@@ -1,37 +1,37 @@
-# pipeline.js — Referenz & Architektur (v2.0)
+# pipeline.js — Reference & Architecture (v2.0)
 
-## Was ist pipeline.js?
+## What is pipeline.js?
 
-pipeline.js ist der deterministische Orchestrator des OpenClaw Swarm. Nova ruft dieses Script auf, um das Build-Pipeline für KubeCommand (oder ein anderes Projekt) autonom durchzuführen. Es steuert den gesamten Lebenszyklus eines Moduls: Blueprints auschecken, Forge spawnen (baut den Code), Git-Sync, Buster spawnen (testet den Code), Chaos-Tests nach Phase-Completion, und Memory-Integration via Qdrant.
+pipeline.js is the deterministic orchestrator of the OpenClaw Swarm. Nova calls this script to autonomously execute the build pipeline for any project. It controls the entire lifecycle of a module: checking out blueprints, spawning Forge (builds the code), spawning echo (reviews the code), git handling, messaging Buster (tests the code), chaos testing after phase completion, and memory integration via Qdrant.
 
-Die Kernphilosophie ist **Kill-and-Respawn**: Bei Fehlern wird nie versucht, einen laufenden Agent zu reparieren. Stattdessen wird die Session zerstört, Nova analysiert den Fehler, schreibt einen besseren Prompt, und ein frischer Agent wird gestartet. Frische Agents mit besseren Prompts schlagen immer stale Agents mit verunreinigtem Context-Window.
+The core philosophy is **Kill-and-Respawn**: on failure, there is never an attempt to repair a running agent. Instead, the session is destroyed, Nova analyzes the error, writes a better prompt, and a fresh agent is started. Fresh agents with better prompts always outperform stale agents with polluted context windows.
 
 
-## Erwartete Dateien & Verzeichnisstruktur
+## Expected Files & Directory Structure
 
-### Config-Dateien (wo pipeline.js sie sucht)
+### Config Files (where pipeline.js looks for them)
 
 ```
-<script_dir>/                        # Verzeichnis wo pipeline.js liegt
-  pipeline.js                        # Das Script selbst
-  pipeline.config.json               # ← Haupt-Konfiguration (muss neben pipeline.js liegen)
+<script_dir>/                        # Directory where pipeline.js lives
+  pipeline.js                        # The script itself
+  pipeline.config.json               # ← Main configuration (must be next to pipeline.js)
 
-<repo_root>/                         # Git-Repository Root (aus config oder git rev-parse)
-  <paths.progress_file>              # z.B. swarm/kubecommand/progress.json
-  <paths.modules_dir>/               # z.B. swarm/kubecommand/modules/
-    <module_dir>/                     # z.B. 06-websockets/
-      FORGE.md                        # Anweisungen für Forge (Builder)
-      BUSTER.md                       # Anweisungen für Buster (Tester)
-      status.json                     # Runtime-Status des Moduls
-      <substep>/FORGE.md              # Optional: Substep-Anweisungen
+<repo_root>/                         # Git repository root (from config or git rev-parse)
+  <paths.progress_file>              # e.g. swarm/<project>/progress.json
+  <paths.modules_dir>/               # e.g. swarm/<project>/modules/
+    <module_dir>/                     # e.g. 06-websockets/
+      FORGE.md                        # Instructions for Forge (builder)
+      BUSTER.md                       # Instructions for Buster (tester)
+      status.json                     # Runtime status of the module
+      <substep>/FORGE.md              # Optional: substep instructions
 ```
 
-### pipeline.config.json — Erwartete Felder
+### pipeline.config.json — Expected Fields
 
 ```jsonc
 {
-  "project": "kubecommand",           // Projektname (überschreibbar via --project)
-  "repo_root": "/app/repo",           // Git-Repo Root (optional, wird auto-detected)
+  "project": "<project>",           // Project name (overridable via --project)
+  "repo_root": "/app/repo",           // Git repo root (optional, auto-detected)
 
   "paths": {
     "progress_file": "swarm/${project}/progress.json",
@@ -39,23 +39,23 @@ Die Kernphilosophie ist **Kill-and-Respawn**: Bei Fehlern wird nie versucht, ein
   },
 
   "models": {
-    "buster": "gemini-flash",          // Pflichtfeld
-    "echo": "claude-sonnet-4-6"        // Optional (für Summary Agent)
+    "buster": "gemini-flash",          // Required
+    "echo": "claude-sonnet-4-6"        // Optional (for Summary Agent)
   },
 
   "agents": {
     "forge": {
-      "dispatch": "acp",               // "acp" oder "redis" — Pflicht
+      "dispatch": "acp",               // "acp" or "redis" — required
       "acp_agent_id": "forge",         // Optional
       "cwd": "/app/repo"               // Optional (default: repo_root)
     },
     "buster": {
-      "dispatch": "redis",             // Pflicht
-      "redis_js_path": "/app/skills/redis.js"  // Pflicht für Redis-Agents
+      "dispatch": "redis",             // Required
+      "redis_js_path": "/app/skills/redis.js"  // Required for Redis agents
     }
   },
 
-  // Optional mit Defaults:
+  // Optional with defaults:
   "poll_interval_seconds": 30,         // Default: 30
   "default_timeout_minutes": 60,       // Default: 60
   "default_max_fails": 3,             // Default: 3
@@ -89,7 +89,7 @@ Die Kernphilosophie ist **Kill-and-Respawn**: Bei Fehlern wird nie versucht, ein
 }
 ```
 
-### progress.json — Projekt-Manifest
+### progress.json — Project Manifest
 
 ```jsonc
 {
@@ -101,7 +101,7 @@ Die Kernphilosophie ist **Kill-and-Respawn**: Bei Fehlern wird nie versucht, ein
       "depends_on": [],
       "forge_model": "codex-5.3",
       "forge_subagent": "forge",
-      "substeps": null,                  // oder ["01a", "01b"]
+      "substeps": null,                  // or ["01a", "01b"]
       "timeout_minutes": 90,
       "max_fails": 3
     }
@@ -109,7 +109,7 @@ Die Kernphilosophie ist **Kill-and-Respawn**: Bei Fehlern wird nie versucht, ein
   "gates": {
     "review_1": {
       "title": "Architecture Review",
-      "type": "forge",                   // Agent-Typ der den Gate ausführt
+      "type": "forge",                   // Agent type that runs the gate
       "model": "claude-sonnet-4-6",
       "instructions_file": "gates/review_1.md",
       "output_file": "gates/review_1-result.json",
@@ -126,7 +126,7 @@ Die Kernphilosophie ist **Kill-and-Respawn**: Bei Fehlern wird nie versucht, ein
 }
 ```
 
-### status.json — Modul-Runtime-Status (pro Modul)
+### status.json — Module Runtime Status (per module)
 
 ```jsonc
 {
@@ -155,40 +155,40 @@ Die Kernphilosophie ist **Kill-and-Respawn**: Bei Fehlern wird nie versucht, ein
 ```
 
 
-## Startup-Sequenz (CLI Entry Point)
+## Startup Sequence (CLI Entry Point)
 
 ```
-node pipeline.js --project kubecommand [--module 06] [--resume] [--status] [--dry-run]
-node pipeline.js --project kubecommand --resume --module 06 --prompt "Use X instead of Y"
-node pipeline.js --project kubecommand --resume --module 06 --prompt-file /tmp/nova-fix.md
+node pipeline.js --project <project> [--module 06] [--resume] [--status] [--dry-run]
+node pipeline.js --project <project> --resume --module 06 --prompt "Use X instead of Y"
+node pipeline.js --project <project> --resume --module 06 --prompt-file /tmp/nova-fix.md
 ```
 
-1. **`initTempDir()`** — Erstellt ein isoliertes Temp-Verzeichnis (`/tmp/swarm-pipeline-XXXXXX`) für alle temporären Dateien dieses Runs
-2. **`registerShutdownHooks()`** — Registriert SIGTERM/SIGINT Handler für Graceful Shutdown
-3. **`loadConfig(projectName)`** — Liest `pipeline.config.json` neben dem Script, löst `${project}`-Templates auf
-4. **`validateConfig(config)`** — Prüft alle Pflichtfelder, setzt Defaults, validiert Script-Pfade gegen Allowlist
-5. **`loadProgress(config)`** — Liest `progress.json` aus dem Repo
-6. Dispatch basierend auf CLI-Flags:
+1. **`initTempDir()`** — Creates an isolated temp directory (`/tmp/swarm-pipeline-XXXXXX`) for all temporary files of this run
+2. **`registerShutdownHooks()`** — Registers SIGTERM/SIGINT handlers for graceful shutdown
+3. **`loadConfig(projectName)`** — Reads `pipeline.config.json` next to the script, resolves `${project}` templates
+4. **`validateConfig(config)`** — Checks all required fields, sets defaults, validates script paths against allowlist
+5. **`loadProgress(config)`** — Reads `progress.json` from the repo
+6. Dispatch based on CLI flags:
    - `--blueprint-list` → `listBlueprints()` → exit
    - `--blueprint 06` → `releaseBlueprint()` → exit
    - `--status` → `printStatus()` → exit
    - `--dry-run` → `dryRun()` → exit
-   - Default → `runPipeline()` (full oder single-module)
+   - Default → `runPipeline()` (full or single-module)
 7. **`cleanupTempDir()`** + `process.exit(exitCode)`
 
 
-## Pipeline-Hauptschleife
+## Pipeline Main Loop
 
-`runPipeline()` iteriert über `progress.execution_order`:
+`runPipeline()` iterates over `progress.execution_order`:
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│  findNextStep()                                      │
-│    Iteriert execution_order linear                   │
-│    Überspringt PASS-Module und completed Gates       │
-│    Stoppt bei BLOCKED                                │
-│    Gibt zurück: { type: 'module'|'gate'|'blocked'|  │
-│                         'done', id }                 │
+│  findNextStep()                                     │
+│    Iterates execution_order linearly                │
+│    Skips PASS modules and completed gates           │
+│    Stops at BLOCKED                                 │
+│    Returns: { type: 'module'|'gate'|'blocked'|      │
+│                     'done', id }                    │
 └──────────────────────┬──────────────────────────────┘
                        │
             ┌──────────▼──────────┐
@@ -200,7 +200,7 @@ node pipeline.js --project kubecommand --resume --module 06 --prompt-file /tmp/n
             └──────────┬──────────┘
                        │no
             ┌──────────▼──────────┐
-            │  type === 'gate'?   │──yes──→ runGate() ──→ Loop zurück
+            │  type === 'gate'?   │──yes──→ runGate() ──→ Loop back
             └──────────┬──────────┘
                        │no (module)
             ┌──────────▼──────────┐
@@ -210,10 +210,10 @@ node pipeline.js --project kubecommand --resume --module 06 --prompt-file /tmp/n
             └─────────────────────┘
                        │
             ┌──────────▼──────────────────┐
-            │  getCompletedPhaseId()       │
-            │  Prüft ob gerade eine ganze  │
-            │  Phase abgeschlossen wurde   │
-            │  UND chaos_test konfiguriert │
+            │  getCompletedPhaseId()      │
+            │  Checks if an entire phase  │
+            │  just completed AND chaos   │
+            │  testing is configured      │
             └──────────┬──────────────────┘
                        │ Phase complete?
             ┌──────────▼──────────┐
@@ -222,187 +222,201 @@ node pipeline.js --project kubecommand --resume --module 06 --prompt-file /tmp/n
 ```
 
 
-## runModule() — Detaillierter Ablauf
+## runModule() — Detailed Flow
 
 ```
 ╔══════════════════════════════════════════════════════╗
-║  MODULE 06: WebSocket Streaming                       ║
+║  MODULE 06: WebSocket Streaming                      ║
 ╠══════════════════════════════════════════════════════╣
 
   1. LOG_MODULE = moduleId, LOG_PHASE = null
   
   2. checkDependencies()
-     Prüft depends_on[] in progress.json
-     Gates: Existiert output_file? Ist gate-status PASS?
-     Module: Ist status PASS?
-     → Wenn nicht erfüllt: EXIT_ERROR
+     Checks depends_on[] in progress.json
+     Gates: Does output_file exist? Is gate-status PASS?
+     Modules: Is status PASS?
+     → If not met: EXIT_ERROR
 
-  3. loadStatus() oder initStatus()
-     Wenn PASS → skip
-     Wenn BLOCKED → EXIT_BLOCKED
-     Wenn PENDING oder null → releaseBlueprint()
-       └─ Safety-Check: Überschreibt nicht non-PENDING status
+  3. RETRY LOOP (while true) — re-reads status.json each iteration
+
+  4. loadStatus() or initStatus()
+     If PASS → skip
+     If BLOCKED → EXIT_BLOCKED
+     If PENDING or null → releaseBlueprint()
+       └─ Safety check: does not overwrite non-PENDING status
        └─ git checkout origin/<project>/architecture -- <module_path>
        └─ git commit + push
 
-  4. Bestimme Resume-Punkt
-     needsForge = PENDING | IN_PROGRESS | FAIL (und phase ≠ buster)
+  5. Determine resume point
+     needsForge = PENDING | IN_PROGRESS | FAIL (and phase ≠ buster)
      needsBuster = READY_FOR_TESTING | (TESTING + phase=buster)
 ```
 
-### Phase 1: FORGE (Code schreiben)
+### Phase 1: FORGE (Write Code)
 
 ```
   LOG_PHASE = 'forge'
   
   5a. readForgeInstructions()
-      Liest FORGE.md (oder substep/FORGE.md für jedes substep)
+      Reads FORGE.md (or substep/FORGE.md for each substep)
   
-  5b. Retry-Context anhängen (wenn status=FAIL)
-      Letzte fail_summary wird als "## RETRY CONTEXT" an den Prompt gehängt
+  5b. Append retry context (if status=FAIL)
+      Last fail_summary is appended as "## RETRY CONTEXT" block
   
-  5c. recallForModule() — Qdrant Memory
-      ┌─ Versucht dynamic import von memory.js (kein Subprocess)
+  5c. Append Nova directive (if --prompt was provided)
+      Injected as "## NOVA DIRECTIVE (High Priority)" block
+  
+  5d. recallForModule() — Qdrant Memory
+      ┌─ Tries dynamic import of memory.js (no subprocess)
       ├─ Fallback: nodeExec('node', [memPath, 'recall', ...])
-      └─ Formatiert als "## CONTEXT FROM SWARM MEMORY" Block
+      └─ Formatted as "## CONTEXT FROM SWARM MEMORY" block
       
-  5d. Status → IN_PROGRESS, phase → forge
+  5e. Status → IN_PROGRESS, phase → forge
       Discord: "Module 06 started"
   
-  5e. setShutdownContext() — Für SIGTERM cleanup
+  5f. setShutdownContext() — For SIGTERM cleanup
   
-  5f. spawnAgent(config, progress, 'forge', moduleId, model, prompt)
-      ├─ ACP-Agent: Schreibt Prompt in Temp-File, übergibt Dateipfad als --task
-      │   (vermeidet E2BIG bei grossen Prompts)
-      └─ Redis-Agent: Baut Payload, schreibt .mjs Dispatch-Script, führt es aus
+  5g. spawnAgent(config, progress, 'forge', moduleId, model, prompt)
+      ├─ ACP agent: Writes prompt to temp file, passes file path as --task
+      │   (avoids E2BIG on large prompts)
+      └─ Redis agent: Builds payload, writes .mjs dispatch script, executes it
   
-  5g. pollStatus() — Polling-Loop
-      ┌─ Alle poll_interval_seconds: sleep → gitPullSafe → loadStatus
-      ├─ Wartet auf: READY_FOR_TESTING | FAIL | BLOCKED
-      ├─ Bei RATE_LIMITED: handleRateLimit() (sleep 2h, fresh status danach)
-      ├─ Bei parse corruption (10x): pollResult(false, 'parse_corrupted')
+  5h. pollStatus() — Polling loop
+      ┌─ Every poll_interval_seconds: sleep → gitPullSafe → loadStatus
+      ├─ Waits for: READY_FOR_TESTING | FAIL | BLOCKED
+      ├─ On RATE_LIMITED: handleRateLimit() (sleep 2h, fresh status after)
+      ├─ On parse corruption (10x): pollResult(false, 'parse_corrupted')
       └─ Timeout: pollResult(false, 'timeout')
       
-      Rückgabe: { ok: boolean, reason: string, status: object|null }
+      Returns: { ok: boolean, reason: string, status: object|null }
   
-  5h. killAgent() — IMMER, auch bei Erfolg (Kill-and-Respawn)
+  5i. killAgent() — ALWAYS, even on success (kill-and-respawn)
       clearShutdownContext()
   
-  5i. Ergebnis auswerten:
-      ├─ !ok + timeout → handleFail(isTimeout: true) → EXIT_TIMEOUT
+  5j. Evaluate result:
+      ├─ !ok + timeout → handleFail(isTimeout: true)
       ├─ !ok + rate_limit_exhausted → EXIT_RATE_LIMITED
       ├─ !ok + parse_corrupted → handleFail()
       ├─ FAIL/BLOCKED → handleFail()
-      └─ READY_FOR_TESTING → weiter zu Git Sync
+      │   └─ handleFail returns { _retry: true }?
+      │       → yes: continue (loop back to step 3)
+      │       → no: return EXIT_NEEDS_NOVA or EXIT_BLOCKED
+      └─ READY_FOR_TESTING → continue to Git Sync
 ```
 
-### Git Sync (Forge → Buster Übergabe)
+### Git Sync (Forge → Buster Handoff)
 
 ```
   6. gitSyncBeforeBuster()
      ├─ git add -A
-     ├─ git commit (wenn uncommitted changes)
-     ├─ gitPullSafe(false) — kein destructive recovery vor push
+     ├─ git commit (if uncommitted changes)
+     ├─ gitPullSafe(false) — no destructive recovery before push
      ├─ git push origin HEAD
-     └─ forge_commit_hash in status.json speichern
+     └─ Record forge_commit_hash in status.json
 ```
 
-### Phase 2: BUSTER (Code testen)
+### Phase 2: BUSTER (Test Code)
 
 ```
   LOG_PHASE = 'buster'
   
   7a. readBusterInstructions()
-      Liest BUSTER.md, injiziert Commit-Hash als "## Test Target"
+      Reads BUSTER.md, injects commit hash as "## Test Target"
   
   7b. Status → TESTING, phase → buster
       setShutdownContext()
   
   7c. spawnAgent(config, progress, 'buster', ...)
-      Redis-Dispatch: Payload mit session config, on_complete Hooks
+      Redis dispatch: payload with session config, on_complete hooks
   
-  7d. pollStatus() — Wartet auf PASS | FAIL | BLOCKED
+  7d. pollStatus() — Waits for PASS | FAIL | BLOCKED
   
   7e. killAgent() + clearShutdownContext()
   
-  7f. Bei PASS:
-      ├─ completed_at + total_duration berechnen
+  7f. On PASS:
+      ├─ Compute completed_at + total_duration
       ├─ saveStatus()
       ├─ Discord: "Module 06 PASS ✓"
       ├─ feedbackMemory('pass') — Qdrant confidence boost
       ├─ spawnSummaryAgent() — Fire-and-forget Echo agent
-      │   └─ Liest git diff, extrahiert 1-5 technische Insights
-      │   └─ Speichert via memory.js remember
-      │   └─ Schreibt Marker-File: summary-markers/<moduleId>-summary.json
+      │   └─ Reads git diff, extracts 1-5 technical insights
+      │   └─ Stores via memory.js remember
+      │   └─ Writes marker file: summary-markers/<moduleId>-summary.json
       └─ EXIT_OK
   
-  7g. Bei FAIL:
-      └─ handleFail() → EXIT_NEEDS_NOVA oder EXIT_BLOCKED
+  7g. On FAIL:
+      └─ handleFail()
+          ├─ { _retry: true } → continue (loop back to step 3, full forge+buster)
+          └─ EXIT_NEEDS_NOVA or EXIT_BLOCKED
 ```
 
-### handleFail() — Fehlerbehandlung
+### handleFail() — Failure Handling
 
 ```
-  ├─ fail_summary anhängen (attempt, phase, reason, is_timeout)
+  ├─ Append fail_summary (attempt, phase, reason, is_timeout)
   ├─ fail_count++
   ├─ Memory feedback:
   │   fail_count == 1 → feedbackMemory('fail') — single decay
-  │   fail_count > 1 && < max → skip (memories nicht schuld)
+  │   fail_count > 1 && < max → skip (memories not at fault)
   │   fail_count >= max → feedbackMemory('blocked') — strong signal
   ├─ Status → FAIL, current_phase → null
-  ├─ Wenn fail_count >= maxFails:
+  ├─ If fail_count >= maxFails:
   │   Status → BLOCKED, Discord: CRITICAL
   │   → EXIT_BLOCKED
-  └─ Sonst: Discord WARN
-      → EXIT_TIMEOUT (wenn timeout) oder EXIT_NEEDS_NOVA
+  ├─ If fail_count <= auto_retry_threshold (default 2):
+  │   Discord: WARN (auto-retry)
+  │   → { _retry: true } (internal loop continues)
+  └─ If fail_count > auto_retry_threshold:
+      Discord: WARN (needs Nova)
+      → EXIT_NEEDS_NOVA
 ```
 
 
-## runGate() — Gate-Durchführung
+## runGate() — Gate Execution
 
 ```
-  1. Prüfe ob output_file schon existiert → skip
+  1. Check if output_file already exists → skip
   2. readGateInstructions()
-  3. spawnAgent() mit gate.type als agentType
-  4. Polling-Loop (eigene, nicht pollStatus):
-     ├─ Prüft output_file Existenz (Hauptsignal)
-     ├─ Prüft <gateId>-gate-status.json für FAIL-Detection
-     │   → EXIT_NEEDS_NOVA wenn FAIL
+  3. spawnAgent() with gate.type as agentType
+  4. Polling loop (custom, not pollStatus):
+     ├─ Checks output_file existence (primary signal)
+     ├─ Checks <gateId>-gate-status.json for FAIL detection
+     │   → EXIT_NEEDS_NOVA if FAIL
      └─ Timeout → EXIT_TIMEOUT
 ```
 
 
-## runChaosTest() — Chaos-Testing nach Phase-Completion
+## runChaosTest() — Chaos Testing After Phase Completion
 
-Wird ausgelöst wenn alle Module einer Phase PASS sind und die Phase in `chaos_test.after_phases` konfiguriert ist.
+Triggered when all modules of a phase are PASS and the phase is configured in `chaos_test.after_phases`.
 
 ```
-  1. Chaos-Marker prüfen (chaos-tests/<phaseId>-done.json)
-  2. Buster spawnen mit chaos_test taskType
+  1. Check chaos marker (chaos-tests/<phaseId>-done.json)
+  2. Spawn Buster with chaos_test taskType
      └─ Prompt: "Break the application. Write plan + results JSON."
-  3. Polling auf results file (nicht status.json)
-  4. Ergebnis auswerten:
-     ├─ severity none → Marker schreiben, weiter
-     ├─ severity low → Discord-Summary, Memory speichern, weiter
-     └─ severity critical/moderate → Auto-Fix Loop:
-         ┌─ Forge spawnen mit Fix-Prompt
-         ├─ Polling über ALLE betroffenen Module (nicht nur letztes)
+  3. Poll for results file (not status.json)
+  4. Evaluate results:
+     ├─ severity none → write marker, continue
+     ├─ severity low → Discord summary, store as memory, continue
+     └─ severity critical/moderate → Auto-fix loop:
+         ┌─ Spawn Forge with fix prompt
+         ├─ Poll across ALL affected modules (not just last)
          ├─ Git sync
-         ├─ Buster erneut spawnen zur Verifikation
-         └─ Max fix_attempts erreicht? → EXIT_NEEDS_NOVA
+         ├─ Re-spawn Buster for verification
+         └─ max fix_attempts reached? → EXIT_NEEDS_NOVA
 ```
 
 
-## Logging — Was wird wo geloggt
+## Logging — What Gets Logged Where
 
-### Ausgabekanäle
+### Output Channels
 
-| Kanal | Format | Konsument |
-|-------|--------|-----------|
-| **stderr** | JSON Lines (eine Zeile pro Event) | Mission Control, Log-Aggregatoren, Terminal |
-| **stdout** | JSON (pretty-printed) | Nova (parst das Result programmatisch) |
+| Channel | Format | Consumer |
+|---------|--------|----------|
+| **stderr** | JSON Lines (one line per event) | Mission Control, log aggregators, terminal |
+| **stdout** | JSON (pretty-printed) | Nova (parses the result programmatically) |
 
-### Log-Entry Struktur (stderr)
+### Log Entry Structure (stderr)
 
 ```json
 {
@@ -416,120 +430,123 @@ Wird ausgelöst wenn alle Module einer Phase PASS sind und die Phase in `chaos_t
 }
 ```
 
-- **run_id** — Eindeutig pro Pipeline-Invokation, korreliert alle Logs eines Runs
-- **module** — Wird gesetzt wenn `runModule()` betreten wird (`LOG_MODULE`)
+- **run_id** — Unique per pipeline invocation, correlates all logs of a run
+- **module** — Set when `runModule()` is entered (`LOG_MODULE`)
 - **phase** — `forge`, `buster`, `chaos`, `chaos-fix-N`, `chaos-verify-N` (`LOG_PHASE`)
 
-### Wo wird was geloggt
+### What Gets Logged Where
 
-| Event | Level | Phase | Nachricht |
-|-------|-------|-------|-----------|
-| Pipeline Start | STEP | — | `PIPELINE: KUBECOMMAND` |
-| Modul Start | STEP | — | `MODULE 06: WebSocket Streaming` |
-| Forge Start | STEP | forge | `Phase: FORGE (subagent: forge, model: codex-5.3)` |
-| Agent Spawn (ACP) | STEP→OK | forge | `Spawning ACP session` → `ACP session spawned` |
-| Agent Spawn (Redis) | STEP→OK | — | `Dispatching to Redis` → `Redis task dispatched` |
-| Memory Recall | STEP | forge | `Memory recall for module 06` |
-| Memory Inject | INFO | forge | `3 memories injected into Forge prompt` |
-| Poll Tick | INFO | forge | `status=IN_PROGRESS phase=forge 120s/3600s` |
-| Git Pull Conflict | WARN | — | `Git pull left repo in REBASING state` |
-| Git Commit Fail | WARN | — | `Git commit failed for status update` |
-| Target Reached | OK | forge | `Target status reached: READY_FOR_TESTING` |
-| Session Kill | STEP→OK | forge | `Destroying ACP session` → `Session destroyed` |
-| Git Sync | STEP→OK | — | `Git sync: committing...` → `Forge commit hash recorded` |
-| Buster Start | STEP | buster | `Phase: BUSTER (model: gemini-flash)` |
+| Event | Level | Phase | Message |
+|-------|-------|-------|---------|
+| Pipeline start | STEP | — | `PIPELINE: <project>` |
+| Module start | STEP | — | `MODULE 06: WebSocket Streaming` |
+| Forge start | STEP | forge | `Phase: FORGE (subagent: forge, model: codex-5.3)` |
+| Agent spawn (ACP) | STEP→OK | forge | `Spawning ACP session` → `ACP session spawned` |
+| Agent spawn (Redis) | STEP→OK | — | `Dispatching to Redis` → `Redis task dispatched` |
+| Memory recall | STEP | forge | `Memory recall for module 06` |
+| Memory inject | INFO | forge | `3 memories injected into Forge prompt` |
+| Nova directive | INFO | forge | `Nova prompt override injected (142 chars)` |
+| Auto-retry | INFO | — | `Auto-retry 1/2 — pipeline will retry internally` |
+| Poll tick | INFO | forge | `status=IN_PROGRESS phase=forge 120s/3600s` |
+| Git pull conflict | WARN | — | `Git pull left repo in REBASING state` |
+| Git commit fail | WARN | — | `Git commit failed for status update` |
+| Target reached | OK | forge | `Target status reached: READY_FOR_TESTING` |
+| Session kill | STEP→OK | forge | `Destroying ACP session` → `Session destroyed` |
+| Git sync | STEP→OK | — | `Git sync: committing...` → `Forge commit hash recorded` |
+| Buster start | STEP | buster | `Phase: BUSTER (model: gemini-flash)` |
 | Module PASS | OK | buster | `Module 06 PASS` |
 | Module FAIL | — | — | (via handleFail → saveStatus → Discord) |
-| Rate Limit | WARN | — | `Rate limit detected! Pause 1/5. Sleeping 2h` |
+| Rate limit | WARN | — | `Rate limit detected! Pause 1/5. Sleeping 2h` |
 | Timeout | ERROR | — | `Timeout after 60 minutes` |
-| Chaos Test | STEP | chaos | `CHAOS TEST: Core Backend (phase_1)` |
-| Shutdown Signal | WARN | — | `Received SIGTERM — initiating graceful shutdown` |
+| Chaos test | STEP | chaos | `CHAOS TEST: Core Backend (phase_1)` |
+| Shutdown signal | WARN | — | `Received SIGTERM — initiating graceful shutdown` |
 
-### Discord-Benachrichtigungen
+### Discord Notifications
 
-| Event | Level | Wann |
+| Event | Level | When |
 |-------|-------|------|
-| Module gestartet | INFO | Forge-Phase beginnt |
-| Module PASS | OK | Buster bestätigt |
-| Module FAIL/TIMEOUT | WARN | Jeder Fehlversuch |
-| Module BLOCKED | CRITICAL | Max-Retries überschritten |
-| Rate Limited | WARN | API Rate-Limit erkannt |
-| Gate PASS/FAIL/TIMEOUT | OK/CRITICAL | Gate abgeschlossen/fehlgeschlagen |
-| Chaos Test Ergebnis | INFO/WARN/OK | Nach Auswertung |
-| Git Commit Failed | WARN | Status auf Disk aber nicht in Git |
-| Pipeline Complete | OK | Alle Module PASS |
+| Module started | INFO | Forge phase begins |
+| Module PASS | OK | Buster confirms |
+| Module FAIL (auto-retry) | WARN | Each auto-retry attempt |
+| Module NEEDS_NOVA | WARN | Auto-retry threshold exceeded |
+| Module BLOCKED | CRITICAL | Max retries exceeded |
+| Rate limited | WARN | API rate limit detected |
+| Gate PASS/FAIL/TIMEOUT | OK/CRITICAL | Gate completed/failed |
+| Chaos test result | INFO/WARN/OK | After evaluation |
+| Git commit failed | WARN | Status on disk but not in git |
+| Pipeline complete | OK | All modules PASS |
 
 
-## Retry-Verhalten (v2.0)
+## Retry Behavior (v2.0)
 
-Die Pipeline hat einen **gestuften Retry-Mechanismus**:
+The pipeline has a **tiered retry mechanism**:
 
-### Auto-Retry (intern, kein Exit)
+### Auto-Retry (internal, no exit)
 
-Die ersten `auto_retry_threshold` Fehlversuche (default: 2) werden **intern** gehandhabt. Die Pipeline stoppt nicht, exitiert nicht — sie looped intern zurück und startet einen frischen Forge-Agent mit dem Retry-Context. Discord informiert über jeden Fehlversuch.
+The first `auto_retry_threshold` failed attempts (default: 2) are handled **internally**. The pipeline does not stop or exit — it loops back internally and starts a fresh Forge agent with the retry context. Discord notifies on each failed attempt.
 
 ```
-Attempt 1: Forge baut → Buster testet → FAIL
+Attempt 1: Forge builds → Buster tests → FAIL
   ↓ handleFail returns { _retry: true }
   ↓ runModule while-loop: continue → re-read status.json
-Attempt 2: Forge baut (mit Retry-Context) → Buster testet → FAIL
+Attempt 2: Forge builds (with retry context) → Buster tests → FAIL
   ↓ handleFail returns { _retry: true }
   ↓ runModule while-loop: continue
 Attempt 3: fail_count (2) > auto_retry_threshold (2)
   ↓ handleFail returns EXIT_NEEDS_NOVA (exit code 10)
-  ↓ Pipeline stoppt
+  ↓ Pipeline stops
 ```
 
-### Nova-Eskalation (EXIT_NEEDS_NOVA = 10)
+### Nova Escalation (EXIT_NEEDS_NOVA = 10)
 
-Nach Überschreitung des Auto-Retry-Thresholds exitiert die Pipeline mit Code 10. Nova (oder du) muss dann mit einem neuen Ansatz fortfahren:
+After exceeding the auto-retry threshold, the pipeline exits with code 10. Nova (or you) must then resume with a new approach:
 
 ```bash
-# Nova analysiert den Fehler und gibt einen neuen Ansatz vor:
-node pipeline.js --project kubecommand --resume --module 06 \
-  --prompt "Der WebSocket-Handler muss auf app direkt registriert werden, nicht auf dem APIRouter. Verwende app.websocket() statt router.websocket()."
+# Nova analyzes the failure and provides a new approach:
+node pipeline.js --project <project> --resume --module 06 \
+  --prompt "WebSocket handler must be registered on app directly, not on APIRouter. Use app.websocket() instead of router.websocket()."
 
-# Für längere Prompts:
-node pipeline.js --project kubecommand --resume --module 06 \
+# For longer prompts:
+node pipeline.js --project <project> --resume --module 06 \
   --prompt-file /tmp/nova-analysis-06.md
 ```
 
-### Was der Forge-Agent bekommt
+### What the Forge Agent Receives
 
-Der zusammengebaute Prompt hat diese Reihenfolge (höchste Priorität zuletzt):
+The assembled prompt has this order (highest priority last):
 
 ```
-1. FORGE.md                    ← Original-Anweisungen von Disk (unverändert)
-2. ## RETRY CONTEXT             ← Automatisch: letzte fail_summary
-3. ## NOVA DIRECTIVE            ← Nur wenn --prompt angegeben
-4. ## CONTEXT FROM SWARM MEMORY ← Qdrant Recall (confidence-adjusted nach Fails)
+1. FORGE.md                    ← Original instructions from disk (unchanged)
+2. ## RETRY CONTEXT             ← Automatic: last fail_summary
+3. ## NOVA DIRECTIVE            ← Only when --prompt is provided
+4. ## CONTEXT FROM SWARM MEMORY ← Qdrant recall (confidence-adjusted after fails)
 ```
 
 ### Config
 
 ```jsonc
 {
-  "auto_retry_threshold": 2,   // Default: 2 (Attempts 1+2 auto, ab 3 → Nova)
-  "default_max_fails": 3       // Default: 3 (Attempt 3 = BLOCKED wenn Nova auch scheitert)
+  "auto_retry_threshold": 2,   // Default: 2 (attempts 1+2 auto, from 3 → Nova)
+  "default_max_fails": 3       // Default: 3 (attempt 3 = BLOCKED if Nova also fails)
 }
 ```
 
-Das Zusammenspiel: `auto_retry_threshold` kontrolliert wann Nova eingeschaltet wird. `max_fails` kontrolliert wann das Modul BLOCKED wird (Human needed). Bei default Werten: 2 Auto-Retries, 1 Nova-Retry, dann BLOCKED.
+The interplay: `auto_retry_threshold` controls when Nova gets involved. `max_fails` controls when the module becomes BLOCKED (human needed). With default values: 2 auto-retries, 1 Nova retry, then BLOCKED.
 
 
-## Exit-Codes
+## Exit Codes
 
-| Code | Konstante | Bedeutung | Nächste Aktion |
-|------|-----------|-----------|----------------|
-| 0 | EXIT_OK | Erfolg | — |
-| 1 | EXIT_ERROR | Config/System-Fehler | Davide prüft Config |
-| 10 | EXIT_NEEDS_NOVA | Auto-Retries erschöpft | Nova: `--resume --module <id> --prompt "..."` |
-| 20 | EXIT_BLOCKED | Max-Retries überschritten | Davide greift manuell ein |
-| 30 | EXIT_TIMEOUT | Agent hat nicht geantwortet | Nova passt Timeout/Prompt an |
-| 40 | EXIT_RATE_LIMITED | API Rate-Limit erschöpft | Abwarten oder Plan anpassen |
+| Code | Constant | Meaning | Next Action |
+|------|----------|---------|-------------|
+| 0 | EXIT_OK | Success | — |
+| 1 | EXIT_ERROR | Config/system error | Fix config |
+| 10 | EXIT_NEEDS_NOVA | Auto-retries exhausted | Nova: `--resume --module <id> --prompt "..."` |
+| 20 | EXIT_BLOCKED | Max retries exceeded | Human intervention needed |
+| 30 | EXIT_TIMEOUT | Agent did not respond | Nova adjusts timeout/prompt |
+| 40 | EXIT_RATE_LIMITED | API rate limit exhausted | Wait or adjust plan |
 
 
-## Status-Transitionen
+## Status Transitions
 
 ```
 PENDING → IN_PROGRESS → READY_FOR_TESTING → TESTING → PASS
@@ -540,7 +557,7 @@ PENDING → IN_PROGRESS → READY_FOR_TESTING → TESTING → PASS
     │ auto-retry (internal loop, ≤ threshold)
     │           │
     │   ┌───────▼──────┐
-    │   │ FAIL (again)  │──── still under threshold? ──→ loop again
+    │   │ FAIL (again) │──── still under threshold? ──→ loop again
     │   └───────┬──────┘
     │           │ threshold exceeded
     │   ┌───────▼──────────┐
@@ -548,54 +565,54 @@ PENDING → IN_PROGRESS → READY_FOR_TESTING → TESTING → PASS
     │   └───────┬──────────┘
     │           │
     │   ┌───────▼──────┐
-    │   │ FAIL (nova)   │──── fail_count >= max_fails?
+    │   │ FAIL (nova)  │──── fail_count >= max_fails?
     │   └───────┬──────┘
     │           │ yes
     │   ┌───────▼──────┐
     │   │   BLOCKED    │  Human intervention needed
     │   └──────────────┘
     │
-    └── * → RATE_LIMITED → (vorheriger Status nach Cooldown)
+    └── * → RATE_LIMITED → (previous status after cooldown)
 ```
 
 
-## Agent-Dispatch Modi
+## Agent Dispatch Modes
 
 ### ACP Agents (Forge, Echo)
-- Nova's Subagents via OpenClaw CLI (`openclaw sessions spawn`)
-- Pipeline hat volle Lifecycle-Kontrolle (spawn/kill)
-- Prompt wird in Temp-File geschrieben, Agent bekommt Dateipfad
-- Session wird nach jeder Phase zerstört
+- Nova's subagents via OpenClaw CLI (`openclaw sessions spawn`)
+- Pipeline has full lifecycle control (spawn/kill)
+- Prompt is written to temp file, agent receives file path
+- Session is destroyed after each phase
 
 ### Redis Agents (Buster)
-- Eigenständige OpenClaw-Instanzen in separatem K8s-Pod
-- Task wird via Redis Stream dispatcht (`redis.js`)
-- Processor-Sidecar nimmt Task auf, injiziert Qdrant-Context, füttert Gateway
-- Pipeline hat KEINE direkte Lifecycle-Kontrolle — "Kill" ist no-op
-- Buster läuft als Podman-in-Pod Sandbox (SYS_ADMIN, SYS_CHROOT)
+- Standalone OpenClaw instances in a separate K8s pod
+- Task dispatched via Redis Stream (`redis.js`)
+- Processor sidecar picks up task, injects Qdrant context, feeds gateway
+- Pipeline has NO direct lifecycle control — "kill" is a no-op
+- Buster runs as Podman-in-Pod sandbox (SYS_ADMIN, SYS_CHROOT)
 
 
-## Sicherheitsmassnahmen (v2.0)
+## Security Measures (v2.0)
 
-- **Path Validation**: `validateSafePath()` prüft redis_js_path und memory_js_path gegen Allowlist (`/app/`, `/opt/`, `/home/`)
-- **No Shell**: Alle externen Commands via `execFileSync` mit Array-Args (kein Shell-Bypass)
-- **Temp Isolation**: Ein `mkdtempSync`-Verzeichnis pro Run, automatisch aufgeräumt
-- **Config Validation**: Alle Pflichtfelder beim Start geprüft, klare Fehlermeldungen
-- **Graceful Shutdown**: SIGTERM/SIGINT tötet laufenden Agent, setzt Status auf FAIL
-- **Discord URL Protection**: Gesamte `discord()` Funktion in try/catch (kein URL-Leak in Stacktrace)
-- **Git Safe Mode**: `gitPullSafe()` default `allowDestructiveRecovery=false` — kein `reset --hard` ohne explizite Erlaubnis
+- **Path Validation**: `validateSafePath()` checks redis_js_path and memory_js_path against allowlist (`/app/`, `/opt/`, `/home/`)
+- **No Shell**: All external commands via `execFileSync` with array args (no shell bypass)
+- **Temp Isolation**: One `mkdtempSync` directory per run, automatically cleaned up
+- **Config Validation**: All required fields checked at startup with clear error messages
+- **Graceful Shutdown**: SIGTERM/SIGINT kills running agent, sets status to FAIL
+- **Discord URL Protection**: Entire `discord()` function wrapped in try/catch (no URL leak in stack traces)
+- **Git Safe Mode**: `gitPullSafe()` defaults to `allowDestructiveRecovery=false` — no `reset --hard` without explicit permission
 
 
-## Generierte Runtime-Dateien
+## Generated Runtime Files
 
-| Pfad | Erzeugt von | Zweck |
-|------|-------------|-------|
-| `/tmp/swarm-pipeline-XXXXXX/` | `initTempDir()` | Temp-Dir für diesen Run |
-| `.../prompt-<mod>-*.md` | `spawnAcpAgent()` | Forge/Echo Prompt-Dateien |
-| `.../payload-<mod>-*.json` | `dispatchRedisTask()` | Redis Task-Payloads |
-| `.../dispatch-<mod>-*.mjs` | `dispatchRedisTask()` | Redis Dispatch-Scripts |
-| `<swarmRoot>/summary-markers/<mod>-summary.json` | Summary Agent | Completion-Marker |
-| `<swarmRoot>/chaos-tests/<phase>-plan.md` | Chaos Buster | Test-Plan |
-| `<swarmRoot>/chaos-tests/<phase>-results.json` | Chaos Buster | Test-Ergebnisse |
-| `<swarmRoot>/chaos-tests/<phase>-done.json` | Pipeline | Chaos-Completion-Marker |
-| `<swarmRoot>/<gateId>-gate-status.json` | Gate Agent | Gate FAIL-Detection |
+| Path | Created by | Purpose |
+|------|-----------|---------|
+| `/tmp/swarm-pipeline-XXXXXX/` | `initTempDir()` | Temp directory for this run |
+| `.../prompt-<mod>-*.md` | `spawnAcpAgent()` | Forge/Echo prompt files |
+| `.../payload-<mod>-*.json` | `dispatchRedisTask()` | Redis task payloads |
+| `.../dispatch-<mod>-*.mjs` | `dispatchRedisTask()` | Redis dispatch scripts |
+| `<swarmRoot>/summary-markers/<mod>-summary.json` | Summary Agent | Completion marker |
+| `<swarmRoot>/chaos-tests/<phase>-plan.md` | Chaos Buster | Test plan |
+| `<swarmRoot>/chaos-tests/<phase>-results.json` | Chaos Buster | Test results |
+| `<swarmRoot>/chaos-tests/<phase>-done.json` | Pipeline | Chaos completion marker |
+| `<swarmRoot>/<gateId>-gate-status.json` | Gate Agent | Gate FAIL detection |
