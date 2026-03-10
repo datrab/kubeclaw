@@ -1,0 +1,28 @@
+apiVersion: v2
+name: kubeclaw
+description: >-
+  Autonomous multi-agent AI swarm on Kubernetes.
+  Deterministic pipeline orchestration, sandboxed execution,
+  confidence-weighted vector memory, and structured inter-agent communication.
+version: 1.0.0
+appVersion: "2026.1"
+type: application
+keywords:
+  - ai-agents
+  - multi-agent
+  - kubernetes
+  - orchestration
+  - llm
+  - openclaw
+  - swarm
+home: https://github.com/kubetoolsio/kubeclaw
+sources:
+  - https://github.com/kubetoolsio/kubeclaw
+maintainers:
+  - name: KubeTools
+    url: https://github.com/kubetoolsio
+icon: https://raw.githubusercontent.com/kubetoolsio/kubeclaw/main/docs/logo.png
+
+# Infrastructure (Redis, Qdrant, PostgreSQL, LiteLLM) is deployed separately
+# via deploy.sh using their official Helm charts. No subchart dependencies needed.
+# This keeps the agent chart lightweight and avoids duplicate installs per agent.

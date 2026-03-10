@@ -1,0 +1,13 @@
+# ConfigMap: Stream Processor sidecar entry point.
+# The processor runs as a sidecar container, consuming Redis Streams
+# and injecting tasks into the OpenClaw gateway.
+# Kept as ConfigMap (not baked into image) for independent iteration.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-processor
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+data:
+  processor.cjs: |
+{{ .Files.Get "files/processor/processor.cjs" | indent 4 }}

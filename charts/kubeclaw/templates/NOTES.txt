@@ -1,0 +1,45 @@
+=====================================================
+ KubeClaw Agent: {{ .Values.agentRole }}
+=====================================================
+
+Agent deployed successfully!
+
+1. Check pod status:
+   kubectl get pods -l app.kubernetes.io/instance={{ .Release.Name }}
+
+2. View logs:
+   kubectl logs -l app.kubernetes.io/instance={{ .Release.Name }} -f
+
+3. Access gateway:
+   {{- if and (eq .Values.service.type "NodePort") (gt (int .Values.service.nodePort) 0) }}
+   http://<NODE_IP>:{{ .Values.service.nodePort }}/?token=<GATEWAY_TOKEN>
+   {{- else }}
+   kubectl port-forward svc/{{ include "kubeclaw.fullname" . }} {{ .Values.service.gatewayPort }}:{{ .Values.service.gatewayPort }}
+   {{- end }}
+
+{{- if .Values.missionControl.enabled }}
+
+4. Mission Control dashboard:
+   {{- if and (eq .Values.service.type "NodePort") (gt (int .Values.service.dashboardNodePort) 0) }}
+   http://<NODE_IP>:{{ .Values.service.dashboardNodePort }}
+   {{- else }}
+   kubectl port-forward svc/{{ include "kubeclaw.fullname" . }} 3000:3000
+   {{- end }}
+{{- end }}
+
+{{- if .Values.workspace.enabled }}
+
+Workspace files seeded:
+   {{- if .Values.workspace.soul }}  - SOUL.md{{- end }}
+   {{- if .Values.workspace.agents }}  - AGENTS.md{{- end }}
+   {{- if .Values.workspace.user }}  - USER.md{{- end }}
+   {{- if .Values.workspace.tools }}  - TOOLS.md{{- end }}
+   {{- if .Values.workspace.identity }}  - IDENTITY.md{{- end }}
+   {{- if .Values.workspace.bootstrap }}  - BOOTSTRAP.md{{- end }}
+{{- end }}
+
+=====================================================
+ Manage:
+   helm upgrade {{ .Release.Name }} ./charts/kubeclaw -f examples/{{ .Values.agentRole }}-values.yaml
+   helm uninstall {{ .Release.Name }}
+=====================================================

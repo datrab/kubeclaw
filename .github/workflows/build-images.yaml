@@ -1,0 +1,123 @@
+name: Build Docker Images
+
+on:
+  # Rebuild when Dockerfiles, skills, or processor change
+  push:
+    branches: [main]
+    paths:
+      - 'docker/**'
+      - 'skills/**'
+      - 'charts/kubeclaw/files/processor/**'
+
+  # Nightly check for base image updates (OpenClaw releases)
+  schedule:
+    - cron: '0 3 * * *'  # 3am UTC daily
+
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: 'Force rebuild even if no changes detected'
+        type: boolean
+        default: false
+
+env:
+  REGISTRY: ghcr.io
+  GENERAL_IMAGE: ghcr.io/${{ github.repository_owner }}/kubeclaw-general
+  SANDBOX_IMAGE: ghcr.io/${{ github.repository_owner }}/kubeclaw-sandbox
+
+jobs:
+  check-base-image:
+    name: Check for base image updates
+    runs-on: ubuntu-latest
+    # Only run on schedule, skip for push (push always builds)
+    if: github.event_name == 'schedule'
+    outputs:
+      changed: ${{ steps.check.outputs.changed }}
+    steps:
+      - name: Check OpenClaw base image digest
+        id: check
+        run: |
+          # Get current digest of base image
+          BASE_IMAGE="ghcr.io/openclaw/openclaw:2026.3.7"
+          DIGEST=$(docker manifest inspect "$BASE_IMAGE" 2>/dev/null | jq -r '.config.digest // .manifests[0].digest' || echo "unknown")
+          echo "Base image digest: $DIGEST"
+
+          # Compare with last known digest (stored as artifact)
+          LAST_DIGEST=""
+          if [ -f /tmp/last-base-digest.txt ]; then
+            LAST_DIGEST=$(cat /tmp/last-base-digest.txt)
+          fi
+
+          if [ "$DIGEST" != "$LAST_DIGEST" ] && [ "$DIGEST" != "unknown" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "$DIGEST" > /tmp/last-base-digest.txt
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  build:
+    name: Build & Push
+    runs-on: ubuntu-latest
+    needs: [check-base-image]
+    # Run if: push, manual trigger, or base image changed
+    if: |
+      always() &&
+      (github.event_name == 'push' ||
+       github.event_name == 'workflow_dispatch' ||
+       needs.check-base-image.outputs.changed == 'true')
+    permissions:
+      contents: read
+      packages: write
+
+    strategy:
+      matrix:
+        include:
+          - name: general
+            dockerfile: docker/Dockerfile.general
+            image_suffix: kubeclaw-general
+          - name: sandbox
+            dockerfile: docker/Dockerfile.sandbox
+            image_suffix: kubeclaw-sandbox
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate tags
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_suffix }}
+          tags: |
+            type=raw,value=latest
+            type=sha,prefix=
+            type=raw,value={{date 'YYYY.MM.DD'}}
+
+      - name: Build & Push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Summary
+        run: |
+          echo "### ${{ matrix.name }} image pushed" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.meta.outputs.tags }}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,37 @@
+{{- if .Values.workspace.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-workspace
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+data:
+  {{- if .Values.workspace.soul }}
+  SOUL.md: |
+{{ .Values.workspace.soul | indent 4 }}
+  {{- end }}
+  {{- if .Values.workspace.agents }}
+  AGENTS.md: |
+{{ .Values.workspace.agents | indent 4 }}
+  {{- end }}
+  {{- if .Values.workspace.user }}
+  USER.md: |
+{{ .Values.workspace.user | indent 4 }}
+  {{- end }}
+  {{- if .Values.workspace.tools }}
+  TOOLS.md: |
+{{ .Values.workspace.tools | indent 4 }}
+  {{- end }}
+  {{- if .Values.workspace.memory }}
+  MEMORY.md: |
+{{ .Values.workspace.memory | indent 4 }}
+  {{- end }}
+  {{- if .Values.workspace.identity }}
+  IDENTITY.md: |
+{{ .Values.workspace.identity | indent 4 }}
+  {{- end }}
+  {{- if .Values.workspace.bootstrap }}
+  BOOTSTRAP.md: |
+{{ .Values.workspace.bootstrap | indent 4 }}
+  {{- end }}
+{{- end }}

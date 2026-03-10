@@ -1,0 +1,39 @@
+# Personal config (never commit to public repo)
+my-values/
+
+# Secrets — NEVER commit
+*.key
+*.pem
+*.env
+*.sops.yaml.dec
+secrets.yml.dec
+keys.txt
+
+# Helm
+charts/kubeclaw/charts/
+Chart.lock
+
+# OS
+.DS_Store
+*.swp
+*.swo
+Thumbs.db
+
+# Logs
+*.log
+
+# Temp
+/tmp/
+.cache/
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Node (if developing skills locally)
+node_modules/
+package-lock.json
+
+# Ansible (if using infrastructure layer)
+*.retry
