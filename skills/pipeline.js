@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+// =============================================================================
+// PIPELINE.JS — Deterministic Swarm Orchestrator
+// =============================================================================
+//
 // Called by Nova to run the module pipeline. Handles the happy path autonomously.
 // On failure, exits with structured JSON so Nova can analyze and retry.
 //
@@ -11,13 +15,13 @@
 //   30 = TIMEOUT — agent didn't respond within time limit
 //
 // Usage:
-//   node pipeline.js --project kubecommand                     # Run full pipeline
-//   node pipeline.js --project kubecommand --module 06         # Run specific module
-//   node pipeline.js --project kubecommand --resume            # Resume from last state
-//   node pipeline.js --project kubecommand --status            # Print current status
-//   node pipeline.js --project kubecommand --dry-run           # Show what would happen
-//   node pipeline.js --project kubecommand --blueprint 06      # Release blueprint only
-//   node pipeline.js --project kubecommand --blueprint-list    # List available blueprints
+//   node pipeline.js --project kubecommand                    # Run full pipeline
+//   node pipeline.js --project kubecommand --module 06        # Run specific module
+//   node pipeline.js --project kubecommand --resume           # Resume from last state
+//   node pipeline.js --project kubecommand --status           # Print current status
+//   node pipeline.js --project kubecommand --dry-run          # Show what would happen
+//   node pipeline.js --project kubecommand --blueprint 06     # Release blueprint only
+//   node pipeline.js --project kubecommand --blueprint-list   # List available blueprints
 //
 // Agent lifecycle:
 //   On PASS  → agent session is destroyed, new one spawned for next module
@@ -1041,10 +1045,10 @@ async function feedbackMemory(config, moduleId, outcome, reason = '') {
  *
  * Instead of storing useless metadata like "Module 03 completed successfully",
  * this spawns a short ACP oneshot Echo agent that:
- * 1. Reads the git diff since module start
- * 2. Reads fail_summaries (what went wrong on retries)
- * 3. Writes a concise technical summary of WHAT was built and HOW
- * 4. Stores it via memory.js with appropriate scope and tags
+ *   1. Reads the git diff since module start
+ *   2. Reads fail_summaries (what went wrong on retries)
+ *   3. Writes a concise technical summary of WHAT was built and HOW
+ *   4. Stores it via memory.js with appropriate scope and tags
  *
  * Clean passes (0 retries) → scope=global (cross-project reusable)
  * Messy passes (retries)   → scope=global (even MORE valuable — we learned something)
@@ -1418,22 +1422,52 @@ async function handleFail(config, status, moduleDir, moduleId, maxFails, phase, 
     return { exit: EXIT_BLOCKED, reason: `Max retries exceeded (${phase})`, module: moduleId, status };
   }
 
-  // Timeouts get EXIT_TIMEOUT so Nova knows the agent didn't produce output
-  // (different recovery strategy than a code error)
-  const exitCode = isTimeout ? EXIT_TIMEOUT : EXIT_NEEDS_NOVA;
+  // Auto-retry vs. escalation decision:
+  //   fail_count <= auto_retry_threshold → internal retry (pipeline continues)
+  //   fail_count > auto_retry_threshold  → EXIT_NEEDS_NOVA (Nova must intervene)
+  //   timeout                            → always EXIT_TIMEOUT (different recovery)
+  const autoRetryThreshold = config.auto_retry_threshold ?? 2;
+  const canAutoRetry = !isTimeout && status.fail_count <= autoRetryThreshold;
 
-  await discord(config, 'WARN', `Module ${moduleId} ${isTimeout ? 'TIMEOUT' : 'FAIL'} (${phase})`,
-    `Attempt ${status.fail_count}/${maxFails}. ${isTimeout ? 'Agent timed out.' : 'Nova must analyze.'}`, [
+  if (canAutoRetry) {
+    // Internal retry — pipeline will loop and try again with retry context
+    log('INFO', `Auto-retry ${status.fail_count}/${autoRetryThreshold} — pipeline will retry internally`);
+    await discord(config, 'WARN', `Module ${moduleId} FAIL (${phase}) — Auto-Retry`,
+      `Attempt ${status.fail_count}/${maxFails}. Auto-retrying (${status.fail_count}/${autoRetryThreshold}).`, [
+        { name: 'Phase', value: phase },
+        { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
+        { name: 'Auto-Retry', value: `${status.fail_count}/${autoRetryThreshold}` },
+      ]);
+
+    return {
+      _retry: true,
+      module: moduleId,
+      module_dir: moduleDir,
+      fail_count: status.fail_count,
+      max_fails: maxFails,
+      last_fail: status.fail_summaries[status.fail_summaries.length - 1] || null,
+    };
+  }
+
+  // Escalation — either timeout or auto-retry threshold exceeded
+  const exitCode = isTimeout ? EXIT_TIMEOUT : EXIT_NEEDS_NOVA;
+  const escalationReason = isTimeout
+    ? 'Agent timed out.'
+    : `Auto-retry exhausted (${autoRetryThreshold}x). Nova must analyze and provide new prompt.`;
+
+  await discord(config, 'WARN', `Module ${moduleId} ${isTimeout ? 'TIMEOUT' : 'NEEDS_NOVA'} (${phase})`,
+    `Attempt ${status.fail_count}/${maxFails}. ${escalationReason}`, [
       { name: 'Phase', value: phase },
       { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
       ...(isTimeout ? [{ name: 'Type', value: 'TIMEOUT' }] : []),
+      ...(!isTimeout ? [{ name: 'Action', value: 'Resume with --prompt' }] : []),
     ]);
 
   return {
     exit: exitCode,
     reason: isTimeout
       ? `${phase} timed out — agent did not respond`
-      : `${phase} failed — Nova must analyze and adjust prompt`,
+      : `${phase} failed ${status.fail_count}x — Nova must provide new approach via --resume --module ${moduleId} --prompt "..."`,
     module: moduleId,
     module_dir: moduleDir,
     fail_count: status.fail_count,
@@ -1445,13 +1479,18 @@ async function handleFail(config, status, moduleDir, moduleId, maxFails, phase, 
 
 // ─── Module Runner ───────────────────────────────────────────────────────────
 
-async function runModule(config, progress, moduleId) {
+async function runModule(config, progress, moduleId, opts = {}) {
   const mod = progress.modules[moduleId];
   if (!mod) throw new Error(`Module ${moduleId} not in progress.json`);
 
   const dir = mod.dir;
   const timeout = mod.timeout_minutes || config.default_timeout_minutes;
   const maxFails = mod.max_fails || config.default_max_fails;
+
+  // Nova prompt override: passed via --resume --module <id> --prompt "new approach"
+  // This is injected into the Forge prompt when Nova has analyzed a failure and
+  // wants the agent to take a specific different approach.
+  const novaPrompt = opts.novaPrompt || null;
 
   // Set logging context for this module
   LOG_MODULE = moduleId;
@@ -1464,6 +1503,14 @@ async function runModule(config, progress, moduleId) {
   // ── Dependencies ──
   const deps = checkDependencies(config, progress, moduleId);
   if (!deps.met) return { exit: EXIT_ERROR, reason: `Dependencies not met: ${deps.reason}` };
+
+  // ──────────────────────────────────────────────────────────────────────────
+  //  RETRY LOOP
+  //  Auto-retries are handled internally (up to auto_retry_threshold).
+  //  The loop re-reads status from disk each iteration so fail_count,
+  //  fail_summaries, and retry context are always fresh.
+  // ──────────────────────────────────────────────────────────────────────────
+  while (true) {
 
   // ── Load or init status ──
   let status = loadStatus(config, dir);
@@ -1514,6 +1561,18 @@ async function runModule(config, progress, moduleId) {
       forgePrompt += `Read the error carefully and take a fundamentally different approach if needed.`;
     }
 
+    // Nova prompt override: if Nova analyzed the failure and provided a new approach,
+    // inject it as a high-priority section after the retry context.
+    if (novaPrompt) {
+      forgePrompt += '\n\n---\n\n';
+      forgePrompt += `## NOVA DIRECTIVE (High Priority)\n\n`;
+      forgePrompt += `Nova has analyzed the previous failures and determined a new approach.\n`;
+      forgePrompt += `Follow these instructions with higher priority than the retry context above:\n\n`;
+      forgePrompt += novaPrompt;
+      forgePrompt += '\n';
+      log('INFO', `Nova prompt override injected (${novaPrompt.length} chars)`);
+    }
+
     // Recall relevant memories from Qdrant (project + global cross-project patterns)
     if (config.memory?.recall_before_forge !== false) {
       const additionalCtx = mod.substeps ? mod.substeps.join(', ') : '';
@@ -1556,8 +1615,10 @@ async function runModule(config, progress, moduleId) {
       status = loadStatus(config, dir) || status;
 
       if (result.reason === 'timeout') {
-        return await handleFail(config, status, dir, moduleId, maxFails, 'forge',
+        const failResultTO = await handleFail(config, status, dir, moduleId, maxFails, 'forge',
           `TIMEOUT: Forge did not complete within ${timeout} minutes`, { isTimeout: true });
+        if (failResultTO._retry) { log('INFO', 'Auto-retrying after forge timeout...'); continue; }
+        return failResultTO;
       }
       if (result.reason === 'rate_limit_exhausted') {
       await discord(config, 'CRITICAL', `Module ${moduleId} RATE LIMITED`,
@@ -1569,20 +1630,26 @@ async function runModule(config, progress, moduleId) {
         };
       }
       if (result.reason === 'parse_corrupted') {
-        return await handleFail(config, status, dir, moduleId, maxFails, 'forge',
+        const failResultPC = await handleFail(config, status, dir, moduleId, maxFails, 'forge',
           'status.json is permanently corrupted (unparseable after multiple attempts)');
+        if (failResultPC._retry) { log('INFO', 'Auto-retrying after parse corruption...'); continue; }
+        return failResultPC;
       }
 
       // blocked or FAIL without details
-      return await handleFail(config, status, dir, moduleId, maxFails, 'forge',
+      const failResult1 = await handleFail(config, status, dir, moduleId, maxFails, 'forge',
         status.fail_summaries.length > 0 ? null : 'Forge reported FAIL without details');
+      if (failResult1._retry) { log('INFO', 'Auto-retrying forge phase...'); continue; }
+      return failResult1;
     }
 
     status = loadStatus(config, dir) || status;
 
     if (status.status === STATUS.FAIL || status.status === STATUS.BLOCKED) {
-      return await handleFail(config, status, dir, moduleId, maxFails, 'forge',
+      const failResult2 = await handleFail(config, status, dir, moduleId, maxFails, 'forge',
         status.fail_summaries.length > 0 ? null : 'Forge reported FAIL without details');
+      if (failResult2._retry) { log('INFO', 'Auto-retrying forge phase...'); continue; }
+      return failResult2;
     }
 
     log('OK', 'Forge complete → READY_FOR_TESTING');
@@ -1643,8 +1710,10 @@ async function runModule(config, progress, moduleId) {
       status = loadStatus(config, dir) || status;
 
       if (result.reason === 'timeout') {
-        return await handleFail(config, status, dir, moduleId, maxFails, 'buster',
+        const bFailTO = await handleFail(config, status, dir, moduleId, maxFails, 'buster',
           `TIMEOUT: Buster did not complete within ${timeout} minutes`, { isTimeout: true });
+        if (bFailTO._retry) { log('INFO', 'Auto-retrying after buster timeout...'); continue; }
+        return bFailTO;
       }
       if (result.reason === 'rate_limit_exhausted') {
       await discord(config, 'CRITICAL', `Module ${moduleId} RATE LIMITED (Buster)`,
@@ -1656,8 +1725,10 @@ async function runModule(config, progress, moduleId) {
         };
       }
       if (result.reason === 'parse_corrupted') {
-        return await handleFail(config, status, dir, moduleId, maxFails, 'buster',
+        const bFailPC = await handleFail(config, status, dir, moduleId, maxFails, 'buster',
           'status.json is permanently corrupted (unparseable after multiple attempts)');
+        if (bFailPC._retry) { log('INFO', 'Auto-retrying after buster parse corruption...'); continue; }
+        return bFailPC;
       }
     }
 
@@ -1692,14 +1763,18 @@ async function runModule(config, progress, moduleId) {
     }
 
     if (status.status === STATUS.FAIL) {
-      return await handleFail(config, status, dir, moduleId, maxFails, 'buster',
+      const bFailFinal = await handleFail(config, status, dir, moduleId, maxFails, 'buster',
         status.fail_summaries.length > 0 ? null : 'Buster reported FAIL without details');
+      if (bFailFinal._retry) { log('INFO', 'Auto-retrying module from forge phase...'); continue; }
+      return bFailFinal;
     }
   }
 
   LOG_MODULE = null;
   LOG_PHASE = null;
   return { exit: EXIT_ERROR, reason: `Unexpected status: ${status?.status}` };
+
+  } // end retry loop
 }
 
 // ─── Gate Runner ─────────────────────────────────────────────────────────────
@@ -1784,7 +1859,7 @@ async function runGate(config, progress, gateId) {
 // After certain phases complete, Buster runs a chaos test. Results are written
 // to dedicated files (not status.json). The pipeline evaluates severity:
 //   critical/moderate → auto-spawn Forge to fix → re-test with Buster
-//   low → Discord summary to operator, continue pipeline
+//   low → Discord summary to Davide, continue pipeline
 //   none → continue
 
 function getCompletedPhaseId(config, progress, justPassedModuleId) {
@@ -2176,7 +2251,7 @@ async function runPipeline(config, progress, opts = {}) {
 
   // Single module mode
   if (opts.module) {
-    const result = await runModule(config, progress, opts.module);
+    const result = await runModule(config, progress, opts.module, { novaPrompt: opts.novaPrompt });
     output(result);
     return result.exit;
   }
@@ -2304,6 +2379,8 @@ if (__currentPath === __entryPath) {
     else if (a === '--module'         && args[i+1]) flags.module = args[++i];
     else if (a === '--blueprint'      && args[i+1]) flags.blueprint = args[++i];
     else if (a === '--blueprint-list')              flags.blueprintList = true;
+    else if (a === '--prompt'         && args[i+1]) flags.prompt = args[++i];
+    else if (a === '--prompt-file'   && args[i+1]) flags.promptFile = args[++i];
     else if (a === '--resume')                      flags.resume = true;
     else if (a === '--status')                      flags.status = true;
     else if (a === '--dry-run')                     flags.dryRun = true;
@@ -2314,11 +2391,18 @@ OpenClaw Swarm Pipeline — Deterministic Orchestrator
 Usage: node pipeline.js [options]
 
 Pipeline commands:
-  --project <n>        Project name (or CURRENT_PROJECT env)
+  --project <n>           Project name (or CURRENT_PROJECT env)
   --module <id>           Run a single module
   --resume                Resume pipeline from current state
+  --prompt "text"         Nova's prompt override (injected into Forge prompt)
+  --prompt-file <path>    Read Nova's prompt from file (for long prompts)
   --status                Print current pipeline status as JSON
   --dry-run               Show execution plan, spawn nothing
+
+Retry flow:
+  Auto-retries 1-2 happen internally (no exit).
+  After auto_retry_threshold (default 2), exits with code 10 (NEEDS_NOVA).
+  Nova resumes: --resume --module 06 --prompt "Use approach X instead of Y"  
 
 Blueprint commands:
   --blueprint <id>        Release a specific blueprint from architecture branch
@@ -2371,9 +2455,20 @@ Exit codes:
       if (flags.status)  { printStatus(config, progress); cleanupTempDir(); process.exit(EXIT_OK); }
       if (flags.dryRun)  { dryRun(config, progress); cleanupTempDir(); process.exit(EXIT_OK); }
 
+      // Resolve Nova prompt from --prompt or --prompt-file
+      let novaPrompt = flags.prompt || null;
+      if (!novaPrompt && flags.promptFile) {
+        if (!fs.existsSync(flags.promptFile)) {
+          throw new Error(`Prompt file not found: ${flags.promptFile}`);
+        }
+        novaPrompt = fs.readFileSync(flags.promptFile, 'utf8').trim();
+        log('INFO', `Nova prompt loaded from file: ${flags.promptFile} (${novaPrompt.length} chars)`);
+      }
+
       const exitCode = await runPipeline(config, progress, {
         module: flags.module,
         resume: flags.resume,
+        novaPrompt,
       });
       cleanupTempDir();
       process.exit(exitCode);
