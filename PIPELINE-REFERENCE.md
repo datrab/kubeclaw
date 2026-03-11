@@ -65,13 +65,13 @@ The central design principle is **Kill-and-Respawn**: Fresh agents with better p
 ### Invocation Modes
 
 ```
-node pipeline.js --project kubecommand                    # Full pipeline
-node pipeline.js --project kubecommand --module 06        # Single module
-node pipeline.js --project kubecommand --resume           # Resume from state
-node pipeline.js --project kubecommand --status           # Print status JSON
-node pipeline.js --project kubecommand --dry-run          # Preview plan
-node pipeline.js --project kubecommand --blueprint 06     # Release blueprint
-node pipeline.js --project kubecommand --blueprint-list   # List blueprints
+node pipeline.js --project <project>                    # Full pipeline
+node pipeline.js --project <project> --module 06        # Single module
+node pipeline.js --project <project> --resume           # Resume from state
+node pipeline.js --project <project> --status           # Print status JSON
+node pipeline.js --project <project> --dry-run          # Preview plan
+node pipeline.js --project <project> --blueprint 06     # Release blueprint
+node pipeline.js --project <project> --blueprint-list   # List blueprints
 ```
 
 ---
