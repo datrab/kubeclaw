@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+// =============================================================================
+// PIPELINE.JS — Deterministic Swarm Orchestrator
+// =============================================================================
+//
 // Called by Nova to run the module pipeline. Handles the happy path autonomously.
 // On failure, exits with structured JSON so Nova can analyze and retry.
 //
@@ -11,13 +15,13 @@
 //   30 = TIMEOUT — agent didn't respond within time limit
 //
 // Usage:
-//   node pipeline.js --project kubecommand                     # Run full pipeline
-//   node pipeline.js --project kubecommand --module 06         # Run specific module
-//   node pipeline.js --project kubecommand --resume            # Resume from last state
-//   node pipeline.js --project kubecommand --status            # Print current status
-//   node pipeline.js --project kubecommand --dry-run           # Show what would happen
-//   node pipeline.js --project kubecommand --blueprint 06      # Release blueprint only
-//   node pipeline.js --project kubecommand --blueprint-list    # List available blueprints
+//   node pipeline.js --project kubecommand                    # Run full pipeline
+//   node pipeline.js --project kubecommand --module 06        # Run specific module
+//   node pipeline.js --project kubecommand --resume           # Resume from last state
+//   node pipeline.js --project kubecommand --status           # Print current status
+//   node pipeline.js --project kubecommand --dry-run          # Show what would happen
+//   node pipeline.js --project kubecommand --blueprint 06     # Release blueprint only
+//   node pipeline.js --project kubecommand --blueprint-list   # List available blueprints
 //
 // Agent lifecycle:
 //   On PASS  → agent session is destroyed, new one spawned for next module
@@ -128,6 +132,10 @@ let _tmpDir = null;
 function initTempDir() {
   _tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'swarm-pipeline-'));
   log('INFO', `Temp directory created: ${_tmpDir}`);
+  // Guarantee cleanup on ANY exit — process.exit(), normal end, unhandled exceptions.
+  // This makes the manual cleanupTempDir() calls throughout the code a nice-to-have
+  // rather than a requirement. Even if a code path forgets to call it, cleanup happens.
+  process.on('exit', cleanupTempDir);
   return _tmpDir;
 }
 
@@ -244,27 +252,83 @@ function output(result) {
 
 // ─── Config & File Helpers ───────────────────────────────────────────────────
 
-function loadConfig(projectName) {
-  const scriptDir = path.dirname(fileURLToPath(import.meta.url));
-  const configPath = path.join(scriptDir, 'pipeline.config.json');
-  if (!fs.existsSync(configPath)) throw new Error(`Config not found: ${configPath}`);
+function loadConfig(projectName, configOverridePath = null) {
+  // Project name is required BEFORE config loading — the config path depends on it.
+  // pipeline.js is a generic skill (/app/skills/), config is project-specific.
+  if (!projectName) {
+    throw new Error(
+      'Project name required. Use --project <name> or set CURRENT_PROJECT env.\n' +
+      '  Config lives at: <repo>/projects/<project>/.swarm/pipeline.config.json'
+    );
+  }
+
+  // Resolve repo root FIRST — config lives inside the repo, not next to the script.
+  let repoRoot;
+  try {
+    repoRoot = execFileSync('git', ['rev-parse', '--show-toplevel'], { encoding: 'utf8' }).trim();
+  } catch {
+    throw new Error('Not inside a git repository. Run from within a git repo.');
+  }
+
+  // Config resolution order:
+  //   1. --config <path>                                           (explicit override)
+  //   2. <repo_root>/projects/<project>/.swarm/pipeline.config.json (standard location)
+  const configPath = configOverridePath
+    || path.join(repoRoot, 'projects', projectName, '.swarm', 'pipeline.config.json');
+
+  if (!fs.existsSync(configPath)) {
+    throw new Error(
+      `Config not found: ${configPath}\n` +
+      `  Expected at: <repo>/projects/${projectName}/.swarm/pipeline.config.json\n` +
+      `  Or specify explicitly: --config /path/to/pipeline.config.json`
+    );
+  }
 
   const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-  config.project = projectName || config.project;
-  if (!config.project) throw new Error('No project specified. Use --project <n> or set in config.');
+  config.project = projectName;
 
-  // Resolve repo root
+  // Use auto-detected repo root, allow config override
   if (!config.repo_root) {
-    try {
-      config.repo_root = execFileSync('git', ['rev-parse', '--show-toplevel'], { encoding: 'utf8' }).trim();
-    } catch {
-      throw new Error('Not inside a git repository. Set repo_root in pipeline.config.json');
+    config.repo_root = repoRoot;
+  }
+
+  // Set module-level _repoRoot so headHash() can use gitExec
+  // even in contexts where config isn't passed (e.g. addHistory → headHash).
+  _repoRoot = config.repo_root;
+
+  // ── Path resolution ──
+  // All swarm data lives under a single swarm_dir. Defaults:
+  //   swarm_dir:     projects/<project>/.swarm       (relative to repo_root)
+  //   progress_file: progress.json                   (relative to swarm_dir)
+  //   modules_dir:   modules                         (relative to swarm_dir)
+  //
+  // Config can override any of these. ${project} is resolved in all path values.
+
+  if (!config.paths) config.paths = {};
+
+  // Resolve ${project} template in all path values
+  for (const [key, val] of Object.entries(config.paths)) {
+    if (typeof val === 'string') {
+      config.paths[key] = val.replace(/\$\{project\}/g, config.project);
     }
   }
 
-  // Resolve template paths
-  for (const [key, val] of Object.entries(config.paths || {})) {
-    config.paths[key] = val.replace(/\$\{project\}/g, config.project);
+  // Set defaults AFTER template resolution (so user overrides take precedence)
+  if (!config.paths.swarm_dir)      config.paths.swarm_dir = `projects/${config.project}/.swarm`;
+  if (!config.paths.progress_file)  config.paths.progress_file = 'progress.json';
+  if (!config.paths.modules_dir)    config.paths.modules_dir = 'modules';
+
+  // Resolve swarm_dir to absolute (relative to repo_root)
+  if (!path.isAbsolute(config.paths.swarm_dir)) {
+    config.paths.swarm_dir = path.join(config.repo_root, config.paths.swarm_dir);
+  }
+
+  // Resolve progress_file and modules_dir relative to swarm_dir
+  if (!path.isAbsolute(config.paths.progress_file)) {
+    config.paths.progress_file = path.join(config.paths.swarm_dir, config.paths.progress_file);
+  }
+  if (!path.isAbsolute(config.paths.modules_dir)) {
+    config.paths.modules_dir = path.join(config.paths.swarm_dir, config.paths.modules_dir);
   }
 
   // Validate all required fields (fail fast instead of cryptic TypeError later)
@@ -301,6 +365,7 @@ function validateConfig(config) {
   requireField(config, 'project');
   requireField(config, 'repo_root');
   requireField(config, 'paths');
+  requireField(config, 'paths.swarm_dir');
   requireField(config, 'paths.progress_file');
   requireField(config, 'paths.modules_dir');
   requireField(config, 'models');
@@ -339,14 +404,22 @@ function validateConfig(config) {
 }
 
 function loadProgress(config) {
-  const p = path.join(config.repo_root, config.paths.progress_file);
+  const p = config.paths.progress_file;
   if (!fs.existsSync(p)) throw new Error(`Progress file not found: ${p}`);
   return JSON.parse(fs.readFileSync(p, 'utf8'));
 }
 
-function modulePath(config, dir)   { return path.join(config.repo_root, config.paths.modules_dir, dir); }
+function modulePath(config, dir)   { return path.join(config.paths.modules_dir, dir); }
 function statusPath(config, dir)   { return path.join(modulePath(config, dir), 'status.json'); }
-function swarmRoot(config)         { return path.join(config.repo_root, config.paths.modules_dir, '..'); }
+function swarmRoot(config)         { return config.paths.swarm_dir; }
+
+/** Convert absolute path back to repo-relative (for git commands and payloads) */
+function relPath(config, absPath)  { return path.relative(config.repo_root, absPath); }
+
+/** Redis stream key for Buster completion signals */
+function completionStreamKey(config) {
+  return `swarm:pipeline:${config.project}:completions`;
+}
 
 function loadStatus(config, dir) {
   const p = statusPath(config, dir);
@@ -359,15 +432,24 @@ function loadStatus(config, dir) {
     // - Partial write (agent was mid-commit)
     // - File corruption
     // Return null so the polling loop treats it as "status not ready yet"
-    log('WARN', `status.json parse failed (${dir}): ${e.message} — treating as not ready`);
+    // Log file content preview so we can distinguish partial-write (normal) from real bugs
+    let preview = '';
+    try { preview = fs.readFileSync(p, 'utf8').slice(0, 200); } catch { /* unreadable */ }
+    log('WARN', `status.json parse failed (${dir}): ${e.message} — treating as not ready`, { preview });
     return null;
   }
 }
 
 function saveStatus(config, dir, status) {
   const p = statusPath(config, dir);
+  const tmp = p + '.tmp';
   status.updated_at = new Date().toISOString();
-  fs.writeFileSync(p, JSON.stringify(status, null, 2) + '\n');
+  // Atomic write: write to temp file, then rename.
+  // rename() is atomic on POSIX when src and dst are on the same filesystem.
+  // This prevents partial-read scenarios where another process (Forge, Buster, polling)
+  // reads a half-written JSON file.
+  fs.writeFileSync(tmp, JSON.stringify(status, null, 2) + '\n');
+  fs.renameSync(tmp, p);
   gitCommitQuiet(config, p, `[pipeline] ${status.module_id} → ${status.status}`);
 }
 
@@ -387,11 +469,25 @@ function gitCommitQuiet(config, filePath, message) {
 }
 
 /**
- * Safe git pull with context-sensitive rebase abort recovery.
- * @param {object} config - The pipeline configuration
- * @param {boolean} allowDestructiveRecovery - If false, throws an error on conflict instead of doing a hard reset.
+ * Git pull with context-sensitive rebase abort recovery.
+ *
+ * Two public functions — use the one that matches your context:
+ *
+ *   gitPullForPolling(config)
+ *     During status polling loops. No local work is at risk — if rebase
+ *     conflicts occur, abort and reset --hard to origin. This is safe because
+ *     the pipeline only READS status.json during polling; Forge/Buster own
+ *     the commits.
+ *
+ *   gitPullBeforePush(config)
+ *     Before git push (Forge→Buster handoff, blueprint release, chaos fix).
+ *     Local commits exist that must NOT be lost. If rebase conflicts occur,
+ *     throw an error instead of resetting. The caller handles the error
+ *     (typically: retry the module).
+ *
+ * @private
  */
-function gitPullSafe(config, allowDestructiveRecovery = false) {
+function _gitPullCore(config, allowDestructiveRecovery) {
   try {
     gitExec(config.repo_root, ['pull', '--rebase', '--quiet'], { stdio: 'ignore' });
     invalidateHeadHash();
@@ -411,6 +507,7 @@ function gitPullSafe(config, allowDestructiveRecovery = false) {
         if (allowDestructiveRecovery) {
           const branch = gitExec(config.repo_root, ['branch', '--show-current']).trim();
           if (branch) {
+            log('WARN', `Performing destructive reset to origin/${branch} — any unpushed local commits will be lost`);
             gitExec(config.repo_root, ['fetch', 'origin', branch], { stdio: 'ignore' });
             gitExec(config.repo_root, ['reset', '--hard', `origin/${branch}`], { stdio: 'ignore' });
             invalidateHeadHash();
@@ -419,7 +516,15 @@ function gitPullSafe(config, allowDestructiveRecovery = false) {
             log('OK', 'Rebase aborted — detached HEAD, skipping reset');
           }
         } else {
-          throw new Error("Git Rebase conflict detected before push. Aborting to prevent local data loss.");
+          throw new Error(
+            `Git rebase conflict detected before push. Aborting to prevent local data loss.\n` +
+            `  Recovery:\n` +
+            `    cd ${config.repo_root}\n` +
+            `    git rebase --abort\n` +
+            `    git pull --rebase origin HEAD\n` +
+            `  Then resume the pipeline:\n` +
+            `    node pipeline.js --project ${config.project} --resume`
+          );
         }
       } catch (abortErr) {
         log('ERROR', `Rebase recovery failed: ${abortErr.message?.split('\n')[0]}`);
@@ -431,17 +536,100 @@ function gitPullSafe(config, allowDestructiveRecovery = false) {
   }
 }
 
+/** Pull during polling loops — destructive recovery allowed (no local work at risk). */
+function gitPullForPolling(config) {
+  _gitPullCore(config, true);
+}
+
+/** Pull before push — throws on conflict to protect local commits. */
+function gitPullBeforePush(config) {
+  _gitPullCore(config, false);
+}
+
+/**
+ * Push to origin with retry for transient failures (network timeouts,
+ * SSH drops, remote temporarily unavailable).
+ * @param {object} config - Pipeline config
+ * @param {number} maxRetries - Number of attempts (default: 3)
+ * @param {number} delayMs - Delay between retries in ms (default: 5000)
+ */
+function gitPushWithRetry(config, maxRetries = 3, delayMs = 5000) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      gitExec(config.repo_root, ['push', 'origin', 'HEAD'], { stdio: 'ignore', timeout: 60000 });
+      return;
+    } catch (e) {
+      if (attempt === maxRetries) throw e;
+      log('WARN', `git push failed (attempt ${attempt}/${maxRetries}): ${e.message?.split('\n')[0]}`);
+      execFileSync('sleep', [String(delayMs / 1000)]);
+    }
+  }
+}
+
+/**
+ * Unified git add → commit → pull-before-push → push with retry.
+ * Replaces scattered git-sync logic across gitSyncBeforeBuster, releaseBlueprint,
+ * and chaos-fix. Ensures consistent behavior: invalidateHeadHash always called,
+ * push always retried, hash optionally captured.
+ *
+ * @param {object} config - Pipeline config
+ * @param {string} message - Commit message
+ * @param {object} opts
+ * @param {string[]} opts.addPaths - Paths to git add (default: ['-A'])
+ * @param {boolean} opts.captureHash - Return commit hash after push (default: false)
+ * @param {boolean} opts.softFail - Log warning instead of throwing on error (default: false)
+ * @returns {{ committed: boolean, hash?: string }}
+ */
+function gitCommitAndPush(config, message, { addPaths = ['-A'], captureHash = false, softFail = false } = {}) {
+  try {
+    gitExec(config.repo_root, ['add', ...addPaths], { stdio: 'ignore' });
+
+    const porcelain = gitExec(config.repo_root, ['status', '--porcelain']);
+    if (!porcelain) {
+      log('INFO', 'No uncommitted changes — nothing to push');
+      return { committed: false };
+    }
+
+    gitExec(config.repo_root, ['commit', '-m', message], { stdio: 'ignore' });
+    invalidateHeadHash();
+    gitPullBeforePush(config);
+    gitPushWithRetry(config);
+
+    const hash = captureHash ? gitExec(config.repo_root, ['rev-parse', 'HEAD']) : null;
+    // No invalidateHeadHash here — rev-parse reads HEAD, doesn't change it.
+    // The invalidation after commit (above) is sufficient.
+
+    log('OK', `Committed and pushed: ${message.slice(0, 60)}${hash ? ` (${hash.substring(0, 8)})` : ''}`);
+    return { committed: true, hash };
+  } catch (e) {
+    if (softFail) {
+      log('WARN', `Git commit+push failed (soft): ${e.message?.split('\n')[0]}`);
+      return { committed: false, error: e.message };
+    }
+    throw e;
+  }
+}
+
 // ─── Git Hash Cache ──────────────────────────────────────────────────────────
 // Avoid spawning `git rev-parse --short HEAD` on every addHistory call.
 // Invalidated after any git operation that changes HEAD.
+// Uses _repoRoot (set by loadConfig) to go through gitExec like all other git calls.
 
 let _headHashCache = null;
+let _repoRoot = null;  // Set by loadConfig — used by headHash before config is passed around
 
 function headHash() {
   if (_headHashCache) return _headHashCache;
   try {
-    _headHashCache = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { encoding: 'utf8' }).trim();
-    return _headHashCache;
+    if (_repoRoot) {
+      _headHashCache = gitExec(_repoRoot, ['rev-parse', '--short', 'HEAD']);
+      return _headHashCache;
+    }
+    // Before loadConfig: _repoRoot not set yet. Return empty string rather than
+    // using CWD (which could be wrong if pipeline is started from outside the repo).
+    // This only affects the commit_hash in the initial PENDING history entry —
+    // purely informational, no functional impact.
+    return '';
   } catch { return ''; }
 }
 
@@ -482,6 +670,14 @@ function initStatus(moduleId, moduleConfig) {
     fail_summaries: [],
     completion_summary: null,
     forge_commit_hash: null,
+    // Track which Qdrant memory IDs have already had their confidence decayed
+    // for this module. Prevents the same memory from being decayed multiple times
+    // across pipeline runs (the "bleed-out" problem).
+    // Reset on PASS (positive feedback boosts everything back up anyway).
+    decayed_memory_ids: [],
+    // Cost tracking — informational only, no budget enforcement.
+    // Populated by agents via status.json updates. Used for Discord reports
+    // and post-mortem analysis. Token budgets are managed at the API/OAuth level.
     cost: {
       forge_tokens_in: 0, forge_tokens_out: 0,
       buster_tokens_in: 0, buster_tokens_out: 0,
@@ -523,7 +719,7 @@ async function discord(config, level, title, description, fields = []) {
 
 function listBlueprints(config) {
   const branch = `${config.project}/architecture`;
-  const dir = config.paths.modules_dir;
+  const dir = relPath(config, config.paths.modules_dir);
 
   try { gitExec(config.repo_root, ['fetch', 'origin', branch], { stdio: 'ignore' }); }
   catch { /* use cache */ }
@@ -538,7 +734,7 @@ function listBlueprints(config) {
 
 function releaseBlueprint(config, moduleId, moduleDir) {
   const branch = `${config.project}/architecture`;
-  const targetPath = `${config.paths.modules_dir}/${moduleDir}`;
+  const targetPath = relPath(config, modulePath(config, moduleDir));
 
   log('STEP', `Releasing blueprint for ${moduleId} from ${branch}`);
 
@@ -552,11 +748,14 @@ function releaseBlueprint(config, moduleId, moduleDir) {
   try { gitExec(config.repo_root, ['fetch', 'origin', branch], { stdio: 'ignore' }); }
   catch { log('WARN', `Could not fetch origin/${branch}, using local cache`); }
 
-  // Verify module exists
-  try {
-    gitExec(config.repo_root, ['cat-file', '-e', `origin/${branch}:${targetPath}/BUSTER.md`], { stdio: 'ignore' });
-  } catch {
-    throw new Error(`Module ${moduleId} not found in architecture branch at ${targetPath}`);
+  // Verify module has required files in architecture branch
+  const requiredFiles = ['FORGE.md', 'BUSTER.md'];
+  for (const file of requiredFiles) {
+    try {
+      gitExec(config.repo_root, ['cat-file', '-e', `origin/${branch}:${targetPath}/${file}`], { stdio: 'ignore' });
+    } catch {
+      throw new Error(`Blueprint incomplete: ${file} not found for ${moduleId} in architecture branch at ${targetPath}`);
+    }
   }
 
   // Checkout into workspace
@@ -568,13 +767,10 @@ function releaseBlueprint(config, moduleId, moduleDir) {
 
   // Commit & push
   try {
-    gitExec(config.repo_root, ['add', targetPath], { stdio: 'ignore' });
-    const porcelain = gitExec(config.repo_root, ['status', '--porcelain']);
-    if (porcelain) {
-      gitExec(config.repo_root, ['commit', '-m', `[blueprint] Release module ${moduleId} (${moduleDir})`], { stdio: 'ignore' });
-      invalidateHeadHash();
-      gitPullSafe(config, false); // Block destructive recovery before push
-      gitExec(config.repo_root, ['push', 'origin', 'HEAD'], { stdio: 'ignore' });
+    const result = gitCommitAndPush(config, `[blueprint] Release module ${moduleId} (${moduleDir})`, {
+      addPaths: [targetPath],
+    });
+    if (result.committed) {
       log('OK', `Blueprint released and pushed: ${moduleDir}`);
       return { status: 'success', action: 'released', module: moduleDir };
     }
@@ -683,65 +879,45 @@ function killAcpAgent(config, agentType, moduleId) {
 function buildBusterPayload(config, progress, moduleId, taskType, taskPrompt, status) {
   const mod = progress.modules[moduleId];
 
-  // Common fields
+  // Common fields — all pipeline tasks include the completion stream
   const base = {
     task_type: taskType,
     module: moduleId,
     project: config.project,
     commit_hash: status?.forge_commit_hash || null,
     timestamp: new Date().toISOString(),
+    completion_stream: completionStreamKey(config),
   };
 
   if (taskType === 'module_test') {
-    // Standard module test — isolated gemini-flash session
     return {
       ...base,
       instructions: taskPrompt,
       session: {
-        model: 'gemini-flash',
-        mode: 'oneshot',
-        destroy_after: true,
+        runtime: 'subagent',
+        timeout_seconds: (mod?.timeout_minutes || config.default_timeout_minutes) * 60,
         label: `buster-test-${moduleId}-${Date.now()}`,
       },
-      module_path: mod ? `${config.paths.modules_dir}/${mod.dir}` : null,
-      buster_md_path: mod ? `${config.paths.modules_dir}/${mod.dir}/BUSTER.md` : null,
-      status_json_path: mod ? `${config.paths.modules_dir}/${mod.dir}/status.json` : null,
-      on_complete: {
-        update_status_json: true,
-        git_commit: true,
-        git_push: true,
-        include_commit_hash: true,
-        status_on_pass: 'PASS',
-        status_on_fail: 'FAIL',
-        fail_summary_required: true,
-      },
+      module_path: mod ? relPath(config, modulePath(config, mod.dir)) : null,
+      buster_md_path: mod ? relPath(config, path.join(modulePath(config, mod.dir), 'BUSTER.md')) : null,
+      status_json_path: mod ? relPath(config, statusPath(config, mod.dir)) : null,
     };
   }
 
   if (taskType === 'chaos_test') {
-    // Chaos test — use stronger model, broader scope
     return {
       ...base,
       instructions: taskPrompt,
       session: {
-        model: config.chaos_test?.model || 'claude-sonnet-4-6',
-        mode: 'oneshot',
-        destroy_after: true,
+        runtime: 'acp',
+        acp_agent_id: config.chaos_test?.acp_agent_id || 'codex',
+        timeout_seconds: (config.chaos_test?.time_limit_minutes || 30) * 60,
         label: `buster-chaos-${moduleId}-${Date.now()}`,
       },
       chaos_config: {
         scope: 'full_application',
         goal: 'Try to crash the application. Test edge cases, invalid inputs, race conditions, resource exhaustion, malformed requests. Be creative and destructive.',
         time_limit_minutes: config.chaos_test?.time_limit_minutes || 30,
-      },
-      on_complete: {
-        update_status_json: true,
-        git_commit: true,
-        git_push: true,
-        include_commit_hash: true,
-        status_on_pass: 'PASS',
-        status_on_fail: 'FAIL',
-        fail_summary_required: true,
       },
     };
   }
@@ -836,10 +1012,51 @@ function steerAgent(config, progress, agentType, moduleId, message) {
   } else {
     const label = acpLabel(agentType, moduleId);
     try {
-      clawExec(['sessions', 'send', '--label', label, '--message', message], { timeout: 15000 });
+      // Write message to temp file to avoid E2BIG on large steer messages
+      // (retry context with fail_summaries can exceed OS argument limits).
+      // Same pattern as spawnAcpAgent uses for task prompts.
+      const tmpMsgPath = tmpFile('steer', moduleId, '.md');
+      fs.writeFileSync(tmpMsgPath, message);
+      const steerArg = `Read the follow-up instructions from: ${tmpMsgPath}\nBegin by reading it with: cat ${tmpMsgPath}`;
+      clawExec(['sessions', 'send', '--label', label, '--message', steerArg], { timeout: 15000 });
     } catch (e) {
       log('WARN', `ACP steer failed for '${label}': ${e.message}`);
     }
+  }
+}
+
+/**
+ * Verify an ACP agent is alive shortly after spawn.
+ * Waits a few seconds then checks session status. Returns true if running.
+ * For Redis agents: always returns true (Processor handles spawn verification).
+ *
+ * This catches silent spawn failures (OOM, bad model ID, gateway down) in seconds
+ * instead of waiting the full polling timeout (up to 60 minutes).
+ */
+function verifyAgentAlive(config, agentType, moduleId, waitMs = 8000) {
+  const agentConfig = config.agents[agentType];
+  if (!agentConfig) return false;
+
+  // Redis agents: trust the dispatch — Processor monitors the subagent
+  if (agentConfig.dispatch === 'redis') return true;
+
+  // Wait for ACP session to initialize
+  execFileSync('sleep', [String(waitMs / 1000)]);
+
+  const label = acpLabel(agentType, moduleId);
+  try {
+    const out = clawExec(['sessions', 'status', '--label', label], { timeout: 10000 });
+    // Check for any indication the session is active
+    const alive = /running|active|idle|busy/i.test(out);
+    if (alive) {
+      log('OK', `Agent health check passed: ${label}`);
+    } else {
+      log('WARN', `Agent health check: session exists but status unclear: ${out.slice(0, 100)}`);
+    }
+    return alive;
+  } catch (e) {
+    log('ERROR', `Agent health check failed: ${label} — ${e.message?.split('\n')[0]}`);
+    return false;
   }
 }
 
@@ -936,18 +1153,27 @@ async function getMemoryModule(config) {
  * Returns formatted markdown block to inject into the agent's prompt,
  * or empty string if no memories found / memory disabled.
  */
-async function recallForModule(config, moduleId, moduleTitle, additionalContext = '') {
-  if (!memoryEnabled(config)) return { block: '', count: 0 };
+async function recallForModule(config, moduleId, moduleTitle, additionalContext = '', failContext = '') {
+  if (!memoryEnabled(config)) return { block: '', count: 0, ids: [] };
 
   const limit = config.memory?.recall_limit || 5;
   const memPath = memoryJsPath(config);
+  const isRetry = !!failContext;
 
   // Build a natural language query — embedding models work better with sentences
   // than with keyword dumps like "06 WebSockets 06a 06b"
   const substepInfo = additionalContext ? ` with steps ${additionalContext}` : '';
-  const query = `What established patterns, solutions, and architectural decisions exist for building ${moduleTitle}${substepInfo}? Include relevant technical insights from similar modules.`;
 
-  log('STEP', `Memory recall for module ${moduleId}: "${query.slice(0, 80)}..."`);
+  // On retry: include fail context so the embedding search can find memories
+  // that are relevant to the SOLUTION, not to the failed approach.
+  // This doesn't filter memories — it biases the semantic search toward
+  // "what works" rather than "what we already tried".
+  const retryHint = isRetry
+    ? ` Previous approaches failed: ${failContext.slice(0, 200)}. Focus on alternative patterns and workarounds.`
+    : '';
+  const query = `What established patterns, solutions, and architectural decisions exist for building ${moduleTitle}${substepInfo}?${retryHint} Include relevant technical insights from similar modules.`;
+
+  log('STEP', `Memory recall for module ${moduleId}${isRetry ? ' (retry-aware)' : ''}: "${query.slice(0, 100)}..."`);
 
   try {
     let memories;
@@ -965,10 +1191,15 @@ async function recallForModule(config, moduleId, moduleTitle, additionalContext 
 
     if (!memories.length) {
       log('INFO', 'No relevant memories found');
-      return { block: '', count: 0 };
+      return { block: '', count: 0, ids: [] };
     }
 
     log('OK', `${memories.length} memories recalled`);
+
+    // Extract IDs for targeted confidence decay on failure.
+    // These are the specific memories that were injected into the agent's prompt —
+    // if the module fails, these (and only these) should have their confidence decayed.
+    const ids = memories.map(m => m.id).filter(Boolean);
 
     // Format as markdown block for prompt injection
     const lines = memories.map((m, i) => {
@@ -982,6 +1213,11 @@ async function recallForModule(config, moduleId, moduleTitle, additionalContext 
       return `${i + 1}. [${stars} relevance:${score}] ${m.text}${meta ? `\n   _(${meta})_` : ''}`;
     });
 
+    // Adjust header based on retry context — on retry, memories need a caveat
+    const headerNote = isRetry
+      ? 'These learnings may or may not apply to the current retry.\nIf a memory contradicts something in the ANTI-PATTERNS section above, the anti-pattern takes precedence.'
+      : 'Use these as guidance, not as absolute truth.';
+
     const block = [
       '',
       '---',
@@ -989,7 +1225,7 @@ async function recallForModule(config, moduleId, moduleTitle, additionalContext 
       '',
       'The following learnings from previous work may be relevant.',
       '★★★ = validated pattern, ★★☆ = neutral, ★☆☆ = unverified.',
-      'Use these as guidance, not as absolute truth.',
+      headerNote,
       '',
       ...lines,
       '',
@@ -997,10 +1233,10 @@ async function recallForModule(config, moduleId, moduleTitle, additionalContext 
       '',
     ].join('\n');
 
-    return { block, count: memories.length };
+    return { block, count: memories.length, ids };
   } catch (e) {
     log('WARN', `Memory recall failed: ${e.message}`);
-    return { block: '', count: 0 };
+    return { block: '', count: 0, ids: [] };
   }
 }
 
@@ -1037,127 +1273,94 @@ async function feedbackMemory(config, moduleId, outcome, reason = '') {
 }
 
 /**
- * Spawn a Summary Agent after module PASS to extract and store technical insights.
+ * Targeted confidence decay for specific memories that were in the agent's prompt.
  *
- * Instead of storing useless metadata like "Module 03 completed successfully",
- * this spawns a short ACP oneshot Echo agent that:
- * 1. Reads the git diff since module start
- * 2. Reads fail_summaries (what went wrong on retries)
- * 3. Writes a concise technical summary of WHAT was built and HOW
- * 4. Stores it via memory.js with appropriate scope and tags
+ * Unlike feedbackMemory (which operates on all memories related to a module),
+ * this decays ONLY the memories that were actually recalled and injected into
+ * the Forge prompt for this specific attempt. This is precise:
+ *   - If a memory was in the prompt and the agent failed → the memory may have
+ *     been misleading or irrelevant. Decay it.
+ *   - If a memory was NOT in the prompt → it had no influence. Leave it alone.
  *
- * Clean passes (0 retries) → scope=global (cross-project reusable)
- * Messy passes (retries)   → scope=global (even MORE valuable — we learned something)
- * The real question is not "did it pass clean" but "is the insight reusable"
+ * Cross-run protection:
+ *   Decayed IDs are tracked in status.decayed_memory_ids. If the same module
+ *   fails again in a later pipeline run, memories that were already decayed
+ *   are skipped. This prevents a correct memory from bleeding out to zero
+ *   confidence over multiple runs where the actual problem is elsewhere.
+ *   The set resets on PASS (positive feedback boosts everything back anyway).
+ *
+ * @param {object} config - Pipeline config
+ * @param {string} moduleId - Module that failed
+ * @param {string[]} memoryIds - Qdrant point IDs of recalled memories
+ * @param {object} status - Module status object (mutated: decayed_memory_ids updated)
+ * @param {string} reason - Why the module failed (for logging)
  */
-async function spawnSummaryAgent(config, moduleId, moduleTitle, status) {
+async function decayRecalledMemories(config, moduleId, memoryIds, status, reason = '') {
   if (!memoryEnabled(config)) return;
-  if (!config.memory?.store_patterns_globally) return;
+  if (!memoryIds?.length) return;
 
-  const memPath = memoryJsPath(config);
-  const failCount = status?.fail_count || 0;
-  const failSummaries = status?.fail_summaries || [];
-  const forgeCommit = status?.forge_commit_hash || '';
+  // ── Cross-run protection ──
+  // Filter out memories that have already been decayed for this module.
+  // status.decayed_memory_ids persists across runs via status.json.
+  const alreadyDecayed = new Set(status.decayed_memory_ids || []);
+  const newIds = memoryIds.filter(id => !alreadyDecayed.has(id));
 
-  log('STEP', `Spawning Summary Agent for module ${moduleId}`);
-
-  // Marker file — Summary Agent writes this when done so next pipeline run
-  // can verify it finished (fire-and-forget tracking).
-  const markerDir = path.join(swarmRoot(config), 'summary-markers');
-  const markerPath = path.join(markerDir, `${moduleId}-summary.json`);
-
-  // Skip if already summarized (idempotent)
-  if (fs.existsSync(markerPath)) {
-    log('INFO', `Summary Agent already completed for ${moduleId} — skipping`);
+  if (newIds.length === 0) {
+    log('INFO', `All ${memoryIds.length} recalled memories already decayed for ${moduleId} — skipping (cross-run protection)`);
     return;
   }
-  if (!fs.existsSync(markerDir)) fs.mkdirSync(markerDir, { recursive: true });
 
-  // Build the summary prompt
-  const failContext = failSummaries.length > 0
-    ? [
-        '',
-        '## What Failed (and how it was fixed)',
-        '',
-        ...failSummaries.map((f, i) =>
-          `**Attempt ${f.attempt}** (${f.phase}): ${f.summary}`
-        ),
-        '',
-        'The fix that eventually worked is in the current code. Identify WHAT was changed to make it pass.',
-      ].join('\n')
-    : '';
+  if (newIds.length < memoryIds.length) {
+    log('INFO', `${memoryIds.length - newIds.length} of ${memoryIds.length} memories already decayed — decaying ${newIds.length} new`);
+  }
 
-  const summaryPrompt = [
-    `## Task: Extract Technical Insights for Module ${moduleId}`,
-    '',
-    `You are a Summary Agent. Your job is to extract reusable technical knowledge.`,
-    `Module "${moduleTitle}" just passed all tests${failCount > 0 ? ` after ${failCount} retries` : ' on first attempt'}.`,
-    '',
-    `### Instructions`,
-    '',
-    `1. Run: \`git diff ${forgeCommit ? forgeCommit + '~1..' + forgeCommit : 'HEAD~5..HEAD'} --stat\``,
-    `   to see what files were changed.`,
-    '',
-    `2. Read the key files that were created/modified.`,
-    '',
-    `3. For EACH significant technical decision or pattern, store a memory:`,
-    '   ```bash',
-    `   node ${memPath} remember \\`,
-    `     --text "Concise technical insight — what was done and why" \\`,
-    `     --tags "tag1,tag2,${moduleId},${config.project}" \\`,
-    `     --scope global \\`,
-    `     --module ${moduleId}`,
-    '   ```',
-    '',
-    '### What to extract (examples):',
-    '- "WebSocket auth: must call close(4001) BEFORE accept() — calling after accept sends the close to an already-open connection"',
-    '- "FastAPI WebSocket routes must be registered on app directly, not on APIRouter — Router does not support ws"',
-    '- "K8s pod log streaming: use run_in_executor for blocking readline() to avoid blocking the asyncio event loop"',
-    '- "Podman rootless in K8s: needs SYS_ADMIN + SYS_CHROOT capabilities and tmpfs mount for storage"',
-    '',
-    '### What NOT to store:',
-    '- "Module 06 passed" (useless metadata)',
-    '- "The code works" (no technical content)',
-    '- Implementation details that are project-specific and not reusable',
-    '',
-    failContext,
-    '',
-    '### Rules',
-    '- Store 1-5 insights (quality over quantity)',
-    '- Each insight must be a self-contained sentence an engineer can act on',
-    '- Use `--scope global` for reusable patterns, `--scope project` for project-specific context',
-    '- Include technology names in tags for discoverability',
-    `- AFTER storing all insights, write a completion marker:`,
-    '  ```bash',
-    `  mkdir -p ${markerDir}`,
-    `  echo '{"module":"${moduleId}","completed_at":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","insights_stored":N}' > ${markerPath}`,
-    `  git add ${markerPath} && git commit -m "[summary] ${moduleId} insights stored" && git push origin HEAD`,
-    '  ```',
-    '- Then exit. No further action needed.',
-  ].join('\n');
+  const memPath = memoryJsPath(config);
 
-  // Spawn as lightweight native subagent session (no ACP overhead needed)
-  // Fire-and-forget: the summary agent is non-critical. Its output (Qdrant memories)
-  // will be available for the NEXT module's recall, not the current one.
-  // No reason to block the pipeline waiting for it.
-  const label = `summary-${moduleId}`;
-  const model = config.models.echo || 'claude-sonnet-4-6';
+  log('STEP', `Targeted memory decay: ${newIds.length} memories that were in failed prompt for ${moduleId}`);
 
   try {
-    clawExec([
-      'sessions', 'spawn',
-      '--agentId', 'echo',
-      '--label', label,
-      '--model', model,
-      '--task', summaryPrompt,
-    ], { timeout: 60000 });
-    log('OK', `Summary Agent spawned (fire-and-forget): ${label}`);
+    const memModule = await getMemoryModule(config);
+    if (memModule?.decayByIds) {
+      // Direct import path — if memory.js exposes a targeted decay function
+      await memModule.decayByIds(newIds, {
+        module: moduleId,
+        reason: reason.slice(0, 500),
+        decay_amount: config.memory?.targeted_decay_amount || 0.1,
+      });
+    } else if (memModule?.feedback) {
+      // Fallback: use feedback with explicit IDs if supported
+      await memModule.feedback(moduleId, 'fail', {
+        reason: reason.slice(0, 500),
+        memory_ids: newIds,
+      });
+    } else {
+      // CLI fallback — pass IDs as comma-separated list
+      const args = [
+        'feedback', '--module', moduleId, '--outcome', 'fail',
+        '--memory-ids', newIds.join(','),
+      ];
+      if (reason) args.push('--reason', reason.slice(0, 500));
+      nodeExec(memPath, args, { timeout: 15000, env: process.env });
+    }
+
+    // Record decayed IDs in status (persisted by handleFail's saveStatus call)
+    if (!status.decayed_memory_ids) status.decayed_memory_ids = [];
+    status.decayed_memory_ids.push(...newIds);
+
+    log('OK', `Decayed ${newIds.length} recalled memories for ${moduleId} (${status.decayed_memory_ids.length} total tracked)`);
   } catch (e) {
-    log('WARN', `Summary Agent spawn failed: ${e.message}`);
+    // Non-critical — log and continue. The pipeline should never fail
+    // because memory confidence updates didn't work.
+    log('WARN', `Targeted memory decay failed: ${e.message}`);
   }
-  // Agent runs in background, stores memories, exits on its own.
-  // No sleep, no kill — pipeline continues immediately.
 }
+
+// ─── Summary Agent (REMOVED) ────────────────────────────────────────────────
+// spawnSummaryAgent was removed in the Buster Architecture Refactor.
+// Technical insights are now stored by the Buster subagent directly via
+// the memory skill as part of the completion protocol (Step B), before
+// signaling completion via redis.js. This eliminates the fire-and-forget
+// Echo agent, the temp-file timing issue, and the extra agent spawn.
 
 // ─── Polling ─────────────────────────────────────────────────────────────────
 
@@ -1167,18 +1370,109 @@ function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
  * Consistent poll result wrapper — all callers get the same shape.
  * @typedef {Object} PollResult
  * @property {boolean} ok - Whether a target status was reached
- * @property {string} reason - 'target_reached' | 'timeout' | 'blocked' | 'rate_limit_exhausted' | 'parse_corrupted'
+ * @property {string} reason - 'target_reached' | 'timeout' | 'blocked' | 'rate_limited' | 'rate_limit_exhausted' | 'parse_corrupted'
  * @property {object|null} status - The status.json content
  */
 function pollResult(ok, reason, status = null) {
   return { ok, reason, status };
 }
 
-async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes) {
+/**
+ * Generic polling loop with rate-limit handling, parse-corruption tracking,
+ * and deadline management. All polling in the pipeline shares this scaffolding.
+ *
+ * @param {object} config - Pipeline config
+ * @param {function} checkFn - Called each cycle. Returns:
+ *   { done: true, result: PollResult }     → terminal, return immediately
+ *   { done: false, logMsg?: string }       → keep polling (optional status message)
+ *   { rate_limited: true, status: object } → rate limit detected
+ *   { parse_error: true }                  → increment corruption counter
+ * @param {number} timeoutMinutes - Max polling duration
+ * @param {string} label - For log messages (e.g. "Gate 'review-01'" or "chaos-phase1")
+ * @returns {PollResult}
+ */
+async function pollGeneric(config, checkFn, timeoutMinutes, label = 'poll') {
   const interval = config.poll_interval_seconds * 1000;
   let deadline = Date.now() + timeoutMinutes * 60 * 1000;
   const startTime = Date.now();
+  let consecutiveParseFailures = 0;
+  const maxParseFailures = 10;
   let rateLimitPauses = 0;
+  const maxPauses = config.rate_limit?.max_pauses_per_module || 5;
+
+  log('INFO', `[${label}] Polling every ${config.poll_interval_seconds}s | timeout: ${timeoutMinutes}min`);
+
+  while (Date.now() < deadline) {
+    await sleep(interval);
+    gitPullForPolling(config);
+
+    const check = await checkFn();
+
+    // ── Terminal result ──
+    if (check.done) {
+      return check.result;
+    }
+
+    // ── Parse corruption tracking ──
+    if (check.parse_error) {
+      consecutiveParseFailures++;
+      if (consecutiveParseFailures >= maxParseFailures) {
+        log('ERROR', `[${label}] Parse corruption limit reached (${consecutiveParseFailures})`);
+        return pollResult(false, 'parse_corrupted', null);
+      }
+      log('WARN', `[${label}] Parse failure ${consecutiveParseFailures}/${maxParseFailures}`);
+      continue;
+    }
+    consecutiveParseFailures = 0;
+
+    // ── Rate limit ──
+    if (check.rate_limited) {
+      rateLimitPauses++;
+      if (rateLimitPauses > maxPauses) {
+        log('ERROR', `[${label}] Rate limit pauses exceeded (${rateLimitPauses}/${maxPauses})`);
+        return pollResult(false, 'rate_limit_exhausted', check.status);
+      }
+      await handleRateLimit(config, check.status, label, rateLimitPauses, maxPauses);
+      // Reset deadline — cooldown doesn't count against work time
+      deadline = Date.now() + timeoutMinutes * 60 * 1000;
+      log('INFO', `[${label}] Deadline reset to full ${timeoutMinutes}min after rate limit pause`);
+      continue;
+    }
+
+    // ── Progress log ──
+    const elapsed = Math.round((Date.now() - startTime) / 1000);
+    const remaining = Math.round((deadline - Date.now()) / 1000);
+    log('INFO', `[${label}] ${check.logMsg || 'pending'} | ${elapsed}s elapsed, ${remaining}s remaining`);
+  }
+
+  log('ERROR', `[${label}] Timeout after ${timeoutMinutes} minutes`);
+  return pollResult(false, 'timeout', null);
+}
+
+/**
+ * Simple file-existence poller built on pollGeneric.
+ * Used by chaos tests where the only completion signal is a file appearing on disk.
+ *
+ * @returns {PollResult} - ok=true if file found, ok=false on timeout
+ */
+async function pollForFile(config, filePath, timeoutMinutes, label = 'file-poll') {
+  return pollGeneric(config, async () => {
+    if (fs.existsSync(filePath)) {
+      return { done: true, result: pollResult(true, 'target_reached', { file: filePath }) };
+    }
+    return { done: false };
+  }, timeoutMinutes, label);
+}
+
+/**
+ * Pure status poller — reads status.json until a target status is reached.
+ * Does NOT handle rate limits, does NOT sleep for hours, does NOT write state.
+ * Returns immediately when it sees RATE_LIMITED (caller decides what to do).
+ */
+async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes) {
+  const interval = config.poll_interval_seconds * 1000;
+  const deadline = Date.now() + timeoutMinutes * 60 * 1000;
+  const startTime = Date.now();
   let consecutiveParseFailures = 0;
   const maxParseFailures = 10; // ~5min at 30s intervals
 
@@ -1188,7 +1482,7 @@ async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes) {
     await sleep(interval);
 
     // Agent may have committed — pull latest
-    gitPullSafe(config); // Default: Destructive Recovery allowed
+    gitPullForPolling(config);
 
     const status = loadStatus(config, moduleDir);
 
@@ -1220,21 +1514,10 @@ async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes) {
       return pollResult(false, 'blocked', status);
     }
 
-    // Rate limit detection — pause and resume, with max pause limit
+    // Rate limit: return immediately — caller handles pause/resume
     if (status.status === STATUS.RATE_LIMITED) {
-      rateLimitPauses++;
-      const maxPauses = config.rate_limit?.max_pauses_per_module || 5;
-
-      if (rateLimitPauses > maxPauses) {
-        log('ERROR', `Rate limit pauses exceeded max (${rateLimitPauses}/${maxPauses}) — giving up`);
-        return pollResult(false, 'rate_limit_exhausted', status);
-      }
-
-      await handleRateLimit(config, status, moduleDir, rateLimitPauses, maxPauses);
-      const cooldownMs = (config.rate_limit?.cooldown_hours || 2) * 60 * 60 * 1000;
-      deadline += cooldownMs;
-      log('INFO', `Timeout deadline extended by ${config.rate_limit?.cooldown_hours || 2}h after rate limit pause (${rateLimitPauses}/${maxPauses})`);
-      continue;
+      log('WARN', 'Agent reported RATE_LIMITED — returning to caller for pause handling');
+      return pollResult(false, 'rate_limited', status);
     }
 
     const elapsed = Math.round((Date.now() - startTime) / 1000);
@@ -1244,6 +1527,43 @@ async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes) {
 
   log('ERROR', `Timeout after ${timeoutMinutes} minutes`);
   return pollResult(false, 'timeout', null);
+}
+
+/**
+ * Wrapper around pollStatus that handles rate limit pauses.
+ *
+ * Separation of concerns:
+ *   pollStatus — pure reader, returns on any terminal condition
+ *   pollWithRateLimitRecovery — handles RATE_LIMITED by sleeping and re-polling
+ *
+ * After each rate limit cooldown, polling restarts with the FULL original timeout.
+ * Cooldown time is "dead time" that doesn't count against the agent's work budget.
+ * This is fair: the agent was blocked by external API limits, not by being slow.
+ */
+async function pollWithRateLimitRecovery(config, moduleDir, expectedStatuses, timeoutMinutes) {
+  let rateLimitPauses = 0;
+  const maxPauses = config.rate_limit?.max_pauses_per_module || 5;
+
+  while (true) {
+    const result = await pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes);
+
+    // Any result except rate_limited → pass through to caller
+    if (result.reason !== 'rate_limited') return result;
+
+    // Rate limit detected — check budget
+    rateLimitPauses++;
+    if (rateLimitPauses > maxPauses) {
+      log('ERROR', `Rate limit pauses exceeded max (${rateLimitPauses}/${maxPauses}) — giving up`);
+      return pollResult(false, 'rate_limit_exhausted', result.status);
+    }
+
+    // Pause (sleeps for hours, updates status, sends Discord alert)
+    await handleRateLimit(config, result.status, moduleDir, rateLimitPauses, maxPauses);
+
+    // After cooldown: restart polling with full timeout budget.
+    // The agent's work clock resets — rate limit pauses don't count against it.
+    log('INFO', `Rate limit cooldown complete — restarting poll with full ${timeoutMinutes}min timeout (pause ${rateLimitPauses}/${maxPauses})`);
+  }
 }
 
 // ─── Rate Limit Handling ─────────────────────────────────────────────────────
@@ -1291,6 +1611,234 @@ async function handleRateLimit(config, status, moduleDir, pauseCount = 1, maxPau
   }
 }
 
+// ─── Redis Completion Reader ────────────────────────────────────────────────
+// Reads the Buster completion stream for a specific module's result.
+// Spawns a short-lived Node subprocess (consistent with existing redis.js pattern).
+// Returns the latest completion entry for the module, or null.
+//
+// Archive pattern:
+//   Active stream:  swarm:pipeline:<project>:completions     (current entries)
+//   Archive stream: swarm:pipeline:<project>:completions:log (processed entries)
+//
+// Before Buster dispatch: archiveModuleCompletions() moves old entries for this
+// module from active → archive, so pollDual never reads stale completions.
+// After pipeline reads a completion: the entry stays in the active stream until
+// the next archiveModuleCompletions() call clears it.
+
+const COMPLETION_ARCHIVE_MAX_LEN = 1000;
+
+/**
+ * Archive old completion entries for a module before dispatching a new Buster attempt.
+ * Moves entries from the active completion stream to the archive stream, then deletes
+ * them from active. This prevents pollDual from reading stale FAIL/PASS entries
+ * from a previous attempt.
+ *
+ * Called once before each Buster dispatch (not on every poll cycle).
+ */
+function archiveModuleCompletions(config, moduleId) {
+  const stream = completionStreamKey(config);
+  const archiveStream = `${stream}:log`;
+
+  const script = [
+    `const Redis = require('ioredis');`,
+    `const redis = new Redis({`,
+    `  host: process.env.REDIS_HOST || 'redis-master.default.svc.cluster.local',`,
+    `  port: parseInt(process.env.REDIS_PORT || '6379'),`,
+    `  password: process.env.REDIS_PASSWORD,`,
+    `});`,
+    `(async () => {`,
+    `  try {`,
+    `    const entries = await redis.xrange(${JSON.stringify(stream)}, '-', '+', 'COUNT', 200);`,
+    `    let archived = 0;`,
+    `    for (const [id, fields] of entries) {`,
+    `      const data = {};`,
+    `      for (let i = 0; i < fields.length; i += 2) data[fields[i]] = fields[i + 1];`,
+    `      if (data.module !== ${JSON.stringify(moduleId)}) continue;`,
+    `      // Copy to archive stream`,
+    `      const archiveFields = [...fields, 'archived_at', Date.now().toString()];`,
+    `      await redis.xadd(${JSON.stringify(archiveStream)}, '*', ...archiveFields);`,
+    `      // Delete from active stream`,
+    `      await redis.xdel(${JSON.stringify(stream)}, id);`,
+    `      archived++;`,
+    `    }`,
+    `    // Trim archive to prevent unbounded growth`,
+    `    await redis.xtrim(${JSON.stringify(archiveStream)}, 'MAXLEN', '~', ${COMPLETION_ARCHIVE_MAX_LEN});`,
+    `    console.log(JSON.stringify({ archived }));`,
+    `  } catch (e) { console.log(JSON.stringify({ archived: 0, error: e.message })); }`,
+    `  finally { await redis.quit(); }`,
+    `})();`,
+  ].join('\n');
+
+  const tmpPath = tmpFile('redis-archive', moduleId, '.cjs');
+  fs.writeFileSync(tmpPath, script);
+
+  try {
+    const result = nodeExec(tmpPath, [], { timeout: 5000, env: process.env });
+    const parsed = JSON.parse(result);
+    if (parsed.archived > 0) {
+      log('INFO', `Archived ${parsed.archived} old completion(s) for ${moduleId} → ${archiveStream}`);
+    }
+    return parsed;
+  } catch (e) {
+    log('DEBUG', `Completion archive failed (non-critical): ${e.message}`);
+    return { archived: 0 };
+  }
+}
+
+function readCompletionFromRedis(config, moduleId) {
+  const stream = completionStreamKey(config);
+
+  const script = [
+    `const Redis = require('ioredis');`,
+    `const redis = new Redis({`,
+    `  host: process.env.REDIS_HOST || 'redis-master.default.svc.cluster.local',`,
+    `  port: parseInt(process.env.REDIS_PORT || '6379'),`,
+    `  password: process.env.REDIS_PASSWORD,`,
+    `});`,
+    `(async () => {`,
+    `  try {`,
+    `    const entries = await redis.xrange(${JSON.stringify(stream)}, '-', '+', 'COUNT', 100);`,
+    `    const match = entries`,
+    `      .map(([id, fields]) => {`,
+    `        const o = { _id: id };`,
+    `        for (let i = 0; i < fields.length; i += 2) o[fields[i]] = fields[i + 1];`,
+    `        return o;`,
+    `      })`,
+    `      .filter(e => e.type === 'completion' && e.module === ${JSON.stringify(moduleId)})`,
+    `      .pop();`,
+    `    console.log(JSON.stringify(match || null));`,
+    `  } catch { console.log('null'); }`,
+    `  finally { await redis.quit(); }`,
+    `})();`,
+  ].join('\n');
+
+  const tmpPath = tmpFile('redis-poll', moduleId, '.cjs');
+  fs.writeFileSync(tmpPath, script);
+
+  try {
+    const result = nodeExec(tmpPath, [], { timeout: 5000, env: process.env });
+    return JSON.parse(result);
+  } catch {
+    return null;
+  }
+}
+
+// ─── Dual-Channel Polling (Redis + Git) ─────────────────────────────────────
+// Checks BOTH the Redis completion stream (fast path, seconds) and
+// Git-polled status.json (fallback, 30s intervals). First signal wins.
+//
+// This replaces pollStatus for the Buster phase only. Forge phase
+// continues to use pure Git polling (Forge is ACP, no Redis signal).
+
+async function pollDual(config, moduleDir, moduleId, expectedStatuses, timeoutMinutes) {
+  const interval = config.poll_interval_seconds * 1000;
+  const deadline = Date.now() + timeoutMinutes * 60 * 1000;
+  const startTime = Date.now();
+  let consecutiveParseFailures = 0;
+  const maxParseFailures = 10;
+
+  log('INFO', `Dual polling: Redis(${completionStreamKey(config)}) + Git(${moduleDir}) | timeout: ${timeoutMinutes}min | waiting for: ${expectedStatuses.join(' | ')}`);
+
+  while (Date.now() < deadline) {
+    await sleep(interval);
+
+    // ── Channel 1: Redis Completion Stream (fast path) ──
+    try {
+      const redisEntry = readCompletionFromRedis(config, moduleId);
+      if (redisEntry && redisEntry.status) {
+        const mappedStatus = mapRedisStatus(redisEntry.status);
+        log('OK', `Redis completion: status=${redisEntry.status} mapped=${mappedStatus} source=${redisEntry.source || 'unknown'}`);
+
+        if (expectedStatuses.includes(mappedStatus)) {
+          return pollResult(true, 'target_reached', {
+            module_id: moduleId,
+            status: mappedStatus,
+            completion_summary: redisEntry.summary || null,
+            forge_commit_hash: redisEntry.commit_hash || null,
+            _source: 'redis',
+            _redis_entry: redisEntry,
+          });
+        }
+        if (mappedStatus === STATUS.BLOCKED) return pollResult(false, 'blocked', redisEntry);
+        if (mappedStatus === STATUS.RATE_LIMITED) return pollResult(false, 'rate_limited', redisEntry);
+      }
+    } catch (e) {
+      log('DEBUG', `Redis poll error (non-critical): ${e.message}`);
+    }
+
+    // ── Channel 2: Git Polling (fallback) ──
+    gitPullForPolling(config);
+    const status = loadStatus(config, moduleDir);
+
+    if (!status) {
+      const filePath = statusPath(config, moduleDir);
+      if (fs.existsSync(filePath)) {
+        consecutiveParseFailures++;
+        if (consecutiveParseFailures >= maxParseFailures) {
+          log('ERROR', `status.json permanently corrupted (${consecutiveParseFailures} consecutive failures)`);
+          return pollResult(false, 'parse_corrupted', { module_id: moduleDir });
+        }
+        log('WARN', `status.json parse failure ${consecutiveParseFailures}/${maxParseFailures}`);
+      }
+      continue;
+    }
+
+    consecutiveParseFailures = 0;
+
+    if (expectedStatuses.includes(status.status)) {
+      log('OK', `Git polling: target status reached: ${status.status}`);
+      return pollResult(true, 'target_reached', { ...status, _source: 'git' });
+    }
+    if (status.status === STATUS.BLOCKED) return pollResult(false, 'blocked', status);
+    if (status.status === STATUS.RATE_LIMITED) {
+      log('WARN', 'Agent reported RATE_LIMITED — returning to caller');
+      return pollResult(false, 'rate_limited', status);
+    }
+
+    const elapsed = Math.round((Date.now() - startTime) / 1000);
+    const remaining = Math.round((deadline - Date.now()) / 1000);
+    log('INFO', `[${moduleId}] status=${status.status} phase=${status.current_phase} elapsed=${elapsed}s remaining=${remaining}s`);
+  }
+
+  log('ERROR', `Timeout after ${timeoutMinutes} minutes`);
+  return pollResult(false, 'timeout', null);
+}
+
+function mapRedisStatus(redisStatus) {
+  const map = {
+    'PASS': STATUS.PASS,
+    'FAIL': STATUS.FAIL,
+    'ISSUES_FOUND': STATUS.FAIL,
+    'BLOCKED': STATUS.BLOCKED,
+    'RATE_LIMITED': STATUS.RATE_LIMITED,
+  };
+  return map[(redisStatus || '').toUpperCase()] || STATUS.FAIL;
+}
+
+/**
+ * Wrapper around pollDual that handles rate limit pauses.
+ * Same pattern as pollWithRateLimitRecovery wraps pollStatus.
+ */
+async function pollDualWithRateLimitRecovery(config, moduleDir, moduleId, expectedStatuses, timeoutMinutes) {
+  let rateLimitPauses = 0;
+  const maxPauses = config.rate_limit?.max_pauses_per_module || 5;
+
+  while (true) {
+    const result = await pollDual(config, moduleDir, moduleId, expectedStatuses, timeoutMinutes);
+
+    if (result.reason !== 'rate_limited') return result;
+
+    rateLimitPauses++;
+    if (rateLimitPauses > maxPauses) {
+      log('ERROR', `Rate limit pauses exceeded max (${rateLimitPauses}/${maxPauses}) — giving up`);
+      return pollResult(false, 'rate_limit_exhausted', result.status);
+    }
+
+    await handleRateLimit(config, result.status, moduleDir, rateLimitPauses, maxPauses);
+    log('INFO', `Rate limit cooldown complete — restarting dual poll with full ${timeoutMinutes}min timeout`);
+  }
+}
+
 // ─── Git Sync (Forge → Buster handoff) ──────────────────────────────────────
 // Before Buster starts, ALL Forge changes must be committed and pushed.
 // The commit hash is recorded in status.json so Buster works on verified code.
@@ -1299,32 +1847,24 @@ function gitSyncBeforeBuster(config, moduleDir, status) {
   log('STEP', 'Git sync: committing and pushing Forge output before Buster');
 
   try {
-    // Stage everything in the repo (Forge may have created files anywhere)
-    gitExec(config.repo_root, ['add', '-A'], { stdio: 'ignore' });
+    // Commit any uncommitted Forge output + push.
+    // If Forge already committed (porcelain empty), gitCommitAndPush returns committed:false.
+    // In that case we STILL need to push — Forge may have committed but not pushed.
+    const result = gitCommitAndPush(config,
+      `[pipeline] Module ${status.module_id}: Forge output — ready for Buster`,
+      { captureHash: true }
+    );
 
-    const porcelain = gitExec(config.repo_root, ['status', '--porcelain']);
-    if (porcelain) {
-      gitExec(config.repo_root, [
-        'commit', '-m', `[pipeline] Module ${status.module_id}: Forge output — ready for Buster`
-      ], { stdio: 'ignore' });
-      invalidateHeadHash();
-      log('OK', 'Forge output committed');
-    } else {
-      log('INFO', 'No uncommitted changes (Forge already committed)');
+    if (!result.committed) {
+      // Nothing new to commit, but ensure any existing unpushed commits get pushed
+      log('INFO', 'No uncommitted changes (Forge already committed) — pushing existing commits');
+      gitPullBeforePush(config);
+      gitPushWithRetry(config);
     }
 
-    // Pull before push to avoid non-fast-forward rejection
-    // (another agent or human may have pushed while Forge was working)
-    // False = Block destructive recovery. If conflict occurs here, throw error and retry pipeline.
-
-    gitPullSafe(config, false); 
-    gitExec(config.repo_root, ['push', 'origin', 'HEAD'], { stdio: 'ignore' });
-    log('OK', 'Pushed to origin');
-
-    // Record commit hash
-    const commitHash = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+    // Record commit hash (always — whether we committed or Forge did)
+    const commitHash = result.hash || gitExec(config.repo_root, ['rev-parse', 'HEAD']);
     const shortHash = commitHash.substring(0, 8);
-    invalidateHeadHash();
 
     status.forge_commit_hash = commitHash;
     addHistory(status, STATUS.READY_FOR_TESTING, 'pipeline', `Git sync complete (${shortHash})`);
@@ -1374,6 +1914,7 @@ function checkDependencies(config, progress, moduleId) {
 
 async function handleFail(config, status, moduleDir, moduleId, maxFails, phase, reason, opts = {}) {
   const isTimeout = opts.isTimeout || false;
+  const recalledMemoryIds = opts.recalledMemoryIds || [];
 
   if (reason) {
     status.fail_summaries.push({
@@ -1386,22 +1927,37 @@ async function handleFail(config, status, moduleDir, moduleId, maxFails, phase, 
     status.fail_count++;
   }
 
-  // Memory feedback: avoid "over-punishment"
-  // A module failing 3 times because of a syntax error should NOT decay
-  // architectural memories 3x. The memories were likely correct — the agent
-  // just made implementation mistakes.
+  // ── Memory feedback strategy ──
+  // Two layers:
   //
-  // Strategy:
-  //   fail_count == 1 → feedbackMemory('fail') — first failure, single decay
-  //   fail_count > 1 && < maxFails → skip — retries don't re-punish memories
-  //   fail_count >= maxFails → feedbackMemory('blocked') — final, strong signal
+  // 1. Targeted decay (recalledMemoryIds):
+  //    Decays ONLY the specific memories that were in the agent's prompt.
+  //    Applied on EVERY failure — these memories were present and the agent
+  //    still failed, so they may be misleading or irrelevant.
+  //    This is precise and doesn't affect unrelated memories.
+  //
+  // 2. Broad feedback (feedbackMemory):
+  //    Updates ALL memories related to this module (by module tag).
+  //    Reserved for strong signals only:
+  //      fail_count >= maxFails → feedbackMemory('blocked') — definitive signal
+  //    NOT called on individual failures — targeted decay handles that.
+  //
+  // The old over-punishment problem is solved:
+  //   Old: fail_count==1 → broad decay, fail_count 2-N → nothing, maxFails → broad blocked
+  //   New: every fail → precise decay of recalled memories, maxFails → broad blocked signal
+
   const failReason = reason || status.fail_summaries?.[status.fail_summaries.length - 1]?.summary || '';
-  if (status.fail_count === 1) {
-    await feedbackMemory(config, moduleId, 'fail', failReason);
-  } else if (status.fail_count >= maxFails) {
+
+  // Targeted decay: decay the specific memories that were in the prompt
+  // (status object is mutated — decayed_memory_ids updated, persisted by saveStatus below)
+  if (recalledMemoryIds.length > 0) {
+    await decayRecalledMemories(config, moduleId, recalledMemoryIds, status, failReason);
+  }
+
+  // Broad feedback: only on final BLOCKED (strong definitive signal)
+  if (status.fail_count >= maxFails) {
     await feedbackMemory(config, moduleId, 'blocked', failReason);
   }
-  // Intermediate retries: no memory feedback (memories are not to blame)
 
   status.status = STATUS.FAIL;
   status.current_phase = null;
@@ -1418,40 +1974,240 @@ async function handleFail(config, status, moduleDir, moduleId, maxFails, phase, 
     return { exit: EXIT_BLOCKED, reason: `Max retries exceeded (${phase})`, module: moduleId, status };
   }
 
-  // Timeouts get EXIT_TIMEOUT so Nova knows the agent didn't produce output
-  // (different recovery strategy than a code error)
-  const exitCode = isTimeout ? EXIT_TIMEOUT : EXIT_NEEDS_NOVA;
+  // Auto-retry vs. escalation decision:
+  //   fail_count <= auto_retry_threshold → internal retry (pipeline continues)
+  //   fail_count > auto_retry_threshold  → EXIT_NEEDS_NOVA (Nova must intervene)
+  //   timeout                            → always EXIT_TIMEOUT (different recovery)
+  const autoRetryThreshold = config.auto_retry_threshold ?? 2;
+  const canAutoRetry = !isTimeout && status.fail_count <= autoRetryThreshold;
 
-  await discord(config, 'WARN', `Module ${moduleId} ${isTimeout ? 'TIMEOUT' : 'FAIL'} (${phase})`,
-    `Attempt ${status.fail_count}/${maxFails}. ${isTimeout ? 'Agent timed out.' : 'Nova must analyze.'}`, [
+  if (canAutoRetry) {
+    // Internal retry — pipeline will loop and try again with retry context
+    log('INFO', `Auto-retry ${status.fail_count}/${autoRetryThreshold} — pipeline will retry internally`);
+    await discord(config, 'WARN', `Module ${moduleId} FAIL (${phase}) — Auto-Retry`,
+      `Attempt ${status.fail_count}/${maxFails}. Auto-retrying (${status.fail_count}/${autoRetryThreshold}).`, [
+        { name: 'Phase', value: phase },
+        { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
+        { name: 'Auto-Retry', value: `${status.fail_count}/${autoRetryThreshold}` },
+      ]);
+
+    return {
+      _retry: true,
+      module: moduleId,
+      module_dir: moduleDir,
+      fail_count: status.fail_count,
+      max_fails: maxFails,
+      last_fail: status.fail_summaries[status.fail_summaries.length - 1] || null,
+    };
+  }
+
+  // ── Escalation — EXIT_NEEDS_NOVA or EXIT_TIMEOUT ──
+  // Build a complete context package so Nova can analyze without reading status.json.
+  // Nova's agent.md defines HOW to handle this; the pipeline provides all the DATA.
+
+  const exitCode = isTimeout ? EXIT_TIMEOUT : EXIT_NEEDS_NOVA;
+  const escalationReason = isTimeout
+    ? 'Agent timed out.'
+    : `Auto-retry exhausted (${autoRetryThreshold}x). Nova must analyze and provide new prompt.`;
+
+  await discord(config, 'WARN', `Module ${moduleId} ${isTimeout ? 'TIMEOUT' : 'NEEDS_NOVA'} (${phase})`,
+    `Attempt ${status.fail_count}/${maxFails}. ${escalationReason}`, [
       { name: 'Phase', value: phase },
       { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
       ...(isTimeout ? [{ name: 'Type', value: 'TIMEOUT' }] : []),
+      ...(!isTimeout ? [{ name: 'Action', value: 'Resume with --prompt' }] : []),
     ]);
+
+  return buildNovaEscalation(config, status, moduleId, moduleDir, maxFails, phase, isTimeout, autoRetryThreshold);
+}
+
+/**
+ * Build the complete escalation package for Nova.
+ * Contains everything Nova needs to analyze the failure without reading status.json:
+ * full fail history, retry state, module snapshot, and the explicit resume command.
+ *
+ * Separated from handleFail for readability and testability.
+ */
+function buildNovaEscalation(config, status, moduleId, moduleDir, maxFails, phase, isTimeout, autoRetryThreshold) {
+  const exitCode = isTimeout ? EXIT_TIMEOUT : EXIT_NEEDS_NOVA;
 
   return {
     exit: exitCode,
-    reason: isTimeout
-      ? `${phase} timed out — agent did not respond`
-      : `${phase} failed — Nova must analyze and adjust prompt`,
     module: moduleId,
     module_dir: moduleDir,
+    is_timeout: isTimeout,
+
+    // ── Complete failure context for Nova ──
+    reason: isTimeout
+      ? `${phase} timed out — agent did not respond within time limit`
+      : `${phase} failed ${status.fail_count}x — auto-retry exhausted, Nova must intervene`,
+
+    // Retry state
     fail_count: status.fail_count,
     max_fails: maxFails,
-    is_timeout: isTimeout,
+    auto_retry_threshold: autoRetryThreshold,
+    remaining_attempts: maxFails - status.fail_count,
+
+    // ALL failures — not just the last one. Nova needs the full history
+    // to spot patterns (e.g. "always fails in buster" vs "alternating phases")
+    fail_history: status.fail_summaries.map(f => ({
+      attempt: f.attempt,
+      phase: f.phase,
+      summary: f.summary,
+      is_timeout: f.is_timeout || false,
+      timestamp: f.timestamp,
+    })),
+
+    // The last failure for quick reference
     last_fail: status.fail_summaries[status.fail_summaries.length - 1] || null,
+
+    // Current module state snapshot
+    module_status: {
+      status: status.status,
+      current_phase: status.current_phase,
+      started_at: status.started_at,
+      forge_commit_hash: status.forge_commit_hash || null,
+      cost: status.cost,
+    },
+
+    // How to resume — explicit command Nova can execute
+    resume_command: `node pipeline.js --project ${config.project} --resume --module ${moduleId} --prompt "YOUR_NEW_APPROACH_HERE"`,
   };
 }
 
-// ─── Module Runner ───────────────────────────────────────────────────────────
+// ─── Forge Prompt Assembly ───────────────────────────────────────────────────
+//
+// Builds the complete prompt for a Forge agent, with explicit priority hierarchy.
+// A fresh agent sees this as its ONLY input — the priority header eliminates
+// ambiguity when sections contain conflicting guidance.
+//
+// Assembly order (top = highest priority at runtime):
+//   1. Priority header (tells agent how to resolve conflicts)
+//   2. Nova directive (if present — Nova outranks everything)
+//   3. Anti-patterns from failures (what NOT to do)
+//   4. FORGE.md base instructions (what TO do)
+//   5. Memory context (supplementary learnings, may be outdated)
 
-async function runModule(config, progress, moduleId) {
+async function buildForgePrompt(config, moduleId, mod, dir, status, maxFails, novaPrompt) {
+  // ── Base instructions ──
+  let baseInstructions;
+  try { baseInstructions = readForgeInstructions(config, dir, mod); }
+  catch (e) { return { error: e.message }; }
+
+  const isRetry = status.status === STATUS.FAIL && status.fail_summaries.length > 0;
+  const hasNova = !!novaPrompt;
+
+  // ── Anti-pattern block (retry only) ──
+  // Frames previous failures as explicit ANTI-PATTERNS rather than vague "try something else".
+  // This gives the agent concrete negative constraints alongside the positive instructions.
+  let antiPatternBlock = '';
+  if (isRetry) {
+    const summaries = status.fail_summaries;
+    const antiPatterns = summaries.map((f, i) => {
+      const label = f.is_timeout ? 'TIMEOUT' : 'FAILED';
+      return `${i + 1}. [${label} in ${f.phase}] ${f.summary}`;
+    });
+
+    antiPatternBlock = [
+      '',
+      '---',
+      '',
+      `## ⛔ ANTI-PATTERNS — Known Failed Approaches (Attempt ${status.fail_count + 1}/${maxFails})`,
+      '',
+      'The following approaches have been tried and FAILED. Do NOT repeat them.',
+      'Each is a concrete anti-pattern — understand WHY it failed and avoid the root cause.',
+      '',
+      ...antiPatterns,
+      '',
+      'Your job: deliver a working implementation that avoids ALL of the above.',
+      'If the same root cause keeps appearing, the architecture may need a different approach entirely.',
+      '',
+    ].join('\n');
+  }
+
+  // ── Nova directive ──
+  let novaBlock = '';
+  if (hasNova) {
+    novaBlock = [
+      '',
+      '---',
+      '',
+      '## 🔴 NOVA DIRECTIVE (Highest Priority)',
+      '',
+      'Nova has analyzed the previous failures and determined a specific new approach.',
+      'This directive OVERRIDES any conflicting guidance from other sections.',
+      '',
+      novaPrompt,
+      '',
+    ].join('\n');
+    log('INFO', `Nova prompt override injected (${novaPrompt.length} chars)`);
+  }
+
+  // ── Memory recall ──
+  // On retry: pass fail summaries as negative context so the query can
+  // de-prioritize memories that match the failed approach.
+  let memoryBlock = '';
+  let recalledMemoryIds = [];
+  if (config.memory?.recall_before_forge !== false) {
+    const additionalCtx = mod.substeps ? mod.substeps.join(', ') : '';
+    const failContext = isRetry
+      ? status.fail_summaries.map(f => f.summary).join('; ')
+      : '';
+    const { block, count, ids } = await recallForModule(
+      config, moduleId, mod.title, additionalCtx, failContext
+    );
+    if (block) {
+      memoryBlock = block;
+      recalledMemoryIds = ids || [];
+      log('INFO', `${count} memories injected into Forge prompt (${recalledMemoryIds.length} IDs tracked for decay)`);
+    }
+  }
+
+  // ── Priority header (only when multiple sections are present) ──
+  let priorityHeader = '';
+  if (isRetry || hasNova || memoryBlock) {
+    const sections = [];
+    if (hasNova)          sections.push('1. **NOVA DIRECTIVE** — highest authority, overrides everything');
+    if (isRetry)          sections.push(`${hasNova ? '2' : '1'}. **ANTI-PATTERNS** — concrete constraints, must be avoided`);
+    sections.push(`${sections.length + 1}. **FORGE.md** — base implementation instructions`);
+    if (memoryBlock)      sections.push(`${sections.length + 1}. **MEMORY CONTEXT** — supplementary, may be outdated or irrelevant`);
+
+    priorityHeader = [
+      '## 📋 INSTRUCTION PRIORITY (Read First)',
+      '',
+      'This prompt contains multiple sections. When they conflict, follow this priority:',
+      '',
+      ...sections,
+      '',
+      'When in doubt, higher-priority sections win.',
+      '',
+      '---',
+      '',
+    ].join('\n');
+  }
+
+  // ── Assemble final prompt ──
+  const prompt = priorityHeader + novaBlock + antiPatternBlock + baseInstructions + memoryBlock;
+  return { prompt, recalledMemoryIds };
+}
+
+// ─── Module Runner ───────────────────────────────────────────────────────────
+//
+// Orchestrator for a single module. The retry loop is a clean 5-line wrapper
+// around executeModuleAttempt(), which handles one complete Forge→Buster cycle.
+//
+// executeModuleAttempt returns:
+//   { retry: true }           → loop continues (auto-retry)
+//   { retry: false, result }  → loop exits with result
+
+async function runModule(config, progress, moduleId, opts = {}) {
   const mod = progress.modules[moduleId];
   if (!mod) throw new Error(`Module ${moduleId} not in progress.json`);
 
   const dir = mod.dir;
   const timeout = mod.timeout_minutes || config.default_timeout_minutes;
   const maxFails = mod.max_fails || config.default_max_fails;
+  const novaPrompt = opts.novaPrompt || null;
 
   // Set logging context for this module
   LOG_MODULE = moduleId;
@@ -1461,19 +2217,44 @@ async function runModule(config, progress, moduleId) {
   log('STEP', `  MODULE ${moduleId}: ${mod.title}`);
   log('STEP', `═══════════════════════════════════════════════════`);
 
-  // ── Dependencies ──
+  // ── Dependencies (checked once, before any attempt) ──
   const deps = checkDependencies(config, progress, moduleId);
   if (!deps.met) return { exit: EXIT_ERROR, reason: `Dependencies not met: ${deps.reason}` };
+
+  // ── Retry loop ──
+  // Each iteration re-reads status from disk so fail_count, fail_summaries,
+  // and retry context are always fresh after handleFail writes them.
+  while (true) {
+    const attempt = await executeModuleAttempt(
+      config, progress, moduleId, mod, dir, timeout, maxFails, novaPrompt
+    );
+    if (!attempt.retry) return attempt.result;
+    log('INFO', `Retry loop continuing — attempt ${attempt.fail_count}/${maxFails}`);
+  }
+}
+
+/**
+ * Execute one complete Forge → Git Sync → Buster cycle for a module.
+ *
+ * @returns {{ retry: true, fail_count: number }} - auto-retry, loop again
+ * @returns {{ retry: false, result: object }}    - done (PASS, BLOCKED, EXIT_*)
+ */
+async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeout, maxFails, novaPrompt) {
+
+  // Track memory IDs that were injected into the Forge prompt for this attempt.
+  // If the module fails (in forge OR buster), these specific memories get decayed.
+  // Declared here so the IDs survive from forge phase through buster phase.
+  let recalledMemoryIds = [];
 
   // ── Load or init status ──
   let status = loadStatus(config, dir);
 
   if (status?.status === STATUS.PASS) {
     log('OK', `Module ${moduleId} already PASS — skipping`);
-    return { exit: EXIT_OK, status: STATUS.PASS };
+    return { retry: false, result: { exit: EXIT_OK, status: STATUS.PASS } };
   }
   if (status?.status === STATUS.BLOCKED) {
-    return { exit: EXIT_BLOCKED, reason: `Module ${moduleId} is BLOCKED`, module: moduleId };
+    return { retry: false, result: { exit: EXIT_BLOCKED, reason: `Module ${moduleId} is BLOCKED`, module: moduleId } };
   }
 
   // ── Release blueprint if needed ──
@@ -1498,33 +2279,11 @@ async function runModule(config, progress, moduleId) {
     LOG_PHASE = 'forge';
     log('STEP', `Phase: FORGE (subagent: ${mod.forge_subagent}, model: ${mod.forge_model})`);
 
-    let forgePrompt;
-    try { forgePrompt = readForgeInstructions(config, dir, mod); }
-    catch (e) { return { exit: EXIT_ERROR, reason: e.message }; }
-
-    // On retry: append structured fail context for the fresh agent
-    if (status.status === STATUS.FAIL && status.fail_summaries.length > 0) {
-      const lastFail = status.fail_summaries[status.fail_summaries.length - 1];
-      forgePrompt += '\n\n---\n\n';
-      forgePrompt += `## RETRY CONTEXT (Attempt ${status.fail_count + 1}/${maxFails})\n\n`;
-      forgePrompt += `The previous attempt failed. Here is what went wrong:\n\n`;
-      forgePrompt += `**Phase:** ${lastFail.phase}\n`;
-      forgePrompt += `**Error:** ${lastFail.summary}\n\n`;
-      forgePrompt += `Fix the issues. Do NOT repeat the same approach if it already failed.\n`;
-      forgePrompt += `Read the error carefully and take a fundamentally different approach if needed.`;
-    }
-
-    // Recall relevant memories from Qdrant (project + global cross-project patterns)
-    if (config.memory?.recall_before_forge !== false) {
-      const additionalCtx = mod.substeps ? mod.substeps.join(', ') : '';
-      const { block: memoryBlock, count: memoryCount } = await recallForModule(
-        config, moduleId, mod.title, additionalCtx
-      );
-      if (memoryBlock) {
-        forgePrompt += memoryBlock;
-        log('INFO', `${memoryCount} memories injected into Forge prompt`);
-      }
-    }
+    // Build complete prompt with priority hierarchy and anti-pattern framing
+    const promptResult = await buildForgePrompt(config, moduleId, mod, dir, status, maxFails, novaPrompt);
+    if (promptResult.error) return { retry: false, result: { exit: EXIT_ERROR, reason: promptResult.error } };
+    const forgePrompt = promptResult.prompt;
+    recalledMemoryIds = promptResult.recalledMemoryIds || [];
 
     status.status = STATUS.IN_PROGRESS;
     status.current_phase = 'forge';
@@ -1542,10 +2301,21 @@ async function runModule(config, progress, moduleId) {
 
     // Spawn fresh Forge session
     try { spawnAgent(config, progress, 'forge', moduleId, mod.forge_model, forgePrompt); }
-    catch (e) { return { exit: EXIT_ERROR, reason: `Forge spawn failed: ${e.message}` }; }
+    catch (e) { return { retry: false, result: { exit: EXIT_ERROR, reason: `Forge spawn failed: ${e.message}` } }; }
 
-    // Poll
-    const result = await pollStatus(config, dir,
+    // Early health check — catch silent spawn failures (OOM, bad model, gateway down)
+    // in ~8 seconds instead of waiting the full timeout (up to 60 minutes).
+    if (!verifyAgentAlive(config, 'forge', moduleId)) {
+      killAgent(config, 'forge', moduleId);
+      clearShutdownContext();
+      const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'forge',
+        'Forge agent failed health check — session not running after spawn', { recalledMemoryIds });
+      if (failResult._retry) return { retry: true, fail_count: status.fail_count };
+      return { retry: false, result: failResult };
+    }
+
+    // Poll (rate limit pauses handled transparently by wrapper)
+    const result = await pollWithRateLimitRecovery(config, dir,
       [STATUS.READY_FOR_TESTING, STATUS.FAIL, STATUS.BLOCKED], timeout);
 
     // ALWAYS destroy session — kill-and-respawn strategy
@@ -1556,33 +2326,41 @@ async function runModule(config, progress, moduleId) {
       status = loadStatus(config, dir) || status;
 
       if (result.reason === 'timeout') {
-        return await handleFail(config, status, dir, moduleId, maxFails, 'forge',
-          `TIMEOUT: Forge did not complete within ${timeout} minutes`, { isTimeout: true });
+        const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'forge',
+          `TIMEOUT: Forge did not complete within ${timeout} minutes`, { isTimeout: true, recalledMemoryIds });
+        if (failResult._retry) return { retry: true, fail_count: status.fail_count };
+        return { retry: false, result: failResult };
       }
       if (result.reason === 'rate_limit_exhausted') {
-      await discord(config, 'CRITICAL', `Module ${moduleId} RATE LIMITED`,
-        `Exceeded max rate limit pauses. Pipeline cannot continue.`);
-        return {
+        await discord(config, 'CRITICAL', `Module ${moduleId} RATE LIMITED`,
+          `Exceeded max rate limit pauses. Pipeline cannot continue.`);
+        return { retry: false, result: {
           exit: EXIT_RATE_LIMITED,
           reason: 'Rate limit pauses exceeded maximum — pipeline halted',
           module: moduleId, module_dir: dir,
-        };
+        }};
       }
       if (result.reason === 'parse_corrupted') {
-        return await handleFail(config, status, dir, moduleId, maxFails, 'forge',
-          'status.json is permanently corrupted (unparseable after multiple attempts)');
+        const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'forge',
+          'status.json is permanently corrupted (unparseable after multiple attempts)', { recalledMemoryIds });
+        if (failResult._retry) return { retry: true, fail_count: status.fail_count };
+        return { retry: false, result: failResult };
       }
 
       // blocked or FAIL without details
-      return await handleFail(config, status, dir, moduleId, maxFails, 'forge',
-        status.fail_summaries.length > 0 ? null : 'Forge reported FAIL without details');
+      const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'forge',
+        status.fail_summaries.length > 0 ? null : 'Forge reported FAIL without details', { recalledMemoryIds });
+      if (failResult._retry) return { retry: true, fail_count: status.fail_count };
+      return { retry: false, result: failResult };
     }
 
     status = loadStatus(config, dir) || status;
 
     if (status.status === STATUS.FAIL || status.status === STATUS.BLOCKED) {
-      return await handleFail(config, status, dir, moduleId, maxFails, 'forge',
-        status.fail_summaries.length > 0 ? null : 'Forge reported FAIL without details');
+      const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'forge',
+        status.fail_summaries.length > 0 ? null : 'Forge reported FAIL without details', { recalledMemoryIds });
+      if (failResult._retry) return { retry: true, fail_count: status.fail_count };
+      return { retry: false, result: failResult };
     }
 
     log('OK', 'Forge complete → READY_FOR_TESTING');
@@ -1598,7 +2376,7 @@ async function runModule(config, progress, moduleId) {
       gitSyncBeforeBuster(config, dir, status);
       saveStatus(config, dir, status);
     } catch (e) {
-      return { exit: EXIT_ERROR, reason: e.message };
+      return { retry: false, result: { exit: EXIT_ERROR, reason: e.message } };
     }
   }
 
@@ -1611,7 +2389,7 @@ async function runModule(config, progress, moduleId) {
 
     let busterPrompt;
     try { busterPrompt = readBusterInstructions(config, dir); }
-    catch (e) { return { exit: EXIT_ERROR, reason: e.message }; }
+    catch (e) { return { retry: false, result: { exit: EXIT_ERROR, reason: e.message } }; }
 
     // Inject commit hash so Buster knows exactly which code to test
     if (status.forge_commit_hash) {
@@ -1629,13 +2407,17 @@ async function runModule(config, progress, moduleId) {
 
     setShutdownContext(config, 'buster', moduleId, dir);
 
-    try { spawnAgent(config, progress, 'buster', moduleId, config.models.buster, busterPrompt, { status, taskType: 'module_test' }); }
-    catch (e) { return { exit: EXIT_ERROR, reason: `Buster spawn failed: ${e.message}` }; }
+    // Archive old completion entries for this module before dispatching.
+    // Prevents pollDual from reading stale FAIL/PASS from a previous attempt.
+    archiveModuleCompletions(config, moduleId);
 
-    const result = await pollStatus(config, dir,
+    try { spawnAgent(config, progress, 'buster', moduleId, config.models.buster, busterPrompt, { status, taskType: 'module_test' }); }
+    catch (e) { return { retry: false, result: { exit: EXIT_ERROR, reason: `Buster spawn failed: ${e.message}` } }; }
+
+    const result = await pollDualWithRateLimitRecovery(config, dir, moduleId,
       [STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED], timeout);
 
-    // ALWAYS destroy session
+    // Kill agent session (safety net — Processor should have killed already after completion)
     killAgent(config, 'buster', moduleId);
     clearShutdownContext();
 
@@ -1643,21 +2425,25 @@ async function runModule(config, progress, moduleId) {
       status = loadStatus(config, dir) || status;
 
       if (result.reason === 'timeout') {
-        return await handleFail(config, status, dir, moduleId, maxFails, 'buster',
-          `TIMEOUT: Buster did not complete within ${timeout} minutes`, { isTimeout: true });
+        const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'buster',
+          `TIMEOUT: Buster did not complete within ${timeout} minutes`, { isTimeout: true, recalledMemoryIds });
+        if (failResult._retry) return { retry: true, fail_count: status.fail_count };
+        return { retry: false, result: failResult };
       }
       if (result.reason === 'rate_limit_exhausted') {
-      await discord(config, 'CRITICAL', `Module ${moduleId} RATE LIMITED (Buster)`,
-        `Exceeded max rate limit pauses during testing.`);
-        return {
+        await discord(config, 'CRITICAL', `Module ${moduleId} RATE LIMITED (Buster)`,
+          `Exceeded max rate limit pauses during testing.`);
+        return { retry: false, result: {
           exit: EXIT_RATE_LIMITED,
           reason: 'Rate limit pauses exceeded maximum during Buster phase',
           module: moduleId, module_dir: dir,
-        };
+        }};
       }
       if (result.reason === 'parse_corrupted') {
-        return await handleFail(config, status, dir, moduleId, maxFails, 'buster',
-          'status.json is permanently corrupted (unparseable after multiple attempts)');
+        const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'buster',
+          'status.json is permanently corrupted (unparseable after multiple attempts)', { recalledMemoryIds });
+        if (failResult._retry) return { retry: true, fail_count: status.fail_count };
+        return { retry: false, result: failResult };
       }
     }
 
@@ -1666,6 +2452,9 @@ async function runModule(config, progress, moduleId) {
     if (status.status === STATUS.PASS) {
       status.completed_at = new Date().toISOString();
       status.current_phase = null;
+      // Reset decay tracking — positive feedback from feedbackMemory('pass')
+      // will boost confidence, making the decay history irrelevant.
+      status.decayed_memory_ids = [];
       if (status.started_at) {
         status.cost.total_duration_seconds = Math.round(
           (new Date(status.completed_at) - new Date(status.started_at)) / 1000
@@ -1685,21 +2474,24 @@ async function runModule(config, progress, moduleId) {
 
       // Memory: update confidence on related memories
       await feedbackMemory(config, moduleId, 'pass');
-      // Summary Agent: extract and store real technical insights
-      await spawnSummaryAgent(config, moduleId, mod.title, status);
+      // Note: Technical insights are now stored by the Buster subagent
+      // directly via memory skill before signaling completion.
+      // spawnSummaryAgent is no longer needed.
 
-      return { exit: EXIT_OK, status: STATUS.PASS };
+      return { retry: false, result: { exit: EXIT_OK, status: STATUS.PASS } };
     }
 
     if (status.status === STATUS.FAIL) {
-      return await handleFail(config, status, dir, moduleId, maxFails, 'buster',
-        status.fail_summaries.length > 0 ? null : 'Buster reported FAIL without details');
+      const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'buster',
+        status.fail_summaries.length > 0 ? null : 'Buster reported FAIL without details', { recalledMemoryIds });
+      if (failResult._retry) return { retry: true, fail_count: status.fail_count };
+      return { retry: false, result: failResult };
     }
   }
 
   LOG_MODULE = null;
   LOG_PHASE = null;
-  return { exit: EXIT_ERROR, reason: `Unexpected status: ${status?.status}` };
+  return { retry: false, result: { exit: EXIT_ERROR, reason: `Unexpected status: ${status?.status}` } };
 }
 
 // ─── Gate Runner ─────────────────────────────────────────────────────────────
@@ -1744,37 +2536,67 @@ async function runGate(config, progress, gateId) {
   try { spawnAgent(config, progress, agentType, gateId, model, instructions); }
   catch (e) { return { exit: EXIT_ERROR, reason: `Gate spawn failed: ${e.message}` }; }
 
-  const deadline = Date.now() + timeout * 60 * 1000;
-
-  while (Date.now() < deadline) {
-    await sleep(config.poll_interval_seconds * 1000);
-
-    gitPullSafe(config); // Default: Destructive Recovery allowed
-
+  // Poll using generic poller with gate-specific check function
+  const result = await pollGeneric(config, async () => {
+    // Primary completion signal: output file exists
     if (gate.output_file) {
       if (fs.existsSync(path.join(swarmRoot(config), gate.output_file))) {
-        killAgent(config, agentType, gateId);
-        log('OK', `Gate '${gateId}' completed`);
-        await discord(config, 'OK', `Gate: ${gate.title} PASS`, 'Review completed');
-        return { exit: EXIT_OK, status: STATUS.PASS };
+        return { done: true, result: pollResult(true, 'target_reached', { gate: gateId }) };
       }
     }
 
-    // Check for gate status file (handles FAIL/crash detection)
-    const gateStatus = loadGateStatus(config, gateId);
-    if (gateStatus?.status === STATUS.FAIL) {
-      killAgent(config, agentType, gateId);
-      log('ERROR', `Gate '${gateId}' agent reported FAIL: ${gateStatus.reason || 'no details'}`);
-      await discord(config, 'CRITICAL', `Gate '${gateId}' FAIL`,
-        `Agent reported failure: ${gateStatus.reason || 'unknown'}`);
-      return { exit: EXIT_NEEDS_NOVA, reason: `Gate '${gateId}' failed: ${gateStatus.reason || 'unknown'}` };
+    // Secondary signal: gate status file (FAIL/RATE_LIMITED/crash detection)
+    const gateStatusFile = gateStatusPath(config, gateId);
+    if (!fs.existsSync(gateStatusFile)) {
+      return { done: false, logMsg: 'waiting for output' };
     }
 
-    const remaining = Math.round((deadline - Date.now()) / 1000);
-    log('INFO', `Gate '${gateId}' pending... ${remaining}s remaining`);
+    let gateStatus;
+    try {
+      gateStatus = JSON.parse(fs.readFileSync(gateStatusFile, 'utf8'));
+    } catch {
+      return { parse_error: true };
+    }
+
+    if (gateStatus?.status === STATUS.FAIL) {
+      return { done: true, result: pollResult(false, 'gate_fail', gateStatus) };
+    }
+    if (gateStatus?.status === STATUS.RATE_LIMITED) {
+      return { rate_limited: true, status: gateStatus };
+    }
+
+    return { done: false, logMsg: `status=${gateStatus?.status || 'unknown'}` };
+  }, timeout, `Gate '${gateId}'`);
+
+  // ── Post-poll: always kill agent ──
+  killAgent(config, agentType, gateId);
+
+  // ── Interpret result ──
+  if (result.ok) {
+    log('OK', `Gate '${gateId}' completed`);
+    await discord(config, 'OK', `Gate: ${gate.title} PASS`, 'Review completed');
+    return { exit: EXIT_OK, status: STATUS.PASS };
   }
 
-  killAgent(config, agentType, gateId);
+  if (result.reason === 'gate_fail') {
+    const reason = result.status?.reason || 'unknown';
+    log('ERROR', `Gate '${gateId}' agent reported FAIL: ${reason}`);
+    await discord(config, 'CRITICAL', `Gate '${gateId}' FAIL`,
+      `Agent reported failure: ${reason}`);
+    return { exit: EXIT_NEEDS_NOVA, reason: `Gate '${gateId}' failed: ${reason}` };
+  }
+
+  if (result.reason === 'parse_corrupted') {
+    log('ERROR', `Gate '${gateId}' status file permanently corrupted`);
+    return { exit: EXIT_NEEDS_NOVA, reason: `Gate '${gateId}' status file permanently corrupted` };
+  }
+
+  if (result.reason === 'rate_limit_exhausted') {
+    log('ERROR', `Gate '${gateId}' rate limit pauses exceeded`);
+    return { exit: EXIT_RATE_LIMITED, reason: `Gate '${gateId}' exceeded max rate limit pauses` };
+  }
+
+  // Timeout
   await discord(config, 'CRITICAL', `Gate '${gateId}' TIMEOUT`,
     `${agentType} did not complete within ${timeout}min`);
   return { exit: EXIT_TIMEOUT, reason: `Gate '${gateId}' timed out` };
@@ -1784,7 +2606,7 @@ async function runGate(config, progress, gateId) {
 // After certain phases complete, Buster runs a chaos test. Results are written
 // to dedicated files (not status.json). The pipeline evaluates severity:
 //   critical/moderate → auto-spawn Forge to fix → re-test with Buster
-//   low → Discord summary to operator, continue pipeline
+//   low → Discord summary to Davide, continue pipeline
 //   none → continue
 
 function getCompletedPhaseId(config, progress, justPassedModuleId) {
@@ -1817,20 +2639,20 @@ function getCompletedPhaseId(config, progress, justPassedModuleId) {
   return null;
 }
 
-function chaosTestDir(config, phaseId) {
+function chaosTestDir(config) {
   return path.join(swarmRoot(config), 'chaos-tests');
 }
 
 function chaosResultsPath(config, phaseId) {
-  return path.join(chaosTestDir(config, phaseId), `${phaseId}-results.json`);
+  return path.join(chaosTestDir(config), `${phaseId}-results.json`);
 }
 
 function chaosPlanPath(config, phaseId) {
-  return path.join(chaosTestDir(config, phaseId), `${phaseId}-plan.md`);
+  return path.join(chaosTestDir(config), `${phaseId}-plan.md`);
 }
 
 function chaosMarkerPath(config, phaseId) {
-  return path.join(chaosTestDir(config, phaseId), `${phaseId}-done.json`);
+  return path.join(chaosTestDir(config), `${phaseId}-done.json`);
 }
 
 function loadChaosResults(config, phaseId) {
@@ -1863,7 +2685,7 @@ async function runChaosTest(config, progress, phase) {
   }
 
   // Ensure chaos-tests directory exists
-  const chaosDir = chaosTestDir(config, phase.id);
+  const chaosDir = chaosTestDir(config);
   if (!fs.existsSync(chaosDir)) fs.mkdirSync(chaosDir, { recursive: true });
 
   log('STEP', `═══════════════════════════════════════════════════`);
@@ -1936,18 +2758,7 @@ async function runChaosTest(config, progress, phase) {
   }
 
   // Poll for results file (not status.json)
-  const deadline = Date.now() + timeout * 60 * 1000;
-  while (Date.now() < deadline) {
-    await sleep(config.poll_interval_seconds * 1000);
-    gitPullSafe(config); // Default: Destructive Recovery allowed
-
-    if (fs.existsSync(resultsFile)) {
-      log('OK', 'Chaos test results file found');
-      break;
-    }
-    const remaining = Math.round((deadline - Date.now()) / 1000);
-    log('INFO', `Waiting for chaos results... ${remaining}s remaining`);
-  }
+  await pollForFile(config, resultsFile, timeout, `chaos-${phase.id}`);
 
   killAgent(config, 'buster', `chaos-${phase.id}`);
 
@@ -2036,8 +2847,16 @@ async function runChaosTest(config, progress, phase) {
       `After fixing: update status.json to READY_FOR_TESTING, then git add, commit, push.`,
     ].join('\n');
 
-    // Use the last module's Forge config for the fix
-    const forgeModel = lastModConfig.forge_model || 'codex-5.3';
+    // Pick the forge model from the most-affected module (first issue with a known module).
+    // Falls back to last module config, then to default.
+    // If issues span multiple modules with different models, the first affected module wins —
+    // the fix agent needs to handle all issues regardless of which model it runs on.
+    let forgeModel = null;
+    for (const issue of blockingIssues) {
+      const affMod = issue.affected_module && progress.modules[issue.affected_module];
+      if (affMod?.forge_model) { forgeModel = affMod.forge_model; break; }
+    }
+    if (!forgeModel) forgeModel = lastModConfig.forge_model || 'codex-5.3';
 
     try {
       spawnAgent(config, progress, 'forge', `chaosfix-${phase.id}-${attempt}`, forgeModel, fixPrompt);
@@ -2059,7 +2878,7 @@ async function runChaosTest(config, progress, phase) {
     let forgeCompleted = false;
     while (Date.now() < forgeDeadline) {
       await sleep(config.poll_interval_seconds * 1000);
-      gitPullSafe(config);
+      gitPullForPolling(config);
       for (const modDir of affectedModuleDirs) {
         const modStatus = loadStatus(config, modDir);
         if (modStatus?.status === STATUS.READY_FOR_TESTING) { forgeCompleted = true; break; }
@@ -2075,16 +2894,12 @@ async function runChaosTest(config, progress, phase) {
     }
 
     // ── Git sync ──
-    try {
-      gitExec(config.repo_root, ['add', '-A'], { stdio: 'ignore' });
-      const porcelain = gitExec(config.repo_root, ['status', '--porcelain']);
-      if (porcelain) {
-        gitExec(config.repo_root, ['commit', '-m', `[pipeline] Chaos fix ${phase.id} attempt ${attempt}`], { stdio: 'ignore' });
-        gitPullSafe(config, false); // Block destructive recovery before push
-        gitExec(config.repo_root, ['push', 'origin', 'HEAD'], { stdio: 'ignore' });
-      }
-    } catch (e) {
-      log('WARN', `Chaos fix git sync failed: ${e.message?.split('\n')[0]} — Buster may test stale code`);
+    const syncResult = gitCommitAndPush(config,
+      `[pipeline] Chaos fix ${phase.id} attempt ${attempt}`,
+      { softFail: true }
+    );
+    if (syncResult.error) {
+      log('WARN', `Chaos fix git sync failed: ${syncResult.error} — Buster may test stale code`);
     }
 
     // ── Re-run chaos test to verify fix ──
@@ -2103,12 +2918,7 @@ async function runChaosTest(config, progress, phase) {
     }
 
     // Poll for new results
-    const verifyDeadline = Date.now() + timeout * 60 * 1000;
-    while (Date.now() < verifyDeadline) {
-      await sleep(config.poll_interval_seconds * 1000);
-      gitPullSafe(config); // Default: Destructive Recovery allowed
-      if (fs.existsSync(resultsFile)) break;
-    }
+    await pollForFile(config, resultsFile, timeout, `chaosverify-${phase.id}-${attempt}`);
 
     killAgent(config, 'buster', `chaosverify-${phase.id}-${attempt}`);
 
@@ -2176,7 +2986,7 @@ async function runPipeline(config, progress, opts = {}) {
 
   // Single module mode
   if (opts.module) {
-    const result = await runModule(config, progress, opts.module);
+    const result = await runModule(config, progress, opts.module, { novaPrompt: opts.novaPrompt });
     output(result);
     return result.exit;
   }
@@ -2276,11 +3086,14 @@ function dryRun(config, progress) {
 export {
   loadConfig, loadProgress, loadStatus, saveStatus,
   releaseBlueprint, listBlueprints,
-  spawnAgent, killAgent, steerAgent,
+  spawnAgent, killAgent, steerAgent, verifyAgentAlive,
   spawnAcpAgent, killAcpAgent, dispatchRedisTask,
-  recallForModule, feedbackMemory, spawnSummaryAgent,
+  recallForModule, feedbackMemory, decayRecalledMemories,
+  buildForgePrompt, executeModuleAttempt,
   runModule, runGate, runPipeline, runChaosTest,
-  printStatus, gitSyncBeforeBuster, handleRateLimit,
+  printStatus, gitSyncBeforeBuster, gitPullForPolling, gitPullBeforePush, gitPushWithRetry, gitCommitAndPush,
+  pollStatus, pollWithRateLimitRecovery, pollDual, pollDualWithRateLimitRecovery, pollGeneric, pollForFile,
+  handleRateLimit, completionStreamKey, archiveModuleCompletions,
   STATUS, EXIT_OK, EXIT_ERROR, EXIT_NEEDS_NOVA, EXIT_BLOCKED, EXIT_TIMEOUT, EXIT_RATE_LIMITED,
 };
 
@@ -2304,6 +3117,9 @@ if (__currentPath === __entryPath) {
     else if (a === '--module'         && args[i+1]) flags.module = args[++i];
     else if (a === '--blueprint'      && args[i+1]) flags.blueprint = args[++i];
     else if (a === '--blueprint-list')              flags.blueprintList = true;
+    else if (a === '--config'         && args[i+1]) flags.config = args[++i];
+    else if (a === '--prompt'         && args[i+1]) flags.prompt = args[++i];
+    else if (a === '--prompt-file'   && args[i+1]) flags.promptFile = args[++i];
     else if (a === '--resume')                      flags.resume = true;
     else if (a === '--status')                      flags.status = true;
     else if (a === '--dry-run')                     flags.dryRun = true;
@@ -2314,11 +3130,19 @@ OpenClaw Swarm Pipeline — Deterministic Orchestrator
 Usage: node pipeline.js [options]
 
 Pipeline commands:
-  --project <n>        Project name (or CURRENT_PROJECT env)
+  --project <n>           Project name (or CURRENT_PROJECT env)
   --module <id>           Run a single module
   --resume                Resume pipeline from current state
+  --prompt "text"         Nova's prompt override (injected into Forge prompt)
+  --prompt-file <path>    Read Nova's prompt from file (for long prompts)
+  --config <path>         Config file override (default: <repo>/projects/<project>/.swarm/pipeline.config.json)
   --status                Print current pipeline status as JSON
   --dry-run               Show execution plan, spawn nothing
+
+Retry flow:
+  Auto-retries 1-2 happen internally (no exit).
+  After auto_retry_threshold (default 2), exits with code 10 (NEEDS_NOVA).
+  Nova resumes: --resume --module 06 --prompt "Use approach X instead of Y"  
 
 Blueprint commands:
   --blueprint <id>        Release a specific blueprint from architecture branch
@@ -2344,7 +3168,7 @@ Exit codes:
       initTempDir();
       registerShutdownHooks();
 
-      const config = loadConfig(flags.project);
+      const config = loadConfig(flags.project, flags.config);
 
       // Blueprint commands
       if (flags.blueprintList) {
@@ -2357,6 +3181,7 @@ Exit codes:
         const mod = progress.modules[flags.blueprint];
         if (!mod) {
           output({ status: 'error', error: `Module '${flags.blueprint}' not in progress.json` });
+          cleanupTempDir();
           process.exit(EXIT_ERROR);
         }
         const result = releaseBlueprint(config, flags.blueprint, mod.dir);
@@ -2371,9 +3196,20 @@ Exit codes:
       if (flags.status)  { printStatus(config, progress); cleanupTempDir(); process.exit(EXIT_OK); }
       if (flags.dryRun)  { dryRun(config, progress); cleanupTempDir(); process.exit(EXIT_OK); }
 
+      // Resolve Nova prompt from --prompt or --prompt-file
+      let novaPrompt = flags.prompt || null;
+      if (!novaPrompt && flags.promptFile) {
+        if (!fs.existsSync(flags.promptFile)) {
+          throw new Error(`Prompt file not found: ${flags.promptFile}`);
+        }
+        novaPrompt = fs.readFileSync(flags.promptFile, 'utf8').trim();
+        log('INFO', `Nova prompt loaded from file: ${flags.promptFile} (${novaPrompt.length} chars)`);
+      }
+
       const exitCode = await runPipeline(config, progress, {
         module: flags.module,
         resume: flags.resume,
+        novaPrompt,
       });
       cleanupTempDir();
       process.exit(exitCode);
