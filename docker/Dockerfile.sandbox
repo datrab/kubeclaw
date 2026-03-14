@@ -1,0 +1,157 @@
+# =============================================================================
+# KubeClaw Sandbox — Isolated Testing Environment for Buster
+# =============================================================================
+# Includes Podman-in-Pod, Lighthouse, Playwright, k6, nginx
+FROM ghcr.io/openclaw/openclaw:2026.3.7
+
+USER root
+
+# 0. Global cache
+RUN mkdir -p /root/.npm && npm config set cache /root/.npm --global
+
+# 1. Podman (container-in-container engine)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    podman buildah slirp4netns fuse-overlayfs uidmap passwd \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN echo "root:100000:65536" >> /etc/subuid && \
+    echo "root:100000:65536" >> /etc/subgid
+
+RUN mkdir -p /etc/containers /run/containers/storage /var/lib/containers/storage && \
+    printf '[storage]\ndriver = "vfs"\nrunroot = "/run/containers/storage"\ngraphroot = "/var/lib/containers/storage"\n' \
+      > /etc/containers/storage.conf && \
+    printf 'unqualified-search-registries = ["docker.io", "ghcr.io"]\n' \
+      > /etc/containers/registries.conf && \
+    printf '[engine]\ncgroup_manager = "cgroupfs"\nevents_logger = "file"\nruntime = "crun"\n' \
+      > /etc/containers/containers.conf
+
+# 2. Skill dependencies
+RUN npm install -g ioredis uuid @qdrant/js-client-rest
+RUN chown -R root:root /app
+
+# 3. Testing tools
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    chromium build-essential python3 python3-pip python3-venv \
+    curl wget netcat-openbsd dnsutils nmap nginx jq tree \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN npm install -g lighthouse serve playwright 2>/dev/null || true
+RUN npx playwright install --with-deps chromium 2>/dev/null || true
+
+# k6 load testing tool
+ARG K6_VERSION=v0.54.0
+RUN set -eux; \
+    ARCH=$(dpkg --print-architecture); \
+    case "$ARCH" in \
+      amd64) K6_ARCH="amd64" ;; \
+      arm64) K6_ARCH="arm64" ;; \
+      *) echo "Unsupported arch: $ARCH" && exit 1 ;; \
+    esac; \
+    URL="https://github.com/grafana/k6/releases/download/${K6_VERSION}/k6-${K6_VERSION}-linux-${K6_ARCH}.tar.gz"; \
+    curl -fsSL "$URL" | tar xz --strip-components=1 -C /usr/local/bin k6-${K6_VERSION}-linux-${K6_ARCH}/k6; \
+    k6 version
+
+# 4. Sandbox directories + nginx config
+RUN mkdir -p /sandbox/{www,results,scripts} && chown -R root:root /sandbox
+
+COPY <<'NGINXCONF' /etc/nginx/sites-available/sandbox
+server {
+    listen 9999;
+    root /sandbox/www;
+    index index.html;
+    add_header X-Frame-Options "DENY" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    location / { try_files $uri $uri/ =404; }
+}
+NGINXCONF
+RUN ln -sf /etc/nginx/sites-available/sandbox /etc/nginx/sites-enabled/sandbox && \
+    rm -f /etc/nginx/sites-enabled/default
+
+# 5. Sandbox helper scripts
+COPY <<'SCRIPT' /usr/local/bin/sandbox-run
+#!/bin/bash
+set -euo pipefail
+IMAGE="${1:?Usage: sandbox-run <image> [command]}"
+CMD="${2:-}"
+NAME="sb-$(date +%s)-$RANDOM"
+TIMEOUT="${SANDBOX_TIMEOUT:-300}"
+ARGS=(--name "$NAME" --rm --network host --memory 2g --cpus 2 --pids-limit 256 --tmpfs /tmp:size=512m -v /sandbox:/sandbox:rw -e SANDBOX=true -e NODE_ENV=test)
+if [[ -n "$CMD" ]]; then
+  timeout "$TIMEOUT" podman run "${ARGS[@]}" "$IMAGE" sh -c "$CMD"
+else
+  podman run -d "${ARGS[@]}" "$IMAGE"
+  echo "[SANDBOX] $NAME running. Stop: sandbox-kill $NAME"
+fi
+SCRIPT
+
+COPY <<'SCRIPT' /usr/local/bin/sandbox-build
+#!/bin/bash
+set -euo pipefail
+IMAGE="${1:?Usage: sandbox-build <image> <project-dir> <build-cmd>}"
+PROJECT="${2:?Provide project directory}"
+BUILD_CMD="${3:?Provide build command}"
+TIMEOUT="${SANDBOX_TIMEOUT:-300}"
+[[ ! -d "$PROJECT" ]] && echo "[BUILD] Not found: $PROJECT" && exit 1
+rm -rf /sandbox/www/*
+timeout "$TIMEOUT" podman run --rm --network host --memory 2g --cpus 2 --pids-limit 256 --tmpfs /tmp:size=512m -v "$PROJECT":/src:ro -v /sandbox/www:/output:rw "$IMAGE" sh -c "cp -r /src/. /build && cd /build && $BUILD_CMD && (cp -r dist/* /output/ 2>/dev/null || cp -r build/* /output/ 2>/dev/null || cp -r out/* /output/ 2>/dev/null || echo 'WARN: no standard output dir found')"
+echo "[BUILD] Output: /sandbox/www/ ($(du -sh /sandbox/www/ 2>/dev/null | cut -f1))"
+SCRIPT
+
+COPY <<'SCRIPT' /usr/local/bin/sandbox-serve
+#!/bin/bash
+SRC="${1:-.}"
+rm -rf /sandbox/www/*
+cp -r "$SRC"/. /sandbox/www/ 2>/dev/null || cp -r "$SRC" /sandbox/www/
+nginx 2>/dev/null; nginx -s reload 2>/dev/null || nginx
+echo "[SANDBOX] http://localhost:9999"
+SCRIPT
+
+COPY <<'SCRIPT' /usr/local/bin/sandbox-cleanup
+#!/bin/bash
+echo "[SANDBOX] Cleaning up..."
+podman stop -a 2>/dev/null; podman rm -a -f 2>/dev/null; podman image prune -a -f 2>/dev/null
+rm -rf /sandbox/www/* /sandbox/results/*
+nginx -s stop 2>/dev/null
+echo "[SANDBOX] Clean."
+SCRIPT
+
+COPY <<'SCRIPT' /usr/local/bin/sandbox-kill
+#!/bin/bash
+podman stop "${1:?Usage: sandbox-kill <n>}" 2>/dev/null && echo "Stopped: $1" || echo "Not found: $1"
+SCRIPT
+
+COPY <<'SCRIPT' /usr/local/bin/sandbox-stop
+#!/bin/bash
+nginx -s stop 2>/dev/null && echo "[SANDBOX] nginx stopped." || true
+SCRIPT
+
+COPY <<'SCRIPT' /usr/local/bin/sandbox-ps
+#!/bin/bash
+podman ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}" 2>/dev/null
+podman stats --no-stream --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}" 2>/dev/null || true
+SCRIPT
+
+RUN chmod +x /usr/local/bin/sandbox-*
+
+# 6. KubeClaw skills — common + buster-specific, placed alongside OpenClaw's own skills
+COPY skills/common/ /app/skills/
+COPY skills/buster/ /app/skills/
+
+# 7. Runtime environment
+ENV NODE_PATH=/usr/local/lib/node_modules:/app/node_modules
+ENV NPM_CONFIG_CACHE=/root/.npm
+ENV HOME=/home/node
+
+RUN mkdir -p /home/node/.openclaw && chown -R root:root /home/node \
+    && openclaw plugins install acpx
+
+# 8. Build verification
+RUN echo "=== Build Verification ===" && \
+    node -e "require('ioredis'); console.log('  ✅ ioredis')" && \
+    podman --version && echo "  ✅ podman" && \
+    k6 version && echo "  ✅ k6" && \
+    ls /app/skills/redis.js /app/skills/memory.js && echo "  ✅ KubeClaw skills in /app/skills/" && \
+    echo "=== All checks passed ==="
+
+LABEL org.opencontainers.image.title="KubeClaw Sandbox (Root Mode)"
+LABEL org.opencontainers.image.description="Podman-in-Pod + Lighthouse, Playwright, k6, nginx"
