@@ -1,0 +1,66 @@
+{
+  "_doc": "Platform-level config. Loaded from SWARM_CONFIG env or /app/config/swarm.config.json. Project/repo_root/paths are derived by loadConfig — do NOT set them here.",
+
+  "discord_webhook_url": "",
+  "discord_alerts": {
+    "info": true,
+    "warn": true,
+    "critical": true,
+    "ok": true
+  },
+
+  "poll_interval_seconds": 30,
+  "default_timeout_minutes": 45,
+  "default_max_fails": 3,
+  "auto_retry_threshold": 2,
+  "session_nudge_threshold": 0.75,
+
+  "rate_limit": {
+    "cooldown_hours": 2,
+    "max_pauses_per_module": 5
+  },
+
+  "memory": {
+    "enabled": true,
+    "memory_js_path": "/app/skills/memory.js",
+    "recall_limit": 5,
+    "recall_before_forge": true,
+    "feedback_after_outcome": true,
+    "store_patterns_globally": true,
+    "targeted_decay_amount": 0.1
+  },
+
+  "agents": {
+    "forge": {
+      "dispatch": "acp",
+      "acp_agent_id": "codex",
+      "cwd": null
+    },
+    "buster": {
+      "dispatch": "redis",
+      "redis_stream": "swarm:buster:tasks",
+      "redis_js_path": "/app/skills/redis.js"
+    },
+    "echo": {
+      "dispatch": "acp",
+      "acp_agent_id": "claude",
+      "cwd": null
+    }
+  },
+
+  "models": {
+    "buster": "claude-sonnet-4-6",
+    "echo": "claude-sonnet-4-6"
+  },
+
+  "review_defaults": {
+    "reviewers": [
+      { "label": "echo-codex", "agent_id": "codex", "model": "codex-5.3" },
+      { "label": "echo-sonnet", "agent_id": "claude", "model": "claude-sonnet-4-6" },
+      { "label": "echo-pro", "agent_id": "claude", "model": "gemini-pro" }
+    ],
+    "merge_script": "echo-reviews/merge-reviews.js",
+    "timeout_minutes": 30,
+    "max_fix_cycles": 3
+  }
+}

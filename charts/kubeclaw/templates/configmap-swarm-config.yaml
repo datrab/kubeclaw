@@ -1,0 +1,15 @@
+# ConfigMap: Swarm platform config for the pipeline engine.
+# Mounted as /app/config/swarm.config.json via subPath (preserves existing /app/config/).
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-swarm-config
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+data:
+  swarm.config.json: |
+{{- if .Values.swarmConfigJson }}
+{{ .Values.swarmConfigJson | indent 4 }}
+{{- else }}
+{{ .Files.Get "files/config/swarm.config.json" | indent 4 }}
+{{- end }}
