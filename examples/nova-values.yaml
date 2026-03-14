@@ -35,15 +35,6 @@ redis:
 service:
   nodePort: 30063
 
-missionControl:
-  enabled: true
-  image: "ghcr.io/forgestackai/kubeclaw-mission-control:latest"
-  publicHost: ""
-  auth:
-    existingSecret: "kubeclaw-shared-secrets"
-    existingSecretUserKey: "mcUser"
-    existingSecretPassKey: "mcPass"
-
 resources:
   requests: { cpu: 100m, memory: 512Mi }
   limits: { cpu: 2000m, memory: 8192Mi }
