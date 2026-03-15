@@ -142,6 +142,58 @@ const lib = {
     return await redis.xreadgroup('GROUP', groupName, consumerName, 'COUNT', count, 'BLOCK', 2000, 'STREAMS', streamKey, '>');
   },
 
+  // ── Pipeline Completion Stream Functions ──────────────────────────────────
+  // Used by pipeline.js via direct import to avoid per-cycle subprocess spawns.
+  // These replace the inline CJS scripts that were generated on every poll cycle.
+
+  /**
+   * Read the latest completion entry for a module from the active stream.
+   * @param {string} streamKey - Redis stream key (e.g. swarm:pipeline:kubecommand:completions)
+   * @param {string} moduleId - Module to filter for
+   * @returns {object|null} - Completion entry or null
+   */
+  async readCompletion(streamKey, moduleId) {
+    const redis = getRedis();
+    const entries = await redis.xrange(streamKey, '-', '+', 'COUNT', 100);
+    const match = entries
+      .map(([id, fields]) => {
+        const o = { _id: id };
+        for (let i = 0; i < fields.length; i += 2) o[fields[i]] = fields[i + 1];
+        return o;
+      })
+      .filter(e => e.type === 'completion' && e.module === moduleId)
+      .pop();
+    return match || null;
+  },
+
+  /**
+   * Archive old completion entries for a module from active → archive stream.
+   * Prevents pollDual from reading stale FAIL/PASS entries from previous attempts.
+   * @param {string} streamKey - Active stream key
+   * @param {string} archiveStreamKey - Archive stream key (typically streamKey + ':log')
+   * @param {string} moduleId - Module to archive completions for
+   * @param {number} maxLen - Max archive stream length (trimmed with ~ approximation)
+   * @returns {{ archived: number }}
+   */
+  async archiveCompletions(streamKey, archiveStreamKey, moduleId, maxLen = 1000) {
+    const redis = getRedis();
+    const entries = await redis.xrange(streamKey, '-', '+', 'COUNT', 200);
+    let archived = 0;
+    for (const [id, fields] of entries) {
+      const data = {};
+      for (let i = 0; i < fields.length; i += 2) data[fields[i]] = fields[i + 1];
+      if (data.module !== moduleId) continue;
+      const archiveFields = [...fields, 'archived_at', Date.now().toString()];
+      await redis.xadd(archiveStreamKey, '*', ...archiveFields);
+      await redis.xdel(streamKey, id);
+      archived++;
+    }
+    if (maxLen > 0) {
+      await redis.xtrim(archiveStreamKey, 'MAXLEN', '~', maxLen);
+    }
+    return { archived };
+  },
+
   async disconnect() {
     if (_redis) {
       await _redis.quit();
