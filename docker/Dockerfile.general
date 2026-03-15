@@ -9,33 +9,77 @@ USER root
 RUN apt-get update && apt-get install -y --no-install-recommends \
     sudo curl wget git jq nano tree net-tools iputils-ping dnsutils \
     build-essential python3 python3-pip python3-venv ffmpeg \
+    shellcheck yamllint \
     && rm -rf /var/lib/apt/lists/*
 
-# 2. Global skill dependencies
+# 2. Global skill dependencies + lint tools (JS/TS)
 RUN mkdir -p /root/.npm && npm config set cache /root/.npm --global \
-    && npm install -g ioredis uuid @qdrant/js-client-rest
+    && npm install -g ioredis uuid @qdrant/js-client-rest \
+       typescript eslint knip madge
 
-# 3. File ownership for root mode
+# 3. Python lint tools (minimum versions for required features)
+#    ruff >= 0.1.0:   JSON output format
+#    mypy >= 1.0:     --output json flag
+#    pip-audit >= 2.6: JSON output with vulns array
+#    semgrep >= 1.40:  stable JSON output schema
+RUN pip install --break-system-packages \
+    'ruff>=0.1.0' 'mypy>=1.0' 'pip-audit>=2.6.0' 'semgrep>=1.40.0'
+
+# 4. Binary tools — pinned versions for reproducible builds
+# Bump these ARGs when updating; `docker build --build-arg HADOLINT_VERSION=x.y.z` to override
+ARG HADOLINT_VERSION=2.12.0
+ARG KUBECONFORM_VERSION=0.6.4
+
+# hadolint — Dockerfile linter
+RUN wget -qO /usr/local/bin/hadolint \
+    https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-x86_64 \
+    && chmod +x /usr/local/bin/hadolint
+
+# kubeconform — K8s manifest validation
+RUN wget -qO- \
+    https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz \
+    | tar xz -C /usr/local/bin/
+
+# helm (if not already in base image)
+RUN if ! command -v helm &>/dev/null; then \
+      curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash; \
+    fi
+
+# 5. File ownership for root mode
 RUN chown -R root:root /app
 
-# 4. KubeClaw skills — common + nova-specific, placed alongside OpenClaw's own skills
+# 6. KubeClaw skills — common + nova-specific, placed alongside OpenClaw's own skills
 COPY skills/common/ /app/skills/
 COPY skills/nova/ /app/skills/
 
-# 5. Environment
+# 7. Environment
 ENV NODE_PATH=/usr/local/lib/node_modules:/app/node_modules
 ENV NPM_CONFIG_CACHE=/root/.npm
 ENV HOME=/home/node
 
-# 6. ACPX plugin (Agent Communication Protocol)
+# 8. ACPX plugin (Agent Communication Protocol)
 RUN mkdir -p /home/node/.openclaw \
     && chown -R root:root /home/node \
     && openclaw plugins install acpx
 
-# 7. Build verification
+# 9. Build verification
 RUN echo "=== Build Verification ===" && \
     node -e "require('ioredis'); console.log('  ✅ ioredis')" && \
-    ls /app/skills/redis.js /app/skills/memory.js /app/skills/pipeline.js && echo "  ✅ KubeClaw skills in /app/skills/"
+    ls /app/skills/redis.js /app/skills/memory.js /app/skills/pipeline.js /app/skills/lint-report.js && echo "  ✅ KubeClaw skills in /app/skills/" && \
+    echo "=== Lint Tools Verification ===" && \
+    tsc --version         && echo "  ✅ tsc" && \
+    eslint --version      && echo "  ✅ eslint" && \
+    knip --version        && echo "  ✅ knip" && \
+    madge --version       && echo "  ✅ madge" && \
+    ruff version          && echo "  ✅ ruff" && \
+    mypy --version        && echo "  ✅ mypy" && \
+    pip-audit --version   && echo "  ✅ pip-audit" && \
+    semgrep --version     && echo "  ✅ semgrep" && \
+    shellcheck --version  && echo "  ✅ shellcheck" && \
+    yamllint --version    && echo "  ✅ yamllint" && \
+    hadolint --version    && echo "  ✅ hadolint" && \
+    kubeconform -v        && echo "  ✅ kubeconform" && \
+    helm version --short  && echo "  ✅ helm"
 
 LABEL org.opencontainers.image.title="KubeClaw General (Root Mode)"
-LABEL org.opencontainers.image.description="Root environment for K8s stateful deployments with ACPX"
+LABEL org.opencontainers.image.description="Root environment for K8s stateful deployments with ACPX + lint tools"
