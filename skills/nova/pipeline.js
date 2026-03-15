@@ -110,10 +110,9 @@ function validateSafePath(filePath, label) {
   if (!filePath || typeof filePath !== 'string') {
     throw new Error(`${label}: path is empty or not a string`);
   }
+  // path.resolve() produces an absolute path with all '..' segments resolved.
+  // The prefix allowlist below is the actual security boundary.
   const normalized = path.resolve(filePath);
-  if (normalized.includes('..')) {
-    throw new Error(`${label}: path traversal detected in '${filePath}'`);
-  }
   const allowed = ALLOWED_PATH_PREFIXES.some(prefix => normalized.startsWith(prefix));
   if (!allowed) {
     throw new Error(
@@ -430,6 +429,7 @@ function validateConfig(config, progress) {
   requireField(config, 'paths.progress_file');
   requireField(config, 'paths.modules_dir');
   requireField(config, 'models');
+  requireField(config, 'models.forge');
   requireField(config, 'models.buster');
   requireField(config, 'agents');
   requireField(config, 'agents.forge');
@@ -448,9 +448,10 @@ function validateConfig(config, progress) {
   }
 
   // Defaults (set if missing, don't error)
-  if (!config.poll_interval_seconds) config.poll_interval_seconds = 30;
-  if (!config.default_timeout_minutes) config.default_timeout_minutes = 45;
-  if (!config.default_max_fails) config.default_max_fails = 3;
+  // ??= only fills null/undefined — explicit 0 is preserved (e.g. max_fails: 0 = "never retry")
+  config.poll_interval_seconds ??= 30;
+  config.default_timeout_minutes ??= 45;
+  config.default_max_fails ??= 3;
 
   // ---- Progress fields ----
   requireField(progress, 'project', 'progress');
@@ -472,6 +473,7 @@ function validateConfig(config, progress) {
     if (gate.type === 'review') {
       if (!gate.review_name) errors.push(`progress.gates.${gateId}.review_name: required for review gates`);
       if (!gate.instructions_file) errors.push(`progress.gates.${gateId}.instructions_file: required`);
+      if (!gate.output_file) errors.push(`progress.gates.${gateId}.output_file: required for review gates (findNextStep uses it as completion signal)`);
       if (!gate.on_nogo) {
         errors.push(`progress.gates.${gateId}.on_nogo: required (${validOnNogo.join(' | ')})`);
       } else if (!validOnNogo.includes(gate.on_nogo)) {
@@ -481,6 +483,7 @@ function validateConfig(config, progress) {
 
     if (gate.type === 'buster') {
       if (!gate.instructions_file) errors.push(`progress.gates.${gateId}.instructions_file: required`);
+      if (!gate.output_file) errors.push(`progress.gates.${gateId}.output_file: required for buster gates (primary completion signal)`);
       if (gate.on_fail && !validOnFail.includes(gate.on_fail)) {
         errors.push(`progress.gates.${gateId}.on_fail: '${gate.on_fail}' not valid`);
       }
@@ -533,6 +536,9 @@ function modulePath(config, dir)   { return path.join(config.paths.modules_dir, 
 function statusPath(config, dir)   { return path.join(modulePath(config, dir), 'status.json'); }
 function swarmRoot(config)         { return config.paths.swarm_dir; }
 
+/** Project source root — where agents should read/write code. Derived from swarm_dir (parent of .swarm). */
+function projectSrcPath(config)    { return path.dirname(config.paths.swarm_dir); }
+
 /** Convert absolute path back to repo-relative (for git commands and payloads) */
 function relPath(config, absPath)  { return path.relative(config.repo_root, absPath); }
 
@@ -545,7 +551,25 @@ function loadStatus(config, dir) {
   const p = statusPath(config, dir);
   if (!fs.existsSync(p)) return null;
   try {
-    return JSON.parse(fs.readFileSync(p, 'utf8'));
+    const parsed = JSON.parse(fs.readFileSync(p, 'utf8'));
+
+    // Defensive defaults for safety-critical fields. If an agent overwrites
+    // status.json with a minimal object (e.g. { "status": "FAIL", "reason": "..." }),
+    // the pipeline would crash on .push(), .map(), .length, or ++ of missing fields.
+    // Spread preserves any existing values; defaults only fill gaps.
+    const STATUS_DEFAULTS = {
+      fail_summaries: [],
+      fail_count: 0,
+      history: [],
+      decayed_memory_ids: [],
+      cost: {
+        forge_tokens_in: 0, forge_tokens_out: 0,
+        buster_tokens_in: 0, buster_tokens_out: 0,
+        total_duration_seconds: 0,
+      },
+    };
+
+    return { ...STATUS_DEFAULTS, ...parsed };
   } catch (e) {
     // JSON parse can fail due to:
     // - Git merge conflict markers in the file
@@ -858,7 +882,7 @@ function listBlueprints(config) {
   }
 }
 
-async function releaseBlueprint(config, moduleId, moduleDir) {
+async function releaseBlueprint(config, moduleId, moduleDir, stages = ['forge', 'buster']) {
   const branch = `${config.project}/architecture`;
   const targetPath = relPath(config, modulePath(config, moduleDir));
 
@@ -874,8 +898,12 @@ async function releaseBlueprint(config, moduleId, moduleDir) {
   try { gitExec(config.repo_root, ['fetch', 'origin', branch], { stdio: 'ignore' }); }
   catch { log('WARN', `Could not fetch origin/${branch}, using local cache`); }
 
-  // Verify module has required files in architecture branch
-  const requiredFiles = ['FORGE.md', 'BUSTER.md'];
+  // Verify module has required files in architecture branch.
+  // Stage-aware: only require files for configured stages.
+  // stages: ['forge'] → FORGE.md only, ['buster'] → BUSTER.md only, both → both.
+  const requiredFiles = [];
+  if (stages.includes('forge'))  requiredFiles.push('FORGE.md');
+  if (stages.includes('buster')) requiredFiles.push('BUSTER.md');
   for (const file of requiredFiles) {
     try {
       gitExec(config.repo_root, ['cat-file', '-e', `origin/${branch}:${targetPath}/${file}`], { stdio: 'ignore' });
@@ -1021,7 +1049,7 @@ function buildBusterPayload(config, progress, moduleId, taskType, taskPrompt, st
       instructions: taskPrompt,
       session: {
         runtime: 'subagent',
-        timeout_seconds: (mod?.timeout_minutes || config.default_timeout_minutes) * 60,
+        timeout_seconds: (mod?.timeout_minutes ?? config.default_timeout_minutes) * 60,
         label: `buster-test-${moduleId}-${Date.now()}`,
       },
       module_path: mod ? relPath(config, modulePath(config, mod.dir)) : null,
@@ -1032,7 +1060,7 @@ function buildBusterPayload(config, progress, moduleId, taskType, taskPrompt, st
 
   if (taskType === 'gate_test') {
     const gate = opts.gate || progress.gates?.[moduleId] || {};
-    const gateTimeout = gate.timeout_minutes || config.default_timeout_minutes;
+    const gateTimeout = gate.timeout_minutes ?? config.default_timeout_minutes;
     return {
       ...base,
       instructions: taskPrompt,
@@ -1387,7 +1415,7 @@ async function getMemoryModule(config) {
 async function recallForModule(config, moduleId, moduleTitle, additionalContext = '', failContext = '') {
   if (!memoryEnabled(config)) return { block: '', count: 0, ids: [] };
 
-  const limit = config.memory?.recall_limit || 5;
+  const limit = config.memory?.recall_limit ?? 5;
   const memPath = memoryJsPath(config);
   const isRetry = !!failContext;
 
@@ -1556,7 +1584,7 @@ async function decayRecalledMemories(config, moduleId, memoryIds, status, reason
       await memModule.decayByIds(newIds, {
         module: moduleId,
         reason: reason.slice(0, 500),
-        decay_amount: config.memory?.targeted_decay_amount || 0.1,
+        decay_amount: config.memory?.targeted_decay_amount ?? 0.1,
       });
     } else if (memModule?.feedback) {
       // Fallback: use feedback with explicit IDs if supported
@@ -1733,7 +1761,7 @@ async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes) {
  */
 async function withRateLimitRecovery(config, moduleDir, pollFn) {
   let rateLimitPauses = 0;
-  const maxPauses = config.rate_limit?.max_pauses_per_module || 5;
+  const maxPauses = config.rate_limit?.max_pauses_per_module ?? 5;
 
   while (true) {
     const result = await pollFn();
@@ -1777,7 +1805,7 @@ async function pollDualWithRateLimitRecovery(config, moduleDir, moduleId, expect
 // The timeout clock is frozen during the pause.
 
 async function handleRateLimit(config, callerStatus, moduleDir, pauseCount = 1, maxPauses = 5) {
-  const cooldownHours = config.rate_limit?.cooldown_hours || 2;
+  const cooldownHours = config.rate_limit?.cooldown_hours ?? 2;
   const cooldownMs = cooldownHours * 60 * 60 * 1000;
   const resumeAt = new Date(Date.now() + cooldownMs);
 
@@ -1820,9 +1848,8 @@ async function handleRateLimit(config, callerStatus, moduleDir, pauseCount = 1, 
 }
 
 // ─── Redis Completion Reader ────────────────────────────────────────────────
-// Reads the Buster completion stream for a specific module's result.
-// Spawns a short-lived Node subprocess (consistent with existing redis.js pattern).
-// Returns the latest completion entry for the module, or null.
+// Reads the Buster completion stream via direct import of redis.js.
+// Single connection reused across all poll cycles — no temp files, no subprocess spawns.
 //
 // Archive pattern:
 //   Active stream:  swarm:pipeline:<project>:completions     (current entries)
@@ -1835,105 +1862,61 @@ async function handleRateLimit(config, callerStatus, moduleDir, pauseCount = 1, 
 
 const COMPLETION_ARCHIVE_MAX_LEN = 1000;
 
-/**
- * Generate the Redis connection boilerplate for inline CJS scripts.
- * Centralizes host/port/password config so Redis connection changes
- * only need to happen in one place (or via environment variables).
- * Used by archiveModuleCompletions and readCompletionFromRedis.
- */
-function redisConnectionBlock() {
-  return [
-    `const Redis = require('ioredis');`,
-    `const redis = new Redis({`,
-    `  host: process.env.REDIS_HOST || 'redis-master.default.svc.cluster.local',`,
-    `  port: parseInt(process.env.REDIS_PORT || '6379'),`,
-    `  password: process.env.REDIS_PASSWORD,`,
-    `  connectTimeout: 5000,`,
-    `});`,
-  ].join('\n');
+let _redisModule = null;
+let _redisImportAttempted = false;
+
+async function getRedisModule(config) {
+  if (_redisImportAttempted) return _redisModule;
+  _redisImportAttempted = true;
+
+  const agentConf = Object.values(config.agents || {}).find(
+    a => typeof a === 'object' && a?.dispatch === 'redis' && a?.redis_js_path
+  );
+  const redisPath = agentConf?.redis_js_path || '/app/skills/redis.js';
+
+  try {
+    const validated = validateSafePath(redisPath, 'redis.js (completion reader)');
+    const mod = await import(validated);
+    _redisModule = mod.default;
+    log('INFO', 'Redis module loaded via direct import');
+  } catch (e) {
+    log('ERROR', `Redis module import failed: ${e.message} — completion polling will fall back to Git only`);
+    _redisModule = null;
+  }
+  return _redisModule;
 }
 
 /**
  * Archive old completion entries for a module before dispatching a new Buster attempt.
- * Moves entries from the active completion stream to the archive stream, then deletes
- * them from active. This prevents pollDual from reading stale FAIL/PASS entries
- * from a previous attempt.
+ * Moves entries from the active stream to the archive stream, preventing pollDual
+ * from reading stale FAIL/PASS entries from a previous attempt.
  *
  * Called once before each Buster dispatch (not on every poll cycle).
  */
-function archiveModuleCompletions(config, moduleId) {
+async function archiveModuleCompletions(config, moduleId) {
   const stream = completionStreamKey(config);
   const archiveStream = `${stream}:log`;
 
-  const script = [
-    redisConnectionBlock(),
-    `(async () => {`,
-    `  try {`,
-    `    const entries = await redis.xrange(${JSON.stringify(stream)}, '-', '+', 'COUNT', 200);`,
-    `    let archived = 0;`,
-    `    for (const [id, fields] of entries) {`,
-    `      const data = {};`,
-    `      for (let i = 0; i < fields.length; i += 2) data[fields[i]] = fields[i + 1];`,
-    `      if (data.module !== ${JSON.stringify(moduleId)}) continue;`,
-    `      // Copy to archive stream`,
-    `      const archiveFields = [...fields, 'archived_at', Date.now().toString()];`,
-    `      await redis.xadd(${JSON.stringify(archiveStream)}, '*', ...archiveFields);`,
-    `      // Delete from active stream`,
-    `      await redis.xdel(${JSON.stringify(stream)}, id);`,
-    `      archived++;`,
-    `    }`,
-    `    // Trim archive to prevent unbounded growth`,
-    `    await redis.xtrim(${JSON.stringify(archiveStream)}, 'MAXLEN', '~', ${COMPLETION_ARCHIVE_MAX_LEN});`,
-    `    console.log(JSON.stringify({ archived }));`,
-    `  } catch (e) { console.log(JSON.stringify({ archived: 0, error: e.message })); }`,
-    `  finally { await redis.quit(); }`,
-    `})();`,
-  ].join('\n');
-
-  const tmpPath = tmpFile('redis-archive', moduleId, '.cjs');
-  fs.writeFileSync(tmpPath, script);
-
   try {
-    const result = nodeExec(tmpPath, [], { timeout: 5000, env: process.env });
-    const parsed = JSON.parse(result);
-    if (parsed.archived > 0) {
-      log('INFO', `Archived ${parsed.archived} old completion(s) for ${moduleId} → ${archiveStream}`);
+    const redisMod = await getRedisModule(config);
+    if (!redisMod) return { archived: 0 };
+    const result = await redisMod.archiveCompletions(stream, archiveStream, moduleId, COMPLETION_ARCHIVE_MAX_LEN);
+    if (result.archived > 0) {
+      log('INFO', `Archived ${result.archived} old completion(s) for ${moduleId} → ${archiveStream}`);
     }
-    return parsed;
+    return result;
   } catch (e) {
     log('DEBUG', `Completion archive failed (non-critical): ${e.message}`);
     return { archived: 0 };
   }
 }
 
-function readCompletionFromRedis(config, moduleId) {
+async function readCompletionFromRedis(config, moduleId) {
   const stream = completionStreamKey(config);
-
-  const script = [
-    redisConnectionBlock(),
-    `(async () => {`,
-    `  try {`,
-    `    const entries = await redis.xrange(${JSON.stringify(stream)}, '-', '+', 'COUNT', 100);`,
-    `    const match = entries`,
-    `      .map(([id, fields]) => {`,
-    `        const o = { _id: id };`,
-    `        for (let i = 0; i < fields.length; i += 2) o[fields[i]] = fields[i + 1];`,
-    `        return o;`,
-    `      })`,
-    `      .filter(e => e.type === 'completion' && e.module === ${JSON.stringify(moduleId)})`,
-    `      .pop();`,
-    `    console.log(JSON.stringify(match || null));`,
-    `  } catch { console.log('null'); }`,
-    `  finally { await redis.quit(); }`,
-    `})();`,
-  ].join('\n');
-
-  const tmpPath = tmpFile('redis-poll', moduleId, '.cjs');
-  fs.writeFileSync(tmpPath, script);
-
   try {
-    const result = nodeExec(tmpPath, [], { timeout: 5000, env: process.env });
-    return JSON.parse(result);
+    const redisMod = await getRedisModule(config);
+    if (!redisMod) return null;
+    return await redisMod.readCompletion(stream, moduleId);
   } catch {
     return null;
   }
@@ -1951,7 +1934,7 @@ async function pollDual(config, moduleDir, moduleId, expectedStatuses, timeoutMi
   return pollGeneric(config, async () => {
     // ── Channel 1: Redis Completion Stream (fast path) ──
     try {
-      const redisEntry = readCompletionFromRedis(config, moduleId);
+      const redisEntry = await readCompletionFromRedis(config, moduleId);
       if (redisEntry && redisEntry.status) {
         const mappedStatus = mapRedisStatus(redisEntry.status);
         log('OK', `Redis completion: status=${redisEntry.status} mapped=${mappedStatus} source=${redisEntry.source || 'unknown'}`);
@@ -2065,7 +2048,7 @@ function checkDependencies(config, progress, moduleId) {
     return { met: false, reason: `Module ${moduleId} not found` };
   }
 
-  for (const dep of mod.depends_on) {
+  for (const dep of mod.depends_on || []) {
     if (dep.startsWith('gate:')) {
       const gateId = dep.replace('gate:', '');
       const gate = progress.gates[gateId];
@@ -2126,20 +2109,43 @@ function checkDependencies(config, progress, moduleId) {
 
 // ─── Failure Handler ─────────────────────────────────────────────────────────
 
+/**
+ * Extract a meaningful failure reason from the agent's status.json output.
+ * Agents may write their failure details to various fields — this function
+ * checks them in priority order and returns the best available reason.
+ * Used by callers of handleFail to always provide informative anti-pattern data.
+ */
+function extractAgentFailReason(status, phase) {
+  // Check last history entry from the agent (not from 'pipeline')
+  const agentHistory = [...(status.history || [])].reverse()
+    .find(h => h.agent !== 'pipeline' && h.note);
+  if (agentHistory?.note) return `[${phase}] ${agentHistory.note}`;
+
+  // Check completion_summary (Buster sometimes writes here on fail)
+  if (status.completion_summary) return `[${phase}] ${status.completion_summary}`;
+
+  // Fallback
+  return `${phase} reported FAIL (no details from agent)`;
+}
+
 async function handleFail(config, status, moduleDir, moduleId, maxFails, phase, reason, opts = {}) {
   const isTimeout = opts.isTimeout || false;
   const recalledMemoryIds = opts.recalledMemoryIds || [];
 
+  // ALWAYS increment fail_count — this is the safety-critical counter that
+  // drives BLOCKED detection and auto-retry thresholds. Without unconditional
+  // increment, a missing reason would cause an infinite retry loop.
+  status.fail_count++;
+
   if (reason) {
     status.fail_summaries.push({
-      attempt: status.fail_count + 1,
+      attempt: status.fail_count,
       timestamp: new Date().toISOString(),
       summary: reason,
       phase,
       is_timeout: isTimeout,
       files_changed: status.forge_diff_stat || null,
     });
-    status.fail_count++;
   }
 
   // ── Memory feedback strategy ──
@@ -2298,6 +2304,211 @@ function buildNovaEscalation(config, status, moduleId, moduleDir, maxFails, phas
   };
 }
 
+// ─── Lint Report Generation ─────────────────────────────────────────────────
+//
+// Shared core for running lint-report.js. Used by:
+//   1. runPreCheck()     — fast Tier 1 check after Forge, before Buster
+//   2. _runReviewOnce()  — full Tier 2 report injected into reviewer prompt
+//
+// Returns the parsed JSON report or null on failure. Never throws —
+// callers decide how to handle degradation.
+
+/**
+ * Run lint-report.js and return the parsed JSON report.
+ *
+ * @param {object} config - Pipeline config
+ * @param {string} tier - 'pre-check' or 'full'
+ * @param {object} opts
+ * @param {string} opts.moduleDir - Module directory name (for --module-path)
+ * @param {string} opts.moduleId - Module identifier (for temp file naming)
+ * @param {string|null} opts.forgeDiffStat - forge_diff_stat from status.json (for --changed-files)
+ * @param {number} opts.timeoutMs - Timeout in ms (default: 30000 for pre-check, 120000 for full)
+ * @returns {{ report: object|null, error: string|null }}
+ */
+function generateLintReport(config, tier, opts = {}) {
+  const lintReportPath = validateSafePath(
+    config.pre_check?.lint_report_path || '/app/skills/lint-report.js',
+    'config.pre_check.lint_report_path'
+  );
+
+  if (!fs.existsSync(lintReportPath)) {
+    log('WARN', `lint-report.js not found at ${lintReportPath}`);
+    return { report: null, error: `lint-report.js not found at ${lintReportPath}` };
+  }
+
+  const defaultTimeout = tier === 'pre-check' ? 30000 : 120000;
+  const timeout = opts.timeoutMs || defaultTimeout;
+  const outputPath = tmpFile(`lint-${tier}`, opts.moduleId || 'report', '.json');
+
+  const args = [
+    '--repo', config.repo_root,
+    '--tier', tier,
+    '--project', config.project,
+    '--output', outputPath,
+  ];
+
+  // Pass semgrep config path if configured (platform-level, not repo-level)
+  if (config.pre_check?.semgrep_config_path) {
+    args.push('--semgrep-config', config.pre_check.semgrep_config_path);
+  }
+
+  if (opts.moduleDir) {
+    const modRelPath = relPath(config, modulePath(config, opts.moduleDir));
+    args.push('--module-path', modRelPath);
+  }
+
+  if (opts.forgeDiffStat) {
+    const changedFiles = opts.forgeDiffStat
+      .split('\n')
+      .map(line => line.trim().split(/\s+\|/)[0]?.trim())
+      .filter(f => f && !f.includes('changed') && !f.includes('insertion') && !f.includes('deletion'));
+
+    if (changedFiles.length > 0) {
+      args.push('--changed-files', changedFiles.join(','));
+    }
+  }
+
+  log('STEP', `Lint report: running lint-report.js --tier ${tier}`);
+
+  try {
+    nodeExec(lintReportPath, args, { timeout, env: process.env });
+  } catch (e) {
+    if (!fs.existsSync(outputPath)) {
+      log('WARN', `lint-report.js crashed: ${e.message?.split('\n')[0]}`);
+      return { report: null, error: e.message };
+    }
+    // Non-zero exit with output file = errors found (expected)
+  }
+
+  try {
+    const report = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+    const { total_errors, total_warnings, tools_ok, tools_failed } = report.summary;
+    log('INFO', `Lint report (${tier}): ${total_errors} errors, ${total_warnings} warnings (${tools_ok} ok, ${tools_failed} failed)`);
+    return { report, error: null };
+  } catch (e) {
+    log('WARN', `Lint report unparseable: ${e.message}`);
+    return { report: null, error: e.message };
+  }
+}
+
+/**
+ * Format lint report errors into a human-readable summary for anti-pattern blocks.
+ * Groups by tool, shows only errors, caps at 20 per tool.
+ */
+function formatLintErrors(report) {
+  const errorLines = [];
+  for (const [toolId, toolResult] of Object.entries(report.tools)) {
+    if (toolResult.status !== 'ok' || toolResult.errors === 0) continue;
+    errorLines.push(`### ${toolId}: ${toolResult.errors} error(s)`);
+    const errors = (toolResult.findings || []).filter(f => f.severity === 'error');
+    for (const finding of errors.slice(0, 20)) {
+      const loc = finding.line ? `:${finding.line}` : '';
+      errorLines.push(`- \`${finding.file || '?'}${loc}\`: ${finding.message}${finding.code ? ` (${finding.code})` : ''}`);
+    }
+    if (errors.length > 20) {
+      errorLines.push(`- ... and ${errors.length - 20} more`);
+    }
+    errorLines.push('');
+  }
+  return errorLines.join('\n');
+}
+
+/**
+ * Format lint report as a structured block for injection into a reviewer prompt.
+ * Includes both errors and warnings, grouped by tool.
+ */
+function formatLintReportForReviewer(report) {
+  const lines = [
+    '## 📊 STATIC ANALYSIS REPORT (Automated)',
+    '',
+    `**Tier:** ${report.tier} | **Timestamp:** ${report.timestamp}`,
+    `**Summary:** ${report.summary.total_errors} errors, ${report.summary.total_warnings} warnings`,
+    `**Tools:** ${report.summary.tools_ok} passed, ${report.summary.tools_skipped} skipped, ${report.summary.tools_failed} failed`,
+    '',
+  ];
+
+  if (report.changed_files?.length > 0) {
+    lines.push(`**Scoped to changed files:** ${report.changed_files.join(', ')}`, '');
+  }
+
+  for (const [toolId, toolResult] of Object.entries(report.tools)) {
+    if (toolResult.status === 'skipped') continue;
+
+    if (toolResult.status === 'error') {
+      lines.push(`### ❌ ${toolId} — TOOL ERROR`, `Error: ${toolResult.error}`, '');
+      continue;
+    }
+
+    if (toolResult.errors === 0 && toolResult.warnings === 0) {
+      lines.push(`### ✅ ${toolId} — clean`);
+      continue;
+    }
+
+    lines.push(`### ${toolResult.errors > 0 ? '🔴' : '🟡'} ${toolId} — ${toolResult.errors} errors, ${toolResult.warnings} warnings`);
+    lines.push('');
+
+    const findings = toolResult.findings || [];
+    for (const finding of findings.slice(0, 30)) {
+      const loc = finding.line ? `:${finding.line}` : '';
+      const icon = finding.severity === 'error' ? '🔴' : '🟡';
+      lines.push(`${icon} \`${finding.file || '?'}${loc}\`: ${finding.message}${finding.code ? ` (${finding.code})` : ''}`);
+    }
+    if (findings.length > 30) {
+      lines.push(`... and ${findings.length - 30} more findings`);
+    }
+    lines.push('');
+  }
+
+  lines.push('---', '');
+  return lines.join('\n');
+}
+
+// ─── Pre-Check (Forge Output Validation) ────────────────────────────────────
+//
+// Runs fast Tier 1 analysis on Forge output BEFORE handing off to Buster.
+// On failure: routes to handleFail with pre_check phase — Forge gets the
+// exact errors as anti-patterns and can retry immediately.
+
+/**
+ * Run pre-check static analysis on Forge output.
+ *
+ * @param {object} config - Pipeline config
+ * @param {string} moduleDir - Module directory name
+ * @param {object} status - Module status object (for forge_diff_stat)
+ * @param {string} moduleId - Module identifier
+ * @returns {{ passed: boolean, report: object|null, error: string|null }}
+ */
+async function runPreCheck(config, moduleDir, status, moduleId) {
+  if (config.pre_check?.enabled === false) {
+    log('INFO', 'Pre-check disabled via config');
+    return { passed: true, report: null, error: null };
+  }
+
+  const timeout = (config.pre_check?.timeout_seconds || 30) * 1000;
+  const { report, error } = generateLintReport(config, 'pre-check', {
+    moduleDir,
+    moduleId,
+    forgeDiffStat: status.forge_diff_stat,
+    timeoutMs: timeout,
+  });
+
+  if (!report) {
+    log('WARN', `Pre-check skipped: ${error}`);
+    return { passed: true, report: null, error };
+  }
+
+  if (report.summary.total_errors === 0) {
+    log('OK', 'Pre-check passed — no errors found');
+    return { passed: true, report, error: null };
+  }
+
+  const errorSummary = `PRE-CHECK FAILED: ${report.summary.total_errors} static analysis error(s) in Forge output.\n\n` +
+    formatLintErrors(report);
+
+  log('WARN', `Pre-check failed: ${report.summary.total_errors} errors — routing to handleFail`);
+  return { passed: false, report, error: errorSummary };
+}
+
 // ─── Forge Prompt Assembly ───────────────────────────────────────────────────
 //
 // Builds the complete prompt for a Forge agent, with explicit priority hierarchy.
@@ -2331,6 +2542,7 @@ async function buildForgePrompt(config, moduleId, mod, dir, status, maxFails, no
     '',
     `**Project:** ${config.project}`,
     `**Module:** ${moduleId} — ${mod.title}`,
+    `**Project Source:** \`${relPath(config, projectSrcPath(config))}\``,
     `**Module Path:** \`${relPath(config, modulePath(config, dir))}\``,
     `**Status JSON:** \`${relPath(config, statusPath(config, dir))}\``,
     `**Repo Root:** \`${config.repo_root}\``,
@@ -2341,6 +2553,9 @@ async function buildForgePrompt(config, moduleId, mod, dir, status, maxFails, no
     status.forge_commit_hash
       ? `**Last Forge Commit:** \`${status.forge_commit_hash.substring(0, 8)}\``
       : '',
+    '',
+    'All file paths in your instructions below are relative to **Project Source**.',
+    `\`cd ${relPath(config, projectSrcPath(config))}\` before creating or modifying any files.`,
     '',
     '---',
     '',
@@ -2466,8 +2681,8 @@ async function runModule(config, progress, moduleId, opts = {}) {
   if (!mod) throw new Error(`Module ${moduleId} not in progress.json`);
 
   const dir = mod.dir;
-  const timeout = mod.timeout_minutes || config.default_timeout_minutes;
-  const maxFails = mod.max_fails || config.default_max_fails;
+  const timeout = mod.timeout_minutes ?? config.default_timeout_minutes;
+  const maxFails = mod.max_fails ?? config.default_max_fails;
   const novaPrompt = opts.novaPrompt || null;
 
   // Set logging context for this module
@@ -2544,7 +2759,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
   }
   if (!status || status.status === STATUS.PENDING) {
     try {
-      await releaseBlueprint(config, moduleId, dir);
+      await releaseBlueprint(config, moduleId, dir, mod.stages || ['forge', 'buster']);
     } catch (e) {
       log('ERROR', `Blueprint release failed: ${e.message}`);
       return { retry: false, result: {
@@ -2661,7 +2876,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
 
       // blocked or FAIL without details
       const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'forge',
-        status.fail_summaries.length > 0 ? null : 'Forge reported FAIL without details', { recalledMemoryIds });
+        extractAgentFailReason(status, 'forge'), { recalledMemoryIds });
       if (failResult._retry) return { retry: true, fail_count: status.fail_count };
       return { retry: false, result: failResult };
     }
@@ -2670,7 +2885,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
 
     if (status.status === STATUS.FAIL || status.status === STATUS.BLOCKED) {
       const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'forge',
-        status.fail_summaries.length > 0 ? null : 'Forge reported FAIL without details', { recalledMemoryIds });
+        extractAgentFailReason(status, 'forge'), { recalledMemoryIds });
       if (failResult._retry) return { retry: true, fail_count: status.fail_count };
       return { retry: false, result: failResult };
     }
@@ -2731,6 +2946,33 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
   }
 
   // ──────────────────────────────────────────────────────────────────────────
+  //  PRE-CHECK (Forge output validation)
+  //  Fast static analysis (tsc, ruff, shellcheck) on Forge output.
+  //  Catches type errors in seconds instead of burning a 45-min Buster cycle.
+  //  Only runs when Forge produced output AND Buster will follow.
+  //  On failure: handleFail with pre_check phase → Forge retry with errors.
+  // ──────────────────────────────────────────────────────────────────────────
+  if (stages.includes('forge') && stages.includes('buster')
+      && status.status === STATUS.READY_FOR_TESTING && needsForge) {
+
+    const preCheckResult = await runPreCheck(config, dir, status, moduleId);
+
+    if (!preCheckResult.passed) {
+      log('WARN', `Pre-check failed for ${moduleId} — routing to Forge retry (skipping Buster)`);
+      await discord(config, 'WARN', `Module ${moduleId} PRE-CHECK FAIL`,
+        `Static analysis found errors in Forge output. Retrying without Buster.`, [
+          { name: 'Errors', value: String(preCheckResult.report?.summary?.total_errors || '?') },
+          { name: 'Phase', value: 'pre_check' },
+        ]);
+
+      const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'pre_check',
+        preCheckResult.error, { recalledMemoryIds });
+      if (failResult._retry) return { retry: true, fail_count: status.fail_count };
+      return { retry: false, result: failResult };
+    }
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────
   //  GIT SYNC (Forge → Buster handoff)
   //  Ensures Buster always works on committed, pushed code.
   //  Records commit hash in status.json for traceability.
@@ -2769,8 +3011,13 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
         '## Test Target',
         '',
         `**Module:** ${moduleId} — ${mod.title}`,
+        `**Project Source:** \`${relPath(config, projectSrcPath(config))}\``,
         `**Module Path:** \`${relPath(config, modulePath(config, dir))}\``,
         `**Status JSON:** \`${relPath(config, statusPath(config, dir))}\``,
+        `**Repo Root:** \`${config.repo_root}\``,
+        '',
+        'All file paths in the test instructions below are relative to **Project Source**.',
+        `\`cd ${relPath(config, projectSrcPath(config))}\` before running any tests.`,
       ];
       if (status.forge_commit_hash) {
         testTargetLines.push(`**Commit:** \`${status.forge_commit_hash.substring(0, 8)}\``);
@@ -2782,9 +3029,13 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
         '', '---', '',
         '## Completion Protocol',
         '',
-        `When testing is complete, update \`${relPath(config, statusPath(config, dir))}\` with your result:`,
-        '- **PASS:** `{ "status": "PASS", "completion_summary": "<what was tested and confirmed>" }`',
-        '- **FAIL:** `{ "status": "FAIL", "reason": "<specific failure description for retry context>" }`',
+        `**Status file:** \`${relPath(config, statusPath(config, dir))}\``,
+        '',
+        'This file contains pipeline metadata (fail_count, history, etc.). Do NOT overwrite it.',
+        'Read the existing JSON, then set ONLY the fields shown below:',
+        '',
+        '- **PASS:** set `"status": "PASS"` and `"completion_summary": "<what was tested and confirmed>"`',
+        '- **FAIL:** set `"status": "FAIL"` and `"reason": "<specific failure description for retry context>"`',
         '',
         'Then signal completion via your redis.js skill.',
         '', '---', ''
@@ -2801,7 +3052,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
 
     // Archive old completion entries for this module before dispatching.
     // Prevents pollDual from reading stale FAIL/PASS from a previous attempt.
-    archiveModuleCompletions(config, moduleId);
+    await archiveModuleCompletions(config, moduleId);
 
     try { spawnAgent(config, progress, 'buster', moduleId, config.models.buster, busterPrompt, { status, taskType: 'module_test' }); }
     catch (e) {
@@ -2842,6 +3093,12 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
         if (failResult._retry) return { retry: true, fail_count: status.fail_count };
         return { retry: false, result: failResult };
       }
+
+      // Catch-all: blocked or other unhandled poll reasons (mirrors Forge path)
+      const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'buster',
+        extractAgentFailReason(status, 'buster'), { recalledMemoryIds });
+      if (failResult._retry) return { retry: true, fail_count: status.fail_count };
+      return { retry: false, result: failResult };
     }
 
     status = loadStatus(config, dir) || status;
@@ -2878,9 +3135,9 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
       return { retry: false, result: { exit: EXIT_OK, status: STATUS.PASS } };
     }
 
-    if (status.status === STATUS.FAIL) {
+    if (status.status === STATUS.FAIL || status.status === STATUS.BLOCKED) {
       const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'buster',
-        status.fail_summaries.length > 0 ? null : 'Buster reported FAIL without details', { recalledMemoryIds });
+        extractAgentFailReason(status, 'buster'), { recalledMemoryIds });
       if (failResult._retry) return { retry: true, fail_count: status.fail_count };
       return { retry: false, result: failResult };
     }
@@ -2909,8 +3166,10 @@ async function _runBusterGateOnce(config, progress, gateId, gate, model, timeout
   // between fix cycles when Forge pushes new code.
   const commitHash = headHash() || gitExec(config.repo_root, ['rev-parse', '--short', 'HEAD']);
   const enrichedInstructions = `## Test Target\n\n`
-    + `**Commit:** \`${commitHash}\`\n`
-    + `**Gate:** ${gateId} — ${gate.title}\n\n---\n\n`
+    + `**Gate:** ${gateId} — ${gate.title}\n`
+    + `**Project Source:** \`${relPath(config, projectSrcPath(config))}\`\n`
+    + `**Repo Root:** \`${config.repo_root}\`\n`
+    + `**Commit:** \`${commitHash}\`\n\n---\n\n`
     + instructions;
 
   try {
@@ -3012,8 +3271,12 @@ function buildGateFixPrompt(config, gate, issues, attempt, maxAttempts, fixHisto
     `## Gate Fix: ${gate.title} (Attempt ${attempt}/${maxAttempts})`,
     '',
     `**Project:** ${config.project}`,
+    `**Project Source:** \`${relPath(config, projectSrcPath(config))}\``,
     `**Working Directory:** \`${relPath(config, swarmRoot(config))}\``,
     `**Repo Root:** \`${config.repo_root}\``,
+    '',
+    'All code paths are relative to **Project Source**.',
+    `\`cd ${relPath(config, projectSrcPath(config))}\` before modifying any files.`,
     '',
   ];
 
@@ -3099,6 +3362,19 @@ async function runBusterGate(config, progress, gateId) {
     } catch { /* unparseable = not completed */ }
   }
 
+  // Clean up stale output files from previous runs BEFORE entering the main loop.
+  // Without this, _runBusterGateOnce's pollGeneric immediately finds the old FAIL
+  // file and returns a phantom gate_fail — wasting a Buster spawn + Forge fix cycle.
+  // Same cleanup pattern as the fix-loop cleanup at the bottom of the loop body.
+  if (gate.output_file) {
+    const outPath = path.join(swarmRoot(config), gate.output_file);
+    try { if (fs.existsSync(outPath)) fs.unlinkSync(outPath); } catch { /* ok */ }
+  }
+  try {
+    const gsp = gateStatusPath(config, gateId);
+    if (fs.existsSync(gsp)) fs.unlinkSync(gsp);
+  } catch { /* ok */ }
+
   let instructions;
   try { instructions = readGateInstructions(config, gate); }
   catch (e) {
@@ -3107,8 +3383,8 @@ async function runBusterGate(config, progress, gateId) {
   }
 
   const model = gate.model || config.models.buster;
-  const timeout = gate.timeout_minutes || config.default_timeout_minutes;
-  const maxFixCycles = gate.max_fix_cycles || config.default_max_fails;
+  const timeout = gate.timeout_minutes ?? config.default_timeout_minutes;
+  const maxFixCycles = gate.max_fix_cycles ?? config.default_max_fails;
   const hasFixLoop = gate.on_fail === 'fix_and_retest';
 
   await discord(config, 'INFO', `Gate: ${gate.title}`, `Starting buster gate${hasFixLoop ? ` (fix loop: max ${maxFixCycles})` : ''}`);
@@ -3116,7 +3392,7 @@ async function runBusterGate(config, progress, gateId) {
   // Rate limit tracking — gate-level, separate from module-level handleRateLimit
   // which requires moduleDir/statusDir context that gates don't have.
   let rateLimitPauses = 0;
-  const maxRateLimitPauses = config.rate_limit?.max_pauses_per_module || 5;
+  const maxRateLimitPauses = config.rate_limit?.max_pauses_per_module ?? 5;
 
   // Fix history — tracks what each previous fix attempt did so Forge
   // doesn't repeat failed approaches (anti-pattern framing for gate fixes).
@@ -3172,7 +3448,7 @@ async function runBusterGate(config, progress, gateId) {
           `Exceeded max rate limit pauses (${maxRateLimitPauses}). Pipeline cannot continue.`);
         return { exit: EXIT_RATE_LIMITED, reason: `Gate '${gateId}' exceeded max rate limit pauses` };
       }
-      const cooldownHours = config.rate_limit?.cooldown_hours || 2;
+      const cooldownHours = config.rate_limit?.cooldown_hours ?? 2;
       const cooldownMs = cooldownHours * 60 * 60 * 1000;
       const resumeAt = new Date(Date.now() + cooldownMs);
       log('WARN', `Gate '${gateId}' rate limited (pause ${rateLimitPauses}/${maxRateLimitPauses}) — sleeping ${cooldownHours}h (resume at ${resumeAt.toISOString()})`);
@@ -3217,7 +3493,7 @@ async function runBusterGate(config, progress, gateId) {
       `Attempt ${attempt}/${maxFixCycles}. Spawning Forge to fix ${issues.length} issue(s).`);
 
     const fixPrompt = buildGateFixPrompt(config, gate, issues, attempt, maxFixCycles, fixHistory);
-    const forgeModel = gate.forge_model || config.models?.forge || 'codex-5.3';
+    const forgeModel = gate.forge_model ?? config.models.forge;
     const fixLabel = `gatefix-${gateId}-${attempt}`;
     const fixAcpLabel = acpLabel('forge', fixLabel);  // Actual ACP session label
 
@@ -3236,7 +3512,7 @@ async function runBusterGate(config, progress, gateId) {
     }
 
     // Poll for Forge session completion (with crash detection)
-    const forgeTimeout = gate.timeout_minutes || config.default_timeout_minutes;
+    const forgeTimeout = gate.timeout_minutes ?? config.default_timeout_minutes;
     const sessionResult = await pollForSessionEnd(config, fixAcpLabel, forgeTimeout, fixLabel);
 
     // Safety net — kill Forge session if still running
@@ -3274,24 +3550,25 @@ async function runBusterGate(config, progress, gateId) {
 
 // ─── Review Gate Runner ──────────────────────────────────────────────────────
 //
-// Review gates spawn N reviewer agents in parallel, each writing their own
-// JSON review file. After all reviews are in, a merge script consolidates
-// them into a single output (GO / NO-GO). Fix loops are handled in Phase 5.
+// Review gates run a lint report (deterministic static analysis) then spawn
+// a single reviewer agent with the lint findings + gate instructions.
+// The reviewer produces a structured JSON review (GO / NO-GO).
+// Fix loops are handled by runReviewGate.
 //
-// Flow: resolve config → spawn reviewers → poll all files → kill all →
-//       run merge script → parse merged result → return GO/NO-GO
+// Flow: lint report → spawn reviewer → poll file → kill →
+//       parse review result → return GO/NO-GO
 
 /**
  * Resolve review configuration by merging gate-level overrides with platform defaults.
  * null values in the gate inherit from swarm.config.review_defaults.
  */
 function resolveReviewConfig(config, gate) {
-  const defaults = config.review_defaults || {};
+  const defaults = config.review_defaults ?? {};
   return {
-    reviewers: gate.reviewers || defaults.reviewers || [],
-    mergeScript: gate.merge_script || defaults.merge_script || 'echo-reviews/merge-reviews.js',
-    timeout: gate.timeout_minutes || defaults.timeout_minutes || config.default_timeout_minutes,
-    maxFixCycles: gate.max_fix_cycles || defaults.max_fix_cycles || config.default_max_fails,
+    reviewers: gate.reviewers ?? defaults.reviewers ?? [],
+    timeout: gate.timeout_minutes ?? defaults.timeout_minutes ?? config.default_timeout_minutes,
+    maxFixCycles: gate.max_fix_cycles ?? defaults.max_fix_cycles ?? config.default_max_fails,
+    lintTier: gate.lint_tier ?? defaults.lint_tier ?? 'full',
   };
 }
 
@@ -3381,165 +3658,178 @@ function killReviewerAgent(config, gateId, reviewer) {
 }
 
 /**
- * Run one complete review cycle: spawn all reviewers, poll, kill, merge, parse.
- * Returns { ok: boolean, mergedResult: object|null, mergedFilePath: string }
+ * Run one complete review cycle: lint report → single reviewer → parse.
+ *
+ * Flow:
+ *   1. Generate lint report (tier: full) — deterministic tool findings
+ *   2. Read gate instructions
+ *   3. Build reviewer prompt: instructions + lint report + output path
+ *   4. Spawn single reviewer agent (first from reviewers array)
+ *   5. Poll for single review output file
+ *   6. Kill reviewer
+ *   7. Parse the review JSON
+ *   8. Commit review output
+ *   9. Return GO / NO-GO
+ *
+ * Graceful degradation: if lint-report.js fails, the reviewer still runs
+ * without the lint data. Only if the reviewer itself fails to produce
+ * output does this return an error.
+ *
+ * Returns { ok: boolean, mergedResult: object|null, mergedFilePath: string|null, error?: string }
+ * Note: "mergedResult" naming preserved for backward compatibility with
+ * extractReviewIssues() and runReviewGate() fix loops.
  *
  * @private — called by runReviewGate, not directly
  */
 async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
-  const { reviewers, mergeScript, timeout } = reviewConfig;
+  const { reviewers, timeout, lintTier } = reviewConfig;
 
-  // Build expected output file paths
-  const expectedFiles = reviewers.map(r => reviewOutputPath(config, gate, r.label));
-
-  log('STEP', `Review cycle: ${reviewers.length} reviewers, expecting files:`);
-  for (const f of expectedFiles) {
-    log('INFO', `  ${path.basename(f)}`);
+  if (reviewers.length === 0) {
+    return { ok: false, error: 'No reviewers configured' };
   }
 
-  // Read base instructions
+  // Use the first (and typically only) reviewer
+  const reviewer = reviewers[0];
+  const outputFilePath = reviewOutputPath(config, gate, reviewer.label);
+  const relOutput = relPath(config, outputFilePath);
+
+  log('STEP', `Review cycle: reviewer=${reviewer.label}, output=${path.basename(outputFilePath)}`);
+
+  // ── Phase 1: Generate lint report ──
+  // Intentionally no moduleDir or forgeDiffStat — review gates assess the entire
+  // project (cross-module regressions, architectural issues), not a single module.
+  // Compare with runPreCheck which IS module-scoped via moduleDir + forgeDiffStat.
+  let lintBlock = '';
+  const { report: lintReport, error: lintError } = generateLintReport(config, lintTier || 'full', {
+    moduleId: gateId,
+  });
+
+  if (lintReport) {
+    lintBlock = formatLintReportForReviewer(lintReport);
+    log('OK', `Lint report ready: ${lintReport.summary.total_errors} errors, ${lintReport.summary.total_warnings} warnings`);
+  } else {
+    log('WARN', `Lint report unavailable (${lintError}) — reviewer will run without static analysis data`);
+    lintBlock = [
+      '## 📊 STATIC ANALYSIS REPORT',
+      '',
+      '⚠️ Lint report generation failed. Review the code manually for type errors, lint issues, and security concerns.',
+      `Error: ${lintError || 'unknown'}`,
+      '',
+      '---',
+      '',
+    ].join('\n');
+  }
+
+  // ── Phase 2: Build reviewer prompt ──
   let instructions;
   try { instructions = readGateInstructions(config, gate); }
   catch (e) { return { ok: false, error: e.message }; }
 
-  // Spawn all reviewers in parallel
-  const spawnErrors = [];
-  for (const reviewer of reviewers) {
-    const outputPath = reviewOutputPath(config, gate, reviewer.label);
-    const relOutput = relPath(config, outputPath);
+  const reviewerPrompt = [
+    '## Review Context',
+    '',
+    `**Project:** ${config.project}`,
+    `**Project Source:** \`${relPath(config, projectSrcPath(config))}\``,
+    `**Repo Root:** \`${config.repo_root}\``,
+    `**Gate:** ${gateId} — ${gate.title}`,
+    '',
+    '---',
+    '',
+    instructions,
+    '',
+    '---',
+    '',
+    lintBlock,
+    '## YOUR OUTPUT FILE',
+    '',
+    `You are reviewer: **${reviewer.label}** (model: ${reviewer.model})`,
+    `Write your review JSON to: \`${relOutput}\``,
+    '',
+    'Your output MUST be valid JSON with this structure:',
+    '```json',
+    '{',
+    '  "status": "GO" or "NO-GO",',
+    '  "critical_issues": [',
+    '    {',
+    '      "source": "tsc | eslint | architectural | ...",',
+    '      "description": "What is wrong",',
+    '      "affected_files": ["path/to/file.ts"],',
+    '      "recommended_fix": "How to fix it"',
+    '    }',
+    '  ],',
+    '  "deferred_issues": [],',
+    '  "summary": "Brief overall assessment"',
+    '}',
+    '```',
+    '',
+    'Rules:',
+    '- Status is GO only if there are zero critical issues.',
+    '- Lint findings that are errors (🔴) should be treated as critical unless they are false positives.',
+    '- Lint warnings (🟡) should be deferred unless they indicate a real problem.',
+    '- Add architectural issues the tools cannot detect (race conditions, security, design flaws).',
+  ].join('\n');
 
-    // Inject output path into instructions so each reviewer knows where to write
-    const reviewerInstructions = [
-      instructions,
-      '',
-      '---',
-      '',
-      `## YOUR OUTPUT FILE`,
-      '',
-      `You are reviewer: **${reviewer.label}** (model: ${reviewer.model})`,
-      `Write your review JSON to: \`${relOutput}\``,
-    ].join('\n');
+  // ── Phase 3: Spawn reviewer ──
+  // Clean up stale output from previous runs BEFORE spawning. Without this,
+  // pollForFile finds the old file instantly and returns stale review data
+  // while the reviewer hasn't even started working yet.
+  try { if (fs.existsSync(outputFilePath)) fs.unlinkSync(outputFilePath); } catch { /* ok */ }
 
-    try {
-      spawnReviewerAgent(config, gateId, reviewer, reviewerInstructions);
-    } catch (e) {
-      spawnErrors.push({ reviewer: reviewer.label, error: e.message });
-      log('ERROR', `Reviewer spawn failed: ${reviewer.label} — ${e.message}`);
-    }
+  try {
+    spawnReviewerAgent(config, gateId, reviewer, reviewerPrompt);
+  } catch (e) {
+    log('ERROR', `Reviewer spawn failed: ${reviewer.label} — ${e.message}`);
+    return { ok: false, error: `Reviewer spawn failed: ${e.message}` };
   }
 
-  // If ALL spawns failed, abort
-  if (spawnErrors.length === reviewers.length) {
-    return { ok: false, error: `All ${reviewers.length} reviewer spawns failed`, spawnErrors };
-  }
+  // ── Phase 4: Poll for review output ──
+  const pollRes = await pollForFile(config, outputFilePath, timeout, `Review '${gateId}'`);
 
-  if (spawnErrors.length > 0) {
-    log('WARN', `${spawnErrors.length}/${reviewers.length} reviewer spawn(s) failed — continuing with remaining`);
-  }
-
-  // Poll until all expected files exist
-  const pollRes = await pollForAllFiles(config, expectedFiles, timeout, `Review '${gateId}'`);
-
-  // Kill all reviewer agents (whether poll succeeded or timed out)
-  for (const reviewer of reviewers) {
-    killReviewerAgent(config, gateId, reviewer);
-  }
+  // ── Phase 5: Kill reviewer ──
+  killReviewerAgent(config, gateId, reviewer);
 
   if (!pollRes.ok) {
-    const missing = expectedFiles.filter(p => !fs.existsSync(p));
-    log('WARN', `Review poll ended: ${pollRes.reason}. Missing ${missing.length} file(s).`);
-    // If some files arrived but not all, we can still try to merge what we have
-    if (missing.length === expectedFiles.length) {
-      return { ok: false, error: `No review files received (${pollRes.reason})` };
-    }
-    log('INFO', `${expectedFiles.length - missing.length} of ${expectedFiles.length} reviews received — proceeding with merge`);
+    log('WARN', `Review poll ended: ${pollRes.reason}. Review file not received.`);
+    return { ok: false, error: `Review file not received (${pollRes.reason})` };
   }
 
-  // Run merge script
-  const mergeScriptPath = path.join(swarmRoot(config), mergeScript);
-  const reviewOutputDir = path.join(swarmRoot(config), gate.review_output_dir || 'echo-reviews');
-
-  if (!fs.existsSync(mergeScriptPath)) {
-    log('WARN', `Merge script not found: ${mergeScriptPath} — skipping merge`);
-    // Without merge, try to determine GO/NO-GO from individual reviews
-    return _parseIndividualReviews(expectedFiles, gate);
-  }
-
-  log('STEP', `Running merge script: ${mergeScript}`);
-  try {
-    nodeExec(mergeScriptPath, [reviewOutputDir, gate.review_name], {
-      timeout: 30000,
-      env: process.env,
-      cwd: config.repo_root,
-    });
-    log('OK', 'Merge script completed');
-  } catch (e) {
-    log('ERROR', `Merge script failed: ${e.message}`);
-    return _parseIndividualReviews(expectedFiles, gate);
-  }
-
-  // Commit merged output
+  // ── Phase 6: Commit review output ──
   await gitCommitAndPush(config,
-    `[pipeline] Review merged: ${gate.review_name}`,
+    `[pipeline] Review: ${gate.review_name} (${reviewer.label})`,
     { softFail: true }
   );
 
-  // Parse merged result
-  const mergedFilePath = path.join(swarmRoot(config), gate.output_file);
-  if (!fs.existsSync(mergedFilePath)) {
-    log('WARN', `Merged output file not found: ${mergedFilePath}`);
-    return _parseIndividualReviews(expectedFiles, gate);
+  // ── Phase 7: Parse review result ──
+  // Copy to gate output_file location if it differs from reviewer output path
+  if (gate.output_file) {
+    const gateOutputPath = path.join(swarmRoot(config), gate.output_file);
+    if (gateOutputPath !== outputFilePath) {
+      try {
+        fs.copyFileSync(outputFilePath, gateOutputPath);
+      } catch (e) {
+        log('WARN', `Could not copy review to gate output: ${e.message}`);
+      }
+    }
   }
 
   try {
-    const mergedContent = fs.readFileSync(mergedFilePath, 'utf8');
-    // Try JSON parse (structured reviews)
+    const content = fs.readFileSync(outputFilePath, 'utf8');
     try {
-      const mergedResult = JSON.parse(mergedContent);
-      const status = (mergedResult.status || '').toUpperCase();
+      const reviewResult = JSON.parse(content);
+      const status = (reviewResult.status || '').toUpperCase();
       const isGo = status === 'GO' || status === 'PASS';
-      log('INFO', `Merged review status: ${mergedResult.status} — ${isGo ? 'GO' : 'NO-GO'}`);
-      return { ok: isGo, mergedResult, mergedFilePath };
+      log('INFO', `Review result: ${reviewResult.status} — ${isGo ? 'GO' : 'NO-GO'}`);
+      return { ok: isGo, mergedResult: reviewResult, mergedFilePath: outputFilePath };
     } catch {
-      // Markdown output — check for NO-GO/FAIL patterns
-      const isNoGo = /\bNO-GO\b|\bFAIL\b|\bcritical_blockers\b/i.test(mergedContent);
-      log('INFO', `Merged review (markdown): ${isNoGo ? 'NO-GO detected' : 'GO (no blockers found)'}`);
-      return { ok: !isNoGo, mergedResult: { raw: mergedContent }, mergedFilePath };
+      // Non-JSON output — check for NO-GO/FAIL patterns in raw text
+      const isNoGo = /\bNO-GO\b|\bFAIL\b|\bcritical_blockers\b/i.test(content);
+      log('INFO', `Review result (non-JSON): ${isNoGo ? 'NO-GO detected' : 'GO (no blockers found)'}`);
+      return { ok: !isNoGo, mergedResult: { raw: content }, mergedFilePath: outputFilePath };
     }
   } catch (e) {
-    log('ERROR', `Failed to read merged output: ${e.message}`);
+    log('ERROR', `Failed to read review output: ${e.message}`);
     return { ok: false, error: e.message };
   }
-}
-
-/**
- * Fallback: parse individual review files when merge script is unavailable or failed.
- * Returns NO-GO if any individual review has critical issues.
- * @private
- */
-function _parseIndividualReviews(expectedFiles, gate) {
-  const reviews = [];
-  let hasNoGo = false;
-
-  for (const filePath of expectedFiles) {
-    if (!fs.existsSync(filePath)) continue;
-    try {
-      const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-      reviews.push(data);
-      const status = (data.status || '').toUpperCase();
-      if (status === 'NO-GO' || status === 'FAIL') hasNoGo = true;
-      if (data.critical_issues?.length > 0 || data.critical_blockers?.length > 0) hasNoGo = true;
-    } catch {
-      log('WARN', `Could not parse review file: ${path.basename(filePath)}`);
-    }
-  }
-
-  log('INFO', `Parsed ${reviews.length} individual reviews: ${hasNoGo ? 'NO-GO' : 'GO'}`);
-  return {
-    ok: !hasNoGo,
-    mergedResult: { individual_reviews: reviews, merge_failed: true },
-    mergedFilePath: null,
-  };
 }
 
 /**
@@ -3593,8 +3883,12 @@ function buildReviewFixPrompt(config, gate, issues, attempt, maxAttempts, fixHis
     `## Review Fix: ${gate.title} (Attempt ${attempt}/${maxAttempts})`,
     '',
     `**Project:** ${config.project}`,
+    `**Project Source:** \`${relPath(config, projectSrcPath(config))}\``,
     `**Working Directory:** \`${relPath(config, swarmRoot(config))}\``,
     `**Repo Root:** \`${config.repo_root}\``,
+    '',
+    'All code paths are relative to **Project Source**.',
+    `\`cd ${relPath(config, projectSrcPath(config))}\` before modifying any files.`,
     '',
   ];
 
@@ -3657,7 +3951,7 @@ function cleanupReviewFiles(config, gate, reviewers) {
 /**
  * Run a type:"review" gate.
  *
- * Core flow: spawn N reviewers in parallel -> poll -> merge -> GO/NO-GO.
+ * Core flow: lint report → single reviewer → GO/NO-GO.
  *
  * Fix lifecycles (on_nogo):
  *   "fix_and_continue"  — Forge fixes, pipeline continues (no re-review)
@@ -3676,7 +3970,7 @@ async function runReviewGate(config, progress, gateId) {
 
   log('STEP', `\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
   log('STEP', `  REVIEW GATE: ${gate.title}`);
-  log('STEP', `  Reviewers: ${reviewers.map(r => r.label).join(', ')}`);
+  log('STEP', `  Reviewer: ${reviewers[0]?.label || 'none'} | lint_tier: ${reviewConfig.lintTier}`);
   log('STEP', `  on_nogo: ${gate.on_nogo} | max_fix_cycles: ${maxFixCycles}`);
   log('STEP', `\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
 
@@ -3707,8 +4001,8 @@ async function runReviewGate(config, progress, gateId) {
   }
 
   await discord(config, 'INFO', `Review Gate: ${gate.title}`,
-    `Starting ${reviewers.length} parallel reviewers`, [
-      { name: 'Reviewers', value: reviewers.map(r => r.label).join(', ') },
+    `Reviewer: ${reviewers[0]?.label || 'none'} with lint report (tier: ${reviewConfig.lintTier})`, [
+      { name: 'Reviewer', value: reviewers[0]?.label || 'none' },
       { name: 'on_nogo', value: gate.on_nogo },
     ]);
 
@@ -3722,7 +4016,7 @@ async function runReviewGate(config, progress, gateId) {
 
   if (reviewResult.ok) {
     log('OK', `Review gate '${gateId}' GO`);
-    await discord(config, 'OK', `Review: ${gate.title} GO`, 'All reviewers approved');
+    await discord(config, 'OK', `Review: ${gate.title} GO`, 'Review approved');
     return { exit: EXIT_OK, status: STATUS.PASS };
   }
 
@@ -3746,7 +4040,7 @@ async function runReviewGate(config, progress, gateId) {
       }
 
       const fixPrompt = buildReviewFixPrompt(config, gate, issues, cycle, maxFixCycles, fixHistory);
-      const forgeModel = gate.forge_model || config.models?.forge || 'codex-5.3';
+      const forgeModel = gate.forge_model ?? config.models.forge;
       const fixLabel = `reviewfix-${gateId}-${cycle}`;
       const fixAcpLabel = acpLabel('forge', fixLabel);
 
@@ -3763,7 +4057,7 @@ async function runReviewGate(config, progress, gateId) {
 
       // Poll for Forge session completion (with crash detection)
       const sessionResult = await pollForSessionEnd(
-        config, fixAcpLabel, reviewConfig.timeout || config.default_timeout_minutes, fixLabel);
+        config, fixAcpLabel, reviewConfig.timeout ?? config.default_timeout_minutes, fixLabel);
 
       killAgent(config, 'forge', fixLabel);
 
@@ -3822,7 +4116,7 @@ async function runReviewGate(config, progress, gateId) {
       }
 
       const fixPrompt = buildReviewFixPrompt(config, gate, currentIssues, cycle, maxFixCycles, fixHistory);
-      const forgeModel = gate.forge_model || config.models?.forge || 'codex-5.3';
+      const forgeModel = gate.forge_model ?? config.models.forge;
       const fixLabel = `reviewfix-${gateId}-${cycle}`;
       const fixAcpLabel = acpLabel('forge', fixLabel);
 
@@ -3839,7 +4133,7 @@ async function runReviewGate(config, progress, gateId) {
 
       // Poll for Forge session completion (with crash detection)
       const sessionResult = await pollForSessionEnd(
-        config, fixAcpLabel, reviewConfig.timeout || config.default_timeout_minutes, fixLabel);
+        config, fixAcpLabel, reviewConfig.timeout ?? config.default_timeout_minutes, fixLabel);
 
       killAgent(config, 'forge', fixLabel);
 
@@ -4122,7 +4416,7 @@ export {
   spawnAgent, killAgent, steerAgent, verifyAgentAlive,
   spawnAcpAgent, killAcpAgent, dispatchRedisTask,
   recallForModule, feedbackMemory, decayRecalledMemories,
-  buildForgePrompt, executeModuleAttempt,
+  buildForgePrompt, executeModuleAttempt, runPreCheck, generateLintReport, formatLintReportForReviewer,
   runModule, runGate, runBusterGate, runReviewGate, runPipeline,
   printStatus, gitSyncBeforeBuster, gitPullForPolling, gitPullBeforePush, gitPushWithRetry, gitCommitAndPush,
   pollStatus, pollWithRateLimitRecovery, pollDual, pollDualWithRateLimitRecovery, pollGeneric, pollForFile,
@@ -4220,7 +4514,7 @@ Exit codes:
           cleanupTempDir();
           process.exit(EXIT_ERROR);
         }
-        const result = await releaseBlueprint(config, flags.blueprint, mod.dir);
+        const result = await releaseBlueprint(config, flags.blueprint, mod.dir, mod.stages || ['forge', 'buster']);
         output(result);
         cleanupTempDir();
         process.exit(EXIT_OK);
