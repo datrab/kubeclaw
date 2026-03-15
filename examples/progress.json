@@ -1,13 +1,14 @@
 {
   "project": "kubecommand",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "created_at": null,
   "last_updated": null,
 
   "execution_order": [
     "01", "02", "03", "04", "05", "06", "07", "08", "09",
-    "gate:midpoint-review",
     "10", "11", "12", "13",
+    "gate:midpoint-review",
+    "14", "15", "16", "17", "18",
     "gate:final-buster",
     "gate:final-review"
   ],
@@ -25,21 +26,31 @@
     },
     {
       "id": "phase-3",
-      "name": "Frontend",
+      "name": "Extended Resource APIs",
       "modules": ["10", "11", "12", "13"]
+    },
+    {
+      "id": "phase-4",
+      "name": "Frontend",
+      "modules": ["14", "15", "16", "17"]
+    },
+    {
+      "id": "phase-5",
+      "name": "Delivery",
+      "modules": ["18"]
     }
   ],
 
   "modules": {
     "01": {
       "title": "Project Scaffold + Auth + Database",
-      "dir": "01-scaffold-auth-db",
+      "dir": "01-project-scaffold-auth-database",
       "substeps": null,
       "depends_on": [],
       "timeout_minutes": 30,
       "max_fails": 3,
       "forge_subagent": "forge-codex",
-      "forge_model": "codex-5.3"
+      "forge_model": "codex-5.4"
     },
     "02": {
       "title": "Kubernetes Connection Layer",
@@ -49,7 +60,7 @@
       "timeout_minutes": 30,
       "max_fails": 3,
       "forge_subagent": "forge-codex",
-      "forge_model": "codex-5.3"
+      "forge_model": "codex-5.4"
     },
     "03": {
       "title": "Pods",
@@ -59,7 +70,7 @@
       "timeout_minutes": 60,
       "max_fails": 3,
       "forge_subagent": "forge-codex",
-      "forge_model": "codex-5.3"
+      "forge_model": "codex-5.4"
     },
     "04": {
       "title": "Deployments",
@@ -69,7 +80,7 @@
       "timeout_minutes": 45,
       "max_fails": 3,
       "forge_subagent": "forge-codex",
-      "forge_model": "codex-5.3"
+      "forge_model": "codex-5.4"
     },
     "05": {
       "title": "Nodes",
@@ -79,7 +90,7 @@
       "timeout_minutes": 45,
       "max_fails": 3,
       "forge_subagent": "forge-codex",
-      "forge_model": "codex-5.3"
+      "forge_model": "codex-5.4"
     },
     "06": {
       "title": "WebSockets (Logs + Exec)",
@@ -89,7 +100,7 @@
       "timeout_minutes": 45,
       "max_fails": 3,
       "forge_subagent": "forge-codex",
-      "forge_model": "codex-5.3"
+      "forge_model": "codex-5.4"
     },
     "07": {
       "title": "Services + CronJobs",
@@ -99,7 +110,7 @@
       "timeout_minutes": 45,
       "max_fails": 3,
       "forge_subagent": "forge-codex",
-      "forge_model": "codex-5.3"
+      "forge_model": "codex-5.4"
     },
     "08": {
       "title": "Git + Build Pipeline",
@@ -109,7 +120,7 @@
       "timeout_minutes": 60,
       "max_fails": 3,
       "forge_subagent": "forge-codex",
-      "forge_model": "codex-5.3"
+      "forge_model": "codex-5.4"
     },
     "09": {
       "title": "Alerts System",
@@ -118,48 +129,98 @@
       "depends_on": ["08"],
       "timeout_minutes": 45,
       "max_fails": 3,
-      "forge_subagent": "forge-sonnet",
-      "forge_model": "claude-sonnet-4-6"
+      "forge_subagent": "forge-codex",
+      "forge_model": "codex-5.4"
     },
     "10": {
-      "title": "Frontend Scaffold + Auth",
-      "dir": "10-frontend-scaffold",
+      "title": "ConfigMaps + Secrets",
+      "dir": "10-configmaps-secrets",
       "substeps": ["10a", "10b"],
-      "depends_on": ["09", "gate:midpoint-review"],
+      "depends_on": ["09"],
       "timeout_minutes": 45,
       "max_fails": 3,
-      "forge_subagent": "forge-pro",
-      "forge_model": "gemini-pro"
+      "forge_subagent": "forge-codex",
+      "forge_model": "codex-5.4"
     },
     "11": {
-      "title": "Dashboard + Pods",
-      "dir": "11-dashboard-pods",
+      "title": "Storage + Events",
+      "dir": "11-storage-events",
       "substeps": ["11a", "11b"],
       "depends_on": ["10"],
       "timeout_minutes": 45,
       "max_fails": 3,
-      "forge_subagent": "forge-pro",
-      "forge_model": "gemini-pro"
+      "forge_subagent": "forge-codex",
+      "forge_model": "codex-5.4"
     },
     "12": {
-      "title": "Resource Pages",
-      "dir": "12-frontend-pages",
-      "substeps": ["12a", "12b", "12c", "12d", "12e"],
+      "title": "Helm",
+      "dir": "12-helm",
+      "substeps": ["12a", "12b"],
       "depends_on": ["11"],
-      "timeout_minutes": 60,
-      "max_fails": 3,
-      "forge_subagent": "forge-pro",
-      "forge_model": "gemini-pro"
-    },
-    "13": {
-      "title": "Delivery",
-      "dir": "13-delivery",
-      "substeps": ["13a", "13b", "13c"],
-      "depends_on": ["12"],
       "timeout_minutes": 45,
       "max_fails": 3,
-      "forge_subagent": "forge-main",
-      "forge_model": "gemini-flash"
+      "forge_subagent": "forge-codex",
+      "forge_model": "codex-5.4"
+    },
+    "13": {
+      "title": "Apply + Deploy + Service Directory",
+      "dir": "13-apply-deploy-directory",
+      "substeps": ["13a", "13b", "13c"],
+      "depends_on": ["12"],
+      "timeout_minutes": 60,
+      "max_fails": 3,
+      "forge_subagent": "forge-codex",
+      "forge_model": "codex-5.4"
+    },
+    "14": {
+      "title": "Frontend Scaffold + Auth",
+      "dir": "14-frontend-scaffold",
+      "substeps": ["14a", "14b"],
+      "depends_on": ["13", "gate:midpoint-review"],
+      "timeout_minutes": 45,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6"
+    },
+    "15": {
+      "title": "Dashboard + Core Pages",
+      "dir": "15-dashboard-core-pages",
+      "substeps": ["15a", "15b", "15c", "15d"],
+      "depends_on": ["14"],
+      "timeout_minutes": 60,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6"
+    },
+    "16": {
+      "title": "Resource Pages",
+      "dir": "16-resource-pages",
+      "substeps": ["16a", "16b", "16c", "16d"],
+      "depends_on": ["15"],
+      "timeout_minutes": 60,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6"
+    },
+    "17": {
+      "title": "Feature Pages",
+      "dir": "17-feature-pages",
+      "substeps": ["17a", "17b", "17c", "17d"],
+      "depends_on": ["16"],
+      "timeout_minutes": 60,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6"
+    },
+    "18": {
+      "title": "Delivery",
+      "dir": "18-delivery",
+      "substeps": ["18a", "18b", "18c"],
+      "depends_on": ["17"],
+      "timeout_minutes": 45,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6"
     }
   },
 
@@ -169,22 +230,22 @@
       "title": "Echo Midpoint Review",
       "review_name": "MIDPOINT-REVIEW",
       "on_nogo": "fix_and_continue",
-      "instructions_file": "echo-reviews/MIDPOINT-REVIEW-INSTRUCTIONS.md",
-      "output_file": "echo-reviews/MIDPOINT-REVIEW.md",
-      "review_output_dir": "echo-reviews",
+      "instructions_file": "echo-review/MIDPOINT-REVIEW-INSTRUCTIONS.md",
+      "output_file": "echo-review/MIDPOINT-REVIEW.json",
+      "review_output_dir": "echo-review",
       "reviewers": null,
-      "merge_script": null,
       "timeout_minutes": 30,
-      "max_fix_cycles": null
+      "max_fix_cycles": null,
+      "lint_tier": null
     },
     "final-buster": {
       "type": "buster",
       "title": "Final System Test",
       "on_fail": "fix_and_retest",
-      "instructions_file": "final-test/FINAL-BUSTER.md",
-      "output_file": "final-test/FINAL-BUSTER-RESULT.json",
+      "instructions_file": "buster-test/FINAL-BUSTER.md",
+      "output_file": "buster-test/FINAL-BUSTER-RESULT.json",
       "model": "claude-sonnet-4-6",
-      "forge_model": "codex-5.3",
+      "forge_model": "codex-5.4",
       "timeout_minutes": 60,
       "max_fix_cycles": 3
     },
@@ -193,13 +254,13 @@
       "title": "Echo Final Review",
       "review_name": "FINAL-REVIEW",
       "on_nogo": "fix_and_rereview",
-      "instructions_file": "echo-reviews/FINAL-REVIEW-INSTRUCTIONS.md",
-      "output_file": "echo-reviews/FINAL-REVIEW.md",
-      "review_output_dir": "echo-reviews",
+      "instructions_file": "echo-review/FINAL-REVIEW-INSTRUCTIONS.md",
+      "output_file": "echo-review/FINAL-REVIEW.json",
+      "review_output_dir": "echo-review",
       "reviewers": null,
-      "merge_script": null,
       "timeout_minutes": 30,
-      "max_fix_cycles": null
+      "max_fix_cycles": null,
+      "lint_tier": null
     }
   }
 }
