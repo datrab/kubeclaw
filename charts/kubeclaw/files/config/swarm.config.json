@@ -20,6 +20,13 @@
     "max_pauses_per_module": 5
   },
 
+  "pre_check": {
+    "enabled": true,
+    "lint_report_path": "/app/skills/lint-report.js",
+    "semgrep_config_path": "/home/node/.openclaw/.semgrep.yml",
+    "timeout_seconds": 30
+  },
+
   "memory": {
     "enabled": true,
     "memory_js_path": "/app/skills/memory.js",
@@ -49,18 +56,17 @@
   },
 
   "models": {
+    "forge": "codex-5.4",
     "buster": "claude-sonnet-4-6",
     "echo": "claude-sonnet-4-6"
   },
 
   "review_defaults": {
     "reviewers": [
-      { "label": "echo-codex", "agent_id": "codex", "model": "codex-5.3" },
-      { "label": "echo-sonnet", "agent_id": "claude", "model": "claude-sonnet-4-6" },
-      { "label": "echo-pro", "agent_id": "claude", "model": "gemini-pro" }
+      { "label": "echo-opus", "agent_id": "claude", "model": "claude-opus-4-6" }
     ],
-    "merge_script": "echo-reviews/merge-reviews.js",
     "timeout_minutes": 30,
-    "max_fix_cycles": 3
+    "max_fix_cycles": 3,
+    "lint_tier": "full"
   }
 }

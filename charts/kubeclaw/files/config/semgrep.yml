@@ -1,0 +1,394 @@
+# =============================================================================
+# .semgrep.yml — Curated Security & Correctness Rules
+# =============================================================================
+#
+# Placed in the repo root. lint-report.js auto-detects this file and uses it
+# instead of semgrep's default "auto" config.
+#
+# Design principles:
+#   - Security + correctness patterns that other tools in the pipeline miss
+#   - Excludes style rules (eslint/ruff handle those)
+#   - Excludes dependency vulns (npm-audit/pip-audit handle those)
+#   - Excludes Dockerfile best practices (hadolint handles that)
+#   - Excludes shell scripting (shellcheck handles that)
+#   - Low noise — every rule should catch real bugs, not style preferences
+#
+# Coverage: JS/TS, Python, React/Frontend, Node.js Backend, K8s YAML
+# Semgrep registry: https://semgrep.dev/r
+# =============================================================================
+
+rules:
+
+  # ─── JavaScript / TypeScript ───────────────────────────────────────────────
+
+  # Detect eval() and equivalent dynamic code execution
+  - id: no-eval
+    patterns:
+      - pattern-either:
+          - pattern: eval(...)
+          - pattern: new Function(...)
+          - pattern: setTimeout($X, ...)
+            metavariable-regex:
+              metavariable: $X
+              regex: ^["']
+    message: "Dynamic code execution detected — potential code injection risk"
+    languages: [javascript, typescript]
+    severity: ERROR
+
+  # Detect command injection via string interpolation in exec/spawn
+  - id: no-shell-interpolation
+    patterns:
+      - pattern-either:
+          - pattern: child_process.exec(`...${...}...`)
+          - pattern: child_process.execSync(`...${...}...`)
+          - pattern: require("child_process").exec(`...${...}...`)
+          - pattern: require("child_process").execSync(`...${...}...`)
+    message: "Shell command with string interpolation — use execFileSync with arg arrays instead"
+    languages: [javascript, typescript]
+    severity: ERROR
+
+  # Detect hardcoded secrets/tokens
+  - id: no-hardcoded-secrets
+    patterns:
+      - pattern-either:
+          - pattern: |
+              $X = "sk-..."
+          - pattern: |
+              $X = "ghp_..."
+          - pattern: |
+              $X = "glpat-..."
+          - pattern: |
+              $X = "AKIA..."
+          - pattern: |
+              $X = "Bearer ..."
+          - pattern: |
+              password = "..."
+          - pattern: |
+              secret = "..."
+          - pattern: |
+              token = "..."
+    paths:
+      exclude:
+        - "*.test.*"
+        - "*.spec.*"
+        - "**/test/**"
+        - "**/tests/**"
+        - "**/__tests__/**"
+        - "**/fixtures/**"
+    message: "Potential hardcoded secret or token"
+    languages: [javascript, typescript, python]
+    severity: ERROR
+
+  # Detect console.log left in production code (not test files)
+  - id: no-console-log-prod
+    pattern: console.log(...)
+    paths:
+      exclude:
+        - "*.test.*"
+        - "*.spec.*"
+        - "**/test/**"
+        - "**/tests/**"
+        - "**/__tests__/**"
+    message: "console.log in production code — use structured logging instead"
+    languages: [javascript, typescript]
+    severity: WARNING
+
+  # ─── Node.js Backend Security ───────────────────────────────────────────────
+
+  # Detect path traversal via user input in fs operations
+  - id: no-path-traversal
+    patterns:
+      - pattern-either:
+          - pattern: fs.readFileSync($PATH, ...)
+          - pattern: fs.readFile($PATH, ...)
+          - pattern: fs.writeFileSync($PATH, ...)
+          - pattern: fs.writeFile($PATH, ...)
+          - pattern: fs.unlinkSync($PATH)
+          - pattern: fs.unlink($PATH, ...)
+          - pattern: fs.existsSync($PATH)
+      - pattern-either:
+          - pattern-inside: |
+              function $FN(..., $REQ, ...) { ... }
+          - pattern-inside: |
+              app.$METHOD($ROUTE, (..., $REQ, ...) => { ... })
+          - pattern-inside: |
+              router.$METHOD($ROUTE, (..., $REQ, ...) => { ... })
+    message: "Filesystem operation in request handler — validate and sanitize the path to prevent path traversal"
+    languages: [javascript, typescript]
+    severity: WARNING
+
+  # Detect Math.random() used for security-sensitive purposes
+  - id: no-math-random-security
+    patterns:
+      - pattern: $VAR = ... Math.random() ...
+      - metavariable-regex:
+          metavariable: $VAR
+          regex: .*(token|secret|key|session|nonce|salt|csrf|auth|password|uuid).*
+    message: "Math.random() is not cryptographically secure — use crypto.randomUUID() or crypto.randomBytes() for tokens/secrets/IDs"
+    languages: [javascript, typescript]
+    severity: ERROR
+
+  # Detect prototype pollution vectors
+  - id: no-prototype-pollution
+    patterns:
+      - pattern-either:
+          - pattern: $OBJ["__proto__"]
+          - pattern: $OBJ.__proto__
+          - pattern: $OBJ["constructor"]["prototype"]
+    message: "Potential prototype pollution — validate keys and use Object.create(null) or Map for untrusted data"
+    languages: [javascript, typescript]
+    severity: ERROR
+
+  # Detect unvalidated redirects in Express-style handlers
+  - id: no-open-redirect
+    patterns:
+      - pattern-either:
+          - pattern: $RES.redirect($INPUT)
+          - pattern: $RES.redirect(301, $INPUT)
+          - pattern: $RES.redirect(302, $INPUT)
+    message: "Unvalidated redirect — ensure the target URL is on an allowlist to prevent open redirect attacks"
+    languages: [javascript, typescript]
+    severity: WARNING
+
+  # ─── Python ────────────────────────────────────────────────────────────────
+
+  # Detect bare except clauses
+  - id: no-bare-except
+    pattern: |
+      try:
+          ...
+      except:
+          ...
+    message: "Bare except clause — catches SystemExit and KeyboardInterrupt. Use 'except Exception:' instead"
+    languages: [python]
+    severity: ERROR
+
+  # Detect SQL injection via string formatting
+  - id: no-sql-string-format
+    patterns:
+      - pattern-either:
+          - pattern: $CURSOR.execute(f"...")
+          - pattern: $CURSOR.execute("..." % ...)
+          - pattern: $CURSOR.execute("...".format(...))
+          - pattern: $CURSOR.executemany(f"...")
+    message: "SQL query built with string formatting — use parameterized queries instead"
+    languages: [python]
+    severity: ERROR
+
+  # Detect == comparison for secrets (should use compare_digest)
+  - id: use-compare-digest
+    patterns:
+      - pattern-either:
+          - pattern: $TOKEN == $OTHER
+          - pattern: $OTHER == $TOKEN
+      - metavariable-regex:
+          metavariable: $TOKEN
+          regex: .*(token|secret|key|password|api_key|apikey).*
+    message: "Secret comparison using == — use hmac.compare_digest() or secrets.compare_digest() to prevent timing attacks"
+    languages: [python]
+    severity: ERROR
+
+  # Detect subprocess.call with shell=True
+  - id: no-subprocess-shell
+    patterns:
+      - pattern-either:
+          - pattern: subprocess.call(..., shell=True, ...)
+          - pattern: subprocess.run(..., shell=True, ...)
+          - pattern: subprocess.Popen(..., shell=True, ...)
+          - pattern: subprocess.check_output(..., shell=True, ...)
+    message: "subprocess with shell=True — risk of shell injection. Use shell=False with arg list"
+    languages: [python]
+    severity: ERROR
+
+  # Detect requests without timeout
+  - id: requests-no-timeout
+    patterns:
+      - pattern-either:
+          - pattern: requests.get($URL)
+          - pattern: requests.post($URL, ...)
+          - pattern: requests.put($URL, ...)
+          - pattern: requests.delete($URL)
+          - pattern: requests.patch($URL, ...)
+    message: "HTTP request without timeout — can hang indefinitely. Add timeout parameter"
+    languages: [python]
+    severity: WARNING
+
+  # Detect verify=False without comment (SSL bypass)
+  - id: requests-no-verify
+    pattern: requests.$METHOD(..., verify=False, ...)
+    message: "SSL verification disabled — ensure this is intentional and documented"
+    languages: [python]
+    severity: WARNING
+
+  # Detect unsafe deserialization via pickle (arbitrary code execution)
+  - id: no-pickle-load
+    patterns:
+      - pattern-either:
+          - pattern: pickle.load(...)
+          - pattern: pickle.loads(...)
+          - pattern: cPickle.load(...)
+          - pattern: cPickle.loads(...)
+    message: "pickle.load() executes arbitrary code — use json or a safe serialization format for untrusted data"
+    languages: [python]
+    severity: ERROR
+
+  # Detect unsafe YAML loading (arbitrary code execution)
+  - id: no-unsafe-yaml-load
+    patterns:
+      - pattern: yaml.load($DATA)
+      - pattern-not: yaml.load($DATA, Loader=...)
+    message: "yaml.load() without Loader executes arbitrary code — use yaml.safe_load() or yaml.load(data, Loader=SafeLoader)"
+    languages: [python]
+    severity: ERROR
+
+  # Detect Jinja2 templates without autoescape (SSTI / XSS)
+  - id: jinja2-no-autoescape
+    patterns:
+      - pattern: jinja2.Environment(...)
+      - pattern-not: jinja2.Environment(..., autoescape=True, ...)
+      - pattern-not: jinja2.Environment(..., autoescape=select_autoescape(...), ...)
+    message: "Jinja2 Environment without autoescape — enables server-side template injection and XSS"
+    languages: [python]
+    severity: ERROR
+
+  # ─── YAML / Kubernetes ─────────────────────────────────────────────────────
+
+  # Detect privileged containers in K8s manifests
+  - id: k8s-no-privileged
+    pattern: |
+      securityContext:
+        ...
+        privileged: true
+    message: "Privileged container detected — ensure this is required (e.g. DinD, Podman-in-Pod) and document the reason"
+    languages: [yaml]
+    severity: WARNING
+
+  # Detect missing resource limits
+  - id: k8s-resource-limits
+    patterns:
+      - pattern: |
+          containers:
+            - ...
+              name: $NAME
+              ...
+      - pattern-not: |
+          containers:
+            - ...
+              name: $NAME
+              ...
+              resources:
+                limits:
+                  ...
+    message: "Container '$NAME' has no resource limits — can consume unbounded cluster resources"
+    languages: [yaml]
+    severity: WARNING
+
+  # Detect wildcard RBAC rules
+  - id: k8s-no-rbac-wildcard
+    pattern: |
+      - apiGroups: ["*"]
+        resources: ["*"]
+        verbs: [...]
+    message: "Wildcard RBAC rule — grants access to all resources in all API groups"
+    languages: [yaml]
+    severity: ERROR
+
+  # Detect host namespace sharing — container escapes
+  - id: k8s-no-host-namespace
+    patterns:
+      - pattern-either:
+          - pattern: |
+              hostNetwork: true
+          - pattern: |
+              hostPID: true
+          - pattern: |
+              hostIPC: true
+    message: "Host namespace sharing enabled — container can escape its isolation boundary"
+    languages: [yaml]
+    severity: WARNING
+
+  # Detect containers running as root without explicit decision
+  - id: k8s-run-as-non-root
+    pattern: |
+      securityContext:
+        ...
+        runAsUser: 0
+    message: "Container explicitly runs as root (UID 0) — ensure this is required and documented"
+    languages: [yaml]
+    severity: WARNING
+
+  # Detect :latest tag in container images — non-deterministic deployments
+  - id: k8s-no-latest-tag
+    patterns:
+      - pattern-either:
+          - pattern: |
+              image: $IMG
+          - pattern: |
+              image: "$IMG"
+      - metavariable-regex:
+          metavariable: $IMG
+          regex: ^[^:]+(:latest)?$
+    paths:
+      exclude:
+        - "**/test/**"
+        - "**/tests/**"
+    message: "Container image uses :latest or no tag — pin to a specific version for deterministic deployments"
+    languages: [yaml]
+    severity: WARNING
+
+  # ─── React / Frontend (XSS Prevention) ─────────────────────────────────────
+
+  # Detect dangerouslySetInnerHTML — XSS vector in React components
+  - id: react-no-dangerously-set-html
+    pattern: dangerouslySetInnerHTML={...}
+    message: "dangerouslySetInnerHTML is an XSS vector — sanitize input with DOMPurify or use safe alternatives"
+    languages: [javascript, typescript]
+    severity: ERROR
+
+  # Detect direct innerHTML assignment — XSS vector outside React
+  - id: no-innerhtml
+    patterns:
+      - pattern-either:
+          - pattern: $EL.innerHTML = $VAL
+          - pattern: $EL.outerHTML = $VAL
+    message: "Direct innerHTML/outerHTML assignment — XSS risk. Use textContent or a sanitization library"
+    languages: [javascript, typescript]
+    severity: ERROR
+
+  # Detect unsanitized URL construction from user input in React
+  - id: react-no-unsanitized-href
+    patterns:
+      - pattern-either:
+          - pattern: <a href={$VAR} ...>...</a>
+          - pattern: window.location.href = $VAR
+          - pattern: window.location = $VAR
+    message: "Dynamic URL from variable — validate against javascript: protocol injection"
+    languages: [javascript, typescript]
+    severity: WARNING
+
+  # ─── Cross-Language: Weak Cryptography ──────────────────────────────────────
+
+  # Detect MD5 usage for security purposes (JS/TS)
+  - id: no-weak-crypto-js
+    patterns:
+      - pattern-either:
+          - pattern: crypto.createHash("md5")
+          - pattern: crypto.createHash("sha1")
+          - pattern: CryptoJS.MD5(...)
+          - pattern: CryptoJS.SHA1(...)
+    message: "MD5/SHA1 are cryptographically broken — use SHA-256+ for hashing and bcrypt/scrypt/argon2 for passwords"
+    languages: [javascript, typescript]
+    severity: ERROR
+
+  # Detect MD5/SHA1 usage for security purposes (Python)
+  - id: no-weak-crypto-py
+    patterns:
+      - pattern-either:
+          - pattern: hashlib.md5(...)
+          - pattern: hashlib.sha1(...)
+          - pattern: hashlib.new("md5", ...)
+          - pattern: hashlib.new("sha1", ...)
+    message: "MD5/SHA1 are cryptographically broken — use hashlib.sha256() or bcrypt/scrypt/argon2 for passwords"
+    languages: [python]
+    severity: ERROR
+
