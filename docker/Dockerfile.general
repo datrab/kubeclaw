@@ -1,7 +1,7 @@
 # =============================================================================
 # KubeClaw General — Root Environment for Nova, Forge, Echo
 # =============================================================================
-FROM ghcr.io/openclaw/openclaw:2026.03.13
+FROM ghcr.io/openclaw/openclaw:2026.3.13
 
 USER root
 
