@@ -2,8 +2,9 @@
 # .semgrep.yml — Curated Security & Correctness Rules
 # =============================================================================
 #
-# Placed in the repo root. lint-report.js auto-detects this file and uses it
-# instead of semgrep's default "auto" config.
+# Deployed to /home/node/.openclaw/.semgrep.yml via Helm ConfigMap.
+# lint-report.js resolution chain: --semgrep-config CLI → SEMGREP_CONFIG env
+#   → /home/node/.openclaw/.semgrep.yml → <repo>/.semgrep.yml → auto
 #
 # Design principles:
 #   - Security + correctness patterns that other tools in the pipeline miss
