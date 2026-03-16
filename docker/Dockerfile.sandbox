@@ -2,7 +2,7 @@
 # KubeClaw Sandbox — Isolated Testing Environment for Buster
 # =============================================================================
 # Includes Podman-in-Pod, Lighthouse, Playwright, k6, nginx
-FROM ghcr.io/openclaw/openclaw:latest
+FROM ghcr.io/openclaw/openclaw:2026.3.13
 
 USER root
 
