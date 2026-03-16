@@ -113,6 +113,8 @@ discordWebhook:
 # =============================================================================
 
 agent:
+  # Active project name — sets CURRENT_PROJECT env for memory scoping
+  project: ""  # e.g. "kubecommand"
   git:
     enabled: true
     # K8s secret containing the SSH deploy key
@@ -184,10 +186,6 @@ persistence:
     size: 20Gi
     storageClass: ""
     accessModes: ["ReadWriteOnce"]
-    enabled: true
-    size: 5Gi
-    storageClass: ""
-    accessModes: ["ReadWriteOnce"]
 
 # =============================================================================
 # RESOURCES
@@ -249,6 +247,16 @@ swarmConfig:
   overrideOnRestart: false
 
 swarmConfigJson: ""
+
+# Default is loaded from charts/kubeclaw/files/config/.semgrep.yml.
+# To override, paste your full YAML config here:
+#
+#   semgrepConfigYaml: |
+#     rules:
+#       - id: my-rule
+#         ...
+
+semgrepConfigYaml: ""
 
 # =============================================================================
 # CUSTOM SKILLS (optional)

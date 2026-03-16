@@ -38,7 +38,6 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      shareProcessNamespace: false
 
       {{- if .Values.sandbox.enabled }}
       # Sandbox mode: no K8s API access when Podman is active
@@ -145,6 +144,14 @@ spec:
                   echo "    swarm.config.json exists, keeping (override=false)"
                 fi
               fi
+              if [ -f "/init-swarm-config/.semgrep.yml" ]; then
+                if [ "${OVERRIDE_SWARM_CONFIG}" = "true" ] || [ ! -f "/config/.semgrep.yml" ]; then
+                  cp -Lf "/init-swarm-config/.semgrep.yml" "/config/.semgrep.yml"
+                  echo "    .semgrep.yml written"
+                else
+                  echo "    .semgrep.yml exists, keeping (override=false)"
+                fi
+              fi
 
               echo "==> 5. Skills Merge"
               mkdir -p /skills-merged
@@ -211,7 +218,7 @@ spec:
       # ---------------------------------------------------------------
       # MAIN CONTAINERS
       # ---------------------------------------------------------------
-      shareProcessNamespace: true
+      shareProcessNamespace: {{ not .Values.sandbox.enabled }}
       containers:
 
         # ── OpenClaw Gateway ──
@@ -261,6 +268,10 @@ spec:
             {{- end }}
             - name: SWARM_CONFIG
               value: "/home/node/.openclaw/swarm.config.json"
+            {{- if .Values.agent.project }}
+            - name: CURRENT_PROJECT
+              value: {{ .Values.agent.project | quote }}
+            {{- end }}
             {{- with .Values.extraEnv }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -383,6 +394,10 @@ spec:
             {{- end }}
             - name: SWARM_CONFIG
               value: "/home/node/.openclaw/swarm.config.json"
+            {{- if .Values.agent.project }}
+            - name: CURRENT_PROJECT
+              value: {{ .Values.agent.project | quote }}
+            {{- end }}
 
           volumeMounts:
             - name: processor-vol
@@ -400,6 +415,10 @@ spec:
           securityContext:
             runAsUser: 0
             runAsGroup: 0
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
 
           resources:
             requests: { cpu: 50m, memory: 64Mi }

@@ -30,6 +30,6 @@ Workspace files seeded:
 
 =====================================================
  Manage:
-   helm upgrade {{ .Release.Name }} ./charts/kubeclaw -f examples/{{ .Values.agentRole }}-values.yaml
+   helm upgrade {{ .Release.Name }} ./charts/kubeclaw -f <your-values-file>
    helm uninstall {{ .Release.Name }}
 =====================================================

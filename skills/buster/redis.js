@@ -33,7 +33,7 @@ let _redis = null;
 function getRedis() {
   if (!_redis) {
     _redis = new Redis({
-      host: process.env.REDIS_HOST || 'redis-master.default.svc.cluster.local',
+      host: process.env.REDIS_HOST || 'redis-master.kubeclaw.svc.cluster.local',
       port: parseInt(process.env.REDIS_PORT || '6379'),
       password: process.env.REDIS_PASSWORD,
       retryStrategy: (times) => Math.min(times * 50, 2000),

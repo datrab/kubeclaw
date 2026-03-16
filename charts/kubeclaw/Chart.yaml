@@ -15,13 +15,13 @@ keywords:
   - llm
   - openclaw
   - swarm
-home: https://github.com/kubetoolsio/kubeclaw
+home: https://github.com/forgestackai/kubeclaw
 sources:
-  - https://github.com/kubetoolsio/kubeclaw
+  - https://github.com/forgestackai/kubeclaw
 maintainers:
-  - name: KubeTools
-    url: https://github.com/kubetoolsio
-icon: https://raw.githubusercontent.com/kubetoolsio/kubeclaw/main/docs/logo.png
+  - name: ForgeStackAI
+    url: https://github.com/forgestackai
+icon: https://raw.githubusercontent.com/forgestackai/kubeclaw/main/docs/logo.png
 
 # Infrastructure (Redis, Qdrant, PostgreSQL, LiteLLM) is deployed separately
 # via deploy.sh using their official Helm charts. No subchart dependencies needed.

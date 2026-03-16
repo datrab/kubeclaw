@@ -156,22 +156,31 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
 
   // ── 3. STUFE 2: Qdrant Memory Check ──
 
+  const MEMORY_RECENCY_MS = 5 * 60 * 1000; // 5 minutes
+
   if (requireMemory) {
     try {
       const memoryOutput = execFileSync(
-        'node', ['/app/skills/memory.js', 'recall', '--query', 'recent task', '--limit', '1'],
+        'node', ['/app/skills/memory.js', 'recall', '--query', `${currentProject} task result`, '--limit', '3'],
         { encoding: 'utf8', timeout: 15000, env: process.env }
       );
       const memories = JSON.parse(memoryOutput);
 
       if (!Array.isArray(memories) || memories.length === 0) {
-        throw new Error('No recent memories found');
+        throw new Error('No memories found for this project');
       }
-      log('✅ [Verify] Stufe 2 Passed (Memory Check). Qdrant-Eintrag gefunden.');
+
+      const now = Date.now();
+      const recentMemory = memories.find(m => m.created_at && (now - m.created_at) < MEMORY_RECENCY_MS);
+      if (!recentMemory) {
+        throw new Error(`No memory written in the last ${MEMORY_RECENCY_MS / 60000} minutes`);
+      }
+      log('✅ [Verify] Stufe 2 Passed (Memory Check). Aktueller Qdrant-Eintrag gefunden.');
     } catch (memoryErr) {
       throw new Error(
         'FEHLENDER MEMORY-EINTRAG. Nutze `node /app/skills/memory.js remember ...` ' +
-        'um deine Erkenntnisse zu sichern, bevor du verify aufrufst.'
+        'um deine Erkenntnisse zu sichern, bevor du verify aufrufst. ' +
+        `(${memoryErr.message})`
       );
     }
   } else {

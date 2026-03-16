@@ -1,5 +1,5 @@
-# ConfigMap: Swarm platform config for the pipeline engine.
-# Mounted as /app/config/swarm.config.json via subPath (preserves existing /app/config/).
+# ConfigMap: Swarm platform config (swarm.config.json + .semgrep.yml).
+# Init container copies these to /home/node/.openclaw/ (config PVC).
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -12,4 +12,10 @@ data:
 {{ .Values.swarmConfigJson | indent 4 }}
 {{- else }}
 {{ .Files.Get "files/config/swarm.config.json" | indent 4 }}
+{{- end }}
+  .semgrep.yml: |
+{{- if .Values.semgrepConfigYaml }}
+{{ .Values.semgrepConfigYaml | indent 4 }}
+{{- else }}
+{{ .Files.Get "files/config/.semgrep.yml" | indent 4 }}
 {{- end }}

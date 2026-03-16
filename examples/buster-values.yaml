@@ -32,6 +32,7 @@ discordWebhook:
   secretKey: "discordWebhook"
 
 agent:
+  project: "kubecommand"
   git:
     enabled: true
     secretName: "git-deploy-key-buster"

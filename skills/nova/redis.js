@@ -12,7 +12,7 @@ let _redis = null;
 function getRedis() {
   if (!_redis) {
     _redis = new Redis({
-      host: process.env.REDIS_HOST || 'redis-master.default.svc.cluster.local',
+      host: process.env.REDIS_HOST || 'redis-master.kubeclaw.svc.cluster.local',
       port: parseInt(process.env.REDIS_PORT || '6379'),
       password: process.env.REDIS_PASSWORD,
       retryStrategy: (times) => Math.min(times * 50, 2000),
@@ -228,6 +228,24 @@ if (currentPath === entryPath) {
       } else if (action === 'read') {
         const res = await lib.readMyTasks();
         console.log(JSON.stringify(res, null, 2));
+
+      } else if (action === 'read-completion') {
+        const stream = getArg('stream');
+        const module = getArg('module');
+        if (!stream || !module) throw new Error('Missing --stream or --module');
+        const res = await lib.readCompletion(stream, module);
+        console.log(JSON.stringify(res, null, 2));
+
+      } else if (action === 'archive-completions') {
+        const stream = getArg('stream');
+        const module = getArg('module');
+        if (!stream || !module) throw new Error('Missing --stream or --module');
+        const archiveStream = stream + ':log';
+        const res = await lib.archiveCompletions(stream, archiveStream, module);
+        console.log(JSON.stringify(res));
+
+      } else {
+        throw new Error('Unknown action. Use --action send|read|read-completion|archive-completions');
       }
     } catch (e) {
       console.error(JSON.stringify({ error: e.message }));

@@ -29,7 +29,7 @@
     // REDIS
     // ═══════════════════════════════════════════════════════════════
     const redis = new Redis({
-      host: process.env.REDIS_HOST || 'redis-master.default.svc.cluster.local',
+      host: process.env.REDIS_HOST || 'redis-master.kubeclaw.svc.cluster.local',
       port: parseInt(process.env.REDIS_PORT || '6379'),
       password: process.env.REDIS_PASSWORD,
       retryStrategy: (times) => Math.min(times * 100, 5000),
@@ -187,14 +187,12 @@
     // PIPELINE TASK HANDLER (module_test / chaos_test)
     // ═══════════════════════════════════════════════════════════════
     //
-    // Pipeline tasks are different from normal swarm tasks:
-    //   - Buster must spawn an ISOLATED ACP session for testing
-    //   - After testing, Buster updates status.json, commits, pushes
-    //   - The pipeline script polls status.json — NO Redis response needed
-    //   - NO cronjob, NO discord message for the response path
+    // Pipeline tasks arrive from pipeline.js via Redis. Nova's job:
+    //   - Format the task as a structured prompt with test instructions
+    //   - Inject into Nova's gateway via one-shot cron job
+    //   - Nova then delegates to Buster via ACP or further orchestration
+    //   - The pipeline polls status.json / completion stream for results
     //
-    // The processor's job: format the pipeline task as a structured prompt
-    // and inject it into Buster's gateway via cron (one-shot fire).
 
     function buildPipelinePrompt(payload, memories) {
       const memoryBlock = formatMemories(memories);

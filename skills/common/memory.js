@@ -6,10 +6,10 @@ import fs from 'fs';
 // ═══════════════════════════════════════════════════════════════
 // CONFIG
 // ═══════════════════════════════════════════════════════════════
-const QDRANT_URL       = (process.env.QDRANT_URL || 'http://qdrant.default.svc.cluster.local:6333').replace(/\/+$/, '');
+const QDRANT_URL       = (process.env.QDRANT_URL || 'http://qdrant.kubeclaw.svc.cluster.local:6333').replace(/\/+$/, '');
 const COLLECTION       = 'swarm_intelligence';
 const ARCHIVE          = 'swarm_archive';
-const LITELLM_URL      = (process.env.LITELLM_URL || 'http://litellm.default.svc.cluster.local:4000').replace(/\/+$/, '');
+const LITELLM_URL      = (process.env.LITELLM_URL || 'http://litellm.kubeclaw.svc.cluster.local:4000').replace(/\/+$/, '');
 const LITELLM_KEY      = process.env.LITELLM_API_KEY || '';
 const EMBEDDING_MODEL  = 'gemini-embedding-001';
 const VECTOR_SIZE      = 3072;
