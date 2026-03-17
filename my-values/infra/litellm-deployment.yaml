@@ -1,0 +1,82 @@
+# =============================================================================
+# LiteLLM Proxy — Deployment + Service
+# =============================================================================
+# Deployed via kubectl apply (no Helm chart).
+# Requires: litellm-config (ConfigMap), litellm-secrets (Secret), google-sa-key (Secret)
+# =============================================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: litellm
+  labels:
+    app: litellm
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: litellm
+  template:
+    metadata:
+      labels:
+        app: litellm
+    spec:
+      containers:
+        - name: litellm
+          image: ghcr.io/berriai/litellm:main-latest
+          imagePullPolicy: Always
+          args:
+            - --config
+            - /app/config.yaml
+            - --port
+            - "4000"
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /keys/credentials.json
+            - name: STORE_MODEL_IN_DB
+              value: "True"
+          envFrom:
+            - secretRef:
+                name: litellm-secrets
+          ports:
+            - name: http
+              containerPort: 4000
+              protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: /app/config.yaml
+              subPath: config.yaml
+            - name: google-key-vol
+              mountPath: /keys
+              readOnly: true
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+      volumes:
+        - name: config
+          configMap:
+            name: litellm-config
+        - name: google-key-vol
+          secret:
+            secretName: google-sa-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: litellm
+  labels:
+    app: litellm
+spec:
+  type: ClusterIP
+  selector:
+    app: litellm
+  ports:
+    - name: http
+      port: 4000
+      targetPort: 4000
+      protocol: TCP
