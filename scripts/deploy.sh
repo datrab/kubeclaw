@@ -91,18 +91,11 @@ cmd_infra() {
     --from-file=config.yaml="$INFRA_DIR/litellm-config.yaml" \
     --dry-run=client -o yaml | kubectl apply -f -
 
-  # Check if LiteLLM has a Helm chart, otherwise use direct deployment
-  if helm search repo litellm 2>/dev/null | grep -q litellm; then
-    helm upgrade --install litellm litellm/litellm \
-      --namespace "$NAMESPACE" \
-      --values "$INFRA_DIR/litellm-values.yaml" \
-      --wait --timeout 120s
-  else
-    warn "No LiteLLM Helm chart found — deploying manually"
-    # If you already have LiteLLM running, this is a no-op
-    info "Ensure LiteLLM is accessible at: litellm.$NAMESPACE.svc.cluster.local:4000"
-    info "If not deployed yet, install via: helm repo add litellm https://litellm.github.io/helm-chart && helm repo update"
-  fi
+  # LiteLLM Deployment + Service (no Helm chart — plain manifest)
+  kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/litellm-deployment.yaml"
+  info "Waiting for LiteLLM to be ready..."
+  kubectl rollout status deployment/litellm -n "$NAMESPACE" --timeout=120s 2>/dev/null || warn "LiteLLM not ready yet (may need litellm-secrets or google-sa-key)"
+  log "LiteLLM deployed"
 
   echo ""
   log "Infrastructure deployed. Pods:"
@@ -182,13 +175,21 @@ cmd_teardown() {
   # Agents
   cmd_teardown_agents
 
-  # Infrastructure
-  for release in litellm qdrant postgresql redis; do
+  # Infrastructure — Helm releases
+  for release in qdrant postgresql redis; do
     if helm status "$release" -n "$NAMESPACE" &>/dev/null; then
       helm uninstall "$release" -n "$NAMESPACE"
       log "Removed: $release"
     fi
   done
+
+  # Infrastructure — LiteLLM (plain manifest, not Helm)
+  if kubectl get deployment litellm -n "$NAMESPACE" &>/dev/null; then
+    kubectl delete -n "$NAMESPACE" -f "$INFRA_DIR/litellm-deployment.yaml" 2>/dev/null || \
+      kubectl delete deployment,svc -n "$NAMESPACE" -l app=litellm
+    kubectl delete configmap litellm-config -n "$NAMESPACE" 2>/dev/null || true
+    log "Removed: litellm"
+  fi
 
   # Clean up PVCs left behind by Helm resource-policy=keep
   local pvcs
@@ -218,13 +219,21 @@ cmd_teardown_all() {
   # Agents
   cmd_teardown_agents
 
-  # Infrastructure
-  for release in litellm qdrant postgresql redis; do
+  # Infrastructure — Helm releases
+  for release in qdrant postgresql redis; do
     if helm status "$release" -n "$NAMESPACE" &>/dev/null; then
       helm uninstall "$release" -n "$NAMESPACE"
       log "Removed: $release"
     fi
   done
+
+  # Infrastructure — LiteLLM (plain manifest, not Helm)
+  if kubectl get deployment litellm -n "$NAMESPACE" &>/dev/null; then
+    kubectl delete -n "$NAMESPACE" -f "$INFRA_DIR/litellm-deployment.yaml" 2>/dev/null || \
+      kubectl delete deployment,svc -n "$NAMESPACE" -l app=litellm
+    kubectl delete configmap litellm-config -n "$NAMESPACE" 2>/dev/null || true
+    log "Removed: litellm"
+  fi
 
   # Namespace (takes everything with it)
   warn "Deleting namespace $NAMESPACE (this removes all remaining resources)..."
