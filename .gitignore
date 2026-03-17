@@ -1,6 +1,3 @@
-# Personal config (never commit to public repo)
-my-values/
-
 # Secrets — NEVER commit
 *.key
 *.pem
@@ -9,8 +6,6 @@ my-values/
 secrets.yml.dec
 keys.txt
 
-# Helm
-charts/kubeclaw/charts/
 Chart.lock
 
 # OS
