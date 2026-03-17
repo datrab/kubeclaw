@@ -347,6 +347,27 @@ async function handlePipelineTask(payload) {
   console.log(`[PIPELINE] Completion stream: ${payload.completion_stream}`);
   console.log(`[PIPELINE] Prompt size: ${prompt.length} chars`);
 
+  // 0. Git sync — ensure repo is up-to-date before spawning the subagent
+  const repoDir = '/home/node/.openclaw/workspace/git-repo';
+  const expectedHash = payload.commit_hash || null;
+  try {
+    const { execFileSync } = require('child_process');
+    execFileSync('git', ['-C', repoDir, 'pull', '--rebase', 'origin', 'HEAD'], {
+      encoding: 'utf8', timeout: 30000, stdio: 'pipe'
+    });
+    const currentHash = execFileSync('git', ['-C', repoDir, 'rev-parse', 'HEAD'], {
+      encoding: 'utf8', timeout: 5000
+    }).trim();
+    const short = currentHash.substring(0, 8);
+    if (expectedHash && !currentHash.startsWith(expectedHash.substring(0, 8))) {
+      console.warn(`[GIT] ⚠️ Hash mismatch: expected ${expectedHash.substring(0, 8)}, got ${short} — proceeding with latest`);
+    } else {
+      console.log(`[GIT] ✅ Repo synced: ${short}`);
+    }
+  } catch (e) {
+    console.error(`[GIT] ⚠️ Pull failed (proceeding anyway): ${e.message}`);
+  }
+
   // 1. Spawn ACP session (thread-bound for Discord visibility)
   const { childSessionKey, runId } = await spawnBusterSession(payload, prompt, timeoutSeconds);
 
