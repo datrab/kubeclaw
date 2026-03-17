@@ -1,0 +1,13 @@
+extraVolumes:
+  - name: google-key-vol
+    secret:
+      secretName: google-sa-key
+
+extraVolumeMounts:
+  - name: google-key-vol
+    mountPath: "/keys"
+    readOnly: true
+
+extraEnv:
+  - name: GOOGLE_APPLICATION_CREDENTIALS
+    value: "/keys/credentials.json"
