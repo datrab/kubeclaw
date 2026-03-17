@@ -1542,6 +1542,83 @@ function readGateInstructions(config, gate) {
 // No memory injection (Buster's decisions are spec-driven, not context-driven).
 
 /**
+ * Git sync section — first thing the agent does to ensure it's on the latest code.
+ * The processor sidecar also does a git pull before spawn (belt-and-suspenders).
+ */
+function buildGitSyncSection(commitHash) {
+  const lines = [
+    '## Step 0: Sync Repository',
+    '',
+    '```bash',
+    'cd /home/node/.openclaw/workspace/git-repo',
+    'git pull --rebase origin HEAD',
+    '```',
+    '',
+  ];
+  if (commitHash) {
+    lines.push(
+      `Verify you are on the expected commit: \`${commitHash.substring(0, 8)}\``,
+      '```bash',
+      'git log --oneline -1',
+      '```',
+      '',
+    );
+  }
+  lines.push('---', '');
+  return lines;
+}
+
+/**
+ * Available tools section — injected into Buster prompts because ACP subagent
+ * sessions don't inherit the main session's workspace (TOOLS.md).
+ */
+function buildAvailableToolsSection() {
+  return [
+    '## Available Tools',
+    '',
+    'All scripts at `/app/skills/`. All env vars are pre-set.',
+    '',
+    '### Redis',
+    '```',
+    'node /app/skills/redis.js --action complete --module <ID> --status <PASS|FAIL> --summary "text" [--project <P>] [--task-type module_test|gate_test]',
+    '```',
+    '',
+    '### Memory (Qdrant)',
+    '```',
+    'node /app/skills/memory.js remember --text "finding" --tags "t1,t2" [--scope project|global|agent] [--module <ID>] [--supersedes <old-id>]',
+    'node /app/skills/memory.js recall --query "text" [--tags "t1"] [--module <ID>] [--min-confidence 0.4] [--limit 5] [--verbose]',
+    'node /app/skills/memory.js forget --id "<ID>"',
+    'node /app/skills/memory.js validate --id "<ID>"',
+    'node /app/skills/memory.js stats',
+    '```',
+    '',
+    '### Sandbox (Podman)',
+    '```',
+    'sandbox-run <image> ["cmd"]',
+    'sandbox-build <image> <dir> "<cmd>"',
+    'sandbox-serve [dir]',
+    'sandbox-kill <name> / sandbox-stop / sandbox-ps / sandbox-cleanup',
+    '```',
+    '',
+    '### Testing Tools',
+    '```',
+    'lighthouse <url> --output json --chrome-flags="--headless --no-sandbox"',
+    'k6 run script.js',
+    'npx playwright test',
+    'curl, nmap, jq, grep',
+    '```',
+    '',
+    '### Visual Audit (screenshot/video → Discord)',
+    '```',
+    'node /app/skills/visual-audit.js "<url>" [--mode image|video]',
+    '```',
+    '',
+    '---',
+    '',
+  ];
+}
+
+/**
  * Shared test workspace section for all Buster prompts.
  * Tells the agent where to write test scripts so they persist in the repo,
  * are separated per attempt, and stay within .swarm/ (verify-task.js scope).
@@ -1612,6 +1689,12 @@ function buildBusterModulePrompt(config, moduleId, mod, dir, status, maxFails) {
 
   contextBlock.push('---', '');
 
+  // ── Git Sync (Step 0) ──
+  const gitSync = buildGitSyncSection(status.forge_commit_hash);
+
+  // ── Available Tools ──
+  const availableTools = buildAvailableToolsSection();
+
   // ── Test Workspace ──
   const testWorkspacePath = relPath(config, path.join(modulePath(config, dir), 'tests', `attempt-${attempt}`));
   const testWorkspace = buildTestWorkspaceSection(testWorkspacePath);
@@ -1629,7 +1712,7 @@ function buildBusterModulePrompt(config, moduleId, mod, dir, status, maxFails) {
   // ── Completion Protocol ──
   const completionProtocol = buildBusterCompletionProtocol(config, moduleId, dir, status);
 
-  const prompt = [...contextBlock, ...testWorkspace, ...testSection, ...completionProtocol].join('\n');
+  const prompt = [...contextBlock, ...gitSync, ...availableTools, ...testWorkspace, ...testSection, ...completionProtocol].join('\n');
   return { prompt };
 }
 
@@ -1664,6 +1747,12 @@ function buildBusterGatePrompt(config, gateId, gate, instructions, commitHash, a
     '',
   ].filter(Boolean);
 
+  // ── Git Sync (Step 0) ──
+  const gitSync = buildGitSyncSection(commitHash);
+
+  // ── Available Tools ──
+  const availableTools = buildAvailableToolsSection();
+
   // ── Test Workspace ──
   const gateDir = gate.output_file ? path.dirname(gate.output_file) : gateId;
   const testWorkspacePath = relPath(config, path.join(swarmRoot(config), gateDir, 'tests', `attempt-${attempt}`));
@@ -1682,7 +1771,7 @@ function buildBusterGatePrompt(config, gateId, gate, instructions, commitHash, a
   // ── Completion Protocol (gate variant) ──
   const completionProtocol = buildBusterGateCompletionProtocol(config, gateId, gate);
 
-  return [...contextBlock, ...testWorkspace, ...testSection, ...completionProtocol].join('\n');
+  return [...contextBlock, ...gitSync, ...availableTools, ...testWorkspace, ...testSection, ...completionProtocol].join('\n');
 }
 
 /**
