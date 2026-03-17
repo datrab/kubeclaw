@@ -43,11 +43,7 @@
       "acp_agent_id": "codex",
       "cwd": null
     },
-    "buster": {
-      "dispatch": "redis",
-      "redis_stream": "swarm:buster:tasks",
-      "redis_js_path": "/app/skills/redis.js"
-    },
+    "buster": {},
     "echo": {
       "dispatch": "acp",
       "acp_agent_id": "claude",
@@ -58,12 +54,12 @@
   "models": {
     "forge": "codex-5.4",
     "buster": "claude-sonnet-4-6",
-    "echo": "claude-sonnet-4-6"
+    "echo": "claude-opus-4-6"
   },
 
   "review_defaults": {
     "reviewers": [
-      { "label": "echo-opus", "agent_id": "claude", "model": "claude-opus-4-6" }
+      { "label": "echo-opus", "agent_id": "claude" }
     ],
     "timeout_minutes": 30,
     "max_fix_cycles": 3,

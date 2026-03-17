@@ -4,6 +4,12 @@
   "created_at": null,
   "last_updated": null,
 
+  "models": {
+    "forge": "codex-5.4",
+    "buster": "claude-sonnet-4-6",
+    "echo": "claude-opus-4-6"
+  },
+
   "execution_order": [
     "01", "02", "03", "04", "05", "06", "07", "08", "09",
     "10", "11", "12", "13",

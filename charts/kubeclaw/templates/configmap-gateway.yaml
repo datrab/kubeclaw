@@ -11,7 +11,7 @@ data:
       "gateway": {
         "mode": "local",
         "tools": {
-          "allow": ["gateway", "cron", "message"]
+          "allow": ["group:openclaw"]
         },
         "port": {{ .Values.gateway.port }},
         "controlUi": {
@@ -21,7 +21,16 @@ data:
       "acp": {
         "enabled": true,
         "backend": "acpx",
-        "allowedAgents": ["codex", "claude", "opencode", "gemini", "pi"]
+        "defaultAgent": "codex",
+        "allowedAgents": ["*"],
+        "maxConcurrentSessions": 8,
+        "stream": {
+          "coalesceIdleMs": 300,
+          "maxChunkChars": 1200
+        },
+        "runtime": {
+          "ttlMinutes": 120
+        }
       },
       "session": {
         "threadBindings": {
@@ -88,6 +97,11 @@ data:
             "mode": "safeguard",
             "maxHistoryShare": 0.5,
             "memoryFlush": { "enabled": true }
+          },
+          "subagents": {
+            "maxConcurrent": 8,
+            "runTimeoutSeconds": 7200,
+            "archiveAfterMinutes": 120
           }
         }
       },

@@ -49,6 +49,13 @@ gateway:
 # -- Replica count (always 1 per agent — agents are stateful)
 replicaCount: 1
 
+# -- Stream processor sidecar (Redis → Gateway bridge)
+# Reads tasks from the agent's Redis stream and injects them into the gateway.
+# Required for Buster (pipeline dispatches tests via Redis).
+# Not needed for Nova (pipeline.js runs directly in Nova's session).
+processor:
+  enabled: true
+
 # =============================================================================
 # AUTHENTICATION
 # =============================================================================
@@ -120,7 +127,6 @@ agent:
     # K8s secret containing the SSH deploy key
     secretName: ""  # e.g. "git-deploy-key-nova"
     repoUrl: ""     # e.g. "git@github.com:your-org/your-project.git"
-    branch: "main"
 
 # =============================================================================
 # INFRASTRUCTURE CONNECTIONS
@@ -198,6 +204,14 @@ resources:
   limits:
     cpu: 2000m
     memory: 2Gi
+
+# =============================================================================
+# SECURITY
+# =============================================================================
+# OpenClaw's base image requires root. Set to false only if running a custom
+# rootless image. Ignored when sandbox.enabled=true (Podman always needs root).
+
+runAsRoot: true
 
 # =============================================================================
 # HEALTH CHECKS

@@ -19,7 +19,9 @@ spec:
         {{- include "kubeclaw.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap-gateway.yaml") . | sha256sum }}
+        {{- if .Values.processor.enabled }}
         checksum/processor: {{ include (print $.Template.BasePath "/configmap-processor.yaml") . | sha256sum }}
+        {{- end }}
         checksum/swarm-config: {{ include (print $.Template.BasePath "/configmap-swarm-config.yaml") . | sha256sum }}
         {{- if .Values.customSkills }}
         checksum/skills: {{ include (print $.Template.BasePath "/configmap-skills.yaml") . | sha256sum }}
@@ -45,9 +47,16 @@ spec:
       {{- end }}
 
       securityContext:
+        {{- if or .Values.sandbox.enabled .Values.runAsRoot }}
         fsGroup: 0
         runAsUser: 0
         runAsGroup: 0
+        {{- else }}
+        fsGroup: 1000
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        {{- end }}
 
       # ---------------------------------------------------------------
       # INIT CONTAINER — Setup SSH, Git, Workspace, Skills
@@ -57,6 +66,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
+            # Init always runs as root (needs chown, mkdir /root/.ssh, etc.)
             runAsUser: 0
           command:
             - /bin/bash
@@ -304,8 +314,13 @@ spec:
           resources: {{- toYaml .Values.resources | nindent 12 }}
 
           securityContext:
+            {{- if or .Values.sandbox.enabled .Values.runAsRoot }}
             runAsUser: 0
             runAsGroup: 0
+            {{- else }}
+            runAsUser: 1000
+            runAsGroup: 1000
+            {{- end }}
             {{- if .Values.sandbox.enabled }}
             appArmorProfile:
               type: Unconfined
@@ -348,6 +363,7 @@ spec:
           {{- end }}
 
         # ── Stream Processor (Redis → Gateway) ──
+        {{- if .Values.processor.enabled }}
         - name: stream-processor
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -413,8 +429,13 @@ spec:
               mountPath: /app/skills
 
           securityContext:
+            {{- if or .Values.sandbox.enabled .Values.runAsRoot }}
             runAsUser: 0
             runAsGroup: 0
+            {{- else }}
+            runAsUser: 1000
+            runAsGroup: 1000
+            {{- end }}
             allowPrivilegeEscalation: false
             capabilities:
               drop:
@@ -423,6 +444,7 @@ spec:
           resources:
             requests: { cpu: 50m, memory: 64Mi }
             limits: { cpu: 200m, memory: 256Mi }
+        {{- end }}
 
       # ---------------------------------------------------------------
       # VOLUMES

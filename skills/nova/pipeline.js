@@ -60,18 +60,6 @@ function gitExec(repoRoot, args, opts = {}) {
 }
 
 /**
- * Run an openclaw CLI command safely.
- * @param {string[]} args - Command arguments
- * @param {object} opts - Options for execFileSync
- * @returns {string} stdout (trimmed)
- */
-function clawExec(args, opts = {}) {
-  const defaults = { encoding: 'utf8', timeout: 30000 };
-  const result = execFileSync('openclaw', args, { ...defaults, ...opts });
-  return typeof result === 'string' ? result.trim() : '';
-}
-
-/**
  * Run a node script safely with arguments as array.
  * @param {string} scriptPath - Path to the .js file
  * @param {string[]} args - Script arguments
@@ -97,6 +85,55 @@ function curlPost(url, jsonPayload, opts = {}) {
     '-d', jsonPayload,
     url,
   ], { stdio: 'ignore', timeout: 10000, ...opts });
+}
+
+// ─── Gateway Tool API ────────────────────────────────────────────────────────
+// ACP sessions (Forge, Echo) are managed through the Gateway's Tool API.
+// This is the only supported programmatic interface — `openclaw sessions spawn`
+// does NOT exist as a CLI command (verified via --help).
+//
+// Docs: https://docs.openclaw.ai/concepts/session-tool
+//       https://docs.openclaw.ai/tools/acp-agents
+
+const GATEWAY_URL   = 'http://127.0.0.1:18789/tools/invoke';
+const GATEWAY_TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN || '';
+
+/**
+ * Invoke a Gateway tool via HTTP POST.
+ * Used for sessions_spawn, sessions_send, session_status.
+ *
+ * @param {string} tool - Tool name (e.g. 'sessions_spawn')
+ * @param {object} args - Tool arguments
+ * @param {number} timeoutMs - HTTP timeout in ms (default 30s)
+ * @returns {Promise<object>} Parsed JSON response
+ */
+async function gatewayInvoke(tool, args, timeoutMs = 30000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(GATEWAY_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(GATEWAY_TOKEN ? { 'Authorization': `Bearer ${GATEWAY_TOKEN}` } : {}),
+      },
+      body: JSON.stringify({ tool, args }),
+      signal: controller.signal,
+    });
+
+    const text = await response.text();
+    if (!response.ok) {
+      const err = new Error(`Gateway ${tool} failed: ${response.status} ${response.statusText}`);
+      err.httpStatus = response.status;
+      err.httpBody = text;
+      throw err;
+    }
+
+    try { return JSON.parse(text); } catch { return { raw: text }; }
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 // ─── Path Validation ─────────────────────────────────────────────────────────
@@ -171,7 +208,6 @@ const STATUS = {
   IN_PROGRESS:        'IN_PROGRESS',
   READY_FOR_TESTING:  'READY_FOR_TESTING',
   TESTING:            'TESTING',
-  REVIEWING:          'REVIEWING',
   PASS:               'PASS',
   FAIL:               'FAIL',
   BLOCKED:            'BLOCKED',
@@ -179,28 +215,48 @@ const STATUS = {
 };
 
 // ─── Graceful Shutdown ───────────────────────────────────────────────────────
-// Track active agent sessions so we can clean up on SIGTERM/SIGINT.
-// Supports multiple concurrent agents (e.g. 3 parallel reviewers).
+// Track active ACP sessions so we can clean up on SIGTERM/SIGINT.
+// Map supports multiple concurrent sessions (e.g. module agent + gate fix agent).
+// Map: label → childSessionKey (from sessions_spawn response)
 
 let _shutdownState = {
   config: null,
   statusDir: null,       // Module status dir (for marking FAIL on interrupt)
-  activeLabels: new Set(), // ACP session labels to kill on shutdown
+  activeSessions: new Map(), // label → childSessionKey (for Gateway kill via sessions_send)
   currentLabel: null,    // Label added by setShutdownContext (for clearShutdownContext cleanup)
 };
+
+/**
+ * Synchronous Gateway kill via curl — used only in shutdown handler.
+ * Normal operations use async gatewayInvoke() instead.
+ */
+function gatewayKillSync(sessionKey) {
+  try {
+    const payload = JSON.stringify({
+      tool: 'sessions_send',
+      args: { sessionKey, message: '/stop' },
+    });
+    execFileSync('curl', [
+      '-s', '-X', 'POST',
+      '-H', 'Content-Type: application/json',
+      ...(GATEWAY_TOKEN ? ['-H', `Authorization: Bearer ${GATEWAY_TOKEN}`] : []),
+      '-d', payload,
+      GATEWAY_URL,
+    ], { stdio: 'ignore', timeout: 10000 });
+  } catch { /* best effort — gateway may be unreachable during shutdown */ }
+}
 
 function registerShutdownHooks() {
   const handler = (signal) => {
     log('WARN', `Received ${signal} — initiating graceful shutdown`);
-    const { config, statusDir, activeLabels } = _shutdownState;
+    const { config, statusDir, activeSessions } = _shutdownState;
 
-    // Kill ALL tracked agent sessions (best effort)
-    if (config && activeLabels.size > 0) {
-      for (const label of activeLabels) {
-        try {
-          clawExec(['sessions', 'kill', '--label', label], { stdio: 'ignore', timeout: 10000 });
-          log('INFO', `Shutdown: killed session '${label}'`);
-        } catch { /* best effort */ }
+    // Kill ALL tracked ACP sessions via Gateway Tool API (best effort)
+    if (config && activeSessions.size > 0) {
+      for (const [label, sessionKey] of activeSessions) {
+        if (!sessionKey) continue;  // Pre-tracked but spawn not yet completed
+        gatewayKillSync(sessionKey);
+        log('INFO', `Shutdown: killed session '${label}' (${sessionKey})`);
       }
     }
 
@@ -225,33 +281,38 @@ function registerShutdownHooks() {
 }
 
 /**
- * Track an ACP session label for graceful shutdown.
- * Call after every spawnAcpAgent / spawnReviewerAgent.
+ * Track an ACP session for graceful shutdown.
+ * @param {object} config - Pipeline config
+ * @param {string} label - Human-readable label (e.g. 'forge-module-1')
+ * @param {string} sessionKey - Gateway childSessionKey from sessions_spawn
  */
-function trackAgent(config, label) {
+function trackAgent(config, label, sessionKey) {
   _shutdownState.config = config;
-  _shutdownState.activeLabels.add(label);
+  _shutdownState.activeSessions.set(label, sessionKey);
 }
 
 /**
- * Stop tracking an ACP session label (after kill).
+ * Stop tracking an ACP session (after kill).
  */
 function untrackAgent(label) {
-  _shutdownState.activeLabels.delete(label);
+  _shutdownState.activeSessions.delete(label);
 }
 
 /**
  * Set module-level shutdown context (for status.json FAIL marking).
- * Also tracks the module's agent label.
+ * Also pre-tracks the module's agent label (sessionKey added later by trackAgent after spawn).
  */
 function setShutdownContext(config, agentType, moduleId, statusDir) {
   _shutdownState.config = config;
   _shutdownState.statusDir = statusDir;
-  // Only track ACP agents — Redis agents can't be killed by label
+  // Only track ACP agents — Redis agents can't be killed by sessionKey
   const agentConf = config.agents?.[agentType];
   if (!agentConf || agentConf.dispatch !== 'redis') {
     const label = acpLabel(agentType, moduleId);
-    _shutdownState.activeLabels.add(label);
+    // Pre-set with null sessionKey — updated by trackAgent after spawn succeeds
+    if (!_shutdownState.activeSessions.has(label)) {
+      _shutdownState.activeSessions.set(label, null);
+    }
     _shutdownState.currentLabel = label;
   } else {
     _shutdownState.currentLabel = null;
@@ -261,11 +322,11 @@ function setShutdownContext(config, agentType, moduleId, statusDir) {
 /**
  * Clear module-level shutdown context after module attempt completes.
  * Removes the current module's agent label from tracking.
- * Safe to call even if killAgent already removed it (Set.delete is idempotent).
+ * Safe to call even if killAgent already removed it (Map.delete is idempotent).
  */
 function clearShutdownContext() {
   if (_shutdownState.currentLabel) {
-    _shutdownState.activeLabels.delete(_shutdownState.currentLabel);
+    _shutdownState.activeSessions.delete(_shutdownState.currentLabel);
     _shutdownState.currentLabel = null;
   }
   _shutdownState.statusDir = null;
@@ -387,6 +448,11 @@ function loadConfig(projectName, opts = {}) {
   // even in contexts where config isn't passed (e.g. addHistory -> headHash).
   _repoRoot = config.repo_root;
 
+  // Discord webhook: swarm.config.json (explicit) > DISCORD_WEBHOOK env (K8s secret)
+  if (!config.discord_webhook_url && process.env.DISCORD_WEBHOOK) {
+    config.discord_webhook_url = process.env.DISCORD_WEBHOOK;
+  }
+
   // Validate merged config (fail fast instead of cryptic TypeError later)
   validateConfig(config, progress);
 
@@ -428,12 +494,18 @@ function validateConfig(config, progress) {
   requireField(config, 'paths.swarm_dir');
   requireField(config, 'paths.progress_file');
   requireField(config, 'paths.modules_dir');
-  requireField(config, 'models');
-  requireField(config, 'models.forge');
-  requireField(config, 'models.buster');
   requireField(config, 'agents');
   requireField(config, 'agents.forge');
   requireField(config, 'agents.buster');
+
+  // Buster is ALWAYS Redis-dispatched (isolated pod with Podman sandbox).
+  // This is architectural — Buster cannot run as an ACP subagent of Nova.
+  config.agents.buster.dispatch = 'redis';
+  config.agents.buster.redis_js_path ??= '/app/skills/redis.js';
+
+  // models section: optional in config (progress.json can provide project-level defaults)
+  // but at least one source must exist — validated at runtime when resolveModel() is called.
+  config.models ??= {};
 
   // Agent dispatch validation
   for (const [name, agentConf] of Object.entries(config.agents || {})) {
@@ -545,6 +617,26 @@ function relPath(config, absPath)  { return path.relative(config.repo_root, absP
 /** Redis stream key for Buster completion signals */
 function completionStreamKey(config) {
   return `swarm:pipeline:${config.project}:completions`;
+}
+
+/**
+ * Resolve model for an agent with three-level fallback:
+ *   1. Explicit override (per-module forge_model, per-gate model, per-reviewer model)
+ *   2. progress.json project-level (progress.models.<agent>)
+ *   3. swarm.config platform-level (config.models.<agent>)
+ *
+ * @param {string} agentType - 'forge', 'buster', or 'echo'
+ * @param {object} config - Platform config (swarm.config.json)
+ * @param {object} progress - Project config (progress.json)
+ * @param {string} [override] - Explicit override (e.g. mod.forge_model, gate.model)
+ * @returns {string} Resolved model string
+ */
+function resolveModel(agentType, config, progress, override) {
+  const model = override ?? progress.models?.[agentType] ?? config.models?.[agentType];
+  if (!model) {
+    throw new Error(`No model configured for '${agentType}'. Set it in progress.json (models.${agentType}) or swarm.config.json (models.${agentType}).`);
+  }
+  return model;
 }
 
 function loadStatus(config, dir) {
@@ -854,7 +946,7 @@ async function discord(config, level, title, description, fields = []) {
         description,
         color: colors[level] || 0x95a5a6,
         fields: fields.map(f => ({ name: f.name, value: String(f.value), inline: f.inline ?? true })),
-        footer: { text: `OpenClaw Pipeline · ${config.project} · ${RUN_ID}` },
+        footer: { text: `KubeClaw Pipeline · ${config.project} · ${RUN_ID}` },
         timestamp: new Date().toISOString(),
       }],
     };
@@ -940,7 +1032,7 @@ async function releaseBlueprint(config, moduleId, moduleDir, stages = ['forge', 
 // Two dispatch modes based on agent type:
 //
 // ACP agents (Forge, Echo) — Nova's subagents
-//   - Spawned as thread-bound ACP sessions via OpenClaw CLI
+//   - Spawned as thread-bound ACP sessions via Gateway Tool API
 //   - Session destroyed after each phase (kill-and-respawn)
 //   - Pipeline has direct lifecycle control
 //
@@ -964,59 +1056,85 @@ function acpLabel(agentType, moduleId) {
   return `${agentType}-${moduleId}`;
 }
 
-// ── ACP Dispatch (Forge, Echo) ──
+/**
+ * Derive the ACP harness ID from a model name.
+ * The harness determines which coding tool runs the ACP session
+ * (Claude Code, Codex, Gemini CLI, etc.).
+ *
+ * Available acpx harnesses: pi, claude, codex, opencode, gemini, kimi
+ * See: https://docs.openclaw.ai/tools/acp-agents#acpx-harness-support-current
+ *
+ * @param {string} modelId - Model identifier (e.g. 'claude-sonnet-4-6', 'codex-5.4', 'gemini-pro')
+ * @returns {string|null} Harness ID or null if unknown
+ */
+function modelToHarness(modelId) {
+  if (!modelId) return null;
+  const m = modelId.toLowerCase();
+  if (m.includes('claude'))    return 'claude';
+  if (m.includes('codex'))     return 'codex';
+  if (m.includes('gpt'))       return 'codex';
+  if (m.includes('gemini'))    return 'gemini';
+  if (m.includes('opencode'))  return 'opencode';
+  if (m.includes('kimi'))      return 'kimi';
+  return null;
+}
 
-function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
+// ── ACP Dispatch (Forge, Echo) — via Gateway Tool API ──
+// sessions_spawn with runtime: "acp" — see https://docs.openclaw.ai/tools/acp-agents
+// Tool API modes: 'run' (one-shot) | 'session' (persistent, requires thread: true)
+
+async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
   const agentConfig = config.agents[agentType];
   const label = acpLabel(agentType, moduleId);
-  const agentId = agentConfig.acp_agent_id || agentType;
+  // Prio: model-derived harness → config acp_agent_id → agentType as fallback
+  const agentId = modelToHarness(model) || agentConfig.acp_agent_id || agentType;
   const cwd = agentConfig.cwd || config.repo_root;
 
   log('STEP', `Spawning ACP session: ${label} (agent: ${agentId}, model: ${model})`);
 
-  // Write prompt to temp file to avoid OS argument length limits (E2BIG)
-  // on large prompts (FORGE.md + retry context + memory context can be 10KB+).
-  // The agent is instructed to read the file for its task instructions.
-  const tmpPromptPath = tmpFile('prompt', moduleId, '.md');
-  fs.writeFileSync(tmpPromptPath, taskPrompt);
-
-  // The task arg tells the agent WHERE to find its instructions, not the instructions themselves.
-  // This keeps CLI args small and avoids E2BIG regardless of prompt size.
-  const taskArg = [
-    `Your full task instructions are in the file: ${tmpPromptPath}`,
-    `Read this file FIRST before doing anything else.`,
-    `The file contains your complete FORGE.md instructions, retry context (if any), and memory context.`,
-    `Begin by reading it with: cat ${tmpPromptPath}`,
-  ].join('\n');
+  // sessions_spawn args — see https://docs.openclaw.ai/concepts/session-tool#sessions_spawn
+  const spawnArgs = {
+    task: taskPrompt,
+    runtime: 'acp',
+    agentId: agentId,
+    label: label,
+    model: model,
+    cwd: cwd,
+    thread: true,
+    mode: 'session',            // Tool API: 'run' | 'session' (persistent thread-bound)
+    cleanup: 'keep',            // Keep transcript for post-mortem
+  };
 
   try {
-    const result = clawExec([
-      'sessions', 'spawn',
-      '--agentId', agentId,
-      '--runtime', 'acp',
-      '--mode', 'persistent',
-      '--label', label,
-      '--model', model,
-      '--cwd', cwd,
-      '--thread', 'auto',
-      '--task', taskArg,
-    ], { timeout: 30000 });
+    // sessions_spawn returns: { status: "accepted", runId, childSessionKey }
+    const result = await gatewayInvoke('sessions_spawn', spawnArgs, 30000);
 
-    log('OK', `ACP session spawned: ${label}`);
-    trackAgent(config, label);
-    return { label, result };
+    if (result.status !== 'accepted') {
+      throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
+    }
+
+    log('OK', `ACP session spawned: ${label} → ${result.childSessionKey}`);
+    trackAgent(config, label, result.childSessionKey);
+    return { label, childSessionKey: result.childSessionKey, runId: result.runId };
   } catch (e) {
     throw new Error(`Failed to spawn ACP session '${label}': ${e.message}`);
   }
-  // Note: prompt temp file is NOT cleaned up here — the agent needs to read it.
-  // It lives in the per-run _tmpDir which is cleaned up when the pipeline exits.
 }
 
-function killAcpAgent(config, agentType, moduleId) {
+async function killAcpAgent(config, agentType, moduleId) {
   const label = acpLabel(agentType, moduleId);
-  log('STEP', `Destroying ACP session: ${label}`);
+  const sessionKey = _shutdownState.activeSessions.get(label);
+
+  if (!sessionKey) {
+    log('WARN', `No sessionKey tracked for '${label}' — skipping kill`);
+    untrackAgent(label);
+    return;
+  }
+
+  log('STEP', `Destroying ACP session: ${label} (${sessionKey})`);
   try {
-    clawExec(['sessions', 'kill', '--label', label], { stdio: 'ignore', timeout: 15000 });
+    // sessions_send with /stop — see https://docs.openclaw.ai/concepts/session-tool#sessions_send
+    await gatewayInvoke('sessions_send', { sessionKey, message: '/stop' }, 15000);
     log('OK', `Session destroyed: ${label}`);
   } catch {
     log('WARN', `Could not destroy session '${label}' — may have already exited`);
@@ -1026,10 +1144,11 @@ function killAcpAgent(config, agentType, moduleId) {
 
 // ── Redis Dispatch (Buster) ──
 // Writes a structured task to Buster's Redis stream. The processor sidecar
-// picks it up, enriches with Qdrant context, and injects into Buster's gateway.
+// picks it up, enriches with Qdrant context, and spawns a subagent via gateway.
 //
-// Task type: module_test (standard module testing via isolated subagent session).
-// Chaos testing is now a regular buster gate, not a special task type.
+// Task types:
+//   module_test — standard module testing (BUSTER.md driven)
+//   gate_test   — gate testing (instructions_file driven, e.g. final system test)
 
 function buildBusterPayload(config, progress, moduleId, taskType, taskPrompt, status, opts = {}) {
   // Common fields — all pipeline tasks include the completion stream
@@ -1048,7 +1167,9 @@ function buildBusterPayload(config, progress, moduleId, taskType, taskPrompt, st
       ...base,
       instructions: taskPrompt,
       session: {
-        runtime: 'subagent',
+        model: opts.model || null,
+        agentId: modelToHarness(opts.model) || null,
+        cwd: config.repo_root,
         timeout_seconds: (mod?.timeout_minutes ?? config.default_timeout_minutes) * 60,
         label: `buster-test-${moduleId}-${Date.now()}`,
       },
@@ -1065,7 +1186,9 @@ function buildBusterPayload(config, progress, moduleId, taskType, taskPrompt, st
       ...base,
       instructions: taskPrompt,
       session: {
-        runtime: 'subagent',
+        model: opts.model || null,
+        agentId: modelToHarness(opts.model) || null,
+        cwd: config.repo_root,
         timeout_seconds: gateTimeout * 60,
         label: `buster-gate-${moduleId}-${Date.now()}`,
       },
@@ -1127,21 +1250,22 @@ function dispatchRedisTask(config, progress, agentType, moduleId, taskType, payl
 
 // ── Unified Interface ──
 // The rest of the pipeline uses these three functions without caring
-// whether the agent is ACP or Redis.
+// whether the agent is ACP or Redis. All are async — callers must await.
 
-function spawnAgent(config, progress, agentType, moduleId, model, taskPrompt, opts = {}) {
+async function spawnAgent(config, progress, agentType, moduleId, model, taskPrompt, opts = {}) {
   const agentConfig = config.agents[agentType];
   if (!agentConfig) throw new Error(`Unknown agent type: ${agentType}`);
 
   if (agentConfig.dispatch === 'redis') {
     const taskType = opts.taskType || 'module_test';
+    opts.model = model;  // Pass resolved model to Redis payload builder
     return dispatchRedisTask(config, progress, agentType, moduleId, taskType, taskPrompt, opts.status, opts);
   } else {
-    return spawnAcpAgent(config, agentType, moduleId, model, taskPrompt);
+    return await spawnAcpAgent(config, agentType, moduleId, model, taskPrompt);
   }
 }
 
-function killAgent(config, agentType, moduleId) {
+async function killAgent(config, agentType, moduleId) {
   const agentConfig = config.agents[agentType];
   if (!agentConfig) return;
 
@@ -1151,11 +1275,11 @@ function killAgent(config, agentType, moduleId) {
     log('INFO', `${agentType} is a Redis agent — no session to destroy (persistent instance)`);
   } else {
     // killAcpAgent calls untrackAgent internally
-    killAcpAgent(config, agentType, moduleId);
+    await killAcpAgent(config, agentType, moduleId);
   }
 }
 
-function steerAgent(config, progress, agentType, moduleId, message) {
+async function steerAgent(config, progress, agentType, moduleId, message) {
   const agentConfig = config.agents[agentType];
   if (!agentConfig) return;
 
@@ -1168,14 +1292,17 @@ function steerAgent(config, progress, agentType, moduleId, message) {
     }
   } else {
     const label = acpLabel(agentType, moduleId);
+    const sessionKey = _shutdownState.activeSessions.get(label);
+
+    if (!sessionKey) {
+      log('WARN', `No sessionKey tracked for '${label}' — cannot steer`);
+      return;
+    }
+
     try {
-      // Write message to temp file to avoid E2BIG on large steer messages
-      // (retry context with fail_summaries can exceed OS argument limits).
-      // Same pattern as spawnAcpAgent uses for task prompts.
-      const tmpMsgPath = tmpFile('steer', moduleId, '.md');
-      fs.writeFileSync(tmpMsgPath, message);
-      const steerArg = `Read the follow-up instructions from: ${tmpMsgPath}\nBegin by reading it with: cat ${tmpMsgPath}`;
-      clawExec(['sessions', 'send', '--label', label, '--message', steerArg], { timeout: 15000 });
+      // sessions_send delivers the steer message to the running ACP session.
+      // No temp file needed — HTTP POST handles large payloads natively.
+      await gatewayInvoke('sessions_send', { sessionKey, message }, 15000);
     } catch (e) {
       log('WARN', `ACP steer failed for '${label}': ${e.message}`);
     }
@@ -1184,7 +1311,7 @@ function steerAgent(config, progress, agentType, moduleId, message) {
 
 /**
  * Verify an ACP agent is alive shortly after spawn.
- * Waits a few seconds then checks session status. Returns true if running.
+ * Waits a few seconds then checks session status via Gateway Tool API.
  * For Redis agents: always returns true (Processor handles spawn verification).
  *
  * This catches silent spawn failures (OOM, bad model ID, gateway down) in seconds
@@ -1201,16 +1328,25 @@ async function verifyAgentAlive(config, agentType, moduleId, waitMs = 8000) {
   await sleep(waitMs);
 
   const label = acpLabel(agentType, moduleId);
+  const sessionKey = _shutdownState.activeSessions.get(label);
+
+  if (!sessionKey) {
+    log('ERROR', `Agent health check failed: no sessionKey for '${label}'`);
+    return false;
+  }
+
   try {
-    const out = clawExec(['sessions', 'status', '--label', label], { timeout: 10000 });
-    // Check for any indication the session is active
-    const alive = /running|active|idle|busy/i.test(out);
-    if (alive) {
-      log('OK', `Agent health check passed: ${label}`);
-    } else {
-      log('WARN', `Agent health check: session exists but status unclear: ${out.slice(0, 100)}`);
+    const result = await gatewayInvoke('session_status', { sessionKey }, 10000);
+
+    // If ACP state is available, check for terminal states (closed/error = spawn failed)
+    const acpState = result?.acp?.state || result?.state || null;
+    if (acpState && /^(closed|error)$/i.test(acpState)) {
+      log('ERROR', `Agent health check: session in terminal state '${acpState}': ${label}`);
+      return false;
     }
-    return alive;
+
+    log('OK', `Agent health check passed: ${label} (${sessionKey}${acpState ? `, state: ${acpState}` : ''})`);
+    return true;
   } catch (e) {
     log('ERROR', `Agent health check failed: ${label} — ${e.message?.split('\n')[0]}`);
     return false;
@@ -1221,12 +1357,14 @@ async function verifyAgentAlive(config, agentType, moduleId, waitMs = 8000) {
  * Poll until an ACP Forge session ends, with progress logging and crash detection.
  * Replaces the raw while-loop pattern used in gate fix cycles.
  *
+ * Uses Gateway Tool API (session_status / sessions_send) instead of CLI.
+ *
  * After session end, checks if Forge actually produced git changes (HEAD diff).
  * This detects silent crashes: OOM, API errors, or other failures where the
  * session dies without producing any commits.
  *
  * @param {object} config - Pipeline config
- * @param {string} sessionLabel - ACP session label to monitor
+ * @param {string} sessionLabel - ACP session label (used to look up childSessionKey)
  * @param {number} timeoutMinutes - Max wait time
  * @param {string} logLabel - For progress messages (e.g. "gatefix-final-test-1")
  * @returns {{ completed: boolean, hasChanges: boolean, reason: string }}
@@ -1238,22 +1376,58 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
   const nudgeThreshold = config.session_nudge_threshold ?? 0.75;
   let nudgeSent = false;
 
+  // Resolve sessionKey from label
+  const sessionKey = _shutdownState.activeSessions.get(sessionLabel);
+  if (!sessionKey) {
+    log('ERROR', `[${logLabel}] No sessionKey for label '${sessionLabel}' — cannot poll`);
+    return { completed: false, hasChanges: false, reason: 'no_session_key' };
+  }
+
   // Capture HEAD before Forge starts — used as fallback change detection
   const headBefore = headHash();
 
-  log('INFO', `[${logLabel}] Waiting for session '${sessionLabel}' to complete | timeout: ${timeoutMinutes}min`);
+  log('INFO', `[${logLabel}] Waiting for session '${sessionLabel}' (${sessionKey}) to complete | timeout: ${timeoutMinutes}min`);
 
   while (Date.now() < deadline) {
     await sleep(interval);
     gitPullForPolling(config);
 
-    // Check if ACP session is still active
+    // Check if ACP session is still actively running via Gateway Tool API.
+    // With cleanup='keep', the session entry persists after run completion —
+    // so we must parse the ACP state from the response, not just check reachability.
+    //
+    // Documented ACP session states (from ACP Thread Bound Agents plan):
+    //   creating → idle → running → idle
+    //   running → cancelling → idle | error
+    //   idle → closed
+    //
+    // 'running' and 'cancelling' = actively working (poll continues).
+    // 'creating' = still initializing (poll continues).
+    // 'idle', 'closed', 'error' = run finished (poll ends).
+    // Unreachable / error response = session gone (poll ends).
     let sessionActive = false;
     try {
-      const out = clawExec(['sessions', 'status', '--label', sessionLabel], { timeout: 10000 });
-      sessionActive = /running|active|busy/i.test(out);
+      const statusResult = await gatewayInvoke('session_status', { sessionKey }, 10000);
+
+      // Try to extract ACP state from response.
+      // session_status may return acp metadata with state field, or general session info.
+      const acpState = statusResult?.acp?.state         // SessionEntry.acp.state
+                    || statusResult?.state               // Direct state field
+                    || null;
+
+      if (acpState) {
+        // Known state — use ACP lifecycle semantics
+        sessionActive = /^(running|creating|cancelling)$/i.test(acpState);
+        if (!sessionActive) {
+          log('INFO', `[${logLabel}] ACP session state: '${acpState}' → run complete`);
+        }
+      } else {
+        // No ACP state in response — fallback: session exists = assume active.
+        // This is the conservative path; timeout will catch stuck sessions.
+        sessionActive = true;
+      }
     } catch {
-      // Session gone = finished or crashed
+      // Session gone = finished or crashed (404 / connection error)
       sessionActive = false;
     }
 
@@ -1302,9 +1476,10 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
       log('WARN', `[${logLabel}] Session at ${Math.round(percentElapsed * 100)}% of timeout — sending completion nudge`);
       try {
         const remainingMin = Math.round((deadline - Date.now()) / 60000);
-        clawExec(['sessions', 'send', '--label', sessionLabel,
-          '--message', `TIMEOUT WARNING: You have ~${remainingMin} minutes remaining. Complete your current task and write your output files now. Unfinished work will be lost.`],
-          { timeout: 10000 });
+        await gatewayInvoke('sessions_send', {
+          sessionKey,
+          message: `TIMEOUT WARNING: You have ~${remainingMin} minutes remaining. Complete your current task and write your output files now. Unfinished work will be lost.`,
+        }, 10000);
         nudgeSent = true;
       } catch { /* best effort — session may have just ended */ }
     }
@@ -1349,6 +1524,266 @@ function readGateInstructions(config, gate) {
   const p = path.join(swarmRoot(config), gate.instructions_file);
   if (!fs.existsSync(p)) throw new Error(`Gate instructions not found: ${p}`);
   return fs.readFileSync(p, 'utf8');
+}
+
+// ─── Buster Prompt Builder ──────────────────────────────────────────────────
+//
+// Builds the complete prompt for Buster subagent sessions.
+// Analogous to buildForgePrompt — pipeline.js owns the full prompt,
+// the Processor just relays it to the gateway.
+//
+// Prompt order (optimized for LLM attention):
+//   1. Context Block — factual orientation (paths, commit, attempt)
+//   2. Test Workspace — where to write test scripts (per-attempt dirs)
+//   3. Test Instructions — BUSTER.md / gate instructions (inline, full content)
+//   4. Completion Protocol — status.json → memory.js → redis.js
+//
+// No anti-patterns (Buster executes specs, doesn't need creative guidance).
+// No memory injection (Buster's decisions are spec-driven, not context-driven).
+
+/**
+ * Shared test workspace section for all Buster prompts.
+ * Tells the agent where to write test scripts so they persist in the repo,
+ * are separated per attempt, and stay within .swarm/ (verify-task.js scope).
+ */
+function buildTestWorkspaceSection(testWorkspacePath) {
+  return [
+    '## Test Workspace',
+    '',
+    `**Test directory:** \`${testWorkspacePath}/\``,
+    '',
+    'Simple checks (curl, ls, single commands) can run inline.',
+    'Multi-step tests, Playwright scripts, k6 scenarios, or anything longer than a few lines:',
+    'write as an executable script file in the test directory above, then run it.',
+    'This keeps your tests documented and reproducible.',
+    '',
+    '- Create the directory if it does not exist',
+    '- The application code is **read-only** (changes outside `.swarm/` will be reverted)',
+    '- Reference application code via relative paths to **Project Source**',
+    '',
+    '---',
+    '',
+  ];
+}
+
+/**
+ * Build a complete Buster prompt for module_test tasks.
+ *
+ * @param {object} config - Pipeline config
+ * @param {string} moduleId - Module ID
+ * @param {object} mod - Module definition from progress.json
+ * @param {string} dir - Module directory name
+ * @param {object} status - Current status.json content
+ * @param {number} maxFails - Max allowed failures
+ * @returns {{ prompt: string } | { error: string }}
+ */
+function buildBusterModulePrompt(config, moduleId, mod, dir, status, maxFails) {
+  // ── Read test spec ──
+  let testInstructions;
+  try { testInstructions = readBusterInstructions(config, dir); }
+  catch (e) { return { error: e.message }; }
+
+  const attempt = status.fail_count + 1;
+
+  // ── Context Block ──
+  const contextBlock = [
+    '## 🔬 TEST CONTEXT',
+    '',
+    `**Project:** ${config.project}`,
+    `**Module:** ${moduleId} — ${mod.title}`,
+    `**Project Source:** \`${relPath(config, projectSrcPath(config))}\``,
+    `**Module Path:** \`${relPath(config, modulePath(config, dir))}\``,
+    `**Status JSON:** \`${relPath(config, statusPath(config, dir))}\``,
+    `**Repo Root:** \`${config.repo_root}\``,
+    `**Working Directory:** \`${relPath(config, projectSrcPath(config))}\``,
+    `**Attempt:** ${attempt}/${maxFails}`,
+    status.forge_commit_hash
+      ? `**Commit:** \`${status.forge_commit_hash.substring(0, 8)}\``
+      : '',
+    '',
+    'All file paths in the test instructions below are relative to **Project Source**.',
+    `\`cd ${relPath(config, projectSrcPath(config))}\` before running any tests.`,
+    '',
+  ].filter(Boolean);
+
+  if (status.forge_diff_stat) {
+    contextBlock.push('**Files Changed by Forge:**', '```', status.forge_diff_stat, '```', '');
+  }
+
+  contextBlock.push('---', '');
+
+  // ── Test Workspace ──
+  const testWorkspacePath = relPath(config, path.join(modulePath(config, dir), 'tests', `attempt-${attempt}`));
+  const testWorkspace = buildTestWorkspaceSection(testWorkspacePath);
+
+  // ── Test Instructions (BUSTER.md inline) ──
+  const testSection = [
+    '## Test Instructions',
+    '',
+    testInstructions,
+    '',
+    '---',
+    '',
+  ];
+
+  // ── Completion Protocol ──
+  const completionProtocol = buildBusterCompletionProtocol(config, moduleId, dir, status);
+
+  const prompt = [...contextBlock, ...testWorkspace, ...testSection, ...completionProtocol].join('\n');
+  return { prompt };
+}
+
+/**
+ * Build a complete Buster prompt for gate_test tasks.
+ *
+ * @param {object} config - Pipeline config
+ * @param {string} gateId - Gate ID
+ * @param {object} gate - Gate definition from progress.json
+ * @param {string} instructions - Gate instructions content (already read)
+ * @param {string|null} commitHash - Current commit hash
+ * @param {number} [attempt=1] - Current attempt number
+ * @returns {string} Complete prompt
+ */
+function buildBusterGatePrompt(config, gateId, gate, instructions, commitHash, attempt = 1) {
+  // ── Context Block ──
+  const contextBlock = [
+    '## 🔬 TEST CONTEXT',
+    '',
+    `**Project:** ${config.project}`,
+    `**Gate:** ${gateId} — ${gate.title}`,
+    `**Project Source:** \`${relPath(config, projectSrcPath(config))}\``,
+    `**Repo Root:** \`${config.repo_root}\``,
+    `**Working Directory:** \`${relPath(config, projectSrcPath(config))}\``,
+    `**Attempt:** ${attempt}`,
+    commitHash ? `**Commit:** \`${commitHash}\`` : '',
+    '',
+    'All file paths in the test instructions below are relative to **Project Source**.',
+    `\`cd ${relPath(config, projectSrcPath(config))}\` before running any tests.`,
+    '',
+    '---',
+    '',
+  ].filter(Boolean);
+
+  // ── Test Workspace ──
+  const gateDir = gate.output_file ? path.dirname(gate.output_file) : gateId;
+  const testWorkspacePath = relPath(config, path.join(swarmRoot(config), gateDir, 'tests', `attempt-${attempt}`));
+  const testWorkspace = buildTestWorkspaceSection(testWorkspacePath);
+
+  // ── Test Instructions (gate instructions inline) ──
+  const testSection = [
+    '## Test Instructions',
+    '',
+    instructions,
+    '',
+    '---',
+    '',
+  ];
+
+  // ── Completion Protocol (gate variant) ──
+  const completionProtocol = buildBusterGateCompletionProtocol(config, gateId, gate);
+
+  return [...contextBlock, ...testWorkspace, ...testSection, ...completionProtocol].join('\n');
+}
+
+/**
+ * Completion protocol for module_test: status.json → memory.js → redis.js
+ */
+function buildBusterCompletionProtocol(config, moduleId, dir, status) {
+  const statusJsonPath = relPath(config, statusPath(config, dir));
+
+  return [
+    '## When Testing Is Complete',
+    '',
+    'Execute these steps **in this exact order**. Do not skip any step.',
+    '',
+    '### Step 1: Update status.json',
+    '',
+    `Update \`${statusJsonPath}\`:`,
+    '- Read the existing JSON first (it contains pipeline metadata — do NOT overwrite it)',
+    '- Set `"status"` to `"PASS"` if all tests pass, or `"FAIL"` if any test fails',
+    '- If FAIL: increment `"fail_count"` and add a `"fail_summaries"` entry:',
+    '  ```json',
+    '  { "attempt": N, "timestamp": "ISO", "summary": "<what failed and why — be specific>", "phase": "buster" }',
+    '  ```',
+    '- If PASS: set `"completion_summary"` with test results overview',
+    '- Set `"current_phase"` to `null`',
+    '',
+    '### Step 2: Store Technical Insights',
+    '',
+    'Store 1-3 key technical insights from this session:',
+    '```bash',
+    `node /app/skills/memory.js remember \\`,
+    `  --text "Concise technical insight — what was tested and what pattern works or fails" \\`,
+    `  --tags "buster,${moduleId},${config.project}" \\`,
+    `  --scope global \\`,
+    `  --module ${moduleId}`,
+    '```',
+    '',
+    'What to store: patterns that worked, edge cases found, root causes of failures, test strategies.',
+    'What NOT to store: "Tests passed" (useless metadata), project-specific details that cannot be reused.',
+    '',
+    '### Step 3: Signal Completion',
+    '',
+    'This is your **LAST** action:',
+    '```bash',
+    `node /app/skills/redis.js \\`,
+    `  --action complete \\`,
+    `  --module ${moduleId} \\`,
+    `  --status <PASS|FAIL> \\`,
+    `  --summary "brief result summary"`,
+    '```',
+    '',
+    'Do NOT skip this step. Without it, your work cannot be registered.',
+  ];
+}
+
+/**
+ * Completion protocol for gate_test: output_file → memory.js → redis.js
+ */
+function buildBusterGateCompletionProtocol(config, gateId, gate) {
+  const outputFile = gate.output_file
+    ? relPath(config, path.join(swarmRoot(config), gate.output_file))
+    : null;
+
+  return [
+    '## When Testing Is Complete',
+    '',
+    'Execute these steps **in this exact order**. Do not skip any step.',
+    '',
+    '### Step 1: Write Results',
+    '',
+    outputFile
+      ? `Write your results to \`${outputFile}\` as JSON with at minimum a \`"status"\` field (\`"PASS"\` or \`"FAIL"\`).`
+      : 'Write your results as described in the instructions above.',
+    'Include a `"summary"` field with a brief overview and a `"findings"` array with details.',
+    '',
+    '### Step 2: Store Technical Insights',
+    '',
+    'Store 1-3 key technical insights from this session:',
+    '```bash',
+    `node /app/skills/memory.js remember \\`,
+    `  --text "Concise technical insight — what was tested and what pattern works or fails" \\`,
+    `  --tags "buster,${gateId},${config.project}" \\`,
+    `  --scope global \\`,
+    `  --module ${gateId}`,
+    '```',
+    '',
+    'What to store: patterns that worked, edge cases found, root causes of failures, test strategies.',
+    'What NOT to store: "Tests passed" (useless metadata), project-specific details that cannot be reused.',
+    '',
+    '### Step 3: Signal Completion',
+    '',
+    'This is your **LAST** action:',
+    '```bash',
+    `node /app/skills/redis.js \\`,
+    `  --action complete \\`,
+    `  --module ${gateId} \\`,
+    `  --status <PASS|FAIL> \\`,
+    `  --summary "brief result summary"`,
+    '```',
+    '',
+    'Do NOT skip this step. Without it, your work cannot be registered.',
+  ];
 }
 
 // ─── Qdrant Memory Integration ───────────────────────────────────────────────
@@ -1652,7 +2087,7 @@ function pollResult(ok, reason, status = null) {
  *   { rate_limited: true, status: object } → rate limit detected
  *   { parse_error: true }                  → increment corruption counter
  * @param {number} timeoutMinutes - Max polling duration
- * @param {string} label - For log messages (e.g. "Gate 'review-01'" or "chaos-phase1")
+ * @param {string} label - For log messages (e.g. "Gate 'review-01'" or "module-06")
  * @returns {PollResult}
  */
 async function pollGeneric(config, checkFn, timeoutMinutes, label = 'poll') {
@@ -1708,7 +2143,7 @@ async function pollGeneric(config, checkFn, timeoutMinutes, label = 'poll') {
 
 /**
  * Simple file-existence poller built on pollGeneric.
- * Used by chaos tests where the only completion signal is a file appearing on disk.
+ * Used by gates where the only completion signal is a file appearing on disk.
  *
  * @returns {PollResult} - ok=true if file found, ok=false on timeout
  */
@@ -2796,7 +3231,9 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
   // ──────────────────────────────────────────────────────────────────────────
   if (needsForge) {
     LOG_PHASE = 'forge';
-    log('STEP', `Phase: FORGE (subagent: ${mod.forge_subagent}, model: ${mod.forge_model})`);
+    const forgeModel = resolveModel('forge', config, progress, mod.forge_model);
+    const forgeHarness = modelToHarness(forgeModel) || config.agents?.forge?.acp_agent_id || 'forge';
+    log('STEP', `Phase: FORGE (harness: ${forgeHarness}, model: ${forgeModel})`);
 
     // Build complete prompt with priority hierarchy and anti-pattern framing
     const promptResult = await buildForgePrompt(config, moduleId, mod, dir, status, maxFails, novaPrompt);
@@ -2810,19 +3247,19 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     status.status = STATUS.IN_PROGRESS;
     status.current_phase = 'forge';
     if (!status.started_at) status.started_at = new Date().toISOString();
-    addHistory(status, STATUS.IN_PROGRESS, 'pipeline', `Forge started (${mod.forge_subagent})`);
+    addHistory(status, STATUS.IN_PROGRESS, 'pipeline', `Forge started (${forgeHarness})`);
     saveStatus(config, dir, status);
 
     await discord(config, 'INFO', `Module ${moduleId} started`, mod.title, [
-      { name: 'Model', value: mod.forge_model },
-      { name: 'Subagent', value: mod.forge_subagent },
+      { name: 'Model', value: forgeModel },
+      { name: 'Harness', value: forgeHarness },
       { name: 'Attempt', value: `${status.fail_count + 1}/${maxFails}` },
     ]);
 
     setShutdownContext(config, 'forge', moduleId, dir);
 
     // Spawn fresh Forge session
-    try { spawnAgent(config, progress, 'forge', moduleId, mod.forge_model, forgePrompt); }
+    try { await spawnAgent(config, progress, 'forge', moduleId, forgeModel, forgePrompt); }
     catch (e) {
       log('ERROR', `Forge agent spawn failed: ${e.message}`);
       clearShutdownContext();
@@ -2832,7 +3269,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     // Early health check — catch silent spawn failures (OOM, bad model, gateway down)
     // in ~8 seconds instead of waiting the full timeout (up to 60 minutes).
     if (!(await verifyAgentAlive(config, 'forge', moduleId))) {
-      killAgent(config, 'forge', moduleId);
+      await killAgent(config, 'forge', moduleId);
       clearShutdownContext();
       const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'forge',
         'Forge agent failed health check — session not running after spawn', { recalledMemoryIds });
@@ -2845,7 +3282,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
       [STATUS.READY_FOR_TESTING, STATUS.FAIL, STATUS.BLOCKED], timeout);
 
     // ALWAYS destroy session — kill-and-respawn strategy
-    killAgent(config, 'forge', moduleId);
+    await killAgent(config, 'forge', moduleId);
     clearShutdownContext();
 
     if (!result.ok) {
@@ -2994,53 +3431,17 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
   if (status.status === STATUS.READY_FOR_TESTING
       || (status.status === STATUS.TESTING && status.current_phase === 'buster')) {
     LOG_PHASE = 'buster';
-    log('STEP', `Phase: BUSTER (model: ${config.models.buster})`);
+    const busterModel = resolveModel('buster', config, progress);
+    log('STEP', `Phase: BUSTER (model: ${busterModel})`);
 
     let busterPrompt;
-    try { busterPrompt = readBusterInstructions(config, dir); }
-    catch (e) {
-      log('ERROR', `BUSTER.md read failed for ${moduleId}: ${e.message}`);
-      return { retry: false, result: { exit: EXIT_ERROR, reason: e.message } };
-    }
-
-    // Inject structured test context so Buster knows what to test, where the code
-    // lives, and where to write results — without wasting tokens on exploration.
-    // Path fields are always present; commit/diff are conditional on Forge having run.
     {
-      const testTargetLines = [
-        '## Test Target',
-        '',
-        `**Module:** ${moduleId} — ${mod.title}`,
-        `**Project Source:** \`${relPath(config, projectSrcPath(config))}\``,
-        `**Module Path:** \`${relPath(config, modulePath(config, dir))}\``,
-        `**Status JSON:** \`${relPath(config, statusPath(config, dir))}\``,
-        `**Repo Root:** \`${config.repo_root}\``,
-        '',
-        'All file paths in the test instructions below are relative to **Project Source**.',
-        `\`cd ${relPath(config, projectSrcPath(config))}\` before running any tests.`,
-      ];
-      if (status.forge_commit_hash) {
-        testTargetLines.push(`**Commit:** \`${status.forge_commit_hash.substring(0, 8)}\``);
+      const promptResult = buildBusterModulePrompt(config, moduleId, mod, dir, status, maxFails);
+      if (promptResult.error) {
+        log('ERROR', `Buster prompt build failed for ${moduleId}: ${promptResult.error}`);
+        return { retry: false, result: { exit: EXIT_ERROR, reason: promptResult.error } };
       }
-      if (status.forge_diff_stat) {
-        testTargetLines.push(`**Files Changed by Forge:**`, '```', status.forge_diff_stat, '```');
-      }
-      testTargetLines.push(
-        '', '---', '',
-        '## Completion Protocol',
-        '',
-        `**Status file:** \`${relPath(config, statusPath(config, dir))}\``,
-        '',
-        'This file contains pipeline metadata (fail_count, history, etc.). Do NOT overwrite it.',
-        'Read the existing JSON, then set ONLY the fields shown below:',
-        '',
-        '- **PASS:** set `"status": "PASS"` and `"completion_summary": "<what was tested and confirmed>"`',
-        '- **FAIL:** set `"status": "FAIL"` and `"reason": "<specific failure description for retry context>"`',
-        '',
-        'Then signal completion via your redis.js skill.',
-        '', '---', ''
-      );
-      busterPrompt = testTargetLines.join('\n') + busterPrompt;
+      busterPrompt = promptResult.prompt;
     }
 
     status.status = STATUS.TESTING;
@@ -3054,7 +3455,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     // Prevents pollDual from reading stale FAIL/PASS from a previous attempt.
     await archiveModuleCompletions(config, moduleId);
 
-    try { spawnAgent(config, progress, 'buster', moduleId, config.models.buster, busterPrompt, { status, taskType: 'module_test' }); }
+    try { await spawnAgent(config, progress, 'buster', moduleId, busterModel, busterPrompt, { status, taskType: 'module_test' }); }
     catch (e) {
       log('ERROR', `Buster agent spawn failed: ${e.message}`);
       clearShutdownContext();
@@ -3065,7 +3466,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
       [STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED], timeout);
 
     // Kill agent session (safety net — Processor should have killed already after completion)
-    killAgent(config, 'buster', moduleId);
+    await killAgent(config, 'buster', moduleId);
     clearShutdownContext();
 
     if (!result.ok) {
@@ -3160,20 +3561,12 @@ function gateStatusPath(config, gateId) {
  * Returns the poll result for the caller to handle.
  * @private
  */
-async function _runBusterGateOnce(config, progress, gateId, gate, model, timeout, instructions) {
-  // Inject commit hash so Buster tests a specific, traceable commit.
-  // Without this, Buster tests "whatever is on disk" which can drift
-  // between fix cycles when Forge pushes new code.
+async function _runBusterGateOnce(config, progress, gateId, gate, model, timeout, instructions, attempt) {
   const commitHash = headHash() || gitExec(config.repo_root, ['rev-parse', '--short', 'HEAD']);
-  const enrichedInstructions = `## Test Target\n\n`
-    + `**Gate:** ${gateId} — ${gate.title}\n`
-    + `**Project Source:** \`${relPath(config, projectSrcPath(config))}\`\n`
-    + `**Repo Root:** \`${config.repo_root}\`\n`
-    + `**Commit:** \`${commitHash}\`\n\n---\n\n`
-    + instructions;
+  const busterPrompt = buildBusterGatePrompt(config, gateId, gate, instructions, commitHash, attempt);
 
   try {
-    spawnAgent(config, progress, 'buster', gateId, model, enrichedInstructions, {
+    await spawnAgent(config, progress, 'buster', gateId, model, busterPrompt, {
       taskType: 'gate_test',
       gate,
     });
@@ -3231,19 +3624,19 @@ async function _runBusterGateOnce(config, progress, gateId, gate, model, timeout
     return { done: false, logMsg: `status=${gateStatus?.status || 'unknown'}` };
   }, timeout, `Gate '${gateId}'`);
 
-  killAgent(config, 'buster', gateId);
+  await killAgent(config, 'buster', gateId);
   return result;
 }
 
 /**
  * Extract actionable issues from a Buster gate result for Forge to fix.
- * Handles both standard test results and chaos test results.
+ * Supports two result formats: structured (issues array) and flat (reason string).
  */
 function extractGateIssues(gateResult) {
   if (!gateResult) return [];
   const data = gateResult.status || gateResult;
 
-  // Chaos-style: { issues: [{ severity, title, description, affected_files }] }
+  // Structured: { issues: [{ severity, title, description, affected_files }] }
   if (Array.isArray(data.issues)) {
     return data.issues
       .filter(i => i.severity === 'critical' || i.severity === 'moderate' || !i.severity)
@@ -3382,7 +3775,7 @@ async function runBusterGate(config, progress, gateId) {
     return { exit: EXIT_ERROR, reason: e.message };
   }
 
-  const model = gate.model || config.models.buster;
+  const model = resolveModel('buster', config, progress, gate.model);
   const timeout = gate.timeout_minutes ?? config.default_timeout_minutes;
   const maxFixCycles = gate.max_fix_cycles ?? config.default_max_fails;
   const hasFixLoop = gate.on_fail === 'fix_and_retest';
@@ -3405,7 +3798,7 @@ async function runBusterGate(config, progress, gateId) {
       log('STEP', `Gate '${gateId}' retry attempt ${attempt - 1}/${maxFixCycles}`);
     }
 
-    const result = await _runBusterGateOnce(config, progress, gateId, gate, model, timeout, instructions);
+    const result = await _runBusterGateOnce(config, progress, gateId, gate, model, timeout, instructions, attempt);
 
     // ── PASS ──
     if (result.ok) {
@@ -3493,12 +3886,12 @@ async function runBusterGate(config, progress, gateId) {
       `Attempt ${attempt}/${maxFixCycles}. Spawning Forge to fix ${issues.length} issue(s).`);
 
     const fixPrompt = buildGateFixPrompt(config, gate, issues, attempt, maxFixCycles, fixHistory);
-    const forgeModel = gate.forge_model ?? config.models.forge;
+    const forgeModel = resolveModel('forge', config, progress, gate.forge_model);
     const fixLabel = `gatefix-${gateId}-${attempt}`;
     const fixAcpLabel = acpLabel('forge', fixLabel);  // Actual ACP session label
 
     try {
-      spawnAgent(config, progress, 'forge', fixLabel, forgeModel, fixPrompt);
+      await spawnAgent(config, progress, 'forge', fixLabel, forgeModel, fixPrompt);
     } catch (e) {
       log('ERROR', `Forge spawn for gate fix failed: ${e.message}`);
       continue; // Try next attempt anyway
@@ -3507,7 +3900,7 @@ async function runBusterGate(config, progress, gateId) {
     // Verify Forge is alive
     if (!(await verifyAgentAlive(config, 'forge', fixLabel))) {
       log('WARN', `Forge health check failed for gate fix — skipping to next attempt`);
-      killAgent(config, 'forge', fixLabel);
+      await killAgent(config, 'forge', fixLabel);
       continue;
     }
 
@@ -3516,7 +3909,7 @@ async function runBusterGate(config, progress, gateId) {
     const sessionResult = await pollForSessionEnd(config, fixAcpLabel, forgeTimeout, fixLabel);
 
     // Safety net — kill Forge session if still running
-    killAgent(config, 'forge', fixLabel);
+    await killAgent(config, 'forge', fixLabel);
 
     // Track this fix attempt for anti-pattern framing in subsequent attempts
     fixHistory.push({ attempt, hasChanges: sessionResult.hasChanges, issues });
@@ -3586,70 +3979,64 @@ function reviewOutputPath(config, gate, reviewerLabel) {
 }
 
 /**
- * Poll until ALL files in the list exist. Built on pollGeneric.
- * Returns as soon as every file is present, or on timeout.
- */
-async function pollForAllFiles(config, filePaths, timeoutMinutes, label = 'multi-file-poll') {
-  return pollGeneric(config, async () => {
-    const missing = filePaths.filter(p => !fs.existsSync(p));
-    if (missing.length === 0) {
-      return { done: true, result: pollResult(true, 'target_reached', { files: filePaths }) };
-    }
-    return { done: false, logMsg: `${filePaths.length - missing.length}/${filePaths.length} files ready` };
-  }, timeoutMinutes, label);
-}
-
-/**
  * Spawn a single ACP reviewer agent with explicit agent_id and model.
  * Unlike spawnAcpAgent (which looks up config.agents[type]), this takes
  * reviewer-specific settings directly — each reviewer can use a different
  * agent/model combination.
+ *
+ * Uses Gateway Tool API (sessions_spawn with runtime: "acp").
  */
-function spawnReviewerAgent(config, gateId, reviewer, instructions) {
+async function spawnReviewerAgent(config, progress, gateId, reviewer, instructions) {
   const label = `echo-${reviewer.label}-${gateId}`;
-  const agentId = reviewer.agent_id || 'claude';
-  const model = reviewer.model || 'claude-sonnet-4-6';
+  const model = resolveModel('echo', config, progress, reviewer.model);
+  // Prio: model-derived harness → reviewer config → 'claude' fallback
+  const agentId = modelToHarness(model) || reviewer.agent_id || 'claude';
   const cwd = config.agents.echo?.cwd || config.repo_root;
 
   log('STEP', `Spawning reviewer: ${label} (agent: ${agentId}, model: ${model})`);
 
-  const tmpPromptPath = tmpFile('review-prompt', reviewer.label, '.md');
-  fs.writeFileSync(tmpPromptPath, instructions);
-
-  const taskArg = [
-    `Your full review instructions are in the file: ${tmpPromptPath}`,
-    `Read this file FIRST before doing anything else.`,
-    `Begin by reading it with: cat ${tmpPromptPath}`,
-  ].join('\n');
+  const spawnArgs = {
+    task: instructions,
+    runtime: 'acp',
+    agentId: agentId,
+    label: label,
+    model: model,
+    cwd: cwd,
+    thread: true,
+    mode: 'session',
+    cleanup: 'keep',
+  };
 
   try {
-    const result = clawExec([
-      'sessions', 'spawn',
-      '--agentId', agentId,
-      '--runtime', 'acp',
-      '--mode', 'persistent',
-      '--label', label,
-      '--model', model,
-      '--cwd', cwd,
-      '--thread', 'auto',
-      '--task', taskArg,
-    ], { timeout: 30000 });
+    const result = await gatewayInvoke('sessions_spawn', spawnArgs, 30000);
 
-    log('OK', `Reviewer spawned: ${label}`);
-    trackAgent(config, label);
-    return { label, result };
+    if (result.status !== 'accepted') {
+      throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
+    }
+
+    log('OK', `Reviewer spawned: ${label} → ${result.childSessionKey}`);
+    trackAgent(config, label, result.childSessionKey);
+    return { label, childSessionKey: result.childSessionKey, runId: result.runId };
   } catch (e) {
     throw new Error(`Failed to spawn reviewer '${label}': ${e.message}`);
   }
 }
 
 /**
- * Kill a reviewer agent by label.
+ * Kill a reviewer agent via Gateway Tool API.
  */
-function killReviewerAgent(config, gateId, reviewer) {
+async function killReviewerAgent(config, gateId, reviewer) {
   const label = `echo-${reviewer.label}-${gateId}`;
+  const sessionKey = _shutdownState.activeSessions.get(label);
+
+  if (!sessionKey) {
+    log('WARN', `No sessionKey for reviewer '${label}' — skipping kill`);
+    untrackAgent(label);
+    return;
+  }
+
   try {
-    clawExec(['sessions', 'kill', '--label', label], { stdio: 'ignore', timeout: 15000 });
+    await gatewayInvoke('sessions_send', { sessionKey, message: '/stop' }, 15000);
     log('OK', `Reviewer killed: ${label}`);
   } catch {
     log('WARN', `Could not kill reviewer '${label}' — may have already exited`);
@@ -3776,7 +4163,7 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
   try { if (fs.existsSync(outputFilePath)) fs.unlinkSync(outputFilePath); } catch { /* ok */ }
 
   try {
-    spawnReviewerAgent(config, gateId, reviewer, reviewerPrompt);
+    await spawnReviewerAgent(config, progress, gateId, reviewer, reviewerPrompt);
   } catch (e) {
     log('ERROR', `Reviewer spawn failed: ${reviewer.label} — ${e.message}`);
     return { ok: false, error: `Reviewer spawn failed: ${e.message}` };
@@ -3786,7 +4173,7 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
   const pollRes = await pollForFile(config, outputFilePath, timeout, `Review '${gateId}'`);
 
   // ── Phase 5: Kill reviewer ──
-  killReviewerAgent(config, gateId, reviewer);
+  await killReviewerAgent(config, gateId, reviewer);
 
   if (!pollRes.ok) {
     log('WARN', `Review poll ended: ${pollRes.reason}. Review file not received.`);
@@ -3833,7 +4220,7 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
 }
 
 /**
- * Extract actionable issues from a merged review result for Forge to fix.
+ * Extract actionable issues from a review result for Forge to fix.
  */
 function extractReviewIssues(mergedResult) {
   if (!mergedResult) return [];
@@ -3849,24 +4236,6 @@ function extractReviewIssues(mergedResult) {
           description: item.description || item.title || 'Unknown issue',
           recommended_fix: item.recommended_fix || item.fix || null,
         });
-      }
-    }
-  }
-
-  // Fallback: check individual reviews if merge contained them
-  if (issues.length === 0 && Array.isArray(mergedResult.individual_reviews)) {
-    for (const review of mergedResult.individual_reviews) {
-      for (const key of ['critical_issues', 'critical_blockers']) {
-        if (Array.isArray(review[key])) {
-          for (const item of review[key]) {
-            issues.push({
-              module: item.module || item.component || null,
-              location: item.location || null,
-              description: item.description || item.title || 'Unknown issue',
-              recommended_fix: item.recommended_fix || item.fix || null,
-            });
-          }
-        }
       }
     }
   }
@@ -4040,18 +4409,18 @@ async function runReviewGate(config, progress, gateId) {
       }
 
       const fixPrompt = buildReviewFixPrompt(config, gate, issues, cycle, maxFixCycles, fixHistory);
-      const forgeModel = gate.forge_model ?? config.models.forge;
+      const forgeModel = resolveModel('forge', config, progress, gate.forge_model);
       const fixLabel = `reviewfix-${gateId}-${cycle}`;
       const fixAcpLabel = acpLabel('forge', fixLabel);
 
-      try { spawnAgent(config, progress, 'forge', fixLabel, forgeModel, fixPrompt); }
+      try { await spawnAgent(config, progress, 'forge', fixLabel, forgeModel, fixPrompt); }
       catch (e) {
         log('ERROR', `Forge spawn failed for review fix: ${e.message}`);
         continue;
       }
 
       if (!(await verifyAgentAlive(config, 'forge', fixLabel))) {
-        killAgent(config, 'forge', fixLabel);
+        await killAgent(config, 'forge', fixLabel);
         continue;
       }
 
@@ -4059,7 +4428,7 @@ async function runReviewGate(config, progress, gateId) {
       const sessionResult = await pollForSessionEnd(
         config, fixAcpLabel, reviewConfig.timeout ?? config.default_timeout_minutes, fixLabel);
 
-      killAgent(config, 'forge', fixLabel);
+      await killAgent(config, 'forge', fixLabel);
 
       // Track this fix attempt for anti-pattern framing in subsequent attempts
       fixHistory.push({ attempt: cycle, hasChanges: sessionResult.hasChanges, issues });
@@ -4116,18 +4485,18 @@ async function runReviewGate(config, progress, gateId) {
       }
 
       const fixPrompt = buildReviewFixPrompt(config, gate, currentIssues, cycle, maxFixCycles, fixHistory);
-      const forgeModel = gate.forge_model ?? config.models.forge;
+      const forgeModel = resolveModel('forge', config, progress, gate.forge_model);
       const fixLabel = `reviewfix-${gateId}-${cycle}`;
       const fixAcpLabel = acpLabel('forge', fixLabel);
 
-      try { spawnAgent(config, progress, 'forge', fixLabel, forgeModel, fixPrompt); }
+      try { await spawnAgent(config, progress, 'forge', fixLabel, forgeModel, fixPrompt); }
       catch (e) {
         log('ERROR', `Forge spawn failed for review fix: ${e.message}`);
         continue;
       }
 
       if (!(await verifyAgentAlive(config, 'forge', fixLabel))) {
-        killAgent(config, 'forge', fixLabel);
+        await killAgent(config, 'forge', fixLabel);
         continue;
       }
 
@@ -4135,7 +4504,7 @@ async function runReviewGate(config, progress, gateId) {
       const sessionResult = await pollForSessionEnd(
         config, fixAcpLabel, reviewConfig.timeout ?? config.default_timeout_minutes, fixLabel);
 
-      killAgent(config, 'forge', fixLabel);
+      await killAgent(config, 'forge', fixLabel);
 
       // Track this fix attempt for anti-pattern framing in subsequent attempts
       fixHistory.push({ attempt: cycle, hasChanges: sessionResult.hasChanges, issues: currentIssues });
@@ -4192,7 +4561,7 @@ async function runReviewGate(config, progress, gateId) {
 /**
  * Gate dispatcher. Routes to the appropriate runner based on gate.type.
  * type:"buster"  -> runBusterGate (with optional fix-and-retest loop)
- * type:"review"  -> runReviewGate (parallel reviewers, merge, fix loops)
+ * type:"review"  -> runReviewGate (single reviewer with lint report, fix loops)
  */
 async function runGate(config, progress, gateId) {
   const gate = progress.gates[gateId];
@@ -4403,7 +4772,7 @@ function dryRun(config, progress) {
       if (!mod) continue;
       const status = loadStatus(config, mod.dir);
       const deps = checkDependencies(config, progress, stepId);
-      log('STEP', `[${stepId}] ${mod.title} | ${status?.status || 'PENDING'} | deps=${deps.met ? 'OK' : deps.reason} | model=${mod.forge_model}`);
+      log('STEP', `[${stepId}] ${mod.title} | ${status?.status || 'PENDING'} | deps=${deps.met ? 'OK' : deps.reason} | model=${mod.forge_model ?? progress.models?.forge ?? config.models?.forge ?? '?'}`);
     }
   }
 }
@@ -4413,10 +4782,11 @@ function dryRun(config, progress) {
 export {
   loadConfig, loadProgress, loadStatus, saveStatus,
   releaseBlueprint, listBlueprints,
-  spawnAgent, killAgent, steerAgent, verifyAgentAlive,
+  spawnAgent, killAgent, steerAgent, verifyAgentAlive, modelToHarness,
   spawnAcpAgent, killAcpAgent, dispatchRedisTask,
   recallForModule, feedbackMemory, decayRecalledMemories,
-  buildForgePrompt, executeModuleAttempt, runPreCheck, generateLintReport, formatLintReportForReviewer,
+  buildForgePrompt, buildBusterModulePrompt, buildBusterGatePrompt,
+  executeModuleAttempt, runPreCheck, generateLintReport, formatLintReportForReviewer,
   runModule, runGate, runBusterGate, runReviewGate, runPipeline,
   printStatus, gitSyncBeforeBuster, gitPullForPolling, gitPullBeforePush, gitPushWithRetry, gitCommitAndPush,
   pollStatus, pollWithRateLimitRecovery, pollDual, pollDualWithRateLimitRecovery, pollGeneric, pollForFile,
@@ -4452,7 +4822,7 @@ if (__currentPath === __entryPath) {
     else if (a === '--dry-run')                     flags.dryRun = true;
     else if (a === '--help') {
       console.error(`
-OpenClaw Swarm Pipeline — Deterministic Orchestrator
+KubeClaw Swarm Pipeline — Deterministic Orchestrator
 
 Usage: node pipeline.js [options]
 

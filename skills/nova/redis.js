@@ -93,28 +93,24 @@ async function logToDiscord(sender, target, type, iter, payload) {
   } catch (e) { /* ignore */ }
 }
 
+const BUSTER_STREAM = 'swarm:buster:tasks';
+
 const lib = {
   get client() { return getRedis(); },
 
+  /**
+   * Send a task to Buster's Redis stream.
+   * Nova only dispatches to Buster via Redis (Forge/Echo use ACP).
+   */
   async sendTask(targetAgent, type, payload, iteration = 1) {
-    const streams = {
-      'dev': 'swarm:forge:tasks', 'forge': 'swarm:forge:tasks',
-      'review': 'swarm:echo:tasks', 'echo': 'swarm:echo:tasks',
-      'test': 'swarm:buster:tasks', 'buster': 'swarm:buster:tasks'
-    };
-
-    const targetKey = targetAgent.toLowerCase();
-    const streamKey = streams[targetKey];
-    if (!streamKey) throw new Error(`Unknown target: ${targetAgent}`);
-
-    const myName = process.env.AGENT_NAME || 'unknown';
+    const myName = process.env.AGENT_NAME || 'nova';
     const redis = getRedis();
 
     if (redis.status !== 'ready') {
       await new Promise(resolve => redis.once('ready', resolve));
     }
 
-    const id = await redis.xadd(streamKey, '*',
+    const id = await redis.xadd(BUSTER_STREAM, '*',
       'type', type,
       'sender', myName,
       'payload', JSON.stringify(payload),
@@ -122,24 +118,9 @@ const lib = {
       'timestamp', Date.now().toString()
     );
 
-    console.log(`[Redis] Sent ${id} to ${streamKey}`);
-    await logToDiscord(myName, targetKey, type, iteration, payload);
-    return { status: 'sent', id, stream: streamKey };
-  },
-
-  async readMyTasks(count = 1) {
-    const myName = process.env.AGENT_NAME;
-    if (!myName) throw new Error('Env AGENT_NAME missing');
-
-    const streamKey = `swarm:${myName}:tasks`;
-    const groupName = `${myName}-group`;
-    const consumerName = `${myName}-${process.env.HOSTNAME || 'pod'}`;
-    const redis = getRedis();
-
-    try { await redis.xgroup('CREATE', streamKey, groupName, '0', 'MKSTREAM'); }
-    catch (e) { if (!e.message.includes('BUSYGROUP')) throw e; }
-
-    return await redis.xreadgroup('GROUP', groupName, consumerName, 'COUNT', count, 'BLOCK', 2000, 'STREAMS', streamKey, '>');
+    console.log(`[Redis] Sent ${id} to ${BUSTER_STREAM}`);
+    await logToDiscord(myName, 'buster', type, iteration, payload);
+    return { status: 'sent', id, stream: BUSTER_STREAM };
   },
 
   // ── Pipeline Completion Stream Functions ──────────────────────────────────
@@ -216,18 +197,13 @@ if (currentPath === entryPath) {
       const action = getArg('action');
 
       if (action === 'send') {
-        const target = getArg('target');
         const type = getArg('type');
         const iter = getArg('iteration') || '1';
         const payload = JSON.parse(getArg('payload') || '{}');
-        if (!target || !type) throw new Error('Missing --target or --type');
+        if (!type) throw new Error('Missing --type');
 
-        const res = await lib.sendTask(target, type, payload, iter);
+        const res = await lib.sendTask('buster', type, payload, iter);
         console.log(JSON.stringify(res));
-
-      } else if (action === 'read') {
-        const res = await lib.readMyTasks();
-        console.log(JSON.stringify(res, null, 2));
 
       } else if (action === 'read-completion') {
         const stream = getArg('stream');
@@ -245,7 +221,7 @@ if (currentPath === entryPath) {
         console.log(JSON.stringify(res));
 
       } else {
-        throw new Error('Unknown action. Use --action send|read|read-completion|archive-completions');
+        throw new Error('Unknown action. Use --action send|read-completion|archive-completions');
       }
     } catch (e) {
       console.error(JSON.stringify({ error: e.message }));

@@ -8,6 +8,11 @@
 
 agentRole: "buster"
 
+# Buster requires the stream processor sidecar —
+# pipeline dispatches tests via Redis, processor spawns subagents.
+processor:
+  enabled: true
+
 image:
   repository: ghcr.io/forgestackai/kubeclaw-sandbox
   tag: "latest"

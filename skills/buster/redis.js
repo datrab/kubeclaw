@@ -168,26 +168,33 @@ const lib = {
    *   2. Completion message is written to the pipeline's Redis stream
    *   3. The Processor detects this and kills the subagent
    *
+   * Stream and project are auto-derived from CURRENT_PROJECT env var.
+   * The completion stream is always: swarm:pipeline:<project>:completions
+   *
    * @param {object} opts
-   * @param {string} opts.stream - Pipeline completion stream key
-   * @param {string} opts.module - Module ID (e.g. '06')
-   * @param {string} opts.project - Project name
-   * @param {string} opts.status - Result: 'PASS', 'FAIL', 'ISSUES_FOUND'
+   * @param {string} opts.module - Module or gate ID (e.g. '06', 'final-buster')
+   * @param {string} opts.status - Result: 'PASS', 'FAIL'
    * @param {string} opts.summary - Brief result summary
-   * @param {string} [opts.taskType] - 'module_test' or 'chaos_test'
+   * @param {string} [opts.project] - Override project (default: CURRENT_PROJECT env)
+   * @param {string} [opts.stream] - Override stream (default: derived from project)
+   * @param {string} [opts.taskType] - 'module_test' or 'gate_test'
    * @param {string} [opts.agentRole] - Agent role for verify (default: 'buster')
    */
   async complete(opts) {
-    const {
-      stream, module: moduleId, project, status, summary = '',
-      taskType = 'module_test',
-      agentRole = process.env.AGENT_ROLE || process.env.AGENT_NAME || 'buster',
-    } = opts;
+    const project = opts.project || process.env.CURRENT_PROJECT;
+    if (!project) throw new Error('complete: project unknown (set --project or CURRENT_PROJECT env)');
 
-    if (!stream) throw new Error('complete: --stream required');
+    const stream = opts.stream || `swarm:pipeline:${project}:completions`;
+    const moduleId = opts.module;
+    const status = opts.status;
+    const summary = opts.summary || '';
+    const taskType = opts.taskType || 'module_test';
+    const agentRole = opts.agentRole || process.env.AGENT_ROLE || process.env.AGENT_NAME || 'buster';
+
     if (!moduleId) throw new Error('complete: --module required');
-    if (!project) throw new Error('complete: --project required');
-    if (!status) throw new Error('complete: --status required (PASS, FAIL, ISSUES_FOUND)');
+    if (!status) throw new Error('complete: --status required (PASS, FAIL)');
+
+    console.log(`[COMPLETE] project=${project} stream=${stream} module=${moduleId} status=${status}`);
 
     // ── Step 1: verify-task.js → scope check + push ──
     console.log('[COMPLETE] Running verify-task.js...');
@@ -208,7 +215,7 @@ const lib = {
       console.error(`[COMPLETE] Verify failed: ${e.message}`);
 
       // Verify failure → still send completion so pipeline doesn't hang
-      await this._sendCompletion(stream, {
+      await lib._sendCompletion(stream, {
         module: moduleId,
         task_type: taskType,
         status: 'FAIL',
@@ -233,7 +240,7 @@ const lib = {
       verify_files_pushed: String(verifyResult.files_pushed || 0),
     };
 
-    const result = await this._sendCompletion(stream, completionData);
+    const result = await lib._sendCompletion(stream, completionData);
     console.log(`[COMPLETE] ✅ Completion sent: ${result.id}`);
     return { status: 'sent', ...result };
   },
@@ -319,12 +326,13 @@ if (currentPath === entryPath) {
 
       } else if (action === 'complete') {
         // ── Pipeline completion: verify → push → Redis signal ──
+        // --stream and --project are optional (derived from CURRENT_PROJECT env)
         const res = await lib.complete({
-          stream:    getArg('stream'),
           module:    getArg('module'),
-          project:   getArg('project'),
           status:    getArg('status'),
           summary:   getArg('summary') || '',
+          project:   getArg('project') || undefined,
+          stream:    getArg('stream') || undefined,
           taskType:  getArg('task-type') || 'module_test',
           agentRole: getArg('role') || undefined,
         });
@@ -335,12 +343,12 @@ if (currentPath === entryPath) {
           'Unknown action. Use --action send|read|complete\n\n' +
           'complete usage:\n' +
           '  node redis.js --action complete \\\n' +
-          '    --stream <completion_stream> \\\n' +
           '    --module <module_id> \\\n' +
-          '    --project <project_name> \\\n' +
-          '    --status <PASS|FAIL|ISSUES_FOUND> \\\n' +
+          '    --status <PASS|FAIL> \\\n' +
           '    --summary "brief result summary" \\\n' +
-          '    [--task-type module_test|chaos_test] \\\n' +
+          '    [--project <name>]      # default: CURRENT_PROJECT env\n' +
+          '    [--stream <key>]        # default: swarm:pipeline:<project>:completions\n' +
+          '    [--task-type module_test|gate_test]\n' +
           '    [--role buster]'
         );
       }

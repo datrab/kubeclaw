@@ -5,6 +5,11 @@
 
 agentRole: "nova"
 
+# Nova doesn't need the stream processor sidecar —
+# pipeline.js runs directly in Nova's OpenClaw session.
+processor:
+  enabled: false
+
 auth:
   existingSecret: "kubeclaw-shared-secrets"
   existingSecretKey: "gatewayToken-nova"

@@ -172,6 +172,7 @@ cmd_teardown_agents() {
 cmd_teardown() {
   echo -e "${RED}WARNING: This will remove EVERYTHING in namespace '$NAMESPACE'${NC}"
   echo "Including: all agents, Redis, Qdrant, PostgreSQL, LiteLLM, PVCs, secrets"
+  echo -e "${YELLOW}Note: PVCs have helm.sh/resource-policy=keep but namespace deletion overrides this.${NC}"
   read -p "Type 'yes' to confirm: " confirm
   if [[ "$confirm" != "yes" ]]; then
     echo "Aborted."
