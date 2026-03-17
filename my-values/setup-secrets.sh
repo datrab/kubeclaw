@@ -66,6 +66,22 @@ fi
 info "Copying remaining secrets from $SRC_NS..."
 copy_secret "redis-secrets"
 copy_secret "postgresql-secrets"
+copy_secret "litellm-secrets"
+
+# Fix DATABASE_URL in litellm-secrets: rewrite namespace reference
+if kubectl get secret litellm-secrets -n "$NAMESPACE" &>/dev/null; then
+  OLD_URL=$(kubectl get secret litellm-secrets -n "$NAMESPACE" -o jsonpath='{.data.DATABASE_URL}' | base64 -d)
+  if echo "$OLD_URL" | grep -q "${SRC_NS}"; then
+    NEW_URL=$(echo "$OLD_URL" | sed "s/${SRC_NS}/${NAMESPACE}/g")
+    kubectl get secret litellm-secrets -n "$NAMESPACE" -o json \
+      | jq --arg val "$(echo -n "$NEW_URL" | base64 -w0)" '.data.DATABASE_URL = $val' \
+      | kubectl apply -n "$NAMESPACE" -f - >/dev/null
+    log "Fixed DATABASE_URL: ${SRC_NS} → ${NAMESPACE}"
+  else
+    log "DATABASE_URL already correct (no ${SRC_NS} reference)"
+  fi
+fi
+
 copy_secret "google-sa-key"
 copy_secret "ghcr-secret"
 copy_secret "git-deploy-key-nova"

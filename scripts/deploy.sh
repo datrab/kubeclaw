@@ -11,8 +11,9 @@
 #   ./deploy.sh agent <name>       Deploy single agent (nova|buster)
 #   ./deploy.sh all                Full deployment (setup + infra + agents)
 #   ./deploy.sh status             Show all pods and services
-#   ./deploy.sh teardown           Remove everything (asks confirmation)
+#   ./deploy.sh teardown           Remove agents + infra, keep namespace/secrets
 #   ./deploy.sh teardown-agents    Remove agents only, keep infra
+#   ./deploy.sh teardown-all       Destroy namespace and everything in it
 #
 # Environment variables:
 #   NAMESPACE    Target namespace (default: kubeclaw)
@@ -170,11 +171,46 @@ cmd_teardown_agents() {
 }
 
 cmd_teardown() {
-  echo -e "${RED}WARNING: This will remove EVERYTHING in namespace '$NAMESPACE'${NC}"
-  echo "Including: all agents, Redis, Qdrant, PostgreSQL, LiteLLM, PVCs, secrets"
-  echo -e "${YELLOW}Note: PVCs have helm.sh/resource-policy=keep but namespace deletion overrides this.${NC}"
+  echo -e "${YELLOW}WARNING: This will remove agents + infrastructure (Helm releases + PVCs)${NC}"
+  echo "Keeping: namespace '$NAMESPACE', secrets"
   read -p "Type 'yes' to confirm: " confirm
   if [[ "$confirm" != "yes" ]]; then
+    echo "Aborted."
+    exit 0
+  fi
+
+  # Agents
+  cmd_teardown_agents
+
+  # Infrastructure
+  for release in litellm qdrant postgresql redis; do
+    if helm status "$release" -n "$NAMESPACE" &>/dev/null; then
+      helm uninstall "$release" -n "$NAMESPACE"
+      log "Removed: $release"
+    fi
+  done
+
+  # Clean up PVCs left behind by Helm resource-policy=keep
+  local pvcs
+  pvcs=$(kubectl get pvc -n "$NAMESPACE" --no-headers -o custom-columns=NAME:.metadata.name 2>/dev/null || true)
+  if [[ -n "$pvcs" ]]; then
+    warn "Removing leftover PVCs..."
+    echo "$pvcs" | xargs -r kubectl delete pvc -n "$NAMESPACE"
+    log "PVCs removed"
+  fi
+
+  log "Teardown complete. Namespace and secrets preserved."
+  echo ""
+  info "Remaining secrets:"
+  kubectl get secrets -n "$NAMESPACE" --no-headers 2>/dev/null | grep -v '^sh.helm' | awk '{print "  " $1}'
+}
+
+cmd_teardown_all() {
+  echo -e "${RED}WARNING: This will DESTROY namespace '$NAMESPACE' and EVERYTHING in it${NC}"
+  echo "Including: all agents, infra, PVCs, secrets, namespace itself"
+  echo -e "${YELLOW}You will need to re-run setup-secrets.sh after recreating the namespace.${NC}"
+  read -p "Type 'destroy' to confirm: " confirm
+  if [[ "$confirm" != "destroy" ]]; then
     echo "Aborted."
     exit 0
   fi
@@ -232,6 +268,9 @@ case "${1:-}" in
   teardown-agents)
     cmd_teardown_agents
     ;;
+  teardown-all)
+    cmd_teardown_all
+    ;;
   *)
     echo "KubeClaw — Full Stack Deployment"
     echo ""
@@ -244,8 +283,9 @@ case "${1:-}" in
     echo "  agent <name>       Deploy single agent (nova|buster)"
     echo "  all                Full deployment (setup + infra + agents)"
     echo "  status             Show all pods, services, PVCs"
-    echo "  teardown           Remove everything (with confirmation)"
+    echo "  teardown           Remove agents + infra, keep namespace + secrets"
     echo "  teardown-agents    Remove agents only, keep infra"
+    echo "  teardown-all       DESTROY namespace and everything in it"
     echo ""
     echo "Environment:"
     echo "  NAMESPACE=$NAMESPACE"

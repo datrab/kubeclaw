@@ -137,7 +137,7 @@ agent:
 redis:
   host: "redis-master.kubeclaw.svc.cluster.local"
   port: "6379"
-  secretName: ""  # K8s secret containing the password
+  secretName: "redis-secrets"
   secretKey: "redis-password"
 
 # -- Qdrant (confidence-weighted vector memory)

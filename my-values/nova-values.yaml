@@ -1,10 +1,14 @@
 # =============================================================================
-# Nova — Personal Values (kubeclaw namespace)
+# Nova (Orchestrator) — Production Values (kubeclaw namespace)
 # =============================================================================
-# NodePorts offset by +10 from old deployment to avoid conflicts during migration.
-# Once old deployment is removed, change back to 3006x if desired.
+# Deploy: helm upgrade --install agent-nova ./charts/kubeclaw -n kubeclaw -f my-values/nova-values.yaml
 
 agentRole: "nova"
+
+# Nova doesn't need the stream processor sidecar —
+# pipeline.js runs directly in Nova's OpenClaw session.
+processor:
+  enabled: false
 
 image:
   repository: ghcr.io/forgestackai/kubeclaw-general
@@ -32,34 +36,14 @@ discordWebhook:
   secretKey: "discordWebhook"
 
 agent:
+  project: "kubecommand"
   git:
     enabled: true
     secretName: "git-deploy-key-nova"
     repoUrl: "git@github.com:Ravencrypt/ForgeStack.git"
 
-redis:
-  host: "redis-master.kubeclaw.svc.cluster.local"
-  port: "6379"
-  secretName: "redis-secrets"
-  secretKey: "redis-password"
-
-qdrant:
-  url: "http://qdrant.kubeclaw.svc.cluster.local:6333"
-
 service:
-  nodePort: 30073  # was 30063
-  dashboardNodePort: 30001  # was 30000
-
-missionControl:
-  enabled: true
-  image: "ghcr.io/forgestackai/mission-control:latest"
-  publicHost: "100.97.157.101"
-  auth:
-    user: "admin"
-    pass: "Welcome99"  # Set via --set or existingSecret
-    # existingSecret: "kubeclaw-mc-auth"
-    # existingSecretUserKey: "mcUser"
-    # existingSecretPassKey: "mcPass"
+  nodePort: 30073
 
 resources:
   requests: { cpu: 100m, memory: 512Mi }
@@ -120,7 +104,7 @@ workspace:
     3. `node memory.js recall --query "module <ID> <error keywords>"` — check prior context
     4. Diagnose: unclear FORGE.md? wrong approach? real bug? missing dependency?
     5. Write a focused retry prompt addressing the specific failure
-    6. Resume: `node pipeline.js --project <name> --resume --module <ID> --prompt "your directive"`
+    6. Resume: `node pipeline.js --project <n> --resume --module <ID> --prompt "your directive"`
        Or for longer analysis: `--prompt-file /tmp/nova-fix.md`
     7. Store your analysis (atomic): `node memory.js remember --text "..." --tags "..." --module <ID>`
 

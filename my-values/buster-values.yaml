@@ -1,5 +1,17 @@
-# Buster — Personal Values (kubeclaw namespace)
+# =============================================================================
+# Buster (Destructive Tester) — Production Values (kubeclaw namespace)
+# =============================================================================
+# Deploy: helm upgrade --install agent-buster ./charts/kubeclaw -n kubeclaw -f my-values/buster-values.yaml
+#
+# Buster uses the sandbox image (Podman-in-Pod) and requires privileged mode.
+# Buster is a persistent pod — receives tasks via Redis, not ACP.
+
 agentRole: "buster"
+
+# Buster requires the stream processor sidecar —
+# pipeline dispatches tests via Redis, processor spawns subagents.
+processor:
+  enabled: true
 
 image:
   repository: ghcr.io/forgestackai/kubeclaw-sandbox
@@ -27,22 +39,14 @@ discordWebhook:
   secretKey: "discordWebhook"
 
 agent:
+  project: "kubecommand"
   git:
     enabled: true
     secretName: "git-deploy-key-buster"
     repoUrl: "git@github.com:Ravencrypt/ForgeStack.git"
 
-redis:
-  host: "redis-master.kubeclaw.svc.cluster.local"
-  port: "6379"
-  secretName: "redis-secrets"
-  secretKey: "redis-password"
-
-qdrant:
-  url: "http://qdrant.kubeclaw.svc.cluster.local:6333"
-
 service:
-  nodePort: 30074  # was 30064
+  nodePort: 30074
 
 sandbox:
   enabled: true
