@@ -21,8 +21,8 @@ data:
       "acp": {
         "enabled": true,
         "backend": "acpx",
-        "defaultAgent": "codex",
-        "allowedAgents": ["*"],
+        "defaultAgent": "claude",
+        "allowedAgents": ["claude","codex","kimi","gemini","pi"],
         "maxConcurrentSessions": 8,
         "stream": {
           "coalesceIdleMs": 300,
@@ -52,7 +52,7 @@ data:
             "enabled": true,
             "config": {
               "permissionMode": "approve-all",
-              "nonInteractivePermissions": "deny"
+              "nonInteractivePermissions": "allow"
             }
           }
         }
