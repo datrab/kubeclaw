@@ -1,0 +1,114 @@
+# Buster — Conventions for the Subagent
+
+This document defines how the Buster subagent operates. It is used as a reference in the prompt or as a workspace doc.
+
+---
+
+## Output Format
+
+Every test script outputs **JSON** to stdout. No Markdown, no free text.
+
+```json
+{
+  "total": 5,
+  "passed": 4,
+  "failed": 1,
+  "results": [
+    {
+      "name": "GET /api/health returns 200",
+      "passed": true
+    },
+    {
+      "name": "POST invalid body returns 400",
+      "passed": false,
+      "actual": "500",
+      "expected": "400"
+    }
+  ]
+}
+```
+
+---
+
+## Naming
+
+Test files: `test-<suite>-<module>-<attempt>.js`
+
+Examples:
+- `test-api-02-1.js` — API tests for module 02, first attempt
+- `test-e2e-15-2.js` — E2E tests for module 15, second attempt
+- `test-ws-06-1.js` — WebSocket tests for module 06
+
+Persistent tests (for e2e.js discovery): `*.spec.js` or `*.test.js` in `.swarm/<module>/tests/`.
+
+---
+
+## Timeouts
+
+Every request and every script has a timeout. No test may run indefinitely.
+
+| Context | Timeout |
+|---|---|
+| HTTP request (fetch) | 5-10s |
+| WebSocket connect | 5s |
+| WebSocket response wait | 5s |
+| Playwright navigation | 15s |
+| Playwright full run | 60s |
+| k6 full run | 120s |
+| Single test script | 120s |
+
+When a timeout is reached: report ERROR, do not wait indefinitely.
+
+---
+
+## Error Reporting
+
+Every bug report contains:
+
+1. **Repro Steps** — Exact steps to reproduce (request, input, action)
+2. **Actual** — What actually happened (status code, response body, error message)
+3. **Expected** — What was expected
+4. **Environment** — URL, port, module, commit hash
+5. **Severity** — critical / serious / moderate / minor
+
+No "it seems broken". Exact data.
+
+---
+
+## Exit Codes
+
+| Code | Meaning |
+|---|---|
+| 0 | PASS — All tests passed |
+| 1 | FAIL — At least one test failed |
+| 2 | ERROR — Script error, timeout, configuration problem |
+
+---
+
+## Sandbox Rules
+
+- Do **NOT** run `sandbox-build`, `sandbox-serve` or `sandbox-cleanup` — the orchestrator handles that
+- The app is already running (URL is in Pre-Test Results)
+- Test scripts run inside the container, not in the sandbox
+- Place results in `.swarm/<module>/` (verify-task.js enforces scope)
+
+---
+
+## Cleanup
+
+- Close open browser instances (Playwright: `browser.close()`)
+- Close WebSocket connections
+- k6 terminates on its own
+- Temp files in `/tmp/` are OK (deleted at task end)
+
+---
+
+## Subagent Workflow Order
+
+1. Read Pre-Test Results (in prompt — JSON)
+2. Memory recall for known bugs
+3. Read BUSTER.md — note all checks
+4. Execute each check sequentially and log
+5. Write status.json (PASS/FAIL)
+6. Store findings in memory
+7. `redis.cjs --action complete` as last command
