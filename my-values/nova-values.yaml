@@ -19,6 +19,10 @@ auth:
   existingSecret: "openclaw-shared-secrets"
   existingSecretKey: "gatewayToken-nova"
 
+anthropic:
+  existingSecret: "openclaw-shared-secrets"
+  existingSecretKey: "anthropicApiKey"
+  
 litellm:
   existingSecret: "openclaw-shared-secrets"
   existingSecretKey: "litellmApiKey"
