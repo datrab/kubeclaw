@@ -99,6 +99,19 @@ litellm:
       maxTokens: 65536
 
 # =============================================================================
+# ANTHROPIC (ACP Claude harness)
+# =============================================================================
+# Required for ACP subagent spawns (Forge via codex harness, Echo via claude harness).
+# The OpenClaw gateway passes this to the claude/codex harness at session spawn time.
+
+anthropic:
+  # Direct API key (NOT recommended for production)
+  apiKey: ""
+  # Reference an existing K8s secret
+  existingSecret: ""
+  existingSecretKey: "anthropicApiKey"
+
+# =============================================================================
 # DISCORD INTEGRATION (optional)
 # =============================================================================
 
