@@ -13,8 +13,10 @@ agentRole: "buster"
 # Rollback: set processor.enabled: true, remove gateway.command override.
 processor:
   enabled: false
-
-
+anthropic:
+  existingSecret: "openclaw-shared-secrets"
+  existingSecretKey: "anthropicApiKey"
+  
 gateway:
   command:
     - "/bin/bash"
