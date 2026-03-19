@@ -52,7 +52,7 @@ data:
             "enabled": true,
             "config": {
               "permissionMode": "approve-all",
-              "nonInteractivePermissions": "allow"
+              "nonInteractivePermissions": "deny"
             }
           }
         }
