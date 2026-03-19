@@ -143,8 +143,10 @@ ENV NODE_PATH=/usr/local/lib/node_modules:/app/node_modules
 ENV NPM_CONFIG_CACHE=/root/.npm
 ENV HOME=/home/node
 
-RUN mkdir -p /home/node/.openclaw && chown -R root:root /home/node \
-    && openclaw plugins install acpx
+RUN mkdir -p /home/node/.openclaw \
+    && chown -R root:root /home/node \
+    && openclaw plugins install acpx \
+    && cd /app/extensions/acpx && npm install --omit=dev --no-save acpx@0.3.1
 
 # 8. Build verification
 RUN echo "=== Build Verification ===" && \
