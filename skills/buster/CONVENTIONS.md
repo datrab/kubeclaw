@@ -111,4 +111,4 @@ No "it seems broken". Exact data.
 4. Execute each check sequentially and log
 5. Write status.json (PASS/FAIL)
 6. Store findings in memory
-7. `redis.js --action complete` as last command
+7. `redis.cjs --action complete` as last command

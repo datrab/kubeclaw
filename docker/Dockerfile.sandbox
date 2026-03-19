@@ -151,7 +151,7 @@ RUN echo "=== Build Verification ===" && \
     node -e "require('ioredis'); console.log('  ✅ ioredis')" && \
     podman --version && echo "  ✅ podman" && \
     k6 version && echo "  ✅ k6" && \
-    ls /app/skills/redis.js /app/skills/memory.js && echo "  ✅ KubeClaw skills in /app/skills/" && \
+    ls /app/skills/redis.cjs /app/skills/memory.js && echo "  ✅ KubeClaw skills in /app/skills/" && \
     echo "=== All checks passed ==="
 
 LABEL org.opencontainers.image.title="KubeClaw Sandbox (Root Mode)"
