@@ -17,12 +17,14 @@ anthropic:
   existingSecret: "openclaw-shared-secrets"
   existingSecretKey: "anthropicApiKey"
   
+# Dual-process start: orchestrator + gateway in same container.
+# If either process dies, both are killed → pod restart.
 gateway:
   command:
     - "/bin/bash"
     - "-c"
     - |
-      node /app/skills/buster-orchestrator.js &
+      node /app/skills/buster-orchestrator.cjs &
       ORCH_PID=$!
       node /app/openclaw.mjs gateway --bind lan --port 18789 &
       GW_PID=$!
