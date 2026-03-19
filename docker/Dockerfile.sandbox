@@ -36,6 +36,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN npm install -g lighthouse serve playwright 2>/dev/null || true
+RUN npm install -g @axe-core/playwright pixelmatch pngjs ws 2>/dev/null || true
 RUN npx playwright install --with-deps chromium 2>/dev/null || true
 
 # k6 load testing tool

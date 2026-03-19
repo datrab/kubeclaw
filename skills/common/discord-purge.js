@@ -4,8 +4,8 @@ import fs from 'fs';
 
 async function deepPurge(channelId, botToken) {
   let totalDeleted = 0;
-  // Logging über stderr, um stdout für reines JSON sauber zu halten
-  console.error(`[Purge] Starte Bulk Purge für Kanal: ${channelId}`);
+  // Logging via stderr to keep stdout clean for JSON output
+  console.error(`[Purge] Starting bulk purge for channel: ${channelId}`);
 
   const authHeader = botToken.startsWith('Bot ') ? botToken : `Bot ${botToken}`;
   const headers = { 'Authorization': authHeader, 'Content-Type': 'application/json' };
@@ -18,7 +18,7 @@ async function deepPurge(channelId, botToken) {
     const messages = await res.json();
 
     if (!Array.isArray(messages) || messages.length === 0) {
-      console.error('[Purge] Keine weiteren Nachrichten gefunden.');
+      console.error('[Purge] No more messages found.');
       break;
     }
 
@@ -29,7 +29,7 @@ async function deepPurge(channelId, botToken) {
     const oldMessagesCount = messages.length - bulkIds.length;
 
     if (bulkIds.length === 0) {
-       console.error(`[Purge] ${oldMessagesCount} Nachrichten sind älter als 14 Tage. Bulk-Delete nicht möglich. Abbruch.`);
+       console.error(`[Purge] ${oldMessagesCount} messages are older than 14 days. Bulk delete not possible. Aborting.`);
        break;
     }
 
@@ -40,12 +40,12 @@ async function deepPurge(channelId, botToken) {
        } else if (delRes.status === 429) {
          const err = await delRes.json();
          const retryAfter = err.retry_after || 2;
-         console.error(`[Purge] Rate-Limit (Single)! Warte ${retryAfter}s...`);
+         console.error(`[Purge] Rate limit (Single)! Waiting ${retryAfter}s...`);
          await new Promise(r => setTimeout(r, retryAfter * 1000));
          continue;
        }
     } else {
-       console.error(`[Purge] Lösche Batch von ${bulkIds.length} Nachrichten...`);
+       console.error(`[Purge] Deleting batch of ${bulkIds.length} messages...`);
        const bulkRes = await fetch(`https://discord.com/api/v10/channels/${channelId}/messages/bulk-delete`, {
          method: 'POST',
          headers,
@@ -56,7 +56,7 @@ async function deepPurge(channelId, botToken) {
          if (bulkRes.status === 429) {
             const err = await bulkRes.json();
             const retryAfter = err.retry_after || 2;
-            console.error(`[Purge] Rate-Limit (Bulk)! Warte ${retryAfter}s...`);
+            console.error(`[Purge] Rate limit (Bulk)! Waiting ${retryAfter}s...`);
             await new Promise(r => setTimeout(r, retryAfter * 1000));
             continue; 
          }
@@ -66,7 +66,7 @@ async function deepPurge(channelId, botToken) {
     }
 
     if (oldMessagesCount > 0) {
-        console.error(`[Purge] ${oldMessagesCount} Nachrichten übersprungen (älter als 14 Tage).`);
+        console.error(`[Purge] ${oldMessagesCount} messages skipped (older than 14 days).`);
         break; 
     }
 
@@ -84,7 +84,7 @@ if (currentPath === entryPath) {
   const token = process.env.DISCORD_TOKEN; 
 
   if (!channel || !token) {
-    console.log(JSON.stringify({ status: "error", error: "DISCORD_TOKEN und DISCORD_CHANNEL erforderlich." }));
+    console.log(JSON.stringify({ status: "error", error: "DISCORD_TOKEN and DISCORD_CHANNEL required." }));
     process.exit(1);
   }
 

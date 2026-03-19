@@ -51,9 +51,9 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
   const swarmRoot = `${projectRoot}/src/.swarm`;
   const echoRoot = `${swarmRoot}/echo-reviews`;
 
-  log(`[Verify] Validiere Task für Rolle: '${agentRole}' im Projekt: '${currentProject}'`);
+  log(`[Verify] Validating task for role: '${agentRole}' in project: '${currentProject}'`);
 
-  // ── 1. Geänderte Dateien via Git ermitteln ──
+  // ── 1. Get changed files via Git ──
 
   let changedFiles = [];
   let repoRoot = '';
@@ -65,7 +65,7 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
       changedFiles = statusOut.split('\n')
         .filter(line => line.trim().length > 0)
         .map(line => {
-          // Git porcelain: XY filename  oder  XY old -> new (bei rename)
+          // Git porcelain: XY filename  or  XY old -> new (on rename)
           const filePart = line.substring(3).trim();
           if (filePart.includes(' -> ')) return filePart.split(' -> ')[1].replace(/^"|"$/g, '');
           return filePart.replace(/^"|"$/g, '');
@@ -73,15 +73,15 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
         .filter(Boolean);
     }
   } catch (e) {
-    throw new Error(`Kritischer Fehler beim Auslesen des Git-Status: ${e.message}`);
+    throw new Error(`Critical error reading Git status: ${e.message}`);
   }
 
   if (changedFiles.length === 0) {
-    log('⚠️ [Verify] Keine ungespeicherten Änderungen gefunden. Nichts zu tun.');
+    log('⚠️ [Verify] No uncommitted changes found. Nothing to do.');
     return { status: 'success', action: 'none', logs };
   }
 
-  // ── 2. STUFE 1: Harte Firewall-Regeln (Selective Revert) ──
+  // ── 2. STAGE 1: Hard Firewall Rules (Selective Revert) ──
 
   const violations = [];
   const badFiles = [];
@@ -90,33 +90,33 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
     let isViolation = false;
     let reason = '';
 
-    // Cross-project check — universell für alle Rollen
+    // Cross-project check — universal for all roles
     if (!file.startsWith(projectRoot)) {
       isViolation = true;
-      reason = `[CROSS-PROJECT] Nur Dateien innerhalb von ${projectRoot}/ erlaubt.`;
+      reason = `[CROSS-PROJECT] Only files within ${projectRoot}/ are allowed.`;
     } else {
       const isSwarmFile = file.startsWith(swarmRoot);
 
       if (agentRole.includes('forge')) {
-        // Forge darf Projekt-Code UND bestimmte .swarm Files ändern
+        // Forge may modify project code AND specific .swarm files
         if (isSwarmFile && !file.endsWith('/STATUS.md') && !file.endsWith('/FORGE.md')) {
           isViolation = true;
-          reason = `[FORGE-RESTRICTION] Forge darf in .swarm/ NUR STATUS.md und FORGE.md bearbeiten.`;
+          reason = `[FORGE-RESTRICTION] Forge may only edit STATUS.md and FORGE.md within .swarm/.`;
         }
       }
       else if (agentRole.includes('buster') || agentRole.includes('test')) {
-        // Buster darf ALLES innerhalb von .swarm/ (status.json, Testresultate, BUSTER.md, etc.)
-        // Aber KEINEN Applikations-Code außerhalb von .swarm/
+        // Buster may modify ANYTHING within .swarm/ (status.json, test results, BUSTER.md, etc.)
+        // But NO application code outside of .swarm/
         if (!isSwarmFile) {
           isViolation = true;
-          reason = `[BUSTER-RESTRICTION] Buster darf KEINEN Applikations-Code ändern. Nur Dateien innerhalb von ${swarmRoot}/ sind erlaubt.`;
+          reason = `[BUSTER-RESTRICTION] Buster must not modify application code. Only files within ${swarmRoot}/ are allowed.`;
         }
       }
       else if (agentRole.includes('echo') || agentRole.includes('review')) {
-        // Echo darf nur in echo-reviews/
+        // Echo may only modify echo-reviews/
         if (!file.startsWith(echoRoot)) {
           isViolation = true;
-          reason = `[ECHO-RESTRICTION] Echo darf AUSSCHLIESSLICH im Ordner ${echoRoot}/ arbeiten.`;
+          reason = `[ECHO-RESTRICTION] Echo may only operate within the ${echoRoot}/ directory.`;
         }
       }
     }
@@ -127,31 +127,31 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
     }
   }
 
-  // Gezieltes Zurücksetzen verbotener Dateien
+  // Selective revert of forbidden files
   if (badFiles.length > 0) {
-    log('⚠️ STUFE 1 WARNUNG: OUT OF SCOPE MODIFICATIONS DETECTED.');
+    log('⚠️ STAGE 1 WARNING: OUT OF SCOPE MODIFICATIONS DETECTED.');
     violations.forEach(v => log(`  - ${v}`));
-    log('[Verify] Bereinige verbotene Änderungen...');
+    log('[Verify] Cleaning up forbidden changes...');
 
     for (const file of badFiles) {
       try {
         const absPath = path.join(repoRoot, file);
-        // Versuch 1: Git checkout (für getrackte Dateien)
+        // Attempt 1: Git checkout (for tracked files)
         try {
           gitExec(repoRoot, ['checkout', 'HEAD', '--', file], { stdio: 'ignore' });
         } catch {
-          // Versuch 2: Datei löschen (für untracked files)
+          // Attempt 2: Delete file (for untracked files)
           if (fs.existsSync(absPath)) {
             fs.rmSync(absPath, { force: true, recursive: true });
           }
         }
         log(`  -> ⏪ Reverted/Deleted: ${file}`);
       } catch (e) {
-        log(`  -> ❌ Konnte ${file} nicht bereinigen: ${e.message}`);
+        log(`  -> ❌ Could not clean up ${file}: ${e.message}`);
       }
     }
   } else {
-    log('✅ [Verify] Stufe 1 Passed (Scope Check).');
+    log('✅ [Verify] Stage 1 Passed (Scope Check).');
   }
 
   // ── 3. STUFE 2: Qdrant Memory Check ──
@@ -175,33 +175,33 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
       if (!recentMemory) {
         throw new Error(`No memory written in the last ${MEMORY_RECENCY_MS / 60000} minutes`);
       }
-      log('✅ [Verify] Stufe 2 Passed (Memory Check). Aktueller Qdrant-Eintrag gefunden.');
+      log('✅ [Verify] Stage 2 Passed (Memory Check). Recent Qdrant entry found.');
     } catch (memoryErr) {
       throw new Error(
-        'FEHLENDER MEMORY-EINTRAG. Nutze `node /app/skills/memory.js remember ...` ' +
-        'um deine Erkenntnisse zu sichern, bevor du verify aufrufst. ' +
+        'MISSING MEMORY ENTRY. Use `node /app/skills/memory.js remember ...` ' +
+        'to store your findings before calling verify. ' +
         `(${memoryErr.message})`
       );
     }
   } else {
-    log('ℹ️ [Verify] Stufe 2 Skipped (Memory Check disabled).');
+    log('ℹ️ [Verify] Stage 2 Skipped (Memory Check disabled).');
   }
 
   // ── 4. Scoped Git Add + Commit + Push ──
 
-  log('✅ [Verify] Alle Bedingungen erfüllt. Führe Commit und Push aus...');
+  log('✅ [Verify] All conditions met. Running commit and push...');
   try {
     const remainingChanges = gitExec(repoRoot, ['status', '--porcelain']);
     if (!remainingChanges) {
-      log('⚠️ [Verify] Nach der Bereinigung gab es keine Änderungen mehr zu pushen.');
+      log('⚠️ [Verify] No changes remaining after cleanup. Nothing to push.');
       return { status: 'success', action: 'reverted_all_bad_files', logs };
     }
 
-    // Scoped add — nur das Projekt-Verzeichnis, nicht das ganze Repo
+    // Scoped add — only the project directory, not the entire repo
     gitExec(repoRoot, ['add', projectRoot], { stdio: 'ignore' });
     gitExec(repoRoot, ['commit', '-m', commitMessage], { stdio: 'ignore' });
 
-    // Push mit einfachem Retry (Netzwerk-Transienten)
+    // Push with simple retry (network transients)
     let pushed = false;
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
@@ -211,15 +211,15 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
       } catch (e) {
         if (attempt === 3) throw e;
         log(`⚠️ [Verify] Push attempt ${attempt}/3 failed: ${e.message?.split('\n')[0]}`);
-        // Kurzer synchroner Wait
+        // Brief synchronous wait
         execFileSync('sleep', ['3']);
       }
     }
 
-    // Commit hash nach Push erfassen
+    // Capture commit hash after push
     const commitHash = gitExec(repoRoot, ['rev-parse', '--short', 'HEAD']);
 
-    log(`✅ [Verify] Push erfolgreich! (${commitHash})`);
+    log(`✅ [Verify] Push successful! (${commitHash})`);
     return {
       status: 'success',
       action: 'pushed',
@@ -228,7 +228,7 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
       logs,
     };
   } catch (gitErr) {
-    throw new Error(`Fehler beim Git Push (Konflikte?): ${gitErr.message}`);
+    throw new Error(`Error during Git push (conflicts?): ${gitErr.message}`);
   }
 }
 
@@ -254,7 +254,7 @@ if (currentPath === entryPath) {
   const commitMessage = getArg('message');
 
   if (!currentProject) {
-    console.log(JSON.stringify({ status: 'error', error: 'Kein Projekt definiert. Nutze --project <name>.' }));
+    console.log(JSON.stringify({ status: 'error', error: 'No project defined. Use --project <name>.' }));
     process.exit(1);
   }
 

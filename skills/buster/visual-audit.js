@@ -9,11 +9,11 @@ async function visualAudit(url, channelId, botToken, mode = 'image') {
   const outputDir = path.join('/tmp', `audit-${Date.now()}`);
   fs.mkdirSync(outputDir, { recursive: true });
   
-  console.error(`[Audit] 📸 Starte Headless-Audit (${mode}) von ${url}...`);
+  console.error(`[Audit] 📸 Starting headless audit (${mode}) of ${url}...`);
 
   const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
   
-  // Nur bei Video den recordVideo Parameter im Kontext aktivieren
+  // Only enable recordVideo parameter in context for video mode
   const contextOptions = isVideo ? { recordVideo: { dir: outputDir, size: { width: 1280, height: 720 } } } : {};
   const context = await browser.newContext(contextOptions);
 
@@ -27,54 +27,54 @@ async function visualAudit(url, channelId, botToken, mode = 'image') {
     await page.goto(url, { waitUntil: 'networkidle', timeout: 15000 });
     
     if (isVideo) {
-      // Video-Pfad: Scrollen, Warten und Kontext schließen (zwingt Playwright zum Speichern)
+      // Video path: scroll, wait, and close context (forces Playwright to save)
       await page.evaluate(() => window.scrollBy(0, document.body.scrollHeight || 1000));
       await page.waitForTimeout(3000); 
       await context.close(); 
       
       const files = fs.readdirSync(outputDir);
       const videoFile = files.find(f => f.endsWith('.webm'));
-      if (!videoFile) throw new Error("Video konnte nicht generiert werden.");
+      if (!videoFile) throw new Error("Video could not be generated.");
       
       fileToSend = path.join(outputDir, videoFile);
       fileName = 'audit.webm';
       mimeType = 'video/webm';
-      messageContent = `🎥 **Visual Audit Video Report**\n**Ziel:** \`${url}\``;
+      messageContent = `🎥 **Visual Audit Video Report**\n**Target:** \`${url}\``;
     } else {
-      // Screenshot-Pfad: Fullpage-Screenshot direkt auslösen
+      // Screenshot path: trigger fullpage screenshot directly
       fileToSend = path.join(outputDir, 'screenshot.png');
       await page.screenshot({ path: fileToSend, fullPage: true });
       await context.close();
       
       fileName = 'screenshot.png';
       mimeType = 'image/png';
-      messageContent = `📸 **Visual Audit Image Report**\n**Ziel:** \`${url}\``;
+      messageContent = `📸 **Visual Audit Image Report**\n**Target:** \`${url}\``;
     }
   } catch (e) {
-    console.error(`[Audit] Warnung beim Laden der Seite: ${e.message}`);
+    console.error(`[Audit] Warning while loading page: ${e.message}`);
   } finally {
-    // Fallback, falls der Browser noch offen ist
+    // Fallback in case the browser is still open
     if (browser.isConnected()) await browser.close();
   }
 
-  // Validierung, ob eine Datei erzeugt wurde
+  // Validate that a file was produced
   if (!fileToSend || !fs.existsSync(fileToSend)) {
     fs.rmSync(outputDir, { recursive: true, force: true });
-    throw new Error(`Audit-Datei (${mode}) wurde nicht erstellt.`);
+    throw new Error(`Audit file (${mode}) was not created.`);
   }
 
   // 25 MB Discord Limit Check
   const stats = fs.statSync(fileToSend);
   const fileSizeMB = stats.size / (1024 * 1024);
 
-  console.error(`[Audit] 🚀 Datei generiert (${fileSizeMB.toFixed(2)} MB). Sende an Discord...`);
+  console.error(`[Audit] 🚀 File generated (${fileSizeMB.toFixed(2)} MB). Sending to Discord...`);
 
   if (fileSizeMB > 25) {
     fs.rmSync(outputDir, { recursive: true, force: true });
-    throw new Error(`Datei ist mit ${fileSizeMB.toFixed(2)} MB zu gross für Discord (Max 25 MB).`);
+    throw new Error(`File is ${fileSizeMB.toFixed(2)} MB — too large for Discord (max 25 MB).`);
   }
 
-  // Payload zusammenbauen
+  // Build payload
   const fileBuffer = fs.readFileSync(fileToSend);
   const formData = new FormData();
   const blob = new Blob([fileBuffer], { type: mimeType });
@@ -93,7 +93,7 @@ async function visualAudit(url, channelId, botToken, mode = 'image') {
 
   if (!res.ok) throw new Error(`Discord API Fehler: ${res.status} ${await res.text()}`);
   
-  console.error(`[Audit] ✅ ${mode} erfolgreich gesendet.`);
+  console.error(`[Audit] ✅ ${mode} sent successfully.`);
   return { status: "success", target_url: url, mode: mode, size_mb: fileSizeMB.toFixed(2) };
 }
 
@@ -103,7 +103,7 @@ const entryPath = (process.argv[1] && fs.existsSync(process.argv[1])) ? fs.realp
 
 if (currentPath === entryPath) {
   const args = process.argv.slice(2);
-  // Suche die URL (das erste Argument, das nicht mit '--' beginnt)
+  // Find the URL (the first argument that doesn't start with '--')
   const url = args.find(a => !a.startsWith('--'));
   const modeFlagIndex = args.indexOf('--mode');
   const mode = modeFlagIndex > -1 && args[modeFlagIndex + 1] ? args[modeFlagIndex + 1] : 'image';
@@ -112,15 +112,15 @@ if (currentPath === entryPath) {
   const token = process.env.DISCORD_TOKEN;
 
   if (!url) {
-    console.log(JSON.stringify({ status: "error", error: "URL als Parameter erforderlich." }));
+    console.log(JSON.stringify({ status: "error", error: "URL required as parameter." }));
     process.exit(1);
   }
   if (!channel || !token) {
-    console.log(JSON.stringify({ status: "error", error: "DISCORD_TOKEN und DISCORD_CHANNEL fehlen." }));
+    console.log(JSON.stringify({ status: "error", error: "DISCORD_TOKEN and DISCORD_CHANNEL are missing." }));
     process.exit(1);
   }
   if (!['image', 'video'].includes(mode)) {
-    console.log(JSON.stringify({ status: "error", error: "--mode muss 'image' oder 'video' sein." }));
+    console.log(JSON.stringify({ status: "error", error: "--mode must be 'image' or 'video'." }));
     process.exit(1);
   }
 

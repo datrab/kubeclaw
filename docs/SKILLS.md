@@ -11,8 +11,9 @@ All skills are located at `/app/skills/` inside the container. They are JavaScri
 | `memory.js` | All | Confidence-weighted vector memory (Qdrant) |
 | `redis.js` | All (agent-specific versions) | Inter-agent communication via Redis Streams |
 | `pipeline.js` | Nova | Deterministic module orchestration engine |
+| `project_setup/` | Nova | Skill: Set up a new project for the autonomous pipeline |
 | `verify-task.js` | All (agent-specific for Buster) | Scope enforcement + controlled git push |
-| `merge-reviews.js` | Nova | Consolidate Echo review files into consensus report |
+| `merge-reviews.js` | Nova | Consolidate Echo review files (legacy — single reviewer since v8) |
 | `discord-purge.js` | All | Bulk-delete Discord channel messages |
 | `visual-audit.js` | Buster | Headless screenshot/video → Discord |
 
@@ -155,7 +156,7 @@ node /app/skills/redis.js --action complete \
 This is Buster's last action in a task. It:
 1. Calls `verify-task.js` (scope check, revert violations, git push)
 2. Writes structured completion message to the pipeline's Redis stream
-3. The Processor detects this and kills the subagent session
+3. The Orchestrator detects this and kills the subagent session
 
 ---
 
@@ -215,6 +216,35 @@ node /app/skills/pipeline.js --project kubecommand --blueprint-list
 - `swarm.config.json` — Platform config (timeouts, agent dispatch, models)
 - `progress.json` — Project definition (modules, dependencies, execution order, gates)
 - `status.json` — Per-module state (created by pipeline, updated by agents)
+
+---
+
+## project_setup/ — Project Setup Skill
+
+Nova skill for setting up a new KubeClaw project end-to-end. Located at `/app/skills/nova/project_setup/`.
+
+### Files
+
+| File | Purpose |
+|------|---------|
+| `SKILL.md` | Entry point: architecture branch workflow, file structure, checklist, common errors |
+| `references/progress-json.md` | Field reference for progress.json: modules, gates, serve config, suite config |
+| `references/module-files.md` | Writing guide for FORGE.md, BUSTER.md, test-spec.json, baselines |
+
+### What It Covers
+
+- Architecture branch workflow (`<project>/architecture` → `releaseBlueprint()`)
+- `progress.json` structure: modules, gates, execution_order, serve config
+- Per-module files: FORGE.md (with unit test section), BUSTER.md, test-spec.json
+- Suite selection per module type (backend, frontend scaffold, frontend pages)
+- Sandbox constraints: no `node_modules`, no K8s cluster, dependency install required
+- Python/FastAPI support: `image`, `start_cmd`, `test_cmd` for non-Node projects
+- Critical `serve.project_dir` requirement for projects under `Projects/<project>/src`
+
+### References
+
+- `docs/PIPELINE-CONFIG-REFERENCE.md` — Pipeline config end-to-end
+- `docs/BUSTER-CONFIG-REFERENCE.md` — Suite details and thresholds
 
 ---
 
@@ -335,12 +365,9 @@ Consumes `swarm:nova:events` Redis stream. On message arrival:
 4. ACKs and deletes the stream entry
 5. Sends Discord notification (success or failure)
 
-### Buster Processor
+### Buster Processor (REPLACED)
 
-Consumes `swarm:buster:tasks` Redis stream. Same flow as Nova but:
-- Monitors for completion messages from Buster subagents
-- Handles session lifecycle (spawn on task, kill on completion)
-- Routes chaos test results differently than module test results
+The processor sidecar has been replaced by `buster-orchestrator.js`, which runs as a background process in the gateway container (dual-process start). The processor file is kept for rollback. See BUSTER-TEST-PLATFORM-PLAN.md §7.5.
 
 ---
 
@@ -352,9 +379,11 @@ Consumes `swarm:buster:tasks` Redis stream. Same flow as Nova but:
 ├── redis.js           # Agent-specific (Nova or Buster version)
 ├── pipeline.js        # Pipeline engine (common, used by Nova)
 ├── verify-task.js     # Agent-specific (common or Buster version)
-├── merge-reviews.js   # Review consolidation (common)
+├── merge-reviews.js   # Review consolidation (legacy — single reviewer since v8)
 ├── discord-purge.js   # Channel cleanup (common)
-└── visual-audit.js    # Headless visual testing (common)
+├── visual-audit.js    # Headless visual testing (common)
+└── nova/
+    └── project_setup/ # Project setup skill (SKILL.md + references/)
 
 /app/scripts/processor/
 └── processor.cjs      # Agent-specific sidecar (Nova or Buster version)

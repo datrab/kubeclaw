@@ -354,10 +354,10 @@ if (currentPath === entryPath) {
       }
     } catch (e) {
       console.error(JSON.stringify({ error: e.message }));
-      process.exit(1);
-    } finally {
       await lib.disconnect();
-      process.exit(0);
+      process.exit(1);
     }
+    await lib.disconnect();
+    process.exit(0);
   })();
 }

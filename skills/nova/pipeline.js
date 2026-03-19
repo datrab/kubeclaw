@@ -1143,8 +1143,9 @@ async function killAcpAgent(config, agentType, moduleId) {
 }
 
 // ── Redis Dispatch (Buster) ──
-// Writes a structured task to Buster's Redis stream. The processor sidecar
-// picks it up, enriches with Qdrant context, and spawns a subagent via gateway.
+// Writes a structured task to Buster's Redis stream. The orchestrator
+// (buster-orchestrator.js) picks it up, runs deterministic suites, enriches
+// the prompt with results, and spawns a subagent via gateway.
 //
 // Task types:
 //   module_test — standard module testing (BUSTER.md driven)
@@ -1176,6 +1177,8 @@ function buildBusterPayload(config, progress, moduleId, taskType, taskPrompt, st
       module_path: mod ? relPath(config, modulePath(config, mod.dir)) : null,
       buster_md_path: mod ? relPath(config, path.join(modulePath(config, mod.dir), 'BUSTER.md')) : null,
       status_json_path: mod ? relPath(config, statusPath(config, mod.dir)) : null,
+      test_suites: mod?.test_suites || null,
+      test_config: mod?.test_config || null,
     };
   }
 
@@ -1529,10 +1532,12 @@ function readGateInstructions(config, gate) {
 // ─── Buster Prompt Builder ──────────────────────────────────────────────────
 //
 // Builds the complete prompt for Buster subagent sessions.
-// Analogous to buildForgePrompt — pipeline.js owns the full prompt,
-// the Processor just relays it to the gateway.
+// Analogous to buildForgePrompt — pipeline.js owns the full prompt.
+// The orchestrator (buster-orchestrator.js) enriches it with Pre-Test
+// Results before spawning the subagent.
 //
 // Prompt order (optimized for LLM attention):
+//   0. Pre-Test Results — injected by orchestrator (verdict JSON, app URL)
 //   1. Context Block — factual orientation (paths, commit, attempt)
 //   2. Test Workspace — where to write test scripts (per-attempt dirs)
 //   3. Test Instructions — BUSTER.md / gate instructions (inline, full content)
@@ -1540,27 +1545,23 @@ function readGateInstructions(config, gate) {
 //
 // No anti-patterns (Buster executes specs, doesn't need creative guidance).
 // No memory injection (Buster's decisions are spec-driven, not context-driven).
+// Orchestrator handles: git pull, build, serve, cleanup, deterministic suites.
 
 /**
- * Git sync section — first thing the agent does to ensure it's on the latest code.
- * The processor sidecar also does a git pull before spawn (belt-and-suspenders).
+ * Git context section — informational only.
+ * The orchestrator already did git pull before spawning the subagent.
+ * This just tells the agent what commit it's working on.
  */
 function buildGitSyncSection(commitHash) {
   const lines = [
-    '## Step 0: Sync Repository',
+    '## Git Context',
     '',
-    '```bash',
-    'cd /home/node/.openclaw/workspace/git-repo',
-    'git pull --rebase origin HEAD',
-    '```',
+    'The orchestrator already synced the repo before your session started. Do NOT run `git pull`.',
     '',
   ];
   if (commitHash) {
     lines.push(
-      `Verify you are on the expected commit: \`${commitHash.substring(0, 8)}\``,
-      '```bash',
-      'git log --oneline -1',
-      '```',
+      `Expected commit: \`${commitHash.substring(0, 8)}\``,
       '',
     );
   }
@@ -1571,6 +1572,9 @@ function buildGitSyncSection(commitHash) {
 /**
  * Available tools section — injected into Buster prompts because ACP subagent
  * sessions don't inherit the main session's workspace (TOOLS.md).
+ *
+ * The orchestrator handles git pull, build, serve, and cleanup.
+ * The subagent must NEVER run sandbox-build/serve/cleanup or git pull.
  */
 function buildAvailableToolsSection() {
   return [
@@ -1578,45 +1582,46 @@ function buildAvailableToolsSection() {
     '',
     'All scripts at `/app/skills/`. All env vars are pre-set.',
     '',
-    '### Redis',
+    '### What the Orchestrator Already Did',
+    '',
+    '- `git pull` — repo is synced to the expected commit',
+    '- Build + Serve — the app is running (URL in Pre-Test Results above)',
+    '- Deterministic test suites (build, health, a11y, perf, etc.) — results in Pre-Test Results above',
+    '- Do **NOT** run `sandbox-build`, `sandbox-serve`, `sandbox-cleanup`, or `git pull`',
+    '',
+    '### Testing Tools',
     '```',
-    'node /app/skills/redis.js --action complete --module <ID> --status <PASS|FAIL> --summary "text" [--project <P>] [--task-type module_test|gate_test]',
+    'npx playwright test              # E2E tests',
+    'k6 run script.js                 # Load tests',
+    'curl -s <url> | jq .             # Quick HTTP checks',
+    'node /app/skills/visual-audit.js "<url>" [--mode image|video]  # Screenshot/video to Discord',
+    '```',
+    '',
+    '### Completion (redis.js)',
+    '```',
+    'node /app/skills/redis.js --action complete --module <ID> --status <PASS|FAIL> --summary "text"',
     '```',
     '',
     '### Memory (Qdrant)',
     '```',
-    'node /app/skills/memory.js remember --text "finding" --tags "t1,t2" [--scope project|global|agent] [--module <ID>] [--supersedes <old-id>]',
-    'node /app/skills/memory.js recall --query "text" [--tags "t1"] [--module <ID>] [--min-confidence 0.4] [--limit 5] [--verbose]',
-    'node /app/skills/memory.js forget --id "<ID>"',
-    'node /app/skills/memory.js validate --id "<ID>"',
-    'node /app/skills/memory.js stats',
+    'node /app/skills/memory.js remember --text "finding" --tags "t1,t2" [--module <ID>]',
+    'node /app/skills/memory.js recall --query "text" [--tags "t1"] [--module <ID>] [--limit 5]',
     '```',
     '',
-    '### Sandbox (Podman)',
-    '```',
-    'sandbox-run <image> ["cmd"]',
-    'sandbox-build <image> <dir> "<cmd>"',
-    'sandbox-serve [dir]',
-    'sandbox-kill <name> / sandbox-stop / sandbox-ps / sandbox-cleanup',
-    '```',
+    '### Conventions',
     '',
-    '### Testing Tools',
-    '```',
-    'lighthouse <url> --output json --chrome-flags="--headless --no-sandbox"',
-    'k6 run script.js',
-    'npx playwright test',
-    'curl, nmap, jq, grep',
-    '```',
-    '',
-    '### Visual Audit (screenshot/video → Discord)',
-    '```',
-    'node /app/skills/visual-audit.js "<url>" [--mode image|video]',
-    '```',
+    'Follow `/app/skills/buster/CONVENTIONS.md`:',
+    '- Output: JSON to stdout (not Markdown)',
+    '- Naming: `test-<suite>-<module>-<attempt>.js`',
+    '- Timeouts: Every request and script must have a timeout',
+    '- Error reports: Repro-Steps, Actual vs Expected, Environment, Severity',
+    '- Exit codes: 0 = PASS, 1 = FAIL, 2 = ERROR',
     '',
     '---',
     '',
   ];
 }
+
 
 /**
  * Shared test workspace section for all Buster prompts.
@@ -4168,6 +4173,10 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
   const reviewer = reviewers[0];
   const outputFilePath = reviewOutputPath(config, gate, reviewer.label);
   const relOutput = relPath(config, outputFilePath);
+
+  // Ensure output directory exists (usually created by Nova, but defensive)
+  const outDir = path.dirname(outputFilePath);
+  if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
   log('STEP', `Review cycle: reviewer=${reviewer.label}, output=${path.basename(outputFilePath)}`);
 

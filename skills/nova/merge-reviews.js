@@ -9,28 +9,28 @@ async function mergeReviews(currentProject) {
   const logs = [];
   const log = (msg) => logs.push(msg);
 
-  // 1. Absolute Pfade ermitteln
+  // 1. Determine absolute paths
   let repoRoot;
   try {
     repoRoot = execSync('git rev-parse --show-toplevel', { encoding: 'utf8' }).trim();
   } catch (e) {
-    throw new Error('Konnte das Git-Root-Verzeichnis nicht ermitteln. Bist du in einem Git-Repository?');
+    throw new Error('Could not determine Git root directory. Are you inside a Git repository?');
   }
 
   const reviewsDir = path.join(repoRoot, 'Projects', currentProject, 'src', '.swarm', 'echo-reviews');
-  log(`[Merge] Starte dynamische Konsolidierung für Projekt: '${currentProject}' in ${reviewsDir}`);
+  log(`[Merge] Starting dynamic consolidation for project: '${currentProject}' in ${reviewsDir}`);
 
   if (!fs.existsSync(reviewsDir)) {
-    throw new Error(`Verzeichnis nicht gefunden: ${reviewsDir}`);
+    throw new Error(`Directory not found: ${reviewsDir}`);
   }
 
   const files = fs.readdirSync(reviewsDir).filter(f => f.startsWith('review-') && f.endsWith('.json'));
 
   if (files.length === 0) {
-    throw new Error('Keine Review-JSON-Dateien gefunden.');
+    throw new Error('No review JSON files found.');
   }
 
-  // 2. Dynamische Daten-Aggregation
+  // 2. Dynamic data aggregation
   let finalStatus = "GO";
   const mergedData = {}; 
   const evaluatedBy = [];
@@ -44,22 +44,22 @@ async function mergeReviews(currentProject) {
       const rawData = fs.readFileSync(filePath, 'utf8');
       const review = JSON.parse(rawData);
 
-      // Harte Konsens-Regel: Ein einziges NO-GO überstimmt alles
+      // Hard consensus rule: a single NO-GO overrides everything
       if (review.status === "NO-GO") {
         finalStatus = "NO-GO";
       }
 
-      // Dynamisches Iterieren über alle JSON-Schlüssel
+      // Dynamically iterate over all JSON keys
       for (const [key, value] of Object.entries(review)) {
-        if (key === "status") continue; // Status wird separat behandelt
+        if (key === "status") continue; // Status is handled separately
 
-        if (!mergedData[key]) mergedData[key] = []; // Dynamisch Array initialisieren
+        if (!mergedData[key]) mergedData[key] = []; // Dynamically initialize array
 
-        // Unterscheidung der Datentypen für saubere spätere Formatierung
+        // Distinguish data types for clean formatting later
         if (Array.isArray(value)) {
           value.forEach(item => mergedData[key].push({ agent: agentName, data: item }));
         } else if (typeof value === 'object' && value !== null) {
-          // Bei Objekten (z. B. checklist_results) das gesamte Objekt speichern
+          // For objects (e.g. checklist_results) store the entire object
           mergedData[key].push({ agent: agentName, data: value });
         } else {
           // Strings, Numbers, Booleans
@@ -70,14 +70,14 @@ async function mergeReviews(currentProject) {
       }
 
     } catch (err) {
-      throw new Error(`Fehler beim Parsen von ${file}: ${err.message}`);
+      throw new Error(`Error parsing ${file}: ${err.message}`);
     }
   }
 
-  // 3. Dynamische Markdown-Generierung
+  // 3. Dynamic Markdown generation
   const timestamp = new Date().toISOString();
 
-  // Hilfsfunktion: "critical_blockers" -> "Critical Blockers"
+  // Helper: "critical_blockers" -> "Critical Blockers"
   const formatHeader = (str) => {
     return str.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
   };
@@ -90,14 +90,14 @@ async function mergeReviews(currentProject) {
     markdownContent += `## ${formatHeader(key)}\n`;
 
     items.forEach(item => {
-      // Wenn die Daten ein verschachteltes JSON-Objekt sind (z. B. Array aus Issue-Objekten)
+      // If the data is a nested JSON object (e.g. array of issue objects)
       if (typeof item.data === 'object' && item.data !== null) {
         markdownContent += `- **[${item.agent}]**\n`;
         for (const [subKey, subVal] of Object.entries(item.data)) {
           markdownContent += `  - **${formatHeader(subKey)}**: ${subVal}\n`;
         }
       } else {
-        // Normale Textblöcke oder Strings
+        // Normal text blocks or strings
         markdownContent += `- **[${item.agent}]**: ${item.data}\n`;
       }
     });
@@ -105,12 +105,12 @@ async function mergeReviews(currentProject) {
     markdownContent += `\n`;
   }
 
-  // 4. Datei speichern
+  // 4. Save file
   const outputPath = path.join(reviewsDir, 'FINAL-REVIEW.md');
   fs.writeFileSync(outputPath, markdownContent.trim());
 
-  log(`✅ [Merge] Dynamischer Markdown-Bericht erstellt unter: ${outputPath}`);
-  log(`✅ [Merge] Finales Konsens-Resultat: ${finalStatus}`);
+  log(`✅ [Merge] Dynamic Markdown report created at: ${outputPath}`);
+  log(`✅ [Merge] Final consensus result: ${finalStatus}`);
 
   fs.writeFileSync(path.join(reviewsDir, '.merge_status'), finalStatus);
   
@@ -139,7 +139,7 @@ if (currentPath === entryPath) {
   }
 
   if (!currentProject) {
-    console.log(JSON.stringify({ status: "error", error: "Kein Projekt definiert. Nutze --project <name>." }));
+    console.log(JSON.stringify({ status: "error", error: "No project defined. Use --project <name>." }));
     process.exit(1);
   }
 

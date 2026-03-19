@@ -3,50 +3,84 @@
   "version": "2.0.0",
   "created_at": null,
   "last_updated": null,
-
   "models": {
     "forge": "codex-5.4",
     "buster": "claude-sonnet-4-6",
     "echo": "claude-opus-4-6"
   },
-
   "execution_order": [
-    "01", "02", "03", "04", "05", "06", "07", "08", "09",
-    "10", "11", "12", "13",
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
     "gate:midpoint-review",
-    "14", "15", "16", "17", "18",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
     "gate:final-buster",
     "gate:final-review"
   ],
-
   "phases": [
     {
       "id": "phase-1",
       "name": "Backend Foundation",
-      "modules": ["01", "02"]
+      "modules": [
+        "01",
+        "02"
+      ]
     },
     {
       "id": "phase-2",
       "name": "Core Resource APIs",
-      "modules": ["03", "04", "05", "06", "07", "08", "09"]
+      "modules": [
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09"
+      ]
     },
     {
       "id": "phase-3",
       "name": "Extended Resource APIs",
-      "modules": ["10", "11", "12", "13"]
+      "modules": [
+        "10",
+        "11",
+        "12",
+        "13"
+      ]
     },
     {
       "id": "phase-4",
       "name": "Frontend",
-      "modules": ["14", "15", "16", "17"]
+      "modules": [
+        "14",
+        "15",
+        "16",
+        "17"
+      ]
     },
     {
       "id": "phase-5",
       "name": "Delivery",
-      "modules": ["18"]
+      "modules": [
+        "18"
+      ]
     }
   ],
-
   "modules": {
     "01": {
       "title": "Project Scaffold + Auth + Database",
@@ -55,181 +89,329 @@
       "depends_on": [],
       "timeout_minutes": 30,
       "max_fails": 3,
-      "forge_subagent": "forge-codex",
-      "forge_model": "codex-5.4"
+      "forge_model": "codex-5.4",
+      "test_suites": [
+        "build",
+        "health"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "npm start",
+          "port": 3000,
+          "health_path": "/api/health"
+        }
+      }
     },
     "02": {
       "title": "Kubernetes Connection Layer",
       "dir": "02-kubernetes-connection",
       "substeps": null,
-      "depends_on": ["01"],
+      "depends_on": [
+        "01"
+      ],
       "timeout_minutes": 30,
       "max_fails": 3,
-      "forge_subagent": "forge-codex",
-      "forge_model": "codex-5.4"
+      "forge_model": "codex-5.4",
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "security"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "npm start",
+          "port": 3000,
+          "health_path": "/api/health"
+        },
+        "api": {
+          "spec_file": ".swarm/modules/02-kubernetes-connection/test-spec.json"
+        }
+      }
     },
     "03": {
       "title": "Pods",
       "dir": "03-pods",
-      "substeps": ["03a", "03b", "03c", "03d"],
-      "depends_on": ["02"],
+      "substeps": [
+        "03a",
+        "03b",
+        "03c",
+        "03d"
+      ],
+      "depends_on": [
+        "02"
+      ],
       "timeout_minutes": 60,
       "max_fails": 3,
-      "forge_subagent": "forge-codex",
       "forge_model": "codex-5.4"
     },
     "04": {
       "title": "Deployments",
       "dir": "04-deployments",
-      "substeps": ["04a", "04b"],
-      "depends_on": ["03"],
+      "substeps": [
+        "04a",
+        "04b"
+      ],
+      "depends_on": [
+        "03"
+      ],
       "timeout_minutes": 45,
       "max_fails": 3,
-      "forge_subagent": "forge-codex",
       "forge_model": "codex-5.4"
     },
     "05": {
       "title": "Nodes",
       "dir": "05-nodes",
-      "substeps": ["05a", "05b"],
-      "depends_on": ["04"],
+      "substeps": [
+        "05a",
+        "05b"
+      ],
+      "depends_on": [
+        "04"
+      ],
       "timeout_minutes": 45,
       "max_fails": 3,
-      "forge_subagent": "forge-codex",
       "forge_model": "codex-5.4"
     },
     "06": {
       "title": "WebSockets (Logs + Exec)",
       "dir": "06-websockets",
-      "substeps": ["06a", "06b"],
-      "depends_on": ["05"],
+      "substeps": [
+        "06a",
+        "06b"
+      ],
+      "depends_on": [
+        "05"
+      ],
       "timeout_minutes": 45,
       "max_fails": 3,
-      "forge_subagent": "forge-codex",
-      "forge_model": "codex-5.4"
+      "forge_model": "codex-5.4",
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "e2e",
+        "security"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "npm start",
+          "port": 3000,
+          "health_path": "/api/health"
+        },
+        "api": {
+          "spec_file": ".swarm/modules/06-websockets/test-spec.json"
+        },
+        "e2e": {
+          "tests_dir": ".swarm/modules/06-websockets/tests"
+        }
+      }
     },
     "07": {
       "title": "Services + CronJobs",
       "dir": "07-services-cronjobs",
-      "substeps": ["07a", "07b"],
-      "depends_on": ["06"],
+      "substeps": [
+        "07a",
+        "07b"
+      ],
+      "depends_on": [
+        "06"
+      ],
       "timeout_minutes": 45,
       "max_fails": 3,
-      "forge_subagent": "forge-codex",
       "forge_model": "codex-5.4"
     },
     "08": {
       "title": "Git + Build Pipeline",
       "dir": "08-git-build",
-      "substeps": ["08a", "08b", "08c"],
-      "depends_on": ["07"],
+      "substeps": [
+        "08a",
+        "08b",
+        "08c"
+      ],
+      "depends_on": [
+        "07"
+      ],
       "timeout_minutes": 60,
       "max_fails": 3,
-      "forge_subagent": "forge-codex",
       "forge_model": "codex-5.4"
     },
     "09": {
       "title": "Alerts System",
       "dir": "09-alerts",
       "substeps": null,
-      "depends_on": ["08"],
+      "depends_on": [
+        "08"
+      ],
       "timeout_minutes": 45,
       "max_fails": 3,
-      "forge_subagent": "forge-codex",
       "forge_model": "codex-5.4"
     },
     "10": {
       "title": "ConfigMaps + Secrets",
       "dir": "10-configmaps-secrets",
-      "substeps": ["10a", "10b"],
-      "depends_on": ["09"],
+      "substeps": [
+        "10a",
+        "10b"
+      ],
+      "depends_on": [
+        "09"
+      ],
       "timeout_minutes": 45,
       "max_fails": 3,
-      "forge_subagent": "forge-codex",
       "forge_model": "codex-5.4"
     },
     "11": {
       "title": "Storage + Events",
       "dir": "11-storage-events",
-      "substeps": ["11a", "11b"],
-      "depends_on": ["10"],
+      "substeps": [
+        "11a",
+        "11b"
+      ],
+      "depends_on": [
+        "10"
+      ],
       "timeout_minutes": 45,
       "max_fails": 3,
-      "forge_subagent": "forge-codex",
       "forge_model": "codex-5.4"
     },
     "12": {
       "title": "Helm",
       "dir": "12-helm",
-      "substeps": ["12a", "12b"],
-      "depends_on": ["11"],
+      "substeps": [
+        "12a",
+        "12b"
+      ],
+      "depends_on": [
+        "11"
+      ],
       "timeout_minutes": 45,
       "max_fails": 3,
-      "forge_subagent": "forge-codex",
       "forge_model": "codex-5.4"
     },
     "13": {
       "title": "Apply + Deploy + Service Directory",
       "dir": "13-apply-deploy-directory",
-      "substeps": ["13a", "13b", "13c"],
-      "depends_on": ["12"],
+      "substeps": [
+        "13a",
+        "13b",
+        "13c"
+      ],
+      "depends_on": [
+        "12"
+      ],
       "timeout_minutes": 60,
       "max_fails": 3,
-      "forge_subagent": "forge-codex",
       "forge_model": "codex-5.4"
     },
     "14": {
       "title": "Frontend Scaffold + Auth",
       "dir": "14-frontend-scaffold",
-      "substeps": ["14a", "14b"],
-      "depends_on": ["13", "gate:midpoint-review"],
+      "substeps": [
+        "14a",
+        "14b"
+      ],
+      "depends_on": [
+        "13",
+        "gate:midpoint-review"
+      ],
       "timeout_minutes": 45,
       "max_fails": 3,
-      "forge_subagent": "forge-sonnet",
       "forge_model": "claude-sonnet-4-6"
     },
     "15": {
       "title": "Dashboard + Core Pages",
       "dir": "15-dashboard-core-pages",
-      "substeps": ["15a", "15b", "15c", "15d"],
-      "depends_on": ["14"],
+      "substeps": [
+        "15a",
+        "15b",
+        "15c",
+        "15d"
+      ],
+      "depends_on": [
+        "14"
+      ],
       "timeout_minutes": 60,
       "max_fails": 3,
-      "forge_subagent": "forge-sonnet",
-      "forge_model": "claude-sonnet-4-6"
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "a11y",
+        "perf",
+        "bundle",
+        "visual-reg",
+        "e2e"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "static",
+          "project_dir": "Projects/kubecommand/src",
+          "build_cmd": "npm run build",
+          "image": "node:20-slim"
+        },
+        "visual-reg": {
+          "baseline_dir": ".swarm/modules/15-dashboard-core-pages/baselines"
+        },
+        "e2e": {
+          "tests_dir": ".swarm/modules/15-dashboard-core-pages/tests"
+        }
+      }
     },
     "16": {
       "title": "Resource Pages",
       "dir": "16-resource-pages",
-      "substeps": ["16a", "16b", "16c", "16d"],
-      "depends_on": ["15"],
+      "substeps": [
+        "16a",
+        "16b",
+        "16c",
+        "16d"
+      ],
+      "depends_on": [
+        "15"
+      ],
       "timeout_minutes": 60,
       "max_fails": 3,
-      "forge_subagent": "forge-sonnet",
       "forge_model": "claude-sonnet-4-6"
     },
     "17": {
       "title": "Feature Pages",
       "dir": "17-feature-pages",
-      "substeps": ["17a", "17b", "17c", "17d"],
-      "depends_on": ["16"],
+      "substeps": [
+        "17a",
+        "17b",
+        "17c",
+        "17d"
+      ],
+      "depends_on": [
+        "16"
+      ],
       "timeout_minutes": 60,
       "max_fails": 3,
-      "forge_subagent": "forge-sonnet",
       "forge_model": "claude-sonnet-4-6"
     },
     "18": {
       "title": "Delivery",
       "dir": "18-delivery",
-      "substeps": ["18a", "18b", "18c"],
-      "depends_on": ["17"],
+      "substeps": [
+        "18a",
+        "18b",
+        "18c"
+      ],
+      "depends_on": [
+        "17"
+      ],
       "timeout_minutes": 45,
       "max_fails": 3,
-      "forge_subagent": "forge-sonnet",
       "forge_model": "claude-sonnet-4-6"
     }
   },
-
   "gates": {
     "midpoint-review": {
       "type": "review",
@@ -253,7 +435,74 @@
       "model": "claude-sonnet-4-6",
       "forge_model": "codex-5.4",
       "timeout_minutes": 60,
-      "max_fix_cycles": 3
+      "max_fix_cycles": 3,
+      "test_suites": [
+        "build",
+        "health",
+        "a11y",
+        "perf",
+        "bundle",
+        "visual-reg",
+        "api",
+        "e2e",
+        "security",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "static",
+          "project_dir": "Projects/kubecommand/src"
+        },
+        "a11y": {
+          "thresholds": {
+            "critical": 0,
+            "serious": 0
+          }
+        },
+        "perf": {
+          "thresholds": {
+            "performance": 80,
+            "accessibility": 90
+          }
+        },
+        "bundle": {
+          "thresholds": {
+            "max_size_kb": 5120,
+            "max_file_count": 500
+          }
+        },
+        "visual-reg": {
+          "thresholds": {
+            "max_diff_percent": 1.0
+          }
+        },
+        "api": {
+          "spec_file": ".swarm/buster-test/final-test-spec.json",
+          "thresholds": {
+            "max_failures": 0
+          }
+        },
+        "e2e": {
+          "tests_dir": ".swarm/buster-test/tests",
+          "thresholds": {
+            "max_failures": 0
+          }
+        },
+        "security": {
+          "paths": [
+            "/",
+            "/api/health"
+          ],
+          "thresholds": {
+            "max_missing_headers": 0
+          }
+        },
+        "unit": {
+          "thresholds": {
+            "max_failures": 0
+          }
+        }
+      }
     },
     "final-review": {
       "type": "review",
