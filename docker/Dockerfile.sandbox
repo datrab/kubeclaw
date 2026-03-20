@@ -146,7 +146,7 @@ ENV HOME=/home/node
 RUN mkdir -p /home/node/.openclaw \
     && chown -R root:root /home/node \
     && openclaw plugins install acpx \
-    && cd /app/extensions/acpx && npm install --omit=dev --no-save acpx@0.3.1
+    && npm install -g acpx
 
 # 8. Build verification
 RUN echo "=== Build Verification ===" && \
