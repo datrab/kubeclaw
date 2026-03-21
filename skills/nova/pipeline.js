@@ -621,6 +621,23 @@ function completionStreamKey(config) {
 }
 
 /**
+ * Save a prompt to disk for debugging/analysis.
+ * Path: .swarm/modules/<dir>/prompts/<runId>/<agent>-attempt-<N>.md
+ * Best-effort — failure is logged but never blocks the pipeline.
+ */
+function savePrompt(config, dir, agentType, attempt, prompt) {
+  try {
+    const promptDir = path.join(modulePath(config, dir), 'prompts', RUN_ID);
+    fs.mkdirSync(promptDir, { recursive: true });
+    const filePath = path.join(promptDir, `${agentType}-attempt-${attempt}.md`);
+    fs.writeFileSync(filePath, prompt);
+    log('DEBUG', `Prompt saved: ${relPath(config, filePath)} (${prompt.length} chars)`);
+  } catch (e) {
+    log('DEBUG', `Prompt save failed (non-critical): ${e.message}`);
+  }
+}
+
+/**
  * Resolve model for an agent with three-level fallback:
  *   1. Explicit override (per-module forge_model, per-gate model, per-reviewer model)
  *   2. progress.json project-level (progress.models.<agent>)
@@ -1182,6 +1199,8 @@ function buildBusterPayload(config, progress, moduleId, taskType, taskPrompt, st
       status_json_path: mod ? relPath(config, statusPath(config, mod.dir)) : null,
       test_suites: mod?.test_suites || null,
       test_config: mod?.test_config || null,
+      run_id: opts.run_id || null,
+      attempt: opts.attempt || 1,
     };
   }
 
@@ -3363,6 +3382,8 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     const forgePrompt = promptResult.prompt;
     recalledMemoryIds = promptResult.recalledMemoryIds || [];
 
+    savePrompt(config, dir, 'forge', status.fail_count + 1, forgePrompt);
+
     status.status = STATUS.IN_PROGRESS;
     status.current_phase = 'forge';
     if (!status.started_at) status.started_at = new Date().toISOString();
@@ -3563,6 +3584,8 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
       busterPrompt = promptResult.prompt;
     }
 
+    savePrompt(config, dir, 'buster', status.fail_count + 1, busterPrompt);
+
     status.status = STATUS.TESTING;
     status.current_phase = 'buster';
     addHistory(status, STATUS.TESTING, 'pipeline', 'Buster started');
@@ -3574,7 +3597,9 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     // Prevents pollDual from reading stale FAIL/PASS from a previous attempt.
     await archiveModuleCompletions(config, moduleId);
 
-    try { await spawnAgent(config, progress, 'buster', moduleId, busterModel, busterPrompt, { status, taskType: 'module_test' }); }
+    try { await spawnAgent(config, progress, 'buster', moduleId, busterModel, busterPrompt, {
+      status, taskType: 'module_test', run_id: RUN_ID, attempt: status.fail_count + 1,
+    }); }
     catch (e) {
       log('ERROR', `Buster agent spawn failed: ${e.message}`);
       clearShutdownContext();
@@ -4303,6 +4328,14 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
   // pollForFile finds the old file instantly and returns stale review data
   // while the reviewer hasn't even started working yet.
   try { if (fs.existsSync(outputFilePath)) fs.unlinkSync(outputFilePath); } catch { /* ok */ }
+
+  // Save reviewer prompt for debugging
+  try {
+    const echoPromptDir = path.join(swarmRoot(config), 'prompts', RUN_ID);
+    fs.mkdirSync(echoPromptDir, { recursive: true });
+    fs.writeFileSync(path.join(echoPromptDir, `echo-${gateId}-${reviewer.label}.md`), reviewerPrompt);
+    log('DEBUG', `Echo prompt saved: prompts/${RUN_ID}/echo-${gateId}-${reviewer.label}.md`);
+  } catch { /* non-critical */ }
 
   try {
     await spawnReviewerAgent(config, progress, gateId, reviewer, reviewerPrompt);

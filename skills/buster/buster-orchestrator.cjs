@@ -750,6 +750,21 @@ async function processTask(payload) {
   const enrichedPrompt = enrichPrompt(prompt, verdict, testConfig.serve);
   console.log(`[TASK] Prompt enriched: ${prompt.length} → ${enrichedPrompt.length} chars`);
 
+  // Save enriched prompt for debugging (uses run_id from pipeline if available)
+  if (payload.module_path) {
+    try {
+      const runId = payload.run_id || `orchestrator-${Date.now()}`;
+      const attempt = payload.attempt || 1;
+      const promptDir = path.join(REPO_DIR, payload.module_path, 'prompts', runId);
+      fs.mkdirSync(promptDir, { recursive: true });
+      const promptPath = path.join(promptDir, `buster-enriched-attempt-${attempt}.md`);
+      fs.writeFileSync(promptPath, enrichedPrompt);
+      console.log(`[TASK] Enriched prompt saved: ${promptPath} (${enrichedPrompt.length} chars)`);
+    } catch (e) {
+      console.warn(`[TASK] Prompt save failed (non-critical): ${e.message}`);
+    }
+  }
+
   // ── Step 7: Calculate subagent timeout ──
   setStep('calc-timeout');
   const subagentTimeout = Math.max(
