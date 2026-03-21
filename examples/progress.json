@@ -110,8 +110,8 @@
           "health_retries": 10,
           "health_timeout": 15000,
           "health_base_delay": 5000,
-          "dockerfile": "backend/Dockerfile",
-          "build_context": "backend/",
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
           "build_timeout": 1800
         },
         "api": {
@@ -151,8 +151,8 @@
           "health_retries": 10,
           "health_timeout": 15000,
           "health_base_delay": 5000,
-          "dockerfile": "backend/Dockerfile",
-          "build_context": "backend/",
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
           "build_timeout": 1800
         },
         "api": {
@@ -198,8 +198,8 @@
           "health_retries": 10,
           "health_timeout": 15000,
           "health_base_delay": 5000,
-          "dockerfile": "backend/Dockerfile",
-          "build_context": "backend/",
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
           "build_timeout": 1800
         },
         "api": {
@@ -242,8 +242,8 @@
           "health_retries": 10,
           "health_timeout": 15000,
           "health_base_delay": 5000,
-          "dockerfile": "backend/Dockerfile",
-          "build_context": "backend/",
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
           "build_timeout": 1800
         },
         "api": {
@@ -286,8 +286,8 @@
           "health_retries": 10,
           "health_timeout": 15000,
           "health_base_delay": 5000,
-          "dockerfile": "backend/Dockerfile",
-          "build_context": "backend/",
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
           "build_timeout": 1800
         },
         "api": {
@@ -330,8 +330,8 @@
           "health_retries": 10,
           "health_timeout": 15000,
           "health_base_delay": 5000,
-          "dockerfile": "backend/Dockerfile",
-          "build_context": "backend/",
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
           "build_timeout": 1800
         },
         "api": {
@@ -374,8 +374,8 @@
           "health_retries": 10,
           "health_timeout": 15000,
           "health_base_delay": 5000,
-          "dockerfile": "backend/Dockerfile",
-          "build_context": "backend/",
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
           "build_timeout": 1800
         },
         "api": {
@@ -419,8 +419,8 @@
           "health_retries": 10,
           "health_timeout": 15000,
           "health_base_delay": 5000,
-          "dockerfile": "backend/Dockerfile",
-          "build_context": "backend/",
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
           "build_timeout": 1800
         },
         "api": {
@@ -460,8 +460,8 @@
           "health_retries": 10,
           "health_timeout": 15000,
           "health_base_delay": 5000,
-          "dockerfile": "backend/Dockerfile",
-          "build_context": "backend/",
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
           "build_timeout": 1800
         },
         "api": {
@@ -504,8 +504,8 @@
           "health_retries": 10,
           "health_timeout": 15000,
           "health_base_delay": 5000,
-          "dockerfile": "backend/Dockerfile",
-          "build_context": "backend/",
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
           "build_timeout": 1800
         },
         "api": {
@@ -548,8 +548,8 @@
           "health_retries": 10,
           "health_timeout": 15000,
           "health_base_delay": 5000,
-          "dockerfile": "backend/Dockerfile",
-          "build_context": "backend/",
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
           "build_timeout": 1800
         },
         "api": {
@@ -592,8 +592,8 @@
           "health_retries": 10,
           "health_timeout": 15000,
           "health_base_delay": 5000,
-          "dockerfile": "backend/Dockerfile",
-          "build_context": "backend/",
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
           "build_timeout": 1800
         },
         "api": {
@@ -637,8 +637,8 @@
           "health_retries": 10,
           "health_timeout": 15000,
           "health_base_delay": 5000,
-          "dockerfile": "backend/Dockerfile",
-          "build_context": "backend/",
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
           "build_timeout": 1800
         },
         "api": {
@@ -847,8 +847,8 @@
           "health_retries": 10,
           "health_timeout": 15000,
           "health_base_delay": 5000,
-          "dockerfile": "backend/Dockerfile",
-          "build_context": "backend/",
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
           "build_timeout": 1800
         },
         "unit": {
@@ -912,8 +912,8 @@
           "health_retries": 10,
           "health_timeout": 15000,
           "health_base_delay": 5000,
-          "dockerfile": "backend/Dockerfile",
-          "build_context": "backend/",
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
           "build_timeout": 1800
         },
         "api": {

@@ -63,17 +63,18 @@ Set in **every** module's `test_config.serve`:
 ```
 
 All relative paths in `spec_file`, `tests_dir`, `baseline_dir` resolve from `project_dir`.
-Paths in `dockerfile` and `build_context` resolve from repo root (NOT from `project_dir`).
+Paths in `dockerfile` and `build_context` resolve from **repo root** (NOT from `project_dir`). Use full paths like `Projects/<project>/src/backend/Dockerfile`.
 
 ## Critical: Backend Dockerfile Pattern
 
 Backend modules should use `dockerfile` + `build_context` to bake dependencies into the image. This avoids `pip install` on every task run and eliminates network dependency during builds (`--pull=never`).
 
+**Both paths are relative to the repo root, NOT to `project_dir`:**
 ```json
 "serve": {
   "type": "server",
-  "dockerfile": "backend/Dockerfile",
-  "build_context": "backend/",
+  "dockerfile": "Projects/<project>/src/backend/Dockerfile",
+  "build_context": "Projects/<project>/src/backend/",
   "image": "<project>-backend:m<id>",
   "start_cmd": "ENV_VARS python -m uvicorn main:app --host 0.0.0.0 --port 8000",
   ...
@@ -126,7 +127,7 @@ The sandbox has **no K8s cluster**. K8s-dependent endpoints return 503. Test deg
 - [ ] Architecture branch: `git checkout -b <project>/architecture`
 - [ ] `progress.json` with `project`, `models`, `execution_order`, `modules`, `gates`
 - [ ] Every module: `serve.project_dir` set (`Projects/<project>/src`)
-- [ ] Backend modules: `serve.type: "server"` + `dockerfile` + `build_context` + `image` (project-specific tag) + `start_cmd` (no pip install) + `port` + `health_path`
+- [ ] Backend modules: `serve.type: "server"` + `dockerfile` + `build_context` (full path from repo root!) + `image` (project-specific tag) + `start_cmd` (no pip install) + `port` + `health_path`
 - [ ] Backend modules: `health_retries: 10` + `health_timeout: 15000` + `health_base_delay: 5000`
 - [ ] Backend Dockerfile: `FROM docker.io/library/python:3.12-slim` (fully-qualified!)
 - [ ] Frontend modules: `serve.type: "static"` + `build_cmd` (incl. `npm install`) + `image: "node:20-slim"`

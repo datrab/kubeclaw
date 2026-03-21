@@ -60,8 +60,8 @@
       "health_retries": 10,
       "health_timeout": 15000,
       "health_base_delay": 5000,
-      "dockerfile": "backend/Dockerfile",
-      "build_context": "backend/",
+      "dockerfile": "Projects/<project>/src/backend/Dockerfile",
+      "build_context": "Projects/<project>/src/backend/",
       "build_timeout": 1800
     },
     "api": { "spec_file": ".swarm/modules/02-kubernetes-connection/test-spec.json" },
@@ -71,6 +71,8 @@
 ```
 
 **Key pattern — Dockerfile build:** When `dockerfile` is set, Buster runs `podman build --pull=never -t <image> -f <dockerfile> <build_context>` before `podman run`. Dependencies are baked into the image, so `start_cmd` does NOT include `pip install` — just the server start command with env vars.
+
+**Critical: `dockerfile` and `build_context` paths are relative to the repo root, NOT to `project_dir`.** Use the full path from repo root (e.g. `Projects/<project>/src/backend/Dockerfile`). Short paths like `backend/Dockerfile` will resolve against the repo root and fail.
 
 ### Frontend Module Example (React/Vite)
 
@@ -115,8 +117,8 @@
 | `health_retries` | `3` | Number of health check retries. Set to `10` for backends with slow startup |
 | `health_timeout` | `10000` | Timeout per health check attempt in ms |
 | `health_base_delay` | `2000` | Initial delay before first health check in ms. Set to `5000` for slow-starting backends |
-| `dockerfile` | — | Path to Dockerfile, relative to repo root. When set, `podman build --pull=never` runs before `podman run` |
-| `build_context` | dirname of `dockerfile` | Docker build context path, relative to repo root |
+| `dockerfile` | — | Path to Dockerfile, relative to repo root (e.g. `Projects/<project>/src/backend/Dockerfile`). NOT relative to `project_dir`. When set, `podman build --pull=never` runs before `podman run` |
+| `build_context` | dirname of `dockerfile` | Docker build context path, relative to repo root (e.g. `Projects/<project>/src/backend/`). NOT relative to `project_dir` |
 | `build_timeout` | `300` | Dockerfile build timeout in seconds |
 
 **Dockerfile convention:** Dockerfiles must use fully-qualified image names (e.g. `FROM docker.io/library/python:3.12-slim`). Unqualified names cause Podman cache misses and network pulls.
@@ -205,8 +207,8 @@ For a **backend-only** or **fullstack** project, the gate tests the backend dete
       "health_retries": 10,
       "health_timeout": 15000,
       "health_base_delay": 5000,
-      "dockerfile": "backend/Dockerfile",
-      "build_context": "backend/",
+      "dockerfile": "Projects/<project>/src/backend/Dockerfile",
+      "build_context": "Projects/<project>/src/backend/",
       "build_timeout": 1800
     },
     "api":      { "spec_file": ".swarm/buster-test/final-test-spec.json", "thresholds": { "max_failures": 0 } },

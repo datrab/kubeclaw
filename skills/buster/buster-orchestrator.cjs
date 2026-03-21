@@ -425,8 +425,8 @@ async function spawnBusterSession(payload, prompt, timeoutSeconds) {
     task: prompt,
     runtime: 'acp',
     label,
-    thread: true,
-    mode: 'session',
+    thread: false,
+    mode: 'run',
     runTimeoutSeconds: timeoutSeconds,
     cleanup: 'keep',
   };
@@ -456,7 +456,10 @@ async function spawnBusterSession(payload, prompt, timeoutSeconds) {
   }
 
   let result;
-  try { result = JSON.parse(responseText); } catch { result = { raw: responseText }; }
+  try {
+    const raw = JSON.parse(responseText);
+    result = raw?.result?.details || raw;
+  } catch { result = { raw: responseText }; }
 
   if (result.status !== 'accepted') {
     throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
