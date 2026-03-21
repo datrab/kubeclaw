@@ -10,7 +10,7 @@
   },
 
   "poll_interval_seconds": 30,
-  "default_timeout_minutes": 45,
+  "default_timeout_minutes": 300,
   "default_max_fails": 3,
   "auto_retry_threshold": 2,
   "session_nudge_threshold": 0.75,

@@ -20,7 +20,7 @@ RUN echo "root:100000:65536" >> /etc/subuid && \
 RUN mkdir -p /etc/containers /run/containers/storage /var/lib/containers/storage && \
     printf '[storage]\ndriver = "vfs"\nrunroot = "/run/containers/storage"\ngraphroot = "/var/lib/containers/storage"\n' \
       > /etc/containers/storage.conf && \
-    printf 'unqualified-search-registries = ["docker.io", "ghcr.io"]\n' \
+    printf 'unqualified-search-registries = ["docker.io", "ghcr.io"]\n\n[[registry]]\nprefix = "docker.io"\nlocation = "docker.io"\n\n[[registry.mirror]]\nlocation = "registry-mirror.kubeclaw.svc.cluster.local:5000"\ninsecure = true\n' \
       > /etc/containers/registries.conf && \
     printf '[engine]\ncgroup_manager = "cgroupfs"\nevents_logger = "file"\nruntime = "crun"\n' \
       > /etc/containers/containers.conf

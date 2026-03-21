@@ -6,7 +6,7 @@
 {
   "project": "<project>",
   "version": "1.0.0",
-  "models": { "forge": "codex-5.4", "buster": "claude-sonnet-4-6", "echo": "claude-opus-4-6" },
+  "models": { "forge": "claude-sonnet-4-6", "buster": "claude-sonnet-4-6", "echo": "claude-opus-4-6" },
   "execution_order": ["01", "02", ..., "gate:midpoint-review", "14", ..., "gate:final-buster", "gate:final-review"],
   "phases": [...],
   "modules": {...},
@@ -29,14 +29,14 @@
 | `dir` | yes | — | Directory name in repo (e.g. `02-kubernetes-connection`) |
 | `substeps` | no | `null` | Array of sub-IDs. Pipeline concatenates their FORGE.md files |
 | `depends_on` | yes | `[]` | Modules that must PASS first |
-| `timeout_minutes` | no | `45` | Max time for one Forge+Buster cycle |
+| `timeout_minutes` | no | `300` | Max time for one Forge+Buster cycle |
 | `max_fails` | no | `3` | Max failures before BLOCKED |
 | `forge_subagent` | no | from `models.forge` | ACP subagent ID |
 | `forge_model` | no | from `models.forge` | LLM model for Forge |
 | `test_suites` | no | `["build","health"]` | Which Buster suites run |
 | `test_config` | no | `{serve:{type:"static"}}` | Suite-specific config (see below) |
 
-### Backend Module Example (Python/FastAPI)
+### Backend Module Example (Python/FastAPI with Dockerfile)
 
 ```json
 "02": {
@@ -44,27 +44,35 @@
   "dir": "02-kubernetes-connection",
   "substeps": null,
   "depends_on": ["01"],
-  "timeout_minutes": 30,
+  "timeout_minutes": 300,
   "max_fails": 3,
-  "forge_subagent": "forge-codex",
-  "forge_model": "codex-5.4",
+  "forge_subagent": "forge-sonnet",
+  "forge_model": "claude-sonnet-4-6",
   "test_suites": ["build", "health", "api", "security", "unit"],
   "test_config": {
     "serve": {
       "type": "server",
       "project_dir": "Projects/<project>/src",
-      "start_cmd": "cd backend && pip install -r requirements.txt -q && KUBECOMMAND_API_KEY=test-key-123 IN_CLUSTER=false uvicorn main:app --host 0.0.0.0 --port 8000",
-      "image": "python:3.12-slim",
+      "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+      "image": "kubecommand-backend:m02",
       "port": 8000,
-      "health_path": "/api/v1/health"
+      "health_path": "/api/v1/health",
+      "health_retries": 10,
+      "health_timeout": 15000,
+      "health_base_delay": 5000,
+      "dockerfile": "backend/Dockerfile",
+      "build_context": "backend/",
+      "build_timeout": 1800
     },
     "api": { "spec_file": ".swarm/modules/02-kubernetes-connection/test-spec.json" },
-    "unit": { "test_cmd": "cd backend && pip install -r requirements.txt -r dev-requirements.txt -q && python -m pytest tests/ -v --tb=short" }
+    "unit": { "test_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short" }
   }
 }
 ```
 
-### Frontend Module Example (React/Vite, with visual-reg + e2e)
+**Key pattern — Dockerfile build:** When `dockerfile` is set, Buster runs `podman build --pull=never -t <image> -f <dockerfile> <build_context>` before `podman run`. Dependencies are baked into the image, so `start_cmd` does NOT include `pip install` — just the server start command with env vars.
+
+### Frontend Module Example (React/Vite)
 
 ```json
 "15": {
@@ -72,7 +80,7 @@
   "dir": "15-dashboard-core-pages",
   "substeps": ["15a", "15b", "15c", "15d"],
   "depends_on": ["14"],
-  "timeout_minutes": 60,
+  "timeout_minutes": 300,
   "max_fails": 3,
   "forge_subagent": "forge-sonnet",
   "forge_model": "claude-sonnet-4-6",
@@ -91,6 +99,8 @@
 }
 ```
 
+**Key difference from backend:** No `dockerfile`/`build_context` — frontend uses `sandbox-build` with `build_cmd`. Dependencies install via `npm install` in `build_cmd` because there is no Dockerfile. `image: "node:20-slim"` is the raw base image pulled from the registry mirror.
+
 ## serve Config
 
 ### `type: "server"` (Backend)
@@ -98,10 +108,18 @@
 | Field | Default | Description |
 |---|---|---|
 | `project_dir` | repo root | **Must set.** Relative to repo root (e.g. `Projects/<project>/src`) |
-| `start_cmd` | `npm start` | Must install deps, set env vars, start server |
-| `image` | `node:20-slim` | Podman image. Python → `python:3.12-slim` |
+| `start_cmd` | `npm start` | Server start command. Do NOT include `pip install` when using `dockerfile` — deps are baked in |
+| `image` | `node:20-slim` | Image tag for `podman run`. With `dockerfile`: use a project-specific tag (e.g. `kubecommand-backend:m01`). Without: use raw base image |
 | `port` | `3000` | Server listen port. Python/uvicorn → `8000` |
 | `health_path` | `/` | Must respond without auth |
+| `health_retries` | `3` | Number of health check retries. Set to `10` for backends with slow startup |
+| `health_timeout` | `10000` | Timeout per health check attempt in ms |
+| `health_base_delay` | `2000` | Initial delay before first health check in ms. Set to `5000` for slow-starting backends |
+| `dockerfile` | — | Path to Dockerfile, relative to repo root. When set, `podman build --pull=never` runs before `podman run` |
+| `build_context` | dirname of `dockerfile` | Docker build context path, relative to repo root |
+| `build_timeout` | `300` | Dockerfile build timeout in seconds |
+
+**Dockerfile convention:** Dockerfiles must use fully-qualified image names (e.g. `FROM docker.io/library/python:3.12-slim`). Unqualified names cause Podman cache misses and network pulls.
 
 ### `type: "static"` (Frontend)
 
@@ -172,7 +190,7 @@ For a **backend-only** or **fullstack** project, the gate tests the backend dete
   "instructions_file": "buster-test/FINAL-BUSTER.md",
   "output_file": "buster-test/FINAL-BUSTER-RESULT.json",
   "model": "claude-sonnet-4-6",
-  "forge_model": "codex-5.4",
+  "forge_model": "claude-sonnet-4-6",
   "timeout_minutes": 60,
   "max_fix_cycles": 3,
   "test_suites": ["build", "health", "api", "security", "unit"],
@@ -180,14 +198,20 @@ For a **backend-only** or **fullstack** project, the gate tests the backend dete
     "serve": {
       "type": "server",
       "project_dir": "Projects/<project>/src",
-      "start_cmd": "cd backend && pip install -r requirements.txt -q && API_KEY=test-key-123 uvicorn main:app --host 0.0.0.0 --port 8000",
-      "image": "python:3.12-slim",
+      "start_cmd": "KUBECOMMAND_API_KEY=test-key-123 IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+      "image": "<project>-backend:gate-final",
       "port": 8000,
-      "health_path": "/api/v1/health"
+      "health_path": "/api/v1/health",
+      "health_retries": 10,
+      "health_timeout": 15000,
+      "health_base_delay": 5000,
+      "dockerfile": "backend/Dockerfile",
+      "build_context": "backend/",
+      "build_timeout": 1800
     },
     "api":      { "spec_file": ".swarm/buster-test/final-test-spec.json", "thresholds": { "max_failures": 0 } },
     "security": { "paths": ["/api/v1/health", "/api/v1/pods"], "thresholds": { "max_missing_headers": 0 } },
-    "unit":     { "test_cmd": "cd backend && pip install -r requirements.txt -r dev-requirements.txt -q && python -m pytest tests/ -v --tb=short", "thresholds": { "max_failures": 0 } }
+    "unit":     { "test_cmd": "KUBECOMMAND_API_KEY=test-key-123 IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short", "thresholds": { "max_failures": 0 } }
   }
 }
 ```

@@ -11,7 +11,7 @@ data:
       "gateway": {
         "mode": "local",
         "tools": {
-          "allow": ["group:openclaw"]
+          "allow": ["sessions_spawn", "sessions_send", "session_status", "group:openclaw"]
         },
         "port": {{ .Values.gateway.port }},
         "controlUi": {
@@ -39,9 +39,16 @@ data:
           "maxAgeHours": 0
         }
       },
+      "tools": {
+        "sessions": {
+          "visibility": "all"
+        }
+      },
       "commands": {
         "native": "auto",
-        "nativeSkills": "auto"
+        "nativeSkills": "auto",
+        "restart": true,
+        "ownerDisplay": "raw"
       },
       "plugins": {
         "entries": {
@@ -52,7 +59,8 @@ data:
             "enabled": true,
             "config": {
               "permissionMode": "approve-all",
-              "nonInteractivePermissions": "deny"
+              "nonInteractivePermissions": "deny",
+              "command": "acpx"
             }
           }
         }
@@ -100,7 +108,7 @@ data:
           },
           "subagents": {
             "maxConcurrent": 8,
-            "runTimeoutSeconds": 7200,
+            "runTimeoutSeconds": 18000,
             "archiveAfterMinutes": 120
           }
         }
@@ -133,6 +141,7 @@ data:
           "enabled": {{ .Values.discord.enabled }},
           "token": "__DISCORD_TOKEN__",
           "groupPolicy": "open",
+          "streaming": "partial",
           "guilds": {
             "*": { "requireMention": false }
           },

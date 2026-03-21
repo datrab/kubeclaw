@@ -71,6 +71,73 @@ const TIMEOUT_BUFFER_SECONDS = 60;
 let activeSessionKey = null;  // Currently running ACP session (for SIGTERM cleanup)
 let shuttingDown = false;
 
+const STATE = {
+  status: 'starting',
+  startedAt: Date.now(),
+  currentModule: null,
+  currentStep: null,
+  lastTask: null,
+  tasksTotal: 0,
+  tasksPassed: 0,
+  tasksFailed: 0,
+};
+
+function setStep(step) {
+  STATE.currentStep = step;
+  console.log(`[STEP] ▶ ${step}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BASE IMAGES — Pre-pulled at startup via ensureBaseImages()
+// ═══════════════════════════════════════════════════════════════
+
+const BASE_IMAGES_STATIC = [
+  'docker.io/library/python:3.12-slim',
+  'docker.io/library/python:3.11-slim',
+  'docker.io/library/node:20-slim',
+];
+
+const BASE_IMAGES = new Set(BASE_IMAGES_STATIC);
+
+/**
+ * Load additional base images from progress.json at startup.
+ * Reads serve.image from all modules and normalises bare names to FQN.
+ */
+function loadBaseImagesFromProgress() {
+  try {
+    const progressPath = path.join(REPO_DIR, '.swarm', 'progress.json');
+    if (!fs.existsSync(progressPath)) return;
+    const progress = JSON.parse(fs.readFileSync(progressPath, 'utf8'));
+
+    // Explicit base_images field
+    if (Array.isArray(progress.base_images)) {
+      for (const img of progress.base_images) BASE_IMAGES.add(normaliseImage(img));
+    }
+
+    // Auto-detect from modules[*].test_config.serve.image
+    if (progress.modules) {
+      for (const mod of Object.values(progress.modules)) {
+        const img = mod.test_config?.serve?.image;
+        if (img) {
+          // Skip locally-built tags (e.g. kubecommand-backend:m01)
+          if (!img.includes('/') && !img.startsWith('docker.io')) continue;
+          BASE_IMAGES.add(normaliseImage(img));
+        }
+      }
+    }
+
+    console.log(`[BASE_IMAGES] ${BASE_IMAGES.size} images protected: ${[...BASE_IMAGES].join(', ')}`);
+  } catch (e) {
+    console.warn(`[BASE_IMAGES] Failed to load from progress.json: ${e.message}`);
+  }
+}
+
+function normaliseImage(name) {
+  // docker.io/library/ prefix for bare names like "python:3.12-slim"
+  if (!name.includes('/')) return `docker.io/library/${name}`;
+  return name;
+}
+
 // ═══════════════════════════════════════════════════════════════
 // REDIS
 // ═══════════════════════════════════════════════════════════════
@@ -213,13 +280,60 @@ function startGatewayHealthMonitor() {
 // ═══════════════════════════════════════════════════════════════
 
 async function sandboxCleanup() {
-  console.log('[CLEANUP] Running sandbox-cleanup...');
+  console.log('[CLEANUP] Running sandbox cleanup...');
   try {
-    await execAsync('sandbox-cleanup', { timeout: 30000, encoding: 'utf8' });
+    // 1. Stop + remove all containers
+    await execAsync('podman stop -a 2>/dev/null; podman rm -a -f 2>/dev/null', {
+      timeout: 30000, encoding: 'utf8',
+    }).catch(() => {});
+
+    // 2. Remove dangling images only (<none>:<none> from rebuilt tags)
+    await execAsync('podman image prune -f 2>/dev/null', {
+      timeout: 10000, encoding: 'utf8',
+    }).catch(() => {});
+
+    // 3. Clear sandbox directories
+    await execAsync('rm -rf /sandbox/www/* /sandbox/results/*', {
+      timeout: 5000, encoding: 'utf8',
+    }).catch(() => {});
+
+    // 4. Stop nginx
+    await execAsync('nginx -s stop 2>/dev/null', {
+      timeout: 5000, encoding: 'utf8',
+    }).catch(() => {});
+
     console.log('[CLEANUP] ✅ Done.');
   } catch (e) {
     console.warn(`[CLEANUP] ⚠️ ${e.message}`);
   }
+}
+
+/**
+ * Pre-pull missing base images at startup.
+ * Checks each non-local BASE_IMAGE with `podman image exists`,
+ * only pulls if not already local.
+ */
+async function ensureBaseImages() {
+  console.log('[BASE_IMAGES] Ensuring base images are cached...');
+  for (const img of BASE_IMAGES) {
+    // Skip locally-built tags (e.g. kubecommand-backend:m01)
+    if (img.startsWith('localhost/') || (!img.includes('/') && !img.startsWith('docker.io'))) {
+      continue;
+    }
+    try {
+      await execAsync(`podman image exists "${img}"`, { timeout: 5000 });
+      console.log(`[BASE_IMAGES] ✅ ${img} (cached)`);
+    } catch {
+      console.log(`[BASE_IMAGES] ⬇️  Pulling ${img}...`);
+      try {
+        await execAsync(`podman pull "${img}"`, { timeout: 300000, encoding: 'utf8' });
+        console.log(`[BASE_IMAGES] ✅ ${img} (pulled)`);
+      } catch (e) {
+        console.error(`[BASE_IMAGES] ❌ Failed to pull ${img}: ${e.message}`);
+      }
+    }
+  }
+  console.log('[BASE_IMAGES] ✅ Pre-pull complete.');
 }
 
 async function gitSync(expectedHash) {
@@ -228,6 +342,14 @@ async function gitSync(expectedHash) {
     // Always fetch latest refs
     await execFileAsync('git', ['-C', REPO_DIR, 'fetch', 'origin'], {
       encoding: 'utf8', timeout: 30000,
+    });
+
+    // Keep main branch ref in sync with origin
+    await execFileAsync('git', ['-C', REPO_DIR, 'checkout', 'main'], {
+      encoding: 'utf8', timeout: 15000,
+    }).catch(() => {}); // may fail if already on main or detached — ok
+    await execFileAsync('git', ['-C', REPO_DIR, 'reset', '--hard', 'origin/main'], {
+      encoding: 'utf8', timeout: 15000,
     });
 
     if (expectedHash) {
@@ -485,29 +607,39 @@ async function processTask(payload) {
   if (!prompt) throw new Error(`No instructions in payload for ${payload.task_type}/${moduleId}`);
 
   const sessionConfig    = payload.session || {};
-  const totalTimeout     = sessionConfig.timeout_seconds || 3600;
+  const totalTimeout     = sessionConfig.timeout_seconds || 18000;
   const completionStream = payload.completion_stream;
 
   // Suite config from pipeline (via progress.json)
   const suiteList = payload.test_suites || DEFAULT_SUITES;
   const testConfig = payload.test_config || DEFAULT_CONFIG;
 
-  console.log(`\n[TASK] ═══ Processing: ${payload.task_type} for module ${moduleId} ═══`);
-  console.log(`[TASK] Suites: [${suiteList.join(',')}]`);
-  console.log(`[TASK] Serve type: ${testConfig.serve?.type || 'static'}`);
-  console.log(`[TASK] Total timeout: ${totalTimeout}s`);
-  console.log(`[TASK] Completion stream: ${completionStream}`);
-  console.log(`[TASK] Prompt size: ${prompt.length} chars`);
+  console.log(`\n[TASK] ═══════════════════════════════════════════════════════`);
+  console.log(`[TASK]   Module:     ${moduleId}`);
+  console.log(`[TASK]   Type:       ${payload.task_type}`);
+  console.log(`[TASK]   Project:    ${payload.project || 'unknown'}`);
+  console.log(`[TASK]   Suites:     [${suiteList.join(', ')}]`);
+  console.log(`[TASK]   Serve:      ${testConfig.serve?.type || 'static'}`);
+  console.log(`[TASK]   Timeout:    ${totalTimeout}s`);
+  console.log(`[TASK]   Stream:     ${completionStream}`);
+  console.log(`[TASK]   Commit:     ${payload.commit_hash || '(latest)'}`);
+  console.log(`[TASK]   Prompt:     ${prompt.length} chars`);
+  console.log(`[TASK] ═══════════════════════════════════════════════════════`);
 
+  STATE.currentModule = moduleId;
+  STATE.tasksTotal++;
   const taskStartTime = Date.now();
 
   // ── Step 0: Sandbox Cleanup (clean slate) ──
+  setStep('sandbox-cleanup');
   await sandboxCleanup();
 
   // ── Step 1: Git Pull ──
+  setStep('git-sync');
   await gitSync(payload.commit_hash);
 
   // ── Step 2: Save prompt to file (audit/debug) ──
+  setStep('save-prompt');
   const promptPath = `/tmp/buster-task-${moduleId}-${Date.now()}.md`;
   try {
     fs.writeFileSync(promptPath, prompt);
@@ -517,6 +649,7 @@ async function processTask(payload) {
   }
 
   // ── Step 3+4: Run Suites (build + serve + health + ...) ──
+  setStep('suite-runner');
   // build.js handles both compilation and serving.
   // health.js checks if the app responds.
   // All configured suites run sequentially with dependency ordering.
@@ -545,6 +678,7 @@ async function processTask(payload) {
   await notifySuiteResults(moduleId, verdict);
 
   // ── Step 5: Decision ──
+  setStep('decision');
   if (verdict.recommendation === RECOMMENDATION.NO_SUBAGENT) {
     console.log(`[TASK] ❌ Critical failure — skipping subagent, sending FAIL to pipeline.`);
 
@@ -567,16 +701,54 @@ async function processTask(payload) {
       console.error(`[TASK] Failed to send FAIL: ${e.message}`);
     }
 
+    // Update status.json so Git channel is consistent with Redis
+    if (payload.module_path) {
+      try {
+        const statusPath = path.join(REPO_DIR, payload.module_path, 'status.json');
+        let status = {};
+        if (fs.existsSync(statusPath)) {
+          try { status = JSON.parse(fs.readFileSync(statusPath, 'utf8')); } catch {}
+        }
+        status.status = 'FAIL';
+        status.current_phase = 'buster';
+        status.fail_summaries = status.fail_summaries || [];
+        status.fail_summaries.push(`Pre-test critical failure: ${verdict.summary}`);
+        status.fail_count = (status.fail_count || 0) + 1;
+        fs.writeFileSync(statusPath, JSON.stringify(status, null, 2));
+
+        // Commit + push (best effort)
+        await execFileAsync('git', ['-C', REPO_DIR, 'add', statusPath], {
+          encoding: 'utf8', timeout: 5000,
+        });
+        await execFileAsync('git', ['-C', REPO_DIR, 'commit', '-m',
+          `[buster] Module ${moduleId}: pre-test FAIL — ${verdict.summary.slice(0, 80)}`], {
+          encoding: 'utf8', timeout: 10000,
+        });
+        await execFileAsync('git', ['-C', REPO_DIR, 'push', 'origin'], {
+          encoding: 'utf8', timeout: 30000,
+        });
+        console.log(`[TASK] status.json updated + pushed (FAIL)`);
+      } catch (e) {
+        console.warn(`[TASK] status.json update failed (non-critical): ${e.message}`);
+      }
+    }
+
     // Cleanup and return — no subagent spawned
+    STATE.tasksFailed++;
+    STATE.lastTask = `${moduleId} → FAIL (pre-test)`;
+    STATE.currentModule = null;
+    STATE.currentStep = null;
     await sandboxCleanup();
     return;
   }
 
   // ── Step 6: Enrich prompt with suite results ──
+  setStep('enrich-prompt');
   const enrichedPrompt = enrichPrompt(prompt, verdict, testConfig.serve);
   console.log(`[TASK] Prompt enriched: ${prompt.length} → ${enrichedPrompt.length} chars`);
 
   // ── Step 7: Calculate subagent timeout ──
+  setStep('calc-timeout');
   const subagentTimeout = Math.max(
     totalTimeout - suiteTimeSeconds - TIMEOUT_BUFFER_SECONDS,
     300 // minimum 5 minutes
@@ -584,13 +756,21 @@ async function processTask(payload) {
   console.log(`[TASK] Subagent timeout: ${totalTimeout} - ${suiteTimeSeconds} - ${TIMEOUT_BUFFER_SECONDS} = ${subagentTimeout}s`);
 
   // ── Step 8: Spawn ACP Session ──
+  setStep('spawn-subagent');
   const { childSessionKey, runId } = await spawnBusterSession(payload, enrichedPrompt, subagentTimeout);
 
   // ── Step 9: Monitor until completion or timeout ──
+  setStep('monitor-session');
   await monitorSession(payload, childSessionKey, runId, subagentTimeout);
 
   // ── Step 10: Final cleanup ──
+  setStep('final-cleanup');
   await sandboxCleanup();
+
+  STATE.tasksPassed++;
+  STATE.lastTask = `${moduleId} → complete`;
+  STATE.currentModule = null;
+  STATE.currentStep = null;
 
   const totalTime = Math.round((Date.now() - taskStartTime) / 1000);
   console.log(`[TASK] ✅ Task complete for module ${moduleId} (${totalTime}s total)`);
@@ -687,7 +867,7 @@ process.on('SIGINT',  () => shutdown('SIGINT'));
 // ═══════════════════════════════════════════════════════════════
 
 async function main() {
-  console.log('[ORCHESTRATOR v1.0] Starting (Buster — Suite Runner + ACP)...');
+  console.log('[ORCHESTRATOR v1.1] Starting (Buster — Suite Runner + ACP)...');
   console.log(` Agent: ${AGENT_NAME}`);
   console.log(` Stream: ${STREAM_KEY}`);
   console.log(` Gateway: ${GATEWAY_URL}`);
@@ -696,13 +876,19 @@ async function main() {
   console.log(` Monitor poll: ${MONITOR_POLL_MS}ms`);
   console.log(` Timeout buffer: ${TIMEOUT_BUFFER_SECONDS}s`);
 
-  // 1. Wait for Gateway readiness
+  // 1. Load base images from progress.json (before any cleanup or pull)
+  loadBaseImagesFromProgress();
+
+  // 2. Wait for Gateway readiness
   await waitForGateway();
 
-  // 2. Start periodic health monitor
+  // 3. Start periodic health monitor
   startGatewayHealthMonitor();
 
-  // 3. Create consumer group
+  // 4. Pre-pull missing base images
+  await ensureBaseImages();
+
+  // 5. Create consumer group
   try {
     await redis.xgroup('CREATE', STREAM_KEY, GROUP_NAME, '0', 'MKSTREAM');
     console.log(`[REDIS] Consumer group created: ${GROUP_NAME}`);
@@ -711,7 +897,8 @@ async function main() {
     console.log(`[REDIS] Consumer group exists: ${GROUP_NAME}`);
   }
 
-  // 4. Main loop
+  // 6. Main loop
+  STATE.status = 'polling';
   console.log('[ORCHESTRATOR] ✅ Ready. Polling for tasks...');
   while (!shuttingDown) {
     try {
@@ -723,4 +910,41 @@ async function main() {
   }
 }
 
-main();
+// ═══════════════════════════════════════════════════════════════
+// CLI: --status flag (print live state and exit)
+// ═══════════════════════════════════════════════════════════════
+
+if (process.argv.includes('--status')) {
+  (async () => {
+    const uptime = Math.round((Date.now() - STATE.startedAt) / 1000);
+    console.log(`\n═══ Buster Orchestrator Status ═══`);
+    console.log(`  Status:         ${STATE.status}`);
+    console.log(`  Uptime:         ${uptime}s`);
+    console.log(`  Current Module: ${STATE.currentModule || '(idle)'}`);
+    console.log(`  Current Step:   ${STATE.currentStep || '(none)'}`);
+    console.log(`  Tasks Total:    ${STATE.tasksTotal}`);
+    console.log(`  Tasks Passed:   ${STATE.tasksPassed}`);
+    console.log(`  Tasks Failed:   ${STATE.tasksFailed}`);
+    console.log(`  Last Task:      ${STATE.lastTask || '(none)'}`);
+
+    // Check Redis queue depth
+    try {
+      const shortRedis = new Redis({
+        host: process.env.REDIS_HOST || 'redis-master.kubeclaw.svc.cluster.local',
+        port: parseInt(process.env.REDIS_PORT || '6379'),
+        password: process.env.REDIS_PASSWORD,
+        connectTimeout: 3000,
+      });
+      const len = await shortRedis.xlen(STREAM_KEY);
+      console.log(`  Queue Depth:    ${len}`);
+      shortRedis.disconnect();
+    } catch {
+      console.log(`  Queue Depth:    (unavailable)`);
+    }
+
+    console.log(`═════════════════════════════════\n`);
+    process.exit(0);
+  })();
+} else {
+  main();
+}

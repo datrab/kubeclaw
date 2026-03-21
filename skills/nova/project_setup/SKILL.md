@@ -63,6 +63,27 @@ Set in **every** module's `test_config.serve`:
 ```
 
 All relative paths in `spec_file`, `tests_dir`, `baseline_dir` resolve from `project_dir`.
+Paths in `dockerfile` and `build_context` resolve from repo root (NOT from `project_dir`).
+
+## Critical: Backend Dockerfile Pattern
+
+Backend modules should use `dockerfile` + `build_context` to bake dependencies into the image. This avoids `pip install` on every task run and eliminates network dependency during builds (`--pull=never`).
+
+```json
+"serve": {
+  "type": "server",
+  "dockerfile": "backend/Dockerfile",
+  "build_context": "backend/",
+  "image": "<project>-backend:m<id>",
+  "start_cmd": "ENV_VARS python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+  ...
+}
+```
+
+The Dockerfile **must** use fully-qualified base image names:
+```dockerfile
+FROM docker.io/library/python:3.12-slim
+```
 
 ## Substeps
 
@@ -90,7 +111,11 @@ modules/<module-dir>/
 
 ## Sandbox Rules
 
-The sandbox is **empty** — no `node_modules/`, no `venv`. Every `start_cmd`, `build_cmd`, and `test_cmd` must install dependencies first.
+The sandbox is **empty** — no `node_modules/`, no `venv`.
+
+**With `dockerfile`** (backend pattern): Dependencies are baked into the image at `podman build` time. `start_cmd` only starts the server — no `pip install` needed. The Dockerfile must use fully-qualified base images (`FROM docker.io/library/python:3.12-slim`).
+
+**Without `dockerfile`** (frontend pattern / legacy): Every `start_cmd`, `build_cmd`, and `test_cmd` must install dependencies first.
 
 The sandbox has **no K8s cluster**. K8s-dependent endpoints return 503. Test degradation (503), auth enforcement (401), input validation (422), SQLite endpoints (200).
 
@@ -101,17 +126,20 @@ The sandbox has **no K8s cluster**. K8s-dependent endpoints return 503. Test deg
 - [ ] Architecture branch: `git checkout -b <project>/architecture`
 - [ ] `progress.json` with `project`, `models`, `execution_order`, `modules`, `gates`
 - [ ] Every module: `serve.project_dir` set (`Projects/<project>/src`)
-- [ ] Backend modules: `serve.type: "server"` + `start_cmd` + `image` + `port` + `health_path`
-- [ ] Frontend modules: `serve.type: "static"` + `build_cmd` + `image` (no manual copy to `/sandbox/www/` — `sandbox-build` auto-copies `dist/`, `build/`, or `out/`)
+- [ ] Backend modules: `serve.type: "server"` + `dockerfile` + `build_context` + `image` (project-specific tag) + `start_cmd` (no pip install) + `port` + `health_path`
+- [ ] Backend modules: `health_retries: 10` + `health_timeout: 15000` + `health_base_delay: 5000`
+- [ ] Backend Dockerfile: `FROM docker.io/library/python:3.12-slim` (fully-qualified!)
+- [ ] Frontend modules: `serve.type: "static"` + `build_cmd` (incl. `npm install`) + `image: "node:20-slim"`
 - [ ] Every module: FORGE.md with unit test section
 - [ ] Every module: BUSTER.md
 - [ ] API modules: test-spec.json + `api.spec_file` in test_config
 - [ ] Gate files: instructions + output paths
-- [ ] `final-buster` gate with enforced `thresholds` on all suites (backend: api/security/unit, NOT frontend suites on `serve.type: "server"`)
+- [ ] `final-buster` gate with `dockerfile`/`build_context` + enforced `thresholds` on all suites
 
 ### Verify
 
-- [ ] All `start_cmd`/`build_cmd`/`test_cmd` install dependencies
+- [ ] Backend `start_cmd` does NOT contain `pip install` (deps in Dockerfile)
+- [ ] Frontend `build_cmd` DOES contain `npm install` (no Dockerfile)
 - [ ] API key in test-spec.json matches key in `start_cmd` env vars
 - [ ] At least 1 regression test per module in test-spec.json
 - [ ] Commit + push architecture branch
@@ -130,10 +158,12 @@ node /app/skills/pipeline.js --project <name> --resume     # Run
 | Build FAIL immediately | `serve.type: "static"` on backend | Set `serve.type: "server"` |
 | `cd backend: No such file` | `project_dir` missing | Set `serve.project_dir` |
 | Health FAIL 404 | Wrong `health_path` | Set correct endpoint |
+| Health FAIL timeout | Backend needs 60-120s to start | Set `health_retries: 10`, `health_base_delay: 5000` |
+| `image not known` in podman build | Unqualified `FROM` in Dockerfile | Use `FROM docker.io/library/python:3.12-slim` |
 | api SKIP | No `spec_file` | Create test-spec.json |
 | unit SKIP | No tests in code | Add unit test section to FORGE.md |
 | unit FAIL `npm test` on Python | Default test_cmd wrong | Set `test_cmd` to pytest |
-| unit FAIL MODULE_NOT_FOUND | Dependencies missing | Prefix `test_cmd` with install |
+| unit FAIL MODULE_NOT_FOUND | Dependencies missing | With Dockerfile: check Dockerfile. Without: prefix `test_cmd` with install |
 | visual-reg SKIP | No baseline.png or .html | Add HTML design reference to baselines/ (auto-generates PNG) |
 | Blueprint release failed | Missing FORGE.md/BUSTER.md | Check architecture branch |
 

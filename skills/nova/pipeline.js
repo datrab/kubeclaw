@@ -105,9 +105,10 @@ const GATEWAY_TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN || '';
  * @param {string} tool - Tool name (e.g. 'sessions_spawn')
  * @param {object} args - Tool arguments
  * @param {number} timeoutMs - HTTP timeout in ms (default 30s)
+ * @param {object} opts - Optional top-level fields merged into request body (e.g. { sessionKey })
  * @returns {Promise<object>} Parsed JSON response
  */
-async function gatewayInvoke(tool, args, timeoutMs = 30000) {
+async function gatewayInvoke(tool, args, timeoutMs = 30000, opts = {}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -118,7 +119,7 @@ async function gatewayInvoke(tool, args, timeoutMs = 30000) {
         'Content-Type': 'application/json',
         ...(GATEWAY_TOKEN ? { 'Authorization': `Bearer ${GATEWAY_TOKEN}` } : {}),
       },
-      body: JSON.stringify({ tool, args }),
+      body: JSON.stringify({ tool, args, ...opts }),
       signal: controller.signal,
     });
 
@@ -1053,7 +1054,7 @@ async function releaseBlueprint(config, moduleId, moduleDir, stages = ['forge', 
 //   context windows. On fail, ACP sessions are always destroyed and re-spawned.
 
 function acpLabel(agentType, moduleId) {
-  return `${agentType}-${moduleId}`;
+  return `${agentType}-${moduleId}-${Date.now()}`;
 }
 
 /**
@@ -1100,14 +1101,15 @@ async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
     label: label,
     model: model,
     cwd: cwd,
-    thread: true,
-    mode: 'session',            // Tool API: 'run' | 'session' (persistent thread-bound)
+    thread: false,
+    mode: 'run',                // Tool API: headless one-shot (no Discord thread required)
     cleanup: 'keep',            // Keep transcript for post-mortem
   };
 
   try {
-    // sessions_spawn returns: { status: "accepted", runId, childSessionKey }
-    const result = await gatewayInvoke('sessions_spawn', spawnArgs, 30000);
+    // sessions_spawn returns wrapped: { ok, result: { details: { status, childSessionKey, runId } } }
+    const raw = await gatewayInvoke('sessions_spawn', spawnArgs, 30000);
+    const result = raw?.result?.details || raw;
 
     if (result.status !== 'accepted') {
       throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
@@ -1244,7 +1246,9 @@ function dispatchRedisTask(config, progress, agentType, moduleId, taskType, payl
   try {
     const result = nodeExec(tmpScriptPath, [], { timeout: 15000, env: process.env });
     log('OK', `Redis task dispatched to ${agentType}: ${result}`);
-    return JSON.parse(result);
+    // redis.js may output a "[Redis] Sent..." prefix before the JSON
+    const jsonMatch = result.match(/(\{[\s\S]*\})\s*$/);
+    return JSON.parse(jsonMatch ? jsonMatch[1] : result);
   } catch (e) {
     throw new Error(`Failed to dispatch Redis task to ${agentType}: ${e.message}`);
   }
@@ -1339,7 +1343,8 @@ async function verifyAgentAlive(config, agentType, moduleId, waitMs = 8000) {
   }
 
   try {
-    const result = await gatewayInvoke('session_status', { sessionKey }, 10000);
+    const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
+    const result = raw?.result?.details || raw;
 
     // If ACP state is available, check for terminal states (closed/error = spawn failed)
     const acpState = result?.acp?.state || result?.state || null;
@@ -1410,7 +1415,8 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
     // Unreachable / error response = session gone (poll ends).
     let sessionActive = false;
     try {
-      const statusResult = await gatewayInvoke('session_status', { sessionKey }, 10000);
+      const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
+      const statusResult = raw?.result?.details || raw;
 
       // Try to extract ACP state from response.
       // session_status may return acp metadata with state field, or general session info.
@@ -1425,9 +1431,18 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
           log('INFO', `[${logLabel}] ACP session state: '${acpState}' → run complete`);
         }
       } else {
-        // No ACP state in response — fallback: session exists = assume active.
-        // This is the conservative path; timeout will catch stuck sessions.
-        sessionActive = true;
+        // No ACP state — Forge may have finished in oneshot mode.
+        // Check HEAD movement as completion signal.
+        invalidateHeadHash();
+        const headNow = headHash();
+        if (headNow !== headBefore) {
+          log('INFO', `[${logLabel}] No ACP state but HEAD moved — treating session as complete`);
+          sessionActive = false;
+        } else {
+          // Conservative fallback: session exists = assume active.
+          // Timeout will catch stuck sessions.
+          sessionActive = true;
+        }
       }
     } catch {
       // Session gone = finished or crashed (404 / connection error)
@@ -3239,6 +3254,7 @@ async function runModule(config, progress, moduleId, opts = {}) {
     );
     if (!attempt.retry) return attempt.result;
     log('INFO', `Retry loop continuing — attempt ${attempt.fail_count}/${maxFails}`);
+    await sleep(5000); // Allow gateway to release session labels before retry
   }
 }
 
@@ -3597,6 +3613,23 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     }
 
     status = loadStatus(config, dir) || status;
+
+    // Trust Redis over stale status.json — if Buster crashed before updating
+    // the file, Redis completion has the authoritative status.
+    const redisEntry = result.status?._redis_entry;
+    if (redisEntry?.status) {
+      const redisStatus = mapRedisStatus(redisEntry.status);
+      if ([STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED].includes(redisStatus) &&
+          ![STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED].includes(status.status)) {
+        log('WARN', `status.json shows '${status.status}' but Redis says '${redisStatus}' — trusting Redis`);
+        status.status = redisStatus;
+        if (redisEntry.summary) {
+          status.fail_summaries = status.fail_summaries || [];
+          status.fail_summaries.push(redisEntry.summary);
+        }
+        saveStatus(config, dir, status);
+      }
+    }
 
     if (status.status === STATUS.PASS) {
       status.completed_at = new Date().toISOString();
@@ -4096,13 +4129,14 @@ async function spawnReviewerAgent(config, progress, gateId, reviewer, instructio
     label: label,
     model: model,
     cwd: cwd,
-    thread: true,
-    mode: 'session',
+    thread: false,
+    mode: 'run',
     cleanup: 'keep',
   };
 
   try {
-    const result = await gatewayInvoke('sessions_spawn', spawnArgs, 30000);
+    const raw = await gatewayInvoke('sessions_spawn', spawnArgs, 30000);
+    const result = raw?.result?.details || raw;
 
     if (result.status !== 'accepted') {
       throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);

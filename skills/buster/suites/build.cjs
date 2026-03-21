@@ -9,7 +9,8 @@
 //     nginx start → serves on :9999
 //
 //   server (Backend):
-//     sandbox-run <image> "<start_cmd>" → app on configured port
+//     podman run <image> "<start_cmd>" → app on configured port
+//     Optional: podman build from Dockerfile before run
 //     Wait briefly to catch immediate crashes
 //
 // The app stays running for downstream suites (health, a11y, etc.)
@@ -22,6 +23,7 @@
 const { execFile, exec } = require('child_process');
 const { promisify } = require('util');
 const fs = require('fs');
+const path = require('path');
 const {
   createSuiteVerdict,
   createFinding,
@@ -43,6 +45,8 @@ const DEFAULTS = {
   project_dir: '/home/node/.openclaw/workspace/git-repo',
   timeout:   300, // seconds — matches SANDBOX_TIMEOUT default
 };
+
+const REPO_DIR = '/home/node/.openclaw/workspace/git-repo';
 
 // ── Helpers ─────────────────────────────────────────────────────
 
@@ -207,21 +211,100 @@ async function buildStatic(config) {
 
 // ── Server Build + Start ────────────────────────────────────────
 
+/**
+ * Resolve a path relative to REPO_DIR if not absolute.
+ */
+function resolveRepoPath(p) {
+  if (!p) return null;
+  return path.isAbsolute(p) ? p : path.join(REPO_DIR, p);
+}
+
+/**
+ * Normalise start_cmd paths: rewrite host-relative paths to /src/ (container workdir).
+ * e.g. "cd Projects/kubecommand/src/backend && ..." → "cd /src/backend && ..."
+ */
+function normaliseStartCmd(cmd, projectDir) {
+  if (!cmd || !projectDir) return cmd;
+  // Strip REPO_DIR prefix and project_dir prefix from cd commands
+  let normalised = cmd;
+  const rawDir = projectDir.replace(REPO_DIR + '/', '').replace(REPO_DIR, '');
+  if (rawDir) {
+    normalised = normalised.replace(new RegExp(`cd\\s+${rawDir.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/?`), 'cd /src/');
+    normalised = normalised.replace(new RegExp(`cd\\s+${projectDir.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/?`), 'cd /src/');
+  }
+  return normalised;
+}
+
 async function buildServer(config) {
   const image     = config.image      || DEFAULTS.image;
   const startCmd  = config.start_cmd  || DEFAULTS.start_cmd;
   const port      = config.port       || DEFAULTS.port;
+  const timeout   = (config.timeout   || DEFAULTS.timeout) * 1000;
+  const rawProjectDir = config.project_dir || DEFAULTS.project_dir;
+  const projectDir = resolveRepoPath(rawProjectDir);
+  const containerName = `sb-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
 
-  log(`Server start: image=${image} cmd="${startCmd}" port=${port}`);
+  log(`Server start: image=${image} cmd="${startCmd}" port=${port} project=${projectDir}`);
 
-  // 1. sandbox-run in background mode (no command → runs detached)
-  //    We pass the start command so it runs inside the container
+  // ── Optional: Dockerfile pre-build ──
+  let runImage = image;
+  let useVolume = true; // mount project_dir at /src
+
+  if (config.dockerfile) {
+    const dockerfile = resolveRepoPath(config.dockerfile);
+    const buildContext = resolveRepoPath(config.build_context) || path.dirname(dockerfile);
+    const buildTimeout = (config.build_timeout || 300) * 1000;
+    const imageTag = config.image || `localhost/build-${containerName}`;
+
+    log(`Dockerfile build: file=${dockerfile} context=${buildContext} tag=${imageTag}`);
+
+    try {
+      const { stdout, stderr } = await execAsync(
+        `podman build --pull=never -t "${imageTag}" -f "${dockerfile}" "${buildContext}"`,
+        { timeout: buildTimeout, encoding: 'utf8' }
+      );
+      if (stdout) log(stdout.trim().split('\n').slice(-3).join('\n'));
+      log(`Dockerfile build OK: ${imageTag}`);
+      runImage = imageTag;
+      useVolume = false; // deps baked into image, no /src mount needed
+    } catch (err) {
+      const output = (err.stderr || '') + (err.stdout || '') || err.message;
+      return {
+        ok: false,
+        findings: parseErrors(output, 'dockerfile-build'),
+        output,
+      };
+    }
+  }
+
+  // ── Podman run ──
+  const normalisedCmd = normaliseStartCmd(startCmd, rawProjectDir);
+  const args = [
+    'run', '-d',
+    '--name', containerName,
+    '--network', 'host',
+    '--memory', '2g',
+    '--cpus', '2',
+    '--pids-limit', '256',
+    '--tmpfs', '/tmp:size=512m',
+    '-v', '/sandbox:/sandbox:rw',
+    '-e', 'SANDBOX=true',
+    '-e', 'NODE_ENV=test',
+  ];
+
+  if (useVolume && projectDir) {
+    args.push('-v', `${projectDir}:/src:rw`, '--workdir', '/src');
+  }
+
+  args.push(runImage, 'sh', '-c', normalisedCmd);
+
+  log(`podman ${useVolume ? '(volume mount)' : '(baked image)'}: ${normalisedCmd.slice(0, 120)}`);
+
   try {
-    const { stdout, stderr } = await execFileAsync(
-      'sandbox-run', [image, startCmd],
-      { timeout: (config.timeout || DEFAULTS.timeout) * 1000, encoding: 'utf8' }
-    );
-    if (stdout) log(stdout.trim());
+    const { stdout } = await execFileAsync('podman', args, {
+      timeout, encoding: 'utf8',
+    });
+    if (stdout) log(`Container started: ${stdout.trim().slice(0, 12)}`);
   } catch (err) {
     const output = (err.stderr || '') + (err.stdout || '') || err.message;
     return {
@@ -231,23 +314,35 @@ async function buildServer(config) {
     };
   }
 
-  // 2. Brief wait to catch immediate crashes (e.g. missing module, port conflict)
+  // ── Crash detection ──
   log('Waiting 3s for crash detection...');
   await new Promise(r => setTimeout(r, 3000));
 
-  // 3. Check if process is still running via sandbox-ps
   try {
-    const { stdout } = await execAsync('sandbox-ps', { encoding: 'utf8', timeout: 5000 });
-    if (!stdout || !stdout.includes('sb-')) {
+    const { stdout } = await execAsync(
+      `podman ps --filter name=${containerName} --format "{{.Names}}"`,
+      { encoding: 'utf8', timeout: 5000 }
+    );
+    if (!stdout || !stdout.includes(containerName)) {
+      // Container crashed — grab logs for diagnosis
+      let crashLogs = '';
+      try {
+        const { stdout: logs } = await execAsync(
+          `podman logs ${containerName} 2>&1 | tail -30`,
+          { encoding: 'utf8', timeout: 5000 }
+        );
+        crashLogs = logs;
+      } catch {}
+
       return {
         ok: false,
-        findings: [createFinding(SEVERITY.CRITICAL, `Server process exited within 3s (port ${port})`, { rule: 'server-crash' })],
-        output: '',
+        findings: parseErrors(crashLogs || `Server process exited within 3s (port ${port})`, 'server-crash'),
+        output: crashLogs,
       };
     }
   } catch {}
 
-  log(`Server running on port ${port}`);
+  log(`Server running on port ${port} (container: ${containerName})`);
   return { ok: true, findings: [], output: '', port };
 }
 
@@ -276,7 +371,7 @@ module.exports = async function buildSuite(context) {
       checks_failed: 0,
       findings: [],
       metadata: {
-        tool: type === 'server' ? 'sandbox-run' : 'sandbox-build',
+        tool: type === 'server' ? 'podman-run' : 'sandbox-build',
         serve_type: type,
         ...(result.outputSize ? { output_size: result.outputSize } : {}),
         ...(result.port ? { port: result.port } : {}),
@@ -292,7 +387,7 @@ module.exports = async function buildSuite(context) {
     checks_failed: 1,
     findings: result.findings,
     metadata: {
-      tool: type === 'server' ? 'sandbox-run' : 'sandbox-build',
+      tool: type === 'server' ? 'podman-run' : 'sandbox-build',
       serve_type: type,
       raw_output: (result.output || '').slice(0, 2000),
     },

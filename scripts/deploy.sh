@@ -97,6 +97,12 @@ cmd_infra() {
   kubectl rollout status deployment/litellm -n "$NAMESPACE" --timeout=120s 2>/dev/null || warn "LiteLLM not ready yet (may need litellm-secrets or google-sa-key)"
   log "LiteLLM deployed"
 
+  header "Infrastructure: Registry Mirror"
+  kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/registry-mirror.yaml"
+  info "Waiting for Registry Mirror to be ready..."
+  kubectl rollout status deployment/registry-mirror -n "$NAMESPACE" --timeout=120s 2>/dev/null || warn "Registry Mirror not ready yet"
+  log "Registry Mirror deployed"
+
   echo ""
   log "Infrastructure deployed. Pods:"
   kubectl get pods -n "$NAMESPACE" --no-headers | awk '{print "  " $1 " → " $3}'
@@ -191,6 +197,13 @@ cmd_teardown() {
     log "Removed: litellm"
   fi
 
+  # Infrastructure — Registry Mirror (plain manifest, not Helm)
+  if kubectl get deployment registry-mirror -n "$NAMESPACE" &>/dev/null; then
+    kubectl delete -n "$NAMESPACE" -f "$INFRA_DIR/registry-mirror.yaml" 2>/dev/null || \
+      kubectl delete deployment,svc,pvc -n "$NAMESPACE" -l app=registry-mirror
+    log "Removed: registry-mirror"
+  fi
+
   # Clean up PVCs left behind by Helm resource-policy=keep
   local pvcs
   pvcs=$(kubectl get pvc -n "$NAMESPACE" --no-headers -o custom-columns=NAME:.metadata.name 2>/dev/null || true)
@@ -233,6 +246,13 @@ cmd_teardown_all() {
       kubectl delete deployment,svc -n "$NAMESPACE" -l app=litellm
     kubectl delete configmap litellm-config -n "$NAMESPACE" 2>/dev/null || true
     log "Removed: litellm"
+  fi
+
+  # Infrastructure — Registry Mirror (plain manifest, not Helm)
+  if kubectl get deployment registry-mirror -n "$NAMESPACE" &>/dev/null; then
+    kubectl delete -n "$NAMESPACE" -f "$INFRA_DIR/registry-mirror.yaml" 2>/dev/null || \
+      kubectl delete deployment,svc,pvc -n "$NAMESPACE" -l app=registry-mirror
+    log "Removed: registry-mirror"
   fi
 
   # Namespace (takes everything with it)
