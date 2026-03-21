@@ -1054,7 +1054,7 @@ async function releaseBlueprint(config, moduleId, moduleDir, stages = ['forge', 
 //   context windows. On fail, ACP sessions are always destroyed and re-spawned.
 
 function acpLabel(agentType, moduleId) {
-  return `${agentType}-${moduleId}-${Date.now()}`;
+  return `${agentType}-${moduleId}`;
 }
 
 /**
@@ -1086,19 +1086,20 @@ function modelToHarness(modelId) {
 
 async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
   const agentConfig = config.agents[agentType];
-  const label = acpLabel(agentType, moduleId);
+  const trackingKey = acpLabel(agentType, moduleId);       // Deterministic — used for Map lookups
+  const gatewayLabel = `${trackingKey}-${Date.now()}`;     // Unique — sent to Gateway (rejects duplicates)
   // Prio: model-derived harness → config acp_agent_id → agentType as fallback
   const agentId = modelToHarness(model) || agentConfig.acp_agent_id || agentType;
   const cwd = agentConfig.cwd || config.repo_root;
 
-  log('STEP', `Spawning ACP session: ${label} (agent: ${agentId}, model: ${model})`);
+  log('STEP', `Spawning ACP session: ${gatewayLabel} (agent: ${agentId}, model: ${model})`);
 
   // sessions_spawn args — see https://docs.openclaw.ai/concepts/session-tool#sessions_spawn
   const spawnArgs = {
     task: taskPrompt,
     runtime: 'acp',
     agentId: agentId,
-    label: label,
+    label: gatewayLabel,
     model: model,
     cwd: cwd,
     thread: false,
@@ -1115,11 +1116,11 @@ async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
       throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
     }
 
-    log('OK', `ACP session spawned: ${label} → ${result.childSessionKey}`);
-    trackAgent(config, label, result.childSessionKey);
-    return { label, childSessionKey: result.childSessionKey, runId: result.runId };
+    log('OK', `ACP session spawned: ${gatewayLabel} → ${result.childSessionKey}`);
+    trackAgent(config, trackingKey, result.childSessionKey);
+    return { label: trackingKey, childSessionKey: result.childSessionKey, runId: result.runId };
   } catch (e) {
-    throw new Error(`Failed to spawn ACP session '${label}': ${e.message}`);
+    throw new Error(`Failed to spawn ACP session '${gatewayLabel}': ${e.message}`);
   }
 }
 
@@ -1817,7 +1818,7 @@ function buildBusterCompletionProtocol(config, moduleId, dir, status) {
     '- If PASS: set `"completion_summary"` with test results overview',
     '- Set `"current_phase"` to `null`',
     '',
-    '### Step 2: Store Technical Insights',
+    '### Step 2: Store Technical Insights (MANDATORY)',
     '',
     'Store 1-3 key technical insights from this session:',
     '```bash',
@@ -1830,6 +1831,10 @@ function buildBusterCompletionProtocol(config, moduleId, dir, status) {
     '',
     'What to store: patterns that worked, edge cases found, root causes of failures, test strategies.',
     'What NOT to store: "Tests passed" (useless metadata), project-specific details that cannot be reused.',
+    '',
+    '⚠️ Step 2 is MANDATORY. `redis.cjs --action complete` triggers `verify-task.js`,',
+    'which checks that at least one memory entry exists for this module.',
+    'If you skip Step 2, Step 3 will fail with MISSING MEMORY ENTRY.',
     '',
     '### Step 3: Signal Completion',
     '',
@@ -1866,7 +1871,7 @@ function buildBusterGateCompletionProtocol(config, gateId, gate) {
       : 'Write your results as described in the instructions above.',
     'Include a `"summary"` field with a brief overview and a `"findings"` array with details.',
     '',
-    '### Step 2: Store Technical Insights',
+    '### Step 2: Store Technical Insights (MANDATORY)',
     '',
     'Store 1-3 key technical insights from this session:',
     '```bash',
@@ -1879,6 +1884,10 @@ function buildBusterGateCompletionProtocol(config, gateId, gate) {
     '',
     'What to store: patterns that worked, edge cases found, root causes of failures, test strategies.',
     'What NOT to store: "Tests passed" (useless metadata), project-specific details that cannot be reused.',
+    '',
+    '⚠️ Step 2 is MANDATORY. `redis.cjs --action complete` triggers `verify-task.js`,',
+    'which checks that at least one memory entry exists for this module.',
+    'If you skip Step 2, Step 3 will fail with MISSING MEMORY ENTRY.',
     '',
     '### Step 3: Signal Completion',
     '',
@@ -4114,19 +4123,20 @@ function reviewOutputPath(config, gate, reviewerLabel) {
  * Uses Gateway Tool API (sessions_spawn with runtime: "acp").
  */
 async function spawnReviewerAgent(config, progress, gateId, reviewer, instructions) {
-  const label = `echo-${reviewer.label}-${gateId}`;
+  const trackingKey = `echo-${reviewer.label}-${gateId}`;
+  const gatewayLabel = `${trackingKey}-${Date.now()}`;
   const model = resolveModel('echo', config, progress, reviewer.model);
   // Prio: model-derived harness → reviewer config → 'claude' fallback
   const agentId = modelToHarness(model) || reviewer.agent_id || 'claude';
   const cwd = config.agents.echo?.cwd || config.repo_root;
 
-  log('STEP', `Spawning reviewer: ${label} (agent: ${agentId}, model: ${model})`);
+  log('STEP', `Spawning reviewer: ${gatewayLabel} (agent: ${agentId}, model: ${model})`);
 
   const spawnArgs = {
     task: instructions,
     runtime: 'acp',
     agentId: agentId,
-    label: label,
+    label: gatewayLabel,
     model: model,
     cwd: cwd,
     thread: false,
@@ -4142,11 +4152,11 @@ async function spawnReviewerAgent(config, progress, gateId, reviewer, instructio
       throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
     }
 
-    log('OK', `Reviewer spawned: ${label} → ${result.childSessionKey}`);
-    trackAgent(config, label, result.childSessionKey);
-    return { label, childSessionKey: result.childSessionKey, runId: result.runId };
+    log('OK', `Reviewer spawned: ${gatewayLabel} → ${result.childSessionKey}`);
+    trackAgent(config, trackingKey, result.childSessionKey);
+    return { label: trackingKey, childSessionKey: result.childSessionKey, runId: result.runId };
   } catch (e) {
-    throw new Error(`Failed to spawn reviewer '${label}': ${e.message}`);
+    throw new Error(`Failed to spawn reviewer '${gatewayLabel}': ${e.message}`);
   }
 }
 
