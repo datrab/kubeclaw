@@ -106,9 +106,10 @@ const GATEWAY_TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN || '';
  * @param {object} args - Tool arguments
  * @param {number} timeoutMs - HTTP timeout in ms (default 30s)
  * @param {object} opts - Optional top-level fields merged into request body (e.g. { sessionKey })
+ * @param {object} extraHeaders - Additional HTTP headers (e.g. Discord context for thread-bound spawns)
  * @returns {Promise<object>} Parsed JSON response
  */
-async function gatewayInvoke(tool, args, timeoutMs = 30000, opts = {}) {
+async function gatewayInvoke(tool, args, timeoutMs = 30000, opts = {}, extraHeaders = {}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -118,6 +119,7 @@ async function gatewayInvoke(tool, args, timeoutMs = 30000, opts = {}) {
       headers: {
         'Content-Type': 'application/json',
         ...(GATEWAY_TOKEN ? { 'Authorization': `Bearer ${GATEWAY_TOKEN}` } : {}),
+        ...extraHeaders,
       },
       body: JSON.stringify({ tool, args, ...opts }),
       signal: controller.signal,
@@ -135,6 +137,23 @@ async function gatewayInvoke(tool, args, timeoutMs = 30000, opts = {}) {
   } finally {
     clearTimeout(timer);
   }
+}
+
+/**
+ * Build Discord context headers for thread-bound ACP spawns.
+ * When present, the gateway creates a new Discord thread for the session,
+ * providing real-time observability of agent activity.
+ *
+ * Returns empty object if no Discord channel is configured (graceful degradation).
+ */
+function discordSpawnHeaders() {
+  const channelId = process.env.DISCORD_CHANNEL_ID || process.env.DISCORD_CHANNEL || '';
+  if (!channelId) return {};
+  return {
+    'x-openclaw-message-channel': 'discord',
+    'x-openclaw-account-id': 'default',
+    'x-openclaw-message-to': `channel:${channelId}`,
+  };
 }
 
 // ─── Path Validation ─────────────────────────────────────────────────────────
@@ -992,9 +1011,10 @@ function listBlueprints(config) {
   }
 }
 
-async function releaseBlueprint(config, moduleId, moduleDir, stages = ['forge', 'buster']) {
+async function releaseBlueprint(config, progress, moduleId, moduleDir, stages = ['forge', 'buster']) {
   const branch = `${config.project}/architecture`;
   const targetPath = relPath(config, modulePath(config, moduleDir));
+  const moduleConfig = progress.modules[moduleId] || {};
 
   log('STEP', `Releasing blueprint for ${moduleId} from ${branch}`);
 
@@ -1010,9 +1030,18 @@ async function releaseBlueprint(config, moduleId, moduleDir, stages = ['forge', 
 
   // Verify module has required files in architecture branch.
   // Stage-aware: only require files for configured stages.
-  // stages: ['forge'] → FORGE.md only, ['buster'] → BUSTER.md only, both → both.
+  // Substep-aware: if module has substeps, check <stepId>/FORGE.md instead of top-level FORGE.md.
   const requiredFiles = [];
-  if (stages.includes('forge'))  requiredFiles.push('FORGE.md');
+  if (stages.includes('forge')) {
+    if (moduleConfig.substeps && moduleConfig.substeps.length > 0) {
+      // Substep modules: FORGE.md lives inside each substep directory
+      for (const stepId of moduleConfig.substeps) {
+        requiredFiles.push(`${stepId}/FORGE.md`);
+      }
+    } else {
+      requiredFiles.push('FORGE.md');
+    }
+  }
   if (stages.includes('buster')) requiredFiles.push('BUSTER.md');
   for (const file of requiredFiles) {
     try {
@@ -1042,6 +1071,79 @@ async function releaseBlueprint(config, moduleId, moduleDir, stages = ['forge', 
     return { status: 'success', action: 'no_changes', module: moduleDir };
   } catch (e) {
     throw new Error(`Blueprint commit/push failed: ${e.message}`);
+  }
+}
+
+/**
+ * Release gate files (echo-review/, buster-test/) from the architecture branch.
+ * Unlike module blueprints (released per-module on demand), gate files are released
+ * once at pipeline start because gates can appear at any point in execution_order.
+ *
+ * Collects unique directories from gate instructions_file paths, checks them out
+ * from the architecture branch, and commits in a single push.
+ */
+async function releaseGateFiles(config, progress) {
+  const gates = progress.gates;
+  if (!gates || Object.keys(gates).length === 0) return;
+
+  const branch = `${config.project}/architecture`;
+
+  try { gitExec(config.repo_root, ['fetch', 'origin', branch], { stdio: 'ignore' }); }
+  catch { log('WARN', `Could not fetch origin/${branch} for gate files`); return; }
+
+  // Collect unique directories from gate file paths
+  const gateDirs = new Set();
+  for (const gate of Object.values(gates)) {
+    if (gate.instructions_file) {
+      const dir = gate.instructions_file.split('/')[0]; // "echo-review/FOO.md" → "echo-review"
+      gateDirs.add(dir);
+    }
+    if (gate.review_output_dir) {
+      gateDirs.add(gate.review_output_dir);
+    }
+  }
+
+  if (gateDirs.size === 0) return;
+
+  const swarmRelPath = relPath(config, swarmRoot(config));
+  let checkedOut = [];
+
+  for (const dir of gateDirs) {
+    const targetPath = `${swarmRelPath}/${dir}`;
+
+    // Check if directory exists in architecture branch
+    try {
+      gitExec(config.repo_root, ['cat-file', '-e', `origin/${branch}:${targetPath}`], { stdio: 'ignore' });
+    } catch {
+      log('DEBUG', `Gate dir '${dir}' not found in architecture branch — skipping`);
+      continue;
+    }
+
+    // Check if already released (any file exists locally)
+    const localPath = path.join(swarmRoot(config), dir);
+    if (fs.existsSync(localPath) && fs.readdirSync(localPath).length > 0) {
+      log('DEBUG', `Gate dir '${dir}' already exists locally — skipping`);
+      continue;
+    }
+
+    try {
+      gitExec(config.repo_root, ['checkout', `origin/${branch}`, '--', targetPath], { stdio: 'ignore' });
+      checkedOut.push(dir);
+      log('OK', `Gate files released: ${dir}/`);
+    } catch (e) {
+      log('WARN', `Failed to checkout gate dir '${dir}': ${e.message}`);
+    }
+  }
+
+  if (checkedOut.length > 0) {
+    try {
+      await gitCommitAndPush(config, `[blueprint] Release gate files: ${checkedOut.join(', ')}`, {
+        addPaths: checkedOut.map(d => `${swarmRelPath}/${d}`),
+      });
+      log('OK', `Gate files committed and pushed: ${checkedOut.join(', ')}`);
+    } catch (e) {
+      log('WARN', `Gate files commit/push failed (non-critical): ${e.message}`);
+    }
   }
 }
 
@@ -1111,6 +1213,9 @@ async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
 
   log('STEP', `Spawning ACP session: ${gatewayLabel} (agent: ${agentId}, model: ${model})`);
 
+  const discordHeaders = discordSpawnHeaders();
+  const useThread = Object.keys(discordHeaders).length > 0;
+
   // sessions_spawn args — see https://docs.openclaw.ai/concepts/session-tool#sessions_spawn
   const spawnArgs = {
     task: taskPrompt,
@@ -1119,14 +1224,14 @@ async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
     label: gatewayLabel,
     model: model,
     cwd: cwd,
-    thread: false,
-    mode: 'run',                // Tool API: headless one-shot (no Discord thread required)
+    thread: useThread,
+    mode: useThread ? 'session' : 'run',  // Thread-bound if Discord available, headless otherwise
     cleanup: 'keep',            // Keep transcript for post-mortem
   };
 
   try {
     // sessions_spawn returns wrapped: { ok, result: { details: { status, childSessionKey, runId } } }
-    const raw = await gatewayInvoke('sessions_spawn', spawnArgs, 30000);
+    const raw = await gatewayInvoke('sessions_spawn', spawnArgs, 30000, {}, discordHeaders);
     const result = raw?.result?.details || raw;
 
     if (result.status !== 'accepted') {
@@ -2296,29 +2401,88 @@ async function pollForFile(config, filePath, timeoutMinutes, label = 'file-poll'
 /**
  * Status poller — reads status.json until a target status is reached.
  * Built on pollGeneric. Returns immediately on RATE_LIMITED (caller decides).
+ *
+ * opts.sessionLabel — if set, also checks ACP session state each cycle.
+ *   When the session ends and HEAD moved → auto-advances to READY_FOR_TESTING.
+ *   This catches Forge agents that commit but forget to update status.json.
+ * opts.headBefore — HEAD hash captured before Forge spawn (required with sessionLabel).
+ * opts.moduleDir — module dir for status.json update on auto-advance.
  */
-async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes) {
+async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes, opts = {}) {
+  const { sessionLabel, headBefore } = opts;
+
   return pollGeneric(config, async () => {
+    // ── Channel 1: status.json (primary signal) ──
     const status = loadStatus(config, moduleDir);
 
     if (!status) {
-      // null = file doesn't exist (normal) or parse failure (bad)
       const filePath = statusPath(config, moduleDir);
       if (fs.existsSync(filePath)) return { parse_error: true };
-      return { done: false };
+      // Fall through to session check if available
+    } else {
+      if (expectedStatuses.includes(status.status)) {
+        return { done: true, result: pollResult(true, 'target_reached', status) };
+      }
+      if (status.status === STATUS.BLOCKED) {
+        return { done: true, result: pollResult(false, 'blocked', status) };
+      }
+      if (status.status === STATUS.RATE_LIMITED) {
+        return { rate_limited: true, status };
+      }
     }
 
-    if (expectedStatuses.includes(status.status)) {
-      return { done: true, result: pollResult(true, 'target_reached', status) };
-    }
-    if (status.status === STATUS.BLOCKED) {
-      return { done: true, result: pollResult(false, 'blocked', status) };
-    }
-    if (status.status === STATUS.RATE_LIMITED) {
-      return { rate_limited: true, status };
+    // ── Channel 2: ACP session state (early exit detection) ──
+    if (sessionLabel && headBefore) {
+      const sessionKey = _shutdownState.activeSessions.get(sessionLabel);
+      if (sessionKey) {
+        let sessionActive = true;
+        try {
+          const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
+          const statusResult = raw?.result?.details || raw;
+          const acpState = statusResult?.acp?.state || statusResult?.state || null;
+
+          if (acpState) {
+            sessionActive = /^(running|creating|cancelling)$/i.test(acpState);
+          } else {
+            // No ACP state — check HEAD movement as fallback
+            invalidateHeadHash();
+            const headNow = headHash();
+            sessionActive = (headNow === headBefore);
+          }
+        } catch {
+          // Session gone (404 / connection error) = finished or crashed
+          sessionActive = false;
+        }
+
+        if (!sessionActive) {
+          // Session ended — check if Forge produced changes
+          gitPullForPolling(config);
+          invalidateHeadHash();
+          const headNow = headHash();
+
+          if (headNow !== headBefore) {
+            // Forge committed but didn't write READY_FOR_TESTING → auto-advance
+            log('WARN', `Session ended + HEAD moved (${headBefore} → ${headNow}) — auto-advancing to READY_FOR_TESTING`);
+            const currentStatus = loadStatus(config, moduleDir) || status || {};
+            currentStatus.status = STATUS.READY_FOR_TESTING;
+            addHistory(currentStatus, STATUS.READY_FOR_TESTING, 'pipeline',
+              'Auto-advanced: Forge session ended with commits but did not update status.json');
+            saveStatus(config, moduleDir, currentStatus);
+            await discord(config, 'WARN', `Forge stall recovered (${moduleDir})`,
+              'Forge session ended with commits but did not write READY_FOR_TESTING. Pipeline auto-advanced.');
+            return { done: true, result: pollResult(true, 'target_reached', currentStatus) };
+          } else {
+            // Session ended with no changes — Forge crashed or produced nothing
+            log('WARN', `Session ended but HEAD unchanged — Forge produced no output`);
+            return { done: true, result: pollResult(false, 'session_ended_no_changes', status) };
+          }
+        }
+      }
     }
 
-    return { done: false, logMsg: `status=${status.status} phase=${status.current_phase}` };
+    const logStatus = status?.status || 'no-status-file';
+    const logPhase = status?.current_phase || '';
+    return { done: false, logMsg: `status=${logStatus} phase=${logPhase}` };
   }, timeoutMinutes, moduleDir);
 }
 
@@ -2358,9 +2522,9 @@ async function withRateLimitRecovery(config, moduleDir, pollFn) {
 }
 
 /** Forge-phase rate-limit recovery (wraps pollStatus). */
-async function pollWithRateLimitRecovery(config, moduleDir, expectedStatuses, timeoutMinutes) {
+async function pollWithRateLimitRecovery(config, moduleDir, expectedStatuses, timeoutMinutes, opts = {}) {
   return withRateLimitRecovery(config, moduleDir,
-    () => pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes));
+    () => pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes, opts));
 }
 
 /** Buster-phase rate-limit recovery (wraps pollDual). */
@@ -3226,6 +3390,29 @@ async function buildForgePrompt(config, moduleId, mod, dir, status, maxFails, no
     ].join('\n');
   }
 
+  // ── Forge Completion Protocol ──
+  const statusJsonPath = relPath(config, statusPath(config, dir));
+  const completionBlock = [
+    '',
+    '---',
+    '',
+    '## ⚠️ MANDATORY: When Your Work Is Complete',
+    '',
+    `Before your session ends, you MUST update \`${statusJsonPath}\`:`,
+    '',
+    '```bash',
+    `cd ${config.repo_root}`,
+    `cat ${statusJsonPath} | jq '.status = "READY_FOR_TESTING" | .current_phase = "forge"' > /tmp/status_update.json`,
+    `mv /tmp/status_update.json ${statusJsonPath}`,
+    '```',
+    '',
+    'This tells the pipeline your code is ready for testing.',
+    'If you skip this step, the pipeline must detect your completion indirectly, which wastes time.',
+    '',
+    'Do NOT set status to "PASS" — only Buster can promote to PASS after testing.',
+    '',
+  ].join('\n');
+
   // ── Assemble final prompt ──
   // Order optimized for LLM attention patterns ("lost in the middle" effect):
   //   - Context block first (factual orientation — not an instruction, no priority conflict)
@@ -3233,9 +3420,10 @@ async function buildForgePrompt(config, moduleId, mod, dir, status, maxFails, no
   //   - FORGE.md as baseline in the middle (bulk content, read as the "plan")
   //   - Anti-patterns near the end (recency bias → constraints stick better)
   //   - Memory last (lowest priority, recency compensated by priority header caveat)
+  //   - Completion protocol at the very end (recency bias → final action sticks)
   // Note: Priority NUMBERING in the header is unchanged — it describes authority
   // hierarchy (Nova > Anti-Patterns > FORGE.md > Memory), not document order.
-  const prompt = contextBlock + priorityHeader + novaBlock + baseInstructions + antiPatternBlock + memoryBlock;
+  const prompt = contextBlock + priorityHeader + novaBlock + baseInstructions + antiPatternBlock + memoryBlock + completionBlock;
   return { prompt, recalledMemoryIds };
 }
 
@@ -3332,7 +3520,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
   }
   if (!status || status.status === STATUS.PENDING) {
     try {
-      await releaseBlueprint(config, moduleId, dir, mod.stages || ['forge', 'buster']);
+      await releaseBlueprint(config, progress, moduleId, dir, mod.stages || ['forge', 'buster']);
     } catch (e) {
       log('ERROR', `Blueprint release failed: ${e.message}`);
       return { retry: false, result: {
@@ -3398,6 +3586,11 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
 
     setShutdownContext(config, 'forge', moduleId, dir);
 
+    // Capture HEAD before Forge starts — used for stall detection in pollStatus
+    invalidateHeadHash();
+    const headBeforeForge = headHash();
+    const forgeSessionLabel = acpLabel('forge', moduleId);
+
     // Spawn fresh Forge session
     try { await spawnAgent(config, progress, 'forge', moduleId, forgeModel, forgePrompt); }
     catch (e) {
@@ -3417,9 +3610,11 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
       return { retry: false, result: failResult };
     }
 
-    // Poll (rate limit pauses handled transparently by wrapper)
+    // Poll — dual channel: status.json + ACP session state.
+    // If Forge's session ends and HEAD moved, pollStatus auto-advances to READY_FOR_TESTING.
     const result = await pollWithRateLimitRecovery(config, dir,
-      [STATUS.READY_FOR_TESTING, STATUS.FAIL, STATUS.BLOCKED], timeout);
+      [STATUS.READY_FOR_TESTING, STATUS.FAIL, STATUS.BLOCKED], timeout,
+      { sessionLabel: forgeSessionLabel, headBefore: headBeforeForge });
 
     // ALWAYS destroy session — kill-and-respawn strategy
     await killAgent(config, 'forge', moduleId);
@@ -3427,6 +3622,13 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
 
     if (!result.ok) {
       status = loadStatus(config, dir) || status;
+
+      if (result.reason === 'session_ended_no_changes') {
+        const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'forge',
+          'Forge session ended but produced no commits — agent may have crashed or errored', { recalledMemoryIds });
+        if (failResult._retry) return { retry: true, fail_count: status.fail_count };
+        return { retry: false, result: failResult };
+      }
 
       if (result.reason === 'timeout') {
         const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'forge',
@@ -3465,6 +3667,20 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
         extractAgentFailReason(status, 'forge'), { recalledMemoryIds });
       if (failResult._retry) return { retry: true, fail_count: status.fail_count };
       return { retry: false, result: failResult };
+    }
+
+    // ── Pipeline guarantee: READY_FOR_TESTING ──
+    // Forge may have committed code but forgotten to update status.json.
+    // The pipeline owns the state machine — if Forge produced changes and
+    // didn't set a terminal status (FAIL/BLOCKED), force READY_FOR_TESTING.
+    if (status.status !== STATUS.READY_FOR_TESTING) {
+      log('WARN', `Forge finished but status is '${status.status}' instead of READY_FOR_TESTING — pipeline forcing advancement`);
+      status.status = STATUS.READY_FOR_TESTING;
+      addHistory(status, STATUS.READY_FOR_TESTING, 'pipeline',
+        'Pipeline forced READY_FOR_TESTING: Forge completed with changes but did not update status.json');
+      saveStatus(config, dir, status);
+      await discord(config, 'WARN', `Module ${moduleId} — forced READY_FOR_TESTING`,
+        'Forge completed but did not update status.json. Pipeline advanced automatically.');
     }
 
     log('OK', 'Forge complete → READY_FOR_TESTING');
@@ -3725,6 +3941,15 @@ function gateStatusPath(config, gateId) {
 async function _runBusterGateOnce(config, progress, gateId, gate, model, timeout, instructions, attempt) {
   const commitHash = headHash() || gitExec(config.repo_root, ['rev-parse', '--short', 'HEAD']);
   const busterPrompt = buildBusterGatePrompt(config, gateId, gate, instructions, commitHash, attempt);
+
+  // Save gate prompt for debugging
+  try {
+    const gateDir = gate.instructions_file ? gate.instructions_file.split('/')[0] : gateId;
+    const promptDir = path.join(swarmRoot(config), gateDir, 'prompts', RUN_ID);
+    fs.mkdirSync(promptDir, { recursive: true });
+    fs.writeFileSync(path.join(promptDir, `buster-gate-${gateId}-attempt-${attempt}.md`), busterPrompt);
+    log('DEBUG', `Buster gate prompt saved: ${gateDir}/prompts/${RUN_ID}/buster-gate-${gateId}-attempt-${attempt}.md`);
+  } catch { /* non-critical */ }
 
   try {
     await spawnAgent(config, progress, 'buster', gateId, model, busterPrompt, {
@@ -4051,6 +4276,14 @@ async function runBusterGate(config, progress, gateId) {
     const fixLabel = `gatefix-${gateId}-${attempt}`;
     const fixAcpLabel = acpLabel('forge', fixLabel);  // Actual ACP session label
 
+    // Save gate fix prompt for debugging
+    try {
+      const gateDir = gate.instructions_file ? gate.instructions_file.split('/')[0] : gateId;
+      const promptDir = path.join(swarmRoot(config), gateDir, 'prompts', RUN_ID);
+      fs.mkdirSync(promptDir, { recursive: true });
+      fs.writeFileSync(path.join(promptDir, `forge-gatefix-${gateId}-attempt-${attempt}.md`), fixPrompt);
+    } catch { /* non-critical */ }
+
     try {
       await spawnAgent(config, progress, 'forge', fixLabel, forgeModel, fixPrompt);
     } catch (e) {
@@ -4157,6 +4390,9 @@ async function spawnReviewerAgent(config, progress, gateId, reviewer, instructio
 
   log('STEP', `Spawning reviewer: ${gatewayLabel} (agent: ${agentId}, model: ${model})`);
 
+  const discordHeaders = discordSpawnHeaders();
+  const useThread = Object.keys(discordHeaders).length > 0;
+
   const spawnArgs = {
     task: instructions,
     runtime: 'acp',
@@ -4164,13 +4400,13 @@ async function spawnReviewerAgent(config, progress, gateId, reviewer, instructio
     label: gatewayLabel,
     model: model,
     cwd: cwd,
-    thread: false,
-    mode: 'run',
+    thread: useThread,
+    mode: useThread ? 'session' : 'run',
     cleanup: 'keep',
   };
 
   try {
-    const raw = await gatewayInvoke('sessions_spawn', spawnArgs, 30000);
+    const raw = await gatewayInvoke('sessions_spawn', spawnArgs, 30000, {}, discordHeaders);
     const result = raw?.result?.details || raw;
 
     if (result.status !== 'accepted') {
@@ -4318,6 +4554,9 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
     '',
     'Rules:',
     '- Status is GO only if there are zero critical issues.',
+    '- Architectural patterns that will propagate to downstream modules are ALWAYS critical, even if the current code works. Fix the pattern now while only 1-2 modules exist, not after 10+.',
+    '- On early review gates (first half of the pipeline): prefer NO-GO when in doubt. Foundation patterns are cheap to fix now, expensive to fix later.',
+    '- Error response shapes, data model conventions, and API contract patterns that downstream modules will copy are critical by definition.',
     '- Lint findings that are errors (🔴) should be treated as critical unless they are false positives.',
     '- Lint warnings (🟡) should be deferred unless they indicate a real problem.',
     '- Add architectural issues the tools cannot detect (race conditions, security, design flaws).',
@@ -4331,10 +4570,11 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
 
   // Save reviewer prompt for debugging
   try {
-    const echoPromptDir = path.join(swarmRoot(config), 'prompts', RUN_ID);
+    const reviewDir = gate.review_output_dir || 'echo-review';
+    const echoPromptDir = path.join(swarmRoot(config), reviewDir, 'prompts', RUN_ID);
     fs.mkdirSync(echoPromptDir, { recursive: true });
     fs.writeFileSync(path.join(echoPromptDir, `echo-${gateId}-${reviewer.label}.md`), reviewerPrompt);
-    log('DEBUG', `Echo prompt saved: prompts/${RUN_ID}/echo-${gateId}-${reviewer.label}.md`);
+    log('DEBUG', `Echo prompt saved: ${reviewDir}/prompts/${RUN_ID}/echo-${gateId}-${reviewer.label}.md`);
   } catch { /* non-critical */ }
 
   try {
@@ -4588,6 +4828,14 @@ async function runReviewGate(config, progress, gateId) {
       const fixLabel = `reviewfix-${gateId}-${cycle}`;
       const fixAcpLabel = acpLabel('forge', fixLabel);
 
+      // Save review fix prompt for debugging
+      try {
+        const reviewDir = gate.review_output_dir || 'echo-review';
+        const promptDir = path.join(swarmRoot(config), reviewDir, 'prompts', RUN_ID);
+        fs.mkdirSync(promptDir, { recursive: true });
+        fs.writeFileSync(path.join(promptDir, `forge-reviewfix-${gateId}-cycle-${cycle}.md`), fixPrompt);
+      } catch { /* non-critical */ }
+
       try { await spawnAgent(config, progress, 'forge', fixLabel, forgeModel, fixPrompt); }
       catch (e) {
         log('ERROR', `Forge spawn failed for review fix: ${e.message}`);
@@ -4663,6 +4911,14 @@ async function runReviewGate(config, progress, gateId) {
       const forgeModel = resolveModel('forge', config, progress, gate.forge_model);
       const fixLabel = `reviewfix-${gateId}-${cycle}`;
       const fixAcpLabel = acpLabel('forge', fixLabel);
+
+      // Save review fix prompt for debugging
+      try {
+        const reviewDir = gate.review_output_dir || 'echo-review';
+        const promptDir = path.join(swarmRoot(config), reviewDir, 'prompts', RUN_ID);
+        fs.mkdirSync(promptDir, { recursive: true });
+        fs.writeFileSync(path.join(promptDir, `forge-reviewfix-${gateId}-cycle-${cycle}.md`), fixPrompt);
+      } catch { /* non-critical */ }
 
       try { await spawnAgent(config, progress, 'forge', fixLabel, forgeModel, fixPrompt); }
       catch (e) {
@@ -4854,6 +5110,13 @@ async function runPipeline(config, progress, opts = {}) {
     }
 
     return result.exit;
+  }
+
+  // Release gate files from architecture branch (once per pipeline run)
+  try {
+    await releaseGateFiles(config, progress);
+  } catch (e) {
+    log('WARN', `Gate files release failed (non-critical): ${e.message}`);
   }
 
   // Full / resume
@@ -5059,7 +5322,7 @@ Exit codes:
           cleanupTempDir();
           process.exit(EXIT_ERROR);
         }
-        const result = await releaseBlueprint(config, flags.blueprint, mod.dir, mod.stages || ['forge', 'buster']);
+        const result = await releaseBlueprint(config, progress, flags.blueprint, mod.dir, mod.stages || ['forge', 'buster']);
         output(result);
         cleanupTempDir();
         process.exit(EXIT_OK);

@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════
-// Buster Orchestrator v1.0 — Replaces Processor Sidecar
+// Buster Orchestrator v1.1 — Replaces Processor Sidecar
 // ═══════════════════════════════════════════════════════════════
 //
 // Runs as background process in the Gateway container (not a sidecar).
@@ -188,7 +188,7 @@ async function notifyTaskResult(id, sender, taskType, success, errObj = null) {
       : `❌ Task Failed: ${sender} ➔ ${AGENT_NAME}`,
     color: success ? 5763719 : 15548997,
     fields,
-    footer: { text: `Buster Orchestrator v1.0 • ${new Date().toISOString()}` },
+    footer: { text: `Buster Orchestrator v1.1 • ${new Date().toISOString()}` },
   });
 }
 
@@ -218,7 +218,7 @@ async function notifySuiteResults(moduleId, verdict) {
     title,
     color: verdict.critical_failure ? 15548997 : 5763719,
     description: `\`\`\`\n${lines}\n\`\`\`\n${action}`,
-    footer: { text: `Buster Orchestrator v1.0 • ${verdict.duration_ms}ms total` },
+    footer: { text: `Buster Orchestrator v1.1 • ${verdict.duration_ms}ms total` },
   });
 }
 
@@ -413,6 +413,20 @@ function enrichPrompt(originalPrompt, verdict, serveConfig) {
 // ═══════════════════════════════════════════════════════════════
 // Carried over from buster-processor.cjs v7.0 with minimal changes.
 
+/**
+ * Build Discord context headers for thread-bound ACP spawns.
+ * Returns empty object if no Discord channel is configured (graceful degradation).
+ */
+function discordSpawnHeaders() {
+  const channelId = process.env.DISCORD_CHANNEL_ID || process.env.DISCORD_CHANNEL || '';
+  if (!channelId) return {};
+  return {
+    'x-openclaw-message-channel': 'discord',
+    'x-openclaw-account-id': 'default',
+    'x-openclaw-message-to': `channel:${channelId}`,
+  };
+}
+
 async function spawnBusterSession(payload, prompt, timeoutSeconds) {
   if (!GATEWAY_TOKEN) throw new Error('OPENCLAW_GATEWAY_TOKEN is not set');
 
@@ -421,12 +435,15 @@ async function spawnBusterSession(payload, prompt, timeoutSeconds) {
 
   const agentId = sessionConfig.agentId || undefined;
 
+  const discordHeaders = discordSpawnHeaders();
+  const useThread = Object.keys(discordHeaders).length > 0;
+
   const spawnArgs = {
     task: prompt,
     runtime: 'acp',
     label,
-    thread: false,
-    mode: 'run',
+    thread: useThread,
+    mode: useThread ? 'session' : 'run',
     runTimeoutSeconds: timeoutSeconds,
     cleanup: 'keep',
   };
@@ -435,13 +452,14 @@ async function spawnBusterSession(payload, prompt, timeoutSeconds) {
   if (sessionConfig.cwd) spawnArgs.cwd = sessionConfig.cwd;
   if (sessionConfig.model) spawnArgs.model = sessionConfig.model;
 
-  console.log(`[SPAWN] ACP session: label=${label} agent=${agentId || 'gateway-default'} model=${spawnArgs.model || 'gateway-default'} timeout=${timeoutSeconds}s`);
+  console.log(`[SPAWN] ACP session: label=${label} agent=${agentId || 'gateway-default'} model=${spawnArgs.model || 'gateway-default'} timeout=${timeoutSeconds}s thread=${useThread}`);
 
   const response = await fetch(GATEWAY_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${GATEWAY_TOKEN}`,
+      ...discordHeaders,
     },
     body: JSON.stringify({ tool: 'sessions_spawn', args: spawnArgs }),
   });
@@ -498,11 +516,18 @@ async function killSession(childSessionKey) {
   }
 }
 
-async function monitorSession(payload, childSessionKey, runId, timeoutSeconds) {
+async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, verdict) {
   const completionStream = payload.completion_stream;
   const moduleId = payload.module;
+  const project = payload.project || 'unknown';
   const startTime = Date.now();
   const deadline = startTime + (timeoutSeconds * 1000);
+
+  // Build a one-line suite summary for embeds
+  const suiteSummary = verdict ? Object.entries(verdict.suites).map(([name, s]) => {
+    const icon = s.status === 'PASS' ? '✅' : s.status === 'FAIL' ? '❌' : s.status === 'SKIP' ? '⏭' : '💥';
+    return `${icon} ${name}`;
+  }).join('  ') : '';
 
   console.log(`[MONITOR] Watching ${childSessionKey} | stream=${completionStream} | timeout=${timeoutSeconds}s`);
 
@@ -511,8 +536,14 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds) {
   await discord({
     title: `🔬 ACP Session Spawned: ${moduleId}`,
     color: 5763719,
-    description: `**Session:** \`${childSessionKey}\`\n**Run:** \`${runId}\`\n**Type:** ${payload.task_type}`,
-    footer: { text: `Buster Orchestrator v1.0 • timeout ${timeoutSeconds}s` },
+    description: suiteSummary ? `**Pre-Test:** ${suiteSummary}` : '',
+    fields: [
+      { name: 'Project', value: `\`${project}\``, inline: true },
+      { name: 'Type', value: `\`${payload.task_type}\``, inline: true },
+      { name: 'Timeout', value: `${Math.round(timeoutSeconds / 60)}min`, inline: true },
+      { name: 'Session', value: `\`${childSessionKey}\``, inline: false },
+    ],
+    footer: { text: `Buster Orchestrator v1.1 • ${new Date().toISOString()}` },
   });
 
   let lastSeenId = '0-0'; // Track position — only read new entries each poll
@@ -540,18 +571,24 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds) {
         if (data.type === 'completion' && data.module === moduleId) {
           const source = data.source || 'unknown';
           const status = data.status || 'UNKNOWN';
+          const elapsed = Math.round((Date.now() - startTime) / 1000);
 
           console.log(`[MONITOR] ✅ Completion: module=${moduleId} status=${status} source=${source}`);
+
+          const summary = data.summary || data.reason || verdict?.summary || '(no summary provided)';
 
           await discord({
             title: `${status === 'PASS' ? '✅' : '❌'} ACP Session Complete: ${moduleId}`,
             color: status === 'PASS' ? 5763719 : 15548997,
-            description: `**Status:** ${status}\n**Source:** ${source}\n**Summary:** ${(data.summary || '').slice(0, 500)}`,
+            description: `**Summary:** ${summary.slice(0, 500)}`,
             fields: [
-              { name: 'Session', value: `\`${childSessionKey}\``, inline: true },
+              { name: 'Status', value: `\`${status}\``, inline: true },
+              { name: 'Source', value: `\`${source}\``, inline: true },
+              { name: 'Duration', value: `${Math.round(elapsed / 60)}min`, inline: true },
               { name: 'Commit', value: `\`${data.commit_hash || 'unknown'}\``, inline: true },
+              { name: 'Session', value: `\`${childSessionKey}\``, inline: false },
             ],
-            footer: { text: `Buster Orchestrator v1.0` },
+            footer: { text: `Buster Orchestrator v1.1 • ${project}` },
           });
 
           await killSession(childSessionKey);
@@ -569,13 +606,20 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds) {
   }
 
   // Timeout
+  const elapsed = Math.round((Date.now() - startTime) / 1000);
   console.error(`[MONITOR] ⏰ TIMEOUT: ${childSessionKey} did not complete within ${timeoutSeconds}s`);
 
   await discord({
     title: `⏰ ACP Session Timeout: ${moduleId}`,
     color: 15548997,
-    description: `Session did not complete within ${timeoutSeconds}s.\nSession: \`${childSessionKey}\``,
-    footer: { text: `Buster Orchestrator v1.0` },
+    description: `Subagent did not complete within the allocated time.`,
+    fields: [
+      { name: 'Timeout', value: `${Math.round(timeoutSeconds / 60)}min`, inline: true },
+      { name: 'Elapsed', value: `${Math.round(elapsed / 60)}min`, inline: true },
+      { name: 'Project', value: `\`${project}\``, inline: true },
+      { name: 'Session', value: `\`${childSessionKey}\``, inline: false },
+    ],
+    footer: { text: `Buster Orchestrator v1.1 • ${project}` },
   });
 
   // Send FAIL to completion stream
@@ -751,18 +795,26 @@ async function processTask(payload) {
   console.log(`[TASK] Prompt enriched: ${prompt.length} → ${enrichedPrompt.length} chars`);
 
   // Save enriched prompt for debugging (uses run_id from pipeline if available)
-  if (payload.module_path) {
-    try {
-      const runId = payload.run_id || `orchestrator-${Date.now()}`;
-      const attempt = payload.attempt || 1;
-      const promptDir = path.join(REPO_DIR, payload.module_path, 'prompts', runId);
+  const pipelineRunId = payload.run_id || `orchestrator-${Date.now()}`;
+  const attempt = payload.attempt || 1;
+  try {
+    let promptDir;
+    if (payload.module_path) {
+      // Module test: .swarm/modules/<dir>/prompts/<runId>/
+      promptDir = path.join(REPO_DIR, payload.module_path, 'prompts', pipelineRunId);
+    } else if (payload.instructions_file) {
+      // Gate test: .swarm/<gate-dir>/prompts/<runId>/  (derived from instructions_file path)
+      const gateDir = path.dirname(payload.instructions_file);
+      promptDir = path.join(REPO_DIR, gateDir, 'prompts', pipelineRunId);
+    }
+    if (promptDir) {
       fs.mkdirSync(promptDir, { recursive: true });
       const promptPath = path.join(promptDir, `buster-enriched-attempt-${attempt}.md`);
       fs.writeFileSync(promptPath, enrichedPrompt);
       console.log(`[TASK] Enriched prompt saved: ${promptPath} (${enrichedPrompt.length} chars)`);
-    } catch (e) {
-      console.warn(`[TASK] Prompt save failed (non-critical): ${e.message}`);
     }
+  } catch (e) {
+    console.warn(`[TASK] Prompt save failed (non-critical): ${e.message}`);
   }
 
   // ── Step 7: Calculate subagent timeout ──
@@ -779,7 +831,7 @@ async function processTask(payload) {
 
   // ── Step 9: Monitor until completion or timeout ──
   setStep('monitor-session');
-  await monitorSession(payload, childSessionKey, runId, subagentTimeout);
+  await monitorSession(payload, childSessionKey, runId, subagentTimeout, verdict);
 
   // ── Step 10: Final cleanup ──
   setStep('final-cleanup');
