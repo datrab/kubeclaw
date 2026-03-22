@@ -201,6 +201,16 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
     gitExec(repoRoot, ['add', projectRoot], { stdio: 'ignore' });
     gitExec(repoRoot, ['commit', '-m', commitMessage], { stdio: 'ignore' });
 
+    // Rebase onto remote BEFORE push to avoid conflicts.
+    // Our commit gets replayed on top of any remote changes.
+    try {
+      gitExec(repoRoot, ['pull', '--rebase', 'origin'], { stdio: 'ignore', timeout: 30000 });
+    } catch (rebaseErr) {
+      log(`⚠️ [Verify] Rebase warning: ${rebaseErr.message?.split('\n')[0]}`);
+      // If rebase fails (true conflict), abort and try push anyway — push retry may still work
+      try { gitExec(repoRoot, ['rebase', '--abort'], { stdio: 'ignore' }); } catch { /* ok */ }
+    }
+
     // Push with simple retry (network transients)
     let pushed = false;
     for (let attempt = 1; attempt <= 3; attempt++) {

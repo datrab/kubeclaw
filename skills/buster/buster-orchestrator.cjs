@@ -69,6 +69,8 @@ const TIMEOUT_BUFFER_SECONDS = 60;
 // ═══════════════════════════════════════════════════════════════
 
 let activeSessionKey = null;  // Currently running ACP session (for SIGTERM cleanup)
+let activeAgentId = null;     // Harness name for acpx session close
+let activeSpawnLabel = null;  // Gateway label for acpx session close
 let shuttingDown = false;
 
 const STATE = {
@@ -454,17 +456,31 @@ async function spawnBusterSession(payload, prompt, timeoutSeconds) {
 
   console.log(`[SPAWN] ACP session: label=${label} agent=${agentId || 'gateway-default'} model=${spawnArgs.model || 'gateway-default'} timeout=${timeoutSeconds}s thread=${useThread}`);
 
-  const response = await fetch(GATEWAY_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${GATEWAY_TOKEN}`,
-      ...discordHeaders,
-    },
-    body: JSON.stringify({ tool: 'sessions_spawn', args: spawnArgs }),
-  });
+  // Retry on transient network errors (fetch failed, ECONNREFUSED, etc.)
+  const maxRetries = 3;
+  const retryDelayMs = 5000;
+  let response, responseText;
 
-  const responseText = await response.text().catch(() => '(unreadable)');
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      response = await fetch(GATEWAY_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GATEWAY_TOKEN}`,
+          ...discordHeaders,
+        },
+        body: JSON.stringify({ tool: 'sessions_spawn', args: spawnArgs }),
+      });
+      responseText = await response.text().catch(() => '(unreadable)');
+      break; // fetch succeeded (may still be HTTP error — handled below)
+    } catch (e) {
+      if (attempt >= maxRetries) throw e;
+      console.warn(`[SPAWN] Network error (attempt ${attempt}/${maxRetries}): ${e.message} — retrying in ${retryDelayMs / 1000}s`);
+      await new Promise(r => setTimeout(r, retryDelayMs));
+    }
+  }
+
   if (!response.ok) {
     const err = new Error(`Spawn failed: ${response.status} ${response.statusText}`);
     err.step = 'spawn';
@@ -489,10 +505,61 @@ async function spawnBusterSession(payload, prompt, timeoutSeconds) {
     childSessionKey: result.childSessionKey,
     runId: result.runId,
     label,
+    agentId: agentId || null,
   };
 }
 
-async function killSession(childSessionKey) {
+/**
+ * Wait for an ACP session to become idle before killing.
+ * Gives the agent time to write a thread summary after completing work.
+ *
+ * @param {string} childSessionKey - Gateway session key
+ * @param {number} extraGraceMs - Extra time after idle detected (default 2min)
+ * @param {number} totalTimeoutMs - Max total wait time (default 10min)
+ */
+async function waitForSessionIdle(childSessionKey, extraGraceMs = 120000, totalTimeoutMs = 600000) {
+  const deadline = Date.now() + totalTimeoutMs;
+  const pollMs = 10000;
+
+  while (Date.now() < deadline) {
+    try {
+      const response = await fetch(GATEWAY_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GATEWAY_TOKEN}`,
+        },
+        body: JSON.stringify({ tool: 'session_status', args: {}, sessionKey: childSessionKey }),
+      });
+      const raw = await response.json().catch(() => ({}));
+      const statusResult = raw?.result?.details || raw;
+      const acpState = statusResult?.acp?.state || statusResult?.state || null;
+
+      if (!acpState || /^(closed|error)$/i.test(acpState)) {
+        console.log(`[GRACE] Session already ${acpState || 'gone'} — no grace needed`);
+        return;
+      }
+
+      if (/^idle$/i.test(acpState)) {
+        const grace = Math.min(extraGraceMs, deadline - Date.now());
+        console.log(`[GRACE] Session idle — waiting ${Math.round(grace / 1000)}s grace period for thread summary`);
+        await new Promise(r => setTimeout(r, grace));
+        return;
+      }
+
+      // Still running/creating — keep waiting
+    } catch {
+      // Session unreachable — treat as gone
+      return;
+    }
+
+    await new Promise(r => setTimeout(r, pollMs));
+  }
+
+  console.log(`[GRACE] Timeout (${totalTimeoutMs / 1000}s) — proceeding with kill`);
+}
+
+async function killSession(childSessionKey, agentId, label) {
   try {
     const response = await fetch(GATEWAY_URL, {
       method: 'POST',
@@ -514,14 +581,27 @@ async function killSession(childSessionKey) {
   } catch (e) {
     console.warn(`[MONITOR] Kill failed: ${e.message}`);
   }
+
+  // Clean up acpx internal session tracking
+  if (agentId && label) {
+    try {
+      await execFileAsync('acpx', [agentId, 'sessions', 'close', '--name', label],
+        { encoding: 'utf8', timeout: 10000 });
+      console.log(`[MONITOR] acpx session closed: ${agentId} / ${label}`);
+    } catch {
+      console.log(`[MONITOR] acpx session close skipped (non-critical): ${agentId} / ${label}`);
+    }
+  }
 }
 
-async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, verdict) {
+async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, verdict, spawnInfo = {}) {
   const completionStream = payload.completion_stream;
   const moduleId = payload.module;
   const project = payload.project || 'unknown';
   const startTime = Date.now();
   const deadline = startTime + (timeoutSeconds * 1000);
+  const _agentId = spawnInfo.agentId || null;
+  const _spawnLabel = spawnInfo.label || null;
 
   // Build a one-line suite summary for embeds
   const suiteSummary = verdict ? Object.entries(verdict.suites).map(([name, s]) => {
@@ -532,6 +612,8 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
   console.log(`[MONITOR] Watching ${childSessionKey} | stream=${completionStream} | timeout=${timeoutSeconds}s`);
 
   activeSessionKey = childSessionKey;
+  activeAgentId = _agentId;
+  activeSpawnLabel = _spawnLabel;
 
   await discord({
     title: `🔬 ACP Session Spawned: ${moduleId}`,
@@ -547,18 +629,19 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
   });
 
   let lastSeenId = '0-0'; // Track position — only read new entries each poll
+  let sessionDeadCycles = 0; // Consecutive cycles where session is not active
 
   while (Date.now() < deadline) {
     if (shuttingDown) {
       console.log('[MONITOR] Shutdown signal — killing session.');
-      await killSession(childSessionKey);
-      activeSessionKey = null;
+      await killSession(childSessionKey, _agentId, _spawnLabel);
+      activeSessionKey = null; activeAgentId = null; activeSpawnLabel = null;
       return;
     }
 
     await new Promise(r => setTimeout(r, MONITOR_POLL_MS));
 
-    // Check Redis completion stream (incremental — only entries after lastSeenId)
+    // ── Channel 1: Redis completion stream (primary fast path) ──
     try {
       const exclusiveStart = lastSeenId === '0-0' ? '-' : `(${lastSeenId}`;
       const entries = await redis.xrange(completionStream, exclusiveStart, '+', 'COUNT', 50);
@@ -591,13 +674,168 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
             footer: { text: `Buster Orchestrator v1.1 • ${project}` },
           });
 
-          await killSession(childSessionKey);
-          activeSessionKey = null;
+          // Grace period: let agent finish thread summary before killing
+          await waitForSessionIdle(childSessionKey);
+
+          await killSession(childSessionKey, _agentId, _spawnLabel);
+          activeSessionKey = null; activeAgentId = null; activeSpawnLabel = null;
           return;
         }
       }
     } catch (e) {
       console.log(`[MONITOR] Redis check: ${e.message}`);
+    }
+
+    // ── Channel 2: ACP session status (crash/error detection) ──
+    try {
+      const statusResp = await fetch(GATEWAY_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GATEWAY_TOKEN}`,
+        },
+        body: JSON.stringify({
+          tool: 'session_status',
+          args: {},
+          sessionKey: childSessionKey,
+        }),
+      });
+      const raw = await statusResp.json().catch(() => ({}));
+      const statusResult = raw?.result?.details || raw;
+      const acpState = statusResult?.acp?.state || statusResult?.state || null;
+
+      const sessionActive = acpState
+        ? /^(running|creating|cancelling)$/i.test(acpState)
+        : statusResp.ok; // If no state but response OK, assume active
+
+      if (!sessionActive) {
+        sessionDeadCycles++;
+        console.log(`[MONITOR] Session not active: state=${acpState || 'unknown'} (dead cycle ${sessionDeadCycles}/2)`);
+
+        // Wait 2 consecutive dead cycles to avoid false positives
+        if (sessionDeadCycles >= 2) {
+          console.log(`[MONITOR] Session confirmed dead — checking status.json for salvageable results`);
+
+          // Git pull to get any changes the agent may have pushed before crashing
+          try {
+            await execFileAsync('git', ['-C', REPO_DIR, 'pull', '--rebase', 'origin'], {
+              encoding: 'utf8', timeout: 15000,
+            });
+          } catch { /* best effort */ }
+
+          // Read status.json to check if agent completed before crashing
+          let moduleStatus = null;
+          const statusJsonPath = payload.status_json_path
+            ? path.join(REPO_DIR, payload.status_json_path)
+            : payload.module_path
+              ? path.join(REPO_DIR, payload.module_path, 'status.json')
+              : null;
+
+          if (statusJsonPath && fs.existsSync(statusJsonPath)) {
+            try { moduleStatus = JSON.parse(fs.readFileSync(statusJsonPath, 'utf8')); } catch { /* corrupt */ }
+          }
+
+          const elapsed = Math.round((Date.now() - startTime) / 1000);
+          const detectedStatus = moduleStatus?.status || null;
+
+          // If the agent set PASS or FAIL before crashing, honor it
+          if (detectedStatus === 'PASS' || detectedStatus === 'FAIL') {
+            console.log(`[MONITOR] 🔍 Salvaged result from status.json: ${detectedStatus}`);
+
+            // Commit any uncommitted changes the agent left behind
+            try {
+              await execFileAsync('git', ['-C', REPO_DIR, 'add', '-A'], { encoding: 'utf8', timeout: 10000 });
+              await execFileAsync('git', ['-C', REPO_DIR, 'commit', '-m',
+                `[buster] Salvaged ${detectedStatus}: agent session crashed before commit`], { encoding: 'utf8', timeout: 10000 });
+              // Rebase onto remote before push to avoid conflicts
+              try {
+                await execFileAsync('git', ['-C', REPO_DIR, 'pull', '--rebase', 'origin'], { encoding: 'utf8', timeout: 30000 });
+              } catch {
+                try { await execFileAsync('git', ['-C', REPO_DIR, 'rebase', '--abort'], { encoding: 'utf8' }); } catch { /* ok */ }
+              }
+              await execFileAsync('git', ['-C', REPO_DIR, 'push', 'origin'], { encoding: 'utf8', timeout: 30000 });
+              console.log(`[MONITOR] Salvaged changes committed and pushed`);
+            } catch (e) {
+              console.warn(`[MONITOR] Salvage commit failed (may already be committed): ${e.message}`);
+            }
+
+            // Send to Redis completion stream so pipeline picks it up
+            try {
+              const fields = [
+                'type', 'completion',
+                'module', moduleId,
+                'task_type', payload.task_type || 'module_test',
+                'status', detectedStatus,
+                'source', 'orchestrator-salvage',
+                'reason', `Session crashed but status.json shows ${detectedStatus}`,
+                'timestamp', Date.now().toString(),
+              ];
+              await redis.xadd(completionStream, '*', ...fields);
+              await redis.xtrim(completionStream, 'MAXLEN', '~', STREAM_MAX_LEN);
+            } catch (e) {
+              console.error(`[MONITOR] Failed to send salvaged completion: ${e.message}`);
+            }
+
+            await discord({
+              title: `${detectedStatus === 'PASS' ? '✅' : '❌'} ACP Session Salvaged: ${moduleId}`,
+              color: detectedStatus === 'PASS' ? 5763719 : 15548997,
+              description: `Session crashed/errored but status.json shows **${detectedStatus}**. Result forwarded to pipeline.`,
+              fields: [
+                { name: 'Status', value: `\`${detectedStatus}\``, inline: true },
+                { name: 'Source', value: '`orchestrator-salvage`', inline: true },
+                { name: 'Duration', value: `${Math.round(elapsed / 60)}min`, inline: true },
+                { name: 'ACP State', value: `\`${acpState || 'unknown'}\``, inline: true },
+                { name: 'Session', value: `\`${childSessionKey}\``, inline: false },
+              ],
+              footer: { text: `Buster Orchestrator v1.1 • ${project}` },
+            });
+
+            await killSession(childSessionKey, _agentId, _spawnLabel);
+            activeSessionKey = null; activeAgentId = null; activeSpawnLabel = null;
+            return;
+          }
+
+          // No salvageable result — agent crashed before completing
+          console.error(`[MONITOR] ❌ Session dead, status.json=${detectedStatus || 'none'} — reporting FAIL`);
+
+          try {
+            const fields = [
+              'type', 'completion',
+              'module', moduleId,
+              'task_type', payload.task_type || 'module_test',
+              'status', 'FAIL',
+              'source', 'orchestrator',
+              'reason', `ACP session ended (state: ${acpState || 'unknown'}) with no completion signal`,
+              'timestamp', Date.now().toString(),
+            ];
+            await redis.xadd(completionStream, '*', ...fields);
+            await redis.xtrim(completionStream, 'MAXLEN', '~', STREAM_MAX_LEN);
+          } catch (e) {
+            console.error(`[MONITOR] Failed to send FAIL: ${e.message}`);
+          }
+
+          await discord({
+            title: `💀 ACP Session Crashed: ${moduleId}`,
+            color: 15548997,
+            description: `Session ended without completing. No salvageable result in status.json.`,
+            fields: [
+              { name: 'ACP State', value: `\`${acpState || 'unknown'}\``, inline: true },
+              { name: 'Duration', value: `${Math.round(elapsed / 60)}min`, inline: true },
+              { name: 'status.json', value: `\`${detectedStatus || 'not found'}\``, inline: true },
+              { name: 'Session', value: `\`${childSessionKey}\``, inline: false },
+            ],
+            footer: { text: `Buster Orchestrator v1.1 • ${project}` },
+          });
+
+          await killSession(childSessionKey, _agentId, _spawnLabel);
+          activeSessionKey = null; activeAgentId = null; activeSpawnLabel = null;
+          return;
+        }
+      } else {
+        sessionDeadCycles = 0; // Reset on active session
+      }
+    } catch (e) {
+      console.log(`[MONITOR] Session status check failed: ${e.message}`);
     }
 
     const elapsed = Math.round((Date.now() - startTime) / 1000);
@@ -640,8 +878,8 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
     console.error(`[MONITOR] Failed to send FAIL: ${e.message}`);
   }
 
-  await killSession(childSessionKey);
-  activeSessionKey = null;
+  await killSession(childSessionKey, _agentId, _spawnLabel);
+  activeSessionKey = null; activeAgentId = null; activeSpawnLabel = null;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -771,6 +1009,14 @@ async function processTask(payload) {
           `[buster] Module ${moduleId}: pre-test FAIL — ${verdict.summary.slice(0, 80)}`], {
           encoding: 'utf8', timeout: 10000,
         });
+        // Rebase onto remote before push to avoid conflicts
+        try {
+          await execFileAsync('git', ['-C', REPO_DIR, 'pull', '--rebase', 'origin'], {
+            encoding: 'utf8', timeout: 30000,
+          });
+        } catch {
+          try { await execFileAsync('git', ['-C', REPO_DIR, 'rebase', '--abort'], { encoding: 'utf8' }); } catch { /* ok */ }
+        }
         await execFileAsync('git', ['-C', REPO_DIR, 'push', 'origin'], {
           encoding: 'utf8', timeout: 30000,
         });
@@ -827,11 +1073,13 @@ async function processTask(payload) {
 
   // ── Step 8: Spawn ACP Session ──
   setStep('spawn-subagent');
-  const { childSessionKey, runId } = await spawnBusterSession(payload, enrichedPrompt, subagentTimeout);
+  const spawnResult = await spawnBusterSession(payload, enrichedPrompt, subagentTimeout);
+  const { childSessionKey, runId } = spawnResult;
 
   // ── Step 9: Monitor until completion or timeout ──
   setStep('monitor-session');
-  await monitorSession(payload, childSessionKey, runId, subagentTimeout, verdict);
+  await monitorSession(payload, childSessionKey, runId, subagentTimeout, verdict,
+    { agentId: spawnResult.agentId, label: spawnResult.label });
 
   // ── Step 10: Final cleanup ──
   setStep('final-cleanup');
@@ -916,7 +1164,7 @@ async function shutdown(signal) {
   // 1. Kill active subagent
   if (activeSessionKey) {
     console.log(`[SHUTDOWN] Killing active session: ${activeSessionKey}`);
-    await killSession(activeSessionKey);
+    await killSession(activeSessionKey, activeAgentId, activeSpawnLabel);
   }
 
   // 2. Sandbox cleanup

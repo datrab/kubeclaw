@@ -110,32 +110,56 @@ const GATEWAY_TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN || '';
  * @returns {Promise<object>} Parsed JSON response
  */
 async function gatewayInvoke(tool, args, timeoutMs = 30000, opts = {}, extraHeaders = {}) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  const maxRetries = 3;
+  const retryDelayMs = 5000;
 
-  try {
-    const response = await fetch(GATEWAY_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(GATEWAY_TOKEN ? { 'Authorization': `Bearer ${GATEWAY_TOKEN}` } : {}),
-        ...extraHeaders,
-      },
-      body: JSON.stringify({ tool, args, ...opts }),
-      signal: controller.signal,
-    });
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
 
-    const text = await response.text();
-    if (!response.ok) {
-      const err = new Error(`Gateway ${tool} failed: ${response.status} ${response.statusText}`);
-      err.httpStatus = response.status;
-      err.httpBody = text;
-      throw err;
+    try {
+      const response = await fetch(GATEWAY_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(GATEWAY_TOKEN ? { 'Authorization': `Bearer ${GATEWAY_TOKEN}` } : {}),
+          ...extraHeaders,
+        },
+        body: JSON.stringify({ tool, args, ...opts }),
+        signal: controller.signal,
+      });
+
+      const text = await response.text();
+      if (!response.ok) {
+        const err = new Error(`Gateway ${tool} failed: ${response.status} ${response.statusText}`);
+        err.httpStatus = response.status;
+        err.httpBody = text;
+        throw err;  // HTTP errors are not retried — they're application-level
+      }
+
+      try { return JSON.parse(text); } catch { return { raw: text }; }
+    } catch (e) {
+      clearTimeout(timer);
+
+      // Only retry on transient network errors (fetch failed, ECONNREFUSED, abort/timeout)
+      const isNetworkError = !e.httpStatus && (
+        e.name === 'AbortError' ||
+        e.code === 'ECONNREFUSED' ||
+        e.code === 'ECONNRESET' ||
+        e.code === 'ETIMEDOUT' ||
+        e.cause?.code === 'ECONNREFUSED' ||
+        e.cause?.code === 'ECONNRESET' ||
+        /fetch failed|network|socket/i.test(e.message)
+      );
+
+      if (!isNetworkError || attempt >= maxRetries) throw e;
+
+      log('WARN', `Gateway ${tool} network error (attempt ${attempt}/${maxRetries}): ${e.message} — retrying in ${retryDelayMs / 1000}s`);
+      await sleep(retryDelayMs);
+      continue;
+    } finally {
+      clearTimeout(timer);
     }
-
-    try { return JSON.parse(text); } catch { return { raw: text }; }
-  } finally {
-    clearTimeout(timer);
   }
 }
 
@@ -242,7 +266,7 @@ const STATUS = {
 let _shutdownState = {
   config: null,
   statusDir: null,       // Module status dir (for marking FAIL on interrupt)
-  activeSessions: new Map(), // label → childSessionKey (for Gateway kill via sessions_send)
+  activeSessions: new Map(), // label → { sessionKey, agentId, gatewayLabel }
   currentLabel: null,    // Label added by setShutdownContext (for clearShutdownContext cleanup)
 };
 
@@ -266,6 +290,76 @@ function gatewayKillSync(sessionKey) {
   } catch { /* best effort — gateway may be unreachable during shutdown */ }
 }
 
+/**
+ * Clean up acpx internal session tracking.
+ * acpx tracks sessions in ~/.acpx/sessions/index.json — sending /stop via Gateway
+ * kills the OpenClaw session but doesn't clean up acpx's internal state.
+ * Without this, session slots fill up and new spawns fail.
+ */
+function acpxCleanupSync(agentId, gatewayLabel) {
+  if (!agentId || !gatewayLabel) return;
+  try {
+    execFileSync('acpx', [agentId, 'sessions', 'close', '--name', gatewayLabel],
+      { stdio: 'ignore', timeout: 10000 });
+  } catch { /* best effort */ }
+}
+
+async function acpxCleanup(agentId, gatewayLabel) {
+  if (!agentId || !gatewayLabel) return;
+  try {
+    execFileSync('acpx', [agentId, 'sessions', 'close', '--name', gatewayLabel],
+      { stdio: 'ignore', timeout: 10000 });
+    log('DEBUG', `acpx session closed: ${agentId} / ${gatewayLabel}`);
+  } catch {
+    log('DEBUG', `acpx session close failed (non-critical): ${agentId} / ${gatewayLabel}`);
+  }
+}
+
+/**
+ * Wait for an ACP session to become idle before killing.
+ * Gives the agent time to write a thread summary after completing work.
+ *
+ * Flow: poll session_status every 10s → once idle → wait extraGraceMs → return.
+ * If session is already closed/error → return immediately.
+ * If totalTimeoutMs exceeded → return (caller will force-kill).
+ *
+ * @param {string} sessionKey - Gateway childSessionKey
+ * @param {number} extraGraceMs - Extra time after idle detected (default 2min)
+ * @param {number} totalTimeoutMs - Max total wait time (default 10min)
+ */
+async function waitForSessionIdle(sessionKey, extraGraceMs = 120000, totalTimeoutMs = 600000) {
+  const deadline = Date.now() + totalTimeoutMs;
+  const pollMs = 10000;
+
+  while (Date.now() < deadline) {
+    try {
+      const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
+      const statusResult = raw?.result?.details || raw;
+      const acpState = statusResult?.acp?.state || statusResult?.state || null;
+
+      if (!acpState || /^(closed|error)$/i.test(acpState)) {
+        log('DEBUG', `Session already ${acpState || 'gone'} — no grace needed`);
+        return;
+      }
+
+      if (/^idle$/i.test(acpState)) {
+        log('DEBUG', `Session idle — waiting ${extraGraceMs / 1000}s grace period for thread summary`);
+        await sleep(Math.min(extraGraceMs, deadline - Date.now()));
+        return;
+      }
+
+      // Still running/creating — keep waiting
+    } catch {
+      // Session unreachable — treat as gone
+      return;
+    }
+
+    await sleep(pollMs);
+  }
+
+  log('DEBUG', `Grace timeout (${totalTimeoutMs / 1000}s) — proceeding with kill`);
+}
+
 function registerShutdownHooks() {
   const handler = (signal) => {
     log('WARN', `Received ${signal} — initiating graceful shutdown`);
@@ -273,9 +367,11 @@ function registerShutdownHooks() {
 
     // Kill ALL tracked ACP sessions via Gateway Tool API (best effort)
     if (config && activeSessions.size > 0) {
-      for (const [label, sessionKey] of activeSessions) {
+      for (const [label, entry] of activeSessions) {
+        const sessionKey = entry?.sessionKey || entry; // backward compat if string
         if (!sessionKey) continue;  // Pre-tracked but spawn not yet completed
         gatewayKillSync(sessionKey);
+        acpxCleanupSync(entry?.agentId, entry?.gatewayLabel);
         log('INFO', `Shutdown: killed session '${label}' (${sessionKey})`);
       }
     }
@@ -301,14 +397,16 @@ function registerShutdownHooks() {
 }
 
 /**
- * Track an ACP session for graceful shutdown.
+ * Track an ACP session for graceful shutdown and acpx cleanup.
  * @param {object} config - Pipeline config
- * @param {string} label - Human-readable label (e.g. 'forge-module-1')
+ * @param {string} label - Deterministic tracking key (e.g. 'forge-02')
  * @param {string} sessionKey - Gateway childSessionKey from sessions_spawn
+ * @param {string} agentId - Harness name (e.g. 'claude', 'codex') for acpx cleanup
+ * @param {string} gatewayLabel - Unique label sent to Gateway for acpx session close
  */
-function trackAgent(config, label, sessionKey) {
+function trackAgent(config, label, sessionKey, agentId, gatewayLabel) {
   _shutdownState.config = config;
-  _shutdownState.activeSessions.set(label, sessionKey);
+  _shutdownState.activeSessions.set(label, { sessionKey, agentId, gatewayLabel });
 }
 
 /**
@@ -331,7 +429,7 @@ function setShutdownContext(config, agentType, moduleId, statusDir) {
     const label = acpLabel(agentType, moduleId);
     // Pre-set with null sessionKey — updated by trackAgent after spawn succeeds
     if (!_shutdownState.activeSessions.has(label)) {
-      _shutdownState.activeSessions.set(label, null);
+      _shutdownState.activeSessions.set(label, { sessionKey: null, agentId: null, gatewayLabel: null });
     }
     _shutdownState.currentLabel = label;
   } else {
@@ -1239,21 +1337,28 @@ async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
     }
 
     log('OK', `ACP session spawned: ${gatewayLabel} → ${result.childSessionKey}`);
-    trackAgent(config, trackingKey, result.childSessionKey);
+    trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel);
     return { label: trackingKey, childSessionKey: result.childSessionKey, runId: result.runId };
   } catch (e) {
     throw new Error(`Failed to spawn ACP session '${gatewayLabel}': ${e.message}`);
   }
 }
 
-async function killAcpAgent(config, agentType, moduleId) {
+async function killAcpAgent(config, agentType, moduleId, graceful = false) {
   const label = acpLabel(agentType, moduleId);
-  const sessionKey = _shutdownState.activeSessions.get(label);
+  const entry = _shutdownState.activeSessions.get(label);
+  const sessionKey = entry?.sessionKey;
 
   if (!sessionKey) {
     log('WARN', `No sessionKey tracked for '${label}' — skipping kill`);
     untrackAgent(label);
     return;
+  }
+
+  // Grace period: wait for agent to finish thread summary before killing
+  if (graceful) {
+    log('INFO', `Waiting for session to become idle: ${label}`);
+    await waitForSessionIdle(sessionKey);
   }
 
   log('STEP', `Destroying ACP session: ${label} (${sessionKey})`);
@@ -1264,6 +1369,7 @@ async function killAcpAgent(config, agentType, moduleId) {
   } catch {
     log('WARN', `Could not destroy session '${label}' — may have already exited`);
   }
+  await acpxCleanup(entry.agentId, entry.gatewayLabel);
   untrackAgent(label);
 }
 
@@ -1397,7 +1503,7 @@ async function spawnAgent(config, progress, agentType, moduleId, model, taskProm
   }
 }
 
-async function killAgent(config, agentType, moduleId) {
+async function killAgent(config, agentType, moduleId, graceful = false) {
   const agentConfig = config.agents[agentType];
   if (!agentConfig) return;
 
@@ -1407,7 +1513,7 @@ async function killAgent(config, agentType, moduleId) {
     log('INFO', `${agentType} is a Redis agent — no session to destroy (persistent instance)`);
   } else {
     // killAcpAgent calls untrackAgent internally
-    await killAcpAgent(config, agentType, moduleId);
+    await killAcpAgent(config, agentType, moduleId, graceful);
   }
 }
 
@@ -1424,7 +1530,7 @@ async function steerAgent(config, progress, agentType, moduleId, message) {
     }
   } else {
     const label = acpLabel(agentType, moduleId);
-    const sessionKey = _shutdownState.activeSessions.get(label);
+    const sessionKey = _shutdownState.activeSessions.get(label)?.sessionKey;
 
     if (!sessionKey) {
       log('WARN', `No sessionKey tracked for '${label}' — cannot steer`);
@@ -1460,7 +1566,7 @@ async function verifyAgentAlive(config, agentType, moduleId, waitMs = 8000) {
   await sleep(waitMs);
 
   const label = acpLabel(agentType, moduleId);
-  const sessionKey = _shutdownState.activeSessions.get(label);
+  const sessionKey = _shutdownState.activeSessions.get(label)?.sessionKey;
 
   if (!sessionKey) {
     log('ERROR', `Agent health check failed: no sessionKey for '${label}'`);
@@ -1510,7 +1616,7 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
   let nudgeSent = false;
 
   // Resolve sessionKey from label
-  const sessionKey = _shutdownState.activeSessions.get(sessionLabel);
+  const sessionKey = _shutdownState.activeSessions.get(sessionLabel)?.sessionKey;
   if (!sessionKey) {
     log('ERROR', `[${logLabel}] No sessionKey for label '${sessionLabel}' — cannot poll`);
     return { completed: false, hasChanges: false, reason: 'no_session_key' };
@@ -2433,7 +2539,7 @@ async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes, o
 
     // ── Channel 2: ACP session state (early exit detection) ──
     if (sessionLabel && headBefore) {
-      const sessionKey = _shutdownState.activeSessions.get(sessionLabel);
+      const sessionKey = _shutdownState.activeSessions.get(sessionLabel)?.sessionKey;
       if (sessionKey) {
         let sessionActive = true;
         try {
@@ -3396,20 +3502,27 @@ async function buildForgePrompt(config, moduleId, mod, dir, status, maxFails, no
     '',
     '---',
     '',
-    '## ⚠️ MANDATORY: When Your Work Is Complete',
+    '## 🚨 CRITICAL — YOUR FINAL STEPS (DO NOT SKIP)',
     '',
-    `Before your session ends, you MUST update \`${statusJsonPath}\`:`,
+    'When your implementation is complete, you MUST do the following before your session ends:',
     '',
+    `**Step 1:** Update \`${statusJsonPath}\` to signal readiness:`,
     '```bash',
     `cd ${config.repo_root}`,
     `cat ${statusJsonPath} | jq '.status = "READY_FOR_TESTING" | .current_phase = "forge"' > /tmp/status_update.json`,
     `mv /tmp/status_update.json ${statusJsonPath}`,
     '```',
     '',
-    'This tells the pipeline your code is ready for testing.',
-    'If you skip this step, the pipeline must detect your completion indirectly, which wastes time.',
+    '**Step 2:** Commit and push ALL changes:',
+    '```bash',
+    'git add -A',
+    'git commit -m "[forge] Module complete: <brief description>"',
+    'git push origin',
+    '```',
     '',
+    'Both steps are mandatory. Without them, the pipeline cannot detect your work.',
     'Do NOT set status to "PASS" — only Buster can promote to PASS after testing.',
+    'This must be the LAST thing you do.',
     '',
   ].join('\n');
 
@@ -3617,7 +3730,8 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
       { sessionLabel: forgeSessionLabel, headBefore: headBeforeForge });
 
     // ALWAYS destroy session — kill-and-respawn strategy
-    await killAgent(config, 'forge', moduleId);
+    // Graceful (wait for idle + summary) only on successful completion
+    await killAgent(config, 'forge', moduleId, result.ok);
     clearShutdownContext();
 
     if (!result.ok) {
@@ -4089,6 +4203,22 @@ function buildGateFixPrompt(config, gate, issues, attempt, maxAttempts, fixHisto
     `Buster found ${issues.length} issue(s) during testing. Fix ALL of the following:`,
     '',
     ...issueBlocks,
+    '---',
+    '',
+    '## 🚨 CRITICAL — YOUR FINAL STEP (DO NOT SKIP)',
+    '',
+    'After fixing all issues above, you MUST commit and push your changes.',
+    'This is how the pipeline knows you are done. If you do not do this, your work is lost.',
+    '',
+    '```bash',
+    `cd ${config.repo_root}`,
+    'git add -A',
+    'git commit -m "[forge] Gate fix: <brief description of what you fixed>"',
+    'git push origin',
+    '```',
+    '',
+    'This must be the LAST thing you do before your session ends.',
+    '',
   ].join('\n');
 }
 
@@ -4303,7 +4433,7 @@ async function runBusterGate(config, progress, gateId) {
     const sessionResult = await pollForSessionEnd(config, fixAcpLabel, forgeTimeout, fixLabel);
 
     // Safety net — kill Forge session if still running
-    await killAgent(config, 'forge', fixLabel);
+    await killAgent(config, 'forge', fixLabel, sessionResult.hasChanges);
 
     // Track this fix attempt for anti-pattern framing in subsequent attempts
     fixHistory.push({ attempt, hasChanges: sessionResult.hasChanges, issues });
@@ -4414,7 +4544,7 @@ async function spawnReviewerAgent(config, progress, gateId, reviewer, instructio
     }
 
     log('OK', `Reviewer spawned: ${gatewayLabel} → ${result.childSessionKey}`);
-    trackAgent(config, trackingKey, result.childSessionKey);
+    trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel);
     return { label: trackingKey, childSessionKey: result.childSessionKey, runId: result.runId };
   } catch (e) {
     throw new Error(`Failed to spawn reviewer '${gatewayLabel}': ${e.message}`);
@@ -4424,14 +4554,20 @@ async function spawnReviewerAgent(config, progress, gateId, reviewer, instructio
 /**
  * Kill a reviewer agent via Gateway Tool API.
  */
-async function killReviewerAgent(config, gateId, reviewer) {
+async function killReviewerAgent(config, gateId, reviewer, graceful = false) {
   const label = `echo-${reviewer.label}-${gateId}`;
-  const sessionKey = _shutdownState.activeSessions.get(label);
+  const entry = _shutdownState.activeSessions.get(label);
+  const sessionKey = entry?.sessionKey;
 
   if (!sessionKey) {
     log('WARN', `No sessionKey for reviewer '${label}' — skipping kill`);
     untrackAgent(label);
     return;
+  }
+
+  if (graceful) {
+    log('INFO', `Waiting for reviewer session to become idle: ${label}`);
+    await waitForSessionIdle(sessionKey);
   }
 
   try {
@@ -4440,6 +4576,7 @@ async function killReviewerAgent(config, gateId, reviewer) {
   } catch {
     log('WARN', `Could not kill reviewer '${label}' — may have already exited`);
   }
+  await acpxCleanup(entry.agentId, entry.gatewayLabel);
   untrackAgent(label);
 }
 
@@ -4588,7 +4725,7 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
   const pollRes = await pollForFile(config, outputFilePath, timeout, `Review '${gateId}'`);
 
   // ── Phase 5: Kill reviewer ──
-  await killReviewerAgent(config, gateId, reviewer);
+  await killReviewerAgent(config, gateId, reviewer, pollRes.ok);
 
   if (!pollRes.ok) {
     log('WARN', `Review poll ended: ${pollRes.reason}. Review file not received.`);
@@ -4707,6 +4844,22 @@ function buildReviewFixPrompt(config, gate, issues, attempt, maxAttempts, fixHis
     `Echo review found ${issues.length} critical issue(s). Fix ALL of the following:`,
     '',
     ...issueBlocks,
+    '---',
+    '',
+    '## 🚨 CRITICAL — YOUR FINAL STEP (DO NOT SKIP)',
+    '',
+    'After fixing all issues above, you MUST commit and push your changes.',
+    'This is how the pipeline knows you are done. If you do not do this, your work is lost.',
+    '',
+    '```bash',
+    `cd ${config.repo_root}`,
+    'git add -A',
+    'git commit -m "[forge] Review fix: <brief description of what you fixed>"',
+    'git push origin',
+    '```',
+    '',
+    'This must be the LAST thing you do before your session ends.',
+    '',
   ].join('\n');
 }
 
@@ -4851,7 +5004,7 @@ async function runReviewGate(config, progress, gateId) {
       const sessionResult = await pollForSessionEnd(
         config, fixAcpLabel, reviewConfig.timeout ?? config.default_timeout_minutes, fixLabel);
 
-      await killAgent(config, 'forge', fixLabel);
+      await killAgent(config, 'forge', fixLabel, sessionResult.hasChanges);
 
       // Track this fix attempt for anti-pattern framing in subsequent attempts
       fixHistory.push({ attempt: cycle, hasChanges: sessionResult.hasChanges, issues });
@@ -4935,7 +5088,7 @@ async function runReviewGate(config, progress, gateId) {
       const sessionResult = await pollForSessionEnd(
         config, fixAcpLabel, reviewConfig.timeout ?? config.default_timeout_minutes, fixLabel);
 
-      await killAgent(config, 'forge', fixLabel);
+      await killAgent(config, 'forge', fixLabel, sessionResult.hasChanges);
 
       // Track this fix attempt for anti-pattern framing in subsequent attempts
       fixHistory.push({ attempt: cycle, hasChanges: sessionResult.hasChanges, issues: currentIssues });

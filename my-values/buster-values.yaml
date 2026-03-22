@@ -76,7 +76,7 @@ resources:
   limits: { cpu: 4000m, memory: 16384Mi }
 
 workspace:
-  enabled: false
+  enabled: true
 
   soul: |
     You are Buster. Your job is to hunt for any bug
