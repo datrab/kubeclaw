@@ -242,17 +242,36 @@ const lib = {
       // Proceed with commit+push despite verify failure (scope check + push still needed)
       try {
         const repoRoot = execFileSync('git', ['rev-parse', '--show-toplevel'], { encoding: 'utf8' }).trim();
+        let currentBranch;
+        try {
+          currentBranch = execFileSync('git', ['-C', repoRoot, 'rev-parse', '--abbrev-ref', 'HEAD'], { encoding: 'utf8' }).trim();
+        } catch { currentBranch = 'main'; }
+
         execFileSync('git', ['-C', repoRoot, 'add', '-A'], { encoding: 'utf8', timeout: 10000 });
         execFileSync('git', ['-C', repoRoot, 'commit', '-m',
           `[${agentRole.toUpperCase()}] Module ${moduleId}: ${status} (verify-task warning: ${isMemoryError ? 'no memory' : 'error'})`],
           { encoding: 'utf8', timeout: 10000 });
-        // Rebase onto remote before push to avoid conflicts
-        try {
-          execFileSync('git', ['-C', repoRoot, 'pull', '--rebase', 'origin'], { encoding: 'utf8', timeout: 30000 });
-        } catch {
-          try { execFileSync('git', ['-C', repoRoot, 'rebase', '--abort'], { encoding: 'utf8' }); } catch { /* ok */ }
+
+        // Push with rebase-before-each-attempt (handles concurrent pipeline pushes)
+        let pushed = false;
+        for (let attempt = 1; attempt <= 3; attempt++) {
+          try {
+            execFileSync('git', ['-C', repoRoot, 'pull', '--rebase', 'origin', currentBranch],
+              { encoding: 'utf8', timeout: 30000 });
+          } catch {
+            try { execFileSync('git', ['-C', repoRoot, 'rebase', '--abort'], { encoding: 'utf8' }); } catch { /* ok */ }
+            if (attempt < 3) { execFileSync('sleep', ['2']); continue; }
+          }
+          try {
+            execFileSync('git', ['-C', repoRoot, 'push', 'origin', `HEAD:${currentBranch}`],
+              { encoding: 'utf8', timeout: 60000 });
+            pushed = true;
+            break;
+          } catch (e) {
+            if (attempt < 3) { execFileSync('sleep', ['2']); continue; }
+            throw e;
+          }
         }
-        execFileSync('git', ['-C', repoRoot, 'push', 'origin'], { encoding: 'utf8', timeout: 30000 });
         console.log('[COMPLETE] Fallback commit+push succeeded');
       } catch (gitErr) {
         console.warn(`[COMPLETE] Fallback commit+push failed: ${gitErr.message}`);

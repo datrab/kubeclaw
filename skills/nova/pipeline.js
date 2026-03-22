@@ -1299,7 +1299,8 @@ function modelToHarness(modelId) {
 
 // ── ACP Dispatch (Forge, Echo) — via Gateway Tool API ──
 // sessions_spawn with runtime: "acp" — see https://docs.openclaw.ai/tools/acp-agents
-// Tool API modes: 'run' (one-shot) | 'session' (persistent, requires thread: true)
+// Always oneshot (mode: 'run') — pipeline owns the session lifecycle.
+// Sessions auto-close after task completion, preventing accumulation and stale-session errors.
 
 async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
   const agentConfig = config.agents[agentType];
@@ -1323,7 +1324,7 @@ async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
     model: model,
     cwd: cwd,
     thread: useThread,
-    mode: useThread ? 'session' : 'run',  // Thread-bound if Discord available, headless otherwise
+    mode: 'run',                // Always oneshot — session closes after task completes
     cleanup: 'keep',            // Keep transcript for post-mortem
   };
 
@@ -2561,25 +2562,46 @@ async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes, o
         }
 
         if (!sessionActive) {
-          // Session ended — check if Forge produced changes
+          // Session ended — commit any uncommitted changes, then check if HEAD moved.
+          // With oneshot mode, Forge may write files but not commit them.
+          // Pipeline owns all git operations — commit whatever Forge produced.
+
+          // Phase 1: Commit uncommitted file changes (Forge wrote files but didn't commit)
+          let committedLocally = false;
+          try {
+            gitExec(config.repo_root, ['add', '-A'], { stdio: 'ignore' });
+            const porcelain = gitExec(config.repo_root, ['status', '--porcelain']);
+            if (porcelain) {
+              gitExec(config.repo_root, ['commit', '-m', `[pipeline] Forge output: ${moduleDir} (auto-committed on session end)`], { stdio: 'ignore' });
+              invalidateHeadHash();
+              committedLocally = true;
+              log('OK', `Session ended — committed uncommitted Forge output for ${moduleDir}`);
+            }
+          } catch (e) {
+            log('DEBUG', `Post-session commit: ${e.message?.split('\n')[0]}`);
+          }
+
+          // Phase 2: Check if HEAD moved (local commit above OR Forge committed directly)
           gitPullForPolling(config);
           invalidateHeadHash();
           const headNow = headHash();
 
-          if (headNow !== headBefore) {
-            // Forge committed but didn't write READY_FOR_TESTING → auto-advance
-            log('WARN', `Session ended + HEAD moved (${headBefore} → ${headNow}) — auto-advancing to READY_FOR_TESTING`);
+          if (headNow !== headBefore || committedLocally) {
+            // Forge produced changes → auto-advance to READY_FOR_TESTING
+            log('WARN', `Session ended + changes detected (${headBefore} → ${headNow}${committedLocally ? ', includes uncommitted' : ''}) — auto-advancing to READY_FOR_TESTING`);
             const currentStatus = loadStatus(config, moduleDir) || status || {};
             currentStatus.status = STATUS.READY_FOR_TESTING;
             addHistory(currentStatus, STATUS.READY_FOR_TESTING, 'pipeline',
-              'Auto-advanced: Forge session ended with commits but did not update status.json');
+              `Auto-advanced: Forge session ended${committedLocally ? ' (uncommitted changes committed by pipeline)' : ' with commits'} but did not update status.json`);
             saveStatus(config, moduleDir, currentStatus);
-            await discord(config, 'WARN', `Forge stall recovered (${moduleDir})`,
-              'Forge session ended with commits but did not write READY_FOR_TESTING. Pipeline auto-advanced.');
+            await discord(config, 'INFO', `Forge session ended → READY_FOR_TESTING (${moduleDir})`,
+              committedLocally
+                ? 'Forge wrote files but did not commit or update status.json. Pipeline committed and advanced.'
+                : 'Forge committed but did not write READY_FOR_TESTING. Pipeline auto-advanced.');
             return { done: true, result: pollResult(true, 'target_reached', currentStatus) };
           } else {
             // Session ended with no changes — Forge crashed or produced nothing
-            log('WARN', `Session ended but HEAD unchanged — Forge produced no output`);
+            log('WARN', `Session ended but no changes detected — Forge produced no output`);
             return { done: true, result: pollResult(false, 'session_ended_no_changes', status) };
           }
         }
@@ -3798,6 +3820,15 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     }
 
     log('OK', 'Forge complete → READY_FOR_TESTING');
+
+    // ── Discord: Forge completion summary ──
+    const forgeDurationSec = Math.round((Date.now() - new Date(status.started_at).getTime()) / 1000);
+    const forgeNextStep = stages.includes('buster') ? 'Buster' : 'done (no Buster)';
+    await discord(config, 'OK', `Module ${moduleId} Forge complete → ${forgeNextStep}`, mod.title, [
+      { name: 'Forge Duration', value: `${Math.round(forgeDurationSec / 60)}min` },
+      { name: 'Model', value: forgeModel },
+      { name: 'Attempt', value: `${status.fail_count + 1}/${maxFails}` },
+    ]);
   }
 
   // ──────────────────────────────────────────────────────────────────────────
@@ -4531,7 +4562,7 @@ async function spawnReviewerAgent(config, progress, gateId, reviewer, instructio
     model: model,
     cwd: cwd,
     thread: useThread,
-    mode: useThread ? 'session' : 'run',
+    mode: 'run',                // Always oneshot — session closes after task completes
     cleanup: 'keep',
   };
 
@@ -4714,6 +4745,8 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
     log('DEBUG', `Echo prompt saved: ${reviewDir}/prompts/${RUN_ID}/echo-${gateId}-${reviewer.label}.md`);
   } catch { /* non-critical */ }
 
+  const echoStartTime = Date.now();
+
   try {
     await spawnReviewerAgent(config, progress, gateId, reviewer, reviewerPrompt);
   } catch (e) {
@@ -4731,6 +4764,15 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
     log('WARN', `Review poll ended: ${pollRes.reason}. Review file not received.`);
     return { ok: false, error: `Review file not received (${pollRes.reason})` };
   }
+
+  // ── Discord: Echo completion summary ──
+  const echoDurationSec = Math.round((Date.now() - echoStartTime) / 1000);
+  const echoModel = resolveModel('echo', config, progress, reviewer.model);
+  await discord(config, 'INFO', `Echo complete: ${gate.title}`, `Reviewer: ${reviewer.label}`, [
+    { name: 'Duration', value: `${Math.round(echoDurationSec / 60)}min` },
+    { name: 'Model', value: echoModel },
+    { name: 'Reviewer', value: reviewer.label },
+  ]);
 
   // ── Phase 6: Commit review output ──
   await gitCommitAndPush(config,

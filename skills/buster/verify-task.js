@@ -197,32 +197,45 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
       return { status: 'success', action: 'reverted_all_bad_files', logs };
     }
 
+    // Detect current branch — needed for explicit pull/push targets
+    let currentBranch;
+    try {
+      currentBranch = gitExec(repoRoot, ['rev-parse', '--abbrev-ref', 'HEAD']);
+    } catch {
+      currentBranch = 'main'; // safe fallback
+    }
+    log(`[Verify] Current branch: ${currentBranch}`);
+
     // Scoped add — only the project directory, not the entire repo
     gitExec(repoRoot, ['add', projectRoot], { stdio: 'ignore' });
     gitExec(repoRoot, ['commit', '-m', commitMessage], { stdio: 'ignore' });
 
-    // Rebase onto remote BEFORE push to avoid conflicts.
-    // Our commit gets replayed on top of any remote changes.
-    try {
-      gitExec(repoRoot, ['pull', '--rebase', 'origin'], { stdio: 'ignore', timeout: 30000 });
-    } catch (rebaseErr) {
-      log(`⚠️ [Verify] Rebase warning: ${rebaseErr.message?.split('\n')[0]}`);
-      // If rebase fails (true conflict), abort and try push anyway — push retry may still work
-      try { gitExec(repoRoot, ['rebase', '--abort'], { stdio: 'ignore' }); } catch { /* ok */ }
-    }
-
-    // Push with simple retry (network transients)
+    // Push with rebase-before-each-attempt strategy.
+    // Each attempt: pull --rebase (explicit branch) → push.
+    // This handles concurrent pushes from pipeline/other agents.
     let pushed = false;
     for (let attempt = 1; attempt <= 3; attempt++) {
+      // Rebase onto remote BEFORE push to incorporate any concurrent changes
       try {
-        gitExec(repoRoot, ['push', 'origin', 'HEAD'], { stdio: 'ignore', timeout: 60000 });
+        gitExec(repoRoot, ['pull', '--rebase', 'origin', currentBranch], { stdio: 'ignore', timeout: 30000 });
+      } catch (rebaseErr) {
+        log(`⚠️ [Verify] Rebase attempt ${attempt}/3: ${rebaseErr.message?.split('\n')[0]}`);
+        // Abort rebase to get back to a clean state, then retry
+        try { gitExec(repoRoot, ['rebase', '--abort'], { stdio: 'ignore' }); } catch { /* ok */ }
+        if (attempt < 3) {
+          execFileSync('sleep', ['2']);
+          continue;
+        }
+      }
+
+      try {
+        gitExec(repoRoot, ['push', 'origin', `HEAD:${currentBranch}`], { stdio: 'ignore', timeout: 60000 });
         pushed = true;
         break;
       } catch (e) {
         if (attempt === 3) throw e;
         log(`⚠️ [Verify] Push attempt ${attempt}/3 failed: ${e.message?.split('\n')[0]}`);
-        // Brief synchronous wait
-        execFileSync('sleep', ['3']);
+        execFileSync('sleep', ['2']);
       }
     }
 

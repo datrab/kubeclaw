@@ -173,9 +173,9 @@ async function discord(embed) {
 
 async function notifyTaskResult(id, sender, taskType, success, errObj = null) {
   const fields = [
-    { name: 'Task ID',  value: `\`${id}\``,       inline: true },
-    { name: 'Type',     value: `\`${taskType}\``, inline: true },
-    { name: 'Sender',   value: `\`${sender}\``,   inline: true },
+    { name: 'Task ID',  value: `\`${id}\``,         inline: true },
+    { name: 'Type',     value: `\`${taskType}\``,   inline: true },
+    { name: 'Sender',   value: `\`${AGENT_NAME}\``, inline: true },
   ];
 
   if (!success && errObj) {
@@ -186,8 +186,8 @@ async function notifyTaskResult(id, sender, taskType, success, errObj = null) {
 
   await discord({
     title: success
-      ? `✅ Task Complete: ${sender} ➔ ${AGENT_NAME}`
-      : `❌ Task Failed: ${sender} ➔ ${AGENT_NAME}`,
+      ? `✅ Task Complete: ${AGENT_NAME} ➔ ${sender}`
+      : `❌ Task Failed: ${AGENT_NAME} ➔ ${sender}`,
     color: success ? 5763719 : 15548997,
     fields,
     footer: { text: `Buster Orchestrator v1.1 • ${new Date().toISOString()}` },
@@ -445,7 +445,7 @@ async function spawnBusterSession(payload, prompt, timeoutSeconds) {
     runtime: 'acp',
     label,
     thread: useThread,
-    mode: useThread ? 'session' : 'run',
+    mode: 'run',                // Always oneshot — session closes after task completes
     runTimeoutSeconds: timeoutSeconds,
     cleanup: 'keep',
   };
