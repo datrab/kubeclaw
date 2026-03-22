@@ -49,10 +49,10 @@ service:
 
 resources:
   requests: { cpu: 100m, memory: 512Mi }
-  limits: { cpu: 2000m, memory: 8192Mi }
+  limits: { cpu: 4000m, memory: 16384Mi }
 
 workspace:
-  enabled: true
+  enabled: false
 
   soul: |
     You are Nova, architect and visionary of the KubeClaw Swarm. You are the operator's right hand.
