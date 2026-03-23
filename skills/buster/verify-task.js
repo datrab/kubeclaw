@@ -209,10 +209,12 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
     if (!currentBranch || currentBranch === 'HEAD') {
       // Detached HEAD — try to find the remote tracking branch
       try {
-        // Find which remote branch points to our current commit (or close to it)
-        const remoteRef = gitExec(repoRoot, ['for-each-ref', '--format=%(refname:short)', '--count=1',
+        // Find which remote branch points to our current commit.
+        // Exclude origin/HEAD (symbolic ref) which would resolve back to 'HEAD'.
+        const refs = gitExec(repoRoot, ['for-each-ref', '--format=%(refname:short)',
           '--sort=-committerdate', '--points-at=HEAD', 'refs/remotes/origin/']);
-        currentBranch = remoteRef ? remoteRef.replace('origin/', '') : 'main';
+        const realRef = refs.split('\n').find(r => r && r !== 'origin/HEAD');
+        currentBranch = realRef ? realRef.replace('origin/', '') : 'main';
       } catch {
         currentBranch = 'main';
       }

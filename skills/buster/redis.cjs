@@ -226,9 +226,10 @@ const lib = {
         } catch { currentBranch = 'HEAD'; }
         if (!currentBranch || currentBranch === 'HEAD') {
           try {
-            const ref = execFileSync('git', ['-C', repoRoot, 'for-each-ref', '--format=%(refname:short)', '--count=1',
+            const refs = execFileSync('git', ['-C', repoRoot, 'for-each-ref', '--format=%(refname:short)',
               '--sort=-committerdate', '--points-at=HEAD', 'refs/remotes/origin/'], { encoding: 'utf8' }).trim();
-            currentBranch = ref ? ref.replace('origin/', '') : 'main';
+            const realRef = refs.split('\n').find(r => r && r !== 'origin/HEAD');
+            currentBranch = realRef ? realRef.replace('origin/', '') : 'main';
           } catch { currentBranch = 'main'; }
         }
 
