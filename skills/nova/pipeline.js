@@ -1674,14 +1674,15 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
     return { completed: false, hasChanges: false, reason: 'no_session_key' };
   }
 
-  // Capture HEAD before Forge starts — used as fallback change detection
+  // Capture HEAD before Forge starts — used for change detection
   const headBefore = headHash();
 
-  // Startup grace period: ACP oneshot sessions can take 35–60s to initialize.
-  // During that window, session_status returns 'idle' which looks like "not active".
-  // Don't declare session dead until grace period expires.
-  const STARTUP_GRACE_MS = 180000; // 180s
-  let sessionDeadCycles = 0;
+  // No session_status polling — 'idle' is ambiguous with oneshot sessions
+  // (can mean initializing, between tool calls, or finished).
+  // Instead: detect when the agent pushes commits (HEAD movement).
+  // Grace period after last HEAD change ensures the agent is truly done.
+  const POST_CHANGE_GRACE_MS = 60000; // 60s of no new changes after HEAD moves = done
+  let lastHeadChangeTime = 0;
 
   log('INFO', `[${logLabel}] Waiting for session '${sessionLabel}' (${sessionKey}) to complete | timeout: ${timeoutMinutes}min`);
 
@@ -1689,67 +1690,34 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
     await sleep(interval);
     gitPullForPolling(config);
 
-    let sessionActive = false;
-    try {
-      const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
-      const statusResult = raw?.result?.details || raw;
-      const parsed = parseSessionState(statusResult);
-      sessionActive = parsed.active;
-      if (!sessionActive) {
-        log('INFO', `[${logLabel}] Session state: '${parsed.state}'`);
-      }
-    } catch {
-      // Session gone = finished or crashed (404 / connection error)
-      sessionActive = false;
+    // Check if HEAD moved (agent pushed commits)
+    invalidateHeadHash();
+    const headNow = headHash();
+
+    if (headNow !== headBefore && headNow !== (lastHeadChangeTime ? headHash() : null)) {
+      lastHeadChangeTime = Date.now();
+      log('INFO', `[${logLabel}] HEAD moved — agent pushed changes. Waiting ${POST_CHANGE_GRACE_MS / 1000}s grace for more...`);
     }
 
-    if (!sessionActive) {
-      const elapsedSinceSpawn = Date.now() - startTime;
+    // If HEAD moved and grace period expired — agent is done
+    if (lastHeadChangeTime > 0 && (Date.now() - lastHeadChangeTime) >= POST_CHANGE_GRACE_MS) {
+      log('INFO', `[${logLabel}] No new changes for ${POST_CHANGE_GRACE_MS / 1000}s after HEAD movement — session complete`);
 
-      if (elapsedSinceSpawn < STARTUP_GRACE_MS) {
-        log('DEBUG', `[${logLabel}] Session not active but within startup grace (${Math.round(elapsedSinceSpawn / 1000)}s / ${STARTUP_GRACE_MS / 1000}s) — ignoring`);
-        continue;
-      }
-
-      sessionDeadCycles++;
-      if (sessionDeadCycles < 2) {
-        log('INFO', `[${logLabel}] Session not active (dead cycle ${sessionDeadCycles}/2) — confirming...`);
-        continue;
-      }
-
-      log('INFO', `[${logLabel}] Session confirmed ended — detecting changes`);
-
-      // Session ended — detect changes and commit them.
-      let hasChanges = false;
-
-      // Phase 1: Check for uncommitted file changes (agent wrote files but didn't commit)
+      // Commit any remaining uncommitted changes
+      let hasChanges = true;
       try {
         gitExec(config.repo_root, ['add', '-A'], { stdio: 'ignore' });
         const porcelain = gitExec(config.repo_root, ['status', '--porcelain']);
         if (porcelain) {
           gitExec(config.repo_root, ['commit', '-m', `[pipeline] ${logLabel}: agent output`], { stdio: 'ignore' });
           invalidateHeadHash();
-          hasChanges = true;
-          log('OK', `[${logLabel}] Session completed — committed agent output`);
+          log('OK', `[${logLabel}] Committed remaining uncommitted files`);
         }
       } catch (e) {
         log('DEBUG', `[${logLabel}] Post-session commit: ${e.message?.split('\n')[0]}`);
       }
 
-      // Phase 2: Fallback — check if HEAD moved (agent committed directly)
-      if (!hasChanges) {
-        invalidateHeadHash();
-        const headAfter = headHash();
-        hasChanges = headBefore !== headAfter;
-      }
-
-      if (!hasChanges) {
-        log('WARN', `[${logLabel}] Session ended but no changes detected — agent may have crashed or produced no output`);
-      }
-
       return { completed: true, hasChanges, reason: 'session_ended' };
-    } else {
-      sessionDeadCycles = 0;
     }
 
     // ── Timeout nudge ──
@@ -2573,67 +2541,11 @@ async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes, o
       }
     }
 
-    // ── Channel 2: ACP session state (early exit detection) ──
-    if (sessionLabel && headBefore) {
-      const sessionKey = _shutdownState.activeSessions.get(sessionLabel)?.sessionKey;
-      if (sessionKey) {
-        let sessionActive = true;
-        try {
-          const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
-          const statusResult = raw?.result?.details || raw;
-          const parsed = parseSessionState(statusResult);
-          sessionActive = parsed.active;
-        } catch {
-          // Session gone (404 / connection error) = finished or crashed
-          sessionActive = false;
-        }
-
-        if (!sessionActive) {
-          // Session ended — commit any uncommitted changes, then check if HEAD moved.
-          // With oneshot mode, Forge may write files but not commit them.
-          // Pipeline owns all git operations — commit whatever Forge produced.
-
-          // Phase 1: Commit uncommitted file changes (Forge wrote files but didn't commit)
-          let committedLocally = false;
-          try {
-            gitExec(config.repo_root, ['add', '-A'], { stdio: 'ignore' });
-            const porcelain = gitExec(config.repo_root, ['status', '--porcelain']);
-            if (porcelain) {
-              gitExec(config.repo_root, ['commit', '-m', `[pipeline] Forge output: ${moduleDir} (auto-committed on session end)`], { stdio: 'ignore' });
-              invalidateHeadHash();
-              committedLocally = true;
-              log('OK', `Session ended — committed uncommitted Forge output for ${moduleDir}`);
-            }
-          } catch (e) {
-            log('DEBUG', `Post-session commit: ${e.message?.split('\n')[0]}`);
-          }
-
-          // Phase 2: Check if HEAD moved (local commit above OR Forge committed directly)
-          gitPullForPolling(config);
-          invalidateHeadHash();
-          const headNow = headHash();
-
-          if (headNow !== headBefore || committedLocally) {
-            // Forge produced changes → auto-advance to READY_FOR_TESTING
-            log('WARN', `Session ended + changes detected (${headBefore} → ${headNow}${committedLocally ? ', includes uncommitted' : ''}) — auto-advancing to READY_FOR_TESTING`);
-            const currentStatus = loadStatus(config, moduleDir) || status || {};
-            currentStatus.status = STATUS.READY_FOR_TESTING;
-            addHistory(currentStatus, STATUS.READY_FOR_TESTING, 'pipeline',
-              `Auto-advanced: Forge session ended${committedLocally ? ' (uncommitted changes committed by pipeline)' : ' with commits'} but did not update status.json`);
-            saveStatus(config, moduleDir, currentStatus);
-            await discord(config, 'INFO', `Forge session ended → READY_FOR_TESTING (${moduleDir})`,
-              committedLocally
-                ? 'Forge wrote files but did not commit or update status.json. Pipeline committed and advanced.'
-                : 'Forge committed but did not write READY_FOR_TESTING. Pipeline auto-advanced.');
-            return { done: true, result: pollResult(true, 'target_reached', currentStatus) };
-          } else {
-            // Session ended with no changes — Forge crashed or produced nothing
-            log('WARN', `Session ended but no changes detected — Forge produced no output`);
-            return { done: true, result: pollResult(false, 'session_ended_no_changes', status) };
-          }
-        }
-      }
-    }
+    // Note: No ACP session_status polling here.
+    // With oneshot sessions, 'idle' can mean "initializing", "between tool calls",
+    // or "finished" — there's no reliable way to distinguish them.
+    // status.json is the single source of truth for Forge completion.
+    // Timeout catches real crashes.
 
     const logStatus = status?.status || 'no-status-file';
     const logPhase = status?.current_phase || '';
