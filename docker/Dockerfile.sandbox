@@ -37,7 +37,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN npm install -g lighthouse serve playwright 2>/dev/null || true
 RUN npm install -g @axe-core/playwright pixelmatch pngjs ws 2>/dev/null || true
-RUN npx playwright install --with-deps chromium 2>/dev/null || true
+
+# Install Playwright browsers to a fixed, predictable path.
+# screenshot.cjs, a11y.cjs, and visual-reg.cjs all rely on this.
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+RUN npx playwright install --with-deps chromium \
+    && echo "  ✅ Playwright browsers installed at /ms-playwright" \
+    && ls /ms-playwright/
 
 # k6 load testing tool
 ARG K6_VERSION=v0.54.0
@@ -151,6 +157,9 @@ RUN mkdir -p /home/node/.openclaw \
 # 8. Build verification
 RUN echo "=== Build Verification ===" && \
     node -e "require('ioredis'); console.log('  ✅ ioredis')" && \
+    node -e "require('@axe-core/playwright'); console.log('  ✅ @axe-core/playwright')" && \
+    node -e "require('pixelmatch'); console.log('  ✅ pixelmatch')" && \
+    test -d /ms-playwright && echo "  ✅ Playwright browsers at /ms-playwright" && \
     podman --version && echo "  ✅ podman" && \
     k6 version && echo "  ✅ k6" && \
     ls /app/skills/redis.cjs /app/skills/memory.js && echo "  ✅ KubeClaw skills in /app/skills/" && \

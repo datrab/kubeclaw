@@ -17,10 +17,15 @@
 const fs   = require('fs');
 const path = require('path');
 
-// Playwright browser binaries are installed at /ms-playwright in the sandbox image.
-// Set this BEFORE requiring playwright so it finds the correct browser executable.
+// Playwright browser binaries location — depends on how they were installed:
+//   Docker image with pre-installed browsers: /ms-playwright
+//   npx playwright install (runtime):         ~/.cache/ms-playwright/
+// Only override if the expected path exists. Otherwise let Playwright use its default.
 if (!process.env.PLAYWRIGHT_BROWSERS_PATH) {
-  process.env.PLAYWRIGHT_BROWSERS_PATH = '/ms-playwright';
+  if (fs.existsSync('/ms-playwright')) {
+    process.env.PLAYWRIGHT_BROWSERS_PATH = '/ms-playwright';
+  }
+  // else: Playwright uses default ~/.cache/ms-playwright/ — no override needed
 }
 
 // ── Defaults ────────────────────────────────────────────────────

@@ -639,13 +639,6 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
   });
 
   let lastSeenId = '0-0'; // Track position — only read new entries each poll
-  let sessionDeadCycles = 0; // Consecutive cycles where session is not active
-
-  // Startup grace period: ACP oneshot sessions can take 35–60s to produce their
-  // first LLM output. During that window, session_status returns state='idle'
-  // (not running/creating), which would falsely trigger crash detection.
-  // Don't count dead cycles until the grace period expires.
-  const STARTUP_GRACE_MS = 180000; // 180s — generous buffer for slow model init
 
   while (Date.now() < deadline) {
     if (shuttingDown) {
@@ -702,175 +695,13 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
       console.log(`[MONITOR] Redis check: ${e.message}`);
     }
 
-    // ── Channel 2: ACP session status (crash/error detection) ──
-    let sessionActive = false;
-    let lastAcpState = null;
-
-    try {
-      const statusResp = await fetch(GATEWAY_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${GATEWAY_TOKEN}`,
-        },
-        body: JSON.stringify({
-          tool: 'session_status',
-          args: {},
-          sessionKey: childSessionKey,
-        }),
-      });
-      const raw = await statusResp.json().catch(() => ({}));
-      const statusResult = raw?.result?.details || raw;
-      const parsed = parseSessionState(statusResult);
-
-      sessionActive = parsed.active;
-      lastAcpState = parsed.state;
-
-    } catch (e) {
-      // session_status failed (404, network error, etc.) → assume dead
-      sessionActive = false;
-      console.log(`[MONITOR] Session status check failed: ${e.message}`);
-    }
-
-    // ── Dead session detection ──
-    if (!sessionActive) {
-      const elapsedSinceSpawn = Date.now() - startTime;
-
-      if (elapsedSinceSpawn < STARTUP_GRACE_MS) {
-        // Inside startup grace period — don't count dead cycles.
-        // ACP sessions report 'idle' during initialization before first LLM output.
-        console.log(`[MONITOR] Session not active (state=${lastAcpState || 'unknown'}) but within startup grace (${Math.round(elapsedSinceSpawn / 1000)}s / ${STARTUP_GRACE_MS / 1000}s) — ignoring`);
-      } else {
-        sessionDeadCycles++;
-        console.log(`[MONITOR] Session not active: state=${lastAcpState || 'unknown'} (dead cycle ${sessionDeadCycles}/2, grace period expired)`);
-      }
-
-      // Wait 2 consecutive dead cycles to avoid false positives
-      if (sessionDeadCycles >= 2) {
-        console.log(`[MONITOR] Session confirmed dead — checking status.json for salvageable results`);
-
-        // Git pull to get any changes the agent may have pushed before crashing
-        try {
-          await execFileAsync('git', ['-C', REPO_DIR, 'pull', '--rebase', 'origin'], {
-            encoding: 'utf8', timeout: 15000, maxBuffer: 50 * 1024 * 1024,
-          });
-        } catch { /* best effort */ }
-
-        // Read status.json to check if agent completed before crashing
-        let moduleStatus = null;
-        const statusJsonPath = payload.status_json_path
-          ? path.join(REPO_DIR, payload.status_json_path)
-          : payload.module_path
-            ? path.join(REPO_DIR, payload.module_path, 'status.json')
-            : null;
-
-        if (statusJsonPath && fs.existsSync(statusJsonPath)) {
-          try { moduleStatus = JSON.parse(fs.readFileSync(statusJsonPath, 'utf8')); } catch { /* corrupt */ }
-        }
-
-        const elapsed = Math.round((Date.now() - startTime) / 1000);
-        const detectedStatus = moduleStatus?.status || null;
-
-        // If the agent set PASS or FAIL before crashing, honor it
-        if (detectedStatus === 'PASS' || detectedStatus === 'FAIL') {
-          console.log(`[MONITOR] 🔍 Salvaged result from status.json: ${detectedStatus}`);
-
-          // Commit any uncommitted changes the agent left behind
-          try {
-            await execFileAsync('git', ['-C', REPO_DIR, 'add', '-A'], { encoding: 'utf8', timeout: 10000, maxBuffer: 50 * 1024 * 1024 });
-            await execFileAsync('git', ['-C', REPO_DIR, 'commit', '-m',
-              `[buster] Salvaged ${detectedStatus}: agent session crashed before commit`], { encoding: 'utf8', timeout: 10000, maxBuffer: 50 * 1024 * 1024 });
-            // Rebase onto remote before push to avoid conflicts
-            try {
-              await execFileAsync('git', ['-C', REPO_DIR, 'pull', '--rebase', 'origin'], { encoding: 'utf8', timeout: 30000, maxBuffer: 50 * 1024 * 1024 });
-            } catch {
-              try { await execFileAsync('git', ['-C', REPO_DIR, 'rebase', '--abort'], { encoding: 'utf8' }); } catch { /* ok */ }
-            }
-            await execFileAsync('git', ['-C', REPO_DIR, 'push', 'origin'], { encoding: 'utf8', timeout: 30000, maxBuffer: 50 * 1024 * 1024 });
-            console.log(`[MONITOR] Salvaged changes committed and pushed`);
-          } catch (e) {
-            console.warn(`[MONITOR] Salvage commit failed (may already be committed): ${e.message}`);
-          }
-
-          // Send to Redis completion stream so pipeline picks it up
-          try {
-            const fields = [
-              'type', 'completion',
-              'module', moduleId,
-              'task_type', payload.task_type || 'module_test',
-              'status', detectedStatus,
-              'source', 'orchestrator-salvage',
-              'reason', `Session crashed but status.json shows ${detectedStatus}`,
-              'timestamp', Date.now().toString(),
-            ];
-            await redis.xadd(completionStream, '*', ...fields);
-            await redis.xtrim(completionStream, 'MAXLEN', '~', STREAM_MAX_LEN);
-          } catch (e) {
-            console.error(`[MONITOR] Failed to send salvaged completion: ${e.message}`);
-          }
-
-          await discord({
-            title: `${detectedStatus === 'PASS' ? '✅' : '❌'} ACP Session Salvaged: ${moduleId}`,
-            color: detectedStatus === 'PASS' ? 5763719 : 15548997,
-            description: `Session crashed/errored but status.json shows **${detectedStatus}**. Result forwarded to pipeline.`,
-            fields: [
-              { name: 'Status', value: `\`${detectedStatus}\``, inline: true },
-              { name: 'Source', value: '`orchestrator-salvage`', inline: true },
-              { name: 'Duration', value: `${Math.round(elapsed / 60)}min`, inline: true },
-              { name: 'ACP State', value: `\`${lastAcpState || 'unknown'}\``, inline: true },
-              { name: 'Session', value: `\`${childSessionKey}\``, inline: false },
-            ],
-            footer: { text: `Buster Orchestrator v1.1 • ${project}` },
-          });
-
-          await killSession(childSessionKey, _agentId, _spawnLabel);
-          activeSessionKey = null; activeAgentId = null; activeSpawnLabel = null;
-          return;
-        }
-
-        // No salvageable result — agent crashed before completing
-        console.error(`[MONITOR] ❌ Session dead, status.json=${detectedStatus || 'none'} — reporting FAIL`);
-
-        try {
-          const fields = [
-            'type', 'completion',
-            'module', moduleId,
-            'task_type', payload.task_type || 'module_test',
-            'status', 'FAIL',
-            'source', 'orchestrator',
-            'reason', `ACP session ended (state: ${lastAcpState || 'unknown'}) with no completion signal`,
-            'timestamp', Date.now().toString(),
-          ];
-          await redis.xadd(completionStream, '*', ...fields);
-          await redis.xtrim(completionStream, 'MAXLEN', '~', STREAM_MAX_LEN);
-        } catch (e) {
-          console.error(`[MONITOR] Failed to send FAIL: ${e.message}`);
-        }
-
-        await discord({
-          title: `💀 ACP Session Crashed: ${moduleId}`,
-          color: 15548997,
-          description: `Session ended without completing. No salvageable result in status.json.`,
-          fields: [
-            { name: 'ACP State', value: `\`${lastAcpState || 'unknown'}\``, inline: true },
-            { name: 'Duration', value: `${Math.round(elapsed / 60)}min`, inline: true },
-            { name: 'status.json', value: `\`${detectedStatus || 'not found'}\``, inline: true },
-            { name: 'Session', value: `\`${childSessionKey}\``, inline: false },
-          ],
-          footer: { text: `Buster Orchestrator v1.1 • ${project}` },
-        });
-
-        await killSession(childSessionKey, _agentId, _spawnLabel);
-        activeSessionKey = null; activeAgentId = null; activeSpawnLabel = null;
-        return;
-      }
-    } else {
-      sessionDeadCycles = 0; // Reset on active session
-    }
+    // No session_status polling — the ACP state is unreliable for crash detection.
+    // 'idle' can mean "initializing", "between tool calls", or "finished".
+    // Redis completion is the single source of truth. Timeout catches real crashes.
 
     const elapsed = Math.round((Date.now() - startTime) / 1000);
     const remaining = Math.round((deadline - Date.now()) / 1000);
-    console.log(`[MONITOR] ${childSessionKey} running... ${elapsed}s elapsed, ${remaining}s remaining`);
+    console.log(`[MONITOR] ${childSessionKey} waiting for Redis completion... ${elapsed}s elapsed, ${remaining}s remaining`);
   }
 
   // Timeout
