@@ -53,10 +53,99 @@ const DEFAULTS = {
   repo_dir:        '/home/node/.openclaw/workspace/git-repo',
 };
 
+const WEBHOOK_URL = process.env.DISCORD_WEBHOOK || '';
+
 // ── Helpers ─────────────────────────────────────────────────────
 
 function log(msg) {
   console.log(`[SUITE] [VISUAL-REG] ${msg}`);
+}
+
+/**
+ * Send screenshot(s) to Discord webhook as image attachments.
+ * Non-critical — failure is logged but never affects the suite result.
+ */
+async function discordScreenshot(moduleId, actualPath, diffPath, diffPercent, status) {
+  if (!WEBHOOK_URL) return;
+  try {
+    const boundary = `----VisRegBoundary${Date.now()}`;
+    const parts = [];
+
+    // Embed with context
+    const icon = status === 'NEW_BASELINE' ? '🆕'
+               : status === STATUS.PASS ? '✅'
+               : status === STATUS.FAIL ? '❌' : '📸';
+    const embedJson = JSON.stringify({
+      embeds: [{
+        title: `${icon} Visual Regression: Module ${moduleId}`,
+        color: status === 'NEW_BASELINE' ? 3447003 : (diffPercent === 0 ? 5763719 : (diffPercent > 5 ? 15548997 : 16776960)),
+        description: status === 'NEW_BASELINE'
+          ? 'New baseline generated from HTML design reference.'
+          : diffPercent === 0
+            ? 'Pixel-perfect match with baseline.'
+            : `**${diffPercent}%** pixel difference detected.`,
+        fields: [
+          { name: 'Status', value: status === 'NEW_BASELINE' ? 'New Baseline' : status, inline: true },
+          ...(status !== 'NEW_BASELINE' ? [{ name: 'Diff', value: `${diffPercent}%`, inline: true }] : []),
+        ],
+        image: { url: 'attachment://screenshot.png' },
+        footer: { text: `Buster Visual-Reg • ${new Date().toISOString()}` },
+      }],
+    });
+
+    // Part 1: payload_json
+    parts.push(
+      `--${boundary}\r\n` +
+      'Content-Disposition: form-data; name="payload_json"\r\n' +
+      'Content-Type: application/json\r\n\r\n' +
+      embedJson
+    );
+
+    // Part 2: actual screenshot
+    const actualData = fs.readFileSync(actualPath);
+    parts.push(
+      `\r\n--${boundary}\r\n` +
+      'Content-Disposition: form-data; name="files[0]"; filename="screenshot.png"\r\n' +
+      'Content-Type: image/png\r\n\r\n'
+    );
+
+    // Part 3: diff image (if exists and has differences)
+    let diffData = null;
+    if (diffPath && diffPercent > 0 && fs.existsSync(diffPath)) {
+      diffData = fs.readFileSync(diffPath);
+    }
+
+    // Build binary body
+    const bodyParts = [
+      Buffer.from(parts[0], 'utf8'),
+      Buffer.from(parts[1], 'utf8'),
+      actualData,
+    ];
+
+    if (diffData) {
+      bodyParts.push(Buffer.from(
+        `\r\n--${boundary}\r\n` +
+        'Content-Disposition: form-data; name="files[1]"; filename="diff.png"\r\n' +
+        'Content-Type: image/png\r\n\r\n',
+        'utf8'
+      ));
+      bodyParts.push(diffData);
+    }
+
+    bodyParts.push(Buffer.from(`\r\n--${boundary}--\r\n`, 'utf8'));
+
+    const body = Buffer.concat(bodyParts);
+
+    await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': `multipart/form-data; boundary=${boundary}` },
+      body,
+    });
+
+    log(`Discord: screenshot sent (${(actualData.length / 1024).toFixed(0)} KB${diffData ? ` + diff ${(diffData.length / 1024).toFixed(0)} KB` : ''})`);
+  } catch (e) {
+    log(`Discord screenshot failed (non-critical): ${e.message}`);
+  }
 }
 
 /**
@@ -131,11 +220,16 @@ module.exports = async function visualRegSuite(context) {
   const urlPath = vrConf.path || DEFAULTS.path;
   const url  = `http://localhost:${port}${urlPath}`;
 
-  // Baseline location
-  const repoDir      = vrConf.repo_dir || DEFAULTS.repo_dir;
+  // Baseline location — resolve against project_dir (not repo_dir)
+  // so relative paths like '.swarm/modules/<dir>/baselines' work correctly
+  const repoDir      = DEFAULTS.repo_dir;
+  const rawProjectDir = serve.project_dir || '';
+  const projectDir   = rawProjectDir
+    ? (path.isAbsolute(rawProjectDir) ? rawProjectDir : path.join(repoDir, rawProjectDir))
+    : repoDir;
   const baselineDir  = vrConf.baseline_dir
-    ? path.resolve(repoDir, vrConf.baseline_dir)
-    : path.join(repoDir, '.swarm/baselines');
+    ? path.resolve(projectDir, vrConf.baseline_dir)
+    : path.join(projectDir, '.swarm/baselines');
   const baselineFile = vrConf.baseline_file || DEFAULTS.baseline_file;
   const baselinePath = path.join(baselineDir, baselineFile);
 
@@ -165,6 +259,8 @@ module.exports = async function visualRegSuite(context) {
           fullPage: vrConf.fullPage ?? true,
         });
         log(`Baseline generated: ${baselinePath}`);
+        // Send newly generated baseline to Discord
+        await discordScreenshot(context.module, baselinePath, null, 0, 'NEW_BASELINE');
       } catch (err) {
         const duration_ms = Date.now() - startTime;
         log(`Failed to generate baseline from HTML: ${err.message}`);
@@ -260,6 +356,9 @@ module.exports = async function visualRegSuite(context) {
   const icon = status === STATUS.PASS ? '✅' : '⚠️';
 
   log(`${icon} ${enforced ? 'enforced' : 'informational'}: ${diffPercent}% diff (${duration_ms}ms)`);
+
+  // 6. Send screenshot(s) to Discord
+  await discordScreenshot(context.module, actualPath, diffPath, diffPercent, status);
 
   return createSuiteVerdict('visual-reg', status, {
     critical: false,
