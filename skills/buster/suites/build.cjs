@@ -135,7 +135,7 @@ function parseErrors(output, source = 'stderr') {
 async function buildStatic(config) {
   const image      = config.image      || DEFAULTS.image;
   const buildCmd   = config.build_cmd  || DEFAULTS.build_cmd;
-  const projectDir = config.project_dir || DEFAULTS.project_dir;
+  const projectDir = resolveRepoPath(config.project_dir || DEFAULTS.project_dir);
   const timeout    = (config.timeout   || DEFAULTS.timeout) * 1000;
 
   log(`Static build: image=${image} cmd="${buildCmd}" dir=${projectDir}`);

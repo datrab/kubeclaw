@@ -245,26 +245,33 @@ const lib = {
         let currentBranch;
         try {
           currentBranch = execFileSync('git', ['-C', repoRoot, 'rev-parse', '--abbrev-ref', 'HEAD'], { encoding: 'utf8' }).trim();
-        } catch { currentBranch = 'main'; }
+        } catch { currentBranch = 'HEAD'; }
+        if (!currentBranch || currentBranch === 'HEAD') {
+          try {
+            const ref = execFileSync('git', ['-C', repoRoot, 'for-each-ref', '--format=%(refname:short)', '--count=1',
+              '--sort=-committerdate', '--points-at=HEAD', 'refs/remotes/origin/'], { encoding: 'utf8' }).trim();
+            currentBranch = ref ? ref.replace('origin/', '') : 'main';
+          } catch { currentBranch = 'main'; }
+        }
 
-        execFileSync('git', ['-C', repoRoot, 'add', '-A'], { encoding: 'utf8', timeout: 10000 });
+        execFileSync('git', ['-C', repoRoot, 'add', '-A'], { encoding: 'utf8', timeout: 10000, maxBuffer: 50 * 1024 * 1024 });
         execFileSync('git', ['-C', repoRoot, 'commit', '-m',
           `[${agentRole.toUpperCase()}] Module ${moduleId}: ${status} (verify-task warning: ${isMemoryError ? 'no memory' : 'error'})`],
-          { encoding: 'utf8', timeout: 10000 });
+          { encoding: 'utf8', timeout: 10000, maxBuffer: 50 * 1024 * 1024 });
 
         // Push with rebase-before-each-attempt (handles concurrent pipeline pushes)
         let pushed = false;
         for (let attempt = 1; attempt <= 3; attempt++) {
           try {
             execFileSync('git', ['-C', repoRoot, 'pull', '--rebase', 'origin', currentBranch],
-              { encoding: 'utf8', timeout: 30000 });
+              { encoding: 'utf8', timeout: 30000, maxBuffer: 50 * 1024 * 1024 });
           } catch {
             try { execFileSync('git', ['-C', repoRoot, 'rebase', '--abort'], { encoding: 'utf8' }); } catch { /* ok */ }
             if (attempt < 3) { execFileSync('sleep', ['2']); continue; }
           }
           try {
             execFileSync('git', ['-C', repoRoot, 'push', 'origin', `HEAD:${currentBranch}`],
-              { encoding: 'utf8', timeout: 60000 });
+              { encoding: 'utf8', timeout: 60000, maxBuffer: 50 * 1024 * 1024 });
             pushed = true;
             break;
           } catch (e) {

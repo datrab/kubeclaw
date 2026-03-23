@@ -54,7 +54,7 @@ import os from 'os';
  * @returns {string} stdout (trimmed)
  */
 function gitExec(repoRoot, args, opts = {}) {
-  const defaults = { encoding: 'utf8', timeout: 30000 };
+  const defaults = { encoding: 'utf8', timeout: 30000, maxBuffer: 50 * 1024 * 1024 };
   const result = execFileSync('git', ['-C', repoRoot, ...args], { ...defaults, ...opts });
   return typeof result === 'string' ? result.trim() : '';
 }
@@ -67,7 +67,7 @@ function gitExec(repoRoot, args, opts = {}) {
  * @returns {string} stdout (trimmed)
  */
 function nodeExec(scriptPath, args, opts = {}) {
-  const defaults = { encoding: 'utf8', timeout: 30000 };
+  const defaults = { encoding: 'utf8', timeout: 30000, maxBuffer: 50 * 1024 * 1024 };
   const result = execFileSync('node', [scriptPath, ...args], { ...defaults, ...opts });
   return typeof result === 'string' ? result.trim() : '';
 }
@@ -161,23 +161,6 @@ async function gatewayInvoke(tool, args, timeoutMs = 30000, opts = {}, extraHead
       clearTimeout(timer);
     }
   }
-}
-
-/**
- * Build Discord context headers for thread-bound ACP spawns.
- * When present, the gateway creates a new Discord thread for the session,
- * providing real-time observability of agent activity.
- *
- * Returns empty object if no Discord channel is configured (graceful degradation).
- */
-function discordSpawnHeaders() {
-  const channelId = process.env.DISCORD_CHANNEL_ID || process.env.DISCORD_CHANNEL || '';
-  if (!channelId) return {};
-  return {
-    'x-openclaw-message-channel': 'discord',
-    'x-openclaw-account-id': 'default',
-    'x-openclaw-message-to': `channel:${channelId}`,
-  };
 }
 
 // ─── Path Validation ─────────────────────────────────────────────────────────
@@ -404,9 +387,9 @@ function registerShutdownHooks() {
  * @param {string} agentId - Harness name (e.g. 'claude', 'codex') for acpx cleanup
  * @param {string} gatewayLabel - Unique label sent to Gateway for acpx session close
  */
-function trackAgent(config, label, sessionKey, agentId, gatewayLabel) {
+function trackAgent(config, label, sessionKey, agentId, gatewayLabel, streamLogPath = null) {
   _shutdownState.config = config;
-  _shutdownState.activeSessions.set(label, { sessionKey, agentId, gatewayLabel });
+  _shutdownState.activeSessions.set(label, { sessionKey, agentId, gatewayLabel, streamLogPath });
 }
 
 /**
@@ -429,7 +412,7 @@ function setShutdownContext(config, agentType, moduleId, statusDir) {
     const label = acpLabel(agentType, moduleId);
     // Pre-set with null sessionKey — updated by trackAgent after spawn succeeds
     if (!_shutdownState.activeSessions.has(label)) {
-      _shutdownState.activeSessions.set(label, { sessionKey: null, agentId: null, gatewayLabel: null });
+      _shutdownState.activeSessions.set(label, { sessionKey: null, agentId: null, gatewayLabel: null, streamLogPath: null });
     }
     _shutdownState.currentLabel = label;
   } else {
@@ -751,6 +734,39 @@ function savePrompt(config, dir, agentType, attempt, prompt) {
     log('DEBUG', `Prompt saved: ${relPath(config, filePath)} (${prompt.length} chars)`);
   } catch (e) {
     log('DEBUG', `Prompt save failed (non-critical): ${e.message}`);
+  }
+}
+
+/**
+ * Copy ACP stream log (JSONL) from the gateway's streamLogPath into the
+ * module's .swarm streams directory for post-mortem analysis and git persistence.
+ *
+ * Directory: .swarm/modules/<dir>/streams/<RUN_ID>/
+ *
+ * Called after session ends (in pollStatus / pollForSessionEnd).
+ * Non-critical — failure is logged but never blocks the pipeline.
+ *
+ * @param {object} config - Pipeline config
+ * @param {string} dir - Module directory (e.g. '08-git-build-pipeline')
+ * @param {string} agentType - 'forge', 'buster', or 'echo'
+ * @param {number} attempt - Current attempt number
+ * @param {string} streamLogPath - Absolute path to the JSONL stream file
+ */
+function saveStreamLog(config, dir, agentType, attempt, streamLogPath) {
+  if (!streamLogPath) return;
+  try {
+    if (!fs.existsSync(streamLogPath)) {
+      log('DEBUG', `Stream log not found: ${streamLogPath}`);
+      return;
+    }
+    const streamDir = path.join(modulePath(config, dir), 'streams', RUN_ID);
+    fs.mkdirSync(streamDir, { recursive: true });
+    const destPath = path.join(streamDir, `${agentType}-stream-attempt-${attempt}.jsonl`);
+    fs.copyFileSync(streamLogPath, destPath);
+    const size = fs.statSync(destPath).size;
+    log('OK', `Stream log saved: ${relPath(config, destPath)} (${(size / 1024).toFixed(1)} KB)`);
+  } catch (e) {
+    log('DEBUG', `Stream log save failed (non-critical): ${e.message}`);
   }
 }
 
@@ -1299,8 +1315,8 @@ function modelToHarness(modelId) {
 
 // ── ACP Dispatch (Forge, Echo) — via Gateway Tool API ──
 // sessions_spawn with runtime: "acp" — see https://docs.openclaw.ai/tools/acp-agents
-// Always oneshot (mode: 'run') — pipeline owns the session lifecycle.
-// Sessions auto-close after task completion, preventing accumulation and stale-session errors.
+// Always oneshot (mode: 'run'), headless (no thread), with stream logging.
+// Pipeline owns the session lifecycle. Stream log is saved to .swarm/ after completion.
 
 async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
   const agentConfig = config.agents[agentType];
@@ -1312,9 +1328,6 @@ async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
 
   log('STEP', `Spawning ACP session: ${gatewayLabel} (agent: ${agentId}, model: ${model})`);
 
-  const discordHeaders = discordSpawnHeaders();
-  const useThread = Object.keys(discordHeaders).length > 0;
-
   // sessions_spawn args — see https://docs.openclaw.ai/concepts/session-tool#sessions_spawn
   const spawnArgs = {
     task: taskPrompt,
@@ -1323,23 +1336,25 @@ async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
     label: gatewayLabel,
     model: model,
     cwd: cwd,
-    thread: useThread,
+    thread: false,              // Headless — no Discord thread (oneshot sessions don't benefit from threads)
     mode: 'run',                // Always oneshot — session closes after task completes
+    streamTo: 'parent',         // Stream JSONL log to file for post-mortem analysis
     cleanup: 'keep',            // Keep transcript for post-mortem
   };
 
   try {
-    // sessions_spawn returns wrapped: { ok, result: { details: { status, childSessionKey, runId } } }
-    const raw = await gatewayInvoke('sessions_spawn', spawnArgs, 30000, {}, discordHeaders);
+    // sessions_spawn returns wrapped: { ok, result: { details: { status, childSessionKey, runId, streamLogPath? } } }
+    const raw = await gatewayInvoke('sessions_spawn', spawnArgs, 30000);
     const result = raw?.result?.details || raw;
 
     if (result.status !== 'accepted') {
       throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
     }
 
-    log('OK', `ACP session spawned: ${gatewayLabel} → ${result.childSessionKey}`);
-    trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel);
-    return { label: trackingKey, childSessionKey: result.childSessionKey, runId: result.runId };
+    const streamLogPath = result.streamLogPath || null;
+    log('OK', `ACP session spawned: ${gatewayLabel} → ${result.childSessionKey}${streamLogPath ? ` (stream: ${streamLogPath})` : ''}`);
+    trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel, streamLogPath);
+    return { label: trackingKey, childSessionKey: result.childSessionKey, runId: result.runId, streamLogPath };
   } catch (e) {
     throw new Error(`Failed to spawn ACP session '${gatewayLabel}': ${e.message}`);
   }
@@ -3753,7 +3768,9 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
 
     // ALWAYS destroy session — kill-and-respawn strategy
     // Graceful (wait for idle + summary) only on successful completion
+    const forgeStreamPath = _shutdownState.activeSessions.get(forgeSessionLabel)?.streamLogPath;
     await killAgent(config, 'forge', moduleId, result.ok);
+    saveStreamLog(config, dir, 'forge', status.fail_count + 1, forgeStreamPath);
     clearShutdownContext();
 
     if (!result.ok) {
@@ -4551,9 +4568,6 @@ async function spawnReviewerAgent(config, progress, gateId, reviewer, instructio
 
   log('STEP', `Spawning reviewer: ${gatewayLabel} (agent: ${agentId}, model: ${model})`);
 
-  const discordHeaders = discordSpawnHeaders();
-  const useThread = Object.keys(discordHeaders).length > 0;
-
   const spawnArgs = {
     task: instructions,
     runtime: 'acp',
@@ -4561,22 +4575,24 @@ async function spawnReviewerAgent(config, progress, gateId, reviewer, instructio
     label: gatewayLabel,
     model: model,
     cwd: cwd,
-    thread: useThread,
+    thread: false,              // Headless — no Discord thread
     mode: 'run',                // Always oneshot — session closes after task completes
+    streamTo: 'parent',         // Stream JSONL log to file for post-mortem analysis
     cleanup: 'keep',
   };
 
   try {
-    const raw = await gatewayInvoke('sessions_spawn', spawnArgs, 30000, {}, discordHeaders);
+    const raw = await gatewayInvoke('sessions_spawn', spawnArgs, 30000);
     const result = raw?.result?.details || raw;
 
     if (result.status !== 'accepted') {
       throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
     }
 
-    log('OK', `Reviewer spawned: ${gatewayLabel} → ${result.childSessionKey}`);
-    trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel);
-    return { label: trackingKey, childSessionKey: result.childSessionKey, runId: result.runId };
+    const streamLogPath = result.streamLogPath || null;
+    log('OK', `Reviewer spawned: ${gatewayLabel} → ${result.childSessionKey}${streamLogPath ? ` (stream: ${streamLogPath})` : ''}`);
+    trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel, streamLogPath);
+    return { label: trackingKey, childSessionKey: result.childSessionKey, runId: result.runId, streamLogPath };
   } catch (e) {
     throw new Error(`Failed to spawn reviewer '${gatewayLabel}': ${e.message}`);
   }
@@ -4758,7 +4774,23 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
   const pollRes = await pollForFile(config, outputFilePath, timeout, `Review '${gateId}'`);
 
   // ── Phase 5: Kill reviewer ──
+  const echoTrackingKey = `echo-${reviewer.label}-${gateId}`;
+  const echoStreamPath = _shutdownState.activeSessions.get(echoTrackingKey)?.streamLogPath;
   await killReviewerAgent(config, gateId, reviewer, pollRes.ok);
+
+  // Save stream log to review streams directory
+  if (echoStreamPath) {
+    try {
+      if (fs.existsSync(echoStreamPath)) {
+        const reviewDir = gate.review_output_dir || 'echo-review';
+        const echoLogDir = path.join(swarmRoot(config), reviewDir, 'streams', RUN_ID);
+        fs.mkdirSync(echoLogDir, { recursive: true });
+        const destPath = path.join(echoLogDir, `echo-stream-${gateId}-${reviewer.label}.jsonl`);
+        fs.copyFileSync(echoStreamPath, destPath);
+        log('OK', `Echo stream log saved: ${reviewDir}/streams/${RUN_ID}/echo-stream-${gateId}-${reviewer.label}.jsonl`);
+      }
+    } catch (e) { log('DEBUG', `Echo stream log save failed (non-critical): ${e.message}`); }
+  }
 
   if (!pollRes.ok) {
     log('WARN', `Review poll ended: ${pollRes.reason}. Review file not received.`);

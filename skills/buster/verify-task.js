@@ -28,7 +28,7 @@ import { fileURLToPath } from 'url';
 // ─── Git Helpers (shell-free) ───────────────────────────────────────────────
 
 function gitExec(repoRoot, args, opts = {}) {
-  const defaults = { encoding: 'utf8', timeout: 30000 };
+  const defaults = { encoding: 'utf8', timeout: 30000, maxBuffer: 50 * 1024 * 1024 };
   const result = execFileSync('git', ['-C', repoRoot, ...args], { ...defaults, ...opts });
   return typeof result === 'string' ? result.trim() : '';
 }
@@ -197,12 +197,25 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
       return { status: 'success', action: 'reverted_all_bad_files', logs };
     }
 
-    // Detect current branch — needed for explicit pull/push targets
+    // Detect current branch — needed for explicit pull/push targets.
+    // On detached HEAD (common in containers after rebase), rev-parse returns
+    // literal 'HEAD' — resolve the actual remote tracking branch instead.
     let currentBranch;
     try {
       currentBranch = gitExec(repoRoot, ['rev-parse', '--abbrev-ref', 'HEAD']);
     } catch {
-      currentBranch = 'main'; // safe fallback
+      currentBranch = 'HEAD'; // will be caught below
+    }
+    if (!currentBranch || currentBranch === 'HEAD') {
+      // Detached HEAD — try to find the remote tracking branch
+      try {
+        // Find which remote branch points to our current commit (or close to it)
+        const remoteRef = gitExec(repoRoot, ['for-each-ref', '--format=%(refname:short)', '--count=1',
+          '--sort=-committerdate', '--points-at=HEAD', 'refs/remotes/origin/']);
+        currentBranch = remoteRef ? remoteRef.replace('origin/', '') : 'main';
+      } catch {
+        currentBranch = 'main';
+      }
     }
     log(`[Verify] Current branch: ${currentBranch}`);
 

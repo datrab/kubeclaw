@@ -294,8 +294,11 @@ async function sandboxCleanup() {
       timeout: 10000, encoding: 'utf8',
     }).catch(() => {});
 
-    // 3. Clear sandbox directories
+    // 3. Clear sandbox directories and ensure they exist
     await execAsync('rm -rf /sandbox/www/* /sandbox/results/*', {
+      timeout: 5000, encoding: 'utf8',
+    }).catch(() => {});
+    await execAsync('mkdir -p /sandbox/www /sandbox/results', {
       timeout: 5000, encoding: 'utf8',
     }).catch(() => {});
 
@@ -365,7 +368,7 @@ async function gitSync(expectedHash) {
 
     // No hash provided (e.g. gate_test) — pull current tracking branch
     await execFileAsync('git', ['-C', REPO_DIR, 'pull', '--rebase', 'origin'], {
-      encoding: 'utf8', timeout: 30000,
+      encoding: 'utf8', timeout: 30000, maxBuffer: 50 * 1024 * 1024,
     });
     const currentHash = (await execFileAsync('git', ['-C', REPO_DIR, 'rev-parse', 'HEAD'], {
       encoding: 'utf8', timeout: 5000,
@@ -413,21 +416,6 @@ function enrichPrompt(originalPrompt, verdict, serveConfig) {
 // ═══════════════════════════════════════════════════════════════
 // ACP SESSION — Spawn, Monitor, Kill
 // ═══════════════════════════════════════════════════════════════
-// Carried over from buster-processor.cjs v7.0 with minimal changes.
-
-/**
- * Build Discord context headers for thread-bound ACP spawns.
- * Returns empty object if no Discord channel is configured (graceful degradation).
- */
-function discordSpawnHeaders() {
-  const channelId = process.env.DISCORD_CHANNEL_ID || process.env.DISCORD_CHANNEL || '';
-  if (!channelId) return {};
-  return {
-    'x-openclaw-message-channel': 'discord',
-    'x-openclaw-account-id': 'default',
-    'x-openclaw-message-to': `channel:${channelId}`,
-  };
-}
 
 async function spawnBusterSession(payload, prompt, timeoutSeconds) {
   if (!GATEWAY_TOKEN) throw new Error('OPENCLAW_GATEWAY_TOKEN is not set');
@@ -437,15 +425,13 @@ async function spawnBusterSession(payload, prompt, timeoutSeconds) {
 
   const agentId = sessionConfig.agentId || undefined;
 
-  const discordHeaders = discordSpawnHeaders();
-  const useThread = Object.keys(discordHeaders).length > 0;
-
   const spawnArgs = {
     task: prompt,
     runtime: 'acp',
     label,
-    thread: useThread,
+    thread: false,              // Headless — no Discord thread (oneshot sessions)
     mode: 'run',                // Always oneshot — session closes after task completes
+    streamTo: 'parent',         // Stream JSONL log to file for post-mortem analysis
     runTimeoutSeconds: timeoutSeconds,
     cleanup: 'keep',
   };
@@ -454,7 +440,7 @@ async function spawnBusterSession(payload, prompt, timeoutSeconds) {
   if (sessionConfig.cwd) spawnArgs.cwd = sessionConfig.cwd;
   if (sessionConfig.model) spawnArgs.model = sessionConfig.model;
 
-  console.log(`[SPAWN] ACP session: label=${label} agent=${agentId || 'gateway-default'} model=${spawnArgs.model || 'gateway-default'} timeout=${timeoutSeconds}s thread=${useThread}`);
+  console.log(`[SPAWN] ACP session: label=${label} agent=${agentId || 'gateway-default'} model=${spawnArgs.model || 'gateway-default'} timeout=${timeoutSeconds}s headless=true`);
 
   // Retry on transient network errors (fetch failed, ECONNREFUSED, etc.)
   const maxRetries = 3;
@@ -468,7 +454,6 @@ async function spawnBusterSession(payload, prompt, timeoutSeconds) {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${GATEWAY_TOKEN}`,
-          ...discordHeaders,
         },
         body: JSON.stringify({ tool: 'sessions_spawn', args: spawnArgs }),
       });
@@ -499,13 +484,15 @@ async function spawnBusterSession(payload, prompt, timeoutSeconds) {
     throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
   }
 
-  console.log(`[SPAWN] ✅ Session spawned: key=${result.childSessionKey} run=${result.runId}`);
+  const streamLogPath = result.streamLogPath || null;
+  console.log(`[SPAWN] ✅ Session spawned: key=${result.childSessionKey} run=${result.runId}${streamLogPath ? ` stream=${streamLogPath}` : ''}`);
 
   return {
     childSessionKey: result.childSessionKey,
     runId: result.runId,
     label,
     agentId: agentId || null,
+    streamLogPath,
   };
 }
 
@@ -719,7 +706,7 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
           // Git pull to get any changes the agent may have pushed before crashing
           try {
             await execFileAsync('git', ['-C', REPO_DIR, 'pull', '--rebase', 'origin'], {
-              encoding: 'utf8', timeout: 15000,
+              encoding: 'utf8', timeout: 15000, maxBuffer: 50 * 1024 * 1024,
             });
           } catch { /* best effort */ }
 
@@ -744,16 +731,16 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
 
             // Commit any uncommitted changes the agent left behind
             try {
-              await execFileAsync('git', ['-C', REPO_DIR, 'add', '-A'], { encoding: 'utf8', timeout: 10000 });
+              await execFileAsync('git', ['-C', REPO_DIR, 'add', '-A'], { encoding: 'utf8', timeout: 10000, maxBuffer: 50 * 1024 * 1024 });
               await execFileAsync('git', ['-C', REPO_DIR, 'commit', '-m',
-                `[buster] Salvaged ${detectedStatus}: agent session crashed before commit`], { encoding: 'utf8', timeout: 10000 });
+                `[buster] Salvaged ${detectedStatus}: agent session crashed before commit`], { encoding: 'utf8', timeout: 10000, maxBuffer: 50 * 1024 * 1024 });
               // Rebase onto remote before push to avoid conflicts
               try {
-                await execFileAsync('git', ['-C', REPO_DIR, 'pull', '--rebase', 'origin'], { encoding: 'utf8', timeout: 30000 });
+                await execFileAsync('git', ['-C', REPO_DIR, 'pull', '--rebase', 'origin'], { encoding: 'utf8', timeout: 30000, maxBuffer: 50 * 1024 * 1024 });
               } catch {
                 try { await execFileAsync('git', ['-C', REPO_DIR, 'rebase', '--abort'], { encoding: 'utf8' }); } catch { /* ok */ }
               }
-              await execFileAsync('git', ['-C', REPO_DIR, 'push', 'origin'], { encoding: 'utf8', timeout: 30000 });
+              await execFileAsync('git', ['-C', REPO_DIR, 'push', 'origin'], { encoding: 'utf8', timeout: 30000, maxBuffer: 50 * 1024 * 1024 });
               console.log(`[MONITOR] Salvaged changes committed and pushed`);
             } catch (e) {
               console.warn(`[MONITOR] Salvage commit failed (may already be committed): ${e.message}`);
@@ -1012,13 +999,13 @@ async function processTask(payload) {
         // Rebase onto remote before push to avoid conflicts
         try {
           await execFileAsync('git', ['-C', REPO_DIR, 'pull', '--rebase', 'origin'], {
-            encoding: 'utf8', timeout: 30000,
+            encoding: 'utf8', timeout: 30000, maxBuffer: 50 * 1024 * 1024,
           });
         } catch {
           try { await execFileAsync('git', ['-C', REPO_DIR, 'rebase', '--abort'], { encoding: 'utf8' }); } catch { /* ok */ }
         }
         await execFileAsync('git', ['-C', REPO_DIR, 'push', 'origin'], {
-          encoding: 'utf8', timeout: 30000,
+          encoding: 'utf8', timeout: 30000, maxBuffer: 50 * 1024 * 1024,
         });
         console.log(`[TASK] status.json updated + pushed (FAIL)`);
       } catch (e) {
@@ -1080,6 +1067,29 @@ async function processTask(payload) {
   setStep('monitor-session');
   await monitorSession(payload, childSessionKey, runId, subagentTimeout, verdict,
     { agentId: spawnResult.agentId, label: spawnResult.label });
+
+  // ── Step 9b: Save stream log for post-mortem ──
+  if (spawnResult.streamLogPath) {
+    try {
+      if (fs.existsSync(spawnResult.streamLogPath)) {
+        let streamDir;
+        if (modulePath) {
+          // Module test: .swarm/modules/<dir>/streams/<runId>/
+          streamDir = path.join(REPO_DIR, modulePath, 'streams', pipelineRunId);
+        } else if (payload.instructions_file) {
+          // Gate test: .swarm/<gate-dir>/streams/<runId>/
+          const gateDir = path.dirname(payload.instructions_file);
+          streamDir = path.join(REPO_DIR, gateDir, 'streams', pipelineRunId);
+        }
+        if (streamDir) {
+          fs.mkdirSync(streamDir, { recursive: true });
+          const destPath = path.join(streamDir, `buster-stream-attempt-${attempt}.jsonl`);
+          fs.copyFileSync(spawnResult.streamLogPath, destPath);
+          console.log(`[STREAM] ✅ Saved: ${destPath} (${(fs.statSync(destPath).size / 1024).toFixed(1)} KB)`);
+        }
+      }
+    } catch (e) { console.log(`[STREAM] Save failed (non-critical): ${e.message}`); }
+  }
 
   // ── Step 10: Final cleanup ──
   setStep('final-cleanup');
