@@ -72,11 +72,12 @@ metadata:
   labels:
     app: litellm
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: litellm
   ports:
     - name: http
       port: 4000
       targetPort: 4000
+      nodePort: 30050
       protocol: TCP

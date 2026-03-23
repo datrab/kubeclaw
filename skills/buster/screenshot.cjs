@@ -17,6 +17,12 @@
 const fs   = require('fs');
 const path = require('path');
 
+// Playwright browser binaries are installed at /ms-playwright in the sandbox image.
+// Set this BEFORE requiring playwright so it finds the correct browser executable.
+if (!process.env.PLAYWRIGHT_BROWSERS_PATH) {
+  process.env.PLAYWRIGHT_BROWSERS_PATH = '/ms-playwright';
+}
+
 // ── Defaults ────────────────────────────────────────────────────
 
 const DEFAULTS = {

@@ -22,7 +22,7 @@ RUN mkdir -p /root/.npm && npm config set cache /root/.npm --global \
 #    mypy >= 1.0:     --output json flag
 #    pip-audit >= 2.6: JSON output with vulns array
 #    semgrep >= 1.40:  stable JSON output schema
-RUN pip install --break-system-packages --no-cache-dir \
+RUN pip install --break-system-packages \
     'ruff>=0.1.0' 'mypy>=1.0' 'pip-audit>=2.6.0' 'semgrep>=1.40.0'
 
 # 4. Binary tools — pinned versions for reproducible builds

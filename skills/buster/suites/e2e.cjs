@@ -50,10 +50,11 @@ const {
 
 // ── Defaults ────────────────────────────────────────────────────
 
+const REPO_DIR = '/home/node/.openclaw/workspace/git-repo';
+
 const DEFAULTS = {
   static_port:  9999,
   server_port:  3000,
-  project_dir:  '/home/node/.openclaw/workspace/git-repo',
   test_patterns: ['*.spec.js', '*.spec.ts', '*.test.js', '*.test.ts', '*.test.mjs'],
   timeout_ms:   60000, // 60s for entire playwright run
   max_findings: 30,
@@ -66,12 +67,22 @@ function log(msg) {
 }
 
 /**
- * Resolve tests_dir path. Checks:
- *   1. Absolute path as-is
- *   2. Relative to project_dir
+ * Resolve tests_dir path against project_dir.
+ * Handles three cases:
+ *   1. Absolute path → as-is
+ *   2. Relative starting with project_dir prefix → resolve against REPO_DIR (avoid doubling)
+ *   3. Relative to project_dir → join
  */
 function resolveTestsDir(testsDir, projectDir) {
   if (path.isAbsolute(testsDir)) return testsDir;
+
+  // Check for path doubling: if tests_dir starts with the raw project_dir prefix,
+  // it's relative to the repo root, not to project_dir. Resolve against REPO_DIR.
+  const rawProjectDir = projectDir.replace(REPO_DIR + '/', '').replace(REPO_DIR, '');
+  if (rawProjectDir && testsDir.startsWith(rawProjectDir)) {
+    return path.join(REPO_DIR, testsDir);
+  }
+
   return path.join(projectDir, testsDir);
 }
 
@@ -169,7 +180,10 @@ module.exports = async function e2eSuite(context) {
   const startTime  = Date.now();
   const serve      = context.config?.serve || {};
   const e2eConf    = context.config?.e2e   || {};
-  const projectDir = serve.project_dir || DEFAULTS.project_dir;
+  const rawProjectDir = serve.project_dir || '';
+  const projectDir = rawProjectDir
+    ? (path.isAbsolute(rawProjectDir) ? rawProjectDir : path.join(REPO_DIR, rawProjectDir))
+    : REPO_DIR;
 
   // Determine base URL for Playwright
   const type    = serve.type || 'static';

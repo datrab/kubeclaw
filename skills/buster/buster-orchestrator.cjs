@@ -641,6 +641,12 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
   let lastSeenId = '0-0'; // Track position — only read new entries each poll
   let sessionDeadCycles = 0; // Consecutive cycles where session is not active
 
+  // Startup grace period: ACP oneshot sessions can take 35–60s to produce their
+  // first LLM output. During that window, session_status returns state='idle'
+  // (not running/creating), which would falsely trigger crash detection.
+  // Don't count dead cycles until the grace period expires.
+  const STARTUP_GRACE_MS = 180000; // 180s — generous buffer for slow model init
+
   while (Date.now() < deadline) {
     if (shuttingDown) {
       console.log('[MONITOR] Shutdown signal — killing session.');
@@ -728,8 +734,16 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
 
     // ── Dead session detection ──
     if (!sessionActive) {
-      sessionDeadCycles++;
-      console.log(`[MONITOR] Session not active: state=${lastAcpState || 'unknown'} (dead cycle ${sessionDeadCycles}/2)`);
+      const elapsedSinceSpawn = Date.now() - startTime;
+
+      if (elapsedSinceSpawn < STARTUP_GRACE_MS) {
+        // Inside startup grace period — don't count dead cycles.
+        // ACP sessions report 'idle' during initialization before first LLM output.
+        console.log(`[MONITOR] Session not active (state=${lastAcpState || 'unknown'}) but within startup grace (${Math.round(elapsedSinceSpawn / 1000)}s / ${STARTUP_GRACE_MS / 1000}s) — ignoring`);
+      } else {
+        sessionDeadCycles++;
+        console.log(`[MONITOR] Session not active: state=${lastAcpState || 'unknown'} (dead cycle ${sessionDeadCycles}/2, grace period expired)`);
+      }
 
       // Wait 2 consecutive dead cycles to avoid false positives
       if (sessionDeadCycles >= 2) {

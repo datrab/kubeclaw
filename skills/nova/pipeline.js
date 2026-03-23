@@ -1677,34 +1677,26 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
   // Capture HEAD before Forge starts — used as fallback change detection
   const headBefore = headHash();
 
+  // Startup grace period: ACP oneshot sessions can take 35–60s to initialize.
+  // During that window, session_status returns 'idle' which looks like "not active".
+  // Don't declare session dead until grace period expires.
+  const STARTUP_GRACE_MS = 180000; // 180s
+  let sessionDeadCycles = 0;
+
   log('INFO', `[${logLabel}] Waiting for session '${sessionLabel}' (${sessionKey}) to complete | timeout: ${timeoutMinutes}min`);
 
   while (Date.now() < deadline) {
     await sleep(interval);
     gitPullForPolling(config);
 
-    // Check if ACP session is still actively running via Gateway Tool API.
-    // With cleanup='keep', the session entry persists after run completion —
-    // so we must parse the ACP state from the response, not just check reachability.
-    //
-    // Documented ACP session states (from ACP Thread Bound Agents plan):
-    //   creating → idle → running → idle
-    //   running → cancelling → idle | error
-    //   idle → closed
-    //
-    // 'running' and 'cancelling' = actively working (poll continues).
-    // 'creating' = still initializing (poll continues).
-    // 'idle', 'closed', 'error' = run finished (poll ends).
-    // Unreachable / error response = session gone (poll ends).
     let sessionActive = false;
     try {
       const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
       const statusResult = raw?.result?.details || raw;
       const parsed = parseSessionState(statusResult);
-
       sessionActive = parsed.active;
       if (!sessionActive) {
-        log('INFO', `[${logLabel}] Session state: '${parsed.state}' → run complete`);
+        log('INFO', `[${logLabel}] Session state: '${parsed.state}'`);
       }
     } catch {
       // Session gone = finished or crashed (404 / connection error)
@@ -1712,11 +1704,22 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
     }
 
     if (!sessionActive) {
-      // Session ended — detect changes and commit them.
-      // Agents don't do git — the pipeline owns all git operations.
-      // Two-phase detection: uncommitted changes first, HEAD diff as fallback
-      // (covers both agents that don't commit AND legacy agents that might).
+      const elapsedSinceSpawn = Date.now() - startTime;
 
+      if (elapsedSinceSpawn < STARTUP_GRACE_MS) {
+        log('DEBUG', `[${logLabel}] Session not active but within startup grace (${Math.round(elapsedSinceSpawn / 1000)}s / ${STARTUP_GRACE_MS / 1000}s) — ignoring`);
+        continue;
+      }
+
+      sessionDeadCycles++;
+      if (sessionDeadCycles < 2) {
+        log('INFO', `[${logLabel}] Session not active (dead cycle ${sessionDeadCycles}/2) — confirming...`);
+        continue;
+      }
+
+      log('INFO', `[${logLabel}] Session confirmed ended — detecting changes`);
+
+      // Session ended — detect changes and commit them.
       let hasChanges = false;
 
       // Phase 1: Check for uncommitted file changes (agent wrote files but didn't commit)
@@ -1745,6 +1748,8 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
       }
 
       return { completed: true, hasChanges, reason: 'session_ended' };
+    } else {
+      sessionDeadCycles = 0;
     }
 
     // ── Timeout nudge ──

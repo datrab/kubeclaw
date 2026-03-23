@@ -51,10 +51,6 @@ const WEBHOOK_URL = process.env.DISCORD_WEBHOOK;
 // Stream trim size — keep last N entries for audit trail
 const STREAM_MAX_LEN = 250;
 
-// Track modules that already got a "write memory" warning on FAIL.
-// Second attempt with missing memory → warn but proceed (don't block).
-const _memoryWarnedModules = new Set();
-
 // ─── Discord Logging ────────────────────────────────────────────────────────
 
 async function logToDiscord(sender, target, type, iter, payload) {
@@ -200,19 +196,16 @@ const lib = {
 
     console.log(`[COMPLETE] project=${project} stream=${stream} module=${moduleId} status=${status}`);
 
-    const isPass = status.toUpperCase() === 'PASS';
-
     // ── Step 1: verify-task.js → scope check + push ──
-    // PASS: no memory needed — Forge did its job, memories will be upweighted.
-    // FAIL: memory required — Buster must document what went wrong.
-    //   First attempt without memory → return error to subagent (chance to write).
-    //   Second attempt still missing → warn and proceed (don't block pipeline).
+    // Memory check disabled — with oneshot sessions the subagent has no guaranteed
+    // second turn to write memory after being told it's missing. Scope check + push
+    // is the critical path; memory is nice-to-have, not a gate.
     console.log('[COMPLETE] Running verify-task.js...');
     let verifyResult;
     try {
       const verifyMod = await import('/app/skills/verify-task.js');
       verifyResult = await verifyMod.default(agentRole, project, {
-        requireMemory: !isPass,
+        requireMemory: false,
         commitMessage: `[${agentRole.toUpperCase()}] Module ${moduleId}: ${status}`,
       });
       console.log(`[COMPLETE] Verify: ${verifyResult.status} (${verifyResult.action})`);
@@ -222,22 +215,7 @@ const lib = {
         verifyResult.logs.forEach(l => console.log(`  ${l}`));
       }
     } catch (e) {
-      const isMemoryError = /MISSING MEMORY/i.test(e.message);
-
-      // FAIL + missing memory: give subagent one chance to write it
-      if (!isPass && isMemoryError && !_memoryWarnedModules.has(moduleId)) {
-        _memoryWarnedModules.add(moduleId);
-        console.warn(`[COMPLETE] Memory missing for FAIL on ${moduleId} — returning error to subagent (first chance)`);
-        // Return error WITHOUT sending to Redis — subagent retries, writes memory, calls complete again
-        return { status: 'error', error: e.message };
-      }
-
-      // Second attempt or non-memory error: warn and proceed with original status
-      if (isMemoryError) {
-        console.warn(`[COMPLETE] ⚠️ Memory still missing for ${moduleId} — proceeding without (second attempt)`);
-      } else {
-        console.error(`[COMPLETE] Verify failed: ${e.message}`);
-      }
+      console.error(`[COMPLETE] Verify failed: ${e.message}`);
 
       // Proceed with commit+push despite verify failure (scope check + push still needed)
       try {
@@ -256,7 +234,7 @@ const lib = {
 
         execFileSync('git', ['-C', repoRoot, 'add', '-A'], { encoding: 'utf8', timeout: 10000, maxBuffer: 50 * 1024 * 1024 });
         execFileSync('git', ['-C', repoRoot, 'commit', '-m',
-          `[${agentRole.toUpperCase()}] Module ${moduleId}: ${status} (verify-task warning: ${isMemoryError ? 'no memory' : 'error'})`],
+          `[${agentRole.toUpperCase()}] Module ${moduleId}: ${status} (verify-task error)`],
           { encoding: 'utf8', timeout: 10000, maxBuffer: 50 * 1024 * 1024 });
 
         // Push with rebase-before-each-attempt (handles concurrent pipeline pushes)
@@ -290,10 +268,8 @@ const lib = {
         task_type: taskType,
         status: status.toUpperCase(),
         source: 'agent',
-        reason: isMemoryError
-          ? `Completed with ${status} but no memory entry written (non-blocking warning)`
-          : `verify-task.js failed: ${e.message}`,
-        verify_status: isMemoryError ? 'memory_warning' : 'error',
+        reason: `verify-task.js failed: ${e.message}`,
+        verify_status: 'error',
       });
       return { status: 'sent', warning: e.message };
     }
