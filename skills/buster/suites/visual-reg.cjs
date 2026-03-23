@@ -72,21 +72,26 @@ async function discordScreenshot(moduleId, actualPath, diffPath, diffPercent, st
     const parts = [];
 
     // Embed with context
-    const icon = status === 'NEW_BASELINE' ? '🆕'
+    const icon = status === 'APP_SCREENSHOT' ? '📸'
+               : status === 'NEW_BASELINE' ? '🆕'
                : status === STATUS.PASS ? '✅'
                : status === STATUS.FAIL ? '❌' : '📸';
+    const isAppShot = status === 'APP_SCREENSHOT';
+    const isBaseline = status === 'NEW_BASELINE';
     const embedJson = JSON.stringify({
       embeds: [{
-        title: `${icon} Visual Regression: Module ${moduleId}`,
-        color: status === 'NEW_BASELINE' ? 3447003 : (diffPercent === 0 ? 5763719 : (diffPercent > 5 ? 15548997 : 16776960)),
-        description: status === 'NEW_BASELINE'
-          ? 'New baseline generated from HTML design reference.'
-          : diffPercent === 0
-            ? 'Pixel-perfect match with baseline.'
-            : `**${diffPercent}%** pixel difference detected.`,
+        title: `${icon} ${isAppShot ? 'Live App' : 'Visual Regression'}: Module ${moduleId}`,
+        color: isAppShot ? 5793266 : isBaseline ? 3447003 : (diffPercent === 0 ? 5763719 : (diffPercent > 5 ? 15548997 : 16776960)),
+        description: isAppShot
+          ? 'Current state of the running application.'
+          : isBaseline
+            ? 'New baseline generated from HTML design reference.'
+            : diffPercent === 0
+              ? 'Pixel-perfect match with baseline.'
+              : `**${diffPercent}%** pixel difference detected.`,
         fields: [
-          { name: 'Status', value: status === 'NEW_BASELINE' ? 'New Baseline' : status, inline: true },
-          ...(status !== 'NEW_BASELINE' ? [{ name: 'Diff', value: `${diffPercent}%`, inline: true }] : []),
+          { name: 'Status', value: isAppShot ? 'Live Screenshot' : isBaseline ? 'New Baseline' : status, inline: true },
+          ...(!isAppShot && !isBaseline ? [{ name: 'Diff', value: `${diffPercent}%`, inline: true }] : []),
         ],
         image: { url: 'attachment://screenshot.png' },
         footer: { text: `Buster Visual-Reg • ${new Date().toISOString()}` },
@@ -299,6 +304,10 @@ module.exports = async function visualRegSuite(context) {
       findings: [],
     });
   }
+
+  // Send app screenshot to Discord immediately — regardless of whether comparison succeeds.
+  // This is the most valuable signal: what does the app actually look like right now?
+  await discordScreenshot(context.module, actualPath, null, -1, 'APP_SCREENSHOT');
 
   // 3. Compare against baseline
   let comparison;

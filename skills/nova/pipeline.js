@@ -299,6 +299,42 @@ async function acpxCleanup(agentId, gatewayLabel) {
 }
 
 /**
+ * Parse session state from a session_status response.
+ * Handles both the legacy format (acp.state field) and the new format
+ * (statusText with "Queue: running" / "Queue: collect").
+ *
+ * @param {object} statusResult - Parsed session_status response (result.details or raw)
+ * @returns {{ active: boolean, state: string }} - active=true if session is working
+ */
+function parseSessionState(statusResult) {
+  if (!statusResult) return { active: false, state: 'unknown' };
+
+  // Legacy format: acp.state field
+  const acpState = statusResult?.acp?.state || statusResult?.state || null;
+  if (acpState) {
+    const active = /^(running|creating|cancelling)$/i.test(acpState);
+    return { active, state: acpState.toLowerCase() };
+  }
+
+  // New format: statusText contains queue state
+  const statusText = statusResult?.statusText || '';
+  if (statusText) {
+    if (/Queue:\s*running/i.test(statusText)) {
+      return { active: true, state: 'running' };
+    }
+    if (/Queue:\s*collect/i.test(statusText)) {
+      return { active: false, state: 'idle' };
+    }
+    // statusText exists but no recognized pattern — session exists but state unclear
+    // Conservative: treat as inactive (oneshot sessions auto-close)
+    return { active: false, state: `unknown (${statusText.slice(0, 80)})` };
+  }
+
+  // No state info at all — session gone or format unrecognized
+  return { active: false, state: 'unknown' };
+}
+
+/**
  * Wait for an ACP session to become idle before killing.
  * Gives the agent time to write a thread summary after completing work.
  *
@@ -318,15 +354,15 @@ async function waitForSessionIdle(sessionKey, extraGraceMs = 120000, totalTimeou
     try {
       const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
       const statusResult = raw?.result?.details || raw;
-      const acpState = statusResult?.acp?.state || statusResult?.state || null;
+      const { active, state } = parseSessionState(statusResult);
 
-      if (!acpState || /^(closed|error)$/i.test(acpState)) {
-        log('DEBUG', `Session already ${acpState || 'gone'} — no grace needed`);
+      if (state === 'unknown' || /^(closed|error)$/i.test(state)) {
+        log('DEBUG', `Session already ${state} — no grace needed`);
         return;
       }
 
-      if (/^idle$/i.test(acpState)) {
-        log('DEBUG', `Session idle — waiting ${extraGraceMs / 1000}s grace period for thread summary`);
+      if (!active) {
+        log('DEBUG', `Session ${state} — waiting ${extraGraceMs / 1000}s grace period for thread summary`);
         await sleep(Math.min(extraGraceMs, deadline - Date.now()));
         return;
       }
@@ -1592,15 +1628,15 @@ async function verifyAgentAlive(config, agentType, moduleId, waitMs = 8000) {
   try {
     const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
     const result = raw?.result?.details || raw;
+    const { active, state } = parseSessionState(result);
 
-    // If ACP state is available, check for terminal states (closed/error = spawn failed)
-    const acpState = result?.acp?.state || result?.state || null;
-    if (acpState && /^(closed|error)$/i.test(acpState)) {
-      log('ERROR', `Agent health check: session in terminal state '${acpState}': ${label}`);
+    // Terminal states right after spawn = spawn failed
+    if (/^(closed|error)$/i.test(state)) {
+      log('ERROR', `Agent health check: session in terminal state '${state}': ${label}`);
       return false;
     }
 
-    log('OK', `Agent health check passed: ${label} (${sessionKey}${acpState ? `, state: ${acpState}` : ''})`);
+    log('OK', `Agent health check passed: ${label} (${sessionKey}, state: ${state})`);
     return true;
   } catch (e) {
     log('ERROR', `Agent health check failed: ${label} — ${e.message?.split('\n')[0]}`);
@@ -1664,32 +1700,11 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
     try {
       const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
       const statusResult = raw?.result?.details || raw;
+      const parsed = parseSessionState(statusResult);
 
-      // Try to extract ACP state from response.
-      // session_status may return acp metadata with state field, or general session info.
-      const acpState = statusResult?.acp?.state         // SessionEntry.acp.state
-                    || statusResult?.state               // Direct state field
-                    || null;
-
-      if (acpState) {
-        // Known state — use ACP lifecycle semantics
-        sessionActive = /^(running|creating|cancelling)$/i.test(acpState);
-        if (!sessionActive) {
-          log('INFO', `[${logLabel}] ACP session state: '${acpState}' → run complete`);
-        }
-      } else {
-        // No ACP state — Forge may have finished in oneshot mode.
-        // Check HEAD movement as completion signal.
-        invalidateHeadHash();
-        const headNow = headHash();
-        if (headNow !== headBefore) {
-          log('INFO', `[${logLabel}] No ACP state but HEAD moved — treating session as complete`);
-          sessionActive = false;
-        } else {
-          // Conservative fallback: session exists = assume active.
-          // Timeout will catch stuck sessions.
-          sessionActive = true;
-        }
+      sessionActive = parsed.active;
+      if (!sessionActive) {
+        log('INFO', `[${logLabel}] Session state: '${parsed.state}' → run complete`);
       }
     } catch {
       // Session gone = finished or crashed (404 / connection error)
@@ -2561,16 +2576,8 @@ async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes, o
         try {
           const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
           const statusResult = raw?.result?.details || raw;
-          const acpState = statusResult?.acp?.state || statusResult?.state || null;
-
-          if (acpState) {
-            sessionActive = /^(running|creating|cancelling)$/i.test(acpState);
-          } else {
-            // No ACP state — check HEAD movement as fallback
-            invalidateHeadHash();
-            const headNow = headHash();
-            sessionActive = (headNow === headBefore);
-          }
+          const parsed = parseSessionState(statusResult);
+          sessionActive = parsed.active;
         } catch {
           // Session gone (404 / connection error) = finished or crashed
           sessionActive = false;
@@ -3952,135 +3959,212 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     const busterModel = resolveModel('buster', config, progress);
     log('STEP', `Phase: BUSTER (model: ${busterModel})`);
 
-    let busterPrompt;
-    {
-      const promptResult = buildBusterModulePrompt(config, moduleId, mod, dir, status, maxFails);
-      if (promptResult.error) {
-        log('ERROR', `Buster prompt build failed for ${moduleId}: ${promptResult.error}`);
-        return { retry: false, result: { exit: EXIT_ERROR, reason: promptResult.error } };
+    // Buster subagent crash retry loop.
+    // Crashes (orchestrator-detected, timeouts) retry the Buster dispatch directly
+    // instead of going back to Forge. Status stays at READY_FOR_TESTING.
+    // Only real test failures (source: 'agent') or exhausted retries go to handleFail → Forge.
+    const maxBusterCrashRetries = mod.max_buster_crash_retries ?? config.max_buster_crash_retries ?? 2;
+
+    for (let busterAttempt = 1; busterAttempt <= maxBusterCrashRetries + 1; busterAttempt++) {
+      const isLastBusterAttempt = busterAttempt > maxBusterCrashRetries;
+
+      let busterPrompt;
+      {
+        const promptResult = buildBusterModulePrompt(config, moduleId, mod, dir, status, maxFails);
+        if (promptResult.error) {
+          log('ERROR', `Buster prompt build failed for ${moduleId}: ${promptResult.error}`);
+          return { retry: false, result: { exit: EXIT_ERROR, reason: promptResult.error } };
+        }
+        busterPrompt = promptResult.prompt;
       }
-      busterPrompt = promptResult.prompt;
-    }
 
-    savePrompt(config, dir, 'buster', status.fail_count + 1, busterPrompt);
+      savePrompt(config, dir, 'buster', status.fail_count + 1, busterPrompt);
 
-    status.status = STATUS.TESTING;
-    status.current_phase = 'buster';
-    addHistory(status, STATUS.TESTING, 'pipeline', 'Buster started');
-    saveStatus(config, dir, status);
+      status.status = STATUS.TESTING;
+      status.current_phase = 'buster';
+      addHistory(status, STATUS.TESTING, 'pipeline',
+        `Buster started (subagent attempt ${busterAttempt}/${maxBusterCrashRetries + 1})`);
+      saveStatus(config, dir, status);
 
-    setShutdownContext(config, 'buster', moduleId, dir);
+      setShutdownContext(config, 'buster', moduleId, dir);
 
-    // Archive old completion entries for this module before dispatching.
-    // Prevents pollDual from reading stale FAIL/PASS from a previous attempt.
-    await archiveModuleCompletions(config, moduleId);
+      // Archive old completion entries for this module before dispatching.
+      // Prevents pollDual from reading stale FAIL/PASS from a previous attempt.
+      await archiveModuleCompletions(config, moduleId);
 
-    try { await spawnAgent(config, progress, 'buster', moduleId, busterModel, busterPrompt, {
-      status, taskType: 'module_test', run_id: RUN_ID, attempt: status.fail_count + 1,
-    }); }
-    catch (e) {
-      log('ERROR', `Buster agent spawn failed: ${e.message}`);
+      try { await spawnAgent(config, progress, 'buster', moduleId, busterModel, busterPrompt, {
+        status, taskType: 'module_test', run_id: RUN_ID, attempt: status.fail_count + 1,
+      }); }
+      catch (e) {
+        log('ERROR', `Buster agent spawn failed: ${e.message}`);
+        clearShutdownContext();
+        return { retry: false, result: { exit: EXIT_ERROR, reason: `Buster spawn failed: ${e.message}` } };
+      }
+
+      const result = await pollDualWithRateLimitRecovery(config, dir, moduleId,
+        [STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED], timeout);
+
+      // Kill agent session (safety net — Processor should have killed already after completion)
+      await killAgent(config, 'buster', moduleId);
       clearShutdownContext();
-      return { retry: false, result: { exit: EXIT_ERROR, reason: `Buster spawn failed: ${e.message}` } };
-    }
 
-    const result = await pollDualWithRateLimitRecovery(config, dir, moduleId,
-      [STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED], timeout);
+      // ── Poll failed (timeout, parse error, etc.) ──
+      if (!result.ok) {
+        status = loadStatus(config, dir) || status;
 
-    // Kill agent session (safety net — Processor should have killed already after completion)
-    await killAgent(config, 'buster', moduleId);
-    clearShutdownContext();
+        if (result.reason === 'rate_limit_exhausted') {
+          log('ERROR', `Module ${moduleId} rate limit pauses exhausted in buster phase`);
+          await discord(config, 'CRITICAL', `Module ${moduleId} RATE LIMITED (Buster)`,
+            `Exceeded max rate limit pauses during testing.`);
+          return { retry: false, result: {
+            exit: EXIT_RATE_LIMITED,
+            reason: 'Rate limit pauses exceeded maximum during Buster phase',
+            module: moduleId, module_dir: dir,
+          }};
+        }
 
-    if (!result.ok) {
-      status = loadStatus(config, dir) || status;
+        // Crash-retryable: timeout, parse corruption, catch-all
+        if (!isLastBusterAttempt) {
+          const reason = result.reason === 'timeout'
+            ? `Buster timed out (${timeout}min)`
+            : result.reason === 'parse_corrupted'
+              ? 'status.json corrupted'
+              : `Poll failed: ${result.reason}`;
+          log('WARN', `Buster subagent crash (attempt ${busterAttempt}/${maxBusterCrashRetries + 1}): ${reason} — retrying Buster`);
+          await discord(config, 'WARN', `Buster crash retry: Module ${moduleId}`,
+            `${reason}. Retrying Buster (attempt ${busterAttempt + 1}/${maxBusterCrashRetries + 1}). Forge output preserved.`);
 
-      if (result.reason === 'timeout') {
-        const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'buster',
-          `TIMEOUT: Buster did not complete within ${timeout} minutes`, { isTimeout: true, recalledMemoryIds });
-        if (failResult._retry) return { retry: true, fail_count: status.fail_count };
-        return { retry: false, result: failResult };
-      }
-      if (result.reason === 'rate_limit_exhausted') {
-        log('ERROR', `Module ${moduleId} rate limit pauses exhausted in buster phase`);
-        await discord(config, 'CRITICAL', `Module ${moduleId} RATE LIMITED (Buster)`,
-          `Exceeded max rate limit pauses during testing.`);
+          // Reset to READY_FOR_TESTING for next Buster attempt
+          status.status = STATUS.READY_FOR_TESTING;
+          addHistory(status, STATUS.READY_FOR_TESTING, 'pipeline',
+            `Buster subagent crashed — retrying (${busterAttempt}/${maxBusterCrashRetries})`);
+          saveStatus(config, dir, status);
+          continue; // → next busterAttempt
+        }
+
+        // Last attempt exhausted — BLOCKED, not handleFail.
+        // Buster crashing repeatedly is an infrastructure problem, not a code problem.
+        // Forge can't fix it. Requires human intervention.
+        log('ERROR', `Buster crash retries exhausted (${maxBusterCrashRetries}) — BLOCKED (infrastructure issue)`);
+
+        status.status = STATUS.BLOCKED;
+        status.current_phase = 'buster';
+        addHistory(status, STATUS.BLOCKED, 'pipeline',
+          `Buster subagent crashed ${maxBusterCrashRetries + 1} times without producing a test result. Infrastructure issue — Forge cannot fix this.`);
+        saveStatus(config, dir, status);
+
+        await discord(config, 'CRITICAL', `Module ${moduleId} BLOCKED — Buster crashes`,
+          `Buster subagent crashed ${maxBusterCrashRetries + 1} times. This is an infrastructure issue, not a code problem. Manual intervention required.`, [
+            { name: 'Last Reason', value: result.reason || 'unknown' },
+            { name: 'Crash Retries', value: `${maxBusterCrashRetries}` },
+          ]);
+
         return { retry: false, result: {
-          exit: EXIT_RATE_LIMITED,
-          reason: 'Rate limit pauses exceeded maximum during Buster phase',
+          exit: EXIT_BLOCKED,
+          reason: `Buster subagent crashed ${maxBusterCrashRetries + 1} times — infrastructure issue (not sent to Forge)`,
           module: moduleId, module_dir: dir,
         }};
       }
-      if (result.reason === 'parse_corrupted') {
+
+      // ── Poll succeeded (terminal status reached) ──
+      status = loadStatus(config, dir) || status;
+
+      // Trust Redis over stale status.json
+      const redisEntry = result.status?._redis_entry;
+      if (redisEntry?.status) {
+        const redisStatus = mapRedisStatus(redisEntry.status);
+        if ([STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED].includes(redisStatus) &&
+            ![STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED].includes(status.status)) {
+          log('WARN', `status.json shows '${status.status}' but Redis says '${redisStatus}' — trusting Redis`);
+          status.status = redisStatus;
+          if (redisEntry.summary) {
+            status.fail_summaries = status.fail_summaries || [];
+            status.fail_summaries.push(redisEntry.summary);
+          }
+          saveStatus(config, dir, status);
+        }
+      }
+
+      // ── PASS ──
+      if (status.status === STATUS.PASS) {
+        status.completed_at = new Date().toISOString();
+        status.current_phase = null;
+        status.decayed_memory_ids = [];
+        if (status.started_at) {
+          status.cost.total_duration_seconds = Math.round(
+            (new Date(status.completed_at) - new Date(status.started_at)) / 1000
+          );
+        }
+        saveStatus(config, dir, status);
+
+        await discord(config, 'OK', `Module ${moduleId} PASS ✓`, mod.title, [
+          { name: 'Duration', value: `${Math.round(status.cost.total_duration_seconds / 60)}min` },
+          { name: 'Attempts', value: `${status.fail_count + 1}` },
+        ]);
+
+        log('OK', `Module ${moduleId} PASS`);
+
+        LOG_MODULE = null;
+        LOG_PHASE = null;
+
+        await feedbackMemory(config, moduleId, 'pass');
+
+        return { retry: false, result: { exit: EXIT_OK, status: STATUS.PASS } };
+      }
+
+      // ── FAIL / BLOCKED ──
+      if (status.status === STATUS.FAIL || status.status === STATUS.BLOCKED) {
+        // Check if this was a subagent crash (orchestrator-detected) or a real test failure
+        const source = redisEntry?.source || 'unknown';
+        const isCrash = /^orchestrator/i.test(source);
+
+        if (isCrash && !isLastBusterAttempt) {
+          log('WARN', `Buster subagent crashed (source: ${source}, attempt ${busterAttempt}/${maxBusterCrashRetries + 1}) — retrying Buster`);
+          await discord(config, 'WARN', `Buster crash retry: Module ${moduleId}`,
+            `Subagent crashed (source: ${source}). Retrying Buster (attempt ${busterAttempt + 1}/${maxBusterCrashRetries + 1}). Forge output preserved.`);
+
+          // Reset to READY_FOR_TESTING — don't count as fail_count (that's for Forge retries)
+          status.status = STATUS.READY_FOR_TESTING;
+          addHistory(status, STATUS.READY_FOR_TESTING, 'pipeline',
+            `Buster subagent crashed (source: ${source}) — retrying (${busterAttempt}/${maxBusterCrashRetries})`);
+          saveStatus(config, dir, status);
+          continue; // → next busterAttempt
+        }
+
+        // Real test failure → handleFail (goes to Forge)
+        // Crash retries exhausted → BLOCKED (infrastructure issue)
+        if (isCrash) {
+          log('ERROR', `Buster crash retries exhausted (${maxBusterCrashRetries}) — BLOCKED (infrastructure issue)`);
+
+          status.status = STATUS.BLOCKED;
+          status.current_phase = 'buster';
+          addHistory(status, STATUS.BLOCKED, 'pipeline',
+            `Buster subagent crashed ${maxBusterCrashRetries + 1} times (source: ${source}). Infrastructure issue — Forge cannot fix this.`);
+          saveStatus(config, dir, status);
+
+          await discord(config, 'CRITICAL', `Module ${moduleId} BLOCKED — Buster crashes`,
+            `Buster subagent crashed ${maxBusterCrashRetries + 1} times. This is an infrastructure issue, not a code problem. Manual intervention required.`, [
+              { name: 'Source', value: source },
+              { name: 'Crash Retries', value: `${maxBusterCrashRetries}` },
+            ]);
+
+          return { retry: false, result: {
+            exit: EXIT_BLOCKED,
+            reason: `Buster subagent crashed ${maxBusterCrashRetries + 1} times — infrastructure issue (not sent to Forge)`,
+            module: moduleId, module_dir: dir,
+          }};
+        }
+
+        // Real test failure from agent → Forge retry
         const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'buster',
-          'status.json is permanently corrupted (unparseable after multiple attempts)', { recalledMemoryIds });
+          extractAgentFailReason(status, 'buster'), { recalledMemoryIds });
         if (failResult._retry) return { retry: true, fail_count: status.fail_count };
         return { retry: false, result: failResult };
       }
 
-      // Catch-all: blocked or other unhandled poll reasons (mirrors Forge path)
-      const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'buster',
-        extractAgentFailReason(status, 'buster'), { recalledMemoryIds });
-      if (failResult._retry) return { retry: true, fail_count: status.fail_count };
-      return { retry: false, result: failResult };
-    }
-
-    status = loadStatus(config, dir) || status;
-
-    // Trust Redis over stale status.json — if Buster crashed before updating
-    // the file, Redis completion has the authoritative status.
-    const redisEntry = result.status?._redis_entry;
-    if (redisEntry?.status) {
-      const redisStatus = mapRedisStatus(redisEntry.status);
-      if ([STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED].includes(redisStatus) &&
-          ![STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED].includes(status.status)) {
-        log('WARN', `status.json shows '${status.status}' but Redis says '${redisStatus}' — trusting Redis`);
-        status.status = redisStatus;
-        if (redisEntry.summary) {
-          status.fail_summaries = status.fail_summaries || [];
-          status.fail_summaries.push(redisEntry.summary);
-        }
-        saveStatus(config, dir, status);
-      }
-    }
-
-    if (status.status === STATUS.PASS) {
-      status.completed_at = new Date().toISOString();
-      status.current_phase = null;
-      // Reset decay tracking — positive feedback from feedbackMemory('pass')
-      // will boost confidence, making the decay history irrelevant.
-      status.decayed_memory_ids = [];
-      if (status.started_at) {
-        status.cost.total_duration_seconds = Math.round(
-          (new Date(status.completed_at) - new Date(status.started_at)) / 1000
-        );
-      }
-      saveStatus(config, dir, status);
-
-      await discord(config, 'OK', `Module ${moduleId} PASS ✓`, mod.title, [
-        { name: 'Duration', value: `${Math.round(status.cost.total_duration_seconds / 60)}min` },
-        { name: 'Attempts', value: `${status.fail_count + 1}` },
-      ]);
-
-      log('OK', `Module ${moduleId} PASS`);
-
-      LOG_MODULE = null;
-      LOG_PHASE = null;
-
-      // Memory: update confidence on related memories
-      await feedbackMemory(config, moduleId, 'pass');
-      // Note: Technical insights are now stored by the Buster subagent
-      // directly via memory skill before signaling completion.
-      // spawnSummaryAgent is no longer needed.
-
-      return { retry: false, result: { exit: EXIT_OK, status: STATUS.PASS } };
-    }
-
-    if (status.status === STATUS.FAIL || status.status === STATUS.BLOCKED) {
-      const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'buster',
-        extractAgentFailReason(status, 'buster'), { recalledMemoryIds });
-      if (failResult._retry) return { retry: true, fail_count: status.fail_count };
-      return { retry: false, result: failResult };
-    }
+      // Unexpected status — break out of retry loop
+      break;
+    } // end busterAttempt loop
   }
 
   LOG_MODULE = null;

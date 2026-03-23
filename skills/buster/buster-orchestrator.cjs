@@ -497,6 +497,29 @@ async function spawnBusterSession(payload, prompt, timeoutSeconds) {
 }
 
 /**
+ * Parse session state from a session_status response.
+ * Handles both the legacy format (acp.state) and the new format (statusText with Queue info).
+ */
+function parseSessionState(statusResult) {
+  if (!statusResult) return { active: false, state: 'unknown' };
+
+  const acpState = statusResult?.acp?.state || statusResult?.state || null;
+  if (acpState) {
+    const active = /^(running|creating|cancelling)$/i.test(acpState);
+    return { active, state: acpState.toLowerCase() };
+  }
+
+  const statusText = statusResult?.statusText || '';
+  if (statusText) {
+    if (/Queue:\s*running/i.test(statusText)) return { active: true, state: 'running' };
+    if (/Queue:\s*collect/i.test(statusText)) return { active: false, state: 'idle' };
+    return { active: false, state: `unknown (${statusText.slice(0, 80)})` };
+  }
+
+  return { active: false, state: 'unknown' };
+}
+
+/**
  * Wait for an ACP session to become idle before killing.
  * Gives the agent time to write a thread summary after completing work.
  *
@@ -520,16 +543,16 @@ async function waitForSessionIdle(childSessionKey, extraGraceMs = 120000, totalT
       });
       const raw = await response.json().catch(() => ({}));
       const statusResult = raw?.result?.details || raw;
-      const acpState = statusResult?.acp?.state || statusResult?.state || null;
+      const { active, state } = parseSessionState(statusResult);
 
-      if (!acpState || /^(closed|error)$/i.test(acpState)) {
-        console.log(`[GRACE] Session already ${acpState || 'gone'} — no grace needed`);
+      if (state === 'unknown' || /^(closed|error)$/i.test(state)) {
+        console.log(`[GRACE] Session already ${state} — no grace needed`);
         return;
       }
 
-      if (/^idle$/i.test(acpState)) {
+      if (!active) {
         const grace = Math.min(extraGraceMs, deadline - Date.now());
-        console.log(`[GRACE] Session idle — waiting ${Math.round(grace / 1000)}s grace period for thread summary`);
+        console.log(`[GRACE] Session ${state} — waiting ${Math.round(grace / 1000)}s grace period`);
         await new Promise(r => setTimeout(r, grace));
         return;
       }
@@ -692,14 +715,10 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
       });
       const raw = await statusResp.json().catch(() => ({}));
       const statusResult = raw?.result?.details || raw;
-      lastAcpState = statusResult?.acp?.state || statusResult?.state || null;
+      const parsed = parseSessionState(statusResult);
 
-      // With oneshot mode (mode: 'run'), sessions auto-close after completion.
-      // Only 'running', 'creating', 'cancelling' mean actively working.
-      // Any other state (idle, closed, error, null) means the session has ended.
-      sessionActive = lastAcpState
-        ? /^(running|creating|cancelling)$/i.test(lastAcpState)
-        : false; // No ACP state → session finished or gone (oneshot auto-closes)
+      sessionActive = parsed.active;
+      lastAcpState = parsed.state;
 
     } catch (e) {
       // session_status failed (404, network error, etc.) → assume dead
