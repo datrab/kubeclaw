@@ -828,8 +828,28 @@ async function processTask(payload) {
   if (verdict.recommendation === RECOMMENDATION.NO_SUBAGENT) {
     console.log(`[TASK] ❌ Critical failure — skipping subagent, sending FAIL to pipeline.`);
 
-    // Send FAIL to completion stream
+    // Send FAIL to completion stream — include verdict JSON so pipeline
+    // can extract per-suite findings and give Forge actionable fix instructions.
     try {
+      // Truncate verdict for Redis: keep suite results + top findings, drop raw output
+      const verdictForRedis = {
+        overall_status: verdict.overall_status,
+        summary: verdict.summary,
+        suites: {},
+      };
+      for (const [name, suite] of Object.entries(verdict.suites || {})) {
+        verdictForRedis.suites[name] = {
+          status: suite.status,
+          critical: suite.critical,
+          checks_total: suite.checks_total,
+          checks_passed: suite.checks_passed,
+          checks_failed: suite.checks_failed,
+          findings: (suite.findings || []).slice(0, 5),
+          error: suite.error || null,
+          reason: suite.reason || null,
+        };
+      }
+
       const fields = [
         'type', 'completion',
         'module', moduleId,
@@ -838,11 +858,12 @@ async function processTask(payload) {
         'source', 'orchestrator',
         'reason', `Pre-test critical failure: ${verdict.summary}`,
         'summary', verdict.summary,
+        'verdict', JSON.stringify(verdictForRedis),
         'timestamp', Date.now().toString(),
       ];
       await redis.xadd(completionStream, '*', ...fields);
       await redis.xtrim(completionStream, 'MAXLEN', '~', STREAM_MAX_LEN);
-      console.log(`[TASK] FAIL sent to ${completionStream}`);
+      console.log(`[TASK] FAIL sent to ${completionStream} (with verdict details)`);
     } catch (e) {
       console.error(`[TASK] Failed to send FAIL: ${e.message}`);
     }

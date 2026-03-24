@@ -4153,11 +4153,17 @@ async function _runBusterGateOnce(config, progress, gateId, gate, model, timeout
           })};
         }
         if (mappedStatus === STATUS.FAIL) {
+          // Parse verdict JSON if present (orchestrator enriches FAIL with per-suite details)
+          let verdict = null;
+          if (redisEntry.verdict) {
+            try { verdict = JSON.parse(redisEntry.verdict); } catch { /* malformed — skip */ }
+          }
           return { done: true, result: pollResult(false, 'gate_fail', {
             gate: gateId,
             status: mappedStatus,
             reason: redisEntry.reason || redisEntry.summary || 'unknown',
             source: redisEntry.source || 'unknown',
+            verdict,
             _source: 'redis',
           })};
         }
@@ -4222,13 +4228,23 @@ async function _runBusterGateOnce(config, progress, gateId, gate, model, timeout
 
 /**
  * Extract actionable issues from a Buster gate result for Forge to fix.
- * Supports two result formats: structured (issues array) and flat (reason string).
+ *
+ * Input shapes (depending on poll source):
+ *   Redis:       { gate, status: 'FAIL', reason: '...', source: 'orchestrator', verdict: {...} }
+ *   Output file: { status: 'FAIL', issues: [...] }
+ *   gate-status: { status: 'FAIL', reason: '...' }
+ *
+ * The verdict field (if present) contains per-suite results with findings.
  */
 function extractGateIssues(gateResult) {
   if (!gateResult) return [];
-  const data = gateResult.status || gateResult;
 
-  // Structured: { issues: [{ severity, title, description, affected_files }] }
+  // Don't dereference .status when it's a string (e.g. 'FAIL')
+  const data = (typeof gateResult.status === 'object' && gateResult.status !== null)
+    ? gateResult.status
+    : gateResult;
+
+  // Structured issues array (from output file or subagent)
   if (Array.isArray(data.issues)) {
     return data.issues
       .filter(i => i.severity === 'critical' || i.severity === 'moderate' || !i.severity)
@@ -4242,7 +4258,36 @@ function extractGateIssues(gateResult) {
       }));
   }
 
-  // Standard test-style: { reason, fail_details, ... }
+  // Verdict JSON from orchestrator (enriched Redis FAIL) — extract per-suite failures
+  const verdict = data.verdict || data._verdict;
+  if (verdict?.suites) {
+    const issues = [];
+    for (const [suiteName, suite] of Object.entries(verdict.suites)) {
+      if (suite.status !== 'FAIL' && suite.status !== 'ERROR') continue;
+      // Each finding becomes an issue
+      if (suite.findings?.length > 0) {
+        for (const f of suite.findings.slice(0, 5)) {
+          issues.push({
+            title: `${suiteName}: ${f.message || 'test failure'}`,
+            description: f.rule ? `Rule: ${f.rule}` : '',
+            severity: f.severity || 'critical',
+            affected_files: f.file ? [f.file] : [],
+          });
+        }
+      } else {
+        // Suite failed but no individual findings
+        issues.push({
+          title: `${suiteName}: ${suite.error || suite.reason || 'failed'}`,
+          description: `Suite ${suiteName} ${suite.status} with ${suite.checks_failed || 0} check(s) failed`,
+          severity: suite.critical ? 'critical' : 'moderate',
+          affected_files: [],
+        });
+      }
+    }
+    if (issues.length > 0) return issues;
+  }
+
+  // Flat reason/summary (legacy or minimal data)
   const reason = data.reason || data.summary || 'Gate test failed without details';
   return [{ title: 'Gate test failure', description: reason, severity: 'unknown', affected_files: [] }];
 }

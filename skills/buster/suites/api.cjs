@@ -43,6 +43,8 @@ const DEFAULTS = {
   project_dir:   '/home/node/.openclaw/workspace/git-repo',
 };
 
+const REPO_DIR = '/home/node/.openclaw/workspace/git-repo';
+
 // ── Helpers ─────────────────────────────────────────────────────
 
 function log(msg) {
@@ -50,9 +52,17 @@ function log(msg) {
 }
 
 /**
+ * Resolve a path relative to REPO_DIR if not absolute.
+ */
+function resolveRepoPath(p) {
+  if (!p) return null;
+  return path.isAbsolute(p) ? p : path.join(REPO_DIR, p);
+}
+
+/**
  * Resolve spec_file path. Checks:
  *   1. Absolute path as-is
- *   2. Relative to project_dir
+ *   2. Relative to project_dir (which is already resolved to absolute)
  */
 function resolveSpecPath(specFile, projectDir) {
   if (path.isAbsolute(specFile)) return specFile;
@@ -398,7 +408,7 @@ module.exports = async function apiSuite(context) {
 
   // Resolve spec file
   const specFile  = apiConf.spec_file || null;
-  const projectDir = serve.project_dir || DEFAULTS.project_dir;
+  const projectDir = resolveRepoPath(serve.project_dir || DEFAULTS.project_dir);
 
   if (!specFile) {
     const duration_ms = Date.now() - startTime;

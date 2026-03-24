@@ -53,6 +53,8 @@ const DEFAULTS = {
   max_findings: 30,
 };
 
+const REPO_DIR = '/home/node/.openclaw/workspace/git-repo';
+
 // npm default stub when no test script is defined
 const NPM_NO_TEST_STUB = 'echo "Error: no test specified" && exit 1';
 
@@ -60,6 +62,14 @@ const NPM_NO_TEST_STUB = 'echo "Error: no test specified" && exit 1';
 
 function log(msg) {
   console.log(`[SUITE] [UNIT] ${msg}`);
+}
+
+/**
+ * Resolve a path relative to REPO_DIR if not absolute.
+ */
+function resolveRepoPath(p) {
+  if (!p) return null;
+  return path.isAbsolute(p) ? p : path.join(REPO_DIR, p);
 }
 
 /**
@@ -271,7 +281,7 @@ module.exports = async function unitSuite(context) {
   const startTime  = Date.now();
   const serve      = context.config?.serve || {};
   const unitConf   = context.config?.unit  || {};
-  const projectDir = serve.project_dir || DEFAULTS.project_dir;
+  const projectDir = resolveRepoPath(serve.project_dir || DEFAULTS.project_dir);
 
   const testCmd    = unitConf.test_cmd   || DEFAULTS.test_cmd;
   const customCmd  = !!unitConf.test_cmd && unitConf.test_cmd !== DEFAULTS.test_cmd;
