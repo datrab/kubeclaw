@@ -112,3 +112,25 @@ Resolve the Anthropic API key secret key.
 anthropicApiKey
 {{- end -}}
 {{- end -}}
+
+{{/*
+Resolve the Stitch API key secret name.
+*/}}
+{{- define "kubeclaw.stitchSecretName" -}}
+{{- if .Values.stitch.existingSecret -}}
+{{- .Values.stitch.existingSecret -}}
+{{- else -}}
+{{- include "kubeclaw.fullname" . }}-gateway
+{{- end -}}
+{{- end -}}
+
+{{/*
+Resolve the Stitch API key secret key.
+*/}}
+{{- define "kubeclaw.stitchSecretKey" -}}
+{{- if .Values.stitch.existingSecret -}}
+{{- .Values.stitch.existingSecretKey -}}
+{{- else -}}
+stitchApiKey
+{{- end -}}
+{{- end -}}

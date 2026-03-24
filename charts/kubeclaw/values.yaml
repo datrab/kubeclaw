@@ -112,6 +112,15 @@ anthropic:
   existingSecretKey: "anthropicApiKey"
 
 # =============================================================================
+# STITCH API (Google Stitch MCP — UI design tool for Prism)
+# =============================================================================
+
+stitch:
+  # Reference an existing K8s secret containing the Stitch API key
+  existingSecret: ""
+  existingSecretKey: "stitchApiKey"
+
+# =============================================================================
 # DISCORD INTEGRATION (optional)
 # =============================================================================
 
@@ -189,6 +198,12 @@ service:
   # NodePort for gateway (set to 0 for auto-assignment)
   nodePort: 0
   bridgeNodePort: 0
+  # Extra ports to expose (e.g. for sidecar services like prism-preview)
+  extraPorts: []
+  # - name: prism-preview
+  #   port: 3456
+  #   targetPort: 3456
+  #   nodePort: 30456
 
 # =============================================================================
 # PERSISTENCE
@@ -307,3 +322,12 @@ nodeSelector: {}
 tolerations: []
 podAnnotations: {}
 extraEnv: []
+
+# -- Extra sidecar containers to inject into the agent pod (e.g. prism-preview)
+extraContainers: []
+
+# -- Extra volumes to mount into the agent pod
+extraVolumes: []
+
+# -- Extra volume mounts for the main kubeclaw container
+extraVolumeMounts: []

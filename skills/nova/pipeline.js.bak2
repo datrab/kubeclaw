@@ -1486,11 +1486,6 @@ function buildBusterPayload(config, progress, moduleId, taskType, taskPrompt, st
       work_dir: relPath(config, swarmRoot(config)),
       output_file: gate.output_file ? relPath(config, path.join(swarmRoot(config), gate.output_file)) : null,
       instructions_file: gate.instructions_file ? relPath(config, path.join(swarmRoot(config), gate.instructions_file)) : null,
-      // Gate suites + config — without these the orchestrator falls back to
-      // DEFAULT_SUITES (['build','health']) and DEFAULT_CONFIG ({serve:{type:'static'}}),
-      // which triggers npm install in contexts without package.json (e.g. Python backends).
-      test_suites: gate.test_suites || null,
-      test_config: gate.test_config || null,
     };
   }
 
@@ -4119,10 +4114,6 @@ async function _runBusterGateOnce(config, progress, gateId, gate, model, timeout
     log('DEBUG', `Buster gate prompt saved: ${gateDir}/prompts/${RUN_ID}/buster-gate-${gateId}-attempt-${attempt}.md`);
   } catch { /* non-critical */ }
 
-  // Archive stale Redis completions for this gate before dispatching
-  // (same pattern as module tests — prevents reading old FAIL/PASS entries)
-  await archiveModuleCompletions(config, gateId);
-
   try {
     await spawnAgent(config, progress, 'buster', gateId, model, busterPrompt, {
       taskType: 'gate_test',
@@ -4135,41 +4126,7 @@ async function _runBusterGateOnce(config, progress, gateId, gate, model, timeout
   }
 
   const result = await pollGeneric(config, async () => {
-    // ── Channel 0: Redis Completion Stream (fast path) ──
-    // Catches pre-test FAILs from the orchestrator (no subagent spawned → no output file).
-    // Same pattern as pollDual() for module tests.
-    try {
-      const redisEntry = await readCompletionFromRedis(config, gateId);
-      if (redisEntry && redisEntry.status) {
-        const mappedStatus = mapRedisStatus(redisEntry.status);
-        log('OK', `Gate '${gateId}' Redis completion: status=${redisEntry.status} mapped=${mappedStatus} source=${redisEntry.source || 'unknown'}`);
-
-        if (mappedStatus === STATUS.PASS) {
-          return { done: true, result: pollResult(true, 'target_reached', {
-            gate: gateId,
-            status: mappedStatus,
-            summary: redisEntry.summary || null,
-            _source: 'redis',
-          })};
-        }
-        if (mappedStatus === STATUS.FAIL) {
-          return { done: true, result: pollResult(false, 'gate_fail', {
-            gate: gateId,
-            status: mappedStatus,
-            reason: redisEntry.reason || redisEntry.summary || 'unknown',
-            source: redisEntry.source || 'unknown',
-            _source: 'redis',
-          })};
-        }
-        if (mappedStatus === STATUS.RATE_LIMITED) {
-          return { rate_limited: true, status: redisEntry };
-        }
-      }
-    } catch (e) {
-      log('DEBUG', `Gate '${gateId}' Redis poll error (non-critical): ${e.message}`);
-    }
-
-    // ── Channel 1: Output file (primary file signal) ──
+    // Primary completion signal: output file exists
     // File existence means "agent finished" — content determines PASS or FAIL.
     if (gate.output_file) {
       const outPath = path.join(swarmRoot(config), gate.output_file);
@@ -4187,7 +4144,7 @@ async function _runBusterGateOnce(config, progress, gateId, gate, model, timeout
       }
     }
 
-    // ── Channel 2: gate-status.json (FAIL/RATE_LIMITED/crash detection) ──
+    // Secondary signal: gate status file (FAIL/RATE_LIMITED/crash detection)
     const gateStatusFile = gateStatusPath(config, gateId);
     if (!fs.existsSync(gateStatusFile)) {
       return { done: false, logMsg: 'waiting for output' };

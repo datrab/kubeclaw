@@ -23,3 +23,12 @@ spec:
       {{- if and (eq .Values.service.type "NodePort") (gt (int .Values.service.bridgeNodePort) 0) }}
       nodePort: {{ .Values.service.bridgeNodePort }}
       {{- end }}
+    {{- range .Values.service.extraPorts }}
+    - name: {{ .name }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+      protocol: TCP
+      {{- if and (eq $.Values.service.type "NodePort") .nodePort }}
+      nodePort: {{ .nodePort }}
+      {{- end }}
+    {{- end }}
