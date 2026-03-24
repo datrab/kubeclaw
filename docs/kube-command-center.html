@@ -8,6 +8,30 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
   <style>* { margin: 0; padding: 0; box-sizing: border-box; } .lucide-icon { display: inline-flex; align-items: center; justify-content: center; }</style>
+  <!-- Route manifest for Prism baseline generator — DO NOT REMOVE -->
+  <script type="application/json" data-routes>
+  [
+    { "name": "setup",       "nav": "Get Started" },
+    { "name": "dashboard",   "nav": "Dashboard" },
+    { "name": "directory",   "nav": "Service Directory" },
+    { "name": "pods",        "nav": "Pods" },
+    { "name": "deployments", "nav": "Deployments" },
+    { "name": "cronjobs",    "nav": "CronJobs" },
+    { "name": "nodes",       "nav": "Nodes" },
+    { "name": "services",    "nav": "Services" },
+    { "name": "storage",     "nav": "Storage" },
+    { "name": "events",      "nav": "Events" },
+    { "name": "configmaps",  "nav": "ConfigMaps" },
+    { "name": "secrets",     "nav": "Secrets" },
+    { "name": "helm",        "nav": "Helm Releases" },
+    { "name": "yamlapply",   "nav": "YAML Apply" },
+    { "name": "repos",       "nav": "Repos & Builds" },
+    { "name": "deploy",      "nav": "Deploy & Expose" },
+    { "name": "alerts",      "nav": "Alerts" },
+    { "name": "terminal",    "nav": "Terminal" },
+    { "name": "settings",    "nav": "Settings" }
+  ]
+  </script>
 </head>
 <body>
   <div id="root"></div>
@@ -691,8 +715,9 @@ function SetupPage({onLogin}){
 }
 
 /* ═══ APP ═══════════════════════════════════════ */
+const _baselinesMode = new URLSearchParams(window.location.search).get('baselines') === 'true';
 function App(){
-  const[page,setPage]=useState("setup"),[auth,setAuth]=useState(false);
+  const[page,setPage]=useState(_baselinesMode?"dashboard":"setup"),[auth,setAuth]=useState(_baselinesMode);
   if(!auth)return <SetupPage onLogin={()=>{setAuth(true);setPage("dashboard")}}/>;
   const P={dashboard:<DashboardPage go={setPage}/>,directory:<DirectoryPage/>,pods:<PodsPage/>,deployments:<DeploymentsPage/>,nodes:<NodesPage/>,services:<ServicesPage/>,cronjobs:<CronJobsPage/>,storage:<StoragePage/>,events:<EventsPage/>,configmaps:<ConfigMapsPage/>,secrets:<SecretsPage/>,helm:<HelmPage/>,yamlapply:<YamlApplyPage/>,repos:<ReposPage/>,deploy:<DeployPage/>,alerts:<AlertsPage/>,terminal:<TerminalPage/>,settings:<SettingsPage/>};
   return <div style={{display:"flex",height:"100vh",overflow:"hidden",background:C.bg0,fontFamily:sans,color:C.text}}>

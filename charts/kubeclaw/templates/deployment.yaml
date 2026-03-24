@@ -119,6 +119,7 @@ spec:
 
               echo "==> 3. Workspace Sync"
               mkdir -p /workspace/memory
+              mkdir -p /workspace/prism/designs
               for file in SOUL.md AGENTS.md USER.md TOOLS.md MEMORY.md IDENTITY.md BOOTSTRAP.md; do
                 if [ -f "/init-workspace/$file" ]; then
                   if [ "${OVERRIDE_WORKSPACE}" = "true" ] || [ ! -f "/workspace/$file" ]; then

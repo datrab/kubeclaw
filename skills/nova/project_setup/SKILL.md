@@ -42,12 +42,15 @@ Projects/<project>/src/.swarm/
 │   └── FINAL-REVIEW-INSTRUCTIONS.md           # If gate:final-review in execution_order
 ├── buster-test/
 │   ├── FINAL-BUSTER.md                        # If gate:final-buster in execution_order
-│   └── final-test-spec.json                   # If api in gate test_suites
+│   ├── final-test-spec.json                   # If api in gate test_suites
+│   └── baselines/                             # If visual-reg in gate test_suites
+│       └── preview.html                       # Prism preview → auto-generates paths.json + PNGs
 └── modules/<module-dir>/
     ├── FORGE.md                               # Build instructions (or substep FORGEs)
     ├── BUSTER.md                              # Test instructions
     ├── test-spec.json                         # If api in test_suites
-    ├── baselines/baseline.png                 # If visual-reg in test_suites
+    ├── baselines/                             # If visual-reg in test_suites
+    │   └── preview.html                       # Prism preview (or baseline.png for single-page)
     └── <substep-id>/FORGE.md                  # For modules with substeps
 ```
 
@@ -136,6 +139,7 @@ The sandbox has **no K8s cluster**. K8s-dependent endpoints return 503. Test deg
 - [ ] API modules: test-spec.json + `api.spec_file` in test_config
 - [ ] Gate files: instructions + output paths
 - [ ] `final-buster` gate with `dockerfile`/`build_context` + enforced `thresholds` on all suites
+- [ ] Visual-reg modules: Prism preview.html in baselines/ with `data-routes` manifest + `?baselines=true` support
 
 ### Verify
 
@@ -143,6 +147,7 @@ The sandbox has **no K8s cluster**. K8s-dependent endpoints return 503. Test deg
 - [ ] Frontend `build_cmd` DOES contain `npm install` (no Dockerfile)
 - [ ] API key in test-spec.json matches key in `start_cmd` env vars
 - [ ] At least 1 regression test per module in test-spec.json
+- [ ] Prism previews: `data-routes` nav labels match visible sidebar/nav text exactly
 - [ ] Commit + push architecture branch
 
 ### Start
@@ -165,7 +170,10 @@ node /app/skills/pipeline.js --project <name> --resume     # Run
 | unit SKIP | No tests in code | Add unit test section to FORGE.md |
 | unit FAIL `npm test` on Python | Default test_cmd wrong | Set `test_cmd` to pytest |
 | unit FAIL MODULE_NOT_FOUND | Dependencies missing | With Dockerfile: check Dockerfile. Without: prefix `test_cmd` with install |
-| visual-reg SKIP | No baseline.png or .html | Add HTML design reference to baselines/ (auto-generates PNG) |
+| visual-reg SKIP | No baseline.png or .html | Add Prism preview.html to baselines/ (auto-generates paths.json + PNGs) |
+| visual-reg 0 pages compared | paths.json exists but no PNGs | Run `node screenshot.cjs --generate-baselines preview.html baselines/` |
+| visual-reg nav click fails | `data-routes` nav label mismatch | Ensure `nav` field matches visible text exactly (case-sensitive) |
+| visual-reg screenshots login only | Missing `?baselines=true` support | Add auth bypass to preview (see prism-conventions.md) |
 | Blueprint release failed | Missing FORGE.md/BUSTER.md | Check architecture branch |
 
 ## References
@@ -174,3 +182,4 @@ For detailed field specifications and writing guides:
 
 - **progress.json fields, module/gate config, serve types**: Read [references/progress-json.md](references/progress-json.md)
 - **Writing FORGE.md, BUSTER.md, test-spec.json, baselines**: Read [references/module-files.md](references/module-files.md)
+- **Prism preview conventions for visual-reg baselines**: Read [references/prism-conventions.md](references/prism-conventions.md)

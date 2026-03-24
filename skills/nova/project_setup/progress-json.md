@@ -94,7 +94,7 @@
       "build_cmd": "cd frontend && npm install && npm run build",
       "image": "node:20-slim"
     },
-    "visual-reg": { "baseline_dir": ".swarm/modules/15-dashboard-core-pages/baselines" },
+    "visual-reg": { "baseline_dir": ".swarm/modules/15-dashboard-core-pages/baselines", "discord": "summary" },
     "e2e": { "tests_dir": ".swarm/modules/15-dashboard-core-pages/tests" },
     "unit": { "test_cmd": "cd frontend && npm install && npx vitest run --reporter=verbose" }
   }
@@ -138,7 +138,7 @@
 |---|---|---|
 | `api` | `api` | `spec_file` (path to test-spec.json), `thresholds: { max_failures: N }` |
 | `e2e` | `e2e` | `tests_dir` (path to Playwright tests), `timeout_ms`, `thresholds: { max_failures: N }` |
-| `visual-reg` | `visual-reg` | `baseline_dir` (path to baselines/), `thresholds: { max_diff_percent: N }` |
+| `visual-reg` | `visual-reg` | `baseline_dir` (path to baselines/), `thresholds: { max_diff_percent: N }`, `discord: "summary"\|"all"` |
 | `a11y` | `a11y` | `tags`, `path`, `exclude`, `thresholds: { critical: N, serious: N }` |
 | `perf` | `perf` | `thresholds: { performance: N, accessibility: N }` |
 | `bundle` | `bundle` | `thresholds: { max_size_kb: N, max_file_count: N }` |
@@ -152,7 +152,9 @@ Without `thresholds` → informational (always PASS). With `thresholds` → enfo
 **SKIP behavior:** Suites that require external artifacts will SKIP (not FAIL) when the artifact is missing:
 - `api` without `spec_file` → SKIP
 - `e2e` without `tests_dir` → SKIP (Buster subagent writes tests on first run, e2e.js picks them up on subsequent runs)
-- `visual-reg` without baseline (no `.png` and no `.html` in `baseline_dir`) → SKIP
+- `visual-reg` without baseline (no `.png`, `.html`, or `paths.json` in `baseline_dir`) → SKIP
+
+**visual-reg multi-path mode:** When `baseline_dir` contains a `paths.json` (or an HTML preview with `data-routes` manifest), the suite runs in multi-path mode — screenshotting and comparing every page listed. `paths.json` + baseline PNGs are auto-generated from Prism preview HTML files. See [module-files.md](references/module-files.md) and [prism-conventions.md](references/prism-conventions.md) for details.
 - `unit` without `test_cmd` and no `package.json` test script → SKIP
 
 ## Gate Definitions

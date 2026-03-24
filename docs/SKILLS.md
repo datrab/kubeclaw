@@ -230,6 +230,7 @@ Nova skill for setting up a new KubeClaw project end-to-end. Located at `/app/sk
 | `SKILL.md` | Entry point: architecture branch workflow, file structure, checklist, common errors |
 | `references/progress-json.md` | Field reference for progress.json: modules, gates, serve config, suite config |
 | `references/module-files.md` | Writing guide for FORGE.md, BUSTER.md, test-spec.json, baselines |
+| `references/prism-conventions.md` | Prism preview contract: data-routes manifest, ?baselines=true auth bypass |
 
 ### What It Covers
 
@@ -240,6 +241,7 @@ Nova skill for setting up a new KubeClaw project end-to-end. Located at `/app/sk
 - Sandbox constraints: no `node_modules`, no K8s cluster, dependency install required
 - Python/FastAPI support: `image`, `start_cmd`, `test_cmd` for non-Node projects
 - Critical `serve.project_dir` requirement for projects under `Projects/<project>/src`
+- Visual-reg multi-path baselines: Prism preview → auto-generated paths.json + PNGs
 
 ### References
 

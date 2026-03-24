@@ -25,7 +25,7 @@ Nova's `pipeline.js` liest `test_suites` und `test_config` aus `progress.json` u
 | Artefakt | Wo ablegen | Erstellt von | Referenziert via |
 |---|---|---|---|
 | API-Test-Spec | `.swarm/modules/<module-dir>/test-spec.json` | Manuell / Prism / Pipeline | `test_config.api.spec_file` |
-| Visual-Reg Baselines | `.swarm/modules/<module-dir>/baselines/baseline.png` | Manuell / Prism + `screenshot.js` | `test_config.visual-reg.baseline_dir` |
+| Visual-Reg Baselines | `.swarm/modules/<module-dir>/baselines/preview.html` | Prism + `screenshot.cjs --generate-baselines` | `test_config.visual-reg.baseline_dir` |
 | E2E Playwright Tests | `.swarm/modules/<module-dir>/tests/*.spec.js` | Buster-Subagent (1. Run) | `test_config.e2e.tests_dir` |
 
 **Wichtig:** Wenn ein Artefakt fehlt → die zugehörige Suite wird SKIP (kein Fehler, kein FAIL).
@@ -199,22 +199,27 @@ Wenn `test_suites` nicht gesetzt oder `null` → Default: `["build", "health"]`.
 ```json
 "visual-reg": {
   "baseline_dir": ".swarm/modules/15-dashboard-core-pages/baselines",
-  "thresholds": { "max_diff_percent": 1.0 }
+  "thresholds": { "max_diff_percent": 1.0 },
+  "discord": "summary"
 }
 ```
 
 | Feld | Typ | Default | Beschreibung |
 |---|---|---|---|
-| `baseline_dir` | string | `.swarm/modules/<module>/baselines` | Verzeichnis mit `baseline.png` |
-| `baseline_file` | string | `"baseline.png"` | Dateiname der Baseline im `baseline_dir` |
-| `path` | string | `"/"` | URL-Pfad für den Screenshot |
+| `baseline_dir` | string | `.swarm/modules/<module>/baselines` | Verzeichnis mit `preview.html` / `paths.json` / PNGs |
+| `baseline_file` | string | `"baseline.png"` | Dateiname der Baseline (nur Single-Path-Modus) |
+| `path` | string | `"/"` | URL-Pfad für den Screenshot (nur Single-Path-Modus) |
 | `pixelmatch.threshold` | number | `0.1` | Farbdistanz pro Pixel (0 = exakt, 1 = alles akzeptiert) |
-| `repo_dir` | string | `/home/node/.openclaw/workspace/git-repo` | Repo-Verzeichnis für Baseline-Pfad-Auflösung |
+| `discord` | string | auto | `"summary"` (1 Embed bei >3 Pfaden) oder `"all"` (einzeln pro Seite) |
 | `thresholds` | object \| null | `null` | Siehe Dual-Mode (§4) |
 
 **Threshold-Felder:** `{ max_diff_percent: N }` — FAIL wenn Pixel-Diff den Prozentsatz überschreitet.
 
-**Voraussetzung:** `baseline.png` muss im `baseline_dir` existieren. Erstellen via: `node screenshot.js baseline.html baseline.png`. Keine Baseline → SKIP.
+**Multi-Path-Modus (empfohlen):** Wenn `baseline_dir` eine `paths.json` enthält (oder eine `.html` Preview mit `data-routes` Manifest), wird jede Seite einzeln screenshottet und verglichen. `paths.json` + Baseline-PNGs werden automatisch aus Prism-Preview-HTML generiert. Siehe `skills/nova/project_setup/prism-conventions.md`.
+
+**Single-Path-Modus (Rückwärtskompatibel):** Wenn nur `baseline.png` existiert (kein `paths.json`, keine `.html`), wird ein einzelner Screenshot gegen die Baseline verglichen. Erstellen via: `node screenshot.cjs baseline.html baseline.png`.
+
+**Keine Baseline** (kein `.png`, `.html` oder `paths.json` im `baseline_dir`) → SKIP.
 
 ### 3.6 api — API-Tests (JSON-Spec)
 
@@ -385,7 +390,8 @@ Typische Config:
       "image": "node:20-slim"
     },
     "visual-reg": {
-      "baseline_dir": ".swarm/modules/<module-dir>/baselines"
+      "baseline_dir": ".swarm/modules/<module-dir>/baselines",
+      "discord": "summary"
     },
     "e2e": {
       "tests_dir": ".swarm/modules/<module-dir>/tests"
@@ -399,7 +405,7 @@ Typische Config:
 - `a11y`: WCAG-Compliance (axe-core)
 - `perf`: Lighthouse Performance-Score
 - `bundle`: Build-Output-Grösse (keine 20MB Bundles)
-- `visual-reg`: Screenshot-Diff gegen Design-Baseline
+- `visual-reg`: Screenshot-Diff gegen Design-Baseline (Multi-Path: jede Seite einzeln aus Prism-Preview)
 - `e2e`: Playwright-Tests (Navigation, Interactions)
 - `unit`: Vitest Component-Tests
 

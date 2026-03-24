@@ -206,22 +206,96 @@ Every module should have at least 1 test hitting an endpoint from the previous m
 
 ---
 
+
 ## Baselines for visual-reg
 
 Only needed when `visual-reg` is in `test_suites`. Typical for frontend modules with real pages (not scaffolds).
 
-**Option A — HTML design reference (recommended):**
+### Multi-Path Baselines (recommended)
+
+For modules with multiple pages. The **Prism preview HTML is the single source of truth** — baselines and paths.json are generated automatically.
+
+**Setup:**
+
+1. Create a Prism preview HTML that renders all pages of the module
+2. The preview must follow the [Prism conventions](prism-conventions.md):
+   - `<script type="application/json" data-routes>` manifest listing every page
+   - `?baselines=true` query param bypasses auth/login
+3. Place at `.swarm/modules/<module-dir>/baselines/preview.html`
+4. `visual-reg.cjs` auto-generates `paths.json` + `{name}-baseline.png` per route on first run
+
+**Result after generation:**
+
+```
+.swarm/modules/15-dashboard-core-pages/baselines/
+├── preview.html              ← Prism-generated (source of truth)
+├── paths.json                ← Auto-generated: [{ name, nav, path }]
+├── setup-baseline.png        ← Auto-generated from preview
+├── dashboard-baseline.png
+├── pods-baseline.png
+├── deployments-baseline.png
+└── ...
+```
+
+**Regeneration:** When `preview.html` is newer than `paths.json`, all baselines are regenerated automatically. Update the preview → next visual-reg run picks up the changes.
+
+**Manual generation via CLI:**
+
+```bash
+node /app/skills/screenshot.cjs --generate-baselines \
+  .swarm/modules/15-dashboard-core-pages/baselines/preview.html \
+  .swarm/modules/15-dashboard-core-pages/baselines/
+```
+
+### Single-Path Baselines (backwards compat)
+
+For modules with only one page (e.g. a single landing page):
+
+**Option A — HTML design reference:**
 1. Create an HTML file that represents the expected design
-2. Place at `.swarm/modules/<module-dir>/baselines/<name>.html`
-3. `visual-reg.js` auto-generates `baseline.png` from the HTML on first run via `screenshot.js`
+2. Place at `.swarm/modules/<module-dir>/baselines/<n>.html`
+3. `visual-reg.cjs` auto-generates `baseline.png` from the HTML on first run
 
 **Option B — Pre-generated PNG:**
-1. Generate manually: `node /app/skills/screenshot.js <input.html> baseline.png`
+1. Generate manually: `node /app/skills/screenshot.cjs <input.html> baseline.png`
 2. Place at `.swarm/modules/<module-dir>/baselines/baseline.png`
 
-Without baseline (no `.png` and no `.html` in baselines dir) → `visual-reg.js` SKIP (no error).
+### Mode Detection
 
-Path in test_config resolves from `project_dir`:
+`visual-reg.cjs` auto-detects the mode based on what it finds in the baseline directory:
+
+| Found in baseline_dir | Mode | Behavior |
+|---|---|---|
+| `paths.json` | Multi-path | Compare each route against its `{name}-baseline.png` |
+| `.html` file (no `paths.json`) | Auto-generate then multi-path | Run generator first, then multi-path |
+| `baseline.png` only | Single-path | Compare one URL against `baseline.png` |
+| Nothing | — | SKIP (no error) |
+
+### Config in progress.json
+
+Multi-path requires only `baseline_dir` — no paths array needed:
+
 ```json
-"visual-reg": { "baseline_dir": ".swarm/modules/15-dashboard-core-pages/baselines" }
+"visual-reg": {
+  "baseline_dir": ".swarm/modules/15-dashboard-core-pages/baselines",
+  "thresholds": { "max_diff_percent": 1.0 },
+  "discord": "summary"
+}
 ```
+
+| Field | Default | Description |
+|---|---|---|
+| `baseline_dir` | `.swarm/baselines` | Directory with preview.html / paths.json / PNGs |
+| `thresholds` | `null` | `null` = informational (always PASS). Set for enforced mode |
+| `discord` | auto | `"summary"` (1 embed, >3 paths) or `"all"` (per-page messages, ≤3 paths) |
+
+### Auth in the Running App
+
+For multi-path, the running app must be accessible without manual login. Two mechanisms:
+
+| Context | How |
+|---|---|
+| **Preview HTML** (baseline generation) | `?baselines=true` query param skips setup page |
+| **Running app** (visual-reg suite) | `SANDBOX=true` env var — backend returns `sandbox: true` in health, frontend auto-auths |
+
+The `SANDBOX=true` env var is already passed to every Podman container by `build.cjs`. The app needs to implement sandbox auto-auth — typically a `useEffect` on mount that checks `/api/v1/health` and auto-sets the API key if `sandbox: true`.
