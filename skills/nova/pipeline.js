@@ -4510,15 +4510,22 @@ async function runBusterGate(config, progress, gateId) {
       await spawnAgent(config, progress, 'forge', fixLabel, forgeModel, fixPrompt);
     } catch (e) {
       log('ERROR', `Forge spawn for gate fix failed: ${e.message}`);
+      await discord(config, 'CRITICAL', `Gate Fix: Forge Spawn Failed`,
+        `Attempt ${attempt}/${maxFixCycles}. Error: ${e.message}`);
       continue; // Try next attempt anyway
     }
 
     // Verify Forge is alive
     if (!(await verifyAgentAlive(config, 'forge', fixLabel))) {
       log('WARN', `Forge health check failed for gate fix — skipping to next attempt`);
+      await discord(config, 'WARN', `Gate Fix: Forge Not Responding`,
+        `Attempt ${attempt}/${maxFixCycles}. Forge spawned but health check failed. Retrying.`);
       await killAgent(config, 'forge', fixLabel);
       continue;
     }
+
+    await discord(config, 'INFO', `Gate Fix: Forge Working`,
+      `Attempt ${attempt}/${maxFixCycles}. Forge is fixing ${issues.length} issue(s)...`);
 
     // Poll for Forge session completion (with crash detection)
     const forgeTimeout = gate.timeout_minutes ?? config.default_timeout_minutes;
@@ -4548,6 +4555,9 @@ async function runBusterGate(config, progress, gateId) {
     }
     const gateStatusFile = gateStatusPath(config, gateId);
     try { if (fs.existsSync(gateStatusFile)) fs.unlinkSync(gateStatusFile); } catch { /* ok */ }
+
+    await discord(config, 'INFO', `Gate Fix: Retesting with Buster`,
+      `Forge fix attempt ${attempt}/${maxFixCycles} committed. Running Buster gate again...`);
 
     // Loop continues -> next iteration runs _runBusterGateOnce again
   }
@@ -5110,13 +5120,20 @@ async function runReviewGate(config, progress, gateId) {
       try { await spawnAgent(config, progress, 'forge', fixLabel, forgeModel, fixPrompt); }
       catch (e) {
         log('ERROR', `Forge spawn failed for review fix: ${e.message}`);
+        await discord(config, 'CRITICAL', `Review Fix: Forge Spawn Failed`,
+          `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Error: ${e.message}`);
         continue;
       }
 
       if (!(await verifyAgentAlive(config, 'forge', fixLabel))) {
+        await discord(config, 'WARN', `Review Fix: Forge Not Responding`,
+          `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Health check failed. Retrying.`);
         await killAgent(config, 'forge', fixLabel);
         continue;
       }
+
+      await discord(config, 'INFO', `Review Fix: Forge Working`,
+        `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Forge is fixing ${issues.length} issue(s)...`);
 
       // Poll for Forge session completion (with crash detection)
       const sessionResult = await pollForSessionEnd(
@@ -5136,6 +5153,9 @@ async function runReviewGate(config, progress, gateId) {
       }
 
       await gitCommitAndPush(config, `[pipeline] Review fix: ${gateId} cycle ${cycle}`, { softFail: true });
+
+      await discord(config, 'OK', `Review Fix: Forge Complete`,
+        `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Fixes committed.`);
 
       // Forge ran successfully — no point re-running with the same issues.
       // Further cycles only matter if spawn/health-check failed (continue above).
@@ -5194,13 +5214,20 @@ async function runReviewGate(config, progress, gateId) {
       try { await spawnAgent(config, progress, 'forge', fixLabel, forgeModel, fixPrompt); }
       catch (e) {
         log('ERROR', `Forge spawn failed for review fix: ${e.message}`);
+        await discord(config, 'CRITICAL', `Review Fix: Forge Spawn Failed`,
+          `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Error: ${e.message}`);
         continue;
       }
 
       if (!(await verifyAgentAlive(config, 'forge', fixLabel))) {
+        await discord(config, 'WARN', `Review Fix: Forge Not Responding`,
+          `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Health check failed. Retrying.`);
         await killAgent(config, 'forge', fixLabel);
         continue;
       }
+
+      await discord(config, 'INFO', `Review Fix: Forge Working`,
+        `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Forge is fixing ${currentIssues.length} issue(s)...`);
 
       // Poll for Forge session completion (with crash detection)
       const sessionResult = await pollForSessionEnd(
@@ -5221,6 +5248,9 @@ async function runReviewGate(config, progress, gateId) {
 
       await gitCommitAndPush(config, `[pipeline] Review fix: ${gateId} cycle ${cycle}`, { softFail: true });
 
+      await discord(config, 'INFO', `Review Fix: Re-Reviewing with Echo`,
+        `Forge fix cycle ${cycle}/${maxFixCycles} committed. Running Echo review again...`);
+
       // \u2500\u2500 Cleanup old review files and re-review \u2500\u2500
       cleanupReviewFiles(config, gate, reviewers);
 
@@ -5228,6 +5258,8 @@ async function runReviewGate(config, progress, gateId) {
 
       if (reviewResult.error) {
         log('ERROR', `Re-review failed: ${reviewResult.error}`);
+        await discord(config, 'WARN', `Review Fix: Re-Review Error`,
+          `Cycle ${cycle}/${maxFixCycles}. Echo review failed: ${reviewResult.error}`);
         continue;
       }
 
@@ -5239,6 +5271,8 @@ async function runReviewGate(config, progress, gateId) {
       }
 
       log('WARN', `Re-review still NO-GO after fix cycle ${cycle}/${maxFixCycles}`);
+      await discord(config, 'WARN', `Review Fix: Still NO-GO`,
+        `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Echo still found issues.`);
     }
 
     // Exhausted

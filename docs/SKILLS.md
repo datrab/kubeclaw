@@ -11,6 +11,7 @@ All skills are located at `/app/skills/` inside the container. They are JavaScri
 | `memory.js` | All | Confidence-weighted vector memory (Qdrant) |
 | `redis.js` | All (agent-specific versions) | Inter-agent communication via Redis Streams |
 | `pipeline.js` | Nova | Deterministic module orchestration engine |
+| `project-summary.js` | Nova | Project lifecycle report: code stats, pipeline metrics, quality |
 | `project_setup/` | Nova | Skill: Set up a new project for the autonomous pipeline |
 | `verify-task.js` | All (agent-specific for Buster) | Scope enforcement + controlled git push |
 | `merge-reviews.js` | Nova | Consolidate Echo review files (legacy — single reviewer since v8) |
@@ -219,6 +220,52 @@ node /app/skills/pipeline.js --project kubecommand --blueprint-list
 
 ---
 
+## project-summary.js — Project Lifecycle Report
+
+Generates a comprehensive summary of a completed (or in-progress) KubeClaw project. Reads progress.json, all status.json files, and git history to produce code stats, pipeline metrics, and quality indicators.
+
+**Env vars:** `CURRENT_PROJECT`, `SWARM_CONFIG`, `DISCORD_WEBHOOK`
+
+### Commands
+
+```bash
+# Print Markdown report to stdout
+node /app/skills/project-summary.js --project kubecommand
+
+# Save report to file
+node /app/skills/project-summary.js --project kubecommand --output /tmp/summary.md
+
+# Post summary embed to Discord
+node /app/skills/project-summary.js --project kubecommand --discord
+
+# JSON output (raw data, no formatting)
+node /app/skills/project-summary.js --project kubecommand --json
+```
+
+### What It Reports
+
+| Section | Metrics |
+|---------|---------|
+| Overview | Modules completed/blocked/pending, total attempts, first-pass rate, avg attempts, wall clock time |
+| Code | Total LOC, files (code vs .swarm), commits, authors, lines by language |
+| Token Usage | Forge/Buster input/output tokens, total |
+| Hardest Modules | Top 5 modules by retry count |
+| Gates | Per-gate status (GO/NO-GO/PENDING) |
+| Top Failure Patterns | Most common failure reasons across all modules |
+| Module Detail | Full table: every module with status, fail count, duration |
+
+### Module API
+
+```javascript
+const { generateSummary } = require('/app/skills/project-summary.js');
+const result = await generateSummary({ project: 'kubecommand' });
+// result.markdown — full Markdown report
+// result.embeds   — Discord embed objects
+// result.data     — raw { codeStats, pipelineStats }
+```
+
+---
+
 ## project_setup/ — Project Setup Skill
 
 Nova skill for setting up a new KubeClaw project end-to-end. Located at `/app/skills/nova/project_setup/`.
@@ -385,6 +432,7 @@ The processor sidecar has been replaced by `buster-orchestrator.js`, which runs 
 ├── discord-purge.js   # Channel cleanup (common)
 ├── visual-audit.js    # Headless visual testing (common)
 └── nova/
+    ├── project-summary.js # Project lifecycle report
     └── project_setup/ # Project setup skill (SKILL.md + references/)
 
 /app/scripts/processor/
