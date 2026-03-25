@@ -337,6 +337,37 @@ function parseSessionState(statusResult) {
 }
 
 /**
+ * Check if an ACP session has reached a terminal state (closed/error).
+ * Used by pollers to fail fast when an agent crashes instead of waiting for timeout.
+ *
+ * Returns { terminal: false } for running, idle, unknown — these are NOT terminal.
+ * Only 'closed' and 'error' are unambiguous end states.
+ *
+ * @param {string} sessionLabel - Tracking key (e.g. 'forge-06', 'echo-opus-final-review')
+ * @returns {{ terminal: boolean, state: string }}
+ */
+async function isSessionTerminal(sessionLabel) {
+  const entry = _shutdownState.activeSessions.get(sessionLabel);
+  const sessionKey = entry?.sessionKey;
+  if (!sessionKey) return { terminal: false, state: 'no_session_key' };
+
+  try {
+    const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
+    const statusResult = raw?.result?.details || raw;
+    const { state } = parseSessionState(statusResult);
+
+    if (/^(closed|error)$/i.test(state)) {
+      return { terminal: true, state };
+    }
+    return { terminal: false, state };
+  } catch {
+    // Session unreachable — could be gone, but don't assume terminal
+    // (network blip, gateway restart). Let timeout handle it.
+    return { terminal: false, state: 'unreachable' };
+  }
+}
+
+/**
  * Wait for an ACP session to become idle before killing.
  * Gives the agent time to write a thread summary after completing work.
  *
@@ -1743,10 +1774,21 @@ async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
     }
 
     const streamLogPath = result.streamLogPath || null;
-    log('OK', `ACP session spawned: ${gatewayLabel} → ${result.childSessionKey}${streamLogPath ? ` (stream: ${streamLogPath})` : ''}`);
+    log('OK', `ACP session spawned: ${gatewayLabel} → ${result.childSessionKey}${streamLogPath ? ` (stream: ${streamLogPath})` : ''}`,
+      { agent: agentId, model, sessionKey: result.childSessionKey, runId: result.runId, stream: streamLogPath });
     trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel, streamLogPath);
+
+    // Discord spawn confirmation (fire-and-forget)
+    discord(config, 'INFO', `🔬 ACP Session Spawned: ${agentType}/${moduleId}`, `Agent is now working.`, [
+      { name: 'Agent', value: agentId, inline: true },
+      { name: 'Model', value: model, inline: true },
+      { name: 'Session', value: result.childSessionKey, inline: false },
+    ]).catch(() => {});
+
     return { label: trackingKey, childSessionKey: result.childSessionKey, runId: result.runId, streamLogPath };
   } catch (e) {
+    // Discord spawn failure (fire-and-forget)
+    discord(config, 'CRITICAL', `❌ ACP Spawn Failed: ${agentType}/${moduleId}`, e.message?.split('\n')[0] || 'unknown').catch(() => {});
     throw new Error(`Failed to spawn ACP session '${gatewayLabel}': ${e.message}`);
   }
 }
@@ -2952,11 +2994,22 @@ async function pollGeneric(config, checkFn, timeoutMinutes, label = 'poll') {
  *
  * @returns {PollResult} - ok=true if file found, ok=false on timeout
  */
-async function pollForFile(config, filePath, timeoutMinutes, label = 'file-poll') {
+async function pollForFile(config, filePath, timeoutMinutes, label = 'file-poll', sessionLabel = null) {
   return pollGeneric(config, async () => {
+    // Signal A: Output file exists → success (always wins)
     if (fs.existsSync(filePath)) {
       return { done: true, result: pollResult(true, 'target_reached', { file: filePath }) };
     }
+
+    // Signal B: Session terminal (closed/error) without file → fail fast
+    if (sessionLabel) {
+      const { terminal, state } = await isSessionTerminal(sessionLabel);
+      if (terminal) {
+        log('WARN', `[${label}] Session ${state} but output file not found — agent crashed or failed to write output`);
+        return { done: true, result: pollResult(false, 'session_ended_no_output', { state }) };
+      }
+    }
+
     return { done: false };
   }, timeoutMinutes, label);
 }
@@ -2994,11 +3047,30 @@ async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes, o
       }
     }
 
-    // Note: No ACP session_status polling here.
-    // With oneshot sessions, 'idle' can mean "initializing", "between tool calls",
-    // or "finished" — there's no reliable way to distinguish them.
-    // status.json is the single source of truth for Forge completion.
-    // Timeout catches real crashes.
+    // ── Channel 2: ACP session terminal state (fail-fast on crash) ──
+    // Only 'closed' and 'error' are terminal. 'idle' and 'unknown' are NOT —
+    // with oneshot sessions, 'idle' can mean initializing, between tool calls, or finished.
+    if (sessionLabel) {
+      const { terminal, state } = await isSessionTerminal(sessionLabel);
+      if (terminal) {
+        // Session died — check if HEAD moved (agent pushed before crashing)
+        gitPullForPolling(config);
+        invalidateHeadHash();
+        const headNow = headHash();
+        if (headBefore && headNow !== headBefore) {
+          log('INFO', `Session ${state} but HEAD moved (${headBefore} → ${headNow}) — auto-advancing to READY_FOR_TESTING`);
+          const currentStatus = loadStatus(config, moduleDir);
+          if (currentStatus && currentStatus.status !== STATUS.READY_FOR_TESTING) {
+            addHistory(currentStatus, STATUS.READY_FOR_TESTING, 'pipeline', `Session ${state}, HEAD moved — auto-advanced`);
+            currentStatus.status = STATUS.READY_FOR_TESTING;
+            saveStatus(config, moduleDir, currentStatus);
+          }
+          return { done: true, result: pollResult(true, 'target_reached', currentStatus || status) };
+        }
+        log('WARN', `Session ${state} without HEAD movement — agent crashed or made no changes`);
+        return { done: true, result: pollResult(false, 'session_ended_no_changes', status) };
+      }
+    }
 
     const logStatus = status?.status || 'no-status-file';
     const logPhase = status?.current_phase || '';
@@ -5381,10 +5453,21 @@ async function spawnReviewerAgent(config, progress, gateId, reviewer, instructio
     }
 
     const streamLogPath = result.streamLogPath || null;
-    log('OK', `Reviewer spawned: ${gatewayLabel} → ${result.childSessionKey}${streamLogPath ? ` (stream: ${streamLogPath})` : ''}`);
+    log('OK', `Reviewer spawned: ${gatewayLabel} → ${result.childSessionKey}${streamLogPath ? ` (stream: ${streamLogPath})` : ''}`,
+      { agent: agentId, model, reviewer: reviewer.label, sessionKey: result.childSessionKey, runId: result.runId, stream: streamLogPath });
     trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel, streamLogPath);
+
+    // Discord spawn confirmation (fire-and-forget)
+    discord(config, 'INFO', `🔬 Reviewer Spawned: ${reviewer.label}/${gateId}`, `Echo reviewer is now working.`, [
+      { name: 'Reviewer', value: reviewer.label, inline: true },
+      { name: 'Model', value: model, inline: true },
+      { name: 'Agent', value: agentId, inline: true },
+      { name: 'Session', value: result.childSessionKey, inline: false },
+    ]).catch(() => {});
+
     return { label: trackingKey, childSessionKey: result.childSessionKey, runId: result.runId, streamLogPath };
   } catch (e) {
+    discord(config, 'CRITICAL', `❌ Reviewer Spawn Failed: ${gateId}`, `${reviewer.label}: ${e.message?.split('\n')[0] || 'unknown'}`).catch(() => {});
     throw new Error(`Failed to spawn reviewer '${gatewayLabel}': ${e.message}`);
   }
 }
@@ -5572,10 +5655,10 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig, revi
   }
 
   // ── Phase 4: Poll for review output ──
-  const pollRes = await pollForFile(config, outputFilePath, timeout, `Review '${gateId}'`);
+  const echoTrackingKey = `echo-${reviewer.label}-${gateId}`;
+  const pollRes = await pollForFile(config, outputFilePath, timeout, `Review '${gateId}'`, echoTrackingKey);
 
   // ── Phase 5: Kill reviewer ──
-  const echoTrackingKey = `echo-${reviewer.label}-${gateId}`;
   const echoStreamPath = _shutdownState.activeSessions.get(echoTrackingKey)?.streamLogPath;
   await killReviewerAgent(config, gateId, reviewer, pollRes.ok);
 
