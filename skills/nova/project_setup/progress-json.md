@@ -166,7 +166,7 @@ Without `thresholds` → informational (always PASS). With `thresholds` → enfo
   "type": "review",
   "title": "Echo Midpoint Review",
   "review_name": "MIDPOINT-REVIEW",
-  "on_nogo": "fix_and_continue",
+  "on_nogo": "fix_and_rereview",
   "instructions_file": "echo-review/MIDPOINT-REVIEW-INSTRUCTIONS.md",
   "output_file": "echo-review/MIDPOINT-REVIEW.json",
   "review_output_dir": "echo-review",
@@ -177,7 +177,7 @@ Without `thresholds` → informational (always PASS). With `thresholds` → enfo
 }
 ```
 
-- `on_nogo: "fix_and_continue"` → Forge fixes, pipeline continues (non-blocking)
+- `on_nogo: "fix_and_rereview"` → Forge fixes, pipeline continues (non-blocking)
 - `on_nogo: "fix_and_rereview"` → Forge fixes, Echo re-reviews (strict)
 - Gate paths (`instructions_file`, `output_file`) relative to `.swarm/`
 - No `test_suites`/`test_config` needed

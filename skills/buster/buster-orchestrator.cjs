@@ -84,9 +84,26 @@ const STATE = {
   tasksFailed: 0,
 };
 
+// ─── Structured Logging ─────────────────────────────────────────────────────
+const LOG_LINES = [];
+let _orchestratorLogPath = null;
+
+function log(tag, msg, data = null) {
+  const entry = {
+    ts: new Date().toISOString(),
+    tag,
+    msg,
+    ...(data && { data }),
+    ...(STATE.currentModule && { module: STATE.currentModule }),
+    ...(STATE.currentStep && { step: STATE.currentStep }),
+  };
+  console.log(JSON.stringify(entry));
+  LOG_LINES.push(JSON.stringify(entry));
+}
+
 function setStep(step) {
   STATE.currentStep = step;
-  console.log(`[STEP] ▶ ${step}`);
+  log('STEP', step);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -282,17 +299,19 @@ function startGatewayHealthMonitor() {
 // ═══════════════════════════════════════════════════════════════
 
 async function sandboxCleanup() {
-  console.log('[CLEANUP] Running sandbox cleanup...');
+  log('CLEANUP', 'Running sandbox cleanup...');
   try {
     // 1. Stop + remove all containers
     await execAsync('podman stop -a 2>/dev/null; podman rm -a -f 2>/dev/null', {
       timeout: 30000, encoding: 'utf8',
     }).catch(() => {});
+    log('CLEANUP', 'Containers stopped and removed');
 
     // 2. Remove dangling images only (<none>:<none> from rebuilt tags)
     await execAsync('podman image prune -f 2>/dev/null', {
       timeout: 10000, encoding: 'utf8',
     }).catch(() => {});
+    log('CLEANUP', 'Dangling images pruned');
 
     // 3. Clear sandbox directories and ensure they exist
     await execAsync('rm -rf /sandbox/www/* /sandbox/results/*', {
@@ -301,15 +320,17 @@ async function sandboxCleanup() {
     await execAsync('mkdir -p /sandbox/www /sandbox/results', {
       timeout: 5000, encoding: 'utf8',
     }).catch(() => {});
+    log('CLEANUP', 'Sandbox directories cleared');
 
     // 4. Stop nginx
     await execAsync('nginx -s stop 2>/dev/null', {
       timeout: 5000, encoding: 'utf8',
     }).catch(() => {});
+    log('CLEANUP', 'nginx stopped');
 
-    console.log('[CLEANUP] ✅ Done.');
+    log('CLEANUP', 'Done');
   } catch (e) {
-    console.warn(`[CLEANUP] ⚠️ ${e.message}`);
+    log('CLEANUP', `Warning: ${e.message}`);
   }
 }
 
@@ -342,7 +363,7 @@ async function ensureBaseImages() {
 }
 
 async function gitSync(expectedHash) {
-  console.log('[GIT] Syncing repo...');
+  log('GIT', 'Syncing repo...');
   try {
     // Always fetch latest refs
     await execFileAsync('git', ['-C', REPO_DIR, 'fetch', 'origin'], {
@@ -362,7 +383,7 @@ async function gitSync(expectedHash) {
       await execFileAsync('git', ['-C', REPO_DIR, 'checkout', expectedHash], {
         encoding: 'utf8', timeout: 15000,
       });
-      console.log(`[GIT] ✅ Checked out exact commit: ${expectedHash.substring(0, 8)}`);
+      log('GIT', `Checked out exact commit`, { hash: expectedHash.substring(0, 8), mode: 'deterministic' });
       return expectedHash;
     }
 
@@ -373,10 +394,10 @@ async function gitSync(expectedHash) {
     const currentHash = (await execFileAsync('git', ['-C', REPO_DIR, 'rev-parse', 'HEAD'], {
       encoding: 'utf8', timeout: 5000,
     })).stdout.trim();
-    console.log(`[GIT] ✅ Pulled latest: ${currentHash.substring(0, 8)}`);
+    log('GIT', `Pulled latest`, { hash: currentHash.substring(0, 8), mode: 'latest' });
     return currentHash;
   } catch (e) {
-    console.error(`[GIT] ⚠️ Sync failed: ${e.message}`);
+    log('GIT', `Sync failed: ${e.message}`);
     return null;
   }
 }
@@ -440,7 +461,7 @@ async function spawnBusterSession(payload, prompt, timeoutSeconds) {
   if (sessionConfig.cwd) spawnArgs.cwd = sessionConfig.cwd;
   if (sessionConfig.model) spawnArgs.model = sessionConfig.model;
 
-  console.log(`[SPAWN] ACP session: label=${label} agent=${agentId || 'gateway-default'} model=${spawnArgs.model || 'gateway-default'} timeout=${timeoutSeconds}s headless=true`);
+  log('SPAWN', `ACP session request`, { label, agent: agentId || 'gateway-default', model: spawnArgs.model || 'gateway-default', timeout: timeoutSeconds });
 
   // Retry on transient network errors (fetch failed, ECONNREFUSED, etc.)
   const maxRetries = 3;
@@ -461,7 +482,7 @@ async function spawnBusterSession(payload, prompt, timeoutSeconds) {
       break; // fetch succeeded (may still be HTTP error — handled below)
     } catch (e) {
       if (attempt >= maxRetries) throw e;
-      console.warn(`[SPAWN] Network error (attempt ${attempt}/${maxRetries}): ${e.message} — retrying in ${retryDelayMs / 1000}s`);
+      log('SPAWN', `Network error (attempt ${attempt}/${maxRetries}): ${e.message} — retrying`);
       await new Promise(r => setTimeout(r, retryDelayMs));
     }
   }
@@ -485,7 +506,7 @@ async function spawnBusterSession(payload, prompt, timeoutSeconds) {
   }
 
   const streamLogPath = result.streamLogPath || null;
-  console.log(`[SPAWN] ✅ Session spawned: key=${result.childSessionKey} run=${result.runId}${streamLogPath ? ` stream=${streamLogPath}` : ''}`);
+  log('SPAWN', `Session spawned`, { key: result.childSessionKey, run: result.runId, stream: streamLogPath || 'none' });
 
   return {
     childSessionKey: result.childSessionKey,
@@ -546,13 +567,13 @@ async function waitForSessionIdle(childSessionKey, extraGraceMs = 120000, totalT
       const { active, state } = parseSessionState(statusResult);
 
       if (state === 'unknown' || /^(closed|error)$/i.test(state)) {
-        console.log(`[GRACE] Session already ${state} — no grace needed`);
+        log('GRACE', `Session already ${state} — no grace needed`);
         return;
       }
 
       if (!active) {
         const grace = Math.min(extraGraceMs, deadline - Date.now());
-        console.log(`[GRACE] Session ${state} — waiting ${Math.round(grace / 1000)}s grace period`);
+        log('GRACE', `Session ${state} — waiting ${Math.round(grace / 1000)}s grace period`);
         await new Promise(r => setTimeout(r, grace));
         return;
       }
@@ -566,7 +587,7 @@ async function waitForSessionIdle(childSessionKey, extraGraceMs = 120000, totalT
     await new Promise(r => setTimeout(r, pollMs));
   }
 
-  console.log(`[GRACE] Timeout (${totalTimeoutMs / 1000}s) — proceeding with kill`);
+  log('GRACE', `Timeout (${totalTimeoutMs / 1000}s) — proceeding with kill`);
 }
 
 async function killSession(childSessionKey, agentId, label) {
@@ -584,12 +605,12 @@ async function killSession(childSessionKey, agentId, label) {
     });
 
     if (response.ok) {
-      console.log(`[MONITOR] ✅ Killed session: ${childSessionKey}`);
+      log('MONITOR', `Killed session: ${childSessionKey}`);
     } else {
-      console.warn(`[MONITOR] Kill response: ${response.status} (session may have exited)`);
+      log('MONITOR', `Kill response: ${response.status} (session may have exited)`);
     }
   } catch (e) {
-    console.warn(`[MONITOR] Kill failed: ${e.message}`);
+    log('MONITOR', `Kill failed: ${e.message}`);
   }
 
   // Clean up acpx internal session tracking
@@ -597,9 +618,9 @@ async function killSession(childSessionKey, agentId, label) {
     try {
       await execFileAsync('acpx', [agentId, 'sessions', 'close', '--name', label],
         { encoding: 'utf8', timeout: 10000 });
-      console.log(`[MONITOR] acpx session closed: ${agentId} / ${label}`);
+      log('MONITOR', `acpx session closed: ${agentId} / ${label}`);
     } catch {
-      console.log(`[MONITOR] acpx session close skipped (non-critical): ${agentId} / ${label}`);
+      log('MONITOR', `acpx session close skipped (non-critical): ${agentId} / ${label}`);
     }
   }
 }
@@ -619,7 +640,7 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
     return `${icon} ${name}`;
   }).join('  ') : '';
 
-  console.log(`[MONITOR] Watching ${childSessionKey} | stream=${completionStream} | timeout=${timeoutSeconds}s`);
+  log('MONITOR', `Watching session`, { key: childSessionKey, stream: completionStream, timeout: timeoutSeconds });
 
   activeSessionKey = childSessionKey;
   activeAgentId = _agentId;
@@ -642,7 +663,7 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
 
   while (Date.now() < deadline) {
     if (shuttingDown) {
-      console.log('[MONITOR] Shutdown signal — killing session.');
+      log('MONITOR', 'Shutdown signal — killing session.');
       await killSession(childSessionKey, _agentId, _spawnLabel);
       activeSessionKey = null; activeAgentId = null; activeSpawnLabel = null;
       return;
@@ -665,7 +686,7 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
           const status = data.status || 'UNKNOWN';
           const elapsed = Math.round((Date.now() - startTime) / 1000);
 
-          console.log(`[MONITOR] ✅ Completion: module=${moduleId} status=${status} source=${source}`);
+          log('MONITOR', `Completion received`, { module: moduleId, status, source, elapsed_s: elapsed });
 
           const summary = data.summary || data.reason || verdict?.summary || '(no summary provided)';
 
@@ -692,7 +713,7 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
         }
       }
     } catch (e) {
-      console.log(`[MONITOR] Redis check: ${e.message}`);
+      log('MONITOR', `Redis check error: ${e.message}`);
     }
 
     // No session_status polling — the ACP state is unreliable for crash detection.
@@ -701,12 +722,12 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
 
     const elapsed = Math.round((Date.now() - startTime) / 1000);
     const remaining = Math.round((deadline - Date.now()) / 1000);
-    console.log(`[MONITOR] ${childSessionKey} waiting for Redis completion... ${elapsed}s elapsed, ${remaining}s remaining`);
+    log('MONITOR', `Waiting for Redis completion`, { elapsed_s: elapsed, remaining_s: remaining });
   }
 
   // Timeout
   const elapsed = Math.round((Date.now() - startTime) / 1000);
-  console.error(`[MONITOR] ⏰ TIMEOUT: ${childSessionKey} did not complete within ${timeoutSeconds}s`);
+  log('MONITOR', `TIMEOUT: ${childSessionKey} did not complete within ${timeoutSeconds}s`);
 
   await discord({
     title: `⏰ ACP Session Timeout: ${moduleId}`,
@@ -734,9 +755,9 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
     ];
     await redis.xadd(completionStream, '*', ...fields);
     await redis.xtrim(completionStream, 'MAXLEN', '~', STREAM_MAX_LEN);
-    console.log(`[MONITOR] FAIL sent to ${completionStream}`);
+    log('MONITOR', `FAIL sent to ${completionStream}`);
   } catch (e) {
-    console.error(`[MONITOR] Failed to send FAIL: ${e.message}`);
+    log('MONITOR', `Failed to send FAIL: ${e.message}`);
   }
 
   await killSession(childSessionKey, _agentId, _spawnLabel);
@@ -760,21 +781,26 @@ async function processTask(payload) {
   const suiteList = payload.test_suites || DEFAULT_SUITES;
   const testConfig = payload.test_config || DEFAULT_CONFIG;
 
-  console.log(`\n[TASK] ═══════════════════════════════════════════════════════`);
-  console.log(`[TASK]   Module:     ${moduleId}`);
-  console.log(`[TASK]   Type:       ${payload.task_type}`);
-  console.log(`[TASK]   Project:    ${payload.project || 'unknown'}`);
-  console.log(`[TASK]   Suites:     [${suiteList.join(', ')}]`);
-  console.log(`[TASK]   Serve:      ${testConfig.serve?.type || 'static'}`);
-  console.log(`[TASK]   Timeout:    ${totalTimeout}s`);
-  console.log(`[TASK]   Stream:     ${completionStream}`);
-  console.log(`[TASK]   Commit:     ${payload.commit_hash || '(latest)'}`);
-  console.log(`[TASK]   Prompt:     ${prompt.length} chars`);
-  console.log(`[TASK] ═══════════════════════════════════════════════════════`);
-
   STATE.currentModule = moduleId;
   STATE.tasksTotal++;
   const taskStartTime = Date.now();
+
+  // ── Compute log paths for centralized logging ──
+  const attempt = payload.attempt || 1;
+  const logBaseDir = payload.log_dir || null;
+  if (logBaseDir) {
+    try { fs.mkdirSync(logBaseDir, { recursive: true }); } catch { /* ok */ }
+    _orchestratorLogPath = path.join(logBaseDir, `orchestrator-attempt-${attempt}.jsonl`);
+  } else {
+    _orchestratorLogPath = null;
+  }
+  LOG_LINES.length = 0; // Clear from previous task
+
+  log('TASK', `Task received`, {
+    module: moduleId, type: payload.task_type, project: payload.project || 'unknown',
+    suites: suiteList, serve: testConfig.serve?.type || 'static', timeout: totalTimeout,
+    stream: completionStream, commit: payload.commit_hash || '(latest)', prompt_chars: prompt.length,
+  });
 
   // ── Step 0: Sandbox Cleanup (clean slate) ──
   setStep('sandbox-cleanup');
@@ -786,12 +812,21 @@ async function processTask(payload) {
 
   // ── Step 2: Save prompt to file (audit/debug) ──
   setStep('save-prompt');
-  const promptPath = `/tmp/buster-task-${moduleId}-${Date.now()}.md`;
-  try {
-    fs.writeFileSync(promptPath, prompt);
-    console.log(`[TASK] Prompt saved: ${promptPath}`);
-  } catch (e) {
-    console.warn(`[TASK] Prompt save failed: ${e.message}`);
+  if (logBaseDir) {
+    try {
+      fs.writeFileSync(path.join(logBaseDir, `buster-prompt-attempt-${attempt}.md`), prompt);
+      log('TASK', `Prompt saved to log dir (${prompt.length} chars)`);
+    } catch (e) {
+      log('TASK', `Prompt save failed: ${e.message}`);
+    }
+  } else {
+    const promptPath = `/tmp/buster-task-${moduleId}-${Date.now()}.md`;
+    try {
+      fs.writeFileSync(promptPath, prompt);
+      log('TASK', `Prompt saved: ${promptPath}`);
+    } catch (e) {
+      log('TASK', `Prompt save failed: ${e.message}`);
+    }
   }
 
   // ── Step 3+4: Run Suites (build + serve + health + ...) ──
@@ -800,14 +835,15 @@ async function processTask(payload) {
   // health.js checks if the app responds.
   // All configured suites run sequentially with dependency ordering.
 
-  console.log('[SUITE] Starting suite-runner...');
+  log('SUITE', 'Starting suite-runner...');
   const suiteStartTime = Date.now();
 
-  // Determine swarm results dir for git persistence
+  // Determine swarm results dir — centralized log directory
   const modulePath = payload.module_path || null;
-  const swarmResultsDir = modulePath
+  const testsLogDir = logBaseDir ? path.join(logBaseDir, 'tests') : null;
+  const swarmResultsDir = testsLogDir || (modulePath
     ? path.join(REPO_DIR, modulePath, 'test-results')
-    : null;
+    : null);
 
   const verdict = await runSuites({
     module: moduleId,
@@ -815,10 +851,12 @@ async function processTask(payload) {
     suites: suiteList,
     config: { ...DEFAULT_CONFIG, ...testConfig },
     swarmResultsDir,
+    attempt,
+    logPath: testsLogDir ? path.join(testsLogDir, `suites-log-attempt-${attempt}.jsonl`) : null,
   });
 
   const suiteTimeSeconds = Math.ceil((Date.now() - suiteStartTime) / 1000);
-  console.log(`[SUITE] Complete: ${verdict.overall_status} → ${verdict.recommendation} (${suiteTimeSeconds}s)`);
+  log('SUITE', `Complete: ${verdict.overall_status} → ${verdict.recommendation}`, { duration_s: suiteTimeSeconds });
 
   // ── Discord: Suite Results ──
   await notifySuiteResults(moduleId, verdict);
@@ -827,6 +865,7 @@ async function processTask(payload) {
   setStep('decision');
   if (verdict.recommendation === RECOMMENDATION.NO_SUBAGENT) {
     console.log(`[TASK] ❌ Critical failure — skipping subagent, sending FAIL to pipeline.`);
+    log('TASK', 'Critical failure — NO_SUBAGENT, sending FAIL');
 
     // Send FAIL to completion stream — include verdict JSON so pipeline
     // can extract per-suite findings and give Forge actionable fix instructions.
@@ -914,35 +953,31 @@ async function processTask(payload) {
     STATE.currentModule = null;
     STATE.currentStep = null;
     await sandboxCleanup();
+
+    // Flush orchestrator log
+    if (_orchestratorLogPath && LOG_LINES.length > 0) {
+      try {
+        fs.mkdirSync(path.dirname(_orchestratorLogPath), { recursive: true });
+        fs.appendFileSync(_orchestratorLogPath, LOG_LINES.join('\n') + '\n');
+      } catch { /* non-critical */ }
+      LOG_LINES.length = 0;
+    }
     return;
   }
 
   // ── Step 6: Enrich prompt with suite results ──
   setStep('enrich-prompt');
   const enrichedPrompt = enrichPrompt(prompt, verdict, testConfig.serve);
-  console.log(`[TASK] Prompt enriched: ${prompt.length} → ${enrichedPrompt.length} chars`);
+  log('TASK', `Prompt enriched: ${prompt.length} → ${enrichedPrompt.length} chars`);
 
-  // Save enriched prompt for debugging (uses run_id from pipeline if available)
-  const pipelineRunId = payload.run_id || `orchestrator-${Date.now()}`;
-  const attempt = payload.attempt || 1;
-  try {
-    let promptDir;
-    if (payload.module_path) {
-      // Module test: .swarm/modules/<dir>/prompts/<runId>/
-      promptDir = path.join(REPO_DIR, payload.module_path, 'prompts', pipelineRunId);
-    } else if (payload.instructions_file) {
-      // Gate test: .swarm/<gate-dir>/prompts/<runId>/  (derived from instructions_file path)
-      const gateDir = path.dirname(payload.instructions_file);
-      promptDir = path.join(REPO_DIR, gateDir, 'prompts', pipelineRunId);
+  // Save enriched prompt to centralized log dir
+  if (logBaseDir) {
+    try {
+      fs.writeFileSync(path.join(logBaseDir, `buster-enriched-prompt-attempt-${attempt}.md`), enrichedPrompt);
+      log('TASK', `Enriched prompt saved (${enrichedPrompt.length} chars)`);
+    } catch (e) {
+      log('TASK', `Enriched prompt save failed (non-critical): ${e.message}`);
     }
-    if (promptDir) {
-      fs.mkdirSync(promptDir, { recursive: true });
-      const promptPath = path.join(promptDir, `buster-enriched-attempt-${attempt}.md`);
-      fs.writeFileSync(promptPath, enrichedPrompt);
-      console.log(`[TASK] Enriched prompt saved: ${promptPath} (${enrichedPrompt.length} chars)`);
-    }
-  } catch (e) {
-    console.warn(`[TASK] Prompt save failed (non-critical): ${e.message}`);
   }
 
   // ── Step 7: Calculate subagent timeout ──
@@ -951,7 +986,7 @@ async function processTask(payload) {
     totalTimeout - suiteTimeSeconds - TIMEOUT_BUFFER_SECONDS,
     300 // minimum 5 minutes
   );
-  console.log(`[TASK] Subagent timeout: ${totalTimeout} - ${suiteTimeSeconds} - ${TIMEOUT_BUFFER_SECONDS} = ${subagentTimeout}s`);
+  log('TASK', `Subagent timeout: ${totalTimeout} - ${suiteTimeSeconds} - ${TIMEOUT_BUFFER_SECONDS} = ${subagentTimeout}s`);
 
   // ── Step 8: Spawn ACP Session ──
   setStep('spawn-subagent');
@@ -964,24 +999,14 @@ async function processTask(payload) {
     { agentId: spawnResult.agentId, label: spawnResult.label });
 
   // ── Step 9b: Save stream log for post-mortem ──
-  if (spawnResult.streamLogPath) {
+  if (spawnResult.streamLogPath && logBaseDir) {
     try {
       if (fs.existsSync(spawnResult.streamLogPath)) {
-        let streamDir;
-        if (modulePath) {
-          streamDir = path.join(REPO_DIR, modulePath, 'buster-streams');
-        } else if (payload.instructions_file) {
-          const gateDir = path.dirname(payload.instructions_file);
-          streamDir = path.join(REPO_DIR, gateDir, 'buster-streams');
-        }
-        if (streamDir) {
-          fs.mkdirSync(streamDir, { recursive: true });
-          const destPath = path.join(streamDir, `${pipelineRunId}-attempt-${attempt}.jsonl`);
-          fs.copyFileSync(spawnResult.streamLogPath, destPath);
-          console.log(`[STREAM] ✅ Saved: ${destPath} (${(fs.statSync(destPath).size / 1024).toFixed(1)} KB)`);
-        }
+        const destPath = path.join(logBaseDir, `buster-transcript-attempt-${attempt}.jsonl`);
+        fs.copyFileSync(spawnResult.streamLogPath, destPath);
+        log('STREAM', `Saved: ${destPath} (${(fs.statSync(destPath).size / 1024).toFixed(1)} KB)`);
       }
-    } catch (e) { console.log(`[STREAM] Save failed (non-critical): ${e.message}`); }
+    } catch (e) { log('STREAM', `Save failed (non-critical): ${e.message}`); }
   }
 
   // ── Step 10: Final cleanup ──
@@ -994,7 +1019,16 @@ async function processTask(payload) {
   STATE.currentStep = null;
 
   const totalTime = Math.round((Date.now() - taskStartTime) / 1000);
-  console.log(`[TASK] ✅ Task complete for module ${moduleId} (${totalTime}s total)`);
+  log('TASK', `Task complete for module ${moduleId}`, { duration_s: totalTime });
+
+  // ── Flush orchestrator log to file ──
+  if (_orchestratorLogPath && LOG_LINES.length > 0) {
+    try {
+      fs.mkdirSync(path.dirname(_orchestratorLogPath), { recursive: true });
+      fs.appendFileSync(_orchestratorLogPath, LOG_LINES.join('\n') + '\n');
+    } catch { /* non-critical */ }
+    LOG_LINES.length = 0;
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════

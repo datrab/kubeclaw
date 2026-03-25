@@ -47,8 +47,10 @@ const REPO_DIR = '/home/node/.openclaw/workspace/git-repo';
 
 // ── Helpers ─────────────────────────────────────────────────────
 
+let _logSink = null;
 function log(msg) {
   console.log(`[SUITE] [API] ${msg}`);
+  if (_logSink) _logSink({ suite: 'api', msg });
 }
 
 /**
@@ -397,6 +399,7 @@ async function runWsTest(test, baseUrl, vars, timeoutMs) {
 // ── Suite Entry Point ───────────────────────────────────────────
 
 module.exports = async function apiSuite(context) {
+  _logSink = context.logSink || null;
   const startTime  = Date.now();
   const serve      = context.config?.serve || {};
   const apiConf    = context.config?.api   || {};

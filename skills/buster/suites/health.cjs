@@ -32,8 +32,10 @@ const DEFAULTS = {
 
 // ── Helpers ─────────────────────────────────────────────────────
 
+let _logSink = null;
 function log(msg) {
   console.log(`[SUITE] [HEALTH] ${msg}`);
+  if (_logSink) _logSink({ suite: 'health', msg });
 }
 
 function sleep(ms) {
@@ -70,6 +72,7 @@ async function attempt(url, timeoutMs) {
 // ── Suite Entry Point ───────────────────────────────────────────
 
 module.exports = async function healthSuite(context) {
+  _logSink = context.logSink || null;
   const startTime = Date.now();
   const serve = context.config?.serve || {};
 

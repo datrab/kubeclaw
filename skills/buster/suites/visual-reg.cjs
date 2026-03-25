@@ -71,8 +71,10 @@ const WEBHOOK_URL = process.env.DISCORD_WEBHOOK || '';
 
 // ── Helpers ─────────────────────────────────────────────────────
 
+let _logSink = null;
 function log(msg) {
   console.log(`[SUITE] [VISUAL-REG] ${msg}`);
+  if (_logSink) _logSink({ suite: 'visual-reg', msg });
 }
 
 /**
@@ -415,6 +417,16 @@ async function runMultiPath(context, pathsJson, baselineDir, baseUrl, pmThreshol
         ));
       }
     }
+
+    // Copy actual + diff PNGs to centralized screenshots directory
+    if (context.screenshotsDir) {
+      try {
+        fs.mkdirSync(context.screenshotsDir, { recursive: true });
+        const att = context.attempt || 1;
+        if (fs.existsSync(actualPath)) fs.copyFileSync(actualPath, path.join(context.screenshotsDir, `${entry.name}-actual-attempt-${att}.png`));
+        if (diffPath && fs.existsSync(diffPath)) fs.copyFileSync(diffPath, path.join(context.screenshotsDir, `${entry.name}-diff-attempt-${att}.png`));
+      } catch { /* non-critical */ }
+    }
   }
 
   return { findings, pageResults, checksTotal, checksPassed, checksFailed };
@@ -423,6 +435,7 @@ async function runMultiPath(context, pathsJson, baselineDir, baseUrl, pmThreshol
 // ── Suite Entry Point ───────────────────────────────────────────
 
 module.exports = async function visualRegSuite(context) {
+  _logSink = context.logSink || null;
   const startTime = Date.now();
   const serve     = context.config?.serve || {};
   const vrConf    = context.config?.['visual-reg'] || {};

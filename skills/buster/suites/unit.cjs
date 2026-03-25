@@ -60,8 +60,10 @@ const NPM_NO_TEST_STUB = 'echo "Error: no test specified" && exit 1';
 
 // ── Helpers ─────────────────────────────────────────────────────
 
+let _logSink = null;
 function log(msg) {
   console.log(`[SUITE] [UNIT] ${msg}`);
+  if (_logSink) _logSink({ suite: 'unit', msg });
 }
 
 /**
@@ -278,6 +280,7 @@ function extractFailures(output) {
 // ── Suite Entry Point ───────────────────────────────────────────
 
 module.exports = async function unitSuite(context) {
+  _logSink = context.logSink || null;
   const startTime  = Date.now();
   const serve      = context.config?.serve || {};
   const unitConf   = context.config?.unit  || {};

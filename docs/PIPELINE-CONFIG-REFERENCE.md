@@ -164,7 +164,7 @@ Gates sind Checkpoints zwischen Phasen. Drei Typen:
   "type": "review",
   "title": "Echo Midpoint Review",
   "review_name": "MIDPOINT-REVIEW",
-  "on_nogo": "fix_and_continue",
+  "on_nogo": "fix_and_rereview",
   "instructions_file": "echo-review/MIDPOINT-REVIEW-INSTRUCTIONS.md",
   "output_file": "echo-review/MIDPOINT-REVIEW.json",
   "review_output_dir": "echo-review",
@@ -179,7 +179,7 @@ Gates sind Checkpoints zwischen Phasen. Drei Typen:
 |---|---|---|
 | `type` | ja | `"review"` |
 | `review_name` | ja | Identifier für den Review (used in output files) |
-| `on_nogo` | ja | `"fix_and_continue"` oder `"fix_and_rereview"` |
+| `on_nogo` | ja | `"fix_and_rereview"` (required) |
 | `instructions_file` | ja | Review-Anweisungen für Echo |
 | `output_file` | ja | Wo Echo das Review-Ergebnis schreibt |
 | `review_output_dir` | nein | Verzeichnis für Review-Artefakte |
@@ -417,7 +417,7 @@ Für jedes Gate:
 │   FAIL → fix_and_retest (Forge fixt, Buster re-testet, max_fix_cycles)
 │
 ├─ Gate type=review → Echo-Dispatch
-│   NO-GO → fix_and_continue oder fix_and_rereview
+│   NO-GO → fix_and_rereview
 ```
 
 ---

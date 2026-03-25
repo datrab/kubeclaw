@@ -62,6 +62,8 @@ function registerTool(tool) {
 
 // ─── Logging ────────────────────────────────────────────────────────────────
 
+let _lintLogPath = null;  // Set via --log-path CLI arg — dual-write execution trace
+
 function log(level, msg, data = null) {
   const entry = {
     ts: new Date().toISOString(),
@@ -71,6 +73,9 @@ function log(level, msg, data = null) {
     ...(data !== null && { data }),
   };
   console.error(JSON.stringify(entry));
+  if (_lintLogPath) {
+    try { fs.appendFileSync(_lintLogPath, JSON.stringify(entry) + '\n'); } catch { /* non-critical */ }
+  }
 }
 
 // ─── Tool Execution Helpers ─────────────────────────────────────────────────
@@ -1018,6 +1023,7 @@ async function main() {
     else if (a === '--output'        && args[i + 1]) flags.output = args[++i];
     else if (a === '--changed-files' && args[i + 1]) flags.changedFiles = args[++i];
     else if (a === '--semgrep-config' && args[i + 1]) flags.semgrepConfig = args[++i];
+    else if (a === '--log-path'       && args[i + 1]) flags.logPath = args[++i];
     else if (a === '--help') { printHelp(); process.exit(0); }
   }
 
@@ -1055,6 +1061,12 @@ async function main() {
     projectTypes,
     semgrepConfig: flags.semgrepConfig || null,
   };
+
+  // Enable execution trace logging if --log-path provided
+  if (flags.logPath) {
+    try { fs.mkdirSync(path.dirname(flags.logPath), { recursive: true }); } catch { /* ok */ }
+    _lintLogPath = flags.logPath;
+  }
 
   // Resolve effective scope
   resolveScope(ctx);

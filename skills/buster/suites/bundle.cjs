@@ -34,8 +34,10 @@ const DEFAULTS = {
 
 // ── Helpers ─────────────────────────────────────────────────────
 
+let _logSink = null;
 function log(msg) {
   console.log(`[SUITE] [BUNDLE] ${msg}`);
+  if (_logSink) _logSink({ suite: 'bundle', msg });
 }
 
 /**
@@ -73,6 +75,7 @@ function scanDir(dir) {
 // ── Suite Entry Point ───────────────────────────────────────────
 
 module.exports = async function bundleSuite(context) {
+  _logSink = context.logSink || null;
   const startTime  = Date.now();
   const config     = context.config?.bundle || {};
   const wwwDir     = config.www_dir    || DEFAULTS.www_dir;

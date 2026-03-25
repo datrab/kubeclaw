@@ -62,8 +62,10 @@ const DEFAULTS = {
 
 // ── Helpers ─────────────────────────────────────────────────────
 
+let _logSink = null;
 function log(msg) {
   console.log(`[SUITE] [E2E] ${msg}`);
+  if (_logSink) _logSink({ suite: 'e2e', msg });
 }
 
 /**
@@ -177,6 +179,7 @@ function parsePlaywrightOutput(stdout, stderr) {
 // ── Suite Entry Point ───────────────────────────────────────────
 
 module.exports = async function e2eSuite(context) {
+  _logSink = context.logSink || null;
   const startTime  = Date.now();
   const serve      = context.config?.serve || {};
   const e2eConf    = context.config?.e2e   || {};

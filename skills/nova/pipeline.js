@@ -112,6 +112,7 @@ const GATEWAY_TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN || '';
 async function gatewayInvoke(tool, args, timeoutMs = 30000, opts = {}, extraHeaders = {}) {
   const maxRetries = 3;
   const retryDelayMs = 5000;
+  log('DEBUG', `Gateway invoke: ${tool}`, { timeout_ms: timeoutMs });
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     const controller = new AbortController();
@@ -137,6 +138,7 @@ async function gatewayInvoke(tool, args, timeoutMs = 30000, opts = {}, extraHead
         throw err;  // HTTP errors are not retried — they're application-level
       }
 
+      log('DEBUG', `Gateway ${tool} OK (attempt ${attempt})`);
       try { return JSON.parse(text); } catch { return { raw: text }; }
     } catch (e) {
       clearTimeout(timer);
@@ -408,6 +410,9 @@ function registerShutdownHooks() {
       } catch { /* best effort */ }
     }
 
+    // Write pipeline summary before exit (sync only — no async in signal handler)
+    if (config) writeSummary(config, EXIT_ERROR, `SIGNAL:${signal}`);
+
     cleanupTempDir();
     process.exit(EXIT_ERROR);
   };
@@ -480,6 +485,25 @@ function clearShutdownContext() {
 const RUN_ID = `run-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
 let LOG_MODULE = null;  // Set when entering a module context
 let LOG_PHASE = null;   // Set when entering a phase (forge/buster)
+let _pipelineLogFd = null;  // WriteStream for .swarm/logs/pipeline/pipeline.jsonl — set by initLogDir()
+
+// Accumulates counters throughout the run for summary.json (written at every pipeline exit).
+const _runStats = {
+  started_at: new Date().toISOString(),
+  modules_completed: [],
+  modules_failed: [],
+  modules_blocked: [],
+  gates_completed: [],
+  gates_failed: [],
+  total_forge_attempts: 0,
+  total_buster_attempts: 0,
+  total_echo_reviews: 0,
+  errors: [],
+  discord_notifications_sent: 0,
+  git_pull_failures: 0,
+  git_push_failures: 0,
+  config_validation_issues: [],
+};
 
 function log(level, msg, data = null) {
   const entry = {
@@ -492,10 +516,79 @@ function log(level, msg, data = null) {
     ...(data !== null && { data }),
   };
   console.error(JSON.stringify(entry));
+  if (_pipelineLogFd) {
+    try { _pipelineLogFd.write(JSON.stringify(entry) + '\n'); } catch { /* non-critical */ }
+  }
+  if (level === 'ERROR' && _runStats.errors.length < 50) {
+    _runStats.errors.push({ ts: entry.ts, msg, ...(LOG_MODULE && { module: LOG_MODULE }) });
+  }
 }
 
 function output(result) {
   console.log(JSON.stringify(result, null, 2));
+}
+
+// ─── Centralized Log Directory ──────────────────────────────────────────────
+
+/**
+ * Initialize the centralized log directory structure under .swarm/logs/.
+ * Creates pipeline/, modules/, and gates/ subdirectories.
+ * Opens a WriteStream for pipeline.jsonl (dual-write target for log()).
+ *
+ * Called once from loadConfig(). Sets config._logDir and module-level _pipelineLogFd.
+ *
+ * @param {object} config - Pipeline config (needs config.paths.swarm_dir)
+ */
+function initLogDir(config) {
+  const logDir = path.join(config.paths.swarm_dir, 'logs');
+  const pipelineDir = path.join(logDir, 'pipeline');
+  fs.mkdirSync(pipelineDir, { recursive: true });
+  fs.mkdirSync(path.join(logDir, 'modules'), { recursive: true });
+  fs.mkdirSync(path.join(logDir, 'gates'), { recursive: true });
+
+  config._logDir = logDir;
+  _pipelineLogFd = fs.createWriteStream(path.join(pipelineDir, 'pipeline.jsonl'), { flags: 'a' });
+  log('INFO', `Log directory initialized: ${logDir}`);
+}
+
+process.on('exit', () => {
+  if (_pipelineLogFd) { try { _pipelineLogFd.end(); } catch { /* ignore */ } }
+});
+
+function moduleLogDir(config, dir) {
+  const p = path.join(config._logDir, 'modules', dir);
+  fs.mkdirSync(p, { recursive: true });
+  return p;
+}
+
+function moduleTestLogDir(config, dir) {
+  const p = path.join(config._logDir, 'modules', dir, 'tests');
+  fs.mkdirSync(p, { recursive: true });
+  return p;
+}
+
+function moduleLintLogDir(config, dir) {
+  const p = path.join(config._logDir, 'modules', dir, 'lint');
+  fs.mkdirSync(p, { recursive: true });
+  return p;
+}
+
+function gateLogDir(config, gateId) {
+  const p = path.join(config._logDir, 'gates', gateId);
+  fs.mkdirSync(p, { recursive: true });
+  return p;
+}
+
+function gateTestLogDir(config, gateId) {
+  const p = path.join(config._logDir, 'gates', gateId, 'tests');
+  fs.mkdirSync(p, { recursive: true });
+  return p;
+}
+
+function gateLintLogDir(config, gateId) {
+  const p = path.join(config._logDir, 'gates', gateId, 'lint');
+  fs.mkdirSync(p, { recursive: true });
+  return p;
 }
 
 // ─── Config & File Helpers ───────────────────────────────────────────────────
@@ -593,6 +686,9 @@ function loadConfig(projectName, opts = {}) {
   // Validate merged config (fail fast instead of cryptic TypeError later)
   validateConfig(config, progress);
 
+  // Initialize centralized log directory (.swarm/logs/) and pipeline.jsonl stream
+  initLogDir(config);
+
   return { config, progress };
 }
 
@@ -669,7 +765,7 @@ function validateConfig(config, progress) {
 
   // Gate type validation
   const validGateTypes = ['buster', 'review'];
-  const validOnNogo = ['fix_and_continue', 'fix_and_rereview'];
+  const validOnNogo = ['fix_and_rereview'];
   const validOnFail = ['fix_and_retest'];
 
   for (const [gateId, gate] of Object.entries(progress.gates || {})) {
@@ -731,6 +827,105 @@ function validateConfig(config, progress) {
 }
 
 /**
+ * Lightweight pre-dispatch validation for Buster test config.
+ * Catches config issues BEFORE wasting a full Buster dispatch cycle.
+ *
+ * Returns { ok: true } or { ok: false, errors: string[] }.
+ *
+ * Called before every Buster dispatch (module_test and gate_test).
+ * Does NOT validate code — only paths, binaries, and suite plausibility.
+ *
+ * @param {object} config - Pipeline config (has repo_root, paths)
+ * @param {object} testConfig - The test_config from progress.json (module or gate level)
+ * @param {string[]} testSuites - The test_suites array
+ * @param {string} label - For log messages (e.g. "module 06" or "gate final-buster")
+ * @returns {{ ok: boolean, errors?: string[] }}
+ */
+function validateBusterConfig(config, testConfig, testSuites, label) {
+  const errors = [];
+  const serve = testConfig?.serve || {};
+  const repoRoot = config.repo_root;
+
+  // ── 1. Suite plausibility ──
+  // Server/static apps need 'build' to compile and serve.
+  if (serve.type && !testSuites?.includes('build')) {
+    errors.push(`test_suites is missing 'build' but serve.type='${serve.type}' requires it`);
+  }
+
+  // 'api' suite needs a spec_file
+  if (testSuites?.includes('api') && !testConfig?.api?.spec_file) {
+    errors.push(`test_suites includes 'api' but no api.spec_file configured`);
+  }
+
+  // ── 2. Path existence checks ──
+  // Resolve paths relative to repo root (same as build.cjs resolveRepoPath).
+  const resolvePath = (p) => p ? (path.isAbsolute(p) ? p : path.join(repoRoot, p)) : null;
+
+  if (serve.dockerfile) {
+    const p = resolvePath(serve.dockerfile);
+    if (p && !fs.existsSync(p)) {
+      errors.push(`serve.dockerfile not found: ${serve.dockerfile} (resolved: ${p})`);
+    }
+  }
+
+  if (serve.build_context) {
+    const p = resolvePath(serve.build_context);
+    if (p && !fs.existsSync(p)) {
+      errors.push(`serve.build_context not found: ${serve.build_context} (resolved: ${p})`);
+    }
+  }
+
+  if (serve.project_dir) {
+    const p = resolvePath(serve.project_dir);
+    if (p && !fs.existsSync(p)) {
+      errors.push(`serve.project_dir not found: ${serve.project_dir} (resolved: ${p})`);
+    }
+  }
+
+  if (testConfig?.api?.spec_file && serve.project_dir) {
+    const projectDir = resolvePath(serve.project_dir);
+    const specPath = path.isAbsolute(testConfig.api.spec_file)
+      ? testConfig.api.spec_file
+      : path.join(projectDir || repoRoot, testConfig.api.spec_file);
+    if (!fs.existsSync(specPath)) {
+      errors.push(`api.spec_file not found: ${testConfig.api.spec_file} (resolved: ${specPath})`);
+    }
+  }
+
+  // ── 3. Known-bad binary patterns ──
+  // Python-slim images only provide 'python3', not 'python'.
+  const startCmd = serve.start_cmd || '';
+  const image = serve.image || '';
+  if (/python[^3]/i.test(startCmd) && /python.*slim|python:\d/i.test(image)) {
+    errors.push(
+      `serve.start_cmd uses 'python' but image '${image}' likely only provides 'python3'. ` +
+      `Change start_cmd to use 'python3' instead.`
+    );
+  }
+
+  // Log validation result to pipeline/config-validation.json
+  if (config._logDir) {
+    try {
+      const cvPath = path.join(config._logDir, 'pipeline', 'config-validation.json');
+      let results = [];
+      try { results = JSON.parse(fs.readFileSync(cvPath, 'utf8')); } catch { /* first entry */ }
+      results.push({ ts: new Date().toISOString(), label, ok: errors.length === 0, errors });
+      fs.writeFileSync(cvPath, JSON.stringify(results, null, 2));
+    } catch { /* non-critical */ }
+  }
+
+  if (errors.length > 0) {
+    log('ERROR', `Buster config validation failed for ${label}:`);
+    errors.forEach(e => log('ERROR', `  → ${e}`));
+    _runStats.config_validation_issues.push({ label, errors });
+    return { ok: false, errors };
+  }
+
+  log('OK', `Config valid for ${label}`);
+  return { ok: true };
+}
+
+/**
  * Load progress from config paths.
  * Kept for export compatibility (Nova may import this).
  * Primary path: loadConfig() returns { config, progress } directly.
@@ -758,14 +953,13 @@ function completionStreamKey(config) {
 
 /**
  * Save a prompt to disk for debugging/analysis.
- * Path: .swarm/modules/<dir>/prompts/<runId>/<agent>-attempt-<N>.md
+ * Path: .swarm/logs/modules/<dir>/<agent>-prompt-attempt-<N>.md
  * Best-effort — failure is logged but never blocks the pipeline.
  */
 function savePrompt(config, dir, agentType, attempt, prompt) {
   try {
-    const promptDir = path.join(modulePath(config, dir), 'prompts', RUN_ID);
-    fs.mkdirSync(promptDir, { recursive: true });
-    const filePath = path.join(promptDir, `${agentType}-attempt-${attempt}.md`);
+    const logDir = moduleLogDir(config, dir);
+    const filePath = path.join(logDir, `${agentType}-prompt-attempt-${attempt}.md`);
     fs.writeFileSync(filePath, prompt);
     log('DEBUG', `Prompt saved: ${relPath(config, filePath)} (${prompt.length} chars)`);
   } catch (e) {
@@ -775,9 +969,9 @@ function savePrompt(config, dir, agentType, attempt, prompt) {
 
 /**
  * Copy ACP stream log (JSONL) from the gateway's streamLogPath into the
- * module's .swarm streams directory for post-mortem analysis and git persistence.
+ * centralized log directory for post-mortem analysis and git persistence.
  *
- * Directory: .swarm/modules/<dir>/streams/<RUN_ID>/
+ * Directory: .swarm/logs/modules/<dir>/
  *
  * Called after session ends (in pollStatus / pollForSessionEnd).
  * Non-critical — failure is logged but never blocks the pipeline.
@@ -795,9 +989,8 @@ function saveStreamLog(config, dir, agentType, attempt, streamLogPath) {
       log('DEBUG', `Stream log not found: ${streamLogPath}`);
       return;
     }
-    const streamDir = path.join(modulePath(config, dir), 'streams', RUN_ID);
-    fs.mkdirSync(streamDir, { recursive: true });
-    const destPath = path.join(streamDir, `${agentType}-stream-attempt-${attempt}.jsonl`);
+    const logDir = moduleLogDir(config, dir);
+    const destPath = path.join(logDir, `${agentType}-transcript-attempt-${attempt}.jsonl`);
     fs.copyFileSync(streamLogPath, destPath);
     const size = fs.statSync(destPath).size;
     log('OK', `Stream log saved: ${relPath(config, destPath)} (${(size / 1024).toFixed(1)} KB)`);
@@ -823,6 +1016,7 @@ function resolveModel(agentType, config, progress, override) {
   if (!model) {
     throw new Error(`No model configured for '${agentType}'. Set it in progress.json (models.${agentType}) or swarm.config.json (models.${agentType}).`);
   }
+  log('DEBUG', `Model resolved: ${agentType} → ${model}`);
   return model;
 }
 
@@ -881,6 +1075,7 @@ function gitCommitQuiet(config, filePath, message) {
     gitExec(config.repo_root, ['add', filePath], { stdio: 'ignore' });
     gitExec(config.repo_root, ['commit', '-m', message], { stdio: 'ignore' });
     invalidateHeadHash();
+    log('DEBUG', `Committed: ${message}`);
   } catch (e) {
     // "nothing to commit" is normal when status didn't actually change
     // (e.g. saveStatus wrote identical content, or gitPullForPolling already has it).
@@ -917,10 +1112,16 @@ function gitCommitQuiet(config, filePath, message) {
  */
 function _gitPullCore(config, allowDestructiveRecovery) {
   try {
-    gitExec(config.repo_root, ['pull', '--rebase', '--quiet'], { stdio: 'ignore' });
+    // --autostash: automatically stash uncommitted changes before rebase and pop after.
+    // Prevents review/test artifacts (deleted review JSONs, prompt files, stream logs)
+    // from blocking the polling pull. Without this, any dirty worktree state during
+    // Echo/Forge sessions causes repeated "git pull --rebase failed" errors.
+    gitExec(config.repo_root, ['pull', '--rebase', '--autostash', '--quiet'], { stdio: 'ignore' });
     invalidateHeadHash();
+    log('DEBUG', 'Git pull succeeded');
   } catch (e) {
     const msg = e.message || '';
+    _runStats.git_pull_failures++;
 
     // Check if we're stuck in a rebase
     const rebaseDir = path.join(config.repo_root, '.git', 'rebase-merge');
@@ -985,9 +1186,10 @@ async function gitPushWithRetry(config, maxRetries = 3, delayMs = 5000) {
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       gitExec(config.repo_root, ['push', 'origin', 'HEAD'], { stdio: 'ignore', timeout: 60000 });
+      log('OK', `Git push succeeded (attempt ${attempt}/${maxRetries})`);
       return;
     } catch (e) {
-      if (attempt === maxRetries) throw e;
+      if (attempt === maxRetries) { _runStats.git_push_failures++; throw e; }
       log('WARN', `git push failed (attempt ${attempt}/${maxRetries}): ${e.message?.split('\n')[0]}`);
       await sleep(delayMs);
     }
@@ -1121,6 +1323,14 @@ async function discord(config, level, title, description, fields = []) {
   // Entire function wrapped in try/catch to prevent webhook URL leaking
   // in stack traces if any step fails (JSON.stringify, curlPost, etc.)
   try {
+    // Log every Discord call to discord.jsonl (even if suppressed by alert config)
+    if (config._logDir) {
+      try {
+        const entry = { ts: new Date().toISOString(), level, title, description, fields, run_id: RUN_ID };
+        fs.appendFileSync(path.join(config._logDir, 'pipeline', 'discord.jsonl'), JSON.stringify(entry) + '\n');
+      } catch { /* non-critical */ }
+    }
+
     if (!config.discord_webhook_url) return;
     if (!config.discord_alerts?.[level.toLowerCase()]) return;
 
@@ -1139,6 +1349,7 @@ async function discord(config, level, title, description, fields = []) {
     };
 
     curlPost(config.discord_webhook_url, JSON.stringify(payload));
+    _runStats.discord_notifications_sent++;
   } catch {
     log('WARN', 'Discord webhook delivery failed (details suppressed for security)');
   }
@@ -1295,6 +1506,150 @@ async function releaseGateFiles(config, progress) {
       log('WARN', `Gate files commit/push failed (non-critical): ${e.message}`);
     }
   }
+}
+
+/**
+ * Sync whitelisted control files from architecture branch → main.
+ * Runs once per pipeline start, AFTER releaseBlueprint/releaseGateFiles.
+ *
+ * releaseBlueprint only fires for PENDING modules (first-time release).
+ * releaseGateFiles only fires for empty gate directories.
+ * Neither re-syncs control files that were updated in the architecture branch
+ * after the initial release. This function fills that gap.
+ *
+ * Architecture is authoritative. Only upsync (architecture → main), never delete.
+ * Uses content comparison (git show vs local read) — only touches divergent files.
+ * One aggregated commit for all changes.
+ *
+ * Whitelist (per module):
+ *   FORGE.md, BUSTER.md, ECHO.md, test-spec.json
+ *   <substepId>/FORGE.md (for substep modules)
+ *
+ * Whitelist (per gate):
+ *   The file pointed to by gate.instructions_file
+ *   FINAL-BUSTER.md, final-test-spec.json (in buster-test/ dirs)
+ */
+async function syncControlFiles(config, progress) {
+  const branch = `${config.project}/architecture`;
+
+  try { gitExec(config.repo_root, ['fetch', 'origin', branch], { stdio: 'ignore' }); }
+  catch {
+    log('DEBUG', 'syncControlFiles: could not fetch architecture branch — skipping');
+    return { synced: 0 };
+  }
+
+  const swarmRel = relPath(config, swarmRoot(config));
+  const synced = [];
+
+  // ── Helper: compare a single file, checkout if divergent ──
+  function syncFile(archPath) {
+    // archPath is relative to repo root, e.g. "Projects/kc/src/.swarm/modules/06/FORGE.md"
+    let archContent;
+    try {
+      archContent = gitExec(config.repo_root, ['show', `origin/${branch}:${archPath}`]);
+    } catch {
+      return; // file doesn't exist in architecture — nothing to sync (Case C: no delete)
+    }
+
+    const localAbsPath = path.join(config.repo_root, archPath);
+    let localContent = null;
+    try {
+      localContent = fs.readFileSync(localAbsPath, 'utf8');
+    } catch { /* file doesn't exist locally — Case A: will be created */ }
+
+    // Content comparison — skip if identical
+    if (localContent !== null && localContent.trim() === archContent.trim()) {
+      return; // identical — no action
+    }
+
+    // Divergent or missing locally → checkout from architecture
+    try {
+      gitExec(config.repo_root, ['checkout', `origin/${branch}`, '--', archPath], { stdio: 'ignore' });
+      const action = localContent === null ? 'created' : 'updated';
+      synced.push({ path: archPath, action });
+      log('OK', `[blueprint-sync] ${action}: ${archPath}`);
+    } catch (e) {
+      log('WARN', `[blueprint-sync] checkout failed for ${archPath}: ${e.message}`);
+    }
+  }
+
+  // ── Module control files ──
+  const MODULE_CONTROL_FILES = ['FORGE.md', 'BUSTER.md', 'ECHO.md', 'test-spec.json'];
+
+  for (const [moduleId, mod] of Object.entries(progress.modules || {})) {
+    // Only sync modules that are NOT pending (pending = not yet released, releaseBlueprint handles those)
+    const status = loadStatus(config, mod.dir);
+    if (!status || status.status === STATUS.PENDING) continue;
+
+    const moduleRel = relPath(config, modulePath(config, mod.dir));
+
+    // Standard control files
+    for (const file of MODULE_CONTROL_FILES) {
+      syncFile(`${moduleRel}/${file}`);
+    }
+
+    // Substep FORGE.md files
+    const moduleConfig = progress.modules[moduleId] || {};
+    if (moduleConfig.substeps && moduleConfig.substeps.length > 0) {
+      for (const stepId of moduleConfig.substeps) {
+        syncFile(`${moduleRel}/${stepId}/FORGE.md`);
+      }
+    }
+  }
+
+  // ── Gate control files ──
+  // Sync gate instruction files and known gate control files
+  const GATE_CONTROL_FILES = ['FINAL-BUSTER.md', 'final-test-spec.json'];
+
+  const processedGateDirs = new Set();
+  for (const gate of Object.values(progress.gates || {})) {
+    // Sync the specific instructions file
+    if (gate.instructions_file) {
+      syncFile(`${swarmRel}/${gate.instructions_file}`);
+
+      // Also sync known control files in the gate's directory
+      const gateDir = gate.instructions_file.split('/')[0];
+      if (!processedGateDirs.has(gateDir)) {
+        processedGateDirs.add(gateDir);
+        for (const file of GATE_CONTROL_FILES) {
+          syncFile(`${swarmRel}/${gateDir}/${file}`);
+        }
+      }
+    }
+  }
+
+  // ── Aggregated commit ──
+  if (synced.length > 0) {
+    const fileList = synced.map(s => s.path).join(', ');
+    const summary = synced.map(s => `${s.action} ${s.path.split('/').pop()}`).join(', ');
+    log('OK', `[blueprint-sync] ${synced.length} control file(s) synced from architecture → main`);
+
+    try {
+      await gitCommitAndPush(config,
+        `[blueprint-sync] Sync ${synced.length} control file(s) from architecture`,
+        { addPaths: synced.map(s => s.path), softFail: true }
+      );
+    } catch (e) {
+      log('WARN', `[blueprint-sync] commit/push failed (non-critical): ${e.message}`);
+    }
+
+    await discord(config, 'INFO', 'Blueprint Sync',
+      `${synced.length} control file(s) updated from architecture branch`, [
+        { name: 'Files', value: summary.slice(0, 200) },
+      ]);
+  } else {
+    log('DEBUG', '[blueprint-sync] All control files up to date — no changes');
+  }
+
+  // Write sync results to centralized log directory
+  if (config._logDir) {
+    try {
+      const syncData = { ts: new Date().toISOString(), synced: synced.length, files: synced, run_id: RUN_ID };
+      fs.writeFileSync(path.join(config._logDir, 'pipeline', 'blueprint-sync.json'), JSON.stringify(syncData, null, 2));
+    } catch { /* non-critical */ }
+  }
+
+  return { synced: synced.length, files: synced };
 }
 
 // ─── Agent Dispatch (Dual Mode: ACP + Redis) ────────────────────────────────
@@ -1464,6 +1819,7 @@ function buildBusterPayload(config, progress, moduleId, taskType, taskPrompt, st
       test_config: mod?.test_config || null,
       run_id: opts.run_id || null,
       attempt: opts.attempt || 1,
+      log_dir: (mod && config._logDir) ? path.join(config._logDir, 'modules', mod.dir) : null,
     };
   }
 
@@ -1491,6 +1847,7 @@ function buildBusterPayload(config, progress, moduleId, taskType, taskPrompt, st
       // which triggers npm install in contexts without package.json (e.g. Python backends).
       test_suites: gate.test_suites || null,
       test_config: gate.test_config || null,
+      log_dir: config._logDir ? path.join(config._logDir, 'gates', moduleId) : null,
     };
   }
 
@@ -1682,12 +2039,23 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
   // Capture HEAD before Forge starts — used for change detection
   const headBefore = headHash();
 
-  // No session_status polling — 'idle' is ambiguous with oneshot sessions
-  // (can mean initializing, between tool calls, or finished).
-  // Instead: detect when the agent pushes commits (HEAD movement).
-  // Grace period after last HEAD change ensures the agent is truly done.
+  // Two completion signals (first one wins):
+  //   1. HEAD movement + grace period — agent pushed commits, wait for more, then done
+  //   2. Session closed/error — agent finished (with or without pushing)
+  //
+  // 'idle' is intentionally NOT treated as a completion signal — it's ambiguous
+  // with oneshot sessions (can mean initializing, between tool calls, or finished).
+  // Only 'closed' and 'error' are unambiguous end states.
+
   const POST_CHANGE_GRACE_MS = 60000; // 60s of no new changes after HEAD moves = done
   let lastHeadChangeTime = 0;
+  let lastKnownHead = headBefore;       // Track the last HEAD we've seen (for multi-commit detection)
+  let sessionEndDetected = false;        // Set when session_status reports closed/error
+  let sessionEndGraceStart = 0;          // When we first detected session end
+
+  // After session closes, allow a short grace for the final git push to arrive.
+  // ACP sessions sometimes close before the push completes on the remote.
+  const SESSION_END_GRACE_MS = 15000;
 
   log('INFO', `[${logLabel}] Waiting for session '${sessionLabel}' (${sessionKey}) to complete | timeout: ${timeoutMinutes}min`);
 
@@ -1699,12 +2067,13 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
     invalidateHeadHash();
     const headNow = headHash();
 
-    if (headNow !== headBefore && headNow !== (lastHeadChangeTime ? headHash() : null)) {
+    if (headNow !== lastKnownHead) {
       lastHeadChangeTime = Date.now();
-      log('INFO', `[${logLabel}] HEAD moved — agent pushed changes. Waiting ${POST_CHANGE_GRACE_MS / 1000}s grace for more...`);
+      lastKnownHead = headNow;
+      log('INFO', `[${logLabel}] HEAD moved (${headNow}) — agent pushed changes. Waiting ${POST_CHANGE_GRACE_MS / 1000}s grace for more...`);
     }
 
-    // If HEAD moved and grace period expired — agent is done
+    // ── Signal 1: HEAD moved and grace period expired ──
     if (lastHeadChangeTime > 0 && (Date.now() - lastHeadChangeTime) >= POST_CHANGE_GRACE_MS) {
       log('INFO', `[${logLabel}] No new changes for ${POST_CHANGE_GRACE_MS / 1000}s after HEAD movement — session complete`);
 
@@ -1723,6 +2092,56 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
       }
 
       return { completed: true, hasChanges, reason: 'session_ended' };
+    }
+
+    // ── Signal 2: Session closed/error (ACP session no longer running) ──
+    // Check session_status every cycle. 'closed' or 'error' = session is done.
+    // If HEAD also moved, return hasChanges=true. If not, the agent completed
+    // without pushing (crash, or no changes made).
+    if (!sessionEndDetected) {
+      try {
+        const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
+        const statusResult = raw?.result?.details || raw;
+        const { state } = parseSessionState(statusResult);
+
+        if (/^(closed|error)$/i.test(state)) {
+          sessionEndDetected = true;
+          sessionEndGraceStart = Date.now();
+          log('INFO', `[${logLabel}] Session ${state} — waiting ${SESSION_END_GRACE_MS / 1000}s for final push to arrive`);
+        }
+      } catch {
+        // Session unreachable — treat as closed
+        sessionEndDetected = true;
+        sessionEndGraceStart = Date.now();
+        log('INFO', `[${logLabel}] Session unreachable — treating as closed`);
+      }
+    }
+
+    // Session ended + grace expired → done (even without HEAD movement)
+    if (sessionEndDetected && (Date.now() - sessionEndGraceStart) >= SESSION_END_GRACE_MS) {
+      // One final git pull to catch any last-second push
+      gitPullForPolling(config);
+      invalidateHeadHash();
+      const finalHead = headHash();
+      const hasChanges = finalHead !== headBefore;
+
+      if (hasChanges) {
+        log('OK', `[${logLabel}] Session closed with changes (HEAD: ${headBefore} → ${finalHead})`);
+      } else {
+        log('WARN', `[${logLabel}] Session closed without pushing changes — agent may have crashed or made no edits`);
+      }
+
+      // Commit any uncommitted local changes (defensive)
+      try {
+        gitExec(config.repo_root, ['add', '-A'], { stdio: 'ignore' });
+        const porcelain = gitExec(config.repo_root, ['status', '--porcelain']);
+        if (porcelain) {
+          gitExec(config.repo_root, ['commit', '-m', `[pipeline] ${logLabel}: agent output (session closed)`], { stdio: 'ignore' });
+          invalidateHeadHash();
+        }
+      } catch { /* ok */ }
+
+      return { completed: true, hasChanges, reason: hasChanges ? 'session_ended' : 'session_closed_no_changes' };
     }
 
     // ── Timeout nudge ──
@@ -1745,7 +2164,7 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
     // Progress logging
     const elapsed = Math.round((Date.now() - startTime) / 1000);
     const remaining = Math.round((deadline - Date.now()) / 1000);
-    log('INFO', `[${logLabel}] Session active | ${elapsed}s elapsed, ${remaining}s remaining`);
+    log('INFO', `[${logLabel}] Session active | ${elapsed}s elapsed, ${remaining}s remaining${sessionEndDetected ? ' (session closed, waiting for push)' : ''}`);
   }
 
   log('WARN', `[${logLabel}] Timeout — session still running after ${timeoutMinutes}min`);
@@ -2212,7 +2631,7 @@ async function getMemoryModule(config) {
  * Returns formatted markdown block to inject into the agent's prompt,
  * or empty string if no memories found / memory disabled.
  */
-async function recallForModule(config, moduleId, moduleTitle, additionalContext = '', failContext = '') {
+async function recallForModule(config, moduleId, moduleTitle, additionalContext = '', failContext = '', logOpts = {}) {
   if (!memoryEnabled(config)) return { block: '', count: 0, ids: [] };
 
   const limit = config.memory?.recall_limit ?? 5;
@@ -2292,6 +2711,16 @@ async function recallForModule(config, moduleId, moduleTitle, additionalContext 
       '',
     ].join('\n');
 
+    // Write recall log to centralized log directory
+    if (logOpts.dir && config._logDir) {
+      try {
+        const attempt = logOpts.attempt || 1;
+        const logDir = moduleLogDir(config, logOpts.dir);
+        const recallData = { recalled_count: memories.length, memories: memories.map(m => ({ id: m.id, score: m.score, confidence: m.confidence, text: m.text?.slice(0, 200) })), query: query.slice(0, 300), module: moduleId };
+        fs.writeFileSync(path.join(logDir, `memory-recall-attempt-${attempt}.json`), JSON.stringify(recallData, null, 2));
+      } catch { /* non-critical */ }
+    }
+
     return { block, count: memories.length, ids };
   } catch (e) {
     log('WARN', `Memory recall failed: ${e.message}`);
@@ -2303,7 +2732,7 @@ async function recallForModule(config, moduleId, moduleTitle, additionalContext 
  * Send outcome feedback to Qdrant after module PASS/FAIL.
  * Updates confidence scores on memories related to this module.
  */
-async function feedbackMemory(config, moduleId, outcome, reason = '') {
+async function feedbackMemory(config, moduleId, outcome, reason = '', logOpts = {}) {
   if (!memoryEnabled(config)) return;
   if (!config.memory?.feedback_after_outcome) return;
 
@@ -2325,6 +2754,17 @@ async function feedbackMemory(config, moduleId, outcome, reason = '') {
     }
 
     log('OK', `Memory feedback applied: ${feedback.memories_affected} memories updated, outcome stored as ${feedback.outcome_memory_id}`);
+
+    // Write feedback log to centralized log directory
+    if (logOpts.dir && config._logDir) {
+      try {
+        const attempt = logOpts.attempt || 1;
+        const logDir = moduleLogDir(config, logOpts.dir);
+        const feedbackData = { module: moduleId, outcome, reason: reason.slice(0, 500), affected_count: feedback.memories_affected };
+        fs.writeFileSync(path.join(logDir, `memory-feedback-attempt-${attempt}.json`), JSON.stringify(feedbackData, null, 2));
+      } catch { /* non-critical */ }
+    }
+
     return feedback;
   } catch (e) {
     log('WARN', `Memory feedback failed: ${e.message}`);
@@ -2695,6 +3135,14 @@ async function getRedisModule(config) {
     const mod = await import(validated);
     _redisModule = mod.default;
     log('INFO', 'Redis module loaded via direct import');
+
+    // Set log callback for Redis operation tracing → pipeline/redis.jsonl
+    if (_redisModule?.setLogCallback && config._logDir) {
+      const redisLogPath = path.join(config._logDir, 'pipeline', 'redis.jsonl');
+      _redisModule.setLogCallback((event) => {
+        try { fs.appendFileSync(redisLogPath, JSON.stringify(event) + '\n'); } catch { /* non-critical */ }
+      });
+    }
   } catch (e) {
     log('ERROR', `Redis module import failed: ${e.message} — completion polling will fall back to Git only`);
     _redisModule = null;
@@ -2733,7 +3181,8 @@ async function readCompletionFromRedis(config, moduleId) {
     const redisMod = await getRedisModule(config);
     if (!redisMod) return null;
     return await redisMod.readCompletion(stream, moduleId);
-  } catch {
+  } catch (e) {
+    log('DEBUG', `Redis completion read failed for ${moduleId}: ${e.message}`);
     return null;
   }
 }
@@ -2920,6 +3369,7 @@ function checkDependencies(config, progress, moduleId) {
     }
   }
 
+  log('DEBUG', `Dependencies OK for ${moduleId}`);
   return { met: true };
 }
 
@@ -2942,6 +3392,61 @@ function extractAgentFailReason(status, phase) {
 
   // Fallback
   return `${phase} reported FAIL (no details from agent)`;
+}
+
+/**
+ * Extract a Forge-actionable fail reason from an orchestrator pre-test failure.
+ * These failures include a structured verdict with per-suite results and findings.
+ *
+ * @param {object} redisEntry - The Redis completion entry (with .reason and .verdict fields)
+ * @returns {string} Formatted reason string prefixed with [buster/pre-test]
+ */
+function extractPreTestFailReason(redisEntry) {
+  const reason = redisEntry?.reason || 'Pre-test failure (no details)';
+  let verdictDetails = '';
+
+  if (redisEntry?.verdict) {
+    try {
+      const v = typeof redisEntry.verdict === 'string'
+        ? JSON.parse(redisEntry.verdict)
+        : redisEntry.verdict;
+      const failedSuites = Object.entries(v.suites || {})
+        .filter(([_, s]) => s.status === 'FAIL' || s.status === 'ERROR')
+        .map(([name, s]) => {
+          const topFindings = (s.findings || [])
+            .slice(0, 3)
+            .map(f => f.description || f.message || f.title || 'unknown')
+            .join('; ');
+          return `${name}: ${s.error || topFindings || 'failed'}`;
+        });
+      if (failedSuites.length > 0) {
+        verdictDetails = ` | Failed suites: ${failedSuites.join(' | ')}`;
+      }
+    } catch { /* malformed verdict — use reason as-is */ }
+  }
+
+  return `[buster/pre-test] ${reason}${verdictDetails}`;
+}
+
+/**
+ * Extract the names of failed suites from a Redis completion entry's verdict.
+ * Used to detect repeated pre-test failures in the same suite (config issue signal).
+ *
+ * @param {object} redisEntry - Redis completion entry with .verdict field
+ * @returns {string[]} Array of failed suite names (e.g. ['build', 'health'])
+ */
+function getFailedSuiteNames(redisEntry) {
+  if (!redisEntry?.verdict) return [];
+  try {
+    const v = typeof redisEntry.verdict === 'string'
+      ? JSON.parse(redisEntry.verdict)
+      : redisEntry.verdict;
+    return Object.entries(v.suites || {})
+      .filter(([_, s]) => s.status === 'FAIL' || s.status === 'ERROR')
+      .map(([name]) => name);
+  } catch {
+    return [];
+  }
 }
 
 async function handleFail(config, status, moduleDir, moduleId, maxFails, phase, reason, opts = {}) {
@@ -2993,7 +3498,7 @@ async function handleFail(config, status, moduleDir, moduleId, maxFails, phase, 
 
   // Broad feedback: only on final BLOCKED (strong definitive signal)
   if (status.fail_count >= maxFails) {
-    await feedbackMemory(config, moduleId, 'blocked', failReason);
+    await feedbackMemory(config, moduleId, 'blocked', failReason, { dir: moduleDir, attempt: status.fail_count });
   }
 
   // ── Status update — single save, single git commit ──
@@ -3007,6 +3512,7 @@ async function handleFail(config, status, moduleDir, moduleId, maxFails, phase, 
     saveStatus(config, moduleDir, status);
 
     log('ERROR', `Module ${moduleId} BLOCKED — failed ${maxFails}x in ${phase} phase`);
+    _runStats.modules_blocked.push(moduleId);
     await discord(config, 'CRITICAL', `Module ${moduleId} BLOCKED`,
       `Failed ${maxFails} times in ${phase} phase. Human intervention needed.`);
     return { exit: EXIT_BLOCKED, reason: `Max retries exceeded (${phase})`, module: moduleId, status };
@@ -3053,6 +3559,7 @@ async function handleFail(config, status, moduleDir, moduleId, maxFails, phase, 
   const escalationReason = isTimeout
     ? 'Agent timed out.'
     : `Auto-retry exhausted (${autoRetryThreshold}x). Nova must analyze and provide new prompt.`;
+  _runStats.modules_failed.push(moduleId);
 
   await discord(config, 'WARN', `Module ${moduleId} ${isTimeout ? 'TIMEOUT' : 'NEEDS_NOVA'} (${phase})`,
     `Attempt ${status.fail_count}/${maxFails}. ${escalationReason}`, [
@@ -3166,6 +3673,11 @@ function generateLintReport(config, tier, opts = {}) {
   // Pass semgrep config path if configured (platform-level, not repo-level)
   if (config.pre_check?.semgrep_config_path) {
     args.push('--semgrep-config', config.pre_check.semgrep_config_path);
+  }
+
+  // Pass execution trace log path for dual-write in lint-report.js
+  if (opts.logPath) {
+    args.push('--log-path', opts.logPath);
   }
 
   if (opts.moduleDir) {
@@ -3301,12 +3813,23 @@ async function runPreCheck(config, moduleDir, status, moduleId) {
   }
 
   const timeout = (config.pre_check?.timeout_seconds || 30) * 1000;
+  const attempt = status.fail_count + 1;
+  const tracePath = config._logDir ? path.join(moduleLintLogDir(config, moduleDir), `precheck-trace-attempt-${attempt}.jsonl`) : null;
   const { report, error } = generateLintReport(config, 'pre-check', {
     moduleDir,
     moduleId,
     forgeDiffStat: status.forge_diff_stat,
     timeoutMs: timeout,
+    logPath: tracePath,
   });
+
+  // Save lint report to centralized log directory
+  if (report && config._logDir) {
+    try {
+      const lintDir = moduleLintLogDir(config, moduleDir);
+      fs.writeFileSync(path.join(lintDir, `precheck-attempt-${attempt}.json`), JSON.stringify(report, null, 2));
+    } catch { /* non-critical */ }
+  }
 
   if (!report) {
     log('WARN', `Pre-check skipped: ${error}`);
@@ -3438,7 +3961,8 @@ async function buildForgePrompt(config, moduleId, mod, dir, status, maxFails, no
       ? status.fail_summaries.map(f => f.summary).join('; ')
       : '';
     const { block, count, ids } = await recallForModule(
-      config, moduleId, mod.title, additionalCtx, failContext
+      config, moduleId, mod.title, additionalCtx, failContext,
+      { dir, attempt: status.fail_count + 1 }
     );
     if (block) {
       memoryBlock = block;
@@ -3647,6 +4171,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     const forgeModel = resolveModel('forge', config, progress, mod.forge_model);
     const forgeHarness = modelToHarness(forgeModel) || config.agents?.forge?.acp_agent_id || 'forge';
     log('STEP', `Phase: FORGE (harness: ${forgeHarness}, model: ${forgeModel})`);
+    _runStats.total_forge_attempts++;
 
     // Build complete prompt with priority hierarchy and anti-pattern framing
     const promptResult = await buildForgePrompt(config, moduleId, mod, dir, status, maxFails, novaPrompt);
@@ -3818,8 +4343,9 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     log('OK', `Module ${moduleId} PASS (forge-only)`);
     LOG_MODULE = null;
     LOG_PHASE = null;
+    _runStats.modules_completed.push(moduleId);
 
-    await feedbackMemory(config, moduleId, 'pass');
+    await feedbackMemory(config, moduleId, 'pass', '', { dir, attempt: status.fail_count + 1 });
     return { retry: false, result: { exit: EXIT_OK, status: STATUS.PASS } };
   }
 
@@ -3888,6 +4414,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     LOG_PHASE = 'buster';
     const busterModel = resolveModel('buster', config, progress);
     log('STEP', `Phase: BUSTER (model: ${busterModel})`);
+    _runStats.total_buster_attempts++;
 
     // Buster subagent crash retry loop.
     // Crashes (orchestrator-detected, timeouts) retry the Buster dispatch directly
@@ -3909,6 +4436,28 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
       }
 
       savePrompt(config, dir, 'buster', status.fail_count + 1, busterPrompt);
+
+      // ── Pre-dispatch config validation ──
+      // Catches obvious config issues (missing paths, bad binaries) before wasting
+      // a full Buster dispatch cycle. Only checked on first buster attempt per module
+      // attempt — crash retries reuse the same config.
+      if (busterAttempt === 1) {
+        const configCheck = validateBusterConfig(config, mod.test_config, mod.test_suites, `module ${moduleId}`);
+        if (!configCheck.ok) {
+          const reason = `Config validation failed: ${configCheck.errors.join('; ')}`;
+          log('ERROR', `Module ${moduleId} — ${reason}`);
+          await discord(config, 'CRITICAL', `Module ${moduleId} — Config Invalid`,
+            `Pre-dispatch validation caught config issues. Fix progress.json before retrying.`,
+            configCheck.errors.map((e, i) => ({ name: `Issue ${i + 1}`, value: e.slice(0, 200) }))
+          );
+          clearShutdownContext();
+          return { retry: false, result: {
+            exit: EXIT_NEEDS_NOVA,
+            reason,
+            module: moduleId, module_dir: dir,
+          }};
+        }
+      }
 
       status.status = STATUS.TESTING;
       status.current_phase = 'buster';
@@ -4036,18 +4585,34 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
 
         LOG_MODULE = null;
         LOG_PHASE = null;
+        _runStats.modules_completed.push(moduleId);
 
-        await feedbackMemory(config, moduleId, 'pass');
+        await feedbackMemory(config, moduleId, 'pass', '', { dir, attempt: status.fail_count + 1 });
 
         return { retry: false, result: { exit: EXIT_OK, status: STATUS.PASS } };
       }
 
       // ── FAIL / BLOCKED ──
       if (status.status === STATUS.FAIL || status.status === STATUS.BLOCKED) {
-        // Check if this was a subagent crash (orchestrator-detected) or a real test failure
-        const source = redisEntry?.source || 'unknown';
-        const isCrash = /^orchestrator/i.test(source);
+        // Classify the failure source into three categories:
+        //
+        //   1. INFRA CRASH — orchestrator timeout, process death, no test output
+        //      → Buster retry (same Forge output), then BLOCKED if exhausted
+        //
+        //   2. PRE-TEST FAILURE — orchestrator detected build/health/suite failure
+        //      before spawning a subagent (has structured verdict with per-suite details)
+        //      → First occurrence: handleFail → Forge (might be a code issue)
+        //      → Repeated same suite: fast-track EXIT_NEEDS_NOVA (likely config issue)
+        //
+        //   3. AGENT TEST FAILURE — subagent ran tests, reported FAIL
+        //      → handleFail → Forge retry (normal flow)
 
+        const source = redisEntry?.source || 'unknown';
+        const isFromOrchestrator = /^orchestrator/i.test(source);
+        const hasPreTestVerdict = isFromOrchestrator && !!redisEntry?.verdict;
+        const isCrash = isFromOrchestrator && !hasPreTestVerdict;
+
+        // ── Category 1: Infrastructure crash ──
         if (isCrash && !isLastBusterAttempt) {
           log('WARN', `Buster subagent crashed (source: ${source}, attempt ${busterAttempt}/${maxBusterCrashRetries + 1}) — retrying Buster`);
           await discord(config, 'WARN', `Buster crash retry: Module ${moduleId}`,
@@ -4061,9 +4626,8 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
           continue; // → next busterAttempt
         }
 
-        // Real test failure → handleFail (goes to Forge)
-        // Crash retries exhausted → BLOCKED (infrastructure issue)
         if (isCrash) {
+          // Crash retries exhausted → BLOCKED (infrastructure issue)
           log('ERROR', `Buster crash retries exhausted (${maxBusterCrashRetries}) — BLOCKED (infrastructure issue)`);
 
           status.status = STATUS.BLOCKED;
@@ -4085,7 +4649,67 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
           }};
         }
 
-        // Real test failure from agent → Forge retry
+        // ── Category 2: Pre-test failure (orchestrator with verdict) ──
+        if (hasPreTestVerdict) {
+          const failedSuiteNames = getFailedSuiteNames(redisEntry);
+          const preTestReason = extractPreTestFailReason(redisEntry);
+
+          log('WARN', `Pre-test failure: ${preTestReason} (suites: ${failedSuiteNames.join(',') || 'unknown'})`);
+
+          // Check if same suite(s) already failed as pre-test in a previous attempt.
+          // Repeated pre-test failures in the same suite = config issue, not code.
+          // Forge cannot fix progress.json — don't waste cycles.
+          const previousPreTestFails = (status.fail_summaries || [])
+            .filter(s => typeof s === 'object' && typeof s.summary === 'string'
+                      && s.summary.startsWith('[buster/pre-test]'));
+
+          const isRepeatedPreTestFail = failedSuiteNames.length > 0
+            && previousPreTestFails.some(prev =>
+              failedSuiteNames.some(suite => prev.summary.includes(suite))
+            );
+
+          if (isRepeatedPreTestFail) {
+            log('ERROR', `Repeated pre-test failure in ${failedSuiteNames.join(',')} — likely config issue, skipping Forge`);
+
+            status.fail_count++;
+            status.fail_summaries.push({
+              attempt: status.fail_count,
+              timestamp: new Date().toISOString(),
+              summary: preTestReason,
+              phase: 'buster',
+              is_pre_test: true,
+              failed_suites: failedSuiteNames,
+            });
+            status.status = STATUS.FAIL;
+            status.current_phase = null;
+            addHistory(status, STATUS.FAIL, 'pipeline',
+              `Repeated pre-test failure (${failedSuiteNames.join(',')}) — config issue, Forge cannot fix`);
+            saveStatus(config, dir, status);
+
+            await discord(config, 'CRITICAL', `Module ${moduleId} — Config Issue Detected`,
+              `Same pre-test suite(s) failed again: ${failedSuiteNames.join(', ')}. This is likely a config problem in progress.json, not a code issue.`, [
+                { name: 'Failed Suites', value: failedSuiteNames.join(', ') },
+                { name: 'Reason', value: preTestReason.slice(0, 200) },
+                { name: 'Action', value: 'Check progress.json test_config / test_suites / serve' },
+              ]);
+
+            return { retry: false, result: {
+              exit: EXIT_NEEDS_NOVA,
+              reason: `Repeated pre-test failure (${failedSuiteNames.join(',')}) — likely config issue in progress.json`,
+              module: moduleId, module_dir: dir,
+              failed_suites: failedSuiteNames,
+            }};
+          }
+
+          // First pre-test failure → give Forge a chance (might be a code issue)
+          log('INFO', `First pre-test failure — routing to Forge via handleFail`);
+          const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'buster',
+            preTestReason, { recalledMemoryIds });
+          if (failResult._retry) return { retry: true, fail_count: status.fail_count };
+          return { retry: false, result: failResult };
+        }
+
+        // ── Category 3: Agent test failure (normal) ──
         const failResult = await handleFail(config, status, dir, moduleId, maxFails, 'buster',
           extractAgentFailReason(status, 'buster'), { recalledMemoryIds });
         if (failResult._retry) return { retry: true, fail_count: status.fail_count };
@@ -4115,17 +4739,31 @@ function gateStatusPath(config, gateId) {
  * @private
  */
 async function _runBusterGateOnce(config, progress, gateId, gate, model, timeout, instructions, attempt) {
+  _runStats.total_buster_attempts++;
   const commitHash = headHash() || gitExec(config.repo_root, ['rev-parse', '--short', 'HEAD']);
   const busterPrompt = buildBusterGatePrompt(config, gateId, gate, instructions, commitHash, attempt);
 
   // Save gate prompt for debugging
   try {
-    const gateDir = gate.instructions_file ? gate.instructions_file.split('/')[0] : gateId;
-    const promptDir = path.join(swarmRoot(config), gateDir, 'prompts', RUN_ID);
-    fs.mkdirSync(promptDir, { recursive: true });
-    fs.writeFileSync(path.join(promptDir, `buster-gate-${gateId}-attempt-${attempt}.md`), busterPrompt);
-    log('DEBUG', `Buster gate prompt saved: ${gateDir}/prompts/${RUN_ID}/buster-gate-${gateId}-attempt-${attempt}.md`);
+    const logDir = gateLogDir(config, gateId);
+    fs.writeFileSync(path.join(logDir, `buster-prompt-attempt-${attempt}.md`), busterPrompt);
+    log('DEBUG', `Buster gate prompt saved: gates/${gateId}/buster-prompt-attempt-${attempt}.md`);
   } catch { /* non-critical */ }
+
+  // ── Pre-dispatch config validation (gate) ──
+  // Same principle as module validation — catch obvious config issues early.
+  if (attempt === 1) {
+    const configCheck = validateBusterConfig(config, gate.test_config, gate.test_suites, `gate ${gateId}`);
+    if (!configCheck.ok) {
+      const reason = `Gate '${gateId}' config validation failed: ${configCheck.errors.join('; ')}`;
+      log('ERROR', reason);
+      await discord(config, 'CRITICAL', `Gate '${gateId}' — Config Invalid`,
+        `Pre-dispatch validation caught config issues. Fix progress.json before retrying.`,
+        configCheck.errors.map((e, i) => ({ name: `Issue ${i + 1}`, value: e.slice(0, 200) }))
+      );
+      return pollResult(false, 'config_invalid', { error: reason, errors: configCheck.errors });
+    }
+  }
 
   // Archive stale Redis completions for this gate before dispatching
   // (same pattern as module tests — prevents reading old FAIL/PASS entries)
@@ -4464,27 +5102,59 @@ async function runBusterGate(config, progress, gateId) {
     // ── PASS ──
     if (result.ok) {
       log('OK', `Gate '${gateId}' PASS${attempt > 1 ? ` (after ${attempt - 1} fix cycle(s))` : ''}`);
+      _runStats.gates_completed.push(gateId);
+
+      // Persist PASS locally so findNextStep() recognises completion on resume.
+      // Without this, a Redis-only PASS leaves no file on Nova's filesystem and
+      // findNextStep re-triggers the gate (Buster is a separate pod — its files
+      // only reach Nova via git, which may not have been pulled yet).
+      try {
+        const gsPath = gateStatusPath(config, gateId);
+        const gsDir = path.dirname(gsPath);
+        if (!fs.existsSync(gsDir)) fs.mkdirSync(gsDir, { recursive: true });
+        fs.writeFileSync(gsPath, JSON.stringify({
+          status: 'PASS',
+          gate: gateId,
+          source: result.status?._source || 'unknown',
+          completed_at: new Date().toISOString(),
+          fix_cycles: attempt > 1 ? attempt - 1 : 0,
+        }, null, 2) + '\n');
+        await gitCommitAndPush(config,
+          `[pipeline] Gate '${gateId}' PASS (persisted)`, { softFail: true });
+      } catch (e) {
+        log('WARN', `Failed to persist gate-status.json for '${gateId}': ${e.message} (non-critical)`);
+      }
+
       await discord(config, 'OK', `Gate: ${gate.title} PASS`,
         attempt > 1 ? `Passed after ${attempt - 1} fix cycle(s)` : 'Passed on first run');
       return { exit: EXIT_OK, status: STATUS.PASS };
     }
 
     // ── Non-fixable failures ──
+    if (result.reason === 'config_invalid') {
+      const err = result.status?.error || 'unknown';
+      log('ERROR', `Gate '${gateId}' config invalid: ${err}`);
+      _runStats.gates_failed.push(gateId);
+      return { exit: EXIT_NEEDS_NOVA, reason: err };
+    }
     if (result.reason === 'spawn_failed') {
       const err = result.status?.error || 'unknown';
       log('ERROR', `Gate '${gateId}' agent spawn failed: ${err}`);
+      _runStats.gates_failed.push(gateId);
       await discord(config, 'CRITICAL', `Gate '${gateId}' Spawn Failed`,
         `Buster agent could not be spawned: ${err}`);
       return { exit: EXIT_ERROR, reason: `Gate '${gateId}' spawn failed: ${err}` };
     }
     if (result.reason === 'parse_corrupted') {
       log('ERROR', `Gate '${gateId}' status file permanently corrupted`);
+      _runStats.gates_failed.push(gateId);
       await discord(config, 'CRITICAL', `Gate '${gateId}' Parse Corrupted`,
         `Gate status file is permanently unparseable after multiple attempts.`);
       return { exit: EXIT_NEEDS_NOVA, reason: `Gate '${gateId}' status file permanently corrupted` };
     }
     if (result.reason === 'timeout') {
       log('ERROR', `Gate '${gateId}' timed out after ${timeout}min`);
+      _runStats.gates_failed.push(gateId);
       await discord(config, 'CRITICAL', `Gate '${gateId}' TIMEOUT`,
         `Buster did not complete within ${timeout}min`);
       // Timeouts are not auto-fixable
@@ -4498,6 +5168,7 @@ async function runBusterGate(config, progress, gateId) {
       rateLimitPauses++;
       if (rateLimitPauses > maxRateLimitPauses) {
         log('ERROR', `Gate '${gateId}' rate limit pauses exceeded (${rateLimitPauses}/${maxRateLimitPauses})`);
+        _runStats.gates_failed.push(gateId);
         await discord(config, 'CRITICAL', `Gate '${gateId}' Rate Limit Exhausted`,
           `Exceeded max rate limit pauses (${maxRateLimitPauses}). Pipeline cannot continue.`);
         return { exit: EXIT_RATE_LIMITED, reason: `Gate '${gateId}' exceeded max rate limit pauses` };
@@ -4524,12 +5195,14 @@ async function runBusterGate(config, progress, gateId) {
 
     // No fix loop configured or exhausted?
     if (!hasFixLoop) {
+      _runStats.gates_failed.push(gateId);
       await discord(config, 'CRITICAL', `Gate '${gateId}' FAIL`, `Agent reported failure: ${failReason}`);
       return { exit: EXIT_NEEDS_NOVA, reason: `Gate '${gateId}' failed: ${failReason}` };
     }
 
     if (attempt > maxFixCycles) {
       log('ERROR', `Gate '${gateId}' fix loop exhausted (${maxFixCycles} attempts)`);
+      _runStats.gates_failed.push(gateId);
       await discord(config, 'CRITICAL', `Gate '${gateId}' BLOCKED`,
         `Fix loop exhausted after ${maxFixCycles} attempts. Issues: ${failReason}`);
       return {
@@ -4553,10 +5226,8 @@ async function runBusterGate(config, progress, gateId) {
 
     // Save gate fix prompt for debugging
     try {
-      const gateDir = gate.instructions_file ? gate.instructions_file.split('/')[0] : gateId;
-      const promptDir = path.join(swarmRoot(config), gateDir, 'prompts', RUN_ID);
-      fs.mkdirSync(promptDir, { recursive: true });
-      fs.writeFileSync(path.join(promptDir, `forge-gatefix-${gateId}-attempt-${attempt}.md`), fixPrompt);
+      const logDir = gateLogDir(config, gateId);
+      fs.writeFileSync(path.join(logDir, `forge-fix-prompt-cycle-${attempt}.md`), fixPrompt);
     } catch { /* non-critical */ }
 
     try {
@@ -4583,6 +5254,19 @@ async function runBusterGate(config, progress, gateId) {
     // Poll for Forge session completion (with crash detection)
     const forgeTimeout = gate.timeout_minutes ?? config.default_timeout_minutes;
     const sessionResult = await pollForSessionEnd(config, fixAcpLabel, forgeTimeout, fixLabel);
+
+    // Save Forge gate-fix stream log before killing session
+    const fixStreamPath = _shutdownState.activeSessions.get(fixAcpLabel)?.streamLogPath;
+    if (fixStreamPath) {
+      try {
+        if (fs.existsSync(fixStreamPath)) {
+          const logDir = gateLogDir(config, gateId);
+          const destPath = path.join(logDir, `forge-fix-transcript-cycle-${attempt}.jsonl`);
+          fs.copyFileSync(fixStreamPath, destPath);
+          log('OK', `Gate fix stream log saved: gates/${gateId}/forge-fix-transcript-cycle-${attempt}.jsonl`);
+        }
+      } catch (e) { log('DEBUG', `Gate fix stream log save failed (non-critical): ${e.message}`); }
+    }
 
     // Safety net — kill Forge session if still running
     await killAgent(config, 'forge', fixLabel, sessionResult.hasChanges);
@@ -4758,12 +5442,14 @@ async function killReviewerAgent(config, gateId, reviewer, graceful = false) {
  *
  * @private — called by runReviewGate, not directly
  */
-async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
+async function _runReviewOnce(config, progress, gateId, gate, reviewConfig, reviewAttempt = 1) {
   const { reviewers, timeout, lintTier } = reviewConfig;
 
   if (reviewers.length === 0) {
     return { ok: false, error: 'No reviewers configured' };
   }
+
+  _runStats.total_echo_reviews++;
 
   // Use the first (and typically only) reviewer
   const reviewer = reviewers[0];
@@ -4781,9 +5467,19 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
   // project (cross-module regressions, architectural issues), not a single module.
   // Compare with runPreCheck which IS module-scoped via moduleDir + forgeDiffStat.
   let lintBlock = '';
+  const tracePath = config._logDir ? path.join(gateLintLogDir(config, gateId), `full-trace-attempt-${reviewAttempt}.jsonl`) : null;
   const { report: lintReport, error: lintError } = generateLintReport(config, lintTier || 'full', {
     moduleId: gateId,
+    logPath: tracePath,
   });
+
+  // Save lint report to centralized log directory
+  if (lintReport && config._logDir) {
+    try {
+      const lintDir = gateLintLogDir(config, gateId);
+      fs.writeFileSync(path.join(lintDir, `full-attempt-${reviewAttempt}.json`), JSON.stringify(lintReport, null, 2));
+    } catch { /* non-critical */ }
+  }
 
   if (lintReport) {
     lintBlock = formatLintReportForReviewer(lintReport);
@@ -4861,11 +5557,9 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
 
   // Save reviewer prompt for debugging
   try {
-    const reviewDir = gate.review_output_dir || 'echo-review';
-    const echoPromptDir = path.join(swarmRoot(config), reviewDir, 'prompts', RUN_ID);
-    fs.mkdirSync(echoPromptDir, { recursive: true });
-    fs.writeFileSync(path.join(echoPromptDir, `echo-${gateId}-${reviewer.label}.md`), reviewerPrompt);
-    log('DEBUG', `Echo prompt saved: ${reviewDir}/prompts/${RUN_ID}/echo-${gateId}-${reviewer.label}.md`);
+    const logDir = gateLogDir(config, gateId);
+    fs.writeFileSync(path.join(logDir, `echo-prompt-attempt-${reviewAttempt}.md`), reviewerPrompt);
+    log('DEBUG', `Echo prompt saved: gates/${gateId}/echo-prompt-attempt-${reviewAttempt}.md`);
   } catch { /* non-critical */ }
 
   const echoStartTime = Date.now();
@@ -4885,16 +5579,14 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig) {
   const echoStreamPath = _shutdownState.activeSessions.get(echoTrackingKey)?.streamLogPath;
   await killReviewerAgent(config, gateId, reviewer, pollRes.ok);
 
-  // Save stream log to review streams directory
+  // Save stream log to centralized log directory
   if (echoStreamPath) {
     try {
       if (fs.existsSync(echoStreamPath)) {
-        const reviewDir = gate.review_output_dir || 'echo-review';
-        const echoLogDir = path.join(swarmRoot(config), reviewDir, 'streams', RUN_ID);
-        fs.mkdirSync(echoLogDir, { recursive: true });
-        const destPath = path.join(echoLogDir, `echo-stream-${gateId}-${reviewer.label}.jsonl`);
+        const logDir = gateLogDir(config, gateId);
+        const destPath = path.join(logDir, `echo-transcript-attempt-${reviewAttempt}.jsonl`);
         fs.copyFileSync(echoStreamPath, destPath);
-        log('OK', `Echo stream log saved: ${reviewDir}/streams/${RUN_ID}/echo-stream-${gateId}-${reviewer.label}.jsonl`);
+        log('OK', `Echo stream log saved: gates/${gateId}/echo-transcript-attempt-${reviewAttempt}.jsonl`);
       }
     } catch (e) { log('DEBUG', `Echo stream log save failed (non-critical): ${e.message}`); }
   }
@@ -5049,12 +5741,15 @@ function buildReviewFixPrompt(config, gate, issues, attempt, maxAttempts, fixHis
  * Removes per-reviewer JSON files AND the merged output file
  * so fresh reviews can be written and merged cleanly.
  */
-function cleanupReviewFiles(config, gate, reviewers) {
+async function cleanupReviewFiles(config, gate, reviewers) {
+  const cleaned = [];
+
   for (const reviewer of reviewers) {
     const filePath = reviewOutputPath(config, gate, reviewer.label);
     try {
       if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
+        cleaned.push(filePath);
         log('INFO', `Cleaned up: ${path.basename(filePath)}`);
       }
     } catch { /* non-critical */ }
@@ -5062,7 +5757,30 @@ function cleanupReviewFiles(config, gate, reviewers) {
   // Also clean merged output file
   if (gate.output_file) {
     const mergedPath = path.join(swarmRoot(config), gate.output_file);
-    try { if (fs.existsSync(mergedPath)) fs.unlinkSync(mergedPath); } catch { /* ok */ }
+    try {
+      if (fs.existsSync(mergedPath)) {
+        fs.unlinkSync(mergedPath);
+        cleaned.push(mergedPath);
+      }
+    } catch { /* ok */ }
+  }
+
+  // Commit the deletions so the worktree is clean for subsequent Echo polling.
+  // Without this, deleted review files show as "D" in git status, making the
+  // worktree dirty and blocking gitPullForPolling (even with --autostash,
+  // committing is cleaner than stash-cycling every 30s).
+  if (cleaned.length > 0) {
+    try {
+      gitExec(config.repo_root, ['add', '-A'], { stdio: 'ignore' });
+      gitExec(config.repo_root, ['commit', '-m',
+        `[pipeline] Cleanup ${cleaned.length} review file(s) before re-review`],
+        { stdio: 'ignore' });
+      invalidateHeadHash();
+      log('OK', `Review cleanup committed (${cleaned.length} file(s))`);
+    } catch {
+      // No changes to commit (files were untracked) — that's fine
+      log('DEBUG', 'Review cleanup: nothing to commit (files may have been untracked)');
+    }
   }
 }
 
@@ -5072,8 +5790,7 @@ function cleanupReviewFiles(config, gate, reviewers) {
  * Core flow: lint report → single reviewer → GO/NO-GO.
  *
  * Fix lifecycles (on_nogo):
- *   "fix_and_continue"  — Forge fixes, pipeline continues (no re-review)
- *   "fix_and_rereview"  — Forge fixes, Echo re-reviews, repeat until GO or exhausted
+ * On NO-GO: Forge fixes, Echo re-reviews, repeat until GO or exhausted
  *
  * @param {object} config - Pipeline config
  * @param {object} progress - Project progress
@@ -5134,6 +5851,7 @@ async function runReviewGate(config, progress, gateId) {
 
   if (reviewResult.ok) {
     log('OK', `Review gate '${gateId}' GO`);
+    _runStats.gates_completed.push(gateId);
     await discord(config, 'OK', `Review: ${gate.title} GO`, 'Review approved');
     return { exit: EXIT_OK, status: STATUS.PASS };
   }
@@ -5143,208 +5861,123 @@ async function runReviewGate(config, progress, gateId) {
   const issues = extractReviewIssues(reviewResult.mergedResult);
   log('INFO', `${issues.length} critical issue(s) extracted from review`);
 
-  // \u2500\u2500 fix_and_continue: Forge fixes, pipeline continues \u2500\u2500
-  if (gate.on_nogo === 'fix_and_continue') {
-    await discord(config, 'WARN', `Review: ${gate.title} NO-GO \u2014 Fix & Continue`,
-      `${issues.length} critical issue(s). Forge will fix, then pipeline continues.`);
+  await discord(config, 'WARN', `Review: ${gate.title} NO-GO \u2014 Fix & Re-Review`,
+    `${issues.length} critical issue(s). Starting fix-and-rereview cycle.`);
 
-    const fixHistory = [];
-    for (let cycle = 1; cycle <= maxFixCycles; cycle++) {
-      log('STEP', `Review fix cycle ${cycle}/${maxFixCycles} (fix_and_continue)`);
+  const fixHistory = [];
+  for (let cycle = 1; cycle <= maxFixCycles; cycle++) {
+    log('STEP', `Review fix cycle ${cycle}/${maxFixCycles} (fix_and_rereview)`);
 
-      if (issues.length === 0) {
-        log('WARN', 'NO-GO but no extractable issues \u2014 escalating');
-        break;
-      }
-
-      const fixPrompt = buildReviewFixPrompt(config, gate, issues, cycle, maxFixCycles, fixHistory);
-      const forgeModel = resolveModel('forge', config, progress, gate.forge_model);
-      const fixLabel = `reviewfix-${gateId}-${cycle}`;
-      const fixAcpLabel = acpLabel('forge', fixLabel);
-
-      // Save review fix prompt for debugging
-      try {
-        const reviewDir = gate.review_output_dir || 'echo-review';
-        const promptDir = path.join(swarmRoot(config), reviewDir, 'prompts', RUN_ID);
-        fs.mkdirSync(promptDir, { recursive: true });
-        fs.writeFileSync(path.join(promptDir, `forge-reviewfix-${gateId}-cycle-${cycle}.md`), fixPrompt);
-      } catch { /* non-critical */ }
-
-      try { await spawnAgent(config, progress, 'forge', fixLabel, forgeModel, fixPrompt); }
-      catch (e) {
-        log('ERROR', `Forge spawn failed for review fix: ${e.message}`);
-        await discord(config, 'CRITICAL', `Review Fix: Forge Spawn Failed`,
-          `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Error: ${e.message}`);
-        continue;
-      }
-
-      if (!(await verifyAgentAlive(config, 'forge', fixLabel))) {
-        await discord(config, 'WARN', `Review Fix: Forge Not Responding`,
-          `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Health check failed. Retrying.`);
-        await killAgent(config, 'forge', fixLabel);
-        continue;
-      }
-
-      await discord(config, 'INFO', `Review Fix: Forge Working`,
-        `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Forge is fixing ${issues.length} issue(s)...`);
-
-      // Poll for Forge session completion (with crash detection)
-      const sessionResult = await pollForSessionEnd(
-        config, fixAcpLabel, reviewConfig.timeout ?? config.default_timeout_minutes, fixLabel);
-
-      await killAgent(config, 'forge', fixLabel, sessionResult.hasChanges);
-
-      // Track this fix attempt for anti-pattern framing in subsequent attempts
-      fixHistory.push({ attempt: cycle, hasChanges: sessionResult.hasChanges, issues });
-
-      if (!sessionResult.hasChanges) {
-        const reason = sessionResult.completed ? 'no changes (crashed?)' : 'timeout';
-        log('WARN', `Review fix '${fixLabel}' ${reason}`);
-        await discord(config, 'WARN', `Review Fix ${reason}: ${gateId}`,
-          `Fix cycle ${cycle}/${maxFixCycles} produced no usable output.`);
-        continue;
-      }
-
-      await gitCommitAndPush(config, `[pipeline] Review fix: ${gateId} cycle ${cycle}`, { softFail: true });
-
-      await discord(config, 'OK', `Review Fix: Forge Complete`,
-        `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Fixes committed.`);
-
-      // Forge ran successfully — no point re-running with the same issues.
-      // Further cycles only matter if spawn/health-check failed (continue above).
-      log('OK', `Fix cycle ${cycle} completed — Forge applied fixes`);
+    // \u2500\u2500 Forge fix \u2500\u2500
+    const currentIssues = extractReviewIssues(reviewResult.mergedResult);
+    if (currentIssues.length === 0) {
+      log('WARN', 'NO-GO but no extractable issues \u2014 escalating');
       break;
     }
 
-    // Write GO status to output file so findNextStep recognizes completion on resume.
-    // Without this, the NO-GO file from the initial review stays on disk and
-    // findNextStep would re-trigger the gate.
-    if (gate.output_file) {
-      const outPath = path.join(swarmRoot(config), gate.output_file);
-      const goResult = JSON.stringify({
-        status: 'GO',
-        note: `Fixes applied (${maxFixCycles} cycle(s)). No re-review performed (fix_and_continue).`,
-        completed_at: new Date().toISOString(),
-      }, null, 2) + '\n';
-      fs.writeFileSync(outPath, goResult);
-      await gitCommitAndPush(config, `[pipeline] Review gate '${gateId}' fix_and_continue complete`, { softFail: true });
+    const fixPrompt = buildReviewFixPrompt(config, gate, currentIssues, cycle, maxFixCycles, fixHistory);
+    const forgeModel = resolveModel('forge', config, progress, gate.forge_model);
+    const fixLabel = `reviewfix-${gateId}-${cycle}`;
+    const fixAcpLabel = acpLabel('forge', fixLabel);
+
+    // Save review fix prompt for debugging
+    try {
+      const logDir = gateLogDir(config, gateId);
+      fs.writeFileSync(path.join(logDir, `forge-fix-prompt-cycle-${cycle}.md`), fixPrompt);
+    } catch { /* non-critical */ }
+
+    try { await spawnAgent(config, progress, 'forge', fixLabel, forgeModel, fixPrompt); }
+    catch (e) {
+      log('ERROR', `Forge spawn failed for review fix: ${e.message}`);
+      await discord(config, 'CRITICAL', `Review Fix: Forge Spawn Failed`,
+        `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Error: ${e.message}`);
+      continue;
     }
 
-    // Pipeline continues regardless — no re-review
-    log('OK', `Review gate '${gateId}' fix_and_continue complete — pipeline continues`);
-    return { exit: EXIT_OK, status: STATUS.PASS };
-  }
+    if (!(await verifyAgentAlive(config, 'forge', fixLabel))) {
+      await discord(config, 'WARN', `Review Fix: Forge Not Responding`,
+        `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Health check failed. Retrying.`);
+      await killAgent(config, 'forge', fixLabel);
+      continue;
+    }
 
-  // \u2500\u2500 fix_and_rereview: Forge fixes, Echo re-reviews \u2500\u2500
-  if (gate.on_nogo === 'fix_and_rereview') {
-    await discord(config, 'WARN', `Review: ${gate.title} NO-GO \u2014 Fix & Re-Review`,
-      `${issues.length} critical issue(s). Starting fix-and-rereview cycle.`);
+    await discord(config, 'INFO', `Review Fix: Forge Working`,
+      `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Forge is fixing ${currentIssues.length} issue(s)...`);
 
-    const fixHistory = [];
-    for (let cycle = 1; cycle <= maxFixCycles; cycle++) {
-      log('STEP', `Review fix cycle ${cycle}/${maxFixCycles} (fix_and_rereview)`);
+    // Poll for Forge session completion (with crash detection)
+    const sessionResult = await pollForSessionEnd(
+      config, fixAcpLabel, reviewConfig.timeout ?? config.default_timeout_minutes, fixLabel);
 
-      // \u2500\u2500 Forge fix \u2500\u2500
-      const currentIssues = extractReviewIssues(reviewResult.mergedResult);
-      if (currentIssues.length === 0) {
-        log('WARN', 'NO-GO but no extractable issues \u2014 escalating');
-        break;
-      }
-
-      const fixPrompt = buildReviewFixPrompt(config, gate, currentIssues, cycle, maxFixCycles, fixHistory);
-      const forgeModel = resolveModel('forge', config, progress, gate.forge_model);
-      const fixLabel = `reviewfix-${gateId}-${cycle}`;
-      const fixAcpLabel = acpLabel('forge', fixLabel);
-
-      // Save review fix prompt for debugging
+    // Save Forge review-fix stream log before killing session
+    const fixStreamPath = _shutdownState.activeSessions.get(fixAcpLabel)?.streamLogPath;
+    if (fixStreamPath) {
       try {
-        const reviewDir = gate.review_output_dir || 'echo-review';
-        const promptDir = path.join(swarmRoot(config), reviewDir, 'prompts', RUN_ID);
-        fs.mkdirSync(promptDir, { recursive: true });
-        fs.writeFileSync(path.join(promptDir, `forge-reviewfix-${gateId}-cycle-${cycle}.md`), fixPrompt);
-      } catch { /* non-critical */ }
-
-      try { await spawnAgent(config, progress, 'forge', fixLabel, forgeModel, fixPrompt); }
-      catch (e) {
-        log('ERROR', `Forge spawn failed for review fix: ${e.message}`);
-        await discord(config, 'CRITICAL', `Review Fix: Forge Spawn Failed`,
-          `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Error: ${e.message}`);
-        continue;
-      }
-
-      if (!(await verifyAgentAlive(config, 'forge', fixLabel))) {
-        await discord(config, 'WARN', `Review Fix: Forge Not Responding`,
-          `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Health check failed. Retrying.`);
-        await killAgent(config, 'forge', fixLabel);
-        continue;
-      }
-
-      await discord(config, 'INFO', `Review Fix: Forge Working`,
-        `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Forge is fixing ${currentIssues.length} issue(s)...`);
-
-      // Poll for Forge session completion (with crash detection)
-      const sessionResult = await pollForSessionEnd(
-        config, fixAcpLabel, reviewConfig.timeout ?? config.default_timeout_minutes, fixLabel);
-
-      await killAgent(config, 'forge', fixLabel, sessionResult.hasChanges);
-
-      // Track this fix attempt for anti-pattern framing in subsequent attempts
-      fixHistory.push({ attempt: cycle, hasChanges: sessionResult.hasChanges, issues: currentIssues });
-
-      if (!sessionResult.hasChanges) {
-        const reason = sessionResult.completed ? 'no changes (crashed?)' : 'timeout';
-        log('WARN', `Review fix '${fixLabel}' ${reason}`);
-        await discord(config, 'WARN', `Review Fix ${reason}: ${gateId}`,
-          `Fix cycle ${cycle}/${maxFixCycles} produced no usable output.`);
-        continue;
-      }
-
-      await gitCommitAndPush(config, `[pipeline] Review fix: ${gateId} cycle ${cycle}`, { softFail: true });
-
-      await discord(config, 'INFO', `Review Fix: Re-Reviewing with Echo`,
-        `Forge fix cycle ${cycle}/${maxFixCycles} committed. Running Echo review again...`);
-
-      // \u2500\u2500 Cleanup old review files and re-review \u2500\u2500
-      cleanupReviewFiles(config, gate, reviewers);
-
-      reviewResult = await _runReviewOnce(config, progress, gateId, gate, reviewConfig);
-
-      if (reviewResult.error) {
-        log('ERROR', `Re-review failed: ${reviewResult.error}`);
-        await discord(config, 'WARN', `Review Fix: Re-Review Error`,
-          `Cycle ${cycle}/${maxFixCycles}. Echo review failed: ${reviewResult.error}`);
-        continue;
-      }
-
-      if (reviewResult.ok) {
-        log('OK', `Review gate '${gateId}' GO after ${cycle} fix cycle(s)`);
-        await discord(config, 'OK', `Review: ${gate.title} GO`,
-          `Passed after ${cycle} fix cycle(s)`);
-        return { exit: EXIT_OK, status: STATUS.PASS };
-      }
-
-      log('WARN', `Re-review still NO-GO after fix cycle ${cycle}/${maxFixCycles}`);
-      await discord(config, 'WARN', `Review Fix: Still NO-GO`,
-        `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Echo still found issues.`);
+        if (fs.existsSync(fixStreamPath)) {
+          const logDir = gateLogDir(config, gateId);
+          const destPath = path.join(logDir, `forge-fix-transcript-cycle-${cycle}.jsonl`);
+          fs.copyFileSync(fixStreamPath, destPath);
+          log('OK', `Review fix stream log saved: gates/${gateId}/forge-fix-transcript-cycle-${cycle}.jsonl`);
+        }
+      } catch (e) { log('DEBUG', `Review fix stream log save failed (non-critical): ${e.message}`); }
     }
 
-    // Exhausted
-    log('ERROR', `Review gate '${gateId}' fix_and_rereview exhausted (${maxFixCycles} cycles)`);
-    await discord(config, 'CRITICAL', `Review: ${gate.title} BLOCKED`,
-      `Fix-and-rereview exhausted after ${maxFixCycles} cycles. Nova must intervene.`);
+    await killAgent(config, 'forge', fixLabel, sessionResult.hasChanges);
 
-    return {
-      exit: EXIT_NEEDS_NOVA,
-      reason: `Review gate '${gateId}' NO-GO after ${maxFixCycles} fix cycles`,
-      gate: gateId,
-      fix_cycles: maxFixCycles,
-      last_review: reviewResult.mergedResult,
-    };
+    // Track this fix attempt for anti-pattern framing in subsequent attempts
+    fixHistory.push({ attempt: cycle, hasChanges: sessionResult.hasChanges, issues: currentIssues });
+
+    if (!sessionResult.hasChanges) {
+      const reason = sessionResult.completed ? 'no changes (crashed?)' : 'timeout';
+      log('WARN', `Review fix '${fixLabel}' ${reason}`);
+      await discord(config, 'WARN', `Review Fix ${reason}: ${gateId}`,
+        `Fix cycle ${cycle}/${maxFixCycles} produced no usable output.`);
+      continue;
+    }
+
+    await gitCommitAndPush(config, `[pipeline] Review fix: ${gateId} cycle ${cycle}`, { softFail: true });
+
+    await discord(config, 'INFO', `Review Fix: Re-Reviewing with Echo`,
+      `Forge fix cycle ${cycle}/${maxFixCycles} committed. Running Echo review again...`);
+
+    // \u2500\u2500 Cleanup old review files and re-review \u2500\u2500
+    await cleanupReviewFiles(config, gate, reviewers);
+
+    reviewResult = await _runReviewOnce(config, progress, gateId, gate, reviewConfig, cycle + 1);
+
+    if (reviewResult.error) {
+      log('ERROR', `Re-review failed: ${reviewResult.error}`);
+      await discord(config, 'WARN', `Review Fix: Re-Review Error`,
+        `Cycle ${cycle}/${maxFixCycles}. Echo review failed: ${reviewResult.error}`);
+      continue;
+    }
+
+    if (reviewResult.ok) {
+      log('OK', `Review gate '${gateId}' GO after ${cycle} fix cycle(s)`);
+      _runStats.gates_completed.push(gateId);
+      await discord(config, 'OK', `Review: ${gate.title} GO`,
+        `Passed after ${cycle} fix cycle(s)`);
+      return { exit: EXIT_OK, status: STATUS.PASS };
+    }
+
+    log('WARN', `Re-review still NO-GO after fix cycle ${cycle}/${maxFixCycles}`);
+    await discord(config, 'WARN', `Review Fix: Still NO-GO`,
+      `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Echo still found issues.`);
   }
 
-  // Unknown on_nogo strategy
-  log('ERROR', `Unknown on_nogo strategy '${gate.on_nogo}' for gate '${gateId}'`);
-  return { exit: EXIT_ERROR, reason: `Unknown on_nogo: ${gate.on_nogo}` };
+  // Exhausted
+  log('ERROR', `Review gate '${gateId}' fix_and_rereview exhausted (${maxFixCycles} cycles)`);
+  _runStats.gates_failed.push(gateId);
+  await discord(config, 'CRITICAL', `Review: ${gate.title} BLOCKED`,
+    `Fix-and-rereview exhausted after ${maxFixCycles} cycles. Nova must intervene.`);
+
+  return {
+    exit: EXIT_NEEDS_NOVA,
+    reason: `Review gate '${gateId}' NO-GO after ${maxFixCycles} fix cycles`,
+    gate: gateId,
+    fix_cycles: maxFixCycles,
+    last_review: reviewResult.mergedResult,
+  };
+
 }
 
 /**
@@ -5426,6 +6059,71 @@ function findNextStep(config, progress) {
   return { type: 'done' };
 }
 
+// ─── Pipeline Summary & Project Summary ─────────────────────────────────────
+
+/**
+ * Write summary.json at every pipeline exit with run metadata, counters, timing.
+ * Uses the module-level _runStats object accumulated throughout the run.
+ *
+ * @param {object} config - Pipeline config
+ * @param {number} exitCode - Pipeline exit code
+ * @param {string} exitReason - Human-readable reason
+ */
+function writeSummary(config, exitCode, exitReason) {
+  if (!config?._logDir) return;
+  try {
+    const summary = {
+      run_id: RUN_ID,
+      started_at: _runStats.started_at,
+      ended_at: new Date().toISOString(),
+      exit_code: exitCode,
+      exit_reason: exitReason,
+      project: config.project,
+      modules_completed: _runStats.modules_completed,
+      modules_failed: _runStats.modules_failed,
+      modules_blocked: _runStats.modules_blocked,
+      gates_completed: _runStats.gates_completed,
+      gates_failed: _runStats.gates_failed,
+      total_forge_attempts: _runStats.total_forge_attempts,
+      total_buster_attempts: _runStats.total_buster_attempts,
+      total_echo_reviews: _runStats.total_echo_reviews,
+      errors: _runStats.errors,
+      discord_notifications_sent: _runStats.discord_notifications_sent,
+      git_pull_failures: _runStats.git_pull_failures,
+      git_push_failures: _runStats.git_push_failures,
+      config_validation_issues: _runStats.config_validation_issues,
+      duration_seconds: Math.round((Date.now() - new Date(_runStats.started_at).getTime()) / 1000),
+    };
+    fs.writeFileSync(path.join(config._logDir, 'pipeline', 'summary.json'), JSON.stringify(summary, null, 2));
+    log('OK', `Pipeline summary written: exit=${exitCode} (${exitReason})`);
+  } catch (e) {
+    log('WARN', `Failed to write summary.json: ${e.message}`);
+  }
+}
+
+/**
+ * Generate project lifecycle summary at pipeline end.
+ * Calls project-summary.js and saves outputs to pipeline/ log directory.
+ * Wrapped in try/catch — non-critical, the project may be in a broken state.
+ *
+ * @param {object} config - Pipeline config
+ */
+async function generateProjectSummary(config) {
+  if (!config?._logDir) return;
+  try {
+    const summaryPath = config.paths?.project_summary_js || '/app/skills/project-summary.js';
+    const { generateSummary } = await import(summaryPath);
+    const summary = await generateSummary({ project: config.project });
+
+    const logDir = path.join(config._logDir, 'pipeline');
+    if (summary.markdown) fs.writeFileSync(path.join(logDir, 'project-summary.md'), summary.markdown);
+    if (summary.data) fs.writeFileSync(path.join(logDir, 'project-summary.json'), JSON.stringify(summary.data, null, 2));
+    log('OK', 'Project summary saved to logs');
+  } catch (e) {
+    log('WARN', `Project summary generation failed (non-critical): ${e.message}`);
+  }
+}
+
 async function runPipeline(config, progress, opts = {}) {
   log('STEP', `╔═══════════════════════════════════════════════════╗`);
   log('STEP', `║  PIPELINE: ${config.project.toUpperCase().padEnd(38)}║`);
@@ -5467,6 +6165,8 @@ async function runPipeline(config, progress, opts = {}) {
         ]);
     }
 
+    writeSummary(config, result.exit, `single_module:${opts.module}`);
+    await generateProjectSummary(config);
     return result.exit;
   }
 
@@ -5477,6 +6177,14 @@ async function runPipeline(config, progress, opts = {}) {
     log('WARN', `Gate files release failed (non-critical): ${e.message}`);
   }
 
+  // Sync control files (FORGE.md, BUSTER.md, etc.) from architecture → main.
+  // Catches updates made to the architecture branch after the initial blueprint release.
+  try {
+    await syncControlFiles(config, progress);
+  } catch (e) {
+    log('WARN', `Control file sync failed (non-critical): ${e.message}`);
+  }
+
   // Full / resume
   while (true) {
     const next = findNextStep(config, progress);
@@ -5485,6 +6193,8 @@ async function runPipeline(config, progress, opts = {}) {
       log('OK', '🎉 Pipeline complete — all modules and gates PASS');
       await discord(config, 'OK', `Pipeline Complete: ${config.project}`, 'All modules passed!');
       output({ exit: EXIT_OK, status: 'PIPELINE_COMPLETE' });
+      writeSummary(config, EXIT_OK, 'PIPELINE_COMPLETE');
+      await generateProjectSummary(config);
       return EXIT_OK;
     }
 
@@ -5496,6 +6206,8 @@ async function runPipeline(config, progress, opts = {}) {
           { name: 'Action', value: 'Fix manually, then --resume' },
         ]);
       output({ exit: EXIT_BLOCKED, module: next.id, reason: 'BLOCKED' });
+      writeSummary(config, EXIT_BLOCKED, `BLOCKED:${next.id}`);
+      await generateProjectSummary(config);
       return EXIT_BLOCKED;
     }
 
@@ -5525,6 +6237,8 @@ async function runPipeline(config, progress, opts = {}) {
       ]);
 
     output(result);
+    writeSummary(config, result.exit, `${exitLabels[result.exit] || 'UNKNOWN'}:${next.id}`);
+    await generateProjectSummary(config);
     return result.exit;
   }
 }
@@ -5577,7 +6291,7 @@ function dryRun(config, progress) {
 
 export {
   loadConfig, loadProgress, loadStatus, saveStatus,
-  releaseBlueprint, listBlueprints,
+  releaseBlueprint, listBlueprints, syncControlFiles, validateBusterConfig,
   spawnAgent, killAgent, steerAgent, verifyAgentAlive, modelToHarness,
   spawnAcpAgent, killAcpAgent, dispatchRedisTask,
   recallForModule, feedbackMemory, decayRecalledMemories,

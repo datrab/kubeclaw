@@ -49,8 +49,10 @@ const CATEGORY_NAMES = {
 
 // ── Helpers ─────────────────────────────────────────────────────
 
+let _logSink = null;
 function log(msg) {
   console.log(`[SUITE] [PERF] ${msg}`);
+  if (_logSink) _logSink({ suite: 'perf', msg });
 }
 
 /**
@@ -67,6 +69,7 @@ function scoreSeverity(score, threshold) {
 // ── Suite Entry Point ───────────────────────────────────────────
 
 module.exports = async function perfSuite(context) {
+  _logSink = context.logSink || null;
   const startTime = Date.now();
   const serve    = context.config?.serve || {};
   const perfConf = context.config?.perf  || {};
@@ -110,6 +113,14 @@ module.exports = async function perfSuite(context) {
 
     const raw = fs.readFileSync(outputPath, 'utf8');
     report = JSON.parse(raw);
+
+    // Copy Lighthouse report to centralized log directory
+    if (context.testsLogDir) {
+      try {
+        const att = context.attempt || 1;
+        fs.copyFileSync(outputPath, path.join(context.testsLogDir, `lighthouse-report-attempt-${att}.json`));
+      } catch { /* non-critical */ }
+    }
 
   } catch (err) {
     const duration_ms = Date.now() - startTime;

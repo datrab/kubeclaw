@@ -68,6 +68,14 @@ function log(label, msg) {
   console.log(`[SUITE] [${label.toUpperCase()}] ${msg}`);
 }
 
+function logEvent(logPath, event, data = {}) {
+  if (!logPath) return;
+  try {
+    const entry = { ts: new Date().toISOString(), event, ...data };
+    fs.appendFileSync(logPath, JSON.stringify(entry) + '\n');
+  } catch { /* non-critical */ }
+}
+
 // ── Suite Loader ────────────────────────────────────────────────
 
 function loadSuite(name) {
@@ -116,7 +124,7 @@ function sortSuites(suiteNames) {
 
 // ── Write Results ───────────────────────────────────────────────
 
-function writeResults(runnerVerdict, swarmResultsDir) {
+function writeResults(runnerVerdict, swarmResultsDir, attempt) {
   // 1. /sandbox/results/ — for subagent access during task
   if (!fs.existsSync(RESULTS_DIR)) {
     fs.mkdirSync(RESULTS_DIR, { recursive: true });
@@ -134,14 +142,22 @@ function writeResults(runnerVerdict, swarmResultsDir) {
 
   log('results', `Written to ${RESULTS_DIR}/ (${Object.keys(runnerVerdict.suites).length} suites + runner)`);
 
-  // 2. .swarm/<module>/test-results/ — for git persistence (if dir provided)
+  // 2. Centralized log dir (or legacy .swarm/<module>/test-results/)
   if (swarmResultsDir) {
     if (!fs.existsSync(swarmResultsDir)) {
       fs.mkdirSync(swarmResultsDir, { recursive: true });
     }
-    const swarmPath = path.join(swarmResultsDir, 'runner-verdict.json');
-    fs.writeFileSync(swarmPath, JSON.stringify(runnerVerdict, null, 2));
-    log('results', `Written to ${swarmResultsDir}/`);
+    const suffix = attempt ? `-attempt-${attempt}` : '';
+
+    // Overall verdict
+    fs.writeFileSync(path.join(swarmResultsDir, `verdict${suffix}.json`), JSON.stringify(runnerVerdict, null, 2));
+
+    // Per-suite verdicts
+    for (const [name, suite] of Object.entries(runnerVerdict.suites)) {
+      fs.writeFileSync(path.join(swarmResultsDir, `${name}-verdict${suffix}.json`), JSON.stringify(suite, null, 2));
+    }
+
+    log('results', `Written to ${swarmResultsDir}/ (${Object.keys(runnerVerdict.suites).length} per-suite + overall)`);
   }
 }
 
@@ -164,11 +180,24 @@ async function runSuites(opts = {}) {
   const suiteList = opts.suites || DEFAULT_SUITES;
   const config    = opts.config || DEFAULT_CONFIG;
   const swarmDir  = opts.swarmResultsDir || null;
+  const logPath   = opts.logPath || null;
+  const attempt   = opts.attempt || null;
 
   log('runner', `Starting: module=${module_id} project=${project} suites=[${suiteList.join(',')}]`);
 
   // Sort by execution order
   const ordered = sortSuites(suiteList);
+
+  logEvent(logPath, 'runner_start', { module: module_id, suites: ordered });
+
+  // Build logSink for suites — writes to same suites-log JSONL
+  const logSink = logPath ? (entry) => {
+    try { fs.appendFileSync(logPath, JSON.stringify({ ts: new Date().toISOString(), ...entry }) + '\n'); } catch {}
+  } : null;
+
+  // Directories for suite artifacts
+  const testsLogDir = swarmDir || null;
+  const screenshotsDir = testsLogDir ? path.join(testsLogDir, 'screenshots') : null;
 
   // Build context object passed to every suite
   const context = {
@@ -176,6 +205,10 @@ async function runSuites(opts = {}) {
     project,
     config,
     resultsDir: RESULTS_DIR,
+    logSink,
+    screenshotsDir,
+    testsLogDir,
+    attempt,
   };
 
   // Execute suites sequentially
@@ -186,6 +219,7 @@ async function runSuites(opts = {}) {
     const suiteFn = loadSuite(suiteName);
     if (!suiteFn) {
       log(suiteName, `Suite file not found: suites/${suiteName}.js — SKIP`);
+      logEvent(logPath, 'suite_skip', { suite: suiteName, reason: 'file not found' });
       completedResults[suiteName] = createSuiteVerdict(suiteName, STATUS.SKIP, {
         reason: `Suite file not found: suites/${suiteName}.js`,
       });
@@ -196,6 +230,7 @@ async function runSuites(opts = {}) {
     const skipReason = checkDependencies(suiteName, completedResults);
     if (skipReason) {
       log(suiteName, `SKIP — ${skipReason}`);
+      logEvent(logPath, 'suite_skip', { suite: suiteName, reason: skipReason });
       completedResults[suiteName] = createSuiteVerdict(suiteName, STATUS.SKIP, {
         reason: skipReason,
       });
@@ -204,6 +239,7 @@ async function runSuites(opts = {}) {
 
     // 3. Execute suite with error boundary + safety timeout
     log(suiteName, 'Running...');
+    logEvent(logPath, 'suite_start', { suite: suiteName, module: module_id });
     const startTime = Date.now();
     const suiteTimeout = config.suite_timeout_ms || SUITE_TIMEOUT_MS;
 
@@ -223,12 +259,14 @@ async function runSuites(opts = {}) {
       const icon = verdict.status === STATUS.PASS ? '✅' :
                    verdict.status === STATUS.FAIL ? '❌' : '⚠️';
       log(suiteName, `${icon} ${verdict.status} (${verdict.duration_ms}ms)`);
+      logEvent(logPath, 'suite_end', { suite: suiteName, status: verdict.status, duration_ms: verdict.duration_ms, checks_total: verdict.checks_total, checks_passed: verdict.checks_passed });
 
       completedResults[suiteName] = verdict;
 
     } catch (err) {
       const duration_ms = Date.now() - startTime;
       log(suiteName, `💥 ERROR: ${err.message}`);
+      logEvent(logPath, 'suite_error', { suite: suiteName, error: err.message, duration_ms });
 
       completedResults[suiteName] = createSuiteVerdict(suiteName, STATUS.ERROR, {
         critical: suiteName === 'build' || suiteName === 'health',
@@ -243,11 +281,12 @@ async function runSuites(opts = {}) {
   const runnerVerdict = createRunnerVerdict(module_id, project, completedResults);
 
   // Write results to disk
-  writeResults(runnerVerdict, swarmDir);
+  writeResults(runnerVerdict, swarmDir, attempt);
 
   const icon = runnerVerdict.overall_status === STATUS.PASS ? '✅' : '❌';
   log('runner', `${icon} Done: ${runnerVerdict.overall_status} → ${runnerVerdict.recommendation} (${runnerVerdict.duration_ms}ms)`);
   log('runner', `Summary: ${runnerVerdict.summary}`);
+  logEvent(logPath, 'runner_end', { overall_status: runnerVerdict.overall_status, recommendation: runnerVerdict.recommendation, duration_ms: runnerVerdict.duration_ms, summary: runnerVerdict.summary });
 
   return runnerVerdict;
 }

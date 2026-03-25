@@ -42,8 +42,10 @@ const DEFAULTS = {
 
 // ── Helpers ─────────────────────────────────────────────────────
 
+let _logSink = null;
 function log(msg) {
   console.log(`[SUITE] [A11Y] ${msg}`);
+  if (_logSink) _logSink({ suite: 'a11y', msg });
 }
 
 /**
@@ -73,6 +75,7 @@ function extractSelector(node) {
 // ── Suite Entry Point ───────────────────────────────────────────
 
 module.exports = async function a11ySuite(context) {
+  _logSink = context.logSink || null;
   const startTime = Date.now();
   const serve     = context.config?.serve || {};
   const a11yConf  = context.config?.a11y  || {};

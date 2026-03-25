@@ -95,8 +95,21 @@ async function logToDiscord(sender, target, type, iter, payload) {
 
 const BUSTER_STREAM = 'swarm:buster:tasks';
 
+// ─── Log Callback ──────────────────────────────────────────────────────────
+// Set by pipeline.js after import to write Redis operations to redis.jsonl.
+let _logCallback = null;
+
+function emitLog(event) {
+  if (_logCallback) {
+    try { _logCallback({ ts: new Date().toISOString(), component: 'redis', ...event }); }
+    catch { /* non-critical */ }
+  }
+}
+
 const lib = {
   get client() { return getRedis(); },
+
+  setLogCallback(fn) { _logCallback = fn; },
 
   /**
    * Send a task to Buster's Redis stream.
@@ -119,6 +132,7 @@ const lib = {
     );
 
     console.log(`[Redis] Sent ${id} to ${BUSTER_STREAM}`);
+    emitLog({ op: 'dispatch', target: targetAgent, type, stream: BUSTER_STREAM, redis_id: id, payload_keys: Object.keys(payload), payload_size: JSON.stringify(payload).length });
     await logToDiscord(myName, 'buster', type, iteration, payload);
     return { status: 'sent', id, stream: BUSTER_STREAM };
   },
@@ -144,6 +158,7 @@ const lib = {
       })
       .filter(e => e.type === 'completion' && e.module === moduleId)
       .pop();
+    emitLog({ op: 'read_completion', stream: streamKey, module: moduleId, found: !!match, ...(match && { entry: { status: match.status, source: match.source, summary: match.summary?.slice(0, 200), commit_hash: match.commit_hash, redis_id: match._id } }) });
     return match || null;
   },
 
@@ -172,6 +187,7 @@ const lib = {
     if (maxLen > 0) {
       await redis.xtrim(archiveStreamKey, 'MAXLEN', '~', maxLen);
     }
+    emitLog({ op: 'archive', stream: streamKey, archive_stream: archiveStreamKey, module: moduleId, archived });
     return { archived };
   },
 

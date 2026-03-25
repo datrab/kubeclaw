@@ -224,13 +224,16 @@ function checkCors(headers) {
 
 // ── Helpers ─────────────────────────────────────────────────────
 
+let _logSink = null;
 function log(msg) {
   console.log(`[SUITE] [SECURITY] ${msg}`);
+  if (_logSink) _logSink({ suite: 'security', msg });
 }
 
 // ── Suite Entry Point ───────────────────────────────────────────
 
 module.exports = async function securitySuite(context) {
+  _logSink = context.logSink || null;
   const startTime = Date.now();
   const serve     = context.config?.serve    || {};
   const secConf   = context.config?.security || {};

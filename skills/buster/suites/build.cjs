@@ -50,8 +50,10 @@ const REPO_DIR = '/home/node/.openclaw/workspace/git-repo';
 
 // ── Helpers ─────────────────────────────────────────────────────
 
+let _logSink = null;
 function log(msg) {
   console.log(`[SUITE] [BUILD] ${msg}`);
+  if (_logSink) _logSink({ suite: 'build', msg });
 }
 
 /**
@@ -349,6 +351,7 @@ async function buildServer(config) {
 // ── Suite Entry Point ───────────────────────────────────────────
 
 module.exports = async function buildSuite(context) {
+  _logSink = context.logSink || null;
   const startTime = Date.now();
   const serve = context.config?.serve || {};
   const type  = serve.type || DEFAULTS.type;

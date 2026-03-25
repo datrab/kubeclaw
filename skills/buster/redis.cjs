@@ -21,6 +21,7 @@
 
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import path from 'path';
 import { createRequire } from 'module';
 import { execFileSync } from 'child_process';
 
@@ -190,6 +191,24 @@ const lib = {
     const summary = opts.summary || '';
     const taskType = opts.taskType || 'module_test';
     const agentRole = opts.agentRole || process.env.AGENT_ROLE || process.env.AGENT_NAME || 'buster';
+    const logPath = opts.logPath || null;
+    const startTime = Date.now();
+
+    // Structured completion log — accumulated and written at end
+    const completionLog = {
+      ts: null,
+      operation: 'complete',
+      module: moduleId,
+      status,
+      task_type: taskType,
+      project,
+      verify: null,
+      verify_fallback_used: false,
+      completion_entry: null,
+      stream,
+      redis_id: null,
+      duration_ms: null,
+    };
 
     if (!moduleId) throw new Error('complete: --module required');
     if (!status) throw new Error('complete: --status required (PASS, FAIL)');
@@ -214,8 +233,11 @@ const lib = {
       if (verifyResult.logs?.length) {
         verifyResult.logs.forEach(l => console.log(`  ${l}`));
       }
+      completionLog.verify = { status: verifyResult.status, action: verifyResult.action, files_pushed: verifyResult.files_pushed || 0, commit_hash: verifyResult.commit_hash, logs: verifyResult.logs || [] };
     } catch (e) {
       console.error(`[COMPLETE] Verify failed: ${e.message}`);
+      completionLog.verify = { status: 'error', error: e.message };
+      completionLog.verify_fallback_used = true;
 
       // Proceed with commit+push despite verify failure (scope check + push still needed)
       try {
@@ -264,7 +286,7 @@ const lib = {
       }
 
       // Send original status to Redis (not FAIL override)
-      await lib._sendCompletion(stream, {
+      const fallbackResult = await lib._sendCompletion(stream, {
         module: moduleId,
         task_type: taskType,
         status: status.toUpperCase(),
@@ -272,6 +294,11 @@ const lib = {
         reason: `verify-task.js failed: ${e.message}`,
         verify_status: 'error',
       });
+      completionLog.completion_entry = { status: status.toUpperCase(), source: 'agent', reason: `verify-task.js failed` };
+      completionLog.redis_id = fallbackResult.id;
+      completionLog.ts = new Date().toISOString();
+      completionLog.duration_ms = Date.now() - startTime;
+      _writeCompletionLog(logPath, completionLog);
       return { status: 'sent', warning: e.message };
     }
 
@@ -291,6 +318,11 @@ const lib = {
 
     const result = await lib._sendCompletion(stream, completionData);
     console.log(`[COMPLETE] ✅ Completion sent: ${result.id}`);
+    completionLog.completion_entry = { status: completionData.status, source: 'agent', summary: completionData.summary?.slice(0, 200), commit_hash: completionData.commit_hash };
+    completionLog.redis_id = result.id;
+    completionLog.ts = new Date().toISOString();
+    completionLog.duration_ms = Date.now() - startTime;
+    _writeCompletionLog(logPath, completionLog);
     return { status: 'sent', ...result };
   },
 
@@ -313,6 +345,7 @@ const lib = {
     }
 
     const id = await redis.xadd(stream, '*', ...fields);
+    console.log(`[REDIS] XADD ${stream} → ${id} (fields: ${Object.keys(data).join(', ')})`);
 
     // Trim to keep last N entries (audit trail, no unbounded growth)
     try {
@@ -331,6 +364,14 @@ const lib = {
 };
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
+
+function _writeCompletionLog(logPath, data) {
+  if (!logPath) return;
+  try {
+    fs.mkdirSync(path.dirname(logPath), { recursive: true });
+    fs.writeFileSync(logPath, JSON.stringify(data, null, 2));
+  } catch { /* non-critical */ }
+}
 
 function getGitHash() {
   try {
@@ -384,6 +425,7 @@ if (currentPath === entryPath) {
           stream:    getArg('stream') || undefined,
           taskType:  getArg('task-type') || 'module_test',
           agentRole: getArg('role') || undefined,
+          logPath:   getArg('log-path') || undefined,
         });
         console.log(JSON.stringify(res));
 
