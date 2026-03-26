@@ -106,8 +106,8 @@ litellm:
 
 anthropic:
   # Reference an existing K8s secret
- # existingSecret: ""
-#  existingSecretKey: "anthropicApiKey"
+  existingSecret: ""
+  existingSecretKey: "anthropicApiKey"
 
 # =============================================================================
 # STITCH API (Google Stitch MCP — UI design tool for Prism)
