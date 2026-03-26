@@ -13,9 +13,9 @@ agentRole: "buster"
 # Rollback: set processor.enabled: true, remove gateway.command override.
 processor:
   enabled: false
-anthropic:
-  existingSecret: "openclaw-shared-secrets"
-  existingSecretKey: "anthropicApiKey"
+#anthropic:
+#  existingSecret: "openclaw-shared-secrets"
+#  existingSecretKey: "anthropicApiKey"
   
 # Dual-process start: orchestrator + gateway in same container.
 # If either process dies, both are killed → pod restart.
