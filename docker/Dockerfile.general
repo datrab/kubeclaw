@@ -60,8 +60,7 @@ ENV HOME=/home/node
 # 8. ACPX plugin (Agent Communication Protocol)
 RUN mkdir -p /home/node/.openclaw \
     && chown -R root:root /home/node \
-    && openclaw plugins install acpx \
-    && npm install -g acpx
+    && openclaw plugins install acpx
 
 # 9. Build verification
 RUN echo "=== Build Verification ===" && \
