@@ -102,6 +102,22 @@ modules/<module-dir>/
 └── 03c/FORGE.md
 ```
 
+## Critical: Reviewer Dispatch
+
+Reviewer execution is now selected by model family unless explicitly overridden in `progress.json`:
+
+- **Anthropic / Claude reviewer models** → reviewer uses **ACP spawn**
+- **OpenAI / Codex / GPT-5 reviewer models** → reviewer uses **native one-shot subagent spawn**
+
+This means Codex reviews should be configured in `progress.json` as native reviewers, while Opus/Sonnet reviews can continue to use ACP.
+
+If you need an explicit override, use reviewer `dispatch` in `progress.json`:
+
+- `"dispatch": "acp"`
+- `"dispatch": "subagent"`
+
+Native reviewer fallback also requires the running agent policy to allow subagent spawning for the requested reviewer agent id.
+
 ## Suite Selection
 
 | Suite | Backend | Frontend (Scaffold) | Frontend (Pages) |
@@ -129,6 +145,7 @@ The sandbox has **no K8s cluster**. K8s-dependent endpoints return 503. Test deg
 
 - [ ] Architecture branch: `git checkout -b <project>/architecture`
 - [ ] `progress.json` with `project`, `models`, `execution_order`, `modules`, `gates`
+- [ ] Optional: `pipeline_review` configured if you want an end-of-run audit agent writing to `.swarm/logs/pipeline-review/`
 - [ ] Every module: `serve.project_dir` set (`Projects/<project>/src`)
 - [ ] Backend modules: `serve.type: "server"` + `dockerfile` + `build_context` (full path from repo root!) + `image` (project-specific tag) + `start_cmd` (no pip install) + `port` + `health_path`
 - [ ] Backend modules: `health_retries: 10` + `health_timeout: 15000` + `health_base_delay: 5000`
@@ -156,6 +173,22 @@ The sandbox has **no K8s cluster**. K8s-dependent endpoints return 503. Test deg
 node /app/skills/pipeline.js --project <name> --dry-run   # Preview
 node /app/skills/pipeline.js --project <name> --resume     # Run
 ```
+
+## Optional: Pipeline Review
+
+Add `pipeline_review` to `progress.json` to run an end-of-pipeline audit agent after summary generation.
+
+Behavior is model-family based:
+
+- OpenAI / Codex / GPT-5 family → native one-shot subagent
+- Anthropic / Claude family → ACP
+
+Outputs default to:
+
+- `.swarm/logs/pipeline-review/PIPELINE-REVIEW.md`
+- `.swarm/logs/pipeline-review/PIPELINE-REVIEW.json`
+
+The review agent should inspect pipeline logs tactically and recommend improvements to prompts, testing, review strategy, and pipeline design.
 
 ## Common Errors
 

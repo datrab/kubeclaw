@@ -21,9 +21,10 @@
 //   node project-summary.js --project kubecommand --output /tmp/summary.md
 //   node project-summary.js --project kubecommand --json
 
-const fs   = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import fs from 'fs';
+import path from 'path';
+import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
 
 // ── Defaults ────────────────────────────────────────────────────
 
@@ -81,6 +82,116 @@ function resolveProjectPaths(project, repoDir, configPath) {
   return { projectRoot, swarmRoot, progressPath };
 }
 
+function toTitleCaseProject(project) {
+  if (!project) return '';
+  return String(project)
+    .replace(/[-_]+/g, ' ')
+    .replace(/\w/g, (m) => m.toUpperCase())
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function groupDeliveredScope(moduleTitles = []) {
+  const groups = {
+    platform_backend: [],
+    frontend_ui: [],
+    delivery_ops: [],
+    data_security: [],
+    other: [],
+  };
+  for (const title of moduleTitles) {
+    const t = String(title || '');
+    const l = t.toLowerCase();
+    if (/frontend|dashboard|pages|auth/.test(l)) groups.frontend_ui.push(t);
+    else if (/helm|delivery|build pipeline|apply|deploy|git/.test(l)) groups.delivery_ops.push(t);
+    else if (/storage|database|secrets|configmaps|alerts/.test(l)) groups.data_security.push(t);
+    else if (/pods|deployments|nodes|websockets|services|cronjobs|kubernetes|connection/.test(l)) groups.platform_backend.push(t);
+    else groups.other.push(t);
+  }
+  return groups;
+}
+
+function buildCaseStudyBase(project, code, pipeline, tests, unitCensus, apiCensus, reviews, agents) {
+  const deliveredModules = (pipeline.moduleStats || []).filter(m => m.status === 'PASS').map(m => m.title || m.id);
+  const hardestModules = (pipeline.hardestModules || []).slice(0, 5).map(m => ({
+    module: m.title || m.id,
+    fails: m.fails || 0,
+    attempts: m.attempts || 0,
+    status: m.status || null,
+  }));
+  const scope = groupDeliveredScope(deliveredModules);
+  return {
+    project: {
+      id: project,
+      name: toTitleCaseProject(project),
+      generated_at: new Date().toISOString(),
+      status: (pipeline.totalCompleted || 0) === (pipeline.moduleCount || 0) && (pipeline.gateStats || []).every(g => ['GO','PASS'].includes(g.status)) ? 'complete' : 'incomplete',
+    },
+    delivery: {
+      started_at: pipeline.earliestStart || null,
+      completed_at: pipeline.latestComplete || null,
+      wall_clock_hours: pipeline.elapsedHours || null,
+      agent_runtime_hours: pipeline.agentHours || null,
+    },
+    modules: {
+      total: pipeline.moduleCount || 0,
+      passed: pipeline.totalCompleted || 0,
+      blocked: pipeline.totalBlocked || 0,
+      pending: pipeline.totalPending || 0,
+      first_pass_rate_pct: pipeline.firstPassRate || 0,
+      avg_attempts_per_module: pipeline.avgAttempts || 0,
+      total_attempts: pipeline.totalAttempts || 0,
+    },
+    gates: {
+      total: pipeline.gateCount || 0,
+      passed: (pipeline.gateStats || []).filter(g => ['GO','PASS'].includes(g.status)).length,
+      failed: (pipeline.gateStats || []).filter(g => !['GO','PASS'].includes(g.status)).length,
+      reviews_total: (reviews.reviews || []).length,
+      critical_issues_found: reviews.totalCritical || 0,
+      deferred_issues_found: reviews.totalDeferred || 0,
+    },
+    code: {
+      total_lines: code.codeLines || 0,
+      code_files: code.totalFiles || 0,
+      pipeline_config_files: code.swarmFiles || 0,
+      commits: code.commitCount || 0,
+      contributors: code.authors || [],
+      languages: Object.entries(code.byLang || {}).map(([lang, v]) => ({ name: lang, lines: v.code || 0, share_pct: pct(v.code || 0, Math.max(1, (code.totalLines || 0) - (code.byLang?.JSON?.total || 0) - (code.byLang?.Markdown?.total || 0) - (code.byLang?.YAML?.total || 0)) ) })).filter(x => x.lines > 0),
+    },
+    tests: {
+      unit_test_functions_total: (unitCensus.pythonFunctions || 0) + (unitCensus.frontendBlocks || 0) + (apiCensus.totalCases || 0),
+      python_unit_tests: unitCensus.pythonFunctions || 0,
+      frontend_unit_tests: unitCensus.frontendBlocks || 0,
+      api_test_cases: apiCensus.totalCases || 0,
+      suite_runs: tests.totalRuns || 0,
+      checks_executed: tests.totalChecks || 0,
+      findings_total: tests.totalFindings || 0,
+      duration_seconds: tests.totalDurationSec || 0,
+    },
+    agents: {
+      forge_spawns: agents.forge || 0,
+      buster_spawns: agents.buster || 0,
+      echo_spawns: agents.echo || 0,
+      gate_fix_spawns: (agents.gateFix || 0) + (agents.reviewFix || 0),
+      total_spawns: agents.total || 0,
+    },
+    scope: {
+      delivered_modules: deliveredModules,
+      delivered_scope_groups: scope,
+    },
+    highlights: {
+      hardest_modules: hardestModules,
+      top_failure_patterns: (pipeline.failPatterns || []).map(([pattern, count]) => ({ pattern, count })),
+    },
+    quality_outcome: {
+      all_modules_passed: (pipeline.totalCompleted || 0) === (pipeline.moduleCount || 0),
+      all_gates_passed: (pipeline.gateStats || []).every(g => ['GO','PASS'].includes(g.status)),
+      final_status: (pipeline.totalCompleted || 0) === (pipeline.moduleCount || 0) && (pipeline.gateStats || []).every(g => ['GO','PASS'].includes(g.status)) ? 'GO' : 'INCOMPLETE',
+    },
+    timeline: pipeline.moduleStats || [],
+  };
+}
+
 function extToLang(ext) {
   const m = {
     '.py':'Python','.pyi':'Python','.ts':'TypeScript','.tsx':'TypeScript',
@@ -120,7 +231,7 @@ function collectCodeStats(repoDir, projectRoot) {
     tracked = walkFiles(projectRoot, relProject);
   }
 
-  let totalLines = 0, totalFiles = 0;
+  let totalLines = 0, totalFiles = 0, codeLines = 0;
   const byLang = {};
   const binaryExts = new Set(['.png','.jpg','.gif','.ico','.woff','.woff2','.ttf','.eot','.zip','.tar','.gz','.db','.sqlite']);
 
@@ -140,7 +251,7 @@ function collectCodeStats(repoDir, projectRoot) {
       const lang = extToLang(ext);
       if (!byLang[lang]) byLang[lang] = { total: 0, code: 0, swarm: 0 };
       byLang[lang].total += lines;
-      if (isSwarm) byLang[lang].swarm += lines; else byLang[lang].code += lines;
+      if (isSwarm) byLang[lang].swarm += lines; else { byLang[lang].code += lines; codeLines += lines; }
     } catch { /* skip */ }
   }
 
@@ -151,7 +262,7 @@ function collectCodeStats(repoDir, projectRoot) {
   const firstCommit = git(repoDir, `log --reverse --format="%aI" -- "${relProject}" | head -1`);
   const lastCommit = git(repoDir, `log -1 --format="%aI" -- "${relProject}"`);
 
-  return { totalLines, totalFiles, codeFiles, swarmFiles, byLang, commitCount, authors,
+  return { totalLines, codeLines, totalFiles, codeFiles, swarmFiles, byLang, commitCount, authors,
     firstCommit: firstCommit || null, lastCommit: lastCommit || null };
 }
 
@@ -453,171 +564,156 @@ function collectAgentInvocations(swarmRoot) {
 // ═══════════════════════════════════════════════════════════════
 
 function buildMarkdown(project, code, pipeline, tests, unitCensus, apiCensus, reviews, agents) {
+  const cs = buildCaseStudyBase(project, code, pipeline, tests, unitCensus, apiCensus, reviews, agents);
   const L = [];
-
   L.push(`# Project Summary: ${project}`);
-  L.push(`Generated: ${new Date().toISOString()}\n`);
-
-  // ── Overview
-  L.push('## Overview\n');
+  L.push(`Generated: ${new Date().toISOString()}`);
+  L.push('');
+  L.push('## Executive Summary');
+  L.push('');
+  L.push(`- **Final Status:** ${cs.quality_outcome.final_status}`);
+  L.push(`- **Delivery Outcome:** ${cs.modules.passed}/${cs.modules.total} modules passed, ${cs.gates.passed}/${cs.gates.total} gates passed`);
+  L.push(`- **Wall Clock Time:** ${pipeline.elapsedHours || '—'}h`);
+  L.push(`- **Agent Runtime:** ${pipeline.agentHours ? pipeline.agentHours + 'h' : '—'}`);
+  L.push(`- **Test Surface:** ${cs.tests.unit_test_functions_total} total tests/checkable cases (${cs.tests.python_unit_tests} Python, ${cs.tests.frontend_unit_tests} frontend, ${cs.tests.api_test_cases} API)`);
+  L.push(`- **Review Outcome:** ${reviews.totalCritical || 0} critical and ${reviews.totalDeferred || 0} deferred issues identified across ${(reviews.reviews || []).length} review cycle(s)`);
+  L.push('');
+  L.push('## Scope Delivered');
+  L.push('');
+  const groups = cs.scope.delivered_scope_groups || {};
+  const sectionMap = [
+    ['Platform / Backend', groups.platform_backend || []],
+    ['Frontend / UI', groups.frontend_ui || []],
+    ['Delivery / Ops', groups.delivery_ops || []],
+    ['Data / Security', groups.data_security || []],
+    ['Other', groups.other || []],
+  ];
+  for (const [title, items] of sectionMap) {
+    if (!items.length) continue;
+    L.push(`### ${title}`);
+    for (const item of items) L.push(`- ${item}`);
+    L.push('');
+  }
+  L.push('## Delivery Metrics');
+  L.push('');
   L.push('| Metric | Value |');
   L.push('|---|---|');
   L.push(`| Modules | ${pipeline.totalCompleted} completed, ${pipeline.totalBlocked} blocked, ${pipeline.totalPending} pending (of ${pipeline.moduleCount}) |`);
-  L.push(`| Gates | ${pipeline.gateCount} (${pipeline.gateStats.filter(g => g.status === 'GO' || g.status === 'PASS').length} passed) |`);
+  L.push(`| Gates | ${pipeline.gateCount} (${(pipeline.gateStats || []).filter(g => ['GO','PASS'].includes(g.status)).length} passed) |`);
   L.push(`| Total Pipeline Attempts | ${pipeline.totalAttempts} |`);
-  L.push(`| First-Pass Rate | ${pipeline.firstPassRate}% (${pipeline.passedFirstTry}/${pipeline.totalCompleted}) |`);
+  L.push(`| First-Pass Rate | ${pipeline.firstPassRate}% (${pipeline.passedFirstTry}/${pipeline.moduleCount}) |`);
   L.push(`| Avg Attempts per Module | ${pipeline.avgAttempts} |`);
-  if (pipeline.elapsedHours) L.push(`| Wall Clock Time | ${pipeline.elapsedHours}h |`);
-  if (pipeline.totalDuration > 0) L.push(`| Total Agent Time | ${formatDuration(pipeline.totalDuration)} |`);
-  if (pipeline.earliestStart) L.push(`| Started | ${pipeline.earliestStart.split('T')[0]} |`);
-  if (pipeline.latestComplete) L.push(`| Completed | ${pipeline.latestComplete.split('T')[0]} |`);
+  L.push(`| Wall Clock Time | ${pipeline.elapsedHours}h |`);
+  L.push(`| Total Agent Time | ${formatDuration((pipeline.agentHours || 0) * 3600)} |`);
+  L.push(`| Started | ${pipeline.earliestStart?.slice(0, 10) || '—'} |`);
+  L.push(`| Completed | ${pipeline.latestComplete?.slice(0, 10) || '—'} |`);
   L.push('');
-
-  // ── Code
-  L.push('## Code\n');
+  L.push('## Code');
+  L.push('');
   L.push('| Metric | Value |');
   L.push('|---|---|');
-  L.push(`| Total Lines | ${formatNum(code.totalLines)} |`);
-  L.push(`| Files | ${code.codeFiles} code + ${code.swarmFiles} pipeline config |`);
-  L.push(`| Commits | ${code.commitCount} |`);
-  L.push(`| Contributors | ${code.authors.join(', ') || '—'} |`);
+  L.push(`| Total Code Lines | ${formatNum(code.codeLines || code.totalLines)} |`);
+  L.push(`| Code Files | ${code.codeFiles} |`);
+  L.push(`| Pipeline Artifact Files | ${code.swarmFiles || 0} |`);
+  L.push(`| Commits | ${code.commitCount || 0} |`);
+  L.push(`| Contributors | ${(code.authors || []).join(', ') || '—'} |`);
   L.push('');
-
-  const langs = Object.entries(code.byLang)
-    .filter(([l]) => !['JSON','Markdown','YAML','Other'].includes(l))
-    .map(([l, v]) => [l, v.code])
-    .filter(([, v]) => v > 0)
-    .sort((a, b) => b[1] - a[1]);
-  if (langs.length > 0) {
-    const codeLoc = langs.reduce((s, [, v]) => s + v, 0);
-    L.push('### Lines by Language (code only)\n');
-    L.push('| Language | Lines | Share |');
-    L.push('|---|---|---|');
-    for (const [lang, loc] of langs) L.push(`| ${lang} | ${formatNum(loc)} | ${pct(loc, codeLoc)}% |`);
-    L.push('');
+  L.push('### Lines by Language (code only)');
+  L.push('');
+  L.push('| Language | Lines | Share |');
+  L.push('|---|---|---|');
+  for (const [lang, stats] of Object.entries(code.byLang || {})) {
+    if (!stats.code) continue;
+    const share = pct(stats.code, Math.max(1, code.totalLines - (code.byLang?.JSON?.total || 0) - (code.byLang?.Markdown?.total || 0) - (code.byLang?.YAML?.total || 0)));
+    L.push(`| ${lang} | ${formatNum(stats.code)} | ${share}% |`);
   }
-
-  // ── Tests
-  L.push('## Tests\n');
+  L.push('');
+  L.push('## Quality Outcome');
+  L.push('');
+  L.push('| Metric | Value |');
+  L.push('|---|---|');
+  L.push(`| All Modules Passed | ${cs.quality_outcome.all_modules_passed ? 'Yes' : 'No'} |`);
+  L.push(`| All Gates Passed | ${cs.quality_outcome.all_gates_passed ? 'Yes' : 'No'} |`);
+  L.push(`| Reviews Run | ${(reviews.reviews || []).length} |`);
+  L.push(`| Critical Issues Found | ${reviews.totalCritical || 0} |`);
+  L.push(`| Deferred Issues Found | ${reviews.totalDeferred || 0} |`);
+  L.push(`| Suite Runs | ${tests.totalRuns || 0} |`);
+  L.push(`| Total Checks Executed | ${tests.totalChecks || 0} |`);
+  L.push(`| Total Findings | ${tests.totalFindings || 0} |`);
+  L.push('');
+  L.push('## Tests');
+  L.push('');
   L.push('| Metric | Value |');
   L.push('|---|---|');
   L.push(`| Unit Tests (Python/pytest) | ${unitCensus.python.functions} functions in ${unitCensus.python.files} files |`);
   L.push(`| Unit Tests (Frontend/Vitest) | ${unitCensus.frontend.functions} test blocks in ${unitCensus.frontend.files} files |`);
   L.push(`| API Test Specs | ${apiCensus.totalCases} cases in ${apiCensus.specs.length} specs |`);
-  L.push(`| Total Test Functions | ${unitCensus.totalFunctions + apiCensus.totalCases} |`);
-  L.push(`| Suite Runs (Buster pre-checks) | ${tests.totalRuns} |`);
-  L.push(`| Total Checks Executed | ${tests.totalChecks} |`);
-  L.push(`| Total Findings | ${tests.totalFindings} |`);
-  L.push(`| Test Duration (cumulative) | ${formatDuration(tests.totalDuration / 1000)} |`);
+  L.push(`| Total Test Functions | ${(unitCensus.python.functions || 0) + (unitCensus.frontend.functions || 0) + (apiCensus.totalCases || 0)} |`);
+  L.push(`| Suite Runs (Buster pre-checks) | ${tests.totalRuns || 0} |`);
+  L.push(`| Total Checks Executed | ${tests.totalChecks || 0} |`);
+  L.push(`| Total Findings | ${tests.totalFindings || 0} |`);
+  L.push(`| Test Duration (cumulative) | ${formatDuration((tests.totalDuration || 0) / 1000)} |`);
   L.push('');
-
-  // Suite breakdown
-  const suiteOrder = ['build','health','security','api','unit','a11y','perf','bundle','visual-reg','e2e'];
-  const sortedSuites = Object.entries(tests.suiteAgg).sort((a, b) => {
-    const ia = suiteOrder.indexOf(a[0]), ib = suiteOrder.indexOf(b[0]);
-    return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
-  });
-  if (sortedSuites.length > 0) {
-    L.push('### Suite Breakdown\n');
+  if (Object.keys(tests.suiteAgg || {}).length) {
+    L.push('### Suite Breakdown');
+    L.push('');
     L.push('| Suite | Runs | Pass | Fail | Skip | Checks | Findings | Avg Duration |');
     L.push('|---|---|---|---|---|---|---|---|');
-    for (const [name, s] of sortedSuites) {
-      const avgDur = s.runs > 0 ? Math.round(s.durationMs / s.runs) : 0;
-      L.push(`| ${name} | ${s.runs} | ${s.pass} | ${s.fail} | ${s.skip + s.error} | ${s.checks} | ${s.findings} | ${avgDur}ms |`);
+    for (const [suite, s] of Object.entries(tests.suiteAgg || {})) {
+      const avg = s.runs ? Math.round((s.durationMs || 0) / s.runs) : 0;
+      L.push(`| ${suite} | ${s.runs} | ${s.pass} | ${s.fail} | ${s.skip} | ${s.checks} | ${s.findings} | ${avg}ms |`);
     }
     L.push('');
   }
-
-  // ── Agent Invocations
-  L.push('## Agent Invocations\n');
+  L.push('## Agent Invocations');
+  L.push('');
   L.push('| Agent | Spawns |');
   L.push('|---|---|');
-  L.push(`| Forge (code writer) | ${agents.forge} |`);
-  L.push(`| Buster (tester) | ${agents.buster} |`);
-  L.push(`| Echo (reviewer) | ${agents.echo} |`);
-  L.push(`| Gate/Review Fixes | ${agents.gateFix + agents.reviewFix} |`);
-  L.push(`| **Total** | **${agents.total}** |`);
+  L.push(`| Forge (code writer) | ${agents.forge || 0} |`);
+  L.push(`| Buster (tester) | ${agents.buster || 0} |`);
+  L.push(`| Echo (reviewer) | ${agents.echo || 0} |`);
+  L.push(`| Gate/Review Fixes | ${(agents.gateFix || 0) + (agents.reviewFix || 0)} |`);
+  L.push(`| **Total** | **${agents.total || 0}** |`);
   L.push('');
-
-  // ── Tokens
-  if (pipeline.tokens.total > 0) {
-    L.push('## Token Usage\n');
-    L.push('| Agent | Input | Output | Total |');
-    L.push('|---|---|---|---|');
-    L.push(`| Forge | ${formatNum(pipeline.tokens.forgeIn)} | ${formatNum(pipeline.tokens.forgeOut)} | ${formatNum(pipeline.tokens.forgeIn + pipeline.tokens.forgeOut)} |`);
-    L.push(`| Buster | ${formatNum(pipeline.tokens.busterIn)} | ${formatNum(pipeline.tokens.busterOut)} | ${formatNum(pipeline.tokens.busterIn + pipeline.tokens.busterOut)} |`);
-    L.push(`| **Total** | | | **${formatNum(pipeline.tokens.total)}** |`);
-    L.push('');
-  }
-
-  // ── Quality Gates
-  if (pipeline.gateStats.length > 0 || reviews.reviews.length > 0) {
-    L.push('## Quality Gates\n');
-    L.push('| Gate | Type | Status |');
-    L.push('|---|---|---|');
-    for (const g of pipeline.gateStats) {
-      const icon = ['GO','PASS'].includes(g.status) ? '✅' : ['NO-GO','FAIL'].includes(g.status) ? '❌' : '⏳';
-      L.push(`| ${g.title} | ${g.type} | ${icon} ${g.status} |`);
-    }
-    L.push('');
-
-    if (reviews.totalCritical > 0 || reviews.totalDeferred > 0) {
-      L.push('### Echo Review Findings\n');
-      L.push(`| Metric | Count |`);
-      L.push(`|---|---|`);
-      L.push(`| Critical Issues Found | ${reviews.totalCritical} |`);
-      L.push(`| Deferred Issues | ${reviews.totalDeferred} |`);
-      L.push(`| Total Reviews | ${reviews.reviews.filter(r => r.type === 'detail').length} |`);
-      L.push('');
-    }
-  }
-
-  // ── Hardest Modules
-  if (pipeline.hardestModules.length > 0) {
-    L.push('## Hardest Modules\n');
+  L.push('## Complexity Highlights');
+  L.push('');
+  if ((pipeline.hardestModules || []).length) {
     L.push('| Module | Fails | Attempts | Status |');
     L.push('|---|---|---|---|');
     for (const m of pipeline.hardestModules) {
-      const icon = m.status === 'PASS' ? '✅' : m.status === 'BLOCKED' ? '🚫' : '⏳';
-      L.push(`| ${m.id}. ${m.title} | ${m.failCount} | ${m.attempts} | ${icon} |`);
+      L.push(`| ${m.title || m.id} | ${m.fails || 0} | ${m.attempts || 0} | ${m.status || '—'} |`);
     }
     L.push('');
   }
-
-  // ── Failure Patterns
-  if (pipeline.failPatterns.length > 0) {
-    L.push('## Top Failure Patterns\n');
+  if ((pipeline.failPatterns || []).length) {
+    L.push('### Top Failure Patterns');
+    L.push('');
     L.push('| Pattern | Count |');
     L.push('|---|---|');
-    for (const [p, c] of pipeline.failPatterns) L.push(`| ${p.slice(0, 120)} | ${c} |`);
+    for (const [pattern, count] of pipeline.failPatterns) {
+      L.push(`| ${pattern} | ${count} |`);
+    }
     L.push('');
   }
-
-  // ── Module Detail
-  L.push('## Module Detail\n');
+  L.push('## Module Detail');
+  L.push('');
   L.push('| # | Module | Status | Fails | Duration | Suites |');
   L.push('|---|---|---|---|---|---|');
-  for (const m of pipeline.moduleStats) {
-    const icon = m.status === 'PASS' ? '✅' : m.status === 'BLOCKED' ? '🚫' : '⏳';
-    const dur = formatDuration(m.cost.total_duration_seconds || 0);
-    const tr = tests.perModule.find(t => t.id === m.id);
-    const suites = tr ? tr.suites.join(', ') : '—';
-    L.push(`| ${m.id} | ${m.title} | ${icon} | ${m.failCount} | ${dur} | ${suites} |`);
+  for (const m of (pipeline.moduleStats || [])) {
+    const suites = (tests.perModule || []).find(x => x.id === m.id)?.suites || [];
+    const dur = m.cost?.total_duration_seconds ? formatDuration(m.cost.total_duration_seconds) : '—';
+    L.push(`| ${m.id || '—'} | ${m.title || '—'} | ${m.status || '—'} | ${m.failCount || 0} | ${dur} | ${suites.join(', ') || '—'} |`);
   }
   L.push('');
-
-  // ── Timeline
-  L.push('## Timeline\n');
+  L.push('## Timeline');
+  L.push('');
   L.push('| Module | Started | Completed | Duration |');
   L.push('|---|---|---|---|');
-  for (const m of pipeline.moduleStats.filter(m => m.startedAt).sort((a, b) => new Date(a.startedAt) - new Date(b.startedAt))) {
-    const s = m.startedAt ? m.startedAt.slice(5, 16).replace('T', ' ') : '—';
-    const c = m.completedAt ? m.completedAt.slice(5, 16).replace('T', ' ') : '—';
-    const dur = formatDuration(m.cost.total_duration_seconds || 0);
-    L.push(`| ${m.id}. ${m.title} | ${s} | ${c} | ${dur} |`);
+  for (const m of (pipeline.moduleStats || [])) {
+    const dur = m.cost?.total_duration_seconds ? formatDuration(m.cost.total_duration_seconds) : '—';
+    L.push(`| ${m.id}. ${m.title} | ${(m.startedAt || '—').replace('T', ' ').slice(0, 16)} | ${(m.completedAt || '—').replace('T', ' ').slice(0, 16)} | ${dur} |`);
   }
   L.push('');
-
   L.push('---');
   L.push(`*Generated by project-summary.js — KubeClaw Pipeline*`);
   return L.join('\n');
@@ -626,42 +722,72 @@ function buildMarkdown(project, code, pipeline, tests, unitCensus, apiCensus, re
 // ── Discord Embeds ──────────────────────────────────────────────
 
 function buildDiscordEmbeds(project, code, pipeline, tests, unitCensus, apiCensus, reviews, agents) {
-  const langs = Object.entries(code.byLang)
+  const langs = Object.entries(code.byLang || {})
     .filter(([l]) => !['JSON','Markdown','YAML','Other'].includes(l))
-    .map(([l, v]) => [l, v.code]).filter(([,v]) => v > 0)
+    .map(([l, v]) => [l, v.code])
+    .filter(([,v]) => v > 0)
     .sort((a, b) => b[1] - a[1]).slice(0, 5)
     .map(([l, n]) => `${l}: ${formatNum(n)}`).join(', ') || '—';
 
-  const hardest = pipeline.hardestModules.slice(0, 3)
+  const hardest = (pipeline.hardestModules || []).slice(0, 3)
     .map(m => `${m.id}. ${m.title} (${m.failCount} fails)`)
     .join('\n') || 'All passed first try! 🎉';
 
-  const gateStr = pipeline.gateStats
+  const gateStr = (pipeline.gateStats || [])
     .map(g => `${['GO','PASS'].includes(g.status)?'✅':['NO-GO','FAIL'].includes(g.status)?'❌':'⏳'} ${g.title}`)
     .join('\n') || '—';
 
-  const totalTests = unitCensus.totalFunctions + apiCensus.totalCases;
+  const totalTests = (unitCensus.totalFunctions || 0) + (apiCensus.totalCases || 0);
+  const passedGates = (pipeline.gateStats || []).filter(g => ['GO','PASS'].includes(g.status)).length;
+  const scope = groupDeliveredScope((pipeline.moduleStats || []).filter(m => m.status === 'PASS').map(m => m.title || m.id));
+  const scopeSummary = [
+    ...(scope.platform_backend || []).slice(0, 2),
+    ...(scope.frontend_ui || []).slice(0, 2),
+    ...(scope.delivery_ops || []).slice(0, 2),
+  ].slice(0, 5).join('\n') || 'See project summary markdown';
+  const quality = [
+    `Modules: ${pipeline.totalCompleted}/${pipeline.moduleCount} passed`,
+    `Gates: ${passedGates}/${pipeline.gateCount} passed`,
+    `Reviews: ${reviews.totalCritical || 0} critical, ${reviews.totalDeferred || 0} deferred`,
+    `Tests: ${totalTests} total surface`,
+  ].join('\n');
 
-  return [{
+  const operational = {
     title: `📊 Project Summary: ${project}`,
     color: pipeline.totalBlocked > 0 ? 15548997 : pipeline.totalPending > 0 ? 16776960 : 5763719,
     fields: [
       { name: '📦 Modules', value: `${pipeline.totalCompleted}/${pipeline.moduleCount}`, inline: true },
       { name: '🎯 First-Pass', value: `${pipeline.firstPassRate}%`, inline: true },
       { name: '🔄 Attempts', value: `${pipeline.totalAttempts}`, inline: true },
-      { name: '📝 Lines of Code', value: formatNum(code.totalLines), inline: true },
-      { name: '📁 Files', value: `${code.codeFiles}`, inline: true },
-      { name: '🔀 Commits', value: `${code.commitCount}`, inline: true },
+      { name: '📝 Code Lines', value: formatNum(code.codeLines || code.totalLines), inline: true },
+      { name: '📁 Code Files', value: `${code.codeFiles}`, inline: true },
+      { name: '🔀 Commits', value: `${code.commitCount || 0}`, inline: true },
       { name: '🧪 Tests Written', value: `${totalTests} (${unitCensus.python.functions} py + ${unitCensus.frontend.functions} tsx + ${apiCensus.totalCases} api)`, inline: false },
       { name: '🤖 Agent Spawns', value: `${agents.total} (${agents.forge} Forge, ${agents.buster} Buster, ${agents.echo} Echo)`, inline: false },
       { name: '🔤 Languages', value: langs, inline: false },
       { name: '🏔️ Hardest', value: hardest, inline: false },
       { name: '🚦 Gates', value: gateStr, inline: false },
       ...(pipeline.elapsedHours ? [{ name: '⏱️ Duration', value: `${pipeline.elapsedHours}h wall clock`, inline: true }] : []),
-      ...(reviews.totalCritical > 0 ? [{ name: '🔍 Review Issues', value: `${reviews.totalCritical} critical, ${reviews.totalDeferred} deferred`, inline: true }] : []),
+      ...((reviews.totalCritical || 0) > 0 ? [{ name: '🔍 Review Issues', value: `${reviews.totalCritical} critical, ${reviews.totalDeferred} deferred`, inline: true }] : []),
     ],
     footer: { text: `KubeClaw • ${new Date().toISOString().split('T')[0]}` },
-  }];
+  };
+
+  const executive = {
+    title: `🧾 Case Study Summary: ${project}`,
+    color: (pipeline.totalCompleted === pipeline.moduleCount && passedGates === pipeline.gateCount) ? 5763719 : 16776960,
+    fields: [
+      { name: '✅ Final Status', value: (pipeline.totalCompleted === pipeline.moduleCount && passedGates === pipeline.gateCount) ? 'GO / COMPLETE' : 'INCOMPLETE', inline: true },
+      { name: '⏱️ Delivery', value: `${pipeline.elapsedHours || '—'}h wall clock`, inline: true },
+      { name: '🔄 Attempts', value: `${pipeline.totalAttempts}`, inline: true },
+      { name: '📦 Scope', value: scopeSummary, inline: false },
+      { name: '🧪 Quality Outcome', value: quality, inline: false },
+      { name: '🤖 Agent Spawns', value: `${agents.total} total (${agents.forge} Forge, ${agents.buster} Buster, ${agents.echo} Echo)`, inline: false },
+    ],
+    footer: { text: `KubeClaw • ${new Date().toISOString().split('T')[0]}` },
+  };
+
+  return [operational, executive];
 }
 
 async function postToDiscord(embeds) {
@@ -716,10 +842,11 @@ async function generateSummary(opts = {}) {
 
   const markdown = buildMarkdown(project, code, pipeline, tests, unitCensus, apiCensus, reviews, agents);
   const embeds = buildDiscordEmbeds(project, code, pipeline, tests, unitCensus, apiCensus, reviews, agents);
+  const caseStudyBase = buildCaseStudyBase(project, code, pipeline, tests, unitCensus, apiCensus, reviews, agents);
 
   log('Summary complete.');
   return {
-    project, markdown, embeds,
+    project, markdown, embeds, caseStudyBase,
     data: { code, unitCensus, apiCensus, pipeline, tests, reviews, agents },
   };
 }
@@ -728,7 +855,8 @@ async function generateSummary(opts = {}) {
 // CLI
 // ═══════════════════════════════════════════════════════════════
 
-if (require.main === module) {
+const __filename = fileURLToPath(import.meta.url);
+if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
   const args = process.argv.slice(2);
   const getArg = (n, fb) => { const i = args.indexOf(`--${n}`); return i === -1 || i + 1 >= args.length ? fb : args[i + 1]; };
   const getFlag = (n) => args.includes(`--${n}`);
@@ -753,4 +881,4 @@ if (require.main === module) {
     .catch((err) => { console.error(`Error: ${err.message}`); process.exit(1); });
 }
 
-module.exports = { generateSummary };
+export { generateSummary, postToDiscord };

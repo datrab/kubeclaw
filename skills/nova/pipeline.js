@@ -381,8 +381,7 @@ function readAcpTranscriptState(streamLogPath, prev = {}) {
   if (!streamLogPath || !fs.existsSync(streamLogPath)) return state;
 
   try {
-    const lines = fs.readFileSync(streamLogPath, 'utf8').split('
-').filter(Boolean);
+    const lines = fs.readFileSync(streamLogPath, 'utf8').split('\n').filter(Boolean);
     const newLines = lines.slice(state.offset);
     state.offset = lines.length;
 
@@ -6384,17 +6383,152 @@ function writeSummary(config, exitCode, exitReason) {
  *
  * @param {object} config - Pipeline config
  */
+function pipelineReviewOutputPath(config, pr = {}) {
+  return path.join(swarmRoot(config), pr.output_file || '.swarm/logs/pipeline-review/PIPELINE-REVIEW.md');
+}
+
+function pipelineReviewJsonPath(config, pr = {}) {
+  return path.join(swarmRoot(config), pr.json_output_file || '.swarm/logs/pipeline-review/PIPELINE-REVIEW.json');
+}
+
+function pipelineReviewInstructionsPath(config, pr = {}) {
+  return path.join(swarmRoot(config), pr.instructions_file || '.swarm/pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md');
+}
+
+function pipelineReviewDispatchMode(model, pr = {}) {
+  const m = String(model || '').toLowerCase();
+  if (m.startsWith('openai/') || m.startsWith('openai-codex/') || m.includes('gpt-5') || m.includes('codex')) return 'subagent';
+  return 'acp';
+}
+
+function pipelineReviewAgentId(model, pr = {}) {
+  if (pr.agent_id) return pr.agent_id;
+  const dispatch = pipelineReviewDispatchMode(model, pr);
+  if (dispatch === 'subagent') return `${String(model || 'gpt5').split('/').pop().replace(/[^a-zA-Z0-9._-]+/g, '-')}_pipeline-review`;
+  return modelToHarness(model) || 'claude';
+}
+
+function ensurePipelineReviewInstructions(config, pr = {}) {
+  const out = pipelineReviewOutputPath(config, pr);
+  const jsonOut = pipelineReviewJsonPath(config, pr);
+  const pathOut = pipelineReviewInstructionsPath(config, pr);
+  fs.mkdirSync(path.dirname(pathOut), { recursive: true });
+  if (fs.existsSync(pathOut)) return pathOut;
+  const content = `You are a pipeline review agent.
+
+Your job is to audit this completed pipeline run and identify improvements to the autonomous software delivery system itself.
+
+Focus on:
+1. where the pipeline can be improved
+2. unclear, contradictory, or incomplete prompts
+3. missing or weak instructions for Nova / Forge / Buster / Echo
+4. incomplete testing or review coverage
+5. failures that should become deterministic checks
+6. areas where retries indicate systemic weakness
+
+Work tactically:
+- start with .swarm/logs/pipeline/project-summary.json
+- then .swarm/logs/pipeline/case-study.base.json
+- then .swarm/logs/pipeline/pipeline.jsonl and summary.json
+- inspect retry-heavy modules, gate findings, fix prompts, and review artifacts
+- do not read every file blindly
+
+Write both outputs:
+- Markdown: ${relPath(config, out)}
+- JSON: ${relPath(config, jsonOut)}
+
+For each recommended change include:
+- severity
+- category
+- target
+- issue
+- evidence
+- recommended_change
+- expected_impact
+`;
+  fs.writeFileSync(pathOut, content);
+  return pathOut;
+}
+
+async function generatePipelineReview(config) {
+  const pr = config.pipeline_review;
+  if (!pr?.enabled) return;
+  try {
+    const model = pr.model;
+    if (!model) throw new Error('pipeline_review.model missing');
+    const dispatch = pipelineReviewDispatchMode(model, pr);
+    const agentId = pipelineReviewAgentId(model, pr);
+    const instructionsPath = ensurePipelineReviewInstructions(config, pr);
+    const instructions = fs.readFileSync(instructionsPath, 'utf8');
+    const label = `pipeline-review-${Date.now()}`;
+    const cwd = config.repo_root;
+    const spawnArgs = {
+      task: instructions,
+      agentId,
+      label,
+      model,
+      cwd,
+      thread: false,
+      mode: 'run',
+      cleanup: 'keep',
+    };
+    if (dispatch === 'acp') {
+      spawnArgs.runtime = 'acp';
+      spawnArgs.streamTo = 'parent';
+    }
+    log('STEP', `Spawning pipeline review (${dispatch}): ${agentId} / ${model}`);
+    const raw = await gatewayInvoke('sessions_spawn', spawnArgs, 30000);
+    const result = raw?.result?.details || raw;
+    if (result.status !== 'accepted') throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
+    const sessionKey = result.childSessionKey;
+    const trackingKey = `pipeline-review-${agentId}`;
+    trackAgent(config, trackingKey, sessionKey, agentId, label, result.streamLogPath || null);
+    const outputFilePath = pipelineReviewOutputPath(config, pr);
+    const timeoutMin = pr.timeout_minutes || 45;
+    const pollRes = await pollForFile(config, outputFilePath, timeoutMin, 'Pipeline Review', trackingKey);
+    if (dispatch === 'subagent') {
+      const src = childSessionTranscriptPath(config, sessionKey);
+      if (src && fs.existsSync(src)) {
+        const archiveDir = path.join(swarmRoot(config), '.swarm', 'logs', 'pipeline-review');
+        fs.mkdirSync(archiveDir, { recursive: true });
+        const ts = new Date().toISOString().replace(/[:.]/g, '-');
+        fs.copyFileSync(src, path.join(archiveDir, `pipeline-review-transcript-${ts}.jsonl`));
+      }
+    }
+    try { await gatewayInvoke('sessions_send', { sessionKey, message: '/stop' }, 15000); } catch {}
+    if (dispatch === 'acp') await acpxCleanup(agentId, label);
+    untrackAgent(trackingKey);
+    if (!pollRes.ok) throw new Error(`Pipeline review failed: ${pollRes.reason}`);
+    log('OK', 'Pipeline review completed');
+  } catch (e) {
+    log('WARN', `Pipeline review failed (non-critical): ${e.message}`);
+  }
+}
+
 async function generateProjectSummary(config) {
   if (!config?._logDir) return;
   try {
     const summaryPath = config.paths?.project_summary_js || '/app/skills/project-summary.js';
-    const { generateSummary } = await import(summaryPath);
+    const { generateSummary, postToDiscord } = await import(summaryPath);
     const summary = await generateSummary({ project: config.project });
 
     const logDir = path.join(config._logDir, 'pipeline');
     if (summary.markdown) fs.writeFileSync(path.join(logDir, 'project-summary.md'), summary.markdown);
     if (summary.data) fs.writeFileSync(path.join(logDir, 'project-summary.json'), JSON.stringify(summary.data, null, 2));
+    if (summary.caseStudyBase) fs.writeFileSync(path.join(logDir, 'case-study.base.json'), JSON.stringify(summary.caseStudyBase, null, 2));
     log('OK', 'Project summary saved to logs');
+
+    if (config.discord_webhook_url && summary.embeds?.length) {
+      const oldWebhook = process.env.DISCORD_WEBHOOK;
+      process.env.DISCORD_WEBHOOK = config.discord_webhook_url;
+      try {
+        await postToDiscord(summary.embeds);
+        log('OK', 'Project summary posted to Discord');
+      } finally {
+        if (oldWebhook === undefined) delete process.env.DISCORD_WEBHOOK;
+        else process.env.DISCORD_WEBHOOK = oldWebhook;
+      }
+    }
   } catch (e) {
     log('WARN', `Project summary generation failed (non-critical): ${e.message}`);
   }
@@ -6471,6 +6605,7 @@ async function runPipeline(config, progress, opts = {}) {
       output({ exit: EXIT_OK, status: 'PIPELINE_COMPLETE' });
       writeSummary(config, EXIT_OK, 'PIPELINE_COMPLETE');
       await generateProjectSummary(config);
+      await generatePipelineReview(config);
       return EXIT_OK;
     }
 

@@ -7,6 +7,14 @@
   "project": "<project>",
   "version": "1.0.0",
   "models": { "forge": "claude-sonnet-4-6", "buster": "claude-sonnet-4-6", "echo": "claude-opus-4-6" },
+  "pipeline_review": {
+    "enabled": true,
+    "model": "openai-codex/gpt-5.4",
+    "agent_id": "gpt5_pipeline-review",
+    "instructions_file": ".swarm/pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md",
+    "output_file": ".swarm/logs/pipeline-review/PIPELINE-REVIEW.md",
+    "json_output_file": ".swarm/logs/pipeline-review/PIPELINE-REVIEW.json"
+  },
   "execution_order": ["01", "02", ..., "gate:midpoint-review", "14", ..., "gate:final-buster", "gate:final-review"],
   "phases": [...],
   "modules": {...},
@@ -32,6 +40,14 @@
 | `timeout_minutes` | no | `300` | Max time for one Forge+Buster cycle |
 | `max_fails` | no | `3` | Max failures before BLOCKED |
 | `forge_subagent` | no | from `models.forge` | ACP subagent ID |
+| `reviewers[].dispatch` | no | auto by model family | Reviewer execution mode: `acp` or `subagent` |
+| `reviewers[].agent_id` | no | derived from dispatch/model | Explicit reviewer agent id (e.g. `claude`, `codex`) |
+| `pipeline_review.enabled` | no | `false` | Enable end-of-run pipeline audit stage |
+| `pipeline_review.model` | yes if enabled | — | Review model to use for the pipeline audit |
+| `pipeline_review.agent_id` | no | derived from model family | Agent id for pipeline review (e.g. `gpt5_pipeline-review`) |
+| `pipeline_review.instructions_file` | no | `.swarm/pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md` | Optional custom audit instructions |
+| `pipeline_review.output_file` | no | `.swarm/logs/pipeline-review/PIPELINE-REVIEW.md` | Markdown output path |
+| `pipeline_review.json_output_file` | no | `.swarm/logs/pipeline-review/PIPELINE-REVIEW.json` | JSON output path |
 | `forge_model` | no | from `models.forge` | LLM model for Forge |
 | `test_suites` | no | `["build","health"]` | Which Buster suites run |
 | `test_config` | no | `{serve:{type:"static"}}` | Suite-specific config (see below) |
@@ -171,6 +187,33 @@ Without `thresholds` → informational (always PASS). With `thresholds` → enfo
   "output_file": "echo-review/MIDPOINT-REVIEW.json",
   "review_output_dir": "echo-review",
   "reviewers": null,
+```
+
+Reviewer dispatch defaults:
+
+- Anthropic / Claude review models → `dispatch: "acp"`
+- OpenAI / Codex / GPT-5 review models → `dispatch: "subagent"`
+
+Example Claude reviewer (ACP):
+
+```json
+{
+  "label": "echo-opus",
+  "model": "claude-opus-4-6",
+  "dispatch": "acp"
+}
+```
+
+Example Codex reviewer (native subagent):
+
+```json
+{
+  "label": "codex-review",
+  "model": "openai-codex/gpt-5.4",
+  "dispatch": "subagent",
+  "agent_id": "codex"
+}
+```
   "timeout_minutes": 30,
   "max_fix_cycles": null,
   "lint_tier": null
@@ -223,3 +266,25 @@ For a **backend-only** or **fullstack** project, the gate tests the backend dete
 Every suite has `thresholds` → enforced. Any failure counts. Fix cycle: Forge fixes → Buster retests → up to `max_fix_cycles`.
 
 **Note:** Frontend-specific suites (`a11y`, `perf`, `bundle`, `visual-reg`, `e2e`) should NOT be in the gate when `serve.type: "server"` — they need a static build + nginx, not a Python backend. The Buster subagent handles frontend validation via Docker image + Playwright in FINAL-BUSTER.md.
+
+## Optional: `pipeline_review`
+
+Use `pipeline_review` to spawn a final audit agent after the pipeline completes. This agent reviews `.swarm/logs/*` tactically and recommends improvements to prompts, testing, review strategy, and pipeline design.
+
+Dispatch is derived automatically from the model family:
+
+- OpenAI / Codex / GPT-5 family → native subagent
+- Anthropic / Claude family → ACP
+
+Example:
+
+```json
+"pipeline_review": {
+  "enabled": true,
+  "model": "openai-codex/gpt-5.4",
+  "agent_id": "gpt5_pipeline-review",
+  "instructions_file": ".swarm/pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md",
+  "output_file": ".swarm/logs/pipeline-review/PIPELINE-REVIEW.md",
+  "json_output_file": ".swarm/logs/pipeline-review/PIPELINE-REVIEW.json"
+}
+```
