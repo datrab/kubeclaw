@@ -20,6 +20,11 @@
     "max_pauses_per_module": 5
   },
 
+  "acp_monitor": {
+    "unknown_poll_limit": 10,
+    "stale_poll_limit": 10
+  },
+
   "pre_check": {
     "enabled": true,
     "lint_report_path": "/app/skills/lint-report.js",

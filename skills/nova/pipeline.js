@@ -311,29 +311,179 @@ async function acpxCleanup(agentId, gatewayLabel) {
 function parseSessionState(statusResult) {
   if (!statusResult) return { active: false, state: 'unknown' };
 
-  // Legacy format: acp.state field
+  // Legacy / structured format: acp.state field
   const acpState = statusResult?.acp?.state || statusResult?.state || null;
   if (acpState) {
     const active = /^(running|creating|cancelling)$/i.test(acpState);
     return { active, state: acpState.toLowerCase() };
   }
 
-  // New format: statusText contains queue state
-  const statusText = statusResult?.statusText || '';
+  // New structured format: statusText contains queue state.
+  // Some gateways return a raw status card string instead of statusText.
+  const statusText = statusResult?.statusText || statusResult?.raw || '';
   if (statusText) {
+    if (/(closed|error)/i.test(statusText)) {
+      const m = statusText.match(/(closed|error)/i);
+      return { active: false, state: m[1].toLowerCase() };
+    }
     if (/Queue:\s*running/i.test(statusText)) {
       return { active: true, state: 'running' };
     }
     if (/Queue:\s*collect/i.test(statusText)) {
       return { active: false, state: 'idle' };
     }
-    // statusText exists but no recognized pattern — session exists but state unclear
-    // Conservative: treat as inactive (oneshot sessions auto-close)
     return { active: false, state: `unknown (${statusText.slice(0, 80)})` };
   }
 
-  // No state info at all — session gone or format unrecognized
   return { active: false, state: 'unknown' };
+}
+
+function getAcpMonitorConfig(config) {
+  return {
+    unknown_poll_limit: config.acp_monitor?.unknown_poll_limit ?? 10,
+    stale_poll_limit: config.acp_monitor?.stale_poll_limit ?? 10,
+  };
+}
+
+function classifyTranscriptText(text) {
+  if (!text) return { kind: 'unknown', detail: '' };
+  const lower = text.toLowerCase();
+
+  if (/rate limit|rate-limit|429|too many requests|retry after|quota exceeded/.test(lower)) {
+    return { kind: 'rate_limited', detail: text.slice(0, 200) };
+  }
+
+  if (
+    /acpx exited with code\s*[1-9]\d*/.test(lower) ||
+    /run failed/.test(lower) ||
+    /spawn failed/.test(lower) ||
+    /adapter command missing/.test(lower) ||
+    /command not found/.test(lower)
+  ) {
+    return { kind: 'hard_error', detail: text.slice(0, 200) };
+  }
+
+  return { kind: 'info', detail: text.slice(0, 200) };
+}
+
+function readAcpTranscriptState(streamLogPath, prev = {}) {
+  const state = {
+    offset: prev.offset ?? 0,
+    eventCount: prev.eventCount ?? 0,
+    lastEventTs: prev.lastEventTs ?? null,
+    lastActivityPoll: prev.lastActivityPoll ?? 0,
+    hardError: prev.hardError ?? false,
+    rateLimited: prev.rateLimited ?? false,
+    terminal: prev.terminal ?? false,
+    lastDetail: prev.lastDetail ?? '',
+  };
+
+  if (!streamLogPath || !fs.existsSync(streamLogPath)) return state;
+
+  try {
+    const lines = fs.readFileSync(streamLogPath, 'utf8').split('
+').filter(Boolean);
+    const newLines = lines.slice(state.offset);
+    state.offset = lines.length;
+
+    if (newLines.length === 0) {
+      state.lastActivityPoll = (prev.lastActivityPoll || 0) + 1;
+      return state;
+    }
+
+    state.eventCount += newLines.length;
+    state.lastActivityPoll = 0;
+
+    for (const line of newLines) {
+      let evt;
+      try { evt = JSON.parse(line); } catch { continue; }
+      state.lastEventTs = evt.ts || state.lastEventTs;
+
+      if (evt.kind === 'lifecycle' && evt.phase === 'error') {
+        const detail = evt?.data?.error || evt?.text || 'ACP lifecycle error';
+        const cls = classifyTranscriptText(detail);
+        state.lastDetail = detail;
+        if (cls.kind === 'rate_limited') state.rateLimited = true;
+        else {
+          state.hardError = true;
+          state.terminal = true;
+        }
+      }
+
+      if (evt.kind === 'system_event' || evt.kind === 'assistant_delta' || evt.kind === 'assistant') {
+        const eventText = evt.text || evt.delta || '';
+        const cls = classifyTranscriptText(eventText);
+        if (cls.kind === 'rate_limited') {
+          state.rateLimited = true;
+          state.lastDetail = cls.detail;
+        } else if (cls.kind === 'hard_error') {
+          state.hardError = true;
+          state.terminal = true;
+          state.lastDetail = cls.detail;
+        }
+      }
+    }
+  } catch (e) {
+    state.lastDetail = `transcript-read-failed: ${e.message}`;
+  }
+
+  return state;
+}
+
+async function getAcpMonitorState(config, sessionLabel, prev = {}) {
+  const monitorCfg = getAcpMonitorConfig(config);
+  const entry = _shutdownState.activeSessions.get(sessionLabel) || {};
+  const sessionKey = entry?.sessionKey || null;
+  const transcript = readAcpTranscriptState(entry?.streamLogPath, prev.transcript || {});
+
+  let sessionState = 'no_session_key';
+  let sessionActive = false;
+  try {
+    if (sessionKey) {
+      const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
+      const statusResult = raw?.result?.details || raw;
+      const parsed = parseSessionState(statusResult);
+      sessionState = parsed.state;
+      sessionActive = parsed.active;
+    }
+  } catch {
+    sessionState = 'unreachable';
+    sessionActive = false;
+  }
+
+  const unknownLike = /^(unknown|unreachable|no_session_key)/i.test(sessionState);
+  const unknownPolls = unknownLike ? ((prev.unknownPolls || 0) + 1) : 0;
+  const staleExceeded = transcript.lastActivityPoll >= monitorCfg.stale_poll_limit;
+  const unknownExceeded = unknownPolls >= monitorCfg.unknown_poll_limit;
+
+  let terminal = false;
+  let reason = null;
+
+  if (transcript.rateLimited) {
+    reason = 'rate_limited';
+  } else if (transcript.hardError || transcript.terminal) {
+    terminal = true;
+    reason = 'transcript_error';
+  } else if (/^(closed|error)$/i.test(sessionState)) {
+    terminal = true;
+    reason = 'session_terminal';
+  } else if (unknownExceeded && staleExceeded) {
+    terminal = true;
+    reason = 'unknown_stale_timeout';
+  }
+
+  return {
+    sessionKey,
+    sessionState,
+    sessionActive,
+    transcript,
+    unknownPolls,
+    transcriptStalePolls: transcript.lastActivityPoll,
+    terminal,
+    rateLimited: reason === 'rate_limited',
+    reason,
+    detail: transcript.lastDetail || sessionState,
+  };
 }
 
 /**
@@ -346,25 +496,15 @@ function parseSessionState(statusResult) {
  * @param {string} sessionLabel - Tracking key (e.g. 'forge-06', 'echo-opus-final-review')
  * @returns {{ terminal: boolean, state: string }}
  */
-async function isSessionTerminal(sessionLabel) {
-  const entry = _shutdownState.activeSessions.get(sessionLabel);
-  const sessionKey = entry?.sessionKey;
-  if (!sessionKey) return { terminal: false, state: 'no_session_key' };
-
-  try {
-    const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
-    const statusResult = raw?.result?.details || raw;
-    const { state } = parseSessionState(statusResult);
-
-    if (/^(closed|error)$/i.test(state)) {
-      return { terminal: true, state };
-    }
-    return { terminal: false, state };
-  } catch {
-    // Session unreachable — could be gone, but don't assume terminal
-    // (network blip, gateway restart). Let timeout handle it.
-    return { terminal: false, state: 'unreachable' };
-  }
+async function isSessionTerminal(sessionLabel, prev = {}, config = {}) {
+  const mon = await getAcpMonitorState(config, sessionLabel, prev);
+  return {
+    terminal: mon.terminal,
+    state: mon.sessionState,
+    reason: mon.reason,
+    detail: mon.detail,
+    next: mon,
+  };
 }
 
 /**
@@ -389,23 +529,19 @@ async function waitForSessionIdle(sessionKey, extraGraceMs = 120000, totalTimeou
       const statusResult = raw?.result?.details || raw;
       const { active, state } = parseSessionState(statusResult);
 
-      if (state === 'unknown' || /^(closed|error)$/i.test(state)) {
+      if (/^(closed|error)$/i.test(state) || state === 'unknown' || state === 'unreachable') {
         log('DEBUG', `Session already ${state} — no grace needed`);
         return;
       }
 
       if (!active) {
         log('DEBUG', `Session ${state} — waiting ${extraGraceMs / 1000}s grace period for thread summary`);
-        await sleep(Math.min(extraGraceMs, deadline - Date.now()));
+        await sleep(Math.min(extraGraceMs, Math.max(0, deadline - Date.now())));
         return;
       }
-
-      // Still running/creating — keep waiting
     } catch {
-      // Session unreachable — treat as gone
       return;
     }
-
     await sleep(pollMs);
   }
 
@@ -788,6 +924,9 @@ function validateConfig(config, progress) {
   config.poll_interval_seconds ??= 30;
   config.default_timeout_minutes ??= 45;
   config.default_max_fails ??= 3;
+  config.acp_monitor ??= {};
+  config.acp_monitor.unknown_poll_limit ??= 10;
+  config.acp_monitor.stale_poll_limit ??= 10;
 
   // ---- Progress fields ----
   requireField(progress, 'project', 'progress');
@@ -2065,6 +2204,7 @@ async function verifyAgentAlive(config, agentType, moduleId, waitMs = 8000) {
  * @returns {{ completed: boolean, hasChanges: boolean, reason: string }}
  */
 async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel = 'session-poll') {
+  let acpState = {};
   const interval = config.poll_interval_seconds * 1000;
   const deadline = Date.now() + timeoutMinutes * 60 * 1000;
   const startTime = Date.now();
@@ -2141,21 +2281,17 @@ async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel 
     // If HEAD also moved, return hasChanges=true. If not, the agent completed
     // without pushing (crash, or no changes made).
     if (!sessionEndDetected) {
-      try {
-        const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
-        const statusResult = raw?.result?.details || raw;
-        const { state } = parseSessionState(statusResult);
+      acpState = await getAcpMonitorState(config, sessionLabel, acpState);
 
-        if (/^(closed|error)$/i.test(state)) {
-          sessionEndDetected = true;
-          sessionEndGraceStart = Date.now();
-          log('INFO', `[${logLabel}] Session ${state} — waiting ${SESSION_END_GRACE_MS / 1000}s for final push to arrive`);
-        }
-      } catch {
-        // Session unreachable — treat as closed
+      if (acpState.rateLimited) {
+        log('WARN', `[${logLabel}] ACP monitor detected rate limit: ${acpState.detail}`);
+        return { completed: false, hasChanges: false, reason: 'rate_limited' };
+      }
+
+      if (acpState.terminal) {
         sessionEndDetected = true;
         sessionEndGraceStart = Date.now();
-        log('INFO', `[${logLabel}] Session unreachable — treating as closed`);
+        log('INFO', `[${logLabel}] Session ${acpState.sessionState} (${acpState.reason}) — waiting ${SESSION_END_GRACE_MS / 1000}s for final push to arrive`);
       }
     }
 
@@ -2995,19 +3131,32 @@ async function pollGeneric(config, checkFn, timeoutMinutes, label = 'poll') {
  * @returns {PollResult} - ok=true if file found, ok=false on timeout
  */
 async function pollForFile(config, filePath, timeoutMinutes, label = 'file-poll', sessionLabel = null) {
+  let acpState = {};
+
   return pollGeneric(config, async () => {
     // Signal A: Output file exists → success (always wins)
     if (fs.existsSync(filePath)) {
       return { done: true, result: pollResult(true, 'target_reached', { file: filePath }) };
     }
 
-    // Signal B: Session terminal (closed/error) without file → fail fast
+    // Signal B: ACP transcript / session terminal state without file → fail fast
     if (sessionLabel) {
-      const { terminal, state } = await isSessionTerminal(sessionLabel);
-      if (terminal) {
-        log('WARN', `[${label}] Session ${state} but output file not found — agent crashed or failed to write output`);
-        return { done: true, result: pollResult(false, 'session_ended_no_output', { state }) };
+      acpState = await getAcpMonitorState(config, sessionLabel, acpState);
+
+      if (acpState.rateLimited) {
+        log('WARN', `[${label}] ACP monitor detected rate limit: ${acpState.detail}`);
+        return { rate_limited: true, status: { module_id: label, current_phase: 'review', reason: acpState.detail } };
       }
+
+      if (acpState.terminal) {
+        log('WARN', `[${label}] ACP monitor terminal (${acpState.reason}): ${acpState.detail}`);
+        return { done: true, result: pollResult(false, 'session_ended_no_output', { state: acpState.sessionState, reason: acpState.reason, detail: acpState.detail }) };
+      }
+
+      return {
+        done: false,
+        logMsg: `session=${acpState.sessionState} unknown=${acpState.unknownPolls}/${getAcpMonitorConfig(config).unknown_poll_limit} transcript_stale=${acpState.transcriptStalePolls}/${getAcpMonitorConfig(config).stale_poll_limit}`,
+      };
     }
 
     return { done: false };
@@ -3026,6 +3175,7 @@ async function pollForFile(config, filePath, timeoutMinutes, label = 'file-poll'
  */
 async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes, opts = {}) {
   const { sessionLabel, headBefore } = opts;
+  let acpState = {};
 
   return pollGeneric(config, async () => {
     // ── Channel 1: status.json (primary signal) ──
@@ -3047,27 +3197,34 @@ async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes, o
       }
     }
 
-    // ── Channel 2: ACP session terminal state (fail-fast on crash) ──
-    // Only 'closed' and 'error' are terminal. 'idle' and 'unknown' are NOT —
-    // with oneshot sessions, 'idle' can mean initializing, between tool calls, or finished.
+    // ── Channel 2: ACP transcript/session terminal state (fail-fast on crash) ──
     if (sessionLabel) {
-      const { terminal, state } = await isSessionTerminal(sessionLabel);
-      if (terminal) {
+      acpState = await getAcpMonitorState(config, sessionLabel, acpState);
+
+      if (acpState.rateLimited) {
+        const currentStatus = status || loadStatus(config, moduleDir) || { module_id: moduleDir, current_phase: 'forge' };
+        currentStatus.status = STATUS.RATE_LIMITED;
+        currentStatus.current_phase ||= 'forge';
+        currentStatus.rate_limit_reason = acpState.detail;
+        return { rate_limited: true, status: currentStatus };
+      }
+
+      if (acpState.terminal) {
         // Session died — check if HEAD moved (agent pushed before crashing)
         gitPullForPolling(config);
         invalidateHeadHash();
         const headNow = headHash();
         if (headBefore && headNow !== headBefore) {
-          log('INFO', `Session ${state} but HEAD moved (${headBefore} → ${headNow}) — auto-advancing to READY_FOR_TESTING`);
+          log('INFO', `Session ${acpState.sessionState} but HEAD moved (${headBefore} → ${headNow}) — auto-advancing to READY_FOR_TESTING`);
           const currentStatus = loadStatus(config, moduleDir);
           if (currentStatus && currentStatus.status !== STATUS.READY_FOR_TESTING) {
-            addHistory(currentStatus, STATUS.READY_FOR_TESTING, 'pipeline', `Session ${state}, HEAD moved — auto-advanced`);
+            addHistory(currentStatus, STATUS.READY_FOR_TESTING, 'pipeline', `Session ${acpState.sessionState}, HEAD moved — auto-advanced`);
             currentStatus.status = STATUS.READY_FOR_TESTING;
             saveStatus(config, moduleDir, currentStatus);
           }
           return { done: true, result: pollResult(true, 'target_reached', currentStatus || status) };
         }
-        log('WARN', `Session ${state} without HEAD movement — agent crashed or made no changes`);
+        log('WARN', `Session ${acpState.sessionState} without HEAD movement — agent crashed or made no changes (${acpState.reason})`);
         return { done: true, result: pollResult(false, 'session_ended_no_changes', status) };
       }
     }
@@ -5132,10 +5289,16 @@ async function runBusterGate(config, progress, gateId) {
   // Same cleanup pattern as the fix-loop cleanup at the bottom of the loop body.
   if (gate.output_file) {
     const outPath = path.join(swarmRoot(config), gate.output_file);
-    try { if (fs.existsSync(outPath)) fs.unlinkSync(outPath); } catch { /* ok */ }
+    try {
+      const archived = archiveGateOutputIfPresent(config, gateId, outPath);
+      if (archived) log('INFO', `Archived previous gate output: ${relPath(config, archived)}`);
+      if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
+    } catch { /* ok */ }
   }
   try {
     const gsp = gateStatusPath(config, gateId);
+    const archivedStatus = archiveGateOutputIfPresent(config, gateId, gsp, { label: 'gate-status' });
+    if (archivedStatus) log('INFO', `Archived previous gate status: ${relPath(config, archivedStatus)}`);
     if (fs.existsSync(gsp)) fs.unlinkSync(gsp);
   } catch { /* ok */ }
 
@@ -5360,10 +5523,18 @@ async function runBusterGate(config, progress, gateId) {
     // Cleanup old output so Buster writes fresh results
     if (gate.output_file) {
       const outPath = path.join(swarmRoot(config), gate.output_file);
-      try { if (fs.existsSync(outPath)) fs.unlinkSync(outPath); } catch { /* ok */ }
+      try {
+        const archived = archiveGateOutputIfPresent(config, gateId, outPath, { attempt });
+        if (archived) log('INFO', `Archived previous gate output: ${relPath(config, archived)}`);
+        if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
+      } catch { /* ok */ }
     }
     const gateStatusFile = gateStatusPath(config, gateId);
-    try { if (fs.existsSync(gateStatusFile)) fs.unlinkSync(gateStatusFile); } catch { /* ok */ }
+    try {
+      const archivedStatus = archiveGateOutputIfPresent(config, gateId, gateStatusFile, { attempt, label: 'gate-status' });
+      if (archivedStatus) log('INFO', `Archived previous gate status: ${relPath(config, archivedStatus)}`);
+      if (fs.existsSync(gateStatusFile)) fs.unlinkSync(gateStatusFile);
+    } catch { /* ok */ }
 
     await discord(config, 'INFO', `Gate Fix: Retesting with Buster`,
       `Forge fix attempt ${attempt}/${maxFixCycles} committed. Running Buster gate again...`);
@@ -5405,6 +5576,25 @@ function resolveReviewConfig(config, gate) {
  * Pattern: <swarm_dir>/<review_output_dir>/<label>-<review_name>.json
  * Example: .swarm/echo-reviews/echo-codex-MIDPOINT-REVIEW.json
  */
+function gateArchiveDir(config, gateId) {
+  return path.join(gateLogDir(config, gateId), 'archive');
+}
+
+function archiveGateOutputIfPresent(config, gateId, sourcePath, { attempt = null, label = null } = {}) {
+  if (!fs.existsSync(sourcePath)) return null;
+
+  const archiveDir = gateArchiveDir(config, gateId);
+  fs.mkdirSync(archiveDir, { recursive: true });
+
+  const ts = new Date().toISOString().replace(/[:.]/g, '-');
+  const parsed = path.parse(sourcePath);
+  const attemptSuffix = attempt ? `-attempt-${attempt}` : '';
+  const labelSuffix = label ? `-${label}` : '';
+  const archivedPath = path.join(archiveDir, `${parsed.name}${labelSuffix}${attemptSuffix}-${ts}${parsed.ext || '.json'}`);
+  fs.copyFileSync(sourcePath, archivedPath);
+  return archivedPath;
+}
+
 function reviewOutputPath(config, gate, reviewerLabel) {
   return path.join(
     swarmRoot(config),
@@ -5633,10 +5823,13 @@ async function _runReviewOnce(config, progress, gateId, gate, reviewConfig, revi
   ].join('\n');
 
   // ── Phase 3: Spawn reviewer ──
-  // Clean up stale output from previous runs BEFORE spawning. Without this,
-  // pollForFile finds the old file instantly and returns stale review data
-  // while the reviewer hasn't even started working yet.
-  try { if (fs.existsSync(outputFilePath)) fs.unlinkSync(outputFilePath); } catch { /* ok */ }
+  // Archive stale output from previous runs BEFORE spawning, then clear the
+  // active path so pollForFile never reads stale review data as fresh output.
+  try {
+    const archived = archiveGateOutputIfPresent(config, gateId, outputFilePath, { attempt: reviewAttempt, label: reviewer.label });
+    if (archived) log('INFO', `Archived previous review output: ${relPath(config, archived)}`);
+    if (fs.existsSync(outputFilePath)) fs.unlinkSync(outputFilePath);
+  } catch { /* ok */ }
 
   // Save reviewer prompt for debugging
   try {

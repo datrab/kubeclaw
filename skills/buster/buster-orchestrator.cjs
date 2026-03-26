@@ -50,6 +50,8 @@ const RESULTS_DIR     = '/sandbox/results';
 const PIPELINE_TASK_TYPES = ['module_test', 'gate_test'];
 const STREAM_MAX_LEN      = 250;
 const MONITOR_POLL_MS     = 10000;
+const ACP_UNKNOWN_POLL_LIMIT = 10;
+const ACP_STALE_POLL_LIMIT   = 10;
 
 // Gateway readiness
 const GATEWAY_HEALTH_URL      = 'http://127.0.0.1:18789/health';
@@ -530,14 +532,97 @@ function parseSessionState(statusResult) {
     return { active, state: acpState.toLowerCase() };
   }
 
-  const statusText = statusResult?.statusText || '';
+  const statusText = statusResult?.statusText || statusResult?.raw || '';
   if (statusText) {
+    if (/(closed|error)/i.test(statusText)) {
+      const m = statusText.match(/(closed|error)/i);
+      return { active: false, state: m[1].toLowerCase() };
+    }
     if (/Queue:\s*running/i.test(statusText)) return { active: true, state: 'running' };
     if (/Queue:\s*collect/i.test(statusText)) return { active: false, state: 'idle' };
     return { active: false, state: `unknown (${statusText.slice(0, 80)})` };
   }
 
   return { active: false, state: 'unknown' };
+}
+
+function classifyTranscriptText(text) {
+  if (!text) return { kind: 'unknown', detail: '' };
+  const lower = text.toLowerCase();
+  if (/rate limit|rate-limit|429|too many requests|retry after|quota exceeded/.test(lower)) {
+    return { kind: 'rate_limited', detail: text.slice(0, 200) };
+  }
+  if (/acpx exited with code\s*[1-9]\d*/.test(lower) || /run failed/.test(lower) || /spawn failed/.test(lower) || /command not found/.test(lower)) {
+    return { kind: 'hard_error', detail: text.slice(0, 200) };
+  }
+  return { kind: 'info', detail: text.slice(0, 200) };
+}
+
+function readAcpTranscriptState(streamLogPath, prev = {}) {
+  const state = {
+    offset: prev.offset ?? 0,
+    lastActivityPoll: prev.lastActivityPoll ?? 0,
+    hardError: prev.hardError ?? false,
+    rateLimited: prev.rateLimited ?? false,
+    terminal: prev.terminal ?? false,
+    lastDetail: prev.lastDetail ?? '',
+  };
+  if (!streamLogPath || !fs.existsSync(streamLogPath)) return state;
+  try {
+    const lines = fs.readFileSync(streamLogPath, 'utf8').split('\n').filter(Boolean);
+    const newLines = lines.slice(state.offset);
+    state.offset = lines.length;
+    if (newLines.length === 0) {
+      state.lastActivityPoll = (prev.lastActivityPoll || 0) + 1;
+      return state;
+    }
+    state.lastActivityPoll = 0;
+    for (const line of newLines) {
+      let evt;
+      try { evt = JSON.parse(line); } catch { continue; }
+      if (evt.kind === 'lifecycle' && evt.phase === 'error') {
+        const detail = evt?.data?.error || evt?.text || 'ACP lifecycle error';
+        const cls = classifyTranscriptText(detail);
+        state.lastDetail = detail;
+        if (cls.kind === 'rate_limited') state.rateLimited = true;
+        else { state.hardError = true; state.terminal = true; }
+      }
+      if (evt.kind === 'system_event' || evt.kind === 'assistant_delta' || evt.kind === 'assistant') {
+        const eventText = evt.text || evt.delta || '';
+        const cls = classifyTranscriptText(eventText);
+        if (cls.kind === 'rate_limited') { state.rateLimited = true; state.lastDetail = cls.detail; }
+        else if (cls.kind === 'hard_error') { state.hardError = true; state.terminal = true; state.lastDetail = cls.detail; }
+      }
+    }
+  } catch (e) {
+    state.lastDetail = `transcript-read-failed: ${e.message}`;
+  }
+  return state;
+}
+
+async function getAcpMonitorState(childSessionKey, streamLogPath, prev = {}) {
+  const transcript = readAcpTranscriptState(streamLogPath, prev.transcript || {});
+  let sessionState = 'unknown';
+  try {
+    const response = await fetch(GATEWAY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GATEWAY_TOKEN}` },
+      body: JSON.stringify({ tool: 'session_status', args: {}, sessionKey: childSessionKey }),
+    });
+    const raw = await response.json().catch(() => ({}));
+    const statusResult = raw?.result?.details || raw;
+    sessionState = parseSessionState(statusResult).state;
+  } catch {
+    sessionState = 'unreachable';
+  }
+  const unknownPolls = /^(unknown|unreachable|no_session_key)/i.test(sessionState) ? ((prev.unknownPolls || 0) + 1) : 0;
+  let terminal = false;
+  let reason = null;
+  if (transcript.rateLimited) reason = 'rate_limited';
+  else if (transcript.hardError || transcript.terminal) { terminal = true; reason = 'transcript_error'; }
+  else if (/^(closed|error)$/i.test(sessionState)) { terminal = true; reason = 'session_terminal'; }
+  else if (unknownPolls >= ACP_UNKNOWN_POLL_LIMIT && transcript.lastActivityPoll >= ACP_STALE_POLL_LIMIT) { terminal = true; reason = 'unknown_stale_timeout'; }
+  return { sessionState, transcript, unknownPolls, terminal, rateLimited: reason === 'rate_limited', reason, detail: transcript.lastDetail || sessionState };
 }
 
 /**
@@ -566,21 +651,18 @@ async function waitForSessionIdle(childSessionKey, extraGraceMs = 120000, totalT
       const statusResult = raw?.result?.details || raw;
       const { active, state } = parseSessionState(statusResult);
 
-      if (state === 'unknown' || /^(closed|error)$/i.test(state)) {
+      if (/^(closed|error)$/i.test(state) || state === 'unknown' || state === 'unreachable') {
         log('GRACE', `Session already ${state} — no grace needed`);
         return;
       }
 
       if (!active) {
-        const grace = Math.min(extraGraceMs, deadline - Date.now());
+        const grace = Math.min(extraGraceMs, Math.max(0, deadline - Date.now()));
         log('GRACE', `Session ${state} — waiting ${Math.round(grace / 1000)}s grace period`);
         await new Promise(r => setTimeout(r, grace));
         return;
       }
-
-      // Still running/creating — keep waiting
     } catch {
-      // Session unreachable — treat as gone
       return;
     }
 
@@ -626,6 +708,7 @@ async function killSession(childSessionKey, agentId, label) {
 }
 
 async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, verdict, spawnInfo = {}) {
+  let acpState = {};
   const completionStream = payload.completion_stream;
   const moduleId = payload.module;
   const project = payload.project || 'unknown';
@@ -716,9 +799,47 @@ async function monitorSession(payload, childSessionKey, runId, timeoutSeconds, v
       log('MONITOR', `Redis check error: ${e.message}`);
     }
 
-    // No session_status polling — the ACP state is unreliable for crash detection.
-    // 'idle' can mean "initializing", "between tool calls", or "finished".
-    // Redis completion is the single source of truth. Timeout catches real crashes.
+    // ── Channel 2: ACP transcript + session monitor (fail fast on crash/rate-limit) ──
+    acpState = await getAcpMonitorState(childSessionKey, spawnInfo.streamLogPath || null, acpState);
+
+    if (acpState.rateLimited) {
+      log('MONITOR', `ACP rate limit detected`, { detail: acpState.detail });
+      try {
+        const fields = [
+          'type', 'completion',
+          'module', moduleId,
+          'task_type', payload.task_type || 'module_test',
+          'status', 'RATE_LIMITED',
+          'source', 'orchestrator',
+          'reason', acpState.detail || 'ACP rate limit detected',
+          'timestamp', Date.now().toString(),
+        ];
+        await redis.xadd(completionStream, '*', ...fields);
+      } catch {}
+      await killSession(childSessionKey, _agentId, _spawnLabel);
+      activeSessionKey = null; activeAgentId = null; activeSpawnLabel = null;
+      return;
+    }
+
+    if (acpState.terminal) {
+      log('MONITOR', `ACP terminal before Redis completion`, { state: acpState.sessionState, reason: acpState.reason, detail: acpState.detail });
+      try {
+        const fields = [
+          'type', 'completion',
+          'module', moduleId,
+          'task_type', payload.task_type || 'module_test',
+          'status', 'FAIL',
+          'source', 'orchestrator',
+          'reason', `ACP ended without completion: ${acpState.reason}${acpState.detail ? ` — ${acpState.detail}` : ''}`,
+          'timestamp', Date.now().toString(),
+        ];
+        await redis.xadd(completionStream, '*', ...fields);
+        await redis.xtrim(completionStream, 'MAXLEN', '~', STREAM_MAX_LEN);
+      } catch {}
+      await killSession(childSessionKey, _agentId, _spawnLabel);
+      activeSessionKey = null; activeAgentId = null; activeSpawnLabel = null;
+      return;
+    }
 
     const elapsed = Math.round((Date.now() - startTime) / 1000);
     const remaining = Math.round((deadline - Date.now()) / 1000);
