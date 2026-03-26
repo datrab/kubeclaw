@@ -11,8 +11,8 @@
 
   "poll_interval_seconds": 30,
   "default_timeout_minutes": 300,
-  "default_max_fails": 4,
-  "auto_retry_threshold": 2,
+  "default_max_fails": 8,
+  "auto_retry_threshold": 7,
   "session_nudge_threshold": 0.75,
 
   "rate_limit": {
