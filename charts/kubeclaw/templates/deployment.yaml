@@ -268,10 +268,10 @@ spec:
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.gatewaySecretName" . }}, key: {{ include "kubeclaw.gatewaySecretKey" . }} } }
             - name: LITELLM_API_KEY
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.litellmSecretName" . }}, key: {{ include "kubeclaw.litellmSecretKey" . }} } }
-            {{- if .Values.anthropic.existingSecret }}
-            - name: ANTHROPIC_API_KEY
-              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
-            {{- end }}
+           # {{- if .Values.anthropic.existingSecret }}
+           # - name: ANTHROPIC_API_KEY
+           #   valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
+            #{{- end }}
             {{- if .Values.discord.enabled }}
             - name: DISCORD_TOKEN
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.discordSecretName" . }}, key: {{ include "kubeclaw.discordSecretKey" . }} } }
@@ -407,10 +407,10 @@ spec:
               value: {{ .Values.litellm.endpoint | trimSuffix "/v1" | quote }}
             - name: LITELLM_API_KEY
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.litellmSecretName" . }}, key: {{ include "kubeclaw.litellmSecretKey" . }} } }
-            {{- if .Values.anthropic.existingSecret }}
-            - name: ANTHROPIC_API_KEY
-              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
-            {{- end }}
+           # {{- if .Values.anthropic.existingSecret }}
+           # - name: ANTHROPIC_API_KEY
+           #   valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
+           # {{- end }}
             - name: OPENCLAW_GATEWAY_TOKEN
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.gatewaySecretName" . }}, key: {{ include "kubeclaw.gatewaySecretKey" . }} } }
             {{- if .Values.discord.enabled }}
