@@ -14,7 +14,6 @@ All skills are located at `/app/skills/` inside the container. They are JavaScri
 | `project-summary.js` | Nova | Project lifecycle report: code stats, pipeline metrics, quality |
 | `project_setup/` | Nova | Skill: Set up a new project for the autonomous pipeline |
 | `verify-task.js` | All (agent-specific for Buster) | Scope enforcement + controlled git push |
-| `merge-reviews.js` | Nova | Consolidate Echo review files (legacy — single reviewer since v8) |
 | `discord-purge.js` | All | Bulk-delete Discord channel messages |
 | `visual-audit.js` | Buster | Headless screenshot/video → Discord |
 
@@ -342,23 +341,6 @@ node /app/skills/verify-task.js \
 
 ---
 
-## merge-reviews.js — Review Consolidation
-
-Reads all `review-*.json` files from the echo-reviews directory and generates a consensus report.
-
-```bash
-node /app/skills/merge-reviews.js --project kubecommand
-```
-
-### Consensus Rule
-
-One NO-GO overrides all GOs. If any reviewer says NO-GO, the final verdict is NO-GO.
-
-### Output
-
-- `FINAL-REVIEW.md` — Markdown report with all findings, grouped by reviewer
-- `.merge_status` — Plain text file containing just `GO` or `NO-GO`
-
 ---
 
 ## discord-purge.js — Channel Cleanup
@@ -428,7 +410,6 @@ The processor sidecar has been replaced by `buster-orchestrator.js`, which runs 
 ├── redis.js           # Agent-specific (Nova or Buster version)
 ├── pipeline.js        # Pipeline engine (common, used by Nova)
 ├── verify-task.js     # Agent-specific (common or Buster version)
-├── merge-reviews.js   # Review consolidation (legacy — single reviewer since v8)
 ├── discord-purge.js   # Channel cleanup (common)
 ├── visual-audit.js    # Headless visual testing (common)
 └── nova/

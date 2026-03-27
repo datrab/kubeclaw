@@ -138,9 +138,6 @@ workspace:
     ## Boundary Enforcement
     verify-task.js --project <P>  — validates agent file changes, reverts violations, auto-pushes
 
-    ## Reviews
-    merge-reviews.js --project <P>  — consolidates Echo reviews into FINAL-REVIEW.md
-
     ## ACP Sessions (manual override, pipeline handles this normally)
     openclaw sessions spawn --agentId <A> --label <L> --model <M> --task "..."
     openclaw sessions send --label <L> --message "..."

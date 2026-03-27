@@ -1589,9 +1589,12 @@ async function releaseBlueprint(config, progress, moduleId, moduleDir, stages = 
   }
 
   // Commit & push
+  // We use addPaths=['-A'] (all staged changes) instead of scoped targetPath to avoid
+  // push failures caused by other dirty/untracked files in the working tree blocking the push.
+  // Blueprint files are already checked out above; committing everything ensures a clean push.
   try {
     const result = await gitCommitAndPush(config, `[blueprint] Release module ${moduleId} (${moduleDir})`, {
-      addPaths: [targetPath],
+      addPaths: ['-A'],
     });
     if (result.committed) {
       log('OK', `Blueprint released and pushed: ${moduleDir}`);
@@ -1668,7 +1671,7 @@ async function releaseGateFiles(config, progress) {
   if (checkedOut.length > 0) {
     try {
       await gitCommitAndPush(config, `[blueprint] Release gate files: ${checkedOut.join(', ')}`, {
-        addPaths: checkedOut.map(d => `${swarmRelPath}/${d}`),
+        addPaths: ['-A'],
       });
       log('OK', `Gate files committed and pushed: ${checkedOut.join(', ')}`);
     } catch (e) {
@@ -3853,6 +3856,88 @@ function buildNovaEscalation(config, status, moduleId, moduleDir, maxFails, phas
     // How to resume — explicit command Nova can execute
     resume_command: `node pipeline.js --project ${config.project} --resume --module ${moduleId} --prompt "YOUR_NEW_APPROACH_HERE"`,
   };
+}
+
+async function injectNeedsNova(config, result, novaChannel, stepType = 'module', stepId = null) {
+  const channelId = novaChannel || process.env.NOVA_CHANNEL || null;
+  const targetId = stepId || result?.module || 'unknown';
+  const exitCode = result?.exit;
+  const exitLabel = exitCode === EXIT_TIMEOUT ? 'TIMEOUT' : 'NEEDS_NOVA';
+  const injectionLogPath = config?._logDir
+    ? path.join(config._logDir, 'pipeline', 'nova-injections.jsonl')
+    : null;
+
+  const entry = {
+    ts: new Date().toISOString(),
+    run_id: RUN_ID,
+    status: 'skipped',
+    channel: channelId,
+    step_type: stepType,
+    step_id: targetId,
+    module: result?.module || null,
+    exit: exitCode,
+    exit_label: exitLabel,
+    reason: (result?.reason || '').slice(0, 500),
+    fail_count: result?.fail_count ?? null,
+    max_fails: result?.max_fails ?? null,
+    remaining_attempts: result?.remaining_attempts ?? null,
+  };
+
+  const appendInjectionLog = () => {
+    if (!injectionLogPath) return;
+    try {
+      fs.appendFileSync(injectionLogPath, JSON.stringify(entry) + '\n');
+    } catch { /* non-critical */ }
+  };
+
+  if (!channelId) {
+    log('INFO', 'EXIT 10/TIMEOUT — no --nova-channel set, skipping Nova session injection');
+    entry.status = 'skipped_no_channel';
+    appendInjectionLog();
+    return;
+  }
+
+  const sessionKey = `agent:main:discord:channel:${channelId}`;
+  const messageLines = [
+    '⚠️ Cronjob injected — Nova working on resolution.',
+    `Project: ${config.project}`,
+    `${stepType === 'gate' ? 'Gate' : 'Module'}: ${targetId}`,
+    `Exit: ${exitLabel}`,
+  ];
+  if (result?.reason) messageLines.push(`Reason: ${String(result.reason).slice(0, 300)}`);
+  if (result?.fail_count != null && result?.max_fails != null) {
+    messageLines.push(`Attempts: ${result.fail_count}/${result.max_fails}`);
+  }
+  if (result?.resume_command) {
+    messageLines.push(`Resume: ${String(result.resume_command).slice(0, 400)}`);
+  }
+  const message = messageLines.join('\n');
+
+  try {
+    await gatewayInvoke('sessions_send', { sessionKey, message }, 15000);
+    entry.status = 'ok';
+    log('OK', `${exitLabel} injected into Nova channel ${channelId} for ${stepType} ${targetId}`);
+    await discord(config, 'WARN', `Nova injection sent: ${targetId}`,
+      `Cronjob injected Nova into Discord channel for ${stepType} ${targetId}.`, [
+        { name: 'Exit', value: exitLabel },
+        { name: 'Channel', value: channelId },
+        { name: 'Target', value: `${stepType}:${targetId}` },
+      ]);
+  } catch (e) {
+    const errMsg = e?.message?.split('\n')[0] || 'unknown error';
+    entry.status = 'failed';
+    entry.error = errMsg;
+    log('WARN', `Failed to inject ${exitLabel} into Nova channel ${channelId}: ${errMsg}`);
+    await discord(config, 'CRITICAL', `Nova injection FAILED: ${targetId}`,
+      `Cronjob could not inject Nova into Discord for ${stepType} ${targetId}. Manual intervention required.`, [
+        { name: 'Exit', value: exitLabel },
+        { name: 'Channel', value: channelId },
+        { name: 'Target', value: `${stepType}:${targetId}` },
+        { name: 'Error', value: errMsg.slice(0, 200) },
+      ]);
+  } finally {
+    appendInjectionLog();
+  }
 }
 
 // ─── Lint Report Generation ─────────────────────────────────────────────────
@@ -6573,6 +6658,9 @@ async function runPipeline(config, progress, opts = {}) {
           { name: 'Reason', value: (result.reason || 'unknown').slice(0, 200) },
           { name: 'Exit Code', value: String(result.exit) },
         ]);
+      if (result.exit === EXIT_NEEDS_NOVA || result.exit === EXIT_TIMEOUT) {
+        await injectNeedsNova(config, result, opts.novaChannel, 'module', opts.module);
+      }
     }
 
     writeSummary(config, result.exit, `single_module:${opts.module}`);
@@ -6646,6 +6734,10 @@ async function runPipeline(config, progress, opts = {}) {
         { name: 'Exit Code', value: `${result.exit} (${exitLabels[result.exit] || 'UNKNOWN'})` },
         { name: 'Reason', value: (result.reason || 'see previous alert').slice(0, 200) },
       ]);
+
+    if (result.exit === EXIT_NEEDS_NOVA || result.exit === EXIT_TIMEOUT) {
+      await injectNeedsNova(config, result, opts.novaChannel, next.type, next.id);
+    }
 
     output(result);
     writeSummary(config, result.exit, `${exitLabels[result.exit] || 'UNKNOWN'}:${next.id}`);
@@ -6738,6 +6830,7 @@ if (__currentPath === __entryPath) {
     else if (a === '--blueprint-list')              flags.blueprintList = true;
     else if (a === '--prompt'         && args[i+1]) flags.prompt = args[++i];
     else if (a === '--prompt-file'   && args[i+1]) flags.promptFile = args[++i];
+    else if (a === '--nova-channel'  && args[i+1]) flags.novaChannel = args[++i];
     else if (a === '--resume')                      flags.resume = true;
     else if (a === '--status')                      flags.status = true;
     else if (a === '--dry-run')                     flags.dryRun = true;
@@ -6754,6 +6847,7 @@ Pipeline commands:
   --resume                Resume pipeline from current state
   --prompt "text"         Nova's prompt override (injected into Forge prompt)
   --prompt-file <path>    Read Nova's prompt from file (for long prompts)
+  --nova-channel <id>     Discord channel id for EXIT 10 / TIMEOUT auto-injection
   --status                Print current pipeline status as JSON
   --dry-run               Show execution plan, spawn nothing
 
@@ -6783,6 +6877,7 @@ Exit codes:
 
   // Env fallback
   if (!flags.project) flags.project = process.env.CURRENT_PROJECT;
+  if (!flags.novaChannel) flags.novaChannel = process.env.NOVA_CHANNEL;
 
   (async () => {
     try {
@@ -6828,6 +6923,7 @@ Exit codes:
         module: flags.module,
         resume: flags.resume,
         novaPrompt,
+        novaChannel: flags.novaChannel,
       });
       cleanupTempDir();
       process.exit(exitCode);

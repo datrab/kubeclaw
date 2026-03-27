@@ -16,14 +16,16 @@ data:
         "port": {{ .Values.gateway.port }},
         "controlUi": {
           "dangerouslyAllowHostHeaderOriginFallback": true
-        }
+        },
+        "channelStaleEventThresholdMinutes": 1440,
+        "channelMaxRestartsPerHour": 3
       },
       "acp": {
         "enabled": true,
         "backend": "acpx",
         "defaultAgent": "claude",
         "allowedAgents": ["claude","codex","kimi","gemini","pi"],
-        "maxConcurrentSessions": 8,
+        "maxConcurrentSessions": 20,
         "stream": {
           "coalesceIdleMs": 300,
           "maxChunkChars": 1200
@@ -33,6 +35,7 @@ data:
         }
       },
       "session": {
+        "dmScope": "per-channel-peer",
         "threadBindings": {
           "enabled": true,
           "idleHours": 24,
@@ -40,8 +43,14 @@ data:
         }
       },
       "tools": {
+        "profile": "coding",
         "sessions": {
           "visibility": "all"
+        },
+        "sessions_spawn": {
+          "attachments": {
+            "enabled": true
+          }
         }
       },
       "commands": {
@@ -111,7 +120,15 @@ data:
             "runTimeoutSeconds": 18000,
             "archiveAfterMinutes": 120
           }
-        }
+        },
+        "list": [
+          {
+            "id": "main",
+            "subagents": {
+              "allowAgents": ["*"]
+            }
+          }
+        ]
       },
       "models": {
         "mode": "merge",
@@ -148,6 +165,12 @@ data:
           "threadBindings": {
             "enabled": true,
             "spawnAcpSessions": true
+          },
+          "retry": {
+            "attempts": 3,
+            "minDelayMs": 500,
+            "maxDelayMs": 30000,
+            "jitter": 0.1
           }
         }
       }

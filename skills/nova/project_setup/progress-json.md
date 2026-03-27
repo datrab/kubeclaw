@@ -11,9 +11,9 @@
     "enabled": true,
     "model": "openai-codex/gpt-5.4",
     "agent_id": "gpt5_pipeline-review",
-    "instructions_file": ".swarm/pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md",
-    "output_file": ".swarm/logs/pipeline-review/PIPELINE-REVIEW.md",
-    "json_output_file": ".swarm/logs/pipeline-review/PIPELINE-REVIEW.json"
+    "instructions_file": "logs/pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md",
+    "output_file": "logs/pipeline-review/PIPELINE-REVIEW.md",
+    "json_output_file": "logs/pipeline-review/PIPELINE-REVIEW.json"
   },
   "execution_order": ["01", "02", ..., "gate:midpoint-review", "14", ..., "gate:final-buster", "gate:final-review"],
   "phases": [...],
@@ -45,9 +45,9 @@
 | `pipeline_review.enabled` | no | `false` | Enable end-of-run pipeline audit stage |
 | `pipeline_review.model` | yes if enabled | — | Review model to use for the pipeline audit |
 | `pipeline_review.agent_id` | no | derived from model family | Agent id for pipeline review (e.g. `gpt5_pipeline-review`) |
-| `pipeline_review.instructions_file` | no | `.swarm/pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md` | Optional custom audit instructions |
-| `pipeline_review.output_file` | no | `.swarm/logs/pipeline-review/PIPELINE-REVIEW.md` | Markdown output path |
-| `pipeline_review.json_output_file` | no | `.swarm/logs/pipeline-review/PIPELINE-REVIEW.json` | JSON output path |
+| `pipeline_review.instructions_file` | no | `logs/pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md` | Optional custom audit instructions |
+| `pipeline_review.output_file` | no | `logs/pipeline-review/PIPELINE-REVIEW.md` | Markdown output path |
+| `pipeline_review.json_output_file` | no | `logs/pipeline-review/PIPELINE-REVIEW.json` | JSON output path |
 | `forge_model` | no | from `models.forge` | LLM model for Forge |
 | `test_suites` | no | `["build","health"]` | Which Buster suites run |
 | `test_config` | no | `{serve:{type:"static"}}` | Suite-specific config (see below) |
@@ -184,8 +184,8 @@ Without `thresholds` → informational (always PASS). With `thresholds` → enfo
   "review_name": "MIDPOINT-REVIEW",
   "on_nogo": "fix_and_rereview",
   "instructions_file": "echo-review/MIDPOINT-REVIEW-INSTRUCTIONS.md",
-  "output_file": "echo-review/MIDPOINT-REVIEW.json",
-  "review_output_dir": "echo-review",
+  "output_file": "logs/echo-review/MIDPOINT-REVIEW.json",
+  "review_output_dir": "logs/echo-review",
   "reviewers": null,
 ```
 
@@ -283,8 +283,8 @@ Example:
   "enabled": true,
   "model": "openai-codex/gpt-5.4",
   "agent_id": "gpt5_pipeline-review",
-  "instructions_file": ".swarm/pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md",
-  "output_file": ".swarm/logs/pipeline-review/PIPELINE-REVIEW.md",
-  "json_output_file": ".swarm/logs/pipeline-review/PIPELINE-REVIEW.json"
+  "instructions_file": "logs/pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md",
+  "output_file": "logs/pipeline-review/PIPELINE-REVIEW.md",
+  "json_output_file": "logs/pipeline-review/PIPELINE-REVIEW.json"
 }
 ```

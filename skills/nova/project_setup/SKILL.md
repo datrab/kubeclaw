@@ -38,6 +38,7 @@ All paths relative to repo root:
 Projects/<project>/src/.swarm/
 ├── progress.json                              # Project definition
 ├── echo-review/
+│   ├── EARLY-REVIEW-INSTRUCTIONS.md           # If gate:early-review in execution_order
 │   ├── MIDPOINT-REVIEW-INSTRUCTIONS.md        # If gate:midpoint-review in execution_order
 │   └── FINAL-REVIEW-INSTRUCTIONS.md           # If gate:final-review in execution_order
 ├── buster-test/
@@ -53,6 +54,8 @@ Projects/<project>/src/.swarm/
     │   └── preview.html                       # Prism preview (or baseline.png for single-page)
     └── <substep-id>/FORGE.md                  # For modules with substeps
 ```
+
+Review outputs (Echo's JSON results) are written to `.swarm/logs/echo-review/` at runtime — not to the instructions directory. Set `review_output_dir` and `output_file` in `progress.json` accordingly (see examples).
 
 `swarm.config.json` and `.semgrep.yml` are deployed via Helm — not repo files.
 
@@ -88,6 +91,8 @@ The Dockerfile **must** use fully-qualified base image names:
 ```dockerfile
 FROM docker.io/library/python:3.12-slim
 ```
+
+**Critical: The Dockerfile must exist before Buster runs.** `validateBusterConfig` checks all `serve.dockerfile` paths on disk before dispatching. If the Dockerfile doesn't exist yet, Buster will not start. The first module (scaffold) must create the Dockerfile — add it to FORGE.md's "Files to Produce" section.
 
 ## Substeps
 
