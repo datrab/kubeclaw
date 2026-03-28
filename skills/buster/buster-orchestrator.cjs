@@ -190,27 +190,11 @@ async function discord(embed) {
   } catch (e) { console.error('[DISCORD]', e.message); }
 }
 
-async function notifyTaskResult(id, sender, taskType, success, errObj = null) {
-  const fields = [
-    { name: 'Task ID',  value: `\`${id}\``,         inline: true },
-    { name: 'Type',     value: `\`${taskType}\``,   inline: true },
-    { name: 'Sender',   value: `\`${AGENT_NAME}\``, inline: true },
-  ];
-
-  if (!success && errObj) {
-    const message = String(errObj.message || errObj).slice(0, 950);
-    fields.push({ name: '❌ Error', value: `\`\`\`\n${message}\n\`\`\`` });
-    if (errObj.step) fields.push({ name: '📍 Step', value: `\`${errObj.step}\``, inline: true });
-  }
-
-  await discord({
-    title: success
-      ? `✅ Task Complete: ${AGENT_NAME} ➔ ${sender}`
-      : `❌ Task Failed: ${AGENT_NAME} ➔ ${sender}`,
-    color: success ? 5763719 : 15548997,
-    fields,
-    footer: { text: `Buster Orchestrator v1.1 • ${new Date().toISOString()}` },
-  });
+// notifyTaskResult removed — redundant with pipeline's own PASS/FAIL embeds.
+// Pipeline reads Redis completion and posts status immediately; this notification
+// arrived 2-3 min late and caused confusion in Discord timeline.
+async function notifyTaskResult(/* id, sender, taskType, success, errObj */) {
+  // no-op — kept as stub so call sites don't need changes
 }
 
 async function notifySuiteResults(moduleId, verdict) {
@@ -303,19 +287,27 @@ function startGatewayHealthMonitor() {
 async function sandboxCleanup() {
   log('CLEANUP', 'Running sandbox cleanup...');
   try {
-    // 1. Stop + remove all containers
-    await execAsync('podman stop -a 2>/dev/null; podman rm -a -f 2>/dev/null', {
+    // 1. Stop + remove all containers (wait for actual stop)
+    await execAsync('podman stop -a -t 5 2>/dev/null; podman rm -a -f 2>/dev/null', {
       timeout: 30000, encoding: 'utf8',
     }).catch(() => {});
     log('CLEANUP', 'Containers stopped and removed');
 
-    // 2. Remove dangling images only (<none>:<none> from rebuilt tags)
+    // 2. Kill anything holding known ports (9999, 8000, 3000, 8080)
+    // This catches processes that survived container cleanup or were started directly
+    await execAsync(
+      'for p in 9999 8000 3000 8080; do fuser -k $p/tcp 2>/dev/null; done',
+      { timeout: 10000, encoding: 'utf8' }
+    ).catch(() => {});
+    log('CLEANUP', 'Port cleanup done (9999, 8000, 3000, 8080)');
+
+    // 3. Remove dangling images only (<none>:<none> from rebuilt tags)
     await execAsync('podman image prune -f 2>/dev/null', {
       timeout: 10000, encoding: 'utf8',
     }).catch(() => {});
     log('CLEANUP', 'Dangling images pruned');
 
-    // 3. Clear sandbox directories and ensure they exist
+    // 4. Clear sandbox directories and ensure they exist
     await execAsync('rm -rf /sandbox/www/* /sandbox/results/*', {
       timeout: 5000, encoding: 'utf8',
     }).catch(() => {});
@@ -324,11 +316,28 @@ async function sandboxCleanup() {
     }).catch(() => {});
     log('CLEANUP', 'Sandbox directories cleared');
 
-    // 4. Stop nginx
+    // 5. Stop nginx
     await execAsync('nginx -s stop 2>/dev/null', {
       timeout: 5000, encoding: 'utf8',
     }).catch(() => {});
     log('CLEANUP', 'nginx stopped');
+
+    // 6. Verify ports are actually free
+    try {
+      const { stdout } = await execAsync(
+        'ss -tlnp 2>/dev/null | grep -E ":9999|:8000|:3000|:8080" || true',
+        { timeout: 5000, encoding: 'utf8' }
+      );
+      if (stdout.trim()) {
+        log('CLEANUP', `WARNING: Ports still in use after cleanup: ${stdout.trim()}`);
+        // Force kill any remaining listeners
+        await execAsync(
+          'for p in 9999 8000 3000 8080; do fuser -k -9 $p/tcp 2>/dev/null; done',
+          { timeout: 10000, encoding: 'utf8' }
+        ).catch(() => {});
+        log('CLEANUP', 'Force-killed remaining port listeners');
+      }
+    } catch { /* ok */ }
 
     log('CLEANUP', 'Done');
   } catch (e) {
@@ -1255,7 +1264,11 @@ async function main() {
   // 1. Load base images from progress.json (before any cleanup or pull)
   loadBaseImagesFromProgress();
 
-  // 2. Wait for Gateway readiness
+  // 2. Startup cleanup — kill orphaned processes from prior crashes
+  console.log('[STARTUP] Running cleanup for orphaned processes...');
+  await sandboxCleanup();
+
+  // 3. Wait for Gateway readiness
   await waitForGateway();
 
   // 3. Start periodic health monitor

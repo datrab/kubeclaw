@@ -4780,6 +4780,33 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
               is_pre_test: true,
               failed_suites: failedSuiteNames,
             });
+
+            // ── BLOCKED check — must respect max_fails like handleFail does ──
+            if (status.fail_count >= maxFails) {
+              status.status = STATUS.BLOCKED;
+              status.current_phase = null;
+              addHistory(status, STATUS.FAIL, 'pipeline',
+                `Repeated pre-test failure (${failedSuiteNames.join(',')}) — config issue, Forge cannot fix`);
+              addHistory(status, STATUS.BLOCKED, 'pipeline', `Max retries (${maxFails}) exceeded`);
+              saveStatus(config, dir, status);
+
+              log('ERROR', `Module ${moduleId} BLOCKED — repeated pre-test failure, ${maxFails}x in buster phase`);
+              _runStats.modules_blocked.push(moduleId);
+              await discord(config, 'CRITICAL', `Module ${moduleId} BLOCKED`,
+                `Repeated pre-test failure in ${failedSuiteNames.join(', ')}. Failed ${maxFails} times. Human intervention needed.`, [
+                  { name: 'Failed Suites', value: failedSuiteNames.join(', ') },
+                  { name: 'Reason', value: preTestReason.slice(0, 200) },
+                  { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
+                ]);
+
+              return { retry: false, result: {
+                exit: EXIT_BLOCKED,
+                reason: `Repeated pre-test failure — max retries exceeded (${failedSuiteNames.join(',')})`,
+                module: moduleId, module_dir: dir,
+                failed_suites: failedSuiteNames,
+              }};
+            }
+
             status.status = STATUS.FAIL;
             status.current_phase = null;
             addHistory(status, STATUS.FAIL, 'pipeline',
@@ -4790,6 +4817,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
               `Same pre-test suite(s) failed again: ${failedSuiteNames.join(', ')}. This is likely a config problem in progress.json, not a code issue.`, [
                 { name: 'Failed Suites', value: failedSuiteNames.join(', ') },
                 { name: 'Reason', value: preTestReason.slice(0, 200) },
+                { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
                 { name: 'Action', value: 'Check progress.json test_config / test_suites / serve' },
               ]);
 
