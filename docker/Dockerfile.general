@@ -2,7 +2,6 @@
 # KubeClaw General — Root Environment for Nova, Forge, Echo
 # =============================================================================
 FROM ghcr.io/openclaw/openclaw:latest
-
 USER root
 
 # 1. System tools
@@ -17,16 +16,17 @@ RUN mkdir -p /root/.npm && npm config set cache /root/.npm --global \
     && npm install -g ioredis uuid @qdrant/js-client-rest \
        typescript eslint knip madge
 
-# 3. Python lint tools (minimum versions for required features)
-#    ruff >= 0.1.0:   JSON output format
-#    mypy >= 1.0:     --output json flag
-#    pip-audit >= 2.6: JSON output with vulns array
-#    semgrep >= 1.40:  stable JSON output schema
+# 3. Python lint tools (stable, no hash issues)
 RUN pip install --break-system-packages --no-cache-dir \
-    'ruff>=0.1.0' 'mypy>=1.0' 'pip-audit>=2.6.0' 'semgrep>=1.40.0'
+    'ruff>=0.1.0' 'mypy>=1.0' 'pip-audit>=2.6.0'
 
-# 4. Binary tools — pinned versions for reproducible builds
-# Bump these ARGs when updating; `docker build --build-arg HADOLINT_VERSION=x.y.z` to override
+# 4. Semgrep — isolated install (musl/hash issues on PyPI)
+#    Eigenes venv verhindert Konflikte mit System-Python
+RUN python3 -m venv /opt/semgrep \
+    && /opt/semgrep/bin/pip install --no-cache-dir 'semgrep>=1.40.0' \
+    && ln -s /opt/semgrep/bin/semgrep /usr/local/bin/semgrep
+
+# 5. Binary tools — pinned versions for reproducible builds
 ARG HADOLINT_VERSION=2.12.0
 ARG KUBECONFORM_VERSION=0.6.4
 
@@ -45,24 +45,24 @@ RUN if ! command -v helm &>/dev/null; then \
       curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash; \
     fi
 
-# 5. File ownership for root mode
+# 6. File ownership for root mode
 RUN chown -R root:root /app
 
-# 6. KubeClaw skills — common + nova-specific, placed alongside OpenClaw's own skills
+# 7. KubeClaw skills
 COPY skills/common/ /app/skills/
 COPY skills/nova/ /app/skills/
 
-# 7. Environment
+# 8. Environment
 ENV NODE_PATH=/usr/local/lib/node_modules:/app/node_modules
 ENV NPM_CONFIG_CACHE=/root/.npm
 ENV HOME=/home/node
 
-# 8. ACPX plugin (Agent Communication Protocol)
+# 9. ACPX plugin (Agent Communication Protocol)
 RUN mkdir -p /home/node/.openclaw \
     && chown -R root:root /home/node \
     && openclaw plugins install acpx
 
-# 9. Build verification
+# 10. Build verification
 RUN echo "=== Build Verification ===" && \
     node -e "require('ioredis'); console.log('  ✅ ioredis')" && \
     ls /app/skills/redis.js /app/skills/memory.js /app/skills/pipeline.js /app/skills/lint-report.js && echo "  ✅ KubeClaw skills in /app/skills/" && \
