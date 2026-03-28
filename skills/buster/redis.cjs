@@ -216,15 +216,11 @@ const lib = {
     console.log(`[COMPLETE] project=${project} stream=${stream} module=${moduleId} status=${status}`);
 
     // ── Step 1: verify-task.js → scope check + push ──
-    // Memory check disabled — with oneshot sessions the subagent has no guaranteed
-    // second turn to write memory after being told it's missing. Scope check + push
-    // is the critical path; memory is nice-to-have, not a gate.
     console.log('[COMPLETE] Running verify-task.js...');
     let verifyResult;
     try {
       const verifyMod = await import('/app/skills/verify-task.js');
       verifyResult = await verifyMod.default(agentRole, project, {
-        requireMemory: false,
         commitMessage: `[${agentRole.toUpperCase()}] Module ${moduleId}: ${status}`,
       });
       console.log(`[COMPLETE] Verify: ${verifyResult.status} (${verifyResult.action})`);

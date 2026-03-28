@@ -166,7 +166,7 @@ async function gatewayInvoke(tool, args, timeoutMs = 30000, opts = {}, extraHead
 }
 
 // ─── Path Validation ─────────────────────────────────────────────────────────
-// Dynamic script paths from config (redis_js_path, memory_js_path) are validated
+// Dynamic script paths from config (redis_js_path) are validated
 // against an allowlist of prefixes. This prevents code execution via path traversal
 // if config is ever modified by an untrusted source.
 
@@ -763,7 +763,7 @@ function gateLintLogDir(config, gateId) {
  * Load and merge platform config (swarm.config.json) with project config (progress.json).
  *
  * Two sources, clear separation:
- *   swarm.config.json -- platform-level (agents, discord, memory, polling, defaults)
+ *   swarm.config.json -- platform-level (agents, discord, polling, defaults)
  *   progress.json     -- project-level (modules, gates, execution_order, phases)
  *
  * Paths are derived from convention, not configured:
@@ -990,9 +990,6 @@ function validateConfig(config, progress) {
       validateSafePath(agentConf.redis_js_path, `config.agents.${name}.redis_js_path`);
     }
   }
-  if (config.memory?.memory_js_path) {
-    validateSafePath(config.memory.memory_js_path, 'config.memory.memory_js_path');
-  }
 }
 
 /**
@@ -1203,7 +1200,6 @@ function loadStatus(config, dir) {
       fail_summaries: [],
       fail_count: 0,
       history: [],
-      decayed_memory_ids: [],
       cost: {
         forge_tokens_in: 0, forge_tokens_out: 0,
         buster_tokens_in: 0, buster_tokens_out: 0,
@@ -1279,6 +1275,75 @@ function gitCommitQuiet(config, filePath, message) {
  *
  * @private
  */
+function isRuntimeStatePath(relPathName) {
+  const p = String(relPathName || '').replace(/\\/g, '/');
+  return (
+    p.includes('/.swarm/logs/') ||
+    /\/\.swarm\/modules\/[^/]+\/status\.json$/.test(p) ||
+    /\/\.swarm\/[^/]+-gate-status\.json$/.test(p) ||
+    /\/\.swarm\/.*summary.*\.(json|md)$/.test(p) ||
+    /\/\.swarm\/.*project-summary.*$/.test(p)
+  );
+}
+
+function tryAutoResolveRebaseForRuntimeState(config) {
+  const conflictOut = gitExec(config.repo_root, ['diff', '--name-only', '--diff-filter=U']);
+  const conflicts = conflictOut.split('\n').map(s => s.trim()).filter(Boolean);
+  if (conflicts.length === 0) return false;
+
+  const runtimeConflicts = conflicts.filter(isRuntimeStatePath);
+  if (runtimeConflicts.length !== conflicts.length) {
+    const nonRuntime = conflicts.filter(p => !isRuntimeStatePath(p));
+    log('WARN', `Rebase has non-runtime conflicts — manual safety path required: ${nonRuntime.join(', ')}`);
+    return false;
+  }
+
+  log('WARN', `Auto-resolving ${runtimeConflicts.length} runtime-state rebase conflict(s) in favor of remote/main`);
+  for (const file of runtimeConflicts) {
+    gitExec(config.repo_root, ['checkout', '--theirs', '--', file], { stdio: 'ignore' });
+    gitExec(config.repo_root, ['add', '--', file], { stdio: 'ignore' });
+  }
+
+  while (true) {
+    try {
+      gitExec(config.repo_root, ['rebase', '--continue'], {
+        stdio: 'ignore',
+        env: { ...process.env, GIT_EDITOR: 'true' },
+      });
+    } catch (e) {
+      const rebaseDir = path.join(config.repo_root, '.git', 'rebase-merge');
+      const rebaseApplyDir = path.join(config.repo_root, '.git', 'rebase-apply');
+      const stillRebasing = fs.existsSync(rebaseDir) || fs.existsSync(rebaseApplyDir);
+      if (!stillRebasing) break;
+
+      const nextConflictOut = gitExec(config.repo_root, ['diff', '--name-only', '--diff-filter=U']);
+      const nextConflicts = nextConflictOut.split('\n').map(s => s.trim()).filter(Boolean);
+      if (nextConflicts.length === 0) throw e;
+
+      const nextRuntime = nextConflicts.filter(isRuntimeStatePath);
+      if (nextRuntime.length !== nextConflicts.length) {
+        const nonRuntime = nextConflicts.filter(p => !isRuntimeStatePath(p));
+        log('WARN', `Rebase advanced into non-runtime conflicts — aborting auto-resolve: ${nonRuntime.join(', ')}`);
+        throw e;
+      }
+
+      for (const file of nextRuntime) {
+        gitExec(config.repo_root, ['checkout', '--theirs', '--', file], { stdio: 'ignore' });
+        gitExec(config.repo_root, ['add', '--', file], { stdio: 'ignore' });
+      }
+    }
+
+    const rebaseDir = path.join(config.repo_root, '.git', 'rebase-merge');
+    const rebaseApplyDir = path.join(config.repo_root, '.git', 'rebase-apply');
+    const stillRebasing = fs.existsSync(rebaseDir) || fs.existsSync(rebaseApplyDir);
+    if (!stillRebasing) break;
+  }
+
+  invalidateHeadHash();
+  log('OK', 'Rebase auto-resolved using remote/main runtime state');
+  return true;
+}
+
 function _gitPullCore(config, allowDestructiveRecovery) {
   try {
     // --autostash: automatically stash uncommitted changes before rebase and pop after.
@@ -1298,8 +1363,13 @@ function _gitPullCore(config, allowDestructiveRecovery) {
     const isRebasing = fs.existsSync(rebaseDir) || fs.existsSync(rebaseApplyDir);
 
     if (isRebasing) {
-      log('WARN', 'Git pull left repo in REBASING state — aborting rebase');
+      log('WARN', 'Git pull left repo in REBASING state');
       try {
+        if (!allowDestructiveRecovery && tryAutoResolveRebaseForRuntimeState(config)) {
+          return;
+        }
+
+        log('WARN', 'Aborting rebase recovery path');
         gitExec(config.repo_root, ['rebase', '--abort'], { stdio: 'ignore' });
 
         if (allowDestructiveRecovery) {
@@ -1383,16 +1453,67 @@ async function gitCommitAndPush(config, message, { addPaths = ['-A'], captureHas
   try {
     gitExec(config.repo_root, ['add', ...addPaths], { stdio: 'ignore' });
 
-    const porcelain = gitExec(config.repo_root, ['status', '--porcelain']);
-    if (!porcelain) {
-      log('INFO', 'No uncommitted changes — nothing to push');
+    const staged = gitExec(config.repo_root, ['diff', '--cached', '--name-only']);
+    if (!staged) {
+      log('INFO', 'No staged changes — nothing to push');
       return { committed: false };
     }
 
     gitExec(config.repo_root, ['commit', '-m', message], { stdio: 'ignore' });
     invalidateHeadHash();
-    gitPullBeforePush(config);
-    await gitPushWithRetry(config);
+
+    // Stash any dirty/untracked files (e.g. .swarm/logs/) before pull-rebase
+    // so they don't conflict with incoming remote changes.
+    let stashed = false;
+    const dirtyCheck = gitExec(config.repo_root, ['status', '--porcelain']);
+    if (dirtyCheck) {
+      try {
+        gitExec(config.repo_root, ['stash', 'push', '--include-untracked', '-m', 'pipeline-pre-push-stash'], { stdio: 'ignore' });
+        stashed = true;
+        log('DEBUG', 'Stashed dirty worktree before pull-rebase');
+      } catch (stashErr) {
+        log('WARN', `Stash before pull failed (continuing anyway): ${stashErr.message?.split('\n')[0]}`);
+      }
+    }
+
+    try {
+      gitPullBeforePush(config);
+      await gitPushWithRetry(config);
+    } finally {
+      if (stashed) {
+        try {
+          gitExec(config.repo_root, ['stash', 'pop'], { stdio: 'ignore' });
+          log('DEBUG', 'Restored stashed worktree after push');
+        } catch (popErr) {
+          // Stash pop conflicts are expected when rebased commits touch the same
+          // runtime files (.swarm/logs/, status.json). Since these are ephemeral
+          // runtime state, we can safely drop the stash — the rebased (remote)
+          // versions are authoritative.
+          log('DEBUG', `Stash pop conflicted — dropping stash (remote state wins for runtime files)`);
+          try {
+            // Resolve conflicts by accepting current (post-rebase) state, then drop.
+            // IMPORTANT: avoid `git checkout -- .` which replaces files on disk (new inodes)
+            // and invalidates any open WriteStreams (like _pipelineLogFd for pipeline.jsonl).
+            // Instead, reset only the index to match HEAD and clean up the merge state.
+            gitExec(config.repo_root, ['reset', 'HEAD', '--', '.'], { stdio: 'ignore' });
+            gitExec(config.repo_root, ['checkout', '--', '.'], { stdio: 'ignore' });
+            gitExec(config.repo_root, ['stash', 'drop'], { stdio: 'ignore' });
+            // Reopen the pipeline log WriteStream if it was invalidated
+            if (_pipelineLogFd && config?._logDir) {
+              try {
+                _pipelineLogFd.end();
+                _pipelineLogFd = fs.createWriteStream(
+                  path.join(config._logDir, 'pipeline', 'pipeline.jsonl'), { flags: 'a' }
+                );
+              } catch { /* best effort */ }
+            }
+          } catch (dropErr) {
+            // Last resort: stash entry may already be gone (pop succeeded partially)
+            log('WARN', `Stash cleanup failed (non-critical): ${dropErr.message?.split('\n')[0]}`);
+          }
+        }
+      }
+    }
 
     const hash = captureHash ? gitExec(config.repo_root, ['rev-parse', 'HEAD']) : null;
     // No invalidateHeadHash here — rev-parse reads HEAD, doesn't change it.
@@ -1470,11 +1591,6 @@ function initStatus(moduleId, moduleConfig) {
     completion_summary: null,
     forge_commit_hash: null,
     forge_diff_stat: null,
-    // Track which Qdrant memory IDs have already had their confidence decayed
-    // for this module. Prevents the same memory from being decayed multiple times
-    // across pipeline runs (the "bleed-out" problem).
-    // Reset on PASS (positive feedback boosts everything back up anyway).
-    decayed_memory_ids: [],
     // Cost tracking — informational only, no budget enforcement.
     // Populated by agents via status.json updates. Used for Discord reports
     // and post-mortem analysis. Token budgets are managed at the API/OAuth level.
@@ -1541,6 +1657,36 @@ function listBlueprints(config) {
   }
 }
 
+// Blueprint/control-state boundary.
+//
+// INCLUDED by blueprint release / sync:
+// - progress.json
+// - module control files: FORGE.md, BUSTER.md, ECHO.md, test-spec.json
+// - substep FORGE.md files
+// - baselines / reference control files when explicitly released under a module path
+// - gate instruction/control files (echo-review/, buster-test/)
+//
+// EXCLUDED by default:
+// - .swarm/logs/**
+// - transient summaries / runtime reports
+// - module status.json and other runtime execution artifacts
+// - gate-status.json and similar runtime completion files
+//
+// Rule: blueprint release should carry control state, not execution residue.
+const BLUEPRINT_POLICY = Object.freeze({
+  include: Object.freeze({
+    moduleControlFiles: ['FORGE.md', 'BUSTER.md', 'ECHO.md', 'test-spec.json'],
+    gateControlFiles: ['FINAL-BUSTER.md', 'final-test-spec.json'],
+  }),
+  excludeGlobs: Object.freeze([
+    '.swarm/logs/**',
+    '.swarm/**/status.json',
+    '.swarm/*-gate-status.json',
+    '.swarm/**/summary*.json',
+    '.swarm/**/project-summary*',
+  ]),
+});
+
 async function releaseBlueprint(config, progress, moduleId, moduleDir, stages = ['forge', 'buster']) {
   const branch = `${config.project}/architecture`;
   const targetPath = relPath(config, modulePath(config, moduleDir));
@@ -1589,12 +1735,12 @@ async function releaseBlueprint(config, progress, moduleId, moduleDir, stages = 
   }
 
   // Commit & push
-  // We use addPaths=['-A'] (all staged changes) instead of scoped targetPath to avoid
-  // push failures caused by other dirty/untracked files in the working tree blocking the push.
-  // Blueprint files are already checked out above; committing everything ensures a clean push.
+  // IMPORTANT: only stage the released blueprint path here.
+  // Using '-A' sweeps in runtime exhaust (.swarm/logs, status churn, summaries),
+  // which creates avoidable rebase conflicts during blueprint release.
   try {
     const result = await gitCommitAndPush(config, `[blueprint] Release module ${moduleId} (${moduleDir})`, {
-      addPaths: ['-A'],
+      addPaths: [targetPath],
     });
     if (result.committed) {
       log('OK', `Blueprint released and pushed: ${moduleDir}`);
@@ -1640,6 +1786,7 @@ async function releaseGateFiles(config, progress) {
 
   const swarmRelPath = relPath(config, swarmRoot(config));
   let checkedOut = [];
+  let checkedOutPaths = [];
 
   for (const dir of gateDirs) {
     const targetPath = `${swarmRelPath}/${dir}`;
@@ -1662,6 +1809,7 @@ async function releaseGateFiles(config, progress) {
     try {
       gitExec(config.repo_root, ['checkout', `origin/${branch}`, '--', targetPath], { stdio: 'ignore' });
       checkedOut.push(dir);
+      checkedOutPaths.push(targetPath);
       log('OK', `Gate files released: ${dir}/`);
     } catch (e) {
       log('WARN', `Failed to checkout gate dir '${dir}': ${e.message}`);
@@ -1671,7 +1819,7 @@ async function releaseGateFiles(config, progress) {
   if (checkedOut.length > 0) {
     try {
       await gitCommitAndPush(config, `[blueprint] Release gate files: ${checkedOut.join(', ')}`, {
-        addPaths: ['-A'],
+        addPaths: checkedOutPaths,
       });
       log('OK', `Gate files committed and pushed: ${checkedOut.join(', ')}`);
     } catch (e) {
@@ -1694,12 +1842,14 @@ async function releaseGateFiles(config, progress) {
  * One aggregated commit for all changes.
  *
  * Whitelist (per module):
- *   FORGE.md, BUSTER.md, ECHO.md, test-spec.json
- *   <substepId>/FORGE.md (for substep modules)
+ *   see BLUEPRINT_POLICY.include.moduleControlFiles
+ *   plus <substepId>/FORGE.md (for substep modules)
  *
  * Whitelist (per gate):
  *   The file pointed to by gate.instructions_file
- *   FINAL-BUSTER.md, final-test-spec.json (in buster-test/ dirs)
+ *   plus BLUEPRINT_POLICY.include.gateControlFiles
+ *
+ * Exclusions are documented in BLUEPRINT_POLICY.excludeGlobs.
  */
 async function syncControlFiles(config, progress) {
   const branch = `${config.project}/architecture`;
@@ -1746,7 +1896,7 @@ async function syncControlFiles(config, progress) {
   }
 
   // ── Module control files ──
-  const MODULE_CONTROL_FILES = ['FORGE.md', 'BUSTER.md', 'ECHO.md', 'test-spec.json'];
+  const MODULE_CONTROL_FILES = BLUEPRINT_POLICY.include.moduleControlFiles;
 
   for (const [moduleId, mod] of Object.entries(progress.modules || {})) {
     // Only sync modules that are NOT pending (pending = not yet released, releaseBlueprint handles those)
@@ -1771,7 +1921,7 @@ async function syncControlFiles(config, progress) {
 
   // ── Gate control files ──
   // Sync gate instruction files and known gate control files
-  const GATE_CONTROL_FILES = ['FINAL-BUSTER.md', 'final-test-spec.json'];
+  const GATE_CONTROL_FILES = BLUEPRINT_POLICY.include.gateControlFiles;
 
   const processedGateDirs = new Set();
   for (const gate of Object.values(progress.gates || {})) {
@@ -2395,10 +2545,9 @@ function readGateInstructions(config, gate) {
 //   1. Context Block — factual orientation (paths, commit, attempt)
 //   2. Test Workspace — where to write test scripts (per-attempt dirs)
 //   3. Test Instructions — BUSTER.md / gate instructions (inline, full content)
-//   4. Completion Protocol — status.json → memory.js → redis.js
+//   4. Completion Protocol — status.json → redis.js
 //
 // No anti-patterns (Buster executes specs, doesn't need creative guidance).
-// No memory injection (Buster's decisions are spec-driven, not context-driven).
 // Orchestrator handles: git pull, build, serve, cleanup, deterministic suites.
 
 /**
@@ -2453,15 +2602,8 @@ function buildAvailableToolsSection() {
     '',
     '### Completion (redis.cjs)',
     '',
-    '**See Step 3 in "When Testing Is Complete" below.** Do NOT use this as a template —',
-    'the completion command requires `--task-type`, a real `--summary` with actual test results,',
-    'and must be preceded by Step 1 (write results) and Step 2 (store memory).',
-    '',
-    '### Memory (Qdrant)',
-    '```',
-    'node /app/skills/memory.js remember --text "finding" --tags "t1,t2" [--module <ID>]',
-    'node /app/skills/memory.js recall --query "text" [--tags "t1"] [--module <ID>] [--limit 5]',
-    '```',
+    '**See the completion steps in "When Testing Is Complete" below.** Do NOT use this as a template —',
+    'the completion command requires `--task-type` where applicable and a real `--summary` with actual test results.',
     '',
     '### Conventions',
     '',
@@ -2635,7 +2777,7 @@ function buildBusterGatePrompt(config, gateId, gate, instructions, commitHash, a
 }
 
 /**
- * Completion protocol for module_test: status.json → memory.js → redis.js
+ * Completion protocol for module_test: status.json → redis.js
  */
 function buildBusterCompletionProtocol(config, moduleId, dir, status) {
   const statusJsonPath = relPath(config, statusPath(config, dir));
@@ -2657,25 +2799,7 @@ function buildBusterCompletionProtocol(config, moduleId, dir, status) {
     '- If PASS: set `"completion_summary"` with test results overview',
     '- Set `"current_phase"` to `null`',
     '',
-    '### Step 2: Store Technical Insights (MANDATORY)',
-    '',
-    'Store 1-3 key technical insights from this session:',
-    '```bash',
-    `node /app/skills/memory.js remember \\`,
-    `  --text "Concise technical insight — what was tested and what pattern works or fails" \\`,
-    `  --tags "buster,${moduleId},${config.project}" \\`,
-    `  --scope global \\`,
-    `  --module ${moduleId}`,
-    '```',
-    '',
-    'What to store: patterns that worked, edge cases found, root causes of failures, test strategies.',
-    'What NOT to store: "Tests passed" (useless metadata), project-specific details that cannot be reused.',
-    '',
-    '⚠️ Step 2 is MANDATORY. `redis.cjs --action complete` triggers `verify-task.js`,',
-    'which checks that at least one memory entry exists for this module.',
-    'If you skip Step 2, Step 3 will fail with MISSING MEMORY ENTRY.',
-    '',
-    '### Step 3: Signal Completion',
+    '### Step 2: Signal Completion',
     '',
     'This is your **LAST** action:',
     '```bash',
@@ -2694,7 +2818,7 @@ function buildBusterCompletionProtocol(config, moduleId, dir, status) {
 }
 
 /**
- * Completion protocol for gate_test: output_file → memory.js → redis.js
+ * Completion protocol for gate_test: output_file → redis.js
  */
 function buildBusterGateCompletionProtocol(config, gateId, gate) {
   const outputFile = gate.output_file
@@ -2713,25 +2837,7 @@ function buildBusterGateCompletionProtocol(config, gateId, gate) {
       : 'Write your results as described in the instructions above.',
     'Include a `"summary"` field with a brief overview and a `"findings"` array with details.',
     '',
-    '### Step 2: Store Technical Insights (MANDATORY)',
-    '',
-    'Store 1-3 key technical insights from this session:',
-    '```bash',
-    `node /app/skills/memory.js remember \\`,
-    `  --text "Concise technical insight — what was tested and what pattern works or fails" \\`,
-    `  --tags "buster,${gateId},${config.project}" \\`,
-    `  --scope global \\`,
-    `  --module ${gateId}`,
-    '```',
-    '',
-    'What to store: patterns that worked, edge cases found, root causes of failures, test strategies.',
-    'What NOT to store: "Tests passed" (useless metadata), project-specific details that cannot be reused.',
-    '',
-    '⚠️ Step 2 is MANDATORY. `redis.cjs --action complete` triggers `verify-task.js`,',
-    'which checks that at least one memory entry exists for this module.',
-    'If you skip Step 2, Step 3 will fail with MISSING MEMORY ENTRY.',
-    '',
-    '### Step 3: Signal Completion',
+    '### Step 2: Signal Completion',
     '',
     'This is your **LAST** action:',
     '```bash',
@@ -2750,296 +2856,14 @@ function buildBusterGateCompletionProtocol(config, gateId, gate) {
   ];
 }
 
-// ─── Qdrant Memory Integration ───────────────────────────────────────────────
+// ─── Memory Integration Disabled ────────────────────────────────────────────
 //
-// Three integration points:
-//
-// 1. BEFORE FORGE (recall)
-//    Pull relevant memories from Qdrant and inject into the Forge prompt.
-//    This includes project-scoped memories AND global patterns from other projects.
-//    The scope filter in memory.js already handles this:
-//      - global (cross-project patterns, reusable learnings)
-//      - project:kubecommand (project-specific context)
-//      - agent:forge (agent-specific knowledge)
-//
-// 2. AFTER PASS/FAIL (feedback)
-//    Call memory.js feedback to bulk-update confidence scores on memories
-//    that were relevant to this module. PASS = boost, FAIL = decay.
-//    This creates a natural reinforcement loop.
-//
-// 3. AFTER PASS (store pattern)
-//    Extract a reusable pattern from the successful module and store it
-//    with scope=global. This makes it available to all future projects.
-//    Example: "WebSocket auth must reject before accept() for 4001 codes"
-
-function memoryEnabled(config) {
-  return config.memory?.enabled !== false;
-}
-
-function memoryJsPath(config) {
-  return validateSafePath(
-    config.memory?.memory_js_path || '/app/skills/memory.js',
-    'config.memory.memory_js_path'
-  );
-}
-
-// ── Dynamic import of memory.js with CLI fallback ──
-// If memory.js exports named functions (recall, feedback, remember), import them
-// directly to avoid subprocess overhead (~7 spawns per module). Falls back to CLI
-// if the import fails (e.g. memory.js doesn't have exports yet).
-
-let _memoryModule = null;
-let _memoryImportAttempted = false;
-
-async function getMemoryModule(config) {
-  if (_memoryImportAttempted) return _memoryModule;
-  _memoryImportAttempted = true;
-
-  const memPath = memoryJsPath(config);
-  try {
-    _memoryModule = await import(memPath);
-    log('INFO', 'Memory module loaded via direct import (no subprocess overhead)');
-  } catch (e) {
-    log('INFO', `Memory module import failed (${e.message}) — using CLI fallback`);
-    _memoryModule = null;
-  }
-  return _memoryModule;
-}
-
-/**
- * Recall relevant memories for a module.
- * Returns formatted markdown block to inject into the agent's prompt,
- * or empty string if no memories found / memory disabled.
- */
-async function recallForModule(config, moduleId, moduleTitle, additionalContext = '', failContext = '', logOpts = {}) {
-  if (!memoryEnabled(config)) return { block: '', count: 0, ids: [] };
-
-  const limit = config.memory?.recall_limit ?? 5;
-  const memPath = memoryJsPath(config);
-  const isRetry = !!failContext;
-
-  // Build a natural language query — embedding models work better with sentences
-  // than with keyword dumps like "06 WebSockets 06a 06b"
-  const substepInfo = additionalContext ? ` with steps ${additionalContext}` : '';
-
-  // On retry: include fail context so the embedding search can find memories
-  // that are relevant to the SOLUTION, not to the failed approach.
-  // This doesn't filter memories — it biases the semantic search toward
-  // "what works" rather than "what we already tried".
-  const retryHint = isRetry
-    ? ` Previous approaches failed: ${failContext.slice(0, 200)}. Focus on alternative patterns and workarounds.`
-    : '';
-  const query = `What established patterns, solutions, and architectural decisions exist for building ${moduleTitle}${substepInfo}?${retryHint} Include relevant technical insights from similar modules.`;
-
-  log('STEP', `Memory recall for module ${moduleId}${isRetry ? ' (retry-aware)' : ''}: "${query.slice(0, 100)}..."`);
-
-  try {
-    let memories;
-
-    // Try direct import first (no subprocess overhead)
-    const memModule = await getMemoryModule(config);
-    if (memModule?.recall) {
-      memories = await memModule.recall(query, { limit });
-    } else {
-      // CLI fallback
-      const result = nodeExec(memPath, ['recall', '--query', query, '--limit', String(limit)],
-        { timeout: 15000, env: process.env });
-      memories = JSON.parse(result);
-    }
-
-    if (!memories.length) {
-      log('INFO', 'No relevant memories found');
-      return { block: '', count: 0, ids: [] };
-    }
-
-    log('OK', `${memories.length} memories recalled`);
-
-    // Extract IDs for targeted confidence decay on failure.
-    // These are the specific memories that were injected into the agent's prompt —
-    // if the module fails, these (and only these) should have their confidence decayed.
-    const ids = memories.map(m => m.id).filter(Boolean);
-
-    // Format as markdown block for prompt injection
-    const lines = memories.map((m, i) => {
-      const conf = m.confidence ?? 0.5;
-      const stars = conf >= 0.75 ? '★★★' : conf >= 0.45 ? '★★☆' : '★☆☆';
-      const score = (m.score ?? 0).toFixed(2);
-      const module = m.module ? `module:${m.module}` : '';
-      const agent = m.agent ? `by:${m.agent}` : '';
-      const tags = m.tags?.length ? `tags:${m.tags.join(',')}` : '';
-      const meta = [module, agent, tags].filter(Boolean).join(' · ');
-      return `${i + 1}. [${stars} relevance:${score}] ${m.text}${meta ? `\n   _(${meta})_` : ''}`;
-    });
-
-    // Adjust header based on retry context — on retry, memories need a caveat
-    const headerNote = isRetry
-      ? 'These learnings may or may not apply to the current retry.\nIf a memory contradicts something in the ANTI-PATTERNS section above, the anti-pattern takes precedence.'
-      : 'Use these as guidance, not as absolute truth.';
-
-    const block = [
-      '',
-      '---',
-      '## 📎 CONTEXT FROM SWARM MEMORY',
-      '',
-      'The following learnings from previous work may be relevant.',
-      '★★★ = validated pattern, ★★☆ = neutral, ★☆☆ = unverified.',
-      headerNote,
-      '',
-      ...lines,
-      '',
-      '---',
-      '',
-    ].join('\n');
-
-    // Write recall log to centralized log directory
-    if (logOpts.dir && config._logDir) {
-      try {
-        const attempt = logOpts.attempt || 1;
-        const logDir = moduleLogDir(config, logOpts.dir);
-        const recallData = { recalled_count: memories.length, memories: memories.map(m => ({ id: m.id, score: m.score, confidence: m.confidence, text: m.text?.slice(0, 200) })), query: query.slice(0, 300), module: moduleId };
-        fs.writeFileSync(path.join(logDir, `memory-recall-attempt-${attempt}.json`), JSON.stringify(recallData, null, 2));
-      } catch { /* non-critical */ }
-    }
-
-    return { block, count: memories.length, ids };
-  } catch (e) {
-    log('WARN', `Memory recall failed: ${e.message}`);
-    return { block: '', count: 0, ids: [] };
-  }
-}
-
-/**
- * Send outcome feedback to Qdrant after module PASS/FAIL.
- * Updates confidence scores on memories related to this module.
- */
-async function feedbackMemory(config, moduleId, outcome, reason = '', logOpts = {}) {
-  if (!memoryEnabled(config)) return;
-  if (!config.memory?.feedback_after_outcome) return;
-
-  const memPath = memoryJsPath(config);
-
-  log('STEP', `Memory feedback: module=${moduleId} outcome=${outcome}`);
-
-  try {
-    let feedback;
-
-    const memModule = await getMemoryModule(config);
-    if (memModule?.feedback) {
-      feedback = await memModule.feedback(moduleId, outcome, { reason: reason.slice(0, 500) });
-    } else {
-      const args = ['feedback', '--module', moduleId, '--outcome', outcome];
-      if (reason) args.push('--reason', reason.slice(0, 500));
-      const result = nodeExec(memPath, args, { timeout: 15000, env: process.env });
-      feedback = JSON.parse(result);
-    }
-
-    log('OK', `Memory feedback applied: ${feedback.memories_affected} memories updated, outcome stored as ${feedback.outcome_memory_id}`);
-
-    // Write feedback log to centralized log directory
-    if (logOpts.dir && config._logDir) {
-      try {
-        const attempt = logOpts.attempt || 1;
-        const logDir = moduleLogDir(config, logOpts.dir);
-        const feedbackData = { module: moduleId, outcome, reason: reason.slice(0, 500), affected_count: feedback.memories_affected };
-        fs.writeFileSync(path.join(logDir, `memory-feedback-attempt-${attempt}.json`), JSON.stringify(feedbackData, null, 2));
-      } catch { /* non-critical */ }
-    }
-
-    return feedback;
-  } catch (e) {
-    log('WARN', `Memory feedback failed: ${e.message}`);
-  }
-}
-
-/**
- * Targeted confidence decay for specific memories that were in the agent's prompt.
- *
- * Unlike feedbackMemory (which operates on all memories related to a module),
- * this decays ONLY the memories that were actually recalled and injected into
- * the Forge prompt for this specific attempt. This is precise:
- *   - If a memory was in the prompt and the agent failed → the memory may have
- *     been misleading or irrelevant. Decay it.
- *   - If a memory was NOT in the prompt → it had no influence. Leave it alone.
- *
- * Cross-run protection:
- *   Decayed IDs are tracked in status.decayed_memory_ids. If the same module
- *   fails again in a later pipeline run, memories that were already decayed
- *   are skipped. This prevents a correct memory from bleeding out to zero
- *   confidence over multiple runs where the actual problem is elsewhere.
- *   The set resets on PASS (positive feedback boosts everything back anyway).
- *
- * @param {object} config - Pipeline config
- * @param {string} moduleId - Module that failed
- * @param {string[]} memoryIds - Qdrant point IDs of recalled memories
- * @param {object} status - Module status object (mutated: decayed_memory_ids updated)
- * @param {string} reason - Why the module failed (for logging)
- */
-async function decayRecalledMemories(config, moduleId, memoryIds, status, reason = '') {
-  if (!memoryEnabled(config)) return;
-  if (!memoryIds?.length) return;
-
-  // ── Cross-run protection ──
-  // Filter out memories that have already been decayed for this module.
-  // status.decayed_memory_ids persists across runs via status.json.
-  const alreadyDecayed = new Set(status.decayed_memory_ids || []);
-  const newIds = memoryIds.filter(id => !alreadyDecayed.has(id));
-
-  if (newIds.length === 0) {
-    log('INFO', `All ${memoryIds.length} recalled memories already decayed for ${moduleId} — skipping (cross-run protection)`);
-    return;
-  }
-
-  if (newIds.length < memoryIds.length) {
-    log('INFO', `${memoryIds.length - newIds.length} of ${memoryIds.length} memories already decayed — decaying ${newIds.length} new`);
-  }
-
-  const memPath = memoryJsPath(config);
-
-  log('STEP', `Targeted memory decay: ${newIds.length} memories that were in failed prompt for ${moduleId}`);
-
-  try {
-    const memModule = await getMemoryModule(config);
-    if (memModule?.decayByIds) {
-      // Direct import path — if memory.js exposes a targeted decay function
-      await memModule.decayByIds(newIds, {
-        module: moduleId,
-        reason: reason.slice(0, 500),
-        decay_amount: config.memory?.targeted_decay_amount ?? 0.1,
-      });
-    } else if (memModule?.feedback) {
-      // Fallback: use feedback with explicit IDs if supported
-      await memModule.feedback(moduleId, 'fail', {
-        reason: reason.slice(0, 500),
-        memory_ids: newIds,
-      });
-    } else {
-      // CLI fallback — pass IDs as comma-separated list
-      const args = [
-        'feedback', '--module', moduleId, '--outcome', 'fail',
-        '--memory-ids', newIds.join(','),
-      ];
-      if (reason) args.push('--reason', reason.slice(0, 500));
-      nodeExec(memPath, args, { timeout: 15000, env: process.env });
-    }
-
-    // Record decayed IDs in status (persisted by handleFail's saveStatus call)
-    if (!status.decayed_memory_ids) status.decayed_memory_ids = [];
-    status.decayed_memory_ids.push(...newIds);
-
-    log('OK', `Decayed ${newIds.length} recalled memories for ${moduleId} (${status.decayed_memory_ids.length} total tracked)`);
-  } catch (e) {
-    // Non-critical — log and continue. The pipeline should never fail
-    // because memory confidence updates didn't work.
-    log('WARN', `Targeted memory decay failed: ${e.message}`);
-  }
-}
+// This deployment intentionally disables pipeline memory recall/feedback.
 
 // ─── Summary Agent (REMOVED) ────────────────────────────────────────────────
 // spawnSummaryAgent was removed in the Buster Architecture Refactor.
-// Technical insights are now stored by the Buster subagent directly via
-// the memory skill as part of the completion protocol (Step B), before
-// signaling completion via redis.js. This eliminates the fire-and-forget
-// Echo agent, the temp-file timing issue, and the extra agent spawn.
+// This eliminates the fire-and-forget Echo agent, the temp-file timing issue,
+// and the extra agent spawn.
 
 // ─── Polling ─────────────────────────────────────────────────────────────────
 
@@ -3709,28 +3533,7 @@ async function handleFail(config, status, moduleDir, moduleId, maxFails, phase, 
   //    still failed, so they may be misleading or irrelevant.
   //    This is precise and doesn't affect unrelated memories.
   //
-  // 2. Broad feedback (feedbackMemory):
-  //    Updates ALL memories related to this module (by module tag).
-  //    Reserved for strong signals only:
-  //      fail_count >= maxFails → feedbackMemory('blocked') — definitive signal
-  //    NOT called on individual failures — targeted decay handles that.
-  //
-  // The old over-punishment problem is solved:
-  //   Old: fail_count==1 → broad decay, fail_count 2-N → nothing, maxFails → broad blocked
-  //   New: every fail → precise decay of recalled memories, maxFails → broad blocked signal
-
   const failReason = reason || status.fail_summaries?.[status.fail_summaries.length - 1]?.summary || '';
-
-  // Targeted decay: decay the specific memories that were in the prompt
-  // (status object is mutated — decayed_memory_ids updated, persisted by saveStatus below)
-  if (recalledMemoryIds.length > 0) {
-    await decayRecalledMemories(config, moduleId, recalledMemoryIds, status, failReason);
-  }
-
-  // Broad feedback: only on final BLOCKED (strong definitive signal)
-  if (status.fail_count >= maxFails) {
-    await feedbackMemory(config, moduleId, 'blocked', failReason, { dir: moduleDir, attempt: status.fail_count });
-  }
 
   // ── Status update — single save, single git commit ──
   // BLOCKED path sets FAIL + BLOCKED in one commit instead of two.
@@ -3925,16 +3728,25 @@ async function injectNeedsNova(config, result, novaChannel, stepType = 'module',
       ]);
   } catch (e) {
     const errMsg = e?.message?.split('\n')[0] || 'unknown error';
-    entry.status = 'failed';
-    entry.error = errMsg;
-    log('WARN', `Failed to inject ${exitLabel} into Nova channel ${channelId}: ${errMsg}`);
-    await discord(config, 'CRITICAL', `Nova injection FAILED: ${targetId}`,
-      `Cronjob could not inject Nova into Discord for ${stepType} ${targetId}. Manual intervention required.`, [
-        { name: 'Exit', value: exitLabel },
-        { name: 'Channel', value: channelId },
-        { name: 'Target', value: `${stepType}:${targetId}` },
-        { name: 'Error', value: errMsg.slice(0, 200) },
-      ]);
+    // "This operation was aborted" means the gateway fetch was cancelled during
+    // pipeline shutdown — but the message was already dispatched to the session.
+    // Treat abort as success (message delivered) rather than a false failure.
+    const isAbort = /aborted|abort/i.test(errMsg);
+    if (isAbort) {
+      entry.status = 'ok_aborted';
+      log('OK', `${exitLabel} injected into Nova channel ${channelId} for ${stepType} ${targetId} (response aborted during shutdown — message delivered)`);
+    } else {
+      entry.status = 'failed';
+      entry.error = errMsg;
+      log('WARN', `Failed to inject ${exitLabel} into Nova channel ${channelId}: ${errMsg}`);
+      await discord(config, 'CRITICAL', `Nova injection FAILED: ${targetId}`,
+        `Cronjob could not inject Nova into Discord for ${stepType} ${targetId}. Manual intervention required.`, [
+          { name: 'Exit', value: exitLabel },
+          { name: 'Channel', value: channelId },
+          { name: 'Target', value: `${stepType}:${targetId}` },
+          { name: 'Error', value: errMsg.slice(0, 200) },
+        ]);
+    }
   } finally {
     appendInjectionLog();
   }
@@ -4263,26 +4075,8 @@ async function buildForgePrompt(config, moduleId, mod, dir, status, maxFails, no
     log('INFO', `Nova prompt override injected (${novaPrompt.length} chars)`);
   }
 
-  // ── Memory recall ──
-  // On retry: pass fail summaries as negative context so the query can
-  // de-prioritize memories that match the failed approach.
   let memoryBlock = '';
   let recalledMemoryIds = [];
-  if (config.memory?.recall_before_forge !== false) {
-    const additionalCtx = mod.substeps ? mod.substeps.join(', ') : '';
-    const failContext = isRetry
-      ? status.fail_summaries.map(f => f.summary).join('; ')
-      : '';
-    const { block, count, ids } = await recallForModule(
-      config, moduleId, mod.title, additionalCtx, failContext,
-      { dir, attempt: status.fail_count + 1 }
-    );
-    if (block) {
-      memoryBlock = block;
-      recalledMemoryIds = ids || [];
-      log('INFO', `${count} memories injected into Forge prompt (${recalledMemoryIds.length} IDs tracked for decay)`);
-    }
-  }
 
   // ── Priority header (only when multiple sections are present) ──
   let priorityHeader = '';
@@ -4409,9 +4203,6 @@ async function runModule(config, progress, moduleId, opts = {}) {
  */
 async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeout, maxFails, novaPrompt) {
 
-  // Track memory IDs that were injected into the Forge prompt for this attempt.
-  // If the module fails (in forge OR buster), these specific memories get decayed.
-  // Declared here so the IDs survive from forge phase through buster phase.
   let recalledMemoryIds = [];
 
   // ── Load or init status ──
@@ -4639,7 +4430,6 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     status.status = STATUS.PASS;
     status.completed_at = new Date().toISOString();
     status.current_phase = null;
-    status.decayed_memory_ids = [];
     if (status.started_at) {
       status.cost.total_duration_seconds = Math.round(
         (new Date(status.completed_at) - new Date(status.started_at)) / 1000
@@ -4658,7 +4448,6 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     LOG_PHASE = null;
     _runStats.modules_completed.push(moduleId);
 
-    await feedbackMemory(config, moduleId, 'pass', '', { dir, attempt: status.fail_count + 1 });
     return { retry: false, result: { exit: EXIT_OK, status: STATUS.PASS } };
   }
 
@@ -4881,7 +4670,6 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
       if (status.status === STATUS.PASS) {
         status.completed_at = new Date().toISOString();
         status.current_phase = null;
-        status.decayed_memory_ids = [];
         if (status.started_at) {
           status.cost.total_duration_seconds = Math.round(
             (new Date(status.completed_at) - new Date(status.started_at)) / 1000
@@ -4900,7 +4688,6 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
         LOG_PHASE = null;
         _runStats.modules_completed.push(moduleId);
 
-        await feedbackMemory(config, moduleId, 'pass', '', { dir, attempt: status.fail_count + 1 });
 
         return { retry: false, result: { exit: EXIT_OK, status: STATUS.PASS } };
       }
@@ -6156,7 +5943,7 @@ async function cleanupReviewFiles(config, gate, reviewers) {
  * @param {object} progress - Project progress
  * @param {string} gateId - Gate identifier
  */
-async function runReviewGate(config, progress, gateId) {
+async function runReviewGate(config, progress, gateId, { novaPrompt } = {}) {
   const gate = progress.gates[gateId];
   if (!gate) throw new Error(`Review gate '${gateId}' not found`);
 
@@ -6170,6 +5957,7 @@ async function runReviewGate(config, progress, gateId) {
   log('STEP', `\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
 
   // Already completed? Content-aware: a NO-GO file from a crashed fix cycle is NOT completed.
+  let skipInitialReview = false;
   if (gate.output_file) {
     const outPath = path.join(swarmRoot(config), gate.output_file);
     if (fs.existsSync(outPath)) {
@@ -6179,7 +5967,12 @@ async function runReviewGate(config, progress, gateId) {
         const s = (data.status || '').toUpperCase();
         if (s === 'NO-GO' || s === 'FAIL') {
           isCompleted = false;
-          log('INFO', `Review gate '${gateId}' output file exists but status is '${data.status}' — re-running`);
+          if (novaPrompt) {
+            skipInitialReview = true;
+            log('INFO', `Review gate '${gateId}' is ${data.status} + Nova prompt provided — skipping initial review, going to Forge fix`);
+          } else {
+            log('INFO', `Review gate '${gateId}' output file exists but status is '${data.status}' — re-running`);
+          }
         }
       } catch { /* non-JSON (e.g. markdown) = completed */ }
 
@@ -6202,7 +5995,15 @@ async function runReviewGate(config, progress, gateId) {
     ]);
 
   // \u2500\u2500 Initial review \u2500\u2500
-  let reviewResult = await _runReviewOnce(config, progress, gateId, gate, reviewConfig);
+  let reviewResult;
+  if (skipInitialReview) {
+    const outPath = path.join(swarmRoot(config), gate.output_file);
+    const existingData = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+    reviewResult = { ok: false, mergedResult: existingData };
+    log('INFO', `Loaded existing review result for Forge fix (skipped Echo)`);
+  } else {
+    reviewResult = await _runReviewOnce(config, progress, gateId, gate, reviewConfig);
+  }
 
   if (reviewResult.error) {
     log('ERROR', `Review gate '${gateId}' failed: ${reviewResult.error}`);
@@ -6235,7 +6036,12 @@ async function runReviewGate(config, progress, gateId) {
       break;
     }
 
-    const fixPrompt = buildReviewFixPrompt(config, gate, currentIssues, cycle, maxFixCycles, fixHistory);
+    let fixPrompt = buildReviewFixPrompt(config, gate, currentIssues, cycle, maxFixCycles, fixHistory);
+    // On first cycle with Nova prompt, prepend it to give Forge precise instructions
+    if (novaPrompt && cycle === 1) {
+      fixPrompt = `## Nova Override\n\n${novaPrompt}\n\n---\n\n${fixPrompt}`;
+      log('INFO', `Nova prompt injected into Forge fix prompt (cycle 1, ${novaPrompt.length} chars)`);
+    }
     const forgeModel = resolveModel('forge', config, progress, gate.forge_model);
     const fixLabel = `reviewfix-${gateId}-${cycle}`;
     const fixAcpLabel = acpLabel('forge', fixLabel);
@@ -6345,7 +6151,7 @@ async function runReviewGate(config, progress, gateId) {
  * type:"buster"  -> runBusterGate (with optional fix-and-retest loop)
  * type:"review"  -> runReviewGate (single reviewer with lint report, fix loops)
  */
-async function runGate(config, progress, gateId) {
+async function runGate(config, progress, gateId, { novaPrompt } = {}) {
   const gate = progress.gates[gateId];
   if (!gate) throw new Error(`Gate '${gateId}' not found in progress.json`);
 
@@ -6354,7 +6160,7 @@ async function runGate(config, progress, gateId) {
   }
 
   if (gate.type === 'review') {
-    return runReviewGate(config, progress, gateId);
+    return runReviewGate(config, progress, gateId, { novaPrompt });
   }
 
   log('ERROR', `Unknown gate type '${gate.type}' for gate '${gateId}'`);
@@ -6664,7 +6470,6 @@ async function runPipeline(config, progress, opts = {}) {
     }
 
     writeSummary(config, result.exit, `single_module:${opts.module}`);
-    await generateProjectSummary(config);
     return result.exit;
   }
 
@@ -6711,8 +6516,8 @@ async function runPipeline(config, progress, opts = {}) {
     }
 
     const result = next.type === 'gate'
-      ? await runGate(config, progress, next.id)
-      : await runModule(config, progress, next.id);
+      ? await runGate(config, progress, next.id, { novaPrompt: opts.novaPrompt })
+      : await runModule(config, progress, next.id, { novaPrompt: opts.novaPrompt });
 
     if (result.exit === EXIT_OK) {
       continue;
@@ -6741,7 +6546,6 @@ async function runPipeline(config, progress, opts = {}) {
 
     output(result);
     writeSummary(config, result.exit, `${exitLabels[result.exit] || 'UNKNOWN'}:${next.id}`);
-    await generateProjectSummary(config);
     return result.exit;
   }
 }
@@ -6797,7 +6601,6 @@ export {
   releaseBlueprint, listBlueprints, syncControlFiles, validateBusterConfig,
   spawnAgent, killAgent, steerAgent, verifyAgentAlive, modelToHarness,
   spawnAcpAgent, killAcpAgent, dispatchRedisTask,
-  recallForModule, feedbackMemory, decayRecalledMemories,
   buildForgePrompt, buildBusterModulePrompt, buildBusterGatePrompt,
   executeModuleAttempt, runPreCheck, generateLintReport, formatLintReportForReviewer,
   runModule, runGate, runBusterGate, runReviewGate, runPipeline,
@@ -6878,6 +6681,13 @@ Exit codes:
   // Env fallback
   if (!flags.project) flags.project = process.env.CURRENT_PROJECT;
   if (!flags.novaChannel) flags.novaChannel = process.env.NOVA_CHANNEL;
+
+  // Nova channel is mandatory for pipeline runs (not for --status, --dry-run, --blueprint)
+  if (!flags.novaChannel && !flags.status && !flags.dryRun && !flags.blueprint && !flags.blueprintList) {
+    console.error('ERROR: --nova-channel <id> is required (or set NOVA_CHANNEL env var).');
+    console.error('       Without it, EXIT 10/TIMEOUT failures cannot be escalated to Nova.');
+    process.exit(EXIT_ERROR);
+  }
 
   (async () => {
     try {

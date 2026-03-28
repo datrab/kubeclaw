@@ -5,7 +5,7 @@
 // =============================================================================
 //
 // Validates that an agent only modified files within its allowed scope,
-// reverts violations, checks memory compliance, then commits and pushes.
+// reverts violations, then commits and pushes.
 //
 // Called by redis.js (complete action) as part of the completion chain:
 //   Subagent → redis.js → verify-task.js → git push → Redis completion
@@ -43,7 +43,6 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
   const logs = [];
   const log = (msg) => logs.push(msg);
 
-  const requireMemory = opts.requireMemory ?? true;
   const commitMessage = opts.commitMessage
     || `[${agentRole.toUpperCase()}] Update task via verify-task.js`;
 
@@ -154,40 +153,7 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
     log('✅ [Verify] Stage 1 Passed (Scope Check).');
   }
 
-  // ── 3. STUFE 2: Qdrant Memory Check ──
-
-  const MEMORY_RECENCY_MS = 5 * 60 * 1000; // 5 minutes
-
-  if (requireMemory) {
-    try {
-      const memoryOutput = execFileSync(
-        'node', ['/app/skills/memory.js', 'recall', '--query', `${currentProject} task result`, '--limit', '3'],
-        { encoding: 'utf8', timeout: 15000, env: process.env }
-      );
-      const memories = JSON.parse(memoryOutput);
-
-      if (!Array.isArray(memories) || memories.length === 0) {
-        throw new Error('No memories found for this project');
-      }
-
-      const now = Date.now();
-      const recentMemory = memories.find(m => m.created_at && (now - m.created_at) < MEMORY_RECENCY_MS);
-      if (!recentMemory) {
-        throw new Error(`No memory written in the last ${MEMORY_RECENCY_MS / 60000} minutes`);
-      }
-      log('✅ [Verify] Stage 2 Passed (Memory Check). Recent Qdrant entry found.');
-    } catch (memoryErr) {
-      throw new Error(
-        'MISSING MEMORY ENTRY. Use `node /app/skills/memory.js remember ...` ' +
-        'to store your findings before calling verify. ' +
-        `(${memoryErr.message})`
-      );
-    }
-  } else {
-    log('ℹ️ [Verify] Stage 2 Skipped (Memory Check disabled).');
-  }
-
-  // ── 4. Scoped Git Add + Commit + Push ──
+  // ── 3. Scoped Git Add + Commit + Push ──
 
   log('✅ [Verify] All conditions met. Running commit and push...');
   try {
@@ -288,7 +254,6 @@ if (currentPath === entryPath) {
 
   const agentRole = (getArg('role') || process.env.AGENT_ROLE || process.env.AGENT_NAME || 'unknown').toLowerCase();
   const currentProject = getArg('project') || process.env.CURRENT_PROJECT;
-  const requireMemory = !hasFlag('no-memory-check');
   const commitMessage = getArg('message');
 
   if (!currentProject) {
@@ -296,7 +261,7 @@ if (currentPath === entryPath) {
     process.exit(1);
   }
 
-  verifyAndPush(agentRole, currentProject, { requireMemory, commitMessage }).then(result => {
+  verifyAndPush(agentRole, currentProject, { commitMessage }).then(result => {
     console.log(JSON.stringify(result, null, 2));
     process.exit(0);
   }).catch(err => {

@@ -290,9 +290,23 @@ async function generateBaselines(htmlPath, outputDir, opts = {}) {
 
     // 2. Open preview with auth bypass
     const url = `file://${htmlPath}?baselines=true`;
+
+    // Track JS errors so a React crash doesn't silently cascade through all routes
+    const pageErrors = [];
+    page.on('pageerror', (err) => {
+      const msg = err.message || String(err);
+      pageErrors.push(msg);
+      log(`PAGE JS ERROR: ${msg}`);
+    });
+
     await page.goto(url, { waitUntil: 'networkidle', timeout: DEFAULTS.timeout });
 
     log('Preview loaded with ?baselines=true');
+
+    // Abort early if the preview crashed on load
+    if (pageErrors.length > 0) {
+      log(`WARNING: ${pageErrors.length} JS error(s) detected on load — baselines may be incomplete`);
+    }
 
     // 3. Handle setup/login page separately (screenshot without auth bypass)
     const setupRoute = routes.find(r => r.name === 'setup');
@@ -322,9 +336,17 @@ async function generateBaselines(htmlPath, outputDir, opts = {}) {
       try {
         const navSelector = `text="${route.nav}"`;
 
+        // Check if there were JS errors from a previous route click — the page may be dead
+        const errorsBeforeClick = pageErrors.length;
+
         await page.waitForSelector(navSelector, { state: 'visible', timeout: 5000 });
         await page.click(navSelector);
         await page.waitForTimeout(settleMs);
+
+        // If new JS errors appeared after click, log a warning
+        if (pageErrors.length > errorsBeforeClick) {
+          log(`WARNING: JS error after clicking "${route.nav}": ${pageErrors[pageErrors.length - 1].slice(0, 120)}`);
+        }
 
         const pngPath = path.join(outputDir, `${route.name}-baseline.png`);
         await page.screenshot({ path: pngPath, fullPage });

@@ -493,11 +493,16 @@ module.exports = async function visualRegSuite(context) {
 
         if (!genResult.ok) {
           const duration_ms = Date.now() - startTime;
-          log(`Baseline generation failed: ${genResult.error}`);
+          const failedRoutes = (genResult.routes || []).filter(r => !r.ok);
+          const errorDetail = genResult.error
+            || (failedRoutes.length > 0
+              ? `${failedRoutes.length} route(s) failed: ${failedRoutes.map(r => `${r.name} (${r.error || 'unknown'})`).slice(0, 3).join('; ')}${failedRoutes.length > 3 ? ` +${failedRoutes.length - 3} more` : ''}`
+              : 'unknown error (no error message returned)');
+          log(`Baseline generation failed: ${errorDetail}`);
           return createSuiteVerdict('visual-reg', STATUS.ERROR, {
             critical: false,
             duration_ms,
-            error: `Baseline generation failed: ${genResult.error}`,
+            error: `Baseline generation failed: ${errorDetail}`,
             findings: [],
           });
         }
