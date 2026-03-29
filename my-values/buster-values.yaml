@@ -58,7 +58,7 @@ discordWebhook:
   secretKey: "discordWebhook"
 
 agent:
-  project: "kubecommand"
+  project: "refactoring"
   git:
     enabled: true
     secretName: "git-deploy-key-buster"
@@ -76,7 +76,7 @@ resources:
   limits: { cpu: 4000m, memory: 24576Mi }
 
 workspace:
-  enabled: true
+  enabled: false
 
   soul: |
     You are Buster. Your job is to hunt for any bug
