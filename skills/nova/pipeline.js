@@ -594,9 +594,9 @@ function registerShutdownHooks() {
  * @param {string} agentId - Harness name (e.g. 'claude', 'codex') for acpx cleanup
  * @param {string} gatewayLabel - Unique label sent to Gateway for acpx session close
  */
-function trackAgent(config, label, sessionKey, agentId, gatewayLabel, streamLogPath = null) {
+function trackAgent(config, label, sessionKey, agentId, gatewayLabel, streamLogPath = null, extra = {}) {
   _shutdownState.config = config;
-  _shutdownState.activeSessions.set(label, { sessionKey, agentId, gatewayLabel, streamLogPath });
+  _shutdownState.activeSessions.set(label, { sessionKey, agentId, gatewayLabel, streamLogPath, ...extra });
 }
 
 /**
@@ -843,6 +843,12 @@ function loadConfig(projectName, opts = {}) {
   // Set module-level _repoRoot so headHash() can use gitExec
   // even in contexts where config isn't passed (e.g. addHistory -> headHash).
   _repoRoot = config.repo_root;
+
+  // Merge pipeline_review from progress.json if not set in swarm.config.json.
+  // progress.json is the project-level source; swarm.config.json is the platform default.
+  if (progress.pipeline_review && !config.pipeline_review) {
+    config.pipeline_review = progress.pipeline_review;
+  }
 
   // Discord webhook: swarm.config.json (explicit) > DISCORD_WEBHOOK env (K8s secret)
   if (!config.discord_webhook_url && process.env.DISCORD_WEBHOOK) {
@@ -2039,21 +2045,31 @@ async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
   const agentId = modelToHarness(model) || agentConfig.acp_agent_id || agentType;
   const cwd = agentConfig.cwd || config.repo_root;
 
-  log('STEP', `Spawning ACP session: ${gatewayLabel} (agent: ${agentId}, model: ${model})`);
+  // Codex / OpenAI models must use native subagent runtime (not ACP).
+  // ACP harness does not support Codex. Same logic as spawnReviewerAgent and generatePipelineReview.
+  const m = String(model || '').toLowerCase();
+  const useSubagent = m.startsWith('openai/') || m.startsWith('openai-codex/') || m.includes('gpt-5') || m.includes('codex');
+
+  log('STEP', `Spawning ${useSubagent ? 'subagent' : 'ACP'} session: ${gatewayLabel} (agent: ${agentId}, model: ${model})`);
 
   // sessions_spawn args — see https://docs.openclaw.ai/concepts/session-tool#sessions_spawn
   const spawnArgs = {
     task: taskPrompt,
-    runtime: 'acp',
-    agentId: agentId,
     label: gatewayLabel,
     model: model,
     cwd: cwd,
     thread: false,              // Headless — no Discord thread (oneshot sessions don't benefit from threads)
     mode: 'run',                // Always oneshot — session closes after task completes
-    streamTo: 'parent',         // Stream JSONL log to file for post-mortem analysis
     cleanup: 'keep',            // Keep transcript for post-mortem
   };
+  if (useSubagent) {
+    // Native subagent: no runtime:'acp', no agentId, no streamTo
+    // agentId becomes the label suffix for tracking only
+  } else {
+    spawnArgs.runtime = 'acp';
+    spawnArgs.agentId = agentId;
+    spawnArgs.streamTo = 'parent';  // Stream JSONL log to file for post-mortem analysis (ACP only)
+  }
 
   try {
     // sessions_spawn returns wrapped: { ok, result: { details: { status, childSessionKey, runId, streamLogPath? } } }
@@ -2065,12 +2081,12 @@ async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
     }
 
     const streamLogPath = result.streamLogPath || null;
-    log('OK', `ACP session spawned: ${gatewayLabel} → ${result.childSessionKey}${streamLogPath ? ` (stream: ${streamLogPath})` : ''}`,
+    log('OK', `${useSubagent ? 'Subagent' : 'ACP'} session spawned: ${gatewayLabel} → ${result.childSessionKey}${streamLogPath ? ` (stream: ${streamLogPath})` : ''}`,
       { agent: agentId, model, sessionKey: result.childSessionKey, runId: result.runId, stream: streamLogPath });
-    trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel, streamLogPath);
+    trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel, streamLogPath, { model });
 
     // Discord spawn confirmation (fire-and-forget)
-    discord(config, 'INFO', `🔬 ACP Session Spawned: ${agentType}/${moduleId}`, `Agent is now working.`, [
+    discord(config, 'INFO', `🔬 ${useSubagent ? 'Subagent' : 'ACP'} Session Spawned: ${agentType}/${moduleId}`, `Agent is now working.`, [
       { name: 'Agent', value: agentId, inline: true },
       { name: 'Model', value: model, inline: true },
       { name: 'Session', value: result.childSessionKey, inline: false },
@@ -2079,8 +2095,8 @@ async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
     return { label: trackingKey, childSessionKey: result.childSessionKey, runId: result.runId, streamLogPath };
   } catch (e) {
     // Discord spawn failure (fire-and-forget)
-    discord(config, 'CRITICAL', `❌ ACP Spawn Failed: ${agentType}/${moduleId}`, e.message?.split('\n')[0] || 'unknown').catch(() => {});
-    throw new Error(`Failed to spawn ACP session '${gatewayLabel}': ${e.message}`);
+    discord(config, 'CRITICAL', `❌ Spawn Failed: ${agentType}/${moduleId}`, e.message?.split('\n')[0] || 'unknown').catch(() => {});
+    throw new Error(`Failed to spawn session '${gatewayLabel}': ${e.message}`);
   }
 }
 
@@ -2101,7 +2117,12 @@ async function killAcpAgent(config, agentType, moduleId, graceful = false) {
     await waitForSessionIdle(sessionKey);
   }
 
-  log('STEP', `Destroying ACP session: ${label} (${sessionKey})`);
+  // Detect subagent vs ACP session — subagents don't need acpx harness cleanup
+  const entryModel = entry.model || '';
+  const m = String(entryModel).toLowerCase();
+  const isSubagent = m.startsWith('openai/') || m.startsWith('openai-codex/') || m.includes('gpt-5') || m.includes('codex');
+
+  log('STEP', `Destroying ${isSubagent ? 'subagent' : 'ACP'} session: ${label} (${sessionKey})`);
   try {
     // sessions_send with /stop — see https://docs.openclaw.ai/concepts/session-tool#sessions_send
     await gatewayInvoke('sessions_send', { sessionKey, message: '/stop' }, 15000);
@@ -2109,7 +2130,10 @@ async function killAcpAgent(config, agentType, moduleId, graceful = false) {
   } catch {
     log('WARN', `Could not destroy session '${label}' — may have already exited`);
   }
-  await acpxCleanup(entry.agentId, entry.gatewayLabel);
+  // acpxCleanup is only for ACP harness sessions — skip for native subagents
+  if (!isSubagent) {
+    await acpxCleanup(entry.agentId, entry.gatewayLabel);
+  }
   untrackAgent(label);
 }
 
@@ -5520,18 +5544,22 @@ async function spawnReviewerAgent(config, progress, gateId, reviewer, instructio
 
   log('STEP', `Spawning reviewer: ${gatewayLabel} (agent: ${agentId}, model: ${model})`);
 
+  const useSubagent = reviewer.dispatch === 'subagent';
   const spawnArgs = {
     task: instructions,
-    runtime: 'acp',
-    agentId: agentId,
+    runtime: useSubagent ? 'subagent' : 'acp',
     label: gatewayLabel,
     model: model,
     cwd: cwd,
     thread: false,              // Headless — no Discord thread
     mode: 'run',                // Always oneshot — session closes after task completes
-    streamTo: 'parent',         // Stream JSONL log to file for post-mortem analysis
     cleanup: 'keep',
   };
+  // streamTo only supported for ACP runtime
+  if (!useSubagent) {
+    spawnArgs.streamTo = 'parent';
+    spawnArgs.agentId = agentId;
+  }
 
   try {
     const raw = await gatewayInvoke('sessions_spawn', spawnArgs, 30000);
@@ -6396,28 +6424,57 @@ async function generatePipelineReview(config) {
       spawnArgs.streamTo = 'parent';
     }
     log('STEP', `Spawning pipeline review (${dispatch}): ${agentId} / ${model}`);
+    await discord(config, 'INFO', `📋 Pipeline Review Spawned`, `Reviewing full pipeline run.`, [
+      { name: 'Model', value: model, inline: true },
+      { name: 'Agent', value: agentId, inline: true },
+      { name: 'Dispatch', value: dispatch, inline: true },
+    ]).catch(() => {});
     const raw = await gatewayInvoke('sessions_spawn', spawnArgs, 30000);
     const result = raw?.result?.details || raw;
     if (result.status !== 'accepted') throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
     const sessionKey = result.childSessionKey;
+    const streamLogPath = result.streamLogPath || null;
     const trackingKey = `pipeline-review-${agentId}`;
-    trackAgent(config, trackingKey, sessionKey, agentId, label, result.streamLogPath || null);
+    trackAgent(config, trackingKey, sessionKey, agentId, label, streamLogPath);
     const outputFilePath = pipelineReviewOutputPath(config, pr);
     const timeoutMin = pr.timeout_minutes || 45;
     const pollRes = await pollForFile(config, outputFilePath, timeoutMin, 'Pipeline Review', trackingKey);
-    if (dispatch === 'subagent') {
+
+    // Archive ACP transcript (both ACP and subagent paths)
+    const archiveDir = path.join(swarmRoot(config), '.swarm', 'logs', 'pipeline-review');
+    fs.mkdirSync(archiveDir, { recursive: true });
+    const ts = new Date().toISOString().replace(/[:.]/g, '-');
+    if (dispatch === 'acp' && streamLogPath && fs.existsSync(streamLogPath)) {
+      const dest = path.join(archiveDir, `pipeline-review-transcript-${ts}.jsonl`);
+      fs.copyFileSync(streamLogPath, dest);
+      log('OK', `Pipeline review ACP transcript saved: ${dest}`);
+    } else if (dispatch === 'subagent') {
       const src = childSessionTranscriptPath(config, sessionKey);
       if (src && fs.existsSync(src)) {
-        const archiveDir = path.join(swarmRoot(config), '.swarm', 'logs', 'pipeline-review');
-        fs.mkdirSync(archiveDir, { recursive: true });
-        const ts = new Date().toISOString().replace(/[:.]/g, '-');
         fs.copyFileSync(src, path.join(archiveDir, `pipeline-review-transcript-${ts}.jsonl`));
       }
     }
+
     try { await gatewayInvoke('sessions_send', { sessionKey, message: '/stop' }, 15000); } catch {}
     if (dispatch === 'acp') await acpxCleanup(agentId, label);
     untrackAgent(trackingKey);
-    if (!pollRes.ok) throw new Error(`Pipeline review failed: ${pollRes.reason}`);
+    if (!pollRes.ok) {
+      await discord(config, 'WARN', `❌ Pipeline Review Failed`, `Review did not complete: ${pollRes.reason}`).catch(() => {});
+      throw new Error(`Pipeline review failed: ${pollRes.reason}`);
+    }
+
+    // Post the review MD to Discord (truncated to fit embed limits)
+    try {
+      const reviewMd = fs.readFileSync(outputFilePath, 'utf8');
+      // Extract summary section (first ~1800 chars to fit Discord embed)
+      const summaryEnd = reviewMd.indexOf('\n---', 200);
+      const excerpt = summaryEnd > 0 ? reviewMd.slice(0, summaryEnd) : reviewMd.slice(0, 1800);
+      await discord(config, 'OK', `📋 Pipeline Review Complete`, excerpt.slice(0, 1900), [
+        { name: 'Full Report', value: `\`.swarm/logs/pipeline-review/PIPELINE-REVIEW.md\``, inline: false },
+      ]);
+    } catch (e) {
+      log('WARN', `Pipeline review Discord post failed (non-critical): ${e.message}`);
+    }
     log('OK', 'Pipeline review completed');
   } catch (e) {
     log('WARN', `Pipeline review failed (non-critical): ${e.message}`);
