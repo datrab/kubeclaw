@@ -65,7 +65,7 @@ RUN mkdir -p /home/node/.openclaw \
 # 10. Build verification
 RUN echo "=== Build Verification ===" && \
     node -e "require('ioredis'); console.log('  ✅ ioredis')" && \
-    ls /app/skills/redis.js /app/skills/memory.js /app/skills/pipeline.js /app/skills/lint-report.js && echo "  ✅ KubeClaw skills in /app/skills/" && \
+    ls /app/skills/redis.js /app/skills/pipeline.js /app/skills/lint-report.js && echo "  ✅ KubeClaw skills in /app/skills/" && \
     echo "=== Lint Tools Verification ===" && \
     tsc --version         && echo "  ✅ tsc" && \
     eslint --version      && echo "  ✅ eslint" && \
