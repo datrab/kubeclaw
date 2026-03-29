@@ -1,0 +1,138 @@
+# pipeline/
+
+Modular refactoring of the KubeClaw Swarm Pipeline. All public API is exported
+from `pipeline/index.js`. The original monolith (`../pipeline-original.js`) is
+kept as a deprecated compatibility source for functions not yet extracted.
+
+## Directory structure
+
+```
+pipeline/
+  core/
+    config.js          Config loading, validation, model resolution
+    constants.js       Shared status strings (STATUS) and exit codes (EXIT_*)
+    context.js         AsyncLocalStorage pipeline context
+    git.js             Repo-root detection (getRepoRoot)
+    logger.js          Structured logger with context-aware dual-write
+    paths.js           Path utilities: modulePath, swarmRoot, relPath, etc.
+    temp.js            Temporary directory lifecycle manager
+  integrations/
+    discord.js         Discord webhook delivery (simplified; see note below)
+    gateway.js         Gateway Tool API client (gatewayInvoke)
+    git.js             Re-exports getRepoRoot (thin shim)
+    redis.js           Redis module loader and stream helpers
+  agents/
+    acp-monitor.js     ACP session state polling and classification
+    lifecycle.js       Agent spawn/kill/steer/verify helpers
+    shutdown.js        Graceful shutdown hooks and agent tracking
+  prompts/
+    buster-gate.js     Buster gate prompt builder
+    buster-instructions.js  Shared Buster instructions loader
+    buster-module.js   Buster module prompt builder
+    forge.js           Forge prompt builder
+    gate-fix.js        Gate fix-and-retest prompt builder
+    review.js          Echo reviewer prompt builder
+    shared.js          Common prompt building blocks
+  runners/
+    buster-gate-runner.js  Buster gate lifecycle (delegates to pipeline-original.js)
+    gate-runner.js     Gate dispatch: routes to buster or review runner via GATE_RUNNERS map
+    module-runner.js   Module lifecycle runner (delegates to pipeline-original.js)
+    pipeline-runner.js Full pipeline orchestration (runPipeline, findNextStep, printStatus, dryRun)
+    review-gate-runner.js  Review gate lifecycle (delegates to pipeline-original.js)
+  services/
+    blueprint.js       Blueprint release and control-file sync
+    failures.js        Failure classification, escalation, and retry logic
+    polling.js         Polling engine: status, Redis, dual-channel, rate-limit recovery
+    rate-limit.js      Rate-limit detection and recovery
+    status-store.js    Module/gate status read/write, log directory management
+    summary.js         Pipeline run summary and review spawner
+    telemetry.js       Pipeline event hooks (onModulePass, onGateFail, etc.)
+  tests/               Per-module Buster test files (node:test, no external deps)
+  cli.js               CLI entry point; delegates to pipeline/index.js exports
+  index.js             Public re-export surface — all pipeline API lives here
+```
+
+## Public API
+
+All exports are available from `pipeline/index.js`. Import from there, not from
+individual module files, to maintain a stable interface:
+
+```js
+import { runPipeline, loadConfig, STATUS, EXIT_OK } from './pipeline/index.js';
+```
+
+Key exports by category:
+
+| Category | Key exports |
+|---|---|
+| Runner | `runPipeline`, `runModule`, `runGate`, `runBusterGate`, `runReviewGate` |
+| Config | `loadConfig`, `validateConfig`, `validateBusterConfig`, `resolveModel` |
+| Status | `loadStatus`, `saveStatus`, `initStatus` |
+| Constants | `STATUS`, `EXIT_OK`, `EXIT_ERROR`, `EXIT_NEEDS_NOVA`, `EXIT_BLOCKED`, `EXIT_TIMEOUT`, `EXIT_RATE_LIMITED` |
+| Paths | `modulePath`, `swarmRoot`, `relPath`, `completionStreamKey`, `gateStatusPath` |
+| Agents | `spawnAgent`, `killAgent`, `steerAgent`, `spawnAcpAgent`, `killAcpAgent` |
+| Prompts | `buildForgePrompt`, `buildBusterModulePrompt`, `buildBusterGatePrompt` |
+| Polling | `pollStatus`, `pollDual`, `pollForFile`, `pollWithRateLimitRecovery` |
+| Blueprint | `listBlueprints`, `releaseBlueprint`, `releaseGateFiles`, `syncControlFiles` |
+| Summary | `writeSummary`, `generateProjectSummary`, `generatePipelineReview` |
+
+## Extending the pipeline
+
+### Add a new gate type
+
+1. Create `runners/my-gate-runner.js` with `export async function runMyGate(...)`.
+2. Register it in `runners/gate-runner.js`:
+   ```js
+   import { runMyGate } from './my-gate-runner.js';
+   export const GATE_RUNNERS = { buster: runBusterGate, review: runReviewGate, my: runMyGate };
+   ```
+3. Export `runMyGate` from `index.js`.
+
+### Add a new service
+
+1. Create `services/my-service.js` with named exports.
+2. Add the exports to `index.js`:
+   ```js
+   export { myFunction } from './services/my-service.js';
+   ```
+
+### Add a new integration
+
+1. Create `integrations/my-service.js` with named exports.
+2. Add the exports to `index.js`.
+
+## How Buster tests work
+
+Each module has a corresponding test file in `pipeline/tests/`. Tests use
+`node:test` with no external dependencies. Buster imports modules directly
+(not via the CLI layer) so tests remain fast and isolated.
+
+Run all tests:
+```bash
+node --test pipeline/tests/
+```
+
+## pipeline-original.js deprecation
+
+`../pipeline-original.js` is the original pipeline monolith (byte-identical to
+`baseline/nova/pipeline.js`). It is kept as the source for functions not yet
+extracted. `pipeline/index.js` re-exports remaining items explicitly from it.
+
+Functions still sourced from `pipeline-original.js`:
+- `discord` (uses module-level `RUN_ID` in log entries and webhook footer)
+- `output` (simple JSON stdout printer)
+- `loadProgress` (progress.json loader)
+- `executeModuleAttempt`, `runPreCheck`, `generateLintReport`, `formatLintReportForReviewer`
+- Git utilities: `gitExec`, `headHash`, `invalidateHeadHash`, `gitSyncBeforeBuster`,
+  `gitPullForPolling`, `gitPullBeforePush`, `gitPushWithRetry`, `gitCommitAndPush`
+- Runtime state: `RUN_ID`, `_runStats`
+
+**Do not add new imports from `pipeline-original.js`.** Extract to a module instead.
+
+## Migration rules
+
+- Add or change behavior in extracted modules, not in the monolith
+- When a symbol is extracted, export it explicitly from `index.js` and remove it
+  from the residual re-export block at the bottom of `index.js`
+- Keep runners free of raw I/O; push file access into services where possible
+- `pipeline-original.js` should not be modified except for critical bug fixes
