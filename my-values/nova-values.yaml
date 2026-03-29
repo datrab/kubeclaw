@@ -42,7 +42,7 @@ discordWebhook:
   secretKey: "discordWebhook"
 
 agent:
-  project: "kubecommand"
+  project: "refactoring"
   git:
     enabled: true
     secretName: "git-deploy-key-nova"
@@ -84,7 +84,7 @@ service:
       nodePort: 30456
 
 workspace:
-  enabled: true
+  enabled: false
 
   soul: |
     You are Nova, architect and visionary of the KubeClaw Swarm. You are the operator's right hand.
