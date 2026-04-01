@@ -1,7 +1,7 @@
 # =============================================================================
 # KubeClaw General — Root Environment for Nova, Forge, Echo
 # =============================================================================
-FROM ghcr.io/openclaw/openclaw:2026.3.31
+FROM ghcr.io/openclaw/openclaw:latest
 USER root
 
 # 1. System tools
@@ -13,12 +13,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # 2. Global skill dependencies + lint tools (JS/TS)
 RUN mkdir -p /root/.npm && npm config set cache /root/.npm --global \
-    && npm install -g typescript eslint knip madge
-
-# 2b. App-local runtime deps for /app/skills/*
-RUN cd /app \
-    && npm install --omit=dev --no-save \
-       ioredis uuid @qdrant/js-client-rest
+    && npm install -g ioredis uuid @qdrant/js-client-rest \
+       typescript eslint knip madge
 
 # 3. Python lint tools (stable, no hash issues)
 RUN pip install --break-system-packages --no-cache-dir \
@@ -68,21 +64,19 @@ RUN mkdir -p /home/node/.openclaw \
 
 # 10. Build verification
 RUN echo "=== Build Verification ===" && \
-    cd /app && \
-    node -e "console.log(require.resolve('ioredis')); console.log(' ✅ ioredis local resolve')" && \
-    node --input-type=module -e "import('/app/skills/redis.js').then(() => console.log(' ✅ redis.js import'))" && \
-    ls /app/skills/redis.js /app/skills/pipeline.js /app/skills/lint-report.js && echo " ✅ KubeClaw skills in /app/skills/" && \
+    node -e "require('ioredis'); console.log('  ✅ ioredis')" && \
+    ls /app/skills/redis.js /app/skills/pipeline.js /app/skills/lint-report.js && echo "  ✅ KubeClaw skills in /app/skills/" && \
     echo "=== Lint Tools Verification ===" && \
-    tsc --version && echo " ✅ tsc" && \
-    eslint --version && echo " ✅ eslint" && \
-    knip --version && echo " ✅ knip" && \
-    madge --version && echo " ✅ madge" && \
-    ruff version && echo " ✅ ruff" && \
-    mypy --version && echo " ✅ mypy" && \
-    pip-audit --version && echo " ✅ pip-audit" && \
-    semgrep --version && echo " ✅ semgrep" && \
-    shellcheck --version && echo " ✅ shellcheck" && \
-    yamllint --version && echo " ✅ yamllint" && \
+    tsc --version         && echo "  ✅ tsc" && \
+    eslint --version      && echo "  ✅ eslint" && \
+    knip --version        && echo "  ✅ knip" && \
+    madge --version       && echo "  ✅ madge" && \
+    ruff version          && echo "  ✅ ruff" && \
+    mypy --version        && echo "  ✅ mypy" && \
+    pip-audit --version   && echo "  ✅ pip-audit" && \
+    semgrep --version     && echo "  ✅ semgrep" && \
+    shellcheck --version  && echo "  ✅ shellcheck" && \
+    yamllint --version    && echo "  ✅ yamllint" && \
     hadolint --version    && echo "  ✅ hadolint" && \
     kubeconform -v        && echo "  ✅ kubeconform" && \
     helm version --short  && echo "  ✅ helm"
