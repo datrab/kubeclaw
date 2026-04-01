@@ -42,7 +42,7 @@ discordWebhook:
   secretKey: "discordWebhook"
 
 agent:
-  project: "refactoring"
+  project: "governance"
   git:
     enabled: true
     secretName: "git-deploy-key-nova"
