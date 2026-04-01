@@ -2,7 +2,7 @@
 # KubeClaw Sandbox — Isolated Testing Environment for Buster
 # =============================================================================
 # Includes Podman-in-Pod, Lighthouse, Playwright, k6, nginx
-FROM ghcr.io/openclaw/openclaw:2026.3.31
+FROM ghcr.io/openclaw/openclaw:latest
 
 USER root
 
@@ -25,11 +25,8 @@ RUN mkdir -p /etc/containers /run/containers/storage /var/lib/containers/storage
     printf '[engine]\ncgroup_manager = "cgroupfs"\nevents_logger = "file"\nruntime = "crun"\n' \
       > /etc/containers/containers.conf
 
-# 2. App-local runtime deps for /app/skills/*
-RUN cd /app \
-    && npm install --omit=dev --no-save \
-       ioredis uuid @qdrant/js-client-rest
-
+# 2. Skill dependencies
+RUN npm install -g ioredis uuid @qdrant/js-client-rest
 RUN chown -R root:root /app
 
 # 3. Testing tools
@@ -158,6 +155,7 @@ RUN mkdir -p /home/node/.openclaw \
 
 # 8. Build verification
 RUN echo "=== Build Verification ===" && \
+    node -e "require('ioredis'); console.log('  ✅ ioredis')" && \
     node -e "require('@axe-core/playwright'); console.log('  ✅ @axe-core/playwright')" && \
     node -e "require('pixelmatch'); console.log('  ✅ pixelmatch')" && \
     test -d /ms-playwright && echo "  ✅ Playwright browsers at /ms-playwright" && \
