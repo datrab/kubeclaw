@@ -38,7 +38,6 @@ All paths relative to repo root:
 Projects/<project>/src/.swarm/
 ├── progress.json                              # Project definition
 ├── echo-review/
-│   ├── EARLY-REVIEW-INSTRUCTIONS.md           # If gate:early-review in execution_order
 │   ├── MIDPOINT-REVIEW-INSTRUCTIONS.md        # If gate:midpoint-review in execution_order
 │   └── FINAL-REVIEW-INSTRUCTIONS.md           # If gate:final-review in execution_order
 ├── buster-test/
@@ -54,8 +53,6 @@ Projects/<project>/src/.swarm/
     │   └── preview.html                       # Prism preview (or baseline.png for single-page)
     └── <substep-id>/FORGE.md                  # For modules with substeps
 ```
-
-Review outputs (Echo's JSON results) are written to `.swarm/logs/echo-review/` at runtime — not to the instructions directory. Set `review_output_dir` and `output_file` in `progress.json` accordingly (see examples).
 
 `swarm.config.json` and `.semgrep.yml` are deployed via Helm — not repo files.
 
@@ -91,8 +88,6 @@ The Dockerfile **must** use fully-qualified base image names:
 ```dockerfile
 FROM docker.io/library/python:3.12-slim
 ```
-
-**Critical: The Dockerfile must exist before Buster runs.** `validateBusterConfig` checks all `serve.dockerfile` paths on disk before dispatching. If the Dockerfile doesn't exist yet, Buster will not start. The first module (scaffold) must create the Dockerfile — add it to FORGE.md's "Files to Produce" section.
 
 ## Substeps
 
@@ -213,6 +208,86 @@ The review agent should inspect pipeline logs tactically and recommend improveme
 | visual-reg nav click fails | `data-routes` nav label mismatch | Ensure `nav` field matches visible text exactly (case-sensitive) |
 | visual-reg screenshots login only | Missing `?baselines=true` support | Add auth bypass to preview (see prism-conventions.md) |
 | Blueprint release failed | Missing FORGE.md/BUSTER.md | Check architecture branch |
+
+## Wave 2 Governance Conventions
+
+Projects running with Wave 2 governance get additional pipeline behavior. Configure it in `progress.json` and `swarm.config.json`.
+
+### Architecture Validator
+
+Runs automatically before module 01. No extra configuration required for deterministic checks. To configure the model for Phase 2 (agent judgment):
+
+```json
+{
+  "defaults": {
+    "models": {
+      "arch_validator": "anthropic/claude-sonnet-4-6"
+    }
+  }
+}
+```
+
+Artifacts are written to `.swarm/logs/architecture-validator/`. Blocking findings halt the pipeline before any module runs.
+
+### Approval Gates
+
+Add `type: "approval"` gates to `progress.json`:
+
+```json
+{
+  "gates": {
+    "gate-qa": {
+      "type": "approval",
+      "title": "QA Approval",
+      "timeout_minutes": 60,
+      "on_timeout": "block"
+    }
+  },
+  "execution_order": ["01-module", "gate:gate-qa", "02-module"]
+}
+```
+
+V1 operator flow: pipeline posts Discord embed → operator responds via Nova-bridge → Nova writes `.swarm/<gate-id>-gate-status.json` → pipeline resumes.
+
+**Do not configure native Discord buttons or slash commands** — V1 does not support inbound Discord interaction.
+
+### Observability Configuration
+
+Budget thresholds in `swarm.config.json`:
+
+```json
+{
+  "observability": {
+    "budget": {
+      "warn_cost_usd": 1.00,
+      "hard_limit_cost_usd": 5.00,
+      "warn_tokens": 500000
+    }
+  }
+}
+```
+
+Budget thresholds emit events and log warnings but are non-blocking unless calling code explicitly checks `isBudgetExceeded()`.
+
+### Key `.swarm/` Paths for Governed Projects
+
+| Path | Contents |
+|---|---|
+| `.swarm/progress.json` | Project definition |
+| `.swarm/<gate-id>-gate-status.json` | Approval gate state (authoritative) |
+| `.swarm/logs/pipeline/pipeline.jsonl` | Lifecycle event stream |
+| `.swarm/logs/pipeline/model-policy.jsonl` | Model resolution log |
+| `.swarm/logs/pipeline/summary.json` | End-of-run summary |
+| `.swarm/logs/architecture-validator/` | Validator findings and report |
+| `.swarm/logs/cost/cost-report.json` | Aggregated cost/token report |
+| `.swarm/logs/gates/<id>/` | Approval gate audit artifacts |
+
+### Governance Docs
+
+- Observability layout: `Projects/governance/src/docs/observability-reference.md`
+- Approval gate operator guide: `Projects/governance/src/docs/approval-gate.md`
+- Architecture validator: `Projects/governance/src/docs/architecture-validator-reference.md`
+- Operator debugging: `Projects/governance/src/docs/governance-integration-guide.md`
 
 ## References
 
