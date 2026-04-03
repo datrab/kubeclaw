@@ -5,12 +5,15 @@ import { log } from '../core/logger.js';
 import { loadStatus } from './status-store.js';
 import { STATUS } from '../core/constants.js';
 import { relPath, modulePath, swarmRoot } from '../core/paths.js';
-import { discord, gitExec } from '../../pipeline-original.js';
+import { discord } from '../integrations/discord.js';
+import { gitExec } from '../integrations/git.js';
 
 const BLUEPRINT_POLICY = Object.freeze({
   include: Object.freeze({
     moduleControlFiles: ['FORGE.md', 'BUSTER.md', 'ECHO.md', 'test-spec.json'],
-    gateControlFiles: ['FINAL-BUSTER.md', 'final-test-spec.json'],
+    gateControlFilesByDir: Object.freeze({
+      'buster-test': ['FINAL-BUSTER.md', 'final-test-spec.json'],
+    }),
   }),
 });
 
@@ -202,6 +205,9 @@ export async function syncControlFiles(config, progress) {
   const swarmRel = relPath(config, swarmRoot(config));
   const synced = [];
   function syncFile(archPath) {
+    try { gitExec(config.repo_root, ['cat-file', '-e', `origin/${branch}:${archPath}`], { stdio: 'ignore' }); }
+    catch { return; }
+
     let archContent;
     try { archContent = gitExec(config.repo_root, ['show', `origin/${branch}:${archPath}`]); } catch { return; }
     const localAbsPath = path.join(config.repo_root, archPath);
@@ -233,7 +239,8 @@ export async function syncControlFiles(config, progress) {
       const gateDir = gate.instructions_file.split('/')[0];
       if (!processedGateDirs.has(gateDir)) {
         processedGateDirs.add(gateDir);
-        for (const file of BLUEPRINT_POLICY.include.gateControlFiles) syncFile(`${swarmRel}/${gateDir}/${file}`);
+        const extraFiles = BLUEPRINT_POLICY.include.gateControlFilesByDir[gateDir] || [];
+        for (const file of extraFiles) syncFile(`${swarmRel}/${gateDir}/${file}`);
       }
     }
   }

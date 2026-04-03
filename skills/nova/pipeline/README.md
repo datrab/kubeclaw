@@ -15,6 +15,7 @@ pipeline/
     git.js             Repo-root detection (getRepoRoot)
     logger.js          Structured logger with context-aware dual-write
     paths.js           Path utilities: modulePath, swarmRoot, relPath, etc.
+    runtime.js         Run identity (RUN_ID), run stats (_runStats), output(), loadProgress()
     temp.js            Temporary directory lifecycle manager
   integrations/
     discord.js         Discord webhook delivery (simplified; see note below)
@@ -101,6 +102,61 @@ Key exports by category:
 1. Create `integrations/my-service.js` with named exports.
 2. Add the exports to `index.js`.
 
+## Wave 2 Governance
+
+Wave 2 adds a governed execution layer on top of the core pipeline. These components run automatically when the project is configured for governance.
+
+### Architecture Validator (`services/arch-validator.js`)
+
+Runs before module 01. Detects project definition defects (missing files, undefined refs, bad configs) before wasting execution time. Produces:
+
+- `.swarm/logs/architecture-validator/results.json` — machine-readable findings
+- `.swarm/logs/architecture-validator/summary.md` — human-readable report
+
+Blocking findings (severity `blocking`) halt the pipeline. Non-blocking findings (`error`, `warn`, `info`) are recorded and the run proceeds.
+
+### Approval Gate (`runners/approval-gate-runner.js`)
+
+A human-in-the-loop gate type. Pauses pipeline execution until an operator approves, rejects, or the timeout elapses. V1 interaction path:
+
+1. Pipeline posts Discord embed via webhook
+2. Operator responds via Nova-bridge: `APPROVE gate:<id>` or `REJECT gate:<id> reason: <text>`
+3. Nova writes decision to `.swarm/<gate-id>-gate-status.json`
+4. Pipeline reads file and resumes or halts
+
+The gate-state file is the **authoritative source of truth** — not Discord message history.
+
+### Model/Thinking Policy Log (`core/runtime.js`, `services/telemetry.js`)
+
+Every agent spawn writes an effective-resolution record to `.swarm/logs/pipeline/model-policy.jsonl`. Records which model ran and why (runtime override, scope policy, project default, config default).
+
+### Observability
+
+All governance observability artifacts live under `.swarm/logs/`:
+
+```
+.swarm/logs/
+├── pipeline/
+│   ├── pipeline.jsonl        ← Lifecycle event stream
+│   ├── model-policy.jsonl    ← Model/thinking resolution log
+│   └── summary.json          ← End-of-run summary with governance section
+├── architecture-validator/   ← Validator findings and report
+├── cost/                     ← Per-agent usage and cost report
+├── redis/                    ← Redis exchange log
+└── gates/<gate-id>/          ← Approval gate audit artifacts
+```
+
+### Governance Docs
+
+| Topic | Reference |
+|---|---|
+| Full observability layout | `Projects/governance/src/docs/observability-reference.md` |
+| Approval gate operator guide | `Projects/governance/src/docs/approval-gate.md` |
+| Architecture validator reference | `Projects/governance/src/docs/architecture-validator-reference.md` |
+| Operator debugging guide | `Projects/governance/src/docs/governance-integration-guide.md` |
+
+---
+
 ## How Buster tests work
 
 Each module has a corresponding test file in `pipeline/tests/`. Tests use
@@ -119,13 +175,15 @@ node --test pipeline/tests/
 extracted. `pipeline/index.js` re-exports remaining items explicitly from it.
 
 Functions still sourced from `pipeline-original.js`:
-- `discord` (uses module-level `RUN_ID` in log entries and webhook footer)
-- `output` (simple JSON stdout printer)
-- `loadProgress` (progress.json loader)
+- `discord` (Module 04 will extract this to `integrations/discord.js`)
 - `executeModuleAttempt`, `runPreCheck`, `generateLintReport`, `formatLintReportForReviewer`
 - Git utilities: `gitExec`, `headHash`, `invalidateHeadHash`, `gitSyncBeforeBuster`,
   `gitPullForPolling`, `gitPullBeforePush`, `gitPushWithRetry`, `gitCommitAndPush`
-- Runtime state: `RUN_ID`, `_runStats`
+
+Extracted to modular owners (no longer from monolith):
+- `RUN_ID`, `_runStats` → `core/runtime.js`
+- `output` → `core/runtime.js`
+- `loadProgress` → `core/runtime.js`
 
 **Do not add new imports from `pipeline-original.js`.** Extract to a module instead.
 

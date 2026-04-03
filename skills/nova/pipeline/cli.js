@@ -5,8 +5,23 @@
 
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-import { loadConfig, printStatus, listBlueprints, releaseBlueprint, EXIT_OK, EXIT_ERROR } from './index.js';
+import {
+  loadConfig,
+  printStatus,
+  listBlueprints,
+  releaseBlueprint,
+  EXIT_OK,
+  EXIT_ERROR,
+  createPipelineContext,
+  setActiveContext,
+  clearActiveContext,
+  initLogDir,
+  registerShutdownHooks,
+  createTempManager,
+} from './index.js';
+import { createRunId, createRunStats } from './core/runtime.js';
 import { runPipeline, dryRun } from './runners/pipeline-runner.js';
+import { validateThinkingLevel } from './core/policy.js';
 
 const __currentPath = fs.realpathSync(fileURLToPath(import.meta.url));
 const __entryPath = (process.argv[1] && fs.existsSync(process.argv[1]))
@@ -14,10 +29,9 @@ const __entryPath = (process.argv[1] && fs.existsSync(process.argv[1]))
   : process.argv[1];
 
 export async function main() {
-  // Temporary stubs — replaced with real imports as modules are extracted
-  let initTempDir = () => {};
-  let registerShutdownHooks = () => {};
-  let cleanupTempDir = () => {};
+  const tempManager = createTempManager();
+  const initTempDir = () => tempManager.init();
+  const cleanupTempDir = () => tempManager.cleanup();
   let output = (o) => process.stdout.write(JSON.stringify(o) + '\n');
   let log = (level, msg) => console.error(`[${level}]`, msg);
 
@@ -34,6 +48,8 @@ export async function main() {
     else if (a === '--prompt'         && args[i+1]) flags.prompt = args[++i];
     else if (a === '--prompt-file'   && args[i+1]) flags.promptFile = args[++i];
     else if (a === '--nova-channel'  && args[i+1]) flags.novaChannel = args[++i];
+    else if (a === '--model'          && args[i+1]) flags.runtimeModel = args[++i];
+    else if (a === '--thinking'       && args[i+1]) flags.runtimeThinking = args[++i];
     else if (a === '--resume')                      flags.resume = true;
     else if (a === '--status')                      flags.status = true;
     else if (a === '--dry-run')                     flags.dryRun = true;
@@ -48,6 +64,9 @@ Pipeline commands:
   --repo <path>           Git repo root (or REPO_ROOT env; auto-detected if in repo)
   --module <id>           Run a single module
   --resume                Resume pipeline from current state
+  --model <id>            Runtime model override (beats all project/config defaults)
+  --thinking <level>      Runtime thinking override: none|low|medium|high|xhigh
+                          (only applies on ACP/subagent paths; ignored on Redis/Buster)
   --prompt "text"         Nova's prompt override (injected into Forge prompt)
   --prompt-file <path>    Read Nova's prompt from file (for long prompts)
   --nova-channel <id>     Discord channel id for EXIT 10 / TIMEOUT auto-injection
@@ -61,7 +80,7 @@ Config:
 Retry flow:
   Auto-retries 1-2 happen internally (no exit).
   After auto_retry_threshold (default 2), exits with code 10 (NEEDS_NOVA).
-  Nova resumes: --resume --module 06 --prompt "Use approach X instead of Y"
+  Nova resumes the full pipeline: --resume --prompt "Use approach X instead of Y"
 
 Blueprint commands:
   --blueprint <id>        Release a specific blueprint from architecture branch
@@ -91,11 +110,39 @@ Exit codes:
 
   await (async () => {
     try {
-      // Initialize temp directory and shutdown hooks FIRST
+      // Initialize temp directory first; config-aware shutdown hooks/logging follow after config load
       initTempDir();
-      registerShutdownHooks();
+
+      // Validate --thinking before loading config so invalid values fail early
+      if (flags.runtimeThinking) {
+        try { validateThinkingLevel(flags.runtimeThinking, '--thinking'); }
+        catch (e) {
+          log('ERROR', e.message);
+          output({ exit: EXIT_ERROR, error: e.message });
+          cleanupTempDir();
+          process.exit(EXIT_ERROR);
+        }
+      }
 
       const { config, progress } = loadConfig(flags.project, { repoRoot: flags.repo });
+
+      // Store runtime overrides on config so resolvePolicy() can read them anywhere
+      if (flags.runtimeModel || flags.runtimeThinking) {
+        config._runtimeOverrides = {
+          model:    flags.runtimeModel    || null,
+          thinking: flags.runtimeThinking || null,
+        };
+        if (flags.runtimeModel)    log('INFO', `Runtime model override: ${flags.runtimeModel}`);
+        if (flags.runtimeThinking) log('INFO', `Runtime thinking override: ${flags.runtimeThinking}`);
+      }
+
+      const runId = createRunId();
+      const stats = createRunStats();
+      const ctx = createPipelineContext({ config, progress, runId, stats, novaChannel: flags.novaChannel });
+      ctx._tmpDir = tempManager.dir;
+      setActiveContext(ctx);
+      initLogDir(config, ctx);
+      registerShutdownHooks(config);
 
       // Blueprint commands
       if (flags.blueprintList) {
@@ -142,6 +189,7 @@ Exit codes:
       log('ERROR', e.message);
       output({ exit: EXIT_ERROR, error: e.message });
       cleanupTempDir();
+      clearActiveContext();
       process.exit(EXIT_ERROR);
     }
   })();

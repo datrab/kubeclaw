@@ -119,6 +119,12 @@ export function readAcpTranscriptState(streamLogPath, prev = {}) {
   return state;
 }
 
+export function transcriptShowsProgress(transcript) {
+  if (!transcript) return false;
+  if (transcript.hardError || transcript.terminal) return false;
+  return transcript.eventCount > 0 && transcript.lastActivityPoll === 0;
+}
+
 export async function getAcpMonitorState(config, sessionLabel, prev = {}) {
   const monitorCfg = getAcpMonitorConfig(config);
   const entry = getTrackedAgent(sessionLabel) || {};
@@ -129,15 +135,20 @@ export async function getAcpMonitorState(config, sessionLabel, prev = {}) {
   let sessionActive = false;
   try {
     if (sessionKey) {
-      const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
+      const raw = await gatewayInvoke('session_status', { sessionKey }, 10000);
       const statusResult = raw?.result?.details || raw;
       const parsed = parseSessionState(statusResult);
       sessionState = parsed.state;
       sessionActive = parsed.active;
     }
   } catch {
-    sessionState = 'unreachable';
-    sessionActive = false;
+    if (transcriptShowsProgress(transcript)) {
+      sessionState = 'running';
+      sessionActive = true;
+    } else {
+      sessionState = 'unreachable';
+      sessionActive = false;
+    }
   }
 
   const unknownLike = /^(unknown|unreachable|no_session_key)/i.test(sessionState);
@@ -192,7 +203,7 @@ export async function waitForSessionIdle(sessionKey, extraGraceMs = 120000, tota
 
   while (Date.now() < deadline) {
     try {
-      const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
+      const raw = await gatewayInvoke('session_status', { sessionKey }, 10000);
       const statusResult = raw?.result?.details || raw;
       const { active, state } = parseSessionState(statusResult);
 

@@ -62,6 +62,13 @@ export function initStatus(moduleId, moduleConfig) {
     cost: {
       total_duration_seconds: 0,
     },
+    validation: {
+      attempt: 1,
+      delivery_lint_passed: false,
+      delivery_lint_passed_at: null,
+      pre_check_passed: false,
+      pre_check_passed_at: null,
+    },
     forge_commit: null,
     buster_commit: null,
   };
@@ -83,6 +90,10 @@ export function addHistory(status, newStatus, agent, note) {
 // ---------------------------------------------------------------------------
 
 export function savePrompt(config, dir, agentType, attempt, prompt) {
+  if (!config?._logDir || !dir || typeof prompt !== 'string') {
+    log('DEBUG', `Prompt save skipped (non-critical): missing log dir, module dir, or prompt content`);
+    return;
+  }
   try {
     const logDir = moduleLogDir(config, dir);
     fs.mkdirSync(logDir, { recursive: true });
@@ -159,7 +170,7 @@ export function readGateStatusJson(config, gateId) {
   try {
     const gs = JSON.parse(fs.readFileSync(gsPath, 'utf8'));
     const s = (gs.status || '').toUpperCase();
-    return { exists: true, data: gs, isPass: s === 'PASS' || s === 'OK' };
+    return { exists: true, data: gs, isPass: s === 'PASS' || s === 'OK' || s === 'APPROVED' };
   } catch {
     return { exists: true, data: null, isPass: false };
   }

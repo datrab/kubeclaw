@@ -5,7 +5,23 @@ import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
 
-const Redis = require('ioredis');
+function requireFirst(candidates) {
+  let lastError = null;
+  for (const candidate of candidates) {
+    try {
+      return require(candidate);
+    } catch (err) {
+      lastError = err;
+    }
+  }
+  throw lastError;
+}
+
+const Redis = requireFirst([
+  'ioredis',
+  '/app/node_modules/ioredis',
+  '/usr/local/lib/node_modules/ioredis',
+]);
 
 // --- CONFIG ---
 let _redis = null;

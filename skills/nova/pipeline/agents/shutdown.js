@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { execFileSync } from 'child_process';
 import { loadStatus, saveStatus, addHistory } from '../services/status-store.js';
 import { log } from '../core/logger.js';
@@ -33,6 +34,26 @@ function collectDescendants(rootPid, byParent, acc = new Set()) {
 function signalPid(pid, signal) { try { process.kill(pid, signal); return true; } catch { return false; } }
 function pidAlive(pid) { try { process.kill(pid, 0); return true; } catch { return false; } }
 function isWrapperCommand(command) { return /node.*claude-agent-acp|npm exec.*acp|sh.*acp/i.test(command || ''); }
+function readProcEnv(pid) {
+  try {
+    const raw = fs.readFileSync(`/proc/${pid}/environ`, 'utf8');
+    const env = {};
+    for (const entry of raw.split('\0')) {
+      if (!entry) continue;
+      const idx = entry.indexOf('=');
+      if (idx <= 0) continue;
+      env[entry.slice(0, idx)] = entry.slice(idx + 1);
+    }
+    return env;
+  } catch {
+    return null;
+  }
+}
+function isTrackedAcpEnv(env, project) {
+  if (!env || env.OPENCLAW_SHELL !== 'acp') return false;
+  if (project && env.CURRENT_PROJECT && env.CURRENT_PROJECT !== project) return false;
+  return true;
+}
 function getTrackedEntryBySessionKey(sessionKey) {
   for (const entry of _shutdownState.activeSessions.values()) {
     if (entry?.sessionKey === sessionKey) return entry;
@@ -49,6 +70,7 @@ function buildVictimSet(agentId, sessionKey) {
 
   const tracked = getTrackedEntryBySessionKey(sessionKey);
   const gatewayLabel = tracked?.gatewayLabel || null;
+  const project = _shutdownState.config?.project || null;
   const byParent = new Map();
   const byPid = new Map();
   for (const row of table) {
@@ -63,8 +85,15 @@ function buildVictimSet(agentId, sessionKey) {
     return isSessionLinked(row.command, agentId, sessionKey, gatewayLabel);
   });
 
+  const orphanRoots = table.filter(row => {
+    if (row.pid === process.pid) return false;
+    if (row.ppid !== 1) return false;
+    if (!isWrapperCommand(row.command)) return false;
+    return isTrackedAcpEnv(readProcEnv(row.pid), project);
+  });
+
   const victims = new Map();
-  for (const root of roots) {
+  for (const root of [...roots, ...orphanRoots]) {
     victims.set(root.pid, root);
     for (const pid of collectDescendants(root.pid, byParent)) {
       if (pid === process.pid) continue;
@@ -146,6 +175,7 @@ export function trackAgent(config, label, sessionKey, agentId, gatewayLabel, str
 }
 export function untrackAgent(label) { _shutdownState.activeSessions.delete(label); }
 export function getTrackedAgent(label) { return _shutdownState.activeSessions.get(label); }
+export function getTrackedAgentCount() { return _shutdownState.activeSessions.size; }
 export function setShutdownContext(config, agentType, moduleId, statusDir) {
   _shutdownState.config = config;
   _shutdownState.statusDir = statusDir;

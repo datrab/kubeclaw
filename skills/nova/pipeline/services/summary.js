@@ -1,38 +1,71 @@
 import fs from 'fs';
 import path from 'path';
 import { log } from '../core/logger.js';
-import { swarmRoot, relPath } from '../core/paths.js';
+import { swarmRoot, relPath, costLogDir } from '../core/paths.js';
 import { gatewayInvoke } from '../integrations/gateway.js';
 import { trackAgent, untrackAgent, acpxCleanup } from '../agents/shutdown.js';
 import { modelToHarness } from '../agents/lifecycle.js';
 import { pollForFile } from './polling.js';
-// RUN_ID and _runStats are module-level state in pipeline-original.js, not yet extracted
-import { RUN_ID, _runStats, discord } from '../../pipeline-original.js';
+import { getRunId, getRunStats } from '../core/runtime.js';
+import { discord } from '../integrations/discord.js';
+import { writeCostReport, checkBudgetThresholds } from './cost.js';
+import { buildGovernanceSummary } from './governance-context.js';
 
-export function writeSummary(config, exitCode, exitReason) {
+export function writeSummary(config, exitCode, exitReason, ctx = null) {
   if (!config?._logDir) return;
   try {
+    const stats = getRunStats(config);
+    const startedAt = stats?.started_at || new Date().toISOString();
+
+    // Cost/usage snapshot — write cost report and check budget thresholds
+    let budgetStatus = null;
+    let costReportPath = null;
+    try {
+      const report = writeCostReport(config);
+      if (report) {
+        budgetStatus = report.budget?.threshold_status || null;
+        costReportPath = path.join(costLogDir(config), 'run-usage.json');
+      }
+      if (ctx) checkBudgetThresholds(config, ctx);
+    } catch (e) {
+      log('DEBUG', `[summary] Cost report failed (non-critical): ${e.message}`);
+    }
+
     const summary = {
-      run_id: RUN_ID,
-      started_at: _runStats.started_at,
+      run_id: getRunId(config),
+      started_at: startedAt,
       ended_at: new Date().toISOString(),
       exit_code: exitCode,
       exit_reason: exitReason,
       project: config.project,
-      modules_completed: _runStats.modules_completed,
-      modules_failed: _runStats.modules_failed,
-      modules_blocked: _runStats.modules_blocked,
-      gates_completed: _runStats.gates_completed,
-      gates_failed: _runStats.gates_failed,
-      total_forge_attempts: _runStats.total_forge_attempts,
-      total_buster_attempts: _runStats.total_buster_attempts,
-      total_echo_reviews: _runStats.total_echo_reviews,
-      errors: _runStats.errors,
-      discord_notifications_sent: _runStats.discord_notifications_sent,
-      git_pull_failures: _runStats.git_pull_failures,
-      git_push_failures: _runStats.git_push_failures,
-      config_validation_issues: _runStats.config_validation_issues,
-      duration_seconds: Math.round((Date.now() - new Date(_runStats.started_at).getTime()) / 1000),
+      modules_completed: stats.modules_completed,
+      modules_failed: stats.modules_failed,
+      modules_blocked: stats.modules_blocked,
+      gates_completed: stats.gates_completed,
+      gates_failed: stats.gates_failed,
+      total_forge_attempts: stats.total_forge_attempts,
+      total_buster_attempts: stats.total_buster_attempts,
+      total_echo_reviews: stats.total_echo_reviews,
+      errors: stats.errors,
+      discord_notifications_sent: stats.discord_notifications_sent,
+      git_pull_failures: stats.git_pull_failures,
+      git_push_failures: stats.git_push_failures,
+      config_validation_issues: stats.config_validation_issues,
+      duration_seconds: Math.round((Date.now() - new Date(startedAt).getTime()) / 1000),
+      governance: buildGovernanceSummary(config),
+      usage: {
+        total_input_tokens: stats?.inputTokens ?? null,
+        total_output_tokens: stats?.outputTokens ?? null,
+        total_tokens: stats?.inputTokens != null && stats?.outputTokens != null
+          ? stats.inputTokens + stats.outputTokens
+          : null,
+        cost_usd: null,
+        cost_availability: 'unavailable — use provider billing dashboard',
+      },
+      budget_threshold_status: budgetStatus,
+      cost_report_path: costReportPath
+        ? path.relative(config.repo_root || config._logDir, costReportPath)
+        : null,
     };
     fs.writeFileSync(path.join(config._logDir, 'pipeline', 'summary.json'), JSON.stringify(summary, null, 2));
     log('OK', `Pipeline summary written: exit=${exitCode} (${exitReason})`);
@@ -66,7 +99,7 @@ export function pipelineReviewAgentId(model, pr = {}) {
   return modelToHarness(model) || 'claude';
 }
 
-function ensurePipelineReviewInstructions(config, pr = {}) {
+export function writePipelineReviewInstructions(config, pr = {}) {
   const out = pipelineReviewOutputPath(config, pr);
   const jsonOut = pipelineReviewJsonPath(config, pr);
   const pathOut = pipelineReviewInstructionsPath(config, pr);
@@ -76,7 +109,7 @@ function ensurePipelineReviewInstructions(config, pr = {}) {
   const modulesDir = config.paths?.modules_dir || '.swarm/modules';
   const reviewMdPath = relPath(config, out);
   const reviewJsonPath = relPath(config, jsonOut);
-  const runId = config._runId || 'unknown';
+  const runId = getRunId(config);
   const content = `You are reviewing a completed pipeline run for project: ${config.project}
 
 ## Run Data Available
@@ -135,7 +168,7 @@ export async function generatePipelineReview(config) {
     const model = pr.model || config.models?.echo || 'openai-codex/gpt-5.4';
     const dispatch = pipelineReviewDispatchMode(model, pr);
     const agentId = pipelineReviewAgentId(model, pr);
-    const instructionsPath = ensurePipelineReviewInstructions(config, pr);
+    const instructionsPath = writePipelineReviewInstructions(config, pr);
     const instructions = fs.readFileSync(instructionsPath, 'utf8');
     const label = `pipeline-review-${Date.now()}`;
     const cwd = config.repo_root;

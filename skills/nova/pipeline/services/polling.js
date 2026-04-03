@@ -10,8 +10,7 @@ import { getAcpMonitorState, getAcpMonitorConfig } from '../agents/acp-monitor.j
 import { getTrackedAgent } from '../agents/shutdown.js';
 import { gatewayInvoke } from '../integrations/gateway.js';
 import { withRateLimitRecovery } from './rate-limit.js';
-// gitPullForPolling, headHash, invalidateHeadHash, gitExec not yet extracted
-import { gitPullForPolling, headHash, invalidateHeadHash, gitExec } from '../../pipeline-original.js';
+import { gitPullForPolling, headHash, invalidateHeadHash, gitExec } from '../integrations/git.js';
 
 const STATUS = {
   PENDING:           'PENDING',
@@ -44,6 +43,33 @@ export function pollResult(ok, reason, status = null) {
   return { ok, reason, status };
 }
 
+function syncRepoForPolling(config, label = 'poll') {
+  if (!config?.repo_root) return { ok: true, skipped: true, reason: 'no_repo_root' };
+  try {
+    const result = gitPullForPolling(config) || { ok: true };
+    if (result.skipped) {
+      log('DEBUG', `[${label}] Git pull skipped (${result.reason || 'skipped'})`);
+    } else if (result.ok === false) {
+      const error = {
+        code: 'POLLING_GIT_PULL_FAILED',
+        message: result.reason || result.details || 'git pull failed during polling',
+        details: result,
+      };
+      log('WARN', `[${label}] Polling git pull failed: ${error.message}`);
+      return { ok: false, error };
+    }
+    return { ok: true, result };
+  } catch (e) {
+    const error = {
+      code: e.code || 'POLLING_GIT_FAILED',
+      message: e.message?.split('\n')[0] || 'git pull failed during polling',
+      details: e.pollingGit || null,
+    };
+    log('ERROR', `[${label}] ${error.message}`);
+    return { ok: false, error };
+  }
+}
+
 // ─── Generic Polling Engine ───────────────────────────────────────────────────
 
 /**
@@ -70,7 +96,8 @@ export async function pollGeneric(config, checkFn, timeoutMinutes, label = 'poll
 
   while (Date.now() < deadline) {
     await sleep(interval);
-    if (config.repo_root) gitPullForPolling(config);
+    const gitSync = syncRepoForPolling(config, label);
+    if (!gitSync.ok) return pollResult(false, 'git_error', gitSync.error);
 
     const check = await checkFn();
 
@@ -202,7 +229,10 @@ export async function pollStatus(config, moduleDir, expectedStatuses, timeoutMin
 
       if (acpState.terminal) {
         // Session died — check if HEAD moved (agent pushed before crashing)
-        gitPullForPolling(config);
+        const gitSync = syncRepoForPolling(config, moduleDir);
+        if (!gitSync.ok) {
+          return { done: true, result: pollResult(false, 'git_error', gitSync.error) };
+        }
         invalidateHeadHash();
         const headNow = headHash();
         if (headBefore && headNow !== headBefore) {
@@ -275,7 +305,10 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
 
   while (Date.now() < deadline) {
     await sleep(interval);
-    gitPullForPolling(config);
+    const gitSync = syncRepoForPolling(config, logLabel);
+    if (!gitSync.ok) {
+      return { completed: false, hasChanges: false, reason: 'git_error', error: gitSync.error };
+    }
 
     // Check if HEAD moved (agent pushed commits)
     invalidateHeadHash();
@@ -330,7 +363,10 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
     // Session ended + grace expired → done (even without HEAD movement)
     if (sessionEndDetected && (Date.now() - sessionEndGraceStart) >= SESSION_END_GRACE_MS) {
       // One final git pull to catch any last-second push
-      gitPullForPolling(config);
+      const finalGitSync = syncRepoForPolling(config, logLabel);
+      if (!finalGitSync.ok) {
+        return { completed: false, hasChanges: false, reason: 'git_error', error: finalGitSync.error };
+      }
       invalidateHeadHash();
       const finalHead = headHash();
       const hasChanges = finalHead !== headBefore;

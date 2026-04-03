@@ -1,7 +1,8 @@
 // Named exports from extracted modules
 export { loadConfig, validateConfig, validateBusterConfig, resolveModel } from './core/config.js';
-export { getRepoRoot } from './core/git.js';
-export { modulePath, statusPath, swarmRoot, projectSrcPath, relPath, completionStreamKey, gateStatusPath, moduleLogDir, moduleTestLogDir, moduleLintLogDir, gateLogDir, gateTestLogDir, gateLintLogDir, validateSafePath } from './core/paths.js';
+export { RUN_ID, _runStats, createRunId, createRunStats, setRunState, bindRunContext, resolveRunContext, getRunState, getRunId, getRunStats, output, loadProgress } from './core/runtime.js';
+export { getRepoRoot, gitExec, headHash, invalidateHeadHash, setRepoRoot } from './core/git.js';
+export { modulePath, statusPath, swarmRoot, projectSrcPath, relPath, completionStreamKey, gateStatusPath, moduleLogDir, moduleTestLogDir, moduleLintLogDir, gateLogDir, gateTestLogDir, gateLintLogDir, validateSafePath, costLogDir, redisLogDir, archValidatorLogDir } from './core/paths.js';
 export { createPipelineContext } from './core/context.js';
 export { createLogger, log, setActiveContext, clearActiveContext, getActiveContext, initContextLogging } from './core/logger.js';
 export { createTempManager } from './core/temp.js';
@@ -19,7 +20,7 @@ export {
 
 // Integration layer exports
 export { gatewayInvoke, GATEWAY_URL, GATEWAY_TOKEN } from './integrations/gateway.js';
-export { discord } from '../pipeline-original.js';
+export { discord } from './integrations/discord.js';
 
 // Agent lifecycle/monitor/shutdown exports
 export {
@@ -57,6 +58,7 @@ export {
   reaperAfterKill,
   reaperAfterKillSync,
   getTrackedAgent,
+  getTrackedAgentCount,
 } from './agents/shutdown.js';
 
 // Status and exit code constants (module 16)
@@ -66,7 +68,10 @@ export { STATUS, EXIT_OK, EXIT_ERROR, EXIT_NEEDS_NOVA, EXIT_BLOCKED, EXIT_TIMEOU
 export { sleep, pollResult, pollGeneric, pollForFile, pollStatus, pollForSessionEnd, pollDual, pollWithRateLimitRecovery, pollDualWithRateLimitRecovery, archiveModuleCompletions, readCompletionFromRedis } from './services/polling.js';
 export { withRateLimitRecovery, handleRateLimit } from './services/rate-limit.js';
 export { FAIL_PATTERNS, extractAgentFailReason, extractPreTestFailReason, getFailedSuiteNames, handleFail, buildNovaEscalation, injectNeedsNova, resolveAutoRetryThreshold } from './services/failures.js';
-export { emitEvent, onPipelineStarted, onPipelineCompleted, onPipelineHalted, onModuleStarted, onModulePass, onModuleFail, onModuleBlocked, onGateStarted, onGatePass, onGateFail, onAgentSpawned, onAgentKilled, onPhaseStarted, onPhaseCompleted } from './services/telemetry.js';
+export { emitEvent, onPipelineStarted, onPipelineCompleted, onPipelineHalted, onModuleStarted, onModulePass, onModuleFail, onModuleBlocked, onGateStarted, onGatePass, onGateFail, onAgentSpawned, onAgentKilled, onPhaseStarted, onPhaseCompleted, onRetryScheduled, onRetryExhausted, onEscalated, onSummaryStarted, onSummaryCompleted, onBudgetWarning, onBudgetExceeded, onRedisMessage } from './services/telemetry.js';
+export { appendStructuredEvent, recordUsageSnapshot, aggregateUsage, isBudgetExceeded, emitBudgetWarnings } from './services/observability.js';
+export { logRedisExchange, logRedisSent, logRedisReceived, closeRedisLog } from './services/redis-log.js';
+export { captureSessionSnapshot, writeUsageArtifact, writeCostReport, checkBudgetThresholds, accumulateTokens } from './services/cost.js';
 
 // Prompt subsystem exports (module 07)
 export { makePromptResult, buildGitSyncSection, buildAvailableToolsSection, buildTestWorkspaceSection, buildBusterCompletionProtocol, buildBusterGateCompletionProtocol } from './prompts/shared.js';
@@ -88,6 +93,7 @@ export {
   writeSummary,
   generateProjectSummary,
   generatePipelineReview,
+  writePipelineReviewInstructions,
   pipelineReviewOutputPath,
   pipelineReviewJsonPath,
   pipelineReviewInstructionsPath,
@@ -95,30 +101,16 @@ export {
   pipelineReviewAgentId,
 } from './services/summary.js';
 
-// Remaining items not yet extracted from pipeline-original.js — explicit re-exports
-// These will be removed as extraction continues in future modules.
-export {
-  // Runtime stats / run identity
-  RUN_ID,
-  _runStats,
-  // Output helper
-  output,
-  // Progress loader
-  loadProgress,
-  // Module execution internals (not yet extracted to runners/)
-  executeModuleAttempt,
-  runPreCheck,
-  generateLintReport,
-  formatLintReportForReviewer,
-  // Git utilities (not yet extracted to integrations/git.js)
-  gitExec,
-  headHash,
-  invalidateHeadHash,
-  gitSyncBeforeBuster,
-  gitPullForPolling,
-  gitPullBeforePush,
-  gitPushWithRetry,
-  gitCommitAndPush,
-} from '../pipeline-original.js';
+// Architecture validator (module 08)
+export { runArchValidator, archValidatorLogDir, buildMarkdownSummary, isBlocking, buildValidatorPrompt, SEVERITY, SCOPE, FINDING_CODES } from './services/arch-validator.js';
+
+// Lint / pre-check helpers (module 03)
+export { generateLintReport, formatLintReportForReviewer, runPreCheck } from './services/lint.js';
+
+// Module dependency checker (module 03)
+export { checkDependencies } from './services/dependencies.js';
+
+// Git utilities — owned by integrations/git.js
+export { gitPullForPolling, gitPullBeforePush, gitPushWithRetry, gitCommitAndPush, gitSyncBeforeBuster } from './integrations/git.js';
 
 export { default } from './runners/pipeline-runner.js';

@@ -1,13 +1,13 @@
 import { execFileSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import { resolveModel } from '../core/config.js';
+import { resolveModel, logEffectivePolicy } from '../core/config.js';
 import { completionStreamKey, modulePath, relPath, statusPath, swarmRoot, validateSafePath } from '../core/paths.js';
 import { log } from '../core/logger.js';
 import { gatewayInvoke } from '../integrations/gateway.js';
 import { discord } from '../integrations/discord.js';
 import { acpxCleanup, getTrackedAgent, reaperAfterKill, trackAgent, untrackAgent } from './shutdown.js';
-import { parseSessionState, waitForSessionIdle } from './acp-monitor.js';
+import { parseSessionState, readAcpTranscriptState, transcriptShowsProgress, waitForSessionIdle } from './acp-monitor.js';
 
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 function nodeExec(scriptPath, args, opts = {}) {
@@ -34,7 +34,7 @@ export function modelToHarness(modelId) {
   return null;
 }
 
-export async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt) {
+export async function spawnAcpAgent(config, agentType, moduleId, model, taskPrompt, opts = {}) {
   const agentConfig = config.agents[agentType];
   const trackingKey = acpLabel(agentType, moduleId);
   const gatewayLabel = `${trackingKey}-${Date.now()}`;
@@ -43,7 +43,10 @@ export async function spawnAcpAgent(config, agentType, moduleId, model, taskProm
   const m = String(model || '').toLowerCase();
   const useSubagent = m.startsWith('openai/') || m.startsWith('openai-codex/') || m.includes('gpt-5') || m.includes('codex');
 
-  log('STEP', `Spawning ${useSubagent ? 'subagent' : 'ACP'} session: ${gatewayLabel} (agent: ${agentId}, model: ${model})`);
+  // Thinking: opts.thinking (from policy resolver) beats config.agents fallback
+  const thinkingLevel = opts.thinking || (useSubagent ? null : config.agents?.[agentType]?.thinking_level) || null;
+
+  log('STEP', `Spawning ${useSubagent ? 'subagent' : 'ACP'} session: ${gatewayLabel} (agent: ${agentId}, model: ${model}${thinkingLevel ? `, thinking: ${thinkingLevel}` : ''})`);
 
   const spawnArgs = {
     task: taskPrompt,
@@ -58,7 +61,6 @@ export async function spawnAcpAgent(config, agentType, moduleId, model, taskProm
   if (!useSubagent) {
     spawnArgs.agentId = agentId;
     spawnArgs.streamTo = 'parent';
-    const thinkingLevel = config.agents?.[agentType]?.thinking_level;
     if (thinkingLevel) spawnArgs.thinking = thinkingLevel;
   }
 
@@ -169,7 +171,7 @@ export async function spawnAgent(config, progress, agentType, moduleId, model, t
     opts.model = model;
     return dispatchRedisTask(config, progress, agentType, moduleId, taskType, taskPrompt, opts.status, opts);
   }
-  return spawnAcpAgent(config, agentType, moduleId, model, taskPrompt);
+  return spawnAcpAgent(config, agentType, moduleId, model, taskPrompt, { thinking: opts.thinking });
 }
 
 export async function killAgent(config, agentType, moduleId, graceful = false) {
@@ -204,35 +206,55 @@ export async function verifyAgentAlive(config, agentType, moduleId, waitMs = 800
   if (agentConfig.dispatch === 'redis') return true;
   await sleep(waitMs);
   const label = acpLabel(agentType, moduleId);
-  const sessionKey = getTrackedAgent(label)?.sessionKey;
+  const entry = getTrackedAgent(label);
+  const sessionKey = entry?.sessionKey;
   if (!sessionKey) {
     log('ERROR', `Agent health check failed: no sessionKey for '${label}'`);
     return false;
   }
   try {
-    const raw = await gatewayInvoke('session_status', {}, 10000, { sessionKey });
+    const raw = await gatewayInvoke('session_status', { sessionKey }, 10000);
     const result = raw?.result?.details || raw;
     const { state } = parseSessionState(result);
     if (/^(closed|error)$/i.test(state)) {
       log('ERROR', `Agent health check: session in terminal state '${state}': ${label}`);
       return false;
     }
+    if (/^(unknown|unreachable)$/i.test(state)) {
+      const transcript = readAcpTranscriptState(entry?.streamLogPath);
+      if (transcriptShowsProgress(transcript)) {
+        log('WARN', `Agent health check using transcript fallback: ${label} (${sessionKey})`);
+        return true;
+      }
+    }
     log('OK', `Agent health check passed: ${label} (${sessionKey}, state: ${state})`);
     return true;
   } catch (e) {
+    const transcript = readAcpTranscriptState(entry?.streamLogPath);
+    if (transcriptShowsProgress(transcript)) {
+      log('WARN', `Agent health check using transcript fallback after session_status failure: ${label} (${sessionKey})`);
+      return true;
+    }
     log('ERROR', `Agent health check failed for '${label}': ${e.message}`);
     return false;
   }
 }
 
-export async function spawnReviewerAgent(config, progress, gateId, reviewer, instructions) {
+export async function spawnReviewerAgent(config, progress, gateId, reviewer, instructions, opts = {}) {
   const trackingKey = `echo-${reviewer.label}-${gateId}`;
   const gatewayLabel = `${trackingKey}-${Date.now()}`;
   const model = resolveModel(config, progress, 'echo', reviewer.model);
   const agentId = modelToHarness(model) || reviewer.agent_id || 'claude';
   const cwd = config.agents.echo?.cwd || config.repo_root;
-  log('STEP', `Spawning reviewer: ${gatewayLabel} (agent: ${agentId}, model: ${model})`);
-  const useSubagent = reviewer.dispatch === 'subagent';
+  // Thinking: opts.thinking (from policy resolver) beats config.agents.echo fallback
+  const thinkingLevel = opts.thinking || config.agents?.echo?.thinking_level || null;
+  log('STEP', `Spawning reviewer: ${gatewayLabel} (agent: ${agentId}, model: ${model}${thinkingLevel ? `, thinking: ${thinkingLevel}` : ''})`);
+  const m = String(model || '').toLowerCase();
+  const useSubagent = reviewer.dispatch === 'subagent'
+    || m.startsWith('openai/')
+    || m.startsWith('openai-codex/')
+    || m.includes('gpt-5')
+    || m.includes('codex');
   const spawnArgs = {
     task: instructions,
     runtime: useSubagent ? 'subagent' : 'acp',
@@ -246,7 +268,6 @@ export async function spawnReviewerAgent(config, progress, gateId, reviewer, ins
   if (!useSubagent) {
     spawnArgs.streamTo = 'parent';
     spawnArgs.agentId = agentId;
-    const thinkingLevel = config.agents?.echo?.thinking_level;
     if (thinkingLevel) spawnArgs.thinking = thinkingLevel;
   }
   try {

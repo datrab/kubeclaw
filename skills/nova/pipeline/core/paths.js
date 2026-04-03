@@ -58,3 +58,15 @@ export function gateTestLogDir(config, gateId) {
 export function gateLintLogDir(config, gateId) {
   return path.join(config._logDir, 'gates', gateId, 'lint');
 }
+
+export function costLogDir(config) {
+  return path.join(config._logDir, 'cost');
+}
+
+export function redisLogDir(config) {
+  return path.join(config._logDir, 'redis');
+}
+
+export function archValidatorLogDir(config) {
+  return path.join(config._logDir, 'architecture-validator');
+}

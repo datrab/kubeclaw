@@ -5,7 +5,10 @@ import fs from 'fs';
 import path from 'path';
 import { log } from './logger.js';
 import { validateSafePath } from './paths.js';
-import { getRepoRoot } from './git.js';
+import { getRepoRoot, setRepoRoot } from './git.js';
+import { resolvePolicy, validateThinkingLevel, logEffectivePolicy, VALID_THINKING_LEVELS, THINKING_SUPPORTED_PATHS, THINKING_UNSUPPORTED_PATHS } from './policy.js';
+
+export { resolvePolicy, validateThinkingLevel, logEffectivePolicy, VALID_THINKING_LEVELS, THINKING_SUPPORTED_PATHS, THINKING_UNSUPPORTED_PATHS };
 
 // ─── Exported functions ───────────────────────────────────────────────────────
 
@@ -78,6 +81,9 @@ export function loadConfig(projectName, opts = {}) {
 
   validateConfig(config, progress);
 
+  // Make headHash() usable without passing config explicitly (e.g. in addHistory).
+  setRepoRoot(config.repo_root);
+
   return { config, progress };
 }
 
@@ -138,9 +144,10 @@ export function validateConfig(config, progress) {
   requireField(progress, 'execution_order', 'progress');
   requireField(progress, 'modules', 'progress');
 
-  const validGateTypes = ['buster', 'review'];
-  const validOnNogo = ['fix_and_rereview'];
-  const validOnFail = ['fix_and_retest'];
+  const validGateTypes = ['buster', 'review', 'approval'];
+  const validOnNogo    = ['fix_and_rereview'];
+  const validOnFail    = ['fix_and_retest'];
+  const validOnTimeout = ['block', 'continue'];
 
   for (const [gateId, gate] of Object.entries(progress.gates || {})) {
     if (!gate.type) {
@@ -160,6 +167,21 @@ export function validateConfig(config, progress) {
     if (gate.type === 'buster') {
       if (gate.on_fail && !validOnFail.includes(gate.on_fail)) {
         errors.push(`progress.gates.${gateId}.on_fail: '${gate.on_fail}' not valid (${validOnFail.join(' | ')})`);
+      }
+    }
+
+    if (gate.type === 'approval') {
+      if (!gate.title) {
+        errors.push(`progress.gates.${gateId}.title: required for approval gates`);
+      }
+      if (gate.on_timeout && !validOnTimeout.includes(gate.on_timeout)) {
+        errors.push(`progress.gates.${gateId}.on_timeout: '${gate.on_timeout}' not valid (${validOnTimeout.join(' | ')})`);
+      }
+      if (gate.timeout_minutes !== undefined && gate.timeout_minutes !== null) {
+        const tm = Number(gate.timeout_minutes);
+        if (!Number.isFinite(tm) || tm <= 0) {
+          errors.push(`progress.gates.${gateId}.timeout_minutes: must be a positive number`);
+        }
       }
     }
   }
@@ -190,13 +212,6 @@ export function validateBusterConfig(config) {
 }
 
 export function resolveModel(config, progress, agentName, explicitModel = null) {
-  if (explicitModel) return explicitModel;
-
-  const progressDefault = progress?.defaults?.models?.[agentName];
-  if (progressDefault) return progressDefault;
-
-  const configDefault = config?.models?.[agentName];
-  if (configDefault) return configDefault;
-
-  return null;
+  const { model } = resolvePolicy(config, progress, agentName, { scopeModel: explicitModel });
+  return model;
 }

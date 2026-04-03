@@ -12,15 +12,21 @@ import { log } from '../core/logger.js';
 import { EXIT_ERROR } from '../core/constants.js';
 import { runBusterGate } from './buster-gate-runner.js';
 import { runReviewGate } from './review-gate-runner.js';
+import { runApprovalGate } from './approval-gate-runner.js';
 
 /**
  * Gate runner strategy map. Keyed by gate.type from progress.json.
  * Add new gate types here — no changes needed in pipeline-runner.js.
  */
 export const GATE_RUNNERS = {
-  buster: runBusterGate,
-  review: runReviewGate,
+  buster:   runBusterGate,
+  review:   runReviewGate,
+  approval: runApprovalGate,
 };
+
+function getGateRunners(config) {
+  return { ...GATE_RUNNERS, ...(config?._testOverrides?.gateRunner?.runners || {}) };
+}
 
 /**
  * Dispatch gate execution to the appropriate runner based on gate.type.
@@ -35,7 +41,7 @@ export async function runGate(config, progress, gateId, { novaPrompt } = {}) {
   const gate = progress.gates[gateId];
   if (!gate) throw new Error(`Gate '${gateId}' not found in progress.json`);
 
-  const runner = GATE_RUNNERS[gate.type];
+  const runner = getGateRunners(config)[gate.type];
   if (!runner) {
     log('ERROR', `Unknown gate type '${gate.type}' for gate '${gateId}'`);
     return { exit: EXIT_ERROR, reason: `Unknown gate type '${gate.type}' for gate '${gateId}'` };

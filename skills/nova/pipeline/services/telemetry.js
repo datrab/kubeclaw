@@ -146,3 +146,43 @@ export function onPhaseStarted(ctx, moduleId, phase, model) {
 export function onPhaseCompleted(ctx, moduleId, phase) {
   emitEvent(ctx, 'phase.completed', { moduleId, phase }).catch(() => {});
 }
+
+export function onRetryScheduled(ctx, moduleId, attempt, maxFails) {
+  emitEvent(ctx, 'retry.scheduled', { moduleId, attempt, maxFails }).catch(() => {});
+}
+
+export function onRetryExhausted(ctx, moduleId, attempt, maxFails) {
+  emitEvent(ctx, 'retry.exhausted', { moduleId, attempt, maxFails }).catch(() => {});
+}
+
+export function onEscalated(ctx, scope, scopeId, reason, exitCode) {
+  emitEvent(ctx, 'escalation', { scope, scopeId, reason, exitCode }).catch(() => {});
+}
+
+export function onSummaryStarted(ctx, summaryType) {
+  emitEvent(ctx, 'summary.started', { summaryType }).catch(() => {});
+}
+
+export function onSummaryCompleted(ctx, summaryType) {
+  emitEvent(ctx, 'summary.completed', { summaryType }).catch(() => {});
+}
+
+export function onBudgetWarning(ctx, threshold, current, limit, unit) {
+  emitEvent(ctx, 'budget.warning', { threshold, current, limit, unit }).catch(() => {});
+}
+
+export function onBudgetExceeded(ctx, threshold, current, limit, unit) {
+  emitEvent(ctx, 'budget.exceeded', { threshold, current, limit, unit }).catch(() => {});
+}
+
+export function onRedisMessage(ctx, direction, type, scope, scopeId, payloadSize) {
+  emitEvent(ctx, 'redis.message', { direction, type, scope, scopeId, payloadSize }).catch(() => {});
+}
+
+export function onApprovalRequested(ctx, gateId, gateTitle, timeoutMinutes, timeoutPolicy) {
+  emitEvent(ctx, 'approval.requested', { gateId, gateTitle, timeoutMinutes, timeoutPolicy }).catch(() => {});
+}
+
+export function onApprovalResolved(ctx, gateId, status, decisionBy) {
+  emitEvent(ctx, 'approval.resolved', { gateId, status, decisionBy: decisionBy || null }).catch(() => {});
+}
