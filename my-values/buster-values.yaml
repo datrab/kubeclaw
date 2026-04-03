@@ -58,7 +58,7 @@ discordWebhook:
   secretKey: "discordWebhook"
 
 agent:
-  project: "governance"
+  project: "wave3"
   git:
     enabled: true
     secretName: "git-deploy-key-buster"
