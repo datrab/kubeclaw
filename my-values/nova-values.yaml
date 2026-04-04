@@ -42,7 +42,7 @@ discordWebhook:
   secretKey: "discordWebhook"
 
 agent:
-  project: "governance"
+  project: "wave4"
   git:
     enabled: true
     secretName: "git-deploy-key-nova"
