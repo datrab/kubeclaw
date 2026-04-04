@@ -1,9 +1,8 @@
 # KubeClaw Pipeline — Konfigurations-Referenz
 
-**Version:** 2.1
-**Datum:** 2026-04-03
+**Version:** 1.0  
+**Datum:** 2026-03-18  
 **Zweck:** Was muss wo konfiguriert sein, damit die Pipeline ein Projekt end-to-end durchlaufen kann. Für Nova und für den Operator.
-**Hinweis:** Aktualisiert für v10 (Wave 3): acp_monitor-Felder, case_study, telemetry-Flag-Semantik, progress.defaults ergänzt.
 
 ---
 
@@ -12,7 +11,7 @@
 | File | Was es steuert | Wer pflegt es |
 |---|---|---|
 | `progress.json` | **Das Projekt:** Module, Gates, Reihenfolge, Models, Timeouts, Test-Configs | Nova / Operator |
-| `swarm.config.json` | **Die Plattform:** Polling, Retries, Rate-Limits, Memory, Pre-Checks, Agent-Routing, Telemetrie | Operator (selten geändert) |
+| `swarm.config.json` | **Die Plattform:** Polling, Retries, Rate-Limits, Memory, Pre-Checks, Agent-Routing | Operator (selten geändert) |
 | `.semgrep.yml` | **Lint-Regeln:** Welche Security/Correctness-Rules Echo's Lint-Report nutzt | Operator (optional anpassbar) |
 
 Dazu kommen **Projekt-Dateien im Repo** die pro Modul existieren müssen:
@@ -61,39 +60,11 @@ Dies ist die zentrale Datei. Liegt im Git-Repo unter `.swarm/progress.json`. Nov
 |---|---|---|
 | `project` | ja | Projektname — wird für Memory-Scoping, Git-Pfade und Redis-Streams verwendet |
 | `version` | nein | Semver — informativ |
-| `models` | ja | Default-Modelle pro Agent. Kann pro Modul überschrieben werden (entspricht `defaults.models` unten) |
+| `models` | ja | Default-Modelle pro Agent. Kann pro Modul überschrieben werden |
 | `execution_order` | ja | Array von Modul-IDs und Gate-Keys in exakter Ausführungsreihenfolge. Gates mit Prefix `gate:` |
 | `phases` | nein | Logische Gruppierung von Modulen (informativ, Pipeline ignoriert es) |
 | `modules` | ja | Modul-Definitionen (siehe §1.2) |
 | `gates` | ja (wenn in execution_order) | Gate-Definitionen (siehe §1.3) |
-| `defaults` | nein | Projekt-Level Model/Thinking-Overrides (Wave 3, siehe §1.5) |
-
-### 1.5 progress.json `defaults` — Projekt-Level Model/Thinking-Override (Wave 3 Neu)
-
-Der `defaults`-Block ermöglicht Projekt-Level-Overrides für Model und Thinking-Level pro Agent. Diese haben Priorität 3 in der 4-stufigen Policy-Auflösung (nach Runtime-Override und Scope-Policy, vor Config-Default).
-
-```json
-{
-  "defaults": {
-    "models": {
-      "forge": "claude-sonnet-4-6",
-      "buster": "claude-sonnet-4-6",
-      "echo": "claude-opus-4-6"
-    },
-    "thinking": {
-      "forge": "medium",
-      "echo": "high"
-    }
-  }
-}
-```
-
-| Feld | Beschreibung |
-|---|---|
-| `defaults.models.<agent>` | Projekt-Level Model-Override für den genannten Agenten. Überschreibt `config.models.<agent>`. |
-| `defaults.thinking.<agent>` | Projekt-Level Thinking-Level für den Agenten. Gültige Werte: `none`, `low`, `medium`, `high`, `xhigh`, `adaptive`. |
-
-**Hinweis:** Thinking wird nur auf ACP/Subagent-Dispatch-Pfaden unterstützt. Auf Redis/Buster-Pfaden wird Thinking ignoriert (source: `not_supported_on_redis`).
 
 ### 1.2 Module
 
@@ -105,7 +76,6 @@ Der `defaults`-Block ermöglicht Projekt-Level-Overrides für Model und Thinking
   "depends_on": ["01"],
   "timeout_minutes": 30,
   "max_fails": 3,
-  "auto_retry_threshold": 3,
   "forge_subagent": "forge-codex",
   "forge_model": "codex-5.4",
   "test_suites": ["build", "health", "api", "security"],
@@ -128,17 +98,16 @@ Der `defaults`-Block ermöglicht Projekt-Level-Overrides für Model und Thinking
 |---|---|---|---|
 | `title` | ja | — | Menschenlesbarer Modulname |
 | `dir` | ja | — | Verzeichnisname im Repo (z.B. `02-kubernetes-connection`) |
-| `substeps` | nein | `null` | Array von Sub-IDs. Pipeline konkateniert deren FORGE.md-Dateien in einem Forge-Spawn |
+| `substeps` | nein | `null` | Array von Sub-IDs (z.B. `["03a", "03b"]`). Pipeline konkateniert deren FORGE.md-Dateien in einem Forge-Spawn |
 | `depends_on` | ja | `[]` | Module die vorher PASS sein müssen |
 | `timeout_minutes` | nein | `45` (aus swarm.config) | Max. Laufzeit für einen Forge+Buster-Zyklus |
 | `max_fails` | nein | `3` (aus swarm.config) | Max. Fehlversuche bevor BLOCKED |
-| `auto_retry_threshold` | nein | aus swarm.config | Max. automatische Retries vor Nova-Eskalation (EXIT 10). Überschreibt den Plattform-Default für dieses Modul. |
 | `forge_subagent` | nein | aus `models.forge` | ACP-Subagent-ID für Forge |
 | `forge_model` | nein | aus `models.forge` | LLM-Modell für Forge |
-| `test_suites` | nein | `["build", "health"]` | Welche Buster-Suites laufen |
-| `test_config` | nein | `{ serve: { type: "static" } }` | Suite-spezifische Config |
+| `test_suites` | nein | `["build", "health"]` | Welche Buster-Suites laufen (siehe BUSTER-CONFIG-REFERENCE.md §2) |
+| `test_config` | nein | `{ serve: { type: "static" } }` | Suite-spezifische Config (siehe BUSTER-CONFIG-REFERENCE.md §3) |
 
-**`serve.project_dir` ist Pflicht** wenn das Projekt nicht im Repo-Root liegt. Ohne `project_dir` startet die Sandbox im Repo-Root und relative Pfade brechen.
+**`serve.project_dir` ist Pflicht** wenn das Projekt nicht im Repo-Root liegt (Standard-Konvention: `Projects/<project>/src`). Ohne `project_dir` startet die Sandbox im Repo-Root und relative Pfade (`cd backend`, `spec_file`, etc.) brechen.
 
 **Substeps:** Wenn ein Modul Substeps hat, bekommt Forge **einen** Spawn. `readForgeInstructions()` konkateniert alle Substep-FORGE.md-Dateien. BUSTER.md bleibt auf Modul-Ebene.
 
@@ -159,7 +128,6 @@ Gates sind Checkpoints zwischen Phasen. Drei Typen:
   "forge_model": "codex-5.4",
   "timeout_minutes": 60,
   "max_fix_cycles": 3,
-  "auto_retry_threshold": 1,
   "test_suites": ["build", "health", "a11y", "perf", "bundle", "visual-reg", "api", "e2e", "security", "unit"],
   "test_config": {
     "serve": { "type": "static", "project_dir": "Projects/kubecommand/src" },
@@ -185,7 +153,6 @@ Gates sind Checkpoints zwischen Phasen. Drei Typen:
 | `forge_model` | nein | LLM-Modell für Forge bei Fixes |
 | `timeout_minutes` | nein | Max. Laufzeit |
 | `max_fix_cycles` | nein | Wie oft Forge fixen darf bevor BLOCKED |
-| `auto_retry_threshold` | nein | aus swarm.config | Max. Auto-Retries vor Nova-Eskalation für dieses Gate |
 | `test_suites` / `test_config` | nein | Wie bei Modulen, aber typischerweise mit `thresholds` (enforced) |
 
 **Unterschied zu Modul-Tests:** Gate-Tests haben `thresholds` → enforced. Jeder Failure zählt.
@@ -232,11 +199,17 @@ Bevor die Pipeline ein Modul bearbeiten kann, müssen diese Dateien im Repo exis
     └── baseline.png      # Optional — Visual-Regression Baseline (wenn visual-reg in test_suites)
 ```
 
+**FORGE.md** beschreibt WAS gebaut werden soll: Architektur, API-Endpoints, Datenmodelle, UI-Komponenten, Acceptance Criteria. Forge übersetzt das in Code.
+
+**BUSTER.md** beschreibt WAS getestet werden soll: Funktionale Tests, Edge Cases, Error-Handling, spezifische Szenarien die der LLM-Subagent prüfen soll (die deterministischen Suites laufen automatisch davor).
+
+**test-spec.json** definiert deterministische API-Tests (HTTP + WebSocket). Format-Referenz: `examples/test-spec-example.json` und `docs/BUSTER-CONFIG-REFERENCE.md §3.6`.
+
 ---
 
 ## 2. swarm.config.json — Die Plattform
 
-Standardpfad: `/app/config/swarm.config.json` (oder via `SWARM_CONFIG` Env-Variable). Alternativ als Helm ConfigMap deployed. Steuert Pipeline-Verhalten — wird selten geändert.
+Liegt unter `.swarm/swarm.config.json` oder wird via Helm ConfigMap deployed. Steuert Pipeline-Verhalten — wird selten geändert.
 
 ### 2.1 Pipeline-Verhalten
 
@@ -255,7 +228,7 @@ Standardpfad: `/app/config/swarm.config.json` (oder via `SWARM_CONFIG` Env-Varia
 | `poll_interval_seconds` | `30` | Wie oft die Pipeline den Buster-Completion-Stream pollt |
 | `default_timeout_minutes` | `45` | Default-Timeout wenn Modul keinen eigenen setzt |
 | `default_max_fails` | `3` | Default max_fails wenn Modul keinen eigenen setzt |
-| `auto_retry_threshold` | `2` | Plattform-Default: Nach N Fails → automatischer Retry mit angepasstem Prompt. Danach → EXIT 10 (NEEDS_NOVA). Kann in progress.json pro Modul/Gate überschrieben werden. |
+| `auto_retry_threshold` | `2` | Nach N Fails → automatischer Retry mit angepasstem Prompt. Danach → EXIT 10 (NEEDS_NOVA) |
 | `session_nudge_threshold` | `0.75` | Bei 75% Timeout-Verbrauch → Nudge an den laufenden Subagent |
 
 ### 2.2 Rate-Limiting
@@ -294,7 +267,7 @@ Standardpfad: `/app/config/swarm.config.json` (oder via `SWARM_CONFIG` Env-Varia
 | `semgrep_config_path` | `.semgrep.yml` | Pfad zur Semgrep-Konfiguration |
 | `timeout_seconds` | `30` | Max. Laufzeit für Lint |
 
-**Was der Pre-Check tut:** Führt `lint-report.js` aus (tsc, ESLint, Semgrep) und hängt das Ergebnis an den Forge-Prompt an.
+**Was der Pre-Check tut:** Führt `lint-report.js` aus (tsc, ESLint, Semgrep) und hängt das Ergebnis an den Forge-Prompt an. Forge sieht bestehende Lint-Fehler bevor es neuen Code schreibt.
 
 ### 2.4 Memory (Qdrant)
 
@@ -316,7 +289,7 @@ Standardpfad: `/app/config/swarm.config.json` (oder via `SWARM_CONFIG` Env-Varia
 | `enabled` | `true` | Memory-System aktiv? |
 | `memory_js_path` | `/app/skills/memory.js` | Pfad zum Memory-Script |
 | `recall_limit` | `5` | Max. Memories pro Recall-Query |
-| `recall_before_forge` | `true` | Vor jedem Forge-Dispatch relevante Memories recallen? |
+| `recall_before_forge` | `true` | Vor jedem Forge-Dispatch relevante Memories recallen und in den Prompt injizieren? |
 | `feedback_after_outcome` | `true` | Nach jedem PASS/FAIL automatisch Memory-Feedback speichern? |
 | `store_patterns_globally` | `true` | Erkannte Patterns cross-project speichern? |
 | `targeted_decay_amount` | `0.1` | Confidence-Decay bei negativem Feedback |
@@ -340,7 +313,7 @@ Standardpfad: `/app/config/swarm.config.json` (oder via `SWARM_CONFIG` Env-Varia
 
 **Models** sind die Default-LLM-Modelle pro Agent. `progress.json` kann sie pro Modul überschreiben via `forge_model`.
 
-**Agents** definiert wie die Pipeline Agenten anspricht. Forge und Echo via ACP (Subagent im Gateway), Buster via Redis (separater Pod).
+**Agents** definiert wie die Pipeline Agenten anspricht. Forge und Echo via ACP (Subagent im Gateway), Buster via Redis (separater Pod). Optionales Feld `cwd` (Default: `null`) setzt das Arbeitsverzeichnis für ACP-Sessions.
 
 ### 2.6 Review-Defaults
 
@@ -373,73 +346,13 @@ Defaults für Gate-Reviews wenn das Gate keine eigenen Werte setzt.
 }
 ```
 
-Steuert welche Pipeline-Events als Discord-Notifications gesendet werden.
-
-### 2.8 Telemetrie (v9-Neu)
-
-```json
-{
-  "telemetry": {
-    "stream_key": "pipeline:events",
-    "enabled": true
-  }
-}
-```
-
-| Feld | Default | Beschreibung |
-|---|---|---|
-| `telemetry.stream_key` | — | **Enable-Flag:** Wenn gesetzt (beliebiger nicht-leerer Wert), ist Telemetrie aktiv. Der Wert selbst wird NICHT als Stream Key verwendet. |
-| `telemetry.enabled` | — | Alternative Enable-Flag: `true` aktiviert Telemetrie. |
-
-**Wichtig:** Der tatsächliche Stream Key wird dynamisch generiert: `pipeline:telemetry:<project>:<run_id>`. Die Konfigurationsfelder dienen nur als Aktivierungsschalter.
-
-Wenn weder `stream_key` noch `enabled` gesetzt ist, oder Redis nicht erreichbar ist, werden Events still verworfen — kein Fehler, kein Crash.
-
-**Emittierte Event-Typen:** Vollständige Liste in `docs/telemetry-event-schema.md`.
-
-### 2.9 ACP-Monitor (Wave 3 Neu)
-
-```json
-{
-  "acp_monitor": {
-    "unknown_poll_limit": 10,
-    "stale_poll_limit": 10,
-    "max_transcript_extensions": 3,
-    "transcript_grace_ms": 300000
-  }
-}
-```
-
-| Feld | Default | Beschreibung |
-|---|---|---|
-| `acp_monitor.unknown_poll_limit` | `10` | Maximale aufeinanderfolgende Polls bei unbekanntem ACP-Session-State bevor Timeout |
-| `acp_monitor.stale_poll_limit` | `10` | Maximale aufeinanderfolgende Polls bei stagniertem Transcript bevor Timeout |
-| `acp_monitor.max_transcript_extensions` | `3` | Maximale Transcript-Erweiterungen pro Session (0 = keine Verlängerungen) |
-| `acp_monitor.transcript_grace_ms` | `300000` (5min) | Wartezeit nach dem letzten Transcript-Update bevor Session als stale gilt |
-
-### 2.10 Case Study (Wave 3 Neu)
-
-```json
-{
-  "case_study": {
-    "enabled": true,
-    "model": "claude-opus-4-6",
-    "output_file": ".swarm/logs/pipeline/case-study.md"
-  }
-}
-```
-
-| Feld | Default | Beschreibung |
-|---|---|---|
-| `case_study.enabled` | `false` | Case-Study-Agent am Pipeline-Ende aktivieren? |
-| `case_study.model` | aus `models.echo` | LLM-Modell für den Case-Study-Agenten |
-| `case_study.output_file` | automatisch generiert | Pfad der output-Datei (relativ zu Repo-Root) |
+Steuert welche Pipeline-Events als Discord-Notifications gesendet werden. Die Webhook-URL kommt aus dem Kubernetes Secret.
 
 ---
 
 ## 3. .semgrep.yml — Lint-Regeln
 
-Liegt unter `.swarm/.semgrep.yml` oder wird via Helm ConfigMap deployed.
+Liegt unter `.swarm/.semgrep.yml` oder wird via Helm ConfigMap deployed. Definiert Semgrep-Regeln für `lint-report.js` (Echo's Pre-Check).
 
 ### Was enthalten ist (Default)
 
@@ -454,7 +367,13 @@ Liegt unter `.swarm/.semgrep.yml` oder wird via Helm ConfigMap deployed.
 
 ### Anpassen
 
-Regeln mit `severity: ERROR` blockieren bei Echo's Review. `severity: WARNING` sind informativ. Um eine Regel zu deaktivieren: entfernen oder `severity: INFO` setzen.
+Regeln können hinzugefügt, entfernt oder die Severity geändert werden. Jede Regel hat eine `id`, `pattern`, `message`, `languages` und `severity` (ERROR oder WARNING).
+
+Regeln mit `severity: ERROR` blockieren bei Echo's Review. `severity: WARNING` sind informativ.
+
+Um eine Regel zu deaktivieren: entfernen oder `severity: INFO` setzen.
+
+Referenz für neue Regeln: https://semgrep.dev/r
 
 ---
 
@@ -480,15 +399,14 @@ Für jedes Modul in execution_order:
 ├─ 6. Forge-Dispatch:
 │     ACP Subagent spawnen mit: FORGE.md + Lint-Report + Memories + ggf. Retry-Prompt
 │     Forge schreibt Code → git commit → status.json
-│     Telemetrie: module_started + forge_completed Events
 │
 ├─ 7. Buster-Dispatch:
-│     Redis-Message an swarm:buster:tasks
-│     Telemetrie: buster_dispatched Event
+│     Redis-Message an swarm:buster:tasks mit:
+│       instructions (BUSTER.md), test_suites, test_config, timeout
 │     Orchestrator empfängt → Build/Serve → Suite-Runner → Conditional Spawn
 │
 ├─ 8. Ergebnis:
-│     PASS → Memory Feedback → Telemetrie: module_passed → Nächstes Modul
+│     PASS → Memory Feedback → Nächstes Modul
 │     FAIL (auto_retry_threshold nicht erreicht) → Retry mit angepasstem Prompt
 │     FAIL (auto_retry_threshold erreicht) → EXIT 10 (NEEDS_NOVA)
 │     FAIL (max_fails erreicht) → EXIT 20 (BLOCKED)
@@ -500,49 +418,13 @@ Für jedes Gate:
 │
 ├─ Gate type=review → Echo-Dispatch
 │   NO-GO → fix_and_rereview
-│
-Am Pipeline-Ende:
-│
-└─ generatePipelineSummary() → Discord + Nova (Empfehlungen, Fail-Patterns, Kosten)
 ```
 
 ---
 
-## 5. Pipeline-Script-Ort (v9 Modular)
+## 5. Checkliste: Neues Projekt aufsetzen
 
-```
-/app/skills/nova/pipeline.js              ← Kompatibilitäts-Shim (≤25 Zeilen)
-/app/skills/nova/pipeline/
-  core/         ← config, paths, context, logger, temp
-  integrations/ ← git, gateway, redis, discord
-  agents/       ← lifecycle, acp-monitor, shutdown
-  prompts/      ← forge, buster-module, buster-gate, gate-fix, review, shared
-  services/     ← status-store, blueprint, polling, rate-limit, failures, telemetry, summary
-  runners/      ← module-runner, gate-runner, buster-gate-runner, review-gate-runner, pipeline-runner
-  index.js      ← öffentliche Exports
-  cli.js        ← CLI-Einstiegspunkt
-```
-
-Aufruf (unverändert zu v8):
-```bash
-node /app/skills/nova/pipeline.js --project kubecommand --resume
-```
-
-Der Shim delegiert automatisch an `pipeline/cli.js`.
-
-**REPO_ROOT Environment Variable:**
-
-| Variable | Beschreibung |
-|---|---|
-| `REPO_ROOT` | Überschreibt die automatische Git-Repo-Erkennung. Nützlich wenn die Pipeline aus einem Verzeichnis ausserhalb des Repos aufgerufen wird (z.B. aus `/app/skills/nova/`). Priorität 2 (nach `--repo` Flag, vor `git rev-parse`). |
-
-```bash
-REPO_ROOT=/workspace/myproject node pipeline.js --project myproject --resume
-```
-
----
-
-## 6. Checkliste: Neues Projekt aufsetzen
+Was Nova (oder der Operator) tun muss bevor `pipeline.js --resume` das erste Mal läuft:
 
 ### Pflicht
 
@@ -561,26 +443,25 @@ REPO_ROOT=/workspace/myproject node pipeline.js --project myproject --resume
 - [ ] Für Frontend-Module: Visual-Regression Baselines in `.swarm/modules/<module-dir>/baselines/`
 - [ ] Gate `final-buster` mit enforced `thresholds` für alle relevanten Suites
 - [ ] Gate `final-review` mit Echo Code-Review
-- [ ] `.semgrep.yml` angepasst an Projekt-Technologien
-- [ ] `telemetry.stream_key` in swarm.config.json für externe Monitoring-Anbindung
+- [ ] `.semgrep.yml` angepasst an Projekt-Technologien (Default deckt JS/TS/Python/K8s ab)
 
 ### Optional
 
 - [ ] `phases` in progress.json (informativ, keine Pipeline-Auswirkung)
-- [ ] `substeps` für grosse Module
-- [ ] Custom `timeout_minutes`, `max_fails` und `auto_retry_threshold` pro Modul (sonst Defaults)
+- [ ] `substeps` für grosse Module (Pipeline konkateniert Substep-FORGE.md-Dateien in einem Forge-Spawn)
+- [ ] Custom `timeout_minutes` und `max_fails` pro Modul (sonst Defaults aus swarm.config)
 - [ ] Memory tuning in swarm.config (recall_limit, decay, patterns)
 
 ---
 
-## 7. Referenz-Verweise
+## 6. Referenz-Verweise
 
 | Thema | Dokument |
 |---|---|
 | Buster test_suites und test_config im Detail | `docs/BUSTER-CONFIG-REFERENCE.md` |
 | API-Test-Spec Format (test-spec.json) | `examples/test-spec-example.json` |
 | Buster-Architektur und Suite-Details | `docs/buster-test-platform-reference-v2.md` |
-| Pipeline Internals (v9) | `docs/pipeline-reference-v9.md` |
+| Pipeline.js Internals | `docs/pipeline-reference-v8.md` |
 | Phasenplan und offene Punkte | `docs/BUSTER-TEST-PLATFORM-PLAN.md` |
 | Beispiel progress.json | `examples/progress.json` |
 | Beispiel swarm.config.json | `charts/kubeclaw/files/config/swarm.config.json` |
