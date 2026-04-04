@@ -14,11 +14,12 @@ let _logStream = null;
 let _logStreamPath = null;
 
 function getOrCreateStream(config) {
-  if (!config?._logDir) return null;
+  if (!config?._runLogDir && !config?._logDir) return null;
   try {
-    const dir = redisLogDir(config);
+    // Use run-scoped dir when available; fall back to shared redis dir.
+    const dir = config._runLogDir || redisLogDir(config);
     fs.mkdirSync(dir, { recursive: true });
-    const filePath = path.join(dir, 'redis-exchanges.jsonl');
+    const filePath = path.join(dir, 'redis.jsonl');
     if (_logStream && _logStreamPath === filePath) return _logStream;
     // Open new stream (append mode)
     _logStream = fs.createWriteStream(filePath, { flags: 'a' });

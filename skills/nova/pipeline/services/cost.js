@@ -11,7 +11,7 @@ import path from 'path';
 import { log } from '../core/logger.js';
 import { costLogDir } from '../core/paths.js';
 import { getRunId, getRunStats } from '../core/runtime.js';
-import { onBudgetWarning, onBudgetExceeded } from './telemetry.js';
+import { onBudgetWarning, onBudgetExceeded, emitCostUpdate } from './telemetry.js';
 
 // ── Cost config defaults ──────────────────────────────────────────────────────
 
@@ -264,11 +264,24 @@ export function checkBudgetThresholds(config, ctx) {
  * Accumulate token usage into run stats from a session meta object.
  * Safe to call with partial/missing data.
  */
-export function accumulateTokens(config, sessionMeta = {}) {
+export function accumulateTokens(config, sessionMeta = {}, ctx = null) {
   try {
     const stats = getRunStats(config);
     if (!stats) return;
     stats.inputTokens  = (stats.inputTokens  ?? 0) + (sessionMeta.inputTokens  ?? 0);
     stats.outputTokens = (stats.outputTokens ?? 0) + (sessionMeta.outputTokens ?? 0);
+
+    // Emit cost.update telemetry event if context provided
+    if (ctx && (sessionMeta.inputTokens || sessionMeta.outputTokens)) {
+      emitCostUpdate(ctx, {
+        module_id: sessionMeta.module_id || null,
+        gate_id: sessionMeta.gate_id || null,
+        tokens_in: sessionMeta.inputTokens ?? null,
+        tokens_out: sessionMeta.outputTokens ?? null,
+        model: sessionMeta.model || null,
+        estimated_cost_usd: sessionMeta.costUsd ?? null,
+        cumulative_cost_usd: null,
+      });
+    }
   } catch { /* non-critical */ }
 }

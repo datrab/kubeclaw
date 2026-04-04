@@ -1,5 +1,4 @@
 // prompts/review.js — Reviewer prompt builder
-// Extracted from pipeline-original.js (module 07)
 
 import { relPath, projectSrcPath } from '../core/paths.js';
 import { makePromptResult } from './shared.js';

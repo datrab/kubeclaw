@@ -1,9 +1,8 @@
 // services/status-store.js — File-backed pipeline state (status.json, gate files, logs)
-// Extracted from pipeline-original.js (module 04)
 
 import fs from 'fs';
 import path from 'path';
-import { statusPath, moduleLogDir, relPath, gateLogDir, swarmRoot, gateStatusPath } from '../core/paths.js';
+import { statusPath, moduleLogDir, relPath, gateLogDir, swarmRoot, gateStatusPath, pipelineRunLogDir } from '../core/paths.js';
 import { log, initContextLogging } from '../core/logger.js';
 
 // ---------------------------------------------------------------------------
@@ -18,7 +17,14 @@ export function initLogDir(config, ctx) {
   fs.mkdirSync(path.join(logDir, 'gates'), { recursive: true });
 
   config._logDir = logDir;
-  const pipelineLogFd = fs.createWriteStream(path.join(pipelineDir, 'pipeline.jsonl'), { flags: 'a' });
+
+  // Create run-scoped log directory and open pipeline.jsonl there.
+  // This prevents Git conflicts on shared pipeline.jsonl across concurrent runs.
+  const runLogDir = pipelineRunLogDir(config);
+  fs.mkdirSync(runLogDir, { recursive: true });
+  config._runLogDir = runLogDir;
+
+  const pipelineLogFd = fs.createWriteStream(path.join(runLogDir, 'pipeline.jsonl'), { flags: 'a' });
   initContextLogging(ctx, pipelineLogFd);
   log('INFO', `Log directory initialized: ${logDir}`);
 }

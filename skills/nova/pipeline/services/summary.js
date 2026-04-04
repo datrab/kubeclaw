@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { log } from '../core/logger.js';
-import { swarmRoot, relPath, costLogDir } from '../core/paths.js';
+import { swarmRoot, relPath, costLogDir, statusPath } from '../core/paths.js';
 import { gatewayInvoke } from '../integrations/gateway.js';
 import { trackAgent, untrackAgent, acpxCleanup } from '../agents/shutdown.js';
 import { modelToHarness } from '../agents/lifecycle.js';
@@ -11,7 +11,53 @@ import { discord } from '../integrations/discord.js';
 import { writeCostReport, checkBudgetThresholds } from './cost.js';
 import { buildGovernanceSummary } from './governance-context.js';
 
-export function writeSummary(config, exitCode, exitReason, ctx = null) {
+/**
+ * Aggregate stats across all module status.json files for the cumulative project view.
+ * Reads status.json for every module in progress.modules and sums attempt counts from history.
+ */
+export function buildCumulativeSummary(config, progress) {
+  if (!progress?.modules) return null;
+
+  let total_forge_attempts = 0;
+  let total_buster_attempts = 0;
+  let modules_passed = 0;
+  let modules_failed = 0;
+  let modules_blocked = 0;
+
+  for (const [moduleId, mod] of Object.entries(progress.modules)) {
+    const sPath = statusPath(config, mod.dir);
+    let status;
+    try {
+      if (!fs.existsSync(sPath)) continue;
+      status = JSON.parse(fs.readFileSync(sPath, 'utf8'));
+    } catch (e) {
+      log('WARN', `[summary] Could not read status.json for ${moduleId}: ${e.message}`);
+      continue;
+    }
+
+    if (status.status === 'PASS') modules_passed++;
+    else if (status.status === 'BLOCKED') modules_blocked++;
+    else if (status.status === 'FAIL') modules_failed++;
+
+    if (Array.isArray(status.history)) {
+      for (const entry of status.history) {
+        const note = entry.note || '';
+        if (note.includes('Forge started')) total_forge_attempts++;
+        if (note.includes('Buster started')) total_buster_attempts++;
+      }
+    }
+  }
+
+  return {
+    modules_completed: modules_passed,
+    modules_failed,
+    modules_blocked,
+    total_forge_attempts,
+    total_buster_attempts,
+  };
+}
+
+export function writeSummary(config, exitCode, exitReason, ctx = null, progress = null) {
   if (!config?._logDir) return;
   try {
     const stats = getRunStats(config);
@@ -31,13 +77,10 @@ export function writeSummary(config, exitCode, exitReason, ctx = null) {
       log('DEBUG', `[summary] Cost report failed (non-critical): ${e.message}`);
     }
 
-    const summary = {
-      run_id: getRunId(config),
-      started_at: startedAt,
-      ended_at: new Date().toISOString(),
-      exit_code: exitCode,
-      exit_reason: exitReason,
-      project: config.project,
+    const cumulative = buildCumulativeSummary(config, progress);
+
+    // run_stats: current-run-only counters (existing behavior, renamed to sub-object)
+    const run_stats = {
       modules_completed: stats.modules_completed,
       modules_failed: stats.modules_failed,
       modules_blocked: stats.modules_blocked,
@@ -51,7 +94,45 @@ export function writeSummary(config, exitCode, exitReason, ctx = null) {
       git_pull_failures: stats.git_pull_failures,
       git_push_failures: stats.git_push_failures,
       config_validation_issues: stats.config_validation_issues,
+    };
+
+    // Top-level fields: populated from cumulative when available (backward compat for readers
+    // expecting modules_completed, total_forge_attempts, etc. at the top level).
+    const topLevel = cumulative
+      ? {
+          modules_completed: cumulative.modules_completed,
+          modules_failed: cumulative.modules_failed,
+          modules_blocked: cumulative.modules_blocked,
+          total_forge_attempts: cumulative.total_forge_attempts,
+          total_buster_attempts: cumulative.total_buster_attempts,
+        }
+      : {
+          modules_completed: stats.modules_completed,
+          modules_failed: stats.modules_failed,
+          modules_blocked: stats.modules_blocked,
+          total_forge_attempts: stats.total_forge_attempts,
+          total_buster_attempts: stats.total_buster_attempts,
+        };
+
+    const summary = {
+      run_id: getRunId(config),
+      started_at: startedAt,
+      ended_at: new Date().toISOString(),
+      exit_code: exitCode,
+      exit_reason: exitReason,
+      project: config.project,
+      ...topLevel,
+      gates_completed: stats.gates_completed,
+      gates_failed: stats.gates_failed,
+      total_echo_reviews: stats.total_echo_reviews,
+      errors: stats.errors,
+      discord_notifications_sent: stats.discord_notifications_sent,
+      git_pull_failures: stats.git_pull_failures,
+      git_push_failures: stats.git_push_failures,
+      config_validation_issues: stats.config_validation_issues,
       duration_seconds: Math.round((Date.now() - new Date(startedAt).getTime()) / 1000),
+      run_stats,
+      ...(cumulative ? { cumulative } : {}),
       governance: buildGovernanceSummary(config),
       usage: {
         total_input_tokens: stats?.inputTokens ?? null,
@@ -67,7 +148,17 @@ export function writeSummary(config, exitCode, exitReason, ctx = null) {
         ? path.relative(config.repo_root || config._logDir, costReportPath)
         : null,
     };
-    fs.writeFileSync(path.join(config._logDir, 'pipeline', 'summary.json'), JSON.stringify(summary, null, 2));
+    const runLogDir = config._runLogDir || path.join(config._logDir, 'pipeline');
+    fs.mkdirSync(runLogDir, { recursive: true });
+    fs.writeFileSync(path.join(runLogDir, 'summary.json'), JSON.stringify(summary, null, 2));
+
+    // Write latest.json pointer atomically so operators can find the most recent run.
+    const latestPath = path.join(config._logDir, 'pipeline', 'latest.json');
+    const runId = summary.run_id;
+    const latestTmp = latestPath + '.tmp';
+    fs.writeFileSync(latestTmp, JSON.stringify({ run_id: runId, path: `runs/${runId}` }, null, 2));
+    fs.renameSync(latestTmp, latestPath);
+
     log('OK', `Pipeline summary written: exit=${exitCode} (${exitReason})`);
   } catch (e) {
     log('WARN', `Failed to write summary.json: ${e.message}`);
@@ -75,15 +166,15 @@ export function writeSummary(config, exitCode, exitReason, ctx = null) {
 }
 
 export function pipelineReviewOutputPath(config, pr = {}) {
-  return path.join(swarmRoot(config), pr.output_file || '.swarm/logs/pipeline-review/PIPELINE-REVIEW.md');
+  return path.join(swarmRoot(config), pr.output_file || 'logs/pipeline-review/PIPELINE-REVIEW.md');
 }
 
 export function pipelineReviewJsonPath(config, pr = {}) {
-  return path.join(swarmRoot(config), pr.json_output_file || '.swarm/logs/pipeline-review/PIPELINE-REVIEW.json');
+  return path.join(swarmRoot(config), pr.json_output_file || 'logs/pipeline-review/PIPELINE-REVIEW.json');
 }
 
 export function pipelineReviewInstructionsPath(config, pr = {}) {
-  return path.join(swarmRoot(config), pr.instructions_file || '.swarm/pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md');
+  return path.join(swarmRoot(config), pr.instructions_file || 'pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md');
 }
 
 export function pipelineReviewDispatchMode(model, pr = {}) {
@@ -162,8 +253,11 @@ Write two files:
   return pathOut;
 }
 
-export async function generatePipelineReview(config) {
-  const pr = config.pipeline_review || {};
+export async function generatePipelineReview(config, progress) {
+  // progress.json pipeline_review overrides config pipeline_review
+  const progressPr = progress?.pipeline_review || {};
+  const configPr = config.pipeline_review || {};
+  const pr = { ...configPr, ...progressPr };
   try {
     const model = pr.model || config.models?.echo || 'openai-codex/gpt-5.4';
     const dispatch = pipelineReviewDispatchMode(model, pr);
@@ -172,7 +266,9 @@ export async function generatePipelineReview(config) {
     const instructions = fs.readFileSync(instructionsPath, 'utf8');
     const label = `pipeline-review-${Date.now()}`;
     const cwd = config.repo_root;
+    const thinking = pr.thinking_level || null;
     const spawnArgs = { task: instructions, agentId, label, model, cwd, thread: false, mode: 'run', cleanup: 'keep' };
+    if (thinking) spawnArgs.thinking = thinking;
     if (dispatch === 'acp') {
       spawnArgs.runtime = 'acp';
       spawnArgs.streamTo = 'parent';
@@ -208,11 +304,18 @@ export async function generatePipelineReview(config) {
 
     try {
       const reviewMd = fs.readFileSync(outputFilePath, 'utf8');
-      const summaryEnd = reviewMd.indexOf('\n---', 200);
-      const excerpt = summaryEnd > 0 ? reviewMd.slice(0, summaryEnd) : reviewMd.slice(0, 1800);
-      await discord(config, 'OK', '📋 Pipeline Review Complete', excerpt.slice(0, 1900), [
-        { name: 'Full Report', value: '`.swarm/logs/pipeline-review/PIPELINE-REVIEW.md`', inline: false },
-      ]);
+      // Send full review content across description + fields (Discord limits: 4096 desc, 1024/field)
+      const maxDesc = 3900;
+      const desc = reviewMd.length <= maxDesc ? reviewMd : reviewMd.slice(0, maxDesc) + '\n\n*[truncated — see full report]*';
+      const fields = [{ name: 'Full Report', value: '`.swarm/logs/pipeline-review/PIPELINE-REVIEW.md`', inline: false }];
+      // If content was truncated, send overflow as additional fields
+      if (reviewMd.length > maxDesc) {
+        const remaining = reviewMd.slice(maxDesc);
+        for (let i = 0; i < remaining.length && fields.length < 8; i += 950) {
+          fields.push({ name: `(continued ${fields.length})`, value: remaining.slice(i, i + 950), inline: false });
+        }
+      }
+      await discord(config, 'OK', '📋 Pipeline Review Complete', desc, fields);
     } catch (e) {
       log('WARN', `Pipeline review Discord post failed (non-critical): ${e.message}`);
     }
@@ -221,6 +324,8 @@ export async function generatePipelineReview(config) {
     log('WARN', `Pipeline review failed (non-critical): ${e.message}`);
   }
 }
+
+export { caseStudyOutputPath, caseStudyInstructionsPath, caseStudyDispatchMode, caseStudyAgentId, generateCaseStudy } from './case-study.js';
 
 export async function generateProjectSummary(config) {
   if (!config?._logDir) return;

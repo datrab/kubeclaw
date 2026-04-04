@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import { AsyncLocalStorage } from 'async_hooks';
 
 const _asyncContext = new AsyncLocalStorage();
@@ -46,7 +48,7 @@ export function initContextLogging(ctx, pipelineLogFd) {
   ctx._logFd = pipelineLogFd;
 }
 
-// Backward-compat: delegates to active context from AsyncLocalStorage so pipeline-original.js needs no changes
+// Delegates to active context from AsyncLocalStorage; falls back to stderr when no context is active
 export function log(level, msg, data = null) {
   const ctx = _asyncContext.getStore();
   if (!ctx) {
@@ -72,6 +74,9 @@ export function log(level, msg, data = null) {
   console.error(JSON.stringify(entry));
   if (ctx._logFd) {
     try { ctx._logFd.write(JSON.stringify(entry) + '\n'); } catch { /* non-critical */ }
+  } else if (ctx.config?._runLogDir) {
+    // Fallback: direct append to run-scoped pipeline.jsonl when no stream is open
+    try { fs.appendFileSync(path.join(ctx.config._runLogDir, 'pipeline.jsonl'), JSON.stringify(entry) + '\n'); } catch { /* non-critical */ }
   }
   if (level === 'ERROR' && ctx.stats.errors.length < 50) {
     ctx.stats.errors.push({ ts: entry.ts, msg, ...(ctx._logModule && { module: ctx._logModule }) });

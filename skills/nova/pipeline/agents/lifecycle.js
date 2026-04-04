@@ -3,7 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import { resolveModel, logEffectivePolicy } from '../core/config.js';
 import { completionStreamKey, modulePath, relPath, statusPath, swarmRoot, validateSafePath } from '../core/paths.js';
-import { log } from '../core/logger.js';
+import { log, getActiveContext } from '../core/logger.js';
+import { onAgentKilled } from '../services/telemetry.js';
 import { gatewayInvoke } from '../integrations/gateway.js';
 import { discord } from '../integrations/discord.js';
 import { acpxCleanup, getTrackedAgent, reaperAfterKill, trackAgent, untrackAgent } from './shutdown.js';
@@ -70,7 +71,17 @@ export async function spawnAcpAgent(config, agentType, moduleId, model, taskProm
     if (result.status !== 'accepted') throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
     const streamLogPath = result.streamLogPath || null;
     log('OK', `${useSubagent ? 'Subagent' : 'ACP'} session spawned: ${gatewayLabel} → ${result.childSessionKey}${streamLogPath ? ` (stream: ${streamLogPath})` : ''}`, { agent: agentId, model, sessionKey: result.childSessionKey, runId: result.runId, stream: streamLogPath });
-    trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel, streamLogPath, { model, runtime: useSubagent ? 'subagent' : 'acp' });
+    trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel, streamLogPath, { model, runtime: useSubagent ? 'subagent' : 'acp', moduleId });
+
+    // Capture baseline files for files_changed tracking at kill time (non-critical)
+    try {
+      const baselineOutput = execFileSync('git', ['diff', '--name-only', 'HEAD'], {
+        encoding: 'utf8', timeout: 5000, cwd: cwd
+      });
+      const entry = getTrackedAgent(trackingKey);
+      if (entry) entry._baselineFiles = new Set(baselineOutput.trim().split('\n').filter(Boolean));
+    } catch { /* non-critical — no git repo or command failed */ }
+
     discord(config, 'INFO', `🔬 ${useSubagent ? 'Subagent' : 'ACP'} Session Spawned: ${agentType}/${moduleId}`, 'Agent is now working.', [
       { name: 'Agent', value: agentId, inline: true },
       { name: 'Model', value: model, inline: true },
@@ -112,7 +123,35 @@ export async function killAcpAgent(config, agentType, moduleId, graceful = false
     await acpxCleanup(entry.agentId, entry.gatewayLabel);
     await reaperAfterKill(entry.agentId, sessionKey);
   }
+
+  // Compute files_changed against baseline (non-critical)
+  let filesChanged = null;
+  let baselineTracked = false;
+  if (entry?._baselineFiles) {
+    baselineTracked = true;
+    try {
+      const repoRoot = config?.repo_root || process.cwd();
+      const currentOutput = execFileSync('git', ['diff', '--name-only', 'HEAD'], {
+        encoding: 'utf8', timeout: 5000, cwd: repoRoot
+      });
+      const currentFiles = new Set(currentOutput.trim().split('\n').filter(Boolean));
+      const newFiles = [...currentFiles].filter(f => !entry._baselineFiles.has(f));
+      if (newFiles.length > 0) filesChanged = newFiles;
+    } catch { /* non-critical */ }
+  }
+
   untrackAgent(label);
+
+  // Emit agent.killed telemetry with files_changed
+  try {
+    const _ctx = getActiveContext() || { config };
+    onAgentKilled(_ctx, agentType, {
+      label,
+      module_id: moduleId,
+      has_changes: baselineTracked ? (filesChanged !== null) : null,
+      files_changed: filesChanged,
+    });
+  } catch { /* non-critical */ }
 }
 
 export function buildBusterPayload(config, progress, moduleId, taskType, taskPrompt, status, opts = {}) {
@@ -276,7 +315,7 @@ export async function spawnReviewerAgent(config, progress, gateId, reviewer, ins
     if (result.status !== 'accepted') throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
     const streamLogPath = result.streamLogPath || null;
     log('OK', `Reviewer spawned: ${gatewayLabel} → ${result.childSessionKey}${streamLogPath ? ` (stream: ${streamLogPath})` : ''}`, { agent: agentId, model, reviewer: reviewer.label, sessionKey: result.childSessionKey, runId: result.runId, stream: streamLogPath });
-    trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel, streamLogPath, { model, runtime: useSubagent ? 'subagent' : 'acp' });
+    trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel, streamLogPath, { model, runtime: useSubagent ? 'subagent' : 'acp', moduleId });
     discord(config, 'INFO', `🔬 Reviewer Spawned: ${reviewer.label}/${gateId}`, 'Echo reviewer is now working.', [
       { name: 'Reviewer', value: reviewer.label, inline: true },
       { name: 'Model', value: model, inline: true },

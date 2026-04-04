@@ -1,5 +1,4 @@
 // prompts/forge.js — Forge prompt builder and FORGE.md reader
-// Extracted from pipeline-original.js (module 07)
 
 import fs from 'fs';
 import path from 'path';
@@ -112,6 +111,9 @@ export async function buildForgePrompt(config, moduleId, mod, dir, status, maxFa
     log('INFO', `Nova prompt override injected (${novaPrompt.length} chars)`);
   }
 
+  // DEPRECATED: Memory recall via Qdrant/memory.js — disabled pending improvement
+  // let memoryBlock = '';
+  // let recalledMemoryIds = [];
   let memoryBlock = '';
   let recalledMemoryIds = [];
 
@@ -122,7 +124,8 @@ export async function buildForgePrompt(config, moduleId, mod, dir, status, maxFa
     if (hasNova)          sections.push('1. **NOVA DIRECTIVE** — highest authority, overrides everything');
     if (isRetry)          sections.push(`${hasNova ? '2' : '1'}. **ANTI-PATTERNS** — concrete constraints, must be avoided`);
     sections.push(`${sections.length + 1}. **FORGE.md** — base implementation instructions`);
-    if (memoryBlock)      sections.push(`${sections.length + 1}. **MEMORY CONTEXT** — supplementary, may be outdated or irrelevant`);
+    // DEPRECATED: memory recall disabled
+    // if (memoryBlock)      sections.push(`${sections.length + 1}. **MEMORY CONTEXT** — supplementary, may be outdated or irrelevant`);
 
     priorityHeader = [
       '## 📋 INSTRUCTION PRIORITY (Read First)',

@@ -28,7 +28,7 @@ import { getRunId } from './runtime.js';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-export const VALID_THINKING_LEVELS = ['none', 'low', 'medium', 'high', 'xhigh'];
+export const VALID_THINKING_LEVELS = ['none', 'low', 'medium', 'high', 'xhigh', 'adaptive'];
 
 /** Dispatch paths that support forwarding thinking to the agent harness. */
 export const THINKING_SUPPORTED_PATHS = ['acp', 'subagent'];

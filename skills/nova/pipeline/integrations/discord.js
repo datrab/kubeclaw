@@ -7,12 +7,16 @@ function curlPost(url, jsonPayload, opts = {}) {
   execFileSync('curl', ['-s', '-X', 'POST', '-H', 'Content-Type: application/json', '-d', jsonPayload, url], { stdio: 'ignore', timeout: 10000, ...opts });
 }
 
+// Discord embed limits: field name ≤ 256 chars, field value ≤ 1024 chars,
+// description ≤ 4096 chars (keep under 500 for readability), title ≤ 256 chars.
+// Use truncateForDiscord() from services/failures.js when building field values.
 export async function discord(config, level, title, description, fields = []) {
   try {
-    if (config._logDir) {
+    if (config._runLogDir || config._logDir) {
       try {
+        const logDir = config._runLogDir || path.join(config._logDir, 'pipeline');
         const entry = { ts: new Date().toISOString(), level, title, description, fields };
-        fs.appendFileSync(path.join(config._logDir, 'pipeline', 'discord.jsonl'), JSON.stringify(entry) + '\n');
+        fs.appendFileSync(path.join(logDir, 'discord.jsonl'), JSON.stringify(entry) + '\n');
       } catch {}
     }
     if (!config.discord_webhook_url) return;

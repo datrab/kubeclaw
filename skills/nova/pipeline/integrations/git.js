@@ -1,5 +1,4 @@
 // integrations/git.js — Git operations
-// Extracted from pipeline-original.js (module 02)
 
 import fs from 'fs';
 import path from 'path';

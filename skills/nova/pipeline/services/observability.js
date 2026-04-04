@@ -14,7 +14,7 @@ import { getRunId } from '../core/runtime.js';
  * (event schema, not free-text log messages) for post-run inspection tools.
  */
 export function appendStructuredEvent(config, eventType, payload = {}) {
-  if (!config?._logDir) return;
+  if (!config?._runLogDir && !config?._logDir) return;
   try {
     const event = {
       event: eventType,
@@ -23,7 +23,8 @@ export function appendStructuredEvent(config, eventType, payload = {}) {
       timestamp: new Date().toISOString(),
       ...payload,
     };
-    const pipelineJsonl = path.join(config._logDir, 'pipeline', 'pipeline.jsonl');
+    const logDir = config._runLogDir || path.join(config._logDir, 'pipeline');
+    const pipelineJsonl = path.join(logDir, 'pipeline.jsonl');
     fs.appendFileSync(pipelineJsonl, JSON.stringify(event) + '\n');
   } catch (e) {
     log('DEBUG', `[observability] appendStructuredEvent failed (non-critical): ${e.message}`);

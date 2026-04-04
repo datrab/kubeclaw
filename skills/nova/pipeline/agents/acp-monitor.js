@@ -5,6 +5,77 @@ import { getTrackedAgent } from './shutdown.js';
 
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
+// ── Transcript delta publishing ──────────────────────────────────────────────
+// Rate limiter: max 5 events per second per agent session.
+// Uses a simple counter + timestamp window — no external library.
+
+const _transcriptRateLimits = new Map(); // agentLabel -> { count, windowStart }
+const TRANSCRIPT_MAX_PER_SEC = 5;
+const VALID_LINE_KINDS = new Set(['assistant', 'assistant_delta', 'tool_call', 'tool_result', 'system_event', 'lifecycle', 'thinking', 'info']);
+
+/**
+ * Publish new transcript lines to Redis telemetry stream.
+ * Fire-and-forget — must never throw; Redis failures are swallowed by emitFn.
+ *
+ * @param {object} ctx - Telemetry context ({ config })
+ * @param {string} agentLabel - ACP session label (e.g. "forge-06")
+ * @param {string} moduleId - Module identifier (e.g. "06")
+ * @param {string[]} newLines - Raw JSONL lines from the transcript (new lines only)
+ * @param {function} emitFn - emitTranscriptLine from telemetry.js (passed as callback to avoid circular import)
+ */
+export function publishTranscriptDelta(ctx, agentLabel, moduleId, newLines, emitFn) {
+  if (!emitFn || !newLines || newLines.length === 0) return;
+
+  const now = Date.now();
+  const rl = _transcriptRateLimits.get(agentLabel) || { count: 0, windowStart: now };
+
+  // Reset window if more than 1 second has elapsed
+  if (now - rl.windowStart >= 1000) {
+    rl.count = 0;
+    rl.windowStart = now;
+  }
+
+  const agentType = agentLabel.split('-')[0] || 'forge';
+  const wouldExceed = (rl.count + newLines.length) > TRANSCRIPT_MAX_PER_SEC;
+
+  if (wouldExceed) {
+    // Batch all lines into a single event
+    const texts = newLines.map(l => {
+      try { const e = JSON.parse(l); return e?.text || l; } catch { return l; }
+    });
+    emitFn(ctx, {
+      agent_type: agentType,
+      label: agentLabel,
+      module_id: moduleId,
+      line_kind: 'info',
+      text: texts.join('\n'),
+      transcript_offset: null,
+      line_count: newLines.length,
+    });
+    rl.count++;
+  } else {
+    // Emit individual events
+    for (const line of newLines) {
+      let evt;
+      try { evt = JSON.parse(line); } catch { evt = null; }
+      const rawKind = evt?.kind;
+      const kind = rawKind && VALID_LINE_KINDS.has(rawKind) ? rawKind : 'info';
+      const text = evt?.text || evt?.data?.text || line;
+      emitFn(ctx, {
+        agent_type: agentType,
+        label: agentLabel,
+        module_id: moduleId,
+        line_kind: kind,
+        text,
+        transcript_offset: evt?.offset ?? null,
+      });
+      rl.count++;
+    }
+  }
+
+  _transcriptRateLimits.set(agentLabel, rl);
+}
+
 export function parseSessionState(statusResult) {
   if (!statusResult) return { active: false, state: 'unknown' };
 
@@ -32,6 +103,8 @@ export function getAcpMonitorConfig(config) {
   return {
     unknown_poll_limit: config.acp_monitor?.unknown_poll_limit ?? 10,
     stale_poll_limit: config.acp_monitor?.stale_poll_limit ?? 10,
+    max_transcript_extensions: config.acp_monitor?.max_transcript_extensions ?? 3,
+    transcript_grace_ms: config.acp_monitor?.transcript_grace_ms ?? 300000,
   };
 }
 
@@ -99,18 +172,9 @@ export function readAcpTranscriptState(streamLogPath, prev = {}) {
         }
       }
 
-      if (evt.kind === 'system_event' || evt.kind === 'assistant_delta' || evt.kind === 'assistant') {
-        const eventText = evt.text || evt.delta || '';
-        const cls = classifyTranscriptText(eventText);
-        if (cls.kind === 'rate_limited') {
-          state.rateLimited = true;
-          state.lastDetail = cls.detail;
-        } else if (cls.kind === 'hard_error') {
-          state.hardError = true;
-          state.terminal = true;
-          state.lastDetail = cls.detail;
-        }
-      }
+      // NOTE: system_event and assistant text are NOT classified for rate limits.
+      // They reflect agent work output (e.g. Forge writing about rate-limit handling)
+      // and cause false positives. Only lifecycle errors (above) are trustworthy.
     }
   } catch (e) {
     state.lastDetail = `transcript-read-failed: ${e.message}`;

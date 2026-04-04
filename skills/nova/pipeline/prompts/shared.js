@@ -1,5 +1,4 @@
 // prompts/shared.js — Common prompt sections used by multiple prompt builders
-// Extracted from pipeline-original.js (module 07)
 
 import path from 'path';
 import { relPath, statusPath, modulePath, swarmRoot, projectSrcPath } from '../core/paths.js';

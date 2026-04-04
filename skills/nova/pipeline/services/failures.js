@@ -384,6 +384,49 @@ export function buildNovaEscalation(config, status, moduleId, moduleDir, maxFail
   };
 }
 
+/**
+ * Truncate text safely for Discord, appending "…" if truncated.
+ * Discord limits: field value ≤ 1024 chars, description ≤ 4096 chars.
+ */
+export function truncateForDiscord(text, maxLength = 1024) {
+  const s = String(text || '');
+  if (s.length <= maxLength) return s;
+  return s.slice(0, maxLength - 1) + '…';
+}
+
+/**
+ * Format fields for a rate-limit Discord embed.
+ * Returns { title, description, fields } to spread into a discord() call.
+ *
+ * @param {object} config - Pipeline config (for rate_limit settings)
+ * @param {object} context - { detail?: string } — transcript detail from classifier
+ * @param {number} pauseCount - current pause number (1-based)
+ * @param {number} maxPauses - max allowed pauses
+ * @param {number} cooldownMs - cooldown duration in milliseconds
+ */
+export function formatRateLimitEmbed(config, context, pauseCount, maxPauses, cooldownMs) {
+  const resumeAt = new Date(Date.now() + cooldownMs);
+  const cooldownHours = cooldownMs / (60 * 60 * 1000);
+  const cooldownDisplay = cooldownHours >= 1
+    ? `${cooldownHours}h`
+    : `${Math.round(cooldownMs / 60000)}min`;
+
+  const detail = context?.detail || '';
+  let cause = /quota exceeded|usage limit/i.test(detail) ? 'Provider quota exceeded' : 'Provider rate limit';
+  if (detail) cause = truncateForDiscord(`${cause} — ${detail}`, 200);
+
+  return {
+    title: `⏳ Rate Limited — Pause ${pauseCount}/${maxPauses}`,
+    description: 'Pipeline paused — this does NOT consume a retry attempt.',
+    fields: [
+      { name: 'Cause', value: cause, inline: false },
+      { name: 'Pause', value: `${pauseCount}/${maxPauses}`, inline: true },
+      { name: 'Cooldown', value: cooldownDisplay, inline: true },
+      { name: 'Resume at', value: resumeAt.toISOString(), inline: false },
+    ],
+  };
+}
+
 export async function injectNeedsNova(config, result, novaChannel, stepType = 'module', stepId = null) {
   const channelId = novaChannel || process.env.NOVA_CHANNEL || null;
   const targetId = stepId || result?.module || 'unknown';

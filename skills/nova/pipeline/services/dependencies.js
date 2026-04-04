@@ -1,5 +1,4 @@
 // services/dependencies.js — Module dependency checker
-// Extracted from pipeline-original.js (module 03)
 
 import fs from 'fs';
 import { log } from '../core/logger.js';

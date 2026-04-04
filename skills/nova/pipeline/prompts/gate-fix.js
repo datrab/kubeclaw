@@ -1,5 +1,4 @@
 // prompts/gate-fix.js — Gate fix cycle prompt builder
-// Extracted from pipeline-original.js (module 07)
 
 import { relPath, projectSrcPath, swarmRoot } from '../core/paths.js';
 import { makePromptResult } from './shared.js';

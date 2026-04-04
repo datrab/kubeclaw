@@ -19,11 +19,19 @@ import { discord } from '../integrations/discord.js';
 import { gitCommitAndPush } from '../integrations/git.js';
 import { mapRedisStatus } from '../integrations/redis.js';
 import { archiveGateOutputIfPresent } from '../services/status-store.js';
+import { formatRateLimitEmbed } from '../services/failures.js';
 import { pollResult, pollGeneric, sleep, archiveModuleCompletions, readCompletionFromRedis, pollForSessionEnd } from '../services/polling.js';
 import { readGateInstructions, buildBusterGatePrompt } from '../prompts/buster-gate.js';
 import { buildGateFixPrompt } from '../prompts/gate-fix.js';
 import { acpLabel, spawnAgent, killAgent, verifyAgentAlive } from '../agents/lifecycle.js';
+import { transcriptShowsProgress } from '../agents/acp-monitor.js';
 import { getTrackedAgent } from '../agents/shutdown.js';
+import { getActiveContext } from '../core/logger.js';
+import { onGateStarted, onGatePass, onGateFail } from '../services/telemetry.js';
+
+function _telemetryCtx(config) {
+  return getActiveContext() || { config, runId: config?.run_id || config?._runId || '' };
+}
 
 const DEFAULT_DEPS = {
   resolveModel,
@@ -330,6 +338,9 @@ export async function runBusterGate(config, progress, gateId) {
   const hasFixLoop = gate.on_fail === 'fix_and_retest';
 
   await deps.discord(config, 'INFO', `Gate: ${gate.title}`, `Starting buster gate${hasFixLoop ? ` (fix loop: max ${maxFixCycles})` : ''}`);
+  onGateStarted(_telemetryCtx(config), gateId, gate);
+
+  const _gateStartedAt = Date.now();
 
   // Rate limit tracking — gate-level
   let rateLimitPauses = 0;
@@ -369,20 +380,47 @@ export async function runBusterGate(config, progress, gateId) {
         log('WARN', `Failed to persist gate-status.json for '${gateId}': ${e.message} (non-critical)`);
       }
 
+      // Write output_file on PASS so findNextStep()/printStatus() detect completion via file check.
+      // Only write if not already present (another channel may have written it during the poll).
+      if (gate.output_file) {
+        try {
+          const outPath = path.join(swarmRoot(config), gate.output_file);
+          if (!fs.existsSync(outPath)) {
+            const outDir = path.dirname(outPath);
+            if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+            fs.writeFileSync(outPath, JSON.stringify({
+              status: 'PASS',
+              gate: gateId,
+              source: result.status?._source || 'unknown',
+              completed_at: new Date().toISOString(),
+              fix_cycles: attempt > 1 ? attempt - 1 : 0,
+            }, null, 2) + '\n');
+            log('OK', `Gate '${gateId}' output_file written: ${relPath(config, outPath)}`);
+          }
+        } catch (e) {
+          log('WARN', `Failed to write output_file for gate '${gateId}': ${e.message} (non-critical)`);
+        }
+      }
+
       await deps.discord(config, 'OK', `Gate: ${gate.title} PASS`,
         attempt > 1 ? `Passed after ${attempt - 1} fix cycle(s)` : 'Passed on first run');
+      onGatePass(_telemetryCtx(config), gateId, {
+        gate_type: gate.type,
+        fix_cycle: attempt > 1 ? attempt - 1 : 0,
+        duration_seconds: Math.round((Date.now() - _gateStartedAt) / 1000),
+      });
       return { exit: EXIT_OK, status: STATUS.PASS };
     }
 
     // ── Non-fixable failures ──
     if (result.reason === 'config_invalid') {
-      const err = result.status?.error || 'unknown';
+      const err = result.status?.error || 'unknown (no error detail available)';
       log('ERROR', `Gate '${gateId}' config invalid: ${err}`);
       getGateStats(config).gates_failed.push(gateId);
       return { exit: EXIT_NEEDS_NOVA, reason: err };
     }
     if (result.reason === 'spawn_failed') {
-      const err = result.status?.error || 'unknown';
+      const err = result.status?.error || 'unknown (no error detail available)';
       log('ERROR', `Gate '${gateId}' agent spawn failed: ${err}`);
       getGateStats(config).gates_failed.push(gateId);
       await deps.discord(config, 'CRITICAL', `Gate '${gateId}' Spawn Failed`,
@@ -425,8 +463,12 @@ export async function runBusterGate(config, progress, gateId) {
       const cooldownMs = cooldownHours * 60 * 60 * 1000;
       const resumeAt = new Date(Date.now() + cooldownMs);
       log('WARN', `Gate '${gateId}' rate limited (pause ${rateLimitPauses}/${maxRateLimitPauses}) — sleeping ${cooldownHours}h (resume at ${resumeAt.toISOString()})`);
-      await deps.discord(config, 'WARN', `Gate '${gateId}' Rate Limited`,
-        `Pause ${rateLimitPauses}/${maxRateLimitPauses}. Sleeping ${cooldownHours}h. Resume at ${resumeAt.toLocaleTimeString()}.`);
+      const rateLimitDetail = result.status?.detail || result.status?.reason || null;
+      const embed = formatRateLimitEmbed(config, { detail: rateLimitDetail }, rateLimitPauses, maxRateLimitPauses, cooldownMs);
+      await deps.discord(config, 'WARN', embed.title, embed.description, [
+        { name: 'Gate', value: gateId },
+        ...embed.fields,
+      ]);
       await deps.sleep(cooldownMs);
       log('OK', `Gate '${gateId}' rate limit cooldown complete — retrying (attempt stays at ${attempt} due to rate limit)`);
       // Rate limit pause is NOT a fix attempt — don't increment attempt counter
@@ -437,13 +479,20 @@ export async function runBusterGate(config, progress, gateId) {
     // ── FAIL ──
     const failData = result.status || {};
     const issues = extractGateIssues(failData);
-    const failReason = issues.map(i => i.title).join('; ') || 'unknown';
+    const failReason = issues.map(i => i.title).join('; ') || 'unknown (no error detail available)';
 
     log('WARN', `Gate '${gateId}' FAIL: ${failReason}`);
 
     if (!hasFixLoop) {
       getGateStats(config).gates_failed.push(gateId);
       await deps.discord(config, 'CRITICAL', `Gate '${gateId}' FAIL`, `Agent reported failure: ${failReason}`);
+      onGateFail(_telemetryCtx(config), gateId, {
+        gate_type: gate.type,
+        issues_count: issues.length,
+        fix_cycle: 0,
+        duration_seconds: Math.round((Date.now() - _gateStartedAt) / 1000),
+        reason: failReason,
+      });
       return { exit: EXIT_NEEDS_NOVA, reason: `Gate '${gateId}' failed: ${failReason}` };
     }
 
@@ -452,6 +501,13 @@ export async function runBusterGate(config, progress, gateId) {
       getGateStats(config).gates_failed.push(gateId);
       await deps.discord(config, 'CRITICAL', `Gate '${gateId}' BLOCKED`,
         `Fix loop exhausted after ${maxFixCycles} attempts. Issues: ${failReason}`);
+      onGateFail(_telemetryCtx(config), gateId, {
+        gate_type: gate.type,
+        issues_count: issues.length,
+        fix_cycle: attempt - 1,
+        duration_seconds: Math.round((Date.now() - _gateStartedAt) / 1000),
+        reason: `Fix loop exhausted after ${maxFixCycles} attempts`,
+      });
       return {
         exit: EXIT_NEEDS_NOVA,
         reason: `Gate '${gateId}' failed after ${maxFixCycles} fix attempts`,
@@ -524,10 +580,21 @@ export async function runBusterGate(config, progress, gateId) {
     fixHistory.push({ attempt, hasChanges: sessionResult.hasChanges, issues });
 
     if (!sessionResult.hasChanges) {
-      const reason = sessionResult.completed ? 'no changes (crashed?)' : 'timeout';
+      const _transcript = sessionResult.transcript;
+      const _tsActive = transcriptShowsProgress(_transcript);
+      const reason = sessionResult.completed
+        ? (_tsActive ? 'no file changes' : 'no changes (crashed?)')
+        : 'timeout';
+      const _tsField = _transcript
+        ? (_tsActive
+            ? `active (${_transcript.eventCount} events)`
+            : `stale (no activity for ${_transcript.lastActivityPoll} polls)`)
+        : 'unknown';
       log('WARN', `Gate fix '${fixLabel}' ${reason}. Skipping retest.`);
       await deps.discord(config, 'WARN', `Gate Fix ${reason}: ${gateId}`,
-        `Fix attempt ${attempt}/${maxFixCycles} produced no usable output.`);
+        `Fix attempt ${attempt}/${maxFixCycles} produced no usable output.`, [
+          { name: 'Transcript', value: _tsField },
+        ]);
       continue;
     }
 

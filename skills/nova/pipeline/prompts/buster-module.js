@@ -1,5 +1,4 @@
 // prompts/buster-module.js — Module test prompt builder
-// Extracted from pipeline-original.js (module 07)
 
 import path from 'path';
 import { modulePath, statusPath, relPath, projectSrcPath } from '../core/paths.js';

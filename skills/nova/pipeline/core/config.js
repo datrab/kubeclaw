@@ -1,5 +1,4 @@
 // core/config.js — Config loading, validation, and model resolution
-// Extracted from pipeline-original.js (module 02)
 
 import fs from 'fs';
 import path from 'path';
@@ -139,6 +138,74 @@ export function validateConfig(config, progress) {
   config.acp_monitor ??= {};
   config.acp_monitor.unknown_poll_limit ??= 10;
   config.acp_monitor.stale_poll_limit ??= 10;
+
+  // ── Wave 3 field validation ──────────────────────────────────────────────
+  // Validate known Wave 3 fields (type/range). Set defaults where applicable.
+  // Unknown top-level fields are allowed — log at DEBUG only.
+
+  // acp_monitor.max_transcript_extensions — number, default 3, min 0
+  if (config.acp_monitor.max_transcript_extensions !== undefined) {
+    const v = Number(config.acp_monitor.max_transcript_extensions);
+    if (!Number.isFinite(v) || v < 0) {
+      errors.push('config.acp_monitor.max_transcript_extensions: must be a non-negative number');
+    } else {
+      config.acp_monitor.max_transcript_extensions = v;
+    }
+  } else {
+    config.acp_monitor.max_transcript_extensions = 3;
+  }
+
+  // acp_monitor.transcript_grace_ms — number, default 300000, min 0
+  if (config.acp_monitor.transcript_grace_ms !== undefined) {
+    const v = Number(config.acp_monitor.transcript_grace_ms);
+    if (!Number.isFinite(v) || v < 0) {
+      errors.push('config.acp_monitor.transcript_grace_ms: must be a non-negative number');
+    } else {
+      config.acp_monitor.transcript_grace_ms = v;
+    }
+  } else {
+    config.acp_monitor.transcript_grace_ms = 300000;
+  }
+
+  // telemetry.enabled — boolean
+  if (config.telemetry?.enabled !== undefined && typeof config.telemetry.enabled !== 'boolean') {
+    errors.push('config.telemetry.enabled: must be a boolean');
+  }
+
+  // telemetry.stream_key — string
+  if (config.telemetry?.stream_key !== undefined && typeof config.telemetry.stream_key !== 'string') {
+    errors.push('config.telemetry.stream_key: must be a string');
+  }
+
+  // case_study.enabled — boolean
+  if (config.case_study?.enabled !== undefined && typeof config.case_study.enabled !== 'boolean') {
+    errors.push('config.case_study.enabled: must be a boolean');
+  }
+
+  // case_study.model — string (optional)
+  if (config.case_study?.model !== undefined && typeof config.case_study.model !== 'string') {
+    errors.push('config.case_study.model: must be a string');
+  }
+
+  // case_study.output_file — string (optional)
+  if (config.case_study?.output_file !== undefined && typeof config.case_study.output_file !== 'string') {
+    errors.push('config.case_study.output_file: must be a string');
+  }
+
+  // Warn about unknown top-level config fields (non-blocking)
+  const KNOWN_TOP_LEVEL_FIELDS = new Set([
+    'project', 'repo_root', 'paths', 'agents', 'models', 'gates',
+    'poll_interval_seconds', 'default_timeout_minutes', 'default_max_fails',
+    'acp_monitor', 'telemetry', 'case_study', 'arch_validation',
+    'discord_webhook_url', 'pipeline_review', 'rate_limit', 'budget',
+    '_runtimeOverrides', '_logDir', '_runLogDir', '_runId', '_validationErrors',
+    '_runStats', '_testOverrides',
+  ]);
+  for (const key of Object.keys(config)) {
+    if (!KNOWN_TOP_LEVEL_FIELDS.has(key)) {
+      log('DEBUG', `[config] Unknown config field '${key}' — ignoring`);
+    }
+  }
 
   requireField(progress, 'project', 'progress');
   requireField(progress, 'execution_order', 'progress');

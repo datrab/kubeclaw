@@ -1,5 +1,4 @@
 // pipeline/core/constants.js — Shared status and exit code constants
-// Extracted from pipeline-original.js (module 16)
 
 export const STATUS = {
   PENDING:           'PENDING',

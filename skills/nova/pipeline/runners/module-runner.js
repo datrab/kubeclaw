@@ -1,5 +1,4 @@
 // runners/module-runner.js — Module execution runner
-// Extracted from pipeline-original.js (module 03)
 //
 // Module state machine:
 //
@@ -31,6 +30,7 @@
 //                                              BLOCKED → EXIT_BLOCKED
 
 import fs from 'fs';
+import { readAcpTranscriptState, transcriptShowsProgress } from '../agents/acp-monitor.js';
 import { STATUS, EXIT_OK, EXIT_ERROR, EXIT_NEEDS_NOVA, EXIT_BLOCKED, EXIT_RATE_LIMITED } from '../core/constants.js';
 import { log, getActiveContext } from '../core/logger.js';
 import { getRunId, getRunStats } from '../core/runtime.js';
@@ -59,6 +59,8 @@ import {
   onPhaseCompleted,
   onRetryScheduled,
   onEscalated,
+  // DEPRECATED: memory recall disabled pending improvement
+  // emitMemoryRecalled,
 } from '../services/telemetry.js';
 
 function _telemetryCtx(config) {
@@ -278,7 +280,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     try {
       await deps.releaseBlueprint(config, progress, moduleId, dir, mod.stages || ['forge', 'buster']);
     } catch (e) {
-      log('ERROR', `Blueprint release failed: ${e.message}`);
+      log('ERROR', `Module ${moduleId}: blueprint release failed: ${e.message}`);
       return { retry: false, result: {
         exit: EXIT_NEEDS_NOVA,
         reason: `Blueprint release failed: ${e.message}. Nova may need to create/fix the architecture branch.`,
@@ -353,11 +355,15 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     // Build complete prompt with priority hierarchy and anti-pattern framing
     const promptResult = await deps.buildForgePrompt(config, moduleId, mod, dir, status, maxFails, novaPrompt);
     if (promptResult.error) {
-      log('ERROR', `Forge prompt assembly failed: ${promptResult.error}`);
+      log('ERROR', `Module ${moduleId}, attempt ${status.fail_count + 1}: forge prompt assembly failed: ${promptResult.error}`);
       return { retry: false, result: { exit: EXIT_ERROR, reason: promptResult.error } };
     }
     const forgePrompt = promptResult.prompt;
     recalledMemoryIds = promptResult.recalledMemoryIds || [];
+    if (recalledMemoryIds.length > 0) {
+      // DEPRECATED: memory recall disabled pending improvement
+      // emitMemoryRecalled(_telemetryCtx(config), moduleId, recalledMemoryIds);
+    }
 
     deps.savePrompt(config, dir, 'forge', status.fail_count + 1, forgePrompt);
 
@@ -390,7 +396,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     // Spawn fresh Forge session
     try { await deps.spawnAgent(config, progress, 'forge', moduleId, forgeModel, forgePrompt, { thinking: forgePolicy.thinking }); }
     catch (e) {
-      log('ERROR', `Forge agent spawn failed: ${e.message}`);
+      log('ERROR', `Module ${moduleId}, attempt ${status.fail_count + 1}/${maxFails}: forge agent spawn failed: ${e.message}`);
       deps.clearShutdownContext();
       return { retry: false, result: { exit: EXIT_ERROR, reason: `Forge spawn failed: ${e.message}` } };
     }
@@ -423,8 +429,19 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
       status = deps.loadStatus(config, dir) || status;
 
       if (result.reason === 'session_ended_no_changes') {
+        const _tsState = readAcpTranscriptState(forgeStreamPath);
+        const _tsActive = transcriptShowsProgress(_tsState);
+        const _tsField = _tsActive
+          ? `active (${_tsState.eventCount} events)`
+          : `stale (no activity for ${_tsState.lastActivityPoll} polls)`;
+        const forgeNoChangesMsg = _tsActive
+          ? 'Forge completed without file changes (transcript shows recent activity — possible no-op session)'
+          : 'Forge session ended but produced no commits — agent may have crashed or errored';
+        await discord(config, 'WARN', `Module ${moduleId} — Forge no changes`, forgeNoChangesMsg, [
+          { name: 'Transcript', value: _tsField },
+        ]);
         const failResult = await deps.handleFail(config, status, dir, moduleId, maxFails, 'forge',
-          'Forge session ended but produced no commits — agent may have crashed or errored', { recalledMemoryIds });
+          forgeNoChangesMsg, { recalledMemoryIds });
         if (failResult._retry) return { retry: true, fail_count: status.fail_count };
         return { retry: false, result: failResult };
       }
@@ -537,6 +554,16 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     ]);
 
     log('OK', `Module ${moduleId} PASS (forge-only)`);
+    onModulePass(_telemetryCtx(config), moduleId, {
+      title: mod.title,
+      old_status: 'READY_FOR_TESTING',
+      attempt: status.fail_count + 1,
+      phase: 'forge',
+      model: null,
+      duration_seconds: status.cost?.total_duration_seconds ?? 0,
+      cost_estimate_usd: null,
+      commit_hash: status.commit_hash || null,
+    });
     setLogScope(null, null);
     getModuleStats(config).modules_completed.push(moduleId);
 
@@ -717,7 +744,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
         status, taskType: 'module_test', run_id: getRunId(config), attempt: status.fail_count + 1,
       }); }
       catch (e) {
-        log('ERROR', `Buster agent spawn failed: ${e.message}`);
+        log('ERROR', `Module ${moduleId}, attempt ${status.fail_count + 1}/${maxFails}: buster agent spawn failed: ${e.message}`);
         deps.clearShutdownContext();
         return { retry: false, result: { exit: EXIT_ERROR, reason: `Buster spawn failed: ${e.message}` } };
       }
@@ -775,7 +802,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
         // Last attempt exhausted — BLOCKED, not handleFail.
         // Buster crashing repeatedly is an infrastructure problem, not a code problem.
         // Forge can't fix it. Requires human intervention.
-        log('ERROR', `Buster crash retries exhausted (${maxBusterCrashRetries}) — BLOCKED (infrastructure issue)`);
+        log('ERROR', `Module ${moduleId}: buster crash retries exhausted (${maxBusterCrashRetries}) — BLOCKED (infrastructure issue)`);
 
         status.status = STATUS.BLOCKED;
         status.current_phase = 'buster';
@@ -785,7 +812,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
 
         await deps.discord(config, 'CRITICAL', `Module ${moduleId} BLOCKED — Buster crashes`,
           `Buster subagent crashed ${maxBusterCrashRetries + 1} times. This is an infrastructure issue, not a code problem. Manual intervention required.`, [
-            { name: 'Last Reason', value: result.reason || 'unknown' },
+            { name: 'Last Reason', value: result.reason || 'unknown (no error detail available)' },
             { name: 'Crash Retries', value: `${maxBusterCrashRetries}` },
           ]);
 
@@ -833,7 +860,16 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
 
         log('OK', `Module ${moduleId} PASS`);
         onPhaseCompleted(_telemetryCtx(config), moduleId, 'buster');
-        onModulePass(_telemetryCtx(config), moduleId, status.cost?.total_duration_seconds ?? 0);
+        onModulePass(_telemetryCtx(config), moduleId, {
+          title: mod.title,
+          old_status: 'TESTING',
+          attempt: status.fail_count + 1,
+          phase: 'buster',
+          model: busterModel,
+          duration_seconds: status.cost?.total_duration_seconds ?? 0,
+          cost_estimate_usd: null,
+          commit_hash: status.commit_hash || null,
+        });
 
         setLogScope(null, null);
         getModuleStats(config).modules_completed.push(moduleId);
@@ -877,7 +913,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
 
         if (isCrash) {
           // Crash retries exhausted → BLOCKED (infrastructure issue)
-          log('ERROR', `Buster crash retries exhausted (${maxBusterCrashRetries}) — BLOCKED (infrastructure issue)`);
+          log('ERROR', `Module ${moduleId}: buster crash retries exhausted (${maxBusterCrashRetries}) — BLOCKED (infrastructure issue)`);
 
           status.status = STATUS.BLOCKED;
           status.current_phase = 'buster';
@@ -890,6 +926,13 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
               { name: 'Source', value: source },
               { name: 'Crash Retries', value: `${maxBusterCrashRetries}` },
             ]);
+
+          onModuleBlocked(_telemetryCtx(config), moduleId, {
+            title: mod.title,
+            old_status: 'TESTING',
+            phase: 'buster',
+            reason: `Buster subagent crashed ${maxBusterCrashRetries + 1} times — infrastructure issue`,
+          });
 
           return { retry: false, result: {
             exit: EXIT_BLOCKED,
@@ -918,7 +961,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
             );
 
           if (isRepeatedPreTestFail) {
-            log('ERROR', `Repeated pre-test failure in ${failedSuiteNames.join(',')} — likely config issue, skipping Forge`);
+            log('ERROR', `Module ${moduleId}: repeated pre-test failure in ${failedSuiteNames.join(',')} — likely config issue, skipping Forge`);
 
             status.fail_count++;
             status.fail_summaries.push({
@@ -948,6 +991,13 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
                   { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
                 ]);
 
+              onModuleBlocked(_telemetryCtx(config), moduleId, {
+                title: mod.title,
+                old_status: 'TESTING',
+                phase: 'buster',
+                reason: `Repeated pre-test failure — max retries exceeded (${failedSuiteNames.join(',')})`,
+              });
+
               return { retry: false, result: {
                 exit: EXIT_BLOCKED,
                 reason: `Repeated pre-test failure — max retries exceeded (${failedSuiteNames.join(',')})`,
@@ -969,6 +1019,14 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
                 { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
                 { name: 'Action', value: 'Check progress.json test_config / test_suites / serve' },
               ]);
+
+            onModuleFail(_telemetryCtx(config), moduleId, {
+              title: mod.title,
+              old_status: 'TESTING',
+              phase: 'buster',
+              attempt: status.fail_count,
+              reason: `Repeated pre-test failure (${failedSuiteNames.join(',')}) — likely config issue`,
+            });
 
             return { retry: false, result: {
               exit: EXIT_NEEDS_NOVA,

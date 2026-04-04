@@ -1,7 +1,7 @@
 // core/paths.js — Path helpers for swarm module/gate layout
-// Extracted from pipeline-original.js (module 02)
 
 import path from 'path';
+import { getRunId } from './runtime.js';
 
 const ALLOWED_PATH_PREFIXES = ['/app/', '/opt/', '/home/'];
 
@@ -69,4 +69,11 @@ export function redisLogDir(config) {
 
 export function archValidatorLogDir(config) {
   return path.join(config._logDir, 'architecture-validator');
+}
+
+// Returns the run-scoped log directory: .swarm/logs/pipeline/runs/<run_id>/
+// All pipeline-level runtime artifacts go here to prevent shared-file conflicts.
+export function pipelineRunLogDir(config) {
+  const runId = getRunId(config);
+  return path.join(config._logDir, 'pipeline', 'runs', runId);
 }

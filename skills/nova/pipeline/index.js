@@ -45,6 +45,7 @@ export {
   waitForSessionIdle,
   classifyTranscriptText,
   getAcpMonitorConfig,
+  publishTranscriptDelta,
 } from './agents/acp-monitor.js';
 export {
   registerShutdownHooks,
@@ -68,7 +69,7 @@ export { STATUS, EXIT_OK, EXIT_ERROR, EXIT_NEEDS_NOVA, EXIT_BLOCKED, EXIT_TIMEOU
 export { sleep, pollResult, pollGeneric, pollForFile, pollStatus, pollForSessionEnd, pollDual, pollWithRateLimitRecovery, pollDualWithRateLimitRecovery, archiveModuleCompletions, readCompletionFromRedis } from './services/polling.js';
 export { withRateLimitRecovery, handleRateLimit } from './services/rate-limit.js';
 export { FAIL_PATTERNS, extractAgentFailReason, extractPreTestFailReason, getFailedSuiteNames, handleFail, buildNovaEscalation, injectNeedsNova, resolveAutoRetryThreshold } from './services/failures.js';
-export { emitEvent, onPipelineStarted, onPipelineCompleted, onPipelineHalted, onModuleStarted, onModulePass, onModuleFail, onModuleBlocked, onGateStarted, onGatePass, onGateFail, onAgentSpawned, onAgentKilled, onPhaseStarted, onPhaseCompleted, onRetryScheduled, onRetryExhausted, onEscalated, onSummaryStarted, onSummaryCompleted, onBudgetWarning, onBudgetExceeded, onRedisMessage } from './services/telemetry.js';
+export { emitEvent, onPipelineStarted, onPipelineCompleted, onPipelineHalted, onModuleStarted, onModulePass, onModuleFail, onModuleBlocked, onGateStarted, onGatePass, onGateFail, onAgentSpawned, onAgentKilled, onPhaseStarted, onPhaseCompleted, onRetryScheduled, onRetryExhausted, onEscalated, onSummaryStarted, onSummaryCompleted, onBudgetWarning, onBudgetExceeded, onRedisMessage, emitCostUpdate, emitRateLimitDetected, emitBusterResult, emitTranscriptLine, emitAgentProgress, emitMemoryRecalled } from './services/telemetry.js';
 export { appendStructuredEvent, recordUsageSnapshot, aggregateUsage, isBudgetExceeded, emitBudgetWarnings } from './services/observability.js';
 export { logRedisExchange, logRedisSent, logRedisReceived, closeRedisLog } from './services/redis-log.js';
 export { captureSessionSnapshot, writeUsageArtifact, writeCostReport, checkBudgetThresholds, accumulateTokens } from './services/cost.js';
@@ -100,6 +101,13 @@ export {
   pipelineReviewDispatchMode,
   pipelineReviewAgentId,
 } from './services/summary.js';
+export {
+  generateCaseStudy,
+  caseStudyOutputPath,
+  caseStudyInstructionsPath,
+  caseStudyDispatchMode,
+  caseStudyAgentId,
+} from './services/case-study.js';
 
 // Architecture validator (module 08)
 export { runArchValidator, archValidatorLogDir, buildMarkdownSummary, isBlocking, buildValidatorPrompt, SEVERITY, SCOPE, FINDING_CODES } from './services/arch-validator.js';

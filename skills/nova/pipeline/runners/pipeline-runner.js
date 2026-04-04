@@ -1,5 +1,8 @@
+import fs from 'fs';
+import path from 'path';
 import { log, getActiveContext } from '../core/logger.js';
 import { loadStatus } from '../services/status-store.js';
+import { pipelineRunLogDir } from '../core/paths.js';
 import { injectNeedsNova } from '../services/failures.js';
 import { STATUS, EXIT_OK, EXIT_BLOCKED, EXIT_ERROR, EXIT_NEEDS_NOVA, EXIT_TIMEOUT, EXIT_RATE_LIMITED } from '../core/constants.js';
 import { discord } from '../integrations/discord.js';
@@ -16,6 +19,7 @@ import {
   writeSummary,
   generateProjectSummary,
   generatePipelineReview,
+  generateCaseStudy,
 } from '../services/summary.js';
 import {
   onPipelineStarted,
@@ -46,6 +50,7 @@ const DEFAULT_DEPS = {
   writeSummary,
   generateProjectSummary,
   generatePipelineReview,
+  generateCaseStudy,
   runArchValidator,
 };
 
@@ -95,7 +100,7 @@ async function preparePipeline(config, progress) {
   catch (e) { log('WARN', `Control file sync failed (non-critical): ${e.message}`); }
 }
 
-async function completePipeline(config) {
+async function completePipeline(config, progress) {
   const deps = getDeps(config);
   const ctx = _telemetryCtx(config);
   log('OK', '🎉 Pipeline complete — all modules and gates PASS');
@@ -103,15 +108,16 @@ async function completePipeline(config) {
   deps.output({ exit: EXIT_OK, status: 'PIPELINE_COMPLETE' });
   onPipelineCompleted(ctx, EXIT_OK);
   onSummaryStarted(ctx, 'pipeline');
-  deps.writeSummary(config, EXIT_OK, 'PIPELINE_COMPLETE', ctx);
+  deps.writeSummary(config, EXIT_OK, 'PIPELINE_COMPLETE', ctx, progress);
   onSummaryCompleted(ctx, 'pipeline');
   try { writeCostReport(config); } catch { /* non-critical */ }
   await deps.generateProjectSummary(config);
-  await deps.generatePipelineReview(config);
+  await deps.generatePipelineReview(config, progress);
+  await deps.generateCaseStudy(config, progress);
   return EXIT_OK;
 }
 
-async function haltPipeline(config, next, result, opts = {}) {
+async function haltPipeline(config, progress, next, result, opts = {}) {
   const deps = getDeps(config);
   const ctx = _telemetryCtx(config);
   if (next.type === 'blocked') {
@@ -123,7 +129,7 @@ async function haltPipeline(config, next, result, opts = {}) {
     deps.output({ exit: EXIT_BLOCKED, module: next.id, reason: 'BLOCKED' });
     onPipelineHalted(ctx, next.id, EXIT_BLOCKED, 'BLOCKED');
     onEscalated(ctx, 'module', next.id, 'Module is BLOCKED', EXIT_BLOCKED);
-    deps.writeSummary(config, EXIT_BLOCKED, `BLOCKED:${next.id}`, ctx);
+    deps.writeSummary(config, EXIT_BLOCKED, `BLOCKED:${next.id}`, ctx, progress);
     try { writeCostReport(config); } catch { /* non-critical */ }
     await deps.generateProjectSummary(config);
     return EXIT_BLOCKED;
@@ -147,7 +153,7 @@ async function haltPipeline(config, next, result, opts = {}) {
   }
   deps.output(result);
   onPipelineHalted(ctx, next.id, result.exit, exitLabels[result.exit] || 'UNKNOWN');
-  deps.writeSummary(config, result.exit, `${exitLabels[result.exit] || 'UNKNOWN'}:${next.id}`, ctx);
+  deps.writeSummary(config, result.exit, `${exitLabels[result.exit] || 'UNKNOWN'}:${next.id}`, ctx, progress);
   try { writeCostReport(config); } catch { /* non-critical */ }
   return result.exit;
 }
@@ -155,10 +161,32 @@ async function haltPipeline(config, next, result, opts = {}) {
 export async function runPipeline(config, progress, opts = {}) {
   const deps = getDeps(config);
   const ctx = _telemetryCtx(config);
+
+  // Ensure run-scoped log directory exists. initLogDir() sets this during normal CLI startup,
+  // but we guard here for direct calls (tests, programmatic use).
+  if (config._logDir && !config._runLogDir) {
+    config._runLogDir = pipelineRunLogDir(config);
+    fs.mkdirSync(config._runLogDir, { recursive: true });
+  }
+
+  // Write config-validation snapshot at pipeline start for post-mortem analysis.
+  if (config._runLogDir) {
+    try {
+      const snapshot = {
+        ts: new Date().toISOString(),
+        project: config.project,
+        run_id: config._runId || config.run_id || null,
+        models: config.models || null,
+        config_validation_issues: config._runStats?.config_validation_issues || [],
+      };
+      fs.writeFileSync(path.join(config._runLogDir, 'config-validation.json'), JSON.stringify(snapshot, null, 2));
+    } catch { /* non-critical */ }
+  }
+
   log('STEP', `╔═══════════════════════════════════════════════════╗`);
   log('STEP', `║  PIPELINE: ${config.project.toUpperCase().padEnd(38)}║`);
   log('STEP', `╚═══════════════════════════════════════════════════╝`);
-  onPipelineStarted(ctx, config.project);
+  onPipelineStarted(ctx, progress);
 
   let startDescription;
   if (opts.module) {
@@ -186,22 +214,44 @@ export async function runPipeline(config, progress, opts = {}) {
     } else {
       await deps.discord(config, 'CRITICAL', `Pipeline halted: ${config.project}`, `Single module run ended with exit code ${result.exit}.`, [
         { name: 'Module', value: opts.module },
-        { name: 'Reason', value: (result.reason || 'unknown').slice(0, 200) },
+        { name: 'Reason', value: (result.reason || 'unknown (no error detail available)').slice(0, 200) },
         { name: 'Exit Code', value: String(result.exit) },
       ]);
       if (result.exit === EXIT_NEEDS_NOVA || result.exit === EXIT_TIMEOUT) {
         await deps.injectNeedsNova(config, result, opts.novaChannel, 'module', opts.module);
       }
     }
-    deps.writeSummary(config, result.exit, `single_module:${opts.module}`);
+    deps.writeSummary(config, result.exit, `single_module:${opts.module}`, null, progress);
     return result.exit;
   }
 
   initGovernanceCtx(config);
   await preparePipeline(config, progress);
 
-  // Pre-pipeline architecture validation — runs before any module starts
-  if (config.arch_validation?.enabled !== false && !opts.skipArchValidation) {
+  // Pre-pipeline architecture validation — runs on fresh starts only
+  // Overridable via progress.json arch_validation.enabled (takes priority over swarm.config)
+  const archEnabled = progress.arch_validation?.enabled ?? config.arch_validation?.enabled ?? true;
+  const hasPassedModules = progress.execution_order.some(stepId => {
+    if (stepId.startsWith('gate:')) return false;
+    const mod = progress.modules[stepId];
+    if (!mod) return false;
+    const status = deps.loadStatus(config, mod.dir);
+    return status?.status === 'PASS';
+  });
+  if (archEnabled && !hasPassedModules && !opts.skipArchValidation) {
+    // Allow progress.json to override arch_validator model/thinking
+    const archOverride = progress.arch_validation || {};
+    if (archOverride.model && !config.models?.arch_validator) {
+      config.models = config.models || {};
+      config.models.arch_validator = archOverride.model;
+    }
+    if (archOverride.thinking_level) {
+      config.agents = config.agents || {};
+      config.agents.arch_validator = config.agents.arch_validator || {};
+      if (!config.agents.arch_validator.thinking_level) {
+        config.agents.arch_validator.thinking_level = archOverride.thinking_level;
+      }
+    }
     const archResult = await deps.runArchValidator(config, progress);
     recordArchValidatorResult(config, archResult);
     if (archResult.blocked) {
@@ -213,7 +263,7 @@ export async function runPipeline(config, progress, opts = {}) {
       ]);
       deps.output({ exit: EXIT_BLOCKED, reason: 'ARCH_VALIDATION_BLOCKED', findings: blockingFindings.length });
       onPipelineHalted(ctx, 'arch-validation', EXIT_BLOCKED, 'ARCH_VALIDATION_BLOCKED');
-      deps.writeSummary(config, EXIT_BLOCKED, 'ARCH_VALIDATION_BLOCKED', ctx);
+      deps.writeSummary(config, EXIT_BLOCKED, 'ARCH_VALIDATION_BLOCKED', ctx, progress);
       try { writeCostReport(config); } catch { /* non-critical */ }
       return EXIT_BLOCKED;
     }
@@ -221,12 +271,12 @@ export async function runPipeline(config, progress, opts = {}) {
 
   while (true) {
     const next = findNextStep(config, progress);
-    if (next.type === 'done') return completePipeline(config);
-    if (next.type === 'blocked') return haltPipeline(config, next, null, opts);
+    if (next.type === 'done') return completePipeline(config, progress);
+    if (next.type === 'blocked') return haltPipeline(config, progress, next, null, opts);
     const result = next.type === 'gate'
       ? await deps.runGate(config, progress, next.id, { novaPrompt: opts.novaPrompt })
       : await deps.runModule(config, progress, next.id, { novaPrompt: opts.novaPrompt });
-    if (result.exit !== EXIT_OK) return haltPipeline(config, next, result, opts);
+    if (result.exit !== EXIT_OK) return haltPipeline(config, progress, next, result, opts);
   }
 }
 
@@ -244,7 +294,9 @@ export function printStatus(config, progress) {
   }
   for (const [id, gate] of Object.entries(progress.gates)) {
     const gateOutput = readGateOutput(config, gate);
-    overview.gates[id] = { title: gate.title, completed: gateOutput.exists };
+    const gateStatusFallback = !gateOutput.isPass ? readGateStatusJson(config, id) : null;
+    const completed = gateOutput.isPass || (gateStatusFallback?.isPass ?? false);
+    overview.gates[id] = { title: gate.title, completed };
   }
   output(overview);
 }

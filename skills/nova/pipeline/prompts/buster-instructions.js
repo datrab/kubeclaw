@@ -1,5 +1,4 @@
 // prompts/buster-instructions.js — BUSTER.md reader
-// Extracted from pipeline-original.js (module 07)
 
 import fs from 'fs';
 import path from 'path';

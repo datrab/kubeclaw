@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import { getActiveContext } from './logger.js';
 
 const FALLBACK_RUN_CONTEXT = {
@@ -89,6 +90,13 @@ export function getRunStats(config = null) {
 export function getRunState(config = null) {
   const { runId, stats } = resolveRunContext(config);
   return { runId, stats };
+}
+
+// Returns the run-scoped log directory: .swarm/logs/pipeline/runs/<run_id>/
+// Requires config._logDir to be set (call after initLogDir).
+export function runLogDir(config) {
+  const runId = getRunId(config);
+  return path.join(config._logDir, 'pipeline', 'runs', runId);
 }
 
 // Print a JSON result to stdout.

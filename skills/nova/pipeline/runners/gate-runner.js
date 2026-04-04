@@ -1,5 +1,4 @@
 // runners/gate-runner.js — Gate dispatch layer
-// Extracted from pipeline-original.js as the gate runner layer.
 //
 // Provides a GATE_RUNNERS strategy map keyed by gate type, enabling
 // new gate types to be added without modifying the monolith or pipeline-runner.

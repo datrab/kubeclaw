@@ -1,12 +1,12 @@
 // services/polling.js — Polling engine and dual-channel Redis+Git polling
-// Extracted from pipeline-original.js (module 08)
 
 import fs from 'fs';
 import path from 'path';
 import { log } from '../core/logger.js';
 import { statusPath, completionStreamKey, validateSafePath } from '../core/paths.js';
 import { loadStatus, saveStatus, addHistory } from './status-store.js';
-import { getAcpMonitorState, getAcpMonitorConfig } from '../agents/acp-monitor.js';
+import { getAcpMonitorState, getAcpMonitorConfig, readAcpTranscriptState, publishTranscriptDelta } from '../agents/acp-monitor.js';
+import { emitTranscriptLine, emitAgentProgress } from './telemetry.js';
 import { getTrackedAgent } from '../agents/shutdown.js';
 import { gatewayInvoke } from '../integrations/gateway.js';
 import { withRateLimitRecovery } from './rate-limit.js';
@@ -263,22 +263,34 @@ export async function pollStatus(config, moduleDir, expectedStatuses, timeoutMin
  * @param {string} sessionLabel - ACP session label (used to look up childSessionKey)
  * @param {number} timeoutMinutes - Max wait time
  * @param {string} logLabel - For progress messages (e.g. "gatefix-final-test-1")
- * @returns {{ completed: boolean, hasChanges: boolean, reason: string }}
+ * @returns {{ completed: boolean, hasChanges: boolean, reason: string, transcript: object|null }}
  */
 export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, logLabel = 'session-poll') {
   let acpState = {};
   const interval = config.poll_interval_seconds * 1000;
-  const deadline = Date.now() + timeoutMinutes * 60 * 1000;
+  let deadline = Date.now() + timeoutMinutes * 60 * 1000;
   const startTime = Date.now();
   const nudgeThreshold = config.session_nudge_threshold ?? 0.75;
   let nudgeSent = false;
+  const _monCfg = getAcpMonitorConfig(config);
+  let _transcriptExtensions = 0;
+  const _maxTranscriptExtensions = _monCfg.max_transcript_extensions;
+  const _transcriptGraceMs = _monCfg.transcript_grace_ms;
 
   // Resolve sessionKey from label
-  const sessionKey = getTrackedAgent(sessionLabel)?.sessionKey;
+  const _trackedEntry = getTrackedAgent(sessionLabel);
+  const sessionKey = _trackedEntry?.sessionKey;
   if (!sessionKey) {
     log('ERROR', `[${logLabel}] No sessionKey for label '${sessionLabel}' — cannot poll`);
     return { completed: false, hasChanges: false, reason: 'no_session_key' };
   }
+
+  // Telemetry context and transcript streaming setup
+  const _streamLogPath = _trackedEntry?.streamLogPath || null;
+  const _moduleId = _trackedEntry?.moduleId || logLabel || sessionLabel;
+  const _ctx = { config };
+  let _lastProgressEmit = startTime;
+  const PROGRESS_INTERVAL_MS = 30000;
 
   // Capture HEAD before Forge starts — used for change detection
   const headBefore = headHash();
@@ -303,6 +315,7 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
 
   log('INFO', `[${logLabel}] Waiting for session '${sessionLabel}' (${sessionKey}) to complete | timeout: ${timeoutMinutes}min`);
 
+  _transcriptExtensionLoop: while (true) { // outer loop handles transcript-based deadline extensions
   while (Date.now() < deadline) {
     await sleep(interval);
     const gitSync = syncRepoForPolling(config, logLabel);
@@ -338,7 +351,7 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
         log('DEBUG', `[${logLabel}] Post-session commit: ${e.message?.split('\n')[0]}`);
       }
 
-      return { completed: true, hasChanges, reason: 'session_ended' };
+      return { completed: true, hasChanges, reason: 'session_ended', transcript: acpState.transcript || null };
     }
 
     // ── Signal 2: Session closed/error (ACP session no longer running) ──
@@ -346,7 +359,35 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
     // If HEAD also moved, return hasChanges=true. If not, the agent completed
     // without pushing (crash, or no changes made).
     if (!sessionEndDetected) {
+      const _prevTxOffset = acpState.transcript?.offset ?? 0;
       acpState = await getAcpMonitorState(config, sessionLabel, acpState);
+
+      // Transcript streaming: publish new lines (fire-and-forget)
+      const _currTxOffset = acpState.transcript?.offset ?? 0;
+      if (_currTxOffset > _prevTxOffset && _streamLogPath) {
+        Promise.resolve().then(() => {
+          try {
+            const allLines = fs.readFileSync(_streamLogPath, 'utf8').split('\n').filter(Boolean);
+            const newLines = allLines.slice(_prevTxOffset, _currTxOffset);
+            if (newLines.length > 0) publishTranscriptDelta(_ctx, sessionLabel, _moduleId, newLines, emitTranscriptLine);
+          } catch { /* non-critical */ }
+        }).catch(() => {});
+      }
+
+      // Agent progress every 30s
+      if (Date.now() - _lastProgressEmit >= PROGRESS_INTERVAL_MS) {
+        const _agentType = sessionLabel.split('-')[0] || 'forge';
+        emitAgentProgress(_ctx, {
+          agent_type: _agentType,
+          label: sessionLabel,
+          module_id: _moduleId,
+          elapsed_seconds: Math.round((Date.now() - startTime) / 1000),
+          transcript_events: acpState.transcript?.eventCount ?? null,
+          last_activity: acpState.transcript?.lastDetail || null,
+          status: 'active',
+        });
+        _lastProgressEmit = Date.now();
+      }
 
       if (acpState.rateLimited) {
         log('WARN', `[${logLabel}] ACP monitor detected rate limit: ${acpState.detail}`);
@@ -387,7 +428,7 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
         }
       } catch { /* ok */ }
 
-      return { completed: true, hasChanges, reason: hasChanges ? 'session_ended' : 'session_closed_no_changes' };
+      return { completed: true, hasChanges, reason: hasChanges ? 'session_ended' : 'session_closed_no_changes', transcript: acpState.transcript || null };
     }
 
     // ── Timeout nudge ──
@@ -413,8 +454,28 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
     log('INFO', `[${logLabel}] Session active | ${elapsed}s elapsed, ${remaining}s remaining${sessionEndDetected ? ' (session closed, waiting for push)' : ''}`);
   }
 
-  log('WARN', `[${logLabel}] Timeout — session still running after ${timeoutMinutes}min`);
-  return { completed: false, hasChanges: false, reason: 'timeout' };
+  // Inner while loop exited (deadline reached) — check transcript before giving up
+  if (!sessionEndDetected && _transcriptExtensions < _maxTranscriptExtensions) {
+    const _tsTracked = getTrackedAgent(sessionLabel);
+    const _tsState = readAcpTranscriptState(_tsTracked?.streamLogPath, acpState.transcript || {});
+    if (_tsState.lastActivityPoll === 0 && _tsState.eventCount > 0) {
+      _transcriptExtensions++;
+      deadline = Date.now() + _transcriptGraceMs;
+      log('WARN', `[${logLabel}] Transcript active (${_tsState.eventCount} events) — extending deadline by ${_transcriptGraceMs / 1000}s (extension ${_transcriptExtensions}/${_maxTranscriptExtensions})`);
+      continue _transcriptExtensionLoop;
+    }
+  }
+  break _transcriptExtensionLoop;
+  } // end _transcriptExtensionLoop
+
+  const _finalTranscript = acpState.transcript || null;
+  const _transcriptDesc = _finalTranscript
+    ? (_finalTranscript.lastActivityPoll === 0
+        ? `active (${_finalTranscript.eventCount} events)`
+        : `stale (no activity for ${_finalTranscript.lastActivityPoll} polls)`)
+    : 'unknown';
+  log('WARN', `[${logLabel}] Timeout — session still running after ${timeoutMinutes}min | Transcript: ${_transcriptDesc}`);
+  return { completed: false, hasChanges: false, reason: 'timeout', transcript: _finalTranscript };
 }
 
 // ─── Redis Completion Reader ──────────────────────────────────────────────────

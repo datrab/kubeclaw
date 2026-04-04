@@ -1,5 +1,4 @@
 // services/lint.js — Static analysis (lint) report generation and pre-check runner
-// Extracted from pipeline-original.js (module 03)
 
 import { execFileSync } from 'child_process';
 import fs from 'fs';

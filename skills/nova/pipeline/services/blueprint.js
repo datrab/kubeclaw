@@ -258,9 +258,10 @@ export async function syncControlFiles(config, progress) {
     log('DEBUG', '[blueprint-sync] All control files up to date — no changes');
   }
 
-  if (config._logDir) {
+  if (config._runLogDir || config._logDir) {
     try {
-      fs.writeFileSync(path.join(config._logDir, 'pipeline', 'blueprint-sync.json'), JSON.stringify({ ts: new Date().toISOString(), synced: synced.length, files: synced }, null, 2));
+      const logDir = config._runLogDir || path.join(config._logDir, 'pipeline');
+      fs.writeFileSync(path.join(logDir, 'blueprint-sync.json'), JSON.stringify({ ts: new Date().toISOString(), synced: synced.length, files: synced }, null, 2));
     } catch {}
   }
 

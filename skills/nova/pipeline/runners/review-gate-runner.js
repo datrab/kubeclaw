@@ -16,13 +16,21 @@ import { gitExec, invalidateHeadHash } from '../core/git.js';
 import { discord } from '../integrations/discord.js';
 import { gitCommitAndPush } from '../integrations/git.js';
 import { archiveGateOutputIfPresent } from '../services/status-store.js';
+import { truncateForDiscord } from '../services/failures.js';
 import { pollForFile } from '../services/polling.js';
 import { generateLintReport, formatLintReportForReviewer } from '../services/lint.js';
 import { readGateInstructions } from '../prompts/buster-gate.js';
 import { buildReviewerPrompt } from '../prompts/review.js';
 import { acpLabel, spawnAgent, killAgent, verifyAgentAlive, spawnReviewerAgent, killReviewerAgent } from '../agents/lifecycle.js';
+import { transcriptShowsProgress } from '../agents/acp-monitor.js';
 import { getTrackedAgent } from '../agents/shutdown.js';
 import { pollForSessionEnd } from '../services/polling.js';
+import { getActiveContext } from '../core/logger.js';
+import { onGateStarted, onGatePass, onGateFail } from '../services/telemetry.js';
+
+function _telemetryCtx(config) {
+  return getActiveContext() || { config, runId: config?.run_id || config?._runId || '' };
+}
 
 const DEFAULT_DEPS = {
   resolveModel,
@@ -420,6 +428,12 @@ export async function runReviewGate(config, progress, gateId, { novaPrompt } = {
       { name: 'Reviewer', value: reviewers[0]?.label || 'none' },
       { name: 'on_nogo', value: gate.on_nogo },
     ]);
+  onGateStarted(_telemetryCtx(config), gateId, {
+    ...gate,
+    reviewers: reviewers.map(r => r.label || r.model || String(r)),
+  });
+
+  const _gateStartedAt = Date.now();
 
   // ── Initial review ──
   let reviewResult;
@@ -441,6 +455,11 @@ export async function runReviewGate(config, progress, gateId, { novaPrompt } = {
     log('OK', `Review gate '${gateId}' GO`);
     getGateStats(config).gates_completed.push(gateId);
     await deps.discord(config, 'OK', `Review: ${gate.title} GO`, 'Review approved');
+    onGatePass(_telemetryCtx(config), gateId, {
+      gate_type: gate.type,
+      fix_cycle: 0,
+      duration_seconds: Math.round((Date.now() - _gateStartedAt) / 1000),
+    });
     return { exit: EXIT_OK, status: STATUS.PASS };
   }
 
@@ -449,8 +468,16 @@ export async function runReviewGate(config, progress, gateId, { novaPrompt } = {
   const issues = extractReviewIssues(reviewResult.mergedResult);
   log('INFO', `${issues.length} critical issue(s) extracted from review`);
 
+  const noGoFields = [];
+  for (let i = 0; i < Math.min(issues.length, 3); i++) {
+    noGoFields.push({ name: `Issue ${i + 1}`, value: truncateForDiscord(issues[i].description, 200), inline: false });
+  }
+  if (issues.length > 3) {
+    const artifactRef = reviewResult.mergedFilePath ? relPath(config, reviewResult.mergedFilePath) : 'review output';
+    noGoFields.push({ name: `+ ${issues.length - 3} more`, value: `See full report: ${artifactRef}`, inline: false });
+  }
   await deps.discord(config, 'WARN', `Review: ${gate.title} NO-GO — Fix & Re-Review`,
-    `${issues.length} critical issue(s). Starting fix-and-rereview cycle.`);
+    `${issues.length} critical issue(s). Starting fix-and-rereview cycle.`, noGoFields);
 
   const fixHistory = [];
   for (let cycle = 1; cycle <= maxFixCycles; cycle++) {
@@ -498,8 +525,13 @@ export async function runReviewGate(config, progress, gateId, { novaPrompt } = {
       continue;
     }
 
+    const topIssueTitle = currentIssues[0]?.description || 'issue';
+    const moreCount = currentIssues.length - 1;
+    const fixingDesc = moreCount > 0
+      ? `Fixing: ${truncateForDiscord(topIssueTitle, 120)} (+ ${moreCount} more)`
+      : `Fixing: ${truncateForDiscord(topIssueTitle, 150)}`;
     await deps.discord(config, 'INFO', `Review Fix: Forge Working`,
-      `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Forge is fixing ${currentIssues.length} issue(s)...`);
+      `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. ${fixingDesc}`);
 
     const sessionResult = await deps.pollForSessionEnd(
       config, fixAcpLabel, reviewConfig.timeout ?? config.default_timeout_minutes, fixLabel);
@@ -522,10 +554,21 @@ export async function runReviewGate(config, progress, gateId, { novaPrompt } = {
     fixHistory.push({ attempt: cycle, hasChanges: sessionResult.hasChanges, issues: currentIssues });
 
     if (!sessionResult.hasChanges) {
-      const reason = sessionResult.completed ? 'no changes (crashed?)' : 'timeout';
+      const _transcript = sessionResult.transcript;
+      const _tsActive = transcriptShowsProgress(_transcript);
+      const reason = sessionResult.completed
+        ? (_tsActive ? 'no file changes' : 'no changes (crashed?)')
+        : 'timeout';
+      const _tsField = _transcript
+        ? (_tsActive
+            ? `active (${_transcript.eventCount} events)`
+            : `stale (no activity for ${_transcript.lastActivityPoll} polls)`)
+        : 'unknown';
       log('WARN', `Review fix '${fixLabel}' ${reason}`);
       await deps.discord(config, 'WARN', `Review Fix ${reason}: ${gateId}`,
-        `Fix cycle ${cycle}/${maxFixCycles} produced no usable output.`);
+        `Fix cycle ${cycle}/${maxFixCycles} produced no usable output.`, [
+          { name: 'Transcript', value: _tsField },
+        ]);
       continue;
     }
 
@@ -551,6 +594,12 @@ export async function runReviewGate(config, progress, gateId, { novaPrompt } = {
       getGateStats(config).gates_completed.push(gateId);
       await deps.discord(config, 'OK', `Review: ${gate.title} GO`,
         `Passed after ${cycle} fix cycle(s)`);
+      onGatePass(_telemetryCtx(config), gateId, {
+        gate_type: gate.type,
+        issues_count: issues.length,
+        fix_cycle: cycle,
+        duration_seconds: Math.round((Date.now() - _gateStartedAt) / 1000),
+      });
       return { exit: EXIT_OK, status: STATUS.PASS };
     }
 
@@ -564,6 +613,13 @@ export async function runReviewGate(config, progress, gateId, { novaPrompt } = {
   getGateStats(config).gates_failed.push(gateId);
   await deps.discord(config, 'CRITICAL', `Review: ${gate.title} BLOCKED`,
     `Fix-and-rereview exhausted after ${maxFixCycles} cycles. Nova must intervene.`);
+  onGateFail(_telemetryCtx(config), gateId, {
+    gate_type: gate.type,
+    issues_count: extractReviewIssues(reviewResult?.mergedResult).length,
+    fix_cycle: maxFixCycles,
+    duration_seconds: Math.round((Date.now() - _gateStartedAt) / 1000),
+    reason: `NO-GO after ${maxFixCycles} fix cycles`,
+  });
 
   return {
     exit: EXIT_NEEDS_NOVA,

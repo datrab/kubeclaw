@@ -1,9 +1,9 @@
 // services/rate-limit.js — Rate-limit pause/recovery logic
-// Extracted from pipeline-original.js (module 08)
 
 import { log } from '../core/logger.js';
 import { loadStatus, saveStatus, addHistory } from './status-store.js';
 import { discord } from '../integrations/discord.js';
+import { formatRateLimitEmbed } from './failures.js';
 
 // Imported from polling.js — circular import is safe because these are function
 // references only used inside function bodies, never at module initialisation.
@@ -67,13 +67,12 @@ export async function handleRateLimit(config, callerStatus, moduleDir, pauseCoun
 
   log('WARN', `Rate limit detected! Pause ${pauseCount}/${maxPauses}. Sleeping ${cooldownHours}h (resume at ${resumeAt.toISOString()})`);
 
-  await discord(config, 'WARN', `Rate Limited — Pause ${pauseCount}/${maxPauses}`,
-    `Module ${moduleId} hit API rate limit. Agent session preserved. Auto-resume at ${resumeAt.toLocaleTimeString()}.`, [
-      { name: 'Module', value: moduleId },
-      { name: 'Phase', value: currentPhase },
-      { name: 'Pause', value: `${pauseCount}/${maxPauses}` },
-      { name: 'Resume At', value: resumeAt.toISOString() },
-    ]);
+  const embed = formatRateLimitEmbed(config, { detail: callerStatus?.reason }, pauseCount, maxPauses, cooldownMs);
+  await discord(config, 'WARN', embed.title, embed.description, [
+    { name: 'Module', value: moduleId },
+    { name: 'Phase', value: currentPhase },
+    ...embed.fields,
+  ]);
 
   // Load fresh status from disk, add history, save — without touching the caller's object
   const preStatus = loadStatus(config, moduleDir);

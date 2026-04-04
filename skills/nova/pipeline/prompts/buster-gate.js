@@ -1,5 +1,4 @@
 // prompts/buster-gate.js — Gate test prompt builder and gate instructions reader
-// Extracted from pipeline-original.js (module 07)
 
 import fs from 'fs';
 import path from 'path';

@@ -3,6 +3,7 @@ import { execFileSync } from 'child_process';
 import { loadStatus, saveStatus, addHistory } from '../services/status-store.js';
 import { log } from '../core/logger.js';
 import { GATEWAY_URL, GATEWAY_TOKEN } from '../integrations/gateway.js';
+import { closeTelemetryRedis } from '../services/telemetry.js';
 
 const STATUS = { PASS: 'PASS', BLOCKED: 'BLOCKED', FAIL: 'FAIL' };
 const EXIT_ERROR = 1;
@@ -164,6 +165,7 @@ export function registerShutdownHooks(config) {
         }
       } catch {}
     }
+    closeTelemetryRedis().catch(() => {});
     process.exit(EXIT_ERROR);
   };
   process.on('SIGTERM', handler);
