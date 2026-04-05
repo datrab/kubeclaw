@@ -45,6 +45,11 @@ RUN npx playwright install --with-deps chromium \
     && echo "  ✅ Playwright browsers installed at /ms-playwright" \
     && ls /ms-playwright/
 
+# agent-browser — CLI browser automation for Buster subagent
+RUN npm install -g agent-browser \
+    && agent-browser install --with-deps 2>/dev/null || true \
+    && echo "  ✅ agent-browser installed"
+
 # k6 load testing tool
 ARG K6_VERSION=v0.54.0
 RUN set -eux; \
@@ -161,6 +166,7 @@ RUN echo "=== Build Verification ===" && \
     test -d /ms-playwright && echo "  ✅ Playwright browsers at /ms-playwright" && \
     podman --version && echo "  ✅ podman" && \
     k6 version && echo "  ✅ k6" && \
+    agent-browser --version && echo "  ✅ agent-browser" && \
     echo "=== All checks passed ==="
 
 LABEL org.opencontainers.image.title="KubeClaw Sandbox (Root Mode)"
