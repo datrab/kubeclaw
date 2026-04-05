@@ -23,6 +23,8 @@ import { execFileSync, exec } from 'child_process';
 import { promisify } from 'util';
 import fs   from 'fs';
 import { join } from 'path';
+import { hostname } from 'os';
+import Redis from 'ioredis';
 
 const execAsync = promisify(exec);
 import { gitSync, getRepoRoot } from './services/git.js';
@@ -742,6 +744,175 @@ export { waitForSessionIdle, getAcpMonitorConfig } from './agents/acp-monitor.js
 export { spawnSession, killSession, killActiveSession, getActiveSession, clearActiveSession } from './agents/lifecycle.js';
 export { createTelemetryContext, emitEvent, closeTelemetry } from './services/telemetry.js';
 
+// ── Runtime constants ─────────────────────────────────────────────
+
+const AGENT_NAME    = process.env.AGENT_NAME || 'buster';
+const STREAM_KEY    = `swarm:${AGENT_NAME}:tasks`;
+const GROUP_NAME    = `${AGENT_NAME}-group`;
+const CONSUMER_NAME = `${AGENT_NAME}-orchestrator-${hostname()}`;
+
+const POLL_INTERVAL  = 2000;
+const STREAM_MAX_LEN = 250;
+
+const PIPELINE_TASK_TYPES = ['module_test', 'gate_test'];
+
+const GATEWAY_URL            = 'http://127.0.0.1:18789/tools/invoke';
+const GATEWAY_HEALTH_URL     = 'http://127.0.0.1:18789/health';
+const GATEWAY_READY_TIMEOUT  = 120000; // 120s
+const GATEWAY_READY_INTERVAL = 3000;   // poll every 3s
+const GATEWAY_HEALTH_INTERVAL     = 60000; // periodic check every 60s
+const GATEWAY_HEALTH_MAX_FAILURES = 3;
+
+// ── Redis ─────────────────────────────────────────────────────────
+
+const redis = new Redis({
+  host:                process.env.REDIS_HOST     || 'redis-master.kubeclaw.svc.cluster.local',
+  port:                parseInt(process.env.REDIS_PORT || '6379'),
+  password:            process.env.REDIS_PASSWORD,
+  retryStrategy:       (times) => Math.min(times * 100, 5000),
+  maxRetriesPerRequest: null,
+  enableReadyCheck:    true,
+});
+
+redis.on('error',   (err) => console.error('[REDIS]', err.message));
+redis.on('connect', ()    => console.log('[REDIS] Connected.'));
+
+// ── Gateway health ────────────────────────────────────────────────
+
+async function checkGatewayHealth() {
+  try {
+    const res = await fetch(GATEWAY_HEALTH_URL, { signal: AbortSignal.timeout(5000) });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+async function waitForGateway() {
+  console.log(`[GATEWAY] Waiting for gateway readiness (max ${GATEWAY_READY_TIMEOUT / 1000}s)...`);
+  const deadline = Date.now() + GATEWAY_READY_TIMEOUT;
+  while (Date.now() < deadline) {
+    if (await checkGatewayHealth()) {
+      console.log('[GATEWAY] ✅ Gateway ready.');
+      return;
+    }
+    await new Promise(r => setTimeout(r, GATEWAY_READY_INTERVAL));
+  }
+  console.error('[GATEWAY] ❌ Gateway not ready within timeout. Exiting.');
+  process.exit(1);
+}
+
+function startGatewayHealthMonitor() {
+  let consecutiveFailures = 0;
+  setInterval(async () => {
+    if (shuttingDown) return;
+    const healthy = await checkGatewayHealth();
+    if (!healthy) {
+      consecutiveFailures++;
+      console.warn(`[GATEWAY] ⚠️ Health check failed (${consecutiveFailures}/${GATEWAY_HEALTH_MAX_FAILURES})`);
+      if (consecutiveFailures >= GATEWAY_HEALTH_MAX_FAILURES) {
+        console.error('[GATEWAY] ❌ Gateway unreachable. Exiting.');
+        process.exit(1);
+      }
+    } else {
+      if (consecutiveFailures > 0) console.log(`[GATEWAY] ✅ Recovered after ${consecutiveFailures} failed check(s).`);
+      consecutiveFailures = 0;
+    }
+  }, GATEWAY_HEALTH_INTERVAL);
+}
+
+// ── Task dequeue ──────────────────────────────────────────────────
+
+async function processOne() {
+  const results = await redis.xreadgroup(
+    'GROUP', GROUP_NAME, CONSUMER_NAME,
+    'COUNT', 1, 'BLOCK', POLL_INTERVAL,
+    'STREAMS', STREAM_KEY, '>'
+  );
+  if (!results) return;
+
+  const [id, fields] = results[0][1][0];
+  const data = {};
+  for (let i = 0; i < fields.length; i += 2) data[fields[i]] = fields[i + 1];
+
+  let payload = {};
+  try { payload = JSON.parse(data.payload || '{}'); } catch {}
+
+  const taskType     = data.type || 'unknown';
+  const sender       = data.sender || 'unknown';
+  const effectiveType = PIPELINE_TASK_TYPES.includes(payload.task_type)
+    ? payload.task_type
+    : taskType;
+
+  console.log(`\n[TASK] ${id} | ${sender} ➔ ${AGENT_NAME} | type=${effectiveType}`);
+
+  if (!PIPELINE_TASK_TYPES.includes(effectiveType)) {
+    console.warn(`[TASK] ⚠️ Unknown task type: ${effectiveType} — skipping`);
+    await redis.xack(STREAM_KEY, GROUP_NAME, id);
+    return;
+  }
+
+  try {
+    await processTask(payload);
+    await redis.xack(STREAM_KEY, GROUP_NAME, id);
+    await redis.xtrim(STREAM_KEY, 'MAXLEN', '~', STREAM_MAX_LEN);
+    console.log('[TASK] ✅ Acked.');
+  } catch (err) {
+    console.error(`[TASK] ❌ Failed: ${err.message}`);
+    await doSandboxCleanup('error', payload).catch(() => {});
+    try { await redis.xack(STREAM_KEY, GROUP_NAME, id); } catch {}
+  }
+}
+
+// ── Shutdown ──────────────────────────────────────────────────────
+
+let shuttingDown = false;
+
+async function shutdown(signal) {
+  if (shuttingDown) return;
+  shuttingDown = true;
+  console.log(`\n[SHUTDOWN] ${signal} received. Cleaning up...`);
+  await killActiveSession().catch(() => {});
+  await doSandboxCleanup('shutdown', {}).catch(() => {});
+  try { redis.disconnect(); } catch {}
+  console.log('[SHUTDOWN] ✅ Clean exit.');
+  process.exit(0);
+}
+
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT',  () => shutdown('SIGINT'));
+
+// ── Main ──────────────────────────────────────────────────────────
+
+async function main() {
+  console.log(`[ORCHESTRATOR v2.0] Starting (Buster — Suite Runner + ACP)...`);
+  console.log(` Agent:   ${AGENT_NAME}`);
+  console.log(` Stream:  ${STREAM_KEY}`);
+  console.log(` Gateway: ${GATEWAY_URL}`);
+
+  await doSandboxCleanup('startup', {});
+  await waitForGateway();
+  startGatewayHealthMonitor();
+
+  try {
+    await redis.xgroup('CREATE', STREAM_KEY, GROUP_NAME, '0', 'MKSTREAM');
+    console.log(`[REDIS] Consumer group created: ${GROUP_NAME}`);
+  } catch (e) {
+    if (!e.message?.includes('BUSYGROUP')) throw e;
+    console.log(`[REDIS] Consumer group exists: ${GROUP_NAME}`);
+  }
+
+  console.log('[ORCHESTRATOR] ✅ Ready. Polling for tasks...');
+  while (!shuttingDown) {
+    try {
+      await processOne();
+    } catch (e) {
+      console.error('[LOOP]', e.message);
+      await new Promise(r => setTimeout(r, 3000));
+    }
+  }
+}
+
 // ── CLI: --status ─────────────────────────────────────────────────
 
 if (process.argv[2] === '--status') {
@@ -749,4 +920,6 @@ if (process.argv[2] === '--status') {
     lastRunLogDir: STATE.lastRunLogDir,
   }, null, 2));
   process.exit(0);
+} else {
+  main();
 }
