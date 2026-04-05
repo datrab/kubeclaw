@@ -24,7 +24,7 @@ gateway:
     - "/bin/bash"
     - "-c"
     - |
-      node /app/skills/buster-orchestrator.cjs &
+      node /app/skills/buster-orchestrator.js &
       ORCH_PID=$!
       node /app/openclaw.mjs gateway --bind lan --port 18789 &
       GW_PID=$!
