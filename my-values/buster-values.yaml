@@ -58,7 +58,7 @@ discordWebhook:
   secretKey: "discordWebhook"
 
 agent:
-  project: "wave4"
+  project: "clawdeck"
   git:
     enabled: true
     secretName: "git-deploy-key-buster"
