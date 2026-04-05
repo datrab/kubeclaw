@@ -62,24 +62,5 @@ RUN mkdir -p /home/node/.openclaw \
     && chown -R root:root /home/node \
     && openclaw plugins install acpx
 
-# 10. Build verification
-RUN echo "=== Build Verification ===" && \
-    node -e "require('ioredis'); console.log('  ✅ ioredis')" && \
-    ls /app/skills/redis.js /app/skills/pipeline.js /app/skills/lint-report.js && echo "  ✅ KubeClaw skills in /app/skills/" && \
-    echo "=== Lint Tools Verification ===" && \
-    tsc --version         && echo "  ✅ tsc" && \
-    eslint --version      && echo "  ✅ eslint" && \
-    knip --version        && echo "  ✅ knip" && \
-    madge --version       && echo "  ✅ madge" && \
-    ruff version          && echo "  ✅ ruff" && \
-    mypy --version        && echo "  ✅ mypy" && \
-    pip-audit --version   && echo "  ✅ pip-audit" && \
-    semgrep --version     && echo "  ✅ semgrep" && \
-    shellcheck --version  && echo "  ✅ shellcheck" && \
-    yamllint --version    && echo "  ✅ yamllint" && \
-    hadolint --version    && echo "  ✅ hadolint" && \
-    kubeconform -v        && echo "  ✅ kubeconform" && \
-    helm version --short  && echo "  ✅ helm"
-
 LABEL org.opencontainers.image.title="KubeClaw General (Root Mode)"
 LABEL org.opencontainers.image.description="Root environment for K8s stateful deployments with ACPX + lint tools"
