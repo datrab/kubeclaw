@@ -191,4 +191,3 @@ Without `thresholds` → informational. With `thresholds` → enforced (can FAIL
 
 - **progress.json complete reference**: [progress-json.md](progress-json.md)
 - **Writing FORGE.md, BUSTER.md, test-spec.json**: [module-files.md](module-files.md)
-- **Prism preview conventions**: [prism-conventions.md](prism-conventions.md)
