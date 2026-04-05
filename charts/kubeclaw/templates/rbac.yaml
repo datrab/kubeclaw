@@ -1,0 +1,53 @@
+{{- if .Values.serviceAccount.create -}}
+---
+# ClusterRole — grants buster full control over ephemeral test namespaces
+# and their workloads. Namespace creation/deletion is enforced by the
+# buster-namespace-fence VAP (only buster-* and test-* prefixes allowed).
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-k8s-tester
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+rules:
+  # Namespace lifecycle — VAP fence limits this to buster-* / test-* prefixes
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs:     ["create", "get", "list", "delete"]
+
+  # Core workload resources within test namespaces
+  - apiGroups: [""]
+    resources:
+      - pods
+      - pods/log
+      - pods/exec
+      - services
+      - endpoints
+      - configmaps
+      - secrets
+      - persistentvolumeclaims
+      - serviceaccounts
+    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+
+  # App workloads
+  - apiGroups: ["apps"]
+    resources:
+      - deployments
+      - replicasets
+    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-k8s-tester
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind:     ClusterRole
+  name:     {{ include "kubeclaw.fullname" . }}-k8s-tester
+subjects:
+  - kind:      ServiceAccount
+    name:      {{ include "kubeclaw.fullname" . }}
+    namespace: {{ .Release.Namespace }}
+{{- end }}

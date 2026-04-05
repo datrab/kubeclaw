@@ -41,8 +41,10 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
 
-      {{- if .Values.sandbox.enabled }}
-      # Sandbox mode: no K8s API access when Podman is active
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ include "kubeclaw.fullname" . }}
+      {{- else if .Values.sandbox.enabled }}
+      # Sandbox mode without serviceAccount: disable token mount
       automountServiceAccountToken: false
       {{- end }}
 

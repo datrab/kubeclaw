@@ -1,0 +1,19 @@
+# k3s containerd registry configuration
+#
+# Copy this file to /etc/rancher/k3s/registries.yaml on every k3s node,
+# then restart k3s: systemctl restart k3s
+#
+# Why this is needed:
+#   registry-local.kubeclaw.svc.cluster.local:5001 is a plain HTTP registry
+#   (no TLS). containerd rejects HTTP registries by default.
+#   The NodePort 30051 is the node-accessible endpoint — containerd can't
+#   resolve cluster DNS (.svc.cluster.local) at the host level, so we
+#   mirror the cluster hostname to localhost:30051 (the NodePort).
+#
+# After restarting k3s, verify with:
+#   crictl info | grep -A5 registry
+#
+mirrors:
+  "registry-local.kubeclaw.svc.cluster.local:5001":
+    endpoint:
+      - "http://127.0.0.1:30051"

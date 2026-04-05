@@ -269,6 +269,19 @@ sandbox:
   storageSize: "25Gi"
 
 # =============================================================================
+# SERVICE ACCOUNT
+# =============================================================================
+# When enabled, creates a ServiceAccount + ClusterRole + ClusterRoleBinding
+# granting buster full access to manage ephemeral test namespaces and their
+# workloads (pods, deployments, services, secrets, etc.).
+# The VAP buster-namespace-fence enforces that only buster-* / test-* namespaces
+# can be created or deleted, protecting production namespaces.
+# Only enable for the Buster agent.
+
+serviceAccount:
+  create: false
+
+# =============================================================================
 # SWARM CONFIG
 # =============================================================================
 # Platform-level config for the pipeline engine.

@@ -1,0 +1,58 @@
+# Registry Local — Writable registry for buster ephemeral test images
+#
+# Unlike registry-mirror (pull-through cache, read-only), this is a plain
+# registry:2 with no proxy config, so push is enabled. Buster builds the
+# production Dockerfile and pushes to this registry before deploying to
+# the test namespace.
+#
+# No PVC — ephemeral. Test images are cleaned up when the namespace is deleted.
+# Port 5001 to avoid clash with registry-mirror (5000).
+# Image pulled from registry-mirror to respect the cluster pull policy.
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry-local
+  labels:
+    app: registry-local
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registry-local
+  template:
+    metadata:
+      labels:
+        app: registry-local
+    spec:
+      containers:
+        - name: registry
+          image: registry-mirror.kubeclaw.svc.cluster.local:5000/library/registry:2
+          ports:
+            - containerPort: 5000
+          env:
+            - name: REGISTRY_STORAGE_DELETE_ENABLED
+              value: "true"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry-local
+  labels:
+    app: registry-local
+spec:
+  selector:
+    app: registry-local
+  ports:
+    - port: 5001
+      targetPort: 5000
+      nodePort: 30051
+      protocol: TCP
+  type: NodePort
