@@ -52,6 +52,12 @@ discord:
   existingSecret: "openclaw-shared-secrets"
   existingSecretKey: "discordToken-buster"
   channelId: "1473692599125540985"
+  execApprovers:
+    - "user:849379821536804864"
+
+commands:
+  allowFromDiscord:
+    - "user:849379821536804864"
 
 discordWebhook:
   secretName: "openclaw-shared-secrets"

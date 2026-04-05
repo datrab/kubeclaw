@@ -32,8 +32,6 @@ spec:
       message: >
         Buster may only create or delete namespaces with prefix "buster-" or "test-".
         Production namespaces are protected.
-  validationActions:
-    - Deny
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingAdmissionPolicyBinding

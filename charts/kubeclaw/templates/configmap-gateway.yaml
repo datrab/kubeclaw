@@ -10,6 +10,7 @@ data:
     {
       "gateway": {
         "mode": "local",
+        "bind": "lan",
         "tools": {
           "allow": ["sessions_spawn", "sessions_send", "session_status", "group:openclaw"]
         },
@@ -17,8 +18,20 @@ data:
         "controlUi": {
           "dangerouslyAllowHostHeaderOriginFallback": true
         },
+        "auth": {
+          "mode": "token",
+          "token": {
+            "source": "env",
+            "provider": "default",
+            "id": "OPENCLAW_GATEWAY_TOKEN"
+          }
+        },
         "channelStaleEventThresholdMinutes": 1440,
-        "channelMaxRestartsPerHour": 3
+        "channelMaxRestartsPerHour": 3,
+        "tailscale": {
+          "mode": "off",
+          "resetOnExit": false
+        }
       },
       "acp": {
         "enabled": true,
@@ -38,7 +51,7 @@ data:
         "dmScope": "per-channel-peer",
         "threadBindings": {
           "enabled": true,
-          "idleHours": 24,
+          "idleHours": 999,
           "maxAgeHours": 0
         }
       },
@@ -57,7 +70,10 @@ data:
         "native": "auto",
         "nativeSkills": "auto",
         "restart": true,
-        "ownerDisplay": "raw"
+        "ownerDisplay": "raw",
+        "allowFrom": {
+          "discord": {{ .Values.commands.allowFromDiscord | default list | toJson }}
+        }
       },
       "plugins": {
         "entries": {
@@ -110,15 +126,18 @@ data:
             "softTrimRatio": 0.7,
             "hardClearRatio": 0.85
           },
+          "thinkingDefault": "high",
           "compaction": {
             "mode": "safeguard",
-            "maxHistoryShare": 0.5,
+            "reserveTokens": 80000,
+            "keepRecentTokens": 140000,
+            "maxHistoryShare": 0.4,
             "memoryFlush": { "enabled": true }
           },
           "subagents": {
-            "maxConcurrent": 8,
-            "runTimeoutSeconds": 18000,
-            "archiveAfterMinutes": 120
+            "maxConcurrent": 20,
+            "runTimeoutSeconds": 7200,
+            "archiveAfterMinutes": 240
           }
         },
         "list": [
@@ -127,6 +146,9 @@ data:
             "subagents": {
               "allowAgents": ["*"]
             }
+          },
+          {
+            "id": "codex"
           }
         ]
       },
@@ -158,13 +180,19 @@ data:
           "enabled": {{ .Values.discord.enabled }},
           "token": "__DISCORD_TOKEN__",
           "groupPolicy": "open",
-          "streaming": "partial",
+          "streaming": "off",
           "guilds": {
             "*": { "requireMention": false }
           },
           "threadBindings": {
             "enabled": true,
+            "idleHours": 999,
             "spawnAcpSessions": true
+          },
+          "execApprovals": {
+            "enabled": true,
+            "approvers": {{ .Values.discord.execApprovers | default list | toJson }},
+            "target": "dm"
           },
           "retry": {
             "attempts": 3,

@@ -125,6 +125,8 @@ stitch:
 discord:
   enabled: false
   channelId: ""
+  # Discord user IDs allowed to approve exec commands (array of "user:<id>" strings)
+  execApprovers: []
   # Direct token
   token: ""
   # Or reference existing secret
@@ -280,6 +282,14 @@ sandbox:
 
 serviceAccount:
   create: false
+
+# =============================================================================
+# COMMANDS
+# =============================================================================
+
+commands:
+  # Discord user IDs allowed to run commands (array of "user:<id>" strings)
+  allowFromDiscord: []
 
 # =============================================================================
 # SWARM CONFIG
