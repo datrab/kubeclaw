@@ -58,6 +58,22 @@ cmd_setup() {
   echo ""
   info "Next: create your secrets (see README for required secrets)"
   info "Then: ./deploy.sh infra && ./deploy.sh agents"
+
+  # k3s node registry config — required for buster k8s suite
+  header "k3s Registry Config (required for buster k8s suite)"
+  K3S_REG_FILE="/etc/rancher/k3s/registries.yaml"
+  if [ -f "$K3S_REG_FILE" ] && grep -q "registry-local.kubeclaw.svc.cluster.local" "$K3S_REG_FILE" 2>/dev/null; then
+    log "k3s registries.yaml already configured for registry-local"
+  else
+    warn "k3s registries.yaml is NOT configured for registry-local"
+    warn "The buster k8s suite pushes images to registry-local:5001 (NodePort 30051)."
+    warn "Without this config, containerd will refuse to pull test images from it."
+    echo ""
+    info "Run on every k3s node (requires root):"
+    info "  sudo cp $REPO_DIR/my-values/infra/k3s-registries.yaml $K3S_REG_FILE"
+    info "  sudo systemctl restart k3s"
+    echo ""
+  fi
 }
 
 # ─── Infrastructure ──────────────────────────────────────────────────────
@@ -102,6 +118,16 @@ cmd_infra() {
   info "Waiting for Registry Mirror to be ready..."
   kubectl rollout status deployment/registry-mirror -n "$NAMESPACE" --timeout=120s 2>/dev/null || warn "Registry Mirror not ready yet"
   log "Registry Mirror deployed"
+
+  header "Infrastructure: Registry Local (writable, buster test images)"
+  kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/registry-local.yaml"
+  info "Waiting for Registry Local to be ready..."
+  kubectl rollout status deployment/registry-local -n "$NAMESPACE" --timeout=60s 2>/dev/null || warn "Registry Local not ready yet"
+  log "Registry Local deployed"
+
+  header "Infrastructure: Buster Namespace Fence (VAP)"
+  kubectl apply -f "$INFRA_DIR/buster-namespace-fence.yaml"
+  log "Buster namespace fence applied"
 
   echo ""
   log "Infrastructure deployed. Pods:"
@@ -204,6 +230,19 @@ cmd_teardown() {
     log "Removed: registry-mirror"
   fi
 
+  # Infrastructure — Registry Local (plain manifest, not Helm)
+  if kubectl get deployment registry-local -n "$NAMESPACE" &>/dev/null; then
+    kubectl delete -n "$NAMESPACE" -f "$INFRA_DIR/registry-local.yaml" 2>/dev/null || \
+      kubectl delete deployment,svc -n "$NAMESPACE" -l app=registry-local
+    log "Removed: registry-local"
+  fi
+
+  # Infrastructure — Buster Namespace Fence (cluster-scoped VAP)
+  if kubectl get validatingadmissionpolicy buster-namespace-fence &>/dev/null; then
+    kubectl delete -f "$INFRA_DIR/buster-namespace-fence.yaml" 2>/dev/null || true
+    log "Removed: buster-namespace-fence"
+  fi
+
   # Clean up PVCs left behind by Helm resource-policy=keep
   local pvcs
   pvcs=$(kubectl get pvc -n "$NAMESPACE" --no-headers -o custom-columns=NAME:.metadata.name 2>/dev/null || true)
@@ -253,6 +292,19 @@ cmd_teardown_all() {
     kubectl delete -n "$NAMESPACE" -f "$INFRA_DIR/registry-mirror.yaml" 2>/dev/null || \
       kubectl delete deployment,svc,pvc -n "$NAMESPACE" -l app=registry-mirror
     log "Removed: registry-mirror"
+  fi
+
+  # Infrastructure — Registry Local (plain manifest, not Helm)
+  if kubectl get deployment registry-local -n "$NAMESPACE" &>/dev/null; then
+    kubectl delete -n "$NAMESPACE" -f "$INFRA_DIR/registry-local.yaml" 2>/dev/null || \
+      kubectl delete deployment,svc -n "$NAMESPACE" -l app=registry-local
+    log "Removed: registry-local"
+  fi
+
+  # Infrastructure — Buster Namespace Fence (cluster-scoped VAP)
+  if kubectl get validatingadmissionpolicy buster-namespace-fence &>/dev/null; then
+    kubectl delete -f "$INFRA_DIR/buster-namespace-fence.yaml" 2>/dev/null || true
+    log "Removed: buster-namespace-fence"
   fi
 
   # Namespace (takes everything with it)

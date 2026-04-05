@@ -19,8 +19,12 @@
 // Telemetry is provided by ./services/telemetry.js.
 // Structured logging is provided by ./services/logger.js.
 
-import { execFileSync } from 'child_process';
+import { execFileSync, exec } from 'child_process';
+import { promisify } from 'util';
+import fs   from 'fs';
 import { join } from 'path';
+
+const execAsync = promisify(exec);
 import { gitSync, getRepoRoot } from './services/git.js';
 
 import {
@@ -178,13 +182,57 @@ export function buildTimeoutEmbed(moduleId, project, { elapsedSeconds, timeoutSe
   };
 }
 
-// ── Stub infrastructure helpers ───────────────────────────────────
-//
-// doSandboxCleanup is a stub to be replaced by a future module.
+// ── Sandbox + K8s cleanup ────────────────────────────────────────
 
 async function doSandboxCleanup(stage, payload) {
-  // Stub: no-op cleanup. Real implementation added by a future module.
-  return { ok: true, duration_seconds: 0 };
+  const start  = Date.now();
+  const errors = [];
+
+  // 1. Stop + remove all Podman containers
+  try {
+    await execAsync('podman stop -a 2>/dev/null; podman rm -a -f 2>/dev/null', {
+      timeout: 30000, encoding: 'utf8',
+    });
+  } catch (e) { errors.push(`containers: ${e.message}`); }
+
+  // 2. Prune dangling images
+  try {
+    await execAsync('podman image prune -f 2>/dev/null', { timeout: 10000, encoding: 'utf8' });
+  } catch (e) { errors.push(`image-prune: ${e.message}`); }
+
+  // 3. Clear sandbox directories
+  try {
+    await execAsync(
+      'rm -rf /sandbox/www/* /sandbox/results/* && mkdir -p /sandbox/www /sandbox/results',
+      { timeout: 5000, encoding: 'utf8' }
+    );
+  } catch (e) { errors.push(`sandbox-dirs: ${e.message}`); }
+
+  // 4. Stop nginx
+  try {
+    await execAsync('nginx -s stop 2>/dev/null', { timeout: 5000, encoding: 'utf8' });
+  } catch { /* nginx may not be running — ignore */ }
+
+  // 5. Delete ephemeral K8s test namespace written by the k8s suite.
+  // Only deletes namespaces matching buster-* or test-* (mirrors VAP fence).
+  const k8sNsFile = '/sandbox/k8s-test-namespace';
+  if (fs.existsSync(k8sNsFile)) {
+    try {
+      const testNs = fs.readFileSync(k8sNsFile, 'utf8').trim();
+      if (testNs && /^(buster|test)-/.test(testNs)) {
+        await execAsync(`kubectl delete namespace "${testNs}" --wait=false 2>/dev/null`, {
+          timeout: 15000, encoding: 'utf8',
+        });
+      }
+    } catch (e) { errors.push(`k8s-ns: ${e.message}`); }
+    try { fs.unlinkSync(k8sNsFile); } catch {}
+  }
+
+  return {
+    ok:               errors.length === 0,
+    duration_seconds: Math.round((Date.now() - start) / 1000),
+    ...(errors.length > 0 && { errors }),
+  };
 }
 
 // ── Task Processing ───────────────────────────────────────────────

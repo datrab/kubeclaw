@@ -155,8 +155,46 @@ node /app/skills/pipeline.js --project <project> --resume
 | `unit` | ✅ (pytest) | ✅ (vitest) |
 | `a11y`, `perf`, `bundle` | ❌ | ✅ |
 | `visual-reg`, `e2e` | ❌ | ✅ (needs baselines) |
+| `k8s` | ✅ (deployment modules) | ❌ |
 
 Without `thresholds` → informational. With `thresholds` → enforced (can FAIL).
+
+### k8s Suite — required test_config fields
+
+Use for any module that produces a Dockerfile + K8s manifests.
+
+```json
+"test_suites": ["k8s"],
+"test_config": {
+  "k8s": {
+    "dockerfile":    "Projects/<name>/src/Dockerfile",
+    "image_name":    "<app>",
+    "service_name":  "<k8s-service-name>",
+    "manifests":     ["Projects/<name>/src/k8s/<app>-all.yaml"],
+    "port":          3001,
+    "health_path":   "/health"
+  }
+}
+```
+
+| Field | Required | Description |
+|---|---|---|
+| `dockerfile` | yes | Path relative to repo root |
+| `image_name` | yes | Image name without registry/tag (used for image override) |
+| `service_name` | yes | K8s Service name in the manifests |
+| `manifests` | yes | Array of manifest paths relative to repo root |
+| `port` | no | Service port (default: 3000) |
+| `health_path` | no | Health check path (default: /health) |
+| `build_context` | no | Podman build context dir (default: dockerfile directory) |
+| `secrets_to_copy` | no | Secret names to copy from `kubeclaw` ns into the test ns |
+| `ready_timeout_seconds` | no | Pod readiness wait (default: 120) |
+| `namespace_prefix` | no | Test namespace prefix — `buster` or `test` (default: buster) |
+
+**Notes:**
+- Manifests may hardcode `namespace:` — the suite strips it so `-n testNs` takes effect
+- `image_name` match is substring: any `image:` line containing it gets overridden with the test registry tag
+- The test namespace is cleaned up by the orchestrator after the session ends
+- Suite is `critical: true` — failure blocks the LLM subagent spawn
 
 ## Checklist
 

@@ -16,6 +16,7 @@ import { runVisualReg } from './suites/visual-reg.js';
 import manifestSuite   from './suites/manifest.js';
 import buildSuite      from './suites/build.js';
 import healthSuite     from './suites/health.js';
+import k8sSuite        from './suites/k8s.js';
 
 // ── Suite icon helpers ────────────────────────────────────────────
 
@@ -47,6 +48,8 @@ async function dispatchSuite(suiteName, ctx) {
       return healthSuite(ctx);
     case 'visual-reg':
       return runVisualReg(ctx);
+    case 'k8s':
+      return k8sSuite(ctx);
 
     // ── Stubs — implementations added by future modules ──────────
     case 'unit':
@@ -181,6 +184,7 @@ export async function runSuites(suites, opts = {}) {
 export const EXECUTION_ORDER = [
   'manifest',        // static analysis — no running app needed
   'build', 'health',
+  'k8s',             // production Dockerfile build + K8s deploy (independent of sandbox build)
   'a11y', 'perf', 'bundle', 'security', 'visual-reg',
   'api', 'e2e', 'unit',
 ];
@@ -189,6 +193,7 @@ export const DEPENDENCIES = {
   manifest:     [],
   build:        ['manifest'],  // manifest must pass before build
   health:       ['build'],
+  k8s:          [],            // builds its own Docker image — no dependency on sandbox build/health
   a11y:         ['health'],
   perf:         ['health'],
   bundle:       ['build'],
