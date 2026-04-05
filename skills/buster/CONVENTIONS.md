@@ -103,6 +103,44 @@ No "it seems broken". Exact data.
 
 ---
 
+## Browser Testing
+
+`agent-browser` is the primary tool for interactive browser testing inside the sandbox.
+
+### Common commands
+
+| Command | Description |
+|---|---|
+| `agent-browser open <url>` | Navigate to a URL |
+| `agent-browser snapshot -i` | Print accessible element tree (for finding selectors) |
+| `agent-browser click <selector>` | Click an element |
+| `agent-browser fill <selector> <value>` | Fill an input field |
+| `agent-browser get <selector>` | Get element text/value |
+| `agent-browser wait <selector>` | Wait for element to appear |
+| `agent-browser errors` | List JS runtime errors (React crashes, undefined access) |
+| `agent-browser console` | Show browser console output |
+| `agent-browser screenshot` | Capture a screenshot |
+| `agent-browser diff <baseline>` | Visual diff against a baseline image |
+| `agent-browser eval <js>` | Evaluate JavaScript in the page context |
+
+### When to use agent-browser vs Playwright
+
+- **agent-browser** — preferred for interactive exploration: checking what rendered, clicking around, inspecting errors, verifying visible text. No script required.
+- **Playwright** — use when you need deterministic programmatic scripting: loops, complex assertions, multi-step flows that must be reproducible as a `.spec.js` test.
+
+### Checking for JS errors
+
+After navigating to a page, always run `agent-browser errors` to surface React crashes, undefined-property accesses, and other runtime failures that may not be visible in the UI.
+
+```bash
+agent-browser open http://localhost:3000/dashboard
+agent-browser errors       # any React or JS errors?
+agent-browser console      # any console.error / warnings?
+agent-browser snapshot -i  # inspect rendered elements
+```
+
+---
+
 ## Subagent Workflow Order
 
 1. Read Pre-Test Results (in prompt — JSON)
@@ -111,4 +149,4 @@ No "it seems broken". Exact data.
 4. Execute each check sequentially and log
 5. Write status.json (PASS/FAIL)
 6. Store findings in memory
-7. `redis.cjs --action complete` as last command
+7. `redis.js --action complete` as last command

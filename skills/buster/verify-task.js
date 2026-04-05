@@ -19,23 +19,11 @@
 //
 // =============================================================================
 
-import { execFileSync } from 'child_process';
 import process from 'process';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
-// ─── Git Helpers (shell-free) ───────────────────────────────────────────────
-
-function gitExec(repoRoot, args, opts = {}) {
-  const defaults = { encoding: 'utf8', timeout: 30000, maxBuffer: 50 * 1024 * 1024 };
-  const result = execFileSync('git', ['-C', repoRoot, ...args], { ...defaults, ...opts });
-  return typeof result === 'string' ? result.trim() : '';
-}
-
-function getRepoRoot() {
-  return execFileSync('git', ['rev-parse', '--show-toplevel'], { encoding: 'utf8' }).trim();
-}
+import { gitExec, getRepoRoot, getCurrentBranch, gitPushWithRetry } from './services/git.js';
 
 // ─── Main ───────────────────────────────────────────────────────────────────
 
@@ -163,65 +151,16 @@ async function verifyAndPush(agentRole, currentProject, opts = {}) {
       return { status: 'success', action: 'reverted_all_bad_files', logs };
     }
 
-    // Detect current branch — needed for explicit pull/push targets.
-    // On detached HEAD (common in containers after rebase), rev-parse returns
-    // literal 'HEAD' — resolve the actual remote tracking branch instead.
-    let currentBranch;
-    try {
-      currentBranch = gitExec(repoRoot, ['rev-parse', '--abbrev-ref', 'HEAD']);
-    } catch {
-      currentBranch = 'HEAD'; // will be caught below
-    }
-    if (!currentBranch || currentBranch === 'HEAD') {
-      // Detached HEAD — try to find the remote tracking branch
-      try {
-        // Find which remote branch points to our current commit.
-        // Exclude origin/HEAD (symbolic ref) which would resolve back to 'HEAD'.
-        const refs = gitExec(repoRoot, ['for-each-ref', '--format=%(refname:short)',
-          '--sort=-committerdate', '--points-at=HEAD', 'refs/remotes/origin/']);
-        const realRef = refs.split('\n').find(r => r && r !== 'origin/HEAD');
-        currentBranch = realRef ? realRef.replace('origin/', '') : 'main';
-      } catch {
-        currentBranch = 'main';
-      }
-    }
+    const currentBranch = getCurrentBranch(repoRoot);
     log(`[Verify] Current branch: ${currentBranch}`);
 
     // Scoped add — only the project directory, not the entire repo
     gitExec(repoRoot, ['add', projectRoot], { stdio: 'ignore' });
     gitExec(repoRoot, ['commit', '-m', commitMessage], { stdio: 'ignore' });
 
-    // Push with rebase-before-each-attempt strategy.
-    // Each attempt: pull --rebase (explicit branch) → push.
-    // This handles concurrent pushes from pipeline/other agents.
-    let pushed = false;
-    for (let attempt = 1; attempt <= 3; attempt++) {
-      // Rebase onto remote BEFORE push to incorporate any concurrent changes
-      try {
-        gitExec(repoRoot, ['pull', '--rebase', 'origin', currentBranch], { stdio: 'ignore', timeout: 30000 });
-      } catch (rebaseErr) {
-        log(`⚠️ [Verify] Rebase attempt ${attempt}/3: ${rebaseErr.message?.split('\n')[0]}`);
-        // Abort rebase to get back to a clean state, then retry
-        try { gitExec(repoRoot, ['rebase', '--abort'], { stdio: 'ignore' }); } catch { /* ok */ }
-        if (attempt < 3) {
-          execFileSync('sleep', ['2']);
-          continue;
-        }
-      }
-
-      try {
-        gitExec(repoRoot, ['push', 'origin', `HEAD:${currentBranch}`], { stdio: 'ignore', timeout: 60000 });
-        pushed = true;
-        break;
-      } catch (e) {
-        if (attempt === 3) throw e;
-        log(`⚠️ [Verify] Push attempt ${attempt}/3 failed: ${e.message?.split('\n')[0]}`);
-        execFileSync('sleep', ['2']);
-      }
-    }
-
-    // Capture commit hash after push
-    const commitHash = gitExec(repoRoot, ['rev-parse', '--short', 'HEAD']);
+    // Push with rebase-before-each-attempt strategy (via shared utility).
+    const gitLogger = { warn: (_, msg) => log(`⚠️ [Verify] ${msg}`), info: (_, msg) => log(msg) };
+    const { hash: commitHash } = await gitPushWithRetry(repoRoot, currentBranch, { logger: gitLogger });
 
     log(`✅ [Verify] Push successful! (${commitHash})`);
     return {
