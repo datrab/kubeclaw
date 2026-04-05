@@ -24,7 +24,8 @@ import { promisify } from 'util';
 import fs   from 'fs';
 import { join } from 'path';
 import { hostname } from 'os';
-import Redis from 'ioredis';
+import { createRequire } from 'module';
+const Redis = createRequire(import.meta.url)('ioredis');
 
 const execAsync = promisify(exec);
 import { gitSync, getRepoRoot } from './services/git.js';
