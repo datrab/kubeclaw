@@ -520,7 +520,7 @@ export async function runBusterGate(config, progress, gateId) {
     // ── Fix cycle: Forge fixes, then retry ──
     log('STEP', `Gate '${gateId}' fix cycle ${attempt}/${maxFixCycles}`);
     await deps.discord(config, 'WARN', `Gate '${gateId}' FAIL — Auto-Fix`,
-      `Attempt ${attempt}/${maxFixCycles}. Spawning Forge to fix ${issues.length} issue(s).`);
+      `Attempt ${attempt}/${maxFixCycles}. Spawning Forge to fix ${issues.length} issue(s).\n\n**Issues:**\n${issues.slice(0, 5).map(i => `• ${i.title}`).join('\n') || 'No details available'}`);
 
     const fixPromptResult = deps.buildGateFixPrompt(config, gate, issues, attempt, maxFixCycles, fixHistory);
     const fixPrompt = fixPromptResult.prompt;
@@ -557,7 +557,7 @@ export async function runBusterGate(config, progress, gateId) {
     }
 
     await deps.discord(config, 'INFO', `Gate Fix: Forge Working`,
-      `Attempt ${attempt}/${maxFixCycles}. Forge is fixing ${issues.length} issue(s)...`);
+      `Attempt ${attempt}/${maxFixCycles}. Forge is fixing ${issues.length} issue(s).\n\n**Fixing:**\n${issues.slice(0, 5).map(i => `• ${i.title}`).join('\n') || 'No details available'}`);
 
     const forgeTimeout = gate.timeout_minutes ?? config.default_timeout_minutes;
     const sessionResult = await deps.pollForSessionEnd(config, fixAcpLabel, forgeTimeout, fixLabel);
@@ -617,7 +617,7 @@ export async function runBusterGate(config, progress, gateId) {
     } catch { /* ok */ }
 
     await deps.discord(config, 'INFO', `Gate Fix: Retesting with Buster`,
-      `Forge fix attempt ${attempt}/${maxFixCycles} committed. Running Buster gate again...`);
+      `Forge fix attempt ${attempt}/${maxFixCycles} committed. Running Buster gate again...\n\n**Previous failures:**\n${issues.slice(0, 3).map(i => `• ${i.title}`).join('\n') || 'unknown'}`);
 
     // Loop continues -> next iteration runs _runBusterGateOnce again
   }

@@ -110,7 +110,7 @@ export {
 } from './services/case-study.js';
 
 // Architecture validator (module 08)
-export { runArchValidator, archValidatorLogDir, buildMarkdownSummary, isBlocking, buildValidatorPrompt, SEVERITY, SCOPE, FINDING_CODES } from './services/arch-validator.js';
+export { runArchValidator, buildMarkdownSummary, isBlocking, buildValidatorPrompt, SEVERITY, SCOPE, FINDING_CODES } from './services/arch-validator.js';
 
 // Lint / pre-check helpers (module 03)
 export { generateLintReport, formatLintReportForReviewer, runPreCheck } from './services/lint.js';

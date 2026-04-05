@@ -288,9 +288,27 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
   // Telemetry context and transcript streaming setup
   const _streamLogPath = _trackedEntry?.streamLogPath || null;
   const _moduleId = _trackedEntry?.moduleId || logLabel || sessionLabel;
+  const _isSubagent = _trackedEntry?.runtime === 'subagent';
   const _ctx = { config };
   let _lastProgressEmit = startTime;
   const PROGRESS_INTERVAL_MS = 30000;
+
+  // Mirror subagent transcript to .swarm/logs after session completes (non-critical).
+  // For ACP sessions _streamLogPath is an ephemeral .acp-stream.jsonl; for subagents
+  // it's the full session transcript — worth preserving alongside other pipeline logs.
+  function _mirrorSubagentTranscript() {
+    if (!_isSubagent || !_streamLogPath || !config._logDir) return;
+    try {
+      if (!fs.existsSync(_streamLogPath)) return;
+      const destDir = path.join(config._logDir, 'modules', _moduleId);
+      fs.mkdirSync(destDir, { recursive: true });
+      const dest = path.join(destDir, 'subagent-transcript.jsonl');
+      fs.copyFileSync(_streamLogPath, dest);
+      log('OK', `[${logLabel}] Subagent transcript mirrored → ${dest}`);
+    } catch (e) {
+      log('DEBUG', `[${logLabel}] Transcript mirror failed (non-critical): ${e.message?.split('\n')[0]}`);
+    }
+  }
 
   // Capture HEAD before Forge starts — used for change detection
   const headBefore = headHash();
@@ -351,6 +369,7 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
         log('DEBUG', `[${logLabel}] Post-session commit: ${e.message?.split('\n')[0]}`);
       }
 
+      _mirrorSubagentTranscript();
       return { completed: true, hasChanges, reason: 'session_ended', transcript: acpState.transcript || null };
     }
 
@@ -428,6 +447,7 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
         }
       } catch { /* ok */ }
 
+      _mirrorSubagentTranscript();
       return { completed: true, hasChanges, reason: hasChanges ? 'session_ended' : 'session_closed_no_changes', transcript: acpState.transcript || null };
     }
 

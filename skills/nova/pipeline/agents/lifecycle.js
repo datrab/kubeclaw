@@ -1,5 +1,6 @@
 import { execFileSync } from 'child_process';
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import { resolveModel, logEffectivePolicy } from '../core/config.js';
 import { completionStreamKey, modulePath, relPath, statusPath, swarmRoot, validateSafePath } from '../core/paths.js';
@@ -69,7 +70,29 @@ export async function spawnAcpAgent(config, agentType, moduleId, model, taskProm
     const raw = await gatewayInvoke('sessions_spawn', spawnArgs, 30000);
     const result = raw?.result?.details || raw;
     if (result.status !== 'accepted') throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
-    const streamLogPath = result.streamLogPath || null;
+    let streamLogPath = result.streamLogPath || null;
+
+    // For subagents, streamLogPath is not returned by the gateway (streamTo:'parent' is ACP-only).
+    // Resolve the transcript path by reading sessions.json for the parent agent:
+    //   childSessionKey = "agent:<parentAgentId>:subagent:<uuid>"
+    //   sessions.json[childSessionKey].sessionId  →  actual transcript filename
+    //   transcript lives at ~/.openclaw/agents/<parentAgentId>/sessions/<sessionId>.jsonl
+    if (useSubagent && !streamLogPath && result.childSessionKey) {
+      try {
+        const parentAgentId = result.childSessionKey.split(':')[1];
+        if (parentAgentId) {
+          const sessionsJsonPath = path.join(os.homedir(), '.openclaw', 'agents', parentAgentId, 'sessions', 'sessions.json');
+          const sessionsData = JSON.parse(fs.readFileSync(sessionsJsonPath, 'utf8'));
+          const sessionId = sessionsData[result.childSessionKey]?.sessionId;
+          if (sessionId) {
+            const candidate = path.join(os.homedir(), '.openclaw', 'agents', parentAgentId, 'sessions', `${sessionId}.jsonl`);
+            streamLogPath = candidate;
+            log('DEBUG', `Subagent transcript path (resolved): ${candidate}`);
+          }
+        }
+      } catch { /* non-critical — sessions.json unreadable or entry not yet written */ }
+    }
+
     log('OK', `${useSubagent ? 'Subagent' : 'ACP'} session spawned: ${gatewayLabel} → ${result.childSessionKey}${streamLogPath ? ` (stream: ${streamLogPath})` : ''}`, { agent: agentId, model, sessionKey: result.childSessionKey, runId: result.runId, stream: streamLogPath });
     trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel, streamLogPath, { model, runtime: useSubagent ? 'subagent' : 'acp', moduleId });
 
@@ -313,9 +336,24 @@ export async function spawnReviewerAgent(config, progress, gateId, reviewer, ins
     const raw = await gatewayInvoke('sessions_spawn', spawnArgs, 30000);
     const result = raw?.result?.details || raw;
     if (result.status !== 'accepted') throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
-    const streamLogPath = result.streamLogPath || null;
+    let streamLogPath = result.streamLogPath || null;
+    if (useSubagent && !streamLogPath && result.childSessionKey) {
+      try {
+        const parentAgentId = result.childSessionKey.split(':')[1];
+        if (parentAgentId) {
+          const sessionsJsonPath = path.join(os.homedir(), '.openclaw', 'agents', parentAgentId, 'sessions', 'sessions.json');
+          const sessionsData = JSON.parse(fs.readFileSync(sessionsJsonPath, 'utf8'));
+          const sessionId = sessionsData[result.childSessionKey]?.sessionId;
+          if (sessionId) {
+            const candidate = path.join(os.homedir(), '.openclaw', 'agents', parentAgentId, 'sessions', `${sessionId}.jsonl`);
+            streamLogPath = candidate;
+            log('DEBUG', `Reviewer subagent transcript path (resolved): ${candidate}`);
+          }
+        }
+      } catch { /* non-critical */ }
+    }
     log('OK', `Reviewer spawned: ${gatewayLabel} → ${result.childSessionKey}${streamLogPath ? ` (stream: ${streamLogPath})` : ''}`, { agent: agentId, model, reviewer: reviewer.label, sessionKey: result.childSessionKey, runId: result.runId, stream: streamLogPath });
-    trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel, streamLogPath, { model, runtime: useSubagent ? 'subagent' : 'acp', moduleId });
+    trackAgent(config, trackingKey, result.childSessionKey, agentId, gatewayLabel, streamLogPath, { model, runtime: useSubagent ? 'subagent' : 'acp', moduleId: gateId });
     discord(config, 'INFO', `🔬 Reviewer Spawned: ${reviewer.label}/${gateId}`, 'Echo reviewer is now working.', [
       { name: 'Reviewer', value: reviewer.label, inline: true },
       { name: 'Model', value: model, inline: true },

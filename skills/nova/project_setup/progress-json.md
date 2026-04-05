@@ -1,177 +1,89 @@
-# progress.json — Field Reference
+# progress.json — Complete Field Reference
 
 ## Top-Level
 
 ```json
 {
-  "project": "<project>",
-  "version": "1.0.0",
-  "models": { "forge": "claude-sonnet-4-6", "buster": "claude-sonnet-4-6", "echo": "claude-opus-4-6" },
-  "pipeline_review": {
-    "enabled": true,
-    "model": "openai-codex/gpt-5.4",
-    "agent_id": "gpt5_pipeline-review",
-    "instructions_file": ".swarm/pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md",
-    "output_file": ".swarm/logs/pipeline-review/PIPELINE-REVIEW.md",
-    "json_output_file": ".swarm/logs/pipeline-review/PIPELINE-REVIEW.json"
+  "project": "my-project",
+  "version": 1,
+  "description": "Optional human-readable description",
+  "notes": ["Optional array of notes"],
+  "models": {
+    "forge": "anthropic/claude-sonnet-4-6",
+    "buster": "anthropic/claude-sonnet-4-6",
+    "echo": "anthropic/claude-opus-4-6"
   },
-  "execution_order": ["01", "02", ..., "gate:midpoint-review", "14", ..., "gate:final-buster", "gate:final-review"],
-  "phases": [...],
-  "modules": {...},
-  "gates": {...}
+  "execution_order": ["01-scaffold", "02-api", "gate:midpoint-review", "03-frontend", "gate:final-buster"],
+  "modules": { ... },
+  "gates": { ... },
+  "arch_validation": { ... },
+  "pipeline_review": { ... },
+  "case_study": { ... },
+  "telemetry": { ... }
 }
 ```
-
-| Field | Required | Description |
-|---|---|---|
-| `project` | yes | Project name — used for memory scoping, git paths, Redis streams |
-| `models` | yes | Default LLM per agent. Overridable per module via `forge_model` |
-| `execution_order` | yes | Array of module IDs and `gate:` keys in exact execution order |
-| `phases` | no | Logical grouping (informational, pipeline ignores it) |
-
-## Module Definition
 
 | Field | Required | Default | Description |
 |---|---|---|---|
-| `title` | yes | — | Human-readable name |
-| `dir` | yes | — | Directory name in repo (e.g. `02-kubernetes-connection`) |
-| `substeps` | no | `null` | Array of sub-IDs. Pipeline concatenates their FORGE.md files |
-| `depends_on` | yes | `[]` | Modules that must PASS first |
+| `project` | **yes** | — | Project name — used for memory scoping, git paths, Redis streams |
+| `version` | no | `1` | Schema version |
+| `description` | no | — | Human-readable project description |
+| `notes` | no | — | Array of informational notes (ignored by pipeline) |
+| `models` | **yes** | — | Default LLM per agent role. Overridable per module/gate |
+| `execution_order` | **yes** | — | Array of module IDs and `gate:<id>` keys in exact execution order |
+| `modules` | **yes** | — | Module definitions (see below) |
+| `gates` | **yes** | — | Gate definitions (see below) |
+| `arch_validation` | no | `{ enabled: true }` | Architecture validator config |
+| `pipeline_review` | no | `{ enabled: false }` | Post-pipeline review agent config |
+| `case_study` | no | `{ enabled: false }` | Post-pipeline case study agent config |
+| `telemetry` | no | — | Redis telemetry stream config |
+| `acp_monitor` | no | — | ACP session monitoring config (transcript extension limits) |
+| `payload` | no | — | Payload dispatch config (rate limiting, ACP overrides) |
+| `phases` | no | — | Logical grouping (informational only, pipeline ignores it) |
+
+---
+
+## Module Definition
+
+```json
+"01-scaffold": {
+  "title": "Project Scaffold",
+  "dir": "01-scaffold",
+  "depends_on": [],
+  "stages": ["forge", "buster"],
+  "timeout_minutes": 120,
+  "max_fails": 3,
+  "forge_model": "anthropic/claude-sonnet-4-6",
+  "thinking_level": "adaptive",
+  "test_suites": ["build", "health", "unit"],
+  "test_config": { ... }
+}
+```
+
+| Field | Required | Default | Description |
+|---|---|---|---|
+| `title` | **yes** | — | Human-readable name |
+| `dir` | **yes** | — | Directory name under `.swarm/modules/` |
+| `depends_on` | **yes** | `[]` | Module IDs that must PASS first |
+| `stages` | no | `["forge", "buster"]` | Pipeline stages. Use `["forge"]` for forge-only (no per-module testing) |
 | `timeout_minutes` | no | `300` | Max time for one Forge+Buster cycle |
 | `max_fails` | no | `3` | Max failures before BLOCKED |
-| `forge_subagent` | no | from `models.forge` | ACP subagent ID |
-| `reviewers[].dispatch` | no | auto by model family | Reviewer execution mode: `acp` or `subagent` |
-| `reviewers[].agent_id` | no | derived from dispatch/model | Explicit reviewer agent id (e.g. `claude`, `codex`) |
-| `pipeline_review.enabled` | no | `false` | Enable end-of-run pipeline audit stage |
-| `pipeline_review.model` | yes if enabled | — | Review model to use for the pipeline audit |
-| `pipeline_review.agent_id` | no | derived from model family | Agent id for pipeline review (e.g. `gpt5_pipeline-review`) |
-| `pipeline_review.instructions_file` | no | `.swarm/pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md` | Optional custom audit instructions |
-| `pipeline_review.output_file` | no | `.swarm/logs/pipeline-review/PIPELINE-REVIEW.md` | Markdown output path |
-| `pipeline_review.json_output_file` | no | `.swarm/logs/pipeline-review/PIPELINE-REVIEW.json` | JSON output path |
-| `forge_model` | no | from `models.forge` | LLM model for Forge |
+| `forge_model` | no | from `models.forge` | LLM model for Forge agent |
+| `thinking_level` | no | — | Thinking level for Forge. String: `"none"`, `"low"`, `"medium"`, `"high"`, `"xhigh"`, `"adaptive"` |
+| `substeps` | no | `null` | Array of sub-IDs. Pipeline concatenates their FORGE.md sections |
+| `forge_subagent` | no | derived | ACP subagent ID override |
+| `session` | no | — | Per-task runtime selection: `{ "runtime": "acp" }` or `{ "runtime": "subagent" }` |
 | `test_suites` | no | `["build","health"]` | Which Buster suites run |
-| `test_config` | no | `{serve:{type:"static"}}` | Suite-specific config (see below) |
+| `test_config` | no | `{}` | Suite-specific config (see Serve & Suite Config below) |
 
-### Backend Module Example (Python/FastAPI with Dockerfile)
+### Forge-Only Modules
 
-```json
-"02": {
-  "title": "Kubernetes Connection Layer",
-  "dir": "02-kubernetes-connection",
-  "substeps": null,
-  "depends_on": ["01"],
-  "timeout_minutes": 300,
-  "max_fails": 3,
-  "forge_subagent": "forge-sonnet",
-  "forge_model": "claude-sonnet-4-6",
-  "test_suites": ["build", "health", "api", "security", "unit"],
-  "test_config": {
-    "serve": {
-      "type": "server",
-      "project_dir": "Projects/<project>/src",
-      "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
-      "image": "kubecommand-backend:m02",
-      "port": 8000,
-      "health_path": "/api/v1/health",
-      "health_retries": 10,
-      "health_timeout": 15000,
-      "health_base_delay": 5000,
-      "dockerfile": "Projects/<project>/src/backend/Dockerfile",
-      "build_context": "Projects/<project>/src/backend/",
-      "build_timeout": 1800
-    },
-    "api": { "spec_file": ".swarm/modules/02-kubernetes-connection/test-spec.json" },
-    "unit": { "test_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short" }
-  }
-}
-```
+Set `"stages": ["forge"]` to skip per-module Buster testing. The module passes when Forge completes and pushes changes. Use this when:
+- Changes are validated by a gate-level Buster later
+- The module is documentation-only or config-only
+- You want faster iteration with testing deferred to gates
 
-**Key pattern — Dockerfile build:** When `dockerfile` is set, Buster runs `podman build --pull=never -t <image> -f <dockerfile> <build_context>` before `podman run`. Dependencies are baked into the image, so `start_cmd` does NOT include `pip install` — just the server start command with env vars.
-
-**Critical: `dockerfile` and `build_context` paths are relative to the repo root, NOT to `project_dir`.** Use the full path from repo root (e.g. `Projects/<project>/src/backend/Dockerfile`). Short paths like `backend/Dockerfile` will resolve against the repo root and fail.
-
-### Frontend Module Example (React/Vite)
-
-```json
-"15": {
-  "title": "Dashboard + Core Pages",
-  "dir": "15-dashboard-core-pages",
-  "substeps": ["15a", "15b", "15c", "15d"],
-  "depends_on": ["14"],
-  "timeout_minutes": 300,
-  "max_fails": 3,
-  "forge_subagent": "forge-sonnet",
-  "forge_model": "claude-sonnet-4-6",
-  "test_suites": ["build", "health", "a11y", "perf", "bundle", "visual-reg", "e2e", "unit"],
-  "test_config": {
-    "serve": {
-      "type": "static",
-      "project_dir": "Projects/<project>/src",
-      "build_cmd": "cd frontend && npm install && npm run build",
-      "image": "node:20-slim"
-    },
-    "visual-reg": { "baseline_dir": ".swarm/modules/15-dashboard-core-pages/baselines", "discord": "summary" },
-    "e2e": { "tests_dir": ".swarm/modules/15-dashboard-core-pages/tests" },
-    "unit": { "test_cmd": "cd frontend && npm install && npx vitest run --reporter=verbose" }
-  }
-}
-```
-
-**Key difference from backend:** No `dockerfile`/`build_context` — frontend uses `sandbox-build` with `build_cmd`. Dependencies install via `npm install` in `build_cmd` because there is no Dockerfile. `image: "node:20-slim"` is the raw base image pulled from the registry mirror.
-
-## serve Config
-
-### `type: "server"` (Backend)
-
-| Field | Default | Description |
-|---|---|---|
-| `project_dir` | repo root | **Must set.** Relative to repo root (e.g. `Projects/<project>/src`) |
-| `start_cmd` | `npm start` | Server start command. Do NOT include `pip install` when using `dockerfile` — deps are baked in |
-| `image` | `node:20-slim` | Image tag for `podman run`. With `dockerfile`: use a project-specific tag (e.g. `kubecommand-backend:m01`). Without: use raw base image |
-| `port` | `3000` | Server listen port. Python/uvicorn → `8000` |
-| `health_path` | `/` | Must respond without auth |
-| `health_retries` | `3` | Number of health check retries. Set to `10` for backends with slow startup |
-| `health_timeout` | `10000` | Timeout per health check attempt in ms |
-| `health_base_delay` | `2000` | Initial delay before first health check in ms. Set to `5000` for slow-starting backends |
-| `dockerfile` | — | Path to Dockerfile, relative to repo root (e.g. `Projects/<project>/src/backend/Dockerfile`). NOT relative to `project_dir`. When set, `podman build --pull=never` runs before `podman run` |
-| `build_context` | dirname of `dockerfile` | Docker build context path, relative to repo root (e.g. `Projects/<project>/src/backend/`). NOT relative to `project_dir` |
-| `build_timeout` | `300` | Dockerfile build timeout in seconds |
-
-**Dockerfile convention:** Dockerfiles must use fully-qualified image names (e.g. `FROM docker.io/library/python:3.12-slim`). Unqualified names cause Podman cache misses and network pulls.
-
-### `type: "static"` (Frontend)
-
-| Field | Default | Description |
-|---|---|---|
-| `project_dir` | repo root | **Must set.** |
-| `build_cmd` | `npm run build` | Must install deps + build. `sandbox-build` auto-copies `dist/`, `build/`, or `out/` to `/sandbox/www/` |
-| `image` | `node:20-slim` | Podman image |
-| `port` | `9999` | nginx serves on this port (rarely changed) |
-
-### Suite-Specific Config
-
-| Suite | Config key | Fields |
-|---|---|---|
-| `api` | `api` | `spec_file` (path to test-spec.json), `thresholds: { max_failures: N }` |
-| `e2e` | `e2e` | `tests_dir` (path to Playwright tests), `timeout_ms`, `thresholds: { max_failures: N }` |
-| `visual-reg` | `visual-reg` | `baseline_dir` (path to baselines/), `thresholds: { max_diff_percent: N }`, `discord: "summary"\|"all"` |
-| `a11y` | `a11y` | `tags`, `path`, `exclude`, `thresholds: { critical: N, serious: N }` |
-| `perf` | `perf` | `thresholds: { performance: N, accessibility: N }` |
-| `bundle` | `bundle` | `thresholds: { max_size_kb: N, max_file_count: N }` |
-| `security` | `security` | `paths` (array), `check_cors`, `thresholds: { max_missing_headers: N }` |
-| `unit` | `unit` | `test_cmd`, `timeout_ms`, `thresholds: { max_failures: N }` |
-
-All relative paths (`spec_file`, `tests_dir`, `baseline_dir`) resolve from `project_dir`.
-
-Without `thresholds` → informational (always PASS). With `thresholds` → enforced (can FAIL). Gates should always have `thresholds`.
-
-**SKIP behavior:** Suites that require external artifacts will SKIP (not FAIL) when the artifact is missing:
-- `api` without `spec_file` → SKIP
-- `e2e` without `tests_dir` → SKIP (Buster subagent writes tests on first run, e2e.js picks them up on subsequent runs)
-- `visual-reg` without baseline (no `.png`, `.html`, or `paths.json` in `baseline_dir`) → SKIP
-
-**visual-reg multi-path mode:** When `baseline_dir` contains a `paths.json` (or an HTML preview with `data-routes` manifest), the suite runs in multi-path mode — screenshotting and comparing every page listed. `paths.json` + baseline PNGs are auto-generated from Prism preview HTML files. See [module-files.md](references/module-files.md) and [prism-conventions.md](references/prism-conventions.md) for details.
-- `unit` without `test_cmd` and no `package.json` test script → SKIP
+---
 
 ## Gate Definitions
 
@@ -180,54 +92,48 @@ Without `thresholds` → informational (always PASS). With `thresholds` → enfo
 ```json
 "midpoint-review": {
   "type": "review",
-  "title": "Echo Midpoint Review",
+  "title": "Midpoint Review",
   "review_name": "MIDPOINT-REVIEW",
   "on_nogo": "fix_and_rereview",
   "instructions_file": "echo-review/MIDPOINT-REVIEW-INSTRUCTIONS.md",
-  "output_file": "echo-review/MIDPOINT-REVIEW.json",
-  "review_output_dir": "echo-review",
-  "reviewers": null,
-```
-
-Reviewer dispatch defaults:
-
-- Anthropic / Claude review models → `dispatch: "acp"`
-- OpenAI / Codex / GPT-5 review models → `dispatch: "subagent"`
-
-Example Claude reviewer (ACP):
-
-```json
-{
-  "label": "echo-opus",
-  "model": "claude-opus-4-6",
-  "dispatch": "acp"
+  "output_file": "logs/echo-review/MIDPOINT-REVIEW.json",
+  "review_output_dir": "logs/echo-review",
+  "reviewers": [
+    {
+      "label": "echo-opus",
+      "model": "anthropic/claude-opus-4-6",
+      "dispatch": "acp",
+      "agent_id": "claude"
+    }
+  ],
+  "forge_model": "anthropic/claude-sonnet-4-6",
+  "forge_thinking_level": "adaptive",
+  "timeout_minutes": 45,
+  "max_fix_cycles": 3
 }
 ```
 
-Example Codex reviewer (native subagent):
+| Field | Required | Default | Description |
+|---|---|---|---|
+| `type` | **yes** | — | `"review"` |
+| `title` | **yes** | — | Human-readable title |
+| `review_name` | **yes** | — | Review identifier (used in filenames) |
+| `on_nogo` | no | `"fix_and_rereview"` | What to do on NO-GO: `"fix_and_rereview"` or `"stop"` |
+| `instructions_file` | **yes** | — | Path to review instructions (relative to `.swarm/`) |
+| `output_file` | **yes** | — | Path for review JSON output (relative to `.swarm/`) |
+| `review_output_dir` | no | — | Directory for review artifacts (relative to `.swarm/`) |
+| `reviewers` | no | auto from `models.echo` | Array of reviewer configs |
+| `forge_model` | no | gateway default | Model for fix-cycle Forge agent. **Set this to avoid fallback to gateway default** |
+| `forge_thinking_level` | no | — | Thinking level for fix-cycle Forge |
+| `timeout_minutes` | no | `30` | Max time per review session |
+| `max_fix_cycles` | no | `3` | Max fix-and-rereview cycles before escalation |
+| `lint_tier` | no | `"full"` | Lint tier: `"full"` or `"pre-check"` |
 
-```json
-{
-  "label": "codex-review",
-  "model": "openai-codex/gpt-5.4",
-  "dispatch": "subagent",
-  "agent_id": "codex"
-}
-```
-  "timeout_minutes": 30,
-  "max_fix_cycles": null,
-  "lint_tier": null
-}
-```
+**Reviewer dispatch:**
+- Anthropic/Claude → `dispatch: "acp"`, `agent_id: "claude"`
+- OpenAI/Codex/GPT → `dispatch: "subagent"`, `agent_id: "codex"`
 
-- `on_nogo: "fix_and_rereview"` → Forge fixes, pipeline continues (non-blocking)
-- `on_nogo: "fix_and_rereview"` → Forge fixes, Echo re-reviews (strict)
-- Gate paths (`instructions_file`, `output_file`) relative to `.swarm/`
-- No `test_suites`/`test_config` needed
-
-### Buster Gate (System Test, enforced)
-
-For a **backend-only** or **fullstack** project, the gate tests the backend deterministically. Frontend testing is handled by the Buster subagent via Docker image + Playwright (see FINAL-BUSTER.md).
+### Buster Gate (System Test)
 
 ```json
 "final-buster": {
@@ -236,55 +142,410 @@ For a **backend-only** or **fullstack** project, the gate tests the backend dete
   "on_fail": "fix_and_retest",
   "instructions_file": "buster-test/FINAL-BUSTER.md",
   "output_file": "buster-test/FINAL-BUSTER-RESULT.json",
-  "model": "claude-sonnet-4-6",
-  "forge_model": "claude-sonnet-4-6",
-  "timeout_minutes": 60,
+  "model": "anthropic/claude-sonnet-4-6",
+  "forge_model": "anthropic/claude-sonnet-4-6",
+  "timeout_minutes": 90,
   "max_fix_cycles": 3,
-  "test_suites": ["build", "health", "api", "security", "unit"],
-  "test_config": {
-    "serve": {
-      "type": "server",
-      "project_dir": "Projects/<project>/src",
-      "start_cmd": "KUBECOMMAND_API_KEY=test-key-123 IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
-      "image": "<project>-backend:gate-final",
-      "port": 8000,
-      "health_path": "/api/v1/health",
-      "health_retries": 10,
-      "health_timeout": 15000,
-      "health_base_delay": 5000,
-      "dockerfile": "Projects/<project>/src/backend/Dockerfile",
-      "build_context": "Projects/<project>/src/backend/",
-      "build_timeout": 1800
-    },
-    "api":      { "spec_file": ".swarm/buster-test/final-test-spec.json", "thresholds": { "max_failures": 0 } },
-    "security": { "paths": ["/api/v1/health", "/api/v1/pods"], "thresholds": { "max_missing_headers": 0 } },
-    "unit":     { "test_cmd": "KUBECOMMAND_API_KEY=test-key-123 IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short", "thresholds": { "max_failures": 0 } }
-  }
+  "test_suites": ["build", "health", "unit"],
+  "test_config": { ... }
 }
 ```
 
-Every suite has `thresholds` → enforced. Any failure counts. Fix cycle: Forge fixes → Buster retests → up to `max_fix_cycles`.
+| Field | Required | Default | Description |
+|---|---|---|---|
+| `type` | **yes** | — | `"buster"` |
+| `title` | **yes** | — | Human-readable title |
+| `on_fail` | no | `"fix_and_retest"` | What to do on FAIL |
+| `instructions_file` | **yes** | — | Path to Buster instructions (relative to `.swarm/`) |
+| `output_file` | **yes** | — | Path for result JSON (relative to `.swarm/`) |
+| `model` | no | from `models.buster` | Model for Buster agent |
+| `forge_model` | no | from `models.forge` | Model for fix-cycle Forge agent |
+| `timeout_minutes` | no | `60` | Max time per test run |
+| `max_fix_cycles` | no | `3` | Max fix-and-retest cycles |
+| `test_suites` | **yes** | — | Suites to run |
+| `test_config` | **yes** | — | Suite configs with serve + per-suite settings |
 
-**Note:** Frontend-specific suites (`a11y`, `perf`, `bundle`, `visual-reg`, `e2e`) should NOT be in the gate when `serve.type: "server"` — they need a static build + nginx, not a Python backend. The Buster subagent handles frontend validation via Docker image + Playwright in FINAL-BUSTER.md.
+### Approval Gate
 
-## Optional: `pipeline_review`
+```json
+"operator-approval": {
+  "type": "approval",
+  "title": "Operator Approval",
+  "on_timeout": "block",
+  "timeout_minutes": 60
+}
+```
 
-Use `pipeline_review` to spawn a final audit agent after the pipeline completes. This agent reviews `.swarm/logs/*` tactically and recommends improvements to prompts, testing, review strategy, and pipeline design.
+| Field | Required | Default | Description |
+|---|---|---|---|
+| `type` | **yes** | — | `"approval"` |
+| `title` | **yes** | — | Human-readable title |
+| `on_timeout` | no | `"block"` | `"block"` stops pipeline, `"continue"` proceeds |
+| `timeout_minutes` | no | `60` | How long to wait for operator response |
 
-Dispatch is derived automatically from the model family:
+---
 
-- OpenAI / Codex / GPT-5 family → native subagent
-- Anthropic / Claude family → ACP
+## Architecture Validation
 
-Example:
+```json
+"arch_validation": {
+  "enabled": true,
+  "model": "anthropic/claude-sonnet-4-6",
+  "thinking_level": "adaptive"
+}
+```
+
+| Field | Required | Default | Description |
+|---|---|---|---|
+| `enabled` | no | `true` | Enable/disable. Set `false` to skip entirely |
+| `model` | no | from `models.arch_validator` or gateway default | LLM for agent judgment |
+| `thinking_level` | no | — | Thinking level for validator agent |
+
+**Behavior:** Only runs on fresh starts (skipped on resume when modules already have PASS). progress.json overrides swarm.config.json.
+
+---
+
+## Pipeline Review
+
+Post-pipeline audit agent — reads logs and recommends improvements.
 
 ```json
 "pipeline_review": {
   "enabled": true,
-  "model": "openai-codex/gpt-5.4",
-  "agent_id": "gpt5_pipeline-review",
-  "instructions_file": ".swarm/pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md",
-  "output_file": ".swarm/logs/pipeline-review/PIPELINE-REVIEW.md",
-  "json_output_file": ".swarm/logs/pipeline-review/PIPELINE-REVIEW.json"
+  "model": "anthropic/claude-opus-4-6",
+  "thinking_level": "high",
+  "agent_id": "claude",
+  "instructions_file": "pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md",
+  "output_file": "logs/pipeline-review/PIPELINE-REVIEW.md",
+  "json_output_file": "logs/pipeline-review/PIPELINE-REVIEW.json"
+}
+```
+
+| Field | Required | Default | Description |
+|---|---|---|---|
+| `enabled` | no | `false` | Enable post-pipeline review |
+| `model` | no | from `models.echo` | Review model |
+| `thinking_level` | no | — | Thinking level |
+| `agent_id` | no | derived from model | Agent ID for dispatch |
+| `instructions_file` | no | `pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md` | Custom instructions (relative to `.swarm/`) |
+| `output_file` | no | `logs/pipeline-review/PIPELINE-REVIEW.md` | Markdown output (relative to `.swarm/`) |
+| `json_output_file` | no | `logs/pipeline-review/PIPELINE-REVIEW.json` | JSON output (relative to `.swarm/`) |
+
+**Dispatch:** Anthropic → ACP, OpenAI → subagent (automatic).
+
+---
+
+## Case Study Agent
+
+Optional post-pipeline agent that generates a publishable case-study.md.
+
+```json
+"case_study": {
+  "enabled": true,
+  "model": "anthropic/claude-sonnet-4-6",
+  "thinking_level": "adaptive",
+  "agent_id": "claude",
+  "output_file": "logs/pipeline/case-study.md",
+  "timeout_minutes": 30
+}
+```
+
+| Field | Required | Default | Description |
+|---|---|---|---|
+| `enabled` | no | `false` | Enable case study generation |
+| `model` | no | from `models.echo` | Agent model |
+| `thinking_level` | no | — | Thinking level |
+| `agent_id` | no | derived from model | Agent ID for dispatch |
+| `output_file` | no | `logs/pipeline/case-study.md` | Output path (relative to `.swarm/`) |
+| `timeout_minutes` | no | `30` | Max agent runtime |
+
+---
+
+## Telemetry
+
+Redis stream telemetry for external consumers (e.g. ClawDeck dashboard).
+
+```json
+"telemetry": {
+  "enabled": true,
+  "stream_key": "pipeline:telemetry:my-project"
+}
+```
+
+| Field | Required | Default | Description |
+|---|---|---|---|
+| `enabled` | no | `false` | Enable Redis event publishing |
+| `stream_key` | no | `pipeline:telemetry:<project>:<run_id>` | Override stream key |
+
+When enabled, all pipeline events (module status, agent lifecycle, gate verdicts, cost updates) are published to Redis. See `docs/telemetry-event-schema.md` for the full event catalog.
+
+---
+
+## Serve Config
+
+### `type: "server"` (Backend)
+
+| Field | Default | Description |
+|---|---|---|
+| `project_dir` | repo root | Relative to repo root (e.g. `Projects/<project>/src`) |
+| `start_cmd` | `npm start` | Server start command |
+| `image` | `node:20-slim` | Podman image tag |
+| `port` | `3000` | Server listen port |
+| `health_path` | `/` | Health check endpoint |
+| `health_retries` | `3` | Health check retry count |
+| `health_timeout` | `10000` | Timeout per health check (ms) |
+| `health_base_delay` | `2000` | Initial delay before first check (ms) |
+| `dockerfile` | — | Path to Dockerfile (relative to repo root) |
+| `build_context` | dirname of dockerfile | Docker build context (relative to repo root) |
+| `build_timeout` | `300` | Build timeout (seconds) |
+| `deployment_yaml` | — | K8s deployment YAML path (relative to repo root) — injects env vars into build |
+| `secret_yaml` | — | K8s secret YAML path (relative to repo root) — injects secrets into build |
+| `smoke_paths` | — | Array of URL paths to request after health passes (e.g. `["/", "/api/v1/health"]`) |
+| `smoke_settle_ms` | `0` | Wait time (ms) after smoke navigation before marking healthy |
+
+### `type: "static"` (Frontend)
+
+| Field | Default | Description |
+|---|---|---|
+| `project_dir` | repo root | Relative to repo root |
+| `build_cmd` | `npm run build` | Must install deps + build |
+| `image` | `node:20-slim` | Podman image |
+
+### Suite-Specific Config
+
+| Suite | Config Key | Key Fields |
+|---|---|---|
+| `api` | `api` | `spec_file`, `thresholds: { max_failures }` |
+| `unit` | `unit` | `test_cmd`, `thresholds: { max_failures }` |
+| `e2e` | `e2e` | `tests_dir`, `timeout_ms`, `thresholds: { max_failures }` |
+| `visual-reg` | `visual-reg` | `baseline_dir`, `thresholds: { max_diff_percent }`, `discord` |
+| `a11y` | `a11y` | `tags`, `path`, `thresholds: { critical, serious }` |
+| `perf` | `perf` | `thresholds: { performance, accessibility }` |
+| `bundle` | `bundle` | `thresholds: { max_size_kb, max_file_count }` |
+| `security` | `security` | `paths`, `check_cors`, `thresholds: { max_missing_headers }` |
+
+Without `thresholds` → informational (always PASS). With `thresholds` → enforced (can FAIL).
+
+### test_config.manifest
+
+Optional deployment validation config. Verifies K8s manifests are present and well-formed before testing.
+
+```json
+"manifest": {
+  "deployment_yaml": "Projects/my-app/src/k8s/deployment.yaml",
+  "secret_yaml": "Projects/my-app/src/k8s/secret.yaml",
+  "required_env": ["DATABASE_URL", "API_KEY"],
+  "private_registries": ["registry.example.com"],
+  "thresholds": { "max_missing_env": 0 }
+}
+```
+
+| Field | Default | Description |
+|---|---|---|
+| `deployment_yaml` | — | Path to K8s deployment YAML (relative to repo root) |
+| `secret_yaml` | — | Path to K8s secret YAML (relative to repo root) |
+| `required_env` | `[]` | Env var names that must be present in the deployment |
+| `private_registries` | `[]` | Registry hostnames that require pull secrets |
+| `thresholds` | `null` | `null` = informational. Set `max_missing_env: 0` to enforce |
+
+---
+
+## ACP Monitor
+
+Controls ACP session transcript extension behavior.
+
+```json
+"acp_monitor": {
+  "max_transcript_extensions": 5,
+  "transcript_grace_ms": 30000
+}
+```
+
+| Field | Default | Description |
+|---|---|---|
+| `max_transcript_extensions` | `10` | Max times a session transcript can be extended before force-stopping |
+| `transcript_grace_ms` | `60000` | Grace period (ms) after last transcript activity before timeout is enforced |
+
+---
+
+## Payload Config
+
+Controls how task payloads are dispatched to Forge agents.
+
+```json
+"payload": {
+  "rate_limit": {
+    "max_pauses": 3,
+    "initial_cooldown_s": 60,
+    "max_cooldown_s": 300
+  },
+  "acp_monitor": {
+    "max_transcript_extensions": 5,
+    "transcript_grace_ms": 30000
+  }
+}
+```
+
+### payload.rate_limit
+
+| Field | Default | Description |
+|---|---|---|
+| `max_pauses` | `5` | Max rate-limit pauses before marking the task as failed |
+| `initial_cooldown_s` | `30` | Initial cooldown duration (seconds) on first rate-limit hit |
+| `max_cooldown_s` | `600` | Max cooldown duration (seconds) after backoff |
+
+### payload.acp_monitor
+
+Same fields as top-level `acp_monitor`. Overrides top-level values for this payload.
+
+---
+
+## Complete Example
+
+```json
+{
+  "project": "my-app",
+  "version": 1,
+  "description": "Full-stack K8s management app",
+  "models": {
+    "forge": "anthropic/claude-sonnet-4-6",
+    "buster": "anthropic/claude-sonnet-4-6",
+    "echo": "anthropic/claude-opus-4-6"
+  },
+  "arch_validation": {
+    "enabled": false
+  },
+  "pipeline_review": {
+    "enabled": true,
+    "model": "anthropic/claude-opus-4-6",
+    "thinking_level": "high"
+  },
+  "case_study": {
+    "enabled": true,
+    "model": "anthropic/claude-sonnet-4-6",
+    "thinking_level": "adaptive"
+  },
+  "execution_order": [
+    "01-scaffold",
+    "02-api",
+    "gate:midpoint-review",
+    "03-frontend",
+    "gate:final-review",
+    "gate:final-buster"
+  ],
+  "modules": {
+    "01-scaffold": {
+      "title": "Project Scaffold",
+      "dir": "01-scaffold",
+      "depends_on": [],
+      "stages": ["forge"],
+      "timeout_minutes": 120,
+      "max_fails": 3,
+      "forge_model": "anthropic/claude-sonnet-4-6",
+      "thinking_level": "adaptive",
+      "test_suites": []
+    },
+    "02-api": {
+      "title": "REST API",
+      "dir": "02-api",
+      "depends_on": ["01-scaffold"],
+      "stages": ["forge", "buster"],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "thinking_level": "adaptive",
+      "test_suites": ["build", "health", "unit", "api"],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/my-app/src",
+          "start_cmd": "python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "my-app-backend:m02",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "dockerfile": "Projects/my-app/src/backend/Dockerfile",
+          "build_context": "Projects/my-app/src/backend/"
+        },
+        "unit": { "test_cmd": "python -m pytest backend/tests/ -v" },
+        "api": { "spec_file": ".swarm/modules/02-api/test-spec.json" }
+      }
+    },
+    "03-frontend": {
+      "title": "Frontend Dashboard",
+      "dir": "03-frontend",
+      "depends_on": ["02-api"],
+      "stages": ["forge", "buster"],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "thinking_level": "adaptive",
+      "test_suites": ["build", "health", "unit"],
+      "test_config": {
+        "serve": {
+          "type": "static",
+          "project_dir": "Projects/my-app/src",
+          "build_cmd": "cd frontend && npm install && npm run build",
+          "image": "node:20-slim"
+        },
+        "unit": { "test_cmd": "cd frontend && npm install && npx vitest run" }
+      }
+    }
+  },
+  "gates": {
+    "midpoint-review": {
+      "type": "review",
+      "title": "Midpoint Review",
+      "review_name": "MIDPOINT-REVIEW",
+      "on_nogo": "fix_and_rereview",
+      "instructions_file": "echo-review/MIDPOINT-REVIEW-INSTRUCTIONS.md",
+      "output_file": "logs/echo-review/MIDPOINT-REVIEW.json",
+      "review_output_dir": "logs/echo-review",
+      "reviewers": [
+        { "label": "echo-opus", "model": "anthropic/claude-opus-4-6", "dispatch": "acp", "agent_id": "claude" }
+      ],
+      "forge_model": "anthropic/claude-sonnet-4-6",
+      "forge_thinking_level": "adaptive",
+      "timeout_minutes": 45,
+      "max_fix_cycles": 3
+    },
+    "final-review": {
+      "type": "review",
+      "title": "Final Review",
+      "review_name": "FINAL-REVIEW",
+      "on_nogo": "fix_and_rereview",
+      "instructions_file": "echo-review/FINAL-REVIEW-INSTRUCTIONS.md",
+      "output_file": "logs/echo-review/FINAL-REVIEW.json",
+      "review_output_dir": "logs/echo-review",
+      "reviewers": [
+        { "label": "echo-opus", "model": "anthropic/claude-opus-4-6", "dispatch": "acp", "agent_id": "claude" }
+      ],
+      "forge_model": "anthropic/claude-sonnet-4-6",
+      "forge_thinking_level": "adaptive",
+      "timeout_minutes": 60,
+      "max_fix_cycles": 3
+    },
+    "final-buster": {
+      "type": "buster",
+      "title": "Final System Test",
+      "on_fail": "fix_and_retest",
+      "instructions_file": "buster-test/FINAL-BUSTER.md",
+      "output_file": "buster-test/FINAL-BUSTER-RESULT.json",
+      "model": "anthropic/claude-sonnet-4-6",
+      "forge_model": "anthropic/claude-sonnet-4-6",
+      "timeout_minutes": 90,
+      "max_fix_cycles": 3,
+      "test_suites": ["build", "health", "unit"],
+      "test_config": {
+        "serve": {
+          "type": "static",
+          "project_dir": "Projects/my-app/src",
+          "build_cmd": "echo no-build",
+          "image": "docker.io/library/node:20-slim"
+        },
+        "unit": {
+          "test_cmd": "node --test pipeline/tests/*.test.js",
+          "thresholds": { "max_failures": 0 }
+        }
+      }
+    }
+  }
 }
 ```

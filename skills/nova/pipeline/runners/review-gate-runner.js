@@ -604,8 +604,17 @@ export async function runReviewGate(config, progress, gateId, { novaPrompt } = {
     }
 
     log('WARN', `Re-review still NO-GO after fix cycle ${cycle}/${maxFixCycles}`);
+    const reReviewIssues = extractReviewIssues(reviewResult.mergedResult);
+    const reReviewFields = [];
+    for (let i = 0; i < Math.min(reReviewIssues.length, 3); i++) {
+      reReviewFields.push({ name: `Issue ${i + 1}`, value: truncateForDiscord(reReviewIssues[i].description, 200), inline: false });
+    }
+    if (reReviewIssues.length > 3) {
+      const artifactRef = reviewResult.mergedFilePath ? relPath(config, reviewResult.mergedFilePath) : 'review output';
+      reReviewFields.push({ name: `+ ${reReviewIssues.length - 3} more`, value: `See full report: ${artifactRef}`, inline: false });
+    }
     await deps.discord(config, 'WARN', `Review Fix: Still NO-GO`,
-      `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Echo still found issues.`);
+      `Cycle ${cycle}/${maxFixCycles} for ${gate.title}. Echo still found ${reReviewIssues.length} issue(s).`, reReviewFields);
   }
 
   // Exhausted

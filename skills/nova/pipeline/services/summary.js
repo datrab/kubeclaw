@@ -300,7 +300,14 @@ export async function generatePipelineReview(config, progress) {
     try { await gatewayInvoke('sessions_send', { sessionKey, message: '/stop' }, 15000); } catch {}
     if (dispatch === 'acp') await acpxCleanup(agentId, label);
     untrackAgent(trackingKey);
-    if (!pollRes.ok) throw new Error(`Pipeline review failed: ${pollRes.reason}`);
+    if (!pollRes.ok) {
+      await discord(config, 'WARN', '📋 Pipeline Review: No Output', `Review agent finished without producing a report. Reason: ${pollRes.reason}`, [
+        { name: 'Timeout', value: `${timeoutMin}min`, inline: true },
+        { name: 'Agent', value: agentId, inline: true },
+        { name: 'Model', value: model, inline: true },
+      ]).catch(() => {});
+      throw new Error(`Pipeline review failed: ${pollRes.reason}`);
+    }
 
     try {
       const reviewMd = fs.readFileSync(outputFilePath, 'utf8');
@@ -316,12 +323,14 @@ export async function generatePipelineReview(config, progress) {
         }
       }
       await discord(config, 'OK', '📋 Pipeline Review Complete', desc, fields);
+      log('OK', 'Pipeline review completed');
     } catch (e) {
       log('WARN', `Pipeline review Discord post failed (non-critical): ${e.message}`);
+      await discord(config, 'WARN', '📋 Pipeline Review: Post Error', `Review completed but Discord post failed: ${e.message}`).catch(() => {});
     }
-    log('OK', 'Pipeline review completed');
   } catch (e) {
     log('WARN', `Pipeline review failed (non-critical): ${e.message}`);
+    await discord(config, 'WARN', '📋 Pipeline Review Failed', `Review agent error: ${e.message?.split('\n')[0] || 'unknown'}`).catch(() => {});
   }
 }
 
