@@ -762,6 +762,28 @@ Rich per-page visual diff data emitted by the `visual-reg` suite. Supplements th
 }
 ```
 
+### buster.k8s.step
+
+Emitted during the k8s suite for each of the 7 sequential checks. Provides live progress to ClawDeck during the long build+deploy sequence (typically 5–15 minutes). Emitted twice per check: once with `status: "started"` and once with `status: "passed"` or `status: "failed"`.
+
+```json
+{
+  "type": "buster.k8s.step",
+  "module_id": "06",
+  "check": "registry-push",
+  "status": "passed",
+  "detail": "Pushed clawdeck:abc1234 to registry-local:5001",
+  "elapsed_seconds": 47
+}
+```
+
+| Field | Type | Values |
+|-------|------|--------|
+| check | string | `dockerfile-build`, `registry-push`, `namespace-create`, `secrets-copy`, `manifest-apply`, `pods-ready`, `health-check` |
+| status | string | `started`, `passed`, `failed` |
+| detail | string\|null | Human-readable check detail or error message |
+| elapsed_seconds | number | Seconds since suite start |
+
 ### buster.session.rate_limited
 
 Emitted when the subagent session is paused due to API rate limiting.
