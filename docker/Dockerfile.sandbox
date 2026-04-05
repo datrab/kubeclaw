@@ -158,16 +158,5 @@ RUN mkdir -p /home/node/.openclaw \
     && chown -R root:root /home/node \
     && openclaw plugins install acpx
 
-# 8. Build verification
-RUN echo "=== Build Verification ===" && \
-    node -e "require('ioredis'); console.log('  ✅ ioredis')" && \
-    node -e "require('@axe-core/playwright'); console.log('  ✅ @axe-core/playwright')" && \
-    node -e "require('pixelmatch'); console.log('  ✅ pixelmatch')" && \
-    test -d /ms-playwright && echo "  ✅ Playwright browsers at /ms-playwright" && \
-    podman --version && echo "  ✅ podman" && \
-    k6 version && echo "  ✅ k6" && \
-    agent-browser --version && echo "  ✅ agent-browser" && \
-    echo "=== All checks passed ==="
-
 LABEL org.opencontainers.image.title="KubeClaw Sandbox (Root Mode)"
 LABEL org.opencontainers.image.description="Podman-in-Pod + Lighthouse, Playwright, k6, nginx"
