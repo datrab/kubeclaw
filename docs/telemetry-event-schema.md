@@ -577,6 +577,207 @@ Emitted when a Redis pub/sub message is sent or received by the pipeline. Used f
 
 ---
 
+## Buster Events
+
+Buster publishes to a separate stream per module task:
+
+```
+buster:telemetry:<project>:<module>
+```
+
+Example: `buster:telemetry:kubecommand:06`
+
+The common envelope is identical to pipeline events (`v`, `type`, `ts`, `run_id`, `project`, `seq`).
+
+### buster.task_started
+
+Emitted once at the start of a task.
+
+```json
+{
+  "type": "buster.task_started",
+  "module_id": "06",
+  "task_type": "module_test",
+  "attempt": 1,
+  "suites": ["build", "health", "api"],
+  "serve_type": "server",
+  "commit_hash": "a1b2c3d4"
+}
+```
+
+### buster.task_completed
+
+Emitted at the end of a task on all exit paths (success, failure, timeout).
+
+```json
+{
+  "type": "buster.task_completed",
+  "module_id": "06",
+  "task_type": "module_test",
+  "attempt": 1,
+  "outcome": "PASS",
+  "reason": "completion_received",
+  "duration_seconds": 420,
+  "suites_passed": 3,
+  "suites_failed": 0,
+  "suites_skipped": 0,
+  "suite_summary": "✅ build ✅ health ✅ api",
+  "spawned_subagent": true
+}
+```
+
+`outcome` values: `PASS`, `FAIL`, `TIMEOUT`, `RATE_LIMITED`
+
+### buster.sandbox_cleanup
+
+Emitted twice per task: before suites (`stage: "pre"`) and after the session ends (`stage: "final"`). Each stage emits a `phase: "started"` then `phase: "completed"` pair.
+
+```json
+{
+  "type": "buster.sandbox_cleanup",
+  "module_id": "06",
+  "stage": "pre",
+  "phase": "completed",
+  "duration_seconds": 2,
+  "ok": true
+}
+```
+
+### buster.git_sync
+
+```json
+{
+  "type": "buster.git_sync",
+  "module_id": "06",
+  "mode": "deterministic",
+  "commit_hash": "a1b2c3d4",
+  "ok": true,
+  "error": null
+}
+```
+
+`mode` values: `"deterministic"` (checkout to `commit_hash`), `"fast-forward"` (pull latest)
+
+### buster.decision
+
+Emitted after suites complete. Determines whether to spawn a subagent.
+
+```json
+{
+  "type": "buster.decision",
+  "module_id": "06",
+  "recommendation": "SPAWN",
+  "reason": "all critical suites passed",
+  "suite_summary": "✅ build ✅ health ✅ api"
+}
+```
+
+`recommendation` values: `"SPAWN"`, `"NO_SPAWN"`
+
+### buster.suite.started
+
+```json
+{
+  "type": "buster.suite.started",
+  "module_id": "06",
+  "suite": "api",
+  "attempt": 1
+}
+```
+
+### buster.suite.completed
+
+```json
+{
+  "type": "buster.suite.completed",
+  "module_id": "06",
+  "suite": "api",
+  "status": "PASS",
+  "duration_seconds": 12,
+  "checks_passed": 8,
+  "checks_failed": 0,
+  "critical": false,
+  "top_finding": null
+}
+```
+
+`status` values: `"PASS"`, `"FAIL"`, `"SKIP"`
+
+### buster.suite.skipped
+
+Emitted in addition to `buster.suite.completed` when a suite status is `SKIP`.
+
+```json
+{
+  "type": "buster.suite.skipped",
+  "module_id": "06",
+  "suite": "e2e",
+  "top_finding": "e2e.tests_dir not configured"
+}
+```
+
+### buster.suite.error
+
+Emitted when a suite throws an unexpected exception.
+
+```json
+{
+  "type": "buster.suite.error",
+  "module_id": "06",
+  "suite": "build",
+  "error": "ENOENT: no such file or directory",
+  "duration_seconds": 1
+}
+```
+
+### buster.session_monitor
+
+Emitted every poll cycle while the subagent session is active.
+
+```json
+{
+  "type": "buster.session_monitor",
+  "module_id": "06",
+  "child_session_key": "agent:buster:session123",
+  "elapsed_seconds": 90,
+  "acp_state": "active",
+  "transcript_events": 47,
+  "rate_limited": false
+}
+```
+
+### buster.visual_reg
+
+Rich per-page visual diff data emitted by the `visual-reg` suite. Supplements the generic `buster.suite.completed` event.
+
+```json
+{
+  "type": "buster.visual_reg",
+  "module_id": "06",
+  "pages": [
+    { "url": "http://localhost:9999/", "diff_pct": 0.02, "status": "PASS" },
+    { "url": "http://localhost:9999/dashboard", "diff_pct": 12.5, "status": "FAIL" }
+  ],
+  "overall": "FAIL"
+}
+```
+
+### buster.session.rate_limited
+
+Emitted when the subagent session is paused due to API rate limiting.
+
+```json
+{
+  "type": "buster.session.rate_limited",
+  "module_id": "06",
+  "pause_count": 1,
+  "max_pauses": 3,
+  "cooldown_ms": 7200000
+}
+```
+
+---
+
 ## ClawDeck Mapping
 
 How dashboard sections map to events:
