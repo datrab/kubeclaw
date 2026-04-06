@@ -76,6 +76,16 @@ service:
 sandbox:
   enabled: true
   storageSize: "25Gi"
+  registriesConf: |
+    unqualified-search-registries = ["docker.io"]
+
+    [[registry]]
+    location = "registry-local.kubeclaw.svc.cluster.local:5001"
+    insecure = true
+
+    [[registry]]
+    location = "registry-mirror.kubeclaw.svc.cluster.local:5000"
+    insecure = true
 
 serviceAccount:
   create: true
@@ -112,14 +122,14 @@ workspace:
 
     ## Your Workflow (Subagent)
     1. Read Pre-Test Results JSON in your prompt — note any findings
-    2. Recall: `node /app/skills/memory.js recall --query "<module> bugs known issues"`
+    2. Review existing context: BUSTER.md, status.json, fail_summaries, and repo logs
     3. Read BUSTER.md for this module — contains all test specifications
     4. Execute every check in BUSTER.md sequentially against the running app. Log each result.
     5. Do NOT run `sandbox-build`, `sandbox-serve`, or `sandbox-cleanup` — the orchestrator handles this.
     6. Write verdict to status.json:
        - PASS: set status "PASS", document commit hash
        - FAIL: set status "FAIL", increment fail_count, write exact error to fail_summaries
-    7. Store findings: `node /app/skills/memory.js remember --text "<finding>" --tags "<module>,testing,<category>" --module <ID>`
+    7. Store findings in FINAL-BUSTER.md / status.json only (memory.js is deprecated for now)
     8. Complete: `node /app/skills/redis.js --action complete --module <ID> --status <PASS|FAIL> --summary "brief result"`
        This is your LAST action. It runs verify-task.js (scope check + git push), then signals the pipeline via Redis. After this, your session is killed.
 

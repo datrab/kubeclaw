@@ -26,6 +26,9 @@ spec:
         {{- if .Values.customSkills }}
         checksum/skills: {{ include (print $.Template.BasePath "/configmap-skills.yaml") . | sha256sum }}
         {{- end }}
+        {{- if and .Values.sandbox.enabled .Values.sandbox.registriesConf }}
+        checksum/podman-registries: {{ include (print $.Template.BasePath "/configmap-podman-registries.yaml") . | sha256sum }}
+        {{- end }}
         {{- if .Values.workspace.enabled }}
         checksum/workspace: {{ include (print $.Template.BasePath "/configmap-workspace.yaml") . | sha256sum }}
         {{- end }}
@@ -320,6 +323,12 @@ spec:
             - name: podman-storage
               mountPropagation: Bidirectional
               mountPath: /var/lib/containers
+            {{- if .Values.sandbox.registriesConf }}
+            - name: podman-registries
+              mountPath: /etc/containers/registries.conf.d/999-kubeclaw.conf
+              subPath: registries.conf
+              readOnly: true
+            {{- end }}
             - name: sandbox-workspace
               mountPath: /sandbox
             {{- end }}
@@ -524,6 +533,12 @@ spec:
         - name: podman-storage
           emptyDir:
             sizeLimit: {{ .Values.sandbox.storageSize | default "25Gi" }}
+        {{- if .Values.sandbox.registriesConf }}
+        - name: podman-registries
+          configMap:
+            name: {{ include "kubeclaw.fullname" . }}-podman-registries
+            defaultMode: 0444
+        {{- end }}
         - name: sandbox-workspace
           emptyDir:
             sizeLimit: 2Gi

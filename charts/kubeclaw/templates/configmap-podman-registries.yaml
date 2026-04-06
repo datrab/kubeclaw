@@ -1,0 +1,11 @@
+{{- if and .Values.sandbox.enabled .Values.sandbox.registriesConf }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-podman-registries
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+data:
+  registries.conf: |
+{{ .Values.sandbox.registriesConf | indent 4 }}
+{{- end }}

@@ -269,6 +269,7 @@ probes:
 sandbox:
   enabled: false
   storageSize: "25Gi"
+  registriesConf: "" # Optional TOML mounted into /etc/containers/registries.conf.d/999-kubeclaw.conf
 
 # =============================================================================
 # SERVICE ACCOUNT

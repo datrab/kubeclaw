@@ -133,12 +133,13 @@ workspace:
     ## On Exit 10 (Failure Recovery)
     1. Read pipeline stdout JSON (contains module ID, fail_count, last_fail.summary)
     2. `cat <module_dir>/status.json` → read .fail_summaries[] for what was tried
-    3. `node /app/skills/memory.js recall --query "module <ID> <error keywords>"` — check prior context
+    3. Review status.json, fail_summaries, and recent pipeline logs for prior context
     4. Diagnose: unclear FORGE.md? wrong approach? real bug? missing dependency?
     5. Write a focused retry prompt addressing the specific failure
-    6. Resume: `node /app/skills/pipeline.js --project $CURRENT_PROJECT --resume --module <ID> --prompt "your directive"`
+    6. Resume the full pipeline: `node /app/skills/pipeline.js --project $CURRENT_PROJECT --resume --prompt "your directive"`
        Or for longer analysis: `--prompt-file /tmp/nova-fix.md`
-    7. Store your analysis (atomic): `node /app/skills/memory.js remember --text "..." --tags "..." --module <ID>`
+       (Do NOT use `--module <ID>`; the resumed pipeline will pick up the failed module automatically.)
+    7. Store your analysis in the repo/module logs only (memory.js is deprecated for now)
 
     ## Escalation
     auto_retry_threshold fails → EXIT 10 → Nova analyzes, resumes with --prompt
