@@ -12,17 +12,22 @@ import { execFileSync } from 'child_process';
 
 // ─── Repo Root Cache ──────────────────────────────────────────────────────────
 
-let _repoRootCache = null;
+let _repoRootCache = new Map();
 
 /**
- * Get the git repo root, cached after first call.
+ * Get the git repo root, cached by start directory.
+ * @param {string} [startDir=process.cwd()]
  * @returns {string}
  */
-export function getRepoRoot() {
-  if (!_repoRootCache) {
-    _repoRootCache = execFileSync('git', ['rev-parse', '--show-toplevel'], { encoding: 'utf8' }).trim();
+export function getRepoRoot(startDir = process.cwd()) {
+  const cacheKey = startDir || process.cwd();
+  if (!_repoRootCache.has(cacheKey)) {
+    _repoRootCache.set(
+      cacheKey,
+      execFileSync('git', ['-C', cacheKey, 'rev-parse', '--show-toplevel'], { encoding: 'utf8' }).trim()
+    );
   }
-  return _repoRootCache;
+  return _repoRootCache.get(cacheKey);
 }
 
 // ─── gitExec ─────────────────────────────────────────────────────────────────

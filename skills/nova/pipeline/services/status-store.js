@@ -18,14 +18,27 @@ export function initLogDir(config, ctx) {
 
   config._logDir = logDir;
 
-  // Create run-scoped log directory and open pipeline.jsonl there.
-  // This prevents Git conflicts on shared pipeline.jsonl across concurrent runs.
+  // Create run-scoped log directory and keep both global and per-run logs.
+  // The top-level file is the operator tail, the run file is the audit trail.
   const runLogDir = pipelineRunLogDir(config);
   fs.mkdirSync(runLogDir, { recursive: true });
   config._runLogDir = runLogDir;
 
-  const pipelineLogFd = fs.createWriteStream(path.join(runLogDir, 'pipeline.jsonl'), { flags: 'a' });
-  initContextLogging(ctx, pipelineLogFd);
+  const pipelineLogFd = fs.createWriteStream(path.join(pipelineDir, 'pipeline.jsonl'), { flags: 'a' });
+  const runPipelineLogFd = fs.createWriteStream(path.join(runLogDir, 'pipeline.jsonl'), { flags: 'a' });
+  config._pipelineLogFd = pipelineLogFd;
+  config._runPipelineLogFd = runPipelineLogFd;
+
+  fs.writeFileSync(
+    path.join(pipelineDir, 'latest.json'),
+    JSON.stringify({
+      run_id: config._runId,
+      path: `runs/${config._runId}`,
+      started_at: new Date().toISOString(),
+    }, null, 2)
+  );
+
+  initContextLogging(ctx, pipelineLogFd, runPipelineLogFd);
   log('INFO', `Log directory initialized: ${logDir}`);
 }
 

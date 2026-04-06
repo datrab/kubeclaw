@@ -10,25 +10,12 @@ import { log } from '../core/logger.js';
 import { redisLogDir } from '../core/paths.js';
 import { getRunId } from '../core/runtime.js';
 
-let _logStream = null;
-let _logStreamPath = null;
-
-function getOrCreateStream(config) {
-  if (!config?._runLogDir && !config?._logDir) return null;
-  try {
-    // Use run-scoped dir when available; fall back to shared redis dir.
-    const dir = config._runLogDir || redisLogDir(config);
-    fs.mkdirSync(dir, { recursive: true });
-    const filePath = path.join(dir, 'redis.jsonl');
-    if (_logStream && _logStreamPath === filePath) return _logStream;
-    // Open new stream (append mode)
-    _logStream = fs.createWriteStream(filePath, { flags: 'a' });
-    _logStream.on('error', () => {}); // swallow write errors silently
-    _logStreamPath = filePath;
-    return _logStream;
-  } catch {
-    return null;
-  }
+function getLogTargets(config) {
+  if (!config?._runLogDir && !config?._logDir) return [];
+  const targets = [];
+  if (config?._logDir) targets.push(path.join(redisLogDir(config), 'redis.jsonl'));
+  if (config?._runLogDir) targets.push(path.join(config._runLogDir, 'redis.jsonl'));
+  return targets;
 }
 
 /**
@@ -44,8 +31,8 @@ function getOrCreateStream(config) {
  */
 export function logRedisExchange(config, direction, type, scope, scopeId, payload) {
   try {
-    const stream = getOrCreateStream(config);
-    if (!stream) return;
+    const targets = getLogTargets(config);
+    if (!targets.length) return;
 
     // Sanitize payload: cap at 2KB to avoid log bloat from large task payloads
     let sanitizedPayload = null;
@@ -68,8 +55,13 @@ export function logRedisExchange(config, direction, type, scope, scopeId, payloa
       scope,
       scope_id: scopeId,
       payload: sanitizedPayload,
-    });
-    stream.write(entry + '\n');
+    }) + '\n';
+    for (const filePath of targets) {
+      try {
+        fs.mkdirSync(path.dirname(filePath), { recursive: true });
+        fs.appendFileSync(filePath, entry);
+      } catch { /* non-blocking */ }
+    }
   } catch {
     // Fully non-blocking — never propagate
   }

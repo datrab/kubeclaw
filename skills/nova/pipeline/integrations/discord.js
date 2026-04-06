@@ -14,9 +14,14 @@ export async function discord(config, level, title, description, fields = []) {
   try {
     if (config._runLogDir || config._logDir) {
       try {
-        const logDir = config._runLogDir || path.join(config._logDir, 'pipeline');
         const entry = { ts: new Date().toISOString(), level, title, description, fields };
-        fs.appendFileSync(path.join(logDir, 'discord.jsonl'), JSON.stringify(entry) + '\n');
+        const targets = [];
+        if (config._logDir) targets.push(path.join(config._logDir, 'pipeline', 'discord.jsonl'));
+        if (config._runLogDir) targets.push(path.join(config._runLogDir, 'discord.jsonl'));
+        for (const target of targets) {
+          fs.mkdirSync(path.dirname(target), { recursive: true });
+          fs.appendFileSync(target, JSON.stringify(entry) + '\n');
+        }
       } catch {}
     }
     if (!config.discord_webhook_url) return;

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { log, getActiveContext } from '../core/logger.js';
-import { loadStatus } from '../services/status-store.js';
+import { loadStatus, saveStatus } from '../services/status-store.js';
 import { pipelineRunLogDir } from '../core/paths.js';
 import { injectNeedsNova } from '../services/failures.js';
 import { STATUS, EXIT_OK, EXIT_BLOCKED, EXIT_ERROR, EXIT_NEEDS_NOVA, EXIT_TIMEOUT, EXIT_RATE_LIMITED } from '../core/constants.js';
@@ -31,9 +31,55 @@ import {
 } from '../services/telemetry.js';
 import { writeCostReport } from '../services/cost.js';
 import { initGovernanceCtx, recordArchValidatorResult } from '../services/governance-context.js';
+import { getAcpMonitorState } from '../agents/acp-monitor.js';
 
 function _telemetryCtx(config) {
   return getActiveContext() || { config, runId: config?.run_id || config?._runId || '' };
+}
+
+async function reconcileStaleModuleState(config, progress) {
+  const now = new Date().toISOString();
+  const moduleEntries = Object.entries(progress.modules || {});
+  for (const [moduleId, mod] of moduleEntries) {
+    const dir = mod?.dir || moduleId;
+    const status = loadStatus(config, dir);
+    if (!status) continue;
+    if (!['IN_PROGRESS', 'TESTING'].includes(status.status)) continue;
+
+    let shouldReset = false;
+    let note = null;
+    const active = status.active_agent || null;
+
+    if (active?.session_key) {
+      try {
+        const mon = await getAcpMonitorState(config, active.session_key, active.stream_log_path || null);
+        if (mon?.failed || mon?.terminal || mon?.sessionTerminal) {
+          shouldReset = true;
+          note = `Recovered stale ${status.current_phase || 'active'} state after child session ended: ${mon.lastDetail || mon.lastSummary || 'terminal'}`;
+        }
+      } catch (e) {
+        shouldReset = true;
+        note = `Recovered stale ${status.current_phase || 'active'} state after child session check failed: ${e.message}`;
+      }
+    } else if (status.updated_at) {
+      const ageMs = Date.now() - new Date(status.updated_at).getTime();
+      if (Number.isFinite(ageMs) && ageMs > 10 * 60 * 1000) {
+        shouldReset = true;
+        note = `Recovered stale ${status.current_phase || 'active'} state with no tracked child session after ${Math.round(ageMs / 60000)}m of inactivity`;
+      }
+    }
+
+    if (!shouldReset) continue;
+    const from = status.status;
+    status.status = status.current_phase === 'buster' ? 'READY_FOR_TESTING' : 'PENDING';
+    status.current_phase = null;
+    status.active_agent = null;
+    status.updated_at = now;
+    status.history = Array.isArray(status.history) ? status.history : [];
+    status.history.push({ timestamp: now, from, to: status.status, agent: 'pipeline', note });
+    saveStatus(config, dir, status);
+    log('WARN', `[stale-reconcile] ${moduleId}: ${note}`);
+  }
 }
 
 const DEFAULT_DEPS = {
@@ -182,6 +228,8 @@ export async function runPipeline(config, progress, opts = {}) {
       fs.writeFileSync(path.join(config._runLogDir, 'config-validation.json'), JSON.stringify(snapshot, null, 2));
     } catch { /* non-critical */ }
   }
+
+  await reconcileStaleModuleState(config, progress);
 
   log('STEP', `╔═══════════════════════════════════════════════════╗`);
   log('STEP', `║  PIPELINE: ${config.project.toUpperCase().padEnd(38)}║`);

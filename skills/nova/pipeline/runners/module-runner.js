@@ -412,18 +412,36 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
       return { retry: false, result: failResult };
     }
 
-    // Poll — dual channel: status.json + ACP session state.
-    // If Forge's session ends and HEAD moved, pollStatus auto-advances to READY_FOR_TESTING.
-    const result = await deps.pollWithRateLimitRecovery(config, dir,
-      [STATUS.READY_FOR_TESTING, STATUS.FAIL, STATUS.BLOCKED], timeout,
-      { sessionLabel: forgeSessionLabel, headBefore: headBeforeForge });
+    status.active_agent = {
+      session_key: deps.getTrackedAgent(forgeSessionLabel)?.sessionKey || null,
+      stream_log_path: deps.getTrackedAgent(forgeSessionLabel)?.streamLogPath || null,
+      label: forgeSessionLabel,
+      runtime: deps.getTrackedAgent(forgeSessionLabel)?.runtime || null,
+      model: forgeModel,
+      phase: 'forge',
+      started_at: new Date().toISOString(),
+    };
+    deps.saveStatus(config, dir, status);
 
-    // ALWAYS destroy session — kill-and-respawn strategy
-    // Graceful (wait for idle + summary) only on successful completion
-    const forgeStreamPath = deps.getTrackedAgent(forgeSessionLabel)?.streamLogPath;
-    await deps.killAgent(config, 'forge', moduleId, result.ok);
-    deps.saveStreamLog(config, dir, 'forge', status.fail_count + 1, forgeStreamPath);
-    deps.clearShutdownContext();
+    let result;
+    let forgeStreamPath = null;
+    try {
+      // Poll — dual channel: status.json + ACP session state.
+      // If Forge's session ends and HEAD moved, pollStatus auto-advances to READY_FOR_TESTING.
+      result = await deps.pollWithRateLimitRecovery(config, dir,
+        [STATUS.READY_FOR_TESTING, STATUS.FAIL, STATUS.BLOCKED], timeout,
+        { sessionLabel: forgeSessionLabel, headBefore: headBeforeForge });
+    } finally {
+      // ALWAYS destroy session — kill-and-respawn strategy
+      // Graceful (wait for idle + summary) only on successful completion
+      forgeStreamPath = deps.getTrackedAgent(forgeSessionLabel)?.streamLogPath || status.active_agent?.stream_log_path;
+      await deps.killAgent(config, 'forge', moduleId, result?.ok || false);
+      status = deps.loadStatus(config, dir) || status;
+      status.active_agent = null;
+      deps.saveStatus(config, dir, status);
+      deps.saveStreamLog(config, dir, 'forge', status.fail_count + 1, forgeStreamPath);
+      deps.clearShutdownContext();
+    }
 
     if (!result.ok) {
       status = deps.loadStatus(config, dir) || status;
@@ -749,12 +767,15 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
         return { retry: false, result: { exit: EXIT_ERROR, reason: `Buster spawn failed: ${e.message}` } };
       }
 
-      const result = await deps.pollDualWithRateLimitRecovery(config, dir, moduleId,
-        [STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED], timeout);
-
-      // Kill agent session (safety net — Processor should have killed already after completion)
-      await deps.killAgent(config, 'buster', moduleId);
-      deps.clearShutdownContext();
+      let result;
+      try {
+        result = await deps.pollDualWithRateLimitRecovery(config, dir, moduleId,
+          [STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED], timeout);
+      } finally {
+        // Kill agent session (safety net — Processor should have killed already after completion)
+        await deps.killAgent(config, 'buster', moduleId, result?.ok || false);
+        deps.clearShutdownContext();
+      }
 
       // ── Poll failed (timeout, parse error, etc.) ──
       if (!result.ok) {

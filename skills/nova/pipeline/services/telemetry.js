@@ -13,7 +13,12 @@ let _seq = 0;
 function getRedisClient(config) {
   if (_redis) return _redis;
   try {
-    const Redis = require('ioredis');
+    let Redis;
+    try {
+      Redis = require('ioredis');
+    } catch {
+      Redis = require('/home/node/.openclaw/workspace/git-repo/Projects/clawdeck/src/backend/node_modules/ioredis');
+    }
     _redis = new Redis({
       host: process.env.REDIS_HOST || 'redis-master.kubeclaw.svc.cluster.local',
       port: parseInt(process.env.REDIS_PORT || '6379'),

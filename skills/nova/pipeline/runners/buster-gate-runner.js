@@ -169,7 +169,9 @@ async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, t
     return deps.pollResult(false, 'spawn_failed', { error: e.message });
   }
 
-  const result = await deps.pollGeneric(config, async () => {
+  let result;
+  try {
+    result = await deps.pollGeneric(config, async () => {
     // Channel 0: Redis Completion Stream (fast path)
     try {
       const redisEntry = await deps.readCompletionFromRedis(config, gateId);
@@ -249,8 +251,9 @@ async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, t
 
     return { done: false, logMsg: `status=${gateStatus?.status || 'unknown'}` };
   }, timeout, `Gate '${gateId}'`);
-
-  await deps.killAgent(config, 'buster', gateId);
+  } finally {
+    await deps.killAgent(config, 'buster', gateId, result?.ok || false);
+  }
   return result;
 }
 

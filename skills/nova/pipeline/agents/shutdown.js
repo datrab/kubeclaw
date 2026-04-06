@@ -82,8 +82,9 @@ function buildVictimSet(agentId, sessionKey) {
 
   const roots = table.filter(row => {
     if (row.pid === process.pid) return false;
+    if (isSessionLinked(row.command, agentId, sessionKey, gatewayLabel)) return true;
     if (!isWrapperCommand(row.command)) return false;
-    return isSessionLinked(row.command, agentId, sessionKey, gatewayLabel);
+    return false;
   });
 
   const orphanRoots = table.filter(row => {

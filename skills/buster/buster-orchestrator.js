@@ -336,7 +336,8 @@ export async function processTask(payload, opts = {}) {
     // ── Git sync ──────────────────────────────────────────────────
     logger.step('git-sync');
 
-    const repoRoot = getRepoRoot();
+    const repoRoot = getRepoRoot(payload?.session?.cwd || process.cwd());
+    logger.info('GIT', `Resolved repo root: ${repoRoot}`);
     const actualHash = await gitSync(repoRoot, commitHash, { logger });
     const syncResult = {
       ok:          actualHash !== null,

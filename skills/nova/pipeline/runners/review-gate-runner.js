@@ -299,36 +299,40 @@ async function _runReviewOnce(deps, config, progress, gateId, gate, reviewConfig
   deps.logEffectivePolicy(config, { scope: 'reviewer', agent: 'echo', gateId, ...reviewerPolicy });
   log('INFO', `Reviewer '${reviewer.label}' model: ${reviewerPolicy.model ?? '(none)'} [${reviewerPolicy.model_source}]${reviewerPolicy.thinking ? `, thinking: ${reviewerPolicy.thinking} [${reviewerPolicy.thinking_source}]` : ''}`);
 
-  try {
-    await deps.spawnReviewerAgent(config, progress, gateId, reviewer, reviewerPrompt, { thinking: reviewerPolicy.thinking });
-  } catch (e) {
-    log('ERROR', `Reviewer spawn failed: ${reviewer.label} — ${e.message}`);
-    return { ok: false, error: `Reviewer spawn failed: ${e.message}` };
-  }
-
-  // ── Phase 4: Poll for review output ──
   const echoTrackingKey = `echo-${reviewer.label}-${gateId}`;
-  const pollRes = await deps.pollForFile(config, outputFilePath, timeout, `Review '${gateId}'`, echoTrackingKey);
-
-  // ── Phase 5: Kill reviewer ──
-  const echoStreamPath = deps.getTrackedAgent(echoTrackingKey)?.streamLogPath;
-  await deps.killReviewerAgent(config, gateId, reviewer, pollRes.ok);
-
-  // Save stream log to centralized log directory
-  if (echoStreamPath) {
+  let pollRes = null;
+  let echoStreamPath = null;
+  try {
     try {
-      if (fs.existsSync(echoStreamPath)) {
-        const logDir = gateLogDir(config, gateId);
-        const destPath = path.join(logDir, `echo-transcript-attempt-${reviewAttempt}.jsonl`);
-        fs.copyFileSync(echoStreamPath, destPath);
-        log('OK', `Echo stream log saved: gates/${gateId}/echo-transcript-attempt-${reviewAttempt}.jsonl`);
-      }
-    } catch (e) { log('DEBUG', `Echo stream log save failed (non-critical): ${e.message}`); }
+      await deps.spawnReviewerAgent(config, progress, gateId, reviewer, reviewerPrompt, { thinking: reviewerPolicy.thinking });
+    } catch (e) {
+      log('ERROR', `Reviewer spawn failed: ${reviewer.label} — ${e.message}`);
+      return { ok: false, error: `Reviewer spawn failed: ${e.message}` };
+    }
+
+    // ── Phase 4: Poll for review output ──
+    pollRes = await deps.pollForFile(config, outputFilePath, timeout, `Review '${gateId}'`, echoTrackingKey);
+    echoStreamPath = deps.getTrackedAgent(echoTrackingKey)?.streamLogPath;
+  } finally {
+    echoStreamPath = echoStreamPath || deps.getTrackedAgent(echoTrackingKey)?.streamLogPath;
+    await deps.killReviewerAgent(config, gateId, reviewer, pollRes?.ok || false);
+
+    // Save stream log to centralized log directory
+    if (echoStreamPath) {
+      try {
+        if (fs.existsSync(echoStreamPath)) {
+          const logDir = gateLogDir(config, gateId);
+          const destPath = path.join(logDir, `echo-transcript-attempt-${reviewAttempt}.jsonl`);
+          fs.copyFileSync(echoStreamPath, destPath);
+          log('OK', `Echo stream log saved: gates/${gateId}/echo-transcript-attempt-${reviewAttempt}.jsonl`);
+        }
+      } catch (e) { log('DEBUG', `Echo stream log save failed (non-critical): ${e.message}`); }
+    }
   }
 
-  if (!pollRes.ok) {
-    log('WARN', `Review poll ended: ${pollRes.reason}. Review file not received.`);
-    return { ok: false, error: `Review file not received (${pollRes.reason})` };
+  if (!pollRes?.ok) {
+    log('WARN', `Review poll ended: ${pollRes?.reason || 'unknown'}. Review file not received.`);
+    return { ok: false, error: `Review file not received (${pollRes?.reason || 'unknown'})` };
   }
 
   // ── Discord: Echo completion summary ──

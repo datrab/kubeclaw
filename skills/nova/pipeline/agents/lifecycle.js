@@ -9,7 +9,7 @@ import { onAgentKilled } from '../services/telemetry.js';
 import { gatewayInvoke } from '../integrations/gateway.js';
 import { discord } from '../integrations/discord.js';
 import { acpxCleanup, getTrackedAgent, reaperAfterKill, trackAgent, untrackAgent } from './shutdown.js';
-import { parseSessionState, readAcpTranscriptState, transcriptShowsProgress, waitForSessionIdle } from './acp-monitor.js';
+import { getAcpMonitorState, parseSessionState, readAcpTranscriptState, transcriptShowsProgress, waitForSessionIdle } from './acp-monitor.js';
 
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 function nodeExec(scriptPath, args, opts = {}) {
@@ -124,7 +124,7 @@ export async function killAcpAgent(config, agentType, moduleId, graceful = false
   if (!sessionKey) {
     log('WARN', `No sessionKey tracked for '${label}' — skipping kill`);
     untrackAgent(label);
-    return;
+    return false;
   }
   if (graceful) {
     log('INFO', `Waiting for session to become idle: ${label}`);
@@ -136,57 +136,74 @@ export async function killAcpAgent(config, agentType, moduleId, graceful = false
   const isSubagent = runtime === 'subagent' || lower.startsWith('openai/') || lower.startsWith('openai-codex/') || lower.includes('gpt-5') || lower.includes('codex');
 
   log('STEP', `Destroying ${isSubagent ? 'subagent' : 'ACP'} session: ${label} (${sessionKey})`);
+  let terminated = false;
   try {
-    await gatewayInvoke('sessions_send', { sessionKey, message: '/stop' }, 15000);
-    log('OK', `Session destroyed: ${label}`);
-  } catch {
-    log('WARN', `Could not destroy session '${label}' — may have already exited`);
-  }
-  if (!isSubagent) {
-    await acpxCleanup(entry.agentId, entry.gatewayLabel);
-    await reaperAfterKill(entry.agentId, sessionKey);
-  }
-
-  // Compute files_changed against baseline (non-critical)
-  let filesChanged = null;
-  let baselineTracked = false;
-  if (entry?._baselineFiles) {
-    baselineTracked = true;
     try {
-      const repoRoot = config?.repo_root || process.cwd();
-      const currentOutput = execFileSync('git', ['diff', '--name-only', 'HEAD'], {
-        encoding: 'utf8', timeout: 5000, cwd: repoRoot
+      await gatewayInvoke('sessions_send', { sessionKey, message: '/stop' }, 15000);
+    } catch {
+      log('WARN', `Could not destroy session '${label}' — may have already exited`);
+    }
+    if (!isSubagent) {
+      await acpxCleanup(entry.agentId, entry.gatewayLabel);
+    }
+    await reaperAfterKill(entry.agentId || agentType, sessionKey, entry.gatewayLabel);
+    try {
+      const mon = await getAcpMonitorState(config, sessionKey, entry?.streamLogPath || null);
+      terminated = Boolean(mon?.failed || mon?.terminal || mon?.sessionTerminal || mon?.stopped);
+      if (!terminated) log('WARN', `Session '${label}' stop requested but monitor still shows it as active (${mon?.lastDetail || 'unknown'})`);
+    } catch (e) {
+      log('DEBUG', `Session monitor check failed after stop for '${label}': ${e.message}`);
+    }
+
+    // Compute files_changed against baseline (non-critical)
+    let filesChanged = null;
+    let baselineTracked = false;
+    if (entry?._baselineFiles) {
+      baselineTracked = true;
+      try {
+        const repoRoot = config?.repo_root || process.cwd();
+        const currentOutput = execFileSync('git', ['diff', '--name-only', 'HEAD'], {
+          encoding: 'utf8', timeout: 5000, cwd: repoRoot
+        });
+        const currentFiles = new Set(currentOutput.trim().split('\n').filter(Boolean));
+        const newFiles = [...currentFiles].filter(f => !entry._baselineFiles.has(f));
+        if (newFiles.length > 0) filesChanged = newFiles;
+      } catch { /* non-critical */ }
+    }
+
+    if (terminated) {
+      untrackAgent(label);
+      log('OK', `Session destroyed: ${label}`);
+    }
+
+    // Emit agent.killed telemetry with files_changed
+    try {
+      const _ctx = getActiveContext() || { config };
+      onAgentKilled(_ctx, agentType, {
+        label,
+        module_id: moduleId,
+        has_changes: baselineTracked ? (filesChanged !== null) : null,
+        files_changed: filesChanged,
       });
-      const currentFiles = new Set(currentOutput.trim().split('\n').filter(Boolean));
-      const newFiles = [...currentFiles].filter(f => !entry._baselineFiles.has(f));
-      if (newFiles.length > 0) filesChanged = newFiles;
     } catch { /* non-critical */ }
+  } finally {
+    if (!terminated) {
+      log('WARN', `Session not fully reconciled after stop: ${label}`);
+    }
   }
-
-  untrackAgent(label);
-
-  // Emit agent.killed telemetry with files_changed
-  try {
-    const _ctx = getActiveContext() || { config };
-    onAgentKilled(_ctx, agentType, {
-      label,
-      module_id: moduleId,
-      has_changes: baselineTracked ? (filesChanged !== null) : null,
-      files_changed: filesChanged,
-    });
-  } catch { /* non-critical */ }
+  return terminated;
 }
 
 export function buildBusterPayload(config, progress, moduleId, taskType, taskPrompt, status, opts = {}) {
   const base = { task_type: taskType, module: moduleId, project: config.project, commit_hash: status?.forge_commit_hash || null, timestamp: new Date().toISOString(), completion_stream: completionStreamKey(config) };
   if (taskType === 'module_test') {
     const mod = progress.modules[moduleId];
-    return { ...base, instructions: taskPrompt, session: { model: opts.model || null, agentId: modelToHarness(opts.model) || null, cwd: config.repo_root, timeout_seconds: (mod?.timeout_minutes ?? config.default_timeout_minutes) * 60, label: `buster-test-${moduleId}-${Date.now()}` }, module_path: mod ? relPath(config, modulePath(config, mod.dir)) : null, buster_md_path: mod ? relPath(config, path.join(modulePath(config, mod.dir), 'BUSTER.md')) : null, status_json_path: mod ? relPath(config, statusPath(config, mod.dir)) : null, test_suites: mod?.test_suites || null, test_config: mod?.test_config || null, run_id: opts.run_id || null, attempt: opts.attempt || 1, log_dir: (mod && config._logDir) ? path.join(config._logDir, 'modules', mod.dir) : null };
+    return { ...base, module_id: moduleId, prompt: taskPrompt, instructions: taskPrompt, session: { model: opts.model || null, agentId: modelToHarness(opts.model) || null, cwd: config.repo_root, timeout_seconds: (mod?.timeout_minutes ?? config.default_timeout_minutes) * 60, label: `buster-test-${moduleId}-${Date.now()}` }, module_path: mod ? relPath(config, modulePath(config, mod.dir)) : null, buster_md_path: mod ? relPath(config, path.join(modulePath(config, mod.dir), 'BUSTER.md')) : null, status_json_path: mod ? relPath(config, statusPath(config, mod.dir)) : null, suites: mod?.test_suites || null, test_suites: mod?.test_suites || null, test_config: mod?.test_config || null, run_id: opts.run_id || null, attempt: opts.attempt || 1, log_dir: (mod && config._logDir) ? path.join(config._logDir, 'modules', mod.dir) : null };
   }
   if (taskType === 'gate_test') {
     const gate = opts.gate || progress.gates?.[moduleId] || {};
     const gateTimeout = gate.timeout_minutes ?? config.default_timeout_minutes;
-    return { ...base, instructions: taskPrompt, session: { model: opts.model || null, agentId: modelToHarness(opts.model) || null, cwd: config.repo_root, timeout_seconds: gateTimeout * 60, label: `buster-gate-${moduleId}-${Date.now()}` }, gate_id: moduleId, gate_title: gate.title || moduleId, work_dir: relPath(config, swarmRoot(config)), output_file: gate.output_file ? relPath(config, path.join(swarmRoot(config), gate.output_file)) : null, instructions_file: gate.instructions_file ? relPath(config, path.join(swarmRoot(config), gate.instructions_file)) : null, test_suites: gate.test_suites || null, test_config: gate.test_config || null, log_dir: config._logDir ? path.join(config._logDir, 'gates', moduleId) : null };
+    return { ...base, module_id: moduleId, prompt: taskPrompt, instructions: taskPrompt, session: { model: opts.model || null, agentId: modelToHarness(opts.model) || null, cwd: config.repo_root, timeout_seconds: gateTimeout * 60, label: `buster-gate-${moduleId}-${Date.now()}` }, gate_id: moduleId, gate_title: gate.title || moduleId, work_dir: relPath(config, swarmRoot(config)), output_file: gate.output_file ? relPath(config, path.join(swarmRoot(config), gate.output_file)) : null, instructions_file: gate.instructions_file ? relPath(config, path.join(swarmRoot(config), gate.instructions_file)) : null, suites: gate.test_suites || null, test_suites: gate.test_suites || null, test_config: gate.test_config || null, log_dir: config._logDir ? path.join(config._logDir, 'gates', moduleId) : null };
   }
   return { ...base, message: taskPrompt };
 }
@@ -374,23 +391,35 @@ export async function killReviewerAgent(config, gateId, reviewer, graceful = fal
   if (!sessionKey) {
     log('WARN', `No sessionKey for reviewer '${label}' — skipping kill`);
     untrackAgent(label);
-    return;
+    return false;
   }
   if (graceful) {
     log('INFO', `Waiting for reviewer session to become idle: ${label}`);
     await waitForSessionIdle(sessionKey);
   }
   log('STEP', `Destroying reviewer session: ${label} (${sessionKey})`);
+  let terminated = false;
   try {
-    await gatewayInvoke('sessions_send', { sessionKey, message: '/stop' }, 15000);
-    log('OK', `Reviewer session destroyed: ${label}`);
-  } catch {
-    log('WARN', `Could not destroy reviewer '${label}' — may have already exited`);
+    try {
+      await gatewayInvoke('sessions_send', { sessionKey, message: '/stop' }, 15000);
+    } catch {
+      log('WARN', `Could not destroy reviewer '${label}' — may have already exited`);
+    }
+    const runtime = entry?.runtime;
+    if (runtime !== 'subagent') {
+      await acpxCleanup(entry.agentId, entry.gatewayLabel);
+    }
+    await reaperAfterKill(entry.agentId || 'reviewer', sessionKey, entry.gatewayLabel);
+    try {
+      const mon = await getAcpMonitorState(config, sessionKey, entry?.streamLogPath || null);
+      terminated = Boolean(mon?.failed || mon?.terminal || mon?.sessionTerminal || mon?.stopped);
+      if (!terminated) log('WARN', `Reviewer '${label}' stop requested but monitor still shows it as active (${mon?.lastDetail || 'unknown'})`);
+    } catch (e) {
+      log('DEBUG', `Reviewer session monitor check failed after stop for '${label}': ${e.message}`);
+    }
+    if (terminated) log('OK', `Reviewer session destroyed: ${label}`);
+  } finally {
+    if (terminated) untrackAgent(label);
   }
-  const runtime = entry?.runtime;
-  if (runtime !== 'subagent') {
-    await acpxCleanup(entry.agentId, entry.gatewayLabel);
-    await reaperAfterKill(entry.agentId, sessionKey);
-  }
-  untrackAgent(label);
+  return terminated;
 }

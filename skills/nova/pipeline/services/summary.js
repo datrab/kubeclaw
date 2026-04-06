@@ -148,15 +148,27 @@ export function writeSummary(config, exitCode, exitReason, ctx = null, progress 
         ? path.relative(config.repo_root || config._logDir, costReportPath)
         : null,
     };
-    const runLogDir = config._runLogDir || path.join(config._logDir, 'pipeline');
+    const pipelineDir = path.join(config._logDir, 'pipeline');
+    const runLogDir = config._runLogDir || pipelineDir;
     fs.mkdirSync(runLogDir, { recursive: true });
     fs.writeFileSync(path.join(runLogDir, 'summary.json'), JSON.stringify(summary, null, 2));
+    fs.writeFileSync(path.join(pipelineDir, 'summary.json'), JSON.stringify(summary, null, 2));
 
     // Write latest.json pointer atomically so operators can find the most recent run.
-    const latestPath = path.join(config._logDir, 'pipeline', 'latest.json');
+    const latestPath = path.join(pipelineDir, 'latest.json');
     const runId = summary.run_id;
     const latestTmp = latestPath + '.tmp';
-    fs.writeFileSync(latestTmp, JSON.stringify({ run_id: runId, path: `runs/${runId}` }, null, 2));
+    fs.writeFileSync(latestTmp, JSON.stringify({
+      run_id: runId,
+      status: exitCode === null ? 'running' : (exitCode === 0 ? 'completed' : 'failed'),
+      run_dir: `runs/${runId}`,
+      path: `runs/${runId}`,
+      pipeline_jsonl: `runs/${runId}/pipeline.jsonl`,
+      summary_json: `runs/${runId}/summary.json`,
+      started_at: summary.started_at || null,
+      completed_at: summary.completed_at || null,
+      exit_code: exitCode,
+    }, null, 2));
     fs.renameSync(latestTmp, latestPath);
 
     log('OK', `Pipeline summary written: exit=${exitCode} (${exitReason})`);
@@ -195,8 +207,8 @@ export function writePipelineReviewInstructions(config, pr = {}) {
   const jsonOut = pipelineReviewJsonPath(config, pr);
   const pathOut = pipelineReviewInstructionsPath(config, pr);
   fs.mkdirSync(path.dirname(pathOut), { recursive: true });
-  const pipelineLogPath = config._logDir ? path.join(config._logDir, 'pipeline', 'pipeline.jsonl') : '.swarm/logs/pipeline/pipeline.jsonl';
-  const summaryJsonPath = config._logDir ? path.join(config._logDir, 'pipeline', 'summary.json') : '.swarm/logs/pipeline/summary.json';
+  const pipelineLogPath = config._runLogDir ? path.join(config._runLogDir, 'pipeline.jsonl') : (config._logDir ? path.join(config._logDir, 'pipeline', 'pipeline.jsonl') : '.swarm/logs/pipeline/pipeline.jsonl');
+  const summaryJsonPath = config._runLogDir ? path.join(config._runLogDir, 'summary.json') : (config._logDir ? path.join(config._logDir, 'pipeline', 'summary.json') : '.swarm/logs/pipeline/summary.json');
   const modulesDir = config.paths?.modules_dir || '.swarm/modules';
   const reviewMdPath = relPath(config, out);
   const reviewJsonPath = relPath(config, jsonOut);
