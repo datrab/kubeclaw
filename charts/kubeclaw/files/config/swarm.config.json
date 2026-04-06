@@ -29,42 +29,32 @@
     "enabled": true,
     "lint_report_path": "/app/skills/lint-report.js",
     "semgrep_config_path": "/home/node/.openclaw/.semgrep.yml",
-    "timeout_seconds": 30
-  },
-
-  "memory": {
-    "enabled": true,
-    "memory_js_path": "/app/skills/memory.js",
-    "recall_limit": 5,
-    "recall_before_forge": true,
-    "feedback_after_outcome": true,
-    "store_patterns_globally": true,
-    "targeted_decay_amount": 0.1
+    "timeout_seconds": 60
   },
 
   "agents": {
     "forge": {
-      "dispatch": "acp",
+      "dispatch": "subagent",
       "acp_agent_id": "codex",
       "cwd": null
     },
     "buster": {},
     "echo": {
-      "dispatch": "acp",
-      "acp_agent_id": "claude",
+      "dispatch": "subagent",
+      "acp_agent_id": "codex",
       "cwd": null
     }
   },
 
   "models": {
     "forge": "codex-5.4",
-    "buster": "claude-sonnet-4-6",
-    "echo": "claude-opus-4-6"
+    "buster": "codex-5.4",
+    "echo": "codex-5.4"
   },
 
   "review_defaults": {
     "reviewers": [
-      { "label": "echo-opus", "agent_id": "claude" }
+      { "label": "codex-5.4", "agent_id": "codex" }
     ],
     "timeout_minutes": 30,
     "max_fix_cycles": 3,
