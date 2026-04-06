@@ -551,6 +551,27 @@ export async function processTask(payload, opts = {}) {
     });
 
     logger.info('TASK', `Task completed: outcome=${outcome} reason=${reason} duration=${totalDuration}s`);
+
+    // Send completion signal back to Nova pipeline via completion_stream.
+    // Buster v2 uses telemetry for observability, but Nova still polls this
+    // stream to unblock the dual-channel poller.
+    if (payload?.completion_stream) {
+      try {
+        await redis.xadd(
+          payload.completion_stream, '*',
+          'type', 'completion',
+          'module', moduleId,
+          'status', outcome === 'PASS' ? 'PASS' : 'FAIL',
+          'source', 'buster-orchestrator',
+          'summary', reason || suitesInfo.suiteSummary || '',
+          'timestamp', String(Date.now()),
+        );
+        logger.info('TASK', `Completion signal sent to ${payload.completion_stream}`);
+      } catch (e) {
+        logger.error('TASK', `Failed to send completion signal: ${e.message}`);
+      }
+    }
+
     logger.flush();
 
     await closeTelemetry(tctx);
@@ -757,6 +778,78 @@ const STREAM_MAX_LEN = 250;
 
 const PIPELINE_TASK_TYPES = ['module_test', 'gate_test'];
 
+// ── Base Image Pre-pull ───────────────────────────────────────────
+
+const BASE_IMAGES_STATIC = [
+  'docker.io/library/python:3.12-slim',
+  'docker.io/library/python:3.11-slim',
+  'docker.io/library/node:20-slim',
+];
+
+const BASE_IMAGES = new Set(BASE_IMAGES_STATIC);
+
+function normaliseImage(name) {
+  if (!name.includes('/')) return `docker.io/library/${name}`;
+  return name;
+}
+
+/**
+ * Load additional base images from .swarm/progress.json at startup.
+ * Reads serve.image from all modules and normalises bare names to FQN.
+ */
+function loadBaseImagesFromProgress() {
+  try {
+    const repoRoot    = getRepoRoot();
+    const progressPath = join(repoRoot, '.swarm', 'progress.json');
+    if (!fs.existsSync(progressPath)) return;
+    const progress = JSON.parse(fs.readFileSync(progressPath, 'utf8'));
+
+    if (Array.isArray(progress.base_images)) {
+      for (const img of progress.base_images) BASE_IMAGES.add(normaliseImage(img));
+    }
+
+    if (progress.modules) {
+      for (const mod of Object.values(progress.modules)) {
+        const img = mod.test_config?.serve?.image;
+        if (img) {
+          if (!img.includes('/') && !img.startsWith('docker.io')) continue;
+          BASE_IMAGES.add(normaliseImage(img));
+        }
+      }
+    }
+
+    console.log(`[BASE_IMAGES] ${BASE_IMAGES.size} images: ${[...BASE_IMAGES].join(', ')}`);
+  } catch (e) {
+    console.warn(`[BASE_IMAGES] Failed to load from progress.json: ${e.message}`);
+  }
+}
+
+/**
+ * Pre-pull missing base images at startup.
+ * Checks each image with `podman image exists`, only pulls if absent.
+ */
+async function ensureBaseImages() {
+  console.log('[BASE_IMAGES] Ensuring base images are cached...');
+  for (const img of BASE_IMAGES) {
+    if (img.startsWith('localhost/') || (!img.includes('/') && !img.startsWith('docker.io'))) {
+      continue;
+    }
+    try {
+      await execAsync(`podman image exists "${img}"`, { timeout: 5000 });
+      console.log(`[BASE_IMAGES] ✅ ${img} (cached)`);
+    } catch {
+      console.log(`[BASE_IMAGES] ⬇️  Pulling ${img}...`);
+      try {
+        await execAsync(`podman pull "${img}"`, { timeout: 300000, encoding: 'utf8' });
+        console.log(`[BASE_IMAGES] ✅ ${img} (pulled)`);
+      } catch (e) {
+        console.error(`[BASE_IMAGES] ❌ Failed to pull ${img}: ${e.message}`);
+      }
+    }
+  }
+  console.log('[BASE_IMAGES] ✅ Pre-pull complete.');
+}
+
 const GATEWAY_URL            = 'http://127.0.0.1:18789/tools/invoke';
 const GATEWAY_HEALTH_URL     = 'http://127.0.0.1:18789/health';
 const GATEWAY_READY_TIMEOUT  = 120000; // 120s
@@ -894,6 +987,9 @@ async function main() {
   await doSandboxCleanup('startup', {});
   await waitForGateway();
   startGatewayHealthMonitor();
+
+  loadBaseImagesFromProgress();
+  await ensureBaseImages();
 
   try {
     await redis.xgroup('CREATE', STREAM_KEY, GROUP_NAME, '0', 'MKSTREAM');

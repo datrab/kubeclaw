@@ -1,24 +1,42 @@
 // ═══════════════════════════════════════════════════════════════
-// Suite Runner — Execute test suites with telemetry
+// Suite Runner — Deterministic Test Suite Orchestrator
 // ═══════════════════════════════════════════════════════════════
 //
-// Runs a list of suites sequentially. Emits buster.suite.started
-// before each suite and buster.suite.completed after. Individual
-// suites that need additional telemetry (e.g. visual-reg) receive
-// the telemetryContext through their suite context object.
+// Loads suites dynamically via import() from ./suites/<name>.js,
+// executes them sequentially with dependency ordering, emits
+// telemetry, and writes verdicts to disk.
 //
-// Suite result contract:
-//   { status: 'PASS'|'FAIL'|'SKIP', checks_passed, checks_failed,
-//     critical, top_finding }
+// Interface:
+//   export async function runSuites(suites, opts)
+//   opts: { payload, moduleId, attempt, telemetryContext, logDir }
+//   returns: { results, suiteSummary, criticalFailed }
+//
+// Each suite must export: export default async function(context) → SuiteVerdict
+//
+// Does NOT: build/serve, Redis, prompt injection — that's the orchestrator's job.
+
+import path from 'path';
+import fs   from 'fs';
+import { fileURLToPath } from 'url';
+
+import {
+  STATUS,
+  createSuiteVerdict,
+  createRunnerVerdict,
+} from './verdict-schema.js';
 
 import { emitEvent } from './services/telemetry.js';
-import { runVisualReg } from './suites/visual-reg.js';
-import manifestSuite   from './suites/manifest.js';
-import buildSuite      from './suites/build.js';
-import healthSuite     from './suites/health.js';
-import k8sSuite        from './suites/k8s.js';
 
-// ── Suite icon helpers ────────────────────────────────────────────
+// ── Constants ────────────────────────────────────────────────────
+
+const RESULTS_DIR = '/sandbox/results';
+
+// Per-suite safety timeout (ms) — last-resort guard against hung suites.
+// Individual suites have their own internal timeouts (typically 15–120s),
+// this only catches cases where those fail to trigger.
+const SUITE_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes
+
+// ── Suite Icon ────────────────────────────────────────────────────
 
 function suiteIcon(status) {
   switch (status) {
@@ -29,144 +47,237 @@ function suiteIcon(status) {
   }
 }
 
-// ── Suite dispatch ────────────────────────────────────────────────
+// ── Suite Loader ─────────────────────────────────────────────────
+//
+// Dynamically imports ./suites/<name>.js. Returns null if not found.
 
-/**
- * Dispatch to the appropriate suite implementation.
- *
- * @param {string} suiteName
- * @param {object} ctx  - Suite context passed to the implementation
- * @returns {Promise<object>} Suite result
- */
-async function dispatchSuite(suiteName, ctx) {
-  switch (suiteName) {
-    case 'manifest':
-      return manifestSuite(ctx);
-    case 'build':
-      return buildSuite(ctx);
-    case 'health':
-      return healthSuite(ctx);
-    case 'visual-reg':
-      return runVisualReg(ctx);
-    case 'k8s':
-      return k8sSuite(ctx);
+async function loadSuite(name) {
+  try {
+    const suiteUrl = new URL(`./suites/${name}.js`, import.meta.url).href;
+    const mod = await import(suiteUrl);
+    return mod.default ?? null;
+  } catch {
+    return null;
+  }
+}
 
-    // ── Stubs — implementations added by future modules ──────────
-    case 'unit':
-    case 'api':
-    case 'e2e':
-    case 'a11y':
-    case 'perf':
-    case 'bundle':
-    case 'security':
-      return {
-        status:         'SKIP',
-        checks_passed:  0,
-        checks_failed:  0,
-        critical:       false,
-        top_finding:    `Suite '${suiteName}' not yet implemented`,
-      };
+// ── Dependency Check ─────────────────────────────────────────────
+//
+// Returns null if all dependencies passed, or a reason string if
+// a dependency failed critically.
 
-    default:
-      return {
-        status:         'SKIP',
-        checks_passed:  0,
-        checks_failed:  0,
-        critical:       false,
-        top_finding:    `Unknown suite '${suiteName}'`,
-      };
+function checkDependencies(suiteName, completedResults) {
+  const deps = DEPENDENCIES[suiteName] || ['build', 'health'];
+
+  for (const dep of deps) {
+    const depResult = completedResults[dep];
+    if (!depResult) continue; // dependency wasn't requested — no gate
+
+    if (depResult.status === STATUS.FAIL && depResult.critical) {
+      return `${dep} failed`;
+    }
+    if (depResult.status === STATUS.ERROR) {
+      return `${dep} errored`;
+    }
+  }
+
+  return null; // all good
+}
+
+// ── Sort Suites ──────────────────────────────────────────────────
+
+function sortSuites(suiteNames) {
+  return [...suiteNames].sort((a, b) => {
+    const posA = EXECUTION_ORDER.indexOf(a);
+    const posB = EXECUTION_ORDER.indexOf(b);
+    return (posA === -1 ? 999 : posA) - (posB === -1 ? 999 : posB);
+  });
+}
+
+// ── Write Results to Disk ────────────────────────────────────────
+
+function writeResults(suiteMap, moduleId, project, swarmResultsDir, attempt) {
+  const runnerVerdict = createRunnerVerdict(moduleId, project, suiteMap);
+
+  // 1. /sandbox/results/ — for subagent access during task
+  try {
+    if (!fs.existsSync(RESULTS_DIR)) {
+      fs.mkdirSync(RESULTS_DIR, { recursive: true });
+    }
+    for (const [name, suite] of Object.entries(suiteMap)) {
+      fs.writeFileSync(path.join(RESULTS_DIR, `${name}-verdict.json`), JSON.stringify(suite, null, 2));
+    }
+    fs.writeFileSync(path.join(RESULTS_DIR, 'runner-verdict.json'), JSON.stringify(runnerVerdict, null, 2));
+  } catch { /* non-critical */ }
+
+  // 2. Centralized log dir
+  if (swarmResultsDir) {
+    try {
+      if (!fs.existsSync(swarmResultsDir)) {
+        fs.mkdirSync(swarmResultsDir, { recursive: true });
+      }
+      const suffix = attempt ? `-attempt-${attempt}` : '';
+      fs.writeFileSync(
+        path.join(swarmResultsDir, `verdict${suffix}.json`),
+        JSON.stringify(runnerVerdict, null, 2),
+      );
+      for (const [name, suite] of Object.entries(suiteMap)) {
+        fs.writeFileSync(
+          path.join(swarmResultsDir, `${name}-verdict${suffix}.json`),
+          JSON.stringify(suite, null, 2),
+        );
+      }
+    } catch { /* non-critical */ }
   }
 }
 
 // ── Public API ────────────────────────────────────────────────────
 
 /**
- * Run all configured suites with telemetry emission.
+ * Run all configured suites with dependency ordering, safety timeouts,
+ * telemetry emission, and result persistence.
  *
- * Emits buster.suite.started before each suite and buster.suite.completed
- * after. Emits buster.suite.skipped for SKIP results and buster.suite.error
- * on thrown exceptions. Passes telemetryContext into individual suite implementations
- * that need to emit their own rich events (e.g. visual-reg).
- *
- * @param {string[]} suites               - Ordered list of suite names
+ * @param {string[]} suites               - Suite names to run
  * @param {object}   opts
  * @param {object}   opts.payload         - Full task payload
  * @param {string}   opts.moduleId        - Module ID (e.g. "06")
- * @param {number}   opts.attempt         - Attempt number (1-based)
- * @param {Function} [opts.logSink]       - Optional log callback (label, msg) => void
+ * @param {number}   [opts.attempt]       - Attempt number (1-based)
  * @param {object}   [opts.telemetryContext] - TelemetryContext from createTelemetryContext()
+ * @param {string}   [opts.logDir]        - Base log directory for writing results
  * @returns {Promise<{ results: object[], suiteSummary: string, criticalFailed: boolean }>}
  */
 export async function runSuites(suites, opts = {}) {
-  const { payload, moduleId, attempt, logSink, telemetryContext: tctx } = opts;
-  const results      = [];
+  const { payload, moduleId, attempt, telemetryContext: tctx, logDir } = opts;
+
+  const config  = payload?.test_config || payload?.config || {};
+  const project = payload?.project || 'unknown';
+
+  // Sort by execution order
+  const ordered = sortSuites(suites);
+
+  // Optional log sink + results dir derived from logDir
+  const swarmResultsDir = logDir ? path.join(logDir, 'tests') : null;
+  const logPath = swarmResultsDir ? path.join(swarmResultsDir, 'suites.jsonl') : null;
+  const logSink = logPath ? (entry) => {
+    try {
+      fs.appendFileSync(logPath, JSON.stringify({ ts: new Date().toISOString(), ...entry }) + '\n');
+    } catch { /* non-critical */ }
+  } : null;
+
+  // Context object passed to every suite
+  const context = {
+    payload,
+    moduleId,
+    config,
+    resultsDir: RESULTS_DIR,
+    logSink,
+    attempt,
+  };
+
+  const results    = [];
+  const suiteMap   = {}; // name → verdict (for dependency checks + disk write)
   let criticalFailed = false;
 
-  for (const suiteName of suites) {
-    const startMs = Date.now();
+  for (const suiteName of ordered) {
+    // 1. Load suite file — skip if not found
+    const suiteFn = await loadSuite(suiteName);
+    if (!suiteFn) {
+      const skipReason = `Suite file not found: suites/${suiteName}.js`;
+      await emitEvent(tctx, 'buster.suite.skipped', {
+        module_id:   moduleId,
+        suite:       suiteName,
+        top_finding: skipReason,
+      });
+      const verdict = createSuiteVerdict(suiteName, STATUS.SKIP, { reason: skipReason });
+      suiteMap[suiteName] = verdict;
+      results.push({ suite: suiteName, ...verdict });
+      continue;
+    }
 
+    // 2. Check dependencies — skip if a critical dependency failed/errored
+    const skipReason = checkDependencies(suiteName, suiteMap);
+    if (skipReason) {
+      await emitEvent(tctx, 'buster.suite.skipped', {
+        module_id:   moduleId,
+        suite:       suiteName,
+        top_finding: skipReason,
+      });
+      const verdict = createSuiteVerdict(suiteName, STATUS.SKIP, { reason: skipReason });
+      suiteMap[suiteName] = verdict;
+      results.push({ suite: suiteName, ...verdict });
+      continue;
+    }
+
+    // 3. Emit suite started
+    const startMs = Date.now();
     await emitEvent(tctx, 'buster.suite.started', {
       module_id: moduleId,
       suite:     suiteName,
       attempt,
     });
 
+    // 4. Execute suite with error boundary + safety timeout
     let result;
     try {
-      result = await dispatchSuite(suiteName, {
-        payload,
-        moduleId,
-        attempt,
-        logSink,
-        telemetryContext: tctx,
-        config: payload?.test_config || payload?.config || {},
-      });
+      const suiteTimeout = config.suite_timeout_ms || SUITE_TIMEOUT_MS;
+      result = await Promise.race([
+        suiteFn({ ...context }),
+        new Promise((_, reject) =>
+          setTimeout(
+            () => reject(new Error(`Suite "${suiteName}" timed out after ${suiteTimeout / 1000}s (safety limit)`)),
+            suiteTimeout,
+          )
+        ),
+      ]);
+      if (!result.duration_ms) {
+        result.duration_ms = Date.now() - startMs;
+      }
     } catch (err) {
-      const durationSecondsErr = Math.round((Date.now() - startMs) / 1000);
+      const duration_ms = Date.now() - startMs;
       await emitEvent(tctx, 'buster.suite.error', {
         module_id:        moduleId,
         suite:            suiteName,
         error:            err?.message || 'Suite threw an unexpected error',
-        duration_seconds: durationSecondsErr,
+        duration_seconds: Math.round(duration_ms / 1000),
       });
-      result = {
-        status:        'FAIL',
-        checks_passed: 0,
-        checks_failed: 1,
-        critical:      true,
-        top_finding:   err?.message || 'Suite threw an unexpected error',
-      };
+      result = createSuiteVerdict(suiteName, STATUS.FAIL, {
+        critical:  suiteName === 'build' || suiteName === 'health',
+        duration_ms,
+        error:     err?.message || 'Suite threw an unexpected error',
+        findings:  [],
+      });
     }
 
+    // 5. Emit suite completed (+ skipped event if result came back SKIP)
     const durationSeconds = Math.round((Date.now() - startMs) / 1000);
 
-    if (result.status === 'SKIP') {
+    if (result.status === STATUS.SKIP) {
       await emitEvent(tctx, 'buster.suite.skipped', {
         module_id:   moduleId,
         suite:       suiteName,
-        top_finding: result.top_finding ?? null,
+        top_finding: result.top_finding ?? result.reason ?? null,
       });
     }
 
     await emitEvent(tctx, 'buster.suite.completed', {
-      module_id:      moduleId,
-      suite:          suiteName,
-      status:         result.status,
-      duration_seconds: durationSeconds,
-      checks_passed:  result.checks_passed  ?? 0,
-      checks_failed:  result.checks_failed  ?? 0,
-      critical:       result.critical       ?? false,
-      top_finding:    result.top_finding    ?? null,
-    });
-
-    if (result.status === 'FAIL' && result.critical) criticalFailed = true;
-
-    results.push({
+      module_id:        moduleId,
       suite:            suiteName,
-      ...result,
+      status:           result.status,
       duration_seconds: durationSeconds,
+      checks_passed:    result.checks_passed  ?? 0,
+      checks_failed:    result.checks_failed  ?? 0,
+      critical:         result.critical       ?? false,
+      top_finding:      result.top_finding ?? result.findings?.[0]?.message ?? null,
     });
+
+    if (result.status === STATUS.FAIL && result.critical) criticalFailed = true;
+
+    suiteMap[suiteName] = result;
+    results.push({ suite: suiteName, ...result, duration_seconds: durationSeconds });
   }
+
+  // Write all results to disk
+  writeResults(suiteMap, moduleId, project, swarmResultsDir, attempt);
 
   const suiteSummary = results
     .map(r => `${suiteIcon(r.status)} ${r.suite}`)
