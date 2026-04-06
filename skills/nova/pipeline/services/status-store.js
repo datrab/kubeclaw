@@ -77,9 +77,12 @@ export function initStatus(moduleId, moduleConfig) {
     fail_summaries: [],
     history: [],
     started_at: null,
+    attempt_started_at: null,
+    phase_started_at: null,
     completed_at: null,
     cost: {
       total_duration_seconds: 0,
+      attempt_duration_seconds: 0,
     },
     validation: {
       attempt: 1,

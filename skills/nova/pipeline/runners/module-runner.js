@@ -39,7 +39,7 @@ import { resolveModel, validateBusterConfig, resolvePolicy, logEffectivePolicy }
 import { headHash, invalidateHeadHash } from '../core/git.js';
 import { loadStatus, saveStatus, addHistory, initStatus, savePrompt, saveStreamLog } from '../services/status-store.js';
 import { releaseBlueprint } from '../services/blueprint.js';
-import { handleFail, extractAgentFailReason, extractPreTestFailReason, getFailedSuiteNames } from '../services/failures.js';
+import { handleFail, extractAgentFailReason, extractPreTestFailReason, getFailedSuiteNames, classifyPreTestFailure, getPassedSuiteNames, buildPreTestDiscordFields } from '../services/failures.js';
 import { sleep, pollWithRateLimitRecovery, pollDualWithRateLimitRecovery, archiveModuleCompletions } from '../services/polling.js';
 import { acpLabel, modelToHarness, spawnAgent, killAgent, verifyAgentAlive } from '../agents/lifecycle.js';
 import { setShutdownContext, clearShutdownContext, getTrackedAgent } from '../agents/shutdown.js';
@@ -79,6 +79,31 @@ function mapRedisStatus(redisStatus) {
   return map[(redisStatus || '').toUpperCase()] || STATUS.FAIL;
 }
 
+
+function computeElapsedSeconds(fromIso, toIso = new Date().toISOString()) {
+  if (!fromIso) return 0;
+  const delta = new Date(toIso).getTime() - new Date(fromIso).getTime();
+  return Number.isFinite(delta) ? Math.max(0, Math.round(delta / 1000)) : 0;
+}
+
+function getAttemptStartedAt(status) {
+  return status?.attempt_started_at || status?.started_at || null;
+}
+
+function getPhaseStartedAt(status) {
+  return status?.phase_started_at || getAttemptStartedAt(status);
+}
+
+function formatDurationCompact(seconds) {
+  const total = Math.max(0, Math.round(Number(seconds) || 0));
+  if (total < 60) return `${total}s`;
+  const hours = Math.floor(total / 3600);
+  const minutes = Math.floor((total % 3600) / 60);
+  const secs = total % 60;
+  if (hours > 0) return secs ? `${hours}h ${minutes}m ${secs}s` : `${hours}h ${minutes}m`;
+  return secs ? `${minutes}m ${secs}s` : `${minutes}m`;
+}
+
 // Mutate the active logger context to set module/phase scope for structured log output
 function setLogScope(moduleId, phase) {
   const ctx = getActiveContext();
@@ -102,6 +127,9 @@ const DEFAULT_DEPS = {
   extractAgentFailReason,
   extractPreTestFailReason,
   getFailedSuiteNames,
+  classifyPreTestFailure,
+  getPassedSuiteNames,
+  buildPreTestDiscordFields,
   pollWithRateLimitRecovery,
   pollDualWithRateLimitRecovery,
   archiveModuleCompletions,
@@ -369,7 +397,10 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
 
     status.status = STATUS.IN_PROGRESS;
     status.current_phase = 'forge';
-    if (!status.started_at) status.started_at = new Date().toISOString();
+    const forgeAttemptStartedAt = new Date().toISOString();
+    if (!status.started_at) status.started_at = forgeAttemptStartedAt;
+    status.attempt_started_at = forgeAttemptStartedAt;
+    status.phase_started_at = forgeAttemptStartedAt;
     addHistory(status, STATUS.IN_PROGRESS, 'pipeline', `Forge started (${forgeHarness})`);
     status.validation = {
       attempt: currentAttemptNumber(status),
@@ -533,10 +564,10 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     onPhaseCompleted(_telemetryCtx(config), moduleId, 'forge');
 
     // ── Discord: Forge completion summary ──
-    const forgeDurationSec = Math.round((Date.now() - new Date(status.started_at).getTime()) / 1000);
+    const forgeDurationSec = computeElapsedSeconds(getPhaseStartedAt(status));
     const forgeNextStep = stages.includes('buster') ? 'Buster' : 'done (no Buster)';
     await deps.discord(config, 'OK', `Module ${moduleId} Forge complete → ${forgeNextStep}`, mod.title, [
-      { name: 'Forge Duration', value: `${Math.round(forgeDurationSec / 60)}min` },
+      { name: 'Forge Duration', value: formatDurationCompact(forgeDurationSec) },
       { name: 'Model', value: forgeModel },
       { name: 'Attempt', value: `${status.fail_count + 1}/${maxFails}` },
     ]);
@@ -558,16 +589,16 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
     status.status = STATUS.PASS;
     status.completed_at = new Date().toISOString();
     status.current_phase = null;
+    status.phase_started_at = null;
     if (status.started_at) {
-      status.cost.total_duration_seconds = Math.round(
-        (new Date(status.completed_at) - new Date(status.started_at)) / 1000
-      );
+      status.cost.total_duration_seconds = computeElapsedSeconds(status.started_at, status.completed_at);
     }
+    status.cost.attempt_duration_seconds = computeElapsedSeconds(getAttemptStartedAt(status), status.completed_at);
     addHistory(status, STATUS.PASS, 'pipeline', 'Forge-only module — no Buster phase');
     deps.saveStatus(config, dir, status);
 
     await deps.discord(config, 'OK', `Module ${moduleId} PASS ✓ (forge-only)`, mod.title, [
-      { name: 'Duration', value: `${Math.round(status.cost.total_duration_seconds / 60)}min` },
+      { name: 'Duration', value: formatDurationCompact(status.cost.attempt_duration_seconds || status.cost.total_duration_seconds) },
       { name: 'Stages', value: stages.join(', ') },
     ]);
 
@@ -578,7 +609,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
       attempt: status.fail_count + 1,
       phase: 'forge',
       model: null,
-      duration_seconds: status.cost?.total_duration_seconds ?? 0,
+      duration_seconds: status.cost?.attempt_duration_seconds ?? status.cost?.total_duration_seconds ?? 0,
       cost_estimate_usd: null,
       commit_hash: status.commit_hash || null,
     });
@@ -596,7 +627,10 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
   if (!stages.includes('forge') && stages.includes('buster')
       && [STATUS.PENDING, STATUS.FAIL].includes(status.status)) {
     log('INFO', 'No forge in stages — promoting to READY_FOR_TESTING for buster-only run');
-    if (!status.started_at) status.started_at = new Date().toISOString();
+    const busterOnlyStartedAt = new Date().toISOString();
+    if (!status.started_at) status.started_at = busterOnlyStartedAt;
+    status.attempt_started_at = busterOnlyStartedAt;
+    status.phase_started_at = busterOnlyStartedAt;
     status.status = STATUS.READY_FOR_TESTING;
     addHistory(status, STATUS.READY_FOR_TESTING, 'pipeline', 'Buster-only module — skipping Forge');
     ensureValidationState(status);
@@ -748,6 +782,9 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
 
       status.status = STATUS.TESTING;
       status.current_phase = 'buster';
+      const busterPhaseStartedAt = new Date().toISOString();
+      if (!status.attempt_started_at) status.attempt_started_at = busterPhaseStartedAt;
+      status.phase_started_at = busterPhaseStartedAt;
       addHistory(status, STATUS.TESTING, 'pipeline',
         `Buster started (subagent attempt ${busterAttempt}/${maxBusterCrashRetries + 1})`);
       deps.saveStatus(config, dir, status);
@@ -867,15 +904,15 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
       if (status.status === STATUS.PASS) {
         status.completed_at = new Date().toISOString();
         status.current_phase = null;
+        status.phase_started_at = null;
         if (status.started_at) {
-          status.cost.total_duration_seconds = Math.round(
-            (new Date(status.completed_at) - new Date(status.started_at)) / 1000
-          );
+          status.cost.total_duration_seconds = computeElapsedSeconds(status.started_at, status.completed_at);
         }
+        status.cost.attempt_duration_seconds = computeElapsedSeconds(getAttemptStartedAt(status), status.completed_at);
         deps.saveStatus(config, dir, status);
 
         await deps.discord(config, 'OK', `Module ${moduleId} PASS ✓`, mod.title, [
-          { name: 'Duration', value: `${Math.round(status.cost.total_duration_seconds / 60)}min` },
+          { name: 'Duration', value: formatDurationCompact(status.cost.attempt_duration_seconds || status.cost.total_duration_seconds) },
           { name: 'Attempts', value: `${status.fail_count + 1}` },
         ]);
 
@@ -887,7 +924,7 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
           attempt: status.fail_count + 1,
           phase: 'buster',
           model: busterModel,
-          duration_seconds: status.cost?.total_duration_seconds ?? 0,
+          duration_seconds: status.cost?.attempt_duration_seconds ?? status.cost?.total_duration_seconds ?? 0,
           cost_estimate_usd: null,
           commit_hash: status.commit_hash || null,
         });
@@ -965,13 +1002,45 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
         // ── Category 2: Pre-test failure (orchestrator with verdict) ──
         if (hasPreTestVerdict) {
           const failedSuiteNames = deps.getFailedSuiteNames(redisEntry);
+          const passedSuiteNames = deps.getPassedSuiteNames(redisEntry);
           const preTestReason = deps.extractPreTestFailReason(redisEntry);
+          const preTestClass = deps.classifyPreTestFailure(redisEntry);
+          const preTestFields = deps.buildPreTestDiscordFields(redisEntry);
 
-          log('WARN', `Pre-test failure: ${preTestReason} (suites: ${failedSuiteNames.join(',') || 'unknown'})`);
+          log('WARN', `Pre-test failure [${preTestClass.kind}/${preTestClass.code}]: ${preTestReason} (suites: ${failedSuiteNames.join(',') || 'unknown'})`);
+
+          if (preTestClass.kind === 'infra' || preTestClass.kind === 'config') {
+            status.status = STATUS.READY_FOR_TESTING;
+            status.current_phase = null;
+            addHistory(status, STATUS.READY_FOR_TESTING, 'pipeline',
+              `Buster pre-test ${preTestClass.kind} issue: ${preTestClass.summary}`);
+            deps.saveStatus(config, dir, status);
+
+            await deps.discord(
+              config,
+              preTestClass.kind === 'infra' ? 'CRITICAL' : 'WARN',
+              `Module ${moduleId} — ${preTestClass.kind === 'infra' ? 'Buster Infra Issue' : 'Buster Config Issue'}`,
+              `${preTestClass.summary}. Forge output preserved; fix the ${preTestClass.kind === 'infra' ? 'test environment' : 'test config'} and resume Buster.`,
+              [
+                { name: 'Classification', value: preTestClass.summary, inline: false },
+                ...preTestFields,
+                { name: 'Action', value: preTestClass.kind === 'infra' ? 'Fix Buster / registry / sandbox infra, then --resume' : 'Fix progress.json test_config / test_suites / serve, then --resume', inline: false },
+                { name: 'Reason', value: preTestReason.slice(0, 1024), inline: false },
+              ],
+            );
+
+            return { retry: false, result: {
+              exit: EXIT_NEEDS_NOVA,
+              reason: `Buster ${preTestClass.kind} issue (${preTestClass.code}) — Forge output preserved: ${preTestClass.detail}`,
+              module: moduleId, module_dir: dir,
+              failed_suites: failedSuiteNames,
+              passed_suites: passedSuiteNames,
+              forge_preserved: true,
+              pretest_classification: preTestClass,
+            }};
+          }
 
           // Check if same suite(s) already failed as pre-test in a previous attempt.
-          // Repeated pre-test failures in the same suite = config issue, not code.
-          // Forge cannot fix progress.json — don't waste cycles.
           const previousPreTestFails = (status.fail_summaries || [])
             .filter(s => typeof s === 'object' && typeof s.summary === 'string'
                       && s.summary.startsWith('[buster/pre-test]'));
@@ -982,83 +1051,27 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
             );
 
           if (isRepeatedPreTestFail) {
-            log('ERROR', `Module ${moduleId}: repeated pre-test failure in ${failedSuiteNames.join(',')} — likely config issue, skipping Forge`);
+            log('ERROR', `Module ${moduleId}: repeated pre-test failure in ${failedSuiteNames.join(',')} — escalating without another Forge cycle`);
 
-            status.fail_count++;
-            status.fail_summaries.push({
-              attempt: status.fail_count,
-              timestamp: new Date().toISOString(),
-              summary: preTestReason,
-              phase: 'buster',
-              is_pre_test: true,
-              failed_suites: failedSuiteNames,
-            });
-
-            // ── BLOCKED check — must respect max_fails like handleFail does ──
-            if (status.fail_count >= maxFails) {
-              status.status = STATUS.BLOCKED;
-              status.current_phase = null;
-              addHistory(status, STATUS.FAIL, 'pipeline',
-                `Repeated pre-test failure (${failedSuiteNames.join(',')}) — config issue, Forge cannot fix`);
-              addHistory(status, STATUS.BLOCKED, 'pipeline', `Max retries (${maxFails}) exceeded`);
-              deps.saveStatus(config, dir, status);
-
-              log('ERROR', `Module ${moduleId} BLOCKED — repeated pre-test failure, ${maxFails}x in buster phase`);
-              getModuleStats(config).modules_blocked.push(moduleId);
-              await deps.discord(config, 'CRITICAL', `Module ${moduleId} BLOCKED`,
-                `Repeated pre-test failure in ${failedSuiteNames.join(', ')}. Failed ${maxFails} times. Human intervention needed.`, [
-                  { name: 'Failed Suites', value: failedSuiteNames.join(', ') },
-                  { name: 'Reason', value: preTestReason.slice(0, 200) },
-                  { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
-                ]);
-
-              onModuleBlocked(_telemetryCtx(config), moduleId, {
-                title: mod.title,
-                old_status: 'TESTING',
-                phase: 'buster',
-                reason: `Repeated pre-test failure — max retries exceeded (${failedSuiteNames.join(',')})`,
-              });
-
-              return { retry: false, result: {
-                exit: EXIT_BLOCKED,
-                reason: `Repeated pre-test failure — max retries exceeded (${failedSuiteNames.join(',')})`,
-                module: moduleId, module_dir: dir,
-                failed_suites: failedSuiteNames,
-              }};
-            }
-
-            status.status = STATUS.FAIL;
-            status.current_phase = null;
-            addHistory(status, STATUS.FAIL, 'pipeline',
-              `Repeated pre-test failure (${failedSuiteNames.join(',')}) — config issue, Forge cannot fix`);
-            deps.saveStatus(config, dir, status);
-
-            await deps.discord(config, 'CRITICAL', `Module ${moduleId} — Config Issue Detected`,
-              `Same pre-test suite(s) failed again: ${failedSuiteNames.join(', ')}. This is likely a config problem in progress.json, not a code issue.`, [
-                { name: 'Failed Suites', value: failedSuiteNames.join(', ') },
-                { name: 'Reason', value: preTestReason.slice(0, 200) },
-                { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
-                { name: 'Action', value: 'Check progress.json test_config / test_suites / serve' },
+            await deps.discord(config, 'CRITICAL', `Module ${moduleId} — Repeated Pre-Test Failure`,
+              `The same pre-test suite(s) failed again after a Forge retry. Stopping before another code cycle.`, [
+                ...preTestFields,
+                { name: 'Reason', value: preTestReason.slice(0, 1024), inline: false },
+                { name: 'Action', value: 'Investigate deterministic test failure before resuming Forge', inline: false },
               ]);
-
-            onModuleFail(_telemetryCtx(config), moduleId, {
-              title: mod.title,
-              old_status: 'TESTING',
-              phase: 'buster',
-              attempt: status.fail_count,
-              reason: `Repeated pre-test failure (${failedSuiteNames.join(',')}) — likely config issue`,
-            });
 
             return { retry: false, result: {
               exit: EXIT_NEEDS_NOVA,
-              reason: `Repeated pre-test failure (${failedSuiteNames.join(',')}) — likely config issue in progress.json`,
+              reason: `Repeated pre-test failure (${failedSuiteNames.join(',')}) — needs Nova review before another Forge cycle`,
               module: moduleId, module_dir: dir,
               failed_suites: failedSuiteNames,
+              passed_suites: passedSuiteNames,
+              pretest_classification: preTestClass,
             }};
           }
 
-          // First pre-test failure → give Forge a chance (might be a code issue)
-          log('INFO', `First pre-test failure — routing to Forge via handleFail`);
+          // Code-side pre-test failure → give Forge a chance.
+          log('INFO', `Code-side pre-test failure — routing to Forge via handleFail`);
           const failResult = await deps.handleFail(config, status, dir, moduleId, maxFails, 'buster',
             preTestReason, { recalledMemoryIds });
           if (failResult._retry) return { retry: true, fail_count: status.fail_count };

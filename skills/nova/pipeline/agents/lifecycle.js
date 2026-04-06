@@ -210,7 +210,7 @@ export function buildBusterPayload(config, progress, moduleId, taskType, taskPro
 
 export function dispatchRedisTask(config, progress, agentType, moduleId, taskType, payload, status = null, opts = {}) {
   const agentConfig = config.agents[agentType];
-  const redisJsPath = validateSafePath(agentConfig.redis_js_path || '/app/skills/redis.js', `agents.${agentType}.redis_js_path`);
+  const redisJsPath = validateSafePath(agentConfig.redis_js_path || '/app/skills/pipeline/tools/redis.js', `agents.${agentType}.redis_js_path`);
   log('STEP', `Dispatching to Redis: ${agentType} (module: ${moduleId}, type: ${taskType})`);
   const taskPayload = (taskType === 'module_test' || taskType === 'gate_test') ? buildBusterPayload(config, progress, moduleId, taskType, payload, status, opts) : { module: moduleId, project: config.project, message: payload, timestamp: new Date().toISOString() };
   const tmpPayloadPath = tmpFile('payload', moduleId, '.json');

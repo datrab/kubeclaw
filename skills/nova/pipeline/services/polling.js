@@ -523,7 +523,7 @@ async function getRedisModule(config) {
   const agentConf = Object.values(config.agents || {}).find(
     a => typeof a === 'object' && a?.dispatch === 'redis' && a?.redis_js_path
   );
-  const redisPath = agentConf?.redis_js_path || '/app/skills/redis.js';
+  const redisPath = agentConf?.redis_js_path || '/app/skills/pipeline/tools/redis.js';
 
   try {
     const validated = validateSafePath(redisPath, 'redis.js (completion reader)');

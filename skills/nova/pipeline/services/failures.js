@@ -216,18 +216,9 @@ export function extractPreTestFailReason(redisEntry) {
 
   if (redisEntry?.verdict) {
     try {
-      const v = typeof redisEntry.verdict === 'string'
-        ? JSON.parse(redisEntry.verdict)
-        : redisEntry.verdict;
-      const failedSuites = Object.entries(v.suites || {})
+      const failedSuites = Object.entries(parsePreTestVerdict(redisEntry).suites || {})
         .filter(([_, s]) => s.status === 'FAIL' || s.status === 'ERROR')
-        .map(([name, s]) => {
-          const topFindings = (s.findings || [])
-            .slice(0, 3)
-            .map(f => f.description || f.message || f.title || 'unknown')
-            .join('; ');
-          return `${name}: ${s.error || topFindings || 'failed'}`;
-        });
+        .map(([name, s]) => `${name}: ${getSuiteFailureDetail(s) || 'failed'}`);
       if (failedSuites.length > 0) {
         verdictDetails = ` | Failed suites: ${failedSuites.join(' | ')}`;
       }
@@ -237,21 +228,146 @@ export function extractPreTestFailReason(redisEntry) {
   return `[buster/pre-test] ${reason}${verdictDetails}`;
 }
 
+function parsePreTestVerdict(redisEntry) {
+  if (!redisEntry?.verdict) return { suites: {} };
+  try {
+    return typeof redisEntry.verdict === 'string'
+      ? JSON.parse(redisEntry.verdict)
+      : redisEntry.verdict;
+  } catch {
+    return { suites: {} };
+  }
+}
+
+function getSuiteFailureDetail(suite) {
+  if (!suite || typeof suite !== 'object') return '';
+  if (suite.error) return String(suite.error);
+  if (suite.top_finding) return String(suite.top_finding);
+  const topFindings = (suite.findings || [])
+    .slice(0, 3)
+    .map(f => f?.description || f?.message || f?.title || 'unknown')
+    .filter(Boolean)
+    .join('; ');
+  return topFindings || String(suite.reason || '');
+}
+
+const PRETEST_INFRA_PATTERNS = [
+  {
+    code: 'REGISTRY_PROTOCOL_MISMATCH',
+    summary: 'Registry mirror protocol mismatch (HTTP registry accessed as HTTPS)',
+    re: /http:\s*server gave HTTP response to HTTPS client/i,
+  },
+  {
+    code: 'REGISTRY_ACCESS_FAILED',
+    summary: 'Registry access failed during pre-test',
+    re: /(x509|certificate signed by unknown authority|tls|authentication required|unauthorized|denied|no route to host|connection refused|network is unreachable|i\/o timeout|temporary failure in name resolution|no such host).*(registry|podman|docker)|(?:registry|podman|docker).*(x509|certificate|unauthorized|denied|connection refused|timeout)/i,
+  },
+  {
+    code: 'SANDBOX_RUNTIME_FAILURE',
+    summary: 'Sandbox or Podman runtime failed before tests could run',
+    re: /(sandbox-build|sandbox-run|podman) .*?(failed|error|cannot|unable)|error: pinging container registry/i,
+  },
+];
+
+const PRETEST_CONFIG_PATTERNS = [
+  {
+    code: 'PROGRESS_CONFIG_INVALID',
+    summary: 'progress.json / test configuration looks invalid',
+    re: /(progress\.json|test_config|test_suites|serve\.|suite file not found|manifest path|dockerfile .*not found|image_name.*required|secret yaml .*not found)/i,
+  },
+];
+
+export function classifyPreTestFailure(redisEntry) {
+  const verdict = parsePreTestVerdict(redisEntry);
+  const suiteEntries = Object.entries(verdict.suites || {});
+  const failed = suiteEntries
+    .filter(([_, suite]) => suite?.status === 'FAIL' || suite?.status === 'ERROR')
+    .map(([name, suite]) => ({ name, detail: getSuiteFailureDetail(suite) || 'failed' }));
+
+  const reasonText = [
+    redisEntry?.reason || '',
+    ...failed.map(({ name, detail }) => `${name}: ${detail}`),
+  ].filter(Boolean).join(' | ');
+
+  for (const pattern of PRETEST_INFRA_PATTERNS) {
+    if (pattern.re.test(reasonText)) {
+      return {
+        kind: 'infra',
+        code: pattern.code,
+        summary: pattern.summary,
+        detail: failed[0]?.detail || reasonText || 'Infrastructure issue during pre-test',
+      };
+    }
+  }
+
+  for (const pattern of PRETEST_CONFIG_PATTERNS) {
+    if (pattern.re.test(reasonText)) {
+      return {
+        kind: 'config',
+        code: pattern.code,
+        summary: pattern.summary,
+        detail: failed[0]?.detail || reasonText || 'Configuration issue during pre-test',
+      };
+    }
+  }
+
+  return {
+    kind: 'code',
+    code: 'PRETEST_SUITE_FAILURE',
+    summary: 'Pre-test suite failure before Buster subagent spawn',
+    detail: failed[0]?.detail || reasonText || 'Pre-test failure',
+  };
+}
+
+export function getPassedSuiteNames(redisEntry) {
+  return Object.entries(parsePreTestVerdict(redisEntry).suites || {})
+    .filter(([_, s]) => s?.status === 'PASS')
+    .map(([name]) => name);
+}
+
+export function buildPreTestDiscordFields(redisEntry) {
+  const suites = parsePreTestVerdict(redisEntry).suites || {};
+  const passed = [];
+  const failed = [];
+  const skipped = [];
+
+  for (const [name, suite] of Object.entries(suites)) {
+    const status = String(suite?.status || '').toUpperCase();
+    if (status === 'PASS') passed.push(name);
+    else if (status === 'SKIP') skipped.push(name);
+    else if (status === 'FAIL' || status === 'ERROR') failed.push({ name, detail: getSuiteFailureDetail(suite) || 'failed' });
+  }
+
+  const fields = [
+    { name: 'Passed Suites', value: passed.length ? truncateForDiscord(passed.join(', '), 1024) : '—', inline: true },
+    { name: 'Failed Suites', value: failed.length ? truncateForDiscord(failed.map(s => s.name).join(', '), 1024) : '—', inline: true },
+  ];
+
+  if (skipped.length) {
+    fields.push({ name: 'Skipped Suites', value: truncateForDiscord(skipped.join(', '), 1024), inline: true });
+  }
+
+  if (failed.length) {
+    fields.push({
+      name: 'Issue',
+      value: truncateForDiscord(
+        failed.slice(0, 3).map(({ name, detail }) => `${name}: ${detail}`).join('\n'),
+        1024,
+      ),
+      inline: false,
+    });
+  }
+
+  return fields;
+}
+
 /**
  * Extract the names of failed suites from a Redis completion entry's verdict.
  */
 export function getFailedSuiteNames(redisEntry) {
-  if (!redisEntry?.verdict) return [];
-  try {
-    const v = typeof redisEntry.verdict === 'string'
-      ? JSON.parse(redisEntry.verdict)
-      : redisEntry.verdict;
-    return Object.entries(v.suites || {})
-      .filter(([_, s]) => s.status === 'FAIL' || s.status === 'ERROR')
-      .map(([name]) => name);
-  } catch {
-    return [];
-  }
+  return Object.entries(parsePreTestVerdict(redisEntry).suites || {})
+    .filter(([_, s]) => s?.status === 'FAIL' || s?.status === 'ERROR')
+    .map(([name]) => name);
 }
 
 /**
@@ -301,7 +417,11 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
     log('ERROR', `Module ${moduleId} BLOCKED — failed ${maxFails}x in ${phase} phase`);
     const stats = getRunStats(config);
     if (stats) stats.modules_blocked.push(moduleId);
-    await discord(config, 'CRITICAL', `Module ${moduleId} BLOCKED`, `Failed ${maxFails} times in ${phase} phase. Human intervention needed.`);
+    await discord(config, 'CRITICAL', `Module ${moduleId} BLOCKED`, `Failed ${maxFails} times in ${phase} phase. Human intervention needed.`, [
+      { name: 'Phase', value: phase },
+      { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
+      ...(reason ? [{ name: 'Reason', value: truncateForDiscord(reason, 1024), inline: false }] : []),
+    ]);
     return { exit: EXIT_BLOCKED, reason: `Max retries exceeded (${phase})`, module: moduleId, status };
   }
 
@@ -319,6 +439,7 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
       { name: 'Phase', value: phase },
       { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
       { name: 'Auto-Retry', value: `${status.fail_count}/${autoRetryThreshold}` },
+      ...(reason ? [{ name: 'Reason', value: truncateForDiscord(reason, 1024), inline: false }] : []),
     ]);
 
     return {
@@ -342,6 +463,7 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
     { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
     ...(isTimeout ? [{ name: 'Type', value: 'TIMEOUT' }] : []),
     ...(!isTimeout ? [{ name: 'Action', value: 'Resume with --prompt' }] : []),
+    ...(reason ? [{ name: 'Reason', value: truncateForDiscord(reason, 1024), inline: false }] : []),
   ]);
 
   return buildNovaEscalation(config, status, moduleId, moduleDir, maxFails, phase, isTimeout, autoRetryThreshold);

@@ -117,7 +117,7 @@ export function validateConfig(config, progress) {
   requireField(config, 'agents.buster');
 
   config.agents.buster.dispatch = 'redis';
-  config.agents.buster.redis_js_path ??= '/app/skills/redis.js';
+  config.agents.buster.redis_js_path ??= '/app/skills/pipeline/tools/redis.js';
 
   config.models ??= {};
 

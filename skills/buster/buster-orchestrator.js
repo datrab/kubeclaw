@@ -99,18 +99,47 @@ const EMBED_FOOTER = { text: 'Buster Orchestrator v2.0' };
  */
 export function buildSuiteResultsEmbed(moduleId, project, suitesInfo) {
   const { suiteSummary, criticalFailed, results = [] } = suitesInfo;
-  const pass      = !criticalFailed;
+  const pass = !criticalFailed;
   const passCount = results.filter(r => r.status === 'PASS').length;
-  const failCount = results.filter(r => r.status === 'FAIL').length;
+  const failEntries = results
+    .filter(r => r.status === 'FAIL' || r.status === 'ERROR')
+    .map(r => {
+      const findings = (r.findings || [])
+        .slice(0, 2)
+        .map(f => f?.description || f?.message || f?.title || 'unknown')
+        .filter(Boolean)
+        .join('; ');
+      return {
+        suite: r.suite,
+        detail: r.error || r.top_finding || findings || r.reason || 'failed',
+      };
+    });
+  const failCount = failEntries.length;
+  const passSuites = results.filter(r => r.status === 'PASS').map(r => r.suite);
+  const skipSuites = results.filter(r => r.status === 'SKIP').map(r => r.suite);
+  const truncate = (value, max = 1024) => {
+    const s = String(value || '—');
+    return s.length <= max ? s : `${s.slice(0, max - 1)}…`;
+  };
   const fields = [
-    { name: 'Status',  value: pass ? 'GO' : 'NO-GO',   inline: true },
-    { name: 'Module',  value: String(moduleId),         inline: true },
-    { name: 'Project', value: String(project || '—'),   inline: true },
-    { name: 'Passed',  value: String(passCount),        inline: true },
-    { name: 'Failed',  value: String(failCount),        inline: true },
+    { name: 'Status',  value: pass ? 'GO' : 'NO-GO', inline: true },
+    { name: 'Module',  value: String(moduleId),       inline: true },
+    { name: 'Project', value: String(project || '—'), inline: true },
+    { name: 'Passed',  value: String(passCount),      inline: true },
+    { name: 'Failed',  value: String(failCount),      inline: true },
   ];
   if (suiteSummary) {
-    fields.push({ name: 'Summary', value: String(suiteSummary).slice(0, 1024), inline: false });
+    fields.push({ name: 'Summary', value: truncate(suiteSummary), inline: false });
+  }
+  if (passSuites.length) {
+    fields.push({ name: 'Passed Suites', value: truncate(passSuites.join(', ')), inline: false });
+  }
+  if (failEntries.length) {
+    fields.push({ name: 'Failed Suites', value: truncate(failEntries.map(r => r.suite).join(', ')), inline: false });
+    fields.push({ name: 'Issue', value: truncate(failEntries.map(r => `${r.suite}: ${r.detail}`).join('\n')), inline: false });
+  }
+  if (skipSuites.length) {
+    fields.push({ name: 'Skipped Suites', value: truncate(skipSuites.join(', ')), inline: false });
   }
   return {
     title:     pass ? `✅ Suite Results: GO — ${moduleId}` : `🚫 Suite Results: NO-GO — ${moduleId}`,

@@ -1,5 +1,5 @@
 export async function getRedisModule(config) {
-  const redisPath = config?.agents?.buster?.redis_js_path || '/app/skills/redis.js';
+  const redisPath = config?.agents?.buster?.redis_js_path || '/app/skills/pipeline/tools/redis.js';
   return import(redisPath);
 }
 

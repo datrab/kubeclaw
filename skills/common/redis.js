@@ -25,14 +25,25 @@ import path from 'path';
 import { createRequire } from 'module';
 import { execFileSync } from 'child_process';
 
-// Load ioredis: try native ESM first, fall back to createRequire for global installs
-let Redis;
-try {
-  const mod = await import('ioredis');
-  Redis = mod.default;
-} catch {
-  Redis = createRequire(import.meta.url)('ioredis');
+const require = createRequire(import.meta.url);
+
+function requireFirst(candidates) {
+  let lastError = null;
+  for (const candidate of candidates) {
+    try {
+      return require(candidate);
+    } catch (err) {
+      lastError = err;
+    }
+  }
+  throw lastError;
 }
+
+const Redis = requireFirst([
+  'ioredis',
+  '/app/node_modules/ioredis',
+  '/usr/local/lib/node_modules/ioredis',
+]);
 
 // ─── Config ─────────────────────────────────────────────────────────────────
 

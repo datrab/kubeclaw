@@ -17,8 +17,8 @@
 // and for the subagent. Cleanup happens at task end via orchestrator.
 //
 // Config (from context.config.serve):
-//   { type: "static", build_cmd: "npm run build", image: "node:20-slim" }
-//   { type: "server", start_cmd: "npm start", port: 3000, image: "node:20-slim" }
+//   { type: "static", build_cmd: "npm run build", image: "docker.io/library/node:20-slim" }
+//   { type: "server", start_cmd: "npm start", port: 3000, image: "docker.io/library/node:20-slim" }
 
 import { execFile, exec } from 'child_process';
 import { promisify } from 'util';
@@ -39,7 +39,7 @@ const execAsync     = promisify(exec);
 
 const DEFAULTS = {
   type:      'static',
-  image:     'node:20-slim',
+  image:     'docker.io/library/node:20-slim',
   build_cmd: 'npm run build',
   start_cmd: 'npm start',
   port:      3000,
@@ -55,6 +55,17 @@ let _logSink = null;
 function log(msg) {
   console.log(`[SUITE] [BUILD] ${msg}`);
   if (_logSink) _logSink({ suite: 'build', msg });
+}
+
+
+function normalizeImageRef(image) {
+  if (!image) return image;
+  const ref = String(image).trim();
+  if (!ref) return ref;
+  const first = ref.split('/')[0];
+  if (!ref.includes('/')) return `docker.io/library/${ref}`;
+  if (!first.includes('.') && !first.includes(':') && first !== 'localhost') return `docker.io/${ref}`;
+  return ref;
 }
 
 /**
@@ -246,7 +257,7 @@ async function extractEnvFromManifest(deploymentYamlPath, secretYamlPath) {
 // ── Static Build + Serve ────────────────────────────────────────
 
 async function buildStatic(config) {
-  const image      = config.image      || DEFAULTS.image;
+  const image      = normalizeImageRef(config.image || DEFAULTS.image);
   const buildCmd   = config.build_cmd  || DEFAULTS.build_cmd;
   const projectDir = resolveRepoPath(config.project_dir || DEFAULTS.project_dir);
   const timeout    = (config.timeout   || DEFAULTS.timeout) * 1000;
@@ -349,7 +360,7 @@ function normaliseStartCmd(cmd, projectDir) {
 }
 
 async function buildServer(config) {
-  const image     = config.image      || DEFAULTS.image;
+  const image     = normalizeImageRef(config.image || DEFAULTS.image);
   const startCmd  = config.start_cmd  || DEFAULTS.start_cmd;
   const port      = config.port       || DEFAULTS.port;
   const timeout   = (config.timeout   || DEFAULTS.timeout) * 1000;

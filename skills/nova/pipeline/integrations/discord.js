@@ -2,6 +2,7 @@ import { execFileSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { log } from '../core/logger.js';
+import { getRunStats } from '../core/runtime.js';
 
 function curlPost(url, jsonPayload, opts = {}) {
   execFileSync('curl', ['-s', '-X', 'POST', '-H', 'Content-Type: application/json', '-d', jsonPayload, url], { stdio: 'ignore', timeout: 10000, ...opts });
@@ -30,6 +31,10 @@ export async function discord(config, level, title, description, fields = []) {
     const icons = { INFO: 'ℹ️', WARN: '⚠️', CRITICAL: '🚨', OK: '✅' };
     const payload = { embeds: [{ title: `${icons[level] || ''} ${title}`, description, color: colors[level] || 0x95a5a6, fields: fields.map(f => ({ name: f.name, value: String(f.value), inline: f.inline ?? true })), footer: { text: `KubeClaw Pipeline · ${config.project}` }, timestamp: new Date().toISOString() }] };
     curlPost(config.discord_webhook_url, JSON.stringify(payload));
+    try {
+      const stats = getRunStats(config);
+      if (stats) stats.discord_notifications_sent = (stats.discord_notifications_sent || 0) + 1;
+    } catch {}
   } catch {
     log('WARN', 'Discord webhook delivery failed (details suppressed for security)');
   }
