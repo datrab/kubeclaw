@@ -73,14 +73,43 @@ const STATE = {
 // ── Discord ───────────────────────────────────────────────────────
 
 /**
- * Send a Discord embed via webhook. Fire-and-forget — never throws.
- * @param {object} embed - Discord embed object (from builder functions below)
+ * Send a Discord webhook payload. Fire-and-forget and never throws.
+ * Accepts either a plain embed object or a richer payload with embeds/content/files.
+ * @param {object} message
  */
-function discord(embed) {
+function discord(message) {
   const webhookUrl = process.env.DISCORD_WEBHOOK_URL || process.env.DISCORD_WEBHOOK;
-  if (!webhookUrl) return;
+  if (!webhookUrl || !message) return;
+
+  const normalized = (message.embeds || message.content || message.files)
+    ? {
+        content: message.content || undefined,
+        embeds: Array.isArray(message.embeds) ? message.embeds : undefined,
+        files: Array.isArray(message.files)
+          ? message.files.filter((f) => f?.path && fs.existsSync(f.path))
+          : [],
+      }
+    : { content: undefined, embeds: [message], files: [] };
+
   try {
-    const body = JSON.stringify({ embeds: [embed] });
+    if (normalized.files.length > 0) {
+      const payload = JSON.stringify({
+        content: normalized.content,
+        embeds: normalized.embeds,
+      });
+      const args = ['-s', '-X', 'POST', '-F', `payload_json=${payload}`];
+      normalized.files.forEach((file, idx) => {
+        args.push('-F', `files[${idx}]=@${file.path};filename=${file.name || path.basename(file.path)}`);
+      });
+      args.push(webhookUrl);
+      execFileSync('curl', args, { stdio: 'ignore', timeout: 10000 });
+      return;
+    }
+
+    const body = JSON.stringify({
+      content: normalized.content,
+      embeds: normalized.embeds,
+    });
     execFileSync('curl', ['-s', '-X', 'POST', '-H', 'Content-Type: application/json', '-d', body, webhookUrl], {
       stdio:   'ignore',
       timeout: 10000,
@@ -214,6 +243,100 @@ export function buildTimeoutEmbed(moduleId, project, { elapsedSeconds, timeoutSe
   };
 }
 
+function buildLegacyTaskDispatchMessage(payload, iter = 1) {
+  const pretty = JSON.stringify(payload, null, 2);
+  const embed = {
+    title: '⚡ Task: nova → buster',
+    description: `nova → buster
+Type: ${payload?.task_type || 'module_test'} | Iter: ${iter}`,
+    color: 0x2ecc71,
+    footer: { text: 'Buster Processor legacy compatibility' },
+  };
+
+  if (pretty.length <= 1800) {
+    embed.fields = [{
+      name: 'Payload',
+      value: `\`\`\`json
+${pretty}
+\`\`\``,
+      inline: false,
+    }];
+    return { embeds: [embed] };
+  }
+
+  const payloadPath = path.join('/tmp', `payload-${payload?.task_type || 'module_test'}-${Date.now()}.json`);
+  try {
+    fs.writeFileSync(payloadPath, pretty);
+    embed.description += '\n\nPayload too large for embed — see attached file.';
+    return {
+      embeds: [embed],
+      files: [{ path: payloadPath, name: path.basename(payloadPath) }],
+    };
+  } catch {
+    embed.description += '\n\nPayload too large for embed.';
+    return { embeds: [embed] };
+  }
+}
+
+function buildLegacySuiteResultsEmbed(moduleId, suitesInfo) {
+  const suites = Object.entries(suitesInfo?.suites || {});
+  const lines = suites.map(([name, s]) => {
+    const icon = s.status === 'PASS' ? '✅' : s.status === 'FAIL' ? '❌' : s.status === 'ERROR' ? '💥' : '⏭️';
+    let line = `${icon} ${name.padEnd(10)} — ${s.status}`;
+    if (s.duration_ms) line += ` (${(s.duration_ms / 1000).toFixed(1)}s)`;
+    if (s.reason) line += `\n   ${s.reason}`;
+    return line;
+  }).join('\n');
+
+  const action = suitesInfo?.criticalFailed
+    ? '→ No spawn (critical suite failed)'
+    : '→ Spawning Subagent (results injected)';
+
+  return {
+    title: suitesInfo?.criticalFailed
+      ? `❌ Pre-Test FAIL: Module ${moduleId}`
+      : `🔬 Pre-Test Results: Module ${moduleId}`,
+    color: suitesInfo?.criticalFailed ? 0xe74c3c : 0x2ecc71,
+    description: `\`\`\`
+${lines}
+\`\`\`
+${action}`,
+    footer: { text: `Buster Orchestrator v1.1 · ${Math.round(suitesInfo?.elapsedMs || 0)}ms total` },
+  };
+}
+
+function buildLegacySessionSpawnEmbed(moduleId, project, sessionData, suitesInfo) {
+  return {
+    title: `🔬 ACP Session Spawned: ${moduleId}`,
+    color: 0x2ecc71,
+    description: `Pre-Test:${suitesInfo?.suiteSummary || ' —'}`,
+    fields: [
+      { name: 'Project', value: String(project || '—'), inline: true },
+      { name: 'Type', value: String(sessionData.taskType || 'module_test'), inline: true },
+      { name: 'Timeout', value: `${Math.max(1, Math.round((sessionData.timeoutSeconds || 0) / 60))}min`, inline: true },
+      { name: 'Session', value: String(sessionData.childSessionKey || '—'), inline: false },
+    ],
+    footer: { text: `Buster Orchestrator v1.1 · ${new Date().toISOString()}` },
+  };
+}
+
+function buildLegacySessionCompleteEmbed(moduleId, project, result) {
+  const pass = result.outcome === 'PASS';
+  return {
+    title: `${pass ? '✅' : '❌'} ACP Session Complete: ${moduleId}`,
+    color: pass ? 0x2ecc71 : 0xe74c3c,
+    description: `Summary: ${result.summary || result.reason || 'test'}`,
+    fields: [
+      { name: 'Status', value: String(result.outcome || '—'), inline: true },
+      { name: 'Source', value: String(result.source || 'agent'), inline: true },
+      { name: 'Duration', value: `${Math.max(0, Math.round((result.durationSeconds || 0) / 60))}min`, inline: true },
+      { name: 'Commit', value: String(result.commitHash || '—'), inline: true },
+      { name: 'Session', value: String(result.childSessionKey || '—'), inline: false },
+    ],
+    footer: { text: `Buster Orchestrator v1.1 · ${project || 'unknown-project'}` },
+  };
+}
+
 // ── Sandbox + K8s cleanup ────────────────────────────────────────
 
 async function doSandboxCleanup(stage, payload) {
@@ -337,6 +460,8 @@ export async function processTask(payload, opts = {}) {
     commit_hash: commitHash,
   });
 
+  discord(buildLegacyTaskDispatchMessage(payload, payload?.iter || attempt || 1));
+
   try {
     // ── Pre-cleanup ───────────────────────────────────────────────
     logger.step('pre-cleanup');
@@ -426,6 +551,7 @@ export async function processTask(payload, opts = {}) {
 
     logger.info('DECISION', `${recommendation} — ${decisionReason}`);
     discord(buildSuiteResultsEmbed(moduleId, project, suitesInfo));
+    discord(buildLegacySuiteResultsEmbed(moduleId, suitesInfo));
 
     if (suitesInfo.criticalFailed) {
       outcome = 'FAIL';
@@ -463,7 +589,13 @@ export async function processTask(payload, opts = {}) {
     logger.info('SPAWN', `Session spawned: ${sessionData.childSessionKey}`, {
       runtime: sessionData.runtime,
     });
-    discord(buildSessionSpawnEmbed(moduleId, project, sessionData));
+    const sessionSpawnData = {
+      ...sessionData,
+      taskType,
+      timeoutSeconds,
+    };
+    discord(buildSessionSpawnEmbed(moduleId, project, sessionSpawnData));
+    discord(buildLegacySessionSpawnEmbed(moduleId, project, sessionSpawnData, suitesInfo));
 
     // ── Monitor session ───────────────────────────────────────────
     logger.step('monitor-session');
@@ -523,13 +655,17 @@ export async function processTask(payload, opts = {}) {
         childSessionKey: sessionData.childSessionKey,
       }));
     } else {
-      discord(buildSessionCompleteEmbed(moduleId, project, {
+      const sessionCompleteData = {
         outcome,
         reason,
-        commitHash:      commitHash,
+        commitHash,
         durationSeconds: elapsedSeconds,
         childSessionKey: sessionData.childSessionKey,
-      }));
+        summary: sessionResult?.detail || sessionResult?.reason || 'test',
+        source: 'agent',
+      };
+      discord(buildSessionCompleteEmbed(moduleId, project, sessionCompleteData));
+      discord(buildLegacySessionCompleteEmbed(moduleId, project, sessionCompleteData));
     }
 
     logger.info('OUTCOME', `Task outcome: ${outcome}`, { reason });
