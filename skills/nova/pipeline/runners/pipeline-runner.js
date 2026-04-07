@@ -79,6 +79,14 @@ async function reconcileStaleModuleState(config, progress) {
     status.history.push({ timestamp: now, from, to: status.status, agent: 'pipeline', note });
     saveStatus(config, dir, status);
     log('WARN', `[stale-reconcile] ${moduleId}: ${note}`);
+    try {
+      await discord(config, 'WARN', `Module ${moduleId} — Recovered stale ${status.current_phase || 'agent'} state`,
+        `${note}. No new Buster suite ran yet; the pipeline only cleared old interrupted state before retrying.`, [
+          { name: 'Previous Phase', value: status.current_phase || 'unknown', inline: true },
+          { name: 'Status Reset To', value: status.status || 'PENDING', inline: true },
+          { name: 'Meaning', value: 'No fresh suite result exists yet. This message is recovery from an earlier interrupted child session.', inline: false },
+        ]);
+    } catch {}
   }
 }
 

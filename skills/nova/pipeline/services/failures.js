@@ -417,9 +417,10 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
     log('ERROR', `Module ${moduleId} BLOCKED — failed ${maxFails}x in ${phase} phase`);
     const stats = getRunStats(config);
     if (stats) stats.modules_blocked.push(moduleId);
-    await discord(config, 'CRITICAL', `Module ${moduleId} BLOCKED`, `Failed ${maxFails} times in ${phase} phase. Human intervention needed.`, [
+    await discord(config, 'CRITICAL', blockedTitle, `Failed ${maxFails} times in ${phase} phase. Human intervention needed.`, [
       { name: 'Phase', value: phase },
       { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
+      ...contextFields,
       ...(reason ? [{ name: 'Reason', value: truncateForDiscord(reason, 1024), inline: false }] : []),
     ]);
     return { exit: EXIT_BLOCKED, reason: `Max retries exceeded (${phase})`, module: moduleId, status };
@@ -435,10 +436,11 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
 
   if (canAutoRetry) {
     log('INFO', `Auto-retry ${status.fail_count}/${autoRetryThreshold} — pipeline will retry internally`);
-    await discord(config, 'WARN', `Module ${moduleId} FAIL (${phase}) — Auto-Retry`, `Attempt ${status.fail_count}/${maxFails}. Auto-retrying (${status.fail_count}/${autoRetryThreshold}).`, [
+    await discord(config, 'WARN', autoRetryTitle, autoRetryDescription, [
       { name: 'Phase', value: phase },
       { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
       { name: 'Auto-Retry', value: `${status.fail_count}/${autoRetryThreshold}` },
+      ...contextFields,
       ...(reason ? [{ name: 'Reason', value: truncateForDiscord(reason, 1024), inline: false }] : []),
     ]);
 
@@ -458,11 +460,12 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
   const stats = getRunStats(config);
   if (stats) stats.modules_failed.push(moduleId);
 
-  await discord(config, 'WARN', `Module ${moduleId} ${isTimeout ? 'TIMEOUT' : 'NEEDS_NOVA'} (${phase})`, `Attempt ${status.fail_count}/${maxFails}. ${escalationReason}`, [
+  await discord(config, 'WARN', escalationTitle, `Attempt ${status.fail_count}/${maxFails}. ${escalationReason}`, [
     { name: 'Phase', value: phase },
     { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
     ...(isTimeout ? [{ name: 'Type', value: 'TIMEOUT' }] : []),
     ...(!isTimeout ? [{ name: 'Action', value: 'Resume with --prompt' }] : []),
+    ...contextFields,
     ...(reason ? [{ name: 'Reason', value: truncateForDiscord(reason, 1024), inline: false }] : []),
   ]);
 

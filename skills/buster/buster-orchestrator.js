@@ -77,7 +77,7 @@ const STATE = {
  * @param {object} embed - Discord embed object (from builder functions below)
  */
 function discord(embed) {
-  const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+  const webhookUrl = process.env.DISCORD_WEBHOOK_URL || process.env.DISCORD_WEBHOOK;
   if (!webhookUrl) return;
   try {
     const body = JSON.stringify({ embeds: [embed] });

@@ -60,6 +60,15 @@ async function logToDiscord(sender, target, type, iter, payload) {
   try {
     const raw = JSON.stringify(payload, null, 2);
     const header = `**${sender}** → **${target}**\nType: \`${type}\` | Iter: \`${iter}\``;
+    const summaryFields = [];
+    if (payload && typeof payload === 'object') {
+      if (payload.project) summaryFields.push({ name: 'Project', value: String(payload.project), inline: true });
+      if (payload.module) summaryFields.push({ name: 'Module', value: String(payload.module), inline: true });
+      if (Array.isArray(payload.test_suites) && payload.test_suites.length) summaryFields.push({ name: 'Suites', value: payload.test_suites.join(', '), inline: true });
+      if (target === 'buster' && type === 'module_test') {
+        summaryFields.push({ name: 'Meaning', value: 'Queued for Buster only. This does not mean suites started or that a subagent exists yet.', inline: false });
+      }
+    }
 
     // If payload fits in one embed description (leave room for header + code fences)
     if (raw.length <= 3500) {
@@ -70,7 +79,8 @@ async function logToDiscord(sender, target, type, iter, payload) {
           embeds: [{
             title: `⚡ Task: ${sender} → ${target}`,
             color: 5763719,
-            description: `${header}\n\n\`\`\`json\n${raw}\n\`\`\``
+            description: `${header}\n\n\`\`\`json\n${raw}\n\`\`\``,
+            fields: summaryFields
           }]
         })
       });
@@ -82,7 +92,8 @@ async function logToDiscord(sender, target, type, iter, payload) {
         embeds: [{
           title: `⚡ Task: ${sender} → ${target}`,
           color: 5763719,
-          description: `${header}\n\n_Payload too large for embed — see attached file._`
+          description: `${header}\n\n_Payload too large for embed — see attached file._`,
+          fields: summaryFields
         }]
       });
 

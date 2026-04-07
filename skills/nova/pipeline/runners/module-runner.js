@@ -791,13 +791,28 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
 
       deps.setShutdownContext(config, 'buster', moduleId, dir);
 
+      await deps.discord(config, 'INFO', `Module ${moduleId} — Buster queued`,
+        `Buster work is queued. Pre-test suites run first; a Buster subagent is spawned only if critical pre-tests pass.`, [
+          { name: 'Phase', value: 'buster', inline: true },
+          { name: 'Queued Suites', value: (mod.test_suites || []).join(', ') || 'none', inline: true },
+          { name: 'Subagent Spawned?', value: 'Not yet', inline: true },
+          { name: 'Next', value: 'Watch for either suite results, a pre-test failure, or a Buster subagent spawn message.', inline: false },
+        ]);
+
       // Archive old completion entries for this module before dispatching.
       // Prevents pollDual from reading stale FAIL/PASS from a previous attempt.
       await deps.archiveModuleCompletions(config, moduleId);
 
       try { await deps.spawnAgent(config, progress, 'buster', moduleId, busterModel, busterPrompt, {
         status, taskType: 'module_test', run_id: getRunId(config), attempt: status.fail_count + 1,
-      }); }
+      });
+        await deps.discord(config, 'INFO', `Module ${moduleId} — Buster subagent started`,
+          `Critical pre-tests passed and the interactive Buster subagent has started.`, [
+            { name: 'Phase', value: 'buster', inline: true },
+            { name: 'Attempt', value: `${busterAttempt}/${maxBusterCrashRetries + 1}`, inline: true },
+            { name: 'Suites', value: (mod.test_suites || []).join(', ') || 'none', inline: true },
+          ]);
+      }
       catch (e) {
         log('ERROR', `Module ${moduleId}, attempt ${status.fail_count + 1}/${maxFails}: buster agent spawn failed: ${e.message}`);
         deps.clearShutdownContext();
@@ -1073,7 +1088,14 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
           // Code-side pre-test failure → give Forge a chance.
           log('INFO', `Code-side pre-test failure — routing to Forge via handleFail`);
           const failResult = await deps.handleFail(config, status, dir, moduleId, maxFails, 'buster',
-            preTestReason, { recalledMemoryIds });
+            preTestReason, {
+              recalledMemoryIds,
+              discordFields: [
+                ...preTestFields,
+                { name: 'Stage', value: 'Pre-test suites', inline: true },
+                { name: 'Subagent Spawned?', value: 'No', inline: true },
+              ],
+            });
           if (failResult._retry) return { retry: true, fail_count: status.fail_count };
           return { retry: false, result: failResult };
         }
