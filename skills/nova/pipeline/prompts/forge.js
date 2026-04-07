@@ -37,6 +37,9 @@ export async function buildForgePrompt(config, moduleId, mod, dir, status, maxFa
   // Factual orientation so Forge knows WHERE it's working, WHAT state things are in,
   // and WHICH attempt this is — without wasting tokens on `pwd`, `find .`, `git log`.
   const forgeCwd = config.agents?.forge?.cwd || config.repo_root;
+  const backendPackageRel = fs.existsSync(path.join(projectSrcPath(config), 'backend', 'package.json'))
+    ? relPath(config, path.join(projectSrcPath(config), 'backend', 'package.json'))
+    : null;
   const contextBlock = [
     '## 🔧 MODULE CONTEXT',
     '',
@@ -47,6 +50,7 @@ export async function buildForgePrompt(config, moduleId, mod, dir, status, maxFa
     `**Status JSON:** \`${relPath(config, statusPath(config, dir))}\``,
     `**Repo Root:** \`${config.repo_root}\``,
     `**Working Directory:** \`${forgeCwd}\``,
+    backendPackageRel ? `**Backend Package:** \`${backendPackageRel}\`` : '',
     `**Current Status:** ${status.status}`,
     `**Attempt:** ${status.fail_count + 1}/${maxFails}`,
     `**Stages:** ${(mod.stages || ['forge', 'buster']).join(' → ')}`,
@@ -56,6 +60,7 @@ export async function buildForgePrompt(config, moduleId, mod, dir, status, maxFa
     '',
     'All file paths in your instructions below are relative to **Project Source**.',
     `\`cd ${relPath(config, projectSrcPath(config))}\` before creating or modifying any files.`,
+    backendPackageRel ? `For package metadata, scripts, and Node workspace checks, use \`${backendPackageRel}\`, not \`${relPath(config, path.join(projectSrcPath(config), 'package.json'))}\`.` : '',
     '',
     '---',
     '',

@@ -14,6 +14,7 @@
 // cannot import pipeline code.
 
 import fs from 'fs';
+import { invokeGatewayTool, resolveGatewayBaseUrl } from './gateway.js';
 
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
@@ -144,23 +145,13 @@ function transcriptShowsProgress(transcript) {
 }
 
 // ── Gateway ──────────────────────────────────────────────────────
-//
-// Buster has no access to pipeline/integrations/gateway.js.
-// We invoke the gateway directly via fetch().
 
 async function fetchSessionStatus(sessionKey, gatewayUrl, gatewayToken) {
-  const url = `${gatewayUrl}/session_status`;
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(gatewayToken ? { 'Authorization': `Bearer ${gatewayToken}` } : {}),
-    },
-    body: JSON.stringify({ sessionKey }),
-    signal: AbortSignal.timeout(10000),
+  return invokeGatewayTool('session_status', { sessionKey }, {
+    gatewayUrl,
+    gatewayToken,
+    timeoutMs: 10000,
   });
-  if (!res.ok) throw new Error(`Gateway returned ${res.status}`);
-  return res.json();
 }
 
 // ── Monitor State ────────────────────────────────────────────────
@@ -172,13 +163,13 @@ async function fetchSessionStatus(sessionKey, gatewayUrl, gatewayToken) {
  * @param {string} streamLogPath    - Path to the session's stream log (JSONL)
  * @param {object} prev             - Previous monitor state (for poll counters)
  * @param {object} opts
- * @param {string} opts.gatewayUrl       - Gateway base URL (default: GATEWAY_URL env)
+ * @param {string} opts.gatewayUrl       - Gateway base URL (default: hardcoded loopback fallback)
  * @param {string} opts.gatewayToken     - Gateway bearer token (default: GATEWAY_TOKEN env)
  * @param {number} opts.unknownPollLimit - Consecutive unknown polls before timeout (default: 10)
  * @param {number} opts.stalePollLimit   - Stale transcript polls before timeout (default: 10)
  */
 export async function getAcpMonitorState(childSessionKey, streamLogPath, prev = {}, opts = {}) {
-  const gatewayUrl     = opts.gatewayUrl     || process.env.GATEWAY_URL;
+  const gatewayUrl     = resolveGatewayBaseUrl(opts.gatewayUrl);
   const gatewayToken   = opts.gatewayToken   || process.env.GATEWAY_TOKEN;
   const unknownPollLimit = opts.unknownPollLimit ?? 10;
   const stalePollLimit   = opts.stalePollLimit   ?? 10;
@@ -263,7 +254,7 @@ export function isSessionTerminal(state) {
  *
  * @param {string} childSessionKey
  * @param {object} opts
- * @param {string} opts.gatewayUrl               - Gateway base URL
+ * @param {string} opts.gatewayUrl               - Gateway base URL (default: hardcoded loopback fallback)
  * @param {string} opts.gatewayToken             - Gateway bearer token
  * @param {string} [opts.streamLogPath]          - Path to stream log for transcript checks
  * @param {number} [opts.extraGraceMs=120000]    - Grace period after session goes inactive
@@ -273,7 +264,7 @@ export function isSessionTerminal(state) {
  * @param {number} [opts.transcriptGraceMs=300000]   - Extension duration per transcript extension
  */
 export async function waitForSessionIdle(childSessionKey, opts = {}) {
-  const gatewayUrl     = opts.gatewayUrl     || process.env.GATEWAY_URL;
+  const gatewayUrl     = resolveGatewayBaseUrl(opts.gatewayUrl);
   const gatewayToken   = opts.gatewayToken   || process.env.GATEWAY_TOKEN;
   const extraGraceMs   = opts.extraGraceMs   ?? 120000;
   const totalTimeoutMs = opts.totalTimeoutMs ?? 600000;

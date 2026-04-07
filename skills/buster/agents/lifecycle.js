@@ -95,7 +95,7 @@ function acpxCleanup(agentId, gatewayLabel) {
  */
 export async function spawnSession(payload, prompt, timeoutSeconds, opts = {}) {
   const session      = payload?.session || {};
-  const gatewayUrl   = opts.gatewayUrl   || process.env.GATEWAY_URL;
+  const gatewayUrl   = resolveGatewayBaseUrl(opts.gatewayUrl);
   const gatewayToken = opts.gatewayToken || process.env.GATEWAY_TOKEN;
   const runtime      = opts.runtime      || session.runtime || 'acp';
   const model        = opts.model        || session.model   || null;
@@ -196,7 +196,7 @@ export async function spawnSession(payload, prompt, timeoutSeconds, opts = {}) {
  */
 export async function killSession(childSessionKey, opts = {}) {
   if (!childSessionKey) return;
-  const gatewayUrl   = opts.gatewayUrl   || process.env.GATEWAY_URL;
+  const gatewayUrl   = resolveGatewayBaseUrl(opts.gatewayUrl);
   const gatewayToken = opts.gatewayToken || process.env.GATEWAY_TOKEN;
   const runtime      = opts.runtime      || 'acp';
   const isSubagent   = runtime === 'subagent';

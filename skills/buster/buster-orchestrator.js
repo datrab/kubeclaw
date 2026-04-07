@@ -768,7 +768,7 @@ export async function monitorSession(childSessionKey, streamLogPath, payload = {
   const spawnedAt = meta.spawnedAt || Date.now();
   const logger    = meta.logger    || createLogger({ module: moduleId });
 
-  const gatewayUrl   = process.env.GATEWAY_URL;
+  const gatewayUrl   = resolveGatewayBaseUrl();
   const gatewayToken = process.env.GATEWAY_TOKEN;
 
   const opts = {
