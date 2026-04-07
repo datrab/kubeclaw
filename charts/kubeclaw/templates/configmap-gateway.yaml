@@ -84,7 +84,6 @@ data:
             "enabled": true,
             "config": {
               "permissionMode": "approve-all",
-              "nonInteractivePermissions": "deny",
               "command": "acpx"
             }
           }
