@@ -281,7 +281,7 @@ ${pretty}
 function buildLegacySuiteResultsEmbed(moduleId, suitesInfo) {
   const suites = Object.entries(suitesInfo?.suites || {});
   const lines = suites.map(([name, s]) => {
-    const icon = s.status === 'PASS' ? '✅' : s.status === 'FAIL' ? '❌' : s.status === 'ERROR' ? '💥' : '⏭️';
+    const icon = s.status === 'PASS' ? '✅' : s.status === 'FAIL' ? '❌' : s.status === 'SKIP' ? '⏭' : '💥';
     let line = `${icon} ${name.padEnd(10)} — ${s.status}`;
     if (s.duration_ms) line += ` (${(s.duration_ms / 1000).toFixed(1)}s)`;
     if (s.reason) line += `\n   ${s.reason}`;
@@ -289,34 +289,34 @@ function buildLegacySuiteResultsEmbed(moduleId, suitesInfo) {
   }).join('\n');
 
   const action = suitesInfo?.criticalFailed
-    ? '→ No spawn (critical suite failed)'
+    ? '→ No subagent. FAIL reported to pipeline.'
     : '→ Spawning Subagent (results injected)';
 
   return {
     title: suitesInfo?.criticalFailed
       ? `❌ Pre-Test FAIL: Module ${moduleId}`
       : `🔬 Pre-Test Results: Module ${moduleId}`,
-    color: suitesInfo?.criticalFailed ? 0xe74c3c : 0x2ecc71,
+    color: suitesInfo?.criticalFailed ? 15548997 : 5763719,
     description: `\`\`\`
 ${lines}
 \`\`\`
 ${action}`,
-    footer: { text: `Buster Orchestrator v1.1 · ${Math.round(suitesInfo?.elapsedMs || 0)}ms total` },
+    footer: { text: `Buster Orchestrator v1.1 • ${Math.round(suitesInfo?.elapsedMs || 0)}ms total` },
   };
 }
 
 function buildLegacySessionSpawnEmbed(moduleId, project, sessionData, suitesInfo) {
   return {
     title: `🔬 ACP Session Spawned: ${moduleId}`,
-    color: 0x2ecc71,
-    description: `Pre-Test:${suitesInfo?.suiteSummary || ' —'}`,
+    color: 5763719,
+    description: suitesInfo?.suiteSummary ? `**Pre-Test:** ${suitesInfo.suiteSummary}` : '',
     fields: [
-      { name: 'Project', value: String(project || '—'), inline: true },
-      { name: 'Type', value: String(sessionData.taskType || 'module_test'), inline: true },
+      { name: 'Project', value: `\`${project || 'unknown'}\``, inline: true },
+      { name: 'Type', value: `\`${sessionData.taskType || 'module_test'}\``, inline: true },
       { name: 'Timeout', value: `${Math.max(1, Math.round((sessionData.timeoutSeconds || 0) / 60))}min`, inline: true },
-      { name: 'Session', value: String(sessionData.childSessionKey || '—'), inline: false },
+      { name: 'Session', value: `\`${sessionData.childSessionKey || '—'}\``, inline: false },
     ],
-    footer: { text: `Buster Orchestrator v1.1 · ${new Date().toISOString()}` },
+    footer: { text: `Buster Orchestrator v1.1 • ${new Date().toISOString()}` },
   };
 }
 
@@ -324,16 +324,16 @@ function buildLegacySessionCompleteEmbed(moduleId, project, result) {
   const pass = result.outcome === 'PASS';
   return {
     title: `${pass ? '✅' : '❌'} ACP Session Complete: ${moduleId}`,
-    color: pass ? 0x2ecc71 : 0xe74c3c,
-    description: `Summary: ${result.summary || result.reason || 'test'}`,
+    color: pass ? 5763719 : 15548997,
+    description: `**Summary:** ${(result.summary || result.reason || 'test').slice(0, 500)}`,
     fields: [
-      { name: 'Status', value: String(result.outcome || '—'), inline: true },
-      { name: 'Source', value: String(result.source || 'agent'), inline: true },
+      { name: 'Status', value: `\`${result.outcome || '—'}\``, inline: true },
+      { name: 'Source', value: `\`${result.source || 'agent'}\``, inline: true },
       { name: 'Duration', value: `${Math.max(0, Math.round((result.durationSeconds || 0) / 60))}min`, inline: true },
-      { name: 'Commit', value: String(result.commitHash || '—'), inline: true },
-      { name: 'Session', value: String(result.childSessionKey || '—'), inline: false },
+      { name: 'Commit', value: `\`${result.commitHash || 'unknown'}\``, inline: true },
+      { name: 'Session', value: `\`${result.childSessionKey || '—'}\``, inline: false },
     ],
-    footer: { text: `Buster Orchestrator v1.1 · ${project || 'unknown-project'}` },
+    footer: { text: `Buster Orchestrator v1.1 • ${project || 'unknown-project'}` },
   };
 }
 
