@@ -403,6 +403,18 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
     });
   }
 
+  const contextFields = [
+    { name: 'Module', value: moduleId },
+    { name: 'Phase', value: phase },
+    { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
+    ...(isTimeout ? [{ name: 'Timeout', value: 'yes', inline: true }] : []),
+  ];
+
+  const blockedTitle = `Module ${moduleId} BLOCKED`;
+  const autoRetryTitle = `Module ${moduleId} FAIL (${phase}) — Auto-Retry`;
+  const autoRetryDescription = `Attempt ${status.fail_count}/${maxFails}. Pipeline will retry automatically.`;
+  const escalationTitle = `Module ${moduleId} ${isTimeout ? 'TIMEOUT' : 'NEEDS_NOVA'} (${phase})`;
+
   if (status.fail_count >= maxFails) {
     status.status = STATUS.BLOCKED;
     status.current_phase = null;
