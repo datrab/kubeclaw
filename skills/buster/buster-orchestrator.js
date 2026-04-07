@@ -243,6 +243,30 @@ export function buildTimeoutEmbed(moduleId, project, { elapsedSeconds, timeoutSe
   };
 }
 
+export function buildTaskFailureEmbed(moduleId, project, { reason, stage, attempt, taskType, commitHash }) {
+  const truncate = (value, max = 1024) => {
+    const s = String(value || 'unknown');
+    return s.length <= max ? s : `${s.slice(0, max - 1)}…`;
+  };
+
+  return {
+    title:  `🚨 Task Failure: ${moduleId}`,
+    color:  15158332,
+    fields: [
+      { name: 'Status',  value: 'FAIL',                        inline: true },
+      { name: 'Module',  value: String(moduleId),              inline: true },
+      { name: 'Project', value: String(project || '—'),        inline: true },
+      { name: 'Stage',   value: String(stage || 'unknown'),    inline: true },
+      { name: 'Attempt', value: String(attempt ?? '—'),        inline: true },
+      { name: 'Type',    value: String(taskType || 'unknown'), inline: true },
+      { name: 'Commit',  value: String(commitHash || '—'),     inline: true },
+      { name: 'Reason',  value: truncate(reason),              inline: false },
+    ],
+    footer:    EMBED_FOOTER,
+    timestamp: new Date().toISOString(),
+  };
+}
+
 function buildLegacyTaskDispatchMessage(payload, iter = 1) {
   const pretty = JSON.stringify(payload, null, 2);
   const embed = {
@@ -264,7 +288,7 @@ ${pretty}
     return { embeds: [embed] };
   }
 
-  const payloadPath = path.join('/tmp', `payload-${payload?.task_type || 'module_test'}-${Date.now()}.json`);
+  const payloadPath = join('/tmp', `payload-${payload?.task_type || 'module_test'}-${Date.now()}.json`);
   try {
     fs.writeFileSync(payloadPath, pretty);
     embed.description += '\n\nPayload too large for embed — see attached file.';
@@ -335,6 +359,26 @@ function buildLegacySessionCompleteEmbed(moduleId, project, result) {
     ],
     footer: { text: `Buster Orchestrator v1.1 • ${project || 'unknown-project'}` },
   };
+}
+
+function buildLegacyTaskFailureEmbed(moduleId, project, result) {
+  return {
+    title: `🚨 Buster Task Failed: Module ${moduleId}`,
+    color: 15548997,
+    description: `**Stage:** \`${result.stage || 'unknown'}\`\n**Reason:** ${(result.reason || 'unknown').slice(0, 700)}`,
+    fields: [
+      { name: 'Project', value: `\`${project || 'unknown'}\``, inline: true },
+      { name: 'Attempt', value: `\`${result.attempt ?? '—'}\``, inline: true },
+      { name: 'Type', value: `\`${result.taskType || 'module_test'}\``, inline: true },
+      { name: 'Commit', value: `\`${result.commitHash || 'unknown'}\``, inline: false },
+    ],
+    footer: { text: `Buster Orchestrator v1.1 • ${new Date().toISOString()}` },
+  };
+}
+
+function notifyTaskFailure(moduleId, project, result) {
+  discord(buildTaskFailureEmbed(moduleId, project, result));
+  discord(buildLegacyTaskFailureEmbed(moduleId, project, result));
 }
 
 // ── Sandbox + K8s cleanup ────────────────────────────────────────
@@ -443,6 +487,7 @@ export async function processTask(payload, opts = {}) {
 
   let outcome    = 'FAIL';
   let reason     = 'unknown';
+  let stage      = 'task-started';
   let suitesInfo = { results: [], suiteSummary: '', criticalFailed: false };
 
   // ── Task started ────────────────────────────────────────────────
@@ -460,10 +505,11 @@ export async function processTask(payload, opts = {}) {
     commit_hash: commitHash,
   });
 
-  discord(buildLegacyTaskDispatchMessage(payload, payload?.iter || attempt || 1));
-
   try {
+    discord(buildLegacyTaskDispatchMessage(payload, payload?.iter || attempt || 1));
+
     // ── Pre-cleanup ───────────────────────────────────────────────
+    stage = 'pre-cleanup';
     logger.step('pre-cleanup');
 
     const preCleanupStart = Date.now();
@@ -488,6 +534,7 @@ export async function processTask(payload, opts = {}) {
     logger.info('SANDBOX', `Pre-cleanup complete`, { ok: preCleanup.ok });
 
     // ── Git sync ──────────────────────────────────────────────────
+    stage = 'git-sync';
     logger.step('git-sync');
 
     const repoRoot = getRepoRoot(payload?.session?.cwd || process.cwd());
@@ -516,10 +563,12 @@ export async function processTask(payload, opts = {}) {
       outcome = 'FAIL';
       reason  = `git_sync_failed: ${syncResult.error || 'unknown'}`;
       logger.error('GIT', `Git sync failed: ${syncResult.error}`);
+      notifyTaskFailure(moduleId, project, { reason, stage, attempt, taskType, commitHash });
       return { outcome, reason };
     }
 
     // ── Run suites ────────────────────────────────────────────────
+    stage = 'run-suites';
     logger.step('run-suites');
 
     suitesInfo = await runSuites(suites, {
@@ -535,6 +584,7 @@ export async function processTask(payload, opts = {}) {
     });
 
     // ── Decision ──────────────────────────────────────────────────
+    stage = 'decision';
     logger.step('decision');
 
     const recommendation = suitesInfo.criticalFailed ? 'NO_SPAWN' : 'SPAWN';
@@ -560,6 +610,7 @@ export async function processTask(payload, opts = {}) {
     }
 
     // ── Spawn subagent ────────────────────────────────────────────
+    stage = 'spawn-session';
     logger.step('spawn-session');
 
     const timeoutSeconds = payload?.timeout_seconds || 1800;
@@ -573,6 +624,7 @@ export async function processTask(payload, opts = {}) {
       logger.error('SPAWN', `Spawn failed: ${err.message}`);
       outcome = 'FAIL';
       reason  = `spawn_failed: ${err.message}`;
+      notifyTaskFailure(moduleId, project, { reason, stage, attempt, taskType, commitHash });
       return { outcome, reason };
     }
 
@@ -598,6 +650,7 @@ export async function processTask(payload, opts = {}) {
     discord(buildLegacySessionSpawnEmbed(moduleId, project, sessionSpawnData, suitesInfo));
 
     // ── Monitor session ───────────────────────────────────────────
+    stage = 'monitor-session';
     logger.step('monitor-session');
 
     const monitorStart  = Date.now();
@@ -612,6 +665,7 @@ export async function processTask(payload, opts = {}) {
     const elapsedSeconds = Math.round((Date.now() - monitorStart) / 1000);
 
     // ── Kill session ──────────────────────────────────────────────
+    stage = 'kill-session';
     logger.step('kill-session');
 
     await killSession(sessionData.childSessionKey, {
@@ -634,6 +688,7 @@ export async function processTask(payload, opts = {}) {
     });
 
     // ── Determine outcome ─────────────────────────────────────────
+    stage = 'determine-outcome';
     logger.step('determine-outcome');
 
     if (sessionResult.reason === 'rate_limited') {
@@ -672,8 +727,16 @@ export async function processTask(payload, opts = {}) {
 
     return { outcome, reason };
 
+  } catch (err) {
+    outcome = 'FAIL';
+    reason  = `internal_error: ${err?.message || String(err)}`;
+    logger.error('TASK', `Unhandled task failure at ${stage}: ${err?.stack || err?.message || String(err)}`);
+    notifyTaskFailure(moduleId, project, { reason, stage, attempt, taskType, commitHash });
+    return { outcome, reason };
+
   } finally {
     // ── Final cleanup (always runs) ───────────────────────────────
+    stage = 'final-cleanup';
     logger.step('final-cleanup');
 
     const finalCleanupStart = Date.now();
