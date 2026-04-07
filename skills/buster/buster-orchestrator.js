@@ -22,7 +22,7 @@
 import { execFileSync, exec } from 'child_process';
 import { promisify } from 'util';
 import fs   from 'fs';
-import { join } from 'path';
+import { join, basename } from 'path';
 import { hostname } from 'os';
 import { createRequire } from 'module';
 const Redis = createRequire(import.meta.url)('ioredis');
@@ -99,7 +99,7 @@ function discord(message) {
       });
       const args = ['-s', '-X', 'POST', '-F', `payload_json=${payload}`];
       normalized.files.forEach((file, idx) => {
-        args.push('-F', `files[${idx}]=@${file.path};filename=${file.name || path.basename(file.path)}`);
+        args.push('-F', `files[${idx}]=@${file.path};filename=${file.name || basename(file.path)}`);
       });
       args.push(webhookUrl);
       execFileSync('curl', args, { stdio: 'ignore', timeout: 10000 });
@@ -270,7 +270,7 @@ ${pretty}
     embed.description += '\n\nPayload too large for embed — see attached file.';
     return {
       embeds: [embed],
-      files: [{ path: payloadPath, name: path.basename(payloadPath) }],
+      files: [{ path: payloadPath, name: basename(payloadPath) }],
     };
   } catch {
     embed.description += '\n\nPayload too large for embed.';

@@ -806,12 +806,6 @@ async function executeModuleAttempt(config, progress, moduleId, mod, dir, timeou
       try { await deps.spawnAgent(config, progress, 'buster', moduleId, busterModel, busterPrompt, {
         status, taskType: 'module_test', run_id: getRunId(config), attempt: status.fail_count + 1,
       });
-        await deps.discord(config, 'INFO', `Module ${moduleId} — Buster subagent started`,
-          `Critical pre-tests passed and the interactive Buster subagent has started.`, [
-            { name: 'Phase', value: 'buster', inline: true },
-            { name: 'Attempt', value: `${busterAttempt}/${maxBusterCrashRetries + 1}`, inline: true },
-            { name: 'Suites', value: (mod.test_suites || []).join(', ') || 'none', inline: true },
-          ]);
       }
       catch (e) {
         log('ERROR', `Module ${moduleId}, attempt ${status.fail_count + 1}/${maxFails}: buster agent spawn failed: ${e.message}`);
