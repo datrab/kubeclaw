@@ -24,8 +24,6 @@ import { promisify } from 'util';
 import fs   from 'fs';
 import { join, basename } from 'path';
 import { hostname } from 'os';
-import { createRequire } from 'module';
-const Redis = createRequire(import.meta.url)('ioredis');
 
 const execAsync = promisify(exec);
 import { gitSync, getRepoRoot } from './services/git.js';
@@ -46,11 +44,15 @@ import {
   clearActiveSession,
 } from './agents/lifecycle.js';
 
+import { resolveGatewayBaseUrl } from './agents/gateway.js';
+
 import {
   createTelemetryContext,
   emitEvent,
   closeTelemetry,
 } from './services/telemetry.js';
+
+import { loadRedisCtor, resolveDiscordWebhookUrl } from './services/runtime.js';
 
 import { runSuites } from './suite-runner.js';
 
@@ -78,7 +80,7 @@ const STATE = {
  * @param {object} message
  */
 function discord(message) {
-  const webhookUrl = process.env.DISCORD_WEBHOOK_URL || process.env.DISCORD_WEBHOOK;
+  const webhookUrl = resolveDiscordWebhookUrl();
   if (!webhookUrl || !message) return;
 
   const normalized = (message.embeds || message.content || message.files)
@@ -488,6 +490,7 @@ export async function processTask(payload, opts = {}) {
   let outcome    = 'FAIL';
   let reason     = 'unknown';
   let stage      = 'task-started';
+  let spawnedSubagent = false;
   let suitesInfo = { results: [], suiteSummary: '', criticalFailed: false };
 
   // ── Task started ────────────────────────────────────────────────
@@ -641,6 +644,7 @@ export async function processTask(payload, opts = {}) {
     logger.info('SPAWN', `Session spawned: ${sessionData.childSessionKey}`, {
       runtime: sessionData.runtime,
     });
+    spawnedSubagent = true;
     const sessionSpawnData = {
       ...sessionData,
       taskType,
@@ -776,7 +780,7 @@ export async function processTask(payload, opts = {}) {
       suites_failed:    failCount,
       suites_skipped:   skipCount,
       suite_summary:    suitesInfo.suiteSummary,
-      spawned_subagent: outcome !== 'FAIL' || reason.startsWith('NO_SUBAGENT') === false,
+      spawned_subagent: spawnedSubagent,
     });
 
     logger.info('TASK', `Task completed: outcome=${outcome} reason=${reason} duration=${totalDuration}s`);
@@ -786,7 +790,8 @@ export async function processTask(payload, opts = {}) {
     // stream to unblock the dual-channel poller.
     if (payload?.completion_stream) {
       try {
-        await redis.xadd(
+        const redisClient = getRedisClient();
+        await redisClient.xadd(
           payload.completion_stream, '*',
           'type', 'completion',
           'module', moduleId,
@@ -1088,17 +1093,25 @@ const GATEWAY_HEALTH_MAX_FAILURES = 3;
 
 // ── Redis ─────────────────────────────────────────────────────────
 
-const redis = new Redis({
-  host:                process.env.REDIS_HOST     || 'redis-master.kubeclaw.svc.cluster.local',
-  port:                parseInt(process.env.REDIS_PORT || '6379'),
-  password:            process.env.REDIS_PASSWORD,
-  retryStrategy:       (times) => Math.min(times * 100, 5000),
-  maxRetriesPerRequest: null,
-  enableReadyCheck:    true,
-});
+let RedisCtor = null;
+let redis = null;
 
-redis.on('error',   (err) => console.error('[REDIS]', err.message));
-redis.on('connect', ()    => console.log('[REDIS] Connected.'));
+function getRedisClient() {
+  if (redis) return redis;
+  RedisCtor ||= loadRedisCtor();
+  redis = new RedisCtor({
+    host:                process.env.REDIS_HOST     || 'redis-master.kubeclaw.svc.cluster.local',
+    port:                parseInt(process.env.REDIS_PORT || '6379'),
+    password:            process.env.REDIS_PASSWORD,
+    retryStrategy:       (times) => Math.min(times * 100, 5000),
+    maxRetriesPerRequest: null,
+    enableReadyCheck:    true,
+  });
+
+  redis.on('error',   (err) => console.error('[REDIS]', err.message));
+  redis.on('connect', ()    => console.log('[REDIS] Connected.'));
+  return redis;
+}
 
 // ── Gateway health ────────────────────────────────────────────────
 
@@ -1147,7 +1160,8 @@ function startGatewayHealthMonitor() {
 // ── Task dequeue ──────────────────────────────────────────────────
 
 async function processOne() {
-  const results = await redis.xreadgroup(
+  const redisClient = getRedisClient();
+  const results = await redisClient.xreadgroup(
     'GROUP', GROUP_NAME, CONSUMER_NAME,
     'COUNT', 1, 'BLOCK', POLL_INTERVAL,
     'STREAMS', STREAM_KEY, '>'
@@ -1177,13 +1191,13 @@ async function processOne() {
 
   try {
     await processTask(payload);
-    await redis.xack(STREAM_KEY, GROUP_NAME, id);
-    await redis.xtrim(STREAM_KEY, 'MAXLEN', '~', STREAM_MAX_LEN);
+    await redisClient.xack(STREAM_KEY, GROUP_NAME, id);
+    await redisClient.xtrim(STREAM_KEY, 'MAXLEN', '~', STREAM_MAX_LEN);
     console.log('[TASK] ✅ Acked.');
   } catch (err) {
     console.error(`[TASK] ❌ Failed: ${err.message}`);
     await doSandboxCleanup('error', payload).catch(() => {});
-    try { await redis.xack(STREAM_KEY, GROUP_NAME, id); } catch {}
+    try { await redisClient.xack(STREAM_KEY, GROUP_NAME, id); } catch {}
   }
 }
 
@@ -1197,7 +1211,7 @@ async function shutdown(signal) {
   console.log(`\n[SHUTDOWN] ${signal} received. Cleaning up...`);
   await killActiveSession().catch(() => {});
   await doSandboxCleanup('shutdown', {}).catch(() => {});
-  try { redis.disconnect(); } catch {}
+  try { redis?.disconnect(); } catch {}
   console.log('[SHUTDOWN] ✅ Clean exit.');
   process.exit(0);
 }
@@ -1221,7 +1235,8 @@ async function main() {
   await ensureBaseImages();
 
   try {
-    await redis.xgroup('CREATE', STREAM_KEY, GROUP_NAME, '0', 'MKSTREAM');
+    const redisClient = getRedisClient();
+    await redisClient.xgroup('CREATE', STREAM_KEY, GROUP_NAME, '0', 'MKSTREAM');
     console.log(`[REDIS] Consumer group created: ${GROUP_NAME}`);
   } catch (e) {
     if (!e.message?.includes('BUSYGROUP')) throw e;

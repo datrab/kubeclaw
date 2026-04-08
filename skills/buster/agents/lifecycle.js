@@ -16,6 +16,7 @@ import { execFileSync } from 'child_process';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import { resolveGatewayBaseUrl } from './gateway.js';
 
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 

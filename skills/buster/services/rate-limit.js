@@ -19,6 +19,7 @@
 import { execFileSync } from 'child_process';
 import { getAcpMonitorState } from '../agents/acp-monitor.js';
 import { emitEvent } from './telemetry.js';
+import { resolveDiscordWebhookUrl } from './runtime.js';
 
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
@@ -133,7 +134,7 @@ export async function handleRateLimit(state, opts = {}) {
   });
 
   // 3. Send yellow Discord embed
-  const webhookUrl = discord?.webhookUrl || process.env.DISCORD_WEBHOOK_URL;
+  const webhookUrl = resolveDiscordWebhookUrl(discord?.webhookUrl || null);
   sendRateLimitEmbed(webhookUrl, {
     moduleId,
     provider,

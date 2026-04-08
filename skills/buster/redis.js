@@ -22,17 +22,10 @@
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
-import { createRequire } from 'module';
 import { execFileSync } from 'child_process';
+import { loadRedisCtor, resolveDiscordWebhookUrl } from './services/runtime.js';
 
-// Load ioredis: try native ESM first, fall back to createRequire for global installs
-let Redis;
-try {
-  const mod = await import('ioredis');
-  Redis = mod.default;
-} catch {
-  Redis = createRequire(import.meta.url)('ioredis');
-}
+const Redis = loadRedisCtor();
 
 // ─── Config ─────────────────────────────────────────────────────────────────
 
@@ -53,7 +46,7 @@ function getRedis() {
   return _redis;
 }
 
-const WEBHOOK_URL = process.env.DISCORD_WEBHOOK;
+const WEBHOOK_URL = resolveDiscordWebhookUrl();
 
 // Stream trim size — keep last N entries for audit trail
 const STREAM_MAX_LEN = 250;

@@ -16,9 +16,7 @@
 // Event envelope on the stream:
 //   { type, seq, ts, project, module, run_id, data: { ...payload } }
 
-import { createRequire } from 'module';
-
-const require = createRequire(import.meta.url);
+import { loadRedisCtor } from './runtime.js';
 
 // ── Context ──────────────────────────────────────────────────────
 
@@ -58,7 +56,7 @@ export function createTelemetryContext(opts = {}) {
 
   let redis = null;
   try {
-    const Redis = require('ioredis');
+    const Redis = loadRedisCtor();
     redis = new Redis({
       host:                redisHost,
       port:                redisPort,

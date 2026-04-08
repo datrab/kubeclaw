@@ -55,6 +55,7 @@ import {
 } from '../verdict-schema.js';
 import { takeScreenshotBatch, takeScreenshot, generateBaselines } from '../screenshot.js';
 import { emitEvent } from '../services/telemetry.js';
+import { resolveDiscordWebhookUrl } from '../services/runtime.js';
 
 // ── Defaults ────────────────────────────────────────────────────
 
@@ -68,7 +69,7 @@ const DEFAULTS = {
   discord_diff_threshold: 2, // only send individual screenshots above this % diff
 };
 
-const WEBHOOK_URL = process.env.DISCORD_WEBHOOK || '';
+const WEBHOOK_URL = resolveDiscordWebhookUrl() || '';
 
 // ── Helpers ─────────────────────────────────────────────────────
 
