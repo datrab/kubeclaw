@@ -236,7 +236,7 @@ Bevor die Pipeline ein Modul bearbeiten kann, müssen diese Dateien im Repo exis
 
 ## 2. swarm.config.json — Die Plattform
 
-Standardpfad: `/app/config/swarm.config.json` (oder via `SWARM_CONFIG` Env-Variable). Alternativ als Helm ConfigMap deployed. Steuert Pipeline-Verhalten — wird selten geändert.
+Standard: via `SWARM_CONFIG` Env-Variable oder portable Auto-Erkennung der Plattformdatei `swarm.config.json` (typisch `~/.openclaw/swarm.config.json`, mit Repo-/Image-Fallback). Alternativ als Helm ConfigMap deployed. Steuert Pipeline-Verhalten — wird selten geändert.
 
 ### 2.1 Pipeline-Verhalten
 
@@ -281,7 +281,6 @@ Standardpfad: `/app/config/swarm.config.json` (oder via `SWARM_CONFIG` Env-Varia
   "pre_check": {
     "enabled": true,
     "lint_report_path": "/app/skills/lint-report.js",
-    "semgrep_config_path": "/home/node/.openclaw/.semgrep.yml",
     "timeout_seconds": 30
   }
 }
@@ -291,7 +290,7 @@ Standardpfad: `/app/config/swarm.config.json` (oder via `SWARM_CONFIG` Env-Varia
 |---|---|---|
 | `enabled` | `true` | Lint-Report vor jedem Forge-Dispatch? |
 | `lint_report_path` | `/app/skills/lint-report.js` | Pfad zum Lint-Report-Script |
-| `semgrep_config_path` | `.semgrep.yml` | Pfad zur Semgrep-Konfiguration |
+| `semgrep_config_path` | `auto-detect` | Optionaler Override für die Semgrep-Konfiguration. Ohne Wert: Suche zuerst neben der erkannten Plattformdatei `swarm.config.json` (z.B. `SWARM_CONFIG`, `~/.openclaw/swarm.config.json`, Helm-/Image-Fallback), dann unter `~/.openclaw/.semgrep.yml`, dann als Legacy-Fallback im Repo (`<repo>/.semgrep.yml`) |
 | `timeout_seconds` | `30` | Max. Laufzeit für Lint |
 
 **Was der Pre-Check tut:** Führt `lint-report.js` aus (tsc, ESLint, Semgrep) und hängt das Ergebnis an den Forge-Prompt an.
@@ -380,7 +379,6 @@ Steuert welche Pipeline-Events als Discord-Notifications gesendet werden.
 ```json
 {
   "telemetry": {
-    "stream_key": "pipeline:events",
     "enabled": true
   }
 }
@@ -393,9 +391,9 @@ Steuert welche Pipeline-Events als Discord-Notifications gesendet werden.
 
 **Wichtig:** Der tatsächliche Stream Key wird dynamisch generiert: `pipeline:telemetry:<project>:<run_id>`. Die Konfigurationsfelder dienen nur als Aktivierungsschalter.
 
-Wenn weder `stream_key` noch `enabled` gesetzt ist, oder Redis nicht erreichbar ist, werden Events still verworfen — kein Fehler, kein Crash.
+Wenn weder `stream_key` noch `enabled` gesetzt ist, bleibt Telemetrie aus. Ist Telemetrie aktiviert und Redis nicht erreichbar, bleibt die Pipeline nicht-blockierend, schreibt aber ein explizites `observability.degraded`-Fallback-Artefakt statt Events still zu verwerfen.
 
-**Emittierte Event-Typen:** Vollständige Liste in `docs/telemetry-event-schema.md`.
+**Emittierte Event-Typen:** Kanonisches Event-Inventar in `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`, event-spezifische Payload-Felder und Beispiele in `docs/telemetry-event-schema.md`.
 
 ### 2.9 ACP-Monitor (Wave 3 Neu)
 
@@ -439,7 +437,9 @@ Wenn weder `stream_key` noch `enabled` gesetzt ist, oder Redis nicht erreichbar 
 
 ## 3. .semgrep.yml — Lint-Regeln
 
-Liegt unter `.swarm/.semgrep.yml` oder wird via Helm ConfigMap deployed.
+Wird standardmäßig portable entdeckt: zuerst als `.semgrep.yml` neben der aktiven oder erkannten Plattformdatei `swarm.config.json` (z.B. neben `SWARM_CONFIG`, `~/.openclaw/swarm.config.json` oder der Image-/Helm-Config), danach unter `~/.openclaw/.semgrep.yml`, dann als Legacy-Repo-Fallback unter `<repo>/.semgrep.yml`.
+
+Im Source-Tree liegt das Helm-Beispiel weiterhin unter `charts/kubeclaw/files/config/.semgrep.yml` und wird in Deployments typischerweise neben die ausgerollte `swarm.config.json` kopiert.
 
 ### Was enthalten ist (Default)
 
@@ -480,15 +480,15 @@ Für jedes Modul in execution_order:
 ├─ 6. Forge-Dispatch:
 │     ACP Subagent spawnen mit: FORGE.md + Lint-Report + Memories + ggf. Retry-Prompt
 │     Forge schreibt Code → git commit → status.json
-│     Telemetrie: module_started + forge_completed Events
+│     Telemetrie: module.started + agent.spawned, später module.status_changed
 │
 ├─ 7. Buster-Dispatch:
 │     Redis-Message an swarm:buster:tasks
-│     Telemetrie: buster_dispatched Event
-│     Orchestrator empfängt → Build/Serve → Suite-Runner → Conditional Spawn
+│     Telemetrie: nach Task-Annahme buster.task_started / buster.task_completed
+│     Buster Pipeline empfängt → Build/Serve → Suite-Runner → Conditional Spawn
 │
 ├─ 8. Ergebnis:
-│     PASS → Memory Feedback → Telemetrie: module_passed → Nächstes Modul
+│     PASS → Memory Feedback → Telemetrie: module.status_changed (PASS) → Nächstes Modul
 │     FAIL (auto_retry_threshold nicht erreicht) → Retry mit angepasstem Prompt
 │     FAIL (auto_retry_threshold erreicht) → EXIT 10 (NEEDS_NOVA)
 │     FAIL (max_fails erreicht) → EXIT 20 (BLOCKED)
@@ -562,7 +562,7 @@ REPO_ROOT=/workspace/myproject node pipeline.js --project myproject --resume
 - [ ] Gate `final-buster` mit enforced `thresholds` für alle relevanten Suites
 - [ ] Gate `final-review` mit Echo Code-Review
 - [ ] `.semgrep.yml` angepasst an Projekt-Technologien
-- [ ] `telemetry.stream_key` in swarm.config.json für externe Monitoring-Anbindung
+- [ ] Telemetrie aktivieren (`telemetry.enabled: true` oder legacy `telemetry.stream_key`) für externe Monitoring-Anbindung
 
 ### Optional
 

@@ -36,7 +36,7 @@
 | `arch_validation` | no | `{ enabled: true }` | Architecture validator config |
 | `pipeline_review` | no | `{ enabled: false }` | Post-pipeline review agent config |
 | `case_study` | no | `{ enabled: false }` | Post-pipeline case study agent config |
-| `telemetry` | no | — | Redis telemetry stream config |
+| `telemetry` | no | — | Redis telemetry enable/config |
 | `phases` | no | — | Logical grouping (informational only, pipeline ignores it) |
 
 ---
@@ -265,16 +265,16 @@ Redis stream telemetry for external consumers (e.g. ClawDeck dashboard).
 ```json
 "telemetry": {
   "enabled": true,
-  "stream_key": "pipeline:telemetry:my-project"
+  "stream_key": "legacy-enable-flag"
 }
 ```
 
 | Field | Required | Default | Description |
 |---|---|---|---|
 | `enabled` | no | `false` | Enable Redis event publishing |
-| `stream_key` | no | `pipeline:telemetry:<project>:<run_id>` | Override stream key |
+| `stream_key` | no | — | Legacy-compatible enable flag. If set to any non-empty string, telemetry is enabled, but the value does not override the stream name. |
 
-When enabled, all pipeline events (module status, agent lifecycle, gate verdicts, cost updates) are published to Redis. See `docs/telemetry-event-schema.md` for the full event catalog.
+When enabled, all pipeline events (module status, agent lifecycle, gate verdicts, cost updates) are published to the canonical run-scoped stream `pipeline:telemetry:<project>:<run_id>`. See `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` for the canonical event inventory and `docs/telemetry-event-schema.md` for event-by-event payload fields and examples.
 
 ---
 

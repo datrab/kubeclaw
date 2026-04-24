@@ -18,7 +18,7 @@ progress.json
     └── "final-buster": { test_suites: [...], test_config: {...} }
 ```
 
-Nova's `pipeline.js` liest `test_suites` und `test_config` aus `progress.json` und schickt sie im Redis-Payload an Buster. Buster's Orchestrator gibt sie an den Suite-Runner weiter. Kein Agent muss die Config kennen — sie fliesst automatisch durch.
+Nova's `pipeline.js` liest `test_suites` und `test_config` aus `progress.json` und schickt sie im Redis-Payload an Buster. Die Buster Pipeline gibt sie an den Suite-Runner weiter. Kein Agent muss die Config kennen — sie fliesst automatisch durch.
 
 ### Externe Artefakte (müssen VOR dem Buster-Run existieren)
 
@@ -494,7 +494,7 @@ progress.json                    Nova (pipeline.js)
   modules.02.test_suites    ──→  buildBusterPayload()
   modules.02.test_config         fügt test_suites + test_config in Redis-Payload ein
 
-Redis-Payload                    Buster (buster-orchestrator.js)
+Redis-Payload                    Buster (buster-pipeline.js)
   payload.test_suites       ──→  processTask()
   payload.test_config            gibt Config an suite-runner.js weiter
 
@@ -504,7 +504,7 @@ suite-runner.js                  suites/*.js
   config.api                ──→  api.js
   ...                            ...
 
-Suite Verdict                    buster-orchestrator.js
+Suite Verdict                    buster-pipeline.js
   { status, findings, ... } ──→  Entscheidung: SPAWN oder NO_SUBAGENT
                                  Prompt-Anreicherung mit Verdict-JSON
                                  Discord-Notification

@@ -26,7 +26,7 @@
 15. [Suite: security (suites/security.js)](#15-suite-security)
 16. [Suite: unit (suites/unit.js)](#16-suite-unit)
 17. [Dual-Mode: Informational vs Enforced](#17-dual-mode)
-18. [Buster-Orchestrator (buster-orchestrator.js)](#18-buster-orchestrator)
+18. [Buster Pipeline (buster-pipeline.js)](#18-buster-pipeline)
 19. [Datenfluss und Payload-Struktur](#19-datenfluss-und-payload-struktur)
 20. [Prompt-Anreicherung](#20-prompt-anreicherung)
 21. [Konfiguration (progress.json)](#21-konfiguration)
@@ -60,10 +60,10 @@ Probleme:
 - Bei Build-Failure wurde trotzdem ein Subagent gespawnt (Token-Verschwendung)
 - Prompt konnte nicht angereichert werden
 
-### Nachher (Orchestrator v1)
+### Nachher (Buster Pipeline v1)
 
 ```
-Redis-Task → Orchestrator (im Gateway-Container, 16GB/4CPU)
+Redis-Task → Buster Pipeline (im Gateway-Container, 16GB/4CPU)
            → git pull → sandbox-cleanup → Build + Serve
            → Suite-Runner (deterministisch, kein LLM)
            → Entscheidung:
@@ -75,7 +75,7 @@ Redis-Task → Orchestrator (im Gateway-Container, 16GB/4CPU)
 
 | Entscheidung | Begründung |
 |---|---|
-| Orchestrator im Gateway-Container, nicht als Sidecar | Voller Zugriff auf Podman, Playwright, nginx, `/sandbox` |
+| Buster Pipeline im Gateway-Container, nicht als Sidecar | Voller Zugriff auf Podman, Playwright, nginx, `/sandbox` |
 | Suite-Output als JSON, nicht Markdown | Konsistent mit status.json, progress.json. LLMs lesen JSON problemlos |
 | Zwei Recommendations: `NO_SUBAGENT` / `SPAWN` | Einfach. Der Subagent bekommt immer das volle Verdict — ob Findings drin sind oder nicht |
 | Suites als einzelne JS-Module | Erweiterbar: neue Suite = neues File in `suites/`, fertig |
@@ -95,7 +95,7 @@ Buster Pod
 │  ├─ /sandbox (www, results, scripts)                    │
 │  ├─ /app/skills/ (alle Skills)                          │
 │  │                                                       │
-│  ├─ Process 1: node /app/skills/buster-orchestrator.js  │
+│  ├─ Process 1: node /app/skills/buster-pipeline.js  │
 │  │  └─ Redis-Poll → Suite-Runner → Conditional Spawn    │
 │  │                                                       │
 │  └─ Process 2: node /app/openclaw.mjs gateway           │
@@ -112,7 +112,7 @@ Beide Prozesse werden in `buster-values.yaml` via `gateway.command` gestartet. `
 ### Task-Flow pro Modul
 
 ```
-pipeline.js (Nova)                  buster-orchestrator.js (Buster)
+pipeline.js (Nova)                  buster-pipeline.js (Buster)
       │                                      │
       ├─ buildBusterPayload()                │
       │  (inkl. test_suites, test_config)    │
@@ -150,7 +150,7 @@ pipeline.js (Nova)                  buster-orchestrator.js (Buster)
 | `suite-runner.js` | 298 | Suite-Orchestrator. Lädt Suites, führt sie sequentiell aus, respektiert Abhängigkeiten, aggregiert |
 | `suites/build.js` | 256 | Build + Serve. Static (sandbox-build + nginx) oder Server (sandbox-run). Fehler-Parsing |
 | `suites/health.js` | 159 | HTTP Health-Check. Fetch mit Retry + exponential Backoff |
-| `buster-orchestrator.js` | 709 | Ersetzt Processor-Sidecar. Redis-Poll → Suites → Conditional Spawn → Monitor |
+| `buster-pipeline.js` | 709 | Ersetzt Processor-Sidecar. Redis-Poll → Suites → Conditional Spawn → Monitor |
 
 ### Neue Files (Phase 2)
 
@@ -316,7 +316,7 @@ Für die Prompt-Injection: Limitiert Findings pro Suite auf `maxFindings` (Defau
 ### Interface
 
 ```js
-// Modul-Interface (vom Orchestrator aufgerufen)
+// Modul-Interface (von der Buster Pipeline aufgerufen)
 const { runSuites } = require('./suite-runner.js');
 const verdict = await runSuites({
   module: '06',
@@ -728,7 +728,7 @@ Ohne `thresholds` → informational (immer PASS, Diff-Prozent als Finding). Mit 
   "diff_percent": 3.2,
   "diff_pixels": 29440,
   "canvas_size": "1280x920",
-  "baseline_path": "/home/node/.openclaw/workspace/git-repo/.swarm/modules/15/baselines/baseline.png",
+  "baseline_path": "<project-root>/.swarm/modules/15/baselines/baseline.png",
   "actual_path": "/sandbox/results/visual-reg-actual.png",
   "diff_path": "/sandbox/results/visual-reg-diff.png",
   "thresholds": { "max_diff_percent": 1.0 }
@@ -1119,14 +1119,14 @@ Jede Suite mit Dual-Mode enthält `mode: 'informational' | 'enforced'` in ihrer 
 
 ---
 
-## 18. Buster-Orchestrator
+## 18. Buster Pipeline
 
-**Datei:** `buster-orchestrator.js` (700 Zeilen)
+**Datei:** `buster-pipeline.js` (700 Zeilen)
 **Zweck:** Ersetzt den Processor-Sidecar. Kernstück der Test-Plattform.
 
 ### Feature-Parity mit Processor v7
 
-| Feature | Processor v7 | Orchestrator v1 |
+| Feature | Processor v7 | Buster Pipeline v1 |
 |---|---|---|
 | Redis XREADGROUP | ✅ | ✅ |
 | Consumer Group Setup | ✅ | ✅ |
@@ -1202,7 +1202,7 @@ let shuttingDown = false;     // Shutdown-Flag
 
 ## 19. Datenfluss und Payload-Struktur
 
-### Redis-Payload (pipeline.js → orchestrator)
+### Redis-Payload (pipeline.js → Buster Pipeline)
 
 ```json
 {
@@ -1230,13 +1230,13 @@ let shuttingDown = false;     // Shutdown-Flag
 }
 ```
 
-`test_suites` und `test_config` sind die in Phase 1 hinzugefügten Felder. Bei `null` nutzt der Orchestrator Defaults: `["build", "health"]` und `{ serve: { type: "static" } }`.
+`test_suites` und `test_config` sind die in Phase 1 hinzugefügten Felder. Bei `null` nutzt die Buster Pipeline Defaults: `["build", "health"]` und `{ serve: { type: "static" } }`.
 
 ---
 
 ## 20. Prompt-Anreicherung
 
-Der Orchestrator injiziert das Verdict-JSON als Block VOR dem originalen Prompt. Das JSON ist die vollständige Runner-Verdict-Struktur, trunciert auf max 5 Findings pro Suite via `truncateForPrompt()`:
+Die Buster Pipeline injiziert das Verdict-JSON als Block VOR dem originalen Prompt. Das JSON ist die vollständige Runner-Verdict-Struktur, trunciert auf max 5 Findings pro Suite via `truncateForPrompt()`:
 
 ```
 ## Pre-Test Results (automatisch ausgeführt — kein Handlungsbedarf)
@@ -1381,7 +1381,7 @@ gateway:
     - "/bin/bash"
     - "-c"
     - |
-      node /app/skills/buster-orchestrator.js &
+      node /app/skills/buster-pipeline.js &
       ORCH_PID=$!
       node /app/openclaw.mjs gateway --bind lan --port 18789 &
       GW_PID=$!
@@ -1408,7 +1408,7 @@ test_suites: mod?.test_suites || null,
 test_config: mod?.test_config || null,
 ```
 
-Pipeline liest `test_suites` und `test_config` aus `progress.json` und reicht sie 1:1 im Redis-Payload durch. Bei `null` nutzt der Orchestrator seine Defaults.
+Pipeline liest `test_suites` und `test_config` aus `progress.json` und reicht sie 1:1 im Redis-Payload durch. Bei `null` nutzt die Buster Pipeline ihre Defaults.
 
 Kein anderer Code in pipeline.js wurde verändert. Kein Breakage-Risiko.
 
@@ -1453,7 +1453,7 @@ Kein anderer Code in pipeline.js wurde verändert. Kein Breakage-Risiko.
 
 ### Gateway-Readiness
 
-Orchestrator wartet max 120s auf Gateway (Health-Check-Loop alle 3s). Wenn nicht ready → `process.exit(1)` → Pod-Restart.
+Die Buster Pipeline wartet max 120s auf Gateway (Health-Check-Loop alle 3s). Wenn nicht ready → `process.exit(1)` → Pod-Restart.
 
 ### Gateway-Health-Monitor
 
@@ -1490,7 +1490,7 @@ Wenn eine Suite eine Exception wirft, fängt der Runner sie als `ERROR`-Verdict 
 
 ## 26. Rollback
 
-Falls der Orchestrator Probleme macht, Rollback in 3 Schritten:
+Falls die Buster Pipeline Probleme macht, Rollback in 3 Schritten:
 
 1. `buster-values.yaml`: `gateway.command` Block entfernen
 2. `processor.enabled: true` setzen
@@ -1544,11 +1544,11 @@ node /app/skills/screenshot.js http://localhost:9999 /tmp/wide.png --width 1920 
 node /app/skills/screenshot.js http://localhost:9999 /tmp/viewport.png --no-fullpage
 ```
 
-### Orchestrator (wird automatisch gestartet)
+### Buster Pipeline (wird automatisch gestartet)
 
 ```bash
 # Startet automatisch via buster-values.yaml gateway.command
-node /app/skills/buster-orchestrator.js
+node /app/skills/buster-pipeline.js
 
 # Logs
 kubectl logs -n kubeclaw deploy/agent-buster -c kubeclaw -f | grep '\[SUITE\]\|\[TASK\]\|\[SPAWN\]'
@@ -1558,7 +1558,7 @@ kubectl logs -n kubeclaw deploy/agent-buster -c kubeclaw -f | grep '\[SUITE\]\|\
 
 ## 28. Changelog
 
-### Phase 4 (partial) — Security + Unit Suites (Orchestrator v2.2)
+### Phase 4 (partial) — Security + Unit Suites (Buster Pipeline v2.2)
 
 **Hinzugefügt:**
 - `suites/security.js` (372Z) — HTTP-Response-Header-Audit: HSTS (max-age Check), CSP (weak-Policy-Erkennung), X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy, Cookie-Flags (HttpOnly/Secure/SameSite), CORS-Wildcard-Check. Multiple Paths, Dual-Mode
@@ -1572,7 +1572,7 @@ kubectl logs -n kubeclaw deploy/agent-buster -c kubeclaw -f | grep '\[SUITE\]\|\
 - Beide Suites `critical: false` — blockieren nie den Subagent-Spawn
 - Keine Änderungen an suite-runner.js, verdict-schema.js, Dockerfile.sandbox nötig
 
-### Phase 3 — API + E2E Test Framework (Orchestrator v2.1)
+### Phase 3 — API + E2E Test Framework (Buster Pipeline v2.1)
 
 **Hinzugefügt:**
 - `suites/api.js` (528Z) — JSON-Spec HTTP/WS Test-Runner. Liest `test-spec.json`, Auth-Setup mit Token-Injection, Template-Variablen (`{{token}}`), WebSocket-Support via `protocol: "ws"`, Dual-Mode
@@ -1586,7 +1586,7 @@ kubectl logs -n kubeclaw deploy/agent-buster -c kubeclaw -f | grep '\[SUITE\]\|\
 - Beide Suites `critical: false` — blockieren nie den Subagent-Spawn
 - Keine Änderungen an suite-runner.js, verdict-schema.js, Dockerfile.sandbox nötig
 
-### Phase 2 — Frontend-Testing Suites (Orchestrator v2)
+### Phase 2 — Frontend-Testing Suites (Buster Pipeline v2)
 
 **Hinzugefügt:**
 - `screenshot.js` (171Z) — Shared Playwright-Screenshot-Utility, akzeptiert URLs + lokale HTML-Dateien, CLI für Baseline-Erstellung
@@ -1605,7 +1605,7 @@ kubectl logs -n kubeclaw deploy/agent-buster -c kubeclaw -f | grep '\[SUITE\]\|\
 - Baselines werden extern erstellt (Prism/manuell), keine Auto-Erstellung. Keine Baseline → SKIP
 - Alle Phase-2-Suites sind `critical: false` — blockieren nie den Subagent-Spawn
 
-### Phase 1 — Foundation (Processor v7 → Orchestrator v1)
+### Phase 1 — Foundation (Processor v7 → Buster Pipeline v1)
 
 **Entfernt:**
 - Processor-Sidecar-Container (256MB/0.2CPU) — eingespart

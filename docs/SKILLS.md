@@ -156,7 +156,7 @@ node /app/skills/redis.js --action complete \
 This is Buster's last action in a task. It:
 1. Calls `verify-task.js` (scope check, revert violations, git push)
 2. Writes structured completion message to the pipeline's Redis stream
-3. The Orchestrator detects this and kills the subagent session
+3. The Buster Pipeline detects this and kills the subagent session
 
 ---
 
@@ -398,7 +398,7 @@ Consumes `swarm:nova:events` Redis stream. On message arrival:
 
 ### Buster Processor (REPLACED)
 
-The processor sidecar has been replaced by `buster-orchestrator.js`, which runs as a background process in the gateway container (dual-process start). The processor file is kept for rollback. See BUSTER-TEST-PLATFORM-PLAN.md §7.5.
+The processor sidecar has been replaced by `buster-pipeline.js`, which runs as a background process in the gateway container (dual-process start). The processor file is kept for rollback. See BUSTER-TEST-PLATFORM-PLAN.md §7.5.
 
 ---
 

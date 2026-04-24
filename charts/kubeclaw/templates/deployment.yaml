@@ -16,7 +16,6 @@ spec:
     metadata:
       labels:
         {{- include "kubeclaw.labels" . | nindent 8 }}
-        {{- include "kubeclaw.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap-gateway.yaml") . | sha256sum }}
         {{- if .Values.processor.enabled }}
@@ -168,6 +167,14 @@ spec:
                   echo "    .semgrep.yml exists, keeping (override=false)"
                 fi
               fi
+              if [ -f "/init-swarm-config/eslint.config.mjs" ]; then
+                if [ "${OVERRIDE_SWARM_CONFIG}" = "true" ] || [ ! -f "/config/eslint.config.mjs" ]; then
+                  cp -Lf "/init-swarm-config/eslint.config.mjs" "/config/eslint.config.mjs"
+                  echo "    eslint.config.mjs written"
+                else
+                  echo "    eslint.config.mjs exists, keeping (override=false)"
+                fi
+              fi
 
               echo "==> 5. Skills Merge"
               mkdir -p /skills-merged
@@ -276,9 +283,9 @@ spec:
             {{- if .Values.anthropic.existingSecret }}
             - name: CLAUDE_CODE_OAUTH_TOKEN
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
-            {{- end }}
             - name: ANTHROPIC_API_KEY
-              value: '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'
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
+            {{- end }}
             {{- if .Values.discord.enabled }}
             - name: DISCORD_TOKEN
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.discordSecretName" . }}, key: {{ include "kubeclaw.discordSecretKey" . }} } }
@@ -423,9 +430,9 @@ spec:
             {{- if .Values.anthropic.existingSecret }}
             - name: CLAUDE_CODE_OAUTH_TOKEN
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
-            {{- end }}
             - name: ANTHROPIC_API_KEY
-              value: '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'
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
+            {{- end }}
             - name: OPENCLAW_GATEWAY_TOKEN
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.gatewaySecretName" . }}, key: {{ include "kubeclaw.gatewaySecretKey" . }} } }
             {{- if .Values.discord.enabled }}

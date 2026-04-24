@@ -50,6 +50,11 @@ agent:
 
 service:
   nodePort: 30073
+  extraPorts:
+    - name: prism-preview
+      port: 3456
+      targetPort: 3456
+      nodePort: 30456
 
 resources:
   requests: { cpu: 100m, memory: 512Mi }
@@ -75,13 +80,6 @@ extraContainers:
     resources:
       requests: { cpu: 50m, memory: 64Mi }
       limits: { cpu: 200m, memory: 128Mi }
-
-service:
-  extraPorts:
-    - name: prism-preview
-      port: 3456
-      targetPort: 3456
-      nodePort: 30456
 
 workspace:
   enabled: false

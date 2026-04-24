@@ -8,7 +8,7 @@
 
 agentRole: "buster"
 
-# Processor sidecar DISABLED — replaced by buster-orchestrator.js
+# Processor sidecar DISABLED — replaced by buster-pipeline.js
 # which runs as background process in the gateway container.
 # Rollback: set processor.enabled: true, remove gateway.command override.
 processor:
@@ -17,19 +17,19 @@ anthropic:
   existingSecret: "openclaw-shared-secrets"
   existingSecretKey: "anthropicApiKey"
   
-# Dual-process start: orchestrator + gateway in same container.
+# Dual-process start: Buster Pipeline + gateway in the same container.
 # If either process dies, both are killed → pod restart.
 gateway:
   command:
     - "/bin/bash"
     - "-c"
     - |
-      node /app/skills/buster-orchestrator.js &
-      ORCH_PID=$!
+      node /app/skills/buster-pipeline.js &
+      BUSTER_PIPELINE_PID=$!
       node /app/openclaw.mjs gateway --bind lan --port 18789 &
       GW_PID=$!
-      wait -n $ORCH_PID $GW_PID
-      kill $ORCH_PID $GW_PID 2>/dev/null
+      wait -n $BUSTER_PIPELINE_PID $GW_PID
+      kill $BUSTER_PIPELINE_PID $GW_PID 2>/dev/null
       exit 1
 
 image:
@@ -104,7 +104,7 @@ workspace:
 
     RULES:
     - Every check in BUSTER.md. No skipping. No partial runs.
-    - The app is already built, served, and pre-tested by the orchestrator. Check your prompt's Pre-Test Results. Do NOT rebuild or re-serve.
+    - The app is already built, served, and pre-tested by the Buster Pipeline. Check your prompt's Pre-Test Results. Do NOT rebuild or re-serve.
     - Cold output. Every bug report needs: exact reproduction steps, actual vs expected output, environment details, error logs. No "it seems broken."
     - Loop guard. If iteration count ≥ 10 on any single task, stop and signal Nova.
     - Verdict is binary. PASS = every check passed. FAIL = any check failed. No "partial pass."
@@ -115,7 +115,7 @@ workspace:
     STYLE: No emotion. Exact output. Reproducible steps. If you can't reproduce it, it's not a bug
 
   agents: |
-    ## What the Orchestrator Already Did Before You Start
+    ## What the Buster Pipeline Already Did Before You Start
     - Build + Serve — the app is running (URL in your prompt's Pre-Test Results)
     - Deterministic suites (build, health, a11y, perf, ...) — results are in your prompt as JSON
     - DO NOT build, serve, or re-run these tests. They are done.
@@ -125,7 +125,7 @@ workspace:
     2. Review existing context: BUSTER.md, status.json, fail_summaries, and repo logs
     3. Read BUSTER.md for this module — contains all test specifications
     4. Execute every check in BUSTER.md sequentially against the running app. Log each result.
-    5. Do NOT run `sandbox-build`, `sandbox-serve`, or `sandbox-cleanup` — the orchestrator handles this.
+    5. Do NOT run `sandbox-build`, `sandbox-serve`, or `sandbox-cleanup` — the Buster Pipeline handles this.
     6. Write verdict to status.json:
        - PASS: set status "PASS", document commit hash
        - FAIL: set status "FAIL", increment fail_count, write exact error to fail_summaries
@@ -135,7 +135,7 @@ workspace:
 
     ## What You Never Do
     - Fix code (that's Forge's job)
-    - Build, serve, or cleanup the sandbox (orchestrator does this)
+    - Build, serve, or cleanup the sandbox (the Buster Pipeline does this)
     - Skip checks because "it's probably fine"
     - Mark PASS if any check is ambiguous — when in doubt, FAIL
 

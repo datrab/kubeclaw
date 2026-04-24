@@ -319,8 +319,8 @@ const TOOLS = {
     config: 'Deployment: Sidecar-Container im Buster-Pod · Podman-in-Pod Sandbox (SYS_ADMIN, SYS_CHROOT)',
   },
   '.semgrep.yml': {
-    icon: '🔒', path: '/app/config/.semgrep.yml', version: 'v1',
-    desc: 'Kuratiertes Semgrep-Regelset für Security- und Code-Quality-Checks. Wird von lint-report.js im full-Tier verwendet. Deckt JS/TS, Python und Kubernetes ab.',
+    icon: '🔒', path: 'writable platform config surface (.semgrep.yml neben swarm.config.json)', version: 'v1',
+    desc: 'Kuratiertes Semgrep-Regelset für Security- und Code-Quality-Checks. Helm liefert das Beispiel unter charts/kubeclaw/files/config/.semgrep.yml; lint-report.js auto-detectet zuerst die Plattformdatei neben swarm.config.json, dann ~/.openclaw/.semgrep.yml, danach <repo>/.semgrep.yml, sonst auto.',
     rules: [
       { lang: 'JS/TS', items: 'eval(), Shell-Injection, hardcoded Secrets, console.log' },
       { lang: 'Python', items: 'bare except, SQL-Injection, compare_digest, subprocess shell=True, requests timeout' },
@@ -328,9 +328,10 @@ const TOOLS = {
     ],
     integration: [
       'Verwendet von <code>lint-report.js</code> im full-Tier (semgrep Tool)',
-      'Konfigurierbar via <code>pre_check.semgrep_config_path</code>',
+      'Helm-Beispiel: <code>charts/kubeclaw/files/config/.semgrep.yml</code> → writable platform config surface',
+      'Override via <code>pre_check.semgrep_config_path</code>, sonst auto-detect (plattformweit → <code>~/.openclaw</code> → Repo → auto)',
     ],
-    config: 'pre_check.semgrep_config_path (optional, Default: auto-detect)',
+    config: 'pre_check.semgrep_config_path (optional override, sonst auto-detect)',
   },
 };
 

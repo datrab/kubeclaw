@@ -1,4 +1,4 @@
-# ConfigMap: Swarm platform config (swarm.config.json + .semgrep.yml).
+# ConfigMap: Swarm platform config (swarm.config.json + .semgrep.yml + eslint.config.mjs).
 # Init container copies these to /home/node/.openclaw/ (config PVC).
 apiVersion: v1
 kind: ConfigMap
@@ -18,4 +18,10 @@ data:
 {{ .Values.semgrepConfigYaml | indent 4 }}
 {{- else }}
 {{ .Files.Get "files/config/.semgrep.yml" | indent 4 }}
+{{- end }}
+  eslint.config.mjs: |
+{{- if .Values.eslintConfigMjs }}
+{{ .Values.eslintConfigMjs | indent 4 }}
+{{- else }}
+{{ .Files.Get "files/config/eslint.config.mjs" | indent 4 }}
 {{- end }}

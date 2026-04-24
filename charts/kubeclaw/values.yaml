@@ -322,6 +322,20 @@ swarmConfigJson: ""
 
 semgrepConfigYaml: ""
 
+# Default is loaded from charts/kubeclaw/files/config/eslint.config.mjs.
+# To override, paste your full flat-config module here:
+#
+#   eslintConfigMjs: |
+#     export default [
+#       {
+#         rules: {
+#           'no-alert': 'warn',
+#         },
+#       },
+#     ];
+
+eslintConfigMjs: ""
+
 # =============================================================================
 # CUSTOM SKILLS (optional)
 # =============================================================================

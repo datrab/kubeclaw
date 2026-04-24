@@ -208,8 +208,7 @@ Der globale State aus v8 (`_shutdownState`, `_tmpDir`, `RUN_ID`, `_headHashCache
 | v8-Funktion(sgruppe) | v9-Modul |
 |---|---|
 | `gitExec`, `gitPull*`, `gitPush*`, `gitCommit*` | `integrations/git.js` |
-| `gatewayInvoke`, `gatewayKillSync` | `integrations/gateway.js` |
-| `archiveModuleCompletions`, `readCompletionFromRedis` | `services/polling.js` |
+| `gatewayInvoke` | `integrations/gateway.js` |
 | `discord`, `curlPost` | `integrations/discord.js` |
 | `spawnAcpAgent`, `killAcpAgent`, `spawnAgent`, `killAgent`, `steerAgent`, `verifyAgentAlive` | `agents/lifecycle.js` |
 | `registerShutdownHooks`, `trackAgent`, `untrackAgent`, `setShutdownContext` | `agents/shutdown.js` |
@@ -219,7 +218,7 @@ Der globale State aus v8 (`_shutdownState`, `_tmpDir`, `RUN_ID`, `_headHashCache
 | `buildGateFixPrompt` | `prompts/gate-fix.js` |
 | `buildReviewerPrompt` | `prompts/review.js` |
 | `buildTestWorkspaceSection` | `prompts/shared.js` |
-| `loadStatus`, `saveStatus`, `initStatus`, `addHistory` | `services/status-store.js` |
+| `loadStatus`, `saveStatus`, `initStatus` | `services/status-store.js` |
 | `releaseBlueprint`, `listBlueprints` | `services/blueprint.js` |
 | `pollGeneric`, `pollStatus`, `pollDual`, `pollForFile`, `pollForSessionEnd` | `services/polling.js` |
 | `handleRateLimit`, `withRateLimitRecovery` | `services/rate-limit.js` |
@@ -227,12 +226,8 @@ Der globale State aus v8 (`_shutdownState`, `_tmpDir`, `RUN_ID`, `_headHashCache
 | `emitEvent`, `onModuleStarted` u.a. Wrapper | `services/telemetry.js` |
 | `generateProjectSummary`, `generatePipelineReview` | `services/summary.js` |
 | `generateCaseStudy` | `services/case-study.js` |
-| `generateLintReport`, `formatLintReportForReviewer`, `runPreCheck` | `services/lint.js` |
-| `checkDependencies` | `services/dependencies.js` |
 | `runArchValidator` | `services/arch-validator.js` |
-| `appendStructuredEvent`, `recordUsageSnapshot` | `services/observability.js` |
-| `captureSessionSnapshot`, `writeCostReport` | `services/cost.js` |
-| `logRedisSent`, `logRedisReceived` | `services/redis-log.js` |
+| `writeCostReport` | `services/cost.js` |
 | `runApprovalGate` | `runners/approval-gate-runner.js` |
 | `runModule`, `executeModuleAttempt` | `runners/module-runner.js` |
 | `runGate` | `runners/gate-runner.js` |
@@ -279,7 +274,7 @@ Der globale State aus v8 (`_shutdownState`, `_tmpDir`, `RUN_ID`, `_headHashCache
 ### Drei Quellen
 
 ```
-/app/config/swarm.config.json              ← Plattform (einmal pro Installation)
+auto-detected swarm.config.json            ← Plattform (einmal pro Installation)
 <repo>/Projects/<project>/src/.swarm/progress.json  ← Projekt (Single Source of Truth)
 Repo Root                                  ← CLI/Env/Auto-detect
 ```
@@ -312,11 +307,11 @@ Enthält alles was für ALLE Projekte identisch ist:
 | Models | `models.forge`, `models.buster`, `models.echo` (optional — Fallback-Level) |
 | Review Defaults | `review_defaults.reviewers`, `timeout_minutes`, `max_fix_cycles`, `lint_tier` |
 | Pre-Check | `pre_check.enabled`, `pre_check.lint_report_path`, `pre_check.timeout_seconds`, `pre_check.semgrep_config_path` |
-| Telemetrie | `telemetry.stream_key` (Default: `"pipeline:events"`) |
+| Telemetrie | `telemetry.enabled`, legacy `telemetry.stream_key` |
 
-Pfad: `SWARM_CONFIG` Env oder `/app/config/swarm.config.json`
+Pfad: `SWARM_CONFIG` Env oder portable Auto-Erkennung der Plattformdatei `swarm.config.json`
 
-**`config.models` ist optional:** Wird per `??= {}` mit leerem Objekt initialisiert. Model-Resolution passiert zur Laufzeit via `resolveModel()` (Vier-Level-Fallback: runtime override → scope policy → `progress.defaults.models` → `config.models`). Für Details siehe §12.
+**`config.models` ist optional:** Wird per `??= {}` mit leerem Objekt initialisiert. Model-Resolution passiert zur Laufzeit via `resolveModel()` (Vier-Level-Fallback: runtime override → scope policy → `progress.defaults.models` oder legacy `progress.models` → `config.models`). Für Details siehe §12.
 
 ### progress.json (Projekt-Level)
 
@@ -328,7 +323,7 @@ Enthält alles projektspezifische:
 | Ablauf | `execution_order`, `phases` |
 | Module | `modules` (mit `dir`, `title`, `stages`, `forge_model`, `forge_subagent`, `depends_on`, `substeps`, `timeout_minutes`, `max_fails`, `auto_retry_threshold`) |
 | Gates | `gates` (mit `type`, `title`, `on_fail`, `on_nogo`, `on_timeout`, `instructions_file`, `output_file`, `review_name`, `review_output_dir`, `model`, `forge_model`, `max_fix_cycles`, `timeout_minutes`, `reviewers`, `lint_tier`, `auto_retry_threshold`) |
-| Models (legacy) | `models.forge`, `models.buster`, `models.echo` (Projekt-Level-Override, entspricht `defaults.models`) |
+| Models (legacy) | `models.forge`, `models.buster`, `models.echo` (Projekt-Level-Override, wird als Legacy-Alias für `defaults.models` weiter auf Priorität 3 honoriert) |
 | Defaults (Wave 3) | `defaults.models.<agent>`, `defaults.thinking.<agent>` (Priorität 3 in Policy-Auflösung) |
 
 Pfad: `<repo>/Projects/<project>/src/.swarm/progress.json` (Konvention, nicht konfigurierbar)
@@ -376,7 +371,7 @@ Exports: `loadConfig(projectName, opts)`, `validateConfig(config, progress)`, `v
 
 Ablauf von `loadConfig`:
 1. Repo-Root via `--repo` Flag / `REPO_ROOT` Env / `git rev-parse --show-toplevel`
-2. swarm.config.json laden (`SWARM_CONFIG` env oder `/app/config/swarm.config.json`)
+2. swarm.config.json laden (`SWARM_CONFIG` env oder portable Auto-Erkennung)
 3. Pfade aus Konvention ableiten: `Projects/<project>/src/.swarm/`
 4. progress.json laden
 5. Merge: swarmConfig (Basis) + project + repo_root + paths
@@ -462,8 +457,8 @@ Sicherer Webhook-Wrapper. `stdio: 'ignore'`, `timeout: 10000`. Nur von `discord(
 ACP Sessions (Forge, Echo) werden über die Gateway Tool API per HTTP verwaltet — **nicht** über CLI-Befehle. Das Gateway ist ein lokaler HTTP-Server, der Session-Lifecycle-Operationen als Tool Invocations bereitstellt.
 
 ```
-GATEWAY_URL   = http://127.0.0.1:18789/tools/invoke
-GATEWAY_TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN
+resolveGatewayInvokeUrl()  // OPENCLAW_GATEWAY_URL -> GATEWAY_URL -> default /tools/invoke
+resolveGatewayToken()      // OPENCLAW_GATEWAY_TOKEN -> GATEWAY_TOKEN -> ''
 ```
 
 Das gesamte Gateway-Modul lebt in `integrations/gateway.js`.
@@ -482,9 +477,9 @@ Async HTTP POST an die Gateway Tool API. Nutzt `fetch()` mit `AbortController` f
 | `sessions_send` | Sendet eine Nachricht (Steer oder `/stop` für Kill) |
 | `session_status` | Fragt den Session-Status ab (ACP State Machine) |
 
-### `gatewayKillSync(ctx, sessionKey)` — integrations/gateway.js
+### Module-private shutdown stop helper — agents/shutdown.js
 
-Synchroner Kill via `execFileSync('curl', ...)` — **ausschließlich** im Shutdown-Handler verwendet.
+`registerShutdownHooks(...)` nutzt jetzt denselben gemeinsamen `killSession(...)` Stop/Confirm-Pfad wie die Lifecycle-Helfer. Lokal in `agents/shutdown.js` bleibt nur der nachgelagerte Reaper für begrenzte Prozessbereinigung.
 
 ### ACP Session State Machine
 
@@ -546,7 +541,7 @@ shutdownState = {
 
 ### `registerShutdownHooks(ctx)` — agents/shutdown.js
 
-SIGTERM/SIGINT Handler: Alle tracked Sessions via `gatewayKillSync(sessionKey)` killen → Status als FAIL markieren → Temp aufräumen → Exit 1.
+SIGTERM/SIGINT Handler: Alle tracked Sessions via module-private Shutdown-Helfer stoppen/aufräumen → Status als FAIL markieren → Temp aufräumen → Exit 1.
 
 **v9-Neu — ACP Process Reaping:** Nach dem Kill via Gateway sendet `registerShutdownHooks` zusätzlich ein SIGTERM an alle OS-Prozesse, die dem beendeten ACP-Agent zugeordnet waren (via PID-Tracking in `acp-monitor.js`). Verhindert Orphan-Prozesse nach ungeplanten Shutdowns.
 
@@ -629,7 +624,7 @@ Thin Wrapper um `resolvePolicy()`. **Vier-Level-Fallback** für Model-Resolution
 |-----------|--------|---------|
 | 1 | `config._runtimeOverrides.model` | `--model` CLI-Flag |
 | 2 | `explicitModel` (scope policy) | `mod.forge_model`, `gate.model`, `reviewer.model` |
-| 3 | `progress.defaults.models.<agent>` | Projekt-Level Default (defaults-Block in progress.json) |
+| 3 | `progress.defaults.models.<agent>` oder legacy `progress.models.<agent>` | Projekt-Level Default in progress.json |
 | 4 | `config.models.<agent>` | Plattform-Level Default in swarm.config.json |
 
 Gibt `null` zurück wenn keine Quelle ein Model liefert (Callers bestimmen ihren eigenen Fallback).
@@ -670,10 +665,6 @@ Leiser Git-Commit. `--allow-empty` entfernt — "nothing to commit" wird still i
 ### Git-Hash-Cache — integrations/git.js
 
 `headHash(ctx)` cached, `invalidateHeadHash(ctx)` nach jeder HEAD-ändernden Operation. Nutzt `ctx.repoRoot` (gesetzt von `loadConfig`).
-
-### `addHistory(status, newStatus, agent, note)` — services/status-store.js
-
-History-Eintrag: `{ timestamp, status, agent, note, commit_hash }`.
 
 ### `initStatus(moduleId, moduleConfig)` — services/status-store.js
 
@@ -1002,11 +993,11 @@ Erster Kanal mit terminalem Status gewinnt. Genutzt für die **Buster-Phase**.
 
 ### `handleRateLimit(ctx, ...)` — services/rate-limit.js
 
-Cooldown → Discord-Alert → Sleep → Fresh Status → Phase wiederherstellen. Mutiert den Status des Callers **nicht**.
+Canonical owner for Nova-side rate-limit pauses: `rate_limit.detected` telemetry → Discord alert → sleep → fresh status reload → phase restore. Mutiert den Status des Callers **nicht**.
 
 ### Gate-Level Rate-Limit-Handling (Inline)
 
-Gates implementieren eigenen inline Rate-Limit-Handler: Sleep → Discord → `attempt--` (Rate-Limit zählt nicht als Fix-Attempt) → Continue.
+Gate polling still handles the control-flow decision inline, but the structured pause event is emitted only once by the rate-limit recovery layer so Buster/Nova do not double-emit the same pause.
 
 ---
 
@@ -1277,11 +1268,19 @@ Pausiert die Pipeline an konfigurierten Entscheidungspunkten bis ein Operator ex
 
 **on_timeout-Verhalten:** `"block"` → `EXIT_NEEDS_NOVA`; `"continue"` → Pipeline fährt fort
 
+**Normalisierung:** Die Config bleibt bei lower-case `on_timeout` (`block` / `continue`), aber der persistierte Gate-State, die Approval-Audit-Artefakte und das Telemetrie-Feld `approval.requested.timeout_policy` werden auf die kanonischen Uppercase-Werte `BLOCK` / `CONTINUE` normalisiert.
+
 **Audit-Artefakte** unter `.swarm/logs/gates/<gateId>/`:
 - `approval-request.json` — normalisierter Request-Payload
 - `approval-request.md` — Operator-facing Summary
 - `approval-transitions.jsonl` — Append-only Transition-Log
 - `approval-decision.json` — Final resolved Decision Record
+
+Persistierter Gate-State, `approval-request.json`, und `approval-decision.json` tragen dieselbe Kernkorrelation (`gate_id`, `gate_type`, `run_id`, `project`) wie die zugehörigen Telemetrie- und Discord-Surfaces.
+`approval-transitions.jsonl` persistiert dieselbe Korrelation pro Zustandswechsel (`run_id`, `project`, `gate_id`, `gate_type`, `from`, `to`, `note`).
+`summary.json` hält dieselbe Governance-Korrelation fest: `.governance.arch_validator` trägt `run_id` und `project`, und `.governance.approval_gates[]` persistiert `gate_id`, `gate_type`, `run_id`, `project` sowie die Pfade zu State-, Request-, Decision- und Transition-Artefakten.
+Dieselben Summary-Approval-Einträge persistieren auch `decision_via`, normalisierte `timeout_policy` und `continued`, sodass Offline-Replay einen blockierenden Timeout von einem Auto-Continue-Timeout unterscheiden kann, ohne den rohen Gate-State erneut zu öffnen.
+`summary.json.governance.overall_outcome` unterscheidet jetzt auch `CONTINUED_AFTER_APPROVAL_TIMEOUT` und `CANCELLED_BY_OPERATOR`, sodass Auto-Continue-Timeouts und Operator-Abbrüche nicht mehr in demselben halted- oder unknown-Summary-Zustand landen.
 
 ---
 
@@ -1376,90 +1375,30 @@ Die vollständige Exportliste aus `pipeline/index.js` (Stand v10-Audit):
 
 ```javascript
 // core/
-export { loadConfig, validateConfig, validateBusterConfig, resolveModel } from './core/config.js';
+export { loadConfig } from './core/config.js';
 export { RUN_ID, _runStats, createRunId, createRunStats, setRunState, bindRunContext,
          resolveRunContext, getRunState, getRunId, getRunStats, output, loadProgress } from './core/runtime.js';
 export { getRepoRoot, gitExec, headHash, invalidateHeadHash, setRepoRoot } from './core/git.js';
-export { modulePath, statusPath, swarmRoot, projectSrcPath, relPath, completionStreamKey,
-         gateStatusPath, moduleLogDir, moduleTestLogDir, moduleLintLogDir,
-         gateLogDir, gateTestLogDir, gateLintLogDir, validateSafePath,
-         costLogDir, redisLogDir, archValidatorLogDir } from './core/paths.js';
-export { createPipelineContext } from './core/context.js';
-export { createLogger, log, setActiveContext, clearActiveContext,
-         getActiveContext, initContextLogging } from './core/logger.js';
-export { createTempManager } from './core/temp.js';
 
 // services/
-export { loadStatus, saveStatus, initStatus, addHistory, savePrompt, saveStreamLog,
-         archiveGateOutputIfPresent, gateArchiveDir, initLogDir,
-         readGateOutput, gateOutputExists, readGateStatusJson } from './services/status-store.js';
-export { listBlueprints, releaseBlueprint, releaseGateFiles, syncControlFiles } from './services/blueprint.js';
-export { sleep, pollResult, pollGeneric, pollForFile, pollStatus, pollForSessionEnd,
-         pollDual, pollWithRateLimitRecovery, pollDualWithRateLimitRecovery,
-         archiveModuleCompletions, readCompletionFromRedis } from './services/polling.js';
-export { withRateLimitRecovery, handleRateLimit } from './services/rate-limit.js';
-export { FAIL_PATTERNS, extractAgentFailReason, extractPreTestFailReason,
-         getFailedSuiteNames, handleFail, buildNovaEscalation,
-         injectNeedsNova, resolveAutoRetryThreshold } from './services/failures.js';
+export { sleep, pollGeneric, pollForFile, pollStatus, pollForSessionEnd,
+         pollDual, pollWithRateLimitRecovery, pollDualWithRateLimitRecovery } from './services/polling.js';
 export { emitEvent, onPipelineStarted, onPipelineCompleted, onPipelineHalted,
          onModuleStarted, onModulePass, onModuleFail, onModuleBlocked,
          onGateStarted, onGatePass, onGateFail, onAgentSpawned, onAgentKilled,
          onPhaseStarted, onPhaseCompleted, onRetryScheduled, onRetryExhausted,
          onEscalated, onSummaryStarted, onSummaryCompleted, onBudgetWarning,
-         onBudgetExceeded, onRedisMessage, emitCostUpdate, emitRateLimitDetected,
-         emitBusterResult, emitTranscriptLine, emitAgentProgress,
-         emitMemoryRecalled } from './services/telemetry.js';
-export { appendStructuredEvent, recordUsageSnapshot, aggregateUsage,
-         isBudgetExceeded, emitBudgetWarnings } from './services/observability.js';
-export { logRedisExchange, logRedisSent, logRedisReceived, closeRedisLog } from './services/redis-log.js';
-export { captureSessionSnapshot, writeUsageArtifact, writeCostReport,
-         checkBudgetThresholds, accumulateTokens } from './services/cost.js';
-export { generateLintReport, formatLintReportForReviewer, runPreCheck } from './services/lint.js';
-export { checkDependencies } from './services/dependencies.js';
-export { runArchValidator, archValidatorLogDir, buildMarkdownSummary,
-         isBlocking, buildValidatorPrompt, SEVERITY, SCOPE, FINDING_CODES } from './services/arch-validator.js';
-export { writeSummary, generateProjectSummary, generatePipelineReview,
-         writePipelineReviewInstructions, pipelineReviewOutputPath,
-         pipelineReviewJsonPath, pipelineReviewInstructionsPath,
-         pipelineReviewDispatchMode, pipelineReviewAgentId } from './services/summary.js';
-export { generateCaseStudy, caseStudyOutputPath, caseStudyInstructionsPath,
-         caseStudyDispatchMode, caseStudyAgentId } from './services/case-study.js';
+         onBudgetExceeded, emitCostUpdate, emitRateLimitDetected,
+         emitObservabilityDegraded, emitObservabilityRestored,
+         emitTranscriptLine, emitAgentProgress } from './services/telemetry.js';
 
 // integrations/
-export { gatewayInvoke, GATEWAY_URL, GATEWAY_TOKEN } from './integrations/gateway.js';
-export { discord } from './integrations/discord.js';
-export { gitPullForPolling, gitPullBeforePush, gitPushWithRetry,
-         gitCommitAndPush, gitSyncBeforeBuster } from './integrations/git.js';
 
 // agents/
-export { acpLabel, modelToHarness, spawnAcpAgent, killAcpAgent, spawnAgent,
-         killAgent, steerAgent, verifyAgentAlive, dispatchRedisTask,
-         buildBusterPayload, spawnReviewerAgent, killReviewerAgent } from './agents/lifecycle.js';
-export { parseSessionState, readAcpTranscriptState, getAcpMonitorState,
-         isSessionTerminal, waitForSessionIdle, classifyTranscriptText,
-         getAcpMonitorConfig, publishTranscriptDelta } from './agents/acp-monitor.js';
-export { registerShutdownHooks, trackAgent, untrackAgent, setShutdownContext,
-         clearShutdownContext, gatewayKillSync, acpxCleanupSync, acpxCleanup,
-         reaperAfterKill, reaperAfterKillSync, getTrackedAgent,
-         getTrackedAgentCount } from './agents/shutdown.js';
-
-// prompts/
-export { makePromptResult, buildGitSyncSection, buildAvailableToolsSection,
-         buildTestWorkspaceSection, buildBusterCompletionProtocol,
-         buildBusterGateCompletionProtocol } from './prompts/shared.js';
-export { readBusterInstructions } from './prompts/buster-instructions.js';
-export { readForgeInstructions, buildForgePrompt } from './prompts/forge.js';
-export { buildBusterModulePrompt } from './prompts/buster-module.js';
-export { readGateInstructions, buildBusterGatePrompt } from './prompts/buster-gate.js';
-export { buildGateFixPrompt } from './prompts/gate-fix.js';
-export { buildReviewerPrompt } from './prompts/review.js';
+export { registerShutdownHooks } from './agents/shutdown.js';
 
 // runners/
-export { runPipeline, findNextStep, printStatus, dryRun } from './runners/pipeline-runner.js';
-export { runModule } from './runners/module-runner.js';
-export { runGate, GATE_RUNNERS } from './runners/gate-runner.js';
-export { runBusterGate } from './runners/buster-gate-runner.js';
-export { runReviewGate } from './runners/review-gate-runner.js';
+export { runPipeline } from './runners/pipeline-runner.js';
 
 // constants/
 export { STATUS, EXIT_OK, EXIT_ERROR, EXIT_NEEDS_NOVA, EXIT_BLOCKED,
@@ -1558,7 +1497,7 @@ CLI Entrypoint (pipeline/cli.js)
             │               ├─ resolveModel('buster', config, progress)
             │               ├─ buildBusterModulePrompt()
             │               ├─ archiveModuleCompletions()
-            │               ├─ emitTelemetryEvent('buster_dispatched', ...)
+            │               ├─ authoritative structured telemetry continues via buster.task_started / buster.task_completed once Buster consumes the task
             │               ├─ spawnAgent('buster') → Redis (module_test)
             │               ├─ pollDualWithRateLimitRecovery() → pollDual → pollGeneric
             │               └─ killAgent('buster')
@@ -1683,7 +1622,7 @@ CLI Entrypoint (pipeline/cli.js)
 | `swarm:buster:tasks` | Pipeline → Processor | Task-Dispatch |
 | `swarm:pipeline:<project>:completions` | Subagent → Pipeline | Completion-Signal |
 | `swarm:pipeline:<project>:completions:log` | Archiv | Alte Completions |
-| `pipeline:events` | Pipeline → Subscriber | Telemetrie-Events (v9-Neu, konfigurierbar) |
+| `pipeline:telemetry:<project>:<run_id>` | Pipeline/Buster → Subscriber | Kanonischer Telemetrie-Stream pro Run |
 
 ### File Naming Convention (Review Gates)
 
@@ -1709,7 +1648,6 @@ Pattern: `{reviewer.label}-{gate.review_name}.json`
 ```json
 {
   "telemetry": {
-    "stream_key": "pipeline:events",
     "enabled": true
   }
 }
@@ -1722,7 +1660,7 @@ Pattern: `{reviewer.label}-{gate.review_name}.json`
 
 **Wichtig:** Der tatsächliche Stream Key wird dynamisch generiert als `pipeline:telemetry:<project>:<run_id>`. Die Konfigurationsfelder `stream_key` und `enabled` dienen nur als Aktivierungsschalter — der Wert von `stream_key` hat keine Auswirkung auf den Key-Namen.
 
-Wenn `telemetry` nicht konfiguriert ist (weder `stream_key` noch `enabled` gesetzt) oder Redis nicht erreichbar ist, werden Events still verworfen (kein Fehler, kein Crash).
+Wenn `telemetry` nicht konfiguriert ist (weder `stream_key` noch `enabled` gesetzt), bleibt Telemetrie aus. Ist Telemetrie aktiviert und Redis nicht erreichbar, bleibt die Pipeline nicht-blockierend, schreibt aber ein explizites `observability.degraded`-Fallback-Artefakt statt Events still zu verwerfen.
 
 ### `emitEvent(ctx, eventType, payload)` — services/telemetry.js
 
@@ -1733,19 +1671,20 @@ Convenience-Wrapper für Standard-Events (alle sind Thin Wrappers um `emitEvent`
 **Event-Schema:**
 ```javascript
 {
-  event_type: string,   // z.B. 'module_started', 'buster_dispatched', 'module_passed'
+  type: string,         // z.B. 'module.started', 'buster.task_started', 'module.status_changed'
+  seq: number,
   project: string,
   run_id: string,
   module_id?: string,
   gate_id?: string,
-  timestamp: string,    // ISO 8601
-  payload: object,      // Event-spezifische Daten
+  ts: string,           // ISO 8601
+  // plus event-spezifische Felder auf Top-Level
 }
 ```
 
 ### Standard-Events (mit Export-Namen)
 
-Die vollständige Event-Taxonomie ist in `docs/telemetry-event-schema.md` dokumentiert. Alle Events folgen dem Schema `v1` mit `type`, `ts`, `run_id`, `project`, `seq`.
+Das kanonische Event-Inventar lebt in `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`; `docs/telemetry-event-schema.md` dokumentiert die event-spezifischen Payload-Felder und Beispiele. Alle Events folgen dem Schema `v1` mit `type`, `ts`, `run_id`, `project`, `seq`.
 
 | Export-Name | Event-Typ | Auslöser |
 |-------------|-----------|----------|
@@ -1767,16 +1706,20 @@ Die vollständige Event-Taxonomie ist in `docs/telemetry-event-schema.md` dokume
 | `onRetryExhausted` | `retry.exhausted` | Alle Retries verbraucht |
 | `onEscalated` | `error.escalation` | Eskalation an Nova |
 | `onSummaryStarted` | `summary.started` | Summary-Agent gestartet |
-| `onSummaryCompleted` | `summary.completed` | Summary-Agent beendet |
+| `onSummaryCompleted` | `summary.completed` | Summary-Agent beendet; für `summary_type: pipeline` auch mit `exit_code`, `exit_reason`, `summary_json_path`, `pipeline_summary_path` und `latest_json_path` |
 | `onBudgetWarning` | `budget.warning` | Budget-Schwelle überschritten |
 | `onBudgetExceeded` | `budget.exceeded` | Hard-Budget-Limit erreicht |
-| `onRedisMessage` | `redis.message` | Redis-Nachricht gesendet/empfangen |
 | `emitCostUpdate` | `cost.update` | Token/Kosten-Update |
 | `emitRateLimitDetected` | `rate_limit.detected` | Rate-Limit erkannt |
-| `emitBusterResult` | `buster.result` | Buster-Ergebnis |
+| `emitObservabilityDegraded` | `observability.degraded` | Sichtbarkeit ist eingeschränkt |
+| `emitObservabilityRestored` | `observability.restored` | Sichtbarkeit wurde wiederhergestellt |
 | `emitTranscriptLine` | `agent.transcript` | Transcript-Zeile |
 | `emitAgentProgress` | `agent.progress` | Agent-Fortschritt (~30s) |
-| `emitMemoryRecalled` | `memory.recalled` | Memory-Recall |
+
+Die veralteten Hilfs-Exports `onRedisMessage`, `emitBusterResult` und
+`emitMemoryRecalled` wurden entfernt. Die kanonische Surface bleibt auf den
+dokumentierten strukturierten Events in `services/telemetry.js` und
+`pipeline/index.js` begrenzt.
 
 ---
 
@@ -1812,7 +1755,8 @@ Formatiert Validation-Failures für Log-Output und Nova-Eskalation.
 
 ### `appendStructuredEvent(config, eventType, payload)` — services/observability.js
 
-Schreibt strukturiertes Lifecycle-Event in `pipeline.jsonl`. Pfad: `config._runLogDir` (run-scoped) oder `config._logDir/pipeline/pipeline.jsonl` (Fallback).
+Schreibt strukturiertes Lifecycle-Event in beide kanonischen Artefakte: `config._logDir/pipeline/pipeline.jsonl` (standardmäßig `.swarm/logs/pipeline/pipeline.jsonl` als Operator-Tail) und, wenn vorhanden, zusätzlich `config._runLogDir/pipeline.jsonl` (die run-scoped `pipeline.jsonl` im Audit-Tree unter `.swarm/logs/pipeline/runs/<run_id>/`).
+Die Artefakte verwenden das kanonische Envelope-Schema mit Top-Level-Feldern wie `type`, `ts`, `run_id`, `project`, `source` und `emitter`, statt eines separaten `event`/`timestamp`-Altformats.
 
 ### `recordUsageSnapshot(config, opts)` / `aggregateUsage(config)` — services/observability.js
 
@@ -1876,7 +1820,7 @@ Die Auflösung erfolgt: Modul/Gate-Override → Platform-Default aus `swarm.conf
 
 ### Pipeline Telemetrie
 
-Strukturierte Events werden an den Redis Stream `pipeline:events` emittiert (konfigurierbar via `telemetry.stream_key` in swarm.config.json). Für Details siehe Sektion 42.
+Strukturierte Events werden an den kanonischen Redis Stream `pipeline:telemetry:<project>:<run_id>` emittiert. `telemetry.enabled` oder legacy `telemetry.stream_key` aktivieren die Emission, aber `telemetry.stream_key` benennt den Stream nicht um. Für Details siehe Sektion 42.
 
 Der Stream ermöglicht:
 - Echtzeit-Monitoring externer Dashboards
@@ -1977,7 +1921,7 @@ Korrekturen gegenüber v9-Dokumentation (kein Code-Change):
 | **Modulare Architektur** | `pipeline.js` (4921 Zeilen monolithisch) aufgeteilt in ~25 Single-Responsibility-Module unter `skills/nova/pipeline/`. Ein dünner Shim (`skills/nova/pipeline.js`) sichert Abwärtskompatibilität. |
 | **PipelineContext statt Globals** | Alle mutable Globals (`_shutdownState`, `_tmpDir`, `RUN_ID`, etc.) sind in `PipelineContext` gekapselt. Ermöglicht parallele Runs und vereinfachte Unit-Tests. |
 | **ACP Process Reaping** | Automatisches Beräumen von Orphan-OS-Prozessen nach Agent-Kill. `acp-monitor.js` trackt PIDs, `reapAcpProcess()` sendet SIGTERM/SIGKILL. |
-| **Pipeline Telemetrie** | `services/telemetry.js` emittiert strukturierte Events an Redis Stream `pipeline:events`. Konfigurierbar via `telemetry.stream_key`. |
+| **Pipeline Telemetrie** | `services/telemetry.js` emittiert strukturierte Events an den kanonischen Redis Stream `pipeline:telemetry:<project>:<run_id>`. `telemetry.stream_key` bleibt nur als Legacy-Enable-Flag bestehen. |
 | **Konfigurierbare Auto-Retry-Schwelle** | `auto_retry_threshold` kann jetzt in `progress.json` pro Modul oder Gate überschrieben werden (bisher nur Platform-Level in swarm.config.json). |
 
 ### Neue Module
@@ -1993,7 +1937,6 @@ Korrekturen gegenüber v9-Dokumentation (kein Code-Change):
 
 | Funktion | Modul | Beschreibung |
 |----------|-------|-------------|
-| `emitTelemetryEvent(ctx, eventType, payload)` | services/telemetry.js | Sendet strukturiertes Event an Redis Stream. |
 | `reapAcpProcess(ctx, label)` | agents/shutdown.js | SIGTERM/SIGKILL für Orphan-OS-Prozesse nach Agent-Kill. |
 | `generatePipelineSummary(ctx, result)` | services/summary.js | Strukturierte End-of-Run-Analyse mit Empfehlungen. |
 
@@ -2025,13 +1968,12 @@ await runPipeline(ctx, progress);
 
 | Feld | Status |
 |------|--------|
-| `telemetry.stream_key` | v9 NEU — Redis Stream Key für Telemetrie-Events |
+| `telemetry.stream_key` | v9 NEU — Legacy-Enable-Flag für Telemetrie, nicht der Stream-Name |
 | `auto_retry_threshold` per Modul/Gate | v9 NEU — kann in progress.json pro Modul/Gate überschrieben werden |
 
 ### Exports (Änderungen)
 
 | Funktion | Status |
 |----------|--------|
-| `emitTelemetryEvent` | v9 NEU (exportiert) |
 | `generatePipelineSummary` | v9 NEU (exportiert) |
 | `createContext` | v9 NEU (exportiert) |

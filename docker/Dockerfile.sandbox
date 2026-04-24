@@ -32,7 +32,7 @@ RUN chown -R root:root /app
 # 3. Testing tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
     chromium build-essential python3 python3-pip python3-venv \
-    curl wget netcat-openbsd dnsutils nmap nginx jq tree \
+    curl wget netcat-openbsd dnsutils nmap nginx jq tree ripgrep \
     && rm -rf /var/lib/apt/lists/*
 
 RUN npm install -g lighthouse serve playwright 2>/dev/null || true
@@ -145,9 +145,24 @@ SCRIPT
 
 RUN chmod +x /usr/local/bin/sandbox-*
 
-# 6. KubeClaw skills — common + buster-specific, placed alongside OpenClaw's own skills
-COPY skills/common/ /app/skills/
-COPY skills/buster/ /app/skills/
+# 6. KubeClaw skills — keep canonical shared helper source at /app/common.
+#    Production /app/skills/pipeline helper paths are populated directly from
+#    skills/common/pipeline so the sandbox runtime uses one canonical
+#    implementation. Repo-local Buster facade files remain only for source-tree
+#    testability and are excluded from the image layer for those helper paths.
+COPY skills/common/ /tmp/kubeclaw-skills/common/
+COPY skills/buster/ /tmp/kubeclaw-skills/buster/
+RUN mkdir -p /app/common /app/skills \
+    && cp -r /tmp/kubeclaw-skills/common/. /app/common/ \
+    && tar -C /tmp/kubeclaw-skills/common -cf - . | tar -C /app/skills -xf - \
+    && tar -C /tmp/kubeclaw-skills/buster \
+         --exclude='pipeline/agents/runtime.js' \
+         --exclude='pipeline/integrations/gateway.js' \
+         --exclude='pipeline/agents/lifecycle.js' \
+         --exclude='pipeline/agents/acp-monitor.js' \
+         --exclude='pipeline/lifecycle-state.js' \
+         -cf - . | tar -C /app/skills -xf - \
+    && rm -rf /tmp/kubeclaw-skills
 
 # 7. Runtime environment
 ENV NODE_PATH=/usr/local/lib/node_modules:/app/node_modules
@@ -158,6 +173,29 @@ RUN mkdir -p /home/node/.openclaw \
     && chown -R root:root /home/node \
     && openclaw plugins install acpx
 
+# 8. Hotfix backgrounded exec onUpdate crash in current OpenClaw base image.
+#    Guard emitUpdate() after backgrounding/exiting so late stdout/stderr
+#    does not invoke a stale agent listener and crash the gateway.
+RUN node - <<'NODE'
+const fs = require('fs');
+const path = require('path');
+const dir = '/app/dist';
+const files = fs.readdirSync(dir).filter((f) => /^exec-defaults-.*\.js$/.test(f));
+if (!files.length) throw new Error('exec-defaults bundle not found in /app/dist');
+const before = "\tconst emitUpdate = () => {\n\t\tif (!opts.onUpdate) return;\n\t\tconst tailText = session.tail || session.aggregated;\n";
+const after = "\tconst emitUpdate = () => {\n\t\tif (!opts.onUpdate) return;\n\t\tif (session.backgrounded || session.exited) return;\n\t\tconst tailText = session.tail || session.aggregated;\n";
+for (const file of files) {
+  const full = path.join(dir, file);
+  const text = fs.readFileSync(full, 'utf8');
+  if (text.includes(after)) {
+    console.log(`already patched ${file}`);
+    continue;
+  }
+  if (!text.includes(before)) throw new Error(`emitUpdate anchor not found in ${file}`);
+  fs.writeFileSync(full, text.replace(before, after));
+  console.log(`patched ${file}`);
+}
+NODE
 
 LABEL org.opencontainers.image.title="KubeClaw Sandbox (Root Mode)"
 LABEL org.opencontainers.image.description="Podman-in-Pod + Lighthouse, Playwright, k6, nginx"

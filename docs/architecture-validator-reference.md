@@ -156,12 +156,16 @@ cat Projects/<project>/src/.swarm/logs/architecture-validator/summary.md
 
 The architecture validator outcome is recorded in `summary.json` under `.governance.arch_validator`:
 
+The summary entry also preserves `run_id` and `project`, so the governance snapshot can be joined directly back to the same pipeline replay bundle and live telemetry stream.
+
 ```json
 {
   "governance": {
     "arch_validator": {
       "ran": true,
       "blocked": false,
+      "run_id": "run-2026-04-11T00-00-00Z",
+      "project": "my-project",
       "outcome": "PASSED_WITH_FINDINGS",
       "findings_total": 2,
       "blocking_count": 0,

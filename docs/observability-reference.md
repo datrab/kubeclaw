@@ -9,8 +9,11 @@ This reference describes the complete artifact layout produced by the governance
 ```
 .swarm/logs/
 ├── pipeline/
+│   ├── latest.json            ← Pointer to the most recent run-scoped audit tree
 │   ├── pipeline.jsonl          ← Structured lifecycle event stream
 │   ├── model-policy.jsonl      ← Effective model/thinking resolution log
+│   ├── discord.jsonl           ← Persisted Discord notifications with run correlation
+│   ├── nova-injections.jsonl   ← Nova escalation handoff audit log
 │   └── summary.json            ← End-of-run pipeline summary
 ├── architecture-validator/
 │   ├── results.json            ← Machine-readable validator findings
@@ -21,7 +24,8 @@ This reference describes the complete artifact layout produced by the governance
 │   ├── cost-report.json        ← Aggregated cost/usage report
 │   └── budget-events.jsonl     ← Budget warning/exceeded events
 ├── redis/
-│   └── redis-exchanges.jsonl   ← Redis send/receive records
+│   ├── redis-exchanges.jsonl   ← Redis send/receive records
+│   └── redis-ops.jsonl         ← Redis completion/archive operation trace
 ├── gates/
 │   └── <gate-id>/
 │       ├── approval-request.json       ← Normalized approval request
@@ -33,11 +37,34 @@ This reference describes the complete artifact layout produced by the governance
         └── (attempt logs, prompts, transcripts — written by status-store)
 ```
 
+Run-scoped pipeline audit mirrors live under:
+
+```text
+.swarm/logs/pipeline/runs/<run-id>/
+├── pipeline.jsonl
+├── discord.jsonl
+├── nova-injections.jsonl
+├── summary.json
+└── redis/
+    ├── redis-exchanges.jsonl
+    └── redis-ops.jsonl
+```
+
+`.swarm/logs/pipeline/latest.json` is the operator shortcut to the most recent run. It records the current `run_id`, the canonical live `telemetry_stream_key`, and the relative paths to that run's `pipeline.jsonl`, `discord.jsonl`, `nova-injections.jsonl`, and `summary.json`.
+
+Approval-gate artifacts and state carry the same core correlation envelope: `gate_id`, `gate_type`, `run_id`, and `project`.
+Transition entries in `approval-transitions.jsonl` also persist `run_id`, `project`, `gate_id`, and `gate_type` alongside each state change.
+`summary.json` keeps the same governance correlation: top-level `telemetry_stream_key` plus `.artifacts.*` mirror the same run-scoped replay bundle named in `latest.json`, while `.governance.arch_validator` carries `run_id` and `project`, and `.governance.approval_gates[]` persists `gate_id`, `gate_type`, `run_id`, `project`, plus the approval state/request/decision/transition artifact paths.
+Those same summary approval entries also persist `decision_via`, normalized `timeout_policy`, and `continued`, so offline replay can distinguish a blocking timeout from an auto-continued timeout without reopening the raw gate-state file.
+`summary.json.governance.overall_outcome` now distinguishes `CONTINUED_AFTER_APPROVAL_TIMEOUT` and `CANCELLED_BY_OPERATOR`, so auto-continued approval timeouts and operator cancellations no longer collapse into the same halted or unknown summary state.
+
 ---
 
-## Pipeline Event Stream (`pipeline/pipeline.jsonl`)
+## Pipeline Event Stream (`.swarm/logs/pipeline/pipeline.jsonl`)
 
-Every major lifecycle transition appends a structured event to `pipeline.jsonl`. This file is the primary instrument for reconstructing what happened in a run.
+Every major lifecycle transition appends a structured event to `.swarm/logs/pipeline/pipeline.jsonl`. This file is the primary instrument for reconstructing what happened in a run.
+
+Both Nova-side pipeline telemetry and Buster-side canonical telemetry mirrors append here, so `source` / `emitter` identify which runtime produced a given event.
 
 ### Event envelope
 
@@ -45,10 +72,13 @@ Every event has these fields:
 
 ```json
 {
-  "event": "<event_type>",
+  "v": 1,
+  "type": "<event_type>",
+  "ts": "2026-04-02T12:00:00.000Z",
   "run_id": "run-<timestamp>",
   "project": "my-project",
-  "timestamp": "2026-04-02T12:00:00.000Z",
+  "source": "pipeline",
+  "emitter": "nova/pipeline/services/observability",
   "<additional fields per event type>"
 }
 ```
@@ -57,46 +87,77 @@ Every event has these fields:
 
 | Event | When emitted |
 |---|---|
-| `pipeline_started` | Pipeline begins execution |
-| `pipeline_completed` | Pipeline finishes normally |
-| `pipeline_halted` | Pipeline halted early (blocked, needs Nova, etc.) |
-| `module_started` | Module execution begins |
-| `module_pass` | Module reaches PASS |
-| `module_fail` | Module attempt fails |
-| `module_blocked` | Module reaches BLOCKED (max fails exceeded) |
-| `gate_started` | Gate execution begins |
-| `gate_pass` | Gate passes |
-| `gate_fail` | Gate fails |
-| `agent_spawned` | Agent (Forge, Echo, Buster) spawned |
-| `agent_killed` | Agent terminated |
-| `retry_scheduled` | Retry queued after a failure |
-| `retry_exhausted` | All retries consumed |
-| `escalated` | Run escalated to NEEDS_NOVA or BLOCKED |
-| `summary_started` | Summary generation begins |
-| `summary_completed` | Summary generation complete |
-| `budget_warning` | Cost or token threshold crossed |
-| `budget_exceeded` | Hard budget limit exceeded |
-| `approval_requested` | Approval gate posted to Discord |
-| `approval_resolved` | Approval gate decision recorded |
-
+| `pipeline.started` | Pipeline begins execution |
+| `pipeline.completed` | Pipeline finishes normally |
+| `pipeline.halted` | Pipeline halted early (blocked, needs Nova, etc.) |
+| `module.started` | Module execution begins |
+| `module.status_changed` | Module status changes, including PASS, FAIL, and BLOCKED |
+| `gate.started` | Gate execution begins |
+| `gate.verdict` | Gate returns GO or NO-GO |
+| `agent.spawned` | Session-backed agent work (Forge, Echo, subagent-backed fixes) spawned |
+| `agent.killed` | Session-backed agent work terminated |
+| `retry.scheduled` | Retry queued after a failure |
+| `retry.exhausted` | All retries consumed |
+| `error.escalation` | Run escalated to NEEDS_NOVA or BLOCKED |
+| `summary.started` | Post-run summary flow begins (`summary_type`: `pipeline`, `pipeline_review`, `case_study`, or `project_summary`) |
+| `summary.completed` | Post-run summary flow completes with terminal `status`/`reason`, artifact/session identity when relevant, and pipeline summary join fields like `exit_code`, `exit_reason`, `summary_json_path`, `pipeline_summary_path`, and `latest_json_path` |
+| `cost.update` | Token and cost usage recorded |
+| `budget.warning` | Cost or token threshold crossed |
+| `budget.exceeded` | Hard budget limit exceeded |
+| `approval.requested` | Approval gate posted |
+| `approval.resolved` | Approval gate decision recorded |
+| `rate_limit.detected` | A rate-limit pause is triggered |
+| `observability.degraded` | Visibility is impaired on a critical surface |
+| `observability.restored` | A degraded observability surface recovers |
 ### Inspecting the event stream
 
 ```bash
 # Read all events for a run
 cat .swarm/logs/pipeline/pipeline.jsonl | jq '.'
 
-# Find all failures
-cat .swarm/logs/pipeline/pipeline.jsonl | jq 'select(.event == "module_fail")'
+# Find all module FAIL transitions
+cat .swarm/logs/pipeline/pipeline.jsonl | jq 'select(.type == "module.status_changed" and .new_status == "FAIL")'
 
 # Find budget events
-cat .swarm/logs/pipeline/pipeline.jsonl | jq 'select(.event | startswith("budget_"))'
+cat .swarm/logs/pipeline/pipeline.jsonl | jq 'select(.type | startswith("budget."))'
 ```
 
 ---
 
-## Model/Thinking Policy Log (`pipeline/model-policy.jsonl`)
+## Discord Audit Log (`.swarm/logs/pipeline/discord.jsonl`)
 
-Every agent spawn appends an effective-resolution record to `model-policy.jsonl`. This file answers "which model ran, and why?" for any execution in the run.
+Every Discord notification is also persisted as JSONL in both the top-level operator log and the run-scoped mirror. This keeps the operator surface auditable even when the webhook destination is unavailable or external message history is incomplete.
+
+```json
+{
+  "ts": "2026-04-02T12:00:00.000Z",
+  "project": "my-project",
+  "run_id": "run-<timestamp>",
+  "session_key": "agent:forge:session123",
+  "attempt": 2,
+  "module_id": "07-observability-cost-and-budgeting",
+  "gate_id": null,
+  "dispatch_id": null,
+  "level": "WARN",
+  "title": "Module 07 RATE LIMITED",
+  "description": "Pausing before retry after provider rate limit.",
+  "fields": [
+    { "name": "Session", "value": "agent:forge:session123", "inline": true }
+  ]
+}
+```
+
+These records are written before webhook delivery is attempted, so the local audit trail remains available even if Discord posting fails. When correlation fields like session, attempt, module, gate, or dispatch are already present in embed fields, the persisted artifact also normalizes them into top-level keys for easier replay and audit joins.
+
+If live Discord webhook delivery itself fails, Nova also emits `observability.degraded` on the `webhook` surface with the same module, gate, session, gateway-label, attempt, and dispatch correlation when known, and later emits `observability.restored` after a successful post for that run. This makes operator-surface visibility loss explicit instead of relying on warn logs plus resumed message flow.
+
+If writing `.swarm/logs/pipeline/discord.jsonl` or the run-scoped `discord.jsonl` mirror fails, Nova emits `observability.degraded` on the `audit_log` surface and later emits `observability.restored` once Discord audit writes resume for that run. This keeps replay-gap incidents explicit instead of silently breaking cross-surface joins while live Discord delivery still succeeds.
+
+---
+
+## Model/Thinking Policy Log (`.swarm/logs/pipeline/model-policy.jsonl`)
+
+Every agent spawn appends an effective-resolution record to `.swarm/logs/pipeline/model-policy.jsonl`. This file answers "which model ran, and why?" for any execution in the run.
 
 ### Record schema
 
@@ -122,7 +183,7 @@ Every agent spawn appends an effective-resolution record to `model-policy.jsonl`
 |---|---|
 | `runtime_override` | `--model` CLI flag set at invocation |
 | `scope_policy` | Module `forge_model` or gate `model` field in `progress.json` |
-| `project_default` | `progress.defaults.models.<agentName>` |
+| `project_default` | `progress.defaults.models.<agentName>` or legacy `progress.models.<agentName>` |
 | `config_default` | `config.models.<agentName>` from `swarm.config.json` |
 | `none` | No value found at any level |
 | `not_supported_on_redis` | Thinking not forwarded on Redis/Buster dispatch path |
@@ -207,14 +268,18 @@ Emitted when a configured threshold is crossed. Events are written here AND emit
 {
   "ts": "2026-04-02T12:00:00.000Z",
   "run_id": "run-<timestamp>",
-  "type": "cost_warning",
-  "threshold": 1.00,
-  "actual": 1.24,
-  "message": "Cost $1.2400 exceeds warning threshold $1.00"
+  "type": "budget.warning",
+  "threshold": "warn_cost_usd",
+  "current": 1.24,
+  "limit": 1.00,
+  "unit": "usd",
+  "current_cost_usd": 1.24,
+  "budget_usd": 1.00,
+  "percent_used": 124
 }
 ```
 
-Event types: `cost_warning`, `cost_exceeded`, `token_warning`.
+Event types: `budget.warning`, `budget.exceeded`.
 
 ---
 
@@ -236,9 +301,9 @@ Budget thresholds are configured under `observability.budget` in `swarm.config.j
 
 | Key | Effect |
 |---|---|
-| `warn_cost_usd` | Emit `cost_warning` event when estimated cost reaches this amount |
-| `hard_limit_cost_usd` | Emit `cost_exceeded` event; `isBudgetExceeded()` returns `true` |
-| `warn_tokens` | Emit `token_warning` event when total token count reaches this |
+| `warn_cost_usd` | Emit `budget.warning` once estimated cost reaches this amount |
+| `hard_limit_cost_usd` | Emit `budget.exceeded`; `isBudgetExceeded()` returns `true` |
+| `warn_tokens` | Emit `budget.warning` when total token count reaches this amount |
 
 Thresholds are **non-blocking by default** — they emit events and log warnings but do not halt the pipeline unless caller code explicitly checks `isBudgetExceeded()`.
 
@@ -259,6 +324,26 @@ Records every Redis send/receive during the run.
   "payload": { "task": "...", "module_id": "..." }
 }
 ```
+
+## Redis Operation Trace (`redis/redis-ops.jsonl`)
+
+Records Redis completion-read and archive operations that support the fast-path polling logic.
+
+```json
+{
+  "ts": "2026-04-02T12:00:00.000Z",
+  "run_id": "run-<timestamp>",
+  "component": "redis",
+  "op": "read_completion",
+  "stream": "swarm:pipeline:demo:completions",
+  "module": "07-observability-cost-and-budgeting",
+  "found": true,
+  "scanned_entries": 4,
+  "scan_batches": 2
+}
+```
+
+These records are written to both the global `.swarm/logs/redis/` directory and the run-scoped mirror under `.swarm/logs/pipeline/runs/<run-id>/redis/`.
 
 ---
 
