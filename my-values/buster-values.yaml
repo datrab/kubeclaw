@@ -24,13 +24,15 @@ gateway:
     - "/bin/bash"
     - "-c"
     - |
-      node /app/skills/buster-pipeline.js &
-      BUSTER_PIPELINE_PID=$!
-      node /app/openclaw.mjs gateway --bind lan --port 18789 &
-      GW_PID=$!
-      wait -n $BUSTER_PIPELINE_PID $GW_PID
-      kill $BUSTER_PIPELINE_PID $GW_PID 2>/dev/null
-      exit 1
+        cd /home/node/.openclaw/workspace/git-repo || exit 1
+        node /app/skills/buster-pipeline.js &
+        BUSTER_PIPELINE_PID=$!
+        node /app/openclaw.mjs gateway --bind lan --port 18789 &
+        GW_PID=$!
+        wait -n $BUSTER_PIPELINE_PID $GW_PID
+        kill $BUSTER_PIPELINE_PID $GW_PID 2>/dev/null || true
+        wait $BUSTER_PIPELINE_PID $GW_PID 2>/dev/null || true
+        exit 1
 
 image:
   repository: ghcr.io/forgestackai/kubeclaw-sandbox
