@@ -142,6 +142,7 @@ export async function processTask(payload, opts = {}) {
 
   // Legacy compatibility hint from payload. The value does not rename the stream.
   const legacyTelemetryStream = payload?.telemetry_stream || undefined;
+  let dispatchIdForCompletion = payload?.dispatch_id || payload?.session?.label || null;
 
   const tctx = createTelemetryContext({
     project,
@@ -164,7 +165,6 @@ export async function processTask(payload, opts = {}) {
   let spawnedSubagent = false;
   let suitesInfo = { results: [], suiteSummary: '', criticalFailed: false };
   let sessionKeyForCompletion = null;
-  let dispatchIdForCompletion = payload?.dispatch_id || payload?.session?.label || null;
   const stageId = payload?.stage_id || (taskType === 'module_test' ? 'worker:module_buster' : (taskType === 'gate_test' ? 'gate:buster' : null));
   const workerType = payload?.worker_type || (taskType === 'module_test' ? 'module_buster' : null);
 
