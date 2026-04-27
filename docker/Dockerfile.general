@@ -74,9 +74,9 @@ ENV NPM_CONFIG_CACHE=/root/.npm
 ENV HOME=/home/node
 
 # 9. ACPX plugin (Agent Communication Protocol)
-RUN mkdir -p /home/node/.openclaw \
-    && chown -R root:root /home/node \
-    && openclaw plugins install acpx
+#RUN mkdir -p /home/node/.openclaw \
+#    && chown -R root:root /home/node \
+#    && openclaw plugins install acpx
 
 LABEL org.opencontainers.image.title="KubeClaw General (Root Mode)"
 LABEL org.opencontainers.image.description="Root environment for K8s stateful deployments with ACPX + lint tools"
