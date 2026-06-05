@@ -2,7 +2,7 @@
 
 **Version:** 1.0  
 **Datum:** 2026-03-18  
-**Zweck:** Vollständige Referenz aller Konfigurationsmöglichkeiten für die Buster Test Platform. Dient als Nachschlagewerk für Menschen UND als Skill-Dokument für Nova (pipeline.js).
+**Zweck:** Vollständige Referenz aller Konfigurationsmöglichkeiten für die Buster Test Platform. Dient als Nachschlagewerk für Menschen UND als Skill-Dokument für Nova (pipeline.ts).
 
 ---
 
@@ -18,7 +18,7 @@ progress.json
     └── "final-buster": { test_suites: [...], test_config: {...} }
 ```
 
-Nova's `pipeline.js` liest `test_suites` und `test_config` aus `progress.json` und schickt sie im Redis-Payload an Buster. Die Buster Pipeline gibt sie an den Suite-Runner weiter. Kein Agent muss die Config kennen — sie fliesst automatisch durch.
+Nova's `pipeline.ts` liest `test_suites` und `test_config` aus `progress.json` und schickt sie im Redis-Payload an Buster. Die Buster Pipeline gibt sie an den Suite-Runner weiter. Kein Agent muss die Config kennen — sie fliesst automatisch durch.
 
 ### Externe Artefakte (müssen VOR dem Buster-Run existieren)
 
@@ -28,7 +28,7 @@ Nova's `pipeline.js` liest `test_suites` und `test_config` aus `progress.json` u
 | Visual-Reg Baselines | `.swarm/modules/<module-dir>/baselines/preview.html` | Prism + `screenshot.cjs --generate-baselines` | `test_config.visual-reg.baseline_dir` |
 | E2E Playwright Tests | `.swarm/modules/<module-dir>/tests/*.spec.js` | Buster-Subagent (1. Run) | `test_config.e2e.tests_dir` |
 
-**Wichtig:** Wenn ein Artefakt fehlt → die zugehörige Suite wird SKIP (kein Fehler, kein FAIL).
+**Wichtig:** Wenn eine angeforderte Suite ein Pflicht-Artefakt braucht, muss dieses Artefakt existieren. Fehlende API-Specs, E2E-Tests, Unit-Tests oder Build-Outputs sind typed `FAIL`, nicht `SKIP`.
 
 ---
 
@@ -170,7 +170,7 @@ Wenn `test_suites` nicht gesetzt oder `null` → Default: `["build", "health"]`.
 |---|---|---|---|
 | `thresholds` | object \| null | `null` | Lighthouse-Kategorie → Mindest-Score (0-100) |
 | `path` | string | `"/"` | URL-Pfad für Lighthouse-Audit |
-| `output_path` | string | `/sandbox/results/lighthouse-report.json` | Pfad für den Lighthouse-JSON-Report |
+| `output_path` | — | nicht unterstützt | Entfernte Legacy-Pfad-Autorität; Reports werden in den Buster-Testlog geschrieben |
 | `timeout` | number | `60` | Lighthouse-Timeout in Sekunden |
 
 **Threshold-Felder:** `{ performance: N, accessibility: N, "best-practices": N, seo: N }` — FAIL wenn ein Score unter dem Threshold liegt.
@@ -232,12 +232,12 @@ Wenn `test_suites` nicht gesetzt oder `null` → Default: `["build", "health"]`.
 
 | Feld | Typ | Default | Beschreibung |
 |---|---|---|---|
-| `spec_file` | string \| null | `null` (→ SKIP) | Pfad zur `test-spec.json` (relativ zu project_dir) |
+| `spec_file` | string | Pflicht wenn `api` angefordert ist | Pfad zur `test-spec.json` (relativ zu project_dir) |
 | `thresholds` | object \| null | `null` | Siehe Dual-Mode (§4) |
 
 **Threshold-Felder:** `{ max_failures: N }` — FAIL wenn mehr als N Tests fehlschlagen.
 
-**Voraussetzung:** `test-spec.json` muss existieren. Format-Referenz: `examples/test-spec-example.json`. Keine Spec → SKIP.
+**Voraussetzung:** `test-spec.json` muss existieren und Tests enthalten. Format-Referenz: `examples/test-spec-example.json`. Keine Spec → typed `FAIL`.
 
 ### 3.7 e2e — E2E-Tests (Playwright)
 
@@ -251,13 +251,13 @@ Wenn `test_suites` nicht gesetzt oder `null` → Default: `["build", "health"]`.
 
 | Feld | Typ | Default | Beschreibung |
 |---|---|---|---|
-| `tests_dir` | string | `.swarm/modules/<module>/tests` | Verzeichnis mit Playwright-Test-Files |
+| `tests_dir` | string | Pflicht wenn `e2e` angefordert ist | Verzeichnis mit Playwright-Test-Files |
 | `timeout_ms` | number | `60000` | Max. Laufzeit für gesamten Playwright-Run |
 | `thresholds` | object \| null | `null` | Siehe Dual-Mode (§4) |
 
 **Threshold-Felder:** `{ max_failures: N }` — FAIL wenn mehr als N Tests fehlschlagen.
 
-**Voraussetzung:** Test-Files (*.spec.js, *.spec.ts, *.test.js, *.test.ts) im `tests_dir`. Keine Tests → SKIP (werden vom Subagent beim ersten Run geschrieben).
+**Voraussetzung:** Test-Files (*.spec.js, *.spec.ts, *.test.js, *.test.ts) im `tests_dir`. Keine Tests → typed `FAIL`; E2E nur anfordern, wenn persistierte Tests vorhanden sind.
 
 ### 3.8 security — HTTP-Header-Audit
 
@@ -301,7 +301,7 @@ Wenn `test_suites` nicht gesetzt oder `null` → Default: `["build", "health"]`.
 
 **Threshold-Felder:** `{ max_failures: N }` — FAIL wenn mehr als N Tests fehlschlagen.
 
-**Voraussetzung:** Wenn `test_cmd` nicht gesetzt ist (Default `npm test`): `package.json` muss ein `"test"` Script definieren das nicht der npm-Default-Stub ist. Kein Test-Script → SKIP. Wenn `test_cmd` explizit gesetzt ist (z.B. für pytest): `package.json`-Check wird übersprungen — der Operator weiß was er tut.
+**Voraussetzung:** Wenn `test_cmd` nicht gesetzt ist (Default `npm test`): `package.json` muss ein `"test"` Script definieren das nicht der npm-Default-Stub ist. Kein/No-op Test-Script → typed `FAIL`. Wenn `test_cmd` explizit gesetzt ist (z.B. für pytest): `package.json`-Check wird als explizite Runner-Policy übersprungen.
 
 **Unterstützte Frameworks:** Jest, Vitest, Mocha, TAP, pytest (Fallback auf Exit-Code bei unbekanntem Format).
 
@@ -311,7 +311,7 @@ Wenn `test_suites` nicht gesetzt oder `null` → Default: `["build", "health"]`.
 
 Jede Suite ausser `build` und `health` unterstützt zwei Modi:
 
-**Kein `thresholds` in Config (oder Config fehlt) → Informational**
+**Kein `thresholds` in Config (oder Config fehlt) → Evidence-only**
 - Suite läuft und reported Ergebnisse
 - Status ist IMMER `PASS`
 - Findings werden als Awareness-Info in den Prompt injiziert
@@ -490,21 +490,21 @@ Gates laufen am Ende einer Phase und prüfen alles mit strikten Thresholds:
 ## 6. Datenfluss: Von progress.json bis zum Verdict
 
 ```
-progress.json                    Nova (pipeline.js)
+progress.json                    Nova (pipeline.ts)
   modules.02.test_suites    ──→  buildBusterPayload()
   modules.02.test_config         fügt test_suites + test_config in Redis-Payload ein
 
-Redis-Payload                    Buster (buster-pipeline.js)
+Redis-Payload                    Buster (buster-pipeline.ts)
   payload.test_suites       ──→  processTask()
   payload.test_config            gibt Config an suite-runner.js weiter
 
 suite-runner.js                  suites/*.js
-  config.serve              ──→  build.js, health.js (App starten)
-  config.a11y               ──→  a11y.js
-  config.api                ──→  api.js
+  config.serve              ──→  build.ts, health.ts (App starten)
+  config.a11y               ──→  a11y.ts
+  config.api                ──→  api.ts
   ...                            ...
 
-Suite Verdict                    buster-pipeline.js
+Suite Verdict                    buster-pipeline.ts
   { status, findings, ... } ──→  Entscheidung: SPAWN oder NO_SUBAGENT
                                  Prompt-Anreicherung mit Verdict-JSON
                                  Discord-Notification
@@ -517,7 +517,7 @@ Suite Verdict                    buster-pipeline.js
 ## 7. Häufige Fragen
 
 **Was passiert wenn ich eine Suite in `test_suites` liste aber keine Config dafür habe?**
-→ Die Suite läuft mit Defaults. Bei Suites die ein externes Artefakt brauchen (api → spec_file, visual-reg → baseline, e2e → tests) wird sie SKIP.
+→ Die Suite läuft mit Defaults. Bei Suites die ein Pflicht-Artefakt brauchen (api → spec_file, e2e → tests, unit → real test script, bundle → build output) wird fehlendes Evidence typed `FAIL`.
 
 **Was passiert wenn ich `test_suites` gar nicht setze?**
 → Default: `["build", "health"]`. Nur Build + Health-Check.

@@ -23,8 +23,9 @@ Example: `pipeline:telemetry:kubecommand:run_7f3a2b`
 
 Stream management:
 - MAXLEN ~10000 (approximate trim, keeps memory bounded)
+- Redis is a capped live/consumer window, not the durable audit log
 - TTL: streams are not auto-expired; old runs can be cleaned by operator or cron
-- Consumer groups: ClawDeck should use XREADGROUP for reliable delivery
+- Live dashboards: ClawDeck should tail with XREAD and per-client Last-IDs; consumer groups are for work-queue processors, not fan-out dashboard viewing
 
 ## Redis audit artifacts
 
@@ -67,17 +68,39 @@ Every event has these fields:
 | source | string | Event producer family, currently `pipeline` or `buster` |
 | emitter | string | Concrete runtime emitter path |
 
+Envelope rule: canonical events are intentionally flat. Event-specific fields live at the top level; consumers must not require legacy nested `data` / `refs` objects or object-shaped `source` / `emitter` provenance wrappers.
+
+## Common Correlation / Joinability Fields
+
+These fields are shared join keys across Redis telemetry, durable `pipeline.jsonl`, Discord/audit mirrors, and fallback artifacts. Emit them when the runtime already knows the typed owner identity; otherwise use `null` or omit event-specific optional fields rather than inventing a display fallback.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| module_id | string\|null | Module owner for module-owned work only |
+| gate_id | string\|null | Gate owner for gate-owned work only |
+| gate_type | string\|null | Canonical gate type when `gate_id` is present and known |
+| attempt | number\|null | Owning retry or gate attempt when known |
+| dispatch_id | string\|null | Dispatch correlation id when work has been dispatched |
+| session_key | string\|null | Canonical ACP/subagent session identity when known |
+| gateway_label | string\|null | Explicit operator-facing gateway/dispatch label when known |
+| label | string\|null | Display-only operator label; never canonical identity |
+
+Joinability rules:
+- `label`, monitor lookup keys, log labels, Discord display fields, and generic session labels are display/routing aids only. They must not be promoted into `session_key`, `module_id`, `gate_id`, `dispatch_id`, or `gateway_label`.
+- Gate-owned evidence uses `gate_id` / `gate_type` and keeps `module_id: null` unless the event also has a real module owner. Do not use module fallback for gate-owned degraded/fallback evidence.
+- Buster artifact fallback and `observability.degraded` / `observability.restored` mirrors preserve known `attempt`, `dispatch_id`, `session_key`, `gate_id`, and `gate_type` from typed context/data, but remain diagnostic when Redis is unavailable and may carry `seq: null` plus `artifact_fallback: true`.
+
 ---
 
 ## Event Types
 
-For the high-value lifecycle and observability events below, the field table is the authoritative payload surface. Examples and prose illustrate common combinations, but the field table owns the canonical payload field list and meanings.
+For the high-value lifecycle and observability events below, the field table is the authoritative payload surface. Examples and prose illustrate common combinations, but the field table owns the canonical payload field list and meanings. Runtime enforcement for core and plugin telemetry payloads lives in `skills/common/pipeline/services/telemetry/payload-schema.ts`; sink envelope validation remains separate in `telemetry-sink-contract.js`.
 
 ### pipeline.started
 
 Emitted once at pipeline start. Contains the full run manifest.
 
-`models` carries the effective project-level per-agent defaults after applying legacy top-level `models` plus `defaults.models`, with `defaults.models` winning for any overlapping agent key.
+`models` carries the effective project-level per-agent defaults from `progress.defaults.models`.
 
 ```json
 {
@@ -137,10 +160,14 @@ Emitted once at pipeline start. Contains the full run manifest.
 | attempt | number\|null | Owning retry or gate attempt when known |
 | dispatch_id | string\|null | Owning retry or gate dispatch correlation key when known |
 | gateway_label | string\|null | Operator-facing session/dispatch label preserved across halt, retry, and Discord surfaces when known |
+| rate_limit_exhausted | boolean\|null | Present on `RATE_LIMITED` halts; true when the owner exhausted the allowed cooldown pause budget |
+| max_rate_limit_pauses | number\|null | Present on `RATE_LIMITED` halts; maximum allowed cooldown pauses for the stopped owner |
 | step_type | string\|null | Pipeline-owned non-module/non-gate stop category such as `arch_validation` |
 | step_id | string\|null | Pipeline-owned non-module/non-gate stop identifier such as `arch-validation` |
 
 For module- or gate-owned halts, `module_id` or `gate_id` carries the stopping step. When the halt is tied to a live module or gate session, `session_key` preserves that cross-surface correlation key. When the terminal result already knows the retry identity, the halt also preserves canonical `attempt`, `dispatch_id`, and `gateway_label` so the stop-path event stays joinable with the exact retry or gate dispatch.
+
+For `RATE_LIMITED` halts, the event also carries the exhausted pause-budget fields when known, for example `"rate_limit_exhausted": true` and `"max_rate_limit_pauses": 3`. Single-module, full-pipeline module, and gate-owned rate-limit halts use the same `RATE_LIMITED:<step-id>` summary reason shape.
 
 When the halt is gate-owned and Nova knows the dispatched gate type, the event also preserves `gate_type`, for example:
 
@@ -279,6 +306,46 @@ When retry exhaustion belongs to dispatched module or gate work, `dispatch_id` p
 When the exhausted work already has a tracked session label, `gateway_label` preserves that same operator-facing join key across retry, halt, Discord, and replay surfaces.
 
 When retry exhaustion belongs to gate-owned work and Nova already knows that identity, the payload also preserves canonical `gate_type` alongside `gate_id`.
+
+### system.io_warning
+
+Emitted as a point-in-time warning when a non-critical local I/O operation fails but the pipeline continues. This event is for warning evidence, not a degraded/restored state machine.
+
+```json
+{
+  "type": "system.io_warning",
+  "component": "model_policy",
+  "surface": "audit_log",
+  "reason": "policy_audit_append_failed",
+  "operation": "append",
+  "path": "/repo/.swarm/logs/pipeline/model-policy.jsonl",
+  "path_role": "model_policy_jsonl",
+  "code": "ENOSPC",
+  "module_id": "06",
+  "attempt": 2,
+  "warning_at": "2026-05-11T14:00:00.000Z"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| component | string | Component that detected the warning |
+| surface | string | I/O surface that failed |
+| reason | string | Stable warning reason |
+| operation | string | Failed operation, for example `append` |
+| path | string | Affected local path |
+| path_role | string\|null | Stable role for the path |
+| detail | string\|null | Error message or operator detail |
+| code | string\|null | Filesystem error code such as `ENOSPC` or `EACCES` |
+| errno | number\|null | Filesystem errno when available |
+| syscall | string\|null | Filesystem syscall when available |
+| module_id | string\|null | Module correlation when known |
+| gate_id | string\|null | Gate correlation when known |
+| gate_type | string\|null | Gate type when known |
+| attempt | number\|null | Attempt correlation when known |
+| dispatch_id | string\|null | Dispatch correlation when known |
+| session_key | string\|null | Session correlation when known |
+| warning_at | string\|null | ISO timestamp for the warning |
 
 Canonical summary lifecycle event names are `summary.started` and `summary.completed`.
 
@@ -482,9 +549,45 @@ NO-GO example (includes `reason`):
 
 When Nova already knows the live session that produced the gate verdict, `session_key` preserves the same cross-surface correlation used on Discord, `agent.spawned`, and related lifecycle events. It may be `null` for purely local/configuration failures that occur before a gate-owned session exists. When that verdict is tied to dispatched gate work, `dispatch_id` preserves the same owning correlation used on gate rate-limit, Discord, and replay surfaces.
 
+### agent.spawn.requested
+
+Typed spawn-request events promoted from the agent-observability control stream. Raw requester prompt/content remains in agent-observability records; canonical telemetry carries only routing and correlation metadata.
+
+```json
+{
+  "type": "agent.spawn.requested",
+  "agent_type": "echo",
+  "module_id": null,
+  "gate_id": "review-06",
+  "dispatch_id": "dispatch-review-06-1",
+  "requester_session_key": "agent:nova:session-parent",
+  "spawn_mode": "session",
+  "thread": true,
+  "requested_at": "2026-05-16T20:00:00.000Z"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| agent_type | string\|null | Requested child agent role when known |
+| module_id | string\|null | Module context when module-owned |
+| gate_id | string\|null | Gate context when gate-owned |
+| gate_type | string\|null | Canonical gate type when known |
+| session_key | string\|null | Current/requesting session key when known |
+| dispatch_id | string\|null | Owning dispatch correlation key when known |
+| gateway_label | string\|null | Gateway display/correlation label |
+| requester_session_key | string\|null | Parent/requester session key |
+| child_run_id | string\|null | Requested child run/thread correlation when known |
+| mode | string\|null | OpenClaw spawn mode when supplied |
+| spawn_mode | string\|null | Normalized spawn mode when supplied |
+| thread | boolean\|null | Whether the spawn requested a bound thread |
+| expects_completion_message | boolean\|null | Whether requester expects a completion message |
+| requester_origin | object\|null | Bounded requester origin metadata |
+| requested_at | string\|null | Source event timestamp |
+
 ### agent.spawned
 
-Session-backed agent lifecycle event for ACP/subagent work such as Forge, Echo, and the child session that Buster spawns after a successful task decision. Redis-dispatched Buster work still emits `buster.task_started` / `buster.task_completed` for task-level lifecycle around that child-session work.
+Session-backed agent lifecycle events use `agent.spawn.requested`, `agent.spawned`, `agent.delivery.target`, and `agent.killed`; plugin-owned task lifecycle details use `plugin.event` with `plugin_id: "buster"`.
 
 ```json
 {
@@ -521,9 +624,44 @@ Session-backed agent lifecycle event for ACP/subagent work such as Forge, Echo, 
 | session_key | string\|null | Canonical session identity for the spawned ACP/subagent work |
 | thinking_level | string\|null | Requested reasoning or thinking level when tracked |
 
+### agent.delivery.target
+
+Typed delivery-target routing events promoted from the agent-observability control stream after a child/session target is known. Raw requester routing payload remains in agent-observability records.
+
+```json
+{
+  "type": "agent.delivery.target",
+  "agent_type": "echo",
+  "gate_id": "review-06",
+  "dispatch_id": "dispatch-review-06-1",
+  "requester_session_key": "agent:nova:session-parent",
+  "child_session_key": "agent:echo:session123",
+  "spawn_mode": "session",
+  "expects_completion_message": true,
+  "targeted_at": "2026-05-16T20:00:01.000Z"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| agent_type | string\|null | Child agent role when known |
+| module_id | string\|null | Module context when module-owned |
+| gate_id | string\|null | Gate context when gate-owned |
+| gate_type | string\|null | Canonical gate type when known |
+| session_key | string\|null | Current/requesting session key when known |
+| dispatch_id | string\|null | Owning dispatch correlation key when known |
+| gateway_label | string\|null | Gateway display/correlation label |
+| requester_session_key | string\|null | Parent/requester session key |
+| child_session_key | string\|null | Resolved child session key when known |
+| child_run_id | string\|null | Child run/thread correlation when known |
+| spawn_mode | string\|null | Resolved spawn mode when supplied |
+| expects_completion_message | boolean\|null | Whether requester expects a completion message |
+| requester_origin | object\|null | Bounded requester origin metadata |
+| targeted_at | string\|null | Source event timestamp |
+
 ### agent.killed
 
-Session-backed agent termination event for ACP/subagent work such as Forge, Echo, and the child session that Buster spawned for a passing task. Redis-dispatched Buster work still emits `buster.task_completed` for task-level lifecycle, while `agent.killed` closes the child-session lifecycle when one existed.
+Session-backed agent termination uses `agent.killed`; plugin-owned task completion details use `plugin.event` with `plugin_event: "task_completed"`.
 
 ```json
 {
@@ -561,6 +699,280 @@ Session-backed agent termination event for ACP/subagent work such as Forge, Echo
 When the orchestrator knows the terminated session identity, `agent.killed` preserves the same top-level correlation fields used on `agent.spawned`, especially `session_key`.
 
 When the spawned or terminated session belongs to gate-owned work and Nova already knows that gate identity, both lifecycle events also preserve canonical `gate_type` and `dispatch_id` join keys alongside `gate_id`, `attempt`, and `session_key`.
+
+### agent.ended
+
+Terminal OpenClaw agent/subagent lifecycle event promoted from the agent-observability control stream. It summarizes terminal state; final message bodies remain in raw agent-observability Redis payload/control records, not canonical telemetry.
+
+```json
+{
+  "type": "agent.ended",
+  "agent_type": "forge",
+  "agent_scope": "agent",
+  "module_id": "01",
+  "session_key": "agent:forge:session-1",
+  "outcome": "success",
+  "duration_seconds": 2.5,
+  "final_message_count": 1
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| agent_type | string\|null | Agent role when known |
+| agent_scope | string\|null | `agent` or `subagent` |
+| label | string\|null | Operator-facing label when known |
+| module_id | string\|null | Module context |
+| gate_id | string\|null | Gate context |
+| session_key | string\|null | Canonical session key |
+| dispatch_id | string\|null | Dispatch correlation key |
+| gateway_label | string\|null | Gateway display/correlation label |
+| outcome | string\|null | Terminal result |
+| reason | string\|null | Human-readable terminal reason |
+| duration_seconds | number\|null | Runtime duration in seconds |
+| final_message_count | number\|null | Count of final messages observed, not their content |
+| error | object\|null | Structured error metadata when available |
+| error_message | string\|null | Error message summary |
+| ended_at | string\|null | Source event timestamp |
+
+### agent.llm.input.summary
+
+Bounded LLM input summary promoted only when explicitly enabled by agent-observability mapping. Full prompts, system prompts, and history remain in the raw payload stream.
+
+```json
+{
+  "type": "agent.llm.input.summary",
+  "agent_type": "forge",
+  "model": "claude-sonnet-4-6",
+  "prompt_chars": 4200,
+  "system_prompt_chars": 1200,
+  "history_message_count": 8,
+  "masking_profile": "kubeclaw-agent-observer-v1-minimal-api-key-mask"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| agent_type | string\|null | Agent role when known |
+| module_id | string\|null | Module context |
+| gate_id | string\|null | Gate context |
+| session_key | string\|null | Canonical session key |
+| dispatch_id | string\|null | Dispatch correlation key |
+| provider | string\|null | Model provider |
+| model | string\|null | Model name |
+| model_call_id | string\|null | Model call correlation key |
+| prompt_chars | number\|null | Character count of prompt content |
+| system_prompt_chars | number\|null | Character count of system prompt |
+| history_message_count | number\|null | Number of prior messages |
+| request | object\|null | Bounded request metadata |
+| masking_profile | string\|null | Applied masking profile |
+| masked | string[]\|null | Mask patterns applied |
+
+### agent.llm.output.summary
+
+Bounded LLM output summary. Full provider/assistant responses remain in raw agent-observability Redis records.
+
+```json
+{
+  "type": "agent.llm.output.summary",
+  "agent_type": "forge",
+  "model": "claude-sonnet-4-6",
+  "response_chars": 980,
+  "usage": { "input_tokens": 1200, "output_tokens": 240 }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| agent_type | string\|null | Agent role when known |
+| module_id | string\|null | Module context |
+| gate_id | string\|null | Gate context |
+| session_key | string\|null | Canonical session key |
+| dispatch_id | string\|null | Dispatch correlation key |
+| provider | string\|null | Model provider |
+| model | string\|null | Model name |
+| model_call_id | string\|null | Model call correlation key |
+| response_chars | number\|null | Character count of raw response |
+| assistant_response_chars | number\|null | Character count of assistant response slice |
+| history_message_count | number\|null | Number of history messages when provided |
+| usage | object\|null | Token/cost usage summary |
+| input_tokens | number\|null | Input token count summary |
+| output_tokens | number\|null | Output token count summary |
+| masking_profile | string\|null | Applied masking profile |
+| masked | string[]\|null | Mask patterns applied |
+
+### agent.tool.started
+
+Tool-call start summary from OpenClaw hooks. Full params remain in the raw payload stream.
+
+```json
+{
+  "type": "agent.tool.started",
+  "tool_name": "read",
+  "tool_call_id": "tool-1",
+  "params_bytes": 128,
+  "param_keys": ["path"]
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| tool_name | string | Tool name |
+| agent_type | string\|null | Agent role when known |
+| module_id | string\|null | Module context |
+| gate_id | string\|null | Gate context |
+| session_key | string\|null | Canonical session key |
+| dispatch_id | string\|null | Dispatch correlation key |
+| gateway_label | string\|null | Gateway display/correlation label |
+| tool_call_id | string\|null | Tool call correlation key |
+| params_bytes | number\|null | Serialized params byte count |
+| param_keys | string[]\|null | Top-level param keys when params are object-shaped |
+| masking_profile | string\|null | Applied masking profile |
+| masked | string[]\|null | Mask patterns applied |
+
+### agent.tool.finished
+
+Tool-call terminal summary. Full params/results remain in raw agent-observability Redis records.
+
+```json
+{
+  "type": "agent.tool.finished",
+  "tool_name": "read",
+  "outcome": "success",
+  "duration_seconds": 0.2,
+  "result_bytes": 2048
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| tool_name | string | Tool name |
+| agent_type | string\|null | Agent role when known |
+| module_id | string\|null | Module context |
+| gate_id | string\|null | Gate context |
+| session_key | string\|null | Canonical session key |
+| dispatch_id | string\|null | Dispatch correlation key |
+| gateway_label | string\|null | Gateway display/correlation label |
+| tool_call_id | string\|null | Tool call correlation key |
+| outcome | string\|null | Tool result outcome |
+| reason | string\|null | Tool terminal reason summary |
+| duration_seconds | number\|null | Tool duration in seconds |
+| result_bytes | number\|null | Serialized result byte count |
+| error | object\|null | Structured error metadata when available |
+| error_message | string\|null | Error message summary |
+| masking_profile | string\|null | Applied masking profile |
+| masked | string[]\|null | Mask patterns applied |
+
+### agent.model.started
+
+Model-call start metadata from OpenClaw hooks. Raw request content is not expanded into canonical telemetry.
+
+```json
+{
+  "type": "agent.model.started",
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-6",
+  "model_call_id": "model-call-1"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| agent_type | string\|null | Agent role when known |
+| module_id | string\|null | Module context |
+| gate_id | string\|null | Gate context |
+| session_key | string\|null | Canonical session key |
+| dispatch_id | string\|null | Dispatch correlation key |
+| provider | string\|null | Model provider |
+| model | string\|null | Model name |
+| model_call_id | string\|null | Model call correlation key |
+| request | object\|null | Bounded request metadata |
+
+### agent.model.ended
+
+Model-call terminal metadata and usage summary from OpenClaw hooks.
+
+```json
+{
+  "type": "agent.model.ended",
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-6",
+  "outcome": "success",
+  "usage": { "input_tokens": 1200, "output_tokens": 240 }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| agent_type | string\|null | Agent role when known |
+| module_id | string\|null | Module context |
+| gate_id | string\|null | Gate context |
+| session_key | string\|null | Canonical session key |
+| dispatch_id | string\|null | Dispatch correlation key |
+| provider | string\|null | Model provider |
+| model | string\|null | Model name |
+| model_call_id | string\|null | Model call correlation key |
+| outcome | string\|null | Model call outcome |
+| reason | string\|null | Terminal reason summary |
+| duration_seconds | number\|null | Model call duration in seconds |
+| usage | object\|null | Token/cost usage summary |
+| input_tokens | number\|null | Input token count summary |
+| output_tokens | number\|null | Output token count summary |
+| cost_usd | number\|null | Cost summary when provided |
+| error | object\|null | Structured error metadata when available |
+| error_message | string\|null | Error message summary |
+
+### agent.session.started
+
+Observed OpenClaw session start. This is a lifecycle observation, not lifecycle authority.
+
+```json
+{
+  "type": "agent.session.started",
+  "session_key": "agent:forge:session-1",
+  "agent_type": "forge"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| agent_type | string\|null | Agent role when known |
+| module_id | string\|null | Module context |
+| gate_id | string\|null | Gate context |
+| session_key | string\|null | Canonical session key |
+| session_id | string\|null | Provider session id |
+| dispatch_id | string\|null | Dispatch correlation key |
+| gateway_label | string\|null | Gateway display/correlation label |
+| started_at | string\|null | Source event timestamp |
+
+### agent.session.ended
+
+Observed OpenClaw session termination. This is a lifecycle observation, not lifecycle authority.
+
+```json
+{
+  "type": "agent.session.ended",
+  "session_key": "agent:forge:session-1",
+  "outcome": "success",
+  "duration_seconds": 180
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| agent_type | string\|null | Agent role when known |
+| module_id | string\|null | Module context |
+| gate_id | string\|null | Gate context |
+| session_key | string\|null | Canonical session key |
+| session_id | string\|null | Provider session id |
+| dispatch_id | string\|null | Dispatch correlation key |
+| gateway_label | string\|null | Gateway display/correlation label |
+| outcome | string\|null | Session outcome |
+| reason | string\|null | Terminal reason summary |
+| duration_seconds | number\|null | Session duration in seconds |
+| error | object\|null | Structured error metadata when available |
+| error_message | string\|null | Error message summary |
+| ended_at | string\|null | Source event timestamp |
 
 ### agent.transcript
 
@@ -641,7 +1053,7 @@ Periodic summary of agent activity (emitted every ~30s while agent is active). L
 
 `memory.recalled`, `buster.result`, and `redis.message` are no longer exported
 by the Nova telemetry module and are not part of the authoritative run stream.
-Downstream consumers should rely on the canonical `buster.*`, `approval.*`,
+Downstream consumers should rely on `plugin.event`, `approval.*`,
 and other documented event families instead.
 
 ### cost.update
@@ -730,9 +1142,9 @@ Emitted when operator visibility is impaired, for example when session status is
 
 | Field | Type | Description |
 |-------|------|-------------|
-| component | string\|null | Runtime owner reporting the incident, e.g. `acp_monitor`, `discord`, or `telemetry` |
-| surface | string\|null | Affected surface, e.g. `gateway`, `audit_log`, or `redis_stream` |
-| reason | string\|null | Stable machine-readable incident reason |
+| component | string | Runtime owner reporting the incident, e.g. `acp_monitor`, `discord`, or `telemetry` |
+| surface | string | Affected surface, e.g. `gateway`, `audit_log`, or `redis_stream` |
+| reason | string | Stable machine-readable incident reason |
 | detail | string\|null | Safe human-readable detail |
 | module_id | string\|null | Module context when visibility loss belongs to module work |
 | gate_id | string\|null | Gate context when visibility loss belongs to gate work |
@@ -745,6 +1157,14 @@ Emitted when operator visibility is impaired, for example when session status is
 | impacted_event_type | string\|null | Event type whose delivery failed, when the incident is tied to one blocked emit |
 | stream_key | string\|null | Telemetry stream key when the degraded surface is stream-specific |
 | degraded_at | string\|null | When degraded visibility began |
+| hook_id | string\|null | Notification hook identity when degraded visibility comes from notification dispatch |
+| stage_id | string\|null | Notification stage identity when degraded visibility comes from notification dispatch |
+| validation_errors | string[]\|null | Event-payload validation errors when the degraded incident represents rejected telemetry |
+| stdout | string\|null | Optional sanitized diagnostic stdout detail |
+| error | string\|null | Optional sanitized diagnostic error detail |
+| authorization | string\|null | Optional sanitized authorization diagnostic detail |
+| payload | object\|null | Optional sanitized diagnostic payload summary |
+| transcript | object[]\|null | Optional sanitized diagnostic transcript summary |
 
 When degraded visibility is tied to a tracked session or dispatch, the event also preserves the same `gateway_label`, `attempt`, and `dispatch_id` join keys used on the surrounding operator surfaces when known. The same event family also covers Discord operator-surface failures, for example the payload may include "component": "discord", "surface": "audit_log", and "reason": "audit_write_failed" when `discord.jsonl` mirroring cannot be written for a run. When degraded visibility is tied to a gate-owned session and Nova knows the dispatched gate type, the event also preserves `gate_type`, for example:
 
@@ -791,9 +1211,9 @@ Emitted when a previously degraded observability surface becomes healthy again.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| component | string\|null | Runtime owner reporting the recovered incident, e.g. `acp_monitor`, `discord`, or `telemetry` |
-| surface | string\|null | Recovered surface, e.g. `gateway`, `audit_log`, or `redis_stream` |
-| reason | string\|null | Stable machine-readable incident reason carried forward from the degraded event |
+| component | string | Runtime owner reporting the recovered incident, e.g. `acp_monitor`, `discord`, or `telemetry` |
+| surface | string | Recovered surface, e.g. `gateway`, `audit_log`, or `redis_stream` |
+| reason | string | Stable machine-readable incident reason carried forward from the degraded event |
 | detail | string\|null | Safe human-readable recovery detail |
 | module_id | string\|null | Module context when visibility recovery belongs to module work |
 | gate_id | string\|null | Gate context when visibility recovery belongs to gate work |
@@ -1005,172 +1425,67 @@ Emitted when cumulative cost or token usage crosses the hard limit. The pipeline
 
 Fields are identical to `budget.warning`.
 
-## Buster Events
+## Plugin Events
 
-Buster publishes into the same canonical run stream as Nova:
+Plugins publish into the same canonical run stream as Nova:
 
 ```
 pipeline:telemetry:<project>:<run_id>
 ```
 
-Buster events are distinguished by `source: "buster"` and their `buster.*` event names.
+Plugin events are distinguished by `type: "plugin.event"`, `plugin_id`, `plugin_event`, and the producer `source` such as `buster`.
 
-### buster.task_started
+Buster is an external telemetry producer because it runs in a separate pod. It publishes plugin-owned details through `plugin.event` directly to the canonical run stream, while shared lifecycle and health signals use the core event names. Nova-owned Redis and Discord delivery for Nova events is handled by registry-owned telemetry sink plugins. Plugin events must keep the canonical envelope fields (`v`, `type`, `ts`, `project`, `run_id`, `source`, `emitter`) and include the relevant module/gate/session identity fields.
 
-Emitted once at the start of a task.
+### plugin.event
+
+Generic extension event for plugin-owned lifecycle, suite, tool, and domain-specific telemetry. Core owns the event type and top-level correlation contract; plugin-owned fields live in `details` so adding a future plugin or gate does not require adding a new top-level telemetry event type.
+
+Buster is the first producer using this shape for task, suite, sandbox, git-sync, decision, session-monitor, and visual-regression telemetry.
 
 ```json
 {
-  "type": "buster.task_started",
+  "type": "plugin.event",
+  "plugin_id": "buster",
+  "plugin_event": "visual_reg",
   "module_id": "06",
-  "task_type": "module_test",
   "attempt": 1,
-  "dispatch_id": "dispatch-buster-06",
-  "session_key": null,
-  "suites": ["build", "health", "api"],
-  "serve_type": "server",
-  "commit_hash": "a1b2c3d4"
+  "status": "FAIL",
+  "details": {
+    "mode": "multi-path",
+    "pages_total": 2,
+    "pages_compared": 2,
+    "pages_skipped": 0,
+    "overall": "FAIL",
+    "page_results": [
+      { "name": "home", "diffPercent": 0.02, "status": "PASS" },
+      { "name": "dashboard", "diffPercent": 12.5, "status": "FAIL" }
+    ],
+    "discord_status": "sent"
+  }
 }
 ```
 
-### buster.task_completed
+| Field | Type | Description |
+|-------|------|-------------|
+| plugin_id | string | Stable plugin namespace, for example `buster` or a future `pentester` |
+| plugin_event | string | Plugin-owned event discriminator such as `task_started`, `task_completed`, `suite_completed`, `session_monitor`, or `visual_reg` |
+| module_id | string\|null | Module owner when the plugin event belongs to module work |
+| gate_id | string\|null | Gate owner when the plugin event belongs to gate work |
+| gate_type | string\|null | Gate type when `gate_id` is present and known |
+| agent_type | string\|null | Agent role or phase when useful for correlation |
+| session_key | string\|null | Session correlation key when known |
+| attempt | number\|null | Owning retry or gate attempt when known |
+| dispatch_id | string\|null | Dispatch correlation key when known |
+| gateway_label | string\|null | Operator-facing gateway/dispatch label when known |
+| status | string\|null | Generic plugin status when a plugin event has one |
+| outcome | string\|null | Generic plugin outcome when a plugin event has one |
+| reason | string\|null | Safe reason/summary when available |
+| severity | string\|null | Generic severity for finding-like plugin events |
+| duration_seconds | number\|null | Duration for timed plugin events |
+| details | object | JSON-safe plugin-owned payload. Arbitrary plugin fields are allowed only inside this object. |
 
-Emitted at the end of a task on all exit paths (success, failure, timeout).
-
-```json
-{
-  "type": "buster.task_completed",
-  "module_id": "06",
-  "task_type": "module_test",
-  "attempt": 1,
-  "dispatch_id": "dispatch-buster-06",
-  "session_key": "agent:buster:session123",
-  "outcome": "PASS",
-  "reason": "completion_received",
-  "duration_seconds": 420,
-  "suites_passed": 3,
-  "suites_failed": 0,
-  "suites_errored": 0,
-  "suites_skipped": 0,
-  "suite_summary": "✅ build ✅ health ✅ api",
-  "spawned_subagent": true
-}
-```
-
-`outcome` values: `PASS`, `FAIL`, `TIMEOUT`, `RATE_LIMITED`
-
-Both events also carry the standard top-level Buster correlation fields `attempt`, `dispatch_id`, and `session_key` when known. `session_key` may be `null` on early `buster.task_started` emits before the child session exists.
-
-### buster.sandbox_cleanup
-
-Emitted twice per task: before suites (`stage: "pre"`) and after the session ends (`stage: "final"`). Each stage emits a `phase: "started"` then `phase: "completed"` pair.
-
-```json
-{
-  "type": "buster.sandbox_cleanup",
-  "module_id": "06",
-  "stage": "pre",
-  "phase": "completed",
-  "duration_seconds": 2,
-  "ok": true
-}
-```
-
-### buster.git_sync
-
-```json
-{
-  "type": "buster.git_sync",
-  "module_id": "06",
-  "mode": "deterministic",
-  "commit_hash": "a1b2c3d4",
-  "ok": true,
-  "error": null
-}
-```
-
-`mode` values: `"deterministic"` (checkout to `commit_hash`), `"fast-forward"` (pull latest)
-
-### buster.decision
-
-Emitted after suites complete. Determines whether to spawn a subagent.
-
-```json
-{
-  "type": "buster.decision",
-  "module_id": "06",
-  "recommendation": "SPAWN",
-  "reason": "all critical suites passed",
-  "suite_summary": "✅ build ✅ health ✅ api"
-}
-```
-
-`recommendation` values: `"SPAWN"`, `"NO_SPAWN"`
-
-### buster.suite_started
-
-```json
-{
-  "type": "buster.suite_started",
-  "module_id": "06",
-  "suite": "api",
-  "attempt": 1
-}
-```
-
-### buster.suite_completed
-
-```json
-{
-  "type": "buster.suite_completed",
-  "module_id": "06",
-  "suite": "api",
-  "status": "PASS",
-  "duration_seconds": 12,
-  "checks_passed": 8,
-  "checks_failed": 0,
-  "critical": false,
-  "top_finding": null
-}
-```
-
-`status` values: `"PASS"`, `"FAIL"`, `"SKIP"`, `"ERROR"`
-
-Skipped and errored suites are represented through `buster.suite_completed` status and reason fields, not separate event names.
-
-### buster.session_monitor
-
-Emitted every poll cycle while the subagent session is active.
-
-```json
-{
-  "type": "buster.session_monitor",
-  "module_id": "06",
-  "session_key": "agent:buster:session123",
-  "elapsed_seconds": 90,
-  "acp_state": "active",
-  "transcript_events": 47,
-  "rate_limited": false
-}
-```
-
-### buster.visual_reg
-
-Rich per-page visual diff data emitted by the `visual-reg` suite. Supplements the generic `buster.suite_completed` event.
-
-```json
-{
-  "type": "buster.visual_reg",
-  "module_id": "06",
-  "pages": [
-    { "url": "http://localhost:9999/", "diff_pct": 0.02, "status": "PASS" },
-    { "url": "http://localhost:9999/dashboard", "diff_pct": 12.5, "status": "FAIL" }
-  ],
-  "overall": "FAIL"
-}
-```
-
-Rate-limit pauses are surfaced through the shared `rate_limit.detected` event, not a Buster-specific rate-limit event name.
+Buster currently uses these `plugin_event` values: `task_started`, `task_completed`, `sandbox_cleanup`, `git_sync`, `decision`, `suite_started`, `suite_completed`, `session_monitor`, and `visual_reg`. Rate-limit pauses are surfaced through the shared `rate_limit.detected` event, not a plugin-specific event.
 
 ---
 
@@ -1185,7 +1500,7 @@ How dashboard sections map to events:
 | Activity feed | All events (rendered chronologically) |
 | Active Agent panel | agent.spawned, agent.progress |
 | Agent Stream (terminal) | agent.transcript |
-| Visual Audit | buster.visual_reg, buster.suite_completed, buster.task_completed |
+| Visual Audit | plugin.event (`plugin_id: buster`, especially `visual_reg`, `suite_completed`, `task_completed`) |
 | Hull damage (ship) | module.status_changed (count attempts > 1) |
 | Module phase tracking | module.started, phase.started, phase.completed |
 | Retry tracking | retry.scheduled, retry.exhausted |
@@ -1200,13 +1515,13 @@ How dashboard sections map to events:
 ## Consumer Notes
 
 **Live dashboard (ClawDeck):**
-Use XREADGROUP with a consumer group. Process events as they arrive. For the agent transcript, expect high throughput (~1-5 events/second during active Forge work).
+Use XREAD with per-client Last-IDs. Process events as they arrive. Do not use shared consumer groups for dashboard fan-out; consumer groups are reserved for work-queue processors that own processing and XACK. For the agent transcript, expect high throughput (~1-5 events/second during active Forge work).
 
 **Post-mortem:**
-Use XRANGE on the stream to replay a complete run. Or start at `.swarm/logs/pipeline/latest.json`, which points to the newest run-scoped `pipeline.jsonl`, `discord.jsonl`, `nova-injections.jsonl`, and `summary.json` under `.swarm/logs/pipeline/runs/<run_id>/`, and records the canonical `telemetry_stream_key` for the same run.
+Use XRANGE on the stream for recent live-window replay only; it may be incomplete after `MAXLEN` trimming. For complete audit replay, start at `.swarm/logs/pipeline/latest.json`, which points to the newest run-scoped `pipeline.jsonl`, `discord.jsonl`, `nova-injections.jsonl`, `buster-telemetry-fallback.jsonl`, `redis/redis-exchanges.jsonl`, `redis/redis-ops.jsonl`, and `summary.json` under `.swarm/logs/pipeline/runs/<run_id>/`, and records the canonical `telemetry_stream_key` for the same run. When Redis emission succeeds, the Redis-owned `seq` is mirrored into run-scoped `pipeline.jsonl`; if `buster-telemetry-fallback.jsonl` contains `observability.degraded` with `artifact_fallback: true`, Buster could not publish that visibility signal to Redis and the run `pipeline.jsonl` mirror is the durable operator evidence for the gap.
 
 **Filtering:**
 All events have `type` — filter client-side. If transcript volume is too high, subscribe to `agent.progress` instead (every ~30s).
 
 **Retention:**
-Streams are trimmed to ~10000 entries per run. For long runs this means early transcript lines may be evicted. The JSONL files in `.swarm/logs/` remain as the durable record.
+Streams are trimmed to ~10000 entries per run. For long runs this means early transcript lines may be evicted. The run-scoped JSONL files in `.swarm/logs/pipeline/runs/<run_id>/` remain as the durable record.

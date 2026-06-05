@@ -44,6 +44,23 @@ const EVENTS = [
   { ts: "14:51:03", type: "info", msg: "FORGE PROGRESS", detail: "10b: Auth flow + Zustand" },
 ];
 
+const AGENT_OBSERVABILITY_DEBUG = {
+  status: "parallel evidence",
+  controlLag: 2,
+  payloadLength: 25,
+  coverage: [
+    ["spawn", "100%", "hook + legacy"],
+    ["agent_end", "100%", "hook + legacy"],
+    ["session_end", "+3.0s", "within tolerance"],
+  ],
+  spans: [
+    ["tool", "1/1", "complete"],
+    ["model", "1/2", "orphan end"],
+    ["llm", "1/1", "paired"],
+  ],
+  warnings: ["legacy-only failure evidence", "payload pressure above threshold"],
+};
+
 const TERMINAL_LINES = [
   { t: 0, text: "forge-pro@gemini-pro ~ $ cd /workspace/forgestack/Projects/kubecommand/src" },
   { t: 400, text: "forge-pro@gemini-pro ~/src $ cat .swarm/modules/10-frontend-scaffold/FORGE.md" },
@@ -434,6 +451,32 @@ function ClawDeck() {
               <div style={{ fontFamily: "var(--d)", fontSize: 7, fontWeight: 600, color: C.dim, letterSpacing: "0.1em", marginBottom: 4 }}>WORKING ON</div>
               {["src/App.tsx", "src/stores/authStore.ts", "src/pages/Setup.tsx", "src/components/AuthGuard.tsx"].map(f => (
                 <div key={f} style={{ fontFamily: "var(--m)", fontSize: 8, color: C.sub, padding: "2px 7px", marginBottom: 1, borderLeft: `2px solid ${C.orange}30`, background: C.bg }}>{f}</div>
+              ))}
+            </div>
+            <div style={{ padding: 8, borderRadius: 3, background: C.bg, border: `1px solid ${C.border}` }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 5 }}>
+                <span style={{ fontFamily: "var(--d)", fontSize: 7, fontWeight: 700, color: C.cyan, letterSpacing: "0.1em" }}>AGENT OBSERVABILITY</span>
+                <span style={{ fontFamily: "var(--m)", fontSize: 7, color: C.amber }}>{AGENT_OBSERVABILITY_DEBUG.status}</span>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 4, marginBottom: 5 }}>
+                {AGENT_OBSERVABILITY_DEBUG.coverage.map(([k, v, note]) => (
+                  <div key={k} title={note} style={{ padding: "4px 5px", background: C.surface, borderLeft: `2px solid ${C.cyan}55` }}>
+                    <div style={{ fontFamily: "var(--m)", fontSize: 8, color: C.text }}>{v}</div>
+                    <div style={{ fontFamily: "var(--d)", fontSize: 6, color: C.dim, letterSpacing: "0.08em" }}>{k}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--m)", fontSize: 7, color: C.dim, marginBottom: 4 }}>
+                <span>control lag <b style={{ color: C.amber }}>{AGENT_OBSERVABILITY_DEBUG.controlLag}</b></span>
+                <span>payload len <b style={{ color: C.amber }}>{AGENT_OBSERVABILITY_DEBUG.payloadLength}</b></span>
+              </div>
+              {AGENT_OBSERVABILITY_DEBUG.spans.map(([k, v, note]) => (
+                <div key={k} style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--m)", fontSize: 7, color: C.sub }}>
+                  <span>{k}</span><span style={{ color: note.includes("orphan") ? C.amber : C.green }}>{v} · {note}</span>
+                </div>
+              ))}
+              {AGENT_OBSERVABILITY_DEBUG.warnings.map(w => (
+                <div key={w} style={{ fontFamily: "var(--m)", fontSize: 7, color: C.amber, marginTop: 2 }}>⚠ {w}</div>
               ))}
             </div>
             <div style={{ marginTop: "auto" }}>

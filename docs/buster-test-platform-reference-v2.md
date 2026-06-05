@@ -2,8 +2,8 @@
 
 **Status:** Phase 1 + Phase 2 + Phase 3 + Phase 4 (partial) + Phase 5 (partial) implementiert
 **Datum:** 2026-03-18
-**Ort:** `skills/buster/` (wird via Dockerfile in `/app/skills/` kopiert)
-**Companion:** `skills/nova/pipeline.js` (dispatcht Tasks), `charts/kubeclaw/files/processor/buster-processor.cjs` (abgelöst, Rollback-Option)
+**Ort:** Source `skills/buster/`; Docker kopiert den Inhalt nach `/app/skills/` (z.B. `skills/buster/pipeline/...` → `/app/skills/pipeline/...`)
+**Companion:** `skills/nova/pipeline.ts` (dispatcht Tasks), `charts/kubeclaw/files/processor/buster-processor.cjs` (abgelöst, Rollback-Option)
 
 ---
 
@@ -12,26 +12,26 @@
 1. [Überblick und Designphilosophie](#1-überblick-und-designphilosophie)
 2. [Architektur](#2-architektur)
 3. [File-Übersicht](#3-file-übersicht)
-4. [Verdict-Schema (verdict-schema.js)](#4-verdict-schema)
-5. [Suite-Runner (suite-runner.js)](#5-suite-runner)
-6. [Suite: build (suites/build.js)](#6-suite-build)
-7. [Suite: health (suites/health.js)](#7-suite-health)
-8. [Suite: a11y (suites/a11y.js)](#8-suite-a11y)
-9. [Suite: perf (suites/perf.js)](#9-suite-perf)
-10. [Suite: bundle (suites/bundle.js)](#10-suite-bundle)
-11. [Suite: visual-reg (suites/visual-reg.js)](#11-suite-visual-reg)
-12. [Screenshot-Utility (screenshot.js)](#12-screenshot-utility)
-13. [Suite: api (suites/api.js)](#13-suite-api)
-14. [Suite: e2e (suites/e2e.js)](#14-suite-e2e)
-15. [Suite: security (suites/security.js)](#15-suite-security)
-16. [Suite: unit (suites/unit.js)](#16-suite-unit)
+4. [Verdict-Schema (pipeline/services/verdict-schema.ts)](#4-verdict-schema)
+5. [Suite-Runner (pipeline/runners/suite-runner.ts)](#5-suite-runner)
+6. [Suite: build (pipeline/suites/build.ts)](#6-suite-build)
+7. [Suite: health (pipeline/suites/health.ts)](#7-suite-health)
+8. [Suite: a11y (pipeline/suites/a11y.ts)](#8-suite-a11y)
+9. [Suite: perf (pipeline/suites/perf.ts)](#9-suite-perf)
+10. [Suite: bundle (pipeline/suites/bundle.ts)](#10-suite-bundle)
+11. [Suite: visual-reg (pipeline/suites/visual-reg.ts)](#11-suite-visual-reg)
+12. [Screenshot-Utility (pipeline/tools/screenshot.ts)](#12-screenshot-utility)
+13. [Suite: api (pipeline/suites/api.ts)](#13-suite-api)
+14. [Suite: e2e (pipeline/suites/e2e.ts)](#14-suite-e2e)
+15. [Suite: security (pipeline/suites/security.ts)](#15-suite-security)
+16. [Suite: unit (pipeline/suites/unit.ts)](#16-suite-unit)
 17. [Dual-Mode: Informational vs Enforced](#17-dual-mode)
-18. [Buster Pipeline (buster-pipeline.js)](#18-buster-pipeline)
+18. [Buster Pipeline (buster-pipeline.ts)](#18-buster-pipeline)
 19. [Datenfluss und Payload-Struktur](#19-datenfluss-und-payload-struktur)
 20. [Prompt-Anreicherung](#20-prompt-anreicherung)
 21. [Konfiguration (progress.json)](#21-konfiguration)
 22. [Deployment (buster-values.yaml)](#22-deployment)
-23. [Pipeline-Integration (pipeline.js)](#23-pipeline-integration)
+23. [Pipeline-Integration (pipeline.ts)](#23-pipeline-integration)
 24. [Discord-Benachrichtigungen](#24-discord-benachrichtigungen)
 25. [Robustheit und Fehlerbehandlung](#25-robustheit-und-fehlerbehandlung)
 26. [Rollback auf Processor-Sidecar](#26-rollback)
@@ -76,9 +76,9 @@ Redis-Task → Buster Pipeline (im Gateway-Container, 16GB/4CPU)
 | Entscheidung | Begründung |
 |---|---|
 | Buster Pipeline im Gateway-Container, nicht als Sidecar | Voller Zugriff auf Podman, Playwright, nginx, `/sandbox` |
-| Suite-Output als JSON, nicht Markdown | Konsistent mit status.json, progress.json. LLMs lesen JSON problemlos |
+| Suite-Output als JSON, nicht Markdown | Konsistent mit `output_file`, `progress.json` und den übrigen Maschinen-Artefakten. LLMs lesen JSON problemlos |
 | Zwei Recommendations: `NO_SUBAGENT` / `SPAWN` | Einfach. Der Subagent bekommt immer das volle Verdict — ob Findings drin sind oder nicht |
-| Suites als einzelne JS-Module | Erweiterbar: neue Suite = neues File in `suites/`, fertig |
+| Suites als einzelne JS-Module | Erweiterbar: neue Suite = neues File in `pipeline/suites/`, fertig |
 | Abhängigkeits-Chain im Runner | build FAIL → alles SKIP. Kein sinnloser Health-Check gegen eine App die nicht existiert |
 
 ---
@@ -95,7 +95,7 @@ Buster Pod
 │  ├─ /sandbox (www, results, scripts)                    │
 │  ├─ /app/skills/ (alle Skills)                          │
 │  │                                                       │
-│  ├─ Process 1: node /app/skills/buster-pipeline.js  │
+│  ├─ Process 1: node /app/skills/buster-pipeline.ts  │
 │  │  └─ Redis-Poll → Suite-Runner → Conditional Spawn    │
 │  │                                                       │
 │  └─ Process 2: node /app/openclaw.mjs gateway           │
@@ -112,7 +112,7 @@ Beide Prozesse werden in `buster-values.yaml` via `gateway.command` gestartet. `
 ### Task-Flow pro Modul
 
 ```
-pipeline.js (Nova)                  buster-pipeline.js (Buster)
+pipeline.ts (Nova)                  buster-pipeline.ts (Buster)
       │                                      │
       ├─ buildBusterPayload()                │
       │  (inkl. test_suites, test_config)    │
@@ -121,9 +121,9 @@ pipeline.js (Nova)                  buster-pipeline.js (Buster)
       │                                      ├─ 0. sandbox-cleanup
       │                                      ├─ 1. git pull --rebase
       │                                      ├─ 2. Prompt als File speichern
-      │                                      ├─ 3. suite-runner.js
-      │                                      │     ├─ build.js (Build + Serve)
-      │                                      │     └─ health.js (HTTP Check)
+      │                                      ├─ 3. pipeline/runners/suite-runner.ts
+      │                                      │     ├─ build.ts (Build + Serve)
+      │                                      │     └─ health.ts (HTTP Check)
       │                                      │
       │                                      ├─ 4. Entscheidung
       │                                      │     ├─ NO_SUBAGENT → FAIL an Stream
@@ -146,28 +146,28 @@ pipeline.js (Nova)                  buster-pipeline.js (Buster)
 
 | File | Zeilen | Beschreibung |
 |---|---|---|
-| `verdict-schema.js` | 221 | Konstanten, Factory-Funktionen für Suite- und Runner-Verdicts, Truncation-Helper |
-| `suite-runner.js` | 298 | Suite-Orchestrator. Lädt Suites, führt sie sequentiell aus, respektiert Abhängigkeiten, aggregiert |
-| `suites/build.js` | 256 | Build + Serve. Static (sandbox-build + nginx) oder Server (sandbox-run). Fehler-Parsing |
-| `suites/health.js` | 159 | HTTP Health-Check. Fetch mit Retry + exponential Backoff |
-| `buster-pipeline.js` | 709 | Ersetzt Processor-Sidecar. Redis-Poll → Suites → Conditional Spawn → Monitor |
+| `pipeline/services/verdict-schema.ts` | 221 | Konstanten, Factory-Funktionen für Suite- und Runner-Verdicts, Truncation-Helper |
+| `pipeline/runners/suite-runner.ts` | 298 | Suite-Orchestrator. Lädt Suites, führt sie sequentiell aus, respektiert Abhängigkeiten, aggregiert |
+| `pipeline/suites/build.ts` | 256 | Build + Serve. Static (sandbox-build + nginx) oder Server (sandbox-run). Fehler-Parsing |
+| `pipeline/suites/health.ts` | 159 | HTTP Health-Check. Fetch mit Retry + exponential Backoff |
+| `buster-pipeline.ts` | 709 | Ersetzt Processor-Sidecar. Redis-Poll → Suites → Conditional Spawn → Monitor |
 
 ### Neue Files (Phase 2)
 
 | File | Zeilen | Beschreibung |
 |---|---|---|
-| `screenshot.js` | 171 | Shared Playwright-Screenshot-Utility. Akzeptiert URLs und lokale HTML-Dateien. CLI für Baseline-Erstellung |
-| `suites/a11y.js` | 203 | Accessibility-Scan via @axe-core/playwright. WCAG-Violations als Findings |
-| `suites/perf.js` | 202 | Lighthouse CLI Performance-Audit. Scores gegen konfigurierbare Thresholds |
-| `suites/bundle.js` | 174 | Build-Output-Größe messen. Dateianzahl, Top-5 größte Files |
-| `suites/visual-reg.js` | 259 | Screenshot-Diff gegen Baseline via pixelmatch. Diff-Image bei Abweichung |
+| `pipeline/tools/screenshot.ts` | 171 | Shared Playwright-Screenshot-Utility. Akzeptiert URLs und lokale HTML-Dateien. CLI für Baseline-Erstellung |
+| `pipeline/suites/a11y.ts` | 203 | Accessibility-Scan via @axe-core/playwright. WCAG-Violations als Findings |
+| `pipeline/suites/perf.ts` | 202 | Lighthouse CLI Performance-Audit. Scores gegen konfigurierbare Thresholds |
+| `pipeline/suites/bundle.ts` | 174 | Build-Output-Größe messen. Dateianzahl, Top-5 größte Files |
+| `pipeline/suites/visual-reg.ts` | 259 | Screenshot-Diff gegen Baseline via pixelmatch. Diff-Image bei Abweichung |
 
 ### Geänderte Files (Phase 1)
 
 | File | Änderung |
 |---|---|
 | `my-values/buster-values.yaml` | `processor.enabled: false`, `gateway.command` (Dual-Process), Soul/Agents aktualisiert |
-| `skills/nova/pipeline.js` | 2 Zeilen: `test_suites` + `test_config` in `buildBusterPayload()` |
+| `skills/nova/pipeline.ts` | 2 Zeilen: `test_suites` + `test_config` in `buildBusterPayload()` |
 
 ### Geänderte Files (Phase 2)
 
@@ -179,16 +179,16 @@ pipeline.js (Nova)                  buster-pipeline.js (Buster)
 
 | File | Zeilen | Beschreibung |
 |---|---|---|
-| `suites/api.js` | 528 | JSON-Spec HTTP/WS Test-Runner. Auth-Setup, Template-Variablen, WebSocket-Support |
-| `suites/e2e.js` | 318 | Playwright-Test-Discovery + Runner. Tests aus `.swarm/modules/<module>/tests/` |
+| `pipeline/suites/api.ts` | 528 | JSON-Spec HTTP/WS Test-Runner. Auth-Setup, Template-Variablen, WebSocket-Support |
+| `pipeline/suites/e2e.ts` | 318 | Playwright-Test-Discovery + Runner. Tests aus `.swarm/modules/<module>/tests/` |
 | `examples/test-spec-example.json` | 127 | Kommentiertes Beispiel-Template für test-spec.json |
 
 ### Neue Files (Phase 4)
 
 | File | Zeilen | Beschreibung |
 |---|---|---|
-| `suites/security.js` | 372 | HTTP-Response-Header-Audit: HSTS, CSP, X-Frame, XCTO, XSS, Referrer, Cookies, CORS |
-| `suites/unit.js` | 345 | `npm test` Runner mit Jest/Vitest/Mocha/TAP Output-Parsing |
+| `pipeline/suites/security.ts` | 372 | HTTP-Response-Header-Audit: HSTS, CSP, X-Frame, XCTO, XSS, Referrer, Cookies, CORS |
+| `pipeline/suites/unit.ts` | 345 | `npm test` Runner mit Jest/Vitest/Mocha/TAP Output-Parsing |
 
 ### Neue Files (Phase 5)
 
@@ -203,16 +203,16 @@ pipeline.js (Nova)                  buster-pipeline.js (Buster)
 | File | Warum |
 |---|---|
 | `buster-processor.cjs` | Bleibt als Rollback-Option. Wird nicht gestartet |
-| `redis.js` | Keine Änderung nötig |
-| `verify-task.js` | Keine Änderung nötig |
-| `visual-audit.js` | Refactor auf später verschoben — screenshot.js steht bereit |
+| `pipeline/tools/redis.ts` | Redis CLI/communication helper moved under `pipeline/tools/` |
+| `pipeline/tools/verify-task.ts` | Keine Änderung nötig |
+| `pipeline/tools/visual-audit.ts` | Native TypeScript visual audit CLI/tool |
 | `templates/deployment.yaml` | Processor wird über `processor.enabled` gesteuert — kein Breakage |
 
 ---
 
 ## 4. Verdict-Schema
 
-**Datei:** `verdict-schema.js` (224 Zeilen)
+**Datei:** `pipeline/services/verdict-schema.ts` (224 Zeilen)
 **Zweck:** Einheitliches Datenformat für alle Test-Suite-Ergebnisse
 
 ### Konstanten
@@ -257,7 +257,7 @@ Jede Suite gibt dieses Format zurück (via `createSuiteVerdict()`):
 
 ### Runner-Verdict (Aggregiert)
 
-`suite-runner.js` aggregiert alle Suites (via `createRunnerVerdict()`):
+`pipeline/runners/suite-runner.ts` aggregiert alle Suites (via `createRunnerVerdict()`):
 
 ```json
 {
@@ -310,33 +310,32 @@ Für die Prompt-Injection: Limitiert Findings pro Suite auf `maxFindings` (Defau
 
 ## 5. Suite-Runner
 
-**Datei:** `suite-runner.js` (298 Zeilen)
+**Datei:** `pipeline/runners/suite-runner.ts` (298 Zeilen)
 **Zweck:** Suites laden, sequentiell ausführen, Ergebnisse aggregieren
 
 ### Interface
 
 ```js
 // Modul-Interface (von der Buster Pipeline aufgerufen)
-const { runSuites } = require('./suite-runner.js');
-const verdict = await runSuites({
-  module: '06',
-  project: 'kubecommand',
-  suites: ['build', 'health'],
-  config: { serve: { type: 'static' } },
-  swarmResultsDir: '/path/to/.swarm/modules/06/test-results',
+import { runSuites } from './pipeline/runners/suite-runner.ts';
+const verdict = await runSuites(['build', 'health'], {
+  moduleId: '06',
+  payload: {
+    project: 'kubecommand',
+    test_config: { serve: { type: 'static' } },
+  },
+  logDir: '/path/to/.swarm/logs/buster/module-06',
 });
 
-// CLI (für manuelles Testen auf dem Pod)
-node suite-runner.js --module 06 --project kubecommand \
-  --suites build,health --config '{"serve":{"type":"static"}}'
+// Kein eigenes CLI: direkte Nutzung über Import-Harness oder über buster-pipeline.ts.
 ```
 
 ### Suite-Vertrag
 
-Jede Suite-Datei in `suites/<name>.js` muss exportieren:
+Jede Suite-Datei in `pipeline/suites/<name>.ts` muss exportieren:
 
-```js
-module.exports = async function(context) → SuiteVerdict
+```ts
+export default async function suiteName(context): Promise<SuiteVerdict>
 ```
 
 Das `context`-Objekt enthält:
@@ -396,7 +395,7 @@ Geschriebene Files: `runner-verdict.json`, `<suite>-verdict.json` pro Suite.
 
 ## 6. Suite: build
 
-**Datei:** `suites/build.js` (257 Zeilen)
+**Datei:** `pipeline/suites/build.ts` (257 Zeilen)
 **Zweck:** Projekt kompilieren + App starten (serven)
 
 ### Zwei Modi
@@ -429,7 +428,7 @@ Geschriebene Files: `runner-verdict.json`, `<suite>-verdict.json` pro Suite.
 
 ### Fehler-Parsing
 
-build.js parsed stderr/stdout für strukturierte Findings:
+build.ts parsed stderr/stdout für strukturierte Findings:
 
 | Pattern | Wird erkannt als |
 |---|---|
@@ -454,7 +453,7 @@ Nach `sandbox-build` wird nginx direkt gestartet — NICHT `sandbox-serve`. Grun
 
 ## 7. Suite: health
 
-**Datei:** `suites/health.js` (159 Zeilen)
+**Datei:** `pipeline/suites/health.ts` (159 Zeilen)
 **Zweck:** HTTP Health-Check gegen die laufende App
 
 ### Verhalten
@@ -510,7 +509,7 @@ Attempt 3: nach 2000ms
 
 ## 8. Suite: a11y
 
-**Datei:** `suites/a11y.js` (203 Zeilen)
+**Datei:** `pipeline/suites/a11y.ts` (203 Zeilen)
 **Zweck:** Accessibility-Scan via @axe-core/playwright
 **Dependencies:** build + health
 **Requires:** `@axe-core/playwright` (Dockerfile.sandbox)
@@ -566,7 +565,7 @@ Ohne `thresholds` → informational (immer PASS, Violations als Findings). Mit `
 
 ## 9. Suite: perf
 
-**Datei:** `suites/perf.js` (202 Zeilen)
+**Datei:** `pipeline/suites/perf.ts` (202 Zeilen)
 **Zweck:** Lighthouse Performance-Audit
 **Dependencies:** build + health
 **Requires:** `lighthouse` (bereits in Dockerfile.sandbox)
@@ -622,7 +621,7 @@ Ohne `thresholds` → informational. Scores werden reported, Findings nur bei au
 
 ## 10. Suite: bundle
 
-**Datei:** `suites/bundle.js` (174 Zeilen)
+**Datei:** `pipeline/suites/bundle.ts` (174 Zeilen)
 **Zweck:** Build-Output-Größe und Dateianzahl messen
 **Dependencies:** build (kein Health nötig — braucht keine laufende App)
 **Requires:** keine externen Packages
@@ -663,17 +662,17 @@ Ohne `thresholds` → informational. Größe wird reported, Findings bei > 3MB (
 
 ## 11. Suite: visual-reg
 
-**Datei:** `suites/visual-reg.js` (260 Zeilen)
-**Zweck:** Screenshot der laufenden App mit Baseline-PNG vergleichen
+**Datei:** `pipeline/suites/visual-reg.ts` (260 Zeilen)
+**Zweck:** Screenshot der laufenden App mit reviewed Baseline-PNG vergleichen
 **Dependencies:** build + health
-**Requires:** `pixelmatch`, `pngjs` (Dockerfile.sandbox), `screenshot.js`
+**Requires:** `pixelmatch`, `pngjs` (Dockerfile.sandbox), `pipeline/tools/screenshot.ts`
 
 ### Baseline-Workflow
 
-Baselines werden extern erstellt, **bevor** Forge das Modul baut:
+Baselines werden extern erstellt und reviewed, **bevor** Forge das Modul baut:
 
 1. Prism (oder manuell) legt `baseline.html` in `.swarm/modules/<module>/baselines/`
-2. `screenshot.js` erstellt daraus `baseline.png`: `node screenshot.js baseline.html baseline.png`
+2. `pipeline/tools/screenshot.ts --generate-baselines` erstellt daraus reviewed baseline PNGs plus `paths.json`: `node pipeline/tools/screenshot.ts baseline.html baseline.png`
 3. Forge baut das echte Modul
 4. visual-reg screenshottet die laufende App → vergleicht gegen `baseline.png`
 
@@ -739,21 +738,21 @@ Ohne `thresholds` → informational (immer PASS, Diff-Prozent als Finding). Mit 
 
 ## 12. Screenshot-Utility
 
-**Datei:** `screenshot.js` (171 Zeilen)
+**Datei:** `pipeline/tools/screenshot.ts` (171 Zeilen)
 **Zweck:** Shared Playwright-Screenshot-Funktion
 
 ### Consumer
 
 | Consumer | Zweck |
 |---|---|
-| `suites/visual-reg.js` | Screenshot der laufenden App für Pixel-Diff |
-| `visual-audit.js` | Screenshot für Discord-Upload (Refactor ausstehend) |
+| `pipeline/suites/visual-reg.ts` | Screenshot der laufenden App für Pixel-Diff |
+| `pipeline/tools/visual-audit.ts` | Screenshot für Discord-Upload (Refactor ausstehend) |
 | CLI | Baseline-Erstellung aus HTML-Previews |
 
 ### API
 
 ```js
-const { takeScreenshot } = require('./screenshot.js');
+import { takeScreenshot } from './pipeline/tools/screenshot.ts';
 const result = await takeScreenshot(target, outputPath, opts);
 // result: { ok: true, path, width, height } oder { ok: false, error }
 ```
@@ -770,13 +769,13 @@ const result = await takeScreenshot(target, outputPath, opts);
 
 ```bash
 # HTML-Preview → Baseline-PNG
-node screenshot.js .swarm/modules/15/baselines/baseline.html .swarm/modules/15/baselines/baseline.png
+node pipeline/tools/screenshot.ts .swarm/modules/15/baselines/baseline.html .swarm/modules/15/baselines/baseline.png
 
 # Laufende App screenshotten
-node screenshot.js http://localhost:9999 /tmp/screenshot.png --width 1920 --height 1080
+node pipeline/tools/screenshot.ts http://localhost:9999 /tmp/screenshot.png --width 1920 --height 1080
 
 # Ohne Fullpage
-node screenshot.js http://localhost:9999 /tmp/viewport-only.png --no-fullpage
+node pipeline/tools/screenshot.ts http://localhost:9999 /tmp/viewport-only.png --no-fullpage
 ```
 
 ### Parameter
@@ -790,7 +789,7 @@ node screenshot.js http://localhost:9999 /tmp/viewport-only.png --no-fullpage
 
 ---
 
-## 13. Suite: api (suites/api.js)
+## 13. Suite: api (pipeline/suites/api.ts)
 
 **Phase 3** — JSON-Spec HTTP/WS Test-Runner.
 
@@ -885,7 +884,7 @@ Beispiel-Template: `examples/test-spec-example.json`
 
 ---
 
-## 14. Suite: e2e (suites/e2e.js)
+## 14. Suite: e2e (pipeline/suites/e2e.ts)
 
 **Phase 3** — Playwright E2E Test-Runner.
 
@@ -941,7 +940,7 @@ Ignoriert: `node_modules/`, versteckte Verzeichnisse
 
 ---
 
-## 15. Suite: security (suites/security.js)
+## 15. Suite: security (pipeline/suites/security.ts)
 
 **Phase 4** — HTTP Response Header Audit.
 
@@ -996,7 +995,7 @@ Wenn `check_cors: true` (Default): Warnt bei `Access-Control-Allow-Origin: *` (s
 
 ---
 
-## 16. Suite: unit (suites/unit.js)
+## 16. Suite: unit (pipeline/suites/unit.ts)
 
 **Phase 4** — Unit Test Runner (`npm test`).
 
@@ -1121,7 +1120,7 @@ Jede Suite mit Dual-Mode enthält `mode: 'informational' | 'enforced'` in ihrer 
 
 ## 18. Buster Pipeline
 
-**Datei:** `buster-pipeline.js` (700 Zeilen)
+**Datei:** `buster-pipeline.ts` (700 Zeilen)
 **Zweck:** Ersetzt den Processor-Sidecar. Kernstück der Test-Plattform.
 
 ### Feature-Parity mit Processor v7
@@ -1202,7 +1201,7 @@ let shuttingDown = false;     // Shutdown-Flag
 
 ## 19. Datenfluss und Payload-Struktur
 
-### Redis-Payload (pipeline.js → Buster Pipeline)
+### Redis-Payload (pipeline.ts → Buster Pipeline)
 
 ```json
 {
@@ -1222,7 +1221,7 @@ let shuttingDown = false;     // Shutdown-Flag
   },
   "module_path": "Projects/kubecommand/src/06-websocket-events",
   "buster_md_path": "Projects/kubecommand/src/06-websocket-events/BUSTER.md",
-  "status_json_path": "Projects/kubecommand/src/.swarm/modules/06-websocket-events/status.json",
+  "output_file": "Projects/kubecommand/src/.swarm/modules/06-websocket-events/buster-result.json",
   "test_suites": ["build", "health"],
   "test_config": {
     "serve": { "type": "server", "start_cmd": "npm start", "port": 3000, "health_path": "/api/health" }
@@ -1381,7 +1380,7 @@ gateway:
     - "/bin/bash"
     - "-c"
     - |
-      node /app/skills/buster-pipeline.js &
+      node /app/skills/buster-pipeline.ts &
       ORCH_PID=$!
       node /app/openclaw.mjs gateway --bind lan --port 18789 &
       GW_PID=$!
@@ -1399,7 +1398,7 @@ gateway:
 
 ## 23. Pipeline-Integration
 
-### Änderung in pipeline.js
+### Änderung in pipeline.ts
 
 Genau 2 Zeilen in `buildBusterPayload()` hinzugefügt (Zeile 1179-1180):
 
@@ -1410,7 +1409,7 @@ test_config: mod?.test_config || null,
 
 Pipeline liest `test_suites` und `test_config` aus `progress.json` und reicht sie 1:1 im Redis-Payload durch. Bei `null` nutzt die Buster Pipeline ihre Defaults.
 
-Kein anderer Code in pipeline.js wurde verändert. Kein Breakage-Risiko.
+Kein anderer Code in pipeline.ts wurde verändert. Kein Breakage-Risiko.
 
 ---
 
@@ -1502,53 +1501,31 @@ Falls die Buster Pipeline Probleme macht, Rollback in 3 Schritten:
 
 ## 27. CLI-Referenz
 
-### suite-runner.js (manuelles Testen auf dem Pod)
+### pipeline/runners/suite-runner.ts
 
-```bash
-# Minimal
-node /app/skills/suite-runner.js --module 06
+`pipeline/runners/suite-runner.ts` ist ein ESM-Modul ohne eigenes CLI. Manuelles Testen läuft entweder über `buster-pipeline.ts` mit Redis-Payload oder über ein kleines Import-Harness, das `runSuites([...], opts)` aufruft.
 
-# Vollständig
-node /app/skills/suite-runner.js \
-  --module 06 \
-  --project kubecommand \
-  --suites build,health \
-  --config '{"serve":{"type":"server","start_cmd":"npm start","port":3000}}'
-
-# Phase 2 Suites (Frontend-Modul)
-node /app/skills/suite-runner.js \
-  --module 15 \
-  --suites build,health,a11y,perf,bundle,visual-reg \
-  --config '{"serve":{"type":"static"},"visual-reg":{"baseline_dir":".swarm/modules/15/baselines"}}'
-
-# Gate-Test mit Enforced Thresholds
-node /app/skills/suite-runner.js \
-  --module 15 \
-  --suites build,health,a11y,perf,bundle,visual-reg \
-  --config '{"serve":{"type":"static"},"perf":{"thresholds":{"performance":80}},"a11y":{"thresholds":{"critical":0}}}'
-```
-
-### screenshot.js (Baseline-Erstellung)
+### pipeline/tools/screenshot.ts (Baseline-Erstellung)
 
 ```bash
 # HTML-Preview → Baseline-PNG
-node /app/skills/screenshot.js .swarm/modules/15/baselines/baseline.html .swarm/modules/15/baselines/baseline.png
+node /app/skills/pipeline/tools/screenshot.ts .swarm/modules/15/baselines/baseline.html .swarm/modules/15/baselines/baseline.png
 
 # Laufende App screenshotten
-node /app/skills/screenshot.js http://localhost:9999 /tmp/screenshot.png
+node /app/skills/pipeline/tools/screenshot.ts http://localhost:9999 /tmp/screenshot.png
 
 # Custom Viewport
-node /app/skills/screenshot.js http://localhost:9999 /tmp/wide.png --width 1920 --height 1080
+node /app/skills/pipeline/tools/screenshot.ts http://localhost:9999 /tmp/wide.png --width 1920 --height 1080
 
 # Viewport-only (kein Fullpage)
-node /app/skills/screenshot.js http://localhost:9999 /tmp/viewport.png --no-fullpage
+node /app/skills/pipeline/tools/screenshot.ts http://localhost:9999 /tmp/viewport.png --no-fullpage
 ```
 
 ### Buster Pipeline (wird automatisch gestartet)
 
 ```bash
 # Startet automatisch via buster-values.yaml gateway.command
-node /app/skills/buster-pipeline.js
+node /app/skills/buster-pipeline.ts
 
 # Logs
 kubectl logs -n kubeclaw deploy/agent-buster -c kubeclaw -f | grep '\[SUITE\]\|\[TASK\]\|\[SPAWN\]'
@@ -1561,39 +1538,39 @@ kubectl logs -n kubeclaw deploy/agent-buster -c kubeclaw -f | grep '\[SUITE\]\|\
 ### Phase 4 (partial) — Security + Unit Suites (Buster Pipeline v2.2)
 
 **Hinzugefügt:**
-- `suites/security.js` (372Z) — HTTP-Response-Header-Audit: HSTS (max-age Check), CSP (weak-Policy-Erkennung), X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy, Cookie-Flags (HttpOnly/Secure/SameSite), CORS-Wildcard-Check. Multiple Paths, Dual-Mode
-- `suites/unit.js` (345Z) — `npm test` Runner. npm-Default-Stub-Erkennung → SKIP. Parst Jest, Vitest, Mocha, TAP. Failure-Detail-Extraktion. Dual-Mode
+- `pipeline/suites/security.ts` (372Z) — HTTP-Response-Header-Audit: HSTS (max-age Check), CSP (weak-Policy-Erkennung), X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy, Cookie-Flags (HttpOnly/Secure/SameSite), CORS-Wildcard-Check. Multiple Paths, Dual-Mode
+- `pipeline/suites/unit.ts` (345Z) — `npm test` Runner. npm-Default-Stub-Erkennung → SKIP. Parst Jest, Vitest, Mocha, TAP. Failure-Detail-Extraktion. Dual-Mode
 
 **Design-Entscheidungen:**
-- security.js prüft OWASP Secure Headers Empfehlungen, Cookie-Flags automatisch für alle Set-Cookie Headers
-- unit.js erkennt npm-Default-Stub → SKIP statt ERROR (falsches Negativ vermeiden)
-- unit.js: Fallback auf Exit-Code bei unbekanntem Test-Framework
+- security.ts prüft OWASP Secure Headers Empfehlungen, Cookie-Flags automatisch für alle Set-Cookie Headers
+- unit.ts erkennt npm-Default-Stub → SKIP statt ERROR (falsches Negativ vermeiden)
+- unit.ts: Fallback auf Exit-Code bei unbekanntem Test-Framework
 - LLM-Features (Chaos, Triage, Exploratory, Visual Audit) auf Phase 5 verschoben — brauchen laufendes System zum iterativen Tunen
 - Beide Suites `critical: false` — blockieren nie den Subagent-Spawn
-- Keine Änderungen an suite-runner.js, verdict-schema.js, Dockerfile.sandbox nötig
+- Keine Änderungen an pipeline/runners/suite-runner.ts, pipeline/services/verdict-schema.ts, Dockerfile.sandbox nötig
 
 ### Phase 3 — API + E2E Test Framework (Buster Pipeline v2.1)
 
 **Hinzugefügt:**
-- `suites/api.js` (528Z) — JSON-Spec HTTP/WS Test-Runner. Liest `test-spec.json`, Auth-Setup mit Token-Injection, Template-Variablen (`{{token}}`), WebSocket-Support via `protocol: "ws"`, Dual-Mode
-- `suites/e2e.js` (310Z) — Playwright-Test-Discovery + Runner. Entdeckt `*.spec.js`/`*.test.js` in `.swarm/modules/<module>/tests/`, führt via `npx playwright test` aus, parsed Output zu Verdict-JSON, Dual-Mode
+- `pipeline/suites/api.ts` (528Z) — JSON-Spec HTTP/WS Test-Runner. Liest `test-spec.json`, Auth-Setup mit Token-Injection, Template-Variablen (`{{token}}`), WebSocket-Support via `protocol: "ws"`, Dual-Mode
+- `pipeline/suites/e2e.ts` (310Z) — Playwright-Test-Discovery + Runner. Entdeckt `*.spec.js`/`*.test.js` in `.swarm/modules/<module>/tests/`, führt via `npx playwright test` aus, parsed Output zu Verdict-JSON, Dual-Mode
 - `examples/test-spec-example.json` (127Z) — Kommentiertes Beispiel-Template mit allen Feldern (HTTP, WS, Auth, Assertions)
 
 **Design-Entscheidungen:**
 - API-Test-Spec-Format: JSON-Spec (`test-spec.json`), deterministisch, kein LLM. Keine Spec → SKIP (analog visual-reg)
-- E2E-Test-Caching: Subagent schreibt Tests, e2e.js führt sie deterministisch aus. Selbstkorrigierender Loop
-- WebSocket-Testing: In api.js integriert (`protocol: "ws"`), kein separater Helper
+- E2E-Test-Caching: Subagent schreibt Tests, e2e.ts führt sie deterministisch aus. Selbstkorrigierender Loop
+- WebSocket-Testing: In api.ts integriert (`protocol: "ws"`), kein separater Helper
 - Beide Suites `critical: false` — blockieren nie den Subagent-Spawn
-- Keine Änderungen an suite-runner.js, verdict-schema.js, Dockerfile.sandbox nötig
+- Keine Änderungen an pipeline/runners/suite-runner.ts, pipeline/services/verdict-schema.ts, Dockerfile.sandbox nötig
 
 ### Phase 2 — Frontend-Testing Suites (Buster Pipeline v2)
 
 **Hinzugefügt:**
-- `screenshot.js` (171Z) — Shared Playwright-Screenshot-Utility, akzeptiert URLs + lokale HTML-Dateien, CLI für Baseline-Erstellung
-- `suites/a11y.js` (203Z) — Accessibility-Scan via @axe-core/playwright, WCAG-Violations als Findings
-- `suites/perf.js` (202Z) — Lighthouse CLI Performance-Audit, 4 Kategorien
-- `suites/bundle.js` (174Z) — Build-Output-Größe + Dateianzahl, Top-5 größte Files
-- `suites/visual-reg.js` (260Z) — Screenshot-Diff gegen Baseline via pixelmatch, Diff-Image-Erzeugung
+- `pipeline/tools/screenshot.ts` (171Z) — Shared Playwright-Screenshot-Utility, akzeptiert URLs + lokale HTML-Dateien, CLI für Baseline-Erstellung
+- `pipeline/suites/a11y.ts` (203Z) — Accessibility-Scan via @axe-core/playwright, WCAG-Violations als Findings
+- `pipeline/suites/perf.ts` (202Z) — Lighthouse CLI Performance-Audit, 4 Kategorien
+- `pipeline/suites/bundle.ts` (174Z) — Build-Output-Größe + Dateianzahl, Top-5 größte Files
+- `pipeline/suites/visual-reg.ts` (260Z) — Screenshot-Diff gegen Baseline via pixelmatch, Diff-Image-Erzeugung
 - Dual-Mode-Konzept: Informational (immer PASS) vs Enforced (kann FAILen) — gesteuert durch `thresholds` in Config
 
 **Geändert:**
@@ -1601,7 +1578,7 @@ kubectl logs -n kubeclaw deploy/agent-buster -c kubeclaw -f | grep '\[SUITE\]\|\
 
 **Design-Entscheidungen:**
 - `scope.js` gestrichen — Suite-Auswahl ist bereits durch `progress.json` determiniert, kein git-diff-Mapping nötig
-- visual-audit.js Refactor verschoben — screenshot.js steht bereit, Refactor wenn nötig
+- pipeline/tools/visual-audit.ts Refactor verschoben — pipeline/tools/screenshot.ts steht bereit, Refactor wenn nötig
 - Baselines werden extern erstellt (Prism/manuell), keine Auto-Erstellung. Keine Baseline → SKIP
 - Alle Phase-2-Suites sind `critical: false` — blockieren nie den Subagent-Spawn
 
@@ -1615,10 +1592,10 @@ kubectl logs -n kubeclaw deploy/agent-buster -c kubeclaw -f | grep '\[SUITE\]\|\
 - Inline git-pull → `gitSync()` Funktion
 
 **Hinzugefügt:**
-- `verdict-schema.js` — Einheitliches Datenformat
-- `suite-runner.js` — Suite-Orchestrator mit Abhängigkeiten
-- `suites/build.js` — Deterministic Build + Serve
-- `suites/health.js` — HTTP Health-Check mit Retry
+- `pipeline/services/verdict-schema.ts` — Einheitliches Datenformat
+- `pipeline/runners/suite-runner.ts` — Suite-Orchestrator mit Abhängigkeiten
+- `pipeline/suites/build.ts` — Deterministic Build + Serve
+- `pipeline/suites/health.ts` — HTTP Health-Check mit Retry
 - Gateway-Readiness-Check (120s)
 - Gateway-Health-Monitor (60s periodisch)
 - sandbox-cleanup (Schritt 0 + Schritt 10)

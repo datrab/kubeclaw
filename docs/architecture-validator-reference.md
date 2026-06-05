@@ -84,7 +84,7 @@ Each finding has these fields:
 | `GATE_MISSING_REVIEW_NAME` | Review gate missing reviewer name |
 | `DEP_UNDEFINED_REF` | depends_on references undefined module |
 | `DEP_SELF_REFERENCE` | Module depends_on itself |
-| `ARCH_VALIDATOR_MODEL_MALFORMED` | `models.arch_validator` is set but not a valid model string |
+| `ARCH_VALIDATOR_MODEL_MALFORMED` | `progress.arch_validation.model` is set but not a valid model string, or deprecated swarm role models are present |
 | `MODULE_FORGE_MODEL_MALFORMED` | A module's `forge_model` is set but not a non-empty string |
 | `GATE_MODEL_MALFORMED` | A gate's `model` is set but not a non-empty string |
 | `AGENT_JUDGMENT_SKIPPED` | Phase 2 agent judgment skipped (info) |
@@ -103,8 +103,6 @@ All artifacts are written to `.swarm/logs/architecture-validator/`:
 ├── summary.md          ← Human-readable report (always written)
 └── validator-prompt.md ← Prompt used for Phase 2 agent run (written if Phase 2 ran)
 ```
-
-These paths resolve to `config._logDir/architecture-validator/` in the pipeline config.
 
 ---
 
@@ -188,9 +186,9 @@ Outcome values:
 
 ## Model Configuration
 
-Default model: `openai/gpt-5.4` with `thinking: xhigh`
+Model resolution uses `progress.arch_validation.model`, then `progress.defaults.models.arch_validator`, then platform `fallback_model`. Thinking uses `progress.arch_validation.thinking_level`, then `progress.defaults.thinking.arch_validator`.
 
-Override via `progress.json`:
+Configure via `progress.json`:
 
 ```json
 {
@@ -202,17 +200,7 @@ Override via `progress.json`:
 }
 ```
 
-Or via `swarm.config.json`:
-
-```json
-{
-  "models": {
-    "arch_validator": "anthropic/claude-sonnet-4-6"
-  }
-}
-```
-
-Model resolution follows the standard policy precedence chain (runtime override → scope policy → project default → config default). The arch validator uses `dispatchPath: 'subagent'`, so thinking settings are fully supported.
+Model resolution follows the standard policy precedence chain (runtime override → scope policy → project default → platform fallback). The arch validator uses `dispatchPath: 'subagent'`, so thinking settings are fully supported.
 
 **Model policy log:** When Phase 2 agent judgment runs, the arch validator writes an effective-resolution record to `.swarm/logs/pipeline/model-policy.jsonl` (scope: `arch_validator`). This makes the validator's model choice visible in the standard model audit trail alongside all other agent spawns.
 

@@ -197,7 +197,7 @@
 
 <div class="header">
   <h1>KUBECLAW PIPELINE — VOLLSTÄNDIGER ABLAUF</h1>
-  <p>pipeline.js v8 · 4921 Zeilen · Alle Pfade und Szenarien · Klick auf Tabs für Ansichten, klick auf Tool-Namen für Details</p>
+  <p>pipeline.ts v8 · 4921 Zeilen · Alle Pfade und Szenarien · Klick auf Tabs für Ansichten, klick auf Tool-Namen für Details</p>
 </div>
 
 <div class="tabs" id="tabs">
@@ -239,8 +239,8 @@ const TOOLS = {
     ],
     config: 'memory.enabled · memory_js_path · recall_limit · recall_before_forge · feedback_after_outcome · targeted_decay_amount',
   },
-  'redis.js': {
-    icon: '📡', path: '/app/skills/redis.js', version: 'v2 (234 Zeilen)',
+  'redis.ts': {
+    icon: '📡', path: '/app/skills/pipeline/tools/redis.ts', version: 'v2 (234 Zeilen)',
     desc: 'Redis-Client für Task-Dispatch und Completion-Signalisierung. Pipeline dispatcht Buster-Tasks via Redis-Streams, Buster signalisiert Completion zurück. Pipeline liest Completions via Direct-Import (keine Subprocesses).',
     functions: [
       { name: 'sendTask(agentType, taskType, payload, priority)', desc: 'Schreibt strukturierten Task-Payload in den Buster-Task-Stream.', tags: ['stream'] },
@@ -257,8 +257,8 @@ const TOOLS = {
     ],
     config: 'agents.buster.redis_js_path · COMPLETION_ARCHIVE_MAX_LEN = 1000',
   },
-  'lint-report.js': {
-    icon: '📊', path: '/app/skills/lint-report.js', version: 'v1 (1099 Zeilen)',
+  'lint-report.ts': {
+    icon: '📊', path: '/app/skills/pipeline/tools/lint-report.ts', version: 'v1 (1099 Zeilen)',
     desc: 'Statische Analyse-Aggregator mit 14 Tools in 2 Tiers. Erkennt automatisch Projekttypen (TS, Python, Docker, K8s, Shell) und führt nur relevante Tools aus. Jedes Tool hat individuellen Timeout und Graceful Degradation.',
     functions: [
       { name: 'runAllTools(opts)', desc: 'Führt alle Tools des gewählten Tiers aus. Returns strukturiertes JSON mit Findings pro Tool.', tags: ['output'] },
@@ -288,8 +288,8 @@ const TOOLS = {
     ],
     config: 'pre_check.enabled · pre_check.lint_report_path · pre_check.timeout_seconds · pre_check.semgrep_config_path',
   },
-  'verify-task.js': {
-    icon: '🛡️', path: '/app/skills/buster/verify-task.js', version: 'v2 (270 Zeilen)',
+  'verify-task.ts': {
+    icon: '🛡️', path: '/app/skills/pipeline/tools/verify-task.ts', version: 'v2 (270 Zeilen)',
     desc: 'Agent-Scope-Firewall und Push-Gate im Buster-Pod. Stellt sicher, dass der Buster-Agent nur innerhalb seines erlaubten Scope arbeitet (innerhalb .swarm/). Kontrolliert Git-Push als letzten Schritt nach erfolgreicher Verifikation.',
     functions: [
       { name: 'verifyScope(taskPayload)', desc: 'Prüft ob alle vom Agent geschriebenen Dateien innerhalb des erlaubten Pfads liegen.', tags: ['input'] },
@@ -305,7 +305,7 @@ const TOOLS = {
   },
   'buster-processor.cjs': {
     icon: '⚙️', path: '/app/skills/buster/buster-processor.cjs (Sidecar)', version: 'v6.0 (432 Zeilen)',
-    desc: 'Processor-Sidecar im Buster-Pod. Liest Tasks aus dem Redis-Stream, reichert sie mit Qdrant-Kontext an, spawnt einen ACP-Subagent via Gateway, wartet auf Completion, und verifiziert das Ergebnis via verify-task.js.',
+    desc: 'Processor-Sidecar im Buster-Pod. Liest Tasks aus dem Redis-Stream, reichert sie mit Qdrant-Kontext an, spawnt einen ACP-Subagent via Gateway, wartet auf Completion, und verifiziert das Ergebnis via pipeline/tools/verify-task.ts.',
     functions: [
       { name: 'processTask(task)', desc: 'Hauptloop: Task lesen → Qdrant-Enrichment → Subagent spawnen → Warten → Verify → Push', tags: ['stream'] },
     ],
@@ -313,23 +313,23 @@ const TOOLS = {
       'Liest aus <code>swarm:buster:tasks</code> Redis-Stream',
       'Spawnt Buster-Subagent via Gateway Tool API (sessions_spawn)',
       'Überwacht Subagent-Lifecycle (Health-Check, Timeout)',
-      'Ruft <code>verify-task.js</code> nach Task-Completion',
+      'Ruft <code>pipeline/tools/verify-task.ts</code> nach Task-Completion',
       'Schreibt Completion in <code>swarm:pipeline:&lt;project&gt;:completions</code>',
     ],
     config: 'Deployment: Sidecar-Container im Buster-Pod · Podman-in-Pod Sandbox (SYS_ADMIN, SYS_CHROOT)',
   },
   '.semgrep.yml': {
     icon: '🔒', path: 'writable platform config surface (.semgrep.yml neben swarm.config.json)', version: 'v1',
-    desc: 'Kuratiertes Semgrep-Regelset für Security- und Code-Quality-Checks. Helm liefert das Beispiel unter charts/kubeclaw/files/config/.semgrep.yml; lint-report.js auto-detectet zuerst die Plattformdatei neben swarm.config.json, dann ~/.openclaw/.semgrep.yml, danach <repo>/.semgrep.yml, sonst auto.',
+    desc: 'Kuratiertes Semgrep-Regelset für Security- und Code-Quality-Checks. Helm liefert das Beispiel unter charts/kubeclaw/files/config/.semgrep.yml; lint-report.ts sucht zuerst /home/node/.openclaw/.semgrep.yml, dann SWARM_CONFIG-adjacent .semgrep.yml; fehlt sie oder ist sie ungültig, meldet Semgrep die Config als fehlend/ungültig.',
     rules: [
       { lang: 'JS/TS', items: 'eval(), Shell-Injection, hardcoded Secrets, console.log' },
       { lang: 'Python', items: 'bare except, SQL-Injection, compare_digest, subprocess shell=True, requests timeout' },
       { lang: 'K8s', items: 'Privileged Containers, fehlende Resource-Limits, RBAC-Wildcards' },
     ],
     integration: [
-      'Verwendet von <code>lint-report.js</code> im full-Tier (semgrep Tool)',
+      'Verwendet von <code>lint-report.ts</code> im full-Tier (semgrep Tool)',
       'Helm-Beispiel: <code>charts/kubeclaw/files/config/.semgrep.yml</code> → writable platform config surface',
-      'Override via <code>pre_check.semgrep_config_path</code>, sonst auto-detect (plattformweit → <code>~/.openclaw</code> → Repo → auto)',
+      'Override via <code>pre_check.semgrep_config_path</code>, sonst auto-detect (<code>/home/node/.openclaw/.semgrep.yml</code> → SWARM_CONFIG-adjacent)',
     ],
     config: 'pre_check.semgrep_config_path (optional override, sonst auto-detect)',
   },
@@ -374,7 +374,7 @@ function openToolModal(toolName) {
   
   // Integration points
   if (tool.integration) {
-    body += `<div class="tool-modal-section"><h4>Integration in pipeline.js</h4>
+    body += `<div class="tool-modal-section"><h4>Integration in pipeline.ts</h4>
       <div style="display:flex;flex-direction:column;gap:6px;">
       ${tool.integration.map(i => `<div style="font-size:11px;color:var(--text-muted);padding-left:12px;border-left:2px solid var(--border-light);">${i}</div>`).join('')}
       </div></div>`;
@@ -450,7 +450,7 @@ function renderModuleCard(mod, opts = {}) {
         <span class="phase-name forge">Forge Phase</span>
       </div>
       <div class="phase-steps">
-        <div class="phase-step"><span class="num">1</span><span class="desc">resolveModel('forge') — Model auflösen</span></div>
+        <div class="phase-step"><span class="num">1</span><span class="desc">resolvePolicy('forge') — Model auflösen</span></div>
         <div class="phase-step"><span class="num">2</span><span class="desc">buildForgePrompt() — Context + Nova + FORGE.md + Anti-Patterns + ${toolRef('memory.js', '🧠 Memory')}</span></div>
         <div class="phase-step"><span class="num">3</span><span class="desc">spawnAgent('forge') → Gateway sessions_spawn</span></div>
         <div class="phase-step"><span class="num">4</span><span class="desc">verifyAgentAlive() — Zustandsprüfung nach 8s</span></div>
@@ -473,7 +473,7 @@ function renderModuleCard(mod, opts = {}) {
         <span class="phase-name precheck">Pre-Check</span>
       </div>
       <div class="phase-steps">
-        <div class="phase-step"><span class="num">1</span><span class="desc">runPreCheck() — tsc + ruff + shellcheck via ${toolRef('lint-report.js', '📊 lint-report.js')}</span></div>
+        <div class="phase-step"><span class="num">1</span><span class="desc">runPreCheck() — tsc + ruff + shellcheck via ${toolRef('lint-report.ts', '📊 lint-report.ts')}</span></div>
         <div class="phase-step"><span class="num">2</span><span class="desc">generateLintReport(tier: pre-check) → ${toolRef('.semgrep.yml', '🔒 .semgrep.yml')}</span></div>
       </div>
       ${showOutcomes ? `
@@ -492,9 +492,9 @@ function renderModuleCard(mod, opts = {}) {
       </div>
       <div class="phase-steps">
         <div class="phase-step"><span class="num">1</span><span class="desc">buildBusterModulePrompt() — Context + Workspace + BUSTER.md + Completion</span></div>
-        <div class="phase-step"><span class="num">2</span><span class="desc">archiveModuleCompletions() — Alte Entries archivieren via ${toolRef('redis.js', '📡 redis.js')}</span></div>
-        <div class="phase-step"><span class="num">3</span><span class="desc">spawnAgent('buster') → ${toolRef('redis.js', '📡 Redis')} dispatchRedisTask(module_test)</span></div>
-        <div class="phase-step"><span class="num">4</span><span class="desc">pollDualWithRateLimitRecovery() — ${toolRef('redis.js', '📡 Redis')} + Git parallel</span></div>
+        <div class="phase-step"><span class="num">2</span><span class="desc">archiveModuleCompletions() — Alte Entries archivieren via ${toolRef('redis.ts', '📡 redis.ts')}</span></div>
+        <div class="phase-step"><span class="num">3</span><span class="desc">spawnAgent('buster') → ${toolRef('redis.ts', '📡 Redis')} dispatchRedisTask(module_test)</span></div>
+        <div class="phase-step"><span class="num">4</span><span class="desc">pollDualWithRateLimitRecovery() — ${toolRef('redis.ts', '📡 Redis')} + Git parallel</span></div>
         <div class="phase-step"><span class="num">5</span><span class="desc">killAgent('buster') — No-Op (Redis-Agent)</span></div>
       </div>
       ${showOutcomes ? `
@@ -533,7 +533,7 @@ function renderGateCard(gate) {
         <div class="gate-phase">
           <div class="gate-phase-title">1. Statische Analyse</div>
           <div class="phase-steps">
-            <div class="phase-step"><span class="num">•</span><span class="desc">${toolRef('lint-report.js', '📊 generateLintReport')}(tier: full) — Alle 14 Tools</span></div>
+            <div class="phase-step"><span class="num">•</span><span class="desc">${toolRef('lint-report.ts', '📊 generateLintReport')}(tier: full) — Alle 14 Tools</span></div>
             <div class="phase-step"><span class="num">•</span><span class="desc">formatLintReportForReviewer() — Strukturierter Block für Prompt</span></div>
           </div>
         </div>
@@ -552,8 +552,8 @@ function renderGateCard(gate) {
             <div class="phase-step"><span class="num">•</span><span class="desc">on_nogo: ${gate.on_nogo}</span></div>
             <div class="phase-step"><span class="num">•</span><span class="desc">extractReviewIssues() → buildReviewFixPrompt(fixHistory)</span></div>
             <div class="phase-step"><span class="num">•</span><span class="desc">Forge-Fix → pollForSessionEnd() → hasChanges?</span></div>
-            <div class="phase-step"><span class="num">•</span><span class="desc">${gate.on_nogo === 'fix_and_rereview' 
-              ? 'cleanupReviewFiles() → Frischer ' + toolRef('lint-report.js', '📊 Lint') + ' + Review → Loop' 
+            <div class="phase-step"><span class="num">•</span><span class="desc">${gate.on_nogo === 'fix_and_rereview'
+              ? 'cleanupReviewFiles() → Frischer ' + toolRef('lint-report.ts', '📊 Lint') + ' + Review → Loop'
               : 'GO-Status schreiben → Pipeline fährt fort'}</span></div>
           </div>
         </div>
@@ -579,7 +579,7 @@ function renderGateCard(gate) {
         <div class="gate-phase-title test">1. Test durchführen</div>
         <div class="phase-steps">
           <div class="phase-step"><span class="num">•</span><span class="desc">buildBusterGatePrompt() — Context + Workspace + Instructions + Completion</span></div>
-          <div class="phase-step"><span class="num">•</span><span class="desc">spawnAgent('buster', gate_test) → ${toolRef('redis.js', '📡 Redis')}</span></div>
+          <div class="phase-step"><span class="num">•</span><span class="desc">spawnAgent('buster', gate_test) → ${toolRef('redis.ts', '📡 Redis')}</span></div>
           <div class="phase-step"><span class="num">•</span><span class="desc">pollGeneric() — output_file + gate-status.json</span></div>
           <div class="phase-step"><span class="num">•</span><span class="desc">killAgent('buster')</span></div>
         </div>
@@ -935,7 +935,7 @@ function renderView(viewId) {
     case 'tools':
       content.innerHTML = `
         <div class="view-title">Externe Tools — Pipeline-Companion-Dateien</div>
-        <div class="view-subtitle">Alle externen Dateien die von pipeline.js aufgerufen werden. Klick auf eine Karte für Details.</div>
+        <div class="view-subtitle">Alle externen Dateien die von pipeline.ts aufgerufen werden. Klick auf eine Karte für Details.</div>
         <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap:16px;">
           ${Object.entries(TOOLS).map(([name, tool]) => `
             <div class="module-card" style="cursor:pointer; transition: border-color 0.15s;" 
@@ -973,13 +973,13 @@ function renderView(viewId) {
         <div style="margin-top:24px;">
           <div class="scenario-card">
             <div class="scenario-title">Datenfluss: Pipeline ↔ Externe Tools</div>
-            <div class="scenario-subtitle">Wie pipeline.js mit den Companion-Dateien interagiert</div>
+            <div class="scenario-subtitle">Wie pipeline.ts mit den Companion-Dateien interagiert</div>
             <div class="timeline">
               <div class="tl-item"><div class="tl-marker"><div class="tl-dot" style="background:var(--forge);"></div><div class="tl-line" style="background:var(--forge)30;"></div></div><div class="tl-content"><div class="tl-label" style="color:var(--forge);">VOR Forge: ${toolRef('memory.js', '🧠 memory.js')}.recall()</div><div class="tl-detail">Pipeline → Qdrant (Semantische Suche) → Memories → Forge-Prompt-Injection</div></div></div>
-              <div class="tl-item"><div class="tl-marker"><div class="tl-dot" style="background:var(--info);"></div><div class="tl-line" style="background:var(--info)30;"></div></div><div class="tl-content"><div class="tl-label" style="color:var(--info);">NACH Forge: ${toolRef('lint-report.js', '📊 lint-report.js')} (Pre-Check)</div><div class="tl-detail">Pipeline → tsc + ruff + shellcheck → Errors? → handleFail / weiter zu Buster</div></div></div>
-              <div class="tl-item"><div class="tl-marker"><div class="tl-dot" style="background:var(--buster);"></div><div class="tl-line" style="background:var(--buster)30;"></div></div><div class="tl-content"><div class="tl-label" style="color:var(--buster);">Buster-Dispatch: ${toolRef('redis.js', '📡 redis.js')}.sendTask()</div><div class="tl-detail">Pipeline → Redis Stream → ${toolRef('buster-processor.cjs', '⚙️ Processor')} → ACP Subagent → Podman Sandbox</div></div></div>
-              <div class="tl-item"><div class="tl-marker"><div class="tl-dot" style="background:var(--buster);"></div><div class="tl-line" style="background:var(--buster)30;"></div></div><div class="tl-content"><div class="tl-label" style="color:var(--buster);">Buster-Completion: ${toolRef('verify-task.js', '🛡️ verify-task.js')} → ${toolRef('redis.js', '📡 redis.js')}</div><div class="tl-detail">Agent schreibt status.json → verify-task.js prüft Scope → Git Push → Redis Completion-Signal</div></div></div>
-              <div class="tl-item"><div class="tl-marker"><div class="tl-dot" style="background:var(--review);"></div><div class="tl-line" style="background:var(--review)30;"></div></div><div class="tl-content"><div class="tl-label" style="color:var(--review);">VOR Review: ${toolRef('lint-report.js', '📊 lint-report.js')} (Full, 14 Tools)</div><div class="tl-detail">Pipeline → Alle Tools inkl. ${toolRef('.semgrep.yml', '🔒 Semgrep')} → Report → Echo-Reviewer-Prompt</div></div></div>
+              <div class="tl-item"><div class="tl-marker"><div class="tl-dot" style="background:var(--info);"></div><div class="tl-line" style="background:var(--info)30;"></div></div><div class="tl-content"><div class="tl-label" style="color:var(--info);">NACH Forge: ${toolRef('lint-report.ts', '📊 lint-report.ts')} (Pre-Check)</div><div class="tl-detail">Pipeline → tsc + ruff + shellcheck → Errors? → handleFail / weiter zu Buster</div></div></div>
+              <div class="tl-item"><div class="tl-marker"><div class="tl-dot" style="background:var(--buster);"></div><div class="tl-line" style="background:var(--buster)30;"></div></div><div class="tl-content"><div class="tl-label" style="color:var(--buster);">Buster-Dispatch: ${toolRef('redis.ts', '📡 redis.ts')}.sendTask()</div><div class="tl-detail">Pipeline → Redis Stream → ${toolRef('buster-processor.cjs', '⚙️ Processor')} → ACP Subagent → Podman Sandbox</div></div></div>
+              <div class="tl-item"><div class="tl-marker"><div class="tl-dot" style="background:var(--buster);"></div><div class="tl-line" style="background:var(--buster)30;"></div></div><div class="tl-content"><div class="tl-label" style="color:var(--buster);">Buster-Completion: ${toolRef('verify-task.ts', '🛡️ verify-task.ts')} → ${toolRef('redis.ts', '📡 redis.ts')}</div><div class="tl-detail">Agent schreibt `output_file` → pipeline/tools/verify-task.ts prüft Scope → Git Push → Redis Completion-Signal</div></div></div>
+              <div class="tl-item"><div class="tl-marker"><div class="tl-dot" style="background:var(--review);"></div><div class="tl-line" style="background:var(--review)30;"></div></div><div class="tl-content"><div class="tl-label" style="color:var(--review);">VOR Review: ${toolRef('lint-report.ts', '📊 lint-report.ts')} (Full, 14 Tools)</div><div class="tl-detail">Pipeline → Alle Tools inkl. ${toolRef('.semgrep.yml', '🔒 Semgrep')} → Report → Echo-Reviewer-Prompt</div></div></div>
               <div class="tl-item"><div class="tl-marker"><div class="tl-dot" style="background:var(--happy);"></div></div><div class="tl-content"><div class="tl-label" style="color:var(--happy);">NACH PASS/FAIL: ${toolRef('memory.js', '🧠 memory.js')}.feedback()</div><div class="tl-detail">Pipeline → Qdrant (Confidence boost/decay) · Agent → memory.js remember (technische Insights)</div></div></div>
             </div>
           </div>

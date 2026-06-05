@@ -3,7 +3,7 @@
 **Version:** 2.1
 **Datum:** 2026-04-03
 **Zweck:** Was muss wo konfiguriert sein, damit die Pipeline ein Projekt end-to-end durchlaufen kann. Für Nova und für den Operator.
-**Hinweis:** Aktualisiert für v10 (Wave 3): acp_monitor-Felder, case_study, telemetry-Flag-Semantik, progress.defaults ergänzt.
+**Hinweis:** Aktualisiert für v10 (Wave 3): ACP-Monitor-Plattformkonfiguration, case_study, telemetry-Flag-Semantik, progress.defaults ergänzt.
 
 ---
 
@@ -37,10 +37,12 @@ Dies ist die zentrale Datei. Liegt im Git-Repo unter `.swarm/progress.json`. Nov
   "project": "kubecommand",
   "version": "2.0.0",
 
-  "models": {
-    "forge": "codex-5.4",
-    "buster": "claude-sonnet-4-6",
-    "echo": "claude-opus-4-6"
+  "defaults": {
+    "models": {
+      "forge": "codex-5.4",
+      "buster": "claude-sonnet-4-6",
+      "echo": "claude-opus-4-6"
+    }
   },
 
   "execution_order": [
@@ -61,7 +63,7 @@ Dies ist die zentrale Datei. Liegt im Git-Repo unter `.swarm/progress.json`. Nov
 |---|---|---|
 | `project` | ja | Projektname — wird für Memory-Scoping, Git-Pfade und Redis-Streams verwendet |
 | `version` | nein | Semver — informativ |
-| `models` | ja | Default-Modelle pro Agent. Kann pro Modul überschrieben werden (entspricht `defaults.models` unten) |
+| `models` | nein | Deprecated/ignored legacy alias. Use `defaults.models` for project-level model defaults. |
 | `execution_order` | ja | Array von Modul-IDs und Gate-Keys in exakter Ausführungsreihenfolge. Gates mit Prefix `gate:` |
 | `phases` | nein | Logische Gruppierung von Modulen (informativ, Pipeline ignoriert es) |
 | `modules` | ja | Modul-Definitionen (siehe §1.2) |
@@ -70,7 +72,7 @@ Dies ist die zentrale Datei. Liegt im Git-Repo unter `.swarm/progress.json`. Nov
 
 ### 1.5 progress.json `defaults` — Projekt-Level Model/Thinking-Override (Wave 3 Neu)
 
-Der `defaults`-Block ermöglicht Projekt-Level-Overrides für Model und Thinking-Level pro Agent. Diese haben Priorität 3 in der 4-stufigen Policy-Auflösung (nach Runtime-Override und Scope-Policy, vor Config-Default).
+Der `defaults`-Block ermöglicht Projekt-Level-Overrides für Model und Thinking-Level pro Agent. Model-Defaults haben Priorität 3 in der 4-stufigen Model-Auflösung (nach Runtime-Override und Scope-Policy, vor Plattform-`fallback_model`). Thinking hat keinen Plattform-Fallback.
 
 ```json
 {
@@ -90,7 +92,7 @@ Der `defaults`-Block ermöglicht Projekt-Level-Overrides für Model und Thinking
 
 | Feld | Beschreibung |
 |---|---|
-| `defaults.models.<agent>` | Projekt-Level Model-Override für den genannten Agenten. Überschreibt `config.models.<agent>`. |
+| `defaults.models.<agent>` | Projekt-Level Model-Default für den genannten Agenten. Überschreibt den Plattform-`fallback_model`. |
 | `defaults.thinking.<agent>` | Projekt-Level Thinking-Level für den Agenten. Gültige Werte: `none`, `low`, `medium`, `high`, `xhigh`, `adaptive`. |
 
 **Hinweis:** Thinking wird nur auf ACP/Subagent-Dispatch-Pfaden unterstützt. Auf Redis/Buster-Pfaden wird Thinking ignoriert (source: `not_supported_on_redis`).
@@ -133,8 +135,8 @@ Der `defaults`-Block ermöglicht Projekt-Level-Overrides für Model und Thinking
 | `timeout_minutes` | nein | `45` (aus swarm.config) | Max. Laufzeit für einen Forge+Buster-Zyklus |
 | `max_fails` | nein | `3` (aus swarm.config) | Max. Fehlversuche bevor BLOCKED |
 | `auto_retry_threshold` | nein | aus swarm.config | Max. automatische Retries vor Nova-Eskalation (EXIT 10). Überschreibt den Plattform-Default für dieses Modul. |
-| `forge_subagent` | nein | aus `models.forge` | ACP-Subagent-ID für Forge |
-| `forge_model` | nein | aus `models.forge` | LLM-Modell für Forge |
+| `forge_subagent` | nein | aus `forge_model`/`defaults.models.forge`/`fallback_model` abgeleitet | ACP-Subagent-ID für Forge |
+| `forge_model` | nein | aus `defaults.models.forge` oder `fallback_model` | LLM-Modell für Forge |
 | `test_suites` | nein | `["build", "health"]` | Welche Buster-Suites laufen |
 | `test_config` | nein | `{ serve: { type: "static" } }` | Suite-spezifische Config |
 
@@ -236,27 +238,27 @@ Bevor die Pipeline ein Modul bearbeiten kann, müssen diese Dateien im Repo exis
 
 ## 2. swarm.config.json — Die Plattform
 
-Standard: via `SWARM_CONFIG` Env-Variable oder portable Auto-Erkennung der Plattformdatei `swarm.config.json` (typisch `~/.openclaw/swarm.config.json`, mit Repo-/Image-Fallback). Alternativ als Helm ConfigMap deployed. Steuert Pipeline-Verhalten — wird selten geändert.
+Standard: `/home/node/.openclaw/swarm.config.json`; `SWARM_CONFIG` als Fallback, wenn die Runtime-Config nicht gemountet ist. Steuert Pipeline-Verhalten — wird selten geändert.
 
 ### 2.1 Pipeline-Verhalten
 
 ```json
 {
   "poll_interval_seconds": 30,
-  "default_timeout_minutes": 45,
-  "default_max_fails": 3,
-  "auto_retry_threshold": 2,
+  "default_timeout_minutes": 300,
+  "default_max_fails": 8,
+  "auto_retry_threshold": 7,
   "session_nudge_threshold": 0.75
 }
 ```
 
-| Feld | Default | Beschreibung |
+| Feld | Erforderlich | Beschreibung |
 |---|---|---|
-| `poll_interval_seconds` | `30` | Wie oft die Pipeline den Buster-Completion-Stream pollt |
-| `default_timeout_minutes` | `45` | Default-Timeout wenn Modul keinen eigenen setzt |
-| `default_max_fails` | `3` | Default max_fails wenn Modul keinen eigenen setzt |
-| `auto_retry_threshold` | `2` | Plattform-Default: Nach N Fails → automatischer Retry mit angepasstem Prompt. Danach → EXIT 10 (NEEDS_NOVA). Kann in progress.json pro Modul/Gate überschrieben werden. |
-| `session_nudge_threshold` | `0.75` | Bei 75% Timeout-Verbrauch → Nudge an den laufenden Subagent |
+| `poll_interval_seconds` | ja | Wie oft die Pipeline den Buster-Completion-Stream pollt |
+| `default_timeout_minutes` | ja | Plattform-Timeout wenn Modul keinen eigenen setzt |
+| `default_max_fails` | ja | Plattform-`max_fails` wenn Modul keinen eigenen setzt |
+| `auto_retry_threshold` | ja | Plattform-Schwelle: Nach N Fails → automatischer Retry mit angepasstem Prompt. Danach → EXIT 10 (NEEDS_NOVA). Kann in progress.json pro Modul/Gate überschrieben werden. |
+| `session_nudge_threshold` | ja | Timeout-Verbrauch-Schwelle für Nudge an laufende Sessions |
 
 ### 2.2 Rate-Limiting
 
@@ -269,10 +271,10 @@ Standard: via `SWARM_CONFIG` Env-Variable oder portable Auto-Erkennung der Platt
 }
 ```
 
-| Feld | Default | Beschreibung |
+| Feld | Erforderlich | Beschreibung |
 |---|---|---|
-| `cooldown_hours` | `2` | Wartezeit bei Rate-Limit-Hit |
-| `max_pauses_per_module` | `5` | Nach N Pausen pro Modul → EXIT 40 |
+| `cooldown_hours` | ja | Wartezeit bei Rate-Limit-Hit |
+| `max_pauses_per_module` | ja | Nach N Pausen pro Modul → EXIT 40 |
 
 ### 2.3 Pre-Check (Lint vor Forge)
 
@@ -280,20 +282,20 @@ Standard: via `SWARM_CONFIG` Env-Variable oder portable Auto-Erkennung der Platt
 {
   "pre_check": {
     "enabled": true,
-    "lint_report_path": "/app/skills/lint-report.js",
-    "timeout_seconds": 30
+    "lint_report_path": "/app/skills/pipeline/tools/lint-report.ts",
+    "timeout_seconds": 60
   }
 }
 ```
 
-| Feld | Default | Beschreibung |
-|---|---|---|
-| `enabled` | `true` | Lint-Report vor jedem Forge-Dispatch? |
-| `lint_report_path` | `/app/skills/lint-report.js` | Pfad zum Lint-Report-Script |
-| `semgrep_config_path` | `auto-detect` | Optionaler Override für die Semgrep-Konfiguration. Ohne Wert: Suche zuerst neben der erkannten Plattformdatei `swarm.config.json` (z.B. `SWARM_CONFIG`, `~/.openclaw/swarm.config.json`, Helm-/Image-Fallback), dann unter `~/.openclaw/.semgrep.yml`, dann als Legacy-Fallback im Repo (`<repo>/.semgrep.yml`) |
-| `timeout_seconds` | `30` | Max. Laufzeit für Lint |
+| Feld | Default | Erforderlich | Beschreibung |
+|---|---|---|---|
+| `enabled` | — | ja | Lint-Report vor jedem Forge-Dispatch? |
+| `lint_report_path` | — | ja | Pfad zum Lint-Report-Script |
+| `semgrep_config_path` | `auto-detect` | nein | Optionaler Override für die Semgrep-Konfiguration. Ohne Wert: Suche zuerst unter `/home/node/.openclaw/.semgrep.yml`, dann neben `SWARM_CONFIG`. Wenn keine gültige Konfiguration gefunden wird, meldet Semgrep eine fehlende oder ungültige Config. |
+| `timeout_seconds` | — | ja | Max. Laufzeit für Lint |
 
-**Was der Pre-Check tut:** Führt `lint-report.js` aus (tsc, ESLint, Semgrep) und hängt das Ergebnis an den Forge-Prompt an.
+**Was der Pre-Check tut:** Führt `lint-report.ts` aus (tsc, ESLint, Semgrep) und hängt das Ergebnis an den Forge-Prompt an.
 
 ### 2.4 Memory (Qdrant)
 
@@ -320,26 +322,24 @@ Standard: via `SWARM_CONFIG` Env-Variable oder portable Auto-Erkennung der Platt
 | `store_patterns_globally` | `true` | Erkannte Patterns cross-project speichern? |
 | `targeted_decay_amount` | `0.1` | Confidence-Decay bei negativem Feedback |
 
-### 2.5 Models und Agents
+### 2.5 Model-Fallback und Agents
 
 ```json
 {
-  "models": {
-    "forge": "codex-5.4",
-    "buster": "claude-sonnet-4-6",
-    "echo": "claude-opus-4-6"
-  },
+  "fallback_model": "codex-5.4",
   "agents": {
-    "forge": { "dispatch": "acp", "acp_agent_id": "codex" },
-    "buster": {},
-    "echo": { "dispatch": "acp", "acp_agent_id": "claude" }
+    "forge": { "dispatch": "subagent", "acp_agent_id": "codex" },
+    "buster": { "dispatch": "redis", "redis_js_path": "/app/skills/pipeline/tools/redis.ts" },
+    "echo": { "dispatch": "subagent", "acp_agent_id": "codex" }
   }
 }
 ```
 
+`fallback_model` ist der einzige Plattform-Model-Wert. Rollenmodelle und Thinking gehören in `progress.json` (`defaults.models`, Modul-/Gate-/Reviewer-/Generator-/Arch-Overrides).
+
 **Models** sind die Default-LLM-Modelle pro Agent. `progress.json` kann sie pro Modul überschreiben via `forge_model`.
 
-**Agents** definiert wie die Pipeline Agenten anspricht. Forge und Echo via ACP (Subagent im Gateway), Buster via Redis (separater Pod).
+**Agents** definiert wie die Pipeline Agenten anspricht. Forge und Echo via ACP/Subagent, Buster via Redis (separater Pod). Diese Werte sind Plattformkonfiguration; die Runtime setzt keine versteckten Agent-/Redis-Pfad-Defaults.
 
 ### 2.6 Review-Defaults
 
@@ -397,23 +397,27 @@ Wenn weder `stream_key` noch `enabled` gesetzt ist, bleibt Telemetrie aus. Ist T
 
 ### 2.9 ACP-Monitor (Wave 3 Neu)
 
+ACP-Monitor-Timing ist Plattformkonfiguration in `swarm.config.json`. Diese Werte sind erforderlich; die Runtime erzeugt keine versteckten Defaults.
+
 ```json
 {
   "acp_monitor": {
     "unknown_poll_limit": 10,
     "stale_poll_limit": 10,
     "max_transcript_extensions": 3,
-    "transcript_grace_ms": 300000
+    "transcript_grace_ms": 300000,
+    "monitor_poll_ms": 10000
   }
 }
 ```
 
-| Feld | Default | Beschreibung |
+| Feld | Erforderlich | Beschreibung |
 |---|---|---|
-| `acp_monitor.unknown_poll_limit` | `10` | Maximale aufeinanderfolgende Polls bei unbekanntem ACP-Session-State bevor Timeout |
-| `acp_monitor.stale_poll_limit` | `10` | Maximale aufeinanderfolgende Polls bei stagniertem Transcript bevor Timeout |
-| `acp_monitor.max_transcript_extensions` | `3` | Maximale Transcript-Erweiterungen pro Session (0 = keine Verlängerungen) |
-| `acp_monitor.transcript_grace_ms` | `300000` (5min) | Wartezeit nach dem letzten Transcript-Update bevor Session als stale gilt |
+| `acp_monitor.unknown_poll_limit` | ja | Maximale aufeinanderfolgende Polls bei unbekanntem ACP-Session-State bevor Timeout |
+| `acp_monitor.stale_poll_limit` | ja | Maximale aufeinanderfolgende Polls bei stagniertem Transcript bevor Timeout |
+| `acp_monitor.max_transcript_extensions` | ja | Maximale Transcript-Erweiterungen pro Session (0 = keine Verlängerungen) |
+| `acp_monitor.transcript_grace_ms` | ja | Wartezeit nach dem letzten Transcript-Update bevor Session als stale gilt |
+| `acp_monitor.monitor_poll_ms` | ja | Poll-Intervall für ACP-Monitor-Warteschleifen |
 
 ### 2.10 Case Study (Wave 3 Neu)
 
@@ -430,14 +434,14 @@ Wenn weder `stream_key` noch `enabled` gesetzt ist, bleibt Telemetrie aus. Ist T
 | Feld | Default | Beschreibung |
 |---|---|---|
 | `case_study.enabled` | `false` | Case-Study-Agent am Pipeline-Ende aktivieren? |
-| `case_study.model` | aus `models.echo` | LLM-Modell für den Case-Study-Agenten |
+| `case_study.model` | aus `defaults.models.echo` oder `fallback_model` | LLM-Modell für den Case-Study-Agenten |
 | `case_study.output_file` | automatisch generiert | Pfad der output-Datei (relativ zu Repo-Root) |
 
 ---
 
 ## 3. .semgrep.yml — Lint-Regeln
 
-Wird standardmäßig portable entdeckt: zuerst als `.semgrep.yml` neben der aktiven oder erkannten Plattformdatei `swarm.config.json` (z.B. neben `SWARM_CONFIG`, `~/.openclaw/swarm.config.json` oder der Image-/Helm-Config), danach unter `~/.openclaw/.semgrep.yml`, dann als Legacy-Repo-Fallback unter `<repo>/.semgrep.yml`.
+Wird standardmäßig entdeckt: zuerst unter `/home/node/.openclaw/.semgrep.yml`, danach neben `SWARM_CONFIG`. Wenn keine gültige Konfiguration gefunden wird, meldet Semgrep eine fehlende oder ungültige Config.
 
 Im Source-Tree liegt das Helm-Beispiel weiterhin unter `charts/kubeclaw/files/config/.semgrep.yml` und wird in Deployments typischerweise neben die ausgerollte `swarm.config.json` kopiert.
 
@@ -461,30 +465,30 @@ Regeln mit `severity: ERROR` blockieren bei Echo's Review. `severity: WARNING` s
 ## 4. Pipeline-Flow: Was passiert pro Modul
 
 ```
-Nova startet: node pipeline.js --project kubecommand --resume
+Nova startet: node pipeline.ts --project kubecommand --resume
 
 Für jedes Modul in execution_order:
 │
-├─ 1. Status prüfen: status.json → bereits PASS? → Skip
+├─ 1. Status prüfen: lifecycle/read-models.json → bereits PASS? → Skip
 │
 ├─ 2. Dependencies prüfen: depends_on alle PASS? → Nein → Skip
 │
 ├─ 3. FORGE.md + BUSTER.md existieren? → Nein → ERROR
 │
 ├─ 4. Pre-Check (wenn enabled):
-│     lint-report.js → Ergebnis an Forge-Prompt anhängen
+│     lint-report.ts → Ergebnis an Forge-Prompt anhängen
 │
 ├─ 5. Memory Recall (wenn enabled):
 │     Relevante Memories für dieses Modul → an Forge-Prompt anhängen
 │
 ├─ 6. Forge-Dispatch:
 │     ACP Subagent spawnen mit: FORGE.md + Lint-Report + Memories + ggf. Retry-Prompt
-│     Forge schreibt Code → git commit → status.json
+│     Forge schreibt Code → git commit → lifecycle state updates
 │     Telemetrie: module.started + agent.spawned, später module.status_changed
 │
 ├─ 7. Buster-Dispatch:
 │     Redis-Message an swarm:buster:tasks
-│     Telemetrie: nach Task-Annahme buster.task_started / buster.task_completed
+│     Telemetrie: nach Task-Annahme plugin.event (`plugin_id: buster`, `plugin_event: task_started/task_completed`)
 │     Buster Pipeline empfängt → Build/Serve → Suite-Runner → Conditional Spawn
 │
 ├─ 8. Ergebnis:
@@ -511,7 +515,7 @@ Am Pipeline-Ende:
 ## 5. Pipeline-Script-Ort (v9 Modular)
 
 ```
-/app/skills/nova/pipeline.js              ← Kompatibilitäts-Shim (≤25 Zeilen)
+/app/skills/nova/pipeline.ts              ← Kompatibilitäts-Shim (≤25 Zeilen)
 /app/skills/nova/pipeline/
   core/         ← config, paths, context, logger, temp
   integrations/ ← git, gateway, redis, discord
@@ -525,7 +529,7 @@ Am Pipeline-Ende:
 
 Aufruf (unverändert zu v8):
 ```bash
-node /app/skills/nova/pipeline.js --project kubecommand --resume
+node /app/skills/nova/pipeline.ts --project kubecommand --resume
 ```
 
 Der Shim delegiert automatisch an `pipeline/cli.js`.
@@ -537,7 +541,7 @@ Der Shim delegiert automatisch an `pipeline/cli.js`.
 | `REPO_ROOT` | Überschreibt die automatische Git-Repo-Erkennung. Nützlich wenn die Pipeline aus einem Verzeichnis ausserhalb des Repos aufgerufen wird (z.B. aus `/app/skills/nova/`). Priorität 2 (nach `--repo` Flag, vor `git rev-parse`). |
 
 ```bash
-REPO_ROOT=/workspace/myproject node pipeline.js --project myproject --resume
+REPO_ROOT=/workspace/myproject node pipeline.ts --project myproject --resume
 ```
 
 ---

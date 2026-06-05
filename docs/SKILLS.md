@@ -9,13 +9,13 @@ All skills are located at `/app/skills/` inside the container. They are JavaScri
 | Skill | Agents | Purpose |
 |-------|--------|---------|
 | `memory.js` | All | Confidence-weighted vector memory (Qdrant) |
-| `redis.js` | All (agent-specific versions) | Inter-agent communication via Redis Streams |
-| `pipeline.js` | Nova | Deterministic module orchestration engine |
-| `project-summary.js` | Nova | Project lifecycle report: code stats, pipeline metrics, quality |
+| `redis.ts` | All (agent-specific versions) | Inter-agent communication via Redis Streams |
+| `pipeline.ts` | Nova | Deterministic module orchestration engine |
+| `project-summary.ts` | Nova | Project lifecycle report: code stats, pipeline metrics, quality |
 | `project_setup/` | Nova | Skill: Set up a new project for the autonomous pipeline |
-| `verify-task.js` | All (agent-specific for Buster) | Scope enforcement + controlled git push |
+| `verify-task.ts` | All (agent-specific for Buster) | Scope enforcement + controlled git push |
 | `discord-purge.js` | All | Bulk-delete Discord channel messages |
-| `visual-audit.js` | Buster | Headless screenshot/video → Discord |
+| `visual-audit.ts` | Buster | Headless screenshot/video → Discord |
 
 ---
 
@@ -110,17 +110,17 @@ Display: ★★★ ≥0.75, ★★☆ 0.45–0.74, ★☆☆ <0.45.
 
 ---
 
-## redis.js — Inter-Agent Communication
+## redis.ts — Inter-Agent Communication
 
 Agent-specific versions exist for Nova and Buster. Same filename, different functionality.
 
-**Env vars:** `REDIS_HOST`, `REDIS_PORT`, `REDIS_PASSWORD`, `AGENT_NAME`, `DISCORD_WEBHOOK`
+**Env vars:** `REDIS_HOST`, `REDIS_PORT`, `REDIS_USERNAME`, `REDIS_PASSWORD`, `REDIS_TLS`/`REDIS_TLS_ENABLED`, `REDIS_NETWORK_ISOLATION`, `AGENT_NAME`, `DISCORD_WEBHOOK`. Non-local Redis clients require password, TLS, or documented network isolation.
 
 ### Nova Version
 
 **send** — Dispatch a task to another agent's stream
 ```bash
-node /app/skills/redis.js --action send \
+node /app/skills/pipeline/tools/redis.ts --action send \
   --target forge \
   --type BUILD_MODULE \
   --payload '{"module":"06","modelInstruction":"forge-codex"}' \
@@ -135,32 +135,16 @@ Automatically logs to Discord webhook with full payload.
 
 **read** — Read from own event stream
 ```bash
-node /app/skills/redis.js --action read
+node /app/skills/pipeline/tools/redis.ts --action read
 ```
 
 ### Buster Version
 
-Has all Nova actions plus:
-
-**complete** — Pipeline completion chain (verify → push → signal)
-```bash
-node /app/skills/redis.js --action complete \
-  --stream swarm:pipeline:completion \
-  --module 06 \
-  --project kubecommand \
-  --status PASS \
-  --summary "All 12 checks passed" \
-  --task-type module_test \
-  --role buster
-```
-This is Buster's last action in a task. It:
-1. Calls `verify-task.js` (scope check, revert violations, git push)
-2. Writes structured completion message to the pipeline's Redis stream
-3. The Buster Pipeline detects this and kills the subagent session
+Buster no longer exposes a direct Redis `complete` action. Subagents write the requested result artifact (`output_file` for both module and gate tasks) and stop. `buster-pipeline.ts` reads the artifact, performs cleanup, and emits the canonical completion signal.
 
 ---
 
-## pipeline.js — Deterministic Orchestration Engine
+## pipeline.ts — Deterministic Orchestration Engine
 
 The core pipeline that drives modules through forge → test → review cycles. Only runs on Nova.
 
@@ -170,25 +154,25 @@ The core pipeline that drives modules through forge → test → review cycles. 
 
 ```bash
 # Full pipeline (auto-advances through all modules)
-node /app/skills/pipeline.js --project kubecommand
+node /app/skills/pipeline.ts --project kubecommand
 
 # Resume from current state
-node /app/skills/pipeline.js --project kubecommand --resume
+node /app/skills/pipeline.ts --project kubecommand --resume
 
 # Run single module
-node /app/skills/pipeline.js --project kubecommand --module 06
+node /app/skills/pipeline.ts --project kubecommand --module 06
 
 # Print status as JSON
-node /app/skills/pipeline.js --project kubecommand --status
+node /app/skills/pipeline.ts --project kubecommand --status
 
 # Preview plan without executing
-node /app/skills/pipeline.js --project kubecommand --dry-run
+node /app/skills/pipeline.ts --project kubecommand --dry-run
 
 # Release a blueprint from architecture branch
-node /app/skills/pipeline.js --project kubecommand --blueprint 06
+node /app/skills/pipeline.ts --project kubecommand --blueprint 06
 
 # List available blueprints
-node /app/skills/pipeline.js --project kubecommand --blueprint-list
+node /app/skills/pipeline.ts --project kubecommand --blueprint-list
 ```
 
 ### Exit Codes
@@ -215,13 +199,13 @@ node /app/skills/pipeline.js --project kubecommand --blueprint-list
 
 - `swarm.config.json` — Platform config (timeouts, agent dispatch, models)
 - `progress.json` — Project definition (modules, dependencies, execution order, gates)
-- `status.json` — Per-module state (created by pipeline, updated by agents)
+- `lifecycle/read-models.json` — Canonical per-run pipeline state and module projections
 
 ---
 
-## project-summary.js — Project Lifecycle Report
+## project-summary.ts — Project Lifecycle Report
 
-Generates a comprehensive summary of a completed (or in-progress) KubeClaw project. Reads progress.json, all status.json files, and git history to produce code stats, pipeline metrics, and quality indicators.
+Generates a comprehensive summary of a completed (or in-progress) KubeClaw project. Reads `progress.json`, run-scoped lifecycle read models, and git history to produce code stats, pipeline metrics, and quality indicators.
 
 **Env vars:** `CURRENT_PROJECT`, `SWARM_CONFIG`, `DISCORD_WEBHOOK`
 
@@ -229,16 +213,16 @@ Generates a comprehensive summary of a completed (or in-progress) KubeClaw proje
 
 ```bash
 # Print Markdown report to stdout
-node /app/skills/project-summary.js --project kubecommand
+node /app/skills/pipeline/tools/project-summary.ts --project kubecommand
 
 # Save report to file
-node /app/skills/project-summary.js --project kubecommand --output /tmp/summary.md
+node /app/skills/pipeline/tools/project-summary.ts --project kubecommand --output /tmp/summary.md
 
 # Post summary embed to Discord
-node /app/skills/project-summary.js --project kubecommand --discord
+node /app/skills/pipeline/tools/project-summary.ts --project kubecommand --discord
 
 # JSON output (raw data, no formatting)
-node /app/skills/project-summary.js --project kubecommand --json
+node /app/skills/pipeline/tools/project-summary.ts --project kubecommand --json
 ```
 
 ### What It Reports
@@ -256,7 +240,7 @@ node /app/skills/project-summary.js --project kubecommand --json
 ### Module API
 
 ```javascript
-const { generateSummary } = require('/app/skills/project-summary.js');
+const { generateSummary } = await import('/app/skills/pipeline/tools/project-summary.ts');
 const result = await generateSummary({ project: 'kubecommand' });
 // result.markdown — full Markdown report
 // result.embeds   — Discord embed objects
@@ -296,7 +280,7 @@ Nova skill for setting up a new KubeClaw project end-to-end. Located at `/app/sk
 
 ---
 
-## verify-task.js — Scope Enforcement + Git Push
+## verify-task.ts — Scope Enforcement + Git Push
 
 Validates that an agent only modified files within its allowed scope, reverts violations, then commits and pushes.
 
@@ -305,13 +289,13 @@ Validates that an agent only modified files within its allowed scope, reverts vi
 ### Common Version (Nova, Forge, Echo)
 
 ```bash
-node /app/skills/verify-task.js --project kubecommand
+node /app/skills/verify-task.ts --project kubecommand
 ```
 
 ### Buster Version (enhanced)
 
 ```bash
-node /app/skills/verify-task.js \
+node /app/skills/verify-task.ts \
   --project kubecommand \
   --role buster \
   --message "[BUSTER] Module 06: PASS" \
@@ -349,10 +333,10 @@ Bulk-deletes messages from a Discord channel.
 
 ```bash
 # Purge specific channel
-node /app/skills/discord-purge.js <CHANNEL_ID>
+node /app/skills/discord-purge.ts <CHANNEL_ID>
 
 # Uses DISCORD_CHANNEL env var
-node /app/skills/discord-purge.js
+node /app/skills/discord-purge.ts
 ```
 
 **Env vars:** `DISCORD_TOKEN`, `DISCORD_CHANNEL`
@@ -361,16 +345,16 @@ Uses Discord's bulk-delete API for messages < 14 days old. Older messages cannot
 
 ---
 
-## visual-audit.js — Headless Visual Testing
+## visual-audit.ts — Headless Visual Testing
 
 Takes a screenshot or records a video of a URL and sends it to Discord.
 
 ```bash
 # Screenshot (default)
-node /app/skills/visual-audit.js "http://localhost:9999"
+node /app/skills/visual-audit.ts "http://localhost:9999"
 
 # Video recording
-node /app/skills/visual-audit.js "http://localhost:9999" --mode video
+node /app/skills/visual-audit.ts "http://localhost:9999" --mode video
 ```
 
 **Env vars:** `DISCORD_TOKEN`, `DISCORD_CHANNEL`
@@ -398,7 +382,7 @@ Consumes `swarm:nova:events` Redis stream. On message arrival:
 
 ### Buster Processor (REPLACED)
 
-The processor sidecar has been replaced by `buster-pipeline.js`, which runs as a background process in the gateway container (dual-process start). The processor file is kept for rollback. See BUSTER-TEST-PLATFORM-PLAN.md §7.5.
+The processor sidecar has been replaced by `buster-pipeline.ts`, which runs as a background process in the gateway container (dual-process start). The processor file is kept for rollback. See BUSTER-TEST-PLATFORM-PLAN.md §7.5.
 
 ---
 
@@ -407,13 +391,13 @@ The processor sidecar has been replaced by `buster-pipeline.js`, which runs as a
 ```
 /app/skills/
 ├── memory.js          # Qdrant vector memory (common)
-├── redis.js           # Agent-specific (Nova or Buster version)
-├── pipeline.js        # Pipeline engine (common, used by Nova)
-├── verify-task.js     # Agent-specific (common or Buster version)
+├── redis.ts           # Agent-specific (Nova or Buster version)
+├── pipeline.ts        # Pipeline engine (common, used by Nova)
+├── verify-task.ts     # Agent-specific (common or Buster version)
 ├── discord-purge.js   # Channel cleanup (common)
-├── visual-audit.js    # Headless visual testing (common)
+├── visual-audit.ts    # Headless visual testing (common)
 └── nova/
-    ├── project-summary.js # Project lifecycle report
+    ├── project-summary.ts # Project lifecycle report
     └── project_setup/ # Project setup skill (SKILL.md + references/)
 
 /app/scripts/processor/

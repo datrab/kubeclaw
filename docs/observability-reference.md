@@ -14,6 +14,7 @@ This reference describes the complete artifact layout produced by the governance
 │   ├── model-policy.jsonl      ← Effective model/thinking resolution log
 │   ├── discord.jsonl           ← Persisted Discord notifications with run correlation
 │   ├── nova-injections.jsonl   ← Nova escalation handoff audit log
+│   ├── buster-telemetry-fallback.jsonl ← Buster Redis-telemetry fallback/degradation mirror
 │   └── summary.json            ← End-of-run pipeline summary
 ├── architecture-validator/
 │   ├── results.json            ← Machine-readable validator findings
@@ -44,13 +45,14 @@ Run-scoped pipeline audit mirrors live under:
 ├── pipeline.jsonl
 ├── discord.jsonl
 ├── nova-injections.jsonl
+├── buster-telemetry-fallback.jsonl
 ├── summary.json
 └── redis/
     ├── redis-exchanges.jsonl
     └── redis-ops.jsonl
 ```
 
-`.swarm/logs/pipeline/latest.json` is the operator shortcut to the most recent run. It records the current `run_id`, the canonical live `telemetry_stream_key`, and the relative paths to that run's `pipeline.jsonl`, `discord.jsonl`, `nova-injections.jsonl`, and `summary.json`.
+`.swarm/logs/pipeline/latest.json` is the operator shortcut to the most recent run. It records the current `run_id`, the canonical live `telemetry_stream_key`, and the relative paths to that run's `pipeline.jsonl`, `discord.jsonl`, `nova-injections.jsonl`, `buster-telemetry-fallback.jsonl`, `redis/redis-exchanges.jsonl`, `redis/redis-ops.jsonl`, and `summary.json`.
 
 Approval-gate artifacts and state carry the same core correlation envelope: `gate_id`, `gate_type`, `run_id`, and `project`.
 Transition entries in `approval-transitions.jsonl` also persist `run_id`, `project`, `gate_id`, and `gate_type` alongside each state change.
@@ -64,7 +66,22 @@ Those same summary approval entries also persist `decision_via`, normalized `tim
 
 Every major lifecycle transition appends a structured event to `.swarm/logs/pipeline/pipeline.jsonl`. This file is the primary instrument for reconstructing what happened in a run.
 
+The Redis telemetry stream is a capped live/consumer window (`MAXLEN ~10000`), not the durable audit log. Use the run-scoped `pipeline/runs/<run_id>/pipeline.jsonl` replay bundle for complete post-mortem reconstruction; when Redis emission succeeds, the Redis-owned `seq` is mirrored into this artifact so ordered replay survives stream trimming.
+
 Both Nova-side pipeline telemetry and Buster-side canonical telemetry mirrors append here, so `source` / `emitter` identify which runtime produced a given event.
+
+### Agent lifecycle authority
+
+After the Phase 6 agent-observability cutover, agent runtime observability and lifecycle authority are exclusive to the self-contained OpenClaw hook plugin Redis path. The plugin is loaded from `/app/openclaw-plugins/kubeclaw-agent-observer` in production and does not import pipeline skill code from `/app/skills`:
+
+```text
+OpenClaw hook event
+  -> pipeline:agent-observability:control:v1
+  -> kubeclaw agent-observability ingester
+  -> canonical agent.* telemetry
+```
+
+ACP/Gateway session-status polling, transcript monitor state, and `forge-completion.json` are not agent observability or lifecycle truth and must not be used as fallback completion/readiness authority. If hook/Redis/ingester evidence is missing, the run should report degraded/fail-closed lifecycle evidence instead of silently switching to a legacy observer path. Gateway remains available for command/control operations such as spawn, stop/kill, steer/nudge, and platform health checks.
 
 ### Event envelope
 
@@ -155,6 +172,22 @@ If writing `.swarm/logs/pipeline/discord.jsonl` or the run-scoped `discord.jsonl
 
 ---
 
+## Buster Telemetry Fallback (`buster-telemetry-fallback.jsonl`)
+
+Buster is a separate Redis-connected worker, so Nova-owned run evidence is normally mirrored from the canonical run telemetry stream. If Buster expects Redis telemetry but cannot initialize or emit to Redis, it writes an explicit `observability.degraded` fallback record into both its task-local `telemetry-fallback.jsonl` and the run-scoped `pipeline/runs/<run-id>/buster-telemetry-fallback.jsonl` when run paths are available. The same degradation is also mirrored into run `pipeline.jsonl` with `artifact_fallback: true` and `seq: null`, making the Redis visibility gap operator-visible without pretending it was successfully sequenced on the Redis stream.
+
+If Buster telemetry is intentionally disabled (`enabled: false`), no degraded fallback is emitted; that path is treated as an explicit diagnostic/offline mode, not a Redis outage.
+
+### Trust boundaries for Buster/operator surfaces
+
+- **Buster Redis task stream:** Redis task payloads are untrusted transport data until `validateBusterTaskPayload(...)` accepts their typed identity (`task_type`, `module_id`, `project`, `run_id`, `attempt`, `dispatch_id`, and gate identity for gate tasks). Malformed or weak-identity tasks are acknowledged only after writing rejection evidence; they must not create lifecycle authority from partial payload fields.
+- **Buster Redis completion stream:** completion entries remain a compatibility input for Nova polling/reconciliation, not standalone truth. Scheduler/recovery code must consume the projection/arbitration layer before deciding pass/fail/rate-limit/blocked state.
+- **Discord/audit artifacts:** Discord fields and embeds are operator evidence only. They may mirror known run/module/gate/session/dispatch identity for replay, but they must not be parsed back into lifecycle authority or promoted from display labels into canonical join keys.
+- **Fallback/degraded artifacts:** Buster fallback records preserve known typed join keys, carry `artifact_fallback: true` / `seq: null` when Redis is unavailable, and remain diagnostic evidence rather than Redis-ordered canonical telemetry.
+- **Custom skills overlay:** Helm `customSkills` is an extension surface only. It is guarded from replacing protected runtime paths such as `pipeline/**`, `common/**`, `nova/pipeline/**`, `buster/pipeline/**`, `redis.ts`, `buster-pipeline.ts`, and `verify-task.ts`; custom overlays must not be used as a compatibility patch path for core runtime behavior.
+
+---
+
 ## Model/Thinking Policy Log (`.swarm/logs/pipeline/model-policy.jsonl`)
 
 Every agent spawn appends an effective-resolution record to `.swarm/logs/pipeline/model-policy.jsonl`. This file answers "which model ran, and why?" for any execution in the run.
@@ -183,8 +216,8 @@ Every agent spawn appends an effective-resolution record to `.swarm/logs/pipelin
 |---|---|
 | `runtime_override` | `--model` CLI flag set at invocation |
 | `scope_policy` | Module `forge_model` or gate `model` field in `progress.json` |
-| `project_default` | `progress.defaults.models.<agentName>` or legacy `progress.models.<agentName>` |
-| `config_default` | `config.models.<agentName>` from `swarm.config.json` |
+| `project_default` | `progress.defaults.models.<agentName>` |
+| `platform_fallback` | `fallback_model` from `swarm.config.json` |
 | `none` | No value found at any level |
 | `not_supported_on_redis` | Thinking not forwarded on Redis/Buster dispatch path |
 
@@ -311,7 +344,7 @@ Thresholds are **non-blocking by default** — they emit events and log warnings
 
 ## Redis Exchange Log (`redis/redis-exchanges.jsonl`)
 
-Records every Redis send/receive during the run.
+Records every Redis send/receive during the run. Each line is a normal JSON object, not a JSON string nested inside JSONL, so replay tools can parse it with one `JSON.parse`.
 
 ```json
 {

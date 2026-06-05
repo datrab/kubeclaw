@@ -8,10 +8,12 @@
   "version": 1,
   "description": "Optional human-readable description",
   "notes": ["Optional array of notes"],
-  "models": {
-    "forge": "anthropic/claude-sonnet-4-6",
-    "buster": "anthropic/claude-sonnet-4-6",
-    "echo": "anthropic/claude-opus-4-6"
+  "defaults": {
+    "models": {
+      "forge": "anthropic/claude-sonnet-4-6",
+      "buster": "anthropic/claude-sonnet-4-6",
+      "echo": "anthropic/claude-opus-4-6"
+    }
   },
   "execution_order": ["01-scaffold", "02-api", "gate:midpoint-review", "03-frontend", "gate:final-buster"],
   "modules": { ... },
@@ -66,7 +68,7 @@
 | `stages` | no | `["forge", "buster"]` | Pipeline stages. Use `["forge"]` for forge-only (no per-module testing) |
 | `timeout_minutes` | no | `300` | Max time for one Forge+Buster cycle |
 | `max_fails` | no | `3` | Max failures before BLOCKED |
-| `forge_model` | no | from `models.forge` | LLM model for Forge agent |
+| `forge_model` | no | from `defaults.models.forge` or platform `fallback_model` | LLM model for Forge agent |
 | `thinking_level` | no | — | Thinking level for Forge. String: `"none"`, `"low"`, `"medium"`, `"high"`, `"xhigh"`, `"adaptive"` |
 | `substeps` | no | `null` | Array of sub-IDs. Pipeline concatenates their FORGE.md sections |
 | `forge_subagent` | no | derived | ACP subagent ID override |
@@ -119,8 +121,8 @@ Set `"stages": ["forge"]` to skip per-module Buster testing. The module passes w
 | `instructions_file` | **yes** | — | Path to review instructions (relative to `.swarm/`) |
 | `output_file` | **yes** | — | Path for review JSON output (relative to `.swarm/`) |
 | `review_output_dir` | no | — | Directory for review artifacts (relative to `.swarm/`) |
-| `reviewers` | no | auto from `models.echo` | Array of reviewer configs |
-| `forge_model` | no | gateway default | Model for fix-cycle Forge agent. **Set this to avoid fallback to gateway default** |
+| `reviewers` | no | set on gate or `defaults.reviewers`; otherwise none | Array of reviewer configs |
+| `forge_model` | no | `defaults.models.forge` or platform `fallback_model` | Model for fix-cycle Forge agent |
 | `forge_thinking_level` | no | — | Thinking level for fix-cycle Forge |
 | `timeout_minutes` | no | `30` | Max time per review session |
 | `max_fix_cycles` | no | `3` | Max fix-and-rereview cycles before escalation |
@@ -155,8 +157,8 @@ Set `"stages": ["forge"]` to skip per-module Buster testing. The module passes w
 | `on_fail` | no | `"fix_and_retest"` | What to do on FAIL |
 | `instructions_file` | **yes** | — | Path to Buster instructions (relative to `.swarm/`) |
 | `output_file` | **yes** | — | Path for result JSON (relative to `.swarm/`) |
-| `model` | no | from `models.buster` | Model for Buster agent |
-| `forge_model` | no | from `models.forge` | Model for fix-cycle Forge agent |
+| `model` | no | from `defaults.models.buster` or platform `fallback_model` | Model for Buster agent |
+| `forge_model` | no | from `defaults.models.forge` or platform `fallback_model` | Model for fix-cycle Forge agent |
 | `timeout_minutes` | no | `60` | Max time per test run |
 | `max_fix_cycles` | no | `3` | Max fix-and-retest cycles |
 | `test_suites` | **yes** | — | Suites to run |
@@ -195,7 +197,7 @@ Set `"stages": ["forge"]` to skip per-module Buster testing. The module passes w
 | Field | Required | Default | Description |
 |---|---|---|---|
 | `enabled` | no | `true` | Enable/disable. Set `false` to skip entirely |
-| `model` | no | from `models.arch_validator` or gateway default | LLM for agent judgment |
+| `model` | no | from `arch_validation.model`, `defaults.models.arch_validator`, or platform `fallback_model` | LLM for agent judgment |
 | `thinking_level` | no | — | Thinking level for validator agent |
 
 **Behavior:** Only runs on fresh starts (skipped on resume when modules already have PASS). progress.json overrides swarm.config.json.
@@ -221,7 +223,7 @@ Post-pipeline audit agent — reads logs and recommends improvements.
 | Field | Required | Default | Description |
 |---|---|---|---|
 | `enabled` | no | `false` | Enable post-pipeline review |
-| `model` | no | from `models.echo` | Review model |
+| `model` | no | from `defaults.models.echo` or platform `fallback_model` | Review model |
 | `thinking_level` | no | — | Thinking level |
 | `agent_id` | no | derived from model | Agent ID for dispatch |
 | `instructions_file` | no | `pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md` | Custom instructions (relative to `.swarm/`) |
@@ -250,7 +252,7 @@ Optional post-pipeline agent that generates a publishable case-study.md.
 | Field | Required | Default | Description |
 |---|---|---|---|
 | `enabled` | no | `false` | Enable case study generation |
-| `model` | no | from `models.echo` | Agent model |
+| `model` | no | from `defaults.models.echo` or platform `fallback_model` | Agent model |
 | `thinking_level` | no | — | Thinking level |
 | `agent_id` | no | derived from model | Agent ID for dispatch |
 | `output_file` | no | `logs/pipeline/case-study.md` | Output path (relative to `.swarm/`) |
@@ -328,10 +330,12 @@ Without `thresholds` → informational (always PASS). With `thresholds` → enfo
   "project": "my-app",
   "version": 1,
   "description": "Full-stack K8s management app",
-  "models": {
-    "forge": "anthropic/claude-sonnet-4-6",
-    "buster": "anthropic/claude-sonnet-4-6",
-    "echo": "anthropic/claude-opus-4-6"
+  "defaults": {
+    "models": {
+      "forge": "anthropic/claude-sonnet-4-6",
+      "buster": "anthropic/claude-sonnet-4-6",
+      "echo": "anthropic/claude-opus-4-6"
+    }
   },
   "arch_validation": {
     "enabled": false

@@ -15,9 +15,7 @@ Key top-level fields:
 | Field | Required | Description |
 |---|---|---|
 | `project` | yes | Project name — scopes memory, git paths, Redis streams |
-| `models.forge` | no | Model for forge agents (default: `anthropic/claude-sonnet-4-6`) |
-| `models.buster` | no | Model for buster agents |
-| `models.echo` | no | Model for reviewer agents |
+| `fallback_model` | yes | Single platform fallback model used only when progress/runtime does not set a model |
 | `execution_order` | yes | Ordered list of module IDs and gate IDs |
 | `modules` | yes | Module definitions |
 | `gates` | no | Gate definitions (`review`, `buster`, `approval`) |
@@ -31,11 +29,14 @@ Key top-level fields:
 |---|---|---|
 | `REDIS_HOST` | `redis-master.kubeclaw.svc.cluster.local` | Redis hostname |
 | `REDIS_PORT` | `6379` | Redis port |
-| `REDIS_PASSWORD` | — | Redis auth password |
-| `DISCORD_WEBHOOK` | — | Discord webhook URL for pipeline notifications |
+| `REDIS_USERNAME` | — | Optional Redis ACL username |
+| `REDIS_PASSWORD` | — | Redis auth password; required unless TLS or documented network isolation is configured |
+| `REDIS_TLS` / `REDIS_TLS_ENABLED` | — | Set to `true`/`1` to enable TLS client options |
+| `REDIS_NETWORK_ISOLATION` | — | Set to `isolated`/`documented` only when network policy is the approved Redis perimeter instead of auth/TLS |
+| `DISCORD_WEBHOOK` | — | Deployment secret env mapped into `swarm.config.json` as `discord_webhook_url` |
 | `OPENCLAW_GATEWAY_TOKEN` | — | ACP Gateway auth token |
 | `REPO_ROOT` | auto-detected | Repository root path |
-| `SWARM_CONFIG` | auto-detected platform `swarm.config.json` | Path to swarm config JSON |
+| `SWARM_CONFIG` | fallback for `/home/node/.openclaw/swarm.config.json` | Path to fallback swarm config JSON |
 
 ---
 
@@ -44,14 +45,6 @@ Key top-level fields:
 | Variable | Default | Description |
 |---|---|---|
 | `REDIS_HOST` | `redis-master.kubeclaw.svc.cluster.local` | Redis hostname |
-| `REDIS_PORT` | `6379` | Redis port |
-| `REDIS_PASSWORD` | — | Redis auth password |
-| `DISCORD_WEBHOOK_URL` | — | Discord webhook for suite result embeds (Buster Pipeline) |
-| `DISCORD_WEBHOOK` | — | Discord webhook for task/completion messages (redis.js) |
-| `BUSTER_PROJECT` | — | Project name fallback when not in task payload |
-| `GATEWAY_URL` | — | ACP Gateway URL for subagent spawn |
-| `GATEWAY_TOKEN` | — | ACP Gateway auth token |
-| `AGENT_NAME` | `unknown` | Subagent identity for Redis consumer group |
 | `HOSTNAME` | pod hostname | Used to build unique consumer name |
 
 ---
@@ -71,7 +64,7 @@ Sent from the pipeline to the Buster Pipeline via Redis task stream.
 | `project` | string | — | Project name |
 | `run_id` | string | auto | Pipeline run identifier |
 | `log_dir` | string\|null | auto | Override for Buster Pipeline log directory |
-| `telemetry_stream` | string\|null | auto | Legacy compatibility field. The value does not rename the stream; Buster normalizes to the canonical run stream. |
+| `output_file` | string\|null | auto | Canonical Buster result artifact path for `module_test` and `gate_test` |
 | `timeout_seconds` | number | `1800` | Subagent session timeout |
 | `prompt` | string | — | Buster subagent prompt text |
 | `session.model` | string | `"anthropic/claude-sonnet-4-6"` | Model for subagent spawn |
@@ -182,7 +175,7 @@ Module and gate definitions in `progress.json` support a `model` field to overri
 }
 ```
 
-The effective model resolution order: task-level override → scope policy → project default → config default.
+The effective model resolution order: task-level override → scope policy → project default → platform fallback.
 
 ---
 
@@ -190,7 +183,7 @@ The effective model resolution order: task-level override → scope policy → p
 
 | Field in progress.json | Default | Description |
 |---|---|---|
-| `telemetry.enabled` | true if `REDIS_HOST` set | Enable/disable Redis telemetry |
+| `telemetry.enabled` | true if `REDIS_HOST` set | Enable/disable Redis telemetry; enabled Redis telemetry still requires the shared secure Redis transport policy (password, TLS, or documented network isolation) |
 | `telemetry.stream_key` | — | Legacy-compatible enable flag. If set, telemetry is on, but the value does not rename the stream. |
 
 Canonical telemetry stream key for both Nova and Buster: `pipeline:telemetry:<project>:<run_id>`
