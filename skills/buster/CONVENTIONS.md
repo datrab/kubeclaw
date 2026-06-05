@@ -39,7 +39,7 @@ Examples:
 - `test-e2e-15-2.js` — E2E tests for module 15, second attempt
 - `test-ws-06-1.js` — WebSocket tests for module 06
 
-Persistent tests (for e2e.js discovery): `*.spec.js` or `*.test.js` in `.swarm/<module>/tests/`.
+Persistent tests (for e2e.ts discovery): `*.spec.js` or `*.test.js` in `.swarm/<module>/tests/`.
 
 ---
 
@@ -90,7 +90,7 @@ No "it seems broken". Exact data.
 - Do **NOT** run `sandbox-build`, `sandbox-serve` or `sandbox-cleanup` — the Buster Pipeline handles that
 - The app is already running (URL is in Pre-Test Results)
 - Test scripts run inside the container, not in the sandbox
-- Place results in `.swarm/<module>/` (verify-task.js enforces scope)
+- Place test scripts and output artifacts under `.swarm/`; Buster Pipeline runs verify-task.ts before completion emission
 
 ---
 
@@ -147,9 +147,12 @@ agent-browser snapshot -i  # inspect rendered elements
 2. Memory recall for known bugs
 3. Read BUSTER.md — note all checks
 4. Execute each check sequentially and log
-5. Update `status.json` using the exact canonical completion protocol from the prompt
-   - use the prompt-provided lifecycle update command as written
-   - do NOT invent alternate lifecycle mutations or retry accounting
-   - do NOT mutate `.fail_count` or `.fail_summaries`
+5. Write only the prompt-provided `output_file`
+   - for `module_test` and `gate_test`, write raw, directly parseable JSON to `output_file`; do not wrap it in Markdown, do not use fenced code blocks, and do not include explanatory text outside the JSON object
+   - for `module_test`, use the prompt-provided schema with `artifact_type: "buster_output"`, `status: PASS|FAIL`, `summary`, and `completed_at`
+   - for `gate_test`, use the prompt-provided schema with `status: PASS|FAIL`, `summary`, and `findings`
+   - do NOT run verify-task.ts yourself; Buster Pipeline runs it before Redis completion emission
+   - do NOT edit `status.json` or any orchestrator state file; Nova owns lifecycle mutation and retry accounting
+   - do NOT mutate `.fail_count`, `.fail_summaries`, `current_phase`, `phase_started_at`, or `completed_at`
 6. Store findings in memory
-7. `redis.js --action complete` as last command
+7. Stop after `output_file` is written. Do not call Redis completion tools; `buster-pipeline.ts` owns verify/push and completion emission.
