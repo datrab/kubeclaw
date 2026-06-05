@@ -5,7 +5,7 @@ description: Set up a new KubeClaw project for the autonomous pipeline. Use when
 
 # Project Setup
 
-Set up a project so `pipeline.js --resume` runs end-to-end.
+Set up a project so `pipeline.ts --resume` runs end-to-end.
 
 ## Steps
 
@@ -43,10 +43,12 @@ Minimal template:
 {
   "project": "my-project",
   "version": 1,
-  "models": {
-    "forge": "anthropic/claude-sonnet-4-6",
-    "buster": "anthropic/claude-sonnet-4-6",
-    "echo": "anthropic/claude-opus-4-6"
+  "defaults": {
+    "models": {
+      "forge": "anthropic/claude-sonnet-4-6",
+      "buster": "anthropic/claude-sonnet-4-6",
+      "echo": "anthropic/claude-opus-4-6"
+    }
   },
   "execution_order": ["01-scaffold", "02-api", "gate:review", "gate:buster"],
   "modules": {
@@ -132,7 +134,7 @@ modules/<dir>/
 ### 5. Verify
 
 ```bash
-node /app/skills/pipeline.js --project <name> --dry-run
+node /app/skills/pipeline.ts --project <name> --dry-run
 ```
 
 ### 6. Run
@@ -142,7 +144,7 @@ git add Projects/<project>/src/.swarm/
 git commit -m "[architecture] Project setup: <project>"
 git push origin <project>/architecture
 git checkout main
-node /app/skills/pipeline.js --project <project> --resume
+node /app/skills/pipeline.ts --project <project> --nova-channel <id> --resume
 ```
 
 ## Suite Selection
@@ -208,7 +210,7 @@ Use for any module that produces a Dockerfile + K8s manifests.
 - [ ] Modules with buster stage: BUSTER.md written
 - [ ] API modules: test-spec.json
 - [ ] Gates: instructions + output paths
-- [ ] Review gates: `forge_model` set (avoids fallback to gateway default)
+- [ ] Review gates: `forge_model` set when they should differ from `defaults.models.forge` / platform `fallback_model`
 
 ### Verify
 - [ ] `--dry-run` passes

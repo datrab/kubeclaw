@@ -29,7 +29,7 @@ Test files with concrete test cases. ← REQUIRED
 
 ### Unit Test Section — REQUIRED
 
-Without this section Forge writes no tests → `unit.js` finds nothing → SKIP.
+Without this section Forge writes no tests → requested `unit.ts` fails typed Buster validation because real tests are required.
 
 **Python (pytest):**
 ```markdown
@@ -99,7 +99,7 @@ File names, cleanup rules, dev dependencies.
 | Aspect | FORGE.md (Unit Tests) | BUSTER.md (Subagent Tests) |
 |---|---|---|
 | Runs in | Podman sandbox (no cluster) | Gateway pod (with cluster) |
-| Executed by | `unit.js` suite | LLM subagent (Claude) |
+| Executed by | `unit.ts` suite | LLM subagent (Claude) |
 | K8s access | No | Yes (ServiceAccount) |
 | Test type | Deterministic, reproducible | Intelligent, exploratory |
 | Examples | parse_cpu("500m")→500 | Pod count matches kubectl |
@@ -112,7 +112,7 @@ File names, cleanup rules, dev dependencies.
 
 ### When Needed
 
-Only when `api` is in `test_suites` and `spec_file` is set. Without it → `api.js` SKIP.
+Only when `api` is in `test_suites`; `spec_file` is required and missing API specs fail typed Buster validation.
 
 ### Format
 
@@ -211,73 +211,62 @@ Every module should have at least 1 test hitting an endpoint from the previous m
 
 Only needed when `visual-reg` is in `test_suites`. Typical for frontend modules with real pages (not scaffolds).
 
-### Multi-Path Baselines (recommended)
+Visual-reg baseline path authority is module identity: Buster derives the baseline directory as `.swarm/modules/<module-dir>/baselines/`. Do not configure a baseline path in `progress.json`.
 
-For modules with multiple pages. The **Prism preview HTML is the single source of truth** — baselines and paths.json are generated automatically.
+### Multi-Path Baselines (required)
+
+For modules with multiple pages. The **Prism preview HTML is the source of truth**, but Buster visual-reg now requires explicit generated baseline artifacts checked into `.swarm/modules/<module-dir>/baselines/` before the suite runs.
 
 **Setup:**
 
-1. Create a Prism preview HTML that renders all pages of the module
+1. Create a Prism preview HTML that renders all pages of the module.
 2. The preview must follow the [Prism conventions](prism-conventions.md):
    - `<script type="application/json" data-routes>` manifest listing every page
    - `?baselines=true` query param bypasses auth/login
-3. Place at `.swarm/modules/<module-dir>/baselines/preview.html`
-4. `visual-reg.cjs` auto-generates `paths.json` + `{name}-baseline.png` per route on first run
+3. Place it at `.swarm/modules/<module-dir>/baselines/preview.html`.
+4. Generate reviewed baseline artifacts explicitly:
 
-**Result after generation:**
+```bash
+node /app/skills/pipeline/tools/screenshot.ts --generate-baselines \
+  .swarm/modules/15-dashboard-core-pages/baselines/preview.html \
+  .swarm/modules/15-dashboard-core-pages/baselines/
+```
+
+5. Review and commit the generated `paths.json` plus per-route `*-baseline.png` files before requesting `visual-reg`.
+
+**Required baseline layout:**
 
 ```
 .swarm/modules/15-dashboard-core-pages/baselines/
-├── preview.html              ← Prism-generated (source of truth)
-├── paths.json                ← Auto-generated: [{ name, nav, path }]
-├── setup-baseline.png        ← Auto-generated from preview
+├── preview.html              ← Prism-generated source of truth
+├── paths.json                ← Explicit reviewed route metadata
+├── setup-baseline.png        ← Explicit reviewed baseline from preview
 ├── dashboard-baseline.png
 ├── pods-baseline.png
 ├── deployments-baseline.png
 └── ...
 ```
 
-**Regeneration:** When `preview.html` is newer than `paths.json`, all baselines are regenerated automatically. Update the preview → next visual-reg run picks up the changes.
+**Regeneration:** when `preview.html` changes, rerun `screenshot.ts --generate-baselines`, review the new artifacts, and commit them. `visual-reg` does **not** auto-regenerate baselines and fails closed if explicit metadata is missing.
 
-**Manual generation via CLI:**
+### Baseline requirements
 
-```bash
-node /app/skills/screenshot.cjs --generate-baselines \
-  .swarm/modules/15-dashboard-core-pages/baselines/preview.html \
-  .swarm/modules/15-dashboard-core-pages/baselines/
-```
+The `visual-reg` suite now requires explicit multi-path metadata:
 
-### Single-Path Baselines (backwards compat)
+| Found in module baseline directory | Behavior |
+|---|---|
+| `paths.json` plus matching `{name}-baseline.png` files | Compare each declared route against its reviewed baseline |
+| Missing/invalid `paths.json` | Typed contract failure |
+| Missing per-route baseline PNG | Typed contract failure |
 
-For modules with only one page (e.g. a single landing page):
-
-**Option A — HTML design reference:**
-1. Create an HTML file that represents the expected design
-2. Place at `.swarm/modules/<module-dir>/baselines/<n>.html`
-3. `visual-reg.cjs` auto-generates `baseline.png` from the HTML on first run
-
-**Option B — Pre-generated PNG:**
-1. Generate manually: `node /app/skills/screenshot.cjs <input.html> baseline.png`
-2. Place at `.swarm/modules/<module-dir>/baselines/baseline.png`
-
-### Mode Detection
-
-`visual-reg.cjs` auto-detects the mode based on what it finds in the baseline directory:
-
-| Found in baseline_dir | Mode | Behavior |
-|---|---|---|
-| `paths.json` | Multi-path | Compare each route against its `{name}-baseline.png` |
-| `.html` file (no `paths.json`) | Auto-generate then multi-path | Run generator first, then multi-path |
-| `baseline.png` only | Single-path | Compare one URL against `baseline.png` |
-| Nothing | — | SKIP (no error) |
+Single-path compatibility and implicit HTML-to-baseline generation are removed.
 
 ### Config in progress.json
 
-Multi-path requires only `baseline_dir` — no paths array needed:
+Configure thresholds/Discord/pixelmatch behavior only:
 
 ```json
 "visual-reg": {
-  "baseline_dir": ".swarm/modules/15-dashboard-core-pages/baselines",
   "thresholds": { "max_diff_percent": 1.0 },
   "discord": "summary"
 }
@@ -285,9 +274,9 @@ Multi-path requires only `baseline_dir` — no paths array needed:
 
 | Field | Default | Description |
 |---|---|---|
-| `baseline_dir` | `.swarm/baselines` | Directory with preview.html / paths.json / PNGs |
 | `thresholds` | `null` | `null` = informational (always PASS). Set for enforced mode |
 | `discord` | auto | `"summary"` (1 embed, >3 paths) or `"all"` (per-page messages, ≤3 paths) |
+| `pixelmatch.threshold` | `0.1` | Per-pixel color-distance threshold |
 
 ### Auth in the Running App
 
