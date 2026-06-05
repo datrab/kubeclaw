@@ -16,7 +16,7 @@ Rule:
 This contract covers:
 - Redis telemetry events
 - event identity, ordering, dedupe, and delivery semantics
-- Buster-specific telemetry surface
+- plugin-owned telemetry surface (Buster is the first external producer)
 - transcript event behavior
 - rate-limit telemetry behavior
 - cost telemetry behavior
@@ -56,12 +56,24 @@ These are canonical event names:
 - `phase.completed`
 - `retry.scheduled`
 - `retry.exhausted`
+- `system.io_warning`
 - `summary.started`
 - `summary.completed`
 - `gate.started`
 - `gate.verdict`
+- `agent.spawn.requested`
 - `agent.spawned`
+- `agent.delivery.target`
 - `agent.killed`
+- `agent.ended`
+- `agent.llm.input.summary`
+- `agent.llm.output.summary`
+- `agent.tool.started`
+- `agent.tool.finished`
+- `agent.model.started`
+- `agent.model.ended`
+- `agent.session.started`
+- `agent.session.ended`
 - `agent.transcript`
 - `agent.progress`
 - `cost.update`
@@ -76,34 +88,39 @@ These are canonical event names:
 
 `summary_type` is the canonical discriminator for post-run summary flows: `pipeline`, `pipeline_review`, `case_study`, and `project_summary`. Session-backed summary flows preserve `gateway_label` as the operator-facing correlation key. For `summary_type: pipeline`, the canonical live payload also preserves `exit_code`, `exit_reason`, `summary_json_path`, `pipeline_summary_path`, and `latest_json_path` so the stream joins directly to the persisted run-summary bundle.
 
-### 3.2 Buster-native event types
+`system.io_warning` is a point-in-time warning event for non-critical local I/O loss such as model-policy audit append failure. It is emitted directly to the Redis telemetry stream when possible and must not introduce degraded/restored state for stateless file append helpers.
 
-These are canonical Buster-specific event names:
+### 3.2 Plugin-owned event type
 
-- `buster.task_started`
-- `buster.task_completed`
-- `buster.sandbox_cleanup`
-- `buster.git_sync`
-- `buster.suite_started`
-- `buster.suite_completed`
-- `buster.visual_reg`
-- `buster.decision`
-- `buster.session_monitor`
+Plugin-specific telemetry uses one canonical extension event name:
 
-### 3.3 Shared event types Buster may emit
+- `plugin.event`
 
-Buster may also emit these shared event names:
+`plugin.event` is the only accepted event type for plugin-owned lifecycle, suite, tool, and domain-specific telemetry. The plugin namespace lives in payload fields (`plugin_id`, `plugin_event`, and `details`), not in the top-level event type. Core does not add a new top-level event type when a future gate or plugin such as Pentester is added.
 
+### 3.3 Shared event types plugins may emit
+
+Plugins may also emit these shared event names when the event belongs to the platform lifecycle/health contract rather than plugin-specific details:
+
+- `agent.spawn.requested`
 - `agent.spawned`
+- `agent.delivery.target`
 - `agent.killed`
+- `agent.ended`
+- `agent.llm.input.summary`
+- `agent.llm.output.summary`
+- `agent.tool.started`
+- `agent.tool.finished`
+- `agent.model.started`
+- `agent.model.ended`
+- `agent.session.started`
+- `agent.session.ended`
 - `agent.transcript`
 - `rate_limit.detected`
 - `observability.degraded`
 - `observability.restored`
 
-So the Buster telemetry surface ClawDeck must handle is **15 event types total**:
-- 9 Buster-native
-- 6 reused shared events
+So the Buster telemetry surface ClawDeck must handle is one plugin extension event (`plugin.event`) plus reused shared platform events.
 
 ---
 
@@ -187,15 +204,38 @@ For new or migrated emitters, these fields should be included whenever known:
 - `source` — `pipeline` or `buster`
 - `emitter` — concrete component name, for example `nova/pipeline/services/telemetry` or `buster/pipeline/services/telemetry`
 - `module_id`
+- `gate_id`
+- `gate_type`
 - `phase`
 - `attempt`
+- `dispatch_id`
 - `agent_type`
 - `label`
+- `gateway_label`
 - `session_key`
 - `model`
 - `runtime`
 
+### 5.3 Joinability and identity authority
+
+Telemetry join keys are owned by typed runtime context, not display text.
+
+Required boundary:
+- `run_id` and `project` identify the run-scoped stream and durable artifact bundle.
+- `module_id` identifies module-owned work only.
+- `gate_id` / `gate_type` identify gate-owned work; gate-owned evidence must not invent a `module_id` fallback.
+- `attempt`, `dispatch_id`, `session_key`, and `gateway_label` are emitted only when the runtime already knows those values from dispatch/session ownership.
+- `label` is diagnostic/operator display only and must not be used as a canonical join key.
+- monitor lookup keys, log labels, Discord display fields, and generic session labels must not be promoted into `session_key`, `module_id`, `gate_id`, `dispatch_id`, or `gateway_label`.
+
+Artifact fallback rule:
+- fallback/degraded artifacts should preserve known join keys from the same typed context/data as canonical Redis events
+- fallback/degraded artifacts remain diagnostic when Redis is unavailable; they may carry `artifact_fallback: true` and `seq: null`, and must not pretend to be Redis-ordered canonical stream events
+
 Rule:
+- the envelope is intentionally flat: event-specific fields live at the top level beside `v`, `type`, `ts`, `project`, `run_id`, and `seq`
+- do not wrap canonical payloads in legacy nested `data` / `refs` objects unless a future version explicitly migrates the contract
+- `source` and `emitter` are strings, not object-shaped provenance wrappers
 - unknown extra fields are allowed
 - consumers must ignore unknown fields
 - new emitters should add provenance, not remove it
@@ -264,6 +304,16 @@ In plain terms:
 
 ## 7. Redis stream contract
 
+### 7.0 Producer / spine / sink ownership
+
+Telemetry has three separate ownership roles:
+
+- **Core telemetry spine**: Nova builds canonical events, appends every event to disk audit artifacts, and dispatches to registry-owned telemetry sinks.
+- **Telemetry sink plugins**: registry-owned sinks deliver telemetry to external transports. The built-in Redis sink receives the full event firehose for ClawDeck; the built-in Discord sink sends only explicitly presented operator payloads.
+- **External producers**: Buster runs in another pod and may publish core-compatible telemetry directly to the canonical run stream. Plugin-owned details use `plugin.event`; shared lifecycle/health details use the core event names. That is producer-side telemetry, not sink ownership.
+
+Disk audit logging is core-owned evidence, not a plugin sink. Redis and Discord delivery are sink plugins. If a sink is missing or fails, the system records `observability.degraded`; it must not silently reroute through a legacy direct fallback.
+
 ### 7.1 Canonical stream identity
 
 Canonical event identity is run-scoped, not module-scoped.
@@ -299,7 +349,7 @@ Locked end-state rule:
 - `pipeline:telemetry:<project>:<run_id>` is the single canonical live stream
 - module identity belongs in payload as `module_id`
 - run identity belongs in `run_id`
-- legacy Buster-only stream families are compatibility-only and should eventually be retired
+- legacy Buster-only stream families are not part of the live producer contract
 
 ### 7.4 Redis payload shape
 
@@ -315,6 +365,14 @@ Example:
 
 One XADD entry = one telemetry event.
 
+### 7.5 Retention and replay authority
+
+Redis is a capped live/consumer window, not the durable audit log.
+
+Canonical producers use one shared approximate trim window (`MAXLEN ~10000`) for `pipeline:telemetry:<project>:<run_id>`. The cap keeps dashboard/consumer memory bounded and means old entries can disappear from Redis during long runs. Consumers may use Redis for live delivery and recent replay, but must not treat XRANGE as complete historical evidence after trimming.
+
+Run-scoped `pipeline.jsonl` is the durable audit trail for replay and post-mortem reconstruction. When Redis emission succeeds, the Redis-owned `seq` is mirrored into the run-scoped `pipeline.jsonl` event so operators can reconstruct the ordered stream even after Redis trims earlier entries. When Redis is unavailable or weak identity prevents canonical stream emission, durable artifacts may contain explicit `observability.degraded` / `artifact_fallback` evidence with `seq: null`; that is intentionally diagnostic and must not pretend to be part of the Redis-ordered sequence.
+
 ---
 
 ## 8. Event-specific rules
@@ -327,33 +385,16 @@ Rules:
 - `reason` is required for meaningful `FAIL` and `BLOCKED` transitions
 - `module_id` is required
 
-### 8.2 `buster.task_completed`
+### 8.2 `plugin.event`
 
 Rules:
-- `outcome` must be one of `PASS | FAIL | TIMEOUT | RATE_LIMITED`
-- `spawned_subagent` is required
-- `reason` is required
-- suite summary counts must be internally consistent
-
-### 8.3 `buster.decision`
-
-Rules:
-- `recommendation` must be `SPAWN` or `NO_SPAWN`
-- recommendation reason must be explicit
-- `NO_SPAWN` is a decision, not a transport failure
-
-### 8.4 `buster.session_monitor`
-
-Rules:
-- this is a heartbeat-style progress event
-- it should be emitted on a regular cadence while a Buster child session is active
-- it is not a terminal event by itself
-
-Recommended fields:
-- `elapsed_seconds`
-- `acp_state`
-- `transcript_events`
-- `rate_limited`
+- `plugin_id` identifies the owning plugin namespace, for example `buster`.
+- `plugin_event` identifies the plugin-owned action within that namespace, for example `task_completed`, `decision`, or `session_monitor`.
+- platform correlation fields such as `module_id`, `gate_id`, `attempt`, `dispatch_id`, and `session_key` stay top-level when known.
+- plugin-specific fields must be carried in `details`; arbitrary plugin fields are not allowed at the top level.
+- Buster task completion keeps `outcome`, `reason`, `duration_seconds`, and `spawned_subagent` either as generic top-level status metadata where allowed or inside `details`; suite summary counts must be internally consistent.
+- Buster decisions use `plugin_event: "decision"`; `details.recommendation` must be `SPAWN` or `NO_SPAWN`, and `details.reason` must be explicit.
+- Buster session-monitor heartbeats use `plugin_event: "session_monitor"`; details should include `elapsed_seconds`, `acp_state`, `transcript_events`, and `rate_limited`.
 
 ---
 
@@ -473,6 +514,7 @@ Expected files:
 - `pipeline.jsonl`
 - `discord.jsonl`
 - `nova-injections.jsonl`
+- `buster-telemetry-fallback.jsonl` when Buster Redis telemetry fallback is needed
 - `latest.json`
 - `summary.json`
 - `model-policy.jsonl` when model-policy logging is enabled
@@ -491,6 +533,7 @@ Expected run artifacts:
 - `pipeline.jsonl`
 - `discord.jsonl`
 - `nova-injections.jsonl`
+- `buster-telemetry-fallback.jsonl` when Buster Redis telemetry fallback is needed
 - `summary.json`
 - `config-validation.json`
 - `blueprint-sync.json`
@@ -575,7 +618,7 @@ Required fields:
 - `path`
 - `started_at`
 
-When known, `latest.json` should also preserve the canonical `telemetry_stream_key` plus the run-scoped replay bundle fields `pipeline_jsonl`, `discord_jsonl`, `nova_injections_jsonl`, and `summary_json` for the same run.
+When known, `latest.json` should also preserve the canonical `telemetry_stream_key` plus the run-scoped replay bundle fields `pipeline_jsonl`, `discord_jsonl`, `nova_injections_jsonl`, `buster_telemetry_fallback_jsonl`, `redis_exchanges_jsonl`, `redis_ops_jsonl`, and `summary_json` for the same run.
 
 ### 12.7 `summary.json`
 
@@ -592,7 +635,7 @@ Summary should include, when known:
 - usage/cost summary
 - artifact pointers
 
-When the summary service owns the write, it should also preserve the canonical `telemetry_stream_key` and a stable `.artifacts` bundle for the same run-scoped `pipeline.jsonl`, `discord.jsonl`, `nova-injections.jsonl`, `summary.json`, plus the top-level `.swarm/logs/pipeline/summary.json` and `.swarm/logs/pipeline/latest.json` pointers.
+When the summary service owns the write, it should also preserve the canonical `telemetry_stream_key` and a stable `.artifacts` bundle for the same run-scoped `pipeline.jsonl`, `discord.jsonl`, `nova-injections.jsonl`, `buster-telemetry-fallback.jsonl`, `redis/redis-exchanges.jsonl`, `redis/redis-ops.jsonl`, `summary.json`, plus the top-level `.swarm/logs/pipeline/summary.json` and `.swarm/logs/pipeline/latest.json` pointers.
 
 ---
 
