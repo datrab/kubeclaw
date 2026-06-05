@@ -1,74 +1,74 @@
 # pipeline/
 
-Modular KubeClaw Swarm Pipeline. All public API is exported from `pipeline/index.js`.
+Modular KubeClaw Swarm Pipeline. The narrow public entry surface is `pipeline/index.ts`; lower-level helpers stay owned by their source modules.
 
 ## Directory structure
 
 ```
 pipeline/
   core/
-    config.js          Config loading, validation, model resolution
-    constants.js       Shared status strings (STATUS) and exit codes (EXIT_*)
-    context.js         AsyncLocalStorage pipeline context
-    git.js             Repo-root detection (getRepoRoot)
-    logger.js          Structured logger with context-aware dual-write
-    paths.js           Path utilities: modulePath, swarmRoot, relPath, etc.
-    runtime.js         Run identity (RUN_ID), run stats (_runStats), output(), loadProgress()
-    temp.js            Temporary directory lifecycle manager
+    config.ts          Config loading, validation, model resolution
+    constants.ts       Shared status strings (STATUS) and exit codes (EXIT_*)
+    context.ts         Pipeline/plugin context and capability narrowing
+    git-context.ts     Nova facade for shared repo-scoped Git primitives
+    logger.ts          Structured logger with context-aware dual-write
+    paths.ts           Path utilities: modulePath, swarmRoot, relPath, etc.
+    runtime.ts         Context/config-first run identity/stats helpers, output(), loadProgress()
+    temp.ts            Temporary directory lifecycle manager
   integrations/
-    discord.js         Discord webhook delivery (simplified; see note below)
-    gateway.js         Gateway Tool API client (gatewayInvoke)
-    git.js             Re-exports getRepoRoot (thin shim)
-    redis.js           Redis module loader and stream helpers
+    discord.ts         Discord webhook/audit integration using shared webhook transport
+    gateway.ts         Typed Gateway operation facades
+    git-worktree.ts    Nova Git worktree/stash/pull/push policy
+    redis.ts           Redis module loader and stream helpers
   agents/
-    runtime.js         Runtime/harness resolution shim to shared pipeline helpers
-    acp-monitor.js     ACP session state polling and classification
-    lifecycle.js       Agent spawn/kill/steer/verify helpers
-    shutdown.js        Graceful shutdown hooks and agent tracking
+    runtime.ts         Runtime/harness resolution shim to shared pipeline helpers
+    acp-monitor.ts     ACP session state polling and classification
+    lifecycle.ts       Agent spawn/kill/steer/verify helpers
+    shutdown.ts        Graceful shutdown hooks and agent tracking
   prompts/
-    buster-gate.js     Buster gate prompt builder
-    buster-instructions.js  Shared Buster instructions loader
-    buster-module.js   Buster module prompt builder
-    forge.js           Forge prompt builder
-    gate-fix.js        Gate fix-and-retest prompt builder
-    review.js          Echo reviewer prompt builder
-    shared.js          Common prompt building blocks
+    buster-gate.ts     Buster gate prompt builder
+    buster-instructions.ts  Shared Buster instructions loader
+    buster-module.ts   Buster module prompt builder
+    forge.ts           Forge prompt builder
+    gate-fix.ts        Gate fix-and-retest prompt builder
+    review.ts          Echo reviewer prompt builder
+    shared.ts          Common prompt building blocks
   runners/
-    buster-gate-runner.js  Buster gate lifecycle
-    gate-runner.js     Gate dispatch: routes to buster or review runner via GATE_RUNNERS map
-    module-runner.js   Module lifecycle runner
-    pipeline-runner.js Full pipeline orchestration (runPipeline, findNextStep, printStatus, dryRun)
-    review-gate-runner.js  Review gate lifecycle
+    buster-gate-runner.ts  Buster gate lifecycle
+    gate-runner.ts     Gate dispatch: routes to buster or review runner via GATE_RUNNERS map
+    module-runner.ts   Module lifecycle runner
+    pipeline-runner.ts Narrow public orchestration facade (runPipeline, printStatus, dryRun)
+    review-gate-runner.ts  Review gate lifecycle
   services/
-    blueprint.js       Blueprint release and control-file sync
-    failures.js        Failure classification, escalation, and retry logic
-    polling.js         Polling engine: status, Redis, dual-channel, rate-limit recovery
-    rate-limit.js      Rate-limit detection and recovery
-    status-store.js    Module/gate status read/write, log directory management
-    summary.js         Pipeline run summary and review spawner
-    telemetry.js       Pipeline event hooks (onModulePass, onGateFail, etc.)
+    blueprint.ts       Blueprint release and control-file sync
+    failures/          Failure classification, presentation, escalation, and retry policy
+    polling.ts         Polling engine: status, Redis, dual-channel, rate-limit recovery
+    rate-limit.ts      Rate-limit detection and recovery
+    status-store.ts    Module/gate status read/write, log directory management
+    summary.ts         Pipeline run summary and review spawner
+    telemetry.ts       Pipeline event hooks (onModulePass, onGateFail, etc.)
   tests/               Per-module Buster test files (node:test, no external deps)
   tools/
-    redis.js           Nova → Buster Redis CLI (send, read-completion)
-    lint-report.js     Standalone lint aggregator CLI
-    project-summary.js Standalone project summary generator CLI
-  cli.js               CLI entry point; delegates to pipeline/index.js exports
-  index.js             Narrow public entry surface for pipeline callers
+    redis.ts           Nova → Buster Redis CLI (send, read-completion)
+    lint-report.ts     Standalone lint aggregator CLI
+    project-summary.ts Standalone project summary generator CLI
+  cli.ts               CLI entry point; imports owned runtime modules directly
+  index.ts             Narrow public entry surface for pipeline callers
 ```
 
 ## Public API
 
-`pipeline/index.js` is the narrow public entry surface, not a catch-all barrel.
+`pipeline/index.ts` is the narrow public entry surface, not a catch-all barrel.
 Use it for top-level pipeline entrypoints and public constants. Import lower-level
 helpers from their owned modules.
 
 ```js
-import { runPipeline, loadConfig, STATUS, EXIT_OK } from './pipeline/index.js';
-import { createRunId, createRunStats } from './pipeline/core/runtime.js';
-import { pollGeneric } from './pipeline/services/polling.js';
+import { runPipeline, loadConfig, STATUS, EXIT_OK } from './pipeline/index.ts';
+import { createRunId, createRunStats } from './pipeline/core/runtime.ts';
+import { pollGeneric } from './pipeline/services/polling.ts';
 ```
 
-Supported `index.js` exports:
+Supported `index.ts` exports:
 
 | Category | Key exports |
 |---|---|
@@ -76,56 +76,52 @@ Supported `index.js` exports:
 | Config | `loadConfig` |
 | Constants | `STATUS`, `EXIT_OK`, `EXIT_ERROR`, `EXIT_NEEDS_NOVA`, `EXIT_BLOCKED`, `EXIT_TIMEOUT`, `EXIT_RATE_LIMITED` |
 | Shutdown | `registerShutdownHooks` |
-| Telemetry | `emitEvent`, `emitCostUpdate`, lifecycle/status emitters |
 
-Helpers that are intentionally **not** re-exported from `index.js`:
-- run-state helpers in `core/runtime.js`
-- git plumbing in `core/git.js`
-- polling primitives in `services/polling.js`
+Helpers that are intentionally **not** re-exported from `index.ts`:
+- telemetry and notification helpers in `services/telemetry.js`, `services/notification-dispatch.js`, and `services/notification-contract.ts`
+- context/config-first run-state helpers in `core/runtime.ts`
+- plugin context helpers in `core/context.ts`
+- git plumbing in `core/git-context.ts` / `integrations/git-worktree.ts`
+- polling primitives in `services/polling.ts`
 - agent, prompt, path, and status internals in their owned modules
 
 ## Shared helper ownership
 
 Canonical shared pipeline helper implementations live in `skills/common/pipeline/`.
-Nova source files now import those shared owners directly, so the canonical
-session/runtime/gateway/lifecycle seams are obvious in search instead of hiding
-behind same-name repo facades.
+Nova and Buster keep repo-local compatibility shims under their own
+`skills/*/pipeline/...` trees, and runtime source imports those local
+production-surface paths.
 
-Production packaging keeps the same ownership model. The general and sandbox
-images copy the canonical helper files from `skills/common/pipeline/` into
-`/app/common/pipeline/...`, and the packaged `/app/skills/pipeline/...` helper
-paths are still materialized from the shared common owners.
+Production packaging exposes only `/app/skills/...`: image-specific skills are
+copied first, then `skills/common/...` is copied over the same tree so canonical
+shared implementations replace the compatibility shims at `/app/skills/pipeline/...`.
 
 ## Extending the pipeline
 
 ### Add a new gate type
 
-1. Create `runners/my-gate-runner.js` with `export async function runMyGate(...)`.
-2. Register it in `runners/gate-runner.js`:
-   ```js
-   import { runMyGate } from './my-gate-runner.js';
-   export const GATE_RUNNERS = { buster: runBusterGate, review: runReviewGate, my: runMyGate };
-   ```
-3. Export `runMyGate` from `index.js`.
+1. Create the runner/control-result implementation in the owning `runners/` or `services/` slice.
+2. Register the gate through the plugin/registry ownership surface so `gate-runner.js` can dispatch it by stage/type.
+3. Add tests for the gate control result and scheduler projection.
+4. Do **not** add the gate runner to `index.ts` unless it is intentionally becoming part of the supported public API.
 
 ### Add a new service
 
 1. Create `services/my-service.js` with named exports.
-2. Add the exports to `index.js`:
-   ```js
-   export { myFunction } from './services/my-service.js';
-   ```
+2. Import it directly from its owned module from runtime code.
+3. Export it from `index.ts` only after deciding it is a supported public API surface.
 
 ### Add a new integration
 
 1. Create `integrations/my-service.js` with named exports.
-2. Add the exports to `index.js`.
+2. Keep the integration imported by its owner/caller module.
+3. Export it from `index.ts` only if external callers need that integration as a stable public contract.
 
 ## Wave 2 Governance
 
 Wave 2 adds a governed execution layer on top of the core pipeline. These components run automatically when the project is configured for governance.
 
-### Architecture Validator (`services/arch-validator.js`)
+### Architecture Validator (`services/arch-validator.ts`)
 
 Runs before module 01. Detects project definition defects (missing files, undefined refs, bad configs) before wasting execution time. Produces:
 
@@ -140,16 +136,16 @@ A human-in-the-loop gate type. Pauses pipeline execution until an operator appro
 
 1. Pipeline posts Discord embed via webhook
 2. Operator responds via Nova-bridge: `APPROVE gate:<id>` or `REJECT gate:<id> reason: <text>`
-3. Nova writes decision to `.swarm/<gate-id>-gate-status.json`
-4. Pipeline reads file and resumes or halts
+3. Nova writes operator decision evidence to `.swarm/<gate-id>-gate-status.json`
+4. Pipeline syncs that evidence into approval wait lifecycle/read-model state and resumes or halts
 
-The gate-state file is the **authoritative source of truth** — not Discord message history.
+Approval wait lifecycle/read-model state is the **authoritative source of truth**. The gate-state file is operator evidence, and Discord message history is only the UI.
 
 Config still uses lower-case `on_timeout` values (`block` / `continue`), but persisted approval gate state, gate audit artifacts, and emitted `approval.requested.timeout_policy` are normalized to canonical uppercase `BLOCK` / `CONTINUE` for downstream consumers.
 
-### Model/Thinking Policy Log (`core/runtime.js`, `services/telemetry.js`)
+### Model/Thinking Policy Log (`core/policy.ts`)
 
-Every agent spawn writes an effective-resolution record to `.swarm/logs/pipeline/model-policy.jsonl`. Records which model ran and why (runtime override, scope policy, project default, config default).
+`core/policy.ts` owns model/thinking override resolution and appends an effective-policy record to `.swarm/logs/pipeline/model-policy.jsonl` for each spawn path that resolves policy. Records which model ran and why (runtime override, scope policy, project default, platform fallback).
 
 ### Observability
 
@@ -162,6 +158,7 @@ All governance observability artifacts live under `.swarm/logs/`:
 │   ├── pipeline.jsonl        ← Lifecycle event stream
 │   ├── discord.jsonl         ← Persisted Discord audit log
 │   ├── nova-injections.jsonl ← Nova escalation handoff audit log
+│   ├── buster-telemetry-fallback.jsonl ← Buster Redis-telemetry fallback/degradation mirror
 │   ├── model-policy.jsonl    ← Model/thinking resolution log
 │   └── summary.json          ← End-of-run summary with governance section
 ├── architecture-validator/   ← Validator findings and report
@@ -170,7 +167,7 @@ All governance observability artifacts live under `.swarm/logs/`:
 └── gates/<gate-id>/          ← Approval gate audit artifacts
 ```
 
-`.swarm/logs/pipeline/latest.json` points operators at the newest run-scoped `pipeline.jsonl`, `discord.jsonl`, `nova-injections.jsonl`, and `summary.json` under `.swarm/logs/pipeline/runs/<run-id>/`, and records the canonical live `telemetry_stream_key` for that run.
+`.swarm/logs/pipeline/latest.json` points operators at the newest run-scoped `pipeline.jsonl`, `discord.jsonl`, `nova-injections.jsonl`, `buster-telemetry-fallback.jsonl`, `redis/redis-exchanges.jsonl`, `redis/redis-ops.jsonl`, and `summary.json` under `.swarm/logs/pipeline/runs/<run-id>/`, and records the canonical live `telemetry_stream_key` for that run.
 
 `scripts/deploy.sh build-local-images [tag]`, `scripts/deploy.sh verify-live [tag]`, and `scripts/deploy.sh smoke` / `scripts/deploy.sh smoke-agent <nova|buster>` are the canonical live deployment command surface; `.swarm/logs/pipeline/latest.json` plus the run-scoped audit bundle are the canonical replay/audit surface for that deployment path.
 

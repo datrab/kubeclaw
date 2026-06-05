@@ -1,0 +1,149 @@
+import {
+  PLUGIN_REJECTION_CODES,
+  PLUGIN_STAGE_IDS,
+} from '../constants.ts';
+import { createRegistryDictionary } from './dictionary.ts';
+
+type AnyRecord = Record<string, any>;
+type RegistryError = { code: string; message: string; [key: string]: any };
+
+function pushError(errors: RegistryError[], code: string, message: string, details: AnyRecord = {}) {
+  errors.push({ code, message, ...details });
+}
+
+export function buildStageOwnerIndex(normalizedConfig: AnyRecord, resolvedRecords: AnyRecord, errors: RegistryError[]) {
+  if (normalizedConfig.enabled === false) return createRegistryDictionary();
+
+  const candidatesByStage: AnyRecord = createRegistryDictionary();
+  const decisionStages: AnyRecord[] = [];
+
+  for (const record of Object.values(resolvedRecords)) {
+    if (!record.enabled) continue;
+    for (const stageId of record.resolvedStageIds) {
+      const hookFamily = record.manifest.hookFamily;
+      candidatesByStage[hookFamily] ??= createRegistryDictionary();
+      candidatesByStage[hookFamily][stageId] ??= [];
+      candidatesByStage[hookFamily][stageId].push(record);
+      if (!['notification', 'telemetry'].includes(record.manifest.kind)) decisionStages.push({ hookFamily, stageId });
+    }
+  }
+
+  const stageOwners: AnyRecord = createRegistryDictionary();
+  const explicitSelections = normalizedConfig.stageOwners;
+  for (const [stageId, moduleIdValue] of Object.entries(explicitSelections)) {
+    const moduleId = String(moduleIdValue);
+    const ownerRecord = resolvedRecords[moduleId];
+    if (!ownerRecord) {
+      pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_STAGE_OWNER_UNKNOWN, `config.plugins.stageOwners.${stageId} references unknown module '${moduleId}'`);
+      continue;
+    }
+    if (!ownerRecord.enabled) {
+      pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_STAGE_OWNER_DISABLED, `config.plugins.stageOwners.${stageId} references disabled module '${moduleId}'`);
+      continue;
+    }
+    if (!ownerRecord.resolvedStageIds.includes(stageId)) {
+      pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_STAGE_OWNER_UNKNOWN, `config.plugins.stageOwners.${stageId} cannot select module '${moduleId}' because it does not claim that stage`);
+      continue;
+    }
+    const hookFamily = ownerRecord.manifest.hookFamily;
+    if (!(PLUGIN_STAGE_IDS as AnyRecord)[ownerRecord.manifest.kind]?.has(stageId)) {
+      pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_STAGE_ID_INVALID, `config.plugins.stageOwners.${stageId} is not a valid stage id for kind '${ownerRecord.manifest.kind}'`);
+      continue;
+    }
+    stageOwners[hookFamily] ??= createRegistryDictionary();
+    stageOwners[hookFamily][stageId] = ownerRecord;
+  }
+
+  for (const [hookFamily, stageMap] of Object.entries(candidatesByStage)) {
+    stageOwners[hookFamily] ??= createRegistryDictionary();
+    for (const [stageId, candidatesValue] of Object.entries(stageMap)) {
+      const candidates = candidatesValue as AnyRecord[];
+      if (candidates.every((candidate: AnyRecord) => ['notification', 'telemetry'].includes(candidate?.manifest?.kind))) {
+        continue;
+      }
+      if (stageOwners[hookFamily][stageId]) continue;
+      if (candidates.length === 1) {
+        stageOwners[hookFamily][stageId] = candidates[0];
+        continue;
+      }
+      if (candidates.length > 1) {
+        pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_STAGE_OWNER_CONFLICT, `Stage '${stageId}' in hookFamily '${hookFamily}' has ${candidates.length} enabled owners but no explicit config.plugins.stageOwners selection`);
+      }
+    }
+  }
+
+  for (const { hookFamily, stageId } of decisionStages) {
+    if (!stageOwners[hookFamily]?.[stageId]) {
+      pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_STAGE_OWNER_MISSING, `Stage '${stageId}' in hookFamily '${hookFamily}' ended startup with no enabled owner`);
+    }
+  }
+
+  return stageOwners;
+}
+
+export function buildHookIndex(resolvedRecords: AnyRecord) {
+  const hookIndex: AnyRecord = createRegistryDictionary();
+  for (const record of Object.values(resolvedRecords)) {
+    hookIndex[record.manifest.hookFamily] ??= createRegistryDictionary();
+    for (const stageId of record.resolvedStageIds) {
+      hookIndex[record.manifest.hookFamily][stageId] ??= [];
+      hookIndex[record.manifest.hookFamily][stageId].push(record);
+    }
+  }
+  return hookIndex;
+}
+
+export function buildGateTypeIndex(normalizedConfig: AnyRecord, resolvedRecords: AnyRecord, stageOwners: AnyRecord, errors: RegistryError[]) {
+  if (normalizedConfig.enabled === false) return createRegistryDictionary();
+
+  const candidatesByGateType: AnyRecord = createRegistryDictionary();
+  for (const record of Object.values(resolvedRecords)) {
+    if (!record.enabled || record.manifest.kind !== 'gate') continue;
+    for (const gateType of record.manifest.gateTypes || []) {
+      candidatesByGateType[gateType] ??= [];
+      candidatesByGateType[gateType].push(record);
+    }
+  }
+
+  const gateTypes: AnyRecord = createRegistryDictionary();
+  for (const [gateType, candidates] of Object.entries(candidatesByGateType)) {
+    const stageId = `gate:${gateType}`;
+    if (candidates.length > 1) {
+      pushError(
+        errors,
+        PLUGIN_REJECTION_CODES.REGISTRY_GATE_TYPE_OWNER_CONFLICT,
+        `Gate type '${gateType}' has ${candidates.length} enabled owners but gate types must be uniquely owned by the startup registry`,
+      );
+      continue;
+    }
+
+    const record = candidates[0];
+    const stageOwner = stageOwners?.['gate.execute']?.[stageId] || null;
+    if (!stageOwner) {
+      pushError(
+        errors,
+        PLUGIN_REJECTION_CODES.REGISTRY_GATE_TYPE_OWNER_MISSING,
+        `Gate type '${gateType}' declared by module '${record.manifest.moduleId}' has no matching 'gate.execute' stage owner for '${stageId}'`,
+      );
+      continue;
+    }
+    if (stageOwner.manifest.moduleId !== record.manifest.moduleId) {
+      pushError(
+        errors,
+        PLUGIN_REJECTION_CODES.REGISTRY_GATE_TYPE_OWNER_CONFLICT,
+        `Gate type '${gateType}' is declared by module '${record.manifest.moduleId}' but stage '${stageId}' is owned by '${stageOwner.manifest.moduleId}'`,
+      );
+      continue;
+    }
+
+    gateTypes[gateType] = {
+      gateType,
+      hookFamily: 'gate.execute',
+      stageId,
+      moduleId: record.manifest.moduleId,
+      owner: record,
+    };
+  }
+
+  return gateTypes;
+}

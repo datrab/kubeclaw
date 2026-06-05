@@ -10,28 +10,28 @@ Autonomous software pipeline. Runs modules sequentially: blueprint release → F
 ## CLI
 
 ```bash
-node /app/skills/pipeline.js --project <name> --resume
-node /app/skills/pipeline.js --project <name> --status
-node /app/skills/pipeline.js --project <name> --dry-run
-node /app/skills/pipeline.js --project <name> --blueprint-list
+node /app/skills/pipeline.ts --project <name> --nova-channel <id> --resume
+node /app/skills/pipeline.ts --project <name> --status
+node /app/skills/pipeline.ts --project <name> --dry-run
+node /app/skills/pipeline.ts --project <name> --blueprint-list
 ```
 
 ## Tools
 
 ### Redis (Nova → Buster)
 ```bash
-node /app/skills/pipeline/tools/redis.js --action send --type <TYPE> --payload '<JSON>'
-node /app/skills/pipeline/tools/redis.js --action read-completion --stream <key> --module <ID>
+node /app/skills/pipeline/tools/redis.ts --action send --type <TYPE> --payload '<JSON>'
+node /app/skills/pipeline/tools/redis.ts --action read-completion --stream <key> --module <ID>
 ```
 
 ### Lint Report
 ```bash
-node /app/skills/pipeline/tools/lint-report.js --repo <path> --tier <full|pre-check>
+node /app/skills/pipeline/tools/lint-report.ts --repo <path> --tier <full|pre-check>
 ```
 
 ### Project Summary
 ```bash
-node /app/skills/pipeline/tools/project-summary.js --project <name>
+node /app/skills/pipeline/tools/project-summary.ts --project <name>
 ```
 
 ## Configuration
