@@ -29,6 +29,12 @@ if [[ -z "$REPO_URL" ]]; then
   exit 1
 fi
 
+if [[ "${KUBECLAW_ALLOW_LEGACY_REPO_SETUP:-}" != "1" ]]; then
+  err "scripts/setup.sh is a legacy one-time bootstrap that runs broad git add/commit/push."
+  err "Use the normal git workflow instead, or rerun with KUBECLAW_ALLOW_LEGACY_REPO_SETUP=1 if this is intentional."
+  exit 1
+fi
+
 cd "$REPO_DIR"
 
 # ─── Step 1: Initialize git ──────────────────────────────────────────────
@@ -41,7 +47,7 @@ else
 fi
 
 # ─── Step 2: Verify .gitignore ───────────────────────────────────────────
-if grep -q "my-values/" .gitignore 2>/dev/null; then
+if [[ -f .gitignore ]] && grep -q "my-values/" .gitignore; then
   log ".gitignore has my-values/ (your personal configs stay private)"
 else
   err ".gitignore is missing 'my-values/' — adding it"
@@ -52,11 +58,11 @@ fi
 echo ""
 echo "Files that WILL be committed (public):"
 git add -A
-git status --short | grep -v "my-values/" | head -30
+git status --short | awk '$0 !~ /my-values\// { print; count += 1; if (count >= 30) exit }'
 echo ""
 
 # Verify my-values is NOT staged
-if git status --short | grep -q "my-values/"; then
+if [[ -n "$(git status --short -- my-values/)" ]]; then
   err "my-values/ is staged! Check your .gitignore"
   exit 1
 else
@@ -74,7 +80,16 @@ log "Initial commit created"
 
 # ─── Step 5: Set remote and push ─────────────────────────────────────────
 echo ""
-git remote remove origin 2>/dev/null || true
+if remote_output=$(git remote get-url origin 2>&1); then
+  git remote remove origin
+  warn "Replaced existing origin remote: $remote_output"
+elif [[ "$remote_output" == *"No such remote"* || "$remote_output" == *"No such remote 'origin'"* ]]; then
+  log "No existing origin remote to remove"
+else
+  err "Failed to inspect existing origin remote"
+  echo "$remote_output" >&2
+  exit 1
+fi
 git remote add origin "$REPO_URL"
 log "Remote set: $REPO_URL"
 

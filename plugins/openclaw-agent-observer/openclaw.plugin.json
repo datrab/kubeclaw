@@ -1,0 +1,33 @@
+{
+  "id": "kubeclaw-agent-observer",
+  "name": "KubeClaw Agent Observer",
+  "description": "Observes OpenClaw agent hooks and writes kubeclaw agent-observability Redis streams.",
+  "version": "0.0.0",
+  "activation": {
+    "onStartup": true
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": { "type": "boolean", "default": false },
+      "redisHost": { "type": "string" },
+      "redisPort": { "type": "number" },
+      "redisUsername": { "type": "string" },
+      "redisPassword": { "type": "string" },
+      "redisTls": { "type": "boolean" },
+      "redisNetworkIsolation": { "type": ["boolean", "string"] },
+      "maxEventBytes": { "type": "number", "default": 3145728 },
+      "maxQueuePerStream": { "type": "number", "default": 100 },
+      "redisCommandTimeoutMs": { "type": "number", "default": 1000 },
+      "streamMaxLen": { "type": "number", "default": 10000 },
+      "deadLetterMaxLen": { "type": "number", "default": 1000 },
+      "controlWriteMaxAttempts": { "type": "number", "default": 3 },
+      "controlWriteRetryBaseMs": { "type": "number", "default": 100 },
+      "controlWriteRetryMaxMs": { "type": "number", "default": 1000 }
+    }
+  },
+  "uiHints": {
+    "redisPassword": { "label": "Redis password", "sensitive": true }
+  }
+}

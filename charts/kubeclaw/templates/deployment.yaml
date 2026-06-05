@@ -159,6 +159,10 @@ spec:
                   echo "    swarm.config.json exists, keeping (override=false)"
                 fi
               fi
+              if [ -n "${DISCORD_WEBHOOK:-}" ] && [ -f "/config/swarm.config.json" ]; then
+                node -e 'const fs=require("fs"); const p="/config/swarm.config.json"; const c=JSON.parse(fs.readFileSync(p,"utf8")); c.discord_webhook_url=process.env.DISCORD_WEBHOOK; fs.writeFileSync(p, JSON.stringify(c,null,2)+"\n");'
+                echo "    discord_webhook_url mapped from deployment secret"
+              fi
               if [ -f "/init-swarm-config/.semgrep.yml" ]; then
                 if [ "${OVERRIDE_SWARM_CONFIG}" = "true" ] || [ ! -f "/config/.semgrep.yml" ]; then
                   cp -Lf "/init-swarm-config/.semgrep.yml" "/config/.semgrep.yml"
@@ -181,8 +185,23 @@ spec:
               # Base: /app/skills/ already contains OpenClaw + KubeClaw skills (from image)
               echo "    Copying skills from image..."
               cp -r /app/skills/. /skills-merged/
+              protected_skill_overlay() {
+                case "$1" in
+                  pipeline|pipeline/*|pipeline.ts|common|common/*|nova/pipeline|nova/pipeline/*|buster/pipeline|buster/pipeline/*|redis.ts|buster-pipeline.ts|verify-task.ts)
+                    return 0
+                    ;;
+                esac
+                return 1
+              }
               # Overlay: optional user-defined custom skills from ConfigMap
               if [ -d /init-skills ] && [ -n "$(ls -A /init-skills 2>/dev/null)" ]; then
+                while IFS= read -r -d '' custom_skill_path; do
+                  custom_skill_rel="${custom_skill_path#/init-skills/}"
+                  if protected_skill_overlay "$custom_skill_rel"; then
+                    echo "    ERROR: customSkills may not override protected runtime skill path: $custom_skill_rel" >&2
+                    exit 1
+                  fi
+                done < <(find /init-skills -mindepth 1 -print0)
                 cp -r /init-skills/. /skills-merged/
                 echo "    Custom skills overlaid ($(ls /init-skills | wc -l) files)"
               fi
@@ -212,6 +231,10 @@ spec:
             {{- if .Values.stitch.existingSecret }}
             - name: STITCH_API_KEY
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.stitchSecretName" . }}, key: {{ include "kubeclaw.stitchSecretKey" . }} } }
+            {{- end }}
+            {{- if .Values.discordWebhook.secretName }}
+            - name: DISCORD_WEBHOOK
+              valueFrom: { secretKeyRef: { name: {{ .Values.discordWebhook.secretName }}, key: {{ .Values.discordWebhook.secretKey | default "discordWebhook" }} } }
             {{- end }}
 
           resources:

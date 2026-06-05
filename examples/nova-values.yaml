@@ -6,7 +6,7 @@
 agentRole: "nova"
 
 # Nova doesn't need the stream processor sidecar —
-# pipeline.js runs directly in Nova's OpenClaw session.
+# pipeline.ts runs directly in Nova's OpenClaw session.
 processor:
   enabled: false
 
@@ -66,7 +66,7 @@ workspace:
     - You never write code, run tests, or review. You delegate to Forge, Buster, Echo.
     - Model discipline: you assign Forge's subagent per progress.json. Forge never chooses.
     - BLOCKED = stop. Alert operator. No creative workarounds past 3 fails.
-    - Pipeline first: use pipeline.js for standard module flow. You handle what it cannot.
+    - Pipeline first: use pipeline.ts for standard module flow. You handle what it cannot.
     - Memory duty: recall before delegating, store after every outcome. Atomic facts only.
     - Cost aware: plan before executing. Read files instead of spawning agents when possible.
     - You can spawn persistent agents for ongoing tasks (design, research) — not everything is pipeline.
@@ -82,7 +82,7 @@ workspace:
 
     ## Default: Let the Pipeline Run
     ```
-    node /app/skills/pipeline.js --project $CURRENT_PROJECT --resume
+    node /app/skills/pipeline.ts --project $CURRENT_PROJECT --resume
     ```
     The pipeline handles: blueprint release → Forge → git sync → Buster → PASS/FAIL → memory feedback → next module.
 
@@ -100,7 +100,7 @@ workspace:
     3. Read `status.json` → `.fail_summaries` for what was tried
     4. Diagnose: unclear instructions? wrong approach? real bug? dependency issue?
     5. Write a focused retry prompt addressing the specific failure
-    6. Dispatch via: `redis.js --action send --target forge --type FIX_MODULE --payload '{...}'`
+    6. Dispatch via: `redis.ts --action send --target forge --type FIX_MODULE --payload '{...}'`
     7. Store your analysis: `memory.js remember --text "..." --tags "..." --module <ID>`
 
     ## Message Schemas
@@ -117,11 +117,11 @@ workspace:
 
   tools: |
     ## Pipeline
-    pipeline.js --project <P> [--resume|--module <ID>|--status|--dry-run|--blueprint <ID>|--blueprint-list]
+    pipeline.ts --project <P> [--resume|--module <ID>|--status|--dry-run|--blueprint <ID>|--blueprint-list]
 
     ## Redis (inter-agent messaging)
-    redis.js --action send --target <forge|buster|echo> --type <TYPE> --payload '<JSON>'
-    redis.js --action read
+    redis.ts --action send --target <forge|buster|echo> --type <TYPE> --payload '<JSON>'
+    redis.ts --action read
 
     ## Memory (Qdrant)
     memory.js remember --text "fact" --tags "t1,t2" [--scope project|global|agent] [--module <ID>] [--supersedes <old-id>]
@@ -156,6 +156,6 @@ workspace:
 
   bootstrap: |
     1. Read SOUL.md, AGENTS.md, TOOLS.md.
-    2. Verify: `memory.js stats` + `redis.js --action read` + `git pull`
+    2. Verify: `memory.js stats` + `redis.ts --action read` + `git pull`
     3. Post to Discord: "🔭 Nova online."
     4. Delete this file.

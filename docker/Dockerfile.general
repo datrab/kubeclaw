@@ -49,34 +49,33 @@ RUN if ! command -v helm &>/dev/null; then \
 RUN chown -R root:root /app
 
 # 7. KubeClaw skills
-#    Keep canonical shared helper source at /app/common.
-#    Production /app/skills/pipeline helper paths are populated directly from
-#    skills/common/pipeline so the runtime uses one canonical implementation.
-#    Repo-local Nova facade files remain only for source-tree testability and
-#    are excluded from the image layer for those helper paths.
-COPY skills/common/ /tmp/kubeclaw-skills/common/
-COPY skills/nova/ /tmp/kubeclaw-skills/nova/
-RUN mkdir -p /app/common /app/skills \
-    && cp -r /tmp/kubeclaw-skills/common/. /app/common/ \
-    && tar -C /tmp/kubeclaw-skills/common -cf - . | tar -C /app/skills -xf - \
-    && tar -C /tmp/kubeclaw-skills/nova \
-         --exclude='pipeline/agents/runtime.js' \
-         --exclude='pipeline/integrations/gateway.js' \
-         --exclude='pipeline/agents/lifecycle.js' \
-         --exclude='pipeline/agents/acp-monitor.js' \
-         --exclude='pipeline/lifecycle-state.js' \
-         -cf - . | tar -C /app/skills -xf - \
-    && rm -rf /tmp/kubeclaw-skills
+#    Runtime surface is /app/skills only. Nova repo-local compatibility shims
+#    are copied first, then canonical shared implementations from
+#    skills/common/pipeline overwrite the matching /app/skills/pipeline paths.
+RUN mkdir -p /app/skills
+COPY skills/nova/ /app/skills/
+COPY skills/common/ /app/skills/
 
-# 8. Environment
+# 8. KubeClaw OpenClaw plugins
+#    Runtime surface is /app/openclaw-plugins. The agent observer plugin is
+#    self-contained and must not import from /app/skills.
+COPY plugins/openclaw-agent-observer/ /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer/
+RUN cd /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer \
+    && rm -rf dist \
+    && tsc -p tsconfig.build.json \
+    && mkdir -p /app/openclaw-plugins/kubeclaw-agent-observer \
+    && cp -R package.json openclaw.plugin.json src dist /app/openclaw-plugins/kubeclaw-agent-observer/ \
+    && rm -rf /tmp/kubeclaw-openclaw-plugins
+
+# 9. Environment
 ENV NODE_PATH=/usr/local/lib/node_modules:/app/node_modules
 ENV NPM_CONFIG_CACHE=/root/.npm
 ENV HOME=/home/node
 
-# 9. ACPX plugin (Agent Communication Protocol)
-#RUN mkdir -p /home/node/.openclaw \
-#    && chown -R root:root /home/node \
-#    && openclaw plugins install acpx
+# 10. ACPX plugin (Agent Communication Protocol) - disabled for now.
+# RUN mkdir -p /home/node/.openclaw \
+#     && chown -R root:root /home/node \
+#     && openclaw plugins install acpx
 
 LABEL org.opencontainers.image.title="KubeClaw General (Root Mode)"
-LABEL org.opencontainers.image.description="Root environment for K8s stateful deployments with ACPX + lint tools"
+LABEL org.opencontainers.image.description="Root environment for K8s stateful deployments with lint tools"

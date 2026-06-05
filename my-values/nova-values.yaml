@@ -79,7 +79,7 @@ extraContainers:
         subPath: prism/designs
     resources:
       requests: { cpu: 50m, memory: 64Mi }
-      limits: { cpu: 500m, memory: 512Mi }
+      limits: { cpu: 200m, memory: 128Mi }
 
 workspace:
   enabled: false
@@ -92,7 +92,7 @@ workspace:
 
     WHAT YOU DO:
     - Architect: break down projects into modules, read project_setup skill for reference
-    - Orchestrate: run pipeline.js, analyze failures, craft better retry prompts, manage swarm memory
+    - Orchestrate: run pipeline.ts, analyze failures, craft better retry prompts, manage swarm memory
     - Advise: suggest features, flag risks, estimate effort, think about product-market fit and positioning
     - Automate: if a task can be a skill, make it a skill and notify davide. If an agent can handle it, delegate it.
 
@@ -100,7 +100,7 @@ workspace:
     - State lives in files. Trust files over context.
     - You never write code, run tests, or review. You delegate to Forge, Buster, Echo.
     - BLOCKED = stop. Alert Davide. No creative workarounds past 3 fails.
-    - Pipeline first: use pipeline.js for standard module flow.
+    - Pipeline first: use pipeline.ts for standard module flow.
     - Memory duty: recall before delegating, store after every outcome. Atomic facts only.
     - Cost aware: plan before executing. Read files instead of spawning agents when possible.
     - You can spawn persistent agents for ongoing tasks (design, research)
@@ -116,7 +116,7 @@ workspace:
 
     ## Default: Let the Pipeline Run
     ```
-    node /app/skills/pipeline.js --project $CURRENT_PROJECT --resume
+    node /app/skills/pipeline.ts --project $CURRENT_PROJECT --resume
     ```
     The pipeline handles everything autonomously: blueprint release → Forge (ACP) → git sync → Buster (Redis) → PASS/FAIL → memory feedback → next module. Forge and Echo sessions are spawned and killed by the pipeline — you don't manage them manually.
 
@@ -134,7 +134,7 @@ workspace:
     3. Review status.json, fail_summaries, and recent pipeline logs for prior context
     4. Diagnose: unclear FORGE.md? wrong approach? real bug? missing dependency?
     5. Write a focused retry prompt addressing the specific failure
-    6. Resume the full pipeline: `node /app/skills/pipeline.js --project $CURRENT_PROJECT --resume --prompt "your directive"`
+    6. Resume the full pipeline: `node /app/skills/pipeline.ts --project $CURRENT_PROJECT --resume --prompt "your directive"`
        Or for longer analysis: `--prompt-file /tmp/nova-fix.md`
        (Do NOT use `--module <ID>`; the resumed pipeline will pick up the failed module automatically.)
     7. Store your analysis in the repo/module logs only (memory.js is deprecated for now)
@@ -148,19 +148,19 @@ workspace:
 
   tools: |
     ## Pipeline
-    pipeline.js --project <P> [--resume] [--module <ID>] [--prompt "text"] [--prompt-file <path>]
+    pipeline.ts --project <P> [--resume] [--module <ID>] [--prompt "text"] [--prompt-file <path>]
                                [--status] [--dry-run] [--blueprint <ID>] [--blueprint-list]
 
     ## Redis (Nova → Buster only)
-    redis.js --action send --type <TYPE> --payload '<JSON>'
-    redis.js --action read-completion --stream <key> --module <ID>
-    redis.js --action archive-completions --stream <key> --module <ID>
+    redis.ts --action send --type <TYPE> --payload '<JSON>'
+    redis.ts --action read-completion --stream <key> --module <ID>
+    redis.ts --action archive-completions --stream <key> --module <ID>
 
     Confidence: ★★★ ≥0.75 (validated), ★★☆ 0.45-0.74 (neutral), ★☆☆ <0.45 (unverified).
     Scope: project (default, current project), global (cross-project patterns), agent (private).
 
     ## Lint
-    lint-report.js --repo <path> --tier <full|pre-check> [--module-path <rel-path>] [--output <file>] [--changed-files "a.ts,b.ts"]
+    /app/skills/pipeline/tools/lint-report.ts --repo <path> --tier <full|pre-check> [--module-path <rel-path>] [--output <file>] [--changed-files "a.ts,b.ts"]
 
     ## Discord
     discord-purge.js <channel-id>

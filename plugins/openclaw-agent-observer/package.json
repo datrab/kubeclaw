@@ -1,0 +1,23 @@
+{
+  "type": "module",
+  "private": true,
+  "name": "@kubeclaw/openclaw-agent-observer",
+  "version": "0.0.0",
+  "description": "OpenClaw hook observer that writes kubeclaw agent-observability Redis streams",
+  "openclaw": {
+    "extensions": ["./src/index.ts"],
+    "runtimeExtensions": ["./dist/index.js"],
+    "compat": {
+      "pluginApi": ">=2026.5.7",
+      "minGatewayVersion": "2026.5.7"
+    },
+    "build": {
+      "openclawVersion": "2026.5.7"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {}
+}

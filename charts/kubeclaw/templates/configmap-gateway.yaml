@@ -265,6 +265,11 @@ data:
         }
       },
       "plugins": {
+        "load": {
+          "paths": [
+            "/app/openclaw-plugins/kubeclaw-agent-observer"
+          ]
+        },
         "entries": {
           "discord": {
             "enabled": {{ .Values.discord.enabled }}
@@ -273,6 +278,15 @@ data:
             "enabled": true,
             "config": {
               "permissionMode": "approve-all"
+            }
+          },
+          "kubeclaw-agent-observer": {
+            "enabled": false,
+            "hooks": {
+              "allowConversationAccess": true
+            },
+            "config": {
+              "enabled": true
             }
           },
           "openai": {

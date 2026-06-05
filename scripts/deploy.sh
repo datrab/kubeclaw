@@ -50,6 +50,116 @@ require_command() {
   fi
 }
 
+is_not_found_error() {
+  local text="$1"
+  [[ "$text" =~ [Nn]ot[Ff]ound|[Nn]ot\ [Ff]ound|not\ found|No\ resources\ found ]]
+}
+
+warn_nonfatal_failure() {
+  local context="$1"
+  local detail="${2:-}"
+
+  warn "$context"
+  if [[ -n "$detail" ]]; then
+    warn "  ${detail//$'\n'/$'\n  '}"
+  fi
+}
+
+add_helm_repo_once() {
+  local name="$1"
+  local url="$2"
+  local output
+
+  if output=$(helm repo add "$name" "$url" 2>&1); then
+    return 0
+  fi
+
+  if [[ "$output" == *"already exists"* ]]; then
+    warn "Helm repo '$name' already exists; keeping existing repo definition."
+    return 0
+  fi
+
+  err "Failed to add Helm repo '$name' ($url)"
+  echo "$output" >&2
+  return 1
+}
+
+wait_for_rollout_or_warn() {
+  local description="$1"
+  shift
+  local output
+
+  if output=$(kubectl rollout status "$@" 2>&1); then
+    return 0
+  fi
+
+  warn_nonfatal_failure "$description is not ready yet; continuing because this infra component may need secrets or external configuration." "$output"
+  return 0
+}
+
+show_optional_kubectl_table() {
+  local description="$1"
+  shift
+  local output
+
+  if output=$(kubectl get "$@" 2>&1); then
+    if [[ -n "$output" ]]; then
+      echo "$output"
+    else
+      warn "No $description found"
+    fi
+    return 0
+  fi
+
+  if is_not_found_error "$output"; then
+    warn "No $description found"
+    return 0
+  fi
+
+  warn_nonfatal_failure "Unable to list $description for namespace '$NAMESPACE'. Status output may be incomplete." "$output"
+}
+
+delete_namespaced_resource_if_present() {
+  local kind="$1"
+  local name="$2"
+  local output
+
+  if output=$(kubectl get "$kind" "$name" -n "$NAMESPACE" 2>&1); then
+    kubectl delete "$kind" "$name" -n "$NAMESPACE"
+    log "Removed: $name"
+    return 0
+  fi
+
+  if is_not_found_error "$output"; then
+    return 0
+  fi
+
+  err "Failed to check $kind/$name in namespace '$NAMESPACE' before delete"
+  echo "$output" >&2
+  return 1
+}
+
+delete_manifest_if_cluster_resource_present() {
+  local kind="$1"
+  local name="$2"
+  local manifest_path="$3"
+  local output
+
+  if output=$(kubectl get "$kind" "$name" 2>&1); then
+    kubectl delete -f "$manifest_path"
+    log "Removed: $name"
+    return 0
+  fi
+
+  if is_not_found_error "$output"; then
+    return 0
+  fi
+
+  err "Failed to check cluster resource $kind/$name before delete"
+  echo "$output" >&2
+  return 1
+}
+
 default_verification_tag() {
   date -u +"live-smoke-%Y%m%d%H%M%S"
 }
@@ -93,18 +203,23 @@ build_local_image() {
 
 cmd_setup() {
   header "Step 1: Namespace"
+  local namespace_output
 
-  if kubectl get namespace "$NAMESPACE" &>/dev/null; then
+  if namespace_output=$(kubectl get namespace "$NAMESPACE" 2>&1); then
     warn "Namespace '$NAMESPACE' already exists"
-  else
+  elif is_not_found_error "$namespace_output"; then
     kubectl create namespace "$NAMESPACE"
     log "Created namespace: $NAMESPACE"
+  else
+    err "Failed to check namespace '$NAMESPACE'"
+    echo "$namespace_output" >&2
+    return 1
   fi
 
   header "Step 2: Helm Repos"
 
-  helm repo add bitnami https://charts.bitnami.com/bitnami 2>/dev/null || true
-  helm repo add qdrant https://qdrant.github.io/qdrant-helm 2>/dev/null || true
+  add_helm_repo_once bitnami https://charts.bitnami.com/bitnami
+  add_helm_repo_once qdrant https://qdrant.github.io/qdrant-helm
   helm repo update >/dev/null
   log "Helm repos ready"
 
@@ -115,7 +230,7 @@ cmd_setup() {
   # k3s node registry config — required for buster k8s suite
   header "k3s Registry Config (required for buster k8s suite)"
   K3S_REG_FILE="/etc/rancher/k3s/registries.yaml"
-  if [ -f "$K3S_REG_FILE" ] && grep -q "registry-local.kubeclaw.svc.cluster.local" "$K3S_REG_FILE" 2>/dev/null; then
+  if [ -f "$K3S_REG_FILE" ] && grep -q "registry-local.kubeclaw.svc.cluster.local" "$K3S_REG_FILE"; then
     log "k3s registries.yaml already configured for registry-local"
   else
     warn "k3s registries.yaml is NOT configured for registry-local"
@@ -163,19 +278,19 @@ cmd_infra() {
   # LiteLLM Deployment + Service (no Helm chart — plain manifest)
   kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/litellm-deployment.yaml"
   info "Waiting for LiteLLM to be ready..."
-  kubectl rollout status deployment/litellm -n "$NAMESPACE" --timeout=120s 2>/dev/null || warn "LiteLLM not ready yet (may need litellm-secrets or google-sa-key)"
+  wait_for_rollout_or_warn "LiteLLM" deployment/litellm -n "$NAMESPACE" --timeout=120s
   log "LiteLLM deployed"
 
   header "Infrastructure: Registry Mirror"
   kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/registry-mirror.yaml"
   info "Waiting for Registry Mirror to be ready..."
-  kubectl rollout status deployment/registry-mirror -n "$NAMESPACE" --timeout=120s 2>/dev/null || warn "Registry Mirror not ready yet"
+  wait_for_rollout_or_warn "Registry Mirror" deployment/registry-mirror -n "$NAMESPACE" --timeout=120s
   log "Registry Mirror deployed"
 
   header "Infrastructure: Registry Local (writable, buster test images)"
   kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/registry-local.yaml"
   info "Waiting for Registry Local to be ready..."
-  kubectl rollout status deployment/registry-local -n "$NAMESPACE" --timeout=60s 2>/dev/null || warn "Registry Local not ready yet"
+  wait_for_rollout_or_warn "Registry Local" deployment/registry-local -n "$NAMESPACE" --timeout=60s
   log "Registry Local deployed"
 
   header "Infrastructure: Buster Namespace Fence (VAP)"
@@ -306,15 +421,15 @@ cmd_verify_live() {
 
 cmd_status() {
   header "Pods ($NAMESPACE)"
-  kubectl get pods -n "$NAMESPACE" -o wide 2>/dev/null || warn "No pods found"
+  show_optional_kubectl_table pods pods -n "$NAMESPACE" -o wide
 
   echo ""
   header "Services ($NAMESPACE)"
-  kubectl get svc -n "$NAMESPACE" 2>/dev/null || warn "No services found"
+  show_optional_kubectl_table services svc -n "$NAMESPACE"
 
   echo ""
   header "PVCs ($NAMESPACE)"
-  kubectl get pvc -n "$NAMESPACE" 2>/dev/null || warn "No PVCs found"
+  show_optional_kubectl_table PVCs pvc -n "$NAMESPACE"
 }
 
 cmd_smoke_agent() {
@@ -349,21 +464,28 @@ cmd_smoke() {
 cmd_teardown_agents() {
   warn "Removing KubeClaw agents from $NAMESPACE..."
   for role in nova buster; do
-    if helm status "agent-${role}" -n "$NAMESPACE" &>/dev/null; then
-      helm uninstall "agent-${role}" -n "$NAMESPACE"
-      log "Removed: agent-${role}"
-    fi
+    uninstall_helm_release_if_present "agent-${role}"
   done
   log "Agents removed. Infrastructure untouched."
 }
 
 uninstall_helm_release_if_present() {
   local release="$1"
+  local output
 
-  if helm status "$release" -n "$NAMESPACE" &>/dev/null; then
+  if output=$(helm status "$release" -n "$NAMESPACE" 2>&1); then
     helm uninstall "$release" -n "$NAMESPACE"
     log "Removed: $release"
+    return 0
   fi
+
+  if is_not_found_error "$output"; then
+    return 0
+  fi
+
+  err "Failed to check Helm release '$release' before uninstall"
+  echo "$output" >&2
+  return 1
 }
 
 delete_manifested_resource_if_present() {
@@ -372,12 +494,34 @@ delete_manifested_resource_if_present() {
   local manifest_path="$3"
   local fallback_types="$4"
   local fallback_selector="$5"
+  local output
+  local fallback_output
 
-  if kubectl get "$kind" "$name" -n "$NAMESPACE" &>/dev/null; then
-    kubectl delete -n "$NAMESPACE" -f "$manifest_path" 2>/dev/null || \
-      kubectl delete $fallback_types -n "$NAMESPACE" -l "$fallback_selector"
-    log "Removed: $name"
+  if output=$(kubectl get "$kind" "$name" -n "$NAMESPACE" 2>&1); then
+    if kubectl delete -n "$NAMESPACE" -f "$manifest_path"; then
+      log "Removed: $name"
+      return 0
+    fi
+
+    warn "Manifest delete failed for $name; attempting selector fallback ($fallback_types -l $fallback_selector)."
+    if fallback_output=$(kubectl delete "$fallback_types" -n "$NAMESPACE" -l "$fallback_selector" 2>&1); then
+      [[ -n "$fallback_output" ]] && echo "$fallback_output"
+      log "Removed: $name via selector fallback"
+      return 0
+    fi
+
+    err "Selector fallback delete failed for $name"
+    echo "$fallback_output" >&2
+    return 1
   fi
+
+  if is_not_found_error "$output"; then
+    return 0
+  fi
+
+  err "Failed to check $kind/$name in namespace '$NAMESPACE' before delete"
+  echo "$output" >&2
+  return 1
 }
 
 remove_destructive_infra() {
@@ -387,7 +531,7 @@ remove_destructive_infra() {
 
   delete_manifested_resource_if_present deployment litellm "$INFRA_DIR/litellm-deployment.yaml" \
     "deployment,svc" "app=litellm"
-  kubectl delete configmap litellm-config -n "$NAMESPACE" 2>/dev/null || true
+  delete_namespaced_resource_if_present configmap litellm-config
 
   delete_manifested_resource_if_present deployment registry-mirror "$INFRA_DIR/registry-mirror.yaml" \
     "deployment,svc,pvc" "app=registry-mirror"
@@ -395,21 +539,33 @@ remove_destructive_infra() {
   delete_manifested_resource_if_present deployment registry-local "$INFRA_DIR/registry-local.yaml" \
     "deployment,svc" "app=registry-local"
 
-  if kubectl get validatingadmissionpolicy buster-namespace-fence &>/dev/null; then
-    kubectl delete -f "$INFRA_DIR/buster-namespace-fence.yaml" 2>/dev/null || true
-    log "Removed: buster-namespace-fence"
-  fi
+  delete_manifest_if_cluster_resource_present validatingadmissionpolicy buster-namespace-fence "$INFRA_DIR/buster-namespace-fence.yaml"
 }
 
 cleanup_leftover_pvcs() {
   local pvcs
+  local pvc
 
-  pvcs=$(kubectl get pvc -n "$NAMESPACE" --no-headers -o custom-columns=NAME:.metadata.name 2>/dev/null || true)
+  pvcs=$(kubectl get pvc -n "$NAMESPACE" --no-headers -o custom-columns=NAME:.metadata.name)
   if [[ -n "$pvcs" ]]; then
     warn "Removing leftover PVCs..."
-    echo "$pvcs" | xargs -r kubectl delete pvc -n "$NAMESPACE"
+    while IFS= read -r pvc; do
+      [[ -n "$pvc" ]] || continue
+      kubectl delete pvc "$pvc" -n "$NAMESPACE"
+    done <<< "$pvcs"
     log "PVCs removed"
   fi
+}
+
+print_remaining_secrets() {
+  local output
+
+  if output=$(kubectl get secrets -n "$NAMESPACE" --no-headers 2>&1); then
+    echo "$output" | grep -v '^sh.helm' | awk '{print "  " $1}'
+    return 0
+  fi
+
+  warn_nonfatal_failure "Unable to list remaining secrets after teardown; namespace/secrets may still need manual inspection." "$output"
 }
 
 run_destructive_teardown() {
@@ -430,7 +586,7 @@ run_destructive_teardown() {
   log "Teardown complete. Namespace and secrets preserved."
   echo ""
   info "Remaining secrets:"
-  kubectl get secrets -n "$NAMESPACE" --no-headers 2>/dev/null | grep -v '^sh.helm' | awk '{print "  " $1}'
+  print_remaining_secrets
 }
 
 cmd_teardown() {

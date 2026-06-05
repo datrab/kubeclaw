@@ -52,7 +52,7 @@ replicaCount: 1
 # -- Stream processor sidecar (Redis → Gateway bridge)
 # Reads tasks from the agent's Redis stream and injects them into the gateway.
 # Required for Buster (pipeline dispatches tests via Redis).
-# Not needed for Nova (pipeline.js runs directly in Nova's session).
+# Not needed for Nova (pipeline.ts runs directly in Nova's session).
 processor:
   enabled: true
 
@@ -296,8 +296,8 @@ commands:
 # SWARM CONFIG
 # =============================================================================
 # Platform-level config for the pipeline engine.
-# Copied to /home/node/.openclaw/swarm.config.json (writable, on config PVC).
-# Pipeline reads via SWARM_CONFIG env var.
+# Copied to the config PVC and mounted at /home/node/.openclaw/swarm.config.json.
+# Pipeline reads /home/node/.openclaw/swarm.config.json first; SWARM_CONFIG is a fallback.
 #
 # Default is loaded from charts/kubeclaw/files/config/swarm.config.json.
 # To override the default, paste your full JSON config here:
@@ -339,7 +339,7 @@ eslintConfigMjs: ""
 # =============================================================================
 # CUSTOM SKILLS (optional)
 # =============================================================================
-# KubeClaw system skills (redis.js, memory.js, pipeline.js, etc.) are baked
+# KubeClaw system skills (redis.ts, memory.js, pipeline.ts, etc.) are baked
 # into the Docker image. This section is ONLY for additional user-defined skills.
 #
 # Example:

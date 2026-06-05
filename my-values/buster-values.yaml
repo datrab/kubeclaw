@@ -8,7 +8,7 @@
 
 agentRole: "buster"
 
-# Processor sidecar DISABLED — replaced by buster-pipeline.js
+# Processor sidecar DISABLED — replaced by buster-pipeline.ts
 # which runs as background process in the gateway container.
 # Rollback: set processor.enabled: true, remove gateway.command override.
 processor:
@@ -24,15 +24,13 @@ gateway:
     - "/bin/bash"
     - "-c"
     - |
-        cd /home/node/.openclaw/workspace/git-repo || exit 1
-        node /app/skills/buster-pipeline.js &
-        BUSTER_PIPELINE_PID=$!
-        node /app/openclaw.mjs gateway --bind lan --port 18789 &
-        GW_PID=$!
-        wait -n $BUSTER_PIPELINE_PID $GW_PID
-        kill $BUSTER_PIPELINE_PID $GW_PID 2>/dev/null || true
-        wait $BUSTER_PIPELINE_PID $GW_PID 2>/dev/null || true
-        exit 1
+      node /app/skills/buster-pipeline.ts &
+      BUSTER_PIPELINE_PID=$!
+      node /app/openclaw.mjs gateway --bind lan --port 18789 &
+      GW_PID=$!
+      wait -n $BUSTER_PIPELINE_PID $GW_PID
+      kill $BUSTER_PIPELINE_PID $GW_PID 2>/dev/null
+      exit 1
 
 image:
   repository: ghcr.io/forgestackai/kubeclaw-sandbox
@@ -111,7 +109,7 @@ workspace:
     - Loop guard. If iteration count ≥ 10 on any single task, stop and signal Nova.
     - Verdict is binary. PASS = every check passed. FAIL = any check failed. No "partial pass."
     - Memory discipline. Recall known bugs before testing. Store all findings after. One fact per memory entry.
-    - Git discipline. Update status.json, then signal completion via redis.js.
+    - Git discipline. Update status.json/output_file only; the Buster pipeline verifies, pushes, and emits Redis completion.
     - You never fix code
 
     STYLE: No emotion. Exact output. Reproducible steps. If you can't reproduce it, it's not a bug
@@ -132,8 +130,7 @@ workspace:
        - PASS: set status "PASS", document commit hash
        - FAIL: set status "FAIL", increment fail_count, write exact error to fail_summaries
     7. Store findings in FINAL-BUSTER.md / status.json only (memory.js is deprecated for now)
-    8. Complete: `node /app/skills/redis.js --action complete --module <ID> --status <PASS|FAIL> --summary "brief result"`
-       This is your LAST action. It runs verify-task.js (scope check + git push), then signals the pipeline via Redis. After this, your session is killed.
+    8. Stop after writing the requested artifact. The Buster pipeline runs verify-task.ts, pushes the scoped result, and signals completion.
 
     ## What You Never Do
     - Fix code (that's Forge's job)
@@ -143,7 +140,7 @@ workspace:
 
   tools: |
     ## Redis
-    redis.js --action complete --module <ID> --status <PASS|FAIL> --summary "text" [--project <P>] [--task-type module_test|gate_test]
+    status.json/output_file only; direct Redis completion is disabled.
 
     Confidence: ★★★ ≥0.75 (validated), ★★☆ 0.45-0.74 (neutral), ★☆☆ <0.45 (unverified).
 
@@ -166,7 +163,7 @@ workspace:
     Nova sends you tasks via Redis with structured payloads. She expects:
     - Binary verdicts: PASS or FAIL. No ambiguity.
     - Exact reproduction steps for every failure.
-    - status.json updated, verify-task.js run
+    - status.json updated, verify-task.ts run
     - Qdrant memories stored for every significant finding.
     If something is unclear in the task payload, signal Nova and wait. Do not guess.
 

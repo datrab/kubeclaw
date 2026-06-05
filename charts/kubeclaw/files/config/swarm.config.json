@@ -1,5 +1,5 @@
 {
-  "_doc": "Platform-level config. Loaded from SWARM_CONFIG env or portable platform auto-detect. Project/repo_root/paths are derived by loadConfig — do NOT set them here.",
+  "_doc": "Platform-level config. Loaded from /home/node/.openclaw/swarm.config.json with SWARM_CONFIG as fallback. Project/repo_root/paths are derived by loadConfig — do NOT set them here.",
 
   "discord_webhook_url": "",
   "discord_alerts": {
@@ -17,17 +17,44 @@
 
   "rate_limit": {
     "cooldown_hours": 2,
-    "max_pauses_per_module": 5
+    "max_pauses_per_module": 5,
+    "cooldown_buffer_ms": 5000
+  },
+
+  "buster": {
+    "suite_timeout_ms": 300000
   },
 
   "acp_monitor": {
     "unknown_poll_limit": 10,
-    "stale_poll_limit": 10
+    "stale_poll_limit": 10,
+    "max_transcript_extensions": 3,
+    "transcript_grace_ms": 300000,
+    "monitor_poll_ms": 10000
+  },
+
+  "agent_observability": {
+    "plugin_control": {
+      "enabled": true,
+      "pluginId": "kubeclaw-agent-observer",
+      "command": "openclaw",
+      "timeoutMs": 10000,
+      "disableOnStop": true
+    },
+    "ingester": {
+      "enabled": true,
+      "redisNetworkIsolation": "isolated",
+      "loopDelayMs": 250,
+      "healthCheckEvery": 10,
+      "redisCommandTimeoutMs": 1000,
+      "controlLagDegradedThreshold": 1000,
+      "payloadPressureDegradedThreshold": 10000
+    }
   },
 
   "pre_check": {
     "enabled": true,
-    "lint_report_path": "/app/skills/lint-report.js",
+    "lint_report_path": "/app/skills/pipeline/tools/lint-report.ts",
     "timeout_seconds": 60
   },
 
@@ -37,7 +64,10 @@
       "acp_agent_id": "codex",
       "cwd": null
     },
-    "buster": {},
+    "buster": {
+      "dispatch": "redis",
+      "redis_js_path": "/app/skills/pipeline/tools/redis.ts"
+    },
     "echo": {
       "dispatch": "subagent",
       "acp_agent_id": "codex",
@@ -45,19 +75,13 @@
     }
   },
 
-  "models": {
-    "forge": "codex-5.4",
-    "buster": "codex-5.4",
-    "echo": "codex-5.4"
-  },
+  "fallback_model": "codex-5.4",
 
   "review_defaults": {
-    "reviewers": [
-      { "label": "codex-5.4", "agent_id": "codex" }
-    ],
     "timeout_minutes": 30,
     "max_fix_cycles": 3,
-    "lint_tier": "full"
+    "lint_tier": "full",
+    "lint_required": true
   },
 
   "plugins": {

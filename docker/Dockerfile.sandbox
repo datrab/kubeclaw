@@ -26,7 +26,7 @@ RUN mkdir -p /etc/containers /run/containers/storage /var/lib/containers/storage
       > /etc/containers/containers.conf
 
 # 2. Skill dependencies
-RUN npm install -g ioredis uuid @qdrant/js-client-rest
+RUN npm install -g ioredis js-yaml uuid @qdrant/js-client-rest
 RUN chown -R root:root /app
 
 # 3. Testing tools
@@ -145,34 +145,34 @@ SCRIPT
 
 RUN chmod +x /usr/local/bin/sandbox-*
 
-# 6. KubeClaw skills — keep canonical shared helper source at /app/common.
-#    Production /app/skills/pipeline helper paths are populated directly from
-#    skills/common/pipeline so the sandbox runtime uses one canonical
-#    implementation. Repo-local Buster facade files remain only for source-tree
-#    testability and are excluded from the image layer for those helper paths.
-COPY skills/common/ /tmp/kubeclaw-skills/common/
-COPY skills/buster/ /tmp/kubeclaw-skills/buster/
-RUN mkdir -p /app/common /app/skills \
-    && cp -r /tmp/kubeclaw-skills/common/. /app/common/ \
-    && tar -C /tmp/kubeclaw-skills/common -cf - . | tar -C /app/skills -xf - \
-    && tar -C /tmp/kubeclaw-skills/buster \
-         --exclude='pipeline/agents/runtime.js' \
-         --exclude='pipeline/integrations/gateway.js' \
-         --exclude='pipeline/agents/lifecycle.js' \
-         --exclude='pipeline/agents/acp-monitor.js' \
-         --exclude='pipeline/lifecycle-state.js' \
-         -cf - . | tar -C /app/skills -xf - \
-    && rm -rf /tmp/kubeclaw-skills
+# 6. KubeClaw skills — runtime surface is /app/skills only.
+#    Buster repo-local compatibility shims are copied first, then canonical
+#    shared implementations from skills/common/pipeline overwrite the matching
+#    /app/skills/pipeline paths.
+RUN mkdir -p /app/skills
+COPY skills/buster/ /app/skills/
+COPY skills/common/ /app/skills/
 
-# 7. Runtime environment
+# 7. KubeClaw OpenClaw plugins
+#    Runtime surface is /app/openclaw-plugins. The agent observer plugin is
+#    self-contained and must not import from /app/skills.
+COPY plugins/openclaw-agent-observer/ /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer/
+RUN cd /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer \
+    && rm -rf dist \
+    && tsc -p tsconfig.build.json \
+    && mkdir -p /app/openclaw-plugins/kubeclaw-agent-observer \
+    && cp -R package.json openclaw.plugin.json src dist /app/openclaw-plugins/kubeclaw-agent-observer/ \
+    && rm -rf /tmp/kubeclaw-openclaw-plugins
+
+# 8. Runtime environment
 ENV NODE_PATH=/usr/local/lib/node_modules:/app/node_modules
 ENV NPM_CONFIG_CACHE=/root/.npm
 ENV HOME=/home/node
 
-#RUN mkdir -p /home/node/.openclaw \
-#    && chown -R root:root /home/node \
-#    && openclaw plugins install acpx
-
+# 9. ACPX plugin (Agent Communication Protocol) - disabled for now.
+# RUN mkdir -p /home/node/.openclaw \
+#     && chown -R root:root /home/node \
+#     && openclaw plugins install acpx
 
 LABEL org.opencontainers.image.title="KubeClaw Sandbox (Root Mode)"
 LABEL org.opencontainers.image.description="Podman-in-Pod + Lighthouse, Playwright, k6, nginx"

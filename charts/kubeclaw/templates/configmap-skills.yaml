@@ -2,10 +2,12 @@
 ConfigMap for user-provided custom skills.
 Only created if customSkills are defined in values.yaml.
 
-KubeClaw system skills (redis.js, memory.js, pipeline.js, etc.) are baked into the
-Docker image at /app/skills-kubeclaw/ and do NOT need to be in a ConfigMap.
+KubeClaw system skills (redis.ts, memory.js, pipeline.ts, etc.) are baked into the
+Docker image at /app/skills and do NOT need to be in a ConfigMap.
 
-This ConfigMap is for additional user-defined skills that overlay on top.
+This ConfigMap is for additional user-defined skills that overlay on top of /app/skills.
+It is extension-only: the init container rejects protected core runtime paths, so
+customSkills cannot be used as a compatibility patch path for pipeline/common/Nova/Buster runtime files.
 */}}
 {{- if .Values.customSkills }}
 apiVersion: v1

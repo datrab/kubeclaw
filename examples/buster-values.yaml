@@ -106,7 +106,7 @@ workspace:
 
   tools: |
     ## Redis (talk to Nova)
-    redis.js --action send --target nova --type <TYPE> --payload '<JSON>'
+    redis.ts --action send --target nova --type <TYPE> --payload '<JSON>'
 
     ## Memory (Qdrant)
     memory.js recall --query "text" [--tags "t1"] [--module <ID>] [--limit 5]
