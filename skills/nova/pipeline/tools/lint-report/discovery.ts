@@ -1,0 +1,210 @@
+import fs from 'fs';
+import path from 'path';
+
+import { discoverPlatformSwarmConfigCandidates } from '../../core/platform-config.ts';
+import { log } from './output.ts';
+
+const discoveryDiagnostics = [];
+
+function recordDiscoveryDiagnostic(entry = {}) {
+  discoveryDiagnostics.push({
+    source: 'lint-report.discovery',
+    ts: new Date().toISOString(),
+    ...entry,
+  });
+}
+
+function takeDiscoveryDiagnostics() {
+  return discoveryDiagnostics.splice(0, discoveryDiagnostics.length);
+}
+
+function discoverPlatformSemgrepConfigCandidates() {
+  const candidates = [
+    ...discoverPlatformSwarmConfigCandidates().map(swarmConfigPath => path.join(path.dirname(swarmConfigPath), '.semgrep.yml')),
+    '/home/node/.openclaw/.semgrep.yml',
+  ];
+
+  return [...new Set(candidates.filter(Boolean))];
+}
+
+function discoverPlatformEslintConfigCandidates() {
+  const candidates = [
+    ...discoverPlatformSwarmConfigCandidates().map(swarmConfigPath => path.join(path.dirname(swarmConfigPath), 'eslint.config.mjs')),
+    '/home/node/.openclaw/eslint.config.mjs',
+  ];
+
+  return [...new Set(candidates.filter(Boolean))];
+}
+
+function findNearestTsconfigDir(repoRoot, modulePath = null) {
+  const cwd = modulePath ? path.join(repoRoot, modulePath) : repoRoot;
+  let tsconfigDir = cwd;
+
+  while (tsconfigDir !== repoRoot && !fs.existsSync(path.join(tsconfigDir, 'tsconfig.json'))) {
+    tsconfigDir = path.dirname(tsconfigDir);
+  }
+
+  if (fs.existsSync(path.join(tsconfigDir, 'tsconfig.json'))) {
+    return tsconfigDir;
+  }
+
+  return null;
+}
+
+function isPolicyIgnoredFile(filePath) {
+  const normalized = filePath.split(path.sep).join('/');
+  return normalized.includes('/node_modules/')
+    || normalized.includes('/dist/')
+    || normalized.includes('/build/')
+    || normalized.includes('/coverage/')
+    || normalized.includes('/plugins/')
+    || normalized.includes('/plugin/')
+    || normalized.includes('/registry/')
+    || normalized.includes('/registries/')
+    || normalized.includes('/loader/')
+    || normalized.includes('/loaders/')
+    || normalized.includes('/migrations/')
+    || /\.(test|spec)\.[jt]sx?$/.test(normalized)
+    || normalized.includes('/test/')
+    || normalized.includes('/tests/')
+    || normalized.includes('/__tests__/')
+    || /\.min\.(js|mjs|cjs)$/.test(normalized);
+}
+
+function listPolicySourceFiles(scanRoot) {
+  return findFiles(scanRoot, f => /\.(js|jsx|ts|tsx|mjs|cjs)$/.test(f), 12)
+    .filter(file => !isPolicyIgnoredFile(file));
+}
+
+/**
+ * Detect project type(s) by looking for marker files.
+ * A project can be multi-type (e.g. Full-Stack: JS + Python + Docker + Helm).
+ *
+ * @param {string} repoRoot - Repo root path
+ * @param {string|null} modulePath - Optional module subdirectory to narrow scope
+ * @returns {{ types: Set<string>, markers: object }}
+ */
+function detectProjectTypes(repoRoot, modulePath) {
+  const scanRoot = modulePath ? path.join(repoRoot, modulePath) : repoRoot;
+  const types = new Set();
+  const markers = {};
+
+  const checks = [
+    { file: 'tsconfig.json',       type: 'typescript', search: [scanRoot, repoRoot] },
+    { file: 'package.json',        type: 'javascript', search: [scanRoot, repoRoot] },
+    { file: 'pyproject.toml',      type: 'python',     search: [scanRoot, repoRoot] },
+    { file: 'requirements.txt',    type: 'python',     search: [scanRoot, repoRoot] },
+    { file: 'setup.py',            type: 'python',     search: [scanRoot, repoRoot] },
+  ];
+
+  for (const check of checks) {
+    for (const dir of check.search) {
+      const fullPath = path.join(dir, check.file);
+      if (fs.existsSync(fullPath)) {
+        types.add(check.type);
+        markers[check.type] = fullPath;
+        break;
+      }
+    }
+  }
+
+  // Helm chart detection — match helm-lint's recursive chart discovery.
+  const chartFiles = findFiles(scanRoot, f => f === 'Chart.yaml', 3);
+  if (chartFiles.length > 0) {
+    types.add('helm');
+    markers.helm = chartFiles[0];
+  }
+
+  // Dockerfile detection — can be anywhere in the tree
+  const dockerfiles = findFiles(scanRoot, f => /^Dockerfile|\.dockerfile$/i.test(f), 3);
+  if (dockerfiles.length > 0) {
+    types.add('docker');
+    markers.docker = dockerfiles[0];
+  }
+
+  // Shell script detection — look for .sh files
+  const shellFiles = findFiles(scanRoot, f => f.endsWith('.sh'), 3);
+  if (shellFiles.length > 0) {
+    types.add('shell');
+    markers.shell = shellFiles[0];
+  }
+
+  // YAML detection — always true if any .yaml/.yml exists (for yamllint)
+  const yamlFiles = findFiles(scanRoot, f => f.endsWith('.yaml') || f.endsWith('.yml'), 2);
+  if (yamlFiles.length > 0) {
+    types.add('yaml');
+  }
+
+  log('INFO', `Detected project types: ${[...types].join(', ')}`, { markers });
+  return { types, markers };
+}
+
+/**
+ * Find files matching a predicate, with max depth.
+ * Lightweight alternative to glob — no dependencies.
+ */
+function findFiles(dir, predicate, maxDepth = 3, _depth = 0) {
+  if (_depth > maxDepth || !fs.existsSync(dir)) return [];
+  const results = [];
+
+  let entries;
+  try { entries = fs.readdirSync(dir, { withFileTypes: true }); }
+  catch (error) {
+    recordDiscoveryDiagnostic({
+      status: 'unavailable',
+      path: dir,
+      reason: error?.message || 'unknown',
+    });
+    return [];
+  }
+
+  for (const entry of entries) {
+    if (entry.name.startsWith('.') || entry.name === 'node_modules') continue;
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isFile() && predicate(entry.name)) {
+      results.push(fullPath);
+    } else if (entry.isDirectory()) {
+      results.push(...findFiles(fullPath, predicate, maxDepth, _depth + 1));
+    }
+  }
+  return results;
+}
+
+/**
+ * Resolve the effective file scope for linting.
+ * Priority: --changed-files > --module-path > full repo.
+ *
+ * @param {object} ctx - Run context
+ * @returns {string[]} List of files to scope lint to, or empty for full scope
+ */
+function resolveScope(ctx) {
+  if (ctx.changedFiles && ctx.changedFiles.length > 0) {
+    // Verify files exist (forge_diff_stat may reference files that were deleted)
+    const existing = ctx.changedFiles.filter(f => {
+      const abs = path.isAbsolute(f) ? f : path.join(ctx.repoRoot, f);
+      return fs.existsSync(abs);
+    });
+    log('INFO', `Scope: ${existing.length} changed files (${ctx.changedFiles.length} requested)`);
+    return existing;
+  }
+
+  if (ctx.modulePath) {
+    log('INFO', `Scope: module path ${ctx.modulePath}`);
+    return []; // Tools will use modulePath as cwd/target
+  }
+
+  log('INFO', 'Scope: full repo');
+  return [];
+}
+
+export {
+  detectProjectTypes,
+  discoverPlatformEslintConfigCandidates,
+  discoverPlatformSemgrepConfigCandidates,
+  discoverPlatformSwarmConfigCandidates,
+  findFiles,
+  findNearestTsconfigDir,
+  listPolicySourceFiles,
+  resolveScope,
+  takeDiscoveryDiagnostics,
+};
