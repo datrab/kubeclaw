@@ -6,6 +6,7 @@ import assert from 'assert';
 import {
   materializeRuntimeTree,
   importRuntimeModule,
+  runGateViaRegistry,
 } from '../../lib/lifecycle-audit-lib.mjs';
 
 export async function registerStopsArea({
@@ -16,14 +17,35 @@ export async function registerStopsArea({
   flushAsync,
   xaddEvents,
 }) {
+function stepExit(result) {
+  return result?.terminal?.exitCode;
+}
+
+function stepMetadata(result) {
+  return result?.diagnostics?.metadata || {};
+}
+
+function gateRuntimeEvents(xaddEvents, streamKey) {
+  return xaddEvents(streamKey)
+    .filter((event) => !String(event.type || '').startsWith('plugin.gate.'))
+    .map((event, index) => ({ ...event, seq: index + 1 }));
+}
+
+async function buildBuiltInRegistry(runtimeRootForRegistry) {
+  const registryMod = await importRuntimeModule(runtimeRootForRegistry, '/app/skills/pipeline/core/registry.ts');
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
+  assert.equal(errors.length, 0);
+  return registry;
+}
+
   await record('buster gate post-start terminal failures still emit authoritative gate failure telemetry', async () => {
     const { runtimeRoot: busterRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(busterRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const busterGateRunnerMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const busterGateRunnerMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   
     const scenarios = [
       {
@@ -100,17 +122,7 @@ export async function registerStopsArea({
   
     for (const scenario of scenarios) {
       const discordCalls = [];
-      const config = {
-        project: scenario.project,
-        paths: { swarm_dir: `/tmp/${scenario.project}-swarm` },
-        telemetry: { enabled: true },
-        _runId: scenario.runId,
-        run_id: scenario.runId,
-        _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-        default_timeout_minutes: 5,
-        default_max_fails: 2,
-        rate_limit: scenario.rateLimit || { max_pauses_per_module: 2, cooldown_hours: 0 },
-        _testOverrides: {
+            const deps = {
           busterGate: {
             discord: async (...args) => { discordCalls.push(args); },
             readGateInstructions: () => 'buster gate instructions',
@@ -118,8 +130,19 @@ export async function registerStopsArea({
             logEffectivePolicy: () => {},
             runOnce: async () => scenario.result,
           },
-        },
-      };
+        };
+const config = {
+        project: scenario.project,
+        paths: { swarm_dir: `/tmp/${scenario.project}-swarm` },
+        telemetry: { enabled: true },
+        _runId: scenario.runId,
+        run_id: scenario.runId,
+        _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+        pluginRegistry: await buildBuiltInRegistry(busterRuntimeRoot),
+        default_timeout_minutes: 5,
+        default_max_fails: 2,
+        rate_limit: scenario.rateLimit || { max_pauses_per_module: 2, cooldown_hours: 0 },
+              };
   
       const progress = {
         modules: {},
@@ -128,22 +151,22 @@ export async function registerStopsArea({
         },
       };
   
-      const result = await busterGateRunnerMod.runBusterGate(config, progress, 'gate:buster');
+      const result = await runGateViaRegistry(busterRuntimeRoot, config, progress, 'gate:buster', { deps });
       await flushAsync();
   
-      assert.equal(result.exit, scenario.expectedExit, scenario.name);
+      assert.equal(stepExit(result), scenario.expectedExit, scenario.name);
       if (['config invalid', 'spawn failed', 'parse corrupted', 'timeout', 'git error', 'rate limit exhausted'].includes(scenario.name)) {
-        assert.equal(result.gateway_label, 'gate-buster-dispatch', `${scenario.name} missing returned gateway label`);
-        assert.equal(result.session_key, 'agent:main:acp:gate-buster', `${scenario.name} missing returned session key`);
+        assert.equal(stepMetadata(result).gateway_label, 'gate-buster-dispatch', `${scenario.name} missing returned gateway label`);
+        assert.equal(stepMetadata(result).session_key, 'agent:main:acp:gate-buster', `${scenario.name} missing returned session key`);
         if (scenario.name === 'rate limit exhausted') {
-          assert.equal(result.dispatch_id, 'dispatch-buster-rate-limit-1', `${scenario.name} missing returned dispatch id`);
-          assert.equal(result.gate_type, 'buster', `${scenario.name} missing returned gate type`);
-          assert.equal(result.max_rate_limit_pauses, 0, `${scenario.name} missing returned pause budget`);
+          assert.equal(stepMetadata(result).dispatch_id, 'dispatch-buster-rate-limit-1', `${scenario.name} missing returned dispatch id`);
+          assert.equal(result.correlation.gate_type, 'buster', `${scenario.name} missing returned gate type`);
+          assert.equal(stepMetadata(result).max_rate_limit_pauses, 0, `${scenario.name} missing returned pause budget`);
         }
       }
   
       const streamKey = `pipeline:telemetry:${scenario.project}:${scenario.runId}`;
-      const events = xaddEvents(streamKey);
+      const events = gateRuntimeEvents(xaddEvents, streamKey);
       const signalEvents = events.filter((event) => event.type !== 'observability.degraded' && event.type !== 'observability.restored');
       if (scenario.expectedExit === 40) {
         assert.deepEqual(signalEvents.map((event) => event.type), ['gate.started', 'gate.verdict', 'retry.exhausted'], scenario.name);

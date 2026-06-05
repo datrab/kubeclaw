@@ -4,18 +4,35 @@ This directory is the canonical home for the repo's verification entrypoints and
 
 ## Quick run
 
-Run the full verification suite from the repo root with:
+Run the fast local tier from the repo root with:
+
+```bash
+./tests/verification/run-fast-verification.sh
+```
+
+It avoids Helm, kubeconform, live subagent, ACP, Redis, and cluster dependencies. It runs Nova/Buster startup smokes, local runtime guards, contract checks, and selected fast behavior areas. Override behavior areas with `BEHAVIOR_AREAS=a,b` or set `SKIP_FAST_BEHAVIOR=1` for contract/runtime-only feedback.
+
+Verification scripts are quiet by default: runtime logs are buffered and only printed on failure, while passing runs print their final summary. Use `--verbose` or `VERIFICATION_VERBOSE=1` when you need full runtime logs for passing checks.
+
+Run the full verification suite with:
 
 ```bash
 ./tests/verification/run-full-verification.sh
 ```
 
-It runs the deployment truth guard, runtime collision guard, live subagent launch smoke, ACP launch-reachability smoke, telemetry contract guard, and the full behavior harness.
+It runs the deployment truth guard, runtime collision guard, Nova/Buster startup smokes, live subagent launch smoke, telemetry contract guard, and the full behavior harness.
+ACP launch reachability is local/provider-specific and is checked explicitly with:
+
+```bash
+./tests/verification/run-local-acp-verification.sh
+```
 
 Current gate expectations:
+- `tests/verification/run-fast-verification.sh` is the default local no-cluster/no-live-agent feedback loop
 - `tests/verification/run-full-verification.sh` is intentionally fail-fast; it exits on the first red surface
 - if you need the full downstream failure set after a red wrapper run, rerun the canonical entrypoints directly
-- live launch smokes are explicit gate surfaces, not implicit proof hidden inside the repo-only behavior harness
+- subagent launch is part of the default clean-checkout wrapper
+- ACP launch is a local-only provider/gateway smoke; failures remain real failures in `run-local-acp-verification.sh`, but do not fail the default clean-checkout wrapper
 
 ## Target end state
 
@@ -76,7 +93,7 @@ tests/
 ### Phase D, cleanup
 - update all docs to point at `tests/` as the implementation home
 - remove retired verifier shims from `scripts/`
-- keep `skills/nova/pipeline.js` explicitly bounded as the thin compatibility entrypoint shim for `node /app/skills/pipeline.js`
+- keep `skills/nova/pipeline.ts` explicitly bounded as the thin compatibility entrypoint shim for `node /app/skills/pipeline.ts`
 
 ## Definition of done for the migration slice
 
@@ -87,9 +104,9 @@ tests/
 
 ## Verifier prerequisites
 
-- the behavior harness at `tests/verification/behavior/verify.mjs` requires `python` on `PATH`
-- `python3` alone is not sufficient if the `python` executable name is missing
-- on Debian or Ubuntu, install `python3` plus `python-is-python3`
+- direct behavior-harness runs at `tests/verification/behavior/verify.mjs` require `python` on `PATH`
+- the default wrapper `tests/verification/run-full-verification.sh` provides a local verification convenience shim from `python` to `python3` when only `python3` is installed; this is not runtime behavior
+- on Debian or Ubuntu, prefer installing `python3` plus `python-is-python3`
 - `docker/Dockerfile.general` is the canonical general environment and should satisfy that prerequisite
 
 ## Current cleanup status
@@ -97,19 +114,24 @@ tests/
 - `kubeclaw-main/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` remains the authoritative telemetry contract for canonical inventory, stream identity, and compatibility boundaries
 - `kubeclaw-main/docs/telemetry-event-schema.md` remains the event-by-event payload reference and stays in inventory parity with that contract
 - `tests/verification/runtime/check-runtime-collisions.mjs` is the canonical runtime guard entrypoint
+- `tests/verification/runtime/check-nova-startup-smoke.mjs` is the canonical Nova import/CLI startup smoke entrypoint
+- `tests/verification/runtime/check-buster-startup-smoke.mjs` is the canonical Buster import/CLI startup smoke entrypoint
 - `tests/verification/runtime/check-subagent-launch.mjs` is the canonical live subagent launch smoke entrypoint
-- `tests/verification/runtime/check-acp-launch.mjs` is the canonical ACP launch-reachability smoke entrypoint
-- `tests/verification/contracts/check-telemetry-contract.mjs` is the canonical contract guard entrypoint
+- `tests/verification/runtime/check-acp-launch.mjs` is the canonical ACP launch-reachability smoke entrypoint and is run through `tests/verification/run-local-acp-verification.sh`
+- `tests/verification/lib/run-contract-suite.sh` is the shared deterministic contract-suite helper used by fast/full wrappers
+- `tests/verification/contracts/check-telemetry-contract.mjs` is the canonical telemetry contract guard entrypoint
 - `tests/verification/deployment/check-deployment-truth.mjs` is the canonical deployment-surface guard entrypoint
 - `tests/verification/behavior-verification.md` is the canonical behavior verification explainer
 - `tests/verification/packaging-verification.md` is the canonical packaging verification explainer
 - `tests/verification/behavior/verify.mjs` is the canonical behavior-harness entrypoint
-- `tests/verification/run-full-verification.sh` is the canonical convenience wrapper for running the entire local verification suite in one command
+- `tests/verification/run-fast-verification.sh` is the canonical convenience wrapper for running local runtime smoke, contract, and selected fast behavior checks without cluster/live-agent dependencies
+- `tests/verification/run-full-verification.sh` is the canonical convenience wrapper for running the default clean-checkout verification suite in one command; it includes subagent launch but excludes local-only ACP launch
+- `tests/verification/run-local-acp-verification.sh` is the explicit local ACP/provider smoke wrapper
 - there is no remaining `scripts/*.mjs` verifier wrapper surface in this repo
 - `scripts/` remains the home for operator utilities like `deploy.sh` and `setup.sh`, not the canonical verification entrypoints
 - `scripts/deploy.sh build-local-images [tag]`, `scripts/deploy.sh verify-live [tag]`, and `scripts/deploy.sh smoke` / `scripts/deploy.sh smoke-agent <nova|buster>` are the canonical live deployment command surface
 - `scripts/deploy.sh` remains tracked executable so that the canonical live deployment commands are directly runnable from the repo checkout
 - `.swarm/logs/pipeline/latest.json` is the canonical pointer into the run-scoped replay bundle under `.swarm/logs/pipeline/runs/<run_id>/`
-- `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,summary.json}` is the canonical replay/audit bundle for deploy, replay, and operator handoff evidence
+- `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,buster-telemetry-fallback.jsonl,redis/redis-exchanges.jsonl,redis/redis-ops.jsonl,summary.json}` is the canonical replay/audit bundle for deploy, replay, and operator handoff evidence
 - `.swarm/logs/redis/{redis-exchanges.jsonl,redis-ops.jsonl}` plus `.swarm/logs/pipeline/runs/<run_id>/redis/` remain the canonical Redis audit artifact layout
-- `skills/nova/pipeline.js` is the bounded compatibility entrypoint for `node /app/skills/pipeline.js`; it should stay a thin shim that re-exports `pipeline/index.js` and dispatches CLI to `pipeline/cli.js`, not a place where runtime logic regrows
+- `skills/nova/pipeline.ts` is the bounded compatibility entrypoint for `node /app/skills/pipeline.ts`; it should stay a thin shim that re-exports `pipeline/index.ts` and dispatches CLI to `pipeline/cli.js`, not a place where runtime logic regrows

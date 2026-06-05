@@ -12,9 +12,15 @@ import {
   readOverlayText,
   materializeRuntimeTree,
   importRuntimeModule,
+  runGateViaRegistry,
   ensureDir,
   writeExecutable,
 } from '../lib/lifecycle-audit-lib.mjs';
+import {
+  installFakeRedis,
+  xaddEvents,
+  flushAsync,
+} from '../lib/fake-redis-lib.mjs';
 import { registerGovernanceArea } from './areas/governance.mjs';
 import { registerGatesArea } from './areas/gates.mjs';
 import { registerSummariesArea } from './areas/summaries.mjs';
@@ -48,6 +54,7 @@ import { registerShellBoundaryArea } from './areas/shell-boundary.mjs';
 import { registerResumeIdempotenceArea } from './areas/resume-idempotence.mjs';
 import { registerSeqRestartArea } from './areas/seq-restart.mjs';
 import { registerManyModuleSoakArea } from './areas/many-module-soak.mjs';
+import { registerMigratedSeamsArea } from './areas/migrated-seams.mjs';
 
 const args = parseArgs();
 const { sourceRoot, overlayRoot } = resolveRoots(args);
@@ -72,6 +79,7 @@ const AREA_ORDER = [
   'resume-idempotence',
   'seq-restart',
   'many-module-soak',
+  'migrated-seams',
   'docs-surface',
   'operator-surface',
   'discord-correlation',
@@ -101,8 +109,12 @@ Options:
   --contract <path>      Telemetry contract markdown to validate against
   --areas <list>         Comma-separated verification areas to run
   --area <name>          Alias for a single verification area
+  --verbose              Print runtime logs and passed check names
   --list-areas           Print the supported verification areas as JSON
   --help                 Show this help
+
+By default, runtime logs are buffered per check and printed only when that
+check fails. Set --verbose or VERIFICATION_VERBOSE=1 to stream all logs.
 `);
 }
 
@@ -135,11 +147,12 @@ if (args['list-areas']) {
 
 const selectedAreas = resolveSelectedAreas(args);
 const selectedAreaSet = new Set(selectedAreas);
+const verboseLogs = args.verbose === true || process.env.VERIFICATION_VERBOSE === '1';
 
 function assertBehaviorVerifierPrereqs() {
   try {
     execFileSync('python', ['--version'], { stdio: 'ignore' });
-  } catch {
+  } catch (_error) {
     throw new Error(
       'Behavior verifier prerequisite missing: `python` is required on PATH. ' +
       'This harness exercises representative pipeline fixtures that invoke `python -m ...`. ' +
@@ -149,7 +162,16 @@ function assertBehaviorVerifierPrereqs() {
   }
 }
 
+function cleanupGeneratedVerificationSwarmArtifacts() {
+  const roots = [...new Set([process.cwd(), sourceRoot].filter(Boolean).map((entry) => path.resolve(entry)))];
+  for (const root of roots) {
+    fs.rmSync(path.join(root, '.swarm'), { recursive: true, force: true });
+  }
+  execFileSync(path.join(sourceRoot, 'tests/verification/lib/cleanup-home-artifacts.sh'), { stdio: 'ignore' });
+}
+
 assertBehaviorVerifierPrereqs();
+cleanupGeneratedVerificationSwarmArtifacts();
 
 // Verification must not hit live Discord webhooks. Discord behavior should be
 // asserted through explicit notification-focused checks, not generic behavior harness runs.
@@ -157,9 +179,66 @@ process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS = '1';
 
 const checks = [];
 
+function stringifyConsoleArgs(values = []) {
+  return values.map((value) => {
+    if (typeof value === 'string') return value;
+    if (value instanceof Error) return value.stack || value.message;
+    try { return JSON.stringify(value); }
+    catch (_error) { return String(value); }
+  }).join(' ');
+}
+
 async function record(name, fn) {
-  await fn();
-  checks.push(name);
+  if (verboseLogs) {
+    await fn();
+    checks.push(name);
+    return;
+  }
+
+  const originalConsoleLog = console.log;
+  const originalConsoleInfo = console.info;
+  const originalConsoleWarn = console.warn;
+  const originalConsoleError = console.error;
+  const originalStdoutWrite = process.stdout.write.bind(process.stdout);
+  const originalStderrWrite = process.stderr.write.bind(process.stderr);
+  const bufferedOutput = [];
+  const captureWrite = (chunk, encoding, callback) => {
+    bufferedOutput.push(Buffer.isBuffer(chunk) ? chunk.toString('utf8') : String(chunk));
+    if (typeof encoding === 'function') encoding();
+    if (typeof callback === 'function') callback();
+    return true;
+  };
+  console.log = (...values) => { bufferedOutput.push(stringifyConsoleArgs(values)); };
+  console.info = (...values) => { bufferedOutput.push(stringifyConsoleArgs(values)); };
+  console.warn = (...values) => { bufferedOutput.push(stringifyConsoleArgs(values)); };
+  console.error = (...values) => { bufferedOutput.push(stringifyConsoleArgs(values)); };
+  process.stdout.write = captureWrite;
+  process.stderr.write = captureWrite;
+  try {
+    await fn();
+    await new Promise((resolve) => setImmediate(resolve));
+    checks.push(name);
+  } catch (error) {
+    console.log = originalConsoleLog;
+    console.info = originalConsoleInfo;
+    console.warn = originalConsoleWarn;
+    console.error = originalConsoleError;
+    process.stdout.write = originalStdoutWrite;
+    process.stderr.write = originalStderrWrite;
+    originalConsoleError(`[behavior] FAILED: ${name}`);
+    if (bufferedOutput.length > 0) {
+      originalConsoleError('[behavior] buffered runtime log output:');
+      for (const line of bufferedOutput) originalConsoleError(line);
+    }
+    throw error;
+  } finally {
+    console.log = originalConsoleLog;
+    console.info = originalConsoleInfo;
+    console.warn = originalConsoleWarn;
+    console.error = originalConsoleError;
+    process.stdout.write = originalStdoutWrite;
+    process.stderr.write = originalStderrWrite;
+  }
 }
 
 async function startGatewayServer(handler) {
@@ -185,87 +264,37 @@ async function startGatewayServer(handler) {
   };
 }
 
-function installFakeRedis(runtimeRoot) {
-  const nodeModulesDir = ensureDir(path.join(runtimeRoot, 'node_modules', 'ioredis'));
-  fs.writeFileSync(path.join(nodeModulesDir, 'index.js'), `
-function counters() {
-  return globalThis.__fakeRedisCounters ||= Object.create(null);
-}
-function calls() {
-  return globalThis.__fakeRedisCalls ||= [];
-}
-class FakeRedis {
-  constructor() {
-    this.status = 'ready';
-  }
-  on() {}
-  async incr(key) {
-    const store = counters();
-    store[key] = (store[key] || 0) + 1;
-    calls().push({ op: 'incr', key, value: store[key] });
-    return store[key];
-  }
-  async xadd(...args) {
-    calls().push({ op: 'xadd', args });
-    return '1-0';
-  }
-  async expire(...args) {
-    calls().push({ op: 'expire', args });
-    return 1;
-  }
-  multi() {
-    const ops = [];
-    const chain = {
-      xadd: (...args) => { ops.push({ op: 'xadd', args }); return chain; },
-      expire: (...args) => { ops.push({ op: 'expire', args }); return chain; },
-      exec: async () => { calls().push(...ops); return ops; },
-    };
-    return chain;
-  }
-  async quit() { calls().push({ op: 'quit' }); }
-}
-module.exports = FakeRedis;
-`);
-  fs.writeFileSync(path.join(nodeModulesDir, 'package.json'), '{"name":"ioredis","main":"index.js"}');
-}
-
-function xaddEvents(prefix) {
-  const calls = globalThis.__fakeRedisCalls || [];
-  return calls
-    .filter((entry) => entry.op === 'xadd' && String(entry.args?.[0] || '').startsWith(prefix))
-    .map((entry) => {
-      const dataIndex = entry.args.indexOf('data');
-      return JSON.parse(entry.args[dataIndex + 1]);
-    });
-}
-
-async function flushAsync() {
-  await new Promise((resolve) => setTimeout(resolve, 0));
-}
-
 const { runtimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
 const { runtimeRoot: sandboxRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'sandbox');
-const pipelineEntryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline.js');
-const pipelineIndexMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/index.js');
-const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.js');
-const contextMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/context.js');
-const coreRuntimeMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/runtime.js');
-const pipelineRunnerMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-const orchestrationMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/agents/orchestration.js');
-const pipelineRedisMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/tools/redis.js');
-const runtimeMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/agents/runtime.js');
-const gatewayMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/integrations/gateway.js');
-const discordMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/integrations/discord.js');
-const lifecycleMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/agents/lifecycle.js');
-const lifecycleStateMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/lifecycle-state.js');
-const statusStoreMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/status-store.js');
-const rateLimitMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/rate-limit.js');
-const monitorMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/agents/acp-monitor.js');
-const redisLogMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/redis-log.js');
-const artifactBundleMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/artifact-bundle.js');
-const correlationMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/correlation.js');
-const pathsMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/paths.js');
-const busterPipelineMod = await importRuntimeModule(sandboxRuntimeRoot, '/app/skills/buster-pipeline.js');
+const pipelineEntryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline.ts');
+const pipelineIndexMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/index.ts');
+const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
+const contextMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/context.ts');
+const coreRuntimeMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/runtime.ts');
+const pipelineRunnerMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+const orchestrationMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/agents/orchestration.ts');
+const pipelineRedisMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/tools/redis.ts');
+const runtimeMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/agents/runtime.ts');
+const gatewayMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/integrations/gateway.ts');
+const discordMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/integrations/discord.ts');
+const lifecycleMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/agents/lifecycle.ts');
+const lifecycleStateMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/lifecycle-state.ts');
+const statusStoreMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/status-store.ts');
+const rateLimitMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/rate-limit.ts');
+const monitorMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/agents/acp-monitor.ts');
+const redisLogMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/redis-log.ts');
+const artifactBundleMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/artifact-bundle.ts');
+const correlationMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/correlation.ts');
+const pathsMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/paths.ts');
+const busterEntrypointMod = await importRuntimeModule(sandboxRuntimeRoot, '/app/skills/buster-pipeline.ts');
+const busterPipelineHelpersMod = await importRuntimeModule(sandboxRuntimeRoot, '/app/skills/pipeline/services/pipeline-helpers.ts');
+const busterSessionMonitorMod = await importRuntimeModule(sandboxRuntimeRoot, '/app/skills/pipeline/services/session-monitor.ts');
+const busterTaskValidationMod = await importRuntimeModule(sandboxRuntimeRoot, '/app/skills/pipeline/services/task-validation.ts');
+const busterRuntimeDiagnosticsMod = await importRuntimeModule(sandboxRuntimeRoot, '/app/skills/pipeline/services/runtime-diagnostics.ts');
+const busterBaseImagesMod = await importRuntimeModule(sandboxRuntimeRoot, '/app/skills/pipeline/services/base-images.ts');
+const busterCapabilitiesMod = await importRuntimeModule(sandboxRuntimeRoot, '/app/skills/pipeline/services/capabilities.ts');
+const busterTaskQueueMod = await importRuntimeModule(sandboxRuntimeRoot, '/app/skills/pipeline/services/task-queue.ts');
+const busterRecoveryMod = await importRuntimeModule(sandboxRuntimeRoot, '/app/skills/pipeline/services/orphan-recovery.ts');
 
 const sharedAreaDeps = {
   record,
@@ -284,6 +313,7 @@ const sharedAreaDeps = {
   readOverlayText,
   materializeRuntimeTree,
   importRuntimeModule,
+  runGateViaRegistry,
   ensureDir,
   writeExecutable,
   runtimeRoot,
@@ -308,7 +338,15 @@ const sharedAreaDeps = {
   artifactBundleMod,
   correlationMod,
   pathsMod,
-  busterPipelineMod,
+  busterEntrypointMod,
+  busterPipelineHelpersMod,
+  busterSessionMonitorMod,
+  busterTaskValidationMod,
+  busterRuntimeDiagnosticsMod,
+  busterBaseImagesMod,
+  busterCapabilitiesMod,
+  busterTaskQueueMod,
+  busterRecoveryMod,
 };
 
 const areaRegistrars = [
@@ -330,6 +368,7 @@ const areaRegistrars = [
   ['resume-idempotence', () => registerResumeIdempotenceArea(sharedAreaDeps)],
   ['seq-restart', () => registerSeqRestartArea(sharedAreaDeps)],
   ['many-module-soak', () => registerManyModuleSoakArea(sharedAreaDeps)],
+  ['migrated-seams', () => registerMigratedSeamsArea(sharedAreaDeps)],
   ['docs-surface', () => registerDocsSurfaceArea(sharedAreaDeps)],
   ['operator-surface', () => registerOperatorSurfaceArea(sharedAreaDeps)],
   ['discord-correlation', () => registerDiscordCorrelationArea(sharedAreaDeps)],
@@ -347,16 +386,21 @@ const areaRegistrars = [
   ['lifecycle-state-surface', () => registerLifecycleStateSurfaceArea(sharedAreaDeps)],
 ];
 
-for (const [areaName, registerArea] of areaRegistrars) {
-  if (!selectedAreaSet.has(areaName)) continue;
-  await registerArea();
+try {
+  for (const [areaName, registerArea] of areaRegistrars) {
+    if (!selectedAreaSet.has(areaName)) continue;
+    await registerArea();
+  }
+} finally {
+  cleanupGeneratedVerificationSwarmArtifacts();
 }
 
 console.log(JSON.stringify({
   sourceRoot,
   overlayRoot,
   selectedAreas,
+  verboseLogs,
   passed: checks.length,
   failed: 0,
-  checks,
+  ...(verboseLogs ? { checks } : {}),
 }, null, 2));

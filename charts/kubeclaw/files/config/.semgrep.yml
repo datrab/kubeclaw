@@ -3,8 +3,8 @@
 # =============================================================================
 #
 # Deployed to /home/node/.openclaw/.semgrep.yml via Helm ConfigMap.
-# lint-report.js resolution chain: --semgrep-config CLI → SEMGREP_CONFIG env
-#   → /home/node/.openclaw/.semgrep.yml → <repo>/.semgrep.yml → auto
+# lint-report.ts resolution chain: --semgrep-config CLI → platform .semgrep.yml
+# No env, repo-local, or registry-auto fallback.
 #
 # Design principles:
 #   - Security + correctness patterns that other tools in the pipeline miss
@@ -24,15 +24,23 @@ rules:
 
   # Detect eval() and equivalent dynamic code execution
   - id: no-eval
+    pattern-either:
+      - pattern: eval(...)
+      - pattern: new Function(...)
+    message: "Dynamic code execution detected — potential code injection risk"
+    languages: [javascript, typescript]
+    severity: ERROR
+
+  # Detect string-evaluated timers, which execute code dynamically.
+  - id: no-string-timer-code
     patterns:
       - pattern-either:
-          - pattern: eval(...)
-          - pattern: new Function(...)
           - pattern: setTimeout($X, ...)
-            metavariable-regex:
-              metavariable: $X
-              regex: ^["']
-    message: "Dynamic code execution detected — potential code injection risk"
+          - pattern: setInterval($X, ...)
+      - metavariable-regex:
+          metavariable: $X
+          regex: ^["']
+    message: "String-evaluated timer detected — pass a function instead of executable source text"
     languages: [javascript, typescript]
     severity: ERROR
 
@@ -94,6 +102,132 @@ rules:
     languages: [javascript, typescript]
     severity: WARNING
 
+  # ─── Agent-Legibility / Maintainability ────────────────────────────────────
+
+  # Detect swallowed JS/TS failures — these hide useful error signals from humans and agents.
+  - id: no-swallowed-catch-js
+    pattern-either:
+      - pattern: |
+          try {
+            ...
+          } catch ($ERR) {
+          }
+      - pattern: |
+          try {
+            ...
+          } catch ($ERR) {
+            return;
+          }
+      - pattern: |
+          try {
+            ...
+          } catch ($ERR) {
+            return undefined;
+          }
+      - pattern: |
+          try {
+            ...
+          } catch ($ERR) {
+            return null;
+          }
+      - pattern: |
+          try {
+            ...
+          } catch ($ERR) {
+            console.error($ERR);
+          }
+      - pattern: |
+          try {
+            ...
+          } catch ($ERR) {
+            console.warn($ERR);
+          }
+      - pattern: |
+          try {
+            ...
+          } catch ($ERR) {
+            console.log($ERR);
+          }
+    message: "Swallowed catch block — handle the failure explicitly or rethrow with context"
+    languages: [javascript, typescript]
+    severity: WARNING
+
+  # Detect dynamic module loading in JS/TS — hides the dependency graph from static tooling.
+  - id: no-dynamic-module-load-js
+    patterns:
+      - pattern-either:
+          - pattern: import(...)
+          - pattern: require($MOD)
+      - pattern-not: require("...")
+      - pattern-not: require('...')
+    paths:
+      exclude:
+        - "**/plugin/**"
+        - "**/plugins/**"
+        - "**/registry/**"
+        - "**/registries/**"
+        - "**/loader/**"
+        - "**/loaders/**"
+        - "**/migrations/**"
+        - "*.test.*"
+        - "*.spec.*"
+        - "**/test/**"
+        - "**/tests/**"
+        - "**/__tests__/**"
+    message: "Dynamic module loading reduces static discoverability — prefer static imports or an explicit registry/loader boundary"
+    languages: [javascript, typescript]
+    severity: WARNING
+
+  # Detect raw SQL outside common data-access layers in JS/TS.
+  - id: no-raw-sql-outside-data-layer-js
+    patterns:
+      - pattern-either:
+          - pattern: $DB.query($SQL, ...)
+          - pattern: $DB.query($SQL)
+          - pattern: $DB.execute($SQL, ...)
+          - pattern: $DB.execute($SQL)
+          - pattern: $DB.raw($SQL, ...)
+          - pattern: $DB.raw($SQL)
+          - pattern: sequelize.query($SQL, ...)
+          - pattern: sequelize.query($SQL)
+          - pattern: $SEQUELIZE.query($SQL, ...)
+          - pattern: $SEQUELIZE.query($SQL)
+          - pattern: knex.raw($SQL, ...)
+          - pattern: knex.raw($SQL)
+          - pattern: $KNEX.raw($SQL, ...)
+          - pattern: $KNEX.raw($SQL)
+          - pattern: prisma.$queryRawUnsafe($SQL, ...)
+          - pattern: prisma.$queryRawUnsafe($SQL)
+          - pattern: prisma.$executeRawUnsafe($SQL, ...)
+          - pattern: prisma.$executeRawUnsafe($SQL)
+          - pattern: $PRISMA.$queryRawUnsafe($SQL, ...)
+          - pattern: $PRISMA.$queryRawUnsafe($SQL)
+          - pattern: $PRISMA.$executeRawUnsafe($SQL, ...)
+          - pattern: $PRISMA.$executeRawUnsafe($SQL)
+      - metavariable-regex:
+          metavariable: $SQL
+          regex: ^[`'\"]\s*(SELECT|INSERT|UPDATE|DELETE|WITH|CREATE|ALTER|DROP)\b
+    paths:
+      exclude:
+        - "**/db/**"
+        - "**/database/**"
+        - "**/sql/**"
+        - "**/query/**"
+        - "**/queries/**"
+        - "**/repository/**"
+        - "**/repositories/**"
+        - "**/storage/**"
+        - "**/persistence/**"
+        - "**/migrations/**"
+        - "*.test.*"
+        - "*.spec.*"
+        - "**/test/**"
+        - "**/tests/**"
+        - "**/__tests__/**"
+    message: "Raw SQL outside the common data-access layer — route queries through the project’s query/repository abstraction"
+    languages: [javascript, typescript]
+    severity: WARNING
+
   # ─── Node.js Backend Security ───────────────────────────────────────────────
 
   # Detect path traversal via user input in fs operations
@@ -121,7 +255,11 @@ rules:
   # Detect Math.random() used for security-sensitive purposes
   - id: no-math-random-security
     patterns:
-      - pattern: $VAR = ... Math.random() ...
+      - pattern-either:
+          - pattern: $VAR = Math.random()
+          - pattern: const $VAR = Math.random()
+          - pattern: let $VAR = Math.random()
+          - pattern: var $VAR = Math.random()
       - metavariable-regex:
           metavariable: $VAR
           regex: .*(token|secret|key|session|nonce|salt|csrf|auth|password|uuid).*
@@ -251,6 +389,116 @@ rules:
     message: "Jinja2 Environment without autoescape — enables server-side template injection and XSS"
     languages: [python]
     severity: ERROR
+
+  # Detect swallowed Python exceptions — hidden failures break maintainability.
+  - id: no-swallowed-exception-py
+    pattern-either:
+      - pattern: |
+          try:
+              ...
+          except Exception:
+              pass
+      - pattern: |
+          try:
+              ...
+          except $ERR:
+              pass
+      - pattern: |
+          try:
+              ...
+          except Exception:
+              return
+      - pattern: |
+          try:
+              ...
+          except $ERR:
+              return
+      - pattern: |
+          try:
+              ...
+          except Exception:
+              return None
+      - pattern: |
+          try:
+              ...
+          except $ERR:
+              return None
+    paths:
+      exclude:
+        - "*.test.*"
+        - "*.spec.*"
+        - "**/test/**"
+        - "**/tests/**"
+        - "**/__tests__/**"
+    message: "Swallowed exception — handle the failure explicitly or re-raise with context"
+    languages: [python]
+    severity: WARNING
+
+  # Detect dynamic module loading in Python — hides the dependency graph from static tooling.
+  - id: no-dynamic-module-load-py
+    patterns:
+      - pattern-either:
+          - pattern: importlib.import_module(...)
+          - pattern: __import__(...)
+    paths:
+      exclude:
+        - "**/plugin/**"
+        - "**/plugins/**"
+        - "**/registry/**"
+        - "**/registries/**"
+        - "**/loader/**"
+        - "**/loaders/**"
+        - "**/migrations/**"
+        - "*.test.*"
+        - "*.spec.*"
+        - "**/test/**"
+        - "**/tests/**"
+        - "**/__tests__/**"
+    message: "Dynamic module loading reduces static discoverability — prefer static imports or an explicit registry/loader boundary"
+    languages: [python]
+    severity: WARNING
+
+  # Detect raw SQL outside common data-access layers in Python.
+  - id: no-raw-sql-outside-data-layer-py
+    patterns:
+      - pattern-either:
+          - pattern: $DB.execute($SQL, ...)
+          - pattern: $DB.execute($SQL)
+          - pattern: $DB.executemany($SQL, ...)
+          - pattern: $DB.executemany($SQL)
+          - pattern: $DB.query($SQL, ...)
+          - pattern: $DB.query($SQL)
+          - pattern: session.execute($SQL, ...)
+          - pattern: session.execute($SQL)
+          - pattern: $SESSION.execute($SQL, ...)
+          - pattern: $SESSION.execute($SQL)
+          - pattern: engine.execute($SQL, ...)
+          - pattern: engine.execute($SQL)
+          - pattern: $ENGINE.execute($SQL, ...)
+          - pattern: $ENGINE.execute($SQL)
+      - metavariable-regex:
+          metavariable: $SQL
+          regex: ^[fFrRuU]*[`'\"]\s*(SELECT|INSERT|UPDATE|DELETE|WITH|CREATE|ALTER|DROP)\b
+    paths:
+      exclude:
+        - "**/db/**"
+        - "**/database/**"
+        - "**/sql/**"
+        - "**/query/**"
+        - "**/queries/**"
+        - "**/repository/**"
+        - "**/repositories/**"
+        - "**/storage/**"
+        - "**/persistence/**"
+        - "**/migrations/**"
+        - "*.test.*"
+        - "*.spec.*"
+        - "**/test/**"
+        - "**/tests/**"
+        - "**/__tests__/**"
+    message: "Raw SQL outside the common data-access layer — route queries through the project’s query/repository abstraction"
+    languages: [python]
+    severity: WARNING
 
   # ─── YAML / Kubernetes ─────────────────────────────────────────────────────
 

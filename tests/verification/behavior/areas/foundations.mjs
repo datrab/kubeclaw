@@ -39,15 +39,71 @@ export async function registerFoundationsArea({
   artifactBundleMod,
   correlationMod,
   pathsMod,
-  busterPipelineMod,
+  busterSessionMonitorMod,
+  busterTaskQueueMod,
 }) {
+const pipelineSchedulingMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/runners/pipeline-runner-scheduling.ts');
+const pipelineLockMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/runners/pipeline-runner-lock.ts');
+
+const anyPluginConfigSchema = () => ({
+  schemaType: 'json_schema',
+  schemaVersion: 'draft-07',
+  schema: { type: 'object', additionalProperties: true },
+  defaults: {},
+});
+
+function captureThrows(fn, matcher = null) {
+  let captured = null;
+  assert.throws(() => {
+    try {
+      fn();
+    } catch (error) {
+      captured = error;
+      throw error;
+    }
+  }, matcher || undefined);
+  return captured;
+}
+
+await record('temp manager owns lazy scratch lifecycle and idempotent cleanup', async () => {
+  const tempMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/temp.ts');
+  assert.equal(typeof tempMod.createTempManager, 'function');
+
+  const manager = tempMod.createTempManager();
+  assert.equal(manager.dir, null, 'temp manager should create lazily');
+
+  const firstFile = manager.file('artifact', '01', '.json');
+  assert.equal(typeof manager.dir, 'string');
+  assert.equal(fs.existsSync(manager.dir), true, 'lazy file allocation should create owned dir');
+  assert.equal(path.basename(manager.dir).startsWith('swarm-pipeline-'), true);
+  assert.equal(path.dirname(firstFile), manager.dir, 'generated file should live inside owned dir');
+  assert.equal(firstFile.endsWith('.json'), true);
+
+  fs.writeFileSync(firstFile, '{"ok":true}\n');
+  assert.equal(fs.existsSync(firstFile), true);
+  manager.cleanup();
+  assert.equal(fs.existsSync(manager.dir), false, 'cleanup should remove owned dir recursively');
+
+  assert.doesNotThrow(() => manager.cleanup(), 'cleanup should be safe when owned dir is already missing');
+});
+
 await record('packaged helper runtime surface is owned by canonical common implementations', async () => {
   const helperPaths = [
-    'pipeline/agents/runtime.js',
-    'pipeline/integrations/gateway.js',
-    'pipeline/agents/lifecycle.js',
-    'pipeline/agents/acp-monitor.js',
-    'pipeline/lifecycle-state.js',
+    'pipeline/agents/acp-monitor.ts',
+    'pipeline/agents/lifecycle.ts',
+    'pipeline/agents/runtime.ts',
+    'pipeline/agents/session-semantics.ts',
+    'pipeline/agents/session-termination.ts',
+    'pipeline/integrations/gateway.ts',
+    'pipeline/lifecycle-state.ts',
+    'pipeline/noncritical-reporting.ts',
+    'pipeline/redaction.ts',
+    'pipeline/security.ts',
+    'pipeline/services/discord-fields-contract.ts',
+    'pipeline/services/observability-health.ts',
+    'pipeline/services/rate-limit-contract.ts',
+    'pipeline/telemetry.ts',
+    'pipeline/timing.ts',
   ];
 
   for (const relPath of helperPaths) {
@@ -57,14 +113,17 @@ await record('packaged helper runtime surface is owned by canonical common imple
 
     assert.equal(generalRuntimeText, commonText, `general image should materialize common ${relPath}`);
     assert.equal(sandboxRuntimeText, commonText, `sandbox image should materialize common ${relPath}`);
-    assert.equal(fs.existsSync(path.join(sourceRoot, 'skills/nova', relPath)), false, `Nova should not keep a same-name repo facade for ${relPath}`);
-    assert.equal(fs.existsSync(path.join(sourceRoot, 'skills/buster', relPath)), false, `Buster should not keep a same-name repo facade for ${relPath}`);
+    for (const area of ['nova', 'buster']) {
+      const shimText = readOverlayText(sourceRoot, overlayRoot, `skills/${area}/${relPath}`);
+      assert(shimText.includes('export * from'), `${area} should keep a repo-local compatibility shim for ${relPath}`);
+      assert(shimText.includes('common/pipeline'), `${area} shim should point to the common owner for ${relPath}`);
+    }
   }
 });
 
 await record('shared lifecycle helper stays backend-oriented while Buster owns its crash-recovery state path', async () => {
-  const commonLifecycleText = readOverlayText(sourceRoot, overlayRoot, 'skills/common/pipeline/agents/lifecycle.js');
-  const busterPipelineHelpersText = fs.readFileSync(path.join(sourceRoot, 'skills/buster/buster-pipeline-helpers.js'), 'utf8');
+  const commonLifecycleText = readOverlayText(sourceRoot, overlayRoot, 'skills/common/pipeline/agents/lifecycle.ts');
+  const busterPipelineHelpersText = fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/services/pipeline-helpers.ts'), 'utf8');
 
   assert.equal(commonLifecycleText.includes(".swarm', 'logs', 'buster', 'active-session.json"), false);
   assert.equal(commonLifecycleText.includes('.swarm/logs/buster/active-session.json'), false);
@@ -75,9 +134,11 @@ await record('shared lifecycle helper stays backend-oriented while Buster owns i
 await record('packaged pipeline entrypoints load cleanly', async () => {
   assert.equal(typeof pipelineEntryMod.default, 'function');
   assert.equal(typeof pipelineIndexMod.runPipeline, 'function');
-  assert.equal(typeof pipelineIndexMod.emitCostUpdate, 'function');
-  assert.equal(typeof pipelineRunnerMod.acquirePipelineRunLock, 'function');
-  assert.equal(typeof pipelineRunnerMod.releasePipelineRunLock, 'function');
+  assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'emitCostUpdate'), false);
+  assert.equal(Object.prototype.hasOwnProperty.call(pipelineRunnerMod, 'acquirePipelineRunLock'), false);
+  assert.equal(Object.prototype.hasOwnProperty.call(pipelineRunnerMod, 'releasePipelineRunLock'), false);
+  assert.equal(typeof pipelineLockMod.acquirePipelineRunLock, 'function');
+  assert.equal(typeof pipelineLockMod.releasePipelineRunLock, 'function');
   assert.equal(typeof lifecycleStateMod.transitionModuleStatus, 'function');
   assert.equal(typeof lifecycleStateMod.finalizeTerminalModuleState, 'function');
   assert.equal(typeof lifecycleStateMod.markModuleBlocked, 'function');
@@ -88,7 +149,7 @@ await record('packaged pipeline entrypoints load cleanly', async () => {
   assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'resolveGatewayHealthUrl'), false);
   assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'resolveGatewayToken'), false);
   assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'discord'), false);
-  for (const key of ['modulePath', 'statusPath', 'swarmRoot', 'projectSrcPath', 'relPath', 'completionStreamKey', 'gateStatusPath', 'moduleLogDir', 'moduleTestLogDir', 'moduleLintLogDir', 'gateLogDir', 'gateTestLogDir', 'gateLintLogDir', 'validateSafePath', 'costLogDir', 'redisLogDir', 'archValidatorLogDir']) {
+  for (const key of ['modulePath', 'statusPath', 'swarmRoot', 'projectSrcPath', 'relPath', 'completionStreamKey', 'gateStatusPath', 'moduleLogDir', 'moduleLintLogDir', 'gateLogDir', 'gateLintLogDir', 'validateSafePath', 'costLogDir', 'redisLogDir', 'archValidatorLogDir']) {
     assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, key), false);
   }
   for (const key of ['buildForgePrompt', 'buildBusterModulePrompt', 'buildBusterGatePrompt', 'buildGateFixPrompt', 'buildReviewerPrompt']) {
@@ -103,13 +164,13 @@ await record('packaged pipeline entrypoints load cleanly', async () => {
   for (const key of ['modelToHarness', 'isSubagentModel', 'resolveRuntime', 'acpLabel', 'spawnAcpAgent', 'killAcpAgent', 'spawnAgent', 'killAgent', 'steerAgent', 'verifyAgentAlive', 'dispatchRedisTask', 'buildBusterPayload', 'spawnReviewerAgent', 'killReviewerAgent']) {
     assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, key), false);
   }
-  for (const key of ['RUN_ID', '_runStats', 'createRunId', 'createRunStats', 'setRunState', 'bindRunContext', 'resolveRunContext', 'getRunState', 'getRunId', 'getRunStats', 'output', 'loadProgress']) {
+  for (const key of ['createRunId', 'createRunStats', 'bindRunContext', 'resolveRunContext', 'getRunState', 'getRunId', 'getRunStats', 'output', 'loadProgress']) {
     assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, key), false);
   }
   for (const key of ['getRepoRoot', 'gitExec', 'headHash', 'invalidateHeadHash', 'setRepoRoot']) {
     assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, key), false);
   }
-  for (const key of ['sleep', 'pollGeneric', 'pollForFile', 'pollStatus', 'pollForSessionEnd', 'pollDual', 'pollWithRateLimitRecovery', 'pollDualWithRateLimitRecovery']) {
+  for (const key of ['sleep', 'pollGeneric', 'pollForFile', 'pollStatus', 'pollForgeCompletion', 'pollForSessionEnd', 'pollDual', 'pollWithRateLimitRecovery', 'pollForgeCompletionWithRateLimitRecovery', 'pollDualWithRateLimitRecovery']) {
     assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, key), false);
   }
   assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'GATEWAY_URL'), false);
@@ -127,34 +188,103 @@ await record('correlation helpers preserve field provenance while keeping canoni
       dispatch_id: 'forge-01-dispatch',
       session_key: 'agent:main:acp:forge-01',
     },
+  });
+
+  assert.equal(statusCorrelation.dispatch_id, null);
+  assert.equal(statusCorrelation.gateway_label, 'forge-01-dispatch');
+  assert.equal(statusCorrelation.session_key, null);
+  assert.equal(statusCorrelation.source_family, 'status');
+  assert.deepEqual(statusCorrelation.source_families, ['status']);
+  assert.equal(statusCorrelation.provenance.dispatch_id, null);
+  assert.deepEqual(statusCorrelation.provenance.gateway_label, {
+    family: 'status',
+    path: 'status.gateway_label',
+    via: 'gateway_label',
+  });
+  assert.equal(statusCorrelation.provenance.session_key, null);
+
+  const statusFallbackCorrelation = correlationMod.resolveStatusCorrelationWithDiagnosticFallback({
+    gateway_label: 'forge-01-dispatch',
+    active_agent: {
+      dispatch_id: 'forge-01-dispatch',
+      session_key: 'agent:main:acp:forge-01',
+    },
   }, {
     dispatch_id: 'dispatch-fallback',
     gateway_label: 'label-fallback',
     session_key: 'session-fallback',
   });
 
-  assert.equal(statusCorrelation.dispatch_id, 'forge-01-dispatch');
-  assert.equal(statusCorrelation.gateway_label, 'forge-01-dispatch');
-  assert.equal(statusCorrelation.session_key, 'agent:main:acp:forge-01');
-  assert.equal(statusCorrelation.source_family, 'mixed');
-  assert.deepEqual(statusCorrelation.source_families, ['status.active_agent', 'status']);
-  assert.deepEqual(statusCorrelation.provenance.dispatch_id, {
-    family: 'status.active_agent',
-    path: 'status.active_agent.dispatch_id',
+  assert.equal(statusFallbackCorrelation.dispatch_id, 'dispatch-fallback');
+  assert.equal(statusFallbackCorrelation.gateway_label, 'forge-01-dispatch');
+  assert.equal(statusFallbackCorrelation.session_key, 'session-fallback');
+  assert.equal(statusFallbackCorrelation.source_family, 'mixed');
+  assert.deepEqual(statusFallbackCorrelation.source_families, ['fallback', 'status']);
+  assert.deepEqual(statusFallbackCorrelation.provenance.dispatch_id, {
+    family: 'fallback',
+    path: 'fallback.dispatch_id',
     via: 'dispatch_id',
   });
-  assert.deepEqual(statusCorrelation.provenance.gateway_label, {
+  assert.deepEqual(statusFallbackCorrelation.provenance.gateway_label, {
     family: 'status',
     path: 'status.gateway_label',
     via: 'gateway_label',
   });
-  assert.deepEqual(statusCorrelation.provenance.session_key, {
-    family: 'status.active_agent',
-    path: 'status.active_agent.session_key',
+  assert.deepEqual(statusFallbackCorrelation.provenance.session_key, {
+    family: 'fallback',
+    path: 'fallback.session_key',
     via: 'session_key',
   });
 
+  const statusCorrelationProvenance = correlationMod.resolveStatusCorrelationProvenance({
+    gateway_label: 'forge-01-dispatch',
+    active_agent: {
+      dispatch_id: 'forge-01-dispatch',
+      session_key: 'agent:main:acp:forge-01',
+    },
+  });
+  assert.equal(statusCorrelationProvenance.dispatch_id, 'forge-01-dispatch');
+  assert.equal(statusCorrelationProvenance.session_key, 'agent:main:acp:forge-01');
+  assert.deepEqual(statusCorrelationProvenance.source_families, ['status.active_agent', 'status']);
+
   const resultCorrelation = correlationMod.resolveResultCorrelation({
+    rate_limit_status: {
+      attempt: 4,
+      dispatch_id: 'review-dispatch-04',
+      gateway_label: 'review-dispatch-04',
+    },
+    module_status: {
+      session_key: 'agent:main:acp:review-04',
+      gate_type: 'review',
+    },
+  });
+
+  assert.equal(resultCorrelation.attempt, 4);
+  assert.equal(resultCorrelation.dispatch_id, 'review-dispatch-04');
+  assert.equal(resultCorrelation.gateway_label, 'review-dispatch-04');
+  assert.equal(resultCorrelation.session_key, null);
+  assert.equal(resultCorrelation.gate_type, null);
+  assert.equal(resultCorrelation.source_family, 'rate_limit_status');
+  assert.deepEqual(resultCorrelation.source_families, ['rate_limit_status']);
+  assert.deepEqual(resultCorrelation.provenance.attempt, {
+    family: 'rate_limit_status',
+    path: 'result.rate_limit_status.attempt',
+    via: 'attempt',
+  });
+  assert.deepEqual(resultCorrelation.provenance.dispatch_id, {
+    family: 'rate_limit_status',
+    path: 'result.rate_limit_status.dispatch_id',
+    via: 'dispatch_id',
+  });
+  assert.deepEqual(resultCorrelation.provenance.gateway_label, {
+    family: 'rate_limit_status',
+    path: 'result.rate_limit_status.gateway_label',
+    via: 'gateway_label',
+  });
+  assert.equal(resultCorrelation.provenance.session_key, null);
+  assert.equal(resultCorrelation.provenance.gate_type, null);
+
+  const resultFallbackCorrelation = correlationMod.resolveResultCorrelationWithDiagnosticFallback({
     rate_limit_status: {
       attempt: 4,
       dispatch_id: 'review-dispatch-04',
@@ -171,41 +301,77 @@ await record('correlation helpers preserve field provenance while keeping canoni
     session_key: 'session-fallback',
     gate_type: 'fallback-gate',
   });
+  assert.equal(resultFallbackCorrelation.session_key, 'session-fallback');
+  assert.equal(resultFallbackCorrelation.gate_type, 'fallback-gate');
+  assert.equal(resultFallbackCorrelation.source_family, 'mixed');
+  assert.deepEqual(resultFallbackCorrelation.source_families, ['rate_limit_status', 'fallback']);
+  assert.deepEqual(resultFallbackCorrelation.provenance.session_key, {
+    family: 'fallback',
+    path: 'fallback.session_key',
+    via: 'session_key',
+  });
+  assert.deepEqual(resultFallbackCorrelation.provenance.gate_type, {
+    family: 'fallback',
+    path: 'fallback.gate_type',
+    via: 'gate_type',
+  });
 
-  assert.equal(resultCorrelation.attempt, 4);
-  assert.equal(resultCorrelation.dispatch_id, 'review-dispatch-04');
-  assert.equal(resultCorrelation.gateway_label, 'review-dispatch-04');
-  assert.equal(resultCorrelation.session_key, 'agent:main:acp:review-04');
-  assert.equal(resultCorrelation.gate_type, 'review');
-  assert.equal(resultCorrelation.source_family, 'mixed');
-  assert.deepEqual(resultCorrelation.source_families, ['rate_limit_status', 'module_status']);
-  assert.deepEqual(resultCorrelation.provenance.attempt, {
-    family: 'rate_limit_status',
-    path: 'result.rate_limit_status.attempt',
-    via: 'attempt',
+  const readModelResultCorrelation = correlationMod.resolveResultReadModelCorrelationProvenance({
+    rate_limit_status: {
+      attempt: 4,
+      dispatch_id: 'review-dispatch-04',
+      gateway_label: 'review-dispatch-04',
+    },
+    module_status: {
+      session_key: 'agent:main:acp:review-04',
+      gate_type: 'review',
+    },
   });
-  assert.deepEqual(resultCorrelation.provenance.dispatch_id, {
-    family: 'rate_limit_status',
-    path: 'result.rate_limit_status.dispatch_id',
-    via: 'dispatch_id',
-  });
-  assert.deepEqual(resultCorrelation.provenance.gateway_label, {
-    family: 'rate_limit_status',
-    path: 'result.rate_limit_status.gateway_label',
-    via: 'gateway_label',
-  });
-  assert.deepEqual(resultCorrelation.provenance.session_key, {
+  assert.equal(readModelResultCorrelation.dispatch_id, null);
+  assert.equal(readModelResultCorrelation.gateway_label, null);
+  assert.equal(readModelResultCorrelation.session_key, 'agent:main:acp:review-04');
+  assert.equal(readModelResultCorrelation.gate_type, 'review');
+  assert.deepEqual(readModelResultCorrelation.source_families, ['module_status']);
+  assert.deepEqual(readModelResultCorrelation.provenance.session_key, {
     family: 'module_status',
     path: 'result.module_status.session_key',
     via: 'session_key',
   });
-  assert.deepEqual(resultCorrelation.provenance.gate_type, {
+  assert.deepEqual(readModelResultCorrelation.provenance.gate_type, {
     family: 'module_status',
     path: 'result.module_status.gate_type',
     via: 'gate_type',
   });
 
-  const fallbackCorrelation = correlationMod.resolveStatusCorrelation({}, {
+  const dispatchOnlyCorrelation = correlationMod.resolveStatusCorrelation({
+    dispatch_id: 'dispatch-only',
+    active_agent: { dispatch_id: 'active-dispatch-only' },
+  });
+  assert.equal(dispatchOnlyCorrelation.dispatch_id, 'dispatch-only');
+  assert.equal(dispatchOnlyCorrelation.gateway_label, null);
+  assert.equal(dispatchOnlyCorrelation.provenance.gateway_label, null);
+
+  const dispatchOnlyResultCorrelation = correlationMod.resolveResultCorrelation({
+    dispatch_id: 'result-dispatch-only',
+    module_status: { dispatch_id: 'module-dispatch-only' },
+  });
+  assert.equal(dispatchOnlyResultCorrelation.dispatch_id, 'result-dispatch-only');
+  assert.equal(dispatchOnlyResultCorrelation.gateway_label, null);
+  assert.equal(dispatchOnlyResultCorrelation.provenance.gateway_label, null);
+
+  const diagnosticLabelOnlyCorrelation = correlationMod.resolveStatusCorrelation({
+    active_agent: { label: 'diagnostic-label-only' },
+  });
+  assert.equal(diagnosticLabelOnlyCorrelation.gateway_label, null);
+  assert.equal(diagnosticLabelOnlyCorrelation.provenance.gateway_label, null);
+
+  const readModelDiagnosticLabelOnlyCorrelation = correlationMod.resolveResultReadModelCorrelationProvenance({
+    module_status: { active_agent: { label: 'diagnostic-label-only' } },
+  });
+  assert.equal(readModelDiagnosticLabelOnlyCorrelation.gateway_label, null);
+  assert.equal(readModelDiagnosticLabelOnlyCorrelation.provenance.gateway_label, null);
+
+  const fallbackCorrelation = correlationMod.resolveStatusCorrelationWithDiagnosticFallback({}, {
     dispatch_id: 'dispatch-fallback',
     gateway_label: 'label-fallback',
     session_key: 'session-fallback',
@@ -227,17 +393,30 @@ await record('correlation helpers preserve field provenance while keeping canoni
     path: 'fallback.session_key',
     via: 'session_key',
   });
+
+  assert.equal(correlationMod.resolveStatusDispatchId({}, 'dispatch-fallback'), null);
+  assert.equal(correlationMod.resolveStatusGatewayLabel({}, 'gateway-fallback'), null);
+  assert.equal(correlationMod.resolveStatusSessionKey({}, 'session-fallback'), null);
+  assert.equal(correlationMod.resolveResultDispatchId({}, 'dispatch-fallback'), null);
+  assert.equal(correlationMod.resolveResultGatewayLabel({}, 'gateway-fallback'), null);
+  assert.equal(correlationMod.resolveResultSessionKey({}, 'session-fallback'), null);
+  assert.equal(correlationMod.resolveResultAttempt({}, 7), null);
+  assert.equal(correlationMod.resolveResultGateType({}, 'review'), null);
 });
 
 await record('shared failure semantics keep monitor, stale-recovery, and broad failure classes reusable', async () => {
-  const failureSemanticsMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/failure-semantics.js');
-  const commonMonitorMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/agents/acp-monitor.js');
+  const failureSemanticsMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/failure-semantics.ts');
+  const commonMonitorMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/agents/acp-monitor.ts');
 
   assert.equal(commonMonitorMod.ACP_MONITOR_REASONS.RATE_LIMITED, 'rate_limited');
   assert.equal(commonMonitorMod.isStoppedSessionState('closed'), true);
   assert.equal(commonMonitorMod.isStoppedSessionState('idle'), true);
   assert.equal(commonMonitorMod.isStoppedSessionState('done'), true);
   assert.equal(commonMonitorMod.parseSessionState({ status: 'done' }).state, 'done');
+  assert.deepEqual(commonMonitorMod.parseSessionState({ statusText: '📌 Tasks: 1 active · subagent · verify' }), { active: true, state: 'running' });
+  assert.deepEqual(commonMonitorMod.parseSessionState({ statusText: '📌 Tasks: latest succeeded · subagent · verify' }), { active: false, state: 'completed' });
+  assert.deepEqual(commonMonitorMod.parseSessionState({ statusText: '📌 Tasks: 1 recent failure · subagent · verify' }), { active: false, state: 'error' });
+  assert.deepEqual(commonMonitorMod.parseSessionState({ statusText: '🪢 Queue: steer (depth 0)' }), { active: false, state: 'idle' });
   assert.equal(commonMonitorMod.isStoppedSessionState('unreachable'), false);
 
   assert.equal(failureSemanticsMod.normalizeFailureClass('forge', 'error TS2304 cannot find name'), 'forge_error');
@@ -270,44 +449,225 @@ await record('shared failure semantics keep monitor, stale-recovery, and broad f
   );
 });
 
+await record('Buster pre-test classification prefers explicit config evidence over broad infra regexes', async () => {
+  const failuresMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/failures/classification.ts');
+
+  const configOwned = failuresMod.classifyPreTestFailure({
+    reason: 'Buster pre-test failed before child spawn',
+    verdict: {
+      suites: {
+        smoke: {
+          status: 'ERROR',
+          error: 'podman build failed: Dockerfile /workspace/Dockerfile not found for test_config.serve.dockerfile',
+        },
+      },
+    },
+  });
+  assert.equal(configOwned.kind, 'config');
+  assert.equal(configOwned.code, 'PROGRESS_CONFIG_INVALID');
+
+  const infraOwned = failuresMod.classifyPreTestFailure({
+    reason: 'Buster pre-test failed before child spawn',
+    verdict: {
+      suites: {
+        smoke: {
+          status: 'ERROR',
+          error: 'podman build failed: error: pinging container registry: connection refused',
+        },
+      },
+    },
+  });
+  assert.equal(infraOwned.kind, 'infra');
+  assert.equal(infraOwned.code, 'REGISTRY_ACCESS_FAILED');
+});
+
+await record('delivery lint Dockerfile paths are repo-realpath jailed and fail closed', async () => {
+  const validationMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/validation.ts');
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-delivery-lint-repo-'));
+  const projectSrc = path.join(repoRoot, 'Projects/demo/src');
+  fs.mkdirSync(projectSrc, { recursive: true });
+  const config = {
+    repo_root: repoRoot,
+    paths: {
+      swarm_dir: path.join(projectSrc, '.swarm'),
+      modules_dir: path.join(projectSrc, '.swarm', 'modules'),
+    },
+  };
+
+  assert.equal(
+    validationMod.runDeliveryLintValidation({ test_config: { serve: {} } }, '01-static-library', config).passed,
+    true,
+    'modules without a declared serve.dockerfile should remain contextual pass-through',
+  );
+
+  const dockerfileRel = 'Projects/demo/src/Dockerfile';
+  fs.writeFileSync(path.join(repoRoot, dockerfileRel), 'FROM scratch\nCOPY dist public\n');
+  assert.equal(
+    validationMod.runDeliveryLintValidation({ test_config: { serve: { dockerfile: dockerfileRel, static_path: 'public' } } }, '02-container', config).passed,
+    true,
+    'repo-relative Dockerfile with matching relative static path should pass',
+  );
+
+  const absoluteResult = validationMod.runDeliveryLintValidation({ test_config: { serve: { dockerfile: path.join(repoRoot, dockerfileRel) } } }, '03-absolute', config);
+  assert.equal(absoluteResult.passed, false);
+  assert.equal(absoluteResult.failures[0].code, validationMod.VALIDATION_CODES.SERVE_DOCKERFILE_PATH_INVALID);
+
+  const outsideRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-delivery-lint-outside-'));
+  const outsideDockerfile = path.join(outsideRoot, 'Dockerfile');
+  fs.writeFileSync(outsideDockerfile, 'FROM scratch\n');
+  fs.symlinkSync(outsideDockerfile, path.join(projectSrc, 'linked-Dockerfile'));
+  const symlinkResult = validationMod.runDeliveryLintValidation({ test_config: { serve: { dockerfile: 'Projects/demo/src/linked-Dockerfile' } } }, '04-symlink', config);
+  assert.equal(symlinkResult.passed, false);
+  assert.equal(symlinkResult.failures[0].code, validationMod.VALIDATION_CODES.SERVE_DOCKERFILE_PATH_INVALID);
+  assert.match(symlinkResult.failures[0].explanation, /outside repository root/);
+
+  fs.mkdirSync(path.join(projectSrc, 'Dockerfile-dir'));
+  const unreadableResult = validationMod.runDeliveryLintValidation({ test_config: { serve: { dockerfile: 'Projects/demo/src/Dockerfile-dir' } } }, '05-unreadable', config);
+  assert.equal(unreadableResult.passed, false);
+  assert.equal(unreadableResult.failures[0].code, validationMod.VALIDATION_CODES.SERVE_DOCKERFILE_READ_FAILED);
+
+  const staticPathResult = validationMod.runDeliveryLintValidation({ test_config: { serve: { dockerfile: dockerfileRel, static_path: '/public' } } }, '06-static-path', config);
+  assert.equal(staticPathResult.passed, false);
+  assert.equal(staticPathResult.failures[0].code, validationMod.VALIDATION_CODES.STATIC_PATH_INVALID);
+
+  const outsideStatic = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-delivery-lint-static-outside-'));
+  fs.writeFileSync(path.join(repoRoot, dockerfileRel), 'FROM scratch\nCOPY dist linked-public\n');
+  fs.symlinkSync(outsideStatic, path.join(repoRoot, 'linked-public'));
+  const staticSymlinkResult = validationMod.runDeliveryLintValidation({ test_config: { serve: { dockerfile: dockerfileRel, static_path: 'linked-public' } } }, '07-static-symlink', config);
+  assert.equal(staticSymlinkResult.passed, false);
+  assert.equal(staticSymlinkResult.failures[0].code, validationMod.VALIDATION_CODES.STATIC_PATH_INVALID);
+  assert.match(staticSymlinkResult.failures[0].explanation, /outside repository root/);
+});
+
+await record('Forge preflight requires explicit readable FORGE.md artifacts', async () => {
+  const validationMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/validation.ts');
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-preflight-forge-repo-'));
+  const modulesDir = path.join(repoRoot, '.swarm', 'modules');
+  fs.mkdirSync(path.join(modulesDir, '01-missing'), { recursive: true });
+  fs.mkdirSync(path.join(modulesDir, '02-substeps', 'alpha'), { recursive: true });
+  const config = {
+    repo_root: repoRoot,
+    paths: {
+      swarm_dir: path.join(repoRoot, '.swarm'),
+      modules_dir: modulesDir,
+    },
+  };
+
+  const missingResult = validationMod.runPreflightValidation({}, '01-missing', config);
+  assert.equal(missingResult.passed, false);
+  assert.equal(missingResult.failures[0].code, validationMod.VALIDATION_CODES.FORGE_BLUEPRINT_MISSING);
+
+  fs.writeFileSync(path.join(modulesDir, '02-substeps', 'alpha', 'FORGE.md'), 'Create api.yaml\n');
+  const missingSubstepResult = validationMod.runPreflightValidation({ substeps: ['alpha', 'beta'] }, '02-substeps', config);
+  assert.equal(missingSubstepResult.passed, false);
+  assert.equal(missingSubstepResult.failures[0].code, validationMod.VALIDATION_CODES.FORGE_BLUEPRINT_MISSING);
+
+  fs.mkdirSync(path.join(modulesDir, '02-substeps', 'beta'), { recursive: true });
+  fs.writeFileSync(path.join(modulesDir, '02-substeps', 'beta', 'FORGE.md'), 'Create Dockerfile\n');
+  const declaredResult = validationMod.runPreflightValidation({
+    substeps: ['alpha', 'beta'],
+    test_config: {
+      serve: { dockerfile: 'Dockerfile' },
+      api: { spec_file: 'api.yaml' },
+    },
+  }, '02-substeps', config);
+  assert.equal(declaredResult.passed, true);
+});
+
 await record('startup plugin registry assembles built-ins deterministically and rejects bad registry inputs', async () => {
   assert.equal(typeof registryMod.buildPluginRegistry, 'function');
   assert.equal(typeof registryMod.resolveStageOwner, 'function');
-  assert.equal(typeof registryMod.resolveStageHandler, 'function');
+  assert.equal(registryMod.resolveStageHandler, undefined);
+  assert.equal(registryMod.resolveGateTypeOwner, undefined);
+  assert.equal(typeof registryMod.requireStageHandler, 'function');
+  assert.equal(typeof registryMod.requireGateTypeOwner, 'function');
 
-  const { normalizedConfig, registry, errors } = registryMod.buildPluginRegistry({}, { throwOnError: false });
+  const explicitPlugins = { enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} };
+  const { normalizedConfig, registry, errors } = registryMod.buildPluginRegistry(explicitPlugins, { throwOnError: false });
   assert.equal(errors.length, 0);
   assert.equal(normalizedConfig.enabled, true);
   assert.equal(registry.summary.discoveredModules >= 9, true);
+  assert.equal(registry.summary.gateTypeCount, 3);
   assert.equal(registry.stageOwners['worker.execute']['worker:module_forge'].manifest.moduleId, 'builtin.worker.module_forge');
   assert.equal(registry.stageOwners['worker.execute']['worker:module_buster'].manifest.moduleId, 'builtin.worker.module_buster');
   assert.equal(registry.stageOwners['gate.execute']['gate:review'].manifest.moduleId, 'builtin.gate.review');
+  assert.equal(registry.gateTypes.review.stageId, 'gate:review');
+  assert.equal(registry.gateTypes.review.moduleId, 'builtin.gate.review');
+  assert.equal(registry.gateTypes.approval.stageId, 'gate:approval');
+  assert.equal(registry.gateTypes.buster.stageId, 'gate:buster');
   assert.equal(registry.stageOwners['validator.run']['validator:architecture'].manifest.moduleId, 'builtin.validator.architecture');
-  assert.equal(typeof registryMod.resolveStageHandler({ _pluginRegistry: registry }, 'worker.execute', 'worker:module_forge', 'execute'), 'function');
-  assert.equal(typeof registryMod.resolveStageHandler({ _pluginRegistry: registry }, 'worker.execute', 'worker:module_buster', 'execute'), 'function');
-  assert.equal(typeof registryMod.resolveStageHandler({ _pluginRegistry: registry }, 'gate.execute', 'gate:approval', 'execute'), 'function');
+  assert.equal(typeof registryMod.requireStageHandler({ pluginRegistry: registry }, 'worker.execute', 'worker:module_forge', 'execute').handler, 'function');
+  assert.equal(typeof registryMod.requireStageHandler({ pluginRegistry: registry }, 'worker.execute', 'worker:module_buster', 'execute').handler, 'function');
+  assert.equal(typeof registryMod.requireStageHandler({ pluginRegistry: registry }, 'gate.execute', 'gate:approval', 'execute').handler, 'function');
+  assert.equal(registryMod.requireGateTypeOwner({ pluginRegistry: registry }, 'buster').stageId, 'gate:buster');
 
   assert.throws(
-    () => registryMod.buildPluginRegistry({ stageOwners: { 'gate:review': 'missing.module' } }),
+    () => registryMod.buildPluginRegistry(undefined),
+    /config\.plugins is required/
+  );
+  assert.throws(
+    () => registryMod.buildPluginRegistry({}),
+    /config\.plugins\.enabled must be a boolean/
+  );
+  assert.throws(
+    () => registryMod.buildPluginRegistry({ ...explicitPlugins, stageOwners: { 'gate:review': 'missing.module' } }),
     /REGISTRY_STAGE_OWNER_UNKNOWN/
   );
   assert.throws(
-    () => registryMod.buildPluginRegistry({ restrictedCapabilityAllowlist: { 'builtin.gate.review': ['capability.does_not_exist'] } }),
+    () => registryMod.buildPluginRegistry({ ...explicitPlugins, restrictedCapabilityAllowlist: { 'builtin.gate.review': ['capability.does_not_exist'] } }),
     /CAPABILITY_UNKNOWN/
   );
+
+  const builtinModules = registryMod.getBuiltinPluginDefinitions();
+  const duplicateReviewGate = {
+    ...builtinModules.find((definition) => definition.manifest.moduleId === 'builtin.gate.review'),
+    manifest: {
+      ...builtinModules.find((definition) => definition.manifest.moduleId === 'builtin.gate.review').manifest,
+      moduleId: 'test.duplicate.review.gate',
+    },
+    implementation: { execute: async () => null },
+  };
   assert.throws(
-    () => registryMod.buildPluginRegistry({}, {
+    () => registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { builtinModules: [...builtinModules, duplicateReviewGate] }),
+    /REGISTRY_GATE_TYPE_OWNER_CONFLICT/
+  );
+
+  assert.throws(
+    () => registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, {
+      builtinModules: [{
+        manifest: {
+          moduleId: 'test.mismatched.gate.type',
+          contractVersion: 'pipeline-plugin-v1',
+          kind: 'gate',
+          hookFamily: 'gate.execute',
+          gateTypes: ['review'],
+          stageIds: ['gate:buster'],
+          capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts'],
+          configSchema: anyPluginConfigSchema(),
+          sourceType: 'builtin',
+          trustTier: 'trusted',
+          defaultEnabled: true,
+        },
+        implementation: { execute: async () => null },
+      }],
+    }),
+    /REGISTRY_GATE_TYPE_INVALID/
+  );
+  assert.throws(
+    () => registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, {
       builtinModules: [{
         manifest: {
           moduleId: 'test.invalid.contract',
-          contractVersion: 'pipeline-plugin-v0',
+          contractVersion: 'v1',
           kind: 'gate',
           hookFamily: 'gate.execute',
+          gateTypes: ['review'],
           stageIds: ['gate:review'],
           capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts'],
-          configSchema: { type: 'object', additionalProperties: true },
+          configSchema: anyPluginConfigSchema(),
           sourceType: 'builtin',
           trustTier: 'trusted',
+          defaultEnabled: true,
         },
         implementation: {
           execute: async () => null,
@@ -316,6 +676,684 @@ await record('startup plugin registry assembles built-ins deterministically and 
     }),
     /REGISTRY_CONTRACT_VERSION_UNSUPPORTED/
   );
+
+  const malformedArrayFieldError = captureThrows(
+    () => registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, {
+      builtinModules: [{
+        manifest: {
+          moduleId: 'test.malformed.array.fields',
+          contractVersion: 'pipeline-plugin-v1',
+          kind: 'gate',
+          hookFamily: 'gate.execute',
+          gateTypes: ['review'],
+          capabilities: 'read.state',
+          configSchema: anyPluginConfigSchema(),
+          sourceType: 'builtin',
+          trustTier: 'trusted',
+          defaultEnabled: true,
+        },
+        implementation: { execute: async () => null },
+      }],
+    })
+  );
+  assert.equal(malformedArrayFieldError instanceof TypeError, false);
+  assert.match(malformedArrayFieldError.message, /REGISTRY_STAGE_ID_INVALID/);
+  assert.match(malformedArrayFieldError.message, /REGISTRY_CAPABILITY_DECLARATION_INVALID/);
+  assert.match(malformedArrayFieldError.message, /Plugin registry validation failed/);
+
+  const unknownKindError = captureThrows(
+    () => registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, {
+      builtinModules: [{
+        manifest: {
+          moduleId: 'test.unknown.kind',
+          contractVersion: 'pipeline-plugin-v1',
+          kind: 'bogus',
+          hookFamily: 'gate.execute',
+          stageIds: ['gate:review'],
+          capabilities: ['read.state'],
+          configSchema: anyPluginConfigSchema(),
+          sourceType: 'builtin',
+          trustTier: 'trusted',
+          defaultEnabled: true,
+        },
+        implementation: { execute: async () => null },
+      }],
+    })
+  );
+  assert.equal(unknownKindError instanceof TypeError, false);
+  assert.match(unknownKindError.message, /Plugin registry validation failed/);
+  assert.match(unknownKindError.message, /REGISTRY_MANIFEST_INVALID/);
+
+  assert.throws(
+    () => registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, {
+      builtinModules: [{
+        manifest: {
+          moduleId: 'test.invalid.config.schema',
+          contractVersion: 'pipeline-plugin-v1',
+          kind: 'gate',
+          hookFamily: 'gate.execute',
+          gateTypes: ['review'],
+          stageIds: ['gate:review'],
+          capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts'],
+          configSchema: { type: 'object', additionalProperties: true },
+          sourceType: 'builtin',
+          trustTier: 'trusted',
+          defaultEnabled: true,
+        },
+        implementation: { execute: async () => null },
+      }],
+    }),
+    /REGISTRY_CONFIG_SCHEMA_INVALID/
+  );
+
+  const invalidSchemaInspection = registryMod.buildPluginRegistry({
+    ...explicitPlugins,
+    modules: {
+      'test.invalid.config.schema': { config: { leakedLegacyRawConfig: true } },
+    },
+  }, {
+    builtinModules: [{
+      manifest: {
+        moduleId: 'test.invalid.config.schema',
+        contractVersion: 'pipeline-plugin-v1',
+        kind: 'gate',
+        hookFamily: 'gate.execute',
+        gateTypes: ['review'],
+        stageIds: ['gate:review'],
+        capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts'],
+        configSchema: { type: 'object', additionalProperties: true },
+        sourceType: 'builtin',
+        trustTier: 'trusted',
+        defaultEnabled: true,
+      },
+      implementation: { execute: async () => null },
+    }],
+    throwOnError: false,
+  });
+  assert(invalidSchemaInspection.errors.some((error) => error.code === 'REGISTRY_CONFIG_SCHEMA_INVALID'));
+  assert(invalidSchemaInspection.errors.some((error) => /cannot validate config because its configSchema is invalid/.test(error.message)));
+  assert.deepEqual(invalidSchemaInspection.registry.records['test.invalid.config.schema'].config, {});
+
+  const customDiscoveryConfig = registryMod.buildPluginRegistry({
+    ...explicitPlugins,
+    allowCustomModules: true,
+    extraModulePaths: ['/app/custom/plugin.js'],
+  }, { throwOnError: false });
+  assert.equal(customDiscoveryConfig.normalizedConfig.extraModulePaths.length, 0);
+  assert(customDiscoveryConfig.errors.some((error) => /extraModulePaths is unsupported/.test(error.message)));
+
+  const restrictedNotifyGate = {
+    manifest: {
+      moduleId: 'test.restricted.notify.gate',
+      contractVersion: 'pipeline-plugin-v1',
+      kind: 'gate',
+      hookFamily: 'gate.execute',
+      gateTypes: ['review'],
+      stageIds: ['gate:review'],
+      capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts', 'notify.operator'],
+      configSchema: anyPluginConfigSchema(),
+      sourceType: 'local',
+      trustTier: 'restricted',
+      defaultEnabled: true,
+    },
+    implementation: { execute: async () => null },
+  };
+  assert.throws(
+    () => registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { builtinModules: [restrictedNotifyGate] }),
+    /CAPABILITY_RESTRICTED_NOT_ALLOWLISTED/
+  );
+  const allowlistedRestrictedGate = registryMod.buildPluginRegistry({
+    ...explicitPlugins,
+    restrictedCapabilityAllowlist: {
+      'test.restricted.notify.gate': ['notify.operator'],
+    },
+  }, { builtinModules: [restrictedNotifyGate], throwOnError: false });
+  assert.equal(allowlistedRestrictedGate.errors.length, 0);
+  assert.equal(allowlistedRestrictedGate.registry.records['test.restricted.notify.gate'].resolvedTrustTier, 'restricted');
+  const restrictedCtx = contextMod.createPluginContext({
+    config: { project: 'behavior-restricted-no-core-runtime', pluginRegistry: allowlistedRestrictedGate.registry },
+    hookFamily: 'gate.execute',
+    stageId: 'gate:review',
+    record: allowlistedRestrictedGate.registry.records['test.restricted.notify.gate'],
+    invocation: { gateId: 'review' },
+  });
+  assert.equal(Object.prototype.hasOwnProperty.call(restrictedCtx, 'coreRuntime'), false);
+
+  assert.throws(
+    () => registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, {
+      builtinModules: [{
+        manifest: {
+          moduleId: 'test.gate.backend.forbidden',
+          contractVersion: 'pipeline-plugin-v1',
+          kind: 'gate',
+          hookFamily: 'gate.execute',
+          gateTypes: ['review'],
+          stageIds: ['gate:review'],
+          capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts', 'dispatch.worker_runtime'],
+          configSchema: anyPluginConfigSchema(),
+          sourceType: 'builtin',
+          trustTier: 'trusted',
+          defaultEnabled: true,
+        },
+        implementation: { execute: async () => null },
+      }],
+    }),
+    /CAPABILITY_FORBIDDEN_FOR_KIND/
+  );
+
+  assert.throws(
+    () => registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, {
+      builtinModules: [{
+        manifest: {
+          moduleId: 'test.restricted.worker.backend',
+          contractVersion: 'pipeline-plugin-v1',
+          kind: 'worker',
+          hookFamily: 'worker.execute',
+          stageIds: ['worker:module_forge'],
+          capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts', 'dispatch.worker_runtime'],
+          configSchema: anyPluginConfigSchema(),
+          sourceType: 'local',
+          trustTier: 'restricted',
+          defaultEnabled: true,
+        },
+        implementation: { execute: async () => null },
+      }],
+    }),
+    /CAPABILITY_FORBIDDEN_FOR_TRUST_TIER/
+  );
+
+  assert.throws(
+    () => registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, {
+      builtinModules: [{
+        manifest: {
+          moduleId: 'test.local.self.trusted',
+          contractVersion: 'pipeline-plugin-v1',
+          kind: 'gate',
+          hookFamily: 'gate.execute',
+          gateTypes: ['review'],
+          stageIds: ['gate:review'],
+          capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts'],
+          configSchema: anyPluginConfigSchema(),
+          sourceType: 'local',
+          trustTier: 'trusted',
+          defaultEnabled: true,
+        },
+        implementation: { execute: async () => null },
+      }],
+    }),
+    /REGISTRY_TRUST_OVERRIDE_INVALID/
+  );
+
+  const locallyElevatedGate = registryMod.buildPluginRegistry({
+    ...explicitPlugins,
+    modules: {
+      'test.restricted.notify.gate': { trustOverride: 'trusted' },
+    },
+  }, { builtinModules: [restrictedNotifyGate], throwOnError: false });
+  assert.equal(locallyElevatedGate.errors.length, 0);
+  assert.equal(locallyElevatedGate.registry.records['test.restricted.notify.gate'].resolvedTrustTier, 'trusted');
+
+  const configurableGate = {
+    manifest: {
+      moduleId: 'test.configurable.gate',
+      contractVersion: 'pipeline-plugin-v1',
+      kind: 'gate',
+      hookFamily: 'gate.execute',
+      gateTypes: ['review'],
+      stageIds: ['gate:review'],
+      capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts'],
+      configSchema: {
+        schemaType: 'json_schema',
+        schemaVersion: 'draft-07',
+        schema: {
+          type: 'object',
+          additionalProperties: false,
+          required: ['mode'],
+          properties: {
+            mode: { type: 'string', enum: ['safe', 'fast'] },
+            retries: { type: 'integer' },
+            enabled: { type: 'boolean' },
+          },
+        },
+        defaults: { mode: 'safe', retries: 2 },
+      },
+      sourceType: 'builtin',
+      trustTier: 'trusted',
+      defaultEnabled: true,
+    },
+    implementation: { execute: async () => null },
+  };
+
+  const configuredRegistryResult = registryMod.buildPluginRegistry({
+    ...explicitPlugins,
+    modules: {
+      'test.configurable.gate': { config: { retries: 4, enabled: true } },
+    },
+  }, { builtinModules: [configurableGate], throwOnError: false });
+  assert.equal(configuredRegistryResult.errors.length, 0);
+  assert.deepEqual(configuredRegistryResult.registry.records['test.configurable.gate'].config, {
+    mode: 'safe',
+    retries: 4,
+    enabled: true,
+  });
+
+  const configuredCtx = contextMod.createPluginContext({
+    config: { project: 'behavior-plugin-config-defaults', pluginRegistry: configuredRegistryResult.registry },
+    hookFamily: 'gate.execute',
+    stageId: 'gate:review',
+    invocation: { gateId: 'review', attempt: 1 },
+  });
+  assert.deepEqual(await configuredCtx.read.moduleConfig(), {
+    mode: 'safe',
+    retries: 4,
+    enabled: true,
+  });
+  assert.equal(Object.isFrozen(await configuredCtx.read.moduleConfig()), true);
+  const mutablePluginInput = { ids: { stageId: 'gate:review' }, nested: { mutable: true } };
+  const mutableWorkerExtra = { worker: { backendConfig: { model: 'test-model' } } };
+  const configuredEnvelope = contextMod.buildPluginInvocationEnvelope(mutablePluginInput, configuredCtx, { workerInput: mutableWorkerExtra });
+  assert.deepEqual(configuredEnvelope.input.plugin.config, {
+    mode: 'safe',
+    retries: 4,
+    enabled: true,
+  });
+  assert.equal(configuredEnvelope.input.plugin.moduleId, 'test.configurable.gate');
+  assert.equal(Object.prototype.hasOwnProperty.call(configuredEnvelope, 'pluginContext'), false);
+  assert.equal(Object.isFrozen(configuredEnvelope), true);
+  assert.equal(Object.isFrozen(configuredEnvelope.input), true);
+  assert.equal(Object.isFrozen(configuredEnvelope.input.ids), true);
+  assert.equal(Object.isFrozen(configuredEnvelope.workerInput), true);
+  assert.equal(Object.isFrozen(configuredEnvelope.workerInput.worker.backendConfig), true);
+  mutablePluginInput.ids.stageId = 'mutated-stage';
+  mutableWorkerExtra.worker.backendConfig.model = 'mutated-model';
+  assert.equal(configuredEnvelope.input.ids.stageId, 'gate:review');
+  assert.equal(configuredEnvelope.workerInput.worker.backendConfig.model, 'test-model');
+  assert.throws(() => {
+    configuredEnvelope.input.ids.stageId = 'mutated-again';
+  }, /read only|not extensible|Cannot assign/i);
+  assert.throws(() => {
+    configuredEnvelope.workerInput.worker.backendConfig.model = 'mutated-again';
+  }, /read only|not extensible|Cannot assign/i);
+
+  assert.throws(
+    () => registryMod.buildPluginRegistry({
+      ...explicitPlugins,
+      modules: {
+        'test.configurable.gate': { config: { mode: 'unsafe', extra: true } },
+      },
+    }, { builtinModules: [configurableGate] }),
+    /REGISTRY_MODULE_CONFIG_INVALID/
+  );
+});
+
+await record('config validation derives accepted gate types from the startup plugin registry', async () => {
+  const configMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/config.ts');
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-gate-type-registry-config-'));
+  const swarmDir = path.join(repoRoot, '.swarm');
+
+  const buildConfig = (pluginConfig = {}) => ({
+    project: 'behavior-gate-type-registry-config',
+    repo_root: repoRoot,
+    paths: {
+      swarm_dir: swarmDir,
+      progress_file: path.join(swarmDir, 'progress.json'),
+      modules_dir: path.join(swarmDir, 'modules'),
+    },
+    agents: {
+      forge: { dispatch: 'acp', acp_agent_id: 'codex' },
+      buster: { dispatch: 'redis', redis_js_path: '/app/skills/pipeline/tools/redis.ts' },
+      echo: { dispatch: 'acp', acp_agent_id: 'codex' },
+    },
+    fallback_model: 'test-fallback-model',
+    poll_interval_seconds: 30,
+    default_timeout_minutes: 45,
+    default_max_fails: 3,
+    auto_retry_threshold: 2,
+    session_nudge_threshold: 0.75,
+    rate_limit: { cooldown_hours: 2, max_pauses_per_module: 5, cooldown_buffer_ms: 5000 },
+    buster: { suite_timeout_ms: 300000 },
+    discord_alerts: { info: true, warn: true, critical: true, ok: true },
+    pre_check: { enabled: true, lint_report_path: '/app/skills/pipeline/tools/lint-report.ts', timeout_seconds: 60 },
+    review_defaults: { timeout_minutes: 30, max_fix_cycles: 3, lint_tier: 'full', lint_required: false },
+    acp_monitor: {
+      unknown_poll_limit: 10,
+      stale_poll_limit: 10,
+      max_transcript_extensions: 3,
+      transcript_grace_ms: 300000,
+      monitor_poll_ms: 10000,
+    },
+    plugins: {
+      enabled: true,
+      allowCustomModules: false,
+      extraModulePaths: [],
+      modules: {},
+      stageOwners: {},
+      restrictedCapabilityAllowlist: {},
+      ...pluginConfig,
+    },
+  });
+
+  const validProgress = {
+    project: 'behavior-gate-type-registry-config',
+    execution_order: ['gate:quality'],
+    modules: {},
+    gates: {
+      quality: { type: 'buster', title: 'Quality Gate' },
+    },
+  };
+
+  const defaultConfig = buildConfig();
+  const defaultRegistry = configMod.validateConfig(defaultConfig, validProgress);
+  assert.equal(defaultRegistry.gateTypes.buster.moduleId, 'builtin.gate.buster');
+
+  const missingApprovalTimeoutProgress = {
+    ...validProgress,
+    execution_order: ['gate:approval'],
+    gates: {
+      approval: { type: 'approval', title: 'Approval Gate' },
+    },
+  };
+  assert.throws(
+    () => configMod.validateConfig(buildConfig(), missingApprovalTimeoutProgress),
+    /progress\.gates\.approval\.on_timeout: required for approval gates/
+  );
+
+  const unknownTopLevelConfig = buildConfig();
+  unknownTopLevelConfig.legacy_shadow_field = true;
+  assert.throws(
+    () => configMod.validateConfig(unknownTopLevelConfig, validProgress),
+    /config\.legacy_shadow_field: unknown top-level config field/
+  );
+  for (const mirrorField of ['_logDir', '_runLogDir']) {
+    const runtimeMirrorConfig = buildConfig();
+    runtimeMirrorConfig[mirrorField] = '/tmp/logs';
+    assert.throws(
+      () => configMod.validateConfig(runtimeMirrorConfig, validProgress),
+      new RegExp(`config\\.${mirrorField}: unknown top-level config field`)
+    );
+  }
+
+  const stringNumericConfig = buildConfig();
+  stringNumericConfig.default_timeout_minutes = '45';
+  assert.throws(
+    () => configMod.validateConfig(stringNumericConfig, validProgress),
+    /config\.default_timeout_minutes: must be a number > 0/
+  );
+
+  const deprecatedModelsConfig = buildConfig();
+  deprecatedModelsConfig.models = { forge: 'legacy-forge' };
+  assert.throws(
+    () => configMod.validateConfig(deprecatedModelsConfig, validProgress),
+    /config\.models: role-specific model defaults belong in progress\.json defaults\.models/
+  );
+
+  const deprecatedReviewersConfig = buildConfig();
+  deprecatedReviewersConfig.review_defaults.reviewers = [{ label: 'codex', agent_id: 'codex' }];
+  assert.throws(
+    () => configMod.validateConfig(deprecatedReviewersConfig, validProgress),
+    /config\.review_defaults\.reviewers: reviewer\/model defaults belong in progress\.json gates\/defaults/
+  );
+
+  const missingMonitorConfig = buildConfig();
+  delete missingMonitorConfig.acp_monitor;
+  assert.throws(
+    () => configMod.validateConfig(missingMonitorConfig, validProgress),
+    /config\.acp_monitor: required platform config object/
+  );
+
+  const incompleteMonitorConfig = buildConfig();
+  delete incompleteMonitorConfig.acp_monitor.monitor_poll_ms;
+  assert.throws(
+    () => configMod.validateConfig(incompleteMonitorConfig, validProgress),
+    /config\.acp_monitor\.monitor_poll_ms: required in swarm\.config\.json/
+  );
+
+  const missingTimeoutConfig = buildConfig();
+  delete missingTimeoutConfig.default_timeout_minutes;
+  assert.throws(
+    () => configMod.validateConfig(missingTimeoutConfig, validProgress),
+    /config\.default_timeout_minutes: required in swarm\.config\.json/
+  );
+
+  const missingBusterRedisPath = buildConfig();
+  delete missingBusterRedisPath.agents.buster.redis_js_path;
+  assert.throws(
+    () => configMod.validateConfig(missingBusterRedisPath, validProgress),
+    /config\.agents\.buster\.redis_js_path: required for redis dispatch agents in swarm\.config\.json/
+  );
+
+  const runtimeTestOverrideConfig = buildConfig();
+  runtimeTestOverrideConfig._testOverrides = { pipelineRunner: { marker: true } };
+  assert.throws(
+    () => configMod.validateConfig(runtimeTestOverrideConfig, validProgress),
+    /config\._testOverrides: forbidden in runtime config/
+  );
+
+  assert.throws(
+    () => configMod.validateConfig(buildConfig({ modules: { 'builtin.gate.buster': { enabled: false } } }), validProgress),
+    /progress\.gates\.quality\.type: 'buster' not registered in the startup plugin registry/
+  );
+});
+
+await record('plugin capability policy narrows context surfaces, effects, and inputs', async () => {
+  const narrowNotification = {
+    manifest: {
+      moduleId: 'test.notification.narrow',
+      contractVersion: 'pipeline-plugin-v1',
+      kind: 'notification',
+      hookFamily: 'module.completed',
+      stageIds: ['module.completed'],
+      capabilities: ['read.state', 'emit.stream', 'write.artifacts'],
+      configSchema: anyPluginConfigSchema(),
+      sourceType: 'builtin',
+      trustTier: 'trusted',
+      defaultEnabled: true,
+      priority: 10,
+    },
+    implementation: { observe: async () => null },
+  };
+  const broadNotification = {
+    manifest: {
+      ...narrowNotification.manifest,
+      moduleId: 'test.notification.broad',
+      capabilities: ['read.state', 'emit.stream', 'read.artifacts', 'write.artifacts', 'notify.operator'],
+      priority: 20,
+    },
+    implementation: { observe: async () => null },
+  };
+
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, {
+    builtinModules: [narrowNotification, broadNotification],
+    throwOnError: false,
+  });
+  assert.equal(errors.length, 0);
+
+  const config = {
+    project: 'behavior-plugin-capabilities',
+    pluginRegistry: registry,
+  };
+  const narrowCtx = contextMod.createPluginContext({
+    config,
+    hookFamily: 'module.completed',
+    stageId: 'module.completed',
+    record: registry.records['test.notification.narrow'],
+    invocation: { hookId: 'module.completed' },
+    stateSnapshot: { status: 'PASS' },
+  });
+  assert.equal(Boolean(narrowCtx.stream), true);
+  assert.equal(Boolean(narrowCtx.artifacts), true);
+  assert.equal(Boolean(narrowCtx.telemetry), false);
+  assert.equal(Boolean(narrowCtx.notify), false);
+  assert.equal(Boolean(narrowCtx.waits), false);
+  assert.equal(Boolean(narrowCtx.signals), false);
+  assert.equal(Boolean(narrowCtx.workerRuntime), false);
+  await assert.rejects(
+    () => narrowCtx.artifacts.get({ type: 'module_summary' }),
+    /artifacts\.get/
+  );
+
+  const rawInput = {
+    ids: { stageId: 'module.completed' },
+    artifacts: [{ type: 'artifact', path: '/tmp/artifact.json' }],
+    summaries: [{ type: 'summary' }],
+    priorResults: [{ status: 'PASS' }],
+    presentation: { discord: { title: 'Done' } },
+    event: { type: 'module.completed', payload: {} },
+  };
+  const narrowEnvelope = contextMod.buildPluginInvocationEnvelope(rawInput, narrowCtx);
+  assert.equal(narrowEnvelope.input.artifacts, undefined);
+  assert.equal(narrowEnvelope.input.summaries, undefined);
+  assert.equal(narrowEnvelope.input.priorResults, undefined);
+  assert.equal(narrowEnvelope.input.presentation, undefined);
+
+  const broadCtx = contextMod.createPluginContext({
+    config,
+    hookFamily: 'module.completed',
+    stageId: 'module.completed',
+    record: registry.records['test.notification.broad'],
+    invocation: { hookId: 'module.completed' },
+    stateSnapshot: { status: 'PASS' },
+  });
+  assert.equal(Boolean(broadCtx.notify), true);
+  assert.equal(Boolean(broadCtx.artifacts), true);
+  const broadEnvelope = contextMod.buildPluginInvocationEnvelope(rawInput, broadCtx);
+  assert.deepEqual(broadEnvelope.input.artifacts, rawInput.artifacts);
+  assert.deepEqual(broadEnvelope.input.presentation, rawInput.presentation);
+});
+
+await record('worker plugin boundary rejects legacy compatibility fallback', async () => {
+  const workerControlMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/contracts/worker-control-result.ts');
+  const legacyWorkerResult = {
+    ok: true,
+    poll_result: { ok: true },
+    status: { status: 'PASS' },
+  };
+
+  assert.throws(
+    () => orchestrationMod.coerceModuleForgeWorkerControlResult(
+      { project: 'behavior-worker-no-compat-fallback' },
+      { ids: { stageId: 'worker:module_forge', moduleId: '01' } },
+      legacyWorkerResult,
+      { stageId: 'worker:module_forge' },
+    ),
+    /compatibility-shaped backend results are not accepted at the worker boundary/,
+  );
+  assert.throws(
+    () => workerControlMod.normalizeTypedWorkerControlResult(legacyWorkerResult, {
+      producerType: 'module_forge',
+      label: 'Module Forge',
+      stageId: 'worker:module_forge',
+      coerce: (result) => orchestrationMod.coerceModuleForgeWorkerControlResult(
+        { project: 'behavior-worker-no-compat-fallback' },
+        { ids: { stageId: 'worker:module_forge', moduleId: '01' } },
+        result,
+        { stageId: 'worker:module_forge' },
+      ),
+    }),
+    /compatibility-shaped backend results are not accepted at the worker boundary/,
+  );
+
+  assert.throws(
+    () => orchestrationMod.coerceModuleForgeWorkerControlResult(
+      { project: 'behavior-worker-no-compat-fallback' },
+      { ids: { stageId: 'worker:module_forge', moduleId: '01' } },
+      legacyWorkerResult,
+      { stageId: 'worker:module_forge', allowCompatibilityCoercion: true },
+    ),
+    /compatibility-shaped backend results are not accepted at the worker boundary/,
+    'stale allowCompatibilityCoercion must not restore worker compatibility fallback',
+  );
+});
+
+await record('git runtime-state path classifier preserves .swarm and accepts Git-relative paths', async () => {
+  const gitWorktreeMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/integrations/git-worktree.ts');
+  assert.equal(typeof gitWorktreeMod.isRuntimeStatePath, 'function');
+
+  for (const relPathName of [
+    '.swarm/logs/pipeline.jsonl',
+    '/.swarm/logs/pipeline.jsonl',
+    'Projects/demo/src/.swarm/logs/pipeline.jsonl',
+    '.swarm/review-gate-status.json',
+    '/.swarm/review-gate-status.json',
+    'Projects/demo/src/.swarm/review-gate-status.json',
+    '.swarm/logs/pipeline/summary.md',
+    '/.swarm/logs/pipeline/summary.json',
+    'Projects/demo/src/.swarm/logs/pipeline/runs/run-1/project-summary.json',
+    '.swarm/project-summary',
+  ]) {
+    assert.equal(gitWorktreeMod.isRuntimeStatePath(relPathName), true, `${relPathName} should be runtime state`);
+  }
+
+  for (const relPathName of [
+    'src/app.js',
+    '.swarmish/logs/pipeline.jsonl',
+    '.swarm/modules/01/output.json',
+    '.swarm/modules/01/status.json.bak',
+    'Projects/demo/src/.swarm/modules/01/source.js',
+  ]) {
+    assert.equal(gitWorktreeMod.isRuntimeStatePath(relPathName), false, `${relPathName} should not be runtime state`);
+  }
+});
+
+await record('pipeline context owns explicit runtime state without config log-dir mirrors', async () => {
+  assert.equal(typeof contextMod.PipelineContext, 'function');
+  assert.equal(typeof contextMod.createPipelineContext, 'function');
+  assert.equal(typeof contextMod.isPipelineContext, 'function');
+
+  const config = {
+    project: 'behavior-pipeline-context',
+    repo_root: '/tmp/behavior-pipeline-context',
+  };
+  const progress = { execution_order: [], modules: {}, gates: {} };
+  const stats = coreRuntimeMod.createRunStats('2026-05-02T00:00:00.000Z');
+  const ctx = contextMod.createPipelineContext({
+    config,
+    progress,
+    runId: 'run-context-1',
+    stats,
+    novaChannel: '1497330547742081268',
+    pluginRegistry: { summary: { enabledModules: 1 } },
+    runtimeOverrides: { model: 'openai/test-model' },
+  });
+
+  assert.equal(contextMod.isPipelineContext(ctx), true);
+  assert.equal(ctx.schemaVersion, 'pipeline-context-v1');
+  assert.strictEqual(ctx.config, config);
+  assert.strictEqual(ctx.progress, progress);
+  assert.strictEqual(ctx.stats, stats);
+  assert.equal(ctx.runId, 'run-context-1');
+  assert.equal(config._runId, 'run-context-1');
+  assert.equal(config.run_id, 'run-context-1');
+  assert.strictEqual(config._runStats, stats);
+  assert.deepEqual(ctx.runtimeOverrides, { model: 'openai/test-model' });
+  assert.equal(Object.prototype.hasOwnProperty.call(config, '_runtimeOverrides'), false);
+  assert.equal(Boolean(ctx.pluginRegistry), true);
+
+  ctx.setLogDirs({ logDir: '/tmp/behavior-pipeline-context/logs', runLogDir: '/tmp/behavior-pipeline-context/logs/pipeline/runs/run-context-1' });
+  assert.equal(ctx.logDir, '/tmp/behavior-pipeline-context/logs');
+  assert.equal(ctx.runLogDir, '/tmp/behavior-pipeline-context/logs/pipeline/runs/run-context-1');
+  assert.equal(Object.prototype.hasOwnProperty.call(config, '_logDir') || Object.prototype.hasOwnProperty.call(config, '_runLogDir'), false);
+
+  const pipelineLogFd = { path: '/tmp/behavior-pipeline-context/logs/pipeline/pipeline.jsonl' };
+  const runPipelineLogFd = { path: '/tmp/behavior-pipeline-context/logs/pipeline/runs/run-context-1/pipeline.jsonl' };
+  ctx.setPipelineLogStreams({ pipelineLogFd, runPipelineLogFd });
+  assert.strictEqual(ctx._pipelineLogFd, pipelineLogFd);
+  assert.strictEqual(ctx._runPipelineLogFd, runPipelineLogFd);
+  assert.equal(ctx._pipelineLogPath, pipelineLogFd.path);
+  assert.equal(ctx._runPipelineLogPath, runPipelineLogFd.path);
+  ctx.setTempDir('/tmp/behavior-pipeline-context/tmp');
+  assert.equal(ctx._tmpDir, '/tmp/behavior-pipeline-context/tmp');
+
+  const snapshot = ctx.runtimeStateSnapshot();
+  assert.equal(snapshot.schemaVersion, 'pipeline-context-v1');
+  assert.equal(snapshot.runId, 'run-context-1');
+  assert.equal(snapshot.novaChannel, '1497330547742081268');
+  assert.equal(snapshot.logDir, ctx.logDir);
+  assert.equal(snapshot.runLogDir, ctx.runLogDir);
+  assert.equal(snapshot.hasPluginRegistry, true);
+  assert.equal(snapshot.hasRuntimeOverrides, true);
+  assert.notStrictEqual(snapshot.stats, stats);
+  assert.throws(() => { snapshot.runId = 'mutated'; }, /read only|Cannot assign|not extensible/i);
 });
 
 await record('plugin context scaffold exposes mediated context, shared correlation, and artifact lane surfaces', async () => {
@@ -324,30 +1362,34 @@ await record('plugin context scaffold exposes mediated context, shared correlati
   assert.equal(typeof artifactBundleMod.createPluginArtifactsApi, 'function');
   assert.equal(typeof correlationMod.buildInvocationSnapshot, 'function');
   assert.equal(typeof correlationMod.resolveStatusCorrelation, 'function');
+  assert.equal(typeof correlationMod.resolveStatusCorrelationWithDiagnosticFallback, 'function');
   assert.equal(typeof correlationMod.resolveResultCorrelation, 'function');
+  assert.equal(typeof correlationMod.resolveResultCorrelationWithDiagnosticFallback, 'function');
+  assert.equal(typeof correlationMod.resolveResultReadModelCorrelation, 'function');
+  assert.equal(typeof correlationMod.resolveResultReadModelCorrelationWithDiagnosticFallback, 'function');
+  assert.equal(typeof correlationMod.resolveResultReadModelCorrelationProvenance, 'function');
+  assert.equal(typeof correlationMod.resolveResultReadModelCorrelationProvenanceWithDiagnosticFallback, 'function');
+  assert.equal(correlationMod.resolveResultCorrelationWithReadModelFallback, undefined);
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-plugin-context-'));
   const logDir = path.join(repoRoot, '.swarm', 'logs');
   fs.mkdirSync(logDir, { recursive: true });
 
-  const { registry, errors } = registryMod.buildPluginRegistry({}, { throwOnError: false });
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
   assert.equal(errors.length, 0);
 
   const config = {
     project: 'behavior-demo',
     repo_root: repoRoot,
-    _logDir: logDir,
+    paths: { swarm_dir: path.join(repoRoot, '.swarm') },
     _runId: 'run-plugin-context',
-    _pluginRegistry: registry,
+    pluginRegistry: registry,
     feature_flags: {
       plugin_context: {
         readonly_config: false,
       },
     },
     retry_limits: [1, 2],
-    _testOverrides: {
-      registryProbe: async () => 'live',
-    },
   };
 
   const progress = {
@@ -405,7 +1447,7 @@ await record('plugin context scaffold exposes mediated context, shared correlati
   assert.equal(Boolean(approvalCtx.waits), true);
   assert.equal(Boolean(approvalCtx.signals), true);
   assert.equal(Boolean(approvalCtx.notify), true);
-  assert.equal(Boolean(approvalCtx.workerBackend), false);
+  assert.equal(Boolean(approvalCtx.workerRuntime), false);
   assert.equal(Object.prototype.hasOwnProperty.call(approvalCtx, 'config'), false);
   assert.equal(Object.prototype.hasOwnProperty.call(approvalCtx, 'registry'), false);
 
@@ -422,24 +1464,19 @@ await record('plugin context scaffold exposes mediated context, shared correlati
   assert.equal(approvalEnvironment.trustTier, 'trusted');
   assert.equal(approvalEnvironment.sourceType, 'builtin');
 
-  const approvalConfig = await approvalCtx.read.config();
-  assert.notStrictEqual(approvalConfig, config);
-  assert.strictEqual(await approvalCtx.read.config(), approvalConfig);
-  assert.equal(Object.isFrozen(approvalConfig), true);
-  assert.equal(Object.isFrozen(approvalConfig.feature_flags), true);
-  assert.equal(Object.isFrozen(approvalConfig.feature_flags.plugin_context), true);
-  assert.equal(Object.isFrozen(approvalConfig.retry_limits), true);
-  assert.equal(approvalConfig.feature_flags.plugin_context.readonly_config, false);
-  assert.deepEqual(approvalConfig.retry_limits, [1, 2]);
-  assert.equal(typeof approvalConfig._testOverrides?.registryProbe, 'undefined');
+  assert.equal(typeof approvalCtx.read.config, 'undefined');
+  assert.equal(typeof approvalCtx.read.progress, 'undefined');
+  assert.equal(Object.prototype.propertyIsEnumerable.call(approvalCtx, 'coreRuntime'), false);
+  assert.equal(typeof approvalCtx.coreRuntime?.readConfig, 'function');
+  assert.equal(typeof approvalCtx.coreRuntime?.readProgress, 'function');
+  assert.strictEqual(approvalCtx.coreRuntime.readConfig(), config);
+  assert.strictEqual(approvalCtx.coreRuntime.readProgress(), progress);
+  const approvalModuleConfig = await approvalCtx.read.moduleConfig();
+  assert.deepEqual(approvalModuleConfig, {});
+  assert.strictEqual(await approvalCtx.read.moduleConfig(), approvalModuleConfig);
+  assert.equal(Object.isFrozen(approvalModuleConfig), true);
   assert.throws(() => {
-    approvalConfig.project = 'mutated-project';
-  }, /read only|not extensible|Cannot assign/i);
-  assert.throws(() => {
-    approvalConfig.feature_flags.plugin_context.readonly_config = true;
-  }, /read only|not extensible|Cannot assign/i);
-  assert.throws(() => {
-    approvalConfig.retry_limits.push(3);
+    approvalModuleConfig.enabled = false;
   }, /read only|not extensible|Cannot add property/i);
   assert.equal(config.project, 'behavior-demo');
   assert.equal(config.feature_flags.plugin_context.readonly_config, false);
@@ -532,7 +1569,7 @@ await record('plugin context scaffold exposes mediated context, shared correlati
     },
     stateSnapshot: async () => ({ status: 'IN_PROGRESS', current_phase: 'forge' }),
     effects: {
-      workerBackend: {
+      workerRuntime: {
         dispatch: async ({ request }) => ({
           ...coreRuntimeMod.createEffectReceipt(),
           backendKind: 'session',
@@ -550,17 +1587,17 @@ await record('plugin context scaffold exposes mediated context, shared correlati
   });
 
   assert.equal(workerCtx.moduleId, 'builtin.worker.module_forge');
-  assert.equal(Boolean(workerCtx.workerBackend), true);
+  assert.equal(Boolean(workerCtx.workerRuntime), true);
   const workerSnapshot = await workerCtx.read.invocation();
   assert.equal(workerSnapshot.refs.dispatch_ref, 'dispatch:dispatch-forge-01-attempt-1');
   assert.equal(workerSnapshot.correlation.primaryRef, 'dispatch:dispatch-forge-01-attempt-1');
-  const workerDispatch = await workerCtx.workerBackend.dispatch({ backendKind: 'session', action: 'spawn' });
+  const workerDispatch = await workerCtx.workerRuntime.dispatch({ backendKind: 'session', action: 'spawn' });
   assert.equal(workerDispatch.backendKind, 'session');
   assert.equal(workerDispatch.request.action, 'spawn');
 });
 
 await record('invalid generator success payloads are rejected and surfaced as failed generator results', async () => {
-  const { registry, errors } = registryMod.buildPluginRegistry({}, { throwOnError: false });
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
   assert.equal(errors.length, 0);
 
   const testRegistry = {
@@ -585,8 +1622,6 @@ await record('invalid generator success payloads are rejected and surfaced as fa
   };
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-generator-invalid-contract-'));
-  const logRoot = path.join(repoRoot, '.swarm', 'logs', 'runs', 'run-generator-invalid-contract-1');
-  fs.mkdirSync(logRoot, { recursive: true });
 
   const config = {
     project: 'behavior-generator-invalid-contract',
@@ -596,9 +1631,7 @@ await record('invalid generator success payloads are rejected and surfaced as fa
       modules_dir: path.join(repoRoot, 'modules'),
     },
     telemetry: { enabled: false },
-    _pluginRegistry: testRegistry,
-    _logDir: path.join(repoRoot, '.swarm', 'logs'),
-    _runLogDir: logRoot,
+    pluginRegistry: testRegistry,
     _runId: 'run-generator-invalid-contract-1',
     run_id: 'run-generator-invalid-contract-1',
     _runStats: coreRuntimeMod.createRunStats('2026-04-21T00:00:00.000Z'),
@@ -610,7 +1643,7 @@ await record('invalid generator success payloads are rejected and surfaced as fa
     gates: {},
   };
 
-  const result = await pipelineRunnerMod.runScheduledGenerator(config, progress, 'generator:project_summary', {
+  const result = await pipelineSchedulingMod.runScheduledGenerator(config, progress, 'generator:project_summary', {
     scheduleReason: 'pipeline_complete',
     mode: 'full',
     exitCode: 0,
@@ -626,6 +1659,13 @@ await record('invalid generator success payloads are rejected and surfaced as fa
   assert.equal(result.outputs.reason, "Generator 'generator:project_summary' returned invalid result: outputs.status must be a non-empty string");
   assert.equal(result.diagnostics.error, "Generator 'generator:project_summary' returned invalid result: outputs.status must be a non-empty string");
   assert.equal(result.diagnostics.contract_invalid, true);
+  assert.equal(result.diagnostics.contract_diagnostic.diagnosticType, 'plugin_contract_invalid');
+  assert.equal(result.diagnostics.contract_diagnostic.stageId, 'generator:project_summary');
+  assert.deepEqual(result.diagnostics.contract_diagnostic.validationErrors, ['outputs.status must be a non-empty string']);
+  assert.equal(result.diagnostics.contract_diagnostic.rawResultPreview, undefined);
+  assert.equal(result.diagnostics.contract_diagnostic.coercedResultPreview, undefined);
+  assert.equal(result.diagnostics.contract_diagnostic.rawResultSummary.redacted, true);
+  assert.equal(result.diagnostics.contract_diagnostic.coercedResultSummary.redacted, true);
 });
 
 await record('canonical lifecycle append boundary updates downstream read models while compatibility status files remain projections', async () => {
@@ -634,7 +1674,7 @@ await record('canonical lifecycle append boundary updates downstream read models
   assert.equal(typeof statusStoreMod.loadLifecycleReadModels, 'function');
   assert.equal(typeof statusStoreMod.getAuthoritativeModuleState, 'function');
   assert.equal(typeof statusStoreMod.readLifecycleEvents, 'function');
-  assert.equal(typeof lifecycleStateMod.consumePendingLifecycleMutation, 'function');
+  assert.equal(typeof lifecycleStateMod.consumePendingLifecycleMutation, 'undefined');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-lifecycle-canonical-'));
   const swarmDir = path.join(repoRoot, '.swarm');
@@ -649,11 +1689,8 @@ await record('canonical lifecycle append boundary updates downstream read models
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),
     },
-    _logDir: logDir,
     _runId: 'run-canonical-lifecycle',
   };
-  config._runLogDir = path.join(logDir, 'pipeline', 'runs', config._runId);
-  ensureDir(config._runLogDir);
   config._progress = {
     execution_order: ['01'],
     modules: {
@@ -668,20 +1705,20 @@ await record('canonical lifecycle append boundary updates downstream read models
   });
 
   const status = statusStoreMod.initStatus('01', { title: 'Scaffold' });
-  lifecycleStateMod.startModulePhase(status, 'forge', 'Forge started', { now: '2026-04-20T17:10:00.000Z' });
-  statusStoreMod.saveStatus(config, '01-scaffold', status);
+  let lifecycleTransition = lifecycleStateMod.startModulePhase(status, 'forge', 'Forge started', { now: '2026-04-20T17:10:00.000Z' });
+  statusStoreMod.saveStatus(config, '01-scaffold', status, lifecycleTransition);
 
-  lifecycleStateMod.transitionModuleStatus(status, 'READY_FOR_TESTING', {
+  lifecycleTransition = lifecycleStateMod.transitionModuleStatus(status, 'READY_FOR_TESTING', {
     note: 'Forge complete',
     now: '2026-04-20T17:12:00.000Z',
   });
-  statusStoreMod.saveStatus(config, '01-scaffold', status);
+  statusStoreMod.saveStatus(config, '01-scaffold', status, lifecycleTransition);
 
-  lifecycleStateMod.transitionModuleStatus(status, 'TESTING', {
+  lifecycleTransition = lifecycleStateMod.transitionModuleStatus(status, 'TESTING', {
     note: 'Buster started',
     now: '2026-04-20T17:13:00.000Z',
   });
-  statusStoreMod.saveStatus(config, '01-scaffold', status);
+  statusStoreMod.saveStatus(config, '01-scaffold', status, lifecycleTransition);
 
   status.active_agent = {
     attempt: 1,
@@ -692,11 +1729,11 @@ await record('canonical lifecycle append boundary updates downstream read models
     model: 'forge-model',
   };
 
-  lifecycleStateMod.transitionModuleStatus(status, 'PASS', {
+  lifecycleTransition = lifecycleStateMod.transitionModuleStatus(status, 'PASS', {
     note: 'Module passed',
     now: '2026-04-20T17:20:00.000Z',
   });
-  statusStoreMod.saveStatus(config, '01-scaffold', status);
+  statusStoreMod.saveStatus(config, '01-scaffold', status, lifecycleTransition);
 
   statusStoreMod.appendPipelineLifecycleEvent(config, 'pipeline_run.completed', {
     progress: config._progress,
@@ -724,19 +1761,17 @@ await record('canonical lifecycle append boundary updates downstream read models
   assert.equal(readModels.modules['01'].status, 'PASS');
   assert.equal(readModels.modules['01'].current_attempt, 1);
   assert.equal(readModels.modules['01'].module_attempt_ref, 'module_attempt:run-canonical-lifecycle:01:1');
-  assert.equal(readModels.modules['01'].compatibility_status_path.endsWith(path.join('modules', '01-scaffold', 'status.json')), true);
   assert.equal(readModels.modules['01'].latest_event_type, 'module_attempt.passed');
   assert.equal(readModels.modules['01'].projection_source, 'canonical-events');
 
   const compatibilityOnlyStatus = statusStoreMod.loadStatus(config, '01-scaffold');
-  compatibilityOnlyStatus.cost.total_duration_seconds = 90;
+  compatibilityOnlyStatus.cost = { total_duration_seconds: 90 };
   statusStoreMod.saveStatus(config, '01-scaffold', compatibilityOnlyStatus);
 
   const readModelsAfterCompatibilitySave = statusStoreMod.loadLifecycleReadModels(config);
   assert.equal(readModelsAfterCompatibilitySave.modules['01'].status, 'PASS');
   assert.equal(readModelsAfterCompatibilitySave.modules['01'].projection_source, 'canonical-events');
-  assert.equal(readModelsAfterCompatibilitySave.modules['01'].compatibility_projection_source, 'status.json');
-  assert.equal(readModelsAfterCompatibilitySave.modules['01'].cost.total_duration_seconds, 90);
+  assert.equal(readModelsAfterCompatibilitySave.modules['01'].cost?.total_duration_seconds, 90, 'runtime snapshot cost edits should synchronize into lifecycle read-model detail without changing terminal status authority');
 
   const authoritativeState = statusStoreMod.getAuthoritativeModuleState(config, '01', {
     dir: '01-scaffold',
@@ -755,7 +1790,7 @@ await record('canonical lifecycle append boundary updates downstream read models
   assert.equal(startedDuplicate.deduped, true);
 });
 
-await record('authoritative module state only bootstraps from compatibility status during explicit migration opt-in', async () => {
+await record('authoritative module state does not bootstrap without lifecycle module state', async () => {
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-authoritative-module-state-'));
   const swarmDir = path.join(repoRoot, '.swarm');
   const logDir = path.join(swarmDir, 'logs');
@@ -770,11 +1805,8 @@ await record('authoritative module state only bootstraps from compatibility stat
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),
     },
-    _logDir: logDir,
     _runId: 'run-authoritative-module-state',
   };
-  config._runLogDir = path.join(logDir, 'pipeline', 'runs', config._runId);
-  ensureDir(config._runLogDir);
   config._progress = {
     execution_order: ['01'],
     modules: {
@@ -788,56 +1820,33 @@ await record('authoritative module state only bootstraps from compatibility stat
     opts: { resume: false },
   });
 
-  fs.writeFileSync(path.join(repoRoot, 'modules', '01-scaffold', 'status.json'), JSON.stringify({
-    module_id: '01',
-    title: 'Scaffold',
-    status: 'READY_FOR_TESTING',
-    fail_count: 0,
-  }, null, 2));
-
-  assert.equal(statusStoreMod.getLifecycleModuleState(config, '01'), null);
-
-  const compatibilityOnly = statusStoreMod.loadStatus(config, '01-scaffold');
+  const legacyOnly = statusStoreMod.loadStatus(config, '01-scaffold');
+  assert.equal(legacyOnly, null, 'loadStatus must not invent module state without lifecycle authority');
   assert.equal(statusStoreMod.getAuthoritativeModuleState(config, '01', {
     dir: '01-scaffold',
-    status: compatibilityOnly,
+    status: legacyOnly,
   }), null);
-  assert.equal(statusStoreMod.getLifecycleModuleState(config, '01'), null);
+  const legacyOnlyProjection = statusStoreMod.projectModuleSchedulerState(config, '01', config._progress.modules['01']);
+  assert.equal(legacyOnlyProjection.status, 'PENDING');
 
-  assert.throws(() => {
-    const staleStatus = statusStoreMod.loadStatus(config, '01-scaffold');
-    lifecycleStateMod.transitionModuleStatus(staleStatus, 'TESTING', {
-      note: 'Buster started without canonical bootstrap',
-      now: '2026-04-22T17:39:00.000Z',
-    });
-    statusStoreMod.saveStatus(config, '01-scaffold', staleStatus);
-  }, /has no open attempt for module_attempt\.testing_started/);
-
-  config.compatibility = {
-    legacy_module_status_bootstrap_mode: 'migration_only',
-  };
-
-  const bootstrapped = statusStoreMod.getAuthoritativeModuleState(config, '01', {
+  assert.equal(statusStoreMod.getAuthoritativeModuleState(config, '01', {
     dir: '01-scaffold',
     status: statusStoreMod.loadStatus(config, '01-scaffold'),
-  });
-  assert.equal(bootstrapped.status, 'READY_FOR_TESTING');
-  assert.equal(bootstrapped.projection_source, 'status.json:migration');
+  }), null);
 
-  const status = statusStoreMod.loadStatus(config, '01-scaffold');
-  lifecycleStateMod.transitionModuleStatus(status, 'TESTING', {
-    note: 'Buster started',
-    now: '2026-04-22T17:40:00.000Z',
+  const canonicalStatus = statusStoreMod.initStatus('01', { title: 'Scaffold' });
+  let canonicalTransition = lifecycleStateMod.startModulePhase(canonicalStatus, 'forge', 'Forge started canonically', { now: '2026-04-22T17:40:00.000Z' });
+  statusStoreMod.saveStatus(config, '01-scaffold', canonicalStatus, canonicalTransition);
+  canonicalTransition = lifecycleStateMod.transitionModuleStatus(canonicalStatus, 'READY_FOR_TESTING', {
+    note: 'Forge complete canonically',
+    now: '2026-04-22T17:41:00.000Z',
   });
-  statusStoreMod.saveStatus(config, '01-scaffold', status);
-
-  fs.writeFileSync(path.join(repoRoot, 'modules', '01-scaffold', 'status.json'), JSON.stringify({
-    module_id: '01',
-    title: 'Scaffold',
-    status: 'PENDING',
-    fail_count: 0,
-    note: 'stale compatibility write',
-  }, null, 2));
+  statusStoreMod.saveStatus(config, '01-scaffold', canonicalStatus, canonicalTransition);
+  canonicalTransition = lifecycleStateMod.transitionModuleStatus(canonicalStatus, 'TESTING', {
+    note: 'Buster started canonically',
+    now: '2026-04-22T17:42:00.000Z',
+  });
+  statusStoreMod.saveStatus(config, '01-scaffold', canonicalStatus, canonicalTransition);
 
   const canonical = statusStoreMod.getAuthoritativeModuleState(config, '01', {
     dir: '01-scaffold',
@@ -845,6 +1854,50 @@ await record('authoritative module state only bootstraps from compatibility stat
   });
   assert.equal(canonical.status, 'TESTING');
   assert.equal(canonical.projection_source, 'canonical-events');
+});
+
+await record('saveStatus rejects guarded lifecycle field changes without lifecycle transition intent', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-status-save-guard-'));
+  const swarmDir = path.join(repoRoot, '.swarm');
+  const logDir = path.join(swarmDir, 'logs');
+  ensureDir(path.join(logDir, 'pipeline'));
+  ensureDir(path.join(logDir, 'modules'));
+  ensureDir(path.join(repoRoot, 'modules', '01-scaffold'));
+
+  const config = {
+    project: 'behavior-status-save-guard',
+    repo_root: repoRoot,
+    paths: {
+      swarm_dir: swarmDir,
+      modules_dir: path.join(repoRoot, 'modules'),
+    },
+    _runId: 'run-status-save-guard',
+  };
+
+  const status = statusStoreMod.initStatus('01', { title: 'Scaffold' });
+  statusStoreMod.saveStatus(config, '01-scaffold', status);
+
+  status.note = 'metadata-only save is allowed';
+  statusStoreMod.saveStatus(config, '01-scaffold', status);
+
+  const directPass = statusStoreMod.loadStatus(config, '01-scaffold');
+  directPass.status = 'PASS';
+  assert.throws(() => statusStoreMod.saveStatus(config, '01-scaffold', directPass), (error) => {
+    assert.equal(error.code, 'STATUS_LIFECYCLE_GUARD_VIOLATION');
+    assert.equal(error.guarded_fields.includes('status'), true);
+    return true;
+  });
+
+  const transitioned = statusStoreMod.loadStatus(config, '01-scaffold');
+  const transitionedLifecycle = lifecycleStateMod.startModulePhase(transitioned, 'forge', 'Forge started canonically', { now: '2026-04-28T12:35:00.000Z' });
+  statusStoreMod.saveStatus(config, '01-scaffold', transitioned, transitionedLifecycle);
+  const persisted = statusStoreMod.loadStatus(config, '01-scaffold');
+  assert.equal(persisted.status, 'IN_PROGRESS');
+
+  const directTerminalOverwrite = statusStoreMod.loadStatus(config, '01-scaffold');
+  directTerminalOverwrite.status = 'BLOCKED';
+  directTerminalOverwrite.blockedReason = 'direct overwrite';
+  assert.throws(() => statusStoreMod.saveStatus(config, '01-scaffold', directTerminalOverwrite), /guarded lifecycle fields changed/);
 });
 
 await record('shared approval wait substrate dedupes replay, collapses conflicting late signals, and lets scheduler skip consumed gates', async () => {
@@ -864,13 +1917,10 @@ await record('shared approval wait substrate dedupes replay, collapses conflicti
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),
     },
-    _logDir: logDir,
     _runId: 'run-approval-lifecycle',
   };
-  config._runLogDir = path.join(logDir, 'pipeline', 'runs', config._runId);
-  ensureDir(config._runLogDir);
 
-  const gate = { type: 'approval', title: 'Release Approval' };
+  const gate = { type: 'approval', title: 'Release Approval', on_timeout: 'block' };
   const progress = {
     execution_order: ['gate:release-approval', '01'],
     modules: {
@@ -939,7 +1989,7 @@ await record('shared approval wait substrate dedupes replay, collapses conflicti
   assert.equal(waitEntry.state, 'CLOSED');
   assert.equal(waitEntry.resume_signal_ref, gateLifecycle.last_signal_ref);
 
-  const next = pipelineRunnerMod.findNextStep(config, progress);
+  const next = pipelineSchedulingMod.findNextStep(config, progress);
   assert.deepEqual(next, { type: 'module', id: '01' });
 });
 
@@ -958,7 +2008,6 @@ await record('buster gate scheduler treats gate-status.json as diagnostic only w
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),
     },
-    _logDir: logDir,
     _runId: 'run-buster-gate-fallback',
   };
 
@@ -992,15 +2041,17 @@ await record('buster gate scheduler treats gate-status.json as diagnostic only w
   assert.equal(reconciled.output.data.status, 'FAIL');
   assert.equal(reconciled.gateStatus.data.status, 'PASS');
 
-  const next = pipelineRunnerMod.findNextStep(config, progress);
+  const next = pipelineSchedulingMod.findNextStep(config, progress);
   assert.deepEqual(next, { type: 'gate', id: 'gate:buster' });
 
   const projectedGate = statusStoreMod.loadLifecycleReadModels(config).gates['gate:buster'];
-  assert.equal(projectedGate.status, 'PENDING');
-  assert.equal(projectedGate.completion_source, null);
-  assert.equal(projectedGate.projection_source, 'compat:pending');
-  assert.equal(projectedGate.compatibility_output_status, 'FAIL');
-  assert.equal(projectedGate.compatibility_gate_status, 'PASS');
+  assert.equal(projectedGate.status, 'FAIL');
+  assert.equal(projectedGate.completion_source, 'output_file');
+  assert.equal(projectedGate.projection_source, 'output_file');
+  assert.equal(projectedGate.gate_output_status, 'FAIL');
+  assert.equal(projectedGate.legacy_gate_status, 'PASS');
+  assert.equal(projectedGate.gate_status_authority.allow_gate_status_completion_authority, false);
+  assert.equal(projectedGate.scheduler_drift_detected, true);
 });
 
 await record('durable cooldown replay survives restart-sensitive module recovery before the next step reruns', async () => {
@@ -1021,11 +2072,9 @@ await record('durable cooldown replay survives restart-sensitive module recovery
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),
     },
-    _logDir: logDir,
     _runId: 'run-cooldown-replay',
   };
-  config._runLogDir = path.join(logDir, 'pipeline', 'runs', config._runId);
-  ensureDir(config._runLogDir);
+  ensureDir(path.join(logDir, 'pipeline', 'runs', config._runId));
 
   const progress = {
     execution_order: ['01'],
@@ -1036,20 +2085,21 @@ await record('durable cooldown replay survives restart-sensitive module recovery
   };
 
   const status = statusStoreMod.initStatus('01', { title: 'Scaffold' });
-  lifecycleStateMod.startModulePhase(status, 'forge', 'Forge started', { now: '2026-04-20T16:55:00.000Z' });
-  statusStoreMod.saveStatus(config, '01-scaffold', status);
-  lifecycleStateMod.transitionModuleStatus(status, 'READY_FOR_TESTING', {
+  let lifecycleTransition = lifecycleStateMod.startModulePhase(status, 'forge', 'Forge started', { now: '2026-04-20T16:55:00.000Z' });
+  statusStoreMod.saveStatus(config, '01-scaffold', status, lifecycleTransition);
+  lifecycleTransition = lifecycleStateMod.transitionModuleStatus(status, 'READY_FOR_TESTING', {
     note: 'Forge complete',
     now: '2026-04-20T16:58:00.000Z',
   });
-  statusStoreMod.saveStatus(config, '01-scaffold', status);
-  lifecycleStateMod.startModulePhase(status, 'buster', 'Buster started', { now: '2026-04-20T17:00:00.000Z' });
-  lifecycleStateMod.transitionModuleStatus(status, 'RATE_LIMITED', {
+  statusStoreMod.saveStatus(config, '01-scaffold', status, lifecycleTransition);
+  lifecycleTransition = lifecycleStateMod.startModulePhase(status, 'buster', 'Buster started', { now: '2026-04-20T17:00:00.000Z' });
+  statusStoreMod.saveStatus(config, '01-scaffold', status, lifecycleTransition);
+  lifecycleTransition = lifecycleStateMod.transitionModuleStatus(status, 'RATE_LIMITED', {
     note: 'Paused for provider cooldown',
     phase: 'buster',
     now: '2026-04-20T17:01:00.000Z',
   });
-  statusStoreMod.saveStatus(config, '01-scaffold', status);
+  statusStoreMod.saveStatus(config, '01-scaffold', status, lifecycleTransition);
 
   const resumeAt = new Date(Date.now() + 25).toISOString();
   statusStoreMod.appendCooldownLifecycleEvent(config, 'rate_limit.cooldown_started', {
@@ -1115,11 +2165,8 @@ await record('durable cooldown replay also clears persisted gate cooldowns befor
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),
     },
-    _logDir: logDir,
     _runId: 'run-gate-cooldown-replay',
   };
-  config._runLogDir = path.join(logDir, 'pipeline', 'runs', config._runId);
-  ensureDir(config._runLogDir);
 
   const progress = {
     execution_order: [],
@@ -1171,47 +2218,56 @@ await record('durable cooldown replay also clears persisted gate cooldowns befor
   );
 });
 
-await record('shared helper ownership stays direct/common and the public pipeline index stays narrow', async () => {
-  const commonGatewayText = readOverlayText(sourceRoot, overlayRoot, 'skills/common/pipeline/integrations/gateway.js');
-  const novaOrchestrationText = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/agents/orchestration.js');
-  const novaModuleRunnerText = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/runners/module-runner.js');
-  const novaPollingText = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/services/polling.js');
-  const busterPipelineText = readOverlayText(sourceRoot, overlayRoot, 'skills/buster/buster-pipeline.js');
-  const busterPipelineHelpersText = readOverlayText(sourceRoot, overlayRoot, 'skills/buster/buster-pipeline-helpers.js');
-  const busterRateLimitText = readOverlayText(sourceRoot, overlayRoot, 'skills/buster/pipeline/services/rate-limit.js');
-  const acpMonitorText = readOverlayText(sourceRoot, overlayRoot, 'skills/common/pipeline/agents/acp-monitor.js');
+await record('shared helper ownership stays local-shimmed and the public pipeline index stays narrow', async () => {
+  const commonGatewayText = readOverlayText(sourceRoot, overlayRoot, 'skills/common/pipeline/integrations/gateway.ts');
+  const novaOrchestrationText = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/agents/orchestration.ts');
+  const novaModuleRunnerText = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/runners/module-runner.ts');
+  const novaPollingText = [
+    'polling.ts',
+    'polling-session-end.ts',
+  ].map((file) => readOverlayText(sourceRoot, overlayRoot, `skills/nova/pipeline/services/${file}`)).join('\n');
+  const busterPipelineText = readOverlayText(sourceRoot, overlayRoot, 'skills/buster/buster-pipeline.ts');
+  const busterRateLimitText = readOverlayText(sourceRoot, overlayRoot, 'skills/buster/pipeline/services/rate-limit.ts');
+  const acpMonitorText = readOverlayText(sourceRoot, overlayRoot, 'skills/common/pipeline/agents/acp-monitor.ts');
+  const lifecycleText = readOverlayText(sourceRoot, overlayRoot, 'skills/common/pipeline/agents/lifecycle.ts');
   assert.equal(commonGatewayText.includes('export function gatewayHeaders'), false);
   assert.equal(commonGatewayText.includes('export async function invokeGatewayTool'), false);
   for (const relPath of [
-    'skills/nova/pipeline/agents/runtime.js',
-    'skills/nova/pipeline/agents/lifecycle.js',
-    'skills/nova/pipeline/agents/acp-monitor.js',
-    'skills/nova/pipeline/integrations/gateway.js',
-    'skills/nova/pipeline/lifecycle-state.js',
-    'skills/buster/pipeline/agents/runtime.js',
-    'skills/buster/pipeline/agents/lifecycle.js',
-    'skills/buster/pipeline/agents/acp-monitor.js',
-    'skills/buster/pipeline/integrations/gateway.js',
-    'skills/buster/pipeline/lifecycle-state.js',
+    'skills/nova/pipeline/agents/runtime.ts',
+    'skills/nova/pipeline/agents/lifecycle.ts',
+    'skills/nova/pipeline/agents/acp-monitor.ts',
+    'skills/nova/pipeline/agents/tracked-agents.ts',
+    'skills/nova/pipeline/integrations/gateway.ts',
+    'skills/nova/pipeline/lifecycle-state.ts',
+    'skills/buster/pipeline/agents/runtime.ts',
+    'skills/buster/pipeline/agents/lifecycle.ts',
+    'skills/buster/pipeline/agents/acp-monitor.ts',
+    'skills/buster/pipeline/agents/tracked-agents.ts',
+    'skills/buster/pipeline/integrations/gateway.ts',
+    'skills/buster/pipeline/lifecycle-state.ts',
   ]) {
-    assert.equal(fs.existsSync(path.join(sourceRoot, relPath)), false, `${relPath} should not remain as a same-name repo facade`);
+    const shimText = readOverlayText(sourceRoot, overlayRoot, relPath);
+    assert(shimText.includes('export * from'), `${relPath} should remain as a repo-local compatibility shim`);
+    assert(shimText.includes('common/pipeline'), `${relPath} shim should point to the common owner`);
   }
-  assert(novaOrchestrationText.includes("../../../common/pipeline/integrations/gateway.js"));
-  assert(novaModuleRunnerText.includes("../../../common/pipeline/agents/runtime.js"));
-  assert(novaModuleRunnerText.includes("../../../common/pipeline/agents/lifecycle.js"));
-  assert(novaModuleRunnerText.includes("../../../common/pipeline/lifecycle-state.js"));
-  assert(novaPollingText.includes("../../../common/pipeline/agents/acp-monitor.js"));
-  assert(novaPollingText.includes("../../../common/pipeline/integrations/gateway.js"));
-  assert(busterPipelineText.includes("../common/pipeline/agents/acp-monitor.js"));
-  assert(busterPipelineText.includes("../common/pipeline/agents/lifecycle.js"));
-  assert(busterPipelineText.includes("../common/pipeline/integrations/gateway.js"));
-  assert(busterPipelineHelpersText.includes("../common/pipeline/lifecycle-state.js"));
-  assert(busterRateLimitText.includes("../../../common/pipeline/agents/acp-monitor.js"));
-  assert(acpMonitorText.includes("import { gatewayInvoke, resolveGatewayBaseUrl, resolveGatewayToken } from '../integrations/gateway.js';"));
-  assert(acpMonitorText.includes("const lifecycleUrl = new URL('./lifecycle.js', import.meta.url);"));
+  assert(novaOrchestrationText.includes("../integrations/gateway.ts"));
+  assert(novaModuleRunnerText.includes("./module-runner/attempt.ts"));
+  assert(novaPollingText.includes("../agents/acp-monitor.ts"));
+  assert(novaPollingText.includes("../integrations/gateway.ts"));
+  assert(busterPipelineText.includes("./pipeline/agents/session-termination.ts"));
+  assert(busterPipelineText.includes("./pipeline/integrations/gateway.ts"));
+  assert(busterRateLimitText.includes("../agents/acp-monitor.ts"));
+  assert(acpMonitorText.includes("import { getGatewaySessionStatus, resolveGatewayBaseUrl, resolveGatewayToken } from '../integrations/gateway.ts';"));
+  assert(acpMonitorText.includes("import { getTrackedAgent } from './tracked-agents.ts';"));
+  assert.equal(acpMonitorText.includes("new URL('./lifecycle.js', import.meta.url)"), false);
+  assert.equal(acpMonitorText.includes('import('), false);
+  assert(lifecycleText.includes("from './session-semantics.ts';"));
+  assert(lifecycleText.includes("from './tracked-agents.ts';"));
+  assert.equal(lifecycleText.includes("from './acp-monitor.ts'"), false);
   assert.equal(acpMonitorText.includes("new URL('./shutdown.js', import.meta.url)"), false);
   assert.equal(acpMonitorText.includes('invokeGatewayTool('), false);
-  assert(acpMonitorText.includes("gatewayInvoke('session_status', { sessionKey }, 10000, {"));
+  assert(acpMonitorText.includes('getGatewaySessionStatus(sessionKey, 10000, {'));
+  assert.equal(acpMonitorText.includes('gatewayInvoke('), false);
   assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'gatewayKillSync'), false);
   assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'acpxCleanupSync'), false);
   assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'acpxCleanup'), false);
@@ -1332,7 +2388,7 @@ await record('deprecated telemetry no-op helpers stay off the public pipeline in
 });
 
 await record('deprecated telemetry shim exports are removed from Nova telemetry runtime', async () => {
-  const telemetryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/telemetry.js');
+  const telemetryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/telemetry.ts');
   assert.equal(Object.prototype.hasOwnProperty.call(telemetryMod, 'onRedisMessage'), false);
   assert.equal(Object.prototype.hasOwnProperty.call(telemetryMod, 'emitBusterResult'), false);
   assert.equal(Object.prototype.hasOwnProperty.call(telemetryMod, 'emitMemoryRecalled'), false);
@@ -1443,7 +2499,7 @@ await record('shared lifecycle-state helper enforces canonical history, phase, a
   assert.equal(normalizedFailStatus.completion_summary, 'Fresh failure detail');
 });
 
-await record('pipeline run lock rejects concurrent local runs and reclaims stale locks', async () => {
+await record('pipeline runtime lock serializes shared-swarm runs and reclaims only expired leased locks', async () => {
   const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-swarm-'));
   const config = {
     project: 'behavior-demo',
@@ -1451,39 +2507,67 @@ await record('pipeline run lock rejects concurrent local runs and reclaims stale
     _runId: 'run-123',
     paths: { swarm_dir: swarmDir },
   };
+  const otherProjectConfig = {
+    ...config,
+    project: 'other-behavior-demo',
+    _runId: 'run-456',
+  };
 
-  const firstLock = pipelineRunnerMod.acquirePipelineRunLock(config, { module: '01' });
+  const firstLock = pipelineLockMod.acquirePipelineRunLock(config, { module: '01' });
   const lockPath = path.join(swarmDir, 'logs', 'pipeline', 'active-run.lock.json');
   assert(fs.existsSync(lockPath));
 
   assert.throws(
-    () => pipelineRunnerMod.acquirePipelineRunLock(config, { module: '02' }),
-    /already active/,
+    () => pipelineLockMod.acquirePipelineRunLock(config, { module: '02' }),
+    /shared runtime\/swarm/,
+  );
+  assert.throws(
+    () => pipelineLockMod.acquirePipelineRunLock(otherProjectConfig, { module: '01' }),
+    /Concurrent pipeline runs are intentionally serialized per swarm_dir/,
   );
 
-  pipelineRunnerMod.releasePipelineRunLock(firstLock);
+  pipelineLockMod.releasePipelineRunLock(firstLock);
   assert.equal(fs.existsSync(lockPath), false);
 
   fs.mkdirSync(path.dirname(lockPath), { recursive: true });
+  fs.writeFileSync(lockPath, '{ not json');
+  assert.throws(
+    () => pipelineLockMod.acquirePipelineRunLock(config, { resume: true }),
+    /malformed and cannot be safely reclaimed/,
+  );
+  assert.equal(fs.existsSync(lockPath), true);
+  fs.unlinkSync(lockPath);
+
   fs.writeFileSync(lockPath, JSON.stringify({
+    schema_version: 1,
+    token: 'expired-token',
     pid: 999999,
-    hostname: os.hostname(),
+    hostname: 'retired-host',
     project: config.project,
     run_id: 'stale-run',
+    module: 'stale-module',
+    resume: false,
+    acquired_at: '2026-01-01T00:00:00.000Z',
+    heartbeat_at: '2026-01-01T00:00:00.000Z',
+    lease_expires_at: '2026-01-01T00:00:01.000Z',
+    stale_at: '2026-01-01T00:00:01.000Z',
+    lease_ms: 1000,
+    heartbeat_ms: 500,
+    repo_root: config.repo_root,
   }, null, 2));
 
-  const reclaimedLock = pipelineRunnerMod.acquirePipelineRunLock(config, { resume: true });
+  const reclaimedLock = pipelineLockMod.acquirePipelineRunLock(config, { resume: true });
   assert(fs.existsSync(lockPath));
   const persisted = JSON.parse(fs.readFileSync(lockPath, 'utf8'));
   assert.equal(persisted.run_id, 'run-123');
   assert.equal(persisted.resume, true);
-  pipelineRunnerMod.releasePipelineRunLock(reclaimedLock);
+  pipelineLockMod.releasePipelineRunLock(reclaimedLock);
   assert.equal(fs.existsSync(lockPath), false);
 });
 
 await record('Buster monitor enforces hard wall-clock timeouts with explicit kill confirmation', async () => {
   const killCalls = [];
-  const result = await busterPipelineMod.monitorSession(
+  const result = await busterSessionMonitorMod.monitorSession(
     'agent:main:acp:timeout',
     null,
     {
@@ -1495,6 +2579,14 @@ await record('Buster monitor enforces hard wall-clock timeouts with explicit kil
         agentId: 'claude',
         label: 'buster-module-01-attempt-1',
       },
+      rate_limit: { max_pauses: 5, initial_cooldown_s: 7200, max_cooldown_s: 7200 },
+      acp_monitor: {
+        unknown_poll_limit: 10,
+        stale_poll_limit: 10,
+        max_transcript_extensions: 3,
+        transcript_grace_ms: 300000,
+        monitor_poll_ms: 10000,
+      },
     },
     null,
     {
@@ -1502,13 +2594,26 @@ await record('Buster monitor enforces hard wall-clock timeouts with explicit kil
       spawnedAt: 1,
       timeoutSeconds: 1,
       killGraceMs: 1,
+      gatewayUrl: 'http://127.0.0.1:1',
+      gatewayToken: '',
       logger: { info() {}, warn() {}, error() {}, step() {}, flush() {} },
       testHooks: {
         now: () => 5000,
         sleep: async () => {},
-        killSession: async (sessionKey, opts) => {
+        terminateSession: async (sessionKey, opts) => {
           killCalls.push({ sessionKey, opts });
-          return { requested: true, confirmed: true };
+          return {
+            sessionKey,
+            requested: true,
+            confirmed: true,
+            unconfirmed: false,
+            terminal: true,
+            state: 'closed',
+            cleanupAttempted: false,
+            cleanupConfirmed: false,
+            cleanupError: null,
+            graceMs: opts.graceMs,
+          };
         },
         getAcpMonitorState: async () => ({
           sessionState: 'closed',
@@ -1524,14 +2629,14 @@ await record('Buster monitor enforces hard wall-clock timeouts with explicit kil
   assert.equal(killCalls[0].sessionKey, 'agent:main:acp:timeout');
   assert.equal(killCalls[0].opts.label, 'buster-module-01-attempt-1');
   assert.equal(result.reason, 'session_timeout_kill_confirmed');
-  assert.equal(result.killIssued, true);
-  assert.equal(result.killConfirmed, true);
+  assert.equal(result.termination.confirmed, true);
+  assert.equal(result.termination.unconfirmed, false);
 });
 
 await record('Buster consumer reclaims pending tasks before reading new deliveries', async () => {
   const reclaimCalls = [];
   let xreadgroupCalls = 0;
-  const reclaimed = await busterPipelineMod.readNextTaskEntry({
+  const reclaimed = await busterTaskQueueMod.readNextTaskEntry({
     call: async (...args) => {
       reclaimCalls.push(args);
       return ['0-0', [[

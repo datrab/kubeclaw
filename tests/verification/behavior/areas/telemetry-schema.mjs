@@ -67,16 +67,21 @@ await record('telemetry schema locks authoritative field tables for hotspot payl
 
 await record('telemetry schema explains effective pipeline.started project model defaults', async () => {
   const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
-  assert.equal(telemetrySchema.includes('`models` carries the effective project-level per-agent defaults after applying legacy top-level `models` plus `defaults.models`, with `defaults.models` winning for any overlapping agent key.'), true);
+  assert.equal(telemetrySchema.includes('`models` carries the effective project-level per-agent defaults from `progress.defaults.models`.'), true);
+  assert.equal(telemetrySchema.includes('legacy top-level `models`'), false);
 });
 
 await record('telemetry schema documents Buster child-session lifecycle under agent.spawned and agent.killed', async () => {
   const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
-  const busterPipeline = readOverlayText(sourceRoot, overlayRoot, 'skills/buster/buster-pipeline.js');
-  assert.equal(telemetrySchema.includes('Session-backed agent lifecycle event for ACP/subagent work such as Forge, Echo, and the child session that Buster spawns after a successful task decision. Redis-dispatched Buster work still emits `buster.task_started` / `buster.task_completed` for task-level lifecycle around that child-session work.'), true);
-  assert.equal(telemetrySchema.includes('Session-backed agent termination event for ACP/subagent work such as Forge, Echo, and the child session that Buster spawned for a passing task. Redis-dispatched Buster work still emits `buster.task_completed` for task-level lifecycle, while `agent.killed` closes the child-session lifecycle when one existed.'), true);
-  assert.equal(telemetrySchema.includes('Redis-dispatched Buster work uses `buster.task_started` / `buster.task_completed` instead of `agent.spawned`.'), false);
-  assert.equal(telemetrySchema.includes('Redis-dispatched Buster work uses `buster.task_completed` instead of `agent.killed`.'), false);
+  const busterPipeline = [
+    'skills/buster/buster-pipeline.ts',
+    'skills/buster/pipeline/services/task-lifecycle.ts',
+    'skills/buster/pipeline/services/task-lifecycle/session.ts',
+  ].map((relPath) => readOverlayText(sourceRoot, overlayRoot, relPath)).join('\n');
+  assert.equal(telemetrySchema.includes('Session-backed agent lifecycle events use `agent.spawn.requested`, `agent.spawned`, `agent.delivery.target`, and `agent.killed`; plugin-owned task lifecycle details use `plugin.event` with `plugin_id: "buster"`.'), true);
+  assert.equal(telemetrySchema.includes('Session-backed agent termination uses `agent.killed`; plugin-owned task completion details use `plugin.event` with `plugin_event: "task_completed"`.'), true);
+  assert.equal(telemetrySchema.includes('buster.task_started'), false);
+  assert.equal(telemetrySchema.includes('buster.task_completed'), false);
   assert.equal(telemetrySchema.includes('When the spawned or terminated session belongs to gate-owned work and Nova already knows that gate identity, both lifecycle events also preserve canonical `gate_type` and `dispatch_id` join keys alongside `gate_id`, `attempt`, and `session_key`.'), true);
   assert.equal(telemetrySchema.includes('"gate_type": "review"'), true);
   assert.equal(telemetrySchema.includes('"dispatch_id": "dispatch-review-06-1"'), true);
@@ -98,6 +103,9 @@ await record('telemetry schema documents the current pipeline.halted payload sha
   assert.equal(telemetrySchema.includes('"session_key": "agent:forge:session123"'), true);
   assert.equal(telemetrySchema.includes('When the halt is tied to a live module or gate session, `session_key` preserves that cross-surface correlation key.'), true);
   assert.equal(telemetrySchema.includes('When the terminal result already knows the retry identity, the halt also preserves canonical `attempt`, `dispatch_id`, and `gateway_label` so the stop-path event stays joinable with the exact retry or gate dispatch.'), true);
+  assert.equal(telemetrySchema.includes('| rate_limit_exhausted | boolean\\|null | Present on `RATE_LIMITED` halts; true when the owner exhausted the allowed cooldown pause budget |'), true);
+  assert.equal(telemetrySchema.includes('| max_rate_limit_pauses | number\\|null | Present on `RATE_LIMITED` halts; maximum allowed cooldown pauses for the stopped owner |'), true);
+  assert.equal(telemetrySchema.includes('Single-module, full-pipeline module, and gate-owned rate-limit halts use the same `RATE_LIMITED:<step-id>` summary reason shape.'), true);
   assert.equal(telemetrySchema.includes('"gate_type": "review"'), true);
   assert.equal(telemetrySchema.includes('When the halt is gate-owned and Nova knows the dispatched gate type, the event also preserves `gate_type`'), true);
   assert.equal(telemetrySchema.includes('"step_type": "arch_validation"'), true);
@@ -214,7 +222,7 @@ await record('telemetry schema documents canonical summary lifecycle payloads an
   assert.equal(telemetrySchema.includes('| summary_json_path | string\\|null | Run-scoped `summary.json` artifact path for `summary_type: pipeline` |'), true);
   assert.equal(telemetrySchema.includes('| pipeline_summary_path | string\\|null | Top-level `.swarm/logs/pipeline/summary.json` artifact path for `summary_type: pipeline` |'), true);
   assert.equal(telemetrySchema.includes('| latest_json_path | string\\|null | Top-level `.swarm/logs/pipeline/latest.json` pointer path for `summary_type: pipeline` |'), true);
-  assert.equal(telemetryContract.includes('plus the top-level `.swarm/logs/pipeline/summary.json` and `.swarm/logs/pipeline/latest.json` pointers.'), true);
+  assert.equal(telemetryContract.includes('`buster-telemetry-fallback.jsonl`, `redis/redis-exchanges.jsonl`, `redis/redis-ops.jsonl`, `summary.json`, plus the top-level `.swarm/logs/pipeline/summary.json` and `.swarm/logs/pipeline/latest.json` pointers.'), true);
   assert.equal(telemetrySchema.includes('### case_study.started'), false);
   assert.equal(telemetrySchema.includes('### case_study.completed'), false);
   assert.equal(telemetrySchema.includes('case_study.started, case_study.completed'), false);
@@ -277,12 +285,14 @@ await record('telemetry schema documents gate-scoped agent transcript and progre
   assert.equal(telemetrySchema.includes('"status": "active"'), true);
 });
 
-await record('telemetry schema documents current Buster task correlation fields', async () => {
+await record('telemetry schema documents current plugin.event Buster task correlation fields', async () => {
   const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
-  assert.equal(telemetrySchema.includes('"type": "buster.task_started"'), true);
-  assert.equal(telemetrySchema.includes('"dispatch_id": "dispatch-buster-06"'), true);
-  assert.equal(telemetrySchema.includes('"session_key": "agent:buster:session123"'), true);
-  assert.equal(telemetrySchema.includes('`session_key` may be `null` on early `buster.task_started` emits before the child session exists.'), true);
+  assert.equal(telemetrySchema.includes('"type": "plugin.event"'), true);
+  assert.equal(telemetrySchema.includes('"plugin_id": "buster"'), true);
+  assert.equal(telemetrySchema.includes('"plugin_event": "visual_reg"'), true);
+  assert.equal(telemetrySchema.includes('| dispatch_id | string\\|null | Dispatch correlation key when known |'), true);
+  assert.equal(telemetrySchema.includes('| session_key | string\\|null | Session correlation key when known |'), true);
+  assert.equal(telemetrySchema.includes('Buster currently uses these `plugin_event` values: `task_started`, `task_completed`, `sandbox_cleanup`, `git_sync`, `decision`, `suite_started`, `suite_completed`, `session_monitor`, and `visual_reg`.'), true);
 });
 
 await record('telemetry schema documents gate-scoped rate-limit dispatch correlation fields', async () => {

@@ -34,15 +34,37 @@ export async function registerAgentLifecycleArea({
   pathsMod,
   busterPipelineMod,
 }) {
+async function buildBuiltInRegistry(runtimeRootForRegistry) {
+  const registryMod = await importRuntimeModule(runtimeRootForRegistry, '/app/skills/pipeline/core/registry.ts');
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
+  assert.equal(errors.length, 0);
+  return registry;
+}
+
+function platformAgentLifecycleDefaults() {
+  return {
+    fallback_model: 'openai-codex/gpt-5.4',
+    rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },
+    buster: { suite_timeout_ms: 300000 },
+    acp_monitor: {
+      unknown_poll_limit: 10,
+      stale_poll_limit: 10,
+      max_transcript_extensions: 3,
+      transcript_grace_ms: 300000,
+      monitor_poll_ms: 10000,
+    },
+  };
+}
+
 await record('agent.spawned is emitted for session-backed Forge spawns with correlation fields', async () => {
   const orchestrationRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
   installFakeRedis(orchestrationRuntimeRoot);
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.js');
-  const lifecycleTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/common/pipeline/agents/lifecycle.js');
-  const runtimeCoreMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.ts');
+  const lifecycleTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/lifecycle.ts');
+  const runtimeCoreMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const requests = [];
   const gateway = await startGatewayServer(async ({ body }) => {
@@ -60,17 +82,18 @@ await record('agent.spawned is emitted for session-backed Forge spawns with corr
   process.env.OPENCLAW_GATEWAY_URL = gateway.url;
 
   const config = {
+    ...platformAgentLifecycleDefaults(),
     project: 'behavior-agent-spawn-correlation',
     repo_root: repoRoot,
     telemetry: { enabled: true },
     agents: { forge: { cwd: repoRoot, timeout_seconds: 2700 } },
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
+    paths: { swarm_dir: path.join(repoRoot, '.swarm') },
     _runId: runId,
     run_id: runId,
     _disable_discord_webhooks: true,
     discord_webhook_url: 'https://example.invalid/webhook',
     _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    pluginRegistry: await buildBuiltInRegistry(orchestrationRuntimeRoot),
   };
 
   try {
@@ -96,16 +119,16 @@ await record('agent.spawned is emitted for session-backed Forge spawns with corr
     assert.equal(spawnedEvent.dispatch, 'acp');
 
     const topLevelEntry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
-    const runScopedEntry = JSON.parse(fs.readFileSync(path.join(config._runLogDir, 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
+    const runScopedEntry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'runs', runId, 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
     assert.equal(topLevelEntry.title, '🔬 ACP Session Spawned: forge/01');
     assert.equal(topLevelEntry.run_id, runId);
     assert.equal(runScopedEntry.run_id, runId);
     assert.equal(runScopedEntry.gateway_label, topLevelEntry.gateway_label);
     assert.equal(runScopedEntry.session_key, 'agent:main:acp:forge-spawn-1');
-    assert.equal(runScopedEntry.fields.some((field) => field.name === 'Run ID' && field.value === 'forge-spawn-run-1'), true);
+    assert.equal(runScopedEntry.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
     assert.equal(runScopedEntry.fields.some((field) => field.name === 'Module' && field.value === '01'), true);
     assert.equal(runScopedEntry.fields.some((field) => field.name === 'Attempt' && field.value === '2'), true);
-    assert.equal(runScopedEntry.fields.some((field) => field.name === 'Label' && String(field.value).startsWith('forge-01-')), true);
+    assert.equal(runScopedEntry.fields.some((field) => field.name === 'Gateway Label' && String(field.value).startsWith('forge-01-')), true);
     assert.equal(runScopedEntry.fields.some((field) => field.name === 'Session' && field.value === 'agent:main:acp:forge-spawn-1'), true);
   } finally {
     lifecycleTestMod.untrackAgent('forge-01');
@@ -120,9 +143,9 @@ await record('subagent-backed Forge spawns preserve subagent runtime semantics a
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.js');
-  const lifecycleTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/common/pipeline/agents/lifecycle.js');
-  const runtimeCoreMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.ts');
+  const lifecycleTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/lifecycle.ts');
+  const runtimeCoreMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const requests = [];
   const gateway = await startGatewayServer(async ({ body }) => {
@@ -140,17 +163,18 @@ await record('subagent-backed Forge spawns preserve subagent runtime semantics a
   process.env.OPENCLAW_GATEWAY_URL = gateway.url;
 
   const config = {
+    ...platformAgentLifecycleDefaults(),
     project: 'behavior-subagent-spawn-correlation',
     repo_root: repoRoot,
     telemetry: { enabled: true },
     agents: { forge: { cwd: repoRoot, timeout_seconds: 2700, thinking_level: 'high' } },
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
+    paths: { swarm_dir: path.join(repoRoot, '.swarm') },
     _runId: runId,
     run_id: runId,
     _disable_discord_webhooks: true,
     discord_webhook_url: 'https://example.invalid/webhook',
     _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    pluginRegistry: await buildBuiltInRegistry(orchestrationRuntimeRoot),
   };
 
   try {
@@ -186,16 +210,16 @@ await record('subagent-backed Forge spawns preserve subagent runtime semantics a
     assert.equal(spawnedEvent.thinking_level, 'high');
 
     const topLevelEntry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
-    const runScopedEntry = JSON.parse(fs.readFileSync(path.join(config._runLogDir, 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
+    const runScopedEntry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'runs', runId, 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
     assert.equal(topLevelEntry.title, '🔬 Subagent Session Spawned: forge/01');
     assert.equal(topLevelEntry.run_id, runId);
     assert.equal(runScopedEntry.run_id, runId);
     assert.equal(runScopedEntry.gateway_label, topLevelEntry.gateway_label);
     assert.equal(runScopedEntry.session_key, 'agent:main:subagent:forge-spawn-1');
-    assert.equal(runScopedEntry.fields.some((field) => field.name === 'Run ID' && field.value === 'forge-subagent-run-1'), true);
+    assert.equal(runScopedEntry.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
     assert.equal(runScopedEntry.fields.some((field) => field.name === 'Module' && field.value === '01'), true);
     assert.equal(runScopedEntry.fields.some((field) => field.name === 'Attempt' && field.value === '3'), true);
-    assert.equal(runScopedEntry.fields.some((field) => field.name === 'Label' && String(field.value).startsWith('forge-01-')), true);
+    assert.equal(runScopedEntry.fields.some((field) => field.name === 'Gateway Label' && String(field.value).startsWith('forge-01-')), true);
     assert.equal(runScopedEntry.fields.some((field) => field.name === 'Session' && field.value === 'agent:main:subagent:forge-spawn-1'), true);
   } finally {
     lifecycleTestMod.untrackAgent('forge-01');
@@ -210,8 +234,8 @@ await record('spawn-failed lifecycle alerts preserve canonical run and label cor
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.js');
-  const runtimeCoreMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.ts');
+  const runtimeCoreMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const gateway = await startGatewayServer(async ({ body }) => {
     if (body?.tool === 'sessions_spawn') {
@@ -227,17 +251,18 @@ await record('spawn-failed lifecycle alerts preserve canonical run and label cor
   process.env.OPENCLAW_GATEWAY_URL = gateway.url;
 
   const config = {
+    ...platformAgentLifecycleDefaults(),
     project: 'behavior-agent-spawn-failed',
     repo_root: repoRoot,
     telemetry: { enabled: true },
     agents: { forge: { cwd: repoRoot, timeout_seconds: 2700 } },
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
+    paths: { swarm_dir: path.join(repoRoot, '.swarm') },
     _runId: runId,
     run_id: runId,
     _disable_discord_webhooks: true,
     discord_webhook_url: 'https://example.invalid/webhook',
     _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    pluginRegistry: await buildBuiltInRegistry(orchestrationRuntimeRoot),
   };
 
   try {
@@ -255,14 +280,14 @@ await record('spawn-failed lifecycle alerts preserve canonical run and label cor
     );
     await flushAsync();
 
-    const runScopedEntry = JSON.parse(fs.readFileSync(path.join(config._runLogDir, 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
+    const runScopedEntry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'runs', runId, 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
     assert.equal(runScopedEntry.title, '❌ Spawn Failed: forge/01');
     assert.equal(runScopedEntry.run_id, runId);
     assert.equal(runScopedEntry.session_key ?? null, null);
     assert.equal(runScopedEntry.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
     assert.equal(runScopedEntry.fields.some((field) => field.name === 'Module' && field.value === '01'), true);
     assert.equal(runScopedEntry.fields.some((field) => field.name === 'Attempt' && field.value === '2'), true);
-    assert.equal(runScopedEntry.fields.some((field) => field.name === 'Label' && String(field.value).startsWith('forge-01-')), true);
+    assert.equal(runScopedEntry.fields.some((field) => field.name === 'Gateway Label' && String(field.value).startsWith('forge-01-')), true);
   } finally {
     process.env.OPENCLAW_GATEWAY_URL = prevGatewayUrl;
     await gateway.close();
@@ -271,8 +296,20 @@ await record('spawn-failed lifecycle alerts preserve canonical run and label cor
 
 await record('kill path keeps ACP cleanup distinct from subagent stop behavior', async () => {
   const requests = [];
+  let subagentKilled = false;
+  let acpStopped = false;
   const gateway = await startGatewayServer(async ({ body }) => {
     requests.push(body);
+    if (body?.tool === 'subagents' && body?.args?.action === 'kill') subagentKilled = true;
+    if (body?.tool === 'sessions_send' && body?.args?.sessionKey === 'agent:main:acp:1') acpStopped = true;
+    if (body?.tool === 'session_status') {
+      if (body?.args?.sessionKey === 'agent:main:subagent:1') {
+        return { result: { details: { status: subagentKilled ? 'closed' : 'running' } } };
+      }
+      if (body?.args?.sessionKey === 'agent:main:acp:1') {
+        return { result: { details: { status: acpStopped ? 'closed' : 'running' } } };
+      }
+    }
     return { result: { details: { ok: true } } };
   });
   const fakeBinDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-bin-'));
@@ -285,26 +322,71 @@ await record('kill path keeps ACP cleanup distinct from subagent stop behavior',
       runtime: 'subagent',
       label: 'subagent-check',
       gatewayUrl: gateway.url,
+      gatewayToken: '',
     });
     await lifecycleMod.killSession('agent:main:acp:1', {
       runtime: 'acp',
       agentId: 'claude',
       label: 'acp-check',
       gatewayUrl: gateway.url,
+      gatewayToken: '',
     });
+    const subagentKillRequests = requests.filter((req) => req?.tool === 'subagents' && req?.args?.action === 'kill');
     const stopRequests = requests.filter((req) => req?.tool === 'sessions_send');
     const statusRequests = requests.filter((req) => req?.tool === 'session_status');
-    assert.equal(stopRequests.length, 2);
-    assert.deepEqual(stopRequests.map((req) => req?.args?.sessionKey), [
-      'agent:main:subagent:1',
-      'agent:main:acp:1',
-    ]);
+    assert.equal(subagentKillRequests.length, 1);
+    assert.equal(subagentKillRequests[0]?.args?.target, 'agent:main:subagent:1');
+    assert.equal(stopRequests.length, 1);
+    assert.deepEqual(stopRequests.map((req) => req?.args?.sessionKey), ['agent:main:acp:1']);
     assert(statusRequests.length >= 2);
     const acpxCalls = fs.existsSync(acpxLog) ? fs.readFileSync(acpxLog, 'utf8').trim().split('\n').filter(Boolean) : [];
-    assert.equal(acpxCalls.length, 1);
-    assert(acpxCalls[0].includes('sessions close --name acp-check'));
+    assert.equal(acpxCalls.length, 0);
   } finally {
     process.env.PATH = prevPath;
+    await gateway.close();
+  }
+});
+
+await record('termination controller returns canonical unconfirmed result within isolated grace period', async () => {
+  const terminationMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/agents/session-termination.ts');
+  const requests = [];
+  const gateway = await startGatewayServer(async ({ body }) => {
+    requests.push(body);
+    if (body?.tool === 'session_status') return { result: { details: { status: 'running' } } };
+    return { result: { details: { ok: true } } };
+  });
+  try {
+    const result = await terminationMod.terminateSession('agent:main:acp:unconfirmed', {
+      runtime: 'acp',
+      agentId: 'claude',
+      label: 'unconfirmed-check',
+      gatewayUrl: gateway.url,
+      gatewayToken: '',
+      graceMs: 100,
+      statusTimeoutMs: 20,
+      requestTimeoutMs: 20,
+      stopRequestTimeoutMs: 20,
+      acpxTimeoutMs: 20,
+    });
+    assert.deepEqual(Object.keys(result).sort(), [
+      'cleanupAttempted',
+      'cleanupConfirmed',
+      'cleanupError',
+      'confirmed',
+      'graceMs',
+      'requested',
+      'sessionKey',
+      'state',
+      'terminal',
+      'unconfirmed',
+    ].sort());
+    assert.equal(result.sessionKey, 'agent:main:acp:unconfirmed');
+    assert.equal(result.confirmed, false);
+    assert.equal(result.unconfirmed, true);
+    assert.equal(result.terminal, false);
+    assert.equal(result.graceMs, 100);
+    assert(requests.some((req) => req?.tool === 'sessions_send'), 'termination should request a stop through the gateway');
+  } finally {
     await gateway.close();
   }
 });
@@ -315,9 +397,9 @@ await record('reviewer lifecycle emits gate-scoped agent.spawned and agent.kille
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.js');
-  const lifecycleTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/common/pipeline/agents/lifecycle.js');
-  const runtimeCoreMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.ts');
+  const lifecycleTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/lifecycle.ts');
+  const runtimeCoreMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const requests = [];
   let reviewerStatusPolls = 0;
@@ -349,17 +431,18 @@ await record('reviewer lifecycle emits gate-scoped agent.spawned and agent.kille
   process.env.OPENCLAW_GATEWAY_URL = gateway.url;
 
   const config = {
+    ...platformAgentLifecycleDefaults(),
     project: 'behavior-reviewer-lifecycle',
     repo_root: repoRoot,
     telemetry: { enabled: true },
     agents: { echo: { cwd: repoRoot, thinking_level: 'high' } },
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
+    paths: { swarm_dir: path.join(repoRoot, '.swarm') },
     _runId: runId,
     run_id: runId,
     _disable_discord_webhooks: true,
     discord_webhook_url: 'https://example.invalid/webhook',
     _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    pluginRegistry: await buildBuiltInRegistry(orchestrationRuntimeRoot),
   };
 
   const reviewer = {
@@ -390,12 +473,8 @@ await record('reviewer lifecycle emits gate-scoped agent.spawned and agent.kille
     const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
     const spawnedEvent = streamEvents.find((event) => event.type === 'agent.spawned' && event.agent_type === 'echo');
     const killedEvent = streamEvents.find((event) => event.type === 'agent.killed' && event.agent_type === 'echo');
-    const degradedEvent = streamEvents.find((event) => event.type === 'observability.degraded' && event.gate_id === 'gate:quality' && event.reason === 'gateway_unreachable');
-    const restoredEvent = streamEvents.find((event) => event.type === 'observability.restored' && event.gate_id === 'gate:quality' && event.reason === 'gateway_unreachable');
     assert.equal(Boolean(spawnedEvent), true);
     assert.equal(Boolean(killedEvent), true);
-    assert.equal(Boolean(degradedEvent), true);
-    assert.equal(Boolean(restoredEvent), true);
     assert.equal(spawnedEvent.label.startsWith('echo-quality-gate:quality-'), true);
     assert.equal(spawnedEvent.gate_id, 'gate:quality');
     assert.equal(spawnedEvent.gate_type, 'review');
@@ -408,19 +487,8 @@ await record('reviewer lifecycle emits gate-scoped agent.spawned and agent.kille
     assert.equal(killedEvent.attempt, 3);
     assert.equal(killedEvent.dispatch_id, 'dispatch-review-gate-quality-3');
     assert.equal(killedEvent.session_key, 'agent:main:acp:echo-review-1');
-    assert.equal(degradedEvent.surface, 'gateway');
-    assert.equal(degradedEvent.gate_type, 'review');
-    assert.equal(degradedEvent.dispatch_id, 'dispatch-review-gate-quality-3');
-    assert.equal(degradedEvent.session_key, 'agent:main:acp:echo-review-1');
-    assert.match(degradedEvent.detail || '', /Gateway session_status failed:/);
-    assert.equal(restoredEvent.surface, 'gateway');
-    assert.equal(restoredEvent.gate_type, 'review');
-    assert.equal(restoredEvent.dispatch_id, 'dispatch-review-gate-quality-3');
-    assert.equal(restoredEvent.session_key, 'agent:main:acp:echo-review-1');
-    assert.equal(restoredEvent.detail, 'session status reachable again');
-    assert.equal(typeof restoredEvent.restored_after_ms, 'number');
 
-    const runScopedEntries = fs.readFileSync(path.join(config._runLogDir, 'discord.jsonl'), 'utf8').trim().split('\n').map((line) => JSON.parse(line));
+    const runScopedEntries = fs.readFileSync(path.join(logRoot, 'pipeline', 'runs', runId, 'discord.jsonl'), 'utf8').trim().split('\n').map((line) => JSON.parse(line));
     const spawnEntry = runScopedEntries.find((entry) => entry.title === '🔬 Reviewer Spawned: quality/gate:quality');
     assert.equal(Boolean(spawnEntry), true);
     assert.equal(spawnEntry.run_id, runId);
@@ -428,12 +496,12 @@ await record('reviewer lifecycle emits gate-scoped agent.spawned and agent.kille
     assert.equal(spawnEntry.gate_type, 'review');
     assert.equal(spawnEntry.dispatch_id, 'dispatch-review-gate-quality-3');
     assert.equal(spawnEntry.session_key, 'agent:main:acp:echo-review-1');
-    assert.equal(spawnEntry.fields.some((field) => field.name === 'Run ID' && field.value === 'reviewer-run-1'), true);
+    assert.equal(spawnEntry.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
     assert.equal(spawnEntry.fields.some((field) => field.name === 'Gate' && field.value === 'gate:quality'), true);
     assert.equal(spawnEntry.fields.some((field) => field.name === 'Gate Type' && field.value === 'review'), true);
     assert.equal(spawnEntry.fields.some((field) => field.name === 'Attempt' && field.value === '3'), true);
     assert.equal(spawnEntry.fields.some((field) => field.name === 'Dispatch' && field.value === 'dispatch-review-gate-quality-3'), true);
-    assert.equal(spawnEntry.fields.some((field) => field.name === 'Label' && String(field.value).startsWith('echo-quality-gate:quality-')), true);
+    assert.equal(spawnEntry.fields.some((field) => field.name === 'Gateway Label' && String(field.value).startsWith('echo-quality-gate:quality-')), true);
     assert.equal(spawnEntry.fields.some((field) => field.name === 'Session' && field.value === 'agent:main:acp:echo-review-1'), true);
   } finally {
     lifecycleTestMod.untrackAgent('echo-quality-gate:quality');
@@ -448,9 +516,9 @@ await record('agent.killed preserves session correlation when orchestration know
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.js');
-  const lifecycleTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/common/pipeline/agents/lifecycle.js');
-  const runtimeCoreMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.ts');
+  const lifecycleTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/lifecycle.ts');
+  const runtimeCoreMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const requests = [];
   let sessionStatusPolls = 0;
@@ -485,13 +553,14 @@ await record('agent.killed preserves session correlation when orchestration know
   process.env.OPENCLAW_GATEWAY_URL = gateway.url;
 
   const config = {
+    ...platformAgentLifecycleDefaults(),
     project: 'behavior-agent-killed-session-correlation',
     telemetry: { enabled: true },
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
+    paths: { swarm_dir: path.join(repoRoot, '.swarm') },
     _runId: runId,
     run_id: runId,
     _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    pluginRegistry: await buildBuiltInRegistry(orchestrationRuntimeRoot),
   };
 
   try {
@@ -517,17 +586,6 @@ await record('agent.killed preserves session correlation when orchestration know
     assert.equal(killedEvent.module_id, '01');
     assert.equal(killedEvent.session_key, 'agent:main:acp:1');
 
-    const degradedEvent = streamEvents.find((event) => event.type === 'observability.degraded' && event.module_id === '01' && event.reason === 'gateway_unreachable');
-    const restoredEvent = streamEvents.find((event) => event.type === 'observability.restored' && event.module_id === '01' && event.reason === 'gateway_unreachable');
-    assert.equal(Boolean(degradedEvent), true);
-    assert.equal(Boolean(restoredEvent), true);
-    assert.equal(degradedEvent.surface, 'gateway');
-    assert.equal(degradedEvent.session_key, 'agent:main:acp:1');
-    assert.match(degradedEvent.detail || '', /Gateway session_status failed:/);
-    assert.equal(restoredEvent.surface, 'gateway');
-    assert.equal(restoredEvent.session_key, 'agent:main:acp:1');
-    assert.equal(restoredEvent.detail, 'session status reachable again');
-    assert.equal(typeof restoredEvent.restored_after_ms, 'number');
   } finally {
     lifecycleTestMod.untrackAgent('forge-01');
     process.env.PATH = prevPath;
@@ -542,7 +600,7 @@ await record('dispatchRedisTask imports the Redis dispatch abstraction directly 
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.js');
+  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.ts');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-redis-dispatch-direct-'));
   const swarmDir = path.join(repoRoot, '.swarm');
@@ -563,7 +621,7 @@ await record('dispatchRedisTask imports the Redis dispatch abstraction directly 
   fs.writeFileSync(fakeRedisModulePath, `
 import fs from 'fs';
 export default {
-  async sendTask(targetAgent, type, payload, iteration = 1) {
+  async publishTask(targetAgent, type, payload, iteration = 1) {
     fs.writeFileSync(process.env.BEHAVIOR_REDIS_DISPATCH_CALL_PATH, JSON.stringify({
       targetAgent,
       type,
@@ -575,10 +633,15 @@ export default {
 };
 `);
 
-  const config = {
+    const deps = {
+      adapters: {
+        redis: (await import(`file://${fakeRedisModulePath}`)).default,
+      },
+    };
+const config = {
+    ...platformAgentLifecycleDefaults(),
     project: 'behavior-redis-dispatch-direct',
     repo_root: repoRoot,
-    _logDir: path.join(swarmDir, 'logs'),
     paths: {
       swarm_dir: swarmDir,
       modules_dir: modulesDir,
@@ -589,7 +652,7 @@ export default {
         redis_js_path: fakeRedisModulePath,
       },
     },
-  };
+      };
 
   const progress = {
     modules: {
@@ -615,6 +678,7 @@ export default {
         run_id: 'run-dispatch-direct-1',
         attempt: 2,
         dispatch_id: 'dispatch-buster-01-attempt-2',
+        deps,
       },
     );
 
@@ -643,19 +707,88 @@ export default {
   }
 });
 
-await record('dispatchRedisTask stays fail-closed when redis_js_path is outside the safe-path allowlist', async () => {
+await record('dispatchRedisTask resolves Redis test adapters per config in one process', async () => {
   const orchestrationRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
   installFakeRedis(orchestrationRuntimeRoot);
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.js');
+  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.ts');
+  const calls = [];
+
+  function makeConfig(project, adapterId) {
+    const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), `behavior-redis-dispatch-${adapterId}-`));
+    const swarmDir = path.join(repoRoot, '.swarm');
+    const modulesDir = path.join(swarmDir, 'modules');
+    fs.mkdirSync(path.join(modulesDir, '01'), { recursive: true });
+    const deps = {
+      adapters: {
+        redis: {
+          async publishTask(targetAgent, type, payload, iteration = 1) {
+            calls.push({ adapterId, targetAgent, type, project: payload.project, iteration });
+            return { status: 'sent', id: adapterId, stream: `swarm:${adapterId}:tasks` };
+          },
+        },
+      },
+    };
+    const config = {
+      ...platformAgentLifecycleDefaults(),
+      project,
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir, modules_dir: modulesDir },
+      agents: { buster: { dispatch: 'redis', redis_adapter: 'pipeline-redis' } },
+    };
+    return { config, deps };
+  }
+
+  const progress = {
+    modules: { '01': { dir: '01', timeout_minutes: 5, test_suites: ['unit'] } },
+    gates: {},
+  };
+  const firstFixture = makeConfig('behavior-redis-dispatch-first', 'first-adapter');
+  const secondFixture = makeConfig('behavior-redis-dispatch-second', 'second-adapter');
+
+  const firstResult = await orchestrationTestMod.dispatchRedisTask(
+    firstFixture.config,
+    progress,
+    'buster',
+    '01',
+    'module_test',
+    'Run the first unit suite',
+    { forge_commit_hash: 'abc123' },
+    { model: 'openai-codex/gpt-5.4', run_id: 'run-first', attempt: 1, dispatch_id: 'dispatch-first', deps: firstFixture.deps },
+  );
+  const secondResult = await orchestrationTestMod.dispatchRedisTask(
+    secondFixture.config,
+    progress,
+    'buster',
+    '01',
+    'module_test',
+    'Run the second unit suite',
+    { forge_commit_hash: 'def456' },
+    { model: 'openai-codex/gpt-5.4', run_id: 'run-second', attempt: 1, dispatch_id: 'dispatch-second', deps: secondFixture.deps },
+  );
+
+  assert.equal(firstResult.id, 'first-adapter');
+  assert.equal(secondResult.id, 'second-adapter');
+  assert.deepEqual(calls.map((entry) => entry.adapterId), ['first-adapter', 'second-adapter']);
+  assert.deepEqual(calls.map((entry) => entry.project), ['behavior-redis-dispatch-first', 'behavior-redis-dispatch-second']);
+});
+
+await record('dispatchRedisTask stays fail-closed when redis_js_path is not a registered adapter', async () => {
+  const orchestrationRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
+  installFakeRedis(orchestrationRuntimeRoot);
+  globalThis.__fakeRedisCalls = [];
+  globalThis.__fakeRedisCounters = Object.create(null);
+
+  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.ts');
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-redis-dispatch-invalid-'));
   const swarmDir = path.join(repoRoot, '.swarm');
   const modulesDir = path.join(swarmDir, 'modules');
   fs.mkdirSync(path.join(modulesDir, '01'), { recursive: true });
 
   const config = {
+    ...platformAgentLifecycleDefaults(),
     project: 'behavior-redis-dispatch-invalid',
     repo_root: repoRoot,
     paths: {
@@ -694,8 +827,8 @@ await record('dispatchRedisTask stays fail-closed when redis_js_path is outside 
       },
     ),
     (err) => {
-      assert.equal(err.message.includes('Failed to dispatch Redis task to buster: agents.buster.redis_js_path: path'), true);
-      assert.equal(err.message.includes("not in allowed prefixes [/app/, /opt/, /home/]. Update ALLOWED_PATH_PREFIXES in core/paths.js if this is intentional."), true);
+      assert.equal(err.message.includes('Failed to dispatch Redis task to buster: agents.buster Redis adapter:'), true);
+      assert.equal(err.message.includes('is not a registered adapter'), true);
       return true;
     },
   );

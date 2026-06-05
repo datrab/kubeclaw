@@ -49,6 +49,44 @@ await record('pipeline README points to canonical tracked docs instead of stale 
   }
 });
 
+await record('project setup progress docs keep ACP monitor config platform-owned', async () => {
+  const progressJsonGuide = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'project_setup', 'progress-json.md'), 'utf8');
+  const swarmConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json'), 'utf8'));
+
+  assert.equal(progressJsonGuide.includes('## ACP Monitor'), false);
+  assert.equal(progressJsonGuide.includes('payload.acp_monitor'), false);
+  assert.equal(progressJsonGuide.includes('| `acp_monitor` |'), false);
+  assert.equal(progressJsonGuide.includes('ACP monitor timing is platform-owned and belongs in `swarm.config.json`, not `progress.json`.'), true);
+  assert.deepEqual(Object.keys(swarmConfig.acp_monitor).sort(), [
+    'max_transcript_extensions',
+    'monitor_poll_ms',
+    'stale_poll_limit',
+    'transcript_grace_ms',
+    'unknown_poll_limit',
+  ]);
+});
+
+await record('project setup and Prism docs use current visual-reg baseline authority and screenshot entrypoint', async () => {
+  const docs = {
+    moduleFiles: fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'project_setup', 'module-files.md'), 'utf8'),
+    progressJson: fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'project_setup', 'progress-json.md'), 'utf8'),
+    prismConventions: fs.readFileSync(path.join(sourceRoot, 'skills', 'prism', 'prism-conventions.md'), 'utf8'),
+  };
+
+  for (const [name, doc] of Object.entries(docs)) {
+    assert.equal(doc.includes('screenshot.cjs'), false, `${name} should not reference stale screenshot.cjs`);
+    assert.equal(doc.includes('visual-reg.cjs'), false, `${name} should not reference stale visual-reg.cjs`);
+    assert.equal(doc.includes('baseline_dir'), false, `${name} should not document removed visual-reg path config`);
+    assert.equal(doc.includes('.swarm/buster-test/baselines'), false, `${name} should not document old gate-level visual baselines`);
+  }
+
+  assert.equal(docs.moduleFiles.includes('Buster derives the baseline directory as `.swarm/modules/<module-dir>/baselines/`'), true);
+  assert.equal(docs.moduleFiles.includes('node /app/skills/pipeline/tools/screenshot.ts --generate-baselines'), true);
+  assert.equal(docs.progressJson.includes('Buster derives them from module identity at `.swarm/modules/<module-dir>/baselines/`'), true);
+  assert.equal(docs.prismConventions.includes('`skills/buster/pipeline/tools/screenshot.ts --generate-baselines` in repo source'), true);
+  assert.equal(docs.prismConventions.includes('`/app/skills/pipeline/tools/screenshot.ts --generate-baselines` in the Buster runtime image'), true);
+});
+
 await record('observability docs expose latest.json as the operator pointer to the newest run-scoped audit tree', async () => {
   const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'observability-reference.md'), 'utf8');
   const readme = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'README.md'), 'utf8');
@@ -62,14 +100,53 @@ await record('observability docs expose latest.json as the operator pointer to t
   assert.equal(observabilityDoc.includes('## Model/Thinking Policy Log (`.swarm/logs/pipeline/model-policy.jsonl`)'), true);
   assert.equal(observabilityDoc.includes('If writing `.swarm/logs/pipeline/discord.jsonl` or the run-scoped `discord.jsonl` mirror fails'), true);
   assert.equal(observabilityDoc.includes('`nova-injections.jsonl`'), true);
+  assert.equal(observabilityDoc.includes('## Buster Telemetry Fallback (`buster-telemetry-fallback.jsonl`)'), true);
+  assert.equal(observabilityDoc.includes('artifact_fallback: true'), true);
+  assert.equal(observabilityDoc.includes('Each line is a normal JSON object, not a JSON string nested inside JSONL'), true);
   assert.equal(readme.includes('.swarm/logs/pipeline/latest.json'), true);
   assert.equal(readme.includes('telemetry_stream_key'), true);
   assert.equal(readme.includes('discord.jsonl'), true);
   assert.equal(readme.includes('nova-injections.jsonl'), true);
+  assert.equal(readme.includes('buster-telemetry-fallback.jsonl'), true);
+  assert.equal(readme.includes('redis/redis-exchanges.jsonl'), true);
+  assert.equal(readme.includes('redis/redis-ops.jsonl'), true);
   assert.equal(telemetrySchema.includes('.swarm/logs/pipeline/latest.json'), true);
   assert.equal(telemetrySchema.includes('telemetry_stream_key'), true);
   assert.equal(telemetrySchema.includes('`discord.jsonl`'), true);
   assert.equal(telemetrySchema.includes('`nova-injections.jsonl`'), true);
+  assert.equal(telemetrySchema.includes('`buster-telemetry-fallback.jsonl`'), true);
+  assert.equal(telemetrySchema.includes('redis/redis-exchanges.jsonl'), true);
+  assert.equal(telemetrySchema.includes('redis/redis-ops.jsonl'), true);
+});
+
+await record('trust-boundary docs keep Buster Redis, Discord, fallback, and customSkills authority bounded', async () => {
+  const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'observability-reference.md'), 'utf8');
+  const repoRoot = path.dirname(sourceRoot);
+  const authorityMap = fs.readFileSync(path.join(repoRoot, 'docs', 'pipeline-hardening', 'final_audits', 'RUNTIME_TRUTH_AUTHORITY_MAP.md'), 'utf8');
+  const customSkillsTemplate = fs.readFileSync(path.join(sourceRoot, 'charts', 'kubeclaw', 'templates', 'configmap-skills.yaml'), 'utf8');
+
+  assert.equal(observabilityDoc.includes('### Trust boundaries for Buster/operator surfaces'), true);
+  assert.equal(observabilityDoc.includes('Redis task payloads are untrusted transport data until `validateBusterTaskPayload(...)` accepts their typed identity'), true);
+  assert.equal(observabilityDoc.includes('Discord fields and embeds are operator evidence only'), true);
+  assert.equal(observabilityDoc.includes('must not be parsed back into lifecycle authority'), true);
+  assert.equal(observabilityDoc.includes('`artifact_fallback: true` / `seq: null`'), true);
+  assert.equal(observabilityDoc.includes('Helm `customSkills` is an extension surface only'), true);
+  assert.equal(observabilityDoc.includes('custom overlays must not be used as a compatibility patch path for core runtime behavior'), true);
+
+  assert.equal(authorityMap.includes('## Cross-surface trust boundaries'), true);
+  assert.equal(authorityMap.includes('Buster Redis task stream'), true);
+  assert.equal(authorityMap.includes('Malformed/weak tasks are rejected with evidence'), true);
+  assert.equal(authorityMap.includes('Buster Redis completion stream'), true);
+  assert.equal(authorityMap.includes('not standalone scheduler truth'), true);
+  assert.equal(authorityMap.includes('Discord/operator artifacts'), true);
+  assert.equal(authorityMap.includes('not lifecycle authority'), true);
+  assert.equal(authorityMap.includes('Telemetry fallback artifacts'), true);
+  assert.equal(authorityMap.includes('not Redis ordered'), true);
+  assert.equal(authorityMap.includes('Helm `customSkills` overlay'), true);
+  assert.equal(authorityMap.includes('customSkills is not a compatibility patch mechanism for core runtime'), true);
+
+  assert.equal(customSkillsTemplate.includes('extension-only'), true);
+  assert.equal(customSkillsTemplate.includes('cannot be used as a compatibility patch path'), true);
 });
 
 await record('pipeline flow semgrep card documents portable platform config discovery instead of a stale app path', async () => {
@@ -77,15 +154,15 @@ await record('pipeline flow semgrep card documents portable platform config disc
 
   assert.equal(pipelineFlow.includes("path: '/app/config/.semgrep.yml'"), false);
   assert.equal(pipelineFlow.includes("path: 'writable platform config surface (.semgrep.yml neben swarm.config.json)'"), true);
-  assert.equal(pipelineFlow.includes('Helm liefert das Beispiel unter charts/kubeclaw/files/config/.semgrep.yml; lint-report.js auto-detectet zuerst die Plattformdatei neben swarm.config.json, dann ~/.openclaw/.semgrep.yml, danach <repo>/.semgrep.yml, sonst auto.'), true);
+  assert.equal(pipelineFlow.includes('lint-report.ts sucht zuerst /home/node/.openclaw/.semgrep.yml, dann SWARM_CONFIG-adjacent .semgrep.yml; fehlt sie oder ist sie ungültig, meldet Semgrep die Config als fehlend/ungültig.'), true);
   assert.equal(pipelineFlow.includes('Helm-Beispiel: <code>charts/kubeclaw/files/config/.semgrep.yml</code> → writable platform config surface'), true);
-  assert.equal(pipelineFlow.includes('Override via <code>pre_check.semgrep_config_path</code>, sonst auto-detect (plattformweit → <code>~/.openclaw</code> → Repo → auto)'), true);
+  assert.equal(pipelineFlow.includes('Override via <code>pre_check.semgrep_config_path</code>, sonst auto-detect (<code>/home/node/.openclaw/.semgrep.yml</code> → SWARM_CONFIG-adjacent)'), true);
 });
 
 await record('initLogDir writes a live latest.json pointer with the canonical replay artifact bundle', async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-live-latest-pointer-'));
   const swarmDir = path.join(root, '.swarm');
-  const statusStoreMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/status-store.js');
+  const statusStoreMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/status-store.ts');
 
   const config = {
     project: 'behavior-live-latest',
@@ -104,6 +181,13 @@ await record('initLogDir writes a live latest.json pointer with the canonical re
   assert.equal(latest.discord_jsonl, `runs/${config._runId}/discord.jsonl`);
   assert.equal(latest.summary_json, `runs/${config._runId}/summary.json`);
   assert.equal(latest.nova_injections_jsonl, `runs/${config._runId}/nova-injections.jsonl`);
+  assert.equal(latest.buster_telemetry_fallback_jsonl, `runs/${config._runId}/buster-telemetry-fallback.jsonl`);
+  assert.equal(latest.redis_exchanges_jsonl, `runs/${config._runId}/redis/redis-exchanges.jsonl`);
+  assert.equal(latest.redis_ops_jsonl, `runs/${config._runId}/redis/redis-ops.jsonl`);
+  assert.equal(latest.authority.role, 'latest_pointer');
+  assert.equal(latest.authority.operator_pointer_only, true);
+  assert.equal(latest.authority.allow_lifecycle_authority, false);
+  assert.equal(latest.authority.allow_session_authority, false);
 
   config._pipelineLogFd?.end();
   config._runPipelineLogFd?.end();
@@ -111,20 +195,20 @@ await record('initLogDir writes a live latest.json pointer with the canonical re
 
 await record('latest.json points replay consumers at telemetry, Discord, and run-scoped summary artifacts for the same run', async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-latest-pointer-'));
-  const logDir = path.join(root, '.swarm', 'logs');
+  const swarmDir = path.join(root, '.swarm');
+  const logDir = path.join(swarmDir, 'logs');
   const runId = 'run-latest-1';
-  const runtimeCoreMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const runtimeCoreMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const config = {
     project: 'behavior-latest',
     repo_root: root,
-    _logDir: logDir,
-    _runLogDir: path.join(logDir, 'pipeline', 'runs', runId),
+    paths: { swarm_dir: swarmDir },
     _runId: runId,
     run_id: runId,
     _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
   };
 
-  const summaryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/summary.js');
+  const summaryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/summary.ts');
   summaryMod.writeSummary(config, 0, 'completed');
 
   const latest = JSON.parse(fs.readFileSync(path.join(logDir, 'pipeline', 'latest.json'), 'utf8'));
@@ -135,6 +219,9 @@ await record('latest.json points replay consumers at telemetry, Discord, and run
   assert.equal(latest.discord_jsonl, `runs/${runId}/discord.jsonl`);
   assert.equal(latest.summary_json, `runs/${runId}/summary.json`);
   assert.equal(latest.nova_injections_jsonl, `runs/${runId}/nova-injections.jsonl`);
+  assert.equal(latest.buster_telemetry_fallback_jsonl, `runs/${runId}/buster-telemetry-fallback.jsonl`);
+  assert.equal(latest.redis_exchanges_jsonl, `runs/${runId}/redis/redis-exchanges.jsonl`);
+  assert.equal(latest.redis_ops_jsonl, `runs/${runId}/redis/redis-ops.jsonl`);
 
   const summary = JSON.parse(fs.readFileSync(path.join(logDir, 'pipeline', 'runs', runId, 'summary.json'), 'utf8'));
   assert.equal(summary.run_id, runId);
@@ -144,7 +231,16 @@ await record('latest.json points replay consumers at telemetry, Discord, and run
   assert.equal(summary.artifacts.discord_jsonl, `runs/${runId}/discord.jsonl`);
   assert.equal(summary.artifacts.summary_json, `runs/${runId}/summary.json`);
   assert.equal(summary.artifacts.nova_injections_jsonl, `runs/${runId}/nova-injections.jsonl`);
+  assert.equal(summary.artifacts.buster_telemetry_fallback_jsonl, `runs/${runId}/buster-telemetry-fallback.jsonl`);
+  assert.equal(summary.artifacts.redis_exchanges_jsonl, `runs/${runId}/redis/redis-exchanges.jsonl`);
+  assert.equal(summary.artifacts.redis_ops_jsonl, `runs/${runId}/redis/redis-ops.jsonl`);
   assert.equal(summary.artifacts.pipeline_summary_json, 'summary.json');
   assert.equal(summary.artifacts.latest_json, 'latest.json');
+  assert.equal(summary.artifacts.authority.pipeline_jsonl.role, 'run_scoped_replay');
+  assert.equal(summary.artifacts.authority.pipeline_jsonl.authority.operator_replay_authority, true);
+  assert.equal(summary.artifacts.authority.latest_json.role, 'latest_pointer');
+  assert.equal(summary.artifacts.authority.latest_json.authority.allow_lifecycle_authority, false);
+  assert.equal(summary.artifacts.authority.buster_telemetry_fallback_jsonl.role, 'diagnostic_fallback');
+  assert.equal(summary.artifacts.authority.buster_telemetry_fallback_jsonl.authority.diagnostic_evidence_only, true);
 });
 }

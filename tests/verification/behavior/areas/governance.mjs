@@ -6,7 +6,35 @@ import assert from 'assert';
 import {
   materializeRuntimeTree,
   importRuntimeModule,
+  runGateViaRegistry,
 } from '../../lib/lifecycle-audit-lib.mjs';
+
+function stepExit(result) {
+  return result?.terminal?.exitCode;
+}
+
+function stepSummary(result) {
+  return result?.diagnostics?.summary;
+}
+
+function stepMetadata(result) {
+  return result?.diagnostics?.metadata || {};
+}
+
+function stepGateStatus(result) {
+  return result?.diagnostics?.typed?.controlResult?.diagnostics?.typed?.gate?.gateRunStatus;
+}
+
+function explicitPluginConfig() {
+  return {
+    enabled: true,
+    allowCustomModules: false,
+    extraModulePaths: [],
+    modules: {},
+    stageOwners: {},
+    restrictedCapabilityAllowlist: {},
+  };
+}
 
 export async function registerGovernanceArea({
   record,
@@ -20,27 +48,26 @@ export async function registerGovernanceArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.js');
+    const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.ts');
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-artifacts-'));
     const swarmDir = path.join(root, '.swarm');
     const logDir = path.join(swarmDir, 'logs');
     fs.mkdirSync(logDir, { recursive: true });
 
-    const config = {
-      project: 'behavior-approval-artifacts',
-      telemetry: { enabled: false },
-      _runId: 'run-approval-artifacts-1',
-      run_id: 'run-approval-artifacts-1',
-      _approvalPollIntervalMs: 0,
-      _logDir: logDir,
-      paths: { swarm_dir: swarmDir },
-      _testOverrides: {
+        const deps = {
         approvalGate: {
           discord: async () => {},
           sleep: async () => {},
         },
-      },
-    };
+      };
+const config = {
+      project: 'behavior-approval-artifacts',
+      telemetry: { enabled: false },
+      _runId: 'run-approval-artifacts-1',
+      run_id: 'run-approval-artifacts-1',
+      plugins: explicitPluginConfig(),
+      paths: { swarm_dir: swarmDir },
+          };
 
     const progress = {
       modules: {},
@@ -55,9 +82,9 @@ export async function registerGovernanceArea({
       execution_order: ['gate:release-approval'],
     };
 
-    const result = await approvalGateRunnerMod.runApprovalGate(config, progress, 'release-approval');
-    assert.equal(result.exit, 10);
-    assert.equal(result.status, 'TIMED_OUT');
+    const result = await runGateViaRegistry(telemetryRuntimeRoot, config, progress, 'release-approval', { deps });
+    assert.equal(stepExit(result), 10);
+    assert.equal(stepGateStatus(result), 'TIMED_OUT');
 
     const gateState = JSON.parse(fs.readFileSync(path.join(swarmDir, 'release-approval-gate-status.json'), 'utf8'));
     const request = JSON.parse(fs.readFileSync(path.join(logDir, 'gates', 'release-approval', 'approval-request.json'), 'utf8'));
@@ -81,27 +108,26 @@ export async function registerGovernanceArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.js');
+    const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.ts');
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-transitions-'));
     const swarmDir = path.join(root, '.swarm');
     const logDir = path.join(swarmDir, 'logs');
     fs.mkdirSync(logDir, { recursive: true });
 
-    const config = {
-      project: 'behavior-approval-transitions',
-      telemetry: { enabled: false },
-      _runId: 'run-approval-transitions-1',
-      run_id: 'run-approval-transitions-1',
-      _approvalPollIntervalMs: 0,
-      _logDir: logDir,
-      paths: { swarm_dir: swarmDir },
-      _testOverrides: {
+        const configDeps2 = {
         approvalGate: {
           discord: async () => {},
           sleep: async () => {},
         },
-      },
-    };
+      };
+const config = {
+      project: 'behavior-approval-transitions',
+      telemetry: { enabled: false },
+      _runId: 'run-approval-transitions-1',
+      run_id: 'run-approval-transitions-1',
+      plugins: explicitPluginConfig(),
+      paths: { swarm_dir: swarmDir },
+          };
 
     const progress = {
       modules: {},
@@ -116,9 +142,9 @@ export async function registerGovernanceArea({
       execution_order: ['gate:ops-approval'],
     };
 
-    const result = await approvalGateRunnerMod.runApprovalGate(config, progress, 'ops-approval');
-    assert.equal(result.exit, 0);
-    assert.equal(result.status, 'TIMED_OUT');
+    const result = await runGateViaRegistry(telemetryRuntimeRoot, config, progress, 'ops-approval', { deps: configDeps2 });
+    assert.equal(stepExit(result), 0);
+    assert.equal(stepGateStatus(result), 'TIMED_OUT');
 
     const transitions = fs.readFileSync(path.join(logDir, 'gates', 'ops-approval', 'approval-transitions.jsonl'), 'utf8')
       .trim()
@@ -149,30 +175,29 @@ export async function registerGovernanceArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.js');
-    const summaryMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/summary.js');
-    const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.ts');
+    const summaryMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/summary.ts');
+    const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-governance-approval-summary-'));
     const swarmDir = path.join(root, '.swarm');
     const logDir = path.join(swarmDir, 'logs');
     fs.mkdirSync(logDir, { recursive: true });
 
-    const config = {
-      project: 'behavior-governance-approval-summary',
-      telemetry: { enabled: false },
-      _runId: 'run-governance-approval-summary-1',
-      run_id: 'run-governance-approval-summary-1',
-      _approvalPollIntervalMs: 0,
-      _logDir: logDir,
-      _runStats: runtimeCoreMod.createRunStats('2026-04-11T00:00:00.000Z'),
-      paths: { swarm_dir: swarmDir },
-      _testOverrides: {
+        const configDeps3 = {
         approvalGate: {
           discord: async () => {},
           sleep: async () => {},
         },
-      },
-    };
+      };
+const config = {
+      project: 'behavior-governance-approval-summary',
+      telemetry: { enabled: false },
+      _runId: 'run-governance-approval-summary-1',
+      run_id: 'run-governance-approval-summary-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-11T00:00:00.000Z'),
+      plugins: explicitPluginConfig(),
+      paths: { swarm_dir: swarmDir },
+          };
 
     const progress = {
       modules: {},
@@ -187,8 +212,8 @@ export async function registerGovernanceArea({
       execution_order: ['gate:release-approval'],
     };
 
-    const result = await approvalGateRunnerMod.runApprovalGate(config, progress, 'release-approval');
-    summaryMod.writeSummary(config, result.exit, result.reason || result.status, null, progress);
+    const result = await runGateViaRegistry(telemetryRuntimeRoot, config, progress, 'release-approval', { deps: configDeps3 });
+    summaryMod.writeSummary(config, stepExit(result), stepSummary(result) || stepGateStatus(result), null, progress);
 
     const summary = JSON.parse(fs.readFileSync(path.join(logDir, 'pipeline', 'summary.json'), 'utf8'));
     const approvalEntry = summary.governance.approval_gates[0];
@@ -214,29 +239,29 @@ export async function registerGovernanceArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.js');
-    const summaryMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/summary.js');
-    const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.ts');
+    const summaryMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/summary.ts');
+    const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-governance-approval-timeout-continue-'));
     const swarmDir = path.join(root, '.swarm');
     const logDir = path.join(swarmDir, 'logs');
     fs.mkdirSync(logDir, { recursive: true });
 
-    const config = {
-      project: 'behavior-governance-approval-timeout-continue',
-      telemetry: { enabled: false },
-      _runId: 'run-governance-approval-timeout-continue-1',
-      run_id: 'run-governance-approval-timeout-continue-1',
-      _logDir: logDir,
-      _runStats: runtimeCoreMod.createRunStats('2026-04-11T00:00:00.000Z'),
-      paths: { swarm_dir: swarmDir },
-      _testOverrides: {
+        const configDeps4 = {
         approvalGate: {
           discord: async () => {},
           sleep: async () => {},
         },
-      },
-    };
+      };
+const config = {
+      project: 'behavior-governance-approval-timeout-continue',
+      telemetry: { enabled: false },
+      _runId: 'run-governance-approval-timeout-continue-1',
+      run_id: 'run-governance-approval-timeout-continue-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-11T00:00:00.000Z'),
+      plugins: explicitPluginConfig(),
+      paths: { swarm_dir: swarmDir },
+          };
 
     const progress = {
       modules: {},
@@ -251,16 +276,16 @@ export async function registerGovernanceArea({
       execution_order: ['gate:release-approval'],
     };
 
-    const result = await approvalGateRunnerMod.runApprovalGate(config, progress, 'release-approval');
-    summaryMod.writeSummary(config, result.exit, result.reason || result.status, null, progress);
+    const result = await runGateViaRegistry(telemetryRuntimeRoot, config, progress, 'release-approval', { deps: configDeps4 });
+    summaryMod.writeSummary(config, stepExit(result), stepSummary(result) || stepGateStatus(result), null, progress);
 
     const summary = JSON.parse(fs.readFileSync(path.join(logDir, 'pipeline', 'summary.json'), 'utf8'));
     const approvalEntry = summary.governance.approval_gates[0];
     const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'observability-reference.md'), 'utf8');
     const pipelineReferenceV10 = fs.readFileSync(path.join(sourceRoot, 'docs', 'pipeline-reference-v10.md'), 'utf8');
 
-    assert.equal(result.exit, 0);
-    assert.equal(result.continued, true);
+    assert.equal(stepExit(result), 0);
+    assert.equal(stepMetadata(result).continued, true);
     assert.equal(summary.governance.overall_outcome, 'CONTINUED_AFTER_APPROVAL_TIMEOUT');
     assert.equal(approvalEntry.status, 'TIMED_OUT');
     assert.equal(approvalEntry.decision_via, 'timeout');
@@ -278,9 +303,9 @@ export async function registerGovernanceArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const governanceMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/governance-context.js');
-    const summaryMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/summary.js');
-    const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const governanceMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/governance-context.ts');
+    const summaryMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/summary.ts');
+    const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-governance-approval-cancelled-'));
     const swarmDir = path.join(root, '.swarm');
     const logDir = path.join(swarmDir, 'logs');
@@ -291,8 +316,8 @@ export async function registerGovernanceArea({
       telemetry: { enabled: false },
       _runId: 'run-governance-approval-cancelled-1',
       run_id: 'run-governance-approval-cancelled-1',
-      _logDir: logDir,
       _runStats: runtimeCoreMod.createRunStats('2026-04-11T00:00:00.000Z'),
+      plugins: explicitPluginConfig(),
       paths: { swarm_dir: swarmDir },
     };
 
@@ -330,9 +355,9 @@ export async function registerGovernanceArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const governanceMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/governance-context.js');
-    const summaryMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/summary.js');
-    const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const governanceMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/governance-context.ts');
+    const summaryMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/summary.ts');
+    const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-governance-arch-summary-'));
     const swarmDir = path.join(root, '.swarm');
     const logDir = path.join(swarmDir, 'logs');
@@ -343,8 +368,8 @@ export async function registerGovernanceArea({
       telemetry: { enabled: false },
       _runId: 'run-governance-arch-summary-1',
       run_id: 'run-governance-arch-summary-1',
-      _logDir: logDir,
       _runStats: runtimeCoreMod.createRunStats('2026-04-11T00:00:00.000Z'),
+      plugins: explicitPluginConfig(),
       paths: { swarm_dir: swarmDir },
     };
 

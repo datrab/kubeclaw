@@ -62,7 +62,7 @@ COPY skills/common/ /app/skills/
 COPY plugins/openclaw-agent-observer/ /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer/
 RUN cd /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer \
     && rm -rf dist \
-    && tsc -p tsconfig.build.json \
+    && node "$(npm root -g)/typescript/bin/tsc" -p tsconfig.build.json \
     && mkdir -p /app/openclaw-plugins/kubeclaw-agent-observer \
     && cp -R package.json openclaw.plugin.json src dist /app/openclaw-plugins/kubeclaw-agent-observer/ \
     && rm -rf /tmp/kubeclaw-openclaw-plugins

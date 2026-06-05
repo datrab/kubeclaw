@@ -4,11 +4,33 @@ import path from 'path';
 import { pathToFileURL } from 'url';
 
 export const SHARED_PIPELINE_HELPER_PATHS = [
-  'pipeline/agents/runtime.js',
-  'pipeline/integrations/gateway.js',
-  'pipeline/agents/lifecycle.js',
-  'pipeline/agents/acp-monitor.js',
-  'pipeline/lifecycle-state.js',
+  'pipeline/agents/acp-monitor.ts',
+  'pipeline/agents/lifecycle.ts',
+  'pipeline/agents/runtime.ts',
+  'pipeline/agents/session-semantics.ts',
+  'pipeline/agents/session-termination.ts',
+  'pipeline/agents/tracked-agents.ts',
+  'pipeline/agent-observability/src/index.ts',
+  'pipeline/integrations/discord-webhook.ts',
+  'pipeline/integrations/gateway.ts',
+  'pipeline/cli-args.ts',
+  'pipeline/git-primitives.ts',
+  'pipeline/lifecycle-state.ts',
+  'pipeline/noncritical-reporting.ts',
+  'pipeline/redaction.ts',
+  'pipeline/redis-transport.ts',
+  'pipeline/security.ts',
+  'pipeline/services/acp-gateway-contract.ts',
+  'pipeline/services/discord-fields.ts',
+  'pipeline/services/discord-fields-contract.ts',
+  'pipeline/services/observability-health.ts',
+  'pipeline/services/rate-limit-contract.ts',
+  'pipeline/services/redis-message-contract.ts',
+  'pipeline/services/pipeline-event-contract.ts',
+  'pipeline/services/task-transport-contract.ts',
+  'pipeline/services/telemetry/payload-schema.ts',
+  'pipeline/telemetry.ts',
+  'pipeline/timing.ts',
 ];
 
 export const DEFAULT_TELEMETRY_CONTRACT_REL_PATH = 'docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md';
@@ -22,7 +44,7 @@ export function expectedPackagedRuntimeOwners(image) {
   );
 
   if (image === 'sandbox') {
-    owners['/app/skills/redis.js'] = 'skills/buster/redis.js';
+    owners['/app/skills/pipeline/tools/redis.ts'] = 'skills/buster/pipeline/tools/redis.ts';
   }
 
   return owners;
@@ -117,20 +139,17 @@ export function loadPackagingRules(sourceRoot, overlayRoot) {
   const deploymentTemplate = readOverlayText(sourceRoot, overlayRoot, 'charts/kubeclaw/templates/deployment.yaml');
 
   const requiredGeneral = [
-    "COPY skills/common/ /tmp/kubeclaw-skills/common/",
-    "COPY skills/nova/ /tmp/kubeclaw-skills/nova/",
-    "cp -r /tmp/kubeclaw-skills/common/. /app/common/",
-    'tar -C /tmp/kubeclaw-skills/common',
-    'tar -C /tmp/kubeclaw-skills/nova',
-    ...SHARED_PIPELINE_HELPER_PATHS.map((relPath) => `--exclude='${relPath}'`),
+    'RUN mkdir -p /app/skills',
+    'COPY skills/nova/ /app/skills/',
+    'COPY skills/common/ /app/skills/',
+    'node "$(npm root -g)/typescript/bin/tsc" -p tsconfig.build.json',
   ];
   const requiredSandbox = [
-    "COPY skills/common/ /tmp/kubeclaw-skills/common/",
-    "COPY skills/buster/ /tmp/kubeclaw-skills/buster/",
-    "cp -r /tmp/kubeclaw-skills/common/. /app/common/",
-    'tar -C /tmp/kubeclaw-skills/common',
-    'tar -C /tmp/kubeclaw-skills/buster',
-    ...SHARED_PIPELINE_HELPER_PATHS.map((relPath) => `--exclude='${relPath}'`),
+    'RUN mkdir -p /app/skills',
+    'COPY skills/buster/ /app/skills/',
+    'COPY skills/common/ /app/skills/',
+    'npm install -g ioredis js-yaml uuid @qdrant/js-client-rest typescript',
+    'node "$(npm root -g)/typescript/bin/tsc" -p tsconfig.build.json',
   ];
   const requiredDeployment = [
     'cp -r /app/skills/. /skills-merged/',
@@ -148,19 +167,33 @@ export function loadPackagingRules(sourceRoot, overlayRoot) {
     if (!deploymentTemplate.includes(needle)) throw new Error(`charts/kubeclaw/templates/deployment.yaml missing expected merge rule: ${needle}`);
   }
 
+  for (const [relPath, dockerfile] of [
+    ['docker/Dockerfile.general', generalDockerfile],
+    ['docker/Dockerfile.sandbox', sandboxDockerfile],
+  ]) {
+    if (dockerfile.includes('/app/common')) {
+      throw new Error(`${relPath} must not materialize shared pipeline helpers under /app/common`);
+    }
+  }
+
+  if (generalDockerfile.indexOf('COPY skills/nova/ /app/skills/') > generalDockerfile.indexOf('COPY skills/common/ /app/skills/')) {
+    throw new Error('docker/Dockerfile.general must copy skills/nova before skills/common so common overwrites compatibility shims');
+  }
+  if (sandboxDockerfile.indexOf('COPY skills/buster/ /app/skills/') > sandboxDockerfile.indexOf('COPY skills/common/ /app/skills/')) {
+    throw new Error('docker/Dockerfile.sandbox must copy skills/buster before skills/common so common overwrites compatibility shims');
+  }
+
   return {
     general: {
       layers: [
-        { sourceDir: 'skills/common', destDir: '/app/common', excludes: new Set() },
+        { sourceDir: 'skills/nova', destDir: '/app/skills', excludes: new Set() },
         { sourceDir: 'skills/common', destDir: '/app/skills', excludes: new Set() },
-        { sourceDir: 'skills/nova', destDir: '/app/skills', excludes: new Set(SHARED_PIPELINE_HELPER_PATHS) },
       ],
     },
     sandbox: {
       layers: [
-        { sourceDir: 'skills/common', destDir: '/app/common', excludes: new Set() },
+        { sourceDir: 'skills/buster', destDir: '/app/skills', excludes: new Set() },
         { sourceDir: 'skills/common', destDir: '/app/skills', excludes: new Set() },
-        { sourceDir: 'skills/buster', destDir: '/app/skills', excludes: new Set(SHARED_PIPELINE_HELPER_PATHS) },
       ],
     },
   };
@@ -193,10 +226,23 @@ export function buildManifest(sourceRoot, overlayRoot, image) {
   return { manifest, owners };
 }
 
+function isIntentionalSharedPipelineOverwrite(destPath, entries) {
+  const relPath = destPath.startsWith('/app/skills/')
+    ? destPath.slice('/app/skills/'.length)
+    : null;
+  if (!relPath || !SHARED_PIPELINE_HELPER_PATHS.includes(relPath)) return false;
+  const finalOwner = entries.at(-1);
+  if (finalOwner?.sourceDir !== 'skills/common' || finalOwner.relativePath !== relPath) return false;
+  return entries.slice(0, -1).every((owner) => (
+    (owner.sourceDir === 'skills/nova' || owner.sourceDir === 'skills/buster')
+    && owner.relativePath === relPath
+  ));
+}
+
 export function findCollisions(sourceRoot, overlayRoot, image) {
   const { owners } = buildManifest(sourceRoot, overlayRoot, image);
   return [...owners.entries()]
-    .filter(([, entries]) => entries.length > 1)
+    .filter(([destPath, entries]) => entries.length > 1 && !isIntentionalSharedPipelineOverwrite(destPath, entries))
     .map(([destPath, entries]) => ({ destPath, entries }));
 }
 
@@ -215,6 +261,36 @@ export function materializeRuntimeTree(sourceRoot, overlayRoot, image, outDir = 
 
 export function importRuntimeModule(runtimeRoot, runtimePath) {
   return import(pathToFileURL(path.join(runtimeRoot, runtimePath.replace(/^\//, ''))).href);
+}
+
+export async function buildBuiltInPluginRegistry(runtimeRoot, pluginConfig = {}) {
+  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
+  const { registry, errors } = registryMod.buildPluginRegistry(pluginConfig, { throwOnError: false });
+  if (errors.length > 0) {
+    throw new Error(`Built-in plugin registry failed verification assembly: ${errors.map((error) => error.message).join('; ')}`);
+  }
+  return registry;
+}
+
+export async function attachBuiltInPluginRegistry(runtimeRoot, config) {
+  if (!config.pluginRegistry) {
+    config.pluginRegistry = await buildBuiltInPluginRegistry(runtimeRoot, config.plugins || {});
+  }
+  return config.pluginRegistry;
+}
+
+export async function runGateViaRegistry(runtimeRoot, config, progress, gateId, opts = {}) {
+  if (!config.paths?.swarm_dir) {
+    const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-gate-registry-'));
+    config.paths = {
+      ...(config.paths || {}),
+      swarm_dir: swarmDir,
+      modules_dir: config.paths?.modules_dir || path.join(swarmDir, 'modules'),
+    };
+  }
+  await attachBuiltInPluginRegistry(runtimeRoot, config);
+  const gateRunnerMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+  return gateRunnerMod.runGate(config, progress, gateId, opts);
 }
 
 export function ensureDir(dirPath) {
@@ -416,6 +492,10 @@ export function collectEmitEventNames(filePath) {
     names.add(match[1]);
   }
 
+  for (const _match of text.matchAll(/emitPluginEvent\(/g)) {
+    names.add('plugin.event');
+  }
+
   for (const match of text.matchAll(/emitLegacyEventDirect\([^,]+,\s*['\"]([^'\"]+)['\"]/g)) {
     names.add(match[1]);
   }
@@ -427,6 +507,9 @@ export function collectEmitEventNames(filePath) {
   for (const match of text.matchAll(/emitTelemetryStreamEvent\([^,]+,\s*['\"]([^'\"]+)['\"]/g)) {
     names.add(match[1]);
   }
+
+  if (/recordObservabilityDegraded\(/.test(text)) names.add('observability.degraded');
+  if (/recordObservabilityRestored\(/.test(text)) names.add('observability.restored');
 
   return names;
 }

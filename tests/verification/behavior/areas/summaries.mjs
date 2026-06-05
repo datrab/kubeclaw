@@ -9,8 +9,8 @@ import {
 } from '../../lib/lifecycle-audit-lib.mjs';
 
 async function buildBuiltInRegistry(runtimeRoot) {
-  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.js');
-  const { registry, errors } = registryMod.buildPluginRegistry({}, { throwOnError: false });
+  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
   assert.equal(errors.length, 0);
   return registry;
 }
@@ -64,6 +64,63 @@ function getFieldValue(fields = [], name) {
   return fields.find((field) => field.name === name)?.value;
 }
 
+
+function terminationResult(sessionKey = 'summary-session') {
+  return {
+    sessionKey,
+    requested: true,
+    confirmed: true,
+    unconfirmed: false,
+    terminal: true,
+    state: 'closed',
+    cleanupAttempted: false,
+    cleanupConfirmed: false,
+    cleanupError: null,
+    graceMs: 5000,
+  };
+}
+
+function platformSummaryDefaults() {
+  return {
+    fallback_model: 'openai-codex/gpt-5.4',
+    default_timeout_minutes: 30,
+    rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },
+  };
+}
+
+function makeStepResult({ stepType = 'module', stepId = '01', exit = 0, reason = null, projection = {}, correlation = {} } = {}) {
+  const outcome = Number(exit) === 0 ? 'passed'
+    : (Number(exit) === 10 ? 'needs_nova'
+      : (Number(exit) === 20 ? 'blocked'
+        : (Number(exit) === 40 ? 'rate_limited' : 'error')));
+  const exitLabel = Number(exit) === 0 ? 'OK'
+    : (Number(exit) === 10 ? 'NEEDS_NOVA'
+      : (Number(exit) === 20 ? 'BLOCKED'
+        : (Number(exit) === 40 ? 'RATE_LIMITED' : 'ERROR')));
+  return {
+    schemaVersion: 'v1',
+    kind: 'pipeline_step_result',
+    stepType,
+    stepId,
+    nextAction: Number(exit) === 0 ? 'continue' : 'halt',
+    outcome,
+    diagnostics: {
+      summary: reason,
+      findings: [],
+      metadata: {
+        ...projection,
+        ...(reason != null ? { reason } : {}),
+      },
+      typed: {},
+    },
+    correlation,
+    terminal: {
+      exitCode: exit,
+      exitLabel,
+    },
+  };
+}
+
 export async function registerSummariesArea({
   record,
   sourceRoot,
@@ -72,19 +129,151 @@ export async function registerSummariesArea({
   flushAsync,
   xaddEvents,
 }) {
+  await record('project summary case-study base preserves exact project id display name', async () => {
+    const { runtimeRoot: projectSummaryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    const formatterMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/tools/project-summary-formatters.ts');
+
+    assert.equal(Object.prototype.hasOwnProperty.call(formatterMod, 'toTitleCaseProject'), false);
+    const base = formatterMod.buildCaseStudyBase(
+      'foo-bar_api',
+      {},
+      { moduleStats: [], gateStats: [], totalCompleted: 0, moduleCount: 0 },
+      {},
+      {},
+      {},
+      {},
+      {},
+    );
+    assert.equal(base.project.id, 'foo-bar_api');
+    assert.equal(base.project.name, 'foo-bar_api');
+  });
+
+  await record('project summary case-study base uses collector-shaped unit tests and fail counts', async () => {
+    const { runtimeRoot: projectSummaryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    const formatterMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/tools/project-summary-formatters.ts');
+
+    const code = { byLang: {}, totalLines: 0, codeLines: 0, codeFiles: 0, totalFiles: 0 };
+    const unitCensus = {
+      python: { files: 1, functions: 7, lines: 30 },
+      frontend: { files: 2, functions: 5, lines: 60 },
+      totalFunctions: 12,
+      totalFiles: 3,
+    };
+    const apiCensus = { specs: [{ module: '01', count: 3 }], totalCases: 3 };
+    const pipeline = {
+      moduleStats: [{ id: '01', title: 'Frontend auth', status: 'PASS', failCount: 2, attempts: 3 }],
+      hardestModules: [{ id: '01', title: 'Frontend auth', status: 'PASS', failCount: 2, attempts: 3 }],
+      gateStats: [],
+      totalCompleted: 1,
+      moduleCount: 1,
+      totalBlocked: 0,
+      totalPending: 0,
+      totalAttempts: 3,
+      firstPassRate: 0,
+    };
+    const tests = { suiteAgg: {}, perModule: [], totalRuns: 0, totalChecks: 0, totalFindings: 0 };
+    const reviews = { reviews: [], totalCritical: 0, totalDeferred: 0 };
+    const agents = { forge: 0, buster: 0, echo: 0, gateFix: 0, reviewFix: 0, total: 0 };
+
+    const base = formatterMod.buildCaseStudyBase('collector-shaped', code, pipeline, tests, unitCensus, apiCensus, reviews, agents);
+    assert.equal(base.tests.python_unit_tests, 7);
+    assert.equal(base.tests.frontend_unit_tests, 5);
+    assert.equal(base.tests.api_test_cases, 3);
+    assert.equal(base.tests.unit_test_functions_total, 15);
+    assert.deepEqual(base.highlights.hardest_modules, [
+      { module: 'Frontend auth', fails: 2, attempts: 3, status: 'PASS' },
+    ]);
+
+    const markdown = formatterMod.buildMarkdown('collector-shaped', code, pipeline, tests, unitCensus, apiCensus, reviews, agents);
+    assert.equal(markdown.includes('- **Test Surface:** 15 total tests/checkable cases (7 Python, 5 frontend, 3 API)'), true);
+    assert.equal(markdown.includes('| Frontend auth | 2 | 3 | PASS |'), true);
+
+    const embeds = formatterMod.buildDiscordEmbeds('collector-shaped', code, pipeline, tests, unitCensus, apiCensus, reviews, agents);
+    assert.equal(getFieldValue(embeds[0].fields, '🧪 Tests Written'), '15 (7 py + 5 tsx + 3 api)');
+    assert.equal(getFieldValue(embeds[0].fields, '🏔️ Hardest'), '01. Frontend auth (2 fails)');
+  });
+
+  await record('project summary requires explicit repo root to be a git repository', async () => {
+    const { runtimeRoot: projectSummaryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    const projectSummaryMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/tools/project-summary.ts');
+
+    const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-project-summary-nongit-'));
+    await assert.rejects(
+      () => projectSummaryMod.generateSummary({ project: 'behavior-project-summary-nongit', repoDir: repoRoot }),
+      (error) => error?.message === `Repo root '${repoRoot}' is not a git repository (no .git directory)`,
+    );
+  });
+
+  await record('pipeline review archives ACP transcript under single swarm logs path', async () => {
+    const { runtimeRoot: summaryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    installFakeRedis(summaryRuntimeRoot);
+    globalThis.__fakeRedisCalls = [];
+    globalThis.__fakeRedisCounters = Object.create(null);
+
+    const summaryMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/summary.ts');
+    const runtimeCoreMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+
+    const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-pipeline-review-transcript-'));
+    const swarmDir = path.join(repoRoot, '.swarm');
+    fs.mkdirSync(swarmDir, { recursive: true });
+    const streamLogPath = path.join(repoRoot, 'review-stream.jsonl');
+    fs.writeFileSync(streamLogPath, '{"event":"token","text":"secret"}\n');
+    const copied = [];
+
+        const deps = {
+        pipelineReview: {
+          spawnSession: async () => ({ childSessionKey: 'agent:main:acp:pipeline-review-transcript', streamLogPath, attempt: 2 }),
+          terminateSession: async () => terminationResult(),
+          trackAgent: () => {},
+          untrackAgent: () => {},
+          pollForFile: async () => ({
+            ok: false,
+            reason: 'timeout',
+            status: { attempt: 2, session_key: 'agent:main:acp:pipeline-review-transcript' },
+          }),
+          sleep: async () => {},
+          discord: async () => {},
+          copyRedactedTranscriptArtifact: (source, dest) => { copied.push({ source, dest }); },
+        },
+      };
+const config = {
+      ...platformSummaryDefaults(),
+      project: 'behavior-pipeline-review-transcript',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: 'run-pipeline-review-transcript-1',
+      run_id: 'run-pipeline-review-transcript-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: await buildBuiltInRegistry(summaryRuntimeRoot),
+      pipeline_review: { model: 'anthropic/claude-sonnet-4-6' },
+          };
+
+    const result = await summaryMod.generatePipelineReview(config, { pipeline_review: { attempt: 2 } }, { deps: deps });
+    await flushAsync();
+
+    assert.equal(result.outputs.status, 'failed');
+    assert.equal(copied.length, 1);
+    assert.equal(copied[0].source, streamLogPath);
+    const expectedArchiveDir = path.join(swarmDir, 'logs', 'pipeline-review');
+    assert.equal(path.dirname(copied[0].dest), expectedArchiveDir);
+    assert.equal(copied[0].dest.includes(`${path.sep}.swarm${path.sep}.swarm${path.sep}`), false);
+  });
+
   await record('pipeline review rate-limit exhaustion emits authoritative pause telemetry and explicit operator failure', async () => {
     const { runtimeRoot: summaryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(summaryRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const summaryMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/summary.js');
-    const rateLimitMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/rate-limit.js');
-    const runtimeCoreMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const summaryMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/summary.ts');
+    const rateLimitMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/rate-limit.ts');
+    const runtimeCoreMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-pipeline-review-rate-limit-'));
     const swarmDir = path.join(repoRoot, '.swarm');
-    fs.mkdirSync(swarmDir, { recursive: true });
+    const logRoot = path.join(swarmDir, 'logs');
+    fs.mkdirSync(logRoot, { recursive: true });
     const sessionKey = 'agent:main:acp:pipeline-review-rate-limit';
     const exhaustedSessionKey = 'agent:main:acp:pipeline-review-rate-limit-exhausted';
     const dispatchId = 'dispatch-pipeline-review-rate-limit-1';
@@ -93,32 +282,23 @@ export async function registerSummariesArea({
     let pollCount = 0;
     let exhaustedResult = null;
   
-    const config = {
-      project: 'behavior-pipeline-review-rate-limit',
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
-      _runId: 'run-pipeline-review-rate-limit-1',
-      run_id: 'run-pipeline-review-rate-limit-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
-      _testOverrides: {
+        const configDeps2 = {
         pipelineReview: {
           spawnSession: async () => ({ childSessionKey: sessionKey, streamLogPath: null, attempt }),
-          killSession: async () => true,
+          terminateSession: async () => terminationResult(),
           trackAgent: () => {},
           untrackAgent: () => {},
           pollForFile: async () => {
             pollCount++;
             if (pollCount === 1) {
-              return { ok: false, reason: 'rate_limited', status: { attempt, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId } };
+              return { ok: false, reason: 'rate_limited', status: { attempt, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId, session_key: sessionKey } };
             }
             exhaustedResult = {
               ok: false,
               reason: 'rate_limit_exhausted',
               rate_limit_exhausted: true,
-              status: { attempt, reason: 'provider overloaded', provider: 'anthropic' },
-              rate_limit_status: { attempt, reason: 'provider overloaded', provider: 'anthropic', session_key: exhaustedSessionKey, max_rate_limit_pauses: 1 },
+              status: { attempt, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId, session_key: exhaustedSessionKey },
+              rate_limit_status: { attempt, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId, session_key: exhaustedSessionKey, max_rate_limit_pauses: 1 },
               rate_limit_pauses: 1,
             };
             return exhaustedResult;
@@ -127,10 +307,21 @@ export async function registerSummariesArea({
           discord: async (_config, _level, title, description, fields) => { discordCalls.push({ title, description, fields }); },
           copyRedactedTranscriptArtifact: () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformSummaryDefaults(),
+      project: 'behavior-pipeline-review-rate-limit',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: 'run-pipeline-review-rate-limit-1',
+      run_id: 'run-pipeline-review-rate-limit-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: await buildBuiltInRegistry(summaryRuntimeRoot),
+      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
+          };
 
-    const reviewRateLimitExit = await summaryMod.generatePipelineReview(config, { pipeline_review: { attempt } });
+    const reviewRateLimitExit = await summaryMod.generatePipelineReview(config, { pipeline_review: { attempt } }, { deps: configDeps2 });
     await flushAsync();
 
     assert.equal(pollCount, 2);
@@ -141,7 +332,8 @@ export async function registerSummariesArea({
     assert.equal(reviewRateLimitExit?.attempt, attempt);
     assert.equal(reviewRateLimitExit?.run_id, config._runId);
     assert.equal(reviewRateLimitExit?.dispatch_id, dispatchId);
-    assert.equal(reviewRateLimitExit?.gateway_label, dispatchId);
+    const expectedGatewayLabel = reviewRateLimitExit?.gateway_label;
+    assert.equal(expectedGatewayLabel, null);
     assert.equal(reviewRateLimitExit?.session_key, exhaustedSessionKey);
     assert.equal(reviewRateLimitExit?.max_rate_limit_pauses, 1);
     assert.deepEqual(reviewRateLimitExit?.rate_limit_status, {
@@ -153,7 +345,7 @@ export async function registerSummariesArea({
       agent_type: 'echo',
       run_id: config._runId,
       dispatch_id: dispatchId,
-      gateway_label: dispatchId,
+      gateway_label: null,
       session_key: exhaustedSessionKey,
       max_rate_limit_pauses: 1,
     });
@@ -166,14 +358,14 @@ export async function registerSummariesArea({
     assert.equal(getFieldValue(discordCalls[0].fields, 'Attempt'), `${attempt}`);
     assert.equal(getFieldValue(discordCalls[1].fields, 'Dispatch'), dispatchId);
     assert.equal(getFieldValue(discordCalls[1].fields, 'Session'), sessionKey);
-    assert.equal(getFieldValue(discordCalls[1].fields, 'Label'), dispatchId);
+    assert.equal(getFieldValue(discordCalls[1].fields, 'Gateway Label'), undefined);
     assert.equal(getFieldValue(discordCalls[2].fields, 'Dispatch'), dispatchId);
     assert.equal(getFieldValue(discordCalls[2].fields, 'Session'), sessionKey);
-    assert.equal(getFieldValue(discordCalls[2].fields, 'Label'), dispatchId);
+    assert.equal(getFieldValue(discordCalls[2].fields, 'Gateway Label'), undefined);
     assert.equal(getFieldValue(discordCalls[3].fields, 'Attempt'), `${attempt}`);
     assert.equal(getFieldValue(discordCalls[3].fields, 'Dispatch'), dispatchId);
     assert.equal(getFieldValue(discordCalls[3].fields, 'Session'), exhaustedSessionKey);
-    assert.equal(getFieldValue(discordCalls[3].fields, 'Label'), dispatchId);
+    assert.equal(getFieldValue(discordCalls[3].fields, 'Gateway Label'), undefined);
     assert.equal(discordCalls[3].description, `Pipeline review attempt ${attempt} exceeded max ACP rate limit pauses (1).`);
 
     const streamKey = 'pipeline:telemetry:behavior-pipeline-review-rate-limit:run-pipeline-review-rate-limit-1';
@@ -181,8 +373,7 @@ export async function registerSummariesArea({
     assert.deepEqual(events.map((event) => event.type), ['summary.started', 'rate_limit.detected', 'retry.exhausted', 'summary.completed']);
     assert.equal(events[0].summary_type, 'pipeline_review');
     assert.equal(events[0].attempt, attempt);
-    assert.equal(typeof events[0].gateway_label, 'string');
-    assert.equal(events[0].gateway_label.startsWith('pipeline-review-'), true);
+    assert.equal(events[0].gateway_label, null);
     assert.equal(events[0].model, 'openai-codex/gpt-5.4');
     assert.equal(events[0].runtime, 'subagent');
     assert.equal(events[1].module_id, 'pipeline-review');
@@ -194,7 +385,7 @@ export async function registerSummariesArea({
     assert.equal(events[2].module_id, 'pipeline-review');
     assert.equal(events[2].attempt, attempt);
     assert.equal(events[2].dispatch_id, dispatchId);
-    assert.equal(events[2].gateway_label, dispatchId);
+    assert.equal(events[2].gateway_label, null);
     assert.equal(events[2].phase, 'pipeline_review');
     assert.equal(events[2].session_key, exhaustedSessionKey);
     assert.equal(events[2].reason, 'Pipeline review exceeded max ACP rate limit pauses');
@@ -206,7 +397,7 @@ export async function registerSummariesArea({
     assert.equal(events[3].reason, 'Pipeline review exceeded max ACP rate limit pauses');
     assert.equal(events[3].dispatch_id, dispatchId);
     assert.equal(events[3].session_key, exhaustedSessionKey);
-    assert.equal(events[3].gateway_label, dispatchId);
+    assert.equal(events[3].gateway_label, null);
     assert.equal(events[3].model, 'openai-codex/gpt-5.4');
     assert.equal(events[3].runtime, 'subagent');
 
@@ -226,8 +417,8 @@ export async function registerSummariesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const summaryMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/summary.js');
-    const runtimeCoreMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const summaryMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/summary.ts');
+    const runtimeCoreMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-pipeline-review-no-output-'));
     const swarmDir = path.join(repoRoot, '.swarm');
@@ -236,7 +427,20 @@ export async function registerSummariesArea({
     const attempt = 8;
     const discordCalls = [];
   
-    const config = {
+        const configDeps3 = {
+        pipelineReview: {
+          spawnSession: async () => ({ childSessionKey: sessionKey, streamLogPath: null, attempt }),
+          terminateSession: async () => terminationResult(),
+          trackAgent: () => {},
+          untrackAgent: () => {},
+          pollForFile: async () => ({ ok: false, reason: 'timeout', status: { attempt, session_key: sessionKey, active_agent: { label: 'legacy-review-label-only' } } }),
+          sleep: async () => {},
+          discord: async (_config, _level, title, description, fields) => { discordCalls.push({ title, description, fields }); },
+          copyRedactedTranscriptArtifact: () => {},
+        },
+      };
+const config = {
+      ...platformSummaryDefaults(),
       project: 'behavior-pipeline-review-no-output',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
@@ -244,21 +448,10 @@ export async function registerSummariesArea({
       _runId: 'run-pipeline-review-no-output-1',
       run_id: 'run-pipeline-review-no-output-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
-        pipelineReview: {
-          spawnSession: async () => ({ childSessionKey: sessionKey, streamLogPath: null, attempt }),
-          killSession: async () => true,
-          trackAgent: () => {},
-          untrackAgent: () => {},
-          pollForFile: async () => ({ ok: false, reason: 'timeout', status: { attempt, session_key: sessionKey } }),
-          sleep: async () => {},
-          discord: async (_config, _level, title, description, fields) => { discordCalls.push({ title, description, fields }); },
-          copyRedactedTranscriptArtifact: () => {},
-        },
-      },
-    };
+      pluginRegistry: await buildBuiltInRegistry(summaryRuntimeRoot),
+          };
 
-    await summaryMod.generatePipelineReview(config, { pipeline_review: { attempt } });
+    await summaryMod.generatePipelineReview(config, { pipeline_review: { attempt } }, { deps: configDeps3 });
     await flushAsync();
 
     assert.deepEqual(discordCalls.map((call) => call.title), [
@@ -275,8 +468,7 @@ export async function registerSummariesArea({
     assert.deepEqual(events.map((event) => event.type), ['summary.started', 'summary.completed']);
     assert.equal(events[0].summary_type, 'pipeline_review');
     assert.equal(events[0].attempt, attempt);
-    assert.equal(typeof events[0].gateway_label, 'string');
-    assert.equal(events[0].gateway_label.startsWith('pipeline-review-'), true);
+    assert.equal(events[0].gateway_label, null);
     assert.equal(events[0].model, 'openai-codex/gpt-5.4');
     assert.equal(events[0].runtime, 'subagent');
     assert.equal(events[1].summary_type, 'pipeline_review');
@@ -284,7 +476,8 @@ export async function registerSummariesArea({
     assert.equal(events[1].status, 'failed');
     assert.equal(events[1].reason, 'Pipeline review failed: timeout');
     assert.equal(events[1].session_key, sessionKey);
-    assert.equal(events[1].gateway_label, events[0].gateway_label);
+    assert.equal(events[1].gateway_label, null);
+    assert.notEqual(events[1].gateway_label, 'legacy-review-label-only');
     assert.equal(events[1].model, 'openai-codex/gpt-5.4');
     assert.equal(events[1].runtime, 'subagent');
   });
@@ -295,8 +488,8 @@ export async function registerSummariesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const summaryMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/summary.js');
-    const runtimeCoreMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const summaryMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/summary.ts');
+    const runtimeCoreMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-pipeline-review-terminal-detail-'));
     const swarmDir = path.join(repoRoot, '.swarm');
@@ -304,18 +497,10 @@ export async function registerSummariesArea({
     const sessionKey = 'agent:main:acp:pipeline-review-terminal-detail';
     const discordCalls = [];
 
-    const config = {
-      project: 'behavior-pipeline-review-terminal-detail',
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
-      _runId: 'run-pipeline-review-terminal-detail-1',
-      run_id: 'run-pipeline-review-terminal-detail-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps4 = {
         pipelineReview: {
           spawnSession: async () => ({ childSessionKey: sessionKey, streamLogPath: null }),
-          killSession: async () => true,
+          terminateSession: async () => terminationResult(),
           trackAgent: () => {},
           untrackAgent: () => {},
           pollForFile: async () => ({
@@ -327,10 +512,20 @@ export async function registerSummariesArea({
           discord: async (_config, _level, title, description) => { discordCalls.push({ title, description }); },
           copyRedactedTranscriptArtifact: () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformSummaryDefaults(),
+      project: 'behavior-pipeline-review-terminal-detail',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: 'run-pipeline-review-terminal-detail-1',
+      run_id: 'run-pipeline-review-terminal-detail-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: await buildBuiltInRegistry(summaryRuntimeRoot),
+          };
 
-    await summaryMod.generatePipelineReview(config, {});
+    await summaryMod.generatePipelineReview(config, {}, { deps: configDeps4 });
     await flushAsync();
 
     assert.equal(discordCalls[1].title, '📋 Pipeline Review: No Output');
@@ -347,19 +542,81 @@ export async function registerSummariesArea({
     assert.equal(events[1].session_key, sessionKey);
   });
   
+  await record('pipeline review poll exception cleans tracked session exactly once using spawned identity', async () => {
+    const { runtimeRoot: summaryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    installFakeRedis(summaryRuntimeRoot);
+    globalThis.__fakeRedisCalls = [];
+    globalThis.__fakeRedisCounters = Object.create(null);
+
+    const summaryMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/summary.ts');
+    const runtimeCoreMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+
+    const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-pipeline-review-cleanup-exception-'));
+    const swarmDir = path.join(repoRoot, '.swarm');
+    fs.mkdirSync(swarmDir, { recursive: true });
+    const sessionKey = 'agent:main:subagent:pipeline-review-cleanup-exception';
+    const killed = [];
+    const tracked = [];
+    const untracked = [];
+
+        const configDeps5 = {
+        pipelineReview: {
+          spawnSession: async () => ({ childSessionKey: sessionKey, streamLogPath: null, attempt: 3 }),
+          terminateSession: async (key, opts) => { killed.push({ key, opts }); return terminationResult(key); },
+          trackAgent: (_config, trackingKey, key, agentId, label) => { tracked.push({ trackingKey, key, agentId, label }); },
+          untrackAgent: (trackingKey) => { untracked.push(trackingKey); },
+          pollForFile: async () => { throw new Error('poll exploded'); },
+          sleep: async () => {},
+          discord: async () => {},
+          copyRedactedTranscriptArtifact: () => {},
+        },
+      };
+const config = {
+      ...platformSummaryDefaults(),
+      project: 'behavior-pipeline-review-cleanup-exception',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: 'run-pipeline-review-cleanup-exception-1',
+      run_id: 'run-pipeline-review-cleanup-exception-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: await buildBuiltInRegistry(summaryRuntimeRoot),
+          };
+
+    const result = await summaryMod.generatePipelineReview(config, { pipeline_review: { attempt: 3 } }, { deps: configDeps5 });
+    await flushAsync();
+
+    assert.equal(result.outputs.status, 'failed');
+    assert.equal(result.outputs.reason, 'poll exploded');
+    assert.equal(tracked.length, 1);
+    assert.equal(tracked[0].trackingKey, 'pipeline-review-gpt-5.4_pipeline-review');
+    assert.equal(tracked[0].key, sessionKey);
+    assert.equal(tracked[0].agentId, 'gpt-5.4_pipeline-review');
+    assert.equal(typeof tracked[0].label, 'string');
+    assert.equal(tracked[0].label.startsWith('pipeline-review-'), true);
+    assert.deepEqual(untracked, ['pipeline-review-gpt-5.4_pipeline-review']);
+    assert.equal(killed.length, 1);
+    assert.equal(killed[0].key, sessionKey);
+    assert.equal(killed[0].opts.runtime, 'subagent');
+    assert.equal(killed[0].opts.model, 'openai-codex/gpt-5.4');
+    assert.equal(killed[0].opts.agentId, 'gpt-5.4_pipeline-review');
+    assert.equal(killed[0].opts.label, tracked[0].label);
+  });
+
   await record('case study rate-limit exhaustion emits authoritative pause telemetry and explicit operator failure', async () => {
     const { runtimeRoot: caseStudyRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(caseStudyRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const caseStudyMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/services/case-study.js');
-    const rateLimitMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/services/rate-limit.js');
-    const runtimeCoreMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const caseStudyMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/services/case-study.ts');
+    const rateLimitMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/services/rate-limit.ts');
+    const runtimeCoreMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-case-study-rate-limit-'));
     const swarmDir = path.join(repoRoot, '.swarm');
-    fs.mkdirSync(swarmDir, { recursive: true });
+    const logRoot = path.join(swarmDir, 'logs');
+    fs.mkdirSync(logRoot, { recursive: true });
     const sessionKey = 'agent:main:acp:case-study-rate-limit';
     const exhaustedSessionKey = 'agent:main:acp:case-study-rate-limit-exhausted';
     const dispatchId = 'dispatch-case-study-rate-limit-1';
@@ -368,34 +625,24 @@ export async function registerSummariesArea({
     let pollCount = 0;
     let exhaustedResult = null;
   
-    const config = {
-      project: 'behavior-case-study-rate-limit',
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
-      _runId: 'run-case-study-rate-limit-1',
-      run_id: 'run-case-study-rate-limit-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
-      case_study: { enabled: true },
-      _testOverrides: {
+        const configDeps6 = {
         caseStudy: {
           spawnSession: async () => ({ childSessionKey: sessionKey, streamLogPath: null, attempt }),
-          killSession: async () => true,
+          terminateSession: async () => terminationResult(),
           trackAgent: () => {},
           untrackAgent: () => {},
           emitEvent: async () => {},
           pollForFile: async () => {
             pollCount++;
             if (pollCount === 1) {
-              return { ok: false, reason: 'rate_limited', status: { attempt, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId } };
+              return { ok: false, reason: 'rate_limited', status: { attempt, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId, session_key: sessionKey } };
             }
             exhaustedResult = {
               ok: false,
               reason: 'rate_limit_exhausted',
               rate_limit_exhausted: true,
-              status: { attempt, reason: 'provider overloaded', provider: 'anthropic' },
-              rate_limit_status: { attempt, reason: 'provider overloaded', provider: 'anthropic', session_key: exhaustedSessionKey, max_rate_limit_pauses: 1 },
+              status: { attempt, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId, session_key: exhaustedSessionKey },
+              rate_limit_status: { attempt, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId, session_key: exhaustedSessionKey, max_rate_limit_pauses: 1 },
               rate_limit_pauses: 1,
             };
             return exhaustedResult;
@@ -404,10 +651,22 @@ export async function registerSummariesArea({
           discord: async (_config, _level, title, description, fields) => { discordCalls.push({ title, description, fields }); },
           copyRedactedTranscriptArtifact: () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformSummaryDefaults(),
+      project: 'behavior-case-study-rate-limit',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: 'run-case-study-rate-limit-1',
+      run_id: 'run-case-study-rate-limit-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: await buildBuiltInRegistry(caseStudyRuntimeRoot),
+      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
+      case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6' },
+          };
 
-    const caseStudyRateLimitExit = await caseStudyMod.generateCaseStudy(config, { case_study: { enabled: true, attempt } });
+    const caseStudyRateLimitExit = await caseStudyMod.generateCaseStudy(config, { case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6', attempt } }, { deps: configDeps6 });
     await flushAsync();
 
     assert.equal(pollCount, 2);
@@ -418,7 +677,8 @@ export async function registerSummariesArea({
     assert.equal(caseStudyRateLimitExit?.attempt, attempt);
     assert.equal(caseStudyRateLimitExit?.run_id, config._runId);
     assert.equal(caseStudyRateLimitExit?.dispatch_id, dispatchId);
-    assert.equal(caseStudyRateLimitExit?.gateway_label, dispatchId);
+    const expectedGatewayLabel = caseStudyRateLimitExit?.gateway_label;
+    assert.equal(expectedGatewayLabel, null);
     assert.equal(caseStudyRateLimitExit?.session_key, exhaustedSessionKey);
     assert.equal(caseStudyRateLimitExit?.max_rate_limit_pauses, 1);
     assert.deepEqual(caseStudyRateLimitExit?.rate_limit_status, {
@@ -430,7 +690,7 @@ export async function registerSummariesArea({
       agent_type: 'echo',
       run_id: config._runId,
       dispatch_id: dispatchId,
-      gateway_label: dispatchId,
+      gateway_label: null,
       session_key: exhaustedSessionKey,
       max_rate_limit_pauses: 1,
     });
@@ -443,14 +703,14 @@ export async function registerSummariesArea({
     assert.equal(getFieldValue(discordCalls[0].fields, 'Attempt'), `${attempt}`);
     assert.equal(getFieldValue(discordCalls[1].fields, 'Dispatch'), dispatchId);
     assert.equal(getFieldValue(discordCalls[1].fields, 'Session'), sessionKey);
-    assert.equal(getFieldValue(discordCalls[1].fields, 'Label'), dispatchId);
+    assert.equal(getFieldValue(discordCalls[1].fields, 'Gateway Label'), undefined);
     assert.equal(getFieldValue(discordCalls[2].fields, 'Dispatch'), dispatchId);
     assert.equal(getFieldValue(discordCalls[2].fields, 'Session'), sessionKey);
-    assert.equal(getFieldValue(discordCalls[2].fields, 'Label'), dispatchId);
+    assert.equal(getFieldValue(discordCalls[2].fields, 'Gateway Label'), undefined);
     assert.equal(getFieldValue(discordCalls[3].fields, 'Attempt'), `${attempt}`);
     assert.equal(getFieldValue(discordCalls[3].fields, 'Dispatch'), dispatchId);
     assert.equal(getFieldValue(discordCalls[3].fields, 'Session'), exhaustedSessionKey);
-    assert.equal(getFieldValue(discordCalls[3].fields, 'Label'), dispatchId);
+    assert.equal(getFieldValue(discordCalls[3].fields, 'Gateway Label'), undefined);
     assert.equal(discordCalls[3].description, `Case study attempt ${attempt} exceeded max ACP rate limit pauses (1).`);
 
     const streamKey = 'pipeline:telemetry:behavior-case-study-rate-limit:run-case-study-rate-limit-1';
@@ -458,8 +718,7 @@ export async function registerSummariesArea({
     assert.deepEqual(events.map((event) => event.type), ['summary.started', 'rate_limit.detected', 'retry.exhausted', 'summary.completed']);
     assert.equal(events[0].summary_type, 'case_study');
     assert.equal(events[0].attempt, attempt);
-    assert.equal(typeof events[0].gateway_label, 'string');
-    assert.equal(events[0].gateway_label.startsWith('case-study-'), true);
+    assert.equal(events[0].gateway_label, null);
     assert.equal(events[0].model, 'anthropic/claude-sonnet-4-6');
     assert.equal(events[0].runtime, 'acp');
     assert.equal(events[1].module_id, 'case-study');
@@ -471,7 +730,7 @@ export async function registerSummariesArea({
     assert.equal(events[2].module_id, 'case-study');
     assert.equal(events[2].attempt, attempt);
     assert.equal(events[2].dispatch_id, dispatchId);
-    assert.equal(events[2].gateway_label, dispatchId);
+    assert.equal(events[2].gateway_label, null);
     assert.equal(events[2].phase, 'case_study');
     assert.equal(events[2].session_key, exhaustedSessionKey);
     assert.equal(events[2].reason, 'Case study generation exceeded max ACP rate limit pauses');
@@ -483,7 +742,7 @@ export async function registerSummariesArea({
     assert.equal(events[3].reason, 'Case study generation exceeded max ACP rate limit pauses');
     assert.equal(events[3].dispatch_id, dispatchId);
     assert.equal(events[3].session_key, exhaustedSessionKey);
-    assert.equal(events[3].gateway_label, dispatchId);
+    assert.equal(events[3].gateway_label, null);
     assert.equal(events[3].model, 'anthropic/claude-sonnet-4-6');
     assert.equal(events[3].runtime, 'acp');
 
@@ -503,8 +762,8 @@ export async function registerSummariesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const caseStudyMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/services/case-study.js');
-    const runtimeCoreMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const caseStudyMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/services/case-study.ts');
+    const runtimeCoreMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-case-study-no-output-'));
     const swarmDir = path.join(repoRoot, '.swarm');
@@ -513,19 +772,10 @@ export async function registerSummariesArea({
     const attempt = 6;
     const discordCalls = [];
 
-    const config = {
-      project: 'behavior-case-study-no-output',
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
-      _runId: 'run-case-study-no-output-1',
-      run_id: 'run-case-study-no-output-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      case_study: { enabled: true },
-      _testOverrides: {
+        const configDeps7 = {
         caseStudy: {
           spawnSession: async () => ({ childSessionKey: sessionKey, streamLogPath: null, attempt }),
-          killSession: async () => true,
+          terminateSession: async () => terminationResult(),
           trackAgent: () => {},
           untrackAgent: () => {},
           emitEvent: async () => {},
@@ -534,10 +784,21 @@ export async function registerSummariesArea({
           discord: async (_config, _level, title, _description, fields) => { discordCalls.push({ title, fields }); },
           copyRedactedTranscriptArtifact: () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformSummaryDefaults(),
+      project: 'behavior-case-study-no-output',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: 'run-case-study-no-output-1',
+      run_id: 'run-case-study-no-output-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: await buildBuiltInRegistry(caseStudyRuntimeRoot),
+      case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6' },
+          };
 
-    await caseStudyMod.generateCaseStudy(config, { case_study: { enabled: true, attempt } });
+    await caseStudyMod.generateCaseStudy(config, { case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6', attempt } }, { deps: configDeps7 });
     await flushAsync();
 
     assert.deepEqual(discordCalls.map((call) => call.title), [
@@ -554,8 +815,7 @@ export async function registerSummariesArea({
     assert.deepEqual(events.map((event) => event.type), ['summary.started', 'summary.completed']);
     assert.equal(events[0].summary_type, 'case_study');
     assert.equal(events[0].attempt, attempt);
-    assert.equal(typeof events[0].gateway_label, 'string');
-    assert.equal(events[0].gateway_label.startsWith('case-study-'), true);
+    assert.equal(events[0].gateway_label, null);
     assert.equal(events[0].model, 'anthropic/claude-sonnet-4-6');
     assert.equal(events[0].runtime, 'acp');
     assert.equal(events[1].summary_type, 'case_study');
@@ -563,7 +823,7 @@ export async function registerSummariesArea({
     assert.equal(events[1].status, 'failed');
     assert.equal(events[1].reason, 'Case study generation failed: timeout');
     assert.equal(events[1].session_key, sessionKey);
-    assert.equal(events[1].gateway_label, events[0].gateway_label);
+    assert.equal(events[1].gateway_label, null);
     assert.equal(events[1].model, 'anthropic/claude-sonnet-4-6');
     assert.equal(events[1].runtime, 'acp');
   });
@@ -574,8 +834,8 @@ export async function registerSummariesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const caseStudyMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/services/case-study.js');
-    const runtimeCoreMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const caseStudyMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/services/case-study.ts');
+    const runtimeCoreMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-case-study-terminal-detail-'));
     const swarmDir = path.join(repoRoot, '.swarm');
@@ -583,19 +843,10 @@ export async function registerSummariesArea({
     const sessionKey = 'agent:main:acp:case-study-terminal-detail';
     const discordCalls = [];
 
-    const config = {
-      project: 'behavior-case-study-terminal-detail',
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
-      _runId: 'run-case-study-terminal-detail-1',
-      run_id: 'run-case-study-terminal-detail-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      case_study: { enabled: true },
-      _testOverrides: {
+        const configDeps8 = {
         caseStudy: {
           spawnSession: async () => ({ childSessionKey: sessionKey, streamLogPath: null }),
-          killSession: async () => true,
+          terminateSession: async () => terminationResult(),
           trackAgent: () => {},
           untrackAgent: () => {},
           emitEvent: async () => {},
@@ -608,10 +859,21 @@ export async function registerSummariesArea({
           discord: async (_config, _level, title, description) => { discordCalls.push({ title, description }); },
           copyRedactedTranscriptArtifact: () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformSummaryDefaults(),
+      project: 'behavior-case-study-terminal-detail',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: 'run-case-study-terminal-detail-1',
+      run_id: 'run-case-study-terminal-detail-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: await buildBuiltInRegistry(caseStudyRuntimeRoot),
+      case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6' },
+          };
 
-    await caseStudyMod.generateCaseStudy(config, {});
+    await caseStudyMod.generateCaseStudy(config, {}, { deps: configDeps8 });
     await flushAsync();
 
     assert.equal(discordCalls[1].title, '📝 Case Study: No Output');
@@ -628,14 +890,77 @@ export async function registerSummariesArea({
     assert.equal(events[1].session_key, sessionKey);
   });
 
+  await record('case study poll exception cleans tracked session exactly once using spawned identity', async () => {
+    const { runtimeRoot: caseStudyRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    installFakeRedis(caseStudyRuntimeRoot);
+    globalThis.__fakeRedisCalls = [];
+    globalThis.__fakeRedisCounters = Object.create(null);
+
+    const caseStudyMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/services/case-study.ts');
+    const runtimeCoreMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+
+    const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-case-study-cleanup-exception-'));
+    const swarmDir = path.join(repoRoot, '.swarm');
+    fs.mkdirSync(swarmDir, { recursive: true });
+    const sessionKey = 'agent:main:acp:case-study-cleanup-exception';
+    const killed = [];
+    const tracked = [];
+    const untracked = [];
+
+        const configDeps9 = {
+        caseStudy: {
+          spawnSession: async () => ({ childSessionKey: sessionKey, streamLogPath: null, attempt: 4 }),
+          terminateSession: async (key, opts) => { killed.push({ key, opts }); return terminationResult(key); },
+          trackAgent: (_config, trackingKey, key, agentId, label) => { tracked.push({ trackingKey, key, agentId, label }); },
+          untrackAgent: (trackingKey) => { untracked.push(trackingKey); },
+          emitEvent: async () => {},
+          pollForFile: async () => { throw new Error('case poll exploded'); },
+          sleep: async () => {},
+          discord: async () => {},
+          copyRedactedTranscriptArtifact: () => {},
+        },
+      };
+const config = {
+      ...platformSummaryDefaults(),
+      project: 'behavior-case-study-cleanup-exception',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: 'run-case-study-cleanup-exception-1',
+      run_id: 'run-case-study-cleanup-exception-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: await buildBuiltInRegistry(caseStudyRuntimeRoot),
+      case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6' },
+          };
+
+    const result = await caseStudyMod.generateCaseStudy(config, { case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6', attempt: 4 } }, { deps: configDeps9 });
+    await flushAsync();
+
+    assert.equal(result.outputs.status, 'failed');
+    assert.equal(result.outputs.reason, 'case poll exploded');
+    assert.equal(tracked.length, 1);
+    assert.equal(tracked[0].trackingKey, 'case-study-claude');
+    assert.equal(tracked[0].key, sessionKey);
+    assert.equal(tracked[0].agentId, 'claude');
+    assert.equal(typeof tracked[0].label, 'string');
+    assert.equal(tracked[0].label.startsWith('case-study-'), true);
+    assert.deepEqual(untracked, ['case-study-claude']);
+    assert.equal(killed.length, 1);
+    assert.equal(killed[0].key, sessionKey);
+    assert.equal(killed[0].opts.runtime, 'acp');
+    assert.equal(killed[0].opts.model, 'anthropic/claude-sonnet-4-6');
+    assert.equal(killed[0].opts.agentId, 'claude');
+    assert.equal(killed[0].opts.label, tracked[0].label);
+  });
+
   await record('case study success uses only canonical summary lifecycle events', async () => {
     const { runtimeRoot: caseStudyRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(caseStudyRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const caseStudyMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/services/case-study.js');
-    const runtimeCoreMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const caseStudyMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/services/case-study.ts');
+    const runtimeCoreMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-case-study-success-'));
     const swarmDir = path.join(repoRoot, '.swarm');
@@ -643,19 +968,10 @@ export async function registerSummariesArea({
     const sessionKey = 'agent:main:acp:case-study-success';
     const outputFilePath = path.join(swarmDir, 'logs', 'pipeline', 'case-study.md');
 
-    const config = {
-      project: 'behavior-case-study-success',
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
-      _runId: 'run-case-study-success-1',
-      run_id: 'run-case-study-success-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      case_study: { enabled: true },
-      _testOverrides: {
+        const configDeps10 = {
         caseStudy: {
           spawnSession: async () => ({ childSessionKey: sessionKey, streamLogPath: null }),
-          killSession: async () => true,
+          terminateSession: async () => terminationResult(),
           trackAgent: () => {},
           untrackAgent: () => {},
           pollForFile: async () => {
@@ -667,24 +983,35 @@ export async function registerSummariesArea({
           discord: async () => {},
           copyRedactedTranscriptArtifact: () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformSummaryDefaults(),
+      project: 'behavior-case-study-success',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: 'run-case-study-success-1',
+      run_id: 'run-case-study-success-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: await buildBuiltInRegistry(caseStudyRuntimeRoot),
+      case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6' },
+          };
 
-    await caseStudyMod.generateCaseStudy(config, {});
+    await caseStudyMod.generateCaseStudy(config, {}, { deps: configDeps10 });
     await flushAsync();
 
     const streamKey = 'pipeline:telemetry:behavior-case-study-success:run-case-study-success-1';
     const events = xaddEvents(streamKey);
     assert.deepEqual(events.map((event) => event.type), ['summary.started', 'summary.completed']);
     assert.equal(events[0].summary_type, 'case_study');
-    assert.equal(events[0].gateway_label.startsWith('case-study-'), true);
+    assert.equal(events[0].gateway_label, null);
     assert.equal(events[0].model, 'anthropic/claude-sonnet-4-6');
     assert.equal(events[0].runtime, 'acp');
     assert.equal(events[1].summary_type, 'case_study');
     assert.equal(events[1].status, 'ok');
     assert.equal(events[1].output, outputFilePath);
     assert.equal(events[1].session_key, sessionKey);
-    assert.equal(events[1].gateway_label, events[0].gateway_label);
+    assert.equal(events[1].gateway_label, null);
     assert.equal(fs.existsSync(outputFilePath), true);
   });
 
@@ -694,38 +1021,35 @@ export async function registerSummariesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const summaryMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/services/summary.js');
-    const runtimeCoreMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const summaryMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/services/summary.ts');
+    const runtimeCoreMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-project-summary-ok-'));
     const logRoot = path.join(repoRoot, '.swarm', 'logs');
     fs.mkdirSync(path.join(logRoot, 'pipeline'), { recursive: true });
-    const summaryModulePath = path.join(repoRoot, 'project-summary-test.mjs');
-    fs.writeFileSync(summaryModulePath, `
-  export async function generateSummary() {
-    return {
-      markdown: '# Summary\\n',
-      data: { status: 'ok' },
-      caseStudyBase: { project: 'behavior-project-summary-ok' },
-      embeds: [],
-    };
-  }
-  
-  export async function postToDiscord() {}
-  `);
-  
-    const config = {
+        const configDeps11 = {
+        adapters: {
+          projectSummaryGenerator: async () => ({
+            markdown: '# Summary\n',
+            data: { status: 'ok' },
+            caseStudyBase: { project: 'behavior-project-summary-ok' },
+            embeds: [],
+          }),
+        },
+      };
+const config = {
+      ...platformSummaryDefaults(),
       project: 'behavior-project-summary-ok',
       repo_root: repoRoot,
+      paths: { swarm_dir: path.join(repoRoot, '.swarm') },
       telemetry: { enabled: true },
       _runId: 'run-project-summary-ok-1',
       run_id: 'run-project-summary-ok-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _logDir: logRoot,
-      paths: { project_summary_js: summaryModulePath },
-    };
+      pluginRegistry: await buildBuiltInRegistry(projectSummaryRuntimeRoot),
+          };
   
-    await summaryMod.generateProjectSummary(config);
+    await summaryMod.generateProjectSummary(config, { deps: configDeps11 });
     await flushAsync();
   
     const streamKey = 'pipeline:telemetry:behavior-project-summary-ok:run-project-summary-ok-1';
@@ -743,7 +1067,7 @@ export async function registerSummariesArea({
   
   await record('project summary normalizes stale lifecycle terminal fields on read', async () => {
     const { runtimeRoot: projectSummaryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
-    const projectSummaryMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/tools/project-summary.js');
+    const projectSummaryMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/tools/project-summary.ts');
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-project-summary-normalized-'));
     const configPath = path.join(repoRoot, 'swarm.config.json');
@@ -751,9 +1075,13 @@ export async function registerSummariesArea({
     const projectRoot = path.join(repoRoot, 'Projects', project, 'src');
     const swarmRoot = path.join(projectRoot, '.swarm');
     const modulesRoot = path.join(swarmRoot, 'modules');
+    const runId = 'run-project-summary-normalized-1';
+    const lifecycleDir = path.join(swarmRoot, 'logs', 'pipeline', 'runs', runId, 'lifecycle');
 
     fs.mkdirSync(projectRoot, { recursive: true });
     fs.mkdirSync(modulesRoot, { recursive: true });
+    fs.mkdirSync(lifecycleDir, { recursive: true });
+    fs.mkdirSync(path.join(repoRoot, '.git'), { recursive: true });
     fs.writeFileSync(configPath, JSON.stringify({ projects_root: 'Projects' }, null, 2));
     fs.writeFileSync(path.join(projectRoot, 'index.js'), 'export const ok = true;\n');
     fs.writeFileSync(path.join(swarmRoot, 'progress.json'), JSON.stringify({
@@ -770,33 +1098,67 @@ export async function registerSummariesArea({
       fs.mkdirSync(path.join(modulesRoot, dir), { recursive: true });
     }
 
-    fs.writeFileSync(path.join(modulesRoot, '01', 'status.json'), JSON.stringify({
-      status: 'PASS',
-      fail_count: 0,
-      started_at: '2026-04-09T09:00:00.000Z',
-      completed_at: '2026-04-09T10:00:00.000Z',
-      completion_summary: 'All suites passed',
-      cost: { total_duration_seconds: 3600 },
-      history: [],
+    fs.writeFileSync(path.join(swarmRoot, 'logs', 'pipeline', 'latest.json'), JSON.stringify({
+      run_id: runId,
+      run_dir: `runs/${runId}`,
+      status: 'completed',
     }, null, 2));
-    fs.writeFileSync(path.join(modulesRoot, '02', 'status.json'), JSON.stringify({
-      status: 'FAIL',
-      fail_count: 1,
-      started_at: '2026-04-10T09:00:00.000Z',
-      completed_at: '2026-04-10T11:00:00.000Z',
-      completion_summary: 'Current buster failure detail',
-      fail_summaries: [{ summary: 'Current buster failure detail' }],
-      cost: { total_duration_seconds: 1800 },
-      history: [],
-    }, null, 2));
-    fs.writeFileSync(path.join(modulesRoot, '03', 'status.json'), JSON.stringify({
-      status: 'IN_PROGRESS',
-      fail_count: 1,
-      started_at: '2026-04-11T09:00:00.000Z',
-      completed_at: '2026-04-11T12:00:00.000Z',
-      completion_summary: 'Stale prior buster summary',
-      cost: { total_duration_seconds: 7200 },
-      history: [],
+    fs.writeFileSync(path.join(lifecycleDir, 'read-models.json'), JSON.stringify({
+      schemaVersion: 'v1',
+      run_id: runId,
+      generated_at: '2026-04-11T12:00:00.000Z',
+      last_event_id: null,
+      last_event_type: null,
+      event_count: 0,
+      pipeline: null,
+      progression: {
+        modules_total: 3,
+        modules_passed: 1,
+        modules_failed: 1,
+        modules_blocked: 0,
+        modules_active: 1,
+      },
+      modules: {
+        '01': {
+          module_id: '01',
+          module_dir: '01',
+          status: 'PASS',
+          current_attempt: 1,
+          fail_count: 0,
+          started_at: '2026-04-09T09:00:00.000Z',
+          completed_at: '2026-04-09T10:00:00.000Z',
+          completion_summary: 'All suites passed',
+          cost: { total_duration_seconds: 3600 },
+          history: [],
+        },
+        '02': {
+          module_id: '02',
+          module_dir: '02',
+          status: 'FAIL',
+          current_attempt: 1,
+          fail_count: 1,
+          started_at: '2026-04-10T09:00:00.000Z',
+          completion_summary: 'Current buster failure detail',
+          fail_summaries: [{ summary: 'Current buster failure detail' }],
+          cost: { total_duration_seconds: 1800 },
+          history: [],
+        },
+        '03': {
+          module_id: '03',
+          module_dir: '03',
+          status: 'IN_PROGRESS',
+          current_attempt: 1,
+          fail_count: 1,
+          started_at: '2026-04-11T09:00:00.000Z',
+          cost: { total_duration_seconds: 7200 },
+          history: [],
+        },
+      },
+      gates: {},
+      waits: { by_ref: {} },
+      signals: { by_ref: {} },
+      active_sessions: { modules: {}, gates: {} },
+      cooldowns: { modules: {}, gates: {} },
     }, null, 2));
 
     const result = await projectSummaryMod.generateSummary({ project, repoDir: repoRoot, configPath });
@@ -821,20 +1183,21 @@ export async function registerSummariesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const summaryMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/services/summary.js');
-    const runtimeCoreMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const summaryMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/services/summary.ts');
+    const runtimeCoreMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-project-summary-fail-'));
     const logRoot = path.join(repoRoot, '.swarm', 'logs');
     const config = {
+      ...platformSummaryDefaults(),
       project: 'behavior-project-summary-fail',
       repo_root: repoRoot,
       telemetry: { enabled: true },
       _runId: 'run-project-summary-fail-1',
       run_id: 'run-project-summary-fail-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _logDir: logRoot,
-      paths: { project_summary_js: path.join(repoRoot, 'missing-project-summary.mjs') },
+      pluginRegistry: await buildBuiltInRegistry(projectSummaryRuntimeRoot),
+      paths: { swarm_dir: path.join(repoRoot, '.swarm'), project_summary_js: path.join(repoRoot, 'missing-project-summary.mjs') },
     };
   
     await summaryMod.generateProjectSummary(config);
@@ -856,34 +1219,30 @@ export async function registerSummariesArea({
     const { runtimeRoot: projectSummaryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(projectSummaryRuntimeRoot);
   
-    const summaryMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/services/summary.js');
+    const summaryMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/services/summary.ts');
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-project-summary-discord-'));
     const logRoot = path.join(repoRoot, '.swarm', 'logs');
     const runLogDir = path.join(logRoot, 'pipeline', 'runs', 'run-project-summary-discord-1');
     fs.mkdirSync(runLogDir, { recursive: true });
-    const summaryModulePath = path.join(repoRoot, 'project-summary-discord-test.mjs');
-    fs.writeFileSync(summaryModulePath, `
-  export async function generateSummary() {
-    return {
-      markdown: '# Summary\\n',
-      data: { status: 'ok' },
-      caseStudyBase: { project: 'behavior-project-summary-discord' },
-      embeds: [{ title: 'Project Summary Embed', fields: [{ name: 'Status', value: 'GO', inline: true }] }],
+    const deps = {
+      adapters: {
+        projectSummaryGenerator: async () => ({
+          markdown: '# Summary\n',
+          data: { status: 'ok' },
+          caseStudyBase: { project: 'behavior-project-summary-discord' },
+          embeds: [{ title: 'Project Summary Embed', fields: [{ name: 'Status', value: 'GO', inline: true }] }],
+        }),
+      },
     };
-  }
-  `);
-  
     await summaryMod.generateProjectSummary({
       project: 'behavior-project-summary-discord',
       repo_root: repoRoot,
+      paths: { swarm_dir: path.join(repoRoot, '.swarm') },
       _runId: 'run-project-summary-discord-1',
       run_id: 'run-project-summary-discord-1',
-      _logDir: logRoot,
-      _runLogDir: runLogDir,
       _disable_discord_webhooks: true,
       discord_webhook_url: 'https://example.invalid/webhook',
-      paths: { project_summary_js: summaryModulePath },
-    });
+    }, { deps });
   
     const topLevelEntry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
     const runScopedEntry = JSON.parse(fs.readFileSync(path.join(runLogDir, 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
@@ -898,7 +1257,7 @@ export async function registerSummariesArea({
     const { runtimeRoot: projectSummaryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(projectSummaryRuntimeRoot);
 
-    const projectSummaryMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/tools/project-summary.js');
+    const projectSummaryMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/tools/project-summary.ts');
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-project-summary-tool-discord-'));
     const project = 'behavior-project-summary-tool-discord';
     const projectRoot = path.join(repoRoot, 'Projects', project, 'src');
@@ -910,6 +1269,7 @@ export async function registerSummariesArea({
     const outputPath = path.join(logRoot, 'pipeline', 'tool-project-summary.md');
 
     fs.mkdirSync(runLogDir, { recursive: true });
+    fs.mkdirSync(path.join(repoRoot, '.git'), { recursive: true });
     fs.writeFileSync(configPath, JSON.stringify({ projects_root: 'Projects' }, null, 2));
     fs.writeFileSync(path.join(logRoot, 'pipeline', 'latest.json'), JSON.stringify({ run_id: runId }, null, 2));
 
@@ -941,8 +1301,8 @@ export async function registerSummariesArea({
     const { runtimeRoot: summaryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(summaryRuntimeRoot);
 
-    const summaryMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/summary.js');
-    const runtimeCoreMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const summaryMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/summary.ts');
+    const runtimeCoreMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-pipeline-review-rate-limit-discord-'));
     const swarmDir = path.join(repoRoot, '.swarm');
@@ -955,46 +1315,46 @@ export async function registerSummariesArea({
     const dispatchId = 'dispatch-pipeline-review-rate-limit-1';
     let pollCount = 0;
 
-    const config = {
-      project: 'behavior-pipeline-review-rate-limit-discord',
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
-      _runId: runId,
-      run_id: runId,
-      _logDir: logRoot,
-      _runLogDir: runLogDir,
-      _disable_discord_webhooks: true,
-      discord_webhook_url: 'https://example.invalid/webhook',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
-      _testOverrides: {
+        const configDeps12 = {
         pipelineReview: {
           spawnSession: async () => ({ childSessionKey: sessionKey, streamLogPath: null, attempt: 4 }),
-          killSession: async () => true,
+          terminateSession: async () => terminationResult(),
           trackAgent: () => {},
           untrackAgent: () => {},
           pollForFile: async () => {
             pollCount++;
             if (pollCount === 1) {
-              return { ok: false, reason: 'rate_limited', status: { attempt: 4, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId } };
+              return { ok: false, reason: 'rate_limited', status: { attempt: 4, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId, session_key: sessionKey } };
             }
             return {
               ok: false,
               reason: 'rate_limit_exhausted',
               rate_limit_exhausted: true,
-              status: { attempt: 4, reason: 'provider overloaded', provider: 'anthropic' },
-              rate_limit_status: { attempt: 4, reason: 'provider overloaded', provider: 'anthropic', session_key: exhaustedSessionKey, max_rate_limit_pauses: 1 },
+              status: { attempt: 4, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId, session_key: exhaustedSessionKey },
+              rate_limit_status: { attempt: 4, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId, session_key: exhaustedSessionKey, max_rate_limit_pauses: 1 },
               rate_limit_pauses: 1,
             };
           },
           sleep: async () => {},
           copyRedactedTranscriptArtifact: () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformSummaryDefaults(),
+      project: 'behavior-pipeline-review-rate-limit-discord',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: runId,
+      run_id: runId,
+      _disable_discord_webhooks: true,
+      discord_webhook_url: 'https://example.invalid/webhook',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: await buildBuiltInRegistry(summaryRuntimeRoot),
+      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
+          };
 
-    await summaryMod.generatePipelineReview(config, { pipeline_review: { attempt: 4 } });
+    await summaryMod.generatePipelineReview(config, { pipeline_review: { attempt: 4 } }, { deps: configDeps12 });
     await flushAsync();
 
     const topLevelEntries = fs.readFileSync(path.join(logRoot, 'pipeline', 'discord.jsonl'), 'utf8').trim().split('\n').map((line) => JSON.parse(line));
@@ -1015,29 +1375,30 @@ export async function registerSummariesArea({
     assert.equal(exhaustedEntry.run_id, runId);
     assert.equal(exhaustedEntry.session_key, exhaustedSessionKey);
     assert.equal(exhaustedEntry.dispatch_id, dispatchId);
-    assert.equal(exhaustedEntry.gateway_label, dispatchId);
+    const expectedGatewayLabel = exhaustedEntry.gateway_label;
+    assert.equal(expectedGatewayLabel, null);
     assert.equal(spawnEntry.fields.some((field) => field.name === 'Attempt' && field.value === '4'), true);
     assert.equal(pauseEntry.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
     assert.equal(pauseEntry.fields.some((field) => field.name === 'Dispatch' && field.value === dispatchId), true);
     assert.equal(pauseEntry.fields.some((field) => field.name === 'Session' && field.value === sessionKey), true);
-    assert.equal(pauseEntry.fields.some((field) => field.name === 'Label' && field.value === dispatchId), true);
+    assert.equal(pauseEntry.fields.some((field) => field.name === 'Gateway Label'), false);
     assert.equal(resumeEntry.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
     assert.equal(resumeEntry.fields.some((field) => field.name === 'Dispatch' && field.value === dispatchId), true);
     assert.equal(resumeEntry.fields.some((field) => field.name === 'Session' && field.value === sessionKey), true);
-    assert.equal(resumeEntry.fields.some((field) => field.name === 'Label' && field.value === dispatchId), true);
+    assert.equal(resumeEntry.fields.some((field) => field.name === 'Gateway Label'), false);
     assert.equal(exhaustedEntry.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
     assert.equal(exhaustedEntry.fields.some((field) => field.name === 'Attempt' && field.value === '4'), true);
     assert.equal(exhaustedEntry.fields.some((field) => field.name === 'Dispatch' && field.value === dispatchId), true);
     assert.equal(exhaustedEntry.fields.some((field) => field.name === 'Session' && field.value === exhaustedSessionKey), true);
-    assert.equal(exhaustedEntry.fields.some((field) => field.name === 'Label' && field.value === dispatchId), true);
+    assert.equal(exhaustedEntry.fields.some((field) => field.name === 'Gateway Label'), false);
   });
 
   await record('case study rate-limit exhaustion emits canonical operator Discord alerts with correlation and audit mirroring', async () => {
     const { runtimeRoot: caseStudyRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(caseStudyRuntimeRoot);
 
-    const caseStudyMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/services/case-study.js');
-    const runtimeCoreMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const caseStudyMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/services/case-study.ts');
+    const runtimeCoreMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-case-study-rate-limit-discord-'));
     const swarmDir = path.join(repoRoot, '.swarm');
@@ -1051,7 +1412,33 @@ export async function registerSummariesArea({
     const attempt = 5;
     let pollCount = 0;
 
-    const config = {
+        const configDeps13 = {
+        caseStudy: {
+          spawnSession: async () => ({ childSessionKey: sessionKey, streamLogPath: null, attempt }),
+          terminateSession: async () => terminationResult(),
+          trackAgent: () => {},
+          untrackAgent: () => {},
+          emitEvent: async () => {},
+          pollForFile: async () => {
+            pollCount++;
+            if (pollCount === 1) {
+              return { ok: false, reason: 'rate_limited', status: { attempt, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId, session_key: sessionKey } };
+            }
+            return {
+              ok: false,
+              reason: 'rate_limit_exhausted',
+              rate_limit_exhausted: true,
+              status: { attempt, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId, session_key: exhaustedSessionKey },
+              rate_limit_status: { attempt, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId, session_key: exhaustedSessionKey, max_rate_limit_pauses: 1 },
+              rate_limit_pauses: 1,
+            };
+          },
+          sleep: async () => {},
+          copyRedactedTranscriptArtifact: () => {},
+        },
+      };
+const config = {
+      ...platformSummaryDefaults(),
       project: 'behavior-case-study-rate-limit-discord',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
@@ -1059,40 +1446,14 @@ export async function registerSummariesArea({
       _runId: runId,
       run_id: runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _logDir: logRoot,
-      _runLogDir: runLogDir,
+      pluginRegistry: await buildBuiltInRegistry(caseStudyRuntimeRoot),
       _disable_discord_webhooks: true,
       discord_webhook_url: 'https://example.invalid/webhook',
       rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
-      case_study: { enabled: true },
-      _testOverrides: {
-        caseStudy: {
-          spawnSession: async () => ({ childSessionKey: sessionKey, streamLogPath: null, attempt }),
-          killSession: async () => true,
-          trackAgent: () => {},
-          untrackAgent: () => {},
-          emitEvent: async () => {},
-          pollForFile: async () => {
-            pollCount++;
-            if (pollCount === 1) {
-              return { ok: false, reason: 'rate_limited', status: { attempt, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId } };
-            }
-            return {
-              ok: false,
-              reason: 'rate_limit_exhausted',
-              rate_limit_exhausted: true,
-              status: { attempt, reason: 'provider overloaded', provider: 'anthropic' },
-              rate_limit_status: { attempt, reason: 'provider overloaded', provider: 'anthropic', session_key: exhaustedSessionKey, max_rate_limit_pauses: 1 },
-              rate_limit_pauses: 1,
-            };
-          },
-          sleep: async () => {},
-          copyRedactedTranscriptArtifact: () => {},
-        },
-      },
-    };
+      case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6' },
+          };
 
-    await caseStudyMod.generateCaseStudy(config, { case_study: { enabled: true, attempt } });
+    await caseStudyMod.generateCaseStudy(config, { case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6', attempt } }, { deps: configDeps13 });
     await flushAsync();
 
     const topLevelEntries = fs.readFileSync(path.join(logRoot, 'pipeline', 'discord.jsonl'), 'utf8').trim().split('\n').map((line) => JSON.parse(line));
@@ -1113,31 +1474,32 @@ export async function registerSummariesArea({
     assert.equal(exhaustedEntry.run_id, runId);
     assert.equal(exhaustedEntry.session_key, exhaustedSessionKey);
     assert.equal(exhaustedEntry.dispatch_id, dispatchId);
-    assert.equal(exhaustedEntry.gateway_label, dispatchId);
+    const expectedGatewayLabel = exhaustedEntry.gateway_label;
+    assert.equal(expectedGatewayLabel, null);
     assert.equal(spawnEntry.fields.some((field) => field.name === 'Attempt' && field.value === `${attempt}`), true);
     assert.equal(pauseEntry.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
     assert.equal(pauseEntry.fields.some((field) => field.name === 'Dispatch' && field.value === dispatchId), true);
     assert.equal(pauseEntry.fields.some((field) => field.name === 'Session' && field.value === sessionKey), true);
-    assert.equal(pauseEntry.fields.some((field) => field.name === 'Label' && field.value === dispatchId), true);
+    assert.equal(pauseEntry.fields.some((field) => field.name === 'Gateway Label'), false);
     assert.equal(resumeEntry.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
     assert.equal(resumeEntry.fields.some((field) => field.name === 'Dispatch' && field.value === dispatchId), true);
     assert.equal(resumeEntry.fields.some((field) => field.name === 'Session' && field.value === sessionKey), true);
-    assert.equal(resumeEntry.fields.some((field) => field.name === 'Label' && field.value === dispatchId), true);
+    assert.equal(resumeEntry.fields.some((field) => field.name === 'Gateway Label'), false);
     assert.equal(exhaustedEntry.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
     assert.equal(exhaustedEntry.fields.some((field) => field.name === 'Attempt' && field.value === `${attempt}`), true);
     assert.equal(exhaustedEntry.fields.some((field) => field.name === 'Dispatch' && field.value === dispatchId), true);
     assert.equal(exhaustedEntry.fields.some((field) => field.name === 'Session' && field.value === exhaustedSessionKey), true);
-    assert.equal(exhaustedEntry.fields.some((field) => field.name === 'Label' && field.value === dispatchId), true);
+    assert.equal(exhaustedEntry.fields.some((field) => field.name === 'Gateway Label'), false);
   });
 
-  await record('shared tracked summary rate-limit exhaustion options preserve dispatch correlation', async () => {
+  await record('shared tracked summary rate-limit exhaustion options preserve dispatch and gateway correlation', async () => {
     const { runtimeRoot: summaryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(summaryRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const rateLimitMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/rate-limit.js');
-    const runtimeCoreMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const rateLimitMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/rate-limit.ts');
+    const runtimeCoreMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-summary-rate-limit-default-fields-'));
     const swarmDir = path.join(repoRoot, '.swarm');
@@ -1147,6 +1509,7 @@ export async function registerSummariesArea({
     const discordCalls = [];
 
     const config = {
+      ...platformSummaryDefaults(),
       project: 'behavior-summary-rate-limit-default-fields',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
@@ -1154,6 +1517,7 @@ export async function registerSummariesArea({
       _runId: runId,
       run_id: runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: await buildBuiltInRegistry(summaryRuntimeRoot),
     };
 
     const exitResult = await rateLimitMod.finalizeSummarySessionRateLimitExit({
@@ -1175,12 +1539,14 @@ export async function registerSummariesArea({
       summaryType: 'pipeline_review',
       phase: 'pipeline_review',
       exhaustedReason: 'Pipeline review exceeded max ACP rate limit pauses',
-      attemptFallback: 6,
-      runIdFallback: runId,
-      dispatchIdFallback: dispatchId,
-      gatewayLabelFallback: dispatchId,
-      sessionKeyFallback: sessionKey,
-      maxPausesFallback: 2,
+      identity: {
+        attempt: 6,
+        run_id: runId,
+        dispatch_id: dispatchId,
+        gateway_label: 'pipeline-review-label-1',
+        session_key: sessionKey,
+      },
+      maxPauses: 2,
       ...rateLimitMod.createTrackedSummarySessionRateLimitExhaustionOptions({
         notifyDiscord: async (_config, _level, title, description, fields) => {
           discordCalls.push({ title, description, fields });
@@ -1192,22 +1558,24 @@ export async function registerSummariesArea({
     await flushAsync();
 
     assert.equal(exitResult.dispatch_id, dispatchId);
-    assert.equal(exitResult.gateway_label, dispatchId);
+    assert.equal(exitResult.gateway_label, 'pipeline-review-label-1');
     assert.equal(exitResult.session_key, sessionKey);
     assert.equal(exitResult.max_rate_limit_pauses, 2);
     assert.equal(discordCalls.length, 1);
     assert.equal(getFieldValue(discordCalls[0].fields, 'Run ID'), runId);
     assert.equal(getFieldValue(discordCalls[0].fields, 'Attempt'), '6');
     assert.equal(getFieldValue(discordCalls[0].fields, 'Dispatch'), dispatchId);
+    assert.equal(getFieldValue(discordCalls[0].fields, 'Gateway Label'), 'pipeline-review-label-1');
     assert.equal(getFieldValue(discordCalls[0].fields, 'Session'), sessionKey);
-    assert.equal(getFieldValue(discordCalls[0].fields, 'Label'), dispatchId);
 
     const streamKey = `pipeline:telemetry:${config.project}:${runId}`;
     const events = xaddEvents(streamKey);
     assert.deepEqual(events.map((event) => event.type), ['retry.exhausted', 'summary.completed']);
     assert.equal(events[0].dispatch_id, dispatchId);
+    assert.equal(events[0].gateway_label, 'pipeline-review-label-1');
     assert.equal(events[0].session_key, sessionKey);
     assert.equal(events[1].dispatch_id, dispatchId);
+    assert.equal(events[1].gateway_label, 'pipeline-review-label-1');
     assert.equal(events[1].session_key, sessionKey);
   });
 
@@ -1215,8 +1583,8 @@ export async function registerSummariesArea({
     const { runtimeRoot: summaryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(summaryRuntimeRoot);
 
-    const summaryMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/summary.js');
-    const runtimeCoreMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const summaryMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/services/summary.ts');
+    const runtimeCoreMod = await importRuntimeModule(summaryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-pipeline-review-no-output-discord-'));
     const swarmDir = path.join(repoRoot, '.swarm');
@@ -1227,32 +1595,32 @@ export async function registerSummariesArea({
     const sessionKey = 'agent:main:acp:pipeline-review-no-output-discord';
     const dispatchId = 'dispatch-pipeline-review-no-output-1';
 
-    const config = {
-      project: 'behavior-pipeline-review-no-output-discord',
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
-      _runId: runId,
-      run_id: runId,
-      _logDir: logRoot,
-      _runLogDir: runLogDir,
-      _disable_discord_webhooks: true,
-      discord_webhook_url: 'https://example.invalid/webhook',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps14 = {
         pipelineReview: {
           spawnSession: async () => ({ childSessionKey: sessionKey, streamLogPath: null, attempt: 8 }),
-          killSession: async () => true,
+          terminateSession: async () => terminationResult(),
           trackAgent: () => {},
           untrackAgent: () => {},
           pollForFile: async () => ({ ok: false, reason: 'timeout', status: { attempt: 8, dispatch_id: dispatchId } }),
           sleep: async () => {},
           copyRedactedTranscriptArtifact: () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformSummaryDefaults(),
+      project: 'behavior-pipeline-review-no-output-discord',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: runId,
+      run_id: runId,
+      _disable_discord_webhooks: true,
+      discord_webhook_url: 'https://example.invalid/webhook',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: await buildBuiltInRegistry(summaryRuntimeRoot),
+          };
 
-    await summaryMod.generatePipelineReview(config, { pipeline_review: { attempt: 8 } });
+    await summaryMod.generatePipelineReview(config, { pipeline_review: { attempt: 8 } }, { deps: configDeps14 });
     await flushAsync();
 
     const topLevelEntries = fs.readFileSync(path.join(logRoot, 'pipeline', 'discord.jsonl'), 'utf8').trim().split('\n').map((line) => JSON.parse(line));
@@ -1266,29 +1634,30 @@ export async function registerSummariesArea({
     assert.equal(noOutputEntry.run_id, runId);
     assert.equal(noOutputEntry.session_key, sessionKey);
     assert.equal(noOutputEntry.dispatch_id, dispatchId);
-    assert.equal(noOutputEntry.gateway_label, dispatchId);
+    const expectedGatewayLabel = noOutputEntry.gateway_label;
+    assert.equal(expectedGatewayLabel, null);
     assert.equal(noOutputEntry.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
     assert.equal(noOutputEntry.fields.some((field) => field.name === 'Attempt' && field.value === '8'), true);
     assert.equal(noOutputEntry.fields.some((field) => field.name === 'Dispatch' && field.value === dispatchId), true);
     assert.equal(noOutputEntry.fields.some((field) => field.name === 'Session' && field.value === sessionKey), true);
-    assert.equal(noOutputEntry.fields.some((field) => field.name === 'Label' && field.value === dispatchId), true);
+    assert.equal(noOutputEntry.fields.some((field) => field.name === 'Gateway Label'), false);
     assert.equal(failedEntry.run_id, runId);
     assert.equal(failedEntry.session_key, sessionKey);
     assert.equal(failedEntry.dispatch_id, dispatchId);
-    assert.equal(failedEntry.gateway_label, dispatchId);
+    assert.equal(failedEntry.gateway_label, expectedGatewayLabel);
     assert.equal(failedEntry.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
     assert.equal(failedEntry.fields.some((field) => field.name === 'Attempt' && field.value === '8'), true);
     assert.equal(failedEntry.fields.some((field) => field.name === 'Dispatch' && field.value === dispatchId), true);
     assert.equal(failedEntry.fields.some((field) => field.name === 'Session' && field.value === sessionKey), true);
-    assert.equal(failedEntry.fields.some((field) => field.name === 'Label' && field.value === dispatchId), true);
+    assert.equal(failedEntry.fields.some((field) => field.name === 'Gateway Label'), false);
   });
 
   await record('case study no-output failure emits canonical operator Discord alerts with correlation and audit mirroring', async () => {
     const { runtimeRoot: caseStudyRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(caseStudyRuntimeRoot);
 
-    const caseStudyMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/services/case-study.js');
-    const runtimeCoreMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const caseStudyMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/services/case-study.ts');
+    const runtimeCoreMod = await importRuntimeModule(caseStudyRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-case-study-no-output-discord-'));
     const swarmDir = path.join(repoRoot, '.swarm');
@@ -1298,23 +1667,10 @@ export async function registerSummariesArea({
     const sessionKey = 'agent:main:acp:case-study-no-output-discord';
     const dispatchId = 'dispatch-case-study-no-output-1';
 
-    const config = {
-      project: 'behavior-case-study-no-output-discord',
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
-      _runId: 'run-case-study-no-output-discord-1',
-      run_id: 'run-case-study-no-output-discord-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _logDir: logRoot,
-      _runLogDir: runLogDir,
-      _disable_discord_webhooks: true,
-      discord_webhook_url: 'https://example.invalid/webhook',
-      case_study: { enabled: true },
-      _testOverrides: {
+        const configDeps15 = {
         caseStudy: {
           spawnSession: async () => ({ childSessionKey: sessionKey, streamLogPath: null }),
-          killSession: async () => true,
+          terminateSession: async () => terminationResult(),
           trackAgent: () => {},
           untrackAgent: () => {},
           emitEvent: async () => {},
@@ -1322,10 +1678,23 @@ export async function registerSummariesArea({
           sleep: async () => {},
           copyRedactedTranscriptArtifact: () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformSummaryDefaults(),
+      project: 'behavior-case-study-no-output-discord',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: 'run-case-study-no-output-discord-1',
+      run_id: 'run-case-study-no-output-discord-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: await buildBuiltInRegistry(caseStudyRuntimeRoot),
+      _disable_discord_webhooks: true,
+      discord_webhook_url: 'https://example.invalid/webhook',
+      case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6' },
+          };
 
-    await caseStudyMod.generateCaseStudy(config, {});
+    await caseStudyMod.generateCaseStudy(config, {}, { deps: configDeps15 });
     await flushAsync();
 
     const topLevelEntries = fs.readFileSync(path.join(logRoot, 'pipeline', 'discord.jsonl'), 'utf8').trim().split('\n').map((line) => JSON.parse(line));
@@ -1337,7 +1706,8 @@ export async function registerSummariesArea({
     assert.equal(noOutputEntry.run_id, 'run-case-study-no-output-discord-1');
     assert.equal(noOutputEntry.session_key, sessionKey);
     assert.equal(noOutputEntry.dispatch_id, dispatchId);
-    assert.equal(noOutputEntry.gateway_label, dispatchId);
+    const expectedGatewayLabel = noOutputEntry.gateway_label;
+    assert.equal(expectedGatewayLabel, null);
     assert.equal(noOutputEntry.fields.some((field) => field.name === 'Run ID' && field.value === 'run-case-study-no-output-discord-1'), true);
     assert.equal(noOutputEntry.fields.some((field) => field.name === 'Dispatch' && field.value === dispatchId), true);
     assert.equal(noOutputEntry.fields.some((field) => field.name === 'Session' && field.value === sessionKey), true);
@@ -1345,16 +1715,16 @@ export async function registerSummariesArea({
     assert.equal(failedEntry.run_id, 'run-case-study-no-output-discord-1');
     assert.equal(failedEntry.session_key, sessionKey);
     assert.equal(failedEntry.dispatch_id, dispatchId);
-    assert.equal(failedEntry.gateway_label, dispatchId);
+    assert.equal(failedEntry.gateway_label, expectedGatewayLabel);
     assert.equal(failedEntry.fields.some((field) => field.name === 'Dispatch' && field.value === dispatchId), true);
-    assert.equal(failedEntry.fields.some((field) => field.name === 'Label' && field.value === dispatchId), true);
+    assert.equal(failedEntry.fields.some((field) => field.name === 'Gateway Label'), false);
   });
 
   await record('project summary failure emits canonical operator Discord alerts with artifact correlation and audit mirroring', async () => {
     const { runtimeRoot: projectSummaryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(projectSummaryRuntimeRoot);
 
-    const summaryMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/services/summary.js');
+    const summaryMod = await importRuntimeModule(projectSummaryRuntimeRoot, '/app/skills/pipeline/services/summary.ts');
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-project-summary-fail-discord-'));
     const logRoot = path.join(repoRoot, '.swarm', 'logs');
     const runLogDir = path.join(logRoot, 'pipeline', 'runs', 'run-project-summary-fail-discord-1');
@@ -1363,13 +1733,11 @@ export async function registerSummariesArea({
     await summaryMod.generateProjectSummary({
       project: 'behavior-project-summary-fail-discord',
       repo_root: repoRoot,
+      paths: { swarm_dir: path.join(repoRoot, '.swarm'), project_summary_js: path.join(repoRoot, 'missing-project-summary-discord.mjs') },
       _runId: 'run-project-summary-fail-discord-1',
       run_id: 'run-project-summary-fail-discord-1',
-      _logDir: logRoot,
-      _runLogDir: runLogDir,
       _disable_discord_webhooks: true,
       discord_webhook_url: 'https://example.invalid/webhook',
-      paths: { project_summary_js: path.join(repoRoot, 'missing-project-summary-discord.mjs') },
     });
 
     const topLevelEntry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
@@ -1387,8 +1755,8 @@ export async function registerSummariesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot));
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-pipeline-summary-ok-'));
@@ -1397,21 +1765,7 @@ export async function registerSummariesArea({
     const runLogDir = path.join(logDir, 'pipeline', 'runs', 'run-pipeline-summary-ok-1');
     fs.mkdirSync(runLogDir, { recursive: true });
 
-    const config = {
-      project: 'behavior-pipeline-summary-ok',
-      repo_root: repoRoot,
-      paths: {
-        swarm_dir: swarmDir,
-        modules_dir: path.join(swarmDir, 'modules'),
-      },
-      telemetry: { enabled: true },
-      _pluginRegistry: registry,
-      _runId: 'run-pipeline-summary-ok-1',
-      run_id: 'run-pipeline-summary-ok-1',
-      _logDir: logDir,
-      _runLogDir: runLogDir,
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps16 = {
         pipelineRunner: {
           discord: async () => {},
           output: () => {},
@@ -1421,8 +1775,21 @@ export async function registerSummariesArea({
           generatePipelineReview: async () => {},
           generateCaseStudy: async () => {},
         },
+      };
+const config = {
+      ...platformSummaryDefaults(),
+      project: 'behavior-pipeline-summary-ok',
+      repo_root: repoRoot,
+      paths: {
+        swarm_dir: swarmDir,
+        modules_dir: path.join(swarmDir, 'modules'),
       },
-    };
+      telemetry: { enabled: true },
+      pluginRegistry: registry,
+      _runId: 'run-pipeline-summary-ok-1',
+      run_id: 'run-pipeline-summary-ok-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+          };
 
     const progress = {
       execution_order: [],
@@ -1431,7 +1798,7 @@ export async function registerSummariesArea({
       arch_validation: { enabled: false },
     };
 
-    const result = await pipelineRunnerMod.runPipeline(config, progress, { skipArchValidation: true });
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps16, skipArchValidation: true }, { deps: configDeps16 });
     await flushAsync();
 
     assert.equal(result, 0);
@@ -1461,6 +1828,9 @@ export async function registerSummariesArea({
     assert.equal(summary.artifacts.discord_jsonl, 'runs/run-pipeline-summary-ok-1/discord.jsonl');
     assert.equal(summary.artifacts.summary_json, 'runs/run-pipeline-summary-ok-1/summary.json');
     assert.equal(summary.artifacts.nova_injections_jsonl, 'runs/run-pipeline-summary-ok-1/nova-injections.jsonl');
+    assert.equal(summary.artifacts.buster_telemetry_fallback_jsonl, 'runs/run-pipeline-summary-ok-1/buster-telemetry-fallback.jsonl');
+    assert.equal(summary.artifacts.redis_exchanges_jsonl, 'runs/run-pipeline-summary-ok-1/redis/redis-exchanges.jsonl');
+    assert.equal(summary.artifacts.redis_ops_jsonl, 'runs/run-pipeline-summary-ok-1/redis/redis-ops.jsonl');
   });
 
   await record('pipeline summary halt paths emit canonical summary lifecycle with artifact correlation', async () => {
@@ -1469,8 +1839,8 @@ export async function registerSummariesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot));
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-pipeline-summary-halt-'));
@@ -1479,7 +1849,30 @@ export async function registerSummariesArea({
     const runLogDir = path.join(logDir, 'pipeline', 'runs', 'run-pipeline-summary-halt-1');
     fs.mkdirSync(runLogDir, { recursive: true });
 
-    const config = {
+        const configDeps17 = {
+        pipelineRunner: {
+          discord: async () => {},
+          output: () => {},
+          releaseGateFiles: async () => {},
+          syncControlFiles: async () => {},
+          runModule: async () => makeStepResult({
+            stepId: '01',
+            exit: 10,
+            reason: 'Forge fix needs Nova guidance',
+            projection: {
+              fail_count: 3,
+              module_status: { session_key: 'agent:main:acp:pipeline-summary-halt-01' },
+            },
+            correlation: {
+              module_id: '01',
+              session_key: 'agent:main:acp:pipeline-summary-halt-01',
+            },
+          }),
+          generateProjectSummary: async () => {},
+        },
+      };
+const config = {
+      ...platformSummaryDefaults(),
       project: 'behavior-pipeline-summary-halt',
       repo_root: repoRoot,
       paths: {
@@ -1487,28 +1880,11 @@ export async function registerSummariesArea({
         modules_dir: path.join(swarmDir, 'modules'),
       },
       telemetry: { enabled: true },
-      _pluginRegistry: registry,
+      pluginRegistry: registry,
       _runId: 'run-pipeline-summary-halt-1',
       run_id: 'run-pipeline-summary-halt-1',
-      _logDir: logDir,
-      _runLogDir: runLogDir,
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
-        pipelineRunner: {
-          discord: async () => {},
-          output: () => {},
-          releaseGateFiles: async () => {},
-          syncControlFiles: async () => {},
-          runModule: async () => ({
-            exit: 10,
-            reason: 'Forge fix needs Nova guidance',
-            fail_count: 3,
-            module_status: { session_key: 'agent:main:acp:pipeline-summary-halt-01' },
-          }),
-          generateProjectSummary: async () => {},
-        },
-      },
-    };
+          };
 
     const progress = {
       execution_order: ['01'],
@@ -1517,7 +1893,7 @@ export async function registerSummariesArea({
       arch_validation: { enabled: false },
     };
 
-    const result = await pipelineRunnerMod.runPipeline(config, progress, { module: '01', skipArchValidation: true });
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps17, module: '01', skipArchValidation: true });
     await flushAsync();
 
     assert.equal(result, 10);
@@ -1547,5 +1923,8 @@ export async function registerSummariesArea({
     assert.equal(summary.artifacts.discord_jsonl, 'runs/run-pipeline-summary-halt-1/discord.jsonl');
     assert.equal(summary.artifacts.summary_json, 'runs/run-pipeline-summary-halt-1/summary.json');
     assert.equal(summary.artifacts.nova_injections_jsonl, 'runs/run-pipeline-summary-halt-1/nova-injections.jsonl');
+    assert.equal(summary.artifacts.buster_telemetry_fallback_jsonl, 'runs/run-pipeline-summary-halt-1/buster-telemetry-fallback.jsonl');
+    assert.equal(summary.artifacts.redis_exchanges_jsonl, 'runs/run-pipeline-summary-halt-1/redis/redis-exchanges.jsonl');
+    assert.equal(summary.artifacts.redis_ops_jsonl, 'runs/run-pipeline-summary-halt-1/redis/redis-ops.jsonl');
   });
 }

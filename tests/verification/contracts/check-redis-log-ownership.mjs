@@ -1,3 +1,5 @@
+import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
+const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-redis-log-ownership' });
 import fs from 'fs';
 import path from 'path';
 import assert from 'assert';
@@ -13,13 +15,13 @@ function parseArgs(argv = process.argv.slice(2)) {
 }
 
 const { sourceRoot } = parseArgs();
-const observabilityPath = path.join(sourceRoot, 'skills/nova/pipeline/services/observability.js');
-const redisLogPath = path.join(sourceRoot, 'skills/nova/pipeline/services/redis-log.js');
+const observabilityPath = path.join(sourceRoot, 'skills/nova/pipeline/services/observability.ts');
+const redisLogPath = path.join(sourceRoot, 'skills/nova/pipeline/services/redis-log.ts');
 
 const observabilitySource = fs.readFileSync(observabilityPath, 'utf8');
 const redisLogSource = fs.readFileSync(redisLogPath, 'utf8');
 
-assert.equal(observabilitySource.includes('export function logRedisExchange('), false, 'observability.js must not own a Redis exchange logging helper');
+assert.equal(observabilitySource.includes('export function logRedisExchange('), false, 'observability.ts must not own a Redis exchange logging helper');
 assert.equal(redisLogSource.includes('export function logRedisExchange('), true, 'redis-log.js must remain the canonical Redis exchange logging owner');
 assert.equal(redisLogSource.includes('export function logRedisSent('), true, 'redis-log.js should keep the canonical sent helper');
 assert.equal(redisLogSource.includes('export function logRedisReceived('), true, 'redis-log.js should keep the canonical received helper');
@@ -32,4 +34,5 @@ assert.equal(typeof redisLogMod.logRedisExchange, 'function', 'redis-log module 
 assert.equal(typeof redisLogMod.logRedisSent, 'function', 'redis-log module should export the canonical sent helper');
 assert.equal(typeof redisLogMod.logRedisReceived, 'function', 'redis-log module should export the canonical received helper');
 
+quietConsole.restore();
 console.log(JSON.stringify({ ok: true, checked: 8 }));

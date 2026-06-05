@@ -47,6 +47,9 @@ await record('behavior verification doc reflects the live repo-based workflow', 
   assert.equal(behaviorDoc.includes('default behavior harness coverage currently spans `33` areas'), true);
   assert.equal(behaviorDoc.includes('exact pass totals should be taken from the live JSON output of `tests/verification/behavior/verify.mjs`, not from a stale static doc snapshot'), true);
   assert.equal(behaviorDoc.includes('`tests/verification/run-full-verification.sh` is the canonical fail-fast local wrapper'), true);
+  assert.equal(behaviorDoc.includes('it includes deployment truth, runtime collision, live subagent launch smoke, telemetry contract, focused contract guards, and the default behavior harness'), true);
+  assert.equal(behaviorDoc.includes('ACP launch reachability is local/provider-specific and is run explicitly with `tests/verification/run-local-acp-verification.sh`'), true);
+  assert.equal(behaviorDoc.includes('ACP failures mean local ACP agent/provider/gateway status setup needs attention; they do not by themselves make deterministic repo verification red'), true);
   assert.equal(behaviorDoc.includes('because the wrapper stops on the first red surface, rerun the underlying entrypoints directly when you need the full downstream failure set'), true);
   assert.equal(behaviorDoc.includes('contract and telemetry schema now pin an explicit authority split: contract owns canonical inventory and boundaries, schema owns event-by-event payload reference'), true);
   assert.equal(behaviorDoc.includes('deprecated no-op event surfaces `memory.recalled`, `buster.result`, and `redis.message` are removed from canonical runtime and contract expectations'), true);
@@ -65,7 +68,7 @@ await record('behavior verification doc reflects the live repo-based workflow', 
   assert.equal(behaviorDoc.includes('Buster pre-test infra/config `EXIT_NEEDS_NOVA` returns now also preserve the dispatch-backed or resolved `gateway_label` plus the terminal `session_key`, so terminal pipeline-runner stop alerts stay joinable when Nova preserves Forge output and stops before another code cycle'), true);
   assert.equal(behaviorDoc.includes('Repeated Buster pre-test `EXIT_NEEDS_NOVA` returns now also preserve the dispatch-backed or resolved `gateway_label` plus the terminal `session_key`, so terminal pipeline-runner stop alerts stay joinable when the same pre-test suite fails again and Nova escalates before another Forge cycle'), true);
   assert.equal(behaviorDoc.includes('Dependency-check EXIT_ERROR returns now also preserve resolved `gateway_label` and `session_key`, so terminal pipeline-runner stop alerts stay joinable when module execution is refused before any attempt starts'), true);
-  assert.equal(behaviorDoc.includes('Corrupt status-load EXIT_ERROR returns now also preserve salvaged `gateway_label` and `session_key` from the unreadable `status.json`, so terminal pipeline-runner stop alerts stay joinable even when Nova aborts to avoid overwriting existing work'), true);
+  assert.equal(behaviorDoc.includes('Corrupt lifecycle-state load EXIT_ERROR returns now also preserve salvaged `gateway_label` and `session_key` from the unreadable lifecycle-backed module state, so terminal pipeline-runner stop alerts stay joinable even when Nova aborts to avoid overwriting existing work'), true);
   assert.equal(behaviorDoc.includes('Module-runner Forge and Buster spawn-failed exits now preserve returned `gateway_label` and `session_key`, so the terminal pipeline-runner stop alerts stay joinable with the owning module attempt even when the failure happens before normal polling begins'), true);
   assert.equal(behaviorDoc.includes('Forge and Buster prompt-build EXIT_ERROR returns now also preserve resolved `gateway_label` and `session_key`, so terminal pipeline-runner stop alerts keep canonical module correlation even when execution fails before any child session is spawned'), true);
   assert.equal(behaviorDoc.includes('Validation-milestone refusal before Buster dispatch now also preserves resolved `gateway_label` and `session_key`, so terminal pipeline-runner stop alerts keep canonical module correlation when Nova aborts before the Git handoff'), true);
@@ -82,7 +85,7 @@ await record('behavior verification doc reflects the live repo-based workflow', 
   assert.equal(behaviorDoc.includes('Buster gate no-fix-loop `EXIT_NEEDS_NOVA` returns now also preserve resolved `gateway_label` and `session_key`, so terminal pipeline-runner stop alerts stay joinable when a Buster gate fails without an auto-fix cycle configured'), true);
   assert.equal(behaviorDoc.includes('Buster gate fix-loop-exhausted `EXIT_NEEDS_NOVA` returns now also preserve resolved `gateway_label` and `session_key`, so terminal pipeline-runner stop alerts stay joinable when Buster gate retries consume every configured fix attempt'), true);
   assert.equal(behaviorDoc.includes('Buster gate fix rate-limit-exhausted `EXIT_RATE_LIMITED` returns now also preserve resolved `gateway_label` and `session_key`, so terminal pipeline-runner stop alerts stay joinable when the Forge auto-fix session itself exhausts cooldown pauses'), true);
-  assert.equal(behaviorDoc.includes("Full-pipeline BLOCKED halt/escalation surfaces resolve the blocked module's persisted `session_key` from `status.json`, so operator Discord alerts and stop-path telemetry stay joinable even when the runner only knows it is resuming a previously BLOCKED module"), true);
+  assert.equal(behaviorDoc.includes("Full-pipeline BLOCKED halt/escalation surfaces resolve the blocked module's persisted `session_key` from lifecycle-backed module state, so operator Discord alerts and stop-path telemetry stay joinable even when the runner only knows it is resuming a previously BLOCKED module"), true);
   assert.equal(behaviorDoc.includes('Buster agent-test failure paths now preserve the cached child `session_key` through failure-service Discord, retry, escalation, and returned result payloads even after `active_agent` cleanup, so Buster-owned FAIL / NEEDS_NOVA surfaces remain joinable with the completed child session'), true);
   assert.equal(behaviorDoc.includes('Approval gates normalize lower-case config `on_timeout` into canonical uppercase `timeout_policy` across gate state, approval audit artifacts, and emitted `approval.requested` telemetry so runtime behavior matches the published contract'), true);
   assert.equal(behaviorDoc.includes('Service-owned pipeline review and case-study ACP cooldown exhaustion now also emit structured `retry.exhausted` telemetry with preserved `session_key`, so those post-run operator-facing failures no longer fall back to pause telemetry plus Discord/log text alone'), true);
@@ -92,7 +95,7 @@ await record('behavior verification doc reflects the live repo-based workflow', 
   assert.equal(behaviorDoc.includes('Service-owned project summary now emits authoritative `summary.started` / `summary.completed` telemetry with `summary_type: project_summary`, terminal `status` / `reason`, and emitted artifact paths when written, so that local summary generation no longer disappears into log text and side files alone on success or failure'), true);
   assert.equal(behaviorDoc.includes('Service-owned case-study no-output and generic failure alerts now also flow through the canonical pipeline Discord integration with persisted `discord.jsonl` mirroring, preserved `run_id`, tracked `gateway_label`, and `session_key` correlation, so post-run case-study failures no longer fall back to logs plus summary telemetry alone once the child session finishes without a usable report'), true);
   assert.equal(behaviorDoc.includes('Local project-summary generation failures now also emit a canonical operator Discord alert with persisted `discord.jsonl` mirroring, preserved `run_id`, and run-scoped artifact-path context, so local summary failures no longer disappear into `summary.completed` plus warn logs without an operator-facing audit surface'), true);
-  assert.equal(behaviorDoc.includes('The standalone `tools/project-summary.js --discord` path now also routes through the canonical pipeline Discord integration with persisted `discord.jsonl` mirroring and preserved `run_id` correlation when a run context is available, instead of bypassing the hardened audit and observability path with a raw webhook-only fetch'), true);
+  assert.equal(behaviorDoc.includes('The standalone `tools/project-summary.ts --discord` path now also routes through the canonical pipeline Discord integration with persisted `discord.jsonl` mirroring and preserved `run_id` correlation when a run context is available, instead of bypassing the hardened audit and observability path with a raw webhook-only fetch'), true);
   assert.equal(behaviorDoc.includes('Redis-dispatched Buster task alerts now also route through the canonical pipeline Discord integration with persisted `discord.jsonl` mirroring and preserved `run_id`, `module`, `attempt`, and `dispatch_id` correlation when that task context is known, instead of bypassing the shared audit path with a raw webhook-only fetch'), true);
   assert.equal(behaviorDoc.includes('Shared pipeline Discord webhook delivery failures now also emit explicit `observability.degraded` telemetry on the `webhook` surface with preserved module, gate, and session correlation when known, so live operator-visibility loss no longer collapses into warn-only logging when `discord.jsonl` keeps writing but Discord posting fails'), true);
   assert.equal(behaviorDoc.includes('That same shared pipeline Discord delivery path now emits matching `observability.restored` telemetry after a later successful webhook post for the same run, so recovery of the live operator surface is explicit instead of being inferred only from resumed message flow'), true);
@@ -106,10 +109,10 @@ await record('behavior verification doc reflects the live repo-based workflow', 
   assert.equal(behaviorDoc.includes('Session-backed ACP `rate_limit.detected` telemetry and polling-owned pause/resume Discord alerts now also preserve canonical `gate_type` and `dispatch_id` for gate-owned work when known, so operator-facing cooldown incidents stay directly joinable with the same gate lifecycle and live-session surfaces instead of flattening back to gate plus session alone'), true);
   assert.equal(behaviorDoc.includes('Gate-backed ACP session transcript and progress telemetry now preserve canonical `gate_id` plus `session_key` without overloading `module_id` with gate labels during live gate-fix monitoring, so those high-frequency live surfaces stay joinable with gate-scoped telemetry, Discord, and audit artifacts'), true);
   assert.equal(behaviorDoc.includes('Shared `pollForFile(...)` ACP sessions now emit live `agent.transcript` and `agent.progress` telemetry with preserved `session_key` and gate context when available, so review gates, pipeline review, and case-study runs no longer stay log-only until the output file appears or the session ends'), true);
-  assert.equal(behaviorDoc.includes('Shared `pollStatus(...)` ACP session monitoring now also emits live `agent.transcript` and `agent.progress` telemetry with preserved `module_id`, `session_key`, and tracked session label correlation, so Forge module runs no longer stay log-only while Nova waits on `status.json`'), true);
+  assert.equal(behaviorDoc.includes('Shared Forge completion polling now emits live `agent.transcript` and `agent.progress` telemetry with preserved `module_id`, `session_key`, and tracked session label correlation while Nova waits on the typed `forge-completion.json` artifact instead of any module-local status file'), true);
   assert.equal(behaviorDoc.includes('Restart-time stale module and gate reconciliation now also emits explicit gateway `observability.degraded` events when `session_status` is unreachable during stale-session recovery, so recovery-time visibility loss no longer collapses into silent kill-or-retry behavior'), true);
   assert.equal(behaviorDoc.includes('Session-backed `agent.spawned` and `agent.killed` lifecycle telemetry now both reuse the tracked ACP gateway label instead of the internal tracking key, keeping Forge and Echo session lifecycle labels aligned across spawn, live telemetry, and teardown'), true);
-  assert.equal(behaviorDoc.includes('Orchestration-owned post-kill session confirmation now also emits explicit gateway `observability.degraded` events when teardown monitoring cannot read `session_status`, so teardown visibility loss no longer degrades into warn-only logging with no structured signal'), true);
+  assert.equal(behaviorDoc.includes('Session teardown now routes through a shared termination controller with an isolated hard-capped grace period and strict canonical `{confirmed, unconfirmed, terminal, cleanup*}` result schema, so orchestration, recovery, Buster monitors, and summary cleanup no longer synthesize split-brain kill state locally'), true);
   assert.equal(behaviorDoc.includes('Restart-time stale module and gate recovery Discord alerts plus persisted `discord.jsonl` audit entries now preserve the recovered ACP `gateway_label`, keeping operator recovery surfaces joinable with the same authoritative label already tracked in session state'), true);
   assert.equal(behaviorDoc.includes('Restart-time stale module recovery alerts now also preserve canonical `attempt`, while stale gate recovery alerts preserve canonical `attempt` plus `dispatch_id`, keeping recovery-time Discord and `discord.jsonl` surfaces joinable with the exact interrupted retry instead of only the recovered session label'), true);
   assert.equal(behaviorDoc.includes('Pipeline halt and escalation telemetry now also preserves canonical `attempt` plus `dispatch_id` when the terminal module or gate result already knows them, keeping stop-path live stream events directly joinable with the exact retry or gate dispatch instead of only the stopped step and session'), true);
@@ -162,18 +165,22 @@ await record('verification docs and hardening trackers point at tests-owned veri
   assert.equal(verificationReadme.includes('`scripts/deploy.sh build-local-images [tag]`, `scripts/deploy.sh verify-live [tag]`, and `scripts/deploy.sh smoke` / `scripts/deploy.sh smoke-agent <nova|buster>` are the canonical live deployment command surface'), true);
   assert.equal(verificationReadme.includes('`tests/verification/run-full-verification.sh` is intentionally fail-fast; it exits on the first red surface'), true);
   assert.equal(verificationReadme.includes('if you need the full downstream failure set after a red wrapper run, rerun the canonical entrypoints directly'), true);
-  assert.equal(verificationReadme.includes('live launch smokes are explicit gate surfaces, not implicit proof hidden inside the repo-only behavior harness'), true);
+  assert.equal(verificationReadme.includes('subagent launch is part of the default clean-checkout wrapper'), true);
+  assert.equal(verificationReadme.includes('ACP launch is a local-only provider/gateway smoke; failures remain real failures in `run-local-acp-verification.sh`, but do not fail the default clean-checkout wrapper'), true);
+  assert.equal(verificationReadme.includes('`tests/verification/run-local-acp-verification.sh` is the explicit local ACP/provider smoke wrapper'), true);
+  assert.equal(fs.existsSync(path.join(sourceRoot, 'tests', 'verification', 'run-local-acp-verification.sh')), true);
+  assert.equal(verificationReadme.includes('live launch smokes are explicit gate surfaces, not implicit proof hidden inside the repo-only behavior harness'), false);
   assert.equal(verificationReadme.includes('`scripts/deploy.sh` remains tracked executable so that the canonical live deployment commands are directly runnable from the repo checkout'), true);
   assert.equal(verificationReadme.includes('`.swarm/logs/pipeline/latest.json` is the canonical pointer into the run-scoped replay bundle under `.swarm/logs/pipeline/runs/<run_id>/`'), true);
-  assert.equal(verificationReadme.includes('`.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,summary.json}` is the canonical replay/audit bundle for deploy, replay, and operator handoff evidence'), true);
+  assert.equal(verificationReadme.includes('`.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,buster-telemetry-fallback.jsonl,redis/redis-exchanges.jsonl,redis/redis-ops.jsonl,summary.json}` is the canonical replay/audit bundle for deploy, replay, and operator handoff evidence'), true);
   assert.equal(verificationReadme.includes('`.swarm/logs/redis/{redis-exchanges.jsonl,redis-ops.jsonl}` plus `.swarm/logs/pipeline/runs/<run_id>/redis/` remain the canonical Redis audit artifact layout'), true);
   assert.equal(verificationReadme.includes('the small verifier shims under `scripts/` are retired in this cleanup slice'), false);
-  assert.equal(behaviorDoc.includes('treat `.swarm/logs/pipeline/latest.json` plus `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,summary.json}` as the canonical replay/audit bundle, with Redis audit artifacts under `.swarm/logs/redis/{redis-exchanges.jsonl,redis-ops.jsonl}` plus the run-scoped `pipeline/runs/<run_id>/redis/` mirror'), true);
+  assert.equal(behaviorDoc.includes('treat `.swarm/logs/pipeline/latest.json` plus `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,buster-telemetry-fallback.jsonl,redis/redis-exchanges.jsonl,redis/redis-ops.jsonl,summary.json}` as the canonical replay/audit bundle, with Redis audit artifacts also mirrored under `.swarm/logs/redis/{redis-exchanges.jsonl,redis-ops.jsonl}`'), true);
   assert.equal(deploymentReadme.includes('live deployment/build/smoke commands live under `scripts/deploy.sh build-local-images [tag]`, `scripts/deploy.sh verify-live [tag]`, and `scripts/deploy.sh smoke` / `scripts/deploy.sh smoke-agent <nova|buster>`'), true);
   assert.equal(deploymentReadme.includes('destructive teardown commands live under `scripts/deploy.sh teardown`, `scripts/deploy.sh teardown-agents`, and `scripts/deploy.sh teardown-all`'), true);
   assert.equal(deploymentReadme.includes('`teardown` and `teardown-all` share one destructive implementation surface and differ only on whether the namespace is preserved or deleted'), true);
   assert.equal(deploymentReadme.includes('`scripts/deploy.sh` remains tracked executable so that canonical live deployment commands are directly runnable from the repo checkout'), true);
-  assert.equal(deploymentReadme.includes('replay/audit artifacts live under `.swarm/logs/pipeline/latest.json` and the run-scoped `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,summary.json}` bundle'), true);
+  assert.equal(deploymentReadme.includes('replay/audit artifacts live under `.swarm/logs/pipeline/latest.json` and the run-scoped `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,buster-telemetry-fallback.jsonl,redis/redis-exchanges.jsonl,redis/redis-ops.jsonl,summary.json}` bundle'), true);
   assert.equal(deploymentReadme.includes('Redis audit artifacts remain under `.swarm/logs/redis/{redis-exchanges.jsonl,redis-ops.jsonl}` plus the run-scoped `.swarm/logs/pipeline/runs/<run_id>/redis/` mirror'), true);
   assert.equal(pipelineReadme.includes('`scripts/deploy.sh build-local-images [tag]`, `scripts/deploy.sh verify-live [tag]`, and `scripts/deploy.sh smoke` / `scripts/deploy.sh smoke-agent <nova|buster>` are the canonical live deployment command surface; `.swarm/logs/pipeline/latest.json` plus the run-scoped audit bundle are the canonical replay/audit surface for that deployment path.'), true);
   assert.equal(phase4Tracker.includes('node scripts/phase8-verify.mjs'), false);
@@ -220,43 +227,48 @@ await record('packaging verification doc reflects the live repo-based workflow',
   assert.equal(packagingDoc.includes('/home/node/.openclaw/workspace/git-repo/kubeclaw-main'), false);
 });
 
-await record('active suite and summary defaults no longer hardcode one host repo-root path', async () => {
-  const projectSummary = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/tools/project-summary.js');
-  const repoPaths = readOverlayText(sourceRoot, overlayRoot, 'skills/buster/suites/repo-paths.js');
+await record('active suite and summary defaults use shared repo and config authority', async () => {
+  const projectSummary = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/tools/project-summary.ts');
+  const repoPaths = readOverlayText(sourceRoot, overlayRoot, 'skills/buster/pipeline/suites/repo-paths.ts');
 
-  assert.equal(projectSummary.includes("const SOURCE_REPO_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../..');"), true);
-  assert.equal(projectSummary.includes('function discoverDefaultRepoDir() {'), true);
-  assert.equal(projectSummary.includes('function discoverDefaultConfigPath(repoDir) {'), true);
-  assert.equal(projectSummary.includes("const repoDir    = validateAllowedPath(opts.repoDir || discoverDefaultRepoDir(), 'project-summary.repoDir');"), true);
-  assert.equal(projectSummary.includes("const configPath = validateAllowedPath(opts.configPath || discoverDefaultConfigPath(repoDir), 'project-summary.configPath');"), true);
+  assert.equal(projectSummary.includes('function discoverDefaultRepoDir() {'), false);
+  assert.equal(projectSummary.includes('function discoverDefaultConfigPath(repoDir) {'), false);
+  assert.equal(projectSummary.includes('const SOURCE_REPO_DIR ='), false);
+  assert.equal(projectSummary.includes("import { getRepoRoot } from '../core/git-context.ts';"), true);
+  assert.equal(projectSummary.includes("import { loadPlatformSwarmConfig } from '../core/platform-config.ts';"), true);
+  assert.equal(projectSummary.includes("const repoDir    = validateAllowedPath(resolveRepoDir(opts.repoDir), 'project-summary.repoDir');"), true);
 
-  assert.equal(repoPaths.includes("const SOURCE_REPO_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');"), true);
-  assert.equal(repoPaths.includes('process.env.REPO_DIR'), true);
-  assert.equal(repoPaths.includes("path.join(cwd, 'git-repo')"), true);
+  assert.equal(repoPaths.includes("import { getRepoRoot } from '../git-primitives.ts';"), true);
+  assert.equal(repoPaths.includes('export function resolveRepoDir(startDir: unknown = null): string {'), true);
+  assert.equal(repoPaths.includes('return startDir ? getRepoRoot(startDir) : getRepoRoot();'), true);
   assert.equal(repoPaths.includes('export const REPO_DIR = resolveRepoDir();'), true);
+  assert.equal(repoPaths.includes('function discoverDefaultRepoDir()'), false);
 
   for (const relPath of [
-    'skills/buster/suites/api.js',
-    'skills/buster/suites/build.js',
-    'skills/buster/suites/e2e.js',
-    'skills/buster/suites/health.js',
-    'skills/buster/suites/manifest.js',
-    'skills/buster/suites/unit.js',
-    'skills/buster/suites/visual-reg.js',
-  ]) {
+	    'skills/buster/pipeline/suites/api.ts',
+	    'skills/buster/pipeline/suites/build.ts',
+	    'skills/buster/pipeline/suites/e2e.ts',
+	    'skills/buster/pipeline/suites/manifest.ts',
+	    'skills/buster/pipeline/suites/unit.ts',
+	    'skills/buster/pipeline/suites/visual-reg.ts',
+	  ]) {
     const fileText = readOverlayText(sourceRoot, overlayRoot, relPath);
     assert.equal(fileText.includes('/home/node/.openclaw/workspace/git-repo'), false);
-    assert.equal(fileText.includes("./repo-paths.js"), true);
-  }
-});
+	    assert.equal(fileText.includes("./repo-paths.ts"), true);
+	  }
+	  const healthSuite = readOverlayText(sourceRoot, overlayRoot, 'skills/buster/pipeline/suites/health.ts');
+	  assert.equal(healthSuite.includes('/home/node/.openclaw/workspace/git-repo'), false);
+	});
 
-await record('repo-root fallback helpers stay source-relative instead of host-specific', async () => {
-  const repoPaths = fs.readFileSync(path.join(sourceRoot, 'skills', 'buster', 'suites', 'repo-paths.js'), 'utf8');
-  const projectSummary = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'tools', 'project-summary.js'), 'utf8');
+await record('project-summary fallback stays source-relative while Buster suite root is canonical', async () => {
+  const repoPaths = fs.readFileSync(path.join(sourceRoot, 'skills', 'buster', 'pipeline', 'suites', 'repo-paths.ts'), 'utf8');
+  const projectSummary = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'tools', 'project-summary.ts'), 'utf8');
 
+  assert.equal(repoPaths.includes('export const REPO_DIR = resolveRepoDir();'), true);
+  assert.equal(repoPaths.includes("import { getRepoRoot } from '../git-primitives.ts';"), true);
   assert.equal(repoPaths.includes('/home/node/.openclaw/workspace/git-repo'), false);
   assert.equal(projectSummary.includes('/home/node/.openclaw/workspace/git-repo'), false);
-  assert.equal(repoPaths.includes('fileURLToPath(import.meta.url)'), true);
+  assert.equal(repoPaths.includes('fileURLToPath(import.meta.url)'), false);
   assert.equal(projectSummary.includes('fileURLToPath(import.meta.url)'), true);
 });
 
@@ -267,50 +279,84 @@ await record('operator-facing visual regression docs avoid host-specific baselin
   assert.equal(busterReference.includes('"baseline_path": "/home/node/.openclaw/workspace/git-repo/.swarm/modules/15/baselines/baseline.png"'), false);
 });
 
-await record('pre-check semgrep config docs and defaults avoid host-specific platform paths', async () => {
-  const lintReport = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'tools', 'lint-report.js'), 'utf8');
+await record('pre-check semgrep config docs and defaults pin OpenClaw home platform paths', async () => {
+  const lintReportOutput = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'tools', 'lint-report', 'output.ts'), 'utf8');
+  const lintReportDiscovery = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'tools', 'lint-report', 'discovery.ts'), 'utf8');
   const pipelineConfigReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'PIPELINE-CONFIG-REFERENCE.md'), 'utf8');
   const swarmConfig = fs.readFileSync(path.join(sourceRoot, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json'), 'utf8');
 
-  assert.equal(lintReport.includes('default: auto-detect'), true);
-  assert.equal(lintReport.includes("path.join(os.homedir(), '.openclaw', '.semgrep.yml')"), true);
-  assert.equal(lintReport.includes('default: /home/node/.openclaw/.semgrep.yml'), false);
-  assert.equal(pipelineConfigReference.includes('/home/node/.openclaw/.semgrep.yml'), false);
+  assert.equal(lintReportOutput.includes('default: auto-detect'), true);
+  assert.equal(lintReportDiscovery.includes("'/home/node/.openclaw/.semgrep.yml'"), true);
+  assert.equal(lintReportOutput.includes('default: /home/node/.openclaw/.semgrep.yml'), false);
+  assert.equal(pipelineConfigReference.includes('/home/node/.openclaw/.semgrep.yml'), true);
   assert.equal(pipelineConfigReference.includes('| `semgrep_config_path` | `auto-detect` |'), true);
   assert.equal(swarmConfig.includes('/home/node/.openclaw/.semgrep.yml'), false);
 });
 
 await record('portable semgrep docs match runtime discovery order', async () => {
-  const lintReport = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'tools', 'lint-report.js'), 'utf8');
+  const lintReportRegistry = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'tools', 'lint-report', 'tool-registry.ts'), 'utf8');
   const pipelineConfigReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'PIPELINE-CONFIG-REFERENCE.md'), 'utf8');
 
-  assert.equal(lintReport.includes('platform-level .semgrep.yml discovered next to SWARM_CONFIG or under ~/.openclaw/'), true);
-  assert.equal(lintReport.includes('<repo>/.semgrep.yml (legacy repo-level fallback)'), true);
-  assert.equal(pipelineConfigReference.includes('Suche zuerst neben der erkannten Plattformdatei `swarm.config.json`'), true);
-  assert.equal(pipelineConfigReference.includes('`~/.openclaw/.semgrep.yml`'), true);
-  assert.equal(pipelineConfigReference.includes('`<repo>/.semgrep.yml`'), true);
+  assert.equal(lintReportRegistry.includes('/home/node/.openclaw/.semgrep.yml'), true);
+  assert.equal(lintReportRegistry.includes('SWARM_CONFIG-adjacent .semgrep.yml fallback'), true);
+  assert.equal(lintReportRegistry.includes('Semgrep config missing or invalid'), true);
+  assert.equal(lintReportRegistry.includes('<repo>/.semgrep.yml (tooling-only legacy repo config fallback)'), false);
+  assert.equal(pipelineConfigReference.includes('Suche zuerst unter `/home/node/.openclaw/.semgrep.yml`, dann neben `SWARM_CONFIG`'), true);
+  assert.equal(pipelineConfigReference.includes('`~/.openclaw/.semgrep.yml`'), false);
+  assert.equal(pipelineConfigReference.includes('`<repo>/.semgrep.yml`'), false);
   assert.equal(pipelineConfigReference.includes('`charts/kubeclaw/files/config/.semgrep.yml`'), true);
   assert.equal(pipelineConfigReference.includes('`.swarm/.semgrep.yml`'), false);
 });
 
-await record('platform swarm config discovery and docs stay portable', async () => {
-  const coreConfig = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'core', 'config.js'), 'utf8');
-  const lintReport = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'tools', 'lint-report.js'), 'utf8');
-  const cli = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'cli.js'), 'utf8');
+await record('platform swarm config discovery is runtime-config first with SWARM_CONFIG fallback', async () => {
+  const coreConfig = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'core', 'config.ts'), 'utf8');
+  const platformConfig = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'core', 'platform-config.ts'), 'utf8');
+  const lintReportDiscovery = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'tools', 'lint-report', 'discovery.ts'), 'utf8');
+  const cli = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'cli.ts'), 'utf8');
   const pipelineConfigReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'PIPELINE-CONFIG-REFERENCE.md'), 'utf8');
   const configurationReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'configuration-reference.md'), 'utf8');
   const pipelineReferenceV10 = fs.readFileSync(path.join(sourceRoot, 'docs', 'pipeline-reference-v10.md'), 'utf8');
   const swarmConfig = fs.readFileSync(path.join(sourceRoot, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json'), 'utf8');
+  const configMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/config.ts');
 
-  assert.equal(coreConfig.includes('export function discoverPlatformSwarmConfigCandidates() {'), true);
-  assert.equal(coreConfig.includes("path.join(os.homedir(), '.openclaw', 'swarm.config.json')"), true);
-  assert.equal(coreConfig.includes('auto-detected'), true);
-  assert.equal(lintReport.includes('discoverPlatformSwarmConfigCandidates'), true);
-  assert.equal(cli.includes('auto-detected platform swarm.config.json'), true);
-  assert.equal(pipelineConfigReference.includes('portable Auto-Erkennung der Plattformdatei `swarm.config.json`'), true);
-  assert.equal(configurationReference.includes('| `SWARM_CONFIG` | auto-detected platform `swarm.config.json` |'), true);
-  assert.equal(pipelineReferenceV10.includes('auto-detected swarm.config.json'), true);
-  assert.equal(pipelineReferenceV10.includes('/app/config/swarm.config.json'), false);
-  assert.equal(swarmConfig.includes('portable platform auto-detect'), true);
+  assert.equal(coreConfig.includes('loadPlatformSwarmConfig'), true);
+  assert.equal(platformConfig.includes('export function discoverPlatformSwarmConfigCandidates() {'), true);
+  assert.equal(platformConfig.includes("'/home/node/.openclaw/swarm.config.json'"), true);
+  assert.equal(platformConfig.includes('SOURCE_SWARM_CONFIG'), false);
+  assert.equal(platformConfig.includes('Swarm config missing:'), true);
+  assert.equal(platformConfig.includes('Swarm config invalid:'), true);
+  assert.equal(lintReportDiscovery.includes("import { discoverPlatformSwarmConfigCandidates } from '../../core/platform-config.ts';"), true);
+  assert.equal(lintReportDiscovery.includes('SOURCE_SWARM_CONFIG'), false);
+  assert.equal(cli.includes('/home/node/.openclaw/swarm.config.json (SWARM_CONFIG fallback)'), true);
+  assert.equal(pipelineConfigReference.includes('`/home/node/.openclaw/swarm.config.json`'), true);
+  assert.equal(pipelineConfigReference.includes('`SWARM_CONFIG` als Fallback'), true);
+  assert.equal(configurationReference.includes('| `SWARM_CONFIG` | fallback for `/home/node/.openclaw/swarm.config.json` |'), true);
+  assert.equal(pipelineReferenceV10.includes('/home/node/.openclaw/swarm.config.json'), true);
+  assert.equal(pipelineReferenceV10.includes('auto-detected swarm.config.json'), false);
+  assert.equal(swarmConfig.includes('/home/node/.openclaw/swarm.config.json'), true);
+  assert.equal(swarmConfig.includes('portable platform auto-detect'), false);
+
+  const previousSwarmConfig = process.env.SWARM_CONFIG;
+  const fallbackConfigPath = path.join(os.tmpdir(), `swarm-config-fallback-${Date.now()}-${Math.random().toString(36).slice(2)}.json`);
+  try {
+	    process.env.SWARM_CONFIG = fallbackConfigPath;
+	    const candidates = configMod.discoverPlatformSwarmConfigCandidates();
+	    assert.deepEqual(candidates, [path.resolve('/home/node/.openclaw/swarm.config.json'), path.resolve(fallbackConfigPath)]);
+	    assert.equal(candidates.some(candidate => candidate.includes('charts/kubeclaw/files/config/swarm.config.json')), false);
+  } finally {
+    if (previousSwarmConfig === undefined) delete process.env.SWARM_CONFIG;
+    else process.env.SWARM_CONFIG = previousSwarmConfig;
+  }
+
+  const firstMissing = path.join(os.tmpdir(), `swarm-config-missing-${Date.now()}-${Math.random().toString(36).slice(2)}.json`);
+  const firstExisting = path.join(os.tmpdir(), `swarm-config-existing-${Date.now()}-${Math.random().toString(36).slice(2)}.json`);
+  fs.writeFileSync(firstExisting, '{"ok":true}\n');
+  try {
+    assert.equal(configMod.discoverSwarmConfigPath([firstMissing, firstExisting]), path.resolve(firstExisting));
+    fs.rmSync(firstExisting, { force: true });
+    assert.equal(configMod.discoverSwarmConfigPath([firstMissing, firstExisting]), path.resolve(firstMissing));
+  } finally {
+    fs.rmSync(firstExisting, { force: true });
+  }
 });
 }

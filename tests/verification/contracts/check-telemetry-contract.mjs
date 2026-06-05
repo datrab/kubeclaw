@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
+const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-telemetry-contract' });
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
@@ -11,85 +13,51 @@ import {
   resolveTelemetryContractPath,
   materializeRuntimeTree,
   importRuntimeModule,
-  ensureDir,
   extractContractEventNames,
   extractTelemetrySchemaEventNames,
   collectEmitEventNames,
   effectiveFiles,
 } from '../lib/lifecycle-audit-lib.mjs';
+import {
+  installFakeRedis,
+  xaddEvents,
+  flushAsync,
+} from '../lib/fake-redis-lib.mjs';
 
 const args = parseArgs();
 const { sourceRoot, overlayRoot } = resolveRoots(args);
 const contractPath = resolveTelemetryContractPath(args, sourceRoot);
-
-function installFakeRedis(runtimeRoot) {
-  const nodeModulesDir = ensureDir(path.join(runtimeRoot, 'node_modules', 'ioredis'));
-  fs.writeFileSync(path.join(nodeModulesDir, 'index.js'), `
-let counters = globalThis.__fakeRedisCounters ||= Object.create(null);
-let calls = globalThis.__fakeRedisCalls ||= [];
-class FakeRedis {
-  constructor() {
-    this.status = 'ready';
-  }
-  on() {}
-  async incr(key) {
-    counters[key] = (counters[key] || 0) + 1;
-    calls.push({ op: 'incr', key, value: counters[key] });
-    return counters[key];
-  }
-  async xadd(...args) {
-    calls.push({ op: 'xadd', args });
-    return '1-0';
-  }
-  async expire(...args) {
-    calls.push({ op: 'expire', args });
-    return 1;
-  }
-  multi() {
-    const ops = [];
-    const chain = {
-      xadd: (...args) => { ops.push({ op: 'xadd', args }); return chain; },
-      expire: (...args) => { ops.push({ op: 'expire', args }); return chain; },
-      exec: async () => { calls.push(...ops); return ops; },
-    };
-    return chain;
-  }
-  async quit() { calls.push({ op: 'quit' }); }
-}
-module.exports = FakeRedis;
-`);
-  fs.writeFileSync(path.join(nodeModulesDir, 'package.json'), '{"name":"ioredis","main":"index.js"}');
-}
 
 async function importFresh(runtimeRoot, runtimePath) {
   const href = pathToFileURL(path.join(runtimeRoot, runtimePath.replace(/^\//, ''))).href;
   return import(`${href}?fresh=${Date.now()}-${Math.random()}`);
 }
 
-function xaddEvents(prefix) {
-  const calls = globalThis.__fakeRedisCalls || [];
-  return calls
-    .filter((entry) => entry.op === 'xadd' && String(entry.args?.[0] || '').startsWith(prefix))
-    .map((entry) => {
-      const dataIndex = entry.args.indexOf('data');
-      return JSON.parse(entry.args[dataIndex + 1]);
-    });
-}
-
-async function flushAsync() {
-  await new Promise((resolve) => setTimeout(resolve, 0));
-}
-
 async function buildBuiltInRegistry(runtimeRoot) {
-  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.js');
-  const { registry, errors } = registryMod.buildPluginRegistry({}, { throwOnError: false });
+  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
   assert.equal(errors.length, 0);
   return registry;
 }
 
 const contractEvents = extractContractEventNames(contractPath);
 const contractText = fs.readFileSync(contractPath, 'utf8');
+const novaTelemetrySource = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'services', 'telemetry.ts'), 'utf8');
+const telemetryBuildersText = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'services', 'telemetry', 'builders.ts'), 'utf8');
+const novaTelemetryStreamSource = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'services', 'telemetry-stream.ts'), 'utf8');
+const novaPollingSource = [
+  'polling.ts',
+  'polling-identity.ts',
+  'polling-session-end.ts',
+].map((file) => fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'services', file), 'utf8')).join('\n');
+const novaAcpObservabilitySource = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'services', 'acp-observability.ts'), 'utf8');
+const busterTelemetrySource = fs.readFileSync(path.join(sourceRoot, 'skills', 'buster', 'pipeline', 'services', 'telemetry.ts'), 'utf8');
+const busterTaskLifecycleSource = fs.readFileSync(path.join(sourceRoot, 'skills', 'buster', 'pipeline', 'services', 'task-lifecycle.ts'), 'utf8');
+const busterSuiteRunnerSource = fs.readFileSync(path.join(sourceRoot, 'skills', 'buster', 'pipeline', 'runners', 'suite-runner.ts'), 'utf8');
+const sharedTelemetrySource = fs.readFileSync(path.join(sourceRoot, 'skills', 'common', 'pipeline', 'telemetry.ts'), 'utf8');
+const agentObservabilityMappingSource = fs.readFileSync(path.join(sourceRoot, 'skills', 'common', 'pipeline', 'agent-observability', 'src', 'mapping.ts'), 'utf8');
 const telemetrySchemaPath = path.join(sourceRoot, 'docs', 'telemetry-event-schema.md');
+const telemetrySchemaText = fs.readFileSync(telemetrySchemaPath, 'utf8');
 const telemetrySchemaEvents = extractTelemetrySchemaEventNames(telemetrySchemaPath);
 const missingSchemaEvents = [...contractEvents].filter((name) => !telemetrySchemaEvents.has(name)).sort();
 const staleSchemaEvents = [...telemetrySchemaEvents].filter((name) => !contractEvents.has(name)).sort();
@@ -119,6 +87,175 @@ assert.equal(
   false,
   'telemetry contract compatibility notes must not describe the legacy Buster run-scoped stream as canonical runtime ownership',
 );
+assert.equal(
+  novaTelemetryStreamSource.includes('_localSeqFallback'),
+  false,
+  'Nova telemetry stream must not allocate process-local fallback seq values',
+);
+assert.equal(
+  novaTelemetryStreamSource.includes('fallbackKey'),
+  false,
+  'Nova telemetry stream must not keep local seq fallback key state',
+);
+assert.equal(
+  busterTelemetrySource.includes('resolveTelemetryStreamIdentity'),
+  true,
+  'Buster telemetry must validate canonical stream identity before Redis stream emission',
+);
+assert.equal(
+  busterTelemetrySource.includes("reason: 'missing_identity'"),
+  true,
+  'Buster telemetry must classify weak canonical stream identity as missing_identity',
+);
+assert.equal(
+  sharedTelemetrySource.includes('export const TELEMETRY_STREAM_MAXLEN = 10000'),
+  true,
+  'shared telemetry constants must own the canonical Redis live-window max length',
+);
+const sharedTelemetryMod = await import(`${pathToFileURL(path.join(sourceRoot, 'skills', 'common', 'pipeline', 'telemetry.ts')).href}?fresh=${Date.now()}`);
+assert.throws(
+  () => sharedTelemetryMod.getTelemetryStreamKey('', 'run-1'),
+  /telemetry project is required/,
+  'shared telemetry key builder must reject missing project instead of falling back to unknown',
+);
+assert.throws(
+  () => sharedTelemetryMod.getTelemetrySeqKey('project-1', ''),
+  /telemetry run_id is required/,
+  'shared telemetry sequence key builder must reject missing run identity instead of falling back to unknown',
+);
+assert.equal(
+  sharedTelemetryMod.getTelemetryStreamKey('project-1', 'run-1'),
+  'pipeline:telemetry:project-1:run-1',
+  'shared telemetry key builder must preserve canonical project/run key format',
+);
+assert.equal(
+  novaTelemetryStreamSource.includes('TELEMETRY_STREAM_MAXLEN'),
+  true,
+  'Nova Redis telemetry must use the shared stream max length constant',
+);
+assert.equal(
+  busterTelemetrySource.includes('TELEMETRY_STREAM_MAXLEN'),
+  true,
+  'Buster Redis telemetry must use the shared stream max length constant',
+);
+assert.equal(
+  busterTelemetrySource.includes('DEFAULT_STREAM_MAXLEN'),
+  false,
+  'Buster telemetry must not keep a separate legacy stream max length',
+);
+assert.equal(
+  busterTelemetrySource.includes('5000'),
+  false,
+  'Buster telemetry must not preserve the stale 5000-entry stream retention window',
+);
+assert.equal(
+  busterTelemetrySource.includes('function buildBusterFallbackCorrelation'),
+  true,
+  'Buster fallback artifacts must use a shared correlation builder for known join fields',
+);
+assert.equal(
+  busterTelemetrySource.includes('gateId: opts.gate_id ?? null'),
+  true,
+  'Buster telemetry context must preserve known gate id for fallback/degraded joinability',
+);
+assert.equal(
+  busterTelemetrySource.includes('dispatch_id: data.dispatch_id ?? ctx.dispatchId ?? null'),
+  true,
+  'Buster fallback/degraded telemetry must preserve known dispatch_id',
+);
+assert.equal(
+  busterTelemetrySource.includes('session_key: data.session_key ?? ctx.sessionKey ?? null'),
+  true,
+  'Buster fallback/degraded telemetry must preserve known session_key',
+);
+assert.equal(
+  busterTaskLifecycleSource.includes('gate_id: gateId') && busterTaskLifecycleSource.includes('gate_type: gateType'),
+  true,
+  'Buster task telemetry context must receive validated gate identity when a task is gate-owned',
+);
+assert.equal(
+  busterTaskLifecycleSource.includes('module_id: gateId ? null : moduleId'),
+  true,
+  'Buster gate task plugin events must not duplicate gate-owned telemetry into module_id',
+);
+assert.equal(
+  busterSuiteRunnerSource.includes('module_id: gateId ? null : moduleId') && busterSuiteRunnerSource.includes('gate_id: gateId'),
+  true,
+  'Buster suite plugin events must preserve gate identity from the telemetry context',
+);
+assert.equal(
+  novaAcpObservabilitySource.includes('session_key: identity.session_key || identity.sessionKey || sessionLabelOrKey || null'),
+  false,
+  'ACP observability must not promote session labels into canonical session_key telemetry identity',
+);
+assert.equal(
+  novaPollingSource.includes('tracked?.telemetry_module_id ?? explicitModuleId ?? tracked?.moduleId ?? logLabel ?? sessionLabel ?? null'),
+  false,
+  'polling session telemetry must not promote log/session labels into canonical module_id',
+);
+assert.equal(
+  novaPollingSource.includes('tracked?.telemetry_module_id ?? explicitModuleId ?? tracked?.moduleId ?? null'),
+  true,
+  'polling session telemetry should derive canonical module_id only from tracked or explicit module identity',
+);
+assert.equal(
+  contractText.includes('Redis is a capped live/consumer window, not the durable audit log.'),
+  true,
+  'telemetry contract must state that Redis is a capped live window rather than durable audit truth',
+);
+assert.equal(
+  contractText.includes('Run-scoped `pipeline.jsonl` is the durable audit trail for replay and post-mortem reconstruction.'),
+  true,
+  'telemetry contract must state that run-scoped pipeline.jsonl is durable replay truth',
+);
+assert.equal(
+  contractText.includes('Telemetry join keys are owned by typed runtime context, not display text.'),
+  true,
+  'telemetry contract must lock typed runtime context as joinability authority',
+);
+assert.equal(
+  contractText.includes('monitor lookup keys, log labels, Discord display fields, and generic session labels must not be promoted into `session_key`, `module_id`, `gate_id`, `dispatch_id`, or `gateway_label`'),
+  true,
+  'telemetry contract must forbid display/routing labels from becoming canonical join keys',
+);
+assert.equal(
+  contractText.includes('gate-owned evidence must not invent a `module_id` fallback'),
+  true,
+  'telemetry contract must forbid module fallback for gate-owned telemetry evidence',
+);
+assert.equal(
+  telemetrySchemaText.includes('## Common Correlation / Joinability Fields'),
+  true,
+  'telemetry schema must document common correlation/joinability fields',
+);
+assert.equal(
+  telemetrySchemaText.includes('label | string\\|null | Display-only operator label; never canonical identity'),
+  true,
+  'telemetry schema must mark label as display-only, not canonical identity',
+);
+assert.equal(
+  telemetrySchemaText.includes('Buster artifact fallback and `observability.degraded` / `observability.restored` mirrors preserve known `attempt`, `dispatch_id`, `session_key`, `gate_id`, and `gate_type`'),
+  true,
+  'telemetry schema must lock Buster fallback joinability fields',
+);
+for (const legacyTelemetryMarker of [
+  "typeof progress === 'string'",
+  'dataOrDuration',
+  'phaseOrData',
+  'reasonOrData',
+  'gateOrType',
+  'targetIdOrData',
+  'attemptOrData',
+  'maxFails',
+  'sessionMeta',
+  'Legacy: on',
+]) {
+  assert.equal(
+    novaTelemetrySource.includes(legacyTelemetryMarker),
+    false,
+    `Nova telemetry runtime must not preserve legacy positional signature marker: ${legacyTelemetryMarker}`,
+  );
+}
 assert.equal(
   contractText.includes('`pipeline:telemetry:<project>:<run_id>` is the single canonical live stream'),
   true,
@@ -182,16 +319,25 @@ assert.equal(
   'telemetry contract must document the canonical run-scoped Redis ops audit artifact path .swarm/logs/pipeline/runs/<run_id>/redis/redis-ops.jsonl',
 );
 const emitted = new Set();
+const agentObservabilityTelemetryEvents = new Set(
+  [...agentObservabilityMappingSource.matchAll(/current_telemetry_type:\s*'([^']+)'/g)]
+    .map((match) => match[1])
+    .filter((name) => name !== 'plugin.event'),
+);
+for (const name of agentObservabilityTelemetryEvents) emitted.add(name);
 for (const relDir of ['skills/buster', 'skills/nova/pipeline']) {
   const files = effectiveFiles(sourceRoot, overlayRoot, relDir);
   for (const [relPath, absPath] of files.entries()) {
-    if (!relPath.endsWith('.js')) continue;
+    if (!(relPath.endsWith('.js') || relPath.endsWith('.ts'))) continue;
     for (const name of collectEmitEventNames(absPath)) emitted.add(name);
   }
 }
-const busterPipelineText = fs.readFileSync(path.join(sourceRoot, 'skills', 'buster', 'buster-pipeline.js'), 'utf8');
-assert.equal(busterPipelineText.includes("await emitEvent(tctx, 'agent.spawned'"), true, 'Buster task orchestration must emit agent.spawned for child sessions');
-assert.equal(busterPipelineText.includes("await emitEvent(tctx, 'agent.killed'"), true, 'Buster task orchestration must emit agent.killed for child sessions');
+const busterTaskLifecycleText = [
+  path.join(sourceRoot, 'skills', 'buster', 'pipeline', 'services', 'task-lifecycle.ts'),
+  path.join(sourceRoot, 'skills', 'buster', 'pipeline', 'services', 'task-lifecycle/session.ts'),
+].map((filePath) => fs.readFileSync(filePath, 'utf8')).join('\n');
+assert.equal(busterTaskLifecycleText.includes("await emitEvent(tctx, 'agent.spawned'"), true, 'Buster task orchestration must emit agent.spawned for child sessions');
+assert.equal(busterTaskLifecycleText.includes("await emitEvent(tctx, 'agent.killed'"), true, 'Buster task orchestration must emit agent.killed for child sessions');
 
 const unknownEvents = [...emitted].filter((name) => !contractEvents.has(name)).sort();
 assert.equal(unknownEvents.length, 0, `Unknown telemetry event names: ${unknownEvents.join(', ')}`);
@@ -201,37 +347,182 @@ const staleContractEvents = [...contractEvents]
   .sort();
 assert.equal(staleContractEvents.length, 0, `Contract-only telemetry event names: ${staleContractEvents.join(', ')}`);
 
+const payloadSchemaPath = path.join(sourceRoot, 'skills', 'common', 'pipeline', 'services', 'telemetry', 'payload-schema.ts');
+const payloadSchema = await import(pathToFileURL(payloadSchemaPath).href);
+const novaPayloadSourceEvents = new Set();
+for (const relPath of [
+  'skills/nova/pipeline/services/telemetry/builders.ts',
+  'skills/nova/pipeline/services/telemetry/progress.ts',
+  'skills/nova/pipeline/services/observability.ts',
+  'skills/nova/pipeline/services/system-io-warning.ts',
+  'skills/nova/pipeline/core/policy.ts',
+]) {
+  for (const eventName of collectEmitEventNames(path.join(sourceRoot, relPath))) novaPayloadSourceEvents.add(eventName);
+}
+assert.deepEqual(
+  payloadSchema.TELEMETRY_PAYLOAD_EVENT_TYPES,
+  [...new Set([...novaPayloadSourceEvents, ...agentObservabilityTelemetryEvents, 'plugin.event'])].sort(),
+  'common telemetry payload schema registry must exactly cover core builder/progress/observability/system I/O warning events, agent-observability first-class events, plus the generic plugin event',
+);
+assert.deepEqual(
+  payloadSchema.TELEMETRY_PAYLOAD_EVENT_TYPES,
+  [...contractEvents].sort(),
+  'common telemetry payload schema registry must exactly cover canonical telemetry contract events',
+);
+
+const validNovaTelemetryPayloads = {
+  'agent.killed': { agent_type: 'forge', module_id: '01', reason: 'completed', has_changes: false },
+  'agent.ended': { agent_type: 'forge', agent_scope: 'agent', module_id: '01', outcome: 'success', duration_seconds: 3, final_message_count: 1, ended_at: '2026-05-16T20:00:00.000Z' },
+  'agent.llm.input.summary': { agent_type: 'forge', module_id: '01', provider: 'anthropic', model: 'claude-sonnet', prompt_chars: 42, history_message_count: 2, masking_profile: 'kubeclaw-agent-observer-v1-minimal-api-key-mask', masked: [] },
+  'agent.llm.output.summary': { agent_type: 'forge', module_id: '01', provider: 'anthropic', model: 'claude-sonnet', response_chars: 24, usage: { input_tokens: 10, output_tokens: 20 }, input_tokens: 10, output_tokens: 20, masking_profile: 'kubeclaw-agent-observer-v1-minimal-api-key-mask', masked: [] },
+  'agent.model.started': { agent_type: 'forge', module_id: '01', provider: 'anthropic', model: 'claude-sonnet', model_call_id: 'model-call-1', request: { temperature: 0.1 } },
+  'agent.model.ended': { agent_type: 'forge', module_id: '01', provider: 'anthropic', model: 'claude-sonnet', model_call_id: 'model-call-1', outcome: 'success', duration_seconds: 1, usage: { input_tokens: 10 }, input_tokens: 10 },
+  'agent.progress': { agent_type: 'forge', module_id: '01', status: 'active', elapsed_seconds: 3 },
+  'agent.session.started': { agent_type: 'forge', module_id: '01', session_key: 'agent:forge:session-1', started_at: '2026-05-16T20:00:00.000Z' },
+  'agent.session.ended': { agent_type: 'forge', module_id: '01', session_key: 'agent:forge:session-1', outcome: 'success', duration_seconds: 3, ended_at: '2026-05-16T20:03:00.000Z' },
+  'agent.spawn.requested': { agent_type: 'forge', module_id: '01', requester_session_key: 'agent:nova:session-parent', spawn_mode: 'session', thread: true, requester_origin: { channel: 'discord' }, requested_at: '2026-05-16T20:00:00.000Z' },
+  'agent.spawned': { agent_type: 'forge', label: 'forge-01', module_id: '01', dispatch: 'acp' },
+  'agent.delivery.target': { agent_type: 'forge', module_id: '01', requester_session_key: 'agent:nova:session-parent', child_session_key: 'agent:forge:session-1', spawn_mode: 'session', expects_completion_message: true, requester_origin: { channel: 'discord' }, targeted_at: '2026-05-16T20:00:01.000Z' },
+  'agent.tool.started': { agent_type: 'forge', module_id: '01', tool_name: 'read', tool_call_id: 'tool-1', params_bytes: 12, param_keys: ['path'], masking_profile: 'kubeclaw-agent-observer-v1-minimal-api-key-mask', masked: [] },
+  'agent.tool.finished': { agent_type: 'forge', module_id: '01', tool_name: 'read', tool_call_id: 'tool-1', outcome: 'success', duration_seconds: 0.2, result_bytes: 128, masking_profile: 'kubeclaw-agent-observer-v1-minimal-api-key-mask', masked: [] },
+  'agent.transcript': { agent_type: 'forge', module_id: '01', line_kind: 'stdout', text: 'hello' },
+  'approval.requested': { approval_id: 'release', prompt: 'Approve?', options: ['APPROVE', 'REJECT'], gate_id: 'release', timeout_policy: 'BLOCK' },
+  'approval.resolved': { approval_id: 'release', choice: 'APPROVE', gate_id: 'release', status: 'APPROVE' },
+  'budget.exceeded': { threshold: 100, current: 125, limit: 100, unit: 'usd', percent_used: 125 },
+  'budget.warning': { threshold: 80, current: 85, limit: 100, unit: 'usd', percent_used: 85 },
+  'cost.update': { module_id: '01', cost_usd: 0.12, total_cost_usd: 0.34, input_tokens: 10, output_tokens: 20 },
+  'error.escalation': { module_id: '01', fail_count: 2, last_failure: 'tests failed', action: 'needs_nova' },
+  'gate.started': { gate_id: 'review', gate_type: 'review', title: 'Review', reviewers: ['raven'] },
+  'gate.verdict': { gate_id: 'review', gate_type: 'review', verdict: 'GO', issues_count: 0 },
+  'module.started': { module_id: '01', model: 'claude-sonnet', attempt: 1 },
+  'module.status_changed': { module_id: '01', old_status: 'IN_PROGRESS', new_status: 'PASS', attempt: 1 },
+  'observability.degraded': { component: 'telemetry_sink', surface: 'redis', reason: 'redis_emit_failed', detail: 'down' },
+  'observability.restored': { component: 'telemetry_sink', surface: 'redis', reason: 'redis_emit_failed', restored_after_ms: 10 },
+  'phase.completed': { module_id: '01', phase: 'forge' },
+  'phase.started': { module_id: '01', phase: 'forge', model: 'claude-sonnet' },
+  'pipeline.completed': { exit_code: 0, exit_reason: null, duration_seconds: 5, modules_passed: 1, modules_failed: 0, modules_total: 1, total_cost_usd: 0.1 },
+  'pipeline.halted': { reason: 'BLOCKED', module_id: '01', exit_code: 20 },
+  'pipeline.started': { modules: [{ id: '01' }], gates: [], execution_order: ['01'], models: {}, resume: false, nova_prompt: null },
+  'plugin.event': { plugin_id: 'buster', plugin_event: 'suite_completed', module_id: '01', attempt: 1, status: 'PASS', details: { suite: 'unit', checks_passed: 4 } },
+  'rate_limit.detected': { agent_type: 'forge', module_id: '01', provider: 'anthropic', retry_after_seconds: 60 },
+  'retry.exhausted': { module_id: '01', attempt: 3, max_attempts: 3, reason: 'failed' },
+  'retry.scheduled': { module_id: '01', attempt: 2, max_attempts: 3, delay_seconds: 5 },
+  'system.io_warning': { component: 'model_policy', surface: 'audit_log', reason: 'policy_audit_append_failed', operation: 'append', path: '/tmp/.swarm/logs/pipeline/model-policy.jsonl', path_role: 'model_policy_jsonl', code: 'ENOSPC' },
+  'summary.completed': { summary_type: 'pipeline', status: 'PASS', reason: null, exit_code: 0, exit_reason: 'PIPELINE_COMPLETE', output_dir: '/tmp/pipeline', markdown_path: '/tmp/project-summary.md', data_path: '/tmp/project-summary.json', case_study_base_path: '/tmp/case-study.base.json', summary_json_path: '/tmp/summary.json' },
+  'summary.started': { summary_type: 'pipeline', status: 'started', exit_code: 0, exit_reason: 'PIPELINE_COMPLETE', output_dir: '/tmp/pipeline' },
+};
+assert.deepEqual(
+  Object.keys(validNovaTelemetryPayloads).sort(),
+  payloadSchema.TELEMETRY_PAYLOAD_EVENT_TYPES,
+  'telemetry payload contract test fixtures must cover every Nova schema event',
+);
+for (const [eventType, samplePayload] of Object.entries(validNovaTelemetryPayloads)) {
+  assert.deepEqual(
+    payloadSchema.validateTelemetryEventPayload(eventType, samplePayload),
+    [],
+    `valid sample payload should pass telemetry schema validation for ${eventType}`,
+  );
+}
+assert.deepEqual(
+  payloadSchema.validateTelemetryEventPayload('telemetry.unknown', {}),
+  ["eventType 'telemetry.unknown' is not registered in TELEMETRY_PAYLOAD_SCHEMAS"],
+  'unknown telemetry event types should be rejected by the payload schema registry',
+);
+assert.deepEqual(
+  payloadSchema.validateTelemetryEventPayload('pipeline.completed', { exit_reason: 'missing exit code' }),
+  ['exit_code is required'],
+  'required telemetry payload fields should be enforced',
+);
+assert.deepEqual(
+  payloadSchema.validateTelemetryEventPayload('gate.verdict', { gate_id: 'review', verdict: 'MAYBE' }),
+  ['verdict has invalid type or value'],
+  'event-specific telemetry payload validators should reject invalid enum values',
+);
+assert.deepEqual(
+  payloadSchema.validateTelemetryEventPayload('module.started', { module_id: '01', unexpected: true }),
+  ['unexpected is not allowed for module.started'],
+  'telemetry payload schemas should reject fields outside the registered event shape',
+);
+assert.deepEqual(
+  payloadSchema.validateTelemetryEventPayload('plugin.event', { plugin_id: 'buster', plugin_event: 'visual_reg', details: {}, pages_total: 1 }),
+  ['pages_total is not allowed for plugin.event'],
+  'plugin.event must keep plugin-owned fields inside details instead of arbitrary top-level fields',
+);
+assert.deepEqual(
+  payloadSchema.buildPluginTelemetryPayload('buster', 'visual_reg', { module_id: '01', pages_total: 1, details: { overall: 'PASS' } }),
+  { plugin_id: 'buster', plugin_event: 'visual_reg', details: { pages_total: 1, overall: 'PASS' }, module_id: '01' },
+  'plugin event builder should preserve core correlation top-level and move plugin-owned fields into details',
+);
+assert.throws(
+  () => payloadSchema.assertTelemetryEventPayload('agent.transcript', null),
+  (error) => error?.name === 'TelemetryPayloadInvalidError'
+    && error?.code === 'TELEMETRY_PAYLOAD_INVALID'
+    && error?.eventType === 'agent.transcript'
+    && error?.validationErrors?.includes('payload must be an object'),
+  'payload assertion should throw a structured telemetry payload invalid error',
+);
+
+const dispatchForSchema = await import(pathToFileURL(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'services', 'telemetry', 'dispatch.ts')).href);
+const invalidTelemetrySwarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'telemetry-payload-invalid-'));
+const invalidTelemetryDir = path.join(invalidTelemetrySwarmDir, 'logs', 'pipeline', 'runs', 'run-invalid-payload');
+const invalidTelemetryResult = await dispatchForSchema.emitEvent({
+  config: {
+    project: 'telemetry-payload-invalid',
+    paths: { swarm_dir: invalidTelemetrySwarmDir },
+    _runId: 'run-invalid-payload',
+  },
+}, 'gate.verdict', { gate_id: 'review', verdict: 'MAYBE' });
+assert.equal(invalidTelemetryResult.event, null, 'invalid telemetry payloads must not be emitted to the core disk event stream');
+assert.equal(invalidTelemetryResult.input, null, 'invalid telemetry payloads must not be dispatched to telemetry sinks');
+assert.match(invalidTelemetryResult.validationError, /Invalid telemetry payload for 'gate.verdict'/);
+const invalidTelemetryEvents = fs.readFileSync(path.join(invalidTelemetryDir, 'pipeline.jsonl'), 'utf8')
+  .trim()
+  .split('\n')
+  .map((line) => JSON.parse(line));
+assert.deepEqual(
+  invalidTelemetryEvents.map((event) => event.type),
+  ['observability.degraded'],
+  'invalid telemetry payloads should only record a degraded observability event',
+);
+assert.equal(invalidTelemetryEvents[0].reason, 'telemetry_payload_invalid');
+assert.equal(invalidTelemetryEvents[0].impacted_event_type, 'gate.verdict');
+
 const sharedRunId = 'run-1';
 const sharedStreamKey = 'pipeline:telemetry:proj:run-1';
 
 const { runtimeRoot: sandboxRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'sandbox');
 installFakeRedis(sandboxRoot);
-const busterTelemetry = await importRuntimeModule(sandboxRoot, '/app/skills/pipeline/services/telemetry.js');
+const busterTelemetry = await importRuntimeModule(sandboxRoot, '/app/skills/pipeline/services/telemetry.ts');
 const busterCtxA = busterTelemetry.createTelemetryContext({
   project: 'proj',
-  module: 'mod-a',
-  runId: sharedRunId,
+  module_id: 'mod-a',
+  run_id: sharedRunId,
   enabled: true,
+  redisHost: '127.0.0.1',
+  enforceSecureMode: false,
 });
 assert.equal(busterCtxA.streamKey, sharedStreamKey);
 
-await busterTelemetry.emitEvent(busterCtxA, 'buster.task_started', { module_id: 'mod-a', attempt: 1 });
-await busterTelemetry.emitEvent(busterCtxA, 'buster.task_completed', { module_id: 'mod-a', outcome: 'PASS' });
+await busterTelemetry.emitPluginEvent(busterCtxA, 'task_started', { module_id: 'mod-a', attempt: 1 });
+await busterTelemetry.emitPluginEvent(busterCtxA, 'task_completed', { module_id: 'mod-a', outcome: 'PASS' });
 const busterCtxB = busterTelemetry.createTelemetryContext({
   project: 'proj',
-  module: 'mod-a',
-  runId: sharedRunId,
-  streamKey: 'legacy:module-stream',
+  module_id: 'mod-a',
+  run_id: sharedRunId,
   enabled: true,
+  redisHost: '127.0.0.1',
+  enforceSecureMode: false,
 });
 assert.equal(busterCtxB.streamKey, sharedStreamKey);
-await busterTelemetry.emitEvent(busterCtxB, 'buster.session_monitor', { module_id: 'mod-a', elapsed_seconds: 3 });
+await busterTelemetry.emitPluginEvent(busterCtxB, 'session_monitor', { module_id: 'mod-a', elapsed_seconds: 3 });
 await busterTelemetry.closeTelemetry(busterCtxA);
 await busterTelemetry.closeTelemetry(busterCtxB);
 
+const previousRedisPassword = process.env.REDIS_PASSWORD;
+process.env.REDIS_PASSWORD = 'verification-redis-password';
 const { runtimeRoot: generalRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
 installFakeRedis(generalRoot);
-const runtimeCore = await importRuntimeModule(generalRoot, '/app/skills/pipeline/core/runtime.js');
+const runtimeCore = await importRuntimeModule(generalRoot, '/app/skills/pipeline/core/runtime.ts');
 const builtInRegistry = await buildBuiltInRegistry(generalRoot);
 const config = {
   project: 'proj',
@@ -240,7 +531,7 @@ const config = {
   compatibility: { legacy_module_status_bootstrap_mode: 'migration_only' },
   resume: false,
   nova_prompt: 'do the thing',
-  _pluginRegistry: builtInRegistry,
+  pluginRegistry: builtInRegistry,
 };
 config._runId = sharedRunId;
 config.run_id = sharedRunId;
@@ -261,7 +552,74 @@ const progress = {
   models: { forge: 'openai/gpt-5' },
 };
 
-const novaTelemetryA = await importFresh(generalRoot, '/app/skills/pipeline/services/telemetry.js');
+const telemetrySinkContractMod = await importFresh(generalRoot, '/app/skills/pipeline/services/telemetry-sink-contract.ts');
+const telemetrySinkDispatchMod = await importFresh(generalRoot, '/app/skills/pipeline/services/telemetry-sink-dispatch.ts');
+const aliasSinkInput = telemetrySinkContractMod.buildTelemetrySinkInput(ctx, 'module.status_changed', { module_id: 'mod-a' }, {
+  moduleId: 'mod-a',
+  snapshot: { status: 'PASS', compatibility_alias: true },
+});
+assert.deepEqual(aliasSinkInput.stateSnapshot, { status: 'PASS', compatibility_alias: true }, 'telemetry sink input should accept snapshot as a compatibility alias for stateSnapshot');
+assert.throws(
+  () => telemetrySinkContractMod.assertTelemetrySinkInput(telemetrySinkContractMod.buildTelemetrySinkInput(ctx, 'module.status_changed', { module_id: 'mod-a' }, {
+    moduleId: 'mod-a',
+    presentation: { discord: { embeds: [{ title: 'legacy embed shape' }] } },
+  })),
+  /presentation\.discord\.embeds is not supported/,
+  'Discord telemetry presentation must reject legacy embed alternatives at the typed sink boundary',
+);
+assert.throws(
+  () => telemetrySinkContractMod.assertTelemetrySinkInput(telemetrySinkContractMod.buildTelemetrySinkInput(ctx, 'module.status_changed', { module_id: 'mod-a' }, {
+    moduleId: 'mod-a',
+    presentation: { discord: { fields: [{ name: 'Module', value: 1 }] } },
+  })),
+  /fields\[0\] must include string name and value/,
+  'Discord telemetry fields must use canonical string name/value entries',
+);
+
+let observedSinkInput = null;
+let observedSinkStateSnapshot = null;
+const sinkSnapshotPlugin = {
+  enabled: true,
+  manifest: {
+    moduleId: 'contract.telemetry.state_snapshot_sink',
+    sourceType: 'builtin',
+    hookFamily: 'telemetry.sink',
+    stageId: 'telemetry.sink',
+    capabilities: [],
+    priority: 0,
+  },
+  config: {},
+  implementation: {
+    observe: async (input, pluginContext) => {
+      observedSinkInput = input;
+      observedSinkStateSnapshot = await pluginContext.read.stateSnapshot();
+    },
+  },
+};
+const sinkSnapshotConfig = {
+  project: 'proj',
+  _runId: sharedRunId,
+  run_id: sharedRunId,
+  pluginRegistry: {
+    enabled: true,
+    hookIndex: {
+      'telemetry.sink': {
+        'telemetry.sink': [sinkSnapshotPlugin],
+      },
+    },
+  },
+};
+await telemetrySinkDispatchMod.dispatchTelemetrySinks({ config: sinkSnapshotConfig, progress }, 'module.status_changed', {
+  module_id: 'mod-a',
+  new_status: 'PASS',
+}, {
+  moduleId: 'mod-a',
+  stateSnapshot: { status: 'PASS', terminal: true },
+});
+assert.deepEqual(observedSinkInput.stateSnapshot, { status: 'PASS', terminal: true }, 'telemetry sink input should carry stateSnapshot');
+assert.deepEqual(observedSinkStateSnapshot, { status: 'PASS', terminal: true }, 'telemetry sink plugin context read.stateSnapshot() should expose the emitted stateSnapshot');
+
+const novaTelemetryA = await importFresh(generalRoot, '/app/skills/pipeline/services/telemetry.ts');
 novaTelemetryA.onPipelineStarted(ctx, progress);
 novaTelemetryA.emitCostUpdate(ctx, {
   module_id: 'mod-a',
@@ -273,7 +631,12 @@ novaTelemetryA.emitCostUpdate(ctx, {
   output_tokens: 45,
   model: 'openai/gpt-5',
 });
-novaTelemetryA.onPipelineHalted(ctx, 'mod-b', 42, 'BLOCKED');
+novaTelemetryA.onPipelineHalted(ctx, {
+  step_type: 'module',
+  step_id: 'mod-b',
+  exit_code: 42,
+  reason: 'BLOCKED',
+});
 novaTelemetryA.onRetryScheduled(ctx, 'mod-a', {
   attempt: 2,
   max_attempts: 5,
@@ -380,7 +743,7 @@ novaTelemetryA.emitObservabilityRestored(ctx, {
 await flushAsync();
 await novaTelemetryA.closeTelemetryRedis();
 
-const novaTelemetryB = await importFresh(generalRoot, '/app/skills/pipeline/services/telemetry.js');
+const novaTelemetryB = await importFresh(generalRoot, '/app/skills/pipeline/services/telemetry.ts');
 novaTelemetryB.onPipelineCompleted(ctx, 0, 'OK', { total_cost_usd: 0.32 });
 await flushAsync();
 await novaTelemetryB.closeTelemetryRedis();
@@ -398,14 +761,50 @@ assert.deepEqual(busterEvents.map((event) => event.seq), [1, 2, 3]);
 assert(busterEvents.every((event) => event.emitter === 'buster/pipeline/services/telemetry'));
 assert(busterEvents.every((event) => event.module_id === 'mod-a'));
 assert(busterEvents.every((event) => !Object.prototype.hasOwnProperty.call(event, 'data')), 'Buster telemetry payload must be flat, not nested under data');
-assert.equal(busterEvents[0].type, 'buster.task_started');
-assert.equal(busterEvents[1].type, 'buster.task_completed');
-assert.equal(busterEvents[2].type, 'buster.session_monitor');
+assert.deepEqual(busterEvents.map((event) => event.type), ['plugin.event', 'plugin.event', 'plugin.event']);
+assert.deepEqual(busterEvents.map((event) => event.plugin_id), ['buster', 'buster', 'buster']);
+assert.deepEqual(busterEvents.map((event) => event.plugin_event), ['task_started', 'task_completed', 'session_monitor']);
+assert.equal(busterEvents[2].details.elapsed_seconds, 3);
+
+const invalidBusterDir = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-telemetry-invalid-'));
+const invalidBusterRunLog = path.join(invalidBusterDir, 'pipeline.jsonl');
+const invalidBusterCtx = busterTelemetry.createTelemetryContext({
+  project: 'proj',
+  module_id: 'mod-a',
+  run_id: 'run-invalid-buster-payload',
+  enabled: true,
+  pipeline_run_log_path: invalidBusterRunLog,
+  redisHost: '127.0.0.1',
+  enforceSecureMode: false,
+});
+const invalidBusterResult = await busterTelemetry.emitEvent(invalidBusterCtx, 'plugin.event', {
+  plugin_id: 'buster',
+  plugin_event: 'visual_reg',
+  details: {},
+  pages_total: 1,
+});
+assert.equal(invalidBusterResult.event, null, 'invalid Buster telemetry payloads must not be emitted');
+assert.match(invalidBusterResult.validationError, /Invalid telemetry payload for 'plugin.event'/);
+assert.equal(xaddEvents('pipeline:telemetry:proj:run-invalid-buster-payload').length, 0, 'invalid Buster telemetry payload must not reach Redis');
+const invalidBusterEvents = fs.readFileSync(invalidBusterRunLog, 'utf8')
+  .trim()
+  .split('\n')
+  .map((line) => JSON.parse(line));
+assert.deepEqual(invalidBusterEvents.map((event) => event.type), ['observability.degraded']);
+assert.equal(invalidBusterEvents[0].reason, 'telemetry_payload_invalid');
+assert.equal(invalidBusterEvents[0].impacted_event_type, 'plugin.event');
+assert.deepEqual(invalidBusterEvents[0].validation_errors, ['pages_total is not allowed for plugin.event']);
+await busterTelemetry.closeTelemetry(invalidBusterCtx);
 
 const novaEvents = pipelineEvents.filter((event) => event.source === 'pipeline');
 assert.equal(novaEvents.length, 15, 'expected fifteen Nova telemetry events on the shared run stream');
 assert.deepEqual(novaEvents.map((event) => event.seq), [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
-assert(novaEvents.every((event) => event.emitter === 'nova/pipeline/services/telemetry'));
+assert(novaEvents
+  .filter((event) => event.type !== 'observability.degraded' && event.type !== 'observability.restored')
+  .every((event) => event.emitter === 'nova/pipeline/services/telemetry'));
+assert(novaEvents
+  .filter((event) => event.type === 'observability.degraded' || event.type === 'observability.restored')
+  .every((event) => event.emitter === 'nova/pipeline/services/observability'));
 
 const completed = pipelineEvents.find((event) => event.type === 'pipeline.completed');
 assert(completed, 'missing pipeline.completed event');
@@ -421,6 +820,11 @@ assert.equal(halted.module_id, 'mod-b');
 assert.equal(halted.exit_code, 42);
 assert(!Object.prototype.hasOwnProperty.call(halted, 'halted_at_module'));
 assert(!Object.prototype.hasOwnProperty.call(halted, 'halted_at_gate'));
+assert.equal(
+  telemetryBuildersText.includes("String(stepId || '').startsWith('gate:')") || telemetryBuildersText.includes('config?.gates?.[stepId]'),
+  false,
+  'pipeline.halted telemetry must not infer module/gate ownership from step-id strings or configured gates'
+);
 
 const retry = pipelineEvents.find((event) => event.type === 'retry.scheduled');
 assert(retry, 'missing retry.scheduled event');
@@ -521,14 +925,18 @@ assert.equal(observabilityRestored.attempt, 2);
 assert.equal(observabilityRestored.dispatch_id, 'dispatch-mod-a-2');
 assert.equal(observabilityRestored.restored_after_ms, 60000);
 
-const failuresMod = await importFresh(generalRoot, '/app/skills/pipeline/services/failures.js');
-const statusStoreMod = await importFresh(generalRoot, '/app/skills/pipeline/services/status-store.js');
+const failuresMod = await importFresh(generalRoot, '/app/skills/pipeline/services/failures/retry-policy.ts');
+const statusStoreMod = await importFresh(generalRoot, '/app/skills/pipeline/services/status-store.ts');
 const failureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'check-telemetry-failures-'));
 const failureSwarmDir = path.join(failureRoot, '.swarm');
 const failureModulesDir = path.join(failureSwarmDir, 'modules');
+const failureRunLogDir = path.join(failureSwarmDir, 'runs', sharedRunId);
 fs.mkdirSync(path.join(failureModulesDir, 'mod-fail'), { recursive: true });
 fs.mkdirSync(path.join(failureModulesDir, 'mod-block'), { recursive: true });
+fs.mkdirSync(failureRunLogDir, { recursive: true });
 config.paths = { swarm_dir: failureSwarmDir, modules_dir: failureModulesDir };
+config._runId = sharedRunId;
+config.run_id = sharedRunId;
 
 const failOnlyStatus = {
   module_id: 'mod-fail',
@@ -545,7 +953,13 @@ const failOnlyStatus = {
   commit_hash: 'abc123',
 };
 
-statusStoreMod.saveStatus(config, 'mod-fail', failOnlyStatus);
+statusStoreMod.appendModuleLifecycleEvent(config, 'mod-fail', failOnlyStatus, {
+  eventType: 'module_attempt.started',
+  oldStatus: 'PENDING',
+  previousPhase: null,
+  note: 'seed contract fixture open attempt',
+  now: failOnlyStatus.attempt_started_at,
+});
 
 const failOnlyResult = await failuresMod.handleFail(
   config,
@@ -574,7 +988,7 @@ assert.equal(failOnlyEvents[0].old_status, 'IN_PROGRESS');
 assert.equal(failOnlyEvents[0].new_status, 'FAIL');
 assert.equal(failOnlyEvents[0].attempt, 3);
 assert.equal(failOnlyEvents[0].dispatch_id, 'dispatch-mod-fail-3');
-assert.equal(failOnlyEvents[0].gateway_label, 'dispatch-mod-fail-3');
+assert.equal(failOnlyEvents[0].gateway_label, 'forge-mod-fail-3');
 assert.equal(failOnlyEvents[0].session_key, 'agent:forge:mod-fail-3');
 assert.equal(failOnlyEvents[0].phase, 'forge');
 assert.equal(failOnlyEvents[0].reason, 'TypeScript compilation errors');
@@ -595,7 +1009,13 @@ const blockedStatus = {
   commit_hash: 'def456',
 };
 
-statusStoreMod.saveStatus(config, 'mod-block', blockedStatus);
+statusStoreMod.appendModuleLifecycleEvent(config, 'mod-block', blockedStatus, {
+  eventType: 'module_attempt.started',
+  oldStatus: 'PENDING',
+  previousPhase: null,
+  note: 'seed contract fixture open attempt',
+  now: blockedStatus.attempt_started_at,
+});
 
 const blockedResult = await failuresMod.handleFail(
   config,
@@ -647,7 +1067,7 @@ assert.equal(blockedEvents[2].session_key, 'agent:mod-block:3');
 assert.equal(blockedEvents[2].phase, 'buster');
 assert.equal(blockedEvents[2].reason, 'Max retries (3) exceeded in buster');
 
-const moduleRunnerMod = await importFresh(generalRoot, '/app/skills/pipeline/runners/module-runner.js');
+const moduleRunnerMod = await importFresh(generalRoot, '/app/skills/pipeline/runners/module-runner.ts');
 const moduleRunnerRegistry = await buildBuiltInRegistry(generalRoot);
 const crashConfig = {
   project: 'proj',
@@ -658,7 +1078,7 @@ const crashConfig = {
   _runId: sharedRunId,
   run_id: sharedRunId,
   _runStats: runtimeCore.createRunStats('2026-04-09T00:00:00.000Z'),
-  _pluginRegistry: moduleRunnerRegistry,
+  pluginRegistry: moduleRunnerRegistry,
   paths: { swarm_dir: failureSwarmDir, modules_dir: failureModulesDir },
 };
 
@@ -678,7 +1098,7 @@ let crashStatus = {
   commit_hash: 'crash123',
 };
 
-crashConfig._testOverrides = {
+const crashDeps = {
   moduleRunner: {
     checkDependencies: () => ({ met: true }),
     sleep: async () => {},
@@ -697,7 +1117,7 @@ crashConfig._testOverrides = {
     setShutdownContext: () => {},
     clearShutdownContext: () => {},
     discord: async () => {},
-    pollDualWithRateLimitRecovery: async () => ({ ok: false, reason: 'timeout', status: { session_key: 'agent:crash:session' } }),
+    pollDualWithRateLimitRecovery: async () => ({ ok: false, reason: 'timeout', failure_class: 'timeout', status: { session_key: 'agent:crash:session' } }),
   },
 };
 
@@ -715,8 +1135,8 @@ const crashProgress = {
 };
 
 const crashEventOffset = xaddEvents(sharedStreamKey).length;
-const crashResult = await moduleRunnerMod.runModule(crashConfig, crashProgress, 'mod-crash');
-assert.equal(crashResult.exit, 20, 'terminal Buster crash exhaustion should block the module');
+const crashResult = await moduleRunnerMod.runModule(crashConfig, crashProgress, 'mod-crash', { deps: crashDeps });
+assert.equal(crashResult.terminal?.exitCode, 20, 'terminal Buster crash exhaustion should block the module');
 await flushAsync();
 
 const crashEvents = xaddEvents(sharedStreamKey)
@@ -746,7 +1166,7 @@ assert.equal(crashEvents[3].attempt, 1);
 assert.equal(crashEvents[3].phase, 'buster');
 assert.equal(crashEvents[3].reason, 'Buster crash retries exhausted after 1 attempt (Buster timed out (15min))');
 
-const rateLimitMod = await importFresh(generalRoot, '/app/skills/pipeline/services/rate-limit.js');
+const rateLimitMod = await importFresh(generalRoot, '/app/skills/pipeline/services/rate-limit.ts');
 const rateLimitRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'check-telemetry-rate-limit-'));
 const rateLimitSwarmDir = path.join(rateLimitRoot, '.swarm');
 const rateLimitModulesDir = path.join(rateLimitSwarmDir, 'modules');
@@ -761,7 +1181,7 @@ const rateLimitStatus = {
   title: 'Module Rate Limited',
   status: 'TESTING',
   current_phase: 'buster',
-  fail_count: 1,
+  fail_count: 0,
   fail_summaries: [],
   history: [],
   started_at: '2026-04-09T00:00:00.000Z',
@@ -770,17 +1190,32 @@ const rateLimitStatus = {
   cost: { total_duration_seconds: 0, attempt_duration_seconds: 0 },
   commit_hash: 'rate123',
   active_agent: {
+    attempt: 1,
     model: 'buster-test-model',
     session_key: 'agent:buster:mod-rate',
   },
 };
-statusStoreMod.saveStatus(rateLimitConfig, 'mod-rate', rateLimitStatus);
+statusStoreMod.appendModuleLifecycleEvent(rateLimitConfig, 'mod-rate', rateLimitStatus, {
+  eventType: 'module_attempt.started',
+  oldStatus: 'PENDING',
+  previousPhase: null,
+  note: 'seed contract fixture open attempt',
+  now: rateLimitStatus.attempt_started_at,
+});
+statusStoreMod.appendModuleLifecycleEvent(rateLimitConfig, 'mod-rate', rateLimitStatus, {
+  eventType: 'module_attempt.testing_started',
+  oldStatus: 'READY_FOR_TESTING',
+  previousPhase: null,
+  note: 'seed contract fixture buster phase',
+  now: rateLimitStatus.phase_started_at,
+});
 const rateLimitEventOffset = xaddEvents(sharedStreamKey).length;
-await rateLimitMod.handleRateLimit(rateLimitConfig, {
-  ...rateLimitStatus,
-  reason: '429 Too Many Requests',
-  rate_limit_reason: 'provider cooldown requested',
-}, 'mod-rate', 1, 3);
+const trackedRateLimitStatus = rateLimitMod.buildTrackedModuleSessionRateLimitStatus(rateLimitConfig, 'mod-rate', { ...rateLimitStatus, reason: '429 Too Many Requests', rate_limit_reason: 'provider cooldown requested' });
+await rateLimitMod.handleSessionRateLimit(rateLimitConfig, trackedRateLimitStatus, {
+  ...rateLimitMod.createTrackedModuleSessionRateLimitRecoveryOptions(rateLimitConfig, 'mod-rate'),
+  pauseCount: 1,
+  maxPauses: 3,
+});
 await flushAsync();
 
 const rateLimitEvents = xaddEvents(sharedStreamKey).slice(rateLimitEventOffset);
@@ -791,7 +1226,7 @@ assert.equal(rateLimitEvents[0].max_pauses, 3);
 assert.equal(rateLimitEvents[1].module_id, 'mod-rate');
 assert.equal(rateLimitEvents[1].old_status, 'TESTING');
 assert.equal(rateLimitEvents[1].new_status, 'RATE_LIMITED');
-assert.equal(rateLimitEvents[1].attempt, 2);
+assert.equal(rateLimitEvents[1].attempt, null);
 assert.equal(rateLimitEvents[1].phase, 'buster');
 assert.equal(rateLimitEvents[1].model, 'buster-test-model');
 assert.equal(rateLimitEvents[1].commit_hash, 'rate123');
@@ -799,7 +1234,7 @@ assert.equal(rateLimitEvents[1].reason, 'Paused 0h (rate limit)');
 assert.equal(rateLimitEvents[2].module_id, 'mod-rate');
 assert.equal(rateLimitEvents[2].old_status, 'RATE_LIMITED');
 assert.equal(rateLimitEvents[2].new_status, 'TESTING');
-assert.equal(rateLimitEvents[2].attempt, 2);
+assert.equal(rateLimitEvents[2].attempt, null);
 assert.equal(rateLimitEvents[2].phase, 'buster');
 assert.equal(rateLimitEvents[2].model, 'buster-test-model');
 assert.equal(rateLimitEvents[2].commit_hash, 'rate123');
@@ -808,7 +1243,6 @@ const restoredRateLimitStatus = statusStoreMod.loadStatus(rateLimitConfig, 'mod-
 assert.equal(restoredRateLimitStatus.status, 'TESTING');
 assert.equal(restoredRateLimitStatus.current_phase, 'buster');
 
-const telemetrySchemaText = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
 assert.doesNotThrow(() => assertTelemetrySchemaHotspotAuthority(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md')));
 assert.equal(telemetrySchemaText.includes('Canonical event inventory, stream identity, envelope invariants, and compatibility boundaries live in `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`.'), true);
 assert.equal(telemetrySchemaText.includes('This schema is the authoritative event-by-event payload reference for those canonical event names, including authoritative field tables, payload examples, and event-specific correlation notes.'), true);
@@ -817,10 +1251,9 @@ assert.equal(telemetrySchemaText.includes('For the high-value lifecycle and obse
 assert.equal(telemetrySchemaText.includes('Valid statuses: `PENDING`, `IN_PROGRESS`, `READY_FOR_TESTING`, `TESTING`, `PASS`, `FAIL`, `BLOCKED`, `RATE_LIMITED`'), true);
 assert.equal(telemetrySchemaText.includes('"new_status": "RATE_LIMITED"'), true);
 assert.equal(telemetrySchemaText.includes('"reason": "Paused 2h (rate limit)"'), true);
-assert.equal(telemetrySchemaText.includes('Session-backed agent lifecycle event for ACP/subagent work such as Forge, Echo, and the child session that Buster spawns after a successful task decision. Redis-dispatched Buster work still emits `buster.task_started` / `buster.task_completed` for task-level lifecycle around that child-session work.'), true);
-assert.equal(telemetrySchemaText.includes('Session-backed agent termination event for ACP/subagent work such as Forge, Echo, and the child session that Buster spawned for a passing task. Redis-dispatched Buster work still emits `buster.task_completed` for task-level lifecycle, while `agent.killed` closes the child-session lifecycle when one existed.'), true);
-assert.equal(telemetrySchemaText.includes('Redis-dispatched Buster work uses `buster.task_started` / `buster.task_completed` instead of `agent.spawned`.'), false);
-assert.equal(telemetrySchemaText.includes('Redis-dispatched Buster work uses `buster.task_completed` instead of `agent.killed`.'), false);
+assert.equal(telemetrySchemaText.includes('Session-backed agent lifecycle events use `agent.spawn.requested`, `agent.spawned`, `agent.delivery.target`, and `agent.killed`; plugin-owned task lifecycle details use `plugin.event` with `plugin_id: "buster"`.'), true);
+assert.equal(telemetrySchemaText.includes('buster.task_started'), false);
+assert.equal(telemetrySchemaText.includes('buster.task_completed'), false);
 assert.equal(telemetrySchemaText.includes('When the spawned or terminated session belongs to gate-owned work and Nova already knows that gate identity, both lifecycle events also preserve canonical `gate_type` and `dispatch_id` join keys alongside `gate_id`, `attempt`, and `session_key`.'), true);
 assert.equal(telemetrySchemaText.includes('"gate_type": "review"'), true);
 assert.equal(telemetrySchemaText.includes('"dispatch_id": "dispatch-review-06-1"'), true);
@@ -834,7 +1267,10 @@ assert.equal(contractText.includes('When `gate.verdict` or gate-scoped `retry.ex
 assert.equal(contractText.includes('When that same gate-owned verdict or exhaustion path is already tied to a dispatch, the payload should also preserve `dispatch_id` so authoritative gate outcomes stay directly joinable with surrounding rate-limit, Discord, and replay surfaces.'), true);
 
 const finalPipelineEvents = xaddEvents(sharedStreamKey);
+if (previousRedisPassword === undefined) delete process.env.REDIS_PASSWORD;
+else process.env.REDIS_PASSWORD = previousRedisPassword;
 
+quietConsole.restore();
 console.log(JSON.stringify({
   sourceRoot,
   overlayRoot,

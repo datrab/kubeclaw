@@ -6,10 +6,33 @@ import assert from 'assert';
 import {
   materializeRuntimeTree,
   importRuntimeModule,
+  runGateViaRegistry,
 } from '../../lib/lifecycle-audit-lib.mjs';
 
 function getFieldValue(fields = [], name) {
   return fields.find((field) => field.name === name)?.value;
+}
+
+function gateRuntimeEvents(xaddEvents, streamKey) {
+  return xaddEvents(streamKey)
+    .filter((event) => !String(event.type || '').startsWith('plugin.gate.'))
+    .map((event, index) => ({ ...event, seq: index + 1 }));
+}
+
+function stepExit(result) {
+  return result?.terminal?.exitCode;
+}
+
+function stepSummary(result) {
+  return result?.diagnostics?.summary;
+}
+
+function stepMetadata(result) {
+  return result?.diagnostics?.metadata || {};
+}
+
+function stepGateStatus(result) {
+  return result?.diagnostics?.typed?.controlResult?.diagnostics?.typed?.gate?.gateRunStatus;
 }
 
 function readJsonl(filePath) {
@@ -22,10 +45,18 @@ function readJsonl(filePath) {
 }
 
 async function buildBuiltInRegistry(runtimeRoot) {
-  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.js');
-  const { registry, errors } = registryMod.buildPluginRegistry({}, { throwOnError: false });
+  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
   assert.equal(errors.length, 0);
   return registry;
+}
+
+function platformTestDefaults() {
+  return {
+    fallback_model: 'fallback-model',
+    rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },
+    review_defaults: { timeout_minutes: 30, max_fix_cycles: 3, lint_tier: 'full', lint_required: false },
+  };
 }
 
 export async function registerGatesArea({
@@ -42,8 +73,8 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
     const gateCalls = [];
     const testRegistry = {
@@ -64,9 +95,17 @@ export async function registerGatesArea({
                   nextAction: 'pass',
                   diagnostics: {
                     summary: 'Review gate passed',
+                    findings: [],
                     metadata: {
                       gate_id: 'gate:review',
                       gate_type: 'review',
+                    },
+                    typed: {
+                      gate: {
+                        schemaVersion: 'v1',
+                        gateRunStatus: 'PASS',
+                        outcomeClass: 'passed',
+                      },
                     },
                   },
                 };
@@ -81,29 +120,28 @@ export async function registerGatesArea({
     const logDir = path.join(swarmDir, 'logs');
     const runId = 'run-review-stage-pass-1';
 
-    const config = {
+        const deps = {
+        gateRunner: {
+          runners: {
+            review: async () => {
+              throw new Error('direct review runner fallback should not run when stage owner is registered');
+            },
+          },
+        },
+      };
+const config = {
+      ...platformTestDefaults(),
       project: 'behavior-review-stage-pass',
       paths: {
         swarm_dir: swarmDir,
         modules_dir: path.join(swarmDir, 'modules'),
       },
       telemetry: { enabled: true },
-      _pluginRegistry: testRegistry,
-      _logDir: logDir,
-      _runLogDir: path.join(logDir, 'pipeline', 'runs', runId),
+      pluginRegistry: testRegistry,
       _runId: runId,
       run_id: runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
-      _testOverrides: {
-        gateRunner: {
-          runners: {
-            review: async () => {
-              throw new Error('legacy review runner fallback should not run when stage owner is registered');
-            },
-          },
-        },
-      },
-    };
+          };
 
     const progress = {
       modules: {},
@@ -116,12 +154,15 @@ export async function registerGatesArea({
       },
     };
 
-    const result = await gateRunnerMod.runGate(config, progress, 'gate:review');
+    const result = await gateRunnerMod.runGate(config, progress, 'gate:review', { deps });
 
-    assert.equal(result.exit, 0);
-    assert.equal(result.status, 'PASS');
-    assert.equal(result.gate_id, 'gate:review');
-    assert.equal(result.gate_type, 'review');
+    assert.equal(result.kind, 'pipeline_step_result');
+    assert.equal(result.nextAction, 'continue');
+    assert.equal(result.outcome, 'passed');
+    assert.equal(stepExit(result), 0);
+    assert.equal(stepGateStatus(result), 'PASS');
+    assert.equal(result.correlation.gate_id, 'gate:review');
+    assert.equal(result.correlation.gate_type, 'review');
     assert.equal(gateCalls.length, 1);
     assert.equal(gateCalls[0].ids.stageId, 'gate:review');
     assert.equal(gateCalls[0].ids.gateId, 'gate:review');
@@ -130,14 +171,84 @@ export async function registerGatesArea({
     assert.equal(gateCalls[0].executionContext.novaPromptProvided, false);
   });
 
+  await record('gate type owners fail closed when their registry stage owner is missing', async () => {
+    const { runtimeRoot: gateRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    installFakeRedis(gateRuntimeRoot);
+    globalThis.__fakeRedisCalls = [];
+    globalThis.__fakeRedisCounters = Object.create(null);
+
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+    const registry = await buildBuiltInRegistry(gateRuntimeRoot);
+    const gateExecuteOwners = { ...registry.stageOwners['gate.execute'] };
+    delete gateExecuteOwners['gate:review'];
+    const testRegistry = {
+      ...registry,
+      stageOwners: {
+        ...registry.stageOwners,
+        'gate.execute': gateExecuteOwners,
+      },
+    };
+
+    const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-review-stage-owner-missing-'));
+    const logDir = path.join(swarmDir, 'logs');
+    const runId = 'run-review-stage-owner-missing-1';
+        const configDeps2 = {
+        gateRunner: {
+          runners: {
+            review: async () => {
+              throw new Error('direct review runner fallback should not run when registry stage owner is missing');
+            },
+          },
+        },
+      };
+const config = {
+      ...platformTestDefaults(),
+      project: 'behavior-review-stage-owner-missing',
+      paths: {
+        swarm_dir: swarmDir,
+        modules_dir: path.join(swarmDir, 'modules'),
+      },
+      telemetry: { enabled: true },
+      pluginRegistry: testRegistry,
+      _runId: runId,
+      run_id: runId,
+      _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
+          };
+    const progress = {
+      modules: {},
+      gates: {
+        'gate:review': {
+          type: 'review',
+          title: 'Review Gate',
+        },
+      },
+    };
+
+    const result = await gateRunnerMod.runGate(config, progress, 'gate:review', { deps: configDeps2 });
+    await flushAsync();
+
+    assert.equal(stepExit(result), 1);
+    assert.equal(stepSummary(result), "Review gate execution failed: No registered plugin owner found for hookFamily 'gate.execute' stage 'gate:review' in the startup-frozen registry.");
+
+    const streamKey = 'pipeline:telemetry:behavior-review-stage-owner-missing:run-review-stage-owner-missing-1';
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
+    assert.deepEqual(events.map((event) => event.type), ['gate.started', 'gate.verdict']);
+    assert.equal(events[0].gate_id, 'gate:review');
+    assert.equal(events[0].gate_type, 'review');
+    assert.equal(events[1].gate_id, 'gate:review');
+    assert.equal(events[1].gate_type, 'review');
+    assert.equal(events[1].reason, stepSummary(result));
+  });
+
   await record('review gate stage-owner block results preserve current NEEDS_NOVA correlation', async () => {
     const { runtimeRoot: gateRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(gateRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
     const testRegistry = {
       ...registry,
@@ -156,14 +267,18 @@ export async function registerGatesArea({
                 issueType: 'code',
                 diagnostics: {
                   summary: 'Review gate needs Nova guidance',
+                  findings: [],
                   metadata: {
-                    legacy_result: {
-                      exit: 10,
-                      reason: 'Review gate needs Nova guidance',
-                      attempt: 2,
-                      fix_cycles: 1,
-                      gateway_label: 'echo-review-gate-2',
-                      session_key: 'agent:main:acp:review-gate-2',
+                    attempt: 2,
+                    fix_cycles: 1,
+                    gateway_label: 'echo-review-gate-2',
+                    session_key: 'agent:main:acp:review-gate-2',
+                  },
+                  typed: {
+                    gate: {
+                      schemaVersion: 'v1',
+                      gateRunStatus: 'FAIL',
+                      outcomeClass: 'needs_nova',
                     },
                   },
                 },
@@ -179,15 +294,14 @@ export async function registerGatesArea({
     const runId = 'run-review-stage-block-1';
 
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-review-stage-block',
       paths: {
         swarm_dir: swarmDir,
         modules_dir: path.join(swarmDir, 'modules'),
       },
       telemetry: { enabled: true },
-      _pluginRegistry: testRegistry,
-      _logDir: logDir,
-      _runLogDir: path.join(logDir, 'pipeline', 'runs', runId),
+      pluginRegistry: testRegistry,
       _runId: runId,
       run_id: runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
@@ -203,16 +317,19 @@ export async function registerGatesArea({
       },
     };
 
-    const result = await gateRunnerMod.runGate(config, progress, 'gate:review');
+    const result = await gateRunnerMod.runGate(config, progress, 'gate:review', {});
 
-    assert.equal(result.exit, 10);
-    assert.equal(result.reason, 'Review gate needs Nova guidance');
-    assert.equal(result.attempt, 2);
-    assert.equal(result.fix_cycles, 1);
-    assert.equal(result.gateway_label, 'echo-review-gate-2');
-    assert.equal(result.session_key, 'agent:main:acp:review-gate-2');
-    assert.equal(result.gate_id, 'gate:review');
-    assert.equal(result.gate_type, 'review');
+    assert.equal(result.kind, 'pipeline_step_result');
+    assert.equal(result.nextAction, 'halt');
+    assert.equal(result.outcome, 'needs_nova');
+    assert.equal(stepExit(result), 10);
+    assert.equal(stepSummary(result), 'Review gate needs Nova guidance');
+    assert.equal(stepMetadata(result).attempt, 2);
+    assert.equal(stepMetadata(result).fix_cycles, 1);
+    assert.equal(stepMetadata(result).gateway_label, 'echo-review-gate-2');
+    assert.equal(stepMetadata(result).session_key, 'agent:main:acp:review-gate-2');
+    assert.equal(result.correlation.gate_id, 'gate:review');
+    assert.equal(result.correlation.gate_type, 'review');
   });
 
   await record('review gate request_fix stage contracts fail closed when remediation payload is missing', async () => {
@@ -221,8 +338,8 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
     const testRegistry = {
       ...registry,
@@ -239,6 +356,18 @@ export async function registerGatesArea({
                 producerType: 'review',
                 nextAction: 'request_fix',
                 issueType: 'code',
+                diagnostics: {
+                  summary: 'Review gate requested remediation without payload',
+                  findings: [],
+                  metadata: {},
+                  typed: {
+                    gate: {
+                      schemaVersion: 'v1',
+                      gateRunStatus: 'FAIL',
+                      outcomeClass: 'fix_requested',
+                    },
+                  },
+                },
               }),
             },
           },
@@ -251,15 +380,14 @@ export async function registerGatesArea({
     const runId = 'run-review-stage-invalid-1';
 
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-review-stage-invalid',
       paths: {
         swarm_dir: swarmDir,
         modules_dir: path.join(swarmDir, 'modules'),
       },
       telemetry: { enabled: true },
-      _pluginRegistry: testRegistry,
-      _logDir: logDir,
-      _runLogDir: path.join(logDir, 'pipeline', 'runs', runId),
+      pluginRegistry: testRegistry,
       _runId: runId,
       run_id: runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
@@ -275,14 +403,18 @@ export async function registerGatesArea({
       },
     };
 
-    const result = await gateRunnerMod.runGate(config, progress, 'gate:review');
+    const result = await gateRunnerMod.runGate(config, progress, 'gate:review', {});
     await flushAsync();
 
-    assert.equal(result.exit, 1);
-    assert.equal(result.reason, 'Review gate execution failed: Review gate returned invalid control result: request_fix for gate:review requires diagnostics.typed.remediation');
+    assert.equal(stepExit(result), 1);
+    assert.equal(stepSummary(result), 'Review gate execution failed: Review gate returned invalid control result: request_fix for gate:review requires diagnostics.typed.remediation');
+    assert.equal(result.diagnostics.contract_invalid, true);
+    assert.equal(result.diagnostics.contract_diagnostic.diagnosticType, 'plugin_contract_invalid');
+    assert.equal(result.diagnostics.contract_diagnostic.stageId, 'gate:review');
+    assert.deepEqual(result.diagnostics.contract_diagnostic.validationErrors, ['request_fix for gate:review requires diagnostics.typed.remediation']);
 
     const streamKey = 'pipeline:telemetry:behavior-review-stage-invalid:run-review-stage-invalid-1';
-    const events = xaddEvents(streamKey);
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
     assert.deepEqual(events.map((event) => event.type), ['gate.started', 'gate.verdict']);
     assert.equal(events[0].gate_id, 'gate:review');
     assert.equal(events[0].gate_type, 'review');
@@ -291,14 +423,107 @@ export async function registerGatesArea({
     assert.equal(events[1].reason, 'Review gate execution failed: Review gate returned invalid control result: request_fix for gate:review requires diagnostics.typed.remediation');
   });
 
+  await record('gate plugin boundary rejects contradictory typed results', async () => {
+    for (const contractCase of [
+      {
+        name: 'legacy-exit-shape',
+        rawResult: { exit: 0, status: 'FAIL', reason: 'legacy shape must not be coerced at plugin boundary' },
+        expected: 'plugin output must be a typed gate control result',
+      },
+      {
+        name: 'pass-with-fail-status',
+        rawResult: {
+          schemaVersion: 'v1',
+          producerKind: 'gate',
+          producerType: 'review',
+          nextAction: 'pass',
+          diagnostics: {
+            summary: 'Contradictory pass',
+            findings: [],
+            metadata: {},
+            typed: { gate: { schemaVersion: 'v1', gateRunStatus: 'FAIL', outcomeClass: 'passed' } },
+          },
+        },
+        expected: "pass for review cannot report failing gateRunStatus 'FAIL'",
+      },
+      {
+        name: 'block-without-diagnostics',
+        rawResult: {
+          schemaVersion: 'v1',
+          producerKind: 'gate',
+          producerType: 'review',
+          nextAction: 'block',
+          issueType: 'code',
+        },
+        expected: 'diagnostics must be an object',
+      },
+    ]) {
+      const { runtimeRoot: gateRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+      installFakeRedis(gateRuntimeRoot);
+      globalThis.__fakeRedisCalls = [];
+      globalThis.__fakeRedisCounters = Object.create(null);
+
+      const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+      const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+      const registry = await buildBuiltInRegistry(gateRuntimeRoot);
+      const testRegistry = {
+        ...registry,
+        stageOwners: {
+          ...registry.stageOwners,
+          'gate.execute': {
+            ...registry.stageOwners['gate.execute'],
+            'gate:review': {
+              ...registry.stageOwners['gate.execute']['gate:review'],
+              implementation: { execute: async () => contractCase.rawResult },
+            },
+          },
+        },
+      };
+
+      const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), `behavior-gate-plugin-contract-${contractCase.name}-`));
+      const logDir = path.join(swarmDir, 'logs');
+      const runId = `run-gate-plugin-contract-${contractCase.name}-1`;
+      const config = {
+        ...platformTestDefaults(),
+        project: `behavior-gate-plugin-contract-${contractCase.name}`,
+        paths: { swarm_dir: swarmDir, modules_dir: path.join(swarmDir, 'modules') },
+        telemetry: { enabled: true },
+        pluginRegistry: testRegistry,
+        _runId: runId,
+        run_id: runId,
+        _runStats: runtimeCoreMod.createRunStats('2026-04-26T00:00:00.000Z'),
+      };
+      const progress = { modules: {}, gates: { 'gate:review': { type: 'review', title: 'Review Gate' } } };
+
+      const result = await gateRunnerMod.runGate(config, progress, 'gate:review', {});
+      await flushAsync();
+
+      assert.notEqual(stepExit(result), 0);
+      assert.equal(['error', 'needs_nova'].includes(result.outcome), true);
+      assert.equal(result.correlation.gate_id, 'gate:review');
+      assert.match(stepSummary(result), new RegExp(contractCase.expected.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+      assert.equal(result.diagnostics.contract_invalid, true);
+      assert.equal(result.diagnostics.contract_diagnostic.diagnosticType, 'plugin_contract_invalid');
+      assert.equal(result.diagnostics.contract_diagnostic.stageId, 'gate:review');
+      assert.equal(result.diagnostics.contract_diagnostic.validationErrors.some((entry) => entry.includes(contractCase.expected)), true);
+      assert.equal(result.diagnostics.contract_diagnostic.rawResultPreview, undefined);
+      assert.equal(result.diagnostics.contract_diagnostic.coercedResultPreview, undefined);
+      assert.equal(result.diagnostics.contract_diagnostic.rawResultSummary?.redacted, true);
+
+      const streamKey = `pipeline:telemetry:behavior-gate-plugin-contract-${contractCase.name}:${runId}`;
+      const events = gateRuntimeEvents(xaddEvents, streamKey);
+      assert.equal(events.some((event) => event.type === 'gate.verdict' && String(event.reason || '').includes(contractCase.expected)), true);
+    }
+  });
+
   await record('buster gates execute through gate stage owners and preserve reconciliation snapshot parity', async () => {
     const { runtimeRoot: gateRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(gateRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
     const gateCalls = [];
     const testRegistry = {
@@ -319,13 +544,17 @@ export async function registerGatesArea({
                   nextAction: 'pass',
                   diagnostics: {
                     summary: 'Buster gate passed',
+                    findings: [],
                     metadata: {
-                      legacy_result: {
-                        exit: 0,
-                        status: 'PASS',
-                        completion_source: 'gate_status',
-                        gate_id: 'gate:buster',
-                        gate_type: 'buster',
+                      completion_source: 'gate_status',
+                      gate_id: 'gate:buster',
+                      gate_type: 'buster',
+                    },
+                    typed: {
+                      gate: {
+                        schemaVersion: 'v1',
+                        gateRunStatus: 'PASS',
+                        outcomeClass: 'passed',
                       },
                     },
                   },
@@ -350,29 +579,28 @@ export async function registerGatesArea({
       JSON.stringify({ status: 'PASS', source: 'gate-status-fallback' }, null, 2),
     );
 
-    const config = {
+        const configDeps3 = {
+        gateRunner: {
+          runners: {
+            buster: async () => {
+              throw new Error('direct buster runner fallback should not run when stage owner is registered');
+            },
+          },
+        },
+      };
+const config = {
+      ...platformTestDefaults(),
       project: 'behavior-buster-stage-pass',
       paths: {
         swarm_dir: swarmDir,
         modules_dir: path.join(swarmDir, 'modules'),
       },
       telemetry: { enabled: true },
-      _pluginRegistry: testRegistry,
-      _logDir: logDir,
-      _runLogDir: path.join(logDir, 'pipeline', 'runs', runId),
+      pluginRegistry: testRegistry,
       _runId: runId,
       run_id: runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
-      _testOverrides: {
-        gateRunner: {
-          runners: {
-            buster: async () => {
-              throw new Error('legacy buster runner fallback should not run when stage owner is registered');
-            },
-          },
-        },
-      },
-    };
+          };
 
     const progress = {
       modules: {},
@@ -385,22 +613,22 @@ export async function registerGatesArea({
       },
     };
 
-    const result = await gateRunnerMod.runGate(config, progress, 'gate:buster');
+    const result = await gateRunnerMod.runGate(config, progress, 'gate:buster', { deps: configDeps3 });
 
-    assert.equal(result.exit, 0);
-    assert.equal(result.status, 'PASS');
-    assert.equal(result.completion_source, 'gate_status');
-    assert.equal(result.gate_id, 'gate:buster');
-    assert.equal(result.gate_type, 'buster');
+    assert.equal(stepExit(result), 0);
+    assert.equal(stepGateStatus(result), 'PASS');
+    assert.equal(stepMetadata(result).completion_source, 'gate_status');
+    assert.equal(result.correlation.gate_id, 'gate:buster');
+    assert.equal(result.correlation.gate_type, 'buster');
     assert.equal(gateCalls.length, 1);
     assert.equal(gateCalls[0].ids.stageId, 'gate:buster');
     assert.equal(gateCalls[0].ids.gateId, 'gate:buster');
     assert.equal(gateCalls[0].ids.gateType, 'buster');
     assert.equal(gateCalls[0].refs.gateEvaluationRef, 'gate_evaluation:run-buster-stage-pass-1:gate:buster:1');
-    assert.equal(gateCalls[0].stateSnapshot.gate.buster_completion_is_pass, false);
-    assert.equal(gateCalls[0].stateSnapshot.gate.buster_completion_source, null);
+    assert.equal(gateCalls[0].stateSnapshot.gate.gate_completion_is_pass, false);
+    assert.equal(gateCalls[0].stateSnapshot.gate.gate_completion_source, null);
     assert.equal(gateCalls[0].stateSnapshot.gate.output_status, 'FAIL');
-    assert.equal(gateCalls[0].stateSnapshot.gate.gate_status, 'PASS');
+    assert.equal(gateCalls[0].stateSnapshot.diagnostics.gate_status.status, 'PASS');
   });
 
   await record('buster gate stage-owner block results preserve failure classification and correlation', async () => {
@@ -409,8 +637,8 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
     const testRegistry = {
       ...registry,
@@ -429,17 +657,22 @@ export async function registerGatesArea({
                 issueType: 'code',
                 diagnostics: {
                   summary: "Gate 'gate:buster' failed after 2 fix attempts",
+                  findings: [],
                   metadata: {
-                    legacy_result: {
-                      exit: 10,
-                      reason: "Gate 'gate:buster' failed after 2 fix attempts",
-                      failure_class: 'fix_loop_exhausted',
-                      fix_attempts: 2,
-                      gateway_label: 'buster-gate-stage-block-2',
-                      session_key: 'agent:main:acp:buster-gate-stage-block-2',
-                      dispatch_id: 'dispatch-buster-stage-block-2',
-                      gate_id: 'gate:buster',
-                      gate_type: 'buster',
+                    reason: "Gate 'gate:buster' failed after 2 fix attempts",
+                    failure_class: 'fix_loop_exhausted',
+                    fix_attempts: 2,
+                    gateway_label: 'buster-gate-stage-block-2',
+                    session_key: 'agent:main:acp:buster-gate-stage-block-2',
+                    dispatch_id: 'dispatch-buster-stage-block-2',
+                    gate_id: 'gate:buster',
+                    gate_type: 'buster',
+                  },
+                  typed: {
+                    gate: {
+                      schemaVersion: 'v1',
+                      gateRunStatus: 'FAIL',
+                      outcomeClass: 'needs_nova',
                     },
                   },
                 },
@@ -455,15 +688,14 @@ export async function registerGatesArea({
     const runId = 'run-buster-stage-block-1';
 
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-buster-stage-block',
       paths: {
         swarm_dir: swarmDir,
         modules_dir: path.join(swarmDir, 'modules'),
       },
       telemetry: { enabled: true },
-      _pluginRegistry: testRegistry,
-      _logDir: logDir,
-      _runLogDir: path.join(logDir, 'pipeline', 'runs', runId),
+      pluginRegistry: testRegistry,
       _runId: runId,
       run_id: runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
@@ -479,17 +711,17 @@ export async function registerGatesArea({
       },
     };
 
-    const result = await gateRunnerMod.runGate(config, progress, 'gate:buster');
+    const result = await gateRunnerMod.runGate(config, progress, 'gate:buster', {});
 
-    assert.equal(result.exit, 10);
-    assert.equal(result.reason, "Gate 'gate:buster' failed after 2 fix attempts");
-    assert.equal(result.failure_class, 'fix_loop_exhausted');
-    assert.equal(result.fix_attempts, 2);
-    assert.equal(result.gateway_label, 'buster-gate-stage-block-2');
-    assert.equal(result.session_key, 'agent:main:acp:buster-gate-stage-block-2');
-    assert.equal(result.dispatch_id, 'dispatch-buster-stage-block-2');
-    assert.equal(result.gate_id, 'gate:buster');
-    assert.equal(result.gate_type, 'buster');
+    assert.equal(stepExit(result), 10);
+    assert.equal(stepSummary(result), "Gate 'gate:buster' failed after 2 fix attempts");
+    assert.equal(stepMetadata(result).failure_class, 'fix_loop_exhausted');
+    assert.equal(stepMetadata(result).fix_attempts, 2);
+    assert.equal(stepMetadata(result).gateway_label, 'buster-gate-stage-block-2');
+    assert.equal(stepMetadata(result).session_key, 'agent:main:acp:buster-gate-stage-block-2');
+    assert.equal(stepMetadata(result).dispatch_id, 'dispatch-buster-stage-block-2');
+    assert.equal(result.correlation.gate_id, 'gate:buster');
+    assert.equal(result.correlation.gate_type, 'buster');
   });
 
   await record('buster gate request_fix stage contracts fail closed when remediation payload is missing', async () => {
@@ -498,8 +730,8 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
     const testRegistry = {
       ...registry,
@@ -516,6 +748,18 @@ export async function registerGatesArea({
                 producerType: 'buster',
                 nextAction: 'request_fix',
                 issueType: 'code',
+                diagnostics: {
+                  summary: 'Buster gate requested remediation without payload',
+                  findings: [],
+                  metadata: {},
+                  typed: {
+                    gate: {
+                      schemaVersion: 'v1',
+                      gateRunStatus: 'FAIL',
+                      outcomeClass: 'fix_requested',
+                    },
+                  },
+                },
               }),
             },
           },
@@ -528,15 +772,14 @@ export async function registerGatesArea({
     const runId = 'run-buster-stage-invalid-1';
 
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-buster-stage-invalid',
       paths: {
         swarm_dir: swarmDir,
         modules_dir: path.join(swarmDir, 'modules'),
       },
       telemetry: { enabled: true },
-      _pluginRegistry: testRegistry,
-      _logDir: logDir,
-      _runLogDir: path.join(logDir, 'pipeline', 'runs', runId),
+      pluginRegistry: testRegistry,
       _runId: runId,
       run_id: runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
@@ -552,14 +795,14 @@ export async function registerGatesArea({
       },
     };
 
-    const result = await gateRunnerMod.runGate(config, progress, 'gate:buster');
+    const result = await gateRunnerMod.runGate(config, progress, 'gate:buster', {});
     await flushAsync();
 
-    assert.equal(result.exit, 1);
-    assert.equal(result.reason, 'Buster gate execution failed: Buster gate returned invalid control result: request_fix for gate:buster requires diagnostics.typed.remediation');
+    assert.equal(stepExit(result), 1);
+    assert.equal(stepSummary(result), 'Buster gate execution failed: Buster gate returned invalid control result: request_fix for gate:buster requires diagnostics.typed.remediation');
 
     const streamKey = 'pipeline:telemetry:behavior-buster-stage-invalid:run-buster-stage-invalid-1';
-    const events = xaddEvents(streamKey);
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
     assert.deepEqual(events.map((event) => event.type), ['gate.started', 'gate.verdict']);
     assert.equal(events[0].gate_id, 'gate:buster');
     assert.equal(events[0].gate_type, 'buster');
@@ -568,19 +811,23 @@ export async function registerGatesArea({
     assert.equal(events[1].reason, 'Buster gate execution failed: Buster gate returned invalid control result: request_fix for gate:buster requires diagnostics.typed.remediation');
   });
 
-  await record('pipeline scheduler preserves review non-JSON output compatibility during review-gate cutover', async () => {
+  await record('pipeline scheduler rejects review non-JSON output instead of treating existence as pass', async () => {
     const { runtimeRoot: gateRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(gateRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const pipelineRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-review-nonjson-complete-'));
+    const pipelineRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner-scheduling.ts');
+    const statusStoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
+    const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-review-nonjson-invalid-'));
     const outputPath = path.join(swarmDir, 'review-output.md');
     fs.writeFileSync(outputPath, '# Review complete\nLooks good.\n');
 
     const config = {
-      project: 'behavior-review-nonjson-complete',
+      ...platformTestDefaults(),
+      project: 'behavior-review-nonjson-invalid',
+      _runId: 'run-review-nonjson-invalid-1',
+      run_id: 'run-review-nonjson-invalid-1',
       paths: {
         swarm_dir: swarmDir,
         modules_dir: path.join(swarmDir, 'modules'),
@@ -599,8 +846,134 @@ export async function registerGatesArea({
       },
     };
 
+    const output = statusStoreMod.readGateOutput(config, progress.gates.review);
+    assert.equal(output.exists, true);
+    assert.equal(output.isPass, false);
+    assert.equal(output.invalid_contract, true);
+    assert.equal(output.parse_error, true);
+    assert.equal(output.invalid_reason, 'invalid_json');
+
+    const projected = statusStoreMod.projectGateSchedulerState(config, 'review', progress.gates.review);
+    assert.equal(projected.status, 'INVALID_OUTPUT');
+    assert.equal(projected.scheduler_consumed, false);
+    assert.equal(projected.scheduler_drift.some((entry) => entry.code === 'gate_output_invalid_contract'), true);
+
     const next = pipelineRunnerMod.findNextStep(config, progress);
-    assert.deepEqual(next, { type: 'done' });
+    assert.deepEqual(next, { type: 'gate', id: 'review' });
+  });
+
+  await record('gate output projection rejects missing or unknown status contracts', async () => {
+    const { runtimeRoot: gateRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    installFakeRedis(gateRuntimeRoot);
+
+    const statusStoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
+    const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-gate-output-contract-'));
+
+    const config = {
+      ...platformTestDefaults(),
+      project: 'behavior-gate-output-contract',
+      paths: {
+        swarm_dir: swarmDir,
+        modules_dir: path.join(swarmDir, 'modules'),
+      },
+    };
+
+    const missingStatusGate = { type: 'buster', title: 'Missing Status Gate', output_file: 'missing-status.json' };
+    fs.writeFileSync(path.join(swarmDir, missingStatusGate.output_file), JSON.stringify({ summary: 'looks done' }, null, 2));
+    const missingStatus = statusStoreMod.projectGateCompletionState(config, 'missing-status', missingStatusGate);
+    assert.equal(missingStatus.done, true);
+    assert.equal(missingStatus.ok, false);
+    assert.equal(missingStatus.outcome, 'invalid_contract');
+    assert.equal(missingStatus.data.invalid_reason, 'missing_status');
+
+    const unknownStatusGate = { type: 'buster', title: 'Unknown Status Gate', output_file: 'unknown-status.json' };
+    fs.writeFileSync(path.join(swarmDir, unknownStatusGate.output_file), JSON.stringify({ status: 'MAYBE', summary: 'ambiguous' }, null, 2));
+    const unknownStatus = statusStoreMod.projectGateCompletionState(config, 'unknown-status', unknownStatusGate);
+    assert.equal(unknownStatus.done, true);
+    assert.equal(unknownStatus.ok, false);
+    assert.equal(unknownStatus.outcome, 'invalid_contract');
+    assert.equal(unknownStatus.data.invalid_reason, 'unknown_status');
+  });
+
+  await record('buster gate invalid output contract fails closed without entering fix loop', async () => {
+    const { runtimeRoot: gateRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    installFakeRedis(gateRuntimeRoot);
+    globalThis.__fakeRedisCalls = [];
+    globalThis.__fakeRedisCounters = Object.create(null);
+
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+    const registry = await buildBuiltInRegistry(gateRuntimeRoot);
+    const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-invalid-output-'));
+    const logDir = path.join(swarmDir, 'logs');
+    const runId = 'run-buster-invalid-output-1';
+    fs.writeFileSync(path.join(swarmDir, 'gate-instructions.md'), 'Run the final Buster gate.');
+
+        const configDeps4 = {
+        busterGate: {
+          resolvePolicy: () => ({ model: 'buster-model', model_source: 'test' }),
+          logEffectivePolicy: () => {},
+          discord: async () => {},
+          gitCommitAndPush: async () => {},
+          runOnce: async (deps, _config, _progress, gateId) => deps.pollResult(false, 'invalid_contract', {
+            gate: gateId,
+            status: 'INVALID_OUTPUT',
+            reason: 'Gate output contract invalid: missing_status',
+            invalid_reason: 'missing_status',
+            run_id: runId,
+            attempt: 1,
+            dispatch_id: 'dispatch-invalid-output',
+            gateway_label: 'buster-invalid-output',
+            session_key: 'session-invalid-output',
+            _source: 'output_file',
+          }),
+        },
+      };
+const config = {
+      ...platformTestDefaults(),
+      project: 'behavior-buster-invalid-output',
+      paths: {
+        swarm_dir: swarmDir,
+        modules_dir: path.join(swarmDir, 'modules'),
+      },
+      telemetry: { enabled: true },
+      default_timeout_minutes: 5,
+      poll_interval_seconds: 0,
+      pluginRegistry: registry,
+      _runId: runId,
+      run_id: runId,
+      _runStats: runtimeCoreMod.createRunStats('2026-04-26T00:00:00.000Z'),
+          };
+
+    const progress = {
+      modules: {},
+      gates: {
+        'gate:buster': {
+          type: 'buster',
+          title: 'Buster Gate',
+          instructions_file: 'gate-instructions.md',
+          output_file: 'gate-output.json',
+          on_fail: 'fix_and_retest',
+          max_fix_cycles: 2,
+        },
+      },
+    };
+
+    const result = await gateRunnerMod.runGate(config, progress, 'gate:buster', { deps: configDeps4 });
+    await flushAsync();
+
+    assert.equal(stepExit(result), 1);
+    assert.equal(stepMetadata(result).failure_class, 'invalid_contract');
+    assert.equal(stepSummary(result), 'Gate output contract invalid: missing_status');
+    assert.equal(result.correlation.gate_id, 'gate:buster');
+    assert.equal(result.correlation.gate_type, 'buster');
+    assert.equal(stepMetadata(result).dispatch_id, 'dispatch-invalid-output');
+    assert.equal(stepMetadata(result).gateway_label, 'buster-invalid-output');
+    assert.equal(stepMetadata(result).session_key, 'session-invalid-output');
+
+    const streamKey = 'pipeline:telemetry:behavior-buster-invalid-output:run-buster-invalid-output-1';
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
+    assert.equal(events.some((event) => event.type === 'gate.verdict' && event.reason === 'Gate output contract invalid: missing_status'), true);
   });
 
   await record('missing gate registry dispatch errors still emit authoritative gate failure telemetry', async () => {
@@ -609,31 +982,32 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
   
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-gate-registry-missing',
       telemetry: { enabled: true },
       _runId: 'run-gate-registry-missing-1',
       run_id: 'run-gate-registry-missing-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _pluginRegistry: registry,
+      pluginRegistry: registry,
     };
   
     const progress = {
       modules: {},
     };
   
-    const result = await gateRunnerMod.runGate(config, progress, 'gate:missing');
+    const result = await gateRunnerMod.runGate(config, progress, 'gate:missing', {});
     await flushAsync();
   
-    assert.equal(result.exit, 1);
-    assert.equal(result.reason, "Gate registry missing in progress.json while dispatching 'gate:missing'");
+    assert.equal(stepExit(result), 1);
+    assert.equal(stepSummary(result), "Gate registry missing in progress.json while dispatching 'gate:missing'");
   
     const streamKey = 'pipeline:telemetry:behavior-gate-registry-missing:run-gate-registry-missing-1';
-    const events = xaddEvents(streamKey);
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
     assert.deepEqual(events.map((event) => event.type), ['gate.started', 'gate.verdict']);
     assert.deepEqual(events.map((event) => event.seq), [1, 2]);
     assert.equal(events[0].gate_id, 'gate:missing');
@@ -650,36 +1024,37 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
     const discordCalls = [];
-    const logDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-gate-registry-missing-discord-'));
+    const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-gate-registry-missing-discord-'));
+    const logDir = path.join(swarmDir, 'logs');
     const runLogDir = path.join(logDir, 'pipeline', 'runs', 'run-gate-registry-missing-discord-1');
     fs.mkdirSync(runLogDir, { recursive: true });
 
-    const config = {
-      project: 'behavior-gate-registry-missing-discord',
-      telemetry: { enabled: true },
-      _pluginRegistry: registry,
-      _logDir: logDir,
-      _runLogDir: runLogDir,
-      _runId: 'run-gate-registry-missing-discord-1',
-      run_id: 'run-gate-registry-missing-discord-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps5 = {
         gateRunner: {
           discord: async (...args) => { discordCalls.push(args); },
         },
-      },
-    };
+      };
+const config = {
+      ...platformTestDefaults(),
+      project: 'behavior-gate-registry-missing-discord',
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      pluginRegistry: registry,
+      _runId: 'run-gate-registry-missing-discord-1',
+      run_id: 'run-gate-registry-missing-discord-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+          };
   
     const progress = {
       modules: {},
     };
   
-    const result = await gateRunnerMod.runGate(config, progress, 'gate:missing');
-    assert.equal(result.exit, 1);
+    const result = await gateRunnerMod.runGate(config, progress, 'gate:missing', { deps: configDeps5 });
+    assert.equal(stepExit(result), 1);
     await flushAsync();
     const alert = readJsonl(path.join(runLogDir, 'discord.jsonl')).find((entry) => entry.title === 'Gate Dispatch Failed: gate:missing');
     assert.equal(Boolean(alert), true, 'missing missing-gate-registry dispatch Discord alert');
@@ -695,17 +1070,18 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
 
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-gate-missing',
       telemetry: { enabled: true },
       _runId: 'run-gate-missing-1',
       run_id: 'run-gate-missing-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _pluginRegistry: registry,
+      pluginRegistry: registry,
     };
   
     const progress = {
@@ -713,14 +1089,14 @@ export async function registerGatesArea({
       gates: {},
     };
   
-    const result = await gateRunnerMod.runGate(config, progress, 'gate:missing');
+    const result = await gateRunnerMod.runGate(config, progress, 'gate:missing', {});
     await flushAsync();
   
-    assert.equal(result.exit, 1);
-    assert.equal(result.reason, "Gate 'gate:missing' not found in progress.json");
+    assert.equal(stepExit(result), 1);
+    assert.equal(stepSummary(result), "Gate 'gate:missing' not found in progress.json");
   
     const streamKey = 'pipeline:telemetry:behavior-gate-missing:run-gate-missing-1';
-    const events = xaddEvents(streamKey);
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
     assert.deepEqual(events.map((event) => event.type), ['gate.started', 'gate.verdict']);
     assert.deepEqual(events.map((event) => event.seq), [1, 2]);
     assert.equal(events[0].gate_id, 'gate:missing');
@@ -737,37 +1113,38 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
     const discordCalls = [];
-    const logDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-gate-missing-discord-'));
+    const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-gate-missing-discord-'));
+    const logDir = path.join(swarmDir, 'logs');
     const runLogDir = path.join(logDir, 'pipeline', 'runs', 'run-gate-missing-discord-1');
     fs.mkdirSync(runLogDir, { recursive: true });
 
-    const config = {
-      project: 'behavior-gate-missing-discord',
-      telemetry: { enabled: true },
-      _pluginRegistry: registry,
-      _logDir: logDir,
-      _runLogDir: runLogDir,
-      _runId: 'run-gate-missing-discord-1',
-      run_id: 'run-gate-missing-discord-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps6 = {
         gateRunner: {
           discord: async (...args) => { discordCalls.push(args); },
         },
-      },
-    };
+      };
+const config = {
+      ...platformTestDefaults(),
+      project: 'behavior-gate-missing-discord',
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      pluginRegistry: registry,
+      _runId: 'run-gate-missing-discord-1',
+      run_id: 'run-gate-missing-discord-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+          };
   
     const progress = {
       modules: {},
       gates: {},
     };
   
-    const result = await gateRunnerMod.runGate(config, progress, 'gate:missing');
-    assert.equal(result.exit, 1);
+    const result = await gateRunnerMod.runGate(config, progress, 'gate:missing', { deps: configDeps6 });
+    assert.equal(stepExit(result), 1);
     await flushAsync();
     const alert = readJsonl(path.join(runLogDir, 'discord.jsonl')).find((entry) => entry.title === 'Gate Dispatch Failed: gate:missing');
     assert.equal(Boolean(alert), true, 'missing missing-gate dispatch Discord alert');
@@ -783,17 +1160,18 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
 
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-gate-dispatch',
       telemetry: { enabled: true },
       _runId: 'run-gate-dispatch-1',
       run_id: 'run-gate-dispatch-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _pluginRegistry: registry,
+      pluginRegistry: registry,
     };
   
     const progress = {
@@ -803,13 +1181,13 @@ export async function registerGatesArea({
       },
     };
   
-    const result = await gateRunnerMod.runGate(config, progress, 'gate:unknown');
+    const result = await gateRunnerMod.runGate(config, progress, 'gate:unknown', {});
     await flushAsync();
   
-    assert.equal(result.exit, 1);
+    assert.equal(stepExit(result), 1);
   
     const streamKey = 'pipeline:telemetry:behavior-gate-dispatch:run-gate-dispatch-1';
-    const events = xaddEvents(streamKey);
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
     assert.deepEqual(events.map((event) => event.type), ['gate.started', 'gate.verdict']);
     assert.deepEqual(events.map((event) => event.seq), [1, 2]);
     assert.equal(events[0].gate_id, 'gate:unknown');
@@ -826,29 +1204,30 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
     const discordCalls = [];
-    const logDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-gate-dispatch-discord-'));
+    const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-gate-dispatch-discord-'));
+    const logDir = path.join(swarmDir, 'logs');
     const runLogDir = path.join(logDir, 'pipeline', 'runs', 'run-gate-dispatch-discord-1');
     fs.mkdirSync(runLogDir, { recursive: true });
 
-    const config = {
-      project: 'behavior-gate-dispatch-discord',
-      telemetry: { enabled: true },
-      _pluginRegistry: registry,
-      _logDir: logDir,
-      _runLogDir: runLogDir,
-      _runId: 'run-gate-dispatch-discord-1',
-      run_id: 'run-gate-dispatch-discord-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps7 = {
         gateRunner: {
           discord: async (...args) => { discordCalls.push(args); },
         },
-      },
-    };
+      };
+const config = {
+      ...platformTestDefaults(),
+      project: 'behavior-gate-dispatch-discord',
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      pluginRegistry: registry,
+      _runId: 'run-gate-dispatch-discord-1',
+      run_id: 'run-gate-dispatch-discord-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+          };
   
     const progress = {
       modules: {},
@@ -857,8 +1236,8 @@ export async function registerGatesArea({
       },
     };
   
-    const result = await gateRunnerMod.runGate(config, progress, 'gate:unknown');
-    assert.equal(result.exit, 1);
+    const result = await gateRunnerMod.runGate(config, progress, 'gate:unknown', { deps: configDeps7 });
+    assert.equal(stepExit(result), 1);
     await flushAsync();
     const alert = readJsonl(path.join(runLogDir, 'discord.jsonl')).find((entry) => entry.title === 'Gate Dispatch Failed: Mystery Gate');
     assert.equal(Boolean(alert), true, 'missing gate dispatch Discord alert');
@@ -874,17 +1253,18 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(reviewRuntimeRoot);
   
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-review-fastfail',
       telemetry: { enabled: true },
       _runId: 'run-review-fastfail-1',
       run_id: 'run-review-fastfail-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _pluginRegistry: registry,
+      pluginRegistry: registry,
     };
   
     const progress = {
@@ -894,14 +1274,14 @@ export async function registerGatesArea({
       },
     };
   
-    const result = await reviewGateRunnerMod.runReviewGate(config, progress, 'gate:review');
+    const result = await runGateViaRegistry(reviewRuntimeRoot, config, progress, 'gate:review', {});
     await flushAsync();
   
-    assert.equal(result.exit, 1);
-    assert.equal(result.reason, 'No reviewers configured');
+    assert.equal(stepExit(result), 1);
+    assert.equal(stepSummary(result), 'No reviewers configured');
   
     const streamKey = 'pipeline:telemetry:behavior-review-fastfail:run-review-fastfail-1';
-    const events = xaddEvents(streamKey);
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
     assert.deepEqual(events.map((event) => event.type), ['gate.started', 'gate.verdict']);
     assert.equal(events[0].gate_id, 'gate:review');
     assert.equal(events[0].gate_type, 'review');
@@ -917,29 +1297,30 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(reviewRuntimeRoot);
     const discordCalls = [];
-    const logDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-review-fastfail-discord-'));
+    const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-review-fastfail-discord-'));
+    const logDir = path.join(swarmDir, 'logs');
     const runLogDir = path.join(logDir, 'pipeline', 'runs', 'run-review-fastfail-discord-1');
     fs.mkdirSync(runLogDir, { recursive: true });
 
-    const config = {
-      project: 'behavior-review-fastfail-discord',
-      telemetry: { enabled: true },
-      _pluginRegistry: registry,
-      _logDir: logDir,
-      _runLogDir: runLogDir,
-      _runId: 'run-review-fastfail-discord-1',
-      run_id: 'run-review-fastfail-discord-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps8 = {
         reviewGate: {
           discord: async (...args) => { discordCalls.push(args); },
         },
-      },
-    };
+      };
+const config = {
+      ...platformTestDefaults(),
+      project: 'behavior-review-fastfail-discord',
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      pluginRegistry: registry,
+      _runId: 'run-review-fastfail-discord-1',
+      run_id: 'run-review-fastfail-discord-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+          };
   
     const progress = {
       modules: {},
@@ -948,8 +1329,8 @@ export async function registerGatesArea({
       },
     };
   
-    const result = await reviewGateRunnerMod.runReviewGate(config, progress, 'gate:review');
-    assert.equal(result.exit, 1);
+    const result = await runGateViaRegistry(reviewRuntimeRoot, config, progress, 'gate:review', { deps: configDeps8 });
+    assert.equal(stepExit(result), 1);
     await flushAsync();
     const alert = readJsonl(path.join(runLogDir, 'discord.jsonl')).find((entry) => entry.title === 'Review Gate Misconfigured: Review Gate');
     assert.equal(Boolean(alert), true, 'missing review gate setup Discord alert');
@@ -966,24 +1347,25 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const busterGateRunnerMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const busterGateRunnerMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(busterRuntimeRoot);
   
-    const config = {
+        const configDeps9 = {
+        busterGate: {
+          readGateInstructions: () => { throw new Error('missing instructions file'); },
+        },
+      };
+const config = {
+      ...platformTestDefaults(),
       project: 'behavior-buster-fastfail',
       paths: { swarm_dir: '/tmp/behavior-buster-fastfail-swarm' },
       telemetry: { enabled: true },
       _runId: 'run-buster-fastfail-1',
       run_id: 'run-buster-fastfail-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _pluginRegistry: registry,
-      _testOverrides: {
-        busterGate: {
-          readGateInstructions: () => { throw new Error('missing instructions file'); },
-        },
-      },
-    };
+      pluginRegistry: registry,
+          };
   
     const progress = {
       modules: {},
@@ -992,14 +1374,14 @@ export async function registerGatesArea({
       },
     };
   
-    const result = await busterGateRunnerMod.runBusterGate(config, progress, 'gate:buster');
+    const result = await runGateViaRegistry(busterRuntimeRoot, config, progress, 'gate:buster', { deps: configDeps9 });
     await flushAsync();
   
-    assert.equal(result.exit, 1);
-    assert.equal(result.reason, 'missing instructions file');
+    assert.equal(stepExit(result), 1);
+    assert.equal(stepSummary(result), 'missing instructions file');
   
     const streamKey = 'pipeline:telemetry:behavior-buster-fastfail:run-buster-fastfail-1';
-    const events = xaddEvents(streamKey);
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
     assert.deepEqual(events.map((event) => event.type), ['gate.started', 'gate.verdict']);
     assert.equal(events[0].gate_id, 'gate:buster');
     assert.equal(events[0].gate_type, 'buster');
@@ -1015,31 +1397,31 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const busterGateRunnerMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const busterGateRunnerMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(busterRuntimeRoot);
     const discordCalls = [];
-    const logDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-fastfail-discord-'));
+    const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-fastfail-discord-'));
+    const logDir = path.join(swarmDir, 'logs');
     const runLogDir = path.join(logDir, 'pipeline', 'runs', 'run-buster-fastfail-discord-1');
     fs.mkdirSync(runLogDir, { recursive: true });
 
-    const config = {
-      project: 'behavior-buster-fastfail-discord',
-      paths: { swarm_dir: '/tmp/behavior-buster-fastfail-discord-swarm' },
-      telemetry: { enabled: true },
-      _pluginRegistry: registry,
-      _logDir: logDir,
-      _runLogDir: runLogDir,
-      _runId: 'run-buster-fastfail-discord-1',
-      run_id: 'run-buster-fastfail-discord-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps10 = {
         busterGate: {
           discord: async (...args) => { discordCalls.push(args); },
           readGateInstructions: () => { throw new Error('missing instructions file'); },
         },
-      },
-    };
+      };
+const config = {
+      ...platformTestDefaults(),
+      project: 'behavior-buster-fastfail-discord',
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      pluginRegistry: registry,
+      _runId: 'run-buster-fastfail-discord-1',
+      run_id: 'run-buster-fastfail-discord-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+          };
   
     const progress = {
       modules: {},
@@ -1048,8 +1430,8 @@ export async function registerGatesArea({
       },
     };
   
-    const result = await busterGateRunnerMod.runBusterGate(config, progress, 'gate:buster');
-    assert.equal(result.exit, 1);
+    const result = await runGateViaRegistry(busterRuntimeRoot, config, progress, 'gate:buster', { deps: configDeps10 });
+    assert.equal(stepExit(result), 1);
     await flushAsync();
     const alert = readJsonl(path.join(runLogDir, 'discord.jsonl')).find((entry) => entry.title === 'Buster Gate Setup Failed: Buster Gate');
     assert.equal(Boolean(alert), true, 'missing buster gate setup Discord alert');
@@ -1066,33 +1448,33 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const busterGateRunnerMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const busterGateRunnerMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(busterRuntimeRoot);
     const discordCalls = [];
-    const logDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-unexpected-discord-'));
+    const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-unexpected-discord-'));
+    const logDir = path.join(swarmDir, 'logs');
     const runLogDir = path.join(logDir, 'pipeline', 'runs', 'run-buster-unexpected-1');
     fs.mkdirSync(runLogDir, { recursive: true });
 
-    const config = {
-      project: 'behavior-buster-unexpected',
-      paths: { swarm_dir: '/tmp/behavior-buster-unexpected-swarm' },
-      telemetry: { enabled: true },
-      _pluginRegistry: registry,
-      _logDir: logDir,
-      _runLogDir: runLogDir,
-      _runId: 'run-buster-unexpected-1',
-      run_id: 'run-buster-unexpected-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps11 = {
         busterGate: {
           discord: async (...args) => { discordCalls.push(args); },
           readGateInstructions: () => 'Gate instructions',
           resolvePolicy: () => ({ model: 'buster-model', model_source: 'test', thinking: 'not_supported_on_redis' }),
           logEffectivePolicy: () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformTestDefaults(),
+      project: 'behavior-buster-unexpected',
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      pluginRegistry: registry,
+      _runId: 'run-buster-unexpected-1',
+      run_id: 'run-buster-unexpected-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+          };
   
     const progress = {
       modules: {},
@@ -1101,11 +1483,11 @@ export async function registerGatesArea({
       },
     };
   
-    const result = await busterGateRunnerMod.runBusterGate(config, progress, 'gate:buster');
+    const result = await runGateViaRegistry(busterRuntimeRoot, config, progress, 'gate:buster', { deps: configDeps11 });
     await flushAsync();
   
-    assert.equal(result.exit, 10);
-    assert.equal(result.reason, "Gate 'gate:buster' ended unexpectedly");
+    assert.equal(stepExit(result), 10);
+    assert.equal(stepSummary(result), "Gate 'gate:buster' ended unexpectedly");
   
     const alert = readJsonl(path.join(runLogDir, 'discord.jsonl')).find((entry) => entry.title === "Gate 'gate:buster' Ended Unexpectedly");
     assert.equal(Boolean(alert), true, 'missing buster unexpected safety-net Discord alert');
@@ -1116,7 +1498,7 @@ export async function registerGatesArea({
     assert.equal(alert.fields.some((field) => field.name === 'Attempt' && field.value === '1'), true);
   
     const streamKey = 'pipeline:telemetry:behavior-buster-unexpected:run-buster-unexpected-1';
-    const events = xaddEvents(streamKey);
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
     assert.deepEqual(events.map((event) => event.type), ['gate.started', 'gate.verdict']);
     assert.equal(events[1].gate_id, 'gate:buster');
     assert.equal(events[1].gate_type, 'buster');
@@ -1130,25 +1512,26 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(reviewRuntimeRoot);
   
-    const config = {
+        const configDeps12 = {
+        reviewGate: {
+          discord: async () => {},
+          runOnce: async () => ({ error: 'reviewer transport crashed', gateway_label: 'echo-quality', session_key: 'agent:main:acp:echo-review-poststart' }),
+        },
+      };
+const config = {
+      ...platformTestDefaults(),
       project: 'behavior-review-poststart-fail',
       paths: { swarm_dir: '/tmp/behavior-review-poststart-fail-swarm' },
       telemetry: { enabled: true },
       _runId: 'run-review-poststart-fail-1',
       run_id: 'run-review-poststart-fail-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _pluginRegistry: registry,
-      _testOverrides: {
-        reviewGate: {
-          discord: async () => {},
-          runOnce: async () => ({ error: 'reviewer transport crashed', gateway_label: 'echo-quality', session_key: 'agent:main:acp:echo-review-poststart' }),
-        },
-      },
-    };
+      pluginRegistry: registry,
+          };
   
     const progress = {
       modules: {},
@@ -1161,16 +1544,16 @@ export async function registerGatesArea({
       },
     };
   
-    const result = await reviewGateRunnerMod.runReviewGate(config, progress, 'gate:review');
+    const result = await runGateViaRegistry(reviewRuntimeRoot, config, progress, 'gate:review', { deps: configDeps12 });
     await flushAsync();
   
-    assert.equal(result.exit, 1);
-    assert.equal(result.reason, 'Review failed: reviewer transport crashed');
-    assert.equal(result.gateway_label, 'echo-quality');
-    assert.equal(result.session_key, 'agent:main:acp:echo-review-poststart');
+    assert.equal(stepExit(result), 1);
+    assert.equal(stepSummary(result), 'Review failed: reviewer transport crashed');
+    assert.equal(stepMetadata(result).gateway_label, 'echo-quality');
+    assert.equal(stepMetadata(result).session_key, 'agent:main:acp:echo-review-poststart');
   
     const streamKey = 'pipeline:telemetry:behavior-review-poststart-fail:run-review-poststart-fail-1';
-    const events = xaddEvents(streamKey);
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
     assert.deepEqual(events.map((event) => event.type), ['gate.started', 'gate.verdict']);
     assert.equal(events[0].gate_id, 'gate:review');
     assert.equal(events[0].gate_type, 'review');
@@ -1179,6 +1562,102 @@ export async function registerGatesArea({
     assert.equal(events[1].verdict, 'NO-GO');
     assert.equal(events[1].reason, 'Review failed: reviewer transport crashed');
   });
+
+  await record('review gate malformed output fails closed instead of regex-falling through to GO', async () => {
+    for (const reviewCase of [
+      {
+        name: 'nonjson',
+        content: '# Review complete\nLooks good.\n',
+        expectedReason: /^Review invalid output: Review output must be valid JSON:/,
+      },
+      {
+        name: 'missing-status',
+        content: JSON.stringify({ summary: 'looks good' }, null, 2),
+        expectedReason: 'Review invalid output: Review output missing required status',
+      },
+    ]) {
+      const { runtimeRoot: reviewRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+      installFakeRedis(reviewRuntimeRoot);
+      globalThis.__fakeRedisCalls = [];
+      globalThis.__fakeRedisCounters = Object.create(null);
+
+      const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.ts');
+      const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+      const registry = await buildBuiltInRegistry(reviewRuntimeRoot);
+      const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), `behavior-review-invalid-output-${reviewCase.name}-`));
+      const swarmDir = path.join(repoRoot, '.swarm');
+      fs.mkdirSync(swarmDir, { recursive: true });
+      const sessionKey = `agent:main:acp:echo-review-invalid-output-${reviewCase.name}`;
+      const runId = `run-review-invalid-output-${reviewCase.name}-1`;
+
+            const configDeps13 = {
+          reviewGate: {
+            discord: async () => {},
+            archiveGateOutputIfPresent: () => null,
+            generateLintReport: () => ({ report: null, error: 'lint disabled in test' }),
+            formatLintReportForReviewer: () => 'lint block',
+            readGateInstructions: () => 'Review the code',
+            buildReviewerPrompt: () => ({ prompt: 'Return strict JSON' }),
+            resolvePolicy: () => ({ model: 'echo-model', model_source: 'test', thinking: 'high' }),
+            logEffectivePolicy: () => {},
+            spawnReviewerAgent: async () => ({}),
+            getTrackedAgent: () => ({
+              sessionKey,
+              telemetry_dispatch_id: `dispatch-review-invalid-output-${reviewCase.name}`,
+              dispatch_id: `dispatch-review-invalid-output-${reviewCase.name}`,
+              gatewayLabel: `echo-quality-${reviewCase.name}`,
+              streamLogPath: null,
+            }),
+            pollForFile: async (_config, outputFilePath) => {
+              fs.mkdirSync(path.dirname(outputFilePath), { recursive: true });
+              fs.writeFileSync(outputFilePath, reviewCase.content);
+              return { ok: true, status: { session_key: sessionKey } };
+            },
+            killReviewerAgent: async () => true,
+            sleep: async () => {},
+            gitCommitAndPush: async () => {},
+          },
+        };
+const config = {
+        ...platformTestDefaults(),
+        project: `behavior-review-invalid-output-${reviewCase.name}`,
+        repo_root: repoRoot,
+        paths: { swarm_dir: swarmDir },
+        telemetry: { enabled: true },
+        _runId: runId,
+        run_id: runId,
+        _runStats: runtimeCoreMod.createRunStats('2026-04-26T00:00:00.000Z'),
+        pluginRegistry: registry,
+              };
+
+      const progress = {
+        modules: {},
+        gates: {
+          'gate:review': {
+            type: 'review',
+            title: 'Review Gate',
+            review_name: 'quality',
+            reviewers: [{ label: 'echo-quality', model: 'anthropic/claude-sonnet-4-6' }],
+          },
+        },
+      };
+
+      const result = await runGateViaRegistry(reviewRuntimeRoot, config, progress, 'gate:review', { deps: configDeps13 });
+      await flushAsync();
+
+      assert.equal(stepExit(result), 1);
+      if (reviewCase.expectedReason instanceof RegExp) {
+        assert.match(stepSummary(result), reviewCase.expectedReason);
+      } else {
+        assert.equal(stepSummary(result), reviewCase.expectedReason);
+      }
+      assert.notEqual(stepGateStatus(result), 'PASS');
+
+      const streamKey = `pipeline:telemetry:behavior-review-invalid-output-${reviewCase.name}:${runId}`;
+      const events = gateRuntimeEvents(xaddEvents, streamKey);
+      assert.equal(events.some((event) => event.type === 'gate.verdict' && String(event.reason || '').startsWith('Review invalid output:')), true);
+    }
+  });
   
   await record('review gate initial no-output failures preserve terminal detail in operator reason and telemetry', async () => {
     const { runtimeRoot: reviewRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
@@ -1186,8 +1665,8 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(reviewRuntimeRoot);
   
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-review-no-output-detail-'));
@@ -1195,16 +1674,7 @@ export async function registerGatesArea({
     fs.mkdirSync(swarmDir, { recursive: true });
     const sessionKey = 'agent:main:acp:echo-review-no-output-detail';
   
-    const config = {
-      project: 'behavior-review-no-output-detail',
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
-      _runId: 'run-review-no-output-detail-1',
-      run_id: 'run-review-no-output-detail-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _pluginRegistry: registry,
-      _testOverrides: {
+        const configDeps14 = {
         reviewGate: {
           discord: async () => {},
           archiveGateOutputIfPresent: () => null,
@@ -1214,9 +1684,14 @@ export async function registerGatesArea({
           buildReviewerPrompt: () => ({ prompt: 'Return GO or NO-GO' }),
           resolvePolicy: () => ({ model: 'echo-model', model_source: 'test', thinking: 'high' }),
           logEffectivePolicy: () => {},
-          resolveModel: () => 'echo-model',
           spawnReviewerAgent: async () => ({}),
-          getTrackedAgent: () => ({ sessionKey, streamLogPath: null }),
+          getTrackedAgent: () => ({
+            sessionKey,
+            telemetry_dispatch_id: 'dispatch-review-no-output-detail-1',
+            dispatch_id: 'dispatch-review-no-output-detail-1',
+            gatewayLabel: 'echo-quality-no-output-detail',
+            streamLogPath: null,
+          }),
           pollForFile: async () => ({
             ok: false,
             reason: 'session_ended_no_output',
@@ -1226,8 +1701,18 @@ export async function registerGatesArea({
           sleep: async () => {},
           gitCommitAndPush: async () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformTestDefaults(),
+      project: 'behavior-review-no-output-detail',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: 'run-review-no-output-detail-1',
+      run_id: 'run-review-no-output-detail-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: registry,
+          };
   
     const progress = {
       modules: {},
@@ -1241,16 +1726,16 @@ export async function registerGatesArea({
       },
     };
   
-    const result = await reviewGateRunnerMod.runReviewGate(config, progress, 'gate:review');
+    const result = await runGateViaRegistry(reviewRuntimeRoot, config, progress, 'gate:review', { deps: configDeps14 });
     await flushAsync();
   
-    assert.equal(result.exit, 1);
-    assert.equal(result.reason, 'Review failed: Review file not received (session_ended_no_output (adapter command missing))');
-    assert.equal(result.gateway_label, 'echo-quality');
-    assert.equal(result.session_key, sessionKey);
+    assert.equal(stepExit(result), 1);
+    assert.equal(stepSummary(result), 'Review failed: Review file not received (session_ended_no_output (adapter command missing))');
+    assert.equal(stepMetadata(result).gateway_label, null);
+    assert.equal(stepMetadata(result).session_key, sessionKey);
   
     const streamKey = 'pipeline:telemetry:behavior-review-no-output-detail:run-review-no-output-detail-1';
-    const events = xaddEvents(streamKey);
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
     assert.deepEqual(events.map((event) => event.type), ['gate.started', 'gate.verdict']);
     assert.equal(events[1].gate_id, 'gate:review');
     assert.equal(events[1].gate_type, 'review');
@@ -1269,8 +1754,8 @@ export async function registerGatesArea({
       globalThis.__fakeRedisCalls = [];
       globalThis.__fakeRedisCounters = Object.create(null);
     
-      const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.js');
-      const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+      const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.ts');
+      const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
       const registry = await buildBuiltInRegistry(reviewRuntimeRoot);
       const discordCalls = [];
     
@@ -1279,18 +1764,7 @@ export async function registerGatesArea({
       fs.mkdirSync(swarmDir, { recursive: true });
       const sessionKey = `agent:main:acp:echo-review-no-output-transcript-${transcriptCase.name}`;
     
-      const config = {
-        project: `behavior-review-no-output-transcript-${transcriptCase.name}`,
-        repo_root: repoRoot,
-        paths: { swarm_dir: swarmDir },
-        telemetry: { enabled: true },
-        _pluginRegistry: registry,
-        _logDir: path.join(swarmDir, 'logs'),
-        _runLogDir: path.join(swarmDir, 'logs', 'pipeline', 'runs', `run-review-no-output-transcript-${transcriptCase.name}-1`),
-        _runId: `run-review-no-output-transcript-${transcriptCase.name}-1`,
-        run_id: `run-review-no-output-transcript-${transcriptCase.name}-1`,
-        _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-        _testOverrides: {
+            const configDeps15 = {
           reviewGate: {
             discord: async (...args) => { discordCalls.push(args); },
             archiveGateOutputIfPresent: () => null,
@@ -1300,9 +1774,14 @@ export async function registerGatesArea({
             buildReviewerPrompt: () => ({ prompt: 'Return GO or NO-GO' }),
             resolvePolicy: () => ({ model: 'echo-model', model_source: 'test', thinking: 'high' }),
             logEffectivePolicy: () => {},
-            resolveModel: () => 'echo-model',
             spawnReviewerAgent: async () => ({}),
-            getTrackedAgent: () => ({ sessionKey, streamLogPath: null }),
+            getTrackedAgent: () => ({
+              sessionKey,
+              telemetry_dispatch_id: `dispatch-review-no-output-transcript-${transcriptCase.name}`,
+              dispatch_id: `dispatch-review-no-output-transcript-${transcriptCase.name}`,
+              gatewayLabel: `echo-quality-${transcriptCase.name}`,
+              streamLogPath: null,
+            }),
             pollForFile: async () => ({
               ok: false,
               reason: 'session_ended_no_output',
@@ -1313,8 +1792,18 @@ export async function registerGatesArea({
             sleep: async () => {},
             gitCommitAndPush: async () => {},
           },
-        },
-      };
+        };
+const config = {
+        ...platformTestDefaults(),
+        project: `behavior-review-no-output-transcript-${transcriptCase.name}`,
+        repo_root: repoRoot,
+        paths: { swarm_dir: swarmDir },
+        telemetry: { enabled: true },
+        pluginRegistry: registry,
+        _runId: `run-review-no-output-transcript-${transcriptCase.name}-1`,
+        run_id: `run-review-no-output-transcript-${transcriptCase.name}-1`,
+        _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+              };
     
       const progress = {
         modules: {},
@@ -1328,16 +1817,16 @@ export async function registerGatesArea({
         },
       };
     
-      const result = await reviewGateRunnerMod.runReviewGate(config, progress, 'gate:review');
-      assert.equal(result.exit, 1);
+      const result = await runGateViaRegistry(reviewRuntimeRoot, config, progress, 'gate:review', { deps: configDeps15 });
+      assert.equal(stepExit(result), 1);
       await flushAsync();
 
-      const alert = readJsonl(path.join(config._runLogDir, 'discord.jsonl')).find((entry) => entry.title === 'Review Gate Failed: Review Gate');
+      const alert = readJsonl(path.join(swarmDir, 'logs', 'pipeline', 'runs', config._runId, 'discord.jsonl')).find((entry) => entry.title === 'Review Gate Failed: Review Gate');
       assert.equal(Boolean(alert), true, `missing transcript alert for ${transcriptCase.name} no-output review failure`);
       assert.equal(alert.description, 'Review failed: Review file not received (session_ended_no_output (adapter command missing))');
       const transcriptField = alert.fields.find((field) => field.name === 'Transcript');
       assert.equal(Boolean(transcriptField), true);
-      assert.equal(transcriptField.value.startsWith('[redacted Transcript;'), true);
+      assert.equal(transcriptField.value, transcriptCase.expected);
     }
   });
   
@@ -1347,8 +1836,8 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(reviewRuntimeRoot);
   
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-review-rate-limit-'));
@@ -1358,17 +1847,7 @@ export async function registerGatesArea({
     const dispatchId = 'dispatch-review-rate-limit-tracked-1';
     let pollCount = 0;
   
-    const config = {
-      project: 'behavior-review-rate-limit',
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
-      _runId: 'run-review-rate-limit-1',
-      run_id: 'run-review-rate-limit-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _pluginRegistry: registry,
-      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
-      _testOverrides: {
+        const configDeps16 = {
         reviewGate: {
           discord: async () => {},
           archiveGateOutputIfPresent: () => null,
@@ -1378,7 +1857,6 @@ export async function registerGatesArea({
           buildReviewerPrompt: () => ({ prompt: 'Return GO or NO-GO' }),
           resolvePolicy: () => ({ model: 'echo-model', model_source: 'test', thinking: 'high' }),
           logEffectivePolicy: () => {},
-          resolveModel: () => 'echo-model',
           spawnReviewerAgent: async () => ({}),
           getTrackedAgent: () => ({ sessionKey, telemetry_dispatch_id: dispatchId, streamLogPath: null }),
           pollForFile: async () => {
@@ -1389,8 +1867,19 @@ export async function registerGatesArea({
           sleep: async () => {},
           gitCommitAndPush: async () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformTestDefaults(),
+      project: 'behavior-review-rate-limit',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: 'run-review-rate-limit-1',
+      run_id: 'run-review-rate-limit-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: registry,
+      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
+          };
   
     const progress = {
       modules: {},
@@ -1404,25 +1893,25 @@ export async function registerGatesArea({
       },
     };
   
-    const result = await reviewGateRunnerMod.runReviewGate(config, progress, 'gate:review');
+    const result = await runGateViaRegistry(reviewRuntimeRoot, config, progress, 'gate:review', { deps: configDeps16 });
     await flushAsync();
   
     assert.equal(pollCount, 2);
-    assert.equal(result.exit, 40);
-    assert.equal(result.reason, "Review gate 'gate:review' exceeded max rate limit pauses");
-    assert.equal(result.run_id, 'run-review-rate-limit-1');
-    assert.equal(result.attempt, 1);
-    assert.equal(result.review_attempt, 1);
-    assert.equal(result.dispatch_id, dispatchId);
-    assert.equal(result.gateway_label, 'echo-quality');
-    assert.equal(result.session_key, sessionKey);
-    assert.equal(result.rate_limit_pauses, 2);
-    assert.equal(result.max_rate_limit_pauses, 1);
-    assert.equal(result.rate_limit_status?.run_id, 'run-review-rate-limit-1');
-    assert.equal(result.rate_limit_status?.dispatch_id, dispatchId);
+    assert.equal(stepExit(result), 40);
+    assert.equal(stepSummary(result), "Review gate 'gate:review' exceeded max rate limit pauses");
+    assert.equal(result.correlation.run_id, 'run-review-rate-limit-1');
+    assert.equal(stepMetadata(result).attempt, 1);
+    assert.equal(stepMetadata(result).review_attempt, 1);
+    assert.equal(stepMetadata(result).dispatch_id, dispatchId);
+    assert.equal(stepMetadata(result).gateway_label, null);
+    assert.equal(stepMetadata(result).session_key, sessionKey);
+    assert.equal(stepMetadata(result).rate_limit_pauses, 2);
+    assert.equal(stepMetadata(result).max_rate_limit_pauses, 1);
+    assert.equal(stepMetadata(result).rate_limit_status?.run_id, 'run-review-rate-limit-1');
+    assert.equal(stepMetadata(result).rate_limit_status?.dispatch_id, dispatchId);
   
     const streamKey = 'pipeline:telemetry:behavior-review-rate-limit:run-review-rate-limit-1';
-    const events = xaddEvents(streamKey);
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
     assert.deepEqual(events.map((event) => event.type), ['gate.started', 'rate_limit.detected', 'gate.verdict', 'retry.exhausted']);
     assert.equal(events[1].gate_id, 'gate:review');
     assert.equal(events[1].gate_type, 'review');
@@ -1451,8 +1940,8 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(reviewRuntimeRoot);
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-review-rate-limit-discord-'));
@@ -1466,21 +1955,7 @@ export async function registerGatesArea({
     const dispatchId = 'dispatch-review-echo-rate-limit-1';
     let pollCount = 0;
 
-    const config = {
-      project: 'behavior-review-rate-limit-discord',
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
-      _runId: runId,
-      run_id: runId,
-      _logDir: logRoot,
-      _runLogDir: runLogDir,
-      _disable_discord_webhooks: true,
-      discord_webhook_url: 'https://example.invalid/webhook',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _pluginRegistry: registry,
-      rate_limit: { max_pauses_per_module: 2, cooldown_hours: 0 },
-      _testOverrides: {
+        const configDeps17 = {
         reviewGate: {
           archiveGateOutputIfPresent: () => null,
           generateLintReport: () => ({ report: null, error: 'lint disabled in test' }),
@@ -1489,9 +1964,14 @@ export async function registerGatesArea({
           buildReviewerPrompt: () => ({ prompt: 'Return GO or NO-GO' }),
           resolvePolicy: () => ({ model: 'echo-model', model_source: 'test', thinking: 'high' }),
           logEffectivePolicy: () => {},
-          resolveModel: () => 'echo-model',
           spawnReviewerAgent: async () => ({}),
-          getTrackedAgent: () => ({ sessionKey, streamLogPath: null }),
+          getTrackedAgent: () => ({
+            sessionKey,
+            telemetry_dispatch_id: dispatchId,
+            dispatch_id: dispatchId,
+            gatewayLabel: 'echo-quality-rate-limit-discord',
+            streamLogPath: null,
+          }),
           pollForFile: async (_config, outputFilePath) => {
             pollCount += 1;
             if (pollCount === 1) {
@@ -1505,8 +1985,21 @@ export async function registerGatesArea({
           sleep: async () => {},
           gitCommitAndPush: async () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformTestDefaults(),
+      project: 'behavior-review-rate-limit-discord',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: runId,
+      run_id: runId,
+      _disable_discord_webhooks: true,
+      discord_webhook_url: 'https://example.invalid/webhook',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: registry,
+      rate_limit: { max_pauses_per_module: 2, cooldown_hours: 0 },
+          };
 
     const progress = {
       modules: {},
@@ -1520,10 +2013,10 @@ export async function registerGatesArea({
       },
     };
 
-    const result = await reviewGateRunnerMod.runReviewGate(config, progress, 'gate:review');
+    const result = await runGateViaRegistry(reviewRuntimeRoot, config, progress, 'gate:review', { deps: configDeps17 });
     await flushAsync();
 
-    assert.equal(result.exit, 0);
+    assert.equal(stepExit(result), 0);
     assert.equal(pollCount, 2);
 
     const runScopedEntries = fs.readFileSync(path.join(runLogDir, 'discord.jsonl'), 'utf8').trim().split('\n').map((line) => JSON.parse(line));
@@ -1537,18 +2030,18 @@ export async function registerGatesArea({
     assert.equal(getFieldValue(pauseEntry.fields, 'Gate Type'), 'review');
     assert.equal(getFieldValue(pauseEntry.fields, 'Attempt'), '2');
     assert.equal(getFieldValue(pauseEntry.fields, 'Dispatch'), dispatchId);
-    assert.equal(getFieldValue(pauseEntry.fields, 'Label'), dispatchId);
+    assert.equal(getFieldValue(pauseEntry.fields, 'Label'), undefined);
     assert.equal(getFieldValue(pauseEntry.fields, 'Session'), sessionKey);
     assert.equal(getFieldValue(resumeEntry.fields, 'Run ID'), runId);
     assert.equal(getFieldValue(resumeEntry.fields, 'Gate'), 'gate:review');
     assert.equal(getFieldValue(resumeEntry.fields, 'Gate Type'), 'review');
     assert.equal(getFieldValue(resumeEntry.fields, 'Attempt'), '2');
     assert.equal(getFieldValue(resumeEntry.fields, 'Dispatch'), dispatchId);
-    assert.equal(getFieldValue(resumeEntry.fields, 'Label'), dispatchId);
+    assert.equal(getFieldValue(resumeEntry.fields, 'Label'), undefined);
     assert.equal(getFieldValue(resumeEntry.fields, 'Session'), sessionKey);
 
     const streamKey = 'pipeline:telemetry:behavior-review-rate-limit-discord:run-review-rate-limit-discord-1';
-    const events = xaddEvents(streamKey);
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
     const rateLimitEvent = events.find((event) => event.type === 'rate_limit.detected');
     assert(rateLimitEvent, 'missing review gate rate_limit.detected event');
     assert.equal(rateLimitEvent.gate_id, 'gate:review');
@@ -1564,8 +2057,8 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(reviewRuntimeRoot);
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-review-rate-limit-fallback-'));
@@ -1589,17 +2082,7 @@ export async function registerGatesArea({
       },
     };
 
-    const config = {
-      project: 'behavior-review-rate-limit-fallback',
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
-      _runId: 'run-review-rate-limit-fallback-1',
-      run_id: 'run-review-rate-limit-fallback-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _pluginRegistry: registry,
-      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
-      _testOverrides: {
+        const configDeps18 = {
         reviewGate: {
           discord: async (_config, _level, title, description, fields) => { discordCalls.push({ title, description, fields }); },
           archiveGateOutputIfPresent: () => null,
@@ -1609,12 +2092,22 @@ export async function registerGatesArea({
           buildReviewerPrompt: () => ({ prompt: 'Return GO or NO-GO' }),
           resolvePolicy: () => ({ model: 'echo-model', model_source: 'test', thinking: 'high' }),
           logEffectivePolicy: () => {},
-          resolveModel: () => 'echo-model',
           runOnce: async () => reviewRateLimitResult,
           gitCommitAndPush: async () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformTestDefaults(),
+      project: 'behavior-review-rate-limit-fallback',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      telemetry: { enabled: true },
+      _runId: 'run-review-rate-limit-fallback-1',
+      run_id: 'run-review-rate-limit-fallback-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: registry,
+      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
+          };
 
     const progress = {
       modules: {},
@@ -1628,20 +2121,20 @@ export async function registerGatesArea({
       },
     };
 
-    const result = await reviewGateRunnerMod.runReviewGate(config, progress, 'gate:review');
+    const result = await runGateViaRegistry(reviewRuntimeRoot, config, progress, 'gate:review', { deps: configDeps18 });
     await flushAsync();
 
-    assert.equal(result.exit, 40);
-    assert.equal(result.run_id, 'run-review-rate-limit-fallback-1');
-    assert.equal(result.gate, 'gate:review');
-    assert.equal(result.gate_id, 'gate:review');
-    assert.equal(result.gate_type, 'review');
-    assert.equal(result.attempt, 4);
-    assert.equal(result.dispatch_id, dispatchId);
-    assert.equal(result.gateway_label, 'echo-quality');
-    assert.equal(result.session_key, sessionKey);
-    assert.equal(result.max_rate_limit_pauses, 3);
-    assert.equal(result.rate_limit_status?.max_rate_limit_pauses, 3);
+    assert.equal(stepExit(result), 40);
+    assert.equal(result.correlation.run_id, 'run-review-rate-limit-fallback-1');
+    assert.equal(stepMetadata(result).gate, 'gate:review');
+    assert.equal(result.correlation.gate_id, 'gate:review');
+    assert.equal(result.correlation.gate_type, 'review');
+    assert.equal(stepMetadata(result).attempt, 4);
+    assert.equal(stepMetadata(result).dispatch_id, dispatchId);
+    assert.equal(stepMetadata(result).gateway_label, 'echo-quality');
+    assert.equal(stepMetadata(result).session_key, sessionKey);
+    assert.equal(stepMetadata(result).max_rate_limit_pauses, 3);
+    assert.equal(stepMetadata(result).rate_limit_status?.max_rate_limit_pauses, 3);
     assert.equal(reviewRateLimitResult.max_rate_limit_pauses, undefined);
     assert.equal(reviewRateLimitResult.rate_limit_status?.max_rate_limit_pauses, 3);
 
@@ -1652,11 +2145,11 @@ export async function registerGatesArea({
     assert.equal(getFieldValue(exhaustedDiscord.fields, 'Gate Type'), 'review');
     assert.equal(getFieldValue(exhaustedDiscord.fields, 'Attempt'), '4');
     assert.equal(getFieldValue(exhaustedDiscord.fields, 'Dispatch'), dispatchId);
-    assert.equal(getFieldValue(exhaustedDiscord.fields, 'Label'), 'echo-quality');
+    assert.equal(getFieldValue(exhaustedDiscord.fields, 'Gateway Label'), 'echo-quality');
     assert.equal(getFieldValue(exhaustedDiscord.fields, 'Session'), sessionKey);
 
     const streamKey = 'pipeline:telemetry:behavior-review-rate-limit-fallback:run-review-rate-limit-fallback-1';
-    const events = xaddEvents(streamKey);
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
     const verdictEvent = events.find((event) => event.type === 'gate.verdict');
     const retryExhaustedEvent = events.find((event) => event.type === 'retry.exhausted');
     assert.equal(verdictEvent.verdict, 'NO-GO');
@@ -1679,8 +2172,9 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.ts');
+    const rateLimitMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/services/rate-limit.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
     const discordCalls = [];
 
@@ -1709,24 +2203,7 @@ export async function registerGatesArea({
       },
     };
 
-    const config = {
-      project: 'behavior-buster-rate-limit-exhausted',
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir },
-      agents: { buster: {} },
-      telemetry: { enabled: true },
-      _runId: runId,
-      run_id: runId,
-      _logDir: logRoot,
-      _runLogDir: runLogDir,
-      _disable_discord_webhooks: true,
-      discord_webhook_url: 'https://example.invalid/webhook',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-15T00:00:00.000Z'),
-      _pluginRegistry: registry,
-      default_timeout_minutes: 5,
-      default_max_fails: 1,
-      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
-      _testOverrides: {
+        const configDeps19 = {
         busterGate: {
           discord: async (_config, _level, title, description, fields) => { discordCalls.push({ title, description, fields }); },
           readGateInstructions: () => 'Run the gate tests',
@@ -1736,8 +2213,24 @@ export async function registerGatesArea({
           gitCommitAndPush: async () => {},
           runOnce: async () => gateRateLimitResult,
         },
-      },
-    };
+      };
+const config = {
+      ...platformTestDefaults(),
+      project: 'behavior-buster-rate-limit-exhausted',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      agents: { buster: {} },
+      telemetry: { enabled: true },
+      _runId: runId,
+      run_id: runId,
+      _disable_discord_webhooks: true,
+      discord_webhook_url: 'https://example.invalid/webhook',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-15T00:00:00.000Z'),
+      pluginRegistry: registry,
+      default_timeout_minutes: 5,
+      default_max_fails: 1,
+      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
+          };
 
     const progress = {
       modules: {},
@@ -1746,18 +2239,18 @@ export async function registerGatesArea({
       },
     };
 
-    const result = await gateRunnerMod.runBusterGate(config, progress, 'gate:buster');
+    const result = await runGateViaRegistry(gateRuntimeRoot, config, progress, 'gate:buster', { deps: configDeps19 });
     await flushAsync();
 
-    assert.equal(result.exit, 40);
-    assert.equal(result.run_id, runId);
-    assert.equal(result.attempt, 4);
-    assert.equal(result.dispatch_id, dispatchId);
-    assert.equal(result.gateway_label, dispatchId);
-    assert.equal(result.session_key, sessionKey);
-    assert.equal(result.max_rate_limit_pauses, 3);
-    assert.equal(result.rate_limit_status?.run_id, runId);
-    assert.equal(result.rate_limit_status?.max_rate_limit_pauses, 3);
+    assert.equal(stepExit(result), 40);
+    assert.equal(result.correlation.run_id, runId);
+    assert.equal(stepMetadata(result).attempt, 4);
+    assert.equal(stepMetadata(result).dispatch_id, dispatchId);
+    assert.equal(stepMetadata(result).gateway_label, dispatchId);
+    assert.equal(stepMetadata(result).session_key, sessionKey);
+    assert.equal(stepMetadata(result).max_rate_limit_pauses, 3);
+    assert.equal(stepMetadata(result).rate_limit_status?.run_id, runId);
+    assert.equal(stepMetadata(result).rate_limit_status?.max_rate_limit_pauses, 3);
     assert.equal(gateRateLimitResult.max_rate_limit_pauses, undefined);
     assert.equal(gateRateLimitResult.rate_limit_status?.max_rate_limit_pauses, 3);
 
@@ -1768,11 +2261,11 @@ export async function registerGatesArea({
     assert.equal(getFieldValue(exhaustedDiscord.fields, 'Gate Type'), 'buster');
     assert.equal(getFieldValue(exhaustedDiscord.fields, 'Attempt'), '4');
     assert.equal(getFieldValue(exhaustedDiscord.fields, 'Dispatch'), dispatchId);
-    assert.equal(getFieldValue(exhaustedDiscord.fields, 'Label'), dispatchId);
+    assert.equal(getFieldValue(exhaustedDiscord.fields, 'Gateway Label'), dispatchId);
     assert.equal(getFieldValue(exhaustedDiscord.fields, 'Session'), sessionKey);
 
     const streamKey = 'pipeline:telemetry:behavior-buster-rate-limit-exhausted:run-buster-rate-limit-exhausted-1';
-    const events = xaddEvents(streamKey);
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
     const verdictEvent = events.find((event) => event.type === 'gate.verdict');
     const retryExhaustedEvent = events.find((event) => event.type === 'retry.exhausted');
     assert.equal(verdictEvent.verdict, 'NO-GO');
@@ -1796,8 +2289,10 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.ts');
+    const pollingMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/services/polling.ts');
+    const rateLimitMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/services/rate-limit.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
     const discordCalls = [];
 
@@ -1812,24 +2307,7 @@ export async function registerGatesArea({
     const sessionKey = 'agent:main:acp:gate-buster-redis-rate-limit-exhausted';
     let redisReads = 0;
 
-    const config = {
-      project: 'behavior-buster-redis-rate-limit-exhausted',
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir },
-      agents: { buster: {} },
-      telemetry: { enabled: true },
-      _runId: runId,
-      run_id: runId,
-      _logDir: logRoot,
-      _runLogDir: runLogDir,
-      _disable_discord_webhooks: true,
-      discord_webhook_url: 'https://example.invalid/webhook',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-15T00:00:00.000Z'),
-      _pluginRegistry: registry,
-      default_timeout_minutes: 5,
-      default_max_fails: 1,
-      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
-      _testOverrides: {
+        const configDeps20 = {
         busterGate: {
           discord: async (_config, _level, title, description, fields) => { discordCalls.push({ title, description, fields }); },
           readGateInstructions: () => 'Run the gate tests',
@@ -1838,26 +2316,53 @@ export async function registerGatesArea({
           validateBusterConfig: () => {},
           archiveModuleCompletions: async () => {},
           spawnAgent: async () => {},
-          readCompletionFromRedis: async () => {
+          getTrackedAgent: () => ({
+            telemetry_dispatch_id: dispatchId,
+            dispatch_id: dispatchId,
+            gatewayLabel: dispatchId,
+            sessionKey,
+          }),
+          waitBusterGateCompletionEvidence: async ({ gateId, gate }) => {
             redisReads += 1;
-            return {
+            return rateLimitMod.buildGateTerminalOwnedRedisRateLimitExitResult({
               status: 'FAIL',
               outcome: 'RATE_LIMITED',
               source: 'buster-pipeline',
               reason: 'max_pauses_exceeded',
               summary: 'max_pauses_exceeded',
               run_id: runId,
-              attempt: 4,
+              attempt: 1,
               dispatch_id: dispatchId,
               gateway_label: dispatchId,
               session_key: sessionKey,
               max_rate_limit_pauses: 3,
-            };
+            }, {
+              expectedIdentity: { run_id: runId, attempt: 1, dispatch_id: dispatchId, gateway_label: dispatchId, session_key: sessionKey },
+              gateId,
+              gateType: gate.type,
+              exit: 40,
+            });
           },
           gitCommitAndPush: async () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformTestDefaults(),
+      project: 'behavior-buster-redis-rate-limit-exhausted',
+      repo_root: repoRoot,
+      paths: { swarm_dir: swarmDir },
+      agents: { buster: {} },
+      telemetry: { enabled: true },
+      _runId: runId,
+      run_id: runId,
+      _disable_discord_webhooks: true,
+      discord_webhook_url: 'https://example.invalid/webhook',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-15T00:00:00.000Z'),
+      pluginRegistry: registry,
+      default_timeout_minutes: 5,
+      default_max_fails: 1,
+      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
+          };
 
     const progress = {
       modules: {},
@@ -1866,39 +2371,39 @@ export async function registerGatesArea({
       },
     };
 
-    const result = await gateRunnerMod.runBusterGate(config, progress, 'gate:buster');
+    const result = await runGateViaRegistry(gateRuntimeRoot, config, progress, 'gate:buster', { deps: configDeps20 });
     await flushAsync();
 
     assert.equal(redisReads, 1);
-    assert.equal(result.exit, 40);
-    assert.equal(result.reason, "Gate 'gate:buster' exceeded max rate limit pauses");
-    assert.equal(result.run_id, runId);
-    assert.equal(result.attempt, 4);
-    assert.equal(result.dispatch_id, dispatchId);
-    assert.equal(result.gateway_label, dispatchId);
-    assert.equal(result.session_key, sessionKey);
-    assert.equal(result.gate, 'gate:buster');
-    assert.equal(result.gate_id, 'gate:buster');
-    assert.equal(result.gate_type, 'buster');
-    assert.equal(result.status?.status, 'RATE_LIMITED');
-    assert.equal(result.max_rate_limit_pauses, 3);
-    assert.equal(result.rate_limit_status?.status, 'RATE_LIMITED');
-    assert.equal(result.rate_limit_status?.gate_id, 'gate:buster');
-    assert.equal(result.rate_limit_status?.gate_type, 'buster');
-    assert.equal(result.rate_limit_status?.max_rate_limit_pauses, 3);
-    assert.equal(result.rate_limit_status?.dispatch_id, dispatchId);
-    assert.equal(result.rate_limit_status?.gateway_label, dispatchId);
-    assert.equal(result.rate_limit_status?.session_key, sessionKey);
+    assert.equal(stepExit(result), 40);
+    assert.equal(stepSummary(result), "Gate 'gate:buster' exceeded max rate limit pauses");
+    assert.equal(result.correlation.run_id, runId);
+    assert.equal(stepMetadata(result).attempt, 1);
+    assert.equal(stepMetadata(result).dispatch_id, dispatchId);
+    assert.equal(stepMetadata(result).gateway_label, dispatchId);
+    assert.equal(stepMetadata(result).session_key, sessionKey);
+    assert.equal(stepMetadata(result).gate, 'gate:buster');
+    assert.equal(result.correlation.gate_id, 'gate:buster');
+    assert.equal(result.correlation.gate_type, 'buster');
+    assert.equal(stepMetadata(result).status?.status, 'RATE_LIMITED');
+    assert.equal(stepMetadata(result).max_rate_limit_pauses, 3);
+    assert.equal(stepMetadata(result).rate_limit_status?.status, 'RATE_LIMITED');
+    assert.equal(stepMetadata(result).rate_limit_status?.gate_id, 'gate:buster');
+    assert.equal(stepMetadata(result).rate_limit_status?.gate_type, 'buster');
+    assert.equal(stepMetadata(result).rate_limit_status?.max_rate_limit_pauses, 3);
+    assert.equal(stepMetadata(result).rate_limit_status?.dispatch_id, dispatchId);
+    assert.equal(stepMetadata(result).rate_limit_status?.gateway_label, dispatchId);
+    assert.equal(stepMetadata(result).rate_limit_status?.session_key, sessionKey);
 
     const exhaustedDiscord = discordCalls.find((call) => call.title === "Gate 'gate:buster' Rate Limit Exhausted");
     assert.equal(Boolean(exhaustedDiscord), true);
-    assert.equal(exhaustedDiscord.description, 'Gate attempt 4 exceeded max ACP rate limit pauses (3).');
+    assert.equal(exhaustedDiscord.description, 'Gate attempt 1 exceeded max ACP rate limit pauses (3).');
     assert.equal(getFieldValue(exhaustedDiscord.fields, 'Run ID'), runId);
     assert.equal(getFieldValue(exhaustedDiscord.fields, 'Gate'), 'gate:buster');
     assert.equal(getFieldValue(exhaustedDiscord.fields, 'Gate Type'), 'buster');
-    assert.equal(getFieldValue(exhaustedDiscord.fields, 'Attempt'), '4');
+    assert.equal(getFieldValue(exhaustedDiscord.fields, 'Attempt'), '1');
     assert.equal(getFieldValue(exhaustedDiscord.fields, 'Dispatch'), dispatchId);
-    assert.equal(getFieldValue(exhaustedDiscord.fields, 'Label'), dispatchId);
+    assert.equal(getFieldValue(exhaustedDiscord.fields, 'Gateway Label'), dispatchId);
     assert.equal(getFieldValue(exhaustedDiscord.fields, 'Session'), sessionKey);
   });
 
@@ -1908,8 +2413,10 @@ export async function registerGatesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.ts');
+    const pollingMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/services/polling.ts');
+    const rateLimitMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/services/rate-limit.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-rate-limit-discord-'));
@@ -1926,25 +2433,7 @@ export async function registerGatesArea({
     Date.now = () => 1700000000000;
 
     try {
-      const config = {
-        project: 'behavior-buster-rate-limit-discord',
-        repo_root: repoRoot,
-        paths: { swarm_dir: swarmDir },
-        poll_interval_seconds: 0,
-        agents: { buster: {} },
-        telemetry: { enabled: true },
-        _runId: runId,
-        run_id: runId,
-        _logDir: logRoot,
-        _runLogDir: runLogDir,
-        _disable_discord_webhooks: true,
-        discord_webhook_url: 'https://example.invalid/webhook',
-        _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-        _pluginRegistry: registry,
-        default_timeout_minutes: 5,
-        default_max_fails: 1,
-        rate_limit: { max_pauses_per_module: 2, cooldown_hours: 0 },
-        _testOverrides: {
+            const configDeps21 = {
           busterGate: {
             readGateInstructions: () => 'buster gate instructions',
             resolvePolicy: () => ({ model: 'buster-model', model_source: 'test' }),
@@ -1954,26 +2443,64 @@ export async function registerGatesArea({
             archiveModuleCompletions: async () => {},
             spawnAgent: async () => ({}),
             killAgent: async () => true,
-            readCompletionFromRedis: async () => {
+            getTrackedAgent: () => ({
+              telemetry_dispatch_id: dispatchId,
+              dispatch_id: dispatchId,
+              gatewayLabel: dispatchId,
+              sessionKey,
+            }),
+            waitBusterGateCompletionEvidence: async ({ gateId, gate }) => {
               redisReadCount += 1;
               if (redisReadCount === 1) {
-                return {
+                return pollingMod.pollResult(false, 'rate_limited', rateLimitMod.buildGateSessionRateLimitStatus({
                   status: 'FAIL',
                   outcome: 'RATE_LIMITED',
                   reason: 'provider overloaded',
                   provider: 'anthropic',
+                  dispatch_id: dispatchId,
+                  gateway_label: dispatchId,
                   session_key: sessionKey,
-                };
+                }, {
+                  gateId,
+                  gateType: gate.type,
+                  runIdFallback: runId,
+                  attemptFallback: 1,
+                  dispatchIdFallback: dispatchId,
+                  gatewayLabelFallback: dispatchId,
+                  sessionKeyFallback: sessionKey,
+                }));
               }
-              return {
+              return pollingMod.pollResult(true, 'target_reached', {
+                gate: gateId,
                 status: 'PASS',
                 summary: 'done',
+                run_id: runId,
+                attempt: 1,
+                dispatch_id: dispatchId,
+                gateway_label: dispatchId,
                 session_key: sessionKey,
-              };
+              });
             },
           },
-        },
-      };
+        };
+const config = {
+        ...platformTestDefaults(),
+        project: 'behavior-buster-rate-limit-discord',
+        repo_root: repoRoot,
+        paths: { swarm_dir: swarmDir },
+        poll_interval_seconds: 0,
+        agents: { buster: {} },
+        telemetry: { enabled: true },
+        _runId: runId,
+        run_id: runId,
+        _disable_discord_webhooks: true,
+        discord_webhook_url: 'https://example.invalid/webhook',
+        _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+        pluginRegistry: registry,
+        default_timeout_minutes: 5,
+        default_max_fails: 1,
+        rate_limit: { max_pauses_per_module: 2, cooldown_hours: 0 },
+              };
 
       const progress = {
         modules: {},
@@ -1982,10 +2509,10 @@ export async function registerGatesArea({
         },
       };
 
-      const result = await gateRunnerMod.runBusterGate(config, progress, 'gate:buster');
+      const result = await runGateViaRegistry(gateRuntimeRoot, config, progress, 'gate:buster', { deps: configDeps21 });
       await flushAsync();
 
-      assert.equal(result.exit, 0);
+      assert.equal(stepExit(result), 0);
       assert.equal(redisReadCount, 2);
 
       const runScopedEntries = fs.readFileSync(path.join(runLogDir, 'discord.jsonl'), 'utf8').trim().split('\n').map((line) => JSON.parse(line));
@@ -1999,18 +2526,18 @@ export async function registerGatesArea({
       assert.equal(getFieldValue(pauseEntry.fields, 'Gate Type'), 'buster');
       assert.equal(getFieldValue(pauseEntry.fields, 'Attempt'), '1');
       assert.equal(getFieldValue(pauseEntry.fields, 'Dispatch'), dispatchId);
-      assert.equal(getFieldValue(pauseEntry.fields, 'Label'), dispatchId);
+      assert.equal(getFieldValue(pauseEntry.fields, 'Label'), undefined);
       assert.equal(getFieldValue(pauseEntry.fields, 'Session'), sessionKey);
       assert.equal(getFieldValue(resumeEntry.fields, 'Run ID'), runId);
       assert.equal(getFieldValue(resumeEntry.fields, 'Gate'), 'gate:buster');
       assert.equal(getFieldValue(resumeEntry.fields, 'Gate Type'), 'buster');
       assert.equal(getFieldValue(resumeEntry.fields, 'Attempt'), '1');
       assert.equal(getFieldValue(resumeEntry.fields, 'Dispatch'), dispatchId);
-      assert.equal(getFieldValue(resumeEntry.fields, 'Label'), dispatchId);
+      assert.equal(getFieldValue(resumeEntry.fields, 'Label'), undefined);
       assert.equal(getFieldValue(resumeEntry.fields, 'Session'), sessionKey);
 
       const streamKey = 'pipeline:telemetry:behavior-buster-rate-limit-discord:run-buster-rate-limit-discord-1';
-      const events = xaddEvents(streamKey);
+      const events = gateRuntimeEvents(xaddEvents, streamKey);
       const rateLimitEvent = events.find((event) => event.type === 'rate_limit.detected');
       assert(rateLimitEvent, 'missing buster gate rate_limit.detected event');
       assert.equal(rateLimitEvent.gate_id, 'gate:buster');
@@ -2023,51 +2550,35 @@ export async function registerGatesArea({
     }
   });
 
-  await record('buster gate gate-status rate-limit pause and resume preserves tracked correlation fallback', async () => {
+  await record('buster gate Redis rate-limit pause and resume preserves tracked correlation', async () => {
     const { runtimeRoot: gateRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(gateRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const gateRunnerMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.ts');
+    const pollingMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/services/polling.ts');
+    const rateLimitMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/services/rate-limit.ts');
+    const runtimeCoreMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(gateRuntimeRoot);
 
-    const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-gate-status-rate-limit-'));
+    const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-gate-redis-rate-limit-'));
     const swarmDir = path.join(repoRoot, '.swarm');
     const logRoot = path.join(swarmDir, 'logs');
-    const runId = 'run-buster-gate-status-rate-limit-1';
+    const runId = 'run-buster-gate-redis-rate-limit-1';
     const runLogDir = path.join(logRoot, 'pipeline', 'runs', runId);
     fs.mkdirSync(runLogDir, { recursive: true });
 
-    const sessionKey = 'agent:main:acp:gate-buster-gate-status-rate-limit';
-    const dispatchId = 'dispatch-buster-gate-status-rate-limit-tracked-1';
-    const gatewayLabel = 'gate-buster-gate-status-dispatch';
+    const sessionKey = 'agent:main:acp:gate-buster-redis-rate-limit';
+    const dispatchId = 'dispatch-buster-gate-redis-rate-limit-tracked-1';
+    const gatewayLabel = 'gate-buster-redis-dispatch';
     const activeSessionPath = path.join(logRoot, 'gates', 'gate:buster', 'active-session.json');
     const realDateNow = Date.now;
     let spawnCount = 0;
     Date.now = () => 1700000000000;
 
     try {
-      const config = {
-        project: 'behavior-buster-gate-status-rate-limit',
-        repo_root: repoRoot,
-        paths: { swarm_dir: swarmDir },
-        poll_interval_seconds: 0,
-        agents: { buster: {} },
-        telemetry: { enabled: true },
-        _runId: runId,
-        run_id: runId,
-        _logDir: logRoot,
-        _runLogDir: runLogDir,
-        _disable_discord_webhooks: true,
-        discord_webhook_url: 'https://example.invalid/webhook',
-        _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-        _pluginRegistry: registry,
-        default_timeout_minutes: 5,
-        default_max_fails: 1,
-        rate_limit: { max_pauses_per_module: 2, cooldown_hours: 0 },
-        _testOverrides: {
+            const configDeps22 = {
           busterGate: {
             readGateInstructions: () => 'buster gate instructions',
             resolvePolicy: () => ({ model: 'buster-model', model_source: 'test' }),
@@ -2075,16 +2586,44 @@ export async function registerGatesArea({
             validateBusterConfig: () => {},
             gitCommitAndPush: async () => {},
             archiveModuleCompletions: async () => {},
-            readCompletionFromRedis: async () => null,
+            waitBusterGateCompletionEvidence: async ({ gateId, gate }) => {
+              if (spawnCount === 1) {
+                return pollingMod.pollResult(false, 'rate_limited', rateLimitMod.buildGateSessionRateLimitStatus({
+                  status: 'RATE_LIMITED',
+                  reason: 'provider overloaded',
+                  provider: 'anthropic',
+                  run_id: runId,
+                  attempt: 1,
+                  dispatch_id: dispatchId,
+                  gateway_label: gatewayLabel,
+                  session_key: sessionKey,
+                }, {
+                  gateId,
+                  gateType: gate.type,
+                  runIdFallback: runId,
+                  attemptFallback: 1,
+                  dispatchIdFallback: dispatchId,
+                  gatewayLabelFallback: gatewayLabel,
+                  sessionKeyFallback: sessionKey,
+                }));
+              }
+              return pollingMod.pollResult(true, 'target_reached', {
+                gate: gateId,
+                status: 'PASS',
+                summary: 'done',
+                run_id: runId,
+                attempt: 1,
+                dispatch_id: dispatchId,
+                gateway_label: gatewayLabel,
+                session_key: sessionKey,
+              });
+            },
             spawnAgent: async () => {
               spawnCount += 1;
               const gateStatusPath = path.join(swarmDir, 'gate:buster-gate-status.json');
               const gateOutputPath = path.join(swarmDir, 'gates', 'gate-buster-output.json');
-              fs.writeFileSync(gateStatusPath, JSON.stringify(spawnCount === 1
-                ? { status: 'RATE_LIMITED', reason: 'provider overloaded', provider: 'anthropic' }
-                : { status: 'PASS', summary: 'done' }
-              ));
               if (spawnCount > 1) {
+                fs.writeFileSync(gateStatusPath, JSON.stringify({ status: 'PASS', summary: 'done' }));
                 fs.mkdirSync(path.dirname(gateOutputPath), { recursive: true });
                 fs.writeFileSync(gateOutputPath, JSON.stringify({ status: 'PASS', summary: 'done' }));
               }
@@ -2095,8 +2634,25 @@ export async function registerGatesArea({
               : null,
             killAgent: async () => true,
           },
-        },
-      };
+        };
+const config = {
+        ...platformTestDefaults(),
+        project: 'behavior-buster-gate-redis-rate-limit',
+        repo_root: repoRoot,
+        paths: { swarm_dir: swarmDir },
+        poll_interval_seconds: 0,
+        agents: { buster: {} },
+        telemetry: { enabled: true },
+        _runId: runId,
+        run_id: runId,
+        _disable_discord_webhooks: true,
+        discord_webhook_url: 'https://example.invalid/webhook',
+        _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+        pluginRegistry: registry,
+        default_timeout_minutes: 5,
+        default_max_fails: 1,
+        rate_limit: { max_pauses_per_module: 2, cooldown_hours: 0 },
+              };
 
       const progress = {
         modules: {},
@@ -2105,10 +2661,10 @@ export async function registerGatesArea({
         },
       };
 
-      const result = await gateRunnerMod.runBusterGate(config, progress, 'gate:buster');
+      const result = await runGateViaRegistry(gateRuntimeRoot, config, progress, 'gate:buster', { deps: configDeps22 });
       await flushAsync();
 
-      assert.equal(result.exit, 0);
+      assert.equal(stepExit(result), 0);
       assert.equal(spawnCount, 2);
       assert.equal(fs.existsSync(activeSessionPath), false);
 
@@ -2120,16 +2676,16 @@ export async function registerGatesArea({
       assert.equal(Boolean(resumeEntry), true);
       assert.equal(getFieldValue(pauseEntry.fields, 'Run ID'), runId);
       assert.equal(getFieldValue(pauseEntry.fields, 'Dispatch'), dispatchId);
-      assert.equal(getFieldValue(pauseEntry.fields, 'Label'), gatewayLabel);
+      assert.equal(getFieldValue(pauseEntry.fields, 'Gateway Label'), gatewayLabel);
       assert.equal(getFieldValue(pauseEntry.fields, 'Session'), sessionKey);
       assert.equal(getFieldValue(resumeEntry.fields, 'Dispatch'), dispatchId);
-      assert.equal(getFieldValue(resumeEntry.fields, 'Label'), gatewayLabel);
+      assert.equal(getFieldValue(resumeEntry.fields, 'Gateway Label'), gatewayLabel);
       assert.equal(getFieldValue(resumeEntry.fields, 'Session'), sessionKey);
 
-      const streamKey = 'pipeline:telemetry:behavior-buster-gate-status-rate-limit:run-buster-gate-status-rate-limit-1';
-      const events = xaddEvents(streamKey);
+      const streamKey = 'pipeline:telemetry:behavior-buster-gate-redis-rate-limit:run-buster-gate-redis-rate-limit-1';
+      const events = gateRuntimeEvents(xaddEvents, streamKey);
       const rateLimitEvent = events.find((event) => event.type === 'rate_limit.detected');
-      assert(rateLimitEvent, 'missing buster gate gate-status rate_limit.detected event');
+      assert(rateLimitEvent, 'missing buster gate Redis rate_limit.detected event');
       assert.equal(rateLimitEvent.gate_id, 'gate:buster');
       assert.equal(rateLimitEvent.dispatch_id, dispatchId);
       assert.equal(rateLimitEvent.gateway_label, gatewayLabel);
@@ -2144,14 +2700,17 @@ export async function registerGatesArea({
     const { runtimeRoot: gateRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(gateRuntimeRoot);
 
-    const dependenciesMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/services/dependencies.js');
+    const dependenciesMod = await importRuntimeModule(gateRuntimeRoot, '/app/skills/pipeline/services/dependencies.ts');
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-gate-dependencies-'));
     const swarmDir = path.join(repoRoot, '.swarm');
     fs.mkdirSync(path.join(swarmDir, 'gates'), { recursive: true });
 
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-buster-gate-dependencies',
+      _runId: 'run-buster-gate-dependencies-1',
+      run_id: 'run-buster-gate-dependencies-1',
       paths: {
         swarm_dir: swarmDir,
         modules_dir: path.join(repoRoot, 'modules'),
@@ -2186,6 +2745,23 @@ export async function registerGatesArea({
     assert.deepEqual(dependenciesMod.checkDependencies(config, progress, '02'), {
       met: false,
       reason: "Gate 'gate:buster' canonical completion output is missing",
+    });
+
+    fs.unlinkSync(path.join(swarmDir, 'gates', 'gate-buster-output.json'));
+    fs.writeFileSync(
+      path.join(swarmDir, 'gate:buster-gate-status.json'),
+      JSON.stringify({
+        status: 'RATE_LIMITED',
+        run_id: 'manual-run',
+        attempt: 1,
+        dispatch_id: 'manual-dispatch',
+        session_key: 'manual-session',
+      }, null, 2),
+    );
+
+    assert.deepEqual(dependenciesMod.checkDependencies(config, progress, '02'), {
+      met: false,
+      reason: "Gate 'gate:buster' not completed",
     });
   });
 }

@@ -6,10 +6,27 @@ import assert from 'assert';
 import {
   materializeRuntimeTree,
   importRuntimeModule,
+  runGateViaRegistry,
 } from '../../lib/lifecycle-audit-lib.mjs';
 
 function getFieldValue(fields = [], name) {
   return fields.find((field) => field.name === name)?.value;
+}
+
+function stepExit(result) {
+  return result?.terminal?.exitCode;
+}
+
+function stepSummary(result) {
+  return result?.diagnostics?.summary;
+}
+
+function stepMetadata(result) {
+  return result?.diagnostics?.metadata || {};
+}
+
+function stepGateStatus(result) {
+  return result?.diagnostics?.typed?.controlResult?.diagnostics?.typed?.gate?.gateRunStatus;
 }
 
 export async function registerFixCyclesArea({
@@ -20,14 +37,34 @@ export async function registerFixCyclesArea({
   flushAsync,
   xaddEvents,
 }) {
+async function buildBuiltInRegistry(runtimeRootForRegistry) {
+  const registryMod = await importRuntimeModule(runtimeRootForRegistry, '/app/skills/pipeline/core/registry.ts');
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
+  assert.equal(errors.length, 0);
+  return registry;
+}
+
+function gateRuntimeEvents(xaddEvents, streamKey) {
+  return xaddEvents(streamKey)
+    .filter((event) => !String(event.type || '').startsWith('plugin.gate.'))
+    .map((event, index) => ({ ...event, seq: index + 1 }));
+}
+
+function platformFixCycleDefaults() {
+  return {
+    rate_limit: { max_pauses_per_module: 5, cooldown_hours: 0 },
+    review_defaults: { timeout_minutes: 5, max_fix_cycles: 1, lint_tier: 'full', lint_required: false },
+  };
+}
+
   await record('review gate fix-cycle interruption paths emit authoritative failure telemetry', async () => {
     const { runtimeRoot: reviewRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(reviewRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   
     const initialNoGo = {
       ok: false,
@@ -151,25 +188,21 @@ export async function registerFixCyclesArea({
           gitCommitAndPush: async () => {},
           discord: async () => {},
         },
+        expectedExit: 1,
+        expectedResultReason: 'Review failed: reviewer transport crashed again',
         expectedReason: 'Review re-review failed: reviewer transport crashed again',
+        expectedSignalReason: 'Review failed: reviewer transport crashed again',
+        expectedTerminalFixCycle: null,
         expectedIssuesCount: null,
+        expectedReturnedCorrelation: false,
+        expectedSignalTypes: ['gate.started', 'gate.verdict', 'gate.verdict'],
       },
     ];
   
     for (const scenario of scenarios) {
       const discordCalls = [];
       const scenarioDiscord = scenario.overrides.discord;
-      const config = {
-        project: scenario.project,
-        repo_root: `/tmp/${scenario.project}`,
-        paths: { swarm_dir: `/tmp/${scenario.project}/swarm` },
-        telemetry: { enabled: true },
-        _runId: scenario.runId,
-        run_id: scenario.runId,
-        _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-        default_timeout_minutes: 5,
-        default_max_fails: 1,
-        _testOverrides: {
+            const deps = {
           reviewGate: {
             ...scenario.overrides,
             discord: async (...args) => {
@@ -177,8 +210,20 @@ export async function registerFixCyclesArea({
               if (scenarioDiscord) await scenarioDiscord(...args);
             },
           },
-        },
-      };
+        };
+const config = {
+        ...platformFixCycleDefaults(),
+        project: scenario.project,
+        repo_root: `/tmp/${scenario.project}`,
+        paths: { swarm_dir: `/tmp/${scenario.project}/swarm` },
+        telemetry: { enabled: true },
+        _runId: scenario.runId,
+        run_id: scenario.runId,
+        _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+        pluginRegistry: await buildBuiltInRegistry(reviewRuntimeRoot),
+        default_timeout_minutes: 5,
+        default_max_fails: 1,
+              };
   
       const progress = {
         modules: {},
@@ -193,25 +238,25 @@ export async function registerFixCyclesArea({
         },
       };
   
-      const result = await reviewGateRunnerMod.runReviewGate(config, progress, 'gate:review');
+      const result = await runGateViaRegistry(reviewRuntimeRoot, config, progress, 'gate:review', { deps });
       await flushAsync();
   
-      assert.equal(result.exit, scenario.expectedExit ?? 10, scenario.name);
-      assert.equal(result.reason, scenario.expectedResultReason ?? "Review gate 'gate:review' NO-GO after 1 fix cycles", scenario.name);
+      assert.equal(stepExit(result), scenario.expectedExit ?? 10, scenario.name);
+      assert.equal(stepSummary(result), scenario.expectedResultReason ?? "Review gate 'gate:review' NO-GO after 1 fix cycles", scenario.name);
       if (scenario.expectedExit === 40) {
-        assert.equal(result.run_id, scenario.runId, `${scenario.name} missing returned run id`);
-        assert.equal(result.gate, 'gate:review', `${scenario.name} missing returned gate alias`);
-        assert.equal(result.gate_id, 'gate:review', `${scenario.name} missing returned gate id`);
-        assert.equal(result.gate_type, 'review', `${scenario.name} missing returned gate type`);
-        assert.equal(result.attempt, 4, `${scenario.name} missing returned attempt`);
-        assert.equal(result.dispatch_id, 'reviewfix-dispatch-4', `${scenario.name} missing returned dispatch id`);
-        assert.equal(result.gateway_label, 'reviewfix-dispatch-4', `${scenario.name} missing returned gateway label`);
-        assert.equal(result.session_key, 'agent:reviewfix-gate:review-1', `${scenario.name} missing returned session key`);
-        assert.equal(result.max_rate_limit_pauses, 3, `${scenario.name} missing returned pause budget`);
-        assert.equal(result.rate_limit_status?.max_rate_limit_pauses, 3, `${scenario.name} missing returned nested pause budget`);
-      } else {
-        assert.equal(result.gateway_label, 'echo-quality', `${scenario.name} missing returned gateway label`);
-        assert.equal(result.session_key, 'agent:main:acp:echo-review-initial', `${scenario.name} missing returned session key`);
+        assert.equal(result.correlation.run_id, scenario.runId, `${scenario.name} missing returned run id`);
+        assert.equal(stepMetadata(result).gate, 'gate:review', `${scenario.name} missing returned gate alias`);
+        assert.equal(result.correlation.gate_id, 'gate:review', `${scenario.name} missing returned gate id`);
+        assert.equal(result.correlation.gate_type, 'review', `${scenario.name} missing returned gate type`);
+        assert.equal(stepMetadata(result).attempt, 4, `${scenario.name} missing returned attempt`);
+        assert.equal(stepMetadata(result).dispatch_id, 'reviewfix-dispatch-4', `${scenario.name} missing returned dispatch id`);
+        assert.equal(stepMetadata(result).gateway_label, 'reviewfix-review-dispatch', `${scenario.name} missing returned gateway label`);
+        assert.equal(stepMetadata(result).session_key, 'agent:reviewfix-gate:review-1', `${scenario.name} missing returned session key`);
+        assert.equal(stepMetadata(result).max_rate_limit_pauses, 3, `${scenario.name} missing returned pause budget`);
+        assert.equal(stepMetadata(result).rate_limit_status?.max_rate_limit_pauses, 3, `${scenario.name} missing returned nested pause budget`);
+      } else if (scenario.expectedReturnedCorrelation !== false) {
+        assert.equal(stepMetadata(result).gateway_label, 'echo-quality', `${scenario.name} missing returned gateway label`);
+        assert.equal(stepMetadata(result).session_key, 'agent:main:acp:echo-review-initial', `${scenario.name} missing returned session key`);
       }
       if (scenario.expectedDiscordTitle) {
         const discordCall = discordCalls.find(([, , title]) => title === scenario.expectedDiscordTitle);
@@ -225,14 +270,13 @@ export async function registerFixCyclesArea({
       }
   
       const streamKey = `pipeline:telemetry:${scenario.project}:${scenario.runId}`;
-      const events = xaddEvents(streamKey);
+      const events = gateRuntimeEvents(xaddEvents, streamKey);
       const signalEvents = events.filter((event) => event.type !== 'observability.degraded');
       const expectedMaxRateLimitPauses = config.rate_limit?.max_pauses_per_module ?? 5;
-      if (scenario.expectedExit === 40) {
-        assert.deepEqual(signalEvents.map((event) => event.type), ['gate.started', 'gate.verdict', 'gate.verdict', 'retry.exhausted'], scenario.name);
-      } else {
-        assert.deepEqual(signalEvents.map((event) => event.type), ['gate.started', 'gate.verdict', 'gate.verdict', 'gate.verdict', 'retry.exhausted'], scenario.name);
-      }
+      const expectedSignalTypes = scenario.expectedSignalTypes || (scenario.expectedExit === 40
+        ? ['gate.started', 'gate.verdict', 'gate.verdict', 'retry.exhausted']
+        : ['gate.started', 'gate.verdict', 'gate.verdict', 'gate.verdict', 'retry.exhausted']);
+      assert.deepEqual(signalEvents.map((event) => event.type), expectedSignalTypes, scenario.name);
       assert.equal(signalEvents[1].verdict, 'NO-GO', scenario.name);
       assert.equal(signalEvents[1].fix_cycle, 0, scenario.name);
       if (scenario.expectedExit === 40) {
@@ -241,7 +285,7 @@ export async function registerFixCyclesArea({
         assert.equal(signalEvents[2].issues_count, scenario.expectedIssuesCount, scenario.name);
         assert.equal(signalEvents[2].attempt, 4, scenario.name);
         assert.equal(signalEvents[2].dispatch_id, 'reviewfix-dispatch-4', scenario.name);
-        assert.equal(signalEvents[2].gateway_label, 'reviewfix-dispatch-4', scenario.name);
+        assert.equal(signalEvents[2].gateway_label, 'reviewfix-review-dispatch', scenario.name);
         assert.equal(signalEvents[2].session_key, 'agent:reviewfix-gate:review-1', scenario.name);
         assert.equal(signalEvents[2].reason, "Review fix 'reviewfix-gate:review-1' exceeded max rate limit pauses", scenario.name);
         assert.equal(signalEvents[3].gate_id, 'gate:review', scenario.name);
@@ -249,11 +293,18 @@ export async function registerFixCyclesArea({
         assert.equal(signalEvents[3].phase, 'review_gate_fix', scenario.name);
         assert.equal(signalEvents[3].attempt, 4, scenario.name);
         assert.equal(signalEvents[3].dispatch_id, 'reviewfix-dispatch-4', scenario.name);
-        assert.equal(signalEvents[3].gateway_label, 'reviewfix-dispatch-4', scenario.name);
+        assert.equal(signalEvents[3].gateway_label, 'reviewfix-review-dispatch', scenario.name);
         assert.equal(signalEvents[3].session_key, 'agent:reviewfix-gate:review-1', scenario.name);
         assert.equal(signalEvents[3].reason, "Review fix 'reviewfix-gate:review-1' exceeded max rate limit pauses", scenario.name);
         assert.equal(signalEvents[3].max_attempts, 3, scenario.name);
         assert.equal(signalEvents[3].max_fails, 3, scenario.name);
+      } else if (scenario.expectedSignalTypes) {
+        assert.equal(signalEvents[2].verdict, 'NO-GO', scenario.name);
+        const expectedTerminalFixCycle = Object.hasOwn(scenario, 'expectedTerminalFixCycle')
+          ? scenario.expectedTerminalFixCycle
+          : 1;
+        assert.equal(signalEvents[2].fix_cycle ?? null, expectedTerminalFixCycle, scenario.name);
+        assert.equal(signalEvents[2].reason, scenario.expectedSignalReason || scenario.expectedReason, scenario.name);
       } else {
         assert.equal(signalEvents[2].verdict, 'NO-GO', scenario.name);
         assert.equal(signalEvents[2].fix_cycle, 1, scenario.name);
@@ -281,8 +332,8 @@ export async function registerFixCyclesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
     const reviewResults = [
       {
@@ -302,17 +353,7 @@ export async function registerFixCyclesArea({
       { ok: true, mergedResult: { status: 'GO' } },
     ];
 
-    const config = {
-      project: 'behavior-review-fix-cycles',
-      repo_root: '/tmp/behavior-review-fix-cycles',
-      paths: { swarm_dir: '/tmp/behavior-review-fix-cycles/swarm' },
-      telemetry: { enabled: true },
-      _runId: 'run-review-fix-cycles-1',
-      run_id: 'run-review-fix-cycles-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      default_timeout_minutes: 5,
-      default_max_fails: 2,
-      _testOverrides: {
+        const configDeps2 = {
         reviewGate: {
           discord: async () => {},
           runOnce: async () => reviewResults.shift(),
@@ -326,8 +367,20 @@ export async function registerFixCyclesArea({
           killAgent: async () => true,
           gitCommitAndPush: async () => {},
         },
-      },
-    };
+      };
+const config = {
+      ...platformFixCycleDefaults(),
+      project: 'behavior-review-fix-cycles',
+      repo_root: '/tmp/behavior-review-fix-cycles',
+      paths: { swarm_dir: '/tmp/behavior-review-fix-cycles/swarm' },
+      telemetry: { enabled: true },
+      _runId: 'run-review-fix-cycles-1',
+      run_id: 'run-review-fix-cycles-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+      pluginRegistry: await buildBuiltInRegistry(reviewRuntimeRoot),
+      default_timeout_minutes: 5,
+      default_max_fails: 2,
+          };
 
     const progress = {
       modules: {},
@@ -342,14 +395,14 @@ export async function registerFixCyclesArea({
       },
     };
 
-    const result = await reviewGateRunnerMod.runReviewGate(config, progress, 'gate:review');
+    const result = await runGateViaRegistry(reviewRuntimeRoot, config, progress, 'gate:review', { deps: configDeps2 });
     await flushAsync();
 
-    assert.equal(result.exit, 0);
-    assert.equal(result.status, 'PASS');
+    assert.equal(stepExit(result), 0);
+    assert.equal(stepGateStatus(result), 'PASS');
 
     const streamKey = 'pipeline:telemetry:behavior-review-fix-cycles:run-review-fix-cycles-1';
-    const events = xaddEvents(streamKey);
+    const events = gateRuntimeEvents(xaddEvents, streamKey);
     const signalEvents = events.filter((event) => event.type !== 'observability.degraded');
     assert.deepEqual(signalEvents.map((event) => event.type), ['gate.started', 'gate.verdict', 'gate.verdict', 'gate.verdict']);
     assert.equal(signalEvents[1].gate_id, 'gate:review');
@@ -375,8 +428,8 @@ export async function registerFixCyclesArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const busterGateRunnerMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const busterGateRunnerMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   
     const initialNoGo = {
       ok: false,
@@ -492,17 +545,7 @@ export async function registerFixCyclesArea({
     for (const scenario of scenarios) {
       const discordCalls = [];
       const scenarioDiscord = scenario.overrides.discord;
-      const config = {
-        project: scenario.project,
-        repo_root: `/tmp/${scenario.project}`,
-        paths: { swarm_dir: `/tmp/${scenario.project}/swarm` },
-        telemetry: { enabled: true },
-        _runId: scenario.runId,
-        run_id: scenario.runId,
-        _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-        default_timeout_minutes: 5,
-        default_max_fails: 1,
-        _testOverrides: {
+            const configDeps3 = {
           busterGate: {
             ...scenario.overrides,
             discord: async (...args) => {
@@ -510,8 +553,20 @@ export async function registerFixCyclesArea({
               if (scenarioDiscord) await scenarioDiscord(...args);
             },
           },
-        },
-      };
+        };
+const config = {
+        ...platformFixCycleDefaults(),
+        project: scenario.project,
+        repo_root: `/tmp/${scenario.project}`,
+        paths: { swarm_dir: `/tmp/${scenario.project}/swarm` },
+        telemetry: { enabled: true },
+        _runId: scenario.runId,
+        run_id: scenario.runId,
+        _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+        pluginRegistry: await buildBuiltInRegistry(busterRuntimeRoot),
+        default_timeout_minutes: 5,
+        default_max_fails: 1,
+              };
   
       const progress = {
         modules: {},
@@ -525,27 +580,27 @@ export async function registerFixCyclesArea({
         },
       };
   
-      const result = await busterGateRunnerMod.runBusterGate(config, progress, 'gate:buster');
+      const result = await runGateViaRegistry(busterRuntimeRoot, config, progress, 'gate:buster', { deps: configDeps3 });
       await flushAsync();
   
-      assert.equal(result.exit, scenario.expectedExit ?? 10, scenario.name);
-      assert.equal(result.reason, scenario.expectedResultReason ?? "Gate 'gate:buster' failed after 1 fix attempts", scenario.name);
+      assert.equal(stepExit(result), scenario.expectedExit ?? 10, scenario.name);
+      assert.equal(stepSummary(result), scenario.expectedResultReason ?? "Gate 'gate:buster' failed after 1 fix attempts", scenario.name);
       if (scenario.name === 'no usable output') {
-        assert.equal(result.gateway_label, 'gate-buster-dispatch', `${scenario.name} missing returned gateway label`);
-        assert.equal(result.session_key, 'agent:main:acp:gate-buster', `${scenario.name} missing returned session key`);
+        assert.equal(stepMetadata(result).gateway_label, 'gate-buster-dispatch', `${scenario.name} missing returned gateway label`);
+        assert.equal(stepMetadata(result).session_key, 'agent:main:acp:gate-buster', `${scenario.name} missing returned session key`);
       }
       if (scenario.name === 'fix rate limit exhausted') {
-        assert.equal(result.attempt, 4, `${scenario.name} missing returned attempt`);
-        assert.equal(result.dispatch_id, 'gatefix-dispatch-4', `${scenario.name} missing returned dispatch id`);
-        assert.equal(result.gateway_label, 'gatefix-buster-dispatch', `${scenario.name} missing returned gateway label`);
-        assert.equal(result.session_key, 'agent:gatefix-gate:buster-1', `${scenario.name} missing returned session key`);
-        assert.equal(result.gate_type, 'buster', `${scenario.name} missing returned gate type`);
-        assert.equal(result.max_rate_limit_pauses, 3, `${scenario.name} missing returned pause budget`);
-        assert.equal(result.rate_limit_status?.max_rate_limit_pauses, 3, `${scenario.name} missing returned nested pause budget`);
+        assert.equal(stepMetadata(result).attempt, 4, `${scenario.name} missing returned attempt`);
+        assert.equal(stepMetadata(result).dispatch_id, 'gatefix-dispatch-4', `${scenario.name} missing returned dispatch id`);
+        assert.equal(stepMetadata(result).gateway_label, 'gatefix-buster-dispatch', `${scenario.name} missing returned gateway label`);
+        assert.equal(stepMetadata(result).session_key, 'agent:gatefix-gate:buster-1', `${scenario.name} missing returned session key`);
+        assert.equal(result.correlation.gate_type, 'buster', `${scenario.name} missing returned gate type`);
+        assert.equal(stepMetadata(result).max_rate_limit_pauses, 3, `${scenario.name} missing returned pause budget`);
+        assert.equal(stepMetadata(result).rate_limit_status?.max_rate_limit_pauses, 3, `${scenario.name} missing returned nested pause budget`);
       }
   
       const streamKey = `pipeline:telemetry:${scenario.project}:${scenario.runId}`;
-      const events = xaddEvents(streamKey);
+      const events = gateRuntimeEvents(xaddEvents, streamKey);
       const signalEvents = events.filter((event) => event.type !== 'observability.degraded');
       const expectedMaxRateLimitPauses = config.rate_limit?.max_pauses_per_module ?? 5;
       if (scenario.expectedExit === 40) {

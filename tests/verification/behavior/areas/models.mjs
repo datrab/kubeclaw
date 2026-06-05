@@ -17,14 +17,14 @@ export async function registerModelsArea({
   xaddEvents,
 }) {
   async function buildBuiltInRegistry(runtimeRoot) {
-    const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.js');
-    const { registry, errors } = registryMod.buildPluginRegistry({}, { throwOnError: false });
+    const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
+    const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
     assert.equal(errors.length, 0);
     return registry;
   }
 
   const runtimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
-  const runtimeMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/agents/runtime.js');
+  const runtimeMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/agents/runtime.ts');
 
   await record('Codex/OpenAI model -> subagent', async () => {
     assert.equal(runtimeMod.resolveRuntime({ model: 'openai/gpt-5' }), 'subagent');
@@ -37,21 +37,21 @@ export async function registerModelsArea({
     assert.equal(runtimeMod.modelToHarness('anthropic/claude-sonnet-4-6'), 'claude');
   });
   
-  await record('project-level model policy honors legacy progress.models compatibility', async () => {
+  await record('project-level model policy ignores legacy progress.models compatibility', async () => {
     const policyRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
-    const policyMod = await importRuntimeModule(policyRuntimeRoot, '/app/skills/pipeline/core/policy.js');
+    const policyMod = await importRuntimeModule(policyRuntimeRoot, '/app/skills/pipeline/core/policy.ts');
   
-    const legacyProjectDefault = policyMod.resolvePolicy(
-      { models: { forge: 'config-default-model' } },
+    const legacyIgnored = policyMod.resolvePolicy(
+      { fallback_model: 'platform-fallback-model' },
       { models: { forge: 'legacy-project-model' } },
       'forge',
       {}
     );
-    assert.equal(legacyProjectDefault.model, 'legacy-project-model');
-    assert.equal(legacyProjectDefault.model_source, 'project_default');
+    assert.equal(legacyIgnored.model, 'platform-fallback-model');
+    assert.equal(legacyIgnored.model_source, 'platform_fallback');
   
-    const defaultsWinsOverLegacy = policyMod.resolvePolicy(
-      { models: { forge: 'config-default-model' } },
+    const defaultsOwnProjectPolicy = policyMod.resolvePolicy(
+      { fallback_model: 'platform-fallback-model' },
       {
         models: { forge: 'legacy-project-model' },
         defaults: { models: { forge: 'wave3-project-model' } },
@@ -59,8 +59,12 @@ export async function registerModelsArea({
       'forge',
       {}
     );
-    assert.equal(defaultsWinsOverLegacy.model, 'wave3-project-model');
-    assert.equal(defaultsWinsOverLegacy.model_source, 'project_default');
+    assert.equal(defaultsOwnProjectPolicy.model, 'wave3-project-model');
+    assert.equal(defaultsOwnProjectPolicy.model_source, 'project_default');
+
+    const policySource = fs.readFileSync(path.join(policyRuntimeRoot, 'app/skills/pipeline/core/policy.ts'), 'utf8');
+    assert.equal(policySource.includes('progress?.models'), false);
+    assert.equal(policySource.includes('legacy progress.models'), false);
   });
   
   await record('pipeline.started reports effective project model defaults', async () => {
@@ -69,22 +73,21 @@ export async function registerModelsArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const telemetryMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/telemetry.js');
-    const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const telemetryMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/telemetry.ts');
+    const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(telemetryRuntimeRoot);
   
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-pipeline-start-models-'));
-    const logRoot = path.join(repoRoot, '.swarm', 'logs');
+    const swarmDir = path.join(repoRoot, '.swarm');
     const runId = 'run-pipeline-start-models-1';
     const config = {
       project: 'behavior-pipeline-start-models',
       telemetry: { enabled: true },
-      _logDir: logRoot,
-      _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
+      paths: { swarm_dir: swarmDir },
       _runId: runId,
       run_id: runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-      _pluginRegistry: registry,
+      pluginRegistry: registry,
     };
   
     telemetryMod.onPipelineStarted({ config }, {
@@ -111,7 +114,6 @@ export async function registerModelsArea({
     assert.equal(streamEvents[0].type, 'pipeline.started');
     assert.deepEqual(streamEvents[0].models, {
       buster: 'wave3-buster-model',
-      echo: 'legacy-echo-model',
       forge: 'wave3-forge-model',
     });
   });

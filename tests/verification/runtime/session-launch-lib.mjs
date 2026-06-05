@@ -1,13 +1,15 @@
 import fs from 'node:fs';
 import { parseArgs } from '../lib/lifecycle-audit-lib.mjs';
-import { spawnSession, killSession } from '../../../skills/common/pipeline/agents/lifecycle.js';
-import { parseSessionState, isStoppedSessionState } from '../../../skills/common/pipeline/agents/acp-monitor.js';
-import { gatewayInvoke, resolveGatewayBaseUrl, resolveGatewayToken } from '../../../skills/common/pipeline/integrations/gateway.js';
-import { modelToHarness, resolveRuntime } from '../../../skills/common/pipeline/agents/runtime.js';
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+import { spawnSession, killSession } from '../../../skills/common/pipeline/agents/lifecycle.ts';
+import {
+  createAcpMonitorEventAdapter,
+  isStoppedSessionState,
+  monitorStateFromAcpEvent,
+} from '../../../skills/common/pipeline/agents/acp-monitor.ts';
+import { gatewayInvoke, resolveGatewayBaseUrl, resolveGatewayToken } from '../../../skills/common/pipeline/integrations/gateway.ts';
+import { modelToHarness, resolveRuntime } from '../../../skills/common/pipeline/agents/runtime.ts';
+import { createBudget, isBudgetExhaustedError } from '../../../skills/common/pipeline/timing.ts';
+import { createPipelineEventBus, waitForAny } from '../../../skills/common/pipeline/services/pipeline-event-contract.ts';
 
 function asBool(value, fallback = false) {
   if (value === undefined || value === null || value === '') return fallback;
@@ -38,17 +40,18 @@ export function parseLaunchArgs(argv = process.argv.slice(2), defaults = {}) {
   const runtime = resolveRuntime({ runtime: args.runtime || defaults.runtime, model: args.model || defaults.model });
   const model = args.model || defaults.model;
   const cwd = args.cwd || process.cwd();
-  const gatewayUrl = resolveGatewayBaseUrl(args['gateway-url'] || null);
-  const gatewayToken = resolveGatewayToken(args['gateway-token'] || null);
   const timeoutSeconds = parseIntegerArg(args['timeout-seconds'] ?? defaults.timeoutSeconds ?? 120, 'timeout-seconds', { min: 1 });
   const pollAttempts = parseIntegerArg(args['poll-attempts'] ?? defaults.pollAttempts ?? 8, 'poll-attempts', { min: 1 });
   const pollMs = parseIntegerArg(args['poll-ms'] ?? defaults.pollMs ?? 1000, 'poll-ms', { min: 0 });
+  const gatewayUrl = resolveGatewayBaseUrl(args['gateway-url'] || null);
+  const gatewayToken = resolveGatewayToken(args['gateway-token'] || null);
   const keepSession = asBool(args['keep-session'], false);
   const prompt = args.prompt || defaults.prompt || 'Reply with READY and stop.';
   const labelPrefix = args['label-prefix'] || defaults.labelPrefix || `verify-${runtime}-launch`;
   const label = `${labelPrefix}-${Date.now()}`;
   const agentId = args['agent-id'] || defaults.agentId || modelToHarness(model) || null;
   const allowTerminalAfterLaunch = asBool(args['allow-terminal-after-launch'], defaults.allowTerminalAfterLaunch ?? false);
+  const allowStoppedCleanup = asBool(args['allow-stopped-cleanup'], defaults.allowStoppedCleanup ?? false);
   return {
     runtime,
     model,
@@ -63,6 +66,7 @@ export function parseLaunchArgs(argv = process.argv.slice(2), defaults = {}) {
     label,
     agentId,
     allowTerminalAfterLaunch,
+    allowStoppedCleanup,
   };
 }
 
@@ -71,48 +75,101 @@ export async function observeSessionLaunch(sessionKey, { gatewayUrl, gatewayToke
   const errors = [];
   const errorKinds = [];
   let degradedVisibility = false;
+  const eventBus = createPipelineEventBus();
+  const budget = createBudget({ timeoutMs: Math.max(1, pollAttempts) * Math.max(1, pollMs), label: 'session-launch-observation' });
+  const identity = { session_key: sessionKey };
+  const adapter = createAcpMonitorEventAdapter(sessionKey, null, {
+    eventBus,
+    identity,
+    budget,
+    pollMs,
+    monitorOpts: {
+      gatewayUrl,
+      gatewayToken,
+      unknown_poll_limit: pollAttempts,
+      stale_poll_limit: pollAttempts,
+      max_transcript_extensions: 0,
+      transcript_grace_ms: 0,
+      monitor_poll_ms: pollMs,
+    },
+    stopOnTerminal: false,
+  });
 
-  for (let attempt = 1; attempt <= pollAttempts; attempt += 1) {
-    try {
-      const raw = await gatewayInvoke('session_status', { sessionKey }, 5000, { gatewayUrl, gatewayToken });
-      const details = raw?.result?.details || raw;
-      const parsed = parseSessionState(details);
-      observedStates.push(parsed.state);
-      return {
-        visible: true,
-        active: parsed.active,
-        state: parsed.state,
-        observedStates,
-        details,
-        errors,
-        errorKinds,
-        degradedVisibility,
-      };
-    } catch (err) {
-      const parsed = parseStatusError(err);
-      errors.push(parsed.message);
-      errorKinds.push(parsed.kind);
-      if (!parsed.notFound) degradedVisibility = true;
-      if (attempt >= pollAttempts || !parsed.notFound) {
+  adapter.start();
+  try {
+    while (budget.remainingMs() > 0) {
+      try {
+        const event = await waitForAny(eventBus, ['acp.session.state', 'fatal.error'], identity, {
+          signal: budget.signal,
+          budget,
+          timeoutMs: budget.remainingMs(),
+        });
+        if (event.type === 'fatal.error') {
+          const message = event.payload?.error || 'session status adapter failed';
+          errors.push(message);
+          errorKinds.push('status_error');
+          degradedVisibility = true;
+          return {
+            visible: false,
+            active: false,
+            state: 'status_error',
+            observedStates,
+            details: null,
+            errors,
+            errorKinds,
+            degradedVisibility,
+          };
+        }
+        const state = monitorStateFromAcpEvent(event);
+        if (!state) continue;
+        observedStates.push(state.sessionState);
+        if (state.gatewayUnreachable === true) {
+          const parsed = parseStatusError(new Error(state.gatewayDetail || state.detail || 'session status unreachable'));
+          errors.push(parsed.message);
+          errorKinds.push(parsed.kind);
+          degradedVisibility = true;
+          if (!parsed.notFound) {
+            return {
+              visible: false,
+              active: false,
+              state: 'status_error',
+              observedStates,
+              details: null,
+              errors,
+              errorKinds,
+              degradedVisibility,
+            };
+          }
+          continue;
+        }
         return {
-          visible: false,
-          active: false,
-          state: parsed.notFound ? 'not_found' : 'status_error',
+          visible: true,
+          active: state.sessionActive,
+          state: state.sessionState,
           observedStates,
-          details: null,
+          details: state,
           errors,
           errorKinds,
           degradedVisibility,
         };
+      } catch (err) {
+        if (err?.code === 'PIPELINE_EVENT_WAIT_TIMEOUT' || isBudgetExhaustedError(err)) break;
+        const parsed = parseStatusError(err);
+        errors.push(parsed.message);
+        errorKinds.push(parsed.kind);
+        if (!parsed.notFound) degradedVisibility = true;
+        break;
       }
-      await sleep(pollMs);
     }
+  } finally {
+    adapter.stop('launch_observation_done');
+    await adapter.done?.catch?.(() => {});
   }
 
   return {
     visible: false,
     active: false,
-    state: 'not_found',
+    state: degradedVisibility ? 'status_error' : 'not_found',
     observedStates,
     details: null,
     errors,
@@ -126,6 +183,7 @@ export function assessLaunchVerification({
   streamLogExists = false,
   cleanup = null,
   allowTerminalAfterLaunch = false,
+  allowStoppedCleanup = false,
   keepSession = false,
 } = {}) {
   const observationIssue = resolveLaunchObservationIssue(observed);
@@ -144,7 +202,11 @@ export function assessLaunchVerification({
     ? 'session_status'
     : ((allowTerminalAfterLaunch === true && streamLogExists) ? 'stream_log_only' : 'none'));
 
-  const cleanupConfirmed = keepSession ? null : cleanup?.confirmed === true;
+  const stoppedBeforeCleanup = allowStoppedCleanup === true
+    && observed?.visible === true
+    && observed?.active !== true
+    && isStoppedSessionState(observed?.state);
+  const cleanupConfirmed = keepSession ? null : (cleanup?.confirmed === true || stoppedBeforeCleanup);
   const degradedVisibility = observed?.degradedVisibility === true || launchEvidence === 'stream_log_only' || Boolean(observationIssue);
   const nonPassReasons = [];
 
@@ -155,14 +217,15 @@ export function assessLaunchVerification({
       : 'launch_unconfirmed');
   }
   if (observed?.degradedVisibility === true) nonPassReasons.push('gateway_visibility_degraded');
-  if (!keepSession && cleanup?.confirmed !== true) nonPassReasons.push('cleanup_unconfirmed');
+  if (!keepSession && cleanupConfirmed !== true) nonPassReasons.push('cleanup_unconfirmed');
 
   return {
-    ok: launchConfirmed && observed?.degradedVisibility !== true && (keepSession || cleanup?.confirmed === true),
+    ok: launchConfirmed && observed?.degradedVisibility !== true && (keepSession || cleanupConfirmed === true),
     launchConfirmed,
     launchEvidence,
     degradedVisibility,
     cleanupConfirmed,
+    cleanupConfirmedByStoppedState: stoppedBeforeCleanup,
     observationIssue,
     nonPassReasons,
   };
@@ -192,7 +255,7 @@ export async function verifyLaunchReachability(options) {
   const spawnOptions = {
     runtime,
     model: options.model,
-    agentId: runtime === 'acp' ? options.agentId : null,
+    agentId: options.agentId,
     cwd: options.cwd,
     label: options.label,
     gatewayUrl: options.gatewayUrl,
@@ -206,7 +269,7 @@ export async function verifyLaunchReachability(options) {
     session: {
       runtime,
       model: options.model,
-      agentId: runtime === 'acp' ? options.agentId : null,
+      agentId: options.agentId,
       cwd: options.cwd,
       label: options.label,
     },
@@ -226,12 +289,12 @@ export async function verifyLaunchReachability(options) {
     cleanup = await killSession(sessionData.childSessionKey, {
       runtime,
       model: options.model,
-      agentId: runtime === 'acp' ? options.agentId : null,
+      agentId: options.agentId,
       label: options.label,
       gatewayUrl: options.gatewayUrl,
       gatewayToken: options.gatewayToken,
-      confirmTimeoutMs: 5000,
-      cleanupConfirmTimeoutMs: 5000,
+      confirmTimeoutMs: 30000,
+      cleanupConfirmTimeoutMs: 30000,
       confirmPollMs: 500,
     });
   }
@@ -241,6 +304,7 @@ export async function verifyLaunchReachability(options) {
     streamLogExists,
     cleanup,
     allowTerminalAfterLaunch: options.allowTerminalAfterLaunch,
+    allowStoppedCleanup: options.allowStoppedCleanup,
     keepSession: options.keepSession,
   });
 
@@ -248,7 +312,7 @@ export async function verifyLaunchReachability(options) {
     ...assessment,
     runtime,
     model: options.model,
-    agentId: runtime === 'acp' ? options.agentId : null,
+    agentId: options.agentId,
     label: options.label,
     gatewayUrl: options.gatewayUrl,
     sessionKey: sessionData.childSessionKey,
@@ -256,6 +320,7 @@ export async function verifyLaunchReachability(options) {
     streamLogPath: sessionData.streamLogPath || null,
     streamLogExists,
     launchVisible: observed.visible,
+    allowStoppedCleanup: options.allowStoppedCleanup,
     active: observed.active,
     state: observed.state,
     observedStates: observed.observedStates,

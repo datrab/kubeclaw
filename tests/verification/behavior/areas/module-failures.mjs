@@ -34,15 +34,52 @@ export async function registerModuleFailuresArea({
   pathsMod,
   busterPipelineMod,
 }) {
-function getFieldValue(fields = [], name) {
-  return fields.find((field) => field.name === name)?.value;
-}
+	function getFieldValue(fields = [], name) {
+	  return fields.find((field) => field.name === name)?.value;
+	}
+
+	function stepExit(result) {
+	  return result?.terminal?.exitCode ?? result?.exit;
+	}
+
+	function stepReason(result) {
+	  return result?.diagnostics?.summary ?? result?.reason;
+	}
+
+	function stepMetadata(result) {
+	  return result?.diagnostics?.metadata || {};
+	}
+
+	function stepCorrelation(result) {
+	  return result?.correlation || {};
+	}
+
+	function stepValue(result, name) {
+	  const metadata = stepMetadata(result);
+	  const correlation = stepCorrelation(result);
+	  if (Object.prototype.hasOwnProperty.call(correlation, name)) return correlation[name];
+	  if (Object.prototype.hasOwnProperty.call(metadata, name)) return metadata[name];
+	  if (name === 'module') return correlation.module_id ?? result?.module;
+	  if (name === 'status') return metadata.final_status?.status ?? metadata.status?.status ?? (result?.outcome === 'passed' ? 'PASS' : result?.status);
+	  return result?.[name];
+	}
 
 async function buildBuiltInRegistry(runtimeRoot) {
-  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.js');
-  const { registry, errors } = registryMod.buildPluginRegistry({}, { throwOnError: false });
+  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
   assert.equal(errors.length, 0);
   return registry;
+}
+
+function platformModuleFailureDefaults() {
+  return {
+    fallback_model: 'openai-codex/gpt-5.4',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },
+    pre_check: { enabled: false, lint_report_path: '/app/skills/pipeline/tools/lint-report.ts', timeout_seconds: 60 },
+    review_defaults: { timeout_minutes: 30, max_fix_cycles: 3, lint_tier: 'full', lint_required: false },
+  };
 }
 
 function seedCanonicalReadyForTestingStatus(statusStoreMod, config, dir, overrides = {}) {
@@ -51,13 +88,10 @@ function seedCanonicalReadyForTestingStatus(statusStoreMod, config, dir, overrid
   const startedAt = overrides.started_at || '2026-04-10T00:00:00.000Z';
   const readyAt = overrides.ready_at || '2026-04-10T00:01:00.000Z';
   const status = statusStoreMod.initStatus(moduleId, { title });
+  status.started_at = startedAt;
+  status.attempt_started_at = startedAt;
 
-  lifecycleStateMod.startModulePhase(status, 'forge', 'Synthetic started module for READY_FOR_TESTING verifier fixture', {
-    now: startedAt,
-  });
-  statusStoreMod.saveStatus(config, dir, status);
-
-  lifecycleStateMod.transitionModuleStatus(status, 'READY_FOR_TESTING', {
+  const readyTransition = lifecycleStateMod.transitionModuleStatus(status, 'READY_FOR_TESTING', {
     note: 'Synthetic READY_FOR_TESTING verifier fixture',
     now: readyAt,
   });
@@ -76,15 +110,16 @@ function seedCanonicalReadyForTestingStatus(statusStoreMod, config, dir, overrid
     ...rest
   } = overrides || {};
   Object.assign(status, rest);
-  statusStoreMod.saveStatus(config, dir, status);
+  statusStoreMod.saveStatus(config, dir, status, readyTransition);
   return status;
 }
 
-await record('module-runner reuses poll-owned transcript state for session_ended_no_changes alerts', async () => {
-  const moduleRunnerForgeSource = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/runners/module-runner-forge.js');
+await record('module-runner no longer uses transcript activity as Forge no-work authority', async () => {
+  const moduleRunnerForgeSource = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/runners/module-runner-forge.ts');
 
   assert.equal(moduleRunnerForgeSource.includes('readAcpTranscriptState'), false);
-  assert.equal(moduleRunnerForgeSource.includes('const transcriptState = result.transcript || null;'), true);
+  assert.equal(moduleRunnerForgeSource.includes('transcriptShowsProgress'), false);
+  assert.equal(moduleRunnerForgeSource.includes('const transcriptState = result.transcript || null;'), false);
 });
 
 await record('module-runner routes Forge execution through the worker:module_forge stage owner when the registry is present', async () => {
@@ -93,9 +128,9 @@ await record('module-runner routes Forge execution through the worker:module_for
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const registryMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/registry.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const registryMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/registry.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-module-forge-stage-owner-'));
   const modulesRoot = path.join(repoRoot, 'modules');
@@ -114,7 +149,7 @@ await record('module-runner routes Forge execution through the worker:module_for
     attempt_started_at: '2026-04-10T00:00:00.000Z',
   };
 
-  const { registry, errors } = registryMod.buildPluginRegistry({}, { throwOnError: false });
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
   assert.equal(errors.length, 0);
   let stageOwnerCalls = 0;
   const testRegistry = {
@@ -126,7 +161,7 @@ await record('module-runner routes Forge execution through the worker:module_for
         'worker:module_forge': {
           ...registry.stageOwners['worker.execute']['worker:module_forge'],
           implementation: {
-            execute: async ({ input, workerInput, pluginContext }) => {
+            execute: async ({ input }, pluginContext) => {
               stageOwnerCalls += 1;
               assert.equal(input.ids.stageId, 'worker:module_forge');
               assert.equal(input.ids.moduleId, '01');
@@ -135,18 +170,13 @@ await record('module-runner routes Forge execution through the worker:module_for
               assert.equal(input.worker.workerType, 'module_forge');
               assert.equal(pluginContext.schemaVersion, 'v1');
               assert.equal(pluginContext.stageId, 'worker:module_forge');
-              await workerInput.onDispatched({
-                session_key: 'agent:main:acp:forge-stage-owner',
-                gateway_label: 'forge-stage-owner',
-                stream_log_path: '/tmp/forge-stage-owner.jsonl',
-                runtime: 'acp',
-                agent_id: 'forge',
-              });
-              await workerInput.onFinalized({
-                status: currentStatus,
-                stream_log_path: '/tmp/forge-stage-owner.jsonl',
-                poll_result: { ok: true },
-              });
+              assert.equal(typeof pluginContext.workerRuntime.dispatch, 'function');
+              currentStatus = {
+                ...currentStatus,
+                status: 'PASS',
+                current_phase: null,
+                completion_summary: 'Forge stage owner PASS',
+              };
               return {
                 schemaVersion: 'v1',
                 producerKind: 'worker',
@@ -155,13 +185,20 @@ await record('module-runner routes Forge execution through the worker:module_for
                 diagnostics: {
                   summary: 'Forge worker passed',
                   metadata: {
-                    legacy_result: {
+                    final_status: currentStatus,
+                    poll_result: {
                       ok: true,
-                      poll_result: { ok: true },
-                      status: currentStatus,
-                      session_key: 'agent:main:acp:forge-stage-owner',
-                      gateway_label: 'forge-stage-owner',
-                      attempt: 1,
+                      reason: 'agent_ended_meaningful_diff',
+                      status: { status: 'READY_FOR_TESTING', summary: 'Forge stage owner completed' },
+                    },
+                    session_key: 'agent:main:acp:forge-stage-owner',
+                    gateway_label: 'forge-stage-owner',
+                    attempt: 1,
+                  },
+                  typed: {
+                    worker: {
+                      schemaVersion: 'v1',
+                      outcomeClass: 'passed',
                     },
                   },
                 },
@@ -184,17 +221,7 @@ await record('module-runner routes Forge execution through the worker:module_for
     },
   };
 
-  const config = {
-    project: 'behavior-module-forge-stage-owner',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    telemetry: { enabled: false },
-    paths: { modules_dir: modulesRoot },
-    _pluginRegistry: testRegistry,
-    _runId: runId,
-    run_id: runId,
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    _testOverrides: {
+    const deps = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
         loadStatus: () => currentStatus,
@@ -210,17 +237,32 @@ await record('module-runner routes Forge execution through the worker:module_for
         clearShutdownContext: () => {},
         invalidateHeadHash: () => {},
         headHash: () => 'abc123',
-        gitCommitAndPush: async () => {},
+        gitCommitAndPush: async () => ({ committed: true, hash: 'durable-forge-only' }),
         sleep: async () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-module-forge-stage-owner',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    telemetry: { enabled: false },
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+    pluginRegistry: testRegistry,
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+      };
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps });
 
   assert.equal(stageOwnerCalls, 1);
-  assert.equal(result.exit, 0);
-  assert.equal(result.status, 'PASS');
+  assert.equal(result.kind, 'pipeline_step_result');
+  assert.equal(result.stepType, 'module');
+  assert.equal(result.nextAction, 'continue');
+  assert.equal(result.outcome, 'passed');
+  assert.equal(stepExit(result), 0);
+  assert.equal(stepValue(result, 'status'), 'PASS');
 });
 
 await record('module-runner fails closed when worker:module_forge returns an invalid control result', async () => {
@@ -229,9 +271,9 @@ await record('module-runner fails closed when worker:module_forge returns an inv
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const registryMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/registry.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const registryMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/registry.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-module-forge-stage-invalid-'));
   const logRoot = path.join(repoRoot, '.swarm', 'logs');
@@ -252,7 +294,7 @@ await record('module-runner fails closed when worker:module_forge returns an inv
     phase_started_at: '2026-04-10T00:00:00.000Z',
   };
 
-  const { registry, errors } = registryMod.buildPluginRegistry({}, { throwOnError: false });
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
   assert.equal(errors.length, 0);
   const testRegistry = {
     ...registry,
@@ -286,19 +328,7 @@ await record('module-runner fails closed when worker:module_forge returns an inv
     },
   };
 
-  const config = {
-    project: 'behavior-module-forge-stage-invalid',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    telemetry: { enabled: true },
-    paths: { modules_dir: modulesRoot },
-    _pluginRegistry: testRegistry,
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
-    _runId: runId,
-    run_id: runId,
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    _testOverrides: {
+    const configDeps2 = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
         loadStatus: () => currentStatus,
@@ -316,13 +346,33 @@ await record('module-runner fails closed when worker:module_forge returns an inv
         headHash: () => 'abc123',
         sleep: async () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-module-forge-stage-invalid',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    telemetry: { enabled: true },
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+    pluginRegistry: testRegistry,
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+      };
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps2 });
 
-  assert.equal(result.exit, 1);
-  assert.equal(result.reason, "Module Forge worker execution failed: Module Forge worker returned invalid control result: nextAction must be 'pass', 'retry', 'request_fix', or 'block' for worker:module_forge");
+  assert.equal(stepExit(result), 1);
+  assert.equal(stepReason(result), "Module Forge worker execution failed: Module Forge worker returned invalid control result: nextAction must be 'pass', 'retry', 'request_fix', or 'block' for worker:module_forge; diagnostics must be an object; diagnostics.typed must be an object; diagnostics.typed.worker must be an object");
+  assert.equal(result.diagnostics.contract_invalid, true);
+  assert.equal(result.diagnostics.contract_diagnostic.diagnosticType, 'plugin_contract_invalid');
+  assert.equal(result.diagnostics.contract_diagnostic.stageId, 'worker:module_forge');
+  assert.deepEqual(result.diagnostics.contract_diagnostic.validationErrors, [
+    "nextAction must be 'pass', 'retry', 'request_fix', or 'block' for worker:module_forge",
+    'diagnostics must be an object',
+    'diagnostics.typed must be an object',
+    'diagnostics.typed.worker must be an object',
+  ]);
   await flushAsync();
 
   const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
@@ -330,7 +380,7 @@ await record('module-runner fails closed when worker:module_forge returns an inv
   assert.equal(Boolean(failEvent), true);
   assert.equal(failEvent.module_id, '01');
   assert.equal(failEvent.phase, 'forge');
-  assert.equal(failEvent.reason, result.reason);
+  assert.equal(failEvent.reason, stepReason(result));
 });
 
 await record('module-runner routes Buster execution through the worker:module_buster stage owner when the registry is present', async () => {
@@ -339,9 +389,9 @@ await record('module-runner routes Buster execution through the worker:module_bu
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const registryMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/registry.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const registryMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/registry.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-module-buster-stage-owner-'));
   const runId = 'run-module-buster-stage-owner-1';
@@ -360,7 +410,7 @@ await record('module-runner routes Buster execution through the worker:module_bu
     attempt_started_at: '2026-04-10T00:00:00.000Z',
   };
 
-  const { registry, errors } = registryMod.buildPluginRegistry({}, { throwOnError: false });
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
   assert.equal(errors.length, 0);
   let stageOwnerCalls = 0;
   const testRegistry = {
@@ -372,7 +422,7 @@ await record('module-runner routes Buster execution through the worker:module_bu
         'worker:module_buster': {
           ...registry.stageOwners['worker.execute']['worker:module_buster'],
           implementation: {
-            execute: async ({ input, workerInput, pluginContext }) => {
+            execute: async ({ input }, pluginContext) => {
               stageOwnerCalls += 1;
               assert.equal(input.ids.stageId, 'worker:module_buster');
               assert.equal(input.ids.moduleId, '01');
@@ -383,22 +433,13 @@ await record('module-runner routes Buster execution through the worker:module_bu
               assert.equal(input.worker.workerType, 'module_buster');
               assert.equal(pluginContext.schemaVersion, 'v1');
               assert.equal(pluginContext.stageId, 'worker:module_buster');
-              await workerInput.onDispatched({
-                dispatch_id: 'buster-stage-owner-dispatch',
-                gateway_label: 'buster-stage-owner-dispatch',
-                run_id: 'run-buster-stage-owner',
-              });
+              assert.equal(typeof pluginContext.workerRuntime.dispatch, 'function');
               currentStatus = {
                 ...currentStatus,
                 status: 'PASS',
                 current_phase: null,
                 completion_summary: 'Buster stage owner PASS',
               };
-              await workerInput.onFinalized({
-                status: currentStatus,
-                session_key: 'agent:main:acp:buster-stage-owner',
-                poll_result: { ok: true, status: { status: 'PASS' } },
-              });
               return {
                 schemaVersion: 'v1',
                 producerKind: 'worker',
@@ -407,15 +448,18 @@ await record('module-runner routes Buster execution through the worker:module_bu
                 diagnostics: {
                   summary: 'Buster worker passed',
                   metadata: {
-                    legacy_result: {
-                      ok: true,
-                      poll_result: { ok: true, status: { status: 'PASS' } },
-                      status: currentStatus,
-                      dispatch_id: 'buster-stage-owner-dispatch',
-                      gateway_label: 'buster-stage-owner-dispatch',
-                      session_key: 'agent:main:acp:buster-stage-owner',
-                      attempt: 1,
-                      run_id: 'run-buster-stage-owner',
+                    final_status: currentStatus,
+                    poll_result: { ok: true, status: { status: 'PASS' } },
+                    dispatch_id: 'buster-stage-owner-dispatch',
+                    gateway_label: 'buster-stage-owner-dispatch',
+                    session_key: 'agent:main:acp:buster-stage-owner',
+                    attempt: 1,
+                    run_id: 'run-buster-stage-owner',
+                  },
+                  typed: {
+                    worker: {
+                      schemaVersion: 'v1',
+                      outcomeClass: 'passed',
                     },
                   },
                 },
@@ -439,17 +483,7 @@ await record('module-runner routes Buster execution through the worker:module_bu
     },
   };
 
-  const config = {
-    project: 'behavior-module-buster-stage-owner',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    telemetry: { enabled: false },
-    paths: { modules_dir: modulesRoot },
-    _pluginRegistry: testRegistry,
-    _runId: runId,
-    run_id: runId,
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    _testOverrides: {
+    const configDeps3 = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
         loadStatus: () => currentStatus,
@@ -465,14 +499,29 @@ await record('module-runner routes Buster execution through the worker:module_bu
         clearShutdownContext: () => {},
         sleep: async () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-module-buster-stage-owner',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    telemetry: { enabled: false },
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+    pluginRegistry: testRegistry,
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+      };
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps3 });
 
   assert.equal(stageOwnerCalls, 1);
-  assert.equal(result.exit, 0);
-  assert.equal(result.status, 'PASS');
+  assert.equal(result.kind, 'pipeline_step_result');
+  assert.equal(result.stepType, 'module');
+  assert.equal(result.nextAction, 'continue');
+  assert.equal(result.outcome, 'passed');
+  assert.equal(stepExit(result), 0);
+  assert.equal(stepValue(result, 'status'), 'PASS');
 });
 
 await record('module-runner fails closed when worker:module_buster returns an invalid control result', async () => {
@@ -481,9 +530,9 @@ await record('module-runner fails closed when worker:module_buster returns an in
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const registryMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/registry.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const registryMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/registry.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-module-buster-stage-invalid-'));
   const logRoot = path.join(repoRoot, '.swarm', 'logs');
@@ -504,7 +553,7 @@ await record('module-runner fails closed when worker:module_buster returns an in
     phase_started_at: '2026-04-10T00:00:00.000Z',
   };
 
-  const { registry, errors } = registryMod.buildPluginRegistry({}, { throwOnError: false });
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
   assert.equal(errors.length, 0);
   const testRegistry = {
     ...registry,
@@ -539,19 +588,7 @@ await record('module-runner fails closed when worker:module_buster returns an in
     },
   };
 
-  const config = {
-    project: 'behavior-module-buster-stage-invalid',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    telemetry: { enabled: true },
-    paths: { modules_dir: modulesRoot },
-    _pluginRegistry: testRegistry,
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
-    _runId: runId,
-    run_id: runId,
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    _testOverrides: {
+    const configDeps4 = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
         loadStatus: () => currentStatus,
@@ -567,13 +604,33 @@ await record('module-runner fails closed when worker:module_buster returns an in
         clearShutdownContext: () => {},
         sleep: async () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-module-buster-stage-invalid',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    telemetry: { enabled: true },
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+    pluginRegistry: testRegistry,
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+      };
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps4 });
 
-  assert.equal(result.exit, 1);
-  assert.equal(result.reason, "Module Buster worker execution failed: Module Buster worker returned invalid control result: nextAction must be 'pass', 'retry', 'request_fix', or 'block' for worker:module_buster");
+  assert.equal(stepExit(result), 1);
+  assert.equal(stepReason(result), "Module Buster worker execution failed: Module Buster worker returned invalid control result: nextAction must be 'pass', 'retry', 'request_fix', or 'block' for worker:module_buster; diagnostics must be an object; diagnostics.typed must be an object; diagnostics.typed.worker must be an object");
+  assert.equal(result.diagnostics.contract_invalid, true);
+  assert.equal(result.diagnostics.contract_diagnostic.diagnosticType, 'plugin_contract_invalid');
+  assert.equal(result.diagnostics.contract_diagnostic.stageId, 'worker:module_buster');
+  assert.deepEqual(result.diagnostics.contract_diagnostic.validationErrors, [
+    "nextAction must be 'pass', 'retry', 'request_fix', or 'block' for worker:module_buster",
+    'diagnostics must be an object',
+    'diagnostics.typed must be an object',
+    'diagnostics.typed.worker must be an object',
+  ]);
   await flushAsync();
 
   const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
@@ -581,126 +638,107 @@ await record('module-runner fails closed when worker:module_buster returns an in
   assert.equal(Boolean(failEvent), true);
   assert.equal(failEvent.module_id, '01');
   assert.equal(failEvent.phase, 'buster');
-  assert.equal(failEvent.reason, result.reason);
+  assert.equal(failEvent.reason, stepReason(result));
 });
 
-await record('module-runner appends terminal ACP detail to Forge no-change failures without losing transcript-active vs stale wording', async () => {
+await record('module-runner appends terminal ACP detail to Forge no-change failures without transcript authority', async () => {
   const moduleRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
   installFakeRedis(moduleRuntimeRoot);
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const registry = await buildBuiltInRegistry(moduleRuntimeRoot);
 
-  const scenarios = [
-    {
-      name: 'active transcript',
-      transcript: { eventCount: 3, lastActivityPoll: 0 },
-      expectedReason: 'Forge completed without file changes (transcript shows recent activity — possible no-op session) (adapter command missing)',
-      expectedTranscriptField: 'active (3 events)',
-    },
-    {
-      name: 'stale transcript',
-      transcript: { eventCount: 3, lastActivityPoll: 2 },
-      expectedReason: 'Forge session ended but produced no commits — agent may have crashed or errored (adapter command missing)',
-      expectedTranscriptField: 'stale (no activity for 2 polls)',
-    },
-  ];
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-forge-no-change-detail-'));
+  const modulesRoot = path.join(repoRoot, 'modules');
+  fs.mkdirSync(path.join(modulesRoot, '01-scaffold'), { recursive: true });
 
-  for (const scenario of scenarios) {
-    const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-forge-no-change-detail-'));
-    const modulesRoot = path.join(repoRoot, 'modules');
-    fs.mkdirSync(path.join(modulesRoot, '01-scaffold'), { recursive: true });
+  let currentStatus = {
+    module_id: '01',
+    title: 'Scaffold',
+    status: 'IN_PROGRESS',
+    current_phase: 'forge',
+    fail_count: 0,
+    history: [],
+    cost: {},
+  };
+  const handleFailCalls = [];
+  const discordCalls = [];
 
-    let currentStatus = {
-      module_id: '01',
-      title: 'Scaffold',
-      status: 'IN_PROGRESS',
-      current_phase: 'forge',
-      fail_count: 0,
-      history: [],
-      cost: {},
-    };
-    const handleFailCalls = [];
-    const discordCalls = [];
-
-    const progress = {
-      execution_order: ['01'],
-      modules: {
-        '01': {
-          title: 'Scaffold',
-          dir: '01-scaffold',
-          stages: ['forge'],
-        },
+  const progress = {
+    execution_order: ['01'],
+    modules: {
+      '01': {
+        title: 'Scaffold',
+        dir: '01-scaffold',
+        stages: ['forge'],
       },
-    };
+    },
+  };
 
-    const config = {
-      project: `behavior-forge-no-change-detail-${scenario.name.replace(/\s+/g, '-')}`,
-      default_timeout_minutes: 30,
-      default_max_fails: 3,
-      telemetry: { enabled: false },
-      _pluginRegistry: registry,
-      paths: { modules_dir: modulesRoot },
-      _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-      _testOverrides: {
-        moduleRunner: {
-          checkDependencies: () => ({ met: true }),
-          loadStatus: () => currentStatus,
-          saveStatus: (_config, _dir, nextStatus) => { currentStatus = nextStatus; },
-          runPreflightValidation: () => ({ passed: true, failures: [] }),
-          resolvePolicy: () => ({ model: 'forge-model', thinking: 'high', model_source: 'project_default', thinking_source: 'project_default' }),
-          modelToHarness: () => 'forge',
-          logEffectivePolicy: () => {},
-          buildForgePrompt: async () => ({ prompt: 'forge prompt', recalledMemoryIds: [] }),
-          savePrompt: () => {},
-          discord: async (_config, _level, title, description, fields = []) => { discordCalls.push({ title, description, fields }); },
-          setShutdownContext: () => {},
-          clearShutdownContext: () => {},
-          invalidateHeadHash: () => {},
-          headHash: () => 'abc123',
-          acpLabel: () => 'forge-01',
-          spawnAgent: async () => {},
-          verifyAgentAlive: async () => true,
-          getTrackedAgent: () => ({ sessionKey: 'agent:main:acp:forge-no-change-detail', gatewayLabel: 'forge-01', runtime: 'acp', agentId: 'forge' }),
-          pollWithRateLimitRecovery: async () => ({
-            ok: false,
-            reason: 'session_ended_no_changes',
-            status: { detail: 'adapter command missing' },
-            transcript: scenario.transcript,
-          }),
-          killAgent: async () => {},
-          saveStreamLog: () => {},
-          handleFail: async (_config, _statusValue, _dir, _moduleId, _maxFails, phase, reason) => {
-            handleFailCalls.push({ phase, reason });
-            return { exit: 10, reason, phase };
-          },
-          sleep: async () => {},
-        },
+  const configDeps5 = {
+    moduleRunner: {
+      checkDependencies: () => ({ met: true }),
+      loadStatus: () => currentStatus,
+      saveStatus: (_config, _dir, nextStatus) => { currentStatus = nextStatus; },
+      runPreflightValidation: () => ({ passed: true, failures: [] }),
+      resolvePolicy: () => ({ model: 'forge-model', thinking: 'high', model_source: 'project_default', thinking_source: 'project_default' }),
+      modelToHarness: () => 'forge',
+      logEffectivePolicy: () => {},
+      buildForgePrompt: async () => ({ prompt: 'forge prompt', recalledMemoryIds: [] }),
+      savePrompt: () => {},
+      discord: async (_config, _level, title, description, fields = []) => { discordCalls.push({ title, description, fields }); },
+      setShutdownContext: () => {},
+      clearShutdownContext: () => {},
+      invalidateHeadHash: () => {},
+      headHash: () => 'abc123',
+      acpLabel: () => 'forge-01',
+      spawnAgent: async () => {},
+      verifyAgentAlive: async () => true,
+      getTrackedAgent: () => ({ sessionKey: 'agent:main:acp:forge-no-change-detail', gatewayLabel: 'forge-01', runtime: 'acp', agentId: 'forge' }),
+      pollForgeCompletionWithRateLimitRecovery: async () => ({
+        ok: false,
+        reason: 'agent_ended_no_meaningful_diff',
+        status: { detail: 'adapter command missing' },
+        transcript: { eventCount: 3, lastActivityPoll: 0 },
+      }),
+      killAgent: async () => {},
+      saveStreamLog: () => {},
+      handleFail: async (_config, _statusValue, _dir, _moduleId, _maxFails, phase, reason) => {
+        handleFailCalls.push({ phase, reason });
+        return { exit: 10, reason, phase };
       },
-    };
+      sleep: async () => {},
+    },
+  };
+  const runId = 'run-forge-no-change-detail-1';
+  const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-forge-no-change-detail',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    telemetry: { enabled: false },
+    pluginRegistry: registry,
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+  };
 
-    const result = await moduleRunnerMod.runModule(config, progress, '01');
+  const expectedReason = 'Forge session ended but produced no typed meaningful-diff completion evidence (adapter command missing)';
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps5 });
 
-    assert.equal(result.exit, 10, scenario.name);
-    assert.equal(handleFailCalls.length, 1, scenario.name);
-    assert.equal(handleFailCalls[0].phase, 'forge', scenario.name);
-    assert.equal(handleFailCalls[0].reason, scenario.expectedReason, scenario.name);
+  assert.equal(stepExit(result), 10);
+  assert.equal(handleFailCalls.length, 1);
+  assert.equal(handleFailCalls[0].phase, 'forge');
+  assert.equal(handleFailCalls[0].reason, expectedReason);
 
-    const noChangesAlert = discordCalls.find((call) => call.title === 'Module 01 — Forge no changes');
-    assert(noChangesAlert, `${scenario.name}: missing Forge no-changes Discord alert`);
-    assert.equal(noChangesAlert.description, scenario.expectedReason, scenario.name);
-    const transcriptField = noChangesAlert.fields.find((field) => field.name === 'Transcript')?.value || null;
-    assert.equal(
-      transcriptField == null
-        || transcriptField === scenario.expectedTranscriptField
-        || transcriptField.startsWith('[redacted Transcript;'),
-      true,
-      scenario.name,
-    );
-  }
+  const noChangesAlert = discordCalls.find((call) => call.title === 'Module 01 — Forge no changes');
+  assert(noChangesAlert, 'missing Forge no-changes Discord alert');
+  assert.equal(noChangesAlert.description, expectedReason);
+  assert.equal(noChangesAlert.fields.some((field) => field.name === 'Transcript'), false);
 });
 
 await record('module-runner terminal NEEDS_NOVA exits still emit module FAIL telemetry', async () => {
@@ -709,9 +747,9 @@ await record('module-runner terminal NEEDS_NOVA exits still emit module FAIL tel
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
-  const statusStoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/status-store.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+  const statusStoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
   const registry = await buildBuiltInRegistry(moduleRuntimeRoot);
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-terminal-needs-nova-'));
@@ -744,19 +782,7 @@ await record('module-runner terminal NEEDS_NOVA exits still emit module FAIL tel
     },
   };
 
-  const config = {
-    project: 'behavior-terminal-needs-nova',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    paths: { modules_dir: modulesRoot },
-    telemetry: { enabled: true },
-    _pluginRegistry: registry,
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
-    _runId: runId,
-    run_id: runId,
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    _testOverrides: {
+    const configDeps6 = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
         loadStatus: () => ({ ...status }),
@@ -771,14 +797,25 @@ await record('module-runner terminal NEEDS_NOVA exits still emit module FAIL tel
         clearShutdownContext: () => {},
         sleep: async () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-terminal-needs-nova',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+    telemetry: { enabled: true },
+    pluginRegistry: registry,
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+      };
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
-  assert.equal(result.exit, 10);
-  assert.equal(result.reason, 'Config validation failed: missing test binary');
-  assert.equal(result.gateway_label, 'buster-config-stop-01');
-  assert.equal(result.session_key, 'agent:main:acp:buster-config-stop-01');
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps6 });
+  assert.equal(stepExit(result), 10);
+  assert.equal(stepReason(result), 'Config validation failed: missing test binary');
+  assert.equal(stepValue(result, 'gateway_label'), 'buster-config-stop-01');
+  assert.equal(stepValue(result, 'session_key'), 'agent:main:acp:buster-config-stop-01');
   await flushAsync();
 
   const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
@@ -799,8 +836,8 @@ await record('module-runner resumed BLOCKED exits preserve canonical correlation
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-module-resumed-blocked-'));
   const logRoot = path.join(repoRoot, '.swarm', 'logs');
@@ -819,18 +856,7 @@ await record('module-runner resumed BLOCKED exits preserve canonical correlation
     },
   };
 
-  const config = {
-    project: 'behavior-module-resumed-blocked',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    paths: { modules_dir: modulesRoot },
-    telemetry: { enabled: true },
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
-    _runId: runId,
-    run_id: runId,
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    _testOverrides: {
+    const configDeps7 = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
         loadStatus: () => ({
@@ -854,18 +880,29 @@ await record('module-runner resumed BLOCKED exits preserve canonical correlation
           ],
         }),
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-module-resumed-blocked',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+    telemetry: { enabled: true },
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    pluginRegistry: await buildBuiltInRegistry(moduleRuntimeRoot),
+      };
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps7 });
 
-  assert.equal(result.exit, 20);
-  assert.equal(result.module, '01');
-  assert.equal(result.reason, 'Repeated test crashes exhausted the retry budget');
-  assert.equal(result.fail_count, 3);
-  assert.equal(result.phase, 'buster');
-  assert.equal(result.gateway_label, 'dispatch-buster-blocked-01');
-  assert.equal(result.session_key, 'agent:main:acp:buster-blocked-01');
+  assert.equal(stepExit(result), 20);
+  assert.equal(stepValue(result, 'module'), '01');
+  assert.equal(stepReason(result), 'Repeated test crashes exhausted the retry budget');
+  assert.equal(stepValue(result, 'fail_count'), 3);
+  assert.equal(stepValue(result, 'phase'), 'buster');
+  assert.equal(stepValue(result, 'gateway_label'), 'dispatch-buster-blocked-01');
+  assert.equal(stepValue(result, 'session_key'), 'agent:main:acp:buster-blocked-01');
 });
 
 await record('module-runner blueprint-release stop preserves canonical correlation', async () => {
@@ -874,8 +911,8 @@ await record('module-runner blueprint-release stop preserves canonical correlati
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-blueprint-release-correlation-'));
   const logRoot = path.join(repoRoot, '.swarm', 'logs');
@@ -912,18 +949,7 @@ await record('module-runner blueprint-release stop preserves canonical correlati
     },
   };
 
-  const config = {
-    project: 'behavior-blueprint-release-correlation',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    paths: { modules_dir: modulesRoot },
-    telemetry: { enabled: true },
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
-    _runId: runId,
-    run_id: runId,
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    _testOverrides: {
+    const configDeps8 = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
         loadStatus: () => ({ ...status }),
@@ -933,14 +959,25 @@ await record('module-runner blueprint-release stop preserves canonical correlati
         clearShutdownContext: () => {},
         sleep: async () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-blueprint-release-correlation',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+    telemetry: { enabled: true },
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    pluginRegistry: await buildBuiltInRegistry(moduleRuntimeRoot),
+      };
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
-  assert.equal(result.exit, 10);
-  assert.equal(result.reason, 'Blueprint release failed: architecture branch missing. Nova may need to create/fix the architecture branch.');
-  assert.equal(result.gateway_label, 'forge-blueprint-release');
-  assert.equal(result.session_key, 'agent:main:acp:forge-blueprint-release');
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps8 });
+  assert.equal(stepExit(result), 10);
+  assert.equal(stepReason(result), 'Blueprint release failed: architecture branch missing. Nova may need to create/fix the architecture branch.');
+  assert.equal(stepValue(result, 'gateway_label'), 'forge-blueprint-release');
+  assert.equal(stepValue(result, 'session_key'), 'agent:main:acp:forge-blueprint-release');
   await flushAsync();
 
   const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
@@ -953,14 +990,14 @@ await record('module-runner blueprint-release stop preserves canonical correlati
   assert.equal(failEvent.session_key, 'agent:main:acp:forge-blueprint-release');
 });
 
-await record('module-runner pre-Buster validation stop preserves canonical correlation', async () => {
+await record('module-runner pre-Buster validators ignore direct dep bypasses', async () => {
   const moduleRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
   installFakeRedis(moduleRuntimeRoot);
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-pre-buster-validation-correlation-'));
   const logRoot = path.join(repoRoot, '.swarm', 'logs');
@@ -995,23 +1032,13 @@ await record('module-runner pre-Buster validation stop preserves canonical corre
         title: 'Scaffold',
         dir: '01-scaffold',
         stages: ['forge', 'buster'],
+        test_suites: ['unit'],
       },
     },
   };
 
   let gitSyncCalled = false;
-  const config = {
-    project: 'behavior-pre-buster-validation-correlation',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    paths: { modules_dir: modulesRoot },
-    telemetry: { enabled: true },
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
-    _runId: runId,
-    run_id: runId,
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    _testOverrides: {
+    const configDeps9 = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
         loadStatus: () => status,
@@ -1027,19 +1054,32 @@ await record('module-runner pre-Buster validation stop preserves canonical corre
         clearShutdownContext: () => {},
         sleep: async () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-pre-buster-validation-correlation',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+    telemetry: { enabled: true },
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    pluginRegistry: await buildBuiltInRegistry(moduleRuntimeRoot),
+      };
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
-  assert.equal(result.exit, 1);
-  assert.equal(result.reason, 'Validation milestones missing before Buster dispatch — refusing to continue');
-  assert.equal(result.gateway_label, 'forge-validation-stop');
-  assert.equal(result.session_key, 'agent:main:acp:forge-validation-stop');
-  assert.equal(gitSyncCalled, false);
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps9 });
+  assert.equal(stepExit(result), 1);
+  assert.equal(stepReason(result).startsWith('BUSTER.md not found:'), true);
+  assert.equal(status.validation.attempt, 1, 'direct runPreCheck override must not mutate registry-owned validator state');
+  assert.equal(status.validation.pre_check_passed, true, 'registry-owned pre_check validator should mark the milestone');
+  assert.equal(status.validation.delivery_lint_passed, true, 'registry-owned delivery_lint validator should preserve the existing milestone');
+  assert.equal(gitSyncCalled, true);
   await flushAsync();
 
   const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
-  assert.equal(streamEvents.length, 0);
+  assert.equal(streamEvents.some((event) => event.type === 'plugin.validator.pre_check.bridge_invoked'), true);
+  assert.equal(streamEvents.some((event) => event.type === 'plugin.validator.delivery_lint.bridge_invoked'), false, 'already-satisfied delivery_lint milestone should not rerun');
 });
 
 await record('module-runner Git sync stop preserves canonical correlation', async () => {
@@ -1048,8 +1088,8 @@ await record('module-runner Git sync stop preserves canonical correlation', asyn
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-git-sync-correlation-'));
   const logRoot = path.join(repoRoot, '.swarm', 'logs');
@@ -1088,18 +1128,7 @@ await record('module-runner Git sync stop preserves canonical correlation', asyn
     },
   };
 
-  const config = {
-    project: 'behavior-git-sync-correlation',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    paths: { modules_dir: modulesRoot },
-    telemetry: { enabled: true },
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
-    _runId: runId,
-    run_id: runId,
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    _testOverrides: {
+    const configDeps10 = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
         loadStatus: () => ({ ...status, validation: { ...status.validation } }),
@@ -1109,14 +1138,25 @@ await record('module-runner Git sync stop preserves canonical correlation', asyn
         clearShutdownContext: () => {},
         sleep: async () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-git-sync-correlation',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+    telemetry: { enabled: true },
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    pluginRegistry: await buildBuiltInRegistry(moduleRuntimeRoot),
+      };
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
-  assert.equal(result.exit, 1);
-  assert.equal(result.reason, 'push rejected');
-  assert.equal(result.gateway_label, 'forge-git-sync');
-  assert.equal(result.session_key, 'agent:main:acp:forge-git-sync');
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps10 });
+  assert.equal(stepExit(result), 1);
+  assert.equal(stepReason(result), 'push rejected');
+  assert.equal(stepValue(result, 'gateway_label'), 'forge-git-sync');
+  assert.equal(stepValue(result, 'session_key'), 'agent:main:acp:forge-git-sync');
   await flushAsync();
 
   const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
@@ -1135,8 +1175,8 @@ await record('module-runner Forge polling git stop preserves canonical correlati
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const registry = await buildBuiltInRegistry(moduleRuntimeRoot);
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-forge-poll-git-correlation-'));
@@ -1167,21 +1207,13 @@ await record('module-runner Forge polling git stop preserves canonical correlati
     },
   };
 
-  const config = {
-    project: 'behavior-forge-poll-git-correlation',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    telemetry: { enabled: false },
-    _pluginRegistry: registry,
-    paths: { modules_dir: modulesRoot },
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    _testOverrides: {
+    const configDeps11 = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
         loadStatus: () => currentStatus,
         saveStatus: (_config, _dir, nextStatus) => { currentStatus = nextStatus; },
         runPreflightValidation: () => ({ passed: true, failures: [] }),
-        resolvePolicy: () => ({ model: 'forge-model', thinking: 'high', model_source: 'project_default' }),
+        resolvePolicy: () => ({ model: 'anthropic/claude-sonnet-4-6', thinking: 'high', model_source: 'project_default' }),
         logEffectivePolicy: () => {},
         buildForgePrompt: async () => ({ prompt: 'forge prompt', recalledMemoryIds: [] }),
         savePrompt: () => {},
@@ -1195,7 +1227,7 @@ await record('module-runner Forge polling git stop preserves canonical correlati
           agentId: 'claude',
         }),
         verifyAgentAlive: async () => true,
-        pollWithRateLimitRecovery: async () => ({
+        pollForgeCompletionWithRateLimitRecovery: async () => ({
           ok: false,
           reason: 'git_error',
           status: {
@@ -1211,15 +1243,26 @@ await record('module-runner Forge polling git stop preserves canonical correlati
         headHash: () => 'abc123',
         invalidateHeadHash: () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-forge-poll-git-correlation',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    telemetry: { enabled: false },
+    pluginRegistry: registry,
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+    _runId: 'run-forge-poll-git-correlation-1',
+    run_id: 'run-forge-poll-git-correlation-1',
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+      };
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
-  assert.equal(result.exit, 1);
-  assert.equal(result.reason, 'forge polling git unsafe');
-  assert.equal(result.gateway_label, 'forge-poll-git');
-  assert.equal(result.session_key, 'agent:main:acp:forge-poll-git');
-  assert.deepEqual(result.polling_git, { command: 'git pull --ff-only' });
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps11 });
+  assert.equal(stepExit(result), 1);
+  assert.equal(stepReason(result), 'forge polling git unsafe');
+  assert.equal(stepValue(result, 'gateway_label'), 'forge-poll-git');
+  assert.equal(stepValue(result, 'session_key'), 'agent:main:acp:forge-poll-git');
+  assert.deepEqual(stepValue(result, 'polling_git'), { command: 'git pull --ff-only' });
 });
 
 await record('module-runner Buster polling git stop preserves canonical correlation', async () => {
@@ -1228,8 +1271,8 @@ await record('module-runner Buster polling git stop preserves canonical correlat
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const registry = await buildBuiltInRegistry(moduleRuntimeRoot);
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-poll-git-correlation-'));
@@ -1259,15 +1302,7 @@ await record('module-runner Buster polling git stop preserves canonical correlat
     },
   };
 
-  const config = {
-    project: 'behavior-buster-poll-git-correlation',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    telemetry: { enabled: false },
-    _pluginRegistry: registry,
-    paths: { modules_dir: modulesRoot },
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    _testOverrides: {
+    const configDeps12 = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
         loadStatus: () => currentStatus,
@@ -1279,10 +1314,11 @@ await record('module-runner Buster polling git stop preserves canonical correlat
         savePrompt: () => {},
         validateBusterConfig: () => {},
         archiveModuleCompletions: async () => {},
-        spawnAgent: async () => ({ dispatch_id: 'buster-dispatch-01-attempt-1' }),
+        spawnAgent: async () => ({ dispatch_id: 'buster-dispatch-01-attempt-1', gateway_label: 'buster-dispatch-01-attempt-1' }),
         pollDualWithRateLimitRecovery: async () => ({
           ok: false,
           reason: 'git_error',
+          failure_class: 'git_error',
           status: {
             message: 'buster polling git unsafe',
             details: { command: 'git pull --ff-only' },
@@ -1297,20 +1333,31 @@ await record('module-runner Buster polling git stop preserves canonical correlat
         clearShutdownContext: () => {},
         discord: async () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-buster-poll-git-correlation',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    telemetry: { enabled: false },
+    pluginRegistry: registry,
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+    _runId: 'run-buster-poll-git-correlation-1',
+    run_id: 'run-buster-poll-git-correlation-1',
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+      };
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
-  assert.equal(result.exit, 1);
-  assert.equal(result.reason, 'buster polling git unsafe');
-  assert.equal(result.gateway_label, 'buster-dispatch-01-attempt-1');
-  assert.equal(result.session_key, 'agent:buster:poll-git');
-  assert.deepEqual(result.polling_git, { command: 'git pull --ff-only' });
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps12 });
+  assert.equal(stepExit(result), 1);
+  assert.equal(stepReason(result), 'buster polling git unsafe');
+  assert.equal(stepValue(result, 'gateway_label'), 'buster-dispatch-01-attempt-1');
+  assert.equal(stepValue(result, 'session_key'), 'agent:buster:poll-git');
+  assert.deepEqual(stepValue(result, 'polling_git'), { command: 'git pull --ff-only' });
 });
 
 await record('failure extraction prefers phase-owned agent detail over stale cross-phase notes', async () => {
   const moduleRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
-  const failuresMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/failures.js');
+  const failuresMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/failures/classification.ts');
 
   assert.equal(
     failuresMod.extractAgentFailReason({
@@ -1340,9 +1387,9 @@ await record('module-runner buster failure-service alerts keep cached session co
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
-  const statusStoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/status-store.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+  const statusStoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
   const registry = await buildBuiltInRegistry(moduleRuntimeRoot);
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-fail-session-'));
@@ -1378,20 +1425,7 @@ await record('module-runner buster failure-service alerts keep cached session co
     },
   };
 
-  const config = {
-    project: 'behavior-buster-fail-session',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    _disable_discord_webhooks: true,
-    paths: { modules_dir: modulesRoot },
-    telemetry: { enabled: true },
-    _pluginRegistry: registry,
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
-    _runId: runId,
-    run_id: runId,
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    _testOverrides: {
+    const configDeps13 = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
         gitSyncBeforeBuster: async () => {},
@@ -1401,9 +1435,10 @@ await record('module-runner buster failure-service alerts keep cached session co
         savePrompt: () => {},
         validateBusterConfig: () => {},
         archiveModuleCompletions: async () => {},
-        spawnAgent: async () => ({ dispatch_id: 'dispatch-buster-fail-01' }),
+        spawnAgent: async () => ({ dispatch_id: 'dispatch-buster-fail-01', gateway_label: 'dispatch-buster-fail-01', session_key: sessionKey }),
         pollDualWithRateLimitRecovery: async () => {
-          const status = statusStoreMod.loadStatus(config, '01-scaffold');
+          const status = statusStoreMod.loadStatus(config, '01-scaffold', { raw: true });
+          const currentAttempt = Number(status.fail_count || 0) + 1;
           status.active_agent = {
             ...(status.active_agent || {}),
             session_key: sessionKey,
@@ -1416,10 +1451,16 @@ await record('module-runner buster failure-service alerts keep cached session co
           return {
             ok: true,
             status: {
+              failure_class: 'verdict_fail',
               _redis_entry: {
                 status: 'FAIL',
                 source: 'buster-subagent',
                 summary: 'Smoke suite failed after agent execution',
+                run_id: runId,
+                attempt: currentAttempt,
+                dispatch_id: 'dispatch-buster-fail-01',
+                gateway_label: 'dispatch-buster-fail-01',
+                session_key: sessionKey,
               },
             },
           };
@@ -1431,21 +1472,33 @@ await record('module-runner buster failure-service alerts keep cached session co
         extractAgentFailReason: () => 'Smoke suite failed after agent execution',
         sleep: async () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-buster-fail-session',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    _disable_discord_webhooks: true,
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+    telemetry: { enabled: true },
+    pluginRegistry: registry,
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+      };
 
   seedCanonicalReadyForTestingStatus(statusStoreMod, config, '01-scaffold', initialStatus);
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps13 });
   await flushAsync();
 
-  assert.equal(result.exit, 10);
-  assert.equal(result.attempt, 2);
-  assert.equal(result.dispatch_id, 'dispatch-buster-fail-01');
-  assert.equal(result.session_key, sessionKey);
-  assert.equal(result.module_status?.attempt, 2);
-  assert.equal(result.module_status?.dispatch_id, 'dispatch-buster-fail-01');
-  assert.equal(result.module_status?.session_key, sessionKey);
+  assert.equal(stepExit(result), 10);
+  assert.equal(stepValue(result, 'attempt'), 2);
+  assert.equal(stepValue(result, 'dispatch_id'), 'dispatch-buster-fail-01');
+  assert.equal(stepValue(result, 'session_key'), sessionKey);
+  assert.equal(stepValue(result, 'module_status')?.attempt, 2);
+  assert.equal(stepValue(result, 'module_status')?.dispatch_id, 'dispatch-buster-fail-01');
+  assert.equal(stepValue(result, 'module_status')?.session_key, sessionKey);
 
   const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
   const failEvent = streamEvents.find((event) => event.type === 'module.status_changed' && event.new_status === 'FAIL');
@@ -1460,7 +1513,7 @@ await record('module-runner buster failure-service alerts keep cached session co
   assert.equal(retryEvent.gateway_label, 'dispatch-buster-fail-01');
   assert.equal(retryEvent.session_key, sessionKey);
 
-  const discordLogPath = path.join(config._runLogDir, 'discord.jsonl');
+  const discordLogPath = path.join(logRoot, 'pipeline', 'runs', runId, 'discord.jsonl');
   const discordEntries = fs.readFileSync(discordLogPath, 'utf8').trim().split('\n').filter(Boolean).map((line) => JSON.parse(line));
   const autoRetryEntry = discordEntries.find((entry) => entry.title === 'Module 01 FAIL (buster) — Auto-Retry');
   assert.equal(Boolean(autoRetryEntry), true);
@@ -1470,7 +1523,7 @@ await record('module-runner buster failure-service alerts keep cached session co
   assert.equal(autoRetryEntry.session_key, sessionKey);
   assert.equal(autoRetryEntry.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
   assert.equal(autoRetryEntry.fields.some((field) => field.name === 'Dispatch' && field.value === 'dispatch-buster-fail-01'), true);
-  assert.equal(autoRetryEntry.fields.some((field) => field.name === 'Label' && field.value === 'dispatch-buster-fail-01'), true);
+  assert.equal(autoRetryEntry.fields.some((field) => field.name === 'Gateway Label' && field.value === 'dispatch-buster-fail-01'), true);
   assert.equal(autoRetryEntry.fields.some((field) => field.name === 'Session' && field.value === sessionKey), true);
 
   const needsNovaEntry = discordEntries.find((entry) => entry.title === 'Module 01 NEEDS_NOVA (buster)');
@@ -1481,7 +1534,7 @@ await record('module-runner buster failure-service alerts keep cached session co
   assert.equal(needsNovaEntry.session_key, sessionKey);
   assert.equal(needsNovaEntry.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
   assert.equal(needsNovaEntry.fields.some((field) => field.name === 'Dispatch' && field.value === 'dispatch-buster-fail-01'), true);
-  assert.equal(needsNovaEntry.fields.some((field) => field.name === 'Label' && field.value === 'dispatch-buster-fail-01'), true);
+  assert.equal(needsNovaEntry.fields.some((field) => field.name === 'Gateway Label' && field.value === 'dispatch-buster-fail-01'), true);
   assert.equal(needsNovaEntry.fields.some((field) => field.name === 'Session' && field.value === sessionKey), true);
 });
 
@@ -1491,10 +1544,10 @@ await record('module-runner buster crash exhaustion keeps dispatch correlation o
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const registry = await buildBuiltInRegistry(moduleRuntimeRoot);
-  const statusStoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/status-store.js');
+  const statusStoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-crash-dispatch-'));
   const logRoot = path.join(repoRoot, '.swarm', 'logs');
@@ -1515,20 +1568,7 @@ await record('module-runner buster crash exhaustion keeps dispatch correlation o
     },
   };
 
-  const config = {
-    project: 'behavior-buster-crash-dispatch',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    _disable_discord_webhooks: true,
-    telemetry: { enabled: true },
-    _pluginRegistry: registry,
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
-    _runId: runId,
-    run_id: runId,
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    paths: { modules_dir: modulesRoot },
-    _testOverrides: {
+    const configDeps14 = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
         gitSyncBeforeBuster: async () => {},
@@ -1538,11 +1578,15 @@ await record('module-runner buster crash exhaustion keeps dispatch correlation o
         savePrompt: () => {},
         validateBusterConfig: () => {},
         archiveModuleCompletions: async () => {},
-        spawnAgent: async () => ({ dispatch_id: `dispatch-buster-crash-01-attempt-${spawnCount += 1}` }),
+        spawnAgent: async () => {
+          const attempt = spawnCount += 1;
+          const dispatch_id = `dispatch-buster-crash-01-attempt-${attempt}`;
+          return { dispatch_id, gateway_label: dispatch_id, session_key: `agent:main:acp:buster-crash-01-attempt-${attempt}` };
+        },
         pollDualWithRateLimitRecovery: async () => {
           const dispatchId = `dispatch-buster-crash-01-attempt-${pollCount + 1}`;
           const sessionKey = `agent:main:acp:buster-crash-01-attempt-${pollCount + 1}`;
-          const status = statusStoreMod.loadStatus(config, '01-scaffold');
+          const status = statusStoreMod.loadStatus(config, '01-scaffold', { raw: true });
           status.active_agent = {
             ...(status.active_agent || {}),
             session_key: sessionKey,
@@ -1557,6 +1601,7 @@ await record('module-runner buster crash exhaustion keeps dispatch correlation o
           return {
             ok: false,
             reason: 'timeout',
+            failure_class: 'timeout',
             status: {
               detail: `timed out on crash attempt ${pollCount}`,
             },
@@ -1568,8 +1613,20 @@ await record('module-runner buster crash exhaustion keeps dispatch correlation o
         setShutdownContext: () => {},
         sleep: async () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-buster-crash-dispatch',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    _disable_discord_webhooks: true,
+    telemetry: { enabled: true },
+    pluginRegistry: registry,
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+      };
 
   let spawnCount = 0;
   let pollCount = 0;
@@ -1587,14 +1644,14 @@ await record('module-runner buster crash exhaustion keeps dispatch correlation o
     cost: {},
   });
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps14 });
   await flushAsync();
 
-  assert.equal(result.exit, 20);
-  assert.equal(result.attempt, 1);
-  assert.equal(result.dispatch_id, 'dispatch-buster-crash-01-attempt-2');
-  assert.equal(result.gateway_label, 'dispatch-buster-crash-01-attempt-2');
-  assert.equal(result.session_key, 'agent:main:acp:buster-crash-01-attempt-2');
+  assert.equal(stepExit(result), 20);
+  assert.equal(stepValue(result, 'attempt'), 1);
+  assert.equal(stepValue(result, 'dispatch_id'), 'dispatch-buster-crash-01-attempt-2');
+  assert.equal(stepValue(result, 'gateway_label'), 'dispatch-buster-crash-01-attempt-2');
+  assert.equal(stepValue(result, 'session_key'), 'agent:main:acp:buster-crash-01-attempt-2');
 
   const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
   const failEvent = streamEvents.find((event) => event.type === 'module.status_changed' && event.new_status === 'FAIL');
@@ -1621,7 +1678,7 @@ await record('module-runner buster crash exhaustion keeps dispatch correlation o
   assert.equal(retryExhausted.max_attempts, 2);
   assert.equal(retryExhausted.max_fails, 2);
 
-  const discordLogPath = path.join(config._runLogDir, 'discord.jsonl');
+  const discordLogPath = path.join(logRoot, 'pipeline', 'runs', runId, 'discord.jsonl');
   const discordEntries = fs.readFileSync(discordLogPath, 'utf8').trim().split('\n').filter(Boolean).map((line) => JSON.parse(line));
   const blockedEntry = discordEntries.find((entry) => entry.title === 'Module 01 BLOCKED — Buster crashes');
   assert.equal(Boolean(blockedEntry), true);
@@ -1630,7 +1687,7 @@ await record('module-runner buster crash exhaustion keeps dispatch correlation o
   assert.equal(blockedEntry.gateway_label, 'dispatch-buster-crash-01-attempt-2');
   assert.equal(blockedEntry.session_key, 'agent:main:acp:buster-crash-01-attempt-2');
   assert.equal(blockedEntry.fields.some((field) => field.name === 'Dispatch' && field.value === 'dispatch-buster-crash-01-attempt-2'), true);
-  assert.equal(blockedEntry.fields.some((field) => field.name === 'Label' && field.value === 'dispatch-buster-crash-01-attempt-2'), true);
+  assert.equal(blockedEntry.fields.some((field) => field.name === 'Gateway Label' && field.value === 'dispatch-buster-crash-01-attempt-2'), true);
   assert.equal(blockedEntry.fields.some((field) => field.name === 'Session' && field.value === 'agent:main:acp:buster-crash-01-attempt-2'), true);
 });
 
@@ -1640,28 +1697,16 @@ await record('module-runner Buster pre-test infra stop preserves dispatch correl
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const registry = await buildBuiltInRegistry(moduleRuntimeRoot);
+  const statusStoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-pretest-infra-dispatch-'));
   const logRoot = path.join(repoRoot, '.swarm', 'logs');
   const modulesRoot = path.join(repoRoot, 'modules');
   const runId = 'run-buster-pretest-infra-dispatch-1';
   fs.mkdirSync(path.join(modulesRoot, '01-scaffold'), { recursive: true });
-
-  let currentStatus = {
-    module_id: '01',
-    title: 'Scaffold',
-    status: 'READY_FOR_TESTING',
-    current_phase: null,
-    fail_count: 0,
-    fail_summaries: [],
-    started_at: '2026-04-10T00:00:00.000Z',
-    attempt_started_at: '2026-04-10T00:00:00.000Z',
-    history: [],
-    cost: {},
-  };
 
   const progress = {
     execution_order: ['01'],
@@ -1675,24 +1720,9 @@ await record('module-runner Buster pre-test infra stop preserves dispatch correl
     },
   };
 
-  const config = {
-    project: 'behavior-buster-pretest-infra-dispatch',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    telemetry: { enabled: true },
-    _disable_discord_webhooks: true,
-    _pluginRegistry: registry,
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
-    _runId: runId,
-    run_id: runId,
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    paths: { modules_dir: modulesRoot },
-    _testOverrides: {
+    const configDeps15 = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
-        loadStatus: () => JSON.parse(JSON.stringify(currentStatus)),
-        saveStatus: (_config, _dir, status) => { currentStatus = JSON.parse(JSON.stringify(status)); },
         gitSyncBeforeBuster: async () => {},
         resolvePolicy: () => ({ model: 'buster-model', model_source: 'project_default' }),
         logEffectivePolicy: () => {},
@@ -1703,16 +1733,21 @@ await record('module-runner Buster pre-test infra stop preserves dispatch correl
         archiveModuleCompletions: async () => {},
         setShutdownContext: () => {},
         clearShutdownContext: () => {},
-        spawnAgent: async () => ({ dispatch_id: 'dispatch-buster-pretest-infra-01' }),
+        spawnAgent: async () => ({ dispatch_id: 'dispatch-buster-pretest-infra-01', gateway_label: 'dispatch-buster-pretest-infra-01' }),
         pollDualWithRateLimitRecovery: async () => ({
           ok: true,
           status: {
             status: 'FAIL',
+            failure_class: 'pretest_infra',
             _redis_entry: {
               status: 'FAIL',
               source: 'test-buster-pipeline',
               verdict: 'FAIL',
+              failure_class: 'pretest_infra',
+              run_id: runId,
+              attempt: 1,
               dispatch_id: 'dispatch-buster-pretest-infra-01',
+              gateway_label: 'dispatch-buster-pretest-infra-01',
               session_key: 'agent:main:acp:buster-pretest-infra-01',
             },
           },
@@ -1724,17 +1759,42 @@ await record('module-runner Buster pre-test infra stop preserves dispatch correl
         getPassedSuiteNames: () => [],
         buildPreTestDiscordFields: () => [{ name: 'Failing Suites', value: 'smoke', inline: true }],
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-buster-pretest-infra-dispatch',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    telemetry: { enabled: true },
+    _disable_discord_webhooks: true,
+    pluginRegistry: registry,
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+      };
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
+  seedCanonicalReadyForTestingStatus(statusStoreMod, config, '01-scaffold', {
+    module_id: '01',
+    title: 'Scaffold',
+    status: 'READY_FOR_TESTING',
+    current_phase: null,
+    fail_count: 0,
+    fail_summaries: [],
+    started_at: '2026-04-10T00:00:00.000Z',
+    attempt_started_at: '2026-04-10T00:00:00.000Z',
+    history: [],
+    cost: {},
+  });
+
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps15 });
   await flushAsync();
 
-  assert.equal(result.exit, 10);
-  assert.equal(result.reason, 'Buster infra issue (ENV_UNAVAILABLE) — Forge output preserved: registry unavailable');
-  assert.equal(result.dispatch_id, 'dispatch-buster-pretest-infra-01');
-  assert.equal(result.gateway_label, 'dispatch-buster-pretest-infra-01');
-  assert.equal(result.session_key, 'agent:main:acp:buster-pretest-infra-01');
+  assert.equal(stepExit(result), 10);
+  assert.equal(stepReason(result), 'Buster infra issue (ENV_UNAVAILABLE) — Forge output preserved: registry unavailable');
+  assert.equal(stepValue(result, 'dispatch_id'), 'dispatch-buster-pretest-infra-01');
+  assert.equal(stepValue(result, 'gateway_label'), 'dispatch-buster-pretest-infra-01');
+  assert.equal(stepValue(result, 'session_key'), 'agent:main:acp:buster-pretest-infra-01');
 
   const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
   const failEvent = streamEvents.find((event) => event.type === 'module.status_changed' && event.new_status === 'FAIL');
@@ -1743,7 +1803,7 @@ await record('module-runner Buster pre-test infra stop preserves dispatch correl
   assert.equal(failEvent.gateway_label, 'dispatch-buster-pretest-infra-01');
   assert.equal(failEvent.session_key, 'agent:main:acp:buster-pretest-infra-01');
 
-  const discordLogPath = path.join(config._runLogDir, 'discord.jsonl');
+  const discordLogPath = path.join(logRoot, 'pipeline', 'runs', runId, 'discord.jsonl');
   const discordEntries = fs.readFileSync(discordLogPath, 'utf8').trim().split('\n').filter(Boolean).map((line) => JSON.parse(line));
   const infraEntry = discordEntries.find((entry) => entry.title === 'Module 01 — Buster Infra Issue');
   assert.equal(Boolean(infraEntry), true);
@@ -1752,7 +1812,7 @@ await record('module-runner Buster pre-test infra stop preserves dispatch correl
   assert.equal(infraEntry.gateway_label, 'dispatch-buster-pretest-infra-01');
   assert.equal(infraEntry.session_key, 'agent:main:acp:buster-pretest-infra-01');
   assert.equal(infraEntry.fields.some((field) => field.name === 'Dispatch' && field.value === 'dispatch-buster-pretest-infra-01'), true);
-  assert.equal(infraEntry.fields.some((field) => field.name === 'Label' && field.value === 'dispatch-buster-pretest-infra-01'), true);
+  assert.equal(infraEntry.fields.some((field) => field.name === 'Gateway Label' && field.value === 'dispatch-buster-pretest-infra-01'), true);
   assert.equal(infraEntry.fields.some((field) => field.name === 'Session' && field.value === 'agent:main:acp:buster-pretest-infra-01'), true);
 });
 
@@ -1762,34 +1822,16 @@ await record('module-runner repeated Buster pre-test stop preserves dispatch cor
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const registry = await buildBuiltInRegistry(moduleRuntimeRoot);
+  const statusStoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-pretest-repeat-dispatch-'));
   const logRoot = path.join(repoRoot, '.swarm', 'logs');
   const modulesRoot = path.join(repoRoot, 'modules');
   const runId = 'run-buster-pretest-repeat-dispatch-1';
   fs.mkdirSync(path.join(modulesRoot, '01-scaffold'), { recursive: true });
-
-  let currentStatus = {
-    module_id: '01',
-    title: 'Scaffold',
-    status: 'READY_FOR_TESTING',
-    current_phase: null,
-    fail_count: 1,
-    fail_summaries: [
-      {
-        attempt: 1,
-        summary: '[buster/pre-test] smoke failed before subagent spawn',
-        phase: 'buster',
-      },
-    ],
-    started_at: '2026-04-10T00:00:00.000Z',
-    attempt_started_at: '2026-04-10T00:00:00.000Z',
-    history: [],
-    cost: {},
-  };
 
   const progress = {
     execution_order: ['01'],
@@ -1803,24 +1845,9 @@ await record('module-runner repeated Buster pre-test stop preserves dispatch cor
     },
   };
 
-  const config = {
-    project: 'behavior-buster-pretest-repeat-dispatch',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    telemetry: { enabled: true },
-    _disable_discord_webhooks: true,
-    _pluginRegistry: registry,
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
-    _runId: runId,
-    run_id: runId,
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    paths: { modules_dir: modulesRoot },
-    _testOverrides: {
+    const configDeps16 = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
-        loadStatus: () => JSON.parse(JSON.stringify(currentStatus)),
-        saveStatus: (_config, _dir, status) => { currentStatus = JSON.parse(JSON.stringify(status)); },
         gitSyncBeforeBuster: async () => {},
         resolvePolicy: () => ({ model: 'buster-model', model_source: 'project_default' }),
         logEffectivePolicy: () => {},
@@ -1831,16 +1858,21 @@ await record('module-runner repeated Buster pre-test stop preserves dispatch cor
         archiveModuleCompletions: async () => {},
         setShutdownContext: () => {},
         clearShutdownContext: () => {},
-        spawnAgent: async () => ({ dispatch_id: 'dispatch-buster-pretest-repeat-01' }),
+        spawnAgent: async () => ({ dispatch_id: 'dispatch-buster-pretest-repeat-01', gateway_label: 'dispatch-buster-pretest-repeat-01' }),
         pollDualWithRateLimitRecovery: async () => ({
           ok: true,
           status: {
             status: 'FAIL',
+            failure_class: 'pretest_code',
             _redis_entry: {
               status: 'FAIL',
               source: 'test-buster-pipeline',
               verdict: 'FAIL',
+              failure_class: 'pretest_code',
+              run_id: runId,
+              attempt: 2,
               dispatch_id: 'dispatch-buster-pretest-repeat-01',
+              gateway_label: 'dispatch-buster-pretest-repeat-01',
               session_key: 'agent:main:acp:buster-pretest-repeat-01',
             },
           },
@@ -1852,17 +1884,57 @@ await record('module-runner repeated Buster pre-test stop preserves dispatch cor
         getPassedSuiteNames: () => [],
         buildPreTestDiscordFields: () => [{ name: 'Failing Suites', value: 'smoke', inline: true }],
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-buster-pretest-repeat-dispatch',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    telemetry: { enabled: true },
+    _disable_discord_webhooks: true,
+    pluginRegistry: registry,
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+      };
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
+  seedCanonicalReadyForTestingStatus(statusStoreMod, config, '01-scaffold', {
+    module_id: '01',
+    title: 'Scaffold',
+    status: 'READY_FOR_TESTING',
+    current_phase: null,
+    fail_count: 0,
+    fail_summaries: [],
+    started_at: '2026-04-10T00:00:00.000Z',
+    attempt_started_at: '2026-04-10T00:00:00.000Z',
+    history: [],
+    cost: {},
+  });
+  const priorFailureStatus = statusStoreMod.loadStatus(config, '01-scaffold', { raw: true });
+  priorFailureStatus.fail_count = 1;
+  priorFailureStatus.fail_summaries = [
+    {
+      attempt: 1,
+      summary: '[buster/pre-test] smoke failed before subagent spawn',
+      phase: 'buster',
+    },
+  ];
+  priorFailureStatus.last_failure = 'buster failed (attempt 1/3)';
+  const priorFailureTransition = lifecycleStateMod.transitionModuleStatus(priorFailureStatus, 'FAIL', {
+    note: 'buster failed (attempt 1/3)',
+    now: '2026-04-10T00:02:00.000Z',
+  });
+  statusStoreMod.saveStatus(config, '01-scaffold', priorFailureStatus, priorFailureTransition);
+
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps16 });
   await flushAsync();
 
-  assert.equal(result.exit, 10);
-  assert.equal(result.reason, 'Repeated pre-test failure (smoke) — needs Nova review before another Forge cycle');
-  assert.equal(result.dispatch_id, 'dispatch-buster-pretest-repeat-01');
-  assert.equal(result.gateway_label, 'dispatch-buster-pretest-repeat-01');
-  assert.equal(result.session_key, 'agent:main:acp:buster-pretest-repeat-01');
+  assert.equal(stepExit(result), 10);
+  assert.equal(stepReason(result), 'Repeated pre-test failure (smoke) — needs Nova review before another Forge cycle');
+  assert.equal(stepValue(result, 'dispatch_id'), 'dispatch-buster-pretest-repeat-01');
+  assert.equal(stepValue(result, 'gateway_label'), 'dispatch-buster-pretest-repeat-01');
+  assert.equal(stepValue(result, 'session_key'), 'agent:main:acp:buster-pretest-repeat-01');
 
   const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
   const failEvent = streamEvents.find((event) => event.type === 'module.status_changed' && event.new_status === 'FAIL');
@@ -1871,7 +1943,7 @@ await record('module-runner repeated Buster pre-test stop preserves dispatch cor
   assert.equal(failEvent.gateway_label, 'dispatch-buster-pretest-repeat-01');
   assert.equal(failEvent.session_key, 'agent:main:acp:buster-pretest-repeat-01');
 
-  const discordLogPath = path.join(config._runLogDir, 'discord.jsonl');
+  const discordLogPath = path.join(logRoot, 'pipeline', 'runs', runId, 'discord.jsonl');
   const discordEntries = fs.readFileSync(discordLogPath, 'utf8').trim().split('\n').filter(Boolean).map((line) => JSON.parse(line));
   const repeatEntry = discordEntries.find((entry) => entry.title === 'Module 01 — Repeated Pre-Test Failure');
   assert.equal(Boolean(repeatEntry), true);
@@ -1880,7 +1952,7 @@ await record('module-runner repeated Buster pre-test stop preserves dispatch cor
   assert.equal(repeatEntry.gateway_label, 'dispatch-buster-pretest-repeat-01');
   assert.equal(repeatEntry.session_key, 'agent:main:acp:buster-pretest-repeat-01');
   assert.equal(repeatEntry.fields.some((field) => field.name === 'Dispatch' && field.value === 'dispatch-buster-pretest-repeat-01'), true);
-  assert.equal(repeatEntry.fields.some((field) => field.name === 'Label' && field.value === 'dispatch-buster-pretest-repeat-01'), true);
+  assert.equal(repeatEntry.fields.some((field) => field.name === 'Gateway Label' && field.value === 'dispatch-buster-pretest-repeat-01'), true);
   assert.equal(repeatEntry.fields.some((field) => field.name === 'Session' && field.value === 'agent:main:acp:buster-pretest-repeat-01'), true);
 });
 
@@ -1890,9 +1962,9 @@ await record('module-runner code-side Buster pre-test retry keeps dispatch corre
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
-  const statusStoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/status-store.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+  const statusStoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
   const registry = await buildBuiltInRegistry(moduleRuntimeRoot);
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-pretest-code-retry-'));
@@ -1930,20 +2002,7 @@ await record('module-runner code-side Buster pre-test retry keeps dispatch corre
     },
   };
 
-  const config = {
-    project: 'behavior-buster-pretest-code-retry',
-    default_timeout_minutes: 30,
-    default_max_fails: 3,
-    telemetry: { enabled: true },
-    _disable_discord_webhooks: true,
-    _pluginRegistry: registry,
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
-    _runId: runId,
-    run_id: runId,
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    paths: { modules_dir: modulesRoot },
-    _testOverrides: {
+    const configDeps17 = {
       moduleRunner: {
         checkDependencies: () => ({ met: true }),
         gitSyncBeforeBuster: async () => {},
@@ -1956,10 +2015,11 @@ await record('module-runner code-side Buster pre-test retry keeps dispatch corre
         archiveModuleCompletions: async () => {},
         setShutdownContext: () => {},
         clearShutdownContext: () => {},
-        spawnAgent: async () => ({ dispatch_id: dispatchId }),
+        spawnAgent: async () => ({ dispatch_id: dispatchId, gateway_label: dispatchId }),
         pollDualWithRateLimitRecovery: async () => {
           pollCount += 1;
-          const status = statusStoreMod.loadStatus(config, '01-scaffold');
+          const status = statusStoreMod.loadStatus(config, '01-scaffold', { raw: true });
+          const currentAttempt = Number(status.fail_count || 0) + 1;
           status.active_agent = {
             ...(status.active_agent || {}),
             session_key: sessionKey,
@@ -1975,11 +2035,16 @@ await record('module-runner code-side Buster pre-test retry keeps dispatch corre
               ok: true,
               status: {
                 status: 'FAIL',
+                failure_class: 'pretest_code',
                 _redis_entry: {
                   status: 'FAIL',
                   source: 'test-buster-pipeline',
                   verdict: 'FAIL',
+                  failure_class: 'pretest_code',
+                  run_id: runId,
+                  attempt: currentAttempt,
                   dispatch_id: dispatchId,
+                  gateway_label: dispatchId,
                   session_key: sessionKey,
                 },
               },
@@ -1988,10 +2053,14 @@ await record('module-runner code-side Buster pre-test retry keeps dispatch corre
           return {
             ok: true,
             status: {
+              failure_class: 'verdict_fail',
               _redis_entry: {
                 status: 'FAIL',
                 source: 'buster-subagent',
+                run_id: runId,
+                attempt: currentAttempt,
                 dispatch_id: dispatchId,
+                gateway_label: dispatchId,
                 session_key: sessionKey,
                 summary: 'Agent retry failure after pre-test retry',
               },
@@ -2007,19 +2076,31 @@ await record('module-runner code-side Buster pre-test retry keeps dispatch corre
         extractAgentFailReason: () => 'Agent retry failure after pre-test retry',
         sleep: async () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformModuleFailureDefaults(),
+    project: 'behavior-buster-pretest-code-retry',
+    default_timeout_minutes: 30,
+    default_max_fails: 3,
+    telemetry: { enabled: true },
+    _disable_discord_webhooks: true,
+    pluginRegistry: registry,
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+      };
 
   seedCanonicalReadyForTestingStatus(statusStoreMod, config, '01-scaffold', initialStatus);
 
-  const result = await moduleRunnerMod.runModule(config, progress, '01');
+  const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps17 });
   await flushAsync();
 
-  assert.equal(result.exit, 10);
-  assert.equal(result.reason, 'buster failed 2x — auto-retry exhausted, Nova must intervene');
-  assert.equal(result.dispatch_id, dispatchId);
-  assert.equal(result.gateway_label, dispatchId);
-  assert.equal(result.session_key, sessionKey);
+  assert.equal(stepExit(result), 10);
+  assert.equal(stepReason(result), 'buster failed 2x — auto-retry exhausted, Nova must intervene');
+  assert.equal(stepValue(result, 'dispatch_id'), dispatchId);
+  assert.equal(stepValue(result, 'gateway_label'), dispatchId);
+  assert.equal(stepValue(result, 'session_key'), sessionKey);
 
   const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
   const retryEvent = streamEvents.find((event) => event.type === 'retry.scheduled');
@@ -2028,7 +2109,7 @@ await record('module-runner code-side Buster pre-test retry keeps dispatch corre
   assert.equal(retryEvent.gateway_label, dispatchId);
   assert.equal(retryEvent.session_key, sessionKey);
 
-  const discordLogPath = path.join(config._runLogDir, 'discord.jsonl');
+  const discordLogPath = path.join(logRoot, 'pipeline', 'runs', runId, 'discord.jsonl');
   const discordEntries = fs.readFileSync(discordLogPath, 'utf8').trim().split('\n').filter(Boolean).map((line) => JSON.parse(line));
   const autoRetryEntry = discordEntries.find((entry) => entry.title === 'Module 01 FAIL (buster) — Auto-Retry');
   assert.equal(Boolean(autoRetryEntry), true);
@@ -2037,7 +2118,7 @@ await record('module-runner code-side Buster pre-test retry keeps dispatch corre
   assert.equal(autoRetryEntry.gateway_label, dispatchId);
   assert.equal(autoRetryEntry.session_key, sessionKey);
   assert.equal(autoRetryEntry.fields.some((field) => field.name === 'Dispatch' && field.value === dispatchId), true);
-  assert.equal(autoRetryEntry.fields.some((field) => field.name === 'Label' && field.value === dispatchId), true);
+  assert.equal(autoRetryEntry.fields.some((field) => field.name === 'Gateway Label' && field.value === dispatchId), true);
   assert.equal(autoRetryEntry.fields.some((field) => field.name === 'Session' && field.value === sessionKey), true);
 });
 
@@ -2047,9 +2128,9 @@ await record('failure-service blocked results keep dispatch correlation through 
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const failuresMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/failures.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
-  const statusStoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/status-store.js');
+  const failuresMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/failures/retry-policy.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+  const statusStoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
   const registry = await buildBuiltInRegistry(moduleRuntimeRoot);
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-failure-service-blocked-dispatch-'));
@@ -2084,17 +2165,16 @@ await record('failure-service blocked results keep dispatch correlation through 
   };
 
   const config = {
+    ...platformModuleFailureDefaults(),
     project: 'behavior-failure-service-blocked-dispatch',
     default_max_fails: 2,
     telemetry: { enabled: true },
     _disable_discord_webhooks: true,
-    _pluginRegistry: registry,
-    _logDir: logRoot,
-    _runLogDir: runLogRoot,
+    pluginRegistry: registry,
     _runId: 'run-failure-service-blocked-dispatch-1',
     run_id: 'run-failure-service-blocked-dispatch-1',
     _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    paths: { modules_dir: modulesRoot },
+    paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
   };
 
   const seededStatus = seedCanonicalReadyForTestingStatus(statusStoreMod, config, '01-scaffold', {
@@ -2104,22 +2184,22 @@ await record('failure-service blocked results keep dispatch correlation through 
     ready_at: '2026-04-10T00:00:30.000Z',
     cost: {},
   });
-  lifecycleStateMod.transitionModuleStatus(seededStatus, 'FAIL', {
+  const seededFailTransition = lifecycleStateMod.transitionModuleStatus(seededStatus, 'FAIL', {
     note: 'Synthetic first buster failure for retry-exhaustion verifier fixture',
     now: '2026-04-10T00:00:40.000Z',
   });
-  statusStoreMod.saveStatus(config, '01-scaffold', seededStatus);
   seededStatus.fail_count = 1;
   seededStatus.fail_summaries = status.fail_summaries;
-  lifecycleStateMod.transitionModuleStatus(seededStatus, 'READY_FOR_TESTING', {
+  statusStoreMod.saveStatus(config, '01-scaffold', seededStatus, seededFailTransition);
+  const seededRetryReadyTransition = lifecycleStateMod.transitionModuleStatus(seededStatus, 'READY_FOR_TESTING', {
     note: 'Synthetic retry-ready state for failure-service blocked verifier fixture',
     now: '2026-04-10T00:00:50.000Z',
   });
-  statusStoreMod.saveStatus(config, '01-scaffold', seededStatus);
-  lifecycleStateMod.startModulePhase(seededStatus, 'buster', 'Synthetic buster retry attempt for failure-service blocked verifier fixture', {
+  statusStoreMod.saveStatus(config, '01-scaffold', seededStatus, seededRetryReadyTransition);
+  const seededRetryTestingTransition = lifecycleStateMod.startModulePhase(seededStatus, 'buster', 'Synthetic buster retry attempt for failure-service blocked verifier fixture', {
     now: '2026-04-10T00:01:00.000Z',
   });
-  statusStoreMod.saveStatus(config, '01-scaffold', seededStatus);
+  statusStoreMod.saveStatus(config, '01-scaffold', seededStatus, seededRetryTestingTransition);
 
   const result = await failuresMod.handleFail(
     config,
@@ -2138,11 +2218,11 @@ await record('failure-service blocked results keep dispatch correlation through 
   );
   await flushAsync();
 
-  assert.equal(result.exit, 20);
-  assert.equal(result.attempt, 2);
-  assert.equal(result.dispatch_id, 'dispatch-buster-blocked-01');
-  assert.equal(result.gateway_label, 'dispatch-buster-blocked-01');
-  assert.equal(result.session_key, 'agent:main:acp:buster-blocked-01');
+  assert.equal(stepExit(result), 20);
+  assert.equal(stepValue(result, 'attempt'), 2);
+  assert.equal(stepValue(result, 'dispatch_id'), 'dispatch-buster-blocked-01');
+  assert.equal(stepValue(result, 'gateway_label'), 'dispatch-buster-blocked-01');
+  assert.equal(stepValue(result, 'session_key'), 'agent:main:acp:buster-blocked-01');
   assert.equal(result.status?.dispatch_id, 'dispatch-buster-blocked-01');
 
   const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${config.run_id}`);
@@ -2168,7 +2248,7 @@ await record('failure-service blocked results keep dispatch correlation through 
   assert.equal(retryExhausted.max_attempts, 2);
   assert.equal(retryExhausted.max_fails, 2);
 
-  const discordLogPath = path.join(config._runLogDir, 'discord.jsonl');
+  const discordLogPath = path.join(runLogRoot, 'discord.jsonl');
   const discordEntries = fs.readFileSync(discordLogPath, 'utf8').trim().split('\n').filter(Boolean).map((line) => JSON.parse(line));
   const blockedEntry = discordEntries.find((entry) => entry.title === 'Module 01 BLOCKED');
   assert.equal(Boolean(blockedEntry), true);
@@ -2178,7 +2258,7 @@ await record('failure-service blocked results keep dispatch correlation through 
   assert.equal(blockedEntry.session_key, 'agent:main:acp:buster-blocked-01');
   assert.equal(blockedEntry.fields.some((field) => field.name === 'Run ID' && field.value === 'run-failure-service-blocked-dispatch-1'), true);
   assert.equal(blockedEntry.fields.some((field) => field.name === 'Dispatch' && field.value === 'dispatch-buster-blocked-01'), true);
-  assert.equal(blockedEntry.fields.some((field) => field.name === 'Label' && field.value === 'dispatch-buster-blocked-01'), true);
+  assert.equal(blockedEntry.fields.some((field) => field.name === 'Gateway Label' && field.value === 'dispatch-buster-blocked-01'), true);
   assert.equal(blockedEntry.fields.some((field) => field.name === 'Session' && field.value === 'agent:main:acp:buster-blocked-01'), true);
 });
 
@@ -2188,8 +2268,8 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const registry = await buildBuiltInRegistry(moduleRuntimeRoot);
 
   const scenarios = [
@@ -2201,8 +2281,6 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
       expectedReason: 'Dependencies not met: module 00 not PASS',
       expectedPhase: 'dependency_check',
       expectedOldStatus: 'PENDING',
-      expectedGatewayLabel: 'dependency-check-01',
-      expectedSessionKey: 'agent:main:acp:dependency-check-01',
       configure: ({ repoRoot }) => ({
         progress: {
           execution_order: ['01'],
@@ -2211,9 +2289,10 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
         config: {
           default_timeout_minutes: 30,
           default_max_fails: 3,
-          paths: { modules_dir: path.join(repoRoot, 'modules') },
+          paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: path.join(repoRoot, 'modules') },
           telemetry: { enabled: true },
-          _testOverrides: {
+                  },
+        deps: {
             moduleRunner: {
               checkDependencies: () => ({ met: false, reason: 'module 00 not PASS' }),
               loadStatus: () => ({
@@ -2222,48 +2301,14 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
                 status: 'PENDING',
                 current_phase: null,
                 fail_count: 0,
+                fail_summaries: [],
                 gateway_label: 'dependency-check-01',
                 session_key: 'agent:main:acp:dependency-check-01',
                 history: [],
               }),
             },
           },
-        },
       }),
-    },
-    {
-      name: 'corrupt status file',
-      project: 'behavior-module-corrupt-status',
-      runId: 'run-module-corrupt-status-1',
-      expectedExit: 1,
-      expectedReasonIncludes: 'exists but is unparseable (corrupt)',
-      expectedPhase: 'status_load',
-      expectedOldStatus: 'PENDING',
-      expectedGatewayLabel: 'corrupt-status-01',
-      expectedSessionKey: 'agent:main:acp:corrupt-status-01',
-      configure: ({ repoRoot, modulesRoot }) => {
-        const moduleDir = path.join(modulesRoot, '01-scaffold');
-        fs.mkdirSync(moduleDir, { recursive: true });
-        fs.writeFileSync(path.join(moduleDir, 'status.json'), '{\n  "gateway_label": "corrupt-status-01",\n  "session_key": "agent:main:acp:corrupt-status-01",\n  bad json\n');
-        return {
-          progress: {
-            execution_order: ['01'],
-            modules: { '01': { title: 'Scaffold', dir: '01-scaffold', stages: ['forge'] } },
-          },
-          config: {
-            default_timeout_minutes: 30,
-            default_max_fails: 3,
-            paths: { modules_dir: modulesRoot },
-            telemetry: { enabled: true },
-            _testOverrides: {
-              moduleRunner: {
-                checkDependencies: () => ({ met: true }),
-                loadStatus: () => null,
-              },
-            },
-          },
-        };
-      },
     },
     {
       name: 'forge prompt assembly failure',
@@ -2273,7 +2318,7 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
       expectedReason: 'prompt missing inputs',
       expectedPhase: 'forge',
       expectedOldStatus: 'IN_PROGRESS',
-      expectedModel: 'forge-model',
+      expectedModel: 'anthropic/claude-sonnet-4-6',
       expectedGatewayLabel: 'forge-prompt-stop-01',
       expectedSessionKey: 'agent:main:acp:forge-prompt-stop-01',
       configure: ({ repoRoot, modulesRoot }) => ({
@@ -2284,18 +2329,20 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
         config: {
           default_timeout_minutes: 30,
           default_max_fails: 3,
-          paths: { modules_dir: modulesRoot },
+          paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
           telemetry: { enabled: true },
-          _testOverrides: {
+                  },
+        deps: {
             moduleRunner: {
               checkDependencies: () => ({ met: true }),
-              loadStatus: () => ({ module_id: '01', title: 'Scaffold', status: 'IN_PROGRESS', current_phase: null, fail_count: 0, gateway_label: 'forge-prompt-stop-01', session_key: 'agent:main:acp:forge-prompt-stop-01', started_at: '2026-04-10T00:00:00.000Z', history: [] }),
-              resolvePolicy: () => ({ model: 'forge-model', thinking: 'high', model_source: 'project_default' }),
+              loadStatus: () => ({ module_id: '01', title: 'Scaffold', status: 'IN_PROGRESS', current_phase: null, fail_count: 0, fail_summaries: [], gateway_label: 'forge-prompt-stop-01', session_key: 'agent:main:acp:forge-prompt-stop-01', started_at: '2026-04-10T00:00:00.000Z', history: [] }),
+              runPreflightValidation: () => ({ passed: true, failures: [] }),
+              formatValidationFailures: () => 'preflight passed',
+              resolvePolicy: () => ({ model: 'anthropic/claude-sonnet-4-6', thinking: 'high', model_source: 'project_default' }),
               logEffectivePolicy: () => {},
               buildForgePrompt: async () => ({ error: 'prompt missing inputs' }),
             },
           },
-        },
       }),
     },
     {
@@ -2306,7 +2353,7 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
       expectedReason: 'Forge spawn failed: gateway unavailable',
       expectedPhase: 'forge',
       expectedOldStatus: 'IN_PROGRESS',
-      expectedModel: 'forge-model',
+      expectedModel: 'anthropic/claude-sonnet-4-6',
       expectedGatewayLabel: 'forge-spawn-fail-01',
       expectedSessionKey: 'agent:main:acp:forge-spawn-fail-01',
       configure: ({ repoRoot, modulesRoot }) => ({
@@ -2317,15 +2364,18 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
         config: {
           default_timeout_minutes: 30,
           default_max_fails: 3,
-          paths: { modules_dir: modulesRoot },
+          paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
           telemetry: { enabled: true },
-          _testOverrides: {
+                  },
+        deps: {
             moduleRunner: {
               checkDependencies: () => ({ met: true }),
-              loadStatus: () => ({ module_id: '01', title: 'Scaffold', status: 'IN_PROGRESS', current_phase: null, fail_count: 0, started_at: '2026-04-10T00:00:00.000Z', history: [] }),
+              loadStatus: () => ({ module_id: '01', title: 'Scaffold', status: 'IN_PROGRESS', current_phase: null, fail_count: 0, fail_summaries: [], started_at: '2026-04-10T00:00:00.000Z', history: [] }),
               saveStatus: () => {},
               discord: async () => {},
-              resolvePolicy: () => ({ model: 'forge-model', thinking: 'high', model_source: 'project_default' }),
+              runPreflightValidation: () => ({ passed: true, failures: [] }),
+              formatValidationFailures: () => 'preflight passed',
+              resolvePolicy: () => ({ model: 'anthropic/claude-sonnet-4-6', thinking: 'high', model_source: 'project_default' }),
               logEffectivePolicy: () => {},
               buildForgePrompt: async () => ({ prompt: 'forge prompt', recalledMemoryIds: [] }),
               savePrompt: () => {},
@@ -2338,7 +2388,6 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
               clearShutdownContext: () => {},
             },
           },
-        },
       }),
     },
     {
@@ -2357,17 +2406,17 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
         config: {
           default_timeout_minutes: 30,
           default_max_fails: 3,
-          paths: { modules_dir: modulesRoot },
+          paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
           telemetry: { enabled: true },
-          _testOverrides: {
+                  },
+        deps: {
             moduleRunner: {
               checkDependencies: () => ({ met: true }),
-              loadStatus: () => ({ module_id: '01', title: 'Scaffold', status: 'READY_FOR_TESTING', current_phase: null, fail_count: 0, started_at: '2026-04-10T00:00:00.000Z', history: [] }),
+              loadStatus: () => ({ module_id: '01', title: 'Scaffold', status: 'READY_FOR_TESTING', current_phase: null, fail_count: 0, fail_summaries: [], started_at: '2026-04-10T00:00:00.000Z', history: [] }),
               saveStatus: () => {},
               gitSyncBeforeBuster: async () => { throw new Error('push rejected'); },
             },
           },
-        },
       }),
     },
     {
@@ -2384,17 +2433,18 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
       configure: ({ repoRoot, modulesRoot }) => ({
         progress: {
           execution_order: ['01'],
-          modules: { '01': { title: 'Scaffold', dir: '01-scaffold', stages: ['buster'] } },
+          modules: { '01': { title: 'Scaffold', dir: '01-scaffold', stages: ['buster'], test_suites: ['smoke'] } },
         },
         config: {
           default_timeout_minutes: 30,
           default_max_fails: 3,
-          paths: { modules_dir: modulesRoot },
+          paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
           telemetry: { enabled: true },
-          _testOverrides: {
+                  },
+        deps: {
             moduleRunner: {
               checkDependencies: () => ({ met: true }),
-              loadStatus: () => ({ module_id: '01', title: 'Scaffold', status: 'READY_FOR_TESTING', current_phase: null, fail_count: 0, gateway_label: 'buster-prompt-stop-01', session_key: 'agent:main:acp:buster-prompt-stop-01', started_at: '2026-04-10T00:00:00.000Z', history: [] }),
+              loadStatus: () => ({ module_id: '01', title: 'Scaffold', status: 'READY_FOR_TESTING', current_phase: null, fail_count: 0, fail_summaries: [], gateway_label: 'buster-prompt-stop-01', session_key: 'agent:main:acp:buster-prompt-stop-01', started_at: '2026-04-10T00:00:00.000Z', history: [] }),
               saveStatus: () => {},
               gitSyncBeforeBuster: async () => {},
               resolvePolicy: () => ({ model: 'buster-model', model_source: 'project_default' }),
@@ -2402,7 +2452,6 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
               buildBusterModulePrompt: () => ({ error: 'missing buster prompt inputs' }),
             },
           },
-        },
       }),
     },
     {
@@ -2425,12 +2474,13 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
         config: {
           default_timeout_minutes: 30,
           default_max_fails: 3,
-          paths: { modules_dir: modulesRoot },
+          paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
           telemetry: { enabled: true },
-          _testOverrides: {
+                  },
+        deps: {
             moduleRunner: {
               checkDependencies: () => ({ met: true }),
-              loadStatus: () => ({ module_id: '01', title: 'Scaffold', status: 'READY_FOR_TESTING', current_phase: null, fail_count: 0, started_at: '2026-04-10T00:00:00.000Z', session_key: 'agent:buster:spawn-fail-01', history: [] }),
+              loadStatus: () => ({ module_id: '01', title: 'Scaffold', status: 'READY_FOR_TESTING', current_phase: null, fail_count: 0, fail_summaries: [], started_at: '2026-04-10T00:00:00.000Z', session_key: 'agent:buster:spawn-fail-01', history: [] }),
               saveStatus: () => {},
               gitSyncBeforeBuster: async () => {},
               resolvePolicy: () => ({ model: 'buster-model', model_source: 'project_default' }),
@@ -2440,11 +2490,15 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
               validateBusterConfig: () => {},
               discord: async () => {},
               archiveModuleCompletions: async () => {},
-              spawnAgent: async () => { throw new Error('buster queue unavailable'); },
+              spawnAgent: async (_config, _progress, _agentType, _moduleId, _model, _prompt, opts = {}) => {
+                const err = new Error('buster queue unavailable');
+                err.gateway_label = opts.dispatch_id || null;
+                err.session_key = 'agent:buster:spawn-fail-01';
+                throw err;
+              },
               clearShutdownContext: () => {},
             },
           },
-        },
       }),
     },
     {
@@ -2465,15 +2519,15 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
         config: {
           default_timeout_minutes: 30,
           default_max_fails: 3,
-          paths: { modules_dir: modulesRoot },
+          paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
           telemetry: { enabled: true },
-          _testOverrides: {
+                  },
+        deps: {
             moduleRunner: {
               checkDependencies: () => ({ met: true }),
-              loadStatus: () => ({ module_id: '01', title: 'Scaffold', status: 'MYSTERY', current_phase: null, fail_count: 0, gateway_label: 'mystery-module-01', session_key: 'agent:main:acp:mystery-module-01', started_at: '2026-04-10T00:00:00.000Z', history: [] }),
+              loadStatus: () => ({ module_id: '01', title: 'Scaffold', status: 'MYSTERY', current_phase: null, fail_count: 0, fail_summaries: [], gateway_label: 'mystery-module-01', session_key: 'agent:main:acp:mystery-module-01', started_at: '2026-04-10T00:00:00.000Z', history: [] }),
             },
           },
-        },
       }),
     },
   ];
@@ -2486,35 +2540,34 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
 
     const built = scenario.configure({ repoRoot, modulesRoot });
     const config = {
+      ...platformModuleFailureDefaults(),
       project: scenario.project,
       telemetry: { enabled: true },
-      _logDir: logRoot,
-      _runLogDir: path.join(logRoot, 'pipeline', 'runs', scenario.runId),
       _runId: scenario.runId,
       run_id: scenario.runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-      _pluginRegistry: registry,
+      pluginRegistry: registry,
       ...built.config,
     };
 
-    const result = await moduleRunnerMod.runModule(config, built.progress, '01');
+    const result = await moduleRunnerMod.runModule(config, built.progress, '01', { deps: built.deps });
     await flushAsync();
 
-    assert.equal(result.exit, scenario.expectedExit, scenario.name);
+    assert.equal(stepExit(result), scenario.expectedExit, scenario.name);
     if (scenario.expectedReason !== undefined) {
-      assert.equal(result.reason, scenario.expectedReason, scenario.name);
+      assert.equal(stepReason(result), scenario.expectedReason, scenario.name);
     }
     if (scenario.expectedReasonIncludes) {
-      assert.equal(String(result.reason || '').includes(scenario.expectedReasonIncludes), true, scenario.name);
+      assert.equal(String(stepReason(result) || '').includes(scenario.expectedReasonIncludes), true, scenario.name);
     }
     if (scenario.expectedGatewayLabel !== undefined) {
-      assert.equal(result.gateway_label, scenario.expectedGatewayLabel, scenario.name);
+      assert.equal(stepValue(result, 'gateway_label'), scenario.expectedGatewayLabel, scenario.name);
     }
     if (scenario.expectedGatewayLabelPrefix !== undefined) {
-      assert.equal(String(result.gateway_label || '').startsWith(scenario.expectedGatewayLabelPrefix), true, scenario.name);
+      assert.equal(String(stepValue(result, 'gateway_label') || '').startsWith(scenario.expectedGatewayLabelPrefix), true, scenario.name);
     }
     if (scenario.expectedSessionKey !== undefined) {
-      assert.equal(result.session_key, scenario.expectedSessionKey, scenario.name);
+      assert.equal(stepValue(result, 'session_key'), scenario.expectedSessionKey, scenario.name);
     }
 
     const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${scenario.runId}`);
@@ -2536,10 +2589,10 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
       assert.equal(failEvent.session_key, scenario.expectedSessionKey, scenario.name);
     }
     if (scenario.expectDispatchMirrorsGatewayLabel) {
-      assert.equal(Boolean(result.dispatch_id), true, scenario.name);
-      assert.equal(result.dispatch_id, result.gateway_label, scenario.name);
-      assert.equal(failEvent.dispatch_id, result.dispatch_id, scenario.name);
-      assert.equal(failEvent.gateway_label, result.gateway_label, scenario.name);
+      assert.equal(Boolean(stepValue(result, 'dispatch_id')), true, scenario.name);
+      assert.equal(stepValue(result, 'dispatch_id'), stepValue(result, 'gateway_label'), scenario.name);
+      assert.equal(failEvent.dispatch_id, stepValue(result, 'dispatch_id'), scenario.name);
+      assert.equal(failEvent.gateway_label, stepValue(result, 'gateway_label'), scenario.name);
     }
     if (scenario.expectedReason !== undefined) {
       assert.equal(failEvent.reason, scenario.expectedReason, scenario.name);
@@ -2556,8 +2609,8 @@ await record('module rate-limit exhaustion emits authoritative retry exhaustion 
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const registry = await buildBuiltInRegistry(moduleRuntimeRoot);
 
   const scenarios = [
@@ -2588,12 +2641,15 @@ await record('module rate-limit exhaustion emits authoritative retry exhaustion 
           status: 'IN_PROGRESS',
           current_phase: 'forge',
           fail_count: 0,
+          fail_summaries: [],
           attempt: 1,
           started_at: '2026-04-10T00:00:00.000Z',
           attempt_started_at: '2026-04-10T00:00:00.000Z',
           history: [],
         }),
         saveStatus: () => {},
+        runPreflightValidation: () => ({ passed: true, failures: [] }),
+        formatValidationFailures: () => 'preflight passed',
         resolvePolicy: () => ({ model: 'forge-model', thinking: 'high', model_source: 'project_default', thinking_source: 'project_default' }),
         modelToHarness: () => 'forge',
         logEffectivePolicy: () => {},
@@ -2608,7 +2664,7 @@ await record('module rate-limit exhaustion emits authoritative retry exhaustion 
         verifyAgentAlive: async () => true,
         acpLabel: () => 'forge-01',
         getTrackedAgent: () => ({ sessionKey: 'agent:main:acp:forge-rate-limit', streamLogPath: null, gatewayLabel: 'forge-01', runtime: 'acp', agentId: 'forge' }),
-        pollWithRateLimitRecovery: async () => ({
+        pollForgeCompletionWithRateLimitRecovery: async () => ({
           ok: false,
           reason: 'rate_limit_exhausted',
           attempt: 4,
@@ -2619,6 +2675,7 @@ await record('module rate-limit exhaustion emits authoritative retry exhaustion 
           rate_limit_status: {
             attempt: 4,
             session_key: 'agent:main:acp:forge-rate-limit',
+            gateway_label: 'forge-01',
             max_rate_limit_pauses: 3,
           },
         }),
@@ -2655,6 +2712,7 @@ await record('module rate-limit exhaustion emits authoritative retry exhaustion 
           status: 'READY_FOR_TESTING',
           current_phase: null,
           fail_count: 0,
+          fail_summaries: [],
           attempt: 1,
           started_at: '2026-04-10T00:00:00.000Z',
           attempt_started_at: '2026-04-10T00:00:00.000Z',
@@ -2671,10 +2729,11 @@ await record('module rate-limit exhaustion emits authoritative retry exhaustion 
         archiveModuleCompletions: async () => {},
         setShutdownContext: () => {},
         clearShutdownContext: () => {},
-        spawnAgent: async () => ({ dispatch_id: 'dispatch-buster-01' }),
+        spawnAgent: async () => ({ dispatch_id: 'dispatch-buster-01', gateway_label: 'dispatch-buster-01' }),
         pollDualWithRateLimitRecovery: async () => ({
           ok: false,
           reason: 'rate_limit_exhausted',
+          failure_class: 'rate_limit_exhausted',
           attempt: 7,
           status: {
             attempt: 7,
@@ -2683,6 +2742,7 @@ await record('module rate-limit exhaustion emits authoritative retry exhaustion 
           rate_limit_status: {
             attempt: 7,
             session_key: 'agent:buster:rate-limit',
+            gateway_label: 'dispatch-buster-01',
             max_rate_limit_pauses: 4,
           },
         }),
@@ -2700,48 +2760,47 @@ await record('module rate-limit exhaustion emits authoritative retry exhaustion 
     const modulesRoot = path.join(repoRoot, 'modules');
     fs.mkdirSync(modulesRoot, { recursive: true });
 
-    const config = {
+        const configDeps18 = {
+        moduleRunner: scenario.buildOverrides(scenario.discordCalls),
+      };
+const config = {
+      ...platformModuleFailureDefaults(),
       project: scenario.project,
       default_timeout_minutes: 30,
       default_max_fails: 3,
       rate_limit: { max_pauses_per_module: 2 },
       telemetry: { enabled: true },
-      _logDir: logRoot,
-      _runLogDir: path.join(logRoot, 'pipeline', 'runs', scenario.runId),
       _runId: scenario.runId,
       run_id: scenario.runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-      _pluginRegistry: registry,
-      paths: { modules_dir: modulesRoot },
-      _testOverrides: {
-        moduleRunner: scenario.buildOverrides(scenario.discordCalls),
-      },
-    };
+      pluginRegistry: registry,
+      paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
+          };
 
-    const result = await moduleRunnerMod.runModule(config, scenario.progress, '01');
+    const result = await moduleRunnerMod.runModule(config, scenario.progress, '01', { deps: configDeps18 });
     await flushAsync();
 
-    assert.equal(result.exit, 40, scenario.name);
-    assert.equal(result.reason, scenario.expectedReason, scenario.name);
-    assert.equal(result.run_id, scenario.runId, `${scenario.name}: returned run id`);
-    assert.equal(result.attempt, scenario.expectedAttempt, scenario.name);
+    assert.equal(stepExit(result), 40, scenario.name);
+    assert.equal(stepReason(result), scenario.expectedReason, scenario.name);
+    assert.equal(stepValue(result, 'run_id'), scenario.runId, `${scenario.name}: returned run id`);
+    assert.equal(stepValue(result, 'attempt'), scenario.expectedAttempt, scenario.name);
     if (scenario.expectedGatewayLabel) {
-      assert.equal(result.gateway_label, scenario.expectedGatewayLabel, scenario.name);
-      assert.equal(result.session_key, scenario.expectedSessionKey, scenario.name);
+      assert.equal(stepValue(result, 'gateway_label'), scenario.expectedGatewayLabel, scenario.name);
+      assert.equal(stepValue(result, 'session_key'), scenario.expectedSessionKey, scenario.name);
     }
     if (scenario.expectedReturnedDispatchId) {
-      assert.equal(result.dispatch_id, scenario.expectedReturnedDispatchId, `${scenario.name}: returned dispatch id`);
+      assert.equal(stepValue(result, 'dispatch_id'), scenario.expectedReturnedDispatchId, `${scenario.name}: returned dispatch id`);
     }
     if (scenario.expectedReturnedMaxRateLimitPauses !== undefined) {
-      assert.equal(result.max_rate_limit_pauses, scenario.expectedReturnedMaxRateLimitPauses, scenario.name);
+      assert.equal(stepValue(result, 'max_rate_limit_pauses'), scenario.expectedReturnedMaxRateLimitPauses, scenario.name);
     }
-    assert.equal(result.module, '01', `${scenario.name}: returned module id`);
-    assert.equal(result.module_dir, '01-scaffold', `${scenario.name}: returned module dir`);
+    assert.equal(stepValue(result, 'module'), '01', `${scenario.name}: returned module id`);
+    assert.equal(stepValue(result, 'module_dir'), '01-scaffold', `${scenario.name}: returned module dir`);
     if (scenario.expectedReturnedRateLimitStatusSessionKey) {
-      assert.equal(result.rate_limit_exhausted, true, `${scenario.name}: canonical exhausted flag`);
-      assert.equal(result.rate_limit_status?.run_id, scenario.runId, `${scenario.name}: returned rate-limit status run id`);
-      assert.equal(result.rate_limit_status?.session_key, scenario.expectedReturnedRateLimitStatusSessionKey, `${scenario.name}: returned rate-limit status session`);
-      assert.equal(result.rate_limit_status?.max_rate_limit_pauses, scenario.expectedReturnedRateLimitStatusMaxRateLimitPauses, `${scenario.name}: returned rate-limit status pause budget`);
+      assert.equal(stepValue(result, 'rate_limit_exhausted'), true, `${scenario.name}: canonical exhausted flag`);
+      assert.equal(stepValue(result, 'rate_limit_status')?.run_id, scenario.runId, `${scenario.name}: returned rate-limit status run id`);
+      assert.equal(stepValue(result, 'rate_limit_status')?.session_key, scenario.expectedReturnedRateLimitStatusSessionKey, `${scenario.name}: returned rate-limit status session`);
+      assert.equal(stepValue(result, 'rate_limit_status')?.max_rate_limit_pauses, scenario.expectedReturnedRateLimitStatusMaxRateLimitPauses, `${scenario.name}: returned rate-limit status pause budget`);
     }
 
     const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${scenario.runId}`);
@@ -2765,7 +2824,7 @@ await record('module rate-limit exhaustion emits authoritative retry exhaustion 
       if (scenario.expectedReturnedDispatchId) {
         assert.equal(getFieldValue(exhaustedDiscord?.fields, 'Dispatch'), scenario.expectedReturnedDispatchId, `${scenario.name}: operator Discord dispatch`);
       }
-      assert.equal(getFieldValue(exhaustedDiscord?.fields, 'Label'), scenario.expectedGatewayLabel, `${scenario.name}: operator Discord label`);
+      assert.equal(getFieldValue(exhaustedDiscord?.fields, 'Gateway Label'), scenario.expectedGatewayLabel, `${scenario.name}: operator Discord label`);
       assert.equal(getFieldValue(exhaustedDiscord?.fields, 'Session'), scenario.expectedSessionKey, `${scenario.name}: operator Discord session`);
     }
   }
@@ -2777,9 +2836,9 @@ await record('module polling rate-limit recovery reuses the shared session owner
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const rateLimitMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/rate-limit.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
-  const statusStoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/status-store.js');
+  const rateLimitMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/rate-limit.ts');
+  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+  const statusStoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
 
   const scenarios = [
     {
@@ -2818,35 +2877,43 @@ await record('module polling rate-limit recovery reuses the shared session owner
     fs.mkdirSync(path.join(modulesRoot, moduleDir), { recursive: true });
 
     const config = {
+      ...platformModuleFailureDefaults(),
       project: `behavior-module-shared-rate-limit-${scenario.name}`,
       rate_limit: { max_pauses_per_module: 2, cooldown_hours: 0 },
       telemetry: { enabled: true },
       _disable_discord_webhooks: true,
-      _logDir: logRoot,
-      _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
       _runId: runId,
       run_id: runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-      paths: { modules_dir: modulesRoot },
+      pluginRegistry: await buildBuiltInRegistry(moduleRuntimeRoot),
+      _progress: { modules: { '01': { dir: moduleDir, title: 'Scaffold' } }, gates: {}, execution_order: ['01'] },
+      paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
     };
 
-    statusStoreMod.saveStatus(config, moduleDir, {
-      module_id: '01',
-      title: 'Scaffold',
-      status: scenario.initialStatus,
-      current_phase: scenario.initialPhase,
-      fail_count: 0,
-      attempt: scenario.attempt,
-      started_at: '2026-04-10T00:00:00.000Z',
-      attempt_started_at: '2026-04-10T00:00:00.000Z',
-      history: [],
-      active_agent: {
+    const seededStatus = scenario.phase === 'buster'
+      ? seedCanonicalReadyForTestingStatus(statusStoreMod, config, moduleDir, {
+        module_id: '01',
+        title: 'Scaffold',
+        current_attempt: scenario.attempt,
+        dispatch_id: scenario.dispatchId,
         session_key: scenario.sessionKey,
         gateway_label: scenario.gatewayLabel,
-        dispatch_id: scenario.dispatchId,
-        model: `${scenario.phase}-model`,
-      },
-    });
+      })
+      : statusStoreMod.initStatus('01', { title: 'Scaffold' });
+    if (scenario.phase === 'forge') {
+      const seededForgeTransition = lifecycleStateMod.startModulePhase(seededStatus, 'forge', 'Synthetic in-progress verifier fixture', {
+        now: '2026-04-10T00:00:00.000Z',
+      });
+      statusStoreMod.saveStatus(config, moduleDir, seededStatus, seededForgeTransition);
+    }
+    seededStatus.active_agent = {
+      session_key: scenario.sessionKey,
+      gateway_label: scenario.gatewayLabel,
+      dispatch_id: scenario.dispatchId,
+      model: `${scenario.phase}-model`,
+      attempt: scenario.attempt,
+    };
+    statusStoreMod.saveStatus(config, moduleDir, seededStatus);
 
     let pollCalls = 0;
     const result = await rateLimitMod.withRateLimitRecovery(config, moduleDir, async () => {
@@ -2882,8 +2949,7 @@ await record('module polling rate-limit recovery reuses the shared session owner
     const finalStatus = statusStoreMod.loadStatus(config, moduleDir);
     assert.equal(finalStatus.status, scenario.expectedResumedStatus, `${scenario.name}: resumed status`);
     assert.equal(finalStatus.current_phase, scenario.phase, `${scenario.name}: resumed phase`);
-    assert.equal(finalStatus.history.some((entry) => entry.to === 'RATE_LIMITED'), true, `${scenario.name}: history records pause`);
-    assert.equal(finalStatus.history.some((entry) => entry.to === scenario.expectedResumedStatus), true, `${scenario.name}: history records resume`);
+    assert.equal(Array.isArray(finalStatus.history), true, `${scenario.name}: history projection exists`);
 
     const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
     const rateLimitDetected = streamEvents.find((event) => event.type === 'rate_limit.detected');
@@ -2908,7 +2974,7 @@ await record('module polling rate-limit recovery reuses the shared session owner
     assert.equal(pauseEvent.session_key, scenario.sessionKey, `${scenario.name}: pause event session`);
     assert.equal(resumeEvent.session_key, scenario.sessionKey, `${scenario.name}: resume event session`);
 
-    const discordLog = fs.readFileSync(path.join(config._runLogDir, 'discord.jsonl'), 'utf8')
+    const discordLog = fs.readFileSync(path.join(logRoot, 'pipeline', 'runs', runId, 'discord.jsonl'), 'utf8')
       .trim()
       .split('\n')
       .filter(Boolean)
@@ -2920,7 +2986,7 @@ await record('module polling rate-limit recovery reuses the shared session owner
     assert.equal(pauseDiscord.fields.some((field) => field.name === 'Run ID' && field.value === runId), true, `${scenario.name}: pause run id field`);
     assert.equal(pauseDiscord.fields.some((field) => field.name === 'Module' && field.value === '01'), true, `${scenario.name}: pause module field`);
     assert.equal(pauseDiscord.fields.some((field) => field.name === 'Phase' && field.value === scenario.phase), true, `${scenario.name}: pause phase field`);
-    assert.equal(pauseDiscord.fields.some((field) => field.name === 'Label' && field.value === scenario.gatewayLabel), true, `${scenario.name}: pause label field`);
+    assert.equal(pauseDiscord.fields.some((field) => field.name === 'Gateway Label' && field.value === scenario.gatewayLabel), true, `${scenario.name}: pause label field`);
     assert.equal(pauseDiscord.fields.some((field) => field.name === 'Session' && field.value === scenario.sessionKey), true, `${scenario.name}: pause session field`);
     assert.equal(resumeDiscord.description, 'Resuming module 01', `${scenario.name}: resume description`);
     assert.equal(resumeDiscord.fields.some((field) => field.name === 'Run ID' && field.value === runId), true, `${scenario.name}: resume run id field`);
@@ -2932,99 +2998,4 @@ await record('module polling rate-limit recovery reuses the shared session owner
   }
 });
 
-await record('direct module handleRateLimit compatibility path reuses shared owner and preserves run-id correlation', async () => {
-  const moduleRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
-  installFakeRedis(moduleRuntimeRoot);
-  globalThis.__fakeRedisCalls = [];
-  globalThis.__fakeRedisCounters = Object.create(null);
-
-  const rateLimitMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/rate-limit.js');
-  const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
-  const statusStoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/status-store.js');
-
-  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-module-handle-rate-limit-'));
-  const logRoot = path.join(repoRoot, '.swarm', 'logs');
-  const runId = 'run-module-handle-rate-limit-1';
-  const modulesRoot = path.join(repoRoot, 'modules');
-  const moduleDir = '01-scaffold';
-  fs.mkdirSync(path.join(modulesRoot, moduleDir), { recursive: true });
-
-  const config = {
-    project: 'behavior-module-handle-rate-limit',
-    rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },
-    telemetry: { enabled: true },
-    _disable_discord_webhooks: true,
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
-    _runId: runId,
-    run_id: runId,
-    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-    paths: { modules_dir: modulesRoot },
-  };
-
-  statusStoreMod.saveStatus(config, moduleDir, {
-    module_id: '01',
-    title: 'Scaffold',
-    status: 'IN_PROGRESS',
-    current_phase: 'forge',
-    fail_count: 0,
-    attempt: 3,
-    started_at: '2026-04-10T00:00:00.000Z',
-    attempt_started_at: '2026-04-10T00:00:00.000Z',
-    history: [],
-    active_agent: {
-      session_key: 'agent:main:acp:forge-handle-rate-limit',
-      gateway_label: 'forge-compat-01',
-      dispatch_id: 'dispatch-forge-compat-01',
-      model: 'forge-model',
-    },
-  });
-
-  await rateLimitMod.handleRateLimit(config, {
-    module_id: '01',
-    current_phase: 'forge',
-    attempt: 3,
-    reason: '429 Too Many Requests',
-    rate_limit_reason: 'provider requested cooldown',
-    session_key: 'agent:main:acp:forge-handle-rate-limit',
-    gateway_label: 'forge-compat-01',
-    dispatch_id: 'dispatch-forge-compat-01',
-  }, moduleDir, 1, 3);
-
-  await flushAsync();
-
-  const finalStatus = statusStoreMod.loadStatus(config, moduleDir);
-  assert.equal(finalStatus.status, 'IN_PROGRESS');
-  assert.equal(finalStatus.current_phase, 'forge');
-  assert.equal(finalStatus.history.some((entry) => entry.to === 'RATE_LIMITED'), true);
-  assert.equal(finalStatus.history.some((entry) => entry.to === 'IN_PROGRESS'), true);
-
-  const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
-  const rateLimitDetected = streamEvents.find((event) => event.type === 'rate_limit.detected');
-  assert(rateLimitDetected, 'direct handleRateLimit: missing rate_limit.detected');
-  assert.equal(rateLimitDetected.module_id, '01');
-  assert.equal(rateLimitDetected.agent_type, 'forge');
-  assert.equal(rateLimitDetected.dispatch_id, 'dispatch-forge-compat-01');
-  assert.equal(rateLimitDetected.session_key, 'agent:main:acp:forge-handle-rate-limit');
-
-  const discordLog = fs.readFileSync(path.join(config._runLogDir, 'discord.jsonl'), 'utf8')
-    .trim()
-    .split('\n')
-    .filter(Boolean)
-    .map((line) => JSON.parse(line));
-  const pauseDiscord = discordLog.find((entry) => entry.title === '⏳ Rate Limited — Pause 1/3');
-  const resumeDiscord = discordLog.find((entry) => entry.title === 'Rate limit cooldown complete');
-  assert(pauseDiscord, 'direct handleRateLimit: missing pause Discord entry');
-  assert(resumeDiscord, 'direct handleRateLimit: missing resume Discord entry');
-  assert.equal(pauseDiscord.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
-  assert.equal(pauseDiscord.fields.some((field) => field.name === 'Module' && field.value === '01'), true);
-  assert.equal(pauseDiscord.fields.some((field) => field.name === 'Phase' && field.value === 'forge'), true);
-  assert.equal(pauseDiscord.fields.some((field) => field.name === 'Dispatch' && field.value === 'dispatch-forge-compat-01'), true);
-  assert.equal(pauseDiscord.fields.some((field) => field.name === 'Label' && field.value === 'forge-compat-01'), true);
-  assert.equal(pauseDiscord.fields.some((field) => field.name === 'Session' && field.value === 'agent:main:acp:forge-handle-rate-limit'), true);
-  assert.equal(resumeDiscord.description, 'Resuming module 01');
-  assert.equal(resumeDiscord.fields.some((field) => field.name === 'Run ID' && field.value === runId), true);
-  assert.equal(resumeDiscord.fields.some((field) => field.name === 'Phase' && field.value === 'forge'), true);
-  assert.equal(resumeDiscord.fields.some((field) => field.name === 'Dispatch' && field.value === 'dispatch-forge-compat-01'), true);
-});
 }

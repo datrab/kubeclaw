@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
+const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-observability-catch-reporting' });
 import assert from 'assert';
 import fs from 'fs';
 import path from 'path';
@@ -24,17 +26,23 @@ const args = parseArgs();
 const sourceRoot = path.resolve(args['source-root'] || process.cwd());
 
 const scopedFiles = [
-  'skills/common/pipeline/noncritical-reporting.js',
-  'skills/common/pipeline/redaction.js',
-  'skills/nova/pipeline/services/telemetry.js',
-  'skills/nova/pipeline/services/telemetry-stream.js',
-  'skills/nova/pipeline/services/observability.js',
-  'skills/nova/pipeline/services/failures.js',
-  'skills/nova/pipeline/services/notification-dispatch.js',
-  'skills/nova/pipeline/integrations/discord.js',
-  'skills/buster/pipeline/services/telemetry.js',
-  'skills/buster/pipeline/services/discord.js',
-  'skills/buster/pipeline/services/logger.js',
+  'skills/common/pipeline/noncritical-reporting.ts',
+  'skills/common/pipeline/redaction.ts',
+  'skills/nova/pipeline/services/telemetry.ts',
+  'skills/nova/pipeline/services/telemetry/builders.ts',
+  'skills/nova/pipeline/services/telemetry/dispatch.ts',
+  'skills/nova/pipeline/services/telemetry/sinks.ts',
+  'skills/nova/pipeline/services/telemetry-stream.ts',
+  'skills/nova/pipeline/services/observability.ts',
+  'skills/nova/pipeline/services/failure-semantics.ts',
+  'skills/nova/pipeline/services/failures/classification.ts',
+  'skills/nova/pipeline/services/failures/presentation.ts',
+  'skills/nova/pipeline/services/failures/retry-policy.ts',
+  'skills/nova/pipeline/services/notification-dispatch.ts',
+  'skills/nova/pipeline/integrations/discord.ts',
+  'skills/buster/pipeline/services/telemetry.ts',
+  'skills/buster/pipeline/services/discord.ts',
+  'skills/buster/pipeline/services/logger.ts',
 ];
 
 const bannedPatterns = [
@@ -56,4 +64,5 @@ for (const relativePath of scopedFiles) {
   }
 }
 
+quietConsole.restore();
 console.log(JSON.stringify({ ok: true, checked: scopedFiles.length, sourceRoot }, null, 2));

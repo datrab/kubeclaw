@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
+const quietConsole = installQuietRuntimeConsole({ label: 'runtime/check-final-gate-hardening' });
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -14,12 +16,12 @@ import {
 const args = parseArgs();
 const { sourceRoot, overlayRoot } = resolveRoots(args);
 const { runtimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
-const pipelineRunnerMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
+const pipelineRunnerMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/runners/pipeline-runner-lock.ts');
 const launchLibMod = await importRuntimeModule(sourceRoot, '/tests/verification/runtime/session-launch-lib.mjs');
 
 const helperDir = fs.mkdtempSync(path.join(os.tmpdir(), 'final-gate-hardening-'));
 const helperPath = path.join(helperDir, 'try-run-lock.mjs');
-const runtimeModulePath = path.join(runtimeRoot, 'app', 'skills', 'pipeline', 'runners', 'pipeline-runner.js');
+const runtimeModulePath = path.join(runtimeRoot, 'app', 'skills', 'pipeline', 'runners', 'pipeline-runner-lock.ts');
 
 fs.writeFileSync(helperPath, `
 import { pathToFileURL } from 'node:url';
@@ -72,7 +74,10 @@ await runCheck('same-project pipeline run concurrency is explicitly bounded to o
     assert.equal(persisted.module, '01');
     assert.equal(persisted.pid, process.pid);
 
-    pipelineRunnerMod.releasePipelineRunLock({ path: lockPath, token: 'wrong-owner-token' });
+    assert.throws(
+      () => pipelineRunnerMod.releasePipelineRunLock({ path: lockPath, token: 'wrong-owner-token', config: lockConfig }),
+      /token mismatch/,
+    );
     assert.equal(fs.existsSync(lockPath), true);
 
     const blocked = spawnSync(process.execPath, [helperPath, runtimeModulePath, JSON.stringify({
@@ -209,5 +214,6 @@ const result = {
   checks,
 };
 
+quietConsole.restore();
 console.log(JSON.stringify(result, null, 2));
 process.exit(failed.length === 0 ? 0 : 1);

@@ -11,6 +11,7 @@ During the transition, `scripts/*.mjs` may remain as thin compatibility entrypoi
 
 ```text
 tests/
+  skills/
   verification/
     lib/
     runtime/
@@ -21,6 +22,7 @@ tests/
 ## Boundary rule
 
 - `scripts/` = operator/deployment utilities and temporary compatibility shims
+- `tests/skills/` = Node unit tests for code that runtime-packages from `skills/`
 - `tests/` = verification, contract guards, fixtures, and harness logic
 
 ## Migration rule

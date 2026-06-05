@@ -6,10 +6,10 @@ Packaging verification covers the real packaged runtime surface that the materia
 
 Authoritative packaging rules remain:
 - `docker/Dockerfile.general` builds `/app/skills` from `skills/common` plus `skills/nova`, while excluding the Nova-local copies of:
-  - `pipeline/integrations/gateway.js`
+  - `pipeline/integrations/gateway.ts`
   - `pipeline/agents/acp-monitor.js`
 - `docker/Dockerfile.sandbox` builds `/app/skills` from `skills/common` plus `skills/buster`, while excluding the common copy of:
-  - `redis.js`
+  - `redis.ts`
 - `charts/kubeclaw/templates/deployment.yaml` still merges image-baked `/app/skills/.` into `/skills-merged/`, then overlays optional `/init-skills/.`, then mounts `/skills-merged` back onto `/app/skills`
 
 Current verification policy:
@@ -23,10 +23,11 @@ Current verification policy:
 The packaging guard fails if any of the following regress:
 - packaged runtime path collisions
 - broken relative imports in the materialized `/app/skills/**` tree
-- general-image `pipeline.js` import failure
-- general-image `pipeline/index.js` import failure
+- `// @ts-nocheck` directives in runtime TypeScript sources
+- general-image `pipeline.ts` import failure
+- general-image `pipeline/index.ts` import failure
 - packaged owner drift for the shared pipeline helper surface under `/app/skills/pipeline/**`
-- packaged owner drift for sandbox `/app/skills/redis.js`
+- packaged owner drift for sandbox `/app/skills/pipeline/tools/redis.ts`
 
 This protects the packaged runtime surface against overlay/copy-order regressions and broken cross-skill relative imports after Docker/chart layering.
 
@@ -46,21 +47,21 @@ Packaging/runtime scan result against the live repo materialization:
 - sandbox image collisions: `0`
 - total packaged owner drift: `0`
 - broken packaged relative imports: `0`
-- packaged `/app/skills/pipeline.js` import: `OK`
-- packaged `/app/skills/pipeline/index.js` import: `OK`
+- packaged `/app/skills/pipeline.ts` import: `OK`
+- packaged `/app/skills/pipeline/index.ts` import: `OK`
 
 Resolved packaged runtime owners:
-- general `/app/skills/pipeline/agents/runtime.js` -> `skills/common/pipeline/agents/runtime.js`
-- general `/app/skills/pipeline/integrations/gateway.js` -> `skills/common/pipeline/integrations/gateway.js`
-- general `/app/skills/pipeline/agents/lifecycle.js` -> `skills/common/pipeline/agents/lifecycle.js`
-- general `/app/skills/pipeline/agents/acp-monitor.js` -> `skills/common/pipeline/agents/acp-monitor.js`
-- general `/app/skills/pipeline/lifecycle-state.js` -> `skills/common/pipeline/lifecycle-state.js`
-- sandbox `/app/skills/pipeline/agents/runtime.js` -> `skills/common/pipeline/agents/runtime.js`
-- sandbox `/app/skills/pipeline/integrations/gateway.js` -> `skills/common/pipeline/integrations/gateway.js`
-- sandbox `/app/skills/pipeline/agents/lifecycle.js` -> `skills/common/pipeline/agents/lifecycle.js`
-- sandbox `/app/skills/pipeline/agents/acp-monitor.js` -> `skills/common/pipeline/agents/acp-monitor.js`
-- sandbox `/app/skills/pipeline/lifecycle-state.js` -> `skills/common/pipeline/lifecycle-state.js`
-- sandbox `/app/skills/redis.js` -> `skills/buster/redis.js`
+- general `/app/skills/pipeline/agents/runtime.ts` -> `skills/common/pipeline/agents/runtime.ts` via runtime facade
+- general `/app/skills/pipeline/integrations/gateway.ts` -> `skills/common/pipeline/integrations/gateway.ts`
+- general `/app/skills/pipeline/agents/lifecycle.ts` -> `skills/common/pipeline/agents/lifecycle.ts` via runtime facade
+- general `/app/skills/pipeline/agents/acp-monitor.ts` -> `skills/common/pipeline/agents/acp-monitor.ts` via runtime facade
+- general `/app/skills/pipeline/lifecycle-state.ts` -> `skills/common/pipeline/lifecycle-state.ts` via runtime facade
+- sandbox `/app/skills/pipeline/agents/runtime.ts` -> `skills/common/pipeline/agents/runtime.ts` via runtime facade
+- sandbox `/app/skills/pipeline/integrations/gateway.ts` -> `skills/common/pipeline/integrations/gateway.ts`
+- sandbox `/app/skills/pipeline/agents/lifecycle.ts` -> `skills/common/pipeline/agents/lifecycle.ts` via runtime facade
+- sandbox `/app/skills/pipeline/agents/acp-monitor.ts` -> `skills/common/pipeline/agents/acp-monitor.ts` via runtime facade
+- sandbox `/app/skills/pipeline/lifecycle-state.ts` -> `skills/common/pipeline/lifecycle-state.ts` via runtime facade
+- sandbox `/app/skills/pipeline/tools/redis.ts` -> `skills/buster/pipeline/tools/redis.ts`
 
 ## Conclusion
 

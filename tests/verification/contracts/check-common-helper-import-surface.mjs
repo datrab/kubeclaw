@@ -1,12 +1,25 @@
+import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
+const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-common-helper-import-surface' });
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import assert from 'assert';
+import { execFileSync } from 'child_process';
+import { effectiveFiles, SHARED_PIPELINE_HELPER_PATHS } from '../lib/lifecycle-audit-lib.mjs';
+import {
+  getRepoRoot,
+  gitExec,
+  headHash,
+  invalidateHeadHash,
+  setRepoRoot,
+} from '../../../skills/common/pipeline/git-primitives.ts';
 
 function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
+  const args = { sourceRoot: process.cwd(), overlayRoot: null };
   for (let i = 0; i < argv.length; i += 1) {
     const token = argv[i];
     if (token === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
+    if (token === '--overlay-root') args.overlayRoot = path.resolve(argv[i + 1]);
   }
   return args;
 }
@@ -16,86 +29,84 @@ function walk(dir, out = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const abs = path.join(dir, entry.name);
     if (entry.isDirectory()) walk(abs, out);
-    else if (entry.isFile() && /\.(?:js|mjs|cjs)$/.test(entry.name)) out.push(abs);
+    else if (entry.isFile() && /\.(?:js|mjs|cjs|ts)$/.test(entry.name)) out.push(abs);
   }
   return out;
 }
 
-const { sourceRoot } = parseArgs();
-const facadePaths = [
-  'skills/nova/pipeline/agents/runtime.js',
-  'skills/nova/pipeline/agents/lifecycle.js',
-  'skills/nova/pipeline/agents/acp-monitor.js',
-  'skills/nova/pipeline/integrations/gateway.js',
-  'skills/nova/pipeline/lifecycle-state.js',
-  'skills/buster/pipeline/agents/runtime.js',
-  'skills/buster/pipeline/agents/lifecycle.js',
-  'skills/buster/pipeline/agents/acp-monitor.js',
-  'skills/buster/pipeline/integrations/gateway.js',
-  'skills/buster/pipeline/lifecycle-state.js',
+const { sourceRoot, overlayRoot } = parseArgs();
+const commonFiles = [...effectiveFiles(sourceRoot, overlayRoot, 'skills/common/pipeline').keys()]
+  .map((relPath) => relPath.replace(/\\/g, '/'))
+  .filter((relPath) => SHARED_PIPELINE_HELPER_PATHS.includes(path.posix.join('pipeline', relPath)))
+  .sort();
+const expectedInventory = SHARED_PIPELINE_HELPER_PATHS
+  .map((relPath) => relPath.replace(/^pipeline\//, ''))
+  .sort();
+
+assert.deepEqual(expectedInventory, commonFiles, 'shared helper inventory must match every declared skills/common/pipeline helper file');
+
+const productionLocalMarkers = [
+  [path.join(sourceRoot, 'skills/nova/pipeline/agents/orchestration.ts'), "from './lifecycle.ts'"],
+  [path.join(sourceRoot, 'skills/nova/pipeline/agents/orchestration.ts'), "from './acp-monitor.ts'"],
+  [path.join(sourceRoot, 'skills/nova/pipeline/agents/orchestration.ts'), "from '../integrations/gateway.ts'"],
+  [path.join(sourceRoot, 'skills/nova/pipeline/services/summary.ts'), "from '../agents/runtime.ts'"],
+  [path.join(sourceRoot, 'skills/nova/pipeline/services/summary.ts'), "from '../agents/lifecycle.ts'"],
+  [path.join(sourceRoot, 'skills/nova/pipeline/services/summary.ts'), "from '../agents/session-termination.ts'"],
+  [path.join(sourceRoot, 'skills/nova/pipeline/services/polling.ts'), "from '../agents/acp-monitor.ts'"],
+  [path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/attempt.ts'), "from '../../agents/runtime.ts'"],
+  [path.join(sourceRoot, 'skills/buster/buster-pipeline.ts'), "from './pipeline/agents/session-termination.ts'"],
+  [path.join(sourceRoot, 'skills/buster/buster-pipeline.ts'), "from './pipeline/integrations/gateway.ts'"],
+  [path.join(sourceRoot, 'skills/buster/pipeline/services/session-monitor.ts'), "from '../agents/acp-monitor.ts'"],
+  [path.join(sourceRoot, 'skills/buster/pipeline/services/session-monitor.ts'), "from '../agents/session-termination.ts'"],
+  [path.join(sourceRoot, 'skills/buster/pipeline/services/rate-limit.ts'), "from '../agents/acp-monitor.ts'"],
 ];
 
-for (const relPath of facadePaths) {
-  assert.equal(fs.existsSync(path.join(sourceRoot, relPath)), false, `${relPath} should not remain as a same-name repo compatibility facade`);
+for (const [filePath, marker] of productionLocalMarkers) {
+  assert.equal(fs.readFileSync(filePath, 'utf8').includes(marker), true, `${path.relative(sourceRoot, filePath)} should import production-local TypeScript facade ${marker}`);
 }
 
-const skillFiles = [
-  ...walk(path.join(sourceRoot, 'skills/nova')),
-  ...walk(path.join(sourceRoot, 'skills/buster')),
-];
-const forbiddenSpecifiers = [
-  "'../agents/runtime.js'",
-  '"../agents/runtime.js"',
-  "'../agents/lifecycle.js'",
-  '"../agents/lifecycle.js"',
-  "'../agents/acp-monitor.js'",
-  '"../agents/acp-monitor.js"',
-  "'../integrations/gateway.js'",
-  '"../integrations/gateway.js"',
-  "'../lifecycle-state.js'",
-  '"../lifecycle-state.js"',
-  "'./pipeline/agents/runtime.js'",
-  '"./pipeline/agents/runtime.js"',
-  "'./pipeline/agents/lifecycle.js'",
-  '"./pipeline/agents/lifecycle.js"',
-  "'./pipeline/agents/acp-monitor.js'",
-  '"./pipeline/agents/acp-monitor.js"',
-  "'./pipeline/integrations/gateway.js'",
-  '"./pipeline/integrations/gateway.js"',
-  "'./pipeline/lifecycle-state.js'",
-  '"./pipeline/lifecycle-state.js"',
-];
+const gitTempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'git-primitives-head-cache-'));
+function initRepo(name, fileContent) {
+  const repo = path.join(gitTempRoot, name);
+  fs.mkdirSync(repo, { recursive: true });
+  execFileSync('git', ['-C', repo, 'init', '-q']);
+  execFileSync('git', ['-C', repo, 'config', 'user.email', 'test@example.invalid']);
+  execFileSync('git', ['-C', repo, 'config', 'user.name', 'Verification Test']);
+  fs.writeFileSync(path.join(repo, 'file.txt'), fileContent);
+  execFileSync('git', ['-C', repo, 'add', 'file.txt']);
+  execFileSync('git', ['-C', repo, 'commit', '-q', '-m', `init ${name}`]);
+  return repo;
+}
+try {
+  const repoA = initRepo('repo-a', 'a\n');
+  const repoB = initRepo('repo-b', 'b\n');
+  const expectedA = execFileSync('git', ['-C', repoA, 'rev-parse', '--short', 'HEAD'], { encoding: 'utf8' }).trim();
+  const expectedB = execFileSync('git', ['-C', repoB, 'rev-parse', '--short', 'HEAD'], { encoding: 'utf8' }).trim();
 
-for (const filePath of skillFiles) {
-  const source = fs.readFileSync(filePath, 'utf8');
-  for (const specifier of forbiddenSpecifiers) {
-    assert.equal(source.includes(specifier), false, `${path.relative(sourceRoot, filePath)} should not import ${specifier}`);
-  }
+  assert.equal(getRepoRoot(repoA), repoA, 'common getRepoRoot should resolve repo A root');
+  assert.equal(gitExec(repoB, ['rev-parse', '--show-toplevel']), repoB, 'common gitExec should run against explicit repo B');
+  setRepoRoot(repoA);
+  assert.equal(headHash(), expectedA, 'default headHash should use current compatibility repo');
+  setRepoRoot(repoB);
+  assert.equal(headHash(), expectedB, 'default headHash should update to new compatibility repo');
+  assert.equal(headHash(repoA), expectedA, 'explicit repo A headHash must not be overwritten by repo B default');
+
+  fs.writeFileSync(path.join(repoA, 'file.txt'), 'a2\n');
+  execFileSync('git', ['-C', repoA, 'add', 'file.txt']);
+  execFileSync('git', ['-C', repoA, 'commit', '-q', '-m', 'update a']);
+  const updatedA = execFileSync('git', ['-C', repoA, 'rev-parse', '--short', 'HEAD'], { encoding: 'utf8' }).trim();
+  assert.equal(headHash(repoA), expectedA, 'repo-scoped headHash should cache per repo until invalidated');
+  invalidateHeadHash(repoA);
+  assert.equal(headHash({ repo_root: repoA }), updatedA, 'repo-scoped invalidation should refresh only the requested repo');
+  assert.equal(headHash({ repo_root: repoB }), expectedB, 'repo B cached headHash should remain intact after repo A invalidation');
+  assert.equal(headHash({ repo_root: path.join(gitTempRoot, 'missing-repo') }), null, 'unavailable headHash should surface typed null instead of magic empty string');
+} finally {
+  fs.rmSync(gitTempRoot, { recursive: true, force: true });
 }
 
-const summarySource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services/summary.js'), 'utf8');
-const moduleRunnerSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner.js'), 'utf8');
-const orchestrationSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/agents/orchestration.js'), 'utf8');
-const pollingSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services/polling.js'), 'utf8');
-const busterPipelineSource = fs.readFileSync(path.join(sourceRoot, 'skills/buster/buster-pipeline.js'), 'utf8');
-const busterPipelineHelpersSource = fs.readFileSync(path.join(sourceRoot, 'skills/buster/buster-pipeline-helpers.js'), 'utf8');
-const busterRateLimitSource = fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/services/rate-limit.js'), 'utf8');
 const pipelineReadme = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/README.md'), 'utf8');
+assert.equal(pipelineReadme.includes('repo-local compatibility shims'), true, 'pipeline README should describe repo-local compatibility shims');
+assert.equal(pipelineReadme.includes('/app/common/pipeline'), false, 'pipeline README must not describe /app/common/pipeline as runtime surface');
 
-assert.equal(summarySource.includes("../../../common/pipeline/agents/runtime.js"), true, 'Nova summary should import the shared common runtime owner directly');
-assert.equal(summarySource.includes("../../../common/pipeline/agents/lifecycle.js"), true, 'Nova summary should import the shared common lifecycle owner directly');
-assert.equal(moduleRunnerSource.includes("../../../common/pipeline/agents/runtime.js"), true, 'module-runner should import the shared common runtime owner directly');
-assert.equal(moduleRunnerSource.includes("../../../common/pipeline/agents/lifecycle.js"), true, 'module-runner should import the shared common lifecycle owner directly');
-assert.equal(moduleRunnerSource.includes("../../../common/pipeline/lifecycle-state.js"), true, 'module-runner should import the shared common lifecycle-state owner directly');
-assert.equal(orchestrationSource.includes("../../../common/pipeline/integrations/gateway.js"), true, 'orchestration should import the shared common gateway owner directly');
-assert.equal(pollingSource.includes("../../../common/pipeline/agents/acp-monitor.js"), true, 'polling should import the shared common ACP monitor owner directly');
-assert.equal(pollingSource.includes("../../../common/pipeline/integrations/gateway.js"), true, 'polling should import the shared common gateway owner directly');
-assert.equal(busterPipelineSource.includes("../common/pipeline/agents/acp-monitor.js"), true, 'buster-pipeline should import the shared common ACP monitor owner directly');
-assert.equal(busterPipelineSource.includes("../common/pipeline/agents/lifecycle.js"), true, 'buster-pipeline should import the shared common lifecycle owner directly');
-assert.equal(busterPipelineSource.includes("../common/pipeline/integrations/gateway.js"), true, 'buster-pipeline should import the shared common gateway owner directly');
-assert.equal(busterPipelineHelpersSource.includes("../common/pipeline/lifecycle-state.js"), true, 'buster-pipeline helpers should import the shared common lifecycle-state owner directly');
-assert.equal(busterRateLimitSource.includes("../../../common/pipeline/agents/acp-monitor.js"), true, 'Buster rate-limit should import the shared common ACP monitor owner directly');
-assert.equal(pipelineReadme.includes('repo/test-only compatibility facades'), false, 'pipeline README should stop describing same-name repo compatibility facades as the active source-tree pattern');
-assert.equal(pipelineReadme.includes('import those shared owners directly'), true, 'pipeline README should describe direct imports of shared owners');
-
-console.log(JSON.stringify({ ok: true, checked: 35 }));
+quietConsole.restore();
+console.log(JSON.stringify({ ok: true, checked: 47 + commonFiles.length * 2 }));

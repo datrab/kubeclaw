@@ -80,7 +80,7 @@ await record('reference docs use the current telemetry envelope and event names'
   const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
   const telemetryContract = fs.readFileSync(contractPath, 'utf8');
 
-  assert.equal(pipelineReference.includes("type: string,         // z.B. 'module.started', 'buster.task_started', 'module.status_changed'"), true);
+  assert.equal(pipelineReference.includes("type: string,         // z.B. 'module.started', 'plugin.event', 'module.status_changed'"), true);
   assert.equal(pipelineReference.includes('seq: number,'), true);
   assert.equal(pipelineReference.includes('ts: string,'), true);
   assert.equal(pipelineReference.includes('Das kanonische Event-Inventar lebt in `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`; `docs/telemetry-event-schema.md` dokumentiert die event-spezifischen Payload-Felder und Beispiele.'), true);
@@ -88,7 +88,7 @@ await record('reference docs use the current telemetry envelope and event names'
   assert.equal(pipelineReference.includes("emitTelemetryEvent('buster_dispatched', ...)"), false);
 
   assert.equal(configReference.includes('Telemetrie: module.started + agent.spawned, später module.status_changed'), true);
-  assert.equal(configReference.includes('Telemetrie: nach Task-Annahme buster.task_started / buster.task_completed'), true);
+  assert.equal(configReference.includes('Telemetrie: nach Task-Annahme plugin.event (`plugin_id: buster`, `plugin_event: task_started/task_completed`)'), true);
   assert.equal(configReference.includes('Telemetrie: module.status_changed (PASS) → Nächstes Modul'), true);
   assert.equal(configReference.includes('**Emittierte Event-Typen:** Kanonisches Event-Inventar in `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`, event-spezifische Payload-Felder und Beispiele in `docs/telemetry-event-schema.md`.'), true);
   assert.equal(pipelineReference.includes('| `onSummaryCompleted` | `summary.completed` | Summary-Agent beendet; für `summary_type: pipeline` auch mit `exit_code`, `exit_reason`, `summary_json_path`, `pipeline_summary_path` und `latest_json_path` |'), true);
@@ -103,9 +103,14 @@ await record('reference docs use the current telemetry envelope and event names'
   assert.equal(configurationReference.includes('See `docs/telemetry-event-schema.md` for the full event catalog.'), false);
   assert.equal(telemetryContract.includes('This contract is the authoritative owner of:'), true);
   assert.equal(telemetryContract.includes('`docs/telemetry-event-schema.md` is the authoritative event-by-event payload reference for those canonical event names, including authoritative field tables, payload examples, and event-specific correlation notes.'), true);
+  assert.equal(telemetryContract.includes('the envelope is intentionally flat: event-specific fields live at the top level beside `v`, `type`, `ts`, `project`, `run_id`, and `seq`'), true);
+  assert.equal(telemetryContract.includes('do not wrap canonical payloads in legacy nested `data` / `refs` objects'), true);
+  assert.equal(telemetryContract.includes('`source` and `emitter` are strings, not object-shaped provenance wrappers'), true);
   assert.equal(telemetrySchema.includes('Canonical event inventory, stream identity, envelope invariants, and compatibility boundaries live in `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`.'), true);
   assert.equal(telemetrySchema.includes('This schema is the authoritative event-by-event payload reference for those canonical event names, including authoritative field tables, payload examples, and event-specific correlation notes.'), true);
   assert.equal(telemetrySchema.includes('For the high-value lifecycle and observability events below, the field table is the authoritative payload surface. Examples and prose illustrate common combinations, but the field table owns the canonical payload field list and meanings.'), true);
+  assert.equal(telemetrySchema.includes('Envelope rule: canonical events are intentionally flat.'), true);
+  assert.equal(telemetrySchema.includes('legacy nested `data` / `refs` objects or object-shaped `source` / `emitter` provenance wrappers'), true);
 });
 
 await record('project setup telemetry docs keep canonical stream ownership explicit', async () => {
@@ -126,17 +131,17 @@ await record('public progress.json telemetry docs keep canonical stream ownershi
   assert.equal(progressJsonReference.includes('"stream_key": "pipeline:telemetry:my-project"'), false);
 });
 
-await record('Buster telemetry_stream docs keep canonical stream ownership explicit', async () => {
+await record('Buster telemetry_stream payload hint is removed from runtime docs and code', async () => {
   const configurationReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'configuration-reference.md'), 'utf8');
   const busterReadme = fs.readFileSync(path.join(sourceRoot, 'skills', 'buster', 'README.md'), 'utf8');
-  const busterPipeline = readOverlayText(sourceRoot, overlayRoot, 'skills/buster/buster-pipeline.js');
-  const busterTelemetry = readOverlayText(sourceRoot, overlayRoot, 'skills/buster/pipeline/services/telemetry.js');
+  const busterPipeline = readOverlayText(sourceRoot, overlayRoot, 'skills/buster/buster-pipeline.ts');
+  const busterTelemetry = readOverlayText(sourceRoot, overlayRoot, 'skills/buster/pipeline/services/telemetry.ts');
 
-  assert.equal(configurationReference.includes('| `telemetry_stream` | string\\|null | auto | Legacy compatibility field. The value does not rename the stream; Buster normalizes to the canonical run stream. |'), true);
-  assert.equal(busterReadme.includes('| `telemetry_stream` | string\\|null | Legacy compatibility field. The value does not rename the stream; Buster normalizes to the canonical run stream. |'), true);
-  assert.equal(busterPipeline.includes('Stream key override from payload'), false);
-  assert.equal(busterPipeline.includes('The value does not rename the stream.'), true);
-  assert.equal(busterTelemetry.includes('Legacy compatibility hint. The value does not rename the stream.'), true);
+  assert.equal(configurationReference.includes('| `telemetry_stream` |'), false);
+  assert.equal(busterReadme.includes('| `telemetry_stream` |'), false);
+  assert.equal(busterPipeline.includes('payload?.telemetry_stream'), false);
+  assert.equal(busterPipeline.includes('streamKey:'), false);
+  assert.equal(busterTelemetry.includes('Legacy compatibility hint. The value does not rename the stream.'), false);
 });
 
 await record('telemetry enable docs describe explicit degraded fallback on Redis outage', async () => {
@@ -145,19 +150,22 @@ await record('telemetry enable docs describe explicit degraded fallback on Redis
 
   assert.equal(pipelineConfigReference.includes('Redis nicht erreichbar, bleibt die Pipeline nicht-blockierend, schreibt aber ein explizites `observability.degraded`-Fallback-Artefakt'), true);
   assert.equal(pipelineConfigReference.includes('werden Events still verworfen'), false);
-  assert.equal(pipelineReferenceV10.includes('Redis nicht erreichbar, bleibt die Pipeline nicht-blockierend, schreibt aber ein explizites `observability.degraded`-Fallback-Artefakt'), true);
-  assert.equal(pipelineReferenceV10.includes('`config._logDir/pipeline/pipeline.jsonl` (standardmäßig `.swarm/logs/pipeline/pipeline.jsonl` als Operator-Tail)'), true);
-  assert.equal(pipelineReferenceV10.includes('`config._runLogDir/pipeline.jsonl` (die run-scoped `pipeline.jsonl` im Audit-Tree unter `.swarm/logs/pipeline/runs/<run_id>/`)'), true);
+  assert.equal(pipelineReferenceV10.includes('Redis nicht erreichbar, bleibt die Pipeline nicht-blockierend, schreibt aber ein explizites `observability.degraded`-Artefakt'), true);
+  assert.equal(pipelineReferenceV10.includes('`projectLogDir(config)/pipeline/pipeline.jsonl` (standardmäßig `.swarm/logs/pipeline/pipeline.jsonl` als Operator-Tail)'), true);
+  assert.equal(pipelineReferenceV10.includes('`resolvePipelineRunLogDir(config)/pipeline.jsonl` (die run-scoped `pipeline.jsonl` im Audit-Tree unter `.swarm/logs/pipeline/runs/<run_id>/`)'), true);
   assert.equal(pipelineReferenceV10.includes('werden Events still verworfen'), false);
 });
 
-await record('model policy docs describe legacy progress.models compatibility', async () => {
+await record('model policy docs describe defaults-only project model policy', async () => {
   const observabilityReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'observability-reference.md'), 'utf8');
   const pipelineReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'pipeline-reference-v10.md'), 'utf8');
 
-  assert.equal(observabilityReference.includes('| `project_default` | `progress.defaults.models.<agentName>` or legacy `progress.models.<agentName>` |'), true);
-  assert.equal(pipelineReference.includes('runtime override → scope policy → `progress.defaults.models` oder legacy `progress.models` → `config.models`'), true);
-  assert.equal(pipelineReference.includes('| Models (legacy) | `models.forge`, `models.buster`, `models.echo` (Projekt-Level-Override, wird als Legacy-Alias für `defaults.models` weiter auf Priorität 3 honoriert) |'), true);
-  assert.equal(pipelineReference.includes('| 3 | `progress.defaults.models.<agent>` oder legacy `progress.models.<agent>` | Projekt-Level Default in progress.json |'), true);
+  assert.equal(observabilityReference.includes('| `project_default` | `progress.defaults.models.<agentName>` |'), true);
+  assert.equal(pipelineReference.includes('runtime override → scope policy → `progress.defaults.models` → `fallback_model`'), true);
+  assert.equal(pipelineReference.includes('| Defaults | `defaults.models.<agent>`, `defaults.thinking.<agent>` (Priorität 3 in Policy-Auflösung) |'), true);
+  assert.equal(pipelineReference.includes('Model-Resolution läuft über Runtime-Override, Scope-Policy, `progress.defaults.models.<agent>` und zuletzt das explizite Plattform-`fallback_model`.'), true);
+  assert.equal(observabilityReference.includes('| `platform_fallback` | `fallback_model` from `swarm.config.json` |'), true);
+  assert.equal(observabilityReference.includes('legacy `progress.models'), false);
+  assert.equal(pipelineReference.includes('legacy `progress.models'), false);
 });
 }

@@ -10,6 +10,7 @@ cleanup() {
   if [[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]]; then
     rm -rf "$TEMP_DIR"
   fi
+  "$REPO_DIR/tests/verification/lib/cleanup-home-artifacts.sh"
 }
 trap cleanup EXIT
 
@@ -49,6 +50,11 @@ run_step() {
 }
 
 cd "$REPO_DIR"
+export REPO_ROOT="$REPO_DIR"
+if [[ -z "${OPENCLAW_GATEWAY_URL:-}" && -n "${OPENCLAW_GATEWAY_PORT:-}" ]]; then
+  export OPENCLAW_GATEWAY_URL="http://127.0.0.1:${OPENCLAW_GATEWAY_PORT}"
+fi
+"$REPO_DIR/tests/verification/lib/cleanup-home-artifacts.sh"
 
 run_step "deployment truth" \
   node tests/verification/deployment/check-deployment-truth.mjs \
@@ -62,81 +68,26 @@ run_step "final-gate hardening" \
   node tests/verification/runtime/check-final-gate-hardening.mjs \
   --source-root "$REPO_DIR"
 
+run_step "nova startup smoke" \
+  node tests/verification/runtime/check-nova-startup-smoke.mjs \
+  --source-root "$REPO_DIR"
+
+run_step "buster startup smoke" \
+  node tests/verification/runtime/check-buster-startup-smoke.mjs \
+  --source-root "$REPO_DIR"
+
 run_step "subagent launch" \
   node tests/verification/runtime/check-subagent-launch.mjs
 
-run_step "ACP launch reachability" \
-  node tests/verification/runtime/check-acp-launch.mjs
+echo ""
+echo "[full-verification] ACP launch reachability is local-only and is not part of the default clean-checkout gate."
+echo "[full-verification] Run ./tests/verification/run-local-acp-verification.sh when validating local ACP/provider setup."
 
-run_step "telemetry contract" \
-  node tests/verification/contracts/check-telemetry-contract.mjs \
+run_step "deterministic contract suite" \
+  tests/verification/lib/run-contract-suite.sh \
   --source-root "$REPO_DIR" \
-  --contract "$CONTRACT_PATH"
-
-run_step "buster operator surface" \
-  node tests/verification/contracts/check-buster-operator-surface.mjs \
-  --source-root "$REPO_DIR"
-
-run_step "redis log ownership" \
-  node tests/verification/contracts/check-redis-log-ownership.mjs \
-  --source-root "$REPO_DIR"
-
-run_step "gate active-session surface" \
-  node tests/verification/contracts/check-gate-active-session-surface.mjs \
-  --source-root "$REPO_DIR"
-
-run_step "gate fix scaffold surface" \
-  node tests/verification/contracts/check-gate-fix-scaffold-surface.mjs \
-  --source-root "$REPO_DIR"
-
-run_step "gate control-result surface" \
-  node tests/verification/contracts/check-gate-control-result-surface.mjs \
-  --source-root "$REPO_DIR"
-
-run_step "worker control-result surface" \
-  node tests/verification/contracts/check-worker-control-result-surface.mjs \
-  --source-root "$REPO_DIR"
-
-run_step "generator result surface" \
-  node tests/verification/contracts/check-generator-result-surface.mjs \
-  --source-root "$REPO_DIR"
-
-run_step "pipeline entrypoint shim surface" \
-  node tests/verification/contracts/check-pipeline-entrypoint-shim-surface.mjs \
-  --source-root "$REPO_DIR"
-
-run_step "common helper import surface" \
-  node tests/verification/contracts/check-common-helper-import-surface.mjs \
-  --source-root "$REPO_DIR"
-
-run_step "module-runner slice surface" \
-  node tests/verification/contracts/check-module-runner-slice-surface.mjs \
-  --source-root "$REPO_DIR"
-
-run_step "rate-limit slice surface" \
-  node tests/verification/contracts/check-rate-limit-slice-surface.mjs \
-  --source-root "$REPO_DIR"
-
-run_step "buster-pipeline slice surface" \
-  node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs \
-  --source-root "$REPO_DIR"
-
-run_step "pipeline-runner slice surface" \
-  node tests/verification/contracts/check-pipeline-runner-slice-surface.mjs \
-  --source-root "$REPO_DIR"
-
-run_step "remediable gate engine surface" \
-  node tests/verification/contracts/check-remediation-handoff-surface.mjs \
-  --source-root "$REPO_DIR"
-
-run_step "stage-envelope primitives surface" \
-  node tests/verification/contracts/check-stage-envelope-primitives-surface.mjs \
-  --source-root "$REPO_DIR"
-
-run_step "status-store slice surface" \
-  node tests/verification/contracts/check-status-store-slice-surface.mjs \
-  --source-root "$REPO_DIR"
-
+  --contract "$CONTRACT_PATH" \
+  --label-prefix "full-verification"
 run_step "behavior harness" \
   node tests/verification/behavior/verify.mjs \
   --source-root "$REPO_DIR" \

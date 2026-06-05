@@ -15,6 +15,7 @@ export async function registerApprovalsArea({
   readOverlayText,
   materializeRuntimeTree,
   importRuntimeModule,
+  runGateViaRegistry,
   ensureDir,
   writeExecutable,
   runtimeRoot,
@@ -35,10 +36,38 @@ export async function registerApprovalsArea({
   busterPipelineMod,
 }) {
 async function buildBuiltInRegistry(runtimeRoot) {
-  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.js');
-  const { registry, errors } = registryMod.buildPluginRegistry({}, { throwOnError: false });
+  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
   assert.equal(errors.length, 0);
   return registry;
+}
+
+function gateRuntimeEvents(xaddEvents, streamKey) {
+  return xaddEvents(streamKey)
+    .filter((event) => !String(event.type || '').startsWith('plugin.gate.'))
+    .map((event, index) => ({ ...event, seq: index + 1 }));
+}
+
+function stepExit(result) {
+  return result?.terminal?.exitCode;
+}
+
+function stepSummary(result) {
+  return result?.diagnostics?.summary;
+}
+
+function stepMetadata(result) {
+  return result?.diagnostics?.metadata || {};
+}
+
+function stepGateStatus(result) {
+  return result?.diagnostics?.typed?.controlResult?.diagnostics?.typed?.gate?.gateRunStatus;
+}
+
+function platformApprovalDefaults() {
+  return {
+    default_timeout_minutes: 30,
+  };
 }
 
 await record('approval gates execute through gate stage owners and preserve timeout-continue pass semantics', async () => {
@@ -47,9 +76,9 @@ await record('approval gates execute through gate stage owners and preserve time
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const gateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
-  const statusStoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/status-store.js');
+  const gateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+  const statusStoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
   const registry = await buildBuiltInRegistry(telemetryRuntimeRoot);
   const approvalCalls = [];
   const testRegistry = {
@@ -71,14 +100,19 @@ await record('approval gates execute through gate stage owners and preserve time
                 issueType: 'policy',
                 diagnostics: {
                   summary: 'Approval gate timed out and auto-continued',
+                  findings: [],
                   metadata: {
-                    legacy_result: {
-                      exit: 0,
-                      status: 'TIMED_OUT',
-                      continued: true,
-                      timeout_policy: 'CONTINUE',
-                      gate_id: 'release-approval',
-                      gate_type: 'approval',
+                    continued: true,
+                    timed_out: true,
+                    timeout_policy: 'CONTINUE',
+                    gate_id: 'release-approval',
+                    gate_type: 'approval',
+                  },
+                  typed: {
+                    gate: {
+                      schemaVersion: 'v1',
+                      gateRunStatus: 'TIMED_OUT',
+                      outcomeClass: 'passed',
                     },
                   },
                 },
@@ -101,29 +135,28 @@ await record('approval gates execute through gate stage owners and preserve time
     on_timeout: 'continue',
   };
 
-  const config = {
+    const deps = {
+      gateRunner: {
+        runners: {
+          approval: async () => {
+            throw new Error('direct approval runner fallback should not run when stage owner is registered');
+          },
+        },
+      },
+    };
+const config = {
+    ...platformApprovalDefaults(),
     project: 'behavior-approval-stage-pass',
     telemetry: { enabled: true },
     paths: {
       swarm_dir: swarmDir,
       modules_dir: path.join(root, 'modules'),
     },
-    _pluginRegistry: testRegistry,
-    _logDir: logDir,
-    _runLogDir: path.join(logDir, 'pipeline', 'runs', runId),
+    pluginRegistry: testRegistry,
     _runId: runId,
     run_id: runId,
     _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
-    _testOverrides: {
-      gateRunner: {
-        runners: {
-          approval: async () => {
-            throw new Error('legacy approval runner fallback should not run when stage owner is registered');
-          },
-        },
-      },
-    },
-  };
+      };
 
   const progress = {
     modules: {},
@@ -161,11 +194,11 @@ await record('approval gates execute through gate stage owners and preserve time
 
   const result = await gateRunnerMod.runGate(config, progress, 'release-approval');
 
-  assert.equal(result.exit, 0);
-  assert.equal(result.status, 'TIMED_OUT');
-  assert.equal(result.continued, true);
-  assert.equal(result.gate_id, 'release-approval');
-  assert.equal(result.gate_type, 'approval');
+  assert.equal(stepExit(result), 0);
+  assert.equal(stepGateStatus(result), 'TIMED_OUT');
+  assert.equal(stepMetadata(result).continued, true);
+  assert.equal(result.correlation.gate_id, 'release-approval');
+  assert.equal(result.correlation.gate_type, 'approval');
   assert.equal(approvalCalls.length, 1);
   assert.equal(approvalCalls[0].ids.stageId, 'gate:approval');
   assert.equal(approvalCalls[0].ids.gateId, 'release-approval');
@@ -176,14 +209,192 @@ await record('approval gates execute through gate stage owners and preserve time
   assert.equal(approvalCalls[0].stateSnapshot.gate.lifecycle_scheduler_consumed, true);
 });
 
+await record('approval wait actions execute through the generic runGate wait controller', async () => {
+  const { runtimeRoot: telemetryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+  installFakeRedis(telemetryRuntimeRoot);
+  globalThis.__fakeRedisCalls = [];
+  globalThis.__fakeRedisCounters = Object.create(null);
+
+  const gateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+  const registry = await buildBuiltInRegistry(telemetryRuntimeRoot);
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-generic-wait-'));
+  const swarmDir = path.join(root, '.swarm');
+  const logDir = path.join(swarmDir, 'logs');
+  const runId = 'run-approval-generic-wait-1';
+
+  let gateState = null;
+  let resolved = false;
+    const configDeps2 = {
+      approvalGate: {
+        discord: async () => {},
+        appendTransition: () => {},
+        writeApprovalRequest: () => {},
+        writeApprovalDecision: () => {},
+        saveGateState: (_config, _gateId, state) => { gateState = JSON.parse(JSON.stringify(state)); },
+        loadGateState: () => {
+          if (gateState?.status === 'PENDING_APPROVAL' && !resolved) {
+            resolved = true;
+            gateState = {
+              ...gateState,
+              status: 'APPROVED',
+              decision_by: 'nova',
+              decision_via: 'manual',
+              reason: 'Generic wait approved',
+            };
+          }
+          return gateState;
+        },
+        sleep: async () => {},
+      },
+    };
+const config = {
+    ...platformApprovalDefaults(),
+    project: 'behavior-approval-generic-wait',
+    telemetry: { enabled: true },
+    paths: {
+      swarm_dir: swarmDir,
+      modules_dir: path.join(root, 'modules'),
+    },
+    pluginRegistry: registry,
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
+      };
+
+  const progress = {
+    modules: {},
+    gates: {
+      'release-approval': {
+        type: 'approval',
+        title: 'Release Approval',
+        timeout_minutes: 30,
+        on_timeout: 'block',
+      },
+    },
+    execution_order: ['gate:release-approval'],
+  };
+
+  const result = await gateRunnerMod.runGate(config, progress, 'release-approval', { deps: configDeps2 });
+  await flushAsync();
+
+  assert.equal(stepExit(result), 0);
+  assert.equal(stepGateStatus(result), 'PASS');
+  assert.equal(result.correlation.gate_id, 'release-approval');
+  assert.equal(result.correlation.gate_type, 'approval');
+  assert.equal(gateState.status, 'APPROVED');
+
+  const streamKey = 'pipeline:telemetry:behavior-approval-generic-wait:run-approval-generic-wait-1';
+  const events = xaddEvents(streamKey).filter((event) => !String(event.type || '').startsWith('plugin.'));
+  assert.deepEqual(events.map((event) => event.type), ['gate.started', 'approval.requested', 'approval.resolved', 'gate.verdict']);
+  assert.equal(events[0].gate_id, 'release-approval');
+  assert.equal(events[1].timeout_policy, 'BLOCK');
+  assert.equal(events[2].status, 'APPROVED');
+  assert.equal(events[3].verdict, 'GO');
+});
+
+await record('approval signal wait reloads persisted deadline before timeout decisions', async () => {
+  const { runtimeRoot: telemetryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+  installFakeRedis(telemetryRuntimeRoot);
+  globalThis.__fakeRedisCalls = [];
+  globalThis.__fakeRedisCounters = Object.create(null);
+
+  const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-deadline-reload-'));
+  const swarmDir = path.join(root, '.swarm');
+  const logDir = path.join(swarmDir, 'logs');
+  const runId = 'run-approval-deadline-reload-1';
+  const gate = {
+    type: 'approval',
+    title: 'Release Approval',
+    timeout_minutes: 1,
+    on_timeout: 'block',
+  };
+  const now = Date.now();
+  const stalePending = {
+    gate_id: 'release-approval',
+    gate_type: 'approval',
+    status: 'PENDING_APPROVAL',
+    run_id: runId,
+    project: 'behavior-approval-deadline-reload',
+    requested_at: new Date(now - 60000).toISOString(),
+    deadline: new Date(now - 1000).toISOString(),
+    timeout_minutes: 1,
+    timeout_policy: 'BLOCK',
+  };
+  const extendedPending = {
+    ...stalePending,
+    deadline: new Date(now + 60000).toISOString(),
+    reason: 'operator extended deadline',
+  };
+  const approvedAfterExtension = {
+    ...extendedPending,
+    status: 'APPROVED',
+    decision_by: 'ops',
+    decision_via: 'manual',
+    reason: 'approved after extension',
+    resolved_at: new Date(now + 1000).toISOString(),
+  };
+
+  let loadCount = 0;
+  const savedStates = [];
+  const decisions = [];
+  const transitions = [];
+    const configDeps3 = {
+      approvalGate: {
+        discord: async () => {},
+        saveGateState: (_config, _gateId, state) => { savedStates.push(JSON.parse(JSON.stringify(state))); },
+        loadGateState: () => {
+          loadCount += 1;
+          if (loadCount === 1) return stalePending;
+          if (loadCount === 2) return extendedPending;
+          return approvedAfterExtension;
+        },
+        appendTransition: (_config, _gateId, from, to, reason) => { transitions.push({ from, to, reason }); },
+        writeApprovalRequest: () => {},
+        writeApprovalDecision: (_config, _gateId, state) => { decisions.push(JSON.parse(JSON.stringify(state))); },
+      },
+    };
+const config = {
+    ...platformApprovalDefaults(),
+    project: 'behavior-approval-deadline-reload',
+    telemetry: { enabled: true },
+    paths: {
+      swarm_dir: swarmDir,
+      modules_dir: path.join(root, 'modules'),
+    },
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
+      };
+  const progress = {
+    modules: {},
+    gates: { 'release-approval': gate },
+    execution_order: ['gate:release-approval'],
+  };
+
+  const result = await approvalGateRunnerMod.waitForApprovalGateSignal(config, progress, 'release-approval', {
+    diagnostics: { metadata: { timeout_policy: 'BLOCK' } },
+  }, { deps: configDeps3 });
+  await flushAsync();
+
+  assert.equal(result.nextAction, 'pass');
+  assert.equal(result.diagnostics.typed.gate.gateRunStatus, 'PASS');
+  assert.equal(loadCount, 3);
+  assert.equal(savedStates.some((state) => state.status === 'TIMED_OUT'), false);
+  assert.equal(decisions.some((state) => state.status === 'TIMED_OUT'), false);
+  assert.deepEqual(transitions.map((entry) => entry.to), ['APPROVED']);
+});
+
 await record('approval gate stage-owner block results preserve rejection semantics', async () => {
   const { runtimeRoot: telemetryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
   installFakeRedis(telemetryRuntimeRoot);
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const gateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const gateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const registry = await buildBuiltInRegistry(telemetryRuntimeRoot);
   const testRegistry = {
     ...registry,
@@ -202,15 +413,19 @@ await record('approval gate stage-owner block results preserve rejection semanti
               issueType: 'policy',
               diagnostics: {
                 summary: "Gate 'release-approval' rejected: Needs changes",
+                findings: [],
                 metadata: {
-                  legacy_result: {
-                    exit: 10,
-                    status: 'REJECTED',
-                    reason: "Gate 'release-approval' rejected: Needs changes",
-                    decision_by: 'nova',
-                    decision_via: 'manual',
-                    gate_id: 'release-approval',
-                    gate_type: 'approval',
+                  reason: "Gate 'release-approval' rejected: Needs changes",
+                  decision_by: 'nova',
+                  decision_via: 'manual',
+                  gate_id: 'release-approval',
+                  gate_type: 'approval',
+                },
+                typed: {
+                  gate: {
+                    schemaVersion: 'v1',
+                    gateRunStatus: 'FAIL',
+                    outcomeClass: 'needs_nova',
                   },
                 },
               },
@@ -226,15 +441,14 @@ await record('approval gate stage-owner block results preserve rejection semanti
   const logDir = path.join(swarmDir, 'logs');
   const runId = 'run-approval-stage-block-1';
   const config = {
+    ...platformApprovalDefaults(),
     project: 'behavior-approval-stage-block',
     telemetry: { enabled: true },
     paths: {
       swarm_dir: swarmDir,
       modules_dir: path.join(root, 'modules'),
     },
-    _pluginRegistry: testRegistry,
-    _logDir: logDir,
-    _runLogDir: path.join(logDir, 'pipeline', 'runs', runId),
+    pluginRegistry: testRegistry,
     _runId: runId,
     run_id: runId,
     _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
@@ -246,6 +460,7 @@ await record('approval gate stage-owner block results preserve rejection semanti
       'release-approval': {
         type: 'approval',
         title: 'Release Approval',
+        on_timeout: 'block',
       },
     },
     execution_order: ['gate:release-approval'],
@@ -253,13 +468,13 @@ await record('approval gate stage-owner block results preserve rejection semanti
 
   const result = await gateRunnerMod.runGate(config, progress, 'release-approval');
 
-  assert.equal(result.exit, 10);
-  assert.equal(result.status, 'REJECTED');
-  assert.equal(result.reason, "Gate 'release-approval' rejected: Needs changes");
-  assert.equal(result.decision_by, 'nova');
-  assert.equal(result.decision_via, 'manual');
-  assert.equal(result.gate_id, 'release-approval');
-  assert.equal(result.gate_type, 'approval');
+  assert.equal(stepExit(result), 10);
+  assert.equal(stepGateStatus(result), 'FAIL');
+  assert.equal(stepSummary(result), "Gate 'release-approval' rejected: Needs changes");
+  assert.equal(stepMetadata(result).decision_by, 'nova');
+  assert.equal(stepMetadata(result).decision_via, 'manual');
+  assert.equal(result.correlation.gate_id, 'release-approval');
+  assert.equal(result.correlation.gate_type, 'approval');
 });
 
 await record('approval gate invalid stage contracts fail closed with authoritative telemetry instead of crashing', async () => {
@@ -268,8 +483,8 @@ await record('approval gate invalid stage contracts fail closed with authoritati
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const gateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const gateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const registry = await buildBuiltInRegistry(telemetryRuntimeRoot);
   const testRegistry = {
     ...registry,
@@ -297,15 +512,14 @@ await record('approval gate invalid stage contracts fail closed with authoritati
   const logDir = path.join(swarmDir, 'logs');
   const runId = 'run-approval-stage-invalid-1';
   const config = {
+    ...platformApprovalDefaults(),
     project: 'behavior-approval-stage-invalid',
     telemetry: { enabled: true },
     paths: {
       swarm_dir: swarmDir,
       modules_dir: path.join(root, 'modules'),
     },
-    _pluginRegistry: testRegistry,
-    _logDir: logDir,
-    _runLogDir: path.join(logDir, 'pipeline', 'runs', runId),
+    pluginRegistry: testRegistry,
     _runId: runId,
     run_id: runId,
     _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
@@ -317,6 +531,7 @@ await record('approval gate invalid stage contracts fail closed with authoritati
       'release-approval': {
         type: 'approval',
         title: 'Release Approval',
+        on_timeout: 'block',
       },
     },
     execution_order: ['gate:release-approval'],
@@ -325,13 +540,14 @@ await record('approval gate invalid stage contracts fail closed with authoritati
   const result = await gateRunnerMod.runGate(config, progress, 'release-approval');
   await flushAsync();
 
-  assert.equal(result.exit, 1);
-  assert(result.reason.includes('Approval gate execution failed: Approval gate returned invalid control result:'));
-  assert(result.reason.includes("nextAction must be 'pass'"));
-  assert(result.reason.includes("'block' for gate:approval"));
+  assert.equal(stepExit(result), 1);
+  assert(stepSummary(result).includes('Approval gate execution failed: Approval gate returned invalid control result:'));
+  assert(stepSummary(result).includes("nextAction must be 'pass'"));
+  assert(stepSummary(result).includes("'wait'"));
+  assert(stepSummary(result).includes("'block' for gate:approval"));
 
   const streamKey = 'pipeline:telemetry:behavior-approval-stage-invalid:run-approval-stage-invalid-1';
-  const events = xaddEvents(streamKey);
+  const events = gateRuntimeEvents(xaddEvents, streamKey);
   assert.deepEqual(events.map((event) => event.type), ['gate.started', 'gate.verdict']);
   assert.equal(events[0].gate_id, 'release-approval');
   assert.equal(events[0].gate_type, 'approval');
@@ -339,7 +555,93 @@ await record('approval gate invalid stage contracts fail closed with authoritati
   assert.equal(events[1].gate_type, 'approval');
   assert(events[1].reason.includes('Approval gate execution failed: Approval gate returned invalid control result:'));
   assert(events[1].reason.includes("nextAction must be 'pass'"));
+  assert(events[1].reason.includes("'wait'"));
   assert(events[1].reason.includes("'block' for gate:approval"));
+});
+
+await record('approval gate wait control results require typed wait payload', async () => {
+  const { runtimeRoot: telemetryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+  installFakeRedis(telemetryRuntimeRoot);
+  globalThis.__fakeRedisCalls = [];
+  globalThis.__fakeRedisCounters = Object.create(null);
+
+  const gateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/gate-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+  const registry = await buildBuiltInRegistry(telemetryRuntimeRoot);
+  const testRegistry = {
+    ...registry,
+    stageOwners: {
+      ...registry.stageOwners,
+      'gate.execute': {
+        ...registry.stageOwners['gate.execute'],
+        'gate:approval': {
+          ...registry.stageOwners['gate.execute']['gate:approval'],
+          implementation: {
+            execute: async () => ({
+              schemaVersion: 'v1',
+              producerKind: 'gate',
+              producerType: 'approval',
+              nextAction: 'wait',
+              issueType: 'policy',
+              diagnostics: {
+                summary: 'Approval gate waiting without typed wait payload',
+                findings: [],
+                metadata: {},
+                typed: {
+                  gate: {
+                    schemaVersion: 'v1',
+                    gateRunStatus: 'WAIT',
+                    outcomeClass: 'waiting',
+                  },
+                },
+              },
+            }),
+          },
+        },
+      },
+    },
+  };
+
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-wait-missing-payload-'));
+  const swarmDir = path.join(root, '.swarm');
+  const logDir = path.join(swarmDir, 'logs');
+  const runId = 'run-approval-wait-missing-payload-1';
+  const config = {
+    ...platformApprovalDefaults(),
+    project: 'behavior-approval-wait-missing-payload',
+    telemetry: { enabled: true },
+    paths: {
+      swarm_dir: swarmDir,
+      modules_dir: path.join(root, 'modules'),
+    },
+    pluginRegistry: testRegistry,
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeCoreMod.createRunStats('2026-04-26T00:00:00.000Z'),
+  };
+
+  const progress = {
+    modules: {},
+    gates: {
+      'release-approval': {
+        type: 'approval',
+        title: 'Release Approval',
+        on_timeout: 'block',
+      },
+    },
+    execution_order: ['gate:release-approval'],
+  };
+
+  const result = await gateRunnerMod.runGate(config, progress, 'release-approval');
+  await flushAsync();
+
+  assert.equal(stepExit(result), 1);
+  assert.equal(result.outcome, 'error');
+  assert.match(stepSummary(result), /wait action requires diagnostics\.typed\.wait/);
+
+  const streamKey = 'pipeline:telemetry:behavior-approval-wait-missing-payload:run-approval-wait-missing-payload-1';
+  const events = gateRuntimeEvents(xaddEvents, streamKey);
+  assert.equal(events.some((event) => event.type === 'gate.verdict' && String(event.reason || '').includes('wait action requires diagnostics.typed.wait')), true);
 });
 
 await record('pipeline scheduler consumes canonical approval timeout-continue lifecycle state without requiring gate-state files', async () => {
@@ -348,19 +650,19 @@ await record('pipeline scheduler consumes canonical approval timeout-continue li
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const pipelineRunnerRuntimeMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-  const statusStoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/status-store.js');
+  const pipelineRunnerRuntimeMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner-scheduling.ts');
+  const statusStoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-lifecycle-skip-'));
   const swarmDir = path.join(root, '.swarm');
   const logDir = path.join(swarmDir, 'logs');
 
   const config = {
+    ...platformApprovalDefaults(),
     project: 'behavior-approval-lifecycle-skip',
     paths: {
       swarm_dir: swarmDir,
       modules_dir: path.join(root, 'modules'),
     },
-    _logDir: logDir,
     _runId: 'run-approval-lifecycle-skip-1',
     run_id: 'run-approval-lifecycle-skip-1',
   };
@@ -371,6 +673,7 @@ await record('pipeline scheduler consumes canonical approval timeout-continue li
       'release-approval': {
         type: 'approval',
         title: 'Release Approval',
+        on_timeout: 'continue',
       },
     },
     execution_order: ['gate:release-approval'],
@@ -412,21 +715,13 @@ await record('approval gates emit canonical gate telemetry on operator approval'
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const registry = await buildBuiltInRegistry(telemetryRuntimeRoot);
 
   let gateState = null;
   let resolved = false;
-  const config = {
-    project: 'behavior-approval-gate',
-    telemetry: { enabled: true },
-    _runId: 'run-approval-1',
-    run_id: 'run-approval-1',
-    _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-    _approvalPollIntervalMs: 0,
-    _pluginRegistry: registry,
-    _testOverrides: {
+    const configDeps4 = {
       approvalGate: {
         discord: async () => {},
         appendTransition: () => {},
@@ -448,8 +743,17 @@ await record('approval gates emit canonical gate telemetry on operator approval'
         },
         sleep: async () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformApprovalDefaults(),
+    project: 'behavior-approval-gate',
+    telemetry: { enabled: true },
+    _runId: 'run-approval-1',
+    run_id: 'run-approval-1',
+    paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-gate-swarm-')) },
+    _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+    pluginRegistry: registry,
+      };
 
   const progress = {
     modules: {},
@@ -457,20 +761,21 @@ await record('approval gates emit canonical gate telemetry on operator approval'
       'midpoint-review': {
         type: 'approval',
         title: 'Midpoint Review',
+        on_timeout: 'block',
       },
     },
     execution_order: ['01', 'gate:midpoint-review', '02'],
   };
 
-  const result = await approvalGateRunnerMod.runApprovalGate(config, progress, 'midpoint-review');
+  const result = await runGateViaRegistry(telemetryRuntimeRoot, config, progress, 'midpoint-review', { deps: configDeps4 });
   await flushAsync();
 
-  assert.equal(result.exit, 0);
-  assert.equal(result.status, 'APPROVED');
+  assert.equal(stepExit(result), 0);
+  assert.equal(stepGateStatus(result), 'PASS');
   assert.equal(gateState.timeout_policy, 'BLOCK');
 
   const streamKey = 'pipeline:telemetry:behavior-approval-gate:run-approval-1';
-  const events = xaddEvents(streamKey);
+  const events = gateRuntimeEvents(xaddEvents, streamKey);
   assert.deepEqual(events.map((event) => event.type), ['gate.started', 'approval.requested', 'approval.resolved', 'gate.verdict']);
   assert.deepEqual(events.map((event) => event.seq), [1, 2, 3, 4]);
   assert.equal(events[0].gate_id, 'midpoint-review');
@@ -488,20 +793,12 @@ await record('approval gate timeouts emit canonical failure gate telemetry', asy
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const registry = await buildBuiltInRegistry(telemetryRuntimeRoot);
 
   let gateState = null;
-  const config = {
-    project: 'behavior-approval-timeout',
-    telemetry: { enabled: true },
-    _runId: 'run-approval-timeout-1',
-    run_id: 'run-approval-timeout-1',
-    _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-    _approvalPollIntervalMs: 0,
-    _pluginRegistry: registry,
-    _testOverrides: {
+    const configDeps5 = {
       approvalGate: {
         discord: async () => {},
         appendTransition: () => {},
@@ -511,8 +808,17 @@ await record('approval gate timeouts emit canonical failure gate telemetry', asy
         loadGateState: () => gateState,
         sleep: async () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformApprovalDefaults(),
+    project: 'behavior-approval-timeout',
+    telemetry: { enabled: true },
+    _runId: 'run-approval-timeout-1',
+    run_id: 'run-approval-timeout-1',
+    paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-timeout-swarm-')) },
+    _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+    pluginRegistry: registry,
+      };
 
   const progress = {
     modules: {},
@@ -527,15 +833,15 @@ await record('approval gate timeouts emit canonical failure gate telemetry', asy
     execution_order: ['gate:release-approval'],
   };
 
-  const result = await approvalGateRunnerMod.runApprovalGate(config, progress, 'release-approval');
+  const result = await runGateViaRegistry(telemetryRuntimeRoot, config, progress, 'release-approval', { deps: configDeps5 });
   await flushAsync();
 
-  assert.equal(result.exit, 10);
-  assert.equal(result.status, 'TIMED_OUT');
+  assert.equal(stepExit(result), 10);
+  assert.equal(stepGateStatus(result), 'TIMED_OUT');
   assert.equal(gateState.timeout_policy, 'BLOCK');
 
   const streamKey = 'pipeline:telemetry:behavior-approval-timeout:run-approval-timeout-1';
-  const events = xaddEvents(streamKey);
+  const events = gateRuntimeEvents(xaddEvents, streamKey);
   assert.deepEqual(events.map((event) => event.type), ['gate.started', 'approval.requested', 'approval.resolved', 'gate.verdict']);
   assert.deepEqual(events.map((event) => event.seq), [1, 2, 3, 4]);
   assert.equal(events[1].gate_type, 'approval');
@@ -553,21 +859,13 @@ await record('approval timeout policies normalize to canonical uppercase in runt
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
-  const telemetryMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/telemetry.js');
+  const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+  const telemetryMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/telemetry.ts');
   const registry = await buildBuiltInRegistry(telemetryRuntimeRoot);
 
   let gateState = null;
-  const config = {
-    project: 'behavior-approval-continue',
-    telemetry: { enabled: true },
-    _runId: 'run-approval-continue-1',
-    run_id: 'run-approval-continue-1',
-    _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-    _approvalPollIntervalMs: 0,
-    _pluginRegistry: registry,
-    _testOverrides: {
+    const configDeps6 = {
       approvalGate: {
         discord: async () => {},
         appendTransition: () => {},
@@ -577,8 +875,17 @@ await record('approval timeout policies normalize to canonical uppercase in runt
         loadGateState: () => gateState,
         sleep: async () => {},
       },
-    },
-  };
+    };
+const config = {
+    ...platformApprovalDefaults(),
+    project: 'behavior-approval-continue',
+    telemetry: { enabled: true },
+    _runId: 'run-approval-continue-1',
+    run_id: 'run-approval-continue-1',
+    paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-continue-swarm-')) },
+    _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+    pluginRegistry: registry,
+      };
 
   const progress = {
     modules: {},
@@ -593,15 +900,15 @@ await record('approval timeout policies normalize to canonical uppercase in runt
     execution_order: ['gate:ops-approval'],
   };
 
-  const result = await approvalGateRunnerMod.runApprovalGate(config, progress, 'ops-approval');
+  const result = await runGateViaRegistry(telemetryRuntimeRoot, config, progress, 'ops-approval', { deps: configDeps6 });
   await flushAsync();
 
-  assert.equal(result.exit, 0);
-  assert.equal(result.continued, true);
+  assert.equal(stepExit(result), 0);
+  assert.equal(stepMetadata(result).continued, true);
   assert.equal(gateState.timeout_policy, 'CONTINUE');
 
   const streamKey = 'pipeline:telemetry:behavior-approval-continue:run-approval-continue-1';
-  const events = xaddEvents(streamKey);
+  const events = gateRuntimeEvents(xaddEvents, streamKey);
   assert.equal(events[1].timeout_policy, 'CONTINUE');
 
   globalThis.__fakeRedisCalls = [];
@@ -623,20 +930,12 @@ await record('approval gate restart-time rejection still emits authoritative res
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
-  const telemetryMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/telemetry.js');
+  const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+  const telemetryMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/telemetry.ts');
   const registry = await buildBuiltInRegistry(telemetryRuntimeRoot);
 
-  const config = {
-    project: 'behavior-approval-resume-rejected',
-    telemetry: { enabled: true },
-    _runId: 'run-approval-resume-rejected-1',
-    run_id: 'run-approval-resume-rejected-1',
-    _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-    _approvalPollIntervalMs: 0,
-    _pluginRegistry: registry,
-    _testOverrides: {
+    const configDeps7 = {
       approvalGate: {
         discord: async () => {},
         appendTransition: () => {},
@@ -650,13 +949,23 @@ await record('approval gate restart-time rejection still emits authoritative res
           project: 'behavior-approval-resume-rejected',
           requested_at: '2026-04-09T00:00:00.000Z',
           resolved_at: '2026-04-09T00:05:00.000Z',
+          timeout_policy: 'BLOCK',
           decision_by: 'nova',
           decision_via: 'manual',
           reason: 'Needs changes',
         }),
       },
-    },
-  };
+    };
+const config = {
+    ...platformApprovalDefaults(),
+    project: 'behavior-approval-resume-rejected',
+    telemetry: { enabled: true },
+    _runId: 'run-approval-resume-rejected-1',
+    run_id: 'run-approval-resume-rejected-1',
+    paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-resume-rejected-swarm-')) },
+    _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+    pluginRegistry: registry,
+      };
 
   const progress = {
     modules: {},
@@ -674,15 +983,15 @@ await record('approval gate restart-time rejection still emits authoritative res
   await telemetryMod.onGateStarted({ config }, 'release-approval', progress.gates['release-approval']);
   telemetryMod.onApprovalRequested({ config }, 'release-approval', 'Release Approval', 30, 'block', { gate_type: 'approval' });
 
-  const result = await approvalGateRunnerMod.runApprovalGate(config, progress, 'release-approval');
+  const result = await runGateViaRegistry(telemetryRuntimeRoot, config, progress, 'release-approval', { deps: configDeps7 });
   await flushAsync();
 
-  assert.equal(result.exit, 10);
-  assert.equal(result.status, 'REJECTED');
-  assert.equal(result.reason, "Gate 'release-approval' was previously rejected: Needs changes");
+  assert.equal(stepExit(result), 10);
+  assert.equal(stepGateStatus(result), 'FAIL');
+  assert.equal(stepSummary(result), "Gate 'release-approval' was previously rejected: Needs changes");
 
   const streamKey = 'pipeline:telemetry:behavior-approval-resume-rejected:run-approval-resume-rejected-1';
-  const events = xaddEvents(streamKey);
+  const events = gateRuntimeEvents(xaddEvents, streamKey);
   assert.deepEqual(events.map((event) => event.type), ['gate.started', 'approval.requested', 'approval.resolved', 'gate.verdict']);
   assert.deepEqual(events.map((event) => event.seq), [1, 2, 3, 4]);
   assert.equal(events[1].gate_type, 'approval');
@@ -702,8 +1011,8 @@ await record('approval gate corrupted persisted state fails closed instead of re
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-corrupted-'));
   const swarmDir = path.join(repoRoot, '.swarm');
@@ -712,7 +1021,13 @@ await record('approval gate corrupted persisted state fails closed instead of re
   ensureDir(path.join(logDir, 'gates'));
 
   const discordCalls = [];
-  const config = {
+    const configDeps8 = {
+      approvalGate: {
+        discord: async (...args) => { discordCalls.push(args); },
+      },
+    };
+const config = {
+    ...platformApprovalDefaults(),
     project: 'behavior-approval-corrupted',
     repo_root: repoRoot,
     telemetry: { enabled: true },
@@ -720,17 +1035,11 @@ await record('approval gate corrupted persisted state fails closed instead of re
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),
     },
-    _logDir: logDir,
     _runId: 'run-approval-corrupted-1',
     run_id: 'run-approval-corrupted-1',
     _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-    _approvalPollIntervalMs: 0,
-    _testOverrides: {
-      approvalGate: {
-        discord: async (...args) => { discordCalls.push(args); },
-      },
-    },
-  };
+    pluginRegistry: await buildBuiltInRegistry(telemetryRuntimeRoot),
+      };
 
   fs.mkdirSync(config.paths.swarm_dir, { recursive: true });
   fs.writeFileSync(
@@ -751,12 +1060,12 @@ await record('approval gate corrupted persisted state fails closed instead of re
     execution_order: ['gate:release-approval'],
   };
 
-  const result = await approvalGateRunnerMod.runApprovalGate(config, progress, 'release-approval');
+  const result = await runGateViaRegistry(telemetryRuntimeRoot, config, progress, 'release-approval', { deps: configDeps8 });
 
-  assert.equal(result.exit, 10);
-  assert.equal(result.status, 'CORRUPTED_STATE');
-  assert.equal(result.corrupted_state, true);
-  assert.match(result.reason, /corrupted persisted state/i);
+  assert.equal(stepExit(result), 10);
+  assert.equal(stepGateStatus(result), 'FAIL');
+  assert.equal(stepMetadata(result).corrupted_state, true);
+  assert.match(stepSummary(result), /corrupted persisted state/i);
   assert.equal(discordCalls.length, 1);
   assert.equal(discordCalls[0][1], 'CRITICAL');
   assert.equal(fs.existsSync(path.join(logDir, 'gates', 'release-approval', 'approval-request.json')), false);
@@ -765,18 +1074,97 @@ await record('approval gate corrupted persisted state fails closed instead of re
   assert.match(persisted, /bad-json/);
 });
 
+await record('approval gate unknown persisted status fails closed instead of reopening a fresh wait', async () => {
+  const { runtimeRoot: telemetryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+  installFakeRedis(telemetryRuntimeRoot);
+  globalThis.__fakeRedisCalls = [];
+  globalThis.__fakeRedisCounters = Object.create(null);
+
+  const approvalGateRunnerMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/runners/approval-gate-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-unknown-state-'));
+  const swarmDir = path.join(repoRoot, '.swarm');
+  const logDir = path.join(swarmDir, 'logs');
+  ensureDir(path.join(logDir, 'pipeline'));
+  ensureDir(path.join(logDir, 'gates'));
+
+  const discordCalls = [];
+    const configDeps9 = {
+      approvalGate: {
+        discord: async (...args) => { discordCalls.push(args); },
+      },
+    };
+const config = {
+    ...platformApprovalDefaults(),
+    project: 'behavior-approval-unknown-state',
+    repo_root: repoRoot,
+    telemetry: { enabled: true },
+    paths: {
+      swarm_dir: swarmDir,
+      modules_dir: path.join(repoRoot, 'modules'),
+    },
+    _runId: 'run-approval-unknown-state-1',
+    run_id: 'run-approval-unknown-state-1',
+    _runStats: runtimeCoreMod.createRunStats('2026-04-26T00:00:00.000Z'),
+    pluginRegistry: await buildBuiltInRegistry(telemetryRuntimeRoot),
+      };
+
+  fs.mkdirSync(config.paths.swarm_dir, { recursive: true });
+  fs.writeFileSync(
+    pathsMod.gateStatusPath(config, 'release-approval'),
+    JSON.stringify({
+      status: 'WAITING_FOR_MAYBE',
+      gate_id: 'release-approval',
+      gate_type: 'approval',
+      requested_at: '2026-04-26T00:00:00.000Z',
+      timeout_minutes: 30,
+      timeout_policy: 'BLOCK',
+    }, null, 2) + '\n',
+  );
+
+  const progress = {
+    modules: {},
+    gates: {
+      'release-approval': {
+        type: 'approval',
+        title: 'Release Approval',
+        timeout_minutes: 30,
+        on_timeout: 'block',
+      },
+    },
+    execution_order: ['gate:release-approval'],
+  };
+
+  const result = await runGateViaRegistry(telemetryRuntimeRoot, config, progress, 'release-approval', { deps: configDeps9 });
+
+  assert.equal(stepExit(result), 10);
+  assert.equal(stepGateStatus(result), 'FAIL');
+  assert.equal(stepMetadata(result).invalid_state, true);
+  assert.match(stepSummary(result), /invalid persisted state status 'WAITING_FOR_MAYBE'/);
+  assert.equal(discordCalls.length, 1);
+  assert.equal(discordCalls[0][1], 'CRITICAL');
+  assert.equal(fs.existsSync(path.join(logDir, 'gates', 'release-approval', 'approval-request.json')), false);
+
+  const persisted = JSON.parse(fs.readFileSync(pathsMod.gateStatusPath(config, 'release-approval'), 'utf8'));
+  assert.equal(persisted.status, 'WAITING_FOR_MAYBE');
+});
+
 await record('approval gate dependencies trust persisted approval state and accept timeout-continue without requiring output files', async () => {
   const { runtimeRoot: telemetryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
   installFakeRedis(telemetryRuntimeRoot);
 
-  const dependenciesMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/dependencies.js');
+  const dependenciesMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/dependencies.ts');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-dependencies-'));
   const swarmDir = path.join(repoRoot, '.swarm');
   fs.mkdirSync(swarmDir, { recursive: true });
 
   const config = {
+    ...platformApprovalDefaults(),
     project: 'behavior-approval-dependencies',
+    _runId: 'run-approval-dependencies-1',
+    run_id: 'run-approval-dependencies-1',
     paths: {
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),
@@ -795,6 +1183,7 @@ await record('approval gate dependencies trust persisted approval state and acce
         type: 'approval',
         title: 'Release Approval',
         output_file: 'gates/release-approval-output.json',
+        on_timeout: 'continue',
       },
     },
   };
@@ -815,7 +1204,31 @@ await record('approval gate dependencies trust persisted approval state and acce
     pathsMod.gateStatusPath(config, 'release-approval'),
     JSON.stringify({ status: 'REJECTED', continued: false }, null, 2),
   );
-  const rejected = dependenciesMod.checkDependencies(config, progress, '02');
+  assert.deepEqual(
+    dependenciesMod.checkDependencies(config, progress, '02'),
+    { met: true },
+    'closed canonical approval read model should ignore later stale gate-state drift',
+  );
+
+  const rejectedRepoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-dependencies-rejected-'));
+  const rejectedSwarmDir = path.join(rejectedRepoRoot, '.swarm');
+  fs.mkdirSync(rejectedSwarmDir, { recursive: true });
+  const rejectedConfig = {
+    ...platformApprovalDefaults(),
+    project: 'behavior-approval-dependencies-rejected',
+    _runId: 'run-approval-dependencies-rejected-1',
+    run_id: 'run-approval-dependencies-rejected-1',
+    paths: {
+      swarm_dir: rejectedSwarmDir,
+      modules_dir: path.join(rejectedRepoRoot, 'modules'),
+    },
+  };
+
+  fs.writeFileSync(
+    pathsMod.gateStatusPath(rejectedConfig, 'release-approval'),
+    JSON.stringify({ status: 'REJECTED', continued: false }, null, 2),
+  );
+  const rejected = dependenciesMod.checkDependencies(rejectedConfig, progress, '02');
   assert.equal(rejected.met, false);
   assert.equal(rejected.reason, "Approval gate 'release-approval' is REJECTED");
 });

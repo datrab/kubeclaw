@@ -9,8 +9,8 @@ import {
 } from '../../lib/lifecycle-audit-lib.mjs';
 
 async function buildBuiltInRegistry(runtimeRoot) {
-  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.js');
-  const { registry, errors } = registryMod.buildPluginRegistry({}, { throwOnError: false });
+  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
   assert.equal(errors.length, 0);
   return registry;
 }
@@ -20,6 +20,24 @@ function withStubbedGeneratorStages(registry) {
     ...registry,
     stageOwners: {
       ...registry.stageOwners,
+      'validator.run': {
+        ...registry.stageOwners['validator.run'],
+        'validator:full_lint': {
+          ...registry.stageOwners['validator.run']?.['validator:full_lint'],
+          implementation: {
+            run: async ({ input }) => ({
+              schemaVersion: 'v1',
+              producerKind: 'validator',
+              producerType: input?.ids?.validatorName || 'full_lint',
+              nextAction: 'pass',
+              diagnostics: {
+                summary: 'Full lint passed in test registry',
+                typed: { validator: { outcomeClass: 'passed' } },
+              },
+            }),
+          },
+        },
+      },
       'generator.run': {
         ...registry.stageOwners['generator.run'],
         'generator:project_summary': {
@@ -60,6 +78,45 @@ function withStubbedGeneratorStages(registry) {
   };
 }
 
+function stepOutcomeForExit(exitCode) {
+  switch (Number(exitCode)) {
+    case 0: return ['continue', 'passed', 'OK'];
+    case 10: return ['halt', 'needs_nova', 'NEEDS_NOVA'];
+    case 20: return ['halt', 'blocked', 'BLOCKED'];
+    case 30: return ['halt', 'timeout', 'TIMEOUT'];
+    case 40: return ['halt', 'rate_limited', 'RATE_LIMITED'];
+    default: return ['halt', 'error', 'ERROR'];
+  }
+}
+
+function makeStepResult({ stepType = 'module', stepId = '01', exit = 0, reason = null, status = null, projection = {}, correlation = {}, issueType = null } = {}) {
+  const [nextAction, outcome, exitLabel] = stepOutcomeForExit(exit);
+  return {
+    schemaVersion: 'v1',
+    kind: 'pipeline_step_result',
+    stepType,
+    stepId,
+    nextAction,
+    outcome,
+    ...(issueType ? { issueType } : {}),
+    diagnostics: {
+      summary: reason,
+      findings: [],
+      metadata: {
+        ...projection,
+        ...(reason != null ? { reason } : {}),
+        ...(status != null ? { status } : {}),
+      },
+      typed: {},
+    },
+    correlation,
+    terminal: {
+      exitCode: exit,
+      exitLabel,
+    },
+  };
+}
+
 function readJsonl(filePath) {
   if (!fs.existsSync(filePath)) return [];
   return fs.readFileSync(filePath, 'utf8')
@@ -77,25 +134,16 @@ async function seedBlockedModuleLifecycleState(pipelineRuntimeRoot, config, prog
   reason = 'Blocked in tests',
   phase = 'buster',
 } = {}) {
-  const statusStoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/services/status-store.js');
-  const lifecycleStateMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/lifecycle-state.js');
+  const statusStoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
+  const lifecycleStateMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/lifecycle-state.ts');
   const moduleDir = progress?.modules?.[moduleId]?.dir || moduleId;
   const moduleTitle = progress?.modules?.[moduleId]?.title || moduleId;
 
-  if (!config._logDir && config?.paths?.swarm_dir) {
-    config._logDir = path.join(config.paths.swarm_dir, 'logs');
-  }
-  if (config._logDir && !config._runLogDir) {
-    config._runLogDir = path.join(config._logDir, 'pipeline', 'runs', config._runId || config.run_id || 'run-unknown');
-  }
-  if (config._runLogDir) {
-    fs.mkdirSync(config._runLogDir, { recursive: true });
-  }
+  fs.mkdirSync(path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId || config.run_id || 'run-unknown'), { recursive: true });
 
   fs.mkdirSync(path.join(config.paths.modules_dir, moduleDir), { recursive: true });
 
   const status = statusStoreMod.initStatus(moduleId, { title: moduleTitle });
-  status.fail_count = Math.max(0, attempt - 1);
   status.active_agent = {
     attempt,
     dispatch_id: dispatchId || null,
@@ -105,20 +153,20 @@ async function seedBlockedModuleLifecycleState(pipelineRuntimeRoot, config, prog
     model: 'anthropic/claude-sonnet-4-6',
   };
 
-  lifecycleStateMod.startModulePhase(status, 'forge', 'Seed blocked module attempt', { now: '2026-04-20T17:00:00.000Z' });
-  statusStoreMod.saveStatus(config, moduleDir, status);
+  const forgeStartTransition = lifecycleStateMod.startModulePhase(status, 'forge', 'Seed blocked module attempt', { now: '2026-04-20T17:00:00.000Z' });
+  statusStoreMod.saveStatus(config, moduleDir, status, forgeStartTransition);
 
-  lifecycleStateMod.transitionModuleStatus(status, 'READY_FOR_TESTING', {
+  const forgeCompleteTransition = lifecycleStateMod.transitionModuleStatus(status, 'READY_FOR_TESTING', {
     note: 'Forge complete',
     now: '2026-04-20T17:05:00.000Z',
   });
-  statusStoreMod.saveStatus(config, moduleDir, status);
+  statusStoreMod.saveStatus(config, moduleDir, status, forgeCompleteTransition);
 
-  lifecycleStateMod.transitionModuleStatus(status, 'TESTING', {
+  const busterStartTransition = lifecycleStateMod.transitionModuleStatus(status, 'TESTING', {
     note: 'Buster started',
     now: '2026-04-20T17:06:00.000Z',
   });
-  statusStoreMod.saveStatus(config, moduleDir, status);
+  statusStoreMod.saveStatus(config, moduleDir, status, busterStartTransition);
 
   status.fail_count = attempt;
   status.blockedReason = reason;
@@ -129,13 +177,13 @@ async function seedBlockedModuleLifecycleState(pipelineRuntimeRoot, config, prog
     phase,
     summary: reason,
   }];
-  lifecycleStateMod.markModuleBlocked(status, phase, reason, {
+  const blockedTransition = lifecycleStateMod.markModuleBlocked(status, phase, reason, {
     reason,
     failCount: attempt,
     now: '2026-04-20T17:07:00.000Z',
     clearActiveAgent: false,
   });
-  statusStoreMod.saveStatus(config, moduleDir, status);
+  statusStoreMod.saveStatus(config, moduleDir, status, blockedTransition);
 
   return status;
 }
@@ -147,20 +195,12 @@ async function seedFailedModuleLifecycleState(pipelineRuntimeRoot, config, progr
   sessionKey = null,
   reason = 'Failed in tests',
 } = {}) {
-  const statusStoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/services/status-store.js');
-  const lifecycleStateMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/lifecycle-state.js');
+  const statusStoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
+  const lifecycleStateMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/lifecycle-state.ts');
   const moduleDir = progress?.modules?.[moduleId]?.dir || moduleId;
   const moduleTitle = progress?.modules?.[moduleId]?.title || moduleId;
 
-  if (!config._logDir && config?.paths?.swarm_dir) {
-    config._logDir = path.join(config.paths.swarm_dir, 'logs');
-  }
-  if (config._logDir && !config._runLogDir) {
-    config._runLogDir = path.join(config._logDir, 'pipeline', 'runs', config._runId || config.run_id || 'run-unknown');
-  }
-  if (config._runLogDir) {
-    fs.mkdirSync(config._runLogDir, { recursive: true });
-  }
+  fs.mkdirSync(path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId || config.run_id || 'run-unknown'), { recursive: true });
 
   fs.mkdirSync(path.join(config.paths.modules_dir, moduleDir), { recursive: true });
 
@@ -175,20 +215,20 @@ async function seedFailedModuleLifecycleState(pipelineRuntimeRoot, config, progr
     model: 'anthropic/claude-sonnet-4-6',
   };
 
-  lifecycleStateMod.startModulePhase(status, 'forge', 'Seed failed module attempt', { now: '2026-04-20T16:50:00.000Z' });
-  statusStoreMod.saveStatus(config, moduleDir, status);
+  const forgeStartTransition = lifecycleStateMod.startModulePhase(status, 'forge', 'Seed failed module attempt', { now: '2026-04-20T16:50:00.000Z' });
+  statusStoreMod.saveStatus(config, moduleDir, status, forgeStartTransition);
 
-  lifecycleStateMod.transitionModuleStatus(status, 'READY_FOR_TESTING', {
+  const forgeCompleteTransition = lifecycleStateMod.transitionModuleStatus(status, 'READY_FOR_TESTING', {
     note: 'Forge complete',
     now: '2026-04-20T16:55:00.000Z',
   });
-  statusStoreMod.saveStatus(config, moduleDir, status);
+  statusStoreMod.saveStatus(config, moduleDir, status, forgeCompleteTransition);
 
-  lifecycleStateMod.transitionModuleStatus(status, 'TESTING', {
+  const busterStartTransition = lifecycleStateMod.transitionModuleStatus(status, 'TESTING', {
     note: 'Buster started',
     now: '2026-04-20T16:56:00.000Z',
   });
-  statusStoreMod.saveStatus(config, moduleDir, status);
+  statusStoreMod.saveStatus(config, moduleDir, status, busterStartTransition);
 
   status.fail_count = attempt;
   status.fail_summaries = [{
@@ -196,11 +236,11 @@ async function seedFailedModuleLifecycleState(pipelineRuntimeRoot, config, progr
     phase: 'buster',
     summary: reason,
   }];
-  lifecycleStateMod.transitionModuleStatus(status, 'FAIL', {
+  const failTransition = lifecycleStateMod.transitionModuleStatus(status, 'FAIL', {
     note: reason,
     now: '2026-04-20T16:57:00.000Z',
   });
-  statusStoreMod.saveStatus(config, moduleDir, status);
+  statusStoreMod.saveStatus(config, moduleDir, status, failTransition);
 
   return status;
 }
@@ -219,39 +259,48 @@ export async function registerPipelineArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-  const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-  const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+  const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const registry = withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot));
   
     const discordCalls = [];
     const sessionKey = 'agent:main:acp:single-module-01';
-    const config = {
+        const deps = {
+        pipelineRunner: {
+          discord: async (...args) => { discordCalls.push(args); },
+          runModule: async () => makeStepResult({
+            stepId: '01',
+            exit: 10,
+            reason: 'Forge fix needs Nova guidance',
+            projection: {
+              fail_count: 3,
+              attempt: 3,
+              dispatch_id: 'dispatch-single-module-01-attempt-3',
+              module_status: { session_key: sessionKey },
+            },
+            correlation: {
+              module_id: '01',
+              attempt: 3,
+              dispatch_id: 'dispatch-single-module-01-attempt-3',
+              session_key: sessionKey,
+            },
+          }),
+          injectNeedsNova: async () => {},
+          writeSummary: () => {},
+        },
+      };
+const config = {
       project: 'behavior-single-module-halt',
       paths: {
         swarm_dir: '/tmp/behavior-single-module-halt/swarm',
         modules_dir: '/tmp/behavior-single-module-halt/modules',
       },
       telemetry: { enabled: true },
-      _pluginRegistry: registry,
+      pluginRegistry: registry,
       _runId: 'run-single-module-halt-1',
       run_id: 'run-single-module-halt-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
-        pipelineRunner: {
-          discord: async (...args) => { discordCalls.push(args); },
-          runModule: async () => ({
-            exit: 10,
-            reason: 'Forge fix needs Nova guidance',
-            fail_count: 3,
-            attempt: 3,
-            dispatch_id: 'dispatch-single-module-01-attempt-3',
-            module_status: { session_key: sessionKey },
-          }),
-          injectNeedsNova: async () => {},
-          writeSummary: () => {},
-        },
-      },
-    };
+          };
   
     const progress = {
       execution_order: ['01'],
@@ -259,7 +308,7 @@ export async function registerPipelineArea({
       gates: {},
     };
   
-    const result = await pipelineRunnerMod.runPipeline(config, progress, { module: '01' });
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps, module: '01' }, { deps });
     await flushAsync();
   
     assert.equal(result, 10);
@@ -272,7 +321,7 @@ export async function registerPipelineArea({
     assert.equal(events[1].session_key, sessionKey);
     assert.equal(events[1].attempt, 3);
     assert.equal(events[1].dispatch_id, 'dispatch-single-module-01-attempt-3');
-    assert.equal(events[1].gateway_label, 'dispatch-single-module-01-attempt-3');
+    assert.equal(events[1].gateway_label, null);
     assert.equal(events[1].fail_count, 3);
     assert.equal(events[1].last_failure, 'Forge fix needs Nova guidance');
     assert.equal(events[1].action, 'NEEDS_NOVA');
@@ -282,7 +331,7 @@ export async function registerPipelineArea({
     assert.equal(events[2].session_key, sessionKey);
     assert.equal(events[2].attempt, 3);
     assert.equal(events[2].dispatch_id, 'dispatch-single-module-01-attempt-3');
-    assert.equal(events[2].gateway_label, 'dispatch-single-module-01-attempt-3');
+    assert.equal(events[2].gateway_label, null);
     assert.equal(events[2].exit_code, 10);
     assert.equal(events[3].summary_type, 'pipeline');
     assert.equal(events[3].exit_code, 10);
@@ -299,14 +348,111 @@ export async function registerPipelineArea({
   assert.equal(haltDiscordCall[4].some((field) => field.name === 'Session' && field.value === sessionKey), true);
 });
 
+  await record('single-module typed step results own halt semantics without raw exit fallback', async () => {
+    const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    installFakeRedis(pipelineRuntimeRoot);
+    globalThis.__fakeRedisCalls = [];
+    globalThis.__fakeRedisCounters = Object.create(null);
+
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+    const registry = withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot));
+
+    const outputs = [];
+    const injectNeedsNovaCalls = [];
+    const sessionKey = 'agent:main:acp:single-module-typed-step';
+    const dispatchId = 'dispatch-single-module-typed-step-5';
+        const configDeps2 = {
+        pipelineRunner: {
+          discord: async () => {},
+          output: (payload) => { outputs.push(payload); },
+          runModule: async () => ({
+            schemaVersion: 'v1',
+            kind: 'pipeline_step_result',
+            stepType: 'module',
+            stepId: '01',
+            nextAction: 'halt',
+            outcome: 'needs_nova',
+            issueType: 'code',
+            diagnostics: {
+              summary: 'Typed module halt requires Nova',
+              findings: [],
+              metadata: {},
+              typed: {},
+            },
+            correlation: {
+              run_id: 'run-single-module-typed-step-1',
+              module_id: '01',
+              attempt: 5,
+              dispatch_id: dispatchId,
+              gateway_label: dispatchId,
+              session_key: sessionKey,
+            },
+            terminal: {
+              exitCode: 10,
+              exitLabel: 'NEEDS_NOVA',
+            },
+          }),
+          injectNeedsNova: async (...args) => { injectNeedsNovaCalls.push(args); },
+          writeSummary: () => {},
+        },
+      };
+const config = {
+      project: 'behavior-single-module-typed-step',
+      paths: {
+        swarm_dir: '/tmp/behavior-single-module-typed-step/swarm',
+        modules_dir: '/tmp/behavior-single-module-typed-step/modules',
+      },
+      telemetry: { enabled: true },
+      pluginRegistry: registry,
+      _runId: 'run-single-module-typed-step-1',
+      run_id: 'run-single-module-typed-step-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-25T00:00:00.000Z'),
+          };
+
+    const progress = {
+      execution_order: ['01'],
+      modules: { '01': { title: 'Scaffold', dir: '01-scaffold' } },
+      gates: {},
+    };
+
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps2, module: '01' }, { deps: configDeps2 });
+    await flushAsync();
+
+    assert.equal(result, 10);
+    assert.equal(outputs.length, 1);
+    assert.equal(outputs[0].exit, 10);
+    assert.equal(outputs[0].outcome, 'needs_nova');
+    assert.equal(outputs[0].next_action, 'halt');
+    assert.equal(outputs[0].attempt, 5);
+    assert.equal(outputs[0].dispatch_id, dispatchId);
+    assert.equal(outputs[0].gateway_label, dispatchId);
+    assert.equal(outputs[0].session_key, sessionKey);
+    assert.equal(injectNeedsNovaCalls.length, 1);
+    assert.equal(injectNeedsNovaCalls[0][1].exit, 10);
+    assert.equal(injectNeedsNovaCalls[0][1].attempt, 5);
+    assert.equal(injectNeedsNovaCalls[0][1].dispatch_id, dispatchId);
+    assert.equal(injectNeedsNovaCalls[0][1].session_key, sessionKey);
+
+    const streamKey = 'pipeline:telemetry:behavior-single-module-typed-step:run-single-module-typed-step-1';
+    const events = xaddEvents(streamKey);
+    assert.deepEqual(events.map((event) => event.type), ['pipeline.started', 'error.escalation', 'pipeline.halted', 'summary.started', 'summary.completed']);
+    assert.equal(events[1].exit_code, 10);
+    assert.equal(events[1].attempt, 5);
+    assert.equal(events[1].dispatch_id, dispatchId);
+    assert.equal(events[2].exit_code, 10);
+    assert.equal(events[2].attempt, 5);
+    assert.equal(events[2].dispatch_id, dispatchId);
+  });
+
   await record('single-module rate-limited runs emit pipeline halt telemetry without escalation drift', async () => {
     const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(pipelineRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot));
 
     const discordCalls = [];
@@ -314,34 +460,33 @@ export async function registerPipelineArea({
     const injectNeedsNovaCalls = [];
     const dispatchId = 'dispatch-single-module-rate-limit-7';
     const sessionKey = 'agent:main:acp:single-module-rate-limit';
-    const config = {
-      project: 'behavior-single-module-rate-limited',
-      paths: {
-        swarm_dir: '/tmp/behavior-single-module-rate-limited/swarm',
-        modules_dir: '/tmp/behavior-single-module-rate-limited/modules',
-      },
-      telemetry: { enabled: true },
-      _pluginRegistry: registry,
-      _runId: 'run-single-module-rate-limited-1',
-      run_id: 'run-single-module-rate-limited-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-16T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps3 = {
         pipelineRunner: {
           discord: async (...args) => { discordCalls.push(args); },
           output: (payload) => { outputs.push(payload); },
-          runModule: async () => ({
+          runModule: async () => makeStepResult({
+            stepId: '01',
             exit: 40,
             reason: 'Rate limit pauses exceeded maximum during Buster phase',
-            rate_limit_exhausted: true,
-            max_rate_limit_pauses: 4,
-            rate_limit_status: {
-              attempt: 7,
-              dispatch_id: dispatchId,
-              gateway_label: dispatchId,
-              session_key: sessionKey,
+            projection: {
+              rate_limit_exhausted: true,
               max_rate_limit_pauses: 4,
+              rate_limit_status: {
+                attempt: 7,
+                dispatch_id: dispatchId,
+                gateway_label: dispatchId,
+                session_key: sessionKey,
+                max_rate_limit_pauses: 4,
+              },
+              module_status: {
+                attempt: 7,
+                dispatch_id: dispatchId,
+                gateway_label: dispatchId,
+                session_key: sessionKey,
+              },
             },
-            module_status: {
+            correlation: {
+              module_id: '01',
               attempt: 7,
               dispatch_id: dispatchId,
               gateway_label: dispatchId,
@@ -351,8 +496,19 @@ export async function registerPipelineArea({
           injectNeedsNova: async (...args) => { injectNeedsNovaCalls.push(args); },
           writeSummary: () => {},
         },
+      };
+const config = {
+      project: 'behavior-single-module-rate-limited',
+      paths: {
+        swarm_dir: '/tmp/behavior-single-module-rate-limited/swarm',
+        modules_dir: '/tmp/behavior-single-module-rate-limited/modules',
       },
-    };
+      telemetry: { enabled: true },
+      pluginRegistry: registry,
+      _runId: 'run-single-module-rate-limited-1',
+      run_id: 'run-single-module-rate-limited-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-16T00:00:00.000Z'),
+          };
 
     const progress = {
       execution_order: ['01'],
@@ -360,7 +516,7 @@ export async function registerPipelineArea({
       gates: {},
     };
 
-    const result = await pipelineRunnerMod.runPipeline(config, progress, { module: '01' });
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps3, module: '01' }, { deps: configDeps3 });
     await flushAsync();
 
     assert.equal(result, 40);
@@ -383,32 +539,35 @@ export async function registerPipelineArea({
     assert.equal(events[1].session_key, sessionKey);
     assert.equal(events[1].reason, 'RATE_LIMITED');
     assert.equal(events[1].exit_code, 40);
+    assert.equal(events[1].rate_limit_exhausted, true);
+    assert.equal(events[1].max_rate_limit_pauses, 4);
     assert.equal(events[2].summary_type, 'pipeline');
     assert.equal(events[2].exit_code, 40);
-    assert.equal(events[2].exit_reason, 'single_module:01');
+    assert.equal(events[2].exit_reason, 'RATE_LIMITED:01');
     assert.equal(events[3].summary_type, 'pipeline');
     assert.equal(events[3].status, 'failed');
     assert.equal(events[3].exit_code, 40);
-    assert.equal(events[3].exit_reason, 'single_module:01');
+    assert.equal(events[3].exit_reason, 'RATE_LIMITED:01');
 
     const haltDiscordCall = discordCalls.find(([, , title]) => title === 'Pipeline halted: behavior-single-module-rate-limited');
     assert.equal(Boolean(haltDiscordCall), true);
     assert.equal(haltDiscordCall[4].some((field) => field.name === 'Module' && field.value === '01'), true);
     assert.equal(haltDiscordCall[4].some((field) => field.name === 'Attempt' && field.value === '7'), true);
     assert.equal(haltDiscordCall[4].some((field) => field.name === 'Dispatch' && field.value === dispatchId), true);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Label' && field.value === dispatchId), true);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Gateway Label' && field.value === dispatchId), true);
     assert.equal(haltDiscordCall[4].some((field) => field.name === 'Session' && field.value === sessionKey), true);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Rate Limit Pauses' && field.value === '4'), true);
   });
 
-  await record('single-module pipeline halts fall back to status correlation for output and Nova handoff', async () => {
+  await record('single-module pipeline halts keep status correlation as provenance only', async () => {
     const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(pipelineRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
-    const pathsMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/paths.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+    const pathsMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/paths.ts');
     const registry = withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot));
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-single-module-failcount-halt-'));
@@ -421,7 +580,22 @@ export async function registerPipelineArea({
     const outputs = [];
     const injectNeedsNovaCalls = [];
     const sessionKey = 'agent:main:acp:single-module-failcount-01';
-    const config = {
+        const configDeps4 = {
+        pipelineRunner: {
+          discord: async (...args) => { discordCalls.push(args); },
+          output: (payload) => { outputs.push(payload); },
+          runModule: async () => makeStepResult({
+            stepId: '01',
+            exit: 10,
+            reason: 'Forge fix still needs Nova guidance',
+            projection: { fail_count: 3 },
+            correlation: { module_id: '01' },
+          }),
+          injectNeedsNova: async (...args) => { injectNeedsNovaCalls.push(args); },
+          writeSummary: () => {},
+        },
+      };
+const config = {
       project: 'behavior-single-module-failcount-halt',
       repo_root: repoRoot,
       paths: {
@@ -429,24 +603,11 @@ export async function registerPipelineArea({
         modules_dir: modulesDir,
       },
       telemetry: { enabled: true },
-      _pluginRegistry: registry,
+      pluginRegistry: registry,
       _runId: 'run-single-module-failcount-halt-1',
       run_id: 'run-single-module-failcount-halt-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
-        pipelineRunner: {
-          discord: async (...args) => { discordCalls.push(args); },
-          output: (payload) => { outputs.push(payload); },
-          runModule: async () => ({
-            exit: 10,
-            reason: 'Forge fix still needs Nova guidance',
-            fail_count: 3,
-          }),
-          injectNeedsNova: async (...args) => { injectNeedsNovaCalls.push(args); },
-          writeSummary: () => {},
-        },
-      },
-    };
+          };
 
     const progress = {
       execution_order: ['01'],
@@ -462,7 +623,7 @@ export async function registerPipelineArea({
       reason: 'Forge fix still needs Nova guidance',
     });
 
-    const result = await pipelineRunnerMod.runPipeline(config, progress, { module: '01' });
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps4, module: '01' }, { deps: configDeps4 });
     await flushAsync();
 
     assert.equal(result, 10);
@@ -470,38 +631,45 @@ export async function registerPipelineArea({
     const streamKey = 'pipeline:telemetry:behavior-single-module-failcount-halt:run-single-module-failcount-halt-1';
     const events = xaddEvents(streamKey);
     assert.deepEqual(events.map((event) => event.type), ['pipeline.started', 'error.escalation', 'pipeline.halted', 'summary.started', 'summary.completed']);
-    assert.equal(events[1].attempt, 3);
-    assert.equal(events[1].dispatch_id, 'dispatch-single-module-failcount-01-attempt-3');
-    assert.equal(events[1].session_key, sessionKey);
-    assert.equal(events[1].gateway_label, 'dispatch-single-module-failcount-01-attempt-3');
-    assert.equal(events[2].attempt, 3);
-    assert.equal(events[2].dispatch_id, 'dispatch-single-module-failcount-01-attempt-3');
-    assert.equal(events[2].session_key, sessionKey);
-    assert.equal(events[2].gateway_label, 'dispatch-single-module-failcount-01-attempt-3');
+    assert.equal(events[1].attempt, null);
+    assert.equal(events[1].dispatch_id, null);
+    assert.equal(events[1].session_key, null);
+    assert.equal(events[1].gateway_label, null);
+    assert.equal(events[2].attempt, null);
+    assert.equal(events[2].dispatch_id, null);
+    assert.equal(events[2].session_key, null);
+    assert.equal(events[2].gateway_label, null);
 
-    assert.equal(outputs.some((payload) => payload?.attempt === 3 && payload?.dispatch_id === 'dispatch-single-module-failcount-01-attempt-3' && payload?.gateway_label === 'dispatch-single-module-failcount-01-attempt-3' && payload?.session_key === sessionKey), true);
+    const statusProvenanceOutput = outputs.find((payload) => payload?.correlation_provenance?.dispatch_id === 'dispatch-single-module-failcount-01-attempt-3' && payload?.correlation_provenance?.gateway_label === 'dispatch-single-module-failcount-01-attempt-3' && payload?.correlation_provenance?.session_key === sessionKey);
+    assert(statusProvenanceOutput, 'status identity should remain available as diagnostic provenance');
+    assert.equal(statusProvenanceOutput.attempt, null);
+    assert.equal(statusProvenanceOutput.dispatch_id, null);
+    assert.equal(statusProvenanceOutput.gateway_label, null);
+    assert.equal(statusProvenanceOutput.session_key, null);
     assert.equal(injectNeedsNovaCalls.length, 1);
-    assert.equal(injectNeedsNovaCalls[0][1]?.attempt, 3);
-    assert.equal(injectNeedsNovaCalls[0][1]?.dispatch_id, 'dispatch-single-module-failcount-01-attempt-3');
-    assert.equal(injectNeedsNovaCalls[0][1]?.gateway_label, 'dispatch-single-module-failcount-01-attempt-3');
-    assert.equal(injectNeedsNovaCalls[0][1]?.session_key, sessionKey);
+    assert.equal(injectNeedsNovaCalls[0][1]?.attempt, null);
+    assert.equal(injectNeedsNovaCalls[0][1]?.dispatch_id, null);
+    assert.equal(injectNeedsNovaCalls[0][1]?.gateway_label, null);
+    assert.equal(injectNeedsNovaCalls[0][1]?.session_key, null);
+    assert.equal(injectNeedsNovaCalls[0][1]?.correlation_provenance?.dispatch_id, 'dispatch-single-module-failcount-01-attempt-3');
+    assert.equal(injectNeedsNovaCalls[0][1]?.correlation_provenance?.session_key, sessionKey);
 
     const haltDiscordCall = discordCalls.find(([, , title]) => title === 'Pipeline halted: behavior-single-module-failcount-halt');
     assert.equal(Boolean(haltDiscordCall), true);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Attempt' && field.value === '3'), true);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Dispatch' && field.value === 'dispatch-single-module-failcount-01-attempt-3'), true);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Session' && field.value === sessionKey), true);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Attempt' && field.value === '3'), false);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Dispatch' && field.value === 'dispatch-single-module-failcount-01-attempt-3'), false);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Session' && field.value === sessionKey), false);
   });
 
-  await record('full-pipeline module halts fall back to status correlation for output and Nova handoff', async () => {
+  await record('full-pipeline module halts keep status correlation as provenance only', async () => {
     const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(pipelineRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
-    const pathsMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/paths.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+    const pathsMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/paths.ts');
     const registry = withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot));
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-full-pipeline-failcount-halt-'));
@@ -514,7 +682,24 @@ export async function registerPipelineArea({
     const outputs = [];
     const injectNeedsNovaCalls = [];
     const sessionKey = 'agent:main:acp:full-pipeline-failcount-01';
-    const config = {
+        const configDeps5 = {
+        pipelineRunner: {
+          discord: async (...args) => { discordCalls.push(args); },
+          output: (payload) => { outputs.push(payload); },
+          releaseGateFiles: async () => {},
+          syncControlFiles: async () => {},
+          runModule: async () => makeStepResult({
+            stepId: '01',
+            exit: 10,
+            reason: 'Forge fix still needs Nova guidance',
+            projection: { fail_count: 3 },
+            correlation: { module_id: '01' },
+          }),
+          injectNeedsNova: async (...args) => { injectNeedsNovaCalls.push(args); },
+          writeSummary: () => {},
+        },
+      };
+const config = {
       project: 'behavior-full-pipeline-failcount-halt',
       repo_root: repoRoot,
       paths: {
@@ -522,26 +707,11 @@ export async function registerPipelineArea({
         modules_dir: modulesDir,
       },
       telemetry: { enabled: true },
-      _pluginRegistry: registry,
+      pluginRegistry: registry,
       _runId: 'run-full-pipeline-failcount-halt-1',
       run_id: 'run-full-pipeline-failcount-halt-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-      _testOverrides: {
-        pipelineRunner: {
-          discord: async (...args) => { discordCalls.push(args); },
-          output: (payload) => { outputs.push(payload); },
-          releaseGateFiles: async () => {},
-          syncControlFiles: async () => {},
-          runModule: async () => ({
-            exit: 10,
-            reason: 'Forge fix still needs Nova guidance',
-            fail_count: 3,
-          }),
-          injectNeedsNova: async (...args) => { injectNeedsNovaCalls.push(args); },
-          writeSummary: () => {},
-        },
-      },
-    };
+          };
 
     const progress = {
       execution_order: ['01'],
@@ -557,16 +727,23 @@ export async function registerPipelineArea({
       reason: 'Forge fix still needs Nova guidance',
     });
 
-    const result = await pipelineRunnerMod.runPipeline(config, progress, { skipArchValidation: true });
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps5, skipArchValidation: true }, { deps: configDeps5 });
     await flushAsync();
 
     assert.equal(result, 10);
-    assert.equal(outputs.some((payload) => payload?.attempt === 3 && payload?.dispatch_id === 'dispatch-full-pipeline-failcount-01-attempt-3' && payload?.gateway_label === 'dispatch-full-pipeline-failcount-01-attempt-3' && payload?.session_key === sessionKey), true);
+    const provenanceOutput = outputs.find((payload) => payload?.correlation_provenance?.dispatch_id === 'dispatch-full-pipeline-failcount-01-attempt-3' && payload?.correlation_provenance?.gateway_label === 'dispatch-full-pipeline-failcount-01-attempt-3' && payload?.correlation_provenance?.session_key === sessionKey);
+    assert(provenanceOutput, 'status identity should remain available as diagnostic provenance');
+    assert.equal(provenanceOutput.attempt, null);
+    assert.equal(provenanceOutput.dispatch_id, null);
+    assert.equal(provenanceOutput.gateway_label, null);
+    assert.equal(provenanceOutput.session_key, null);
     assert.equal(injectNeedsNovaCalls.length, 1);
-    assert.equal(injectNeedsNovaCalls[0][1]?.attempt, 3);
-    assert.equal(injectNeedsNovaCalls[0][1]?.dispatch_id, 'dispatch-full-pipeline-failcount-01-attempt-3');
-    assert.equal(injectNeedsNovaCalls[0][1]?.gateway_label, 'dispatch-full-pipeline-failcount-01-attempt-3');
-    assert.equal(injectNeedsNovaCalls[0][1]?.session_key, sessionKey);
+    assert.equal(injectNeedsNovaCalls[0][1]?.attempt, null);
+    assert.equal(injectNeedsNovaCalls[0][1]?.dispatch_id, null);
+    assert.equal(injectNeedsNovaCalls[0][1]?.gateway_label, null);
+    assert.equal(injectNeedsNovaCalls[0][1]?.session_key, null);
+    assert.equal(injectNeedsNovaCalls[0][1]?.correlation_provenance?.dispatch_id, 'dispatch-full-pipeline-failcount-01-attempt-3');
+    assert.equal(injectNeedsNovaCalls[0][1]?.correlation_provenance?.session_key, sessionKey);
 
     const streamKey = 'pipeline:telemetry:behavior-full-pipeline-failcount-halt:run-full-pipeline-failcount-halt-1';
     const events = xaddEvents(streamKey);
@@ -574,31 +751,31 @@ export async function registerPipelineArea({
     const haltedEvent = events.find((event) => event.type === 'pipeline.halted');
     assert(escalationEvent, 'missing full-pipeline failcount escalation event');
     assert(haltedEvent, 'missing full-pipeline failcount halted event');
-    assert.equal(escalationEvent.attempt, 3);
-    assert.equal(escalationEvent.dispatch_id, 'dispatch-full-pipeline-failcount-01-attempt-3');
-    assert.equal(escalationEvent.session_key, sessionKey);
-    assert.equal(escalationEvent.gateway_label, 'dispatch-full-pipeline-failcount-01-attempt-3');
-    assert.equal(haltedEvent.attempt, 3);
-    assert.equal(haltedEvent.dispatch_id, 'dispatch-full-pipeline-failcount-01-attempt-3');
-    assert.equal(haltedEvent.session_key, sessionKey);
-    assert.equal(haltedEvent.gateway_label, 'dispatch-full-pipeline-failcount-01-attempt-3');
+    assert.equal(escalationEvent.attempt, null);
+    assert.equal(escalationEvent.dispatch_id, null);
+    assert.equal(escalationEvent.session_key, null);
+    assert.equal(escalationEvent.gateway_label, null);
+    assert.equal(haltedEvent.attempt, null);
+    assert.equal(haltedEvent.dispatch_id, null);
+    assert.equal(haltedEvent.session_key, null);
+    assert.equal(haltedEvent.gateway_label, null);
 
     const haltDiscordCall = discordCalls.find(([, , title]) => title === 'Pipeline halted: behavior-full-pipeline-failcount-halt');
     assert.equal(Boolean(haltDiscordCall), true);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Attempt' && field.value === '3'), true);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Dispatch' && field.value === 'dispatch-full-pipeline-failcount-01-attempt-3'), true);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Session' && field.value === sessionKey), true);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Attempt' && field.value === '3'), false);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Dispatch' && field.value === 'dispatch-full-pipeline-failcount-01-attempt-3'), false);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Session' && field.value === sessionKey), false);
   });
 
-  await record('single-module blocked runs emit escalation telemetry with preserved session correlation', async () => {
+  await record('single-module blocked runs expose persisted module identity as provenance only', async () => {
     const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(pipelineRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
-    const pathsMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/paths.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+    const pathsMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/paths.ts');
     const registry = withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot));
   
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-single-module-blocked-'));
@@ -610,7 +787,14 @@ export async function registerPipelineArea({
     const discordCalls = [];
     let injectNeedsNovaCalls = 0;
     const sessionKey = 'agent:main:acp:single-module-blocked-01';
-    const config = {
+        const configDeps6 = {
+        pipelineRunner: {
+          discord: async (...args) => { discordCalls.push(args); },
+          injectNeedsNova: async () => { injectNeedsNovaCalls++; },
+          writeSummary: () => {},
+        },
+      };
+const config = {
       project: 'behavior-single-module-blocked',
       repo_root: repoRoot,
       paths: {
@@ -618,18 +802,11 @@ export async function registerPipelineArea({
         modules_dir: modulesDir,
       },
       telemetry: { enabled: true },
-      _pluginRegistry: registry,
+      pluginRegistry: registry,
       _runId: 'run-single-module-blocked-1',
       run_id: 'run-single-module-blocked-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-      _testOverrides: {
-        pipelineRunner: {
-          discord: async (...args) => { discordCalls.push(args); },
-          injectNeedsNova: async () => { injectNeedsNovaCalls++; },
-          writeSummary: () => {},
-        },
-      },
-    };
+          };
   
     const progress = {
       execution_order: ['01'],
@@ -645,7 +822,7 @@ export async function registerPipelineArea({
       reason: 'Repeated test crashes exhausted the retry budget',
     });
 
-    const result = await pipelineRunnerMod.runPipeline(config, progress, { module: '01' });
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps6, module: '01' }, { deps: configDeps6 });
     await flushAsync();
   
     assert.equal(result, 20);
@@ -656,20 +833,20 @@ export async function registerPipelineArea({
     assert.deepEqual(events.map((event) => event.type), ['pipeline.started', 'error.escalation', 'pipeline.halted', 'summary.started', 'summary.completed']);
     assert.equal(events[1].module_id, '01');
     assert.equal(events[1].gate_id, null);
-    assert.equal(events[1].session_key, sessionKey);
-    assert.equal(events[1].attempt, 3);
-    assert.equal(events[1].dispatch_id, 'buster-dispatch-01-attempt-3');
-    assert.equal(events[1].gateway_label, 'buster-dispatch-01-attempt-3');
+    assert.equal(events[1].session_key, null);
+    assert.equal(events[1].attempt, null);
+    assert.equal(events[1].dispatch_id, null);
+    assert.equal(events[1].gateway_label, null);
     assert.equal(events[1].fail_count, 3);
     assert.equal(events[1].last_failure, 'Repeated test crashes exhausted the retry budget');
     assert.equal(events[1].action, 'BLOCKED');
     assert.equal(events[1].exit_code, 20);
     assert.equal(events[2].reason, 'BLOCKED');
     assert.equal(events[2].module_id, '01');
-    assert.equal(events[2].session_key, sessionKey);
-    assert.equal(events[2].attempt, 3);
-    assert.equal(events[2].dispatch_id, 'buster-dispatch-01-attempt-3');
-    assert.equal(events[2].gateway_label, 'buster-dispatch-01-attempt-3');
+    assert.equal(events[2].session_key, null);
+    assert.equal(events[2].attempt, null);
+    assert.equal(events[2].dispatch_id, null);
+    assert.equal(events[2].gateway_label, null);
     assert.equal(events[2].exit_code, 20);
     assert.equal(events[3].summary_type, 'pipeline');
     assert.equal(events[3].exit_code, 20);
@@ -681,21 +858,21 @@ export async function registerPipelineArea({
   
     const haltDiscordCall = discordCalls.find(([, , title]) => title === 'Pipeline halted: behavior-single-module-blocked');
     assert.equal(Boolean(haltDiscordCall), true);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Attempt' && field.value === '3'), true);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Dispatch' && field.value === 'buster-dispatch-01-attempt-3'), true);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Session' && field.value === sessionKey), true);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Attempt' && field.value === '3'), false);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Dispatch' && field.value === 'buster-dispatch-01-attempt-3'), false);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Session' && field.value === sessionKey), false);
     assert.equal(haltDiscordCall[4].some((field) => field.name === 'Reason' && field.value === 'Repeated test crashes exhausted the retry budget'), true);
   });
   
-  await record('full-pipeline blocked runs emit halt and escalation correlation from persisted module state', async () => {
+  await record('full-pipeline blocked runs keep persisted module identity as provenance only', async () => {
     const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(pipelineRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
-    const pathsMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/paths.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+    const pathsMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/paths.ts');
     const registry = withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot));
   
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-full-pipeline-blocked-'));
@@ -707,19 +884,7 @@ export async function registerPipelineArea({
     const discordCalls = [];
     const outputs = [];
     const sessionKey = 'agent:main:acp:full-pipeline-blocked-01';
-    const config = {
-      project: 'behavior-full-pipeline-blocked',
-      repo_root: repoRoot,
-      paths: {
-        swarm_dir: swarmDir,
-        modules_dir: modulesDir,
-      },
-      telemetry: { enabled: true },
-      _pluginRegistry: registry,
-      _runId: 'run-full-pipeline-blocked-1',
-      run_id: 'run-full-pipeline-blocked-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps7 = {
         pipelineRunner: {
           discord: async (...args) => { discordCalls.push(args); },
           output: (payload) => { outputs.push(payload); },
@@ -731,8 +896,20 @@ export async function registerPipelineArea({
             outputs: { status: 'ok' },
           }),
         },
+      };
+const config = {
+      project: 'behavior-full-pipeline-blocked',
+      repo_root: repoRoot,
+      paths: {
+        swarm_dir: swarmDir,
+        modules_dir: modulesDir,
       },
-    };
+      telemetry: { enabled: true },
+      pluginRegistry: registry,
+      _runId: 'run-full-pipeline-blocked-1',
+      run_id: 'run-full-pipeline-blocked-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+          };
   
     const progress = {
       execution_order: ['01'],
@@ -748,11 +925,18 @@ export async function registerPipelineArea({
       reason: 'Repeated test crashes exhausted the retry budget',
     });
 
-    const result = await pipelineRunnerMod.runPipeline(config, progress, { skipArchValidation: true });
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps7, skipArchValidation: true }, { deps: configDeps7 });
     await flushAsync();
   
     assert.equal(result, 20);
-    assert.equal(outputs.some((payload) => payload?.exit === 20 && payload?.session_key === sessionKey), true);
+    const blockedOutput = outputs.find((payload) => payload?.exit === 20);
+    assert(blockedOutput, 'missing blocked output payload');
+    assert.equal(blockedOutput.session_key, null);
+    assert.equal(blockedOutput.dispatch_id, null);
+    assert.equal(blockedOutput.gateway_label, null);
+    assert.equal(blockedOutput.attempt, null);
+    assert.equal(blockedOutput.correlation_provenance?.session_key, sessionKey);
+    assert.equal(blockedOutput.correlation_provenance?.dispatch_id, 'buster-dispatch-full-01-attempt-3');
   
     const streamKey = 'pipeline:telemetry:behavior-full-pipeline-blocked:run-full-pipeline-blocked-1';
     const events = xaddEvents(streamKey);
@@ -762,18 +946,18 @@ export async function registerPipelineArea({
     assert(escalationEvent, 'missing full-pipeline blocked escalation event');
     assert(haltedEvent, 'missing full-pipeline blocked halt event');
     assert.equal(escalationEvent.module_id, '01');
-    assert.equal(escalationEvent.session_key, sessionKey);
-    assert.equal(escalationEvent.attempt, 3);
-    assert.equal(escalationEvent.dispatch_id, 'buster-dispatch-full-01-attempt-3');
-    assert.equal(escalationEvent.gateway_label, 'buster-dispatch-full-01-attempt-3');
+    assert.equal(escalationEvent.session_key, null);
+    assert.equal(escalationEvent.attempt, null);
+    assert.equal(escalationEvent.dispatch_id, null);
+    assert.equal(escalationEvent.gateway_label, null);
     assert.equal(escalationEvent.fail_count, 3);
     assert.equal(escalationEvent.last_failure, 'Repeated test crashes exhausted the retry budget');
     assert.equal(escalationEvent.action, 'BLOCKED');
     assert.equal(haltedEvent.module_id, '01');
-    assert.equal(haltedEvent.session_key, sessionKey);
-    assert.equal(haltedEvent.attempt, 3);
-    assert.equal(haltedEvent.dispatch_id, 'buster-dispatch-full-01-attempt-3');
-    assert.equal(haltedEvent.gateway_label, 'buster-dispatch-full-01-attempt-3');
+    assert.equal(haltedEvent.session_key, null);
+    assert.equal(haltedEvent.attempt, null);
+    assert.equal(haltedEvent.dispatch_id, null);
+    assert.equal(haltedEvent.gateway_label, null);
     assert.equal(haltedEvent.reason, 'BLOCKED');
     assert.equal(haltedEvent.exit_code, 20);
     const summaryStartedEvent = events.find((event) => event.type === 'summary.started');
@@ -790,9 +974,130 @@ export async function registerPipelineArea({
   
     const haltDiscordCall = discordCalls.find(([, , title]) => title === 'Pipeline halted: behavior-full-pipeline-blocked');
     assert.equal(Boolean(haltDiscordCall), true);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Attempt' && field.value === '3'), true);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Dispatch' && field.value === 'buster-dispatch-full-01-attempt-3'), true);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Session' && field.value === sessionKey), true);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Attempt' && field.value === '3'), false);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Dispatch' && field.value === 'buster-dispatch-full-01-attempt-3'), false);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Session' && field.value === sessionKey), false);
+  });
+
+  await record('fresh full-pipeline EXIT_BLOCKED uses the same terminal halt finalizer as resumed BLOCKED state', async () => {
+    const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    installFakeRedis(pipelineRuntimeRoot);
+    globalThis.__fakeRedisCalls = [];
+    globalThis.__fakeRedisCounters = Object.create(null);
+
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+    const registry = await buildBuiltInRegistry(pipelineRuntimeRoot);
+    const generatorCalls = [];
+    const projectSummaryStage = registry.stageOwners['generator.run']['generator:project_summary'];
+    const testRegistry = {
+      ...registry,
+      stageOwners: {
+        ...registry.stageOwners,
+        'generator.run': {
+          ...registry.stageOwners['generator.run'],
+          'generator:project_summary': {
+            ...projectSummaryStage,
+            implementation: {
+              run: async ({ input }) => {
+                generatorCalls.push({ stageId: 'generator:project_summary', input });
+                return { schemaVersion: 'v1', producerKind: 'generator', producerType: 'project_summary', outputs: { status: 'ok' } };
+              },
+            },
+          },
+        },
+      },
+    };
+
+    const outputs = [];
+    const injectNeedsNovaCalls = [];
+    const sessionKey = 'agent:main:acp:fresh-blocked-01';
+    const dispatchId = 'dispatch-fresh-blocked-01-attempt-3';
+        const configDeps8 = {
+        pipelineRunner: {
+          discord: async () => {},
+          output: (payload) => { outputs.push(payload); },
+          writeSummary: () => {},
+          injectNeedsNova: async (...args) => { injectNeedsNovaCalls.push(args); },
+          runModule: async () => ({
+            schemaVersion: 'v1',
+            kind: 'pipeline_step_result',
+            stepType: 'module',
+            stepId: '01',
+            nextAction: 'halt',
+            outcome: 'blocked',
+            issueType: 'policy',
+            diagnostics: {
+              summary: 'Buster crash retries exhausted after 2 attempts',
+              findings: [],
+              metadata: {
+                reason: 'Buster crash retries exhausted after 2 attempts',
+                fail_count: 3,
+              },
+              typed: {},
+            },
+            correlation: {
+              run_id: 'run-fresh-blocked-finalizer-1',
+              module_id: '01',
+              attempt: 3,
+              dispatch_id: dispatchId,
+              gateway_label: dispatchId,
+              session_key: sessionKey,
+            },
+            terminal: {
+              exitCode: 20,
+              exitLabel: 'BLOCKED',
+            },
+          }),
+        },
+      };
+const config = {
+      project: 'behavior-fresh-blocked-finalizer',
+      paths: {
+        swarm_dir: '/tmp/behavior-fresh-blocked-finalizer/swarm',
+        modules_dir: '/tmp/behavior-fresh-blocked-finalizer/modules',
+      },
+      telemetry: { enabled: true },
+      pluginRegistry: testRegistry,
+      _runId: 'run-fresh-blocked-finalizer-1',
+      run_id: 'run-fresh-blocked-finalizer-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-26T00:00:00.000Z'),
+          };
+
+    const progress = {
+      execution_order: ['01'],
+      modules: { '01': { title: 'Scaffold', dir: '01-scaffold' } },
+      gates: {},
+    };
+
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps8, skipArchValidation: true }, { deps: configDeps8 });
+    await flushAsync();
+
+    assert.equal(result, 20);
+    assert.equal(injectNeedsNovaCalls.length, 0, 'fresh BLOCKED should not inject NEEDS_NOVA');
+    assert.equal(outputs.length, 1);
+    assert.equal(outputs[0].exit, 20);
+    assert.equal(outputs[0].attempt, 3);
+    assert.equal(outputs[0].dispatch_id, dispatchId);
+    assert.equal(outputs[0].session_key, sessionKey);
+
+    const streamKey = 'pipeline:telemetry:behavior-fresh-blocked-finalizer:run-fresh-blocked-finalizer-1';
+    const events = xaddEvents(streamKey);
+    assert.deepEqual(events.map((event) => event.type), ['pipeline.started', 'error.escalation', 'pipeline.halted', 'summary.started', 'summary.completed']);
+    assert.equal(events[1].module_id, '01');
+    assert.equal(events[1].action, 'BLOCKED');
+    assert.equal(events[1].exit_code, 20);
+    assert.equal(events[1].attempt, 3);
+    assert.equal(events[1].dispatch_id, dispatchId);
+    assert.equal(events[1].session_key, sessionKey);
+    assert.equal(events[2].reason, 'BLOCKED');
+    assert.equal(events[2].exit_code, 20);
+    assert.equal(events[3].exit_reason, 'BLOCKED:01');
+    assert.equal(events[4].exit_reason, 'BLOCKED:01');
+    assert.deepEqual(generatorCalls.map((call) => call.stageId), ['generator:project_summary']);
+    assert.equal(generatorCalls[0].input.executionContext.exitCode, 20);
+    assert.equal(generatorCalls[0].input.executionContext.exitReason, 'BLOCKED:01');
+    assert.equal(generatorCalls[0].input.ids.moduleId, '01');
   });
   
   await record('full pipeline missing gate registries fail authoritatively instead of crashing before dispatch telemetry', async () => {
@@ -801,29 +1106,17 @@ export async function registerPipelineArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(pipelineRuntimeRoot);
     const discordCalls = [];
     const outputs = [];
-    const logDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-gate-registry-pipeline-'));
+    const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-gate-registry-pipeline-'));
+    const logDir = path.join(swarmDir, 'logs');
     const runLogDir = path.join(logDir, 'pipeline', 'runs', 'run-gate-registry-pipeline-1');
     fs.mkdirSync(runLogDir, { recursive: true });
   
-    const config = {
-      project: 'behavior-gate-registry-pipeline',
-      paths: {
-        swarm_dir: '/tmp/behavior-gate-registry-pipeline/.swarm',
-        modules_dir: '/tmp/behavior-gate-registry-pipeline/modules',
-      },
-      telemetry: { enabled: true },
-      _pluginRegistry: registry,
-      _logDir: logDir,
-      _runLogDir: runLogDir,
-      _runId: 'run-gate-registry-pipeline-1',
-      run_id: 'run-gate-registry-pipeline-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps9 = {
         pipelineRunner: {
           discord: async (...args) => { discordCalls.push(args); },
           output: (payload) => { outputs.push(payload); },
@@ -834,15 +1127,26 @@ export async function registerPipelineArea({
         gateRunner: {
           discord: async (...args) => { discordCalls.push(args); },
         },
+      };
+const config = {
+      project: 'behavior-gate-registry-pipeline',
+      paths: {
+        swarm_dir: swarmDir,
+        modules_dir: path.join(swarmDir, 'modules'),
       },
-    };
+      telemetry: { enabled: true },
+      pluginRegistry: registry,
+      _runId: 'run-gate-registry-pipeline-1',
+      run_id: 'run-gate-registry-pipeline-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+          };
   
     const progress = {
       execution_order: ['gate:missing'],
       modules: {},
     };
   
-    const result = await pipelineRunnerMod.runPipeline(config, progress, { skipArchValidation: true });
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps9, skipArchValidation: true }, { deps: configDeps9 });
     await flushAsync();
   
     assert.equal(result, 1);
@@ -884,8 +1188,8 @@ export async function registerPipelineArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot));
     const discordCalls = [];
     const outputs = [];
@@ -895,19 +1199,7 @@ export async function registerPipelineArea({
     const swarmDir = `${root}/.swarm`;
     const logDir = `${swarmDir}/logs`;
   
-    const config = {
-      project: 'behavior-pipeline-gate-type-stop',
-      paths: {
-        swarm_dir: swarmDir,
-        modules_dir: `${root}/modules`,
-      },
-      telemetry: { enabled: true },
-      _pluginRegistry: registry,
-      _runId: 'run-pipeline-gate-type-stop-1',
-      run_id: 'run-pipeline-gate-type-stop-1',
-      _logDir: logDir,
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps10 = {
         pipelineRunner: {
           discord: async (...args) => { discordCalls.push(args); },
           output: (payload) => { outputs.push(payload); },
@@ -915,17 +1207,42 @@ export async function registerPipelineArea({
           syncControlFiles: async () => {},
           writeSummary: () => {},
           injectNeedsNova: async (...args) => { injectNeedsNovaCalls.push(args); },
-          runGate: async () => ({
+          runGate: async () => makeStepResult({
+            stepType: 'gate',
+            stepId: 'review',
             exit: 10,
             reason: 'Review gate needs Nova guidance',
-            fail_count: 3,
-            attempt: 2,
-            dispatch_id: 'review-dispatch-2',
-            session_key: sessionKey,
+            projection: {
+              gate: 'review',
+              gate_id: 'review',
+              gate_type: 'review',
+              fail_count: 3,
+              attempt: 2,
+              dispatch_id: 'review-dispatch-2',
+              session_key: sessionKey,
+            },
+            correlation: {
+              gate_id: 'review',
+              gate_type: 'review',
+              attempt: 2,
+              dispatch_id: 'review-dispatch-2',
+              session_key: sessionKey,
+            },
           }),
         },
+      };
+const config = {
+      project: 'behavior-pipeline-gate-type-stop',
+      paths: {
+        swarm_dir: swarmDir,
+        modules_dir: `${root}/modules`,
       },
-    };
+      telemetry: { enabled: true },
+      pluginRegistry: registry,
+      _runId: 'run-pipeline-gate-type-stop-1',
+      run_id: 'run-pipeline-gate-type-stop-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+          };
   
     const progress = {
       execution_order: ['gate:review'],
@@ -938,7 +1255,7 @@ export async function registerPipelineArea({
       },
     };
   
-    const result = await pipelineRunnerMod.runPipeline(config, progress, { skipArchValidation: true });
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps10, skipArchValidation: true }, { deps: configDeps10 });
     await flushAsync();
   
     assert.equal(result, 10);
@@ -957,7 +1274,7 @@ export async function registerPipelineArea({
     assert.equal(events[1].session_key, sessionKey);
     assert.equal(events[1].attempt, 2);
     assert.equal(events[1].dispatch_id, 'review-dispatch-2');
-    assert.equal(events[1].gateway_label, 'review-dispatch-2');
+    assert.equal(events[1].gateway_label, null);
     assert.equal(events[1].fail_count, 3);
     assert.equal(events[1].last_failure, 'Review gate needs Nova guidance');
     assert.equal(events[1].action, 'NEEDS_NOVA');
@@ -968,7 +1285,7 @@ export async function registerPipelineArea({
     assert.equal(events[2].session_key, sessionKey);
     assert.equal(events[2].attempt, 2);
     assert.equal(events[2].dispatch_id, 'review-dispatch-2');
-    assert.equal(events[2].gateway_label, 'review-dispatch-2');
+    assert.equal(events[2].gateway_label, null);
     assert.equal(events[2].reason, 'NEEDS_NOVA');
     assert.equal(events[2].exit_code, 10);
     assert.equal(events[3].summary_type, 'pipeline');
@@ -994,8 +1311,8 @@ export async function registerPipelineArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot));
 
     const discordCalls = [];
@@ -1007,19 +1324,7 @@ export async function registerPipelineArea({
     const swarmDir = `${root}/swarm`;
     const logDir = `${swarmDir}/logs`;
 
-    const config = {
-      project: 'behavior-pipeline-gate-rate-limited',
-      paths: {
-        swarm_dir: swarmDir,
-        modules_dir: `${root}/modules`,
-      },
-      telemetry: { enabled: true },
-      _pluginRegistry: registry,
-      _runId: 'run-pipeline-gate-rate-limited-1',
-      run_id: 'run-pipeline-gate-rate-limited-1',
-      _logDir: logDir,
-      _runStats: runtimeCoreMod.createRunStats('2026-04-16T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps11 = {
         pipelineRunner: {
           discord: async (...args) => { discordCalls.push(args); },
           output: (payload) => { outputs.push(payload); },
@@ -1027,19 +1332,45 @@ export async function registerPipelineArea({
           syncControlFiles: async () => {},
           writeSummary: () => {},
           injectNeedsNova: async (...args) => { injectNeedsNovaCalls.push(args); },
-          runGate: async () => ({
+          runGate: async () => makeStepResult({
+            stepType: 'gate',
+            stepId: 'review',
             exit: 40,
             reason: 'Review gate exceeded max rate limit pauses',
-            attempt: 2,
-            dispatch_id: dispatchId,
-            gateway_label: dispatchId,
-            session_key: sessionKey,
-            rate_limit_exhausted: true,
-            max_rate_limit_pauses: 2,
+            projection: {
+              gate: 'review',
+              gate_id: 'review',
+              gate_type: 'review',
+              attempt: 2,
+              dispatch_id: dispatchId,
+              gateway_label: dispatchId,
+              session_key: sessionKey,
+              rate_limit_exhausted: true,
+              max_rate_limit_pauses: 2,
+            },
+            correlation: {
+              gate_id: 'review',
+              gate_type: 'review',
+              attempt: 2,
+              dispatch_id: dispatchId,
+              gateway_label: dispatchId,
+              session_key: sessionKey,
+            },
           }),
         },
+      };
+const config = {
+      project: 'behavior-pipeline-gate-rate-limited',
+      paths: {
+        swarm_dir: swarmDir,
+        modules_dir: `${root}/modules`,
       },
-    };
+      telemetry: { enabled: true },
+      pluginRegistry: registry,
+      _runId: 'run-pipeline-gate-rate-limited-1',
+      run_id: 'run-pipeline-gate-rate-limited-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-16T00:00:00.000Z'),
+          };
 
     const progress = {
       execution_order: ['gate:review'],
@@ -1049,7 +1380,7 @@ export async function registerPipelineArea({
       },
     };
 
-    const result = await pipelineRunnerMod.runPipeline(config, progress, { skipArchValidation: true });
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps11, skipArchValidation: true }, { deps: configDeps11 });
     await flushAsync();
 
     assert.equal(result, 40);
@@ -1074,6 +1405,8 @@ export async function registerPipelineArea({
     assert.equal(events[1].session_key, sessionKey);
     assert.equal(events[1].reason, 'RATE_LIMITED');
     assert.equal(events[1].exit_code, 40);
+    assert.equal(events[1].rate_limit_exhausted, true);
+    assert.equal(events[1].max_rate_limit_pauses, 2);
     assert.equal(events[2].summary_type, 'pipeline');
     assert.equal(events[2].exit_code, 40);
     assert.equal(events[2].exit_reason, 'RATE_LIMITED:review');
@@ -1088,8 +1421,9 @@ export async function registerPipelineArea({
     assert.equal(haltDiscordCall[4].some((field) => field.name === 'Gate Type' && field.value === 'review'), true);
     assert.equal(haltDiscordCall[4].some((field) => field.name === 'Attempt' && field.value === '2'), true);
     assert.equal(haltDiscordCall[4].some((field) => field.name === 'Dispatch' && field.value === dispatchId), true);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Label' && field.value === dispatchId), true);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Gateway Label' && field.value === dispatchId), true);
     assert.equal(haltDiscordCall[4].some((field) => field.name === 'Session' && field.value === sessionKey), true);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Rate Limit Pauses' && field.value === '2'), true);
   });
   
   await record('architecture validation blocks emit step-scoped pipeline halt and escalation telemetry', async () => {
@@ -1098,8 +1432,8 @@ export async function registerPipelineArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
   
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(pipelineRuntimeRoot);
     const validatorCalls = [];
     const testRegistry = withStubbedGeneratorStages({
@@ -1136,18 +1470,7 @@ export async function registerPipelineArea({
       },
     });
   
-    const config = {
-      project: 'behavior-arch-validation-block',
-      paths: {
-        swarm_dir: '/tmp/behavior-arch-validation-block/swarm',
-        modules_dir: '/tmp/behavior-arch-validation-block/modules',
-      },
-      telemetry: { enabled: true },
-      _runId: 'run-arch-validation-block-1',
-      run_id: 'run-arch-validation-block-1',
-      _pluginRegistry: testRegistry,
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps12 = {
         pipelineRunner: {
           discord: async () => {},
           output: () => {},
@@ -1158,8 +1481,19 @@ export async function registerPipelineArea({
             throw new Error('fallback arch validator should not run when validator stage owner is registered');
           },
         },
+      };
+const config = {
+      project: 'behavior-arch-validation-block',
+      paths: {
+        swarm_dir: '/tmp/behavior-arch-validation-block/swarm',
+        modules_dir: '/tmp/behavior-arch-validation-block/modules',
       },
-    };
+      telemetry: { enabled: true },
+      _runId: 'run-arch-validation-block-1',
+      run_id: 'run-arch-validation-block-1',
+      pluginRegistry: testRegistry,
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+          };
   
     const progress = {
       execution_order: ['01'],
@@ -1167,7 +1501,7 @@ export async function registerPipelineArea({
       gates: {},
     };
   
-    const result = await pipelineRunnerMod.runPipeline(config, progress);
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps12 });
     await flushAsync();
   
     assert.equal(result, 20);
@@ -1202,14 +1536,312 @@ export async function registerPipelineArea({
     assert.equal(events[4].exit_reason, 'ARCH_VALIDATION_BLOCKED');
   });
 
+  await record('mandatory full_lint runs before review gate dispatch', async () => {
+    const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    installFakeRedis(pipelineRuntimeRoot);
+    globalThis.__fakeRedisCalls = [];
+    globalThis.__fakeRedisCounters = Object.create(null);
+
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+    const registry = withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot));
+    const validatorCalls = [];
+    const testRegistry = {
+      ...registry,
+      stageOwners: {
+        ...registry.stageOwners,
+        'validator.run': {
+          ...registry.stageOwners['validator.run'],
+          'validator:full_lint': {
+            ...registry.stageOwners['validator.run']['validator:full_lint'],
+            implementation: {
+              run: async ({ input }) => {
+                validatorCalls.push(input);
+                return {
+                  schemaVersion: 'v1',
+                  producerKind: 'validator',
+                  producerType: 'full_lint',
+                  nextAction: 'pass',
+                  diagnostics: {
+                    summary: 'Full lint passed',
+                    typed: { validator: { outcomeClass: 'passed' } },
+                  },
+                };
+              },
+            },
+          },
+        },
+      },
+    };
+
+    const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-full-lint-before-review-'));
+    const swarmDir = path.join(repoRoot, '.swarm');
+    fs.mkdirSync(swarmDir, { recursive: true });
+        const configDeps13 = {
+        pipelineRunner: {
+          discord: async () => {},
+          output: () => {},
+          releaseGateFiles: async () => {},
+          syncControlFiles: async () => {},
+          writeSummary: () => {},
+          runGate: async (_config, _progress, gateId) => {
+            assert.equal(validatorCalls.length, 1, 'review gate must not dispatch before full_lint passes');
+            fs.writeFileSync(path.join(swarmDir, 'review-output.json'), JSON.stringify({ status: 'GO' }));
+            return makeStepResult({
+              stepType: 'gate',
+              stepId: gateId,
+              exit: 0,
+              status: 'PASS',
+              projection: { gate: gateId, gate_id: gateId, gate_type: 'review' },
+              correlation: { gate_id: gateId, gate_type: 'review' },
+            });
+          },
+        },
+      };
+const config = {
+      project: 'behavior-full-lint-before-review',
+      paths: { swarm_dir: swarmDir, modules_dir: path.join(repoRoot, 'modules') },
+      telemetry: { enabled: true },
+      _runId: 'run-full-lint-before-review-1',
+      run_id: 'run-full-lint-before-review-1',
+      pluginRegistry: testRegistry,
+      _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+          };
+
+    const progress = {
+      execution_order: ['gate:review'],
+      modules: {},
+      gates: {
+        review: {
+          type: 'review',
+          title: 'Review Gate',
+          output_file: 'review-output.json',
+          lint_tier: 'full',
+        },
+      },
+    };
+
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps13, skipArchValidation: true }, { deps: configDeps13 });
+    await flushAsync();
+
+    assert.equal(result, 0);
+    assert.equal(validatorCalls.length, 1);
+    assert.equal(validatorCalls[0].ids.stageId, 'validator:full_lint');
+    assert.equal(validatorCalls[0].ids.scope, 'pipeline');
+    assert.equal(validatorCalls[0].validator.config.tier, 'full');
+  });
+
+  await record('mandatory full_lint request_fix halts before review gate dispatch', async () => {
+    const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    installFakeRedis(pipelineRuntimeRoot);
+    globalThis.__fakeRedisCalls = [];
+    globalThis.__fakeRedisCounters = Object.create(null);
+
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+    const registry = withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot));
+    const testRegistry = {
+      ...registry,
+      stageOwners: {
+        ...registry.stageOwners,
+        'validator.run': {
+          ...registry.stageOwners['validator.run'],
+          'validator:full_lint': {
+            ...registry.stageOwners['validator.run']['validator:full_lint'],
+            implementation: {
+              run: async () => ({
+                schemaVersion: 'v1',
+                producerKind: 'validator',
+                producerType: 'full_lint',
+                nextAction: 'request_fix',
+                issueType: 'code',
+                diagnostics: {
+                  summary: 'Full lint found 2 error(s)',
+                  findings: [{ code: 'lint.error', severity: 'error', message: 'fix lint' }],
+                  typed: { validator: { outcomeClass: 'fix_requested' } },
+                },
+              }),
+            },
+          },
+        },
+      },
+    };
+
+    const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-full-lint-request-fix-'));
+        const configDeps14 = {
+        pipelineRunner: {
+          discord: async () => {},
+          output: () => {},
+          injectNeedsNova: async () => {},
+          releaseGateFiles: async () => {},
+          syncControlFiles: async () => {},
+          writeSummary: () => {},
+          runGate: async () => {
+            throw new Error('review gate should not dispatch when mandatory full_lint requests a fix');
+          },
+        },
+      };
+const config = {
+      project: 'behavior-full-lint-request-fix',
+      paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: path.join(repoRoot, 'modules') },
+      telemetry: { enabled: true },
+      _runId: 'run-full-lint-request-fix-1',
+      run_id: 'run-full-lint-request-fix-1',
+      pluginRegistry: testRegistry,
+      _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+          };
+
+    const progress = {
+      execution_order: ['gate:review'],
+      modules: {},
+      gates: { review: { type: 'review', title: 'Review Gate', output_file: 'review-output.json' } },
+    };
+
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps14, skipArchValidation: true }, { deps: configDeps14 });
+    await flushAsync();
+
+    assert.equal(result, 10);
+    const streamKey = 'pipeline:telemetry:behavior-full-lint-request-fix:run-full-lint-request-fix-1';
+    const events = xaddEvents(streamKey);
+    const halt = events.find((event) => event.type === 'pipeline.halted');
+    assert.equal(halt.step_type, 'validator');
+    assert.equal(halt.exit_code, 10);
+    assert.equal(halt.reason, 'NEEDS_NOVA');
+  });
+
+  await record('progress.json can schedule full_lint after a module', async () => {
+    const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    installFakeRedis(pipelineRuntimeRoot);
+    globalThis.__fakeRedisCalls = [];
+    globalThis.__fakeRedisCounters = Object.create(null);
+
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+    const statusStoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
+    const lifecycleStateMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/lifecycle-state.ts');
+    const registry = withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot));
+    const validatorCalls = [];
+    let moduleRuns = 0;
+    const testRegistry = {
+      ...registry,
+      stageOwners: {
+        ...registry.stageOwners,
+        'validator.run': {
+          ...registry.stageOwners['validator.run'],
+          'validator:full_lint': {
+            ...registry.stageOwners['validator.run']['validator:full_lint'],
+            implementation: {
+              run: async ({ input }) => {
+                validatorCalls.push(input);
+                return {
+                  schemaVersion: 'v1',
+                  producerKind: 'validator',
+                  producerType: 'full_lint',
+                  nextAction: 'pass',
+                  diagnostics: {
+                    summary: 'Scheduled full lint passed',
+                    typed: { validator: { outcomeClass: 'passed' } },
+                  },
+                };
+              },
+            },
+          },
+        },
+      },
+    };
+
+    const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-scheduled-full-lint-'));
+        const configDeps15 = {
+        pipelineRunner: {
+          discord: async () => {},
+          output: () => {},
+          releaseGateFiles: async () => {},
+          syncControlFiles: async () => {},
+          writeSummary: () => {},
+          runModule: async (configArg) => {
+            moduleRuns += 1;
+            if (moduleRuns > 1) throw new Error('module should not rerun after canonical PASS before scheduled full_lint');
+            const status = statusStoreMod.loadStatus(configArg, '01-scaffold')
+              || statusStoreMod.initStatus('01', { title: 'Scaffold' });
+            if (!status.current_phase) {
+              const startTransition = lifecycleStateMod.startModulePhase(status, 'forge', 'Scheduled full_lint verifier started module', {
+                now: '2026-04-10T00:01:00.000Z',
+              });
+              statusStoreMod.saveStatus(configArg, '01-scaffold', status, startTransition);
+            }
+            const passTransition = lifecycleStateMod.transitionModuleStatus(status, 'PASS', {
+              agent: 'forge',
+              note: 'Scheduled full_lint verifier completed module',
+              now: '2026-04-10T00:02:00.000Z',
+              completedAt: '2026-04-10T00:02:00.000Z',
+            });
+            statusStoreMod.saveStatus(configArg, '01-scaffold', status, passTransition);
+            return makeStepResult({
+              stepId: '01',
+              exit: 0,
+              reason: 'Module passed before scheduled full_lint',
+              status: 'PASS',
+              correlation: { module_id: '01', attempt: 1, dispatch_id: 'dispatch-scheduled-full-lint-01-attempt-1' },
+            });
+          },
+        },
+      };
+const config = {
+      project: 'behavior-scheduled-full-lint',
+      paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: path.join(repoRoot, 'modules') },
+      telemetry: { enabled: true },
+      _runId: 'run-scheduled-full-lint-1',
+      run_id: 'run-scheduled-full-lint-1',
+      pluginRegistry: testRegistry,
+      _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+          };
+
+    const progress = {
+      execution_order: ['01'],
+      modules: { '01': { title: 'Scaffold', dir: '01-scaffold' } },
+      gates: {},
+      validators: {
+        schedule: [{ stage: 'validator:full_lint', after: 'module:01', scope: 'pipeline', mode: 'mandatory', key: 'lint-after-01' }],
+      },
+    };
+
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps15, skipArchValidation: true }, { deps: configDeps15 });
+    await flushAsync();
+
+    assert.equal(result, 0);
+    assert.equal(moduleRuns, 1);
+    assert.equal(validatorCalls.length, 1);
+    assert.equal(validatorCalls[0].ids.stageId, 'validator:full_lint');
+    assert.equal(validatorCalls[0].ids.scope, 'pipeline');
+    assert.equal(validatorCalls[0].executionContext.scheduleKey, 'lint-after-01');
+    assert.equal(validatorCalls[0].executionContext.scheduleReason, 'progress_json_after_module:01');
+
+    const completionPath = path.join(path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId || config.run_id || 'run-unknown'), 'scheduled-validator-completions.json');
+    assert.equal(fs.existsSync(completionPath), true, 'scheduled validator completion should be durable');
+    const completionState = JSON.parse(fs.readFileSync(completionPath, 'utf8'));
+    assert.equal(completionState.completed.some((entry) => entry.key === 'lint-after-01'), true);
+
+    const resumedConfig = {
+      ...config,
+      _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:10:00.000Z'),
+    };
+    delete resumedConfig._validatorRunState;
+    const resumedResult = await pipelineRunnerMod.runPipeline(resumedConfig, progress, { skipArchValidation: true });
+    await flushAsync();
+
+    assert.equal(resumedResult, 0);
+    assert.equal(moduleRuns, 1, 'fresh same-run config should not rerun passed module');
+    assert.equal(validatorCalls.length, 1, 'fresh same-run config should not rerun completed scheduled validator');
+  });
+
   await record('architecture validation runs through validator stage owners and preserves pass semantics', async () => {
     const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(pipelineRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(pipelineRuntimeRoot);
     const validatorCalls = [];
     const testRegistry = withStubbedGeneratorStages({
@@ -1245,18 +1877,7 @@ export async function registerPipelineArea({
       },
     });
 
-    const config = {
-      project: 'behavior-arch-validation-pass',
-      paths: {
-        swarm_dir: '/tmp/behavior-arch-validation-pass/swarm',
-        modules_dir: '/tmp/behavior-arch-validation-pass/modules',
-      },
-      telemetry: { enabled: true },
-      _runId: 'run-arch-validation-pass-1',
-      run_id: 'run-arch-validation-pass-1',
-      _pluginRegistry: testRegistry,
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps16 = {
         pipelineRunner: {
           discord: async () => {},
           output: () => {},
@@ -1267,8 +1888,19 @@ export async function registerPipelineArea({
             throw new Error('fallback arch validator should not run when validator stage owner is registered');
           },
         },
+      };
+const config = {
+      project: 'behavior-arch-validation-pass',
+      paths: {
+        swarm_dir: '/tmp/behavior-arch-validation-pass/swarm',
+        modules_dir: '/tmp/behavior-arch-validation-pass/modules',
       },
-    };
+      telemetry: { enabled: true },
+      _runId: 'run-arch-validation-pass-1',
+      run_id: 'run-arch-validation-pass-1',
+      pluginRegistry: testRegistry,
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+          };
 
     const progress = {
       project: 'behavior-arch-validation-pass',
@@ -1277,7 +1909,7 @@ export async function registerPipelineArea({
       gates: {},
     };
 
-    const result = await pipelineRunnerMod.runPipeline(config, progress);
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps16 });
     await flushAsync();
 
     assert.equal(result, 0);
@@ -1295,8 +1927,8 @@ export async function registerPipelineArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(pipelineRuntimeRoot);
     const testRegistry = withStubbedGeneratorStages({
       ...registry,
@@ -1316,18 +1948,7 @@ export async function registerPipelineArea({
       },
     });
 
-    const config = {
-      project: 'behavior-arch-validation-error',
-      paths: {
-        swarm_dir: '/tmp/behavior-arch-validation-error/swarm',
-        modules_dir: '/tmp/behavior-arch-validation-error/modules',
-      },
-      telemetry: { enabled: true },
-      _runId: 'run-arch-validation-error-1',
-      run_id: 'run-arch-validation-error-1',
-      _pluginRegistry: testRegistry,
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps17 = {
         pipelineRunner: {
           discord: async () => {},
           output: () => {},
@@ -1338,8 +1959,19 @@ export async function registerPipelineArea({
             throw new Error('module runner should not execute after architecture validator failure');
           },
         },
+      };
+const config = {
+      project: 'behavior-arch-validation-error',
+      paths: {
+        swarm_dir: '/tmp/behavior-arch-validation-error/swarm',
+        modules_dir: '/tmp/behavior-arch-validation-error/modules',
       },
-    };
+      telemetry: { enabled: true },
+      _runId: 'run-arch-validation-error-1',
+      run_id: 'run-arch-validation-error-1',
+      pluginRegistry: testRegistry,
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+          };
 
     const progress = {
       project: 'behavior-arch-validation-error',
@@ -1348,7 +1980,7 @@ export async function registerPipelineArea({
       gates: {},
     };
 
-    const result = await pipelineRunnerMod.runPipeline(config, progress);
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps17 });
     await flushAsync();
 
     assert.equal(result, 1);
@@ -1374,30 +2006,13 @@ export async function registerPipelineArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
     const registry = await buildBuiltInRegistry(pipelineRuntimeRoot);
     const discordCalls = [];
     const outputs = [];
 
-    const config = {
-      project: 'behavior-arch-validation-registry-miss',
-      paths: {
-        swarm_dir: '/tmp/behavior-arch-validation-registry-miss/swarm',
-        modules_dir: '/tmp/behavior-arch-validation-registry-miss/modules',
-      },
-      telemetry: { enabled: true },
-      _runId: 'run-arch-validation-registry-miss-1',
-      run_id: 'run-arch-validation-registry-miss-1',
-      _pluginRegistry: {
-        ...registry,
-        stageOwners: {
-          ...registry.stageOwners,
-          'validator.run': {},
-        },
-      },
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps18 = {
         pipelineRunner: {
           discord: async (...args) => { discordCalls.push(args); },
           output: (payload) => { outputs.push(payload); },
@@ -1411,8 +2026,25 @@ export async function registerPipelineArea({
             throw new Error('module runner should not execute after validator registry miss');
           },
         },
+      };
+const config = {
+      project: 'behavior-arch-validation-registry-miss',
+      paths: {
+        swarm_dir: '/tmp/behavior-arch-validation-registry-miss/swarm',
+        modules_dir: '/tmp/behavior-arch-validation-registry-miss/modules',
       },
-    };
+      telemetry: { enabled: true },
+      _runId: 'run-arch-validation-registry-miss-1',
+      run_id: 'run-arch-validation-registry-miss-1',
+      pluginRegistry: {
+        ...registry,
+        stageOwners: {
+          ...registry.stageOwners,
+          'validator.run': {},
+        },
+      },
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+          };
 
     const progress = {
       project: 'behavior-arch-validation-registry-miss',
@@ -1421,7 +2053,7 @@ export async function registerPipelineArea({
       gates: {},
     };
 
-    const result = await pipelineRunnerMod.runPipeline(config, progress);
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps18 });
     await flushAsync();
 
     assert.equal(result, 1);
@@ -1453,10 +2085,10 @@ export async function registerPipelineArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
-    const statusStoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/services/status-store.js');
-    const lifecycleStateMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/lifecycle-state.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+    const statusStoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
+    const lifecycleStateMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/lifecycle-state.ts');
     const registry = await buildBuiltInRegistry(pipelineRuntimeRoot);
     const validatorCalls = [];
     const testRegistry = withStubbedGeneratorStages({
@@ -1492,7 +2124,16 @@ export async function registerPipelineArea({
       },
     });
 
-    const beforeWorkConfig = {
+        const beforeWorkConfigDeps = {
+        pipelineRunner: {
+          discord: async () => {},
+          output: () => {},
+          releaseGateFiles: async () => {},
+          syncControlFiles: async () => {},
+          writeSummary: () => {},
+        },
+      };
+const beforeWorkConfig = {
       project: 'behavior-arch-validation-resume-before-work',
       paths: {
         swarm_dir: '/tmp/behavior-arch-validation-resume-before-work/swarm',
@@ -1501,18 +2142,9 @@ export async function registerPipelineArea({
       telemetry: { enabled: true },
       _runId: 'run-arch-validation-resume-before-work-1',
       run_id: 'run-arch-validation-resume-before-work-1',
-      _pluginRegistry: testRegistry,
+      pluginRegistry: testRegistry,
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
-        pipelineRunner: {
-          discord: async () => {},
-          output: () => {},
-          releaseGateFiles: async () => {},
-          syncControlFiles: async () => {},
-          writeSummary: () => {},
-        },
-      },
-    };
+          };
 
     const beforeWorkProgress = {
       project: 'behavior-arch-validation-resume-before-work',
@@ -1521,7 +2153,7 @@ export async function registerPipelineArea({
       gates: {},
     };
 
-    const beforeWorkResult = await pipelineRunnerMod.runPipeline(beforeWorkConfig, beforeWorkProgress, { resume: true });
+    const beforeWorkResult = await pipelineRunnerMod.runPipeline(beforeWorkConfig, beforeWorkProgress, { resume: true, deps: beforeWorkConfigDeps });
     await flushAsync();
 
     assert.equal(beforeWorkResult, 0);
@@ -1532,18 +2164,7 @@ export async function registerPipelineArea({
     const modulesDir = '/tmp/behavior-arch-validation-resume-after-work/modules';
     fs.mkdirSync(path.join(modulesDir, '01-scaffold'), { recursive: true });
 
-    const afterWorkConfig = {
-      project: 'behavior-arch-validation-resume-after-work',
-      paths: {
-        swarm_dir: '/tmp/behavior-arch-validation-resume-after-work/swarm',
-        modules_dir: '/tmp/behavior-arch-validation-resume-after-work/modules',
-      },
-      telemetry: { enabled: true },
-      _runId: 'run-arch-validation-resume-after-work-1',
-      run_id: 'run-arch-validation-resume-after-work-1',
-      _pluginRegistry: testRegistry,
-      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
-      _testOverrides: {
+        const afterWorkConfigDeps = {
         pipelineRunner: {
           discord: async () => {},
           output: () => {},
@@ -1554,41 +2175,44 @@ export async function registerPipelineArea({
             const status = statusStoreMod.loadStatus(configArg, '01-scaffold')
               || statusStoreMod.initStatus('01', { title: 'Scaffold' });
             if (!status.current_phase) {
-              lifecycleStateMod.startModulePhase(status, 'forge', 'Resume-after-work verifier started module', {
+              const startTransition = lifecycleStateMod.startModulePhase(status, 'forge', 'Resume-after-work verifier started module', {
                 now: '2026-04-09T00:01:30.000Z',
               });
-              statusStoreMod.saveStatus(configArg, '01-scaffold', status);
+              statusStoreMod.saveStatus(configArg, '01-scaffold', status, startTransition);
             }
-            lifecycleStateMod.transitionModuleStatus(status, 'PASS', {
+            const passTransition = lifecycleStateMod.transitionModuleStatus(status, 'PASS', {
               agent: 'forge',
               note: 'Resume-after-work verifier completed module',
               now: '2026-04-09T00:02:00.000Z',
               completedAt: '2026-04-09T00:02:00.000Z',
             });
-            statusStoreMod.saveStatus(configArg, '01-scaffold', status);
-            return { exit: 0 };
+            statusStoreMod.saveStatus(configArg, '01-scaffold', status, passTransition);
+            return makeStepResult({ stepId: '01', exit: 0, reason: 'PASS', status: 'PASS', correlation: { module_id: '01' } });
           },
         },
+      };
+const afterWorkConfig = {
+      project: 'behavior-arch-validation-resume-after-work',
+      paths: {
+        swarm_dir: '/tmp/behavior-arch-validation-resume-after-work/swarm',
+        modules_dir: '/tmp/behavior-arch-validation-resume-after-work/modules',
       },
-    };
+      telemetry: { enabled: true },
+      _runId: 'run-arch-validation-resume-after-work-1',
+      run_id: 'run-arch-validation-resume-after-work-1',
+      pluginRegistry: testRegistry,
+      _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
+          };
 
-    if (!afterWorkConfig._logDir && afterWorkConfig?.paths?.swarm_dir) {
-      afterWorkConfig._logDir = path.join(afterWorkConfig.paths.swarm_dir, 'logs');
+    if (!path.join(afterWorkConfig.paths.swarm_dir, 'logs') && afterWorkConfig?.paths?.swarm_dir) {
+      path.join(afterWorkConfig.paths.swarm_dir, 'logs') = path.join(afterWorkConfig.paths.swarm_dir, 'logs');
     }
-    if (afterWorkConfig._logDir && !afterWorkConfig._runLogDir) {
-      afterWorkConfig._runLogDir = path.join(
-        afterWorkConfig._logDir,
-        'pipeline',
-        'runs',
-        afterWorkConfig._runId || afterWorkConfig.run_id || 'run-unknown',
-      );
-      fs.mkdirSync(afterWorkConfig._runLogDir, { recursive: true });
-    }
+    fs.mkdirSync(path.join(afterWorkConfig.paths.swarm_dir, 'logs', 'pipeline', 'runs', afterWorkConfig._runId || afterWorkConfig.run_id || 'run-unknown'), { recursive: true });
     const afterWorkStatus = statusStoreMod.initStatus('01', { title: 'Scaffold' });
-    lifecycleStateMod.startModulePhase(afterWorkStatus, 'forge', 'Synthetic started module for arch validation resume-after-work verifier', {
+    const afterWorkStartTransition = lifecycleStateMod.startModulePhase(afterWorkStatus, 'forge', 'Synthetic started module for arch validation resume-after-work verifier', {
       now: '2026-04-09T00:01:00.000Z',
     });
-    statusStoreMod.saveStatus(afterWorkConfig, '01-scaffold', afterWorkStatus);
+    statusStoreMod.saveStatus(afterWorkConfig, '01-scaffold', afterWorkStatus, afterWorkStartTransition);
 
     const afterWorkProgress = {
       project: 'behavior-arch-validation-resume-after-work',
@@ -1597,7 +2221,7 @@ export async function registerPipelineArea({
       gates: {},
     };
 
-    const afterWorkResult = await pipelineRunnerMod.runPipeline(afterWorkConfig, afterWorkProgress, { resume: true });
+    const afterWorkResult = await pipelineRunnerMod.runPipeline(afterWorkConfig, afterWorkProgress, { resume: true, deps: afterWorkConfigDeps });
     await flushAsync();
 
     assert.equal(afterWorkResult, 0);
@@ -1606,7 +2230,7 @@ export async function registerPipelineArea({
 
   await record('built-in architecture validator stage returns control results while report artifacts stay downstream', async () => {
     const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
-    const archValidatorMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/services/arch-validator.js');
+    const archValidatorMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/services/arch-validator.ts');
 
     const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-arch-validator-artifacts-'));
     const modulesDir = path.join(tempRoot, 'modules');
@@ -1621,7 +2245,6 @@ export async function registerPipelineArea({
         modules_dir: modulesDir,
         progress_file: 'progress.json',
       },
-      _logDir: path.join(tempRoot, 'logs'),
       _runId: 'run-arch-validator-artifacts-1',
       run_id: 'run-arch-validator-artifacts-1',
     };
@@ -1644,8 +2267,8 @@ export async function registerPipelineArea({
       },
     });
 
-    const resultsPath = path.join(config._logDir, 'architecture-validator', 'results.json');
-    const summaryPath = path.join(config._logDir, 'architecture-validator', 'summary.md');
+    const resultsPath = path.join(path.join(config.paths.swarm_dir, 'logs'), 'architecture-validator', 'results.json');
+    const summaryPath = path.join(path.join(config.paths.swarm_dir, 'logs'), 'architecture-validator', 'summary.md');
     assert.equal(result.schemaVersion, 'v1');
     assert.equal(result.producerKind, 'validator');
     assert.equal(result.producerType, 'architecture');
@@ -1658,14 +2281,96 @@ export async function registerPipelineArea({
     assert.equal(writtenReport.blocked, false);
   });
 
+  await record('architecture validator reports malformed execution_order entries without internal error', async () => {
+    const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    const archValidatorChecksMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/services/arch-validator-checks.ts');
+    const archValidatorMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/services/arch-validator.ts');
+
+    const progress = {
+      project: 'behavior-arch-validator-exec-order-entry',
+      execution_order: [1, null, {}, '', '01', 'validator:full_lint'],
+      modules: { '01': { title: 'Scaffold', dir: '01-scaffold', stages: [] } },
+      gates: {},
+    };
+    const config = {
+      project: 'behavior-arch-validator-exec-order-entry',
+      paths: { progress_file: 'progress.json' },
+    };
+
+    const findings = archValidatorChecksMod.runDeterministicArchitectureChecks(progress, config);
+    const invalidFindings = findings.filter((finding) => finding.id === 'EXEC_ORDER_ENTRY_INVALID');
+    assert.equal(invalidFindings.length, 4);
+    assert.equal(invalidFindings.every((finding) => finding.severity === 'blocking'), true);
+    assert.equal(invalidFindings.every((finding) => finding.paths.includes('progress.json')), true);
+    assert.equal(findings.some((finding) => finding.id === 'VALIDATOR_INTERNAL_ERROR'), false);
+
+    const result = await archValidatorMod.runArchitectureValidatorStage(config, progress, {
+      skipAgent: true,
+      input: {
+        ids: {
+          stageId: 'validator:architecture',
+          validatorName: 'architecture',
+        },
+      },
+    });
+    assert.equal(result.schemaVersion, 'v1');
+    assert.equal(result.producerKind, 'validator');
+    assert.equal(result.nextAction, 'block');
+    assert.equal(result.diagnostics.metadata.blocked, true);
+    assert.equal(result.diagnostics.metadata.raw_findings.filter((finding) => finding.id === 'EXEC_ORDER_ENTRY_INVALID').length, 4);
+    assert.equal(result.diagnostics.metadata.raw_findings.some((finding) => finding.id === 'VALIDATOR_INTERNAL_ERROR'), false);
+  });
+
+  await record('built-in architecture validator internal errors become blocking control results', async () => {
+    const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    const archValidatorMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/services/arch-validator.ts');
+
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-arch-validator-internal-error-'));
+    const config = {
+      project: 'behavior-arch-validator-internal-error',
+      paths: {
+        swarm_dir: path.join(tempRoot, 'swarm'),
+        modules_dir: path.join(tempRoot, 'modules'),
+        progress_file: 'progress.json',
+      },
+      _runId: 'run-arch-validator-internal-error-1',
+      run_id: 'run-arch-validator-internal-error-1',
+    };
+
+    const result = await archValidatorMod.runArchitectureValidatorStage(config, null, {
+      input: {
+        ids: {
+          stageId: 'validator:architecture',
+          validatorName: 'architecture',
+        },
+      },
+    });
+
+    assert.equal(result.schemaVersion, 'v1');
+    assert.equal(result.producerKind, 'validator');
+    assert.equal(result.nextAction, 'block');
+    assert.equal(result.issueType, 'code');
+    assert.equal(result.diagnostics.metadata.blocked, true);
+    assert.equal(result.diagnostics.metadata.blocking_count, 1);
+    assert.equal(result.diagnostics.metadata.raw_findings[0].id, 'VALIDATOR_INTERNAL_ERROR');
+    assert.equal(result.diagnostics.metadata.raw_findings[0].severity, 'blocking');
+    assert.match(result.diagnostics.summary, /Architecture validation BLOCKED with 1 blocking finding/);
+
+    const resultsPath = path.join(path.join(config.paths.swarm_dir, 'logs'), 'architecture-validator', 'results.json');
+    assert.equal(fs.existsSync(resultsPath), true);
+    const writtenReport = JSON.parse(fs.readFileSync(resultsPath, 'utf8'));
+    assert.equal(writtenReport.blocked, true);
+    assert.equal(writtenReport.findings[0].severity, 'blocking');
+  });
+
   await record('pipeline completion schedules generators through explicit stage owners in core-defined order', async () => {
     const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(pipelineRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
     const registry = await buildBuiltInRegistry(pipelineRuntimeRoot);
     const generatorCalls = [];
@@ -1707,24 +2412,9 @@ export async function registerPipelineArea({
     };
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-generator-stage-order-'));
-    const logRoot = path.join(repoRoot, '.swarm', 'logs', 'runs', 'run-generator-stage-order-1');
-    fs.mkdirSync(logRoot, { recursive: true });
+    fs.mkdirSync(path.join(repoRoot, '.swarm', 'logs', 'runs', 'run-generator-stage-order-1'), { recursive: true });
 
-    const config = {
-      project: 'behavior-generator-stage-order',
-      repo_root: repoRoot,
-      paths: {
-        swarm_dir: '/tmp/behavior-generator-stage-order/swarm',
-        modules_dir: '/tmp/behavior-generator-stage-order/modules',
-      },
-      telemetry: { enabled: true },
-      _pluginRegistry: testRegistry,
-      _logDir: path.join(repoRoot, '.swarm', 'logs'),
-      _runLogDir: logRoot,
-      _runId: 'run-generator-stage-order-1',
-      run_id: 'run-generator-stage-order-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps19 = {
         pipelineRunner: {
           discord: async () => {},
           output: () => {},
@@ -1732,8 +2422,20 @@ export async function registerPipelineArea({
           syncControlFiles: async () => {},
           writeSummary: () => {},
         },
+      };
+const config = {
+      project: 'behavior-generator-stage-order',
+      repo_root: repoRoot,
+      paths: {
+        swarm_dir: path.join(repoRoot, '.swarm'),
+        modules_dir: path.join(repoRoot, 'modules'),
       },
-    };
+      telemetry: { enabled: true },
+      pluginRegistry: testRegistry,
+      _runId: 'run-generator-stage-order-1',
+      run_id: 'run-generator-stage-order-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
+          };
 
     const progress = {
       execution_order: [],
@@ -1742,7 +2444,7 @@ export async function registerPipelineArea({
       case_study: { enabled: true },
     };
 
-    const result = await pipelineRunnerMod.runPipeline(config, progress, { skipArchValidation: true });
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps19, skipArchValidation: true }, { deps: configDeps19 });
     await flushAsync();
 
     assert.equal(result, 0);
@@ -1766,8 +2468,8 @@ export async function registerPipelineArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
     const registry = await buildBuiltInRegistry(pipelineRuntimeRoot);
     const generatorCalls = [];
@@ -1785,20 +2487,24 @@ export async function registerPipelineArea({
     }
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-generator-blocked-halt-'));
-    const logRoot = path.join(repoRoot, '.swarm', 'logs', 'runs', 'run-generator-blocked-halt-1');
-    fs.mkdirSync(logRoot, { recursive: true });
+    fs.mkdirSync(path.join(repoRoot, '.swarm', 'logs', 'runs', 'run-generator-blocked-halt-1'), { recursive: true });
 
-    const config = {
+        const configDeps20 = {
+        pipelineRunner: {
+          discord: async () => {},
+          output: () => {},
+          writeSummary: () => {},
+        },
+      };
+const config = {
       project: 'behavior-generator-blocked-halt',
       repo_root: repoRoot,
       paths: {
-        swarm_dir: '/tmp/behavior-generator-blocked-halt/swarm',
-        modules_dir: '/tmp/behavior-generator-blocked-halt/modules',
+        swarm_dir: path.join(repoRoot, '.swarm'),
+        modules_dir: path.join(repoRoot, 'modules'),
       },
       telemetry: { enabled: false },
-      _logDir: path.join(repoRoot, '.swarm', 'logs'),
-      _runLogDir: logRoot,
-      _pluginRegistry: {
+      pluginRegistry: {
         ...registry,
         stageOwners: {
           ...registry.stageOwners,
@@ -1808,14 +2514,7 @@ export async function registerPipelineArea({
       _runId: 'run-generator-blocked-halt-1',
       run_id: 'run-generator-blocked-halt-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
-      _testOverrides: {
-        pipelineRunner: {
-          discord: async () => {},
-          output: () => {},
-          writeSummary: () => {},
-        },
-      },
-    };
+          };
 
     const progress = {
       execution_order: ['01'],
@@ -1829,7 +2528,7 @@ export async function registerPipelineArea({
       reason: 'Blocked in tests',
     });
 
-    const result = await pipelineRunnerMod.runPipeline(config, progress, { skipArchValidation: true });
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps20, skipArchValidation: true }, { deps: configDeps20 });
     await flushAsync();
 
     assert.equal(result, 20);
@@ -1845,8 +2544,8 @@ export async function registerPipelineArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
     const registry = await buildBuiltInRegistry(pipelineRuntimeRoot);
     const generatorCalls = [];
@@ -1864,30 +2563,9 @@ export async function registerPipelineArea({
     }
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-generator-arch-block-'));
-    const logRoot = path.join(repoRoot, '.swarm', 'logs', 'runs', 'run-generator-arch-block-1');
-    fs.mkdirSync(logRoot, { recursive: true });
+    fs.mkdirSync(path.join(repoRoot, '.swarm', 'logs', 'runs', 'run-generator-arch-block-1'), { recursive: true });
 
-    const config = {
-      project: 'behavior-generator-arch-block',
-      repo_root: repoRoot,
-      paths: {
-        swarm_dir: '/tmp/behavior-generator-arch-block/swarm',
-        modules_dir: '/tmp/behavior-generator-arch-block/modules',
-      },
-      telemetry: { enabled: false },
-      _logDir: path.join(repoRoot, '.swarm', 'logs'),
-      _runLogDir: logRoot,
-      _pluginRegistry: {
-        ...registry,
-        stageOwners: {
-          ...registry.stageOwners,
-          'generator.run': stageOwners,
-        },
-      },
-      _runId: 'run-generator-arch-block-1',
-      run_id: 'run-generator-arch-block-1',
-      _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
-      _testOverrides: {
+        const configDeps21 = {
         pipelineRunner: {
           discord: async () => {},
           output: () => {},
@@ -1899,8 +2577,26 @@ export async function registerPipelineArea({
             findings: [{ id: 'ARCH-1', severity: 'blocking', explanation: 'Missing deployment rollback plan' }],
           }),
         },
+      };
+const config = {
+      project: 'behavior-generator-arch-block',
+      repo_root: repoRoot,
+      paths: {
+        swarm_dir: path.join(repoRoot, '.swarm'),
+        modules_dir: path.join(repoRoot, 'modules'),
       },
-    };
+      telemetry: { enabled: false },
+      pluginRegistry: {
+        ...registry,
+        stageOwners: {
+          ...registry.stageOwners,
+          'generator.run': stageOwners,
+        },
+      },
+      _runId: 'run-generator-arch-block-1',
+      run_id: 'run-generator-arch-block-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
+          };
 
     const progress = {
       execution_order: ['01'],
@@ -1909,7 +2605,7 @@ export async function registerPipelineArea({
       case_study: { enabled: true },
     };
 
-    const result = await pipelineRunnerMod.runPipeline(config, progress);
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps21 });
     await flushAsync();
 
     assert.equal(result, 20);
@@ -1922,8 +2618,8 @@ export async function registerPipelineArea({
     globalThis.__fakeRedisCalls = [];
     globalThis.__fakeRedisCounters = Object.create(null);
 
-    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.js');
-    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
     const registry = await buildBuiltInRegistry(pipelineRuntimeRoot);
     const generatorCalls = [];
@@ -1941,20 +2637,25 @@ export async function registerPipelineArea({
     }
 
     const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-generator-single-module-'));
-    const logRoot = path.join(repoRoot, '.swarm', 'logs', 'runs', 'run-generator-single-module-1');
-    fs.mkdirSync(logRoot, { recursive: true });
+    fs.mkdirSync(path.join(repoRoot, '.swarm', 'logs', 'runs', 'run-generator-single-module-1'), { recursive: true });
 
-    const config = {
+        const configDeps22 = {
+        pipelineRunner: {
+          discord: async () => {},
+          output: () => {},
+          runModule: async () => makeStepResult({ stepId: '01', exit: 0, reason: 'PASS', status: 'PASS', correlation: { module_id: '01' } }),
+          writeSummary: () => {},
+        },
+      };
+const config = {
       project: 'behavior-generator-single-module',
       repo_root: repoRoot,
       paths: {
-        swarm_dir: '/tmp/behavior-generator-single-module/swarm',
-        modules_dir: '/tmp/behavior-generator-single-module/modules',
+        swarm_dir: path.join(repoRoot, '.swarm'),
+        modules_dir: path.join(repoRoot, 'modules'),
       },
       telemetry: { enabled: false },
-      _logDir: path.join(repoRoot, '.swarm', 'logs'),
-      _runLogDir: logRoot,
-      _pluginRegistry: {
+      pluginRegistry: {
         ...registry,
         stageOwners: {
           ...registry.stageOwners,
@@ -1964,15 +2665,7 @@ export async function registerPipelineArea({
       _runId: 'run-generator-single-module-1',
       run_id: 'run-generator-single-module-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-21T00:00:00.000Z'),
-      _testOverrides: {
-        pipelineRunner: {
-          discord: async () => {},
-          output: () => {},
-          runModule: async () => ({ exit: 0, reason: 'PASS', status: 'PASS' }),
-          writeSummary: () => {},
-        },
-      },
-    };
+          };
 
     const progress = {
       execution_order: ['01'],
@@ -1981,10 +2674,53 @@ export async function registerPipelineArea({
       case_study: { enabled: true },
     };
 
-    const result = await pipelineRunnerMod.runPipeline(config, progress, { module: '01', skipArchValidation: true });
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps22, module: '01', skipArchValidation: true });
     await flushAsync();
 
     assert.equal(result, 0);
     assert.deepEqual(generatorCalls, []);
+  });
+
+  await record('pipeline rejects raw exit-shaped step results as scheduler authority', async () => {
+    const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    installFakeRedis(pipelineRuntimeRoot);
+
+    const pipelineRunnerMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/runners/pipeline-runner.ts');
+    const runtimeCoreMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+
+    const outputs = [];
+        const configDeps23 = {
+        pipelineRunner: {
+          discord: async () => {},
+          output: (payload) => { outputs.push(payload); },
+          runModule: async () => ({ exit: 0, reason: 'old raw compatibility success' }),
+          writeSummary: () => {},
+        },
+      };
+const config = {
+      project: 'behavior-raw-exit-rejected',
+      paths: {
+        swarm_dir: '/tmp/behavior-raw-exit-rejected/swarm',
+        modules_dir: '/tmp/behavior-raw-exit-rejected/modules',
+      },
+      telemetry: { enabled: false },
+      pluginRegistry: withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot)),
+      _runId: 'run-raw-exit-rejected-1',
+      run_id: 'run-raw-exit-rejected-1',
+      _runStats: runtimeCoreMod.createRunStats('2026-04-26T00:00:00.000Z'),
+          };
+
+    const progress = {
+      execution_order: ['01'],
+      modules: { '01': { title: 'Scaffold', dir: '01-scaffold' } },
+      gates: {},
+    };
+
+    const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps23, module: '01', skipArchValidation: true });
+    await flushAsync();
+
+    assert.equal(result, 1);
+    assert.match(outputs[0]?.reason || '', /expected pipeline_step_result/);
+    assert.equal(outputs[0]?.outcome, 'error');
   });
 }

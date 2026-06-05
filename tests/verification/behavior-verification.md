@@ -13,7 +13,7 @@ Current verification policy:
 - rerun the guards against current source, not historical rebuilt-artifact trees
 - treat `kubeclaw-main/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` as the authoritative inventory, stream-identity, and contract-boundary spec
 - treat `kubeclaw-main/docs/telemetry-event-schema.md` as the authoritative event-by-event payload reference, kept in exact inventory parity with that contract
-- treat `.swarm/logs/pipeline/latest.json` plus `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,summary.json}` as the canonical replay/audit bundle, with Redis audit artifacts under `.swarm/logs/redis/{redis-exchanges.jsonl,redis-ops.jsonl}` plus the run-scoped `pipeline/runs/<run_id>/redis/` mirror
+- treat `.swarm/logs/pipeline/latest.json` plus `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,buster-telemetry-fallback.jsonl,redis/redis-exchanges.jsonl,redis/redis-ops.jsonl,summary.json}` as the canonical replay/audit bundle, with Redis audit artifacts also mirrored under `.swarm/logs/redis/{redis-exchanges.jsonl,redis-ops.jsonl}`
 
 Current source root used for reruns:
 - `<repo-root>/kubeclaw-main`
@@ -69,8 +69,8 @@ node tests/verification/behavior/verify.mjs \
 - verified surfaces in that rerun: deployment truth, runtime collisions, final-gate hardening, telemetry contract, focused contract/slice guards, and the default behavior harness
 - total collisions: `0`
 - broken packaged relative imports: `0`
-- packaged `/app/skills/pipeline.js`: `OK`
-- packaged `/app/skills/pipeline/index.js`: `OK`
+- packaged `/app/skills/pipeline.ts`: `OK`
+- packaged `/app/skills/pipeline/index.ts`: `OK`
 - emitted event names checked across Nova and Buster runtime files: all valid
 - canonical live stream ownership remains pinned to `pipeline:telemetry:<project>:<run_id>`
 - contract and telemetry schema now pin an explicit authority split: contract owns canonical inventory and boundaries, schema owns event-by-event payload reference
@@ -81,7 +81,8 @@ node tests/verification/behavior/verify.mjs \
 
 ### Current gate expectations
 - `tests/verification/run-full-verification.sh` is the canonical fail-fast local wrapper
-- it includes deployment truth, runtime collision, live subagent launch smoke, ACP launch-reachability smoke, telemetry contract, and the default behavior harness
+- it includes deployment truth, runtime collision, live subagent launch smoke, telemetry contract, focused contract guards, and the default behavior harness
+- ACP launch reachability is local/provider-specific and is run explicitly with `tests/verification/run-local-acp-verification.sh`
 - because the wrapper stops on the first red surface, rerun the underlying entrypoints directly when you need the full downstream failure set
 - `scripts/deploy.sh verify-live [tag]` plus `scripts/deploy.sh smoke` / `scripts/deploy.sh smoke-agent <nova|buster>` remain operator-run live-cluster surfaces and require Docker plus cluster access; they are not executed by the repo-only deployment truth guard
 
@@ -89,10 +90,10 @@ node tests/verification/behavior/verify.mjs \
 - direct `tests/verification/deployment/check-deployment-truth.mjs` is green
 - direct `tests/verification/runtime/check-runtime-collisions.mjs` is green
 - direct `tests/verification/behavior/verify.mjs` is green in the documented verifier environment where `python` is present on `PATH` (current live result: `passed: 300`, `failed: 0`, `selectedAreas: 33`)
-- the canonical fail-fast wrapper `tests/verification/run-full-verification.sh` is still red in the current environment because the live launch smokes fail before the behavior harness starts
-- direct `tests/verification/runtime/check-subagent-launch.mjs` currently fails with `Gateway sessions_spawn failed: 404 Not Found`
-- direct `tests/verification/runtime/check-acp-launch.mjs` currently fails with `Gateway sessions_spawn failed: 404 Not Found`
-- until those live launch surfaces are green or explicitly waived, the final closure gate remains open even though the repo-truth no-launch stack is green
+- the canonical fail-fast wrapper `tests/verification/run-full-verification.sh` keeps subagent launch in the default clean-checkout gate and keeps ACP launch out of that default lane
+- direct `tests/verification/runtime/check-subagent-launch.mjs` is the normal launch-health surface for the default wrapper
+- direct `tests/verification/runtime/check-acp-launch.mjs` remains a real smoke for local ACP setup, but it is run via `tests/verification/run-local-acp-verification.sh` rather than the default clean-checkout wrapper
+- ACP failures mean local ACP agent/provider/gateway status setup needs attention; they do not by themselves make deterministic repo verification red
 
 Foundation-sensitive proof now explicitly includes deterministic registry assembly/rejection checks, packaged helper ownership, explicit Buster crash-recovery path ownership, shared failure normalization, mediated plugin-context scaffolding, and restart-safe lifecycle state handling.
 
@@ -107,19 +108,19 @@ Representative coverage areas:
 8. operator-facing visual-regression reference examples stay portable instead of embedding host-specific baseline artifact paths
 9. pre-check Semgrep config discovery and docs stay portable, using auto-detect instead of host-specific platform config paths
 10. remaining repo-root fallback helpers stay source-relative and portable instead of preserving hardcoded legacy host paths
-11. platform swarm config discovery and operator docs stay portable, using auto-detect instead of an `/app/config/swarm.config.json`-only default
+11. platform swarm config discovery and operator docs use `/home/node/.openclaw/swarm.config.json` first with `SWARM_CONFIG` as fallback, instead of `/app/config` or source-chart fallback discovery
 12. lifecycle contract docs keep canonical Redis audit artifact paths instead of reintroducing stale `pipeline/redis.jsonl` provenance
 13. lifecycle contract docs no longer keep stale explicit `buster:telemetry:<project>:<run_id>` compatibility literals after the single-canonical-stream decision
 14. stale session recovery alerts keep the recovered child `session_key` on operator Discord surfaces so restart cleanup stays cross-surface joinable
 15. Nova injection sent/failed alerts keep the owning child `session_key` on operator Discord surfaces so escalation and channel-injection audit trails stay joinable
-16. Full-pipeline BLOCKED halt/escalation surfaces resolve the blocked module's persisted `session_key` from `status.json`, so operator Discord alerts and stop-path telemetry stay joinable even when the runner only knows it is resuming a previously BLOCKED module
+16. Full-pipeline BLOCKED halt/escalation surfaces resolve the blocked module's persisted `session_key` from lifecycle-backed module state, so operator Discord alerts and stop-path telemetry stay joinable even when the runner only knows it is resuming a previously BLOCKED module
 17. Buster agent-test failure paths now preserve the cached child `session_key` through failure-service Discord, retry, escalation, and returned result payloads even after `active_agent` cleanup, so Buster-owned FAIL / NEEDS_NOVA surfaces remain joinable with the completed child session
 18. Approval gates normalize lower-case config `on_timeout` into canonical uppercase `timeout_policy` across gate state, approval audit artifacts, and emitted `approval.requested` telemetry so runtime behavior matches the published contract
 19. Service-owned pipeline review and case-study ACP cooldown exhaustion now also emit structured `retry.exhausted` telemetry with preserved `session_key`, so those post-run operator-facing failures no longer fall back to pause telemetry plus Discord/log text alone
 20. Gate-owned pause-budget and fix-budget exhaustion paths now also emit structured gate-scoped `retry.exhausted` telemetry with preserved `gate_id`, `gate_type`, and `session_key`, so Buster/Review gate cooldown exhaustion and fix-loop exhaustion no longer end at `gate.verdict` plus exit code alone
 21. Gate-backed ACP session transcript and progress telemetry now preserve canonical `gate_id` plus `session_key` without overloading `module_id` with gate labels during live gate-fix monitoring, so those high-frequency live surfaces stay joinable with gate-scoped telemetry, Discord, and audit artifacts
 22. Shared `pollForFile(...)` ACP sessions now emit live `agent.transcript` and `agent.progress` telemetry with preserved `session_key` and gate context when available, so review gates, pipeline review, and case-study runs no longer stay log-only until the output file appears or the session ends
-23. Shared `pollStatus(...)` ACP session monitoring now also emits live `agent.transcript` and `agent.progress` telemetry with preserved `module_id`, `session_key`, and tracked session label correlation, so Forge module runs no longer stay log-only while Nova waits on `status.json`
+23. Shared Forge completion polling now emits live `agent.transcript` and `agent.progress` telemetry with preserved `module_id`, `session_key`, and tracked session label correlation while Nova waits on the typed `forge-completion.json` artifact instead of any module-local status file
 24. Shared `pollForSessionEnd(...)` gate-fix and review-fix telemetry now reuses the tracked ACP gateway label instead of the internal tracking key, keeping live transcript/progress labels consistent with the other ACP polling surfaces
 25. Session-backed `agent.spawned` and `agent.killed` lifecycle telemetry now both reuse the tracked ACP gateway label instead of the internal tracking key, keeping Forge and Echo session lifecycle labels aligned across spawn, live telemetry, and teardown
 26. Restart-time stale module and gate recovery Discord alerts plus persisted `discord.jsonl` audit entries now preserve the recovered ACP `gateway_label`, keeping operator recovery surfaces joinable with the same authoritative label already tracked in session state
@@ -146,7 +147,7 @@ Representative coverage areas:
 44. Buster pre-test infra/config `EXIT_NEEDS_NOVA` returns now also preserve the dispatch-backed or resolved `gateway_label` plus the terminal `session_key`, so terminal pipeline-runner stop alerts stay joinable when Nova preserves Forge output and stops before another code cycle
 45. Repeated Buster pre-test `EXIT_NEEDS_NOVA` returns now also preserve the dispatch-backed or resolved `gateway_label` plus the terminal `session_key`, so terminal pipeline-runner stop alerts stay joinable when the same pre-test suite fails again and Nova escalates before another Forge cycle
 46. Dependency-check EXIT_ERROR returns now also preserve resolved `gateway_label` and `session_key`, so terminal pipeline-runner stop alerts stay joinable when module execution is refused before any attempt starts
-47. Corrupt status-load EXIT_ERROR returns now also preserve salvaged `gateway_label` and `session_key` from the unreadable `status.json`, so terminal pipeline-runner stop alerts stay joinable even when Nova aborts to avoid overwriting existing work
+47. Corrupt lifecycle-state load EXIT_ERROR returns now also preserve salvaged `gateway_label` and `session_key` from the unreadable lifecycle-backed module state, so terminal pipeline-runner stop alerts stay joinable even when Nova aborts to avoid overwriting existing work
 48. Module-runner Forge and Buster spawn-failed exits now preserve returned `gateway_label` and `session_key`, so the terminal pipeline-runner stop alerts stay joinable with the owning module attempt even when the failure happens before normal polling begins
 49. Forge and Buster prompt-build EXIT_ERROR returns now also preserve resolved `gateway_label` and `session_key`, so terminal pipeline-runner stop alerts keep canonical module correlation even when execution fails before any child session is spawned
 50. Validation-milestone refusal before Buster dispatch now also preserves resolved `gateway_label` and `session_key`, so terminal pipeline-runner stop alerts keep canonical module correlation when Nova aborts before the Git handoff
@@ -169,7 +170,7 @@ Representative coverage areas:
 67. Review gate fix-loop-exhausted `EXIT_NEEDS_NOVA` returns now also preserve resolved `gateway_label` and `session_key`, so terminal pipeline-runner stop alerts stay joinable when review fix cycles are exhausted and the gate remains NO-GO
 68. Restart-time stale module and gate reconciliation now also emits explicit gateway `observability.degraded` events when `session_status` is unreachable during stale-session recovery, so recovery-time visibility loss no longer collapses into silent kill-or-retry behavior
 69. Those same stale gate recovery `observability.degraded` events now also preserve canonical `attempt` plus `dispatch_id` when the interrupted gate session already knew them, keeping recovery-time visibility loss directly joinable with the exact gate retry and dispatch instead of only the gate/session pair
-69. Orchestration-owned post-kill session confirmation now also emits explicit gateway `observability.degraded` events when teardown monitoring cannot read `session_status`, so teardown visibility loss no longer degrades into warn-only logging with no structured signal
+69. Session teardown now routes through a shared termination controller with an isolated hard-capped grace period and strict canonical `{confirmed, unconfirmed, terminal, cleanup*}` result schema, so orchestration, recovery, Buster monitors, and summary cleanup no longer synthesize split-brain kill state locally
 70. Service-owned pipeline review now emits authoritative `summary.started` / `summary.completed` telemetry with `summary_type: pipeline_review`, preserved `session_key`, and terminal `status` / `reason` on cooldown-budget exhaustion and no-output failure paths, so that post-run review surface no longer drops back to Discord/log text alone outside the `retry.exhausted` branch
 71. Service-owned case study now emits authoritative `summary.started` / `summary.completed` telemetry with `summary_type: case_study`, preserved `session_key`, and terminal `status` / `reason` on cooldown-budget exhaustion and no-output failure paths, so that post-run case-study generation no longer drops back to Discord/log text alone outside the `retry.exhausted` branch
 72. Service-owned project summary now emits authoritative `summary.started` / `summary.completed` telemetry with `summary_type: project_summary`, terminal `status` / `reason`, and emitted artifact paths when written, so that local summary generation no longer disappears into log text and side files alone on success or failure
@@ -189,7 +190,7 @@ Representative coverage areas:
 86. `summary.json` now preserves canonical arch-validator run correlation too, with `.governance.arch_validator` carrying `run_id` and `project` so the governance snapshot joins cleanly back to the live stream and replay artifacts
 87. Service-owned case-study no-output and generic failure alerts now also flow through the canonical pipeline Discord integration with persisted `discord.jsonl` mirroring, preserved `run_id`, tracked `gateway_label`, and `session_key` correlation, so post-run case-study failures no longer fall back to logs plus summary telemetry alone once the child session finishes without a usable report
 88. Local project-summary generation failures now also emit a canonical operator Discord alert with persisted `discord.jsonl` mirroring, preserved `run_id`, and run-scoped artifact-path context, so local summary failures no longer disappear into `summary.completed` plus warn logs without an operator-facing audit surface
-89. The standalone `tools/project-summary.js --discord` path now also routes through the canonical pipeline Discord integration with persisted `discord.jsonl` mirroring and preserved `run_id` correlation when a run context is available, instead of bypassing the hardened audit and observability path with a raw webhook-only fetch
+89. The standalone `tools/project-summary.ts --discord` path now also routes through the canonical pipeline Discord integration with persisted `discord.jsonl` mirroring and preserved `run_id` correlation when a run context is available, instead of bypassing the hardened audit and observability path with a raw webhook-only fetch
 90. Redis-dispatched Buster task alerts now also route through the canonical pipeline Discord integration with persisted `discord.jsonl` mirroring and preserved `run_id`, `module`, `attempt`, and `dispatch_id` correlation when that task context is known, instead of bypassing the shared audit path with a raw webhook-only fetch
 91. Shared pipeline Discord webhook delivery failures now also emit explicit `observability.degraded` telemetry on the `webhook` surface with preserved module, gate, and session correlation when known, so live operator-visibility loss no longer collapses into warn-only logging when `discord.jsonl` keeps writing but Discord posting fails
 92. That same shared pipeline Discord delivery path now emits matching `observability.restored` telemetry after a later successful webhook post for the same run, so recovery of the live operator surface is explicit instead of being inferred only from resumed message flow

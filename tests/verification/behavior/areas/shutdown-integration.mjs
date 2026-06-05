@@ -36,19 +36,21 @@ export async function registerShutdownIntegrationArea({
 }) {
 await record('Nova shutdown/reaper integration stays wired through orchestration', async () => {
   const orchestrationRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
-  const shutdownTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/shutdown.js');
-  const orchestrationText = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/agents/orchestration.js');
-  const shutdownText = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/agents/shutdown.js');
-  const lifecycleText = readOverlayText(sourceRoot, overlayRoot, 'skills/common/pipeline/agents/lifecycle.js');
-  assert(orchestrationText.includes("import { reaperAfterKill } from './shutdown.js';"));
-  assert(orchestrationText.includes("import { getTrackedAgent, spawnSession, killSession, trackAgent, untrackAgent } from '../../../common/pipeline/agents/lifecycle.js';"));
-  assert(orchestrationText.includes('await reaperAfterKill(entry.agentId || agentType, sessionKey, entry.gatewayLabel);'));
+  const shutdownTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/shutdown.ts');
+  const orchestrationText = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/agents/orchestration.ts');
+  const shutdownText = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/agents/shutdown.ts');
+  const lifecycleText = readOverlayText(sourceRoot, overlayRoot, 'skills/common/pipeline/agents/lifecycle.ts');
+  assert(orchestrationText.includes("import { reaperAfterKill } from './shutdown.ts';"));
+  assert(orchestrationText.includes("import { getTrackedAgent, spawnSession, trackAgent, untrackAgent } from './lifecycle.ts';"));
+  assert(orchestrationText.includes("import { terminateSession } from './session-termination.ts';"));
+  assert(orchestrationText.includes('cleanup: async () => reaperAfterKill(entry.agentId, sessionKey, entry.gatewayLabel),'));
   assert(orchestrationText.includes('trackAgent(config, trackingKey, sessionData.childSessionKey'));
-  assert(shutdownText.includes("import { getTrackedAgent, killSession, listTrackedAgents, trackAgent, untrackAgent } from '../../../common/pipeline/agents/lifecycle.js';"));
-  assert(shutdownText.includes("import { resolveGatewayInvokeUrl, resolveGatewayToken } from '../../../common/pipeline/integrations/gateway.js';"));
+  assert(shutdownText.includes("import { getTrackedAgent, listTrackedAgents, trackAgent, untrackAgent } from './lifecycle.ts';"));
+  assert(shutdownText.includes("import { terminateSession } from './session-termination.ts';"));
+  assert(shutdownText.includes("import { resolveGatewayInvokeUrl, resolveGatewayToken } from '../integrations/gateway.ts';"));
   assert(shutdownText.includes('const gatewayUrl = resolveGatewayInvokeUrl();'));
   assert(shutdownText.includes('const gatewayToken = resolveGatewayToken();'));
-  assert(shutdownText.includes('await killSession(sessionKey, {'));
+  assert(shutdownText.includes('await terminateSession(sessionKey, {'));
   assert(shutdownText.includes('const trackedAgents = listTrackedAgents();'));
   assert.equal(shutdownText.includes('activeSessions: new Map()'), false);
   assert.equal(shutdownText.includes('export function trackAgent'), false);
@@ -61,7 +63,7 @@ await record('Nova shutdown/reaper integration stays wired through orchestration
   assert.equal(shutdownText.includes('export function reaperAfterKillSync'), false);
   assert.equal(shutdownText.includes('export function getShutdownState'), false);
   assert.equal(shutdownText.includes("execFileSync('curl'"), false);
-  assert(lifecycleText.includes('const _trackedAgents = new Map();'));
+  assert(lifecycleText.includes("from './tracked-agents.ts';"));
   assert.equal(typeof lifecycleMod.getTrackedAgent, 'function');
   assert.equal(typeof lifecycleMod.trackAgent, 'function');
   assert.equal(typeof lifecycleMod.untrackAgent, 'function');

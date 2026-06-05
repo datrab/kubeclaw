@@ -34,10 +34,19 @@ export async function registerTranscriptMonitorArea({
   pathsMod,
   busterPipelineMod,
 }) {
-await record('pollForSessionEnd timeout grace reuses ACP monitor state instead of raw transcript rereads', async () => {
-  const pollingSource = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/services/polling.js');
+async function buildBuiltInRegistry(runtimeRootForRegistry) {
+  const registryMod = await importRuntimeModule(runtimeRootForRegistry, '/app/skills/pipeline/core/registry.ts');
+  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
+  assert.equal(errors.length, 0);
+  return registry;
+}
 
-  assert.equal(pollingSource.includes('const _timeoutMonitorState = await getAcpMonitorState(config, sessionLabel, acpState);'), true);
+await record('pollForSessionEnd consumes budget strictly instead of extending for transcript activity', async () => {
+  const pollingSource = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/services/polling-session-end.ts');
+
+  assert.equal(pollingSource.includes('createBudgetFromMinutes(timeoutMinutes'), true);
+  assert.equal(pollingSource.includes('waitForAcpMonitorEvent(Math.min(interval, budget.remainingMs()))'), true);
+  assert.equal(pollingSource.includes('deadline = Date.now() + _transcriptGraceMs'), false);
   assert.equal(pollingSource.includes('const _tsState = readAcpTranscriptState(_tsTracked?.streamLogPath, acpState.transcript || {});'), false);
 });
 
@@ -63,7 +72,7 @@ await record('transcript monitor reads only appended transcript lines and preser
   assert.equal(idle.lastActivityPoll, 1);
 });
 
-await record('waitForSessionIdle preserves transcript grace when gateway status is unreachable', async () => {
+await record('waitForSessionIdle honors the strict total timeout when gateway status is unreachable', async () => {
   const transcriptDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-wait-for-idle-transcript-'));
   const transcriptPath = path.join(transcriptDir, 'stream.jsonl');
   fs.writeFileSync(transcriptPath, `${JSON.stringify({ ts: '2026-04-13T06:00:00.000Z', kind: 'assistant', text: 'wrapping up now' })}\n`);
@@ -71,16 +80,20 @@ await record('waitForSessionIdle preserves transcript grace when gateway status 
   const started = Date.now();
   await monitorMod.waitForSessionIdle('agent:main:acp:wait-for-idle', {
     gatewayUrl: 'http://127.0.0.1:9',
+    gatewayToken: '',
     streamLogPath: transcriptPath,
     extraGraceMs: 0,
     totalTimeoutMs: 10,
     pollMs: 5,
+    unknown_poll_limit: 10,
+    stale_poll_limit: 10,
     maxTranscriptExtensions: 1,
     transcriptGraceMs: 60,
+    monitorPollMs: 5,
   });
   const elapsedMs = Date.now() - started;
 
-  assert(elapsedMs >= 40, `expected transcript grace to delay return, got ${elapsedMs}ms`);
+  assert(elapsedMs < 100, `expected strict total timeout to bound return, got ${elapsedMs}ms`);
 });
 
 await record('verifyAgentAlive reuses transcript delta state, suppresses duplicate fallback warnings, and restores gateway observability', async () => {
@@ -89,9 +102,9 @@ await record('verifyAgentAlive reuses transcript delta state, suppresses duplica
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.js');
-  const lifecycleTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/common/pipeline/agents/lifecycle.js');
-  const runtimeCoreMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.ts');
+  const lifecycleTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/lifecycle.ts');
+  const runtimeCoreMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const sessionStates = ['unknown', 'unknown', 'running'];
   const gateway = await startGatewayServer(async ({ body }) => {
@@ -102,7 +115,7 @@ await record('verifyAgentAlive reuses transcript delta state, suppresses duplica
   });
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-verify-alive-transcript-'));
-  const logRoot = path.join(repoRoot, '.swarm', 'logs');
+  const swarmDir = path.join(repoRoot, '.swarm');
   const runId = 'run-verify-agent-alive-1';
   const transcriptPath = path.join(repoRoot, 'stream.jsonl');
   fs.writeFileSync(transcriptPath, `${JSON.stringify({ ts: '2026-04-10T09:20:00.000Z', kind: 'assistant', text: 'first' })}\n`);
@@ -118,11 +131,11 @@ await record('verifyAgentAlive reuses transcript delta state, suppresses duplica
     repo_root: repoRoot,
     telemetry: { enabled: true },
     agents: { forge: { cwd: repoRoot } },
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
+    paths: { swarm_dir: swarmDir },
     _runId: runId,
     run_id: runId,
     _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    pluginRegistry: await buildBuiltInRegistry(orchestrationRuntimeRoot),
   };
 
   try {
@@ -158,10 +171,10 @@ await record('verifyAgentAlive reuses transcript delta state, suppresses duplica
     const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
     const eventTypes = streamEvents.map((event) => event.type);
     assert.deepEqual(eventTypes, ['observability.degraded', 'observability.restored']);
-    assert.equal(streamEvents[0].reason, 'session_status_unknown');
+    assert.equal(streamEvents[0].reason, 'gateway_status_unknown');
     assert.equal(streamEvents[0].module_id, '01');
     assert.equal(streamEvents[0].session_key, 'agent:main:acp:forge-01');
-    assert.equal(streamEvents[1].reason, 'session_status_unknown');
+    assert.equal(streamEvents[1].reason, 'gateway_status_unknown');
   } finally {
     console.error = prevConsoleError;
     lifecycleTestMod.untrackAgent('forge-01');
@@ -177,9 +190,9 @@ await record('verifyAgentAlive emits degraded observability before rejecting unk
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
-  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.js');
-  const lifecycleTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/common/pipeline/agents/lifecycle.js');
-  const runtimeCoreMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/core/runtime.js');
+  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.ts');
+  const lifecycleTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/lifecycle.ts');
+  const runtimeCoreMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
   const gateway = await startGatewayServer(async ({ body }) => {
     if (body?.tool === 'session_status') {
@@ -189,7 +202,7 @@ await record('verifyAgentAlive emits degraded observability before rejecting unk
   });
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-verify-alive-stale-'));
-  const logRoot = path.join(repoRoot, '.swarm', 'logs');
+  const swarmDir = path.join(repoRoot, '.swarm');
   const runId = 'run-verify-agent-alive-stale-1';
   const transcriptPath = path.join(repoRoot, 'stream.jsonl');
   fs.writeFileSync(transcriptPath, '');
@@ -202,11 +215,11 @@ await record('verifyAgentAlive emits degraded observability before rejecting unk
     repo_root: repoRoot,
     telemetry: { enabled: true },
     agents: { forge: { cwd: repoRoot } },
-    _logDir: logRoot,
-    _runLogDir: path.join(logRoot, 'pipeline', 'runs', runId),
+    paths: { swarm_dir: swarmDir },
     _runId: runId,
     run_id: runId,
     _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    pluginRegistry: await buildBuiltInRegistry(orchestrationRuntimeRoot),
   };
 
   try {
@@ -224,7 +237,7 @@ await record('verifyAgentAlive emits degraded observability before rejecting unk
     const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
     assert.equal(streamEvents.length, 1);
     assert.equal(streamEvents[0].type, 'observability.degraded');
-    assert.equal(streamEvents[0].reason, 'session_status_unknown');
+    assert.equal(streamEvents[0].reason, 'gateway_status_unknown');
     assert.equal(streamEvents[0].module_id, '01');
     assert.equal(streamEvents[0].session_key, 'agent:main:acp:forge-01');
   } finally {
