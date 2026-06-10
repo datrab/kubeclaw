@@ -6,7 +6,7 @@
 agentRole: "nova"
 
 image:
-  repository: ghcr.io/forgestackai/kubeclaw-general
+  repository: ghcr.io/datrab/kubeclaw-general
   tag: "latest"
   pullPolicy: Always
 imagePullSecrets:
