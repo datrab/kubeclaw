@@ -28,7 +28,6 @@ export function buildCompletionEventEntry(rawEntry = {}, {
   config = {},
   targetKind = 'module',
   targetId = null,
-  expectedIdentity = {},
 } = {}) {
   const moduleId = normalizeValue(rawEntry.module ?? rawEntry.module_id ?? (targetKind === 'module' ? targetId : null));
   const gateId = normalizeValue(rawEntry.gate_id ?? (targetKind === 'gate' ? targetId : null));
@@ -43,10 +42,10 @@ export function buildCompletionEventEntry(rawEntry = {}, {
     module: moduleId || normalizeValue(rawEntry.module),
     gate_id: gateId || undefined,
     gate_type: normalizeValue(rawEntry.gate_type ?? rawEntry.gateType),
-    run_id: normalizeValue(rawEntry.run_id ?? rawEntry.runId ?? expectedIdentity.run_id ?? expectedIdentity.runId),
-    attempt: rawEntry.attempt ?? expectedIdentity.attempt ?? null,
-    dispatch_id: normalizeValue(rawEntry.dispatch_id ?? rawEntry.dispatchId ?? expectedIdentity.dispatch_id ?? expectedIdentity.dispatchId),
-    session_key: normalizeValue(rawEntry.session_key ?? rawEntry.sessionKey ?? expectedIdentity.session_key ?? expectedIdentity.sessionKey),
+    run_id: normalizeValue(rawEntry.run_id ?? rawEntry.runId),
+    attempt: rawEntry.attempt ?? null,
+    dispatch_id: normalizeValue(rawEntry.dispatch_id ?? rawEntry.dispatchId),
+    session_key: normalizeValue(rawEntry.session_key ?? rawEntry.sessionKey),
     source: safeRedisCompletionSource(rawEntry.source),
     timestamp: normalizeValue(rawEntry.timestamp ?? rawEntry.ts) || new Date().toISOString(),
     ...rawEntry,
@@ -66,7 +65,7 @@ function requireSignal(signal) {
   }
 }
 
-function buildInvalidCompletionEntry(entry = {}, validationErrors = [], expectedIdentity = {}) {
+function buildInvalidCompletionEntry(entry = {}, validationErrors = []) {
   return {
     ...entry,
     status: STATUS.FAIL,
@@ -75,10 +74,10 @@ function buildInvalidCompletionEntry(entry = {}, validationErrors = [], expected
     reason: 'invalid_completion_entry_schema',
     summary: `Invalid Redis completion event: ${validationErrors.join('; ')}`,
     invalid_completion_errors: validationErrors.join('; '),
-    run_id: normalizeValue(entry.run_id ?? expectedIdentity.run_id ?? expectedIdentity.runId),
-    attempt: normalizeValue(entry.attempt ?? expectedIdentity.attempt),
-    dispatch_id: normalizeValue(entry.dispatch_id ?? expectedIdentity.dispatch_id ?? expectedIdentity.dispatchId),
-    session_key: normalizeValue(entry.session_key ?? expectedIdentity.session_key ?? expectedIdentity.sessionKey),
+    run_id: normalizeValue(entry.run_id),
+    attempt: normalizeValue(entry.attempt),
+    dispatch_id: normalizeValue(entry.dispatch_id),
+    session_key: normalizeValue(entry.session_key),
   };
 }
 
@@ -98,7 +97,7 @@ function buildRedisCompletionResult({
 }) {
   const validationErrors = validateRedisCompletionEntry(redisEntry || {});
   const effectiveRedisEntry = validationErrors.length > 0
-    ? buildInvalidCompletionEntry(redisEntry || {}, validationErrors, expectedIdentity)
+    ? buildInvalidCompletionEntry(redisEntry || {}, validationErrors)
     : redisEntry;
 
   const completion = adjudicateCompletionEvidence({
@@ -272,28 +271,6 @@ export function buildGateLocalEvidenceResolver(projectGateCompletionState, {
   }
   return function resolveGateLocalEvidence(event) {
     const fileCompletion = projectGateCompletionState(config, gateId, gate, { activeDispatch });
-    if ((fileCompletion.outcome === 'parse_error' || fileCompletion.outcome === 'invalid_contract') && fileCompletion.source === 'output_file') {
-      return {
-        resolved: true,
-        reason: 'invalid_contract',
-        source: 'output_file',
-        target_kind: 'gate',
-        target_id: gateId,
-        event,
-        local_completion: fileCompletion,
-      };
-    }
-    if (fileCompletion.done) {
-      return {
-        resolved: true,
-        reason: fileCompletion.outcome,
-        source: fileCompletion.source || 'local_fs',
-        target_kind: 'gate',
-        target_id: gateId,
-        event,
-        local_completion: fileCompletion,
-      };
-    }
     return {
       resolved: false,
       reason: 'local_evidence_pending',

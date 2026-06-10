@@ -17,7 +17,7 @@ import {
 } from './status-store-lifecycle.ts';
 import {
   READ_MODEL_SOURCE_CANONICAL_EVENTS,
-} from './status-store-compat.ts';
+} from './status-store-read-models.ts';
 import {
   hasStrongActiveSessionIdentity,
   normalizeActiveSessionIdentity,
@@ -43,16 +43,15 @@ export {
   buildGateStatusAuthorityPolicy,
   gateOutputExists,
   getAuthoritativeModuleState,
-  projectGateLegacyEvidenceIntoReadModel,
+  projectGateEvidenceIntoReadModel,
   projectGateCompletionState,
   projectGateSchedulerState,
   projectModuleSchedulerState,
   readBusterGateCompletion,
   readGateCompletionEvidence,
   readGateOutput,
-  readGateStatusJson,
   syncApprovalWaitState,
-} from './status-store-compat.ts';
+} from './status-store-read-models.ts';
 
 export {
   projectModuleTruthDrift,
@@ -91,7 +90,7 @@ export function initLogDir(config, ctx) {
       status: 'running',
       startedAt: new Date().toISOString(),
       completedAt: null,
-      exitCode: null,
+      terminalStatus: null,
     }), null, 2)
   );
 

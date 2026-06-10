@@ -2,7 +2,6 @@
 
 import fs from 'fs';
 import { log } from '../core/logger.ts';
-import { EXIT_NEEDS_NOVA } from '../core/constants.ts';
 import { approvalGateArtifactPaths, approvalGateArtifactRefPaths, gateStatusPath } from '../core/paths.ts';
 import { discord as discordIntegration } from '../integrations/discord.ts';
 import {
@@ -93,8 +92,8 @@ export async function failClosedOnCorruptedApprovalState(config, gateId, gate, s
   );
 
   return {
-    exit: EXIT_NEEDS_NOVA,
     status: 'CORRUPTED_STATE',
+    outcome_class: 'needs_nova',
     reason,
     gate_id: gateId,
     corrupted_state: true,
@@ -121,8 +120,8 @@ export async function failClosedOnInvalidApprovalState(config, gateId, gate, sta
   );
 
   return {
-    exit: EXIT_NEEDS_NOVA,
     status: 'INVALID_STATE',
+    outcome_class: 'needs_nova',
     reason,
     gate_id: gateId,
     invalid_state: true,

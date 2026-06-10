@@ -9,6 +9,12 @@ import {
 import { normalizeFailureClass } from '../failure-semantics.ts';
 import { saveStatus } from '../status-store.ts';
 import { onModuleBlocked, onModuleFail, onRetryExhausted } from '../telemetry.ts';
+import {
+  buildPipelineStepResult,
+  PIPELINE_STEP_ACTIONS,
+  PIPELINE_STEP_OUTCOMES,
+  PIPELINE_STEP_TYPES,
+} from '../contracts/pipeline-step-result.ts';
 import { classifyFailPattern } from './classification.ts';
 import {
   buildFailureDiscordFields,
@@ -16,10 +22,6 @@ import {
   telemetryCtx,
   truncateForDiscord,
 } from './presentation.ts';
-
-const EXIT_NEEDS_NOVA = 10;
-const EXIT_BLOCKED = 20;
-const EXIT_TIMEOUT = 30;
 
 const STATUS = {
   FAIL: 'FAIL',
@@ -143,16 +145,34 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
     log('ERROR', `Module ${moduleId} BLOCKED — failed ${maxFails}x in ${phase} phase`);
     const stats = getRunStats(config);
     if (stats) stats.modules_blocked.push(moduleId);
-    return {
-      exit: EXIT_BLOCKED,
+    const dispatchId = opts.dispatch_id ?? resolveStatusDispatchId(status) ?? null;
+    const gatewayLabel = opts.gateway_label ?? resolveStatusGatewayLabel(status) ?? null;
+    const sessionKey = opts.session_key ?? resolveStatusSessionKey(status) ?? null;
+    return buildPipelineStepResult({
+      stepType: PIPELINE_STEP_TYPES.MODULE,
+      stepId: moduleId,
+      nextAction: PIPELINE_STEP_ACTIONS.HALT,
+      outcome: PIPELINE_STEP_OUTCOMES.BLOCKED,
+      issueType: 'policy',
       reason: `Max retries exceeded (${phase})`,
-      module: moduleId,
-      attempt: status.fail_count,
-      status,
-      dispatch_id: (opts.dispatch_id ?? resolveStatusDispatchId(status) ?? null),
-      gateway_label: (opts.gateway_label ?? resolveStatusGatewayLabel(status) ?? null),
-      session_key: (opts.session_key ?? resolveStatusSessionKey(status) ?? null),
-    };
+      diagnostics: {
+        metadata: {
+          module: moduleId,
+          attempt: status.fail_count,
+          status,
+          dispatch_id: dispatchId,
+          gateway_label: gatewayLabel,
+          session_key: sessionKey,
+        },
+      },
+      correlation: {
+        module_id: moduleId,
+        attempt: status.fail_count,
+        dispatch_id: dispatchId,
+        gateway_label: gatewayLabel,
+        session_key: sessionKey,
+      },
+    });
   }
 
   const failTransition = transitionModuleStatus(status, STATUS.FAIL, {
@@ -222,10 +242,8 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
 }
 
 export function buildNovaEscalation(config, status, moduleId, moduleDir, maxFails, phase, isTimeout, autoRetryThreshold, opts = {}) {
-  const exitCode = isTimeout ? EXIT_TIMEOUT : EXIT_NEEDS_NOVA;
-
   return {
-    exit: exitCode,
+    outcome_class: isTimeout ? 'timeout' : 'needs_nova',
     run_id: getRunId(config),
     module: moduleId,
     module_dir: moduleDir,

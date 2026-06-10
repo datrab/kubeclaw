@@ -276,9 +276,8 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
     errors.push('config.telemetry.enabled: must be a boolean');
   }
 
-  // telemetry.stream_key — string
-  if (config.telemetry?.stream_key !== undefined && typeof config.telemetry.stream_key !== 'string') {
-    errors.push('config.telemetry.stream_key: must be a string');
+  if (config.telemetry?.stream_key !== undefined) {
+    errors.push('config.telemetry stream_key: removed; use config.telemetry.enabled and canonical run-scoped stream names');
   }
 
   // case_study.enabled — boolean

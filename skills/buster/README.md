@@ -166,8 +166,8 @@ Suite configuration is read from `payload.test_config`. Each key maps to a suite
 | `DISCORD_WEBHOOK_URL` | — | Discord webhook for suite result and session embeds |
 | `DISCORD_WEBHOOK` | — | Alternate Discord webhook (used by redis.ts) |
 | `BUSTER_PROJECT` | — | Process-level diagnostic `project_hint` for Buster health artifacts only; task payload `project` is required and is not inferred from this env var |
-| `GATEWAY_URL` | — | ACP Gateway URL for session spawn |
-| `GATEWAY_TOKEN` | — | ACP Gateway auth token |
+| `OPENCLAW_GATEWAY_URL` | — | ACP Gateway URL for session spawn |
+| `OPENCLAW_GATEWAY_TOKEN` | — | ACP Gateway auth token |
 | `AGENT_NAME` | `unknown` | Subagent identity for Redis consumer group |
 | `HOSTNAME` | pod hostname | Used to build unique consumer name |
 

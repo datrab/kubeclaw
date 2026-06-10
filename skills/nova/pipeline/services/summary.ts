@@ -64,8 +64,16 @@ const DEFAULT_PIPELINE_REVIEW_DEPS = {
   copyRedactedTranscriptArtifact,
 };
 
+const COMPLETED_TERMINAL_STATUSES = new Set([0, 'succeeded', 'completed']);
+
 function getPipelineReviewDeps(config, overrides = {}) {
   return { ...DEFAULT_PIPELINE_REVIEW_DEPS, ...selectDeps(overrides, 'pipelineReview') };
+}
+
+function normalizeLatestSummaryStatus(terminalStatus) {
+  if (terminalStatus == null) return 'running';
+  if (COMPLETED_TERMINAL_STATUSES.has(terminalStatus)) return 'completed';
+  return 'failed';
 }
 
 /**
@@ -86,7 +94,7 @@ export function buildCumulativeSummary(config, progress) {
   };
 }
 
-export function writeSummary(config, exitCode, exitReason, ctx = null, progress = null) {
+export function writeSummary(config, terminalStatus, reasonCode, ctx = null, progress = null) {
   const artifactBundle = getPipelineArtifactBundle(config);
   if (!artifactBundle.pipeline_dir) {
     return {
@@ -132,7 +140,6 @@ export function writeSummary(config, exitCode, exitReason, ctx = null, progress 
 
     const cumulative = buildCumulativeSummary(config, progress);
 
-    // run_stats: current-run-only counters (existing behavior, renamed to sub-object)
     const run_stats = {
       modules_completed: stats.modules_completed,
       modules_failed: stats.modules_failed,
@@ -149,43 +156,16 @@ export function writeSummary(config, exitCode, exitReason, ctx = null, progress 
       config_validation_issues: stats.config_validation_issues,
     };
 
-    // Top-level fields: populated from cumulative when available (backward compat for readers
-    // expecting modules_completed, total_forge_attempts, etc. at the top level).
-    const topLevel = cumulative
-      ? {
-          modules_completed: cumulative.modules_completed,
-          modules_failed: cumulative.modules_failed,
-          modules_blocked: cumulative.modules_blocked,
-          total_forge_attempts: cumulative.total_forge_attempts,
-          total_buster_attempts: cumulative.total_buster_attempts,
-        }
-      : {
-          modules_completed: stats.modules_completed,
-          modules_failed: stats.modules_failed,
-          modules_blocked: stats.modules_blocked,
-          total_forge_attempts: stats.total_forge_attempts,
-          total_buster_attempts: stats.total_buster_attempts,
-        };
-
     const completedAt = new Date().toISOString();
     const summary = {
       run_id: artifactBundle.run_id,
       started_at: startedAt,
       completed_at: completedAt,
       ended_at: completedAt,
-      exit_code: exitCode,
-      exit_reason: exitReason,
+      terminal_status: terminalStatus ?? null,
+      reason_code: reasonCode,
       project: config.project,
       telemetry_stream_key: artifactBundle.telemetry_stream_key,
-      ...topLevel,
-      gates_completed: stats.gates_completed,
-      gates_failed: stats.gates_failed,
-      total_echo_reviews: stats.total_echo_reviews,
-      errors: stats.errors,
-      discord_notifications_sent: stats.discord_notifications_sent,
-      git_pull_failures: stats.git_pull_failures,
-      git_push_failures: stats.git_push_failures,
-      config_validation_issues: stats.config_validation_issues,
       duration_seconds: Math.round((Date.now() - new Date(startedAt).getTime()) / 1000),
       run_stats,
       ...(cumulative ? { cumulative } : {}),
@@ -220,14 +200,14 @@ export function writeSummary(config, exitCode, exitReason, ctx = null, progress 
     const latestPath = artifactBundle.latest_json_path || path.join(pipelineDir, 'latest.json');
     const latestTmp = latestPath + '.tmp';
     fs.writeFileSync(latestTmp, JSON.stringify(sanitizeJsonEgress(buildLatestPointer(config, {
-      status: exitCode === null ? 'running' : (exitCode === 0 ? 'completed' : 'failed'),
+      status: normalizeLatestSummaryStatus(terminalStatus),
       startedAt: summary.started_at || null,
       completedAt: summary.completed_at || null,
-      exitCode,
+      terminalStatus,
     }), 'latest_pointer'), null, 2));
     fs.renameSync(latestTmp, latestPath);
 
-    log('OK', `Pipeline summary written: exit=${exitCode} (${exitReason})`);
+    log('OK', `Pipeline summary written: terminal_status=${terminalStatus} (${reasonCode})`);
     return {
       output_dir: pipelineDir,
       pipeline_summary_path: pipelineSummaryPath,

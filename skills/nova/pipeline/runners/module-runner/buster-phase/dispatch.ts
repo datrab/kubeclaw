@@ -1,4 +1,4 @@
-import { STATUS, EXIT_ERROR, EXIT_NEEDS_NOVA } from '../../../core/constants.ts';
+import { STATUS } from '../../../core/constants.ts';
 import { log } from '../../../core/logger.ts';
 import { getRunId } from '../../../core/runtime.ts';
 import {
@@ -74,7 +74,7 @@ export async function executeBusterAttemptDispatch({
     log('ERROR', `Module ${moduleId} — ${reason}`);
     emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'buster', busterModel, status?.status ?? STATUS.READY_FOR_TESTING, reason);
     return { terminal: { retry: false, result: {
-      exit: EXIT_NEEDS_NOVA,
+      outcome_class: 'needs_nova',
       reason,
       module: moduleId,
       module_dir: dir,
@@ -95,7 +95,7 @@ export async function executeBusterAttemptDispatch({
         terminal: {
           retry: false,
           result: {
-            exit: EXIT_ERROR,
+            outcome_class: 'error',
             reason: promptResult.error,
             gateway_label: resolveStatusGatewayLabel(status),
             session_key: resolveStatusSessionKey(status),
@@ -127,7 +127,7 @@ export async function executeBusterAttemptDispatch({
       );
       deps.clearShutdownContext();
       return { terminal: { retry: false, result: {
-        exit: EXIT_NEEDS_NOVA,
+        outcome_class: 'needs_nova',
         reason,
         module: moduleId, module_dir: dir,
         gateway_label: resolveStatusGatewayLabel(status),

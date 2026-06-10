@@ -62,11 +62,10 @@ function stripInvokeSuffix(value: unknown) {
 function configuredGatewayUrl(override?: string | null) {
   const raw = override !== undefined && override !== null
     ? override
-    : process.env.OPENCLAW_GATEWAY_URL
-    || process.env.GATEWAY_URL;
+    : process.env.OPENCLAW_GATEWAY_URL;
   const base = stripInvokeSuffix(raw);
   if (!base) {
-    throw new Error('Gateway URL is required; provide gatewayUrl, OPENCLAW_GATEWAY_URL, or GATEWAY_URL');
+    throw new Error('Gateway URL is required; provide gatewayUrl or OPENCLAW_GATEWAY_URL');
   }
   return base;
 }
@@ -94,11 +93,9 @@ export function resolveGatewayHealthUrl(override?: string | null) {
 
 export function resolveGatewayToken(override?: string | null) {
   if (override !== undefined && override !== null) return String(override);
-  const token = process.env.OPENCLAW_GATEWAY_TOKEN !== undefined
-    ? process.env.OPENCLAW_GATEWAY_TOKEN
-    : process.env.GATEWAY_TOKEN;
+  const token = process.env.OPENCLAW_GATEWAY_TOKEN;
   if (token === undefined) {
-    throw new Error('Gateway token policy is required; provide gatewayToken, OPENCLAW_GATEWAY_TOKEN, or GATEWAY_TOKEN');
+    throw new Error('Gateway token policy is required; provide gatewayToken or OPENCLAW_GATEWAY_TOKEN');
   }
   return token;
 }
@@ -115,7 +112,7 @@ function gatewayHeaders(gatewayToken: string | null | undefined, extraHeaders: G
 function optionalGatewayHeaders(gatewayToken: string | null | undefined, extraHeaders: GatewayHeaders = {}) {
   const token = gatewayToken !== undefined && gatewayToken !== null
     ? String(gatewayToken)
-    : process.env.OPENCLAW_GATEWAY_TOKEN ?? process.env.GATEWAY_TOKEN;
+    : process.env.OPENCLAW_GATEWAY_TOKEN;
   return {
     'Content-Type': 'application/json',
     ...(token ? { Authorization: `Bearer ${token}` } : {}),

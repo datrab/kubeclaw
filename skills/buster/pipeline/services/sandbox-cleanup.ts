@@ -75,6 +75,17 @@ interface CleanupStateDiagnostic {
   detail: string | null;
 }
 
+interface DiskUsageSnapshot {
+  path: string;
+  exists: boolean;
+  size_bytes: number | null;
+  free_bytes: number | null;
+  available_bytes: number | null;
+  used_bytes: number | null;
+  usage_percent: number | null;
+  error?: string;
+}
+
 interface RunExecResult {
   ok: boolean;
   ignored?: boolean;
@@ -89,10 +100,11 @@ export const DEFAULT_SANDBOX_ROOT = '/sandbox';
 export const DEFAULT_WWW_DIR = '/sandbox/www';
 export const DEFAULT_RESULTS_DIR = '/sandbox/results';
 const STATE_DIR_NAME = '.buster-cleanup';
-const SAFE_NAMESPACE_RE = /^(buster|test)-/;
+const SAFE_NAMESPACE_RE = /^test-/;
 const STATE_LOCK_TIMEOUT_MS = 5000;
 const STATE_LOCK_STALE_MS = 30000;
 const STATE_LOCK_RETRY_MS = 10;
+const KUBECLAW_NS = process.env.KUBECLAW_NAMESPACE || 'kubeclaw';
 export const CLEANUP_SCOPE_LABEL = 'openclaw.io/buster-scope';
 
 export const CLEANUP_POLICY = Object.freeze({
@@ -107,6 +119,59 @@ const TRACKED_RESOURCE_SCOPE = Object.freeze({
   SCOPED: 'scoped',
   ALL: 'all',
 });
+
+function readDiskUsage(targetPath: string): DiskUsageSnapshot {
+  if (!fs.existsSync(targetPath)) {
+    return {
+      path: targetPath,
+      exists: false,
+      size_bytes: null,
+      free_bytes: null,
+      available_bytes: null,
+      used_bytes: null,
+      usage_percent: null,
+    };
+  }
+  try {
+    const stats = fs.statfsSync(targetPath);
+    const blockSize = Number(stats.bsize || 0);
+    const totalBlocks = Number(stats.blocks || 0);
+    const freeBlocks = Number(stats.bfree || 0);
+    const availableBlocks = Number(stats.bavail || 0);
+    const sizeBytes = totalBlocks * blockSize;
+    const freeBytes = freeBlocks * blockSize;
+    const availableBytes = availableBlocks * blockSize;
+    const usedBytes = Math.max(0, sizeBytes - freeBytes);
+    return {
+      path: targetPath,
+      exists: true,
+      size_bytes: sizeBytes,
+      free_bytes: freeBytes,
+      available_bytes: availableBytes,
+      used_bytes: usedBytes,
+      usage_percent: sizeBytes > 0 ? Math.round((usedBytes / sizeBytes) * 10000) / 100 : null,
+    };
+  } catch (error: unknown) {
+    const detail = error instanceof Error ? error.message : String(error || 'unknown');
+    return {
+      path: targetPath,
+      exists: true,
+      size_bytes: null,
+      free_bytes: null,
+      available_bytes: null,
+      used_bytes: null,
+      usage_percent: null,
+      error: detail,
+    };
+  }
+}
+
+function readSandboxDiskUsage(sandboxRoot: string): Record<string, DiskUsageSnapshot> {
+  return {
+    sandbox_root: readDiskUsage(sandboxRoot),
+    podman_storage: readDiskUsage('/var/lib/containers'),
+  };
+}
 
 function normalizeResourceValue(value: unknown): string | null {
   if (value === undefined || value === null) return null;
@@ -507,6 +572,19 @@ async function cleanupStateFile(stage: string, statePath: string, options: Clean
       remaining.namespaces.push(namespaceName);
       continue;
     }
+    const leaseResult = await runExecFile(execFileAsync, 'kubectl', ['delete', 'busternamespacelease', namespaceName, '-n', KUBECLAW_NS, '--wait=false'], {
+      timeout: 15000,
+      ignore: /(not found|no resources found|the server doesn't have a resource type)/i,
+    });
+    if (leaseResult.ok) {
+      cleaned.namespaces.push(namespaceName);
+      continue;
+    }
+    if (!leaseResult.ignored) {
+      errors.push(`namespace:${namespaceName}: ${leaseResult.error}`);
+      remaining.namespaces.push(namespaceName);
+      continue;
+    }
     const nsResult = await runExecFile(execFileAsync, 'kubectl', ['delete', 'namespace', namespaceName, '--wait=false'], {
       timeout: 15000,
       ignore: /(not found|no resources found)/i,
@@ -540,6 +618,7 @@ async function cleanupStateFile(stage: string, statePath: string, options: Clean
 export async function cleanupSandboxResources(stage: string, payload: CleanupPayload | null = null, options: CleanupOptions = {}): Promise<Record<string, unknown>> {
   const sandboxRoot = options.sandboxRoot || DEFAULT_SANDBOX_ROOT;
   const start = Date.now();
+  const diskUsageBefore = readSandboxDiskUsage(sandboxRoot);
   const policy = normalizeCleanupPolicy(stage, payload, options);
   const policyDenied: PolicyDeniedEntry[] = [];
   const statePaths = resolveCleanupStatePaths(stage, payload, sandboxRoot, policy, policyDenied);
@@ -619,6 +698,10 @@ export async function cleanupSandboxResources(stage: string, payload: CleanupPay
     ok: errors.length === 0 && policyDenied.length === 0,
     duration_seconds: Math.round((Date.now() - start) / 1000),
     cleanup_policy: publicCleanupPolicy(policy),
+    disk_usage: {
+      before: diskUsageBefore,
+      after: readSandboxDiskUsage(sandboxRoot),
+    },
     cleaned: {
       containers: uniqueValues(cleaned.containers),
       images: uniqueValues(cleaned.images),

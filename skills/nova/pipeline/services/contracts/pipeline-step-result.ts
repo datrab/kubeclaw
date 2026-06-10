@@ -1,12 +1,9 @@
-import {
-  EXIT_OK,
-  EXIT_ERROR,
-  EXIT_NEEDS_NOVA,
-  EXIT_BLOCKED,
-  EXIT_TIMEOUT,
-  EXIT_RATE_LIMITED,
-} from '../../core/constants.ts';
 import { cloneSerializable as cloneSerializableValue } from '../serialization.ts';
+import {
+  buildPipelineTerminalDecisionFromStepOutcome,
+  pipelineTerminalStatusForStepOutcome,
+  validatePipelineTerminalDecision,
+} from './terminal-decision.ts';
 
 type UnknownRecord = Record<string, any>;
 
@@ -38,24 +35,6 @@ export const PIPELINE_STEP_OUTCOMES: Record<string, any> = Object.freeze({
   ERROR: 'error',
   TIMEOUT: 'timeout',
   RATE_LIMITED: 'rate_limited',
-});
-
-export const PIPELINE_STEP_EXIT_CODES: Record<string, number> = Object.freeze({
-  [PIPELINE_STEP_OUTCOMES.PASSED]: EXIT_OK,
-  [PIPELINE_STEP_OUTCOMES.ERROR]: EXIT_ERROR,
-  [PIPELINE_STEP_OUTCOMES.NEEDS_NOVA]: EXIT_NEEDS_NOVA,
-  [PIPELINE_STEP_OUTCOMES.BLOCKED]: EXIT_BLOCKED,
-  [PIPELINE_STEP_OUTCOMES.TIMEOUT]: EXIT_TIMEOUT,
-  [PIPELINE_STEP_OUTCOMES.RATE_LIMITED]: EXIT_RATE_LIMITED,
-});
-
-export const PIPELINE_STEP_EXIT_LABELS: Record<number, string> = Object.freeze({
-  [EXIT_OK]: 'OK',
-  [EXIT_ERROR]: 'ERROR',
-  [EXIT_NEEDS_NOVA]: 'NEEDS_NOVA',
-  [EXIT_BLOCKED]: 'BLOCKED',
-  [EXIT_TIMEOUT]: 'TIMEOUT',
-  [EXIT_RATE_LIMITED]: 'RATE_LIMITED',
 });
 
 const OUTCOMES_BY_ACTION: Record<string, readonly string[]> = Object.freeze({
@@ -105,15 +84,7 @@ export function isPipelineStepOutcome(outcome: unknown): boolean {
 }
 
 export function isTerminalPipelineStepOutcome(outcome: unknown): boolean {
-  return Object.prototype.hasOwnProperty.call(PIPELINE_STEP_EXIT_CODES, outcome as string);
-}
-
-export function pipelineStepExitCodeForOutcome(outcome: unknown): number | null {
-  return PIPELINE_STEP_EXIT_CODES[outcome as string] ?? null;
-}
-
-export function pipelineStepExitLabelForCode(exitCode: unknown): string {
-  return PIPELINE_STEP_EXIT_LABELS[Number(exitCode)] || 'UNKNOWN';
+  return pipelineTerminalStatusForStepOutcome(outcome) != null;
 }
 
 export function pipelineStepActionForControlAction(controlAction: unknown): string | null {
@@ -133,10 +104,10 @@ function isPlainObject(value: unknown): value is UnknownRecord {
 }
 
 function normalizeTerminal({ outcome }: UnknownRecord = {}): UnknownRecord {
-  const exitCode = pipelineStepExitCodeForOutcome(outcome);
+  const decision = buildPipelineTerminalDecisionFromStepOutcome({ outcome });
   return {
-    exitCode,
-    exitLabel: exitCode == null ? null : pipelineStepExitLabelForCode(exitCode),
+    status: decision?.status ?? null,
+    decision,
   };
 }
 
@@ -248,10 +219,27 @@ export function validatePipelineStepResult(result: unknown = {}): string[] {
     errors.push(`outcome '${result.outcome}' is not valid for nextAction '${result.nextAction}'`);
   }
 
-  const expectedExitCode = pipelineStepExitCodeForOutcome(result.outcome);
-  const actualExitCode = result?.terminal?.exitCode ?? null;
-  if (expectedExitCode !== actualExitCode) {
-    errors.push(`terminal.exitCode must be ${expectedExitCode == null ? 'null' : expectedExitCode} for outcome '${result.outcome}'`);
+  if (Object.prototype.hasOwnProperty.call(result?.terminal || {}, 'exitCode')) errors.push('numeric terminal exitCode must not be present');
+  if (Object.prototype.hasOwnProperty.call(result?.terminal || {}, 'exitLabel')) errors.push('numeric terminal exitLabel must not be present');
+  if (Object.prototype.hasOwnProperty.call(result?.terminal || {}, 'exit_code')) errors.push('numeric terminal exit_code must not be present');
+  if (Object.prototype.hasOwnProperty.call(result?.terminal || {}, 'exit_label')) errors.push('numeric terminal exit_label must not be present');
+
+  const expectedTerminalStatus = pipelineTerminalStatusForStepOutcome(result.outcome);
+  const actualTerminalStatus = result?.terminal?.status ?? null;
+  if (expectedTerminalStatus !== actualTerminalStatus) {
+    errors.push(`terminal.status must be ${expectedTerminalStatus == null ? 'null' : expectedTerminalStatus} for outcome '${result.outcome}'`);
+  }
+
+  const terminalDecision = result?.terminal?.decision ?? null;
+  if (expectedTerminalStatus == null && terminalDecision != null) {
+    errors.push(`terminal.decision must be null for non-terminal outcome '${result.outcome}'`);
+  } else if (expectedTerminalStatus != null) {
+    const decisionErrors = validatePipelineTerminalDecision(terminalDecision);
+    if (decisionErrors.length > 0) {
+      errors.push(...decisionErrors.map((error) => `terminal.decision ${error}`));
+    } else if (terminalDecision.status !== expectedTerminalStatus) {
+      errors.push(`terminal.decision.status must be ${expectedTerminalStatus} for outcome '${result.outcome}'`);
+    }
   }
 
   return errors;
@@ -263,14 +251,14 @@ export function assertPipelineStepResult(result: unknown = {}): UnknownRecord {
   return result as UnknownRecord;
 }
 
-export function pipelineStepExitCode(result: unknown = {}): number | null {
+export function pipelineStepTerminalStatus(result: unknown = {}): string | null {
   const stepResult = assertPipelineStepResult(result);
-  return stepResult?.terminal?.exitCode ?? pipelineStepExitCodeForOutcome(stepResult.outcome);
+  return stepResult?.terminal?.status ?? pipelineTerminalStatusForStepOutcome(stepResult.outcome);
 }
 
-export function pipelineStepExitLabel(result: unknown = {}): string | null {
-  const exitCode = pipelineStepExitCode(result);
-  return exitCode == null ? null : pipelineStepExitLabelForCode(exitCode);
+export function pipelineStepTerminalDecision(result: unknown = {}): UnknownRecord | null {
+  const stepResult = assertPipelineStepResult(result);
+  return stepResult?.terminal?.decision ?? null;
 }
 
 export function pipelineStepDiagnosticSummary(result: unknown = {}): string | null {

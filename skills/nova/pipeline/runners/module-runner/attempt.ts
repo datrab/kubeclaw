@@ -1,15 +1,7 @@
 // runners/module-runner/attempt.ts — one module lifecycle attempt
 
 import { selectDeps } from '../../core/deps.ts';
-import {
-  STATUS,
-  EXIT_OK,
-  EXIT_ERROR,
-  EXIT_BLOCKED,
-  EXIT_TIMEOUT,
-  EXIT_RATE_LIMITED,
-  EXIT_NEEDS_NOVA,
-} from '../../core/constants.ts';
+import { STATUS } from '../../core/constants.ts';
 import { log } from '../../core/logger.ts';
 import { validateBusterConfig, resolvePolicy, logEffectivePolicy } from '../../core/config.ts';
 import { headHash, invalidateHeadHash } from '../../core/git-context.ts';
@@ -123,13 +115,21 @@ function buildTypedModuleAttemptTerminal(config: AnyRecord, moduleId: string, te
   };
 }
 
-function moduleTerminalOutcomeForExit(exit: unknown) {
-  const exitCode = Number(exit);
-  if (exitCode === EXIT_OK) return PIPELINE_STEP_OUTCOMES.PASSED;
-  if (exitCode === EXIT_BLOCKED) return PIPELINE_STEP_OUTCOMES.BLOCKED;
-  if (exitCode === EXIT_TIMEOUT) return PIPELINE_STEP_OUTCOMES.TIMEOUT;
-  if (exitCode === EXIT_RATE_LIMITED) return PIPELINE_STEP_OUTCOMES.RATE_LIMITED;
-  if (exitCode === EXIT_NEEDS_NOVA) return PIPELINE_STEP_OUTCOMES.NEEDS_NOVA;
+function moduleTerminalOutcomeForResult(result: AnyRecord = {}) {
+  const explicitOutcome = String(result?.outcome_class || result?.outcomeClass || '').trim().toLowerCase();
+  if (explicitOutcome === 'passed') return PIPELINE_STEP_OUTCOMES.PASSED;
+  if (explicitOutcome === 'blocked') return PIPELINE_STEP_OUTCOMES.BLOCKED;
+  if (explicitOutcome === 'timeout') return PIPELINE_STEP_OUTCOMES.TIMEOUT;
+  if (explicitOutcome === 'rate_limited') return PIPELINE_STEP_OUTCOMES.RATE_LIMITED;
+  if (explicitOutcome === 'needs_nova') return PIPELINE_STEP_OUTCOMES.NEEDS_NOVA;
+  if (explicitOutcome === 'error') return PIPELINE_STEP_OUTCOMES.ERROR;
+
+  const domainStatus = String(result?.status?.status || result?.status || '').trim().toUpperCase();
+  if (domainStatus === STATUS.PASS) return PIPELINE_STEP_OUTCOMES.PASSED;
+  if (domainStatus === STATUS.BLOCKED) return PIPELINE_STEP_OUTCOMES.BLOCKED;
+  if (domainStatus === STATUS.RATE_LIMITED) return PIPELINE_STEP_OUTCOMES.RATE_LIMITED;
+  if (result?.timed_out === true || result?.timeout === true) return PIPELINE_STEP_OUTCOMES.TIMEOUT;
+  if (result?.rate_limit_exhausted === true) return PIPELINE_STEP_OUTCOMES.RATE_LIMITED;
   return PIPELINE_STEP_OUTCOMES.ERROR;
 }
 
@@ -144,7 +144,7 @@ function buildTypedModuleAttemptResult(config: AnyRecord, moduleId: string, resu
   const rawResult: AnyRecord = result && typeof result === 'object' ? (result as AnyRecord) : {};
   const diagnostics = rawResult.diagnostics || {};
   const activeStatus = rawResult.status || null;
-  const outcome = moduleTerminalOutcomeForExit(rawResult.exit);
+  const outcome = moduleTerminalOutcomeForResult(rawResult);
   return buildPipelineStepResult({
     stepType: PIPELINE_STEP_TYPES.MODULE,
     stepId: moduleId,
@@ -205,8 +205,8 @@ export async function executeModuleAttempt({
     emitTerminalModuleFailTelemetry(config, moduleId, dependencyStatus, mod, 'dependency_check', null, dependencyStatus?.status ?? STATUS.PENDING, reason);
     return {
       retry: false,
-      result: buildTypedModuleAttemptResult(config, moduleId, {
-        exit: EXIT_ERROR,
+    result: buildTypedModuleAttemptResult(config, moduleId, {
+        outcome_class: 'error',
         reason,
         status: dependencyStatus,
         phase: 'dependency_check',

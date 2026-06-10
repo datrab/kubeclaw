@@ -1,12 +1,13 @@
 # Buster Namespace Fence — ValidatingAdmissionPolicy (K8s GA since 1.30)
 #
-# Buster needs cluster-scoped namespace create/delete to spin up ephemeral
-# test namespaces. Standard RBAC cannot restrict by name prefix on cluster-
-# scoped resources, so we use a VAP with CEL validation to enforce that
-# buster can only touch namespaces starting with "buster-" or "test-".
+# The Buster namespace controller needs cluster-scoped namespace create/delete
+# to spin up ephemeral test namespaces. Standard RBAC cannot restrict by name
+# prefix on cluster-scoped resources, so we use a VAP with CEL validation to
+# enforce that only the broker controller can touch managed namespaces starting
+# with "test-".
 #
-# The policy only fires when the caller is the agent-buster ServiceAccount.
-# All other callers are unaffected.
+# The policy only fires when the caller is the Buster ServiceAccount or the
+# Buster namespace-controller ServiceAccount. All other callers are unaffected.
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingAdmissionPolicy
@@ -21,17 +22,38 @@ spec:
         resources:   ["namespaces"]
         operations:  ["CREATE", "DELETE"]
   matchConditions:
-    - name: is-buster-serviceaccount
+    - name: is-buster-namespace-actor
       expression: >
         request.userInfo.username ==
-        "system:serviceaccount:kubeclaw:agent-buster"
+        "system:serviceaccount:kubeclaw:agent-buster" ||
+        request.userInfo.username ==
+        "system:serviceaccount:kubeclaw:agent-buster-namespace-controller"
   validations:
     - expression: >
-        object.metadata.name.startsWith("buster-") ||
-        object.metadata.name.startsWith("test-")
+        request.userInfo.username !=
+        "system:serviceaccount:kubeclaw:agent-buster"
       message: >
-        Buster may only create or delete namespaces with prefix "buster-" or "test-".
-        Production namespaces are protected.
+        Buster must request BusterNamespaceLease objects instead of creating or
+        deleting namespaces directly.
+    - expression: >
+        request.operation == "CREATE"
+          ? (
+              object.metadata.name.startsWith("test-") &&
+              has(object.metadata.labels) &&
+              "kubeclaw/managed-by" in object.metadata.labels &&
+              object.metadata.labels["kubeclaw/managed-by"] ==
+                "buster-namespace-controller"
+            )
+          : (
+              oldObject.metadata.name.startsWith("test-") &&
+              has(oldObject.metadata.labels) &&
+              "kubeclaw/managed-by" in oldObject.metadata.labels &&
+              oldObject.metadata.labels["kubeclaw/managed-by"] ==
+                "buster-namespace-controller"
+            )
+      message: >
+        The Buster namespace controller may only create or delete managed
+        namespaces with prefix "test-".
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingAdmissionPolicyBinding

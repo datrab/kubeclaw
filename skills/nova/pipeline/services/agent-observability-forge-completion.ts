@@ -1,8 +1,8 @@
 // services/agent-observability-forge-completion.ts — Phase 5 Forge completion authority.
 //
 // Forge readiness is decided from canonical agent.ended telemetry plus meaningful
-// git evidence. Agent-side forge-completion.json remains readable for migration
-// diagnostics, but it is not completion authority here.
+// git evidence. The typed forge-completion.json path is ignored as control output
+// during this decision and is not completion authority here.
 
 import path from 'path';
 import { STATUS } from '../core/constants.ts';
@@ -253,7 +253,7 @@ export function createAgentEndedTelemetryReader(config, opts = {}) {
   if (opts.agentEndedReader) return opts.agentEndedReader;
   const runId = opts.runId || opts.run_id || getRunId(config) || '';
   const project = config?.project || '';
-  if (!config?.telemetry?.enabled && !config?.telemetry?.stream_key) {
+  if (config?.telemetry?.enabled !== true) {
     return null;
   }
   if (!runId || !project) return null;

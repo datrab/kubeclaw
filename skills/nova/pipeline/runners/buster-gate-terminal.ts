@@ -3,7 +3,7 @@
 // The runner still owns setup, dispatch, polling loop, and remediation controller wiring.
 
 import { log } from '../core/logger.ts';
-import { STATUS, EXIT_OK, EXIT_ERROR, EXIT_NEEDS_NOVA, EXIT_TIMEOUT, EXIT_RATE_LIMITED } from '../core/constants.ts';
+import { STATUS } from '../core/constants.ts';
 import { getRunId } from '../core/runtime.ts';
 import { onGatePass, onGateFail } from '../services/telemetry.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
@@ -89,8 +89,9 @@ export async function handleBusterGateEvaluationResult({
       },
     });
     return buildBusterGateControlResult(config, gateId, gate, {
-      exit: EXIT_OK,
       status: STATUS.PASS,
+      passed: true,
+      outcome_class: 'passed',
       completion_source: result.status?._source || result.status?.source || null,
       attempt,
       dispatch_id: dispatchId,
@@ -120,11 +121,11 @@ export async function handleBusterGateEvaluationResult({
       },
     });
     return buildBusterGateControlResult(config, gateId, gate, {
-      exit: EXIT_NEEDS_NOVA,
       reason: err,
       gateway_label: gatewayLabel,
       session_key: sessionKey,
       failure_class: 'config_invalid',
+      outcome_class: 'needs_nova',
       attempt,
       dispatch_id: dispatchId,
     }, { ...opts, input: { ids: { attempt } } });
@@ -151,11 +152,11 @@ export async function handleBusterGateEvaluationResult({
       },
     });
     return buildBusterGateControlResult(config, gateId, gate, {
-      exit: EXIT_ERROR,
       reason: `Gate '${gateId}' spawn failed: ${err}`,
       gateway_label: gatewayLabel,
       session_key: sessionKey,
       failure_class: 'spawn_failed',
+      outcome_class: 'error',
       attempt,
       dispatch_id: dispatchId,
     }, { ...opts, input: { ids: { attempt } } });
@@ -193,11 +194,11 @@ export async function handleBusterGateEvaluationResult({
       },
     });
     return buildBusterGateControlResult(config, gateId, gate, {
-      exit: EXIT_ERROR,
       reason: err,
       gateway_label: gatewayLabel,
       session_key: sessionKey,
       failure_class: 'invalid_contract',
+      outcome_class: 'error',
       status: invalid,
       attempt,
       dispatch_id: dispatchId,
@@ -224,11 +225,11 @@ export async function handleBusterGateEvaluationResult({
       },
     });
     return buildBusterGateControlResult(config, gateId, gate, {
-      exit: EXIT_NEEDS_NOVA,
       reason: `Gate '${gateId}' status file permanently corrupted`,
       gateway_label: gatewayLabel,
       session_key: sessionKey,
       failure_class: 'parse_corrupted',
+      outcome_class: 'needs_nova',
       attempt,
       dispatch_id: dispatchId,
     }, { ...opts, input: { ids: { attempt } } });
@@ -254,11 +255,11 @@ export async function handleBusterGateEvaluationResult({
       },
     });
     return buildBusterGateControlResult(config, gateId, gate, {
-      exit: EXIT_TIMEOUT,
       reason: `Gate '${gateId}' timed out`,
       gateway_label: gatewayLabel,
       session_key: sessionKey,
       failure_class: 'timeout',
+      outcome_class: 'timeout',
       attempt,
       dispatch_id: dispatchId,
     }, { ...opts, input: { ids: { attempt } } });
@@ -285,12 +286,12 @@ export async function handleBusterGateEvaluationResult({
       },
     });
     return buildBusterGateControlResult(config, gateId, gate, {
-      exit: EXIT_ERROR,
       reason: err,
       polling_git: result.status?.details || result.status || null,
       gateway_label: gatewayLabel,
       session_key: sessionKey,
       failure_class: 'git_error',
+      outcome_class: 'error',
       attempt,
       dispatch_id: dispatchId,
     }, { ...opts, input: { ids: { attempt } } });
@@ -312,8 +313,8 @@ export async function handleBusterGateEvaluationResult({
         session_key: sessionKey,
       },
       maxPauses: maxRateLimitPauses,
-      exit: EXIT_RATE_LIMITED,
       reason: exhaustedReason,
+      resultOverrides: { outcome_class: 'rate_limited' },
       telemetryCtx: telemetryCtx(config),
       runId: getRunId(config),
       discordFn: deps.discord,
@@ -348,6 +349,7 @@ export async function handleBusterGateEvaluationResult({
     return buildBusterGateControlResult(config, gateId, gate, {
       ...gateRateLimitExit,
       failure_class: 'rate_limit_exhausted',
+      outcome_class: 'rate_limited',
       attempt: gateRateLimitExit.attempt ?? attempt,
       dispatch_id: gateRateLimitExit.dispatch_id ?? dispatchId,
       gateway_label: gateRateLimitExit.gateway_label ?? gatewayLabel,
@@ -385,12 +387,12 @@ export async function handleBusterGateEvaluationResult({
       },
     });
     return buildBusterGateControlResult(config, gateId, gate, {
-      exit: EXIT_ERROR,
       reason: err,
       status: completionStatus,
       gateway_label: gatewayLabel,
       session_key: sessionKey,
       failure_class: result.reason,
+      outcome_class: 'error',
       attempt,
       dispatch_id: dispatchId,
     }, { ...opts, input: { ids: { attempt } } });
@@ -461,11 +463,11 @@ export async function handleBusterGateEvaluationResult({
     },
   });
   return buildBusterGateControlResult(config, gateId, gate, {
-    exit: EXIT_NEEDS_NOVA,
     reason: `Gate '${gateId}' failed: ${failReason}`,
     gateway_label: gatewayLabel,
     session_key: sessionKey,
     failure_class: 'verdict_fail',
+    outcome_class: 'needs_nova',
     remaining_issues: issues,
     attempt,
     dispatch_id: dispatchId,

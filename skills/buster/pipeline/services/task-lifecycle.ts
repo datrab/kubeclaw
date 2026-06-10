@@ -55,6 +55,48 @@ function sandboxCleanupFailureReason(cleanup) {
   return cleanup.reason || cleanup.error || 'cleanup returned ok=false';
 }
 
+function collectAppTestCredentials(suitesInfo = {}) {
+  const credentials = [];
+  for (const result of suitesInfo?.results || []) {
+    const entries = Array.isArray(result?.metadata?.test_credentials)
+      ? result.metadata.test_credentials
+      : [];
+    for (const entry of entries) {
+      if (!entry || typeof entry !== 'object' || !entry.values || typeof entry.values !== 'object') continue;
+      credentials.push({
+        suite: result.suite || 'unknown',
+        namespace: result.metadata?.test_namespace || null,
+        service_url: result.metadata?.service_url || null,
+        preview_url: result.metadata?.preview_url || null,
+        secret: entry.secret || null,
+        purpose: entry.purpose || null,
+        values: entry.values,
+      });
+    }
+  }
+  return credentials;
+}
+
+function appendAppTestCredentialsToPrompt(prompt, suitesInfo = {}) {
+  const credentials = collectAppTestCredentials(suitesInfo);
+  if (credentials.length === 0) return prompt || '';
+  const section = [
+    '',
+    '---',
+    '',
+    '## App Test Credentials',
+    '',
+    'The deterministic pre-test runner decoded only the app-under-test credentials explicitly declared in `test_config.k8s.test_credentials` or final-preview credential config.',
+    'Use these values only for authenticated tests against the deployed app. Do not print them into `output_file` unless a failing assertion requires a redacted reference.',
+    '',
+    '```json',
+    JSON.stringify(credentials, null, 2),
+    '```',
+    '',
+  ].join('\n');
+  return `${prompt || ''}${section}`;
+}
+
 export async function processTask(payload, opts = {}) {
   const identity = validateBusterTaskPayload(payload);
   const moduleId   = identity.moduleId;
@@ -220,7 +262,7 @@ export async function processTask(payload, opts = {}) {
     stage = 'spawn-session';
     logger.step('spawn-session');
 
-    const prompt = payload?.prompt || '';
+    const prompt = appendAppTestCredentialsToPrompt(payload?.prompt || '', suitesInfo);
     const spawnResult = await spawnTaskSession({
       payload,
       prompt,

@@ -48,18 +48,14 @@ async function buildBuiltInRegistry(runtimeRootForRegistry) {
   return registry;
 }
 
-await record('gateway token/env resolution works for OPENCLAW and GATEWAY names with correct precedence', async () => {
+await record('gateway token/env resolution uses only canonical OPENCLAW names', async () => {
   const prev = {
     OPENCLAW_GATEWAY_URL: process.env.OPENCLAW_GATEWAY_URL,
     OPENCLAW_GATEWAY_TOKEN: process.env.OPENCLAW_GATEWAY_TOKEN,
-    GATEWAY_URL: process.env.GATEWAY_URL,
-    GATEWAY_TOKEN: process.env.GATEWAY_TOKEN,
   };
   try {
     process.env.OPENCLAW_GATEWAY_URL = 'http://gw.example/tools/invoke';
     process.env.OPENCLAW_GATEWAY_TOKEN = 'openclaw-token';
-    process.env.GATEWAY_URL = 'http://legacy.example';
-    process.env.GATEWAY_TOKEN = 'legacy-token';
     assert.equal(gatewayMod.resolveGatewayBaseUrl(), 'http://gw.example');
     assert.equal(gatewayMod.resolveGatewayInvokeUrl(), 'http://gw.example/tools/invoke');
     assert.equal(gatewayMod.resolveGatewayHealthUrl(), 'http://gw.example/health');
@@ -67,13 +63,6 @@ await record('gateway token/env resolution works for OPENCLAW and GATEWAY names 
 
     delete process.env.OPENCLAW_GATEWAY_URL;
     delete process.env.OPENCLAW_GATEWAY_TOKEN;
-    assert.equal(gatewayMod.resolveGatewayBaseUrl(), 'http://legacy.example');
-    assert.equal(gatewayMod.resolveGatewayInvokeUrl(), 'http://legacy.example/tools/invoke');
-    assert.equal(gatewayMod.resolveGatewayHealthUrl(), 'http://legacy.example/health');
-    assert.equal(gatewayMod.resolveGatewayToken(), 'legacy-token');
-
-    delete process.env.GATEWAY_URL;
-    delete process.env.GATEWAY_TOKEN;
     assert.throws(
       () => gatewayMod.resolveGatewayBaseUrl(),
       /Gateway URL is required/

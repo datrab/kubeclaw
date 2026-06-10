@@ -3,7 +3,6 @@ import {
   loadStatus,
   readBusterGateCompletion,
   readGateOutput,
-  readGateStatusJson,
 } from '../services/status-store.ts';
 import { injectNeedsNova } from '../services/failures/presentation.ts';
 import { discord } from '../integrations/discord.ts';
@@ -27,7 +26,6 @@ export const DEFAULT_PIPELINE_RUNNER_DEPS = {
   runGate,
   readBusterGateCompletion,
   readGateOutput,
-  readGateStatusJson,
   releaseGateFiles,
   syncControlFiles,
   writeSummary,

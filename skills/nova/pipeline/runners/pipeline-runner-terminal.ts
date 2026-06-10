@@ -9,7 +9,6 @@ import {
   appendPipelineLifecycleEvent,
   loadLifecycleReadModels,
 } from '../services/status-store.ts';
-import { EXIT_OK, EXIT_BLOCKED, EXIT_ERROR, EXIT_NEEDS_NOVA, EXIT_TIMEOUT, EXIT_RATE_LIMITED } from '../core/constants.ts';
 import {
   onPipelineCompleted,
   onPipelineHalted,
@@ -29,9 +28,9 @@ import {
   buildPipelineStepResult,
   isPipelineStepResult,
   pipelineStepDiagnosticSummary,
-  pipelineStepExitCode,
-  pipelineStepExitLabel,
   pipelineStepRateLimitDetails,
+  pipelineStepTerminalDecision,
+  pipelineStepTerminalStatus,
   PIPELINE_STEP_ACTIONS,
   PIPELINE_STEP_OUTCOMES,
   PIPELINE_STEP_TYPES,
@@ -49,6 +48,7 @@ import { getPipelineRunnerDeps } from './pipeline-runner-deps.ts';
 import { getPipelineArtifactBundle } from '../services/artifact-bundle.ts';
 import { getRunId } from '../core/runtime.ts';
 import { resolvePipelineRunLogDir } from '../core/paths.ts';
+import { deliverFinalPreviews } from '../services/preview-delivery.ts';
 
 type AnyRecord = Record<string, any>;
 type TerminalGeneratorRunState = {
@@ -72,28 +72,23 @@ const TERMINAL_COMPLETION_GENERATORS = Object.freeze([
   },
 ]);
 
+const PROCESS_SUCCESS_CODE = 0;
+const PROCESS_FAILURE_CODE = 1;
+
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
-const EXIT_LABELS = Object.freeze({
-  [EXIT_ERROR]: 'ERROR',
-  [EXIT_NEEDS_NOVA]: 'NEEDS_NOVA',
-  [EXIT_BLOCKED]: 'BLOCKED',
-  [EXIT_TIMEOUT]: 'TIMEOUT',
-  [EXIT_RATE_LIMITED]: 'RATE_LIMITED',
-});
-
-function exitLabelForCode(exitCode: number | null | undefined): string {
-  return EXIT_LABELS[exitCode as keyof typeof EXIT_LABELS] || 'UNKNOWN';
+function shouldInjectNeedsNovaForTerminalStatus(terminalStatus: string | null | undefined): boolean {
+  return terminalStatus === 'action_required' || terminalStatus === 'timed_out';
 }
 
-function shouldInjectNeedsNovaForExit(exitCode: number | null | undefined): boolean {
-  return exitCode === EXIT_NEEDS_NOVA || exitCode === EXIT_TIMEOUT;
+function shouldEmitEscalationForTerminalStatus(terminalStatus: string | null | undefined): boolean {
+  return terminalStatus === 'action_required' || terminalStatus === 'timed_out' || terminalStatus === 'blocked';
 }
 
-function shouldEmitEscalationForExit(exitCode: number | null | undefined): boolean {
-  return exitCode === EXIT_NEEDS_NOVA || exitCode === EXIT_TIMEOUT || exitCode === EXIT_BLOCKED;
+export function processExitCodeForTerminalStatus(terminalStatus: string | null | undefined): number {
+  return terminalStatus === 'succeeded' ? PROCESS_SUCCESS_CODE : PROCESS_FAILURE_CODE;
 }
 
 function buildInvalidPipelineStepResult(result: AnyRecord, { stepType = PIPELINE_STEP_TYPES.PIPELINE, stepId = 'unknown' }: AnyRecord = {}): AnyRecord {
@@ -113,7 +108,7 @@ function buildInvalidPipelineStepResult(result: AnyRecord, { stepType = PIPELINE
     diagnostics: {
       summary: reason,
       metadata: {
-        compatibility_authority_rejected: true,
+        invalid_step_result_rejected: true,
         rejected_result_kind: result?.kind || null,
         rejected_result_keys: resultKeys,
       },
@@ -127,37 +122,36 @@ function buildInvalidPipelineStepResult(result: AnyRecord, { stepType = PIPELINE
 
 export function normalizeStepResultForPipeline(result: AnyRecord = {}, step: AnyRecord = {}): AnyRecord {
   if (isPipelineStepResult(result)) {
-    const exitCode = pipelineStepExitCode(result);
     return {
       stepResult: result,
-      exitCode,
-      exitLabel: exitCode == null ? null : pipelineStepExitLabel(result),
+      terminalStatus: pipelineStepTerminalStatus(result),
+      terminalDecision: pipelineStepTerminalDecision(result),
       shouldContinue: result.nextAction === 'continue',
     };
   }
   const invalidStepResult = buildInvalidPipelineStepResult(result, step);
-  const exitCode = pipelineStepExitCode(invalidStepResult);
   return {
     stepResult: invalidStepResult,
-    exitCode,
-    exitLabel: pipelineStepExitLabel(invalidStepResult),
+    terminalStatus: pipelineStepTerminalStatus(invalidStepResult),
+    terminalDecision: pipelineStepTerminalDecision(invalidStepResult),
     shouldContinue: false,
   };
 }
 
-export function emitPipelineSummaryLifecycle(config: AnyRecord, ctx: AnyRecord, exitCode: number, exitReason: string, progress: AnyRecord, writeSummaryFn: (...args: any[]) => AnyRecord): AnyRecord {
+export function emitPipelineSummaryLifecycle(config: AnyRecord, ctx: AnyRecord, terminalStatus: string, reasonCode: string, progress: AnyRecord, writeSummaryFn: (...args: any[]) => AnyRecord, terminalDecision: AnyRecord | null = null): AnyRecord {
   const baseData = {
     output_dir: getPipelineArtifactBundle(config).pipeline_dir,
-    exit_code: exitCode ?? null,
-    exit_reason: exitReason || null,
+    terminal_status: terminalStatus || null,
+    terminal_decision: terminalDecision || null,
+    reason_code: reasonCode || null,
   };
   onSummaryStarted(ctx, 'pipeline', baseData);
-  const summaryResult = writeSummaryFn(config, exitCode, exitReason, ctx, progress) || {};
+  const summaryResult = writeSummaryFn(config, terminalStatus, reasonCode, ctx, progress) || {};
   const { failed: summaryFailed, ...summaryTelemetryFields } = summaryResult;
   const completionData: AnyRecord = {
     ...baseData,
     ...summaryTelemetryFields,
-    status: summaryFailed ? 'failed' : (exitCode === EXIT_OK ? 'ok' : 'failed'),
+    status: summaryFailed ? 'failed' : (terminalStatus === 'succeeded' ? 'ok' : 'failed'),
   };
   if (summaryFailed && !completionData.reason) {
     completionData.reason = 'Failed to write pipeline summary';
@@ -242,8 +236,8 @@ async function runTerminalCompletionGenerator(config: AnyRecord, progress: AnyRe
   const result = await runScheduledGenerator(config, progress, stageId, {
     scheduleReason: 'pipeline_complete',
     mode: 'full',
-    exitCode: EXIT_OK,
-    exitReason: 'PIPELINE_COMPLETE',
+    terminalStatus: 'succeeded',
+    reasonCode: 'PIPELINE_COMPLETE',
     causationRef: 'event:pipeline_run.completed',
     ...opts,
   });
@@ -273,12 +267,15 @@ export async function finalizeTerminalHalt(config: AnyRecord, progress: AnyRecor
   const ctx = { ..._telemetryCtx(config), deps: opts.deps || null };
   const normalizedResult = normalizeStepResultForPipeline(result, { stepType, stepId });
   const stepResult = normalizedResult.stepResult;
-  const exitCode = normalizedResult.exitCode ?? EXIT_ERROR;
-  const exitLabel = normalizedResult.exitLabel || exitLabelForCode(exitCode);
+  const terminalStatus = normalizedResult.terminalStatus || 'failed';
+  const terminalDecision = normalizedResult.terminalDecision || null;
+  const exitCode = processExitCodeForTerminalStatus(terminalStatus);
   const typedOperatorReason = pipelineStepDiagnosticSummary(stepResult) || 'see previous alert';
   const typedRateLimit = pipelineStepRateLimitDetails(stepResult);
+  const isRateLimited = terminalStatus === 'rate_limited';
   const correlatedResult = buildResultWithStepCorrelation(config, progress, stepType, stepId, {
-    exit: exitCode,
+    terminal_status: terminalStatus,
+    terminal_decision: terminalDecision,
     step_type: stepResult.stepType,
     step_id: stepResult.stepId,
     outcome: stepResult.outcome,
@@ -287,7 +284,7 @@ export async function finalizeTerminalHalt(config: AnyRecord, progress: AnyRecor
     reason: typedOperatorReason,
     ...(stepResult.diagnostics?.metadata || {}),
     ...(stepResult.correlation || {}),
-    ...(exitCode === EXIT_RATE_LIMITED ? {
+    ...(isRateLimited ? {
       rate_limit_authority: typedRateLimit.source,
       rate_limit_exhausted: typedRateLimit.rate_limit_exhausted,
       max_rate_limit_pauses: typedRateLimit.max_rate_limit_pauses,
@@ -295,9 +292,9 @@ export async function finalizeTerminalHalt(config: AnyRecord, progress: AnyRecor
     } : {}),
   }, deps);
   const gateType = resolvePipelineGateType(progress, stepType, stepId, correlatedResult);
-  const maxRateLimitPauses = exitCode === EXIT_RATE_LIMITED ? typedRateLimit.max_rate_limit_pauses : null;
-  const rateLimitExhausted = exitCode === EXIT_RATE_LIMITED ? typedRateLimit.rate_limit_exhausted : false;
-  const haltReason = exitLabel || 'UNKNOWN';
+  const maxRateLimitPauses = isRateLimited ? typedRateLimit.max_rate_limit_pauses : null;
+  const rateLimitExhausted = isRateLimited ? typedRateLimit.rate_limit_exhausted : false;
+  const haltReason = terminalDecision?.reasonCode || terminalStatus || 'failed';
   const operatorReason = typedOperatorReason;
   const resolvedSummaryReason = summaryReason || `${haltReason}:${stepId}`;
 
@@ -318,9 +315,10 @@ export async function finalizeTerminalHalt(config: AnyRecord, progress: AnyRecor
     dispatch_id: resolveResultDispatchId(correlatedResult),
     gateway_label: resolveResultGatewayLabel(correlatedResult),
     session_key: resolveResultSessionKey(correlatedResult),
-    exit_code: exitCode,
+    terminal_status: terminalStatus,
+    terminal_decision: terminalDecision,
     reason: operatorReason,
-    ...(exitCode === EXIT_RATE_LIMITED ? {
+    ...(isRateLimited ? {
       rate_limit_exhausted: rateLimitExhausted,
       max_rate_limit_pauses: maxRateLimitPauses,
     } : {}),
@@ -330,41 +328,40 @@ export async function finalizeTerminalHalt(config: AnyRecord, progress: AnyRecor
       discord: {
         level: 'CRITICAL',
         title: `Pipeline halted: ${config.project}`,
-        description: `Pipeline stopped at ${stepType} '${stepId}'. Exit: ${haltReason || exitCode}.`,
+        description: `Pipeline stopped at ${stepType} '${stepId}'. Status: ${terminalStatus}.`,
         fields: [
           ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: config._runId || config.run_id || 'unknown', module_id: stepType === 'module' ? stepId : null, gate_id: stepType === 'gate' ? stepId : null, gate_type: gateType, step_type: stepType, attempt: resolveResultAttempt(correlatedResult), dispatch_id: resolveResultDispatchId(correlatedResult), gateway_label: resolveResultGatewayLabel(correlatedResult), session_key: resolveResultSessionKey(correlatedResult) }),
           { name: 'Stopped At', value: `${stepType}:${stepId}` },
-          { name: 'Exit Code', value: `${exitCode} (${haltReason || 'UNKNOWN'})` },
+          { name: 'Status', value: String(terminalStatus) },
           { name: 'Reason', value: String(operatorReason).slice(0, 200) },
-          ...(exitCode === EXIT_RATE_LIMITED && maxRateLimitPauses != null ? [{ name: 'Rate Limit Pauses', value: String(maxRateLimitPauses) }] : []),
-          ...(exitCode === EXIT_BLOCKED ? [{ name: 'Action', value: 'Fix manually, then --resume' }] : []),
+          ...(isRateLimited && maxRateLimitPauses != null ? [{ name: 'Rate Limit Pauses', value: String(maxRateLimitPauses) }] : []),
+          ...(terminalStatus === 'blocked' ? [{ name: 'Action', value: 'Fix manually, then --resume' }] : []),
         ],
       },
     },
   });
 
-  if (shouldInjectNeedsNovaForExit(exitCode)) {
+  if (shouldInjectNeedsNovaForTerminalStatus(terminalStatus)) {
     await deps.injectNeedsNova(config, correlatedResult, opts.novaChannel, stepType, stepId);
   }
-  if (shouldEmitEscalationForExit(exitCode)) {
+  if (shouldEmitEscalationForTerminalStatus(terminalStatus)) {
     onEscalated(ctx, stepType, stepId, {
       ...buildEscalationPayload(stepType, stepId, correlatedResult, haltReason, gateType),
-      exit_code: exitCode,
     });
   }
-  deps.output(correlatedResult);
+  deps.output({ exit: exitCode, ...correlatedResult });
   onPipelineHalted(ctx, buildPipelineHaltPayload(stepType, stepId, correlatedResult, haltReason, gateType));
-  emitPipelineSummaryLifecycle(config, ctx, exitCode, resolvedSummaryReason, progress, deps.writeSummary);
+  emitPipelineSummaryLifecycle(config, ctx, terminalStatus, resolvedSummaryReason, progress, deps.writeSummary, terminalDecision);
   try { writeCostReport(config); } catch (_error) { /* non-critical */ }
 
-  if (scheduleProjectSummaryOnBlocked && exitCode === EXIT_BLOCKED) {
+  if (scheduleProjectSummaryOnBlocked && terminalStatus === 'blocked') {
     await runScheduledGenerator(config, progress, 'generator:project_summary', {
       scheduleReason: 'blocked_terminal_halt',
       mode: 'full',
       ...(stepType === 'module' ? { moduleId: stepId } : {}),
       ...(stepType === 'gate' ? { gateId: stepId } : {}),
-      exitCode,
-      exitReason: resolvedSummaryReason,
+      terminalStatus,
+      reasonCode: resolvedSummaryReason,
       orderIndex: 1,
       causationRef: 'event:pipeline_run.halted',
     });
@@ -377,7 +374,7 @@ export async function completePipeline(config: AnyRecord, progress: AnyRecord, o
   if (priorPipelineState?.run_id === (config._runId || config.run_id || null) && priorPipelineState?.status === 'COMPLETED') {
     log('INFO', `Pipeline run '${priorPipelineState.run_id}' already completed — checking terminal generators`);
     await runMissingTerminalCompletionGenerators(config, progress, opts);
-    return EXIT_OK;
+    return PROCESS_SUCCESS_CODE;
   }
 
   const deps = getPipelineRunnerDeps(config, opts.deps);
@@ -386,17 +383,17 @@ export async function completePipeline(config: AnyRecord, progress: AnyRecord, o
   try {
     appendPipelineLifecycleEvent(config, 'pipeline_run.completed', {
       progress,
-      result: { exit: EXIT_OK, reason: 'PIPELINE_COMPLETE' },
+      result: { terminal_status: 'succeeded', reason: 'PIPELINE_COMPLETE' },
     });
   } catch (error) {
     if (!errorMessage(error).includes('is already terminal')) throw error;
     log('INFO', `Pipeline run '${config._runId || config.run_id || 'unknown'}' already terminal — checking terminal generators`);
     await runMissingTerminalCompletionGenerators(config, progress, opts);
-    return EXIT_OK;
+    return PROCESS_SUCCESS_CODE;
   }
   log('OK', '🎉 Pipeline complete — all modules and gates PASS');
-  deps.output({ exit: EXIT_OK, status: 'PIPELINE_COMPLETE' });
-  await onPipelineCompleted(ctx, EXIT_OK, undefined, {}, {
+  deps.output({ exit: PROCESS_SUCCESS_CODE, status: 'PIPELINE_COMPLETE' });
+  await onPipelineCompleted(ctx, 'succeeded', undefined, {}, {
     presentation: {
       discord: {
         level: 'OK',
@@ -406,10 +403,15 @@ export async function completePipeline(config: AnyRecord, progress: AnyRecord, o
       },
     },
   });
-  emitPipelineSummaryLifecycle(config, ctx, EXIT_OK, 'PIPELINE_COMPLETE', progress, deps.writeSummary);
+  emitPipelineSummaryLifecycle(config, ctx, 'succeeded', 'PIPELINE_COMPLETE', progress, deps.writeSummary);
+  try {
+    await deliverFinalPreviews(config, progress, { discord: deps.discord, deps: opts.deps });
+  } catch (error) {
+    log('WARN', `Final preview delivery failed: ${errorMessage(error)}`);
+  }
   try { writeCostReport(config); } catch (_error) { /* non-critical */ }
   await runMissingTerminalCompletionGenerators(config, progress, opts);
-  return EXIT_OK;
+  return PROCESS_SUCCESS_CODE;
 }
 
 export async function haltPipeline(config: AnyRecord, progress: AnyRecord, next: AnyRecord, result: AnyRecord | null, opts: AnyRecord = {}): Promise<number> {

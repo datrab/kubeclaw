@@ -29,7 +29,7 @@ export function loadPlatformSwarmConfig(configPath = discoverSwarmConfigPath()) 
   if (!fs.existsSync(resolvedPath)) {
     throw new Error(
       `Swarm config missing: ${resolvedPath}\n` +
-      `  Expected ${DEFAULT_SWARM_CONFIG_PATH} or SWARM_CONFIG fallback`
+      `  Expected ${DEFAULT_SWARM_CONFIG_PATH}; SWARM_CONFIG is checked only as a secondary candidate`
     );
   }
   try {

@@ -191,17 +191,6 @@ function isTerminalCompletionStatus(status) {
   return TERMINAL_COMPLETION_STATUSES.includes(normalizeStatusText(status));
 }
 
-function isLegacyStatusJsonSource(source) {
-  const normalized = String(source || '').trim().toLowerCase();
-  return normalized === 'status.json'
-    || normalized === 'status_json'
-    || normalized === 'legacy_status:status_json';
-}
-
-function shouldIgnoreStatusCompletion(status = null, statusSource = null) {
-  return isLegacyStatusJsonSource(statusSource) || isLegacyStatusJsonSource(status?._source);
-}
-
 function buildCompletionAuthorityPolicy({ redisCompletion = null, statusCompletion = null, expectedIdentity = {} } = {}) {
   const redisStatus = normalizeStatusText(redisCompletion?.status);
   const statusStatus = normalizeStatusText(statusCompletion?.status);
@@ -334,7 +323,7 @@ export function adjudicateCompletionEvidence({
   const redisCompletion = redisEntry?.status
     ? projectCompletionState({ targetKind, targetId, expectedStatuses, redisEntry, source: 'redis' })
     : null;
-  const statusCompletion = status?.status && !shouldIgnoreStatusCompletion(status, statusSource)
+  const statusCompletion = status?.status
     ? projectCompletionState({ targetKind, targetId, expectedStatuses, status, source: statusSource })
     : null;
   const drift = buildCompletionDrift({ redisCompletion, statusCompletion, expectedIdentity });

@@ -1,4 +1,4 @@
-// services/correlation.js — canonical correlation authority + diagnostic provenance helpers
+// services/correlation.js — canonical correlation authority + provenance helpers
 
 function canonicalRef(prefix, value) {
   if (value == null || value === '') return null;
@@ -23,16 +23,7 @@ function normalizeResolvedValue(value) {
   return value;
 }
 
-function resolveFallbackField(fallback, names = []) {
-  if (!fallback || typeof fallback !== 'object' || Array.isArray(fallback)) return null;
-  for (const name of names) {
-    const value = normalizeResolvedValue(fallback?.[name]);
-    if (value !== null) return value;
-  }
-  return null;
-}
-
-function resolveFieldWithProvenance(input, resolvers, fallbackValue, fallbackField) {
+function resolveFieldWithProvenance(input, resolvers) {
   for (const resolver of resolvers) {
     const value = normalizeResolvedValue(resolver.get(input));
     if (value !== null) {
@@ -45,18 +36,6 @@ function resolveFieldWithProvenance(input, resolvers, fallbackValue, fallbackFie
         },
       };
     }
-  }
-
-  const normalizedFallback = normalizeResolvedValue(fallbackValue);
-  if (normalizedFallback !== null) {
-    return {
-      value: normalizedFallback,
-      source: {
-        family: 'fallback',
-        path: `fallback.${fallbackField}`,
-        via: fallbackField,
-      },
-    };
   }
 
   return { value: null, source: null };
@@ -178,93 +157,47 @@ const RESULT_READ_MODEL_GATE_TYPE_RESOLVERS = [
 
 export function resolveStatusCorrelation(status) {
   return finalizeCorrelationBundle({
-    dispatch_id: resolveFieldWithProvenance(status, STATUS_DISPATCH_ID_RESOLVERS, null, 'dispatch_id'),
-    gateway_label: resolveFieldWithProvenance(status, STATUS_GATEWAY_LABEL_RESOLVERS, null, 'gateway_label'),
-    session_key: resolveFieldWithProvenance(status, STATUS_SESSION_KEY_RESOLVERS, null, 'session_key'),
-  });
-}
-
-export function resolveStatusCorrelationWithDiagnosticFallback(status, fallback = {}) {
-  return finalizeCorrelationBundle({
-    dispatch_id: resolveFieldWithProvenance(status, STATUS_DISPATCH_ID_RESOLVERS, resolveFallbackField(fallback, ['dispatch_id', 'dispatchId']), 'dispatch_id'),
-    gateway_label: resolveFieldWithProvenance(status, STATUS_GATEWAY_LABEL_RESOLVERS, resolveFallbackField(fallback, ['gateway_label', 'gatewayLabel']), 'gateway_label'),
-    session_key: resolveFieldWithProvenance(status, STATUS_SESSION_KEY_RESOLVERS, resolveFallbackField(fallback, ['session_key', 'sessionKey']), 'session_key'),
+    dispatch_id: resolveFieldWithProvenance(status, STATUS_DISPATCH_ID_RESOLVERS),
+    gateway_label: resolveFieldWithProvenance(status, STATUS_GATEWAY_LABEL_RESOLVERS),
+    session_key: resolveFieldWithProvenance(status, STATUS_SESSION_KEY_RESOLVERS),
   });
 }
 
 export function resolveStatusCorrelationProvenance(status) {
   return finalizeCorrelationBundle({
-    dispatch_id: resolveFieldWithProvenance(status, STATUS_PROVENANCE_DISPATCH_ID_RESOLVERS, null, 'dispatch_id'),
-    gateway_label: resolveFieldWithProvenance(status, STATUS_PROVENANCE_GATEWAY_LABEL_RESOLVERS, null, 'gateway_label'),
-    session_key: resolveFieldWithProvenance(status, STATUS_PROVENANCE_SESSION_KEY_RESOLVERS, null, 'session_key'),
-  });
-}
-
-export function resolveStatusCorrelationProvenanceWithDiagnosticFallback(status, fallback = {}) {
-  return finalizeCorrelationBundle({
-    dispatch_id: resolveFieldWithProvenance(status, STATUS_PROVENANCE_DISPATCH_ID_RESOLVERS, resolveFallbackField(fallback, ['dispatch_id', 'dispatchId']), 'dispatch_id'),
-    gateway_label: resolveFieldWithProvenance(status, STATUS_PROVENANCE_GATEWAY_LABEL_RESOLVERS, resolveFallbackField(fallback, ['gateway_label', 'gatewayLabel']), 'gateway_label'),
-    session_key: resolveFieldWithProvenance(status, STATUS_PROVENANCE_SESSION_KEY_RESOLVERS, resolveFallbackField(fallback, ['session_key', 'sessionKey']), 'session_key'),
+    dispatch_id: resolveFieldWithProvenance(status, STATUS_PROVENANCE_DISPATCH_ID_RESOLVERS),
+    gateway_label: resolveFieldWithProvenance(status, STATUS_PROVENANCE_GATEWAY_LABEL_RESOLVERS),
+    session_key: resolveFieldWithProvenance(status, STATUS_PROVENANCE_SESSION_KEY_RESOLVERS),
   });
 }
 
 export function resolveResultCorrelation(result) {
   return finalizeCorrelationBundle({
-    attempt: resolveFieldWithProvenance(result, RESULT_ATTEMPT_RESOLVERS, null, 'attempt'),
-    dispatch_id: resolveFieldWithProvenance(result, RESULT_DISPATCH_ID_RESOLVERS, null, 'dispatch_id'),
-    gateway_label: resolveFieldWithProvenance(result, RESULT_GATEWAY_LABEL_RESOLVERS, null, 'gateway_label'),
-    session_key: resolveFieldWithProvenance(result, RESULT_SESSION_KEY_RESOLVERS, null, 'session_key'),
-    gate_type: resolveFieldWithProvenance(result, RESULT_GATE_TYPE_RESOLVERS, null, 'gate_type'),
-  });
-}
-
-export function resolveResultCorrelationWithDiagnosticFallback(result, fallback = {}) {
-  return finalizeCorrelationBundle({
-    attempt: resolveFieldWithProvenance(result, RESULT_ATTEMPT_RESOLVERS, resolveFallbackField(fallback, ['attempt']), 'attempt'),
-    dispatch_id: resolveFieldWithProvenance(result, RESULT_DISPATCH_ID_RESOLVERS, resolveFallbackField(fallback, ['dispatch_id', 'dispatchId']), 'dispatch_id'),
-    gateway_label: resolveFieldWithProvenance(result, RESULT_GATEWAY_LABEL_RESOLVERS, resolveFallbackField(fallback, ['gateway_label', 'gatewayLabel']), 'gateway_label'),
-    session_key: resolveFieldWithProvenance(result, RESULT_SESSION_KEY_RESOLVERS, resolveFallbackField(fallback, ['session_key', 'sessionKey']), 'session_key'),
-    gate_type: resolveFieldWithProvenance(result, RESULT_GATE_TYPE_RESOLVERS, resolveFallbackField(fallback, ['gate_type', 'gateType']), 'gate_type'),
+    attempt: resolveFieldWithProvenance(result, RESULT_ATTEMPT_RESOLVERS),
+    dispatch_id: resolveFieldWithProvenance(result, RESULT_DISPATCH_ID_RESOLVERS),
+    gateway_label: resolveFieldWithProvenance(result, RESULT_GATEWAY_LABEL_RESOLVERS),
+    session_key: resolveFieldWithProvenance(result, RESULT_SESSION_KEY_RESOLVERS),
+    gate_type: resolveFieldWithProvenance(result, RESULT_GATE_TYPE_RESOLVERS),
   });
 }
 
 export function resolveResultReadModelCorrelation(result) {
   return finalizeCorrelationBundle({
-    attempt: resolveFieldWithProvenance(result, RESULT_READ_MODEL_ATTEMPT_RESOLVERS, null, 'attempt'),
-    dispatch_id: resolveFieldWithProvenance(result, RESULT_READ_MODEL_DISPATCH_ID_RESOLVERS, null, 'dispatch_id'),
-    gateway_label: resolveFieldWithProvenance(result, RESULT_READ_MODEL_GATEWAY_LABEL_RESOLVERS, null, 'gateway_label'),
-    session_key: resolveFieldWithProvenance(result, RESULT_READ_MODEL_SESSION_KEY_RESOLVERS, null, 'session_key'),
-    gate_type: resolveFieldWithProvenance(result, RESULT_READ_MODEL_GATE_TYPE_RESOLVERS, null, 'gate_type'),
-  });
-}
-
-export function resolveResultReadModelCorrelationWithDiagnosticFallback(result, fallback = {}) {
-  return finalizeCorrelationBundle({
-    attempt: resolveFieldWithProvenance(result, RESULT_READ_MODEL_ATTEMPT_RESOLVERS, resolveFallbackField(fallback, ['attempt']), 'attempt'),
-    dispatch_id: resolveFieldWithProvenance(result, RESULT_READ_MODEL_DISPATCH_ID_RESOLVERS, resolveFallbackField(fallback, ['dispatch_id', 'dispatchId']), 'dispatch_id'),
-    gateway_label: resolveFieldWithProvenance(result, RESULT_READ_MODEL_GATEWAY_LABEL_RESOLVERS, resolveFallbackField(fallback, ['gateway_label', 'gatewayLabel']), 'gateway_label'),
-    session_key: resolveFieldWithProvenance(result, RESULT_READ_MODEL_SESSION_KEY_RESOLVERS, resolveFallbackField(fallback, ['session_key', 'sessionKey']), 'session_key'),
-    gate_type: resolveFieldWithProvenance(result, RESULT_READ_MODEL_GATE_TYPE_RESOLVERS, resolveFallbackField(fallback, ['gate_type', 'gateType']), 'gate_type'),
+    attempt: resolveFieldWithProvenance(result, RESULT_READ_MODEL_ATTEMPT_RESOLVERS),
+    dispatch_id: resolveFieldWithProvenance(result, RESULT_READ_MODEL_DISPATCH_ID_RESOLVERS),
+    gateway_label: resolveFieldWithProvenance(result, RESULT_READ_MODEL_GATEWAY_LABEL_RESOLVERS),
+    session_key: resolveFieldWithProvenance(result, RESULT_READ_MODEL_SESSION_KEY_RESOLVERS),
+    gate_type: resolveFieldWithProvenance(result, RESULT_READ_MODEL_GATE_TYPE_RESOLVERS),
   });
 }
 
 export function resolveResultReadModelCorrelationProvenance(result) {
   return finalizeCorrelationBundle({
-    attempt: resolveFieldWithProvenance(result, RESULT_READ_MODEL_ATTEMPT_PROVENANCE_RESOLVERS, null, 'attempt'),
-    dispatch_id: resolveFieldWithProvenance(result, RESULT_READ_MODEL_DISPATCH_ID_RESOLVERS, null, 'dispatch_id'),
-    gateway_label: resolveFieldWithProvenance(result, RESULT_READ_MODEL_GATEWAY_LABEL_RESOLVERS, null, 'gateway_label'),
-    session_key: resolveFieldWithProvenance(result, RESULT_READ_MODEL_SESSION_KEY_RESOLVERS, null, 'session_key'),
-    gate_type: resolveFieldWithProvenance(result, RESULT_READ_MODEL_GATE_TYPE_RESOLVERS, null, 'gate_type'),
-  });
-}
-
-export function resolveResultReadModelCorrelationProvenanceWithDiagnosticFallback(result, fallback = {}) {
-  return finalizeCorrelationBundle({
-    attempt: resolveFieldWithProvenance(result, RESULT_READ_MODEL_ATTEMPT_PROVENANCE_RESOLVERS, resolveFallbackField(fallback, ['attempt']), 'attempt'),
-    dispatch_id: resolveFieldWithProvenance(result, RESULT_READ_MODEL_DISPATCH_ID_RESOLVERS, resolveFallbackField(fallback, ['dispatch_id', 'dispatchId']), 'dispatch_id'),
-    gateway_label: resolveFieldWithProvenance(result, RESULT_READ_MODEL_GATEWAY_LABEL_RESOLVERS, resolveFallbackField(fallback, ['gateway_label', 'gatewayLabel']), 'gateway_label'),
-    session_key: resolveFieldWithProvenance(result, RESULT_READ_MODEL_SESSION_KEY_RESOLVERS, resolveFallbackField(fallback, ['session_key', 'sessionKey']), 'session_key'),
-    gate_type: resolveFieldWithProvenance(result, RESULT_READ_MODEL_GATE_TYPE_RESOLVERS, resolveFallbackField(fallback, ['gate_type', 'gateType']), 'gate_type'),
+    attempt: resolveFieldWithProvenance(result, RESULT_READ_MODEL_ATTEMPT_PROVENANCE_RESOLVERS),
+    dispatch_id: resolveFieldWithProvenance(result, RESULT_READ_MODEL_DISPATCH_ID_RESOLVERS),
+    gateway_label: resolveFieldWithProvenance(result, RESULT_READ_MODEL_GATEWAY_LABEL_RESOLVERS),
+    session_key: resolveFieldWithProvenance(result, RESULT_READ_MODEL_SESSION_KEY_RESOLVERS),
+    gate_type: resolveFieldWithProvenance(result, RESULT_READ_MODEL_GATE_TYPE_RESOLVERS),
   });
 }
 

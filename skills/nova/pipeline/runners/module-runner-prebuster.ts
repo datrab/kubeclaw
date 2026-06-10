@@ -1,7 +1,7 @@
 // runners/module-runner-prebuster.ts — pre-Buster validation and git preparation
 
 import { buildPluginInvocationEnvelope, createPluginContext } from '../core/context.ts';
-import { STATUS, EXIT_ERROR, EXIT_NEEDS_NOVA } from '../core/constants.ts';
+import { STATUS } from '../core/constants.ts';
 import { log } from '../core/logger.ts';
 import { getRunId } from '../core/runtime.ts';
 import { requireStageHandler } from '../core/registry.ts';
@@ -104,7 +104,7 @@ function buildModuleValidatorBlockTerminal(moduleId: string, stageId: string, re
   return {
     retry: false,
     result: {
-      exit: EXIT_ERROR,
+      outcome_class: 'error',
       reason,
       module: moduleId,
       validator: stageId,
@@ -245,7 +245,7 @@ export async function prepareModuleForBuster({
       terminal: {
         retry: false,
         result: {
-          exit: EXIT_ERROR,
+          outcome_class: 'error',
           reason: 'Validation milestones missing before Buster dispatch — refusing to continue',
           module: moduleId,
           gateway_label: resolveStatusGatewayLabel(status),
@@ -269,7 +269,7 @@ export async function prepareModuleForBuster({
         terminal: {
           retry: false,
           result: {
-            exit: EXIT_ERROR,
+            outcome_class: 'error',
             reason: errorMessage(e),
             gateway_label: resolveStatusGatewayLabel(status),
             session_key: resolveStatusSessionKey(status),

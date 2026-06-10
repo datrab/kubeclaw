@@ -203,39 +203,6 @@ await record('correlation helpers preserve field provenance while keeping canoni
   });
   assert.equal(statusCorrelation.provenance.session_key, null);
 
-  const statusFallbackCorrelation = correlationMod.resolveStatusCorrelationWithDiagnosticFallback({
-    gateway_label: 'forge-01-dispatch',
-    active_agent: {
-      dispatch_id: 'forge-01-dispatch',
-      session_key: 'agent:main:acp:forge-01',
-    },
-  }, {
-    dispatch_id: 'dispatch-fallback',
-    gateway_label: 'label-fallback',
-    session_key: 'session-fallback',
-  });
-
-  assert.equal(statusFallbackCorrelation.dispatch_id, 'dispatch-fallback');
-  assert.equal(statusFallbackCorrelation.gateway_label, 'forge-01-dispatch');
-  assert.equal(statusFallbackCorrelation.session_key, 'session-fallback');
-  assert.equal(statusFallbackCorrelation.source_family, 'mixed');
-  assert.deepEqual(statusFallbackCorrelation.source_families, ['fallback', 'status']);
-  assert.deepEqual(statusFallbackCorrelation.provenance.dispatch_id, {
-    family: 'fallback',
-    path: 'fallback.dispatch_id',
-    via: 'dispatch_id',
-  });
-  assert.deepEqual(statusFallbackCorrelation.provenance.gateway_label, {
-    family: 'status',
-    path: 'status.gateway_label',
-    via: 'gateway_label',
-  });
-  assert.deepEqual(statusFallbackCorrelation.provenance.session_key, {
-    family: 'fallback',
-    path: 'fallback.session_key',
-    via: 'session_key',
-  });
-
   const statusCorrelationProvenance = correlationMod.resolveStatusCorrelationProvenance({
     gateway_label: 'forge-01-dispatch',
     active_agent: {
@@ -283,38 +250,6 @@ await record('correlation helpers preserve field provenance while keeping canoni
   });
   assert.equal(resultCorrelation.provenance.session_key, null);
   assert.equal(resultCorrelation.provenance.gate_type, null);
-
-  const resultFallbackCorrelation = correlationMod.resolveResultCorrelationWithDiagnosticFallback({
-    rate_limit_status: {
-      attempt: 4,
-      dispatch_id: 'review-dispatch-04',
-      gateway_label: 'review-dispatch-04',
-    },
-    module_status: {
-      session_key: 'agent:main:acp:review-04',
-      gate_type: 'review',
-    },
-  }, {
-    attempt: 9,
-    dispatch_id: 'dispatch-fallback',
-    gateway_label: 'label-fallback',
-    session_key: 'session-fallback',
-    gate_type: 'fallback-gate',
-  });
-  assert.equal(resultFallbackCorrelation.session_key, 'session-fallback');
-  assert.equal(resultFallbackCorrelation.gate_type, 'fallback-gate');
-  assert.equal(resultFallbackCorrelation.source_family, 'mixed');
-  assert.deepEqual(resultFallbackCorrelation.source_families, ['rate_limit_status', 'fallback']);
-  assert.deepEqual(resultFallbackCorrelation.provenance.session_key, {
-    family: 'fallback',
-    path: 'fallback.session_key',
-    via: 'session_key',
-  });
-  assert.deepEqual(resultFallbackCorrelation.provenance.gate_type, {
-    family: 'fallback',
-    path: 'fallback.gate_type',
-    via: 'gate_type',
-  });
 
   const readModelResultCorrelation = correlationMod.resolveResultReadModelCorrelationProvenance({
     rate_limit_status: {
@@ -370,29 +305,6 @@ await record('correlation helpers preserve field provenance while keeping canoni
   });
   assert.equal(readModelDiagnosticLabelOnlyCorrelation.gateway_label, null);
   assert.equal(readModelDiagnosticLabelOnlyCorrelation.provenance.gateway_label, null);
-
-  const fallbackCorrelation = correlationMod.resolveStatusCorrelationWithDiagnosticFallback({}, {
-    dispatch_id: 'dispatch-fallback',
-    gateway_label: 'label-fallback',
-    session_key: 'session-fallback',
-  });
-  assert.equal(fallbackCorrelation.source_family, 'fallback');
-  assert.deepEqual(fallbackCorrelation.source_families, ['fallback']);
-  assert.deepEqual(fallbackCorrelation.provenance.dispatch_id, {
-    family: 'fallback',
-    path: 'fallback.dispatch_id',
-    via: 'dispatch_id',
-  });
-  assert.deepEqual(fallbackCorrelation.provenance.gateway_label, {
-    family: 'fallback',
-    path: 'fallback.gateway_label',
-    via: 'gateway_label',
-  });
-  assert.deepEqual(fallbackCorrelation.provenance.session_key, {
-    family: 'fallback',
-    path: 'fallback.session_key',
-    via: 'session_key',
-  });
 
   assert.equal(correlationMod.resolveStatusDispatchId({}, 'dispatch-fallback'), null);
   assert.equal(correlationMod.resolveStatusGatewayLabel({}, 'gateway-fallback'), null);
@@ -1122,6 +1034,13 @@ await record('config validation derives accepted gate types from the startup plu
     /config\.agents\.buster\.redis_js_path: required for redis dispatch agents in swarm\.config\.json/
   );
 
+  const removedTelemetryStreamKeyConfig = buildConfig();
+  removedTelemetryStreamKeyConfig.telemetry = { enabled: true, stream_key: 'legacy-enable-flag' };
+  assert.throws(
+    () => configMod.validateConfig(removedTelemetryStreamKeyConfig, validProgress),
+    /config\.telemetry stream_key: removed; use config\.telemetry\.enabled and canonical run-scoped stream names/
+  );
+
   const runtimeTestOverrideConfig = buildConfig();
   runtimeTestOverrideConfig._testOverrides = { pipelineRunner: { marker: true } };
   assert.throws(
@@ -1225,7 +1144,7 @@ await record('worker plugin boundary rejects legacy compatibility fallback', asy
   const workerControlMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/contracts/worker-control-result.ts');
   const legacyWorkerResult = {
     ok: true,
-    poll_result: { ok: true },
+    legacy_metadata: { ok: true },
     status: { status: 'PASS' },
   };
 
@@ -1362,13 +1281,13 @@ await record('plugin context scaffold exposes mediated context, shared correlati
   assert.equal(typeof artifactBundleMod.createPluginArtifactsApi, 'function');
   assert.equal(typeof correlationMod.buildInvocationSnapshot, 'function');
   assert.equal(typeof correlationMod.resolveStatusCorrelation, 'function');
-  assert.equal(typeof correlationMod.resolveStatusCorrelationWithDiagnosticFallback, 'function');
+  assert.equal(correlationMod.resolveStatusCorrelationWithDiagnosticFallback, undefined);
   assert.equal(typeof correlationMod.resolveResultCorrelation, 'function');
-  assert.equal(typeof correlationMod.resolveResultCorrelationWithDiagnosticFallback, 'function');
+  assert.equal(correlationMod.resolveResultCorrelationWithDiagnosticFallback, undefined);
   assert.equal(typeof correlationMod.resolveResultReadModelCorrelation, 'function');
-  assert.equal(typeof correlationMod.resolveResultReadModelCorrelationWithDiagnosticFallback, 'function');
+  assert.equal(correlationMod.resolveResultReadModelCorrelationWithDiagnosticFallback, undefined);
   assert.equal(typeof correlationMod.resolveResultReadModelCorrelationProvenance, 'function');
-  assert.equal(typeof correlationMod.resolveResultReadModelCorrelationProvenanceWithDiagnosticFallback, 'function');
+  assert.equal(correlationMod.resolveResultReadModelCorrelationProvenanceWithDiagnosticFallback, undefined);
   assert.equal(correlationMod.resolveResultCorrelationWithReadModelFallback, undefined);
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-plugin-context-'));
@@ -1646,8 +1565,8 @@ await record('invalid generator success payloads are rejected and surfaced as fa
   const result = await pipelineSchedulingMod.runScheduledGenerator(config, progress, 'generator:project_summary', {
     scheduleReason: 'pipeline_complete',
     mode: 'full',
-    exitCode: 0,
-    exitReason: 'PIPELINE_COMPLETE',
+    terminalStatus: 'succeeded',
+    reasonCode: 'PIPELINE_COMPLETE',
     orderIndex: 1,
     causationRef: 'event:pipeline_run.completed',
   });
@@ -2039,7 +1958,7 @@ await record('buster gate scheduler treats gate-status.json as diagnostic only w
   assert.equal(reconciled.isPass, false);
   assert.equal(reconciled.source, null);
   assert.equal(reconciled.output.data.status, 'FAIL');
-  assert.equal(reconciled.gateStatus.data.status, 'PASS');
+  assert.equal(Object.prototype.hasOwnProperty.call(reconciled, 'gateStatus'), false);
 
   const next = pipelineSchedulingMod.findNextStep(config, progress);
   assert.deepEqual(next, { type: 'gate', id: 'gate:buster' });
@@ -2049,9 +1968,9 @@ await record('buster gate scheduler treats gate-status.json as diagnostic only w
   assert.equal(projectedGate.completion_source, 'output_file');
   assert.equal(projectedGate.projection_source, 'output_file');
   assert.equal(projectedGate.gate_output_status, 'FAIL');
-  assert.equal(projectedGate.legacy_gate_status, 'PASS');
+  assert.equal(Object.prototype.hasOwnProperty.call(projectedGate, 'gate_status_diagnostic'), false);
   assert.equal(projectedGate.gate_status_authority.allow_gate_status_completion_authority, false);
-  assert.equal(projectedGate.scheduler_drift_detected, true);
+  assert.equal(projectedGate.scheduler_drift_detected, false);
 });
 
 await record('durable cooldown replay survives restart-sensitive module recovery before the next step reruns', async () => {
@@ -2321,7 +2240,6 @@ await record('shared helper ownership stays local-shimmed and the public pipelin
   assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'initLogDir'), false);
   assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'readGateOutput'), false);
   assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'gateOutputExists'), false);
-  assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'readGateStatusJson'), false);
   assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'makePromptResult'), false);
   assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'buildGitSyncSection'), false);
   assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'buildAvailableToolsSection'), false);

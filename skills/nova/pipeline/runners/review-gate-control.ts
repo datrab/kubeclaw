@@ -1,7 +1,6 @@
 // runners/review-gate-control.ts — Review gate typed-control and remediation request helpers
 // Keep this module free of runner lifecycle, spawning, polling, and Discord side effects.
 
-import { EXIT_OK, EXIT_NEEDS_NOVA, EXIT_RATE_LIMITED } from '../core/constants.ts';
 import { getRunId } from '../core/runtime.ts';
 import {
   GATE_CONTROL_ACTIONS,
@@ -27,20 +26,20 @@ export const REVIEW_GATE_FAILURE_CLASSES = Object.freeze([
 ]);
 
 function buildReviewControlSummary(gateId, result = {}) {
-  if (result?.exit === EXIT_OK) {
+  if (isReviewGatePassResult(result)) {
     return `Review gate '${gateId}' passed`;
   }
-  if (result?.exit === EXIT_RATE_LIMITED) {
+  if (result?.failure_class === 'rate_limit_exhausted' || result?.outcome_class === 'rate_limited') {
     return result?.reason || `Review gate '${gateId}' exceeded max rate limit pauses`;
   }
-  if (result?.exit === EXIT_NEEDS_NOVA) {
+  if (result?.outcome_class === 'needs_nova') {
     return result?.reason || `Review gate '${gateId}' requires Nova intervention`;
   }
   return result?.reason || `Review gate '${gateId}' failed`;
 }
 
 function requireReviewFailureClass(result = {}, gateId = '') {
-  if (result?.exit === EXIT_OK) return null;
+  if (isReviewGatePassResult(result)) return null;
   const failureClass = String(result?.failure_class || '').trim().toLowerCase();
   if (!failureClass) {
     throw new Error(`Review gate '${gateId}' non-pass result requires explicit failure_class`);
@@ -52,7 +51,7 @@ function requireReviewFailureClass(result = {}, gateId = '') {
 }
 
 function reviewGateDecisionForResult(result = {}, failureClass = null) {
-  if (result?.exit === EXIT_OK) {
+  if (isReviewGatePassResult(result)) {
     return { nextAction: GATE_CONTROL_ACTIONS.PASS, issueType: undefined, outcomeClass: 'passed' };
   }
   if (failureClass === 'rate_limit_exhausted') {
@@ -68,12 +67,12 @@ function reviewGateDecisionForResult(result = {}, failureClass = null) {
 }
 
 function canonicalReviewGateRunStatus(result = {}) {
-  return result?.exit === EXIT_OK ? 'PASS' : 'FAIL';
+  return isReviewGatePassResult(result) ? 'PASS' : 'FAIL';
 }
 
 function buildReviewControlFindings(result = {}, gateId, issues = [], failureClass = null) {
   if (issues.length > 0) return buildReviewGateFindings(issues);
-  if (result?.exit === EXIT_OK) return [];
+  if (isReviewGatePassResult(result)) return [];
   if (failureClass === 'review_failed') {
     return [{
       code: 'REVIEW_GATE_REVIEW_FAILED',
@@ -97,6 +96,12 @@ function buildReviewControlFindings(result = {}, gateId, issues = [], failureCla
     }];
   }
   return [];
+}
+
+function isReviewGatePassResult(result = {}) {
+  return result?.passed === true
+    || result?.outcome_class === 'passed'
+    || String(result?.status || '').trim().toUpperCase() === 'PASS';
 }
 
 export function buildReviewGateControlResult(config, gateId, gate, result = {}, opts = {}) {

@@ -1,4 +1,4 @@
-import { STATUS, EXIT_ERROR, EXIT_BLOCKED, EXIT_RATE_LIMITED } from '../../../core/constants.ts';
+import { STATUS } from '../../../core/constants.ts';
 import { log } from '../../../core/logger.ts';
 import { getRunId } from '../../../core/runtime.ts';
 import { finalizeModuleSessionRateLimitExit } from '../../../services/rate-limit.ts';
@@ -27,20 +27,17 @@ function workerMetadata(controlResult: AnyRecord | null = null): AnyRecord {
     : {};
 }
 
-function resolvePollFailureStatusAuthority({ result, busterWorkerControlResult, status }: AnyRecord = {}) {
+function resolvePollFailureStatusAuthority({ busterWorkerControlResult, status }: AnyRecord = {}) {
   const metadata = workerMetadata(busterWorkerControlResult);
   if (metadata.final_status) {
     return { status: metadata.final_status, source: 'worker_final_status' };
-  }
-  if (result?.status && typeof result.status === 'object') {
-    return { status: result.status, source: 'poll_result_status' };
   }
   return {
     status,
     source: 'in_memory_status',
     degraded: {
       code: 'poll_failure_status_authority_in_memory',
-      message: 'Buster poll failure lacked worker final status and poll result status; using active in-memory status with explicit authority evidence',
+      message: 'Buster poll failure lacked worker final status; using active in-memory status with explicit authority evidence',
     },
   };
 }
@@ -53,7 +50,7 @@ export async function handleFailedPollResult({
   status,
   timeout,
   deps,
-  result,
+  redisEntry = null,
   busterWorkerControlResult,
   busterSessionKey,
   completionIdentity,
@@ -62,17 +59,22 @@ export async function handleFailedPollResult({
   maxBusterCrashRetries,
   isLastBusterAttempt,
 }: AnyRecord = {}) {
-  const pollResult = result || {};
   const workerMeta = workerMetadata(busterWorkerControlResult);
-  const statusAuthority = resolvePollFailureStatusAuthority({ result: pollResult, busterWorkerControlResult, status });
+  const statusAuthority = resolvePollFailureStatusAuthority({ busterWorkerControlResult, status });
   status = statusAuthority.status;
-  const workerSessionKey = workerMeta.session_key || busterSessionKey || pollResult.status?.session_key || null;
-  const pollSessionKey = resolveCompletionSessionKey(status, completionIdentity, workerSessionKey, pollResult.status?._redis_entry);
-  const reasonCode = pollResult.reason || workerMeta.reason || 'unknown';
+  const workerSessionKey = workerMeta.session_key || busterSessionKey || redisEntry?.session_key || null;
+  const pollSessionKey = resolveCompletionSessionKey(status, completionIdentity, workerSessionKey, redisEntry);
+  const reasonCode = workerMeta.reason || 'unknown';
 
   if (reasonCode === 'rate_limit_exhausted') {
     const rateLimitReason = 'Rate limit pauses exceeded maximum during Buster phase';
-    const busterRateLimitExit = await finalizeModuleSessionRateLimitExit(pollResult, {
+    const busterRateLimitExit = await finalizeModuleSessionRateLimitExit({
+      reason: reasonCode,
+      rate_limit_status: workerMeta.rate_limit_status || null,
+      rate_limit_pauses: workerMeta.rate_limit_pauses ?? null,
+      max_rate_limit_pauses: workerMeta.max_rate_limit_pauses ?? null,
+      status: workerMeta.rate_limit_status || null,
+    }, {
       config,
       moduleId,
       moduleDir: dir,
@@ -83,7 +85,7 @@ export async function handleFailedPollResult({
         `Buster attempt ${exitResult.attempt} exceeded max ACP rate limit pauses (${exitResult.max_rate_limit_pauses}).`,
       discordIdentity: completionIdentity,
       reason: rateLimitReason,
-      exit: EXIT_RATE_LIMITED,
+      resultOverrides: { outcome_class: 'rate_limited' },
       identity: {
         run_id: completionIdentity.runId || getRunId(config),
         attempt: completionIdentity.attempt ?? currentAttemptNumber(status),
@@ -99,19 +101,19 @@ export async function handleFailedPollResult({
   }
   if (reasonCode === 'git_error') {
     return { terminal: { retry: false, result: {
-      exit: EXIT_ERROR,
-      reason: pollResult.status?.message || 'Polling git sync failed closed during Buster phase',
+      outcome_class: 'error',
+      reason: workerMeta.status_message || 'Polling git sync failed closed during Buster phase',
       module: moduleId,
       module_dir: dir,
       gateway_label: resolveCompletionGatewayLabel(status, completionIdentity),
       session_key: pollSessionKey,
-      polling_git: pollResult.status?.details || pollResult.status || null,
+      polling_git: workerMeta.polling_git || null,
       status_authority: statusAuthority.source,
       ...(statusAuthority.degraded ? { degraded: statusAuthority.degraded } : {}),
     }} };
   }
   if (reasonCode === 'completion_conflict') {
-    const conflictStatus = pollResult.status || {};
+    const conflictStatus = workerMeta.completion_conflict || {};
     const localStatus = conflictStatus.local_status || status?.status || null;
     log('ERROR', `Module ${moduleId}: Redis completion conflicts with terminal local state — failing closed`);
     const blockedTransition = markModuleBlocked(
@@ -129,7 +131,7 @@ export async function handleFailedPollResult({
         { name: 'Policy', value: String(conflictStatus.authority_policy?.code || 'redis_terminal_conflicts_with_terminal_status') },
       ]);
     return { terminal: { retry: false, result: {
-      exit: EXIT_BLOCKED,
+      outcome_class: 'blocked',
       reason: 'COMPLETION_CONFLICT',
       module: moduleId,
       module_dir: dir,
@@ -210,7 +212,7 @@ export async function handleFailedPollResult({
     ]);
 
   return { terminal: { retry: false, result: {
-    exit: EXIT_BLOCKED,
+    outcome_class: 'blocked',
     reason: `Buster subagent crashed ${maxBusterCrashRetries + 1} times — infrastructure issue (not sent to Forge)`,
     module: moduleId, module_dir: dir,
     attempt: failEvent.attempt,

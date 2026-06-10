@@ -7,7 +7,7 @@ import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '..
 import { log } from '../core/logger.ts';
 import { appendPipelineLifecycleEvent } from '../services/status-store.ts';
 import { ensurePipelineRunLogDir } from '../core/paths.ts';
-import { STATUS, EXIT_OK, EXIT_BLOCKED, EXIT_ERROR, EXIT_RATE_LIMITED } from '../core/constants.ts';
+import { STATUS } from '../core/constants.ts';
 import { extractArchValidatorReport } from '../services/arch-validator.ts';
 import {
   onPipelineStarted,
@@ -37,6 +37,7 @@ import {
 import {
   emitPipelineSummaryLifecycle,
   finalizeTerminalHalt,
+  processExitCodeForTerminalStatus,
   normalizeStepResultForPipeline,
 } from './pipeline-runner-terminal.ts';
 import { getPipelineRunnerDeps } from './pipeline-runner-deps.ts';
@@ -122,20 +123,22 @@ export async function runSingleModulePipeline(config: AnyRecord, progress: AnyRe
   const result = await deps.runModule(config, progress, opts.module, { novaPrompt: opts.novaPrompt, deps: opts.deps, budget: opts.budget || null, signal: opts.signal || null });
   const normalizedResult = normalizeStepResultForPipeline(result, { stepType: 'module', stepId: opts.module });
   const stepResult = normalizedResult.stepResult;
-  const singleModuleExitCode = normalizedResult.exitCode ?? EXIT_ERROR;
-  if (singleModuleExitCode !== EXIT_OK) {
+  const terminalStatus = normalizedResult.terminalStatus || 'failed';
+  const singleModuleExitCode = processExitCodeForTerminalStatus(terminalStatus);
+  if (terminalStatus !== 'succeeded') {
     return finalizeTerminalHalt(config, progress, {
       stepType: 'module',
       stepId: opts.module,
       result,
       opts,
-      summaryReason: singleModuleExitCode === EXIT_RATE_LIMITED ? `RATE_LIMITED:${opts.module}` : `single_module:${opts.module}`,
+      summaryReason: terminalStatus === 'rate_limited' ? `rate_limited:${opts.module}` : `single_module:${opts.module}`,
       scheduleProjectSummaryOnBlocked: false,
     });
   }
 
   const resultWithStatusCorrelation = buildResultWithStepCorrelation(config, progress, 'module', opts.module, {
-    exit: singleModuleExitCode,
+    terminal_status: terminalStatus,
+    terminal_decision: normalizedResult.terminalDecision || null,
     reason: stepResult?.diagnostics?.summary || 'single_module_complete',
     ...(stepResult?.correlation || {}),
   }, deps);
@@ -146,7 +149,8 @@ export async function runSingleModulePipeline(config: AnyRecord, progress: AnyRe
   appendPipelineLifecycleEvent(config, 'pipeline_run.halted', {
     progress,
     result: {
-      exit: singleModuleExitCode,
+      terminal_status: terminalStatus,
+      terminal_decision: normalizedResult.terminalDecision || null,
       reason: 'single_module_complete',
       attempt: singleModuleAttempt,
       dispatch_id: singleModuleDispatchId,
@@ -158,12 +162,12 @@ export async function runSingleModulePipeline(config: AnyRecord, progress: AnyRe
     stepId: opts.module,
     haltReason: 'single_module_complete',
   });
-  deps.output(resultWithStatusCorrelation);
+  deps.output({ exit: singleModuleExitCode, ...resultWithStatusCorrelation });
   await deps.discord(config, 'OK', 'Pipeline: single module done', `Module ${opts.module} completed successfully.`,
     buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: config._runId || config.run_id || 'unknown', module_id: opts.module, step_type: 'module', attempt: singleModuleAttempt, dispatch_id: singleModuleDispatchId, gateway_label: singleModuleGatewayLabel, session_key: singleModuleSessionKey }),
     { deps: opts.deps }
   );
-  emitPipelineSummaryLifecycle(config, ctx, singleModuleExitCode, `single_module:${opts.module}`, progress, deps.writeSummary);
+  emitPipelineSummaryLifecycle(config, ctx, terminalStatus, `single_module:${opts.module}`, progress, deps.writeSummary, normalizedResult.terminalDecision || null);
   return singleModuleExitCode;
 }
 
@@ -195,9 +199,11 @@ async function maybeRunArchitectureValidation(config: AnyRecord, progress: AnyRe
     || 'Architecture validation failed before module execution';
 
   if (isExecutionError) {
+    const terminalStatus = 'failed';
+    const terminalExitCode = processExitCodeForTerminalStatus(terminalStatus);
     await emitOperatorAlert(ctx, 'pipeline.operator_alert', {
       step_type: 'arch_validation',
-      exit_code: EXIT_ERROR,
+      terminal_status: terminalStatus,
       reason: summary,
     }, {
       hookId: 'pipeline.completed',
@@ -214,28 +220,30 @@ async function maybeRunArchitectureValidation(config: AnyRecord, progress: AnyRe
         },
       },
     });
-    deps.output({ exit: EXIT_ERROR, reason: 'ARCH_VALIDATION_ERROR', error: summary });
+    deps.output({ exit: terminalExitCode, terminal_status: terminalStatus, reason: 'ARCH_VALIDATION_ERROR', error: summary });
     onEscalated(ctx, 'step', 'arch-validation', {
       action: 'ERROR',
       last_failure: summary,
       step_type: 'arch_validation',
       step_id: 'arch-validation',
-      exit_code: EXIT_ERROR,
+      terminal_status: terminalStatus,
     });
     onPipelineHalted(ctx, {
       step_type: 'arch_validation',
       step_id: 'arch-validation',
-      exit_code: EXIT_ERROR,
+      terminal_status: terminalStatus,
       reason: 'ARCH_VALIDATION_ERROR',
     });
-    emitPipelineSummaryLifecycle(config, ctx, EXIT_ERROR, 'ARCH_VALIDATION_ERROR', progress, deps.writeSummary);
+    emitPipelineSummaryLifecycle(config, ctx, terminalStatus, 'ARCH_VALIDATION_ERROR', progress, deps.writeSummary);
     try { writeCostReport(config); } catch (_error) { /* non-critical */ }
-    return EXIT_ERROR;
+    return terminalExitCode;
   }
 
+  const terminalStatus = 'blocked';
+  const terminalExitCode = processExitCodeForTerminalStatus(terminalStatus);
   await emitOperatorAlert(ctx, 'pipeline.operator_alert', {
     step_type: 'arch_validation',
-    exit_code: EXIT_BLOCKED,
+    terminal_status: terminalStatus,
     reason: summary,
   }, {
     hookId: 'pipeline.completed',
@@ -252,23 +260,23 @@ async function maybeRunArchitectureValidation(config: AnyRecord, progress: AnyRe
       },
     },
   });
-  deps.output({ exit: EXIT_BLOCKED, reason: 'ARCH_VALIDATION_BLOCKED', findings: blockingFindings.length });
+  deps.output({ exit: terminalExitCode, terminal_status: terminalStatus, reason: 'ARCH_VALIDATION_BLOCKED', findings: blockingFindings.length });
   onEscalated(ctx, 'step', 'arch-validation', {
     action: 'BLOCKED',
     last_failure: 'Architecture validation failed before module execution',
     step_type: 'arch_validation',
     step_id: 'arch-validation',
-    exit_code: EXIT_BLOCKED,
+    terminal_status: terminalStatus,
   });
   onPipelineHalted(ctx, {
     step_type: 'arch_validation',
     step_id: 'arch-validation',
-    exit_code: EXIT_BLOCKED,
+    terminal_status: terminalStatus,
     reason: 'ARCH_VALIDATION_BLOCKED',
   });
-  emitPipelineSummaryLifecycle(config, ctx, EXIT_BLOCKED, 'ARCH_VALIDATION_BLOCKED', progress, deps.writeSummary);
+  emitPipelineSummaryLifecycle(config, ctx, terminalStatus, 'ARCH_VALIDATION_BLOCKED', progress, deps.writeSummary);
   try { writeCostReport(config); } catch (_error) { /* non-critical */ }
-  return EXIT_BLOCKED;
+  return terminalExitCode;
 }
 
 export async function preparePipelineStart(config: AnyRecord, progress: AnyRecord, opts: AnyRecord = {}): Promise<any> {

@@ -5,7 +5,8 @@ This directory owns the typed result/control contracts used by the Nova pipeline
 - gate control results
 - generator results
 - pipeline step results
+- pipeline terminal decisions
 - validator control results
 - worker control results
 
-The legacy `skills/nova/pipeline/services/*result*.ts` paths are compatibility shims that re-export these implementations. New contract work should live here instead of adding more result adapters under `services/`.
+The typed contract owners live here. Keep new contract work in this directory instead of adding result adapters under `services/`.

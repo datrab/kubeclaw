@@ -270,17 +270,15 @@ Redis stream telemetry for external consumers (e.g. ClawDeck dashboard).
 
 ```json
 "telemetry": {
-  "enabled": true,
-  "stream_key": "legacy-enable-flag"
+  "enabled": true
 }
 ```
 
 | Field | Required | Default | Description |
 |---|---|---|---|
 | `enabled` | no | `false` | Enable Redis event publishing |
-| `stream_key` | no | — | Legacy-compatible enable flag. If set to any non-empty string, telemetry is enabled, but the value does not rename the stream. |
 
-When enabled, all pipeline events (module status, agent lifecycle, gate verdicts, cost updates) are published to the canonical run-scoped stream `pipeline:telemetry:<project>:<run_id>`. See `docs/telemetry-event-schema.md` for the full event catalog.
+When enabled, all pipeline events (module status, agent lifecycle, gate verdicts, cost updates) are published to the canonical run-scoped stream `pipeline:telemetry:<project>:<run_id>`. See `docs/archive/legacy-root-docs/telemetry-event-schema.md` for the full event catalog.
 
 ---
 
@@ -330,6 +328,68 @@ When enabled, all pipeline events (module status, agent lifecycle, gate verdicts
 Without `thresholds` → informational (always PASS). With `thresholds` → enforced (can FAIL).
 
 Visual-reg baseline files are not configured by path. Buster derives them from module identity at `.swarm/modules/<module-dir>/baselines/`; place Prism `preview.html`, generated `paths.json`, and baseline PNGs there.
+
+### test_config.k8s
+
+Builds a production Dockerfile, pushes it to the in-cluster registry-local, deploys the supplied Kubernetes manifests into a broker-created namespace, waits for readiness, and runs an internal health check.
+
+Normal module and gate runs should use the default `purpose: "pretest"` and `cleanup_policy: "delete"`. The final Buster gate can use `purpose: "final-preview"` and `cleanup_policy: "keep"` so the verified deployment remains live after the pipeline completes.
+
+```json
+"k8s": {
+  "dockerfile": "Projects/my-app/src/Dockerfile",
+  "build_context": "Projects/my-app/src",
+  "image_name": "my-app",
+  "service_name": "my-app",
+  "manifests": ["Projects/my-app/src/k8s/my-app-all.yaml"],
+  "port": 3000,
+  "health_path": "/health",
+  "purpose": "final-preview",
+  "cleanup_policy": "keep",
+  "namespace_prefix": "test",
+  "secrets_to_copy": ["app-runtime-secrets"],
+  "test_credentials": [
+    {
+      "secret": "app-preview-login",
+      "keys": ["username", "password"],
+      "purpose": "login to the app under test"
+    }
+  ],
+  "preview": {
+    "provider": "tailscale-ingress",
+    "path": "/",
+    "credentials_ref": "secret/app-preview-login",
+    "reveal_credentials": true,
+    "credentials_keys": ["username", "password"]
+  }
+}
+```
+
+| Field | Default | Description |
+|---|---|---|
+| `dockerfile` | — | Path to Dockerfile, relative to repo root |
+| `build_context` | Dockerfile directory | Docker build context, relative to repo root |
+| `image_name` | — | Workload image name to replace in manifests |
+| `service_name` | — | Kubernetes Service name to health-check and expose |
+| `manifests` | — | Manifest paths, relative to repo root |
+| `port` | `3000` | Service port |
+| `health_path` | `/health` | Health endpoint path |
+| `purpose` | `pretest` | `pretest` or `final-preview` |
+| `cleanup_policy` | `delete` | `delete` removes broker namespace; `keep` leaves it running |
+| `namespace_prefix` | `test` | Allowed prefix: `test` |
+| `namespace_ttl_seconds` | `7200` | TTL used when cleanup policy is `delete` |
+| `namespace_lease_timeout_seconds` | `60` | Time to wait for the broker namespace lease |
+| `secrets_to_copy` | `[]` | Existing KubeClaw namespace Secret names to copy into the test namespace |
+| `test_credentials` | `[]` | App-under-test Secret/key allowlist decoded by the deterministic k8s suite and injected into Buster's prompt |
+| `preview.provider` | `tailscale-ingress` for final-preview | `tailscale-ingress` creates an Ingress with `ingressClassName: tailscale`; use `off` to disable |
+| `preview.path` | `/` | Public preview path |
+| `preview.hostname` | generated | Optional tailnet hostname label for the Tailscale Ingress |
+| `preview.credentials_ref` | `null` | Human/operator reference, commonly `secret/<name>` |
+| `preview.reveal_credentials` | `false` | When true, verify the preview credential Secret and include a copy-paste retrieval command in Discord |
+| `preview.credentials_secret_name` | derived from `credentials_ref` | Source Secret name for credential retrieval |
+| `preview.credentials_keys` | all keys | Secret keys to retrieve, for example `["username", "password"]` |
+
+Final-preview Tailscale URLs require the Tailscale Kubernetes Operator to be installed by deployment. The pipeline records the resulting tailnet URL and a non-secret credential retrieval command in the k8s verdict metadata; Nova uses that metadata for Discord delivery. `test_credentials` is the explicit allowlist for credentials Buster may see in prompt context for authenticated tests; do not put infrastructure, registry, deploy-key, or provider Secrets there.
 
 ### test_config.manifest
 

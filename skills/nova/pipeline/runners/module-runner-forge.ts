@@ -1,5 +1,5 @@
 import { buildPluginInvocationEnvelope, createPluginContext } from '../core/context.ts';
-import { STATUS, EXIT_OK, EXIT_ERROR, EXIT_NEEDS_NOVA, EXIT_BLOCKED, EXIT_RATE_LIMITED } from '../core/constants.ts';
+import { STATUS } from '../core/constants.ts';
 import { log } from '../core/logger.ts';
 import { getRunId } from '../core/runtime.ts';
 import { requireStageHandler } from '../core/registry.ts';
@@ -168,7 +168,7 @@ export async function runModuleForgePhase({
       terminal: {
         retry: false,
         result: {
-          exit: EXIT_ERROR,
+          outcome_class: 'error',
           reason: promptResult.error,
           gateway_label: resolveStatusGatewayLabel(status),
           session_key: resolveStatusSessionKey(status),
@@ -210,14 +210,7 @@ export async function runModuleForgePhase({
   });
   const forgeWorkerInput = {
     ...forgeExecutionInput,
-    moduleId,
-    moduleDir: dir,
-    timeoutMinutes: timeout,
-    model: forgeModel,
     prompt: forgePrompt,
-    thinking: forgePolicy.thinking,
-    attempt: currentAttemptNumber(status),
-    headBefore: headBeforeForge,
     onDispatched: async (dispatch: AnyRecord = {}) => {
       setModuleActiveAgent(status, {
         session_key: dispatch.session_key || null,
@@ -301,7 +294,7 @@ export async function runModuleForgePhase({
       terminal: {
         retry: false,
         result: {
-          exit: EXIT_ERROR,
+          outcome_class: 'error',
           reason,
           gateway_label: failureGatewayLabel,
           session_key: failureSessionKey,
@@ -314,11 +307,16 @@ export async function runModuleForgePhase({
   const forgeWorkerMetadata = workerMetadata(forgeWorkerControlResult);
   const forgeWorkerTypedMetadata = workerTypedMetadata(forgeWorkerControlResult);
   const forgeWorkerSummary = workerSummary(forgeWorkerControlResult);
-  const result = forgeWorkerMetadata.poll_result || null;
-  const resultStatus = result?.status || null;
   const forgeFinalStatus = forgeWorkerMetadata.final_status || null;
-  const workerReason = forgeWorkerMetadata.reason || result?.reason || workerOutcomeClass(forgeWorkerControlResult) || forgeWorkerTypedMetadata.outcomeClass || null;
+  const workerReason = forgeWorkerMetadata.reason || workerOutcomeClass(forgeWorkerControlResult) || forgeWorkerTypedMetadata.outcomeClass || null;
   const forgeSessionKey = (forgeWorkerMetadata.session_key ?? resolveStatusSessionKey(status));
+  const terminalDetail = typeof forgeWorkerMetadata.status_detail === 'string' && forgeWorkerMetadata.status_detail.trim()
+    ? forgeWorkerMetadata.status_detail.trim()
+    : null;
+  const terminalMessage = typeof forgeWorkerMetadata.status_message === 'string' && forgeWorkerMetadata.status_message.trim()
+    ? forgeWorkerMetadata.status_message.trim()
+    : null;
+  const terminalErrors = Array.isArray(forgeWorkerMetadata.status_errors) ? forgeWorkerMetadata.status_errors : [];
 
   if (workerReason === 'spawn_failed') {
     const reason = `Forge spawn failed: ${forgeWorkerMetadata.error}`;
@@ -367,7 +365,7 @@ export async function runModuleForgePhase({
     return {
       status,
       recalledMemoryIds,
-      terminal: { retry: false, result: { exit: EXIT_ERROR, reason, gateway_label: spawnFailureGatewayLabel, session_key: spawnFailureSessionKey } },
+      terminal: { retry: false, result: { outcome_class: 'error', reason, gateway_label: spawnFailureGatewayLabel, session_key: spawnFailureSessionKey } },
     };
   }
 
@@ -388,9 +386,6 @@ export async function runModuleForgePhase({
       'session_ended_no_meaningful_diff',
     ]);
     if (forgeNoWorkReasons.has(workerReason)) {
-      const terminalDetail = typeof resultStatus?.detail === 'string' && resultStatus.detail.trim()
-        ? resultStatus.detail.trim()
-        : null;
       const forgeNoChangesBaseMsg = 'Forge session ended but produced no typed meaningful-diff completion evidence';
       const forgeNoChangesMsg = terminalDetail
         ? `${forgeNoChangesBaseMsg} (${terminalDetail})`
@@ -431,7 +426,13 @@ export async function runModuleForgePhase({
     }
     if (workerReason === 'rate_limit_exhausted') {
       const rateLimitReason = 'Rate limit pauses exceeded maximum — pipeline halted';
-      const forgeRateLimitExit = await finalizeModuleSessionRateLimitExit(result, {
+      const forgeRateLimitExit = await finalizeModuleSessionRateLimitExit({
+        reason: workerReason,
+        rate_limit_status: forgeWorkerMetadata.rate_limit_status || null,
+        rate_limit_pauses: forgeWorkerMetadata.rate_limit_pauses ?? null,
+        max_rate_limit_pauses: forgeWorkerMetadata.max_rate_limit_pauses ?? null,
+        status: forgeWorkerMetadata.rate_limit_status || null,
+      }, {
         config,
         moduleId,
         moduleDir: dir,
@@ -441,7 +442,7 @@ export async function runModuleForgePhase({
         discordDescription: (exitResult: AnyRecord) =>
           `Forge attempt ${exitResult.attempt} exceeded max ACP rate limit pauses (${exitResult.max_rate_limit_pauses}). Pipeline cannot continue.`,
         reason: rateLimitReason,
-        exit: EXIT_RATE_LIMITED,
+        resultOverrides: { outcome_class: 'rate_limited' },
         identity: {
           run_id: getRunId(config),
           attempt: currentAttemptNumber(status),
@@ -455,8 +456,8 @@ export async function runModuleForgePhase({
       return { status, recalledMemoryIds, terminal: { retry: false, result: forgeRateLimitExit } };
     }
     if (workerReason === 'invalid_forge_completion') {
-      const detail = Array.isArray(resultStatus?.errors) && resultStatus.errors.length > 0
-        ? resultStatus.errors.join('; ')
+      const detail = terminalErrors.length > 0
+        ? terminalErrors.join('; ')
         : 'invalid Forge completion artifact';
       const failResult = await handleModuleFail(status, 'forge', detail, { recalledMemoryIds });
       return failResult._retry
@@ -477,21 +478,20 @@ export async function runModuleForgePhase({
         terminal: {
           retry: false,
           result: {
-            exit: EXIT_ERROR,
-            reason: resultStatus?.message || 'Polling git sync failed closed during Forge phase',
+            outcome_class: 'error',
+            reason: terminalMessage || 'Polling git sync failed closed during Forge phase',
             module: moduleId,
             module_dir: dir,
             gateway_label: resolveStatusGatewayLabel(status),
             session_key: (resolveStatusSessionKey(status) ?? forgeSessionKey ?? null),
-            polling_git: resultStatus?.details || resultStatus || null,
+            polling_git: forgeWorkerMetadata.polling_git || null,
           },
         },
       };
     }
 
-    const failReason = resultStatus?.detail
-      || resultStatus?.reason
-      || resultStatus?.message
+    const failReason = terminalDetail
+      || terminalMessage
       || forgeWorkerSummary
       || workerReason
       || 'Forge completion artifact was not produced';
@@ -513,7 +513,7 @@ export async function runModuleForgePhase({
       }
     : null;
   const forgeCompletion = forgeCompletionReasons.has(workerReason)
-    ? (resultStatus || forgeFinalStatus)
+    ? forgeFinalStatus
     : typedPassForgeCompletion;
 
   if (forgeCompletion?.status === STATUS.BLOCKED) {
@@ -531,7 +531,7 @@ export async function runModuleForgePhase({
       terminal: {
         retry: false,
         result: {
-          exit: EXIT_BLOCKED,
+          outcome_class: 'blocked',
           reason: forgeCompletion.summary,
           module: moduleId,
           module_dir: dir,
@@ -543,7 +543,7 @@ export async function runModuleForgePhase({
   }
 
   if (forgeCompletion?.status !== STATUS.READY_FOR_TESTING) {
-    const reason = `Unexpected Forge completion result: ${result?.reason || 'unknown'}`;
+    const reason = `Unexpected Forge completion result: ${workerReason || 'unknown'}`;
     log('ERROR', reason);
     return {
       status,
@@ -551,7 +551,7 @@ export async function runModuleForgePhase({
       terminal: {
         retry: false,
         result: {
-          exit: EXIT_ERROR,
+          outcome_class: 'error',
           reason,
           module: moduleId,
           module_dir: dir,
@@ -601,7 +601,7 @@ export async function finalizeForgeOnlyPass({
     const reason = `Forge-only module cannot PASS without durable Git persistence: ${errorMessage(error)}`;
     log('ERROR', reason);
     return { terminal: { retry: false, result: {
-      exit: EXIT_ERROR,
+      outcome_class: 'error',
       reason,
       module: moduleId,
       module_dir: dir,
@@ -613,7 +613,7 @@ export async function finalizeForgeOnlyPass({
     const reason = `Forge-only module cannot PASS without a durable Git commit: ${gitResult?.error || 'no commit was created'}`;
     log('ERROR', reason);
     return { terminal: { retry: false, result: {
-      exit: EXIT_ERROR,
+      outcome_class: 'error',
       reason,
       module: moduleId,
       module_dir: dir,
@@ -661,5 +661,5 @@ export async function finalizeForgeOnlyPass({
   setLogScope(null, null);
   getModuleStats(config).modules_completed.push(moduleId);
 
-  return { status, terminal: { retry: false, result: { exit: EXIT_OK, status: STATUS.PASS } } };
+  return { status, terminal: { retry: false, result: { outcome_class: 'passed', status: STATUS.PASS } } };
 }

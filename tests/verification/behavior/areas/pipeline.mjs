@@ -78,19 +78,19 @@ function withStubbedGeneratorStages(registry) {
   };
 }
 
-function stepOutcomeForExit(exitCode) {
-  switch (Number(exitCode)) {
-    case 0: return ['continue', 'passed', 'OK'];
-    case 10: return ['halt', 'needs_nova', 'NEEDS_NOVA'];
-    case 20: return ['halt', 'blocked', 'BLOCKED'];
-    case 30: return ['halt', 'timeout', 'TIMEOUT'];
-    case 40: return ['halt', 'rate_limited', 'RATE_LIMITED'];
-    default: return ['halt', 'error', 'ERROR'];
+function stepOutcomeForClass(outcomeClass = 'passed') {
+  switch (outcomeClass) {
+    case 'passed': return ['continue', 'passed', 'succeeded', 'none'];
+    case 'needs_nova': return ['halt', 'needs_nova', 'action_required', 'request_handoff'];
+    case 'blocked': return ['halt', 'blocked', 'blocked', 'notify_operator'];
+    case 'timeout': return ['halt', 'timeout', 'timed_out', 'request_handoff'];
+    case 'rate_limited': return ['halt', 'rate_limited', 'rate_limited', 'retry_later'];
+    default: return ['halt', 'error', 'failed', 'stop'];
   }
 }
 
-function makeStepResult({ stepType = 'module', stepId = '01', exit = 0, reason = null, status = null, projection = {}, correlation = {}, issueType = null } = {}) {
-  const [nextAction, outcome, exitLabel] = stepOutcomeForExit(exit);
+function makeStepResult({ stepType = 'module', stepId = '01', outcomeClass = 'passed', reason = null, status = null, projection = {}, correlation = {}, issueType = null } = {}) {
+  const [nextAction, outcome, terminalStatus, terminalAction] = stepOutcomeForClass(outcomeClass);
   return {
     schemaVersion: 'v1',
     kind: 'pipeline_step_result',
@@ -111,8 +111,19 @@ function makeStepResult({ stepType = 'module', stepId = '01', exit = 0, reason =
     },
     correlation,
     terminal: {
-      exitCode: exit,
-      exitLabel,
+      status: terminalStatus,
+      decision: {
+        schemaVersion: 'v1',
+        kind: 'pipeline_terminal_decision',
+        status: terminalStatus,
+        action: terminalAction,
+        reasonCode: outcome,
+        humanReason: reason,
+        scope: stepType,
+        correlation: {},
+        source: null,
+        metadata: {},
+      },
     },
   };
 }
@@ -124,6 +135,15 @@ function readJsonl(filePath) {
     .map((line) => line.trim())
     .filter(Boolean)
     .map((line) => JSON.parse(line));
+}
+
+function assertTypedTerminalEvent(event, status, reasonCode = undefined) {
+  assert.equal(event.terminal_status, status);
+  assert.equal(Object.prototype.hasOwnProperty.call(event, 'exit_code'), false);
+  assert.equal(Object.prototype.hasOwnProperty.call(event, 'exit_reason'), false);
+  assert.equal(Object.prototype.hasOwnProperty.call(event, 'exitCode'), false);
+  assert.equal(Object.prototype.hasOwnProperty.call(event, 'exitLabel'), false);
+  if (reasonCode !== undefined) assert.equal(event.reason_code, reasonCode);
 }
 
 async function seedBlockedModuleLifecycleState(pipelineRuntimeRoot, config, progress, moduleId, {
@@ -270,7 +290,7 @@ export async function registerPipelineArea({
           discord: async (...args) => { discordCalls.push(args); },
           runModule: async () => makeStepResult({
             stepId: '01',
-            exit: 10,
+            outcomeClass: 'needs_nova',
             reason: 'Forge fix needs Nova guidance',
             projection: {
               fail_count: 3,
@@ -311,7 +331,7 @@ const config = {
     const result = await pipelineRunnerMod.runPipeline(config, progress, { deps, module: '01' }, { deps });
     await flushAsync();
   
-    assert.equal(result, 10);
+    assert.equal(result, 1);
   
     const streamKey = 'pipeline:telemetry:behavior-single-module-halt:run-single-module-halt-1';
     const events = xaddEvents(streamKey);
@@ -324,22 +344,20 @@ const config = {
     assert.equal(events[1].gateway_label, null);
     assert.equal(events[1].fail_count, 3);
     assert.equal(events[1].last_failure, 'Forge fix needs Nova guidance');
-    assert.equal(events[1].action, 'NEEDS_NOVA');
-    assert.equal(events[1].exit_code, 10);
-    assert.equal(events[2].reason, 'NEEDS_NOVA');
+    assert.equal(events[1].action, 'needs_nova');
+    assertTypedTerminalEvent(events[1], 'action_required');
+    assert.equal(events[2].reason, 'needs_nova');
     assert.equal(events[2].module_id, '01');
     assert.equal(events[2].session_key, sessionKey);
     assert.equal(events[2].attempt, 3);
     assert.equal(events[2].dispatch_id, 'dispatch-single-module-01-attempt-3');
     assert.equal(events[2].gateway_label, null);
-    assert.equal(events[2].exit_code, 10);
+    assertTypedTerminalEvent(events[2], 'action_required');
     assert.equal(events[3].summary_type, 'pipeline');
-    assert.equal(events[3].exit_code, 10);
-    assert.equal(events[3].exit_reason, 'single_module:01');
+    assertTypedTerminalEvent(events[3], 'action_required', 'single_module:01');
     assert.equal(events[4].summary_type, 'pipeline');
     assert.equal(events[4].status, 'failed');
-    assert.equal(events[4].exit_code, 10);
-    assert.equal(events[4].exit_reason, 'single_module:01');
+    assertTypedTerminalEvent(events[4], 'action_required', 'single_module:01');
   
   const haltDiscordCall = discordCalls.find(([, , title]) => title === 'Pipeline halted: behavior-single-module-halt');
   assert.equal(Boolean(haltDiscordCall), true);
@@ -389,8 +407,19 @@ const config = {
               session_key: sessionKey,
             },
             terminal: {
-              exitCode: 10,
-              exitLabel: 'NEEDS_NOVA',
+              status: 'action_required',
+              decision: {
+                schemaVersion: 'v1',
+                kind: 'pipeline_terminal_decision',
+                status: 'action_required',
+                action: 'request_handoff',
+                reasonCode: 'needs_nova',
+                humanReason: 'Typed module halt requires Nova',
+                scope: 'module',
+                correlation: {},
+                source: null,
+                metadata: {},
+              },
             },
           }),
           injectNeedsNova: async (...args) => { injectNeedsNovaCalls.push(args); },
@@ -419,9 +448,9 @@ const config = {
     const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps2, module: '01' }, { deps: configDeps2 });
     await flushAsync();
 
-    assert.equal(result, 10);
+    assert.equal(result, 1);
     assert.equal(outputs.length, 1);
-    assert.equal(outputs[0].exit, 10);
+    assert.equal(outputs[0].exit, 1);
     assert.equal(outputs[0].outcome, 'needs_nova');
     assert.equal(outputs[0].next_action, 'halt');
     assert.equal(outputs[0].attempt, 5);
@@ -429,7 +458,8 @@ const config = {
     assert.equal(outputs[0].gateway_label, dispatchId);
     assert.equal(outputs[0].session_key, sessionKey);
     assert.equal(injectNeedsNovaCalls.length, 1);
-    assert.equal(injectNeedsNovaCalls[0][1].exit, 10);
+    assert.equal(injectNeedsNovaCalls[0][1].terminal_status, 'action_required');
+    assert.equal(injectNeedsNovaCalls[0][1].terminal_decision.action, 'request_handoff');
     assert.equal(injectNeedsNovaCalls[0][1].attempt, 5);
     assert.equal(injectNeedsNovaCalls[0][1].dispatch_id, dispatchId);
     assert.equal(injectNeedsNovaCalls[0][1].session_key, sessionKey);
@@ -437,10 +467,10 @@ const config = {
     const streamKey = 'pipeline:telemetry:behavior-single-module-typed-step:run-single-module-typed-step-1';
     const events = xaddEvents(streamKey);
     assert.deepEqual(events.map((event) => event.type), ['pipeline.started', 'error.escalation', 'pipeline.halted', 'summary.started', 'summary.completed']);
-    assert.equal(events[1].exit_code, 10);
+    assertTypedTerminalEvent(events[1], 'action_required');
     assert.equal(events[1].attempt, 5);
     assert.equal(events[1].dispatch_id, dispatchId);
-    assert.equal(events[2].exit_code, 10);
+    assertTypedTerminalEvent(events[2], 'action_required');
     assert.equal(events[2].attempt, 5);
     assert.equal(events[2].dispatch_id, dispatchId);
   });
@@ -466,7 +496,7 @@ const config = {
           output: (payload) => { outputs.push(payload); },
           runModule: async () => makeStepResult({
             stepId: '01',
-            exit: 40,
+            outcomeClass: 'rate_limited',
             reason: 'Rate limit pauses exceeded maximum during Buster phase',
             projection: {
               rate_limit_exhausted: true,
@@ -519,10 +549,10 @@ const config = {
     const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps3, module: '01' }, { deps: configDeps3 });
     await flushAsync();
 
-    assert.equal(result, 40);
+    assert.equal(result, 1);
     assert.equal(injectNeedsNovaCalls.length, 0, 'rate-limited single-module runs should not escalate to Nova');
     assert.equal(outputs.length, 1, 'expected one output payload');
-    assert.equal(outputs[0].exit, 40);
+    assert.equal(outputs[0].exit, 1);
     assert.equal(outputs[0].attempt, 7);
     assert.equal(outputs[0].dispatch_id, dispatchId);
     assert.equal(outputs[0].gateway_label, dispatchId);
@@ -537,17 +567,13 @@ const config = {
     assert.equal(events[1].dispatch_id, dispatchId);
     assert.equal(events[1].gateway_label, dispatchId);
     assert.equal(events[1].session_key, sessionKey);
-    assert.equal(events[1].reason, 'RATE_LIMITED');
-    assert.equal(events[1].exit_code, 40);
-    assert.equal(events[1].rate_limit_exhausted, true);
-    assert.equal(events[1].max_rate_limit_pauses, 4);
+    assert.equal(events[1].reason, 'rate_limited');
+    assertTypedTerminalEvent(events[1], 'rate_limited');
     assert.equal(events[2].summary_type, 'pipeline');
-    assert.equal(events[2].exit_code, 40);
-    assert.equal(events[2].exit_reason, 'RATE_LIMITED:01');
+    assertTypedTerminalEvent(events[2], 'rate_limited', 'rate_limited:01');
     assert.equal(events[3].summary_type, 'pipeline');
     assert.equal(events[3].status, 'failed');
-    assert.equal(events[3].exit_code, 40);
-    assert.equal(events[3].exit_reason, 'RATE_LIMITED:01');
+    assertTypedTerminalEvent(events[3], 'rate_limited', 'rate_limited:01');
 
     const haltDiscordCall = discordCalls.find(([, , title]) => title === 'Pipeline halted: behavior-single-module-rate-limited');
     assert.equal(Boolean(haltDiscordCall), true);
@@ -586,7 +612,7 @@ const config = {
           output: (payload) => { outputs.push(payload); },
           runModule: async () => makeStepResult({
             stepId: '01',
-            exit: 10,
+            outcomeClass: 'needs_nova',
             reason: 'Forge fix still needs Nova guidance',
             projection: { fail_count: 3 },
             correlation: { module_id: '01' },
@@ -626,7 +652,7 @@ const config = {
     const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps4, module: '01' }, { deps: configDeps4 });
     await flushAsync();
 
-    assert.equal(result, 10);
+    assert.equal(result, 1);
 
     const streamKey = 'pipeline:telemetry:behavior-single-module-failcount-halt:run-single-module-failcount-halt-1';
     const events = xaddEvents(streamKey);
@@ -690,7 +716,7 @@ const config = {
           syncControlFiles: async () => {},
           runModule: async () => makeStepResult({
             stepId: '01',
-            exit: 10,
+            outcomeClass: 'needs_nova',
             reason: 'Forge fix still needs Nova guidance',
             projection: { fail_count: 3 },
             correlation: { module_id: '01' },
@@ -730,7 +756,7 @@ const config = {
     const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps5, skipArchValidation: true }, { deps: configDeps5 });
     await flushAsync();
 
-    assert.equal(result, 10);
+    assert.equal(result, 1);
     const provenanceOutput = outputs.find((payload) => payload?.correlation_provenance?.dispatch_id === 'dispatch-full-pipeline-failcount-01-attempt-3' && payload?.correlation_provenance?.gateway_label === 'dispatch-full-pipeline-failcount-01-attempt-3' && payload?.correlation_provenance?.session_key === sessionKey);
     assert(provenanceOutput, 'status identity should remain available as diagnostic provenance');
     assert.equal(provenanceOutput.attempt, null);
@@ -825,7 +851,7 @@ const config = {
     const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps6, module: '01' }, { deps: configDeps6 });
     await flushAsync();
   
-    assert.equal(result, 20);
+    assert.equal(result, 1);
     assert.equal(injectNeedsNovaCalls, 0);
   
     const streamKey = 'pipeline:telemetry:behavior-single-module-blocked:run-single-module-blocked-1';
@@ -839,22 +865,20 @@ const config = {
     assert.equal(events[1].gateway_label, null);
     assert.equal(events[1].fail_count, 3);
     assert.equal(events[1].last_failure, 'Repeated test crashes exhausted the retry budget');
-    assert.equal(events[1].action, 'BLOCKED');
-    assert.equal(events[1].exit_code, 20);
-    assert.equal(events[2].reason, 'BLOCKED');
+    assert.equal(events[1].action, 'blocked');
+    assertTypedTerminalEvent(events[1], 'blocked');
+    assert.equal(events[2].reason, 'blocked');
     assert.equal(events[2].module_id, '01');
     assert.equal(events[2].session_key, null);
     assert.equal(events[2].attempt, null);
     assert.equal(events[2].dispatch_id, null);
     assert.equal(events[2].gateway_label, null);
-    assert.equal(events[2].exit_code, 20);
+    assertTypedTerminalEvent(events[2], 'blocked');
     assert.equal(events[3].summary_type, 'pipeline');
-    assert.equal(events[3].exit_code, 20);
-    assert.equal(events[3].exit_reason, 'single_module:01');
+    assertTypedTerminalEvent(events[3], 'blocked', 'single_module:01');
     assert.equal(events[4].summary_type, 'pipeline');
     assert.equal(events[4].status, 'failed');
-    assert.equal(events[4].exit_code, 20);
-    assert.equal(events[4].exit_reason, 'single_module:01');
+    assertTypedTerminalEvent(events[4], 'blocked', 'single_module:01');
   
     const haltDiscordCall = discordCalls.find(([, , title]) => title === 'Pipeline halted: behavior-single-module-blocked');
     assert.equal(Boolean(haltDiscordCall), true);
@@ -928,8 +952,8 @@ const config = {
     const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps7, skipArchValidation: true }, { deps: configDeps7 });
     await flushAsync();
   
-    assert.equal(result, 20);
-    const blockedOutput = outputs.find((payload) => payload?.exit === 20);
+    assert.equal(result, 1);
+    const blockedOutput = outputs.find((payload) => payload?.exit === 1);
     assert(blockedOutput, 'missing blocked output payload');
     assert.equal(blockedOutput.session_key, null);
     assert.equal(blockedOutput.dispatch_id, null);
@@ -952,25 +976,23 @@ const config = {
     assert.equal(escalationEvent.gateway_label, null);
     assert.equal(escalationEvent.fail_count, 3);
     assert.equal(escalationEvent.last_failure, 'Repeated test crashes exhausted the retry budget');
-    assert.equal(escalationEvent.action, 'BLOCKED');
+    assert.equal(escalationEvent.action, 'blocked');
     assert.equal(haltedEvent.module_id, '01');
     assert.equal(haltedEvent.session_key, null);
     assert.equal(haltedEvent.attempt, null);
     assert.equal(haltedEvent.dispatch_id, null);
     assert.equal(haltedEvent.gateway_label, null);
-    assert.equal(haltedEvent.reason, 'BLOCKED');
-    assert.equal(haltedEvent.exit_code, 20);
+    assert.equal(haltedEvent.reason, 'blocked');
+    assertTypedTerminalEvent(haltedEvent, 'blocked');
     const summaryStartedEvent = events.find((event) => event.type === 'summary.started');
     const summaryCompletedEvent = events.find((event) => event.type === 'summary.completed');
     assert(summaryStartedEvent, 'missing full-pipeline blocked summary.started event');
     assert(summaryCompletedEvent, 'missing full-pipeline blocked summary.completed event');
     assert.equal(summaryStartedEvent.summary_type, 'pipeline');
-    assert.equal(summaryStartedEvent.exit_code, 20);
-    assert.equal(summaryStartedEvent.exit_reason, 'BLOCKED:01');
+    assertTypedTerminalEvent(summaryStartedEvent, 'blocked', 'blocked:01');
     assert.equal(summaryCompletedEvent.summary_type, 'pipeline');
     assert.equal(summaryCompletedEvent.status, 'failed');
-    assert.equal(summaryCompletedEvent.exit_code, 20);
-    assert.equal(summaryCompletedEvent.exit_reason, 'BLOCKED:01');
+    assertTypedTerminalEvent(summaryCompletedEvent, 'blocked', 'blocked:01');
   
     const haltDiscordCall = discordCalls.find(([, , title]) => title === 'Pipeline halted: behavior-full-pipeline-blocked');
     assert.equal(Boolean(haltDiscordCall), true);
@@ -979,7 +1001,7 @@ const config = {
     assert.equal(haltDiscordCall[4].some((field) => field.name === 'Session' && field.value === sessionKey), false);
   });
 
-  await record('fresh full-pipeline EXIT_BLOCKED uses the same terminal halt finalizer as resumed BLOCKED state', async () => {
+  await record('fresh full-pipeline blocked status uses the same terminal halt finalizer as resumed blocked state', async () => {
     const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(pipelineRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
@@ -1045,8 +1067,19 @@ const config = {
               session_key: sessionKey,
             },
             terminal: {
-              exitCode: 20,
-              exitLabel: 'BLOCKED',
+              status: 'blocked',
+              decision: {
+                schemaVersion: 'v1',
+                kind: 'pipeline_terminal_decision',
+                status: 'blocked',
+                action: 'notify_operator',
+                reasonCode: 'blocked',
+                humanReason: 'Buster crash retries exhausted after 2 attempts',
+                scope: 'module',
+                correlation: {},
+                source: null,
+                metadata: {},
+              },
             },
           }),
         },
@@ -1073,10 +1106,10 @@ const config = {
     const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps8, skipArchValidation: true }, { deps: configDeps8 });
     await flushAsync();
 
-    assert.equal(result, 20);
+    assert.equal(result, 1);
     assert.equal(injectNeedsNovaCalls.length, 0, 'fresh BLOCKED should not inject NEEDS_NOVA');
     assert.equal(outputs.length, 1);
-    assert.equal(outputs[0].exit, 20);
+    assert.equal(outputs[0].exit, 1);
     assert.equal(outputs[0].attempt, 3);
     assert.equal(outputs[0].dispatch_id, dispatchId);
     assert.equal(outputs[0].session_key, sessionKey);
@@ -1085,18 +1118,18 @@ const config = {
     const events = xaddEvents(streamKey);
     assert.deepEqual(events.map((event) => event.type), ['pipeline.started', 'error.escalation', 'pipeline.halted', 'summary.started', 'summary.completed']);
     assert.equal(events[1].module_id, '01');
-    assert.equal(events[1].action, 'BLOCKED');
-    assert.equal(events[1].exit_code, 20);
+    assert.equal(events[1].action, 'blocked');
+    assertTypedTerminalEvent(events[1], 'blocked');
     assert.equal(events[1].attempt, 3);
     assert.equal(events[1].dispatch_id, dispatchId);
     assert.equal(events[1].session_key, sessionKey);
-    assert.equal(events[2].reason, 'BLOCKED');
-    assert.equal(events[2].exit_code, 20);
-    assert.equal(events[3].exit_reason, 'BLOCKED:01');
-    assert.equal(events[4].exit_reason, 'BLOCKED:01');
+    assert.equal(events[2].reason, 'blocked');
+    assertTypedTerminalEvent(events[2], 'blocked');
+    assertTypedTerminalEvent(events[3], 'blocked', 'blocked:01');
+    assertTypedTerminalEvent(events[4], 'blocked', 'blocked:01');
     assert.deepEqual(generatorCalls.map((call) => call.stageId), ['generator:project_summary']);
-    assert.equal(generatorCalls[0].input.executionContext.exitCode, 20);
-    assert.equal(generatorCalls[0].input.executionContext.exitReason, 'BLOCKED:01');
+    assert.equal(generatorCalls[0].input.executionContext.terminalStatus, 'blocked');
+    assert.equal(generatorCalls[0].input.executionContext.reasonCode, 'blocked:01');
     assert.equal(generatorCalls[0].input.ids.moduleId, '01');
   });
   
@@ -1162,15 +1195,13 @@ const config = {
     assert.equal(events[2].verdict, 'NO-GO');
     assert.equal(events[2].reason, "Gate registry missing in progress.json while dispatching 'missing'");
     assert.equal(events[3].gate_id, 'missing');
-    assert.equal(events[3].reason, 'ERROR');
-    assert.equal(events[3].exit_code, 1);
+    assert.equal(events[3].reason, 'error');
+    assertTypedTerminalEvent(events[3], 'failed');
     assert.equal(events[4].summary_type, 'pipeline');
-    assert.equal(events[4].exit_code, 1);
-    assert.equal(events[4].exit_reason, 'ERROR:missing');
+    assertTypedTerminalEvent(events[4], 'failed', 'error:missing');
     assert.equal(events[5].summary_type, 'pipeline');
     assert.equal(events[5].status, 'failed');
-    assert.equal(events[5].exit_code, 1);
-    assert.equal(events[5].exit_reason, 'ERROR:missing');
+    assertTypedTerminalEvent(events[5], 'failed', 'error:missing');
   
     const dispatchDiscordCall = readJsonl(path.join(runLogDir, 'discord.jsonl')).find((entry) => entry.title === 'Gate Dispatch Failed: missing');
     assert.equal(Boolean(dispatchDiscordCall), true, 'missing full-pipeline gate-registry dispatch Discord alert');
@@ -1210,7 +1241,7 @@ const config = {
           runGate: async () => makeStepResult({
             stepType: 'gate',
             stepId: 'review',
-            exit: 10,
+            outcomeClass: 'needs_nova',
             reason: 'Review gate needs Nova guidance',
             projection: {
               gate: 'review',
@@ -1258,8 +1289,8 @@ const config = {
     const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps10, skipArchValidation: true }, { deps: configDeps10 });
     await flushAsync();
   
-    assert.equal(result, 10);
-    assert.equal(outputs.some((payload) => payload?.exit === 10 && payload?.session_key === sessionKey && payload?.gate_type === 'review'), true);
+    assert.equal(result, 1);
+    assert.equal(outputs.some((payload) => payload?.exit === 1 && payload?.session_key === sessionKey && payload?.gate_type === 'review'), true);
     assert.equal(injectNeedsNovaCalls.length, 1);
     assert.equal(injectNeedsNovaCalls[0][1]?.gate_type, 'review');
     assert.equal(injectNeedsNovaCalls[0][1]?.dispatch_id, 'review-dispatch-2');
@@ -1277,8 +1308,8 @@ const config = {
     assert.equal(events[1].gateway_label, null);
     assert.equal(events[1].fail_count, 3);
     assert.equal(events[1].last_failure, 'Review gate needs Nova guidance');
-    assert.equal(events[1].action, 'NEEDS_NOVA');
-    assert.equal(events[1].exit_code, 10);
+    assert.equal(events[1].action, 'needs_nova');
+    assertTypedTerminalEvent(events[1], 'action_required');
     assert.equal(events[2].module_id, null);
     assert.equal(events[2].gate_id, 'review');
     assert.equal(events[2].gate_type, 'review');
@@ -1286,15 +1317,13 @@ const config = {
     assert.equal(events[2].attempt, 2);
     assert.equal(events[2].dispatch_id, 'review-dispatch-2');
     assert.equal(events[2].gateway_label, null);
-    assert.equal(events[2].reason, 'NEEDS_NOVA');
-    assert.equal(events[2].exit_code, 10);
+    assert.equal(events[2].reason, 'needs_nova');
+    assertTypedTerminalEvent(events[2], 'action_required');
     assert.equal(events[3].summary_type, 'pipeline');
-    assert.equal(events[3].exit_code, 10);
-    assert.equal(events[3].exit_reason, 'NEEDS_NOVA:review');
+    assertTypedTerminalEvent(events[3], 'action_required', 'needs_nova:review');
     assert.equal(events[4].summary_type, 'pipeline');
     assert.equal(events[4].status, 'failed');
-    assert.equal(events[4].exit_code, 10);
-    assert.equal(events[4].exit_reason, 'NEEDS_NOVA:review');
+    assertTypedTerminalEvent(events[4], 'action_required', 'needs_nova:review');
   
     const haltDiscordCall = discordCalls.find(([, , title]) => title === 'Pipeline halted: behavior-pipeline-gate-type-stop');
     assert.equal(Boolean(haltDiscordCall), true, 'missing gate halt Discord alert');
@@ -1335,7 +1364,7 @@ const config = {
           runGate: async () => makeStepResult({
             stepType: 'gate',
             stepId: 'review',
-            exit: 40,
+            outcomeClass: 'rate_limited',
             reason: 'Review gate exceeded max rate limit pauses',
             projection: {
               gate: 'review',
@@ -1383,10 +1412,10 @@ const config = {
     const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps11, skipArchValidation: true }, { deps: configDeps11 });
     await flushAsync();
 
-    assert.equal(result, 40);
+    assert.equal(result, 1);
     assert.equal(injectNeedsNovaCalls.length, 0, 'rate-limited gate halts should not escalate to Nova');
     assert.equal(outputs.length, 1, 'expected one output payload');
-    assert.equal(outputs[0].exit, 40);
+    assert.equal(outputs[0].exit, 1);
     assert.equal(outputs[0].gate_type, 'review');
     assert.equal(outputs[0].attempt, 2);
     assert.equal(outputs[0].dispatch_id, dispatchId);
@@ -1403,17 +1432,13 @@ const config = {
     assert.equal(events[1].dispatch_id, dispatchId);
     assert.equal(events[1].gateway_label, dispatchId);
     assert.equal(events[1].session_key, sessionKey);
-    assert.equal(events[1].reason, 'RATE_LIMITED');
-    assert.equal(events[1].exit_code, 40);
-    assert.equal(events[1].rate_limit_exhausted, true);
-    assert.equal(events[1].max_rate_limit_pauses, 2);
+    assert.equal(events[1].reason, 'rate_limited');
+    assertTypedTerminalEvent(events[1], 'rate_limited');
     assert.equal(events[2].summary_type, 'pipeline');
-    assert.equal(events[2].exit_code, 40);
-    assert.equal(events[2].exit_reason, 'RATE_LIMITED:review');
+    assertTypedTerminalEvent(events[2], 'rate_limited', 'rate_limited:review');
     assert.equal(events[3].summary_type, 'pipeline');
     assert.equal(events[3].status, 'failed');
-    assert.equal(events[3].exit_code, 40);
-    assert.equal(events[3].exit_reason, 'RATE_LIMITED:review');
+    assertTypedTerminalEvent(events[3], 'rate_limited', 'rate_limited:review');
 
     const haltDiscordCall = discordCalls.find(([, , title]) => title === 'Pipeline halted: behavior-pipeline-gate-rate-limited');
     assert.equal(Boolean(haltDiscordCall), true, 'missing gate rate-limit halt Discord alert');
@@ -1504,7 +1529,7 @@ const config = {
     const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps12 });
     await flushAsync();
   
-    assert.equal(result, 20);
+    assert.equal(result, 1);
     assert.equal(validatorCalls.length, 1);
     assert.equal(validatorCalls[0].ids.stageId, 'validator:architecture');
     assert.equal(validatorCalls[0].ids.scope, 'run');
@@ -1520,20 +1545,18 @@ const config = {
     assert.equal(events[1].step_id, 'arch-validation');
     assert.equal(events[1].last_failure, 'Architecture validation failed before module execution');
     assert.equal(events[1].action, 'BLOCKED');
-    assert.equal(events[1].exit_code, 20);
+    assertTypedTerminalEvent(events[1], 'blocked');
     assert.equal(events[2].reason, 'ARCH_VALIDATION_BLOCKED');
     assert.equal(events[2].module_id, null);
     assert.equal(events[2].gate_id, null);
     assert.equal(events[2].step_type, 'arch_validation');
     assert.equal(events[2].step_id, 'arch-validation');
-    assert.equal(events[2].exit_code, 20);
+    assertTypedTerminalEvent(events[2], 'blocked');
     assert.equal(events[3].summary_type, 'pipeline');
-    assert.equal(events[3].exit_code, 20);
-    assert.equal(events[3].exit_reason, 'ARCH_VALIDATION_BLOCKED');
+    assertTypedTerminalEvent(events[3], 'blocked', 'ARCH_VALIDATION_BLOCKED');
     assert.equal(events[4].summary_type, 'pipeline');
     assert.equal(events[4].status, 'failed');
-    assert.equal(events[4].exit_code, 20);
-    assert.equal(events[4].exit_reason, 'ARCH_VALIDATION_BLOCKED');
+    assertTypedTerminalEvent(events[4], 'blocked', 'ARCH_VALIDATION_BLOCKED');
   });
 
   await record('mandatory full_lint runs before review gate dispatch', async () => {
@@ -1700,13 +1723,13 @@ const config = {
     const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps14, skipArchValidation: true }, { deps: configDeps14 });
     await flushAsync();
 
-    assert.equal(result, 10);
+    assert.equal(result, 1);
     const streamKey = 'pipeline:telemetry:behavior-full-lint-request-fix:run-full-lint-request-fix-1';
     const events = xaddEvents(streamKey);
     const halt = events.find((event) => event.type === 'pipeline.halted');
     assert.equal(halt.step_type, 'validator');
-    assert.equal(halt.exit_code, 10);
-    assert.equal(halt.reason, 'NEEDS_NOVA');
+    assertTypedTerminalEvent(halt, 'action_required');
+    assert.equal(halt.reason, 'needs_nova');
   });
 
   await record('progress.json can schedule full_lint after a module', async () => {
@@ -1921,7 +1944,7 @@ const config = {
     assert.equal(config._governanceCtx.arch_validator.outcome, 'PASSED');
   });
 
-  await record('architecture validator execution failures halt with EXIT_ERROR before module work starts', async () => {
+  await record('architecture validator execution failures halt as failed before module work starts', async () => {
     const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(pipelineRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
@@ -1992,12 +2015,12 @@ const config = {
     assert.deepEqual(events.map((event) => event.type), ['pipeline.started', 'error.escalation', 'pipeline.halted', 'summary.started', 'summary.completed']);
     assert.equal(events[1].step_type, 'arch_validation');
     assert.equal(events[1].action, 'ERROR');
-    assert.equal(events[1].exit_code, 1);
+    assertTypedTerminalEvent(events[1], 'failed');
     assert.equal(events[2].reason, 'ARCH_VALIDATION_ERROR');
     assert.equal(events[2].step_type, 'arch_validation');
-    assert.equal(events[2].exit_code, 1);
-    assert.equal(events[3].exit_reason, 'ARCH_VALIDATION_ERROR');
-    assert.equal(events[4].exit_reason, 'ARCH_VALIDATION_ERROR');
+    assertTypedTerminalEvent(events[2], 'failed');
+    assertTypedTerminalEvent(events[3], 'failed', 'ARCH_VALIDATION_ERROR');
+    assertTypedTerminalEvent(events[4], 'failed', 'ARCH_VALIDATION_ERROR');
   });
 
   await record('architecture validator registry misses fail closed without executing a fallback validator', async () => {
@@ -2066,13 +2089,13 @@ const config = {
     assert.deepEqual(events.map((event) => event.type), ['pipeline.started', 'error.escalation', 'pipeline.halted', 'summary.started', 'summary.completed']);
     assert.equal(events[1].step_type, 'arch_validation');
     assert.equal(events[1].action, 'ERROR');
-    assert.equal(events[1].exit_code, 1);
+    assertTypedTerminalEvent(events[1], 'failed');
     assert.match(events[1].last_failure || '', /No registered plugin owner found/);
     assert.equal(events[2].reason, 'ARCH_VALIDATION_ERROR');
     assert.equal(events[2].step_type, 'arch_validation');
-    assert.equal(events[2].exit_code, 1);
-    assert.equal(events[3].exit_reason, 'ARCH_VALIDATION_ERROR');
-    assert.equal(events[4].exit_reason, 'ARCH_VALIDATION_ERROR');
+    assertTypedTerminalEvent(events[2], 'failed');
+    assertTypedTerminalEvent(events[3], 'failed', 'ARCH_VALIDATION_ERROR');
+    assertTypedTerminalEvent(events[4], 'failed', 'ARCH_VALIDATION_ERROR');
 
     const haltDiscordCall = discordCalls.find(([, , title]) => title === 'Pipeline halted: behavior-arch-validation-registry-miss');
     assert.equal(Boolean(haltDiscordCall), true, 'missing validator registry-miss halt Discord alert');
@@ -2455,7 +2478,7 @@ const config = {
     ]);
     assert.equal(generatorCalls[0].input.ids.generatorType, 'project_summary');
     assert.equal(generatorCalls[0].input.executionContext.orderIndex, 1);
-    assert.equal(generatorCalls[0].input.executionContext.exitReason, 'PIPELINE_COMPLETE');
+    assert.equal(generatorCalls[0].input.executionContext.reasonCode, 'PIPELINE_COMPLETE');
     assert.equal(generatorCalls[1].input.ids.generatorType, 'pipeline_review');
     assert.equal(generatorCalls[1].input.executionContext.orderIndex, 2);
     assert.equal(generatorCalls[2].input.ids.generatorType, 'case_study');
@@ -2531,11 +2554,11 @@ const config = {
     const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps20, skipArchValidation: true }, { deps: configDeps20 });
     await flushAsync();
 
-    assert.equal(result, 20);
+    assert.equal(result, 1);
     assert.deepEqual(generatorCalls.map((call) => call.stageId), ['generator:project_summary']);
     assert.equal(generatorCalls[0].input.ids.generatorType, 'project_summary');
     assert.equal(generatorCalls[0].input.ids.moduleId, '01');
-    assert.equal(generatorCalls[0].input.executionContext.exitReason, 'BLOCKED:01');
+    assert.equal(generatorCalls[0].input.executionContext.reasonCode, 'blocked:01');
   });
 
   await record('architecture validation blocks exit before the generator schedule runs', async () => {
@@ -2608,7 +2631,7 @@ const config = {
     const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps21 });
     await flushAsync();
 
-    assert.equal(result, 20);
+    assert.equal(result, 1);
     assert.deepEqual(generatorCalls, []);
   });
 

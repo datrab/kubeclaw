@@ -46,28 +46,29 @@ else
   log "Git initialized"
 fi
 
-# ─── Step 2: Verify .gitignore ───────────────────────────────────────────
-if [[ -f .gitignore ]] && grep -q "my-values/" .gitignore; then
-  log ".gitignore has my-values/ (your personal configs stay private)"
+# ─── Step 2: Verify repository hygiene ───────────────────────────────────
+if [[ -f .dockerignore ]] && grep -qxF "my-values/" .dockerignore; then
+  log ".dockerignore excludes my-values/ from runtime image build contexts"
 else
-  err ".gitignore is missing 'my-values/' — adding it"
-  echo "my-values/" >> .gitignore
-fi
-
-# ─── Step 3: Stage public files ──────────────────────────────────────────
-echo ""
-echo "Files that WILL be committed (public):"
-git add -A
-git status --short | awk '$0 !~ /my-values\// { print; count += 1; if (count >= 30) exit }'
-echo ""
-
-# Verify my-values is NOT staged
-if [[ -n "$(git status --short -- my-values/)" ]]; then
-  err "my-values/ is staged! Check your .gitignore"
+  err ".dockerignore must exclude my-values/ from runtime image build contexts"
   exit 1
-else
-  log "my-values/ correctly excluded from git"
 fi
+
+if [[ -f .gitignore ]] && grep -qxF "my-values/.workspace-namespace" .gitignore; then
+  log ".gitignore excludes only local workspace namespace state under my-values/"
+else
+  err ".gitignore must keep my-values/.workspace-namespace local"
+  exit 1
+fi
+
+warn "my-values/ is currently tracked as the audited deployment surface; keep real secrets in Kubernetes Secrets."
+
+# ─── Step 3: Stage repository files ──────────────────────────────────────
+echo ""
+echo "Files that WILL be committed:"
+git add -A
+git status --short | awk '{ print; count += 1; if (count >= 30) exit }'
+echo ""
 
 # ─── Step 4: Initial commit ──────────────────────────────────────────────
 echo ""
@@ -104,7 +105,7 @@ log "Repository ready!"
 echo ""
 echo "  Public repo:  $REPO_URL"
 echo "  Local path:   $REPO_DIR"
-echo "  Private data: $REPO_DIR/my-values/ (git-ignored)"
+echo "  Deploy values: $REPO_DIR/my-values/ (tracked for now, excluded from Docker context)"
 echo ""
 echo "  Next: ./scripts/deploy.sh all"
 echo "============================================="

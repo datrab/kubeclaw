@@ -42,10 +42,10 @@ const { sourceRoot } = parseArgs();
 const mainPath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store.ts');
 const lifecyclePath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-lifecycle.ts');
 const lifecycleLegalityPath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-lifecycle/legality.ts');
-const compatPath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-compat.ts');
-const compatCommonPath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-compat/common.ts');
-const compatGatePath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-compat/gate-projection.ts');
-const compatModulePath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-compat/module-projection.ts');
+const compatPath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-read-models.ts');
+const compatCommonPath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-read-models/common.ts');
+const compatGatePath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-read-models/gate-projection.ts');
+const compatModulePath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-read-models/module-projection.ts');
 const completionAdjudicatorPath = path.join(sourceRoot, 'skills/nova/pipeline/services/completion-adjudicator.ts');
 const truthDriftPath = path.join(sourceRoot, 'skills/nova/pipeline/services/truth-drift.ts');
 const dependenciesPath = path.join(sourceRoot, 'skills/nova/pipeline/services/dependencies.ts');
@@ -57,8 +57,6 @@ const pipelineRunnerSchedulingPath = path.join(sourceRoot, 'skills/nova/pipeline
 const pipelineRunnerRecoveryPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner-recovery.ts');
 const pipelineRunnerSharedPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner-shared.ts');
 const pathsPath = path.join(sourceRoot, 'skills/nova/pipeline/core/paths.ts');
-const pathConstructionMapPath = path.join(sourceRoot, 'docs/pipeline/implementation-map/path-construction.md');
-const externalBoundariesMapPath = path.join(sourceRoot, 'docs/pipeline/implementation-map/external-boundaries.md');
 
 const mainSource = fs.readFileSync(mainPath, 'utf8');
 const lifecycleSource = fs.readFileSync(lifecyclePath, 'utf8');
@@ -79,12 +77,10 @@ const pipelineRunnerSchedulingSource = fs.readFileSync(pipelineRunnerSchedulingP
 const pipelineRunnerRecoverySource = fs.readFileSync(pipelineRunnerRecoveryPath, 'utf8');
 const pipelineRunnerSharedSource = fs.readFileSync(pipelineRunnerSharedPath, 'utf8');
 const pathsSource = fs.readFileSync(pathsPath, 'utf8');
-const pathConstructionMap = fs.readFileSync(pathConstructionMapPath, 'utf8');
-const externalBoundariesMap = fs.readFileSync(externalBoundariesMapPath, 'utf8');
 
 for (const marker of [
   "from './status-store-lifecycle.ts'",
-  "from './status-store-compat.ts'",
+  "from './status-store-read-models.ts'",
   "from './truth-drift.ts'",
   'export {\n  appendCooldownLifecycleEvent,',
   'export {\n  GATE_STATUS_AUTHORITY_ROLES,',
@@ -112,7 +108,7 @@ for (const marker of [
 for (const marker of [
   'export function getAuthoritativeModuleState(',
   'export function projectModuleSchedulerState(',
-  'export function projectGateLegacyEvidenceIntoReadModel(',
+  'export function projectGateEvidenceIntoReadModel(',
   'export function projectGateCompletionState(',
   'export function projectGateSchedulerState(',
   'export function syncApprovalWaitState(',
@@ -120,10 +116,9 @@ for (const marker of [
   'export function buildGateStatusAuthorityPolicy(',
   'export function readGateOutput(',
   'export function gateOutputExists(',
-  'export function readGateStatusJson(',
   'export function readBusterGateCompletion(',
 ]) {
-  assert.equal(compatSource.includes(marker), true, `status-store compat helpers should export ${marker}`);
+  assert.equal(compatSource.includes(marker), true, `status-store read-model helpers should export ${marker}`);
 }
 
 for (const removedMarker of [
@@ -245,7 +240,7 @@ for (const [mod, name] of [
   [compatMod, 'getAuthoritativeModuleState'],
   [compatMod, 'projectModuleSchedulerState'],
   [compatMod, 'buildGateStatusAuthorityPolicy'],
-  [compatMod, 'projectGateLegacyEvidenceIntoReadModel'],
+  [compatMod, 'projectGateEvidenceIntoReadModel'],
   [compatMod, 'projectGateCompletionState'],
   [compatMod, 'projectGateSchedulerState'],
   [compatMod, 'syncApprovalWaitState'],
@@ -370,7 +365,7 @@ const moduleProjection = mainMod.projectModuleSchedulerState(config, '01', progr
 assert.equal(moduleProjection.status, 'PASS', 'module scheduler projection should use lifecycle state');
 assert.equal(moduleProjection.read_model_source, 'canonical-events');
 assert.equal(moduleProjection.operator_projection_source, 'module_scheduler_read_model');
-assert.equal(moduleProjection.legacy_evidence_source, null);
+assert.equal(moduleProjection.diagnostic_evidence_source, null);
 assert.equal(moduleProjection.scheduler_drift_detected, false);
 assert.equal('legacy_status' in moduleProjection, false, 'module scheduler projection should not surface legacy status evidence');
 
@@ -446,7 +441,8 @@ progress.gates.quality = { type: 'buster', title: 'Quality Gate', output_file: '
 fs.writeFileSync(path.join(config.paths.swarm_dir, 'quality-gate-status.json'), JSON.stringify({ status: 'PASS' }, null, 2) + '\n');
 const gateProjection = mainMod.projectGateSchedulerState(config, 'quality', progress.gates.quality);
 assert.equal(gateProjection.completed, false);
-assert.equal(gateProjection.legacy_evidence_source, 'legacy_status:gate-status.json');
+assert.equal(gateProjection.diagnostic_evidence_source, null);
+assert.equal(gateProjection.status, 'PENDING');
 
 fs.rmSync(tmpRoot, { recursive: true, force: true });
 

@@ -1,7 +1,7 @@
 // runners/module-runner-buster-worker.ts — registry-backed Buster worker dispatch
 
 import { buildPluginInvocationEnvelope, createPluginContext } from '../core/context.ts';
-import { STATUS, EXIT_ERROR } from '../core/constants.ts';
+import { STATUS } from '../core/constants.ts';
 import { log } from '../core/logger.ts';
 import { requireStageHandler } from '../core/registry.ts';
 import { setModuleActiveAgent, clearModuleActiveAgent } from '../lifecycle-state.ts';
@@ -76,15 +76,8 @@ export async function executeBusterWorkerAttempt({
   });
   const busterWorkerInput = {
     ...busterExecutionInput,
-    moduleId,
-    moduleDir: dir,
-    timeoutMinutes: timeout,
-    model: busterModel,
     prompt: busterPrompt,
     status,
-    runId: completionIdentity.runId,
-    attempt: completionIdentity.attempt,
-    dispatchId: completionIdentity.dispatchId,
     onDispatched: async (dispatch: AnyRecord = {}) => {
       completionIdentity.dispatchId = dispatch.dispatch_id || completionIdentity.dispatchId;
       completionIdentity.gateway_label = dispatch.gateway_label || null;
@@ -175,7 +168,7 @@ export async function executeBusterWorkerAttempt({
       terminal: {
         retry: false,
         result: {
-          exit: EXIT_ERROR,
+          outcome_class: 'error',
           reason,
           dispatch_id: completionIdentity.dispatchId,
           gateway_label: completionIdentity.gateway_label,

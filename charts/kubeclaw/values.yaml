@@ -35,6 +35,9 @@ imagePullSecrets: []
 # =============================================================================
 
 gateway:
+  # Internal URL used by colocated runtime processes such as Buster and the
+  # gateway runtime. Empty defaults to http://127.0.0.1:<gateway.port>.
+  url: ""
   command:
     - "node"
     - "/app/openclaw.mjs"
@@ -45,16 +48,18 @@ gateway:
     - "18789"
   port: 18789
   bridgePort: 18790
+  resources: {}
+
+busterPipeline:
+  enabled: false
+  heartbeatIntervalMs: 1000
+  command:
+    - "node"
+    - "/app/skills/buster-pipeline.ts"
+  resources: {}
 
 # -- Replica count (always 1 per agent — agents are stateful)
 replicaCount: 1
-
-# -- Stream processor sidecar (Redis → Gateway bridge)
-# Reads tasks from the agent's Redis stream and injects them into the gateway.
-# Required for Buster (pipeline dispatches tests via Redis).
-# Not needed for Nova (pipeline.ts runs directly in Nova's session).
-processor:
-  enabled: true
 
 # =============================================================================
 # AUTHENTICATION
@@ -192,13 +197,16 @@ workspace:
 # =============================================================================
 
 service:
-  type: NodePort
+  type: ClusterIP
   gatewayPort: 18789
   bridgePort: 18790
-  # NodePort for gateway (set to 0 for auto-assignment)
+  # NodePort for gateway when service.type is NodePort.
   nodePort: 0
   bridgeNodePort: 0
-  # Extra ports to expose (e.g. for sidecar services like prism-preview)
+  # Extra ports to expose on the internal Service.
+  # If nodePort is set while service.type is not NodePort, the chart also
+  # creates a dedicated NodePort Service for that extra port without exposing
+  # the gateway.
   extraPorts: []
   # - name: prism-preview
   #   port: 3456
@@ -246,18 +254,57 @@ runAsRoot: true
 # =============================================================================
 
 probes:
+  startup:
+    enabled: true
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 10
+    failureThreshold: 24
   readiness:
     enabled: true
-    tcpSocket: { port: 18789 }
-    initialDelaySeconds: 60
+    initialDelaySeconds: 5
     periodSeconds: 10
-    timeoutSeconds: 5
+    timeoutSeconds: 10
+    failureThreshold: 3
   liveness:
     enabled: true
-    tcpSocket: { port: 18789 }
     initialDelaySeconds: 120
     periodSeconds: 15
     timeoutSeconds: 5
+    failureThreshold: 3
+  dependencies:
+    gateway:
+      enabled: true
+    redis:
+      enabled: true
+    redisStream:
+      enabled: true
+      stream: ""
+      maxLen: 1000
+    litellm:
+      enabled: true
+    qdrant:
+      enabled: true
+    registries:
+      enabled: true
+      endpoints:
+        - "http://registry-local.kubeclaw.svc.cluster.local:5001"
+        - "http://registry-mirror.kubeclaw.svc.cluster.local:5000"
+    busterHeartbeat:
+      enabled: true
+      path: "/tmp/kubeclaw-buster-heartbeat"
+      maxAgeSeconds: 120
+
+# =============================================================================
+# SHUTDOWN
+# =============================================================================
+
+shutdown:
+  # Kubernetes sends SIGTERM after preStop completes; keep this long enough for
+  # Redis task settlement, active-session termination, and sandbox cleanup.
+  terminationGracePeriodSeconds: 180
+  drainFile: "/tmp/kubeclaw-draining"
+  preStopDrainSeconds: 5
 
 # =============================================================================
 # SANDBOX (Buster only)
@@ -268,21 +315,44 @@ probes:
 
 sandbox:
   enabled: false
-  storageSize: "25Gi"
+  storageSize: "50Gi"
   registriesConf: "" # Optional TOML mounted into /etc/containers/registries.conf.d/999-kubeclaw.conf
 
 # =============================================================================
 # SERVICE ACCOUNT
 # =============================================================================
-# When enabled, creates a ServiceAccount + ClusterRole + ClusterRoleBinding
-# granting buster full access to manage ephemeral test namespaces and their
-# workloads (pods, deployments, services, secrets, etc.).
-# The VAP buster-namespace-fence enforces that only buster-* / test-* namespaces
-# can be created or deleted, protecting production namespaces.
-# Only enable for the Buster agent.
+# When enabled, creates an agent ServiceAccount. By default it does not mount a
+# Kubernetes token. Buster deployments that need k8s suite access should use
+# busterNamespaceBroker and explicitly enable automount for this account.
 
 serviceAccount:
   create: false
+  automount: false
+
+# =============================================================================
+# BUSTER NAMESPACE BROKER (Buster only)
+# =============================================================================
+# Self-contained namespace lease controller for Buster k8s tests.
+# Buster can create BusterNamespaceLease objects in the release namespace; the
+# trusted controller creates/deletes ephemeral test namespaces and binds Buster's
+# ServiceAccount only inside those namespaces.
+
+busterNamespaceBroker:
+  enabled: false
+  leaseApiGroup: kubeclaw.forgestack.ai
+  leaseApiVersion: v1alpha1
+  allowedPrefixes:
+    - test
+  defaultTtlSeconds: 7200
+  controller:
+    image:
+      repository: ghcr.io/forgestackai/kubeclaw-general
+      tag: latest
+      pullPolicy: Always
+    pollIntervalMs: 3000
+    resources:
+      requests: { cpu: 50m, memory: 128Mi }
+      limits: { cpu: 500m, memory: 512Mi }
 
 # =============================================================================
 # COMMANDS
@@ -297,7 +367,7 @@ commands:
 # =============================================================================
 # Platform-level config for the pipeline engine.
 # Copied to the config PVC and mounted at /home/node/.openclaw/swarm.config.json.
-# Pipeline reads /home/node/.openclaw/swarm.config.json first; SWARM_CONFIG is a fallback.
+# Pipeline reads /home/node/.openclaw/swarm.config.json first; SWARM_CONFIG is a secondary candidate.
 #
 # Default is loaded from charts/kubeclaw/files/config/swarm.config.json.
 # To override the default, paste your full JSON config here:

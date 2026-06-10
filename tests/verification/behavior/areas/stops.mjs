@@ -18,7 +18,8 @@ export async function registerStopsArea({
   xaddEvents,
 }) {
 function stepExit(result) {
-  return result?.terminal?.exitCode;
+  const status = result?.terminal?.status ?? result?.terminal_status ?? null;
+  return status === "succeeded" ? 0 : (status ? 1 : null);
 }
 
 function stepMetadata(result) {
@@ -52,7 +53,7 @@ async function buildBuiltInRegistry(runtimeRootForRegistry) {
         name: 'config invalid',
         project: 'behavior-buster-config-invalid',
         runId: 'run-buster-config-invalid-1',
-        expectedExit: 10,
+        expectedExit: 1,
         result: { ok: false, reason: 'config_invalid', status: { error: 'missing suite config', gateway_label: 'gate-buster-dispatch', session_key: 'agent:main:acp:gate-buster' } },
         expectedReason: "Gate 'gate:buster' config invalid: missing suite config",
       },
@@ -68,7 +69,7 @@ async function buildBuiltInRegistry(runtimeRootForRegistry) {
         name: 'parse corrupted',
         project: 'behavior-buster-parse-corrupted',
         runId: 'run-buster-parse-corrupted-1',
-        expectedExit: 10,
+        expectedExit: 1,
         result: { ok: false, reason: 'parse_corrupted', status: { attempt: 1, gateway_label: 'gate-buster-dispatch', session_key: 'agent:main:acp:gate-buster' } },
         expectedReason: "Gate 'gate:buster' status file permanently corrupted",
       },
@@ -76,7 +77,7 @@ async function buildBuiltInRegistry(runtimeRootForRegistry) {
         name: 'timeout',
         project: 'behavior-buster-timeout',
         runId: 'run-buster-timeout-1',
-        expectedExit: 30,
+        expectedExit: 1,
         result: { ok: false, reason: 'timeout', status: { attempt: 1, gateway_label: 'gate-buster-dispatch', session_key: 'agent:main:acp:gate-buster' } },
         expectedReason: "Gate 'gate:buster' timed out",
       },
@@ -92,7 +93,7 @@ async function buildBuiltInRegistry(runtimeRootForRegistry) {
         name: 'rate limit exhausted',
         project: 'behavior-buster-rate-limit-exhausted',
         runId: 'run-buster-rate-limit-exhausted-1',
-        expectedExit: 40,
+        expectedExit: 1,
         rateLimit: { max_pauses_per_module: 0 },
         result: { ok: false, reason: 'rate_limited', status: { attempt: 1, provider: 'anthropic', dispatch_id: 'dispatch-buster-rate-limit-1', gateway_label: 'gate-buster-dispatch', session_key: 'agent:main:acp:gate-buster' } },
         expectedReason: "Gate 'gate:buster' exceeded max rate limit pauses",
@@ -101,7 +102,7 @@ async function buildBuiltInRegistry(runtimeRootForRegistry) {
         name: 'no fix loop',
         project: 'behavior-buster-no-fix-loop',
         runId: 'run-buster-no-fix-loop-1',
-        expectedExit: 10,
+        expectedExit: 1,
         result: {
           ok: false,
           reason: 'gate_fail',
@@ -168,7 +169,7 @@ const config = {
       const streamKey = `pipeline:telemetry:${scenario.project}:${scenario.runId}`;
       const events = gateRuntimeEvents(xaddEvents, streamKey);
       const signalEvents = events.filter((event) => event.type !== 'observability.degraded' && event.type !== 'observability.restored');
-      if (scenario.expectedExit === 40) {
+      if (scenario.name === "rate limit exhausted") {
         assert.deepEqual(signalEvents.map((event) => event.type), ['gate.started', 'gate.verdict', 'retry.exhausted'], scenario.name);
       } else {
         assert.deepEqual(signalEvents.map((event) => event.type), ['gate.started', 'gate.verdict'], scenario.name);
@@ -180,7 +181,7 @@ const config = {
       assert.equal(signalEvents[1].verdict, 'NO-GO', scenario.name);
       assert.equal(signalEvents[1].reason, scenario.expectedVerdictReason ?? scenario.expectedReason, scenario.name);
       assert.equal(signalEvents[1].session_key, 'agent:main:acp:gate-buster', scenario.name);
-      if (scenario.expectedExit === 40) {
+      if (scenario.name === "rate limit exhausted") {
         assert.equal(signalEvents[1].dispatch_id, 'dispatch-buster-rate-limit-1', scenario.name);
         assert.equal(signalEvents[2].gate_id, 'gate:buster', scenario.name);
         assert.equal(signalEvents[2].module_id, null, scenario.name);

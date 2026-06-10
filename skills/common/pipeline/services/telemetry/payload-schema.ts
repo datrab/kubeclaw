@@ -362,7 +362,8 @@ export const TELEMETRY_PAYLOAD_SCHEMAS: Record<string, TelemetryPayloadSchema> =
     tokens_out: nullable(number),
   }),
   'error.escalation': schema({}, {
-    exit_code: nullable(number),
+    terminal_status: nullable(nonEmptyString),
+    terminal_decision: nullable(jsonObject),
     module_id: nullable(nonEmptyString),
     gate_id: nullable(nonEmptyString),
     gate_type: nullable(nonEmptyString),
@@ -462,8 +463,8 @@ export const TELEMETRY_PAYLOAD_SCHEMAS: Record<string, TelemetryPayloadSchema> =
   'phase.started': schema({ module_id: nonEmptyString, phase: nonEmptyString }, {
     model: nullable(nonEmptyString),
   }),
-  'pipeline.completed': schema({ exit_code: number }, {
-    exit_reason: nullable(string),
+  'pipeline.completed': schema({ terminal_status: nonEmptyString }, {
+    reason_code: nullable(string),
     duration_seconds: nullable(number),
     modules_passed: nullable(number),
     modules_failed: nullable(number),
@@ -478,7 +479,8 @@ export const TELEMETRY_PAYLOAD_SCHEMAS: Record<string, TelemetryPayloadSchema> =
     attempt: nullable(number),
     dispatch_id: nullable(nonEmptyString),
     gateway_label: nullable(string),
-    exit_code: nullable(number),
+    terminal_status: nullable(nonEmptyString),
+    terminal_decision: nullable(jsonObject),
     rate_limit_exhausted: nullable(boolean),
     max_rate_limit_pauses: nullable(number),
     step_type: nullable(nonEmptyString),
@@ -579,8 +581,9 @@ export const TELEMETRY_PAYLOAD_SCHEMAS: Record<string, TelemetryPayloadSchema> =
     summary_json_path: nullable(string),
     pipeline_summary_path: nullable(string),
     latest_json_path: nullable(string),
-    exit_code: nullable(number),
-    exit_reason: nullable(string),
+    terminal_status: nullable(nonEmptyString),
+    terminal_decision: nullable(jsonObject),
+    reason_code: nullable(string),
   }),
   'summary.started': schema({ summary_type: nonEmptyString }, {
     gateway_label: nullable(string),
@@ -594,8 +597,9 @@ export const TELEMETRY_PAYLOAD_SCHEMAS: Record<string, TelemetryPayloadSchema> =
     model: nullable(nonEmptyString),
     runtime: nullable(nonEmptyString),
     output_dir: nullable(string),
-    exit_code: nullable(number),
-    exit_reason: nullable(string),
+    terminal_status: nullable(nonEmptyString),
+    terminal_decision: nullable(jsonObject),
+    reason_code: nullable(string),
   }),
 });
 

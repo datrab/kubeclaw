@@ -63,7 +63,6 @@ exports.dump = (doc) => JSON.stringify(doc, null, 2) + '\\n';
         DISCORD_WEBHOOK_URL: 'https://discord.example/webhook-url',
         DISCORD_WEBHOOK_BACKUP: 'https://discord.example/webhook-backup',
         DISCORD_TOKEN: 'discord-token',
-        GATEWAY_TOKEN: 'gateway-token',
         OPENCLAW_GATEWAY_TOKEN: 'openclaw-gateway-token',
         REDIS_PASSWORD: 'redis-password',
       },
@@ -72,7 +71,7 @@ exports.dump = (doc) => JSON.stringify(doc, null, 2) + '\\n';
     assert.equal(env.PATH, '/usr/bin');
     assert.equal(env.HOME, '/tmp/home');
     assert.equal(env.CI, 'true');
-    for (const denied of ['DISCORD_WEBHOOK', 'DISCORD_WEBHOOK_URL', 'DISCORD_WEBHOOK_BACKUP', 'DISCORD_TOKEN', 'GATEWAY_TOKEN', 'OPENCLAW_GATEWAY_TOKEN', 'REDIS_PASSWORD']) {
+    for (const denied of ['DISCORD_WEBHOOK', 'DISCORD_WEBHOOK_URL', 'DISCORD_WEBHOOK_BACKUP', 'DISCORD_TOKEN', 'OPENCLAW_GATEWAY_TOKEN', 'REDIS_PASSWORD']) {
       assert.equal(Object.prototype.hasOwnProperty.call(env, denied), false, `${denied} must not be inherited by subprocesses`);
     }
     assert.throws(
@@ -86,15 +85,15 @@ exports.dump = (doc) => JSON.stringify(doc, null, 2) + '\\n';
     const executionMod = await importRuntimeModule(generalRoot, '/app/skills/pipeline/tools/lint-report/execution.ts');
 
     const previousDiscordToken = process.env.DISCORD_TOKEN;
-    const previousGatewayToken = process.env.GATEWAY_TOKEN;
+    const previousGatewayToken = process.env.OPENCLAW_GATEWAY_TOKEN;
     const previousRedisPassword = process.env.REDIS_PASSWORD;
     process.env.DISCORD_TOKEN = 'parent-discord-token';
-    process.env.GATEWAY_TOKEN = 'parent-gateway-token';
+    process.env.OPENCLAW_GATEWAY_TOKEN = 'parent-gateway-token';
     process.env.REDIS_PASSWORD = 'parent-redis-password';
     try {
       const result = executionMod.safeExec('node', [
         '-e',
-        "process.stdout.write(JSON.stringify({PATH:process.env.PATH||null,CI:process.env.CI||null,DISCORD_TOKEN:process.env.DISCORD_TOKEN||null,GATEWAY_TOKEN:process.env.GATEWAY_TOKEN||null,REDIS_PASSWORD:process.env.REDIS_PASSWORD||null}))",
+        "process.stdout.write(JSON.stringify({PATH:process.env.PATH||null,CI:process.env.CI||null,DISCORD_TOKEN:process.env.DISCORD_TOKEN||null,OPENCLAW_GATEWAY_TOKEN:process.env.OPENCLAW_GATEWAY_TOKEN||null,REDIS_PASSWORD:process.env.REDIS_PASSWORD||null}))",
       ], { env: { CI: 'true' } });
 
       assert.equal(result.ok, true);
@@ -102,13 +101,13 @@ exports.dump = (doc) => JSON.stringify(doc, null, 2) + '\\n';
       assert.equal(Boolean(childEnv.PATH), true);
       assert.equal(childEnv.CI, 'true');
       assert.equal(childEnv.DISCORD_TOKEN, null);
-      assert.equal(childEnv.GATEWAY_TOKEN, null);
+      assert.equal(childEnv.OPENCLAW_GATEWAY_TOKEN, null);
       assert.equal(childEnv.REDIS_PASSWORD, null);
     } finally {
       if (previousDiscordToken === undefined) delete process.env.DISCORD_TOKEN;
       else process.env.DISCORD_TOKEN = previousDiscordToken;
-      if (previousGatewayToken === undefined) delete process.env.GATEWAY_TOKEN;
-      else process.env.GATEWAY_TOKEN = previousGatewayToken;
+      if (previousGatewayToken === undefined) delete process.env.OPENCLAW_GATEWAY_TOKEN;
+      else process.env.OPENCLAW_GATEWAY_TOKEN = previousGatewayToken;
       if (previousRedisPassword === undefined) delete process.env.REDIS_PASSWORD;
       else process.env.REDIS_PASSWORD = previousRedisPassword;
     }
@@ -193,7 +192,7 @@ metadata:
     const k8sMod = await importRuntimeModule(sandboxRoot, '/app/skills/pipeline/suites/k8s.ts');
     const cleanupMod = await importRuntimeModule(sandboxRoot, '/app/skills/pipeline/services/sandbox-cleanup.ts');
 
-    assert.equal(k8sMod.validateK8sNamespacePrefix('buster'), true);
+    assert.equal(k8sMod.validateK8sNamespacePrefix('buster'), false);
     assert.equal(k8sMod.validateK8sNamespacePrefix('test'), true);
     assert.equal(k8sMod.validateK8sNamespacePrefix('prod'), false);
 
@@ -229,7 +228,7 @@ metadata:
       assert.equal(verdict.critical, true);
       assert.equal(verdict.checks_total, 1);
       assert.equal(verdict.metadata.checks[0].name, 'namespace-prefix');
-      assert.match(verdict.findings[0].message, /expected one of: buster, test/);
+      assert.match(verdict.findings[0].message, /expected one of: test/);
       assert.equal(events.some((entry) => entry[0]?.check === 'dockerfile-build'), false);
       assert.equal(fs.existsSync(cleanupStatePath), false);
     } finally {
@@ -464,7 +463,7 @@ metadata:
     cleanupMod.trackSandboxResources(payload, {
       containers: ['sb-test-container'],
       images: ['localhost/build-sb-test-container'],
-      namespaces: ['buster-behavior-cleanup-abc123'],
+      namespaces: ['test-behavior-cleanup-abc123'],
     }, { sandboxRoot: sandboxDir });
 
     const calls = [];
@@ -494,11 +493,11 @@ metadata:
       { command: 'podman', args: ['stop', 'sb-test-container'] },
       { command: 'podman', args: ['rm', '-f', 'sb-test-container'] },
       { command: 'podman', args: ['image', 'rm', '-f', 'localhost/build-sb-test-container'] },
-      { command: 'kubectl', args: ['delete', 'namespace', 'buster-behavior-cleanup-abc123', '--wait=false'] },
+      { command: 'kubectl', args: ['delete', 'busternamespacelease', 'test-behavior-cleanup-abc123', '-n', 'kubeclaw', '--wait=false'] },
     ]);
     assert.deepEqual(result.cleaned.containers, ['sb-test-container']);
     assert.deepEqual(result.cleaned.images, ['localhost/build-sb-test-container']);
-    assert.deepEqual(result.cleaned.namespaces, ['buster-behavior-cleanup-abc123']);
+    assert.deepEqual(result.cleaned.namespaces, ['test-behavior-cleanup-abc123']);
     assert.equal(fs.existsSync(cleanupMod.getCleanupStatePath(payload, { sandboxRoot: sandboxDir })), false);
   });
 
@@ -531,6 +530,11 @@ metadata:
     assert.equal(result.ok, true);
     assert.equal(result.cleanup_policy.name, 'startup_sweep');
     assert.equal(result.cleanup_policy.tracked_resources, 'all');
+    assert.equal(result.disk_usage.before.sandbox_root.path, sandboxDir);
+    assert.equal(result.disk_usage.before.sandbox_root.exists, true);
+    assert.equal(typeof result.disk_usage.before.sandbox_root.size_bytes, 'number');
+    assert.equal(result.disk_usage.after.sandbox_root.path, sandboxDir);
+    assert.equal(result.disk_usage.after.sandbox_root.exists, true);
     assert.deepEqual(fs.readdirSync(wwwDir), []);
     assert.deepEqual(fs.readdirSync(resultsDir), []);
     assert.deepEqual(fs.readdirSync(untouchedDir), ['keep.txt']);
@@ -560,7 +564,7 @@ metadata:
     cleanupMod.trackSandboxResources(payload, {
       containers: ['sb-policy-container'],
       images: ['localhost/build-sb-policy-container'],
-      namespaces: ['buster-behavior-policy-abc123'],
+      namespaces: ['test-behavior-policy-abc123'],
     }, { sandboxRoot: sandboxDir });
 
     const calls = [];
@@ -609,12 +613,12 @@ metadata:
     cleanupMod.trackSandboxResources(payloadA, {
       containers: ['sb-sibling-a'],
       images: ['localhost/build-sb-sibling-a'],
-      namespaces: ['buster-behavior-sibling-a'],
+      namespaces: ['test-behavior-sibling-a'],
     }, { sandboxRoot: sandboxDir });
     cleanupMod.trackSandboxResources(payloadB, {
       containers: ['sb-sibling-b'],
       images: ['localhost/build-sb-sibling-b'],
-      namespaces: ['buster-behavior-sibling-b'],
+      namespaces: ['test-behavior-sibling-b'],
     }, { sandboxRoot: sandboxDir });
 
     const calls = [];
@@ -636,7 +640,7 @@ metadata:
       { command: 'podman', args: ['stop', 'sb-sibling-a'] },
       { command: 'podman', args: ['rm', '-f', 'sb-sibling-a'] },
       { command: 'podman', args: ['image', 'rm', '-f', 'localhost/build-sb-sibling-a'] },
-      { command: 'kubectl', args: ['delete', 'namespace', 'buster-behavior-sibling-a', '--wait=false'] },
+      { command: 'kubectl', args: ['delete', 'busternamespacelease', 'test-behavior-sibling-a', '-n', 'kubeclaw', '--wait=false'] },
     ]);
     assert.equal(calls.some((call) => call.command === 'nginx'), false);
     assert.equal(fs.existsSync(cleanupMod.getCleanupStatePath(payloadA, { sandboxRoot: sandboxDir })), false);
@@ -644,7 +648,7 @@ metadata:
     const siblingState = JSON.parse(fs.readFileSync(cleanupMod.getCleanupStatePath(payloadB, { sandboxRoot: sandboxDir }), 'utf8'));
     assert.deepEqual(siblingState.containers, ['sb-sibling-b']);
     assert.deepEqual(siblingState.images, ['localhost/build-sb-sibling-b']);
-    assert.deepEqual(siblingState.namespaces, ['buster-behavior-sibling-b']);
+    assert.deepEqual(siblingState.namespaces, ['test-behavior-sibling-b']);
   });
 
   await record('buster startup sweep cleans all tracked recovery state only under sweep policy', async () => {
@@ -655,7 +659,7 @@ metadata:
     const payloadA = { project: 'behavior-sweep', module_id: '01', attempt: 1, run_id: 'run-sweep-a' };
     const payloadB = { project: 'behavior-sweep', module_id: '02', attempt: 1, run_id: 'run-sweep-b' };
     cleanupMod.trackSandboxResources(payloadA, { containers: ['sb-sweep-a'] }, { sandboxRoot: sandboxDir });
-    cleanupMod.trackSandboxResources(payloadB, { namespaces: ['buster-behavior-sweep-b'] }, { sandboxRoot: sandboxDir });
+    cleanupMod.trackSandboxResources(payloadB, { namespaces: ['test-behavior-sweep-b'] }, { sandboxRoot: sandboxDir });
 
     const calls = [];
     const result = await cleanupMod.cleanupSandboxResources('startup', null, {
@@ -672,11 +676,11 @@ metadata:
     assert.deepEqual(calls, [
       { command: 'podman', args: ['stop', 'sb-sweep-a'] },
       { command: 'podman', args: ['rm', '-f', 'sb-sweep-a'] },
-      { command: 'kubectl', args: ['delete', 'namespace', 'buster-behavior-sweep-b', '--wait=false'] },
+      { command: 'kubectl', args: ['delete', 'busternamespacelease', 'test-behavior-sweep-b', '-n', 'kubeclaw', '--wait=false'] },
       { command: 'nginx', args: ['-s', 'stop'] },
     ]);
     assert.deepEqual(result.cleaned.containers, ['sb-sweep-a']);
-    assert.deepEqual(result.cleaned.namespaces, ['buster-behavior-sweep-b']);
+    assert.deepEqual(result.cleaned.namespaces, ['test-behavior-sweep-b']);
     assert.equal(fs.existsSync(cleanupMod.getCleanupStatePath(payloadA, { sandboxRoot: sandboxDir })), false);
     assert.equal(fs.existsSync(cleanupMod.getCleanupStatePath(payloadB, { sandboxRoot: sandboxDir })), false);
   });
@@ -693,7 +697,7 @@ metadata:
       run_id: 'run-cleanup-retry-1',
     };
     cleanupMod.trackSandboxResources(payload, {
-      namespaces: ['buster-behavior-retry-abc123'],
+      namespaces: ['test-behavior-retry-abc123'],
     }, { sandboxRoot: sandboxDir });
 
     const calls = [];
@@ -712,13 +716,13 @@ metadata:
 
     assert.equal(result.ok, false);
     assert.deepEqual(calls.filter((call) => call.command === 'kubectl' && call.args[0] === 'delete'), [
-      { command: 'kubectl', args: ['delete', 'namespace', 'buster-behavior-retry-abc123', '--wait=false'] },
+      { command: 'kubectl', args: ['delete', 'busternamespacelease', 'test-behavior-retry-abc123', '-n', 'kubeclaw', '--wait=false'] },
     ]);
     assert.equal(calls.some((call) => call.command === 'nginx'), false);
     assert.equal(result.errors.some((entry) => entry.includes('temporary apiserver outage')), true);
     assert.equal(fs.existsSync(cleanupMod.getCleanupStatePath(payload, { sandboxRoot: sandboxDir })), true);
     const remaining = JSON.parse(fs.readFileSync(cleanupMod.getCleanupStatePath(payload, { sandboxRoot: sandboxDir }), 'utf8'));
-    assert.deepEqual(remaining.namespaces, ['buster-behavior-retry-abc123']);
+    assert.deepEqual(remaining.namespaces, ['test-behavior-retry-abc123']);
   });
 
   await record('buster cleanup reports corrupt state without treating it as empty successful cleanup', async () => {

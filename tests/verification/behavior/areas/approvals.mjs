@@ -49,7 +49,8 @@ function gateRuntimeEvents(xaddEvents, streamKey) {
 }
 
 function stepExit(result) {
-  return result?.terminal?.exitCode;
+  const status = result?.terminal?.status ?? result?.terminal_status ?? null;
+  return status === "succeeded" ? 0 : (status ? 1 : null);
 }
 
 function stepSummary(result) {
@@ -468,7 +469,7 @@ await record('approval gate stage-owner block results preserve rejection semanti
 
   const result = await gateRunnerMod.runGate(config, progress, 'release-approval');
 
-  assert.equal(stepExit(result), 10);
+  assert.equal(stepExit(result), 1);
   assert.equal(stepGateStatus(result), 'FAIL');
   assert.equal(stepSummary(result), "Gate 'release-approval' rejected: Needs changes");
   assert.equal(stepMetadata(result).decision_by, 'nova');
@@ -836,7 +837,7 @@ const config = {
   const result = await runGateViaRegistry(telemetryRuntimeRoot, config, progress, 'release-approval', { deps: configDeps5 });
   await flushAsync();
 
-  assert.equal(stepExit(result), 10);
+  assert.equal(stepExit(result), 1);
   assert.equal(stepGateStatus(result), 'TIMED_OUT');
   assert.equal(gateState.timeout_policy, 'BLOCK');
 
@@ -986,7 +987,7 @@ const config = {
   const result = await runGateViaRegistry(telemetryRuntimeRoot, config, progress, 'release-approval', { deps: configDeps7 });
   await flushAsync();
 
-  assert.equal(stepExit(result), 10);
+  assert.equal(stepExit(result), 1);
   assert.equal(stepGateStatus(result), 'FAIL');
   assert.equal(stepSummary(result), "Gate 'release-approval' was previously rejected: Needs changes");
 
@@ -1062,7 +1063,7 @@ const config = {
 
   const result = await runGateViaRegistry(telemetryRuntimeRoot, config, progress, 'release-approval', { deps: configDeps8 });
 
-  assert.equal(stepExit(result), 10);
+  assert.equal(stepExit(result), 1);
   assert.equal(stepGateStatus(result), 'FAIL');
   assert.equal(stepMetadata(result).corrupted_state, true);
   assert.match(stepSummary(result), /corrupted persisted state/i);
@@ -1138,7 +1139,7 @@ const config = {
 
   const result = await runGateViaRegistry(telemetryRuntimeRoot, config, progress, 'release-approval', { deps: configDeps9 });
 
-  assert.equal(stepExit(result), 10);
+  assert.equal(stepExit(result), 1);
   assert.equal(stepGateStatus(result), 'FAIL');
   assert.equal(stepMetadata(result).invalid_state, true);
   assert.match(stepSummary(result), /invalid persisted state status 'WAITING_FOR_MAYBE'/);
@@ -1150,11 +1151,12 @@ const config = {
   assert.equal(persisted.status, 'WAITING_FOR_MAYBE');
 });
 
-await record('approval gate dependencies trust persisted approval state and accept timeout-continue without requiring output files', async () => {
+await record('approval gate dependencies ignore diagnostic gate-state files and consume canonical approval read models', async () => {
   const { runtimeRoot: telemetryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
   installFakeRedis(telemetryRuntimeRoot);
 
   const dependenciesMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/dependencies.ts');
+  const statusStoreMod = await importRuntimeModule(telemetryRuntimeRoot, '/app/skills/pipeline/services/status-store.ts');
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-dependencies-'));
   const swarmDir = path.join(repoRoot, '.swarm');
@@ -1192,13 +1194,43 @@ await record('approval gate dependencies trust persisted approval state and acce
     pathsMod.gateStatusPath(config, 'release-approval'),
     JSON.stringify({ status: 'APPROVED' }, null, 2),
   );
+  assert.deepEqual(
+    dependenciesMod.checkDependencies(config, progress, '02'),
+    { met: false, reason: "Gate 'release-approval' not completed" },
+    'diagnostic approval state must not satisfy scheduler dependencies',
+  );
+
+  statusStoreMod.syncApprovalWaitState(config, 'release-approval', progress.gates['release-approval'], {
+    status: 'APPROVED',
+    resolved_at: '2026-06-07T00:00:00.000Z',
+    reason: 'Approved by operator',
+  });
   assert.deepEqual(dependenciesMod.checkDependencies(config, progress, '02'), { met: true });
 
-  fs.writeFileSync(
-    pathsMod.gateStatusPath(config, 'release-approval'),
-    JSON.stringify({ status: 'TIMED_OUT', continued: true }, null, 2),
+  const timeoutRepoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-dependencies-timeout-'));
+  const timeoutSwarmDir = path.join(timeoutRepoRoot, '.swarm');
+  fs.mkdirSync(timeoutSwarmDir, { recursive: true });
+  const timeoutConfig = {
+    ...platformApprovalDefaults(),
+    project: 'behavior-approval-dependencies-timeout',
+    _runId: 'run-approval-dependencies-timeout-1',
+    run_id: 'run-approval-dependencies-timeout-1',
+    paths: {
+      swarm_dir: timeoutSwarmDir,
+      modules_dir: path.join(timeoutRepoRoot, 'modules'),
+    },
+  };
+  statusStoreMod.syncApprovalWaitState(timeoutConfig, 'release-approval', progress.gates['release-approval'], {
+    status: 'TIMED_OUT',
+    continued: true,
+    resolved_at: '2026-06-07T00:01:00.000Z',
+    reason: 'Approval timed out and continued',
+  });
+  assert.deepEqual(
+    dependenciesMod.checkDependencies(timeoutConfig, progress, '02'),
+    { met: true },
+    'canonical timeout-continue approval read model should satisfy dependencies',
   );
-  assert.deepEqual(dependenciesMod.checkDependencies(config, progress, '02'), { met: true });
 
   fs.writeFileSync(
     pathsMod.gateStatusPath(config, 'release-approval'),
@@ -1228,8 +1260,18 @@ await record('approval gate dependencies trust persisted approval state and acce
     pathsMod.gateStatusPath(rejectedConfig, 'release-approval'),
     JSON.stringify({ status: 'REJECTED', continued: false }, null, 2),
   );
-  const rejected = dependenciesMod.checkDependencies(rejectedConfig, progress, '02');
-  assert.equal(rejected.met, false);
-  assert.equal(rejected.reason, "Approval gate 'release-approval' is REJECTED");
+  const diagnosticRejected = dependenciesMod.checkDependencies(rejectedConfig, progress, '02');
+  assert.equal(diagnosticRejected.met, false);
+  assert.equal(diagnosticRejected.reason, "Gate 'release-approval' not completed");
+
+  statusStoreMod.syncApprovalWaitState(rejectedConfig, 'release-approval', progress.gates['release-approval'], {
+    status: 'REJECTED',
+    continued: false,
+    resolved_at: '2026-06-07T00:02:00.000Z',
+    reason: 'Needs changes',
+  });
+  const canonicalRejected = dependenciesMod.checkDependencies(rejectedConfig, progress, '02');
+  assert.equal(canonicalRejected.met, false);
+  assert.equal(canonicalRejected.reason, "Approval gate 'release-approval' is REJECTED");
 });
 }

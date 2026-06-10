@@ -233,14 +233,22 @@ await record('Buster telemetry mirrors successful events into canonical pipeline
 
 await record('Buster telemetry init failure emits explicit degraded fallback artifacts', async () => {
   const { runtimeRoot: brokenTelemetryRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'sandbox');
-  const nodeModulesDir = ensureDir(path.join(brokenTelemetryRoot, 'node_modules', 'ioredis'));
-  fs.writeFileSync(path.join(nodeModulesDir, 'index.js'), `
+  const brokenRedisPackage = `
 module.exports = class BrokenRedis {
   constructor() {
     throw new Error('redis client unavailable');
   }
 };
-`);
+`;
+  for (const nodeModulesRoot of [
+    path.join(brokenTelemetryRoot, 'node_modules'),
+    path.join(brokenTelemetryRoot, 'app', 'node_modules'),
+    path.join(brokenTelemetryRoot, 'app', 'skills', 'node_modules'),
+  ]) {
+    const nodeModulesDir = ensureDir(path.join(nodeModulesRoot, 'ioredis'));
+    fs.writeFileSync(path.join(nodeModulesDir, 'index.js'), brokenRedisPackage);
+    fs.writeFileSync(path.join(nodeModulesDir, 'package.json'), '{"name":"ioredis","main":"index.js"}');
+  }
 
   const busterTelemetryMod = await importRuntimeModule(brokenTelemetryRoot, '/app/skills/pipeline/services/telemetry.ts');
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-telemetry-fallback-'));
@@ -539,7 +547,8 @@ const config = {
   const result = await runGateViaRegistry(gateRuntimeRoot, config, progress, 'gate:buster', { deps: configDeps2 });
   await flushAsync();
 
-  assert.equal(result.terminal.exitCode, 1);
+  assert.equal(result.terminal.status, 'failed');
+  assert.equal(result.terminal.decision.action, 'stop');
   assert.equal(result.outcome, 'error');
   assert.equal(result.diagnostics.metadata.failure_class, 'completion_event_adapter_failed');
 });
@@ -986,7 +995,8 @@ const config = {
   await flushAsync();
 
   assert.equal(result.outcome, 'passed');
-  assert.equal(result.terminal.exitCode, 0);
+  assert.equal(result.terminal.status, 'succeeded');
+  assert.equal(result.terminal.decision.action, 'none');
   assert.equal(runOnceCalls, 2);
 
   const streamKey = 'pipeline:telemetry:behavior-gate-rate-limit:run-gate-1';
@@ -1116,7 +1126,7 @@ await record('buster gate polling treats Buster Pipeline-owned RATE_LIMITED comp
             expectedIdentity: { run_id: 'run-buster-terminal-owned-rate-limit-1', attempt: 1, dispatch_id: 'dispatch-buster-rate-limit-1', session_key: 'agent:main:acp:gate-buster' },
             gateId,
             gateType: gate.type,
-            exit: 40,
+            resultOverrides: { outcome_class: "rate_limited" },
           });
           return capturedResult;
         },
@@ -1149,7 +1159,8 @@ const config = {
   await flushAsync();
 
   assert.equal(waitCalls, 1);
-  assert.equal(result.terminal.exitCode, 40);
+  assert.equal(result.terminal.status, 'rate_limited');
+  assert.equal(result.terminal.decision.action, 'retry_later');
   assert.equal(result.diagnostics.summary, "Gate 'gate:buster' exceeded max rate limit pauses");
   assert.equal(result.diagnostics.metadata.attempt, 1);
   assert.equal(result.diagnostics.metadata.dispatch_id, 'dispatch-buster-rate-limit-1');

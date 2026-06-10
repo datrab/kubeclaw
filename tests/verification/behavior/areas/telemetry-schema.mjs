@@ -41,7 +41,7 @@ export async function registerTelemetrySchemaArea({
   busterPipelineMod,
 }) {
 await record('telemetry schema keeps canonical event inventory aligned with lifecycle contract', async () => {
-  const telemetrySchemaPath = path.join(sourceRoot, 'docs', 'telemetry-event-schema.md');
+  const telemetrySchemaPath = path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md');
   const contractEvents = extractContractEventNames(contractPath);
   const schemaEvents = extractTelemetrySchemaEventNames(telemetrySchemaPath);
 
@@ -61,18 +61,18 @@ await record('telemetry schema keeps canonical event inventory aligned with life
 });
 
 await record('telemetry schema locks authoritative field tables for hotspot payload shapes', async () => {
-  const telemetrySchemaPath = path.join(sourceRoot, 'docs', 'telemetry-event-schema.md');
+  const telemetrySchemaPath = path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md');
   assert.doesNotThrow(() => assertTelemetrySchemaHotspotAuthority(telemetrySchemaPath));
 });
 
 await record('telemetry schema explains effective pipeline.started project model defaults', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   assert.equal(telemetrySchema.includes('`models` carries the effective project-level per-agent defaults from `progress.defaults.models`.'), true);
   assert.equal(telemetrySchema.includes('legacy top-level `models`'), false);
 });
 
 await record('telemetry schema documents Buster child-session lifecycle under agent.spawned and agent.killed', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   const busterPipeline = [
     'skills/buster/buster-pipeline.ts',
     'skills/buster/pipeline/services/task-lifecycle.ts',
@@ -92,7 +92,7 @@ await record('telemetry schema documents Buster child-session lifecycle under ag
 });
 
 await record('telemetry schema documents the current pipeline.halted payload shape', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   assert.equal(telemetrySchema.includes('"type": "pipeline.halted"'), true);
   assert.equal(telemetrySchema.includes('"reason": "BLOCKED"'), true);
   assert.equal(telemetrySchema.includes('"module_id": "06"'), true);
@@ -116,7 +116,7 @@ await record('telemetry schema documents the current pipeline.halted payload sha
 });
 
 await record('telemetry schema documents the current error.escalation payload shape', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   assert.equal(telemetrySchema.includes('"type": "error.escalation"'), true);
   assert.equal(telemetrySchema.includes('"attempt": 3'), true);
   assert.equal(telemetrySchema.includes('"dispatch_id": "buster-dispatch-06-attempt-3"'), true);
@@ -134,7 +134,7 @@ await record('telemetry schema documents the current error.escalation payload sh
 });
 
 await record('telemetry schema documents the current observability.degraded payload shape', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   assert.equal(telemetrySchema.includes('"type": "observability.degraded"'), true);
   assert.equal(telemetrySchema.includes('"surface": "gateway"'), true);
   assert.equal(telemetrySchema.includes('"surface": "audit_log"'), true);
@@ -151,7 +151,7 @@ await record('telemetry schema documents the current observability.degraded payl
 });
 
 await record('telemetry schema documents the current observability.restored payload shape', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   assert.equal(telemetrySchema.includes('"type": "observability.restored"'), true);
   assert.equal(telemetrySchema.includes('"gateway_label": "buster-gate-review-1712876400000"'), true);
   assert.equal(telemetrySchema.includes('"dispatch_id": "dispatch-gate-review-3"'), true);
@@ -165,9 +165,10 @@ await record('telemetry schema documents the current observability.restored payl
 });
 
 await record('telemetry schema documents the current pipeline.completed payload shape', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   assert.equal(telemetrySchema.includes('"type": "pipeline.completed"'), true);
-  assert.equal(telemetrySchema.includes('"exit_reason": "all modules passed"'), true);
+  assert.equal(telemetrySchema.includes('"terminal_status": "succeeded"'), true);
+  assert.equal(telemetrySchema.includes('"reason_code": "all_modules_passed"'), true);
   assert.equal(telemetrySchema.includes('"duration_seconds": 19080'), true);
   assert.equal(telemetrySchema.includes('"modules_passed": 13'), true);
   assert.equal(telemetrySchema.includes('"modules_failed": 0'), true);
@@ -178,7 +179,7 @@ await record('telemetry schema documents the current pipeline.completed payload 
 });
 
 await record('telemetry schema documents the current retry event payload shape', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   assert.equal(telemetrySchema.includes('"type": "retry.scheduled"'), true);
   assert.equal(telemetrySchema.includes('"max_attempts": 5'), true);
   assert.equal(telemetrySchema.includes('"delay_seconds": 30'), true);
@@ -194,7 +195,7 @@ await record('telemetry schema documents the current retry event payload shape',
 });
 
 await record('telemetry schema documents terminal module status correlation fields', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   assert.equal(telemetrySchema.includes('"type": "module.status_changed"'), true);
   assert.equal(telemetrySchema.includes('"new_status": "FAIL"'), true);
   assert.equal(telemetrySchema.includes('"dispatch_id": "dispatch-buster-06"'), true);
@@ -204,7 +205,7 @@ await record('telemetry schema documents terminal module status correlation fiel
 });
 
 await record('telemetry schema documents canonical summary lifecycle payloads and drops stale case-study-only events', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   const telemetryContract = fs.readFileSync(contractPath, 'utf8');
   assert.equal(telemetrySchema.includes('"type": "summary.started"'), true);
   assert.equal(telemetrySchema.includes('"summary_type": "pipeline_review"'), true);
@@ -216,9 +217,9 @@ await record('telemetry schema documents canonical summary lifecycle payloads an
   assert.equal(telemetrySchema.includes('"status": "ok"'), true);
   assert.equal(telemetrySchema.includes('| summary_type | string | Canonical summary surface: `pipeline`, `pipeline_review`, `case_study`, or `project_summary` |'), true);
   assert.equal(telemetrySchema.includes('| session_key | string\\|null | Session-backed summary child-session identity when one existed |'), true);
-  assert.equal(telemetrySchema.includes('Pipeline-owned summary writes (`summary_type: pipeline`) also preserve `exit_code`, `exit_reason`, and the artifact join points `summary_json_path`, `pipeline_summary_path`, and `latest_json_path`'), true);
-  assert.equal(telemetrySchema.includes('| exit_code | number\\|null | Pipeline exit code when the summary reflects the authoritative pipeline run outcome |'), true);
-  assert.equal(telemetrySchema.includes('| exit_reason | string\\|null | Pipeline summary exit label such as `PIPELINE_COMPLETE`, `BLOCKED:01`, or `single_module:01` |'), true);
+  assert.equal(telemetrySchema.includes('Pipeline-owned summary writes (`summary_type: pipeline`) also preserve `terminal_status`, `reason_code`, and the artifact join points `summary_json_path`, `pipeline_summary_path`, and `latest_json_path`'), true);
+  assert.equal(telemetrySchema.includes('| terminal_status | string\\|null | Typed terminal status when the summary reflects the authoritative pipeline run outcome |'), true);
+  assert.equal(telemetrySchema.includes('| reason_code | string\\|null | Pipeline terminal reason code such as `PIPELINE_COMPLETE`, `blocked:01`, or `single_module:01` |'), true);
   assert.equal(telemetrySchema.includes('| summary_json_path | string\\|null | Run-scoped `summary.json` artifact path for `summary_type: pipeline` |'), true);
   assert.equal(telemetrySchema.includes('| pipeline_summary_path | string\\|null | Top-level `.swarm/logs/pipeline/summary.json` artifact path for `summary_type: pipeline` |'), true);
   assert.equal(telemetrySchema.includes('| latest_json_path | string\\|null | Top-level `.swarm/logs/pipeline/latest.json` pointer path for `summary_type: pipeline` |'), true);
@@ -231,7 +232,7 @@ await record('telemetry schema documents canonical summary lifecycle payloads an
 });
 
 await record('telemetry schema documents the current budget event payload shape', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   assert.equal(telemetrySchema.includes('"type": "budget.warning"'), true);
   assert.equal(telemetrySchema.includes('"current_cost_usd": 0.95'), true);
   assert.equal(telemetrySchema.includes('"budget_usd": 1.00'), true);
@@ -243,7 +244,7 @@ await record('telemetry schema documents the current budget event payload shape'
 });
 
 await record('telemetry schema documents the current cost.update payload shape', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   assert.equal(telemetrySchema.includes('"type": "cost.update"'), true);
   assert.equal(telemetrySchema.includes('"agent_type": "forge"'), true);
   assert.equal(telemetrySchema.includes('"label": "forge-06"'), true);
@@ -254,7 +255,7 @@ await record('telemetry schema documents the current cost.update payload shape',
 });
 
 await record('telemetry schema documents the current approval event payload shape', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   assert.equal(telemetrySchema.includes('"type": "approval.requested"'), true);
   assert.equal(telemetrySchema.includes('"approval_id": "midpoint-review"'), true);
   assert.equal(telemetrySchema.includes('"prompt": "Approval required for gate Midpoint Review"'), true);
@@ -272,7 +273,7 @@ await record('telemetry schema documents the current approval event payload shap
 });
 
 await record('telemetry schema documents gate-scoped agent transcript and progress correlation fields', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   assert.equal(telemetrySchema.includes('"type": "agent.transcript"'), true);
   assert.equal(telemetrySchema.includes('"gate_id": null'), true);
   assert.equal(telemetrySchema.includes('"gate_type": "review"'), true);
@@ -286,7 +287,7 @@ await record('telemetry schema documents gate-scoped agent transcript and progre
 });
 
 await record('telemetry schema documents current plugin.event Buster task correlation fields', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   assert.equal(telemetrySchema.includes('"type": "plugin.event"'), true);
   assert.equal(telemetrySchema.includes('"plugin_id": "buster"'), true);
   assert.equal(telemetrySchema.includes('"plugin_event": "visual_reg"'), true);
@@ -296,7 +297,7 @@ await record('telemetry schema documents current plugin.event Buster task correl
 });
 
 await record('telemetry schema documents gate-scoped rate-limit dispatch correlation fields', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   assert.equal(telemetrySchema.includes('"type": "rate_limit.detected"'), true);
   assert.equal(telemetrySchema.includes('"gate_type": "review"'), true);
   assert.equal(telemetrySchema.includes('"dispatch_id": "dispatch-review-06-2"'), true);
@@ -304,7 +305,7 @@ await record('telemetry schema documents gate-scoped rate-limit dispatch correla
 });
 
 await record('telemetry schema documents gate verdict and retry exhaustion dispatch correlation fields', async () => {
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   assert.equal(telemetrySchema.includes('"dispatch_id": "dispatch-gate-quality-1"'), true);
   assert.equal(telemetrySchema.includes('| dispatch_id | string\\|null | Owning dispatch correlation key when the gate verdict belongs to dispatched gate work |'), true);
   assert.equal(telemetrySchema.includes('When retry exhaustion belongs to dispatched module or gate work, `dispatch_id` preserves the same owning correlation key used on the surrounding verdict, rate-limit, Discord, and replay surfaces when known.'), true);

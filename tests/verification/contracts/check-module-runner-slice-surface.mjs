@@ -112,11 +112,12 @@ assert.equal(busterDispatchSource.includes("requestedSuites.join(', ')"), true, 
 assert.equal(busterDispatchSource.includes("|| 'none'"), false, 'Buster queued notification must not render missing suites as none');
 assert.equal(busterDispatchSource.includes("value: 'none'"), false, 'Buster queued notification must not use a none fallback for suites');
 assert.equal(busterPhaseSource.includes('?? 2'), false, 'Buster crash retry policy must not use an anonymous literal fallback');
-assert.equal(forgeSource.includes('forgeWorkerMetadata.poll_result || {'), false, 'Forge worker routing must not reconstruct poll-result-like objects from typed metadata');
-assert.equal(busterPhaseSource.includes('busterWorkerMetadata.poll_result || {'), false, 'Buster worker routing must not reconstruct poll-result-like objects from typed metadata');
+assert.equal(forgeSource.includes('poll_result'), false, 'Forge worker routing must not read poll_result compatibility metadata');
+assert.equal(busterPhaseSource.includes('poll_result'), false, 'Buster worker routing must not read poll_result compatibility metadata');
+assert.equal(busterPollFailureSource.includes('poll_result'), false, 'Buster poll-failure routing must not read poll_result compatibility metadata');
 assert.equal(busterPhaseSource.includes('ok: busterWorkerControlResult?.nextAction ==='), false, 'Buster worker routing must use typed final status or real poll evidence, not synthetic ok/status objects');
 assert.equal(busterPollFailureSource.includes("if (reasonCode === 'git_error')"), true, 'Buster polling Git failures must have an explicit fail-closed branch');
-assert.equal(busterPollFailureSource.includes('exit: EXIT_ERROR'), true, 'Buster polling Git failures must return terminal EXIT_ERROR');
+assert.equal(busterPollFailureSource.includes("outcome_class: 'error'"), true, 'Buster polling Git failures must return typed terminal error outcome');
 assert.equal(busterPollFailureSource.includes('polling_git:'), true, 'Buster polling Git failures must expose operator-visible Git evidence');
 assert.equal(busterTerminalFailureSource.includes('redisEntry?.verdict'), false, 'Terminal Buster failure mapping must not classify from Redis verdict presence');
 assert.equal(busterTerminalFailureSource.includes('source regex'), false, 'Terminal Buster failure mapping must not use source regex classification');
@@ -217,7 +218,7 @@ const forgeOnlyGitFailure = await forgeMod.finalizeForgeOnlyPass({
     gitCommitAndPush: async () => ({ committed: false, error: 'push rejected' }),
   },
 });
-assert.equal(forgeOnlyGitFailure.terminal?.result?.exit, 1, 'Forge-only Git publication failure must return EXIT_ERROR');
+assert.equal(forgeOnlyGitFailure.terminal?.result?.outcome_class, 'error', 'Forge-only Git publication failure must return typed terminal error outcome');
 assert.equal(
   forgeOnlyGitFailure.terminal?.result?.reason,
   'Forge-only module cannot PASS without a durable Git commit: push rejected',
@@ -293,7 +294,7 @@ async function assertMalformedPreBusterValidatorPreservesDiagnostic({ stageId, p
     },
   });
   const terminalResult = prepared.terminal.result;
-  assert.equal(terminalResult.exit, 1, `${stageId}: malformed validator should fail closed`);
+  assert.equal(terminalResult.outcome_class, 'error', `${stageId}: malformed validator should fail closed with typed terminal error`);
   assert.equal(terminalResult.validator, stageId, `${stageId}: terminal result should identify validator`);
   assert.equal(terminalResult.validator_result, null, `${stageId}: malformed validator has no normalized result`);
   assert.equal(terminalResult.diagnostics.contract_invalid, true, `${stageId}: contract invalid flag`);

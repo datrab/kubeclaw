@@ -20,12 +20,6 @@ function evaluateGateDependency(config, gateId, gate) {
 
   const label = dependencyGateLabel(gate);
   const status = String(projection?.status || '').toUpperCase();
-  const legacyGateStatus = String(projection?.legacy_gate_status || '').toUpperCase();
-
-  if ((legacyGateStatus === 'PASS' || legacyGateStatus === 'OK' || legacyGateStatus === 'APPROVED') && projection?.completed !== true) {
-    log('INFO', `Dependency not met: gate '${gateId}' legacy status reports ${legacyGateStatus} but canonical read-model completion is missing`);
-    return { met: false, reason: `Gate '${gateId}' canonical completion output is missing` };
-  }
 
   if (projection?.gate_output_exists && projection?.gate_output_status) {
     log('INFO', `Dependency not met: gate '${gateId}' has status '${projection.gate_output_status}'`);

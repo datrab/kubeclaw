@@ -16,7 +16,7 @@ type AnyRecord = Record<string, any>;
 type PsRow = { pid: number, ppid: number, command: string };
 
 const STATUS = { PASS: 'PASS', BLOCKED: 'BLOCKED', FAIL: 'FAIL' };
-const EXIT_ERROR = 1;
+const PROCESS_FAILURE_CODE = 1;
 const _shutdownState: AnyRecord = { config: null, statusDir: null, currentLabel: null, shuttingDown: false };
 
 function parsePsTable(): PsRow[] | null {
@@ -218,7 +218,7 @@ export function registerShutdownHooks(config: AnyRecord) {
         log('WARN', `Shutdown cleanup failed (non-fatal): ${err?.message || err}`);
       })
       .finally(() => {
-        process.exit(EXIT_ERROR);
+        process.exit(PROCESS_FAILURE_CODE);
       });
   };
   process.on('SIGTERM', handler);

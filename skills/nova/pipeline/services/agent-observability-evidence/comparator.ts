@@ -7,7 +7,6 @@ import type {
   AgentObservabilityEvidenceIdentity,
   AgentObservabilityEvidenceIssue,
   AgentObservabilityEvidenceRecordType,
-  AgentObservabilityLegacyEvidenceRecord,
   AgentObservabilityLlmCoverageSummary,
   AgentObservabilityNormalizedEvidenceRecord,
   AgentObservabilityParallelRunEvidenceInput,
@@ -19,7 +18,6 @@ import type {
   AgentObservabilitySpanCompletenessSummary,
 } from './types.ts';
 
-const DEFAULT_SESSION_END_TIMING_TOLERANCE_MS = 30_000;
 const DEFAULT_CONTROL_LAG_THRESHOLD = 1_000;
 const DEFAULT_PAYLOAD_PRESSURE_THRESHOLD = 10_000;
 
@@ -38,11 +36,6 @@ function issue(
   extra: Omit<AgentObservabilityEvidenceIssue, 'code' | 'severity' | 'message'> = {},
 ): AgentObservabilityEvidenceIssue {
   return { code, severity, message, ...extra };
-}
-
-function eventTimestampMs(ts: string): number | null {
-  const value = Date.parse(ts);
-  return Number.isFinite(value) ? value : null;
 }
 
 function bump(counts: Record<string, number>, key: string): void {
@@ -109,17 +102,6 @@ function normalizeObservedEvent(event: AgentObservabilityIngressEventV1): AgentO
   return classified ? [base, { ...base, type: classified }] : [base];
 }
 
-function normalizeLegacyRecord(record: AgentObservabilityLegacyEvidenceRecord): AgentObservabilityNormalizedEvidenceRecord {
-  return {
-    type: record.type,
-    source: record.source ?? 'legacy.acp-gateway-polling',
-    ts: record.ts,
-    identity: { ...(record.identity ?? {}) },
-    outcome: record.outcome ?? null,
-    reason: record.reason ?? null,
-  };
-}
-
 function identityKey(record: AgentObservabilityNormalizedEvidenceRecord): string {
   const identity = record.identity;
   return [
@@ -172,19 +154,11 @@ function recordsOf(records: AgentObservabilityNormalizedEvidenceRecord[], type: 
 
 function coverage(
   observed: AgentObservabilityNormalizedEvidenceRecord[],
-  legacy: AgentObservabilityNormalizedEvidenceRecord[],
   type: string,
 ): AgentObservabilityCoverageSummary {
   const observedKeys = new Set(recordsOf(observed, type).map(entityKey));
-  const legacyKeys = new Set(recordsOf(legacy, type).map(entityKey));
-  let matched = 0;
-  for (const key of legacyKeys) if (observedKeys.has(key)) matched += 1;
   return {
     observed: observedKeys.size,
-    legacy: legacyKeys.size,
-    missing_observed: [...legacyKeys].filter((key) => !observedKeys.has(key)).length,
-    missing_legacy: [...observedKeys].filter((key) => !legacyKeys.has(key)).length,
-    coverage: legacyKeys.size === 0 ? null : matched / legacyKeys.size,
   };
 }
 
@@ -223,32 +197,9 @@ function llmCoverage(records: AgentObservabilityNormalizedEvidenceRecord[]): Age
 
 function sessionEndTiming(
   observed: AgentObservabilityNormalizedEvidenceRecord[],
-  legacy: AgentObservabilityNormalizedEvidenceRecord[],
-  toleranceMs: number,
-  issues: AgentObservabilityEvidenceIssue[],
 ): AgentObservabilitySessionTimingSummary {
-  const observedByKey = new Map(recordsOf(observed, 'agent.session.ended').map((record) => [entityKey(record), record]));
-  let compared = 0;
-  let maxDelta: number | null = null;
-  let outOfTolerance = 0;
-  for (const legacyRecord of recordsOf(legacy, 'agent.session.ended')) {
-    const observedRecord = observedByKey.get(entityKey(legacyRecord));
-    if (!observedRecord) continue;
-    const legacyTs = eventTimestampMs(legacyRecord.ts);
-    const observedTs = eventTimestampMs(observedRecord.ts);
-    if (legacyTs === null || observedTs === null) continue;
-    const delta = Math.abs(observedTs - legacyTs);
-    compared += 1;
-    maxDelta = Math.max(maxDelta ?? 0, delta);
-    if (delta > toleranceMs) {
-      outOfTolerance += 1;
-      issues.push(issue('session_end_timing_delta', 'warning', 'Hook session_end timing differs from legacy polling beyond tolerance.', {
-        identity: observedRecord.identity,
-        details: { delta_ms: delta, tolerance_ms: toleranceMs },
-      }));
-    }
-  }
-  return { compared, max_delta_ms: maxDelta, out_of_tolerance: outOfTolerance };
+  const ended = recordsOf(observed, 'agent.session.ended');
+  return { compared: ended.length, max_delta_ms: null, out_of_tolerance: 0 };
 }
 
 function identityGaps(records: AgentObservabilityNormalizedEvidenceRecord[]): AgentObservabilityEvidenceIssue[] {
@@ -272,7 +223,7 @@ function identityGaps(records: AgentObservabilityNormalizedEvidenceRecord[]): Ag
         details: { type: record.type, missing },
       };
       if (record.observed_type !== undefined) issueData.observed_type = record.observed_type;
-      gaps.push(issue('identity_gap', 'warning', 'Observed hook record is missing comparison identity fields.', issueData));
+      gaps.push(issue('identity_gap', 'warning', 'Observed hook record is missing canonical identity fields.', issueData));
     }
   }
   return gaps;
@@ -306,9 +257,9 @@ function pressureSummary(input?: AgentObservabilityRedisPressureSnapshot): Agent
 function coverageIssues(summary: AgentObservabilityParallelRunEvidenceV1['coverage']): AgentObservabilityEvidenceIssue[] {
   const issues: AgentObservabilityEvidenceIssue[] = [];
   for (const [name, item] of Object.entries(summary)) {
-    if (item.missing_observed > 0) {
-      issues.push(issue(`${name}_missing_hook_evidence`, 'warning', `Legacy ${name} evidence has no matching hook record.`, {
-        details: { missing_observed: item.missing_observed },
+    if (item.observed === 0) {
+      issues.push(issue(`${name}_missing_observed_evidence`, 'warning', `Canonical ${name} evidence was not observed.`, {
+        details: { observed: item.observed },
       }));
     }
   }
@@ -321,16 +272,15 @@ export function compareAgentObservabilityParallelRunEvidence(
 ): AgentObservabilityParallelRunEvidenceV1 {
   const generatedAt = input.generatedAt ?? (options.now ?? new Date()).toISOString();
   const observed = input.observedEvents.flatMap(normalizeObservedEvent);
-  const legacy = (input.legacyRecords ?? []).map(normalizeLegacyRecord);
   const issues: AgentObservabilityEvidenceIssue[] = [];
   const identityGapIssues = identityGaps(observed);
 
   const coverageSummary = {
-    spawn: coverage(observed, legacy, 'agent.spawned'),
-    agent_end: coverage(observed, legacy, 'agent.ended'),
-    session_end: coverage(observed, legacy, 'agent.session.ended'),
-    rate_limit: coverage(observed, legacy, 'agent.rate_limited'),
-    failure: coverage(observed, legacy, 'agent.failure'),
+    spawn: coverage(observed, 'agent.spawned'),
+    agent_end: coverage(observed, 'agent.ended'),
+    session_end: coverage(observed, 'agent.session.ended'),
+    rate_limit: coverage(observed, 'agent.rate_limited'),
+    failure: coverage(observed, 'agent.failure'),
   };
 
   issues.push(...coverageIssues(coverageSummary));
@@ -353,9 +303,6 @@ export function compareAgentObservabilityParallelRunEvidence(
 
   const sessionTiming = sessionEndTiming(
     observed,
-    legacy,
-    options.sessionEndTimingToleranceMs ?? DEFAULT_SESSION_END_TIMING_TOLERANCE_MS,
-    issues,
   );
   const redisPressure = pressureSummary(input.redisPressure);
   if (redisPressure.degraded.length > 0) {
@@ -372,7 +319,6 @@ export function compareAgentObservabilityParallelRunEvidence(
     generated_at: generatedAt,
     status: hasCritical || redisPressure.degraded.length > 0 ? 'degraded' : hasWarnings ? 'warning' : 'ok',
     observed_counts: countByType(observed),
-    legacy_counts: countByType(legacy),
     coverage: coverageSummary,
     spans,
     session_end_timing: sessionTiming,

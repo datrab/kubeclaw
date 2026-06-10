@@ -39,7 +39,8 @@ export async function registerModuleFailuresArea({
 	}
 
 	function stepExit(result) {
-	  return result?.terminal?.exitCode ?? result?.exit;
+	  const status = result?.terminal?.status ?? result?.terminal_status ?? null;
+	  return status === "succeeded" ? 0 : (status ? 1 : null);
 	}
 
 	function stepReason(result) {
@@ -173,9 +174,9 @@ await record('module-runner routes Forge execution through the worker:module_for
               assert.equal(typeof pluginContext.workerRuntime.dispatch, 'function');
               currentStatus = {
                 ...currentStatus,
-                status: 'PASS',
+                status: 'READY_FOR_TESTING',
                 current_phase: null,
-                completion_summary: 'Forge stage owner PASS',
+                completion_summary: 'Forge stage owner READY_FOR_TESTING',
               };
               return {
                 schemaVersion: 'v1',
@@ -186,11 +187,7 @@ await record('module-runner routes Forge execution through the worker:module_for
                   summary: 'Forge worker passed',
                   metadata: {
                     final_status: currentStatus,
-                    poll_result: {
-                      ok: true,
-                      reason: 'agent_ended_meaningful_diff',
-                      status: { status: 'READY_FOR_TESTING', summary: 'Forge stage owner completed' },
-                    },
+                    reason: 'agent_ended_meaningful_diff',
                     session_key: 'agent:main:acp:forge-stage-owner',
                     gateway_label: 'forge-stage-owner',
                     attempt: 1,
@@ -449,7 +446,6 @@ await record('module-runner routes Buster execution through the worker:module_bu
                   summary: 'Buster worker passed',
                   metadata: {
                     final_status: currentStatus,
-                    poll_result: { ok: true, status: { status: 'PASS' } },
                     dispatch_id: 'buster-stage-owner-dispatch',
                     gateway_label: 'buster-stage-owner-dispatch',
                     session_key: 'agent:main:acp:buster-stage-owner',
@@ -708,7 +704,7 @@ await record('module-runner appends terminal ACP detail to Forge no-change failu
       saveStreamLog: () => {},
       handleFail: async (_config, _statusValue, _dir, _moduleId, _maxFails, phase, reason) => {
         handleFailCalls.push({ phase, reason });
-        return { exit: 10, reason, phase };
+        return { outcome_class: "needs_nova", reason, phase };
       },
       sleep: async () => {},
     },
@@ -730,7 +726,7 @@ await record('module-runner appends terminal ACP detail to Forge no-change failu
   const expectedReason = 'Forge session ended but produced no typed meaningful-diff completion evidence (adapter command missing)';
   const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps5 });
 
-  assert.equal(stepExit(result), 10);
+  assert.equal(stepExit(result), 1);
   assert.equal(handleFailCalls.length, 1);
   assert.equal(handleFailCalls[0].phase, 'forge');
   assert.equal(handleFailCalls[0].reason, expectedReason);
@@ -812,7 +808,7 @@ const config = {
       };
 
   const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps6 });
-  assert.equal(stepExit(result), 10);
+  assert.equal(stepExit(result), 1);
   assert.equal(stepReason(result), 'Config validation failed: missing test binary');
   assert.equal(stepValue(result, 'gateway_label'), 'buster-config-stop-01');
   assert.equal(stepValue(result, 'session_key'), 'agent:main:acp:buster-config-stop-01');
@@ -896,7 +892,7 @@ const config = {
 
   const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps7 });
 
-  assert.equal(stepExit(result), 20);
+  assert.equal(stepExit(result), 1);
   assert.equal(stepValue(result, 'module'), '01');
   assert.equal(stepReason(result), 'Repeated test crashes exhausted the retry budget');
   assert.equal(stepValue(result, 'fail_count'), 3);
@@ -974,7 +970,7 @@ const config = {
       };
 
   const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps8 });
-  assert.equal(stepExit(result), 10);
+  assert.equal(stepExit(result), 1);
   assert.equal(stepReason(result), 'Blueprint release failed: architecture branch missing. Nova may need to create/fix the architecture branch.');
   assert.equal(stepValue(result, 'gateway_label'), 'forge-blueprint-release');
   assert.equal(stepValue(result, 'session_key'), 'agent:main:acp:forge-blueprint-release');
@@ -1492,7 +1488,7 @@ const config = {
   const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps13 });
   await flushAsync();
 
-  assert.equal(stepExit(result), 10);
+  assert.equal(stepExit(result), 1);
   assert.equal(stepValue(result, 'attempt'), 2);
   assert.equal(stepValue(result, 'dispatch_id'), 'dispatch-buster-fail-01');
   assert.equal(stepValue(result, 'session_key'), sessionKey);
@@ -1647,7 +1643,7 @@ const config = {
   const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps14 });
   await flushAsync();
 
-  assert.equal(stepExit(result), 20);
+  assert.equal(stepExit(result), 1);
   assert.equal(stepValue(result, 'attempt'), 1);
   assert.equal(stepValue(result, 'dispatch_id'), 'dispatch-buster-crash-01-attempt-2');
   assert.equal(stepValue(result, 'gateway_label'), 'dispatch-buster-crash-01-attempt-2');
@@ -1790,7 +1786,7 @@ const config = {
   const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps15 });
   await flushAsync();
 
-  assert.equal(stepExit(result), 10);
+  assert.equal(stepExit(result), 1);
   assert.equal(stepReason(result), 'Buster infra issue (ENV_UNAVAILABLE) — Forge output preserved: registry unavailable');
   assert.equal(stepValue(result, 'dispatch_id'), 'dispatch-buster-pretest-infra-01');
   assert.equal(stepValue(result, 'gateway_label'), 'dispatch-buster-pretest-infra-01');
@@ -1930,7 +1926,7 @@ const config = {
   const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps16 });
   await flushAsync();
 
-  assert.equal(stepExit(result), 10);
+  assert.equal(stepExit(result), 1);
   assert.equal(stepReason(result), 'Repeated pre-test failure (smoke) — needs Nova review before another Forge cycle');
   assert.equal(stepValue(result, 'dispatch_id'), 'dispatch-buster-pretest-repeat-01');
   assert.equal(stepValue(result, 'gateway_label'), 'dispatch-buster-pretest-repeat-01');
@@ -2096,7 +2092,7 @@ const config = {
   const result = await moduleRunnerMod.runModule(config, progress, '01', { deps: configDeps17 });
   await flushAsync();
 
-  assert.equal(stepExit(result), 10);
+  assert.equal(stepExit(result), 1);
   assert.equal(stepReason(result), 'buster failed 2x — auto-retry exhausted, Nova must intervene');
   assert.equal(stepValue(result, 'dispatch_id'), dispatchId);
   assert.equal(stepValue(result, 'gateway_label'), dispatchId);
@@ -2218,12 +2214,12 @@ await record('failure-service blocked results keep dispatch correlation through 
   );
   await flushAsync();
 
-  assert.equal(stepExit(result), 20);
+  assert.equal(stepExit(result), 1);
   assert.equal(stepValue(result, 'attempt'), 2);
   assert.equal(stepValue(result, 'dispatch_id'), 'dispatch-buster-blocked-01');
   assert.equal(stepValue(result, 'gateway_label'), 'dispatch-buster-blocked-01');
   assert.equal(stepValue(result, 'session_key'), 'agent:main:acp:buster-blocked-01');
-  assert.equal(result.status?.dispatch_id, 'dispatch-buster-blocked-01');
+  assert.equal(stepMetadata(result).status?.dispatch_id, 'dispatch-buster-blocked-01');
 
   const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${config.run_id}`);
   const failEvent = streamEvents.find((event) => event.type === 'module.status_changed' && event.new_status === 'FAIL');
@@ -2262,7 +2258,7 @@ await record('failure-service blocked results keep dispatch correlation through 
   assert.equal(blockedEntry.fields.some((field) => field.name === 'Session' && field.value === 'agent:main:acp:buster-blocked-01'), true);
 });
 
-await record('module-runner early terminal EXIT_ERROR paths still emit module FAIL telemetry', async () => {
+await record('module-runner early terminal failure paths still emit module FAIL telemetry', async () => {
   const moduleRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
   installFakeRedis(moduleRuntimeRoot);
   globalThis.__fakeRedisCalls = [];
@@ -2603,7 +2599,7 @@ await record('module-runner early terminal EXIT_ERROR paths still emit module FA
   }
 });
 
-await record('module rate-limit exhaustion emits authoritative retry exhaustion telemetry before returning EXIT_RATE_LIMITED', async () => {
+await record('module rate-limit exhaustion emits authoritative retry exhaustion telemetry before returning rate-limited status', async () => {
   const moduleRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
   installFakeRedis(moduleRuntimeRoot);
   globalThis.__fakeRedisCalls = [];
@@ -2780,7 +2776,7 @@ const config = {
     const result = await moduleRunnerMod.runModule(config, scenario.progress, '01', { deps: configDeps18 });
     await flushAsync();
 
-    assert.equal(stepExit(result), 40, scenario.name);
+    assert.equal(stepExit(result), 1, scenario.name);
     assert.equal(stepReason(result), scenario.expectedReason, scenario.name);
     assert.equal(stepValue(result, 'run_id'), scenario.runId, `${scenario.name}: returned run id`);
     assert.equal(stepValue(result, 'attempt'), scenario.expectedAttempt, scenario.name);

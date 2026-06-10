@@ -1,14 +1,15 @@
-# k3s containerd registry configuration
+# Legacy k3s containerd registry configuration for a deliberately exposed
+# registry-local endpoint.
 #
-# Copy this file to /etc/rancher/k3s/registries.yaml on every k3s node,
-# then restart k3s: systemctl restart k3s
+# The default registry-local Service is ClusterIP and does not expose a NodePort.
+# Do not copy this file on a production/default install unless you also create
+# a private node-local registry endpoint and replace the placeholder below.
 #
-# Why this is needed:
+# Historical reason this existed:
 #   registry-local.kubeclaw.svc.cluster.local:5001 is a plain HTTP registry
 #   (no TLS). containerd rejects HTTP registries by default.
-#   The NodePort 30051 is the node-accessible endpoint — containerd can't
-#   resolve cluster DNS (.svc.cluster.local) at the host level, so we
-#   mirror the cluster hostname to localhost:30051 (the NodePort).
+#   containerd cannot resolve cluster DNS (.svc.cluster.local) at the host
+#   level, so local-image verification needs an explicit private pull path.
 #
 # After restarting k3s, verify with:
 #   crictl info | grep -A5 registry
@@ -16,4 +17,4 @@
 mirrors:
   "registry-local.kubeclaw.svc.cluster.local:5001":
     endpoint:
-      - "http://127.0.0.1:30051"
+      - "http://127.0.0.1:<private-registry-port>"

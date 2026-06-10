@@ -3,10 +3,12 @@ Deployment-surface verification lives here.
 Canonical entrypoint:
 - `tests/verification/deployment/check-deployment-truth.mjs`
 
-Current scope:
-- rendered Helm manifest truth for Nova values
-- rendered Helm manifest truth for Buster values, including sandbox image, privileged Podman-in-Pod surface, dual-process Buster pipeline/gateway command, Redis/gateway/Anthropic secret wiring, registry-local Podman config, and disabled legacy stream-processor sidecar
+Current local scope:
+- rendered Helm manifest truth for Nova values, including structured Service exposure checks that reject unexpected NodePorts
+- rendered Helm manifest truth for Buster values, including structured lease-only agent RBAC checks, sandbox image, privileged Podman-in-Pod surface on both split Buster containers, shared runtime/sandbox mounts, bounded `ephemeral-storage`, Redis/gateway/Anthropic secret wiring, registry-local Podman config, and removal of the legacy stream-processor sidecar
 - kubeconform validation of the rendered Nova and Buster manifests
+- kubeconform validation of local Kubernetes infra manifests where schemas are available: Buster namespace fence, LiteLLM, registry-local, registry-mirror, and NetworkPolicies
+- structured NetworkPolicy checks for default-deny, agent egress, Redis ingress, Clawdeck Redis egress, LiteLLM egress, and registry-mirror egress selectors/ports
 - writable swarm-config and Semgrep-config provenance in the rendered ConfigMap
 - tracked executable operator surface through `scripts/deploy.sh`
 - pinned CI-owned real image-build path through `.github/workflows/build-images.yaml`
@@ -23,5 +25,9 @@ Canonical operator evidence split:
 - replay/audit artifacts live under `.swarm/logs/pipeline/latest.json` and the run-scoped `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,buster-telemetry-fallback.jsonl,redis/redis-exchanges.jsonl,redis/redis-ops.jsonl,summary.json}` bundle
 - Redis audit artifacts remain under `.swarm/logs/redis/{redis-exchanges.jsonl,redis-ops.jsonl}` plus the run-scoped `.swarm/logs/pipeline/runs/<run_id>/redis/` mirror
 
+Live scope:
+- `scripts/deploy.sh smoke` checks rollout, pod readiness, in-pod OpenClaw gateway status, packaged skills, and runtime swarm config on a real cluster
+- `scripts/deploy.sh verify-live [tag]` builds local images, pushes to registry-local, proves the cluster-visible pull path with a temporary pod, redeploys Nova/Buster against those images, and runs smoke
+
 Current limitation:
-- this guard now pins the existence of the real image-build path, the registry-local live verification path, the teardown surface, and the canonical pod-level smoke path, but the actual build/push/redeploy/smoke/teardown execution still depends on a live cluster plus local Docker access and is not executed inside this repo-only verifier
+- this guard pins the real image-build path, registry-local live verification path, teardown surface, canonical pod-level smoke path, and local manifest safety invariants, but actual build/push/redeploy/smoke/teardown execution still depends on a live cluster plus local Docker access and is not executed inside this repo-only verifier

@@ -4,7 +4,7 @@ Canonical entrypoint:
 - `tests/verification/contracts/check-telemetry-contract.mjs`
 
 Default contract path:
-- `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`
+- `docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`
 
 Rule:
 - when `--contract` is omitted, the verifier defaults to that canonical markdown contract

@@ -5,9 +5,6 @@
 
 agentRole: "nova"
 
-processor:
-  enabled: false
-
 image:
   repository: ghcr.io/forgestackai/kubeclaw-general
   tag: "latest"
@@ -49,7 +46,6 @@ agent:
     repoUrl: "git@github.com:Ravencrypt/ForgeStack.git"
 
 service:
-  nodePort: 30073
   extraPorts:
     - name: prism-preview
       port: 3456

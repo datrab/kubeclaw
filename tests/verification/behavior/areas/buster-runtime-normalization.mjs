@@ -120,8 +120,7 @@ function fakeMonitorState(overrides = {}) {
 }
 
 function installQueuedTaskRedis(runtimeRoot, { payload, failCompletion = false, failDeadLetter = false } = {}) {
-  const nodeModulesDir = ensureDir(path.join(runtimeRoot, 'node_modules', 'ioredis'));
-  fs.writeFileSync(path.join(nodeModulesDir, 'index.js'), `
+  const queueRedisPackage = `
 class FakeRedis {
   constructor() { this.status = 'ready'; }
   on() {}
@@ -146,8 +145,16 @@ class FakeRedis {
   async quit() { globalThis.__queueRedisCalls.push({ op: 'quit' }); }
 }
 module.exports = FakeRedis;
-`);
-  fs.writeFileSync(path.join(nodeModulesDir, 'package.json'), '{"name":"ioredis","main":"index.js"}');
+`;
+  for (const nodeModulesRoot of [
+    path.join(runtimeRoot, 'node_modules'),
+    path.join(runtimeRoot, 'app', 'node_modules'),
+    path.join(runtimeRoot, 'app', 'skills', 'node_modules'),
+  ]) {
+    const nodeModulesDir = ensureDir(path.join(nodeModulesRoot, 'ioredis'));
+    fs.writeFileSync(path.join(nodeModulesDir, 'index.js'), queueRedisPackage);
+    fs.writeFileSync(path.join(nodeModulesDir, 'package.json'), '{"name":"ioredis","main":"index.js"}');
+  }
   globalThis.__queueRedisCalls = [];
   globalThis.__queueRedisDelivered = false;
   globalThis.__queueRedisStream = 'swarm:buster:tasks';
@@ -301,6 +308,8 @@ await record('Buster monitor publishes transcript deltas with canonical session 
       moduleId: '01',
       spawnedAt: Date.now(),
       timeoutSeconds: 30,
+      gatewayUrl: 'http://127.0.0.1:1',
+      gatewayToken: '',
       logger: silentLogger,
       testHooks: {
         now: () => Date.now(),
@@ -352,6 +361,8 @@ await record('Buster monitor returns rate-limit pause budget for terminal comple
       moduleId: '01',
       spawnedAt: Date.now(),
       timeoutSeconds: 30,
+      gatewayUrl: 'http://127.0.0.1:1',
+      gatewayToken: '',
       logger: silentLogger,
       testHooks: {
         now: () => Date.now(),
@@ -707,10 +718,10 @@ await record('Buster startup recovery treats persisted active-session files as d
     activeStatePath: evidencePath,
   });
   assert.equal(fenced.found, true);
-  assert.equal(fenced.ok, false);
+  assert.equal(fenced.ok, true);
   assert.equal(fenced.recovered, false);
   assert.equal(fenced.cleaned, false);
-  assert.equal(fenced.reason, 'lifecycle_authority_absent');
+  assert.equal(fenced.reason, 'active_session_file_diagnostic_only');
   assert.equal(fenced.authority.active_session_authority_source, null);
   assert.equal(fenced.authority.allow_active_session_file_authority, false);
   assert.equal(fenced.authority.allow_evidence_hydration, false);
@@ -721,7 +732,7 @@ await record('Buster startup recovery treats persisted active-session files as d
   fs.writeFileSync(malformedPath, '{not-json');
   const malformed = await busterRecoveryMod.recoverOrphanedActiveSession({ activeStatePath: malformedPath });
   assert.equal(malformed.found, false);
-  assert.equal(malformed.ok, false);
+  assert.equal(malformed.ok, true);
   assert.equal(malformed.invalid, true);
   assert.equal(malformed.recovered, false);
   assert.equal(malformed.cleaned, false);

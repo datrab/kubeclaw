@@ -13,7 +13,7 @@ import { requireGateTypeOwner } from '../core/registry.ts';
 import { gateOutputPath, gateInstructionsPath, gateStatusPath, gateActiveSessionPath } from '../core/paths.ts';
 import { onGateFail, onGateStarted } from '../services/telemetry.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
-import { readGateOutput, readGateStatusJson, getLifecycleGateState, readGateCompletionEvidence } from '../services/status-store.ts';
+import { readGateOutput, getLifecycleGateState, readGateCompletionEvidence } from '../services/status-store.ts';
 import { runScheduledRemediableGate } from './remediable-gate-engine.ts';
 import { runScheduledWaitableGate } from './waitable-gate-engine.ts';
 import { ensureScheduledGatePluginLogDirs, runScheduledGateInvocation } from './scheduled-gate-invocation.ts';
@@ -36,7 +36,6 @@ type AnyRecord = Record<string, any>;
 function getGateRunnerDeps(config, overrides = {}) {
   return {
     readGateOutput,
-    readGateStatusJson,
     getLifecycleGateState,
     readGateCompletionEvidence,
     ...selectDeps(overrides, 'gateRunner'),
@@ -134,7 +133,6 @@ function buildGateArtifactRefs(config, gateId, gate) {
 
 function buildGateStateSnapshot(config, progress, gateId, gate, deps = getGateRunnerDeps(config)) {
   const gateOutput = deps.readGateOutput(config, gate);
-  const gateStatus = deps.readGateStatusJson(config, gateId);
   const lifecycleGate = deps.getLifecycleGateState(config, gateId);
   const completionEvidence = deps.readGateCompletionEvidence(config, gateId, gate);
 
@@ -158,7 +156,7 @@ function buildGateStateSnapshot(config, progress, gateId, gate, deps = getGateRu
       gate_completion_is_pass: completionEvidence?.isPass === true,
       gate_completion_source: completionEvidence?.source || null,
     },
-    diagnostics: { gate_status: { exists: gateStatus.exists === true, status: gateStatus?.data?.status || null, is_pass: gateStatus.isPass === true, continued: gateStatus?.data?.continued === true, timeout_policy: gateStatus?.data?.timeout_policy || null } },
+    diagnostics: {},
   };
 }
 

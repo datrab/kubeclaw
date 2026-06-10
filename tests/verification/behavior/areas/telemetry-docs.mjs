@@ -60,24 +60,24 @@ await record('implementation companion keeps legacy Buster stream notes compatib
 
 await record('summary telemetry docs keep summary.started/completed canonical and drop case-study-only event names', async () => {
   const telemetryContract = fs.readFileSync(contractPath, 'utf8');
-  const observabilityReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'observability-reference.md'), 'utf8');
+  const observabilityReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'observability-reference.md'), 'utf8');
 
   assert.equal(telemetryContract.includes('`summary.started`'), true);
   assert.equal(telemetryContract.includes('`summary.completed`'), true);
   assert.equal(telemetryContract.includes('`case_study.started`'), false);
   assert.equal(telemetryContract.includes('`case_study.completed`'), false);
   assert.equal(observabilityReference.includes('| `summary.started` | Post-run summary flow begins (`summary_type`: `pipeline`, `pipeline_review`, `case_study`, or `project_summary`) |'), true);
-  assert.equal(observabilityReference.includes('| `summary.completed` | Post-run summary flow completes with terminal `status`/`reason`, artifact/session identity when relevant, and pipeline summary join fields like `exit_code`, `exit_reason`, `summary_json_path`, `pipeline_summary_path`, and `latest_json_path` |'), true);
+  assert.equal(observabilityReference.includes('| `summary.completed` | Post-run summary flow completes with typed `terminal_status`/`reason_code`, artifact/session identity when relevant, and pipeline summary join fields like `summary_json_path`, `pipeline_summary_path`, and `latest_json_path` |'), true);
   assert.equal(observabilityReference.includes('| `case_study.started` |'), false);
   assert.equal(observabilityReference.includes('| `case_study.completed` |'), false);
 });
 
 await record('reference docs use the current telemetry envelope and event names', async () => {
-  const pipelineReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'pipeline-reference-v10.md'), 'utf8');
-  const configReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'PIPELINE-CONFIG-REFERENCE.md'), 'utf8');
-  const progressJsonReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'progress-json-reference.md'), 'utf8');
-  const configurationReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'configuration-reference.md'), 'utf8');
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const pipelineReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'pipeline-reference-v10.md'), 'utf8');
+  const configReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'PIPELINE-CONFIG-REFERENCE.md'), 'utf8');
+  const progressJsonReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'progress-json-reference.md'), 'utf8');
+  const configurationReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'configuration-reference.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   const telemetryContract = fs.readFileSync(contractPath, 'utf8');
 
   assert.equal(pipelineReference.includes("type: string,         // z.B. 'module.started', 'plugin.event', 'module.status_changed'"), true);
@@ -91,7 +91,7 @@ await record('reference docs use the current telemetry envelope and event names'
   assert.equal(configReference.includes('Telemetrie: nach Task-Annahme plugin.event (`plugin_id: buster`, `plugin_event: task_started/task_completed`)'), true);
   assert.equal(configReference.includes('Telemetrie: module.status_changed (PASS) → Nächstes Modul'), true);
   assert.equal(configReference.includes('**Emittierte Event-Typen:** Kanonisches Event-Inventar in `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`, event-spezifische Payload-Felder und Beispiele in `docs/telemetry-event-schema.md`.'), true);
-  assert.equal(pipelineReference.includes('| `onSummaryCompleted` | `summary.completed` | Summary-Agent beendet; für `summary_type: pipeline` auch mit `exit_code`, `exit_reason`, `summary_json_path`, `pipeline_summary_path` und `latest_json_path` |'), true);
+  assert.equal(pipelineReference.includes('| `onSummaryCompleted` | `summary.completed` | Summary-Agent beendet; für `summary_type: pipeline` auch mit `terminal_status`, `reason_code`, `summary_json_path`, `pipeline_summary_path` und `latest_json_path` |'), true);
   assert.equal(configReference.includes('Telemetrie: module_started + forge_completed Events'), false);
   assert.equal(configReference.includes('Telemetrie: buster_dispatched Event'), false);
   assert.equal(configReference.includes('Telemetrie: module_passed → Nächstes Modul'), false);
@@ -116,23 +116,23 @@ await record('reference docs use the current telemetry envelope and event names'
 await record('project setup telemetry docs keep canonical stream ownership explicit', async () => {
   const progressJsonGuide = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'project_setup', 'progress-json.md'), 'utf8');
   assert.equal(progressJsonGuide.includes('| `telemetry` | no | — | Redis telemetry enable/config |'), true);
-  assert.equal(progressJsonGuide.includes('"stream_key": "legacy-enable-flag"'), true);
-  assert.equal(progressJsonGuide.includes('| `stream_key` | no | — | Legacy-compatible enable flag. If set to any non-empty string, telemetry is enabled, but the value does not rename the stream. |'), true);
+  assert.equal(progressJsonGuide.includes('"stream_key"'), false);
+  assert.equal(progressJsonGuide.includes('Legacy-compatible enable flag'), false);
   assert.equal(progressJsonGuide.includes('published to the canonical run-scoped stream `pipeline:telemetry:<project>:<run_id>`'), true);
   assert.equal(progressJsonGuide.includes('Override stream key'), false);
 });
 
 await record('public progress.json telemetry docs keep canonical stream ownership explicit', async () => {
-  const progressJsonReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'progress-json-reference.md'), 'utf8');
+  const progressJsonReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'progress-json-reference.md'), 'utf8');
   assert.equal(progressJsonReference.includes('| `telemetry` | no | — | Redis telemetry enable/config |'), true);
-  assert.equal(progressJsonReference.includes('"stream_key": "legacy-enable-flag"'), true);
-  assert.equal(progressJsonReference.includes('| `stream_key` | no | — | Legacy-compatible enable flag. If set to any non-empty string, telemetry is enabled, but the value does not override the stream name. |'), true);
+  assert.equal(progressJsonReference.includes('"stream_key"'), false);
+  assert.equal(progressJsonReference.includes('Legacy-compatible enable flag'), false);
   assert.equal(progressJsonReference.includes('published to the canonical run-scoped stream `pipeline:telemetry:<project>:<run_id>`'), true);
   assert.equal(progressJsonReference.includes('"stream_key": "pipeline:telemetry:my-project"'), false);
 });
 
 await record('Buster telemetry_stream payload hint is removed from runtime docs and code', async () => {
-  const configurationReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'configuration-reference.md'), 'utf8');
+  const configurationReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'configuration-reference.md'), 'utf8');
   const busterReadme = fs.readFileSync(path.join(sourceRoot, 'skills', 'buster', 'README.md'), 'utf8');
   const busterPipeline = readOverlayText(sourceRoot, overlayRoot, 'skills/buster/buster-pipeline.ts');
   const busterTelemetry = readOverlayText(sourceRoot, overlayRoot, 'skills/buster/pipeline/services/telemetry.ts');
@@ -145,8 +145,8 @@ await record('Buster telemetry_stream payload hint is removed from runtime docs 
 });
 
 await record('telemetry enable docs describe explicit degraded fallback on Redis outage', async () => {
-  const pipelineConfigReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'PIPELINE-CONFIG-REFERENCE.md'), 'utf8');
-  const pipelineReferenceV10 = fs.readFileSync(path.join(sourceRoot, 'docs', 'pipeline-reference-v10.md'), 'utf8');
+  const pipelineConfigReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'PIPELINE-CONFIG-REFERENCE.md'), 'utf8');
+  const pipelineReferenceV10 = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'pipeline-reference-v10.md'), 'utf8');
 
   assert.equal(pipelineConfigReference.includes('Redis nicht erreichbar, bleibt die Pipeline nicht-blockierend, schreibt aber ein explizites `observability.degraded`-Fallback-Artefakt'), true);
   assert.equal(pipelineConfigReference.includes('werden Events still verworfen'), false);
@@ -157,8 +157,8 @@ await record('telemetry enable docs describe explicit degraded fallback on Redis
 });
 
 await record('model policy docs describe defaults-only project model policy', async () => {
-  const observabilityReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'observability-reference.md'), 'utf8');
-  const pipelineReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'pipeline-reference-v10.md'), 'utf8');
+  const observabilityReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'observability-reference.md'), 'utf8');
+  const pipelineReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'pipeline-reference-v10.md'), 'utf8');
 
   assert.equal(observabilityReference.includes('| `project_default` | `progress.defaults.models.<agentName>` |'), true);
   assert.equal(pipelineReference.includes('runtime override → scope policy → `progress.defaults.models` → `fallback_model`'), true);

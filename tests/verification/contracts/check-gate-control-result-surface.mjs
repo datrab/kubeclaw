@@ -107,7 +107,7 @@ assert.equal(scheduledGateInvocationSource.includes('scheduled gate invocation r
 assert.equal(gateRunnerSource.includes("opts?.stageId || `gate:${gate?.type || 'unknown'}`"), false, 'gate-runner must not synthesize scheduled gate stage ids from gate type fallbacks');
 assert.equal(gateRunnerSource.includes('gate run input requires explicit stageId'), true, 'gate-runner should reject missing scheduled gate stage ids at input construction');
 assert.equal(gateRunnerSource.includes('gate plugin invocation requires explicit stageId'), true, 'gate-runner should reject missing scheduled gate stage ids at plugin invocation construction');
-assert.equal(gateRunnerSource.includes('diagnostics: { gate_status:'), true, 'gate-status JSON evidence should be nested under diagnostics in gate state snapshots');
+assert.equal(gateRunnerSource.includes('diagnostics: { gate_status:'), false, 'gate state snapshots must not expose diagnostic gate-status evidence');
 assert.equal(gateRunnerSource.includes("priorResults: artifacts.filter((artifact) => artifact.type === 'gate_output')"), true, 'gate priorResults should only expose canonical gate output evidence');
 for (const forbiddenGateStatusAuthorityField of ['gate_status_exists:', 'gate_status_is_pass:', 'gate_status_continued:', 'gate_status_timeout_policy:', "artifact.type === 'gate_output' || artifact.type === 'gate_status'"]) assert.equal(gateRunnerSource.includes(forbiddenGateStatusAuthorityField), false, `gate state snapshots must not expose diagnostic gate-status as authority: ${forbiddenGateStatusAuthorityField}`);
 assert.equal(waitableGateEngineSource.includes("from './scheduled-gate-invocation.ts'"), true, 'waitable gates should use the shared scheduled gate invocation helper');
@@ -147,7 +147,7 @@ const reviewRateLimited = reviewControlMod.buildReviewGateControlResult(
   { _runId: 'run-1' },
   'review',
   { type: 'review' },
-  { exit: 40, reason: 'rate limited', rate_limit_exhausted: true, failure_class: 'rate_limit_exhausted' },
+  { outcome_class: 'rate_limited', reason: 'rate limited', rate_limit_exhausted: true, failure_class: 'rate_limit_exhausted' },
 );
 assert.equal(reviewRateLimited.nextAction, 'block');
 assert.equal(reviewRateLimited.issueType, 'environment');
@@ -157,17 +157,17 @@ assert.throws(
     { _runId: 'run-1' },
     'review',
     { type: 'review' },
-    { exit: 1, reason: 'reason-only review failure' },
+    { outcome_class: 'error', reason: 'reason-only review failure' },
   ),
   /non-pass result requires explicit failure_class/,
-  'review gate controls must not infer failure class from exit/status/reason',
+  'review gate controls must not infer failure class from status/reason',
 );
 
 const busterVerdictFail = busterControlMod.buildBusterGateControlResult(
   { _runId: 'run-1' },
   'buster',
   { type: 'buster' },
-  { exit: 10, reason: "Gate 'buster' failed: issue", failure_class: 'verdict_fail' },
+  { outcome_class: 'needs_nova', reason: "Gate 'buster' failed: issue", failure_class: 'verdict_fail' },
 );
 assert.equal(busterVerdictFail.nextAction, 'block');
 assert.equal(busterVerdictFail.issueType, 'code');
@@ -177,17 +177,17 @@ assert.throws(
     { _runId: 'run-1' },
     'buster',
     { type: 'buster' },
-    { exit: 10, reason: "Gate 'buster' failed: issue" },
+    { outcome_class: 'needs_nova', reason: "Gate 'buster' failed: issue" },
   ),
   /non-pass result requires explicit failure_class/,
-  'Buster gate controls must not infer failure class from exit/status/reason',
+  'Buster gate controls must not infer failure class from status/reason',
 );
 
 const approvalTimeoutContinue = approvalControlMod.buildApprovalGateControlResult(
   { _runId: 'run-1' },
   'approval',
   { type: 'approval', on_timeout: 'continue' },
-  { exit: 0, status: 'TIMED_OUT', continued: true, timed_out: true },
+  { outcome_class: 'passed', status: 'TIMED_OUT', passed: true, continued: true, timed_out: true },
   { approvalState: { timeout_policy: 'CONTINUE' } },
 );
 assert.equal(approvalTimeoutContinue.nextAction, 'pass');
@@ -198,7 +198,7 @@ assert.throws(
     { _runId: 'run-1' },
     'approval',
     { type: 'approval', on_timeout: 'continue' },
-    { exit: 0, status: 'TIMED_OUT', continued: true, timed_out: true },
+    { outcome_class: 'passed', status: 'TIMED_OUT', passed: true, continued: true, timed_out: true },
   ),
   /persisted state requires timeout_policy authority/,
   'approval control results must read timeout policy from persisted state authority, not gate config fallback',

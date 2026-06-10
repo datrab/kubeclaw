@@ -454,13 +454,13 @@ await record('Failure-service Discord alerts expose canonical escalation label c
   assert.equal(failurePresentation.includes('return resolveCanonicalResultGatewayLabel(result, fallback);'), false);
   assert.equal(failurePresentation.includes('return resolveCanonicalResultGateType(result, fallback);'), false);
   assert.equal(correlationService.includes('export function resolveStatusCorrelation(status) {'), true);
-  assert.equal(correlationService.includes('export function resolveStatusCorrelationWithDiagnosticFallback(status, fallback = {}) {'), true);
+  assert.equal(correlationService.includes('export function resolveStatusCorrelationWithDiagnosticFallback(status, fallback = {}) {'), false);
   assert.equal(correlationService.includes('export function resolveResultCorrelation(result) {'), true);
-  assert.equal(correlationService.includes('export function resolveResultCorrelationWithDiagnosticFallback(result, fallback = {}) {'), true);
+  assert.equal(correlationService.includes('export function resolveResultCorrelationWithDiagnosticFallback(result, fallback = {}) {'), false);
   assert.equal(correlationService.includes('export function resolveResultReadModelCorrelation(result) {'), true);
-  assert.equal(correlationService.includes('export function resolveResultReadModelCorrelationWithDiagnosticFallback(result, fallback = {}) {'), true);
+  assert.equal(correlationService.includes('export function resolveResultReadModelCorrelationWithDiagnosticFallback(result, fallback = {}) {'), false);
   assert.equal(correlationService.includes('export function resolveResultReadModelCorrelationProvenance(result) {'), true);
-  assert.equal(correlationService.includes('export function resolveResultReadModelCorrelationProvenanceWithDiagnosticFallback(result, fallback = {}) {'), true);
+  assert.equal(correlationService.includes('export function resolveResultReadModelCorrelationProvenanceWithDiagnosticFallback(result, fallback = {}) {'), false);
   assert.equal(correlationService.includes('export function resolveResultCorrelationWithReadModelFallback(result, fallback = {}) {'), false);
   assert.equal(correlationService.includes('source_family: sourceFamilies.length === 0 ? null : (sourceFamilies.length === 1 ? sourceFamilies[0] : \'mixed\')'), true);
   assert.equal(correlationService.includes('provenance,'), true);

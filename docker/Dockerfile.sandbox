@@ -32,11 +32,11 @@ RUN chown -R root:root /app
 # 3. Testing tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
     chromium build-essential python3 python3-pip python3-venv \
-    curl wget netcat-openbsd dnsutils nmap nginx jq tree ripgrep \
+    curl wget git openssh-client netcat-openbsd dnsutils nmap nginx jq tree ripgrep \
     && rm -rf /var/lib/apt/lists/*
 
-RUN npm install -g lighthouse serve playwright 2>/dev/null || true
-RUN npm install -g @axe-core/playwright pixelmatch pngjs ws 2>/dev/null || true
+RUN npm install -g lighthouse serve playwright
+RUN npm install -g @axe-core/playwright pixelmatch pngjs ws
 
 # Install Playwright browsers to a fixed, predictable path.
 # screenshot.cjs, a11y.cjs, and visual-reg.cjs all rely on this.
@@ -47,7 +47,7 @@ RUN npx playwright install --with-deps chromium \
 
 # agent-browser — CLI browser automation for Buster subagent
 RUN npm install -g agent-browser \
-    && agent-browser install --with-deps 2>/dev/null || true \
+    && agent-browser install --with-deps \
     && echo "  ✅ agent-browser installed"
 
 # k6 load testing tool
@@ -154,14 +154,14 @@ COPY skills/buster/ /app/skills/
 COPY skills/common/ /app/skills/
 
 # 7. KubeClaw OpenClaw plugins
-#    Runtime surface is /app/openclaw-plugins. The agent observer plugin is
-#    self-contained and must not import from /app/skills.
+#    Runtime surface is OpenClaw's bundled plugin tree. The agent observer
+#    plugin is self-contained and must not import from /app/skills.
 COPY plugins/openclaw-agent-observer/ /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer/
 RUN cd /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer \
     && rm -rf dist \
     && node "$(npm root -g)/typescript/bin/tsc" -p tsconfig.build.json \
-    && mkdir -p /app/openclaw-plugins/kubeclaw-agent-observer \
-    && cp -R package.json openclaw.plugin.json src dist /app/openclaw-plugins/kubeclaw-agent-observer/ \
+    && mkdir -p /app/dist/extensions/kubeclaw-agent-observer \
+    && cp -R package.json openclaw.plugin.json src dist /app/dist/extensions/kubeclaw-agent-observer/ \
     && rm -rf /tmp/kubeclaw-openclaw-plugins
 
 # 8. Runtime environment

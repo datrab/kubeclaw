@@ -18,7 +18,7 @@ function assertOk(condition, message) {
 }
 
 function checkFallbackLedger() {
-  const relPath = 'docs/ts-migration/fallback-ledger.md';
+  const relPath = 'docs/archive/ts-migration/fallback-ledger.md';
   const text = readText(relPath);
   const unresolved = [];
   for (const [index, line] of text.split('\n').entries()) {
@@ -31,7 +31,7 @@ function checkFallbackLedger() {
 }
 
 function checkSliceTemplate() {
-  const relPath = 'docs/ts-migration/slice-review-template.md';
+  const relPath = 'docs/archive/ts-migration/slice-review-template.md';
   const text = readText(relPath);
   const required = [
     'Slice:',

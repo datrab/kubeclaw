@@ -889,8 +889,9 @@ const result = await pollingMod.pollDual({
   }, { deps });
 
   assert.equal(result.ok, false);
-  assert.equal(result.reason, 'completion_conflict');
-  assert.equal(result.status?.authority_policy?.code, 'redis_completion_entry_invalid');
+  assert.equal(result.reason, 'timeout');
+  assert.equal(result.status, null);
+  assert.equal(result.failure_class, 'timeout');
 });
 
 await record('pollDual fails closed when Redis terminal completion conflicts with local terminal status', async () => {

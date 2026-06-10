@@ -107,6 +107,7 @@ export async function runModuleBusterPhase({
       const { busterWorkerControlResult, busterSessionKey } = workerOutcome;
       const busterWorkerMetadata = workerMetadata(busterWorkerControlResult);
       const busterWorkerTypedMetadata = workerTypedMetadata(busterWorkerControlResult);
+      const redisEntry = busterWorkerMetadata.redis_entry || null;
       const typedPassBusterStatus = busterWorkerControlResult?.nextAction === 'pass' && workerOutcomeClass(busterWorkerControlResult) === 'passed'
         ? {
             ...status,
@@ -114,7 +115,6 @@ export async function runModuleBusterPhase({
             completion_summary: workerSummary(busterWorkerControlResult) || status?.completion_summary || null,
           }
         : null;
-      const result = busterWorkerMetadata.poll_result || (typedPassBusterStatus ? { ok: true, status: typedPassBusterStatus, reason: 'typed_worker_pass' } : null);
       const busterFinalStatus = busterWorkerMetadata.final_status
         ? {
             ...status,
@@ -141,7 +141,11 @@ export async function runModuleBusterPhase({
 
 
       // ── Poll failed (timeout, parse error, etc.) ──
-      if (result ? !result.ok : !busterFinalStatus) {
+      const busterFinalState = String(busterFinalStatus?.status || '').trim().toUpperCase();
+      const redisTerminalState = String(redisEntry?.status || '').trim().toUpperCase();
+      const hasTerminalBusterStatus = [busterFinalState, redisTerminalState]
+        .some((candidate) => [STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED].includes(candidate));
+      if (busterWorkerControlResult?.nextAction !== 'pass' && !hasTerminalBusterStatus) {
         const pollFailure = await handleFailedPollResult({
           config,
           moduleId,
@@ -150,7 +154,7 @@ export async function runModuleBusterPhase({
           status,
           timeout,
           deps,
-          result,
+          redisEntry,
           busterWorkerControlResult,
           busterSessionKey,
           completionIdentity,
@@ -169,8 +173,11 @@ export async function runModuleBusterPhase({
       status = busterFinalStatus || deps.loadStatus(config, dir) || status;
 
       // Reconcile Redis completion evidence against local status through the shared adjudicator.
-      const redisEntry = result?.status?._redis_entry;
-      const completionSessionKey = resolveExpectedCompletionSessionKey(status, completionIdentity, busterSessionKey || result?.status?.session_key || null);
+      const completionSessionKey = resolveExpectedCompletionSessionKey(
+        status,
+        completionIdentity,
+        busterSessionKey || busterWorkerMetadata.session_key || redisEntry?.session_key || null,
+      );
       if (redisEntry?.status) {
         const redisAdjudication = shouldApplyRedisCompletionToStatus({
           moduleId,
@@ -225,7 +232,6 @@ export async function runModuleBusterPhase({
           dir,
           status,
           deps,
-          result,
           redisEntry,
           failureClass: busterWorkerMetadata.failure_class || busterWorkerTypedMetadata.failure_class || null,
           busterModel,

@@ -433,7 +433,7 @@ export function buildLatestPointer(config = {}, {
   status = 'running',
   startedAt = null,
   completedAt = null,
-  exitCode = null,
+  terminalStatus = null,
 } = {}) {
   const artifacts = getPipelineArtifactBundle(config);
   return {
@@ -442,7 +442,7 @@ export function buildLatestPointer(config = {}, {
     telemetry_stream_key: artifacts.telemetry_stream_key,
     authority: buildPipelineArtifactAuthorityPolicy({
       surface: PIPELINE_ARTIFACT_SURFACES.LATEST_JSON,
-      artifact: { run_id: artifacts.run_id, status, exit_code: exitCode },
+      artifact: { run_id: artifacts.run_id, status, terminal_status: terminalStatus },
       expectedRunId: artifacts.run_id,
     }),
     run_dir: artifacts.relative.run_dir,
@@ -456,7 +456,7 @@ export function buildLatestPointer(config = {}, {
     redis_ops_jsonl: artifacts.relative.redis_ops_jsonl,
     started_at: startedAt,
     completed_at: completedAt,
-    exit_code: exitCode,
+    terminal_status: terminalStatus,
   };
 }
 

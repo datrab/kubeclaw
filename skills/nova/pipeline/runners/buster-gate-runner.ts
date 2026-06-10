@@ -11,7 +11,7 @@ import { selectDeps } from '../core/deps.ts';
 import fs from 'fs';
 import path from 'path';
 import { log } from '../core/logger.ts';
-import { STATUS, EXIT_OK, EXIT_ERROR, EXIT_NEEDS_NOVA, EXIT_RATE_LIMITED } from '../core/constants.ts';
+import { STATUS } from '../core/constants.ts';
 import { getRunId, getRunStats } from '../core/runtime.ts';
 import { validateBusterConfig, resolvePolicy, logEffectivePolicy } from '../core/config.ts';
 import { relPath, gateLogDir, gateOutputPath, gateStatusPath } from '../core/paths.ts';
@@ -326,8 +326,9 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
     if (existingCompletion.isPass) {
       log('OK', `Gate '${gateId}' already completed via output_file — skipping`);
       return buildBusterGateControlResult(config, gateId, gate, {
-        exit: EXIT_OK,
         status: STATUS.PASS,
+        passed: true,
+        outcome_class: 'passed',
         completion_source: existingCompletion.source || null,
         attempt,
       }, { ...opts, input: { ids: { attempt } } });
@@ -376,9 +377,9 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
       },
     });
     return buildBusterGateControlResult(config, gateId, gate, {
-      exit: EXIT_ERROR,
       reason: e.message,
       failure_class: 'instructions_read_failed',
+      outcome_class: 'error',
       attempt,
     }, { ...opts, input: { ids: { attempt } } });
   }
@@ -416,9 +417,9 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
       },
     });
     return buildBusterGateControlResult(config, gateId, gate, {
-      exit: EXIT_NEEDS_NOVA,
       reason,
       failure_class: 'unexpected_exit',
+      outcome_class: 'needs_nova',
       attempt,
     }, { ...opts, input: { ids: { attempt } } });
   }
@@ -463,7 +464,7 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
       resumeLogMessage: () => `Gate '${gateId}' rate limit cooldown complete — retrying (attempt stays at ${attempt} due to rate limit)`,
       suppressPausePresentation: ({ status }) => (status?.source || '').toLowerCase() === 'buster-pipeline',
       exhaustedResultConfig: {
-        exit: EXIT_RATE_LIMITED,
+        resultOverrides: { outcome_class: 'rate_limited' },
       },
     }),
   );

@@ -92,6 +92,21 @@ const runtimeLoopAbort = new AbortController();
 const BUSTER_RUNTIME_LOOP_POLICY = Object.freeze({
   errorBackoffMs: 3000,
 });
+export const BUSTER_HEARTBEAT_PATH = process.env.BUSTER_HEARTBEAT_PATH || '/tmp/kubeclaw-buster-heartbeat';
+export const BUSTER_HEARTBEAT_INTERVAL_MS = Number.parseInt(process.env.BUSTER_HEARTBEAT_INTERVAL_MS || '15000', 10);
+
+function writeBusterHeartbeat(): void {
+  fs.writeFileSync(BUSTER_HEARTBEAT_PATH, `${Date.now()}\n`);
+}
+
+export function startBusterHeartbeat(): ReturnType<typeof setInterval> {
+  writeBusterHeartbeat();
+  const interval = setInterval(() => {
+    if (!shuttingDown) writeBusterHeartbeat();
+  }, BUSTER_HEARTBEAT_INTERVAL_MS);
+  interval.unref?.();
+  return interval;
+}
 
 async function emitGatewayHealthDegraded({ reason, detail }: { reason: string; detail: string }): Promise<void> {
   appendBusterProcessDiagnostic(buildBusterProcessDiagnosticRecord({
@@ -207,6 +222,7 @@ export async function main(): Promise<void> {
   console.log(` Gateway: ${resolveGatewayInvokeUrl()}`);
 
   await waitForGateway({ shutdown });
+  startBusterHeartbeat();
   const startupRecovery = await recoverOrphanedActiveSession();
   if (startupRecovery?.ok === false) {
     console.error('[RECOVERY] ❌ Buster startup recovery blocked because persisted session evidence is not lifecycle authority.');

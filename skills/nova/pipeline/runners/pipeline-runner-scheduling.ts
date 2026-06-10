@@ -71,8 +71,9 @@ function buildGeneratorStateSnapshot(config: AnyRecord, progress: AnyRecord, opt
     pipeline: {
       project: config?.project || null,
       run_id: getRunId(config),
-      exit_code: opts.exitCode ?? null,
-      exit_reason: opts.exitReason || null,
+      terminal_status: opts.terminalStatus ?? null,
+      terminal_decision: opts.terminalDecision ?? null,
+      reason_code: opts.reasonCode || null,
       schedule_reason: opts.scheduleReason || null,
       mode: opts.mode || 'full',
     },
@@ -128,8 +129,9 @@ function buildGeneratorRunInput(config: AnyRecord, progress: AnyRecord, stageId:
     executionContext: {
       scheduleReason: opts.scheduleReason || null,
       mode: opts.mode || 'full',
-      exitCode: opts.exitCode ?? null,
-      exitReason: opts.exitReason || null,
+      terminalStatus: opts.terminalStatus ?? null,
+      terminalDecision: opts.terminalDecision ?? null,
+      reasonCode: opts.reasonCode || null,
       orderIndex: opts.orderIndex ?? null,
     },
   };
@@ -480,8 +482,9 @@ export async function runScheduledGenerator(config: AnyRecord, progress: AnyReco
     environmentMetadata: {
       scheduleReason: opts.scheduleReason || null,
       mode: opts.mode || 'full',
-      exitCode: opts.exitCode ?? null,
-      exitReason: opts.exitReason || null,
+      terminalStatus: opts.terminalStatus ?? null,
+      terminalDecision: opts.terminalDecision ?? null,
+      reasonCode: opts.reasonCode || null,
     },
     injectedDeps: deps,
   });

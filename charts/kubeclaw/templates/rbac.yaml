@@ -1,8 +1,42 @@
 {{- if .Values.serviceAccount.create -}}
+{{- if and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole "buster") }}
 ---
-# ClusterRole — grants buster full control over ephemeral test namespaces
-# and their workloads. Namespace creation/deletion is enforced by the
-# buster-namespace-fence VAP (only buster-* and test-* prefixes allowed).
+# Buster may request ephemeral namespaces but cannot create/delete namespaces or
+# mutate workloads outside broker-created namespace RoleBindings.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-namespace-lease-client
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+rules:
+  - apiGroups: ["{{ .Values.busterNamespaceBroker.leaseApiGroup }}"]
+    resources: ["busternamespaceleases"]
+    verbs: ["create", "get", "list", "watch", "patch", "update", "delete"]
+  - apiGroups: ["{{ .Values.busterNamespaceBroker.leaseApiGroup }}"]
+    resources: ["busternamespaceleases/status"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-namespace-lease-client
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "kubeclaw.fullname" . }}-namespace-lease-client
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "kubeclaw.fullname" . }}
+    namespace: {{ .Release.Namespace }}
+{{- else }}
+---
+# Legacy fallback for non-broker Buster deployments. Production Buster values
+# should enable busterNamespaceBroker so this broad role is not rendered.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -10,12 +44,9 @@ metadata:
   labels:
     {{- include "kubeclaw.labels" . | nindent 4 }}
 rules:
-  # Namespace lifecycle — VAP fence limits this to buster-* / test-* prefixes
   - apiGroups: [""]
     resources: ["namespaces"]
-    verbs:     ["create", "get", "list", "delete"]
-
-  # Core workload resources within test namespaces
+    verbs: ["create", "get", "list", "delete"]
   - apiGroups: [""]
     resources:
       - pods
@@ -28,8 +59,6 @@ rules:
       - persistentvolumeclaims
       - serviceaccounts
     verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
-
-  # App workloads
   - apiGroups: ["apps"]
     resources:
       - deployments
@@ -44,10 +73,11 @@ metadata:
     {{- include "kubeclaw.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind:     ClusterRole
-  name:     {{ include "kubeclaw.fullname" . }}-k8s-tester
+  kind: ClusterRole
+  name: {{ include "kubeclaw.fullname" . }}-k8s-tester
 subjects:
-  - kind:      ServiceAccount
-    name:      {{ include "kubeclaw.fullname" . }}
+  - kind: ServiceAccount
+    name: {{ include "kubeclaw.fullname" . }}
     namespace: {{ .Release.Namespace }}
+{{- end }}
 {{- end }}

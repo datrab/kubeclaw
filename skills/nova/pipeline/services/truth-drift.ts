@@ -3,7 +3,7 @@
 import {
   projectModuleSchedulerState,
   projectGateSchedulerState,
-} from './status-store-compat.ts';
+} from './status-store-read-models.ts';
 import { adjudicateCompletionEvidence } from './completion-adjudicator.ts';
 
 function withSource(source, drift = []) {
@@ -18,7 +18,6 @@ function collectModuleArtifactRefs(moduleProjection = {}) {
 function collectGateArtifactRefs(gateProjection = {}) {
   return {
     output_path: gateProjection?.output?.path || gateProjection?.output_path || gateProjection?.gate_output_path || null,
-    gate_status_path: gateProjection?.gateStatus?.path || gateProjection?.gate_status_path || gateProjection?.legacy_gate_status_path || null,
   };
 }
 

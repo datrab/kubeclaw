@@ -39,9 +39,9 @@ await record('behavior verification doc reflects the live repo-based workflow', 
   const verificationReadme = fs.readFileSync(path.join(sourceRoot, 'tests', 'verification', 'README.md'), 'utf8');
 
   assert.equal(behaviorDoc.includes('use the live repo state in `kubeclaw-main` as the source of truth'), true);
-  assert.equal(behaviorDoc.includes('`<repo-root>/kubeclaw-main/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`'), true);
-  assert.equal(behaviorDoc.includes('treat `kubeclaw-main/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` as the authoritative inventory, stream-identity, and contract-boundary spec'), true);
-  assert.equal(behaviorDoc.includes('treat `kubeclaw-main/docs/telemetry-event-schema.md` as the authoritative event-by-event payload reference, kept in exact inventory parity with that contract'), true);
+  assert.equal(behaviorDoc.includes('`<repo-root>/kubeclaw-main/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`'), true);
+  assert.equal(behaviorDoc.includes('treat `kubeclaw-main/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` as the authoritative inventory, stream-identity, and contract-boundary spec'), true);
+  assert.equal(behaviorDoc.includes('treat `kubeclaw-main/docs/archive/legacy-root-docs/telemetry-event-schema.md` as the authoritative event-by-event payload reference, kept in exact inventory parity with that contract'), true);
   assert.equal(behaviorDoc.includes('`pipeline:telemetry:<project>:<run_id>`'), true);
   assert.equal(behaviorDoc.includes('latest repo-truth rerun against live `kubeclaw-main` passed for the no-launch verification stack used during harness recovery'), true);
   assert.equal(behaviorDoc.includes('default behavior harness coverage currently spans `33` areas'), true);
@@ -143,8 +143,8 @@ await record('behavior verification doc reflects the live repo-based workflow', 
   assert.equal(behaviorDoc.includes('Passed: `9`'), false);
   assert.equal(behaviorDoc.includes('Passed: `193`'), false);
 
-  assert.equal(verificationReadme.includes('`kubeclaw-main/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` remains the authoritative telemetry contract for canonical inventory, stream identity, and compatibility boundaries'), true);
-  assert.equal(verificationReadme.includes('`kubeclaw-main/docs/telemetry-event-schema.md` remains the event-by-event payload reference and stays in inventory parity with that contract'), true);
+  assert.equal(verificationReadme.includes('`kubeclaw-main/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` remains the authoritative telemetry contract for canonical inventory, stream identity, and compatibility boundaries'), true);
+  assert.equal(verificationReadme.includes('`kubeclaw-main/docs/archive/legacy-root-docs/telemetry-event-schema.md` remains the event-by-event payload reference and stays in inventory parity with that contract'), true);
 });
 
 await record('verification docs and hardening trackers point at tests-owned verifier entrypoints, not stale scripts wrappers', async () => {
@@ -273,7 +273,7 @@ await record('project-summary fallback stays source-relative while Buster suite 
 });
 
 await record('operator-facing visual regression docs avoid host-specific baseline evidence paths', async () => {
-  const busterReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'buster-test-platform-reference-v2.md'), 'utf8');
+  const busterReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'buster-test-platform-reference-v2.md'), 'utf8');
 
   assert.equal(busterReference.includes('"baseline_path": "<project-root>/.swarm/modules/15/baselines/baseline.png"'), true);
   assert.equal(busterReference.includes('"baseline_path": "/home/node/.openclaw/workspace/git-repo/.swarm/modules/15/baselines/baseline.png"'), false);
@@ -282,7 +282,7 @@ await record('operator-facing visual regression docs avoid host-specific baselin
 await record('pre-check semgrep config docs and defaults pin OpenClaw home platform paths', async () => {
   const lintReportOutput = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'tools', 'lint-report', 'output.ts'), 'utf8');
   const lintReportDiscovery = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'tools', 'lint-report', 'discovery.ts'), 'utf8');
-  const pipelineConfigReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'PIPELINE-CONFIG-REFERENCE.md'), 'utf8');
+  const pipelineConfigReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'PIPELINE-CONFIG-REFERENCE.md'), 'utf8');
   const swarmConfig = fs.readFileSync(path.join(sourceRoot, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json'), 'utf8');
 
   assert.equal(lintReportOutput.includes('default: auto-detect'), true);
@@ -295,7 +295,7 @@ await record('pre-check semgrep config docs and defaults pin OpenClaw home platf
 
 await record('portable semgrep docs match runtime discovery order', async () => {
   const lintReportRegistry = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'tools', 'lint-report', 'tool-registry.ts'), 'utf8');
-  const pipelineConfigReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'PIPELINE-CONFIG-REFERENCE.md'), 'utf8');
+  const pipelineConfigReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'PIPELINE-CONFIG-REFERENCE.md'), 'utf8');
 
   assert.equal(lintReportRegistry.includes('/home/node/.openclaw/.semgrep.yml'), true);
   assert.equal(lintReportRegistry.includes('SWARM_CONFIG-adjacent .semgrep.yml fallback'), true);
@@ -308,14 +308,14 @@ await record('portable semgrep docs match runtime discovery order', async () => 
   assert.equal(pipelineConfigReference.includes('`.swarm/.semgrep.yml`'), false);
 });
 
-await record('platform swarm config discovery is runtime-config first with SWARM_CONFIG fallback', async () => {
+await record('platform swarm config discovery is runtime-config first with explicit SWARM_CONFIG override', async () => {
   const coreConfig = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'core', 'config.ts'), 'utf8');
   const platformConfig = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'core', 'platform-config.ts'), 'utf8');
   const lintReportDiscovery = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'tools', 'lint-report', 'discovery.ts'), 'utf8');
   const cli = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'cli.ts'), 'utf8');
-  const pipelineConfigReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'PIPELINE-CONFIG-REFERENCE.md'), 'utf8');
-  const configurationReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'configuration-reference.md'), 'utf8');
-  const pipelineReferenceV10 = fs.readFileSync(path.join(sourceRoot, 'docs', 'pipeline-reference-v10.md'), 'utf8');
+  const pipelineConfigReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'PIPELINE-CONFIG-REFERENCE.md'), 'utf8');
+  const configurationReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'configuration-reference.md'), 'utf8');
+  const pipelineReferenceV10 = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'pipeline-reference-v10.md'), 'utf8');
   const swarmConfig = fs.readFileSync(path.join(sourceRoot, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json'), 'utf8');
   const configMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/config.ts');
 
@@ -327,21 +327,21 @@ await record('platform swarm config discovery is runtime-config first with SWARM
   assert.equal(platformConfig.includes('Swarm config invalid:'), true);
   assert.equal(lintReportDiscovery.includes("import { discoverPlatformSwarmConfigCandidates } from '../../core/platform-config.ts';"), true);
   assert.equal(lintReportDiscovery.includes('SOURCE_SWARM_CONFIG'), false);
-  assert.equal(cli.includes('/home/node/.openclaw/swarm.config.json (SWARM_CONFIG fallback)'), true);
+  assert.equal(cli.includes('/home/node/.openclaw/swarm.config.json (SWARM_CONFIG secondary candidate)'), true);
   assert.equal(pipelineConfigReference.includes('`/home/node/.openclaw/swarm.config.json`'), true);
-  assert.equal(pipelineConfigReference.includes('`SWARM_CONFIG` als Fallback'), true);
-  assert.equal(configurationReference.includes('| `SWARM_CONFIG` | fallback for `/home/node/.openclaw/swarm.config.json` |'), true);
+  assert.equal(pipelineConfigReference.includes('`SWARM_CONFIG` als Fallback'), false);
+  assert.equal(configurationReference.includes('| `SWARM_CONFIG` | fallback for `/home/node/.openclaw/swarm.config.json` |'), false);
   assert.equal(pipelineReferenceV10.includes('/home/node/.openclaw/swarm.config.json'), true);
   assert.equal(pipelineReferenceV10.includes('auto-detected swarm.config.json'), false);
   assert.equal(swarmConfig.includes('/home/node/.openclaw/swarm.config.json'), true);
   assert.equal(swarmConfig.includes('portable platform auto-detect'), false);
 
   const previousSwarmConfig = process.env.SWARM_CONFIG;
-  const fallbackConfigPath = path.join(os.tmpdir(), `swarm-config-fallback-${Date.now()}-${Math.random().toString(36).slice(2)}.json`);
+  const overrideConfigPath = path.join(os.tmpdir(), `swarm-config-override-${Date.now()}-${Math.random().toString(36).slice(2)}.json`);
   try {
-	    process.env.SWARM_CONFIG = fallbackConfigPath;
+	    process.env.SWARM_CONFIG = overrideConfigPath;
 	    const candidates = configMod.discoverPlatformSwarmConfigCandidates();
-	    assert.deepEqual(candidates, [path.resolve('/home/node/.openclaw/swarm.config.json'), path.resolve(fallbackConfigPath)]);
+	    assert.deepEqual(candidates, [path.resolve('/home/node/.openclaw/swarm.config.json'), path.resolve(overrideConfigPath)]);
 	    assert.equal(candidates.some(candidate => candidate.includes('charts/kubeclaw/files/config/swarm.config.json')), false);
   } finally {
     if (previousSwarmConfig === undefined) delete process.env.SWARM_CONFIG;

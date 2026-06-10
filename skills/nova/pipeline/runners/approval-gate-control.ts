@@ -1,6 +1,5 @@
 // runners/approval-gate-control.js — typed control-result helpers for approval gates
 
-import { EXIT_OK } from '../core/constants.ts';
 import {
   GATE_CONTROL_ACTIONS,
   buildTypedGateControlResult,
@@ -14,10 +13,10 @@ import {
 
 function buildApprovalControlSummary(gateId, result = {}) {
   const status = String(result?.status || '').trim().toUpperCase();
-  if (result?.exit === EXIT_OK && status === APPROVAL_STATUS.APPROVED) {
+  if (isApprovalGatePassResult(result) && status === APPROVAL_STATUS.APPROVED) {
     return `Approval gate '${gateId}' approved`;
   }
-  if (result?.exit === EXIT_OK && status === APPROVAL_STATUS.TIMED_OUT && result?.continued === true) {
+  if (isApprovalGatePassResult(result) && status === APPROVAL_STATUS.TIMED_OUT && result?.continued === true) {
     return `Approval gate '${gateId}' timed out and auto-continued`;
   }
   if (status === APPROVAL_STATUS.REJECTED) {
@@ -37,7 +36,7 @@ function buildApprovalControlSummary(gateId, result = {}) {
 
 function buildApprovalFindings(result = {}) {
   const status = String(result?.status || '').trim().toUpperCase();
-  if (result?.exit === EXIT_OK) return [];
+  if (isApprovalGatePassResult(result)) return [];
 
   if (result?.status === 'CORRUPTED_STATE' || result?.corrupted_state === true) {
     return [{
@@ -64,7 +63,7 @@ function buildApprovalFindings(result = {}) {
 
 function approvalGateDecisionForResult(result = {}) {
   const status = String(result?.status || '').trim().toUpperCase();
-  if (result?.exit === EXIT_OK) {
+  if (isApprovalGatePassResult(result)) {
     if (status === APPROVAL_STATUS.TIMED_OUT && result?.continued === true) {
       return { nextAction: GATE_CONTROL_ACTIONS.PASS, issueType: 'policy', outcomeClass: 'passed' };
     }
@@ -88,9 +87,17 @@ function approvalGateDecisionForResult(result = {}) {
 
 function canonicalApprovalGateRunStatus(status, result = {}) {
   if (status === APPROVAL_STATUS.TIMED_OUT) return 'TIMED_OUT';
-  if (result?.exit === EXIT_OK) return 'PASS';
+  if (isApprovalGatePassResult(result)) return 'PASS';
   if (status === APPROVAL_STATUS.PENDING_APPROVAL) return 'WAIT';
   return 'FAIL';
+}
+
+function isApprovalGatePassResult(result = {}) {
+  const status = String(result?.status || '').trim().toUpperCase();
+  return result?.passed === true
+    || result?.outcome_class === 'passed'
+    || status === APPROVAL_STATUS.APPROVED
+    || (status === APPROVAL_STATUS.TIMED_OUT && result?.continued === true);
 }
 
 function tryResolveApprovalTimeoutPolicyFromState(stateAuthority, gateId) {

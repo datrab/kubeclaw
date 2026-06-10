@@ -48,7 +48,6 @@ export function buildModuleForgeWorkerControlResult(config: AnyRecord, workerInp
   const outcomeClass = normalizeOutcomeClass(input.outcomeClass);
   const ids = workerInput?.ids || {};
   const refs = workerInput?.refs || {};
-  const pollResult = input.pollResult ?? null;
   const finalStatus = input.finalStatus ?? null;
   const metadata = {
     module_id: ids.moduleId || null,
@@ -64,7 +63,13 @@ export function buildModuleForgeWorkerControlResult(config: AnyRecord, workerInp
     stream_log_path: input?.streamLogPath || null,
     module_attempt_ref: refs.moduleAttemptRef || null,
     final_status: cloneSerializable(finalStatus),
-    poll_result: cloneSerializable(pollResult),
+    status_detail: input?.statusDetail || null,
+    status_message: input?.statusMessage || null,
+    status_errors: Array.isArray(input?.statusErrors) ? cloneSerializable(input.statusErrors) : null,
+    polling_git: cloneSerializable(input?.pollingGit || null),
+    rate_limit_status: cloneSerializable(input?.rateLimitStatus || null),
+    rate_limit_pauses: input?.rateLimitPauses ?? null,
+    max_rate_limit_pauses: input?.maxRateLimitPauses ?? input?.rateLimitStatus?.max_rate_limit_pauses ?? null,
   };
 
   return buildTypedWorkerControlResult({
@@ -93,7 +98,7 @@ export function coerceModuleForgeWorkerControlResult(config: AnyRecord, workerIn
 
 function buildModuleBusterWorkerSummary(workerInput: AnyRecord = {}, input: AnyRecord = {}) {
   const moduleId = workerInput?.ids?.moduleId || 'unknown';
-  const finalStatus = input?.finalStatus?.status || input?.pollResult?.status?.status || null;
+  const finalStatus = input?.finalStatus?.status || null;
   if (input.nextAction === 'pass') {
     return `Module Buster worker '${moduleId}' reached ${finalStatus || 'PASS'}`;
   }
@@ -112,9 +117,8 @@ export function buildModuleBusterWorkerControlResult(config: AnyRecord, workerIn
   }
   const ids = workerInput?.ids || {};
   const refs = workerInput?.refs || {};
-  const pollResult = input.pollResult ?? null;
   const finalStatus = input.finalStatus ?? null;
-  const redisEntry = pollResult?.status?._redis_entry || null;
+  const redisEntry = input.redisEntry || null;
   const metadata = {
     module_id: ids.moduleId || null,
     run_id: ids.runId || input?.runId || config?._runId || config?.run_id || null,
@@ -133,7 +137,14 @@ export function buildModuleBusterWorkerControlResult(config: AnyRecord, workerIn
     worker_dispatch_ref: refs.workerDispatchRef || null,
     redis_entry: cloneSerializable(redisEntry),
     final_status: cloneSerializable(finalStatus),
-    poll_result: cloneSerializable(pollResult),
+    status_detail: input?.statusDetail || null,
+    status_message: input?.statusMessage || null,
+    status_errors: Array.isArray(input?.statusErrors) ? cloneSerializable(input.statusErrors) : null,
+    completion_conflict: cloneSerializable(input?.completionConflict || null),
+    polling_git: cloneSerializable(input?.pollingGit || null),
+    rate_limit_status: cloneSerializable(input?.rateLimitStatus || null),
+    rate_limit_pauses: input?.rateLimitPauses ?? null,
+    max_rate_limit_pauses: input?.maxRateLimitPauses ?? input?.rateLimitStatus?.max_rate_limit_pauses ?? null,
   };
 
   return buildTypedWorkerControlResult({

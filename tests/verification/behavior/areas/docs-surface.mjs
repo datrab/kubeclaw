@@ -34,15 +34,43 @@ export async function registerDocsSurfaceArea({
   pathsMod,
   busterPipelineMod,
 }) {
-await record('pipeline README points to canonical tracked docs instead of stale governance project paths', async () => {
+await record('public docs root stays reserved for active control files and generated target docs', async () => {
+  const rootFiles = fs.readdirSync(path.join(sourceRoot, 'docs'), { withFileTypes: true })
+    .filter((entry) => entry.isFile())
+    .map((entry) => entry.name)
+    .sort();
+  assert.deepEqual(rootFiles, [
+    'CONTRIBUTING.md',
+    'DOCUMENTATION_AUDIT.md',
+    'DOCUMENTATION_HANDOFF_PROMPT.md',
+    'DOCUMENTATION_PLAN.md',
+    'DOCUMENTATION_REBUILD_PLAN.md',
+    'DOCUMENTATION_TARGET_PAGE_LIST.md',
+    'DOCUMENTATION_WORKFLOW.md',
+    'README.md',
+    'ROADMAP.md',
+    'future-implementation-ideas.md',
+    'open-issues.md',
+  ]);
+});
+
+await record('documentation handoff prompt requires completing every phase before stopping', async () => {
+  const prompt = fs.readFileSync(path.join(sourceRoot, 'docs', 'DOCUMENTATION_HANDOFF_PROMPT.md'), 'utf8');
+
+  assert.equal(prompt.includes('Do not voluntarily stop until every phase in docs/DOCUMENTATION_PLAN.md is complete.'), true);
+  assert.equal(prompt.includes('Stop early only if genuinely blocked or forced to hand off because context is getting large.'), true);
+  assert.equal(prompt.includes('Do not stop at a proposal, partial phase, or partial documentation set unless genuinely blocked or forced to hand off at a completed-file boundary.'), true);
+});
+
+await record('pipeline README points to archived source docs instead of stale governance project paths', async () => {
   const readmePath = path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'README.md');
   const readme = fs.readFileSync(readmePath, 'utf8');
   assert.equal(readme.includes('Projects/governance/src/docs/'), false);
   for (const relPath of [
-    'docs/observability-reference.md',
-    'docs/architecture-validator-reference.md',
-    'docs/telemetry-event-schema.md',
-    'docs/pipeline-reference-v10.md',
+    'docs/archive/legacy-root-docs/observability-reference.md',
+    'docs/archive/legacy-root-docs/architecture-validator-reference.md',
+    'docs/archive/legacy-root-docs/telemetry-event-schema.md',
+    'docs/archive/legacy-root-docs/pipeline-reference-v10.md',
   ]) {
     assert.equal(readme.includes(`\`${relPath}\``), true);
     assert.equal(fs.existsSync(path.join(sourceRoot, relPath)), true);
@@ -88,9 +116,9 @@ await record('project setup and Prism docs use current visual-reg baseline autho
 });
 
 await record('observability docs expose latest.json as the operator pointer to the newest run-scoped audit tree', async () => {
-  const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'observability-reference.md'), 'utf8');
+  const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'observability-reference.md'), 'utf8');
   const readme = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'README.md'), 'utf8');
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
 
   assert.equal(observabilityDoc.includes('.swarm/logs/pipeline/latest.json'), true);
   assert.equal(observabilityDoc.includes('Pointer to the most recent run-scoped audit tree'), true);
@@ -120,7 +148,7 @@ await record('observability docs expose latest.json as the operator pointer to t
 });
 
 await record('trust-boundary docs keep Buster Redis, Discord, fallback, and customSkills authority bounded', async () => {
-  const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'observability-reference.md'), 'utf8');
+  const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'observability-reference.md'), 'utf8');
   const repoRoot = path.dirname(sourceRoot);
   const authorityMap = fs.readFileSync(path.join(repoRoot, 'docs', 'pipeline-hardening', 'final_audits', 'RUNTIME_TRUTH_AUTHORITY_MAP.md'), 'utf8');
   const customSkillsTemplate = fs.readFileSync(path.join(sourceRoot, 'charts', 'kubeclaw', 'templates', 'configmap-skills.yaml'), 'utf8');
@@ -150,7 +178,7 @@ await record('trust-boundary docs keep Buster Redis, Discord, fallback, and cust
 });
 
 await record('pipeline flow semgrep card documents portable platform config discovery instead of a stale app path', async () => {
-  const pipelineFlow = fs.readFileSync(path.join(sourceRoot, 'docs', 'pipeline-flow.html'), 'utf8');
+  const pipelineFlow = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'static-artifacts', 'pipeline-flow.html'), 'utf8');
 
   assert.equal(pipelineFlow.includes("path: '/app/config/.semgrep.yml'"), false);
   assert.equal(pipelineFlow.includes("path: 'writable platform config surface (.semgrep.yml neben swarm.config.json)'"), true);

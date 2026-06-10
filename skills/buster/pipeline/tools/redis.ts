@@ -167,10 +167,6 @@ const lib = {
     return { status: 'sent', id, stream: streamKey };
   },
 
-  async sendTask(targetAgent: string, type: string, payload: unknown, iteration: number | string = 1, options: PublishOptions = {}): Promise<Record<string, unknown>> {
-    return this.publishTask(targetAgent, type, payload, iteration, options);
-  },
-
   async readMyTasks(count = 1, options: ReadOptions = {}): Promise<unknown> {
     const myName = getRequiredEnv('AGENT_NAME', process.env.AGENT_NAME);
     const consumerIdentity = getRequiredEnv(
@@ -229,7 +225,7 @@ if (currentPath === entryPath) {
         const payload = JSON.parse(flags.payload || '{}');
         if (!target || !type) throw new Error('Missing --target or --type');
 
-        const res = await lib.sendTask(target, type, payload, iter);
+        const res = await lib.publishTask(target, type, payload, iter);
         console.log(JSON.stringify(res));
       } else if (action === 'read') {
         const res = await lib.readMyTasks(1, flags.consumer ? { consumerName: flags.consumer } : {});

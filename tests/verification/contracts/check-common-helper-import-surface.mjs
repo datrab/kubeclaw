@@ -105,7 +105,8 @@ try {
 }
 
 const pipelineReadme = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/README.md'), 'utf8');
-assert.equal(pipelineReadme.includes('repo-local compatibility shims'), true, 'pipeline README should describe repo-local compatibility shims');
+assert.equal(pipelineReadme.includes('repo-local common facades'), true, 'pipeline README should describe repo-local common facades');
+assert.equal(pipelineReadme.includes('repo-local compatibility shims'), false, 'pipeline README must not describe common facades as compatibility behavior');
 assert.equal(pipelineReadme.includes('/app/common/pipeline'), false, 'pipeline README must not describe /app/common/pipeline as runtime surface');
 
 quietConsole.restore();

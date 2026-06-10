@@ -4,7 +4,7 @@
 
 import { selectDeps } from '../core/deps.ts';
 import { log } from '../core/logger.ts';
-import { STATUS, EXIT_RATE_LIMITED } from '../core/constants.ts';
+import { STATUS } from '../core/constants.ts';
 import { gateOutputPath } from '../core/paths.ts';
 import { appendDurableOperatorAlert } from '../services/telemetry.ts';
 import { projectGateCompletionState } from '../services/status-store.ts';
@@ -13,10 +13,7 @@ import {
   createRedisCompletionEventAdapter as defaultCreateRedisCompletionEventAdapter,
   createLocalEvidenceEventAdapter as defaultCreateLocalEvidenceEventAdapter,
 } from '../services/completion-event-adapters.ts';
-import {
-  buildGateLocalEvidenceResolver,
-  waitForBusterCompletion,
-} from '../services/buster-completion-controller.ts';
+import { waitForBusterCompletion } from '../services/buster-completion-controller.ts';
 import {
   buildGateSessionRateLimitStatus,
   buildGateTerminalOwnedRedisRateLimitExitResult,
@@ -87,7 +84,7 @@ function mapRedisControllerCompletion({ deps, gateId, gate, completionIdentity, 
       gateId,
       gateType: gate.type,
       statusOptions: gateRateLimitStatusOptions,
-      exit: EXIT_RATE_LIMITED,
+      resultOverrides: { outcome_class: 'rate_limited' },
     }) };
   }
 
@@ -135,40 +132,6 @@ function mapRedisControllerCompletion({ deps, gateId, gate, completionIdentity, 
   }
 
   return null;
-}
-
-function mapLocalControllerCompletion({ deps, gateId, completionIdentity, localCompletion }) {
-  if (!localCompletion) return null;
-
-  if ((localCompletion.outcome === 'parse_error' || localCompletion.outcome === 'invalid_contract') && localCompletion.source === 'output_file') {
-    const data = localCompletion.data || {};
-    return { done: true, result: deps.pollResult(false, 'invalid_contract', {
-      gate: gateId,
-      status: 'INVALID_OUTPUT',
-      source: 'output_file',
-      reason: data.reason || `Gate output contract invalid: ${data.invalid_reason || 'unknown'}`,
-      invalid_reason: data.invalid_reason || null,
-      error: data.error || null,
-      ...buildPollIdentityFields(completionIdentity),
-      gateway_label: completionIdentity.gateway_label,
-      session_key: null,
-      _source: 'output_file',
-    }) };
-  }
-
-  if (localCompletion.outcome === 'parse_error') return { parse_error: true };
-
-  if (localCompletion.done) {
-    const data = localCompletion.data || { gate: gateId };
-    return { done: true, result: deps.pollResult(localCompletion.ok, localCompletion.outcome, {
-      ...data,
-      ...buildPollIdentityFields(completionIdentity),
-      gateway_label: data.gateway_label || completionIdentity.gateway_label,
-      session_key: data.session_key || null,
-    }) };
-  }
-
-  return { done: false, logMsg: localCompletion.logMsg || `status=${localCompletion.status || 'unknown'}` };
 }
 
 function appendDurableGateCompletionAlert(config, gateId, gate, completionIdentity = {}, reason, extra = {}) {
@@ -231,23 +194,6 @@ function mapBusterGateControllerResult({
     if (redisResult?.rate_limited) return deps.pollResult(false, 'rate_limited', redisResult.status);
   }
 
-  if (controllerResult?.source === 'output_file' || controllerResult?.source === 'local_fs') {
-    const localResult = mapLocalControllerCompletion({
-      deps,
-      gateId,
-      completionIdentity,
-      localCompletion: controllerResult.local_completion,
-    });
-    if (localResult?.done) return localResult.result;
-    if (localResult?.parse_error) return deps.pollResult(false, 'parse_error', {
-      gate: gateId,
-      status: STATUS.FAIL,
-      source: 'output_file',
-      ...buildPollIdentityFields(completionIdentity),
-      gateway_label: completionIdentity.gateway_label,
-    });
-  }
-
   return deps.pollResult(false, 'completion_event_unresolved', {
     gate: gateId,
     status: STATUS.FAIL,
@@ -300,12 +246,6 @@ export async function waitBusterGateCompletionEvidence({
     timeoutMs,
     getLocalStatus: () => projectGateCompletionState(config, gateId, gate, { activeDispatch: activeCompletionIdentity }),
     statusSource: 'output_file',
-    resolveLocalEvidence: buildGateLocalEvidenceResolver(projectGateCompletionState, {
-      config,
-      gateId,
-      gate,
-      activeDispatch: activeCompletionIdentity,
-    }),
   });
   completionWait.catch?.(() => {});
   let redisDone = null;

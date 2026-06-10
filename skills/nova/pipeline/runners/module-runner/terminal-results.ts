@@ -1,6 +1,5 @@
 // runners/module-runner/terminal-results.ts — terminal/retry result builders for module runner
 
-import { EXIT_BLOCKED } from '../../core/constants.ts';
 import { getRunId } from '../../core/runtime.ts';
 import {
   resolveStatusSessionKey,
@@ -56,7 +55,7 @@ export function buildBlockedTerminalResult(status: AnyRecord, moduleId: string) 
   return {
     retry: false,
     result: {
-      exit: EXIT_BLOCKED,
+      outcome_class: 'blocked',
       reason: status?.blockedReason
         || status?.fail_summaries?.[status.fail_summaries.length - 1]?.summary
         || `Module ${moduleId} is BLOCKED`,

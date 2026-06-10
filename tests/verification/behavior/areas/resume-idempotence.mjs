@@ -503,7 +503,7 @@ async function buildBuiltInRegistry(runtimeRoot) {
     const harness = await buildArchValidationResumeHarness({ seedStartedModule: false });
     const exitCode = await harness.pipelineRunnerMod.runPipeline(harness.config, harness.progress, { resume: true, deps: harness.deps });
 
-    assert.equal(exitCode, harness.constantsMod.EXIT_BLOCKED);
+    assert.equal(exitCode, harness.constantsMod.EXIT_ERROR);
     assert.equal(harness.archValidatorCalls.length, 1);
     assert.equal(harness.moduleRunCalls.length, 0);
   });

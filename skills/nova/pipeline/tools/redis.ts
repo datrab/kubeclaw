@@ -245,10 +245,6 @@ const lib = {
     return { status: 'sent', id, stream: BUSTER_STREAM };
   },
 
-  async sendTask(targetAgent, type, payload, iteration = 1) {
-    return this.publishTask(targetAgent, type, payload, iteration);
-  },
-
   // ── Pipeline Completion Stream Functions ──────────────────────────────────
   // Used by pipeline.ts via direct import to avoid per-cycle subprocess spawns.
   // These replace the inline CJS scripts that were generated on every poll cycle.
@@ -350,7 +346,7 @@ async function main(args = process.argv.slice(2)) {
       const payload = JSON.parse(flags.payload || '{}');
       if (!type) throw new Error('Missing --type');
 
-      const res = await lib.sendTask('buster', type, payload, iter);
+      const res = await lib.publishTask('buster', type, payload, iter);
       console.log(JSON.stringify(res));
       return;
     }

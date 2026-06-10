@@ -79,6 +79,8 @@ assert.equal(moduleWorkerControlResultsSource.includes('coerceTypedWorkerControl
 assert.equal(moduleWorkerControlResultsSource.includes('isTypedWorkerControlResult('), true, 'module worker control-result helper should test worker control-result shape through the shared helper');
 assert.equal(moduleWorkerControlResultsSource.includes('result?.ok'), false, 'module worker control builders must not use result.ok as worker authority');
 assert.equal(moduleWorkerControlResultsSource.includes('poll_result?.ok'), false, 'module worker control builders must not use poll_result.ok as worker authority');
+assert.equal(moduleWorkerControlResultsSource.includes('poll_result:'), false, 'module worker control metadata must not serialize poll_result compatibility payloads');
+assert.equal(moduleWorkerControlResultsSource.includes('input.pollResult'), false, 'module worker control builders must not consume pollResult as builder authority');
 assert.equal(moduleWorkerControlResultsSource.includes('workerInput?.moduleId'), false, 'module worker control builders should read typed ids.moduleId rather than legacy top-level moduleId');
 assert.equal(moduleWorkerControlResultsSource.includes('workerInput?.attempt'), false, 'module worker control builders should read typed ids.attempt rather than legacy top-level attempt');
 assert.equal(moduleWorkerControlResultsSource.includes('workerInput?.moduleDir'), false, 'module worker control builders should read typed executionContext.moduleDir rather than legacy top-level moduleDir');
@@ -88,6 +90,13 @@ assert.equal(moduleWorkerControlResultsSource.includes('_redis_entry?.failure_cl
 assert.equal(moduleWorkersSource.includes('return buildModuleForgeWorkerControlResult(config, workerInput,'), true, 'Forge worker backend should return typed worker control results directly');
 assert.equal(moduleWorkersSource.includes('return buildModuleBusterWorkerControlResult(config, workerInput,'), true, 'Buster worker backend should return typed worker control results directly');
 assert.equal(moduleWorkersSource.includes('normalizeModuleWorkerInput('), true, 'module workers should canonicalize worker input before runner logic reads it');
+assert.equal(moduleWorkersSource.includes('workerInput?.moduleId'), false, 'module workers must not accept legacy top-level moduleId aliases');
+assert.equal(moduleWorkersSource.includes('workerInput?.runId'), false, 'module workers must not accept legacy top-level runId aliases');
+assert.equal(moduleWorkersSource.includes('workerInput?.attempt'), false, 'module workers must not accept legacy top-level attempt aliases');
+assert.equal(moduleWorkersSource.includes('workerInput?.dispatchId'), false, 'module workers must not accept legacy top-level dispatchId aliases');
+assert.equal(moduleWorkersSource.includes('workerInput?.moduleDir'), false, 'module workers must not accept legacy top-level moduleDir aliases');
+assert.equal(moduleWorkersSource.includes('workerInput?.worker?.backendConfig || workerInput'), false, 'module workers must not fall back from typed worker.backendConfig to top-level config aliases');
+assert.equal(moduleWorkersSource.includes('poll_result:'), false, 'module worker hook payloads and metadata must not expose poll_result compatibility payloads');
 assert.equal(moduleWorkersSource.includes('_redis_entry?.failure_class'), false, 'module worker backend must not read legacy Redis entry failure_class');
 assert.equal(moduleWorkersSource.includes("terminalStatus === STATUS.FAIL"), false, 'module worker backend must not infer failure_class from final FAIL status');
 assert.equal(moduleWorkersSource.includes("return 'unknown'"), false, 'module worker backend must not default missing Buster failure_class to unknown');
@@ -143,12 +152,7 @@ const explicitBusterFailureControl = moduleWorkerControlResultsMod.buildModuleBu
     outcomeClass: 'fix_requested',
     reason: 'buster_failed',
     failureClass: 'pretest_code',
-    pollResult: {
-      ok: false,
-      reason: 'buster_failed',
-      failure_class: 'pretest_code',
-      status: { status: 'FAIL' },
-    },
+    redisEntry: { status: 'FAIL', source: 'module:buster', failure_class: 'pretest_code' },
     finalStatus: { status: 'FAIL' },
   },
 );
@@ -168,7 +172,6 @@ assert.throws(
       issueType: 'unknown',
       outcomeClass: 'error',
       reason: 'missing failure class',
-      pollResult: { ok: false, status: { status: 'FAIL' } },
       finalStatus: { status: 'FAIL' },
     },
   ),
@@ -184,7 +187,6 @@ assert.throws(
       issueType: 'environment',
       reason: 'missing outcome class',
       failureClass: 'spawn_failed',
-      pollResult: { ok: false, status: { status: 'FAIL' } },
       finalStatus: { status: 'FAIL' },
     },
   ),
@@ -199,7 +201,7 @@ const defaultDependencyForgeResult = await moduleWorkersMod.runModuleForgeWorker
   workerInput: {
     ids: { moduleId: 'default-deps-module', attempt: 1 },
     executionContext: { moduleDir: 'default-deps-module', timeoutMinutes: 1 },
-    model: 'test-model',
+    worker: { backendConfig: { model: 'test-model' } },
     prompt: 'contract test',
   },
   deps: {
@@ -221,7 +223,7 @@ const defaultDependencyBusterResult = await moduleWorkersMod.runModuleBusterWork
   workerInput: {
     ids: { moduleId: 'default-deps-module', attempt: 1, dispatchId: 'dispatch-default-deps' },
     executionContext: { moduleDir: 'default-deps-module', timeoutMinutes: 1 },
-    model: 'test-model',
+    worker: { backendConfig: { model: 'test-model' } },
     prompt: 'contract test',
     status: { status: 'TESTING' },
   },

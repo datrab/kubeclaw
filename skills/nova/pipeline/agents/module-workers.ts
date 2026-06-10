@@ -31,6 +31,34 @@ function normalizeAttempt(value: unknown, fallback = 1): number {
   return Number.isFinite(numeric) && numeric > 0 ? numeric : fallback;
 }
 
+function objectOrNull(value: unknown): AnyRecord | null {
+  return value && typeof value === 'object' ? value as AnyRecord : null;
+}
+
+function pollStatus(pollResult: AnyRecord | null = null): AnyRecord | null {
+  return objectOrNull(pollResult?.status);
+}
+
+function pollRedisEntry(pollResult: AnyRecord | null = null): AnyRecord | null {
+  return objectOrNull(pollStatus(pollResult)?._redis_entry);
+}
+
+function statusEvidenceFields(pollResult: AnyRecord | null = null): AnyRecord {
+  const status = pollStatus(pollResult);
+  const redisEntry = pollRedisEntry(pollResult);
+  return {
+    statusDetail: typeof status?.detail === 'string' && status.detail.trim() ? status.detail.trim() : null,
+    statusMessage: typeof status?.message === 'string' && status.message.trim() ? status.message.trim() : null,
+    statusErrors: Array.isArray(status?.errors) ? status.errors : null,
+    pollingGit: pollResult?.reason === 'git_error' ? (status?.details || status || null) : null,
+    completionConflict: pollResult?.reason === 'completion_conflict' ? (status || null) : null,
+    redisEntry,
+    rateLimitStatus: objectOrNull(pollResult?.rate_limit_status) || (pollResult?.reason === 'rate_limit_exhausted' || pollResult?.reason === 'rate_limited' ? status : null),
+    rateLimitPauses: pollResult?.rate_limit_pauses ?? status?.rate_limit_pauses ?? null,
+    maxRateLimitPauses: pollResult?.max_rate_limit_pauses ?? status?.max_rate_limit_pauses ?? null,
+  };
+}
+
 function normalizeModuleWorkerInput(workerType: 'module_forge' | 'module_buster', workerInput: AnyRecord = {}) {
   const ids = workerInput?.ids && typeof workerInput.ids === 'object' ? { ...workerInput.ids } : {};
   const refs = workerInput?.refs && typeof workerInput.refs === 'object' ? { ...workerInput.refs } : {};
@@ -41,22 +69,16 @@ function normalizeModuleWorkerInput(workerType: 'module_forge' | 'module_buster'
     ? { ...workerInput.worker }
     : {};
 
-  ids.moduleId = normalizeString(ids.moduleId) || normalizeString(workerInput?.moduleId);
-  ids.runId = normalizeString(ids.runId) || normalizeString(workerInput?.runId);
-  ids.attempt = normalizeAttempt(ids.attempt ?? workerInput?.attempt);
+  ids.moduleId = normalizeString(ids.moduleId);
+  ids.runId = normalizeString(ids.runId);
+  ids.attempt = normalizeAttempt(ids.attempt);
   ids.stageId = normalizeString(ids.stageId) || `worker:${workerType}`;
   if (workerType === 'module_buster') {
-    ids.dispatchId = normalizeString(ids.dispatchId) || normalizeString(workerInput?.dispatchId);
+    ids.dispatchId = normalizeString(ids.dispatchId);
   }
 
-  executionContext.moduleDir = normalizeString(executionContext.moduleDir) || normalizeString(workerInput?.moduleDir);
-  executionContext.timeoutMinutes = executionContext.timeoutMinutes ?? workerInput?.timeoutMinutes ?? null;
-  if (workerInput?.headBefore !== undefined && executionContext.headBefore === undefined) {
-    executionContext.headBefore = workerInput.headBefore;
-  }
-  if (workerInput?.busterAttempt !== undefined && executionContext.busterAttempt === undefined) {
-    executionContext.busterAttempt = workerInput.busterAttempt;
-  }
+  executionContext.moduleDir = normalizeString(executionContext.moduleDir);
+  executionContext.timeoutMinutes = executionContext.timeoutMinutes ?? null;
 
   worker.workerType = worker.workerType || workerType;
 
@@ -128,7 +150,7 @@ function busterControlForPollResult(pollResult: AnyRecord = {}, failureClass: st
   if (failureClass === 'spawn_failed' || failureClass === 'completion_archive_failed') {
     return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error', failureClass };
   }
-  return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error', failureClass: failureClass || 'unknown' };
+  return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error', failureClass: failureClass || 'unclassified_poll_failure' };
 }
 
 export async function runModuleForgeWorker({
@@ -148,7 +170,7 @@ export async function runModuleForgeWorker({
   const {
     model,
     thinking = null,
-  } = workerInput?.worker?.backendConfig || workerInput;
+  } = workerInput?.worker?.backendConfig || {};
   const moduleId = workerInput.ids.moduleId;
   const moduleDir = workerInput.executionContext.moduleDir;
   const timeoutMinutes = workerInput.executionContext.timeoutMinutes;
@@ -267,7 +289,6 @@ export async function runModuleForgeWorker({
           await onFinalized({
             status: finalStatus,
             stream_log_path: forgeStreamPath,
-            poll_result: pollResult,
             dispatch,
           });
           try {
@@ -293,31 +314,33 @@ export async function runModuleForgeWorker({
   }
 
   if (hookError) {
+    const evidence = statusEvidenceFields(pollResult);
     return buildModuleForgeWorkerControlResult(config, workerInput, {
       nextAction: 'block',
       issueType: 'environment',
       outcomeClass: 'error',
       reason: hookFailureReason,
       error: hookError?.message || String(hookError),
-      pollResult,
       finalStatus,
       streamLogPath: forgeStreamPath,
       gatewayLabel: dispatch.gateway_label,
       sessionKey: dispatch.session_key,
       attempt,
+      ...evidence,
     });
   }
 
   const forgeControl = forgeControlForPollResult(pollResult || {});
+  const forgeEvidence = statusEvidenceFields(pollResult);
   return buildModuleForgeWorkerControlResult(config, workerInput, {
     ...forgeControl,
     reason: pollResult?.reason || null,
-    pollResult,
     finalStatus,
     streamLogPath: forgeStreamPath,
     gatewayLabel: dispatch.gateway_label,
     sessionKey: dispatch.session_key,
     attempt,
+    ...forgeEvidence,
   });
 }
 
@@ -336,7 +359,7 @@ export async function runModuleBusterWorker({
     onDispatched = null,
     onFinalized = null,
   } = workerInput;
-  const { model } = workerInput?.worker?.backendConfig || workerInput;
+  const { model } = workerInput?.worker?.backendConfig || {};
   const moduleId = workerInput.ids.moduleId;
   const moduleDir = workerInput.executionContext.moduleDir;
   const timeoutMinutes = workerInput.executionContext.timeoutMinutes;
@@ -486,14 +509,17 @@ export async function runModuleBusterWorker({
       });
       const confirmedFinalActive = finalActivePolicy.identity_confirmed === true ? finalActive : null;
       finalStreamPath = confirmedFinalActive?.stream_log_path || dispatch.stream_log_path || null;
-      finalSessionKey = confirmedFinalActive?.session_key || pollResult?.status?._redis_entry?.session_key || dispatch.session_key || null;
+      finalSessionKey = confirmedFinalActive?.session_key
+        ?? pollRedisEntry(pollResult)?.session_key
+        ?? pollStatus(pollResult)?.session_key
+        ?? dispatch.session_key
+        ?? null;
       if (typeof onFinalized === 'function') {
         try {
           await onFinalized({
             status: finalStatus,
             stream_log_path: finalStreamPath,
             session_key: finalSessionKey,
-            poll_result: pollResult,
             dispatch,
           });
           try {
@@ -519,6 +545,7 @@ export async function runModuleBusterWorker({
   }
 
   if (hookError) {
+    const evidence = statusEvidenceFields(pollResult);
     return buildModuleBusterWorkerControlResult(config, workerInput, {
       nextAction: 'block',
       issueType: 'environment',
@@ -526,7 +553,6 @@ export async function runModuleBusterWorker({
       reason: hookFailureReason,
       failureClass: hookFailureReason,
       error: hookError?.message || String(hookError),
-      pollResult,
       finalStatus,
       streamLogPath: finalStreamPath,
       dispatchId: dispatch.dispatch_id,
@@ -534,15 +560,16 @@ export async function runModuleBusterWorker({
       sessionKey: finalSessionKey,
       attempt,
       runId: dispatch.run_id,
+      ...evidence,
     });
   }
 
   const failureClass = resolveModuleBusterFailureClass(pollResult || {});
   const busterControl = busterControlForPollResult(pollResult || {}, failureClass);
+  const busterEvidence = statusEvidenceFields(pollResult);
   return buildModuleBusterWorkerControlResult(config, workerInput, {
     ...busterControl,
     reason: pollResult?.reason || null,
-    pollResult,
     finalStatus,
     streamLogPath: finalStreamPath,
     dispatchId: dispatch.dispatch_id,
@@ -550,5 +577,6 @@ export async function runModuleBusterWorker({
     sessionKey: finalSessionKey,
     attempt,
     runId: dispatch.run_id,
+    ...busterEvidence,
   });
 }

@@ -8,29 +8,25 @@
 
 agentRole: "buster"
 
-# Processor sidecar DISABLED — replaced by buster-pipeline.ts
-# which runs as background process in the gateway container.
-# Rollback: set processor.enabled: true, remove gateway.command override.
-processor:
-  enabled: false
 anthropic:
   existingSecret: "openclaw-shared-secrets"
   existingSecretKey: "anthropicApiKey"
   
-# Dual-process start: Buster Pipeline + gateway in the same container.
-# If either process dies, both are killed → pod restart.
+# Buster runs as one pod with two containers:
+# - kubeclaw: OpenClaw gateway and gateway-side agent tests
+# - buster-pipeline: persistent Redis task worker and deterministic suites
+# Both containers keep the sandbox runtime mounts because both participate in tests.
+busterPipeline:
+  enabled: true
+  heartbeatIntervalMs: 1000
+  resources:
+    requests: { cpu: 500m, memory: 4096Mi, ephemeral-storage: 4Gi }
+    limits: { cpu: 4000m, memory: 24576Mi, ephemeral-storage: 50Gi }
+
 gateway:
-  command:
-    - "/bin/bash"
-    - "-c"
-    - |
-      node /app/skills/buster-pipeline.ts &
-      BUSTER_PIPELINE_PID=$!
-      node /app/openclaw.mjs gateway --bind lan --port 18789 &
-      GW_PID=$!
-      wait -n $BUSTER_PIPELINE_PID $GW_PID
-      kill $BUSTER_PIPELINE_PID $GW_PID 2>/dev/null
-      exit 1
+  resources:
+    requests: { cpu: 100m, memory: 512Mi, ephemeral-storage: 1Gi }
+    limits: { cpu: 1000m, memory: 2048Mi, ephemeral-storage: 50Gi }
 
 image:
   repository: ghcr.io/forgestackai/kubeclaw-sandbox
@@ -57,11 +53,21 @@ discord:
 
 commands:
   allowFromDiscord:
+    - "849379821536804864"
     - "user:849379821536804864"
 
 discordWebhook:
   secretName: "openclaw-shared-secrets"
   secretKey: "discordWebhook"
+
+probes:
+  liveness:
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+  dependencies:
+    busterHeartbeat:
+      maxAgeSeconds: 5
 
 agent:
   project: "clawdeck"
@@ -70,12 +76,9 @@ agent:
     secretName: "git-deploy-key-buster"
     repoUrl: "git@github.com:Ravencrypt/ForgeStack.git"
 
-service:
-  nodePort: 30074
-
 sandbox:
   enabled: true
-  storageSize: "25Gi"
+  storageSize: "50Gi"
   registriesConf: |
     unqualified-search-registries = ["docker.io"]
 
@@ -89,6 +92,10 @@ sandbox:
 
 serviceAccount:
   create: true
+  automount: true
+
+busterNamespaceBroker:
+  enabled: true
 
 resources:
   requests: { cpu: 500m, memory: 4096Mi }

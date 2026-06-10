@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import assert from 'assert';
 import { pathToFileURL } from 'url';
+import { execFileSync } from 'child_process';
 
 function parseArgs(argv = process.argv.slice(2)) {
   const args = { sourceRoot: process.cwd() };
@@ -15,6 +16,7 @@ function parseArgs(argv = process.argv.slice(2)) {
 }
 
 const { sourceRoot } = parseArgs();
+process.env.REPO_ROOT = sourceRoot;
 const shimPath = path.join(sourceRoot, 'skills/buster/buster-pipeline.ts');
 const mainPath = path.join(sourceRoot, 'skills/buster/buster-pipeline.ts');
 const helpersPath = path.join(sourceRoot, 'skills/buster/pipeline/services/pipeline-helpers.ts');
@@ -442,7 +444,7 @@ assert.equal(helpersMod.resolveBusterRateLimitMaxPauses({}, { rate_limit_status:
 assert.equal(helpersMod.resolveBusterRateLimitMaxPauses({ rate_limit: { max_pauses: 5 } }, {}), 5);
 assert.throws(() => helpersMod.resolveBusterRateLimitMaxPauses({}, {}), /requires explicit rate_limit\.max_pauses policy/);
 
-const repoRootForArtifact = process.cwd();
+const repoRootForArtifact = sourceRoot;
 const artifactTempDir = fs.mkdtempSync(path.join(repoRootForArtifact, '.tmp-buster-agent-result-contract-'));
 const outputPath = path.join(artifactTempDir, 'buster-output.json');
 const outputRel = path.relative(repoRootForArtifact, outputPath);

@@ -1,7 +1,6 @@
 // runners/buster-gate-control.js — Buster gate typed-control and issue mapping helpers
 // Keep this module free of runner lifecycle, spawning, polling, and Discord side effects.
 
-import { STATUS, EXIT_OK, EXIT_ERROR, EXIT_NEEDS_NOVA, EXIT_TIMEOUT, EXIT_RATE_LIMITED } from '../core/constants.ts';
 import { getRunId } from '../core/runtime.ts';
 import {
   GATE_CONTROL_ACTIONS,
@@ -32,7 +31,7 @@ export const BUSTER_GATE_FAILURE_CLASSES = Object.freeze([
 ]);
 
 function requireBusterFailureClass(result = {}, gateId = '') {
-  if (result?.exit === EXIT_OK) return null;
+  if (isBusterGatePassResult(result)) return null;
   const failureClass = String(result?.failure_class || '').trim().toLowerCase();
   if (!failureClass) {
     throw new Error(`Buster gate '${gateId}' non-pass result requires explicit failure_class`);
@@ -44,7 +43,7 @@ function requireBusterFailureClass(result = {}, gateId = '') {
 }
 
 function buildBusterGateControlSummary(gateId, result = {}) {
-  if (result?.exit === EXIT_OK) {
+  if (isBusterGatePassResult(result)) {
     const source = result?.completion_source ? ` via ${result.completion_source}` : '';
     return `Buster gate '${gateId}' passed${source}`;
   }
@@ -52,7 +51,7 @@ function buildBusterGateControlSummary(gateId, result = {}) {
 }
 
 function busterGateDecisionForResult(result = {}, failureClass = null) {
-  if (result?.exit === EXIT_OK) {
+  if (isBusterGatePassResult(result)) {
     return { nextAction: GATE_CONTROL_ACTIONS.PASS, issueType: undefined, outcomeClass: 'passed' };
   }
   const normalizedFailureClass = String(failureClass || '').trim().toLowerCase();
@@ -81,7 +80,7 @@ function busterGateDecisionForResult(result = {}, failureClass = null) {
 }
 
 function buildBusterGateFindings(result = {}, gateId, failureClass = null) {
-  if (result?.exit === EXIT_OK) return [];
+  if (isBusterGatePassResult(result)) return [];
   return [{
     code: `BUSTER_GATE_${String(failureClass || 'FAILED').toUpperCase()}`,
     severity: failureClass === 'parse_corrupted' ? 'critical' : 'error',
@@ -111,6 +110,12 @@ export function buildBusterIssueFindings(issues = []) {
       affected_files: cloneSerializable(issue.affected_files || []),
     },
   }));
+}
+
+function isBusterGatePassResult(result = {}) {
+  return result?.passed === true
+    || result?.outcome_class === 'passed'
+    || String(result?.status || '').trim().toUpperCase() === 'PASS';
 }
 
 function requireTypedRemediationPolicy(policy = null) {
@@ -162,7 +167,7 @@ export function buildBusterGateControlResult(config, gateId, gate, result = {}, 
     summary: buildBusterGateControlSummary(gateId, result),
     findings: buildBusterGateFindings(result, gateId, failureClass),
     metadata,
-    gateRunStatus: result?.exit === EXIT_OK ? STATUS.PASS : STATUS.FAIL,
+    gateRunStatus: isBusterGatePassResult(result) ? 'PASS' : 'FAIL',
     outcomeClass: decision.outcomeClass,
     recommendation: decision.nextAction === 'pass' ? 'proceed' : 'stop',
     metrics: {

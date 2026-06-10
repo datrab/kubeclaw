@@ -392,7 +392,7 @@ await record('Redis-dispatched task alerts now flow through canonical Discord au
 
   try {
     const redisToolMod = await importRuntimeModule(redisRuntimeRoot, '/app/skills/pipeline/tools/redis.ts');
-    await redisToolMod.default.sendTask('buster', 'module_test', {
+    await redisToolMod.default.publishTask('buster', 'module_test', {
       project: 'behavior-redis-discord',
       module: '07',
       test_suites: ['unit', 'api'],
@@ -1201,7 +1201,7 @@ await record('Buster logger append failures emit canonical degraded telemetry', 
 });
 
 await record('observability docs use the current dotted telemetry event names', async () => {
-  const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'observability-reference.md'), 'utf8');
+  const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'observability-reference.md'), 'utf8');
 
   assert.equal(observabilityDoc.includes('`pipeline.started`'), true);
   assert.equal(observabilityDoc.includes('`module.status_changed`'), true);
@@ -1224,7 +1224,7 @@ await record('observability docs use the current dotted telemetry event names', 
 });
 
 await record('observability docs use the canonical pipeline.jsonl envelope', async () => {
-  const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'observability-reference.md'), 'utf8');
+  const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'observability-reference.md'), 'utf8');
 
   assert.equal(observabilityDoc.includes('"type": "<event_type>"'), true);
   assert.equal(observabilityDoc.includes('"ts": "2026-04-02T12:00:00.000Z"'), true);
@@ -1238,7 +1238,7 @@ await record('observability docs use the canonical pipeline.jsonl envelope', asy
 });
 
 await record('observability docs use the current budget artifact event names and fields', async () => {
-  const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'observability-reference.md'), 'utf8');
+  const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'observability-reference.md'), 'utf8');
 
   assert.equal(observabilityDoc.includes('"type": "budget.warning"'), true);
   assert.equal(observabilityDoc.includes('"current_cost_usd": 1.24'), true);

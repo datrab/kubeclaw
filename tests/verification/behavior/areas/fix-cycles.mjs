@@ -14,7 +14,8 @@ function getFieldValue(fields = [], name) {
 }
 
 function stepExit(result) {
-  return result?.terminal?.exitCode;
+  const status = result?.terminal?.status ?? result?.terminal_status ?? null;
+  return status === 'succeeded' ? 0 : (status ? 1 : null);
 }
 
 function stepSummary(result) {
@@ -160,7 +161,7 @@ function platformFixCycleDefaults() {
           killAgent: async () => true,
           discord: async () => {},
         },
-        expectedExit: 40,
+        expectedExit: 1,
         expectedResultReason: "Review fix 'reviewfix-gate:review-1' exceeded max rate limit pauses",
         expectedReason: "Review fix 'reviewfix-gate:review-1' exceeded max rate limit pauses",
         expectedIssuesCount: 2,
@@ -241,9 +242,10 @@ const config = {
       const result = await runGateViaRegistry(reviewRuntimeRoot, config, progress, 'gate:review', { deps });
       await flushAsync();
   
-      assert.equal(stepExit(result), scenario.expectedExit ?? 10, scenario.name);
+      const isRateLimitScenario = scenario.name === 'fix rate limit exhausted';
+      assert.equal(stepExit(result), scenario.expectedExit ?? 1, scenario.name);
       assert.equal(stepSummary(result), scenario.expectedResultReason ?? "Review gate 'gate:review' NO-GO after 1 fix cycles", scenario.name);
-      if (scenario.expectedExit === 40) {
+      if (isRateLimitScenario) {
         assert.equal(result.correlation.run_id, scenario.runId, `${scenario.name} missing returned run id`);
         assert.equal(stepMetadata(result).gate, 'gate:review', `${scenario.name} missing returned gate alias`);
         assert.equal(result.correlation.gate_id, 'gate:review', `${scenario.name} missing returned gate id`);
@@ -273,13 +275,13 @@ const config = {
       const events = gateRuntimeEvents(xaddEvents, streamKey);
       const signalEvents = events.filter((event) => event.type !== 'observability.degraded');
       const expectedMaxRateLimitPauses = config.rate_limit?.max_pauses_per_module ?? 5;
-      const expectedSignalTypes = scenario.expectedSignalTypes || (scenario.expectedExit === 40
+      const expectedSignalTypes = scenario.expectedSignalTypes || (isRateLimitScenario
         ? ['gate.started', 'gate.verdict', 'gate.verdict', 'retry.exhausted']
         : ['gate.started', 'gate.verdict', 'gate.verdict', 'gate.verdict', 'retry.exhausted']);
       assert.deepEqual(signalEvents.map((event) => event.type), expectedSignalTypes, scenario.name);
       assert.equal(signalEvents[1].verdict, 'NO-GO', scenario.name);
       assert.equal(signalEvents[1].fix_cycle, 0, scenario.name);
-      if (scenario.expectedExit === 40) {
+      if (isRateLimitScenario) {
         assert.equal(signalEvents[2].verdict, 'NO-GO', scenario.name);
         assert.equal(signalEvents[2].fix_cycle, 1, scenario.name);
         assert.equal(signalEvents[2].issues_count, scenario.expectedIssuesCount, scenario.name);
@@ -512,7 +514,7 @@ const config = {
           killAgent: async () => true,
           discord: async () => {},
         },
-        expectedExit: 10,
+        expectedExit: 1,
         expectedResultReason: "Gate 'gate:buster' failed after 1 fix attempts",
         expectedReason: 'Gate fix produced no usable output (timeout)',
       },
@@ -534,7 +536,7 @@ const config = {
           killAgent: async () => true,
           discord: async () => {},
         },
-        expectedExit: 40,
+        expectedExit: 1,
         expectedResultReason: "Gate fix 'gatefix-gate:buster-1' exceeded max rate limit pauses",
         expectedReason: "Gate fix 'gatefix-gate:buster-1' exceeded max rate limit pauses",
         expectedDiscordDescription: 'Fix attempt 4 exceeded max ACP rate limit pauses (3).',
@@ -583,7 +585,8 @@ const config = {
       const result = await runGateViaRegistry(busterRuntimeRoot, config, progress, 'gate:buster', { deps: configDeps3 });
       await flushAsync();
   
-      assert.equal(stepExit(result), scenario.expectedExit ?? 10, scenario.name);
+      const isRateLimitScenario = scenario.name === 'fix rate limit exhausted';
+      assert.equal(stepExit(result), scenario.expectedExit ?? 1, scenario.name);
       assert.equal(stepSummary(result), scenario.expectedResultReason ?? "Gate 'gate:buster' failed after 1 fix attempts", scenario.name);
       if (scenario.name === 'no usable output') {
         assert.equal(stepMetadata(result).gateway_label, 'gate-buster-dispatch', `${scenario.name} missing returned gateway label`);
@@ -603,7 +606,7 @@ const config = {
       const events = gateRuntimeEvents(xaddEvents, streamKey);
       const signalEvents = events.filter((event) => event.type !== 'observability.degraded');
       const expectedMaxRateLimitPauses = config.rate_limit?.max_pauses_per_module ?? 5;
-      if (scenario.expectedExit === 40) {
+      if (isRateLimitScenario) {
         assert.deepEqual(signalEvents.map((event) => event.type), ['gate.started', 'gate.verdict', 'gate.verdict', 'retry.exhausted'], scenario.name);
       } else {
         assert.deepEqual(signalEvents.map((event) => event.type), ['gate.started', 'gate.verdict', 'gate.verdict', 'gate.verdict', 'retry.exhausted'], scenario.name);
@@ -620,7 +623,7 @@ const config = {
       const expectedFixCycleSessionKey = scenario.name === 'forge spawn failed'
         ? 'agent:main:acp:gate-buster'
         : 'agent:gatefix-gate:buster-1';
-      if (scenario.expectedExit === 40) {
+      if (isRateLimitScenario) {
         assert.equal(signalEvents[2].session_key, 'agent:gatefix-gate:buster-1', scenario.name);
       } else {
         assert.equal(signalEvents[2].session_key, expectedFixCycleSessionKey, scenario.name);
@@ -649,17 +652,17 @@ const config = {
         assert.equal(scenario.expectedExhaustedResult.max_rate_limit_pauses, undefined, `${scenario.name} should omit top-level pause budget`);
         assert.equal(scenario.expectedExhaustedResult.rate_limit_status?.max_rate_limit_pauses, 3, `${scenario.name} should preserve nested pause budget`);
       }
-      if (scenario.expectedExit === 40) {
+      if (isRateLimitScenario) {
         assert.equal(signalEvents[2].attempt, 4, scenario.name);
         assert.equal(signalEvents[2].dispatch_id, 'gatefix-dispatch-4', scenario.name);
         assert.equal(signalEvents[2].gateway_label, 'gatefix-buster-dispatch', scenario.name);
         assert.equal(signalEvents[2].session_key, 'agent:gatefix-gate:buster-1', scenario.name);
       }
-      const exhaustedEvent = scenario.expectedExit === 40 ? signalEvents[3] : signalEvents[4];
+      const exhaustedEvent = isRateLimitScenario ? signalEvents[3] : signalEvents[4];
       assert.equal(exhaustedEvent.gate_id, 'gate:buster', scenario.name);
       assert.equal(exhaustedEvent.module_id, null, scenario.name);
       assert.equal(exhaustedEvent.phase, 'buster_gate_fix', scenario.name);
-      if (scenario.expectedExit === 40) {
+      if (isRateLimitScenario) {
         assert.equal(exhaustedEvent.attempt, 4, scenario.name);
         assert.equal(exhaustedEvent.dispatch_id, 'gatefix-dispatch-4', scenario.name);
         assert.equal(exhaustedEvent.gateway_label, 'gatefix-buster-dispatch', scenario.name);

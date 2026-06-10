@@ -9,7 +9,6 @@ import { getRunStats } from '../core/runtime.ts';
 import { STATUS } from '../core/constants.ts';
 import { gitExec, headHash, invalidateHeadHash, setRepoRoot } from '../core/git-context.ts';
 import { FAIL_PATTERNS, classifyGitPushError } from '../services/failures/classification.ts';
-import { getTrackedAgentCount } from '../agents/lifecycle.ts';
 import { transitionModuleStatus } from '../lifecycle-state.ts';
 import { sleep } from '../timing.ts';
 import { buildSubprocessEnv } from '../security.ts';
@@ -19,7 +18,6 @@ type PorcelainEntry = { raw: string; status: string; path: string };
 type StashEntry = { ref: string; sha: string; subject: string };
 type GitStructuredError = Error & { code?: string; gitSync?: AnyRecord; pollingGit?: AnyRecord };
 type RuntimeStashState = { stashRef: string | null; stashSha?: string | null; paths: string[] } | null;
-type PollingSafetyOptions = { trackedAgentCount?: number };
 type GitCommitPushOptions = { addPaths?: string[]; captureHash?: boolean; softFail?: boolean; budget?: any; signal?: any };
 
 function errorMessage(error: unknown): string {
@@ -233,96 +231,6 @@ export const __gitWorktreeTest = {
   restoreRuntimeStateStash,
 };
 
-function dirtyWorktreeDetails(repoRoot: string) {
-  try {
-    const entries = parsePorcelainEntries(repoRoot);
-    const { runtimeEntries, nonRuntimeEntries } = partitionRuntimeStateEntries(entries);
-    const paths = entries.map(entry => entry.path);
-    const unsafePaths = nonRuntimeEntries.map(entry => entry.path);
-    return {
-      hasUnsafeChanges: unsafePaths.length > 0,
-      unsafePaths,
-      runtimeOnly: paths.length > 0 && runtimeEntries.length === paths.length,
-    };
-  } catch (_error) {
-    return { hasUnsafeChanges: true, unsafePaths: ['git-status-unavailable'], runtimeOnly: false };
-  }
-}
-
-function inspectUnpushedLocalCommits(repoRoot: string): { ok: true; hasUnpushed: boolean } | { ok: false; error: string } {
-  try {
-    const upstream = gitExec(repoRoot, ['rev-parse', '--abbrev-ref', '--symbolic-full-name', '@{upstream}']).trim();
-    if (!upstream) return { ok: false, error: 'upstream lookup returned empty ref' };
-    return { ok: true, hasUnpushed: gitExec(repoRoot, ['rev-list', `${upstream}..HEAD`, '--count']).trim() !== '0' };
-  } catch (error) {
-    return { ok: false, error: errorMessage(error) };
-  }
-}
-
-function createPollingSafetyError(config: AnyRecord, reason: string, details: string): GitStructuredError {
-  const error: GitStructuredError = new Error(
-    `[POLLING_GIT_UNSAFE] Shared-worktree polling pull refused: ${reason}. ${details}`
-  );
-  error.code = 'POLLING_GIT_UNSAFE';
-  error.pollingGit = {
-    reason,
-    details,
-    repo_root: config?.repo_root || null,
-    fail_closed: true,
-  };
-  return error;
-}
-
-export function assessPollingPullSafety(config: AnyRecord, opts: PollingSafetyOptions = {}) {
-  const trackedAgentCount = opts.trackedAgentCount ?? getTrackedAgentCount();
-  if (trackedAgentCount > 0) {
-    return {
-      safe: true,
-      action: 'skip',
-      reason: 'active_session',
-      details: `tracked_agents=${trackedAgentCount}`,
-    };
-  }
-
-  const dirtyState = dirtyWorktreeDetails(config.repo_root);
-  if (dirtyState.runtimeOnly) {
-    return {
-      safe: true,
-      action: 'skip',
-      reason: 'runtime_state_only',
-      details: 'only runtime-state files are dirty',
-    };
-  }
-  if (dirtyState.hasUnsafeChanges) {
-    return {
-      safe: false,
-      action: 'fail',
-      reason: 'dirty_worktree',
-      details: `local modifications or untracked files present: ${dirtyState.unsafePaths.slice(0, 5).join(', ')}`,
-    };
-  }
-
-  const unpushedState = inspectUnpushedLocalCommits(config.repo_root);
-  if (!unpushedState.ok) {
-    return {
-      safe: false,
-      action: 'fail',
-      reason: 'upstream_lookup_failed',
-      details: `could not prove local branch has no unpushed commits: ${unpushedState.error}`,
-    };
-  }
-  if (unpushedState.hasUnpushed) {
-    return {
-      safe: false,
-      action: 'fail',
-      reason: 'unpushed_commits',
-      details: 'local branch is ahead of upstream',
-    };
-  }
-
-  return { safe: true, action: 'pull', reason: 'clean', details: 'shared worktree clean' };
-}
-
 // ─── Git Pull Core ────────────────────────────────────────────────────────────
 
 export function isRuntimeStatePath(relPathName: unknown): boolean {
@@ -446,37 +354,6 @@ function _gitPullCore(config: AnyRecord) {
 }
 
 // ─── Public Git Pull Functions ────────────────────────────────────────────────
-
-/**
- * Git pull with context-sensitive rebase abort recovery.
- *
- * Two public functions — use the one that matches your context:
- *
- *   gitPullForPolling(config)
- *     During status polling loops in the shared repo worktree. Pull only when
- *     the repo is provably safe (no tracked live sessions, no dirty worktree,
- *     no local-only commits). Unsafe cases fail closed and skip the pull.
- *
- *   gitPullBeforePush(config)
- *     Before git push (Forge→Buster handoff, blueprint release, gate fix).
- *     Local commits exist that must NOT be lost. If rebase conflicts occur,
- *     throw an error instead of resetting. The caller handles the error
- *     (typically: retry the module).
- */
-
-/** Pull during polling loops — fail closed unless the shared worktree is provably clean. */
-export function gitPullForPolling(config: AnyRecord, opts: PollingSafetyOptions = {}) {
-  const safety = assessPollingPullSafety(config, opts);
-  if (safety.action === 'skip') {
-    log('INFO', `Skipping polling git pull (${safety.reason}) — ${safety.details}`);
-    return { attempted: false, skipped: true, ...safety };
-  }
-  if (!safety.safe) {
-    throw createPollingSafetyError(config, safety.reason, safety.details);
-  }
-
-  return _gitPullCore(config);
-}
 
 /** Pull before push — throws on conflict to protect local commits. */
 export function gitPullBeforePush(config: AnyRecord) {

@@ -67,10 +67,17 @@ for (const marker of [
   'pipelineStepRateLimitDetails(stepResult)',
   'rate_limit_authority: typedRateLimit.source',
   'scheduleProjectSummaryOnBlocked',
-  'compatibility_authority_rejected',
+  'invalid_step_result_rejected',
   'const operatorReason = typedOperatorReason;',
 ]) {
   assert.equal(terminalSource.includes(marker), true, `pipeline-runner terminal helper should include ${marker}`);
+}
+
+for (const marker of [
+  'compatibility_authority_rejected',
+  'compatibilityStatus',
+]) {
+  assert.equal(`${terminalSource}\n${sharedSource}`.includes(marker), false, `pipeline runner should not retain stale compatibility naming: ${marker}`);
 }
 
 for (const marker of [
@@ -110,6 +117,12 @@ for (const marker of [
 assert.equal(mainSource.includes('if (result.exit !== EXIT_OK) return haltPipeline'), false, 'pipeline-runner full scheduler must not decide from compatibility result.exit after step-result cutover');
 assert.equal(mainSource.includes('result.exit'), false, 'pipeline-runner must not branch or project single-module lifecycle from raw result.exit');
 assert.equal(mainSource.includes('result?.exit'), false, 'pipeline-runner must not accept optional raw result?.exit scheduler authority');
+assert.equal(startSource.includes('result.exit'), false, 'pipeline-runner start helper must not branch or project from raw result.exit');
+assert.equal(startSource.includes('result?.exit'), false, 'pipeline-runner start helper must not accept optional raw result?.exit scheduler authority');
+assert.equal(terminalSource.includes('Number.isInteger(result?.exit)'), false, 'pipeline-runner terminal halt must not derive process projection from raw result.exit');
+assert.equal(terminalSource.includes('shouldInjectNeedsNovaForExit'), false, 'pipeline-runner terminal halt must inject handoff from typed terminal status, not exit code');
+assert.equal(terminalSource.includes('shouldEmitEscalationForExit'), false, 'pipeline-runner terminal halt must escalate from typed terminal status, not exit code');
+assert.equal(sharedSource.includes('result?.exit !== EXIT_BLOCKED'), false, 'pipeline-runner correlation exposure must not branch on numeric blocked exit');
 assert.equal(terminalSource.includes('correlatedResult?.rate_limit_exhausted'), false, 'pipeline-runner terminal halt must not read legacy rate-limit exhausted authority from compatibility projection');
 assert.equal(terminalSource.includes('correlatedResult?.rate_limit_status?.rate_limit_exhausted'), false, 'pipeline-runner terminal halt must not read nested legacy rate-limit authority from compatibility projection');
 

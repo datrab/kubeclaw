@@ -9,7 +9,7 @@ import { selectDeps } from '../core/deps.ts';
 import fs from 'fs';
 import path from 'path';
 import { log } from '../core/logger.ts';
-import { STATUS, EXIT_OK, EXIT_ERROR, EXIT_NEEDS_NOVA, EXIT_RATE_LIMITED } from '../core/constants.ts';
+import { STATUS } from '../core/constants.ts';
 import { getRunId, getRunStats } from '../core/runtime.ts';
 import { resolvePolicy, logEffectivePolicy } from '../core/config.ts';
 import { relPath, gateOutputPath } from '../core/paths.ts';
@@ -404,7 +404,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
 
       if (isCompleted) {
         log('OK', `Review gate '${gateId}' already completed — skipping`);
-        return buildReviewGateControlResult(config, gateId, gate, { exit: EXIT_OK, status: STATUS.PASS, attempt }, opts);
+        return buildReviewGateControlResult(config, gateId, gate, { status: STATUS.PASS, passed: true, outcome_class: 'passed', attempt }, opts);
       }
     }
   }
@@ -431,7 +431,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
         },
       },
     });
-    return buildReviewGateControlResult(config, gateId, gate, { exit: EXIT_ERROR, reason: setupReason, failure_class: 'config_invalid', attempt }, opts);
+    return buildReviewGateControlResult(config, gateId, gate, { reason: setupReason, failure_class: 'config_invalid', outcome_class: 'error', attempt }, opts);
   }
 
   const primaryReviewer = reviewConfig.primaryReviewer;
@@ -490,8 +490,8 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
         gateway_label: resolveResultGatewayLabel(reviewResult),
       },
       maxPauses: maxRateLimitPauses,
-      exit: EXIT_RATE_LIMITED,
       reason: exhaustedReason,
+      resultOverrides: { outcome_class: 'rate_limited' },
       telemetryCtx: _telemetryCtx(config),
       runId: getRunId(config),
       discordFn: deps.discord,
@@ -525,6 +525,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
     return buildReviewGateControlResult(config, gateId, gate, {
       ...reviewRateLimitExit,
       failure_class: 'rate_limit_exhausted',
+      outcome_class: 'rate_limited',
     }, { ...opts, input: { ids: { attempt } } });
   }
 
@@ -549,9 +550,9 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
         },
       });
       return buildReviewGateControlResult(config, gateId, gate, {
-        exit: EXIT_ERROR,
         reason: `Review invalid output: ${reviewResult.error}`,
         failure_class: 'invalid_contract',
+        outcome_class: 'error',
         gateway_label: reviewGatewayLabel,
         session_key: reviewSessionKey,
         attempt,
@@ -580,9 +581,9 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
       },
     });
     return buildReviewGateControlResult(config, gateId, gate, {
-      exit: EXIT_ERROR,
       reason: `Review failed: ${reviewResult.error}`,
       failure_class: 'review_failed',
+      outcome_class: 'error',
       gateway_label: reviewGatewayLabel,
       session_key: reviewSessionKey,
       attempt,
@@ -607,7 +608,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
         },
       },
     });
-    return buildReviewGateControlResult(config, gateId, gate, { exit: EXIT_OK, status: STATUS.PASS, attempt }, { ...opts, input: { ids: { attempt } } });
+    return buildReviewGateControlResult(config, gateId, gate, { status: STATUS.PASS, passed: true, outcome_class: 'passed', attempt }, { ...opts, input: { ids: { attempt } } });
   }
 
   log('WARN', `Review gate '${gateId}' NO-GO`);
@@ -636,9 +637,9 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
 
   if (noGoAction !== 'fix_and_rereview') {
     return buildReviewGateControlResult(config, gateId, gate, {
-      exit: EXIT_NEEDS_NOVA,
       reason: `Review gate '${gateId}' NO-GO`,
       failure_class: 'verdict_fail',
+      outcome_class: 'needs_nova',
       attempt,
       last_review: reviewResult.mergedResult,
       gateway_label: resolveResultGatewayLabel(reviewResult),

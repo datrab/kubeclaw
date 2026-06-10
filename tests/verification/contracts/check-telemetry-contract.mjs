@@ -56,7 +56,7 @@ const busterTaskLifecycleSource = fs.readFileSync(path.join(sourceRoot, 'skills'
 const busterSuiteRunnerSource = fs.readFileSync(path.join(sourceRoot, 'skills', 'buster', 'pipeline', 'runners', 'suite-runner.ts'), 'utf8');
 const sharedTelemetrySource = fs.readFileSync(path.join(sourceRoot, 'skills', 'common', 'pipeline', 'telemetry.ts'), 'utf8');
 const agentObservabilityMappingSource = fs.readFileSync(path.join(sourceRoot, 'skills', 'common', 'pipeline', 'agent-observability', 'src', 'mapping.ts'), 'utf8');
-const telemetrySchemaPath = path.join(sourceRoot, 'docs', 'telemetry-event-schema.md');
+const telemetrySchemaPath = path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md');
 const telemetrySchemaText = fs.readFileSync(telemetrySchemaPath, 'utf8');
 const telemetrySchemaEvents = extractTelemetrySchemaEventNames(telemetrySchemaPath);
 const missingSchemaEvents = [...contractEvents].filter((name) => !telemetrySchemaEvents.has(name)).sort();
@@ -87,6 +87,34 @@ assert.equal(
   false,
   'telemetry contract compatibility notes must not describe the legacy Buster run-scoped stream as canonical runtime ownership',
 );
+for (const deletedCompatibilityPhrase of [
+  'Migration compatibility',
+  'ClawDeck may ingest legacy compatibility shapes',
+  'Compatibility-only behavior still accepted',
+  'legacy module-scoped Buster stream keys',
+  'nested Buster envelopes shaped like',
+  'older Buster-only flat-envelope stream variants may still exist',
+  'accepts those flat compatibility envelopes',
+]) {
+  assert.equal(
+    contractText.includes(deletedCompatibilityPhrase),
+    false,
+    `telemetry contract must not keep temporary compatibility-reader language: ${deletedCompatibilityPhrase}`,
+  );
+}
+for (const typedContractPhrase of [
+  '### 7.3 Typed producer contract',
+  'nested compatibility envelopes are not accepted producer output',
+  'module-scoped Buster stream families are not accepted producer output',
+  '**Buster transport cutover**',
+  '`pipeline:telemetry:<project>:<run_id>` is the only accepted live stream',
+]) {
+  assert.equal(
+    contractText.includes(typedContractPhrase),
+    true,
+    `telemetry contract must document the hard typed cutover phrase: ${typedContractPhrase}`,
+  );
+}
 assert.equal(
   novaTelemetryStreamSource.includes('_localSeqFallback'),
   false,
@@ -294,7 +322,7 @@ assert.equal(
   'telemetry contract must not preserve the stale case-study completed event name as canonical ownership',
 );
 assert.equal(
-  contractText.includes('For `summary_type: pipeline`, the canonical live payload also preserves `exit_code`, `exit_reason`, `summary_json_path`, `pipeline_summary_path`, and `latest_json_path`'),
+  contractText.includes('For `summary_type: pipeline`, the canonical live payload also preserves `terminal_status`, `reason_code`, `summary_json_path`, `pipeline_summary_path`, and `latest_json_path`'),
   true,
   'telemetry contract must document pipeline summary artifact correlation fields',
 );
@@ -400,16 +428,16 @@ const validNovaTelemetryPayloads = {
   'observability.restored': { component: 'telemetry_sink', surface: 'redis', reason: 'redis_emit_failed', restored_after_ms: 10 },
   'phase.completed': { module_id: '01', phase: 'forge' },
   'phase.started': { module_id: '01', phase: 'forge', model: 'claude-sonnet' },
-  'pipeline.completed': { exit_code: 0, exit_reason: null, duration_seconds: 5, modules_passed: 1, modules_failed: 0, modules_total: 1, total_cost_usd: 0.1 },
-  'pipeline.halted': { reason: 'BLOCKED', module_id: '01', exit_code: 20 },
+  'pipeline.completed': { terminal_status: 'succeeded', reason_code: null, duration_seconds: 5, modules_passed: 1, modules_failed: 0, modules_total: 1, total_cost_usd: 0.1 },
+  'pipeline.halted': { reason: 'BLOCKED', module_id: '01', terminal_status: 'blocked' },
   'pipeline.started': { modules: [{ id: '01' }], gates: [], execution_order: ['01'], models: {}, resume: false, nova_prompt: null },
   'plugin.event': { plugin_id: 'buster', plugin_event: 'suite_completed', module_id: '01', attempt: 1, status: 'PASS', details: { suite: 'unit', checks_passed: 4 } },
   'rate_limit.detected': { agent_type: 'forge', module_id: '01', provider: 'anthropic', retry_after_seconds: 60 },
   'retry.exhausted': { module_id: '01', attempt: 3, max_attempts: 3, reason: 'failed' },
   'retry.scheduled': { module_id: '01', attempt: 2, max_attempts: 3, delay_seconds: 5 },
   'system.io_warning': { component: 'model_policy', surface: 'audit_log', reason: 'policy_audit_append_failed', operation: 'append', path: '/tmp/.swarm/logs/pipeline/model-policy.jsonl', path_role: 'model_policy_jsonl', code: 'ENOSPC' },
-  'summary.completed': { summary_type: 'pipeline', status: 'PASS', reason: null, exit_code: 0, exit_reason: 'PIPELINE_COMPLETE', output_dir: '/tmp/pipeline', markdown_path: '/tmp/project-summary.md', data_path: '/tmp/project-summary.json', case_study_base_path: '/tmp/case-study.base.json', summary_json_path: '/tmp/summary.json' },
-  'summary.started': { summary_type: 'pipeline', status: 'started', exit_code: 0, exit_reason: 'PIPELINE_COMPLETE', output_dir: '/tmp/pipeline' },
+  'summary.completed': { summary_type: 'pipeline', status: 'PASS', reason: null, terminal_status: 'succeeded', reason_code: 'PIPELINE_COMPLETE', output_dir: '/tmp/pipeline', markdown_path: '/tmp/project-summary.md', data_path: '/tmp/project-summary.json', case_study_base_path: '/tmp/case-study.base.json', summary_json_path: '/tmp/summary.json' },
+  'summary.started': { summary_type: 'pipeline', status: 'started', terminal_status: 'succeeded', reason_code: 'PIPELINE_COMPLETE', output_dir: '/tmp/pipeline' },
 };
 assert.deepEqual(
   Object.keys(validNovaTelemetryPayloads).sort(),
@@ -429,10 +457,25 @@ assert.deepEqual(
   'unknown telemetry event types should be rejected by the payload schema registry',
 );
 assert.deepEqual(
-  payloadSchema.validateTelemetryEventPayload('pipeline.completed', { exit_reason: 'missing exit code' }),
-  ['exit_code is required'],
+  payloadSchema.validateTelemetryEventPayload('pipeline.completed', { reason_code: 'missing terminal status' }),
+  ['terminal_status is required'],
   'required telemetry payload fields should be enforced',
 );
+for (const [eventType, requiredPayload] of Object.entries({
+  'pipeline.completed': { terminal_status: 'succeeded' },
+  'pipeline.halted': { reason: 'blocked' },
+  'summary.started': { summary_type: 'pipeline' },
+  'summary.completed': { summary_type: 'pipeline' },
+  'error.escalation': {},
+})) {
+  for (const deniedField of ['exit', 'exit_code', 'exit_reason', 'exitCode', 'exitLabel']) {
+    assert.deepEqual(
+      payloadSchema.validateTelemetryEventPayload(eventType, { ...requiredPayload, [deniedField]: 10 }),
+      [`${deniedField} is not allowed for ${eventType}`],
+      `${eventType} must not accept numeric terminal field ${deniedField}`,
+    );
+  }
+}
 assert.deepEqual(
   payloadSchema.validateTelemetryEventPayload('gate.verdict', { gate_id: 'review', verdict: 'MAYBE' }),
   ['verdict has invalid type or value'],
@@ -526,7 +569,7 @@ const runtimeCore = await importRuntimeModule(generalRoot, '/app/skills/pipeline
 const builtInRegistry = await buildBuiltInRegistry(generalRoot);
 const config = {
   project: 'proj',
-  telemetry: { enabled: true, stream_key: 'legacy:custom-stream' },
+  telemetry: { enabled: true },
   gates: { 'gate:quality': { type: 'review', title: 'Quality' } },
   compatibility: { legacy_module_status_bootstrap_mode: 'migration_only' },
   resume: false,
@@ -634,7 +677,7 @@ novaTelemetryA.emitCostUpdate(ctx, {
 novaTelemetryA.onPipelineHalted(ctx, {
   step_type: 'module',
   step_id: 'mod-b',
-  exit_code: 42,
+  terminal_status: 'blocked',
   reason: 'BLOCKED',
 });
 novaTelemetryA.onRetryScheduled(ctx, 'mod-a', {
@@ -744,14 +787,13 @@ await flushAsync();
 await novaTelemetryA.closeTelemetryRedis();
 
 const novaTelemetryB = await importFresh(generalRoot, '/app/skills/pipeline/services/telemetry.ts');
-novaTelemetryB.onPipelineCompleted(ctx, 0, 'OK', { total_cost_usd: 0.32 });
+novaTelemetryB.onPipelineCompleted(ctx, 'succeeded', 'OK', { total_cost_usd: 0.32 });
 await flushAsync();
 await novaTelemetryB.closeTelemetryRedis();
 
 const pipelineEvents = xaddEvents(sharedStreamKey);
 assert.equal(pipelineEvents.length, 18, 'expected eighteen telemetry xadd operations on the shared run stream');
 assert.deepEqual(pipelineEvents.map((event) => event.seq), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
-assert.equal(xaddEvents('legacy:custom-stream').length, 0, 'telemetry.stream_key must not create a non-canonical stream family');
 assert(pipelineEvents.every((event) => event.v === 1), 'all telemetry events must set v=1');
 assert(pipelineEvents.every((event) => event.project === 'proj' && event.run_id === sharedRunId));
 
@@ -817,7 +859,7 @@ const halted = pipelineEvents.find((event) => event.type === 'pipeline.halted');
 assert(halted, 'missing pipeline.halted event');
 assert.equal(halted.reason, 'BLOCKED');
 assert.equal(halted.module_id, 'mod-b');
-assert.equal(halted.exit_code, 42);
+assert.equal(halted.terminal_status, 'blocked');
 assert(!Object.prototype.hasOwnProperty.call(halted, 'halted_at_module'));
 assert(!Object.prototype.hasOwnProperty.call(halted, 'halted_at_gate'));
 assert.equal(
@@ -975,7 +1017,7 @@ const failOnlyResult = await failuresMod.handleFail(
     session_key: 'agent:forge:mod-fail-3',
   },
 );
-assert.equal(failOnlyResult.exit, 10, 'non-terminal module failures should escalate with EXIT_NEEDS_NOVA when auto-retry is exhausted');
+assert.equal(failOnlyResult.outcome_class, 'needs_nova', 'non-terminal module failures should escalate with typed needs_nova when auto-retry is exhausted');
 assert.equal(failOnlyResult.attempt, 3);
 assert.equal(failOnlyResult.module_status?.attempt, 3);
 await flushAsync();
@@ -1031,8 +1073,8 @@ const blockedResult = await failuresMod.handleFail(
     session_key: 'agent:mod-block:3',
   },
 );
-assert.equal(blockedResult.exit, 20, 'terminal module failures should block once max_fails is reached');
-assert.equal(blockedResult.attempt, 3);
+assert.equal(blockedResult.terminal.status, 'blocked', 'terminal module failures should block once max_fails is reached');
+assert.equal(blockedResult.correlation.attempt, 3);
 await flushAsync();
 
 const blockedEvents = xaddEvents(sharedStreamKey).slice(19);
@@ -1136,7 +1178,7 @@ const crashProgress = {
 
 const crashEventOffset = xaddEvents(sharedStreamKey).length;
 const crashResult = await moduleRunnerMod.runModule(crashConfig, crashProgress, 'mod-crash', { deps: crashDeps });
-assert.equal(crashResult.terminal?.exitCode, 20, 'terminal Buster crash exhaustion should block the module');
+assert.equal(crashResult.terminal?.status, 'blocked', 'terminal Buster crash exhaustion should block the module');
 await flushAsync();
 
 const crashEvents = xaddEvents(sharedStreamKey)
@@ -1243,7 +1285,7 @@ const restoredRateLimitStatus = statusStoreMod.loadStatus(rateLimitConfig, 'mod-
 assert.equal(restoredRateLimitStatus.status, 'TESTING');
 assert.equal(restoredRateLimitStatus.current_phase, 'buster');
 
-assert.doesNotThrow(() => assertTelemetrySchemaHotspotAuthority(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md')));
+assert.doesNotThrow(() => assertTelemetrySchemaHotspotAuthority(telemetrySchemaPath));
 assert.equal(telemetrySchemaText.includes('Canonical event inventory, stream identity, envelope invariants, and compatibility boundaries live in `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`.'), true);
 assert.equal(telemetrySchemaText.includes('This schema is the authoritative event-by-event payload reference for those canonical event names, including authoritative field tables, payload examples, and event-specific correlation notes.'), true);
 assert.equal(telemetrySchemaText.includes('The event sections below must remain in exact inventory parity with the contract and must not invent additional canonical event families.'), true);

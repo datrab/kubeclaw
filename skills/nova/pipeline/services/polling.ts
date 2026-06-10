@@ -1,9 +1,9 @@
-// services/polling.ts — Polling engine and dual-channel Redis+Git polling
+// services/polling.ts — Polling engine and lifecycle/ACP polling
 
 import fs from 'fs';
 import { log } from '../core/logger.ts';
 import { getRunId } from '../core/runtime.ts';
-import { loadStatus, saveStatus } from './status-store.ts';
+import { loadStatus } from './status-store.ts';
 import { getAcpMonitorState, getAcpMonitorConfig } from '../agents/acp-monitor.ts';
 import { getTrackedAgent } from '../agents/lifecycle.ts';
 import {
@@ -15,7 +15,6 @@ import {
   resolveStatusDispatchId,
   resolveStatusGatewayLabel,
 } from './correlation.ts';
-import { gitPullForPolling, headHash, invalidateHeadHash } from '../integrations/git-worktree.ts';
 import { transitionModuleStatus } from '../lifecycle-state.ts';
 import { sanitizeAcpTranscriptEvidence, sanitizeTranscriptDetail } from '../redaction.ts';
 import {
@@ -89,41 +88,6 @@ export function pollResult(ok, reason, status = null, extra = {}) {
   return { ok, reason, status, ...extra };
 }
 
-function syncRepoForPolling(config, label = 'poll') {
-  if (!config?.repo_root) {
-    const error = {
-      code: 'POLLING_REPO_ROOT_REQUIRED',
-      message: 'Git polling requires typed repo_root context',
-      details: { reason: 'no_repo_root' },
-    };
-    log('ERROR', `[${label}] ${error.message}`);
-    return { ok: false, error };
-  }
-  try {
-    const result = gitPullForPolling(config) || { ok: true };
-    if (result.skipped) {
-      log('DEBUG', `[${label}] Git pull skipped (${result.reason || 'skipped'})`);
-    } else if (result.ok === false) {
-      const error = {
-        code: 'POLLING_GIT_PULL_FAILED',
-        message: result.reason || result.details || 'git pull failed during polling',
-        details: result,
-      };
-      log('WARN', `[${label}] Polling git pull failed: ${error.message}`);
-      return { ok: false, error };
-    }
-    return { ok: true, result };
-  } catch (e) {
-    const error = {
-      code: e.code || 'POLLING_GIT_FAILED',
-      message: e.message?.split('\n')[0] || 'git pull failed during polling',
-      details: e.pollingGit || null,
-    };
-    log('ERROR', `[${label}] ${error.message}`);
-    return { ok: false, error };
-  }
-}
-
 // ─── Generic Polling Engine ───────────────────────────────────────────────────
 
 /**
@@ -157,8 +121,6 @@ export async function pollGeneric(config, checkFn, timeoutMinutes, label = 'poll
       budget.throwIfExhausted();
       if (!firstCycle) {
         await sleep(interval, { budget });
-        const gitSync = syncRepoForPolling(config, label);
-        if (!gitSync.ok) return pollResult(false, 'git_error', gitSync.error);
       } else {
         firstCycle = false;
       }
@@ -332,7 +294,7 @@ export async function pollForFile(config, filePath, timeoutMinutes, label = 'fil
  * pollForgeCompletion and the typed forge-completion.json artifact.
  */
 export async function pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes, opts = {}) {
-  const { sessionLabel, headBefore } = opts;
+  const { sessionLabel } = opts;
   let acpState = {};
   const observabilityState = {
     gateway: { active: false, degradedAt: null },
@@ -435,26 +397,8 @@ export async function pollStatus(config, moduleDir, expectedStatuses, timeoutMin
       }
 
       if (acpState.terminal) {
-        // Session died — check if HEAD moved (agent pushed before crashing)
-        const gitSync = syncRepoForPolling(config, moduleDir);
-        if (!gitSync.ok) {
-          return { done: true, result: pollResult(false, 'git_error', gitSync.error) };
-        }
-        invalidateHeadHash(config);
-        const headNow = headHash(config);
-        if (headBefore && headNow !== headBefore) {
-          log('INFO', `Session ${acpState.sessionState} but HEAD moved (${headBefore} → ${headNow}) — auto-advancing to READY_FOR_TESTING`);
-          const currentStatus = loadStatus(config, moduleDir);
-          if (currentStatus && currentStatus.status !== STATUS.READY_FOR_TESTING) {
-            const headMovedTransition = transitionModuleStatus(currentStatus, STATUS.READY_FOR_TESTING, {
-              note: `Session ${acpState.sessionState}, HEAD moved — auto-advanced`,
-            });
-            saveStatus(config, moduleDir, currentStatus, headMovedTransition);
-          }
-          return { done: true, result: pollResult(true, 'target_reached', currentStatus || status) };
-        }
         const terminalDetail = sanitizeTranscriptDetail(acpState.detail);
-        log('WARN', `Session ${acpState.sessionState} without HEAD movement — agent crashed or made no changes (${acpState.reason}${terminalDetail ? `; ${terminalDetail}` : ''})`);
+        log('WARN', `Session ${acpState.sessionState} before target lifecycle status (${acpState.reason}${terminalDetail ? `; ${terminalDetail}` : ''})`);
         return {
           done: true,
           result: pollResult(false, 'session_ended_no_changes', {

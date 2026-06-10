@@ -33,7 +33,7 @@ export const SHARED_PIPELINE_HELPER_PATHS = [
   'pipeline/timing.ts',
 ];
 
-export const DEFAULT_TELEMETRY_CONTRACT_REL_PATH = 'docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md';
+export const DEFAULT_TELEMETRY_CONTRACT_REL_PATH = 'docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md';
 
 export function expectedPackagedRuntimeOwners(image) {
   const owners = Object.fromEntries(
@@ -139,17 +139,23 @@ export function loadPackagingRules(sourceRoot, overlayRoot) {
   const deploymentTemplate = readOverlayText(sourceRoot, overlayRoot, 'charts/kubeclaw/templates/deployment.yaml');
 
   const requiredGeneral = [
+    'sudo curl wget git openssh-client jq',
     'RUN mkdir -p /app/skills',
     'COPY skills/nova/ /app/skills/',
     'COPY skills/common/ /app/skills/',
     'node "$(npm root -g)/typescript/bin/tsc" -p tsconfig.build.json',
+    'mkdir -p /app/dist/extensions/kubeclaw-agent-observer',
+    'cp -R package.json openclaw.plugin.json src dist /app/dist/extensions/kubeclaw-agent-observer/',
   ];
   const requiredSandbox = [
+    'curl wget git openssh-client netcat-openbsd',
     'RUN mkdir -p /app/skills',
     'COPY skills/buster/ /app/skills/',
     'COPY skills/common/ /app/skills/',
     'npm install -g ioredis js-yaml uuid @qdrant/js-client-rest typescript',
     'node "$(npm root -g)/typescript/bin/tsc" -p tsconfig.build.json',
+    'mkdir -p /app/dist/extensions/kubeclaw-agent-observer',
+    'cp -R package.json openclaw.plugin.json src dist /app/dist/extensions/kubeclaw-agent-observer/',
   ];
   const requiredDeployment = [
     'cp -r /app/skills/. /skills-merged/',
@@ -397,7 +403,7 @@ export const TELEMETRY_SCHEMA_HOTSPOT_AUTHORITY_NOTE = 'For the high-value lifec
 
 export const TELEMETRY_SCHEMA_HOTSPOT_FIELD_ROWS = {
   'pipeline.halted': [
-    { field: 'exit_code', type: 'number', description: 'Pipeline exit code responsible for the halt' },
+    { field: 'terminal_status', type: 'string', description: 'Typed terminal status responsible for the halt' },
     { field: 'reason', type: 'string', description: 'Terminal halt label such as `BLOCKED`, `NEEDS_NOVA`, or `ARCH_VALIDATION_BLOCKED`' },
     { field: 'dispatch_id', type: 'string|null', description: 'Owning retry or gate dispatch correlation key when known' },
     { field: 'gateway_label', type: 'string|null', description: 'Operator-facing session/dispatch label preserved across halt, retry, and Discord surfaces when known' },

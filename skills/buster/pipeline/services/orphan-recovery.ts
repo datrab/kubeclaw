@@ -36,12 +36,13 @@ export async function recoverOrphanedActiveSession(options = {}) {
   });
 
   return {
-    ok: false,
+    ok: true,
     found: inspected.ok,
     invalid: !inspected.ok,
     recovered: false,
     cleaned: false,
-    reason: inspected.ok ? 'lifecycle_authority_absent' : inspected.reason,
+    diagnosticOnly: true,
+    reason: inspected.ok ? 'active_session_file_diagnostic_only' : inspected.reason,
     activeStatePath,
     diagnostic,
     diagnostics: [diagnostic].filter(Boolean),

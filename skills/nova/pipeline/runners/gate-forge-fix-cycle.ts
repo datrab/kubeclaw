@@ -2,7 +2,6 @@
 // Gate-specific adapters own prompt content and post-fix cleanup/re-evaluation policy.
 
 import { log } from '../core/logger.ts';
-import { EXIT_RATE_LIMITED } from '../core/constants.ts';
 import { getRunId } from '../core/runtime.ts';
 import { buildDiscordIdentitySurfaceFields } from '../services/discord-fields.ts';
 import { emitGitCommitPushSoftFailDegraded } from '../services/git-soft-fail-observability.ts';
@@ -181,8 +180,8 @@ export async function runGateForgeFixCycle({
         session_key: resolveFixCycleSessionKey(),
       },
       maxPauses: config.rate_limit.max_pauses_per_module,
-      exit: EXIT_RATE_LIMITED,
       reason: exhaustedReason,
+      resultOverrides: { outcome_class: 'rate_limited' },
       telemetryCtx: telemetryCtx(config),
       runId: getRunId(config),
       discordFn: deps.discord,

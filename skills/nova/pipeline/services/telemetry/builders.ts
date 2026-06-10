@@ -14,11 +14,11 @@ function normalizeApprovalTimeoutPolicy(value) {
   return normalized === 'CONTINUE' ? 'CONTINUE' : 'BLOCK';
 }
 
-function mapPipelineExitStatus(exitCode) {
-  if (exitCode === 0) return 'PASS';
-  if (exitCode === 20) return 'BLOCKED';
-  if (exitCode === 30) return 'TIMEOUT';
-  if (exitCode === 40) return 'RATE_LIMITED';
+function mapPipelineTerminalSnapshotStatus(terminalStatus) {
+  if (terminalStatus === 'succeeded') return 'PASS';
+  if (terminalStatus === 'blocked') return 'BLOCKED';
+  if (terminalStatus === 'timed_out') return 'TIMEOUT';
+  if (terminalStatus === 'rate_limited') return 'RATE_LIMITED';
   return 'FAIL';
 }
 
@@ -63,11 +63,11 @@ export function onPipelineStarted(ctx: any, progress: any = null, options: any =
 
 /**
  * @param {object} ctx
- * @param {number} exitCode
- * @param {string} [exitReason]
+ * @param {string} terminalStatus
+ * @param {string} [reasonCode]
  * @param {object} [summary] - { duration_seconds, modules_passed, modules_failed, cost_usd }
  */
-export function onPipelineCompleted(ctx, exitCode, exitReason, summary = {}, options = {}) {
+export function onPipelineCompleted(ctx, terminalStatus, reasonCode, summary = {}, options = {}) {
   const stats = getRunStats(ctx?.config);
   const startedAt = stats?.started_at ? new Date(stats.started_at).getTime() : null;
   const modulesPassed = summary?.modules_passed ?? (Array.isArray(stats?.modules_completed) ? stats.modules_completed.length : null);
@@ -82,8 +82,8 @@ export function onPipelineCompleted(ctx, exitCode, exitReason, summary = {}, opt
   const totalCostUsd = summary?.total_cost_usd ?? summary?.cost_usd ?? null;
 
   const payload = {
-    exit_code: exitCode,
-    exit_reason: exitReason || null,
+    terminal_status: terminalStatus || 'succeeded',
+    reason_code: reasonCode || null,
     duration_seconds: durationSeconds,
     modules_passed: modulesPassed,
     modules_failed: modulesFailed,
@@ -92,7 +92,7 @@ export function onPipelineCompleted(ctx, exitCode, exitReason, summary = {}, opt
   };
 
   return emitEvent(ctx, 'pipeline.completed', payload, {
-    stateSnapshot: { status: mapPipelineExitStatus(exitCode) },
+    stateSnapshot: { status: mapPipelineTerminalSnapshotStatus(payload.terminal_status) },
     presentation: options.presentation || {},
   });
 }
@@ -112,7 +112,8 @@ export function onPipelineHalted(ctx, data = {}) {
     attempt: data.attempt ?? null,
     dispatch_id: data.dispatch_id ?? null,
     gateway_label: data.gateway_label ?? null,
-    exit_code: data.exit_code ?? null,
+    terminal_status: data.terminal_status ?? null,
+    terminal_decision: data.terminal_decision ?? null,
     ...(data.reason === 'RATE_LIMITED' ? {
       rate_limit_exhausted: data.rate_limit_exhausted === true,
       max_rate_limit_pauses: data.max_rate_limit_pauses ?? null,
@@ -382,14 +383,15 @@ export function onRetryExhausted(ctx, moduleId, data = {}) {
  * @param {object} ctx
  * @param {string} scope - usually 'module' or 'gate', optionally another pipeline-owned step type
  * @param {string} scopeId
- * @param {object} data - { action, last_failure, fail_count, step_type, step_id, exit_code }
+ * @param {object} data - { action, last_failure, fail_count, step_type, step_id, terminal_status }
  */
 export function onEscalated(ctx, scope, scopeId, data = {}) {
   const stepType = data.step_type ?? data.stepType ?? null;
   const isGate = scope === 'gate' || stepType === 'gate';
   const isModule = scope === 'module' || stepType === 'module';
   const event = {
-    exit_code: data.exit_code ?? null,
+    terminal_status: data.terminal_status ?? null,
+    terminal_decision: data.terminal_decision ?? null,
     module_id: data.module_id ?? (isModule ? (scopeId || null) : null),
     gate_id: data.gate_id ?? (isGate ? (scopeId || null) : null),
     gate_type: isGate ? (data.gate_type ?? null) : undefined,

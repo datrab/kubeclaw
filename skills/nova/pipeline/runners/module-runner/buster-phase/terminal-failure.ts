@@ -1,4 +1,4 @@
-import { STATUS, EXIT_NEEDS_NOVA, EXIT_BLOCKED } from '../../../core/constants.ts';
+import { STATUS } from '../../../core/constants.ts';
 import { log } from '../../../core/logger.ts';
 import { getRunId } from '../../../core/runtime.ts';
 import {
@@ -33,7 +33,6 @@ export async function handleBusterFailOrBlockedStatus({
   dir,
   status,
   deps,
-  result,
   redisEntry,
   failureClass: explicitFailureClass,
   busterModel,
@@ -49,8 +48,8 @@ export async function handleBusterFailOrBlockedStatus({
   // Classify from explicit worker failure_class only. Verdict/source presence is evidence,
   // but no longer authorizes Buster failure routing.
   const source = redisEntry?.source || 'unknown';
-  const resultRedisEntry = result?.status?._redis_entry || null;
-  const failureClass = String(explicitFailureClass || result?.failure_class || redisEntry?.failure_class || '').trim().toLowerCase();
+  const resultRedisEntry = redisEntry || null;
+  const failureClass = String(explicitFailureClass || '').trim().toLowerCase();
   if (!failureClass) {
     const reason = 'Buster terminal failure lacks explicit typed failure_class';
     log('ERROR', `Module ${moduleId}: ${reason}`);
@@ -62,7 +61,7 @@ export async function handleBusterFailOrBlockedStatus({
     );
     deps.saveStatus(config, dir, status, blockedTransition);
     return { terminal: { retry: false, result: {
-      exit: EXIT_BLOCKED,
+      outcome_class: 'blocked',
       reason,
       module: moduleId,
       module_dir: dir,
@@ -131,7 +130,7 @@ export async function handleBusterFailOrBlockedStatus({
     await emitTerminalBusterCrashTelemetry(config, moduleId, failEvent, blockedTelemetryReason, crashAttemptBudget);
 
     return { terminal: { retry: false, result: {
-      exit: EXIT_BLOCKED,
+      outcome_class: 'blocked',
       reason: `Buster subagent crashed ${maxBusterCrashRetries + 1} times — infrastructure issue (not sent to Forge)`,
       module: moduleId, module_dir: dir,
       attempt: failEvent.attempt,
@@ -192,7 +191,7 @@ export async function handleBusterFailOrBlockedStatus({
       );
 
       return { terminal: { retry: false, result: {
-        exit: EXIT_NEEDS_NOVA,
+        outcome_class: 'needs_nova',
         reason: `Buster ${preTestClass.kind} issue (${preTestClass.code}) — Forge output preserved: ${preTestClass.detail}`,
         module: moduleId, module_dir: dir,
         dispatch_id: preTestDispatchId,
@@ -247,7 +246,7 @@ export async function handleBusterFailOrBlockedStatus({
       );
 
       return { terminal: { retry: false, result: {
-        exit: EXIT_NEEDS_NOVA,
+        outcome_class: 'needs_nova',
         reason: `Repeated pre-test failure (${failedSuiteNames.join(',')}) — needs Nova review before another Forge cycle`,
         module: moduleId, module_dir: dir,
         dispatch_id: repeatedPreTestDispatchId,

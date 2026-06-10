@@ -88,21 +88,22 @@ function platformSummaryDefaults() {
   };
 }
 
-function makeStepResult({ stepType = 'module', stepId = '01', exit = 0, reason = null, projection = {}, correlation = {} } = {}) {
-  const outcome = Number(exit) === 0 ? 'passed'
-    : (Number(exit) === 10 ? 'needs_nova'
-      : (Number(exit) === 20 ? 'blocked'
-        : (Number(exit) === 40 ? 'rate_limited' : 'error')));
-  const exitLabel = Number(exit) === 0 ? 'OK'
-    : (Number(exit) === 10 ? 'NEEDS_NOVA'
-      : (Number(exit) === 20 ? 'BLOCKED'
-        : (Number(exit) === 40 ? 'RATE_LIMITED' : 'ERROR')));
+function makeStepResult({ stepType = 'module', stepId = '01', outcomeClass = 'passed', reason = null, projection = {}, correlation = {} } = {}) {
+  const outcome = outcomeClass;
+  const terminalStatus = outcome === 'passed' ? 'succeeded'
+    : (outcome === 'needs_nova' ? 'action_required'
+      : (outcome === 'blocked' ? 'blocked'
+        : (outcome === 'rate_limited' ? 'rate_limited' : 'failed')));
+  const terminalAction = terminalStatus === 'succeeded' ? 'none'
+    : (terminalStatus === 'action_required' ? 'request_handoff'
+      : (terminalStatus === 'rate_limited' ? 'retry_later'
+        : (terminalStatus === 'blocked' ? 'notify_operator' : 'stop')));
   return {
     schemaVersion: 'v1',
     kind: 'pipeline_step_result',
     stepType,
     stepId,
-    nextAction: Number(exit) === 0 ? 'continue' : 'halt',
+    nextAction: outcome === 'passed' ? 'continue' : 'halt',
     outcome,
     diagnostics: {
       summary: reason,
@@ -115,8 +116,19 @@ function makeStepResult({ stepType = 'module', stepId = '01', exit = 0, reason =
     },
     correlation,
     terminal: {
-      exitCode: exit,
-      exitLabel,
+      status: terminalStatus,
+      decision: {
+        schemaVersion: 'v1',
+        kind: 'pipeline_terminal_decision',
+        status: terminalStatus,
+        action: terminalAction,
+        reasonCode: outcome,
+        humanReason: reason,
+        scope: stepType,
+        correlation: {},
+        source: null,
+        metadata: {},
+      },
     },
   };
 }
@@ -1807,13 +1819,13 @@ const config = {
     const events = xaddEvents(streamKey);
     assert.deepEqual(events.map((event) => event.type), ['pipeline.started', 'pipeline.completed', 'summary.started', 'summary.completed']);
     assert.equal(events[2].summary_type, 'pipeline');
-    assert.equal(events[2].exit_code, 0);
-    assert.equal(events[2].exit_reason, 'PIPELINE_COMPLETE');
+    assert.equal(events[2].terminal_status, 'succeeded');
+    assert.equal(events[2].reason_code, 'PIPELINE_COMPLETE');
     assert.equal(events[2].output_dir, path.join(logDir, 'pipeline'));
     assert.equal(events[3].summary_type, 'pipeline');
     assert.equal(events[3].status, 'ok');
-    assert.equal(events[3].exit_code, 0);
-    assert.equal(events[3].exit_reason, 'PIPELINE_COMPLETE');
+    assert.equal(events[3].terminal_status, 'succeeded');
+    assert.equal(events[3].reason_code, 'PIPELINE_COMPLETE');
     assert.equal(events[3].output_dir, path.join(logDir, 'pipeline'));
     assert.equal(events[3].summary_json_path, path.join(runLogDir, 'summary.json'));
     assert.equal(events[3].pipeline_summary_path, path.join(logDir, 'pipeline', 'summary.json'));
@@ -1857,7 +1869,7 @@ const config = {
           syncControlFiles: async () => {},
           runModule: async () => makeStepResult({
             stepId: '01',
-            exit: 10,
+            outcomeClass: 'needs_nova',
             reason: 'Forge fix needs Nova guidance',
             projection: {
               fail_count: 3,
@@ -1896,19 +1908,19 @@ const config = {
     const result = await pipelineRunnerMod.runPipeline(config, progress, { deps: configDeps17, module: '01', skipArchValidation: true });
     await flushAsync();
 
-    assert.equal(result, 10);
+    assert.equal(result, 1);
 
     const streamKey = 'pipeline:telemetry:behavior-pipeline-summary-halt:run-pipeline-summary-halt-1';
     const events = xaddEvents(streamKey);
     assert.deepEqual(events.map((event) => event.type), ['pipeline.started', 'error.escalation', 'pipeline.halted', 'summary.started', 'summary.completed']);
     assert.equal(events[3].summary_type, 'pipeline');
-    assert.equal(events[3].exit_code, 10);
-    assert.equal(events[3].exit_reason, 'single_module:01');
+    assert.equal(events[3].terminal_status, 'action_required');
+    assert.equal(events[3].reason_code, 'single_module:01');
     assert.equal(events[3].output_dir, path.join(logDir, 'pipeline'));
     assert.equal(events[4].summary_type, 'pipeline');
     assert.equal(events[4].status, 'failed');
-    assert.equal(events[4].exit_code, 10);
-    assert.equal(events[4].exit_reason, 'single_module:01');
+    assert.equal(events[4].terminal_status, 'action_required');
+    assert.equal(events[4].reason_code, 'single_module:01');
     assert.equal(events[4].output_dir, path.join(logDir, 'pipeline'));
     assert.equal(events[4].summary_json_path, path.join(runLogDir, 'summary.json'));
     assert.equal(events[4].pipeline_summary_path, path.join(logDir, 'pipeline', 'summary.json'));

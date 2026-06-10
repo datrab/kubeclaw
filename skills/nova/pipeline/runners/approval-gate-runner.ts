@@ -22,7 +22,6 @@
 
 import { selectDeps } from '../core/deps.ts';
 import { log } from '../core/logger.ts';
-import { EXIT_OK, EXIT_NEEDS_NOVA } from '../core/constants.ts';
 import { syncApprovalWaitState } from '../services/status-store.ts';
 import { recordApprovalGateOutcome, buildGovernanceEmbedFields } from '../services/governance-context.ts';
 import { onApprovalRequested, onApprovalResolved, onGateStarted, onGatePass, onGateFail } from '../services/telemetry.ts';
@@ -182,8 +181,9 @@ async function resolveTimeout(config, gateId, gate, state, timeoutPolicy, deps) 
     });
     log('WARN', `Approval gate '${gateId}' timed out — timeout_policy=${APPROVAL_TIMEOUT_POLICY.CONTINUE}, proceeding`);
     return buildApprovalGateControlResult(config, gateId, gate, {
-      exit: EXIT_OK,
       status: APPROVAL_STATUS.TIMED_OUT,
+      passed: true,
+      outcome_class: 'passed',
       timed_out: true,
       continued: true,
       gate_id: gateId,
@@ -207,8 +207,8 @@ async function resolveTimeout(config, gateId, gate, state, timeoutPolicy, deps) 
   });
   log('ERROR', `Approval gate '${gateId}' timed out — timeout_policy=${APPROVAL_TIMEOUT_POLICY.BLOCK}, halting pipeline`);
   return buildApprovalGateControlResult(config, gateId, gate, {
-    exit:      EXIT_NEEDS_NOVA,
     status:    APPROVAL_STATUS.TIMED_OUT,
+    outcome_class: 'needs_nova',
     reason:    `Approval gate '${gateId}' timed out after ${state.timeout_minutes} minutes`,
     gate_id:   gateId,
     timed_out: true,
@@ -305,8 +305,9 @@ async function resolveObservedApprovalState(config, gateId, gate, rawCurrent, ti
     });
     return {
       result: buildApprovalGateControlResult(config, gateId, gate, {
-        exit: EXIT_OK,
         status: APPROVAL_STATUS.APPROVED,
+        passed: true,
+        outcome_class: 'passed',
         gate_id: gateId,
         decision_by: current.decision_by || null,
         decision_via: current.decision_via || null,
@@ -346,8 +347,8 @@ async function resolveObservedApprovalState(config, gateId, gate, rawCurrent, ti
     });
     return {
       result: buildApprovalGateControlResult(config, gateId, gate, {
-        exit: EXIT_NEEDS_NOVA,
         status: APPROVAL_STATUS.REJECTED,
+        outcome_class: 'needs_nova',
         reason: `Gate '${gateId}' rejected: ${current.reason || 'no reason given'}`,
         gate_id: gateId,
         decision_by: current.decision_by || null,
@@ -375,8 +376,8 @@ async function resolveObservedApprovalState(config, gateId, gate, rawCurrent, ti
     emitApprovalGateVerdict(config, gateId, gate, 'NO-GO', current?.reason || 'Approval cancelled');
     return {
       result: buildApprovalGateControlResult(config, gateId, gate, {
-        exit: EXIT_NEEDS_NOVA,
         status: APPROVAL_STATUS.CANCELLED,
+        outcome_class: 'needs_nova',
         reason: `Gate '${gateId}' cancelled`,
         gate_id: gateId,
         decision_via: current.decision_via || null,
@@ -563,7 +564,7 @@ export async function runApprovalGateEvaluation(config, progress, gateId, opts =
         fallbackReason: 'Approved by operator',
       });
       deps.writeApprovalDecision(config, gateId, gateState);
-      return buildApprovalGateControlResult(config, gateId, gate, { exit: EXIT_OK, status: APPROVAL_STATUS.APPROVED, gate_id: gateId }, { ...opts, approvalState: gateState });
+      return buildApprovalGateControlResult(config, gateId, gate, { status: APPROVAL_STATUS.APPROVED, passed: true, outcome_class: 'passed', gate_id: gateId }, { ...opts, approvalState: gateState });
     }
 
     if (s === APPROVAL_STATUS.REJECTED) {
@@ -574,8 +575,8 @@ export async function runApprovalGateEvaluation(config, progress, gateId, opts =
       });
       deps.writeApprovalDecision(config, gateId, gateState);
       return buildApprovalGateControlResult(config, gateId, gate, {
-        exit:    EXIT_NEEDS_NOVA,
         status:  APPROVAL_STATUS.REJECTED,
+        outcome_class: 'needs_nova',
         reason:  `Gate '${gateId}' was previously rejected: ${gateState.reason || 'no reason given'}`,
         gate_id: gateId,
       }, { ...opts, approvalState: gateState });
@@ -589,8 +590,8 @@ export async function runApprovalGateEvaluation(config, progress, gateId, opts =
       });
       deps.writeApprovalDecision(config, gateId, gateState);
       return buildApprovalGateControlResult(config, gateId, gate, {
-        exit:    EXIT_NEEDS_NOVA,
         status:  APPROVAL_STATUS.CANCELLED,
+        outcome_class: 'needs_nova',
         reason:  `Gate '${gateId}' cancelled`,
         gate_id: gateId,
       }, { ...opts, approvalState: gateState });

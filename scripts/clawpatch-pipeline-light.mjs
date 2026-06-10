@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
 
-const DEFAULT_REPORT = 'docs/clawpatch/2026-06-01-clawpatch-pipeline-review.json';
+const DEFAULT_REPORT = 'docs/archive/clawpatch/2026-06-01-clawpatch-pipeline-review.json';
 const DEFAULT_AUTOREVIEW =
   'python /home/node/.openclaw/agents/main/agent/codex-home/skills/autoreview/scripts/autoreview';
 
@@ -466,7 +466,7 @@ function guardDirtyDiff(repo, finding) {
       file.startsWith('.worktrees/') ||
       file.startsWith('.clawpatch-light/') ||
       file.startsWith('node_modules/') ||
-      file.startsWith('docs/clawpatch/')
+      file.startsWith('docs/archive/clawpatch/')
     );
   });
 

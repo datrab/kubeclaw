@@ -106,8 +106,9 @@ export function appendPipelineLifecycleEvent(config, type, {
   } else if (type === 'pipeline_run.completed') {
     const readModels = loadLifecycleReadModels(config), artifacts = getPipelineArtifactBundle(config);
     data = {
-      exit_code: result?.exit ?? 0,
-      exit_reason: result?.reason || 'PIPELINE_COMPLETE',
+      terminal_status: result?.terminal_status || 'succeeded',
+      terminal_decision: result?.terminal_decision || null,
+      reason_code: result?.reason || 'PIPELINE_COMPLETE',
       duration_seconds: null,
       modules_passed: readModels?.progression?.modules_passed ?? null,
       modules_failed: readModels?.progression?.modules_failed ?? null,
@@ -121,7 +122,8 @@ export function appendPipelineLifecycleEvent(config, type, {
   } else if (type === 'pipeline_run.halted') {
     data = {
       halt_reason: haltReason || result?.reason || 'halted',
-      exit_code: result?.exit ?? null,
+      terminal_status: result?.terminal_status || null,
+      terminal_decision: result?.terminal_decision || null,
       step_type: stepType || null,
       step_id: stepId || null,
       attempt: result?.attempt ?? null,

@@ -33,16 +33,6 @@ export interface AgentObservabilityEvidenceIdentity {
   child_session_key?: string;
 }
 
-export interface AgentObservabilityLegacyEvidenceRecord {
-  type: AgentObservabilityEvidenceRecordType;
-  ts: string;
-  source?: string;
-  identity?: AgentObservabilityEvidenceIdentity;
-  outcome?: string | null;
-  reason?: string | null;
-  payload?: Record<string, unknown>;
-}
-
 export interface AgentObservabilityRedisPressureSnapshot {
   controlPending?: number;
   controlLag?: number;
@@ -57,13 +47,11 @@ export interface AgentObservabilityRedisPressureSnapshot {
 
 export interface AgentObservabilityParallelRunEvidenceInput {
   observedEvents: AgentObservabilityIngressEventV1[];
-  legacyRecords?: AgentObservabilityLegacyEvidenceRecord[];
   redisPressure?: AgentObservabilityRedisPressureSnapshot;
   generatedAt?: string;
 }
 
 export interface AgentObservabilityParallelRunEvidenceOptions {
-  sessionEndTimingToleranceMs?: number;
   now?: Date;
 }
 
@@ -83,16 +71,11 @@ export interface AgentObservabilityEvidenceIssue {
   message: string;
   identity?: AgentObservabilityEvidenceIdentity;
   observed_type?: string;
-  legacy_type?: string;
   details?: Record<string, unknown>;
 }
 
 export interface AgentObservabilityCoverageSummary {
   observed: number;
-  legacy: number;
-  missing_observed: number;
-  missing_legacy: number;
-  coverage: number | null;
 }
 
 export interface AgentObservabilitySpanCompletenessSummary {
@@ -131,7 +114,6 @@ export interface AgentObservabilityParallelRunEvidenceV1 {
   generated_at: string;
   status: 'ok' | 'warning' | 'degraded';
   observed_counts: Record<string, number>;
-  legacy_counts: Record<string, number>;
   coverage: {
     spawn: AgentObservabilityCoverageSummary;
     agent_end: AgentObservabilityCoverageSummary;

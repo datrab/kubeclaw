@@ -5,7 +5,7 @@ import {
   projectGateSchedulerState,
   projectModuleSchedulerState,
 } from '../services/status-store.ts';
-import { STATUS, EXIT_BLOCKED } from '../core/constants.ts';
+import { STATUS } from '../core/constants.ts';
 import {
   buildPipelineStepResult,
   PIPELINE_STEP_ACTIONS,
@@ -70,22 +70,26 @@ export function buildEscalationPayload(stepType, stepId, result, action, gateTyp
     ...(stepType === 'module' ? { module_id: stepId } : {}),
     ...(stepType === 'gate' ? { gate_id: stepId, gate_type: gateType ?? getResultGateType(result) ?? null } : {}),
     ...(stepType === 'validator' ? { validator_id: stepId, validator_stage_id: result?.validator_stage_id || result?.validator || null } : {}),
+    terminal_status: result?.terminal_status ?? result?.terminal?.status ?? null,
+    terminal_decision: result?.terminal_decision ?? result?.terminal?.decision ?? null,
   };
 }
 
 export function buildPipelineHaltPayload(stepType, stepId, result, reason, gateType = null) {
   const maxRateLimitPauses = result?.max_rate_limit_pauses ?? result?.rate_limit_status?.max_rate_limit_pauses ?? null;
   const rateLimitExhausted = result?.rate_limit_exhausted === true || result?.rate_limit_status?.rate_limit_exhausted === true;
+  const terminalStatus = result?.terminal_status ?? result?.terminal?.status ?? null;
   return {
     step_type: stepType || null,
     step_id: stepId || null,
     reason: reason || 'UNKNOWN',
-    exit_code: result?.exit,
+    terminal_status: terminalStatus,
+    terminal_decision: result?.terminal_decision ?? result?.terminal?.decision ?? null,
     session_key: resolveResultSessionKey(result),
     attempt: resolveResultAttempt(result),
     dispatch_id: resolveResultDispatchId(result),
     gateway_label: resolveResultGatewayLabel(result),
-    ...(reason === 'RATE_LIMITED' ? {
+    ...(terminalStatus === 'rate_limited' ? {
       rate_limit_exhausted: rateLimitExhausted,
       max_rate_limit_pauses: maxRateLimitPauses,
     } : {}),
@@ -111,15 +115,15 @@ export function loadAuthoritativeModuleState(config, progress, moduleId, {
 } = {}) {
   const moduleConfig = progress?.modules?.[moduleId] || null;
   const moduleDir = moduleConfig?.dir || moduleId || null;
-  const compatibilityStatus = status === undefined && moduleDir
+  const moduleStatusSnapshot = status === undefined && moduleDir
     ? loadStatusFn(config, moduleDir)
     : status;
 
   return projectModuleSchedulerState(config, moduleId, moduleConfig, {
-    status: compatibilityStatus,
+    status: moduleStatusSnapshot,
   }) || getAuthoritativeModuleState(config, moduleId, {
     dir: moduleDir,
-    status: compatibilityStatus,
+    status: moduleStatusSnapshot,
   });
 }
 
@@ -193,7 +197,8 @@ export function buildResultWithStepCorrelation(config, progress, stepType, stepI
   if (stepType !== 'module') return { ...result };
 
   const rawStatus = loadModuleStatus(config, progress, stepId, deps);
-  const exposeIdentity = result?.exit !== EXIT_BLOCKED || result?.attempt != null || result?.dispatch_id != null;
+  const terminalStatus = result?.terminal_status ?? result?.terminal?.status ?? null;
+  const exposeIdentity = terminalStatus !== 'blocked' || result?.attempt != null || result?.dispatch_id != null;
   return {
     ...result,
     attempt: exposeIdentity ? resolveProjectedAttempt(result) : null,

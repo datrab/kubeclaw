@@ -1,4 +1,4 @@
-import { STATUS, EXIT_ERROR } from '../../../core/constants.ts';
+import { STATUS } from '../../../core/constants.ts';
 import { log } from '../../../core/logger.ts';
 import { getRunId } from '../../../core/runtime.ts';
 import { emitOperatorAlert } from '../../../services/telemetry.ts';
@@ -79,5 +79,5 @@ export async function handleBusterSpawnFailure({
       sessionKey: spawnFailureSessionKey,
     },
   );
-  return { retry: false, result: { exit: EXIT_ERROR, reason, dispatch_id: completionIdentity.dispatchId, gateway_label: spawnFailureGatewayLabel, session_key: spawnFailureSessionKey } };
+  return { retry: false, result: { outcome_class: 'error', reason, dispatch_id: completionIdentity.dispatchId, gateway_label: spawnFailureGatewayLabel, session_key: spawnFailureSessionKey } };
 }

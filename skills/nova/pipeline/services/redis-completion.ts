@@ -55,7 +55,6 @@ function matchesCompletionTarget(entry = {}, targetId) {
 }
 
 function buildInvalidCompletionEntry(entry = {}, validationErrors = [], moduleId = null, expected = {}) {
-  const normalizedExpected = normalizeExpectedCompletionIdentity(expected);
   const envelope = normalizeRedisPipelineEnvelope(entry);
   return {
     _id: entry?._id || null,
@@ -70,7 +69,10 @@ function buildInvalidCompletionEntry(entry = {}, validationErrors = [], moduleId
     invalid_completion_source: entry?.source || null,
     invalid_completion_status: entry?.status || null,
     invalid_completion_errors: validationErrors.join('; '),
-    ...normalizedExpected,
+    run_id: normalizeIdentityValue(entry?.run_id ?? entry?.runId),
+    attempt: normalizeIdentityValue(entry?.attempt),
+    dispatch_id: normalizeIdentityValue(entry?.dispatch_id ?? entry?.dispatchId),
+    session_key: normalizeIdentityValue(entry?.session_key ?? entry?.sessionKey),
   };
 }
 

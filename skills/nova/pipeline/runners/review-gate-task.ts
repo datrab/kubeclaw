@@ -4,7 +4,6 @@
 import fs from 'fs';
 import path from 'path';
 import { log } from '../core/logger.ts';
-import { EXIT_RATE_LIMITED } from '../core/constants.ts';
 import { getRunId, getRunStats } from '../core/runtime.ts';
 import { relPath, gateLogDir, gateLintLogDir, gateOutputPath, reviewGateOutputPath } from '../core/paths.ts';
 import {
@@ -264,9 +263,9 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
         pauseLogMessage: ({ pauseCount, maxPauses, cooldownHours, resumeAt }) => `Review gate '${gateId}' reviewer rate limited (pause ${pauseCount}/${maxPauses}) — sleeping ${cooldownHours}h (resume at ${resumeAt.toISOString()})`,
         resumeLogMessage: () => `Review gate '${gateId}' reviewer cooldown complete — retrying review attempt ${reviewAttempt}`,
         exhaustedResultConfig: {
-          exit: EXIT_RATE_LIMITED,
           resultOverrides: {
             review_attempt: reviewAttempt,
+            outcome_class: 'rate_limited',
           },
         },
       })

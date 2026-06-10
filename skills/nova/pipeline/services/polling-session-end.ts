@@ -9,7 +9,7 @@ import { createAcpMonitorEventAdapter, monitorStateFromAcpEvent } from '../agent
 import { getTrackedAgent } from '../agents/lifecycle.ts';
 import { sendGatewaySessionMessage } from '../integrations/gateway.ts';
 import { copyRedactedTranscriptArtifact, sanitizeAcpTranscriptEvidence } from '../redaction.ts';
-import { gitPullForPolling, headHash, invalidateHeadHash, gitExec } from '../integrations/git-worktree.ts';
+import { headHash, invalidateHeadHash, gitExec } from '../integrations/git-worktree.ts';
 import {
   processSessionRateLimit,
   buildGateSessionRateLimitStatus,
@@ -144,41 +144,6 @@ export function buildSessionPollRateLimitIdentity({
   };
 }
 
-function syncRepoForPolling(config, label = 'poll') {
-  if (!config?.repo_root) {
-    const error = {
-      code: 'POLLING_REPO_ROOT_REQUIRED',
-      message: 'Git polling requires typed repo_root context',
-      details: { reason: 'no_repo_root' },
-    };
-    log('ERROR', `[${label}] ${error.message}`);
-    return { ok: false, error };
-  }
-  try {
-    const result = gitPullForPolling(config) || { ok: true };
-    if (result.skipped) {
-      log('DEBUG', `[${label}] Git pull skipped (${result.reason || 'skipped'})`);
-    } else if (result.ok === false) {
-      const error = {
-        code: 'POLLING_GIT_PULL_FAILED',
-        message: result.reason || result.details || 'git pull failed during polling',
-        details: result,
-      };
-      log('WARN', `[${label}] Polling git pull failed: ${error.message}`);
-      return { ok: false, error };
-    }
-    return { ok: true, result };
-  } catch (e) {
-    const error = {
-      code: e.code || 'POLLING_GIT_FAILED',
-      message: e.message?.split('\n')[0] || 'git pull failed during polling',
-      details: e.pollingGit || null,
-    };
-    log('ERROR', `[${label}] ${error.message}`);
-    return { ok: false, error };
-  }
-}
-
 // ─── Session End Poller ───────────────────────────────────────────────────────
 
 /**
@@ -267,10 +232,6 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
   }
 
   function _detectFinalChanges() {
-    const finalGitSync = syncRepoForPolling(config, logLabel);
-    if (!finalGitSync.ok) {
-      return { ok: false, error: finalGitSync.error };
-    }
     invalidateHeadHash(config);
     const finalHead = headHash(config);
     const finalWorktreeSignature = worktreeChangeSignature(config, _ignoredChangePaths);
@@ -288,17 +249,11 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
   // Capture HEAD before Forge starts — used for change detection
   const headBefore = headHash(config);
 
-  // Two completion signals (first one wins):
-  //   1. HEAD movement + grace period — legacy agent-side commit/push completed
-  //   2. Session closed/error — agent finished; caller inspects local changes and owns git sync
-  //
+  // ACP terminal state is the only session completion signal. Git/worktree
+  // evidence is sampled only after terminal/timeout to classify local changes.
   // 'idle' is intentionally NOT treated as a completion signal — it's ambiguous
   // with oneshot sessions (can mean initializing, between tool calls, or finished).
   // Only 'closed' and 'error' are unambiguous end states.
-
-  const POST_CHANGE_GRACE_MS = 60000; // 60s of no new changes after HEAD moves = done
-  let lastHeadChangeTime = 0;
-  let lastKnownHead = headBefore;       // Track the last HEAD we've seen (for multi-commit detection)
   let sessionEndDetected = false;        // Set when the Gateway status wrapper reports closed/error
   let sessionEndGraceStart = 0;          // When we first detected session end
 
@@ -364,33 +319,10 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
       }
     }
 
-    const gitSync = syncRepoForPolling(config, logLabel);
-    if (!gitSync.ok) {
-      return { completed: false, hasChanges: false, reason: 'git_error', error: gitSync.error };
-    }
-
-    // Check if HEAD moved (legacy agent-side commit/push)
-    invalidateHeadHash(config);
-    const headNow = headHash(config);
-
-    if (headNow !== lastKnownHead) {
-      lastHeadChangeTime = Date.now();
-      lastKnownHead = headNow;
-      log('INFO', `[${logLabel}] HEAD moved (${headNow}) — waiting ${POST_CHANGE_GRACE_MS / 1000}s grace for more...`);
-    }
-
-    // ── Signal 1: HEAD moved and grace period expired ──
-    if (lastHeadChangeTime > 0 && (Date.now() - lastHeadChangeTime) >= POST_CHANGE_GRACE_MS) {
-      log('INFO', `[${logLabel}] No new changes for ${POST_CHANGE_GRACE_MS / 1000}s after HEAD movement — session complete`);
-
-      _mirrorSubagentTranscript();
-      return { completed: true, hasChanges: true, reason: 'session_ended', transcript: sanitizeAcpTranscriptEvidence(acpState.transcript) };
-    }
-
-    // ── Signal 2: Session closed/error (ACP session no longer running) ──
+    // ── Session closed/error (ACP session no longer running) ──
     // ACP session/transcript observation arrives through the edge adapter EventBus.
-    // If HEAD moved or the worktree is dirty, return hasChanges=true. The caller
-    // owns any commit/push; this poller does not stage or commit files.
+    // After terminal state, local commit/worktree deltas are classification only.
+    // The caller owns any commit/push; this poller does not stage or commit files.
     if (!sessionEndDetected && monitorEvent) {
       if (monitorEvent.type === 'fatal.error') {
         return { completed: false, hasChanges: false, reason: 'monitor_adapter_failed', error: monitorEvent.payload || {} };
@@ -499,7 +431,6 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
 
     // Session ended + grace expired → done (even without HEAD movement)
     if (sessionEndDetected && (Date.now() - sessionEndGraceStart) >= sessionEndGraceMs) {
-      // One final safe git pull to catch any legacy remote update
       const finalChanges = _detectFinalChanges();
       if (!finalChanges.ok) {
         return { completed: false, hasChanges: false, reason: 'git_error', error: finalChanges.error };

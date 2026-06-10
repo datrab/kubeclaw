@@ -10,7 +10,8 @@ import {
 } from '../../lib/lifecycle-audit-lib.mjs';
 
 function stepExit(result) {
-  return result?.terminal?.exitCode;
+  const status = result?.terminal?.status ?? result?.terminal_status ?? null;
+  return ({ succeeded: 0, failed: 1, action_required: 10, blocked: 20, timed_out: 30, rate_limited: 40 })[status] ?? null;
 }
 
 function stepSummary(result) {
@@ -150,8 +151,8 @@ const config = {
       .trim()
       .split('\n')
       .map((line) => JSON.parse(line));
-    const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'observability-reference.md'), 'utf8');
-    const pipelineReferenceV10 = fs.readFileSync(path.join(sourceRoot, 'docs', 'pipeline-reference-v10.md'), 'utf8');
+    const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'observability-reference.md'), 'utf8');
+    const pipelineReferenceV10 = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'pipeline-reference-v10.md'), 'utf8');
 
     assert.equal(transitions.length, 2);
     assert.equal(transitions[0].run_id, 'run-approval-transitions-1');
@@ -217,8 +218,8 @@ const config = {
 
     const summary = JSON.parse(fs.readFileSync(path.join(logDir, 'pipeline', 'summary.json'), 'utf8'));
     const approvalEntry = summary.governance.approval_gates[0];
-    const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'observability-reference.md'), 'utf8');
-    const pipelineReferenceV10 = fs.readFileSync(path.join(sourceRoot, 'docs', 'pipeline-reference-v10.md'), 'utf8');
+    const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'observability-reference.md'), 'utf8');
+    const pipelineReferenceV10 = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'pipeline-reference-v10.md'), 'utf8');
 
     assert.equal(approvalEntry.gate_id, 'release-approval');
     assert.equal(approvalEntry.gate_type, 'approval');
@@ -281,8 +282,8 @@ const config = {
 
     const summary = JSON.parse(fs.readFileSync(path.join(logDir, 'pipeline', 'summary.json'), 'utf8'));
     const approvalEntry = summary.governance.approval_gates[0];
-    const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'observability-reference.md'), 'utf8');
-    const pipelineReferenceV10 = fs.readFileSync(path.join(sourceRoot, 'docs', 'pipeline-reference-v10.md'), 'utf8');
+    const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'observability-reference.md'), 'utf8');
+    const pipelineReferenceV10 = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'pipeline-reference-v10.md'), 'utf8');
 
     assert.equal(stepExit(result), 0);
     assert.equal(stepMetadata(result).continued, true);
@@ -385,8 +386,8 @@ const config = {
 
     const summary = JSON.parse(fs.readFileSync(path.join(logDir, 'pipeline', 'summary.json'), 'utf8'));
     const archValidator = summary.governance.arch_validator;
-    const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'observability-reference.md'), 'utf8');
-    const architectureValidatorReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'architecture-validator-reference.md'), 'utf8');
+    const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'observability-reference.md'), 'utf8');
+    const architectureValidatorReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'architecture-validator-reference.md'), 'utf8');
 
     assert.equal(archValidator.run_id, 'run-governance-arch-summary-1');
     assert.equal(archValidator.project, 'behavior-governance-arch-summary');

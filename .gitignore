@@ -5,6 +5,7 @@
 *.sops.yaml.dec
 secrets.yml.dec
 keys.txt
+my-values/.workspace-namespace
 
 Chart.lock
 
@@ -29,6 +30,7 @@ Thumbs.db
 # Node (if developing skills locally)
 node_modules/
 package-lock.json
+plugins/openclaw-agent-observer/dist/
 
 # Ansible (if using infrastructure layer)
 *.retry

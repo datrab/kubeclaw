@@ -11,18 +11,18 @@ Canonical verifier implementations live under `tests/verification/`:
 Current verification policy:
 - use the live repo state in `kubeclaw-main` as the source of truth
 - rerun the guards against current source, not historical rebuilt-artifact trees
-- treat `kubeclaw-main/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` as the authoritative inventory, stream-identity, and contract-boundary spec
-- treat `kubeclaw-main/docs/telemetry-event-schema.md` as the authoritative event-by-event payload reference, kept in exact inventory parity with that contract
+- treat `kubeclaw-main/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` as the authoritative inventory, stream-identity, and contract-boundary spec
+- treat `kubeclaw-main/docs/archive/legacy-root-docs/telemetry-event-schema.md` as the authoritative event-by-event payload reference, kept in exact inventory parity with that contract
 - treat `.swarm/logs/pipeline/latest.json` plus `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,buster-telemetry-fallback.jsonl,redis/redis-exchanges.jsonl,redis/redis-ops.jsonl,summary.json}` as the canonical replay/audit bundle, with Redis audit artifacts also mirrored under `.swarm/logs/redis/{redis-exchanges.jsonl,redis-ops.jsonl}`
 
 Current source root used for reruns:
 - `<repo-root>/kubeclaw-main`
 
 Current contract used for reruns:
-- `<repo-root>/kubeclaw-main/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`
+- `<repo-root>/kubeclaw-main/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`
 
 Verifier default:
-- both `tests/verification/contracts/check-telemetry-contract.mjs` and `tests/verification/behavior/verify.mjs` default `--contract` to `<repo-root>/kubeclaw-main/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`
+- both `tests/verification/contracts/check-telemetry-contract.mjs` and `tests/verification/behavior/verify.mjs` default `--contract` to `<repo-root>/kubeclaw-main/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`
 - `--contract` is only needed when intentionally checking a different markdown contract file
 
 ## Prerequisites
@@ -108,7 +108,7 @@ Representative coverage areas:
 8. operator-facing visual-regression reference examples stay portable instead of embedding host-specific baseline artifact paths
 9. pre-check Semgrep config discovery and docs stay portable, using auto-detect instead of host-specific platform config paths
 10. remaining repo-root fallback helpers stay source-relative and portable instead of preserving hardcoded legacy host paths
-11. platform swarm config discovery and operator docs use `/home/node/.openclaw/swarm.config.json` first with `SWARM_CONFIG` as fallback, instead of `/app/config` or source-chart fallback discovery
+11. platform swarm config discovery and operator docs use `/home/node/.openclaw/swarm.config.json` first with `SWARM_CONFIG` as a secondary candidate, instead of `/app/config` or source-chart discovery
 12. lifecycle contract docs keep canonical Redis audit artifact paths instead of reintroducing stale `pipeline/redis.jsonl` provenance
 13. lifecycle contract docs no longer keep stale explicit `buster:telemetry:<project>:<run_id>` compatibility literals after the single-canonical-stream decision
 14. stale session recovery alerts keep the recovered child `session_key` on operator Discord surfaces so restart cleanup stays cross-surface joinable

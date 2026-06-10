@@ -8,7 +8,7 @@ Modular KubeClaw Swarm Pipeline. The narrow public entry surface is `pipeline/in
 pipeline/
   core/
     config.ts          Config loading, validation, model resolution
-    constants.ts       Shared status strings (STATUS) and exit codes (EXIT_*)
+    constants.ts       Shared status strings (STATUS)
     context.ts         Pipeline/plugin context and capability narrowing
     git-context.ts     Nova facade for shared repo-scoped Git primitives
     logger.ts          Structured logger with context-aware dual-write
@@ -63,7 +63,7 @@ Use it for top-level pipeline entrypoints and public constants. Import lower-lev
 helpers from their owned modules.
 
 ```js
-import { runPipeline, loadConfig, STATUS, EXIT_OK } from './pipeline/index.ts';
+import { runPipeline, loadConfig, STATUS } from './pipeline/index.ts';
 import { createRunId, createRunStats } from './pipeline/core/runtime.ts';
 import { pollGeneric } from './pipeline/services/polling.ts';
 ```
@@ -74,7 +74,7 @@ Supported `index.ts` exports:
 |---|---|
 | Runner | `runPipeline` |
 | Config | `loadConfig` |
-| Constants | `STATUS`, `EXIT_OK`, `EXIT_ERROR`, `EXIT_NEEDS_NOVA`, `EXIT_BLOCKED`, `EXIT_TIMEOUT`, `EXIT_RATE_LIMITED` |
+| Constants | `STATUS` |
 | Shutdown | `registerShutdownHooks` |
 
 Helpers that are intentionally **not** re-exported from `index.ts`:
@@ -88,13 +88,13 @@ Helpers that are intentionally **not** re-exported from `index.ts`:
 ## Shared helper ownership
 
 Canonical shared pipeline helper implementations live in `skills/common/pipeline/`.
-Nova and Buster keep repo-local compatibility shims under their own
+Nova and Buster keep repo-local common facades under their own
 `skills/*/pipeline/...` trees, and runtime source imports those local
 production-surface paths.
 
 Production packaging exposes only `/app/skills/...`: image-specific skills are
 copied first, then `skills/common/...` is copied over the same tree so canonical
-shared implementations replace the compatibility shims at `/app/skills/pipeline/...`.
+shared implementations replace the repo-local common facades at `/app/skills/pipeline/...`.
 
 ## Extending the pipeline
 
@@ -136,7 +136,7 @@ A human-in-the-loop gate type. Pauses pipeline execution until an operator appro
 
 1. Pipeline posts Discord embed via webhook
 2. Operator responds via Nova-bridge: `APPROVE gate:<id>` or `REJECT gate:<id> reason: <text>`
-3. Nova writes operator decision evidence to `.swarm/<gate-id>-gate-status.json`
+3. Nova writes operator decision evidence to the configured gate state artifact
 4. Pipeline syncs that evidence into approval wait lifecycle/read-model state and resumes or halts
 
 Approval wait lifecycle/read-model state is the **authoritative source of truth**. The gate-state file is operator evidence, and Discord message history is only the UI.
@@ -175,10 +175,10 @@ All governance observability artifacts live under `.swarm/logs/`:
 
 | Topic | Reference |
 |---|---|
-| Full observability layout | `docs/observability-reference.md` |
-| Architecture validator reference | `docs/architecture-validator-reference.md` |
-| Telemetry contract | `docs/telemetry-event-schema.md` |
-| Pipeline reference | `docs/pipeline-reference-v10.md` |
+| Full observability layout | `docs/archive/legacy-root-docs/observability-reference.md` |
+| Architecture validator reference | `docs/archive/legacy-root-docs/architecture-validator-reference.md` |
+| Telemetry contract | `docs/archive/legacy-root-docs/telemetry-event-schema.md` |
+| Pipeline reference | `docs/archive/legacy-root-docs/pipeline-reference-v10.md` |
 
 ---
 

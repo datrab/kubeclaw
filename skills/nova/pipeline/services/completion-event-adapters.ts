@@ -43,24 +43,19 @@ function emitFatal(eventBus, identity, payload) {
   });
 }
 
-function buildCompletionEventIdentity(entry = {}, fallbackIdentity = {}) {
+function buildCompletionEventIdentity(entry = {}) {
   const envelope = normalizeRedisPipelineEnvelope(entry);
   const targetKind = envelope.target_kind;
   const targetId = envelope.target_id;
-  const fallbackAttempt = fallbackIdentity.attempt !== undefined
-    && fallbackIdentity.attempt !== null
-    && String(fallbackIdentity.attempt) !== ''
-    ? fallbackIdentity.attempt
-    : null;
   return {
-    ...(targetKind === 'gate' && targetId ? { gate_id: envelope.gate_id || targetId } : (fallbackIdentity.gate_id ? { gate_id: fallbackIdentity.gate_id } : {})),
-    ...(targetKind !== 'gate' && targetId ? { module_id: envelope.module || targetId } : (fallbackIdentity.module_id ? { module_id: fallbackIdentity.module_id } : {})),
+    ...(targetKind === 'gate' && targetId ? { gate_id: envelope.gate_id || targetId } : {}),
+    ...(targetKind !== 'gate' && targetId ? { module_id: envelope.module || targetId } : {}),
     ...(targetKind === 'gate' && envelope.module ? { module_id: envelope.module } : {}),
-    ...(envelope.run_id ? { run_id: envelope.run_id } : (fallbackIdentity.run_id ? { run_id: fallbackIdentity.run_id } : {})),
-    ...(envelope.attempt ? { attempt: envelope.attempt } : (fallbackAttempt !== null ? { attempt: fallbackAttempt } : {})),
-    ...(envelope.dispatch_id ? { dispatch_id: envelope.dispatch_id } : (fallbackIdentity.dispatch_id ? { dispatch_id: fallbackIdentity.dispatch_id } : {})),
-    ...(envelope.session_key ? { session_key: envelope.session_key } : (fallbackIdentity.session_key ? { session_key: fallbackIdentity.session_key } : {})),
-    ...(entry.gateway_label ? { gateway_label: entry.gateway_label } : (fallbackIdentity.gateway_label ? { gateway_label: fallbackIdentity.gateway_label } : {})),
+    ...(envelope.run_id ? { run_id: envelope.run_id } : {}),
+    ...(envelope.attempt ? { attempt: envelope.attempt } : {}),
+    ...(envelope.dispatch_id ? { dispatch_id: envelope.dispatch_id } : {}),
+    ...(envelope.session_key ? { session_key: envelope.session_key } : {}),
+    ...(entry.gateway_label ? { gateway_label: entry.gateway_label } : {}),
   };
 }
 
@@ -85,7 +80,7 @@ export function createRedisCompletionEventAdapter(config, opts = {}) {
   const stream = opts.stream || completionStreamKey(config);
   const blockMs = opts.blockMs ?? DEFAULT_REDIS_COMPLETION_BLOCK_MS;
   const startId = opts.startId || '$';
-  const baseIdentity = opts.identity || {};
+  const fatalIdentity = opts.identity || {};
   const controller = new AbortController();
   const signal = controller.signal;
   let client = null;
@@ -127,7 +122,7 @@ export function createRedisCompletionEventAdapter(config, opts = {}) {
           eventBus.emit({
             type: 'completion.evidence',
             source: 'redis',
-            identity: buildCompletionEventIdentity(entry.data, baseIdentity),
+            identity: buildCompletionEventIdentity(entry.data),
             payload: {
               stream_key: entry.stream || stream,
               redis_id: entry.id,
@@ -137,7 +132,7 @@ export function createRedisCompletionEventAdapter(config, opts = {}) {
         }
       } catch (error) {
         if (isIntentionalAbortRedisError(error, signal)) break;
-        emitFatal(eventBus, baseIdentity, {
+        emitFatal(eventBus, fatalIdentity, {
           adapter: 'redis_completion',
           stream_key: stream,
           reason: 'redis_completion_adapter_failed',

@@ -9,7 +9,6 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import { registerShutdownHooks } from './agents/shutdown.ts';
 import { loadConfig } from './core/config.ts';
-import { EXIT_OK, EXIT_ERROR } from './core/constants.ts';
 import { listBlueprints, releaseBlueprint } from './services/blueprint.ts';
 import { createPipelineContext } from './core/context.ts';
 import { setActiveContext, clearActiveContext } from './core/logger.ts';
@@ -24,6 +23,9 @@ import { resolveNovaPromptIngress, PROMPT_INGRESS_MAX_BYTES } from './services/p
 
 declare const process: any;
 type AnyRecord = Record<string, any>;
+
+const PROCESS_SUCCESS_CODE = 0;
+const PROCESS_FAILURE_CODE = 1;
 
 const __currentPath = fs.realpathSync(fileURLToPath(import.meta.url));
 const __entryPath = (process.argv[1] && fs.existsSync(process.argv[1]))
@@ -84,10 +86,10 @@ export async function main() {
   } catch (e: any) {
     const message = e?.message || String(e);
     log('ERROR', message);
-    await output({ exit: EXIT_ERROR, error: message });
+    await output({ exit: PROCESS_FAILURE_CODE, error: message });
     cleanupTempDir();
-    process.exitCode = EXIT_ERROR;
-    return EXIT_ERROR;
+    process.exitCode = PROCESS_FAILURE_CODE;
+    return PROCESS_FAILURE_CODE;
   }
   if (flags.help) {
     console.error(`
@@ -105,17 +107,17 @@ Pipeline commands:
                           (only applies on ACP/subagent paths; ignored on Redis/Buster)
   --prompt "text"         Bounded operator remediation guidance for Forge prompts
   --prompt-file <path>    Read bounded guidance from a repo-contained UTF-8 file (max ${PROMPT_INGRESS_MAX_BYTES} bytes)
-  --nova-channel <id>     Discord channel id for EXIT 10 / TIMEOUT auto-injection
+  --nova-channel <id>     Discord channel id for typed action-required / timeout auto-injection
   --status                Print current pipeline status as JSON
   --dry-run               Show execution plan, spawn nothing
 
 Config:
-  Platform config:  /home/node/.openclaw/swarm.config.json (SWARM_CONFIG fallback)
+  Platform config:  /home/node/.openclaw/swarm.config.json (SWARM_CONFIG secondary candidate)
   Project config:   <repo>/Projects/<project>/src/.swarm/progress.json
 
 Retry flow:
   Auto-retries up to the configured auto_retry_threshold happen internally (no exit).
-  After auto_retry_threshold from swarm.config.json/progress overrides, exits with code 10 (NEEDS_NOVA).
+  After auto_retry_threshold from swarm.config.json/progress overrides, emits action_required terminal status.
   Nova resumes the full pipeline: --resume --prompt "Use approach X instead of Y"
 
 Blueprint commands:
@@ -124,21 +126,18 @@ Blueprint commands:
 
 Exit codes:
   0   Success / pipeline complete
-  1   Configuration or system error
-  10  NEEDS_NOVA — failure, Nova must analyze
-  20  BLOCKED — max retries exceeded, human needed
-  30  TIMEOUT — agent didn't respond in time
+  1   Any non-success terminal status or configuration/system error
       `);
-    process.exitCode = EXIT_OK;
-    return EXIT_OK;
+    process.exitCode = PROCESS_SUCCESS_CODE;
+    return PROCESS_SUCCESS_CODE;
   }
 
   // Nova channel is mandatory for pipeline runs (not for --status, --dry-run, --blueprint)
   if (!flags.novaChannel && !flags.status && !flags.dryRun && !flags.blueprint && !flags.blueprintList) {
     console.error('ERROR: --nova-channel <id> is required (or set NOVA_CHANNEL env var).');
-    console.error('       Without it, EXIT 10/TIMEOUT failures cannot be escalated to Nova.');
-    process.exitCode = EXIT_ERROR;
-    return EXIT_ERROR;
+    console.error('       Without it, action-required / timeout failures cannot be escalated to Nova.');
+    process.exitCode = PROCESS_FAILURE_CODE;
+    return PROCESS_FAILURE_CODE;
   }
 
   return await (async () => {
@@ -151,10 +150,10 @@ Exit codes:
         try { validateThinkingLevel(flags.runtimeThinking, '--thinking'); }
         catch (e: any) {
           log('ERROR', e.message);
-          await output({ exit: EXIT_ERROR, error: e.message });
+          await output({ exit: PROCESS_FAILURE_CODE, error: e.message });
           cleanupTempDir();
-          process.exitCode = EXIT_ERROR;
-          return EXIT_ERROR;
+          process.exitCode = PROCESS_FAILURE_CODE;
+          return PROCESS_FAILURE_CODE;
         }
       }
 
@@ -181,26 +180,26 @@ Exit codes:
       if (flags.blueprintList) {
         await output({ status: 'success', modules: listBlueprints(config) });
         cleanupTempDir();
-        process.exitCode = EXIT_OK;
-        return EXIT_OK;
+        process.exitCode = PROCESS_SUCCESS_CODE;
+        return PROCESS_SUCCESS_CODE;
       }
       if (flags.blueprint) {
         const mod = progress.modules[flags.blueprint];
         if (!mod) {
           await output({ status: 'error', error: `Module '${flags.blueprint}' not in progress.json` });
           cleanupTempDir();
-          process.exitCode = EXIT_ERROR;
-          return EXIT_ERROR;
+          process.exitCode = PROCESS_FAILURE_CODE;
+          return PROCESS_FAILURE_CODE;
         }
         const result = await releaseBlueprint(config, progress, flags.blueprint, mod.dir, mod.stages || ['forge', 'buster']);
         await output(result);
         cleanupTempDir();
-        process.exitCode = EXIT_OK;
-        return EXIT_OK;
+        process.exitCode = PROCESS_SUCCESS_CODE;
+        return PROCESS_SUCCESS_CODE;
       }
 
-      if (flags.status)  { printStatus(config, progress); cleanupTempDir(); process.exitCode = EXIT_OK; return EXIT_OK; }
-      if (flags.dryRun)  { dryRun(config, progress); cleanupTempDir(); process.exitCode = EXIT_OK; return EXIT_OK; }
+      if (flags.status)  { printStatus(config, progress); cleanupTempDir(); process.exitCode = PROCESS_SUCCESS_CODE; return PROCESS_SUCCESS_CODE; }
+      if (flags.dryRun)  { dryRun(config, progress); cleanupTempDir(); process.exitCode = PROCESS_SUCCESS_CODE; return PROCESS_SUCCESS_CODE; }
 
       // Resolve bounded operator guidance from --prompt or --prompt-file.
       const promptIngress = resolveNovaPromptIngress({
@@ -226,10 +225,10 @@ Exit codes:
 
     } catch (e: any) {
       log('ERROR', e.message);
-      await output({ exit: EXIT_ERROR, error: e.message });
+      await output({ exit: PROCESS_FAILURE_CODE, error: e.message });
       cleanupTempDir();
-      process.exitCode = EXIT_ERROR;
-      return EXIT_ERROR;
+      process.exitCode = PROCESS_FAILURE_CODE;
+      return PROCESS_FAILURE_CODE;
     } finally {
       clearActiveContext();
     }

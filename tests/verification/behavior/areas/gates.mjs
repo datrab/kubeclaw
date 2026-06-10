@@ -20,7 +20,8 @@ function gateRuntimeEvents(xaddEvents, streamKey) {
 }
 
 function stepExit(result) {
-  return result?.terminal?.exitCode;
+  const status = result?.terminal?.status ?? result?.terminal_status ?? null;
+  return status === "succeeded" ? 0 : (status ? 1 : null);
 }
 
 function stepSummary(result) {
@@ -322,7 +323,7 @@ const config = {
     assert.equal(result.kind, 'pipeline_step_result');
     assert.equal(result.nextAction, 'halt');
     assert.equal(result.outcome, 'needs_nova');
-    assert.equal(stepExit(result), 10);
+    assert.equal(stepExit(result), 1);
     assert.equal(stepSummary(result), 'Review gate needs Nova guidance');
     assert.equal(stepMetadata(result).attempt, 2);
     assert.equal(stepMetadata(result).fix_cycles, 1);
@@ -628,7 +629,7 @@ const config = {
     assert.equal(gateCalls[0].stateSnapshot.gate.gate_completion_is_pass, false);
     assert.equal(gateCalls[0].stateSnapshot.gate.gate_completion_source, null);
     assert.equal(gateCalls[0].stateSnapshot.gate.output_status, 'FAIL');
-    assert.equal(gateCalls[0].stateSnapshot.diagnostics.gate_status.status, 'PASS');
+    assert.equal(Object.prototype.hasOwnProperty.call(gateCalls[0].stateSnapshot.diagnostics, 'gate_status'), false);
   });
 
   await record('buster gate stage-owner block results preserve failure classification and correlation', async () => {
@@ -713,7 +714,7 @@ const config = {
 
     const result = await gateRunnerMod.runGate(config, progress, 'gate:buster', {});
 
-    assert.equal(stepExit(result), 10);
+    assert.equal(stepExit(result), 1);
     assert.equal(stepSummary(result), "Gate 'gate:buster' failed after 2 fix attempts");
     assert.equal(stepMetadata(result).failure_class, 'fix_loop_exhausted');
     assert.equal(stepMetadata(result).fix_attempts, 2);
@@ -1486,7 +1487,7 @@ const config = {
     const result = await runGateViaRegistry(busterRuntimeRoot, config, progress, 'gate:buster', { deps: configDeps11 });
     await flushAsync();
   
-    assert.equal(stepExit(result), 10);
+    assert.equal(stepExit(result), 1);
     assert.equal(stepSummary(result), "Gate 'gate:buster' ended unexpectedly");
   
     const alert = readJsonl(path.join(runLogDir, 'discord.jsonl')).find((entry) => entry.title === "Gate 'gate:buster' Ended Unexpectedly");
@@ -1897,7 +1898,7 @@ const config = {
     await flushAsync();
   
     assert.equal(pollCount, 2);
-    assert.equal(stepExit(result), 40);
+    assert.equal(stepExit(result), 1);
     assert.equal(stepSummary(result), "Review gate 'gate:review' exceeded max rate limit pauses");
     assert.equal(result.correlation.run_id, 'run-review-rate-limit-1');
     assert.equal(stepMetadata(result).attempt, 1);
@@ -2124,7 +2125,7 @@ const config = {
     const result = await runGateViaRegistry(reviewRuntimeRoot, config, progress, 'gate:review', { deps: configDeps18 });
     await flushAsync();
 
-    assert.equal(stepExit(result), 40);
+    assert.equal(stepExit(result), 1);
     assert.equal(result.correlation.run_id, 'run-review-rate-limit-fallback-1');
     assert.equal(stepMetadata(result).gate, 'gate:review');
     assert.equal(result.correlation.gate_id, 'gate:review');
@@ -2242,7 +2243,7 @@ const config = {
     const result = await runGateViaRegistry(gateRuntimeRoot, config, progress, 'gate:buster', { deps: configDeps19 });
     await flushAsync();
 
-    assert.equal(stepExit(result), 40);
+    assert.equal(stepExit(result), 1);
     assert.equal(result.correlation.run_id, runId);
     assert.equal(stepMetadata(result).attempt, 4);
     assert.equal(stepMetadata(result).dispatch_id, dispatchId);
@@ -2340,7 +2341,7 @@ const config = {
               expectedIdentity: { run_id: runId, attempt: 1, dispatch_id: dispatchId, gateway_label: dispatchId, session_key: sessionKey },
               gateId,
               gateType: gate.type,
-              exit: 40,
+              resultOverrides: { outcome_class: "rate_limited" },
             });
           },
           gitCommitAndPush: async () => {},
@@ -2375,7 +2376,7 @@ const config = {
     await flushAsync();
 
     assert.equal(redisReads, 1);
-    assert.equal(stepExit(result), 40);
+    assert.equal(stepExit(result), 1);
     assert.equal(stepSummary(result), "Gate 'gate:buster' exceeded max rate limit pauses");
     assert.equal(result.correlation.run_id, runId);
     assert.equal(stepMetadata(result).attempt, 1);
@@ -2696,7 +2697,7 @@ const config = {
     }
   });
 
-  await record('buster gate dependencies require canonical output_file completion even when gate-status.json reports PASS', async () => {
+  await record('buster gate dependencies ignore diagnostic gate-state PASS when canonical output_file fails or is missing', async () => {
     const { runtimeRoot: gateRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(gateRuntimeRoot);
 
@@ -2744,7 +2745,7 @@ const config = {
 
     assert.deepEqual(dependenciesMod.checkDependencies(config, progress, '02'), {
       met: false,
-      reason: "Gate 'gate:buster' canonical completion output is missing",
+      reason: "Gate 'gate:buster' has status 'FAIL'",
     });
 
     fs.unlinkSync(path.join(swarmDir, 'gates', 'gate-buster-output.json'));

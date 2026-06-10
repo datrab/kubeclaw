@@ -241,7 +241,6 @@ function withStubbedGeneratorStages(registry) {
         generatePipelineReview: async () => {},
         generateCaseStudy: async () => {},
         readGateOutput: () => ({ isPass: false }),
-        readGateStatusJson: () => ({ isPass: false }),
         runArchValidator: async () => ({ blocked: false, findings: [] }),
       },
     };

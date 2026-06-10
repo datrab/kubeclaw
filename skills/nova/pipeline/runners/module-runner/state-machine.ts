@@ -1,6 +1,6 @@
 // runners/module-runner/state-machine.ts — explicit module attempt state machine
 
-import { STATUS, EXIT_ERROR, EXIT_NEEDS_NOVA } from '../../core/constants.ts';
+import { STATUS } from '../../core/constants.ts';
 import { log } from '../../core/logger.ts';
 import {
   resolveStatusSessionKey,
@@ -84,7 +84,7 @@ async function releaseBlueprintForAttempt({ config, progress, moduleId, mod, dir
       terminal: {
         retry: false,
         result: {
-          exit: EXIT_NEEDS_NOVA,
+          outcome_class: 'needs_nova',
           reason,
           module: moduleId,
           resume_command: `node pipeline.ts --project ${config.project} --resume`,
@@ -111,7 +111,7 @@ function buildUnexpectedStatusTerminal({ config, moduleId, mod, status, deps }: 
   return {
     retry: false,
     result: {
-      exit: EXIT_ERROR,
+      outcome_class: 'error',
       reason,
       gateway_label: resolveStatusGatewayLabel(status),
       session_key: resolveStatusSessionKey(status),

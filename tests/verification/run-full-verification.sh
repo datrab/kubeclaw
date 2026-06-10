@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
-CONTRACT_PATH="$REPO_DIR/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md"
+CONTRACT_PATH="$REPO_DIR/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md"
 
 TEMP_DIR=""
 cleanup() {

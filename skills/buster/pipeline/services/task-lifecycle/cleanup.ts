@@ -20,6 +20,7 @@ export async function runSandboxCleanupStage({ payload, moduleId, tctx, logger, 
     phase:            'completed',
     duration_seconds: Math.round((Date.now() - cleanupStart) / 1000),
     ok:               cleanup.ok,
+    disk_usage:       cleanup.disk_usage || null,
   });
 
   if (logCompletion) {

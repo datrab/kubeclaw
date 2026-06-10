@@ -19,8 +19,6 @@ import { formatRateLimitEmbed as formatSharedRateLimitEmbed } from '../rate-limi
 import { getSuiteFailureDetail, parsePreTestVerdict } from './classification.ts';
 import { reportFailureSurfaceIncident } from './incidents.ts';
 
-const EXIT_TIMEOUT = 30;
-
 function telemetryCtx(config) {
   return getActiveContext() || { config, runId: getRunId(config) || config?.run_id || config?._runId || '' };
 }
@@ -134,8 +132,9 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
   const gatewaySend = opts?.sendGatewaySessionMessage || sendGatewaySessionMessage;
   const discordNotify = opts?.discord || discord;
   const targetId = stepId || result?.module || 'unknown';
-  const exitCode = result?.exit;
-  const exitLabel = exitCode === EXIT_TIMEOUT ? 'TIMEOUT' : 'NEEDS_NOVA';
+  const terminalStatus = result?.terminal_status || result?.terminal?.status || 'action_required';
+  const terminalDecision = result?.terminal_decision || result?.terminal?.decision || null;
+  const terminalAction = terminalDecision?.action || (terminalStatus === 'timed_out' ? 'request_handoff' : 'notify_operator');
   const runId = config?._runId || config?.run_id || getRunId(config);
   const injectionCorrelation = resolveResultCorrelation(result);
   const injectionCorrelationProvenance = resolveResultReadModelCorrelationProvenance(result);
@@ -161,8 +160,9 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
     module: result?.module || null,
     gate_id: stepType === 'gate' ? gateId : undefined,
     gate_type: stepType === 'gate' ? gateType : undefined,
-    exit: exitCode,
-    exit_label: exitLabel,
+    terminal_status: terminalStatus,
+    terminal_decision: terminalDecision,
+    terminal_action: terminalAction,
     reason: (result?.reason || '').slice(0, 500),
     attempt,
     dispatch_id: dispatchId,
@@ -188,7 +188,7 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
   };
 
   if (!channelId) {
-    log('INFO', 'EXIT 10/TIMEOUT — no --nova-channel set, skipping Nova session injection');
+    log('INFO', `${terminalStatus} — no --nova-channel set, skipping Nova session injection`);
     entry.status = 'skipped_no_channel';
     appendInjectionLog();
     return;
@@ -199,7 +199,8 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
     '⚠️ Cronjob injected — Nova working on resolution.',
     `Project: ${config.project}`,
     `${stepType === 'gate' ? 'Gate' : 'Module'}: ${targetId}`,
-    `Exit: ${exitLabel}`,
+    `Status: ${terminalStatus}`,
+    `Action: ${terminalAction}`,
   ];
   if (runId) messageLines.push(`Run ID: ${runId}`);
   if (stepType === 'gate' && gateType) messageLines.push(`Gate Type: ${gateType}`);
@@ -231,10 +232,11 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
         entry.status = 'delivery_unknown_aborted';
         entry.error = errMsg;
         entry.delivery_acknowledged = false;
-        log('WARN', `${exitLabel} Nova injection delivery unknown for channel ${channelId} and ${stepType} ${targetId} (Gateway response aborted before acknowledgement)`);
+        log('WARN', `${terminalStatus} Nova injection delivery unknown for channel ${channelId} and ${stepType} ${targetId} (Gateway response aborted before acknowledgement)`);
         await discordNotify(config, 'CRITICAL', `Nova injection delivery UNKNOWN: ${targetId}`, `Cronjob could not confirm Nova injection delivery for ${stepType} ${targetId}; Gateway response aborted before acknowledgement. Manual verification required.`, [
           ...buildFailureDiscordFields({ run_id: runId, step_type: stepType, step_id: targetId, gate_id: gateId, gate_type: gateType, attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: childSessionKey }),
-          { name: 'Exit', value: exitLabel },
+          { name: 'Status', value: terminalStatus },
+          { name: 'Action', value: terminalAction },
           { name: 'Channel', value: channelId },
           { name: 'Target', value: `${stepType}:${targetId}` },
           { name: 'Delivery', value: 'unknown_aborted' },
@@ -245,10 +247,11 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
       } else {
         entry.status = 'failed';
         entry.error = errMsg;
-        log('WARN', `Failed to inject ${exitLabel} into Nova channel ${channelId}: ${errMsg}`);
+        log('WARN', `Failed to inject ${terminalStatus} into Nova channel ${channelId}: ${errMsg}`);
         await discordNotify(config, 'CRITICAL', `Nova injection FAILED: ${targetId}`, `Cronjob could not inject Nova into Discord for ${stepType} ${targetId}. Manual intervention required.`, [
           ...buildFailureDiscordFields({ run_id: runId, step_type: stepType, step_id: targetId, gate_id: gateId, gate_type: gateType, attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: childSessionKey }),
-          { name: 'Exit', value: exitLabel },
+          { name: 'Status', value: terminalStatus },
+          { name: 'Action', value: terminalAction },
           { name: 'Channel', value: channelId },
           { name: 'Target', value: `${stepType}:${targetId}` },
           { name: 'Error', value: errMsg.slice(0, 200) },
@@ -260,11 +263,12 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
     }
 
     entry.status = 'ok';
-    log('OK', `${exitLabel} injected into Nova channel ${channelId} for ${stepType} ${targetId}`);
+    log('OK', `${terminalStatus} injected into Nova channel ${channelId} for ${stepType} ${targetId}`);
     try {
       await discordNotify(config, 'WARN', `Nova injection sent: ${targetId}`, `Cronjob injected Nova into Discord channel for ${stepType} ${targetId}.`, [
         ...buildFailureDiscordFields({ run_id: runId, step_type: stepType, step_id: targetId, gate_id: gateId, gate_type: gateType, attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: childSessionKey }),
-        { name: 'Exit', value: exitLabel },
+        { name: 'Status', value: terminalStatus },
+        { name: 'Action', value: terminalAction },
         { name: 'Channel', value: channelId },
         { name: 'Target', value: `${stepType}:${targetId}` },
       ]);

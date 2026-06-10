@@ -1,5 +1,5 @@
 {
-  "_doc": "Platform-level config. Loaded from /home/node/.openclaw/swarm.config.json with SWARM_CONFIG as fallback. Project/repo_root/paths are derived by loadConfig — do NOT set them here.",
+  "_doc": "Platform-level config. Loaded from /home/node/.openclaw/swarm.config.json with SWARM_CONFIG as a secondary candidate. Project/repo_root/paths are derived by loadConfig — do NOT set them here.",
 
   "discord_webhook_url": "",
   "discord_alerts": {
