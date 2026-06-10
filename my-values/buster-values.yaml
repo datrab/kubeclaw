@@ -26,10 +26,10 @@ busterPipeline:
 gateway:
   resources:
     requests: { cpu: 100m, memory: 512Mi, ephemeral-storage: 1Gi }
-    limits: { cpu: 1000m, memory: 2048Mi, ephemeral-storage: 50Gi }
+    limits: { cpu: 4000m, memory: 24576Mi, ephemeral-storage: 50Gi }
 
 image:
-  repository: ghcr.io/forgestackai/kubeclaw-sandbox
+  repository: ghcr.io/datrab/kubeclaw-sandbox
   tag: "latest"
   pullPolicy: Always
 imagePullSecrets:
