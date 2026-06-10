@@ -1,0 +1,25 @@
+{
+  "example": "blocked pre-check/tooling failure",
+  "project": "my-project",
+  "run_id": "run-2026-06-08T211500Z",
+  "module_id": "02-api",
+  "status": {
+    "status": "BLOCKED",
+    "current_phase": null,
+    "fail_count": 8,
+    "blockedReason": "PRE-CHECK SETUP FAILED: lint-report.ts not found",
+    "blockedAt": "2026-06-08T21:40:00.000Z",
+    "blockedPhase": "pre_check",
+    "blockedFailCount": 8,
+    "history": [
+      {
+        "from": "READY_FOR_TESTING",
+        "to": "BLOCKED",
+        "agent": "nova",
+        "note": "Pre-check execution failed",
+        "at": "2026-06-08T21:40:00.000Z"
+      }
+    ]
+  },
+  "operator_interpretation": "This is a tooling/environment failure before Buster. Fix the lint-report path or runtime image, verify the tool exists, then resume with an operator note."
+}

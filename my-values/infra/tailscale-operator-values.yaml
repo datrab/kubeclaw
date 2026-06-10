@@ -1,0 +1,28 @@
+# Tailscale Kubernetes Operator values.
+#
+# OAuth credentials are intentionally not stored here. The official chart
+# mounts Secret/operator-oauth from the operator namespace when oauth.clientId
+# and oauth.clientSecret are empty. The secret must contain:
+#
+#   client_id: <Tailscale OAuth client ID>
+#   client_secret: <Tailscale OAuth client secret>
+
+oauth:
+  clientId: ""
+  clientSecret: ""
+
+installCRDs: true
+
+ingressClass:
+  enabled: true
+  name: tailscale
+
+operatorConfig:
+  defaultTags:
+    - tag:k8s-operator
+  resources:
+    requests: { cpu: 50m, memory: 128Mi }
+    limits: { cpu: 250m, memory: 256Mi }
+
+proxyConfig:
+  defaultTags: tag:k8s

@@ -1,0 +1,11 @@
+{
+  "name": "kubeclaw",
+  "private": true,
+  "scripts": {
+    "docs:inventory": "node scripts/docs-inventory.mjs",
+    "docs:inventory:check": "node scripts/docs-inventory.mjs --check",
+    "docs:generate": "node scripts/docs-generate.mjs",
+    "docs:generate:check": "node scripts/docs-generate.mjs --check",
+    "docs:check": "npm run docs:inventory:check && npm run docs:generate:check && node scripts/docs-check.mjs"
+  }
+}

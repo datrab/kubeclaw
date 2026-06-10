@@ -1,0 +1,311 @@
+{
+  "generatedFrom": [
+    "charts/kubeclaw/values.yaml",
+    "my-values/nova-values.yaml",
+    "my-values/buster-values.yaml",
+    "my-values/infra/redis-values.yaml",
+    "my-values/infra/postgresql-values.yaml",
+    "my-values/infra/qdrant-values.yaml",
+    "my-values/infra/litellm-values.yaml",
+    "my-values/infra/litellm-config.yaml",
+    "my-values/infra/litellm-deployment.yaml",
+    "my-values/infra/tailscale-operator-values.yaml",
+    "my-values/infra/registry-mirror.yaml",
+    "my-values/infra/registry-local.yaml",
+    "my-values/infra/network-policies.yaml",
+    "my-values/infra/buster-namespace-fence.yaml"
+  ],
+  "files": [
+    {
+      "path": "charts/kubeclaw/values.yaml",
+      "topLevelKeys": [
+        "agentRole",
+        "image",
+        "imagePullSecrets",
+        "gateway",
+        "busterPipeline",
+        "replicaCount",
+        "auth",
+        "litellm",
+        "anthropic",
+        "stitch",
+        "discord",
+        "discordWebhook",
+        "agent",
+        "redis",
+        "qdrant",
+        "workspace",
+        "service",
+        "persistence",
+        "resources",
+        "runAsRoot",
+        "probes",
+        "shutdown",
+        "sandbox",
+        "serviceAccount",
+        "busterNamespaceBroker",
+        "commands",
+        "swarmConfig",
+        "swarmConfigJson",
+        "semgrepConfigYaml",
+        "eslintConfigMjs",
+        "customSkills",
+        "nodeSelector",
+        "tolerations",
+        "podAnnotations",
+        "extraEnv",
+        "extraContainers",
+        "extraVolumes",
+        "extraVolumeMounts"
+      ],
+      "secretReferences": [
+        {
+          "key": "secretName",
+          "value": "redis-secrets",
+          "line": 167
+        }
+      ]
+    },
+    {
+      "path": "my-values/nova-values.yaml",
+      "topLevelKeys": [
+        "agentRole",
+        "image",
+        "imagePullSecrets",
+        "auth",
+        "anthropic",
+        "stitch",
+        "litellm",
+        "discord",
+        "discordWebhook",
+        "agent",
+        "service",
+        "resources",
+        "extraContainers",
+        "workspace"
+      ],
+      "secretReferences": [
+        {
+          "key": "existingSecret",
+          "value": "openclaw-shared-secrets",
+          "line": 16
+        },
+        {
+          "key": "existingSecret",
+          "value": "openclaw-shared-secrets",
+          "line": 20
+        },
+        {
+          "key": "existingSecret",
+          "value": "openclaw-shared-secrets",
+          "line": 24
+        },
+        {
+          "key": "existingSecret",
+          "value": "openclaw-shared-secrets",
+          "line": 28
+        },
+        {
+          "key": "existingSecret",
+          "value": "openclaw-shared-secrets",
+          "line": 33
+        },
+        {
+          "key": "secretName",
+          "value": "openclaw-shared-secrets",
+          "line": 38
+        },
+        {
+          "key": "secretName",
+          "value": "git-deploy-key-nova",
+          "line": 45
+        }
+      ]
+    },
+    {
+      "path": "my-values/buster-values.yaml",
+      "topLevelKeys": [
+        "agentRole",
+        "anthropic",
+        "busterPipeline",
+        "gateway",
+        "image",
+        "imagePullSecrets",
+        "auth",
+        "litellm",
+        "discord",
+        "commands",
+        "discordWebhook",
+        "probes",
+        "agent",
+        "sandbox",
+        "serviceAccount",
+        "busterNamespaceBroker",
+        "resources",
+        "workspace"
+      ],
+      "secretReferences": [
+        {
+          "key": "existingSecret",
+          "value": "openclaw-shared-secrets",
+          "line": 12
+        },
+        {
+          "key": "existingSecret",
+          "value": "openclaw-shared-secrets",
+          "line": 39
+        },
+        {
+          "key": "existingSecret",
+          "value": "openclaw-shared-secrets",
+          "line": 43
+        },
+        {
+          "key": "existingSecret",
+          "value": "openclaw-shared-secrets",
+          "line": 48
+        },
+        {
+          "key": "secretName",
+          "value": "openclaw-shared-secrets",
+          "line": 60
+        },
+        {
+          "key": "secretName",
+          "value": "git-deploy-key-buster",
+          "line": 76
+        }
+      ]
+    },
+    {
+      "path": "my-values/infra/redis-values.yaml",
+      "topLevelKeys": [
+        "architecture",
+        "auth",
+        "master"
+      ],
+      "secretReferences": [
+        {
+          "key": "existingSecret",
+          "value": "redis-secrets",
+          "line": 4
+        }
+      ]
+    },
+    {
+      "path": "my-values/infra/postgresql-values.yaml",
+      "topLevelKeys": [
+        "architecture",
+        "auth",
+        "primary"
+      ],
+      "secretReferences": [
+        {
+          "key": "existingSecret",
+          "value": "postgresql-secrets",
+          "line": 5
+        }
+      ]
+    },
+    {
+      "path": "my-values/infra/qdrant-values.yaml",
+      "topLevelKeys": [
+        "replicaCount",
+        "persistence",
+        "resources"
+      ],
+      "secretReferences": []
+    },
+    {
+      "path": "my-values/infra/litellm-values.yaml",
+      "topLevelKeys": [
+        "extraVolumes",
+        "extraVolumeMounts",
+        "extraEnv"
+      ],
+      "secretReferences": [
+        {
+          "key": "secretName",
+          "value": "google-sa-key",
+          "line": 4
+        }
+      ]
+    },
+    {
+      "path": "my-values/infra/litellm-config.yaml",
+      "topLevelKeys": [
+        "model_list",
+        "general_settings",
+        "litellm_settings"
+      ],
+      "secretReferences": []
+    },
+    {
+      "path": "my-values/infra/litellm-deployment.yaml",
+      "topLevelKeys": [
+        "apiVersion",
+        "kind",
+        "metadata",
+        "spec"
+      ],
+      "secretReferences": [
+        {
+          "key": "secretName",
+          "value": "google-sa-key",
+          "line": 66
+        }
+      ]
+    },
+    {
+      "path": "my-values/infra/tailscale-operator-values.yaml",
+      "topLevelKeys": [
+        "oauth",
+        "installCRDs",
+        "ingressClass",
+        "operatorConfig",
+        "proxyConfig"
+      ],
+      "secretReferences": []
+    },
+    {
+      "path": "my-values/infra/registry-mirror.yaml",
+      "topLevelKeys": [
+        "apiVersion",
+        "kind",
+        "metadata",
+        "spec"
+      ],
+      "secretReferences": []
+    },
+    {
+      "path": "my-values/infra/registry-local.yaml",
+      "topLevelKeys": [
+        "apiVersion",
+        "kind",
+        "metadata",
+        "spec"
+      ],
+      "secretReferences": []
+    },
+    {
+      "path": "my-values/infra/network-policies.yaml",
+      "topLevelKeys": [
+        "apiVersion",
+        "kind",
+        "metadata",
+        "spec"
+      ],
+      "secretReferences": []
+    },
+    {
+      "path": "my-values/infra/buster-namespace-fence.yaml",
+      "topLevelKeys": [
+        "apiVersion",
+        "kind",
+        "metadata",
+        "spec"
+      ],
+      "secretReferences": []
+    }
+  ]
+}

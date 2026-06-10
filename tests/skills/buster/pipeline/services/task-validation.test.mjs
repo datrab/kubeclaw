@@ -1,0 +1,57 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+import test from 'node:test';
+
+import { MalformedBusterTaskError, validateBusterTaskPayload } from '../../../../../skills/buster/pipeline/services/task-validation.ts';
+
+function validPayload(overrides = {}) {
+  return {
+    task_type: 'module_test',
+    module_id: 'mod',
+    project: 'project',
+    run_id: 'run',
+    attempt: 1,
+    dispatch_id: 'dispatch',
+    commit_hash: 'abc123',
+    output_file: 'logs/buster-output.json',
+    stage_id: 'worker:module_buster',
+    worker_type: 'module_buster',
+    timeout_seconds: 60,
+    session: {
+      runtime: 'acp',
+      model: 'model',
+      agentId: 'agent',
+      cwd: process.cwd(),
+      label: 'dispatch',
+    },
+    suites: ['unit'],
+    capabilities: [],
+    ...overrides,
+  };
+}
+
+test('validateBusterTaskPayload accepts session.cwd in the current repository', () => {
+  assert.equal(validateBusterTaskPayload(validPayload()).moduleId, 'mod');
+});
+
+test('validateBusterTaskPayload rejects absolute session.cwd outside the current repository', () => {
+  const outsideRepo = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-cwd-outside-'));
+  execFileSync('git', ['init'], { cwd: outsideRepo, stdio: 'ignore' });
+
+  assert.throws(
+    () => validateBusterTaskPayload(validPayload({ session: { ...validPayload().session, cwd: outsideRepo } })),
+    (error) => error instanceof MalformedBusterTaskError
+      && error.unsafe_fields.some(entry => entry.field === 'session.cwd'),
+  );
+});
+
+test('validateBusterTaskPayload rejects parent-traversing session.cwd', () => {
+  assert.throws(
+    () => validateBusterTaskPayload(validPayload({ session: { ...validPayload().session, cwd: '../other-repo' } })),
+    (error) => error instanceof MalformedBusterTaskError
+      && error.unsafe_fields.some(entry => entry.field === 'session.cwd'),
+  );
+});

@@ -1,0 +1,368 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+
+import {
+  runModuleBusterWorker,
+  runModuleForgeWorker,
+} from '../../../../../skills/nova/pipeline/agents/module-workers.ts';
+
+function baseConfig() {
+  return { project: 'module-workers-test', _runId: 'run-1' };
+}
+
+function forgeInput(overrides = {}) {
+  return {
+    prompt: 'forge',
+    ids: { moduleId: 'mod-a', attempt: 1 },
+    executionContext: { moduleDir: 'modules/mod-a', timeoutMinutes: 1 },
+    worker: { backendConfig: { model: 'test-model' } },
+    ...overrides,
+  };
+}
+
+function busterInput(overrides = {}) {
+  return {
+    prompt: 'buster',
+    ids: { moduleId: 'mod-a', attempt: 1, runId: 'run-1', dispatchId: 'dispatch-1' },
+    executionContext: { moduleDir: 'modules/mod-a', timeoutMinutes: 1 },
+    worker: { backendConfig: { model: 'test-model' } },
+    ...overrides,
+  };
+}
+
+test('module forge cleans up and returns typed block when dispatch hook rejects', async () => {
+  const calls = [];
+  const result = await runModuleForgeWorker({
+    config: baseConfig(),
+    progress: {},
+    workerInput: forgeInput({
+      onDispatched: async () => {
+        throw new Error('dispatch failed');
+      },
+    }),
+    deps: {
+      spawnAgent: async () => calls.push('spawn'),
+      verifyAgentAlive: async () => true,
+      acpLabel: () => 'forge-mod-a',
+      getTrackedAgent: () => ({
+        sessionKey: 'session-1',
+        gatewayLabel: 'gateway-1',
+        streamLogPath: '/tmp/forge.log',
+      }),
+      pollForgeCompletionWithRateLimitRecovery: async () => {
+        calls.push('poll');
+        return { ok: true };
+      },
+      killAgent: async () => calls.push('kill'),
+      loadStatus: () => ({ status: 'READY_FOR_TESTING' }),
+      saveStreamLog: () => calls.push('save'),
+      clearShutdownContext: () => calls.push('clear'),
+    },
+  });
+
+  assert.equal(result.schemaVersion, 'v1');
+  assert.equal(result.producerType, 'module_forge');
+  assert.equal(result.nextAction, 'block');
+  assert.equal(result.diagnostics.metadata.reason, 'dispatch_hook_failed');
+  assert.deepEqual(calls, ['spawn', 'kill', 'save', 'clear']);
+});
+
+test('module forge saves stream log and clears context when finalize hook rejects', async () => {
+  const calls = [];
+  const result = await runModuleForgeWorker({
+    config: baseConfig(),
+    progress: {},
+    workerInput: forgeInput({
+      onFinalized: async () => {
+        throw new Error('finalize failed');
+      },
+    }),
+    deps: {
+      spawnAgent: async () => calls.push('spawn'),
+      verifyAgentAlive: async () => true,
+      acpLabel: () => 'forge-mod-a',
+      getTrackedAgent: () => ({
+        sessionKey: 'session-1',
+        gatewayLabel: 'gateway-1',
+        streamLogPath: '/tmp/forge.log',
+      }),
+      pollForgeCompletionWithRateLimitRecovery: async () => {
+        calls.push('poll');
+        return { ok: true };
+      },
+      killAgent: async () => calls.push('kill'),
+      loadStatus: () => ({ status: 'READY_FOR_TESTING' }),
+      saveStreamLog: () => calls.push('save'),
+      clearShutdownContext: () => calls.push('clear'),
+    },
+  });
+
+  assert.equal(result.producerType, 'module_forge');
+  assert.equal(result.nextAction, 'block');
+  assert.equal(result.diagnostics.metadata.reason, 'finalize_hook_failed');
+  assert.deepEqual(calls, ['spawn', 'poll', 'kill', 'save', 'clear']);
+});
+
+test('module forge returns typed block when cleanup kill rejects after poll', async () => {
+  const calls = [];
+  const result = await runModuleForgeWorker({
+    config: baseConfig(),
+    progress: {},
+    workerInput: forgeInput(),
+    deps: {
+      spawnAgent: async () => calls.push('spawn'),
+      verifyAgentAlive: async () => true,
+      acpLabel: () => 'forge-mod-a',
+      getTrackedAgent: () => ({
+        sessionKey: 'session-1',
+        gatewayLabel: 'gateway-1',
+        streamLogPath: '/tmp/forge.log',
+      }),
+      pollForgeCompletionWithRateLimitRecovery: async () => {
+        calls.push('poll');
+        return { ok: true };
+      },
+      killAgent: async () => {
+        calls.push('kill');
+        throw new Error('kill failed');
+      },
+      loadStatus: () => ({ status: 'READY_FOR_TESTING' }),
+      saveStreamLog: () => calls.push('save'),
+      clearShutdownContext: () => calls.push('clear'),
+    },
+  });
+
+  assert.equal(result.schemaVersion, 'v1');
+  assert.equal(result.producerType, 'module_forge');
+  assert.equal(result.nextAction, 'block');
+  assert.equal(result.diagnostics.metadata.reason, 'cleanup_failed');
+  assert.equal(result.diagnostics.metadata.error, 'kill failed');
+  assert.deepEqual(calls, ['spawn', 'poll', 'kill', 'save', 'clear']);
+});
+
+test('module forge scopes lifecycle labels by run and attempt', async () => {
+  const tracked = new Map();
+  const spawns = [];
+  const polls = [];
+  const kills = [];
+  const saves = [];
+
+  await Promise.all([1, 2].map((attempt) => runModuleForgeWorker({
+    config: baseConfig(),
+    progress: {},
+    workerInput: forgeInput({ ids: { moduleId: 'mod-a', runId: 'run-1', attempt } }),
+    deps: {
+      spawnAgent: async (_config, _progress, _agentType, _moduleId, _model, _prompt, opts) => {
+        spawns.push({ attempt, trackingLabel: opts.trackingLabel });
+        tracked.set(opts.trackingLabel, {
+          sessionKey: `session-${attempt}`,
+          gatewayLabel: `gateway-${attempt}`,
+          streamLogPath: `/tmp/forge-${attempt}.log`,
+          run_id: 'run-1',
+          dispatch_id: `dispatch-${attempt}`,
+        });
+      },
+      verifyAgentAlive: async (_config, _agentType, _moduleId, opts) => tracked.has(opts.trackingLabel),
+      getTrackedAgent: (label) => tracked.get(label),
+      pollForgeCompletionWithRateLimitRecovery: async (_config, _moduleDir, _timeoutMinutes, opts) => {
+        polls.push({ attempt, ...opts });
+        return { ok: true };
+      },
+      killAgent: async (_config, _agentType, _moduleId, _graceful, opts) => {
+        kills.push({ attempt, trackingLabel: opts.trackingLabel });
+        tracked.delete(opts.trackingLabel);
+      },
+      loadStatus: () => ({ status: 'READY_FOR_TESTING' }),
+      saveStreamLog: (_config, _moduleDir, _agentType, saveAttempt, streamPath) => {
+        saves.push({ attempt: saveAttempt, streamPath });
+      },
+    },
+  })));
+
+  const labels = spawns.map((entry) => entry.trackingLabel).sort();
+  assert.deepEqual(labels, [
+    'forge-mod-a-run-run-1-attempt-1',
+    'forge-mod-a-run-run-1-attempt-2',
+  ]);
+  assert.deepEqual(polls.map((entry) => [entry.attempt, entry.sessionLabel, entry.sessionKey]).sort(), [
+    [1, 'forge-mod-a-run-run-1-attempt-1', 'session-1'],
+    [2, 'forge-mod-a-run-run-1-attempt-2', 'session-2'],
+  ]);
+  assert.deepEqual(kills.map((entry) => [entry.attempt, entry.trackingLabel]).sort(), [
+    [1, 'forge-mod-a-run-run-1-attempt-1'],
+    [2, 'forge-mod-a-run-run-1-attempt-2'],
+  ]);
+  assert.deepEqual(saves.sort((a, b) => a.attempt - b.attempt), [
+    { attempt: 1, streamPath: '/tmp/forge-1.log' },
+    { attempt: 2, streamPath: '/tmp/forge-2.log' },
+  ]);
+});
+
+test('module buster cleans up and returns typed block when dispatch hook rejects', async () => {
+  const calls = [];
+  const result = await runModuleBusterWorker({
+    config: baseConfig(),
+    progress: {},
+    workerInput: busterInput({
+      onDispatched: async () => {
+        throw new Error('dispatch failed');
+      },
+    }),
+    deps: {
+      archiveModuleCompletions: async () => ({ failed: false }),
+      spawnAgent: async () => ({
+        dispatch_id: 'dispatch-1',
+        run_id: 'run-1',
+        session_key: 'session-1',
+        gateway_label: 'gateway-1',
+        stream_log_path: '/tmp/buster.log',
+      }),
+      pollDualWithRateLimitRecovery: async () => {
+        calls.push('poll');
+        return { ok: true };
+      },
+      killAgent: async () => calls.push('kill'),
+      loadStatus: () => ({}),
+      saveStreamLog: () => calls.push('save'),
+      clearShutdownContext: () => calls.push('clear'),
+    },
+  });
+
+  assert.equal(result.schemaVersion, 'v1');
+  assert.equal(result.producerType, 'module_buster');
+  assert.equal(result.nextAction, 'block');
+  assert.equal(result.diagnostics.metadata.reason, 'dispatch_hook_failed');
+  assert.deepEqual(calls, ['kill', 'save', 'clear']);
+});
+
+test('module buster contains thrown archive errors as typed blocks', async () => {
+  const calls = [];
+  const result = await runModuleBusterWorker({
+    config: baseConfig(),
+    progress: {},
+    workerInput: busterInput(),
+    deps: {
+      archiveModuleCompletions: async () => {
+        throw new Error('redis archive unavailable');
+      },
+      spawnAgent: async () => calls.push('spawn'),
+      clearShutdownContext: () => calls.push('clear'),
+    },
+  });
+
+  assert.equal(result.schemaVersion, 'v1');
+  assert.equal(result.producerType, 'module_buster');
+  assert.equal(result.nextAction, 'block');
+  assert.equal(result.diagnostics.metadata.reason, 'completion_archive_failed');
+  assert.equal(result.diagnostics.metadata.failure_class, 'completion_archive_failed');
+  assert.equal(result.diagnostics.metadata.error, 'redis archive unavailable');
+  assert.deepEqual(calls, ['clear']);
+});
+
+test('module buster returns typed block for unclassified poll failure', async () => {
+  const calls = [];
+  const result = await runModuleBusterWorker({
+    config: baseConfig(),
+    progress: {},
+    workerInput: busterInput(),
+    deps: {
+      archiveModuleCompletions: async () => ({ failed: false }),
+      spawnAgent: async () => ({
+        dispatch_id: 'dispatch-1',
+        run_id: 'run-1',
+        session_key: 'session-1',
+        gateway_label: 'gateway-1',
+        stream_log_path: '/tmp/buster.log',
+      }),
+      pollDualWithRateLimitRecovery: async () => {
+        calls.push('poll');
+        return { ok: false, reason: 'redis_missing', status: { status: 'BLOCKED' } };
+      },
+      killAgent: async () => calls.push('kill'),
+      loadStatus: () => ({}),
+      saveStreamLog: () => calls.push('save'),
+      clearShutdownContext: () => calls.push('clear'),
+    },
+  });
+
+  assert.equal(result.schemaVersion, 'v1');
+  assert.equal(result.producerType, 'module_buster');
+  assert.equal(result.nextAction, 'block');
+  assert.equal(result.diagnostics.metadata.reason, 'redis_missing');
+  assert.equal(result.diagnostics.metadata.failure_class, 'unclassified_poll_failure');
+  assert.deepEqual(calls, ['poll', 'kill', 'save', 'clear']);
+});
+
+test('module buster saves stream log and clears context when finalize hook rejects', async () => {
+  const calls = [];
+  const result = await runModuleBusterWorker({
+    config: baseConfig(),
+    progress: {},
+    workerInput: busterInput({
+      onFinalized: async () => {
+        throw new Error('finalize failed');
+      },
+    }),
+    deps: {
+      archiveModuleCompletions: async () => ({ failed: false }),
+      spawnAgent: async () => ({
+        dispatch_id: 'dispatch-1',
+        run_id: 'run-1',
+        session_key: 'session-1',
+        gateway_label: 'gateway-1',
+        stream_log_path: '/tmp/buster.log',
+      }),
+      pollDualWithRateLimitRecovery: async () => {
+        calls.push('poll');
+        return { ok: true };
+      },
+      killAgent: async () => calls.push('kill'),
+      loadStatus: () => ({}),
+      saveStreamLog: () => calls.push('save'),
+      clearShutdownContext: () => calls.push('clear'),
+    },
+  });
+
+  assert.equal(result.producerType, 'module_buster');
+  assert.equal(result.nextAction, 'block');
+  assert.equal(result.diagnostics.metadata.reason, 'finalize_hook_failed');
+  assert.deepEqual(calls, ['poll', 'kill', 'save', 'clear']);
+});
+
+test('module buster returns typed block when save stream log rejects after poll', async () => {
+  const calls = [];
+  const result = await runModuleBusterWorker({
+    config: baseConfig(),
+    progress: {},
+    workerInput: busterInput(),
+    deps: {
+      archiveModuleCompletions: async () => ({ failed: false }),
+      spawnAgent: async () => ({
+        dispatch_id: 'dispatch-1',
+        run_id: 'run-1',
+        session_key: 'session-1',
+        gateway_label: 'gateway-1',
+        stream_log_path: '/tmp/buster.log',
+      }),
+      pollDualWithRateLimitRecovery: async () => {
+        calls.push('poll');
+        return { ok: true };
+      },
+      killAgent: async () => calls.push('kill'),
+      loadStatus: () => ({}),
+      saveStreamLog: async () => {
+        calls.push('save');
+        throw new Error('save failed');
+      },
+      clearShutdownContext: () => calls.push('clear'),
+    },
+  });
+
+  assert.equal(result.schemaVersion, 'v1');
+  assert.equal(result.producerType, 'module_buster');
+  assert.equal(result.nextAction, 'block');
+  assert.equal(result.diagnostics.metadata.reason, 'cleanup_failed');
+  assert.equal(result.diagnostics.metadata.failure_class, 'cleanup_failed');
+  assert.equal(result.diagnostics.metadata.error, 'save failed');
+  assert.deepEqual(calls, ['poll', 'kill', 'save', 'clear']);
+});

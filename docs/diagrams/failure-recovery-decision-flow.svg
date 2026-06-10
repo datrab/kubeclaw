@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="520" viewBox="0 0 1080 520" role="img" aria-labelledby="title desc">
+  <title id="title">Failure and recovery decision flow</title>
+  <desc id="desc">Decision flow for checking status, identifying config, Forge, validator, Buster, approval, rate limit, or terminal artifact failures, then resuming or escalating.</desc>
+  <style>
+    text { font: 14px Arial, sans-serif; fill: #172033; }
+    .title { font-size: 20px; font-weight: 700; }
+    .box { fill: #fff; stroke: #315a8c; stroke-width: 1.5; rx: 6; }
+    .warn { stroke: #a35d24; }
+    .bad { stroke: #a33d3d; }
+    .ok { stroke: #4e7d43; }
+    .line { stroke: #53657d; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+    .label { font-size: 12px; fill: #3d4b5f; }
+  </style>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#53657d"/></marker></defs>
+  <text x="36" y="36" class="title">Failure And Recovery Decision Flow</text>
+  <rect x="50" y="80" width="160" height="52" class="box"/><text x="80" y="112">run --status</text>
+  <rect x="270" y="80" width="170" height="52" class="box"/><text x="300" y="112">find latest run</text>
+  <rect x="500" y="80" width="180" height="52" class="box"/><text x="526" y="112">read terminal evidence</text>
+  <rect x="750" y="40" width="190" height="52" class="box warn"/><text x="779" y="72">config/load error</text>
+  <rect x="750" y="110" width="190" height="52" class="box warn"/><text x="792" y="142">Forge/session</text>
+  <rect x="750" y="180" width="190" height="52" class="box warn"/><text x="805" y="212">validator</text>
+  <rect x="750" y="250" width="190" height="52" class="box warn"/><text x="796" y="282">Buster task</text>
+  <rect x="750" y="320" width="190" height="52" class="box warn"/><text x="789" y="352">approval/rate limit</text>
+  <rect x="500" y="365" width="180" height="52" class="box ok"/><text x="536" y="397">resume with note</text>
+  <rect x="270" y="365" width="170" height="52" class="box bad"/><text x="318" y="397">escalate</text>
+  <path d="M210 106 L270 106" class="line"/>
+  <path d="M440 106 L500 106" class="line"/>
+  <path d="M680 106 C710 106 720 66 750 66" class="line"/>
+  <path d="M680 106 L750 136" class="line"/>
+  <path d="M680 106 C710 135 720 206 750 206" class="line"/>
+  <path d="M680 106 C710 170 720 276 750 276" class="line"/>
+  <path d="M680 106 C710 210 720 346 750 346" class="line"/>
+  <path d="M845 372 C780 420 705 420 680 391" class="line"/>
+  <path d="M500 391 L440 391" class="line"/>
+  <text x="702" y="392" class="label">fixed and state valid</text>
+  <text x="285" y="432" class="label">unknown cause, missing evidence, repeated contract failure</text>
+</svg>

@@ -1,0 +1,195 @@
+{
+  "project": "my-project",
+  "version": 1,
+  "description": "Richer end-to-end example with staged modules, review gate, final Buster gate, approval gate, telemetry, and post-run generators",
+  "notes": [
+    "Example values are safe placeholders.",
+    "Instruction and output files are relative to Projects/my-project/src/.swarm/."
+  ],
+  "defaults": {
+    "models": {
+      "forge": "anthropic/claude-sonnet-4-6",
+      "buster": "anthropic/claude-sonnet-4-6",
+      "echo": "anthropic/claude-opus-4-6",
+      "arch_validator": "anthropic/claude-sonnet-4-6"
+    },
+    "reviewers": [
+      {
+        "label": "echo-opus",
+        "model": "anthropic/claude-opus-4-6",
+        "dispatch": "acp",
+        "agent_id": "claude"
+      }
+    ],
+    "primary_reviewer": "echo-opus"
+  },
+  "execution_order": [
+    "01-scaffold",
+    "02-api",
+    "gate:midpoint-review",
+    "03-frontend",
+    "gate:final-buster",
+    "gate:release-approval"
+  ],
+  "modules": {
+    "01-scaffold": {
+      "title": "Scaffold app shell and shared config",
+      "dir": "01-scaffold",
+      "depends_on": [],
+      "stages": [
+        "forge"
+      ],
+      "timeout_minutes": 120,
+      "max_fails": 2,
+      "thinking_level": "adaptive",
+      "test_suites": []
+    },
+    "02-api": {
+      "title": "Build API service and health endpoint",
+      "dir": "02-api",
+      "depends_on": [
+        "01-scaffold"
+      ],
+      "stages": [
+        "forge",
+        "buster"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "thinking_level": "adaptive",
+      "test_suites": [
+        "build",
+        "health",
+        "unit",
+        "api"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/my-project/src",
+          "start_cmd": "npm start",
+          "port": 3000,
+          "health_path": "/health"
+        },
+        "unit": {
+          "test_cmd": "npm test",
+          "thresholds": {
+            "max_failures": 0
+          }
+        },
+        "api": {
+          "base_url": "http://127.0.0.1:3000",
+          "spec_file": ".swarm/modules/02-api/test-spec.json"
+        }
+      }
+    },
+    "03-frontend": {
+      "title": "Build operator dashboard frontend",
+      "dir": "03-frontend",
+      "depends_on": [
+        "02-api",
+        "gate:midpoint-review"
+      ],
+      "stages": [
+        "forge",
+        "buster"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "thinking_level": "adaptive",
+      "test_suites": [
+        "build",
+        "health",
+        "e2e",
+        "a11y"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/my-project/src",
+          "start_cmd": "npm run preview -- --host 127.0.0.1",
+          "port": 4173,
+          "health_path": "/"
+        },
+        "e2e": {
+          "test_cmd": "npm run test:e2e",
+          "thresholds": {
+            "max_failures": 0
+          }
+        },
+        "a11y": {
+          "paths": [
+            "/",
+            "/settings"
+          ],
+          "thresholds": {
+            "critical": 0,
+            "serious": 0
+          }
+        }
+      }
+    }
+  },
+  "gates": {
+    "midpoint-review": {
+      "type": "review",
+      "title": "Midpoint architecture review",
+      "review_name": "MIDPOINT-REVIEW",
+      "on_nogo": "fix_and_rereview",
+      "instructions_file": "echo-review/MIDPOINT-REVIEW-INSTRUCTIONS.md",
+      "output_file": "logs/echo-review/MIDPOINT-REVIEW.json",
+      "review_output_dir": "logs/echo-review",
+      "timeout_minutes": 45,
+      "max_fix_cycles": 3,
+      "lint_tier": "full"
+    },
+    "final-buster": {
+      "type": "buster",
+      "title": "Final system and deployment validation",
+      "on_fail": "fix_and_retest",
+      "instructions_file": "buster-test/FINAL-BUSTER.md",
+      "output_file": "buster-test/FINAL-BUSTER-RESULT.json",
+      "timeout_minutes": 90,
+      "max_fix_cycles": 3,
+      "test_suites": [
+        "build",
+        "health",
+        "unit",
+        "e2e",
+        "k8s"
+      ],
+      "test_config": {
+        "k8s": {
+          "namespace": "preview-my-project",
+          "manifest_dir": "deploy/k8s"
+        }
+      }
+    },
+    "release-approval": {
+      "type": "approval",
+      "title": "Operator release approval",
+      "on_timeout": "block",
+      "timeout_minutes": 60
+    }
+  },
+  "arch_validation": {
+    "enabled": true,
+    "thinking_level": "adaptive"
+  },
+  "pipeline_review": {
+    "enabled": true,
+    "thinking_level": "high",
+    "instructions_file": "pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md",
+    "output_file": "logs/pipeline-review/PIPELINE-REVIEW.md",
+    "json_output_file": "logs/pipeline-review/PIPELINE-REVIEW.json"
+  },
+  "case_study": {
+    "enabled": true,
+    "thinking_level": "adaptive",
+    "output_file": "logs/pipeline/case-study.md",
+    "timeout_minutes": 30
+  },
+  "telemetry": {
+    "enabled": true
+  }
+}

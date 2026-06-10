@@ -1,0 +1,22 @@
+{{- range .Values.service.extraPorts }}
+{{- if and .nodePort (ne $.Values.service.type "NodePort") }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ printf "%s-%s" (include "kubeclaw.fullname" $) .name | trunc 63 | trimSuffix "-" }}
+  labels:
+    {{- include "kubeclaw.labels" $ | nindent 4 }}
+    kubeclaw/exposure: extra-nodeport
+spec:
+  type: NodePort
+  selector:
+    {{- include "kubeclaw.selectorLabels" $ | nindent 4 }}
+  ports:
+    - name: {{ .name }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+      protocol: TCP
+      nodePort: {{ .nodePort }}
+{{- end }}
+{{- end }}

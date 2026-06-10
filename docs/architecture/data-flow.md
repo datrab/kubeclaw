@@ -1,0 +1,70 @@
+# Data Flow
+
+Status: current
+Audience: maintainer, operator
+
+## Purpose
+
+Describe how work, state, completion, and telemetry move through the current system.
+
+## Current Behavior
+
+Nova loads `swarm.config.json`, then project `.swarm/progress.json`. The project name comes from `--project` or `CURRENT_PROJECT`; the repo root comes from `--repo`, `REPO_ROOT`, or Git auto-detection.
+
+The pipeline creates a run ID and initializes `.swarm/logs/pipeline/`. It writes a global `pipeline.jsonl`, a run-scoped `runs/<run_id>/pipeline.jsonl`, and `latest.json` pointing at the active run bundle.
+
+For module work, Nova uses built-in worker plugin definitions for `worker:module_forge` and `worker:module_buster`. Forge/Echo paths go through OpenClaw gateway session helpers. Buster paths create typed Redis task payloads with run, module, attempt, dispatch, stage, session, suite, and output-file identity.
+
+Buster consumes task entries from Redis, validates the canonical envelope and payload identity, rejects malformed tasks to a dead-letter path before ACK, runs suites or a subagent task lifecycle, pushes the scoped output artifact when required, emits completion to the requested completion stream, and ACKs only after terminal completion or dead-letter evidence exists.
+
+For k8s suites, Buster creates a `BusterNamespaceLease` instead of creating namespaces directly. The namespace controller observes the lease, creates the namespace/RBAC/secret copies, and updates lease status. For final-preview leases, the controller also creates a Tailscale `Ingress`; Buster records the resulting preview URL and credential metadata in the k8s verdict. Nova reads the verdict after pipeline completion and posts the preview URL/login to Discord.
+
+Telemetry uses Redis streams when enabled and file artifacts when Redis emission is unavailable or intentionally disabled. Pipeline artifacts are run-scoped; Discord audit artifacts mirror operator-visible notifications.
+
+## State Stores And Artifacts
+
+Nova writes three broad classes of state:
+
+- lifecycle read models: module/gate state projected from canonical lifecycle events
+- run logs: global and run-scoped `pipeline.jsonl`, `discord.jsonl`, and `summary.json`
+- pointer files: `latest.json` points operators and tooling at the latest run bundle
+
+The lifecycle state contains guarded fields such as `status`, `current_phase`, `fail_count`, `blockedReason`, `phase_started_at`, active session identity, dispatch identity, and latest event metadata. Those fields are projected through `status-store*.ts`, not edited as loose JSON by random pipeline stages.
+
+Buster writes worker evidence:
+
+- task output JSON at the requested `output_file`
+- suite artifacts such as logs, screenshots, verdicts, and manifest/k8s evidence
+- completion records to the requested completion stream
+- dead-letter records to the task dead-letter stream when validation or terminal guarantee fails
+- fallback telemetry artifacts when Redis telemetry degrades
+
+## Redis Message Flow
+
+Module and gate Buster dispatch follow this shape:
+
+```text
+Nova
+  -> archive stale completions for target/run identity
+  -> publish typed task to swarm:buster:tasks
+  -> wait for completion identity or output evidence
+
+Buster
+  -> read task as consumer-group member
+  -> validate task_type, run_id, attempt, dispatch_id, stage_id, session, suites, paths, capabilities
+  -> run suites and optional agent session
+  -> publish completion to payload.completion_stream
+  -> ACK task only after terminal evidence exists
+```
+
+If Buster cannot publish completion, it writes a dead-letter record before ACK. If both completion and dead-letter fail, the task terminal guarantee fails and the worker treats that as a serious runtime error.
+
+## Authority Rules
+
+- `progress.json` defines intended order and config, but persisted lifecycle state decides what is already complete.
+- module/gate output files are evidence, but Nova projects them through typed control/result contracts before advancing.
+- Redis telemetry streams are live observability, but local artifacts remain the durable audit trail.
+- Discord messages are presentation and audit evidence; they are not scheduler truth.
+- Kubernetes pod status explains runtime health, not pipeline intent.
+
+This authority order is why the recommended stuck-run trace starts with `--status` and `latest.json`, then moves to module/gate artifacts, then Redis and pod logs.

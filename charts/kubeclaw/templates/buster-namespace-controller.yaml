@@ -1,0 +1,118 @@
+{{- if and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole "buster") -}}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-namespace-controller
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+automountServiceAccountToken: true
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-namespace-controller
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+rules:
+  - apiGroups: ["{{ .Values.busterNamespaceBroker.leaseApiGroup }}"]
+    resources: ["busternamespaceleases"]
+    verbs: ["get", "list", "watch", "patch", "update"]
+  - apiGroups: ["{{ .Values.busterNamespaceBroker.leaseApiGroup }}"]
+    resources: ["busternamespaceleases/status"]
+    verbs: ["get", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["create", "get", "list", "delete", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["serviceaccounts", "configmaps", "persistentvolumeclaims", "pods", "pods/log", "services", "endpoints"]
+    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "create", "patch", "update"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets", "statefulsets"]
+    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+  - apiGroups: ["batch"]
+    resources: ["jobs", "cronjobs"]
+    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["roles", "rolebindings"]
+    verbs: ["create", "get", "list", "delete", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-namespace-controller
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "kubeclaw.fullname" . }}-namespace-controller
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "kubeclaw.fullname" . }}-namespace-controller
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-namespace-controller
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+    kubeclaw/controller: buster-namespace-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: buster-namespace-controller
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kubeclaw
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/component: buster-namespace-controller
+        kubeclaw/role: {{ .Values.agentRole }}
+    spec:
+      serviceAccountName: {{ include "kubeclaw.fullname" . }}-namespace-controller
+      automountServiceAccountToken: true
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: controller
+          image: "{{ .Values.busterNamespaceBroker.controller.image.repository }}:{{ .Values.busterNamespaceBroker.controller.image.tag }}"
+          imagePullPolicy: {{ .Values.busterNamespaceBroker.controller.image.pullPolicy }}
+          command:
+            - node
+            - /app/scripts/buster-namespace-controller.mjs
+          env:
+            - name: KUBECLAW_NAMESPACE
+              value: {{ .Release.Namespace | quote }}
+            - name: BUSTER_SERVICE_ACCOUNT_NAME
+              value: {{ include "kubeclaw.fullname" . | quote }}
+            - name: BUSTER_SERVICE_ACCOUNT_NAMESPACE
+              value: {{ .Release.Namespace | quote }}
+            - name: BUSTER_LEASE_API_GROUP
+              value: {{ .Values.busterNamespaceBroker.leaseApiGroup | quote }}
+            - name: BUSTER_LEASE_API_VERSION
+              value: {{ .Values.busterNamespaceBroker.leaseApiVersion | quote }}
+            - name: BUSTER_ALLOWED_NAMESPACE_PREFIXES
+              value: {{ join "," .Values.busterNamespaceBroker.allowedPrefixes | quote }}
+            - name: BUSTER_DEFAULT_TTL_SECONDS
+              value: {{ .Values.busterNamespaceBroker.defaultTtlSeconds | quote }}
+            - name: BUSTER_CONTROLLER_POLL_MS
+              value: {{ .Values.busterNamespaceBroker.controller.pollIntervalMs | quote }}
+          resources:
+            {{- toYaml .Values.busterNamespaceBroker.controller.resources | nindent 12 }}
+{{- end }}

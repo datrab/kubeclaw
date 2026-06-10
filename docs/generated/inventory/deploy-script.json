@@ -1,0 +1,213 @@
+{
+  "generatedFrom": [
+    "scripts/deploy.sh"
+  ],
+  "commands": [
+    {
+      "invocation": "./scripts/deploy.sh setup",
+      "description": "Create namespace + secrets + helm repos"
+    },
+    {
+      "invocation": "./scripts/deploy.sh secrets",
+      "description": "Create/copy/prompt required Kubernetes secrets"
+    },
+    {
+      "invocation": "./scripts/deploy.sh infra",
+      "description": "Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM"
+    },
+    {
+      "invocation": "./scripts/deploy.sh tailscale",
+      "description": "Deploy Tailscale Kubernetes Operator"
+    },
+    {
+      "invocation": "./scripts/deploy.sh agents",
+      "description": "Deploy agents (Nova + Buster)"
+    },
+    {
+      "invocation": "./scripts/deploy.sh agent <name>",
+      "description": "Deploy single agent (nova|buster)"
+    },
+    {
+      "invocation": "./scripts/deploy.sh build-local-images [tag]",
+      "description": "Build + push verification images to registry-local"
+    },
+    {
+      "invocation": "./scripts/deploy.sh verify-live [tag]",
+      "description": "Build local images, redeploy agents, run pod smoke"
+    },
+    {
+      "invocation": "./scripts/deploy.sh smoke",
+      "description": "Run pod-level smoke checks for Nova + Buster"
+    },
+    {
+      "invocation": "./scripts/deploy.sh smoke-agent <name>",
+      "description": "Run pod-level smoke checks for one agent"
+    },
+    {
+      "invocation": "./scripts/deploy.sh all",
+      "description": "Full deployment (setup + infra + agents)"
+    },
+    {
+      "invocation": "./scripts/deploy.sh status",
+      "description": "Show all pods and services"
+    },
+    {
+      "invocation": "./scripts/deploy.sh teardown",
+      "description": "Remove agents + infra, keep namespace/secrets"
+    },
+    {
+      "invocation": "./scripts/deploy.sh teardown-agents",
+      "description": "Remove agents only, keep infra"
+    },
+    {
+      "invocation": "./scripts/deploy.sh teardown-all",
+      "description": "Destroy namespace and everything in it"
+    }
+  ],
+  "commandCases": [
+    "setup",
+    "infra",
+    "secrets",
+    "tailscale",
+    "agents",
+    "agent",
+    "all",
+    "build-local-images",
+    "verify-live",
+    "smoke",
+    "smoke-agent",
+    "status",
+    "teardown",
+    "teardown-agents",
+    "teardown-all"
+  ],
+  "environment": [
+    {
+      "name": "NAMESPACE",
+      "description": "Target namespace (default: kubeclaw)"
+    },
+    {
+      "name": "LOCAL_REGISTRY_PUSH",
+      "description": "Host-visible push target for build-local-images"
+    },
+    {
+      "name": "LOCAL_REGISTRY_PULL",
+      "description": "Cluster-visible pull target for verify-live"
+    },
+    {
+      "name": "TAILSCALE_OPERATOR_ENABLED",
+      "description": "true|false (default: true)"
+    },
+    {
+      "name": "TAILSCALE_OAUTH_CLIENT_ID",
+      "description": "Optional bootstrap source for Secret/operator-oauth"
+    },
+    {
+      "name": "TAILSCALE_OAUTH_CLIENT_SECRET",
+      "description": "Optional bootstrap source for Secret/operator-oauth"
+    },
+    {
+      "name": "KUBECLAW_SECRET_SETUP_MODE",
+      "description": "auto|interactive|noninteractive (default: auto)"
+    },
+    {
+      "name": "KUBECLAW_RUN_SECRET_SETUP",
+      "description": "auto|true|false for setup/all (default: auto)"
+    },
+    {
+      "name": "KUBECLAW_WORKSPACE_PROMPT",
+      "description": "auto|true|false (default: auto)"
+    },
+    {
+      "name": "KUBECLAW_DEPLOY_POSTGRESQL",
+      "description": "true|false (default: true)"
+    },
+    {
+      "name": "KUBECLAW_DEPLOY_QDRANT",
+      "description": "true|false (default: true)"
+    },
+    {
+      "name": "KUBECLAW_DEPLOY_LITELLM",
+      "description": "true|false (default: true)"
+    },
+    {
+      "name": "ALLOW_PARTIAL_INFRA",
+      "description": "true|false (default: false)"
+    }
+  ],
+  "defaults": {
+    "NAMESPACE": "kubeclaw",
+    "LOCAL_REGISTRY_PUSH": null,
+    "LOCAL_REGISTRY_PULL": null,
+    "TAILSCALE_OPERATOR_ENABLED": null,
+    "TAILSCALE_OAUTH_CLIENT_ID": null,
+    "TAILSCALE_OAUTH_CLIENT_SECRET": null,
+    "KUBECLAW_SECRET_SETUP_MODE": null,
+    "KUBECLAW_RUN_SECRET_SETUP": null,
+    "KUBECLAW_WORKSPACE_PROMPT": "auto",
+    "KUBECLAW_DEPLOY_POSTGRESQL": "true",
+    "KUBECLAW_DEPLOY_QDRANT": "true",
+    "KUBECLAW_DEPLOY_LITELLM": "true",
+    "ALLOW_PARTIAL_INFRA": "false"
+  },
+  "functions": [
+    "warn",
+    "info",
+    "header",
+    "require_command",
+    "is_not_found_error",
+    "warn_nonfatal_failure",
+    "add_helm_repo_once",
+    "wait_for_rollout_required",
+    "show_optional_kubectl_table",
+    "delete_namespaced_resource_if_present",
+    "delete_manifest_if_cluster_resource_present",
+    "default_verification_tag",
+    "write_image_override_file",
+    "build_local_image",
+    "verify_cluster_image_pull",
+    "is_valid_namespace",
+    "prompt_workspace_namespace_if_needed",
+    "component_enabled",
+    "cmd_setup",
+    "cmd_secrets",
+    "run_secret_setup_if_enabled",
+    "run_secret_setup",
+    "normalize_boolish",
+    "deploy_tailscale_operator",
+    "ensure_tailscale_oauth_secret",
+    "cmd_infra",
+    "deploy_agent",
+    "cmd_agents",
+    "cmd_build_local_images",
+    "cmd_verify_live",
+    "cmd_status",
+    "cmd_smoke_agent",
+    "cmd_smoke",
+    "cmd_teardown_agents",
+    "uninstall_helm_release_if_present",
+    "delete_manifested_resource_if_present",
+    "remove_destructive_infra",
+    "cleanup_leftover_pvcs",
+    "print_remaining_secrets",
+    "run_destructive_teardown",
+    "cmd_teardown",
+    "cmd_teardown_all"
+  ],
+  "componentFlags": [
+    "KUBECLAW_DEPLOY_POSTGRESQL",
+    "KUBECLAW_DEPLOY_QDRANT",
+    "KUBECLAW_DEPLOY_LITELLM",
+    "TAILSCALE_OPERATOR_ENABLED",
+    "ALLOW_PARTIAL_INFRA"
+  ],
+  "sourceAnchors": {
+    "setup": 335,
+    "secrets": 379,
+    "tailscale": 438,
+    "infra": 526,
+    "agents": 665,
+    "smoke": 771,
+    "teardown": 910
+  }
+}

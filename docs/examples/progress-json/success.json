@@ -1,0 +1,98 @@
+{
+  "project": "my-project",
+  "version": 1,
+  "description": "Minimal source-backed example project workflow",
+  "defaults": {
+    "models": {
+      "forge": "codex-5.4",
+      "buster": "codex-5.4",
+      "echo": "codex-5.4"
+    }
+  },
+  "execution_order": [
+    "01-scaffold",
+    "02-api",
+    "gate:final-review",
+    "gate:final-buster"
+  ],
+  "modules": {
+    "01-scaffold": {
+      "title": "Scaffold",
+      "dir": "01-scaffold",
+      "depends_on": [],
+      "stages": [
+        "forge"
+      ],
+      "timeout_minutes": 120,
+      "max_fails": 3,
+      "thinking_level": "adaptive",
+      "test_suites": []
+    },
+    "02-api": {
+      "title": "API",
+      "dir": "02-api",
+      "depends_on": [
+        "01-scaffold"
+      ],
+      "stages": [
+        "forge",
+        "buster"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "thinking_level": "adaptive",
+      "test_suites": [
+        "build",
+        "health",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/my-project/src",
+          "start_cmd": "npm start",
+          "port": 3000,
+          "health_path": "/health"
+        },
+        "unit": {
+          "test_cmd": "npm test",
+          "thresholds": {
+            "max_failures": 0
+          }
+        }
+      }
+    }
+  },
+  "gates": {
+    "final-review": {
+      "type": "review",
+      "title": "Final Review",
+      "review_name": "FINAL-REVIEW",
+      "on_nogo": "fix_and_rereview",
+      "instructions_file": "echo-review/FINAL-REVIEW-INSTRUCTIONS.md",
+      "output_file": "logs/echo-review/FINAL-REVIEW.json",
+      "review_output_dir": "logs/echo-review",
+      "timeout_minutes": 45,
+      "max_fix_cycles": 3,
+      "lint_tier": "full"
+    },
+    "final-buster": {
+      "type": "buster",
+      "title": "Final Buster",
+      "on_fail": "fix_and_retest",
+      "instructions_file": "buster-test/FINAL-BUSTER.md",
+      "output_file": "buster-test/FINAL-BUSTER-RESULT.json",
+      "timeout_minutes": 90,
+      "max_fix_cycles": 3,
+      "test_suites": [
+        "build",
+        "health",
+        "unit"
+      ],
+      "test_config": {}
+    }
+  },
+  "telemetry": {
+    "enabled": true
+  }
+}

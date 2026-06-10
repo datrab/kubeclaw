@@ -1,0 +1,33 @@
+{
+  "example": "partial artifact states after interruption",
+  "states": [
+    {
+      "observed": [
+        ".swarm/modules/02-api/FORGE.md",
+        ".swarm/modules/02-api/status.json"
+      ],
+      "missing": [
+        ".swarm/modules/02-api/buster-output.json"
+      ],
+      "interpretation": "Forge instructions and status exist, but Buster has not completed. Use --status and Buster logs before rerun."
+    },
+    {
+      "observed": [
+        ".swarm/modules/02-api/buster-output.json"
+      ],
+      "missing": [
+        ".swarm/logs/pipeline/runs/<run_id>/summary.json"
+      ],
+      "interpretation": "Buster evidence exists but terminal completion did not finish. Resume if Nova status still points at this run."
+    },
+    {
+      "observed": [
+        ".swarm/logs/gates/operator-approval/approval-request.md"
+      ],
+      "missing": [
+        ".swarm/logs/gates/operator-approval/approval-decision.json"
+      ],
+      "interpretation": "Approval is waiting or timed out before decision. Record or recover the operator decision before continuing."
+    }
+  ]
+}

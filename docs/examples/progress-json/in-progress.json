@@ -1,0 +1,42 @@
+{
+  "example": "module currently in Buster",
+  "project": "my-project",
+  "run_id": "run-2026-06-08T210000Z",
+  "module_id": "02-api",
+  "status": {
+    "status": "TESTING",
+    "current_phase": "buster",
+    "fail_count": 1,
+    "attempt_started_at": "2026-06-08T21:00:00.000Z",
+    "phase_started_at": "2026-06-08T21:18:00.000Z",
+    "active_agent": {
+      "runtime": "redis",
+      "label": "buster:02-api",
+      "dispatch_id": "dispatch-02-api-1"
+    },
+    "history": [
+      {
+        "from": "PENDING",
+        "to": "IN_PROGRESS",
+        "agent": "nova",
+        "note": "Forge started",
+        "at": "2026-06-08T21:00:00.000Z"
+      },
+      {
+        "from": "IN_PROGRESS",
+        "to": "READY_FOR_TESTING",
+        "agent": "nova",
+        "note": "Forge completed",
+        "at": "2026-06-08T21:17:30.000Z"
+      },
+      {
+        "from": "READY_FOR_TESTING",
+        "to": "TESTING",
+        "agent": "nova",
+        "note": "Buster dispatch accepted",
+        "at": "2026-06-08T21:18:00.000Z"
+      }
+    ]
+  },
+  "operator_interpretation": "Buster owns the active phase. Inspect Buster logs, Redis tasks/completions, and the module buster-output.json before forcing a rerun."
+}

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="440" viewBox="0 0 980 440" role="img" aria-labelledby="title desc">
+  <title id="title">Infrastructure dependency graph</title>
+  <desc id="desc">Deployment dependencies among Redis, PostgreSQL, LiteLLM, Qdrant, Tailscale operator, agents, registry, and final preview workloads.</desc>
+  <style>
+    text { font: 14px Arial, sans-serif; fill: #172033; }
+    .title { font-size: 20px; font-weight: 700; }
+    .box { fill: #fff; stroke: #315a8c; stroke-width: 1.5; rx: 6; }
+    .infra { stroke: #4e7d43; }
+    .secret { stroke: #7a4b8f; }
+    .line { stroke: #53657d; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+    .label { font-size: 12px; fill: #3d4b5f; }
+  </style>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#53657d"/></marker></defs>
+  <text x="36" y="36" class="title">Infrastructure Dependencies</text>
+  <rect x="60" y="80" width="150" height="50" class="box secret"/><text x="91" y="110">Secrets</text>
+  <rect x="280" y="80" width="150" height="50" class="box infra"/><text x="329" y="110">Redis</text>
+  <rect x="280" y="160" width="150" height="50" class="box infra"/><text x="310" y="190">PostgreSQL</text>
+  <rect x="280" y="240" width="150" height="50" class="box infra"/><text x="327" y="270">Qdrant</text>
+  <rect x="500" y="160" width="150" height="50" class="box infra"/><text x="535" y="190">LiteLLM</text>
+  <rect x="500" y="300" width="150" height="50" class="box infra"/><text x="523" y="330">Tailscale operator</text>
+  <rect x="720" y="80" width="150" height="50" class="box"/><text x="751" y="110">agent-nova</text>
+  <rect x="720" y="180" width="150" height="50" class="box"/><text x="748" y="210">agent-buster</text>
+  <rect x="720" y="300" width="150" height="50" class="box"/><text x="747" y="330">final preview</text>
+  <path d="M210 105 L280 105" class="line"/><text x="220" y="94" class="label">redis auth</text>
+  <path d="M210 185 L280 185" class="line"/><text x="220" y="174" class="label">db password</text>
+  <path d="M210 320 L500 320" class="line"/><text x="288" y="310" class="label">operator OAuth</text>
+  <path d="M430 185 L500 185" class="line"/><text x="443" y="174" class="label">database</text>
+  <path d="M650 185 C680 185 690 105 720 105" class="line"/><text x="650" y="132" class="label">model proxy</text>
+  <path d="M430 105 L720 105" class="line"/><text x="515" y="94" class="label">pipeline state/events</text>
+  <path d="M430 105 C520 120 610 205 720 205" class="line"/><text x="538" y="150" class="label">tasks/completions</text>
+  <path d="M430 265 C540 250 610 205 720 205" class="line"/><text x="520" y="245" class="label">memory/search where used</text>
+  <path d="M650 325 L720 325" class="line"/><text x="664" y="314" class="label">tailscale ingress</text>
+</svg>

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620" role="img" aria-labelledby="title desc">
+  <title id="title">KubeClaw deployment topology</title>
+  <desc id="desc">Operator workstation, Kubernetes namespace, agents, infrastructure services, OpenClaw gateway, Discord, model providers, registry, and Tailscale ingress relationships.</desc>
+  <style>
+    text { font: 14px Arial, sans-serif; fill: #172033; }
+    .title { font-size: 20px; font-weight: 700; }
+    .group { fill: #f7f9fc; stroke: #8290a8; stroke-width: 1.5; rx: 8; }
+    .box { fill: #ffffff; stroke: #315a8c; stroke-width: 1.5; rx: 6; }
+    .infra { stroke: #4e7d43; }
+    .external { stroke: #8a5a2b; }
+    .line { stroke: #53657d; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+    .dash { stroke-dasharray: 7 5; }
+    .label { font-size: 12px; fill: #3d4b5f; }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#53657d"/>
+    </marker>
+  </defs>
+  <text x="40" y="38" class="title">KubeClaw Deployment Topology</text>
+  <rect x="40" y="70" width="190" height="180" class="group"/>
+  <text x="64" y="100" class="title">Operator</text>
+  <rect x="64" y="124" width="140" height="42" class="box"/>
+  <text x="88" y="150">kubectl / helm</text>
+  <rect x="64" y="188" width="140" height="42" class="box"/>
+  <text x="89" y="214">deploy scripts</text>
+  <rect x="280" y="70" width="540" height="490" class="group"/>
+  <text x="304" y="100" class="title">Kubernetes namespace: kubeclaw</text>
+  <rect x="310" y="124" width="160" height="52" class="box"/>
+  <text x="348" y="154">agent-nova</text>
+  <rect x="310" y="210" width="160" height="52" class="box"/>
+  <text x="347" y="240">agent-buster</text>
+  <rect x="520" y="124" width="130" height="52" class="box"/>
+  <text x="546" y="154">OpenClaw</text>
+  <rect x="520" y="210" width="130" height="52" class="box infra"/>
+  <text x="568" y="240">Redis</text>
+  <rect x="690" y="124" width="100" height="52" class="box infra"/>
+  <text x="715" y="154">LiteLLM</text>
+  <rect x="690" y="210" width="100" height="52" class="box infra"/>
+  <text x="708" y="240">Postgres</text>
+  <rect x="520" y="300" width="130" height="52" class="box infra"/>
+  <text x="561" y="330">Qdrant</text>
+  <rect x="690" y="300" width="100" height="52" class="box infra"/>
+  <text x="718" y="330">Registry</text>
+  <rect x="310" y="390" width="160" height="52" class="box"/>
+  <text x="334" y="420">final preview app</text>
+  <rect x="520" y="390" width="270" height="52" class="box infra"/>
+  <text x="555" y="420">Tailscale Kubernetes Operator</text>
+  <rect x="870" y="90" width="180" height="52" class="box external"/>
+  <text x="928" y="120">Discord</text>
+  <rect x="870" y="180" width="180" height="52" class="box external"/>
+  <text x="912" y="210">Model provider</text>
+  <rect x="870" y="270" width="180" height="52" class="box external"/>
+  <text x="925" y="300">Tailnet</text>
+  <rect x="870" y="360" width="180" height="52" class="box external"/>
+  <text x="930" y="390">Users</text>
+  <path d="M204 145 C244 145 260 145 310 145" class="line"/>
+  <path d="M204 209 C244 209 260 236 310 236" class="line"/>
+  <path d="M470 150 L520 150" class="line"/>
+  <path d="M470 236 L520 236" class="line"/>
+  <path d="M585 210 L585 176" class="line"/>
+  <path d="M650 150 L690 150" class="line"/>
+  <path d="M740 210 L740 176" class="line"/>
+  <path d="M650 236 L690 236" class="line dash"/>
+  <path d="M470 416 L520 416" class="line"/>
+  <path d="M790 416 C835 416 835 300 870 300" class="line"/>
+  <path d="M960 322 L960 360" class="line"/>
+  <path d="M390 176 L390 210" class="line"/>
+  <path d="M470 236 C505 260 520 285 585 300" class="line"/>
+  <path d="M790 150 C835 150 835 206 870 206" class="line"/>
+  <path d="M470 150 C670 70 720 116 870 116" class="line dash"/>
+  <text x="236" y="132" class="label">install / upgrade</text>
+  <text x="596" y="196" class="label">task + telemetry</text>
+  <text x="805" y="178" class="label">model proxy</text>
+  <text x="806" y="438" class="label">IngressClass tailscale</text>
+</svg>
