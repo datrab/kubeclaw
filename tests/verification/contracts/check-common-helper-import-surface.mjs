@@ -82,8 +82,14 @@ try {
   const repoB = initRepo('repo-b', 'b\n');
   const expectedA = execFileSync('git', ['-C', repoA, 'rev-parse', '--short', 'HEAD'], { encoding: 'utf8' }).trim();
   const expectedB = execFileSync('git', ['-C', repoB, 'rev-parse', '--short', 'HEAD'], { encoding: 'utf8' }).trim();
+  const previousRepoRootEnv = process.env.REPO_ROOT;
 
   assert.equal(getRepoRoot(repoA), repoA, 'common getRepoRoot should resolve repo A root');
+  process.env.REPO_ROOT = repoA;
+  assert.equal(getRepoRoot('/app'), repoA, 'common getRepoRoot should map packaged /app runtime paths to REPO_ROOT');
+  assert.equal(getRepoRoot('/app/skills/pipeline/suites'), repoA, 'common getRepoRoot should map packaged skill paths to REPO_ROOT');
+  if (previousRepoRootEnv === undefined) delete process.env.REPO_ROOT;
+  else process.env.REPO_ROOT = previousRepoRootEnv;
   assert.equal(gitExec(repoB, ['rev-parse', '--show-toplevel']), repoB, 'common gitExec should run against explicit repo B');
   setRepoRoot(repoA);
   assert.equal(headHash(), expectedA, 'default headHash should use current compatibility repo');

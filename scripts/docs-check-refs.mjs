@@ -6,14 +6,6 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const docsRoot = path.join(root, 'docs');
 
-const auditedArchiveDocs = new Set([
-  'docs/archive/audits/2026-06-12-adequate-depth-review.md',
-  'docs/archive/audits/2026-06-12-documentation-coverage-audit.md',
-  'docs/archive/audits/2026-06-12-documentation-coverage-matrix.md',
-  'docs/archive/audits/2026-06-12-documentation-enrichment-changelog.md',
-  'docs/archive/audits/2026-06-12-documentation-topic-map.md',
-]);
-
 const repoPathPrefixes = [
   '.github/',
   'charts/',
@@ -45,7 +37,6 @@ const historicalRepoRefDocs = new Set([
   'docs/ROADMAP.md',
   'docs/future-implementation-ideas.md',
   'docs/open-issues.md',
-  'docs/archive/audits/2026-06-12-documentation-coverage-audit.md',
 ]);
 
 const errors = [];
@@ -69,9 +60,7 @@ function walk(dir, predicate = () => true) {
 
 function docsToScan() {
   return walk(docsRoot, (filePath) => filePath.endsWith('.md')).filter((filePath) => {
-    const relative = rel(filePath);
-    if (!relative.startsWith('docs/archive/')) return true;
-    return auditedArchiveDocs.has(relative);
+    return !rel(filePath).startsWith('docs/archive/');
   });
 }
 
@@ -98,6 +87,7 @@ function normalizeReference(raw) {
 }
 
 function isRepoReference(ref) {
+  if (ref.startsWith('docs/archive/')) return false;
   if (repoPathFiles.has(ref)) return true;
   return repoPathPrefixes.some((prefix) => ref.startsWith(prefix));
 }
@@ -130,6 +120,7 @@ function checkMarkdownLinks(filePath, text) {
     const target = normalizeReference(match[1]);
     if (!target) continue;
     const resolved = path.resolve(path.dirname(filePath), decodeURI(target));
+    if (rel(resolved).startsWith('docs/archive/')) continue;
     checkedMarkdownLinks += 1;
     if (!fs.existsSync(resolved)) {
       errors.push(`${rel(filePath)} links to missing local path: ${match[1]}`);
@@ -172,7 +163,7 @@ if (errors.length) {
   console.error('docs reference check failed:');
   for (const error of errors) console.error(`- ${error}`);
   console.error('');
-  console.error('Intentional exclusions: archived docs outside the 2026-06-12 audit set, fenced code blocks, external URLs, globs, placeholders, and generated example data are not treated as source-path claims.');
+  console.error('Intentional exclusions: docs/archive/**, fenced code blocks, external URLs, globs, placeholders, and generated example data are not treated as source-path claims.');
   process.exit(1);
 }
 

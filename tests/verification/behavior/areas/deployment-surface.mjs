@@ -65,11 +65,11 @@ await record('helm render for nova values preserves service exposure, skills mer
   assert(parsed.checks.includes('Rendered swarm-config ConfigMap matches the chart-provided swarm.config.json and .semgrep.yml artifacts'));
   assert(parsed.checks.includes('Templates still pin SWARM_CONFIG and default swarm config artifacts in source'));
   assert(parsed.checks.includes('Custom skills ConfigMap comments match the /app/skills runtime path and mark customSkills extension-only'));
-  assert(parsed.checks.includes('Build-images workflow still builds and publishes the general runtime image from docker/Dockerfile.general'));
+  assert(parsed.checks.includes('Build-images workflow still builds and publishes the runtime and namespace controller images'));
   assert(parsed.checks.includes('Deploy script remains executable as the canonical operator deployment surface'));
   assert(parsed.checks.includes('Deploy script exposes a canonical local image-build command for deployment verification'));
   assert(parsed.checks.includes('Deploy script exposes a canonical live deployment verification command'));
-  assert(parsed.checks.includes('Live deployment verification builds both runtime images and pushes them to registry-local'));
+  assert(parsed.checks.includes('Live deployment verification builds runtime and namespace controller images and pushes them to registry-local'));
   assert(parsed.checks.includes('Live deployment verification preflights every deployed runtime image pull path'));
   assert(parsed.checks.includes('Live deployment verification redeploys Nova and Buster against registry-local before smoke runs'));
   assert(parsed.checks.includes('Deploy script exposes canonical pod-level smoke commands for the deployed agents'));

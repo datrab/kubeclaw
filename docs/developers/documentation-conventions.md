@@ -309,7 +309,7 @@ npm run docs:inventory
 npm run docs:generate
 ```
 
-If `docs:check:refs` fails, fix the cited path or rewrite the sentence so it no longer claims a concrete source path. If `docs:check:coverage` fails, update `docs/archive/audits/2026-06-12-documentation-coverage-matrix.md` and `docs/archive/audits/2026-06-12-documentation-topic-map.md` in the same change.
+If `docs:check:refs` fails, fix the cited path or rewrite the sentence so it no longer claims a concrete source path. `docs/archive/**` is optional historical material and is intentionally outside docs checks. If `docs:check:coverage` fails, update `docs/DOCUMENTATION_COVERAGE_MATRIX.md` and `docs/DOCUMENTATION_TOPIC_MAP.md` in the same change.
 
 Update docs in the same change when touching:
 

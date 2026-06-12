@@ -1,6 +1,8 @@
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { execFileSync } from 'child_process';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
+import fs from 'fs';
+// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 import { buildSubprocessEnv } from './security.ts';
 
@@ -10,6 +12,7 @@ type AnyRecord = Record<string, any>;
 
 const DEFAULT_GIT_TIMEOUT_MS = 30000;
 const DEFAULT_GIT_MAX_BUFFER = 50 * 1024 * 1024;
+const DEFAULT_RUNTIME_REPO_ROOT = '/home/node/.openclaw/workspace/git-repo';
 
 const repoRootCache = new Map();
 const headHashCache = new Map();
@@ -28,16 +31,29 @@ function isPathInsideOrEqual(child: string, parent: string) {
   return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel));
 }
 
+function isPackagedRuntimePath(value: string) {
+  const resolved = path.resolve(value);
+  return resolved === '/app' || isPathInsideOrEqual(resolved, '/app');
+}
+
+function resolveRuntimeRepoRoot() {
+  if (process.env.REPO_ROOT) return path.resolve(process.env.REPO_ROOT);
+  return fs.existsSync(DEFAULT_RUNTIME_REPO_ROOT) ? DEFAULT_RUNTIME_REPO_ROOT : null;
+}
+
 export function getRepoRoot(startDir?: any) {
-  const envRepoRoot = process.env.REPO_ROOT ? path.resolve(process.env.REPO_ROOT) : null;
-  if ((startDir === undefined || startDir === null || startDir === '') && envRepoRoot) {
-    return envRepoRoot;
+  const runtimeRepoRoot = resolveRuntimeRepoRoot();
+  if ((startDir === undefined || startDir === null || startDir === '') && runtimeRepoRoot) {
+    return runtimeRepoRoot;
   }
   const requestedStart = startDir === undefined || startDir === null || startDir === ''
     ? process.cwd()
     : startDir;
-  if (envRepoRoot && isPathInsideOrEqual(path.resolve(requestedStart), envRepoRoot)) {
-    return envRepoRoot;
+  if (runtimeRepoRoot && isPathInsideOrEqual(path.resolve(requestedStart), runtimeRepoRoot)) {
+    return runtimeRepoRoot;
+  }
+  if (runtimeRepoRoot && isPackagedRuntimePath(requestedStart)) {
+    return runtimeRepoRoot;
   }
   const cacheKey = path.resolve(requestedStart);
   if (!repoRootCache.has(cacheKey)) {

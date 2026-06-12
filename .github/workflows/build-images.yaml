@@ -6,6 +6,7 @@ on:
     paths:
       - 'docker/**'
       - 'skills/**'
+      - 'scripts/buster-namespace-controller.mjs'
   # Nightly check for base image updates (OpenClaw releases)
   schedule:
     - cron: '0 3 * * *'  # 3am UTC daily
@@ -20,6 +21,7 @@ env:
   REGISTRY: ghcr.io
   GENERAL_IMAGE: ghcr.io/${{ github.repository_owner }}/kubeclaw-general
   SANDBOX_IMAGE: ghcr.io/${{ github.repository_owner }}/kubeclaw-sandbox
+  NAMESPACE_CONTROLLER_IMAGE: ghcr.io/${{ github.repository_owner }}/kubeclaw-namespace-controller
   PRISM_IMAGE: ghcr.io/${{ github.repository_owner }}/kubeclaw-prism-preview
 jobs:
   check-base-image:
@@ -70,6 +72,9 @@ jobs:
           - name: sandbox
             dockerfile: docker/Dockerfile.sandbox
             image_suffix: kubeclaw-sandbox
+          - name: namespace-controller
+            dockerfile: docker/Dockerfile.namespace-controller
+            image_suffix: kubeclaw-namespace-controller
           - name: prism-preview
             dockerfile: docker/Dockerfile.prism-preview
             image_suffix: kubeclaw-prism-preview

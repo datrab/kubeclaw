@@ -202,12 +202,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 334,
-    "secrets": 378,
-    "tailscale": 437,
-    "infra": 525,
-    "agents": 664,
-    "smoke": 770,
-    "teardown": 909
+    "setup": 348,
+    "secrets": 392,
+    "tailscale": 451,
+    "infra": 539,
+    "agents": 682,
+    "smoke": 793,
+    "teardown": 932
   }
 }

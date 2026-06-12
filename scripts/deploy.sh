@@ -205,6 +205,8 @@ write_image_override_file() {
   local image_repo="$2"
   local image_tag="$3"
   local disable_pull_secrets="$4"
+  local controller_image_repo="${5:-}"
+  local controller_image_tag="${6:-}"
 
   : > "$output_path"
 
@@ -220,6 +222,18 @@ write_image_override_file() {
 
   if [[ "$disable_pull_secrets" == "1" ]]; then
     echo "imagePullSecrets: []" >> "$output_path"
+  fi
+
+  if [[ -n "$controller_image_repo" || -n "$controller_image_tag" ]]; then
+    echo "busterNamespaceBroker:" >> "$output_path"
+    echo "  controller:" >> "$output_path"
+    echo "    image:" >> "$output_path"
+    if [[ -n "$controller_image_repo" ]]; then
+      echo "      repository: \"$controller_image_repo\"" >> "$output_path"
+    fi
+    if [[ -n "$controller_image_tag" ]]; then
+      echo "      tag: \"$controller_image_tag\"" >> "$output_path"
+    fi
   fi
 }
 
@@ -603,6 +617,8 @@ deploy_agent() {
   local values_file="$VALUES_DIR/${role}-values.yaml"
   local image_repo=""
   local image_tag=""
+  local controller_image_repo=""
+  local controller_image_tag=""
   local override_file=""
   local disable_pull_secrets="${DISABLE_IMAGE_PULL_SECRETS:-0}"
   local helm_args=()
@@ -620,12 +636,14 @@ deploy_agent() {
     buster)
       image_repo="${BUSTER_IMAGE_REPOSITORY:-${SANDBOX_IMAGE_REPOSITORY:-}}"
       image_tag="${BUSTER_IMAGE_TAG:-${SANDBOX_IMAGE_TAG:-}}"
+      controller_image_repo="${BUSTER_CONTROLLER_IMAGE_REPOSITORY:-${NAMESPACE_CONTROLLER_IMAGE_REPOSITORY:-}}"
+      controller_image_tag="${BUSTER_CONTROLLER_IMAGE_TAG:-${NAMESPACE_CONTROLLER_IMAGE_TAG:-}}"
       ;;
   esac
 
-  if [[ -n "$image_repo" || -n "$image_tag" || "$disable_pull_secrets" == "1" ]]; then
+  if [[ -n "$image_repo" || -n "$image_tag" || -n "$controller_image_repo" || -n "$controller_image_tag" || "$disable_pull_secrets" == "1" ]]; then
     override_file="$(mktemp)"
-    write_image_override_file "$override_file" "$image_repo" "$image_tag" "$disable_pull_secrets"
+    write_image_override_file "$override_file" "$image_repo" "$image_tag" "$disable_pull_secrets" "$controller_image_repo" "$controller_image_tag"
   fi
 
   helm_args=(
@@ -695,6 +713,7 @@ cmd_build_local_images() {
 
   build_local_image "general" "docker/Dockerfile.general" "$push_registry/kubeclaw-general" "$tag"
   build_local_image "sandbox" "docker/Dockerfile.sandbox" "$push_registry/kubeclaw-sandbox" "$tag"
+  build_local_image "namespace-controller" "docker/Dockerfile.namespace-controller" "$push_registry/kubeclaw-namespace-controller" "$tag"
 }
 
 cmd_verify_live() {
@@ -716,14 +735,18 @@ cmd_verify_live() {
 
   local general_image="$pull_registry/kubeclaw-general:$tag"
   local sandbox_image="$pull_registry/kubeclaw-sandbox:$tag"
+  local namespace_controller_image="$pull_registry/kubeclaw-namespace-controller:$tag"
 
   verify_cluster_image_pull "$general_image"
   verify_cluster_image_pull "$sandbox_image"
+  verify_cluster_image_pull "$namespace_controller_image"
 
   GENERAL_IMAGE_REPOSITORY="$pull_registry/kubeclaw-general"
   GENERAL_IMAGE_TAG="$tag"
   SANDBOX_IMAGE_REPOSITORY="$pull_registry/kubeclaw-sandbox"
   SANDBOX_IMAGE_TAG="$tag"
+  NAMESPACE_CONTROLLER_IMAGE_REPOSITORY="$pull_registry/kubeclaw-namespace-controller"
+  NAMESPACE_CONTROLLER_IMAGE_TAG="$tag"
   DISABLE_IMAGE_PULL_SECRETS=1
 
   info "Redeploying agents against registry-local tag: $tag"

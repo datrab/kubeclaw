@@ -28,6 +28,7 @@ Explain how defaults and production values differ.
 
 - `agentRole: buster`
 - sandbox image `ghcr.io/datrab/kubeclaw-sandbox:latest`
+- namespace controller image `ghcr.io/datrab/kubeclaw-namespace-controller:latest`
 - two-container Buster pod with `kubeclaw` gateway and `buster-pipeline` worker containers sharing runtime config, workspace, skills, Podman storage, registry config, and `/sandbox`
 - Buster-specific gateway and Discord secret keys
 - Discord exec/command approver user ID
@@ -42,7 +43,7 @@ Explain how defaults and production values differ.
 | Values area | Default owner | Nova override | Buster override | Rendered effect |
 | --- | --- | --- | --- | --- |
 | Agent identity | `agentRole` in `charts/kubeclaw/values.yaml` | `agentRole: nova` | `agentRole: buster` | labels, deployment name, `AGENT_NAME`, role-specific service account/RBAC decisions |
-| Images | `image.repository`, `image.tag`, `image.pullPolicy`, `imagePullSecrets` | `ghcr.io/datrab/kubeclaw-general:latest`; `ghcr-secret` | `ghcr.io/datrab/kubeclaw-sandbox:latest`; `ghcr-secret` | init and main container images; Buster pipeline container image; image pull Secret wiring |
+| Images | `image.repository`, `image.tag`, `image.pullPolicy`, `imagePullSecrets`, `busterNamespaceBroker.controller.image.*` | `ghcr.io/datrab/kubeclaw-general:latest`; `ghcr-secret` | `ghcr.io/datrab/kubeclaw-sandbox:latest`; controller `ghcr.io/datrab/kubeclaw-namespace-controller:latest`; `ghcr-secret` | init and main container images; Buster pipeline container image; namespace controller image; image pull Secret wiring |
 | Secrets | `auth.*`, `anthropic.*`, `stitch.*`, `litellm.*`, `discord.*`, `discordWebhook.*`, `agent.git.secretName` | Nova-specific gateway and Discord keys from `openclaw-shared-secrets`; `git-deploy-key-nova` | Buster-specific gateway and Discord keys from `openclaw-shared-secrets`; `git-deploy-key-buster` | env vars and mounted SSH key in `charts/kubeclaw/templates/deployment.yaml` |
 | Services | `service.type`, `service.gatewayPort`, `service.bridgePort`, `service.extraPorts` | Prism preview extra port `3456` with NodePort `30456` | internal gateway/bridge only | `charts/kubeclaw/templates/service.yaml` and dedicated extra-port NodePort behavior checked by deployment truth |
 | Persistence | `persistence.config.*`, `persistence.workspace.*` | defaults unless overridden | defaults unless overridden plus sandbox storage | kept PVCs from `charts/kubeclaw/templates/pvc.yaml` and workspace/config mounts |

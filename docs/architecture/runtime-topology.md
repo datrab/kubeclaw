@@ -31,10 +31,11 @@ Buster render:
 - Service: `agent-buster`, ClusterIP for gateway/bridge
 - Deployment: `agent-buster`
 - Main image: `ghcr.io/datrab/kubeclaw-sandbox:latest`
+- Namespace controller image: `ghcr.io/datrab/kubeclaw-namespace-controller:latest`
 - Gateway URL env: `OPENCLAW_GATEWAY_URL=http://127.0.0.1:18789` by default
 - Sandbox volumes: Podman storage at `/var/lib/containers`, sandbox workspace at `/sandbox`
 
-The namespace controller is a separate one-replica pod rendered by the Buster chart when `busterNamespaceBroker.enabled` is true. Buster itself can create/read/delete lease objects in the release namespace; the controller creates the actual test namespace, namespaced Role/RoleBinding, copied secrets, and final-preview Tailscale Ingress.
+The namespace controller is a separate one-replica pod rendered by the Buster chart when `busterNamespaceBroker.enabled` is true. It runs from the lightweight `kubeclaw-namespace-controller` image, not from an OpenClaw agent image. Buster itself can create/read/delete lease objects in the release namespace; the controller creates the actual test namespace, namespaced Role/RoleBinding, copied secrets, and final-preview Tailscale Ingress.
 
 Tailscale render is owned by `scripts/deploy.sh`, not the agent chart. The deploy script installs the official `tailscale/tailscale-operator` Helm chart with `my-values/infra/tailscale-operator-values.yaml`, expecting `Secret/operator-oauth` in namespace `tailscale`.
 

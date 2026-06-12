@@ -46,6 +46,7 @@ function checkLocalLinks(files) {
       target = target.split('#')[0];
       if (!target) continue;
       const resolved = path.resolve(path.dirname(file), decodeURI(target));
+      if (rel(resolved).startsWith('docs/archive/')) continue;
       if (!fs.existsSync(resolved)) errors.push(`${rel(file)} links to missing path: ${match[1]}`);
     }
   }

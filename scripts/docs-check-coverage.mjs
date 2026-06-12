@@ -5,8 +5,8 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const docsRoot = path.join(root, 'docs');
-const matrixPath = 'docs/archive/audits/2026-06-12-documentation-coverage-matrix.md';
-const topicMapPath = 'docs/archive/audits/2026-06-12-documentation-topic-map.md';
+const matrixPath = 'docs/DOCUMENTATION_COVERAGE_MATRIX.md';
+const topicMapPath = 'docs/DOCUMENTATION_TOPIC_MAP.md';
 
 const validRatings = new Set(['rich', 'adequate', 'shallow', 'stale', 'misleading', 'duplicate', 'missing']);
 const allowedWeakRatings = new Set(['shallow', 'stale', 'misleading']);
@@ -105,6 +105,7 @@ function checkTopicMap() {
   while ((match = pathRe.exec(text))) {
     const ref = normalizeRef(match[1]);
     if (!ref || ref.includes('*') || ref.includes('<') || ref.includes('>') || ref.endsWith('/')) continue;
+    if (ref.startsWith('docs/archive/')) continue;
     if (!fs.existsSync(path.join(root, ref))) {
       errors.push(`${topicMapPath} cites missing docs path: ${ref}`);
     }

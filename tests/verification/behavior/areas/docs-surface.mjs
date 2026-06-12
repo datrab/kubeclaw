@@ -42,10 +42,12 @@ await record('public docs root stays reserved for active control files and gener
   assert.deepEqual(rootFiles, [
     'CONTRIBUTING.md',
     'DOCUMENTATION_AUDIT.md',
+    'DOCUMENTATION_COVERAGE_MATRIX.md',
     'DOCUMENTATION_HANDOFF_PROMPT.md',
     'DOCUMENTATION_PLAN.md',
     'DOCUMENTATION_REBUILD_PLAN.md',
     'DOCUMENTATION_TARGET_PAGE_LIST.md',
+    'DOCUMENTATION_TOPIC_MAP.md',
     'DOCUMENTATION_WORKFLOW.md',
     'README.md',
     'ROADMAP.md',

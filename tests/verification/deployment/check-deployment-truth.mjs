@@ -36,6 +36,7 @@ const busterNamespaceFencePath = path.join(sourceRoot, 'my-values', 'infra', 'bu
 const imageBuildWorkflowPath = path.join(sourceRoot, '.github', 'workflows', 'build-images.yaml');
 const generalDockerfilePath = path.join(sourceRoot, 'docker', 'Dockerfile.general');
 const sandboxDockerfilePath = path.join(sourceRoot, 'docker', 'Dockerfile.sandbox');
+const namespaceControllerDockerfilePath = path.join(sourceRoot, 'docker', 'Dockerfile.namespace-controller');
 const rbacSandboxDocsPath = path.join(sourceRoot, 'docs', 'deployment', 'rbac-and-sandbox.md');
 
 if (!fs.existsSync(chartDir)) throw new Error(`Chart directory not found: ${chartDir}`);
@@ -376,6 +377,7 @@ const networkPolicies = fs.readFileSync(networkPoliciesPath, 'utf8');
 const imageBuildWorkflow = fs.readFileSync(imageBuildWorkflowPath, 'utf8');
 const generalDockerfile = fs.readFileSync(generalDockerfilePath, 'utf8');
 const sandboxDockerfile = fs.readFileSync(sandboxDockerfilePath, 'utf8');
+const namespaceControllerDockerfile = fs.readFileSync(namespaceControllerDockerfilePath, 'utf8');
 const rbacSandboxDocs = fs.readFileSync(rbacSandboxDocsPath, 'utf8');
 const deployScriptMode = fs.statSync(deployScriptPath).mode;
 const renderedSwarmConfigMap = findRenderedDocument(rendered, {
@@ -489,6 +491,16 @@ assert.equal(
   String(busterNamespaceControllerPrefixEnvObject?.value || '').includes('buster'),
   false,
   'Buster namespace controller must not allow legacy buster namespace prefixes',
+);
+assert.equal(
+  busterNamespaceControllerContainerObject.image,
+  'ghcr.io/datrab/kubeclaw-namespace-controller:latest',
+  'Buster namespace controller must render the dedicated namespace controller image from Buster values',
+);
+assert.deepEqual(
+  busterNamespaceControllerDeploymentObject.spec?.template?.spec?.imagePullSecrets,
+  [{ name: 'ghcr-secret' }],
+  'Buster namespace controller must inherit imagePullSecrets for private GHCR pulls',
 );
 assertIncludes(
   busterNamespaceControllerScript,
@@ -866,11 +878,22 @@ assert.equal(customSkillsConfigMapTemplate.includes('/app/skills-kubeclaw'), fal
 assertIncludes(imageBuildWorkflow, 'docker/Dockerfile.general', 'Image-build workflow must build the general runtime image from docker/Dockerfile.general');
 assertIncludes(imageBuildWorkflow, 'docker/build-push-action@v5', 'Image-build workflow must use docker/build-push-action for the general runtime image');
 assertIncludes(imageBuildWorkflow, 'image_suffix: kubeclaw-general', 'Image-build workflow must publish the kubeclaw-general image');
+assertIncludes(imageBuildWorkflow, 'docker/Dockerfile.namespace-controller', 'Image-build workflow must build the namespace controller image from docker/Dockerfile.namespace-controller');
+assertIncludes(imageBuildWorkflow, 'image_suffix: kubeclaw-namespace-controller', 'Image-build workflow must publish the kubeclaw-namespace-controller image');
 assertDockerInstallCommandsFailClosed(generalDockerfile, 'General Dockerfile');
 assertDockerInstallCommandsFailClosed(sandboxDockerfile, 'Sandbox Dockerfile');
+assertIncludes(namespaceControllerDockerfile, 'FROM node:22-bookworm-slim', 'Namespace controller Dockerfile must use a lightweight Node image');
+assertIncludes(namespaceControllerDockerfile, 'COPY scripts/buster-namespace-controller.mjs /app/scripts/buster-namespace-controller.mjs', 'Namespace controller Dockerfile must package the namespace controller entrypoint');
+assertIncludes(namespaceControllerDockerfile, 'USER node', 'Namespace controller Dockerfile must run as the non-root node user');
+assert.equal(
+  namespaceControllerDockerfile.includes('ghcr.io/openclaw/openclaw'),
+  false,
+  'Namespace controller Dockerfile must not inherit the OpenClaw runtime image',
+);
 assertIncludes(sandboxDockerfile, 'RUN npm install -g lighthouse serve playwright', 'Sandbox Dockerfile must fail closed when browser test tool installation fails');
 assertIncludes(sandboxDockerfile, '&& agent-browser install --with-deps', 'Sandbox Dockerfile must fail closed when agent-browser dependency installation fails');
 assertLine(dockerignore, '**', 'Docker build context must default-deny repository files');
+assertLine(dockerignore, '!docker/Dockerfile.namespace-controller', 'Docker build context must include the namespace controller Dockerfile');
 assertLine(dockerignore, '!skills/**', 'Docker build context must include runtime skills');
 assertLine(dockerignore, '!plugins/openclaw-agent-observer/**', 'Docker build context must include observer plugin source');
 assertLine(dockerignore, '!scripts/buster-namespace-controller.mjs', 'Docker build context must include the namespace controller entrypoint');
@@ -941,6 +964,7 @@ assertIncludes(tailscaleValues, 'defaultTags: tag:k8s', 'Tailscale values must t
 assertIncludes(deployScript, 'docker build -f "$REPO_DIR/$dockerfile" -t "$push_repo:$tag" "$REPO_DIR"', 'Deploy verification must use a canonical docker build helper rooted at the repo');
 assertIncludes(deployScript, 'build_local_image "general" "docker/Dockerfile.general" "$push_registry/kubeclaw-general" "$tag"', 'Deploy verification must build the general image from docker/Dockerfile.general');
 assertIncludes(deployScript, 'build_local_image "sandbox" "docker/Dockerfile.sandbox" "$push_registry/kubeclaw-sandbox" "$tag"', 'Deploy verification must build the sandbox image from docker/Dockerfile.sandbox');
+assertIncludes(deployScript, 'build_local_image "namespace-controller" "docker/Dockerfile.namespace-controller" "$push_registry/kubeclaw-namespace-controller" "$tag"', 'Deploy verification must build the namespace controller image from docker/Dockerfile.namespace-controller');
 assertIncludes(deployScript, 'LOCAL_REGISTRY_PUSH is required because registry-local is ClusterIP by default.', 'Deploy verification must not assume a registry-local NodePort push path');
 assertIncludes(deployScript, 'LOCAL_REGISTRY_PULL is required because registry-local is ClusterIP by default.', 'Live verification must require an explicit cluster pull path');
 assertIncludes(deployScript, 'verify_cluster_image_pull() {', 'Live deployment verification must define a cluster image-pull preflight');
@@ -950,11 +974,16 @@ assertIncludes(deployScript, 'kubectl wait --for=condition=Ready "pod/$pod"', 'L
 assertIncludes(deployScript, 'kubectl describe pod "$pod"', 'Live deployment verification must describe the failed preflight pod');
 assertIncludes(deployScript, 'local general_image="$pull_registry/kubeclaw-general:$tag"', 'Live deployment verification must resolve the exact general image ref before redeploying agents');
 assertIncludes(deployScript, 'local sandbox_image="$pull_registry/kubeclaw-sandbox:$tag"', 'Live deployment verification must resolve the exact sandbox image ref before redeploying agents');
+assertIncludes(deployScript, 'local namespace_controller_image="$pull_registry/kubeclaw-namespace-controller:$tag"', 'Live deployment verification must resolve the exact namespace controller image ref before redeploying agents');
 assertIncludes(deployScript, 'verify_cluster_image_pull "$general_image"', 'Live deployment verification must preflight the deployed general image pull path before redeploying agents');
 assertIncludes(deployScript, 'verify_cluster_image_pull "$sandbox_image"', 'Live deployment verification must preflight the deployed sandbox image pull path before redeploying agents');
+assertIncludes(deployScript, 'verify_cluster_image_pull "$namespace_controller_image"', 'Live deployment verification must preflight the namespace controller image pull path before redeploying agents');
 assertIncludes(deployScript, 'cmd_build_local_images "$tag"', 'Live deployment verification must invoke the local image-build step before redeploying');
 assertIncludes(deployScript, 'GENERAL_IMAGE_REPOSITORY="$pull_registry/kubeclaw-general"', 'Live deployment verification must redeploy Nova against the registry-local general image');
 assertIncludes(deployScript, 'SANDBOX_IMAGE_REPOSITORY="$pull_registry/kubeclaw-sandbox"', 'Live deployment verification must redeploy Buster against the registry-local sandbox image');
+assertIncludes(deployScript, 'NAMESPACE_CONTROLLER_IMAGE_REPOSITORY="$pull_registry/kubeclaw-namespace-controller"', 'Live deployment verification must redeploy the namespace controller against the registry-local controller image');
+assertIncludes(deployScript, 'controller_image_repo="${BUSTER_CONTROLLER_IMAGE_REPOSITORY:-${NAMESPACE_CONTROLLER_IMAGE_REPOSITORY:-}}"', 'Buster deploy overrides must keep the namespace controller on the dedicated controller image repository');
+assertIncludes(deployScript, 'controller_image_tag="${BUSTER_CONTROLLER_IMAGE_TAG:-${NAMESPACE_CONTROLLER_IMAGE_TAG:-}}"', 'Buster deploy overrides must keep the namespace controller on the dedicated controller image tag');
 assertIncludes(deployScript, '--set probes.dependencies.litellm.enabled=false', 'Agent deployment must disable LiteLLM readiness checks when LiteLLM infrastructure is intentionally disabled');
 assertIncludes(deployScript, '--set probes.dependencies.qdrant.enabled=false', 'Agent deployment must disable Qdrant readiness checks when Qdrant infrastructure is intentionally disabled');
 assertIncludes(deployScript, 'DISABLE_IMAGE_PULL_SECRETS=1', 'Live deployment verification must drop GHCR pull secrets when redeploying against registry-local');
@@ -1081,7 +1110,7 @@ const result = {
     'Templates still pin SWARM_CONFIG and default swarm config artifacts in source',
     'Custom skills ConfigMap comments match the /app/skills runtime path and mark customSkills extension-only',
     'Templates still expose extra service ports and merge logic in source',
-    'Build-images workflow still builds and publishes the general runtime image from docker/Dockerfile.general',
+    'Build-images workflow still builds and publishes the runtime and namespace controller images',
     'Runtime Dockerfiles fail closed on tool installation failures',
     'Docker build context excludes deployment values, local state, dependencies, logs, and secret-shaped files',
     'Git ignore keeps my-values tracked while excluding only local workspace namespace state',
@@ -1094,7 +1123,7 @@ const result = {
     'Infra rollout failures fail closed unless ALLOW_PARTIAL_INFRA is explicit',
     'Deploy script exposes a canonical local image-build command for deployment verification',
     'Deploy script exposes a canonical live deployment verification command',
-    'Live deployment verification builds both runtime images and pushes them to registry-local',
+    'Live deployment verification builds runtime and namespace controller images and pushes them to registry-local',
     'Live deployment verification preflights every deployed runtime image pull path',
     'Live deployment verification redeploys Nova and Buster against registry-local before smoke runs',
     'Deploy script exposes canonical pod-level smoke commands for the deployed agents',

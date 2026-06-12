@@ -13,9 +13,11 @@ Document what the runtime images contain.
 
 `docker/Dockerfile.sandbox` builds the Buster runtime from `ghcr.io/openclaw/openclaw:latest`. It installs Podman/buildah/slirp/fuse-overlayfs, Chromium, nginx, jq, tree, ripgrep, Lighthouse, Playwright, axe, pixelmatch, pngjs, ws, agent-browser, k6 `v0.54.0`, sandbox helper scripts, Buster skills, common skills, and the observer plugin extension.
 
+`docker/Dockerfile.namespace-controller` builds the Buster namespace controller from `node:22-bookworm-slim`. It copies only `scripts/buster-namespace-controller.mjs` and runs it as the non-root `node` user. It does not inherit the OpenClaw runtime image.
+
 `docker/Dockerfile.prism-preview` builds a lightweight `node:20-alpine` static server with `serve` and exposes port `3456`.
 
-Current production values use `latest` tags for general and sandbox images. CI publishes `latest`, SHA, and date tags.
+Current production values use `latest` tags for general, sandbox, namespace-controller, and Prism preview images. CI publishes `latest`, SHA, and date tags.
 
 The root `.dockerignore` keeps runtime image build contexts narrow. It defaults to excluding repository files, then allows only the image inputs used by the Dockerfiles: runtime skills, the observer plugin source, the namespace controller entrypoint, and the Dockerfiles themselves. Deployment values under `my-values/`, local `.swarm` state, worktrees, local dependencies, logs, and secret-shaped files are excluded from Docker contexts even though `my-values/` remains tracked as the current audited deployment surface.
 
@@ -23,8 +25,9 @@ The root `.dockerignore` keeps runtime image build contexts narrow. It defaults 
 
 | Image | Copied repo paths | Runtime paths | Important env/defaults | Known failure signal |
 | --- | --- | --- | --- | --- |
-| General | `skills/nova/`; `skills/common/`; `plugins/openclaw-agent-observer/`; `scripts/buster-namespace-controller.mjs` | `/app/skills`, `/app/dist/extensions/kubeclaw-agent-observer`, `/app/scripts/buster-namespace-controller.mjs` | `NODE_PATH=/usr/local/lib/node_modules:/app/node_modules`, `NPM_CONFIG_CACHE=/root/.npm`, `HOME=/home/node` | missing tool or plugin compile failure during Docker build; deployment truth fails if install commands silently continue |
+| General | `skills/nova/`; `skills/common/`; `plugins/openclaw-agent-observer/` | `/app/skills`, `/app/dist/extensions/kubeclaw-agent-observer` | `NODE_PATH=/usr/local/lib/node_modules:/app/node_modules`, `NPM_CONFIG_CACHE=/root/.npm`, `HOME=/home/node` | missing tool or plugin compile failure during Docker build; deployment truth fails if install commands silently continue |
 | Sandbox | `skills/buster/`; `skills/common/`; `plugins/openclaw-agent-observer/` | `/app/skills`, `/sandbox`, `/var/lib/containers/storage`, `/ms-playwright`, `/app/dist/extensions/kubeclaw-agent-observer` | `PLAYWRIGHT_BROWSERS_PATH=/ms-playwright`, `SANDBOX_TIMEOUT`, Podman storage under `/var/lib/containers/storage` | Buster startup or suite failures, Podman storage pressure, missing browser/tool binary |
+| Namespace controller | `scripts/buster-namespace-controller.mjs` | `/app/scripts/buster-namespace-controller.mjs` | Kubernetes ServiceAccount env and token mount, `BUSTER_*` broker settings | controller pod `ImagePullBackOff`, ServiceAccount token/API host errors, or lease reconciliation errors |
 | Prism preview | none beyond the Dockerfile | `/designs`, port `3456` | `serve /designs -p 3456 --no-clipboard` | sidecar reachable but no preview files if Nova has not written workspace designs |
 
 ## Build Context Contract
@@ -40,7 +43,7 @@ The canonical local build path is in `scripts/deploy.sh`:
 ./scripts/deploy.sh verify-live [tag]
 ```
 
-`build-local-images` builds `docker/Dockerfile.general` and `docker/Dockerfile.sandbox`, tags them under the host-visible registry target from `LOCAL_REGISTRY_PUSH`, and pushes them. `verify-live` then proves the cluster-visible registry target from `LOCAL_REGISTRY_PULL` by starting temporary pods from both pushed runtime images before redeploying Nova and Buster. Because `registry-local` is ClusterIP by default, live local-image verification needs an explicit private push/pull path before use.
+`build-local-images` builds `docker/Dockerfile.general`, `docker/Dockerfile.sandbox`, and `docker/Dockerfile.namespace-controller`, tags them under the host-visible registry target from `LOCAL_REGISTRY_PUSH`, and pushes them. `verify-live` then proves the cluster-visible registry target from `LOCAL_REGISTRY_PULL` by starting temporary pods from all deployed images before redeploying Nova and Buster. Because `registry-local` is ClusterIP by default, live local-image verification needs an explicit private push/pull path before use.
 
 ## Pinning Risk
 

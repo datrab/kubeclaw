@@ -344,7 +344,7 @@ busterNamespaceBroker:
   defaultTtlSeconds: 7200
   controller:
     image:
-      repository: ghcr.io/datrab/kubeclaw-general
+      repository: ghcr.io/datrab/kubeclaw-namespace-controller
       tag: latest
       pullPolicy: Always
     pollIntervalMs: 3000

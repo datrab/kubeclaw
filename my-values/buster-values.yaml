@@ -95,6 +95,11 @@ serviceAccount:
 
 busterNamespaceBroker:
   enabled: true
+  controller:
+    image:
+      repository: ghcr.io/datrab/kubeclaw-namespace-controller
+      tag: "latest"
+      pullPolicy: Always
 
 resources:
   requests: { cpu: 500m, memory: 4096Mi }

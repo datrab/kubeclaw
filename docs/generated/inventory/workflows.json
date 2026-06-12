@@ -15,7 +15,8 @@
       ],
       "pathFilters": [
         "docker/**",
-        "skills/**"
+        "skills/**",
+        "scripts/buster-namespace-controller.mjs"
       ],
       "schedules": [
         "0 3 * * *"
