@@ -26,6 +26,10 @@ function stepMetadata(result) {
   return result?.diagnostics?.metadata || {};
 }
 
+function stepRateLimit(result) {
+  return result?.rateLimit || {};
+}
+
 function stepGateStatus(result) {
   return result?.diagnostics?.typed?.controlResult?.diagnostics?.typed?.gate?.gateRunStatus;
 }
@@ -254,8 +258,8 @@ const config = {
         assert.equal(stepMetadata(result).dispatch_id, 'reviewfix-dispatch-4', `${scenario.name} missing returned dispatch id`);
         assert.equal(stepMetadata(result).gateway_label, 'reviewfix-review-dispatch', `${scenario.name} missing returned gateway label`);
         assert.equal(stepMetadata(result).session_key, 'agent:reviewfix-gate:review-1', `${scenario.name} missing returned session key`);
-        assert.equal(stepMetadata(result).max_rate_limit_pauses, 3, `${scenario.name} missing returned pause budget`);
-        assert.equal(stepMetadata(result).rate_limit_status?.max_rate_limit_pauses, 3, `${scenario.name} missing returned nested pause budget`);
+        assert.equal(stepRateLimit(result).max_rate_limit_pauses, 3, `${scenario.name} missing returned pause budget`);
+        assert.equal(stepRateLimit(result).rate_limit_status?.max_rate_limit_pauses, 3, `${scenario.name} missing returned nested pause budget`);
       } else if (scenario.expectedReturnedCorrelation !== false) {
         assert.equal(stepMetadata(result).gateway_label, 'echo-quality', `${scenario.name} missing returned gateway label`);
         assert.equal(stepMetadata(result).session_key, 'agent:main:acp:echo-review-initial', `${scenario.name} missing returned session key`);
@@ -435,7 +439,7 @@ const config = {
   
     const initialNoGo = {
       ok: false,
-      reason: 'gate_fail',
+      reason: 'verdict_fail',
       status: {
         gateway_label: 'gate-buster-dispatch',
         session_key: 'agent:main:acp:gate-buster',
@@ -598,8 +602,8 @@ const config = {
         assert.equal(stepMetadata(result).gateway_label, 'gatefix-buster-dispatch', `${scenario.name} missing returned gateway label`);
         assert.equal(stepMetadata(result).session_key, 'agent:gatefix-gate:buster-1', `${scenario.name} missing returned session key`);
         assert.equal(result.correlation.gate_type, 'buster', `${scenario.name} missing returned gate type`);
-        assert.equal(stepMetadata(result).max_rate_limit_pauses, 3, `${scenario.name} missing returned pause budget`);
-        assert.equal(stepMetadata(result).rate_limit_status?.max_rate_limit_pauses, 3, `${scenario.name} missing returned nested pause budget`);
+        assert.equal(stepRateLimit(result).max_rate_limit_pauses, 3, `${scenario.name} missing returned pause budget`);
+        assert.equal(stepRateLimit(result).rate_limit_status?.max_rate_limit_pauses, 3, `${scenario.name} missing returned nested pause budget`);
       }
   
       const streamKey = `pipeline:telemetry:${scenario.project}:${scenario.runId}`;

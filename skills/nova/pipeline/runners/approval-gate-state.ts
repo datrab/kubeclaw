@@ -78,17 +78,23 @@ export async function failClosedOnCorruptedApprovalState(config, gateId, gate, s
   const preview = state?.parse_error_preview
     ? state.parse_error_preview.replace(/\s+/g, ' ').trim().slice(0, 200)
     : '(unavailable)';
+  const correlation = {
+    run_id: config._runId || config.run_id || null,
+    gate_id: gateId,
+    gate_type: gate?.type || 'approval',
+  };
 
   log('ERROR', `${reason}. Refusing to start a fresh approval flow over corrupted persisted state.`);
   await deps.discord(config, 'CRITICAL', `Approval state corrupted: ${gate?.title || gateId}`,
     `Gate \`${gateId}\` has unreadable persisted approval state. Refusing to reopen or reset the wait automatically. Operator intervention required.`,
-    buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate?.type || 'approval' }, [
+    buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, correlation, [
       { name: 'Action', value: 'Failing closed. Repair or remove the corrupted gate-state file before retrying.', inline: false },
       { name: 'State file', value: `\`${state?.parse_error_path || 'unknown'}\``, inline: false },
       { name: 'Parse error', value: (state?.parse_error || 'unknown').slice(0, 1000), inline: false },
       { name: 'Preview', value: preview ? `\`${preview}\`` : '(unavailable)', inline: false },
       { name: 'Audit trail', value: `\`.swarm/logs/gates/${gateId}/\``, inline: false },
-    ])
+    ]),
+    { correlation },
   );
 
   return {
@@ -106,17 +112,23 @@ export async function failClosedOnInvalidApprovalState(config, gateId, gate, sta
     state_path: gateStatusPath(config, gateId),
   };
   const reason = buildInvalidApprovalStateReason(gateId, stateWithPath);
+  const correlation = {
+    run_id: config._runId || config.run_id || null,
+    gate_id: gateId,
+    gate_type: gate?.type || 'approval',
+  };
 
   log('ERROR', `${reason}. Operator intervention required.`);
   await deps.discord(config, 'CRITICAL', `Approval state invalid: ${gate?.title || gateId}`,
     `Gate \`${gateId}\` has illegal persisted approval state. Refusing to reopen or reset the wait automatically. Operator intervention required.`,
-    buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate?.type || 'approval' }, [
+    buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, correlation, [
       { name: 'Action', value: 'Failing closed. Repair or remove the invalid gate-state file before retrying.', inline: false },
       { name: 'State file', value: `\`${stateWithPath.state_path}\``, inline: false },
       { name: 'Status', value: String(state?.status ?? 'missing').slice(0, 200), inline: true },
       ...(state?.invalid_state_error ? [{ name: 'Invalid state', value: String(state.invalid_state_error).slice(0, 1000), inline: false }] : []),
       { name: 'Allowed statuses', value: Object.values(APPROVAL_STATUS).join(', '), inline: false },
-    ])
+    ]),
+    { correlation },
   );
 
   return {

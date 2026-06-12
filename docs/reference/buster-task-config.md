@@ -78,3 +78,19 @@ This page is manually maintained from:
 - `skills/buster/pipeline/services/capabilities.ts`
 - `skills/buster/pipeline/services/task-completion.ts`
 - `skills/buster/pipeline/runners/suite-runner.ts`
+
+## Validation And Failure Fields
+
+`validateBusterTaskPayload` requires identity and execution fields before a task can run. Important required fields include `task_type`, `module_id`, `project`, `run_id`, `attempt`, `dispatch_id`, `commit_hash`, `output_file`, `stage_id`, `timeout_seconds`, `session.runtime`, `session.model`, `session.agentId`, `session.cwd`, `session.label`, `suites`, and `test_config.suite_timeout_ms`. `gate_test` additionally requires `gate_id`; `module_test` requires `worker_type: module_buster`.
+
+Path fields must be repository-relative and must not contain parent traversal. `session.cwd` must resolve within the current repository root. Unknown capabilities or malformed `test_config` produce `BUSTER_TASK_MALFORMED` instead of a best-effort run.
+
+## Operator Checks
+
+```bash
+node --test tests/skills/buster/pipeline/services/task-validation.test.mjs
+node --test tests/skills/buster/pipeline/services/task-completion.test.mjs
+node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"
+```
+
+If a task is rejected, inspect the dead-letter record, malformed-task artifact, and payload keys before editing suite code. A payload problem should be fixed at the producer/config boundary.

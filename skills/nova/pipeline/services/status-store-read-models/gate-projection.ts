@@ -413,7 +413,7 @@ export function projectGateCompletionState(config, gateId, gate = null, deps = {
     const data = output.data || { gate: gateId };
     const status = output.status || normalizeGateOutputStatus(data?.status);
     if (GATE_OUTPUT_FAIL_STATUSES.has(status)) {
-      return { done: true, ok: false, outcome: 'gate_fail', source: GATE_OUTPUT_EVIDENCE_SOURCE, status: status || 'FAIL', data, output, gateStatusAuthority };
+      return { done: true, ok: false, outcome: 'verdict_fail', source: GATE_OUTPUT_EVIDENCE_SOURCE, status: status || 'FAIL', data, output, gateStatusAuthority };
     }
     if (GATE_OUTPUT_PASS_STATUSES.has(status)) {
       return { done: true, ok: true, outcome: 'target_reached', source: GATE_OUTPUT_EVIDENCE_SOURCE, status, data, output, gateStatusAuthority };

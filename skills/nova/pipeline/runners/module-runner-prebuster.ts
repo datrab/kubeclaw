@@ -8,6 +8,7 @@ import { requireStageHandler } from '../core/registry.ts';
 import { resolveStatusSessionKey, resolveStatusGatewayLabel } from '../services/correlation.ts';
 import { getContractInvalidDiagnostic, isContractInvalidError } from '../services/contract-diagnostics.ts';
 import { normalizeTypedValidatorControlResult } from '../services/contracts/validator-control-result.ts';
+import { assertPipelineStepResult } from '../services/contracts/pipeline-step-result.ts';
 import { transitionModuleStatus } from '../lifecycle-state.ts';
 import { emitOperatorAlert } from '../services/telemetry.ts';
 import {
@@ -21,7 +22,10 @@ import {
   getModuleStats,
   markValidationPassed,
 } from './module-runner-shared.ts';
-import { buildRetryResult } from './module-runner/terminal-results.ts';
+import {
+  buildModuleErrorTerminalResult,
+  buildRetryResult,
+} from './module-runner/terminal-results.ts';
 
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
 
@@ -100,18 +104,23 @@ function buildModuleValidatorContractDiagnostics(error: AnyRecord) {
   };
 }
 
-function buildModuleValidatorBlockTerminal(moduleId: string, stageId: string, reason: string, controlResult: AnyRecord | null = null, diagnostics: AnyRecord = {}) {
-  return {
-    retry: false,
-    result: {
-      outcome_class: 'error',
-      reason,
-      module: moduleId,
+function buildModuleValidatorBlockTerminal(config: AnyRecord, moduleId: string, stageId: string, reason: string, controlResult: AnyRecord | null = null, diagnostics: AnyRecord = {}, {
+  dir = null,
+  status = null,
+}: AnyRecord = {}) {
+  return buildModuleErrorTerminalResult(config, moduleId, {
+    reason,
+    moduleDir: dir,
+    attempt: currentAttemptNumber(status),
+    phase: stageId,
+    gatewayLabel: resolveStatusGatewayLabel(status),
+    sessionKey: resolveStatusSessionKey(status),
+    metadata: {
       validator: stageId,
       validator_result: controlResult,
-      ...(Object.keys(diagnostics || {}).length > 0 ? { diagnostics } : {}),
     },
-  };
+    diagnostics,
+  });
 }
 
 export async function prepareModuleForBuster({
@@ -165,26 +174,35 @@ export async function prepareModuleForBuster({
       } catch (error) {
         const reason = `Delivery lint validator execution failed: ${errorMessage(error)}`;
         log('ERROR', reason);
-        return { status, terminal: buildModuleValidatorBlockTerminal(moduleId, 'validator:delivery_lint', reason, null, buildModuleValidatorContractDiagnostics(error as AnyRecord)) };
+        return { status, terminal: buildModuleValidatorBlockTerminal(config, moduleId, 'validator:delivery_lint', reason, null, buildModuleValidatorContractDiagnostics(error as AnyRecord), { dir, status }) };
       }
 
       if (deliveryLintControl.nextAction !== 'pass') {
         const reason = moduleValidatorSummary(deliveryLintControl);
+        const deliveryLintCorrelation = {
+          run_id: getRunId(config),
+          module_id: moduleId,
+          attempt: currentAttemptNumber(status),
+          gateway_label: resolveStatusGatewayLabel(status),
+          session_key: resolveStatusSessionKey(status),
+        };
         log('WARN', `Module ${moduleId} delivery lint failed — aborting before Buster dispatch`);
         await deps.discord(config, 'WARN', `Module ${moduleId} DELIVERY LINT FAIL`,
           `Deterministic artifact inconsistency detected after Forge. Retrying without Buster.`, [
-            ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { run_id: getRunId(config), module_id: moduleId, attempt: currentAttemptNumber(status), gateway_label: resolveStatusGatewayLabel(status), session_key: resolveStatusSessionKey(status) }),
+            ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, deliveryLintCorrelation),
             { name: 'Stage', value: 'delivery_lint' },
             { name: 'Action', value: deliveryLintControl.nextAction },
             { name: 'Codes', value: moduleValidatorCodes(deliveryLintControl) },
-          ]);
+          ],
+          { correlation: deliveryLintCorrelation },
+        );
         if (deliveryLintControl.nextAction === 'block') {
-          return { status, terminal: buildModuleValidatorBlockTerminal(moduleId, 'validator:delivery_lint', reason, deliveryLintControl) };
+          return { status, terminal: buildModuleValidatorBlockTerminal(config, moduleId, 'validator:delivery_lint', reason, deliveryLintControl, {}, { dir, status }) };
         }
         const failResult = await handleModuleFail(status, 'delivery_lint', reason, { recalledMemoryIds });
         return failResult._retry
           ? { status, terminal: buildRetryResult(failResult, status) }
-          : { status, terminal: { retry: false, result: failResult } };
+          : { status, terminal: { retry: false, result: assertPipelineStepResult(failResult) } };
       }
 
       markValidationPassed(status, 'delivery_lint_passed');
@@ -207,28 +225,35 @@ export async function prepareModuleForBuster({
       } catch (error) {
         const reason = `Pre-check validator execution failed: ${errorMessage(error)}`;
         log('ERROR', reason);
-        return { status, terminal: buildModuleValidatorBlockTerminal(moduleId, 'validator:pre_check', reason, null, buildModuleValidatorContractDiagnostics(error as AnyRecord)) };
+        return { status, terminal: buildModuleValidatorBlockTerminal(config, moduleId, 'validator:pre_check', reason, null, buildModuleValidatorContractDiagnostics(error as AnyRecord), { dir, status }) };
       }
       if (preCheckControl.nextAction !== 'pass') {
         const precheckReason = moduleValidatorSummary(preCheckControl);
         const precheckMetadata = moduleValidatorMetadata(preCheckControl);
+        const precheckCorrelation = {
+          run_id: getRunId(config),
+          module_id: moduleId,
+          attempt: currentAttemptNumber(status),
+          gateway_label: resolveStatusGatewayLabel(status),
+          session_key: resolveStatusSessionKey(status),
+        };
         log('WARN', `Module ${moduleId} pre-check failed — retrying Forge before Buster dispatch`);
         await deps.discord(config, 'WARN', `Module ${moduleId} PRE-CHECK FAIL`, precheckReason.slice(0, 500), [
-          ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { run_id: getRunId(config), module_id: moduleId, attempt: currentAttemptNumber(status), gateway_label: resolveStatusGatewayLabel(status), session_key: resolveStatusSessionKey(status) }),
+          ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, precheckCorrelation),
           { name: 'Stage', value: 'pre_check' },
           { name: 'Action', value: preCheckControl.nextAction },
           ...(precheckMetadata.report_summary ? [{
             name: 'Lint',
             value: `${precheckMetadata.report_summary.total_errors} errors / ${precheckMetadata.report_summary.total_warnings} warnings`,
           }] : []),
-        ]);
+        ], { correlation: precheckCorrelation });
         if (preCheckControl.nextAction === 'block') {
-          return { status, terminal: buildModuleValidatorBlockTerminal(moduleId, 'validator:pre_check', precheckReason, preCheckControl) };
+          return { status, terminal: buildModuleValidatorBlockTerminal(config, moduleId, 'validator:pre_check', precheckReason, preCheckControl, {}, { dir, status }) };
         }
         const failResult = await handleModuleFail(status, 'pre_check', precheckReason, { recalledMemoryIds });
         return failResult._retry
           ? { status, terminal: buildRetryResult(failResult, status) }
-          : { status, terminal: { retry: false, result: failResult } };
+          : { status, terminal: { retry: false, result: assertPipelineStepResult(failResult) } };
       }
 
       markValidationPassed(status, 'pre_check_passed');
@@ -242,16 +267,17 @@ export async function prepareModuleForBuster({
       && (!validation.delivery_lint_passed || !validation.pre_check_passed)) {
     return {
       status,
-      terminal: {
-        retry: false,
-        result: {
-          outcome_class: 'error',
-          reason: 'Validation milestones missing before Buster dispatch — refusing to continue',
-          module: moduleId,
-          gateway_label: resolveStatusGatewayLabel(status),
-          session_key: resolveStatusSessionKey(status),
+      terminal: buildModuleErrorTerminalResult(config, moduleId, {
+        reason: 'Validation milestones missing before Buster dispatch — refusing to continue',
+        moduleDir: dir,
+        attempt: currentAttemptNumber(status),
+        phase: 'pre_buster_validation',
+        gatewayLabel: resolveStatusGatewayLabel(status),
+        sessionKey: resolveStatusSessionKey(status),
+        metadata: {
+          validation,
         },
-      },
+      }),
     };
   }
 
@@ -266,15 +292,14 @@ export async function prepareModuleForBuster({
       emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'git_sync', null, status?.status ?? STATUS.READY_FOR_TESTING, errorMessage(e));
       return {
         status,
-        terminal: {
-          retry: false,
-          result: {
-            outcome_class: 'error',
-            reason: errorMessage(e),
-            gateway_label: resolveStatusGatewayLabel(status),
-            session_key: resolveStatusSessionKey(status),
-          },
-        },
+        terminal: buildModuleErrorTerminalResult(config, moduleId, {
+          reason: errorMessage(e),
+          moduleDir: dir,
+          attempt: currentAttemptNumber(status),
+          phase: 'git_sync',
+          gatewayLabel: resolveStatusGatewayLabel(status),
+          sessionKey: resolveStatusSessionKey(status),
+        }),
       };
     }
   }

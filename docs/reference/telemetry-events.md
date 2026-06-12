@@ -73,6 +73,25 @@ Do not add numeric process exit fields as replay state.
 
 Telemetry write failures are non-blocking for scheduler truth when local artifacts preserve recovery evidence. Degraded/restored events and fallback artifacts make the observability failure visible.
 
+## Event Build Path
+
+Nova pipeline event helpers are exported by `skills/nova/pipeline/services/telemetry.ts`. The detailed owners are:
+
+- builders: `skills/nova/pipeline/services/telemetry/builders.ts`
+- dispatch: `skills/nova/pipeline/services/telemetry/dispatch.ts`
+- sink input validation: `skills/nova/pipeline/services/telemetry-sink-contract.ts`
+- Redis stream emission: `skills/nova/pipeline/services/telemetry-stream.ts`
+- payload schema validation: `skills/common/pipeline/services/telemetry/payload-schema.ts`
+
+The envelope is flat. Event-specific fields live beside `v`, `type`, `ts`, `run_id`, `project`, `seq`, `source`, and `emitter`; do not wrap canonical payloads in legacy nested `data` or `refs` objects.
+
+Verification:
+
+```bash
+node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry-docs
+node tests/verification/behavior/verify.mjs --source-root "$PWD" --area docs-surface
+```
+
 ## Generated From
 
 This page is manually maintained from:

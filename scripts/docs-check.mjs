@@ -58,6 +58,7 @@ function checkGeneratedMarkers() {
     'docs/reference/helm-values.md',
     'docs/reference/secrets.md',
     'docs/reference/verification-commands.md',
+    'docs/reference/workflows.md',
   ];
   for (const page of generatedPages) {
     const filePath = path.join(root, page);

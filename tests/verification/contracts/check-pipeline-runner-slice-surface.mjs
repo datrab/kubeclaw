@@ -389,10 +389,16 @@ assert.deepEqual(failingIngesterRuntime.stats(), { processed: 0 });
 assert.equal(degradedEvidence[0]?.reason, 'agent_observability_ingester_loop_failed', 'loop failures must emit typed degraded evidence');
 assert.equal(degradedEvidence[0]?.source, 'agent_observability_ingester_runtime');
 
-const rawNestedStatusCorrelation = sharedMod.buildResultWithStepCorrelation({
+const rawNestedStatusDir = fs.mkdtempSync(path.join(os.tmpdir(), 'contract-correlation-boundary-'));
+const rawNestedStatusConfig = {
   project: 'contract-correlation-boundary',
-  paths: { modules_dir: '/tmp/contract-correlation-boundary/modules' },
-}, {
+  _runId: 'contract-correlation-boundary-run',
+  paths: {
+    swarm_dir: rawNestedStatusDir,
+    modules_dir: path.join(rawNestedStatusDir, 'modules'),
+  },
+};
+const rawNestedStatusCorrelation = sharedMod.buildResultWithStepCorrelation(rawNestedStatusConfig, {
   modules: { '01': { dir: '01-scaffold' } },
   gates: {},
 }, 'module', '01', {
@@ -409,11 +415,12 @@ const rawNestedStatusCorrelation = sharedMod.buildResultWithStepCorrelation({
     gateway_label: 'raw-module-status-gateway',
     session_key: 'raw-module-status-session',
   },
-}, { loadStatus: () => null });
+});
 assert.equal(rawNestedStatusCorrelation.attempt, null, 'pipeline halt correlation must not read raw nested status attempts');
 assert.equal(rawNestedStatusCorrelation.dispatch_id, null, 'pipeline halt correlation must not read raw nested status dispatch ids');
 assert.equal(rawNestedStatusCorrelation.gateway_label, null, 'pipeline halt correlation must not read raw nested status gateway labels');
 assert.equal(rawNestedStatusCorrelation.session_key, null, 'pipeline halt correlation must not read raw nested status session keys');
+fs.rmSync(rawNestedStatusDir, { recursive: true, force: true });
 
 quietConsole.restore();
 console.log(JSON.stringify({ ok: true, checked: 118 }));

@@ -73,9 +73,7 @@ function buildStartDescription(config: AnyRecord, progress: AnyRecord, opts: Any
     const moduleId = s.startsWith('module:') ? s.slice('module:'.length) : s;
     const mod = progress.modules[moduleId];
     if (!mod) return false;
-    const authoritative = loadAuthoritativeModuleState(config, progress, moduleId, {
-      loadStatusFn: deps.loadStatus,
-    });
+    const authoritative = loadAuthoritativeModuleState(config, progress, moduleId);
     return !authoritative || authoritative.status !== STATUS.PASS;
   }).length;
   const totalModules = progress.execution_order.filter((s: string) => {
@@ -163,9 +161,18 @@ export async function runSingleModulePipeline(config: AnyRecord, progress: AnyRe
     haltReason: 'single_module_complete',
   });
   deps.output({ exit: singleModuleExitCode, ...resultWithStatusCorrelation });
+  const singleModuleDiscordCorrelation = {
+    run_id: config._runId || config.run_id || null,
+    module_id: opts.module,
+    step_type: 'module',
+    attempt: singleModuleAttempt,
+    dispatch_id: singleModuleDispatchId,
+    gateway_label: singleModuleGatewayLabel,
+    session_key: singleModuleSessionKey,
+  };
   await deps.discord(config, 'OK', 'Pipeline: single module done', `Module ${opts.module} completed successfully.`,
-    buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: config._runId || config.run_id || 'unknown', module_id: opts.module, step_type: 'module', attempt: singleModuleAttempt, dispatch_id: singleModuleDispatchId, gateway_label: singleModuleGatewayLabel, session_key: singleModuleSessionKey }),
-    { deps: opts.deps }
+    buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, singleModuleDiscordCorrelation),
+    { deps: opts.deps, correlation: singleModuleDiscordCorrelation }
   );
   emitPipelineSummaryLifecycle(config, ctx, terminalStatus, `single_module:${opts.module}`, progress, deps.writeSummary, normalizedResult.terminalDecision || null);
   return singleModuleExitCode;

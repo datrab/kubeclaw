@@ -65,8 +65,7 @@ resources:
 # =============================================================================
 extraContainers:
   - name: prism-preview
-    image: node:20-alpine
-    command: ["npx", "--yes", "serve", "/designs", "-p", "3456", "--no-clipboard"]
+    image: ghcr.io/datrab/kubeclaw-prism-preview:latest
     ports:
       - containerPort: 3456
     volumeMounts:

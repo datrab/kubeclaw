@@ -49,13 +49,13 @@ await record('monitor handles running, closed, unreachable-with-progress, and ra
     return { result: { details: { acp: { state: 'unknown' } } } };
   });
   try {
-    const running = await monitorMod.getAcpMonitorState('running-session', null, {}, { ...acpMonitorConfig, gatewayUrl: gateway.url, gatewayToken: '' });
+    const running = await monitorMod.getAcpMonitorState({ childSessionKey: 'running-session', streamLogPath: null, previousState: {}, ...acpMonitorConfig, gatewayUrl: gateway.url, gatewayToken: '' });
     assert.equal(running.sessionState, 'running');
     assert.equal(running.sessionActive, true);
     assert.equal(running.terminal, false);
     assert.equal(running.gatewayUnreachable, false);
 
-    const closed = await monitorMod.getAcpMonitorState('closed-session', null, {}, { ...acpMonitorConfig, gatewayUrl: gateway.url, gatewayToken: '' });
+    const closed = await monitorMod.getAcpMonitorState({ childSessionKey: 'closed-session', streamLogPath: null, previousState: {}, ...acpMonitorConfig, gatewayUrl: gateway.url, gatewayToken: '' });
     assert.equal(closed.sessionState, 'closed');
     assert.equal(closed.terminal, true);
     assert.equal(closed.reason, 'session_terminal');
@@ -66,7 +66,7 @@ await record('monitor handles running, closed, unreachable-with-progress, and ra
 
   const transcriptPath = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-transcript-')), 'stream.jsonl');
   fs.writeFileSync(transcriptPath, `${JSON.stringify({ ts: new Date().toISOString(), kind: 'assistant', text: 'still working' })}\n`);
-  const progressState = await monitorMod.getAcpMonitorState('missing-session', transcriptPath, {}, { ...acpMonitorConfig, gatewayUrl: 'http://127.0.0.1:1', gatewayToken: '' });
+  const progressState = await monitorMod.getAcpMonitorState({ childSessionKey: 'missing-session', streamLogPath: transcriptPath, previousState: {}, ...acpMonitorConfig, gatewayUrl: 'http://127.0.0.1:1', gatewayToken: '' });
   assert.equal(progressState.sessionState, 'running');
   assert.equal(progressState.sessionActive, true);
   assert.equal(progressState.terminal, false);
@@ -74,7 +74,7 @@ await record('monitor handles running, closed, unreachable-with-progress, and ra
   assert.equal(typeof progressState.gatewayDetail, 'string');
 
   fs.writeFileSync(transcriptPath, `${JSON.stringify({ ts: new Date().toISOString(), kind: 'lifecycle', phase: 'error', data: { error: '429 rate limit, retry after 60 seconds' } })}\n`);
-  const rateLimited = await monitorMod.getAcpMonitorState('missing-session', transcriptPath, {}, { ...acpMonitorConfig, gatewayUrl: 'http://127.0.0.1:1', gatewayToken: '' });
+  const rateLimited = await monitorMod.getAcpMonitorState({ childSessionKey: 'missing-session', streamLogPath: transcriptPath, previousState: {}, ...acpMonitorConfig, gatewayUrl: 'http://127.0.0.1:1', gatewayToken: '' });
   assert.equal(rateLimited.rateLimited, true);
   assert.equal(rateLimited.reason, 'rate_limited');
   assert.equal(rateLimited.gatewayUnreachable, true);

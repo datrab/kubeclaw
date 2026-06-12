@@ -317,6 +317,21 @@ await record('ACP session rate-limit ownership is centralized in rate-limit serv
     {
       pauseCount: 2,
       maxPauses: 1,
+      exhaustedResultOptions: rateLimitMod.createTrackedModuleSessionRateLimitExhaustedResultOptions({
+        moduleId: 'session-monitor-rate-limit',
+        phase: 'forge',
+        identity: {
+          run_id: 'run-session-monitor-rate-limit-1',
+          attempt: 2,
+          dispatch_id: 'dispatch-session-monitor-rate-limit-1',
+          gateway_label: 'session-monitor-rate-limit-gateway',
+          session_key: 'agent:main:acp:session-monitor-rate-limit-1',
+        },
+        resultOverrides: {
+          detail: 'provider overloaded',
+          transcript: { eventCount: 3, lastDetail: 'rate limited' },
+        },
+      }),
     },
   );
 
@@ -336,6 +351,10 @@ await record('ACP session rate-limit ownership is centralized in rate-limit serv
     session_key: 'agent:main:acp:session-monitor-rate-limit-1',
     detail: 'provider overloaded',
     transcript: { eventCount: 3, lastDetail: 'rate limited' },
+    module: 'session-monitor-rate-limit',
+    module_id: 'session-monitor-rate-limit',
+    phase: 'forge',
+    current_phase: 'forge',
   });
   assert.deepEqual(exhausted.result.status, exhausted.result.rate_limit_status);
   assert.deepEqual(exhausted.status, {
@@ -374,6 +393,17 @@ await record('shared session rate-limit ownership can preserve cooldown budget a
     {
       sleepFn: async () => {},
       pauseState,
+      exhaustedResultOptions: rateLimitMod.createTrackedModuleSessionRateLimitExhaustedResultOptions({
+        moduleId: 'shared-session-rate-limit',
+        phase: 'forge',
+        identity: {
+          run_id: sharedStatus.run_id,
+          attempt: sharedStatus.attempt,
+          dispatch_id: sharedStatus.dispatch_id,
+          gateway_label: sharedStatus.gateway_label,
+          session_key: sharedStatus.session_key,
+        },
+      }),
     },
   );
 
@@ -383,6 +413,17 @@ await record('shared session rate-limit ownership can preserve cooldown budget a
     {
       sleepFn: async () => {},
       pauseState,
+      exhaustedResultOptions: rateLimitMod.createTrackedModuleSessionRateLimitExhaustedResultOptions({
+        moduleId: 'shared-session-rate-limit',
+        phase: 'forge',
+        identity: {
+          run_id: sharedStatus.run_id,
+          attempt: sharedStatus.attempt,
+          dispatch_id: sharedStatus.dispatch_id,
+          gateway_label: sharedStatus.gateway_label,
+          session_key: sharedStatus.session_key,
+        },
+      }),
     },
   );
 

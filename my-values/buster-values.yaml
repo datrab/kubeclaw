@@ -18,7 +18,6 @@ anthropic:
 # Both containers keep the sandbox runtime mounts because both participate in tests.
 busterPipeline:
   enabled: true
-  heartbeatIntervalMs: 1000
   resources:
     requests: { cpu: 500m, memory: 4096Mi, ephemeral-storage: 4Gi }
     limits: { cpu: 4000m, memory: 24576Mi, ephemeral-storage: 50Gi }
@@ -26,7 +25,7 @@ busterPipeline:
 gateway:
   resources:
     requests: { cpu: 100m, memory: 512Mi, ephemeral-storage: 1Gi }
-    limits: { cpu: 4000m, memory: 24576Mi, ephemeral-storage: 50Gi }
+    limits: { cpu: 1000m, memory: 2048Mi, ephemeral-storage: 50Gi }
 
 image:
   repository: ghcr.io/datrab/kubeclaw-sandbox

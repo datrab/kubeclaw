@@ -675,7 +675,7 @@ assertIncludes(renderedBuster, 'name: agent-buster', 'Buster Helm render must ta
 assertIncludes(renderedBuster, 'type: ClusterIP', 'Rendered Buster gateway Service must be cluster-internal by default');
 assert.equal(renderedBuster.includes('nodePort: 30074'), false, 'Rendered Buster gateway must not expose a NodePort');
 assertIncludes(renderedBuster, 'kind: Deployment', 'Buster Helm render must include a Deployment');
-assertIncludes(renderedBuster, 'image: "ghcr.io/forgestackai/kubeclaw-sandbox:latest"', 'Buster deployment must render the sandbox runtime image');
+assertIncludes(renderedBuster, 'image: "ghcr.io/datrab/kubeclaw-sandbox:latest"', 'Buster deployment must render the sandbox runtime image');
 assertIncludes(renderedBuster, 'name: kubeclaw', 'Buster deployment must render the OpenClaw gateway container');
 assertIncludes(renderedBuster, 'name: buster-pipeline', 'Buster deployment must render the Buster pipeline worker container separately');
 assertIncludes(renderedBuster, 'value: "gateway"', 'Buster gateway container must expose its health role explicitly');
@@ -686,11 +686,15 @@ assert.equal(renderedBuster.includes('wait -n'), false, 'Buster deployment must 
 assert.equal(renderedBuster.includes('BUSTER_PIPELINE_PID'), false, 'Buster deployment must remove the old shell-supervised worker PID path');
 assertIncludes(renderedBuster, 'name: OPENCLAW_GATEWAY_URL', 'Buster deployment must expose the colocated gateway URL to the Buster startup process');
 assertIncludes(renderedBuster, 'value: "http://127.0.0.1:18789"', 'Buster deployment must point Buster startup checks at the colocated gateway port');
+assertIncludes(renderedBuster, 'name: REPO_ROOT', 'Buster deployment must pass the mounted checkout path to runtime processes');
+assertIncludes(renderedBuster, 'value: "/home/node/.openclaw/workspace/git-repo"', 'Buster deployment must point REPO_ROOT at the workspace-mounted Git checkout');
 assertIncludes(renderedBuster, 'mountPath: /home/node/.openclaw/workspace', 'Buster containers must share the OpenClaw workspace runtime mount');
 assertIncludes(renderedBuster, 'mountPath: /home/node/.openclaw/openclaw.json', 'Buster containers must share the rendered OpenClaw runtime config');
 assertIncludes(renderedBuster, 'mountPath: /home/node/.openclaw/swarm.config.json', 'Buster containers must share the rendered swarm runtime config');
 assertIncludes(renderedBuster, 'mountPath: /app/skills', 'Buster containers must share the merged skills runtime');
-assertIncludes(renderedBuster, 'BUSTER_HEARTBEAT_PATH', 'Buster deployment must expose the Buster heartbeat path to readiness probes');
+assertIncludes(renderedBuster, 'config.buster.runtime.heartbeat_path is required', 'Buster readiness must use swarm.config.json as heartbeat path authority');
+assert.equal(renderedBuster.includes('BUSTER_HEARTBEAT_PATH'), false, 'Buster deployment must not keep heartbeat path env fallback after swarm config owns it');
+assert.equal(renderedBuster.includes('BUSTER_HEARTBEAT_INTERVAL_MS'), false, 'Buster deployment must not keep obsolete heartbeat interval env fallback');
 assertIncludes(renderedBuster, 'KUBECLAW_HEALTH_CHECK_BUSTER_HEARTBEAT', 'Buster deployment must enable Buster heartbeat readiness checks');
 assertIncludes(renderedBusterGatewayUrlOverride, 'value: "http://agent-buster.kubeclaw.svc.cluster.local:18789"', 'Buster deployment must honor gateway.url when explicitly configured');
 assertIncludes(renderedBuster, 'shareProcessNamespace: false', 'Buster sandbox deployment must not share the pod process namespace');
@@ -893,6 +897,8 @@ assertIncludes(deployScript, 'cmd_secrets() {', 'Deploy script must expose a can
 assertIncludes(deployScript, 'prompt_workspace_namespace_if_needed() {', 'Deploy script must prompt for a workspace namespace when no namespace is configured');
 assertIncludes(deployScript, 'How would you like to name the workspace namespace?', 'Deploy script must present operator-facing workspace namespace wording');
 assertIncludes(deployScript, 'KUBECLAW_WORKSPACE_NAMESPACE_FILE', 'Deploy script must remember the selected workspace namespace for later setup runs');
+assertIncludes(deployScript, 'prompt_default="$workspace"', 'Deploy script must offer the remembered workspace namespace as the interactive prompt default');
+assertIncludes(deployScript, 'workspace="${workspace:-$prompt_default}"', 'Deploy script must accept the remembered/default namespace when the operator presses Enter');
 assertIncludes(deployScript, 'KUBECLAW_DEPLOY_LITELLM', 'Deploy script must expose optional component deployment switches');
 assertIncludes(deployScript, 'KUBECLAW_DEPLOY_POSTGRESQL', 'Deploy script must allow PostgreSQL to be disabled as optional infrastructure');
 assertIncludes(deployScript, 'KUBECLAW_DEPLOY_QDRANT', 'Deploy script must allow Qdrant to be disabled as optional infrastructure');

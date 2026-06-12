@@ -92,3 +92,21 @@ This page is manually maintained from:
 - `skills/buster/pipeline/services/task-completion.ts`
 - `skills/nova/pipeline/core/paths.ts`
 - `skills/common/pipeline/telemetry.ts`
+
+## Stream Ownership
+
+| Stream | Producer | Consumer | Failure evidence |
+| --- | --- | --- | --- |
+| `swarm:<agent>:tasks` | Nova Buster dispatch code and Redis transport helpers | Buster task queue consumer group `<agent>-group` | invalid envelopes and malformed payloads go to `swarm:<agent>:tasks:dead-letter` by default |
+| task completion stream from payload | Buster task completion service | Nova completion polling/adjudication | missing completion triggers synthesized failure completion or dead-letter before ACK |
+| `pipeline:telemetry:<project>:<run_id>` | Nova/Buster telemetry services | observer plugin, operators, diagnostics | weak identity is rejected rather than writing to `unknown:unknown` |
+| `pipeline:telemetry:seq:<project>:<run_id>` | telemetry stream service | telemetry ordering checks | seq restart checks prove monotonic behavior across emitter restarts |
+
+## Troubleshooting
+
+- High `XPENDING` on Buster tasks means work was read but not ACKed; inspect Buster logs and reclaim policy before deleting entries.
+- Dead-letter entries mean the task was terminally recorded before ACK; inspect `reason`, `phase`, `payload_keys`, `run_id`, `attempt`, and `dispatch_id`.
+- Completion entries without matching lifecycle identity should not advance scheduler state.
+- Telemetry stream absence can mean telemetry disabled, weak identity rejected, Redis unavailable, or sink fallback only.
+
+Run the Buster, telemetry, and Redis transport contract tests after stream schema changes.

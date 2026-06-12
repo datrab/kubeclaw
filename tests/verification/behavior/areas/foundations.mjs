@@ -44,6 +44,7 @@ export async function registerFoundationsArea({
 }) {
 const pipelineSchedulingMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/runners/pipeline-runner-scheduling.ts');
 const pipelineLockMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/runners/pipeline-runner-lock.ts');
+const busterRuntimePolicyMod = await importRuntimeModule(sandboxRuntimeRoot, '/app/skills/pipeline/services/runtime-policy.ts');
 
 const anyPluginConfigSchema = () => ({
   schemaType: 'json_schema',
@@ -923,7 +924,17 @@ await record('config validation derives accepted gate types from the startup plu
     auto_retry_threshold: 2,
     session_nudge_threshold: 0.75,
     rate_limit: { cooldown_hours: 2, max_pauses_per_module: 5, cooldown_buffer_ms: 5000 },
-    buster: { suite_timeout_ms: 300000 },
+    buster: {
+      suite_timeout_ms: 300000,
+      max_crash_retries: 2,
+      runtime: {
+        heartbeat_path: '/tmp/kubeclaw-buster-heartbeat',
+        heartbeat_interval_ms: 1000,
+        task_poll_interval_ms: 2000,
+        task_pending_reclaim_idle_ms: 60000,
+        task_stream_max_len: 250,
+      },
+    },
     discord_alerts: { info: true, warn: true, critical: true, ok: true },
     pre_check: { enabled: true, lint_report_path: '/app/skills/pipeline/tools/lint-report.ts', timeout_seconds: 60 },
     review_defaults: { timeout_minutes: 30, max_fix_cycles: 3, lint_tier: 'full', lint_required: false },
@@ -2554,31 +2565,53 @@ await record('Buster monitor enforces hard wall-clock timeouts with explicit kil
 await record('Buster consumer reclaims pending tasks before reading new deliveries', async () => {
   const reclaimCalls = [];
   let xreadgroupCalls = 0;
-  const reclaimed = await busterTaskQueueMod.readNextTaskEntry({
-    call: async (...args) => {
-      reclaimCalls.push(args);
-      return ['0-0', [[
-        '1712345678901-0',
-        [
-          'type', 'module_test',
-          'sender', 'nova',
-          'payload', JSON.stringify({ module_id: '01', dispatch_id: 'dispatch-reclaimed' }),
-        ],
-      ]], []];
+  const previousSwarmConfig = process.env.SWARM_CONFIG;
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-task-queue-'));
+  const swarmConfigPath = path.join(root, 'swarm.config.json');
+  fs.writeFileSync(swarmConfigPath, JSON.stringify({
+    buster: {
+      runtime: {
+        heartbeat_path: path.join(root, 'heartbeat.json'),
+        heartbeat_interval_ms: 1000,
+        task_poll_interval_ms: 2000,
+        task_pending_reclaim_idle_ms: 60000,
+        task_stream_max_len: 250,
+      },
     },
-    xreadgroup: async () => {
-      xreadgroupCalls += 1;
-      return null;
-    },
-  });
+  }));
+  try {
+    process.env.SWARM_CONFIG = swarmConfigPath;
+    busterRuntimePolicyMod.resetBusterRuntimePolicyForTests();
+    const reclaimed = await busterTaskQueueMod.readNextTaskEntry({
+      call: async (...args) => {
+        reclaimCalls.push(args);
+        return ['0-0', [[
+          '1712345678901-0',
+          [
+            'type', 'module_test',
+            'sender', 'nova',
+            'payload', JSON.stringify({ module_id: '01', dispatch_id: 'dispatch-reclaimed' }),
+          ],
+        ]], []];
+      },
+      xreadgroup: async () => {
+        xreadgroupCalls += 1;
+        return null;
+      },
+    });
 
-  assert.equal(reclaimCalls.length, 1);
-  assert.equal(reclaimCalls[0][0], 'XAUTOCLAIM');
-  assert(/^[\w:-]+:tasks$/.test(reclaimCalls[0][1]));
-  assert(/[\w-]+-group$/.test(reclaimCalls[0][2]));
-  assert.equal(reclaimed.reclaimed, true);
-  assert.equal(reclaimed.id, '1712345678901-0');
-  assert.equal(reclaimed.data.type, 'module_test');
-  assert.equal(xreadgroupCalls, 0);
+    assert.equal(reclaimCalls.length, 1);
+    assert.equal(reclaimCalls[0][0], 'XAUTOCLAIM');
+    assert(/^[\w:-]+:tasks$/.test(reclaimCalls[0][1]));
+    assert(/[\w-]+-group$/.test(reclaimCalls[0][2]));
+    assert.equal(reclaimed.reclaimed, true);
+    assert.equal(reclaimed.id, '1712345678901-0');
+    assert.equal(reclaimed.data.type, 'module_test');
+    assert.equal(xreadgroupCalls, 0);
+  } finally {
+    busterRuntimePolicyMod.resetBusterRuntimePolicyForTests();
+    if (previousSwarmConfig === undefined) delete process.env.SWARM_CONFIG;
+    else process.env.SWARM_CONFIG = previousSwarmConfig;
+  }
 });
 }

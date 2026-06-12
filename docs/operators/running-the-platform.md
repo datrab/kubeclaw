@@ -89,3 +89,15 @@ Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/summary.json
 ## Restart Expectations
 
 Both agent deployments use `strategy.type: Recreate` and persistent config/workspace PVCs. The init container preserves existing OpenClaw and swarm config unless the relevant override flag is enabled. Restarting a pod can therefore keep runtime-edited config and workspace state.
+
+## Steady-State Signals
+
+| Signal | Where to check | Healthy expectation |
+| --- | --- | --- |
+| Pods | `kubectl -n "$NAMESPACE" get pods` | agent pods Ready, Buster pipeline container running when Buster is deployed |
+| Gateway | `./scripts/deploy.sh smoke-agent nova`; `./scripts/deploy.sh smoke-agent buster` | health script succeeds for gateway/config/dependencies that are enabled |
+| Pipeline run | `.swarm/logs/pipeline/latest.json` | status and terminal fields match current work; run directory exists |
+| Redis work queue | `XPENDING`/`XLEN` on `swarm:buster:tasks` | pending work drains or has explainable dead-letter/completion records |
+| Telemetry | run-scoped `pipeline.jsonl`, Redis telemetry stream, optional observer output | event identity includes project and run ID; external sinks may degrade without owning scheduler truth |
+
+Use `verify-live` after image, registry, or chart changes. Use behavior/contract verifiers for source changes that do not require a live cluster.

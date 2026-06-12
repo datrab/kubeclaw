@@ -34,8 +34,8 @@ Important fields:
 
 - `dir`: directory under `.swarm/modules/`; path helpers reject absolute paths and parent traversal.
 - `depends_on`: module IDs that should already be `PASS`.
-- `stages`: `["forge", "buster"]` by default. Use `["forge"]` for modules tested later by a gate.
-- `timeout_minutes`: module attempt timeout, falling back to platform defaults.
+- `stages`: explicit module phases, usually `["forge", "buster"]`. Use `["forge"]` for modules tested later by a gate.
+- `timeout_minutes`: explicit module attempt timeout.
 - `max_fails`: retry ceiling before the module becomes blocked.
 - `forge_model` and `thinking_level`: per-module overrides for Forge.
 - `test_suites` and `test_config`: Buster suite selection and suite config.
@@ -78,7 +78,7 @@ Important technical details:
 - `stages` drives the branch: `["forge"]`, `["buster"]`, and `["forge", "buster"]` do not all follow the same path.
 - Buster preparation can stop before dispatch when `progress.json` or environment config is invalid.
 - retry scheduling emits telemetry with attempt, max attempts, dispatch/session identity, and reason.
-- the attempt returns a canonical `PipelineStepResult`; older compatibility-shaped results are normalized at the boundary.
+- the attempt returns a canonical `PipelineStepResult`; non-typed producer results are rejected at the boundary.
 
 ## Module State Fields Operators Should Read
 
@@ -166,7 +166,7 @@ The technical reason gates are separate from modules is that they often evaluate
 
 ## Approval Behavior
 
-Approval gates are the explicit human-control surface. They write request and decision artifacts under `.swarm/logs/gates/<gate_id>/` and gate status under `.swarm/<gate_id>-gate-status.json`. Use them before destructive operations, public previews, or expensive model/test stages.
+Approval gates are the explicit human-control surface. They persist approval state in `.swarm/<gate_id>-gate-status.json`, write request and decision evidence under `.swarm/logs/gates/<gate_id>/`, and Nova projects scheduler state from lifecycle/read-model authority. Use them before destructive operations, public previews, or expensive model/test stages.
 
 If the approval times out and `on_timeout` is `block`, the pipeline stops with operator-visible evidence. Resume only after recording the intended decision path.
 

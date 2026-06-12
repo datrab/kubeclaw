@@ -315,12 +315,20 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
   const echoDurationSec = Math.round((Date.now() - echoStartTime) / 1000);
   const echoModel = reviewerPolicy.model;
   echoGatewayLabel = echoGatewayLabel || trackedGatewayLabel(deps.getTrackedAgent(echoTrackingKey));
+  const echoCompletionCorrelation = {
+    run_id: config._runId || config.run_id || null,
+    gate_id: gateId,
+    gate_type: gate.type,
+    attempt: reviewAttempt,
+    gateway_label: echoGatewayLabel,
+    session_key: echoSessionKey,
+  };
   await deps.discord(config, 'INFO', `Echo complete: ${gate.title}`, `Reviewer: ${reviewer.label}`, [
-    ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate.type, attempt: reviewAttempt, gateway_label: echoGatewayLabel, session_key: echoSessionKey }),
+    ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, echoCompletionCorrelation),
     { name: 'Duration', value: `${Math.round(echoDurationSec / 60)}min` },
     { name: 'Model', value: echoModel },
     { name: 'Reviewer', value: reviewer.label },
-  ]);
+  ], { correlation: echoCompletionCorrelation });
 
   // ── Phase 6: Parse review result before publication ──
   let parsedReview;

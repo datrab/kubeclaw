@@ -1,7 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// Suite: k8s — Production Dockerfile Build + K8s Deploy
-// ═══════════════════════════════════════════════════════════════
-//
 // KEEP_TYPED_POLICY: Kubernetes defaults define bounded ephemeral deployment;
 // safe namespace prefixes prevent broad targeting; production manifests are
 // adapted to the ephemeral namespace/image; temp cleanup and readiness
@@ -29,23 +25,9 @@ import { buildSubprocessEnv } from '../security.ts';
 
 type AnyRecord = Record<string, any>;
 type SuiteLog = (msg: string) => void;
-
 type Check = { name: string; passed: boolean; detail: string };
-type NamespaceLeaseStatus = {
-  namespaceName: string;
-  previewUrl: string | null;
-  exposurePhase: string | null;
-  exposureHostname: string | null;
-  credentialsRef: string | null;
-  credentialsAvailable: boolean;
-  message: string | null;
-};
-
-type TestCredentialSpec = {
-  secretName: string;
-  keys: string[];
-  purpose: string | null;
-};
+type NamespaceLeaseStatus = { namespaceName: string; previewUrl: string | null; exposurePhase: string | null; exposureHostname: string | null; credentialsRef: string | null; credentialsAvailable: boolean; message: string | null };
+type TestCredentialSpec = { secretName: string; keys: string[]; purpose: string | null };
 
 interface K8sContext {
   payload?: AnyRecord;
@@ -63,25 +45,10 @@ const BUSTER_LEASE_API_GROUP = process.env.BUSTER_LEASE_API_GROUP || 'kubeclaw.f
 const BUSTER_LEASE_API_VERSION = process.env.BUSTER_LEASE_API_VERSION || 'v1alpha1';
 const K8S_DNS_LABEL_MAX_LENGTH = 63;
 
-const DEFAULTS = {
-  port:                   3000,
-  health_path:            '/health',
-  namespace_prefix:       'test',
-  ready_timeout_seconds:  120,
-  build_timeout_seconds:  300,
-  push_timeout_seconds:   120,
-  deploy_timeout_seconds: 30,
-};
+const DEFAULTS = { port: 3000, health_path: '/health', namespace_prefix: 'test', ready_timeout_seconds: 120, build_timeout_seconds: 300, push_timeout_seconds: 120, deploy_timeout_seconds: 30 };
 
 const SAFE_NAMESPACE_PREFIXES = Object.freeze(['test']);
-const CLUSTER_SCOPED_KINDS = new Set([
-  'APIService', 'CertificateSigningRequest', 'ClusterRole', 'ClusterRoleBinding',
-  'CSIDriver', 'CSINode', 'CustomResourceDefinition', 'FlowSchema', 'IngressClass',
-  'MutatingWebhookConfiguration', 'Namespace', 'Node', 'PersistentVolume',
-  'PodSecurityPolicy', 'PriorityClass', 'PriorityLevelConfiguration', 'RuntimeClass',
-  'StorageClass', 'ValidatingAdmissionPolicy', 'ValidatingAdmissionPolicyBinding',
-  'ValidatingWebhookConfiguration', 'VolumeSnapshotClass',
-]);
+const CLUSTER_SCOPED_KINDS = new Set(['APIService', 'CertificateSigningRequest', 'ClusterRole', 'ClusterRoleBinding', 'CSIDriver', 'CSINode', 'CustomResourceDefinition', 'FlowSchema', 'IngressClass', 'MutatingWebhookConfiguration', 'Namespace', 'Node', 'PersistentVolume', 'PodSecurityPolicy', 'PriorityClass', 'PriorityLevelConfiguration', 'RuntimeClass', 'StorageClass', 'ValidatingAdmissionPolicy', 'ValidatingAdmissionPolicyBinding', 'ValidatingWebhookConfiguration', 'VolumeSnapshotClass']);
 
 function shortId(): string {
   return Math.random().toString(36).slice(2, 8);

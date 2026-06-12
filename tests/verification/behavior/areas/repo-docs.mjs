@@ -37,8 +37,12 @@ export async function registerRepoDocsArea({
 await record('behavior verification doc reflects the live repo-based workflow', async () => {
   const behaviorDoc = fs.readFileSync(path.join(sourceRoot, 'tests', 'verification', 'behavior-verification.md'), 'utf8');
   const verificationReadme = fs.readFileSync(path.join(sourceRoot, 'tests', 'verification', 'README.md'), 'utf8');
+  const statusArtifactsReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'reference', 'status-and-artifacts.md'), 'utf8');
+  const modulesAndGatesDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'pipeline', 'modules-and-gates.md'), 'utf8');
 
   assert.equal(behaviorDoc.includes('use the live repo state in `kubeclaw-main` as the source of truth'), true);
+  assert.equal(statusArtifactsReference.includes('`.swarm/<gate_id>-gate-status.json`'), true, 'status/artifact reference must list approval gate persisted state');
+  assert.equal(modulesAndGatesDoc.includes('persist approval state in `.swarm/<gate_id>-gate-status.json`'), true, 'modules/gates docs must list approval gate persisted state');
   assert.equal(behaviorDoc.includes('`<repo-root>/kubeclaw-main/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`'), true);
   assert.equal(behaviorDoc.includes('treat `kubeclaw-main/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` as the authoritative inventory, stream-identity, and contract-boundary spec'), true);
   assert.equal(behaviorDoc.includes('treat `kubeclaw-main/docs/archive/legacy-root-docs/telemetry-event-schema.md` as the authoritative event-by-event payload reference, kept in exact inventory parity with that contract'), true);

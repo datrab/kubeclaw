@@ -275,15 +275,14 @@ prompt_workspace_namespace_if_needed() {
   local prompt_default="$NAMESPACE"
 
   mode="$(normalize_boolish "$KUBECLAW_WORKSPACE_PROMPT")"
-  if [[ -z "$NAMESPACE_WAS_SET" && "$mode" == "auto" && -f "$KUBECLAW_WORKSPACE_NAMESPACE_FILE" ]]; then
+  if [[ -z "$NAMESPACE_WAS_SET" && -f "$KUBECLAW_WORKSPACE_NAMESPACE_FILE" ]]; then
     workspace="$(tr -d '[:space:]' < "$KUBECLAW_WORKSPACE_NAMESPACE_FILE")"
     if is_valid_namespace "$workspace"; then
       NAMESPACE="$workspace"
-      export NAMESPACE
-      log "Workspace namespace: $NAMESPACE"
-      return 0
+      prompt_default="$workspace"
+    else
+      warn "Ignoring invalid workspace namespace file: $KUBECLAW_WORKSPACE_NAMESPACE_FILE"
     fi
-    warn "Ignoring invalid workspace namespace file: $KUBECLAW_WORKSPACE_NAMESPACE_FILE"
   fi
 
   case "$mode" in

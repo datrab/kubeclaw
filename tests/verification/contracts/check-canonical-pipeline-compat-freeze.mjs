@@ -122,6 +122,17 @@ const activeDocMarkerLimits = {
   },
 };
 
+const canonicalApprovalStateDocMarkers = [
+  {
+    rel: 'docs/pipeline/modules-and-gates.md',
+    text: 'persist approval state in `.swarm/<gate_id>-gate-status.json`',
+  },
+  {
+    rel: 'docs/reference/status-and-artifacts.md',
+    text: '- `.swarm/<gate_id>-gate-status.json`',
+  },
+];
+
 const highRiskOrRe = /\|\|.*(fallback|legacy|status|status_json|gateStatus|gateway|GATEWAY|stream_key|session|dispatch|run_id|module_id|gate_id|payload|context|identity|source|module|gate|env)/i;
 const highRiskOrLimits = {
   'skills/nova/pipeline/agents/module-worker-control-results.ts': 14,
@@ -307,6 +318,19 @@ function countHighRiskOr(source) {
   return source.split('\n').filter((line) => line.includes('||') && highRiskOrRe.test(line)).length;
 }
 
+function sourceForActiveDocMarkerScan(rel, source) {
+  return canonicalApprovalStateDocMarkers
+    .filter((marker) => marker.rel === rel)
+    .reduce((updated, marker) => {
+      assert.equal(
+        updated.includes(marker.text),
+        true,
+        `canonical approval gate state doc marker missing in ${rel}: ${marker.text}`,
+      );
+      return updated.replace(marker.text, '<canonical approval gate state artifact>');
+    }, source);
+}
+
 function assertCountLimits({ name, re, limits }) {
   const seen = new Map();
   for (const filePath of runtimeFiles) {
@@ -335,7 +359,8 @@ for (const [name, config] of Object.entries(markerLimits)) {
   ].filter((filePath) => fs.existsSync(filePath));
   for (const filePath of activeDocFiles) {
     const rel = relPath(sourceRoot, filePath);
-    const count = countLineMatches(fs.readFileSync(filePath, 'utf8'), activeDocMarkerLimits.re);
+    const source = sourceForActiveDocMarkerScan(rel, fs.readFileSync(filePath, 'utf8'));
+    const count = countLineMatches(source, activeDocMarkerLimits.re);
     if (count > 0) seen.set(rel, count);
     const limit = activeDocMarkerLimits.limits[rel] ?? 0;
     assert(count <= limit, `active doc compatibility markers grew in ${rel}: ${count} > ${limit}`);

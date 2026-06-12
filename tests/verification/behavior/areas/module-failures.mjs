@@ -60,6 +60,9 @@ export async function registerModuleFailuresArea({
 	  const correlation = stepCorrelation(result);
 	  if (Object.prototype.hasOwnProperty.call(correlation, name)) return correlation[name];
 	  if (Object.prototype.hasOwnProperty.call(metadata, name)) return metadata[name];
+	  if (name === 'rate_limit_exhausted') return result?.outcome === 'rate_limited';
+	  if (name === 'rate_limit_status') return result?.rateLimit?.rate_limit_status ?? null;
+	  if (name === 'max_rate_limit_pauses') return result?.rateLimit?.max_rate_limit_pauses ?? null;
 	  if (name === 'module') return correlation.module_id ?? result?.module;
 	  if (name === 'status') return metadata.final_status?.status ?? metadata.status?.status ?? (result?.outcome === 'passed' ? 'PASS' : result?.status);
 	  return result?.[name];
@@ -78,6 +81,17 @@ function platformModuleFailureDefaults() {
     default_timeout_minutes: 30,
     default_max_fails: 3,
     rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },
+    buster: {
+      suite_timeout_ms: 300000,
+      max_crash_retries: 0,
+      runtime: {
+        heartbeat_path: '/tmp/kubeclaw-buster-heartbeat',
+        heartbeat_interval_ms: 1000,
+        task_poll_interval_ms: 2000,
+        task_pending_reclaim_idle_ms: 60000,
+        task_stream_max_len: 250,
+      },
+    },
     pre_check: { enabled: false, lint_report_path: '/app/skills/pipeline/tools/lint-report.ts', timeout_seconds: 60 },
     review_defaults: { timeout_minutes: 30, max_fix_cycles: 3, lint_tier: 'full', lint_required: false },
   };
@@ -645,6 +659,7 @@ await record('module-runner appends terminal ACP detail to Forge no-change failu
 
   const moduleRunnerMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/runners/module-runner.ts');
   const runtimeCoreMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
+  const pipelineStepResultMod = await importRuntimeModule(moduleRuntimeRoot, '/app/skills/pipeline/services/contracts/pipeline-step-result.ts');
   const registry = await buildBuiltInRegistry(moduleRuntimeRoot);
 
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-forge-no-change-detail-'));
@@ -662,6 +677,7 @@ await record('module-runner appends terminal ACP detail to Forge no-change failu
   };
   const handleFailCalls = [];
   const discordCalls = [];
+  const runId = 'run-forge-no-change-detail-1';
 
   const progress = {
     execution_order: ['01'],
@@ -704,12 +720,27 @@ await record('module-runner appends terminal ACP detail to Forge no-change failu
       saveStreamLog: () => {},
       handleFail: async (_config, _statusValue, _dir, _moduleId, _maxFails, phase, reason) => {
         handleFailCalls.push({ phase, reason });
-        return { outcome_class: "needs_nova", reason, phase };
+        return pipelineStepResultMod.buildPipelineStepResult({
+          stepType: 'module',
+          stepId: '01',
+          nextAction: 'halt',
+          outcome: 'needs_nova',
+          issueType: 'code',
+          reason,
+          correlation: {
+            run_id: runId,
+            module_id: '01',
+            module_dir: '01-scaffold',
+            attempt: 1,
+            phase,
+          },
+          terminalAction: 'request_handoff',
+          terminalScope: 'module',
+        });
       },
       sleep: async () => {},
     },
   };
-  const runId = 'run-forge-no-change-detail-1';
   const config = {
     ...platformModuleFailureDefaults(),
     project: 'behavior-forge-no-change-detail',
@@ -1559,7 +1590,6 @@ await record('module-runner buster crash exhaustion keeps dispatch correlation o
         dir: '01-scaffold',
         stages: ['buster'],
         test_suites: ['smoke'],
-        max_buster_crash_retries: 1,
       },
     },
   };
@@ -1615,6 +1645,10 @@ const config = {
     project: 'behavior-buster-crash-dispatch',
     default_timeout_minutes: 30,
     default_max_fails: 3,
+    buster: {
+      ...platformModuleFailureDefaults().buster,
+      max_crash_retries: 1,
+    },
     _disable_discord_webhooks: true,
     telemetry: { enabled: true },
     pluginRegistry: registry,
@@ -2274,9 +2308,14 @@ await record('module-runner early terminal failure paths still emit module FAIL 
       project: 'behavior-module-dependency-fail',
       runId: 'run-module-dependency-fail-1',
       expectedExit: 1,
-      expectedReason: 'Dependencies not met: module 00 not PASS',
-      expectedPhase: 'dependency_check',
-      expectedOldStatus: 'PENDING',
+	      expectedReason: 'Dependencies not met: module 00 not PASS',
+	      expectedPhase: 'dependency_check',
+	      expectedOldStatus: 'PENDING',
+	      expectedAttempt: 2,
+	      expectedDispatchId: 'dispatch-dependency-check-01',
+	      expectedGatewayLabel: 'dependency-check-01',
+	      expectedSessionKey: 'agent:main:acp:dependency-check-01',
+	      expectedCorrelationProvenanceFamily: 'status',
       configure: ({ repoRoot }) => ({
         progress: {
           execution_order: ['01'],
@@ -2294,12 +2333,14 @@ await record('module-runner early terminal failure paths still emit module FAIL 
               loadStatus: () => ({
                 module_id: '01',
                 title: 'Scaffold',
-                status: 'PENDING',
-                current_phase: null,
-                fail_count: 0,
-                fail_summaries: [],
-                gateway_label: 'dependency-check-01',
-                session_key: 'agent:main:acp:dependency-check-01',
+	                status: 'PENDING',
+	                current_phase: 'stale_forge_phase',
+	                attempt: 2,
+	                fail_count: 0,
+	                fail_summaries: [],
+	                dispatch_id: 'dispatch-dependency-check-01',
+	                gateway_label: 'dependency-check-01',
+	                session_key: 'agent:main:acp:dependency-check-01',
                 history: [],
               }),
             },
@@ -2553,18 +2594,30 @@ await record('module-runner early terminal failure paths still emit module FAIL 
     if (scenario.expectedReason !== undefined) {
       assert.equal(stepReason(result), scenario.expectedReason, scenario.name);
     }
-    if (scenario.expectedReasonIncludes) {
-      assert.equal(String(stepReason(result) || '').includes(scenario.expectedReasonIncludes), true, scenario.name);
-    }
-    if (scenario.expectedGatewayLabel !== undefined) {
-      assert.equal(stepValue(result, 'gateway_label'), scenario.expectedGatewayLabel, scenario.name);
-    }
+	    if (scenario.expectedReasonIncludes) {
+	      assert.equal(String(stepReason(result) || '').includes(scenario.expectedReasonIncludes), true, scenario.name);
+	    }
+	    if (scenario.expectedPhase !== undefined) {
+	      assert.equal(stepValue(result, 'phase') ?? null, scenario.expectedPhase, scenario.name);
+	    }
+	    if (scenario.expectedGatewayLabel !== undefined) {
+	      assert.equal(stepValue(result, 'gateway_label'), scenario.expectedGatewayLabel, scenario.name);
+	    }
+	    if (scenario.expectedDispatchId !== undefined) {
+	      assert.equal(stepValue(result, 'dispatch_id'), scenario.expectedDispatchId, scenario.name);
+	    }
+	    if (scenario.expectedAttempt !== undefined) {
+	      assert.equal(stepValue(result, 'attempt'), scenario.expectedAttempt, scenario.name);
+	    }
     if (scenario.expectedGatewayLabelPrefix !== undefined) {
       assert.equal(String(stepValue(result, 'gateway_label') || '').startsWith(scenario.expectedGatewayLabelPrefix), true, scenario.name);
     }
-    if (scenario.expectedSessionKey !== undefined) {
-      assert.equal(stepValue(result, 'session_key'), scenario.expectedSessionKey, scenario.name);
-    }
+	    if (scenario.expectedSessionKey !== undefined) {
+	      assert.equal(stepValue(result, 'session_key'), scenario.expectedSessionKey, scenario.name);
+	    }
+	    if (scenario.expectedCorrelationProvenanceFamily !== undefined) {
+	      assert.equal(stepCorrelation(result).correlation_provenance?.source_family, scenario.expectedCorrelationProvenanceFamily, scenario.name);
+	    }
 
     const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${scenario.runId}`);
     const failEvent = streamEvents.find((event) => event.type === 'module.status_changed' && event.new_status === 'FAIL');
@@ -2575,9 +2628,12 @@ await record('module-runner early terminal failure paths still emit module FAIL 
     if (scenario.expectedModel !== undefined) {
       assert.equal(failEvent.model, scenario.expectedModel, scenario.name);
     }
-    if (scenario.expectedGatewayLabel !== undefined) {
-      assert.equal(failEvent.gateway_label, scenario.expectedGatewayLabel, scenario.name);
-    }
+	    if (scenario.expectedGatewayLabel !== undefined) {
+	      assert.equal(failEvent.gateway_label, scenario.expectedGatewayLabel, scenario.name);
+	    }
+	    if (scenario.expectedDispatchId !== undefined) {
+	      assert.equal(failEvent.dispatch_id, scenario.expectedDispatchId, scenario.name);
+	    }
     if (scenario.expectedGatewayLabelPrefix !== undefined) {
       assert.equal(String(failEvent.gateway_label || '').startsWith(scenario.expectedGatewayLabelPrefix), true, scenario.name);
     }

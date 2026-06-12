@@ -27,6 +27,7 @@ const busterPhasePath = path.join(sourceRoot, 'skills/nova/pipeline/runners/modu
 const busterDispatchPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/buster-phase/dispatch.ts');
 const busterPollFailurePath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure.ts');
 const busterTerminalFailurePath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure.ts');
+const busterTerminalPassPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/buster-phase/terminal-pass.ts');
 const terminalResultsPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/terminal-results.ts');
 const contextPath = path.join(sourceRoot, 'skills/nova/pipeline/core/context.ts');
 const registryPath = path.join(sourceRoot, 'skills/nova/pipeline/core/registry.ts');
@@ -46,6 +47,7 @@ const busterPhaseSource = fs.readFileSync(busterPhasePath, 'utf8');
 const busterDispatchSource = fs.readFileSync(busterDispatchPath, 'utf8');
 const busterPollFailureSource = fs.readFileSync(busterPollFailurePath, 'utf8');
 const busterTerminalFailureSource = fs.readFileSync(busterTerminalFailurePath, 'utf8');
+const busterTerminalPassSource = fs.readFileSync(busterTerminalPassPath, 'utf8');
 const terminalResultsSource = fs.readFileSync(terminalResultsPath, 'utf8');
 const contextSource = fs.readFileSync(contextPath, 'utf8');
 const registrySource = fs.readFileSync(registryPath, 'utf8');
@@ -91,11 +93,13 @@ assert.equal(attemptSource.includes("from './state-machine.ts'"), true, 'module-
 assert.equal(sharedSource.includes("from '../services/contracts/pipeline-step-result.ts'"), false, 'module-runner shared helper must not retain step-result compatibility projection');
 assert.equal(moduleRunnerSource.includes('return attempt.result;'), true, 'module-runner should receive canonical step results from executeModuleAttempt');
 assert.equal(moduleRunnerSource.includes('buildModuleStepResult'), false, 'module-runner facade must not own module terminal envelope projection');
-assert.equal(attemptSource.includes('buildTypedModuleAttemptTerminal('), true, 'module-runner attempt should project terminal outcomes before returning to facade');
+assert.equal(attemptSource.includes('assertTypedModuleAttemptTerminal('), true, 'module-runner attempt should assert typed terminal outcomes before returning to facade');
 assert.equal(attemptSource.includes('buildModuleStepResult'), false, 'module-runner attempt must not call deleted module step compatibility reconstruction');
-assert.equal(attemptSource.includes('function buildTypedModuleAttemptResult('), true, 'module-runner attempt should own explicit typed module terminal result creation');
+assert.equal(attemptSource.includes('function buildTypedModuleAttemptResult('), false, 'module-runner attempt must not keep module terminal fallback projection');
+assert.equal(attemptSource.includes('moduleTerminalOutcomeForResult('), false, 'module-runner attempt must not infer terminal outcomes from legacy result fields');
+assert.equal(attemptSource.includes('assertPipelineStepResult(terminal.result)'), true, 'module-runner attempt boundary must fail closed on non-typed terminal results');
 assert.equal(sharedSource.includes('export function buildModuleStepResult('), false, 'shared module-runner helper must delete buildModuleStepResult compatibility reconstruction');
-assert.equal(attemptSource.includes('resolveResultAttempt(rawResult)'), true, 'module terminal projection must not derive attempt authority from status active_agent');
+assert.equal(attemptSource.includes('resolveResultAttempt(rawResult)'), false, 'module terminal fallback projection must be deleted');
 assert.equal(stateMachineSource.includes('await runModuleForgePhase({'), true, 'state machine should delegate Forge phase execution through the extracted helper');
 assert.equal(stateMachineSource.includes('await finalizeForgeOnlyPass({'), true, 'state machine should delegate forge-only pass promotion through the extracted helper');
 assert.equal(stateMachineSource.includes('await prepareModuleForBuster({'), true, 'state machine should delegate pre-Buster preparation through the extracted helper');
@@ -112,13 +116,21 @@ assert.equal(busterDispatchSource.includes("requestedSuites.join(', ')"), true, 
 assert.equal(busterDispatchSource.includes("|| 'none'"), false, 'Buster queued notification must not render missing suites as none');
 assert.equal(busterDispatchSource.includes("value: 'none'"), false, 'Buster queued notification must not use a none fallback for suites');
 assert.equal(busterPhaseSource.includes('?? 2'), false, 'Buster crash retry policy must not use an anonymous literal fallback');
+assert.equal(busterPhaseSource.includes('mod.max_buster_crash_retries'), false, 'Buster crash retry policy must use platform config, not module override policy');
+assert.equal(busterPhaseSource.includes('config.buster.max_crash_retries'), true, 'Buster crash retry policy must be read from required platform config');
 assert.equal(forgeSource.includes('poll_result'), false, 'Forge worker routing must not read poll_result compatibility metadata');
 assert.equal(busterPhaseSource.includes('poll_result'), false, 'Buster worker routing must not read poll_result compatibility metadata');
 assert.equal(busterPollFailureSource.includes('poll_result'), false, 'Buster poll-failure routing must not read poll_result compatibility metadata');
 assert.equal(busterPhaseSource.includes('ok: busterWorkerControlResult?.nextAction ==='), false, 'Buster worker routing must use typed final status or real poll evidence, not synthetic ok/status objects');
 assert.equal(busterPollFailureSource.includes("if (reasonCode === 'git_error')"), true, 'Buster polling Git failures must have an explicit fail-closed branch');
-assert.equal(busterPollFailureSource.includes("outcome_class: 'error'"), true, 'Buster polling Git failures must return typed terminal error outcome');
+assert.equal(busterPollFailureSource.includes('buildModuleErrorTerminalResult(config, moduleId'), true, 'Buster polling Git failures must return typed terminal error outcome');
 assert.equal(busterPollFailureSource.includes('polling_git:'), true, 'Buster polling Git failures must expose operator-visible Git evidence');
+assert.equal(busterPollFailureSource.includes('buildModuleRateLimitedTerminalResult(config, moduleId'), true, 'Buster polling rate-limit exhaustion must return typed rate-limited module result');
+assert.equal(busterTerminalFailureSource.includes('buildModuleNeedsNovaTerminalResult(config, moduleId'), true, 'Terminal Buster needs-Nova outcomes must be typed module results');
+assert.equal(busterTerminalFailureSource.includes('buildModuleBlockedTerminalResult(config, moduleId'), true, 'Terminal Buster blocked outcomes must be typed module results');
+assert.equal(busterTerminalFailureSource.includes('runId: resultRedisEntry?.run_id ?? completionIdentity.runId ?? getRunId(config)'), true, 'Terminal Buster invalid failure-class results must preserve Redis run authority');
+assert.equal(busterTerminalFailureSource.includes('attempt: resultRedisEntry?.attempt ?? completionIdentity.attempt ?? currentAttemptNumber(status)'), true, 'Terminal Buster pre-test results must preserve Redis/completion attempt authority');
+assert.equal(busterTerminalPassSource.includes('attempt: completionIdentity.attempt ?? status.fail_count + 1'), true, 'Terminal Buster PASS results must preserve completion attempt authority');
 assert.equal(busterTerminalFailureSource.includes('redisEntry?.verdict'), false, 'Terminal Buster failure mapping must not classify from Redis verdict presence');
 assert.equal(busterTerminalFailureSource.includes('source regex'), false, 'Terminal Buster failure mapping must not use source regex classification');
 assert.equal(busterTerminalFailureSource.includes('Buster terminal failure lacks explicit typed failure_class'), true, 'Terminal Buster failures must require explicit typed failure_class');
@@ -129,6 +141,7 @@ assert.equal(prebusterSource.includes('buildModuleValidatorRunInput('), true, 'p
 assert.equal(sharedSource.includes('function buildModuleWorkerRunInputBase('), true, 'shared module-runner helper should collapse duplicated worker run-input scaffolding');
 assert.equal(sharedSource.includes('function buildModuleWorkerDeadline('), true, 'shared module-runner helper should collapse duplicated worker deadline construction');
 assert.equal(prebusterSource.includes('normalizeTypedValidatorControlResult('), true, 'pre-Buster validators should normalize typed validator controls');
+assert.equal(prebusterSource.includes('assertPipelineStepResult(failResult)'), true, 'pre-Buster non-retry validator failures must assert canonical typed handleFail results');
 assert.equal(prebusterSource.includes('getContractInvalidDiagnostic('), true, 'pre-Buster validators should preserve contract-invalid diagnostics');
 assert.equal(prebusterSource.includes('contract_diagnostic'), true, 'pre-Buster validators should return rich contract diagnostics on malformed plugin output');
 assert.equal(prebusterSource.includes('deps.runDeliveryLintValidation'), false, 'pre-Buster helper must not bypass registry for delivery lint');
@@ -182,6 +195,37 @@ assert.equal(typeof preflightMod.runModulePreflight, 'function', 'preflight help
 assert.equal(typeof busterPhaseMod.runModuleBusterPhase, 'function', 'Buster phase helper should expose runModuleBusterPhase');
 assert.equal(typeof busterDispatchMod.executeBusterAttemptDispatch, 'function', 'Buster phase dispatch helper should expose executeBusterAttemptDispatch');
 assert.equal(typeof terminalResultsMod.buildModulePassTerminalResult, 'function', 'terminal result helper should expose typed module PASS builder');
+assert.equal(typeof terminalResultsMod.buildModuleErrorTerminalResult, 'function', 'terminal result helper should expose typed module ERROR builder');
+const explicitRunTerminal = terminalResultsMod.buildModuleErrorTerminalResult(
+  { _runId: 'config-run' },
+  '01',
+  { reason: 'explicit completion run', runId: 'completion-run' },
+);
+assert.equal(explicitRunTerminal.result.correlation.run_id, 'completion-run', 'module terminal helper must preserve authoritative completion run id');
+const persistedBlockedTerminal = terminalResultsMod.buildBlockedTerminalResult(
+  { _runId: 'config-run' },
+  { status: 'BLOCKED', run_id: 'persisted-terminal-run', fail_count: 2 },
+  '01',
+);
+assert.equal(persistedBlockedTerminal.result.correlation.run_id, 'persisted-terminal-run', 'blocked terminal helper must preserve persisted status run id');
+const typedRateLimitTerminal = terminalResultsMod.buildModuleRateLimitedTerminalResult(
+  { _runId: 'config-run' },
+  '01',
+  {
+    reason: 'rate limited',
+    runId: 'rate-limit-run',
+    attempt: 3,
+    rateLimitResult: {
+      max_rate_limit_pauses: 4,
+      rate_limit_status: { max_rate_limit_pauses: 4, session_key: 'agent:rate-limit' },
+    },
+  },
+);
+assert.equal(typedRateLimitTerminal.result.outcome, 'rate_limited', 'rate-limit terminal helper must emit typed rate-limited outcome');
+assert.equal(typedRateLimitTerminal.result.rateLimit.max_rate_limit_pauses, 4, 'rate-limit terminal helper must preserve typed rate-limit evidence');
+assert.equal(typedRateLimitTerminal.result.rateLimit.rate_limit_status.session_key, 'agent:rate-limit', 'rate-limit terminal helper must preserve rate-limit status evidence');
+assert.equal(Object.prototype.hasOwnProperty.call(typedRateLimitTerminal.result.diagnostics.metadata, 'rate_limit_status'), false, 'rate-limit terminal helper must not duplicate rate-limit status into diagnostic metadata');
+assert.equal(Object.prototype.hasOwnProperty.call(typedRateLimitTerminal.result.diagnostics.metadata, 'max_rate_limit_pauses'), false, 'rate-limit terminal helper must not duplicate max pauses into diagnostic metadata');
 assert.equal(stateMachineMod.planLoadedModuleStatus({ status: 'PASS' }), stateMachineMod.MODULE_ATTEMPT_ACTIONS.TERMINAL_PASS, 'state machine should route existing PASS to terminal pass');
 assert.equal(stateMachineMod.planLoadedModuleStatus({ status: 'BLOCKED' }), stateMachineMod.MODULE_ATTEMPT_ACTIONS.TERMINAL_BLOCKED, 'state machine should route existing BLOCKED to terminal blocked');
 assert.equal(stateMachineMod.planLoadedModuleStatus(null), stateMachineMod.MODULE_ATTEMPT_ACTIONS.RELEASE_BLUEPRINT, 'state machine should route missing status to blueprint release/init');
@@ -204,8 +248,8 @@ const emptySuiteDispatch = await busterDispatchMod.executeBusterAttemptDispatch(
   busterAttempt: 1,
 });
 assert.equal(emptySuiteDispatch.terminal?.retry, false, 'empty Buster suite dispatch should be terminal');
-assert.equal(emptySuiteDispatch.terminal?.result?.reason, 'Buster dispatch requires a typed nonempty test_suites list', 'empty Buster suite dispatch should fail validation');
-assert.equal(emptySuiteDispatch.terminal?.result?.diagnostics?.code, 'buster_test_suites_empty', 'empty Buster suite dispatch should expose typed diagnostics');
+assert.equal(emptySuiteDispatch.terminal?.result?.diagnostics?.summary, 'Buster dispatch requires a typed nonempty test_suites list', 'empty Buster suite dispatch should fail validation');
+assert.equal(emptySuiteDispatch.terminal?.result?.diagnostics?.metadata?.code, 'buster_test_suites_empty', 'empty Buster suite dispatch should expose typed diagnostics');
 
 const forgeOnlyGitFailure = await forgeMod.finalizeForgeOnlyPass({
   config: { _runId: 'run-forge-only-git-failure' },
@@ -218,9 +262,9 @@ const forgeOnlyGitFailure = await forgeMod.finalizeForgeOnlyPass({
     gitCommitAndPush: async () => ({ committed: false, error: 'push rejected' }),
   },
 });
-assert.equal(forgeOnlyGitFailure.terminal?.result?.outcome_class, 'error', 'Forge-only Git publication failure must return typed terminal error outcome');
+assert.equal(forgeOnlyGitFailure.terminal?.result?.outcome, 'error', 'Forge-only Git publication failure must return typed terminal error outcome');
 assert.equal(
-  forgeOnlyGitFailure.terminal?.result?.reason,
+  forgeOnlyGitFailure.terminal?.result?.diagnostics?.summary,
   'Forge-only module cannot PASS without a durable Git commit: push rejected',
   'Forge-only Git publication failure must not soft-pass unpublished work',
 );
@@ -294,9 +338,9 @@ async function assertMalformedPreBusterValidatorPreservesDiagnostic({ stageId, p
     },
   });
   const terminalResult = prepared.terminal.result;
-  assert.equal(terminalResult.outcome_class, 'error', `${stageId}: malformed validator should fail closed with typed terminal error`);
-  assert.equal(terminalResult.validator, stageId, `${stageId}: terminal result should identify validator`);
-  assert.equal(terminalResult.validator_result, null, `${stageId}: malformed validator has no normalized result`);
+  assert.equal(terminalResult.outcome, 'error', `${stageId}: malformed validator should fail closed with typed terminal error`);
+  assert.equal(terminalResult.diagnostics.metadata.validator, stageId, `${stageId}: terminal result should identify validator`);
+  assert.equal(terminalResult.diagnostics.metadata.validator_result, null, `${stageId}: malformed validator has no normalized result`);
   assert.equal(terminalResult.diagnostics.contract_invalid, true, `${stageId}: contract invalid flag`);
   assert.equal(terminalResult.diagnostics.contract_diagnostic.diagnosticType, 'plugin_contract_invalid', `${stageId}: diagnostic type`);
   assert.equal(terminalResult.diagnostics.contract_diagnostic.stageId, stageId, `${stageId}: diagnostic stage id`);

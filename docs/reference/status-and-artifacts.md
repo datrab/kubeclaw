@@ -92,3 +92,24 @@ This page is manually maintained from:
 - `skills/nova/pipeline/services/artifact-bundle.ts`
 - `skills/nova/pipeline/services/status-store.ts`
 - `skills/common/pipeline/lifecycle-state.ts`
+
+## Authority And Recovery
+
+| Artifact/state | Authority level | Use it for |
+| --- | --- | --- |
+| `canonical-events.jsonl` | strongest lifecycle audit source | reconstructing module/gate/pipeline transitions and illegal append investigations |
+| `read-models.json` | projected scheduler/read state | deciding current status, active sessions, waits, cooldowns, and recovery candidates |
+| `latest.json` | operator pointer | quickly finding current run status and run directory |
+| run-scoped `pipeline.jsonl` | replay/audit log | tracing actions and telemetry around a run |
+| module/gate output files | evidence | proving work completed, failed, or needs operator interpretation |
+| Redis completion streams | candidate live evidence | confirming Buster completion when identity matches lifecycle state |
+
+Recovery should preserve run-scoped artifacts. If artifacts disagree, inspect identity fields (`run_id`, `attempt`, `dispatch_id`, `session_key`) before trusting age or presentation surfaces.
+
+Verification:
+
+```bash
+node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"
+node tests/verification/behavior/verify.mjs --source-root "$PWD" --area restart-recovery
+node tests/verification/contracts/check-artifact-authority-slice-surface.mjs --source-root "$PWD"
+```

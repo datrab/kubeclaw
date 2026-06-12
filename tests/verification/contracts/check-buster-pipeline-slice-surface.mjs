@@ -47,6 +47,7 @@ const perfSuitePath = path.join(sourceRoot, 'skills/buster/pipeline/suites/perf.
 const securitySuitePath = path.join(sourceRoot, 'skills/buster/pipeline/suites/security.ts');
 const unitSuitePath = path.join(sourceRoot, 'skills/buster/pipeline/suites/unit.ts');
 const busterConventionsPath = path.join(sourceRoot, 'skills/buster/CONVENTIONS.md');
+const busterReadmePath = path.join(sourceRoot, 'skills/buster/README.md');
 const novaPromptSharedPath = path.join(sourceRoot, 'skills/nova/pipeline/prompts/shared.ts');
 const novaBusterModulePromptPath = path.join(sourceRoot, 'skills/nova/pipeline/prompts/buster-module.ts');
 const novaOrchestrationPath = path.join(sourceRoot, 'skills/nova/pipeline/agents/orchestration.ts');
@@ -82,12 +83,17 @@ const perfSuiteSource = fs.readFileSync(perfSuitePath, 'utf8');
 const securitySuiteSource = fs.readFileSync(securitySuitePath, 'utf8');
 const unitSuiteSource = fs.readFileSync(unitSuitePath, 'utf8');
 const busterConventionsSource = fs.readFileSync(busterConventionsPath, 'utf8');
+const busterReadmeSource = fs.readFileSync(busterReadmePath, 'utf8');
 const novaPromptSharedSource = fs.readFileSync(novaPromptSharedPath, 'utf8');
 const novaBusterModulePromptSource = fs.readFileSync(novaBusterModulePromptPath, 'utf8');
 const orchestrationSource = fs.readFileSync(novaOrchestrationPath, 'utf8');
 
 assert.equal(shimSource.includes('await handleBusterEntrypoint();'), true, 'buster-pipeline.ts should execute the typed entrypoint directly');
 assert.equal(shimSource.includes('export * from'), false, 'buster-pipeline.ts must not preserve public helper re-exports');
+assert.equal(busterReadmeSource.includes('manifest → build → health → k8s → a11y → perf → bundle → security → visual-reg → api → e2e → unit'), true, 'Buster README suite order must include k8s in runtime order');
+assert.equal(busterReadmeSource.includes('| k8s | — |'), true, 'Buster README dependency table must document k8s as independent');
+assert.equal(busterReadmeSource.includes('Capability-denied verdicts are critical'), true, 'Buster README criticality text must mention capability-denied verdicts');
+assert.equal(busterReadmeSource.includes('spawned sessions use required `session.agentId` / `session.agent_id`'), true, 'Buster README AGENT_NAME text must distinguish consumer identity from spawned session agent identity');
 assert.equal(mainSource.includes("from './pipeline/services/pipeline-helpers.ts'"), true, 'typed buster entrypoint should import extracted task/status helpers for runtime startup/shutdown');
 assert.equal(mainSource.includes("from './pipeline/services/session-monitor.ts'"), false, 'typed buster entrypoint should not re-export or import the session monitor helper barrel');
 assert.equal(mainSource.includes('ensureTaskConsumerGroup'), true, 'buster-pipeline should initialize the task queue through the TaskQueue boundary');
@@ -98,6 +104,8 @@ assert.equal(capabilitiesSource.includes('appendDurableOperatorAlert'), true, 'B
 assert.equal(capabilitiesSource.includes('explicitCandidates.length > 0'), true, 'Buster capability alerts should not write repo-root .swarm fallback when explicit log targets exist');
 assert.equal(/const SUITE_REGISTRY(?::[^=]+)?= Object\.freeze/.test(suiteRunnerSource), true, 'suite runner should use a static suite registry');
 assert.equal(suiteRunnerSource.includes('Suite file not found'), false, 'suite runner must not preserve unknown-suite SKIP fallback');
+assert.equal(suiteRunnerSource.includes("default: return '❓'"), false, 'suite runner must not render unreachable unknown status icon fallback');
+assert.equal(suiteRunnerSource.includes('Unsupported suite status'), true, 'suite runner should fail closed if an unsupported suite status reaches icon rendering');
 assert.equal(suiteRunnerSource.includes('export function validateSuiteNames('), true, 'suite runner should validate requested suite names before execution');
 assert.equal(suiteRunnerSource.includes("DEPENDENCIES[suiteName] || ['build', 'health']"), false, 'suite runner must not default unknown suite dependencies to build/health');
 assert.equal(suiteRunnerSource.includes('missing_suite_dependencies'), true, 'suite runner should fail loudly when a registered suite lacks dependency policy');
@@ -110,6 +118,7 @@ assert.equal(orchestrationSource.includes('BUSTER_SUITE_RUNNER_DEFAULT_POLICY'),
 assert.equal(orchestrationSource.includes('config.buster.suite_timeout_ms'), true, 'Nova Buster payload producer should read suite timeout from canonical platform config');
 assert.equal(orchestrationSource.includes('config.buster_suite_timeout_ms'), false, 'Nova Buster payload producer must not preserve legacy top-level suite timeout alias');
 assert.equal(suiteRunnerSource.includes('payload?.config'), false, 'suite runner must not preserve payload.config fallback beside typed test_config');
+assert.equal(capabilitiesSource.includes('payload?.config'), false, 'Buster capability policy must not preserve payload.config fallback beside typed test_config');
 assert.equal(suiteRunnerSource.includes('buster_capabilities'), false, 'suite runner must not preserve buster_capabilities capability fallback');
 assert.equal(taskValidationSource.includes('status_json_path'), false, 'Buster task validation should not keep obsolete status_json_path-specific handling');
 assert.equal(`${taskValidationSource}\n${capabilitiesSource}\n${orchestrationSource}`.includes('buster_capabilities'), false, 'Buster task capability handling should not keep legacy buster_capabilities alias');
@@ -368,6 +377,7 @@ const validBusterTaskPayload = {
   timeout_seconds: 1800,
   session: { runtime: 'acp', model: 'gpt-test', agentId: 'buster', cwd: sourceRoot, label: 'buster-dispatch-2' },
   suites: ['build'],
+  test_config: { suite_timeout_ms: 300000 },
   output_file: '.swarm/modules/07/buster-output.json',
 };
 
@@ -424,6 +434,42 @@ assert.throws(() => validationMod.validateBusterTaskPayload({
   assert.equal(error.missing_fields.includes('suites'), true);
   return true;
 }, 'Buster task validation must reject empty suite lists before agent work');
+
+assert.throws(() => validationMod.validateBusterTaskPayload({
+  ...validBusterTaskPayload,
+  test_config: undefined,
+}), (error) => {
+  assert.equal(error.code, 'BUSTER_TASK_MALFORMED');
+  assert.equal(error.details.reason, 'missing_required_identity');
+  assert.equal(error.missing_fields.includes('test_config'), true);
+  return true;
+}, 'Buster task validation must require typed test_config before suite execution');
+
+for (const invalidTestConfig of [null, [], 'suite_timeout_ms=300000']) {
+  assert.throws(() => validationMod.validateBusterTaskPayload({
+    ...validBusterTaskPayload,
+    test_config: invalidTestConfig,
+  }), (error) => {
+    assert.equal(error.code, 'BUSTER_TASK_MALFORMED');
+    assert.equal(error.details.reason, 'invalid_test_config_shape');
+    assert.deepEqual(error.details.invalid_fields, [{
+      field: 'test_config',
+      expected: 'object',
+      actual: Array.isArray(invalidTestConfig) ? 'array' : invalidTestConfig === null ? 'null' : typeof invalidTestConfig,
+    }]);
+    return true;
+  }, `Buster task validation must diagnose invalid test_config shape ${String(invalidTestConfig)}`);
+}
+
+assert.throws(() => validationMod.validateBusterTaskPayload({
+  ...validBusterTaskPayload,
+  test_config: { suite_timeout_ms: 0 },
+}), (error) => {
+  assert.equal(error.code, 'BUSTER_TASK_MALFORMED');
+  assert.equal(error.details.reason, 'missing_required_identity');
+  assert.equal(error.missing_fields.includes('test_config.suite_timeout_ms'), true);
+  return true;
+}, 'Buster task validation must require explicit positive test_config.suite_timeout_ms');
 
 assert.throws(() => validationMod.validateBusterTaskPayload({
   ...validBusterTaskPayload,

@@ -199,6 +199,34 @@ function buildQueuePayload(extra = {}) {
   };
 }
 
+async function withCanonicalBusterRuntimePolicy(queueRoot, run) {
+  const previousSwarmConfig = process.env.SWARM_CONFIG;
+  let runtimePolicyMod = null;
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-runtime-policy-'));
+  const swarmConfigPath = path.join(root, 'swarm.config.json');
+  fs.writeFileSync(swarmConfigPath, JSON.stringify({
+    buster: {
+      runtime: {
+        heartbeat_path: path.join(root, 'heartbeat.json'),
+        heartbeat_interval_ms: 1000,
+        task_poll_interval_ms: 2000,
+        task_pending_reclaim_idle_ms: 60000,
+        task_stream_max_len: 250,
+      },
+    },
+  }));
+  try {
+    process.env.SWARM_CONFIG = swarmConfigPath;
+    runtimePolicyMod = await importRuntimeModule(queueRoot, '/app/skills/pipeline/services/runtime-policy.ts');
+    runtimePolicyMod.resetBusterRuntimePolicyForTests();
+    return await run();
+  } finally {
+    if (runtimePolicyMod) runtimePolicyMod.resetBusterRuntimePolicyForTests();
+    if (previousSwarmConfig === undefined) delete process.env.SWARM_CONFIG;
+    else process.env.SWARM_CONFIG = previousSwarmConfig;
+  }
+}
+
 function buildValidBusterTaskPayload(extra = {}) {
   return {
     task_type: 'module_test',
@@ -212,6 +240,7 @@ function buildValidBusterTaskPayload(extra = {}) {
     timeout_seconds: 1800,
     session: { runtime: 'acp', model: 'gpt-test', agentId: 'buster', cwd: sourceRoot, label: 'buster-dispatch-1' },
     suites: ['build'],
+    test_config: { suite_timeout_ms: 300000 },
     output_file: '.swarm/modules/01/buster-output.json',
     ...extra,
   };
@@ -489,6 +518,7 @@ await record('Buster task payload validation rejects missing canonical identity 
   assert.equal(valid.commitHash, 'abc123');
   assert.equal(valid.timeoutSeconds, 1800);
   assert.deepEqual(valid.suites, ['build']);
+  assert.equal(valid.suiteTimeoutMs, 300000);
 
   assert.throws(() => busterTaskValidationMod.validateBusterTaskPayload({
     task_type: 'module_test',
@@ -617,10 +647,12 @@ await record('Buster critical runtime catches report typed process diagnostics',
 await record('Buster task queue emits terminal completion before ACK when processTask throws', async () => {
   const { runtimeRoot: queueRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'sandbox');
   installQueuedTaskRedis(queueRoot, { payload: buildQueuePayload() });
-  const taskQueueMod = await importRuntimeModule(queueRoot, '/app/skills/pipeline/services/task-queue.ts');
 
-  await taskQueueMod.processOneQueuedTask(async () => {
-    throw new Error('finally failed before terminal completion');
+  await withCanonicalBusterRuntimePolicy(queueRoot, async () => {
+    const taskQueueMod = await importRuntimeModule(queueRoot, '/app/skills/pipeline/services/task-queue.ts');
+    await taskQueueMod.processOneQueuedTask(async () => {
+      throw new Error('finally failed before terminal completion');
+    });
   });
 
   const calls = globalThis.__queueRedisCalls || [];
@@ -636,10 +668,12 @@ await record('Buster task queue emits terminal completion before ACK when proces
 await record('Buster task queue writes dead-letter before synthesized failure completion ACK when completion fails', async () => {
   const { runtimeRoot: queueRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'sandbox');
   installQueuedTaskRedis(queueRoot, { payload: buildQueuePayload(), failCompletion: true });
-  const taskQueueMod = await importRuntimeModule(queueRoot, '/app/skills/pipeline/services/task-queue.ts');
 
-  await taskQueueMod.processOneQueuedTask(async () => {
-    throw new Error('finally failed before terminal completion');
+  await withCanonicalBusterRuntimePolicy(queueRoot, async () => {
+    const taskQueueMod = await importRuntimeModule(queueRoot, '/app/skills/pipeline/services/task-queue.ts');
+    await taskQueueMod.processOneQueuedTask(async () => {
+      throw new Error('finally failed before terminal completion');
+    });
   });
 
   const calls = globalThis.__queueRedisCalls || [];
@@ -653,11 +687,13 @@ await record('Buster task queue writes dead-letter before synthesized failure co
 await record('Buster task queue refuses ACK when completion and dead-letter both fail', async () => {
   const { runtimeRoot: queueRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'sandbox');
   installQueuedTaskRedis(queueRoot, { payload: buildQueuePayload(), failCompletion: true, failDeadLetter: true });
-  const taskQueueMod = await importRuntimeModule(queueRoot, '/app/skills/pipeline/services/task-queue.ts');
 
   await assert.rejects(
-    () => taskQueueMod.processOneQueuedTask(async () => {
-      throw new Error('finally failed before terminal completion');
+    () => withCanonicalBusterRuntimePolicy(queueRoot, async () => {
+      const taskQueueMod = await importRuntimeModule(queueRoot, '/app/skills/pipeline/services/task-queue.ts');
+      await taskQueueMod.processOneQueuedTask(async () => {
+        throw new Error('finally failed before terminal completion');
+      });
     }),
     /BUSTER_TASK_TERMINAL_GUARANTEE_FAILED/,
   );

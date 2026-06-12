@@ -456,6 +456,20 @@ assert.deepEqual(
   ["eventType 'telemetry.unknown' is not registered in TELEMETRY_PAYLOAD_SCHEMAS"],
   'unknown telemetry event types should be rejected by the payload schema registry',
 );
+const deniedPluginSpecificEventTypes = [
+  'plugin.worker.module_buster.bridge_invoked',
+  'plugin.worker.module_forge.bridge_invoked',
+  'plugin.gate.review.bridge_invoked',
+  'plugin.validator.full_lint.bridge_invoked',
+  'plugin.generator.pipeline_review.bridge_invoked',
+];
+for (const eventType of deniedPluginSpecificEventTypes) {
+  assert.deepEqual(
+    payloadSchema.validateTelemetryEventPayload(eventType, { plugin_id: 'builtin', plugin_event: 'bridge_invoked', details: {} }),
+    [`eventType '${eventType}' is not registered in TELEMETRY_PAYLOAD_SCHEMAS`],
+    `${eventType} must not bypass canonical plugin.event telemetry`,
+  );
+}
 assert.deepEqual(
   payloadSchema.validateTelemetryEventPayload('pipeline.completed', { reason_code: 'missing terminal status' }),
   ['terminal_status is required'],
@@ -529,6 +543,33 @@ assert.deepEqual(
 );
 assert.equal(invalidTelemetryEvents[0].reason, 'telemetry_payload_invalid');
 assert.equal(invalidTelemetryEvents[0].impacted_event_type, 'gate.verdict');
+
+const invalidPluginEventSwarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'telemetry-plugin-event-invalid-'));
+const invalidPluginEventDir = path.join(invalidPluginEventSwarmDir, 'logs', 'pipeline', 'runs', 'run-invalid-plugin-event');
+const invalidPluginEventResult = await dispatchForSchema.emitEvent({
+  config: {
+    project: 'telemetry-plugin-event-invalid',
+    paths: { swarm_dir: invalidPluginEventSwarmDir },
+    _runId: 'run-invalid-plugin-event',
+  },
+}, 'plugin.worker.module_buster.bridge_invoked', {
+  plugin_id: 'builtin.worker.module_buster',
+  plugin_event: 'bridge_invoked',
+  details: { stageId: 'worker:module_buster' },
+});
+assert.equal(invalidPluginEventResult.event, null, 'unregistered plugin-specific events must not be emitted to the core disk event stream');
+assert.equal(invalidPluginEventResult.input, null, 'unregistered plugin-specific events must not be dispatched to telemetry sinks');
+assert.match(invalidPluginEventResult.validationError, /Invalid telemetry payload for 'plugin\.worker\.module_buster\.bridge_invoked'/);
+const invalidPluginEvents = fs.readFileSync(path.join(invalidPluginEventDir, 'pipeline.jsonl'), 'utf8')
+  .trim()
+  .split('\n')
+  .map((line) => JSON.parse(line));
+assert.deepEqual(
+  invalidPluginEvents.map((event) => event.type),
+  ['observability.degraded'],
+  'unregistered plugin-specific events should only record a degraded observability event',
+);
+assert.equal(invalidPluginEvents[0].impacted_event_type, 'plugin.worker.module_buster.bridge_invoked');
 
 const sharedRunId = 'run-1';
 const sharedStreamKey = 'pipeline:telemetry:proj:run-1';
@@ -716,8 +757,17 @@ novaTelemetryA.emitRateLimitDetected(ctx, {
 novaTelemetryA.onGatePass(ctx, 'gate:dispatch', {
   gate_type: 'buster',
   dispatch_id: 'dispatch-gate-contract-1',
+  gateway_label: 'buster-gate-contract-1',
   session_key: 'agent:buster:gate-contract-1',
   duration_seconds: 12,
+});
+novaTelemetryA.onGateFail(ctx, 'gate:dispatch-fail', {
+  gate_type: 'buster',
+  dispatch_id: 'dispatch-gate-contract-2',
+  gateway_label: 'buster-gate-contract-2',
+  session_key: 'agent:buster:gate-contract-2',
+  reason: 'dispatch failed',
+  duration_seconds: 9,
 });
 novaTelemetryA.onRetryExhausted(ctx, 'gate:dispatch', {
   gate_id: 'gate:dispatch',
@@ -792,8 +842,8 @@ await flushAsync();
 await novaTelemetryB.closeTelemetryRedis();
 
 const pipelineEvents = xaddEvents(sharedStreamKey);
-assert.equal(pipelineEvents.length, 18, 'expected eighteen telemetry xadd operations on the shared run stream');
-assert.deepEqual(pipelineEvents.map((event) => event.seq), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
+assert.equal(pipelineEvents.length, 19, 'expected nineteen telemetry xadd operations on the shared run stream');
+assert.deepEqual(pipelineEvents.map((event) => event.seq), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]);
 assert(pipelineEvents.every((event) => event.v === 1), 'all telemetry events must set v=1');
 assert(pipelineEvents.every((event) => event.project === 'proj' && event.run_id === sharedRunId));
 
@@ -839,8 +889,8 @@ assert.deepEqual(invalidBusterEvents[0].validation_errors, ['pages_total is not 
 await busterTelemetry.closeTelemetry(invalidBusterCtx);
 
 const novaEvents = pipelineEvents.filter((event) => event.source === 'pipeline');
-assert.equal(novaEvents.length, 15, 'expected fifteen Nova telemetry events on the shared run stream');
-assert.deepEqual(novaEvents.map((event) => event.seq), [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
+assert.equal(novaEvents.length, 16, 'expected sixteen Nova telemetry events on the shared run stream');
+assert.deepEqual(novaEvents.map((event) => event.seq), [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]);
 assert(novaEvents
   .filter((event) => event.type !== 'observability.degraded' && event.type !== 'observability.restored')
   .every((event) => event.emitter === 'nova/pipeline/services/telemetry'));
@@ -923,9 +973,18 @@ assert.equal(gateRateLimit.max_pauses, 2);
 
 const gateVerdictWithDispatch = pipelineEvents.find((event) => event.type === 'gate.verdict' && event.gate_id === 'gate:dispatch');
 assert(gateVerdictWithDispatch, 'missing gate.verdict dispatch correlation event');
+assert.equal(gateVerdictWithDispatch.run_id, sharedRunId);
 assert.equal(gateVerdictWithDispatch.dispatch_id, 'dispatch-gate-contract-1');
+assert.equal(gateVerdictWithDispatch.gateway_label, 'buster-gate-contract-1');
 assert.equal(gateVerdictWithDispatch.session_key, 'agent:buster:gate-contract-1');
 assert.equal(gateVerdictWithDispatch.verdict, 'GO');
+const gateNoGoVerdictWithDispatch = pipelineEvents.find((event) => event.type === 'gate.verdict' && event.gate_id === 'gate:dispatch-fail');
+assert(gateNoGoVerdictWithDispatch, 'missing gate.verdict NO-GO dispatch correlation event');
+assert.equal(gateNoGoVerdictWithDispatch.run_id, sharedRunId);
+assert.equal(gateNoGoVerdictWithDispatch.dispatch_id, 'dispatch-gate-contract-2');
+assert.equal(gateNoGoVerdictWithDispatch.gateway_label, 'buster-gate-contract-2');
+assert.equal(gateNoGoVerdictWithDispatch.session_key, 'agent:buster:gate-contract-2');
+assert.equal(gateNoGoVerdictWithDispatch.verdict, 'NO-GO');
 
 const gateRetryExhaustedWithDispatch = pipelineEvents.find((event) => event.type === 'retry.exhausted' && event.gate_id === 'gate:dispatch');
 assert(gateRetryExhaustedWithDispatch, 'missing retry.exhausted dispatch correlation event');
@@ -1017,12 +1076,13 @@ const failOnlyResult = await failuresMod.handleFail(
     session_key: 'agent:forge:mod-fail-3',
   },
 );
-assert.equal(failOnlyResult.outcome_class, 'needs_nova', 'non-terminal module failures should escalate with typed needs_nova when auto-retry is exhausted');
-assert.equal(failOnlyResult.attempt, 3);
-assert.equal(failOnlyResult.module_status?.attempt, 3);
+assert.equal(failOnlyResult.kind, 'pipeline_step_result', 'non-terminal module failures should return canonical typed step results');
+assert.equal(failOnlyResult.outcome, 'needs_nova', 'non-terminal module failures should escalate with typed needs_nova when auto-retry is exhausted');
+assert.equal(failOnlyResult.correlation.attempt, 3);
+assert.equal(failOnlyResult.diagnostics.metadata.module_status?.attempt, 3);
 await flushAsync();
 
-const failOnlyEvents = xaddEvents(sharedStreamKey).slice(18);
+const failOnlyEvents = xaddEvents(sharedStreamKey).slice(19);
 assert.equal(failOnlyEvents.length, 1, 'expected one FAIL telemetry event for a non-terminal module failure');
 assert.equal(failOnlyEvents[0].type, 'module.status_changed');
 assert.equal(failOnlyEvents[0].module_id, 'mod-fail');
@@ -1077,7 +1137,7 @@ assert.equal(blockedResult.terminal.status, 'blocked', 'terminal module failures
 assert.equal(blockedResult.correlation.attempt, 3);
 await flushAsync();
 
-const blockedEvents = xaddEvents(sharedStreamKey).slice(19);
+const blockedEvents = xaddEvents(sharedStreamKey).slice(20);
 assert.equal(blockedEvents.length, 3, 'expected FAIL + retry.exhausted + BLOCKED telemetry for a terminal module failure');
 assert.equal(blockedEvents[0].type, 'module.status_changed');
 assert.equal(blockedEvents[0].module_id, 'mod-block');
@@ -1116,7 +1176,17 @@ const crashConfig = {
   telemetry: { enabled: true },
   default_timeout_minutes: 15,
   default_max_fails: 3,
-  max_buster_crash_retries: 0,
+  buster: {
+    suite_timeout_ms: 300000,
+    max_crash_retries: 0,
+    runtime: {
+      heartbeat_path: '/tmp/kubeclaw-buster-heartbeat',
+      heartbeat_interval_ms: 1000,
+      task_poll_interval_ms: 2000,
+      task_pending_reclaim_idle_ms: 60000,
+      task_stream_max_len: 250,
+    },
+  },
   _runId: sharedRunId,
   run_id: sharedRunId,
   _runStats: runtimeCore.createRunStats('2026-04-09T00:00:00.000Z'),
@@ -1170,7 +1240,6 @@ const crashProgress = {
       dir: 'mods/crash',
       stages: ['buster'],
       timeout_minutes: 15,
-      max_buster_crash_retries: 0,
       test_suites: ['unit'],
     },
   },
@@ -1217,6 +1286,15 @@ const rateLimitConfig = {
   ...config,
   rate_limit: { cooldown_hours: 0 },
   paths: { swarm_dir: rateLimitSwarmDir, modules_dir: rateLimitModulesDir },
+  _progress: {
+    modules: {
+      'mod-rate': {
+        dir: 'mod-rate',
+        title: 'Module Rate Limited',
+        stages: ['buster'],
+      },
+    },
+  },
 };
 const rateLimitStatus = {
   module_id: 'mod-rate',

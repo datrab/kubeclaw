@@ -107,3 +107,17 @@ This page is manually maintained from:
 - `skills/nova/pipeline/tools/lint-report/tool-registry.ts`
 - `skills/nova/pipeline/tools/lint-report/container-yaml-tools.ts`
 - `skills/nova/pipeline/services/lint.ts`
+
+## Tool Inventory
+
+The lint report runner supports two tiers: `pre-check` and `full`. Pre-check tools include fast language/shell checks; full adds heavier project, dependency, container, YAML, and security checks when applicable. Tool discovery is source-backed by `lint-report/discovery.ts` and the registries under `skills/nova/pipeline/tools/lint-report/`.
+
+| Failure | Meaning | Next action |
+| --- | --- | --- |
+| `unknown tier` | caller passed a tier outside `pre-check` or `full` | fix pipeline config or CLI args |
+| config-missing finding | ESLint or Semgrep config was not explicitly found | provide `--eslint-config`, `--semgrep-config`, or platform config files |
+| parse failure | external tool output did not match parser expectations | inspect raw stdout/stderr and update parser/tests if the tool changed |
+| `summary.total_errors > 0` | blocking findings exist | request code fixes before passing the gate |
+| `summary.tools_failed > 0` | environment/tool execution failed | treat as tooling issue, not clean code |
+
+Run `node --test tests/skills/nova/pipeline/tools/lint-report/*.test.mjs tests/skills/nova/pipeline/services/lint.test.mjs` for parser/service changes.

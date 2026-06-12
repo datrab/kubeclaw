@@ -215,7 +215,9 @@ secret_missing_keys() {
     fi
   done
 
-  printf '%s\n' "${missing[@]}"
+  if [[ "${#missing[@]}" -gt 0 ]]; then
+    printf '%s\n' "${missing[@]}"
+  fi
 }
 
 join_by_comma() {

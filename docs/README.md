@@ -47,3 +47,39 @@ This is the active documentation home for KubeClaw. It separates current source-
 - Add hooks, plugins, or runtime adapters: [Developers](developers/README.md) -> [Hooks and plugins](developers/hooks-and-plugins.md) and [Replacing agent runtime](developers/replacing-agent-runtime.md)
 - Add Buster suites, lint rules, or observability sinks: [Developers](developers/README.md) -> [Adding Buster suites](developers/adding-buster-suites.md), [Linting rules](developers/linting-rules.md), and [Adding observability sinks](developers/adding-observability-sinks.md)
 - Add verification: [Developers](developers/README.md) -> [Adding verification](developers/adding-verification.md)
+
+## Current Completion State
+
+The active tree has been rebuilt against `DOCUMENTATION_REBUILD_PLAN.md`. `DOCUMENTATION_AUDIT.md` records the page-by-page rebuild decisions, and `DOCUMENTATION_TARGET_PAGE_LIST.md` records the intended active tree. Current pages are source-backed by repository code, manifests, generated inventory, verification tests, or upstream documentation where the upstream project owns the behavior.
+
+The docs deliberately separate current behavior from unresolved readiness gaps:
+
+- source-verified local quickstart exists for Helm rendering and deployment truth verification
+- complete live clean-cluster quickstart remains open until prerequisites and secret provisioning are fully source-verified
+- root `LICENSE` is not present because maintainers have not selected license terms
+- public security disclosure contact is still a maintainer decision
+- NodePort exposure, privileged Buster, version compatibility gaps, and missing Kubernetes-native observability are tracked as current risks or future work
+- generated docs automation covers CLI, Helm values, environment variables, secrets, verification commands, and source inventory; remaining reference automation opportunities are tracked rather than presented as current behavior
+
+## Archive boundary
+
+`docs/archive/` contains historical reviews, retired root docs, migration notes, plans, static artifacts, and deployment audits. Archive files can be useful context, but they are not current behavior authority unless an active doc points to a specific source-backed item.
+
+## Source Of Truth Map
+
+| Reader question | Start here | Source owner | Proof command |
+| --- | --- | --- | --- |
+| What is the platform and where do I begin? | `getting-started/README.md`; `getting-started/repository-tour.md` | root `README.md`, `docs/README.md`, `scripts/docs-check.mjs` | `npm run docs:check` |
+| How is the runtime deployed? | `deployment/README.md`; `deployment/deployment-overview.md`; `operators/install-and-upgrade.md` | `scripts/deploy.sh`, `charts/kubeclaw/templates/*.yaml`, `my-values/*.yaml` | `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` |
+| What state does the pipeline own? | `architecture/lifecycle-and-state.md`; `reference/status-and-artifacts.md` | `skills/nova/pipeline/services/status-store.ts`, `skills/nova/pipeline/services/artifact-bundle.ts` | `node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"` |
+| How does Buster consume work? | `pipeline/workers-and-buster.md`; `reference/buster-task-config.md`; `reference/redis-streams.md` | `skills/buster/pipeline/services/task-queue.ts`, `task-validation.ts`, `task-completion.ts` | `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"` |
+| What references are generated? | `generated/inventory/README.md`; `generated/reference/README.md`; `reference/README.md` | `scripts/docs-inventory.mjs`, `scripts/docs-generate.mjs`, `docs/generated/inventory/*.json` | `npm run docs:inventory:check && npm run docs:generate:check` |
+
+## Failure Signals
+
+- Generated reference pages differ after `npm run docs:generate`.
+- A page links to `docs/archive/` as active behavior authority without saying why.
+- An operator page names a command but not the expected resource, artifact, or state to inspect next.
+- A live-only behavior such as provider readiness, Tailscale tailnet policy, or CNI enforcement is documented as repo-proven.
+
+Those failures mean the reader's next question is still unanswered. Fix the smallest page that owns the claim rather than duplicating detail into every index.

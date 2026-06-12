@@ -25,6 +25,24 @@ export const REVIEW_GATE_FAILURE_CLASSES = Object.freeze([
   'verdict_fail',
 ]);
 
+const REVIEW_GATE_FAILURE_DECISIONS = Object.freeze({
+  'config_invalid': { issueType: 'unknown', outcomeClass: 'error' },
+  'invalid_contract': { issueType: 'unknown', outcomeClass: 'error' },
+  'rate_limit_exhausted': { issueType: 'environment', outcomeClass: 'rate_limited' },
+  'review_failed': { issueType: 'environment', outcomeClass: 'error' },
+  'unknown_failure': { issueType: 'unknown', outcomeClass: 'error' },
+  'verdict_fail': { issueType: 'code', outcomeClass: 'needs_nova' },
+});
+
+const REVIEW_GATE_FAILURE_FINDINGS = Object.freeze({
+  'config_invalid': { code: 'REVIEW_GATE_CONFIG_INVALID', severity: 'critical', retryable: false, environmentIssue: false },
+  'invalid_contract': { code: 'REVIEW_GATE_INVALID_CONTRACT', severity: 'critical', retryable: false, environmentIssue: false },
+  'rate_limit_exhausted': { code: 'REVIEW_GATE_RATE_LIMIT_EXHAUSTED', severity: 'error', retryable: true, environmentIssue: true },
+  'review_failed': { code: 'REVIEW_GATE_REVIEW_FAILED', severity: 'error', retryable: true, environmentIssue: true },
+  'unknown_failure': { code: 'REVIEW_GATE_UNKNOWN_FAILURE', severity: 'error', retryable: false, environmentIssue: false },
+  'verdict_fail': { code: 'REVIEW_GATE_VERDICT_FAIL', severity: 'error', retryable: false, environmentIssue: false },
+});
+
 function buildReviewControlSummary(gateId, result = {}) {
   if (isReviewGatePassResult(result)) {
     return `Review gate '${gateId}' passed`;
@@ -54,16 +72,11 @@ function reviewGateDecisionForResult(result = {}, failureClass = null) {
   if (isReviewGatePassResult(result)) {
     return { nextAction: GATE_CONTROL_ACTIONS.PASS, issueType: undefined, outcomeClass: 'passed' };
   }
-  if (failureClass === 'rate_limit_exhausted') {
-    return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'environment', outcomeClass: 'rate_limited' };
+  const decision = REVIEW_GATE_FAILURE_DECISIONS[failureClass];
+  if (!decision) {
+    throw new Error(`Review failure_class '${failureClass}' does not have a registered decision mapping`);
   }
-  if (failureClass === 'review_failed') {
-    return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'environment', outcomeClass: 'error' };
-  }
-  if (failureClass === 'verdict_fail') {
-    return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'code', outcomeClass: 'needs_nova' };
-  }
-  return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'unknown', outcomeClass: 'error' };
+  return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, ...decision };
 }
 
 function canonicalReviewGateRunStatus(result = {}) {
@@ -73,35 +86,23 @@ function canonicalReviewGateRunStatus(result = {}) {
 function buildReviewControlFindings(result = {}, gateId, issues = [], failureClass = null) {
   if (issues.length > 0) return buildReviewGateFindings(issues);
   if (isReviewGatePassResult(result)) return [];
-  if (failureClass === 'review_failed') {
-    return [{
-      code: 'REVIEW_GATE_REVIEW_FAILED',
-      severity: 'error',
-      message: result?.reason || `Review gate '${gateId}' failed before a valid review verdict`,
-      category: 'review',
-      target: gateId || null,
-      retryable: true,
-      environmentIssue: true,
-    }];
+  const finding = REVIEW_GATE_FAILURE_FINDINGS[failureClass];
+  if (!finding) {
+    throw new Error(`Review failure_class '${failureClass}' does not have a registered finding mapping`);
   }
-  if (failureClass === 'rate_limit_exhausted') {
-    return [{
-      code: 'REVIEW_GATE_RATE_LIMIT_EXHAUSTED',
-      severity: 'error',
-      message: result?.reason || `Review gate '${gateId}' exceeded max rate limit pauses`,
-      category: 'review',
-      target: gateId || null,
-      retryable: true,
-      environmentIssue: true,
-    }];
-  }
-  return [];
+  return [{
+    code: finding.code,
+    severity: finding.severity,
+    message: result?.reason || `Review gate '${gateId}' failed`,
+    category: 'review',
+    target: gateId || null,
+    retryable: finding.retryable,
+    environmentIssue: finding.environmentIssue,
+  }];
 }
 
 function isReviewGatePassResult(result = {}) {
-  return result?.passed === true
-    || result?.outcome_class === 'passed'
-    || String(result?.status || '').trim().toUpperCase() === 'PASS';
+  return result?.outcome_class === 'passed';
 }
 
 export function buildReviewGateControlResult(config, gateId, gate, result = {}, opts = {}) {
@@ -112,6 +113,13 @@ export function buildReviewGateControlResult(config, gateId, gate, result = {}, 
   const summary = buildReviewControlSummary(gateId, result);
   const issues = extractReviewIssues(result?.last_review || null);
   const findings = buildReviewControlFindings(result, gateId, issues, failureClass);
+  const rateLimit = decision.outcomeClass === 'rate_limited'
+    ? {
+        max_rate_limit_pauses: result?.max_rate_limit_pauses ?? result?.rate_limit_status?.max_rate_limit_pauses ?? null,
+        rate_limit_pauses: result?.rate_limit_pauses ?? null,
+        rate_limit_status: cloneSerializable(result?.rate_limit_status || null),
+      }
+    : null;
   const metadata = {
     gate_id: gateId,
     gate_type: gate?.type || 'review',
@@ -125,10 +133,6 @@ export function buildReviewGateControlResult(config, gateId, gate, result = {}, 
     dispatch_id: result?.dispatch_id || null,
     gateway_label: result?.gateway_label || null,
     session_key: result?.session_key || null,
-    rate_limit_exhausted: result?.rate_limit_exhausted === true,
-    rate_limit_pauses: result?.rate_limit_pauses ?? null,
-    max_rate_limit_pauses: result?.max_rate_limit_pauses ?? result?.rate_limit_status?.max_rate_limit_pauses ?? null,
-    rate_limit_status: cloneSerializable(result?.rate_limit_status || null),
     last_review: cloneSerializable(result?.last_review || null),
     domain_status: result?.status || null,
   };
@@ -143,6 +147,7 @@ export function buildReviewGateControlResult(config, gateId, gate, result = {}, 
     gateRunStatus: canonicalReviewGateRunStatus(result),
     outcomeClass: decision.outcomeClass,
     recommendation: decision.nextAction === 'pass' ? 'proceed' : 'stop',
+    rateLimit,
     metrics: {
       attempt,
       fix_cycles: result?.fix_cycles ?? 0,

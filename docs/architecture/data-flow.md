@@ -68,3 +68,20 @@ If Buster cannot publish completion, it writes a dead-letter record before ACK. 
 - Kubernetes pod status explains runtime health, not pipeline intent.
 
 This authority order is why the recommended stuck-run trace starts with `--status` and `latest.json`, then moves to module/gate artifacts, then Redis and pod logs.
+
+## Source Owners And Verification
+
+| Flow segment | Source owner | Expected artifact/state | Verification |
+| --- | --- | --- | --- |
+| Config and progress loading | `skills/nova/pipeline/core/config.ts`; `skills/nova/pipeline/core/platform-config.ts`; `charts/kubeclaw/files/config/swarm.config.json` | project, repo root, `.swarm/progress.json`, plugin registry summary | `node --test tests/skills/nova/pipeline/core/config-plugin-registry.test.mjs tests/skills/nova/pipeline/core/path-segments.test.mjs` |
+| Pipeline lifecycle and read models | `skills/nova/pipeline/services/status-store.ts`; `skills/nova/pipeline/services/status-store-lifecycle/**` | `canonical-events.jsonl`, `read-models.json`, run-scoped `pipeline.jsonl` | `node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"` |
+| Buster task and completion stream | `skills/buster/pipeline/services/task-queue.ts`; `task-validation.ts`; `task-completion.ts` | `swarm:<agent>:tasks`, completion stream, `:dead-letter` stream | `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"` |
+| Telemetry and operator mirrors | `skills/nova/pipeline/services/telemetry*.ts`; `skills/common/pipeline/telemetry.ts` | `pipeline:telemetry:<project>:<run_id>`, `discord.jsonl`, fallback telemetry JSONL | `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry-docs` |
+
+## Common Breakpoints
+
+- `Progress file not found`: `loadConfig` could not resolve `Projects/<project>/src/.swarm/progress.json`; check `CURRENT_PROJECT`, `--project`, and `REPO_ROOT`.
+- `STATUS_LIFECYCLE_GUARD_VIOLATION`: code attempted to mutate guarded lifecycle fields outside the lifecycle append path.
+- `BUSTER_TASK_MALFORMED`: Redis task payload lacks identity, has unsafe paths, unknown capabilities, or invalid `test_config`.
+- Redis completion conflicts with lifecycle state: treat Redis as candidate evidence, then inspect run-scoped lifecycle events before retrying.
+- Telemetry exists without local artifacts: keep local `pipeline.jsonl` and read models as durable audit authority.

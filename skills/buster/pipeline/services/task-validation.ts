@@ -33,6 +33,16 @@ function normalizeAttempt(value) {
   return numeric;
 }
 
+function isPlainObject(value) {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+}
+
+function payloadValueType(value) {
+  if (Array.isArray(value)) return 'array';
+  if (value === null) return 'null';
+  return typeof value;
+}
+
 function normalizeRequiredSuites(value) {
   if (!Array.isArray(value)) return null;
   const suiteNames = [];
@@ -143,6 +153,9 @@ export function validateBusterTaskPayload(payload = {}) {
   const suites = normalizeRequiredSuites(payload.suites);
   const capabilities = normalizeBusterCapabilities(payload.capabilities || []);
   const unknownCapabilities = unknownBusterCapabilities(capabilities);
+  const testConfigProvided = payload.test_config !== undefined;
+  const testConfig = isPlainObject(payload.test_config) ? payload.test_config : null;
+  const suiteTimeoutMs = testConfig ? normalizeAttempt(testConfig.suite_timeout_ms) : null;
 
   if (!moduleId) missing.push('module_id');
   if (!project) missing.push('project');
@@ -160,6 +173,15 @@ export function validateBusterTaskPayload(payload = {}) {
   if (!sessionCwd) missing.push('session.cwd');
   if (!sessionLabel) missing.push('session.label');
   if (!suites) missing.push('suites');
+  if (testConfigProvided && !testConfig) {
+    throw new MalformedBusterTaskError('Buster task payload test_config must be an object', {
+      reason: 'invalid_test_config_shape',
+      invalid_fields: [{ field: 'test_config', expected: 'object', actual: payloadValueType(payload.test_config) }],
+      payload_keys: Object.keys(payload),
+    });
+  }
+  if (!testConfigProvided) missing.push('test_config');
+  if (testConfig && suiteTimeoutMs === null) missing.push('test_config.suite_timeout_ms');
   if (taskType === 'gate_test' && !gateId) missing.push('gate_id');
 
   if (missing.length > 0) {
@@ -195,5 +217,6 @@ export function validateBusterTaskPayload(payload = {}) {
     timeoutSeconds,
     suites,
     capabilities,
+    suiteTimeoutMs,
   };
 }

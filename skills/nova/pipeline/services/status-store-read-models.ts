@@ -12,6 +12,7 @@ export {
 
 export {
   getAuthoritativeModuleState,
+  projectModuleRuntimeState,
   projectModuleSchedulerState,
 } from './status-store-read-models/module-projection.ts';
 

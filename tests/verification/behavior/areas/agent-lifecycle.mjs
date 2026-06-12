@@ -45,7 +45,17 @@ function platformAgentLifecycleDefaults() {
   return {
     fallback_model: 'openai-codex/gpt-5.4',
     rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },
-    buster: { suite_timeout_ms: 300000 },
+    buster: {
+      suite_timeout_ms: 300000,
+      max_crash_retries: 2,
+      runtime: {
+        heartbeat_path: '/tmp/kubeclaw-buster-heartbeat',
+        heartbeat_interval_ms: 1000,
+        task_poll_interval_ms: 2000,
+        task_pending_reclaim_idle_ms: 60000,
+        task_stream_max_len: 250,
+      },
+    },
     acp_monitor: {
       unknown_poll_limit: 10,
       stale_poll_limit: 10,

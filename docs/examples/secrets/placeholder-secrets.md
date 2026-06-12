@@ -61,3 +61,21 @@ kubectl create secret generic operator-oauth -n tailscale \
   --from-literal=client_id="<tailnet-oauth-client-id>" \
   --from-literal=client_secret="<tailnet-oauth-client-secret>"
 ```
+
+## Verify And Replace
+
+Placeholder commands are for shape only. Replace every placeholder before deployment and prefer `./my-values/setup-secrets.sh` when you want the repo-owned resolution order.
+
+```bash
+kubectl -n "$NAMESPACE" get secret openclaw-shared-secrets redis-secrets ghcr-secret git-deploy-key-nova git-deploy-key-buster
+kubectl -n "$NAMESPACE" get secret postgresql-secrets litellm-secrets google-sa-key
+kubectl -n tailscale get secret operator-oauth
+node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
+```
+
+Failure signals:
+
+- `secret ... exists but is missing keys`: rerun `my-values/setup-secrets.sh` with `KUBECLAW_SECRET_SETUP_MODE=interactive` or patch the missing key.
+- `ImagePullBackOff`: inspect `ghcr-secret` before rebuilding images.
+- LiteLLM starts but provider calls fail: check `litellm-secrets`, `google-sa-key`, and upstream provider permissions.
+- Tailscale final preview has no URL: check `tailscale/operator-oauth`, operator pods, and tailnet ACL/tag policy.

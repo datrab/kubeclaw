@@ -41,27 +41,6 @@ function normalizeDiscordCorrelation(source = {}) {
   };
 }
 
-function extractDiscordCorrelation(fields = []) {
-  const correlation = emptyDiscordCorrelation();
-
-  for (const field of Array.isArray(fields) ? fields : []) {
-    const key = typeof field?.correlation_key === 'string' ? field.correlation_key : null;
-    const value = field?.value;
-    if (!value) continue;
-
-    if (key === 'run_id' && !correlation.run_id) correlation.run_id = String(value);
-    else if (key === 'session_key' && !correlation.session_key) correlation.session_key = String(value);
-    else if (key === 'gateway_label' && !correlation.gateway_label) correlation.gateway_label = String(value);
-    else if (key === 'attempt' && correlation.attempt == null) correlation.attempt = normalizeAttempt(value);
-    else if (key === 'module_id' && !correlation.module_id) correlation.module_id = String(value);
-    else if (key === 'gate_id' && !correlation.gate_id) correlation.gate_id = String(value);
-    else if (key === 'gate_type' && !correlation.gate_type) correlation.gate_type = String(value);
-    else if (key === 'dispatch_id' && !correlation.dispatch_id) correlation.dispatch_id = String(value);
-  }
-
-  return correlation;
-}
-
 function mergeDiscordCorrelation(base = {}, extra = {}) {
   return {
     run_id: extra.run_id || base.run_id || null,
@@ -73,13 +52,6 @@ function mergeDiscordCorrelation(base = {}, extra = {}) {
     gate_type: extra.gate_type || base.gate_type || null,
     dispatch_id: extra.dispatch_id || base.dispatch_id || null,
   };
-}
-
-function extractDiscordBatchCorrelation(embeds = []) {
-  return (Array.isArray(embeds) ? embeds : []).reduce(
-    (merged, embed) => mergeDiscordCorrelation(merged, extractDiscordCorrelation(embed?.fields || [])),
-    emptyDiscordCorrelation(),
-  );
 }
 
 function reportDiscordIncident(config = {}, classification, message, error = null, options = {}) {
@@ -185,10 +157,7 @@ async function appendDiscordAuditEntries(config = {}, level = 'INFO', embeds = [
   const runId = config?._runId || config?.run_id || null;
   const batchCorrelation = normalizeDiscordCorrelation(opts.correlation || {});
   const embedCorrelations = Array.isArray(opts.correlations) ? opts.correlations : [];
-  const correlation = mergeDiscordCorrelation(
-    extractDiscordBatchCorrelation(embeds),
-    batchCorrelation,
-  );
+  const correlation = batchCorrelation;
   if (!Array.isArray(embeds) || !embeds.length) return { ok: true, correlation };
   const targets = Array.isArray(opts.auditTargets) ? opts.auditTargets.filter(Boolean) : [getPipelineArtifactBundle(config).global_discord_jsonl_path, getPipelineArtifactBundle(config).run_discord_jsonl_path].filter(Boolean);
   if (!targets.length) return { ok: true, correlation };
@@ -196,8 +165,8 @@ async function appendDiscordAuditEntries(config = {}, level = 'INFO', embeds = [
     for (const [index, rawEmbed] of embeds.entries()) {
       const safeEmbed = sanitizeJsonEgress(rawEmbed, 'discord_audit_embed');
       const entryCorrelation = mergeDiscordCorrelation(
-        extractDiscordCorrelation(rawEmbed?.fields || []),
-        mergeDiscordCorrelation(normalizeDiscordCorrelation(embedCorrelations[index] || {}), batchCorrelation),
+        normalizeDiscordCorrelation(embedCorrelations[index] || {}),
+        batchCorrelation,
       );
       const entry = sanitizeJsonEgress({
         ts: new Date().toISOString(),
@@ -268,13 +237,13 @@ export async function discord(config: any, level: any, title: any, description: 
       embeds: [{ title, description, fields }],
     }).embeds?.[0] || { title, description, fields };
     const correlation = mergeDiscordCorrelation(
-      extractDiscordCorrelation(fields || []),
+      emptyDiscordCorrelation(),
       normalizeDiscordCorrelation(opts.correlation || {}),
     );
     await appendDiscordAuditEntries(config, level, [{ ...safeEmbed, fields }], { correlation });
     const injectedDiscord = resolveInjectedDiscord(opts, 'discord');
     if (typeof injectedDiscord === 'function') {
-      await injectedDiscord(config, level, safeEmbed.title, safeEmbed.description, safeEmbed.fields || []);
+      await injectedDiscord(config, level, safeEmbed.title, safeEmbed.description, safeEmbed.fields || [], { correlation });
       return;
     }
     if (discordWebhookDeliveryMuted(config)) return;
@@ -333,7 +302,7 @@ export async function discordEmbeds(config: any, embeds: any[] = [], opts: any =
       })),
     }).embeds || [];
     const correlation = mergeDiscordCorrelation(
-      extractDiscordBatchCorrelation(embeds),
+      emptyDiscordCorrelation(),
       normalizeDiscordCorrelation(opts.correlation || {}),
     );
     await appendDiscordAuditEntries(config, level, safeEmbeds.map((safeEmbed, index) => ({

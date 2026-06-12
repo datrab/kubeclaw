@@ -25,6 +25,24 @@ Final-preview credential delivery is an intentional bootstrap exception for huma
 
 Runtime code provides path-scoping helpers, denied subprocess secret env keys, shell-tokenization checks, redaction, Buster task identity validation, and Buster default-deny capabilities for suite/tool surfaces.
 
+## Security Ownership And Verification
+
+| Security surface | Runtime owner | Inputs and artifacts | Verification or operator signal |
+| --- | --- | --- | --- |
+| Kubernetes Secret wiring | `charts/kubeclaw/templates/secret.yaml`; `charts/kubeclaw/templates/deployment.yaml`; `my-values/setup-secrets.sh` | `openclaw-shared-secrets`, `redis-secrets`, `postgresql-secrets`, `litellm-secrets`, `google-sa-key`, `ghcr-secret`, `git-deploy-key-nova`, `git-deploy-key-buster`, `operator-oauth` | `npm run docs:generate:check`; `kubectl -n "$NAMESPACE" get secret ...`; `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` |
+| Runtime config secret materialization | `charts/kubeclaw/templates/configmap-gateway.yaml`; init block in `charts/kubeclaw/templates/deployment.yaml` | persistent source `/config/openclaw.json`; runtime overlay `/runtime-config/openclaw.json`; placeholders `__LITELLM_API_KEY__` and `__DISCORD_TOKEN__` | inspect rendered deployment; `kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- test -f /home/node/.openclaw/openclaw.json` |
+| Network isolation | `my-values/infra/network-policies.yaml`; `scripts/deploy.sh` infra/teardown functions | default-deny ingress/egress plus DNS, internal service, registry, LiteLLM, PostgreSQL, and temporary public port allowances | deployment truth validates 13 NetworkPolicies; `kubectl -n "$NAMESPACE" get networkpolicy` |
+| Buster privileged sandbox | `docker/Dockerfile.sandbox`; `charts/kubeclaw/templates/deployment.yaml`; `my-values/buster-values.yaml` | privileged Podman-in-Pod, `/var/lib/containers`, `/sandbox`, `BUSTER_TASK_STREAM`, `buster.runtime.*` | deployment truth checks privileged sandbox mounts/resources; `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"` |
+| Buster Kubernetes authority | `charts/kubeclaw/templates/rbac.yaml`; `my-values/infra/buster-namespace-fence.yaml`; `scripts/buster-namespace-controller.mjs` | lease-client Role in the release namespace, namespace controller authority for labeled `test-*` namespaces | `kubectl auth can-i create namespaces --as system:serviceaccount:kubeclaw:agent-buster -n "$NAMESPACE"` should be denied in broker mode; deployment truth checks lease-only authority |
+| Pipeline path and task validation | `skills/nova/pipeline/core/paths.ts`; `skills/buster/pipeline/services/task-validation.ts`; `skills/common/pipeline/security.ts`; `skills/common/pipeline/redaction.ts` | safe project path segments, repo-relative payload paths, denied secret env keys, redacted logs | `node --test tests/skills/nova/pipeline/core/path-segments.test.mjs tests/skills/buster/pipeline/services/task-validation.test.mjs tests/skills/common/pipeline/security.test.mjs tests/skills/common/pipeline/redaction.test.mjs` |
+
+## Troubleshooting Signals
+
+- Missing or stale credentials usually surface as failed pod readiness, failed `openclaw gateway status`, or missing Secret keys reported by `my-values/setup-secrets.sh`.
+- NetworkPolicy regressions should first be checked with `kubectl -n "$NAMESPACE" get networkpolicy` and the deployment truth verifier, then with pod-level connectivity checks from `../deployment/networking.md`.
+- Buster sandbox security changes should be checked against rendered container `securityContext`, Podman storage mounts, and `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"`.
+- If a runtime config change appears lost after rollout, inspect `/home/node/.openclaw-persisted/openclaw.json`; existing PVC state is intentionally preserved unless the operator migrates it.
+
 ## Open Issues
 
 - LiteLLM and Prism preview still use temporary NodePorts.

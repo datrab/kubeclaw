@@ -93,11 +93,16 @@ function canonicalApprovalGateRunStatus(status, result = {}) {
 }
 
 function isApprovalGatePassResult(result = {}) {
-  const status = String(result?.status || '').trim().toUpperCase();
-  return result?.passed === true
-    || result?.outcome_class === 'passed'
-    || status === APPROVAL_STATUS.APPROVED
-    || (status === APPROVAL_STATUS.TIMED_OUT && result?.continued === true);
+  return result?.outcome_class === 'passed';
+}
+
+function assertApprovalGateResultContract(gateId, status, result = {}) {
+  if (result?.outcome_class !== 'passed') return;
+  const hasApprovedAuthority = status === APPROVAL_STATUS.APPROVED;
+  const hasTimeoutContinueAuthority = status === APPROVAL_STATUS.TIMED_OUT && result?.continued === true;
+  if (!hasApprovedAuthority && !hasTimeoutContinueAuthority) {
+    throw new Error(`Approval gate '${gateId}' passed outcome requires APPROVED status or continued TIMED_OUT authority`);
+  }
 }
 
 function tryResolveApprovalTimeoutPolicyFromState(stateAuthority, gateId) {
@@ -110,9 +115,10 @@ function tryResolveApprovalTimeoutPolicyFromState(stateAuthority, gateId) {
 }
 
 export function buildApprovalGateControlResult(config, gateId, gate, result = {}, opts = {}) {
-  const decision = approvalGateDecisionForResult(result);
   const runId = config?._runId || config?.run_id || null;
   const status = String(result?.status || '').trim().toUpperCase() || null;
+  assertApprovalGateResultContract(gateId, status, result);
+  const decision = approvalGateDecisionForResult(result);
   const stateAuthority = opts?.approvalState || opts?.input?.stateSnapshot?.gate;
   const timeoutPolicy = result?.corrupted_state === true || result?.invalid_state === true || status === 'CORRUPTED_STATE' || status === 'INVALID_STATE'
     ? tryResolveApprovalTimeoutPolicyFromState(stateAuthority, gateId)

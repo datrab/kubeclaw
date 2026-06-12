@@ -81,6 +81,15 @@ export async function spawnReviewerAgent(
     } catch (e: any) {
       log('DEBUG', `Reviewer spawn telemetry failed for ${gatewayLabel}: ${e?.message || e}`);
     }
+    const spawnDiscordCorrelation = {
+      run_id: runId,
+      gate_id: gateId,
+      gate_type: opts.gate_type || null,
+      attempt: opts.attempt ?? null,
+      dispatch_id: dispatchId,
+      gateway_label: gatewayLabel,
+      session_key: sessionData.childSessionKey,
+    };
     discord(config, 'INFO', `🔬 Reviewer Spawned: ${reviewer.label}/${gateId}`, 'Echo reviewer is now working.', buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.LIFECYCLE, {
       runId,
       gateId,
@@ -93,11 +102,19 @@ export async function spawnReviewerAgent(
       { name: 'Reviewer', value: reviewer.label, inline: true },
       { name: 'Model', value: model, inline: true },
       { name: 'Agent', value: agentId, inline: true },
-    ])).catch((e) => {
+    ]), { correlation: spawnDiscordCorrelation }).catch((e) => {
       log('DEBUG', `Reviewer spawn Discord notice failed for ${gatewayLabel}: ${e?.message || e}`);
     });
     return { label: trackingKey, childSessionKey: sessionData.childSessionKey, runId, dispatchId, streamLogPath: sessionData.streamLogPath };
   } catch (e: any) {
+    const spawnFailureDiscordCorrelation = {
+      run_id: runId,
+      gate_id: gateId,
+      gate_type: opts.gate_type || null,
+      attempt: opts.attempt ?? null,
+      dispatch_id: dispatchId,
+      gateway_label: gatewayLabel,
+    };
     discord(config, 'CRITICAL', `❌ Reviewer Spawn Failed: ${gateId}`, `${reviewer.label}: ${e.message?.split('\n')[0] || 'unknown'}`,
       buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.LIFECYCLE, {
         runId,
@@ -106,7 +123,8 @@ export async function spawnReviewerAgent(
         attempt: opts.attempt ?? null,
         dispatchId,
         gatewayLabel,
-      })
+      }),
+      { correlation: spawnFailureDiscordCorrelation },
     ).catch((discordError) => {
       log('DEBUG', `Reviewer spawn failure Discord notice failed for ${gatewayLabel}: ${discordError?.message || discordError}`);
     });

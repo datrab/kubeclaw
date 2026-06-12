@@ -32,7 +32,7 @@ The implemented command sequence is:
 ./scripts/deploy.sh smoke
 ```
 
-`setup` creates or verifies the namespace, adds Bitnami/Qdrant/Tailscale Helm repos, runs the secret setup helper when a TTY is available, and notes that local-image verification needs an explicit private registry pull path. If `NAMESPACE` is unset, it asks for a workspace namespace and stores the answer in `my-values/.workspace-namespace`.
+`setup` creates or verifies the namespace, adds Bitnami/Qdrant/Tailscale Helm repos, runs the secret setup helper when a TTY is available, and notes that local-image verification needs an explicit private registry pull path. If `NAMESPACE` is unset and a TTY is available, it asks for a workspace namespace every time. Press Enter to use the remembered/default namespace, or type a new namespace to deploy another pipeline namespace and remember that value.
 
 `infra` installs required Redis, registry mirror, registry-local, the Buster namespace fence, and the Tailscale operator. It also installs optional PostgreSQL, Qdrant, and LiteLLM unless their switches are disabled. `agents` installs Nova and Buster with production values. `smoke` waits for both agent deployments, checks dependency-aware pod readiness, runs `openclaw gateway status` in the `kubeclaw` container, and verifies `/app/skills` plus `/home/node/.openclaw/swarm.config.json`.
 
@@ -76,3 +76,27 @@ Before a live install, review:
 ## Current gap
 
 A complete source-verified five-minute clean-cluster quickstart is not present. The command surface exists, but the docs cannot promise a timed live install until maintainer-selected prerequisites, secret provisioning, cluster profile, and rollback guarantees are verified end to end. The missing quickstart is tracked in `../open-issues.md`.
+
+## First Live Run Sequence
+
+Use this sequence when the prerequisites above are satisfied. It is source-backed by `scripts/deploy.sh`, but external credentials and cluster readiness are still live responsibilities.
+
+```bash
+export NAMESPACE=kubeclaw
+./scripts/deploy.sh setup
+./scripts/deploy.sh infra
+./scripts/deploy.sh agents
+./scripts/deploy.sh status
+./scripts/deploy.sh smoke
+```
+
+Expected resources include Redis, optional PostgreSQL/Qdrant/LiteLLM, `Deployment/agent-nova`, `Deployment/agent-buster`, Services for both agents, PVCs for workspace/config storage, and Secrets from `my-values/setup-secrets.sh`.
+
+If this fails:
+
+- setup/secrets failure: inspect missing Secret names and rerun with `KUBECLAW_SECRET_SETUP_MODE=interactive`.
+- infra rollout failure: keep `ALLOW_PARTIAL_INFRA=false` unless intentionally troubleshooting, then inspect the specific deployment.
+- agent pod not ready: inspect init-container logs before main container logs.
+- smoke fails after pod readiness: inspect `/runtime-config/openclaw.json`, `SWARM_CONFIG`, Redis, and gateway health.
+
+Run `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` before live changes to confirm the repo still renders the expected deployment shape.

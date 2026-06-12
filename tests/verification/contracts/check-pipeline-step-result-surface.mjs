@@ -16,6 +16,7 @@ function parseArgs(argv = process.argv.slice(2)) {
 
 const { sourceRoot } = parseArgs();
 const helperPath = path.join(sourceRoot, 'skills/nova/pipeline/services/contracts/pipeline-step-result.ts');
+const controlResultMappingPath = path.join(sourceRoot, 'skills/nova/pipeline/services/contracts/control-result-mapping.ts');
 const helperSource = fs.readFileSync(helperPath, 'utf8');
 
 for (const marker of [
@@ -69,6 +70,7 @@ assert.equal(helperSource.includes('typedNode.recommendation'), false, 'step-res
 assert.equal(helperSource.includes('metadata.rate_limit_exhausted === true'), false, 'rate-limit exhaustion must come from typed step outcome, not diagnostics metadata');
 assert.equal(helperSource.includes('controlMetadata.rate_limit_exhausted === true'), false, 'rate-limit exhaustion must come from typed step outcome, not control metadata');
 assert.equal(helperSource.includes('rateLimitStatus?.rate_limit_exhausted === true'), false, 'rate-limit exhaustion must come from typed step outcome, not nested rate-limit status metadata');
+assert.equal(fs.existsSync(controlResultMappingPath), false, 'generic control-result mapping fallback helper must be deleted');
 
 const runnerFiles = [
   'skills/nova/pipeline/runners/module-runner-shared.ts',
@@ -102,6 +104,8 @@ const passResult = helperMod.buildPipelineStepResult({
   outcome: 'passed',
   reason: 'Gate passed',
   correlation: { gate_id: 'quality', gate_type: 'review' },
+  terminalAction: 'none',
+  terminalScope: 'gate',
 });
 assert.equal(helperMod.isPipelineStepResult(passResult), true);
 assert.deepEqual(helperMod.validatePipelineStepResult(passResult), []);
@@ -140,6 +144,8 @@ const needsNovaStep = helperMod.buildPipelineStepResultFromControlResult(needsNo
   outcome: 'needs_nova',
   correlation: { gate_id: 'test', gate_type: 'buster' },
   remediation: { cycle: 3, maxCycles: 3, reason: 'fix_cycles_exhausted' },
+  terminalAction: 'request_handoff',
+  terminalScope: 'gate',
 });
 assert.equal(needsNovaStep.nextAction, 'halt');
 assert.equal(needsNovaStep.outcome, 'needs_nova');
@@ -173,6 +179,8 @@ const staleMetadataStep = helperMod.buildPipelineStepResultFromControlResult({
   stepType: 'gate',
   stepId: 'review',
   outcome: 'passed',
+  terminalAction: 'none',
+  terminalScope: 'gate',
 });
 assert.equal(staleMetadataStep.nextAction, 'continue');
 assert.equal(staleMetadataStep.outcome, 'passed', 'typed outcome must beat stale metadata outcome');
@@ -189,6 +197,14 @@ const rateLimitedStep = helperMod.buildPipelineStepResultFromControlResult({
     metadata: {
       legacy_outcome_class: 'rate_limit_exhausted',
       rate_limit_exhausted: true,
+      rate_limit: {
+        max_rate_limit_pauses: 3,
+        rate_limit_status: {
+          rate_limit_exhausted: true,
+          max_rate_limit_pauses: 3,
+          dispatch_id: 'dispatch-rate-limit-1',
+        },
+      },
       max_rate_limit_pauses: 3,
       rate_limit_status: {
         rate_limit_exhausted: true,
@@ -206,13 +222,25 @@ const rateLimitedStep = helperMod.buildPipelineStepResultFromControlResult({
   stepType: 'gate',
   stepId: 'buster',
   outcome: 'rate_limited',
+  rateLimit: {
+    max_rate_limit_pauses: 3,
+    rate_limit_pauses: 3,
+    rate_limit_status: {
+      rate_limit_exhausted: true,
+      max_rate_limit_pauses: 3,
+      dispatch_id: 'dispatch-rate-limit-1',
+    },
+  },
+  terminalAction: 'retry_later',
+  terminalScope: 'gate',
 });
 assert.equal(rateLimitedStep.outcome, 'rate_limited');
 assert.equal(rateLimitedStep.terminal.status, 'rate_limited');
 const rateLimitDetails = helperMod.pipelineStepRateLimitDetails(rateLimitedStep);
-assert.equal(rateLimitDetails.source, 'typed_step_result_diagnostics');
+assert.equal(rateLimitDetails.source, 'typed_step_result_rate_limit');
 assert.equal(rateLimitDetails.rate_limit_exhausted, true);
 assert.equal(rateLimitDetails.max_rate_limit_pauses, 3);
+assert.equal(rateLimitDetails.rate_limit_pauses, 3);
 assert.equal(rateLimitDetails.rate_limit_status.dispatch_id, 'dispatch-rate-limit-1');
 
 const staleRateLimitMetadataStep = helperMod.buildPipelineStepResultFromControlResult({
@@ -235,10 +263,44 @@ const staleRateLimitMetadataStep = helperMod.buildPipelineStepResultFromControlR
   stepType: 'gate',
   stepId: 'stale-rate-limit-metadata',
   outcome: 'passed',
+  terminalAction: 'none',
+  terminalScope: 'gate',
 });
 const staleRateLimitDetails = helperMod.pipelineStepRateLimitDetails(staleRateLimitMetadataStep);
 assert.equal(staleRateLimitDetails.rate_limit_exhausted, false, 'rate-limit exhaustion must be false unless the typed step outcome is rate_limited');
-assert.equal(staleRateLimitDetails.max_rate_limit_pauses, 7, 'diagnostic rate-limit metadata may still carry non-authoritative details');
+assert.equal(staleRateLimitDetails.max_rate_limit_pauses, null, 'diagnostic rate-limit metadata is not rate-limit authority');
+
+assert.throws(
+  () => helperMod.buildPipelineStepResultFromControlResult({
+    schemaVersion: 'v1',
+    producerKind: 'gate',
+    producerType: 'buster',
+    nextAction: 'block',
+    issueType: 'environment',
+    diagnostics: {
+      summary: 'Rate limit metadata is not authority',
+      metadata: {
+        rate_limit: {
+          max_rate_limit_pauses: 3,
+          rate_limit_status: { max_rate_limit_pauses: 3 },
+        },
+      },
+      typed: {
+        gate: {
+          outcomeClass: 'rate_limited',
+        },
+      },
+    },
+  }, {
+    stepType: 'gate',
+    stepId: 'rate-limit-without-typed-authority',
+    outcome: 'rate_limited',
+    terminalAction: 'retry_later',
+    terminalScope: 'gate',
+  }),
+  /rateLimit must be provided for rate_limited outcomes/,
+  'rate-limited step results must use the dedicated rateLimit authority instead of diagnostics metadata',
+);
 
 const ambiguousHaltStep = helperMod.buildPipelineStepResultFromControlResult({
   schemaVersion: 'v1',
@@ -258,6 +320,8 @@ const ambiguousHaltStep = helperMod.buildPipelineStepResultFromControlResult({
   stepType: 'gate',
   stepId: 'ambiguous-halt',
   outcome: 'error',
+  terminalAction: 'stop',
+  terminalScope: 'gate',
 });
 assert.equal(ambiguousHaltStep.outcome, 'error', 'explicit typed outcome metadata must own HALT classification instead of summary text');
 assert.equal(ambiguousHaltStep.terminal.status, 'failed');
@@ -311,9 +375,40 @@ assert.equal(requestFixStep.outcome, 'fix_requested');
 assert.equal(requestFixStep.terminal.exitCode, undefined, 'non-terminal request_fix should not project an exit code');
 
 assert.throws(
-  () => helperMod.buildPipelineStepResult({ stepType: 'gate', stepId: 'review', nextAction: 'continue', outcome: 'needs_nova' }),
+  () => helperMod.buildPipelineStepResult({
+    stepType: 'gate',
+    stepId: 'review',
+    nextAction: 'continue',
+    outcome: 'needs_nova',
+    terminalAction: 'request_handoff',
+    terminalScope: 'gate',
+  }),
   /outcome 'needs_nova' is not valid for nextAction 'continue'/,
   'step result helper should reject typed-action/outcome contradictions',
+);
+
+assert.throws(
+  () => helperMod.buildPipelineStepResult({
+    stepType: 'gate',
+    stepId: 'review',
+    nextAction: 'halt',
+    outcome: 'needs_nova',
+    terminalScope: 'gate',
+  }),
+  /action must be one of:/,
+  'terminal step result producers must provide explicit terminal action',
+);
+
+assert.throws(
+  () => helperMod.buildPipelineStepResult({
+    stepType: 'gate',
+    stepId: 'review',
+    nextAction: 'halt',
+    outcome: 'needs_nova',
+    terminalAction: 'request_handoff',
+  }),
+  /scope must be one of:/,
+  'terminal step result producers must provide explicit terminal scope',
 );
 
 assert.throws(

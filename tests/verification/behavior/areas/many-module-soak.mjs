@@ -19,6 +19,20 @@ async function buildBuiltInRegistry(runtimeRootForRegistry) {
   return registry;
 }
 
+function canonicalBusterPolicy(root) {
+  return {
+    suite_timeout_ms: 300000,
+    max_crash_retries: 0,
+    runtime: {
+      heartbeat_path: path.join(root, 'buster-heartbeat.json'),
+      heartbeat_interval_ms: 1000,
+      task_poll_interval_ms: 2000,
+      task_pending_reclaim_idle_ms: 60000,
+      task_stream_max_len: 250,
+    },
+  };
+}
+
 function withIntegratedModuleHappyPathStages(registry, { lifecycleStateMod, fs, behavior = {}, labelPrefix = 'integrated' }) {
   const workerCalls = [];
   const validatorCalls = [];
@@ -342,6 +356,7 @@ const config = {
       fallback_model: 'anthropic/claude-sonnet-4-6',
       auto_retry_threshold: 2,
       rate_limit: { cooldown_hours: 0, max_pauses_per_module: 3 },
+      buster: canonicalBusterPolicy(repoRoot),
       review_defaults: { timeout_minutes: 30, max_fix_cycles: 3, lint_tier: 'full', lint_required: false },
       _runId: runId,
       run_id: runId,
@@ -480,6 +495,7 @@ const config = {
       fallback_model: 'anthropic/claude-sonnet-4-6',
       auto_retry_threshold: 2,
       rate_limit: { cooldown_hours: 0, max_pauses_per_module: 3 },
+      buster: canonicalBusterPolicy(repoRoot),
       review_defaults: { timeout_minutes: 30, max_fix_cycles: 3, lint_tier: 'full', lint_required: false },
       _runId: runId,
       run_id: runId,
@@ -629,6 +645,8 @@ const config = {
 	                gateway_label: dispatchId,
 	                session_key: `agent:main:acp:${dispatchId}`,
 	              },
+              terminalAction: 'none',
+              terminalScope: 'module',
 	            });
           },
         },

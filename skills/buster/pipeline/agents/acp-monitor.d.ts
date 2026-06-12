@@ -1,1 +1,1 @@
-export function getAcpMonitorState(...args: unknown[]): Promise<Record<string, unknown>>;
+export function getAcpMonitorState(request: Record<string, unknown>): Promise<Record<string, unknown>>;

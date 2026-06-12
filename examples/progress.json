@@ -1,0 +1,956 @@
+{
+  "project": "kubecommand",
+  "version": "1.0.0",
+  "created_at": null,
+  "last_updated": null,
+  "models": {
+    "forge": "claude-sonnet-4-6",
+    "buster": "claude-sonnet-4-6",
+    "echo": "claude-opus-4-6"
+  },
+  "execution_order": [
+    "01",
+    "02",
+    "gate:early-review",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
+    "gate:midpoint-review",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "gate:final-buster",
+    "gate:final-review"
+  ],
+  "phases": [
+    {
+      "id": "phase-1",
+      "name": "Backend Foundation",
+      "modules": [
+        "01",
+        "02"
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "Core Resource APIs",
+      "modules": [
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09"
+      ]
+    },
+    {
+      "id": "phase-3",
+      "name": "Extended Resource APIs",
+      "modules": [
+        "10",
+        "11",
+        "12",
+        "13"
+      ]
+    },
+    {
+      "id": "phase-4",
+      "name": "Frontend",
+      "modules": [
+        "14",
+        "15",
+        "16",
+        "17"
+      ]
+    },
+    {
+      "id": "phase-5",
+      "name": "Delivery",
+      "modules": [
+        "18"
+      ]
+    }
+  ],
+  "modules": {
+    "01": {
+      "title": "Project Scaffold + Auth + Database",
+      "dir": "01-project-scaffold-auth-database",
+      "substeps": null,
+      "depends_on": [],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "security",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "kubecommand-backend:m01",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "health_retries": 10,
+          "health_timeout": 15000,
+          "health_base_delay": 5000,
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
+          "build_timeout": 1800
+        },
+        "api": {
+          "spec_file": ".swarm/modules/01-project-scaffold-auth-database/test-spec.json"
+        },
+        "unit": {
+          "test_cmd": "pip install -r backend/requirements.txt -r backend/dev-requirements.txt -q && KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short"
+        }
+      }
+    },
+    "02": {
+      "title": "Kubernetes Connection Layer",
+      "dir": "02-kubernetes-connection",
+      "substeps": null,
+      "depends_on": [
+        "01"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "security",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "kubecommand-backend:m02",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "health_retries": 10,
+          "health_timeout": 15000,
+          "health_base_delay": 5000,
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
+          "build_timeout": 1800
+        },
+        "api": {
+          "spec_file": ".swarm/modules/02-kubernetes-connection/test-spec.json"
+        },
+        "unit": {
+          "test_cmd": "pip install -r backend/requirements.txt -r backend/dev-requirements.txt -q && KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short"
+        }
+      }
+    },
+    "03": {
+      "title": "Pods",
+      "dir": "03-pods",
+      "substeps": [
+        "03a",
+        "03b",
+        "03c",
+        "03d"
+      ],
+      "depends_on": [
+        "02",
+        "gate:early-review"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "security",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "kubecommand-backend:m03",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "health_retries": 10,
+          "health_timeout": 15000,
+          "health_base_delay": 5000,
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
+          "build_timeout": 1800
+        },
+        "api": {
+          "spec_file": ".swarm/modules/03-pods/test-spec.json"
+        },
+        "unit": {
+          "test_cmd": "pip install -r backend/requirements.txt -r backend/dev-requirements.txt -q && KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short"
+        }
+      }
+    },
+    "04": {
+      "title": "Deployments",
+      "dir": "04-deployments",
+      "substeps": [
+        "04a",
+        "04b"
+      ],
+      "depends_on": [
+        "03"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "security",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "kubecommand-backend:m04",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "health_retries": 10,
+          "health_timeout": 15000,
+          "health_base_delay": 5000,
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
+          "build_timeout": 1800
+        },
+        "api": {
+          "spec_file": ".swarm/modules/04-deployments/test-spec.json"
+        },
+        "unit": {
+          "test_cmd": "pip install -r backend/requirements.txt -r backend/dev-requirements.txt -q && KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short"
+        }
+      }
+    },
+    "05": {
+      "title": "Nodes",
+      "dir": "05-nodes",
+      "substeps": [
+        "05a",
+        "05b"
+      ],
+      "depends_on": [
+        "04"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "security",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "kubecommand-backend:m05",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "health_retries": 10,
+          "health_timeout": 15000,
+          "health_base_delay": 5000,
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
+          "build_timeout": 1800
+        },
+        "api": {
+          "spec_file": ".swarm/modules/05-nodes/test-spec.json"
+        },
+        "unit": {
+          "test_cmd": "pip install -r backend/requirements.txt -r backend/dev-requirements.txt -q && KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short"
+        }
+      }
+    },
+    "06": {
+      "title": "WebSockets (Logs + Exec)",
+      "dir": "06-websockets",
+      "substeps": [
+        "06a",
+        "06b"
+      ],
+      "depends_on": [
+        "05"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "security",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "kubecommand-backend:m06",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "health_retries": 10,
+          "health_timeout": 15000,
+          "health_base_delay": 5000,
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
+          "build_timeout": 1800
+        },
+        "api": {
+          "spec_file": ".swarm/modules/06-websockets/test-spec.json"
+        },
+        "unit": {
+          "test_cmd": "pip install -r backend/requirements.txt -r backend/dev-requirements.txt -q && KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short"
+        }
+      }
+    },
+    "07": {
+      "title": "Services + CronJobs",
+      "dir": "07-services-cronjobs",
+      "substeps": [
+        "07a",
+        "07b"
+      ],
+      "depends_on": [
+        "06"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "security",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "kubecommand-backend:m07",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "health_retries": 10,
+          "health_timeout": 15000,
+          "health_base_delay": 5000,
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
+          "build_timeout": 1800
+        },
+        "api": {
+          "spec_file": ".swarm/modules/07-services-cronjobs/test-spec.json"
+        },
+        "unit": {
+          "test_cmd": "pip install -r backend/requirements.txt -r backend/dev-requirements.txt -q && KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short"
+        }
+      }
+    },
+    "08": {
+      "title": "Git + Build Pipeline",
+      "dir": "08-git-build",
+      "substeps": [
+        "08a",
+        "08b",
+        "08c"
+      ],
+      "depends_on": [
+        "07"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "security",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "kubecommand-backend:m08",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "health_retries": 10,
+          "health_timeout": 15000,
+          "health_base_delay": 5000,
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
+          "build_timeout": 1800
+        },
+        "api": {
+          "spec_file": ".swarm/modules/08-git-build/test-spec.json"
+        },
+        "unit": {
+          "test_cmd": "pip install -r backend/requirements.txt -r backend/dev-requirements.txt -q && KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short"
+        }
+      }
+    },
+    "09": {
+      "title": "Alerts System",
+      "dir": "09-alerts",
+      "substeps": null,
+      "depends_on": [
+        "08"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "security",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "kubecommand-backend:m09",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "health_retries": 10,
+          "health_timeout": 15000,
+          "health_base_delay": 5000,
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
+          "build_timeout": 1800
+        },
+        "api": {
+          "spec_file": ".swarm/modules/09-alerts/test-spec.json"
+        },
+        "unit": {
+          "test_cmd": "pip install -r backend/requirements.txt -r backend/dev-requirements.txt -q && KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short"
+        }
+      }
+    },
+    "10": {
+      "title": "ConfigMaps + Secrets",
+      "dir": "10-configmaps-secrets",
+      "substeps": [
+        "10a",
+        "10b"
+      ],
+      "depends_on": [
+        "09"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "security",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "kubecommand-backend:m10",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "health_retries": 10,
+          "health_timeout": 15000,
+          "health_base_delay": 5000,
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
+          "build_timeout": 1800
+        },
+        "api": {
+          "spec_file": ".swarm/modules/10-configmaps-secrets/test-spec.json"
+        },
+        "unit": {
+          "test_cmd": "pip install -r backend/requirements.txt -r backend/dev-requirements.txt -q && KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short"
+        }
+      }
+    },
+    "11": {
+      "title": "Storage + Events",
+      "dir": "11-storage-events",
+      "substeps": [
+        "11a",
+        "11b"
+      ],
+      "depends_on": [
+        "10"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "security",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "kubecommand-backend:m11",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "health_retries": 10,
+          "health_timeout": 15000,
+          "health_base_delay": 5000,
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
+          "build_timeout": 1800
+        },
+        "api": {
+          "spec_file": ".swarm/modules/11-storage-events/test-spec.json"
+        },
+        "unit": {
+          "test_cmd": "pip install -r backend/requirements.txt -r backend/dev-requirements.txt -q && KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short"
+        }
+      }
+    },
+    "12": {
+      "title": "Helm",
+      "dir": "12-helm",
+      "substeps": [
+        "12a",
+        "12b"
+      ],
+      "depends_on": [
+        "11"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "security",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "kubecommand-backend:m12",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "health_retries": 10,
+          "health_timeout": 15000,
+          "health_base_delay": 5000,
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
+          "build_timeout": 1800
+        },
+        "api": {
+          "spec_file": ".swarm/modules/12-helm/test-spec.json"
+        },
+        "unit": {
+          "test_cmd": "pip install -r backend/requirements.txt -r backend/dev-requirements.txt -q && KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short"
+        }
+      }
+    },
+    "13": {
+      "title": "Apply + Deploy + Service Directory",
+      "dir": "13-apply-deploy-directory",
+      "substeps": [
+        "13a",
+        "13b",
+        "13c"
+      ],
+      "depends_on": [
+        "12"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "security",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "kubecommand-backend:m13",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "health_retries": 10,
+          "health_timeout": 15000,
+          "health_base_delay": 5000,
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
+          "build_timeout": 1800
+        },
+        "api": {
+          "spec_file": ".swarm/modules/13-apply-deploy-directory/test-spec.json"
+        },
+        "unit": {
+          "test_cmd": "pip install -r backend/requirements.txt -r backend/dev-requirements.txt -q && KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short"
+        }
+      }
+    },
+    "14": {
+      "title": "Frontend Scaffold + Auth",
+      "dir": "14-frontend-scaffold",
+      "substeps": [
+        "14a",
+        "14b"
+      ],
+      "depends_on": [
+        "13",
+        "gate:midpoint-review"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "a11y",
+        "perf",
+        "bundle",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "static",
+          "project_dir": "Projects/kubecommand/src",
+          "build_cmd": "cd frontend && npm install && npm run build",
+          "image": "node:20-slim"
+        },
+        "unit": {
+          "test_cmd": "cd frontend && npm install && npx vitest run --reporter=verbose"
+        }
+      }
+    },
+    "15": {
+      "title": "Dashboard + Core Pages",
+      "dir": "15-dashboard-core-pages",
+      "substeps": [
+        "15a",
+        "15b",
+        "15c",
+        "15d"
+      ],
+      "depends_on": [
+        "14"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "a11y",
+        "perf",
+        "bundle",
+        "visual-reg",
+        "e2e",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "static",
+          "project_dir": "Projects/kubecommand/src",
+          "build_cmd": "cd frontend && npm install && npm run build",
+          "image": "node:20-slim"
+        },
+        "visual-reg": {
+          "baseline_dir": ".swarm/modules/15-dashboard-core-pages/baselines"
+        },
+        "e2e": {
+          "tests_dir": ".swarm/modules/15-dashboard-core-pages/tests"
+        },
+        "unit": {
+          "test_cmd": "cd frontend && npm install && npx vitest run --reporter=verbose"
+        }
+      }
+    },
+    "16": {
+      "title": "Resource Pages",
+      "dir": "16-resource-pages",
+      "substeps": [
+        "16a",
+        "16b",
+        "16c",
+        "16d"
+      ],
+      "depends_on": [
+        "15"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "a11y",
+        "perf",
+        "bundle",
+        "visual-reg",
+        "e2e",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "static",
+          "project_dir": "Projects/kubecommand/src",
+          "build_cmd": "cd frontend && npm install && npm run build",
+          "image": "node:20-slim"
+        },
+        "visual-reg": {
+          "baseline_dir": ".swarm/modules/16-resource-pages/baselines"
+        },
+        "e2e": {
+          "tests_dir": ".swarm/modules/16-resource-pages/tests"
+        },
+        "unit": {
+          "test_cmd": "cd frontend && npm install && npx vitest run --reporter=verbose"
+        }
+      }
+    },
+    "17": {
+      "title": "Feature Pages",
+      "dir": "17-feature-pages",
+      "substeps": [
+        "17a",
+        "17b",
+        "17c",
+        "17d"
+      ],
+      "depends_on": [
+        "16"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "a11y",
+        "perf",
+        "bundle",
+        "visual-reg",
+        "e2e",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "static",
+          "project_dir": "Projects/kubecommand/src",
+          "build_cmd": "cd frontend && npm install && npm run build",
+          "image": "node:20-slim"
+        },
+        "visual-reg": {
+          "baseline_dir": ".swarm/modules/17-feature-pages/baselines"
+        },
+        "e2e": {
+          "tests_dir": ".swarm/modules/17-feature-pages/tests"
+        },
+        "unit": {
+          "test_cmd": "cd frontend && npm install && npx vitest run --reporter=verbose"
+        }
+      }
+    },
+    "18": {
+      "title": "Delivery",
+      "dir": "18-delivery",
+      "substeps": [
+        "18a",
+        "18b",
+        "18c"
+      ],
+      "depends_on": [
+        "17"
+      ],
+      "timeout_minutes": 300,
+      "max_fails": 3,
+      "forge_subagent": "forge-sonnet",
+      "forge_model": "claude-sonnet-4-6",
+      "test_suites": [
+        "build",
+        "health",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "kubecommand-backend:m18",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "health_retries": 10,
+          "health_timeout": 15000,
+          "health_base_delay": 5000,
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
+          "build_timeout": 1800
+        },
+        "unit": {
+          "test_cmd": "pip install -r requirements.txt -r dev-requirements.txt -q && pip install pyyaml -q && KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest tests/ -v --tb=short"
+        }
+      }
+    }
+  },
+  "gates": {
+    "early-review": {
+      "type": "review",
+      "title": "Echo Early Architecture Review",
+      "review_name": "EARLY-REVIEW",
+      "on_nogo": "fix_and_rereview",
+      "instructions_file": "echo-review/EARLY-REVIEW-INSTRUCTIONS.md",
+      "output_file": "logs/echo-review/EARLY-REVIEW.json",
+      "review_output_dir": "logs/echo-review",
+      "reviewers": null,
+      "timeout_minutes": 30,
+      "max_fix_cycles": null,
+      "lint_tier": "full"
+    },
+    "midpoint-review": {
+      "type": "review",
+      "title": "Echo Midpoint Review",
+      "review_name": "MIDPOINT-REVIEW",
+      "on_nogo": "fix_and_rereview",
+      "instructions_file": "echo-review/MIDPOINT-REVIEW-INSTRUCTIONS.md",
+      "output_file": "logs/echo-review/MIDPOINT-REVIEW.json",
+      "review_output_dir": "logs/echo-review",
+      "reviewers": null,
+      "timeout_minutes": 30,
+      "max_fix_cycles": null,
+      "lint_tier": null
+    },
+    "final-buster": {
+      "type": "buster",
+      "title": "Final System Test",
+      "on_fail": "fix_and_retest",
+      "instructions_file": "buster-test/FINAL-BUSTER.md",
+      "output_file": "buster-test/FINAL-BUSTER-RESULT.json",
+      "model": "claude-sonnet-4-6",
+      "forge_model": "claude-sonnet-4-6",
+      "timeout_minutes": 60,
+      "max_fix_cycles": 3,
+      "test_suites": [
+        "build",
+        "health",
+        "api",
+        "security",
+        "unit"
+      ],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/kubecommand/src",
+          "start_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "image": "kubecommand-backend:gate-final",
+          "port": 8000,
+          "health_path": "/api/v1/health",
+          "health_retries": 10,
+          "health_timeout": 15000,
+          "health_base_delay": 5000,
+          "dockerfile": "Projects/kubecommand/src/backend/Dockerfile",
+          "build_context": "Projects/kubecommand/src/backend/",
+          "build_timeout": 1800
+        },
+        "api": {
+          "spec_file": ".swarm/buster-test/final-test-spec.json",
+          "thresholds": {
+            "max_failures": 0
+          }
+        },
+        "security": {
+          "paths": [
+            "/api/v1/health",
+            "/api/v1/pods"
+          ],
+          "thresholds": {
+            "max_missing_headers": 0
+          }
+        },
+        "unit": {
+          "test_cmd": "KUBECOMMAND_API_KEY=test_api_key_for_buster_minimum_32_chars IN_CLUSTER=false python -m pytest backend/tests/ -v --tb=short",
+          "thresholds": {
+            "max_failures": 0
+          }
+        }
+      }
+    },
+    "final-review": {
+      "type": "review",
+      "title": "Echo Final Review",
+      "review_name": "FINAL-REVIEW",
+      "on_nogo": "fix_and_rereview",
+      "instructions_file": "echo-review/FINAL-REVIEW-INSTRUCTIONS.md",
+      "output_file": "logs/echo-review/FINAL-REVIEW.json",
+      "review_output_dir": "logs/echo-review",
+      "reviewers": null,
+      "timeout_minutes": 30,
+      "max_fix_cycles": null,
+      "lint_tier": null
+    }
+  }
+}

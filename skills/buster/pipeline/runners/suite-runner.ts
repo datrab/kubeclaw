@@ -152,8 +152,9 @@ function suiteIcon(status: SuiteStatus): string {
     case 'FAIL': return '❌';
     case 'SKIP': return '⏭';
     case 'ERROR': return '💥';
-    default: return '❓';
   }
+  const exhaustive: never = status;
+  throw new Error(`Unsupported suite status: ${String(exhaustive)}`);
 }
 
 const SUITE_REGISTRY: Readonly<Record<string, SuiteFunction>> = Object.freeze({
@@ -313,9 +314,16 @@ function requireSuiteIdentity(moduleId: unknown, project: unknown): { moduleId: 
   return { moduleId: normalizedModuleId, project: normalizedProject };
 }
 
-function safeArtifactSegment(value: unknown, fallback = 'unknown'): string {
-  const segment = String(value || fallback).replace(/[^a-zA-Z0-9._-]+/g, '_').replace(/^\.+/, '');
-  return segment || fallback;
+function safeArtifactSegment(value: string): string {
+  const segment = value.replace(/[^a-zA-Z0-9._-]+/g, '_').replace(/^\.+/, '');
+  if (!segment) {
+    throw createSuiteRunnerValidationError('Buster suite artifact segment must be non-empty after sanitization', {
+      reason: 'invalid_suite_artifact_segment',
+      field: 'moduleId',
+      value,
+    });
+  }
+  return segment;
 }
 
 export function resolveSandboxResultsDir(moduleId: string, attempt: number | undefined): string {
@@ -430,7 +438,14 @@ export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOpt
   const suiteIdentity = requireSuiteIdentity(moduleId, payload.project);
 
   const suiteNames = validateSuiteNames(suites);
-  const config = isRecord(payload.test_config) ? payload.test_config : {};
+  if (!isRecord(payload.test_config)) {
+    throw createSuiteRunnerValidationError('Buster payload test_config must be an object', {
+      reason: 'invalid_test_config_shape',
+      field: 'test_config',
+      value: payload.test_config ?? null,
+    });
+  }
+  const config = payload.test_config;
   const suiteTimeout = resolveSuiteTimeoutMs(config);
   const project = suiteIdentity.project;
   const resolvedModuleId = suiteIdentity.moduleId;

@@ -80,7 +80,7 @@ const STATUS = {
  *
  * @typedef {Object} PollResult
  * @property {boolean} ok - Whether a terminal status was reached (PASS, FAIL, etc.)
- * @property {string} reason - 'target_reached' | 'gate_fail' | 'timeout' | 'blocked' | 'rate_limited' | 'rate_limit_exhausted' | 'parse_corrupted' | 'spawn_failed' | 'completion_conflict'
+ * @property {string} reason - 'target_reached' | 'verdict_fail' | 'timeout' | 'blocked' | 'rate_limited' | 'rate_limit_exhausted' | 'parse_corrupted' | 'spawn_failed' | 'completion_conflict'
  * @property {object|null} status - The lifecycle read-model projection or Redis completion data
  * @property {object|null} transcript - Optional ACP transcript state when polling owns it
  */
@@ -208,7 +208,7 @@ export async function pollForFile(config, filePath, timeoutMinutes, label = 'fil
 
     // Signal B: ACP transcript / session terminal state without file → fail fast
     if (sessionLabel) {
-      acpState = await getAcpMonitorState(config, sessionLabel, acpState);
+      acpState = await getAcpMonitorState({ config, sessionLabelOrKey: sessionLabel, previousState: acpState });
       const tracked = getTrackedAgent(sessionLabel);
       const pollIdentity = resolveFilePollIdentity(label, tracked);
       updateAcpPollObservability(
@@ -342,10 +342,10 @@ export async function pollStatus(config, moduleDir, expectedStatuses, timeoutMin
 
     // ── Channel 2: ACP transcript/session terminal state (fail-fast on crash) ──
     if (sessionLabel) {
-      acpState = await getAcpMonitorState(config, sessionLabel, acpState);
+      acpState = await getAcpMonitorState({ config, sessionLabelOrKey: sessionLabel, previousState: acpState });
       const tracked = getTrackedAgent(sessionLabel);
-      const currentStatus = status || loadStatus(config, moduleDir) || { module_id: moduleDir, current_phase: 'forge' };
-      const pollIdentity = resolveStatusPollIdentity(moduleDir, currentStatus, tracked, sessionLabel);
+      const pollIdentity = resolveStatusPollIdentity(moduleDir, status, tracked, sessionLabel);
+      const currentStatus = status || {};
       const liveAgentType = pollIdentity.agent_type || 'forge';
       updateAcpPollObservability(ctx, observabilityState, acpState, pollIdentity, liveAgentType);
       publishAcpTranscriptDelta(ctx, pollIdentity, acpState, {
@@ -514,7 +514,7 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
       }
 
       if (sessionLabel) {
-        acpState = await getAcpMonitorState(config, sessionLabel, acpState);
+        acpState = await getAcpMonitorState({ config, sessionLabelOrKey: sessionLabel, previousState: acpState });
         const liveAgentType = pollIdentity.agent_type || 'forge';
         updateAcpPollObservability(ctx, observabilityState, acpState, pollIdentity, liveAgentType);
         publishAcpTranscriptDelta(ctx, pollIdentity, acpState, {

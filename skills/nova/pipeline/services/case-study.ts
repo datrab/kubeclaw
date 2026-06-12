@@ -27,15 +27,20 @@ import {
 import { buildGeneratorArtifactRef, buildGeneratorResult } from './contracts/generator-result.ts';
 import { createTrackedSummarySessionCleanup } from './summary-session-cleanup.ts';
 import { getPipelineArtifactBundle } from './artifact-bundle.ts';
+import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from './discord-fields.ts';
 
 function buildCaseStudyDiscordFields(identity = {}, extra = []) {
-  const fields = [];
-  if (identity.run_id) fields.push({ name: 'Run ID', value: identity.run_id, inline: true, correlation_key: 'run_id' });
-  if (identity.attempt != null) fields.push({ name: 'Attempt', value: `${identity.attempt}`, inline: true, correlation_key: 'attempt' });
-  if (identity.dispatch_id) fields.push({ name: 'Dispatch', value: identity.dispatch_id, inline: false, correlation_key: 'dispatch_id' });
-  if (identity.gateway_label) fields.push({ name: 'Gateway Label', value: identity.gateway_label, inline: false, correlation_key: 'gateway_label' });
-  if (identity.session_key) fields.push({ name: 'Session', value: identity.session_key, inline: false, correlation_key: 'session_key' });
-  return [...fields, ...extra];
+  return buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, identity, extra);
+}
+
+function buildCaseStudyDiscordCorrelation(identity = {}) {
+  return {
+    run_id: identity.run_id || null,
+    attempt: identity.attempt ?? null,
+    dispatch_id: identity.dispatch_id || null,
+    gateway_label: identity.gateway_label || null,
+    session_key: identity.session_key || null,
+  };
 }
 
 const DEFAULT_CASE_STUDY_DEPS = {
@@ -201,11 +206,12 @@ export async function generateCaseStudy(config, progress, opts = {}) {
       telemetry_agent_type: 'echo',
       telemetry_attempt: caseStudyAttempt,
     });
-    await deps.discord(config, 'INFO', '📝 Case Study Agent Spawned', 'Generating publishable case study from pipeline data.', buildCaseStudyDiscordFields({ run_id: runId, attempt: caseStudyAttempt, gateway_label: caseStudyGatewayLabel, session_key: sessionKey }, [
+    const spawnDiscordIdentity = { run_id: runId, attempt: caseStudyAttempt, gateway_label: caseStudyGatewayLabel, session_key: sessionKey };
+    await deps.discord(config, 'INFO', '📝 Case Study Agent Spawned', 'Generating publishable case study from pipeline data.', buildCaseStudyDiscordFields(spawnDiscordIdentity, [
       { name: 'Model', value: model, inline: true },
       { name: 'Agent', value: agentId, inline: true },
       { name: 'Dispatch', value: dispatch, inline: true },
-    ])).catch((e) => {
+    ]), { correlation: buildCaseStudyDiscordCorrelation(spawnDiscordIdentity) }).catch((e) => {
       log('DEBUG', `Case study spawn Discord notice failed: ${e?.message || e}`);
     });
 
@@ -304,19 +310,20 @@ export async function generateCaseStudy(config, progress, opts = {}) {
     if (!pollRes.ok) {
       caseStudyAttempt = resolveResultAttempt(pollRes) ?? caseStudyAttempt ?? null;
       const failureReason = pollRes?.status?.detail ? `${pollRes.reason} (${pollRes.status.detail})` : pollRes.reason;
+      const noOutputDiscordIdentity = {
+        run_id: runId,
+        attempt: caseStudyAttempt,
+        dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? caseStudyDispatchId ?? null),
+        gateway_label: (resolveStatusGatewayLabel(pollRes?.status) ?? caseStudyGatewayLabel ?? null),
+        session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
+      };
       await deps.discord(config, 'WARN', '📝 Case Study: No Output', `Case study agent finished without producing a report. Reason: ${failureReason}`, [
-        ...buildCaseStudyDiscordFields({
-          run_id: runId,
-          attempt: caseStudyAttempt,
-          dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? caseStudyDispatchId ?? null),
-          gateway_label: (resolveStatusGatewayLabel(pollRes?.status) ?? caseStudyGatewayLabel ?? null),
-          session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
-        }),
+        ...buildCaseStudyDiscordFields(noOutputDiscordIdentity),
         { name: 'Timeout', value: `${timeoutMin}min`, inline: true },
         { name: 'Agent', value: agentId, inline: true },
         { name: 'Model', value: model, inline: true },
         { name: 'Full Report', value: `\`${cs.output_file || 'logs/pipeline/case-study.md'}\``, inline: false },
-      ]).catch((e) => {
+      ], { correlation: buildCaseStudyDiscordCorrelation(noOutputDiscordIdentity) }).catch((e) => {
         log('DEBUG', `Case study timeout/failure Discord notice failed: ${e?.message || e}`);
       });
       throw new Error(`Case study generation failed: ${failureReason}`);
@@ -339,16 +346,17 @@ export async function generateCaseStudy(config, progress, opts = {}) {
 
     try {
       const preview = safeCaseStudyMd.slice(0, 500);
+      const completeDiscordIdentity = {
+        run_id: runId,
+        attempt: caseStudyAttempt,
+        dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? caseStudyDispatchId ?? null),
+        gateway_label: (resolveStatusGatewayLabel(pollRes?.status) ?? caseStudyGatewayLabel ?? null),
+        session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
+      };
       await deps.discord(config, 'OK', '📝 Case Study Complete', preview, [
-        ...buildCaseStudyDiscordFields({
-          run_id: runId,
-          attempt: caseStudyAttempt,
-          dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? caseStudyDispatchId ?? null),
-          gateway_label: (resolveStatusGatewayLabel(pollRes?.status) ?? caseStudyGatewayLabel ?? null),
-          session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
-        }),
+        ...buildCaseStudyDiscordFields(completeDiscordIdentity),
         { name: 'Full Report', value: `\`${cs.output_file || 'logs/pipeline/case-study.md'}\``, inline: false },
-      ]);
+      ], { correlation: buildCaseStudyDiscordCorrelation(completeDiscordIdentity) });
     } catch (e) {
       log('WARN', `Case study Discord post failed (non-critical): ${e.message}`);
     }
@@ -381,17 +389,19 @@ export async function generateCaseStudy(config, progress, opts = {}) {
       runtime: dispatch,
     });
     log('WARN', `Case study generation failed (non-critical): ${e.message}`);
+    const failedDiscordIdentity = {
+      run_id: runId,
+      attempt: caseStudyAttempt,
+      dispatch_id: (resolveStatusDispatchId(lastCaseStudyStatus) ?? caseStudyDispatchId ?? null),
+      gateway_label: (resolveStatusGatewayLabel(lastCaseStudyStatus) ?? caseStudyGatewayLabel ?? null),
+      session_key: (resolveStatusSessionKey(lastCaseStudyStatus) ?? sessionKey ?? null),
+    };
     await deps.discord(config, 'WARN', '📝 Case Study Failed', `Case study agent error: ${e.message?.split('\n')[0] || 'unknown'}`,
-      buildCaseStudyDiscordFields({
-        run_id: runId,
-        attempt: caseStudyAttempt,
-        dispatch_id: (resolveStatusDispatchId(lastCaseStudyStatus) ?? caseStudyDispatchId ?? null),
-        gateway_label: (resolveStatusGatewayLabel(lastCaseStudyStatus) ?? caseStudyGatewayLabel ?? null),
-        session_key: (resolveStatusSessionKey(lastCaseStudyStatus) ?? sessionKey ?? null),
-      }, [
+      buildCaseStudyDiscordFields(failedDiscordIdentity, [
         ...(agentId ? [{ name: 'Agent', value: agentId, inline: true }] : []),
         ...(model ? [{ name: 'Model', value: model, inline: true }] : []),
-      ])
+      ]),
+      { correlation: buildCaseStudyDiscordCorrelation(failedDiscordIdentity) },
     ).catch((discordError) => {
       log('DEBUG', `Case study failure Discord notice failed: ${discordError?.message || discordError}`);
     });

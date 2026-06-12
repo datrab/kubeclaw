@@ -34,6 +34,16 @@ helm template agent-buster charts/kubeclaw -n kubeclaw -f my-values/buster-value
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 ```
 
+## Deployment Source Map
+
+| Surface | Source files | Runtime inputs | Outputs and artifacts | Failure signals |
+| --- | --- | --- | --- | --- |
+| Operator entrypoint | `scripts/deploy.sh` | `NAMESPACE`, `KUBECLAW_RUN_SECRET_SETUP`, `KUBECLAW_DEPLOY_POSTGRESQL`, `KUBECLAW_DEPLOY_QDRANT`, `KUBECLAW_DEPLOY_LITELLM`, `ALLOW_PARTIAL_INFRA` | namespace, secrets, infra resources, Helm releases, smoke output | missing `kubectl`/`helm`, rollout timeout, failed image pull preflight, smoke failure |
+| Secret setup | `my-values/setup-secrets.sh` | `SRC_NS`, `KUBECLAW_SECRET_SETUP_MODE`, `KUBECLAW_SECRETS_OVERWRITE`, `TAILSCALE_OAUTH_CLIENT_ID`, `TAILSCALE_OAUTH_CLIENT_SECRET` | app namespace Secrets and `operator-oauth` in the Tailscale namespace | missing keys, noninteractive mode without source Secret/SOPS value, Tailscale OAuth Secret missing |
+| Agent chart | `charts/kubeclaw/templates/deployment.yaml`; `service.yaml`; `pvc.yaml`; `configmap-gateway.yaml`; `configmap-swarm-config.yaml`; `rbac.yaml` | chart defaults plus `my-values/nova-values.yaml` and `my-values/buster-values.yaml` | Nova/Buster Deployments, Services, PVCs, ConfigMaps, optional RBAC | deployment truth render assertion failure, pod readiness failure, gateway health failure |
+| Infra manifests | `my-values/infra/*.yaml`; `my-values/infra/network-policies.yaml` | component flags and namespace | Redis/PostgreSQL/Qdrant/LiteLLM/registries/Tailscale resources, namespace fence, 13 NetworkPolicies | failed rollout unless `ALLOW_PARTIAL_INFRA=true`, failed kubeconform validation |
+| Images | `docker/Dockerfile.general`; `docker/Dockerfile.sandbox`; `docker/Dockerfile.prism-preview`; `.github/workflows/build-images.yaml` | GHCR owner, image tag, `LOCAL_REGISTRY_PUSH`, `LOCAL_REGISTRY_PULL` | GHCR images and local verification images | Docker build failure, pushed image unavailable to cluster, mutable `latest` drift |
+
 ## Operator Path
 
 For a normal deployment, read these pages in order:
@@ -46,3 +56,7 @@ For a normal deployment, read these pages in order:
 6. [Tailscale operator](tailscale-operator.md), if final previews are enabled
 7. [Agent deployments](agent-deployments.md)
 8. [Deployment verification](deployment-verification.md)
+
+## What Repository Checks Prove
+
+`node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` renders both production values files, validates the agent chart, checks expected Service exposure, validates Buster sandbox/RBAC surfaces, verifies the generated config/skills merge paths, checks image workflow and Dockerfile policy, and validates the 13 NetworkPolicy resources. It does not prove that a live cluster has a working CNI, a reachable model provider, or a valid backup/restore path.

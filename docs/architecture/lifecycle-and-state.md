@@ -76,3 +76,32 @@ External systems produce evidence that can influence lifecycle only through adap
 - Discord notifications are presentation surfaces and are never scheduler authority.
 
 This authority split is deliberate. It lets Nova recover from restarts without trusting whichever live surface happened to produce the latest message.
+
+## Authority And Evidence Matrix
+
+| State or evidence | File/stream | Code owner | Authority rule |
+| --- | --- | --- | --- |
+| canonical lifecycle events | `.swarm/logs/pipeline/runs/<run_id>/lifecycle/canonical-events.jsonl` | `status-store-lifecycle/appenders.ts` | append-only scheduler truth; every event needs type, primary ref, idempotency key, and legality check |
+| lifecycle read models | `.swarm/logs/pipeline/runs/<run_id>/lifecycle/read-models.json` | `status-store-lifecycle/read-models.ts`; `projections.ts` | scheduler read surface rebuilt from canonical events |
+| append lock | `.swarm/logs/pipeline/runs/<run_id>/lifecycle/append.lock/owner.json` | `status-store-lifecycle/storage.ts` | serializes concurrent recovery, wait, cooldown, and completion appends |
+| latest pointer | `.swarm/logs/pipeline/latest.json` | `artifact-bundle.ts`; `status-store.ts` | discovery pointer to active/latest run, not full state authority |
+| active session authority | read model `active_sessions.modules` and `active_sessions.gates` | `session-authority.ts`; `pipeline-runner-recovery.ts` | requires `run_id`, `attempt`, `dispatch_id`, `session_key`; diagnostic files cannot rehydrate authority |
+| Redis completion | `swarm:pipeline:<project>:completions` | Nova completion adjudicator; Buster `task-completion.ts` | accepted only when terminal evidence matches active dispatch identity |
+| Redis dead-letter | `swarm:buster:tasks:dead-letter` | Buster `task-completion.ts` | failure evidence for malformed/runtime task failure before ACK |
+| Discord and pod logs | `discord.jsonl`, Kubernetes logs | telemetry/notification sinks and runtime containers | presentation and diagnostics only |
+
+## Recovery Invariants
+
+- Stale recovery may reset state only after lifecycle authority confirms the active session identity and monitor/termination evidence proves the session is terminal or stopped.
+- `recovery.stale_blocked` preserves active-session evidence when identity is weak or stop confirmation fails.
+- Buster must not mutate Nova lifecycle state directly. It emits completion or dead-letter evidence, then Nova adjudicates it.
+- Buster task ACK happens only after `ensureTaskTerminalBeforeAck()` proves completion or dead-letter evidence.
+- Lifecycle legality rejects impossible append order, including duplicate terminal run completion, closing unopened waits, and attempt mismatch.
+
+Verification:
+
+```bash
+node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"
+node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"
+node tests/verification/behavior/verify.mjs --area restart-recovery
+```

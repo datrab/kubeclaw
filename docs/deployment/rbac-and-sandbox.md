@@ -48,3 +48,14 @@ That authority is intentional for the current Buster role, but it is still a hig
 
 - The namespace fence does not constrain namespaced resource writes in existing namespaces.
 - Buster combines privileged container execution with namespace-lease permissions in production values.
+
+## Verification And Recovery
+
+| Surface | Command | Expected result |
+| --- | --- | --- |
+| Rendered RBAC | `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` | Buster broker RBAC and sandbox posture match production values |
+| Lease client authority | `kubectl -n "$NAMESPACE" auth can-i create busternamespaceleases --as system:serviceaccount:"$NAMESPACE":agent-buster` | allowed when broker mode is enabled |
+| Namespace controller authority | `kubectl auth can-i create namespaces --as system:serviceaccount:"$NAMESPACE":agent-buster-namespace-controller` | allowed, with namespace-fence policy required for prefix restriction |
+| Nova write authority | `kubectl -n "$NAMESPACE" auth can-i create pods --as system:serviceaccount:"$NAMESPACE":agent-nova` | should not be broadly allowed by the agent chart |
+
+If Buster suites fail with Kubernetes authorization errors, identify whether the failing pod is `agent-buster` or `agent-buster-namespace-controller`. The first should only request leases and run sandbox work; the second owns test namespace creation/deletion. Preserve the failed task payload because capabilities and requested suite type decide which authority was expected.

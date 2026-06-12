@@ -72,3 +72,16 @@ node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PW
 
 - LiteLLM and Prism preview still use temporary NodePorts.
 - NetworkPolicy egress is intentionally broad for agents, LiteLLM, and registry-mirror until Cilium/FQDN policy is available.
+
+## NetworkPolicy Proof And Limits
+
+`my-values/infra/network-policies.yaml` is applied by `scripts/deploy.sh infra`. Deployment truth currently verifies the policy set and expected count, but it does not prove live CNI enforcement. A live cluster can still behave differently if the CNI ignores Kubernetes NetworkPolicy or if node-level firewall/routing rules differ.
+
+| Check | Command | Expected signal |
+| --- | --- | --- |
+| Source policy count and shape | `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` | NetworkPolicy validation passes with the expected baseline resources |
+| Policies installed | `kubectl -n "$NAMESPACE" get networkpolicy` | default-deny and app-specific ingress/egress policies are present |
+| Service exposure | `kubectl -n "$NAMESPACE" get svc -o wide` | gateway/bridge are ClusterIP; explicit extra ports show only where values request them |
+| Tailscale ingress | `kubectl get ingressclass tailscale && kubectl -n "$NAMESPACE" get ingress` | final-preview Ingress uses Tailscale only after the operator is installed |
+
+If Redis, Qdrant, PostgreSQL, or LiteLLM traffic fails after policies are applied, inspect pod labels first. The policies select labels such as `app.kubernetes.io/name` and `app.kubernetes.io/instance`; a label drift can look like a network outage.

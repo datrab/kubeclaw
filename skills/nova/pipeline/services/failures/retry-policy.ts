@@ -15,6 +15,10 @@ import {
   PIPELINE_STEP_OUTCOMES,
   PIPELINE_STEP_TYPES,
 } from '../contracts/pipeline-step-result.ts';
+import {
+  PIPELINE_TERMINAL_ACTIONS,
+  PIPELINE_TERMINAL_SCOPES,
+} from '../contracts/terminal-decision.ts';
 import { classifyFailPattern } from './classification.ts';
 import {
   buildFailureDiscordFields,
@@ -172,6 +176,8 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
         gateway_label: gatewayLabel,
         session_key: sessionKey,
       },
+      terminalAction: PIPELINE_TERMINAL_ACTIONS.NOTIFY_OPERATOR,
+      terminalScope: PIPELINE_TERMINAL_SCOPES.MODULE,
     });
   }
 
@@ -242,48 +248,70 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
 }
 
 export function buildNovaEscalation(config, status, moduleId, moduleDir, maxFails, phase, isTimeout, autoRetryThreshold, opts = {}) {
-  return {
-    outcome_class: isTimeout ? 'timeout' : 'needs_nova',
-    run_id: getRunId(config),
-    module: moduleId,
-    module_dir: moduleDir,
-    is_timeout: isTimeout,
+  const dispatchId = opts.dispatch_id ?? resolveStatusDispatchId(status) ?? null;
+  const gatewayLabel = opts.gateway_label ?? resolveStatusGatewayLabel(status) ?? null;
+  const sessionKey = opts.session_key ?? resolveStatusSessionKey(status) ?? null;
+  const runId = getRunId(config);
+  const reason = isTimeout
+    ? `${phase} timed out — agent did not respond within time limit`
+    : `${phase} failed ${status.fail_count}x — auto-retry exhausted, Nova must intervene`;
+  const failHistory = status.fail_summaries.map(f => ({
+    attempt: f.attempt,
+    phase: f.phase,
+    summary: f.summary,
+    failPattern: f.failPattern,
+    failure_class: f.failure_class || normalizeFailureClass(f.phase, f.summary, {
+      isTimeout: f.is_timeout === true,
+      failurePattern: f.failPattern,
+    }),
+    is_timeout: f.is_timeout || false,
+    files_changed: f.files_changed || null,
+    timestamp: f.timestamp,
+  }));
+  const moduleStatus = {
+    status: status.status,
+    current_phase: status.current_phase,
+    started_at: status.started_at,
     attempt: status.fail_count,
-    dispatch_id: (opts.dispatch_id ?? resolveStatusDispatchId(status) ?? null),
-    gateway_label: (opts.gateway_label ?? resolveStatusGatewayLabel(status) ?? null),
-    session_key: (opts.session_key ?? resolveStatusSessionKey(status) ?? null),
-    reason: isTimeout
-      ? `${phase} timed out — agent did not respond within time limit`
-      : `${phase} failed ${status.fail_count}x — auto-retry exhausted, Nova must intervene`,
-    fail_count: status.fail_count,
-    max_fails: maxFails,
-    auto_retry_threshold: autoRetryThreshold,
-    remaining_attempts: maxFails - status.fail_count,
-    fail_history: status.fail_summaries.map(f => ({
-      attempt: f.attempt,
-      phase: f.phase,
-      summary: f.summary,
-      failPattern: f.failPattern,
-      failure_class: f.failure_class || normalizeFailureClass(f.phase, f.summary, {
-        isTimeout: f.is_timeout === true,
-        failurePattern: f.failPattern,
-      }),
-      is_timeout: f.is_timeout || false,
-      files_changed: f.files_changed || null,
-      timestamp: f.timestamp,
-    })),
-    last_fail: status.fail_summaries[status.fail_summaries.length - 1] || null,
-    module_status: {
-      status: status.status,
-      current_phase: status.current_phase,
-      started_at: status.started_at,
-      attempt: status.fail_count,
-      dispatch_id: (opts.dispatch_id ?? resolveStatusDispatchId(status) ?? null),
-      gateway_label: (opts.gateway_label ?? resolveStatusGatewayLabel(status) ?? null),
-      session_key: (opts.session_key ?? resolveStatusSessionKey(status) ?? null),
-      forge_commit_hash: status.forge_commit_hash || null,
-      cost: status.cost,
-    },
-    resume_command: buildFullPipelineResumeCommand(config, 'YOUR_NEW_APPROACH_HERE'),
+    dispatch_id: dispatchId,
+    gateway_label: gatewayLabel,
+    session_key: sessionKey,
+    forge_commit_hash: status.forge_commit_hash || null,
+    cost: status.cost,
   };
+  return buildPipelineStepResult({
+    stepType: PIPELINE_STEP_TYPES.MODULE,
+    stepId: moduleId,
+    nextAction: PIPELINE_STEP_ACTIONS.HALT,
+    outcome: isTimeout ? PIPELINE_STEP_OUTCOMES.TIMEOUT : PIPELINE_STEP_OUTCOMES.NEEDS_NOVA,
+    issueType: isTimeout ? 'environment' : 'code',
+    reason,
+    diagnostics: {
+      metadata: {
+        module: moduleId,
+        module_dir: moduleDir,
+        is_timeout: isTimeout,
+        fail_count: status.fail_count,
+        max_fails: maxFails,
+        auto_retry_threshold: autoRetryThreshold,
+        remaining_attempts: maxFails - status.fail_count,
+        fail_history: failHistory,
+        last_fail: status.fail_summaries[status.fail_summaries.length - 1] || null,
+        module_status: moduleStatus,
+        resume_command: buildFullPipelineResumeCommand(config, 'YOUR_NEW_APPROACH_HERE'),
+      },
+    },
+    correlation: {
+      run_id: runId,
+      module_id: moduleId,
+      module_dir: moduleDir,
+      attempt: status.fail_count,
+      phase,
+      dispatch_id: dispatchId,
+      gateway_label: gatewayLabel,
+      session_key: sessionKey,
+    },
+    terminalAction: PIPELINE_TERMINAL_ACTIONS.REQUEST_HANDOFF,
+    terminalScope: PIPELINE_TERMINAL_SCOPES.MODULE,
+  });
 }

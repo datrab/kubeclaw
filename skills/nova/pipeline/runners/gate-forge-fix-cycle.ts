@@ -94,7 +94,7 @@ export async function runGateForgeFixCycle({
   };
   const msg = (key, overrides = {}) => gateFixMessage(messages, key, { ...context, ...overrides });
   const send = (level, titleKey, descriptionKey, overrides = {}, fieldOverrides = {}, extraFields = []) =>
-    deps.discord(config, level, msg(titleKey, overrides), msg(descriptionKey, overrides), fields(fieldOverrides, extraFields));
+    deps.discord(config, level, msg(titleKey, overrides), msg(descriptionKey, overrides), fields(fieldOverrides, extraFields), { correlation: identity(fieldOverrides) });
   const emitFailure = (reasonKey, overrides = {}) => emitFixCycleFail(config, gateId, gate.type, cycle, gateStartedAt, msg(reasonKey, overrides), {
     issues_count: issues.length,
     session_key: resolveFixCycleSessionKey(),

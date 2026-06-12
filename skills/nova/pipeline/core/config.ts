@@ -201,6 +201,16 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
 
   if (!isPlainObject(config.buster)) { errors.push('config.buster: required platform config object'); config.buster = {}; }
   requireNumber(config.buster, 'suite_timeout_ms', 'config.buster.suite_timeout_ms', { min: 0, allowZero: false });
+  requireNumber(config.buster, 'max_crash_retries', 'config.buster.max_crash_retries', { min: 0 });
+  if (!isPlainObject(config.buster.runtime)) {
+    errors.push('config.buster.runtime: required platform config object');
+    config.buster.runtime = {};
+  }
+  requireNonEmptyString(config.buster.runtime.heartbeat_path, 'config.buster.runtime.heartbeat_path');
+  requireNumber(config.buster.runtime, 'heartbeat_interval_ms', 'config.buster.runtime.heartbeat_interval_ms', { min: 0, allowZero: false });
+  requireNumber(config.buster.runtime, 'task_poll_interval_ms', 'config.buster.runtime.task_poll_interval_ms', { min: 0, allowZero: false });
+  requireNumber(config.buster.runtime, 'task_pending_reclaim_idle_ms', 'config.buster.runtime.task_pending_reclaim_idle_ms', { min: 0, allowZero: false });
+  requireNumber(config.buster.runtime, 'task_stream_max_len', 'config.buster.runtime.task_stream_max_len', { min: 0, allowZero: false });
 
   if (!isPlainObject(config.discord_alerts)) {
     errors.push('config.discord_alerts: required platform config object');

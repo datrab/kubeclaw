@@ -123,3 +123,19 @@ node tests/verification/behavior/verify.mjs --source-root "$PWD" --area gates
 - `skills/nova/pipeline/runners/buster-gate-terminal.ts`
 - `skills/nova/pipeline/core/constants.ts`
 - `tests/verification/behavior/areas/gates.mjs`
+
+## Gate Contract Checklist
+
+| Gate responsibility | Source owner | Required evidence |
+| --- | --- | --- |
+| Stage ownership | `skills/nova/pipeline/core/registry.ts`; `core/registry/*.ts`; `core/constants.ts` | plugin registry accepts the gate owner and rejects conflicts, unknown stage IDs, or missing implementation |
+| Execution result | `skills/nova/pipeline/services/contracts/pipeline-step-result.ts` | gate returns `pipeline_step_result` with `stepType: gate`, `nextAction`, `outcome`, diagnostics, and terminal mapping when needed |
+| Terminal decision | `skills/nova/pipeline/services/contracts/terminal-decision.ts` | blocking/error/rate-limit outcomes map to explicit terminal status and operator action |
+| Artifacts | gate runner and `skills/nova/pipeline/core/paths.ts` | output files, instructions, review outputs, and approval artifacts resolve inside `.swarm` |
+| Telemetry and Discord | telemetry builders and Discord field helpers | gate status is correlated with run, gate, attempt, dispatch, and session identity |
+
+## Recovery Boundaries
+
+A gate that waits for approval, requests a fix, or blocks must preserve enough identity for resume. Do not clear active-session identity, dispatch IDs, or gate artifacts as a cleanup shortcut. If a gate cannot prove terminal evidence, prefer `action_required` or `blocked` with artifacts over silent success.
+
+Run `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area gates` plus the terminal/step-result contract checks when the gate result shape changes.

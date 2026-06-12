@@ -210,9 +210,11 @@ await record('Discord audit uses structured correlation instead of rendered fiel
   assert.equal(renderedOnlyEntry.dispatch_id, null);
   assert.equal(renderedOnlyEntry.session_key, null);
   assert.equal(renderedOnlyEntry.gateway_label, null);
+  assert.equal(discordSource.includes('extractDiscordCorrelation'), false);
+  assert.equal(discordSource.includes('extractDiscordBatchCorrelation'), false);
   assert.equal(discordSource.includes("name === 'label'"), false);
   assert.equal(discordSource.includes("name === 'gateway label' || name === 'gateway_label'"), false);
-  assert.equal(discordSource.includes('correlation_key'), true);
+  assert.equal(discordSource.includes('correlation_key'), false);
 });
 
 await record('Core operator-surface modules share the canonical Discord identity builder', async () => {
@@ -311,6 +313,21 @@ await record('Nova injection Discord alerts preserve session correlation', async
       max_fails: 3,
       remaining_attempts: 0,
       resume_command: 'node pipeline.ts --project behavior-nova-inject --resume --prompt "YOUR_NEW_APPROACH_HERE"',
+      terminal: {
+        status: 'action_required',
+        decision: {
+          schemaVersion: 'v1',
+          kind: 'pipeline_terminal_decision',
+          status: 'action_required',
+          action: 'request_handoff',
+          reasonCode: 'needs_nova',
+          humanReason: 'Forge fix needs Nova guidance',
+          scope: 'module',
+          correlation: { run_id: 'run-nova-inject-1', module_id: '01' },
+          source: null,
+          metadata: {},
+        },
+      },
     }, '1491459259647524965', 'module', '01');
 
     const sendRequest = requests.find((req) => req?.tool === 'sessions_send');
@@ -391,6 +408,21 @@ await record('Gate-owned Nova injections preserve gate_type across message, audi
       fail_count: 2,
       max_fails: 3,
       remaining_attempts: 1,
+      terminal: {
+        status: 'action_required',
+        decision: {
+          schemaVersion: 'v1',
+          kind: 'pipeline_terminal_decision',
+          status: 'action_required',
+          action: 'request_handoff',
+          reasonCode: 'needs_nova',
+          humanReason: 'Review gate needs Nova guidance',
+          scope: 'gate',
+          correlation: { run_id: 'run-nova-inject-gate-1', gate_id: 'review' },
+          source: null,
+          metadata: {},
+        },
+      },
     }, '1491459259647524965', 'gate', 'review');
 
     const sendRequest = requests.find((req) => req?.tool === 'sessions_send');

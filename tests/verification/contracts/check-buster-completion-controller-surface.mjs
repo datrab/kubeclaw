@@ -230,7 +230,7 @@ function emitRedis(bus, entry = redisEntry()) {
   const resolver = controller.buildGateLocalEvidenceResolver(() => ({
     done: true,
     ok: false,
-    outcome: 'gate_fail',
+    outcome: 'verdict_fail',
     source: 'output_file',
     data: { gate: 'quality', status: 'FAIL', reason: 'tests failed' },
   }), {

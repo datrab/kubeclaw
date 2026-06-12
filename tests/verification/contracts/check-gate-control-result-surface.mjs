@@ -18,6 +18,7 @@ const { sourceRoot } = parseArgs();
 const helperPath = path.join(sourceRoot, 'skills/nova/pipeline/services/contracts/gate-control-result.ts');
 const reviewControlPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/review-gate-control.ts');
 const busterControlPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/buster-gate-control.ts');
+const busterTerminalPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/buster-gate-terminal.ts');
 const approvalControlPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/approval-gate-control.ts');
 const reviewRunnerPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/review-gate-runner.ts');
 const busterRunnerPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/buster-gate-runner.ts');
@@ -32,6 +33,7 @@ const builtinsRegistryPath = path.join(sourceRoot, 'skills/nova/pipeline/core/re
 const helperSource = fs.readFileSync(helperPath, 'utf8');
 const reviewControlSource = fs.readFileSync(reviewControlPath, 'utf8');
 const busterControlSource = fs.readFileSync(busterControlPath, 'utf8');
+const busterTerminalSource = fs.readFileSync(busterTerminalPath, 'utf8');
 const approvalControlSource = fs.readFileSync(approvalControlPath, 'utf8');
 const reviewRunnerSource = fs.readFileSync(reviewRunnerPath, 'utf8');
 const busterRunnerSource = fs.readFileSync(busterRunnerPath, 'utf8');
@@ -42,6 +44,11 @@ const waitableGateEngineSource = fs.readFileSync(waitableGateEnginePath, 'utf8')
 const scheduledGateInvocationSource = fs.readFileSync(scheduledGateInvocationPath, 'utf8');
 const remediationSource = fs.readFileSync(remediationPath, 'utf8');
 const builtinsRegistrySource = fs.readFileSync(builtinsRegistryPath, 'utf8');
+
+assert.equal(busterTerminalSource.includes('export const BUSTER_GATE_EVALUATION_RESULT_TYPES'), true, 'Buster gate terminal must expose typed evaluation result tags');
+assert.equal(busterTerminalSource.includes('export function assertBusterGateEvaluationResult('), true, 'Buster gate terminal must classify raw poll results at one boundary');
+assert.equal(busterTerminalSource.includes('result.reason ==='), false, 'Buster gate terminal must not branch directly on raw result.reason strings');
+assert.equal(busterTerminalSource.includes('result.status || {}'), false, 'Buster gate terminal must consume typed evaluation status instead of raw status fallback');
 
 for (const marker of [
   'export const GATE_CONTROL_ACTIONS =',
@@ -120,11 +127,26 @@ assert.equal(reviewRunnerSource.includes('createReviewGateRemediationController'
 assert.equal(busterRunnerSource.includes('createBusterGateRemediationController'), true, 'Buster gate should keep typed remediation controller factory');
 assert.equal(approvalRunnerSource.includes('createApprovalGateWaitController'), true, 'approval gate should keep typed wait controller factory');
 assert.equal(reviewControlSource.includes('non-pass result requires explicit failure_class'), true, 'review gate controls should require typed failure_class for non-pass results');
+assert.equal(reviewControlSource.includes("result?.outcome_class === 'passed'"), true, 'review gate pass detection should use the typed outcome class');
+assert.equal(reviewControlSource.includes('result?.passed === true'), false, 'review gate controls must not accept legacy passed booleans');
+assert.equal(reviewControlSource.includes("String(result?.status || '').trim().toUpperCase() === 'PASS'"), false, 'review gate controls must not accept status pass aliases');
+assert.equal(reviewRunnerSource.includes('passed: true'), false, 'review gate pass producers must not emit legacy passed booleans');
+assert.equal(reviewRunnerSource.includes('status: STATUS.PASS'), false, 'review gate pass producers must not emit status pass aliases');
+assert.equal(reviewControlSource.includes('REVIEW_GATE_FAILURE_DECISIONS'), true, 'review failure classes should map through an explicit decision authority');
+assert.equal(reviewControlSource.includes('REVIEW_GATE_FAILURE_FINDINGS'), true, 'review failure classes should map through an explicit finding authority');
+assert.equal(reviewControlSource.includes("return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'unknown', outcomeClass: 'error' };"), false, 'review failure-class mapping must not fall through to a generic block decision');
 assert.equal(busterControlSource.includes('non-pass result requires explicit failure_class'), true, 'Buster gate controls should require typed failure_class for non-pass results');
+assert.equal(approvalControlSource.includes("function isApprovalGatePassResult(result = {}) {\n  return result?.outcome_class === 'passed';\n}"), true, 'approval gate pass detection should use the typed outcome class');
+assert.equal(approvalControlSource.includes('result?.passed === true'), false, 'approval gate controls must not accept legacy passed booleans');
+assert.equal(approvalRunnerSource.includes('passed: true'), false, 'approval gate pass producers must not emit legacy passed booleans');
+assert.equal(approvalControlSource.includes('passed outcome requires APPROVED status or continued TIMED_OUT authority'), true, 'approval pass controls should validate domain status authority');
 assert.equal(busterControlSource.includes('function inferBusterFailureClass'), false, 'Buster gate controls must not infer failure class from reason/status text');
 assert.equal(busterControlSource.includes('reasonLower'), false, 'Buster gate controls must not inspect reason text to classify failures');
 assert.equal(reviewControlSource.includes('rate_limit_status?.attempt'), false, 'review gate controls must not derive attempts from rate-limit diagnostics');
 assert.equal(busterControlSource.includes('rate_limit_status?.attempt'), false, 'Buster gate controls must not derive attempts from rate-limit diagnostics');
+assert.equal(reviewControlSource.includes('rate_limit_exhausted:'), false, 'review gate diagnostic metadata must not own rate-limit exhausted authority');
+assert.equal(reviewControlSource.includes('rate_limit:'), false, 'review gate diagnostic metadata must not own rate-limit detail authority');
+assert.equal(busterControlSource.includes('rate_limit:'), false, 'Buster gate diagnostic metadata must not own rate-limit detail authority');
 assert.equal(busterControlSource.includes('data._verdict'), false, 'Buster gate issue extraction must not read legacy _verdict aliases');
 assert.equal(reviewControlSource.includes('resolveResultGatewayLabel'), false, 'review remediation controls must require explicit correlation');
 assert.equal(busterControlSource.includes('resolveStatusDispatchId'), false, 'Buster remediation controls must require explicit correlation');
@@ -135,6 +157,7 @@ assert.equal(builtinsRegistrySource.includes('gateControl: getApprovalGateContro
 const helperMod = await import(pathToFileURL(helperPath).href);
 const reviewControlMod = await import(pathToFileURL(reviewControlPath).href);
 const busterControlMod = await import(pathToFileURL(busterControlPath).href);
+const busterTerminalMod = await import(pathToFileURL(busterTerminalPath).href);
 const approvalControlMod = await import(pathToFileURL(approvalControlPath).href);
 
 assert.equal(typeof helperMod.mapGateCompatibilityResultToControl, 'undefined', 'shared gate helper must not expose compatibility-to-control mapping');
@@ -147,11 +170,23 @@ const reviewRateLimited = reviewControlMod.buildReviewGateControlResult(
   { _runId: 'run-1' },
   'review',
   { type: 'review' },
-  { outcome_class: 'rate_limited', reason: 'rate limited', rate_limit_exhausted: true, failure_class: 'rate_limit_exhausted' },
+  {
+    outcome_class: 'rate_limited',
+    reason: 'rate limited',
+    rate_limit_exhausted: true,
+    failure_class: 'rate_limit_exhausted',
+    max_rate_limit_pauses: 2,
+    rate_limit_status: { session_key: 'review-session' },
+  },
 );
 assert.equal(reviewRateLimited.nextAction, 'block');
 assert.equal(reviewRateLimited.issueType, 'environment');
 assert.equal(reviewRateLimited.diagnostics.typed.gate.outcomeClass, 'rate_limited');
+assert.equal(reviewRateLimited.diagnostics.typed.rateLimit.max_rate_limit_pauses, 2);
+assert.equal(reviewRateLimited.diagnostics.typed.rateLimit.rate_limit_status.session_key, 'review-session');
+assert.equal(Object.prototype.hasOwnProperty.call(reviewRateLimited.diagnostics.metadata, 'rate_limit'), false);
+assert.equal(Object.prototype.hasOwnProperty.call(reviewRateLimited.diagnostics.metadata, 'rate_limit_status'), false);
+assert.equal(Object.prototype.hasOwnProperty.call(reviewRateLimited.diagnostics.metadata, 'max_rate_limit_pauses'), false);
 assert.throws(
   () => reviewControlMod.buildReviewGateControlResult(
     { _runId: 'run-1' },
@@ -162,6 +197,26 @@ assert.throws(
   /non-pass result requires explicit failure_class/,
   'review gate controls must not infer failure class from status/reason',
 );
+const reviewFailureExpectations = {
+  config_invalid: ['unknown', 'error', 'REVIEW_GATE_CONFIG_INVALID'],
+  invalid_contract: ['unknown', 'error', 'REVIEW_GATE_INVALID_CONTRACT'],
+  rate_limit_exhausted: ['environment', 'rate_limited', 'REVIEW_GATE_RATE_LIMIT_EXHAUSTED'],
+  review_failed: ['environment', 'error', 'REVIEW_GATE_REVIEW_FAILED'],
+  unknown_failure: ['unknown', 'error', 'REVIEW_GATE_UNKNOWN_FAILURE'],
+  verdict_fail: ['code', 'needs_nova', 'REVIEW_GATE_VERDICT_FAIL'],
+};
+for (const [failureClass, [issueType, outcomeClass, findingCode]] of Object.entries(reviewFailureExpectations)) {
+  const control = reviewControlMod.buildReviewGateControlResult(
+    { _runId: 'run-1' },
+    'review',
+    { type: 'review' },
+    { outcome_class: outcomeClass, reason: `${failureClass} reason`, failure_class: failureClass },
+  );
+  assert.equal(control.nextAction, 'block', `${failureClass} should block`);
+  assert.equal(control.issueType, issueType, `${failureClass} issueType`);
+  assert.equal(control.diagnostics.typed.gate.outcomeClass, outcomeClass, `${failureClass} outcomeClass`);
+  assert.equal(control.diagnostics.findings[0].code, findingCode, `${failureClass} finding code`);
+}
 
 const busterVerdictFail = busterControlMod.buildBusterGateControlResult(
   { _runId: 'run-1' },
@@ -172,6 +227,17 @@ const busterVerdictFail = busterControlMod.buildBusterGateControlResult(
 assert.equal(busterVerdictFail.nextAction, 'block');
 assert.equal(busterVerdictFail.issueType, 'code');
 assert.equal(busterVerdictFail.diagnostics.typed.gate.outcomeClass, 'needs_nova');
+assert.equal(
+  busterTerminalMod.assertBusterGateEvaluationResult({ ok: false, reason: 'verdict_fail', status: { reason: 'NO-GO' } }).type,
+  busterTerminalMod.BUSTER_GATE_EVALUATION_RESULT_TYPES.VERDICT_FAIL,
+  'Buster gate terminal should classify the canonical verdict_fail reason as verdict_fail',
+);
+const malformedBusterGatePass = busterTerminalMod.assertBusterGateEvaluationResult({ ok: true });
+assert.equal(malformedBusterGatePass.type, busterTerminalMod.BUSTER_GATE_EVALUATION_RESULT_TYPES.INVALID_CONTRACT);
+assert.equal(malformedBusterGatePass.status.invalid_reason, 'invalid_pass_payload');
+const unknownBusterGateReason = busterTerminalMod.assertBusterGateEvaluationResult({ ok: false, reason: 'new_shape', status: {} });
+assert.equal(unknownBusterGateReason.type, busterTerminalMod.BUSTER_GATE_EVALUATION_RESULT_TYPES.INVALID_CONTRACT);
+assert.equal(unknownBusterGateReason.status.invalid_reason, 'unknown_reason');
 assert.throws(
   () => busterControlMod.buildBusterGateControlResult(
     { _runId: 'run-1' },
@@ -187,7 +253,7 @@ const approvalTimeoutContinue = approvalControlMod.buildApprovalGateControlResul
   { _runId: 'run-1' },
   'approval',
   { type: 'approval', on_timeout: 'continue' },
-  { outcome_class: 'passed', status: 'TIMED_OUT', passed: true, continued: true, timed_out: true },
+  { outcome_class: 'passed', status: 'TIMED_OUT', continued: true, timed_out: true },
   { approvalState: { timeout_policy: 'CONTINUE' } },
 );
 assert.equal(approvalTimeoutContinue.nextAction, 'pass');
@@ -198,10 +264,21 @@ assert.throws(
     { _runId: 'run-1' },
     'approval',
     { type: 'approval', on_timeout: 'continue' },
-    { outcome_class: 'passed', status: 'TIMED_OUT', passed: true, continued: true, timed_out: true },
+    { outcome_class: 'passed', status: 'TIMED_OUT', continued: true, timed_out: true },
   ),
   /persisted state requires timeout_policy authority/,
   'approval control results must read timeout policy from persisted state authority, not gate config fallback',
+);
+assert.throws(
+  () => approvalControlMod.buildApprovalGateControlResult(
+    { _runId: 'run-1' },
+    'approval',
+    { type: 'approval' },
+    { outcome_class: 'passed', status: 'REJECTED' },
+    { approvalState: { timeout_policy: 'BLOCK' } },
+  ),
+  /passed outcome requires APPROVED status or continued TIMED_OUT authority/,
+  'approval pass controls must fail closed when typed pass conflicts with domain status',
 );
 
 const typed = helperMod.buildTypedGateControlResult({

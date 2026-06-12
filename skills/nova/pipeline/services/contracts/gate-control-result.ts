@@ -133,6 +133,7 @@ export function buildTypedGateControlResult({
   recommendation = null,
   metrics = {},
   wait = null,
+  rateLimit = null,
 }: UnknownRecord = {}): UnknownRecord {
   return {
     schemaVersion: 'v1',
@@ -153,6 +154,7 @@ export function buildTypedGateControlResult({
           metrics,
         },
         ...(wait ? { wait: cloneSerializable(wait) } : {}),
+        ...(rateLimit ? { rateLimit: cloneSerializable(rateLimit) } : {}),
       },
     },
   };

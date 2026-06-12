@@ -404,7 +404,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
 
       if (isCompleted) {
         log('OK', `Review gate '${gateId}' already completed — skipping`);
-        return buildReviewGateControlResult(config, gateId, gate, { status: STATUS.PASS, passed: true, outcome_class: 'passed', attempt }, opts);
+        return buildReviewGateControlResult(config, gateId, gate, { outcome_class: 'passed', attempt }, opts);
       }
     }
   }
@@ -608,7 +608,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
         },
       },
     });
-    return buildReviewGateControlResult(config, gateId, gate, { status: STATUS.PASS, passed: true, outcome_class: 'passed', attempt }, { ...opts, input: { ids: { attempt } } });
+    return buildReviewGateControlResult(config, gateId, gate, { outcome_class: 'passed', attempt }, { ...opts, input: { ids: { attempt } } });
   }
 
   log('WARN', `Review gate '${gateId}' NO-GO`);

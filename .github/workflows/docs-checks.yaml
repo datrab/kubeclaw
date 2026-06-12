@@ -6,23 +6,37 @@ on:
       - 'docs/**'
       - 'scripts/docs-*.mjs'
       - 'scripts/deploy.sh'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/**'
       - 'my-values/**'
       - 'charts/kubeclaw/**'
-      - 'package.json'
+      - 'deploy/**'
+      - 'docker/**'
+      - 'tests/**'
+      - 'skills/**'
+      - 'plugins/**'
   push:
     branches: [main]
     paths:
       - 'docs/**'
       - 'scripts/docs-*.mjs'
       - 'scripts/deploy.sh'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/**'
       - 'my-values/**'
       - 'charts/kubeclaw/**'
-      - 'package.json'
+      - 'deploy/**'
+      - 'docker/**'
+      - 'tests/**'
+      - 'skills/**'
+      - 'plugins/**'
   workflow_dispatch:
 
 jobs:
   docs:
-    name: Generated docs and Markdown hygiene
+    name: Documentation drift guardrails
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -31,7 +45,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Check docs
-        run: npm run docs:check
+      - name: Check generated docs freshness
+        run: npm run docs:check:generated
+      - name: Check Markdown hygiene
+        run: node scripts/docs-check.mjs
+      - name: Check cited repository references
+        run: npm run docs:check:refs
+      - name: Check coverage matrix and topic map
+        run: npm run docs:check:coverage
       - name: Check whitespace
         run: git diff --check

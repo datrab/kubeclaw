@@ -31,6 +31,16 @@ Discord notification code writes audit entries to global and run-scoped `discord
 
 Buster writes telemetry to Redis when available and appends fallback artifacts when Redis telemetry degrades. Buster also records process diagnostics and malformed task artifacts.
 
+## Runtime Flow
+
+| Flow | Source owner | Output | Degradation behavior |
+| --- | --- | --- | --- |
+| Nova pipeline telemetry | `skills/nova/pipeline/services/telemetry/builders.ts`; `dispatch.ts`; `telemetry-sink-contract.ts`; `telemetry-stream.ts` | `pipeline:telemetry:<project>:<run_id>` plus sequence key | Redis failure records `observability.degraded` and local fallback evidence without changing scheduler truth |
+| Discord presentation | `notification-contract.ts`; `telemetry-sink-contract.ts`; Discord integration | global and run-scoped `discord.jsonl`, webhook messages | Discord/audit failure is observability degradation only |
+| Buster telemetry | `skills/buster/pipeline/services/telemetry.ts` | Redis telemetry or `buster-telemetry-fallback.jsonl` | fallback lines use explicit artifact evidence when Redis is unavailable |
+| OpenClaw agent observer | `plugins/openclaw-agent-observer/src/index.ts`; `hook-normalizers.ts`; `redis-writer.ts` | OpenClaw hook/model usage streams and dead-letter entries | invalid config drops events with logged failure; Redis write failures increment writer stats/dead-letter attempts |
+| Kubernetes logs | pod containers | `kubectl logs` output | no central source-proven aggregation yet |
+
 Operators collect pod logs with `kubectl logs` today. There is no source-proven central aggregation for Buster sandbox stdout/stderr beyond runtime files and pod logs.
 
 ## Collection Paths

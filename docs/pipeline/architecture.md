@@ -107,3 +107,26 @@ Buster rejects malformed work before execution, dead-letters invalid payloads be
 - `skills/nova/pipeline/runners/pipeline-runner-scheduling.ts`
 - `skills/nova/pipeline/services/completion-adjudicator.ts`
 - `skills/buster/buster-pipeline.ts`
+
+## Execution And Evidence Contract
+
+| Stage | Owner | Inputs | Outputs/evidence | Failure handling |
+| --- | --- | --- | --- | --- |
+| Config load | `core/config.ts`; `core/platform-config.ts` | `--project`, `CURRENT_PROJECT`, `REPO_ROOT`, `SWARM_CONFIG`, `.swarm/progress.json` | runtime config, progress object, plugin registry | missing project/progress/config fields fail before scheduling |
+| Module Forge | module runner and worker runtime adapters | module metadata, model/runtime defaults, active session identity | module status transitions, prompt/transcript artifacts, telemetry | timeout, rate-limit, blocked, or no-output outcomes become typed step results |
+| Buster module/gate test | Buster task runner and Redis transport | task payload with identity, suites, paths, capabilities, completion stream | `buster-output.json`, suite verdicts, Redis completion/dead-letter | malformed tasks and runtime failures must emit terminal evidence before ACK |
+| Review/approval gates | gate runners | gate instructions, output paths, reviewer/approval config | gate artifacts, review outputs, approval decisions, lifecycle events | wait/request-fix/block decisions preserve resume identity |
+| Pipeline terminal | terminal runner and artifact bundle | step results, lifecycle read models, completion adjudication | `latest.json`, `summary.json`, run-scoped `pipeline.jsonl`, terminal decision | terminal status maps to explicit operator action |
+
+## Verification Map
+
+```bash
+node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
+node tests/verification/contracts/check-pipeline-runner-slice-surface.mjs --source-root "$PWD"
+node tests/verification/contracts/check-pipeline-step-result-surface.mjs --source-root "$PWD"
+node tests/verification/contracts/check-pipeline-terminal-decision-surface.mjs --source-root "$PWD"
+node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"
+node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"
+```
+
+Repo verification proves the source contracts and representative fixtures. It does not prove an external model provider, Discord delivery, or a live cluster dependency unless the relevant live operator check is also run.

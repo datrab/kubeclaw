@@ -62,6 +62,17 @@ Projects/<project>/src/.swarm/modules/<module_dir>/buster-output.json
 
 Exact paths can vary for gate tasks and overridden `log_dir` values, but every task should have run/module/gate identity in the payload and logs.
 
+## Evidence Strength
+
+| Evidence | Strong enough to change state? | Required identity or fields | Troubleshooting use |
+| --- | --- | --- | --- |
+| lifecycle event/read model | yes | run ref plus module/gate/wait/cooldown refs | determine current scheduler state and legal next action |
+| Buster completion | candidate only | `run_id`, `attempt`, `dispatch_id`, target id, completion stream | unblock Nova only after completion adjudication |
+| Buster dead-letter | no direct state mutation | Redis id, stream, reason, phase, payload identity when available | explain task failure before ACK |
+| telemetry event | no | run id, run ref, primary ref, event type, payload, ISO timestamp | dashboard/debug timeline |
+| Discord notification | no | presentation fields and correlation IDs | human notification; cross-check against artifacts |
+| pod log line | no | container, timestamp, related run/session/task id | diagnose runtime, CNI, Secret, or tool failures |
+
 ## Redis Telemetry
 
 Run telemetry stream:

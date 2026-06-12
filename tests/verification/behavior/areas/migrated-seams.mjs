@@ -21,6 +21,20 @@ export async function registerMigratedSeamsArea({
     return result?.diagnostics?.summary ?? result?.reason;
   }
 
+  function canonicalBusterPolicy(root) {
+    return {
+      suite_timeout_ms: 300000,
+      max_crash_retries: 0,
+      runtime: {
+        heartbeat_path: path.join(root, 'buster-heartbeat.json'),
+        heartbeat_interval_ms: 1000,
+        task_poll_interval_ms: 2000,
+        task_pending_reclaim_idle_ms: 60000,
+        task_stream_max_len: 250,
+      },
+    };
+  }
+
   async function buildRegistryWithFakeModuleWorkers(runtimeRoot, {
     lifecycleStateMod,
     expectedModuleIds = null,
@@ -255,7 +269,7 @@ export async function registerMigratedSeamsArea({
       repo_root: fixture.repoRoot,
       default_timeout_minutes: 30,
       default_max_fails: 3,
-      max_buster_crash_retries: 0,
+      buster: canonicalBusterPolicy(fixture.repoRoot),
       telemetry: { enabled: true },
       pre_check: { enabled: false },
       fallback_model: 'anthropic/claude-sonnet-4-6',
@@ -308,7 +322,7 @@ const config = {
       repo_root: repoRoot,
       default_timeout_minutes: 30,
       default_max_fails: 3,
-      max_buster_crash_retries: 0,
+      buster: canonicalBusterPolicy(repoRoot),
       telemetry: { enabled: true },
       pre_check: { enabled: false },
       fallback_model: 'anthropic/claude-sonnet-4-6',
@@ -425,7 +439,7 @@ const config = {
       repo_root: repoRoot,
       default_timeout_minutes: 30,
       default_max_fails: 3,
-      max_buster_crash_retries: 0,
+      buster: canonicalBusterPolicy(repoRoot),
       telemetry: { enabled: true },
       pre_check: { enabled: false },
       fallback_model: 'anthropic/claude-sonnet-4-6',

@@ -82,3 +82,15 @@ When adapting `end-to-end.json`, change these fields before running:
 - Missing Buster artifacts are normal while a module is still in Forge.
 - A Buster config validation failure is not the same as a failing app test.
 - Approval gates are intentional automation pauses, not stuck modules.
+
+## Source Owners And Verification
+
+| Example field | Runtime owner | Check |
+| --- | --- | --- |
+| `project`, `repo_root`, and `paths` | `skills/nova/pipeline/core/config.ts` | config/path tests |
+| `execution_order`, modules, gates | `skills/nova/pipeline/runners/pipeline-runner*.ts` | pipeline behavior area |
+| `test_config`, suites, paths, capabilities | `skills/buster/pipeline/services/task-validation.ts`; `suite-runner.ts` | Buster task validation and suite tests |
+| gate outputs and instructions | `skills/nova/pipeline/core/paths.ts`; gate runners | gate behavior area and status-store contract |
+| lifecycle status interpretation | `skills/nova/pipeline/services/status-store*.ts` | status-store contract check |
+
+These examples are fixtures and teaching aids, not a generated schema. When you adapt one for a real project, validate the resulting project with the narrowest runtime test and then inspect `.swarm/logs/pipeline/latest.json`, run-scoped `pipeline.jsonl`, and module/gate artifacts.

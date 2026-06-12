@@ -129,3 +129,23 @@ node tests/verification/behavior/verify.mjs --source-root "$PWD" --area runtime-
 - `skills/buster/pipeline/services/task-validation.ts`
 - `skills/buster/pipeline/suites/*.ts`
 - `docker/Dockerfile.sandbox`
+
+## Contract Checklist
+
+| Requirement | Source owner | What to preserve |
+| --- | --- | --- |
+| Suite name and registration | `skills/buster/pipeline/runners/suite-runner.ts` | add the suite to the registry and dependency ordering; unknown names fail validation |
+| Capability boundary | `skills/buster/pipeline/services/capabilities.ts` | declare required capabilities so denied operations become structured `ERROR` verdicts |
+| Timeout behavior | `suite_timeout_ms` from validated task payload and suite-local defaults | suites must stop within the shared deadline and report timeout as `ERROR` or `FAIL` according to suite policy |
+| Output shape | `skills/buster/pipeline/services/verdict-schema.ts`; `skills/buster/CONVENTIONS.md` | emit parseable JSON with `PASS`, `FAIL`, `ERROR`, or `SKIP` at suite level; task-level outcome normalizes to PASS/FAIL completion |
+| Artifacts | `skills/buster/pipeline/runners/suite-runner.ts` | write suite verdict files under Buster results paths and append `suites.jsonl` when a swarm results dir exists |
+
+## Failure Signals
+
+- `unknown_suite` or `invalid_suite_name`: registry/suite list mismatch.
+- `missing_suite_timeout_ms`: task payload did not include required timeout config.
+- `buster_capability_denied`: suite requested behavior not allowed by the task capabilities.
+- `BUSTER_TASK_MALFORMED`: payload identity/path validation failed before suite execution.
+- task ACK without completion/dead-letter is blocked by the terminal guarantee.
+
+After adding a suite, run the focused suite test, task validation/completion tests, and the Buster contract check before relying on operator docs.

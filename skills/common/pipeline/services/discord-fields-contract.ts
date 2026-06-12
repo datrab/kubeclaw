@@ -3,7 +3,6 @@ type UnknownRecord = Record<string, any>;
 interface DiscordFieldSpec {
   name?: string;
   keys?: string[];
-  correlationKey?: string;
   inline?: boolean;
   format?: (value: unknown, identity: UnknownRecord) => string;
 }
@@ -11,7 +10,6 @@ interface DiscordFieldSpec {
 interface NormalizedDiscordFieldSpec {
   name: string;
   keys: string[];
-  correlationKey: string | null;
   inline: boolean;
   format: (value: unknown, identity: UnknownRecord) => string;
 }
@@ -28,27 +26,24 @@ function normalizeFieldSpec(spec: DiscordFieldSpec = {}): NormalizedDiscordField
   return {
     name: spec.name || 'Field',
     keys: Array.isArray(spec.keys) ? spec.keys : [],
-    correlationKey: typeof spec.correlationKey === 'string' && spec.correlationKey.trim()
-      ? spec.correlationKey.trim()
-      : null,
     inline: spec.inline !== false,
     format: typeof spec.format === 'function' ? spec.format : ((value: unknown) => String(value)),
   };
 }
 
 export const DISCORD_FIELD_SPECS: Record<string, any> = Object.freeze({
-  RUN_ID: Object.freeze({ name: 'Run ID', keys: ['runId', 'run_id'], correlationKey: 'run_id', inline: true }),
-  MODULE_ID: Object.freeze({ name: 'Module', keys: ['moduleId', 'module_id'], correlationKey: 'module_id', inline: true }),
-  GATE_ID: Object.freeze({ name: 'Gate', keys: ['gateId', 'gate_id'], correlationKey: 'gate_id', inline: true }),
-  GATE_TYPE: Object.freeze({ name: 'Gate Type', keys: ['gateType', 'gate_type'], correlationKey: 'gate_type', inline: true }),
+  RUN_ID: Object.freeze({ name: 'Run ID', keys: ['runId', 'run_id'], inline: true }),
+  MODULE_ID: Object.freeze({ name: 'Module', keys: ['moduleId', 'module_id'], inline: true }),
+  GATE_ID: Object.freeze({ name: 'Gate', keys: ['gateId', 'gate_id'], inline: true }),
+  GATE_TYPE: Object.freeze({ name: 'Gate Type', keys: ['gateType', 'gate_type'], inline: true }),
   STEP_TYPE: Object.freeze({ name: 'Step Type', keys: ['stepType', 'step_type'], inline: true }),
   STEP_ID: Object.freeze({ name: 'Step ID', keys: ['stepId', 'step_id'], inline: true }),
   PHASE: Object.freeze({ name: 'Phase', keys: ['phase'], inline: true }),
   PHASE_OR_AGENT_TYPE: Object.freeze({ name: 'Phase', keys: ['phase', 'agent_type'], inline: true }),
-  ATTEMPT: Object.freeze({ name: 'Attempt', keys: ['attempt'], correlationKey: 'attempt', inline: true, format: (value: unknown) => `${value}` }),
-  DISPATCH_ID: Object.freeze({ name: 'Dispatch', keys: ['dispatchId', 'dispatch_id'], correlationKey: 'dispatch_id', inline: false }),
-  GATEWAY_LABEL: Object.freeze({ name: 'Gateway Label', keys: ['gatewayLabel', 'gateway_label'], correlationKey: 'gateway_label', inline: false }),
-  SESSION_KEY: Object.freeze({ name: 'Session', keys: ['sessionKey', 'session_key'], correlationKey: 'session_key', inline: false }),
+  ATTEMPT: Object.freeze({ name: 'Attempt', keys: ['attempt'], inline: true, format: (value: unknown) => `${value}` }),
+  DISPATCH_ID: Object.freeze({ name: 'Dispatch', keys: ['dispatchId', 'dispatch_id'], inline: false }),
+  GATEWAY_LABEL: Object.freeze({ name: 'Gateway Label', keys: ['gatewayLabel', 'gateway_label'], inline: false }),
+  SESSION_KEY: Object.freeze({ name: 'Session', keys: ['sessionKey', 'session_key'], inline: false }),
 });
 
 export const DISCORD_IDENTITY_SURFACES: Record<string, any> = Object.freeze({
@@ -134,12 +129,6 @@ export function buildDiscordIdentityFields(identity: UnknownRecord = {}, fieldSp
         value: spec.format(value, identity),
         inline: spec.inline,
       };
-      if (spec.correlationKey) {
-        Object.defineProperty(field, 'correlation_key', {
-          value: spec.correlationKey,
-          enumerable: false,
-        });
-      }
       return [field];
     });
   return [...fields, ...extra];

@@ -16,15 +16,12 @@ import {
   ensureTaskTerminalBeforeAck,
   writeTaskDeadLetter,
 } from './task-completion.ts';
+import { loadBusterRuntimePolicy } from './runtime-policy.ts';
 
 export const AGENT_NAME = process.env.AGENT_NAME || 'buster';
 export const STREAM_KEY = process.env.BUSTER_TASK_STREAM || `swarm:${AGENT_NAME}:tasks`;
 export const GROUP_NAME = `${AGENT_NAME}-group`;
 export const CONSUMER_NAME = `${AGENT_NAME}-buster-pipeline-${hostname()}`;
-
-export const POLL_INTERVAL = 2000;
-export const STREAM_MAX_LEN = 250;
-export const PENDING_RECLAIM_IDLE_MS = parseInt(process.env.BUSTER_PENDING_RECLAIM_IDLE_MS || '60000', 10);
 
 let RedisCtor = null;
 let redis = null;
@@ -70,13 +67,14 @@ export async function disconnectRedisClient() {
 }
 
 function getTaskQueue(redisClient = getRedisClient()) {
+  const runtimePolicy = loadBusterRuntimePolicy();
   return createRedisTaskQueue(redisClient, {
     streamKey: STREAM_KEY,
     groupName: GROUP_NAME,
     consumerName: CONSUMER_NAME,
-    pollInterval: POLL_INTERVAL,
-    reclaimIdleMs: PENDING_RECLAIM_IDLE_MS,
-    maxLen: STREAM_MAX_LEN,
+    pollInterval: runtimePolicy.task_poll_interval_ms,
+    reclaimIdleMs: runtimePolicy.task_pending_reclaim_idle_ms,
+    maxLen: runtimePolicy.task_stream_max_len,
   });
 }
 
@@ -229,7 +227,7 @@ export async function processOneQueuedTask(processTask) {
       phase: 'process_task_returned',
     });
     await ackTaskAfterTerminal(taskQueue, id, terminalResult);
-    await taskQueue.trim(STREAM_MAX_LEN);
+    await taskQueue.trim(loadBusterRuntimePolicy().task_stream_max_len);
     console.log(`[TASK] ✅ Acked after ${terminalResult.mode}.`);
     return;
   }

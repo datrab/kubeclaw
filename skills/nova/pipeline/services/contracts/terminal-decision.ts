@@ -33,17 +33,6 @@ export const PIPELINE_TERMINAL_SCOPES = Object.freeze({
   SUMMARY: 'summary',
 });
 
-const DEFAULT_ACTION_BY_STATUS: Record<string, string> = Object.freeze({
-  succeeded: PIPELINE_TERMINAL_ACTIONS.NONE,
-  failed: PIPELINE_TERMINAL_ACTIONS.STOP,
-  paused: PIPELINE_TERMINAL_ACTIONS.PAUSE,
-  blocked: PIPELINE_TERMINAL_ACTIONS.NOTIFY_OPERATOR,
-  action_required: PIPELINE_TERMINAL_ACTIONS.REQUEST_HANDOFF,
-  timed_out: PIPELINE_TERMINAL_ACTIONS.REQUEST_HANDOFF,
-  rate_limited: PIPELINE_TERMINAL_ACTIONS.RETRY_LATER,
-  cancelled: PIPELINE_TERMINAL_ACTIONS.STOP,
-});
-
 const TERMINAL_STATUS_BY_STEP_OUTCOME: Record<string, string> = Object.freeze({
   passed: PIPELINE_TERMINAL_STATUSES.SUCCEEDED,
   error: PIPELINE_TERMINAL_STATUSES.FAILED,
@@ -109,18 +98,12 @@ export function pipelineTerminalStatusForStepOutcome(outcome: unknown): string |
   return TERMINAL_STATUS_BY_STEP_OUTCOME[normalizedOutcome] ?? null;
 }
 
-export function pipelineTerminalDefaultActionForStatus(status: unknown): string | null {
-  const normalizedStatus = normalizeToken(status);
-  if (!normalizedStatus) return null;
-  return DEFAULT_ACTION_BY_STATUS[normalizedStatus] ?? null;
-}
-
 export function buildPipelineTerminalDecision({
   status,
-  action = null,
+  action,
   reasonCode = null,
   humanReason = null,
-  scope = PIPELINE_TERMINAL_SCOPES.PIPELINE,
+  scope,
   runId = null,
   moduleId = null,
   gateId = null,
@@ -132,8 +115,8 @@ export function buildPipelineTerminalDecision({
   metadata = {},
 }: UnknownRecord = {}): UnknownRecord {
   const normalizedStatus = normalizeToken(status);
-  const normalizedAction = normalizeToken(action) || pipelineTerminalDefaultActionForStatus(normalizedStatus);
-  const normalizedScope = normalizeToken(scope) || PIPELINE_TERMINAL_SCOPES.PIPELINE;
+  const normalizedAction = normalizeToken(action);
+  const normalizedScope = normalizeToken(scope);
   const correlation: UnknownRecord = optionalTextFields({
     run_id: runId,
     module_id: moduleId,
@@ -167,9 +150,10 @@ export function buildPipelineTerminalDecision({
 
 export function buildPipelineTerminalDecisionFromStepOutcome({
   outcome,
+  action,
+  scope,
   reasonCode = null,
   humanReason = null,
-  stepType = PIPELINE_TERMINAL_SCOPES.PIPELINE,
   stepId = null,
   runId = null,
   attempt = null,
@@ -180,17 +164,21 @@ export function buildPipelineTerminalDecisionFromStepOutcome({
 }: UnknownRecord = {}): UnknownRecord | null {
   const status = pipelineTerminalStatusForStepOutcome(outcome);
   if (!status) return null;
-  const scope = isPipelineTerminalScope(stepType) ? stepType : PIPELINE_TERMINAL_SCOPES.PIPELINE;
+  const normalizedScope = normalizeToken(scope);
+  if (!isPipelineTerminalScope(normalizedScope)) {
+    throw new Error(`Invalid pipeline terminal decision: scope must be one of: ${Object.values(PIPELINE_TERMINAL_SCOPES).join(', ')}`);
+  }
   const scopedIdentity: UnknownRecord = {};
-  if (scope === PIPELINE_TERMINAL_SCOPES.MODULE) scopedIdentity.moduleId = stepId;
-  else if (scope === PIPELINE_TERMINAL_SCOPES.GATE) scopedIdentity.gateId = stepId;
-  else if (scope === PIPELINE_TERMINAL_SCOPES.VALIDATOR) scopedIdentity.validatorId = stepId;
+  if (normalizedScope === PIPELINE_TERMINAL_SCOPES.MODULE) scopedIdentity.moduleId = stepId;
+  else if (normalizedScope === PIPELINE_TERMINAL_SCOPES.GATE) scopedIdentity.gateId = stepId;
+  else if (normalizedScope === PIPELINE_TERMINAL_SCOPES.VALIDATOR) scopedIdentity.validatorId = stepId;
 
   return buildPipelineTerminalDecision({
     status,
+    action,
     reasonCode: reasonCode || outcome,
     humanReason,
-    scope,
+    scope: normalizedScope,
     runId,
     attempt,
     dispatchId,

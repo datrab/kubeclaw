@@ -96,10 +96,10 @@ Redis task stream
 
 ## Suite execution order
 
-Suites run in the order specified in the task payload (`suites` field). The recommended default order is:
+The task payload (`suites` field) selects the suites to run. Buster executes the selected suites in canonical dependency order:
 
 ```
-manifest → build → health → a11y → perf → bundle → security → visual-reg → api → e2e → unit
+manifest → build → health → k8s → a11y → perf → bundle → security → visual-reg → api → e2e → unit
 ```
 
 Dependencies (a suite is skipped if its dependency has a critical failure):
@@ -109,6 +109,7 @@ Dependencies (a suite is skipped if its dependency has a critical failure):
 | manifest | — |
 | build | manifest |
 | health | build |
+| k8s | — |
 | a11y | health |
 | perf | health |
 | bundle | build |
@@ -118,7 +119,7 @@ Dependencies (a suite is skipped if its dependency has a critical failure):
 | e2e | health |
 | unit | — |
 
-A suite failure is **critical** only when the suite explicitly sets `critical: true` in its verdict. Only `build` and `manifest` set `critical: true` by default — their failure blocks subagent spawn. All other suites are informational or enforced but non-critical.
+A suite failure is **critical** when the suite explicitly sets `critical: true` in its verdict. Capability-denied verdicts are critical, thrown `build` and `health` errors are critical, and downstream dependency skips are emitted as explicit `SKIP` verdicts.
 
 ## Configuration
 
@@ -168,7 +169,7 @@ Suite configuration is read from `payload.test_config`. Each key maps to a suite
 | `BUSTER_PROJECT` | — | Process-level diagnostic `project_hint` for Buster health artifacts only; task payload `project` is required and is not inferred from this env var |
 | `OPENCLAW_GATEWAY_URL` | — | ACP Gateway URL for session spawn |
 | `OPENCLAW_GATEWAY_TOKEN` | — | ACP Gateway auth token |
-| `AGENT_NAME` | `unknown` | Subagent identity for Redis consumer group |
+| `AGENT_NAME` | `buster` | Buster Redis task-consumer identity used for stream/group naming; spawned sessions use required `session.agentId` / `session.agent_id` from the task payload |
 | `HOSTNAME` | pod hostname | Used to build unique consumer name |
 
 ## Task payload fields

@@ -117,3 +117,20 @@ npm run docs:generate:check
 - `skills/common/pipeline/services/telemetry/payload-schema.ts`
 - `skills/nova/pipeline/services/observability.ts`
 - `skills/buster/pipeline/services/telemetry.ts`
+
+## Sink Contract Checklist
+
+| Requirement | Source owner | Expected behavior |
+| --- | --- | --- |
+| Event envelope | `skills/common/pipeline/services/telemetry/payload-schema.ts` | accept the shared telemetry payload shape without adding sink-only required fields |
+| Dispatch path | `skills/nova/pipeline/services/telemetry/dispatch.ts`; `skills/nova/pipeline/services/telemetry-stream.ts` | failures are recorded as noncritical sink degradation, not scheduler truth |
+| Sink config | `charts/kubeclaw/files/config/swarm.config.json`; `docs/reference/observability-sinks.md` | new config keys live under the existing observability/plugin-control surfaces |
+| Redaction | `skills/common/pipeline/redaction.ts`; sink implementation | secrets and tokens must be masked before external delivery |
+| Verification | telemetry docs/schema behavior checks and contract tests | generated docs and sink docs stay synchronized with emitted event names |
+
+## Failure Signals
+
+- sink throws and breaks pipeline control flow: incorrect, sinks must degrade without owning scheduler truth.
+- event appears in Redis but not external sink: inspect sink config and fallback artifacts before changing telemetry builders.
+- sink output contains tokens or full credentials: block the sink until redaction is fixed and covered by tests.
+- live observer hook firing is not repo-proven; document it as a live check until a cluster verifier exists.

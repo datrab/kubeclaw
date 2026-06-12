@@ -29,6 +29,12 @@ Audience: reference reader, developer
 - `rate_limit.max_pauses_per_module`: `5`
 - `rate_limit.cooldown_buffer_ms`: `5000`
 - `buster.suite_timeout_ms`: `300000`
+- `buster.max_crash_retries`: `2`
+- `buster.runtime.heartbeat_path`: `/tmp/kubeclaw-buster-heartbeat`
+- `buster.runtime.heartbeat_interval_ms`: `1000`
+- `buster.runtime.task_poll_interval_ms`: `2000`
+- `buster.runtime.task_pending_reclaim_idle_ms`: `60000`
+- `buster.runtime.task_stream_max_len`: `250`
 - `acp_monitor.unknown_poll_limit`: `10`
 - `acp_monitor.stale_poll_limit`: `10`
 - `acp_monitor.max_transcript_extensions`: `3`
@@ -74,6 +80,7 @@ Audience: reference reader, developer
 - requires Buster dispatch to be `redis`
 - rejects `config.models` in swarm config
 - builds the plugin registry during startup
+- rejects unknown top-level fields
 
 ## Example
 
@@ -83,6 +90,17 @@ Audience: reference reader, developer
   "default_timeout_minutes": 300,
   "default_max_fails": 8,
   "auto_retry_threshold": 7,
+  "buster": {
+    "suite_timeout_ms": 300000,
+    "max_crash_retries": 2,
+    "runtime": {
+      "heartbeat_path": "/tmp/kubeclaw-buster-heartbeat",
+      "heartbeat_interval_ms": 1000,
+      "task_poll_interval_ms": 2000,
+      "task_pending_reclaim_idle_ms": 60000,
+      "task_stream_max_len": 250
+    }
+  },
   "agents": {
     "forge": { "dispatch": "subagent", "acp_agent_id": "codex", "cwd": null },
     "buster": { "dispatch": "redis", "redis_js_path": "/app/skills/pipeline/tools/redis.ts" },
@@ -108,6 +126,37 @@ Audience: reference reader, developer
 - OpenClaw agent observability
 - pre-check linting
 - plugin registry construction
+
+## Validation Reference
+
+| Field | Required shape | Notes |
+| --- | --- | --- |
+| `agents.forge.dispatch`, `agents.echo.dispatch` | `acp`, `subagent`, or `redis`; current chart uses `subagent` | ACP/subagent entries require `acp_agent_id`. |
+| `agents.buster.dispatch` | exactly `redis` | Buster also requires `agents.buster.redis_js_path`; the default is `/app/skills/pipeline/tools/redis.ts`. |
+| `fallback_model` | non-empty string | Role-specific model defaults belong in project `progress.json`, not here. |
+| `poll_interval_seconds`, `default_timeout_minutes` | positive numbers | Scheduler timing defaults. |
+| `default_max_fails`, `auto_retry_threshold` | numbers `>= 0` | Retry escalation thresholds. |
+| `session_nudge_threshold` | number `0..1` | Session monitor nudge threshold. |
+| `rate_limit.cooldown_hours`, `rate_limit.max_pauses_per_module`, `rate_limit.cooldown_buffer_ms` | numbers `>= 0` | Rate-limit recovery budget. |
+| `buster.suite_timeout_ms` | positive number | Deterministic suite timeout. |
+| `buster.max_crash_retries` | number `>= 0` | Buster crash retry budget. |
+| `buster.runtime.heartbeat_path` | non-empty string | Buster readiness uses this path; deployment truth rejects the old `BUSTER_HEARTBEAT_PATH` env fallback. |
+| `buster.runtime.heartbeat_interval_ms`, `task_poll_interval_ms`, `task_pending_reclaim_idle_ms`, `task_stream_max_len` | positive numbers | Worker heartbeat, polling, pending reclaim, and stream trimming. |
+| `discord_alerts.info`, `warn`, `critical`, `ok` | booleans | Operator alert filtering. |
+| `pre_check.enabled`, `pre_check.lint_report_path`, `pre_check.timeout_seconds` | boolean, non-empty string, positive number | Delivery lint/pre-check validator. |
+| `review_defaults.timeout_minutes`, `max_fix_cycles`, `lint_tier`, `lint_required` | positive number, number `>= 0`, non-empty string, boolean | Review gate defaults; `review_defaults.reviewers` is rejected. |
+| `plugins.enabled`, `allowCustomModules`, `extraModulePaths`, `modules`, `stageOwners`, `restrictedCapabilityAllowlist` | boolean, boolean, array, object, object, object | Registry startup validates stage ownership, trust overrides, and capabilities in `skills/nova/pipeline/core/registry/**`. |
+| `acp_monitor.*` | non-negative numbers | ACP transcript/session monitor timing. |
+
+Rejected here: `_testOverrides`, top-level `models`, `telemetry.stream_key`, unknown top-level fields, reviewer/model defaults, and project workflow fields. Put workflow in `<repo>/Projects/<project>/src/.swarm/progress.json`.
+
+## Verification
+
+```bash
+node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
+node tests/verification/behavior/verify.mjs --area pipeline
+npm run docs:check
+```
 
 ## Generated From
 

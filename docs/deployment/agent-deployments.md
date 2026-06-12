@@ -64,16 +64,16 @@ Deploy both after infrastructure is ready:
 
 ## Nova Deployment
 
-Nova uses `ghcr.io/forgestackai/kubeclaw-general:latest` in production values. It renders without a service account, without sandbox volumes, and with `allowPrivilegeEscalation: false` plus `capabilities.drop: [ALL]` because sandbox mode is disabled. The service exposes:
+Nova uses `ghcr.io/datrab/kubeclaw-general:latest` in production values. It renders without a service account, without sandbox volumes, and with `allowPrivilegeEscalation: false` plus `capabilities.drop: [ALL]` because sandbox mode is disabled. The service exposes:
 
 - `gateway` and `bridge` on the cluster-internal `agent-nova` Service
 - `prism-preview` on a dedicated temporary NodePort Service at `30456`
 
-The `prism-preview` sidecar uses `node:20-alpine`, runs `npx --yes serve /designs -p 3456 --no-clipboard`, and mounts the workspace PVC at `/designs` with `subPath: prism/designs`.
+The `prism-preview` sidecar uses `ghcr.io/datrab/kubeclaw-prism-preview:latest`, serves `/designs` on port `3456` from the image entrypoint, and mounts the workspace PVC at `/designs` with `subPath: prism/designs`.
 
 ## Buster Deployment
 
-Buster uses `ghcr.io/forgestackai/kubeclaw-sandbox:latest` in production values. It renders:
+Buster uses `ghcr.io/datrab/kubeclaw-sandbox:latest` in production values. It renders:
 
 - `ServiceAccount/agent-buster`
 - `ClusterRole/agent-buster-k8s-tester`
@@ -94,7 +94,9 @@ kubectl logs -n "$NAMESPACE" deployment/agent-buster -c buster-pipeline
 
 Both agents receive Redis, Qdrant, LiteLLM, gateway, Git, Discord, and project environment from the chart. Secret-backed variables include `REDIS_PASSWORD`, `OPENCLAW_GATEWAY_TOKEN`, `LITELLM_API_KEY`, optional `ANTHROPIC_API_KEY`/`CLAUDE_CODE_OAUTH_TOKEN`, optional `DISCORD_TOKEN`, and optional `DISCORD_WEBHOOK`.
 
-The chart pins `SWARM_CONFIG` to `/home/node/.openclaw/swarm.config.json`. Runtime containers mount the retained config PVC at `/home/node/.openclaw`, expose the same retained source at `/home/node/.openclaw-persisted`, and overlay only `openclaw.json` plus `swarm.config.json` from an `emptyDir` runtime config volume. Runtime `openclaw.json` receives the current `LITELLM_API_KEY` and `DISCORD_TOKEN`; the retained source config keeps placeholders so secret rotation does not leave old values on the PVC. Buster's gateway and pipeline containers share this runtime config, the workspace PVC, `/app/skills`, Podman storage, registry config, and `/sandbox`, so pipeline preparation and gateway-side agent tests use the same runtime surface.
+The chart pins `SWARM_CONFIG` to `/home/node/.openclaw/swarm.config.json` and `REPO_ROOT` to `/home/node/.openclaw/workspace/git-repo`. Runtime containers mount the retained config PVC at `/home/node/.openclaw`, expose the same retained source at `/home/node/.openclaw-persisted`, and overlay only `openclaw.json` plus `swarm.config.json` from an `emptyDir` runtime config volume. Runtime `openclaw.json` receives the current `LITELLM_API_KEY` and `DISCORD_TOKEN`; the retained source config keeps placeholders so secret rotation does not leave old values on the PVC. Buster's gateway and pipeline containers share this runtime config, the workspace PVC, `/app/skills`, Podman storage, registry config, and `/sandbox`, so pipeline preparation and gateway-side agent tests use the same runtime surface.
+
+Persistent storage and incident checks are detailed in `persistent-storage.md` and `../operators/security-operations.md`. The deployment verifier asserts that the retained config source is exposed separately, runtime config is overlaid by `subPath`, Buster containers mount `/var/lib/containers` and `/sandbox`, and the sandbox ephemeral-storage limit remains `50Gi`.
 
 ## Health Probes
 

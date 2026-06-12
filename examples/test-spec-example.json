@@ -1,0 +1,127 @@
+{
+  "_comment": "API Test Spec — Beispiel-Template für Buster suites/api.js",
+  "_docs": "Ablageort: .swarm/modules/<module-dir>/test-spec.json — Referenz von progress.json via test_config.api.spec_file",
+
+  "base_url": "http://localhost:3000",
+
+  "defaults": {
+    "headers": {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    "timeout_ms": 5000,
+    "ws_timeout_ms": 5000
+  },
+
+  "setup": {
+    "_comment": "Optional: Auth-Setup. Wird vor allen Tests ausgeführt, Token in {{token}} verfügbar.",
+    "auth_endpoint": "/api/auth/login",
+    "auth_body": { "username": "admin", "password": "admin" },
+    "token_path": "token"
+  },
+
+  "tests": [
+    {
+      "_comment": "--- Einfacher GET mit Status-Check ---",
+      "name": "Health endpoint returns 200",
+      "method": "GET",
+      "path": "/api/health",
+      "expect": {
+        "status": 200
+      }
+    },
+    {
+      "_comment": "--- GET mit Auth-Header und Body-Validierung ---",
+      "name": "GET /api/pods returns array",
+      "method": "GET",
+      "path": "/api/pods",
+      "headers": {
+        "Authorization": "Bearer {{token}}"
+      },
+      "expect": {
+        "status": 200,
+        "body_type": "array",
+        "body_min_length": 0
+      }
+    },
+    {
+      "_comment": "--- POST mit Body und Fehler-Erwartung ---",
+      "name": "POST /api/pods with invalid body returns 400",
+      "method": "POST",
+      "path": "/api/pods",
+      "headers": {
+        "Authorization": "Bearer {{token}}"
+      },
+      "body": {
+        "invalid_field": true
+      },
+      "expect": {
+        "status": 400,
+        "body_contains": {
+          "error": true
+        }
+      }
+    },
+    {
+      "_comment": "--- GET mit Response-Time-Check ---",
+      "name": "GET /api/deployments responds within 2s",
+      "method": "GET",
+      "path": "/api/deployments",
+      "headers": {
+        "Authorization": "Bearer {{token}}"
+      },
+      "expect": {
+        "status": 200,
+        "max_response_ms": 2000
+      }
+    },
+    {
+      "_comment": "--- Unauthenticated Request → 401 ---",
+      "name": "GET /api/pods without auth returns 401",
+      "method": "GET",
+      "path": "/api/pods",
+      "expect": {
+        "status": 401
+      }
+    },
+    {
+      "_comment": "--- body_contains mit spezifischem Wert (nicht nur Existenz) ---",
+      "name": "GET /api/health returns status ok",
+      "method": "GET",
+      "path": "/api/health",
+      "expect": {
+        "status": 200,
+        "body_contains": {
+          "status": "ok"
+        }
+      }
+    },
+    {
+      "_comment": "--- WebSocket-Test (protocol: ws) ---",
+      "name": "WS /api/ws/logs connects and receives data",
+      "protocol": "ws",
+      "path": "/api/ws/logs",
+      "ws_messages": [
+        {
+          "send": { "type": "subscribe", "resource": "pods", "namespace": "default" }
+        }
+      ],
+      "expect": {
+        "ws_connected": true,
+        "ws_response_contains": {
+          "type": "subscribed"
+        },
+        "ws_min_messages": 1
+      }
+    },
+    {
+      "_comment": "--- WebSocket: Verbindung soll fehlschlagen (z.B. ohne Auth) ---",
+      "name": "WS /api/ws/exec rejects without auth",
+      "protocol": "ws",
+      "path": "/api/ws/exec",
+      "expect": {
+        "ws_connected": false
+      }
+    }
+  ]
+}

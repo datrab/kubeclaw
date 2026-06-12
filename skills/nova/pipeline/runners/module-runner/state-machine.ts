@@ -19,6 +19,8 @@ import { prepareModuleForBuster } from '../module-runner-prebuster.ts';
 import { runModuleBusterPhase } from './buster-phase.ts';
 import {
   buildBlockedTerminalResult,
+  buildModuleErrorTerminalResult,
+  buildModuleNeedsNovaTerminalResult,
   buildModulePassTerminalResult,
   buildRetryResult,
 } from './terminal-results.ts';
@@ -81,17 +83,16 @@ async function releaseBlueprintForAttempt({ config, progress, moduleId, mod, dir
     emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'blueprint_release', null, status?.status ?? STATUS.PENDING, reason, {}, deps._explicitDeps);
     return {
       status,
-      terminal: {
-        retry: false,
-        result: {
-          outcome_class: 'needs_nova',
-          reason,
-          module: moduleId,
+      terminal: buildModuleNeedsNovaTerminalResult(config, moduleId, {
+        reason,
+        moduleDir: dir,
+        phase: 'blueprint_release',
+        gatewayLabel: resolveStatusGatewayLabel(status),
+        sessionKey: resolveStatusSessionKey(status),
+        metadata: {
           resume_command: `node pipeline.ts --project ${config.project} --resume`,
-          gateway_label: resolveStatusGatewayLabel(status),
-          session_key: resolveStatusSessionKey(status),
         },
-      },
+      }),
     };
   }
 
@@ -108,15 +109,12 @@ function buildUnexpectedStatusTerminal({ config, moduleId, mod, status, deps }: 
   const reason = `Unexpected status: ${status?.status}`;
   log('ERROR', `Module ${moduleId} ended in unexpected status: ${status?.status}`);
   emitTerminalModuleFailTelemetry(config, moduleId, status, mod, status?.current_phase || null, status?.active_agent?.model || null, status?.status ?? null, reason, {}, deps?._explicitDeps);
-  return {
-    retry: false,
-    result: {
-      outcome_class: 'error',
-      reason,
-      gateway_label: resolveStatusGatewayLabel(status),
-      session_key: resolveStatusSessionKey(status),
-    },
-  };
+  return buildModuleErrorTerminalResult(config, moduleId, {
+    reason,
+    phase: status?.current_phase ?? null,
+    gatewayLabel: resolveStatusGatewayLabel(status),
+    sessionKey: resolveStatusSessionKey(status),
+  });
 }
 
 export async function runModuleAttemptStateMachine({
@@ -141,7 +139,7 @@ export async function runModuleAttemptStateMachine({
   }
   if (loadedAction === MODULE_ATTEMPT_ACTIONS.TERMINAL_BLOCKED) {
     log('WARN', `Module ${moduleId} is BLOCKED — cannot proceed`);
-    return buildBlockedTerminalResult(status, moduleId);
+    return buildBlockedTerminalResult(config, status, moduleId, { moduleDir: dir });
   }
   if (loadedAction === MODULE_ATTEMPT_ACTIONS.RELEASE_BLUEPRINT) {
     const released = await releaseBlueprintForAttempt({ config, progress, moduleId, mod, dir, deps, status });

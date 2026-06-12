@@ -13,6 +13,7 @@ function stableWriteMap() {
   const deploy = readJson('docs/generated/inventory/deploy-script.json');
   const secrets = readJson('docs/generated/inventory/secret-setup.json');
   const helm = readJson('docs/generated/inventory/helm-values.json');
+  const workflows = readJson('docs/generated/inventory/workflows.json');
 
   return new Map([
     ['docs/reference/cli.md', renderCli(deploy)],
@@ -20,6 +21,7 @@ function stableWriteMap() {
     ['docs/reference/helm-values.md', renderHelmValues(helm)],
     ['docs/reference/environment-variables.md', renderEnvironment(deploy, secrets)],
     ['docs/reference/verification-commands.md', renderVerification(deploy)],
+    ['docs/reference/workflows.md', renderWorkflows(workflows)],
   ]);
 }
 
@@ -77,6 +79,27 @@ ${generatedEnd()}
 - \`../deployment/deployment-verification.md\`
 - \`../operators/recovery-runbook.md\`
 
+## Command Expectations
+
+| Command group | Runtime owner | Expected artifacts or resources | Failure signals |
+| --- | --- | --- | --- |
+| setup and secrets | \`scripts/deploy.sh\`; \`my-values/setup-secrets.sh\` | namespace, required Kubernetes Secrets, Helm repositories, optional workspace namespace record | missing command, invalid secret setup mode, missing required Secret keys |
+| infra | \`scripts/deploy.sh\`; \`my-values/infra/*.yaml\` | Redis, optional PostgreSQL/Qdrant/LiteLLM, registry helpers, NetworkPolicies, namespace fence | rollout timeout, Helm repo failure, invalid manifest, partial infra warning when \`ALLOW_PARTIAL_INFRA=true\` |
+| agents | \`charts/kubeclaw/templates/*.yaml\`; \`my-values/nova-values.yaml\`; \`my-values/buster-values.yaml\` | \`Deployment/agent-nova\`, \`Deployment/agent-buster\`, Services, PVCs, runtime ConfigMaps | Helm render failure, image pull failure, init-container Git/config/skill error |
+| smoke and verify-live | \`scripts/deploy.sh\`; chart health script | pod smoke output, cluster image-pull preflight, local image override values | gateway health failure, Redis/LiteLLM dependency failure, local registry push/pull mismatch |
+| teardown | \`scripts/deploy.sh\` | removed Helm releases/resources according to selected teardown scope | confirmation prompt mismatch, retained PVCs or Secrets that need manual review |
+
+## Verification
+
+\`\`\`bash
+npm run docs:inventory:check
+npm run docs:generate:check
+node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
+git diff --check
+\`\`\`
+
+This generated page proves command inventory and documented command groups. It does not prove live provider credentials, Tailscale tailnet policy, node firewall rules, or CNI enforcement.
+
 ## Generated from
 
 - \`../generated/inventory/deploy-script.json\`
@@ -127,6 +150,23 @@ Check Tailscale OAuth Secret:
 kubectl -n tailscale get secret operator-oauth
 \`\`\`
 
+## Secret Ownership And Failure Signals
+
+| Secret group | Created or reused by | Consumed by | Failure signal |
+| --- | --- | --- | --- |
+| shared OpenClaw credentials | \`my-values/setup-secrets.sh\`; chart values using \`openclaw-shared-secrets\` | gateway config, agent env, Discord/webhook wiring, provider credentials | missing key warning, gateway auth failure, Discord/provider credential failure |
+| Redis | \`my-values/setup-secrets.sh\`; \`my-values/infra/redis-values.yaml\` | agent and Buster Redis clients | Redis auth/connection failure, Buster task queue idle with connection errors |
+| PostgreSQL and LiteLLM | \`my-values/setup-secrets.sh\`; LiteLLM infra manifests | optional PostgreSQL chart and LiteLLM deployment | LiteLLM rollout failure, invalid \`DATABASE_URL\`, missing \`LITELLM_MASTER_KEY\` |
+| GHCR and Git deploy keys | \`my-values/setup-secrets.sh\`; agent values | image pull and init-container Git clone | \`ImagePullBackOff\`, missing \`/secrets/ssh/id_rsa\`, Git clone failure |
+| Tailscale OAuth | \`my-values/setup-secrets.sh\`; Tailscale operator values | official Tailscale Kubernetes Operator | missing \`IngressClass/tailscale\`, no final-preview URL, operator auth errors |
+
+## Recovery Notes
+
+- Existing Secrets are reused unless \`KUBECLAW_SECRETS_OVERWRITE=true\`.
+- Noninteractive setup never invents provider credentials; pre-create/copy Secrets or run with \`KUBECLAW_SECRET_SETUP_MODE=interactive\`.
+- If a Secret exists but is missing keys, patch only the missing keys or intentionally rerun setup with overwrite.
+- Run deployment truth after changing the helper or generated inventory so rendered Secret refs stay in sync.
+
 ## Generated from
 
 - \`../generated/inventory/secret-setup.json\`
@@ -161,6 +201,24 @@ ${generatedEnd()}
 - \`../deployment/values-files.md\`
 - \`../deployment/secrets.md\`
 - \`../deployment/agent-deployments.md\`
+
+## Runtime Meaning
+
+| Value group | Runtime effect | Expected proof |
+| --- | --- | --- |
+| image and pull secrets | selects agent and sidecar images, tags, pull policy, and GHCR pull Secret | rendered Deployments include expected image refs and \`imagePullSecrets\` |
+| auth/provider/Discord/Stitch/LiteLLM | selects direct values or existing Secret name/key references | rendered env refs point to expected Secret keys and generated secrets reference lists those keys |
+| persistence and sandbox | creates workspace/config PVCs and Buster Podman/sandbox mounts | rendered PVCs and Buster volumes match production values |
+| service and extra ports | exposes gateway/bridge ClusterIP ports plus explicit extra NodePorts | rendered Services contain only documented ports |
+| buster namespace broker | adds lease CRD/RBAC/controller and controller env vars | Buster render includes CRD, lease client RBAC, controller Deployment, and namespace fence docs |
+| probes and dependency checks | configures runtime health script for gateway, Redis, Redis stream, LiteLLM, and Buster heartbeat checks | rendered env vars match values and smoke commands exercise the health script |
+
+## Failure Signals
+
+- A top-level value appears in this page but has no rendered effect: add deployment truth coverage or remove the stale value.
+- Rendered Secret refs do not match \`my-values/setup-secrets.sh\`: update values, helper, inventory, and docs together.
+- Buster values disable sandbox/broker behavior unexpectedly: inspect \`my-values/buster-values.yaml\` before changing chart templates.
+- A live pod keeps old config after values change: remember the init container preserves persisted config unless override flags request replacement.
 
 ## Generated from
 
@@ -202,6 +260,30 @@ ${table(['Name', 'Description', 'Deploy default', 'Secret setup default'], rows.
   item.secretDefault ? `\`${item.secretDefault}\`` : '',
 ]))}
 ${generatedEnd()}
+## Ownership And Runtime Boundaries
+
+| Variable group | Owner | Runtime effect | Verification |
+| --- | --- | --- | --- |
+| Namespace and workspace prompt | \`scripts/deploy.sh\`; \`my-values/setup-secrets.sh\` | selects the Kubernetes namespace and optionally records \`my-values/.workspace-namespace\` for local operator convenience | \`./scripts/deploy.sh status\`; generated inventory check |
+| Component switches | \`scripts/deploy.sh\`; \`my-values/setup-secrets.sh\` | controls optional PostgreSQL, Qdrant, LiteLLM, and Tailscale setup paths; \`ALLOW_PARTIAL_INFRA\` changes rollout failures from fail-closed to warning | deployment truth plus live rollout status |
+| Secret setup controls | \`my-values/setup-secrets.sh\` | chooses interactive/noninteractive/auto resolution, overwrite behavior, source namespace copies, and Tailscale OAuth bootstrap | \`kubectl -n "$NAMESPACE" get secret ...\`; \`kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" get secret operator-oauth\` |
+| Local image verification | \`scripts/deploy.sh\` | separates host-visible image push target from cluster-visible pull target for \`build-local-images\` and \`verify-live\` | \`./scripts/deploy.sh build-local-images [tag]\`; \`./scripts/deploy.sh verify-live [tag]\` |
+
+## Failure Modes
+
+- Invalid boolean-like values can skip expected component paths or keep optional setup enabled; use the exact values listed in this table.
+- Noninteractive secret setup warns when a required source is unavailable instead of inventing credentials.
+- \`ALLOW_PARTIAL_INFRA=true\` is for troubleshooting only; the default infra path should fail closed on required rollout failures.
+- Local image verification requires both \`LOCAL_REGISTRY_PUSH\` and \`LOCAL_REGISTRY_PULL\` when the host-visible and cluster-visible registry names differ.
+
+## Checks
+
+\`\`\`bash
+npm run docs:inventory:check
+npm run docs:generate:check
+node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
+\`\`\`
+
 ## Generated from
 
 - \`../generated/inventory/deploy-script.json\`
@@ -238,9 +320,66 @@ node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PW
 git diff --check
 \`\`\`
 
+## Claim-To-Test Map
+
+| Claim class | Source or verifier |
+| --- | --- |
+| Documentation inventory and generated references are current | \`npm run docs:inventory:check\`; \`npm run docs:generate:check\`; \`node scripts/docs-check.mjs\` |
+| Deployment manifests, NetworkPolicies, service exposure, PVCs, config mounts, and sandbox surfaces match source | \`node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"\` |
+| Documentation surface links and generated docs expectations stay valid | \`node tests/verification/behavior/verify.mjs --source-root "$PWD" --area docs-surface\` |
+| Telemetry docs match the event envelope and sink contracts | \`node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry-docs\` |
+| Restart recovery and runtime monitor behavior remain source-backed | \`node tests/verification/behavior/verify.mjs --source-root "$PWD" --area restart-recovery\`; \`node tests/verification/behavior/verify.mjs --source-root "$PWD" --area runtime-monitor\` |
+| Status store lifecycle, artifacts, and Buster task settlement contracts stay stable | \`node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"\`; \`node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"\` |
+| Proposed doc edits have no whitespace errors | \`git diff --check\` |
+| Referenced source paths/config keys exist | Use a targeted \`test -e\`/ \`rg -q\` sanity check for newly cited paths and keys before closing the docs pass. |
+
 ## Generated from
 
 - \`../generated/inventory/deploy-script.json\`
+- \`../../scripts/docs-generate.mjs\`
+`;
+}
+
+function renderWorkflows(workflows) {
+  return `# Workflow Inventory
+
+Status: generated reference
+Audience: maintainer, developer
+
+## Summary
+
+This page lists repository GitHub Actions workflows, their trigger surfaces, path filters, jobs, schedules, and command/action references. Use it when docs, deployment, images, tests, skills, plugins, or CI behavior change.
+
+${generatedNotice(workflows.generatedFrom)}
+## Workflows
+
+${table(['Workflow', 'Triggers', 'Path filters', 'Schedules', 'Jobs', 'Commands/actions'], workflows.workflows.map((workflow) => [
+  `\`${workflow.path}\` (${workflow.name})`,
+  workflow.triggers.map((trigger) => `\`${trigger}\``).join(', '),
+  workflow.pathFilters.length ? workflow.pathFilters.map((filter) => `\`${filter}\``).join('<br>') : '',
+  workflow.schedules.length ? workflow.schedules.map((schedule) => `\`${schedule}\``).join('<br>') : '',
+  workflow.jobs.map((job) => `\`${job}\``).join(', '),
+  workflow.commandAndActionRefs.map((ref) => `\`${ref}\``).join('<br>'),
+]))}
+${generatedEnd()}
+## Drift Guardrails
+
+| Guardrail | Protected surface | Failure signal |
+| --- | --- | --- |
+| \`npm run docs:check:generated\` | generated inventory and generated reference pages | stale \`docs/generated/inventory/*.json\` or stale generated reference Markdown |
+| \`npm run docs:check:refs\` | local Markdown links and cited repository paths in active docs/current audit artifacts | missing doc, script, workflow, chart, config, test, skill, plugin, or root file path |
+| \`npm run docs:check:coverage\` | coverage matrix and topic-map consistency | untracked active docs, invalid ratings, adequate rows without accepted rationale, weak ratings without explicit allowance, vague topic-map weakness language |
+| \`git diff --check\` | whitespace hygiene in changed files | trailing whitespace or conflict-marker-like whitespace errors |
+
+## Maintenance Notes
+
+- Regenerate this page with \`npm run docs:inventory && npm run docs:generate\` after workflow files change.
+- Keep workflow path filters broad enough to catch documented runtime drift. Prefer catching drift over saving a small amount of CI time.
+- If a workflow command changes, update the human docs only when the changed command affects a documented operator/developer procedure.
+
+## Generated from
+
+- \`../generated/inventory/workflows.json\`
 - \`../../scripts/docs-generate.mjs\`
 `;
 }

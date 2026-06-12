@@ -209,7 +209,37 @@ const terminationMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/
 assert.throws(() => terminationMod.resolveSessionTerminationPolicy({ graceMs: -1 }), /graceMs must be a finite number >= 0/);
 assert.throws(() => terminationMod.resolveSessionTerminationPolicy({ confirmPollMs: 0 }), /confirmPollMs must be a finite number >= 1/);
 
+const lifecycleSource = fs.readFileSync(path.join(sourceRoot, 'skills/common/pipeline/agents/lifecycle.ts'), 'utf8');
+assert.equal(lifecycleSource.includes('SESSION_SPAWN_POLICY_DEFAULTS'), true, 'session spawn timing/defaults must be policy-scoped');
+assert.equal(lifecycleSource.includes('SESSION_KILL_POLICY_DEFAULTS'), true, 'session kill timing/defaults must be policy-scoped');
+assert.equal(lifecycleSource.includes("cleanupConfirmTimeoutMs: 'match_confirm_timeout'"), true, 'session kill cleanup confirmation policy must explicitly match confirm timeout');
+assert.equal(lifecycleSource.includes('function resolveCleanupConfirmTimeoutMs'), true, 'session kill cleanup confirmation sentinel must be resolved after option merging');
+assert.equal(lifecycleSource.includes('opts.cleanupConfirmTimeoutMs ?? SESSION_KILL_POLICY_DEFAULTS.cleanupConfirmTimeoutMs'), true, 'session kill cleanup confirmation must merge caller and policy before sentinel resolution');
+assert.equal(lifecycleSource.includes('opts.maxRetries ?? 3'), false, 'spawnSession must not use anonymous retry defaults');
+assert.equal(lifecycleSource.includes('opts.retryDelayMs ?? 5000'), false, 'spawnSession must not use anonymous retry delay defaults');
+assert.equal(lifecycleSource.includes("spawnGatewaySession, 'session spawn', spawnArgs, 30000"), false, 'spawnSession must not use anonymous gateway request timeout');
+assert.equal(lifecycleSource.includes("opts.stopMessage || '/stop'"), false, 'killSession must not use anonymous stop-message defaults');
+assert.equal(lifecycleSource.includes('opts.confirmTimeoutMs ?? (isSubagent ? 120000 : 15000)'), false, 'killSession confirm timeout must resolve through named policy');
+assert.equal(lifecycleSource.includes('opts.cleanupConfirmTimeoutMs ?? confirmTimeoutMs'), false, 'killSession cleanup confirmation timeout must resolve through named policy');
+
+const acpMonitorSource = fs.readFileSync(path.join(sourceRoot, 'skills/common/pipeline/agents/acp-monitor.ts'), 'utf8');
+assert.equal(acpMonitorSource.includes('SESSION_IDLE_POLICY_DEFAULTS'), true, 'session idle timing defaults must be policy-scoped');
+assert.equal(acpMonitorSource.includes('optsOrGraceMs'), false, 'waitForSessionIdle must not accept legacy positional grace arguments');
+assert.equal(acpMonitorSource.includes('maybeTimeoutMs'), false, 'waitForSessionIdle must not accept legacy positional timeout arguments');
+assert.equal(acpMonitorSource.includes('isNovaSignature'), false, 'ACP monitor must not keep legacy Nova positional signature detection');
+assert.equal(acpMonitorSource.includes('export async function getAcpMonitorState(...args'), false, 'ACP monitor state must expose one object-shaped call surface');
+assert.equal(acpMonitorSource.includes('maybeStreamLogPath'), false, 'ACP monitor must not keep legacy positional stream-log argument handling');
+assert.equal(acpMonitorSource.includes('getState(childSessionKey, streamLogPath, previousState, monitorOpts)'), false, 'ACP monitor event adapter must not call monitor hooks with legacy positional arguments');
+assert.equal(acpMonitorSource.includes('arguments.length !== 1'), true, 'ACP monitor must reject extra positional arguments');
+assert.equal(acpMonitorSource.includes('request.trackedAgent || await resolveTrackedAgent(sessionLabelOrKey)'), true, 'ACP monitor object-shaped Nova path must await tracked session resolution');
+assert.equal(acpMonitorSource.includes('entry?.streamLogPath ?? request.streamLogPath ?? null'), true, 'ACP monitor Nova path must keep tracked transcript path precedence');
+
 const lifecycleMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/common/pipeline/agents/lifecycle.ts')).href);
+assert.equal(
+  lifecycleMod.SESSION_KILL_POLICY_DEFAULTS.cleanupConfirmTimeoutMs,
+  'match_confirm_timeout',
+  'session kill cleanup confirmation policy must be exported as an explicit match-confirm rule',
+);
 await assert.rejects(
   () => lifecycleMod.spawnSession({ session: { runtime: 'acp', agentId: 'claude', cwd: sourceRoot, label: 'missing-model' } }, 'prompt', null),
   /spawnSession requires explicit session\.model/,
@@ -229,6 +259,27 @@ await assert.rejects(
   () => lifecycleMod.spawnSession({ session: { runtime: 'acp', model: 'anthropic/claude-sonnet-4-6', agentId: 'claude', cwd: sourceRoot } }, 'prompt', null),
   /spawnSession requires explicit session\.label/,
   'spawnSession must not silently default missing label identity',
+);
+const acpMonitorMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/common/pipeline/agents/acp-monitor.ts')).href);
+await assert.rejects(
+  () => acpMonitorMod.getAcpMonitorState(),
+  /getAcpMonitorState requires exactly one options object/,
+  'getAcpMonitorState must reject missing monitor options',
+);
+await assert.rejects(
+  () => acpMonitorMod.getAcpMonitorState('agent:main:acp:legacy-monitor'),
+  /getAcpMonitorState requires a single options object/,
+  'getAcpMonitorState must reject legacy positional monitor arguments',
+);
+await assert.rejects(
+  () => acpMonitorMod.getAcpMonitorState({ acp_monitor: { unknown_poll_limit: 1 } }, 'legacy-label', {}),
+  /getAcpMonitorState requires exactly one options object/,
+  'getAcpMonitorState must reject legacy Nova positional monitor arguments',
+);
+await assert.rejects(
+  () => acpMonitorMod.waitForSessionIdle('agent:main:acp:legacy-idle', 1000),
+  /waitForSessionIdle requires an options object/,
+  'waitForSessionIdle must reject legacy positional grace arguments',
 );
 
 const trackedAgentsMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/common/pipeline/agents/tracked-agents.ts')).href);

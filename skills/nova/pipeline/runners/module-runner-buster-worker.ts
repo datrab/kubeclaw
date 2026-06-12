@@ -13,6 +13,7 @@ import {
   ensureModulePluginLogDirs,
   normalizeModuleBusterWorkerResult,
 } from './module-runner-shared.ts';
+import { buildModuleErrorTerminalResult } from './module-runner/terminal-results.ts';
 
 type AnyRecord = Record<string, any>;
 
@@ -165,17 +166,17 @@ export async function executeBusterWorkerAttempt({
     );
     return {
       status,
-      terminal: {
-        retry: false,
-        result: {
-          outcome_class: 'error',
-          reason,
-          dispatch_id: completionIdentity.dispatchId,
-          gateway_label: completionIdentity.gateway_label,
-          session_key: busterSessionKey,
-          ...((error as AnyRecord)?.diagnostics ? { diagnostics: { contract_invalid: true, contract_diagnostic: (error as AnyRecord).diagnostics } } : {}),
-        },
-      },
+      terminal: buildModuleErrorTerminalResult(config, moduleId, {
+        reason,
+        runId: completionIdentity.runId,
+        moduleDir: dir,
+        attempt: completionIdentity.attempt,
+        phase: 'buster',
+        dispatchId: completionIdentity.dispatchId,
+        gatewayLabel: completionIdentity.gateway_label,
+        sessionKey: busterSessionKey,
+        ...((error as AnyRecord)?.diagnostics ? { diagnostics: { contract_invalid: true, contract_diagnostic: (error as AnyRecord).diagnostics } } : {}),
+      }),
     };
   }
 

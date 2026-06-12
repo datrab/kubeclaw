@@ -287,7 +287,79 @@ for (const [label, rawResult, expectedError] of [
   assert.equal(archResult.nextAction, 'block', `malformed architecture validator output should fail closed for ${label}`);
   assert.equal(archResult.diagnostics.metadata.contract_invalid, true, `malformed architecture validator output should be marked contract-invalid for ${label}`);
   assert(archResult.diagnostics.metadata.contract_diagnostic.validationErrors.includes(expectedError), `expected architecture validator contract error for ${label}`);
+  const stepResult = schedulingMod.projectValidatorControlResultToStepResult(
+    { project: `validator-control-contract-${label.replace(/\s+/g, '-')}`, _runId: 'run-validator-control-contract-arch-1' },
+    archResult,
+    { stageId: 'validator:architecture' },
+  );
+  assert.equal(stepResult.outcome, 'error', `malformed architecture validator output should project to error for ${label}`);
+  assert.equal(stepResult.nextAction, 'halt', `malformed architecture validator output should halt scheduling for ${label}`);
+  assert.equal(stepResult.terminal.decision.action, 'stop', `malformed architecture validator output should stop terminal handling for ${label}`);
 }
+
+const mixedMetadataContractInvalid = schedulingMod.projectValidatorControlResultToStepResult(config, {
+  schemaVersion: 'v1',
+  producerKind: 'validator',
+  producerType: 'architecture',
+  nextAction: 'block',
+  issueType: 'unknown',
+  diagnostics: {
+    summary: 'Architecture contract invalid',
+    metadata: { contract_invalid: true },
+    typed: {
+      validator: {
+        schemaVersion: 'v1',
+        validatorType: 'architecture',
+        outcomeClass: 'blocked',
+        metadata: {},
+      },
+    },
+  },
+}, { stageId: 'validator:architecture' });
+assert.equal(mixedMetadataContractInvalid.outcome, 'error', 'top-level validator contract_invalid should override typed blocked outcome');
+assert.equal(mixedMetadataContractInvalid.terminal.decision.action, 'stop', 'top-level validator contract_invalid should stop terminal handling');
+const typedMetadataContractInvalid = schedulingMod.projectValidatorControlResultToStepResult(config, {
+  schemaVersion: 'v1',
+  producerKind: 'validator',
+  producerType: 'architecture',
+  nextAction: 'block',
+  issueType: 'unknown',
+  diagnostics: {
+    summary: 'Architecture contract invalid',
+    metadata: { contract_invalid: false },
+    typed: {
+      validator: {
+        schemaVersion: 'v1',
+        validatorType: 'architecture',
+        outcomeClass: 'blocked',
+        metadata: { contract_invalid: true },
+      },
+    },
+  },
+}, { stageId: 'validator:architecture' });
+assert.equal(typedMetadataContractInvalid.outcome, 'error', 'typed validator contract_invalid should override top-level false flag');
+assert.equal(typedMetadataContractInvalid.terminal.decision.action, 'stop', 'typed validator contract_invalid should stop terminal handling');
+const requestFixContractInvalid = schedulingMod.projectValidatorControlResultToStepResult(config, {
+  schemaVersion: 'v1',
+  producerKind: 'validator',
+  producerType: 'delivery_lint',
+  nextAction: 'request_fix',
+  issueType: 'code',
+  diagnostics: {
+    summary: 'Delivery lint contract invalid',
+    metadata: { contract_invalid: true },
+    typed: {
+      validator: {
+        schemaVersion: 'v1',
+        validatorType: 'delivery_lint',
+        outcomeClass: 'validation_failed',
+        metadata: {},
+      },
+    },
+  },
+}, { stageId: 'validator:delivery_lint' });
+assert.equal(requestFixContractInvalid.outcome, 'error', 'contract-invalid validator request_fix should project to error');
+assert.equal(requestFixContractInvalid.terminal.decision.action, 'stop', 'contract-invalid validator request_fix should stop terminal handling');
 
 assert.throws(
   () => helperMod.normalizeTypedValidatorControlResult({

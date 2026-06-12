@@ -23,7 +23,7 @@ agentRole: "nova"
 image:
   # General image for Nova, Forge, Echo
   # Override with sandbox image for Buster
-  repository: ghcr.io/forgestackai/kubeclaw-general
+  repository: ghcr.io/datrab/kubeclaw-general
   tag: "latest"
   pullPolicy: Always
 
@@ -52,7 +52,6 @@ gateway:
 
 busterPipeline:
   enabled: false
-  heartbeatIntervalMs: 1000
   command:
     - "node"
     - "/app/skills/buster-pipeline.ts"
@@ -292,7 +291,6 @@ probes:
         - "http://registry-mirror.kubeclaw.svc.cluster.local:5000"
     busterHeartbeat:
       enabled: true
-      path: "/tmp/kubeclaw-buster-heartbeat"
       maxAgeSeconds: 120
 
 # =============================================================================
@@ -346,7 +344,7 @@ busterNamespaceBroker:
   defaultTtlSeconds: 7200
   controller:
     image:
-      repository: ghcr.io/forgestackai/kubeclaw-general
+      repository: ghcr.io/datrab/kubeclaw-general
       tag: latest
       pullPolicy: Always
     pollIntervalMs: 3000

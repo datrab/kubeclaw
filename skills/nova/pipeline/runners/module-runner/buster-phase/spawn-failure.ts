@@ -11,6 +11,7 @@ import {
   resolveCompletionGatewayLabel,
   resolveCompletionSessionKey,
 } from './identity.ts';
+import { buildModuleErrorTerminalResult } from '../terminal-results.ts';
 
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../../../services/discord-fields.ts';
 
@@ -79,5 +80,13 @@ export async function handleBusterSpawnFailure({
       sessionKey: spawnFailureSessionKey,
     },
   );
-  return { retry: false, result: { outcome_class: 'error', reason, dispatch_id: completionIdentity.dispatchId, gateway_label: spawnFailureGatewayLabel, session_key: spawnFailureSessionKey } };
+  return buildModuleErrorTerminalResult(config, moduleId, {
+    reason,
+    runId: completionIdentity.runId ?? completionIdentity.run_id ?? null,
+    attempt: currentAttemptNumber(status),
+    phase: 'buster',
+    dispatchId: completionIdentity.dispatchId,
+    gatewayLabel: spawnFailureGatewayLabel,
+    sessionKey: spawnFailureSessionKey,
+  });
 }

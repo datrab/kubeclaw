@@ -499,7 +499,9 @@ class CountingAbortSignal {
       transcript_grace_ms: 0,
       monitor_poll_ms: 1,
     },
-    getAcpMonitorState: async (_key, _path, _prev) => {
+    getAcpMonitorState: async (request) => {
+      assert.equal(request.childSessionKey, 'session-diff');
+      assert.equal(Object.prototype.hasOwnProperty.call(request, 'previousState'), true);
       const base = states[Math.min(calls, states.length - 1)];
       calls += 1;
       return {

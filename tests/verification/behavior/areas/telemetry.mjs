@@ -78,7 +78,17 @@ await record('completion selection stays scoped to run and attempt identity inst
     run_id: 'run-current',
     default_timeout_minutes: 5,
     rate_limit: { cooldown_hours: 2, max_pauses_per_module: 5 },
-    buster: { suite_timeout_ms: 300000 },
+    buster: {
+      suite_timeout_ms: 300000,
+      max_crash_retries: 2,
+      runtime: {
+        heartbeat_path: '/tmp/kubeclaw-buster-heartbeat',
+        heartbeat_interval_ms: 1000,
+        task_poll_interval_ms: 2000,
+        task_pending_reclaim_idle_ms: 60000,
+        task_stream_max_len: 250,
+      },
+    },
     acp_monitor: {
       unknown_poll_limit: 10,
       stale_poll_limit: 10,
@@ -949,10 +959,15 @@ await record('buster gate rate-limit pauses emit canonical gate telemetry once',
           }
           return {
             ok: true,
+            reason: 'target_reached',
             status: {
+              status: 'PASS',
+              reason: 'target_reached',
               _source: 'redis',
+              run_id: 'run-gate-1',
               dispatch_id: 'dispatch-gate-quality',
               session_key: 'agent:main:acp:gate-quality',
+              attempt: 1,
             },
           };
         },

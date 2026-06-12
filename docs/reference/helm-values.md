@@ -15,9 +15,9 @@ Generated from: `charts/kubeclaw/values.yaml`, `my-values/nova-values.yaml`, `my
 
 | File | Top-level keys | Secret references |
 | --- | --- | --- |
-| `charts/kubeclaw/values.yaml` | `agentRole`, `image`, `imagePullSecrets`, `gateway`, `busterPipeline`, `replicaCount`, `auth`, `litellm`, `anthropic`, `stitch`, `discord`, `discordWebhook`, `agent`, `redis`, `qdrant`, `workspace`, `service`, `persistence`, `resources`, `runAsRoot`, `probes`, `shutdown`, `sandbox`, `serviceAccount`, `busterNamespaceBroker`, `commands`, `swarmConfig`, `swarmConfigJson`, `semgrepConfigYaml`, `eslintConfigMjs`, `customSkills`, `nodeSelector`, `tolerations`, `podAnnotations`, `extraEnv`, `extraContainers`, `extraVolumes`, `extraVolumeMounts` | `secretName: redis-secrets` at line 167 |
+| `charts/kubeclaw/values.yaml` | `agentRole`, `image`, `imagePullSecrets`, `gateway`, `busterPipeline`, `replicaCount`, `auth`, `litellm`, `anthropic`, `stitch`, `discord`, `discordWebhook`, `agent`, `redis`, `qdrant`, `workspace`, `service`, `persistence`, `resources`, `runAsRoot`, `probes`, `shutdown`, `sandbox`, `serviceAccount`, `busterNamespaceBroker`, `commands`, `swarmConfig`, `swarmConfigJson`, `semgrepConfigYaml`, `eslintConfigMjs`, `customSkills`, `nodeSelector`, `tolerations`, `podAnnotations`, `extraEnv`, `extraContainers`, `extraVolumes`, `extraVolumeMounts` | `secretName: redis-secrets` at line 166 |
 | `my-values/nova-values.yaml` | `agentRole`, `image`, `imagePullSecrets`, `auth`, `anthropic`, `stitch`, `litellm`, `discord`, `discordWebhook`, `agent`, `service`, `resources`, `extraContainers`, `workspace` | `existingSecret: openclaw-shared-secrets` at line 16<br>`existingSecret: openclaw-shared-secrets` at line 20<br>`existingSecret: openclaw-shared-secrets` at line 24<br>`existingSecret: openclaw-shared-secrets` at line 28<br>`existingSecret: openclaw-shared-secrets` at line 33<br>`secretName: openclaw-shared-secrets` at line 38<br>`secretName: git-deploy-key-nova` at line 45 |
-| `my-values/buster-values.yaml` | `agentRole`, `anthropic`, `busterPipeline`, `gateway`, `image`, `imagePullSecrets`, `auth`, `litellm`, `discord`, `commands`, `discordWebhook`, `probes`, `agent`, `sandbox`, `serviceAccount`, `busterNamespaceBroker`, `resources`, `workspace` | `existingSecret: openclaw-shared-secrets` at line 12<br>`existingSecret: openclaw-shared-secrets` at line 39<br>`existingSecret: openclaw-shared-secrets` at line 43<br>`existingSecret: openclaw-shared-secrets` at line 48<br>`secretName: openclaw-shared-secrets` at line 60<br>`secretName: git-deploy-key-buster` at line 76 |
+| `my-values/buster-values.yaml` | `agentRole`, `anthropic`, `busterPipeline`, `gateway`, `image`, `imagePullSecrets`, `auth`, `litellm`, `discord`, `commands`, `discordWebhook`, `probes`, `agent`, `sandbox`, `serviceAccount`, `busterNamespaceBroker`, `resources`, `workspace` | `existingSecret: openclaw-shared-secrets` at line 12<br>`existingSecret: openclaw-shared-secrets` at line 38<br>`existingSecret: openclaw-shared-secrets` at line 42<br>`existingSecret: openclaw-shared-secrets` at line 47<br>`secretName: openclaw-shared-secrets` at line 59<br>`secretName: git-deploy-key-buster` at line 75 |
 | `my-values/infra/redis-values.yaml` | `architecture`, `auth`, `master` | `existingSecret: redis-secrets` at line 4 |
 | `my-values/infra/postgresql-values.yaml` | `architecture`, `auth`, `primary` | `existingSecret: postgresql-secrets` at line 5 |
 | `my-values/infra/qdrant-values.yaml` | `replicaCount`, `persistence`, `resources` |  |
@@ -39,6 +39,24 @@ Generated from: `charts/kubeclaw/values.yaml`, `my-values/nova-values.yaml`, `my
 - `../deployment/values-files.md`
 - `../deployment/secrets.md`
 - `../deployment/agent-deployments.md`
+
+## Runtime Meaning
+
+| Value group | Runtime effect | Expected proof |
+| --- | --- | --- |
+| image and pull secrets | selects agent and sidecar images, tags, pull policy, and GHCR pull Secret | rendered Deployments include expected image refs and `imagePullSecrets` |
+| auth/provider/Discord/Stitch/LiteLLM | selects direct values or existing Secret name/key references | rendered env refs point to expected Secret keys and generated secrets reference lists those keys |
+| persistence and sandbox | creates workspace/config PVCs and Buster Podman/sandbox mounts | rendered PVCs and Buster volumes match production values |
+| service and extra ports | exposes gateway/bridge ClusterIP ports plus explicit extra NodePorts | rendered Services contain only documented ports |
+| buster namespace broker | adds lease CRD/RBAC/controller and controller env vars | Buster render includes CRD, lease client RBAC, controller Deployment, and namespace fence docs |
+| probes and dependency checks | configures runtime health script for gateway, Redis, Redis stream, LiteLLM, and Buster heartbeat checks | rendered env vars match values and smoke commands exercise the health script |
+
+## Failure Signals
+
+- A top-level value appears in this page but has no rendered effect: add deployment truth coverage or remove the stale value.
+- Rendered Secret refs do not match `my-values/setup-secrets.sh`: update values, helper, inventory, and docs together.
+- Buster values disable sandbox/broker behavior unexpectedly: inspect `my-values/buster-values.yaml` before changing chart templates.
+- A live pod keeps old config after values change: remember the init container preserves persisted config unless override flags request replacement.
 
 ## Generated from
 

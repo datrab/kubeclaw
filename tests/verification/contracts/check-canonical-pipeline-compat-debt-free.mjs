@@ -26,11 +26,41 @@ function walk(dir, predicate, out = []) {
 
 function lineHits(sourceRoot, filePath, re, label) {
   const source = fs.readFileSync(filePath, 'utf8');
+  return sourceLineHits(sourceRoot, filePath, source, re, label);
+}
+
+function sourceLineHits(sourceRoot, filePath, source, re, label) {
   return source
     .split('\n')
     .flatMap((line, index) => (re.test(line)
       ? [{ label, path: relPath(sourceRoot, filePath), line: index + 1, text: line.trim() }]
       : []));
+}
+
+const canonicalApprovalStateDocMarkers = [
+  {
+    rel: 'docs/pipeline/modules-and-gates.md',
+    text: 'persist approval state in `.swarm/<gate_id>-gate-status.json`',
+  },
+  {
+    rel: 'docs/reference/status-and-artifacts.md',
+    text: '- `.swarm/<gate_id>-gate-status.json`',
+  },
+];
+
+function sourceForActiveDocDebtScan(sourceRoot, filePath) {
+  const rel = relPath(sourceRoot, filePath);
+  const source = fs.readFileSync(filePath, 'utf8');
+  return canonicalApprovalStateDocMarkers
+    .filter((marker) => marker.rel === rel)
+    .reduce((updated, marker) => {
+      assert.equal(
+        updated.includes(marker.text),
+        true,
+        `canonical approval gate state doc marker missing in ${rel}: ${marker.text}`,
+      );
+      return updated.replace(marker.text, '<canonical approval gate state artifact>');
+    }, source);
 }
 
 const { sourceRoot } = parseArgs();
@@ -124,7 +154,10 @@ for (const filePath of runtimeFiles) {
   for (const debt of runtimeDebt) hits.push(...lineHits(sourceRoot, filePath, debt.re, debt.label));
 }
 for (const filePath of activeDocFiles) {
-  for (const debt of activeDocDebt) hits.push(...lineHits(sourceRoot, filePath, debt.re, debt.label));
+  const source = sourceForActiveDocDebtScan(sourceRoot, filePath);
+  for (const debt of activeDocDebt) {
+    hits.push(...sourceLineHits(sourceRoot, filePath, source, debt.re, debt.label));
+  }
 }
 
 if (hits.length > 0) {

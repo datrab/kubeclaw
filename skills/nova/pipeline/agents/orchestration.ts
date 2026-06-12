@@ -207,6 +207,16 @@ export async function spawnAcpAgent(
       log('DEBUG', `Spawn telemetry failed for ${gatewayLabel}: ${e?.message || e}`);
     }
 
+    const spawnDiscordCorrelation = {
+      run_id: runId,
+      module_id: telemetryModuleId(opts, moduleId),
+      gate_id: opts.gate_id || null,
+      gate_type: opts.gate_type || null,
+      attempt: opts.attempt ?? null,
+      dispatch_id: dispatchId,
+      gateway_label: gatewayLabel,
+      session_key: sessionData.childSessionKey,
+    };
     discord(config, 'INFO', `🔬 ${useSubagent ? 'Subagent' : 'ACP'} Session Spawned: ${agentType}/${moduleId}`, 'Agent is now working.', buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.LIFECYCLE, {
       runId,
       moduleId: telemetryModuleId(opts, moduleId),
@@ -219,11 +229,20 @@ export async function spawnAcpAgent(
     }, [
       { name: 'Agent', value: agentId, inline: true },
       { name: 'Model', value: model, inline: true },
-    ])).catch((e) => {
+    ]), { correlation: spawnDiscordCorrelation }).catch((e) => {
       log('DEBUG', `Agent spawn Discord notice failed for ${gatewayLabel}: ${e?.message || e}`);
     });
     return { label: trackingKey, childSessionKey: sessionData.childSessionKey, runId, dispatchId, streamLogPath: sessionData.streamLogPath };
   } catch (e: any) {
+    const spawnFailureDiscordCorrelation = {
+      run_id: runId,
+      module_id: telemetryModuleId(opts, moduleId),
+      gate_id: opts.gate_id || null,
+      gate_type: opts.gate_type || null,
+      attempt: opts.attempt ?? null,
+      dispatch_id: dispatchId,
+      gateway_label: gatewayLabel,
+    };
     discord(config, 'CRITICAL', `❌ Spawn Failed: ${agentType}/${moduleId}`, e.message?.split('\n')[0] || 'unknown',
       buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.LIFECYCLE, {
         runId,
@@ -233,7 +252,8 @@ export async function spawnAcpAgent(
         attempt: opts.attempt ?? null,
         dispatchId,
         gatewayLabel,
-      })
+      }),
+      { correlation: spawnFailureDiscordCorrelation },
     ).catch((discordError) => {
       log('DEBUG', `Agent spawn failure Discord notice failed for ${gatewayLabel}: ${discordError?.message || discordError}`);
     });

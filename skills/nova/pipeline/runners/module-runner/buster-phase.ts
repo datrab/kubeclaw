@@ -18,7 +18,6 @@ import { handleBusterFailOrBlockedStatus } from './buster-phase/terminal-failure
 import { executeBusterAttemptDispatch } from './buster-phase/dispatch.ts';
 
 type AnyRecord = Record<string, any>;
-const BUSTER_CRASH_RETRY_POLICY_MAX_RETRIES = 2;
 
 function workerMetadata(controlResult: AnyRecord | null = null): AnyRecord {
   return controlResult?.diagnostics?.metadata && typeof controlResult.diagnostics.metadata === 'object'
@@ -81,7 +80,7 @@ export async function runModuleBusterPhase({
     getModuleStats(config).total_buster_attempts++;
     onPhaseStarted(_telemetryCtx(config), moduleId, 'buster', busterModel);
 
-    const maxBusterCrashRetries = mod.max_buster_crash_retries ?? config.max_buster_crash_retries ?? BUSTER_CRASH_RETRY_POLICY_MAX_RETRIES;
+    const maxBusterCrashRetries = config.buster.max_crash_retries;
 
     for (let busterAttempt = 1; busterAttempt <= maxBusterCrashRetries + 1; busterAttempt++) {
       const isLastBusterAttempt = busterAttempt > maxBusterCrashRetries;

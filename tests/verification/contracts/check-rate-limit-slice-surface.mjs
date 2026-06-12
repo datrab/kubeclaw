@@ -38,6 +38,11 @@ assert.equal(mainSource.includes("from './rate-limit-exit.ts'"), true, 'rate-lim
 assert.equal(mainSource.includes('appendDurableRateLimitExhaustionAlert'), false, 'rate-limit main surface must not keep duplicate durable exhaustion alert logic');
 assert.equal(mainSource.includes('appendDurableOperatorAlert'), false, 'rate-limit main surface must not write exhaustion alerts directly');
 assert.equal(mainSource.includes('finalizeSessionRateLimitExhaustion'), true, 'generic rate-limit wrappers must route exhaustion through the central finalizer');
+assert.equal(mainSource.includes('defaultSessionRateLimitExhaustedResult'), false, 'generic rate-limit wrappers must not synthesize default exhausted results');
+assert.equal(mainSource.includes('defaultSessionMonitorRateLimitExhaustedResult'), false, 'session monitor rate-limit exhaustion must require typed exhausted result options');
+assert.equal(mainSource.includes('session rate-limit exhaustion requires explicit typed buildExhaustedResult or exhaustedResultOptions'), true, 'generic rate-limit exhaustion must fail closed without typed exhausted result options');
+assert.equal(buildersSource.includes('export function createTrackedModuleSessionRateLimitExhaustedResultOptions('), true, 'module rate-limit recovery must expose typed exhausted result options');
+assert.equal(buildersSource.includes('export function createTrackedGateSessionRateLimitExhaustedResultOptions('), true, 'gate rate-limit recovery must expose typed exhausted result options');
 assert.equal(exitSource.includes('appendDurableOperatorAlert(config'), true, 'rate-limit finalizer must write durable local evidence');
 assert.equal(
   exitSource.indexOf("if (config) {\n    appendDurableOperatorAlert(config, 'pipeline.operator_alert'") < exitSource.indexOf("await runHook('sendDiscord'"),
@@ -104,6 +109,10 @@ assert.equal(Object.prototype.hasOwnProperty.call(mainMod, 'handleRateLimit'), f
 assert.equal(mainSource.includes('pauseCount = 1, maxPauses = 5'), false, 'rate-limit surface must not keep hard-coded wrapper pause defaults');
 assert.equal(mainSource.includes('cooldown_buffer_ms ?? 5000'), false, 'rate-limit surface must not keep hidden cooldown buffer fallback');
 assert.equal(mainSource.includes('config.rate_limit.cooldown_buffer_ms'), true, 'rate-limit cooldown buffer must come from platform config');
+assert.equal(buildersSource.includes('projectModuleSchedulerState('), true, 'tracked module rate-limit status must consume canonical module scheduler projections');
+assert.equal(buildersSource.includes("import { loadStatus }"), false, 'tracked module rate-limit status must not import legacy-shaped loadStatus snapshots');
+assert.equal(buildersSource.includes('?? moduleDir'), false, 'tracked module rate-limit status must not synthesize module identity from the directory');
+assert.equal(buildersSource.includes('moduleConfig: modules[resolvedModuleId] ?? { dir: moduleDir }'), false, 'tracked module rate-limit status must not fabricate module configs');
 assert.equal(`${mainSource}\n${buildersSource}\n${exitSource}`.includes('phaseFallback'), false, 'rate-limit module phase identity must use explicit phase, not phaseFallback aliases');
 for (const disallowedRateLimitIdentityAlias of [
   'runIdFallback',
@@ -121,6 +130,38 @@ for (const disallowedRateLimitIdentityAlias of [
   );
 }
 assert.equal(buildersSource.includes('export function resolveRateLimitIdentity('), true, 'rate-limit helpers must expose explicit identity normalization');
+
+const trackedRateLimitRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'tracked-rate-limit-contract-'));
+const trackedRateLimitConfig = {
+  project: 'tracked-rate-limit-contract',
+  repo_root: trackedRateLimitRoot,
+  paths: {
+    swarm_dir: path.join(trackedRateLimitRoot, '.swarm'),
+    modules_dir: path.join(trackedRateLimitRoot, '.swarm', 'modules'),
+  },
+  _runId: 'run-tracked-rate-limit-contract',
+  _progress: {
+    modules: {
+      'mod-alpha': { dir: 'alpha', title: 'Alpha' },
+    },
+  },
+};
+fs.mkdirSync(trackedRateLimitConfig.paths.modules_dir, { recursive: true });
+const trackedModuleStatus = buildersMod.buildTrackedModuleSessionRateLimitStatus(
+  trackedRateLimitConfig,
+  'alpha',
+  { current_phase: 'forge' },
+);
+assert.equal(trackedModuleStatus.module_id, 'mod-alpha', 'tracked module rate-limit status must resolve module id from canonical progress config');
+assert.throws(
+  () => buildersMod.buildTrackedModuleSessionRateLimitStatus(
+    { ...trackedRateLimitConfig, _progress: { modules: {} } },
+    'alpha',
+    { current_phase: 'forge' },
+  ),
+  /requires canonical module identity/,
+  'tracked module rate-limit status must reject unresolved module projections',
+);
 
 function fieldValue(fields, name) {
   return fields.find((field) => field.name === name)?.value;
@@ -174,6 +215,268 @@ assert.equal(exhaustionAlerts[0].payload.rate_limit_exhausted, true, 'terminal e
 assert.equal(exhaustionAlerts[1].reason, 'rate_limit_exhaustion_delivery_failed', 'hook failure must produce a local delivery-failure alert');
 assert.equal(exhaustionAlerts[1].payload.failed_hook, 'sendDiscord', 'delivery-failure alert should name the failed hook');
 
+const gateRateLimitDiscordCalls = [];
+const gateRateLimitResult = await exitMod.finalizeGateSessionRateLimitExit({
+  run_id: 'run-stale',
+  attempt: 2,
+  dispatch_id: 'dispatch-gate-rate-limit',
+  gateway_label: 'gateway-gate-rate-limit',
+  session_key: 'agent:buster:gate-rate-limit',
+  rate_limit_status: {
+    run_id: 'run-stale-status',
+    attempt: 2,
+    dispatch_id: 'dispatch-gate-rate-limit',
+    gateway_label: 'gateway-gate-rate-limit',
+    session_key: 'agent:buster:gate-rate-limit',
+    max_rate_limit_pauses: 2,
+  },
+  rate_limit_pauses: 3,
+  max_rate_limit_pauses: 2,
+}, {
+  config: {
+    project: 'contract-gate-rate-limit-finalizer',
+    paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'gate-rate-limit-finalizer-')) },
+    _runId: 'run-rate-limit-gate-1',
+    run_id: 'run-rate-limit-gate-1',
+  },
+  gateId: 'gate:buster',
+  gateType: 'buster',
+  phase: 'buster_gate',
+  identity: {
+    run_id: 'run-rate-limit-gate-1',
+    attempt: 2,
+    dispatch_id: 'dispatch-gate-rate-limit',
+    gateway_label: 'gateway-gate-rate-limit',
+    session_key: 'agent:buster:gate-rate-limit',
+  },
+  runId: 'run-rate-limit-gate-1',
+  maxPauses: 2,
+  discordTitle: 'Gate rate limit exhausted',
+  discordDescription: 'Gate exceeded rate-limit pauses',
+  discordFn: async (_config, _level, _title, _description, _fields, opts = {}) => {
+    gateRateLimitDiscordCalls.push(opts.correlation);
+  },
+});
+assert.equal(gateRateLimitResult.run_id, 'run-rate-limit-gate-1', 'gate rate-limit finalizer must prefer explicit pipeline run over stale result run_id');
+assert.equal(gateRateLimitResult.rate_limit_status.run_id, 'run-rate-limit-gate-1', 'gate rate-limit status must carry explicit pipeline run');
+assert.equal(gateRateLimitDiscordCalls[0].run_id, 'run-rate-limit-gate-1', 'gate rate-limit Discord correlation must use explicit pipeline run');
+await assert.rejects(
+  () => exitMod.finalizeGateSessionRateLimitExit({
+    rate_limit_status: {
+      max_rate_limit_pauses: 2,
+    },
+    rate_limit_pauses: 3,
+    max_rate_limit_pauses: 2,
+  }, {
+    config: {
+      project: 'contract-gate-rate-limit-finalizer-invalid-run',
+      paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'gate-rate-limit-invalid-run-')) },
+      _runId: 'run-rate-limit-gate-1',
+      run_id: 'run-rate-limit-gate-1',
+    },
+    gateId: 'gate:buster',
+    gateType: 'buster',
+    phase: 'buster_gate',
+    identity: {
+      run_id: 'run-rate-limit-gate-1',
+      attempt: 2,
+      dispatch_id: 'dispatch-gate-rate-limit',
+      gateway_label: 'gateway-gate-rate-limit',
+      session_key: 'agent:buster:gate-rate-limit',
+    },
+    runId: '',
+    maxPauses: 2,
+  }),
+  /gate rate-limit finalizer requires non-empty explicit run id/,
+  'gate rate-limit finalizer must reject blank explicit run ids instead of falling back to identity',
+);
+await assert.rejects(
+  () => exitMod.finalizeGateSessionRateLimitExit({
+    rate_limit_status: {
+      max_rate_limit_pauses: 2,
+    },
+    rate_limit_pauses: 3,
+    max_rate_limit_pauses: 2,
+  }, {
+    config: {
+      project: 'contract-gate-rate-limit-finalizer-padded-run',
+      paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'gate-rate-limit-padded-run-')) },
+      _runId: 'run-rate-limit-gate-1',
+      run_id: 'run-rate-limit-gate-1',
+    },
+    gateId: 'gate:buster',
+    gateType: 'buster',
+    phase: 'buster_gate',
+    identity: {
+      run_id: 'run-rate-limit-gate-1',
+      attempt: 2,
+      dispatch_id: 'dispatch-gate-rate-limit',
+      gateway_label: 'gateway-gate-rate-limit',
+      session_key: 'agent:buster:gate-rate-limit',
+    },
+    runId: ' run-rate-limit-gate-1 ',
+    maxPauses: 2,
+  }),
+  /gate rate-limit finalizer requires non-empty explicit run id/,
+  'gate rate-limit finalizer must reject padded explicit run ids instead of creating another canonical representation',
+);
+await assert.rejects(
+  () => exitMod.finalizeGateSessionRateLimitExit({
+    run_id: 'run-stale',
+    rate_limit_status: {
+      run_id: 'run-stale-status',
+      max_rate_limit_pauses: 2,
+    },
+    rate_limit_pauses: 3,
+    max_rate_limit_pauses: 2,
+  }, {
+    config: {
+      project: 'contract-gate-rate-limit-finalizer-invalid-run-type',
+      paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'gate-rate-limit-invalid-run-type-')) },
+      _runId: 'run-rate-limit-gate-1',
+      run_id: 'run-rate-limit-gate-1',
+    },
+    gateId: 'gate:buster',
+    gateType: 'buster',
+    phase: 'buster_gate',
+    identity: {
+      run_id: 'run-rate-limit-gate-1',
+      attempt: 2,
+      dispatch_id: 'dispatch-gate-rate-limit',
+      gateway_label: 'gateway-gate-rate-limit',
+      session_key: 'agent:buster:gate-rate-limit',
+    },
+    runId: 42,
+    maxPauses: 2,
+  }),
+  /gate rate-limit finalizer requires non-empty explicit run id/,
+  'gate rate-limit finalizer must reject non-string explicit run ids instead of falling back to identity',
+);
+await assert.rejects(
+  () => exitMod.finalizeGateSessionRateLimitExit({
+    run_id: 'run-stale',
+    rate_limit_status: {
+      run_id: 'run-stale-status',
+      max_rate_limit_pauses: 2,
+    },
+    rate_limit_pauses: 3,
+    max_rate_limit_pauses: 2,
+  }, {
+    config: {
+      project: 'contract-gate-rate-limit-finalizer-null-run',
+      paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'gate-rate-limit-null-run-')) },
+      _runId: 'run-rate-limit-gate-1',
+      run_id: 'run-rate-limit-gate-1',
+    },
+    gateId: 'gate:buster',
+    gateType: 'buster',
+    phase: 'buster_gate',
+    identity: {
+      run_id: 'run-rate-limit-gate-1',
+      attempt: 2,
+      dispatch_id: 'dispatch-gate-rate-limit',
+      gateway_label: 'gateway-gate-rate-limit',
+      session_key: 'agent:buster:gate-rate-limit',
+    },
+    runId: null,
+    maxPauses: 2,
+  }),
+  /gate rate-limit finalizer requires non-empty explicit run id/,
+  'gate rate-limit finalizer must reject explicit null run ids instead of falling back to identity',
+);
+await assert.rejects(
+  () => exitMod.finalizeGateSessionRateLimitExit({
+    rate_limit_status: {
+      run_id: 'run-stale-status',
+      max_rate_limit_pauses: 2,
+    },
+    rate_limit_pauses: 3,
+    max_rate_limit_pauses: 2,
+  }, {
+    config: {
+      project: 'contract-gate-rate-limit-finalizer-undefined-run',
+      paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'gate-rate-limit-undefined-run-')) },
+      _runId: 'run-rate-limit-gate-1',
+      run_id: 'run-rate-limit-gate-1',
+    },
+    gateId: 'gate:buster',
+    gateType: 'buster',
+    phase: 'buster_gate',
+    identity: {
+      run_id: 'run-rate-limit-gate-1',
+      attempt: 2,
+      dispatch_id: 'dispatch-gate-rate-limit',
+      gateway_label: 'gateway-gate-rate-limit',
+      session_key: 'agent:buster:gate-rate-limit',
+    },
+    runId: undefined,
+    maxPauses: 2,
+  }),
+  /gate rate-limit finalizer requires non-empty explicit run id/,
+  'gate rate-limit finalizer must reject explicit undefined run ids instead of falling back to identity',
+);
+await assert.rejects(
+  () => exitMod.finalizeGateSessionRateLimitExit({
+    run_id: 'run-stale',
+    rate_limit_status: {
+      run_id: 'run-stale-status',
+      max_rate_limit_pauses: 2,
+    },
+    rate_limit_pauses: 3,
+    max_rate_limit_pauses: 2,
+  }, {
+    config: {
+      project: 'contract-gate-rate-limit-finalizer-missing-identity-run',
+      paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'gate-rate-limit-missing-identity-run-')) },
+      _runId: 'run-rate-limit-gate-1',
+      run_id: 'run-rate-limit-gate-1',
+    },
+    gateId: 'gate:buster',
+    gateType: 'buster',
+    phase: 'buster_gate',
+    identity: {
+      attempt: 2,
+      dispatch_id: 'dispatch-gate-rate-limit',
+      gateway_label: 'gateway-gate-rate-limit',
+      session_key: 'agent:buster:gate-rate-limit',
+    },
+    maxPauses: 2,
+  }),
+  /gate rate-limit finalizer requires non-empty explicit run id/,
+  'gate rate-limit finalizer must reject missing canonical identity run id instead of using stale result values',
+);
+await assert.rejects(
+  () => exitMod.finalizeGateSessionRateLimitExit({
+    run_id: 'run-stale',
+    rate_limit_status: {
+      run_id: 'run-stale-status',
+      max_rate_limit_pauses: 2,
+    },
+    rate_limit_pauses: 3,
+    max_rate_limit_pauses: 2,
+  }, {
+    config: {
+      project: 'contract-gate-rate-limit-finalizer-identity-only-run',
+      paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'gate-rate-limit-identity-only-run-')) },
+      _runId: 'run-rate-limit-gate-1',
+      run_id: 'run-rate-limit-gate-1',
+    },
+    gateId: 'gate:buster',
+    gateType: 'buster',
+    phase: 'buster_gate',
+    identity: {
+      run_id: 'run-rate-limit-gate-1',
+      attempt: 2,
+      dispatch_id: 'dispatch-gate-rate-limit',
+      gateway_label: 'gateway-gate-rate-limit',
+      session_key: 'agent:buster:gate-rate-limit',
+    },
+    maxPauses: 2,
+  }),
+  /gate rate-limit finalizer requires non-empty explicit run id/,
+  'gate rate-limit finalizer must reject identity-only run ids instead of accepting a second canonical path',
+);
+
 const wrapperAlertRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'rate-limit-wrapper-contract-'));
 const wrapperLogDir = path.join(wrapperAlertRoot, 'logs');
 const wrapperRunDir = path.join(wrapperLogDir, 'pipeline', 'runs', 'run-rate-limit-wrapper-1');
@@ -189,6 +492,11 @@ const wrapperResult = await mainMod.processSessionRateLimit({
 }, {
   pauseCount: 1,
   maxPauses: 0,
+  exhaustedResultOptions: buildersMod.createTrackedModuleSessionRateLimitExhaustedResultOptions({
+    moduleId: '02',
+    phase: 'forge',
+    identity: { run_id: 'run-rate-limit-wrapper-1' },
+  }),
 });
 assert.equal(wrapperResult.exhausted, true, 'generic rate-limit process wrapper should report exhaustion');
 assert.equal(fs.existsSync(path.join(wrapperRunDir, 'operator-alerts.jsonl')), true, 'generic wrapper exhaustion must route through durable finalizer evidence');

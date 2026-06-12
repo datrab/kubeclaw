@@ -60,7 +60,7 @@ Nova builds task payload
   -> Buster XTRIMs the task stream
 ```
 
-Pending reclaim matters after worker restarts. A task that was delivered to an old consumer but not ACKed can be reclaimed after `BUSTER_PENDING_RECLAIM_IDLE_MS`. Reclaimed tasks are logged with `reclaimed=pending` so operators know they are recovery work, not new dispatches.
+Pending reclaim matters after worker restarts. A task that was delivered to an old consumer but not ACKed can be reclaimed after `buster.runtime.task_pending_reclaim_idle_ms` from `swarm.config.json`. Reclaimed tasks are logged with `reclaimed=pending` so operators know they are recovery work, not new dispatches.
 
 The transport adapter lives in `skills/common/pipeline/services/task-transport-contract.ts`. It intentionally exposes queue methods (`publishTask`, `readNext`, `ack`, `trim`) instead of letting every caller use raw Redis commands.
 

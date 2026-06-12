@@ -49,6 +49,8 @@ const compatModulePath = path.join(sourceRoot, 'skills/nova/pipeline/services/st
 const completionAdjudicatorPath = path.join(sourceRoot, 'skills/nova/pipeline/services/completion-adjudicator.ts');
 const truthDriftPath = path.join(sourceRoot, 'skills/nova/pipeline/services/truth-drift.ts');
 const dependenciesPath = path.join(sourceRoot, 'skills/nova/pipeline/services/dependencies.ts');
+const blueprintPath = path.join(sourceRoot, 'skills/nova/pipeline/services/blueprint.ts');
+const rateLimitExhaustionOptionsPath = path.join(sourceRoot, 'skills/nova/pipeline/services/rate-limit-builders/exhaustion-options.ts');
 const pollingPath = path.join(sourceRoot, 'skills/nova/pipeline/services/polling.ts');
 const pollingDualPath = path.join(sourceRoot, 'skills/nova/pipeline/services/polling-dual.ts');
 const busterCompletionControllerPath = path.join(sourceRoot, 'skills/nova/pipeline/services/buster-completion-controller.ts');
@@ -69,6 +71,8 @@ const compatSource = [compatFacadeSource, compatCommonSource, compatGateSource, 
 const completionAdjudicatorSource = fs.readFileSync(completionAdjudicatorPath, 'utf8');
 const truthDriftSource = fs.readFileSync(truthDriftPath, 'utf8');
 const dependenciesSource = fs.readFileSync(dependenciesPath, 'utf8');
+const blueprintSource = fs.readFileSync(blueprintPath, 'utf8');
+const rateLimitExhaustionOptionsSource = fs.readFileSync(rateLimitExhaustionOptionsPath, 'utf8');
 const pollingSource = fs.readFileSync(pollingPath, 'utf8');
 const pollingDualSource = fs.readFileSync(pollingDualPath, 'utf8');
 const busterCompletionControllerSource = fs.readFileSync(busterCompletionControllerPath, 'utf8');
@@ -145,10 +149,16 @@ assert.equal(lifecycleLegalitySource.includes('export function ensureLifecycleEv
 
 assert.equal(dependenciesSource.includes('projectModuleSchedulerState('), true, 'dependency checks should consume module scheduler projections');
 assert.equal(dependenciesSource.includes('loadStatus'), false, 'dependency checks must not decide module readiness from raw loadStatus calls');
+assert.equal(blueprintSource.includes('projectModuleSchedulerState(config, moduleId, moduleConfig)'), true, 'blueprint release should consume canonical module scheduler projections');
+assert.equal(blueprintSource.includes('loadStatus'), false, 'blueprint release must not decide module release from legacy-shaped loadStatus snapshots');
+assert.equal(rateLimitExhaustionOptionsSource.includes('projectModuleSchedulerState(config, moduleProjection.moduleId, moduleProjection.moduleConfig)'), true, 'tracked module rate-limit status should consume canonical module scheduler projections');
+assert.equal(rateLimitExhaustionOptionsSource.includes('loadStatus'), false, 'tracked module rate-limit status must not read legacy-shaped loadStatus snapshots');
 
 const loadStatusSource = extractExportedFunctionSource(mainSource, 'loadStatus');
-assert.equal(loadStatusSource.includes('getLifecycleModuleState(config, moduleId)'), true, 'loadStatus must consume lifecycle module state');
-assert.equal(loadStatusSource.includes('buildStatusFromLifecycleModule('), true, 'loadStatus must project lifecycle state');
+assert.equal(mainSource.includes('function buildStatusFromLifecycleModule'), false, 'status-store must not keep the old private lifecycle projection helper');
+assert.equal(loadStatusSource.includes('projectModuleRuntimeState(config, moduleId'), true, 'loadStatus must delegate module runtime projection to the read-model projector');
+assert.equal(compatModuleSource.includes('export function projectModuleRuntimeState('), true, 'module read-model projector must own runtime module projection');
+assert.equal(compatModuleSource.includes('loadLifecycleReadModels(config)?.active_sessions?.modules'), true, 'runtime module projection should join active session read models explicitly');
 for (const disallowedLoadStatusRead of ['fs.', 'readModuleStatusJson', 'statusPath(']) {
   assert.equal(loadStatusSource.includes(disallowedLoadStatusRead), false, `loadStatus must not retain legacy status reads via ${disallowedLoadStatusRead}`);
 }
@@ -163,7 +173,9 @@ for (const removedSnapshotWrite of ['fs.writeFileSync(tmp,', 'fs.renameSync(tmp,
 const statusJsonAuthorityReadSurfaces = {
   compatFacade: compatFacadeSource,
   compatModule: compatModuleSource,
+  blueprint: blueprintSource,
   dependencies: dependenciesSource,
+  rateLimitExhaustionOptions: rateLimitExhaustionOptionsSource,
   moduleRunnerAttempt: moduleRunnerAttemptSource,
   pipelineRunnerScheduling: pipelineRunnerSchedulingSource,
   pipelineRunnerShared: pipelineRunnerSharedSource,
@@ -178,9 +190,12 @@ for (const [surface, source] of Object.entries(statusJsonAuthorityReadSurfaces))
 }
 
 assert.equal(moduleRunnerAttemptSource.includes('deps.loadStatus(config, dir)'), true, 'module attempt routing may consume lifecycle-backed loadStatus');
-assert.equal(pipelineRunnerSchedulingSource.includes('deps.loadStatus(config, mod.dir)'), true, 'pipeline scheduling may consume lifecycle-backed loadStatus');
+assert.equal(pipelineRunnerSharedSource.includes('projectModuleSchedulerState(config, moduleId, moduleConfig)'), true, 'pipeline scheduling must consume canonical module scheduler projections');
+assert.equal(pipelineRunnerSchedulingSource.includes('deps.loadStatus(config, mod.dir)'), false, 'pipeline scheduling must not consume legacy-shaped loadStatus snapshots');
 assert.equal(pipelineRunnerRecoverySource.includes('loadStatus(config, dir)'), true, 'recovery may consume lifecycle-backed loadStatus');
 assert.equal(pollingSource.includes('loadStatus(config, moduleDir)'), true, 'module polling may consume lifecycle-backed loadStatus');
+assert.equal(pollingSource.includes('status || loadStatus(config, moduleDir)'), false, 'module polling must not re-read legacy-shaped loadStatus snapshots in one poll tick');
+assert.equal(pollingSource.includes("status || loadStatus(config, moduleDir) || { module_id: moduleDir, current_phase: 'forge' }"), false, 'module polling must not synthesize fallback forge status for ACP observability');
 assert.equal(pollingSource.includes('Lifecycle read models are the only local polling authority for module state.'), true, 'polling docs should describe lifecycle authority explicitly');
 
 assert.equal(completionAdjudicatorSource.includes("source: source || status._source || 'lifecycle_read_model'"), true, 'completion projection should default local authority to lifecycle_read_model');

@@ -66,6 +66,27 @@ Generated from: `scripts/deploy.sh`
 - `../deployment/deployment-verification.md`
 - `../operators/recovery-runbook.md`
 
+## Command Expectations
+
+| Command group | Runtime owner | Expected artifacts or resources | Failure signals |
+| --- | --- | --- | --- |
+| setup and secrets | `scripts/deploy.sh`; `my-values/setup-secrets.sh` | namespace, required Kubernetes Secrets, Helm repositories, optional workspace namespace record | missing command, invalid secret setup mode, missing required Secret keys |
+| infra | `scripts/deploy.sh`; `my-values/infra/*.yaml` | Redis, optional PostgreSQL/Qdrant/LiteLLM, registry helpers, NetworkPolicies, namespace fence | rollout timeout, Helm repo failure, invalid manifest, partial infra warning when `ALLOW_PARTIAL_INFRA=true` |
+| agents | `charts/kubeclaw/templates/*.yaml`; `my-values/nova-values.yaml`; `my-values/buster-values.yaml` | `Deployment/agent-nova`, `Deployment/agent-buster`, Services, PVCs, runtime ConfigMaps | Helm render failure, image pull failure, init-container Git/config/skill error |
+| smoke and verify-live | `scripts/deploy.sh`; chart health script | pod smoke output, cluster image-pull preflight, local image override values | gateway health failure, Redis/LiteLLM dependency failure, local registry push/pull mismatch |
+| teardown | `scripts/deploy.sh` | removed Helm releases/resources according to selected teardown scope | confirmation prompt mismatch, retained PVCs or Secrets that need manual review |
+
+## Verification
+
+```bash
+npm run docs:inventory:check
+npm run docs:generate:check
+node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
+git diff --check
+```
+
+This generated page proves command inventory and documented command groups. It does not prove live provider credentials, Tailscale tailnet policy, node firewall rules, or CNI enforcement.
+
 ## Generated from
 
 - `../generated/inventory/deploy-script.json`

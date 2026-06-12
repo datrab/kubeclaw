@@ -89,7 +89,7 @@ function stepOutcomeForClass(outcomeClass = 'passed') {
   }
 }
 
-function makeStepResult({ stepType = 'module', stepId = '01', outcomeClass = 'passed', reason = null, status = null, projection = {}, correlation = {}, issueType = null } = {}) {
+function makeStepResult({ stepType = 'module', stepId = '01', outcomeClass = 'passed', reason = null, status = null, projection = {}, correlation = {}, issueType = null, rateLimit = null } = {}) {
   const [nextAction, outcome, terminalStatus, terminalAction] = stepOutcomeForClass(outcomeClass);
   return {
     schemaVersion: 'v1',
@@ -110,6 +110,7 @@ function makeStepResult({ stepType = 'module', stepId = '01', outcomeClass = 'pa
       typed: {},
     },
     correlation,
+    ...(rateLimit == null ? {} : { rateLimit }),
     terminal: {
       status: terminalStatus,
       decision: {
@@ -498,8 +499,7 @@ const config = {
             stepId: '01',
             outcomeClass: 'rate_limited',
             reason: 'Rate limit pauses exceeded maximum during Buster phase',
-            projection: {
-              rate_limit_exhausted: true,
+            rateLimit: {
               max_rate_limit_pauses: 4,
               rate_limit_status: {
                 attempt: 7,
@@ -508,6 +508,8 @@ const config = {
                 session_key: sessionKey,
                 max_rate_limit_pauses: 4,
               },
+            },
+            projection: {
               module_status: {
                 attempt: 7,
                 dispatch_id: dispatchId,
@@ -793,7 +795,7 @@ const config = {
     assert.equal(haltDiscordCall[4].some((field) => field.name === 'Session' && field.value === sessionKey), false);
   });
 
-  await record('single-module blocked runs expose persisted module identity as provenance only', async () => {
+  await record('single-module blocked runs expose canonical persisted module identity', async () => {
     const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(pipelineRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
@@ -859,20 +861,20 @@ const config = {
     assert.deepEqual(events.map((event) => event.type), ['pipeline.started', 'error.escalation', 'pipeline.halted', 'summary.started', 'summary.completed']);
     assert.equal(events[1].module_id, '01');
     assert.equal(events[1].gate_id, null);
-    assert.equal(events[1].session_key, null);
-    assert.equal(events[1].attempt, null);
-    assert.equal(events[1].dispatch_id, null);
-    assert.equal(events[1].gateway_label, null);
+    assert.equal(events[1].session_key, sessionKey);
+    assert.equal(events[1].attempt, 3);
+    assert.equal(events[1].dispatch_id, 'buster-dispatch-01-attempt-3');
+    assert.equal(events[1].gateway_label, 'buster-dispatch-01-attempt-3');
     assert.equal(events[1].fail_count, 3);
     assert.equal(events[1].last_failure, 'Repeated test crashes exhausted the retry budget');
     assert.equal(events[1].action, 'blocked');
     assertTypedTerminalEvent(events[1], 'blocked');
     assert.equal(events[2].reason, 'blocked');
     assert.equal(events[2].module_id, '01');
-    assert.equal(events[2].session_key, null);
-    assert.equal(events[2].attempt, null);
-    assert.equal(events[2].dispatch_id, null);
-    assert.equal(events[2].gateway_label, null);
+    assert.equal(events[2].session_key, sessionKey);
+    assert.equal(events[2].attempt, 3);
+    assert.equal(events[2].dispatch_id, 'buster-dispatch-01-attempt-3');
+    assert.equal(events[2].gateway_label, 'buster-dispatch-01-attempt-3');
     assertTypedTerminalEvent(events[2], 'blocked');
     assert.equal(events[3].summary_type, 'pipeline');
     assertTypedTerminalEvent(events[3], 'blocked', 'single_module:01');
@@ -882,9 +884,9 @@ const config = {
   
     const haltDiscordCall = discordCalls.find(([, , title]) => title === 'Pipeline halted: behavior-single-module-blocked');
     assert.equal(Boolean(haltDiscordCall), true);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Attempt' && field.value === '3'), false);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Dispatch' && field.value === 'buster-dispatch-01-attempt-3'), false);
-    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Session' && field.value === sessionKey), false);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Attempt' && field.value === '3'), true);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Dispatch' && field.value === 'buster-dispatch-01-attempt-3'), true);
+    assert.equal(haltDiscordCall[4].some((field) => field.name === 'Session' && field.value === sessionKey), true);
     assert.equal(haltDiscordCall[4].some((field) => field.name === 'Reason' && field.value === 'Repeated test crashes exhausted the retry budget'), true);
   });
   
@@ -1366,6 +1368,16 @@ const config = {
             stepId: 'review',
             outcomeClass: 'rate_limited',
             reason: 'Review gate exceeded max rate limit pauses',
+            rateLimit: {
+              max_rate_limit_pauses: 2,
+              rate_limit_status: {
+                attempt: 2,
+                dispatch_id: dispatchId,
+                gateway_label: dispatchId,
+                session_key: sessionKey,
+                max_rate_limit_pauses: 2,
+              },
+            },
             projection: {
               gate: 'review',
               gate_id: 'review',
@@ -1374,8 +1386,6 @@ const config = {
               dispatch_id: dispatchId,
               gateway_label: dispatchId,
               session_key: sessionKey,
-              rate_limit_exhausted: true,
-              max_rate_limit_pauses: 2,
             },
             correlation: {
               gate_id: 'review',

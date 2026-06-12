@@ -48,3 +48,20 @@ This page is manually maintained from:
 - `skills/nova/pipeline/services/contracts/terminal-decision.ts`
 - `skills/nova/pipeline/cli.ts`
 - `skills/buster/CONVENTIONS.md`
+
+## Terminal Status Mapping
+
+Pipeline control should prefer typed terminal decisions over numeric exit codes. Current terminal statuses are `succeeded`, `failed`, `paused`, `blocked`, `action_required`, `timed_out`, `rate_limited`, and `cancelled`; actions are `none`, `stop`, `pause`, `notify_operator`, `request_handoff`, and `retry_later`.
+
+Step outcomes map to terminal status through `terminal-decision.ts`:
+
+| Step outcome | Terminal status |
+| --- | --- |
+| `passed` | `succeeded` |
+| `error` | `failed` |
+| `needs_nova` | `action_required` |
+| `blocked` | `blocked` |
+| `timeout` | `timed_out` |
+| `rate_limited` | `rate_limited` |
+
+Run `node tests/verification/contracts/check-pipeline-terminal-decision-surface.mjs --source-root "$PWD"` and `node tests/verification/contracts/check-pipeline-step-result-surface.mjs --source-root "$PWD"` when changing terminal behavior.

@@ -12,15 +12,20 @@ import {
   buildModuleStatusTelemetry,
   buildSessionRateLimitDiscordFields,
   buildTrackedModuleSessionRateLimitStatus,
+  createTrackedModuleSessionRateLimitExhaustedResultOptions,
   createSessionRateLimitDiscordNotifier,
   defaultSessionRateLimitDetail,
   resolveRateLimitIdentity,
 } from './rate-limit-builders.ts';
 import {
   appendInvalidRateLimitCooldownResumeAtAlert,
-  buildSessionRateLimitExitResult,
   finalizeSessionRateLimitExhaustion,
 } from './rate-limit-exit.ts';
+import {
+  resolveStatusDispatchId,
+  resolveStatusGatewayLabel,
+  resolveStatusSessionKey,
+} from './correlation.ts';
 
 export * from './rate-limit-builders.ts';
 export * from './rate-limit-exit.ts';
@@ -29,54 +34,55 @@ export function createRateLimitPauseState(initialCount = 0) {
   return { count: initialCount };
 }
 
-function defaultSessionRateLimitExhaustedResult(status = {}, pauseCount = 0, maxPauses = 0) {
-  return buildSessionRateLimitExitResult(
+async function finalizeConfiguredSessionRateLimitExhaustion(config, options = {}, exhaustedCtx = {}) {
+  const { status = {}, pauseCount = 0, maxPauses = 0 } = exhaustedCtx;
+  if (typeof options.buildExhaustedResult === 'function') {
+    const builtExhaustedResult = await options.buildExhaustedResult(exhaustedCtx);
+    return finalizeSessionRateLimitExhaustion(builtExhaustedResult, {
+      config,
+      reason: builtExhaustedResult?.reason || 'rate_limit_exhausted',
+      maxPauses,
+    });
+  }
+  if (!options.exhaustedResultOptions) {
+    throw new Error('session rate-limit exhaustion requires explicit typed buildExhaustedResult or exhaustedResultOptions');
+  }
+  const exhaustedResultOptions = typeof options.exhaustedResultOptions === 'function'
+    ? options.exhaustedResultOptions(exhaustedCtx)
+    : options.exhaustedResultOptions;
+  const {
+    reason = 'rate_limit_exhausted',
+    resultOverrides = {},
+    ...buildOptions
+  } = exhaustedResultOptions || {};
+  return finalizeSessionRateLimitExhaustion(
     {
       status,
       rate_limit_status: status,
       rate_limit_pauses: pauseCount,
       max_rate_limit_pauses: maxPauses,
+      ...resultOverrides,
     },
-    'rate_limit_exhausted',
     {
-      identity: {
-        run_id: status?.run_id ?? null,
-        attempt: status?.attempt ?? null,
-        dispatch_id: status?.dispatch_id ?? null,
-        gateway_label: status?.gateway_label ?? null,
-        session_key: status?.session_key ?? null,
-      },
+      config,
+      reason,
       maxPauses,
+      ...buildOptions,
     },
   );
 }
 
-function defaultSessionMonitorRateLimitExhaustedResult(status = {}, pauseCount = 0, maxPauses = 0) {
-  return buildSessionRateLimitExitResult(
-    {
-      status,
-      rate_limit_status: status,
-      rate_limit_pauses: pauseCount,
-      max_rate_limit_pauses: maxPauses,
-    },
-    'rate_limit_exhausted',
-    {
-      identity: {
-        run_id: status?.run_id ?? null,
-        attempt: status?.attempt ?? null,
-        dispatch_id: status?.dispatch_id ?? null,
-        gateway_label: status?.gateway_label ?? null,
-        session_key: status?.session_key ?? null,
-      },
-      maxPauses,
-      resultOverrides: {
-        completed: false,
-        hasChanges: false,
-        detail: defaultSessionRateLimitDetail(status),
-        transcript: status?.transcript || null,
-      },
-    },
-  );
+function buildRateLimitDiscordCorrelation(status = {}) {
+  return {
+    run_id: status?.run_id || null,
+    module_id: status?.module_id || null,
+    gate_id: status?.gate_id || null,
+    gate_type: status?.gate_type || null,
+    attempt: status?.attempt ?? null,
+    dispatch_id: resolveStatusDispatchId(status) ?? null,
+    gateway_label: resolveStatusGatewayLabel(status) ?? null,
+    session_key: resolveStatusSessionKey(status) ?? null,
+  };
 }
 
 export async function handleSessionRateLimit(config, status = {}, options = {}) {
@@ -151,7 +157,7 @@ export async function handleSessionRateLimit(config, status = {}, options = {}) 
       await discord(config, 'WARN', embed.title, embed.description, [
         ...buildSessionRateLimitDiscordFields(status),
         ...embed.fields,
-      ]).catch((e) => {
+      ], { correlation: buildRateLimitDiscordCorrelation(status) }).catch((e) => {
         log('DEBUG', `Rate-limit pause Discord notice failed: ${e?.message || e}`);
       });
     }
@@ -200,7 +206,8 @@ export async function handleSessionRateLimit(config, status = {}, options = {}) 
       ? `gate fix ${status.gate_id}`
       : `session ${status?.module_id || status?.gateway_label || status?.session_key || 'session'}`;
     await discord(config, 'INFO', 'Rate limit cooldown complete', `Resuming ${resumeTarget}`,
-      buildSessionRateLimitDiscordFields(status)
+      buildSessionRateLimitDiscordFields(status),
+      { correlation: buildRateLimitDiscordCorrelation(status) },
     ).catch((e) => {
       log('DEBUG', `Rate-limit resume Discord notice failed: ${e?.message || e}`);
     });
@@ -223,14 +230,7 @@ export async function processSessionRateLimit(config, status = {}, options = {})
       : options.exhaustedLogMessage;
     if (exhaustedLogMessage) log('ERROR', exhaustedLogMessage);
 
-    const builtExhaustedResult = typeof options.buildExhaustedResult === 'function'
-      ? await options.buildExhaustedResult(exhaustedCtx)
-      : defaultSessionMonitorRateLimitExhaustedResult(normalizedStatus, pauseCount, maxPauses);
-    const exhaustedResult = await finalizeSessionRateLimitExhaustion(builtExhaustedResult, {
-      config,
-      reason: builtExhaustedResult?.reason || 'rate_limit_exhausted',
-      maxPauses,
-    });
+    const exhaustedResult = await finalizeConfiguredSessionRateLimitExhaustion(config, options, exhaustedCtx);
     return {
       exhausted: true,
       status: normalizedStatus,
@@ -264,6 +264,7 @@ export function createTrackedModuleSessionRateLimitRecoveryOptions(config, modul
   normalizeStatus: customNormalizeStatus = null,
   onPause: customOnPause = null,
   onResume: customOnResume = null,
+  exhaustedResultOptions: customExhaustedResultOptions = null,
   ...options
 } = {}) {
   const moduleRecoveryOptions = {
@@ -291,6 +292,12 @@ export function createTrackedModuleSessionRateLimitRecoveryOptions(config, modul
     ...(pauseState == null ? {} : { pauseState }),
     ...(pauseLogMessage == null ? {} : { pauseLogMessage }),
     ...(resumeLogMessage == null ? {} : { resumeLogMessage }),
+    exhaustedResultOptions: customExhaustedResultOptions ?? createTrackedModuleSessionRateLimitExhaustedResultOptions({
+      moduleId,
+      moduleDir,
+      phase,
+      identity,
+    }),
     normalizeStatus: (result, pauseCount) => {
       const normalized = buildTrackedModuleSessionRateLimitStatus(config, moduleDir, result?.status || {}, {
         ...moduleRecoveryOptions,
@@ -461,47 +468,7 @@ export async function withSessionRateLimitRecovery(config, pollFn, options = {})
 
     if (rateLimitPauses > maxPauses) {
       const exhaustedCtx = { result, status, pauseCount: rateLimitPauses, maxPauses };
-      let exhaustedResult;
-      if (typeof options.buildExhaustedResult === 'function') {
-        const builtExhaustedResult = await options.buildExhaustedResult(exhaustedCtx);
-        exhaustedResult = await finalizeSessionRateLimitExhaustion(builtExhaustedResult, {
-          config,
-          reason: builtExhaustedResult?.reason || 'rate_limit_exhausted',
-          maxPauses,
-        });
-      } else if (options.exhaustedResultOptions) {
-        const exhaustedResultOptions = typeof options.exhaustedResultOptions === 'function'
-          ? options.exhaustedResultOptions(exhaustedCtx)
-          : options.exhaustedResultOptions;
-        const {
-          reason = 'rate_limit_exhausted',
-          resultOverrides = {},
-          ...buildOptions
-        } = exhaustedResultOptions || {};
-        exhaustedResult = await finalizeSessionRateLimitExhaustion(
-          {
-            status,
-            rate_limit_status: status,
-            rate_limit_pauses: rateLimitPauses,
-            max_rate_limit_pauses: maxPauses,
-            ...resultOverrides,
-          },
-          {
-            config,
-            reason,
-            maxPauses,
-            ...buildOptions,
-          },
-        );
-      } else {
-        const builtExhaustedResult = defaultSessionRateLimitExhaustedResult(status, rateLimitPauses, maxPauses);
-        exhaustedResult = await finalizeSessionRateLimitExhaustion(builtExhaustedResult, {
-          config,
-          reason: builtExhaustedResult.reason || 'rate_limit_exhausted',
-          maxPauses,
-        });
-      }
-      return exhaustedResult;
+      return finalizeConfiguredSessionRateLimitExhaustion(config, options, exhaustedCtx);
     }
 
     await handleSessionRateLimit(config, status, {

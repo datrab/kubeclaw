@@ -14,6 +14,8 @@ import {
   processSessionRateLimit,
   buildGateSessionRateLimitStatus,
   buildModuleSessionRateLimitStatus,
+  createTrackedGateSessionRateLimitExhaustedResultOptions,
+  createTrackedModuleSessionRateLimitExhaustedResultOptions,
 } from './rate-limit.ts';
 import { buildSessionProgressStateKey, resolveSessionPollIdentity } from './polling-identity.ts';
 import {
@@ -390,7 +392,7 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
               });
             }
             return buildModuleSessionRateLimitStatus(normalizedStatus, {
-              moduleId: _rateLimitIdentity.module_id || _moduleId,
+              moduleId: _rateLimitIdentity.module_id ?? _moduleId,
               phase: _rateLimitIdentity.phase,
               identity: {
                 agent_type: _rateLimitIdentity.phase,
@@ -405,6 +407,44 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
           pauseLogMessage: ({ pauseCount, maxPauses, cooldownHours, resumeAt }) => `[${logLabel}] ACP session rate limited (pause ${pauseCount}/${maxPauses}) — sleeping ${cooldownHours}h (resume at ${resumeAt.toISOString()})`,
           resumeLogMessage: () => `[${logLabel}] ACP session rate limit cooldown complete — resuming monitor`,
           exhaustedLogMessage: ({ pauseCount, maxPauses }) => `[${logLabel}] ACP session rate limit pauses exhausted (${pauseCount}/${maxPauses})`,
+          exhaustedResultOptions: _rateLimitIdentity.gate_id
+            ? createTrackedGateSessionRateLimitExhaustedResultOptions({
+                gateId: _rateLimitIdentity.gate_id,
+                gateType: _rateLimitIdentity.gate_type ?? null,
+                identity: {
+                  agent_type: _rateLimitIdentity.phase,
+                  run_id: _rateLimitIdentity.run_id || null,
+                  attempt: _rateLimitIdentity.attempt ?? null,
+                  dispatch_id: _rateLimitIdentity.dispatch_id ?? null,
+                  gateway_label: _rateLimitIdentity.gateway_label || null,
+                  session_key: _rateLimitIdentity.session_key || null,
+                },
+                resultOverrides: {
+                  completed: false,
+                  hasChanges: false,
+                  detail: acpState.detail || null,
+                  transcript: sanitizedTranscript,
+                },
+              })
+            : createTrackedModuleSessionRateLimitExhaustedResultOptions({
+                moduleId: _rateLimitIdentity.module_id ?? _moduleId,
+                moduleDir: _moduleId,
+                phase: _rateLimitIdentity.phase,
+                identity: {
+                  agent_type: _rateLimitIdentity.phase,
+                  run_id: _rateLimitIdentity.run_id || null,
+                  attempt: _rateLimitIdentity.attempt ?? null,
+                  dispatch_id: _rateLimitIdentity.dispatch_id ?? null,
+                  gateway_label: _rateLimitIdentity.gateway_label || null,
+                  session_key: _rateLimitIdentity.session_key || null,
+                },
+                resultOverrides: {
+                  completed: false,
+                  hasChanges: false,
+                  detail: acpState.detail || null,
+                  transcript: sanitizedTranscript,
+                },
+              }),
           budget,
         });
         if (rateLimitStep.exhausted) {

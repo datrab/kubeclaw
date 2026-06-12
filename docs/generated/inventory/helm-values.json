@@ -62,7 +62,7 @@
         {
           "key": "secretName",
           "value": "redis-secrets",
-          "line": 167
+          "line": 166
         }
       ]
     },
@@ -153,27 +153,27 @@
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 39
+          "line": 38
         },
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 43
+          "line": 42
         },
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 48
+          "line": 47
         },
         {
           "key": "secretName",
           "value": "openclaw-shared-secrets",
-          "line": 60
+          "line": 59
         },
         {
           "key": "secretName",
           "value": "git-deploy-key-buster",
-          "line": 76
+          "line": 75
         }
       ]
     },

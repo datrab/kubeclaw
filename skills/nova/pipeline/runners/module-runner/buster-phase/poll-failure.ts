@@ -16,6 +16,11 @@ import {
   resolveCompletionGatewayLabel,
   resolveCompletionSessionKey,
 } from './identity.ts';
+import {
+  buildModuleBlockedTerminalResult,
+  buildModuleErrorTerminalResult,
+  buildModuleRateLimitedTerminalResult,
+} from '../terminal-results.ts';
 
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../../../services/discord-fields.ts';
 
@@ -85,7 +90,6 @@ export async function handleFailedPollResult({
         `Buster attempt ${exitResult.attempt} exceeded max ACP rate limit pauses (${exitResult.max_rate_limit_pauses}).`,
       discordIdentity: completionIdentity,
       reason: rateLimitReason,
-      resultOverrides: { outcome_class: 'rate_limited' },
       identity: {
         run_id: completionIdentity.runId || getRunId(config),
         attempt: completionIdentity.attempt ?? currentAttemptNumber(status),
@@ -97,20 +101,34 @@ export async function handleFailedPollResult({
       logLevel: 'ERROR',
       logMessage: `Module ${moduleId} rate limit pauses exhausted in buster phase`,
     } as AnyRecord);
-    return { terminal: { retry: false, result: busterRateLimitExit } };
+    return { terminal: buildModuleRateLimitedTerminalResult(config, moduleId, {
+      rateLimitResult: busterRateLimitExit,
+      reason: rateLimitReason,
+      runId: busterRateLimitExit.run_id ?? completionIdentity.runId ?? getRunId(config),
+      moduleDir: dir,
+      attempt: busterRateLimitExit.attempt ?? completionIdentity.attempt ?? currentAttemptNumber(status),
+      phase: 'buster',
+      dispatchId: busterRateLimitExit.dispatch_id ?? completionIdentity.dispatchId,
+      gatewayLabel: busterRateLimitExit.gateway_label ?? resolveCompletionGatewayLabel(status, completionIdentity),
+      sessionKey: busterRateLimitExit.session_key ?? pollSessionKey,
+    }) };
   }
   if (reasonCode === 'git_error') {
-    return { terminal: { retry: false, result: {
-      outcome_class: 'error',
+    return { terminal: buildModuleErrorTerminalResult(config, moduleId, {
       reason: workerMeta.status_message || 'Polling git sync failed closed during Buster phase',
-      module: moduleId,
-      module_dir: dir,
-      gateway_label: resolveCompletionGatewayLabel(status, completionIdentity),
-      session_key: pollSessionKey,
-      polling_git: workerMeta.polling_git || null,
-      status_authority: statusAuthority.source,
-      ...(statusAuthority.degraded ? { degraded: statusAuthority.degraded } : {}),
-    }} };
+      runId: completionIdentity.runId ?? getRunId(config),
+      moduleDir: dir,
+      attempt: completionIdentity.attempt ?? currentAttemptNumber(status),
+      phase: 'buster',
+      dispatchId: completionIdentity.dispatchId,
+      gatewayLabel: resolveCompletionGatewayLabel(status, completionIdentity),
+      sessionKey: pollSessionKey,
+      metadata: {
+        polling_git: workerMeta.polling_git || null,
+        status_authority: statusAuthority.source,
+        ...(statusAuthority.degraded ? { degraded: statusAuthority.degraded } : {}),
+      },
+    }) };
   }
   if (reasonCode === 'completion_conflict') {
     const conflictStatus = workerMeta.completion_conflict || {};
@@ -123,27 +141,40 @@ export async function handleFailedPollResult({
       { reason: 'completion_conflict' },
     );
     deps.saveStatus(config, dir, status, blockedTransition);
+    const conflictCorrelation = {
+      run_id: completionIdentity.runId ?? getRunId(config),
+      module_id: moduleId,
+      attempt: completionIdentity.attempt ?? currentAttemptNumber(status),
+      dispatch_id: completionIdentity.dispatchId || null,
+      gateway_label: completionIdentity.gateway_label || null,
+      session_key: pollSessionKey,
+    };
     await deps.discord(config, 'CRITICAL', `Module ${moduleId} completion conflict`,
       'Redis completion and local terminal state disagree. Nova is failing closed instead of choosing a winner silently.', [
-        ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { ...completionIdentity, module_id: moduleId, session_key: pollSessionKey }),
+        ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, conflictCorrelation),
         { name: 'Redis Status', value: String(conflictStatus.redis_status || conflictStatus.status || 'unknown') },
         { name: 'Local Status', value: String(localStatus || 'unknown') },
         { name: 'Policy', value: String(conflictStatus.authority_policy?.code || 'redis_terminal_conflicts_with_terminal_status') },
-      ]);
-    return { terminal: { retry: false, result: {
-      outcome_class: 'blocked',
+      ],
+      { correlation: conflictCorrelation },
+    );
+    return { terminal: buildModuleBlockedTerminalResult(config, moduleId, {
       reason: 'COMPLETION_CONFLICT',
-      module: moduleId,
-      module_dir: dir,
-      redis_status: conflictStatus.redis_status || conflictStatus.status || null,
-      local_status: localStatus,
-      authority_policy: conflictStatus.authority_policy || null,
-      status_authority: statusAuthority.source,
-      drift: conflictStatus.drift || null,
-      dispatch_id: completionIdentity.dispatchId,
-      gateway_label: resolveCompletionGatewayLabel(status, completionIdentity),
-      session_key: pollSessionKey,
-    }} };
+      runId: completionIdentity.runId ?? getRunId(config),
+      moduleDir: dir,
+      attempt: completionIdentity.attempt ?? currentAttemptNumber(status),
+      phase: 'buster',
+      dispatchId: completionIdentity.dispatchId,
+      gatewayLabel: resolveCompletionGatewayLabel(status, completionIdentity),
+      sessionKey: pollSessionKey,
+      metadata: {
+        redis_status: conflictStatus.redis_status || conflictStatus.status || null,
+        local_status: localStatus,
+        authority_policy: conflictStatus.authority_policy || null,
+        status_authority: statusAuthority.source,
+        drift: conflictStatus.drift || null,
+      },
+    }) };
   }
 
   // Crash-retryable: timeout, parse corruption, catch-all
@@ -154,9 +185,18 @@ export async function handleFailedPollResult({
         ? 'local lifecycle snapshot corrupted'
         : `Poll failed: ${reasonCode}`;
     log('WARN', `Buster subagent crash (attempt ${busterAttempt}/${maxBusterCrashRetries + 1}): ${reason} — retrying Buster`);
+    const retryDiscordCorrelation = {
+      run_id: completionIdentity.runId ?? completionIdentity.run_id ?? getRunId(config),
+      module_id: moduleId,
+      attempt: currentAttemptNumber(status),
+      dispatch_id: resolveCompletionDispatchId(status, completionIdentity),
+      gateway_label: resolveCompletionGatewayLabel(status, completionIdentity),
+      session_key: pollSessionKey,
+    };
     await deps.discord(config, 'WARN', `Buster crash retry: Module ${moduleId}`,
       `${reason}. Retrying Buster (attempt ${busterAttempt + 1}/${maxBusterCrashRetries + 1}). Forge output preserved.`,
-      buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { ...completionIdentity, module_id: moduleId, session_key: pollSessionKey })
+      buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { ...completionIdentity, module_id: moduleId, session_key: pollSessionKey }),
+      { correlation: retryDiscordCorrelation },
     );
 
     // Reset to READY_FOR_TESTING for next Buster attempt
@@ -209,15 +249,25 @@ export async function handleFailedPollResult({
       ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { ...completionIdentity, module_id: moduleId, session_key: pollSessionKey }),
       { name: 'Last Reason', value: reasonCode || 'unknown (no error detail available)' },
       { name: 'Crash Retries', value: `${maxBusterCrashRetries}` },
-    ]);
+    ], {
+      correlation: {
+        run_id: completionIdentity.runId ?? completionIdentity.run_id ?? getRunId(config),
+        module_id: moduleId,
+        attempt: currentAttemptNumber(status),
+        dispatch_id: crashDispatchId,
+        gateway_label: crashGatewayLabel,
+        session_key: pollSessionKey,
+      },
+    });
 
-  return { terminal: { retry: false, result: {
-    outcome_class: 'blocked',
+  return { terminal: buildModuleBlockedTerminalResult(config, moduleId, {
     reason: `Buster subagent crashed ${maxBusterCrashRetries + 1} times — infrastructure issue (not sent to Forge)`,
-    module: moduleId, module_dir: dir,
+    runId: completionIdentity.runId ?? getRunId(config),
+    moduleDir: dir,
     attempt: failEvent.attempt,
-    dispatch_id: failEvent.dispatch_id,
-    gateway_label: failEvent.gateway_label,
-    session_key: pollSessionKey,
-  }} };
+    phase: 'buster',
+    dispatchId: failEvent.dispatch_id,
+    gatewayLabel: failEvent.gateway_label,
+    sessionKey: pollSessionKey,
+  }) };
 }

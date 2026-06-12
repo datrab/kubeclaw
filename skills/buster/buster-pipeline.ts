@@ -44,11 +44,11 @@ import {
   parseCapabilitiesEnv,
 } from './pipeline/services/capabilities.ts';
 import { doSandboxCleanup } from './pipeline/services/pipeline-helpers.ts';
+import { loadBusterRuntimePolicy } from './pipeline/services/runtime-policy.ts';
 import {
   AGENT_NAME,
   CONSUMER_NAME,
   GROUP_NAME,
-  PENDING_RECLAIM_IDLE_MS,
   STREAM_KEY,
   disconnectRedisClient,
   ensureTaskConsumerGroup,
@@ -92,18 +92,18 @@ const runtimeLoopAbort = new AbortController();
 const BUSTER_RUNTIME_LOOP_POLICY = Object.freeze({
   errorBackoffMs: 3000,
 });
-export const BUSTER_HEARTBEAT_PATH = process.env.BUSTER_HEARTBEAT_PATH || '/tmp/kubeclaw-buster-heartbeat';
-export const BUSTER_HEARTBEAT_INTERVAL_MS = Number.parseInt(process.env.BUSTER_HEARTBEAT_INTERVAL_MS || '15000', 10);
 
 function writeBusterHeartbeat(): void {
-  fs.writeFileSync(BUSTER_HEARTBEAT_PATH, `${Date.now()}\n`);
+  const runtimePolicy = loadBusterRuntimePolicy();
+  fs.writeFileSync(runtimePolicy.heartbeat_path, `${Date.now()}\n`);
 }
 
 export function startBusterHeartbeat(): ReturnType<typeof setInterval> {
+  const runtimePolicy = loadBusterRuntimePolicy();
   writeBusterHeartbeat();
   const interval = setInterval(() => {
     if (!shuttingDown) writeBusterHeartbeat();
-  }, BUSTER_HEARTBEAT_INTERVAL_MS);
+  }, runtimePolicy.heartbeat_interval_ms);
   interval.unref?.();
   return interval;
 }
@@ -247,7 +247,7 @@ export async function main(): Promise<void> {
   const consumerGroup = await ensureTaskConsumerGroup();
   console.log(`[REDIS] Consumer group ${consumerGroup.created ? 'created' : 'exists'}: ${GROUP_NAME}`);
 
-  console.log(`[REDIS] Pending reclaim enabled: idle >= ${PENDING_RECLAIM_IDLE_MS}ms → ${CONSUMER_NAME}`);
+  console.log(`[REDIS] Pending reclaim enabled: idle >= ${loadBusterRuntimePolicy().task_pending_reclaim_idle_ms}ms → ${CONSUMER_NAME}`);
 
   console.log('[BUSTER PIPELINE] ✅ Ready. Polling for tasks...');
   while (!shuttingDown) {

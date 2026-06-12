@@ -36,6 +36,9 @@ import {
   PIPELINE_STEP_TYPES,
 } from '../services/contracts/pipeline-step-result.ts';
 import {
+  PIPELINE_TERMINAL_ACTIONS,
+} from '../services/contracts/terminal-decision.ts';
+import {
   _telemetryCtx,
   buildEscalationPayload,
   buildPipelineHaltPayload,
@@ -117,6 +120,8 @@ function buildInvalidPipelineStepResult(result: AnyRecord, { stepType = PIPELINE
       step_type: normalizedStepType,
       step_id: normalizedStepId,
     },
+    terminalAction: PIPELINE_TERMINAL_ACTIONS.STOP,
+    terminalScope: normalizedStepType,
   });
 }
 

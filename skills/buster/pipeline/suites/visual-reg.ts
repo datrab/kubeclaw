@@ -243,8 +243,11 @@ function assertNoLegacyVisualRegPathConfig(vrConf: AnyRecord = {}): void {
 }
 
 function safeModulePathSegment(moduleId: unknown): string {
-  const segment = String(moduleId || 'unknown').replace(/[^a-zA-Z0-9._-]+/g, '_').replace(/^\.+/, '');
-  return segment || 'unknown';
+  const raw = typeof moduleId === 'string' ? moduleId.trim() : '';
+  if (!raw) throw new Error('visual-reg requires explicit module identity');
+  const segment = raw.replace(/[^a-zA-Z0-9._-]+/g, '_').replace(/^\.+/, '');
+  if (!segment) throw new Error('visual-reg module identity is invalid after sanitization');
+  return segment;
 }
 
 function requireRepoScopedPath(value: string | null, field: string): string {
@@ -473,7 +476,7 @@ export async function runVisualReg(context: Record<string, unknown>): Promise<Su
   const ctx = context as VisualRegContext;
   const log = createLog(ctx.logSink || null);
   const tctx = ctx.telemetryContext || null;
-  const moduleId = String(ctx.moduleId || ctx.module || 'unknown');
+  const moduleId = safeModulePathSegment(ctx.moduleId || ctx.module || ctx.payload?.module_id || ctx.payload?.module);
   const discordDeliveryContext = {
     project: ctx.project || ctx.config?.project || null,
     run_id: ctx.runId || ctx.run_id || ctx.config?.runId || ctx.config?.run_id || null,

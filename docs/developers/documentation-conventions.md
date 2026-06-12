@@ -279,11 +279,37 @@ Run the docs maintenance checks before review:
 ```bash
 npm run docs:inventory
 npm run docs:generate
+npm run docs:check:generated
+npm run docs:check:refs
+npm run docs:check:coverage
 npm run docs:check
 git diff --check
 ```
 
-`npm run docs:check` runs stale generated inventory checks, stale generated reference checks, local Markdown link checks, generated-section marker checks, core operator page shape checks, target-state guardrails for pages marked current, and SVG diagram smoke checks.
+`npm run docs:check` runs stale generated inventory checks, stale generated reference checks, local Markdown link checks, generated-section marker checks, core operator page shape checks, target-state guardrails for pages marked current, SVG diagram smoke checks, cited repository path checks, coverage-matrix checks, and topic-map checks.
+
+## Drift Guardrails
+
+Use these commands before closing any docs or source change that affects documented behavior:
+
+| Command | Protects | Typical failure |
+| --- | --- | --- |
+| `npm run docs:check:generated` | generated JSON inventory and generated reference pages | a source workflow/script/value file changed without `npm run docs:inventory && npm run docs:generate` |
+| `npm run docs:check:refs` | local Markdown links and cited repository paths in active docs/current audit artifacts | a doc points at a deleted or renamed script, chart, workflow, test, skill, plugin, config, or local Markdown page |
+| `npm run docs:check:coverage` | coverage matrix and topic map | an active docs file is untracked, a rating is invalid, an `adequate` row lacks accepted rationale, or vague weakness language returns |
+| `npm run docs:check` | full docs guardrail bundle | any of the above plus existing Markdown/generated marker/page-shape checks |
+| `git diff --check` | whitespace hygiene | trailing whitespace or diff formatting problems |
+
+Generated docs currently include `docs/reference/cli.md`, `docs/reference/environment-variables.md`, `docs/reference/helm-values.md`, `docs/reference/secrets.md`, `docs/reference/verification-commands.md`, and `docs/reference/workflows.md`. Their inventory inputs live in `docs/generated/inventory/`.
+
+When a generated-doc check fails, regenerate first:
+
+```bash
+npm run docs:inventory
+npm run docs:generate
+```
+
+If `docs:check:refs` fails, fix the cited path or rewrite the sentence so it no longer claims a concrete source path. If `docs:check:coverage` fails, update `docs/archive/audits/2026-06-12-documentation-coverage-matrix.md` and `docs/archive/audits/2026-06-12-documentation-topic-map.md` in the same change.
 
 Update docs in the same change when touching:
 

@@ -281,6 +281,8 @@ test('gate failure telemetry emits when exhaustion beforeReturn hook fails', asy
     gateId: 'review-gate',
     gateType: 'review',
     phase: 'review',
+    identity: { run_id: config._runId },
+    runId: config._runId,
     telemetryCtx: { config },
     beforeReturn: async () => {
       throw new Error('custom beforeReturn failed');

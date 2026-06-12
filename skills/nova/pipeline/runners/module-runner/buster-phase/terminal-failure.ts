@@ -21,6 +21,10 @@ import {
   resolveCompletionDispatchId,
   resolveCompletionGatewayLabel,
 } from './identity.ts';
+import {
+  buildModuleBlockedTerminalResult,
+  buildModuleNeedsNovaTerminalResult,
+} from '../terminal-results.ts';
 
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../../../services/discord-fields.ts';
 
@@ -60,16 +64,19 @@ export async function handleBusterFailOrBlockedStatus({
       { reason: 'buster_failure_class_missing' },
     );
     deps.saveStatus(config, dir, status, blockedTransition);
-    return { terminal: { retry: false, result: {
-      outcome_class: 'blocked',
+    return { terminal: buildModuleBlockedTerminalResult(config, moduleId, {
       reason,
-      module: moduleId,
-      module_dir: dir,
-      dispatch_id: completionIdentity.dispatchId,
-      gateway_label: resolveCompletionGatewayLabel(status, completionIdentity),
-      session_key: completionSessionKey,
-      diagnostics: { code: 'buster_failure_class_missing', redis_source: source },
-    }} };
+      runId: resultRedisEntry?.run_id ?? completionIdentity.runId ?? getRunId(config),
+      moduleDir: dir,
+      attempt: resultRedisEntry?.attempt ?? completionIdentity.attempt ?? currentAttemptNumber(status),
+      phase: 'buster',
+      dispatchId: completionIdentity.dispatchId,
+      gatewayLabel: resolveCompletionGatewayLabel(status, completionIdentity),
+      sessionKey: completionSessionKey,
+      diagnostics: {
+        metadata: { code: 'buster_failure_class_missing', redis_source: source },
+      },
+    }) };
   }
   const isCrash = failureClass === 'infra_crash';
   const isPreTest = failureClass === 'pretest_infra' || failureClass === 'pretest_config' || failureClass === 'pretest_code';
@@ -77,9 +84,18 @@ export async function handleBusterFailOrBlockedStatus({
   // ── Category 1: Infrastructure crash ──
   if (isCrash && !isLastBusterAttempt) {
     log('WARN', `Buster subagent crashed (source: ${source}, attempt ${busterAttempt}/${maxBusterCrashRetries + 1}) — retrying Buster`);
+    const retryDiscordCorrelation = {
+      run_id: completionIdentity.runId ?? completionIdentity.run_id ?? getRunId(config),
+      module_id: moduleId,
+      attempt: currentAttemptNumber(status),
+      dispatch_id: resolveCompletionDispatchId(status, completionIdentity),
+      gateway_label: resolveCompletionGatewayLabel(status, completionIdentity),
+      session_key: completionSessionKey,
+    };
     await deps.discord(config, 'WARN', `Buster crash retry: Module ${moduleId}`,
       `Subagent crashed (source: ${source}). Retrying Buster (attempt ${busterAttempt + 1}/${maxBusterCrashRetries + 1}). Forge output preserved.`,
-      buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { ...completionIdentity, module_id: moduleId, session_key: completionSessionKey })
+      buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { ...completionIdentity, module_id: moduleId, session_key: completionSessionKey }),
+      { correlation: retryDiscordCorrelation },
     );
 
     // Reset to READY_FOR_TESTING — don't count as fail_count (that's for Forge retries)
@@ -126,18 +142,28 @@ export async function handleBusterFailOrBlockedStatus({
         ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { ...completionIdentity, module_id: moduleId, session_key: completionSessionKey }),
         { name: 'Source', value: source },
         { name: 'Crash Retries', value: `${maxBusterCrashRetries}` },
-      ]);
+      ], {
+        correlation: {
+          run_id: completionIdentity.runId ?? completionIdentity.run_id ?? getRunId(config),
+          module_id: moduleId,
+          attempt: currentAttemptNumber(status),
+          dispatch_id: crashDispatchId,
+          gateway_label: crashGatewayLabel,
+          session_key: completionSessionKey,
+        },
+      });
     await emitTerminalBusterCrashTelemetry(config, moduleId, failEvent, blockedTelemetryReason, crashAttemptBudget);
 
-    return { terminal: { retry: false, result: {
-      outcome_class: 'blocked',
+    return { terminal: buildModuleBlockedTerminalResult(config, moduleId, {
       reason: `Buster subagent crashed ${maxBusterCrashRetries + 1} times — infrastructure issue (not sent to Forge)`,
-      module: moduleId, module_dir: dir,
+      runId: completionIdentity.runId ?? getRunId(config),
+      moduleDir: dir,
       attempt: failEvent.attempt,
-      dispatch_id: failEvent.dispatch_id,
-      gateway_label: failEvent.gateway_label,
-      session_key: (resolveStatusSessionKey(status) ?? completionSessionKey),
-    }} };
+      phase: 'buster',
+      dispatchId: failEvent.dispatch_id,
+      gatewayLabel: failEvent.gateway_label,
+      sessionKey: (resolveStatusSessionKey(status) ?? completionSessionKey),
+    }) };
   }
 
   // ── Category 2: Explicit typed pre-test failure ──
@@ -172,6 +198,16 @@ export async function handleBusterFailOrBlockedStatus({
           { name: 'Action', value: preTestClass.kind === 'infra' ? 'Fix Buster / registry / sandbox infra, then --resume' : 'Fix progress.json test_config / test_suites / serve, then --resume', inline: false },
           { name: 'Reason', value: preTestReason.slice(0, 1024), inline: false },
         ],
+        {
+          correlation: {
+            run_id: getRunId(config),
+            module_id: moduleId,
+            attempt: currentAttemptNumber(status),
+            dispatch_id: preTestDispatchId,
+            gateway_label: preTestGatewayLabel,
+            session_key: preTestSessionKey,
+          },
+        },
       );
 
       emitTerminalModuleFailTelemetry(
@@ -190,18 +226,22 @@ export async function handleBusterFailOrBlockedStatus({
         },
       );
 
-      return { terminal: { retry: false, result: {
-        outcome_class: 'needs_nova',
+      return { terminal: buildModuleNeedsNovaTerminalResult(config, moduleId, {
         reason: `Buster ${preTestClass.kind} issue (${preTestClass.code}) — Forge output preserved: ${preTestClass.detail}`,
-        module: moduleId, module_dir: dir,
-        dispatch_id: preTestDispatchId,
-        gateway_label: preTestGatewayLabel,
-        session_key: preTestSessionKey,
-        failed_suites: failedSuiteNames,
-        passed_suites: passedSuiteNames,
-        forge_preserved: true,
-        pretest_classification: preTestClass,
-      }} };
+        runId: resultRedisEntry?.run_id ?? completionIdentity.runId ?? getRunId(config),
+        moduleDir: dir,
+        attempt: resultRedisEntry?.attempt ?? completionIdentity.attempt ?? currentAttemptNumber(status),
+        phase: 'buster',
+        dispatchId: preTestDispatchId,
+        gatewayLabel: preTestGatewayLabel,
+        sessionKey: preTestSessionKey,
+        metadata: {
+          failed_suites: failedSuiteNames,
+          passed_suites: passedSuiteNames,
+          forge_preserved: true,
+          pretest_classification: preTestClass,
+        },
+      }) };
     }
 
     // Check if same suite(s) already failed as pre-test in a previous attempt.
@@ -227,7 +267,16 @@ export async function handleBusterFailOrBlockedStatus({
           ...preTestFields,
           { name: 'Reason', value: preTestReason.slice(0, 1024), inline: false },
           { name: 'Action', value: 'Investigate deterministic test failure before resuming Forge', inline: false },
-        ]);
+        ], {
+          correlation: {
+            run_id: getRunId(config),
+            module_id: moduleId,
+            attempt: currentAttemptNumber(status),
+            dispatch_id: repeatedPreTestDispatchId,
+            gateway_label: repeatedPreTestGatewayLabel,
+            session_key: repeatedPreTestSessionKey,
+          },
+        });
 
       emitTerminalModuleFailTelemetry(
         config,
@@ -245,17 +294,21 @@ export async function handleBusterFailOrBlockedStatus({
         },
       );
 
-      return { terminal: { retry: false, result: {
-        outcome_class: 'needs_nova',
+      return { terminal: buildModuleNeedsNovaTerminalResult(config, moduleId, {
         reason: `Repeated pre-test failure (${failedSuiteNames.join(',')}) — needs Nova review before another Forge cycle`,
-        module: moduleId, module_dir: dir,
-        dispatch_id: repeatedPreTestDispatchId,
-        gateway_label: repeatedPreTestGatewayLabel,
-        session_key: repeatedPreTestSessionKey,
-        failed_suites: failedSuiteNames,
-        passed_suites: passedSuiteNames,
-        pretest_classification: preTestClass,
-      }} };
+        runId: resultRedisEntry?.run_id ?? completionIdentity.runId ?? getRunId(config),
+        moduleDir: dir,
+        attempt: resultRedisEntry?.attempt ?? completionIdentity.attempt ?? currentAttemptNumber(status),
+        phase: 'buster',
+        dispatchId: repeatedPreTestDispatchId,
+        gatewayLabel: repeatedPreTestGatewayLabel,
+        sessionKey: repeatedPreTestSessionKey,
+        metadata: {
+          failed_suites: failedSuiteNames,
+          passed_suites: passedSuiteNames,
+          pretest_classification: preTestClass,
+        },
+      }) };
     }
 
     // Code-side pre-test failure → give Forge a chance.

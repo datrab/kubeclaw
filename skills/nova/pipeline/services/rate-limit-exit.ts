@@ -24,6 +24,13 @@ import {
   resolveResultGatewayLabel,
 } from './correlation.ts';
 
+function normalizeGateRateLimitRunId(value) {
+  if (typeof value !== 'string' || value.trim() === '' || value !== value.trim()) {
+    throw new Error('gate rate-limit finalizer requires non-empty explicit run id');
+  }
+  return value;
+}
+
 export function buildSessionRateLimitExitResult(result = {}, reason = 'rate_limit_exhausted', {
   identity = {},
   maxPauses = null,
@@ -494,28 +501,30 @@ export async function finalizeGateSessionRateLimitExhaustion(result = {}, {
   });
 }
 
-export async function finalizeGateSessionRateLimitExit(result = {}, {
-  config,
-  gateId,
-  gateType = null,
-  phase,
-  exhaustedReason = 'rate_limit_exhausted',
-  identity = {},
-  maxPauses = null,
-  exit = null,
-  resultOverrides = {},
-  reason = exhaustedReason,
-  telemetryCtx = null,
-  runId = null,
-  discordFn = discord,
-  discordLevel = 'CRITICAL',
-  discordTitle = null,
-  discordDescription = null,
-  beforeReturn = null,
-  gateFailureData = null,
-  logMessage = exhaustedReason,
-  logLevel = 'WARN',
-} = {}) {
+export async function finalizeGateSessionRateLimitExit(result = {}, options = {}) {
+  const {
+    config,
+    gateId,
+    gateType = null,
+    phase,
+    exhaustedReason = 'rate_limit_exhausted',
+    identity = {},
+    maxPauses = null,
+    exit = null,
+    resultOverrides = {},
+    reason = exhaustedReason,
+    telemetryCtx = null,
+    runId = null,
+    discordFn = discord,
+    discordLevel = 'CRITICAL',
+    discordTitle = null,
+    discordDescription = null,
+    beforeReturn = null,
+    gateFailureData = null,
+    logMessage = exhaustedReason,
+    logLevel = 'WARN',
+  } = options;
+  const canonicalRunId = normalizeGateRateLimitRunId(runId);
   return finalizeGateSessionRateLimitExhaustion(result, {
     config,
     gateId,
@@ -525,6 +534,7 @@ export async function finalizeGateSessionRateLimitExit(result = {}, {
     exit,
     reason,
     resultOverrides,
+    resolveRunId: () => canonicalRunId,
     ...createGateSessionRateLimitExhaustionOptions(config, {
       gateId,
       gateType,

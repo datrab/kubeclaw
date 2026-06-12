@@ -17,6 +17,7 @@ import {
 } from './status-store-lifecycle.ts';
 import {
   READ_MODEL_SOURCE_CANONICAL_EVENTS,
+  projectModuleRuntimeState,
 } from './status-store-read-models.ts';
 import {
   hasStrongActiveSessionIdentity,
@@ -115,58 +116,9 @@ function resolveModuleIdForDir(config, dir) {
   return readModelMatch?.[0] || dir;
 }
 
-function buildStatusFromLifecycleModule(config, dir, lifecycleModule) {
-  if (!lifecycleModule) return null;
-  const moduleId = lifecycleModule.module_id || resolveModuleIdForDir(config, dir);
-  const storedActiveSession = loadLifecycleReadModels(config)?.active_sessions?.modules?.[moduleId] || null;
-  const activeSession = storedActiveSession;
-  const normalizedActiveSession = activeSession ? {
-    ...activeSession,
-    module_id: moduleId,
-    attempt: activeSession.attempt ?? lifecycleModule.current_attempt ?? null,
-    dispatch_id: activeSession.dispatch_id || lifecycleModule.dispatch_id || null,
-    session_key: activeSession.session_key || lifecycleModule.session_key || null,
-    gateway_label: activeSession.gateway_label || lifecycleModule.gateway_label || null,
-    model: activeSession.model || lifecycleModule.model || null,
-  } : null;
-  return {
-    module_id: moduleId,
-    title: lifecycleModule.title || config?._progress?.modules?.[moduleId]?.title || null,
-    status: lifecycleModule.status || 'PENDING',
-    current_phase: lifecycleModule.current_phase ?? null,
-    fail_count: lifecycleModule.fail_count ?? 0,
-    fail_summaries: lifecycleModule.fail_summaries || [],
-    history: lifecycleModule.history || [],
-    started_at: lifecycleModule.started_at || lifecycleModule.attempt_started_at || null,
-    attempt_started_at: lifecycleModule.attempt_started_at || null,
-    phase_started_at: lifecycleModule.phase_started_at || null,
-    completed_at: lifecycleModule.completed_at || null,
-    completion_summary: lifecycleModule.completion_summary ?? null,
-    blockedAt: lifecycleModule.blocked_at || null,
-    blockedReason: lifecycleModule.blocked_reason || null,
-    blockedPhase: lifecycleModule.blocked_phase || null,
-    blockedFailCount: lifecycleModule.blocked_fail_count ?? null,
-    validation: lifecycleModule.validation || null,
-    cost: lifecycleModule.cost || null,
-    commit_hash: lifecycleModule.commit_hash || null,
-    model: lifecycleModule.model || normalizedActiveSession?.model || null,
-    active_agent: normalizedActiveSession,
-    dispatch_id: lifecycleModule.dispatch_id || normalizedActiveSession?.dispatch_id || null,
-    gateway_label: lifecycleModule.gateway_label || normalizedActiveSession?.gateway_label || null,
-    session_key: lifecycleModule.session_key || normalizedActiveSession?.session_key || null,
-    current_attempt: lifecycleModule.current_attempt ?? normalizedActiveSession?.attempt ?? null,
-    updated_at: lifecycleModule.latest_event_at || null,
-    status_authority_source: 'lifecycle_read_model',
-    lifecycle_module_state_authority: true,
-    lifecycle_projection_source: lifecycleModule.projection_source || lifecycleModule.read_model_source || READ_MODEL_SOURCE_CANONICAL_EVENTS,
-    lifecycle_latest_event_type: lifecycleModule.latest_event_type || null,
-    lifecycle_latest_event_at: lifecycleModule.latest_event_at || null,
-  };
-}
-
 export function loadStatus(config, dir, _opts = {}) {
   const moduleId = resolveModuleIdForDir(config, dir);
-  return buildStatusFromLifecycleModule(config, dir, getLifecycleModuleState(config, moduleId));
+  return projectModuleRuntimeState(config, moduleId, config?._progress?.modules?.[moduleId] || { dir });
 }
 
 export const STATUS_LIFECYCLE_GUARDED_FIELDS = Object.freeze([

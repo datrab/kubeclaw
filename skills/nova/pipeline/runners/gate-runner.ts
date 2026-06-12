@@ -30,6 +30,10 @@ import {
   buildPipelineStepResult,
   buildPipelineStepResultFromControlResult,
 } from '../services/contracts/pipeline-step-result.ts';
+import {
+  PIPELINE_TERMINAL_ACTIONS,
+  PIPELINE_TERMINAL_SCOPES,
+} from '../services/contracts/terminal-decision.ts';
 
 type AnyRecord = Record<string, any>;
 
@@ -51,14 +55,36 @@ function buildGateStepCorrelation(config, gateId, gateOrIdentity = {}, extra = {
   };
 }
 
+function terminalActionForGateOutcomeClass(outcomeClass) {
+  switch (outcomeClass) {
+    case PIPELINE_STEP_OUTCOMES.PASSED:
+      return PIPELINE_TERMINAL_ACTIONS.NONE;
+    case PIPELINE_STEP_OUTCOMES.NEEDS_NOVA:
+    case PIPELINE_STEP_OUTCOMES.TIMEOUT:
+      return PIPELINE_TERMINAL_ACTIONS.REQUEST_HANDOFF;
+    case PIPELINE_STEP_OUTCOMES.BLOCKED:
+      return PIPELINE_TERMINAL_ACTIONS.NOTIFY_OPERATOR;
+    case PIPELINE_STEP_OUTCOMES.ERROR:
+      return PIPELINE_TERMINAL_ACTIONS.STOP;
+    case PIPELINE_STEP_OUTCOMES.RATE_LIMITED:
+      return PIPELINE_TERMINAL_ACTIONS.RETRY_LATER;
+    default:
+      return null;
+  }
+}
+
 function buildGateStepResultFromControl(config, gateId, gate, controlResult, extra = {}) {
+  const outcome = controlResult?.diagnostics?.typed?.gate?.outcomeClass;
   return buildPipelineStepResultFromControlResult(controlResult, {
     stepType: PIPELINE_STEP_TYPES.GATE,
     stepId: gateId,
-    outcome: controlResult?.diagnostics?.typed?.gate?.outcomeClass,
+    outcome,
     correlation: buildGateStepCorrelation(config, gateId, gate, extra.correlation || {}),
     remediation: controlResult?.diagnostics?.typed?.remediation || null,
     wait: controlResult?.diagnostics?.typed?.wait || null,
+    rateLimit: controlResult?.diagnostics?.typed?.rateLimit || null,
+    terminalAction: terminalActionForGateOutcomeClass(outcome),
+    terminalScope: PIPELINE_TERMINAL_SCOPES.GATE,
   });
 }
 
@@ -103,6 +129,8 @@ async function buildGateRuntimeErrorControl(config, ctx, gateId, gateOrIdentity 
     reason,
     diagnostics,
     correlation: buildGateStepCorrelation(config, gateId, gateOrIdentity),
+    terminalAction: PIPELINE_TERMINAL_ACTIONS.STOP,
+    terminalScope: PIPELINE_TERMINAL_SCOPES.GATE,
   });
 }
 

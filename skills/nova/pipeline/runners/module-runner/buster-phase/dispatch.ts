@@ -10,6 +10,10 @@ import {
   emitTerminalModuleFailTelemetry,
 } from '../../module-runner-shared.ts';
 import { executeBusterWorkerAttempt } from '../../module-runner-buster-worker.ts';
+import {
+  buildModuleErrorTerminalResult,
+  buildModuleNeedsNovaTerminalResult,
+} from '../terminal-results.ts';
 
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../../../services/discord-fields.ts';
 
@@ -73,16 +77,19 @@ export async function executeBusterAttemptDispatch({
     const reason = 'Buster dispatch requires a typed nonempty test_suites list';
     log('ERROR', `Module ${moduleId} — ${reason}`);
     emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'buster', busterModel, status?.status ?? STATUS.READY_FOR_TESTING, reason);
-    return { terminal: { retry: false, result: {
-      outcome_class: 'needs_nova',
+    return { terminal: buildModuleNeedsNovaTerminalResult(config, moduleId, {
       reason,
-      module: moduleId,
-      module_dir: dir,
-      dispatch_id: completionIdentity.dispatchId,
-      gateway_label: resolveStatusGatewayLabel(status),
-      session_key: resolveStatusSessionKey(status),
-      diagnostics: { code: 'buster_test_suites_empty', test_suites: mod?.test_suites ?? null },
-    }} };
+      runId: completionIdentity.runId,
+      moduleDir: dir,
+      attempt: completionIdentity.attempt,
+      phase: 'buster',
+      dispatchId: completionIdentity.dispatchId,
+      gatewayLabel: resolveStatusGatewayLabel(status),
+      sessionKey: resolveStatusSessionKey(status),
+      diagnostics: {
+        metadata: { code: 'buster_test_suites_empty', test_suites: mod?.test_suites ?? null },
+      },
+    }) };
   }
 
   let busterPrompt;
@@ -91,17 +98,16 @@ export async function executeBusterAttemptDispatch({
     if (promptResult.error) {
       log('ERROR', `Buster prompt build failed for ${moduleId}: ${promptResult.error}`);
       emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'buster', busterModel, status?.status ?? STATUS.READY_FOR_TESTING, promptResult.error);
-      return {
-        terminal: {
-          retry: false,
-          result: {
-            outcome_class: 'error',
-            reason: promptResult.error,
-            gateway_label: resolveStatusGatewayLabel(status),
-            session_key: resolveStatusSessionKey(status),
-          },
-        },
-      };
+      return { terminal: buildModuleErrorTerminalResult(config, moduleId, {
+        reason: promptResult.error,
+        runId: completionIdentity.runId,
+        moduleDir: dir,
+        attempt: completionIdentity.attempt,
+        phase: 'buster',
+        dispatchId: completionIdentity.dispatchId,
+        gatewayLabel: resolveStatusGatewayLabel(status),
+        sessionKey: resolveStatusSessionKey(status),
+      }) };
     }
     busterPrompt = promptResult.prompt;
   }
@@ -119,20 +125,32 @@ export async function executeBusterAttemptDispatch({
       const reason = `Config validation failed: ${errorMessage(e)}`;
       log('ERROR', `Module ${moduleId} — ${reason}`);
       emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'buster', busterModel, status?.status ?? STATUS.READY_FOR_TESTING, reason);
+      const configInvalidCorrelation = {
+        run_id: completionIdentity.runId,
+        module_id: moduleId,
+        attempt: completionIdentity.attempt,
+        dispatch_id: completionIdentity.dispatchId,
+        gateway_label: completionIdentity.gateway_label,
+        session_key: completionIdentity.sessionKey,
+      };
       await deps.discord(config, 'CRITICAL', `Module ${moduleId} — Config Invalid`,
         `Pre-dispatch validation caught config issues. Fix progress.json before retrying.`,
-        buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, completionIdentity, [
+        buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, configInvalidCorrelation, [
           { name: 'Issue', value: errorMessage(e).slice(0, 200) },
-        ])
+        ]),
+        { correlation: configInvalidCorrelation },
       );
       deps.clearShutdownContext();
-      return { terminal: { retry: false, result: {
-        outcome_class: 'needs_nova',
+      return { terminal: buildModuleNeedsNovaTerminalResult(config, moduleId, {
         reason,
-        module: moduleId, module_dir: dir,
-        gateway_label: resolveStatusGatewayLabel(status),
-        session_key: resolveStatusSessionKey(status),
-      }} };
+        runId: completionIdentity.runId,
+        moduleDir: dir,
+        attempt: completionIdentity.attempt,
+        phase: 'buster',
+        dispatchId: completionIdentity.dispatchId,
+        gatewayLabel: resolveStatusGatewayLabel(status),
+        sessionKey: resolveStatusSessionKey(status),
+      }) };
     }
   }
 
@@ -146,12 +164,29 @@ export async function executeBusterAttemptDispatch({
 
   await deps.discord(config, 'INFO', `Module ${moduleId} — Buster queued`,
     `Buster work is queued. Pre-test suites run first; a Buster subagent is spawned only if critical pre-tests pass.`, [
-      ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { ...completionIdentity, module_id: moduleId }),
+      ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, {
+        run_id: completionIdentity.runId,
+        module_id: moduleId,
+        attempt: completionIdentity.attempt,
+        dispatch_id: completionIdentity.dispatchId,
+        gateway_label: completionIdentity.gateway_label,
+        session_key: completionIdentity.sessionKey,
+      }),
       { name: 'Phase', value: 'buster', inline: true },
       { name: 'Queued Suites', value: requestedSuites.join(', '), inline: true },
       { name: 'Subagent Spawned?', value: 'Not yet', inline: true },
       { name: 'Next', value: 'Watch for either suite results, a pre-test failure, or a Buster subagent spawn message.', inline: false },
-    ]);
+    ],
+    {
+      correlation: {
+        run_id: completionIdentity.runId,
+        module_id: moduleId,
+        attempt: completionIdentity.attempt,
+        dispatch_id: completionIdentity.dispatchId,
+        gateway_label: completionIdentity.gateway_label,
+        session_key: completionIdentity.sessionKey,
+      },
+    });
 
   completionIdentity.gateway_label = null;
 

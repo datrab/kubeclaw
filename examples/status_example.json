@@ -1,0 +1,33 @@
+{
+  "module_id": "06",
+  "title": "WebSockets (Logs + Exec)",
+  "status": "PENDING",
+  "current_phase": null,
+  "fail_count": 0,
+  "started_at": null,
+  "updated_at": null,
+  "completed_at": null,
+  "forge_commit_hash": null,
+  "forge_diff_stat": null,
+
+  "substeps": [
+    { "id": "06a", "title": "WebSocket Log Streaming", "forge_done": false },
+    { "id": "06b", "title": "WebSocket Exec Shell", "forge_done": false }
+  ],
+
+  "history": [],
+
+  "fail_summaries": [],
+
+  "completion_summary": null,
+
+  "decayed_memory_ids": [],
+
+  "cost": {
+    "forge_tokens_in": 0,
+    "forge_tokens_out": 0,
+    "buster_tokens_in": 0,
+    "buster_tokens_out": 0,
+    "total_duration_seconds": 0
+  }
+}

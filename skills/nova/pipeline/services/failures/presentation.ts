@@ -45,6 +45,19 @@ function buildFailureDiscordFields(identity = {}, extra = []) {
   ], extra);
 }
 
+function buildFailureDiscordCorrelation(identity = {}) {
+  return {
+    run_id: identity.run_id || null,
+    module_id: identity.module_id || null,
+    gate_id: identity.gate_id || null,
+    gate_type: identity.gate_type || null,
+    attempt: identity.attempt ?? null,
+    dispatch_id: identity.dispatch_id || null,
+    gateway_label: identity.gateway_label || null,
+    session_key: identity.session_key || null,
+  };
+}
+
 function buildModuleFailureTelemetry(status, phase, reason, oldStatus, opts = {}) {
   const startedAt = status?.phase_started_at || status?.attempt_started_at || status?.started_at || null;
   return {
@@ -134,7 +147,10 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
   const targetId = stepId || result?.module || 'unknown';
   const terminalStatus = result?.terminal_status || result?.terminal?.status || 'action_required';
   const terminalDecision = result?.terminal_decision || result?.terminal?.decision || null;
-  const terminalAction = terminalDecision?.action || (terminalStatus === 'timed_out' ? 'request_handoff' : 'notify_operator');
+  const terminalAction = terminalDecision?.action || null;
+  if (!terminalAction) {
+    throw new Error('Nova injection requires an explicit terminal decision action');
+  }
   const runId = config?._runId || config?.run_id || getRunId(config);
   const injectionCorrelation = resolveResultCorrelation(result);
   const injectionCorrelationProvenance = resolveResultReadModelCorrelationProvenance(result);
@@ -221,6 +237,8 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
     messageLines.push(`Resume: ${String(result.resume_command).slice(0, 400)}`);
   }
   const message = messageLines.join('\n');
+  const injectionDiscordIdentity = { run_id: runId, step_type: stepType, step_id: targetId, gate_id: gateId, gate_type: gateType, attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: childSessionKey };
+  const injectionDiscordCorrelation = buildFailureDiscordCorrelation(injectionDiscordIdentity);
 
   try {
     try {
@@ -234,14 +252,14 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
         entry.delivery_acknowledged = false;
         log('WARN', `${terminalStatus} Nova injection delivery unknown for channel ${channelId} and ${stepType} ${targetId} (Gateway response aborted before acknowledgement)`);
         await discordNotify(config, 'CRITICAL', `Nova injection delivery UNKNOWN: ${targetId}`, `Cronjob could not confirm Nova injection delivery for ${stepType} ${targetId}; Gateway response aborted before acknowledgement. Manual verification required.`, [
-          ...buildFailureDiscordFields({ run_id: runId, step_type: stepType, step_id: targetId, gate_id: gateId, gate_type: gateType, attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: childSessionKey }),
+          ...buildFailureDiscordFields(injectionDiscordIdentity),
           { name: 'Status', value: terminalStatus },
           { name: 'Action', value: terminalAction },
           { name: 'Channel', value: channelId },
           { name: 'Target', value: `${stepType}:${targetId}` },
           { name: 'Delivery', value: 'unknown_aborted' },
           { name: 'Error', value: errMsg.slice(0, 200) },
-        ]).catch((discordError) => {
+        ], { correlation: injectionDiscordCorrelation }).catch((discordError) => {
           log('DEBUG', `Nova injection unknown-delivery Discord notice failed: ${discordError?.message || discordError}`);
         });
       } else {
@@ -249,13 +267,13 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
         entry.error = errMsg;
         log('WARN', `Failed to inject ${terminalStatus} into Nova channel ${channelId}: ${errMsg}`);
         await discordNotify(config, 'CRITICAL', `Nova injection FAILED: ${targetId}`, `Cronjob could not inject Nova into Discord for ${stepType} ${targetId}. Manual intervention required.`, [
-          ...buildFailureDiscordFields({ run_id: runId, step_type: stepType, step_id: targetId, gate_id: gateId, gate_type: gateType, attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: childSessionKey }),
+          ...buildFailureDiscordFields(injectionDiscordIdentity),
           { name: 'Status', value: terminalStatus },
           { name: 'Action', value: terminalAction },
           { name: 'Channel', value: channelId },
           { name: 'Target', value: `${stepType}:${targetId}` },
           { name: 'Error', value: errMsg.slice(0, 200) },
-        ]).catch((discordError) => {
+        ], { correlation: injectionDiscordCorrelation }).catch((discordError) => {
           log('DEBUG', `Nova injection failure Discord notice failed: ${discordError?.message || discordError}`);
         });
       }
@@ -266,12 +284,12 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
     log('OK', `${terminalStatus} injected into Nova channel ${channelId} for ${stepType} ${targetId}`);
     try {
       await discordNotify(config, 'WARN', `Nova injection sent: ${targetId}`, `Cronjob injected Nova into Discord channel for ${stepType} ${targetId}.`, [
-        ...buildFailureDiscordFields({ run_id: runId, step_type: stepType, step_id: targetId, gate_id: gateId, gate_type: gateType, attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: childSessionKey }),
+        ...buildFailureDiscordFields(injectionDiscordIdentity),
         { name: 'Status', value: terminalStatus },
         { name: 'Action', value: terminalAction },
         { name: 'Channel', value: channelId },
         { name: 'Target', value: `${stepType}:${targetId}` },
-      ]);
+      ], { correlation: injectionDiscordCorrelation });
       entry.notification_status = 'ok';
     } catch (discordError) {
       const discordErrMsg = discordError?.message?.split('\n')[0] || 'unknown error';

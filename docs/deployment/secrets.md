@@ -48,7 +48,7 @@ The official Tailscale Helm chart mounts that Secret when `oauth.clientId` and `
 
 `TTY` means an interactive terminal. When a TTY is available, the script can safely prompt for pasted values. `SRC_NS` is the source namespace used when copying already-created Secrets into the deployment namespace; it defaults to `default`.
 
-When `NAMESPACE` is unset and a TTY is available, `scripts/deploy.sh setup` and `scripts/deploy.sh secrets` ask for the workspace namespace and remember it in `my-values/.workspace-namespace`. Operators can still set `NAMESPACE` directly for automation or for multiple team/customer namespaces.
+When `NAMESPACE` is unset and a TTY is available, `scripts/deploy.sh setup` and `scripts/deploy.sh secrets` ask for the workspace namespace every time. If `my-values/.workspace-namespace` exists, the remembered namespace is shown as the default; pressing Enter accepts it, and typing a new namespace switches the deployment target and remembers the new value. Operators can still set `NAMESPACE` directly for automation.
 
 `my-values/setup-secrets.sh` resolves each Secret in this order:
 

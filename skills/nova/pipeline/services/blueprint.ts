@@ -5,7 +5,7 @@ import path from 'path';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { spawnSync } from 'child_process';
 import { log } from '../core/logger.ts';
-import { loadStatus } from './status-store.ts';
+import { projectModuleSchedulerState } from './status-store.ts';
 import { STATUS } from '../core/constants.ts';
 import { getRunId } from '../core/runtime.ts';
 import { gateInstructionsPathRef, gateInstructionsTopLevelRef, modulePath, relPath, reviewGateOutputDirRef, swarmRoot } from '../core/paths.ts';
@@ -140,7 +140,7 @@ export async function releaseBlueprint(config: AnyRecord, progress: AnyRecord, m
   const moduleConfig = progress.modules[moduleId] || {};
 
   log('STEP', `Releasing blueprint for ${moduleId} from ${branch}`);
-  const existingStatus = loadStatus(config, moduleDir);
+  const existingStatus = projectModuleSchedulerState(config, moduleId, moduleConfig);
   if (existingStatus && existingStatus.status !== STATUS.PENDING) {
     log('WARN', `Module ${moduleId} already has status ${existingStatus.status} — skipping blueprint release`);
     return { status: 'skipped', reason: `existing status: ${existingStatus.status}`, module: moduleDir };
@@ -274,7 +274,7 @@ export async function syncControlFiles(config: AnyRecord, progress: AnyRecord) {
   }
 
   for (const [moduleId, mod] of Object.entries(progress.modules || {}) as [string, AnyRecord][]) {
-    const status = loadStatus(config, mod.dir);
+    const status = projectModuleSchedulerState(config, moduleId, mod);
     if (!status || status.status === STATUS.PENDING) continue;
     const moduleRel = relPath(config, modulePath(config, mod.dir));
     for (const file of BLUEPRINT_POLICY.include.moduleControlFiles) syncFile(`${moduleRel}/${file}`);

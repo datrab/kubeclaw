@@ -6,6 +6,9 @@
     "docs:inventory:check": "node scripts/docs-inventory.mjs --check",
     "docs:generate": "node scripts/docs-generate.mjs",
     "docs:generate:check": "node scripts/docs-generate.mjs --check",
-    "docs:check": "npm run docs:inventory:check && npm run docs:generate:check && node scripts/docs-check.mjs"
+    "docs:check:generated": "npm run docs:inventory:check && npm run docs:generate:check",
+    "docs:check:refs": "node scripts/docs-check-refs.mjs",
+    "docs:check:coverage": "node scripts/docs-check-coverage.mjs",
+    "docs:check": "npm run docs:check:generated && node scripts/docs-check.mjs && npm run docs:check:refs && npm run docs:check:coverage"
   }
 }

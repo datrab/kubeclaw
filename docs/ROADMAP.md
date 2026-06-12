@@ -9,15 +9,15 @@ This page keeps future direction separate from current operator behavior. Items 
 
 ## Current Documentation Rebuild
 
-The active near-term roadmap is the documentation rebuild in `DOCUMENTATION_REBUILD_PLAN.md`.
+The original near-term roadmap was the documentation rebuild in `DOCUMENTATION_REBUILD_PLAN.md`. Current execution context is now the 2026-06-12 coverage audit, topic map, matrix, enrichment plan, and enrichment changelog under `docs/archive/audits/`.
 
 Current sequence:
 
-1. Define documentation standards.
-2. Audit and normalize the active docs tree.
-3. Build generated inventory and generated reference checks.
-4. Rebuild deployment, operator, pipeline, developer, and reference docs from source.
-5. Add diagrams, examples, failure drills, and docs maintenance automation.
+1. Keep P0/P1 docs source-grounded and update the coverage matrix when enriching them.
+2. Expand generated inventory for the remaining drift-prone references.
+3. Finish clean-cluster quickstart verification before promising live first-run behavior.
+4. Split active limitations from long resolved-history tracker content where useful.
+5. Add failure drills and docs maintenance automation only after source-backed procedures exist.
 
 ## Product And Platform Direction
 
@@ -35,6 +35,8 @@ These are candidate roadmap themes, not current behavior claims:
 - Improved prompt engineering and prompt upgrade workflows.
 - Additional intent-driven use cases beyond application delivery, including infrastructure-oriented workflows.
 - Pentest and security agent workflows.
+- Hostname-aware egress policy after a CNI/egress layer is chosen.
+- Kubernetes-native metrics/log aggregation after a stack is selected.
 
 ## Promotion Rule
 

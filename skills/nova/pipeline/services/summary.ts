@@ -38,15 +38,20 @@ import {
 } from './correlation.ts';
 import { buildGeneratorResult } from './contracts/generator-result.ts';
 import { createTrackedSummarySessionCleanup } from './summary-session-cleanup.ts';
+import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from './discord-fields.ts';
 
 function buildPipelineReviewDiscordFields(identity = {}, extra = []) {
-  const fields = [];
-  if (identity.run_id) fields.push({ name: 'Run ID', value: identity.run_id, inline: true, correlation_key: 'run_id' });
-  if (identity.attempt != null) fields.push({ name: 'Attempt', value: `${identity.attempt}`, inline: true, correlation_key: 'attempt' });
-  if (identity.dispatch_id) fields.push({ name: 'Dispatch', value: identity.dispatch_id, inline: false, correlation_key: 'dispatch_id' });
-  if (identity.gateway_label) fields.push({ name: 'Gateway Label', value: identity.gateway_label, inline: false, correlation_key: 'gateway_label' });
-  if (identity.session_key) fields.push({ name: 'Session', value: identity.session_key, inline: false, correlation_key: 'session_key' });
-  return [...fields, ...extra];
+  return buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, identity, extra);
+}
+
+function buildPipelineReviewDiscordCorrelation(identity = {}) {
+  return {
+    run_id: identity.run_id || null,
+    attempt: identity.attempt ?? null,
+    dispatch_id: identity.dispatch_id || null,
+    gateway_label: identity.gateway_label || null,
+    session_key: identity.session_key || null,
+  };
 }
 
 function resolvePipelineReviewGatewayLabel(status) {
@@ -373,11 +378,12 @@ export async function generatePipelineReview(config, progress, opts = {}) {
       telemetry_agent_type: 'echo',
       telemetry_attempt: reviewAttempt,
     });
-    await deps.discord(config, 'INFO', '📋 Pipeline Review Spawned', 'Reviewing full pipeline run.', buildPipelineReviewDiscordFields({ run_id: runId, attempt: reviewAttempt, gateway_label: reviewGatewayLabel, session_key: sessionKey }, [
+    const spawnDiscordIdentity = { run_id: runId, attempt: reviewAttempt, gateway_label: reviewGatewayLabel, session_key: sessionKey };
+    await deps.discord(config, 'INFO', '📋 Pipeline Review Spawned', 'Reviewing full pipeline run.', buildPipelineReviewDiscordFields(spawnDiscordIdentity, [
       { name: 'Model', value: model, inline: true },
       { name: 'Agent', value: agentId, inline: true },
       { name: 'Dispatch', value: dispatch, inline: true },
-    ])).catch((e) => {
+    ]), { correlation: buildPipelineReviewDiscordCorrelation(spawnDiscordIdentity) }).catch((e) => {
       log('DEBUG', `Pipeline review spawn Discord notice failed: ${e?.message || e}`);
     });
     const outputFilePath = pipelineReviewOutputPath(config, pr);
@@ -475,18 +481,19 @@ export async function generatePipelineReview(config, progress, opts = {}) {
       const failureReason = pollRes?.status?.detail
         ? `${pollRes.reason} (${pollRes.status.detail})`
         : pollRes.reason;
+      const noOutputDiscordIdentity = {
+        run_id: runId,
+        attempt: reviewAttempt,
+        dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? reviewDispatchId ?? null),
+        gateway_label: (resolvePipelineReviewGatewayLabel(pollRes?.status) ?? reviewGatewayLabel ?? null),
+        session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
+      };
       await deps.discord(config, 'WARN', '📋 Pipeline Review: No Output', `Review agent finished without producing a report. Reason: ${failureReason}`, [
-        ...buildPipelineReviewDiscordFields({
-          run_id: runId,
-          attempt: reviewAttempt,
-          dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? reviewDispatchId ?? null),
-          gateway_label: (resolvePipelineReviewGatewayLabel(pollRes?.status) ?? reviewGatewayLabel ?? null),
-          session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
-        }),
+        ...buildPipelineReviewDiscordFields(noOutputDiscordIdentity),
         { name: 'Timeout', value: `${timeoutMin}min`, inline: true },
         { name: 'Agent', value: agentId, inline: true },
         { name: 'Model', value: model, inline: true },
-      ]).catch((e) => {
+      ], { correlation: buildPipelineReviewDiscordCorrelation(noOutputDiscordIdentity) }).catch((e) => {
         log('DEBUG', `Pipeline review timeout/failure Discord notice failed: ${e?.message || e}`);
       });
       throw new Error(`Pipeline review failed: ${failureReason}`);
@@ -505,14 +512,15 @@ export async function generatePipelineReview(config, progress, opts = {}) {
           fields.push({ name: `(continued ${fields.length})`, value: remaining.slice(i, i + 950), inline: false });
         }
       }
-      fields.unshift(...buildPipelineReviewDiscordFields({
+      const completeDiscordIdentity = {
         run_id: runId,
         attempt: reviewAttempt,
         dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? reviewDispatchId ?? null),
         gateway_label: (resolvePipelineReviewGatewayLabel(pollRes?.status) ?? reviewGatewayLabel ?? null),
         session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
-      }));
-      await deps.discord(config, 'OK', '📋 Pipeline Review Complete', desc, fields);
+      };
+      fields.unshift(...buildPipelineReviewDiscordFields(completeDiscordIdentity));
+      await deps.discord(config, 'OK', '📋 Pipeline Review Complete', desc, fields, { correlation: buildPipelineReviewDiscordCorrelation(completeDiscordIdentity) });
       onSummaryCompleted({ config }, 'pipeline_review', {
         attempt: reviewAttempt,
         status: 'ok',
@@ -544,14 +552,16 @@ export async function generatePipelineReview(config, progress, opts = {}) {
       });
     } catch (e) {
       log('WARN', `Pipeline review Discord post failed (non-critical): ${e.message}`);
+      const postErrorDiscordIdentity = {
+        run_id: runId,
+        attempt: reviewAttempt,
+        dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? reviewDispatchId ?? null),
+        gateway_label: (resolvePipelineReviewGatewayLabel(pollRes?.status) ?? reviewGatewayLabel ?? null),
+        session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
+      };
       await deps.discord(config, 'WARN', '📋 Pipeline Review: Post Error', `Review completed but Discord post failed: ${e.message}`,
-        buildPipelineReviewDiscordFields({
-          run_id: runId,
-          attempt: reviewAttempt,
-          dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? reviewDispatchId ?? null),
-          gateway_label: (resolvePipelineReviewGatewayLabel(pollRes?.status) ?? reviewGatewayLabel ?? null),
-          session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
-        })
+        buildPipelineReviewDiscordFields(postErrorDiscordIdentity),
+        { correlation: buildPipelineReviewDiscordCorrelation(postErrorDiscordIdentity) },
       ).catch((postErrorNoticeError) => {
         log('DEBUG', `Pipeline review post-error Discord notice failed: ${postErrorNoticeError?.message || postErrorNoticeError}`);
       });
@@ -589,14 +599,16 @@ export async function generatePipelineReview(config, progress, opts = {}) {
       runtime: dispatch,
     });
     log('WARN', `Pipeline review failed (non-critical): ${e.message}`);
+    const failedDiscordIdentity = {
+      run_id: runId,
+      attempt: reviewAttempt,
+      dispatch_id: (resolveStatusDispatchId(lastReviewStatus) ?? reviewDispatchId ?? null),
+      gateway_label: (resolvePipelineReviewGatewayLabel(lastReviewStatus) ?? reviewGatewayLabel ?? null),
+      session_key: (resolveStatusSessionKey(lastReviewStatus) ?? sessionKey ?? null),
+    };
     await deps.discord(config, 'WARN', '📋 Pipeline Review Failed', `Review agent error: ${e.message?.split('\n')[0] || 'unknown'}`,
-      buildPipelineReviewDiscordFields({
-        run_id: runId,
-        attempt: reviewAttempt,
-        dispatch_id: (resolveStatusDispatchId(lastReviewStatus) ?? reviewDispatchId ?? null),
-        gateway_label: (resolvePipelineReviewGatewayLabel(lastReviewStatus) ?? reviewGatewayLabel ?? null),
-        session_key: (resolveStatusSessionKey(lastReviewStatus) ?? sessionKey ?? null),
-      })
+      buildPipelineReviewDiscordFields(failedDiscordIdentity),
+      { correlation: buildPipelineReviewDiscordCorrelation(failedDiscordIdentity) },
     ).catch((discordError) => {
       log('DEBUG', `Pipeline review failure Discord notice failed: ${discordError?.message || discordError}`);
     });

@@ -75,7 +75,7 @@ export function missingBusterCapabilities(capabilities, required = []) {
 }
 
 export function requiredCapabilitiesForSuite(suiteName: string, context: Record<string, any> = {}): string[] {
-  const serve = context.config?.serve || context.payload?.test_config?.serve || context.payload?.config?.serve || {};
+  const serve = context.config?.serve || context.payload?.test_config?.serve || {};
   switch (suiteName) {
     case 'build':
       return [(serve.type || 'static') === 'server'

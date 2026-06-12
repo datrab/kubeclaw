@@ -26,6 +26,10 @@ function stepMetadata(result) {
   return result?.diagnostics?.metadata || {};
 }
 
+function stepRateLimit(result) {
+  return result?.rateLimit || {};
+}
+
 function gateRuntimeEvents(xaddEvents, streamKey) {
   return xaddEvents(streamKey)
     .filter((event) => !String(event.type || '').startsWith('plugin.gate.'))
@@ -105,7 +109,7 @@ async function buildBuiltInRegistry(runtimeRootForRegistry) {
         expectedExit: 1,
         result: {
           ok: false,
-          reason: 'gate_fail',
+          reason: 'verdict_fail',
           status: {
             attempt: 1,
             gateway_label: 'gate-buster-dispatch',
@@ -162,7 +166,7 @@ const config = {
         if (scenario.name === 'rate limit exhausted') {
           assert.equal(stepMetadata(result).dispatch_id, 'dispatch-buster-rate-limit-1', `${scenario.name} missing returned dispatch id`);
           assert.equal(result.correlation.gate_type, 'buster', `${scenario.name} missing returned gate type`);
-          assert.equal(stepMetadata(result).max_rate_limit_pauses, 0, `${scenario.name} missing returned pause budget`);
+          assert.equal(stepRateLimit(result).max_rate_limit_pauses, 0, `${scenario.name} missing returned pause budget`);
         }
       }
   

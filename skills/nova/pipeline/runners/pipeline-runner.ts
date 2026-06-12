@@ -159,9 +159,7 @@ export function printStatus(config, progress) {
   const deps = getPipelineRunnerDeps(config);
   const overview = { project: config.project, timestamp: new Date().toISOString(), modules: {}, gates: {} };
   for (const [id, mod] of Object.entries(progress.modules)) {
-    const projected = loadAuthoritativeModuleState(config, progress, id, {
-      loadStatusFn: deps.loadStatus,
-    });
+    const projected = loadAuthoritativeModuleState(config, progress, id);
     overview.modules[id] = {
       title: mod.title,
       status: projected?.status || 'NOT_INITIALIZED',
@@ -193,9 +191,7 @@ export function dryRun(config, progress) {
     } else {
       const mod = progress.modules[stepId];
       if (!mod) continue;
-      const projected = loadAuthoritativeModuleState(config, progress, stepId, {
-        loadStatusFn: deps.loadStatus,
-      });
+      const projected = loadAuthoritativeModuleState(config, progress, stepId);
       log('STEP', `[${stepId}] ${mod.title} | ${projected?.status || STATUS.PENDING} | model=${mod.forge_model ?? progress.defaults?.models?.forge ?? config.fallback_model}`);
     }
   }

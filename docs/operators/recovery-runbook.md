@@ -143,6 +143,17 @@ cat .swarm/logs/pipeline/latest.json
 find .swarm/logs/pipeline -maxdepth 3 -type f | sort | tail -40
 ```
 
+Then inspect the run-scoped lifecycle authority before deciding to resume:
+
+```bash
+RUN_ID="$(jq -r '.run_id' .swarm/logs/pipeline/latest.json)"
+jq . ".swarm/logs/pipeline/runs/${RUN_ID}/lifecycle/read-models.json"
+tail -40 ".swarm/logs/pipeline/runs/${RUN_ID}/lifecycle/canonical-events.jsonl"
+rg '"recovery.stale_blocked|recovery.stale_reset|terminal_status|reason_code"' ".swarm/logs/pipeline/runs/${RUN_ID}"
+```
+
+Do not resume from Discord text alone. If lifecycle read models show `recovery.stale_blocked` or an active session with missing `run_id`, `attempt`, `dispatch_id`, or `session_key`, collect evidence and escalate instead of forcing a reset.
+
 Resume with a focused prompt:
 
 ```bash
@@ -154,6 +165,19 @@ For longer recovery guidance:
 ```bash
 node /app/skills/pipeline.ts --project <name> --nova-channel <id> --resume --prompt-file <repo-relative-file>
 ```
+
+### Buster task does not settle
+
+Buster owns the Redis task consumer and must write a terminal completion or dead-letter before ACK. Check both the worker logs and Redis streams:
+
+```bash
+kubectl -n "$NAMESPACE" logs deployment/agent-buster -c buster-pipeline --tail=300
+redis-cli -h redis-master.kubeclaw.svc.cluster.local XPENDING swarm:buster:tasks buster-workers
+redis-cli -h redis-master.kubeclaw.svc.cluster.local XREVRANGE swarm:buster:tasks:dead-letter + - COUNT 20
+redis-cli -h redis-master.kubeclaw.svc.cluster.local XREVRANGE "swarm:pipeline:<project>:completions" + - COUNT 20
+```
+
+If logs show `BUSTER_TASK_MALFORMED`, inspect task identity fields before retrying: `task_type`, `module_id`, `project`, `run_id`, `attempt`, `dispatch_id`, `commit_hash`, `output_file`, `stage_id`, `timeout_seconds`, `session.runtime`, `session.model`, `session.agentId`, `session.cwd`, `session.label`, `suites`, and `test_config.suite_timeout_ms`. If logs show `BUSTER_TASK_TERMINAL_GUARANTEE_FAILED`, treat it as a Redis/task reliability incident because ACK was blocked by missing completion/dead-letter evidence.
 
 ## Verification
 
@@ -177,6 +201,8 @@ Escalate with this evidence:
 - pipeline status JSON
 - relevant summary, artifact, or failure files
 - exact recovery command already attempted
+
+For storage or security incidents, also include the checks from `../deployment/persistent-storage.md` and `security-operations.md`: retained PVC list, service exposure, NetworkPolicy list, Buster privilege/mount evidence, and persisted-config placeholder scan. Do not include decoded Secret values.
 
 ## Prevention
 

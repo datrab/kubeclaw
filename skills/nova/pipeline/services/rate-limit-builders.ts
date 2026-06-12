@@ -297,6 +297,46 @@ export function createTrackedGateSessionRateLimitExhaustedResultOptions({
   };
 }
 
+export function createTrackedModuleSessionRateLimitExhaustedResultOptions({
+  moduleId = null,
+  moduleDir = null,
+  phase = null,
+  identity = {},
+  statusOverrides = {},
+  resultOverrides = {},
+  exit = null,
+} = {}) {
+  return ({ result = {}, status = result?.status || {}, maxPauses } = {}) => {
+    const ctx = { result, status, maxPauses };
+    const resolvedStatusOverrides = resolveRateLimitOption(statusOverrides, ctx) || {};
+    const resolvedResultOverrides = resolveRateLimitOption(resultOverrides, ctx) || {};
+    const resolvedIdentity = resolveRateLimitIdentity(identity, ctx);
+    const resolvedExit = resolveRateLimitOption(exit, ctx);
+    const moduleIdentity = {
+      ...(moduleId == null ? {} : { module: moduleId, module_id: moduleId }),
+      ...(moduleDir == null ? {} : { module_dir: moduleDir }),
+      ...(phase == null ? {} : { phase, current_phase: phase }),
+    };
+
+    return {
+      identity: {
+        ...resolvedIdentity,
+        session_key: (resolveStatusSessionKey(status) ?? resolvedIdentity.session_key ?? null),
+      },
+      maxPauses,
+      statusOverrides: {
+        ...moduleIdentity,
+        ...resolvedStatusOverrides,
+      },
+      ...(resolvedExit == null ? {} : { exit: resolvedExit }),
+      resultOverrides: {
+        ...moduleIdentity,
+        ...resolvedResultOverrides,
+      },
+    };
+  };
+}
+
 export function buildModuleSessionRateLimitStatus(status = {}, {
   moduleId = null,
   phase = null,

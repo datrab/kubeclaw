@@ -140,6 +140,13 @@ export function buildBusterGateControlResult(config, gateId, gate, result = {}, 
   const failureClass = requireBusterFailureClass(result, gateId);
   const decision = busterGateDecisionForResult(result, failureClass);
   const runId = result?.run_id || config?._runId || config?.run_id || null;
+  const rateLimit = decision.outcomeClass === 'rate_limited'
+    ? {
+        max_rate_limit_pauses: result?.max_rate_limit_pauses ?? result?.rate_limit_status?.max_rate_limit_pauses ?? null,
+        rate_limit_pauses: result?.rate_limit_pauses ?? null,
+        rate_limit_status: cloneSerializable(result?.rate_limit_status || null),
+      }
+    : null;
   const metadata = {
     gate_id: gateId,
     gate_type: gate?.type || 'buster',
@@ -153,8 +160,6 @@ export function buildBusterGateControlResult(config, gateId, gate, result = {}, 
     gateway_label: result?.gateway_label || null,
     session_key: result?.session_key || null,
     dispatch_id: result?.dispatch_id || null,
-    max_rate_limit_pauses: result?.max_rate_limit_pauses ?? result?.rate_limit_status?.max_rate_limit_pauses ?? null,
-    rate_limit_status: cloneSerializable(result?.rate_limit_status || null),
     status: cloneSerializable(result?.status || null),
     polling_git: cloneSerializable(result?.polling_git || null),
     remaining_issues: cloneSerializable(result?.remaining_issues || null),
@@ -170,6 +175,7 @@ export function buildBusterGateControlResult(config, gateId, gate, result = {}, 
     gateRunStatus: isBusterGatePassResult(result) ? 'PASS' : 'FAIL',
     outcomeClass: decision.outcomeClass,
     recommendation: decision.nextAction === 'pass' ? 'proceed' : 'stop',
+    rateLimit,
     metrics: {
       fix_attempts: result?.fix_attempts ?? 0,
       completion_source: result?.completion_source || null,

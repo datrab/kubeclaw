@@ -110,6 +110,27 @@ Telemetry write failures are non-blocking for scheduler truth when local artifac
 rg '"observability.degraded|observability.restored"' Projects/my-project/src/.swarm/logs/pipeline
 ```
 
+The Redis telemetry path is:
+
+```text
+telemetry builder in skills/nova/pipeline/services/telemetry/builders.ts
+  -> emitEvent/emitEventNonBlocking in services/telemetry/dispatch.ts
+  -> telemetry sink contract in services/telemetry-sink-contract.ts
+  -> Redis stream writer in services/telemetry-stream.ts
+  -> pipeline:telemetry:<project>:<run_id>
+```
+
+OpenClaw hook observability is separate. The `kubeclaw-agent-observer` plugin registers OpenClaw hooks in `plugins/openclaw-agent-observer/src/index.ts`, normalizes hook/model usage events in `hook-normalizers.ts`, and writes Redis events through `redis-writer.ts`. Its config defaults come from `agent_observability.plugin_control.*` and `agent_observability.ingester.*` in `swarm.config.json`.
+
+Inspect observer streams and dead letters with the stream names configured by the plugin source:
+
+```bash
+redis-cli -h redis-master.kubeclaw.svc.cluster.local --scan --pattern '*agent*observability*'
+redis-cli -h redis-master.kubeclaw.svc.cluster.local --scan --pattern '*openclaw*'
+```
+
+Open question: this repository verifies observer plugin packaging and source-level stream policy, but it does not include a live cluster check proving every OpenClaw hook fires in production.
+
 ## Discord Audit
 
 Discord notifications are presentation output, not scheduler authority. When configured, KubeClaw writes delivery audit entries to:
@@ -129,6 +150,7 @@ If Discord is quiet but artifacts and Redis show progress, continue the operatio
 - Buster not consuming tasks: inspect `buster-pipeline` logs, worker status, Redis connectivity, and `BUSTER_TASK_STREAM`
 - Redis telemetry empty: inspect `buster-telemetry-fallback.jsonl`, Redis connectivity, and local artifact logs
 - Discord missing: inspect `discord.jsonl`; webhook delivery can fail while the pipeline continues
+- Observer stream quiet: check `agent_observability.plugin_control.enabled`, plugin runtime logs, Redis connectivity, and whether OpenClaw emitted the hook family being inspected
 
 ## Related Pages
 

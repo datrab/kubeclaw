@@ -49,7 +49,12 @@ export async function observeAcpMonitorSurfaces(config, sessionLabelOrKey, ident
   let monitor = monitorState;
 
   for (let poll = 0; poll < maxPolls; poll += 1) {
-    monitor = await getAcpMonitorState(config, sessionLabelOrKey, monitorState, opts.streamLogPath || null);
+    monitor = await getAcpMonitorState({
+      config,
+      sessionLabelOrKey,
+      previousState: monitorState,
+      streamLogPath: opts.streamLogPath || null,
+    });
     monitorState = monitor;
 
     const data = buildObservabilityData(normalizedIdentity, monitor);

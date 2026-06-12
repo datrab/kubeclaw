@@ -100,3 +100,26 @@ Recommended sequence:
 - `skills/nova/pipeline/runners/pipeline-runner.ts`
 - `skills/common/pipeline/services/acp-gateway-contract.ts`
 - `plugins/openclaw-agent-observer/`
+
+## Runtime Replacement Contract
+
+| Contract area | Current owner | Replacement must provide |
+| --- | --- | --- |
+| Launch/session identity | `skills/nova/pipeline/agents/orchestration.ts`; common ACP lifecycle helpers | stable `run_id`, `attempt`, `dispatch_id`, `session_key`, model/runtime labels, and stream log path where available |
+| Completion signal | module/gate runners and `pipeline-step-result.ts` | typed step result, terminal mapping, diagnostics, and artifacts before status advancement |
+| Gateway/status health | `skills/common/pipeline/services/acp-gateway-contract.ts`; chart health script | readiness/status command with explicit failure reasons, not silent timeout |
+| Observability | telemetry builders, Discord identity fields, observer plugin | event identity and redaction compatible with current telemetry contracts |
+| Recovery | `session-authority.ts`; `pipeline-runner-recovery.ts` | strong active-session identity or explicit non-resumable semantics |
+
+## Verification Path
+
+Run these before making a runtime adapter the default:
+
+```bash
+node tests/verification/behavior/verify.mjs --source-root "$PWD" --area agent-lifecycle
+node tests/verification/behavior/verify.mjs --source-root "$PWD" --area runtime-monitor
+node tests/verification/contracts/check-acp-gateway-contract-surface.mjs --source-root "$PWD"
+node tests/verification/contracts/check-pipeline-step-result-surface.mjs --source-root "$PWD"
+```
+
+If a replacement runtime cannot support resume, document that as a boundary and force explicit rerun semantics rather than projecting weak state into lifecycle read models.

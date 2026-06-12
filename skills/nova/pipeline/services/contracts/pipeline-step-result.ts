@@ -103,8 +103,31 @@ function isPlainObject(value: unknown): value is UnknownRecord {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
 
-function normalizeTerminal({ outcome }: UnknownRecord = {}): UnknownRecord {
-  const decision = buildPipelineTerminalDecisionFromStepOutcome({ outcome });
+function normalizeTerminal({
+  outcome,
+  stepId,
+  correlation,
+  terminalAction,
+  terminalScope,
+  terminalReasonCode = null,
+  terminalHumanReason = null,
+  terminalSource = null,
+  terminalMetadata = {},
+}: UnknownRecord = {}): UnknownRecord {
+  const decision = buildPipelineTerminalDecisionFromStepOutcome({
+    outcome,
+    action: terminalAction,
+    scope: terminalScope,
+    stepId,
+    reasonCode: terminalReasonCode,
+    humanReason: terminalHumanReason,
+    runId: correlation?.run_id ?? correlation?.runId ?? null,
+    attempt: correlation?.attempt ?? null,
+    dispatchId: correlation?.dispatch_id ?? correlation?.dispatchId ?? null,
+    sessionKey: correlation?.session_key ?? correlation?.sessionKey ?? null,
+    source: terminalSource,
+    metadata: terminalMetadata,
+  });
   return {
     status: decision?.status ?? null,
     decision,
@@ -123,7 +146,14 @@ export function buildPipelineStepResult({
   correlation = {},
   remediation = null,
   wait = null,
+  rateLimit = null,
   controlResult = null,
+  terminalAction = null,
+  terminalScope = null,
+  terminalReasonCode = null,
+  terminalHumanReason = null,
+  terminalSource = null,
+  terminalMetadata = {},
 }: UnknownRecord = {}): UnknownRecord {
   const normalizedStepType = normalizeStepType(stepType);
   const normalizedStepId = normalizeStepId(stepId);
@@ -153,7 +183,18 @@ export function buildPipelineStepResult({
       ...(diagnostics?.contract_diagnostic ? { contract_diagnostic: cloneSerializable(diagnostics.contract_diagnostic) } : {}),
     },
     correlation: cloneSerializable(correlation || {}),
-    terminal: normalizeTerminal({ outcome: normalizedOutcome }),
+    rateLimit: rateLimit == null ? null : cloneSerializable(rateLimit),
+    terminal: normalizeTerminal({
+      outcome: normalizedOutcome,
+      stepId: normalizedStepId,
+      correlation,
+      terminalAction,
+      terminalScope,
+      terminalReasonCode,
+      terminalHumanReason,
+      terminalSource,
+      terminalMetadata,
+    }),
   };
 
   const errors = validatePipelineStepResult(result);
@@ -171,6 +212,13 @@ export function buildPipelineStepResultFromControlResult(controlResult: UnknownR
   correlation = {},
   remediation = null,
   wait = null,
+  rateLimit = null,
+  terminalAction = null,
+  terminalScope = null,
+  terminalReasonCode = null,
+  terminalHumanReason = null,
+  terminalSource = null,
+  terminalMetadata = {},
 }: UnknownRecord = {}): UnknownRecord {
   const action = pipelineStepActionForControlAction(controlResult?.nextAction);
   return buildPipelineStepResult({
@@ -188,7 +236,14 @@ export function buildPipelineStepResultFromControlResult(controlResult: UnknownR
     correlation,
     remediation,
     wait,
+    rateLimit,
     controlResult,
+    terminalAction,
+    terminalScope,
+    terminalReasonCode,
+    terminalHumanReason,
+    terminalSource,
+    terminalMetadata,
   });
 }
 
@@ -223,6 +278,10 @@ export function validatePipelineStepResult(result: unknown = {}): string[] {
   if (Object.prototype.hasOwnProperty.call(result?.terminal || {}, 'exitLabel')) errors.push('numeric terminal exitLabel must not be present');
   if (Object.prototype.hasOwnProperty.call(result?.terminal || {}, 'exit_code')) errors.push('numeric terminal exit_code must not be present');
   if (Object.prototype.hasOwnProperty.call(result?.terminal || {}, 'exit_label')) errors.push('numeric terminal exit_label must not be present');
+  if (result.rateLimit != null && !isPlainObject(result.rateLimit)) errors.push('rateLimit must be an object or null');
+  if (result.outcome === PIPELINE_STEP_OUTCOMES.RATE_LIMITED && !isPlainObject(result.rateLimit)) {
+    errors.push('rateLimit must be provided for rate_limited outcomes');
+  }
 
   const expectedTerminalStatus = pipelineTerminalStatusForStepOutcome(result.outcome);
   const actualTerminalStatus = result?.terminal?.status ?? null;
@@ -268,17 +327,16 @@ export function pipelineStepDiagnosticSummary(result: unknown = {}): string | nu
 
 export function pipelineStepRateLimitDetails(result: unknown = {}): UnknownRecord {
   const stepResult = assertPipelineStepResult(result);
-  const metadata = stepResult?.diagnostics?.metadata || {};
-  const controlMetadata = stepResult?.diagnostics?.typed?.controlResult?.diagnostics?.metadata || {};
-  const rateLimitStatus = metadata.rate_limit_status || controlMetadata.rate_limit_status || null;
-  const maxRateLimitPauses = metadata.max_rate_limit_pauses
-    ?? controlMetadata.max_rate_limit_pauses
+  const rateLimit = stepResult.rateLimit && typeof stepResult.rateLimit === 'object' ? stepResult.rateLimit : {};
+  const rateLimitStatus = rateLimit.rate_limit_status || null;
+  const maxRateLimitPauses = rateLimit.max_rate_limit_pauses
     ?? rateLimitStatus?.max_rate_limit_pauses
     ?? null;
   return {
-    source: 'typed_step_result_diagnostics',
+    source: 'typed_step_result_rate_limit',
     rate_limit_exhausted: stepResult.outcome === PIPELINE_STEP_OUTCOMES.RATE_LIMITED,
     max_rate_limit_pauses: maxRateLimitPauses,
+    rate_limit_pauses: rateLimit.rate_limit_pauses ?? null,
     rate_limit_status: rateLimitStatus,
   };
 }

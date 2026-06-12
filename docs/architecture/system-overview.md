@@ -63,6 +63,17 @@ The split lets operators ask two different questions during debugging:
 
 Deployment details live in `../deployment/README.md`. Pipeline behavior lives in `../pipeline/README.md`. Exact values and environment variables live in `../reference/README.md`.
 
-## Open Issues
+## Security And Networking Baseline
 
-- Buster privilege, remaining temporary NodePort exposure, persisted runtime secrets, and missing NetworkPolicies are tracked in `../open-issues.md`.
+Current deployment includes a portable Kubernetes NetworkPolicy baseline. `scripts/deploy.sh infra` applies `my-values/infra/network-policies.yaml` after shared infrastructure and the Buster namespace fence, and teardown removes the same manifest with `kubectl delete -n "$NAMESPACE" -f "$INFRA_DIR/network-policies.yaml" --ignore-not-found`.
+
+The baseline is deliberately standard `networking.k8s.io/v1` NetworkPolicy, so it verifies namespace isolation without relying on Cilium-specific features. It contains 13 policy objects: namespace default-deny ingress/egress, DNS egress, agent egress to Redis/Qdrant/LiteLLM/registries plus TCP `22`, `80`, and `443`, Redis ingress from agents and Clawdeck, Clawdeck Redis egress, Qdrant/LiteLLM/PostgreSQL/registry ingress, LiteLLM and registry-mirror egress, and temporary public ingress for current agent/LiteLLM ports. `tests/verification/deployment/check-deployment-truth.mjs` asserts those selectors and ports.
+
+What remains open is narrower than "missing NetworkPolicies": egress is still port-based rather than FQDN-based, Kubernetes-native observability resources such as ServiceMonitor/PodMonitor are not present, and LiteLLM plus Prism preview still have temporary NodePort exposure. See `../deployment/networking.md`, `../architecture/security-model.md`, and `../open-issues.md` before changing exposure.
+
+Operator verification:
+
+```bash
+node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
+rg -n "kind: NetworkPolicy" my-values/infra/network-policies.yaml
+```

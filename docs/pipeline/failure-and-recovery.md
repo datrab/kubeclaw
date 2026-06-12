@@ -87,6 +87,17 @@ status says active
 
 Nova refuses age-only reset when no typed active session evidence exists. That is intentional: an old timestamp is not proof that a child session is gone or safe to kill.
 
+The strong identity fields are defined in `skills/nova/pipeline/services/session-authority.ts`: `run_id`, `attempt`, `dispatch_id`, and `session_key`. `gateway_label` is optional identity evidence. Persisted `status.active_agent`, active-session JSON files, and process-local tracked agents are diagnostic evidence only; they cannot rehydrate authority after restart. If lifecycle read models do not contain strong active-session identity, `pipeline-runner-recovery.ts` appends `recovery.stale_blocked`, emits a durable operator alert, and leaves the module or gate unchanged.
+
+Recovery actions are source-coded, not inferred from age alone:
+
+| Evidence | Runtime owner | Recovery action | Operator action |
+| --- | --- | --- | --- |
+| lifecycle active session has strong identity and monitor confirms terminal | `session-authority.ts`; `pipeline-runner-recovery.ts`; ACP monitor | `observed_terminal`; reset module/gate to retryable state | inspect `canonical-events.jsonl`, then resume if the failure cause is understood |
+| lifecycle active session has strong identity and monitor shows active orphan | `terminateSession()` plus `reaperAfterKill()` | `killed_orphan` only after stop confirmation | collect session key, dispatch id, gateway label, and last logs before resuming |
+| lifecycle active session missing strong identity | `buildActiveSessionAuthorityPolicy()` | `identity_unconfirmed`; `recovery.stale_blocked` | do not force reset; inspect read models and active-session files, then escalate |
+| no typed active session evidence, only stale status age | `pipeline-runner-recovery.ts` | blocks age-only recovery | treat as weak evidence and avoid killing unknown sessions |
+
 ## Completion Conflicts
 
 Buster completions and local lifecycle/status can disagree. Nova handles that through completion adjudication:
@@ -97,6 +108,17 @@ Buster completions and local lifecycle/status can disagree. Nova handles that th
 - Redis completion is rate-limited or timeout-owned by Buster: preserve the typed outcome.
 
 When terminal artifacts disagree with status JSON, inspect lifecycle read models and completion drift diagnostics before rerunning.
+
+## Authority Matrix
+
+| Surface | Authority level | Owned by | Trust rule |
+| --- | --- | --- | --- |
+| lifecycle `canonical-events.jsonl` and `read-models.json` | scheduler authority | `skills/nova/pipeline/services/status-store-lifecycle/**` | legal/idempotent events drive current state |
+| `.swarm/logs/pipeline/latest.json` | latest pointer/read surface | `skills/nova/pipeline/services/artifact-bundle.ts` and `status-store.ts` | use to find the run, then verify lifecycle/read-model details |
+| Redis Buster completion | candidate evidence | `completion-adjudicator.ts`; `task-completion.ts` | accepted only when identity matches active dispatch |
+| Redis dead-letter | failure evidence | `skills/buster/pipeline/services/task-completion.ts` | proves task failed before terminal completion; does not directly mutate Nova state |
+| Discord message | presentation | notification/telemetry sinks | never scheduler authority |
+| pod logs and Buster output files | diagnostic evidence | Buster runtime and suites | use for root cause and reproduction |
 
 ## Failure Classes
 

@@ -1,4 +1,4 @@
-import { getRunStats } from '../../core/runtime.ts';
+import { getRunId, getRunStats } from '../../core/runtime.ts';
 import { recordObservabilityDegraded, recordObservabilityRestored } from '../observability.ts';
 import { emitEvent, emitEventNonBlocking } from './dispatch.ts';
 
@@ -231,6 +231,7 @@ export function onGateStarted(ctx, gateId, gate = {}, options = {}) {
  */
 export function onGatePass(ctx, gateId, data = {}) {
   const payload = {
+    run_id: data.run_id || getRunId(ctx?.config || {}) || ctx?.runId || null,
     gate_id: gateId,
     gate_type: data.gate_type || null,
     verdict: 'GO',
@@ -239,6 +240,7 @@ export function onGatePass(ctx, gateId, data = {}) {
     fix_cycle: data.fix_cycle ?? null,
     duration_seconds: data.duration_seconds ?? null,
     dispatch_id: data.dispatch_id ?? null,
+    gateway_label: data.gateway_label ?? null,
     session_key: data.session_key || null,
   };
 
@@ -258,7 +260,9 @@ export function onGatePass(ctx, gateId, data = {}) {
  * @param {object} data - enriched telemetry payload
  */
 export function onGateFail(ctx, gateId, data = {}) {
+  const gatewayLabel = data.gateway_label ?? null;
   const payload = {
+    run_id: data.run_id || getRunId(ctx?.config || {}) || ctx?.runId || null,
     gate_id: gateId,
     gate_type: data.gate_type || null,
     verdict: 'NO-GO',
@@ -269,7 +273,7 @@ export function onGateFail(ctx, gateId, data = {}) {
     attempt: data.attempt ?? null,
     reason: data.reason || null,
     dispatch_id: data.dispatch_id ?? null,
-    gateway_label: data.gateway_label ?? null,
+    gateway_label: gatewayLabel,
     session_key: data.session_key || null,
   };
 

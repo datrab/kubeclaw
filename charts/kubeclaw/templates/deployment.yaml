@@ -251,6 +251,21 @@ spec:
                 if (type === 'dir' && !stat.isDirectory()) throw new Error(`${path} is not a directory`);
               }
 
+              let cachedSwarmConfig = null;
+              function readSwarmConfig() {
+                if (cachedSwarmConfig) return cachedSwarmConfig;
+                const swarmConfigPath = process.env.SWARM_CONFIG;
+                if (!swarmConfigPath) throw new Error('SWARM_CONFIG is required');
+                cachedSwarmConfig = JSON.parse(fs.readFileSync(swarmConfigPath, 'utf8'));
+                return cachedSwarmConfig;
+              }
+
+              function busterHeartbeatPath() {
+                const path = readSwarmConfig()?.buster?.runtime?.heartbeat_path;
+                if (typeof path === 'string' && path.trim()) return path.trim();
+                throw new Error('config.buster.runtime.heartbeat_path is required');
+              }
+
               function baseUrl(raw) {
                 return String(raw || '').trim().replace(/\/tools\/invoke$/, '').replace(/\/v1$/, '').replace(/\/$/, '');
               }
@@ -352,7 +367,7 @@ spec:
 
               function checkBusterHeartbeat() {
                 if (agent !== 'buster' || !enabled('KUBECLAW_HEALTH_CHECK_BUSTER_HEARTBEAT', true)) return;
-                const path = process.env.BUSTER_HEARTBEAT_PATH || '/tmp/kubeclaw-buster-heartbeat';
+                const path = busterHeartbeatPath();
                 const maxAgeMs = Number.parseInt(process.env.KUBECLAW_HEALTH_BUSTER_HEARTBEAT_MAX_AGE_MS || '120000', 10);
                 const stat = fs.statSync(path);
                 const age = Date.now() - stat.mtimeMs;
@@ -494,6 +509,8 @@ spec:
               value: {{- if and (eq (.Values.agentRole | default "") "buster") (.Values.busterPipeline.enabled | default false) }} "gateway"{{- else }} "agent"{{- end }}
             - name: GIT_REPO_URL
               value: {{ .Values.agent.git.repoUrl | quote }}
+            - name: REPO_ROOT
+              value: "/home/node/.openclaw/workspace/git-repo"
             - name: REDIS_HOST
               value: {{ .Values.redis.host | quote }}
             - name: REDIS_PORT
@@ -540,8 +557,6 @@ spec:
               value: {{ .Values.shutdown.drainFile | default "/tmp/kubeclaw-draining" | quote }}
             - name: KUBECLAW_PRESTOP_DRAIN_SECONDS
               value: {{ .Values.shutdown.preStopDrainSeconds | default 5 | quote }}
-            - name: BUSTER_HEARTBEAT_PATH
-              value: {{ .Values.probes.dependencies.busterHeartbeat.path | default "/tmp/kubeclaw-buster-heartbeat" | quote }}
             - name: KUBECLAW_HEALTH_TIMEOUT_MS
               value: {{ mul (.Values.probes.readiness.timeoutSeconds | default 10 | int) 1000 | quote }}
             - name: KUBECLAW_HEALTH_CHECK_GATEWAY
@@ -720,6 +735,8 @@ spec:
               value: "buster-pipeline"
             - name: GIT_REPO_URL
               value: {{ .Values.agent.git.repoUrl | quote }}
+            - name: REPO_ROOT
+              value: "/home/node/.openclaw/workspace/git-repo"
             - name: REDIS_HOST
               value: {{ .Values.redis.host | quote }}
             - name: REDIS_PORT
@@ -766,10 +783,6 @@ spec:
               value: {{ .Values.shutdown.drainFile | default "/tmp/kubeclaw-draining" | quote }}
             - name: KUBECLAW_PRESTOP_DRAIN_SECONDS
               value: {{ .Values.shutdown.preStopDrainSeconds | default 5 | quote }}
-            - name: BUSTER_HEARTBEAT_PATH
-              value: {{ .Values.probes.dependencies.busterHeartbeat.path | default "/tmp/kubeclaw-buster-heartbeat" | quote }}
-            - name: BUSTER_HEARTBEAT_INTERVAL_MS
-              value: {{ .Values.busterPipeline.heartbeatIntervalMs | default 1000 | quote }}
             - name: KUBECLAW_HEALTH_TIMEOUT_MS
               value: {{ mul (.Values.probes.readiness.timeoutSeconds | default 10 | int) 1000 | quote }}
             - name: KUBECLAW_HEALTH_CHECK_GATEWAY

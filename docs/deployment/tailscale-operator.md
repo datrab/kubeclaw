@@ -73,3 +73,14 @@ kubectl get ingressclass tailscale
 - OAuth scopes/tags invalid: use upstream Tailscale docs to correct the tailnet policy.
 - `IngressClass tailscale` missing: rerun `./scripts/deploy.sh tailscale` and check operator pods.
 - final preview has no URL: inspect the preview Ingress and Tailscale operator logs.
+
+## Source-Backed Contract
+
+| Contract | Source | Operator proof |
+| --- | --- | --- |
+| OAuth Secret name and keys | `my-values/setup-secrets.sh`; `my-values/infra/tailscale-operator-values.yaml` | `kubectl -n tailscale get secret operator-oauth -o jsonpath='{.data.client_id}'` and `client_secret` |
+| Helm repository and release | `scripts/deploy.sh` | `helm -n tailscale status tailscale-operator` |
+| Operator values | `my-values/infra/tailscale-operator-values.yaml` | rendered operator pods use the expected namespace/tags from values |
+| Final-preview consumer | `docs/operators/final-preview-tailscale.md`; Buster namespace broker templates | preview Ingress status gets a Tailscale URL |
+
+Repo checks prove that KubeClaw asks for the official Tailscale operator path and expected Secret. They do not prove the tailnet ACL, OAuth client validity, tag ownership, or DNS propagation.

@@ -383,6 +383,7 @@ export const TELEMETRY_PAYLOAD_SCHEMAS: Record<string, TelemetryPayloadSchema> =
     reviewers: nullable(arrayOrObject),
   }),
   'gate.verdict': schema({ gate_id: nonEmptyString, verdict }, {
+    run_id: nullable(nonEmptyString),
     gate_type: nullable(nonEmptyString),
     issues_count: nullable(number),
     blockers_count: nullable(number),

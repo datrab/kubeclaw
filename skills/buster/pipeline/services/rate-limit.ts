@@ -194,12 +194,12 @@ export function buildProbeMonitorOptions(gatewayUrl: string | null, gatewayToken
 
 async function probeSessionLiveness(childSessionKey: string, gatewayUrl: string | null, gatewayToken: string | null, acpMonitorConfig: Record<string, unknown> | null | undefined): Promise<BusterSessionLiveness> {
   try {
-    const monitorState = await getAcpMonitorState(
+    const monitorState = await getAcpMonitorState({
       childSessionKey,
-      null,
-      {},
-      buildProbeMonitorOptions(gatewayUrl, gatewayToken, acpMonitorConfig),
-    );
+      streamLogPath: null,
+      previousState: {},
+      monitorOptions: buildProbeMonitorOptions(gatewayUrl, gatewayToken, acpMonitorConfig),
+    });
     const gatewayUnreachable = monitorState.gatewayUnreachable === true;
     const gatewayDetail = stringField(monitorState.gatewayDetail) || stringField(monitorState.detail);
     if (gatewayUnreachable) {

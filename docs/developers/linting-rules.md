@@ -135,3 +135,21 @@ node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
 - `skills/nova/pipeline/tools/lint-report/container-yaml-tools.ts`
 - `skills/nova/pipeline/services/lint.ts`
 - `skills/nova/pipeline/services/module-validators.ts`
+
+## Rule And Tool Contract
+
+| Surface | Source owner | Expected output |
+| --- | --- | --- |
+| CLI flags and exit behavior | `skills/nova/pipeline/tools/lint-report.ts`; `lint-report/output.ts` | `--repo`, `--tier`, `--project`, `--module-path`, `--changed-files`, `--output`, config flags; process exits nonzero on errors or tool failures |
+| Tool discovery | `lint-report/discovery.ts`; `tool-registry.ts`; `container-yaml-tools.ts` | applicable tools based on project files and tier; config-missing results instead of implicit repo-local ESLint/Semgrep fallback |
+| Report schema | `lint-report/report.ts`; `lint-report/output.ts` | JSON summary with total errors/warnings, per-tool status, findings, duration, and diagnostics |
+| Pipeline consumption | `skills/nova/pipeline/services/lint.ts`; `module-validators.ts` | pre-check/full lint can request fixes, block, or provide evidence according to policy |
+
+## Failure Signals
+
+- `unknown tier`: CLI input is invalid; use `pre-check` or `full`.
+- `eslint-config-missing` or `semgrep-config-missing`: platform-level configs were not discovered; do not silently fall back to repo defaults.
+- parse failure finding: tool output format changed or command failed unexpectedly.
+- `tools_failed` greater than zero: treat as environment/tooling issue, not clean code.
+
+Run the lint-report unit tests when changing parsing/discovery and the pipeline behavior area when changing how lint results affect module/gate decisions.

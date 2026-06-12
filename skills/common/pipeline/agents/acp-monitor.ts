@@ -377,31 +377,38 @@ function looksLikeSessionKey(value: any) {
   return typeof value === 'string' && value.includes(':');
 }
 
-function isNovaSignature(args: any[]) {
-  return args.length >= 2 && args[0] && typeof args[0] === 'object' && typeof args[1] === 'string';
-}
+export async function getAcpMonitorState(request: AnyRecord) {
+  if (arguments.length !== 1) {
+    throw new TypeError('getAcpMonitorState requires exactly one options object');
+  }
+  if (!request || typeof request !== 'object' || Array.isArray(request)) {
+    throw new TypeError('getAcpMonitorState requires a single options object');
+  }
 
-export async function getAcpMonitorState(...args: any[]) {
-  if (isNovaSignature(args)) {
-    const [config, sessionLabelOrKey, prevOrStream = {}, maybeStreamLogPath = null] = args;
-    const entry = (typeof prevOrStream === 'string' || prevOrStream === null)
-      ? {}
-      : await resolveTrackedAgent(sessionLabelOrKey);
-    const prev = (typeof prevOrStream === 'string' || prevOrStream === null) ? {} : (prevOrStream || {});
-    const streamLogPath = (typeof prevOrStream === 'string' || prevOrStream === null)
-      ? (prevOrStream || maybeStreamLogPath || null)
-      : (entry?.streamLogPath || maybeStreamLogPath || null);
-    const sessionKey = entry?.sessionKey || (looksLikeSessionKey(sessionLabelOrKey) ? sessionLabelOrKey : null);
+  if (request.config) {
+    const config = request.config;
+    const sessionLabelOrKey = request.sessionLabelOrKey ?? request.sessionLabel ?? request.sessionKey ?? null;
+    const entry = request.trackedAgent || await resolveTrackedAgent(sessionLabelOrKey);
+    const streamLogPath = entry?.streamLogPath ?? request.streamLogPath ?? null;
+    const previousState = request.previousState ?? {};
+    const sessionKey = request.childSessionKey ?? entry?.sessionKey ?? (looksLikeSessionKey(sessionLabelOrKey) ? sessionLabelOrKey : null);
     const monitorCfg = getAcpMonitorConfig(config);
-    return getDirectAcpMonitorState(sessionKey, streamLogPath, prev, {
+    return getDirectAcpMonitorState(sessionKey, streamLogPath, previousState, {
       ...monitorCfg,
       gatewayUrl: config.gatewayUrl ?? config.gateway_url,
       gatewayToken: config.gatewayToken ?? config.gateway_token,
     });
   }
 
-  const [childSessionKey, streamLogPath, prev = {}, opts = {}] = args;
-  return getDirectAcpMonitorState(childSessionKey, streamLogPath, prev, opts);
+  const {
+    childSessionKey = null,
+    sessionKey = null,
+    streamLogPath = null,
+    previousState = {},
+    monitorOptions = null,
+    ...monitorPolicy
+  } = request;
+  return getDirectAcpMonitorState(childSessionKey ?? sessionKey, streamLogPath, previousState, monitorOptions || monitorPolicy);
 }
 
 
@@ -470,7 +477,12 @@ export function createAcpMonitorEventAdapter(childSessionKey: any, streamLogPath
   const monitorOpts = { ...(opts.monitorOpts || opts), budget, signal };
   const monitorCfg = getAcpMonitorConfig(monitorOpts);
   const pollMs = opts.pollMs ?? monitorCfg.monitorPollMs;
-  const getState: AnyFunction = opts.getAcpMonitorState || getDirectAcpMonitorState;
+  const getState: AnyFunction = opts.getAcpMonitorState || ((request: AnyRecord = {}) => getDirectAcpMonitorState(
+    request.childSessionKey,
+    request.streamLogPath,
+    request.previousState,
+    request.monitorOptions,
+  ));
   const stopOnTerminal = opts.stopOnTerminal !== false;
   let previousState: AnyRecord = opts.initialState || {};
   let lastSessionSignature: string | null = null;
@@ -516,7 +528,14 @@ export function createAcpMonitorEventAdapter(childSessionKey: any, streamLogPath
     try {
       while (!signal.aborted) {
         budget?.throwIfExhausted?.('acp_monitor_event_adapter_budget_exhausted');
-        const state = await getState(childSessionKey, streamLogPath, previousState, monitorOpts);
+        const state = await getState({
+          childSessionKey,
+          streamLogPath,
+          previousState,
+          monitorOptions: monitorOpts,
+          budget,
+          signal,
+        });
         emitSessionState(state);
         emitTranscriptDelta(state);
         previousState = state;
@@ -583,16 +602,21 @@ function isBudgetOwnedPipelineEventAbort(error: any, budget: AnyRecord) {
 
 // ── Wait for Idle ────────────────────────────────────────────────────────────
 
-export async function waitForSessionIdle(childSessionKey: any, optsOrGraceMs: AnyRecord | number = {}, maybeTimeoutMs: number = 600000) {
-  const opts = (optsOrGraceMs && typeof optsOrGraceMs === 'object')
-    ? optsOrGraceMs
-    : { extraGraceMs: optsOrGraceMs, totalTimeoutMs: maybeTimeoutMs };
+export const SESSION_IDLE_POLICY_DEFAULTS = Object.freeze({
+  extraGraceMs: 120000,
+  totalTimeoutMs: 600000,
+});
+
+export async function waitForSessionIdle(childSessionKey: any, opts: AnyRecord = {}) {
+  if (!opts || typeof opts !== 'object' || Array.isArray(opts)) {
+    throw new TypeError('waitForSessionIdle requires an options object with acp_monitor policy fields');
+  }
 
   const gatewayUrl = resolveGatewayBaseUrl(opts.gatewayUrl);
   const gatewayToken = resolveGatewayToken(opts.gatewayToken);
   const monitorCfg = getAcpMonitorConfig(opts);
-  const extraGraceMs = opts.extraGraceMs ?? 120000;
-  const totalTimeoutMs = opts.totalTimeoutMs ?? 600000;
+  const extraGraceMs = opts.extraGraceMs ?? SESSION_IDLE_POLICY_DEFAULTS.extraGraceMs;
+  const totalTimeoutMs = opts.totalTimeoutMs ?? SESSION_IDLE_POLICY_DEFAULTS.totalTimeoutMs;
   const budget = opts.budget || createBudget({ timeoutMs: totalTimeoutMs, signal: opts.signal, label: 'acp-session-idle' });
   const eventBus = opts.eventBus || createPipelineEventBus();
   const adapter = createAcpMonitorEventAdapter(childSessionKey, opts.streamLogPath || null, {

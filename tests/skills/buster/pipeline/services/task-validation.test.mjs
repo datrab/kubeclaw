@@ -28,6 +28,7 @@ function validPayload(overrides = {}) {
       label: 'dispatch',
     },
     suites: ['unit'],
+    test_config: { suite_timeout_ms: 5000 },
     capabilities: [],
     ...overrides,
   };
@@ -53,5 +54,18 @@ test('validateBusterTaskPayload rejects parent-traversing session.cwd', () => {
     () => validateBusterTaskPayload(validPayload({ session: { ...validPayload().session, cwd: '../other-repo' } })),
     (error) => error instanceof MalformedBusterTaskError
       && error.unsafe_fields.some(entry => entry.field === 'session.cwd'),
+  );
+});
+
+test('validateBusterTaskPayload requires typed test_config suite timeout policy', () => {
+  assert.throws(
+    () => validateBusterTaskPayload(validPayload({ test_config: undefined })),
+    (error) => error instanceof MalformedBusterTaskError
+      && error.missing_fields.includes('test_config'),
+  );
+  assert.throws(
+    () => validateBusterTaskPayload(validPayload({ test_config: { suite_timeout_ms: 0 } })),
+    (error) => error instanceof MalformedBusterTaskError
+      && error.missing_fields.includes('test_config.suite_timeout_ms'),
   );
 });

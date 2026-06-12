@@ -22,7 +22,17 @@ function makeSwarmConfig() {
     auto_retry_threshold: 0,
     session_nudge_threshold: 0,
     rate_limit: { cooldown_hours: 0, max_pauses_per_module: 0, cooldown_buffer_ms: 0 },
-    buster: { suite_timeout_ms: 1 },
+    buster: {
+      suite_timeout_ms: 1,
+      max_crash_retries: 0,
+      runtime: {
+        heartbeat_path: '/tmp/kubeclaw-buster-heartbeat',
+        heartbeat_interval_ms: 1,
+        task_poll_interval_ms: 1,
+        task_pending_reclaim_idle_ms: 1,
+        task_stream_max_len: 1,
+      },
+    },
     discord_alerts: { info: false, warn: false, critical: false, ok: false },
     pre_check: { enabled: false, lint_report_path: '/home/node/lint.js', timeout_seconds: 1 },
     review_defaults: { timeout_minutes: 1, max_fix_cycles: 0, lint_tier: 'pre-check', lint_required: false },

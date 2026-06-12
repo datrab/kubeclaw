@@ -67,3 +67,14 @@ The local deployment truth check does not prove secret values, external Vertex A
 - Helm render fails: fix values/schema/template syntax before applying to a cluster.
 - Deployment truth check fails: inspect the failing resource class in the JSON output and update either chart behavior or docs.
 - Local check passes but live rollout fails: switch to deployment/operator verification commands because the issue is runtime dependency, credentials, or cluster state.
+
+## Claim-To-Check Map
+
+| Claim type | Source owner | Command | Expected signal |
+| --- | --- | --- | --- |
+| Chart renders for Nova and Buster | `charts/kubeclaw/templates/*.yaml`; `my-values/nova-values.yaml`; `my-values/buster-values.yaml` | `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` | render, kubeconform, and deployment-shape checks pass |
+| Secrets and config are wired, not literal runtime values | `charts/kubeclaw/templates/secret.yaml`; `configmap-gateway.yaml`; `deployment.yaml`; `my-values/setup-secrets.sh` | deployment truth plus `kubectl -n "$NAMESPACE" get secret ...` in live cluster | rendered manifests reference expected Secret names and keys |
+| Agent pods can start locally enough for smoke | `scripts/deploy.sh`; `charts/kubeclaw/templates/deployment.yaml` | `./scripts/deploy.sh smoke` or `./scripts/deploy.sh smoke-agent nova` | health script reports gateway/config/dependency checks |
+| Local image path matches cluster pull path | `scripts/deploy.sh`; `my-values/infra/k3s-registries.yaml` | `./scripts/deploy.sh verify-live [tag]` | preflight pull pod becomes Ready, then agent smoke checks pass |
+
+Preserve failed render output and live `kubectl describe pod` output when escalating. They identify whether the failure belongs to source templates, values, credentials, image pulls, runtime config, or external providers.

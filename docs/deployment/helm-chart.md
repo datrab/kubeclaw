@@ -58,3 +58,21 @@ helm template agent-buster charts/kubeclaw -n kubeclaw -f my-values/buster-value
 The chart no longer exposes a current `processor.enabled` path. Deployment verification asserts that no legacy stream processor sidecar, processor ConfigMap, `.Values.processor`, or `processor:` values remain.
 
 The rendered services include gateway and bridge ports for each agent. Nova adds `prism-preview` as an extra service port from production values. Buster adds the Podman registries ConfigMap and sandbox volumes because `sandbox.enabled` is true.
+
+## Values And Manifest Ownership
+
+| Area | Values/source | Rendered surface |
+| --- | --- | --- |
+| Agent identity | `agentRole`, `agent.*`, `serviceAccount.*` in values | labels, ServiceAccount, runtime env, Git deploy key Secret reference |
+| Runtime config | `swarmConfig.*`, `openclaw.*`, `customSkills.*` | ConfigMaps, init-container config copy, `/runtime-config/openclaw.json`, `/home/node/.openclaw/swarm.config.json` |
+| Credentials | `auth.*`, `litellm.*`, `discord.*`, `anthropic.*`, `stitch.*`, `redis.*` | Secret refs in main/gateway/Buster containers |
+| Storage | `persistence.*`, `configPersistence.*`, `sandbox.*` | PVCs, workspace/config mounts, Buster Podman storage |
+| Buster broker | `busterNamespaceBroker.*` | CRD, lease RBAC, controller Deployment, environment variables |
+
+Use `docs/reference/helm-values.md` for generated top-level value inventory. If a value changes runtime behavior but does not appear in rendered output, add a deployment truth check before relying on the documentation.
+
+## Failure Signals
+
+- `helm template` fails: fix chart syntax or values before touching live resources.
+- rendered Secret name/key differs from `my-values/setup-secrets.sh`: update values, helper, generated reference, and deployment truth together.
+- Buster render lacks sandbox or broker resources when production values expect them: inspect `my-values/buster-values.yaml` and `charts/kubeclaw/templates/rbac.yaml`.

@@ -53,3 +53,17 @@ npm run docs:check
 - `developers/adding-verification.md`
 - `DOCUMENTATION_AUDIT.md`
 - `DOCUMENTATION_REBUILD_PLAN.md`
+
+## Source-Backed Closeout Checklist
+
+Use this checklist when a contribution changes docs, runtime behavior, deployment, or generated reference output.
+
+| Change type | Source of truth | Minimum proof | Failure signal |
+| --- | --- | --- | --- |
+| Docs-only routing or wording | `docs/**`, `scripts/docs-check.mjs` | `npm run docs:check`; `git diff --check` | stale generated reference, broken doc link, or whitespace error |
+| Generated reference docs | `scripts/docs-inventory.mjs`, `scripts/docs-generate.mjs`, `docs/generated/inventory/*.json` | `npm run docs:inventory:check`; `npm run docs:generate:check` | generated file differs from generator output |
+| Deployment, chart, values, or secrets | `scripts/deploy.sh`, `my-values/setup-secrets.sh`, `charts/kubeclaw/templates/*.yaml`, `my-values/*.yaml` | `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` | Helm render drift, invalid manifest, missing Secret wiring, or outdated resource count |
+| Pipeline/runtime behavior | `skills/nova/pipeline/**`, `skills/buster/pipeline/**`, `skills/common/pipeline/**` | narrow `node --test tests/skills/...` plus relevant behavior/contract verifier | lifecycle guard, terminal decision, Redis completion, or telemetry contract failure |
+| Buster task/suite behavior | `skills/buster/pipeline/services/task-*.ts`, `skills/buster/pipeline/runners/suite-runner.ts`, `skills/buster/pipeline/suites/*.ts` | Buster service/suite tests and `check-buster-pipeline-slice-surface.mjs` | malformed task, unknown capability, missing completion/dead-letter before ACK |
+
+Do not treat a successful docs check as proof of runtime behavior. It only proves inventory freshness, generated-reference freshness, and doc-surface checks. Runtime claims need the source-specific checks above.

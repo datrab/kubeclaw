@@ -196,14 +196,8 @@ async function buildBuiltInRegistry(runtimeRoot) {
               gateway_label: moduleDispatchId,
               session_key: moduleSessionKey,
             },
-            compatibilityResult: {
-              exit: 0,
-              module: '01',
-              attempt: 1,
-              dispatch_id: moduleDispatchId,
-              gateway_label: moduleDispatchId,
-              session_key: moduleSessionKey,
-            },
+            terminalAction: 'none',
+            terminalScope: 'module',
           });
         },
         runGate: async (...args) => {
@@ -395,7 +389,8 @@ async function buildBuiltInRegistry(runtimeRoot) {
               outcome: pipelineStepResultMod.PIPELINE_STEP_OUTCOMES.PASSED,
               reason: 'Resume arch-validation verifier completed module',
               correlation: { module_id: '01' },
-              compatibilityResult: { exit: 0, module: '01' },
+              terminalAction: 'none',
+              terminalScope: 'module',
             });
           },
         },

@@ -5,6 +5,7 @@ import path from 'path';
 
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
 import { log } from '../core/logger.ts';
+import { getRunId } from '../core/runtime.ts';
 import {
   loadStatus,
   saveStatus,
@@ -63,6 +64,32 @@ function resolveDiagnosticLabel(active: AnyRecord | null = null): string | null 
 
 function diagnosticLabelField(diagnosticLabel: string | null): AnyRecord[] {
   return diagnosticLabel ? [{ name: 'Diagnostic Label', value: diagnosticLabel, inline: true }] : [];
+}
+
+function recoveryRunId(config: AnyRecord): string | null {
+  return getRunId(config) || null;
+}
+
+function buildRecoveryDiscordCorrelation({
+  runId = null,
+  moduleId = null,
+  gateId = null,
+  gateType = null,
+  attempt = null,
+  dispatchId = null,
+  gatewayLabel = null,
+  sessionKey = null,
+}: AnyRecord = {}): AnyRecord {
+  return {
+    run_id: runId || null,
+    module_id: moduleId || null,
+    gate_id: gateId || null,
+    gate_type: gateType || null,
+    attempt: attempt ?? null,
+    dispatch_id: dispatchId || null,
+    gateway_label: gatewayLabel || null,
+    session_key: sessionKey || null,
+  };
 }
 
 function removeFileIfPresent(filePath: string | null): void {
@@ -133,8 +160,8 @@ function recoveryStopConfirmOptions(config: AnyRecord): AnyRecord {
 }
 
 function runRefs(config: AnyRecord, scope: string, id: string, sessionKey: string | null): AnyRecord {
-  const runId = config?._runId || config?.run_id || 'unknown';
-  const recoveryId = `recovery_blocked:${runId}:${scope}:${id || 'unknown'}:${sessionKey || 'no-session'}`;
+  const runId = recoveryRunId(config);
+  const recoveryId = `recovery_blocked:${runId || 'no-run-id'}:${scope}:${id || 'unknown'}:${sessionKey || 'no-session'}`;
   return {
     primary_ref: { kind: 'recovery_blocked', id: recoveryId },
     run_id: runId,
@@ -198,8 +225,18 @@ async function recordUnconfirmedRecoveryBlock(config: AnyRecord, {
       ? `Gate ${gateId} — Stale ${previousPhase} recovery blocked`
       : `Module ${moduleId} — Stale ${previousPhase} recovery blocked`;
     const fields = scope === 'gate'
-      ? buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gateType, attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey })
-      : buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: config._runId || config.run_id || 'unknown', module_id: moduleId, attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey });
+      ? buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: recoveryRunId(config), gate_id: gateId, gate_type: gateType, attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey })
+      : buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: recoveryRunId(config), module_id: moduleId, attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey });
+    const correlation = buildRecoveryDiscordCorrelation({
+      runId: recoveryRunId(config),
+      moduleId,
+      gateId,
+      gateType,
+      attempt,
+      dispatchId,
+      gatewayLabel,
+      sessionKey,
+    });
     await discord(config, 'CRITICAL', title, `${reason}. Recovery state was left intact; manual intervention is required before retry.`, [
       ...fields,
       ...diagnosticLabelField(diagnosticLabel),
@@ -207,7 +244,7 @@ async function recordUnconfirmedRecoveryBlock(config: AnyRecord, {
       { name: 'Recovery Action', value: recoveryAction, inline: true },
       { name: 'Status Reset To', value: 'unchanged', inline: true },
       { name: 'Action', value: 'Manually stop or verify the stale child session, then resume.', inline: false },
-    ]);
+    ], { correlation });
   } catch (discordError) {
     log('WARN', `[stale-reconcile] failed to emit recovery blocked Discord for ${scope} ${id}: ${errorMessage(discordError)}`);
   }
@@ -376,7 +413,7 @@ export async function reconcileStaleModuleState(config: AnyRecord, progress: Any
       });
     }
     saveStatus(config, dir, status, recoveryTransition as any);
-    onModuleStatusChanged({ config, runId: config?.run_id || config?._runId || '' }, moduleId, {
+    onModuleStatusChanged({ config, runId: recoveryRunId(config) || '' }, moduleId, {
       title: mod?.title || null,
       old_status: oldStatus,
       new_status: status.status || null,
@@ -389,15 +426,23 @@ export async function reconcileStaleModuleState(config: AnyRecord, progress: Any
     });
     log('WARN', `[stale-reconcile] ${moduleId}: ${note}`);
     try {
+      const recoveryDiscordCorrelation = buildRecoveryDiscordCorrelation({
+        runId: recoveryRunId(config),
+        moduleId,
+        attempt: recoveryAttempt,
+        dispatchId: recoveryDispatchId,
+        gatewayLabel: recoveryGatewayLabel,
+        sessionKey: recoverySessionKey,
+      });
       await discord(config, 'WARN', `Module ${moduleId} — Recovered stale ${previousPhase} state`,
         `${note}. No new Buster suite ran yet; the pipeline only cleared old interrupted state before retrying.`, [
-          ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: config._runId || config.run_id || 'unknown', module_id: moduleId, attempt: recoveryAttempt, dispatch_id: recoveryDispatchId, gateway_label: recoveryGatewayLabel, session_key: recoverySessionKey }),
+          ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: recoveryRunId(config), module_id: moduleId, attempt: recoveryAttempt, dispatch_id: recoveryDispatchId, gateway_label: recoveryGatewayLabel, session_key: recoverySessionKey }),
           ...diagnosticLabelField(recoveryDiagnosticLabel),
           { name: 'Previous Phase', value: previousPhase, inline: true },
           { name: 'Recovery Action', value: recoveryAction || STALE_RECOVERY_ACTIONS.RESET_WITHOUT_SESSION, inline: true },
           { name: 'Status Reset To', value: status.status || 'PENDING', inline: true },
           { name: 'Meaning', value: 'No fresh suite result exists yet. This message is recovery from an earlier interrupted child session.', inline: false },
-        ]);
+        ], { correlation: recoveryDiscordCorrelation });
     } catch (e) {
       log('DEBUG', `Failed to send stale module recovery Discord notice for ${moduleId}: ${errorMessage(e)}`);
     }
@@ -545,13 +590,22 @@ export async function reconcileStaleGateSessions(config: AnyRecord, progress: An
       removeFileIfPresent(activePath);
       log('WARN', `[stale-reconcile] gate ${gateId}: ${note}`);
       try {
+        const recoveryDiscordCorrelation = buildRecoveryDiscordCorrelation({
+          runId: recoveryRunId(config),
+          gateId,
+          gateType,
+          attempt: active.attempt ?? null,
+          dispatchId: active.dispatch_id || null,
+          gatewayLabel: gateRecoveryGatewayLabel,
+          sessionKey: active.session_key || null,
+        });
         await discord(config, 'WARN', `Gate ${gateId} — Recovered stale ${previousPhase} session`, note, [
-          ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gateType, attempt: active.attempt ?? null, dispatch_id: active.dispatch_id || null, gateway_label: gateRecoveryGatewayLabel, session_key: active.session_key || null }),
+          ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: recoveryRunId(config), gate_id: gateId, gate_type: gateType, attempt: active.attempt ?? null, dispatch_id: active.dispatch_id || null, gateway_label: gateRecoveryGatewayLabel, session_key: active.session_key || null }),
           ...diagnosticLabelField(gateRecoveryDiagnosticLabel),
           { name: 'Previous Phase', value: previousPhase, inline: true },
           { name: 'Recovery Action', value: recoveryAction || STALE_RECOVERY_ACTIONS.KILLED_ORPHAN, inline: true },
           { name: 'Action', value: 'Cleared stale gate session state', inline: true },
-        ]);
+        ], { correlation: recoveryDiscordCorrelation });
       } catch (e) {
         log('DEBUG', `Failed to send stale gate recovery Discord notice for ${gateId}: ${errorMessage(e)}`);
       }

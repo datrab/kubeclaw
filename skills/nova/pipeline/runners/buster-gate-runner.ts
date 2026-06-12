@@ -135,12 +135,22 @@ async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, t
       deps.validateBusterConfig(config);
     } catch (e) {
       const reason = `Gate '${gateId}' config validation failed: ${e.message}`;
+      const configInvalidCorrelation = {
+        run_id: completionIdentity.runId,
+        gate_id: gateId,
+        gate_type: gate.type,
+        attempt,
+        dispatch_id: completionIdentity.dispatchId,
+        gateway_label: completionIdentity.gateway_label,
+        session_key: completionIdentity.sessionKey,
+      };
       log('ERROR', reason);
       await deps.discord(config, 'CRITICAL', `Gate '${gateId}' — Config Invalid`,
         `Pre-dispatch validation caught config issues. Fix before retrying.`,
-        buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: completionIdentity.runId, gate_id: gateId, gate_type: gate.type, attempt, dispatch_id: completionIdentity.dispatchId, gateway_label: completionIdentity.gateway_label }, [
+        buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, configInvalidCorrelation, [
           { name: 'Issue', value: e.message.slice(0, 200) },
-        ])
+        ]),
+        { correlation: configInvalidCorrelation },
       );
       return deps.pollResult(false, 'config_invalid', {
         error: reason,

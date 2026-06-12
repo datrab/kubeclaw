@@ -30,12 +30,13 @@ for (const marker of [
   'export function assertPipelineTerminalDecision(',
   'export function isPipelineTerminalDecision(',
   'export function pipelineTerminalStatusForStepOutcome(',
-  'export function pipelineTerminalDefaultActionForStatus(',
 ]) {
   assert.equal(helperSource.includes(marker), true, `terminal decision helper must export ${marker}`);
 }
 
 for (const forbidden of [
+  'DEFAULT_ACTION_BY_STATUS',
+  'pipelineTerminalDefaultActionForStatus',
   'EXIT_OK',
   'EXIT_ERROR',
   'EXIT_NEEDS_NOVA',
@@ -73,12 +74,10 @@ assert.equal(helperMod.pipelineTerminalStatusForStepOutcome('timeout'), 'timed_o
 assert.equal(helperMod.pipelineTerminalStatusForStepOutcome('rate_limited'), 'rate_limited');
 assert.equal(helperMod.pipelineTerminalStatusForStepOutcome('retrying'), null);
 assert.equal(helperMod.pipelineTerminalStatusForStepOutcome('fix_requested'), null);
-assert.equal(helperMod.pipelineTerminalDefaultActionForStatus('action_required'), 'request_handoff');
-assert.equal(helperMod.pipelineTerminalDefaultActionForStatus('blocked'), 'notify_operator');
-assert.equal(helperMod.pipelineTerminalDefaultActionForStatus('rate_limited'), 'retry_later');
 
 const actionRequired = helperMod.buildPipelineTerminalDecision({
   status: 'ACTION REQUIRED',
+  action: 'request_handoff',
   reasonCode: 'Needs Nova',
   humanReason: 'Fix cycles exhausted',
   scope: 'gate',
@@ -106,8 +105,9 @@ assert.equal(actionRequired.exit_code, undefined, 'terminal decision must not ex
 
 const moduleTimeout = helperMod.buildPipelineTerminalDecisionFromStepOutcome({
   outcome: 'timeout',
+  action: 'request_handoff',
+  scope: 'module',
   humanReason: 'Module timed out',
-  stepType: 'module',
   stepId: '01',
   runId: 'run-2',
   sessionKey: 'session-2',
@@ -117,12 +117,42 @@ assert.equal(moduleTimeout.action, 'request_handoff');
 assert.equal(moduleTimeout.scope, 'module');
 assert.equal(moduleTimeout.correlation.module_id, '01');
 assert.equal(moduleTimeout.reasonCode, 'timeout');
+
+const validatorBlock = helperMod.buildPipelineTerminalDecisionFromStepOutcome({
+  outcome: 'blocked',
+  action: 'notify_operator',
+  scope: 'validator',
+  stepId: 'arch-validator:01',
+  runId: 'run-validator',
+});
+assert.equal(validatorBlock.status, 'blocked');
+assert.equal(validatorBlock.scope, 'validator');
+assert.equal(validatorBlock.correlation.validator_id, 'arch-validator:01');
+
 assert.equal(helperMod.buildPipelineTerminalDecisionFromStepOutcome({ outcome: 'retrying' }), null, 'non-terminal outcomes should not produce terminal decisions');
+
+assert.throws(
+  () => helperMod.buildPipelineTerminalDecisionFromStepOutcome({ outcome: 'blocked', scope: 'module', stepId: '01' }),
+  /action must be one of:/,
+  'terminal decisions built from step outcomes must receive an explicit action',
+);
+
+assert.throws(
+  () => helperMod.buildPipelineTerminalDecisionFromStepOutcome({ outcome: 'blocked', action: 'notify_operator', stepId: '01' }),
+  /scope must be one of:/,
+  'terminal decisions built from step outcomes must receive an explicit scope',
+);
 
 assert.throws(
   () => helperMod.buildPipelineTerminalDecision({ status: 'exit_10', reasonCode: 'legacy' }),
   /status must be one of:/,
   'terminal decision status must be typed, not numeric-exit language',
+);
+
+assert.throws(
+  () => helperMod.buildPipelineTerminalDecision({ status: 'blocked', action: 'notify_operator' }),
+  /scope must be one of:/,
+  'terminal decision scope must be explicit',
 );
 
 assert.deepEqual(

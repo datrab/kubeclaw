@@ -32,6 +32,10 @@ function stepMetadata(result) {
   return result?.diagnostics?.metadata || {};
 }
 
+function stepRateLimit(result) {
+  return result?.rateLimit || {};
+}
+
 function stepGateStatus(result) {
   return result?.diagnostics?.typed?.controlResult?.diagnostics?.typed?.gate?.gateRunStatus;
 }
@@ -1906,10 +1910,10 @@ const config = {
     assert.equal(stepMetadata(result).dispatch_id, dispatchId);
     assert.equal(stepMetadata(result).gateway_label, null);
     assert.equal(stepMetadata(result).session_key, sessionKey);
-    assert.equal(stepMetadata(result).rate_limit_pauses, 2);
-    assert.equal(stepMetadata(result).max_rate_limit_pauses, 1);
-    assert.equal(stepMetadata(result).rate_limit_status?.run_id, 'run-review-rate-limit-1');
-    assert.equal(stepMetadata(result).rate_limit_status?.dispatch_id, dispatchId);
+    assert.equal(stepRateLimit(result).rate_limit_pauses, 2);
+    assert.equal(stepRateLimit(result).max_rate_limit_pauses, 1);
+    assert.equal(stepRateLimit(result).rate_limit_status?.run_id, 'run-review-rate-limit-1');
+    assert.equal(stepRateLimit(result).rate_limit_status?.dispatch_id, dispatchId);
   
     const streamKey = 'pipeline:telemetry:behavior-review-rate-limit:run-review-rate-limit-1';
     const events = gateRuntimeEvents(xaddEvents, streamKey);
@@ -2134,8 +2138,8 @@ const config = {
     assert.equal(stepMetadata(result).dispatch_id, dispatchId);
     assert.equal(stepMetadata(result).gateway_label, 'echo-quality');
     assert.equal(stepMetadata(result).session_key, sessionKey);
-    assert.equal(stepMetadata(result).max_rate_limit_pauses, 3);
-    assert.equal(stepMetadata(result).rate_limit_status?.max_rate_limit_pauses, 3);
+    assert.equal(stepRateLimit(result).max_rate_limit_pauses, 3);
+    assert.equal(stepRateLimit(result).rate_limit_status?.max_rate_limit_pauses, 3);
     assert.equal(reviewRateLimitResult.max_rate_limit_pauses, undefined);
     assert.equal(reviewRateLimitResult.rate_limit_status?.max_rate_limit_pauses, 3);
 
@@ -2249,9 +2253,9 @@ const config = {
     assert.equal(stepMetadata(result).dispatch_id, dispatchId);
     assert.equal(stepMetadata(result).gateway_label, dispatchId);
     assert.equal(stepMetadata(result).session_key, sessionKey);
-    assert.equal(stepMetadata(result).max_rate_limit_pauses, 3);
-    assert.equal(stepMetadata(result).rate_limit_status?.run_id, runId);
-    assert.equal(stepMetadata(result).rate_limit_status?.max_rate_limit_pauses, 3);
+    assert.equal(stepRateLimit(result).max_rate_limit_pauses, 3);
+    assert.equal(stepRateLimit(result).rate_limit_status?.run_id, runId);
+    assert.equal(stepRateLimit(result).rate_limit_status?.max_rate_limit_pauses, 3);
     assert.equal(gateRateLimitResult.max_rate_limit_pauses, undefined);
     assert.equal(gateRateLimitResult.rate_limit_status?.max_rate_limit_pauses, 3);
 
@@ -2387,14 +2391,14 @@ const config = {
     assert.equal(result.correlation.gate_id, 'gate:buster');
     assert.equal(result.correlation.gate_type, 'buster');
     assert.equal(stepMetadata(result).status?.status, 'RATE_LIMITED');
-    assert.equal(stepMetadata(result).max_rate_limit_pauses, 3);
-    assert.equal(stepMetadata(result).rate_limit_status?.status, 'RATE_LIMITED');
-    assert.equal(stepMetadata(result).rate_limit_status?.gate_id, 'gate:buster');
-    assert.equal(stepMetadata(result).rate_limit_status?.gate_type, 'buster');
-    assert.equal(stepMetadata(result).rate_limit_status?.max_rate_limit_pauses, 3);
-    assert.equal(stepMetadata(result).rate_limit_status?.dispatch_id, dispatchId);
-    assert.equal(stepMetadata(result).rate_limit_status?.gateway_label, dispatchId);
-    assert.equal(stepMetadata(result).rate_limit_status?.session_key, sessionKey);
+    assert.equal(stepRateLimit(result).max_rate_limit_pauses, 3);
+    assert.equal(stepRateLimit(result).rate_limit_status?.status, 'RATE_LIMITED');
+    assert.equal(stepRateLimit(result).rate_limit_status?.gate_id, 'gate:buster');
+    assert.equal(stepRateLimit(result).rate_limit_status?.gate_type, 'buster');
+    assert.equal(stepRateLimit(result).rate_limit_status?.max_rate_limit_pauses, 3);
+    assert.equal(stepRateLimit(result).rate_limit_status?.dispatch_id, dispatchId);
+    assert.equal(stepRateLimit(result).rate_limit_status?.gateway_label, dispatchId);
+    assert.equal(stepRateLimit(result).rate_limit_status?.session_key, sessionKey);
 
     const exhaustedDiscord = discordCalls.find((call) => call.title === "Gate 'gate:buster' Rate Limit Exhausted");
     assert.equal(Boolean(exhaustedDiscord), true);

@@ -5,7 +5,6 @@ import { STATUS } from '../../core/constants.ts';
 import { log } from '../../core/logger.ts';
 import { validateBusterConfig, resolvePolicy, logEffectivePolicy } from '../../core/config.ts';
 import { headHash, invalidateHeadHash } from '../../core/git-context.ts';
-import { getRunId } from '../../core/runtime.ts';
 import { loadStatus, saveStatus, initStatus, savePrompt, saveStreamLog } from '../../services/status-store.ts';
 import { releaseBlueprint } from '../../services/blueprint.ts';
 import { extractAgentFailReason, extractPreTestFailReason, getFailedSuiteNames, classifyPreTestFailure, getPassedSuiteNames } from '../../services/failures/classification.ts';
@@ -13,19 +12,12 @@ import { buildPreTestDiscordFields } from '../../services/failures/presentation.
 import { handleFail } from '../../services/failures/retry-policy.ts';
 import { sleep, pollWithRateLimitRecovery, pollDualWithRateLimitRecovery, archiveModuleCompletions } from '../../services/polling.ts';
 import {
-  resolveResultAttempt,
-  resolveResultDispatchId,
-  resolveResultGatewayLabel,
-  resolveResultSessionKey,
   resolveStatusCorrelationProvenance,
+  resolveStatusDispatchId,
+  resolveStatusGatewayLabel,
+  resolveStatusSessionKey,
 } from '../../services/correlation.ts';
-import {
-  PIPELINE_STEP_TYPES,
-  PIPELINE_STEP_ACTIONS,
-  PIPELINE_STEP_OUTCOMES,
-  buildPipelineStepResult,
-  isPipelineStepResult,
-} from '../../services/contracts/pipeline-step-result.ts';
+import { assertPipelineStepResult } from '../../services/contracts/pipeline-step-result.ts';
 import { modelToHarness } from '../../agents/runtime.ts';
 import {
   acpLabel,
@@ -45,6 +37,7 @@ import { checkDependencies } from '../../services/dependencies.ts';
 import { runPreflightValidation, formatValidationFailures } from '../../services/validation.ts';
 import { emitTerminalModuleFailTelemetry } from '../module-runner-shared.ts';
 import { runModuleAttemptStateMachine } from './state-machine.ts';
+import { buildModuleErrorTerminalResult } from './terminal-results.ts';
 
 type AnyRecord = Record<string, any>;
 
@@ -107,77 +100,12 @@ export function resolveModuleRunContext(config: AnyRecord, progress: AnyRecord, 
   };
 }
 
-function buildTypedModuleAttemptTerminal(config: AnyRecord, moduleId: string, terminal: AnyRecord = {}) {
+function assertTypedModuleAttemptTerminal(terminal: AnyRecord = {}) {
   if (!terminal || terminal.retry) return terminal;
   return {
     ...terminal,
-    result: buildTypedModuleAttemptResult(config, moduleId, terminal.result),
+    result: assertPipelineStepResult(terminal.result),
   };
-}
-
-function moduleTerminalOutcomeForResult(result: AnyRecord = {}) {
-  const explicitOutcome = String(result?.outcome_class || result?.outcomeClass || '').trim().toLowerCase();
-  if (explicitOutcome === 'passed') return PIPELINE_STEP_OUTCOMES.PASSED;
-  if (explicitOutcome === 'blocked') return PIPELINE_STEP_OUTCOMES.BLOCKED;
-  if (explicitOutcome === 'timeout') return PIPELINE_STEP_OUTCOMES.TIMEOUT;
-  if (explicitOutcome === 'rate_limited') return PIPELINE_STEP_OUTCOMES.RATE_LIMITED;
-  if (explicitOutcome === 'needs_nova') return PIPELINE_STEP_OUTCOMES.NEEDS_NOVA;
-  if (explicitOutcome === 'error') return PIPELINE_STEP_OUTCOMES.ERROR;
-
-  const domainStatus = String(result?.status?.status || result?.status || '').trim().toUpperCase();
-  if (domainStatus === STATUS.PASS) return PIPELINE_STEP_OUTCOMES.PASSED;
-  if (domainStatus === STATUS.BLOCKED) return PIPELINE_STEP_OUTCOMES.BLOCKED;
-  if (domainStatus === STATUS.RATE_LIMITED) return PIPELINE_STEP_OUTCOMES.RATE_LIMITED;
-  if (result?.timed_out === true || result?.timeout === true) return PIPELINE_STEP_OUTCOMES.TIMEOUT;
-  if (result?.rate_limit_exhausted === true) return PIPELINE_STEP_OUTCOMES.RATE_LIMITED;
-  return PIPELINE_STEP_OUTCOMES.ERROR;
-}
-
-function moduleTerminalIssueType(outcome: string) {
-  if (outcome === PIPELINE_STEP_OUTCOMES.NEEDS_NOVA) return 'code';
-  if (outcome === PIPELINE_STEP_OUTCOMES.BLOCKED) return 'policy';
-  return 'environment';
-}
-
-function buildTypedModuleAttemptResult(config: AnyRecord, moduleId: string, result: unknown = {}) {
-  if (isPipelineStepResult(result)) return result;
-  const rawResult: AnyRecord = result && typeof result === 'object' ? (result as AnyRecord) : {};
-  const diagnostics = rawResult.diagnostics || {};
-  const activeStatus = rawResult.status || null;
-  const outcome = moduleTerminalOutcomeForResult(rawResult);
-  return buildPipelineStepResult({
-    stepType: PIPELINE_STEP_TYPES.MODULE,
-    stepId: moduleId,
-    nextAction: outcome === PIPELINE_STEP_OUTCOMES.PASSED ? PIPELINE_STEP_ACTIONS.CONTINUE : PIPELINE_STEP_ACTIONS.HALT,
-    outcome,
-    issueType: moduleTerminalIssueType(outcome),
-    reason: rawResult.reason || rawResult.status || diagnostics?.summary || null,
-    correlation: {
-      run_id: getRunId(config),
-      module_id: moduleId,
-      module_dir: rawResult.module_dir || rawResult.moduleDir || null,
-      attempt: resolveResultAttempt(rawResult),
-      phase: rawResult.phase || activeStatus?.current_phase || null,
-      dispatch_id: resolveResultDispatchId(rawResult),
-      gateway_label: resolveResultGatewayLabel(rawResult),
-      session_key: resolveResultSessionKey(rawResult),
-      correlation_provenance: resolveStatusCorrelationProvenance(activeStatus),
-    },
-    diagnostics: {
-      ...diagnostics,
-      metadata: {
-        ...(diagnostics?.metadata || {}),
-        ...(rawResult.fail_count === undefined ? {} : { fail_count: rawResult.fail_count }),
-        ...(rawResult.max_rate_limit_pauses === undefined ? {} : { max_rate_limit_pauses: rawResult.max_rate_limit_pauses }),
-        ...(rawResult.rate_limit_status === undefined ? {} : { rate_limit_status: rawResult.rate_limit_status }),
-        ...(rawResult.polling_git === undefined ? {} : { polling_git: rawResult.polling_git }),
-        ...(rawResult.module_status === undefined ? {} : { module_status: rawResult.module_status }),
-        ...(rawResult.rate_limit_exhausted === undefined ? {} : { rate_limit_exhausted: rawResult.rate_limit_exhausted }),
-        ...(rawResult.status_authority === undefined ? {} : { status_authority: rawResult.status_authority }),
-        ...(rawResult.degraded === undefined ? {} : { degraded: rawResult.degraded }),
-      },
-    },
-  });
 }
 
 /**
@@ -203,22 +131,23 @@ export async function executeModuleAttempt({
     const reason = `Dependencies not met: ${dependencyState.reason}`;
     log('ERROR', `Module ${moduleId} dependencies not met: ${dependencyState.reason}`);
     emitTerminalModuleFailTelemetry(config, moduleId, dependencyStatus, mod, 'dependency_check', null, dependencyStatus?.status ?? STATUS.PENDING, reason);
-    return {
-      retry: false,
-    result: buildTypedModuleAttemptResult(config, moduleId, {
-        outcome_class: 'error',
-        reason,
-        status: dependencyStatus,
-        phase: 'dependency_check',
-      }),
-    };
+    return buildModuleErrorTerminalResult(config, moduleId, {
+      reason,
+      moduleDir: dir,
+      attempt: dependencyStatus?.active_agent?.attempt ?? dependencyStatus?.attempt ?? null,
+      phase: 'dependency_check',
+      dispatchId: resolveStatusDispatchId(dependencyStatus),
+      gatewayLabel: resolveStatusGatewayLabel(dependencyStatus),
+      sessionKey: resolveStatusSessionKey(dependencyStatus),
+      correlationProvenance: resolveStatusCorrelationProvenance(dependencyStatus),
+    });
   }
 
   const handleModuleFail = (statusValue: AnyRecord, phase: string, reason: string, opts: AnyRecord = {}) => (
     deps.handleFail(config, statusValue, dir, moduleId, maxFails, phase, reason, { progress, ...opts })
   );
 
-  return buildTypedModuleAttemptTerminal(config, moduleId, await runModuleAttemptStateMachine({
+  return assertTypedModuleAttemptTerminal(await runModuleAttemptStateMachine({
     config,
     progress,
     moduleId,

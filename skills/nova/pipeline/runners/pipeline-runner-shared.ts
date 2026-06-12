@@ -1,7 +1,5 @@
 import { getActiveContext } from '../core/logger.ts';
 import {
-  loadStatus,
-  getAuthoritativeModuleState,
   projectGateSchedulerState,
   projectModuleSchedulerState,
 } from '../services/status-store.ts';
@@ -12,6 +10,10 @@ import {
   PIPELINE_STEP_OUTCOMES,
   PIPELINE_STEP_TYPES,
 } from '../services/contracts/pipeline-step-result.ts';
+import {
+  PIPELINE_TERMINAL_ACTIONS,
+  PIPELINE_TERMINAL_SCOPES,
+} from '../services/contracts/terminal-decision.ts';
 import {
   resolveResultAttempt,
   resolveResultSessionKey,
@@ -104,27 +106,14 @@ export function projectPipelineGateState(config, gateId, gate, deps = {}) {
 }
 
 export function loadModuleStatus(config, progress, moduleId, deps = {}) {
-  const moduleDir = progress?.modules?.[moduleId]?.dir;
-  const loadStatusFn = deps.loadStatus || loadStatus;
-  return moduleDir ? loadStatusFn(config, moduleDir) : null;
+  void deps;
+  const moduleConfig = progress?.modules?.[moduleId] || null;
+  return projectModuleSchedulerState(config, moduleId, moduleConfig);
 }
 
-export function loadAuthoritativeModuleState(config, progress, moduleId, {
-  status = undefined,
-  loadStatusFn = loadStatus,
-} = {}) {
+export function loadAuthoritativeModuleState(config, progress, moduleId) {
   const moduleConfig = progress?.modules?.[moduleId] || null;
-  const moduleDir = moduleConfig?.dir || moduleId || null;
-  const moduleStatusSnapshot = status === undefined && moduleDir
-    ? loadStatusFn(config, moduleDir)
-    : status;
-
-  return projectModuleSchedulerState(config, moduleId, moduleConfig, {
-    status: moduleStatusSnapshot,
-  }) || getAuthoritativeModuleState(config, moduleId, {
-    dir: moduleDir,
-    status: moduleStatusSnapshot,
-  });
+  return projectModuleSchedulerState(config, moduleId, moduleConfig);
 }
 
 export function hasModuleStarted(status) {
@@ -141,19 +130,14 @@ export function hasAnyStartedModules(config, progress, deps = {}) {
     const moduleId = stepId.startsWith('module:') ? stepId.slice('module:'.length) : stepId;
     const mod = progress.modules[moduleId];
     if (!mod) return false;
-    const authoritative = loadAuthoritativeModuleState(config, progress, moduleId, {
-      loadStatusFn: deps.loadStatus || loadStatus,
-    });
+    const authoritative = loadAuthoritativeModuleState(config, progress, moduleId);
     return hasModuleStarted(authoritative);
   });
 }
 
 export function buildBlockedModuleResult(config, progress, moduleId, deps = {}) {
   const status = loadModuleStatus(config, progress, moduleId, deps);
-  const authoritative = loadAuthoritativeModuleState(config, progress, moduleId, {
-    status,
-    loadStatusFn: deps.loadStatus || loadStatus,
-  }) || status;
+  const authoritative = loadAuthoritativeModuleState(config, progress, moduleId) || status;
   const reason = authoritative?.blocked_reason || status?.blockedReason || status?.note || 'BLOCKED';
   return buildPipelineStepResult({
     stepType: PIPELINE_STEP_TYPES.MODULE,
@@ -179,6 +163,8 @@ export function buildBlockedModuleResult(config, progress, moduleId, deps = {}) 
       session_key: null,
       correlation_provenance: resolveStatusCorrelationProvenance(authoritative || status || null),
     },
+    terminalAction: PIPELINE_TERMINAL_ACTIONS.NOTIFY_OPERATOR,
+    terminalScope: PIPELINE_TERMINAL_SCOPES.MODULE,
   });
 }
 

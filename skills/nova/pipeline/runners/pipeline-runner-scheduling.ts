@@ -26,6 +26,10 @@ import {
   buildPipelineStepResultFromControlResult,
 } from '../services/contracts/pipeline-step-result.ts';
 import {
+  PIPELINE_TERMINAL_ACTIONS,
+  PIPELINE_TERMINAL_SCOPES,
+} from '../services/contracts/terminal-decision.ts';
+import {
   loadAuthoritativeModuleState,
   hasAnyStartedModules,
   projectPipelineGateState,
@@ -52,13 +56,8 @@ function errorMessage(error: unknown): string {
 
 function buildGeneratorStateSnapshot(config: AnyRecord, progress: AnyRecord, opts: AnyRecord = {}, deps: AnyRecord = {}) {
   const moduleStatuses = Object.entries(progress?.modules || {}).map(([moduleId, mod = {}]: [string, any]) => {
-    const status = mod?.dir && typeof deps.loadStatus === 'function'
-      ? deps.loadStatus(config, mod.dir)
-      : undefined;
-    const authoritative = loadAuthoritativeModuleState(config, progress, moduleId, {
-      status,
-      loadStatusFn: deps.loadStatus,
-    });
+    void mod;
+    const authoritative = loadAuthoritativeModuleState(config, progress, moduleId);
     return authoritative?.status || STATUS.PENDING;
   });
   const gateStatuses = Object.keys(progress?.gates || {}).map((gateId: string) => {
@@ -171,7 +170,7 @@ function buildValidatorRunInput(config: AnyRecord, progress: AnyRecord, stageId:
   const gateId = opts.gateId || null;
   const moduleConfig = moduleId ? progress?.modules?.[moduleId] || null : null;
   const moduleState = moduleId
-    ? loadAuthoritativeModuleState(config, progress, moduleId, { loadStatusFn: deps.loadStatus })
+    ? loadAuthoritativeModuleState(config, progress, moduleId)
     : null;
   const stageConfig = {
     ...(stageId === 'validator:architecture' && config?.arch_validation && typeof config.arch_validation === 'object' ? config.arch_validation : {}),
@@ -312,6 +311,19 @@ export function projectValidatorControlResultToStepResult(config: AnyRecord, con
   const stageId = opts.stageId || `validator:${controlResult?.producerType || 'unknown'}`;
   const stepId = opts.stepId || stageId;
   const validatorOutcomeClass = controlResult?.diagnostics?.typed?.validator?.outcomeClass;
+  const typedValidatorMetadata = controlResult?.diagnostics?.typed?.validator?.metadata || {};
+  const validatorMetadata = controlResult?.diagnostics?.metadata || {};
+  const invalidOrExecutionFailed = typedValidatorMetadata?.contract_invalid === true
+    || typedValidatorMetadata?.execution_failed === true
+    || validatorMetadata?.contract_invalid === true
+    || validatorMetadata?.execution_failed === true;
+  const outcome = invalidOrExecutionFailed ? PIPELINE_STEP_OUTCOMES.ERROR
+    : validatorOutcomeClass === 'blocked' ? PIPELINE_STEP_OUTCOMES.BLOCKED
+    : controlResult?.nextAction === 'pass' ? PIPELINE_STEP_OUTCOMES.PASSED
+      : PIPELINE_STEP_OUTCOMES.ERROR;
+  const terminalAction = outcome === PIPELINE_STEP_OUTCOMES.PASSED ? PIPELINE_TERMINAL_ACTIONS.NONE
+    : outcome === PIPELINE_STEP_OUTCOMES.BLOCKED ? PIPELINE_TERMINAL_ACTIONS.NOTIFY_OPERATOR
+      : PIPELINE_TERMINAL_ACTIONS.STOP;
   const correlation = {
     run_id: config?._runId || config?.run_id || getRunId(config) || null,
     validator_stage_id: stageId,
@@ -322,11 +334,13 @@ export function projectValidatorControlResultToStepResult(config: AnyRecord, con
   };
 
   if (controlResult?.nextAction === 'request_fix') {
+    const requestFixOutcome = invalidOrExecutionFailed ? PIPELINE_STEP_OUTCOMES.ERROR : PIPELINE_STEP_OUTCOMES.NEEDS_NOVA;
+    const requestFixTerminalAction = invalidOrExecutionFailed ? PIPELINE_TERMINAL_ACTIONS.STOP : PIPELINE_TERMINAL_ACTIONS.REQUEST_HANDOFF;
     return buildPipelineStepResult({
       stepType: PIPELINE_STEP_TYPES.VALIDATOR,
       stepId,
       nextAction: PIPELINE_STEP_ACTIONS.HALT,
-      outcome: PIPELINE_STEP_OUTCOMES.NEEDS_NOVA,
+      outcome: requestFixOutcome,
       issueType: controlResult.issueType || 'code',
       summary: controlResult?.diagnostics?.summary || 'Validator requested a fix',
       diagnostics: {
@@ -335,16 +349,18 @@ export function projectValidatorControlResultToStepResult(config: AnyRecord, con
       },
       correlation,
       controlResult,
+      terminalAction: requestFixTerminalAction,
+      terminalScope: PIPELINE_TERMINAL_SCOPES.VALIDATOR,
     });
   }
 
   return buildPipelineStepResultFromControlResult(controlResult, {
     stepType: PIPELINE_STEP_TYPES.VALIDATOR,
     stepId,
-    outcome: validatorOutcomeClass === 'blocked' ? PIPELINE_STEP_OUTCOMES.BLOCKED
-      : controlResult?.nextAction === 'pass' ? PIPELINE_STEP_OUTCOMES.PASSED
-        : PIPELINE_STEP_OUTCOMES.ERROR,
+    outcome,
     correlation,
+    terminalAction,
+    terminalScope: PIPELINE_TERMINAL_SCOPES.VALIDATOR,
   });
 }
 
@@ -653,9 +669,7 @@ export function findNextStep(config: AnyRecord, progress: AnyRecord, deps: AnyRe
     if (!mod) {
       throw new Error(`Invalid execution_order step '${String(stepId)}': no typed module/gate/validator target exists`);
     }
-    const lifecycleModule = loadAuthoritativeModuleState(config, progress, moduleId, {
-      loadStatusFn: deps.loadStatus,
-    });
+    const lifecycleModule = loadAuthoritativeModuleState(config, progress, moduleId);
     if (lifecycleModule?.status === STATUS.PASS) {
       const afterConfigured = firstPendingScheduledValidator(config, progress, 'after', `module:${moduleId}`);
       if (afterConfigured) return afterConfigured;

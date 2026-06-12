@@ -118,7 +118,7 @@ function mapRedisControllerCompletion({ deps, gateId, gate, completionIdentity, 
   }
 
   if (mappedStatus === STATUS.FAIL) {
-    return { done: true, result: deps.pollResult(false, 'gate_fail', {
+    return { done: true, result: deps.pollResult(false, 'verdict_fail', {
       gate: gateId,
       status: mappedStatus,
       reason: redisEntry.reason || redisEntry.summary || 'unknown',

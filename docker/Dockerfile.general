@@ -67,6 +67,9 @@ RUN cd /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer \
     && cp -R package.json openclaw.plugin.json src dist /app/dist/extensions/kubeclaw-agent-observer/ \
     && rm -rf /tmp/kubeclaw-openclaw-plugins
 
+# 8b. KubeClaw controller entrypoints
+COPY scripts/buster-namespace-controller.mjs /app/scripts/buster-namespace-controller.mjs
+
 # 9. Environment
 ENV NODE_PATH=/usr/local/lib/node_modules:/app/node_modules
 ENV NPM_CONFIG_CACHE=/root/.npm

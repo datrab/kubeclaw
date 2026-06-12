@@ -69,8 +69,12 @@ export function handleBusterPassStatus({
   getModuleStats(config).modules_completed.push(moduleId);
 
   return buildModulePassTerminalResult(config, moduleId, {
+    runId: completionIdentity.runId ?? completionIdentity.run_id ?? null,
     moduleDir: dir,
-    attempt: status.fail_count + 1,
+    attempt: completionIdentity.attempt ?? status.fail_count + 1,
     phase: 'buster',
+    dispatchId: completionIdentity.dispatchId ?? completionIdentity.dispatch_id ?? null,
+    gatewayLabel: completionIdentity.gateway_label ?? null,
+    sessionKey: completionSessionKey,
   });
 }
