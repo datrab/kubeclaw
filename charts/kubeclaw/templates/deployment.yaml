@@ -128,8 +128,7 @@ spec:
                       echo "    Fast-forwarding repository to origin/main..."
                       git merge --ff-only origin/main
                     else
-                      echo "    ERROR: Repository diverged from origin/main; refusing unsafe init merge." >&2
-                      exit 1
+                     echo "    WARNING: Repository diverged from origin/main. Skipping pull to preserve local state." >&2
                     fi
                   else
                     echo "    WARNING: Git fetch failed; keeping existing workspace checkout." >&2
