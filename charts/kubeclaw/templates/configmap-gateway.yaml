@@ -28,15 +28,21 @@ data:
             "provider": "litellm",
             "mode": "api_key"
           },
-          "openai-codex:default": {
+          "openai-codex:d.trabucco@tutamail.com": {
             "provider": "openai-codex",
             "mode": "oauth"
           },
-          "openai-codex:d.trabucco@tutamail.com": {
-            "provider": "openai-codex",
+          "openai:d.trabucco@tutamail.com": {
+            "provider": "openai",
             "mode": "oauth",
             "email": "d.trabucco@tutamail.com"
           }
+        },
+        "order": {
+          "openai": [
+            "openai:d.trabucco@tutamail.com",
+            "openai-codex:d.trabucco@tutamail.com"
+          ]
         }
       },
       "acp": {
@@ -86,18 +92,28 @@ data:
         "defaults": {
           "thinkingDefault": "high",
           "model": {
-            "primary": "litellm/{{ .Values.litellm.defaultModel }}",
+            "primary": "openai/gpt-5.5",
             "fallbacks": [
+              "openai/gpt-5.4",
               "anthropic/claude-sonnet-4-6",
-              "anthropic/claude-opus-4-6"
+              "anthropic/claude-opus-4-6",
+              "openai/gpt-5.5-pro",
+              "openai-codex/gpt-5.5",
+              "litellm/{{ .Values.litellm.defaultModel }}"
             ]
           },
           "models": {
             "anthropic/claude-sonnet-4-6": {},
             "anthropic/claude-opus-4-6": {},
-            "openai-codex/gpt-5.4": {}
+            "openai/gpt-5.4": {},
+            "openai/gpt-5.5-pro": {},
+            "openai/gpt-5.5": {},
+            "openai-codex/gpt-5.5": {}
           },
           "workspace": "/home/node/.openclaw/workspace",
+          "embeddedAgent": {
+            "executionContract": "strict-agentic"
+          },
           "memorySearch": {
             "enabled": true,
             "experimental": {
@@ -144,13 +160,16 @@ data:
             "maxHistoryShare": 0.4,
             "memoryFlush": {
               "enabled": true
-            }
+            },
+            "reserveTokensFloor": 40000
           },
           "subagents": {
             "maxConcurrent": 20,
             "archiveAfterMinutes": 240,
-            "runTimeoutSeconds": 7200
-          }
+            "runTimeoutSeconds": 43200,
+            "maxSpawnDepth": 3
+          },
+          "contextInjection": "never"
         },
         "list": [
           {
@@ -159,6 +178,10 @@ data:
               "allowAgents": [
                 "*"
               ]
+            },
+            "skills": [],
+            "skillsLimits": {
+              "maxSkillsPromptChars": 1200
             }
           },
           {
@@ -180,6 +203,9 @@ data:
           "timeoutSec": 604800,
           "security": "full",
           "ask": "off"
+        },
+        "agentToAgent": {
+          "enabled": true
         }
       },
       "commands": {
@@ -193,6 +219,12 @@ data:
       },
       "session": {
         "dmScope": "per-channel-peer",
+        "resetByType": {
+          "group": {
+            "mode": "idle",
+            "idleMinutes": 43200
+          }
+        },
         "threadBindings": {
           "enabled": true,
           "idleHours": 999,
@@ -204,12 +236,14 @@ data:
           "enabled": {{ .Values.discord.enabled }},
           "token": "__DISCORD_TOKEN__",
           "groupPolicy": "open",
-          "streaming": "partial",
+          "streaming": {
+            "mode": "partial"
+          },
           "eventQueue": {
             "listenerTimeout": 120000
           },
           "inboundWorker": {
-            "runTimeoutMs": 7200000
+            "runTimeoutMs": 43200000
           },
           "retry": {
             "attempts": 3,
@@ -225,7 +259,7 @@ data:
           "threadBindings": {
             "enabled": true,
             "idleHours": 999,
-            "spawnAcpSessions": true
+            "spawnSessions": true
           },
           "execApprovals": {
             "enabled": false,
@@ -275,21 +309,20 @@ data:
               "permissionMode": "approve-all"
             }
           },
-          "kubeclaw-agent-observer": {
-            "enabled": false,
-            "hooks": {
-              "allowConversationAccess": true
-            },
-            "config": {
-              "enabled": true
-            }
-          },
           "openai": {
             "enabled": true
           },
           "anthropic": {
             "enabled": true
+          },
+          "codex": {
+            "enabled": true
           }
+        }
+      },
+      "messages": {
+        "groupChat": {
+          "visibleReplies": "automatic"
         }
       }
     }
