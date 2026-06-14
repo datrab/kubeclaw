@@ -13,7 +13,7 @@ The chart renders `openclaw.json` in `ConfigMap/<release>-config`. The init cont
 
 The rendered config includes:
 
-- auth profiles for Anthropic, LiteLLM, and OpenAI Codex
+- auth profiles for Anthropic, LiteLLM, OpenAI, and OpenAI Codex
 - ACP enabled with backend `acpx`
 - LiteLLM provider model definitions from values
 - agent defaults and model fallbacks
@@ -37,10 +37,10 @@ Init normalizes persisted `openclaw.json` so LiteLLM and Discord token fields re
 ## Config Keys To Treat As Current Behavior
 
 - `acp.enabled`, `acp.backend`, `acp.allowedAgents`, and `acp.maxConcurrentSessions` define ACP availability in the rendered OpenClaw config.
-- `models.providers.litellm.baseUrl`, `models.providers.litellm.apiKey`, and `agents.defaults.model.primary` connect the pod to the configured LiteLLM-compatible endpoint.
+- `models.providers.litellm.baseUrl` and `models.providers.litellm.apiKey` connect the pod to the configured LiteLLM-compatible endpoint while the default model policy prefers OpenAI profiles and keeps LiteLLM as a chart-driven fallback.
 - `agents.defaults.memorySearch.remote.baseUrl` and `agents.defaults.memorySearch.remote.apiKey` reuse the LiteLLM endpoint/API key for remote memory search.
 - `tools.profile`, `tools.sessions.visibility`, `tools.sessions_spawn.attachments.enabled`, and `tools.exec.security` configure the runtime tool posture.
-- `channels.discord.enabled`, `channels.discord.threadBindings.spawnAcpSessions`, and `channels.discord.execApprovals.approvers` are rendered from chart values and Discord values.
+- `channels.discord.enabled`, `channels.discord.threadBindings.spawnSessions`, and `channels.discord.execApprovals.approvers` are rendered from chart values and Discord values.
 
 ## Verification
 
