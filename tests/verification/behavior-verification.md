@@ -9,20 +9,20 @@ Canonical verifier implementations live under `tests/verification/`:
 - `tests/verification/behavior/verify.mjs`
 
 Current verification policy:
-- use the live repo state in `kubeclaw-main` as the source of truth
+- use the live repo root as the source of truth
 - rerun the guards against current source, not historical rebuilt-artifact trees
-- treat `kubeclaw-main/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` as the authoritative inventory, stream-identity, and contract-boundary spec
-- treat `kubeclaw-main/docs/archive/legacy-root-docs/telemetry-event-schema.md` as the authoritative event-by-event payload reference, kept in exact inventory parity with that contract
+- treat `docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` as the authoritative inventory, stream-identity, and contract-boundary spec
+- treat `docs/archive/legacy-root-docs/telemetry-event-schema.md` as the authoritative event-by-event payload reference, kept in exact inventory parity with that contract
 - treat `.swarm/logs/pipeline/latest.json` plus `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,buster-telemetry-fallback.jsonl,redis/redis-exchanges.jsonl,redis/redis-ops.jsonl,summary.json}` as the canonical replay/audit bundle, with Redis audit artifacts also mirrored under `.swarm/logs/redis/{redis-exchanges.jsonl,redis-ops.jsonl}`
 
 Current source root used for reruns:
-- `<repo-root>/kubeclaw-main`
+- `<repo-root>`
 
 Current contract used for reruns:
-- `<repo-root>/kubeclaw-main/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`
+- `<repo-root>/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`
 
 Verifier default:
-- both `tests/verification/contracts/check-telemetry-contract.mjs` and `tests/verification/behavior/verify.mjs` default `--contract` to `<repo-root>/kubeclaw-main/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`
+- both `tests/verification/contracts/check-telemetry-contract.mjs` and `tests/verification/behavior/verify.mjs` default `--contract` to `<repo-root>/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`
 - `--contract` is only needed when intentionally checking a different markdown contract file
 
 ## Prerequisites
@@ -42,30 +42,30 @@ apt-get install -y python3 python-is-python3
 ## Commands
 
 ```bash
-cd <repo-root>/kubeclaw-main
+cd <repo-root>
 
 node tests/verification/runtime/check-runtime-collisions.mjs \
-  --source-root <repo-root>/kubeclaw-main
+  --source-root <repo-root>
 
 node tests/verification/contracts/check-telemetry-contract.mjs \
-  --source-root <repo-root>/kubeclaw-main
+  --source-root <repo-root>
 
 node tests/verification/behavior/verify.mjs \
-  --source-root <repo-root>/kubeclaw-main
+  --source-root <repo-root>
 
 node tests/verification/behavior/verify.mjs \
-  --source-root <repo-root>/kubeclaw-main \
+  --source-root <repo-root> \
   --list-areas
 
 node tests/verification/behavior/verify.mjs \
-  --source-root <repo-root>/kubeclaw-main \
+  --source-root <repo-root> \
   --areas foundations,fix-cycles
 ```
 
 ## Latest live repo rerun summary (2026-04-24)
 
 ### Current repo-truth baseline
-- latest repo-truth rerun against live `kubeclaw-main` passed for the no-launch verification stack used during harness recovery
+- latest repo-truth rerun against live repo root passed for the no-launch verification stack used during harness recovery
 - verified surfaces in that rerun: deployment truth, runtime collisions, final-gate hardening, telemetry contract, focused contract/slice guards, and the default behavior harness
 - total collisions: `0`
 - broken packaged relative imports: `0`
@@ -208,7 +208,7 @@ For the exact live check list, use `tests/verification/behavior/verify.mjs`; the
 ## Conclusion
 
 Behavior verification is now reproducible from the current repo state, not from stale historical artifact trees.
-The harness and guardrails validate package-level runtime ownership, Nova/Buster lifecycle behavior, telemetry contract alignment, and cross-surface auditability against the live `kubeclaw-main` tree.
+The harness and guardrails validate package-level runtime ownership, Nova/Buster lifecycle behavior, telemetry contract alignment, and cross-surface auditability against the live repo root tree.
 Verifier ownership now lives under `tests/verification/`, and the canonical entrypoints are:
 - `tests/verification/runtime/check-runtime-collisions.mjs`
 - `tests/verification/contracts/check-telemetry-contract.mjs`

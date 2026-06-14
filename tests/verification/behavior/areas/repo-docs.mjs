@@ -40,14 +40,14 @@ await record('behavior verification doc reflects the live repo-based workflow', 
   const statusArtifactsReference = fs.readFileSync(path.join(sourceRoot, 'docs', 'reference', 'status-and-artifacts.md'), 'utf8');
   const modulesAndGatesDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'pipeline', 'modules-and-gates.md'), 'utf8');
 
-  assert.equal(behaviorDoc.includes('use the live repo state in `kubeclaw-main` as the source of truth'), true);
+  assert.equal(behaviorDoc.includes('use the live repo root as the source of truth'), true);
   assert.equal(statusArtifactsReference.includes('`.swarm/<gate_id>-gate-status.json`'), true, 'status/artifact reference must list approval gate persisted state');
   assert.equal(modulesAndGatesDoc.includes('persist approval state in `.swarm/<gate_id>-gate-status.json`'), true, 'modules/gates docs must list approval gate persisted state');
-  assert.equal(behaviorDoc.includes('`<repo-root>/kubeclaw-main/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`'), true);
-  assert.equal(behaviorDoc.includes('treat `kubeclaw-main/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` as the authoritative inventory, stream-identity, and contract-boundary spec'), true);
-  assert.equal(behaviorDoc.includes('treat `kubeclaw-main/docs/archive/legacy-root-docs/telemetry-event-schema.md` as the authoritative event-by-event payload reference, kept in exact inventory parity with that contract'), true);
+  assert.equal(behaviorDoc.includes('`<repo-root>/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`'), true);
+  assert.equal(behaviorDoc.includes('treat `docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` as the authoritative inventory, stream-identity, and contract-boundary spec'), true);
+  assert.equal(behaviorDoc.includes('treat `docs/archive/legacy-root-docs/telemetry-event-schema.md` as the authoritative event-by-event payload reference, kept in exact inventory parity with that contract'), true);
   assert.equal(behaviorDoc.includes('`pipeline:telemetry:<project>:<run_id>`'), true);
-  assert.equal(behaviorDoc.includes('latest repo-truth rerun against live `kubeclaw-main` passed for the no-launch verification stack used during harness recovery'), true);
+  assert.equal(behaviorDoc.includes('latest repo-truth rerun against live repo root passed for the no-launch verification stack used during harness recovery'), true);
   assert.equal(behaviorDoc.includes('default behavior harness coverage currently spans `33` areas'), true);
   assert.equal(behaviorDoc.includes('exact pass totals should be taken from the live JSON output of `tests/verification/behavior/verify.mjs`, not from a stale static doc snapshot'), true);
   assert.equal(behaviorDoc.includes('`tests/verification/run-full-verification.sh` is the canonical fail-fast local wrapper'), true);
@@ -147,8 +147,8 @@ await record('behavior verification doc reflects the live repo-based workflow', 
   assert.equal(behaviorDoc.includes('Passed: `9`'), false);
   assert.equal(behaviorDoc.includes('Passed: `193`'), false);
 
-  assert.equal(verificationReadme.includes('`kubeclaw-main/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` remains the authoritative telemetry contract for canonical inventory, stream identity, and compatibility boundaries'), true);
-  assert.equal(verificationReadme.includes('`kubeclaw-main/docs/archive/legacy-root-docs/telemetry-event-schema.md` remains the event-by-event payload reference and stays in inventory parity with that contract'), true);
+  assert.equal(verificationReadme.includes('`docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` remains the authoritative telemetry contract for canonical inventory, stream identity, and compatibility boundaries'), true);
+  assert.equal(verificationReadme.includes('`docs/archive/legacy-root-docs/telemetry-event-schema.md` remains the event-by-event payload reference and stays in inventory parity with that contract'), true);
 });
 
 await record('verification docs and hardening trackers point at tests-owned verifier entrypoints, not stale scripts wrappers', async () => {
@@ -156,12 +156,12 @@ await record('verification docs and hardening trackers point at tests-owned veri
   const behaviorDoc = fs.readFileSync(path.join(sourceRoot, 'tests', 'verification', 'behavior-verification.md'), 'utf8');
   const deploymentReadme = fs.readFileSync(path.join(sourceRoot, 'tests', 'verification', 'deployment', 'README.md'), 'utf8');
   const pipelineReadme = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'README.md'), 'utf8');
-  const phase4Tracker = fs.readFileSync(path.join(sourceRoot, '..', 'docs', 'archive', 'pipeline-hardening', 'pre-plugin', 'PHASE4_EXECUTION_TRACKER.md'), 'utf8');
-  const readinessChecklist = fs.readFileSync(path.join(sourceRoot, '..', 'docs', 'archive', 'pipeline-hardening', 'pre-plugin', 'PIPELINE_PRODUCTION_READINESS_CHECKLIST.md'), 'utf8');
-  const openPoints = fs.readFileSync(path.join(sourceRoot, '..', 'docs', 'archive', 'pipeline-hardening', 'pre-plugin', 'PIPELINE_OPEN_POINTS.md'), 'utf8');
-  const executionPlan = fs.readFileSync(path.join(sourceRoot, '..', 'docs', 'archive', 'pipeline-hardening', 'phase3', 'PHASE3_PHASE4_EXECUTION_PLAN.md'), 'utf8');
-  const phasePlan = fs.readFileSync(path.join(sourceRoot, '..', 'docs', 'archive', 'pipeline-hardening', 'pre-plugin', 'PIPELINE_HARDENING_PHASE_PLAN.md'), 'utf8');
-  const phaseCompletionChecklist = fs.readFileSync(path.join(sourceRoot, '..', 'docs', 'archive', 'pipeline-hardening', 'pre-plugin', 'PHASE_COMPLETION_REVIEW_CHECKLIST.md'), 'utf8');
+  const phase4Tracker = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'root-docs', 'archive', 'pipeline-hardening', 'pre-plugin', 'PHASE4_EXECUTION_TRACKER.md'), 'utf8');
+  const readinessChecklist = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'root-docs', 'archive', 'pipeline-hardening', 'pre-plugin', 'PIPELINE_PRODUCTION_READINESS_CHECKLIST.md'), 'utf8');
+  const openPoints = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'root-docs', 'archive', 'pipeline-hardening', 'pre-plugin', 'PIPELINE_OPEN_POINTS.md'), 'utf8');
+  const executionPlan = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'root-docs', 'archive', 'pipeline-hardening', 'phase3', 'PHASE3_PHASE4_EXECUTION_PLAN.md'), 'utf8');
+  const phasePlan = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'root-docs', 'archive', 'pipeline-hardening', 'pre-plugin', 'PIPELINE_HARDENING_PHASE_PLAN.md'), 'utf8');
+  const phaseCompletionChecklist = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'root-docs', 'archive', 'pipeline-hardening', 'pre-plugin', 'PHASE_COMPLETION_REVIEW_CHECKLIST.md'), 'utf8');
 
   assert.equal(fs.existsSync(path.join(sourceRoot, 'scripts', 'phase8-verify.mjs')), false);
   assert.equal(verificationReadme.includes('there is no remaining `scripts/*.mjs` verifier wrapper surface in this repo'), true);
@@ -221,7 +221,7 @@ await record('verification docs and hardening trackers point at tests-owned veri
 await record('packaging verification doc reflects the live repo-based workflow', async () => {
   const packagingDoc = fs.readFileSync(path.join(sourceRoot, 'tests', 'verification', 'packaging-verification.md'), 'utf8');
 
-  assert.equal(packagingDoc.includes('use the live repo state in `kubeclaw-main` as the source of truth'), true);
+  assert.equal(packagingDoc.includes('use the live repo root as the source of truth'), true);
   assert.equal(packagingDoc.includes('stale unpacked audit artifacts as historical reference only, not authoritative evidence'), true);
   assert.equal(packagingDoc.includes('`check-runtime-collisions.mjs` against the current repo, not historical rebuilt-artifact trees'), true);
   assert.equal(packagingDoc.includes('general image collisions: `0`'), true);

@@ -671,7 +671,9 @@ assert.equal(rendered.includes('sed -i "s|__DISCORD_TOKEN__|'), false, 'Rendered
 assertIncludes(rendered, 'openclaw.json source normalized without literal runtime secrets', 'Rendered init container must normalize persistent openclaw.json as secret-free source config');
 assertIncludes(rendered, 'openclaw.json rendered into runtime config', 'Rendered init container must render secret-expanded openclaw.json only into runtime config');
 assertIncludes(rendered, 'swarm.config.json rendered into runtime config', 'Rendered init container must render webhook-expanded swarm.config.json only into runtime config');
-assertIncludes(rendered, 'removed discord_webhook_url from persistent swarm.config.json source', 'Rendered init container must remove webhook secrets from persistent swarm.config.json');
+assertIncludes(rendered, 'swarm.config.json written from chart source', 'Rendered init container must overwrite persisted swarm.config.json from chart source');
+assertIncludes(rendered, 'delete config.discord_webhook_url', 'Rendered init container must remove webhook secrets from persistent swarm.config.json');
+assertIncludes(rendered, 'swarm.config.json source normalized without runtime webhook secrets', 'Rendered init container must normalize persisted swarm.config.json source');
 assertIncludes(rendered, 'kubeclaw-health.mjs', 'Rendered init container must generate the reusable agent health script');
 assertIncludes(rendered, 'function checkDrainState()', 'Rendered health script must include drain-aware readiness');
 assertIncludes(rendered, "await check('drain state', checkDrainState)", 'Rendered readiness must fail when the container is draining');
@@ -844,7 +846,8 @@ assertIncludes(deploymentTemplate, 'git clone "$GIT_REPO_URL" "$REPO_DIR"', 'Dep
 assertIncludes(deploymentTemplate, 'git diff --quiet && git diff --cached --quiet', 'Deployment init must preserve existing workspace local edits');
 assertIncludes(deploymentTemplate, 'git fetch origin main', 'Deployment init must fetch before non-destructive workspace sync');
 assertIncludes(deploymentTemplate, 'git merge --ff-only origin/main', 'Deployment init must only fast-forward clean existing workspaces');
-assertIncludes(deploymentTemplate, 'Repository diverged from origin/main; refusing unsafe init merge.', 'Deployment init must fail on diverged existing workspaces');
+assertIncludes(deploymentTemplate, 'Repository diverged from origin/main. Skipping pull to preserve local state.', 'Deployment init must preserve diverged existing workspaces');
+assert.equal(deploymentTemplate.includes('Repository diverged from origin/main; refusing unsafe init merge.'), false, 'Deployment init must not fail on diverged existing workspaces');
 assertIncludes(deploymentTemplate, 'Git fetch failed; keeping existing workspace checkout.', 'Deployment init must make stale existing workspace startup explicit');
 assertIncludes(deploymentTemplate, "redis.xadd(stream, 'MAXLEN'", 'Deployment template health script must write a Redis stream smoke entry');
 assertIncludes(deploymentTemplate, 'checkRegistries', 'Deployment template health script must check configured registries');
@@ -860,13 +863,15 @@ assertIncludes(deploymentTemplate, 'subPath: swarm.config.json', 'Deployment tem
 assertIncludes(deploymentTemplate, 'openclaw.json source normalized without literal runtime secrets', 'Deployment template must normalize persistent openclaw.json as secret-free source config');
 assertIncludes(deploymentTemplate, 'openclaw.json rendered into runtime config', 'Deployment template must render openclaw.json into emptyDir-backed runtime config');
 assertIncludes(deploymentTemplate, 'swarm.config.json rendered into runtime config', 'Deployment template must render swarm.config.json into emptyDir-backed runtime config');
-assertIncludes(deploymentTemplate, 'removed discord_webhook_url from persistent swarm.config.json source', 'Deployment template must remove webhook secrets from persistent swarm.config.json source');
+assertIncludes(deploymentTemplate, 'swarm.config.json written from chart source', 'Deployment template must overwrite persisted swarm.config.json from chart source');
+assertIncludes(deploymentTemplate, 'delete config.discord_webhook_url', 'Deployment template must remove webhook secrets from persistent swarm.config.json source');
+assertIncludes(deploymentTemplate, 'swarm.config.json source normalized without runtime webhook secrets', 'Deployment template must normalize persisted swarm.config.json source');
 assert.equal(deploymentTemplate.includes('sed -i "s|__LITELLM_API_KEY__|'), false, 'Deployment template must not substitute LiteLLM secrets into the retained config PVC');
 assert.equal(deploymentTemplate.includes('sed -i "s|__DISCORD_TOKEN__|'), false, 'Deployment template must not substitute Discord secrets into the retained config PVC');
 assert.equal(deploymentTemplate.includes('mountPath: /app/config'), false, 'Deployment template must not mount the stale /app/config runtime config path');
 assertIncludes(deploymentTemplate, 'removed obsolete kubeclaw-agent-observer plugin load path', 'Deployment template must include the persistent openclaw.json observer plugin path migration');
 assert.equal(gatewayConfigTemplate.includes('/app/openclaw-plugins/kubeclaw-agent-observer'), false, 'Gateway config template must not seed the obsolete observer plugin load path');
-assertIncludes(deploymentTemplate, 'cp -Lf "/init-swarm-config/swarm.config.json" "/config/swarm.config.json"', 'Deployment template must copy swarm.config.json into the retained source config surface');
+assertIncludes(deploymentTemplate, 'cp -Lf "/init-swarm-config/swarm.config.json" "/config/swarm.config.json"', 'Deployment template must copy chart swarm.config.json into the retained source config surface every init');
 assertIncludes(deploymentTemplate, 'cp -Lf /config/.semgrep.yml /runtime-config/.semgrep.yml', 'Deployment template must copy .semgrep.yml into the runtime config surface');
 assertIncludes(serviceTemplate, '.Values.service.extraPorts', 'Service template must continue rendering configured extra service ports');
 assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/swarm.config.json"', 'Swarm config template must source swarm.config.json from the chart artifact by default');

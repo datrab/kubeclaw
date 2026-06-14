@@ -52,7 +52,7 @@ Use `--repo` if the repository is not auto-detected:
 
 ```bash
 node /app/skills/pipeline.ts \
-  --repo /home/node/.openclaw/workspace/git-repo/kubeclaw-main \
+  --repo /home/node/.openclaw/workspace/git-repo \
   --project my-project \
   --nova-channel 1513577188899946506
 ```

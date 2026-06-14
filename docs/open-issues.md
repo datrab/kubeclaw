@@ -7,7 +7,7 @@ Archived previous tracker: `docs/archive/pipeline-implementation-map-review-2026
 ## Purpose
 
 This file tracks current source-backed issues, documentation gaps, verification gaps, and maintainer decisions discovered during implementation and documentation review.
-The previous tracker was archived outside `kubeclaw-main/` at the path above.
+The previous tracker was archived under `docs/archive/` at the path above.
 
 ## Entry format
 
@@ -465,7 +465,7 @@ Last reviewed: 2026-05-13 (gateway-boundary review added OI-47)
 | OI-44 | Contract-invalid diagnostics can include unredacted plugin input/result previews | Resolved | High | Small/Medium | Contract regressions prove nested secret-like fields are summarized/redacted and raw preview fields are absent before downstream projection | `skills/nova/pipeline/services/contract-diagnostics.ts`, contract normalizers, module/gate/pipeline callers |
 | OI-45 | Prompt artifacts and structural logger append failures are still debug-only | Resolved | Medium | Small/Medium | `system.io_warning` now covers prompt artifact and pipeline JSONL append failures with contract/behavior verification | `skills/nova/pipeline/services/status-store.ts`, `skills/nova/pipeline/core/logger.ts`, `skills/nova/pipeline/services/system-io-warning.ts`, `skills/nova/pipeline/services/telemetry-stream.ts` |
 | OI-46 | Approval-gate waits still use persisted-state polling instead of event/blocking wait adapters | Resolved | Low | Medium | `approval.signal` contract/adapter checks plus `approvals,governance,resume-idempotence` behavior areas passed; runner polling config absence is asserted | `skills/nova/pipeline/runners/approval-gate-runner.ts`, `skills/nova/pipeline/services/approval-signal-event-adapter.ts`, pipeline event contract |
-| OI-47 | Gateway-facing agent operations are still scattered outside the common agent boundary | Resolved | Medium | Medium/Large | Typed common Gateway wrappers centralize session status/message/spawn/kill/list/completion/health, and `check-gateway-operation-boundary-surface.mjs` rejects raw `gatewayInvoke` outside the common owner/facades | `skills/common/pipeline/integrations/gateway.ts`, common agent modules, Nova gateway call sites, Buster gateway health |
+| OI-47 | Gateway-facing agent operations are still scattered under the common agent boundary | Resolved | Medium | Medium/Large | Typed common Gateway wrappers centralize session status/message/spawn/kill/list/completion/health, and `check-gateway-operation-boundary-surface.mjs` rejects raw `gatewayInvoke` under the common owner/facades | `skills/common/pipeline/integrations/gateway.ts`, common agent modules, Nova gateway call sites, Buster gateway health |
 
 
 ## Issues
@@ -479,22 +479,22 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline.ts`
-- `kubeclaw-main/skills/nova/pipeline/cli.ts`
-- `kubeclaw-main/skills/nova/pipeline/cli-args.ts`
-- `kubeclaw-main/skills/common/pipeline/cli-args.ts`
-- `kubeclaw-main/tests/verification/contracts/check-strict-cli-args-surface.mjs`
-- `kubeclaw-main/tests/verification/runtime/check-nova-startup-smoke.mjs`
+- `skills/nova/pipeline.ts`
+- `skills/nova/pipeline/cli.ts`
+- `skills/nova/pipeline/cli-args.ts`
+- `skills/common/pipeline/cli-args.ts`
+- `tests/verification/contracts/check-strict-cli-args-surface.mjs`
+- `tests/verification/runtime/check-nova-startup-smoke.mjs`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/cli.ts` — added a targeted strict-parser catch so invalid argv gets the same terminal JSON/error handling as other CLI setup failures.
-- `kubeclaw-main/tests/verification/runtime/check-nova-startup-smoke.mjs` — added Nova invalid-flag and missing-value smoke assertions so entrypoint invalid-argv behavior stays covered.
-- `kubeclaw-main/tests/verification/contracts/check-strict-cli-args-surface.mjs` — verified unchanged; this remains parser-unit/source migration coverage while runtime entrypoint behavior is covered by the startup smoke test.
+- `skills/nova/pipeline/cli.ts` — added a targeted strict-parser catch so invalid argv gets the same terminal JSON/error handling as other CLI setup failures.
+- `tests/verification/runtime/check-nova-startup-smoke.mjs` — added Nova invalid-flag and missing-value smoke assertions so entrypoint invalid-argv behavior stays covered.
+- `tests/verification/contracts/check-strict-cli-args-surface.mjs` — verified unchanged; this remains parser-unit/source migration coverage while runtime entrypoint behavior is covered by the startup smoke test.
 
 ### Problem / in-depth issue description
 
-`skills/nova/pipeline/cli.ts` calls `parseCliFlagValues(process.argv.slice(2), schema)` before entering its main `try` block. The shared parser throws for unknown flags, unexpected positionals, missing values, invalid inline booleans, and required/positional count failures. Because the parse call is outside the CLI catch, those errors bypass the CLI's normal handled-failure path (`log('ERROR', e.message)`, JSON output `{ exit: EXIT_ERROR, error: e.message }`, temp cleanup where applicable, and `process.exit(EXIT_ERROR)`). A live check during this review (`node kubeclaw-main/skills/nova/pipeline.ts --unknown-flag 1`) exited non-zero with a Node stack trace from `skills/common/pipeline/cli-args.ts:24` and no stdout JSON envelope.
+`skills/nova/pipeline/cli.ts` calls `parseCliFlagValues(process.argv.slice(2), schema)` before entering its main `try` block. The shared parser throws for unknown flags, unexpected positionals, missing values, invalid inline booleans, and required/positional count failures. Because the parse call is under the CLI catch, those errors bypass the CLI's normal handled-failure path (`log('ERROR', e.message)`, JSON output `{ exit: EXIT_ERROR, error: e.message }`, temp cleanup where applicable, and `process.exit(EXIT_ERROR)`). A live check during this review (`node skills/nova/pipeline.ts --unknown-flag 1`) exited non-zero with a Node stack trace from `skills/common/pipeline/cli-args.ts:24` and no stdout JSON envelope.
 
 Expected behavior should be explicit: either parser errors are intentionally raw Node failures, or they should be caught and reported like other CLI setup errors. The rest of this CLI already treats invalid `--thinking`, missing prompt files, and generic setup failures as operator-facing error messages/envelopes, so parser failures are inconsistent.
 
@@ -508,10 +508,10 @@ Resolved by wrapping the strict parser call in a targeted `try/catch` at the sta
 
 ### Links / files
 
-- `kubeclaw-main/skills/nova/pipeline/cli.ts`
-- `kubeclaw-main/skills/common/pipeline/cli-args.ts`
-- `kubeclaw-main/tests/verification/contracts/check-strict-cli-args-surface.mjs`
-- `kubeclaw-main/tests/verification/runtime/check-nova-startup-smoke.mjs`
+- `skills/nova/pipeline/cli.ts`
+- `skills/common/pipeline/cli-args.ts`
+- `tests/verification/contracts/check-strict-cli-args-surface.mjs`
+- `tests/verification/runtime/check-nova-startup-smoke.mjs`
 
 ## P01-ISSUE-001 — Runtime `--thinking adaptive` is accepted by policy but omitted from Nova CLI help
 
@@ -522,16 +522,16 @@ Type: docs-gap
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/cli.ts`
-- `kubeclaw-main/skills/nova/pipeline/core/policy.ts`
-- `kubeclaw-main/docs/PIPELINE-CONFIG-REFERENCE.md`
-- `kubeclaw-main/docs/progress-json-reference.md`
+- `skills/nova/pipeline/cli.ts`
+- `skills/nova/pipeline/core/policy.ts`
+- `docs/PIPELINE-CONFIG-REFERENCE.md`
+- `docs/progress-json-reference.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/cli.ts` — help text now renders runtime `--thinking` values from `VALID_THINKING_LEVELS`, including `adaptive`.
-- `kubeclaw-main/tests/verification/runtime/check-nova-startup-smoke.mjs` — extended the help marker assertion so CLI help stays aligned with the policy enum.
-- `kubeclaw-main/skills/nova/pipeline/core/policy.ts` — verified unchanged as the authoritative accepted-value list.
+- `skills/nova/pipeline/cli.ts` — help text now renders runtime `--thinking` values from `VALID_THINKING_LEVELS`, including `adaptive`.
+- `tests/verification/runtime/check-nova-startup-smoke.mjs` — extended the help marker assertion so CLI help stays aligned with the policy enum.
+- `skills/nova/pipeline/core/policy.ts` — verified unchanged as the authoritative accepted-value list.
 
 ### Problem / in-depth issue description
 
@@ -549,9 +549,9 @@ Resolved by interpolating `VALID_THINKING_LEVELS.join('|')` in the Nova CLI help
 
 ### Links / files
 
-- `kubeclaw-main/skills/nova/pipeline/cli.ts`
-- `kubeclaw-main/skills/nova/pipeline/core/policy.ts`
-- `kubeclaw-main/tests/verification/runtime/check-nova-startup-smoke.mjs`
+- `skills/nova/pipeline/cli.ts`
+- `skills/nova/pipeline/core/policy.ts`
+- `tests/verification/runtime/check-nova-startup-smoke.mjs`
 
 ## P02-ISSUE-001 — Registry validation throws `TypeError` for unknown plugin `manifest.kind`
 
@@ -562,15 +562,15 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/core/registry.ts`
-- `kubeclaw-main/skills/nova/pipeline/core/registry/validation.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/foundations.mjs`
+- `skills/nova/pipeline/core/registry.ts`
+- `skills/nova/pipeline/core/registry/validation.ts`
+- `tests/verification/behavior/areas/foundations.mjs`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/core/registry/validation.ts` — guarded kind-indexed capability maps when `manifest.kind` is invalid or missing.
-- `kubeclaw-main/skills/nova/pipeline/core/registry.ts` — verified unchanged; the validation guard preserves accumulated registry errors without changing registry assembly flow.
-- `kubeclaw-main/tests/verification/behavior/areas/foundations.mjs` — added a regression case for an unknown plugin kind that asserts `buildPluginRegistry` throws a formatted `Plugin registry validation failed...` error containing `REGISTRY_MANIFEST_INVALID`, not a `TypeError`.
+- `skills/nova/pipeline/core/registry/validation.ts` — guarded kind-indexed capability maps when `manifest.kind` is invalid or missing.
+- `skills/nova/pipeline/core/registry.ts` — verified unchanged; the validation guard preserves accumulated registry errors without changing registry assembly flow.
+- `tests/verification/behavior/areas/foundations.mjs` — added a regression case for an unknown plugin kind that asserts `buildPluginRegistry` throws a formatted `Plugin registry validation failed...` error containing `REGISTRY_MANIFEST_INVALID`, not a `TypeError`.
 
 ### Problem / in-depth issue description
 
@@ -596,9 +596,9 @@ Resolved by defaulting `validateCapabilities()` kind-indexed capability policy a
 
 ### Links / files
 
-- `kubeclaw-main/skills/nova/pipeline/core/registry/validation.ts`
-- `kubeclaw-main/skills/nova/pipeline/core/registry.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/foundations.mjs`
+- `skills/nova/pipeline/core/registry/validation.ts`
+- `skills/nova/pipeline/core/registry.ts`
+- `tests/verification/behavior/areas/foundations.mjs`
 
 ## P03-ISSUE-001 — Git runtime-state classifier rejects relative `.swarm/...` paths
 
@@ -609,13 +609,13 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/integrations/git-worktree.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/foundations.mjs`
+- `skills/nova/pipeline/integrations/git-worktree.ts`
+- `tests/verification/behavior/areas/foundations.mjs`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/integrations/git-worktree.ts` — normalized Git paths inside `isRuntimeStatePath()` while preserving the `.swarm` segment, so relative `.swarm/...`, slash-prefixed `/.swarm/...`, and repo-prefixed `Projects/<project>/src/.swarm/...` inputs classify consistently.
-- `kubeclaw-main/tests/verification/behavior/areas/foundations.mjs` — added coverage proving `.swarm/modules/<id>/module status JSON artifact`, `.swarm/logs/...`, gate status, summary, and project-summary paths are treated as runtime-state paths with relative, slash-prefixed, and repo-prefixed forms where applicable.
+- `skills/nova/pipeline/integrations/git-worktree.ts` — normalized Git paths inside `isRuntimeStatePath()` while preserving the `.swarm` segment, so relative `.swarm/...`, slash-prefixed `/.swarm/...`, and repo-prefixed `Projects/<project>/src/.swarm/...` inputs classify consistently.
+- `tests/verification/behavior/areas/foundations.mjs` — added coverage proving `.swarm/modules/<id>/module status JSON artifact`, `.swarm/logs/...`, gate status, summary, and project-summary paths are treated as runtime-state paths with relative, slash-prefixed, and repo-prefixed forms where applicable.
 
 ### Problem / in-depth issue description
 
@@ -648,8 +648,8 @@ Resolved by centralizing Git path normalization in `isRuntimeStatePath()` and pr
 
 ### Links / files
 
-- `kubeclaw-main/skills/nova/pipeline/integrations/git-worktree.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/foundations.mjs`
+- `skills/nova/pipeline/integrations/git-worktree.ts`
+- `tests/verification/behavior/areas/foundations.mjs`
 
 ## P07-ISSUE-001 — Module Buster crash-exhaustion verification fails on guarded `phase_started_at` status save
 
@@ -660,21 +660,21 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-buster-worker.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner/buster-phase.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-forge.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-prebuster.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-shared.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner/buster-phase/dispatch.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner/buster-phase.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/module-failures.mjs`
+- `skills/nova/pipeline/runners/module-runner-buster-worker.ts`
+- `skills/nova/pipeline/runners/module-runner/buster-phase.ts`
+- `skills/nova/pipeline/runners/module-runner-forge.ts`
+- `skills/nova/pipeline/runners/module-runner-prebuster.ts`
+- `skills/nova/pipeline/runners/module-runner-shared.ts`
+- `skills/nova/pipeline/runners/module-runner.ts`
+- `skills/nova/pipeline/runners/module-runner/buster-phase/dispatch.ts`
+- `skills/nova/pipeline/runners/module-runner/buster-phase.ts`
+- `tests/verification/behavior/areas/module-failures.mjs`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/agents/module-workers.ts` — fixed the Buster worker finalization reloads to read the raw status snapshot before clearing active-agent metadata, preventing projected read-model fields from rolling guarded lifecycle fields backward during crash retries.
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-buster-worker.ts` — fixed `onFinalized` fallback reload to request the raw status snapshot before clearing active-agent metadata.
-- `kubeclaw-main/tests/verification/behavior/areas/module-failures.mjs` — retained/adjusted the regression `module-runner buster crash exhaustion keeps dispatch correlation on telemetry and stop payloads`; focused area validation now passes.
+- `skills/nova/pipeline/agents/module-workers.ts` — fixed the Buster worker finalization reloads to read the raw status snapshot before clearing active-agent metadata, preventing projected read-model fields from rolling guarded lifecycle fields backward during crash retries.
+- `skills/nova/pipeline/runners/module-runner-buster-worker.ts` — fixed `onFinalized` fallback reload to request the raw status snapshot before clearing active-agent metadata.
+- `tests/verification/behavior/areas/module-failures.mjs` — retained/adjusted the regression `module-runner buster crash exhaustion keeps dispatch correlation on telemetry and stop payloads`; focused area validation now passes.
 
 ### Problem / in-depth issue description
 
@@ -700,9 +700,9 @@ Resolved in V02a3 by reloading raw Buster status snapshots in `module-workers.js
 
 ### Links / files
 
-- `kubeclaw-main/skills/nova/pipeline/agents/module-workers.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-buster-worker.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/module-failures.mjs`
+- `skills/nova/pipeline/agents/module-workers.ts`
+- `skills/nova/pipeline/runners/module-runner-buster-worker.ts`
+- `tests/verification/behavior/areas/module-failures.mjs`
 
 ## P13-ISSUE-001 — Generator result builder lacks an explicit validator/normalizer owner
 
@@ -713,14 +713,14 @@ Type: docs-gap
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/services/contracts/generator-result.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/contracts/README.md`
-- `kubeclaw-main/tests/verification/contracts/check-generator-result-surface.mjs`
+- `skills/nova/pipeline/services/contracts/generator-result.ts`
+- `skills/nova/pipeline/services/contracts/README.md`
+- `tests/verification/contracts/check-generator-result-surface.mjs`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/services/contracts/generator-result.ts` — now owns the v1 generator result builder plus `isGeneratorResult`, `coerceGeneratorResult`, `validateGeneratorArtifactRef`, `validateGeneratorResult`, and `normalizeGeneratorResult` with structured `generator.run` contract-invalid diagnostics.
-- `kubeclaw-main/tests/verification/contracts/check-generator-result-surface.mjs` — now verifies valid generator results, malformed artifacts/results, no fallback coercion, and structured normalizer failures.
+- `skills/nova/pipeline/services/contracts/generator-result.ts` — now owns the v1 generator result builder plus `isGeneratorResult`, `coerceGeneratorResult`, `validateGeneratorArtifactRef`, `validateGeneratorResult`, and `normalizeGeneratorResult` with structured `generator.run` contract-invalid diagnostics.
+- `tests/verification/contracts/check-generator-result-surface.mjs` — now verifies valid generator results, malformed artifacts/results, no fallback coercion, and structured normalizer failures.
 
 ### Problem / in-depth issue description
 
@@ -738,7 +738,7 @@ Resolved by adding the generator result validator/normalizer/coercer in `generat
 
 ### Links / files
 
-- `kubeclaw-main/docs/pipeline/implementation-map/batches/P13-nova-contract-result-surfaces.md`
+- `docs/pipeline/implementation-map/batches/P13-nova-contract-result-surfaces.md`
 
 ## P16-ISSUE-001 — Telemetry event payload builders lack a centralized validator/schema owner
 
@@ -749,22 +749,22 @@ Type: schema-gap
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/services/telemetry/builders.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/telemetry/progress.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/observability.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/telemetry-sink-contract.ts`
-- `kubeclaw-main/tests/verification/contracts/check-telemetry-contract.mjs`
-- `kubeclaw-main/tests/verification/behavior/areas/telemetry-schema.mjs`
-- `kubeclaw-main/tests/verification/behavior/areas/polling.mjs`
-- `kubeclaw-main/docs/pipeline/implementation-map/batches/V03a-behavior-verification-agents-buster-deployment-polling-redaction.md`
+- `skills/nova/pipeline/services/telemetry/builders.ts`
+- `skills/nova/pipeline/services/telemetry/progress.ts`
+- `skills/nova/pipeline/services/observability.ts`
+- `skills/nova/pipeline/services/telemetry-sink-contract.ts`
+- `tests/verification/contracts/check-telemetry-contract.mjs`
+- `tests/verification/behavior/areas/telemetry-schema.mjs`
+- `tests/verification/behavior/areas/polling.mjs`
+- `docs/pipeline/implementation-map/batches/V03a-behavior-verification-agents-buster-deployment-polling-redaction.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/common/pipeline/services/telemetry/payload-schema.ts` — now owns the centralized core telemetry event-type payload schema registry and validation/assertion helpers, including the generic `plugin.event` extension surface.
-- `kubeclaw-main/skills/nova/pipeline/services/telemetry/payload-schema.ts` — repo-local re-export facade that re-exports the common schema owner.
-- `kubeclaw-main/skills/nova/pipeline/services/telemetry/dispatch.ts` — now validates event payloads before sink dispatch or disk projection; invalid payloads are rejected non-critically and recorded as degraded observability.
-- `kubeclaw-main/skills/nova/pipeline/services/observability.ts` — now validates known structured event payloads before writing pipeline JSONL artifacts.
-- `kubeclaw-main/skills/nova/pipeline/services/telemetry-sink-contract.ts` — remains the sink envelope validator; event-type payload validation is now owned separately by `payload-schema.js`.
+- `skills/common/pipeline/services/telemetry/payload-schema.ts` — now owns the centralized core telemetry event-type payload schema registry and validation/assertion helpers, including the generic `plugin.event` extension surface.
+- `skills/nova/pipeline/services/telemetry/payload-schema.ts` — repo-local re-export facade that re-exports the common schema owner.
+- `skills/nova/pipeline/services/telemetry/dispatch.ts` — now validates event payloads before sink dispatch or disk projection; invalid payloads are rejected non-critically and recorded as degraded observability.
+- `skills/nova/pipeline/services/observability.ts` — now validates known structured event payloads before writing pipeline JSONL artifacts.
+- `skills/nova/pipeline/services/telemetry-sink-contract.ts` — remains the sink envelope validator; event-type payload validation is now owned separately by `payload-schema.js`.
 
 ### Problem / in-depth issue description
 
@@ -782,8 +782,8 @@ Resolved by adding `telemetry/payload-schema.js`, wiring validation into `emitEv
 
 ### Links / files
 
-- `kubeclaw-main/docs/pipeline/implementation-map/batches/P16-nova-telemetry-event-sinks-and-observability.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/batches/V03a-behavior-verification-agents-buster-deployment-polling-redaction.md`
+- `docs/pipeline/implementation-map/batches/P16-nova-telemetry-event-sinks-and-observability.md`
+- `docs/pipeline/implementation-map/batches/V03a-behavior-verification-agents-buster-deployment-polling-redaction.md`
 
 ## P17-ISSUE-001 — Redis completion stream entries lack an explicit validator/schema owner
 
@@ -794,21 +794,21 @@ Type: schema-gap
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/services/redis-completion.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/completion-adjudicator.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/polling-redis-completion.ts`
-- `kubeclaw-main/tests/verification/contracts/check-redis-completion-service-surface.mjs`
-- `kubeclaw-main/tests/verification/behavior/areas/polling.mjs`
-- `kubeclaw-main/tests/verification/behavior/areas/telemetry.mjs`
-- `kubeclaw-main/docs/pipeline/implementation-map/batches/V03a-behavior-verification-agents-buster-deployment-polling-redaction.md`
+- `skills/nova/pipeline/services/redis-completion.ts`
+- `skills/nova/pipeline/services/completion-adjudicator.ts`
+- `skills/nova/pipeline/services/polling-redis-completion.ts`
+- `tests/verification/contracts/check-redis-completion-service-surface.mjs`
+- `tests/verification/behavior/areas/polling.mjs`
+- `tests/verification/behavior/areas/telemetry.mjs`
+- `docs/pipeline/implementation-map/batches/V03a-behavior-verification-agents-buster-deployment-polling-redaction.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/common/pipeline/services/redis-message-contract.ts` — now owns the normalized Redis pipeline envelope plus completion-entry schema used by Nova completion consumers.
-- `kubeclaw-main/skills/nova/pipeline/services/redis-message-contract.ts` — repo-local re-export facade to the common Redis message contract.
-- `kubeclaw-main/skills/nova/pipeline/services/redis-completion.ts` — validates decoded completion entries before they can be selected as Redis authority and returns explicit `COMPLETION_INVALID` diagnostics for malformed current-identity records.
-- `kubeclaw-main/skills/nova/pipeline/services/completion-adjudicator.ts` — now fails closed on invalid/conflict Redis completion diagnostics instead of allowing malformed Redis authority.
-- `kubeclaw-main/skills/nova/pipeline/services/polling-redis-completion.ts` — receives schema-validated completion evidence through the registered Redis adapter.
+- `skills/common/pipeline/services/redis-message-contract.ts` — now owns the normalized Redis pipeline envelope plus completion-entry schema used by Nova completion consumers.
+- `skills/nova/pipeline/services/redis-message-contract.ts` — repo-local re-export facade to the common Redis message contract.
+- `skills/nova/pipeline/services/redis-completion.ts` — validates decoded completion entries before they can be selected as Redis authority and returns explicit `COMPLETION_INVALID` diagnostics for malformed current-identity records.
+- `skills/nova/pipeline/services/completion-adjudicator.ts` — now fails closed on invalid/conflict Redis completion diagnostics instead of allowing malformed Redis authority.
+- `skills/nova/pipeline/services/polling-redis-completion.ts` — receives schema-validated completion evidence through the registered Redis adapter.
 
 ### Problem / in-depth issue description
 
@@ -826,8 +826,8 @@ Resolved by the common Redis message contract and focused contract coverage in `
 
 ### Links / files
 
-- `kubeclaw-main/docs/pipeline/implementation-map/batches/P17-nova-polling-and-completion-watching.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/batches/V03a-behavior-verification-agents-buster-deployment-polling-redaction.md`
+- `docs/pipeline/implementation-map/batches/P17-nova-polling-and-completion-watching.md`
+- `docs/pipeline/implementation-map/batches/V03a-behavior-verification-agents-buster-deployment-polling-redaction.md`
 
 ## P17-ISSUE-002 — Redis task/work streams should migrate to the normalized pipeline message envelope
 
@@ -838,22 +838,22 @@ Type: schema-gap
 
 ### Evidence
 
-- `kubeclaw-main/skills/common/pipeline/services/redis-message-contract.ts`
-- `kubeclaw-main/skills/nova/pipeline/tools/redis.ts`
-- `kubeclaw-main/skills/buster/pipeline/tools/redis.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/task-queue.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/task-completion.ts`
-- `kubeclaw-main/tests/verification/contracts/check-redis-completion-service-surface.mjs`
-- `kubeclaw-main/tests/verification/behavior/areas/operator-surface.mjs`
-- `kubeclaw-main/tests/verification/behavior/areas/buster-runtime-normalization.mjs`
+- `skills/common/pipeline/services/redis-message-contract.ts`
+- `skills/nova/pipeline/tools/redis.ts`
+- `skills/buster/pipeline/tools/redis.ts`
+- `skills/buster/pipeline/services/task-queue.ts`
+- `skills/buster/pipeline/services/task-completion.ts`
+- `tests/verification/contracts/check-redis-completion-service-surface.mjs`
+- `tests/verification/behavior/areas/operator-surface.mjs`
+- `tests/verification/behavior/areas/buster-runtime-normalization.mjs`
 
 ### Affected files
 
-- `kubeclaw-main/skills/common/pipeline/services/redis-message-contract.ts` — now owns task/work stream helpers on the same normalized non-telemetry Redis envelope as completion entries: `REDIS_TASK_TYPES`, `buildRedisTaskStreamEntry()`, `inferRedisTaskTarget()`, `validateRedisTaskEntry()`, `assertRedisTaskEntry()`, and validity helpers.
-- `kubeclaw-main/skills/nova/pipeline/tools/redis.ts` — Nova Redis task dispatch now builds a canonical task envelope before XADD, with `schema_version:'v1'`, `stream_role:'task'`, `target_kind`, `target_id`, identity/correlation fields, and JSON payload.
-- `kubeclaw-main/skills/buster/pipeline/services/task-queue.ts` — Buster validates the Redis task envelope before task type/payload processing; invalid envelope records are dead-lettered before ACK with `invalid_task_entry_schema`.
-- `kubeclaw-main/skills/buster/pipeline/services/task-completion.ts` — Buster completion emission now builds canonical completion records with normalized envelope fields and validates them before XADD.
-- `kubeclaw-main/skills/buster/pipeline/tools/redis.ts` — send helper always builds and validates the canonical task envelope before XADD; the previous raw-field legacy send branch is removed.
+- `skills/common/pipeline/services/redis-message-contract.ts` — now owns task/work stream helpers on the same normalized non-telemetry Redis envelope as completion entries: `REDIS_TASK_TYPES`, `buildRedisTaskStreamEntry()`, `inferRedisTaskTarget()`, `validateRedisTaskEntry()`, `assertRedisTaskEntry()`, and validity helpers.
+- `skills/nova/pipeline/tools/redis.ts` — Nova Redis task dispatch now builds a canonical task envelope before XADD, with `schema_version:'v1'`, `stream_role:'task'`, `target_kind`, `target_id`, identity/correlation fields, and JSON payload.
+- `skills/buster/pipeline/services/task-queue.ts` — Buster validates the Redis task envelope before task type/payload processing; invalid envelope records are dead-lettered before ACK with `invalid_task_entry_schema`.
+- `skills/buster/pipeline/services/task-completion.ts` — Buster completion emission now builds canonical completion records with normalized envelope fields and validates them before XADD.
+- `skills/buster/pipeline/tools/redis.ts` — send helper always builds and validates the canonical task envelope before XADD; the previous raw-field legacy send branch is removed.
 
 ### Problem / in-depth issue description
 
@@ -871,11 +871,11 @@ Resolved by common task-envelope helpers, producer/consumer validation, and focu
 
 ### Links / files
 
-- `kubeclaw-main/skills/common/pipeline/services/redis-message-contract.ts`
-- `kubeclaw-main/skills/nova/pipeline/tools/redis.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/task-queue.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/task-completion.ts`
-- `kubeclaw-main/tests/verification/contracts/check-redis-completion-service-surface.mjs`
+- `skills/common/pipeline/services/redis-message-contract.ts`
+- `skills/nova/pipeline/tools/redis.ts`
+- `skills/buster/pipeline/services/task-queue.ts`
+- `skills/buster/pipeline/services/task-completion.ts`
+- `tests/verification/contracts/check-redis-completion-service-surface.mjs`
 
 ## P18b-ISSUE-001 — Summary rate-limit builders drop gateway-label fallback/tracked correlation
 
@@ -886,19 +886,19 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/services/rate-limit-builders.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/rate-limit-exit.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/rate-limit.ts`
-- `kubeclaw-main/tests/verification/contracts/check-rate-limit-slice-surface.mjs`
-- `kubeclaw-main/tests/verification/behavior/areas/summaries.mjs`
+- `skills/nova/pipeline/services/rate-limit-builders.ts`
+- `skills/nova/pipeline/services/rate-limit-exit.ts`
+- `skills/nova/pipeline/services/rate-limit.ts`
+- `tests/verification/contracts/check-rate-limit-slice-surface.mjs`
+- `tests/verification/behavior/areas/summaries.mjs`
 - Live import check of `buildSummarySessionRateLimitStatus()` and `buildTrackedSummarySessionRateLimitStatus()` during P18b
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/services/rate-limit-builders.ts` — updated `buildSummarySessionRateLimitStatus()`, `buildTrackedSummarySessionRateLimitStatus()`, and `createSummarySessionRateLimitDiscordNotifier()` to preserve status/tracked/fallback `gateway_label` correlation consistently with module and gate builders.
-- `kubeclaw-main/skills/nova/pipeline/services/rate-limit-exit.ts` — verified summary finalizers consume the corrected summary status builder so terminal `rate_limit_exhausted` results and telemetry inherit fallback gateway labels for sparse poll results.
-- `kubeclaw-main/tests/verification/contracts/check-rate-limit-slice-surface.mjs` — added focused status/notifier regressions for direct fallback and tracked summary gateway-label correlation.
-- `kubeclaw-main/tests/verification/behavior/areas/summaries.mjs` — updated summary exhaustion behavior coverage to assert fallback gateway label preservation in terminal result, Discord fields, and telemetry.
+- `skills/nova/pipeline/services/rate-limit-builders.ts` — updated `buildSummarySessionRateLimitStatus()`, `buildTrackedSummarySessionRateLimitStatus()`, and `createSummarySessionRateLimitDiscordNotifier()` to preserve status/tracked/fallback `gateway_label` correlation consistently with module and gate builders.
+- `skills/nova/pipeline/services/rate-limit-exit.ts` — verified summary finalizers consume the corrected summary status builder so terminal `rate_limit_exhausted` results and telemetry inherit fallback gateway labels for sparse poll results.
+- `tests/verification/contracts/check-rate-limit-slice-surface.mjs` — added focused status/notifier regressions for direct fallback and tracked summary gateway-label correlation.
+- `tests/verification/behavior/areas/summaries.mjs` — updated summary exhaustion behavior coverage to assert fallback gateway label preservation in terminal result, Discord fields, and telemetry.
 
 ### Problem / in-depth issue description
 
@@ -923,10 +923,10 @@ Resolved by projecting summary gateway label correlation with precedence `status
 
 ### Links / files
 
-- `kubeclaw-main/skills/nova/pipeline/services/rate-limit-builders.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/rate-limit-exit.ts`
-- `kubeclaw-main/tests/verification/contracts/check-rate-limit-slice-surface.mjs`
-- `kubeclaw-main/tests/verification/behavior/areas/summaries.mjs`
+- `skills/nova/pipeline/services/rate-limit-builders.ts`
+- `skills/nova/pipeline/services/rate-limit-exit.ts`
+- `tests/verification/contracts/check-rate-limit-slice-surface.mjs`
+- `tests/verification/behavior/areas/summaries.mjs`
 
 ## P19-ISSUE-001 — Architecture progress validation throws on non-string execution_order entries
 
@@ -937,16 +937,16 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/services/arch-validator-checks.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/arch-validator.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/pipeline.mjs`
-- `kubeclaw-main/docs/pipeline/implementation-map/batches/V02b-behavior-verification-pipeline-recovery-resume-sequence-stops.md`
+- `skills/nova/pipeline/services/arch-validator-checks.ts`
+- `skills/nova/pipeline/services/arch-validator.ts`
+- `tests/verification/behavior/areas/pipeline.mjs`
+- `docs/pipeline/implementation-map/batches/V02b-behavior-verification-pipeline-recovery-resume-sequence-stops.md`
 - Live import check of `runDeterministicArchitectureChecks()` during P19
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/services/arch-validator-checks.ts` — `checkProgress()` now validates each `execution_order` entry is a non-empty string before prefix routing and emits `EXEC_ORDER_ENTRY_INVALID` blocking findings for malformed entries.
-- `kubeclaw-main/tests/verification/behavior/areas/pipeline.mjs` — added a focused regression proving malformed `progress.execution_order` entries return structured findings/control results and do not become `VALIDATOR_INTERNAL_ERROR`.
+- `skills/nova/pipeline/services/arch-validator-checks.ts` — `checkProgress()` now validates each `execution_order` entry is a non-empty string before prefix routing and emits `EXEC_ORDER_ENTRY_INVALID` blocking findings for malformed entries.
+- `tests/verification/behavior/areas/pipeline.mjs` — added a focused regression proving malformed `progress.execution_order` entries return structured findings/control results and do not become `VALIDATOR_INTERNAL_ERROR`.
 
 ### Problem / in-depth issue description
 
@@ -971,9 +971,9 @@ Resolved by per-entry validation in `checkProgress()` before prefix routing. Mal
 
 ### Links / files
 
-- `kubeclaw-main/skills/nova/pipeline/services/arch-validator-checks.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/arch-validator.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/pipeline.mjs`
+- `skills/nova/pipeline/services/arch-validator-checks.ts`
+- `skills/nova/pipeline/services/arch-validator.ts`
+- `tests/verification/behavior/areas/pipeline.mjs`
 
 ## P20-ISSUE-001 — Blueprint commit helper can commit unrelated pre-staged files
 
@@ -984,18 +984,18 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/services/blueprint.ts`
-- `kubeclaw-main/tests/verification/contracts/check-blueprint-commit-scope.mjs`
-- `kubeclaw-main/tests/verification/lib/run-contract-suite.sh`
-- `kubeclaw-main/tests/verification/contracts/check-verification-wrapper-surface.mjs`
-- `kubeclaw-main/docs/open-issues.md` existing broad-staging findings for comparison
+- `skills/nova/pipeline/services/blueprint.ts`
+- `tests/verification/contracts/check-blueprint-commit-scope.mjs`
+- `tests/verification/lib/run-contract-suite.sh`
+- `tests/verification/contracts/check-verification-wrapper-surface.mjs`
+- `docs/open-issues.md` existing broad-staging findings for comparison
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/services/blueprint.ts` — `commitSelectedPaths(config, message, addPaths)` now stages only requested paths, rejects any staged index entries outside those selected paths, and commits with an explicit `-- <addPaths>` pathspec.
-- `kubeclaw-main/tests/verification/contracts/check-blueprint-commit-scope.mjs` — added focused git-backed clean-release and dirty-index regressions for blueprint commit scope.
-- `kubeclaw-main/tests/verification/lib/run-contract-suite.sh` — includes the focused blueprint commit-scope guard in the shared contract suite.
-- `kubeclaw-main/tests/verification/contracts/check-verification-wrapper-surface.mjs` — keeps wrapper/list coverage aware of the new contract guard.
+- `skills/nova/pipeline/services/blueprint.ts` — `commitSelectedPaths(config, message, addPaths)` now stages only requested paths, rejects any staged index entries under those selected paths, and commits with an explicit `-- <addPaths>` pathspec.
+- `tests/verification/contracts/check-blueprint-commit-scope.mjs` — added focused git-backed clean-release and dirty-index regressions for blueprint commit scope.
+- `tests/verification/lib/run-contract-suite.sh` — includes the focused blueprint commit-scope guard in the shared contract suite.
+- `tests/verification/contracts/check-verification-wrapper-surface.mjs` — keeps wrapper/list coverage aware of the new contract guard.
 
 ### Problem / in-depth issue description
 
@@ -1021,8 +1021,8 @@ Resolved by validating that every staged path is inside the selected blueprint/c
 
 ### Links / files
 
-- `kubeclaw-main/skills/nova/pipeline/services/blueprint.ts`
-- `kubeclaw-main/tests/verification/contracts/check-blueprint-commit-scope.mjs`
+- `skills/nova/pipeline/services/blueprint.ts`
+- `tests/verification/contracts/check-blueprint-commit-scope.mjs`
 
 ## P21-ISSUE-001 — Lint-report temp output files are never removed
 
@@ -1033,16 +1033,16 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/services/lint.ts`
-- `kubeclaw-main/tests/verification/contracts/check-validator-control-result-surface.mjs`
-- `kubeclaw-main/tests/verification/behavior/areas/gates.mjs`
+- `skills/nova/pipeline/services/lint.ts`
+- `tests/verification/contracts/check-validator-control-result-surface.mjs`
+- `tests/verification/behavior/areas/gates.mjs`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/services/lint.ts` — `generateLintReport()` now removes its unique `/tmp/swarm-pipeline-lint-*` scratch output in a `finally` block after subprocess/parsing success or failure.
-- `kubeclaw-main/skills/nova/pipeline/services/module-validators.ts` — full-lint validator reports are retained as canonical `.swarm/logs/.../lint/full-lint-*.json` artifacts instead of relying on the transient subprocess output.
-- `kubeclaw-main/skills/nova/pipeline/services/contracts/validator-control-result.ts` — typed validator diagnostics now include an optional `report_artifact` path when a retained lint report exists.
-- `kubeclaw-main/tests/verification/contracts/check-validator-control-result-surface.mjs` — added regression coverage proving pre-check and full-lint remove `/tmp` scratch output and full-lint retains a canonical gate lint report.
+- `skills/nova/pipeline/services/lint.ts` — `generateLintReport()` now removes its unique `/tmp/swarm-pipeline-lint-*` scratch output in a `finally` block after subprocess/parsing success or failure.
+- `skills/nova/pipeline/services/module-validators.ts` — full-lint validator reports are retained as canonical `.swarm/logs/.../lint/full-lint-*.json` artifacts instead of relying on the transient subprocess output.
+- `skills/nova/pipeline/services/contracts/validator-control-result.ts` — typed validator diagnostics now include an optional `report_artifact` path when a retained lint report exists.
+- `tests/verification/contracts/check-validator-control-result-surface.mjs` — added regression coverage proving pre-check and full-lint remove `/tmp` scratch output and full-lint retains a canonical gate lint report.
 
 ### Problem / in-depth issue description
 
@@ -1052,7 +1052,7 @@ This is separate from the intentional lint artifacts written under the run log d
 
 ### Impact
 
-Long-running workers, soak tests, or repeated pipeline runs can leave unbounded scratch JSON files in `/tmp`. The files can contain static-analysis findings and path metadata longer than needed, increasing disk usage and retaining diagnostic data outside the canonical artifact tree.
+Long-running workers, soak tests, or repeated pipeline runs can leave unbounded scratch JSON files in `/tmp`. The files can contain static-analysis findings and path metadata longer than needed, increasing disk usage and retaining diagnostic data under the canonical artifact tree.
 
 ### Next step
 
@@ -1060,10 +1060,10 @@ Resolved by wrapping lint-report subprocess/parsing in `try/finally`, deleting t
 
 ### Links / files
 
-- `kubeclaw-main/skills/nova/pipeline/services/lint.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/module-validators.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/contracts/validator-control-result.ts`
-- `kubeclaw-main/tests/verification/contracts/check-validator-control-result-surface.mjs`
+- `skills/nova/pipeline/services/lint.ts`
+- `skills/nova/pipeline/services/module-validators.ts`
+- `skills/nova/pipeline/services/contracts/validator-control-result.ts`
+- `tests/verification/contracts/check-validator-control-result-surface.mjs`
 
 ## P22-ISSUE-001 — Forge and fix prompts instruct agents to run broad `git add -A`
 
@@ -1074,30 +1074,30 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/prompts/forge.ts`
-- `kubeclaw-main/skills/nova/pipeline/prompts/gate-fix.ts`
-- `kubeclaw-main/skills/nova/pipeline/prompts/review.ts`
-- `kubeclaw-main/skills/nova/pipeline/prompts/shared.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/forge-completion.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/polling.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/polling-session-end.ts`
-- `kubeclaw-main/skills/nova/pipeline/agents/module-workers.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-forge.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/lifecycle-state-surface.mjs`
+- `skills/nova/pipeline/prompts/forge.ts`
+- `skills/nova/pipeline/prompts/gate-fix.ts`
+- `skills/nova/pipeline/prompts/review.ts`
+- `skills/nova/pipeline/prompts/shared.ts`
+- `skills/nova/pipeline/services/forge-completion.ts`
+- `skills/nova/pipeline/services/polling.ts`
+- `skills/nova/pipeline/services/polling-session-end.ts`
+- `skills/nova/pipeline/agents/module-workers.ts`
+- `skills/nova/pipeline/runners/module-runner-forge.ts`
+- `tests/verification/behavior/areas/lifecycle-state-surface.mjs`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/prompts/forge.ts` — removed agent git staging/commit/push instructions; final protocol now only writes the Forge completion artifact and stops.
-- `kubeclaw-main/skills/nova/pipeline/prompts/gate-fix.ts` — removed agent git staging/commit/push instructions; fix agent stops after local changes.
-- `kubeclaw-main/skills/nova/pipeline/prompts/review.ts` — removed agent git staging/commit/push instructions; review-fix agent stops after local changes.
-- `kubeclaw-main/skills/nova/pipeline/prompts/shared.ts` — Forge completion artifact command now writes an explicit `READY_FOR_TESTING` or `BLOCKED` status.
-- `kubeclaw-main/skills/nova/pipeline/services/forge-completion.ts` — added the Forge completion artifact path/validator/reader owner.
-- `kubeclaw-main/skills/nova/pipeline/services/polling.ts` — added artifact-only Forge completion polling; `module status JSON artifact` is no longer a Forge completion signal.
-- `kubeclaw-main/skills/nova/pipeline/agents/module-workers.ts` — Forge worker now polls the typed completion artifact by default.
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-forge.ts` — module runner applies validated Forge completion statuses to lifecycle state and handles `BLOCKED` artifacts.
-- `kubeclaw-main/skills/nova/pipeline/services/polling-session-end.ts` — gate/review fix session polling no longer stages or commits; it reports local changes so the caller-owned git sync can commit/push.
-- `kubeclaw-main/tests/verification/behavior/areas/lifecycle-state-surface.mjs` — prompt/artifact regression coverage added.
-- `kubeclaw-main/tests/verification/behavior/areas/foundations.mjs` — updated private-surface assertion for the new Forge completion polling helpers.
+- `skills/nova/pipeline/prompts/forge.ts` — removed agent git staging/commit/push instructions; final protocol now only writes the Forge completion artifact and stops.
+- `skills/nova/pipeline/prompts/gate-fix.ts` — removed agent git staging/commit/push instructions; fix agent stops after local changes.
+- `skills/nova/pipeline/prompts/review.ts` — removed agent git staging/commit/push instructions; review-fix agent stops after local changes.
+- `skills/nova/pipeline/prompts/shared.ts` — Forge completion artifact command now writes an explicit `READY_FOR_TESTING` or `BLOCKED` status.
+- `skills/nova/pipeline/services/forge-completion.ts` — added the Forge completion artifact path/validator/reader owner.
+- `skills/nova/pipeline/services/polling.ts` — added artifact-only Forge completion polling; `module status JSON artifact` is no longer a Forge completion signal.
+- `skills/nova/pipeline/agents/module-workers.ts` — Forge worker now polls the typed completion artifact by default.
+- `skills/nova/pipeline/runners/module-runner-forge.ts` — module runner applies validated Forge completion statuses to lifecycle state and handles `BLOCKED` artifacts.
+- `skills/nova/pipeline/services/polling-session-end.ts` — gate/review fix session polling no longer stages or commits; it reports local changes so the caller-owned git sync can commit/push.
+- `tests/verification/behavior/areas/lifecycle-state-surface.mjs` — prompt/artifact regression coverage added.
+- `tests/verification/behavior/areas/foundations.mjs` — updated private-surface assertion for the new Forge completion polling helpers.
 
 ### Problem / in-depth issue description
 
@@ -1115,12 +1115,12 @@ Resolved by removing agent git commands from Forge/gate-fix/review prompts, addi
 
 ### Links / files
 
-- `kubeclaw-main/skills/nova/pipeline/prompts/forge.ts`
-- `kubeclaw-main/skills/nova/pipeline/prompts/gate-fix.ts`
-- `kubeclaw-main/skills/nova/pipeline/prompts/review.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/forge-completion.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/polling.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/lifecycle-state-surface.mjs`
+- `skills/nova/pipeline/prompts/forge.ts`
+- `skills/nova/pipeline/prompts/gate-fix.ts`
+- `skills/nova/pipeline/prompts/review.ts`
+- `skills/nova/pipeline/services/forge-completion.ts`
+- `skills/nova/pipeline/services/polling.ts`
+- `tests/verification/behavior/areas/lifecycle-state-surface.mjs`
 
 ## P23a-ISSUE-001 — Project-summary explicit repo root remains a Git-root contract
 
@@ -1131,16 +1131,16 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/common/pipeline/git-primitives.ts`
-- `kubeclaw-main/skills/nova/pipeline/core/git-context.ts`
-- `kubeclaw-main/skills/nova/pipeline/core/config.ts`
-- `kubeclaw-main/skills/nova/pipeline/tools/project-summary.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/summaries.mjs`
+- `skills/common/pipeline/git-primitives.ts`
+- `skills/nova/pipeline/core/git-context.ts`
+- `skills/nova/pipeline/core/config.ts`
+- `skills/nova/pipeline/tools/project-summary.ts`
+- `tests/verification/behavior/areas/summaries.mjs`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/tools/project-summary.ts` — kept `resolveRepoDir()` strict: explicit `--repo`/`opts.repoDir` and `REPO_ROOT` must name a Git repository root. Updated the `collectCodeStats()` fallback comment so it only promises filesystem walking when `git ls-files` returns no tracked project files inside a valid Git root, not no-git support.
-- `kubeclaw-main/tests/verification/behavior/areas/summaries.mjs` — added focused behavior coverage proving explicit non-git repo roots are rejected with the existing `.git` error envelope.
+- `skills/nova/pipeline/tools/project-summary.ts` — kept `resolveRepoDir()` strict: explicit `--repo`/`opts.repoDir` and `REPO_ROOT` must name a Git repository root. Updated the `collectCodeStats()` fallback comment so it only promises filesystem walking when `git ls-files` returns no tracked project files inside a valid Git root, not no-git support.
+- `tests/verification/behavior/areas/summaries.mjs` — added focused behavior coverage proving explicit non-git repo roots are rejected with the existing `.git` error envelope.
 
 ### Problem / in-depth issue description
 
@@ -1160,11 +1160,11 @@ Resolved by preserving the strict Git repo-root contract, narrowing the misleadi
 
 ### Links / files
 
-- `kubeclaw-main/skills/common/pipeline/git-primitives.ts`
-- `kubeclaw-main/skills/nova/pipeline/core/git-context.ts`
-- `kubeclaw-main/skills/nova/pipeline/core/config.ts`
-- `kubeclaw-main/skills/nova/pipeline/tools/project-summary.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/summaries.mjs`
+- `skills/common/pipeline/git-primitives.ts`
+- `skills/nova/pipeline/core/git-context.ts`
+- `skills/nova/pipeline/core/config.ts`
+- `skills/nova/pipeline/tools/project-summary.ts`
+- `tests/verification/behavior/areas/summaries.mjs`
 
 ## P23a-ISSUE-002 — Case-study base uses stale field names for unit-test and hardest-module metrics
 
@@ -1175,14 +1175,14 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/tools/project-summary.ts`
-- `kubeclaw-main/skills/nova/pipeline/tools/project-summary-formatters.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/summaries.mjs`
+- `skills/nova/pipeline/tools/project-summary.ts`
+- `skills/nova/pipeline/tools/project-summary-formatters.ts`
+- `tests/verification/behavior/areas/summaries.mjs`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/tools/project-summary-formatters.ts` — updated `buildCaseStudyBase()`, markdown complexity highlights, and Discord hardest-module output to prefer nested `unitCensus.python.functions`, `unitCensus.frontend.functions`, and `failCount`, with legacy alias fallback.
-- `kubeclaw-main/tests/verification/behavior/areas/summaries.mjs` — added coverage that case-study base, markdown, and Discord embeds preserve Python/frontend unit-test counts and hardest-module fail counts from collector-shaped input.
+- `skills/nova/pipeline/tools/project-summary-formatters.ts` — updated `buildCaseStudyBase()`, markdown complexity highlights, and Discord hardest-module output to prefer nested `unitCensus.python.functions`, `unitCensus.frontend.functions`, and `failCount`, with legacy alias fallback.
+- `tests/verification/behavior/areas/summaries.mjs` — added coverage that case-study base, markdown, and Discord embeds preserve Python/frontend unit-test counts and hardest-module fail counts from collector-shaped input.
 
 ### Problem / in-depth issue description
 
@@ -1217,9 +1217,9 @@ Resolved by adding formatter normalization for nested unit census fields and har
 
 ### Links / files
 
-- `kubeclaw-main/skills/nova/pipeline/tools/project-summary-formatters.ts`
-- `kubeclaw-main/skills/nova/pipeline/tools/project-summary.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/summaries.mjs`
+- `skills/nova/pipeline/tools/project-summary-formatters.ts`
+- `skills/nova/pipeline/tools/project-summary.ts`
+- `tests/verification/behavior/areas/summaries.mjs`
 
 ## P23b-ISSUE-001 — lint-report CLI exits 0 when tools fail but emit no findings
 
@@ -1230,16 +1230,16 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/tools/lint-report.ts`
-- `kubeclaw-main/skills/nova/pipeline/tools/lint-report/report.ts`
-- `kubeclaw-main/skills/nova/pipeline/tools/lint-report/tool-registry.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/lint.ts`
+- `skills/nova/pipeline/tools/lint-report.ts`
+- `skills/nova/pipeline/tools/lint-report/report.ts`
+- `skills/nova/pipeline/tools/lint-report/tool-registry.ts`
+- `skills/nova/pipeline/services/lint.ts`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/tools/lint-report.ts` — added `lintReportExitCode()` and changed `main()` to exit nonzero when either `summary.total_errors` or `summary.tools_failed` is nonzero.
-- `kubeclaw-main/skills/nova/pipeline/tools/lint-report/report.ts` — verified unchanged as the report owner that maps thrown tool implementations to `{status:'error', error, duration_ms}` and increments `summary.tools_failed`.
-- `kubeclaw-main/tests/verification/contracts/check-strict-cli-args-surface.mjs` — added regression coverage for a controlled throwing tool with `total_errors === 0`, `tools_failed === 1`, and exit mapping `1`.
+- `skills/nova/pipeline/tools/lint-report.ts` — added `lintReportExitCode()` and changed `main()` to exit nonzero when either `summary.total_errors` or `summary.tools_failed` is nonzero.
+- `skills/nova/pipeline/tools/lint-report/report.ts` — verified unchanged as the report owner that maps thrown tool implementations to `{status:'error', error, duration_ms}` and increments `summary.tools_failed`.
+- `tests/verification/contracts/check-strict-cli-args-surface.mjs` — added regression coverage for a controlled throwing tool with `total_errors === 0`, `tools_failed === 1`, and exit mapping `1`.
 
 ### Problem / in-depth issue description
 
@@ -1263,8 +1263,8 @@ Resolved by routing `main()` through `lintReportExitCode(report)`, which fails w
 
 ### Links / files
 
-- `kubeclaw-main/skills/nova/pipeline/tools/lint-report.ts`
-- `kubeclaw-main/skills/nova/pipeline/tools/lint-report/report.ts`
+- `skills/nova/pipeline/tools/lint-report.ts`
+- `skills/nova/pipeline/tools/lint-report/report.ts`
 
 ## B00a-ISSUE-001 — Buster conventions still instruct subagents to update `module status JSON artifact` directly
 
@@ -1275,26 +1275,26 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/buster/CONVENTIONS.md`
-- `kubeclaw-main/skills/buster/README.md`
-- `kubeclaw-main/skills/buster/buster-pipeline.ts`
-- `kubeclaw-main/skills/nova/pipeline/prompts/shared.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/pipeline-helpers.ts`
-- `kubeclaw-main/tests/verification/contracts/check-buster-pipeline-slice-surface.mjs`
-- `kubeclaw-main/docs/pipeline/implementation-map/authority-map.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/data-schemas.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/path-construction.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/prompts-and-agent-behavior.md`
+- `skills/buster/CONVENTIONS.md`
+- `skills/buster/README.md`
+- `skills/buster/buster-pipeline.ts`
+- `skills/nova/pipeline/prompts/shared.ts`
+- `skills/buster/pipeline/services/pipeline-helpers.ts`
+- `tests/verification/contracts/check-buster-pipeline-slice-surface.mjs`
+- `docs/pipeline/implementation-map/authority-map.md`
+- `docs/pipeline/implementation-map/data-schemas.md`
+- `docs/pipeline/implementation-map/path-construction.md`
+- `docs/pipeline/implementation-map/prompts-and-agent-behavior.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/buster/CONVENTIONS.md` — replaced stale direct `module status JSON artifact` workflow guidance with the artifact-only module/gate completion contract.
-- `kubeclaw-main/skills/buster/README.md` — later updated by B02a to the current single `output_file` and Buster-owned verify/push completion contract.
-- `kubeclaw-main/tests/verification/contracts/check-buster-pipeline-slice-surface.mjs` — added docs drift assertions preventing direct `module status JSON artifact` update instructions from returning to Buster conventions.
-- `kubeclaw-main/docs/pipeline/implementation-map/authority-map.md` — updated Buster completion authority to remove the old CONVENTIONS drift note.
-- `kubeclaw-main/docs/pipeline/implementation-map/data-schemas.md` — clarified child-agent completion schema excludes direct `status JSON artifact path` / `module status JSON artifact` edits.
-- `kubeclaw-main/docs/pipeline/implementation-map/path-construction.md` — aligned legacy `status JSON artifact path` notes with README and CONVENTIONS.
-- `kubeclaw-main/docs/pipeline/implementation-map/prompts-and-agent-behavior.md` — updated Buster subagent behavior to artifact-only completion.
+- `skills/buster/CONVENTIONS.md` — replaced stale direct `module status JSON artifact` workflow guidance with the artifact-only module/gate completion contract.
+- `skills/buster/README.md` — later updated by B02a to the current single `output_file` and Buster-owned verify/push completion contract.
+- `tests/verification/contracts/check-buster-pipeline-slice-surface.mjs` — added docs drift assertions preventing direct `module status JSON artifact` update instructions from returning to Buster conventions.
+- `docs/pipeline/implementation-map/authority-map.md` — updated Buster completion authority to remove the old CONVENTIONS drift note.
+- `docs/pipeline/implementation-map/data-schemas.md` — clarified child-agent completion schema excludes direct `status JSON artifact path` / `module status JSON artifact` edits.
+- `docs/pipeline/implementation-map/path-construction.md` — aligned legacy `status JSON artifact path` notes with README and CONVENTIONS.
+- `docs/pipeline/implementation-map/prompts-and-agent-behavior.md` — updated Buster subagent behavior to artifact-only completion.
 
 ### Problem / in-depth issue description
 
@@ -1312,13 +1312,13 @@ Resolved by updating `CONVENTIONS.md` workflow step 5 to require only the prompt
 
 ### Links / files
 
-- `kubeclaw-main/skills/buster/CONVENTIONS.md`
-- `kubeclaw-main/skills/buster/README.md`
-- `kubeclaw-main/tests/verification/contracts/check-buster-pipeline-slice-surface.mjs`
-- `kubeclaw-main/docs/pipeline/implementation-map/authority-map.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/data-schemas.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/path-construction.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/prompts-and-agent-behavior.md`
+- `skills/buster/CONVENTIONS.md`
+- `skills/buster/README.md`
+- `tests/verification/contracts/check-buster-pipeline-slice-surface.mjs`
+- `docs/pipeline/implementation-map/authority-map.md`
+- `docs/pipeline/implementation-map/data-schemas.md`
+- `docs/pipeline/implementation-map/path-construction.md`
+- `docs/pipeline/implementation-map/prompts-and-agent-behavior.md`
 
 ## B02a-ISSUE-001 — Buster gitPushWithRetry optional commit path stages the entire worktree
 
@@ -1329,36 +1329,36 @@ Type: risk
 
 ### Evidence
 
-- `kubeclaw-main/skills/buster/pipeline/services/git-workflows.ts`
-- `kubeclaw-main/skills/buster/pipeline/tools/verify-task.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/pipeline-helpers.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/task-lifecycle/completion-signal.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/task-completion.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/task-validation.ts`
-- `kubeclaw-main/skills/nova/pipeline/agents/orchestration.ts`
-- `kubeclaw-main/skills/nova/pipeline/prompts/shared.ts`
-- `kubeclaw-main/skills/buster/README.md`
-- `kubeclaw-main/skills/buster/CONVENTIONS.md`
-- `kubeclaw-main/tests/verification/contracts/check-buster-verify-task-scope.mjs`
-- `kubeclaw-main/tests/verification/contracts/check-buster-pipeline-slice-surface.mjs`
-- `kubeclaw-main/tests/verification/behavior/areas/buster-runtime-normalization.mjs`
+- `skills/buster/pipeline/services/git-workflows.ts`
+- `skills/buster/pipeline/tools/verify-task.ts`
+- `skills/buster/pipeline/services/pipeline-helpers.ts`
+- `skills/buster/pipeline/services/task-lifecycle/completion-signal.ts`
+- `skills/buster/pipeline/services/task-completion.ts`
+- `skills/buster/pipeline/services/task-validation.ts`
+- `skills/nova/pipeline/agents/orchestration.ts`
+- `skills/nova/pipeline/prompts/shared.ts`
+- `skills/buster/README.md`
+- `skills/buster/CONVENTIONS.md`
+- `tests/verification/contracts/check-buster-verify-task-scope.mjs`
+- `tests/verification/contracts/check-buster-pipeline-slice-surface.mjs`
+- `tests/verification/behavior/areas/buster-runtime-normalization.mjs`
 
 ### Affected files
 
-- `kubeclaw-main/skills/buster/pipeline/services/git-workflows.ts` — changed commit mode to require explicit `opts.addPaths` and stage only `git add -- <paths>`.
-- `kubeclaw-main/skills/buster/pipeline/tools/verify-task.ts` — routes scoped Buster pushes through `gitPushWithRetry` with `addPaths: [swarmRoot]`.
-- `kubeclaw-main/skills/buster/pipeline/services/task-lifecycle/completion-signal.ts` — makes Buster completion wait for `output_file` readiness and verify-task push before Redis completion emission.
-- `kubeclaw-main/skills/buster/pipeline/services/task-completion.ts` — dead-letters completion precondition failures such as verify/push failure instead of falling through to normal completion.
-- `kubeclaw-main/skills/buster/pipeline/services/pipeline-helpers.ts` — removed completion fallback to `result_artifact_path`, `result_file`, or `status JSON artifact path`; added required `output_file` read/write helpers.
-- `kubeclaw-main/skills/buster/pipeline/services/task-validation.ts` — requires `output_file` in Buster task payloads.
-- `kubeclaw-main/skills/nova/pipeline/agents/orchestration.ts` — sends module Buster artifact path as `output_file`, matching gate Buster payloads.
-- `kubeclaw-main/skills/nova/pipeline/prompts/shared.ts` — tells module and gate Buster agents to write `output_file`, not direct status or Redis completion.
-- `kubeclaw-main/skills/buster/README.md` — documents required `output_file` and push-before-completion workflow.
-- `kubeclaw-main/skills/buster/CONVENTIONS.md` — aligns child-agent conventions with single `output_file` contract and Buster-owned verify/push.
-- `kubeclaw-main/tests/verification/contracts/check-buster-verify-task-scope.mjs` — added scoped commit regression proving missing `addPaths` rejects and supplied pathspecs do not stage unrelated files.
-- `kubeclaw-main/tests/verification/contracts/check-buster-pipeline-slice-surface.mjs` — added/updated Buster artifact and push-before-completion drift assertions.
-- `kubeclaw-main/tests/verification/behavior/areas/buster-runtime-normalization.mjs` — updated Buster task identity fixture to include required `output_file` and assert missing output file is malformed.
-- `kubeclaw-main/docs/pipeline/implementation-map/` — updated living authority/schema/path/call/logic/error/concurrency/dependency/input/boundary/prompt maps for the new Buster completion contract.
+- `skills/buster/pipeline/services/git-workflows.ts` — changed commit mode to require explicit `opts.addPaths` and stage only `git add -- <paths>`.
+- `skills/buster/pipeline/tools/verify-task.ts` — routes scoped Buster pushes through `gitPushWithRetry` with `addPaths: [swarmRoot]`.
+- `skills/buster/pipeline/services/task-lifecycle/completion-signal.ts` — makes Buster completion wait for `output_file` readiness and verify-task push before Redis completion emission.
+- `skills/buster/pipeline/services/task-completion.ts` — dead-letters completion precondition failures such as verify/push failure instead of falling through to normal completion.
+- `skills/buster/pipeline/services/pipeline-helpers.ts` — removed completion fallback to `result_artifact_path`, `result_file`, or `status JSON artifact path`; added required `output_file` read/write helpers.
+- `skills/buster/pipeline/services/task-validation.ts` — requires `output_file` in Buster task payloads.
+- `skills/nova/pipeline/agents/orchestration.ts` — sends module Buster artifact path as `output_file`, matching gate Buster payloads.
+- `skills/nova/pipeline/prompts/shared.ts` — tells module and gate Buster agents to write `output_file`, not direct status or Redis completion.
+- `skills/buster/README.md` — documents required `output_file` and push-before-completion workflow.
+- `skills/buster/CONVENTIONS.md` — aligns child-agent conventions with single `output_file` contract and Buster-owned verify/push.
+- `tests/verification/contracts/check-buster-verify-task-scope.mjs` — added scoped commit regression proving missing `addPaths` rejects and supplied pathspecs do not stage unrelated files.
+- `tests/verification/contracts/check-buster-pipeline-slice-surface.mjs` — added/updated Buster artifact and push-before-completion drift assertions.
+- `tests/verification/behavior/areas/buster-runtime-normalization.mjs` — updated Buster task identity fixture to include required `output_file` and assert missing output file is malformed.
+- `docs/pipeline/implementation-map/` — updated living authority/schema/path/call/logic/error/concurrency/dependency/input/boundary/prompt maps for the new Buster completion contract.
 
 ### Problem / in-depth issue description
 
@@ -1378,16 +1378,16 @@ Resolved by requiring `opts.addPaths` for `gitPushWithRetry` commit mode, routin
 
 ### Links / files
 
-- `kubeclaw-main/skills/buster/pipeline/services/git-workflows.ts`
-- `kubeclaw-main/skills/buster/pipeline/tools/verify-task.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/pipeline-helpers.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/task-lifecycle/completion-signal.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/task-completion.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/task-validation.ts`
-- `kubeclaw-main/skills/nova/pipeline/agents/orchestration.ts`
-- `kubeclaw-main/skills/nova/pipeline/prompts/shared.ts`
-- `kubeclaw-main/tests/verification/contracts/check-buster-verify-task-scope.mjs`
-- `kubeclaw-main/tests/verification/contracts/check-buster-pipeline-slice-surface.mjs`
+- `skills/buster/pipeline/services/git-workflows.ts`
+- `skills/buster/pipeline/tools/verify-task.ts`
+- `skills/buster/pipeline/services/pipeline-helpers.ts`
+- `skills/buster/pipeline/services/task-lifecycle/completion-signal.ts`
+- `skills/buster/pipeline/services/task-completion.ts`
+- `skills/buster/pipeline/services/task-validation.ts`
+- `skills/nova/pipeline/agents/orchestration.ts`
+- `skills/nova/pipeline/prompts/shared.ts`
+- `tests/verification/contracts/check-buster-verify-task-scope.mjs`
+- `tests/verification/contracts/check-buster-pipeline-slice-surface.mjs`
 
 ## B03-ISSUE-001 — Buster k8s suite accepts namespace prefixes that cleanup later refuses to delete
 
@@ -1398,15 +1398,15 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/buster/pipeline/suites/k8s.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/sandbox-cleanup.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/shell-boundary.mjs`
+- `skills/buster/pipeline/suites/k8s.ts`
+- `skills/buster/pipeline/services/sandbox-cleanup.ts`
+- `tests/verification/behavior/areas/shell-boundary.mjs`
 
 ### Affected files
 
-- `kubeclaw-main/skills/buster/pipeline/suites/k8s.ts` — now validates `namespace_prefix` as exactly `buster` or `test` before constructing/tracking a namespace or calling external build/deploy tools.
-- `kubeclaw-main/skills/buster/pipeline/services/sandbox-cleanup.ts` — verified unchanged; cleanup remains the delete authority for tracked namespaces matching the safe prefix regex `/^(buster|test)-/`.
-- `kubeclaw-main/tests/verification/behavior/areas/shell-boundary.mjs` — added a regression proving `namespace_prefix: "prod"` returns a critical K8s FAIL with `namespace-prefix` evidence before cleanup tracking or build/deploy steps.
+- `skills/buster/pipeline/suites/k8s.ts` — now validates `namespace_prefix` as exactly `buster` or `test` before constructing/tracking a namespace or calling external build/deploy tools.
+- `skills/buster/pipeline/services/sandbox-cleanup.ts` — verified unchanged; cleanup remains the delete authority for tracked namespaces matching the safe prefix regex `/^(buster|test)-/`.
+- `tests/verification/behavior/areas/shell-boundary.mjs` — added a regression proving `namespace_prefix: "prod"` returns a critical K8s FAIL with `namespace-prefix` evidence before cleanup tracking or build/deploy steps.
 
 ### Problem / in-depth issue description
 
@@ -1420,13 +1420,13 @@ A misconfigured task can create an ephemeral namespace that Buster's cleanup ser
 
 ### Next step
 
-Resolved by adding `validateK8sNamespacePrefix()` in `k8s.js`, returning a critical K8s FAIL for prefixes outside `buster`/`test` before cleanup tracking, Podman, or `kubectl` calls. Focused run passed: `node tests/verification/behavior/verify.mjs --source-root "$PWD" --areas shell-boundary`.
+Resolved by adding `validateK8sNamespacePrefix()` in `k8s.js`, returning a critical K8s FAIL for prefixes under `buster`/`test` before cleanup tracking, Podman, or `kubectl` calls. Focused run passed: `node tests/verification/behavior/verify.mjs --source-root "$PWD" --areas shell-boundary`.
 
 ### Links / files
 
-- `kubeclaw-main/skills/buster/pipeline/suites/k8s.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/sandbox-cleanup.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/shell-boundary.mjs`
+- `skills/buster/pipeline/suites/k8s.ts`
+- `skills/buster/pipeline/services/sandbox-cleanup.ts`
+- `tests/verification/behavior/areas/shell-boundary.mjs`
 
 ## B04-ISSUE-001 — Buster visual-reg telemetry reports Discord sent even when delivery is skipped or fails
 
@@ -1437,15 +1437,15 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg.ts`
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg-discord.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/operator-surface.mjs`
+- `skills/buster/pipeline/suites/visual-reg.ts`
+- `skills/buster/pipeline/suites/visual-reg-discord.ts`
+- `tests/verification/behavior/areas/operator-surface.mjs`
 
 ### Affected files
 
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg.ts` — now aggregates Discord helper results and emits truthful `discord_sent`, `discord_status`, and delivery count fields in `buster.visual_reg` telemetry.
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg-discord.ts` — now returns explicit delivery results for skipped webhook, successful send, and non-critical failure.
-- `kubeclaw-main/tests/verification/behavior/areas/operator-surface.mjs` — now verifies skipped, sent, failed, and aggregate telemetry projection cases.
+- `skills/buster/pipeline/suites/visual-reg.ts` — now aggregates Discord helper results and emits truthful `discord_sent`, `discord_status`, and delivery count fields in `buster.visual_reg` telemetry.
+- `skills/buster/pipeline/suites/visual-reg-discord.ts` — now returns explicit delivery results for skipped webhook, successful send, and non-critical failure.
+- `tests/verification/behavior/areas/operator-surface.mjs` — now verifies skipped, sent, failed, and aggregate telemetry projection cases.
 
 ### Problem / in-depth issue description
 
@@ -1463,9 +1463,9 @@ Resolved by returning `{status:'skipped_no_webhook'|'sent'|'failed_noncritical',
 
 ### Links / files
 
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg.ts`
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg-discord.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/operator-surface.mjs`
+- `skills/buster/pipeline/suites/visual-reg.ts`
+- `skills/buster/pipeline/suites/visual-reg-discord.ts`
+- `tests/verification/behavior/areas/operator-surface.mjs`
 
 ## B04-ISSUE-002 — Buster visual-audit can leak temp media directories when Discord upload throws
 
@@ -1476,24 +1476,24 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/buster/pipeline/tools/visual-audit.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/operator-surface.mjs`
-- `kubeclaw-main/tests/verification/contracts/check-strict-cli-args-surface.mjs`
-- `kubeclaw-main/docs/pipeline/implementation-map/authority-map.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/path-construction.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/resiliency-and-error-handling.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/dependency-matrix.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/external-boundaries.md`
+- `skills/buster/pipeline/tools/visual-audit.ts`
+- `tests/verification/behavior/areas/operator-surface.mjs`
+- `tests/verification/contracts/check-strict-cli-args-surface.mjs`
+- `docs/pipeline/implementation-map/authority-map.md`
+- `docs/pipeline/implementation-map/path-construction.md`
+- `docs/pipeline/implementation-map/resiliency-and-error-handling.md`
+- `docs/pipeline/implementation-map/dependency-matrix.md`
+- `docs/pipeline/implementation-map/external-boundaries.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/buster/pipeline/tools/visual-audit.ts` — now scopes the `/tmp/audit-<Date.now()>` media directory to a `try/finally`, so success, HTTP errors, thrown upload errors, validation failures, and Chromium launch/capture failures remove temporary media before preserving the existing thrown error/CLI JSON behavior.
-- `kubeclaw-main/tests/verification/behavior/areas/operator-surface.mjs` — added a mocked visual-audit regression where Discord upload throws after screenshot generation and asserts no `audit-*` directory remains.
-- `kubeclaw-main/docs/pipeline/implementation-map/authority-map.md` — updated visual-audit temp artifact lifecycle authority to resolved behavior.
-- `kubeclaw-main/docs/pipeline/implementation-map/path-construction.md` — updated `/tmp/audit-*` path lifecycle to the current `finally` cleanup contract.
-- `kubeclaw-main/docs/pipeline/implementation-map/resiliency-and-error-handling.md` — updated visual-audit error/telemetry rows to remove the stale cleanup gap.
-- `kubeclaw-main/docs/pipeline/implementation-map/dependency-matrix.md` — clarified that thrown direct REST upload errors propagate after temp cleanup.
-- `kubeclaw-main/docs/pipeline/implementation-map/external-boundaries.md` — clarified visual-audit direct upload failures throw after cleanup.
+- `skills/buster/pipeline/tools/visual-audit.ts` — now scopes the `/tmp/audit-<Date.now()>` media directory to a `try/finally`, so success, HTTP errors, thrown upload errors, validation failures, and Chromium launch/capture failures remove temporary media before preserving the existing thrown error/CLI JSON behavior.
+- `tests/verification/behavior/areas/operator-surface.mjs` — added a mocked visual-audit regression where Discord upload throws after screenshot generation and asserts no `audit-*` directory remains.
+- `docs/pipeline/implementation-map/authority-map.md` — updated visual-audit temp artifact lifecycle authority to resolved behavior.
+- `docs/pipeline/implementation-map/path-construction.md` — updated `/tmp/audit-*` path lifecycle to the current `finally` cleanup contract.
+- `docs/pipeline/implementation-map/resiliency-and-error-handling.md` — updated visual-audit error/telemetry rows to remove the stale cleanup gap.
+- `docs/pipeline/implementation-map/dependency-matrix.md` — clarified that thrown direct REST upload errors propagate after temp cleanup.
+- `docs/pipeline/implementation-map/external-boundaries.md` — clarified visual-audit direct upload failures throw after cleanup.
 
 ### Problem / in-depth issue description
 
@@ -1520,8 +1520,8 @@ Resolved by wrapping the visual-audit temp media lifecycle in `try/finally`, kee
 
 ### Links / files
 
-- `kubeclaw-main/skills/buster/pipeline/tools/visual-audit.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/operator-surface.mjs`
+- `skills/buster/pipeline/tools/visual-audit.ts`
+- `tests/verification/behavior/areas/operator-surface.mjs`
 
 ## B05-ISSUE-001 — Buster telemetry accepts arbitrary event-type payloads without a centralized schema validator
 
@@ -1532,29 +1532,29 @@ Type: schema-validation
 
 ### Evidence
 
-- `kubeclaw-main/skills/buster/pipeline/services/telemetry.ts`
-- `kubeclaw-main/skills/common/pipeline/services/telemetry/payload-schema.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/rate-limit.ts`
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg.ts`
-- `kubeclaw-main/tests/verification/contracts/check-telemetry-contract.mjs`
-- `kubeclaw-main/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`
-- `kubeclaw-main/docs/telemetry-event-schema.md`
+- `skills/buster/pipeline/services/telemetry.ts`
+- `skills/common/pipeline/services/telemetry/payload-schema.ts`
+- `skills/buster/pipeline/services/rate-limit.ts`
+- `skills/buster/pipeline/suites/visual-reg.ts`
+- `tests/verification/contracts/check-telemetry-contract.mjs`
+- `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`
+- `docs/telemetry-event-schema.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/common/pipeline/services/telemetry/payload-schema.ts` — now owns the shared telemetry payload schema registry for core events plus the generic `plugin.event` extension event.
-- `kubeclaw-main/skills/nova/pipeline/services/telemetry/payload-schema.ts` — changed to a repo-local re-export facade that re-exports the common schema owner.
-- `kubeclaw-main/skills/buster/pipeline/services/telemetry/payload-schema.ts` — added the Buster-side repo-local re-export facade for the common schema owner.
-- `kubeclaw-main/skills/buster/pipeline/services/telemetry.ts` — validates every Buster emission before Redis/artifact output and records degraded diagnostics for invalid payloads.
-- `kubeclaw-main/skills/buster/pipeline/runners/suite-runner.ts` — emits Buster-owned suite telemetry through `plugin.event`.
-- `kubeclaw-main/skills/buster/pipeline/services/session-monitor.ts` — emits Buster-owned session monitor telemetry through `plugin.event` while retaining shared observability/transcript events.
-- `kubeclaw-main/skills/buster/pipeline/services/task-lifecycle.ts` — emits Buster-owned task/decision telemetry through `plugin.event` while retaining shared agent lifecycle events.
-- `kubeclaw-main/skills/buster/pipeline/services/task-lifecycle/cleanup.ts` — emits Buster-owned sandbox cleanup telemetry through `plugin.event`.
-- `kubeclaw-main/skills/buster/pipeline/services/task-lifecycle/git-sync.ts` — emits Buster-owned git-sync telemetry through `plugin.event`.
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg.ts` — emits Buster-owned visual-reg telemetry through `plugin.event` with plugin fields under `details`.
-- `kubeclaw-main/tests/verification/contracts/check-telemetry-contract.mjs` — verifies common schema inventory, plugin-event builder behavior, and invalid Buster payload suppression/degraded diagnostics.
-- `kubeclaw-main/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` — replaces Buster-specific event-name inventory with the single `plugin.event` extension contract.
-- `kubeclaw-main/docs/telemetry-event-schema.md` — documents `plugin.event` as the payload schema for plugin-owned telemetry.
+- `skills/common/pipeline/services/telemetry/payload-schema.ts` — now owns the shared telemetry payload schema registry for core events plus the generic `plugin.event` extension event.
+- `skills/nova/pipeline/services/telemetry/payload-schema.ts` — changed to a repo-local re-export facade that re-exports the common schema owner.
+- `skills/buster/pipeline/services/telemetry/payload-schema.ts` — added the Buster-side repo-local re-export facade for the common schema owner.
+- `skills/buster/pipeline/services/telemetry.ts` — validates every Buster emission before Redis/artifact output and records degraded diagnostics for invalid payloads.
+- `skills/buster/pipeline/runners/suite-runner.ts` — emits Buster-owned suite telemetry through `plugin.event`.
+- `skills/buster/pipeline/services/session-monitor.ts` — emits Buster-owned session monitor telemetry through `plugin.event` while retaining shared observability/transcript events.
+- `skills/buster/pipeline/services/task-lifecycle.ts` — emits Buster-owned task/decision telemetry through `plugin.event` while retaining shared agent lifecycle events.
+- `skills/buster/pipeline/services/task-lifecycle/cleanup.ts` — emits Buster-owned sandbox cleanup telemetry through `plugin.event`.
+- `skills/buster/pipeline/services/task-lifecycle/git-sync.ts` — emits Buster-owned git-sync telemetry through `plugin.event`.
+- `skills/buster/pipeline/suites/visual-reg.ts` — emits Buster-owned visual-reg telemetry through `plugin.event` with plugin fields under `details`.
+- `tests/verification/contracts/check-telemetry-contract.mjs` — verifies common schema inventory, plugin-event builder behavior, and invalid Buster payload suppression/degraded diagnostics.
+- `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` — replaces Buster-specific event-name inventory with the single `plugin.event` extension contract.
+- `docs/telemetry-event-schema.md` — documents `plugin.event` as the payload schema for plugin-owned telemetry.
 
 ### Problem / in-depth issue description
 
@@ -1572,12 +1572,12 @@ Resolved by moving payload schema authority to common telemetry, adding `plugin.
 
 ### Links / files
 
-- `kubeclaw-main/skills/common/pipeline/services/telemetry/payload-schema.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/telemetry.ts`
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg.ts`
-- `kubeclaw-main/tests/verification/contracts/check-telemetry-contract.mjs`
-- `kubeclaw-main/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`
-- `kubeclaw-main/docs/telemetry-event-schema.md`
+- `skills/common/pipeline/services/telemetry/payload-schema.ts`
+- `skills/buster/pipeline/services/telemetry.ts`
+- `skills/buster/pipeline/suites/visual-reg.ts`
+- `tests/verification/contracts/check-telemetry-contract.mjs`
+- `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`
+- `docs/telemetry-event-schema.md`
 
 ## C00a-ISSUE-001 — Discord purge can stall on single-message non-rate-limit delete failures
 
@@ -1588,11 +1588,11 @@ Type: bug
 
 ### Evidence
 
-- `kubeclaw-main/skills/common/discord-purge.ts`
+- `skills/common/discord-purge.ts`
 
 ### Affected files
 
-- `kubeclaw-main/skills/common/discord-purge.ts` — in the `bulkIds.length === 1` branch, a 429 response sleeps and retries, an OK response increments `totalDeleted`, and any other non-OK response now throws a terminal error containing the status/body.
+- `skills/common/discord-purge.ts` — in the `bulkIds.length === 1` branch, a 429 response sleeps and retries, an OK response increments `totalDeleted`, and any other non-OK response now throws a terminal error containing the status/body.
 
 ### Problem / in-depth issue description
 
@@ -1608,7 +1608,7 @@ Resolved by handling non-429 single DELETE failures the same way as bulk-delete 
 
 ### Links / files
 
-- `kubeclaw-main/skills/common/discord-purge.ts`
+- `skills/common/discord-purge.ts`
 
 ## C00b-ISSUE-001 — Common ACP/gateway helper result shapes are consumed as contracts but have no central validator/schema owner
 
@@ -1619,25 +1619,25 @@ Type: schema-validation
 
 ### Evidence
 
-- `kubeclaw-main/skills/common/pipeline/agents/acp-monitor.ts`
-- `kubeclaw-main/skills/common/pipeline/agents/lifecycle.ts`
-- `kubeclaw-main/skills/common/pipeline/integrations/gateway.ts`
-- `kubeclaw-main/skills/common/pipeline/services/acp-gateway-contract.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/runtime-monitor.mjs`
-- `kubeclaw-main/tests/verification/contracts/check-common-helper-import-surface.mjs`
-- `kubeclaw-main/tests/verification/contracts/check-acp-gateway-contract-surface.mjs`
+- `skills/common/pipeline/agents/acp-monitor.ts`
+- `skills/common/pipeline/agents/lifecycle.ts`
+- `skills/common/pipeline/integrations/gateway.ts`
+- `skills/common/pipeline/services/acp-gateway-contract.ts`
+- `tests/verification/behavior/areas/runtime-monitor.mjs`
+- `tests/verification/contracts/check-common-helper-import-surface.mjs`
+- `tests/verification/contracts/check-acp-gateway-contract-surface.mjs`
 
 ### Affected files
 
-- `kubeclaw-main/skills/common/pipeline/services/acp-gateway-contract.ts` — added as the central validator/normalizer owner for transcript state, monitor state, session lifecycle records, kill results, and gateway invoke result/error shapes.
-- `kubeclaw-main/skills/common/pipeline/agents/acp-monitor.ts` — now validates transcript cursor state and monitor result objects (`sessionKey`, `sessionState`, `sessionActive`, transcript state, gateway flags, terminal flags, reason/detail aliases, etc.) at return boundaries.
-- `kubeclaw-main/skills/common/pipeline/agents/lifecycle.ts` — now validates spawn session data, active-session JSON recovery/persist shape, and kill results.
-- `kubeclaw-main/skills/common/pipeline/integrations/gateway.ts` — now normalizes parsed/non-JSON gateway bodies and HTTP error shape through the common contract helper.
-- `kubeclaw-main/skills/nova/pipeline/services/acp-gateway-contract.ts` — added Nova repo-local re-export facade for the common contract owner.
-- `kubeclaw-main/skills/buster/pipeline/services/acp-gateway-contract.ts` — added Buster repo-local re-export facade for the common contract owner.
-- `kubeclaw-main/tests/verification/contracts/check-acp-gateway-contract-surface.mjs` — added focused contract coverage for the new helpers and caller wiring.
-- `kubeclaw-main/tests/verification/lib/lifecycle-audit-lib.mjs` — updated shared-helper inventory for the new common helper and shims.
-- `kubeclaw-main/tests/verification/lib/run-contract-suite.sh` — added the focused contract check to the contract suite.
+- `skills/common/pipeline/services/acp-gateway-contract.ts` — added as the central validator/normalizer owner for transcript state, monitor state, session lifecycle records, kill results, and gateway invoke result/error shapes.
+- `skills/common/pipeline/agents/acp-monitor.ts` — now validates transcript cursor state and monitor result objects (`sessionKey`, `sessionState`, `sessionActive`, transcript state, gateway flags, terminal flags, reason/detail aliases, etc.) at return boundaries.
+- `skills/common/pipeline/agents/lifecycle.ts` — now validates spawn session data, active-session JSON recovery/persist shape, and kill results.
+- `skills/common/pipeline/integrations/gateway.ts` — now normalizes parsed/non-JSON gateway bodies and HTTP error shape through the common contract helper.
+- `skills/nova/pipeline/services/acp-gateway-contract.ts` — added Nova repo-local re-export facade for the common contract owner.
+- `skills/buster/pipeline/services/acp-gateway-contract.ts` — added Buster repo-local re-export facade for the common contract owner.
+- `tests/verification/contracts/check-acp-gateway-contract-surface.mjs` — added focused contract coverage for the new helpers and caller wiring.
+- `tests/verification/lib/lifecycle-audit-lib.mjs` — updated shared-helper inventory for the new common helper and shims.
+- `tests/verification/lib/run-contract-suite.sh` — added the focused contract check to the contract suite.
 
 ### Problem / in-depth issue description
 
@@ -1655,11 +1655,11 @@ Resolved. Focused verification passed: `node tests/verification/contracts/check-
 
 ### Links / files
 
-- `kubeclaw-main/skills/common/pipeline/agents/acp-monitor.ts`
-- `kubeclaw-main/skills/common/pipeline/agents/lifecycle.ts`
-- `kubeclaw-main/skills/common/pipeline/integrations/gateway.ts`
-- `kubeclaw-main/skills/common/pipeline/services/acp-gateway-contract.ts`
-- `kubeclaw-main/tests/verification/contracts/check-acp-gateway-contract-surface.mjs`
+- `skills/common/pipeline/agents/acp-monitor.ts`
+- `skills/common/pipeline/agents/lifecycle.ts`
+- `skills/common/pipeline/integrations/gateway.ts`
+- `skills/common/pipeline/services/acp-gateway-contract.ts`
+- `tests/verification/contracts/check-acp-gateway-contract-surface.mjs`
 
 ## S00-ISSUE-001 — Project setup and Prism docs still document legacy visual-reg `baseline_dir` and `.cjs` tool names
 
@@ -1670,30 +1670,30 @@ Type: documentation-drift
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/project_setup/module-files.md`
-- `kubeclaw-main/skills/nova/project_setup/progress-json.md`
-- `kubeclaw-main/skills/prism/prism-conventions.md`
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg.ts`
-- `kubeclaw-main/skills/buster/pipeline/tools/screenshot.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/docs-surface.mjs`
-- `kubeclaw-main/tests/verification/contracts/check-buster-repo-scoped-paths.mjs`
+- `skills/nova/project_setup/module-files.md`
+- `skills/nova/project_setup/progress-json.md`
+- `skills/prism/prism-conventions.md`
+- `skills/buster/pipeline/suites/visual-reg.ts`
+- `skills/buster/pipeline/tools/screenshot.ts`
+- `tests/verification/behavior/areas/docs-surface.mjs`
+- `tests/verification/contracts/check-buster-repo-scoped-paths.mjs`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/project_setup/module-files.md` — now documents module-derived visual-reg baseline paths and current screenshot CLI path.
-- `kubeclaw-main/skills/nova/project_setup/progress-json.md` — now lists current visual-reg config fields without task-configured baseline paths.
-- `kubeclaw-main/skills/prism/prism-conventions.md` — now documents current source/runtime screenshot entrypoints and module baseline placement.
-- `kubeclaw-main/tests/verification/behavior/areas/docs-surface.mjs` — added focused docs-drift assertions for stale visual-reg tool/path guidance.
-- `kubeclaw-main/docs/pipeline/implementation-map/authority-map.md` — living authority rows now reflect resolved visual-reg docs authority.
-- `kubeclaw-main/docs/pipeline/implementation-map/dependency-matrix.md` — living dependency row now points at current screenshot source/runtime entrypoints.
-- `kubeclaw-main/docs/pipeline/implementation-map/env-vars-and-inputs.md` — living config row now reflects current visual-reg config and derived baseline paths.
-- `kubeclaw-main/docs/pipeline/implementation-map/external-boundaries.md` — living external-boundary row now reflects current screenshot tool boundary.
-- `kubeclaw-main/docs/pipeline/implementation-map/function-call-map.md` — living call row now reflects the current screenshot generator command and suite auto-detection.
-- `kubeclaw-main/docs/pipeline/implementation-map/logic-and-algorithms-map.md` — living logic row now reflects current mode detection and tool naming.
-- `kubeclaw-main/docs/pipeline/implementation-map/path-construction.md` — living path row now reflects module-derived visual-reg baseline paths.
-- `kubeclaw-main/docs/pipeline/implementation-map/resiliency-and-error-handling.md` — living resiliency/telemetry rows no longer describe stale config state.
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg.ts` — verified unchanged; current source derives baseline directories from module identity and rejects legacy baseline path configuration.
-- `kubeclaw-main/skills/buster/pipeline/tools/screenshot.ts` — verified unchanged; current source entrypoint is `.js` in this repo.
+- `skills/nova/project_setup/module-files.md` — now documents module-derived visual-reg baseline paths and current screenshot CLI path.
+- `skills/nova/project_setup/progress-json.md` — now lists current visual-reg config fields without task-configured baseline paths.
+- `skills/prism/prism-conventions.md` — now documents current source/runtime screenshot entrypoints and module baseline placement.
+- `tests/verification/behavior/areas/docs-surface.mjs` — added focused docs-drift assertions for stale visual-reg tool/path guidance.
+- `docs/pipeline/implementation-map/authority-map.md` — living authority rows now reflect resolved visual-reg docs authority.
+- `docs/pipeline/implementation-map/dependency-matrix.md` — living dependency row now points at current screenshot source/runtime entrypoints.
+- `docs/pipeline/implementation-map/env-vars-and-inputs.md` — living config row now reflects current visual-reg config and derived baseline paths.
+- `docs/pipeline/implementation-map/external-boundaries.md` — living external-boundary row now reflects current screenshot tool boundary.
+- `docs/pipeline/implementation-map/function-call-map.md` — living call row now reflects the current screenshot generator command and suite auto-detection.
+- `docs/pipeline/implementation-map/logic-and-algorithms-map.md` — living logic row now reflects current mode detection and tool naming.
+- `docs/pipeline/implementation-map/path-construction.md` — living path row now reflects module-derived visual-reg baseline paths.
+- `docs/pipeline/implementation-map/resiliency-and-error-handling.md` — living resiliency/telemetry rows no longer describe stale config state.
+- `skills/buster/pipeline/suites/visual-reg.ts` — verified unchanged; current source derives baseline directories from module identity and rejects legacy baseline path configuration.
+- `skills/buster/pipeline/tools/screenshot.ts` — verified unchanged; current source entrypoint is `.js` in this repo.
 
 ### Problem / in-depth issue description
 
@@ -1711,12 +1711,12 @@ Resolved by updating `module-files.md`, `progress-json.md`, and `prism-conventio
 
 ### Links / files
 
-- `kubeclaw-main/skills/nova/project_setup/module-files.md`
-- `kubeclaw-main/skills/nova/project_setup/progress-json.md`
-- `kubeclaw-main/skills/prism/prism-conventions.md`
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg.ts`
-- `kubeclaw-main/skills/buster/pipeline/tools/screenshot.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/docs-surface.mjs`
+- `skills/nova/project_setup/module-files.md`
+- `skills/nova/project_setup/progress-json.md`
+- `skills/prism/prism-conventions.md`
+- `skills/buster/pipeline/suites/visual-reg.ts`
+- `skills/buster/pipeline/tools/screenshot.ts`
+- `tests/verification/behavior/areas/docs-surface.mjs`
 
 ## S00-ISSUE-002 — progress-json ACP monitor defaults drift from current common monitor defaults
 
@@ -1727,35 +1727,35 @@ Type: authority-boundary / documentation-drift
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/project_setup/progress-json.md`
-- `kubeclaw-main/charts/kubeclaw/files/config/swarm.config.json`
-- `kubeclaw-main/skills/nova/pipeline/core/config.ts`
-- `kubeclaw-main/skills/common/pipeline/agents/acp-monitor.ts`
-- `kubeclaw-main/skills/nova/pipeline/agents/orchestration.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/session-monitor.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/rate-limit.ts`
+- `skills/nova/project_setup/progress-json.md`
+- `charts/kubeclaw/files/config/swarm.config.json`
+- `skills/nova/pipeline/core/config.ts`
+- `skills/common/pipeline/agents/acp-monitor.ts`
+- `skills/nova/pipeline/agents/orchestration.ts`
+- `skills/buster/pipeline/services/session-monitor.ts`
+- `skills/buster/pipeline/services/rate-limit.ts`
 - focused behavior areas listed in the triage row
 
 ### Affected files
 
-- `kubeclaw-main/charts/kubeclaw/files/config/swarm.config.json` — now carries the complete required platform-owned `acp_monitor` block.
-- `kubeclaw-main/skills/nova/pipeline/core/config.ts` — validates `config.acp_monitor.*` as required non-negative platform config without synthesizing hidden defaults.
-- `kubeclaw-main/skills/common/pipeline/agents/acp-monitor.ts` — `getAcpMonitorConfig()` now normalizes explicit config only and throws on missing/invalid fields.
-- `kubeclaw-main/skills/nova/pipeline/agents/orchestration.ts` — forwards platform ACP monitor config into Buster task payloads and graceful idle waits.
-- `kubeclaw-main/skills/nova/pipeline/agents/reviewer-lifecycle.ts` — forwards platform ACP monitor config into graceful reviewer idle waits.
-- `kubeclaw-main/skills/buster/pipeline/services/session-monitor.ts` — consumes explicit Buster task `payload.acp_monitor` for monitor and rate-limit paths.
-- `kubeclaw-main/skills/buster/pipeline/services/rate-limit.ts` — liveness probes now receive explicit ACP monitor config instead of relying on fallback defaults.
-- `kubeclaw-main/skills/nova/project_setup/progress-json.md` — no longer documents ACP monitor timing as `progress.json` or payload-owned project config.
-- `kubeclaw-main/docs/PIPELINE-CONFIG-REFERENCE.md` — documents ACP monitor timing as required `swarm.config.json` platform config.
-- `kubeclaw-main/docs/pipeline-reference-v10.md` — updated the Wave 3 note to remove hidden-default language.
-- `kubeclaw-main/tests/verification/behavior/areas/foundations.mjs` — added validation coverage for missing/incomplete `config.acp_monitor`.
-- `kubeclaw-main/tests/verification/behavior/areas/docs-surface.mjs` — added docs coverage that ACP monitor config remains platform-owned.
-- `kubeclaw-main/tests/verification/behavior/areas/runtime-monitor.mjs` — added coverage that common ACP monitor config has no hidden defaults.
-- `kubeclaw-main/tests/verification/behavior/areas/telemetry.mjs` — verifies Nova Buster payloads carry explicit ACP monitor config and updates monitor fixtures.
-- `kubeclaw-main/tests/verification/behavior/areas/polling.mjs` — updates ACP polling fixtures to supply explicit platform config.
-- `kubeclaw-main/tests/verification/behavior/areas/transcript-monitor.mjs` — updates idle-wait transcript fixture to supply explicit platform config.
-- `kubeclaw-main/tests/verification/behavior/areas/buster-runtime-normalization.mjs` — updates Buster runtime/rate-limit fixtures to supply explicit platform config.
-- `kubeclaw-main/docs/pipeline/implementation-map/*` — living maps now point to `swarm.config.json`/explicit config authority and no longer describe progress-json defaults drift.
+- `charts/kubeclaw/files/config/swarm.config.json` — now carries the complete required platform-owned `acp_monitor` block.
+- `skills/nova/pipeline/core/config.ts` — validates `config.acp_monitor.*` as required non-negative platform config without synthesizing hidden defaults.
+- `skills/common/pipeline/agents/acp-monitor.ts` — `getAcpMonitorConfig()` now normalizes explicit config only and throws on missing/invalid fields.
+- `skills/nova/pipeline/agents/orchestration.ts` — forwards platform ACP monitor config into Buster task payloads and graceful idle waits.
+- `skills/nova/pipeline/agents/reviewer-lifecycle.ts` — forwards platform ACP monitor config into graceful reviewer idle waits.
+- `skills/buster/pipeline/services/session-monitor.ts` — consumes explicit Buster task `payload.acp_monitor` for monitor and rate-limit paths.
+- `skills/buster/pipeline/services/rate-limit.ts` — liveness probes now receive explicit ACP monitor config instead of relying on fallback defaults.
+- `skills/nova/project_setup/progress-json.md` — no longer documents ACP monitor timing as `progress.json` or payload-owned project config.
+- `docs/PIPELINE-CONFIG-REFERENCE.md` — documents ACP monitor timing as required `swarm.config.json` platform config.
+- `docs/pipeline-reference-v10.md` — updated the Wave 3 note to remove hidden-default language.
+- `tests/verification/behavior/areas/foundations.mjs` — added validation coverage for missing/incomplete `config.acp_monitor`.
+- `tests/verification/behavior/areas/docs-surface.mjs` — added docs coverage that ACP monitor config remains platform-owned.
+- `tests/verification/behavior/areas/runtime-monitor.mjs` — added coverage that common ACP monitor config has no hidden defaults.
+- `tests/verification/behavior/areas/telemetry.mjs` — verifies Nova Buster payloads carry explicit ACP monitor config and updates monitor fixtures.
+- `tests/verification/behavior/areas/polling.mjs` — updates ACP polling fixtures to supply explicit platform config.
+- `tests/verification/behavior/areas/transcript-monitor.mjs` — updates idle-wait transcript fixture to supply explicit platform config.
+- `tests/verification/behavior/areas/buster-runtime-normalization.mjs` — updates Buster runtime/rate-limit fixtures to supply explicit platform config.
+- `docs/pipeline/implementation-map/*` — living maps now point to `swarm.config.json`/explicit config authority and no longer describe progress-json defaults drift.
 
 ### Problem / in-depth issue description
 
@@ -1773,10 +1773,10 @@ Resolved by making `acp_monitor` required platform config, forwarding it explici
 
 ### Links / files
 
-- `kubeclaw-main/charts/kubeclaw/files/config/swarm.config.json`
-- `kubeclaw-main/skills/nova/pipeline/core/config.ts`
-- `kubeclaw-main/skills/common/pipeline/agents/acp-monitor.ts`
-- `kubeclaw-main/skills/nova/project_setup/progress-json.md`
+- `charts/kubeclaw/files/config/swarm.config.json`
+- `skills/nova/pipeline/core/config.ts`
+- `skills/common/pipeline/agents/acp-monitor.ts`
+- `skills/nova/project_setup/progress-json.md`
 
 ## OI-34 — Milestone-based state authority deprecation needs an explicit cutoff contract
 
@@ -1787,23 +1787,23 @@ Type: authority-boundary / risk
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/services/status-store.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/status-store-read-models.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/status-store-lifecycle/read-models.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/gate-active-session.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/pipeline-runner-recovery.ts`
+- `skills/nova/pipeline/services/status-store.ts`
+- `skills/nova/pipeline/services/status-store-read-models.ts`
+- `skills/nova/pipeline/services/status-store-lifecycle/read-models.ts`
+- `skills/nova/pipeline/services/gate-active-session.ts`
+- `skills/nova/pipeline/runners/pipeline-runner-recovery.ts`
 - `docs/archive/pipeline-implementation-map-review-2026-05-08/open-issues.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/services/status-store.ts` — `loadStatus()` now projects lifecycle read models only; `module status JSON artifact` remains write-only diagnostic output for the pipeline.
-- `kubeclaw-main/skills/nova/pipeline/services/status-store-read-models.ts` and `status-store-read-models/module-projection.ts` — verified scheduler read-model helpers do not implicitly read module status artifacts.
-- `kubeclaw-main/skills/nova/pipeline/services/status-store-lifecycle/read-models.ts` — verified unchanged canonical lifecycle read-model authority.
-- `kubeclaw-main/skills/nova/pipeline/services/gate-active-session.ts` — file-only gate `active-session.json` is diagnostic evidence and never recovery identity.
-- `kubeclaw-main/skills/nova/pipeline/runners/pipeline-runner-recovery.ts` — verified stale recovery acts from lifecycle active-session authority, not legacy fallback files.
-- `kubeclaw-main/tests/verification/contracts/check-status-store-slice-surface.mjs` — added/updated no-status-read and explicit diagnostic evidence regressions.
-- `kubeclaw-main/tests/verification/contracts/check-gate-active-session-surface.mjs` — added file-only gate active-session diagnostic-only regression.
-- `kubeclaw-main/tests/verification/behavior/areas/restart-recovery.mjs` and `polling.mjs` — seeded lifecycle authority explicitly and covered recovery/polling without `module status JSON artifact` reads.
+- `skills/nova/pipeline/services/status-store.ts` — `loadStatus()` now projects lifecycle read models only; `module status JSON artifact` remains write-only diagnostic output for the pipeline.
+- `skills/nova/pipeline/services/status-store-read-models.ts` and `status-store-read-models/module-projection.ts` — verified scheduler read-model helpers do not implicitly read module status artifacts.
+- `skills/nova/pipeline/services/status-store-lifecycle/read-models.ts` — verified unchanged canonical lifecycle read-model authority.
+- `skills/nova/pipeline/services/gate-active-session.ts` — file-only gate `active-session.json` is diagnostic evidence and never recovery identity.
+- `skills/nova/pipeline/runners/pipeline-runner-recovery.ts` — verified stale recovery acts from lifecycle active-session authority, not legacy fallback files.
+- `tests/verification/contracts/check-status-store-slice-surface.mjs` — added/updated no-status-read and explicit diagnostic evidence regressions.
+- `tests/verification/contracts/check-gate-active-session-surface.mjs` — added file-only gate active-session diagnostic-only regression.
+- `tests/verification/behavior/areas/restart-recovery.mjs` and `polling.mjs` — seeded lifecycle authority explicitly and covered recovery/polling without `module status JSON artifact` reads.
 
 ### Problem / in-depth issue description
 
@@ -1833,26 +1833,26 @@ Type: simplification / architecture
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/runners/gate-runner.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/review-gate-runner.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/buster-gate-runner.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/approval-gate-runner.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/remediable-gate-engine.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/waitable-gate-engine.ts`
-- `kubeclaw-main/skills/nova/pipeline/core/registry/builtins.ts`
-- `kubeclaw-main/tests/verification/contracts/check-gate-control-result-surface.mjs`
+- `skills/nova/pipeline/runners/gate-runner.ts`
+- `skills/nova/pipeline/runners/review-gate-runner.ts`
+- `skills/nova/pipeline/runners/buster-gate-runner.ts`
+- `skills/nova/pipeline/runners/approval-gate-runner.ts`
+- `skills/nova/pipeline/runners/remediable-gate-engine.ts`
+- `skills/nova/pipeline/runners/waitable-gate-engine.ts`
+- `skills/nova/pipeline/core/registry/builtins.ts`
+- `tests/verification/contracts/check-gate-control-result-surface.mjs`
 - `docs/archive/pipeline-implementation-map-review-2026-05-08/open-issues.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/runners/gate-runner.ts` — verified as the generic registry-resolved orchestration entrypoint with no concrete gate-type dispatch table.
-- `kubeclaw-main/skills/nova/pipeline/runners/review-gate-runner.ts` — verified review-specific behavior is evaluation/control-adapter code; the registry exposes `runReviewGateStage` for scheduler orchestration.
-- `kubeclaw-main/skills/nova/pipeline/runners/buster-gate-runner.ts` — verified Buster-specific Redis/task behavior stays behind the gate plugin/stage boundary; the registry exposes `runBusterGateStage`.
-- `kubeclaw-main/skills/nova/pipeline/runners/approval-gate-runner.ts` — verified approval wait/pass/block behavior uses typed control results and a waitable adapter; the registry exposes `runApprovalGateStage`.
-- `kubeclaw-main/skills/nova/pipeline/runners/remediable-gate-engine.ts` — verified shared fix-loop policy remains generic for review/Buster request-fix gates.
-- `kubeclaw-main/skills/nova/pipeline/runners/waitable-gate-engine.ts` — verified shared wait policy remains generic for wait-capable gates.
-- `kubeclaw-main/skills/nova/pipeline/core/registry/builtins.ts` — now covered by a contract assertion that built-in gates register stage evaluation functions plus `gateControl` strategy adapters, not direct gate-specific orchestration calls.
-- `kubeclaw-main/tests/verification/contracts/check-gate-control-result-surface.mjs` — added registry strategy assertions for review/Buster/approval stage entrypoints and adapter declarations.
+- `skills/nova/pipeline/runners/gate-runner.ts` — verified as the generic registry-resolved orchestration entrypoint with no concrete gate-type dispatch table.
+- `skills/nova/pipeline/runners/review-gate-runner.ts` — verified review-specific behavior is evaluation/control-adapter code; the registry exposes `runReviewGateStage` for scheduler orchestration.
+- `skills/nova/pipeline/runners/buster-gate-runner.ts` — verified Buster-specific Redis/task behavior stays behind the gate plugin/stage boundary; the registry exposes `runBusterGateStage`.
+- `skills/nova/pipeline/runners/approval-gate-runner.ts` — verified approval wait/pass/block behavior uses typed control results and a waitable adapter; the registry exposes `runApprovalGateStage`.
+- `skills/nova/pipeline/runners/remediable-gate-engine.ts` — verified shared fix-loop policy remains generic for review/Buster request-fix gates.
+- `skills/nova/pipeline/runners/waitable-gate-engine.ts` — verified shared wait policy remains generic for wait-capable gates.
+- `skills/nova/pipeline/core/registry/builtins.ts` — now covered by a contract assertion that built-in gates register stage evaluation functions plus `gateControl` strategy adapters, not direct gate-specific orchestration calls.
+- `tests/verification/contracts/check-gate-control-result-surface.mjs` — added registry strategy assertions for review/Buster/approval stage entrypoints and adapter declarations.
 
 ### Problem / in-depth issue description
 
@@ -1870,10 +1870,10 @@ Resolved by documenting the current strategy contract and adding focused verific
 
 ### Links / files
 
-- `kubeclaw-main/docs/pipeline/implementation-map/batches/P11-nova-buster-gate.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/batches/P12-nova-approval-gate.md`
-- `kubeclaw-main/skills/nova/pipeline/core/registry/builtins.ts`
-- `kubeclaw-main/tests/verification/contracts/check-gate-control-result-surface.mjs`
+- `docs/pipeline/implementation-map/batches/P11-nova-buster-gate.md`
+- `docs/pipeline/implementation-map/batches/P12-nova-approval-gate.md`
+- `skills/nova/pipeline/core/registry/builtins.ts`
+- `tests/verification/contracts/check-gate-control-result-surface.mjs`
 - Archived source issue: `docs/archive/pipeline-implementation-map-review-2026-05-08/open-issues.md` OI-35
 
 ## OI-36 — Pipeline and module runner state machines are fragmented across many micro-modules
@@ -1885,28 +1885,28 @@ Type: simplification / maintainability
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/runners/pipeline-runner.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/pipeline-runner-loop.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/pipeline-runner-state-machine.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/pipeline-runner-scheduling.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/pipeline-runner-recovery.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-prebuster.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner/buster-phase.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-forge.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner/state-machine.ts`
-- `kubeclaw-main/tests/verification/contracts/check-pipeline-runner-slice-surface.mjs`
-- `kubeclaw-main/tests/verification/contracts/check-module-runner-slice-surface.mjs`
+- `skills/nova/pipeline/runners/pipeline-runner.ts`
+- `skills/nova/pipeline/runners/pipeline-runner-loop.ts`
+- `skills/nova/pipeline/runners/pipeline-runner-state-machine.ts`
+- `skills/nova/pipeline/runners/pipeline-runner-scheduling.ts`
+- `skills/nova/pipeline/runners/pipeline-runner-recovery.ts`
+- `skills/nova/pipeline/runners/module-runner.ts`
+- `skills/nova/pipeline/runners/module-runner-prebuster.ts`
+- `skills/nova/pipeline/runners/module-runner/buster-phase.ts`
+- `skills/nova/pipeline/runners/module-runner-forge.ts`
+- `skills/nova/pipeline/runners/module-runner/state-machine.ts`
+- `tests/verification/contracts/check-pipeline-runner-slice-surface.mjs`
+- `tests/verification/contracts/check-module-runner-slice-surface.mjs`
 - `docs/archive/pipeline-implementation-map-review-2026-05-08/open-issues.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/runners/pipeline-runner-loop.ts` — now delegates loop routing to the explicit pipeline state-machine controller.
-- `kubeclaw-main/skills/nova/pipeline/runners/pipeline-runner-state-machine.ts` — added as the cohesive owner for pipeline loop actions: complete, blocked halt, validator, gate, and module execution.
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner/attempt.ts` — now delegates module lifecycle phase routing to the explicit module attempt state-machine controller after dependency checks.
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner/state-machine.ts` — added as the cohesive owner for loaded-status, Forge, forge-only, pre-Buster, Buster, retry/terminal, and unexpected-status actions.
-- `kubeclaw-main/tests/verification/contracts/check-pipeline-runner-slice-surface.mjs` — added state-machine import/export and planner transition coverage.
-- `kubeclaw-main/tests/verification/contracts/check-module-runner-slice-surface.mjs` — added module state-machine import/export and planner transition coverage.
+- `skills/nova/pipeline/runners/pipeline-runner-loop.ts` — now delegates loop routing to the explicit pipeline state-machine controller.
+- `skills/nova/pipeline/runners/pipeline-runner-state-machine.ts` — added as the cohesive owner for pipeline loop actions: complete, blocked halt, validator, gate, and module execution.
+- `skills/nova/pipeline/runners/module-runner/attempt.ts` — now delegates module lifecycle phase routing to the explicit module attempt state-machine controller after dependency checks.
+- `skills/nova/pipeline/runners/module-runner/state-machine.ts` — added as the cohesive owner for loaded-status, Forge, forge-only, pre-Buster, Buster, retry/terminal, and unexpected-status actions.
+- `tests/verification/contracts/check-pipeline-runner-slice-surface.mjs` — added state-machine import/export and planner transition coverage.
+- `tests/verification/contracts/check-module-runner-slice-surface.mjs` — added module state-machine import/export and planner transition coverage.
 
 ### Problem / in-depth issue description
 
@@ -1922,11 +1922,11 @@ Resolved by introducing cohesive behavior-retaining state-machine controllers fo
 
 ### Links / files
 
-- `kubeclaw-main/skills/nova/pipeline/runners/pipeline-runner-state-machine.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner/state-machine.ts`
-- `kubeclaw-main/docs/pipeline/implementation-map/function-call-map.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/authority-map.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/logic-and-algorithms-map.md`
+- `skills/nova/pipeline/runners/pipeline-runner-state-machine.ts`
+- `skills/nova/pipeline/runners/module-runner/state-machine.ts`
+- `docs/pipeline/implementation-map/function-call-map.md`
+- `docs/pipeline/implementation-map/authority-map.md`
+- `docs/pipeline/implementation-map/logic-and-algorithms-map.md`
 - Archived source issue: `docs/archive/pipeline-implementation-map-review-2026-05-08/open-issues.md` OI-36
 
 ## OI-37 — Redis transport needs a formal TaskQueue/EventBus abstraction boundary
@@ -1938,51 +1938,51 @@ Type: simplification / architecture
 
 ### Evidence
 
-- `kubeclaw-main/skills/common/pipeline/services/task-transport-contract.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/task-transport-contract.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/task-transport-contract.ts`
-- `kubeclaw-main/skills/nova/pipeline/tools/redis.ts`
-- `kubeclaw-main/skills/nova/pipeline/agents/orchestration.ts`
-- `kubeclaw-main/skills/buster/buster-pipeline.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/task-queue.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/task-completion.ts`
-- `kubeclaw-main/skills/buster/pipeline/tools/redis.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/redis-completion.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/polling-redis-completion.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/redis-log.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/task-lifecycle.ts`
-- `kubeclaw-main/tests/verification/contracts/check-redis-completion-service-surface.mjs`
-- `kubeclaw-main/tests/verification/contracts/check-buster-pipeline-slice-surface.mjs`
-- `kubeclaw-main/tests/verification/behavior/areas/agent-lifecycle.mjs`
-- `kubeclaw-main/tests/verification/behavior/areas/buster-runtime-normalization.mjs`
+- `skills/common/pipeline/services/task-transport-contract.ts`
+- `skills/nova/pipeline/services/task-transport-contract.ts`
+- `skills/buster/pipeline/services/task-transport-contract.ts`
+- `skills/nova/pipeline/tools/redis.ts`
+- `skills/nova/pipeline/agents/orchestration.ts`
+- `skills/buster/buster-pipeline.ts`
+- `skills/buster/pipeline/services/task-queue.ts`
+- `skills/buster/pipeline/services/task-completion.ts`
+- `skills/buster/pipeline/tools/redis.ts`
+- `skills/nova/pipeline/services/redis-completion.ts`
+- `skills/nova/pipeline/services/polling-redis-completion.ts`
+- `skills/nova/pipeline/services/redis-log.ts`
+- `skills/buster/pipeline/services/task-lifecycle.ts`
+- `tests/verification/contracts/check-redis-completion-service-surface.mjs`
+- `tests/verification/contracts/check-buster-pipeline-slice-surface.mjs`
+- `tests/verification/behavior/areas/agent-lifecycle.mjs`
+- `tests/verification/behavior/areas/buster-runtime-normalization.mjs`
 - `docs/archive/pipeline-implementation-map-review-2026-05-08/open-issues.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/common/pipeline/services/task-transport-contract.ts` — added the canonical TaskQueue/EventBus contract, Redis-backed adapter factories, adapter shape assertions, and stream-entry decoding/field flattening helpers.
-- `kubeclaw-main/skills/nova/pipeline/services/task-transport-contract.ts` — added Nova repo-local re-export facade to the canonical common transport contract.
-- `kubeclaw-main/skills/buster/pipeline/services/task-transport-contract.ts` — added Buster repo-local re-export facade to the canonical common transport contract.
-- `kubeclaw-main/skills/nova/pipeline/tools/redis.ts` — migrated task publishing to `publishTask(...)` through the TaskQueue adapter.
-- `kubeclaw-main/skills/nova/pipeline/agents/orchestration.ts` — changed Redis dispatch to require/use the TaskQueue-facing `publishTask(...)` method.
-- `kubeclaw-main/skills/buster/buster-pipeline.ts` — moved consumer-group creation behind the Buster task queue boundary.
-- `kubeclaw-main/skills/buster/pipeline/services/task-queue.ts` — moved Redis read/reclaim/ACK/trim calls behind the TaskQueue adapter while preserving terminal evidence before ACK.
-- `kubeclaw-main/skills/buster/pipeline/services/task-completion.ts` — moved completion and dead-letter XADD calls behind the EventBus adapter.
-- `kubeclaw-main/skills/buster/pipeline/tools/redis.ts` — migrated task send path to the TaskQueue adapter.
-- `kubeclaw-main/tests/verification/contracts/check-redis-completion-service-surface.mjs` — added contract assertions for the TaskQueue/EventBus owner, shims, and Redis adapter parity.
-- `kubeclaw-main/tests/verification/contracts/check-buster-pipeline-slice-surface.mjs` — added Buster source contract assertions for TaskQueue/EventBus usage and exported consumer-group initialization.
-- `kubeclaw-main/tests/verification/behavior/areas/agent-lifecycle.mjs` — updated Redis dispatch fixtures to expose the new `publishTask(...)` adapter method.
-- `kubeclaw-main/tests/verification/lib/lifecycle-audit-lib.mjs` — added the new shared transport helper to the common-helper packaging/shim inventory.
-- `kubeclaw-main/docs/pipeline/implementation-map/authority-map.md` — updated living authority rows for TaskQueue/EventBus ownership and canonical publish semantics.
-- `kubeclaw-main/docs/pipeline/implementation-map/external-boundaries.md` — updated Redis task/completion boundary rows to the formal transport contract.
-- `kubeclaw-main/docs/pipeline/implementation-map/function-call-map.md` — updated call edges for TaskQueue publish/read/ACK/trim and EventBus completion/dead-letter publish.
-- `kubeclaw-main/docs/pipeline/implementation-map/data-schemas.md` — updated task/completion/dead-letter schema rows to show transport validation and decoding ownership.
-- `kubeclaw-main/docs/pipeline/implementation-map/concurrency-and-backpressure.md` — updated queue/read/trim/reclaim/ACK and completion backpressure rows to the adapter boundary.
-- `kubeclaw-main/docs/pipeline/implementation-map/dependency-matrix.md` — updated Redis dependencies to identify the common transport contract owner.
-- `kubeclaw-main/docs/pipeline/implementation-map/path-construction.md` — updated stream path rows to TaskQueue/EventBus producers and consumers.
-- `kubeclaw-main/docs/pipeline/implementation-map/env-vars-and-inputs.md` — updated sender/stream env-var owner to TaskQueue publish.
-- `kubeclaw-main/docs/pipeline/implementation-map/logic-and-algorithms-map.md` — updated Redis publish algorithm row to TaskQueue publish.
-- `kubeclaw-main/docs/pipeline/implementation-map/resiliency-and-error-handling.md` — updated publish/ACK/dead-letter failure rows to EventBus/TaskQueue semantics.
-- `kubeclaw-main/docs/pipeline/implementation-map/acp-protocol.md` — updated completion stream publish wording for EventBus.
+- `skills/common/pipeline/services/task-transport-contract.ts` — added the canonical TaskQueue/EventBus contract, Redis-backed adapter factories, adapter shape assertions, and stream-entry decoding/field flattening helpers.
+- `skills/nova/pipeline/services/task-transport-contract.ts` — added Nova repo-local re-export facade to the canonical common transport contract.
+- `skills/buster/pipeline/services/task-transport-contract.ts` — added Buster repo-local re-export facade to the canonical common transport contract.
+- `skills/nova/pipeline/tools/redis.ts` — migrated task publishing to `publishTask(...)` through the TaskQueue adapter.
+- `skills/nova/pipeline/agents/orchestration.ts` — changed Redis dispatch to require/use the TaskQueue-facing `publishTask(...)` method.
+- `skills/buster/buster-pipeline.ts` — moved consumer-group creation behind the Buster task queue boundary.
+- `skills/buster/pipeline/services/task-queue.ts` — moved Redis read/reclaim/ACK/trim calls behind the TaskQueue adapter while preserving terminal evidence before ACK.
+- `skills/buster/pipeline/services/task-completion.ts` — moved completion and dead-letter XADD calls behind the EventBus adapter.
+- `skills/buster/pipeline/tools/redis.ts` — migrated task send path to the TaskQueue adapter.
+- `tests/verification/contracts/check-redis-completion-service-surface.mjs` — added contract assertions for the TaskQueue/EventBus owner, shims, and Redis adapter parity.
+- `tests/verification/contracts/check-buster-pipeline-slice-surface.mjs` — added Buster source contract assertions for TaskQueue/EventBus usage and exported consumer-group initialization.
+- `tests/verification/behavior/areas/agent-lifecycle.mjs` — updated Redis dispatch fixtures to expose the new `publishTask(...)` adapter method.
+- `tests/verification/lib/lifecycle-audit-lib.mjs` — added the new shared transport helper to the common-helper packaging/shim inventory.
+- `docs/pipeline/implementation-map/authority-map.md` — updated living authority rows for TaskQueue/EventBus ownership and canonical publish semantics.
+- `docs/pipeline/implementation-map/external-boundaries.md` — updated Redis task/completion boundary rows to the formal transport contract.
+- `docs/pipeline/implementation-map/function-call-map.md` — updated call edges for TaskQueue publish/read/ACK/trim and EventBus completion/dead-letter publish.
+- `docs/pipeline/implementation-map/data-schemas.md` — updated task/completion/dead-letter schema rows to show transport validation and decoding ownership.
+- `docs/pipeline/implementation-map/concurrency-and-backpressure.md` — updated queue/read/trim/reclaim/ACK and completion backpressure rows to the adapter boundary.
+- `docs/pipeline/implementation-map/dependency-matrix.md` — updated Redis dependencies to identify the common transport contract owner.
+- `docs/pipeline/implementation-map/path-construction.md` — updated stream path rows to TaskQueue/EventBus producers and consumers.
+- `docs/pipeline/implementation-map/env-vars-and-inputs.md` — updated sender/stream env-var owner to TaskQueue publish.
+- `docs/pipeline/implementation-map/logic-and-algorithms-map.md` — updated Redis publish algorithm row to TaskQueue publish.
+- `docs/pipeline/implementation-map/resiliency-and-error-handling.md` — updated publish/ACK/dead-letter failure rows to EventBus/TaskQueue semantics.
+- `docs/pipeline/implementation-map/acp-protocol.md` — updated completion stream publish wording for EventBus.
 
 ### Problem / in-depth issue description
 
@@ -1998,13 +1998,13 @@ Resolved by adding a common `TaskQueue` / `EventBus` transport contract and migr
 
 ### Links / files
 
-- `kubeclaw-main/skills/common/pipeline/services/task-transport-contract.ts`
-- `kubeclaw-main/docs/pipeline/implementation-map/external-boundaries.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/function-call-map.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/data-schemas.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/concurrency-and-backpressure.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/dependency-matrix.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/path-construction.md`
+- `skills/common/pipeline/services/task-transport-contract.ts`
+- `docs/pipeline/implementation-map/external-boundaries.md`
+- `docs/pipeline/implementation-map/function-call-map.md`
+- `docs/pipeline/implementation-map/data-schemas.md`
+- `docs/pipeline/implementation-map/concurrency-and-backpressure.md`
+- `docs/pipeline/implementation-map/dependency-matrix.md`
+- `docs/pipeline/implementation-map/path-construction.md`
 - Archived source issue: `docs/archive/pipeline-implementation-map-review-2026-05-08/open-issues.md` OI-37
 
 ## OI-38 — Nova repo-local re-export facade files duplicate canonical common pipeline package surfaces
@@ -2016,26 +2016,26 @@ Type: accepted-duplication / repo-testability
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/agents/acp-monitor.ts`
-- `kubeclaw-main/skills/nova/pipeline/agents/lifecycle.ts`
-- `kubeclaw-main/skills/nova/pipeline/agents/runtime.ts`
-- `kubeclaw-main/skills/nova/pipeline/integrations/discord-webhook.ts`
-- `kubeclaw-main/skills/nova/pipeline/lifecycle-state.ts`
-- `kubeclaw-main/skills/nova/pipeline/security.ts`
-- `kubeclaw-main/skills/nova/pipeline/telemetry.ts`
-- `kubeclaw-main/skills/common/pipeline/`
+- `skills/nova/pipeline/agents/acp-monitor.ts`
+- `skills/nova/pipeline/agents/lifecycle.ts`
+- `skills/nova/pipeline/agents/runtime.ts`
+- `skills/nova/pipeline/integrations/discord-webhook.ts`
+- `skills/nova/pipeline/lifecycle-state.ts`
+- `skills/nova/pipeline/security.ts`
+- `skills/nova/pipeline/telemetry.ts`
+- `skills/common/pipeline/`
 - `docs/archive/pipeline-implementation-map-review-2026-05-08/open-issues.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/agents/acp-monitor.ts` — Nova-local repo-local re-export facade for common implementation.
-- `kubeclaw-main/skills/nova/pipeline/agents/lifecycle.ts` — Nova-local repo-local re-export facade for common implementation.
-- `kubeclaw-main/skills/nova/pipeline/agents/runtime.ts` — Nova-local repo-local re-export facade for common implementation.
-- `kubeclaw-main/skills/nova/pipeline/integrations/discord-webhook.ts` — Nova-local repo-local re-export facade for common implementation.
-- `kubeclaw-main/skills/nova/pipeline/lifecycle-state.ts` — Nova-local repo-local re-export facade for common implementation.
-- `kubeclaw-main/skills/nova/pipeline/security.ts` — Nova-local repo-local re-export facade for common implementation.
-- `kubeclaw-main/skills/nova/pipeline/telemetry.ts` — Nova-local repo-local re-export facade for common implementation.
-- `kubeclaw-main/skills/common/pipeline/` — canonical shared helper owner.
+- `skills/nova/pipeline/agents/acp-monitor.ts` — Nova-local repo-local re-export facade for common implementation.
+- `skills/nova/pipeline/agents/lifecycle.ts` — Nova-local repo-local re-export facade for common implementation.
+- `skills/nova/pipeline/agents/runtime.ts` — Nova-local repo-local re-export facade for common implementation.
+- `skills/nova/pipeline/integrations/discord-webhook.ts` — Nova-local repo-local re-export facade for common implementation.
+- `skills/nova/pipeline/lifecycle-state.ts` — Nova-local repo-local re-export facade for common implementation.
+- `skills/nova/pipeline/security.ts` — Nova-local repo-local re-export facade for common implementation.
+- `skills/nova/pipeline/telemetry.ts` — Nova-local repo-local re-export facade for common implementation.
+- `skills/common/pipeline/` — canonical shared helper owner.
 
 ### Problem / in-depth issue description
 
@@ -2053,7 +2053,7 @@ No immediate code change. Revisit only if repo testability no longer needs the s
 
 ### Links / files
 
-- `kubeclaw-main/skills/nova/pipeline/README.md`
+- `skills/nova/pipeline/README.md`
 - Archived source issue: `docs/archive/pipeline-implementation-map-review-2026-05-08/open-issues.md` OI-38
 
 ## OI-39 — Artifact path construction is scattered across string-based module-local helpers
@@ -2065,30 +2065,30 @@ Type: simplification / risk
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/core/paths.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/buster-gate-terminal.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/review-gate-task.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/review-gate-runner.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/approval-gate-state.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/redis-log.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/status-store-read-models/gate-projection.ts`
-- `kubeclaw-main/tests/verification/contracts/check-path-construction-surface.mjs`
-- `kubeclaw-main/docs/pipeline/implementation-map/path-construction.md`
+- `skills/nova/pipeline/core/paths.ts`
+- `skills/nova/pipeline/runners/buster-gate-terminal.ts`
+- `skills/nova/pipeline/runners/review-gate-task.ts`
+- `skills/nova/pipeline/runners/review-gate-runner.ts`
+- `skills/nova/pipeline/runners/approval-gate-state.ts`
+- `skills/nova/pipeline/services/redis-log.ts`
+- `skills/nova/pipeline/services/status-store-read-models/gate-projection.ts`
+- `tests/verification/contracts/check-path-construction-surface.mjs`
+- `docs/pipeline/implementation-map/path-construction.md`
 - `docs/archive/pipeline-implementation-map-review-2026-05-08/open-issues.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/core/paths.ts` — now owns swarm-scoped gate/review/instruction artifacts, approval artifact paths/refs, and Redis log artifact targets.
-- `kubeclaw-main/skills/nova/pipeline/runners/buster-gate-terminal.ts` — delegates durable Buster gate output path construction to `gateOutputPath()`.
-- `kubeclaw-main/skills/nova/pipeline/runners/buster-gate-runner.ts` — delegates stale output cleanup path construction to `gateOutputPath()`.
-- `kubeclaw-main/skills/nova/pipeline/runners/buster-gate-fix-cycle.ts` — delegates fix-cycle stale output cleanup path construction to `gateOutputPath()`.
-- `kubeclaw-main/skills/nova/pipeline/runners/review-gate-task.ts` — delegates reviewer and merged review output paths to `reviewGateOutputPath()` / `gateOutputPath()`.
-- `kubeclaw-main/skills/nova/pipeline/runners/review-gate-runner.ts` — delegates review cleanup and existing-output reads to `gateOutputPath()`.
-- `kubeclaw-main/skills/nova/pipeline/runners/approval-gate-state.ts` — delegates approval request/decision/transition artifact paths to `approvalGateArtifactPaths()` and operator refs to `approvalGateArtifactRefPaths()`.
-- `kubeclaw-main/skills/nova/pipeline/services/redis-log.ts` — delegates Redis artifact targets to `redisLogArtifactTargets()`.
-- `kubeclaw-main/skills/nova/pipeline/services/status-store-read-models/gate-projection.ts` — delegates gate output read-model path projection to `gateOutputPath()`.
-- `kubeclaw-main/tests/verification/contracts/check-path-construction-surface.mjs` — added central helper/path-boundary/source-delegation contract coverage.
-- `kubeclaw-main/docs/pipeline/implementation-map/path-construction.md` — updated living path authority map for OI-39.
+- `skills/nova/pipeline/core/paths.ts` — now owns swarm-scoped gate/review/instruction artifacts, approval artifact paths/refs, and Redis log artifact targets.
+- `skills/nova/pipeline/runners/buster-gate-terminal.ts` — delegates durable Buster gate output path construction to `gateOutputPath()`.
+- `skills/nova/pipeline/runners/buster-gate-runner.ts` — delegates stale output cleanup path construction to `gateOutputPath()`.
+- `skills/nova/pipeline/runners/buster-gate-fix-cycle.ts` — delegates fix-cycle stale output cleanup path construction to `gateOutputPath()`.
+- `skills/nova/pipeline/runners/review-gate-task.ts` — delegates reviewer and merged review output paths to `reviewGateOutputPath()` / `gateOutputPath()`.
+- `skills/nova/pipeline/runners/review-gate-runner.ts` — delegates review cleanup and existing-output reads to `gateOutputPath()`.
+- `skills/nova/pipeline/runners/approval-gate-state.ts` — delegates approval request/decision/transition artifact paths to `approvalGateArtifactPaths()` and operator refs to `approvalGateArtifactRefPaths()`.
+- `skills/nova/pipeline/services/redis-log.ts` — delegates Redis artifact targets to `redisLogArtifactTargets()`.
+- `skills/nova/pipeline/services/status-store-read-models/gate-projection.ts` — delegates gate output read-model path projection to `gateOutputPath()`.
+- `tests/verification/contracts/check-path-construction-surface.mjs` — added central helper/path-boundary/source-delegation contract coverage.
+- `docs/pipeline/implementation-map/path-construction.md` — updated living path authority map for OI-39.
 
 ### Problem / in-depth issue description
 
@@ -2116,26 +2116,26 @@ Type: duplication / simplification
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/agents/orchestration-lifecycle-events.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/gate-runner.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/review-gate-runner.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/buster-gate-runner.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/approval-gate-shared.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-shared.ts`
+- `skills/nova/pipeline/agents/orchestration-lifecycle-events.ts`
+- `skills/nova/pipeline/runners/gate-runner.ts`
+- `skills/nova/pipeline/runners/review-gate-runner.ts`
+- `skills/nova/pipeline/runners/buster-gate-runner.ts`
+- `skills/nova/pipeline/runners/approval-gate-shared.ts`
+- `skills/nova/pipeline/runners/module-runner-shared.ts`
 - `docs/archive/pipeline-implementation-map-review-2026-05-08/open-issues.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/common/pipeline/services/rate-limit-contract.ts` — owns canonical Discord identity field specs, surface sets, and surface builder.
-- `kubeclaw-main/skills/nova/pipeline/services/discord-fields.ts` — re-exports the canonical common Discord identity surface for Nova callers.
-- `kubeclaw-main/skills/nova/pipeline/agents/orchestration.ts` — builds lifecycle Discord/operator identity fields directly from the canonical lifecycle surface.
-- `kubeclaw-main/skills/nova/pipeline/agents/reviewer-lifecycle.ts` — builds reviewer lifecycle Discord/operator identity fields directly from the canonical lifecycle surface.
-- `kubeclaw-main/skills/nova/pipeline/runners/gate-runner.ts` — builds gate dispatch identity fields from the canonical gate-dispatch surface.
-- `kubeclaw-main/skills/nova/pipeline/runners/review-gate-runner.ts` — builds review-gate identity fields from the canonical gate-session surface.
-- `kubeclaw-main/skills/nova/pipeline/runners/buster-gate-runner.ts` — builds Buster-gate identity fields from the canonical gate-session surface.
-- `kubeclaw-main/skills/nova/pipeline/runners/approval-gate-runner.ts` — builds approval identity fields from the canonical approval-gate surface.
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-forge.ts` and module runner Buster-phase files — build module notification identity fields from the canonical module-session surface.
-- `kubeclaw-main/skills/nova/pipeline/runners/pipeline-runner-*.ts` — build pipeline notification identity fields from the canonical pipeline surface.
+- `skills/common/pipeline/services/rate-limit-contract.ts` — owns canonical Discord identity field specs, surface sets, and surface builder.
+- `skills/nova/pipeline/services/discord-fields.ts` — re-exports the canonical common Discord identity surface for Nova callers.
+- `skills/nova/pipeline/agents/orchestration.ts` — builds lifecycle Discord/operator identity fields directly from the canonical lifecycle surface.
+- `skills/nova/pipeline/agents/reviewer-lifecycle.ts` — builds reviewer lifecycle Discord/operator identity fields directly from the canonical lifecycle surface.
+- `skills/nova/pipeline/runners/gate-runner.ts` — builds gate dispatch identity fields from the canonical gate-dispatch surface.
+- `skills/nova/pipeline/runners/review-gate-runner.ts` — builds review-gate identity fields from the canonical gate-session surface.
+- `skills/nova/pipeline/runners/buster-gate-runner.ts` — builds Buster-gate identity fields from the canonical gate-session surface.
+- `skills/nova/pipeline/runners/approval-gate-runner.ts` — builds approval identity fields from the canonical approval-gate surface.
+- `skills/nova/pipeline/runners/module-runner-forge.ts` and module runner Buster-phase files — build module notification identity fields from the canonical module-session surface.
+- `skills/nova/pipeline/runners/pipeline-runner-*.ts` — build pipeline notification identity fields from the canonical pipeline surface.
 
 ### Problem / in-depth issue description
 
@@ -2163,37 +2163,37 @@ Type: simplification / maintainability
 
 ### Evidence
 
-- `kubeclaw-main/skills/common/pipeline/agents/acp-monitor.ts`
-- `kubeclaw-main/skills/common/pipeline/agents/lifecycle.ts`
-- `kubeclaw-main/skills/common/pipeline/agents/session-semantics.ts`
-- `kubeclaw-main/skills/common/pipeline/agents/tracked-agents.ts`
-- `kubeclaw-main/tests/verification/contracts/check-critical-dynamic-imports.mjs`
-- `kubeclaw-main/tests/verification/contracts/check-common-helper-import-surface.mjs`
-- `kubeclaw-main/tests/verification/behavior/areas/foundations.mjs`
-- `kubeclaw-main/tests/verification/behavior/areas/shutdown-integration.mjs`
-- `kubeclaw-main/docs/pipeline/implementation-map/function-call-map.md`
+- `skills/common/pipeline/agents/acp-monitor.ts`
+- `skills/common/pipeline/agents/lifecycle.ts`
+- `skills/common/pipeline/agents/session-semantics.ts`
+- `skills/common/pipeline/agents/tracked-agents.ts`
+- `tests/verification/contracts/check-critical-dynamic-imports.mjs`
+- `tests/verification/contracts/check-common-helper-import-surface.mjs`
+- `tests/verification/behavior/areas/foundations.mjs`
+- `tests/verification/behavior/areas/shutdown-integration.mjs`
+- `docs/pipeline/implementation-map/function-call-map.md`
 - `docs/archive/pipeline-implementation-map-review-2026-05-08/open-issues.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/common/pipeline/agents/acp-monitor.ts` — removed the lifecycle lazy import; monitor now statically reads tracked-agent state from the neutral registry and re-exports session parsing from semantics.
-- `kubeclaw-main/skills/common/pipeline/agents/lifecycle.ts` — stopped importing ACP monitor; lifecycle imports session parsing from `session-semantics.js` and re-exports tracked-agent helpers as the compatibility facade.
-- `kubeclaw-main/skills/common/pipeline/agents/session-semantics.ts` — now owns `parseSessionState` alongside terminal/stopped/unreachable vocabulary.
-- `kubeclaw-main/skills/common/pipeline/agents/tracked-agents.ts` — new neutral process-local tracked-agent registry owner.
-- `kubeclaw-main/skills/nova/pipeline/agents/tracked-agents.ts` — Nova repo-local re-export facade for the new common owner.
-- `kubeclaw-main/skills/buster/pipeline/agents/tracked-agents.ts` — Buster repo-local re-export facade for the new common owner.
-- `kubeclaw-main/tests/verification/contracts/check-critical-dynamic-imports.mjs` — verifies ACP monitor has zero dynamic imports and lifecycle no longer imports ACP monitor.
-- `kubeclaw-main/tests/verification/contracts/check-common-helper-import-surface.mjs` — verified updated shared helper inventory and shims.
-- `kubeclaw-main/tests/verification/behavior/areas/foundations.mjs` — updated source-boundary assertions for static neutral imports.
-- `kubeclaw-main/tests/verification/behavior/areas/shutdown-integration.mjs` — updated lifecycle/tracked-agent ownership assertion.
-- `kubeclaw-main/docs/pipeline/implementation-map/README.md` — added the neutral tracked-agent helper to the common-agent scope.
-- `kubeclaw-main/docs/pipeline/implementation-map/function-call-map.md` — updated call edges to remove the monitor/lifecycle lazy edge and record neutral static imports.
-- `kubeclaw-main/docs/pipeline/implementation-map/authority-map.md` — updated tracked-agent registry authority to `tracked-agents.js`.
-- `kubeclaw-main/docs/pipeline/implementation-map/data-schemas.md` — updated tracked-agent entry producer/consumer ownership.
-- `kubeclaw-main/docs/pipeline/implementation-map/acp-protocol.md` — updated ACP session parsing and tracked-record producers.
-- `kubeclaw-main/docs/pipeline/implementation-map/concurrency-and-backpressure.md` — updated shutdown cleanup to reference the neutral tracked-agent map.
-- `kubeclaw-main/docs/pipeline/implementation-map/dependency-matrix.md` — removed the old URL/dynamic-import dependency state.
-- `kubeclaw-main/docs/pipeline/implementation-map/logic-and-algorithms-map.md` — updated parse-session and tracked-agent algorithm ownership.
+- `skills/common/pipeline/agents/acp-monitor.ts` — removed the lifecycle lazy import; monitor now statically reads tracked-agent state from the neutral registry and re-exports session parsing from semantics.
+- `skills/common/pipeline/agents/lifecycle.ts` — stopped importing ACP monitor; lifecycle imports session parsing from `session-semantics.js` and re-exports tracked-agent helpers as the compatibility facade.
+- `skills/common/pipeline/agents/session-semantics.ts` — now owns `parseSessionState` alongside terminal/stopped/unreachable vocabulary.
+- `skills/common/pipeline/agents/tracked-agents.ts` — new neutral process-local tracked-agent registry owner.
+- `skills/nova/pipeline/agents/tracked-agents.ts` — Nova repo-local re-export facade for the new common owner.
+- `skills/buster/pipeline/agents/tracked-agents.ts` — Buster repo-local re-export facade for the new common owner.
+- `tests/verification/contracts/check-critical-dynamic-imports.mjs` — verifies ACP monitor has zero dynamic imports and lifecycle no longer imports ACP monitor.
+- `tests/verification/contracts/check-common-helper-import-surface.mjs` — verified updated shared helper inventory and shims.
+- `tests/verification/behavior/areas/foundations.mjs` — updated source-boundary assertions for static neutral imports.
+- `tests/verification/behavior/areas/shutdown-integration.mjs` — updated lifecycle/tracked-agent ownership assertion.
+- `docs/pipeline/implementation-map/README.md` — added the neutral tracked-agent helper to the common-agent scope.
+- `docs/pipeline/implementation-map/function-call-map.md` — updated call edges to remove the monitor/lifecycle lazy edge and record neutral static imports.
+- `docs/pipeline/implementation-map/authority-map.md` — updated tracked-agent registry authority to `tracked-agents.js`.
+- `docs/pipeline/implementation-map/data-schemas.md` — updated tracked-agent entry producer/consumer ownership.
+- `docs/pipeline/implementation-map/acp-protocol.md` — updated ACP session parsing and tracked-record producers.
+- `docs/pipeline/implementation-map/concurrency-and-backpressure.md` — updated shutdown cleanup to reference the neutral tracked-agent map.
+- `docs/pipeline/implementation-map/dependency-matrix.md` — removed the old URL/dynamic-import dependency state.
+- `docs/pipeline/implementation-map/logic-and-algorithms-map.md` — updated parse-session and tracked-agent algorithm ownership.
 
 ### Problem / in-depth issue description
 
@@ -2214,9 +2214,9 @@ No further action for this issue. Focused verification passed:
 
 ### Links / files
 
-- `kubeclaw-main/skills/common/pipeline/agents/tracked-agents.ts`
-- `kubeclaw-main/skills/common/pipeline/agents/session-semantics.ts`
-- `kubeclaw-main/docs/pipeline/implementation-map/function-call-map.md`
+- `skills/common/pipeline/agents/tracked-agents.ts`
+- `skills/common/pipeline/agents/session-semantics.ts`
+- `docs/pipeline/implementation-map/function-call-map.md`
 - Archived source issue: `docs/archive/pipeline-implementation-map-review-2026-05-08/open-issues.md` OI-41
 
 ## OI-42 — Active polling loops should be evaluated for event-driven or blocking wait patterns
@@ -2228,40 +2228,40 @@ Type: optimization / architecture
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/runners/buster-gate-completion.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/polling-redis-completion.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/polling.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/polling-session-end.ts`
-- `kubeclaw-main/skills/common/pipeline/agents/acp-monitor.ts`
-- `kubeclaw-main/skills/common/pipeline/services/redis-message-contract.ts`
-- `kubeclaw-main/skills/common/pipeline/services/pipeline-event-contract.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/completion-event-adapters.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/buster-completion-controller.ts`
-- `kubeclaw-main/docs/pipeline/OI-42-event-driven-completion-refactor-plan.md`
-- `kubeclaw-main/docs/pipeline/implementation-map/batches/P17-nova-polling-and-completion-watching.md`
+- `skills/nova/pipeline/runners/buster-gate-completion.ts`
+- `skills/nova/pipeline/services/polling-redis-completion.ts`
+- `skills/nova/pipeline/services/polling.ts`
+- `skills/nova/pipeline/services/polling-session-end.ts`
+- `skills/common/pipeline/agents/acp-monitor.ts`
+- `skills/common/pipeline/services/redis-message-contract.ts`
+- `skills/common/pipeline/services/pipeline-event-contract.ts`
+- `skills/nova/pipeline/services/completion-event-adapters.ts`
+- `skills/nova/pipeline/services/buster-completion-controller.ts`
+- `docs/pipeline/OI-42-event-driven-completion-refactor-plan.md`
+- `docs/pipeline/implementation-map/batches/P17-nova-polling-and-completion-watching.md`
 - `docs/archive/pipeline-implementation-map-review-2026-05-08/open-issues.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/runners/buster-gate-runner.ts` — Buster gate attempts call `waitBusterGateCompletionEvidence(...)` directly for completion evidence.
-- `kubeclaw-main/skills/nova/pipeline/runners/buster-gate-completion.ts` — active Buster gate completion waits use Redis/local event adapters and the shared controller.
-- `kubeclaw-main/skills/nova/pipeline/services/polling-dual.ts` — active Buster module completion waits use `waitForModuleBusterCompletion(...)` with Redis/local event adapters and the shared controller.
-- `kubeclaw-main/skills/nova/pipeline/services/completion-event-adapters.ts` — Redis completion waits now use a dedicated `XREAD BLOCK` adapter.
-- `kubeclaw-main/skills/nova/pipeline/services/polling.ts` — Phase 4 keeps `pollDual(...)` / `pollDualWithRateLimitRecovery(...)` public wrappers but routes Buster module completion to the event-driven wait.
-- `kubeclaw-main/skills/nova/pipeline/services/polling-session-end.ts` — session-end loops should be evaluated for event-driven monitor support.
-- `kubeclaw-main/skills/common/pipeline/agents/acp-monitor.ts` — ACP monitor sleep loops should be evaluated for event-driven or blocking wait patterns.
-- `kubeclaw-main/skills/common/pipeline/services/pipeline-event-contract.ts` — Phase 1 added the canonical in-process event envelope, identity normalization, event bus, and abortable wait contract using the Redis schema style as the template.
-- `kubeclaw-main/skills/nova/pipeline/services/pipeline-event-contract.ts` — Nova repo-local re-export facade for the common event contract.
-- `kubeclaw-main/skills/buster/pipeline/services/pipeline-event-contract.ts` — Buster repo-local re-export facade for the common event contract.
-- `kubeclaw-main/skills/nova/pipeline/services/completion-event-adapters.ts` — Phase 4 active Buster module/gate waits now start the Redis and local filesystem completion evidence adapters.
-- `kubeclaw-main/skills/nova/pipeline/services/buster-completion-controller.ts` — Phase 4 active Buster module/gate waits now use the controller for Redis/local/fatal event resolution.
-- `kubeclaw-main/tests/verification/contracts/check-pipeline-event-contract-surface.mjs` — Phase 5 covers AbortSignal/listener cleanup plus `waitForAny` race and timeout cleanup.
-- `kubeclaw-main/tests/verification/contracts/check-completion-event-adapters-surface.mjs` — Phase 5 covers fake Redis dedicated-client/blocking behavior plus local evidence debounce/watcher cleanup.
-- `kubeclaw-main/tests/verification/contracts/check-buster-completion-controller-surface.mjs` — Phase 5 covers controller stale-event/timeout cleanup and module/gate wrapper behavior.
-- `kubeclaw-main/tests/verification/contracts/check-pipeline-event-contract-surface.mjs` — focused Phase 1 verification for envelope validation, wait matching, timeout, abort, and listener cleanup.
-- `kubeclaw-main/tests/verification/contracts/check-completion-event-adapters-surface.mjs` — focused Phase 2 verification for dedicated Redis blocking client behavior, abort cleanup, local watcher debounce, and watcher cleanup.
-- `kubeclaw-main/tests/verification/contracts/check-buster-completion-controller-surface.mjs` — focused Phase 3 verification for Redis-first resolution, local fallback/wakeup behavior, invalid completion fail-closed handling, gate output terminal fallback, and fatal adapter errors.
-- `kubeclaw-main/docs/pipeline/OI-42-event-driven-completion-refactor-plan.md` — recorded the controlled multi-phase refactor plan and cleanup requirements.
+- `skills/nova/pipeline/runners/buster-gate-runner.ts` — Buster gate attempts call `waitBusterGateCompletionEvidence(...)` directly for completion evidence.
+- `skills/nova/pipeline/runners/buster-gate-completion.ts` — active Buster gate completion waits use Redis/local event adapters and the shared controller.
+- `skills/nova/pipeline/services/polling-dual.ts` — active Buster module completion waits use `waitForModuleBusterCompletion(...)` with Redis/local event adapters and the shared controller.
+- `skills/nova/pipeline/services/completion-event-adapters.ts` — Redis completion waits now use a dedicated `XREAD BLOCK` adapter.
+- `skills/nova/pipeline/services/polling.ts` — Phase 4 keeps `pollDual(...)` / `pollDualWithRateLimitRecovery(...)` public wrappers but routes Buster module completion to the event-driven wait.
+- `skills/nova/pipeline/services/polling-session-end.ts` — session-end loops should be evaluated for event-driven monitor support.
+- `skills/common/pipeline/agents/acp-monitor.ts` — ACP monitor sleep loops should be evaluated for event-driven or blocking wait patterns.
+- `skills/common/pipeline/services/pipeline-event-contract.ts` — Phase 1 added the canonical in-process event envelope, identity normalization, event bus, and abortable wait contract using the Redis schema style as the template.
+- `skills/nova/pipeline/services/pipeline-event-contract.ts` — Nova repo-local re-export facade for the common event contract.
+- `skills/buster/pipeline/services/pipeline-event-contract.ts` — Buster repo-local re-export facade for the common event contract.
+- `skills/nova/pipeline/services/completion-event-adapters.ts` — Phase 4 active Buster module/gate waits now start the Redis and local filesystem completion evidence adapters.
+- `skills/nova/pipeline/services/buster-completion-controller.ts` — Phase 4 active Buster module/gate waits now use the controller for Redis/local/fatal event resolution.
+- `tests/verification/contracts/check-pipeline-event-contract-surface.mjs` — Phase 5 covers AbortSignal/listener cleanup plus `waitForAny` race and timeout cleanup.
+- `tests/verification/contracts/check-completion-event-adapters-surface.mjs` — Phase 5 covers fake Redis dedicated-client/blocking behavior plus local evidence debounce/watcher cleanup.
+- `tests/verification/contracts/check-buster-completion-controller-surface.mjs` — Phase 5 covers controller stale-event/timeout cleanup and module/gate wrapper behavior.
+- `tests/verification/contracts/check-pipeline-event-contract-surface.mjs` — focused Phase 1 verification for envelope validation, wait matching, timeout, abort, and listener cleanup.
+- `tests/verification/contracts/check-completion-event-adapters-surface.mjs` — focused Phase 2 verification for dedicated Redis blocking client behavior, abort cleanup, local watcher debounce, and watcher cleanup.
+- `tests/verification/contracts/check-buster-completion-controller-surface.mjs` — focused Phase 3 verification for Redis-first resolution, local fallback/wakeup behavior, invalid completion fail-closed handling, gate output terminal fallback, and fatal adapter errors.
+- `docs/pipeline/OI-42-event-driven-completion-refactor-plan.md` — recorded the controlled multi-phase refactor plan and cleanup requirements.
 
 ### Problem / in-depth issue description
 
@@ -2290,43 +2290,43 @@ Type: telemetry-gap / operator-surface
 
 ### Evidence
 
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg-discord.ts`
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/discord.ts`
-- `kubeclaw-main/skills/nova/pipeline/core/policy.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/system-io-warning.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/git-soft-fail-observability.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-forge.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/review-gate-task.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/gate-forge-fix-cycle.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/buster-gate-terminal.ts`
-- `kubeclaw-main/skills/common/pipeline/services/telemetry/payload-schema.ts`
-- `kubeclaw-main/tests/verification/behavior/areas/operator-surface.mjs`
-- `kubeclaw-main/tests/verification/contracts/check-git-soft-fail-observability-surface.mjs`
-- `kubeclaw-main/tests/verification/contracts/check-system-io-warning-surface.mjs`
-- `kubeclaw-main/tests/verification/contracts/check-telemetry-contract.mjs`
-- `kubeclaw-main/docs/pipeline/implementation-map/OI-43-noncritical-observability-plan.md`
+- `skills/buster/pipeline/suites/visual-reg-discord.ts`
+- `skills/buster/pipeline/suites/visual-reg.ts`
+- `skills/buster/pipeline/services/discord.ts`
+- `skills/nova/pipeline/core/policy.ts`
+- `skills/nova/pipeline/services/system-io-warning.ts`
+- `skills/nova/pipeline/services/git-soft-fail-observability.ts`
+- `skills/nova/pipeline/runners/module-runner-forge.ts`
+- `skills/nova/pipeline/runners/review-gate-task.ts`
+- `skills/nova/pipeline/runners/gate-forge-fix-cycle.ts`
+- `skills/nova/pipeline/runners/buster-gate-terminal.ts`
+- `skills/common/pipeline/services/telemetry/payload-schema.ts`
+- `tests/verification/behavior/areas/operator-surface.mjs`
+- `tests/verification/contracts/check-git-soft-fail-observability-surface.mjs`
+- `tests/verification/contracts/check-system-io-warning-surface.mjs`
+- `tests/verification/contracts/check-telemetry-contract.mjs`
+- `docs/pipeline/implementation-map/OI-43-noncritical-observability-plan.md`
 - `docs/archive/pipeline-implementation-map-review-2026-05-08/open-issues.md`
 
 ### Affected files
 
-- `kubeclaw-main/skills/buster/pipeline/services/discord.ts` — added protocol-agnostic `deliverDiscordWebhookRequest()` so raw/multipart callers share Buster Discord degraded/restored webhook telemetry.
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg-discord.ts` — now formats multipart visual-reg payloads and delegates HTTP delivery to the shared Buster Discord transport while preserving non-critical delivery result shapes.
-- `kubeclaw-main/skills/buster/pipeline/suites/visual-reg.ts` — passes run/module/session delivery context to visual-reg Discord helpers.
-- `kubeclaw-main/skills/nova/pipeline/integrations/git-worktree.ts` — verified unchanged for transient retry semantics; retry warnings remain local resiliency signals, not degraded telemetry.
-- `kubeclaw-main/skills/nova/pipeline/services/git-soft-fail-observability.ts` — centralizes the stable `git_worktree` / `commit_push` / `git_commit_push_soft_failed` degraded payload while leaving emission caller-owned.
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-forge.ts` — uses the shared helper with module context when forge-only soft-fail commit/push loses persistence.
-- `kubeclaw-main/skills/nova/pipeline/runners/review-gate-task.ts` — uses the shared helper with gate/review context when review output soft-fail commit/push loses persistence.
-- `kubeclaw-main/skills/nova/pipeline/runners/gate-forge-fix-cycle.ts` — uses the shared helper with gate/cycle/session context when gate fix soft-fail commit/push loses persistence.
-- `kubeclaw-main/skills/nova/pipeline/runners/buster-gate-terminal.ts` — uses the shared helper with gate/session context when Buster gate PASS persistence soft-fail commit/push loses persistence.
-- `kubeclaw-main/skills/nova/pipeline/services/system-io-warning.ts` — centralizes point-in-time `system.io_warning` emission and stable local I/O specializations.
-- `kubeclaw-main/skills/nova/pipeline/core/policy.ts` — delegates model-policy audit append warning emission to the shared helper without introducing restored state.
-- `kubeclaw-main/skills/common/pipeline/services/telemetry/payload-schema.ts` — registers the `system.io_warning` payload contract.
-- `kubeclaw-main/tests/verification/behavior/areas/operator-surface.mjs` — added focused regressions for visual-reg shared Discord degraded/restored telemetry, Git soft-fail caller telemetry, and policy IO warning emission.
-- `kubeclaw-main/tests/verification/contracts/check-git-soft-fail-observability-surface.mjs` — added Phase 2 source contract coverage for the shared helper, all four orchestration soft-fail call sites, and the low-level git retry helper staying telemetry-free.
-- `kubeclaw-main/tests/verification/contracts/check-system-io-warning-surface.mjs` — covers the shared I/O warning helper, stable specializations, logger/status-store wiring, and bare stderr fallback.
-- `kubeclaw-main/tests/verification/contracts/check-telemetry-contract.mjs` — extended payload-schema exhaustiveness fixture for `system.io_warning`.
-- `kubeclaw-main/docs/pipeline/implementation-map/OI-43-noncritical-observability-plan.md` — records accepted plan and contract seams.
+- `skills/buster/pipeline/services/discord.ts` — added protocol-agnostic `deliverDiscordWebhookRequest()` so raw/multipart callers share Buster Discord degraded/restored webhook telemetry.
+- `skills/buster/pipeline/suites/visual-reg-discord.ts` — now formats multipart visual-reg payloads and delegates HTTP delivery to the shared Buster Discord transport while preserving non-critical delivery result shapes.
+- `skills/buster/pipeline/suites/visual-reg.ts` — passes run/module/session delivery context to visual-reg Discord helpers.
+- `skills/nova/pipeline/integrations/git-worktree.ts` — verified unchanged for transient retry semantics; retry warnings remain local resiliency signals, not degraded telemetry.
+- `skills/nova/pipeline/services/git-soft-fail-observability.ts` — centralizes the stable `git_worktree` / `commit_push` / `git_commit_push_soft_failed` degraded payload while leaving emission caller-owned.
+- `skills/nova/pipeline/runners/module-runner-forge.ts` — uses the shared helper with module context when forge-only soft-fail commit/push loses persistence.
+- `skills/nova/pipeline/runners/review-gate-task.ts` — uses the shared helper with gate/review context when review output soft-fail commit/push loses persistence.
+- `skills/nova/pipeline/runners/gate-forge-fix-cycle.ts` — uses the shared helper with gate/cycle/session context when gate fix soft-fail commit/push loses persistence.
+- `skills/nova/pipeline/runners/buster-gate-terminal.ts` — uses the shared helper with gate/session context when Buster gate PASS persistence soft-fail commit/push loses persistence.
+- `skills/nova/pipeline/services/system-io-warning.ts` — centralizes point-in-time `system.io_warning` emission and stable local I/O specializations.
+- `skills/nova/pipeline/core/policy.ts` — delegates model-policy audit append warning emission to the shared helper without introducing restored state.
+- `skills/common/pipeline/services/telemetry/payload-schema.ts` — registers the `system.io_warning` payload contract.
+- `tests/verification/behavior/areas/operator-surface.mjs` — added focused regressions for visual-reg shared Discord degraded/restored telemetry, Git soft-fail caller telemetry, and policy IO warning emission.
+- `tests/verification/contracts/check-git-soft-fail-observability-surface.mjs` — added Phase 2 source contract coverage for the shared helper, all four orchestration soft-fail call sites, and the low-level git retry helper staying telemetry-free.
+- `tests/verification/contracts/check-system-io-warning-surface.mjs` — covers the shared I/O warning helper, stable specializations, logger/status-store wiring, and bare stderr fallback.
+- `tests/verification/contracts/check-telemetry-contract.mjs` — extended payload-schema exhaustiveness fixture for `system.io_warning`.
+- `docs/pipeline/implementation-map/OI-43-noncritical-observability-plan.md` — records accepted plan and contract seams.
 
 ### Problem / in-depth issue description
 
@@ -2355,31 +2355,31 @@ Type: risk
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/services/contract-diagnostics.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/serialization.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/contracts/gate-control-result.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/contracts/worker-control-result.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/contracts/validator-control-result.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/contracts/generator-result.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-forge.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-buster-worker.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/gate-runner.ts`
-- `kubeclaw-main/skills/nova/pipeline/runners/pipeline-runner-scheduling.ts`
-- `kubeclaw-main/skills/common/pipeline/redaction.ts`
+- `skills/nova/pipeline/services/contract-diagnostics.ts`
+- `skills/nova/pipeline/services/serialization.ts`
+- `skills/nova/pipeline/services/contracts/gate-control-result.ts`
+- `skills/nova/pipeline/services/contracts/worker-control-result.ts`
+- `skills/nova/pipeline/services/contracts/validator-control-result.ts`
+- `skills/nova/pipeline/services/contracts/generator-result.ts`
+- `skills/nova/pipeline/runners/module-runner-forge.ts`
+- `skills/nova/pipeline/runners/module-runner-buster-worker.ts`
+- `skills/nova/pipeline/runners/gate-runner.ts`
+- `skills/nova/pipeline/runners/pipeline-runner-scheduling.ts`
+- `skills/common/pipeline/redaction.ts`
 
 ### Affected files
 
-- `kubeclaw-main/skills/nova/pipeline/services/contract-diagnostics.ts` — now builds source-redacted contract diagnostics through the redaction facade; raw/coerced preview fields are deleted and replaced by redacted summaries.
-- `kubeclaw-main/skills/nova/pipeline/services/serialization.ts` — `buildSafeJsonPreview()` was deleted after import verification found no legitimate remaining callers.
-- `kubeclaw-main/skills/nova/pipeline/services/contracts/gate-control-result.ts` — gate normalizers still pass raw plugin gate results into `createContractInvalidError()`; the diagnostic builder redacts them before projection.
-- `kubeclaw-main/skills/nova/pipeline/services/contracts/worker-control-result.ts` — worker normalizers still pass raw plugin worker results into `createContractInvalidError()`; the diagnostic builder redacts them before projection.
-- `kubeclaw-main/skills/nova/pipeline/services/contracts/validator-control-result.ts` — validator normalizers still pass raw plugin validator results into `createContractInvalidError()`; the diagnostic builder redacts them before projection.
-- `kubeclaw-main/skills/nova/pipeline/services/contracts/generator-result.ts` — generator normalizer still passes raw generator output into `createContractInvalidError()`; the diagnostic builder redacts it before projection.
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-forge.ts` — continues propagating `error.diagnostics`, now source-redacted.
-- `kubeclaw-main/skills/nova/pipeline/runners/module-runner-buster-worker.ts` — continues propagating `error.diagnostics`, now source-redacted.
-- `kubeclaw-main/skills/nova/pipeline/runners/gate-runner.ts` — continues propagating `error.diagnostics`, now source-redacted.
-- `kubeclaw-main/skills/nova/pipeline/runners/pipeline-runner-scheduling.ts` — continues propagating scheduled validator/generator contract diagnostics, now source-redacted.
-- `kubeclaw-main/skills/common/pipeline/redaction.ts` — owns the reused `summarizeStructuredValue()`, `redactSecrets()`, and telemetry/Discord sanitizers.
+- `skills/nova/pipeline/services/contract-diagnostics.ts` — now builds source-redacted contract diagnostics through the redaction facade; raw/coerced preview fields are deleted and replaced by redacted summaries.
+- `skills/nova/pipeline/services/serialization.ts` — `buildSafeJsonPreview()` was deleted after import verification found no legitimate remaining callers.
+- `skills/nova/pipeline/services/contracts/gate-control-result.ts` — gate normalizers still pass raw plugin gate results into `createContractInvalidError()`; the diagnostic builder redacts them before projection.
+- `skills/nova/pipeline/services/contracts/worker-control-result.ts` — worker normalizers still pass raw plugin worker results into `createContractInvalidError()`; the diagnostic builder redacts them before projection.
+- `skills/nova/pipeline/services/contracts/validator-control-result.ts` — validator normalizers still pass raw plugin validator results into `createContractInvalidError()`; the diagnostic builder redacts them before projection.
+- `skills/nova/pipeline/services/contracts/generator-result.ts` — generator normalizer still passes raw generator output into `createContractInvalidError()`; the diagnostic builder redacts it before projection.
+- `skills/nova/pipeline/runners/module-runner-forge.ts` — continues propagating `error.diagnostics`, now source-redacted.
+- `skills/nova/pipeline/runners/module-runner-buster-worker.ts` — continues propagating `error.diagnostics`, now source-redacted.
+- `skills/nova/pipeline/runners/gate-runner.ts` — continues propagating `error.diagnostics`, now source-redacted.
+- `skills/nova/pipeline/runners/pipeline-runner-scheduling.ts` — continues propagating scheduled validator/generator contract diagnostics, now source-redacted.
+- `skills/common/pipeline/redaction.ts` — owns the reused `summarizeStructuredValue()`, `redactSecrets()`, and telemetry/Discord sanitizers.
 
 ### Problem / in-depth issue description
 
@@ -2398,7 +2398,7 @@ Resolved by deleting raw previews, using the redaction facade in `contract-diagn
 ### Links / files
 
 - Review citations: P07-R005, P07-R016, P13-R001 through P13-R007.
-- Related redaction owner: `kubeclaw-main/skills/common/pipeline/redaction.ts`.
+- Related redaction owner: `skills/common/pipeline/redaction.ts`.
 
 ## OI-45 — Prompt artifacts and structural logger append failures are still debug-only
 
@@ -2409,20 +2409,20 @@ Type: telemetry-gap
 
 ### Evidence
 
-- `kubeclaw-main/skills/nova/pipeline/services/status-store.ts`
-- `kubeclaw-main/skills/nova/pipeline/core/logger.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/system-io-warning.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/telemetry-stream.ts`
-- `kubeclaw-main/tests/verification/contracts/check-system-io-warning-surface.mjs`
-- `kubeclaw-main/tests/verification/behavior/areas/operator-surface.mjs`
-- `kubeclaw-main/docs/pipeline/implementation-map/OI-43-noncritical-observability-plan.md`
+- `skills/nova/pipeline/services/status-store.ts`
+- `skills/nova/pipeline/core/logger.ts`
+- `skills/nova/pipeline/services/system-io-warning.ts`
+- `skills/nova/pipeline/services/telemetry-stream.ts`
+- `tests/verification/contracts/check-system-io-warning-surface.mjs`
+- `tests/verification/behavior/areas/operator-surface.mjs`
+- `docs/pipeline/implementation-map/OI-43-noncritical-observability-plan.md`
 
 ### Resolution
 
-- `kubeclaw-main/skills/nova/pipeline/services/system-io-warning.ts` owns the canonical `system.io_warning` helper plus stable specializations for model-policy audit, pipeline JSONL, and redacted prompt artifact failures.
-- `kubeclaw-main/skills/nova/pipeline/core/logger.ts` calls `emitPipelineLogAppendWarning()` when pipeline JSONL mkdir/append fails.
-- `kubeclaw-main/skills/nova/pipeline/services/status-store.ts` calls `emitPromptArtifactWriteWarning()` when `savePrompt()` cannot persist a redacted prompt artifact.
-- `kubeclaw-main/skills/nova/pipeline/services/telemetry-stream.ts` no longer imports `core/logger.js`, so warning emission cannot recurse through the structural logger path.
+- `skills/nova/pipeline/services/system-io-warning.ts` owns the canonical `system.io_warning` helper plus stable specializations for model-policy audit, pipeline JSONL, and redacted prompt artifact failures.
+- `skills/nova/pipeline/core/logger.ts` calls `emitPipelineLogAppendWarning()` when pipeline JSONL mkdir/append fails.
+- `skills/nova/pipeline/services/status-store.ts` calls `emitPromptArtifactWriteWarning()` when `savePrompt()` cannot persist a redacted prompt artifact.
+- `skills/nova/pipeline/services/telemetry-stream.ts` no longer imports `core/logger.js`, so warning emission cannot recurse through the structural logger path.
 - `system-io-warning.js` includes a bare `console.error`/`process.stderr.write` fallback when Redis stream emission itself fails.
 
 ### Verification
@@ -2461,7 +2461,7 @@ The filesystem edge is isolated in `skills/nova/pipeline/services/approval-signa
 - `skills/common/pipeline/services/pipeline-event-contract.ts`
 - `docs/pipeline/implementation-map/reviews/open-issues-table.md`
 
-## OI-47 — Gateway-facing agent operations are still scattered outside the common agent boundary
+## OI-47 — Gateway-facing agent operations are still scattered under the common agent boundary
 
 Status: resolved
 Area: pipeline
@@ -2470,38 +2470,38 @@ Type: simplification
 
 ### Evidence
 
-- `kubeclaw-main/skills/common/pipeline/integrations/gateway.ts`
-- `kubeclaw-main/skills/common/pipeline/agents/lifecycle.ts`
-- `kubeclaw-main/skills/common/pipeline/agents/acp-monitor.ts`
-- `kubeclaw-main/skills/common/pipeline/agents/session-termination.ts`
-- `kubeclaw-main/skills/common/pipeline/agents/runtime.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/failures/presentation.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/arch-validator.ts`
-- `kubeclaw-main/skills/nova/pipeline/services/polling-session-end.ts`
-- `kubeclaw-main/skills/nova/pipeline/agents/orchestration.ts`
-- `kubeclaw-main/skills/nova/pipeline/agents/orchestration-healthcheck.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/gateway-health.ts`
-- `kubeclaw-main/skills/buster/pipeline/services/session-monitor.ts`
+- `skills/common/pipeline/integrations/gateway.ts`
+- `skills/common/pipeline/agents/lifecycle.ts`
+- `skills/common/pipeline/agents/acp-monitor.ts`
+- `skills/common/pipeline/agents/session-termination.ts`
+- `skills/common/pipeline/agents/runtime.ts`
+- `skills/nova/pipeline/services/failures/presentation.ts`
+- `skills/nova/pipeline/services/arch-validator.ts`
+- `skills/nova/pipeline/services/polling-session-end.ts`
+- `skills/nova/pipeline/agents/orchestration.ts`
+- `skills/nova/pipeline/agents/orchestration-healthcheck.ts`
+- `skills/buster/pipeline/services/gateway-health.ts`
+- `skills/buster/pipeline/services/session-monitor.ts`
 
 ### Affected files
 
-- `kubeclaw-main/skills/common/pipeline/integrations/gateway.ts` — should expose typed gateway operation wrappers instead of leaving domain code to call raw tool names directly.
-- `kubeclaw-main/skills/common/pipeline/agents/lifecycle.ts` — already owns `spawnSession()` / `killSession()`; should remain the canonical spawn/kill boundary and may need additional exported operations for send/steer/status reuse.
-- `kubeclaw-main/skills/common/pipeline/agents/acp-monitor.ts` — already owns canonical monitor state and event adapter behavior; should remain the canonical status/transcript monitoring boundary.
-- `kubeclaw-main/skills/common/pipeline/agents/session-termination.ts` — verify all termination callers continue to enter through this shared controller after gateway operation wrappers are introduced.
-- `kubeclaw-main/skills/common/pipeline/services/acp-gateway-contract.ts` — may need schemas/validators for any new typed common operation result wrappers.
-- `kubeclaw-main/skills/nova/pipeline/services/failures/presentation.ts` — currently calls `gatewayInvoke('sessions_send', ...)` for Needs-Nova/operator injection; should call a common typed session-message operation.
-- `kubeclaw-main/skills/nova/pipeline/services/arch-validator.ts` — currently calls `gatewayInvoke('complete', ...)` directly; the generic gateway completion operation should be common while the architecture prompt/checks remain Nova-owned.
-- `kubeclaw-main/skills/nova/pipeline/services/polling-session-end.ts` — currently calls `gatewayInvoke('sessions_send', ...)` for nudge/stop-style session interaction; should use a common typed session-message operation while retaining Nova-specific no-change/Git/operator policy locally.
-- `kubeclaw-main/skills/nova/pipeline/agents/orchestration.ts` — already delegates spawn/kill to common lifecycle but still calls `gatewayInvoke('sessions_send', ...)` directly for steering; steering should use a common operation.
-- `kubeclaw-main/skills/nova/pipeline/agents/orchestration-healthcheck.ts` — currently calls `gatewayInvoke('session_status', ...)` directly; the reusable liveness/status check should be common, with Nova retaining only identity projection and degraded/restored telemetry presentation.
-- `kubeclaw-main/skills/buster/pipeline/services/gateway-health.ts` — currently performs Gateway `/health` fetch logic in Buster; Gateway health probing should be common if Nova/Buster both depend on it.
-- `kubeclaw-main/skills/buster/pipeline/services/session-monitor.ts` — already consumes common ACP monitor and termination primitives; verify it remains on common wrappers and does not grow raw gateway calls.
-- `kubeclaw-main/tests/verification/contracts/check-common-helper-import-surface.mjs` or a new focused contract — add source checks that fail if Nova/Buster domain modules call raw Gateway tool names directly outside the allowlisted common boundary/facades.
-- `kubeclaw-main/docs/pipeline/implementation-map/function-call-map.md` — synchronize call ownership after the common operation boundary is introduced.
-- `kubeclaw-main/docs/pipeline/implementation-map/external-boundaries.md` — document the common Gateway operation boundary and allowed raw Gateway callers.
-- `kubeclaw-main/docs/pipeline/implementation-map/acp-protocol.md` — update session/status/send/complete/health protocol rows to point at the common wrappers.
-- `kubeclaw-main/docs/pipeline/implementation-map/dependency-matrix.md` — document the framework portability boundary for Gateway/OpenClaw-specific operations.
+- `skills/common/pipeline/integrations/gateway.ts` — should expose typed gateway operation wrappers instead of leaving domain code to call raw tool names directly.
+- `skills/common/pipeline/agents/lifecycle.ts` — already owns `spawnSession()` / `killSession()`; should remain the canonical spawn/kill boundary and may need additional exported operations for send/steer/status reuse.
+- `skills/common/pipeline/agents/acp-monitor.ts` — already owns canonical monitor state and event adapter behavior; should remain the canonical status/transcript monitoring boundary.
+- `skills/common/pipeline/agents/session-termination.ts` — verify all termination callers continue to enter through this shared controller after gateway operation wrappers are introduced.
+- `skills/common/pipeline/services/acp-gateway-contract.ts` — may need schemas/validators for any new typed common operation result wrappers.
+- `skills/nova/pipeline/services/failures/presentation.ts` — currently calls `gatewayInvoke('sessions_send', ...)` for Needs-Nova/operator injection; should call a common typed session-message operation.
+- `skills/nova/pipeline/services/arch-validator.ts` — currently calls `gatewayInvoke('complete', ...)` directly; the generic gateway completion operation should be common while the architecture prompt/checks remain Nova-owned.
+- `skills/nova/pipeline/services/polling-session-end.ts` — currently calls `gatewayInvoke('sessions_send', ...)` for nudge/stop-style session interaction; should use a common typed session-message operation while retaining Nova-specific no-change/Git/operator policy locally.
+- `skills/nova/pipeline/agents/orchestration.ts` — already delegates spawn/kill to common lifecycle but still calls `gatewayInvoke('sessions_send', ...)` directly for steering; steering should use a common operation.
+- `skills/nova/pipeline/agents/orchestration-healthcheck.ts` — currently calls `gatewayInvoke('session_status', ...)` directly; the reusable liveness/status check should be common, with Nova retaining only identity projection and degraded/restored telemetry presentation.
+- `skills/buster/pipeline/services/gateway-health.ts` — currently performs Gateway `/health` fetch logic in Buster; Gateway health probing should be common if Nova/Buster both depend on it.
+- `skills/buster/pipeline/services/session-monitor.ts` — already consumes common ACP monitor and termination primitives; verify it remains on common wrappers and does not grow raw gateway calls.
+- `tests/verification/contracts/check-common-helper-import-surface.mjs` or a new focused contract — add source checks that fail if Nova/Buster domain modules call raw Gateway tool names directly under the allowlisted common boundary/facades.
+- `docs/pipeline/implementation-map/function-call-map.md` — synchronize call ownership after the common operation boundary is introduced.
+- `docs/pipeline/implementation-map/external-boundaries.md` — document the common Gateway operation boundary and allowed raw Gateway callers.
+- `docs/pipeline/implementation-map/acp-protocol.md` — update session/status/send/complete/health protocol rows to point at the common wrappers.
+- `docs/pipeline/implementation-map/dependency-matrix.md` — document the framework portability boundary for Gateway/OpenClaw-specific operations.
 
 ### Problem / in-depth issue description
 
@@ -2513,12 +2513,12 @@ Without that boundary, replacing OpenClaw Gateway with another framework require
 
 ### Impact
 
-Framework portability remains weaker than the current common-agent module layout suggests. A future swap to another agent framework, or to a self-hosted agent runner, would require changes outside the intended common boundary. Observability behavior can also drift between Nova and Buster for gateway status, session liveness, rate-limit recovery, and cost/usage snapshots.
+Framework portability remains weaker than the current common-agent module layout suggests. A future swap to another agent framework, or to a self-hosted agent runner, would require changes under the intended common boundary. Observability behavior can also drift between Nova and Buster for gateway status, session liveness, rate-limit recovery, and cost/usage snapshots.
 
 
 ### Resolution
 
-Resolved by introducing typed common Gateway operation wrappers (`getGatewaySessionStatus`, `spawnGatewaySession`, `sendGatewaySessionMessage`, `killGatewaySubagent`, `listGatewaySubagents`, `completeGatewayPrompt`, `checkGatewayHealth`) and migrating Nova/Buster/common agent callers off raw `gatewayInvoke`. `tests/verification/contracts/check-gateway-operation-boundary-surface.mjs` now rejects raw `gatewayInvoke` imports/uses outside the common Gateway owner and repo-local facades.
+Resolved by introducing typed common Gateway operation wrappers (`getGatewaySessionStatus`, `spawnGatewaySession`, `sendGatewaySessionMessage`, `killGatewaySubagent`, `listGatewaySubagents`, `completeGatewayPrompt`, `checkGatewayHealth`) and migrating Nova/Buster/common agent callers off raw `gatewayInvoke`. `tests/verification/contracts/check-gateway-operation-boundary-surface.mjs` now rejects raw `gatewayInvoke` imports/uses under the common Gateway owner and repo-local facades.
 
 ### Verification
 
@@ -2528,6 +2528,6 @@ Resolved by introducing typed common Gateway operation wrappers (`getGatewaySess
 
 ### Links / files
 
-- Current canonical common agent boundary: `kubeclaw-main/skills/common/pipeline/agents/`
-- Current raw Gateway integration: `kubeclaw-main/skills/common/pipeline/integrations/gateway.ts`
-- Implementation-map tracker: `kubeclaw-main/docs/pipeline/implementation-map/reviews/open-issues-table.md`
+- Current canonical common agent boundary: `skills/common/pipeline/agents/`
+- Current raw Gateway integration: `skills/common/pipeline/integrations/gateway.ts`
+- Implementation-map tracker: `docs/pipeline/implementation-map/reviews/open-issues-table.md`

@@ -51,7 +51,7 @@ await record('lifecycle contract docs do not preserve stale explicit buster stre
 });
 
 await record('implementation companion keeps legacy Buster stream notes compatibility-only', async () => {
-  const implementationChecklist = fs.readFileSync(path.resolve(sourceRoot, '..', 'docs', 'lifecycle-unification', 'TELEMETRY_V1_IMPLEMENTATION_CHECKLIST.md'), 'utf8');
+  const implementationChecklist = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'root-docs', 'lifecycle-unification', 'TELEMETRY_V1_IMPLEMENTATION_CHECKLIST.md'), 'utf8');
 
   assert.equal(implementationChecklist.includes('Buster runtime currently documented/emitted as: `buster:telemetry:<project>:<module>`'), false);
   assert.equal(implementationChecklist.includes('Buster runtime now also treats `pipeline:telemetry:<project>:<run_id>` as the only canonical live stream'), true);

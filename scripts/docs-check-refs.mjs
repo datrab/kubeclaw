@@ -80,7 +80,7 @@ function normalizeReference(raw) {
   ref = ref.split('#')[0];
   ref = ref.replace(/^[`'"]+|[`'",.;)]+$/g, '');
   ref = ref.split(/\s+/)[0];
-  ref = ref.replace(/^git-repo\/kubeclaw-main\//, '');
+  ref = ref.replace(/^git-repo\//, '');
   ref = ref.replace(/^\.\//, '');
   ref = ref.replace(/:\d+(:\d+)?$/, '');
   return ref || null;

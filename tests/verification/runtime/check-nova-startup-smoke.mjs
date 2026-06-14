@@ -67,7 +67,8 @@ const cliApi = await import(pathToFileURL(novaCliShim).href);
 assert.equal(typeof cliApi.main, 'function', 'Nova CLI module should export main()');
 assert.equal(configSource.includes('process.env.DISCORD_WEBHOOK'), false, 'Nova loadConfig must not synthesize discord_webhook_url from deployment env');
 assert.equal(configSource.includes('progress.pipeline_review'), false, 'Nova loadConfig must not mirror progress.pipeline_review into runtime config');
-assert.equal(deploymentSource.includes('delete c.discord_webhook_url'), true, 'Helm deployment must remove discord_webhook_url from persistent swarm.config.json source');
+assert.equal(deploymentSource.includes('swarm.config.json written from chart source'), true, 'Helm deployment must overwrite persisted swarm.config.json from chart source');
+assert.equal(deploymentSource.includes('delete config.discord_webhook_url'), true, 'Helm deployment must remove discord_webhook_url from persistent swarm.config.json source');
 assert.equal(deploymentSource.includes('config.discord_webhook_url=process.env.DISCORD_WEBHOOK'), true, 'Helm deployment must render DISCORD_WEBHOOK only into runtime swarm.config.json');
 
 const policyApi = await import(pathToFileURL(path.join(sourceRoot, 'skills/nova/pipeline/core/policy.ts')).href);

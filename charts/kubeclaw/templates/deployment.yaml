@@ -128,7 +128,7 @@ spec:
                       echo "    Fast-forwarding repository to origin/main..."
                       git merge --ff-only origin/main
                     else
-                     echo "    WARNING: Repository diverged from origin/main. Skipping pull to preserve local state." >&2
+                      echo "    WARNING: Repository diverged from origin/main. Skipping pull to preserve local state." >&2
                     fi
                   else
                     echo "    WARNING: Git fetch failed; keeping existing workspace checkout." >&2
@@ -168,15 +168,11 @@ spec:
 
               echo "==> 4b. Swarm Config"
               if [ -f "/init-swarm-config/swarm.config.json" ]; then
-                if [ "${OVERRIDE_SWARM_CONFIG}" = "true" ] || [ ! -f "/config/swarm.config.json" ]; then
-                  cp -Lf "/init-swarm-config/swarm.config.json" "/config/swarm.config.json"
-                  echo "    swarm.config.json written"
-                else
-                  echo "    swarm.config.json exists, keeping (override=false)"
-                fi
+                cp -Lf "/init-swarm-config/swarm.config.json" "/config/swarm.config.json"
+                echo "    swarm.config.json written from chart source"
               fi
               if [ -f "/config/swarm.config.json" ]; then
-                node -e 'const fs=require("fs"); const p="/config/swarm.config.json"; const c=JSON.parse(fs.readFileSync(p,"utf8")); if (Object.prototype.hasOwnProperty.call(c,"discord_webhook_url")) { delete c.discord_webhook_url; fs.writeFileSync(p, JSON.stringify(c,null,2)+"\n"); console.log("    removed discord_webhook_url from persistent swarm.config.json source"); }'
+                node -e 'const fs=require("fs"); const p="/config/swarm.config.json"; const config=JSON.parse(fs.readFileSync(p,"utf8")); if (Object.prototype.hasOwnProperty.call(config,"discord_webhook_url")) { delete config.discord_webhook_url; fs.writeFileSync(p, JSON.stringify(config,null,2)+"\n"); } console.log("    swarm.config.json source normalized without runtime webhook secrets");'
               fi
               if [ -f "/init-swarm-config/.semgrep.yml" ]; then
                 if [ "${OVERRIDE_SWARM_CONFIG}" = "true" ] || [ ! -f "/config/.semgrep.yml" ]; then

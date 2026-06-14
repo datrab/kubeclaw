@@ -13,7 +13,7 @@ Authoritative packaging rules remain:
 - `charts/kubeclaw/templates/deployment.yaml` still merges image-baked `/app/skills/.` into `/skills-merged/`, then overlays optional `/init-skills/.`, then mounts `/skills-merged` back onto `/app/skills`
 
 Current verification policy:
-- use the live repo state in `kubeclaw-main` as the source of truth
+- use the live repo root as the source of truth
 - use `tests/verification/runtime/check-runtime-collisions.mjs` as the canonical guard entrypoint
 - rerun `check-runtime-collisions.mjs` against the current repo, not historical rebuilt-artifact trees
 - treat stale unpacked audit artifacts as historical reference only, not authoritative evidence
@@ -34,10 +34,10 @@ This protects the packaged runtime surface against overlay/copy-order regression
 ## Reproducible check
 
 ```bash
-cd <repo-root>/kubeclaw-main
+cd <repo-root>
 
 node tests/verification/runtime/check-runtime-collisions.mjs \
-  --source-root <repo-root>/kubeclaw-main
+  --source-root <repo-root>
 ```
 
 ## Latest rerun summary (2026-04-11)

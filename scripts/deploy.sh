@@ -82,7 +82,7 @@ require_command() {
 
 is_not_found_error() {
   local text="$1"
-  [[ "$text" =~ [Nn]ot[Ff]ound|[Nn]ot\ [Ff]ound|not\ found|No\ resources\ found ]]
+  [[ "$text" =~ [Nn]ot[Ff]ound|[Nn]ot\ [Ff]ound|No\ resources\ found ]]
 }
 
 warn_nonfatal_failure() {
@@ -454,6 +454,9 @@ deploy_tailscale_operator() {
   normalized_mode="$(normalize_boolish "$mode")"
 
   header "Infrastructure: Tailscale Kubernetes Operator"
+
+  require_command kubectl
+  require_command helm
 
   if [[ "$normalized_mode" == "false" ]]; then
     warn "Tailscale operator install disabled by TAILSCALE_OPERATOR_ENABLED=$mode"

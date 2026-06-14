@@ -151,8 +151,7 @@ await record('observability docs expose latest.json as the operator pointer to t
 
 await record('trust-boundary docs keep Buster Redis, Discord, fallback, and customSkills authority bounded', async () => {
   const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'observability-reference.md'), 'utf8');
-  const repoRoot = path.dirname(sourceRoot);
-  const authorityMap = fs.readFileSync(path.join(repoRoot, 'docs', 'pipeline-hardening', 'final_audits', 'RUNTIME_TRUTH_AUTHORITY_MAP.md'), 'utf8');
+  const authorityMap = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'root-docs', 'pipeline-hardening', 'final_audits', 'RUNTIME_TRUTH_AUTHORITY_MAP.md'), 'utf8');
   const customSkillsTemplate = fs.readFileSync(path.join(sourceRoot, 'charts', 'kubeclaw', 'templates', 'configmap-skills.yaml'), 'utf8');
 
   assert.equal(observabilityDoc.includes('### Trust boundaries for Buster/operator surfaces'), true);

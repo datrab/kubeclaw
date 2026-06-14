@@ -87,7 +87,7 @@ function checkMatrix() {
 
 function normalizeRef(raw) {
   let ref = raw.trim().replace(/^[`'"]+|[`'",.;)]+$/g, '');
-  ref = ref.replace(/^git-repo\/kubeclaw-main\//, '');
+  ref = ref.replace(/^git-repo\//, '');
   ref = ref.replace(/^\.\/+/, '');
   ref = ref.replace(/:\d+(:\d+)?$/, '');
   ref = ref.split('#')[0];

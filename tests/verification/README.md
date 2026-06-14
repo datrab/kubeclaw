@@ -111,8 +111,8 @@ tests/
 
 ## Current cleanup status
 
-- `kubeclaw-main/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` remains the authoritative telemetry contract for canonical inventory, stream identity, and compatibility boundaries
-- `kubeclaw-main/docs/archive/legacy-root-docs/telemetry-event-schema.md` remains the event-by-event payload reference and stays in inventory parity with that contract
+- `docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` remains the authoritative telemetry contract for canonical inventory, stream identity, and compatibility boundaries
+- `docs/archive/legacy-root-docs/telemetry-event-schema.md` remains the event-by-event payload reference and stays in inventory parity with that contract
 - `tests/verification/runtime/check-runtime-collisions.mjs` is the canonical runtime guard entrypoint
 - `tests/verification/runtime/check-nova-startup-smoke.mjs` is the canonical Nova import/CLI startup smoke entrypoint
 - `tests/verification/runtime/check-buster-startup-smoke.mjs` is the canonical Buster import/CLI startup smoke entrypoint
