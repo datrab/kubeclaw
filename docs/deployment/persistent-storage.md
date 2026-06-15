@@ -25,15 +25,15 @@ PVCs have `helm.sh/resource-policy: keep`, so Helm uninstall does not remove the
 
 | Surface | Owner | Mounted at runtime | Backing store | What belongs there | Verification source |
 | --- | --- | --- | --- | --- | --- |
-| config PVC | Helm chart, init container | `/home/node/.openclaw`; source view at `/home/node/.openclaw-persisted`; init view at `/config` | `<release>-config` PVC, default `10Gi`, `ReadWriteOnce`, kept on uninstall | Secret-free source `openclaw.json`, `swarm.config.json`, `.semgrep.yml`, `eslint.config.mjs` | `charts/kubeclaw/templates/pvc.yaml`; `charts/kubeclaw/templates/deployment.yaml`; `tests/verification/deployment/check-deployment-truth.mjs` |
-| runtime config overlay | Init container | `/home/node/.openclaw/openclaw.json`; `/home/node/.openclaw/swarm.config.json`; `/runtime-config` | pod `emptyDir` | Current secret-expanded runtime config and health script | `deployment.yaml` mounts `runtime-config`; deployment truth asserts both `subPath` overlays |
+| config PVC | Helm chart, init container | `/home/node/.openclaw`; source view at `/home/node/.openclaw-persisted`; init view at `/config` | `<release>-config` PVC, default `10Gi`, `ReadWriteOnce`, kept on uninstall | Writable `openclaw.json` with SecretRefs, external plugin npm cache, `swarm.config.json`, `.semgrep.yml`, `eslint.config.mjs`, OpenClaw state | `charts/kubeclaw/templates/pvc.yaml`; `charts/kubeclaw/templates/deployment.yaml`; `tests/verification/deployment/check-deployment-truth.mjs` |
+| runtime config overlay | Init container | `/home/node/.openclaw/swarm.config.json`; `/runtime-config` | pod `emptyDir` | Webhook-expanded `swarm.config.json`, OpenClaw config mirror, and health script | `deployment.yaml` mounts `runtime-config`; deployment truth asserts `openclaw.json` is not a `subPath` mount |
 | workspace PVC | Helm chart, init container, agents | `/home/node/.openclaw/workspace`; init view at `/workspace` | `<release>-workspace` PVC, default `20Gi`, `ReadWriteOnce`, kept on uninstall | cloned Git repo at `git-repo`, `memory`, `prism/designs`, runtime workspace files, operator edits preserved across restarts | `values.yaml` `persistence.workspace`; `deployment.yaml` Git fast-forward guard |
 | Nova Prism designs | Nova sidecar | `/designs` with `subPath: prism/designs` | Nova workspace PVC | rendered design previews under the workspace | `my-values/nova-values.yaml` `extraContainers` |
 | Buster Podman storage | Buster gateway and pipeline containers | `/var/lib/containers` | pod `emptyDir` with `sandbox.storageSize` default/production `50Gi` | Podman images, layers, and container state for sandbox suites | `my-values/buster-values.yaml`; deployment truth checks both containers mount it |
 | Buster sandbox workspace | Buster gateway and pipeline containers | `/sandbox` | pod `emptyDir`, default size limit `2Gi` in the chart unless overridden by rendered values | transient build/serve/test workspace and suite outputs before scoped artifacts are copied back | `charts/kubeclaw/templates/deployment.yaml`; deployment truth checks both containers mount it |
 | pipeline artifacts | Nova/Buster runtime | `.swarm/logs/pipeline` under the project checkout | workspace PVC when running in the agent pod; local filesystem in source-only verification | `latest.json`, run-scoped summaries, status projections, Buster output files, failure evidence | `docs/reference/status-and-artifacts.md`; `skills/nova/pipeline/services/artifact-bundle.ts` |
 
-The config PVC is intentionally not the same as runtime config. The init container normalizes persisted `openclaw.json` back to placeholders for `LITELLM_API_KEY` and `DISCORD_TOKEN`, removes `discord_webhook_url` from persisted `swarm.config.json`, then writes secret-expanded files only into the pod-local `runtime-config` `emptyDir`. `tests/verification/deployment/check-deployment-truth.mjs` asserts the placeholder normalization, the webhook removal, and the runtime `subPath` overlays.
+The config PVC stores the normal writable OpenClaw home. The init container normalizes persisted `openclaw.json` to canonical model refs and env SecretRefs for `LITELLM_API_KEY` and `DISCORD_TOKEN`, removes `discord_webhook_url` from persisted `swarm.config.json`, seeds official external plugins from the image cache, and writes the webhook-expanded `swarm.config.json` only into the pod-local `runtime-config` `emptyDir`. `tests/verification/deployment/check-deployment-truth.mjs` asserts the SecretRef normalization, plugin seeding, webhook removal, and that `openclaw.json` is not mounted through `subPath`.
 
 Buster sandbox mode also uses `emptyDir` for Podman storage. Production Buster values set `sandbox.storageSize: "50Gi"` and set `ephemeral-storage` requests/limits on both the `kubeclaw` gateway container and the `buster-pipeline` container. This means Podman state is bounded and lost with the pod, while the workspace and config PVCs remain.
 
@@ -52,10 +52,11 @@ kubectl -n kubeclaw describe pvc agent-buster-config agent-buster-workspace
 kubectl -n kubeclaw get deploy agent-nova agent-buster -o yaml | rg "claimName|mountPath|/runtime-config|/var/lib/containers|/sandbox"
 ```
 
-Check that retained config is secret-free and runtime config is the only secret-expanded surface:
+Check that retained config uses SecretRefs and the webhook remains runtime-only:
 
 ```bash
-kubectl -n kubeclaw exec deploy/agent-nova -c kubeclaw -- rg -n "discord_webhook_url|__LITELLM_API_KEY__|__DISCORD_TOKEN__" /home/node/.openclaw-persisted
+kubectl -n kubeclaw exec deploy/agent-nova -c kubeclaw -- jq '.models.providers.litellm.apiKey,.channels.discord.token' /home/node/.openclaw/openclaw.json
+kubectl -n kubeclaw exec deploy/agent-nova -c kubeclaw -- rg -n "discord_webhook_url" /home/node/.openclaw-persisted
 kubectl -n kubeclaw exec deploy/agent-nova -c kubeclaw -- test -f /runtime-config/openclaw.json
 kubectl -n kubeclaw exec deploy/agent-buster -c buster-pipeline -- df -h /sandbox /var/lib/containers /home/node/.openclaw/workspace
 ```

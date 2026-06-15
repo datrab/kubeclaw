@@ -34,6 +34,9 @@ on:
       - 'plugins/**'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   docs:
     name: Documentation drift guardrails
@@ -41,10 +44,38 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref }}
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: '24'
+      - name: Regenerate docs
+        run: npm run docs:inventory && npm run docs:generate
+      - name: Reject generated docs drift on read-only PRs
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+        run: |
+          if git diff --quiet -- docs/generated docs/reference; then
+            echo "Generated docs are already current."
+            exit 0
+          fi
+
+          echo "::error::Generated docs are stale. Run npm run docs:inventory && npm run docs:generate and commit the result."
+          git diff --name-only -- docs/generated docs/reference
+          exit 1
+      - name: Commit generated docs
+        if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+        run: |
+          if git diff --quiet -- docs/generated docs/reference; then
+            echo "Generated docs are already current."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/generated docs/reference
+          git commit -m "docs: refresh generated references"
+          git push
       - name: Check generated docs freshness
         run: npm run docs:check:generated
       - name: Check Markdown hygiene

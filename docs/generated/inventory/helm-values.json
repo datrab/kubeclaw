@@ -78,6 +78,7 @@
         "litellm",
         "discord",
         "discordWebhook",
+        "commands",
         "agent",
         "service",
         "resources",
@@ -118,7 +119,7 @@
         {
           "key": "secretName",
           "value": "git-deploy-key-nova",
-          "line": 45
+          "line": 52
         }
       ]
     },
@@ -168,12 +169,12 @@
         {
           "key": "secretName",
           "value": "openclaw-shared-secrets",
-          "line": 59
+          "line": 61
         },
         {
           "key": "secretName",
           "value": "git-deploy-key-buster",
-          "line": 75
+          "line": 77
         }
       ]
     },

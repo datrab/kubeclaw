@@ -357,6 +357,9 @@ busterNamespaceBroker:
 # =============================================================================
 
 commands:
+  # Channel-qualified operator IDs for OpenClaw owner-only commands.
+  # Example: ["discord:123456789012345678"]
+  ownerAllowFrom: []
   # Discord user IDs allowed to run commands (array of "user:<id>" strings)
   allowFromDiscord: []
 

@@ -40,7 +40,7 @@ KubeClaw deploys infrastructure first, then two agent releases from the shared H
 ## Runtime Artifacts
 
 - Agent config PVCs and workspace PVCs are rendered by `charts/kubeclaw/templates/pvc.yaml` and are annotated with `helm.sh/resource-policy: keep`.
-- Persistent source config lives under `/home/node/.openclaw-persisted`; pod-local rendered config is overlaid at `/home/node/.openclaw/openclaw.json` and `/home/node/.openclaw/swarm.config.json`.
+- Persistent OpenClaw config lives under `/home/node/.openclaw` and is also exposed at `/home/node/.openclaw-persisted`; only webhook-expanded `swarm.config.json` is overlaid from pod-local runtime config.
 - Buster uses a two-container pod when `busterPipeline.enabled: true`; `kubeclaw` owns the OpenClaw gateway and `buster-pipeline` runs the Redis task loop.
 - Nova's Prism preview sidecar mounts workspace `prism/designs` at `/designs` and serves port `3456`.
 

@@ -9,9 +9,9 @@ Document what the runtime images contain.
 
 ## Current Behavior
 
-`docker/Dockerfile.general` builds the Nova/Forge/Echo runtime from `ghcr.io/openclaw/openclaw:latest`. It installs system tools, TypeScript/lint tooling, Python lint tools, semgrep, hadolint `2.12.0`, kubeconform `0.6.4`, Helm when absent, Nova skills, common skills, and the OpenClaw agent observer plugin extension.
+`docker/Dockerfile.general` builds the Nova/Forge/Echo runtime from `ghcr.io/openclaw/openclaw:latest`. It installs system tools, TypeScript/lint tooling, Python lint tools, semgrep, hadolint `2.12.0`, kubeconform `0.6.4`, Helm when absent, Nova skills, common skills, the OpenClaw agent observer plugin extension, and an image-baked npm cache for the official `@openclaw/acpx` and `@openclaw/discord` plugins.
 
-`docker/Dockerfile.sandbox` builds the Buster runtime from `ghcr.io/openclaw/openclaw:latest`. It installs Podman/buildah/slirp/fuse-overlayfs, Chromium, nginx, jq, tree, ripgrep, Lighthouse, Playwright, axe, pixelmatch, pngjs, ws, agent-browser, k6 `v0.54.0`, sandbox helper scripts, Buster skills, common skills, and the observer plugin extension.
+`docker/Dockerfile.sandbox` builds the Buster runtime from `ghcr.io/openclaw/openclaw:latest`. It installs Podman/buildah/slirp/fuse-overlayfs, Chromium, nginx, jq, tree, ripgrep, Lighthouse, Playwright, axe, pixelmatch, pngjs, ws, agent-browser, k6 `v0.54.0`, sandbox helper scripts, Buster skills, common skills, the observer plugin extension, and the same official external plugin cache.
 
 `docker/Dockerfile.namespace-controller` builds the Buster namespace controller from `node:22-bookworm-slim`. It copies only `scripts/buster-namespace-controller.mjs` and runs it as the non-root `node` user. It does not inherit the OpenClaw runtime image.
 
@@ -25,8 +25,8 @@ The root `.dockerignore` keeps runtime image build contexts narrow. It defaults 
 
 | Image | Copied repo paths | Runtime paths | Important env/defaults | Known failure signal |
 | --- | --- | --- | --- | --- |
-| General | `skills/nova/`; `skills/common/`; `plugins/openclaw-agent-observer/` | `/app/skills`, `/app/dist/extensions/kubeclaw-agent-observer` | `NODE_PATH=/usr/local/lib/node_modules:/app/node_modules`, `NPM_CONFIG_CACHE=/root/.npm`, `HOME=/home/node` | missing tool or plugin compile failure during Docker build; deployment truth fails if install commands silently continue |
-| Sandbox | `skills/buster/`; `skills/common/`; `plugins/openclaw-agent-observer/` | `/app/skills`, `/sandbox`, `/var/lib/containers/storage`, `/ms-playwright`, `/app/dist/extensions/kubeclaw-agent-observer` | `PLAYWRIGHT_BROWSERS_PATH=/ms-playwright`, `SANDBOX_TIMEOUT`, Podman storage under `/var/lib/containers/storage` | Buster startup or suite failures, Podman storage pressure, missing browser/tool binary |
+| General | `skills/nova/`; `skills/common/`; `plugins/openclaw-agent-observer/` | `/app/skills`, `/app/dist/extensions/kubeclaw-agent-observer`, `/opt/openclaw-plugin-npm` | `NODE_PATH=/usr/local/lib/node_modules:/app/node_modules`, `NPM_CONFIG_CACHE=/root/.npm`, `HOME=/home/node` | missing tool, plugin compile failure, or official plugin install failure during Docker build; deployment truth fails if install commands silently continue |
+| Sandbox | `skills/buster/`; `skills/common/`; `plugins/openclaw-agent-observer/` | `/app/skills`, `/sandbox`, `/var/lib/containers/storage`, `/ms-playwright`, `/app/dist/extensions/kubeclaw-agent-observer`, `/opt/openclaw-plugin-npm` | `PLAYWRIGHT_BROWSERS_PATH=/ms-playwright`, `SANDBOX_TIMEOUT`, Podman storage under `/var/lib/containers/storage` | Buster startup or suite failures, Podman storage pressure, missing browser/tool binary, or official plugin install failure |
 | Namespace controller | `scripts/buster-namespace-controller.mjs` | `/app/scripts/buster-namespace-controller.mjs` | Kubernetes ServiceAccount env and token mount, `BUSTER_*` broker settings | controller pod `ImagePullBackOff`, ServiceAccount token/API host errors, or lease reconciliation errors |
 | Prism preview | none beyond the Dockerfile | `/designs`, port `3456` | `serve /designs -p 3456 --no-clipboard` | sidecar reachable but no preview files if Nova has not written workspace designs |
 

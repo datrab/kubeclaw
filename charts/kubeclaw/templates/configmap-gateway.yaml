@@ -28,20 +28,31 @@ data:
             "provider": "litellm",
             "mode": "api_key"
           },
+<<<<<<< HEAD
           "openai-codex:d.trabucco@tutamail.com": {
             "provider": "openai-codex",
             "mode": "oauth"
           },
+=======
+>>>>>>> 2211515 (update)
           "openai:d.trabucco@tutamail.com": {
             "provider": "openai",
             "mode": "oauth",
             "email": "d.trabucco@tutamail.com"
+          },
+          "openai:chatgpt-d.trabucco@tutamail.com": {
+            "provider": "openai",
+            "mode": "oauth"
           }
         },
         "order": {
           "openai": [
             "openai:d.trabucco@tutamail.com",
+<<<<<<< HEAD
             "openai-codex:d.trabucco@tutamail.com"
+=======
+            "openai:chatgpt-d.trabucco@tutamail.com"
+>>>>>>> 2211515 (update)
           ]
         }
       },
@@ -70,7 +81,11 @@ data:
         "providers": {
           "litellm": {
             "baseUrl": "{{ .Values.litellm.endpoint }}",
-            "apiKey": "__LITELLM_API_KEY__",
+            "apiKey": {
+              "source": "env",
+              "provider": "default",
+              "id": "LITELLM_API_KEY"
+            },
             "api": "openai-completions",
             "models": [
               {{- range $i, $model := .Values.litellm.models }}
@@ -98,7 +113,11 @@ data:
               "anthropic/claude-sonnet-4-6",
               "anthropic/claude-opus-4-6",
               "openai/gpt-5.5-pro",
+<<<<<<< HEAD
               "openai-codex/gpt-5.5",
+=======
+              "openai/gpt-5.5",
+>>>>>>> 2211515 (update)
               "litellm/{{ .Values.litellm.defaultModel }}"
             ]
           },
@@ -107,8 +126,17 @@ data:
             "anthropic/claude-opus-4-6": {},
             "openai/gpt-5.4": {},
             "openai/gpt-5.5-pro": {},
+<<<<<<< HEAD
             "openai/gpt-5.5": {},
             "openai-codex/gpt-5.5": {}
+=======
+            "openai/gpt-5.5": {
+              "agentRuntime": {
+                "id": "codex"
+              }
+            },
+            "litellm/{{ .Values.litellm.defaultModel }}": {}
+>>>>>>> 2211515 (update)
           },
           "workspace": "/home/node/.openclaw/workspace",
           "embeddedAgent": {
@@ -122,7 +150,11 @@ data:
             "provider": "openai",
             "remote": {
               "baseUrl": "{{ .Values.litellm.endpoint }}",
-              "apiKey": "__LITELLM_API_KEY__"
+              "apiKey": {
+                "source": "env",
+                "provider": "default",
+                "id": "LITELLM_API_KEY"
+              }
             },
             "model": "gemini-embedding-001",
             "store": {
@@ -213,6 +245,7 @@ data:
         "nativeSkills": "auto",
         "restart": true,
         "ownerDisplay": "raw",
+        "ownerAllowFrom": {{ .Values.commands.ownerAllowFrom | default list | toJson }},
         "allowFrom": {
           "discord": {{ .Values.commands.allowFromDiscord | default list | toJson }}
         }
@@ -234,7 +267,11 @@ data:
       "channels": {
         "discord": {
           "enabled": {{ .Values.discord.enabled }},
-          "token": "__DISCORD_TOKEN__",
+          "token": {
+            "source": "env",
+            "provider": "default",
+            "id": "DISCORD_TOKEN"
+          },
           "groupPolicy": "open",
           "streaming": {
             "mode": "partial"
@@ -315,6 +352,12 @@ data:
           "anthropic": {
             "enabled": true
           },
+<<<<<<< HEAD
+=======
+          "litellm": {
+            "enabled": true
+          },
+>>>>>>> 2211515 (update)
           "codex": {
             "enabled": true
           }

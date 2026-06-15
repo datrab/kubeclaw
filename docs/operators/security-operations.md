@@ -25,8 +25,8 @@ Checklist before production exposure:
 | Surface | Code or config owner | When it runs | Security expectation | Failure signal |
 | --- | --- | --- | --- | --- |
 | Kubernetes Secrets | `charts/kubeclaw/templates/secret.yaml`; `my-values/setup-secrets.sh`; production values | before `./scripts/deploy.sh agents` and during pod env injection | provider tokens, gateway tokens, Redis password, Git key, Discord, Stitch, and Tailscale OAuth stay in Secrets | rollout failure, health probe failure, missing env, `kubectl get secret` absent |
-| retained config PVC | `charts/kubeclaw/templates/deployment.yaml` init container | every pod start | persisted `/home/node/.openclaw-persisted` remains placeholder-only for runtime tokens and omits `discord_webhook_url` | deployment truth failure, literal token in persisted files |
-| runtime config overlay | `deployment.yaml` `runtime-config` `emptyDir` | every pod start | secret-expanded `openclaw.json` and `swarm.config.json` exist only inside the pod | missing `/runtime-config/openclaw.json`, gateway auth/model failures |
+| retained config PVC | `charts/kubeclaw/templates/deployment.yaml` init container | every pod start | persisted `/home/node/.openclaw-persisted/openclaw.json` uses SecretRefs for runtime tokens and omits `discord_webhook_url` | deployment truth failure, literal token in persisted files |
+| runtime config overlay | `deployment.yaml` `runtime-config` `emptyDir` | every pod start | webhook-expanded `swarm.config.json`, config mirror, and health script exist only inside the pod | missing `/runtime-config/openclaw.json`, gateway auth/model failures |
 | Buster sandbox privileges | `my-values/buster-values.yaml`; `charts/kubeclaw/templates/deployment.yaml` | Buster pod render/start | both Buster containers are privileged and share `/sandbox`, `/var/lib/containers`, runtime config, workspace, and skills | Podman failures, suite startup failures, verifier missing `privileged: true` |
 | Buster namespace fence | `my-values/infra/buster-namespace-fence.yaml`; `scripts/deploy.sh infra` | shared infra install | direct namespace lifecycle by `agent-buster` is denied; controller owns brokered namespace create/delete | `kubectl get validatingadmissionpolicy buster-namespace-fence` missing |
 | NetworkPolicy baseline | `my-values/infra/network-policies.yaml`; `scripts/deploy.sh infra` | after shared infra and namespace fence | default-deny ingress/egress plus explicit DNS, agent, Clawdeck, LiteLLM, registry, and temporary ingress allowances | deployment truth reports policy count/selector/port failure |
@@ -52,7 +52,8 @@ kubectl get validatingadmissionpolicy buster-namespace-fence
 kubectl -n "$NAMESPACE" get networkpolicy
 kubectl -n "$NAMESPACE" get svc
 kubectl -n "$NAMESPACE" get deploy agent-buster -o yaml | rg "privileged|SYS_ADMIN|NET_ADMIN|MKNOD|/sandbox|/var/lib/containers"
-kubectl -n "$NAMESPACE" exec deploy/agent-nova -c kubeclaw -- rg -n "discord_webhook_url|__LITELLM_API_KEY__|__DISCORD_TOKEN__" /home/node/.openclaw-persisted
+kubectl -n "$NAMESPACE" exec deploy/agent-nova -c kubeclaw -- jq '.models.providers.litellm.apiKey,.channels.discord.token' /home/node/.openclaw/openclaw.json
+kubectl -n "$NAMESPACE" exec deploy/agent-nova -c kubeclaw -- rg -n "discord_webhook_url" /home/node/.openclaw-persisted
 ```
 
 Expected current exposure from repository values:
@@ -74,7 +75,7 @@ For suspected credential exposure, collect evidence before recycling pods:
 - `kubectl -n "$NAMESPACE" logs deployment/agent-buster -c buster-pipeline --tail=200`.
 - `.swarm/logs/pipeline/latest.json` and the affected run artifact directory.
 
-Do not paste decoded Secret values into issue trackers or Discord. If persisted config contains real tokens rather than placeholders, rotate the Secret first, redeploy agents, then verify the persisted source config normalization with the commands above.
+Do not paste decoded Secret values into issue trackers or Discord. If persisted config contains real tokens rather than SecretRef objects, rotate the Secret first, redeploy agents, then verify the persisted source config normalization with the commands above.
 
 ## Open Questions
 

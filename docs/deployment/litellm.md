@@ -59,6 +59,6 @@ kubectl -n "$NAMESPACE" get svc litellm
 | LiteLLM deployment | `my-values/infra/litellm-deployment.yaml` | `Deployment/litellm`, `Service/litellm`, `Secret/litellm-secrets`, `Secret/google-sa-key`, `ConfigMap/litellm-config` |
 | LiteLLM config | `my-values/infra/litellm-config.yaml` | provider/model routing and `master_key: os.environ/LITELLM_MASTER_KEY` |
 | Secret creation | `my-values/setup-secrets.sh` | `litellm-secrets` keys `LITELLM_MASTER_KEY` and `DATABASE_URL`; `google-sa-key` key `credentials.json` |
-| Agent consumption | `charts/kubeclaw/templates/deployment.yaml`; `configmap-gateway.yaml` | `LITELLM_URL`, `LITELLM_API_KEY`, and runtime OpenClaw config placeholders replaced in `/runtime-config/openclaw.json` |
+| Agent consumption | `charts/kubeclaw/templates/deployment.yaml`; `configmap-gateway.yaml` | `LITELLM_URL`, `LITELLM_API_KEY`, and OpenClaw config env SecretRefs for LiteLLM provider and memory search credentials |
 
 Run `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` after changing any of these files. That proves source/render wiring, not live provider account validity.

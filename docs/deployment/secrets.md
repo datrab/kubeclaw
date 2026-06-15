@@ -88,7 +88,7 @@ The helper keeps LiteLLM values aligned by reusing `openclaw-shared-secrets.lite
 
 The chart can render a Secret when direct token/API key values are supplied instead of `existingSecret`, but production values use existing secrets.
 
-Agent init keeps the retained config PVC secret-free. `/config/openclaw.json` remains the editable source with LiteLLM and Discord token placeholders; each pod start renders the current secret values into `emptyDir` runtime files overlaid at `/home/node/.openclaw/openclaw.json` and `/home/node/.openclaw/swarm.config.json`. `DISCORD_WEBHOOK` is also mapped only into the runtime `swarm.config.json`, not the retained source file.
+Agent init keeps `openclaw.json` free of literal LiteLLM and Discord secrets by storing those fields as env SecretRefs. `/config/openclaw.json` remains the editable source and is mounted as the normal writable `/home/node/.openclaw/openclaw.json`, so OpenClaw maintenance commands can rewrite it atomically. `DISCORD_WEBHOOK` is mapped only into the runtime `swarm.config.json` overlay, not the retained source file.
 
 ## Procedure
 

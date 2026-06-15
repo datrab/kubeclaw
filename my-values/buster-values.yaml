@@ -51,6 +51,8 @@ discord:
     - "user:849379821536804864"
 
 commands:
+  ownerAllowFrom:
+    - "discord:849379821536804864"
   allowFromDiscord:
     - "849379821536804864"
     - "user:849379821536804864"

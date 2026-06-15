@@ -81,8 +81,8 @@ spec:
                 cp -r /app/skills /app/skills_org
                 echo "    /app/skills_org created"
               fi
-              if [ -f /home/node/.openclaw/openclaw.json ] && [ ! -f /home/node/.openclaw/openclaw_org.json ]; then
-                cp /home/node/.openclaw/openclaw.json /home/node/.openclaw/openclaw_org.json
+              if [ -f /config/openclaw.json ] && [ ! -f /config/openclaw_org.json ]; then
+                cp /config/openclaw.json /config/openclaw_org.json
                 echo "    openclaw_org.json created"
               fi
 
@@ -163,8 +163,83 @@ spec:
                 echo "    openclaw.json exists, keeping persistent source"
               fi
               if [ -f /config/openclaw.json ]; then
-                node -e 'const fs=require("fs"); const p="/config/openclaw.json"; const obsolete="/app/openclaw-plugins/kubeclaw-agent-observer"; try { const config=JSON.parse(fs.readFileSync(p,"utf8")); const paths=Array.isArray(config?.plugins?.load?.paths) ? config.plugins.load.paths : null; if (paths?.includes(obsolete)) { config.plugins.load.paths=paths.filter((entry)=>entry!==obsolete); if (config.plugins.load.paths.length===0) delete config.plugins.load.paths; if (config.plugins.load && Object.keys(config.plugins.load).length===0) delete config.plugins.load; console.log("    removed obsolete kubeclaw-agent-observer plugin load path"); } if (config?.models?.providers?.litellm) config.models.providers.litellm.apiKey="__LITELLM_API_KEY__"; if (config?.agents?.defaults?.memorySearch?.remote) config.agents.defaults.memorySearch.remote.apiKey="__LITELLM_API_KEY__"; if (config?.channels?.discord) config.channels.discord.token="__DISCORD_TOKEN__"; fs.writeFileSync(p, JSON.stringify(config,null,2)+"\n"); console.log("    openclaw.json source normalized without literal runtime secrets"); } catch (err) { console.error("    ERROR: failed to normalize persistent openclaw.json:", err?.message || err); process.exit(1); }'
+                node <<'NODE'
+              const fs = require('fs');
+              const p = '/config/openclaw.json';
+              const obsolete = '/app/openclaw-plugins/kubeclaw-agent-observer';
+              const litellmSecretRef = { source: 'env', provider: 'default', id: 'LITELLM_API_KEY' };
+              const discordSecretRef = { source: 'env', provider: 'default', id: 'DISCORD_TOKEN' };
+              const config = JSON.parse(fs.readFileSync(p, 'utf8'));
+
+              const paths = Array.isArray(config?.plugins?.load?.paths) ? config.plugins.load.paths : null;
+              if (paths?.includes(obsolete)) {
+                config.plugins.load.paths = paths.filter((entry) => entry !== obsolete);
+                if (config.plugins.load.paths.length === 0) delete config.plugins.load.paths;
+                if (config.plugins.load && Object.keys(config.plugins.load).length === 0) delete config.plugins.load;
+                console.log('    removed obsolete kubeclaw-agent-observer plugin load path');
+              }
+
+              if (config?.auth?.profiles) {
+                for (const [profileId, profile] of Object.entries(config.auth.profiles)) {
+                  if (profileId.startsWith('openai-codex:') || profile?.provider === 'openai-codex') {
+                    delete config.auth.profiles[profileId];
+                  }
+                }
+                if (!config.auth.profiles['openai:chatgpt-d.trabucco@tutamail.com']) {
+                  config.auth.profiles['openai:chatgpt-d.trabucco@tutamail.com'] = {
+                    provider: 'openai',
+                    mode: 'oauth',
+                  };
+                }
+              }
+              if (Array.isArray(config?.auth?.order?.openai)) {
+                config.auth.order.openai = config.auth.order.openai
+                  .filter((entry) => !String(entry).startsWith('openai-codex:'));
+                if (!config.auth.order.openai.includes('openai:chatgpt-d.trabucco@tutamail.com')) {
+                  config.auth.order.openai.push('openai:chatgpt-d.trabucco@tutamail.com');
+                }
+              }
+
+              const defaults = config?.agents?.defaults;
+              if (defaults?.model?.fallbacks) {
+                defaults.model.fallbacks = defaults.model.fallbacks.map((entry) => (
+                  entry === 'openai-codex/gpt-5.5' ? 'openai/gpt-5.5' : entry
+                ));
+              }
+              if (defaults?.models) {
+                delete defaults.models['openai-codex/gpt-5.5'];
+                defaults.models['openai/gpt-5.5'] = {
+                  ...(defaults.models['openai/gpt-5.5'] || {}),
+                  agentRuntime: { id: 'codex' },
+                };
+                defaults.models['litellm/{{ .Values.litellm.defaultModel }}'] =
+                  defaults.models['litellm/{{ .Values.litellm.defaultModel }}'] || {};
+              }
+
+              if (config?.models?.providers?.litellm) config.models.providers.litellm.apiKey = litellmSecretRef;
+              if (defaults?.memorySearch?.remote) defaults.memorySearch.remote.apiKey = litellmSecretRef;
+              if (config?.channels?.discord) config.channels.discord.token = discordSecretRef;
+              config.plugins = config.plugins || {};
+              config.plugins.entries = config.plugins.entries || {};
+              config.plugins.entries.litellm = {
+                ...(config.plugins.entries.litellm || {}),
+                enabled: true,
+              };
+
+              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\n`);
+              console.log('    openclaw.json source normalized with canonical refs and SecretRefs');
+              NODE
               fi
+
+              echo "==> 4a. OpenClaw Plugin Cache"
+              if [ -d /opt/openclaw-plugin-npm ]; then
+                mkdir -p /config/npm
+                cp -a /opt/openclaw-plugin-npm/. /config/npm/
+                echo "    Seeded OpenClaw external plugins from image cache"
+              else
+                echo "    WARNING: baked OpenClaw plugin npm cache not found"
+              fi
+              mkdir -p /config/agents/main/sessions
 
               echo "==> 4b. Swarm Config"
               if [ -f "/init-swarm-config/swarm.config.json" ]; then
@@ -194,8 +269,8 @@ spec:
               echo "==> 4c. Runtime Config"
               mkdir -p /runtime-config
               if [ -f /config/openclaw.json ]; then
-                node -e 'const fs=require("fs"); const source="/config/openclaw.json"; const target="/runtime-config/openclaw.json"; let text=fs.readFileSync(source,"utf8"); text=text.replaceAll("__LITELLM_API_KEY__", process.env.LITELLM_API_KEY || "").replaceAll("__DISCORD_TOKEN__", process.env.DISCORD_TOKEN || ""); fs.writeFileSync(target, text);'
-                echo "    openclaw.json rendered into runtime config"
+                cp -Lf /config/openclaw.json /runtime-config/openclaw.json
+                echo "    openclaw.json mirrored into runtime config"
               fi
               if [ -f /config/swarm.config.json ]; then
                 node -e 'const fs=require("fs"); const source="/config/swarm.config.json"; const target="/runtime-config/swarm.config.json"; const config=JSON.parse(fs.readFileSync(source,"utf8")); if (process.env.DISCORD_WEBHOOK) config.discord_webhook_url=process.env.DISCORD_WEBHOOK; fs.writeFileSync(target, JSON.stringify(config,null,2)+"\n");'
@@ -422,6 +497,8 @@ spec:
 
               echo "==> 6. Fixing Permissions"
               chown -R 0:0 /workspace /config /runtime-config /root/.ssh /skills-merged
+              chmod 700 /config
+              chmod 600 /config/openclaw.json
               echo "==> Init Complete."
               ls -la /workspace/
 
@@ -595,9 +672,6 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /home/node/.openclaw
-            - name: runtime-config
-              mountPath: /home/node/.openclaw/openclaw.json
-              subPath: openclaw.json
             - name: runtime-config
               mountPath: /home/node/.openclaw/swarm.config.json
               subPath: swarm.config.json
@@ -813,9 +887,6 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /home/node/.openclaw
-            - name: runtime-config
-              mountPath: /home/node/.openclaw/openclaw.json
-              subPath: openclaw.json
             - name: runtime-config
               mountPath: /home/node/.openclaw/swarm.config.json
               subPath: swarm.config.json

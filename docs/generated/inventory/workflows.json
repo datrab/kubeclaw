@@ -66,6 +66,7 @@
         "npm run docs:check:coverage",
         "npm run docs:check:generated",
         "npm run docs:check:refs",
+        "npm run docs:inventory && npm run docs:generate",
         "uses: actions/checkout@v4",
         "uses: actions/setup-node@v4"
       ]

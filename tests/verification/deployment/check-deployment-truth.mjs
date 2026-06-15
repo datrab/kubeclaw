@@ -660,16 +660,19 @@ assertIncludes(rendered, 'value: "/home/node/.openclaw/swarm.config.json"', 'Ren
 assertIncludes(rendered, 'mountPath: /home/node/.openclaw', 'Rendered deployment must mount the runtime config surface at /home/node/.openclaw');
 assertIncludes(rendered, 'mountPath: /home/node/.openclaw-persisted', 'Rendered deployment must keep the retained config PVC available as persistent source config');
 assertIncludes(rendered, 'mountPath: /runtime-config', 'Rendered init container must mount the runtime config emptyDir');
-assertIncludes(rendered, 'mountPath: /home/node/.openclaw/openclaw.json', 'Rendered deployment must overlay runtime openclaw.json onto the normal config path');
-assertIncludes(rendered, 'subPath: openclaw.json', 'Rendered deployment must mount only the runtime openclaw.json file over the persistent source');
+assert.equal(rendered.includes('mountPath: /home/node/.openclaw/openclaw.json'), false, 'Rendered deployment must not bind-mount openclaw.json because doctor rewrites it atomically');
+assert.equal(rendered.includes('subPath: openclaw.json'), false, 'Rendered deployment must not mount openclaw.json through subPath');
 assertIncludes(rendered, 'mountPath: /home/node/.openclaw/swarm.config.json', 'Rendered deployment must overlay runtime swarm.config.json onto the normal config path');
 assertIncludes(rendered, 'subPath: swarm.config.json', 'Rendered deployment must mount only the runtime swarm.config.json file over the persistent source');
 assertIncludes(rendered, 'emptyDir: {}', 'Rendered deployment must include emptyDir-backed runtime config storage');
 assert.equal(rendered.includes('mountPath: /app/config'), false, 'Rendered deployment must not mount the stale /app/config runtime config path');
 assert.equal(rendered.includes('sed -i "s|__LITELLM_API_KEY__|'), false, 'Rendered init container must not substitute secrets into the retained config PVC with sed');
 assert.equal(rendered.includes('sed -i "s|__DISCORD_TOKEN__|'), false, 'Rendered init container must not substitute Discord tokens into the retained config PVC with sed');
-assertIncludes(rendered, 'openclaw.json source normalized without literal runtime secrets', 'Rendered init container must normalize persistent openclaw.json as secret-free source config');
-assertIncludes(rendered, 'openclaw.json rendered into runtime config', 'Rendered init container must render secret-expanded openclaw.json only into runtime config');
+assertIncludes(rendered, 'openclaw.json source normalized with canonical refs and SecretRefs', 'Rendered init container must normalize persistent openclaw.json with canonical model refs and SecretRefs');
+assertIncludes(rendered, 'Seeded OpenClaw external plugins from image cache', 'Rendered init container must seed configured external plugins without startup network installs');
+assertIncludes(rendered, 'openclaw.json mirrored into runtime config', 'Rendered init container must mirror OpenClaw config into runtime diagnostics');
+assertIncludes(rendered, 'chmod 700 /config', 'Rendered init container must harden the OpenClaw state directory permissions');
+assertIncludes(rendered, 'chmod 600 /config/openclaw.json', 'Rendered init container must harden openclaw.json permissions');
 assertIncludes(rendered, 'swarm.config.json rendered into runtime config', 'Rendered init container must render webhook-expanded swarm.config.json only into runtime config');
 assertIncludes(rendered, 'swarm.config.json written from chart source', 'Rendered init container must overwrite persisted swarm.config.json from chart source');
 assertIncludes(rendered, 'delete config.discord_webhook_url', 'Rendered init container must remove webhook secrets from persistent swarm.config.json');
@@ -703,7 +706,7 @@ assertIncludes(renderedBuster, 'value: "http://127.0.0.1:18789"', 'Buster deploy
 assertIncludes(renderedBuster, 'name: REPO_ROOT', 'Buster deployment must pass the mounted checkout path to runtime processes');
 assertIncludes(renderedBuster, 'value: "/home/node/.openclaw/workspace/git-repo"', 'Buster deployment must point REPO_ROOT at the workspace-mounted Git checkout');
 assertIncludes(renderedBuster, 'mountPath: /home/node/.openclaw/workspace', 'Buster containers must share the OpenClaw workspace runtime mount');
-assertIncludes(renderedBuster, 'mountPath: /home/node/.openclaw/openclaw.json', 'Buster containers must share the rendered OpenClaw runtime config');
+assertIncludes(renderedBuster, 'mountPath: /home/node/.openclaw', 'Buster containers must share the writable OpenClaw home with a normal openclaw.json file');
 assertIncludes(renderedBuster, 'mountPath: /home/node/.openclaw/swarm.config.json', 'Buster containers must share the rendered swarm runtime config');
 assertIncludes(renderedBuster, 'mountPath: /app/skills', 'Buster containers must share the merged skills runtime');
 assertIncludes(renderedBuster, 'config.buster.runtime.heartbeat_path is required', 'Buster readiness must use swarm.config.json as heartbeat path authority');
@@ -796,6 +799,41 @@ assert.equal(
   false,
   'Rendered Buster gateway config must not preserve the obsolete observer plugin load path',
 );
+assert.equal(
+  JSON.stringify(renderedBusterGatewayConfig).includes('openai-codex'),
+  false,
+  'Rendered Buster gateway config must use canonical OpenAI refs instead of legacy openai-codex refs',
+);
+assert.deepEqual(
+  renderedBusterGatewayConfig.agents?.defaults?.models?.['openai/gpt-5.5']?.agentRuntime,
+  { id: 'codex' },
+  'Rendered Buster gateway config must keep Codex auth routing on canonical OpenAI model refs',
+);
+assert.deepEqual(
+  renderedBusterGatewayConfig.models?.providers?.litellm?.apiKey,
+  { source: 'env', provider: 'default', id: 'LITELLM_API_KEY' },
+  'Rendered Buster gateway config must use a SecretRef for the LiteLLM API key',
+);
+assert.deepEqual(
+  renderedBusterGatewayConfig.agents?.defaults?.memorySearch?.remote?.apiKey,
+  { source: 'env', provider: 'default', id: 'LITELLM_API_KEY' },
+  'Rendered Buster gateway config must use a SecretRef for memory search API key',
+);
+assert.deepEqual(
+  renderedBusterGatewayConfig.channels?.discord?.token,
+  { source: 'env', provider: 'default', id: 'DISCORD_TOKEN' },
+  'Rendered Buster gateway config must use a SecretRef for the Discord token',
+);
+assert.deepEqual(
+  renderedBusterGatewayConfig.commands?.ownerAllowFrom,
+  ['discord:849379821536804864'],
+  'Rendered Buster gateway config must configure the OpenClaw command owner',
+);
+assert.equal(
+  renderedBusterGatewayConfig.plugins?.entries?.litellm?.enabled,
+  true,
+  'Rendered Buster gateway config must explicitly enable the LiteLLM plugin',
+);
 assertIncludes(renderedBuster, 'removed obsolete kubeclaw-agent-observer plugin load path', 'Rendered init container must migrate existing PVC openclaw.json away from the obsolete observer plugin path');
 assert.equal(
   renderedBuster.includes('\n        - name: stream-processor'),
@@ -856,12 +894,15 @@ assertIncludes(deploymentTemplate, 'checkQdrant', 'Deployment template health sc
 assertIncludes(deploymentTemplate, 'checkBusterHeartbeat', 'Deployment template health script must check Buster heartbeat when enabled');
 assertIncludes(deploymentTemplate, 'mountPath: /home/node/.openclaw-persisted', 'Deployment template must expose the retained config PVC separately from runtime config');
 assertIncludes(deploymentTemplate, 'mountPath: /runtime-config', 'Deployment template must mount runtime config into the init container');
-assertIncludes(deploymentTemplate, 'mountPath: /home/node/.openclaw/openclaw.json', 'Deployment template must overlay runtime openclaw.json onto the normal config path');
-assertIncludes(deploymentTemplate, 'subPath: openclaw.json', 'Deployment template must mount only the runtime openclaw.json file over the persistent source');
+assert.equal(deploymentTemplate.includes('mountPath: /home/node/.openclaw/openclaw.json'), false, 'Deployment template must not bind-mount openclaw.json because doctor rewrites it atomically');
+assert.equal(deploymentTemplate.includes('subPath: openclaw.json'), false, 'Deployment template must not mount openclaw.json through subPath');
 assertIncludes(deploymentTemplate, 'mountPath: /home/node/.openclaw/swarm.config.json', 'Deployment template must overlay runtime swarm.config.json onto the normal config path');
 assertIncludes(deploymentTemplate, 'subPath: swarm.config.json', 'Deployment template must mount only the runtime swarm.config.json file over the persistent source');
-assertIncludes(deploymentTemplate, 'openclaw.json source normalized without literal runtime secrets', 'Deployment template must normalize persistent openclaw.json as secret-free source config');
-assertIncludes(deploymentTemplate, 'openclaw.json rendered into runtime config', 'Deployment template must render openclaw.json into emptyDir-backed runtime config');
+assertIncludes(deploymentTemplate, 'openclaw.json source normalized with canonical refs and SecretRefs', 'Deployment template must normalize persistent openclaw.json with canonical model refs and SecretRefs');
+assertIncludes(deploymentTemplate, 'Seeded OpenClaw external plugins from image cache', 'Deployment template must seed configured external plugins from the baked image cache');
+assertIncludes(deploymentTemplate, 'openclaw.json mirrored into runtime config', 'Deployment template must mirror openclaw.json into the runtime diagnostics surface');
+assertIncludes(deploymentTemplate, 'chmod 700 /config', 'Deployment template must harden the OpenClaw state directory permissions');
+assertIncludes(deploymentTemplate, 'chmod 600 /config/openclaw.json', 'Deployment template must harden openclaw.json permissions');
 assertIncludes(deploymentTemplate, 'swarm.config.json rendered into runtime config', 'Deployment template must render swarm.config.json into emptyDir-backed runtime config');
 assertIncludes(deploymentTemplate, 'swarm.config.json written from chart source', 'Deployment template must overwrite persisted swarm.config.json from chart source');
 assertIncludes(deploymentTemplate, 'delete config.discord_webhook_url', 'Deployment template must remove webhook secrets from persistent swarm.config.json source');
@@ -887,6 +928,14 @@ assertIncludes(imageBuildWorkflow, 'docker/Dockerfile.namespace-controller', 'Im
 assertIncludes(imageBuildWorkflow, 'image_suffix: kubeclaw-namespace-controller', 'Image-build workflow must publish the kubeclaw-namespace-controller image');
 assertDockerInstallCommandsFailClosed(generalDockerfile, 'General Dockerfile');
 assertDockerInstallCommandsFailClosed(sandboxDockerfile, 'Sandbox Dockerfile');
+for (const [label, dockerfile] of [
+  ['General Dockerfile', generalDockerfile],
+  ['Sandbox Dockerfile', sandboxDockerfile],
+]) {
+  assertIncludes(dockerfile, 'openclaw plugins install @openclaw/acpx', `${label} must bake the official ACPX plugin into the image cache`);
+  assertIncludes(dockerfile, 'openclaw plugins install @openclaw/discord', `${label} must bake the official Discord plugin into the image cache`);
+  assertIncludes(dockerfile, '/opt/openclaw-plugin-npm', `${label} must expose the baked OpenClaw npm plugin cache for init seeding`);
+}
 assertIncludes(namespaceControllerDockerfile, 'FROM node:22-bookworm-slim', 'Namespace controller Dockerfile must use a lightweight Node image');
 assertIncludes(namespaceControllerDockerfile, 'COPY scripts/buster-namespace-controller.mjs /app/scripts/buster-namespace-controller.mjs', 'Namespace controller Dockerfile must package the namespace controller entrypoint');
 assertIncludes(namespaceControllerDockerfile, 'USER node', 'Namespace controller Dockerfile must run as the non-root node user');
@@ -1108,7 +1157,7 @@ const result = {
     'Rendered Deployment blocks customSkills from overriding core runtime paths',
     'Rendered pod mounts merged skills at /app/skills',
     'Rendered Deployment pins SWARM_CONFIG to /home/node/.openclaw/swarm.config.json',
-    'Rendered init flow keeps persistent config secret-free and renders secrets only into runtime config',
+    'Rendered init flow keeps OpenClaw config SecretRef-backed, writable, and doctor-compatible',
     'Rendered probes use dependency-aware health checks instead of TCP-only port checks',
     'Rendered agent Deployments define shutdown grace, preStop drain markers, and drain-aware readiness',
     'Rendered swarm-config ConfigMap matches the chart-provided swarm.config.json and .semgrep.yml artifacts',

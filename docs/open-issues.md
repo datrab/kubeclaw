@@ -321,13 +321,13 @@ Type: risk
 
 ### Affected files
 
-- `charts/kubeclaw/templates/deployment.yaml` — init container normalizes the persistent source config and writes substituted config only into `/runtime-config`.
-- `charts/kubeclaw/templates/configmap-gateway.yaml` — renders `openclaw.json` with `__LITELLM_API_KEY__` and `__DISCORD_TOKEN__` placeholders.
+- `charts/kubeclaw/templates/deployment.yaml` — init container normalizes the persistent source config to SecretRefs and keeps webhook expansion in `/runtime-config`.
+- `charts/kubeclaw/templates/configmap-gateway.yaml` — renders `openclaw.json` with env SecretRefs for LiteLLM and Discord token fields.
 - `docs/deployment/secrets.md` — documents current secret flow and persistence behavior.
 
 ### Problem / in-depth issue description
 
-The original risk was that the deployment init container could copy OpenClaw config into the PVC-backed config mount and substitute secret values such as LiteLLM API key and Discord token there. The current template now keeps the persistent `/config/openclaw.json` source normalized with placeholders and writes substituted values into `/runtime-config/openclaw.json`, which is mounted into the main container through an `emptyDir` runtime overlay.
+The original risk was that the deployment init container could copy OpenClaw config into the PVC-backed config mount and substitute secret values such as LiteLLM API key and Discord token there. The current template now keeps `/config/openclaw.json` normalized with env SecretRefs and only writes webhook-expanded `swarm.config.json` into the `emptyDir` runtime overlay.
 
 ### Impact
 

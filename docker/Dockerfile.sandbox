@@ -164,15 +164,21 @@ RUN cd /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer \
     && cp -R package.json openclaw.plugin.json src dist /app/dist/extensions/kubeclaw-agent-observer/ \
     && rm -rf /tmp/kubeclaw-openclaw-plugins
 
-# 8. Runtime environment
+# 8. Official external OpenClaw plugins
+#    These install into OpenClaw's npm plugin layout during image build. Pod
+#    init seeds the mounted OpenClaw home from this baked cache, avoiding first
+#    boot network installs.
+RUN mkdir -p /tmp/openclaw-plugin-home \
+    && HOME=/tmp/openclaw-plugin-home openclaw plugins install @openclaw/acpx \
+    && HOME=/tmp/openclaw-plugin-home openclaw plugins install @openclaw/discord \
+    && mkdir -p /opt/openclaw-plugin-npm \
+    && cp -a /tmp/openclaw-plugin-home/.openclaw/npm/. /opt/openclaw-plugin-npm/ \
+    && rm -rf /tmp/openclaw-plugin-home
+
+# 9. Runtime environment
 ENV NODE_PATH=/usr/local/lib/node_modules:/app/node_modules
 ENV NPM_CONFIG_CACHE=/root/.npm
 ENV HOME=/home/node
-
-# 9. ACPX plugin (Agent Communication Protocol) - disabled for now.
-# RUN mkdir -p /home/node/.openclaw \
-#     && chown -R root:root /home/node \
-#     && openclaw plugins install acpx
 
 LABEL org.opencontainers.image.title="KubeClaw Sandbox (Root Mode)"
 LABEL org.opencontainers.image.description="Podman-in-Pod + Lighthouse, Playwright, k6, nginx"

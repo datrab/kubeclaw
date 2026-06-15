@@ -18,11 +18,12 @@ The init container:
 - pins GitHub known hosts
 - clones `GIT_REPO_URL` into `/workspace/git-repo`, or safely fast-forwards an existing clean checkout
 - writes workspace bootstrap files only when `workspace.enabled` is true
-- initializes `/config/openclaw.json` as the retained, secret-free source config when absent
-- normalizes persisted OpenClaw config so LiteLLM and Discord token fields stay as placeholders
+- initializes `/config/openclaw.json` as the retained OpenClaw config when absent
+- normalizes persisted OpenClaw config to canonical OpenAI/Codex model refs and SecretRef-backed LiteLLM/Discord fields
+- seeds configured external OpenClaw plugins from the image-baked npm cache into the retained OpenClaw home
 - removes obsolete `/app/openclaw-plugins/kubeclaw-agent-observer` plugin load paths from persisted config
 - writes or preserves source `swarm.config.json`, `.semgrep.yml`, and `eslint.config.mjs`
-- renders secret-expanded runtime config into `/runtime-config`
+- mirrors OpenClaw config into `/runtime-config` for diagnostics and renders runtime `swarm.config.json`
 - maps `DISCORD_WEBHOOK` only into the runtime `swarm.config.json`
 - merges packaged skills and optional custom skills into `/skills-merged`
 - rejects custom overlays targeting protected runtime paths
@@ -94,9 +95,9 @@ kubectl logs -n "$NAMESPACE" deployment/agent-buster -c buster-pipeline
 
 Both agents receive Redis, Qdrant, LiteLLM, gateway, Git, Discord, and project environment from the chart. Secret-backed variables include `REDIS_PASSWORD`, `OPENCLAW_GATEWAY_TOKEN`, `LITELLM_API_KEY`, optional `ANTHROPIC_API_KEY`/`CLAUDE_CODE_OAUTH_TOKEN`, optional `DISCORD_TOKEN`, and optional `DISCORD_WEBHOOK`.
 
-The chart pins `SWARM_CONFIG` to `/home/node/.openclaw/swarm.config.json` and `REPO_ROOT` to `/home/node/.openclaw/workspace/git-repo`. Runtime containers mount the retained config PVC at `/home/node/.openclaw`, expose the same retained source at `/home/node/.openclaw-persisted`, and overlay only `openclaw.json` plus `swarm.config.json` from an `emptyDir` runtime config volume. Runtime `openclaw.json` receives the current `LITELLM_API_KEY` and `DISCORD_TOKEN`; the retained source config keeps placeholders so secret rotation does not leave old values on the PVC. Buster's gateway and pipeline containers share this runtime config, the workspace PVC, `/app/skills`, Podman storage, registry config, and `/sandbox`, so pipeline preparation and gateway-side agent tests use the same runtime surface.
+The chart pins `SWARM_CONFIG` to `/home/node/.openclaw/swarm.config.json` and `REPO_ROOT` to `/home/node/.openclaw/workspace/git-repo`. Runtime containers mount the retained config PVC at `/home/node/.openclaw` and expose the same retained source at `/home/node/.openclaw-persisted`. `openclaw.json` is a normal writable file so `openclaw doctor` can atomically rewrite it. Secret-bearing OpenClaw config fields use env SecretRefs for `LITELLM_API_KEY` and `DISCORD_TOKEN`, while `swarm.config.json` is still overlaid from an `emptyDir` runtime config volume so `DISCORD_WEBHOOK` does not persist to the PVC. Buster's gateway and pipeline containers share this runtime config, the workspace PVC, `/app/skills`, Podman storage, registry config, and `/sandbox`, so pipeline preparation and gateway-side agent tests use the same runtime surface.
 
-Persistent storage and incident checks are detailed in `persistent-storage.md` and `../operators/security-operations.md`. The deployment verifier asserts that the retained config source is exposed separately, runtime config is overlaid by `subPath`, Buster containers mount `/var/lib/containers` and `/sandbox`, and the sandbox ephemeral-storage limit remains `50Gi`.
+Persistent storage and incident checks are detailed in `persistent-storage.md` and `../operators/security-operations.md`. The deployment verifier asserts that the retained config source is exposed separately, `openclaw.json` is not mounted through `subPath`, Buster containers mount `/var/lib/containers` and `/sandbox`, and the sandbox ephemeral-storage limit remains `50Gi`.
 
 ## Health Probes
 
