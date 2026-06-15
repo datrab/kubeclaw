@@ -13,11 +13,7 @@ The chart renders `openclaw.json` in `ConfigMap/<release>-config`. The init cont
 
 The rendered config includes:
 
-<<<<<<< HEAD
-- auth profiles for Anthropic, LiteLLM, OpenAI, and OpenAI Codex
-=======
 - auth profiles for Anthropic, LiteLLM, and canonical OpenAI OAuth
->>>>>>> 2211515 (update)
 - ACP enabled with backend `acpx`
 - LiteLLM provider model definitions from values
 - agent defaults and model fallbacks, including Codex runtime metadata on canonical OpenAI model refs
@@ -41,18 +37,11 @@ Init normalizes persisted `openclaw.json` so LiteLLM, memory search, and Discord
 ## Config Keys To Treat As Current Behavior
 
 - `acp.enabled`, `acp.backend`, `acp.allowedAgents`, and `acp.maxConcurrentSessions` define ACP availability in the rendered OpenClaw config.
-<<<<<<< HEAD
-- `models.providers.litellm.baseUrl` and `models.providers.litellm.apiKey` connect the pod to the configured LiteLLM-compatible endpoint while the default model policy prefers OpenAI profiles and keeps LiteLLM as a chart-driven fallback.
-- `agents.defaults.memorySearch.remote.baseUrl` and `agents.defaults.memorySearch.remote.apiKey` reuse the LiteLLM endpoint/API key for remote memory search.
-- `tools.profile`, `tools.sessions.visibility`, `tools.sessions_spawn.attachments.enabled`, and `tools.exec.security` configure the runtime tool posture.
-- `channels.discord.enabled`, `channels.discord.threadBindings.spawnSessions`, and `channels.discord.execApprovals.approvers` are rendered from chart values and Discord values.
-=======
 - `models.providers.litellm.baseUrl` and `models.providers.litellm.apiKey` connect the pod to the configured LiteLLM-compatible endpoint while the default model policy prefers OpenAI profiles and keeps LiteLLM as a chart-driven fallback. The API key is an env SecretRef to `LITELLM_API_KEY`.
 - `agents.defaults.memorySearch.remote.baseUrl` and `agents.defaults.memorySearch.remote.apiKey` reuse the LiteLLM endpoint/API key for remote memory search. The API key is also an env SecretRef.
 - `commands.ownerAllowFrom` configures OpenClaw owner-only command authority from chart values.
 - `tools.profile`, `tools.sessions.visibility`, `tools.sessions_spawn.attachments.enabled`, and `tools.exec.security` configure the runtime tool posture.
 - `channels.discord.enabled`, `channels.discord.token`, `channels.discord.threadBindings.spawnSessions`, and `channels.discord.execApprovals.approvers` are rendered from chart values and Discord values. The token is an env SecretRef to `DISCORD_TOKEN`.
->>>>>>> 2211515 (update)
 
 ## Verification
 
