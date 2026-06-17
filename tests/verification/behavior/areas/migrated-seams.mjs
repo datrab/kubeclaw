@@ -1,3 +1,7 @@
+import {
+  stepExit,
+} from './helpers.mjs';
+
 export async function registerMigratedSeamsArea({
   record,
   sourceRoot,
@@ -12,11 +16,6 @@ export async function registerMigratedSeamsArea({
   materializeRuntimeTree,
   importRuntimeModule,
 }) {
-  function stepExit(result) {
-    const status = result?.terminal?.status ?? result?.terminal_status ?? null;
-    return status === "succeeded" ? 0 : (status ? 1 : null);
-  }
-
   function stepReason(result) {
     return result?.diagnostics?.summary ?? result?.reason;
   }

@@ -15,6 +15,7 @@ This section documents the deployable KubeClaw platform from chart, values, infr
 - [Helm chart](helm-chart.md)
 - [Values files](values-files.md)
 - [Agent deployments](agent-deployments.md)
+- [Startup and health checks](startup-and-health.md)
 - [Infrastructure](infrastructure.md)
 - [LiteLLM](litellm.md)
 - [Tailscale operator](tailscale-operator.md)
@@ -55,7 +56,8 @@ For a normal deployment, read these pages in order:
 5. [LiteLLM](litellm.md), if enabled
 6. [Tailscale operator](tailscale-operator.md), if final previews are enabled
 7. [Agent deployments](agent-deployments.md)
-8. [Deployment verification](deployment-verification.md)
+8. [Startup and health checks](startup-and-health.md)
+9. [Deployment verification](deployment-verification.md)
 
 ## What Repository Checks Prove
 

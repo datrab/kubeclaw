@@ -9,6 +9,14 @@ import {
   runGateViaRegistry,
 } from '../../lib/lifecycle-audit-lib.mjs';
 
+import {
+  buildBuiltInRegistry,
+  gateRuntimeEvents,
+  stepExit,
+  stepMetadata,
+  stepRateLimit,
+} from './helpers.mjs';
+
 export async function registerStopsArea({
   record,
   sourceRoot,
@@ -17,32 +25,6 @@ export async function registerStopsArea({
   flushAsync,
   xaddEvents,
 }) {
-function stepExit(result) {
-  const status = result?.terminal?.status ?? result?.terminal_status ?? null;
-  return status === "succeeded" ? 0 : (status ? 1 : null);
-}
-
-function stepMetadata(result) {
-  return result?.diagnostics?.metadata || {};
-}
-
-function stepRateLimit(result) {
-  return result?.rateLimit || {};
-}
-
-function gateRuntimeEvents(xaddEvents, streamKey) {
-  return xaddEvents(streamKey)
-    .filter((event) => !String(event.type || '').startsWith('plugin.gate.'))
-    .map((event, index) => ({ ...event, seq: index + 1 }));
-}
-
-async function buildBuiltInRegistry(runtimeRootForRegistry) {
-  const registryMod = await importRuntimeModule(runtimeRootForRegistry, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
-
   await record('buster gate post-start terminal failures still emit authoritative gate failure telemetry', async () => {
     const { runtimeRoot: busterRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(busterRuntimeRoot);

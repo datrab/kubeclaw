@@ -1,3 +1,8 @@
+import {
+  buildBuiltInRegistry,
+  gateRuntimeEvents,
+} from './helpers.mjs';
+
 export async function registerResumeIdempotenceArea({
   record,
   sourceRoot,
@@ -13,43 +18,6 @@ export async function registerResumeIdempotenceArea({
   importRuntimeModule,
   runGateViaRegistry,
 }) {
-  function gateRuntimeEvents(xaddEvents, streamKey) {
-  return xaddEvents(streamKey)
-    .filter((event) => !String(event.type || '').startsWith('plugin.gate.'))
-    .map((event, index) => ({ ...event, seq: index + 1 }));
-}
-
-async function buildBuiltInRegistry(runtimeRoot) {
-    const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
-    const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-    assert.equal(errors.length, 0);
-    const generatorStageOwners = {};
-    for (const stageId of ['generator:project_summary', 'generator:pipeline_review', 'generator:case_study']) {
-      generatorStageOwners[stageId] = {
-        ...registry.stageOwners['generator.run'][stageId],
-        implementation: {
-          ...registry.stageOwners['generator.run'][stageId].implementation,
-          run: async () => ({
-            schemaVersion: 'v1',
-            producerKind: 'generator',
-            producerType: String(stageId).split(':')[1] || 'unknown',
-            outputs: { status: 'passed' },
-          }),
-        },
-      };
-    }
-    return {
-      ...registry,
-      stageOwners: {
-        ...registry.stageOwners,
-        'generator.run': {
-          ...registry.stageOwners['generator.run'],
-          ...generatorStageOwners,
-        },
-      },
-    };
-  }
-
   async function loadRuntimeModules() {
     const { runtimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(runtimeRoot);

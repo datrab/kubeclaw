@@ -1,3 +1,8 @@
+import {
+  buildBuiltInRegistry,
+  gateRuntimeEvents,
+} from './helpers.mjs';
+
 export async function registerTelemetryArea({
   record,
   sourceRoot,
@@ -34,18 +39,6 @@ export async function registerTelemetryArea({
   pathsMod,
   busterPipelineMod,
 }) {
-function gateRuntimeEvents(xaddEvents, streamKey) {
-  return xaddEvents(streamKey)
-    .filter((event) => !String(event.type || '').startsWith('plugin.gate.'))
-    .map((event, index) => ({ ...event, seq: index + 1 }));
-}
-
-async function buildBuiltInRegistry(runtimeRoot) {
-  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
 const EXPLICIT_ACP_MONITOR_CONFIG = {
   unknown_poll_limit: 10,
   stale_poll_limit: 10,

@@ -468,6 +468,54 @@ spec:
               }
               console.log(JSON.stringify({ ok: true, mode, agent }));
               HEALTH_SCRIPT
+              cat > /runtime-config/kubeclaw-startup-doctor.sh <<'STARTUP_DOCTOR'
+              #!/bin/sh
+              set -u
+
+              if [ "{{ .Values.gateway.startupDoctor.enabled }}" != "true" ]; then
+                exit 0
+              fi
+
+              (
+                set +e
+                LOG_DIR="/home/node/.openclaw/logs"
+                LOG_FILE="/home/node/.openclaw/logs/startup-doctor.log"
+                WAIT_SECONDS="{{ .Values.gateway.startupDoctor.waitSeconds | default 120 }}"
+                POLL_SECONDS="{{ .Values.gateway.startupDoctor.pollSeconds | default 5 }}"
+                mkdir -p "$LOG_DIR"
+
+                echo "[$(date -Iseconds)] startup doctor waiting for gateway health"
+                DEADLINE=$(( $(date +%s) + WAIT_SECONDS ))
+                while [ "$(date +%s)" -le "$DEADLINE" ]; do
+                  node <<'NODE'
+              const raw = process.env.OPENCLAW_GATEWAY_URL || `http://127.0.0.1:${process.env.GATEWAY_PORT || '18789'}`;
+              const base = String(raw).trim().replace(/\/tools\/invoke$/, '').replace(/\/v1$/, '').replace(/\/$/, '');
+              const headers = process.env.OPENCLAW_GATEWAY_TOKEN
+                ? { Authorization: `Bearer ${process.env.OPENCLAW_GATEWAY_TOKEN}` }
+                : {};
+              const controller = new AbortController();
+              const timeout = setTimeout(() => controller.abort(), 5000);
+              fetch(`${base}/health`, { headers, signal: controller.signal })
+                .then((response) => process.exit(response.ok ? 0 : 1))
+                .catch(() => process.exit(1))
+                .finally(() => clearTimeout(timeout));
+              NODE
+                  if [ "$?" -eq 0 ]; then
+                    echo "[$(date -Iseconds)] gateway healthy; running openclaw doctor --fix"
+                    node /app/openclaw.mjs doctor --fix
+                    STATUS="$?"
+                    echo "[$(date -Iseconds)] openclaw doctor --fix exited with status ${STATUS}"
+                    exit 0
+                  fi
+                  sleep "$POLL_SECONDS"
+                done
+
+                echo "[$(date -Iseconds)] startup doctor skipped; gateway did not become healthy within ${WAIT_SECONDS}s"
+              ) >> "$LOG_FILE" 2>&1 &
+
+              exit 0
+              STARTUP_DOCTOR
+              chmod +x /runtime-config/kubeclaw-startup-doctor.sh
 
               echo "==> 5. Skills Merge"
               mkdir -p /skills-merged
@@ -706,6 +754,13 @@ spec:
           resources: {{- toYaml (.Values.gateway.resources | default .Values.resources) | nindent 12 }}
 
           lifecycle:
+            {{- if .Values.gateway.startupDoctor.enabled }}
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - /runtime-config/kubeclaw-startup-doctor.sh
+            {{- end }}
             preStop:
               exec:
                 command:

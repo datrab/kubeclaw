@@ -21,9 +21,6 @@ This is the active documentation home for KubeClaw. It separates current source-
 - [Decisions](decisions/README.md) - source-backed decision records.
 - [Roadmap](ROADMAP.md) - planned direction separated from current behavior.
 - [Contributing](CONTRIBUTING.md) - docs-local contribution paths.
-- [Documentation rebuild plan](DOCUMENTATION_REBUILD_PLAN.md) - phased plan for rebuilding thin docs into rich, operator-grade documentation with maintenance automation.
-- [Documentation audit](DOCUMENTATION_AUDIT.md) - page-by-page rebuild decisions.
-- [Documentation target page list](DOCUMENTATION_TARGET_PAGE_LIST.md) - active target tree for the first rebuild pass.
 - [Open issues](open-issues.md) - factual unresolved problems.
 - [Future implementation ideas](future-implementation-ideas.md) - candidates that are not committed work.
 
@@ -50,7 +47,7 @@ This is the active documentation home for KubeClaw. It separates current source-
 
 ## Current Completion State
 
-The active tree has been rebuilt against `DOCUMENTATION_REBUILD_PLAN.md`. `DOCUMENTATION_AUDIT.md` records the page-by-page rebuild decisions, and `DOCUMENTATION_TARGET_PAGE_LIST.md` records the intended active tree. Current pages are source-backed by repository code, manifests, generated inventory, verification tests, or upstream documentation where the upstream project owns the behavior.
+The active tree is source-backed by repository code, manifests, generated inventory, verification tests, or upstream documentation where the upstream project owns the behavior.
 
 The docs deliberately separate current behavior from unresolved readiness gaps:
 

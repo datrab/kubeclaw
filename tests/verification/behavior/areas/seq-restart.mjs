@@ -1,3 +1,7 @@
+import {
+  buildBuiltInRegistry,
+} from './helpers.mjs';
+
 export async function registerSeqRestartArea({
   record,
   sourceRoot,
@@ -12,13 +16,6 @@ export async function registerSeqRestartArea({
   materializeRuntimeTree,
   importRuntimeModule,
 }) {
-async function buildBuiltInRegistry(runtimeRootForRegistry) {
-  const registryMod = await importRuntimeModule(runtimeRootForRegistry, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
-
   await record('telemetry seq stays monotonic across emitter restart and resume on the same run id', async () => {
     const bootA = {
       general: materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot,

@@ -8,12 +8,11 @@ import {
   importRuntimeModule,
 } from '../../lib/lifecycle-audit-lib.mjs';
 
-async function buildBuiltInRegistry(runtimeRoot) {
-  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
+import {
+  buildBuiltInRegistry,
+  getFieldValue,
+  makeStepResult,
+} from './helpers.mjs';
 
 function withStubbedGeneratorStages(registry) {
   return {
@@ -60,11 +59,6 @@ function withStubbedGeneratorStages(registry) {
   };
 }
 
-function getFieldValue(fields = [], name) {
-  return fields.find((field) => field.name === name)?.value;
-}
-
-
 function terminationResult(sessionKey = 'summary-session') {
   return {
     sessionKey,
@@ -85,51 +79,6 @@ function platformSummaryDefaults() {
     fallback_model: 'openai-codex/gpt-5.4',
     default_timeout_minutes: 30,
     rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },
-  };
-}
-
-function makeStepResult({ stepType = 'module', stepId = '01', outcomeClass = 'passed', reason = null, projection = {}, correlation = {} } = {}) {
-  const outcome = outcomeClass;
-  const terminalStatus = outcome === 'passed' ? 'succeeded'
-    : (outcome === 'needs_nova' ? 'action_required'
-      : (outcome === 'blocked' ? 'blocked'
-        : (outcome === 'rate_limited' ? 'rate_limited' : 'failed')));
-  const terminalAction = terminalStatus === 'succeeded' ? 'none'
-    : (terminalStatus === 'action_required' ? 'request_handoff'
-      : (terminalStatus === 'rate_limited' ? 'retry_later'
-        : (terminalStatus === 'blocked' ? 'notify_operator' : 'stop')));
-  return {
-    schemaVersion: 'v1',
-    kind: 'pipeline_step_result',
-    stepType,
-    stepId,
-    nextAction: outcome === 'passed' ? 'continue' : 'halt',
-    outcome,
-    diagnostics: {
-      summary: reason,
-      findings: [],
-      metadata: {
-        ...projection,
-        ...(reason != null ? { reason } : {}),
-      },
-      typed: {},
-    },
-    correlation,
-    terminal: {
-      status: terminalStatus,
-      decision: {
-        schemaVersion: 'v1',
-        kind: 'pipeline_terminal_decision',
-        status: terminalStatus,
-        action: terminalAction,
-        reasonCode: outcome,
-        humanReason: reason,
-        scope: stepType,
-        correlation: {},
-        source: null,
-        metadata: {},
-      },
-    },
   };
 }
 

@@ -343,13 +343,17 @@ export async function runModuleForgePhase({
           level: 'CRITICAL',
           title: `Module ${moduleId} — Forge Spawn Failed`,
           description: reason,
-          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, {
-            run_id: getRunId(config),
-            module_id: moduleId,
-            attempt: currentAttemptNumber(status),
-            gateway_label: spawnFailureGatewayLabel,
-            session_key: spawnFailureSessionKey,
-          }),
+          fields: [
+            ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, {
+              run_id: getRunId(config),
+              module_id: moduleId,
+              attempt: currentAttemptNumber(status),
+              gateway_label: spawnFailureGatewayLabel,
+              session_key: spawnFailureSessionKey,
+            }),
+            { name: 'Status', value: 'ERROR' },
+            { name: 'Action', value: 'Inspect Forge runtime and retry the module' },
+          ],
         },
       },
     });
@@ -419,6 +423,8 @@ export async function runModuleForgePhase({
             description: forgeNoChangesMsg,
             fields: [
               ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { run_id: getRunId(config), module_id: moduleId, attempt: currentAttemptNumber(status), gateway_label: resolveStatusGatewayLabel(status), session_key: forgeSessionKey }),
+              { name: 'Status', value: 'FAIL' },
+              { name: 'Action', value: 'Inspect Forge output and resume' },
             ],
           },
         },

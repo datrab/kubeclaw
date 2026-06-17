@@ -54,14 +54,18 @@ export async function handleBusterSpawnFailure({
         level: 'CRITICAL',
         title: `Module ${moduleId} — Buster Spawn Failed`,
         description: reason,
-        fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, {
-          run_id: getRunId(config),
-          module_id: moduleId,
-          attempt: currentAttemptNumber(status),
-          dispatch_id: completionIdentity.dispatchId,
-          gateway_label: spawnFailureGatewayLabel,
-          session_key: spawnFailureSessionKey,
-        }),
+        fields: [
+          ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, {
+            run_id: getRunId(config),
+            module_id: moduleId,
+            attempt: currentAttemptNumber(status),
+            dispatch_id: completionIdentity.dispatchId,
+            gateway_label: spawnFailureGatewayLabel,
+            session_key: spawnFailureSessionKey,
+          }),
+          { name: 'Status', value: 'ERROR' },
+          { name: 'Action', value: 'Inspect Buster runtime and retry the module' },
+        ],
       },
     },
   });

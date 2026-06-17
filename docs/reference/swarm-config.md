@@ -11,7 +11,7 @@ Audience: reference reader, developer
 
 - source: `charts/kubeclaw/files/config/swarm.config.json`
 - runtime: `/home/node/.openclaw/swarm.config.json`
-- secondary runtime candidate: `SWARM_CONFIG`
+- secondary runtime candidate: removed uppercase swarm-config environment override
 
 ## Fields And Defaults
 
@@ -148,7 +148,7 @@ Audience: reference reader, developer
 | `plugins.enabled`, `allowCustomModules`, `extraModulePaths`, `modules`, `stageOwners`, `restrictedCapabilityAllowlist` | boolean, boolean, array, object, object, object | Registry startup validates stage ownership, trust overrides, and capabilities in `skills/nova/pipeline/core/registry/**`. |
 | `acp_monitor.*` | non-negative numbers | ACP transcript/session monitor timing. |
 
-Rejected here: `_testOverrides`, top-level `models`, `telemetry.stream_key`, unknown top-level fields, reviewer/model defaults, and project workflow fields. Put workflow in `<repo>/Projects/<project>/src/.swarm/progress.json`.
+Rejected here: `_testOverrides`, top-level `models`, removed telemetry stream-key config, unknown top-level fields, reviewer/model defaults, and project workflow fields. Put workflow in `<repo>/Projects/<project>/src/.swarm/progress.json`.
 
 ## Verification
 

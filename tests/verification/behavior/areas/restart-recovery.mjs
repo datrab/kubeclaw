@@ -1,3 +1,7 @@
+import {
+  buildBuiltInRegistry,
+} from './helpers.mjs';
+
 export async function registerRestartRecoveryArea({
   record,
   sourceRoot,
@@ -34,13 +38,6 @@ export async function registerRestartRecoveryArea({
   pathsMod,
   busterPipelineMod,
 }) {
-async function buildBuiltInRegistry(runtimeRootForRegistry) {
-  const registryMod = await importRuntimeModule(runtimeRootForRegistry, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
-
 function platformRestartRecoveryDefaults() {
   return {
     fallback_model: 'openai-codex/gpt-5.4',

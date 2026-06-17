@@ -11,6 +11,19 @@ LIST_ONLY=0
 CONTRACTS=(
   check-buster-operator-surface.mjs
   check-buster-repo-scoped-paths.mjs
+  check-nova-buster-task-envelope-acceptance.mjs
+  check-redis-task-lifecycle-acceptance.mjs
+  check-redis-completion-selection-acceptance.mjs
+  check-buster-output-artifact-acceptance.mjs
+  check-artifact-authority-matrix-acceptance.mjs
+  check-lifecycle-read-model-replay-acceptance.mjs
+  check-gate-evidence-authority-acceptance.mjs
+  check-manual-degraded-terminal-acceptance.mjs
+  check-suite-timeout-config-acceptance.mjs
+  check-notification-operator-identity-acceptance.mjs
+  check-capability-env-degradation-acceptance.mjs
+  check-deploy-runtime-gate-acceptance.mjs
+  check-restart-session-recovery-acceptance.mjs
   check-buster-verify-task-scope.mjs
   check-redis-log-ownership.mjs
   check-redis-completion-service-surface.mjs

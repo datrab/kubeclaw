@@ -3,6 +3,7 @@
 import {
   loadLifecycleReadModels as loadLifecycleReadModelsImpl,
   readLifecycleEvents as readLifecycleEventsImpl,
+  rebuildLifecycleReadModels as rebuildLifecycleReadModelsImpl,
   recomputeProgression as recomputeProgressionImpl,
   saveLifecycleReadModels as saveLifecycleReadModelsImpl,
 } from './status-store-lifecycle/read-models.ts';
@@ -40,6 +41,10 @@ export function saveLifecycleReadModels(config, readModels) {
 
 export function readLifecycleEvents(config) {
   return readLifecycleEventsImpl(config);
+}
+
+export function rebuildLifecycleReadModels(config, events = readLifecycleEventsImpl(config)) {
+  return rebuildLifecycleReadModelsImpl(config, events);
 }
 
 export function recomputeProgression(readModels) {

@@ -129,22 +129,22 @@ export function didProcessResultEmitTerminalCompletion(processResult) {
 }
 
 export async function ensureTaskTerminalBeforeAck(redisClient, opts = {}) {
-  const payload = opts.payload || {};
-  const processResult = opts.processResult || null;
-  const taskError = opts.error || null;
+  const payload = opts.payload ?? {};
+  const processResult = opts.processResult ?? null;
+  const taskError = opts.error ?? null;
 
   if (didProcessResultEmitTerminalCompletion(processResult)) {
     return { ok: true, mode: 'completion_already_emitted', stream: processResult.completion.stream };
   }
 
-  if (!payload?.completion_stream && !processResult?.completion?.attempted && !taskError) {
-    return { ok: true, mode: 'no_completion_stream' };
+  let reason = opts.reason;
+  if (!reason) reason = processResult?.reason;
+  if (!reason && processResult?.completion?.error) {
+    reason = `task_completion_precondition_failed: ${safeErrorMessage(processResult.completion.error)}`;
   }
-
-  const reason = opts.reason
-    || processResult?.reason
-    || (processResult?.completion?.error ? `task_completion_precondition_failed: ${safeErrorMessage(processResult.completion.error)}` : null)
-    || (taskError ? `task_runtime_failure: ${safeErrorMessage(taskError)}` : 'task_failed_before_completion');
+  if (!reason && !payload?.completion_stream) reason = 'missing_completion_stream';
+  if (!reason && taskError) reason = `task_runtime_failure: ${safeErrorMessage(taskError)}`;
+  if (!reason) reason = 'task_failed_before_completion';
   const summary = opts.summary || reason;
 
   if (payload?.completion_stream) {

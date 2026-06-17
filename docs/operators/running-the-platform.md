@@ -27,6 +27,8 @@ Smoke checks require a live cluster. They verify deployment and service existenc
 
 Pod readiness is dependency-aware. It checks OpenClaw gateway health, Redis `PING`, a small Redis stream write, configured registry endpoints, enabled LiteLLM/Qdrant endpoints, runtime config files, and Buster heartbeat for the Buster pod. Tailscale operator readiness is checked during infra deployment, not by every agent pod.
 
+The full startup order, startup doctor behavior, probe budgets, and failure signals are documented in [Startup and health checks](../deployment/startup-and-health.md).
+
 Build and push local verification images to an explicit private registry endpoint:
 
 ```bash

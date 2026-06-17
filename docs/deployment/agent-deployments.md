@@ -41,7 +41,7 @@ node /app/openclaw.mjs gateway --bind lan --port 18789
 node /app/skills/buster-pipeline.ts
 ```
 
-`OPENCLAW_GATEWAY_URL` defaults to `http://127.0.0.1:18789`; the deployment verifier proves an explicit `gateway.url` override is honored.
+`OPENCLAW_GATEWAY_URL` defaults to `http://127.0.0.1:18789`; the deployment verifier proves an explicit `gateway.url` override is honored. Startup doctor behavior and probe details are documented in [Startup and health checks](startup-and-health.md).
 
 ## Deploy
 
@@ -108,6 +108,8 @@ Startup and readiness are dependency-aware. They check runtime config files, `/a
 Readiness is also drain-aware. Container `preStop` hooks write `KUBECLAW_DRAIN_FILE` before Kubernetes sends `SIGTERM`, so terminating containers stop reporting Ready during rollout, eviction, or node drain.
 
 Liveness is intentionally conservative. The gateway container checks local gateway health. The Buster pipeline container keeps liveness local-only; its heartbeat is a readiness signal so short sandbox pressure makes the pod unready instead of forcing restart loops. External dependency outages should make the pod unready, not force restart loops.
+
+For operator commands, failure signals, probe budgets, and startup doctor logs, use [Startup and health checks](startup-and-health.md).
 
 ## Verification
 

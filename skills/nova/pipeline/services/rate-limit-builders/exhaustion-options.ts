@@ -81,6 +81,17 @@ export function createGateSessionRateLimitExhaustionOptions(config, {
           const extraGateFailureData = typeof gateFailureData === 'function'
             ? (gateFailureData(exitResult) || {})
             : (gateFailureData || {});
+          const discordPresentation = extraGateFailureData?.presentation?.discord;
+          const presentation = discordPresentation && typeof discordPresentation === 'object' && !Array.isArray(discordPresentation)
+            ? {
+              ...extraGateFailureData.presentation,
+              discord: {
+                next_action: 'retry_later',
+                action: 'retry_later',
+                ...discordPresentation,
+              },
+            }
+            : extraGateFailureData?.presentation;
           await onGateFail(telemetryCtx, gateId, {
             gate_type: gateType,
             attempt: exitResult.attempt,
@@ -89,6 +100,7 @@ export function createGateSessionRateLimitExhaustionOptions(config, {
             gateway_label: exitResult.gateway_label,
             session_key: exitResult.session_key,
             ...extraGateFailureData,
+            ...(presentation == null ? {} : { presentation }),
           });
         }
       }

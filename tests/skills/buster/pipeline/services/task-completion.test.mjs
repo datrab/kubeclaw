@@ -55,3 +55,40 @@ test('ensureTaskTerminalBeforeAck synthesizes completion failure after failed co
   assert.equal(redisClient.calls[0].fields.status, 'FAIL');
   assert.match(redisClient.calls[0].fields.reason, /git push failed/);
 });
+
+test('ensureTaskTerminalBeforeAck dead-letters missing completion_stream before ACK', async () => {
+  const redisClient = createRecordingRedisClient();
+  const payload = {
+    task_type: 'module_test',
+    project: 'project',
+    module_id: 'mod',
+    run_id: 'run',
+    attempt: 1,
+    dispatch_id: 'dispatch',
+  };
+
+  const result = await ensureTaskTerminalBeforeAck(redisClient, {
+    streamKey: 'swarm:buster:tasks',
+    id: '1-0',
+    data: { type: 'module_test', sender: 'nova', payload: JSON.stringify(payload) },
+    payload,
+    processResult: {
+      outcome: 'FAIL',
+      reason: 'task returned without completion stream',
+      completion: {
+        attempted: false,
+        terminal: false,
+      },
+    },
+    moduleId: payload.module_id,
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(result.mode, 'dead_letter');
+  assert.equal(result.stream, 'swarm:buster:tasks:dead-letter');
+  assert.equal(redisClient.calls.length, 1);
+  assert.equal(redisClient.calls[0].stream, 'swarm:buster:tasks:dead-letter');
+  assert.equal(redisClient.calls[0].fields.reason, 'task_failed_before_terminal_completion');
+  assert.equal(redisClient.calls[0].fields.phase, 'completion_missing');
+  assert.equal(redisClient.calls[0].fields.completion_stream, undefined);
+});

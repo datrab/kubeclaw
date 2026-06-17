@@ -15,6 +15,7 @@ function validPayload(overrides = {}) {
     run_id: 'run',
     attempt: 1,
     dispatch_id: 'dispatch',
+    completion_stream: 'swarm:pipeline:project:completions',
     commit_hash: 'abc123',
     output_file: 'logs/buster-output.json',
     stage_id: 'worker:module_buster',
@@ -67,5 +68,13 @@ test('validateBusterTaskPayload requires typed test_config suite timeout policy'
     () => validateBusterTaskPayload(validPayload({ test_config: { suite_timeout_ms: 0 } })),
     (error) => error instanceof MalformedBusterTaskError
       && error.missing_fields.includes('test_config.suite_timeout_ms'),
+  );
+});
+
+test('validateBusterTaskPayload requires completion_stream identity', () => {
+  assert.throws(
+    () => validateBusterTaskPayload(validPayload({ completion_stream: undefined })),
+    (error) => error instanceof MalformedBusterTaskError
+      && error.missing_fields.includes('completion_stream'),
   );
 });

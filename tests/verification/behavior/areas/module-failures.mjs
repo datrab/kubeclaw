@@ -1,3 +1,10 @@
+import {
+  buildBuiltInRegistry,
+  getFieldValue,
+  stepExit,
+  stepMetadata,
+} from './helpers.mjs';
+
 export async function registerModuleFailuresArea({
   record,
   sourceRoot,
@@ -34,21 +41,8 @@ export async function registerModuleFailuresArea({
   pathsMod,
   busterPipelineMod,
 }) {
-	function getFieldValue(fields = [], name) {
-	  return fields.find((field) => field.name === name)?.value;
-	}
-
-	function stepExit(result) {
-	  const status = result?.terminal?.status ?? result?.terminal_status ?? null;
-	  return status === "succeeded" ? 0 : (status ? 1 : null);
-	}
-
 	function stepReason(result) {
 	  return result?.diagnostics?.summary ?? result?.reason;
-	}
-
-	function stepMetadata(result) {
-	  return result?.diagnostics?.metadata || {};
 	}
 
 	function stepCorrelation(result) {
@@ -67,13 +61,6 @@ export async function registerModuleFailuresArea({
 	  if (name === 'status') return metadata.final_status?.status ?? metadata.status?.status ?? (result?.outcome === 'passed' ? 'PASS' : result?.status);
 	  return result?.[name];
 	}
-
-async function buildBuiltInRegistry(runtimeRoot) {
-  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
 
 function platformModuleFailureDefaults() {
   return {

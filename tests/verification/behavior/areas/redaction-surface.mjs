@@ -1,5 +1,9 @@
 import { pathToFileURL } from 'url';
 
+import {
+  buildBuiltInRegistry,
+} from './helpers.mjs';
+
 function listFiles(fs, path, root) {
   const entries = fs.readdirSync(root, { withFileTypes: true });
   const files = [];
@@ -37,13 +41,6 @@ export async function registerRedactionSurfaceArea({
   importRuntimeModule,
   busterRuntimeDiagnosticsMod,
 }) {
-async function buildBuiltInRegistry(runtimeRootForRegistry) {
-  const registryMod = await importRuntimeModule(runtimeRootForRegistry, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
-
   await record('ACP transcript evidence sanitizer returns redacted summaries and tolerates malformed inputs', async () => {
     const redactionMod = await import(`${pathToFileURL(path.join(sourceRoot, 'skills', 'common', 'pipeline', 'redaction.ts')).href}?fresh=${Date.now()}-${Math.random()}`);
 

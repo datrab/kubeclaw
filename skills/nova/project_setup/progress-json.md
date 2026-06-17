@@ -31,10 +31,11 @@
 | `version` | no | `1` | Schema version |
 | `description` | no | — | Human-readable project description |
 | `notes` | no | — | Array of informational notes (ignored by pipeline) |
-| `models` | **yes** | — | Default LLM per agent role. Overridable per module/gate |
+| `defaults` | no | — | Project defaults, including `defaults.models` and `defaults.thinking` |
+| `defaults.models` | no | platform `fallback_model` | Default LLM per agent role. Overridable per module/gate |
 | `execution_order` | **yes** | — | Array of module IDs and `gate:<id>` keys in exact execution order |
 | `modules` | **yes** | — | Module definitions (see below) |
-| `gates` | **yes** | — | Gate definitions (see below) |
+| `gates` | required when `execution_order` uses `gate:<id>` | `{}` | Gate definitions (see below) |
 | `arch_validation` | no | `{ enabled: true }` | Architecture validator config |
 | `pipeline_review` | no | `{ enabled: false }` | Post-pipeline review agent config |
 | `case_study` | no | `{ enabled: false }` | Post-pipeline case study agent config |

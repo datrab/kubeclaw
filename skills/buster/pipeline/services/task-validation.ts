@@ -139,6 +139,7 @@ export function validateBusterTaskPayload(payload = {}) {
   const runId = normalizeRequiredIdentity(payload.run_id);
   const attempt = normalizeAttempt(payload.attempt);
   const dispatchId = normalizeRequiredIdentity(payload.dispatch_id);
+  const completionStream = normalizeRequiredIdentity(payload.completion_stream);
   const gateId = normalizeRequiredIdentity(payload.gate_id);
   const commitHash = normalizeRequiredIdentity(payload.commit_hash);
   const outputFile = normalizeRequiredIdentity(payload.output_file);
@@ -162,6 +163,7 @@ export function validateBusterTaskPayload(payload = {}) {
   if (!runId) missing.push('run_id');
   if (attempt === null) missing.push('attempt');
   if (!dispatchId) missing.push('dispatch_id');
+  if (!completionStream) missing.push('completion_stream');
   if (!commitHash) missing.push('commit_hash');
   if (!outputFile) missing.push('output_file');
   if (!stageId) missing.push('stage_id');
@@ -211,6 +213,7 @@ export function validateBusterTaskPayload(payload = {}) {
     runId,
     attempt,
     dispatchId,
+    completionStream,
     commitHash,
     stageId,
     workerType: taskType === 'module_test' ? workerType : null,

@@ -31,6 +31,25 @@ function normalizeGateRateLimitRunId(value) {
   return value;
 }
 
+function buildRateLimitOperatorAlertPayload(exitResult = {}, reason = 'rate_limit_exhausted', overrides = {}) {
+  return {
+    module_id: exitResult.module_id || exitResult.module || null,
+    gate_id: exitResult.gate_id || exitResult.gate || null,
+    gate_type: exitResult.gate_type || null,
+    attempt: exitResult.attempt ?? null,
+    dispatch_id: exitResult.dispatch_id || null,
+    gateway_label: exitResult.gateway_label || null,
+    session_key: exitResult.session_key || null,
+    terminal_status: 'rate_limited',
+    reason: exitResult.reason || reason,
+    rate_limit_exhausted: true,
+    max_rate_limit_pauses: exitResult.max_rate_limit_pauses ?? null,
+    rate_limit_pauses: exitResult.rate_limit_pauses ?? null,
+    rate_limit_status: exitResult.rate_limit_status || null,
+    ...overrides,
+  };
+}
+
 export function buildSessionRateLimitExitResult(result = {}, reason = 'rate_limit_exhausted', {
   identity = {},
   maxPauses = null,
@@ -237,24 +256,12 @@ export async function finalizeSessionRateLimitExhaustion(result = {}, {
   const appendDeliveryFailureAlert = (hookName, error) => {
     if (!config) return;
     try {
-      appendDurableOperatorAlert(config, 'pipeline.operator_alert', {
-        module_id: exitResult.module_id || exitResult.module || null,
-        gate_id: exitResult.gate_id || exitResult.gate || null,
-        gate_type: exitResult.gate_type || null,
-        attempt: exitResult.attempt ?? null,
-        dispatch_id: exitResult.dispatch_id || null,
-        gateway_label: exitResult.gateway_label || null,
-        session_key: exitResult.session_key || null,
-        terminal_status: 'rate_limited',
+      appendDurableOperatorAlert(config, 'pipeline.operator_alert', buildRateLimitOperatorAlertPayload(exitResult, reason, {
         reason: 'rate_limit_exhaustion_delivery_failed',
         failed_hook: hookName,
         error: error?.message || String(error),
         original_reason: exitResult.reason || reason,
-        rate_limit_exhausted: true,
-        max_rate_limit_pauses: exitResult.max_rate_limit_pauses ?? null,
-        rate_limit_pauses: exitResult.rate_limit_pauses ?? null,
-        rate_limit_status: exitResult.rate_limit_status || null,
-      }, {
+      }), {
         severity: 'WARN',
         source: 'rate_limit',
         emitter: 'nova/pipeline/services/rate-limit-exit',
@@ -275,21 +282,7 @@ export async function finalizeSessionRateLimitExhaustion(result = {}, {
   };
 
   if (config) {
-    appendDurableOperatorAlert(config, 'pipeline.operator_alert', {
-      module_id: exitResult.module_id || exitResult.module || null,
-      gate_id: exitResult.gate_id || exitResult.gate || null,
-      gate_type: exitResult.gate_type || null,
-      attempt: exitResult.attempt ?? null,
-      dispatch_id: exitResult.dispatch_id || null,
-      gateway_label: exitResult.gateway_label || null,
-      session_key: exitResult.session_key || null,
-      terminal_status: 'rate_limited',
-      reason: exitResult.reason || reason,
-      rate_limit_exhausted: true,
-      max_rate_limit_pauses: exitResult.max_rate_limit_pauses ?? null,
-      rate_limit_pauses: exitResult.rate_limit_pauses ?? null,
-      rate_limit_status: exitResult.rate_limit_status || null,
-    }, {
+    appendDurableOperatorAlert(config, 'pipeline.operator_alert', buildRateLimitOperatorAlertPayload(exitResult, reason), {
       severity: 'CRITICAL',
       source: 'rate_limit',
       emitter: 'nova/pipeline/services/rate-limit-exit',

@@ -120,6 +120,8 @@ export function buildApprovalGateControlResult(config, gateId, gate, result = {}
   assertApprovalGateResultContract(gateId, status, result);
   const decision = approvalGateDecisionForResult(result);
   const stateAuthority = opts?.approvalState || opts?.input?.stateSnapshot?.gate;
+  const attempt = result?.attempt ?? stateAuthority?.attempt ?? opts?.input?.ids?.attempt ?? null;
+  const dispatchId = result?.dispatch_id || result?.dispatchId || stateAuthority?.dispatch_id || stateAuthority?.dispatchId || opts?.input?.ids?.dispatchId || opts?.input?.ids?.dispatch_id || null;
   const timeoutPolicy = result?.corrupted_state === true || result?.invalid_state === true || status === 'CORRUPTED_STATE' || status === 'INVALID_STATE'
     ? tryResolveApprovalTimeoutPolicyFromState(stateAuthority, gateId)
     : resolveApprovalTimeoutPolicyFromState(stateAuthority, gateId);
@@ -127,6 +129,8 @@ export function buildApprovalGateControlResult(config, gateId, gate, result = {}
     gate_id: gateId,
     gate_type: gate?.type || 'approval',
     run_id: runId,
+    attempt,
+    dispatch_id: dispatchId,
     reason: result?.reason || null,
     timeout_policy: timeoutPolicy,
     continued: result?.continued === true,
@@ -161,6 +165,8 @@ export function buildApprovalGateWaitControlResult(config, gateId, gate, gateSta
   const runId = config?._runId || config?.run_id || gateState?.run_id || null;
   const timeoutPolicy = resolveApprovalTimeoutPolicyFromState(gateState, gateId);
   const waitRef = gateState?.wait_ref || opts?.input?.refs?.waitRef || null;
+  const attempt = gateState?.attempt ?? opts?.input?.ids?.attempt ?? null;
+  const dispatchId = gateState?.dispatch_id || gateState?.dispatchId || opts?.input?.ids?.dispatchId || opts?.input?.ids?.dispatch_id || null;
   return buildTypedGateControlResult({
     producerType: 'approval',
     nextAction: GATE_CONTROL_ACTIONS.WAIT,
@@ -171,6 +177,8 @@ export function buildApprovalGateWaitControlResult(config, gateId, gate, gateSta
       gate_id: gateId,
       gate_type: gate?.type || 'approval',
       run_id: runId,
+      attempt,
+      dispatch_id: dispatchId,
       timeout_policy: timeoutPolicy,
       deadline: gateState?.deadline || null,
       timeout_minutes: gateState?.timeout_minutes ?? null,

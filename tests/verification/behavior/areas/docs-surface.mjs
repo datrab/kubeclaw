@@ -96,6 +96,18 @@ await record('project setup progress docs keep ACP monitor config platform-owned
   ]);
 });
 
+await record('project setup docs keep project model defaults under defaults.models', async () => {
+  const skill = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'project_setup', 'SKILL.md'), 'utf8');
+  const progressJsonGuide = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'project_setup', 'progress-json.md'), 'utf8');
+  const developerGuide = fs.readFileSync(path.join(sourceRoot, 'docs', 'developers', 'project-setup.md'), 'utf8');
+
+  assert.equal(progressJsonGuide.includes('| `models` | **yes** |'), false);
+  assert.equal(progressJsonGuide.includes('| `defaults.models` | no | platform `fallback_model` |'), true);
+  assert.equal(skill.includes('docs/developers/project-setup.md'), true);
+  assert.equal(developerGuide.includes('progress.defaults.models'), true);
+  assert.equal(developerGuide.includes('Role-specific model defaults belong under `defaults.models`, not top-level `models`'), true);
+});
+
 await record('project setup and Prism docs use current visual-reg baseline authority and screenshot entrypoint', async () => {
   const docs = {
     moduleFiles: fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'project_setup', 'module-files.md'), 'utf8'),

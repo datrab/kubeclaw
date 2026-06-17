@@ -1,3 +1,7 @@
+import {
+  buildBuiltInRegistry,
+} from './helpers.mjs';
+
 export async function registerPollingArea({
   record,
   sourceRoot,
@@ -33,13 +37,6 @@ export async function registerPollingArea({
   pathsMod,
   busterPipelineMod,
 }) {
-async function buildBuiltInRegistry(runtimeRootForRegistry) {
-  const registryMod = await importRuntimeModule(runtimeRootForRegistry, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
-
 function createCleanPollingRepo(prefix) {
   const parent = fs.mkdtempSync(path.join(os.tmpdir(), prefix));
   const remoteRoot = path.join(parent, 'remote.git');

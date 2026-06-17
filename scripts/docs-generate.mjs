@@ -211,7 +211,7 @@ ${generatedEnd()}
 | persistence and sandbox | creates workspace/config PVCs and Buster Podman/sandbox mounts | rendered PVCs and Buster volumes match production values |
 | service and extra ports | exposes gateway/bridge ClusterIP ports plus explicit extra NodePorts | rendered Services contain only documented ports |
 | buster namespace broker | adds lease CRD/RBAC/controller and controller env vars | Buster render includes CRD, lease client RBAC, controller Deployment, and namespace fence docs |
-| probes and dependency checks | configures runtime health script for gateway, Redis, Redis stream, LiteLLM, and Buster heartbeat checks | rendered env vars match values and smoke commands exercise the health script |
+| probes, startup doctor, and dependency checks | configures runtime health script for gateway, Redis, Redis stream, LiteLLM, and Buster heartbeat checks; \`gateway.startupDoctor\` runs \`openclaw doctor --fix\` once after gateway health | rendered env vars, startup hook, and smoke commands exercise the health and doctor surfaces |
 
 ## Failure Signals
 

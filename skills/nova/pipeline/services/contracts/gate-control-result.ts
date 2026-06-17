@@ -57,7 +57,7 @@ function formatAllowedNextActions(actions: readonly string[] = []): string {
 }
 
 function normalizeGateStatus(value: unknown): string {
-  return String(value || '').trim().toUpperCase();
+  return String(value ?? '').trim().toUpperCase();
 }
 
 function isPlainObject(value: unknown): value is UnknownRecord {
@@ -119,6 +119,74 @@ function validateGateActionSemantics(result: UnknownRecord, errors: string[]): v
       errors.push(`wait for ${result.producerType || 'gate'} cannot report terminal gateRunStatus '${gateStatus}'`);
     }
   }
+}
+
+function readMetadataValue(metadata: UnknownRecord, keys: string[]): unknown {
+  for (const key of keys) {
+    if (metadata[key] !== undefined && metadata[key] !== null && String(metadata[key]).trim() !== '') {
+      return metadata[key];
+    }
+  }
+  return null;
+}
+
+function valuesMatch(expected: unknown, actual: unknown): boolean {
+  if (expected === undefined) return true;
+  if (expected === null) return true;
+  if (expected === '') return true;
+  return actual !== undefined && actual !== null && String(actual) === String(expected);
+}
+
+function isMissingEvidenceValue(value: unknown): boolean {
+  if (value === undefined) return true;
+  if (value === null) return true;
+  return value === '';
+}
+
+export function validateGateEvidenceAuthority(result: unknown, {
+  expectedRunId = null,
+  expectedGateId = null,
+  expectedGateType = null,
+  expectedAttempt = null,
+  expectedDispatchId = null,
+  requireDispatchId = false,
+}: UnknownRecord = {}): string[] {
+  const errors: string[] = [];
+  if (!isPlainObject(result)) return ['gate evidence result must be an object'];
+
+  const diagnostics = isPlainObject(result?.diagnostics) ? result.diagnostics : {};
+  const metadata = isPlainObject(diagnostics?.metadata) ? diagnostics.metadata : {};
+  const remediation = isPlainObject(diagnostics?.typed?.remediation) ? diagnostics.typed.remediation : null;
+  const evidence = remediation ?? metadata;
+  const remediationCorrelation = isPlainObject(remediation?.correlation) ? remediation.correlation : {};
+
+  const runId = readMetadataValue(evidence, ['runId', 'run_id']);
+  const gateId = readMetadataValue(evidence, ['gateId', 'gate_id']);
+  const gateType = readMetadataValue(evidence, ['gateType', 'gate_type']);
+  const attempt = readMetadataValue(evidence, ['attempt']);
+  const dispatchId = readMetadataValue(evidence, ['dispatchId', 'dispatch_id'])
+    ?? readMetadataValue(remediationCorrelation, ['dispatchId', 'dispatch_id']);
+
+  if (!runId) errors.push('gate evidence must include run_id');
+  if (!gateId) errors.push('gate evidence must include gate_id');
+  if (!gateType) errors.push('gate evidence must include gate_type');
+  if (attempt === null) errors.push('gate evidence must include attempt');
+  if (requireDispatchId && !dispatchId) errors.push('gate evidence must include dispatch_id');
+
+  if (!valuesMatch(expectedRunId, runId)) errors.push('gate evidence run_id does not match expected run');
+  if (!valuesMatch(expectedGateId, gateId)) errors.push('gate evidence gate_id does not match expected gate');
+  if (!valuesMatch(expectedGateType, gateType)) errors.push('gate evidence gate_type does not match expected gate type');
+  if (!valuesMatch(expectedAttempt, attempt)) errors.push('gate evidence attempt does not match expected attempt');
+  if (!valuesMatch(expectedDispatchId, dispatchId)) errors.push('gate evidence dispatch_id does not match expected dispatch');
+
+  const pathEvidence = readMetadataValue(metadata, ['path', 'output_file', 'evidence_path', 'request_artifact_path'])
+    ?? readMetadataValue(remediation?.diagnostics ?? {}, ['path', 'output_file', 'evidence_path', 'merged_file_path']);
+  const hasPathEvidence = Boolean(pathEvidence);
+  if (hasPathEvidence && [runId, gateId, attempt].some(isMissingEvidenceValue)) {
+    errors.push('gate evidence path is diagnostic only without run/gate/attempt identity');
+  }
+
+  return errors;
 }
 
 export function buildTypedGateControlResult({

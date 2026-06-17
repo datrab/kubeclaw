@@ -12,6 +12,7 @@ Use this section when changing KubeClaw source code, verification, generated doc
 - [Contributing to KubeClaw](contributing.md)
 - [Codebase tour](codebase-tour.md)
 - [Adding pipeline features](adding-pipeline-features.md)
+- [Project setup skill](project-setup.md)
 - [Adding gates](adding-gates.md)
 - [Hooks and plugins](hooks-and-plugins.md)
 - [Replacing or adapting the agent runtime](replacing-agent-runtime.md)
@@ -28,6 +29,7 @@ Use this section when changing KubeClaw source code, verification, generated doc
 | --- | --- | --- | --- |
 | Docs or examples | `contributing.md`; `documentation-conventions.md`; `../examples/README.md` | `docs/**`; `scripts/docs-check.mjs`; `scripts/docs-inventory.mjs`; `scripts/docs-generate.mjs` | `npm run docs:check`; docs-surface behavior area for layout/check changes |
 | Pipeline orchestration | `adding-pipeline-features.md`; `adding-gates.md`; `../pipeline/README.md` | `skills/nova/pipeline/cli.ts`; `core/config.ts`; `runners/*.ts`; `services/status-store.ts` | pipeline behavior area and affected contract checks |
+| Project setup docs or skill | `project-setup.md`; `../pipeline/progress-json.md`; `../reference/progress-json.md` | `skills/nova/project_setup/*.md`; `skills/nova/pipeline/core/config.ts`; `skills/nova/pipeline/core/policy.ts`; `skills/buster/pipeline/services/task-validation.ts` | docs-surface and telemetry-docs behavior areas |
 | Plugin or hook behavior | `hooks-and-plugins.md`; `../concepts/extensibility-model.md` | `skills/nova/pipeline/core/registry.ts`; `skills/nova/pipeline/core/registry/*.ts`; `charts/kubeclaw/files/config/swarm.config.json` | config plugin registry test |
 | Buster suites or worker tasks | `adding-buster-suites.md`; `../pipeline/workers-and-buster.md` | `skills/buster/pipeline/suites/*.ts`; `services/task-queue.ts`; `services/task-validation.ts`; `services/task-completion.ts` | Buster contract check and focused Buster unit tests |
 | Observability | `adding-observability-sinks.md`; `../reference/observability-sinks.md` | `skills/nova/pipeline/services/telemetry*.ts`; `skills/common/pipeline/telemetry.ts`; `plugins/openclaw-agent-observer/src/index.ts` | telemetry-docs behavior area and telemetry contract check |

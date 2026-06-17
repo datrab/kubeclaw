@@ -36,6 +36,7 @@ export {
   getLifecycleModuleState,
   loadLifecycleReadModels,
   readLifecycleEvents,
+  rebuildLifecycleReadModels,
   saveLifecycleReadModels,
 } from './status-store-lifecycle.ts';
 

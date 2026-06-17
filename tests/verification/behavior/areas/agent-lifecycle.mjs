@@ -1,3 +1,7 @@
+import {
+  buildBuiltInRegistry,
+} from './helpers.mjs';
+
 export async function registerAgentLifecycleArea({
   record,
   sourceRoot,
@@ -34,13 +38,6 @@ export async function registerAgentLifecycleArea({
   pathsMod,
   busterPipelineMod,
 }) {
-async function buildBuiltInRegistry(runtimeRootForRegistry) {
-  const registryMod = await importRuntimeModule(runtimeRootForRegistry, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
-
 function platformAgentLifecycleDefaults() {
   return {
     fallback_model: 'openai-codex/gpt-5.4',
@@ -630,6 +627,7 @@ await record('dispatchRedisTask imports the Redis dispatch abstraction directly 
   process.env.BEHAVIOR_REDIS_DISPATCH_CALL_PATH = callPath;
   fs.writeFileSync(fakeRedisModulePath, `
 import fs from 'fs';
+
 export default {
   async publishTask(targetAgent, type, payload, iteration = 1) {
     fs.writeFileSync(process.env.BEHAVIOR_REDIS_DISPATCH_CALL_PATH, JSON.stringify({

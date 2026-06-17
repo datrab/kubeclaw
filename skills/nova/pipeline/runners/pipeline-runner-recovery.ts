@@ -159,6 +159,115 @@ function recoveryStopConfirmOptions(config: AnyRecord): AnyRecord {
   };
 }
 
+async function reconcileActiveStaleSession(config: AnyRecord, {
+  scope,
+  moduleId = null,
+  gateId = null,
+  gateType = null,
+  previousPhase = 'unknown',
+  active = null,
+  attempt = null,
+  dispatchId = null,
+  gatewayLabel = null,
+  diagnosticLabel = null,
+  statusBeforeReset = null,
+  activeSessionPath = null,
+  monitorIdentity = {},
+  noteKind = 'state',
+  unconfirmedErrorSubject = 'orphaned child session',
+}: AnyRecord = {}): Promise<AnyRecord> {
+  await assertRecoverySessionIdentityConfirmed(config, {
+    scope,
+    moduleId,
+    gateId,
+    gateType,
+    previousPhase,
+    attempt,
+    dispatchId,
+    gatewayLabel,
+    sessionKey: active?.session_key || null,
+    diagnosticLabel,
+    statusBeforeReset,
+    activeSessionPath,
+    active,
+  });
+
+  const { monitor: mon } = await observeAcpMonitorSurfaces(config, active.session_key, {
+    ...monitorIdentity,
+    gateway_label: gatewayLabel,
+    diagnostic_label: diagnosticLabel,
+    session_key: active.session_key || null,
+    attempt,
+    dispatch_id: dispatchId || null,
+    agent_type: previousPhase,
+  }, {
+    streamLogPath: active.stream_log_path || null,
+  });
+  const definitelyStopped = isDefinitivelyStoppedMonitorState(mon);
+  const sessionAuthority = buildRecoverySessionAuthority(config, active, {
+    confirmed: true,
+    state: definitelyStopped ? 'terminal' : 'active',
+    observed_via: 'session_monitor',
+  });
+
+  if (definitelyStopped) {
+    const note = describeStaleRecovery(previousPhase, STALE_RECOVERY_ACTIONS.OBSERVED_TERMINAL, {
+      detail: mon.lastDetail || mon.lastSummary || 'terminal',
+    });
+    return {
+      recoveryAction: STALE_RECOVERY_ACTIONS.OBSERVED_TERMINAL,
+      note: noteKind === 'session' ? note.replace(' state ', ' session ') : note,
+      sessionAuthority,
+    };
+  }
+
+  const stopResult = await terminateSession(active.session_key, {
+    runtime: active.runtime || null,
+    model: active.model || null,
+    agentId: active.agent_id || null,
+    label: gatewayLabel || diagnosticLabel || null,
+    ...recoveryStopConfirmOptions(config),
+    cleanup: async () => {
+      if ((active.runtime || '').toLowerCase() !== 'subagent') {
+        await (reaperAfterKill as any)(active.agent_id || null, active.session_key, gatewayLabel || diagnosticLabel || null);
+      }
+    },
+  }) as AnyRecord;
+
+  if (stopResult.unconfirmed) {
+    await recordUnconfirmedRecoveryBlock(config, {
+      scope,
+      moduleId,
+      gateId,
+      gateType,
+      previousPhase,
+      attempt,
+      dispatchId,
+      gatewayLabel,
+      sessionKey: active.session_key || null,
+      diagnosticLabel,
+      statusBeforeReset,
+      activeSessionPath,
+      stopResult,
+      sessionAuthority: buildRecoverySessionAuthority(config, active, {
+        confirmed: false,
+        state: stopResult?.state || null,
+        observed_via: 'kill_confirmation',
+      }),
+    });
+    throw new Error(`${unconfirmedErrorSubject} could not be confirmed stopped (${stopResult?.state || 'unknown'})`);
+  }
+
+  const note = describeStaleRecovery(previousPhase, STALE_RECOVERY_ACTIONS.KILLED_ORPHAN, {
+    sessionKey: active.session_key,
+  });
+  return {
+    recoveryAction: STALE_RECOVERY_ACTIONS.KILLED_ORPHAN,
+    note: noteKind === 'session' ? note.replace(' state ', ' session ') : note,
+    sessionAuthority,
+  };
+}
+
 function runRefs(config: AnyRecord, scope: string, id: string, sessionKey: string | null): AnyRecord {
   const runId = recoveryRunId(config);
   const recoveryId = `recovery_blocked:${runId || 'no-run-id'}:${scope}:${id || 'unknown'}:${sessionKey || 'no-session'}`;
@@ -274,7 +383,7 @@ export async function reconcileStaleModuleState(config: AnyRecord, progress: Any
 
     if (active?.session_key) {
       try {
-        sessionAuthority = await assertRecoverySessionIdentityConfirmed(config, {
+        const recovered = await reconcileActiveStaleSession(config, {
           scope: 'module',
           moduleId,
           previousPhase,
@@ -285,69 +394,12 @@ export async function reconcileStaleModuleState(config: AnyRecord, progress: Any
           diagnosticLabel: recoveryDiagnosticLabel,
           statusBeforeReset: oldStatus,
           active,
+          monitorIdentity: { module_id: moduleId },
         });
-        const { monitor: mon } = await observeAcpMonitorSurfaces(config, active.session_key, {
-          module_id: moduleId,
-          gateway_label: recoveryGatewayLabel,
-          diagnostic_label: recoveryDiagnosticLabel,
-          session_key: active.session_key || null,
-          attempt: recoveryAttempt,
-          dispatch_id: active.dispatch_id || null,
-          agent_type: previousPhase,
-        }, {
-          streamLogPath: active.stream_log_path || null,
-        });
-        const definitelyStopped = isDefinitivelyStoppedMonitorState(mon);
-        sessionAuthority = buildRecoverySessionAuthority(config, active, {
-          confirmed: true,
-          state: definitelyStopped ? 'terminal' : 'active',
-          observed_via: 'session_monitor',
-        });
-        if (definitelyStopped) {
-          shouldReset = true;
-          recoveryAction = STALE_RECOVERY_ACTIONS.OBSERVED_TERMINAL;
-          note = describeStaleRecovery(previousPhase, recoveryAction, {
-            detail: mon.lastDetail || mon.lastSummary || 'terminal',
-          });
-        } else {
-          const stopResult = await terminateSession(active.session_key, {
-            runtime: active.runtime || null,
-            model: active.model || null,
-            agentId: active.agent_id || null,
-            label: recoveryGatewayLabel || recoveryDiagnosticLabel || null,
-            ...recoveryStopConfirmOptions(config),
-            cleanup: async () => {
-              if ((active.runtime || '').toLowerCase() !== 'subagent') {
-                await (reaperAfterKill as any)(active.agent_id || null, active.session_key, recoveryGatewayLabel || recoveryDiagnosticLabel || null);
-              }
-            },
-          }) as AnyRecord;
-          if (stopResult.unconfirmed) {
-            await recordUnconfirmedRecoveryBlock(config, {
-              scope: 'module',
-              moduleId,
-              previousPhase,
-              attempt: recoveryAttempt,
-              dispatchId: active.dispatch_id || null,
-              gatewayLabel: recoveryGatewayLabel,
-              sessionKey: active.session_key || null,
-              diagnosticLabel: recoveryDiagnosticLabel,
-              statusBeforeReset: oldStatus,
-              stopResult,
-              sessionAuthority: buildRecoverySessionAuthority(config, active, {
-                confirmed: false,
-                state: stopResult?.state || null,
-                observed_via: 'kill_confirmation',
-              }),
-            });
-            throw new Error(`orphaned child session could not be confirmed stopped (${stopResult?.state || 'unknown'})`);
-          }
-          shouldReset = true;
-          recoveryAction = STALE_RECOVERY_ACTIONS.KILLED_ORPHAN;
-          note = describeStaleRecovery(previousPhase, recoveryAction, {
-            sessionKey: active.session_key,
-          });
-        }
+        shouldReset = true;
+        recoveryAction = recovered.recoveryAction;
+        note = recovered.note;
+        sessionAuthority = recovered.sessionAuthority;
       } catch (e) {
         throw new Error(`Failed to reconcile stale ${previousPhase} session for module ${moduleId}: ${errorMessage(e)}`);
       }
@@ -490,7 +542,7 @@ export async function reconcileStaleGateSessions(config: AnyRecord, progress: An
     let recoveryAction = null;
     let sessionAuthority = null;
     try {
-      sessionAuthority = await assertRecoverySessionIdentityConfirmed(config, {
+      const recovered = await reconcileActiveStaleSession(config, {
         scope: 'gate',
         gateId,
         gateType,
@@ -502,70 +554,13 @@ export async function reconcileStaleGateSessions(config: AnyRecord, progress: An
         diagnosticLabel: gateRecoveryDiagnosticLabel,
         activeSessionPath: activePath,
         active,
+        monitorIdentity: { gate_id: gateId, gate_type: gateType },
+        noteKind: 'session',
+        unconfirmedErrorSubject: 'orphaned gate session',
       });
-      const { monitor: mon } = await observeAcpMonitorSurfaces(config, active.session_key, {
-        gate_id: gateId,
-        gate_type: gateType,
-        gateway_label: gateRecoveryGatewayLabel,
-        diagnostic_label: gateRecoveryDiagnosticLabel,
-        session_key: active.session_key || null,
-        attempt: active.attempt ?? null,
-        dispatch_id: active.dispatch_id || null,
-        agent_type: previousPhase,
-      }, {
-        streamLogPath: active.stream_log_path || null,
-      });
-      const definitelyStopped = isDefinitivelyStoppedMonitorState(mon);
-      sessionAuthority = buildRecoverySessionAuthority(config, active, {
-        confirmed: true,
-        state: definitelyStopped ? 'terminal' : 'active',
-        observed_via: 'session_monitor',
-      });
-
-      if (definitelyStopped) {
-        recoveryAction = STALE_RECOVERY_ACTIONS.OBSERVED_TERMINAL;
-        note = describeStaleRecovery(previousPhase, recoveryAction, {
-          detail: mon.lastDetail || mon.lastSummary || 'terminal',
-        }).replace(' state ', ' session ');
-      } else {
-        const stopResult = await terminateSession(active.session_key, {
-          runtime: active.runtime || null,
-          model: active.model || null,
-          agentId: active.agent_id || null,
-          label: gateRecoveryGatewayLabel || gateRecoveryDiagnosticLabel || null,
-          ...recoveryStopConfirmOptions(config),
-          cleanup: async () => {
-            if ((active.runtime || '').toLowerCase() !== 'subagent') {
-              await (reaperAfterKill as any)(active.agent_id || null, active.session_key, gateRecoveryGatewayLabel || gateRecoveryDiagnosticLabel || null);
-            }
-          },
-        }) as AnyRecord;
-        if (stopResult.unconfirmed) {
-          await recordUnconfirmedRecoveryBlock(config, {
-            scope: 'gate',
-            gateId,
-            gateType,
-            previousPhase,
-            attempt: active.attempt ?? null,
-            dispatchId: active.dispatch_id || null,
-            gatewayLabel: gateRecoveryGatewayLabel,
-            sessionKey: active.session_key || null,
-            diagnosticLabel: gateRecoveryDiagnosticLabel,
-            activeSessionPath: activePath,
-            stopResult,
-            sessionAuthority: buildRecoverySessionAuthority(config, active, {
-              confirmed: false,
-              state: stopResult?.state || null,
-              observed_via: 'kill_confirmation',
-            }),
-          });
-          throw new Error(`orphaned gate session could not be confirmed stopped (${stopResult?.state || 'unknown'})`);
-        }
-        recoveryAction = STALE_RECOVERY_ACTIONS.KILLED_ORPHAN;
-        note = describeStaleRecovery(previousPhase, recoveryAction, {
-          sessionKey: active.session_key,
-        }).replace(' state ', ' session ');
-      }
+      recoveryAction = recovered.recoveryAction;
+      note = recovered.note;
+      sessionAuthority = recovered.sessionAuthority;
 
       appendStaleRecoveryLifecycleEvent(config, {
         gateId,

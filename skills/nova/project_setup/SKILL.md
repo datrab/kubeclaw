@@ -66,12 +66,41 @@ Minimal template:
       "stages": ["forge", "buster"],
       "thinking_level": "adaptive",
       "test_suites": ["build", "health", "unit"],
-      "test_config": { "serve": { "type": "server", "project_dir": "Projects/my-project/src", ... } }
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/my-project/src",
+          "start_cmd": "npm start",
+          "port": 3000,
+          "health_path": "/health"
+        }
+      }
     }
   },
   "gates": {
-    "review": { "type": "review", ... },
-    "buster": { "type": "buster", ... }
+    "review": {
+      "type": "review",
+      "title": "Review",
+      "review_name": "REVIEW",
+      "instructions_file": "echo-review/REVIEW-INSTRUCTIONS.md",
+      "output_file": "logs/echo-review/REVIEW.json"
+    },
+    "buster": {
+      "type": "buster",
+      "title": "System Test",
+      "instructions_file": "buster-test/SYSTEM.md",
+      "output_file": "buster-test/SYSTEM-RESULT.json",
+      "test_suites": ["build", "health", "unit"],
+      "test_config": {
+        "serve": {
+          "type": "server",
+          "project_dir": "Projects/my-project/src",
+          "start_cmd": "npm start",
+          "port": 3000,
+          "health_path": "/health"
+        }
+      }
+    }
   }
 }
 ```
@@ -103,7 +132,7 @@ Minimal template:
 }
 ```
 
-**Buster gates** need `test_config` with serve settings and enforced `thresholds`.
+**Buster gates** need `test_config` with serve settings for the selected suites. Add suite `thresholds` when failures should block the run; without thresholds, many deterministic suites are informational.
 
 #### Post-Pipeline Agents
 
@@ -270,3 +299,4 @@ Final-preview shape for the last Buster gate:
 
 - **progress.json complete reference**: [progress-json.md](progress-json.md)
 - **Writing FORGE.md, BUSTER.md, test-spec.json**: [module-files.md](module-files.md)
+- **Public docs overview**: `docs/developers/project-setup.md`

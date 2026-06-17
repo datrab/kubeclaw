@@ -71,10 +71,94 @@ function normalizeTelemetrySinkPresentation(presentation: unknown): UnknownRecor
       ...(typeof discordRecord.level === 'string' ? { level: discordRecord.level } : {}),
       ...(typeof discordRecord.title === 'string' ? { title: discordRecord.title } : {}),
       ...(typeof discordRecord.description === 'string' ? { description: discordRecord.description } : {}),
+      ...(typeof discordRecord.verdict === 'string' ? { verdict: discordRecord.verdict } : {}),
+      ...(typeof discordRecord.status === 'string' ? { status: discordRecord.status } : {}),
+      ...(typeof discordRecord.outcome === 'string' ? { outcome: discordRecord.outcome } : {}),
+      ...(typeof discordRecord.terminal_status === 'string' ? { terminal_status: discordRecord.terminal_status } : {}),
+      ...(typeof discordRecord.next_action === 'string' ? { next_action: discordRecord.next_action } : {}),
+      ...(typeof discordRecord.nextAction === 'string' ? { nextAction: discordRecord.nextAction } : {}),
+      ...(typeof discordRecord.action === 'string' ? { action: discordRecord.action } : {}),
       ...(discordRecord.embeds !== undefined ? { embeds: deepClone(discordRecord.embeds) } : {}),
       ...(Array.isArray(discordRecord.fields) ? { fields: deepClone(discordRecord.fields) } : {}),
     },
   };
+}
+
+function normalizeFieldName(value: unknown): string {
+  return String(value ?? '').trim().toLowerCase().replace(/[_-]+/g, ' ');
+}
+
+function hasActionableValue(value: unknown): boolean {
+  if (typeof value === 'string') return value.trim() !== '';
+  if (typeof value === 'number') return Number.isFinite(value);
+  return false;
+}
+
+function telemetryDiscordLevelRequiresActionableContract(discordPresentation: UnknownRecord = {}): boolean {
+  const explicitFlags = [
+    discordPresentation.critical,
+    discordPresentation.require_actionable,
+    discordPresentation.requires_actionable_contract,
+  ];
+  if (explicitFlags.some((value) => value === true)) return true;
+  const level = String(discordPresentation.level ?? '').trim().toUpperCase();
+  return ['WARN', 'WARNING', 'ERROR', 'CRITICAL', 'FAIL', 'FAILED', 'BLOCKED', 'DEGRADED'].includes(level);
+}
+
+function validateTelemetryDiscordOperatorPresentation(
+  discordPresentation: UnknownRecord = {},
+  input: UnknownRecord = {},
+): string[] {
+  const errors: string[] = [];
+  if (!telemetryDiscordLevelRequiresActionableContract(discordPresentation)) return errors;
+
+  const fields = Array.isArray(discordPresentation.fields) ? discordPresentation.fields : [];
+  const fieldByName = new Map(fields.map((field) => [normalizeFieldName(field?.name), field?.value]));
+  const payload = input?.event?.payload || {};
+  const ids = input?.ids || {};
+  const verdictValues = [
+    discordPresentation.verdict,
+    discordPresentation.status,
+    discordPresentation.outcome,
+    discordPresentation.terminal_status,
+    payload.verdict,
+    payload.status,
+    payload.new_status,
+    payload.outcome,
+    payload.terminal_status,
+    ...['verdict', 'status', 'outcome', 'terminal status', 'result'].map((name) => fieldByName.get(name)),
+  ];
+  const actionValues = [
+    discordPresentation.next_action,
+    discordPresentation.nextAction,
+    discordPresentation.action,
+    payload.next_action,
+    payload.nextAction,
+    payload.action,
+    payload.operator_action,
+    ...['next action', 'action', 'operator action'].map((name) => fieldByName.get(name)),
+  ];
+  const identityValues = [
+    ids.runId,
+    payload.run_id,
+    payload.module_id,
+    payload.gate_id,
+    payload.dispatch_id,
+    payload.gateway_label,
+    payload.session_key,
+    ...['run id', 'run', 'module', 'module id', 'gate', 'gate id', 'dispatch', 'dispatch id', 'gateway', 'gateway label', 'session', 'session key'].map((name) => fieldByName.get(name)),
+  ];
+
+  if (!verdictValues.some(hasActionableValue)) {
+    errors.push('telemetry sink severe Discord alert must include verdict/status/outcome');
+  }
+  if (!actionValues.some(hasActionableValue)) {
+    errors.push('telemetry sink severe Discord alert must include next action/action');
+  }
+  if (!identityValues.some(hasActionableValue)) {
+    errors.push('telemetry sink severe Discord alert must include run/module/gate identity');
+  }
+  return errors;
 }
 
 export function buildTelemetrySinkInput(ctx: UnknownRecord = {}, eventType: string, payload: UnknownRecord = {}, options: UnknownRecord = {}): UnknownRecord {
@@ -148,6 +232,7 @@ export function validateTelemetrySinkInput(input: unknown = {}): string[] {
           }
         }
       }
+      errors.push(...validateTelemetryDiscordOperatorPresentation(discordPresentation, record));
     }
   }
   if (!record?.occurredAt || Number.isNaN(Date.parse(record.occurredAt))) {

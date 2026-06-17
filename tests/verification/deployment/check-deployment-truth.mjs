@@ -149,6 +149,10 @@ function preStopCommand(container) {
   return (container?.lifecycle?.preStop?.exec?.command || []).join('\n');
 }
 
+function postStartCommand(container) {
+  return (container?.lifecycle?.postStart?.exec?.command || []).join('\n');
+}
+
 function volumeByName(deployment, volumeName) {
   const volumes = deployment?.spec?.template?.spec?.volumes || [];
   const volume = volumes.find((entry) => entry?.name === volumeName);
@@ -678,6 +682,10 @@ assertIncludes(rendered, 'swarm.config.json written from chart source', 'Rendere
 assertIncludes(rendered, 'delete config.discord_webhook_url', 'Rendered init container must remove webhook secrets from persistent swarm.config.json');
 assertIncludes(rendered, 'swarm.config.json source normalized without runtime webhook secrets', 'Rendered init container must normalize persisted swarm.config.json source');
 assertIncludes(rendered, 'kubeclaw-health.mjs', 'Rendered init container must generate the reusable agent health script');
+assertIncludes(rendered, 'kubeclaw-startup-doctor.sh', 'Rendered init container must generate the startup doctor helper');
+assertIncludes(rendered, 'startup doctor waiting for gateway health', 'Rendered startup doctor must wait for the gateway before running');
+assertIncludes(rendered, 'node /app/openclaw.mjs doctor --fix', 'Rendered startup doctor must run OpenClaw doctor with fixes enabled');
+assertIncludes(rendered, '/home/node/.openclaw/logs/startup-doctor.log', 'Rendered startup doctor must write a persistent diagnostic log');
 assertIncludes(rendered, 'function checkDrainState()', 'Rendered health script must include drain-aware readiness');
 assertIncludes(rendered, "await check('drain state', checkDrainState)", 'Rendered readiness must fail when the container is draining');
 assertIncludes(rendered, "redis.xadd(stream, 'MAXLEN'", 'Rendered health script must write a Redis stream smoke entry');
@@ -699,6 +707,9 @@ assertIncludes(renderedBuster, 'value: "gateway"', 'Buster gateway container mus
 assertIncludes(renderedBuster, 'value: "buster-pipeline"', 'Buster pipeline container must expose its health role explicitly');
 assertIncludes(renderedBuster, '- /app/openclaw.mjs', 'Buster gateway container must start OpenClaw gateway directly');
 assertIncludes(renderedBuster, '- /app/skills/buster-pipeline.ts', 'Buster pipeline container must start the Buster worker directly');
+assertIncludes(postStartCommand(novaGatewayContainerObject), '/runtime-config/kubeclaw-startup-doctor.sh', 'Nova gateway postStart must run the startup doctor helper');
+assertIncludes(postStartCommand(busterGatewayContainerObject), '/runtime-config/kubeclaw-startup-doctor.sh', 'Buster gateway postStart must run the startup doctor helper');
+assert.equal(postStartCommand(busterPipelineContainerObject), '', 'Buster pipeline worker must not run OpenClaw doctor');
 assert.equal(renderedBuster.includes('wait -n'), false, 'Buster deployment must not couple gateway and worker through shell wait supervision');
 assert.equal(renderedBuster.includes('BUSTER_PIPELINE_PID'), false, 'Buster deployment must remove the old shell-supervised worker PID path');
 assertIncludes(renderedBuster, 'name: OPENCLAW_GATEWAY_URL', 'Buster deployment must expose the colocated gateway URL to the Buster startup process');

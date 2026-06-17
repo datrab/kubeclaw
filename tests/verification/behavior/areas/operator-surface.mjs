@@ -1,3 +1,7 @@
+import {
+  buildBuiltInRegistry,
+} from './helpers.mjs';
+
 export async function registerOperatorSurfaceArea({
   record,
   sourceRoot,
@@ -34,13 +38,6 @@ export async function registerOperatorSurfaceArea({
   pathsMod,
   busterPipelineMod,
 }) {
-async function buildBuiltInRegistry(runtimeRootForRegistry) {
-  const registryMod = await importRuntimeModule(runtimeRootForRegistry, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
-
 await record('Discord audit artifacts and embeds carry run correlation', async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-discord-audit-'));
   const logDir = path.join(root, '.swarm', 'logs');

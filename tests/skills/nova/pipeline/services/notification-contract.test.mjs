@@ -6,7 +6,11 @@ import test from 'node:test';
 
 import { buildPluginRegistry } from '../../../../../skills/nova/pipeline/core/registry.ts';
 import { dispatchNotificationHook } from '../../../../../skills/nova/pipeline/services/notification-dispatch.ts';
-import { getBuiltinNotificationPluginDefinitions, observeDiscordNotification } from '../../../../../skills/nova/pipeline/services/notification-contract.ts';
+import {
+  getBuiltinNotificationPluginDefinitions,
+  observeDiscordNotification,
+  validateDiscordOperatorPresentation,
+} from '../../../../../skills/nova/pipeline/services/notification-contract.ts';
 
 function makeConfig(prefix) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), `${prefix}-`));
@@ -142,4 +146,35 @@ test('dispatchNotificationHook supplies config runtime to built-in Discord liste
     ok: true,
   }]);
   assertNotificationCorrelation(readRunDiscordEntry(config));
+});
+
+test('Discord operator validation rejects path-only critical but accepts existing status presentations', () => {
+  assert.deepEqual(validateDiscordOperatorPresentation({
+    level: 'WARN',
+    title: 'Gate completed',
+    fields: [{ name: 'Status', value: 'complete' }],
+  }, {
+    hookId: 'gate.completed',
+    gateId: 'gate-review',
+  }), []);
+
+  assert.deepEqual(validateDiscordOperatorPresentation({
+    level: 'CRITICAL',
+    title: 'Gate blocked',
+    fields: [{ name: 'Status', value: 'BLOCKED' }],
+  }, {
+    hookId: 'gate.completed',
+    gateId: 'gate-review',
+  }), []);
+
+  const pathOnlyErrors = validateDiscordOperatorPresentation({
+    critical: true,
+    title: 'Gate blocked',
+    fields: [{ name: 'Evidence', value: '.swarm/logs/pipeline/latest.json' }],
+  }, {
+    hookId: 'gate.completed',
+    gateId: 'gate-review',
+  });
+  assert(pathOnlyErrors.includes('critical Discord notification must include verdict/status/outcome'));
+  assert(pathOnlyErrors.includes('critical Discord notification must include next action/action'));
 });

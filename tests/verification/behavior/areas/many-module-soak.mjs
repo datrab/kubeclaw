@@ -1,3 +1,7 @@
+import {
+  buildBuiltInRegistry,
+} from './helpers.mjs';
+
 export async function registerManyModuleSoakArea({
   record,
   sourceRoot,
@@ -12,13 +16,6 @@ export async function registerManyModuleSoakArea({
   materializeRuntimeTree,
   importRuntimeModule,
 }) {
-async function buildBuiltInRegistry(runtimeRootForRegistry) {
-  const registryMod = await importRuntimeModule(runtimeRootForRegistry, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
-
 function canonicalBusterPolicy(root) {
   return {
     suite_timeout_ms: 300000,

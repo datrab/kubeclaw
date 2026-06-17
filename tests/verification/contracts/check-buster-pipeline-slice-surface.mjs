@@ -371,6 +371,7 @@ const validBusterTaskPayload = {
   run_id: 'run-1',
   attempt: 2,
   dispatch_id: 'dispatch-2',
+  completion_stream: 'pipeline:demo-project:completions',
   commit_hash: 'abc123',
   stage_id: 'worker:module_buster',
   worker_type: 'module_buster',
@@ -414,6 +415,16 @@ assert.throws(() => validationMod.validateBusterTaskPayload({
   assert.equal(error.unsafe_fields.some(entry => entry.field === 'work_dir'), true);
   return true;
 }, 'Buster gate task validation must reject absolute work_dir');
+
+assert.throws(() => validationMod.validateBusterTaskPayload({
+  ...validBusterTaskPayload,
+  completion_stream: undefined,
+}), (error) => {
+  assert.equal(error.code, 'BUSTER_TASK_MALFORMED');
+  assert.equal(error.details.reason, 'missing_required_identity');
+  assert.equal(error.missing_fields.includes('completion_stream'), true);
+  return true;
+}, 'Buster task validation must require completion_stream identity before ACK');
 
 assert.throws(() => validationMod.validateBusterTaskPayload({
   ...validBusterTaskPayload,

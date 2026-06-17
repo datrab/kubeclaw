@@ -250,7 +250,11 @@ await telemetryMod.emitOperatorAlert({
       level: 'WARN',
       title: 'Module 01 — Forge no changes',
       description: 'Forge completed without file changes',
-      fields: [{ name: 'Module', value: '01' }],
+      fields: [
+        { name: 'Status', value: 'FAIL' },
+        { name: 'Next Action', value: 'Inspect forge output and resume' },
+        { name: 'Module', value: '01' },
+      ],
     },
   },
 });
@@ -258,8 +262,8 @@ await telemetryMod.emitOperatorAlert({
 assert.equal(directCalls.length, 1, 'emitOperatorAlert should dispatch exactly one operator alert through the Discord telemetry sink');
 assert.equal(directCalls[0].title, 'Module 01 — Forge no changes');
 assert.equal(directCalls[0].description, 'Forge completed without file changes');
-assert.equal(directCalls[0].fields[0].name, 'Module');
-assert.equal(directCalls[0].fields[0].value, '01');
+assert.equal(directCalls[0].fields[2].name, 'Module');
+assert.equal(directCalls[0].fields[2].value, '01');
 const directRunAlert = fs.readFileSync(directRunAlertPath, 'utf8');
 assert.equal(directRunAlert.includes('ghp_123456789012345678901234567890123456'), false, 'durable alert payload should be redacted at source');
 assert.equal(directRunAlert.includes('raw transcript-like operator evidence'), false, 'sensitive durable alert fields should be summarized, not written raw');
@@ -291,15 +295,19 @@ await telemetryMod.onGateFail({
       level: 'CRITICAL',
       title: "Gate 'gate:buster' Spawn Failed",
       description: 'Buster agent could not be spawned: spawn unavailable',
-      fields: [{ name: 'Gate', value: 'gate:buster' }],
+      fields: [
+        { name: 'Status', value: 'NO-GO' },
+        { name: 'Next Action', value: 'Inspect Buster gateway and rerun the gate' },
+        { name: 'Gate', value: 'gate:buster' },
+      ],
     },
   },
 });
 
 assert.equal(fallbackCalls.length, 1, 'onGateFail should deliver operator presentation through the Discord telemetry sink');
   assert.equal(fallbackCalls[0].title, "Gate 'gate:buster' Spawn Failed");
-  assert.equal(fallbackCalls[0].fields[0].name, 'Gate');
-  assert.equal(fallbackCalls[0].fields[0].value, 'gate:buster');
+  assert.equal(fallbackCalls[0].fields[2].name, 'Gate');
+  assert.equal(fallbackCalls[0].fields[2].value, 'gate:buster');
   assert.equal(fallbackCalls[0].opts.correlation.run_id, 'run-operator-fallback-1');
   assert.equal(fallbackCalls[0].opts.correlation.gate_id, 'gate:buster');
   assert.equal(fallbackCalls[0].opts.correlation.gate_type, 'buster');

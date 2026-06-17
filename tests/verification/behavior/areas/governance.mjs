@@ -9,21 +9,15 @@ import {
   runGateViaRegistry,
 } from '../../lib/lifecycle-audit-lib.mjs';
 
+import {
+  stepSummary,
+  stepMetadata,
+  stepGateStatus,
+} from './helpers.mjs';
+
 function stepExit(result) {
   const status = result?.terminal?.status ?? result?.terminal_status ?? null;
   return ({ succeeded: 0, failed: 1, action_required: 10, blocked: 20, timed_out: 30, rate_limited: 40 })[status] ?? null;
-}
-
-function stepSummary(result) {
-  return result?.diagnostics?.summary;
-}
-
-function stepMetadata(result) {
-  return result?.diagnostics?.metadata || {};
-}
-
-function stepGateStatus(result) {
-  return result?.diagnostics?.typed?.controlResult?.diagnostics?.typed?.gate?.gateRunStatus;
 }
 
 function explicitPluginConfig() {

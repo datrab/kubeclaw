@@ -9,30 +9,16 @@ import {
   runGateViaRegistry,
 } from '../../lib/lifecycle-audit-lib.mjs';
 
-function getFieldValue(fields = [], name) {
-  return fields.find((field) => field.name === name)?.value;
-}
-
-function stepExit(result) {
-  const status = result?.terminal?.status ?? result?.terminal_status ?? null;
-  return status === 'succeeded' ? 0 : (status ? 1 : null);
-}
-
-function stepSummary(result) {
-  return result?.diagnostics?.summary;
-}
-
-function stepMetadata(result) {
-  return result?.diagnostics?.metadata || {};
-}
-
-function stepRateLimit(result) {
-  return result?.rateLimit || {};
-}
-
-function stepGateStatus(result) {
-  return result?.diagnostics?.typed?.controlResult?.diagnostics?.typed?.gate?.gateRunStatus;
-}
+import {
+  buildBuiltInRegistry,
+  gateRuntimeEvents,
+  getFieldValue,
+  stepExit,
+  stepSummary,
+  stepMetadata,
+  stepRateLimit,
+  stepGateStatus,
+} from './helpers.mjs';
 
 export async function registerFixCyclesArea({
   record,
@@ -42,19 +28,6 @@ export async function registerFixCyclesArea({
   flushAsync,
   xaddEvents,
 }) {
-async function buildBuiltInRegistry(runtimeRootForRegistry) {
-  const registryMod = await importRuntimeModule(runtimeRootForRegistry, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
-
-function gateRuntimeEvents(xaddEvents, streamKey) {
-  return xaddEvents(streamKey)
-    .filter((event) => !String(event.type || '').startsWith('plugin.gate.'))
-    .map((event, index) => ({ ...event, seq: index + 1 }));
-}
-
 function platformFixCycleDefaults() {
   return {
     rate_limit: { max_pauses_per_module: 5, cooldown_hours: 0 },

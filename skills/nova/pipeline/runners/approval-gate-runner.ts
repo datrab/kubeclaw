@@ -667,6 +667,9 @@ export async function runApprovalGateEvaluation(config, progress, gateId, opts =
     level: 'WARN',
     title: `⏸️ Approval Required: ${gate.title}`,
     description: embed.description,
+    status: APPROVAL_STATUS.PENDING_APPROVAL,
+    next_action: 'approve_or_reject',
+    action: 'approve_or_reject',
     fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, { run_id: gateState.run_id, gate_id: gateId, gate_type: gate.type }, embed.fields),
   };
   await onGateStarted({ config, deps: opts.deps }, gateId, gate, {

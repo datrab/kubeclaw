@@ -236,6 +236,7 @@ function buildValidBusterTaskPayload(extra = {}) {
     run_id: 'run-buster-identity-1',
     attempt: 2,
     dispatch_id: 'dispatch-buster-identity-1',
+    completion_stream: 'swarm:pipeline:demo-project:completions',
     commit_hash: 'abc123',
     timeout_seconds: 1800,
     session: { runtime: 'acp', model: 'gpt-test', agentId: 'buster', cwd: sourceRoot, label: 'buster-dispatch-1' },
@@ -530,6 +531,7 @@ await record('Buster task payload validation rejects missing canonical identity 
     assert.equal(error.missing_fields.includes('run_id'), true);
     assert.equal(error.missing_fields.includes('attempt'), true);
     assert.equal(error.missing_fields.includes('dispatch_id'), true);
+    assert.equal(error.missing_fields.includes('completion_stream'), true);
     assert.equal(error.missing_fields.includes('commit_hash'), true);
     assert.equal(error.missing_fields.includes('output_file'), true);
     return true;

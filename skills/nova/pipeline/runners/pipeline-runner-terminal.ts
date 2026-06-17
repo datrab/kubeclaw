@@ -37,6 +37,7 @@ import {
 } from '../services/contracts/pipeline-step-result.ts';
 import {
   PIPELINE_TERMINAL_ACTIONS,
+  PIPELINE_TERMINAL_SCOPES,
 } from '../services/contracts/terminal-decision.ts';
 import {
   _telemetryCtx,
@@ -236,6 +237,55 @@ function didTerminalGeneratorSucceed(result: AnyRecord): boolean {
   return result?.outputs?.status !== 'failed';
 }
 
+function normalizeDegradedEvidenceEntries(value: unknown): AnyRecord[] {
+  const entries = Array.isArray(value) ? value : value ? [value] : [];
+  return entries
+    .filter((entry): entry is AnyRecord => Boolean(entry) && typeof entry === 'object' && !Array.isArray(entry))
+    .filter((entry) => entry.resolved !== true && entry.resolved_at == null && entry.allow_clean_success !== true);
+}
+
+function collectUnresolvedDegradedEvidence(config: AnyRecord, progress: AnyRecord): AnyRecord[] {
+  return [
+    ...normalizeDegradedEvidenceEntries(config?._startupDegradedEvidence),
+    ...normalizeDegradedEvidenceEntries(config?._degradedEvidence),
+    ...normalizeDegradedEvidenceEntries(progress?._degradedEvidence),
+    ...normalizeDegradedEvidenceEntries(progress?.degraded_evidence),
+  ];
+}
+
+function buildDegradedEvidenceBlockedResult(config: AnyRecord, progress: AnyRecord): AnyRecord | null {
+  const evidence = collectUnresolvedDegradedEvidence(config, progress);
+  if (evidence.length === 0) return null;
+  const reason = `Pipeline has unresolved degraded/manual fallback evidence (${evidence.length}); clean autonomous success is not allowed`;
+  return buildPipelineStepResult({
+    stepType: PIPELINE_STEP_TYPES.PIPELINE,
+    stepId: 'degraded_evidence',
+    nextAction: PIPELINE_STEP_ACTIONS.HALT,
+    outcome: PIPELINE_STEP_OUTCOMES.BLOCKED,
+    issueType: 'environment',
+    reason,
+    diagnostics: {
+      summary: reason,
+      metadata: {
+        degraded_evidence_count: evidence.length,
+        degraded_evidence: evidence.map((entry) => ({
+          code: entry.code ?? entry.reason ?? null,
+          surface: entry.surface ?? entry.component ?? null,
+          message: entry.message ?? entry.detail ?? entry.summary ?? null,
+        })),
+      },
+    },
+    correlation: {
+      run_id: config?._runId ?? config?.run_id ?? null,
+    },
+    terminalAction: PIPELINE_TERMINAL_ACTIONS.REQUEST_HANDOFF,
+    terminalScope: PIPELINE_TERMINAL_SCOPES.PIPELINE,
+    terminalReasonCode: 'degraded_evidence_requires_handoff',
+    terminalHumanReason: reason,
+    terminalSource: 'pipeline:degraded_evidence',
+  });
+}
+
 async function runTerminalCompletionGenerator(config: AnyRecord, progress: AnyRecord, stageId: string, opts: AnyRecord = {}): Promise<void> {
   if (isTerminalGeneratorComplete(config, stageId)) return;
   const result = await runScheduledGenerator(config, progress, stageId, {
@@ -340,7 +390,7 @@ export async function finalizeTerminalHalt(config: AnyRecord, progress: AnyRecor
           { name: 'Status', value: String(terminalStatus) },
           { name: 'Reason', value: String(operatorReason).slice(0, 200) },
           ...(isRateLimited && maxRateLimitPauses != null ? [{ name: 'Rate Limit Pauses', value: String(maxRateLimitPauses) }] : []),
-          ...(terminalStatus === 'blocked' ? [{ name: 'Action', value: 'Fix manually, then --resume' }] : []),
+          { name: 'Action', value: terminalStatus === 'blocked' ? 'Fix manually, then --resume' : 'Inspect terminal failure evidence before rerun' },
         ],
       },
     },
@@ -375,6 +425,19 @@ export async function finalizeTerminalHalt(config: AnyRecord, progress: AnyRecor
 }
 
 export async function completePipeline(config: AnyRecord, progress: AnyRecord, opts: AnyRecord = {}): Promise<number> {
+  const degradedBlockedResult = buildDegradedEvidenceBlockedResult(config, progress);
+  if (degradedBlockedResult) {
+    log('ERROR', 'Pipeline has unresolved degraded/manual fallback evidence — blocking clean completion');
+    return finalizeTerminalHalt(config, progress, {
+      stepType: 'pipeline',
+      stepId: 'degraded_evidence',
+      result: degradedBlockedResult,
+      opts,
+      summaryReason: 'degraded_evidence_requires_handoff',
+      scheduleProjectSummaryOnBlocked: true,
+    });
+  }
+
   const priorPipelineState = loadLifecycleReadModels(config)?.pipeline || null;
   if (priorPipelineState?.run_id === (config._runId || config.run_id || null) && priorPipelineState?.status === 'COMPLETED') {
     log('INFO', `Pipeline run '${priorPipelineState.run_id}' already completed — checking terminal generators`);

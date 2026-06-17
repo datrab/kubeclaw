@@ -104,10 +104,14 @@ try {
     commit_hash: fixture.commit,
     completion_stream: completionStream,
     log_dir: path.join(fixture.repo, '.swarm', 'logs', 'buster', moduleId, `attempt-${attempt}`),
+    timeout_seconds: 30,
     session: {
       cwd: fixture.repo,
       label: dispatchId,
       timeout_seconds: 30,
+      runtime: 'subagent',
+      agentId: 'codex',
+      model: 'gpt-5-codex',
     },
     test_config: {
       suite_timeout_ms: 300000,
@@ -121,17 +125,14 @@ try {
   taskId = dispatch.id;
   assert.equal(dispatch.stream, taskStream);
 
-  const taskEntry = await busterTaskQueue.readNextTaskEntry(redis);
-  assert(taskEntry, 'Buster did not read the dispatched Redis task');
-  assert.equal(taskEntry.id, taskId);
-  const taskPayload = JSON.parse(taskEntry.data.payload || '{}');
-  assert.equal(taskPayload.run_id, runId);
-  assert.equal(taskPayload.dispatch_id, dispatchId);
+  await busterTaskQueue.processOneQueuedTask((taskPayload) => {
+    assert.equal(taskPayload.run_id, runId);
+    assert.equal(taskPayload.dispatch_id, dispatchId);
+    return busterTaskLifecycle.processTask(taskPayload, { telemetryEnabled: false });
+  });
 
-  const taskResult = await busterTaskLifecycle.processTask(taskPayload, { telemetryEnabled: false });
-  await redis.xack(taskStream, groupName, taskEntry.id);
-  assert.equal(taskResult.outcome, 'FAIL');
-  assert.match(taskResult.reason, /NO_SUBAGENT|manifest|critical/i);
+  const pending = await redis.xpending(taskStream, groupName);
+  assert.equal(Number(pending?.[0] || 0), 0, 'Buster task queue must ACK after terminal completion/dead-letter guarantee');
 
   const completion = await redisTool.readCompletion(completionStream, moduleId, {
     run_id: runId,

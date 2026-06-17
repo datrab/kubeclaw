@@ -1,3 +1,7 @@
+import {
+  buildBuiltInRegistry,
+} from './helpers.mjs';
+
 export async function registerRuntimeSurfaceArea({
   record,
   sourceRoot,
@@ -40,13 +44,6 @@ const anyPluginConfigSchema = () => ({
   schema: { type: 'object', additionalProperties: true },
   defaults: {},
 });
-
-async function buildBuiltInRegistry(runtimeRootForRegistry) {
-  const registryMod = await importRuntimeModule(runtimeRootForRegistry, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
 
 await record('gateway token/env resolution uses only canonical OPENCLAW names', async () => {
   const prev = {

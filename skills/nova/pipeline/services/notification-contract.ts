@@ -75,6 +75,82 @@ function normalizeNotificationRefs(ids: UnknownRecord = {}, envelope: UnknownRec
   };
 }
 
+function normalizeFieldName(value: unknown): string {
+  return String(value ?? '').trim().toLowerCase().replace(/[_-]+/g, ' ');
+}
+
+function hasActionableValue(value: unknown): boolean {
+  if (typeof value === 'string') return value.trim() !== '';
+  if (typeof value === 'number') return Number.isFinite(value);
+  return false;
+}
+
+function collectDiscordFields(discordPresentation: UnknownRecord = {}): UnknownRecord[] {
+  const fields: UnknownRecord[] = [];
+  if (Array.isArray(discordPresentation.fields)) fields.push(...discordPresentation.fields);
+  if (Array.isArray(discordPresentation.embeds)) {
+    for (const embed of discordPresentation.embeds) {
+      if (Array.isArray(embed?.fields)) fields.push(...embed.fields);
+    }
+  }
+  return fields;
+}
+
+function discordPresentationRequiresActionableContract(discordPresentation: UnknownRecord = {}): boolean {
+  const explicitFlags = [
+    discordPresentation.critical,
+    discordPresentation.require_actionable,
+    discordPresentation.requires_actionable_contract,
+  ];
+  if (explicitFlags.some((value) => value === true)) return true;
+  const level = String(discordPresentation.level ?? '').trim().toUpperCase();
+  return ['WARN', 'WARNING', 'ERROR', 'CRITICAL', 'FAIL', 'FAILED', 'BLOCKED', 'DEGRADED'].includes(level);
+}
+
+function discordPresentationRequiresNextAction(discordPresentation: UnknownRecord = {}): boolean {
+  return discordPresentation.critical === true
+    || discordPresentation.require_actionable === true
+    || discordPresentation.requires_actionable_contract === true;
+}
+
+export function validateDiscordOperatorPresentation(discordPresentation: UnknownRecord = {}, ids: UnknownRecord = {}): string[] {
+  const errors: string[] = [];
+  if (!discordPresentationRequiresActionableContract(discordPresentation)) return errors;
+
+  const fields = collectDiscordFields(discordPresentation);
+  const fieldByName = new Map(fields.map((field) => [normalizeFieldName(field?.name), field?.value]));
+  const verdictValues = [
+    discordPresentation.verdict,
+    discordPresentation.status,
+    discordPresentation.outcome,
+    discordPresentation.terminal_status,
+    ...['verdict', 'status', 'outcome', 'terminal status', 'result'].map((name) => fieldByName.get(name)),
+  ];
+  const actionValues = [
+    discordPresentation.next_action,
+    discordPresentation.nextAction,
+    discordPresentation.action,
+    ...['next action', 'action', 'operator action'].map((name) => fieldByName.get(name)),
+  ];
+  const hasVerdict = verdictValues.some(hasActionableValue);
+  const hasAction = actionValues.some(hasActionableValue);
+
+  if (!hasVerdict) errors.push('critical Discord notification must include verdict/status/outcome');
+  if (discordPresentationRequiresNextAction(discordPresentation) && !hasAction) {
+    errors.push('critical Discord notification must include next action/action');
+  }
+
+  const hookId = ids?.hookId ?? '';
+  if (String(hookId).startsWith('module.') && !ids?.moduleId) {
+    errors.push('module Discord notification must include ids.moduleId');
+  }
+  if (String(hookId).startsWith('gate.') && !ids?.gateId) {
+    errors.push('gate Discord notification must include ids.gateId');
+  }
+
+  return errors;
+}
+
 export function buildNotificationEventInput(ctx: UnknownRecord = {}, hookId: string, envelope: UnknownRecord = {}): UnknownRecord {
   const ids = normalizeNotificationIds(hookId, ctx, envelope);
   const refs = normalizeNotificationRefs(ids, envelope);
@@ -125,6 +201,13 @@ export function validateNotificationEventInput(input: UnknownRecord = {}): strin
   }
   if (input?.presentation !== undefined && (typeof input.presentation !== 'object' || Array.isArray(input.presentation))) {
     errors.push('notification presentation must be an object when provided');
+  }
+  if (input?.presentation?.discord !== undefined) {
+    if (typeof input.presentation.discord !== 'object' || Array.isArray(input.presentation.discord)) {
+      errors.push('notification presentation.discord must be an object when provided');
+    } else {
+      errors.push(...validateDiscordOperatorPresentation(input.presentation.discord, input.ids ?? {}));
+    }
   }
   return errors;
 }

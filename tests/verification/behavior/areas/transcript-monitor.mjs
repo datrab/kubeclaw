@@ -1,3 +1,7 @@
+import {
+  buildBuiltInRegistry,
+} from './helpers.mjs';
+
 export async function registerTranscriptMonitorArea({
   record,
   sourceRoot,
@@ -34,13 +38,6 @@ export async function registerTranscriptMonitorArea({
   pathsMod,
   busterPipelineMod,
 }) {
-async function buildBuiltInRegistry(runtimeRootForRegistry) {
-  const registryMod = await importRuntimeModule(runtimeRootForRegistry, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
-
 await record('pollForSessionEnd consumes budget strictly instead of extending for transcript activity', async () => {
   const pollingSource = readOverlayText(sourceRoot, overlayRoot, 'skills/nova/pipeline/services/polling-session-end.ts');
 

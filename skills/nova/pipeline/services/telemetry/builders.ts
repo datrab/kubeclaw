@@ -261,6 +261,25 @@ export function onGatePass(ctx, gateId, data = {}) {
  */
 export function onGateFail(ctx, gateId, data = {}) {
   const gatewayLabel = data.gateway_label ?? null;
+  const presentation = data.presentation && typeof data.presentation === 'object' && !Array.isArray(data.presentation)
+    ? { ...data.presentation }
+    : {};
+  if (presentation.discord && typeof presentation.discord === 'object' && !Array.isArray(presentation.discord)) {
+    const discordPresentation = presentation.discord;
+    const action = discordPresentation.action
+      || discordPresentation.next_action
+      || discordPresentation.nextAction
+      || data.action
+      || data.next_action
+      || data.nextAction
+      || data.operator_action
+      || 'stop';
+    presentation.discord = {
+      ...discordPresentation,
+      action,
+      next_action: discordPresentation.next_action || discordPresentation.nextAction || action,
+    };
+  }
   const payload = {
     run_id: data.run_id || getRunId(ctx?.config || {}) || ctx?.runId || null,
     gate_id: gateId,
@@ -282,7 +301,7 @@ export function onGateFail(ctx, gateId, data = {}) {
     gateType: payload.gate_type || null,
     attempt: payload.attempt,
     stateSnapshot: { verdict: 'NO-GO', status: 'FAIL' },
-    presentation: data.presentation || {},
+    presentation,
   });
 }
 

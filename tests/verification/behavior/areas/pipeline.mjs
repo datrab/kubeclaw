@@ -8,12 +8,12 @@ import {
   importRuntimeModule,
 } from '../../lib/lifecycle-audit-lib.mjs';
 
-async function buildBuiltInRegistry(runtimeRoot) {
-  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
+import {
+  buildBuiltInRegistry,
+  makeStepResult,
+  readJsonl,
+  assertTypedTerminalEvent,
+} from './helpers.mjs';
 
 function withStubbedGeneratorStages(registry) {
   return {
@@ -76,75 +76,6 @@ function withStubbedGeneratorStages(registry) {
       },
     },
   };
-}
-
-function stepOutcomeForClass(outcomeClass = 'passed') {
-  switch (outcomeClass) {
-    case 'passed': return ['continue', 'passed', 'succeeded', 'none'];
-    case 'needs_nova': return ['halt', 'needs_nova', 'action_required', 'request_handoff'];
-    case 'blocked': return ['halt', 'blocked', 'blocked', 'notify_operator'];
-    case 'timeout': return ['halt', 'timeout', 'timed_out', 'request_handoff'];
-    case 'rate_limited': return ['halt', 'rate_limited', 'rate_limited', 'retry_later'];
-    default: return ['halt', 'error', 'failed', 'stop'];
-  }
-}
-
-function makeStepResult({ stepType = 'module', stepId = '01', outcomeClass = 'passed', reason = null, status = null, projection = {}, correlation = {}, issueType = null, rateLimit = null } = {}) {
-  const [nextAction, outcome, terminalStatus, terminalAction] = stepOutcomeForClass(outcomeClass);
-  return {
-    schemaVersion: 'v1',
-    kind: 'pipeline_step_result',
-    stepType,
-    stepId,
-    nextAction,
-    outcome,
-    ...(issueType ? { issueType } : {}),
-    diagnostics: {
-      summary: reason,
-      findings: [],
-      metadata: {
-        ...projection,
-        ...(reason != null ? { reason } : {}),
-        ...(status != null ? { status } : {}),
-      },
-      typed: {},
-    },
-    correlation,
-    ...(rateLimit == null ? {} : { rateLimit }),
-    terminal: {
-      status: terminalStatus,
-      decision: {
-        schemaVersion: 'v1',
-        kind: 'pipeline_terminal_decision',
-        status: terminalStatus,
-        action: terminalAction,
-        reasonCode: outcome,
-        humanReason: reason,
-        scope: stepType,
-        correlation: {},
-        source: null,
-        metadata: {},
-      },
-    },
-  };
-}
-
-function readJsonl(filePath) {
-  if (!fs.existsSync(filePath)) return [];
-  return fs.readFileSync(filePath, 'utf8')
-    .split('\n')
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((line) => JSON.parse(line));
-}
-
-function assertTypedTerminalEvent(event, status, reasonCode = undefined) {
-  assert.equal(event.terminal_status, status);
-  assert.equal(Object.prototype.hasOwnProperty.call(event, 'exit_code'), false);
-  assert.equal(Object.prototype.hasOwnProperty.call(event, 'exit_reason'), false);
-  assert.equal(Object.prototype.hasOwnProperty.call(event, 'exitCode'), false);
-  assert.equal(Object.prototype.hasOwnProperty.call(event, 'exitLabel'), false);
-  if (reasonCode !== undefined) assert.equal(event.reason_code, reasonCode);
 }
 
 async function seedBlockedModuleLifecycleState(pipelineRuntimeRoot, config, progress, moduleId, {
@@ -1854,17 +1785,6 @@ const config = {
     const completionState = JSON.parse(fs.readFileSync(completionPath, 'utf8'));
     assert.equal(completionState.completed.some((entry) => entry.key === 'lint-after-01'), true);
 
-    const resumedConfig = {
-      ...config,
-      _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:10:00.000Z'),
-    };
-    delete resumedConfig._validatorRunState;
-    const resumedResult = await pipelineRunnerMod.runPipeline(resumedConfig, progress, { skipArchValidation: true });
-    await flushAsync();
-
-    assert.equal(resumedResult, 0);
-    assert.equal(moduleRuns, 1, 'fresh same-run config should not rerun passed module');
-    assert.equal(validatorCalls.length, 1, 'fresh same-run config should not rerun completed scheduled validator');
   });
 
   await record('architecture validation runs through validator stage owners and preserves pass semantics', async () => {

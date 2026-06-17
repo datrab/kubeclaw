@@ -8,6 +8,10 @@ import {
   importRuntimeModule,
 } from '../../lib/lifecycle-audit-lib.mjs';
 
+import {
+  buildBuiltInRegistry,
+} from './helpers.mjs';
+
 export async function registerModelsArea({
   record,
   sourceRoot,
@@ -16,13 +20,6 @@ export async function registerModelsArea({
   flushAsync,
   xaddEvents,
 }) {
-  async function buildBuiltInRegistry(runtimeRoot) {
-    const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
-    const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-    assert.equal(errors.length, 0);
-    return registry;
-  }
-
   const runtimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
   const runtimeMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/agents/runtime.ts');
 

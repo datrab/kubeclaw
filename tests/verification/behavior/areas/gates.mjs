@@ -9,60 +9,18 @@ import {
   runGateViaRegistry,
 } from '../../lib/lifecycle-audit-lib.mjs';
 
-function getFieldValue(fields = [], name) {
-  return fields.find((field) => field.name === name)?.value;
-}
-
-function gateRuntimeEvents(xaddEvents, streamKey) {
-  return xaddEvents(streamKey)
-    .filter((event) => !String(event.type || '').startsWith('plugin.gate.'))
-    .map((event, index) => ({ ...event, seq: index + 1 }));
-}
-
-function stepExit(result) {
-  const status = result?.terminal?.status ?? result?.terminal_status ?? null;
-  return status === "succeeded" ? 0 : (status ? 1 : null);
-}
-
-function stepSummary(result) {
-  return result?.diagnostics?.summary;
-}
-
-function stepMetadata(result) {
-  return result?.diagnostics?.metadata || {};
-}
-
-function stepRateLimit(result) {
-  return result?.rateLimit || {};
-}
-
-function stepGateStatus(result) {
-  return result?.diagnostics?.typed?.controlResult?.diagnostics?.typed?.gate?.gateRunStatus;
-}
-
-function readJsonl(filePath) {
-  if (!fs.existsSync(filePath)) return [];
-  return fs.readFileSync(filePath, 'utf8')
-    .split('\n')
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((line) => JSON.parse(line));
-}
-
-async function buildBuiltInRegistry(runtimeRoot) {
-  const registryMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/registry.ts');
-  const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
-  assert.equal(errors.length, 0);
-  return registry;
-}
-
-function platformTestDefaults() {
-  return {
-    fallback_model: 'fallback-model',
-    rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },
-    review_defaults: { timeout_minutes: 30, max_fix_cycles: 3, lint_tier: 'full', lint_required: false },
-  };
-}
+import {
+  buildBuiltInRegistry,
+  gateRuntimeEvents,
+  getFieldValue,
+  platformTestDefaults,
+  readJsonl,
+  stepExit,
+  stepSummary,
+  stepMetadata,
+  stepRateLimit,
+  stepGateStatus,
+} from './helpers.mjs';
 
 export async function registerGatesArea({
   record,
