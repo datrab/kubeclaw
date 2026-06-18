@@ -12,5 +12,5 @@ fi
 cd "$REPO_DIR"
 
 echo "[local-acp-verification] ACP launch reachability is a local/provider smoke."
-echo "[local-acp-verification] Failures here mean local ACP agent/provider/gateway status setup needs attention; they do not fail the default clean-checkout wrapper."
+echo "[local-acp-verification] Failures here mean local ACP agent/provider/gateway status setup needs attention."
 node tests/verification/runtime/check-acp-launch.mjs "$@"

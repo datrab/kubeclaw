@@ -124,7 +124,7 @@ Buster rejects malformed work before execution, dead-letters invalid payloads be
 node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
 node tests/verification/contracts/check-pipeline-runner-slice-surface.mjs --source-root "$PWD"
 node tests/verification/contracts/check-pipeline-step-result-surface.mjs --source-root "$PWD"
-node tests/verification/contracts/check-pipeline-terminal-decision-surface.mjs --source-root "$PWD"
+node tests/verification/contracts/check-manual-degraded-terminal-acceptance.mjs --source-root "$PWD"
 node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"
 node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"
 ```

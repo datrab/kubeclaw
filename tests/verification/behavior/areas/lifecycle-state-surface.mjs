@@ -5,6 +5,7 @@ export async function registerLifecycleStateSurfaceArea({
   path,
   assert,
   importRuntimeModule,
+  startGatewayServer,
   runtimeRoot,
   pipelineIndexMod,
   lifecycleStateMod,
@@ -141,6 +142,48 @@ export async function registerLifecycleStateSurfaceArea({
     assert.equal(forgeCompletionPoll.ok, true);
     assert.equal(forgeCompletionPoll.reason, 'agent_ended_meaningful_diff');
     assert.equal(forgeCompletionPoll.status.status, 'READY_FOR_TESTING');
+
+    const terminalGateway = await startGatewayServer(async () => ({
+      result: { details: { acp: { state: 'closed' } } },
+    }));
+    try {
+      fs.writeFileSync(path.join(moduleDir, 'forge-completion.json'), JSON.stringify({
+        artifact_type: 'forge_completion',
+        status: 'READY_FOR_TESTING',
+        summary: 'implementation complete after terminal session',
+        completed_at: '2026-04-12T16:01:00Z',
+      }, null, 2));
+      const terminalArtifactPoll = await pollingMod.pollForgeCompletion({
+        ...config,
+        gateway_url: terminalGateway.url,
+        gateway_token: '',
+        poll_interval_seconds: 0,
+        agent_observability_forge_completion_settle_ms: 0,
+        acp_monitor: {
+          unknown_poll_limit: 1,
+          stale_poll_limit: 1,
+          max_transcript_extensions: 3,
+          transcript_grace_ms: 300000,
+          monitor_poll_ms: 0,
+        },
+      }, '01', 1, {
+        moduleId: '01',
+        sessionLabel: 'agent:forge:01',
+        sessionKey: 'agent:forge:01',
+        agentEndedReader: {
+          async read() {
+            return null;
+          },
+          close() {},
+        },
+      });
+      assert.equal(terminalArtifactPoll.ok, true);
+      assert.equal(terminalArtifactPoll.reason, 'forge_completion');
+      assert.equal(terminalArtifactPoll.status.status, 'READY_FOR_TESTING');
+      assert.equal(terminalArtifactPoll.status.source, 'forge_completion_artifact');
+    } finally {
+      await terminalGateway.close();
+    }
 
     const busterPromptResult = busterPromptMod.buildBusterModulePrompt(
       config,

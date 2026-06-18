@@ -10,8 +10,7 @@ import {
   moduleBusterOutputPathRef,
   modulePathRef,
 } from '../core/paths.ts';
-import { log, getActiveContext } from '../core/logger.ts';
-import { onAgentKilled, onAgentSpawned } from '../services/telemetry.ts';
+import { log } from '../core/logger.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
 import {
   buildModuleBusterWorkerControlResult,
@@ -23,8 +22,6 @@ import {
 } from './module-worker-control-results.ts';
 import { verifyAgentAlive } from './orchestration-healthcheck.ts';
 import {
-  buildKillTelemetryPayload,
-  buildSpawnTelemetryPayload,
   telemetryModuleId,
 } from './orchestration-lifecycle-events.ts';
 import { sendGatewaySessionMessage } from '../integrations/gateway.ts';
@@ -39,6 +36,11 @@ import { runModuleBusterWorker, runModuleForgeWorker } from './module-workers.ts
 import { killReviewerAgent, spawnReviewerAgent } from './reviewer-lifecycle.ts';
 import { buildSubprocessEnv } from '../security.ts';
 import { getPipelineArtifactBundle } from '../services/artifact-bundle.ts';
+import {
+  assertRequiredAgentStartupEvidence,
+  createAgentLifecycleTelemetryReader,
+  waitForRequiredAgentStartupEvidence,
+} from '../services/agent-observability-required.ts';
 
 declare const process: any;
 type AnyRecord = Record<string, any>;
@@ -154,6 +156,22 @@ export async function spawnAcpAgent(
   const runtime = resolveRuntime({ model });
   const useSubagent = runtime === 'subagent';
   const thinkingLevel = opts.thinking || null;
+  const telemetryIdentity = {
+    run_id: runId,
+    project: config?.project || null,
+    agent_type: agentType,
+    module_id: telemetryModuleId(opts, moduleId),
+    gate_id: opts.gate_id || null,
+    gate_type: opts.gate_type || null,
+    attempt: opts.attempt ?? null,
+    dispatch_id: dispatchId,
+    gateway_label: gatewayLabel,
+  };
+  const startupEvidenceReader = createAgentLifecycleTelemetryReader(config, {
+    runId,
+    startId: '0-0',
+    ...(opts.agentLifecycleReader ? { reader: opts.agentLifecycleReader } : {}),
+  });
 
   try {
     const sessionData = await spawnSession({
@@ -168,6 +186,7 @@ export async function spawnAcpAgent(
       trackActive: false,
       budget: opts.budget || null,
       signal: opts.signal || null,
+      observabilityIdentity: telemetryIdentity,
     });
 
     log('OK', `${useSubagent ? 'Subagent' : 'ACP'} session spawned: ${gatewayLabel} → ${sessionData.childSessionKey}${sessionData.streamLogPath ? ` (stream: ${sessionData.streamLogPath})` : ''}`, { agent: agentId, model, sessionKey: sessionData.childSessionKey, runId: sessionData.runId, dispatchId, stream: sessionData.streamLogPath });
@@ -186,26 +205,16 @@ export async function spawnAcpAgent(
       telemetry_substep: opts.substep || null,
     });
     captureBaselineFiles(trackingKey, cwd);
-
-    try {
-      const _ctx = getActiveContext() || { config };
-      onAgentSpawned(_ctx, agentType, buildSpawnTelemetryPayload({
-        label: gatewayLabel,
-        model,
-        dispatch: useSubagent ? 'subagent' : 'acp',
-        moduleId: telemetryModuleId(opts, moduleId),
-        gateId: opts.gate_id || null,
-        gateType: opts.gate_type || null,
-        substep: opts.substep || null,
-        attempt: opts.attempt ?? null,
-        dispatchId,
-        timeoutSeconds: agentConfig?.timeout_seconds || null,
-        sessionKey: sessionData.childSessionKey,
-        thinkingLevel,
-      }));
-    } catch (e: any) {
-      log('DEBUG', `Spawn telemetry failed for ${gatewayLabel}: ${e?.message || e}`);
-    }
+    assertRequiredAgentStartupEvidence(await waitForRequiredAgentStartupEvidence(config, {
+      ...telemetryIdentity,
+      session_key: sessionData.childSessionKey,
+    }, {
+      reader: startupEvidenceReader,
+      timeoutMs: opts.agentObservabilityStartupTimeoutMs,
+    }), {
+      ...telemetryIdentity,
+      session_key: sessionData.childSessionKey,
+    });
 
     const spawnDiscordCorrelation = {
       run_id: runId,
@@ -234,6 +243,7 @@ export async function spawnAcpAgent(
     });
     return { label: trackingKey, childSessionKey: sessionData.childSessionKey, runId, dispatchId, streamLogPath: sessionData.streamLogPath };
   } catch (e: any) {
+    startupEvidenceReader.close?.();
     const spawnFailureDiscordCorrelation = {
       run_id: runId,
       module_id: telemetryModuleId(opts, moduleId),
@@ -295,26 +305,11 @@ export async function killAcpAgent(
     cleanup: async () => reaperAfterKill(entry.agentId, sessionKey, entry.gatewayLabel),
   });
 
-  const { filesChanged, baselineTracked } = computeFilesChanged(entry, config);
   if (termination.confirmed) {
     untrackAgent(label);
     log('OK', `Session destroyed: ${label}`);
   } else {
     log('WARN', `Session not fully reconciled after stop: ${label} (${termination.state})`);
-  }
-
-  try {
-    const _ctx = getActiveContext() || { config };
-    onAgentKilled(_ctx, agentType, buildKillTelemetryPayload({
-      entry,
-      fallbackLabel: label,
-      fallbackModuleId: moduleId,
-      fallbackGateId: null,
-      filesChanged,
-      baselineTracked,
-    }));
-  } catch (e: any) {
-    log('DEBUG', `Kill telemetry failed for ${label}: ${e?.message || e}`);
   }
   return termination.confirmed;
 }

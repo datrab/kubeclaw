@@ -61,3 +61,33 @@ data:
     fs.rmSync(fixtureDir, { recursive: true, force: true });
   }
 });
+
+test('buildSuite rejects shorthand Dockerfile FROM images before podman build', async () => {
+  const repoRoot = resolveRepoDir();
+  const fixtureDir = path.join(repoRoot, '.swarm', 'build-suite-dockerfile-test', String(process.pid));
+  const dockerfilePath = path.join(fixtureDir, 'Dockerfile');
+
+  fs.mkdirSync(fixtureDir, { recursive: true });
+  fs.writeFileSync(dockerfilePath, 'FROM node:20-slim\nCMD ["npm", "start"]\n');
+
+  try {
+    const verdict = await buildSuite({
+      config: {
+        serve: {
+          type: 'server',
+          image: 'docker.io/library/node:20-slim',
+          dockerfile: path.relative(repoRoot, dockerfilePath),
+          build_context: path.relative(repoRoot, fixtureDir),
+        },
+      },
+      payload: {},
+      logSink: null,
+    });
+
+    assert.equal(verdict.status, 'FAIL');
+    assert.equal(verdict.findings[0]?.rule, 'dockerfile-from-image');
+    assert.match(verdict.findings[0]?.message || '', /FROM "node:20-slim".*fully qualified/);
+  } finally {
+    fs.rmSync(fixtureDir, { recursive: true, force: true });
+  }
+});

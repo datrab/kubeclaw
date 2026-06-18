@@ -857,6 +857,8 @@ spec:
               value: {{ .Values.agentRole | default "default" | quote }}
             - name: KUBECLAW_CONTAINER_ROLE
               value: "buster-pipeline"
+            - name: BUSTER_PLATFORM_CAPABILITIES
+              value: {{ join "," (.Values.busterPipeline.platformCapabilities | default list) | quote }}
             - name: GIT_REPO_URL
               value: {{ .Values.agent.git.repoUrl | quote }}
             - name: REPO_ROOT

@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
+const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-manual-degraded-terminal-acceptance' });
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -94,6 +96,7 @@ try {
   assert.match(lifecycle, /pipeline_run\.halted/);
   assert.doesNotMatch(lifecycle, /pipeline_run\.completed/);
 
+  quietConsole.restore();
   console.log(JSON.stringify({
     ok: true,
     contract: 'manual-degraded-terminal',

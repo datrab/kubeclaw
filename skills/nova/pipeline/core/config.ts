@@ -290,6 +290,22 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
     errors.push('config.telemetry stream_key: removed; use config.telemetry.enabled and canonical run-scoped stream names');
   }
 
+  if (config.agent_observability !== undefined) {
+    if (!isPlainObject(config.agent_observability)) {
+      errors.push('config.agent_observability: must be an object when provided');
+      config.agent_observability = {};
+    }
+    if (config.agent_observability.required !== undefined) {
+      requireBoolean(config.agent_observability.required, 'config.agent_observability.required');
+    }
+    if (config.agent_observability.startup_evidence_timeout_ms !== undefined) {
+      const timeout = config.agent_observability.startup_evidence_timeout_ms;
+      if (typeof timeout !== 'number' || !Number.isFinite(timeout) || timeout < 0) {
+        errors.push('config.agent_observability.startup_evidence_timeout_ms: must be a non-negative number');
+      }
+    }
+  }
+
   // case_study.enabled — boolean
   if (config.case_study?.enabled !== undefined && typeof config.case_study.enabled !== 'boolean') {
     errors.push('config.case_study.enabled: must be a boolean');
@@ -308,10 +324,12 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
   // Reject unknown top-level config fields. Silent drift at the runtime config
   // boundary was a legacy fallback and is intentionally deleted in Phase 3.
   const KNOWN_TOP_LEVEL_FIELDS = new Set([
+    '_doc',
     'project', 'repo_root', 'paths', 'agents', 'fallback_model', 'gates',
     'poll_interval_seconds', 'default_timeout_minutes', 'default_max_fails',
     'auto_retry_threshold', 'session_nudge_threshold',
     'acp_monitor', 'telemetry', 'case_study', 'arch_validation',
+    'agent_observability', 'agent_observability_forge_completion_settle_ms',
     'plugins', 'discord_alerts', 'pre_check', 'review_defaults', 'buster',
     'discord_webhook_url', 'rate_limit', 'budget',
     'models', '_testOverrides',

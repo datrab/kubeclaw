@@ -600,6 +600,7 @@ assert.equal(volumeByName(busterDeploymentObject, 'podman-storage')?.emptyDir?.s
 assert.equal(busterGatewayContainerObject.livenessProbe?.periodSeconds >= 10, true, 'Buster gateway liveness period must tolerate sandbox pressure');
 assert.equal(busterGatewayContainerObject.livenessProbe?.timeoutSeconds >= 5, true, 'Buster gateway liveness timeout must tolerate sandbox pressure');
 assert.equal(busterGatewayContainerObject.livenessProbe?.failureThreshold >= 6, true, 'Buster gateway liveness failure threshold must avoid transient restart loops');
+assert.equal(envValue(busterPipelineContainerObject, 'BUSTER_PLATFORM_CAPABILITIES'), 'image_prepull', 'Buster pipeline must pre-pull standard base images before task polling');
 assert.equal(busterPipelineContainerObject.livenessProbe?.periodSeconds >= 10, true, 'Buster pipeline liveness period must tolerate sandbox pressure');
 assert.equal(busterPipelineContainerObject.livenessProbe?.timeoutSeconds >= 5, true, 'Buster pipeline liveness timeout must tolerate sandbox pressure');
 assert.equal(busterPipelineContainerObject.livenessProbe?.failureThreshold >= 6, true, 'Buster pipeline liveness failure threshold must avoid transient restart loops');

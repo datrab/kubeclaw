@@ -14,6 +14,7 @@ export interface AgentObservabilityIngesterConfig {
   pollBlockMs: number;
   reclaimIdleMs: number;
   redisCommandTimeoutMs: number;
+  loopDelayMs: number;
   deadLetterMaxLen: number;
   controlStreamMaxLen: number;
   controlLagDegradedThreshold: number;
@@ -118,6 +119,7 @@ export function resolveAgentObservabilityIngesterConfig(
     pollBlockMs: positiveInteger(config, 'pollBlockMs', 1000),
     reclaimIdleMs: positiveInteger(config, 'reclaimIdleMs', 60000),
     redisCommandTimeoutMs: positiveInteger(config, 'redisCommandTimeoutMs', 1000),
+    loopDelayMs: positiveInteger(config, 'loopDelayMs', 250),
     deadLetterMaxLen: positiveInteger(config, 'deadLetterMaxLen', 1000),
     controlStreamMaxLen: positiveInteger(config, 'controlStreamMaxLen', 10000),
     controlLagDegradedThreshold: nonNegativeInteger(config, 'controlLagDegradedThreshold', 1000),

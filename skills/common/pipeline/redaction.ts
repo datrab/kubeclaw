@@ -94,6 +94,7 @@ function finiteNumberOrNull(value: unknown) {
 export function sanitizeTranscriptDetail(value: unknown, label = 'transcript_detail') {
   try {
     if (value == null || value === '') return null;
+    if (label === 'transcript_detail') return redactSecrets(value, 500);
     return buildRedactionMarker(value, label);
   } catch (error: any) {
     return `[redacted ${label}; sanitizer_error=${redactSecrets(error?.message || 'failed', 160)}]`;

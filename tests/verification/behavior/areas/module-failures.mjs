@@ -1092,8 +1092,8 @@ const config = {
   await flushAsync();
 
   const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
-  assert.equal(streamEvents.some((event) => event.type === 'plugin.validator.pre_check.bridge_invoked'), true);
-  assert.equal(streamEvents.some((event) => event.type === 'plugin.validator.delivery_lint.bridge_invoked'), false, 'already-satisfied delivery_lint milestone should not rerun');
+  assert.equal(streamEvents.some((event) => event.type === 'plugin.event' && event.plugin_id === 'builtin.validator.pre_check' && event.plugin_event === 'bridge_invoked'), true);
+  assert.equal(streamEvents.some((event) => event.type === 'plugin.event' && event.plugin_id === 'builtin.validator.delivery_lint' && event.plugin_event === 'bridge_invoked'), false, 'already-satisfied delivery_lint milestone should not rerun');
 });
 
 await record('module-runner Git sync stop preserves canonical correlation', async () => {

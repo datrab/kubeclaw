@@ -305,63 +305,6 @@ export function onGateFail(ctx, gateId, data = {}) {
   });
 }
 
-/**
- * Emit agent.spawned.
- * @param {object} ctx
- * @param {string} agentType
- * @param {object} data - enriched telemetry payload
- */
-export function onAgentSpawned(ctx, agentType, data = {}) {
-  if (agentType && !data.agent_type) data = { agent_type: agentType, ...data };
-
-  emitEventNonBlocking(ctx, 'agent.spawned', {
-    agent_type: data.agent_type || agentType || null,
-    label: data.label || null,
-    model: data.model || null,
-    dispatch: data.dispatch || null,
-    module_id: data.module_id || null,
-    gate_id: data.gate_id || null,
-    gate_type: data.gate_type || null,
-    substep: data.substep || null,
-    attempt: data.attempt ?? null,
-    dispatch_id: data.dispatch_id || null,
-    timeout_minutes: data.timeout_minutes ?? null,
-    session_key: data.session_key || null,
-    thinking_level: data.thinking_level || null,
-  });
-}
-
-/**
- * Emit agent.killed and accumulate tokens into ctx.stats.
- * @param {object} ctx
- * @param {string} agentType
- * @param {object} data - enriched telemetry payload
- */
-export function onAgentKilled(ctx, agentType, data = {}) {
-  const metaTokens = data || {};
-
-  emitEventNonBlocking(ctx, 'agent.killed', {
-    agent_type: agentType || data.agent_type || null,
-    label: data.label || null,
-    module_id: data.module_id || null,
-    gate_id: data.gate_id || null,
-    gate_type: data.gate_type || null,
-    session_key: data.session_key || null,
-    attempt: data.attempt ?? null,
-    dispatch_id: data.dispatch_id || null,
-    has_changes: data.has_changes ?? null,
-    duration_seconds: data.duration_seconds ?? null,
-    files_changed: data.files_changed || null,
-    reason: data.reason || null,
-  });
-
-  // Accumulate into ctx.stats for module-level summary
-  if (ctx?.stats) {
-    ctx.stats.inputTokens = (ctx.stats.inputTokens ?? 0) + (metaTokens.inputTokens ?? 0);
-    ctx.stats.outputTokens = (ctx.stats.outputTokens ?? 0) + (metaTokens.outputTokens ?? 0);
-  }
-}
-
 export function onPhaseStarted(ctx, moduleId, phase, model) {
   emitEventNonBlocking(ctx, 'phase.started', { module_id: moduleId, phase, model });
 }

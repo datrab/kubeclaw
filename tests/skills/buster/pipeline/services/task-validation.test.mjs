@@ -71,6 +71,26 @@ test('validateBusterTaskPayload requires typed test_config suite timeout policy'
   );
 });
 
+test('validateBusterTaskPayload rejects shorthand serve image references', () => {
+  assert.throws(
+    () => validateBusterTaskPayload(validPayload({
+      test_config: {
+        suite_timeout_ms: 5000,
+        serve: { image: 'node:20-slim' },
+      },
+    })),
+    (error) => error instanceof MalformedBusterTaskError
+      && error.details.reason === 'invalid_serve_image_reference'
+      && error.details.invalid_fields[0].field === 'test_config.serve.image',
+  );
+  assert.equal(validateBusterTaskPayload(validPayload({
+    test_config: {
+      suite_timeout_ms: 5000,
+      serve: { image: 'docker.io/library/node:20-slim' },
+    },
+  })).moduleId, 'mod');
+});
+
 test('validateBusterTaskPayload requires completion_stream identity', () => {
   assert.throws(
     () => validateBusterTaskPayload(validPayload({ completion_stream: undefined })),

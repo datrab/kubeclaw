@@ -29,6 +29,7 @@ import type { Finding, SuiteVerdict } from '../services/verdict-schema.ts';
 import { REPO_DIR, resolveRepoScopedPath, stripRepoDirPrefix } from './repo-paths.ts';
 import { buildCleanupPodmanLabelArgs, trackSandboxResources } from '../services/sandbox-cleanup.ts';
 import { buildSubprocessEnv } from '../security.ts';
+import { validateBaseImageRef } from '../services/base-images.ts';
 
 declare const process: {
   kill(pid: number, signal?: string | number): boolean;
@@ -85,12 +86,29 @@ function errorOutput(error: any): string {
 
 function requireCanonicalImageRef(image: unknown, field = 'serve.image'): string {
   const ref = String(image || '').trim();
-  const first = ref.split('/')[0] || '';
-  const hasRegistry = first === 'localhost' || first.includes('.') || first.includes(':');
-  if (!ref || !ref.includes('/') || !hasRegistry) {
-    throw new Error(`${field} must be a fully qualified image reference with registry/namespace; shorthand image names are not supported`);
+  const validation = validateBaseImageRef(ref);
+  if (validation.ok) return validation.value;
+  throw new Error(`${field} must be a fully qualified image reference with registry/namespace; shorthand image names are not supported (${validation.reason})`);
+}
+
+function validateDockerfileFromImages(dockerfilePath: string): Finding[] {
+  const findings: Finding[] = [];
+  const text = fs.readFileSync(dockerfilePath, 'utf8');
+  const lines = text.split(/\r?\n/);
+  for (let i = 0; i < lines.length; i += 1) {
+    const match = lines[i]?.match(/^\s*FROM\s+(?:--platform=\S+\s+)?([^\s]+)/i);
+    if (!match) continue;
+    const imageRef = match[1];
+    if (!imageRef || imageRef.startsWith('$')) {
+      findings.push(createFinding(SEVERITY.CRITICAL, `Dockerfile FROM at line ${i + 1} must use a literal fully qualified image reference`, { rule: 'dockerfile-from-image' }));
+      continue;
+    }
+    const validation = validateBaseImageRef(imageRef);
+    if (!validation.ok) {
+      findings.push(createFinding(SEVERITY.CRITICAL, `Dockerfile FROM "${imageRef}" at line ${i + 1} must be fully qualified with registry/namespace (${validation.reason})`, { rule: 'dockerfile-from-image' }));
+    }
   }
-  return ref;
+  return findings;
 }
 
 function parseErrors(output: string, source = 'stderr'): Finding[] {
@@ -118,9 +136,53 @@ function parseErrors(output: string, source = 'stderr'): Finding[] {
   return findings.slice(0, 20);
 }
 
-function loadJsYaml(): any {
-  // @ts-expect-error Optional runtime dependency declaration is not installed for this migration island.
-  return import('js-yaml');
+function unquoteYamlScalar(value: string): string {
+  return value.trim().replace(/^['"]|['"]$/g, '');
+}
+
+function parseSimpleYamlDocument(content: string): AnyRecord {
+  const doc: AnyRecord = {};
+  const kindMatch = content.match(/^\s*kind:\s*([^\n#]+)/m);
+  if (kindMatch) doc.kind = unquoteYamlScalar(kindMatch[1] || '');
+  const metadataNameMatch = content.match(/^\s*metadata:\s*\n(?:\s+[^\n]*\n)*?\s+name:\s*([^\n#]+)/m);
+  if (metadataNameMatch) doc.metadata = { name: unquoteYamlScalar(metadataNameMatch[1] || '') };
+  if (doc.kind === 'Secret') {
+    const data: AnyRecord = {};
+    const dataMatch = content.match(/^\s*data:\s*\n([\s\S]*?)(?=^\S|$)/m);
+    for (const line of (dataMatch?.[1] || '').split(/\r?\n/)) {
+      const match = line.match(/^\s+([A-Za-z0-9_.-]+):\s*([^\n#]+)/);
+      if (match) data[match[1]] = unquoteYamlScalar(match[2] || '');
+    }
+    doc.data = data;
+  }
+  const env: AnyRecord[] = [];
+  const secretRefRe = /-\s+name:\s*([^\n#]+)\s*\n\s+valueFrom:\s*\n\s+secretKeyRef:\s*\n\s+name:\s*([^\n#]+)\s*\n\s+key:\s*([^\n#]+)/g;
+  for (const match of content.matchAll(secretRefRe)) {
+    env.push({
+      name: unquoteYamlScalar(match[1] || ''),
+      valueFrom: {
+        secretKeyRef: {
+          name: unquoteYamlScalar(match[2] || ''),
+          key: unquoteYamlScalar(match[3] || ''),
+        },
+      },
+    });
+  }
+  if (env.length > 0) {
+    doc.spec = { template: { spec: { containers: [{ env }] } } };
+  }
+  return doc;
+}
+
+async function loadYamlDocument(content: string): Promise<AnyRecord> {
+  try {
+    // @ts-expect-error Optional runtime dependency declaration is not installed for this migration island.
+    const jsYaml = await import('js-yaml');
+    return (jsYaml.default?.load(content) ?? jsYaml.load(content) ?? {}) as AnyRecord;
+  } catch (error) {
+    if (!String(errorMessage(error)).includes('Cannot find package')) throw error;
+    return parseSimpleYamlDocument(content);
+  }
 }
 
 async function extractEnvFromManifest(deploymentYamlPath: string, secretYamlPath: string | null): Promise<EnvExtractionResult> {
@@ -131,8 +193,7 @@ async function extractEnvFromManifest(deploymentYamlPath: string, secretYamlPath
 
   let doc: any;
   try {
-    const jsYaml = await loadJsYaml();
-    doc = jsYaml.default.load(fs.readFileSync(deploymentYamlPath, 'utf8'));
+    doc = await loadYamlDocument(fs.readFileSync(deploymentYamlPath, 'utf8'));
   } catch (error) {
     return { ok: false, env: [], findings: [createFinding(SEVERITY.CRITICAL, `serve.deployment_yaml could not be parsed: ${errorMessage(error)}`, { rule: 'serve-deployment-yaml' })] };
   }
@@ -157,8 +218,7 @@ async function extractEnvFromManifest(deploymentYamlPath: string, secretYamlPath
       findings.push(createFinding(SEVERITY.CRITICAL, `serve.secret_yaml not found: ${secretYamlPath}`, { rule: 'serve-secret-yaml' }));
     } else {
       try {
-        const jsYaml = await loadJsYaml();
-        const secretDoc = jsYaml.default.load(fs.readFileSync(secretYamlPath, 'utf8'));
+        const secretDoc = await loadYamlDocument(fs.readFileSync(secretYamlPath, 'utf8'));
         secretName = String(secretDoc?.metadata?.name || '');
         secretData = secretDoc?.data || {};
         secretLoaded = true;
@@ -289,6 +349,11 @@ async function buildServer(config: AnyRecord, context: BuildContext): Promise<Bu
   if (config.dockerfile) {
     const dockerfile = resolveRepoScopedPath(config.dockerfile, { field: 'serve.dockerfile' });
     if (!dockerfile) return { ok: false, findings: [createFinding(SEVERITY.CRITICAL, 'serve.dockerfile is invalid', { rule: 'serve-dockerfile' })], output: '' };
+    const dockerfileImageFindings = validateDockerfileFromImages(dockerfile);
+    if (dockerfileImageFindings.length > 0) {
+      const output = dockerfileImageFindings.map((finding) => finding.message).join('\n');
+      return { ok: false, findings: dockerfileImageFindings, output };
+    }
     const buildContext = config.build_context ? resolveRepoScopedPath(config.build_context, { field: 'serve.build_context' }) : path.dirname(dockerfile);
     const buildTimeout = (config.build_timeout || 300) * 1000;
     const imageTag = config.image || `localhost/build-${containerName}`;

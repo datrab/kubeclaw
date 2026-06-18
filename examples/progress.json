@@ -677,7 +677,7 @@
           "type": "static",
           "project_dir": "Projects/kubecommand/src",
           "build_cmd": "cd frontend && npm install && npm run build",
-          "image": "node:20-slim"
+          "image": "docker.io/library/node:20-slim"
         },
         "unit": {
           "test_cmd": "cd frontend && npm install && npx vitest run --reporter=verbose"
@@ -715,7 +715,7 @@
           "type": "static",
           "project_dir": "Projects/kubecommand/src",
           "build_cmd": "cd frontend && npm install && npm run build",
-          "image": "node:20-slim"
+          "image": "docker.io/library/node:20-slim"
         },
         "visual-reg": {
           "baseline_dir": ".swarm/modules/15-dashboard-core-pages/baselines"
@@ -759,7 +759,7 @@
           "type": "static",
           "project_dir": "Projects/kubecommand/src",
           "build_cmd": "cd frontend && npm install && npm run build",
-          "image": "node:20-slim"
+          "image": "docker.io/library/node:20-slim"
         },
         "visual-reg": {
           "baseline_dir": ".swarm/modules/16-resource-pages/baselines"
@@ -803,7 +803,7 @@
           "type": "static",
           "project_dir": "Projects/kubecommand/src",
           "build_cmd": "cd frontend && npm install && npm run build",
-          "image": "node:20-slim"
+          "image": "docker.io/library/node:20-slim"
         },
         "visual-reg": {
           "baseline_dir": ".swarm/modules/17-feature-pages/baselines"

@@ -364,14 +364,15 @@ const busterTaskLifecycleText = [
   path.join(sourceRoot, 'skills', 'buster', 'pipeline', 'services', 'task-lifecycle.ts'),
   path.join(sourceRoot, 'skills', 'buster', 'pipeline', 'services', 'task-lifecycle/session.ts'),
 ].map((filePath) => fs.readFileSync(filePath, 'utf8')).join('\n');
-assert.equal(busterTaskLifecycleText.includes("await emitEvent(tctx, 'agent.spawned'"), true, 'Buster task orchestration must emit agent.spawned for child sessions');
-assert.equal(busterTaskLifecycleText.includes("await emitEvent(tctx, 'agent.killed'"), true, 'Buster task orchestration must emit agent.killed for child sessions');
+assert.equal(busterTaskLifecycleText.includes("await emitEvent(tctx, 'agent.spawned'"), false, 'Buster task orchestration must not emit agent.spawned outside the observer plugin');
+assert.equal(busterTaskLifecycleText.includes("await emitEvent(tctx, 'agent.killed'"), false, 'Buster task orchestration must not emit agent.killed outside the observer plugin');
 
 const unknownEvents = [...emitted].filter((name) => !contractEvents.has(name)).sort();
 assert.equal(unknownEvents.length, 0, `Unknown telemetry event names: ${unknownEvents.join(', ')}`);
 
+const retiredAgentStatusEvents = new Set(['agent.killed', 'agent.progress', 'agent.transcript']);
 const staleContractEvents = [...contractEvents]
-  .filter((name) => !emitted.has(name))
+  .filter((name) => !emitted.has(name) && !retiredAgentStatusEvents.has(name))
   .sort();
 assert.equal(staleContractEvents.length, 0, `Contract-only telemetry event names: ${staleContractEvents.join(', ')}`);
 
@@ -380,7 +381,6 @@ const payloadSchema = await import(pathToFileURL(payloadSchemaPath).href);
 const novaPayloadSourceEvents = new Set();
 for (const relPath of [
   'skills/nova/pipeline/services/telemetry/builders.ts',
-  'skills/nova/pipeline/services/telemetry/progress.ts',
   'skills/nova/pipeline/services/observability.ts',
   'skills/nova/pipeline/services/system-io-warning.ts',
   'skills/nova/pipeline/core/policy.ts',
@@ -389,8 +389,8 @@ for (const relPath of [
 }
 assert.deepEqual(
   payloadSchema.TELEMETRY_PAYLOAD_EVENT_TYPES,
-  [...new Set([...novaPayloadSourceEvents, ...agentObservabilityTelemetryEvents, 'plugin.event'])].sort(),
-  'common telemetry payload schema registry must exactly cover core builder/progress/observability/system I/O warning events, agent-observability first-class events, plus the generic plugin event',
+  [...new Set([...novaPayloadSourceEvents, ...agentObservabilityTelemetryEvents, ...retiredAgentStatusEvents, 'plugin.event'])].sort(),
+  'common telemetry payload schema registry must exactly cover core builder/progress/observability/system I/O warning events, agent-observability first-class events, retained compatibility event schemas, plus the generic plugin event',
 );
 assert.deepEqual(
   payloadSchema.TELEMETRY_PAYLOAD_EVENT_TYPES,
@@ -520,6 +520,10 @@ assert.throws(
 );
 
 const dispatchForSchema = await import(pathToFileURL(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'services', 'telemetry', 'dispatch.ts')).href);
+const builtinsRegistrySource = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'core', 'registry', 'builtins.ts'), 'utf8');
+assert.equal(builtinsRegistrySource.includes("ctx.telemetry.emit({ eventType: 'plugin.event'"), true, 'built-in plugin bridge traces must emit canonical plugin.event telemetry');
+assert.equal(builtinsRegistrySource.includes("ctx.telemetry.emit({ eventType, payload })"), false, 'built-in plugin bridge traces must not emit unregistered plugin-specific event types');
+assert.equal(builtinsRegistrySource.includes("ctx.stream.emit({ eventType: 'plugin.event'"), false, 'built-in plugin bridge traces must not route canonical telemetry through the generic plugin stream surface');
 const invalidTelemetrySwarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'telemetry-payload-invalid-'));
 const invalidTelemetryDir = path.join(invalidTelemetrySwarmDir, 'logs', 'pipeline', 'runs', 'run-invalid-payload');
 const invalidTelemetryResult = await dispatchForSchema.emitEvent({
@@ -780,31 +784,10 @@ novaTelemetryA.onRetryExhausted(ctx, 'gate:dispatch', {
   max_attempts: 2,
   max_fails: 2,
 });
-novaTelemetryA.emitTranscriptLine(ctx, {
-  agent_type: 'echo',
-  label: 'echo-review-06',
-  module_id: null,
-  gate_id: 'gate:review',
-  gate_type: 'review',
-  session_key: 'agent:echo:gate-review',
-  dispatch_id: 'dispatch-review-06-2',
-  line_kind: 'assistant',
-  text: 'Reviewing gate feedback now',
-  transcript_offset: 42,
-});
-novaTelemetryA.emitAgentProgress(ctx, {
-  agent_type: 'echo',
-  label: 'echo-review-06',
-  module_id: null,
-  gate_id: 'gate:review',
-  gate_type: 'review',
-  session_key: 'agent:echo:gate-review',
-  dispatch_id: 'dispatch-review-06-2',
-  elapsed_seconds: 15,
-  transcript_events: 3,
-  last_activity: 'Reviewing gate feedback now',
-  status: 'active',
-});
+assert.equal(Object.prototype.hasOwnProperty.call(novaTelemetryA, 'onAgentSpawned'), false);
+assert.equal(Object.prototype.hasOwnProperty.call(novaTelemetryA, 'onAgentKilled'), false);
+assert.equal(Object.prototype.hasOwnProperty.call(novaTelemetryA, 'emitTranscriptLine'), false);
+assert.equal(Object.prototype.hasOwnProperty.call(novaTelemetryA, 'emitAgentProgress'), false);
 novaTelemetryA.emitObservabilityDegraded(ctx, {
   component: 'acp_monitor',
   surface: 'gateway',
@@ -842,8 +825,12 @@ await flushAsync();
 await novaTelemetryB.closeTelemetryRedis();
 
 const pipelineEvents = xaddEvents(sharedStreamKey);
-assert.equal(pipelineEvents.length, 19, 'expected nineteen telemetry xadd operations on the shared run stream');
-assert.deepEqual(pipelineEvents.map((event) => event.seq), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]);
+const baselinePipelineEventCount = 17;
+assert.equal(pipelineEvents.length, baselinePipelineEventCount, 'expected seventeen telemetry xadd operations on the shared run stream after plugin-owned agent transcript/progress no-ops');
+assert.deepEqual(
+  pipelineEvents.map((event) => event.seq),
+  Array.from({ length: baselinePipelineEventCount }, (_, index) => index + 1),
+);
 assert(pipelineEvents.every((event) => event.v === 1), 'all telemetry events must set v=1');
 assert(pipelineEvents.every((event) => event.project === 'proj' && event.run_id === sharedRunId));
 
@@ -889,8 +876,11 @@ assert.deepEqual(invalidBusterEvents[0].validation_errors, ['pages_total is not 
 await busterTelemetry.closeTelemetry(invalidBusterCtx);
 
 const novaEvents = pipelineEvents.filter((event) => event.source === 'pipeline');
-assert.equal(novaEvents.length, 16, 'expected sixteen Nova telemetry events on the shared run stream');
-assert.deepEqual(novaEvents.map((event) => event.seq), [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]);
+assert.equal(novaEvents.length, baselinePipelineEventCount - 3, 'expected fourteen Nova telemetry events on the shared run stream after plugin-owned agent transcript/progress no-ops');
+assert.deepEqual(
+  novaEvents.map((event) => event.seq),
+  Array.from({ length: baselinePipelineEventCount - 3 }, (_, index) => index + 4),
+);
 assert(novaEvents
   .filter((event) => event.type !== 'observability.degraded' && event.type !== 'observability.restored')
   .every((event) => event.emitter === 'nova/pipeline/services/telemetry'));
@@ -993,19 +983,8 @@ assert.equal(gateRetryExhaustedWithDispatch.dispatch_id, 'dispatch-gate-contract
 assert.equal(gateRetryExhaustedWithDispatch.session_key, 'agent:buster:gate-contract-1');
 assert.equal(gateRetryExhaustedWithDispatch.phase, 'buster_gate');
 
-const transcript = pipelineEvents.find((event) => event.type === 'agent.transcript');
-assert(transcript, 'missing agent.transcript event');
-assert.equal(transcript.gate_id, 'gate:review');
-assert.equal(transcript.gate_type, 'review');
-assert.equal(transcript.dispatch_id, 'dispatch-review-06-2');
-assert.equal(transcript.session_key, 'agent:echo:gate-review');
-
-const progressEvent = pipelineEvents.find((event) => event.type === 'agent.progress');
-assert(progressEvent, 'missing agent.progress event');
-assert.equal(progressEvent.gate_id, 'gate:review');
-assert.equal(progressEvent.gate_type, 'review');
-assert.equal(progressEvent.dispatch_id, 'dispatch-review-06-2');
-assert.equal(progressEvent.session_key, 'agent:echo:gate-review');
+assert.equal(pipelineEvents.some((event) => event.type === 'agent.transcript'), false);
+assert.equal(pipelineEvents.some((event) => event.type === 'agent.progress'), false);
 
 const observabilityDegraded = pipelineEvents.find((event) => event.type === 'observability.degraded');
 assert(observabilityDegraded, 'missing observability.degraded event');
@@ -1082,7 +1061,7 @@ assert.equal(failOnlyResult.correlation.attempt, 3);
 assert.equal(failOnlyResult.diagnostics.metadata.module_status?.attempt, 3);
 await flushAsync();
 
-const failOnlyEvents = xaddEvents(sharedStreamKey).slice(19);
+const failOnlyEvents = xaddEvents(sharedStreamKey).slice(baselinePipelineEventCount);
 assert.equal(failOnlyEvents.length, 1, 'expected one FAIL telemetry event for a non-terminal module failure');
 assert.equal(failOnlyEvents[0].type, 'module.status_changed');
 assert.equal(failOnlyEvents[0].module_id, 'mod-fail');
@@ -1137,7 +1116,7 @@ assert.equal(blockedResult.terminal.status, 'blocked', 'terminal module failures
 assert.equal(blockedResult.correlation.attempt, 3);
 await flushAsync();
 
-const blockedEvents = xaddEvents(sharedStreamKey).slice(20);
+const blockedEvents = xaddEvents(sharedStreamKey).slice(baselinePipelineEventCount + 1);
 assert.equal(blockedEvents.length, 3, 'expected FAIL + retry.exhausted + BLOCKED telemetry for a terminal module failure');
 assert.equal(blockedEvents[0].type, 'module.status_changed');
 assert.equal(blockedEvents[0].module_id, 'mod-block');
@@ -1253,29 +1232,34 @@ await flushAsync();
 const crashEvents = xaddEvents(sharedStreamKey)
   .slice(crashEventOffset)
   .filter((event) => contractEvents.has(event.type));
-assert.deepEqual(crashEvents.map((event) => event.type), ['phase.started', 'module.status_changed', 'retry.exhausted', 'module.status_changed']);
+assert.deepEqual(crashEvents.map((event) => event.type), ['plugin.event', 'phase.started', 'module.status_changed', 'retry.exhausted', 'module.status_changed']);
+assert.equal(crashEvents[0].plugin_id, 'builtin.worker.module_buster');
+assert.equal(crashEvents[0].plugin_event, 'bridge_invoked');
 assert.equal(crashEvents[0].module_id, 'mod-crash');
-assert.equal(crashEvents[0].phase, 'buster');
+assert.equal(crashEvents[0].attempt, 1);
+assert.equal(crashEvents[0].details.bridge_event_type, 'plugin.worker.module_buster.bridge_invoked');
 assert.equal(crashEvents[1].module_id, 'mod-crash');
-assert.equal(crashEvents[1].old_status, 'TESTING');
-assert.equal(crashEvents[1].new_status, 'FAIL');
-assert.equal(crashEvents[1].attempt, 1);
 assert.equal(crashEvents[1].phase, 'buster');
-assert.equal(crashEvents[1].model, 'buster-test-model');
-assert.equal(crashEvents[1].reason, 'Buster timed out (15min)');
 assert.equal(crashEvents[2].module_id, 'mod-crash');
+assert.equal(crashEvents[2].old_status, 'TESTING');
+assert.equal(crashEvents[2].new_status, 'FAIL');
 assert.equal(crashEvents[2].attempt, 1);
 assert.equal(crashEvents[2].phase, 'buster');
-assert.equal(crashEvents[2].session_key, 'agent:crash:session');
-assert.equal(crashEvents[2].max_attempts, 1);
-assert.equal(crashEvents[2].max_fails, 1);
+assert.equal(crashEvents[2].model, 'buster-test-model');
 assert.equal(crashEvents[2].reason, 'Buster timed out (15min)');
 assert.equal(crashEvents[3].module_id, 'mod-crash');
-assert.equal(crashEvents[3].old_status, 'FAIL');
-assert.equal(crashEvents[3].new_status, 'BLOCKED');
 assert.equal(crashEvents[3].attempt, 1);
 assert.equal(crashEvents[3].phase, 'buster');
-assert.equal(crashEvents[3].reason, 'Buster crash retries exhausted after 1 attempt (Buster timed out (15min))');
+assert.equal(crashEvents[3].session_key, 'agent:crash:session');
+assert.equal(crashEvents[3].max_attempts, 1);
+assert.equal(crashEvents[3].max_fails, 1);
+assert.equal(crashEvents[3].reason, 'Buster timed out (15min)');
+assert.equal(crashEvents[4].module_id, 'mod-crash');
+assert.equal(crashEvents[4].old_status, 'FAIL');
+assert.equal(crashEvents[4].new_status, 'BLOCKED');
+assert.equal(crashEvents[4].attempt, 1);
+assert.equal(crashEvents[4].phase, 'buster');
+assert.equal(crashEvents[4].reason, 'Buster crash retries exhausted after 1 attempt (Buster timed out (15min))');
 
 const rateLimitMod = await importFresh(generalRoot, '/app/skills/pipeline/services/rate-limit.ts');
 const rateLimitRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'check-telemetry-rate-limit-'));
@@ -1371,10 +1355,10 @@ assert.equal(telemetrySchemaText.includes('For the high-value lifecycle and obse
 assert.equal(telemetrySchemaText.includes('Valid statuses: `PENDING`, `IN_PROGRESS`, `READY_FOR_TESTING`, `TESTING`, `PASS`, `FAIL`, `BLOCKED`, `RATE_LIMITED`'), true);
 assert.equal(telemetrySchemaText.includes('"new_status": "RATE_LIMITED"'), true);
 assert.equal(telemetrySchemaText.includes('"reason": "Paused 2h (rate limit)"'), true);
-assert.equal(telemetrySchemaText.includes('Session-backed agent lifecycle events use `agent.spawn.requested`, `agent.spawned`, `agent.delivery.target`, and `agent.killed`; plugin-owned task lifecycle details use `plugin.event` with `plugin_id: "buster"`.'), true);
+assert.equal(telemetrySchemaText.includes('Session-backed agent observability is plugin-owned. Nova may request and target child sessions with `agent.spawn.requested` and `agent.delivery.target`, but runtime start/end/progress/transcript truth is promoted from the OpenClaw observer plugin through the agent-observability ingester.'), true);
 assert.equal(telemetrySchemaText.includes('buster.task_started'), false);
 assert.equal(telemetrySchemaText.includes('buster.task_completed'), false);
-assert.equal(telemetrySchemaText.includes('When the spawned or terminated session belongs to gate-owned work and Nova already knows that gate identity, both lifecycle events also preserve canonical `gate_type` and `dispatch_id` join keys alongside `gate_id`, `attempt`, and `session_key`.'), true);
+assert.equal(telemetrySchemaText.includes('When a spawned or terminated session belongs to gate-owned work and Nova supplied that identity to the observer path, observer-promoted lifecycle events preserve canonical `gate_type` and `dispatch_id` join keys alongside `gate_id`, `attempt`, and `session_key`.'), true);
 assert.equal(telemetrySchemaText.includes('"gate_type": "review"'), true);
 assert.equal(telemetrySchemaText.includes('"dispatch_id": "dispatch-review-06-1"'), true);
 assert.equal(telemetrySchemaText.includes('| gate_type | string\\|null | Canonical gate type when the live session is gate-owned and Nova knows that identity |'), true);

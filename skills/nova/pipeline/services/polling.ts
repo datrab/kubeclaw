@@ -42,6 +42,7 @@ import {
   createAgentEndedTelemetryReader,
   shouldSettleAgentEnded,
 } from './agent-observability-forge-completion.ts';
+import { readForgeCompletionArtifact } from './forge-completion.ts';
 import { BudgetExhaustedError, createBudgetFromMinutes, isBudgetExhaustedError, sleep } from '../timing.ts';
 
 export { archiveModuleCompletions } from './polling-redis-completion.ts';
@@ -423,10 +424,11 @@ export async function pollStatus(config, moduleDir, expectedStatuses, timeoutMin
   }, timeoutMinutes, moduleDir, opts);
 }
 
-// ─── Forge Completion Polling (agent.ended + meaningful diff authority) ──
-// Forge completion is driven by canonical agent.ended telemetry and meaningful git
-// evidence. ACP monitoring remains an observability/rate-limit adapter only and
-// cannot authorize Forge readiness when hook evidence is unavailable or missing.
+// ─── Forge Completion Polling (agent.ended + typed artifact authority) ──
+// Forge completion is normally closed by canonical agent.ended telemetry and
+// meaningful git evidence. When the worker session is already terminal and hook
+// evidence is unavailable, the typed forge-completion.json artifact is the
+// durable worker contract and may authorize the terminal Forge result.
 
 export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opts = {}) {
   const { sessionLabel } = opts;
@@ -561,6 +563,20 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
         if (acpState.terminal) {
           const terminalDetail = sanitizeTranscriptDetail(acpState.detail);
           const transcript = sanitizeAcpTranscriptEvidence(acpState.transcript);
+          const artifact = readForgeCompletionArtifact(config, moduleDir);
+          if (artifact.found && artifact.valid) {
+            return {
+              done: true,
+              result: pollResult(true, 'forge_completion', {
+                ...artifact.artifact,
+                source: 'forge_completion_artifact',
+                module_id: pollIdentity.module_id || moduleDir,
+                dispatch_id: pollIdentity.dispatch_id || null,
+                gateway_label: pollIdentity.gateway_label || sessionLabel || null,
+                session_key: pollIdentity.session_key || null,
+              }, { transcript }),
+            };
+          }
           const missingHookStatus = {
             status: STATUS.FAIL,
             source: 'acp_session_monitor_diagnostic',

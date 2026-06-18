@@ -62,6 +62,8 @@ busterPipeline:
   command:
     - "node"
     - "/app/skills/buster-pipeline.ts"
+  platformCapabilities:
+    - image_prepull
   resources: {}
 
 # -- Replica count (always 1 per agent — agents are stateful)

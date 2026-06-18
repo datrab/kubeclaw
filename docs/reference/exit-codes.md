@@ -64,4 +64,4 @@ Step outcomes map to terminal status through `terminal-decision.ts`:
 | `timeout` | `timed_out` |
 | `rate_limited` | `rate_limited` |
 
-Run `node tests/verification/contracts/check-pipeline-terminal-decision-surface.mjs --source-root "$PWD"` and `node tests/verification/contracts/check-pipeline-step-result-surface.mjs --source-root "$PWD"` when changing terminal behavior.
+Run `node tests/verification/contracts/check-pipeline-step-result-surface.mjs --source-root "$PWD"` and `node tests/verification/contracts/check-manual-degraded-terminal-acceptance.mjs --source-root "$PWD"` when changing terminal behavior.

@@ -71,24 +71,24 @@ await record('telemetry schema explains effective pipeline.started project model
   assert.equal(telemetrySchema.includes('legacy top-level `models`'), false);
 });
 
-await record('telemetry schema documents Buster child-session lifecycle under agent.spawned and agent.killed', async () => {
+await record('telemetry schema documents plugin-owned child-session lifecycle authority', async () => {
   const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
   const busterPipeline = [
     'skills/buster/buster-pipeline.ts',
     'skills/buster/pipeline/services/task-lifecycle.ts',
     'skills/buster/pipeline/services/task-lifecycle/session.ts',
   ].map((relPath) => readOverlayText(sourceRoot, overlayRoot, relPath)).join('\n');
-  assert.equal(telemetrySchema.includes('Session-backed agent lifecycle events use `agent.spawn.requested`, `agent.spawned`, `agent.delivery.target`, and `agent.killed`; plugin-owned task lifecycle details use `plugin.event` with `plugin_id: "buster"`.'), true);
-  assert.equal(telemetrySchema.includes('Session-backed agent termination uses `agent.killed`; plugin-owned task completion details use `plugin.event` with `plugin_event: "task_completed"`.'), true);
+  assert.equal(telemetrySchema.includes('Session-backed agent observability is plugin-owned. Nova may request and target child sessions with `agent.spawn.requested` and `agent.delivery.target`, but runtime start/end/progress/transcript truth is promoted from the OpenClaw observer plugin through the agent-observability ingester.'), true);
+  assert.equal(telemetrySchema.includes('`agent.killed` is retained as a compatibility schema for older consumers, but new session termination truth comes from observer-plugin terminal events such as `agent.ended` and `agent.session.ended`.'), true);
   assert.equal(telemetrySchema.includes('buster.task_started'), false);
   assert.equal(telemetrySchema.includes('buster.task_completed'), false);
-  assert.equal(telemetrySchema.includes('When the spawned or terminated session belongs to gate-owned work and Nova already knows that gate identity, both lifecycle events also preserve canonical `gate_type` and `dispatch_id` join keys alongside `gate_id`, `attempt`, and `session_key`.'), true);
+  assert.equal(telemetrySchema.includes('When a spawned or terminated session belongs to gate-owned work and Nova supplied that identity to the observer path, observer-promoted lifecycle events preserve canonical `gate_type` and `dispatch_id` join keys alongside `gate_id`, `attempt`, and `session_key`.'), true);
   assert.equal(telemetrySchema.includes('"gate_type": "review"'), true);
   assert.equal(telemetrySchema.includes('"dispatch_id": "dispatch-review-06-1"'), true);
   assert.equal(telemetrySchema.includes('"session_key": "agent:forge:session123"'), true);
-  assert.equal(telemetrySchema.includes('When the orchestrator knows the terminated session identity, `agent.killed` preserves the same top-level correlation fields used on `agent.spawned`, especially `session_key`.'), true);
-  assert.equal(busterPipeline.includes("await emitEvent(tctx, 'agent.spawned'"), true);
-  assert.equal(busterPipeline.includes("await emitEvent(tctx, 'agent.killed'"), true);
+  assert.equal(telemetrySchema.includes('When legacy `agent.killed` records are encountered, they preserve the same top-level correlation fields used on `agent.spawned`, especially `session_key`.'), true);
+  assert.equal(busterPipeline.includes("await emitEvent(tctx, 'agent.spawned'"), false);
+  assert.equal(busterPipeline.includes("await emitEvent(tctx, 'agent.killed'"), false);
 });
 
 await record('telemetry schema documents the current pipeline.halted payload shape', async () => {
@@ -272,8 +272,9 @@ await record('telemetry schema documents the current approval event payload shap
   assert.equal(telemetrySchema.includes('| gate_type | string\\|null | Canonical gate type when the resolution is tied to a gate-owned approval, currently `"approval"` |'), true);
 });
 
-await record('telemetry schema documents gate-scoped agent transcript and progress correlation fields', async () => {
+await record('telemetry schema documents plugin-owned gate-scoped agent transcript and progress correlation fields', async () => {
   const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
+  assert.equal(telemetrySchema.includes('This event is observer-plugin-owned; Nova\'s HTTP/API polling path must not publish it.'), true);
   assert.equal(telemetrySchema.includes('"type": "agent.transcript"'), true);
   assert.equal(telemetrySchema.includes('"gate_id": null'), true);
   assert.equal(telemetrySchema.includes('"gate_type": "review"'), true);

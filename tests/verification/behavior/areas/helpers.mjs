@@ -19,7 +19,7 @@ export async function buildBuiltInRegistry(runtimeRoot) {
 
 export function gateRuntimeEvents(xaddEvents, streamKey) {
   return xaddEvents(streamKey)
-    .filter((event) => !String(event.type || '').startsWith('plugin.gate.'))
+    .filter((event) => event.type !== 'plugin.event' || !String(event.details?.bridge_event_type || '').startsWith('plugin.gate.'))
     .map((event, index) => ({ ...event, seq: index + 1 }));
 }
 

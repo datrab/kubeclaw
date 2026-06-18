@@ -76,24 +76,24 @@ node tests/verification/behavior/verify.mjs \
 - contract and telemetry schema now pin an explicit authority split: contract owns canonical inventory and boundaries, schema owns event-by-event payload reference
 - authoritative contract inventory now includes `observability.degraded` and `observability.restored`
 - deprecated no-op event surfaces `memory.recalled`, `buster.result`, and `redis.message` are removed from canonical runtime and contract expectations
-- default behavior harness coverage currently spans `33` areas
+- default behavior harness coverage currently spans `34` areas
 - exact pass totals should be taken from the live JSON output of `tests/verification/behavior/verify.mjs`, not from a stale static doc snapshot
 
 ### Current gate expectations
-- `tests/verification/run-full-verification.sh` is the canonical fail-fast local wrapper
-- it includes deployment truth, runtime collision, live subagent launch smoke, telemetry contract, focused contract guards, and the default behavior harness
-- ACP launch reachability is local/provider-specific and is run explicitly with `tests/verification/run-local-acp-verification.sh`
+- `tests/verification/run-full-verification.sh` is the canonical exhaustive fail-fast local wrapper
+- it includes deployment truth, runtime collision, live subagent and ACP launch smokes, required live Redis smoke, telemetry contract, focused contract guards, docs checks, whitespace checks, and the default behavior harness
+- fast/full wrappers are silent on clean passes unless a step emits warning output; use `--verbose` or `VERIFICATION_VERBOSE=1` to stream step banners and passing output
+- ACP launch reachability can also be run directly with `tests/verification/run-local-acp-verification.sh`
 - because the wrapper stops on the first red surface, rerun the underlying entrypoints directly when you need the full downstream failure set
 - `scripts/deploy.sh verify-live [tag]` plus `scripts/deploy.sh smoke` / `scripts/deploy.sh smoke-agent <nova|buster>` remain operator-run live-cluster surfaces and require Docker plus cluster access; they are not executed by the repo-only deployment truth guard
 
 ### Final closure-gate snapshot (2026-04-24)
 - direct `tests/verification/deployment/check-deployment-truth.mjs` is green
 - direct `tests/verification/runtime/check-runtime-collisions.mjs` is green
-- direct `tests/verification/behavior/verify.mjs` is green in the documented verifier environment where `python` is present on `PATH` (current live result: `passed: 300`, `failed: 0`, `selectedAreas: 33`)
-- the canonical fail-fast wrapper `tests/verification/run-full-verification.sh` keeps subagent launch in the default clean-checkout gate and keeps ACP launch out of that default lane
-- direct `tests/verification/runtime/check-subagent-launch.mjs` is the normal launch-health surface for the default wrapper
-- direct `tests/verification/runtime/check-acp-launch.mjs` remains a real smoke for local ACP setup, but it is run via `tests/verification/run-local-acp-verification.sh` rather than the default clean-checkout wrapper
-- ACP failures mean local ACP agent/provider/gateway status setup needs attention; they do not by themselves make deterministic repo verification red
+- direct `tests/verification/behavior/verify.mjs` is green in the documented verifier environment where `python` is present on `PATH` (exact current pass totals come from the live harness output)
+- the canonical fail-fast wrapper `tests/verification/run-full-verification.sh` includes subagent launch, ACP launch, required live Redis smoke, docs checks, whitespace checks, contracts, deployment truth, runtime guards, and the full behavior harness
+- direct `tests/verification/runtime/check-subagent-launch.mjs` and `tests/verification/runtime/check-acp-launch.mjs` are the launch-health surfaces for the full wrapper
+- ACP failures mean local ACP agent/provider/gateway status setup needs attention and make full verification red
 
 Foundation-sensitive proof now explicitly includes deterministic registry assembly/rejection checks, packaged helper ownership, explicit Buster crash-recovery path ownership, shared failure normalization, mediated plugin-context scaffolding, and restart-safe lifecycle state handling.
 

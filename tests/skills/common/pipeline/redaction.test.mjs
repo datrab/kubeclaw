@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { sanitizeDiscordMessage, sanitizeTelemetryPayload } from '../../../../skills/common/pipeline/redaction.ts';
+import { sanitizeAcpTranscriptEvidence, sanitizeDiscordMessage, sanitizeTelemetryPayload } from '../../../../skills/common/pipeline/redaction.ts';
 
 test('discord embed sanitizer redacts nested embed strings and secret-like field labels', () => {
   const sanitized = sanitizeDiscordMessage({
@@ -54,4 +54,19 @@ test('telemetry sanitizer preserves token counters while redacting token secrets
   assert.equal(sanitized.output_tokens, 45);
   assert.equal(sanitized.auth_token, '[redacted-secret]');
   assert.equal(sanitized.accessToken, '[redacted-secret]');
+});
+
+test('transcript detail sanitizer preserves diagnostic reasons while masking secrets', () => {
+  const sanitized = sanitizeAcpTranscriptEvidence({
+    eventCount: 1,
+    lastActivityPoll: 0,
+    lastDetail: 'adapter command missing token=UnsafeTranscriptToken1234567890',
+    partialLine: 'raw partial line token=UnsafePartialToken1234567890',
+  });
+
+  const serialized = JSON.stringify(sanitized);
+  assert.equal(sanitized.detail_summary, 'adapter command missing token=[redacted-secret]');
+  assert.equal(sanitized.partial_line_summary.startsWith('[redacted transcript_partial_line;'), true);
+  assert.equal(serialized.includes('UnsafeTranscriptToken1234567890'), false);
+  assert.equal(serialized.includes('UnsafePartialToken1234567890'), false);
 });

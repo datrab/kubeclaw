@@ -83,6 +83,8 @@ Nova pipeline event helpers are exported by `skills/nova/pipeline/services/telem
 - Redis stream emission: `skills/nova/pipeline/services/telemetry-stream.ts`
 - payload schema validation: `skills/common/pipeline/services/telemetry/payload-schema.ts`
 
+Agent status, transcript, progress, model, tool, and LLM events are observer-owned. The OpenClaw agent observer plugin writes raw hook evidence to the agent-observability streams, and the ingester promotes that evidence into canonical `agent.*` telemetry. Gateway/HTTP polling is diagnostic only and must not be used as the authority for whether an agent started, is still running, or ended successfully.
+
 The envelope is flat. Event-specific fields live beside `v`, `type`, `ts`, `run_id`, `project`, `seq`, `source`, and `emitter`; do not wrap canonical payloads in legacy nested `data` or `refs` objects.
 
 Verification:

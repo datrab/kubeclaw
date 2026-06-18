@@ -12,7 +12,7 @@ Run the fast local tier from the repo root with:
 
 It avoids Helm, kubeconform, live subagent, ACP, Redis, and cluster dependencies. It runs Nova/Buster startup smokes, local runtime guards, contract checks, and selected fast behavior areas. Override behavior areas with `BEHAVIOR_AREAS=a,b` or set `SKIP_FAST_BEHAVIOR=1` for contract/runtime-only feedback.
 
-Verification scripts are quiet by default: runtime logs are buffered and only printed on failure, while passing runs print their final summary. Use `--verbose` or `VERIFICATION_VERBOSE=1` when you need full runtime logs for passing checks.
+Verification wrappers are quiet by default: passing step output is captured and discarded, warning output is printed, and failed steps print their buffered output before exiting. Use `--verbose` or `VERIFICATION_VERBOSE=1` when you need full runtime logs for passing checks.
 
 Run the full verification suite with:
 
@@ -20,8 +20,8 @@ Run the full verification suite with:
 ./tests/verification/run-full-verification.sh
 ```
 
-It runs the deployment truth guard, runtime collision guard, Nova/Buster startup smokes, live subagent launch smoke, telemetry contract guard, and the full behavior harness.
-ACP launch reachability is local/provider-specific and is checked explicitly with:
+It runs deployment truth, runtime guards, Nova/Buster startup smokes, live subagent and ACP launch smokes, required live Redis smoke, the deterministic contract suite, docs checks, whitespace checks, and the full behavior harness.
+ACP launch reachability can still be checked directly with:
 
 ```bash
 ./tests/verification/run-local-acp-verification.sh
@@ -29,10 +29,11 @@ ACP launch reachability is local/provider-specific and is checked explicitly wit
 
 Current gate expectations:
 - `tests/verification/run-fast-verification.sh` is the default local no-cluster/no-live-agent feedback loop
-- `tests/verification/run-full-verification.sh` is intentionally fail-fast; it exits on the first red surface
+- `tests/verification/run-full-verification.sh` is intentionally exhaustive and fail-fast; it exits on the first red surface
+- fast/full wrappers are silent on clean passes unless a step emits warning output; `--verbose` or `VERIFICATION_VERBOSE=1` restores step banners and pass output
 - if you need the full downstream failure set after a red wrapper run, rerun the canonical entrypoints directly
-- subagent launch is part of the default clean-checkout wrapper
-- ACP launch is a local-only provider/gateway smoke; failures remain real failures in `run-local-acp-verification.sh`, but do not fail the default clean-checkout wrapper
+- subagent and ACP launch are part of the full wrapper
+- live Redis backend smoke is part of the full wrapper and fails when `REDIS_HOST` is not configured
 
 ## Target end state
 
@@ -117,7 +118,7 @@ tests/
 - `tests/verification/runtime/check-nova-startup-smoke.mjs` is the canonical Nova import/CLI startup smoke entrypoint
 - `tests/verification/runtime/check-buster-startup-smoke.mjs` is the canonical Buster import/CLI startup smoke entrypoint
 - `tests/verification/runtime/check-subagent-launch.mjs` is the canonical live subagent launch smoke entrypoint
-- `tests/verification/runtime/check-acp-launch.mjs` is the canonical ACP launch-reachability smoke entrypoint and is run through `tests/verification/run-local-acp-verification.sh`
+- `tests/verification/runtime/check-acp-launch.mjs` is the canonical ACP launch-reachability smoke entrypoint and is run by both `tests/verification/run-full-verification.sh` and `tests/verification/run-local-acp-verification.sh`
 - `tests/verification/lib/run-contract-suite.sh` is the shared deterministic contract-suite helper used by fast/full wrappers
 - `tests/verification/contracts/check-telemetry-contract.mjs` is the canonical telemetry contract guard entrypoint
 - `tests/verification/deployment/check-deployment-truth.mjs` is the canonical deployment-surface guard entrypoint
@@ -125,8 +126,8 @@ tests/
 - `tests/verification/packaging-verification.md` is the canonical packaging verification explainer
 - `tests/verification/behavior/verify.mjs` is the canonical behavior-harness entrypoint
 - `tests/verification/run-fast-verification.sh` is the canonical convenience wrapper for running local runtime smoke, contract, and selected fast behavior checks without cluster/live-agent dependencies
-- `tests/verification/run-full-verification.sh` is the canonical convenience wrapper for running the default clean-checkout verification suite in one command; it includes subagent launch but excludes local-only ACP launch
-- `tests/verification/run-local-acp-verification.sh` is the explicit local ACP/provider smoke wrapper
+- `tests/verification/run-full-verification.sh` is the canonical exhaustive wrapper for running all verification surfaces in one command
+- `tests/verification/run-local-acp-verification.sh` is the direct ACP/provider smoke wrapper
 - there is no remaining `scripts/*.mjs` verifier wrapper surface in this repo
 - `scripts/` remains the home for operator utilities like `deploy.sh` and `setup.sh`, not the canonical verification entrypoints
 - `scripts/deploy.sh build-local-images [tag]`, `scripts/deploy.sh verify-live [tag]`, and `scripts/deploy.sh smoke` / `scripts/deploy.sh smoke-agent <nova|buster>` are the canonical live deployment command surface

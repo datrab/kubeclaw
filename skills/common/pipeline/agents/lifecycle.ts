@@ -343,6 +343,9 @@ export async function spawnSession(payload: AnyRecord, prompt: any, timeoutSecon
   const budget = opts.budget || null;
   const signal = opts.signal || null;
   const shouldTrackActive = opts.trackActive !== false;
+  const observabilityIdentity = opts.observabilityIdentity && typeof opts.observabilityIdentity === 'object'
+    ? opts.observabilityIdentity
+    : null;
 
   const spawnArgs: AnyRecord = {
     task: opts.task || prompt,
@@ -354,6 +357,27 @@ export async function spawnSession(payload: AnyRecord, prompt: any, timeoutSecon
     mode: opts.mode ?? SESSION_SPAWN_POLICY_DEFAULTS.mode,
     cleanup: opts.cleanup ?? SESSION_SPAWN_POLICY_DEFAULTS.cleanup,
   };
+  if (observabilityIdentity) {
+    spawnArgs.runId = observabilityIdentity.run_id ?? observabilityIdentity.runId ?? null;
+    spawnArgs.project = observabilityIdentity.project ?? null;
+    spawnArgs.dispatchId = observabilityIdentity.dispatch_id ?? observabilityIdentity.dispatchId ?? null;
+    spawnArgs.gatewayLabel = observabilityIdentity.gateway_label ?? observabilityIdentity.gatewayLabel ?? label;
+    spawnArgs.agentType = observabilityIdentity.agent_type ?? observabilityIdentity.agentType ?? null;
+    spawnArgs.moduleId = observabilityIdentity.module_id ?? observabilityIdentity.moduleId ?? null;
+    spawnArgs.gateId = observabilityIdentity.gate_id ?? observabilityIdentity.gateId ?? null;
+    spawnArgs.metadata = {
+      ...(spawnArgs.metadata ?? {}),
+      run_id: spawnArgs.runId,
+      project: spawnArgs.project,
+      dispatch_id: spawnArgs.dispatchId,
+      gateway_label: spawnArgs.gatewayLabel,
+      agent_type: spawnArgs.agentType,
+      module_id: spawnArgs.moduleId,
+      gate_id: spawnArgs.gateId,
+      gate_type: observabilityIdentity.gate_type ?? observabilityIdentity.gateType ?? null,
+      attempt: observabilityIdentity.attempt ?? null,
+    };
+  }
   if (!isSubagent) {
     spawnArgs.agentId = agentId;
     spawnArgs.streamTo = opts.streamTo ?? SESSION_SPAWN_POLICY_DEFAULTS.streamTo;

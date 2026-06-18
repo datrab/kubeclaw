@@ -130,7 +130,7 @@ Suite configuration is read from `payload.test_config`. Each key maps to a suite
   "serve": {
     "type": "static",
     "build_cmd": "npm run build",
-    "image": "node:20-slim",
+    "image": "docker.io/library/node:20-slim",
     "port": 9999,
     "health_path": "/"
   },
@@ -153,6 +153,8 @@ Suite configuration is read from `payload.test_config`. Each key maps to a suite
   "security": { "thresholds": { "critical": 0 } }
 }
 ```
+
+Container image references must be fully qualified with registry and namespace, for example `docker.io/library/node:20-slim`. Buster rejects shorthand image names before running Podman.
 
 ## Environment variables
 

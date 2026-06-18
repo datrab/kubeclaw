@@ -1,6 +1,5 @@
 import { resolvePolicy } from '../core/config.ts';
-import { log, getActiveContext } from '../core/logger.ts';
-import { onAgentKilled, onAgentSpawned } from '../services/telemetry.ts';
+import { log } from '../core/logger.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
 import { discord } from '../integrations/discord.ts';
 import { reaperAfterKill } from './shutdown.ts';
@@ -9,9 +8,10 @@ import { modelToHarness, resolveRuntime } from './runtime.ts';
 import { getTrackedAgent, spawnSession, trackAgent, untrackAgent } from './lifecycle.ts';
 import { terminateSession } from './session-termination.ts';
 import {
-  buildKillTelemetryPayload,
-  buildSpawnTelemetryPayload,
-} from './orchestration-lifecycle-events.ts';
+  assertRequiredAgentStartupEvidence,
+  createAgentLifecycleTelemetryReader,
+  waitForRequiredAgentStartupEvidence,
+} from '../services/agent-observability-required.ts';
 
 type AnyRecord = Record<string, any>;
 
@@ -34,6 +34,22 @@ export async function spawnReviewerAgent(
   const thinkingLevel = opts.thinking || reviewer.thinking_level || null;
   const runtime = resolveRuntime({ runtime: reviewer.dispatch, model });
   const useSubagent = runtime === 'subagent';
+  const telemetryIdentity = {
+    run_id: runId,
+    project: config?.project || null,
+    agent_type: 'echo',
+    module_id: null,
+    gate_id: gateId,
+    gate_type: opts.gate_type || null,
+    attempt: opts.attempt ?? null,
+    dispatch_id: dispatchId,
+    gateway_label: gatewayLabel,
+  };
+  const startupEvidenceReader = createAgentLifecycleTelemetryReader(config, {
+    runId,
+    startId: '0-0',
+    ...(opts.agentLifecycleReader ? { reader: opts.agentLifecycleReader } : {}),
+  });
   try {
     const sessionData = await spawnSession({
       session: { model, runtime, agentId, cwd, label: gatewayLabel },
@@ -47,6 +63,7 @@ export async function spawnReviewerAgent(
       trackActive: false,
       budget: opts.budget || null,
       signal: opts.signal || null,
+      observabilityIdentity: telemetryIdentity,
     });
     log('OK', `Reviewer spawned: ${gatewayLabel} → ${sessionData.childSessionKey}${sessionData.streamLogPath ? ` (stream: ${sessionData.streamLogPath})` : ''}`, { agent: agentId, model, reviewer: reviewer.label, sessionKey: sessionData.childSessionKey, runId: sessionData.runId, dispatchId, stream: sessionData.streamLogPath });
     trackAgent(config, trackingKey, sessionData.childSessionKey, agentId, gatewayLabel, sessionData.streamLogPath, {
@@ -63,24 +80,16 @@ export async function spawnReviewerAgent(
       telemetry_dispatch_id: dispatchId,
       reviewer_label: reviewer.label || null,
     });
-    try {
-      const _ctx = getActiveContext() || { config };
-      onAgentSpawned(_ctx, 'echo', buildSpawnTelemetryPayload({
-        label: gatewayLabel,
-        model,
-        dispatch: useSubagent ? 'subagent' : 'acp',
-        moduleId: null,
-        gateId,
-        gateType: opts.gate_type || null,
-        attempt: opts.attempt ?? null,
-        dispatchId,
-        timeoutSeconds: reviewer?.timeout_seconds || null,
-        sessionKey: sessionData.childSessionKey,
-        thinkingLevel,
-      }));
-    } catch (e: any) {
-      log('DEBUG', `Reviewer spawn telemetry failed for ${gatewayLabel}: ${e?.message || e}`);
-    }
+    assertRequiredAgentStartupEvidence(await waitForRequiredAgentStartupEvidence(config, {
+      ...telemetryIdentity,
+      session_key: sessionData.childSessionKey,
+    }, {
+      reader: startupEvidenceReader,
+      timeoutMs: opts.agentObservabilityStartupTimeoutMs,
+    }), {
+      ...telemetryIdentity,
+      session_key: sessionData.childSessionKey,
+    });
     const spawnDiscordCorrelation = {
       run_id: runId,
       gate_id: gateId,
@@ -107,6 +116,7 @@ export async function spawnReviewerAgent(
     });
     return { label: trackingKey, childSessionKey: sessionData.childSessionKey, runId, dispatchId, streamLogPath: sessionData.streamLogPath };
   } catch (e: any) {
+    startupEvidenceReader.close?.();
     const spawnFailureDiscordCorrelation = {
       run_id: runId,
       gate_id: gateId,
@@ -166,17 +176,6 @@ export async function killReviewerAgent(
     log('OK', `Reviewer session destroyed: ${label}`);
   } else {
     log('WARN', `Reviewer session not fully reconciled after stop: ${label} (${termination.state})`);
-  }
-  try {
-    const _ctx = getActiveContext() || { config };
-    onAgentKilled(_ctx, 'echo', buildKillTelemetryPayload({
-      entry,
-      fallbackLabel: label,
-      fallbackModuleId: null,
-      fallbackGateId: gateId,
-    }));
-  } catch (e: any) {
-    log('DEBUG', `Reviewer kill telemetry failed for ${label}: ${e?.message || e}`);
   }
   return termination.confirmed;
 }

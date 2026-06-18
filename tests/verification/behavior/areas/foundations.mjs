@@ -987,6 +987,29 @@ await record('config validation derives accepted gate types from the startup plu
     () => configMod.validateConfig(unknownTopLevelConfig, validProgress),
     /config\.legacy_shadow_field: unknown top-level config field/
   );
+  const currentPlatformConfig = buildConfig();
+  currentPlatformConfig._doc = 'operator note';
+  currentPlatformConfig.agent_observability = {
+    plugin_control: {
+      enabled: true,
+      pluginId: 'kubeclaw-agent-observer',
+      command: 'openclaw',
+      timeoutMs: 10000,
+      disableOnStop: true,
+    },
+    ingester: {
+      enabled: true,
+      redisNetworkIsolation: 'isolated',
+      loopDelayMs: 250,
+      healthCheckEvery: 10,
+      redisCommandTimeoutMs: 1000,
+    },
+  };
+  currentPlatformConfig.agent_observability_forge_completion_settle_ms = 0;
+  assert.doesNotThrow(
+    () => configMod.validateConfig(currentPlatformConfig, validProgress),
+    'current platform observability config keys should pass strict top-level validation',
+  );
   for (const mirrorField of ['_logDir', '_runLogDir']) {
     const runtimeMirrorConfig = buildConfig();
     runtimeMirrorConfig[mirrorField] = '/tmp/logs';

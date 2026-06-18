@@ -200,10 +200,11 @@ for (const marker of [
 
 assert.equal(monitorSource.includes('export async function monitorSession('), true, 'buster session monitor module must export monitorSession');
 assert.equal(monitorSource.includes('`buster-${moduleId}`,\n        moduleId,'), false, 'buster transcript publishing must not use the obsolete positional identity signature');
-assert.equal(monitorSource.includes('label: `buster-${moduleId}`'), true, 'buster transcript publishing should pass an explicit identity object');
-assert.equal(monitorSource.includes('session_key: childSessionKey'), true, 'buster transcript publishing should preserve session identity');
+assert.equal(monitorSource.includes('publishTranscriptDelta'), false, 'Buster ACP monitor must not publish agent transcript telemetry outside the observer plugin');
+assert.equal(monitorSource.includes('Transcript delta observed through diagnostic ACP monitor'), true, 'Buster ACP monitor transcript deltas should remain diagnostic only');
+assert.equal(monitorSource.includes('session_key: childSessionKey'), true, 'Buster monitor diagnostics should preserve session identity');
 assert.equal(/catch \(monitorError(?:: unknown)?\)/.test(taskLifecycleSessionSource), true, 'buster task lifecycle should handle monitor exceptions before finalization');
-assert.equal(taskLifecycleSessionSource.includes("reason:          'monitor_error'"), true, 'monitor failures should emit agent.killed with explicit monitor_error reason');
+assert.equal(taskLifecycleSessionSource.includes("reason: `monitor_error: ${monitorReason}`"), true, 'monitor failures should return explicit monitor_error reason without emitting agent.killed outside the observer plugin');
 assert.equal(taskLifecycleSessionSource.includes('clearActiveChildSession({ preserveFile: termination?.unconfirmed === true })'), true, 'monitor failures should clear in-memory active session while preserving unconfirmed recovery state');
 assert.equal(monitorSource.includes('terminateSession'), true, 'Buster monitor should route hard-timeout teardown through the shared termination controller');
 assert.equal(monitorSource.includes('killIssued'), false, 'Buster monitor must not synthesize local killIssued state');

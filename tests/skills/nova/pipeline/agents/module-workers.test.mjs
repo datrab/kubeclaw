@@ -140,6 +140,48 @@ test('module forge returns typed block when cleanup kill rejects after poll', as
   assert.deepEqual(calls, ['spawn', 'poll', 'kill', 'save', 'clear']);
 });
 
+test('module forge carries successful poll status even before Nova lifecycle transition', async () => {
+  const calls = [];
+  const result = await runModuleForgeWorker({
+    config: baseConfig(),
+    progress: {},
+    workerInput: forgeInput(),
+    deps: {
+      spawnAgent: async () => calls.push('spawn'),
+      verifyAgentAlive: async () => true,
+      acpLabel: () => 'forge-mod-a',
+      getTrackedAgent: () => ({
+        sessionKey: 'session-1',
+        gatewayLabel: 'gateway-1',
+        streamLogPath: '/tmp/forge.log',
+      }),
+      pollForgeCompletionWithRateLimitRecovery: async () => {
+        calls.push('poll');
+        return {
+          ok: true,
+          reason: 'forge_completion',
+          status: {
+            status: 'READY_FOR_TESTING',
+            summary: 'typed artifact accepted',
+            completed_at: '2026-06-17T15:33:29Z',
+          },
+        };
+      },
+      killAgent: async () => calls.push('kill'),
+      loadStatus: () => ({ status: 'IN_PROGRESS' }),
+      saveStreamLog: () => calls.push('save'),
+      clearShutdownContext: () => calls.push('clear'),
+    },
+  });
+
+  assert.equal(result.schemaVersion, 'v1');
+  assert.equal(result.producerType, 'module_forge');
+  assert.equal(result.nextAction, 'pass');
+  assert.equal(result.diagnostics.metadata.reason, 'forge_completion');
+  assert.equal(result.diagnostics.metadata.final_status.status, 'READY_FOR_TESTING');
+  assert.deepEqual(calls, ['spawn', 'poll', 'kill', 'save', 'clear']);
+});
+
 test('module forge scopes lifecycle labels by run and attempt', async () => {
   const tracked = new Map();
   const spawns = [];

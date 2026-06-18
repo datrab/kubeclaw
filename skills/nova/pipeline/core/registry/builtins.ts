@@ -33,11 +33,25 @@ function readPluginDeps(ctx: AnyRecord = {}) {
 }
 
 async function emitBuiltinBridgeTrace(ctx: AnyRecord = {}, eventType: string, message: string, payload: AnyRecord = {}) {
-  if (typeof ctx?.stream?.emit === 'function') {
-    await ctx.stream.emit({ eventType, level: 'DEBUG', message, payload });
-  }
+  const pluginId = eventType.startsWith('plugin.') && eventType.endsWith('.bridge_invoked')
+    ? `builtin.${eventType.slice('plugin.'.length, -'.bridge_invoked'.length)}`
+    : 'builtin.unknown';
+  const canonicalPayload = {
+    plugin_id: pluginId,
+    plugin_event: 'bridge_invoked',
+    module_id: payload.moduleId || null,
+    gate_id: payload.gateId || null,
+    gate_type: payload.gateType || null,
+    attempt: payload.attempt ?? null,
+    dispatch_id: payload.dispatchId || null,
+    details: {
+      bridge_event_type: eventType,
+      message,
+      ...payload,
+    },
+  };
   if (typeof ctx?.telemetry?.emit === 'function') {
-    await ctx.telemetry.emit({ eventType, payload });
+    await ctx.telemetry.emit({ eventType: 'plugin.event', payload: canonicalPayload });
   }
 }
 

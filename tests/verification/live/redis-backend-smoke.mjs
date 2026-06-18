@@ -7,7 +7,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
-const enabled = process.env.LIVE_REDIS_SMOKE === '1' || process.env.KUBECLAW_LIVE_REDIS_SMOKE === '1';
+const required = process.env.LIVE_REDIS_SMOKE_REQUIRED === '1' || process.argv.includes('--required');
+const enabled = required || process.env.LIVE_REDIS_SMOKE === '1' || process.env.KUBECLAW_LIVE_REDIS_SMOKE === '1';
 if (!enabled) {
   quietConsole.restore();
 console.log(JSON.stringify({ ok: true, skipped: true, reason: 'set LIVE_REDIS_SMOKE=1 to run live Redis backend smoke' }, null, 2));
@@ -16,6 +17,10 @@ console.log(JSON.stringify({ ok: true, skipped: true, reason: 'set LIVE_REDIS_SM
 
 if (!process.env.REDIS_HOST) {
   quietConsole.restore();
+  if (required) {
+console.error(JSON.stringify({ ok: false, skipped: false, reason: 'REDIS_HOST is required for live Redis backend smoke' }, null, 2));
+    process.exit(1);
+  }
 console.log(JSON.stringify({ ok: true, skipped: true, reason: 'REDIS_HOST is required for live Redis backend smoke' }, null, 2));
   process.exit(0);
 }
@@ -39,7 +44,8 @@ process.env.BUSTER_TASK_STREAM = taskStream;
 process.env.BUSTER_PROJECT = project;
 
 function git(args, cwd, opts = {}) {
-  return execFileSync('git', args, { cwd, encoding: 'utf8', stdio: opts.stdio || 'pipe' }).trim();
+  const output = execFileSync('git', args, { cwd, encoding: 'utf8', stdio: opts.stdio || 'pipe' });
+  return typeof output === 'string' ? output.trim() : '';
 }
 
 function createSmokeRepo() {
@@ -71,6 +77,7 @@ let busterTaskLifecycle;
 let redis;
 let fixture;
 let taskId;
+const previousCwd = process.cwd();
 
 try {
   redisTool = (await import('../../../skills/nova/pipeline/tools/redis.ts')).default;
@@ -91,6 +98,7 @@ try {
   }
 
   fixture = createSmokeRepo();
+  process.chdir(fixture.repo);
   const payload = {
     task_type: 'module_test',
     project,
@@ -103,10 +111,11 @@ try {
     suites: ['manifest'],
     commit_hash: fixture.commit,
     completion_stream: completionStream,
+    output_file: `.swarm/modules/${moduleId}/buster-output.json`,
     log_dir: path.join(fixture.repo, '.swarm', 'logs', 'buster', moduleId, `attempt-${attempt}`),
     timeout_seconds: 30,
     session: {
-      cwd: fixture.repo,
+      cwd: '.',
       label: dispatchId,
       timeout_seconds: 30,
       runtime: 'subagent',
@@ -163,6 +172,7 @@ console.log(JSON.stringify({
     repo: fixture.repo,
   }, null, 2));
 } finally {
+  try { process.chdir(previousCwd); } catch {}
   try { if (redis && taskId) await redis.xdel(taskStream, taskId); } catch (e) { console.warn(`cleanup xdel failed: ${e?.message || e}`); }
   try { if (redis) await redis.del(taskStream, completionStream, `${completionStream}:log`); } catch (e) { console.warn(`cleanup redis del failed: ${e?.message || e}`); }
   try { await redisTool?.disconnect?.(); } catch (e) { console.warn(`cleanup redis tool disconnect failed: ${e?.message || e}`); }

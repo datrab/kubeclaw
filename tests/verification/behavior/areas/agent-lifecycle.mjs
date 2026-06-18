@@ -63,7 +63,7 @@ function platformAgentLifecycleDefaults() {
   };
 }
 
-await record('agent.spawned is emitted for session-backed Forge spawns with correlation fields', async () => {
+await record('session-backed Forge spawns pass observer identity without core agent.spawned telemetry', async () => {
   const orchestrationRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
   installFakeRedis(orchestrationRuntimeRoot);
   globalThis.__fakeRedisCalls = [];
@@ -114,16 +114,16 @@ await record('agent.spawned is emitted for session-backed Forge spawns with corr
 
     const spawnRequests = requests.filter((req) => req?.tool === 'sessions_spawn');
     assert.equal(spawnRequests.length, 1);
+    assert.equal(spawnRequests[0]?.args?.runId, runId);
+    assert.equal(spawnRequests[0]?.args?.project, config.project);
+    assert.equal(spawnRequests[0]?.args?.agentType, 'forge');
+    assert.equal(spawnRequests[0]?.args?.moduleId, '01');
+    assert.equal(spawnRequests[0]?.args?.dispatchId.startsWith('forge-01-dispatch-'), true);
+    assert.equal(spawnRequests[0]?.args?.gatewayLabel.startsWith('forge-01-'), true);
+    assert.equal(spawnRequests[0]?.args?.metadata?.attempt, 2);
 
     const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
-    const spawnedEvent = streamEvents.find((event) => event.type === 'agent.spawned');
-    assert.equal(Boolean(spawnedEvent), true);
-    assert.equal(spawnedEvent.agent_type, 'forge');
-    assert.equal(spawnedEvent.label.startsWith('forge-01-'), true);
-    assert.equal(spawnedEvent.module_id, '01');
-    assert.equal(spawnedEvent.attempt, 2);
-    assert.equal(spawnedEvent.session_key, 'agent:main:acp:forge-spawn-1');
-    assert.equal(spawnedEvent.dispatch, 'acp');
+    assert.equal(streamEvents.some((event) => event.type === 'agent.spawned'), false);
 
     const topLevelEntry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
     const runScopedEntry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'runs', runId, 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
@@ -204,17 +204,16 @@ await record('subagent-backed Forge spawns preserve subagent runtime semantics a
     assert.equal(spawnRequests[0]?.args?.agentId ?? null, null);
     assert.equal(spawnRequests[0]?.args?.streamTo ?? null, null);
     assert.equal(spawnRequests[0]?.args?.thinking ?? null, null);
+    assert.equal(spawnRequests[0]?.args?.runId, runId);
+    assert.equal(spawnRequests[0]?.args?.project, config.project);
+    assert.equal(spawnRequests[0]?.args?.agentType, 'forge');
+    assert.equal(spawnRequests[0]?.args?.moduleId, '01');
+    assert.equal(spawnRequests[0]?.args?.dispatchId.startsWith('forge-01-dispatch-'), true);
+    assert.equal(spawnRequests[0]?.args?.gatewayLabel.startsWith('forge-01-'), true);
+    assert.equal(spawnRequests[0]?.args?.metadata?.attempt, 3);
 
     const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
-    const spawnedEvent = streamEvents.find((event) => event.type === 'agent.spawned');
-    assert.equal(Boolean(spawnedEvent), true);
-    assert.equal(spawnedEvent.agent_type, 'forge');
-    assert.equal(spawnedEvent.label.startsWith('forge-01-'), true);
-    assert.equal(spawnedEvent.module_id, '01');
-    assert.equal(spawnedEvent.attempt, 3);
-    assert.equal(spawnedEvent.session_key, 'agent:main:subagent:forge-spawn-1');
-    assert.equal(spawnedEvent.dispatch, 'subagent');
-    assert.equal(spawnedEvent.thinking_level, 'high');
+    assert.equal(streamEvents.some((event) => event.type === 'agent.spawned'), false);
 
     const topLevelEntry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
     const runScopedEntry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'runs', runId, 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
@@ -398,7 +397,7 @@ await record('termination controller returns canonical unconfirmed result within
   }
 });
 
-await record('reviewer lifecycle emits gate-scoped agent.spawned and agent.killed events', async () => {
+await record('reviewer lifecycle passes observer identity and leaves spawned/killed telemetry to the plugin', async () => {
   const orchestrationRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
   installFakeRedis(orchestrationRuntimeRoot);
   globalThis.__fakeRedisCalls = [];
@@ -476,24 +475,18 @@ await record('reviewer lifecycle emits gate-scoped agent.spawned and agent.kille
     const stopRequests = requests.filter((req) => req?.tool === 'sessions_send');
     assert.equal(spawnRequests.length, 1);
     assert.equal(stopRequests.length >= 1, true);
+    assert.equal(spawnRequests[0]?.args?.runId, runId);
+    assert.equal(spawnRequests[0]?.args?.project, config.project);
+    assert.equal(spawnRequests[0]?.args?.agentType, 'echo');
+    assert.equal(spawnRequests[0]?.args?.gateId, 'gate:quality');
+    assert.equal(spawnRequests[0]?.args?.dispatchId, 'dispatch-review-gate-quality-3');
+    assert.equal(spawnRequests[0]?.args?.gatewayLabel.startsWith('echo-quality-gate:quality-'), true);
+    assert.equal(spawnRequests[0]?.args?.metadata?.gate_type, 'review');
+    assert.equal(spawnRequests[0]?.args?.metadata?.attempt, 3);
 
     const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
-    const spawnedEvent = streamEvents.find((event) => event.type === 'agent.spawned' && event.agent_type === 'echo');
-    const killedEvent = streamEvents.find((event) => event.type === 'agent.killed' && event.agent_type === 'echo');
-    assert.equal(Boolean(spawnedEvent), true);
-    assert.equal(Boolean(killedEvent), true);
-    assert.equal(spawnedEvent.label.startsWith('echo-quality-gate:quality-'), true);
-    assert.equal(spawnedEvent.gate_id, 'gate:quality');
-    assert.equal(spawnedEvent.gate_type, 'review');
-    assert.equal(spawnedEvent.attempt, 3);
-    assert.equal(spawnedEvent.dispatch_id, 'dispatch-review-gate-quality-3');
-    assert.equal(spawnedEvent.session_key, 'agent:main:acp:echo-review-1');
-    assert.equal(killedEvent.label, spawnedEvent.label);
-    assert.equal(killedEvent.gate_id, 'gate:quality');
-    assert.equal(killedEvent.gate_type, 'review');
-    assert.equal(killedEvent.attempt, 3);
-    assert.equal(killedEvent.dispatch_id, 'dispatch-review-gate-quality-3');
-    assert.equal(killedEvent.session_key, 'agent:main:acp:echo-review-1');
+    assert.equal(streamEvents.some((event) => event.type === 'agent.spawned'), false);
+    assert.equal(streamEvents.some((event) => event.type === 'agent.killed'), false);
 
     const runScopedEntries = fs.readFileSync(path.join(logRoot, 'pipeline', 'runs', runId, 'discord.jsonl'), 'utf8').trim().split('\n').map((line) => JSON.parse(line));
     const spawnEntry = runScopedEntries.find((entry) => entry.title === '🔬 Reviewer Spawned: quality/gate:quality');
@@ -517,7 +510,7 @@ await record('reviewer lifecycle emits gate-scoped agent.spawned and agent.kille
   }
 });
 
-await record('agent.killed preserves session correlation when orchestration knows the session key', async () => {
+await record('agent kill stops the session without core agent.killed telemetry', async () => {
   const orchestrationRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
   installFakeRedis(orchestrationRuntimeRoot);
   globalThis.__fakeRedisCalls = [];
@@ -586,12 +579,7 @@ await record('agent.killed preserves session correlation when orchestration know
     assert.equal(stopRequests.at(-1)?.args?.sessionKey, 'agent:main:acp:1');
 
     const streamEvents = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
-    const killedEvent = streamEvents.find((event) => event.type === 'agent.killed');
-    assert.equal(Boolean(killedEvent), true);
-    assert.equal(killedEvent.agent_type, 'forge');
-    assert.equal(killedEvent.label, 'forge-01-123');
-    assert.equal(killedEvent.module_id, '01');
-    assert.equal(killedEvent.session_key, 'agent:main:acp:1');
+    assert.equal(streamEvents.some((event) => event.type === 'agent.killed'), false);
 
   } finally {
     lifecycleTestMod.untrackAgent('forge-01');

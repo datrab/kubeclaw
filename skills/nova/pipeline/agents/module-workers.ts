@@ -332,10 +332,15 @@ export async function runModuleForgeWorker({
 
   const forgeControl = forgeControlForPollResult(pollResult || {});
   const forgeEvidence = statusEvidenceFields(pollResult);
+  const forgePollStatus = pollStatus(pollResult);
+  const forgeTerminalStatus = pollResult?.ok === true
+    && (forgePollStatus?.status === STATUS.READY_FOR_TESTING || forgePollStatus?.status === STATUS.BLOCKED)
+    ? forgePollStatus
+    : null;
   return buildModuleForgeWorkerControlResult(config, workerInput, {
     ...forgeControl,
     reason: pollResult?.reason || null,
-    finalStatus,
+    finalStatus: forgeTerminalStatus || finalStatus,
     streamLogPath: forgeStreamPath,
     gatewayLabel: dispatch.gateway_label,
     sessionKey: dispatch.session_key,

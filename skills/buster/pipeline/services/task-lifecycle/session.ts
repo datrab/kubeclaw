@@ -4,7 +4,6 @@ import {
 } from '../../agents/lifecycle.ts';
 import { terminateSession } from '../../agents/session-termination.ts';
 import { assertValidSessionTerminationResult } from '../acp-gateway-contract.ts';
-import { emitEvent } from '../telemetry.ts';
 import {
   resolveBusterActiveSessionPath,
   buildSessionSpawnEmbed,
@@ -177,6 +176,17 @@ export async function spawnTaskSession({
       activeStatePath: resolveBusterActiveSessionPath(cwd),
       budget,
       signal,
+      observabilityIdentity: {
+        run_id: payload?.run_id ?? payload?.session?.run_id ?? null,
+        project: payload?.project ?? null,
+        agent_type: 'buster',
+        module_id: moduleId,
+        gate_id: payload?.gate_id ?? null,
+        gate_type: payload?.gate_type ?? null,
+        attempt: payload?.attempt ?? null,
+        dispatch_id: payload?.dispatch_id ?? label,
+        gateway_label: label,
+      },
     }) as SessionData;
   } catch (err: unknown) {
     const spawnErrorDetail = safeErrorMessage(err);
@@ -186,16 +196,6 @@ export async function spawnTaskSession({
     });
     return { ok: false, reason: `spawn_failed: ${spawnErrorDetail}` };
   }
-
-  await emitEvent(tctx, 'agent.spawned', {
-    module_id:       moduleId,
-    agent_type:      'buster',
-    label:           sessionData.label,
-    session_key:     sessionData.childSessionKey,
-    runtime:         sessionData.runtime,
-    model,
-    timeout_seconds: timeoutSeconds,
-  });
 
   logger.info('SPAWN', `Session spawned: ${sessionData.childSessionKey}`, {
     runtime: sessionData.runtime,
@@ -276,16 +276,6 @@ export async function monitorTaskSession({
       clearActiveChildSession({ preserveFile: termination?.unconfirmed === true });
     }
 
-    await emitEvent(tctx, 'agent.killed', {
-      module_id:       moduleId,
-      agent_type:      'buster',
-      label:           sessionData.label,
-      session_key:     sessionData.childSessionKey,
-      reason:          'monitor_error',
-      elapsed_seconds: elapsedSeconds,
-      kill_confirmed:  termination?.confirmed === true,
-    });
-
     return { ok: false, reason: `monitor_error: ${monitorReason}` };
   }
 }
@@ -331,15 +321,6 @@ export async function killTaskSession({
   } finally {
     clearActiveChildSession({ preserveFile: termination?.unconfirmed === true });
   }
-
-  await emitEvent(tctx, 'agent.killed', {
-    module_id:       moduleId,
-    agent_type:      'buster',
-    label:           sessionData.label,
-    session_key:     sessionData.childSessionKey,
-    reason:          sessionResult.reason,
-    elapsed_seconds: elapsedSeconds,
-  });
 
   logger.info('SESSION', 'Session killed', {
     reason: sessionResult.reason,

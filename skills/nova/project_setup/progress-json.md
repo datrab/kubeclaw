@@ -291,7 +291,7 @@ When enabled, all pipeline events (module status, agent lifecycle, gate verdicts
 |---|---|---|
 | `project_dir` | repo root | Relative to repo root (e.g. `Projects/<project>/src`) |
 | `start_cmd` | `npm start` | Server start command |
-| `image` | `node:20-slim` | Podman image tag |
+| `image` | `docker.io/library/node:20-slim` | Podman image tag |
 | `port` | `3000` | Server listen port |
 | `health_path` | `/` | Health check endpoint |
 | `health_retries` | `3` | Health check retry count |
@@ -311,7 +311,9 @@ When enabled, all pipeline events (module status, agent lifecycle, gate verdicts
 |---|---|---|
 | `project_dir` | repo root | Relative to repo root |
 | `build_cmd` | `npm run build` | Must install deps + build |
-| `image` | `node:20-slim` | Podman image |
+| `image` | `docker.io/library/node:20-slim` | Podman image |
+
+`image` must be a fully qualified registry/namespace reference. Shorthand names such as `node:20-slim` are rejected before Buster accepts a task.
 
 ### Suite-Specific Config
 
@@ -525,7 +527,7 @@ Controls how task payloads are dispatched to Forge agents.
           "type": "static",
           "project_dir": "Projects/my-app/src",
           "build_cmd": "cd frontend && npm install && npm run build",
-          "image": "node:20-slim"
+          "image": "docker.io/library/node:20-slim"
         },
         "unit": { "test_cmd": "cd frontend && npm install && npx vitest run" }
       }

@@ -21,8 +21,6 @@ export {
   onGateStarted,
   onGatePass,
   onGateFail,
-  onAgentSpawned,
-  onAgentKilled,
   onPhaseStarted,
   onPhaseCompleted,
   onRetryScheduled,
@@ -43,11 +41,6 @@ export {
   updateTranscriptObservability,
   updateRedisCompletionObservability,
 } from './telemetry/builders.ts';
-
-export {
-  emitTranscriptLine,
-  emitAgentProgress,
-} from './telemetry/progress.ts';
 
 export {
   TELEMETRY_PAYLOAD_EVENT_TYPES,

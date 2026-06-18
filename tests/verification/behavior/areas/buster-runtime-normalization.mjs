@@ -266,8 +266,8 @@ await record('Buster runtime imports, token resolution, and telemetry guard stay
   assert(busterSessionMonitorText.includes('resolveGatewayBaseUrl'));
   assert(busterSessionMonitorText.includes('resolveGatewayToken'));
   assert.equal(busterSessionMonitorText.includes('`buster-${moduleId}`,\n        moduleId,'), false);
-  assert(busterSessionMonitorText.includes('label: `buster-${moduleId}`'));
-  assert(busterSessionMonitorText.includes("agent_type: 'buster'"));
+  assert.equal(busterSessionMonitorText.includes('publishTranscriptDelta'), false);
+  assert(busterSessionMonitorText.includes('Transcript delta observed through diagnostic ACP monitor'));
   assert(!busterPipelineText.includes('process.env.GATEWAY_TOKEN'));
   assert(!busterSessionMonitorText.includes('process.env.GATEWAY_TOKEN'));
   assert(!busterPipelineText.includes("const GATEWAY_URL            = 'http://127.0.0.1:18789/tools/invoke'"));
@@ -363,14 +363,7 @@ await record('Buster monitor publishes transcript deltas with canonical session 
 
   assert.equal(result.terminal, true, JSON.stringify(result));
   const transcriptEvents = events.filter((event) => event.type === 'agent.transcript');
-  assert.equal(transcriptEvents.length, 1);
-  assert.equal(transcriptEvents[0].agent_type, 'buster');
-  assert.equal(transcriptEvents[0].label, 'buster-01');
-  assert.equal(transcriptEvents[0].module_id, '01');
-  assert.equal(transcriptEvents[0].session_key, 'agent:main:acp:buster-session-1');
-  assert.equal(transcriptEvents[0].dispatch_id, 'dispatch-1');
-  assert.equal(transcriptEvents[0].line_kind, 'assistant');
-  assert.match(transcriptEvents[0].text, /^\[redacted text; chars=/);
+  assert.equal(transcriptEvents.length, 0);
 });
 
 await record('Buster monitor returns rate-limit pause budget for terminal completion emission', async () => {

@@ -28,6 +28,17 @@ class FakeRedis {
     this.pending = [0];
     this.payloadLength = 0;
     this.closed = false;
+    this.status = 'wait';
+  }
+
+  async connect() {
+    this.calls.push({ op: 'connect', args: [] });
+    this.status = 'ready';
+  }
+
+  async ping() {
+    this.calls.push({ op: 'ping', args: [] });
+    return 'PONG';
   }
 
   async xgroup(...args) {
@@ -198,6 +209,8 @@ assert.equal(emitted[0].payload.outcome, 'success');
 assert.equal(emitted[0].payload.duration_seconds, 2.5);
 assert.equal(emitted[0].payload.final_message_count, 1);
 assert.equal(redis.calls.some((call) => call.op === 'xreadgroup'), true);
+assert.equal(redis.calls.findIndex((call) => call.op === 'connect') < redis.calls.findIndex((call) => call.op === 'xgroup'), true, 'ingester must connect before creating consumer groups');
+assert.equal(redis.calls.findIndex((call) => call.op === 'ping') < redis.calls.findIndex((call) => call.op === 'xgroup'), true, 'ingester must confirm Redis is writable before stream setup');
 assert.equal(redis.calls.some((call) => call.op === 'xack' && call.args[2] === '1-0'), true);
 assert.equal(ingester.getStats().emitted, 1);
 

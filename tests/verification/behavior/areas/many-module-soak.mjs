@@ -690,11 +690,11 @@ const config = {
     assert.equal(pipelineSignals[3].summary_type, 'pipeline');
     assert.equal(pipelineSignals[3].status, 'ok');
 
-    const generatorBridgeEvents = signalEvents.filter((event) => event.type.startsWith('plugin.generator.'));
-    assert.deepEqual(generatorBridgeEvents.map((event) => event.type), [
-      'plugin.generator.project_summary.bridge_invoked',
-      'plugin.generator.pipeline_review.bridge_invoked',
-      'plugin.generator.case_study.bridge_invoked',
+    const generatorBridgeEvents = signalEvents.filter((event) => event.type === 'plugin.event' && event.plugin_event === 'bridge_invoked' && event.plugin_id?.startsWith('builtin.generator.'));
+    assert.deepEqual(generatorBridgeEvents.map((event) => event.plugin_id), [
+      'builtin.generator.project_summary',
+      'builtin.generator.pipeline_review',
+      'builtin.generator.case_study',
     ]);
   });
 }

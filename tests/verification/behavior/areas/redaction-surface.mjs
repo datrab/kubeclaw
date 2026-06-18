@@ -76,7 +76,7 @@ export async function registerRedactionSurfaceArea({
     assert.equal(summary.lastDetail, undefined);
     assert.equal(summary.partialLine, undefined);
     assert.equal(summary.newLines, undefined);
-    assert.equal(summary.detail_summary.startsWith('[redacted transcript_detail;'), true);
+    assert.equal(summary.detail_summary, 'adapter failed with token=[redacted-secret]');
     assert.equal(summary.partial_line_summary.startsWith('[redacted transcript_partial_line;'), true);
     assert.equal(summary.new_lines_summary.startsWith('[redacted transcript_new_lines;'), true);
     assert.equal(serialized.includes('UnsafeTranscriptToken1234567890'), false);

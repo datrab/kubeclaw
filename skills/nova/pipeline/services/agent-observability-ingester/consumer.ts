@@ -22,6 +22,9 @@ import {
 } from './usage-aggregation.ts';
 
 interface RedisClient {
+  status?: string;
+  connect?: () => Promise<unknown> | unknown;
+  ping?: () => Promise<unknown> | unknown;
   xgroup?: (...args: unknown[]) => Promise<unknown> | unknown;
   xreadgroup?: (...args: unknown[]) => Promise<unknown> | unknown;
   xack?: (...args: unknown[]) => Promise<unknown> | unknown;
@@ -89,7 +92,7 @@ function defaultRedisClientFactory(config: AgentObservabilityIngesterConfig): Re
       networkIsolation: config.redisNetworkIsolation,
     },
     {
-      lazyConnect: false,
+      lazyConnect: true,
       maxRetriesPerRequest: 1,
       enableOfflineQueue: false,
     },
@@ -177,6 +180,7 @@ export class AgentObservabilityIngester {
   private readonly degradedReasons = new Set<string>();
   private readonly loggedFailures = new Set<string>();
   private redis: RedisClient | null = null;
+  private redisReady = false;
   private groupReady = false;
   private running = false;
   private stopped = false;
@@ -209,6 +213,20 @@ export class AgentObservabilityIngester {
     return this.redis;
   }
 
+  private async ensureRedisReady(): Promise<RedisClient> {
+    const redis = this.ensureRedisClient();
+    if (this.redisReady) return redis;
+    const status = typeof redis.status === 'string' ? redis.status : '';
+    if (typeof redis.connect === 'function' && status !== 'ready') {
+      await this.redisCall(() => redis.connect?.(), 'agent observability Redis connect');
+    }
+    if (typeof redis.ping === 'function') {
+      await this.redisCall(() => redis.ping?.(), 'agent observability Redis ping');
+    }
+    this.redisReady = true;
+    return redis;
+  }
+
   private async redisCall<T>(operation: () => Promise<T> | T, description: string): Promise<T> {
     return withTimeout(Promise.resolve(operation()), this.config.redisCommandTimeoutMs, `${description} timed out`);
   }
@@ -223,7 +241,7 @@ export class AgentObservabilityIngester {
 
   async ensureConsumerGroup(): Promise<void> {
     if (this.groupReady) return;
-    const redis = this.ensureRedisClient();
+    const redis = await this.ensureRedisReady();
     if (!redis.xgroup) throw new Error('Redis client does not expose xgroup');
     for (const stream of [AGENT_OBSERVABILITY_CONTROL_STREAM, AGENT_OBSERVABILITY_PAYLOAD_STREAM] as const) {
       try {
@@ -239,7 +257,7 @@ export class AgentObservabilityIngester {
   }
 
   async reclaimPending(): Promise<StreamEntry[]> {
-    const redis = this.ensureRedisClient();
+    const redis = await this.ensureRedisReady();
     if (!redis.call) return [];
     for (const stream of [AGENT_OBSERVABILITY_CONTROL_STREAM, AGENT_OBSERVABILITY_PAYLOAD_STREAM] as const) {
       const result = await this.redisCall(
@@ -267,7 +285,7 @@ export class AgentObservabilityIngester {
     const reclaimed = await this.reclaimPending();
     if (reclaimed.length > 0) return reclaimed;
 
-    const redis = this.ensureRedisClient();
+    const redis = await this.ensureRedisReady();
     if (!redis.xreadgroup) throw new Error('Redis client does not expose xreadgroup');
     const result = await this.redisBlockingReadCall(
       () => redis.xreadgroup?.(
@@ -349,7 +367,7 @@ export class AgentObservabilityIngester {
   async ack(entry: StreamEntry | string): Promise<void> {
     const stream = typeof entry === 'string' ? AGENT_OBSERVABILITY_CONTROL_STREAM : entry.stream;
     const id = typeof entry === 'string' ? entry : entry.id;
-    const redis = this.ensureRedisClient();
+    const redis = await this.ensureRedisReady();
     if (!redis.xack) throw new Error('Redis client does not expose xack');
     await this.redisCall(
       () => redis.xack?.(stream, this.config.groupName, id),
@@ -364,7 +382,7 @@ export class AgentObservabilityIngester {
   }
 
   async deadLetter(entry: StreamEntry, reason: string, errors: string[], raw?: string): Promise<void> {
-    const redis = this.ensureRedisClient();
+    const redis = await this.ensureRedisReady();
     if (!redis.xadd) throw new Error('Redis client does not expose xadd');
     const record = {
       v: 1,
@@ -388,7 +406,7 @@ export class AgentObservabilityIngester {
   }
 
   async trim(): Promise<void> {
-    const redis = this.ensureRedisClient();
+    const redis = await this.ensureRedisReady();
     if (!redis.xtrim) return;
     await this.redisCall(
       () => redis.xtrim?.(AGENT_OBSERVABILITY_CONTROL_STREAM, 'MAXLEN', '~', this.config.controlStreamMaxLen),
@@ -401,7 +419,7 @@ export class AgentObservabilityIngester {
   }
 
   async checkPressure(ctx: unknown = {}): Promise<AgentObservabilityPressureStatus> {
-    const redis = this.ensureRedisClient();
+    const redis = await this.ensureRedisReady();
     const controlPending = redis.xpending
       ? pendingCount(await this.redisCall(
         () => redis.xpending?.(AGENT_OBSERVABILITY_CONTROL_STREAM, this.config.groupName),
@@ -464,8 +482,11 @@ export class AgentObservabilityIngester {
           await this.trim();
         } catch (error) {
           this.stats.failed += 1;
+          this.redisReady = false;
+          this.groupReady = false;
           this.stats.lastError = errorMessage(error);
           this.logOnce('loop', `agent observability ingester loop failed: ${this.stats.lastError}`);
+          await new Promise((resolve) => setTimeout(resolve, this.config.loopDelayMs));
         }
       }
     };
@@ -489,6 +510,8 @@ export class AgentObservabilityIngester {
     if (loopTask) await loopTask;
     const redis = this.redis;
     this.redis = null;
+    this.redisReady = false;
+    this.groupReady = false;
     if (!redis) return;
     try {
       if (redis.quit) await redis.quit();

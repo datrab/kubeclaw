@@ -3,7 +3,6 @@ import {
   createAcpMonitorEventAdapter,
   isSessionTerminal,
   monitorStateFromAcpEvent,
-  publishTranscriptDelta,
 } from '../agents/acp-monitor.ts';
 import {
   SESSION_TERMINATION_POLICY_DEFAULTS,
@@ -251,20 +250,9 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
       if (event.type === 'acp.transcript.delta') {
         const newLines = state.transcript?.newLines || [];
         if (newLines.length > 0) {
-          publishTranscriptDelta(
-            tctx,
-            {
-              label: `buster-${moduleId}`,
-              module_id: moduleId,
-              gate_id: payload?.gate_id || null,
-              gate_type: payload?.gate_type || null,
-              session_key: childSessionKey,
-              dispatch_id: payload?.dispatch_id || payload?.session?.label || null,
-              agent_type: 'buster',
-            },
-            newLines,
-            (_ctx, data) => emitEvent(tctx, 'agent.transcript', data),
-          );
+          logger.info('MONITOR', 'Transcript delta observed through diagnostic ACP monitor', {
+            lines: newLines.length,
+          });
         }
       }
 

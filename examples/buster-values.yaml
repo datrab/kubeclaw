@@ -13,6 +13,11 @@ agentRole: "buster"
 processor:
   enabled: true
 
+busterPipeline:
+  enabled: true
+  platformCapabilities:
+    - image_prepull
+
 image:
   repository: ghcr.io/forgestackai/kubeclaw-sandbox
   tag: "latest"

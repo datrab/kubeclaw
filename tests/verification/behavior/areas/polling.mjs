@@ -1401,7 +1401,7 @@ await record('pollForFile preserves transcript state when an ACP session ends wi
     assert.equal(result.ok, false);
     assert.equal(result.reason, 'session_ended_no_output');
     assert.equal(result.status.session_key, 'agent:main:acp:pipeline-review-session');
-    assert.equal(result.status.detail.startsWith('[redacted transcript_detail;'), true);
+    assert.equal(result.status.detail, 'closed');
     assert.equal(result.transcript?.type, 'transcript.summary');
     assert.equal(result.transcript?.redacted, true);
     assert.equal(result.transcript?.eventCount, 1);
@@ -1984,7 +1984,7 @@ await record('pollForSessionEnd normalizes exhausted gate-fix rate-limit status 
   }
 });
 
-await record('pollForSessionEnd keeps gate-backed transcript and progress telemetry gate-scoped instead of overloading module_id', async () => {
+await record('pollForSessionEnd leaves gate-backed transcript and progress telemetry to the observer plugin', async () => {
   const { runtimeRoot: telemetryRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
   installFakeRedis(telemetryRuntimeRoot);
   globalThis.__fakeRedisCalls = [];
@@ -2064,23 +2064,8 @@ await record('pollForSessionEnd keeps gate-backed transcript and progress teleme
     assert.equal(result.completed, true);
 
     const events = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
-    const transcript = events.find((event) => event.type === 'agent.transcript');
-    assert(transcript, 'missing gate-backed agent.transcript event');
-    assert.equal(transcript.label, gatewayLabel);
-    assert.equal(transcript.module_id, null);
-    assert.equal(transcript.gate_id, 'gate:review');
-    assert.equal(transcript.gate_type, 'review');
-    assert.equal(transcript.session_key, sessionKey);
-    assert.equal(transcript.dispatch_id, 'dispatch-review-gatefix-1');
-
-    const progress = events.find((event) => event.type === 'agent.progress');
-    assert(progress, 'missing gate-backed agent.progress event');
-    assert.equal(progress.label, gatewayLabel);
-    assert.equal(progress.module_id, null);
-    assert.equal(progress.gate_id, 'gate:review');
-    assert.equal(progress.gate_type, 'review');
-    assert.equal(progress.session_key, sessionKey);
-    assert.equal(progress.dispatch_id, 'dispatch-review-gatefix-1');
+    assert.equal(events.some((event) => event.type === 'agent.transcript'), false);
+    assert.equal(events.some((event) => event.type === 'agent.progress'), false);
   } finally {
     telemetryShutdownMod.untrackAgent('forge-gatefix-review');
     await gateway.close();
@@ -2323,21 +2308,8 @@ await record('pollStatus emits live transcript and progress telemetry for module
     assert.equal(JSON.stringify(result.transcript).includes('forge progress update'), false);
 
     const events = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
-    const transcript = events.find((event) => event.type === 'agent.transcript');
-    assert(transcript, 'missing pollStatus agent.transcript event');
-    assert.equal(transcript.agent_type, 'forge');
-    assert.equal(transcript.label, gatewayLabel);
-    assert.equal(transcript.module_id, '01');
-    assert.equal(transcript.gate_id, null);
-    assert.equal(transcript.session_key, sessionKey);
-
-    const progress = events.find((event) => event.type === 'agent.progress');
-    assert(progress, 'missing pollStatus agent.progress event');
-    assert.equal(progress.agent_type, 'forge');
-    assert.equal(progress.label, gatewayLabel);
-    assert.equal(progress.module_id, '01');
-    assert.equal(progress.gate_id, null);
-    assert.equal(progress.session_key, sessionKey);
+    assert.equal(events.some((event) => event.type === 'agent.transcript'), false);
+    assert.equal(events.some((event) => event.type === 'agent.progress'), false);
   } finally {
     telemetryShutdownMod.untrackAgent(trackingKey);
     await gateway.close();
@@ -2655,17 +2627,8 @@ await record('pollStatus prefers live status dispatch-backed correlation over st
     assert.equal(result.reason, 'session_ended_no_changes');
 
     const events = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
-    const transcript = events.find((event) => event.type === 'agent.transcript');
-    assert(transcript, 'missing pollStatus dispatch-backed agent.transcript event');
-    assert.equal(transcript.label, staleGatewayLabel);
-    assert.equal(transcript.dispatch_id, liveDispatchId);
-    assert.equal(transcript.session_key, sessionKey);
-
-    const progress = events.find((event) => event.type === 'agent.progress');
-    assert(progress, 'missing pollStatus dispatch-backed agent.progress event');
-    assert.equal(progress.label, staleGatewayLabel);
-    assert.equal(progress.dispatch_id, liveDispatchId);
-    assert.equal(progress.session_key, sessionKey);
+    assert.equal(events.some((event) => event.type === 'agent.transcript'), false);
+    assert.equal(events.some((event) => event.type === 'agent.progress'), false);
   } finally {
     telemetryShutdownMod.untrackAgent(trackingKey);
     await gateway.close();
@@ -2745,14 +2708,12 @@ await record('pollStatus preserves terminal ACP detail alongside the transcript 
 
     assert.equal(result.ok, false);
     assert.equal(result.reason, 'session_ended_no_changes');
-    assert.equal(result.status?.detail.startsWith('[redacted transcript_detail;'), true);
-    assert.equal(result.status?.detail.includes('adapter command missing'), false);
+    assert.equal(result.status?.detail, 'adapter command missing');
     assert.equal(result.status?.state, 'closed');
     assert.equal(result.transcript?.type, 'transcript.summary');
     assert.equal(result.transcript?.redacted, true);
     assert.equal(result.transcript?.lastDetail, undefined);
-    assert.equal(result.transcript?.detail_summary.startsWith('[redacted transcript_detail;'), true);
-    assert.equal(result.transcript?.detail_summary.includes('adapter command missing'), false);
+    assert.equal(result.transcript?.detail_summary, 'adapter command missing');
     assert.equal(result.transcript?.eventCount, 1);
   } finally {
     telemetryShutdownMod.untrackAgent(trackingKey);
@@ -2926,21 +2887,8 @@ await record('pollForFile emits live transcript and progress telemetry for file-
     assert.equal(result.reason, 'session_ended_no_output');
 
     const events = xaddEvents(`pipeline:telemetry:${config.project}:${runId}`);
-    const transcript = events.find((event) => event.type === 'agent.transcript');
-    assert(transcript, 'missing pollForFile agent.transcript event');
-    assert.equal(transcript.agent_type, 'echo');
-    assert.equal(transcript.label, gatewayLabel);
-    assert.equal(transcript.module_id, 'pipeline-review');
-    assert.equal(transcript.gate_id, null);
-    assert.equal(transcript.session_key, sessionKey);
-
-    const progress = events.find((event) => event.type === 'agent.progress');
-    assert(progress, 'missing pollForFile agent.progress event');
-    assert.equal(progress.agent_type, 'echo');
-    assert.equal(progress.label, gatewayLabel);
-    assert.equal(progress.module_id, 'pipeline-review');
-    assert.equal(progress.gate_id, null);
-    assert.equal(progress.session_key, sessionKey);
+    assert.equal(events.some((event) => event.type === 'agent.transcript'), false);
+    assert.equal(events.some((event) => event.type === 'agent.progress'), false);
   } finally {
     telemetryShutdownMod.untrackAgent('pipeline-review-gpt-5.4');
     await gateway.close();

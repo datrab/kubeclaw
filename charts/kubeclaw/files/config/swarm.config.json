@@ -42,6 +42,8 @@
   },
 
   "agent_observability": {
+    "required": true,
+    "startup_evidence_timeout_ms": 15000,
     "plugin_control": {
       "enabled": true,
       "pluginId": "kubeclaw-agent-observer",

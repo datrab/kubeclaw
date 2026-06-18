@@ -31,7 +31,7 @@ Reason: Runners, terminal handling, retry policy, telemetry, summaries, and repl
 
 Source proof: `skills/nova/pipeline/services/contracts/terminal-decision.ts`, `skills/nova/pipeline/runners/pipeline-runner-terminal.ts`, `skills/nova/pipeline/services/failures/retry-policy.ts`, and `skills/nova/pipeline/services/contracts/pipeline-step-result.ts`.
 
-Verification: `node tests/verification/contracts/check-pipeline-terminal-decision-surface.mjs --source-root "$PWD"` and `node tests/verification/contracts/check-pipeline-step-result-surface.mjs --source-root "$PWD"`.
+Verification: `node tests/verification/contracts/check-pipeline-step-result-surface.mjs --source-root "$PWD"` and `node tests/verification/contracts/check-manual-degraded-terminal-acceptance.mjs --source-root "$PWD"`.
 
 ## Plugin Registry Is Startup-Time Platform Config
 
