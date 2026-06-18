@@ -94,11 +94,11 @@ data:
       },
       "agents": {
         "defaults": {
-          "thinkingDefault": "high",
+          "thinkingDefault": "off",
+          "reasoningDefault": "off",
           "model": {
-            "primary": "openai/gpt-5.5",
+            "primary": "openai/gpt-5.4",
             "fallbacks": [
-              "openai/gpt-5.4",
               "anthropic/claude-sonnet-4-6",
               "anthropic/claude-opus-4-6",
               "openai/gpt-5.5-pro",
@@ -109,13 +109,13 @@ data:
           "models": {
             "anthropic/claude-sonnet-4-6": {},
             "anthropic/claude-opus-4-6": {},
-            "openai/gpt-5.4": {},
-            "openai/gpt-5.5-pro": {},
-            "openai/gpt-5.5": {
+            "openai/gpt-5.4": {
               "agentRuntime": {
                 "id": "codex"
               }
             },
+            "openai/gpt-5.5-pro": {},
+            "openai/gpt-5.5": {},
             "litellm/{{ .Values.litellm.defaultModel }}": {}
           },
           "workspace": "/home/node/.openclaw/workspace",
@@ -337,6 +337,12 @@ data:
           },
           "codex": {
             "enabled": true
+          },
+          "kubeclaw-agent-observer": {
+            "enabled": false,
+            "hooks": {
+              "allowConversationAccess": true
+            }
           }
         }
       },

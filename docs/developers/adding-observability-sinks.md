@@ -133,4 +133,4 @@ npm run docs:generate:check
 - sink throws and breaks pipeline control flow: incorrect, sinks must degrade without owning scheduler truth.
 - event appears in Redis but not external sink: inspect sink config and fallback artifacts before changing telemetry builders.
 - sink output contains tokens or full credentials: block the sink until redaction is fixed and covered by tests.
-- live observer hook firing is not repo-proven; document it as a live check until a cluster verifier exists.
+- observer runtime capture changes should update `plugins/openclaw-agent-observer/src/index.ts`, `hook-normalizers.ts`, the status/self-test contract check, and the operator stream checks together.

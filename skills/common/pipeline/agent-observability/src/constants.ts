@@ -40,7 +40,6 @@ export const AGENT_OBSERVABILITY_HOOKS = Object.freeze([
   'agent_end',
   'llm_input',
   'llm_output',
-  'subagent_spawning',
   'subagent_spawned',
   'subagent_delivery_target',
   'subagent_ended',
@@ -48,7 +47,6 @@ export const AGENT_OBSERVABILITY_HOOKS = Object.freeze([
   'after_tool_call',
   'model_call_started',
   'model_call_ended',
-  'model_usage',
   'session_start',
   'session_end',
 ] as const);

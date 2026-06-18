@@ -68,7 +68,7 @@ function positivePort(value: unknown): number | undefined {
 export function resolveAgentObserverConfig(pluginConfig: unknown = {}, env: UnknownRecord = process.env): AgentObserverConfig {
   const config = asRecord(pluginConfig);
   return {
-    enabled: boolValue(config.enabled ?? env.OPENCLAW_AGENT_OBSERVER_ENABLED, false),
+    enabled: boolValue(config.enabled ?? env.OPENCLAW_AGENT_OBSERVER_ENABLED, true),
     redisHost: stringValue(config.redisHost ?? env.REDIS_HOST),
     redisPort: positivePort(config.redisPort ?? env.REDIS_PORT),
     redisUsername: stringValue(config.redisUsername ?? env.REDIS_USERNAME),

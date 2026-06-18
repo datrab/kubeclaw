@@ -57,7 +57,7 @@ export function loadLifecycleReadModels(config) {
     });
   }
   const stored = readJsonIfPresent(filePath, cached || createDefaultLifecycleReadModels(config));
-  return catchUpLifecycleReadModels(config, stored);
+  return catchUpLifecycleReadModels(config, stored, { persist: config?._lifecycleReadOnly !== true });
 }
 
 export function saveLifecycleReadModels(config, readModels) {

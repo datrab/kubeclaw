@@ -7,7 +7,7 @@ import test from 'node:test';
 import { promisify } from 'node:util';
 
 import { resolvePerfReportPaths } from '../../../../../skills/buster/pipeline/suites/perf.ts';
-import { resolveSandboxResultsDir, runSuites, runSuiteWithTimeout } from '../../../../../skills/buster/pipeline/runners/suite-runner.ts';
+import { buildDetailedSuiteSummary, resolveSandboxResultsDir, runSuites, runSuiteWithTimeout } from '../../../../../skills/buster/pipeline/runners/suite-runner.ts';
 
 const execFileAsync = promisify(execFile);
 
@@ -54,6 +54,20 @@ test('sandbox verdict paths are namespaced by module and attempt', () => {
     path.join('/sandbox/results', 'module-b-attempt-2'),
   );
   assert.notEqual(resolveSandboxResultsDir('module/a', 1), resolveSandboxResultsDir('module-b', 2));
+});
+
+test('detailed suite summary preserves the top failure reason', () => {
+  const summary = buildDetailedSuiteSummary([
+    {
+      suite: 'build',
+      status: 'FAIL',
+      findings: [{ severity: 'CRITICAL', message: 'Dockerfile base image is missing', rule: 'dockerfile-base-image' }],
+    },
+    { suite: 'health', status: 'SKIP', reason: 'build failed' },
+    { suite: 'unit', status: 'PASS' },
+  ]);
+
+  assert.equal(summary, 'build: FAIL - Dockerfile base image is missing | health: SKIP - build failed | unit: PASS');
 });
 
 test('perf report paths use per-run scratch and final artifacts', () => {

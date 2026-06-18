@@ -20,7 +20,6 @@ const HOOK_TO_TYPE: Record<AgentObservabilityHook, AgentObservabilityIngressEven
   agent_end: 'openclaw.agent.ended',
   llm_input: 'openclaw.llm.input',
   llm_output: 'openclaw.llm.output',
-  subagent_spawning: 'openclaw.subagent.spawning',
   subagent_spawned: 'openclaw.subagent.spawned',
   subagent_delivery_target: 'openclaw.subagent.delivery_target',
   subagent_ended: 'openclaw.subagent.ended',
@@ -28,7 +27,6 @@ const HOOK_TO_TYPE: Record<AgentObservabilityHook, AgentObservabilityIngressEven
   after_tool_call: 'openclaw.tool.finished',
   model_call_started: 'openclaw.model.started',
   model_call_ended: 'openclaw.model.ended',
-  model_usage: 'openclaw.model.usage',
   session_start: 'openclaw.session.started',
   session_end: 'openclaw.session.ended',
 });
@@ -67,6 +65,15 @@ function boolValue(value: unknown): boolean | undefined {
   const normalized = String(value).trim().toLowerCase();
   if (['1', 'true', 'yes', 'on'].includes(normalized)) return true;
   if (['0', 'false', 'no', 'off'].includes(normalized)) return false;
+  return undefined;
+}
+
+function successValue(value: unknown): boolean | undefined {
+  const explicit = boolValue(valueAt(value, 'success', 'ok'));
+  if (explicit !== undefined) return explicit;
+  const phase = stringValue(valueAt(value, 'phase'));
+  if (phase === 'end') return true;
+  if (phase === 'error') return false;
   return undefined;
 }
 
@@ -211,6 +218,39 @@ function modelUsagePayload(event: unknown): AgentObservabilityIngressPayloadV1 {
   };
 }
 
+function unwrapAgentEventData(event: unknown): UnknownRecord {
+  const eventRecord = asRecord(event);
+  return {
+    ...asRecord(valueAt(event, 'data')),
+    runId: eventRecord.runId,
+    sessionKey: eventRecord.sessionKey,
+    sessionId: eventRecord.sessionId,
+    agentId: eventRecord.agentId,
+    seq: eventRecord.seq,
+    ts: eventRecord.ts,
+    stream: eventRecord.stream,
+  };
+}
+
+function normalizeAgentEventHook(event: unknown): AgentObservabilityHook | null {
+  const stream = stringValue(valueAt(event, 'stream'));
+  const data = asRecord(valueAt(event, 'data'));
+  const phase = stringValue(valueAt(data, 'phase'));
+  if (stream === 'lifecycle') {
+    if (phase === 'start') return 'session_start';
+    if (phase === 'end' || phase === 'error') return 'agent_end';
+    return null;
+  }
+  if (stream === 'assistant') return 'llm_output';
+  if (stream === 'item') {
+    if (phase === 'start') return 'before_tool_call';
+    if (phase === 'end') return 'after_tool_call';
+    return null;
+  }
+  if (stream === 'command_output' || stream === 'patch' || stream === 'approval') return 'after_tool_call';
+  return null;
+}
+
 export function normalizePayload(hook: AgentObservabilityHook, event: unknown): AgentObservabilityIngressPayloadV1 {
   switch (hook) {
     case 'llm_input':
@@ -257,8 +297,8 @@ export function normalizePayload(hook: AgentObservabilityHook, event: unknown): 
     case 'agent_end':
       return {
         hook,
-        outcome: outcome(event) ?? null,
-        reason: stringValue(valueAt(event, 'reason')) ?? null,
+        outcome: outcome(event) ?? (successValue(event) === true ? 'success' : successValue(event) === false ? 'error' : null),
+        reason: stringValue(firstValue(valueAt(event, 'reason'), valueAt(event, 'stopReason', 'stop_reason'), valueAt(event, 'phase'))) ?? null,
         error: toJsonValue(valueAt(event, 'error')),
         duration_ms: numberValue(valueAt(event, 'durationMs', 'duration_ms', 'duration')) ?? null,
         final_messages: historyMessages(valueAt(event, 'finalMessages', 'final_messages', 'messages')),
@@ -283,9 +323,6 @@ export function normalizePayload(hook: AgentObservabilityHook, event: unknown): 
         usage: toJsonRecord(valueAt(event, 'usage')),
         metadata: baseMetadata(event),
       };
-    case 'model_usage':
-      return modelUsagePayload(event);
-    case 'subagent_spawning':
     case 'subagent_spawned':
     case 'subagent_delivery_target':
     case 'subagent_ended':
@@ -313,8 +350,8 @@ export function normalizePayload(hook: AgentObservabilityHook, event: unknown): 
         hook,
         session_key: stringValue(valueAt(event, 'sessionKey', 'session_key')) ?? null,
         session_id: stringValue(valueAt(event, 'sessionId', 'session_id')) ?? null,
-        outcome: outcome(event) ?? null,
-        reason: stringValue(valueAt(event, 'reason')) ?? null,
+        outcome: outcome(event) ?? (successValue(event) === true ? 'success' : successValue(event) === false ? 'error' : null),
+        reason: stringValue(firstValue(valueAt(event, 'reason'), valueAt(event, 'stopReason', 'stop_reason'), valueAt(event, 'phase'))) ?? null,
         error: toJsonValue(valueAt(event, 'error')),
         duration_ms: numberValue(valueAt(event, 'durationMs', 'duration_ms', 'duration')) ?? null,
         metadata: baseMetadata(event),
@@ -356,4 +393,11 @@ export function normalizeModelUsageDiagnosticEvent(event: unknown, now = new Dat
     throw new Error('unsupported OpenClaw diagnostic event: expected model.usage');
   }
   return normalizeIngressEvent('openclaw.model.usage', event, modelUsagePayload(event), now);
+}
+
+export function normalizeAgentEvent(event: unknown, now = new Date()): AgentObservabilityIngressEventV1 | null {
+  const hook = normalizeAgentEventHook(event);
+  if (!hook) return null;
+  const normalizedEvent = unwrapAgentEventData(event);
+  return normalizeHookEvent(hook, normalizedEvent, now, event);
 }

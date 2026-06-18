@@ -38,7 +38,7 @@ Buster writes telemetry to Redis when available and appends fallback artifacts w
 | Nova pipeline telemetry | `skills/nova/pipeline/services/telemetry/builders.ts`; `dispatch.ts`; `telemetry-sink-contract.ts`; `telemetry-stream.ts` | `pipeline:telemetry:<project>:<run_id>` plus sequence key | Redis failure records `observability.degraded` and local fallback evidence without changing scheduler truth |
 | Discord presentation | `notification-contract.ts`; `telemetry-sink-contract.ts`; Discord integration | global and run-scoped `discord.jsonl`, webhook messages | Discord/audit failure is observability degradation only |
 | Buster telemetry | `skills/buster/pipeline/services/telemetry.ts` | Redis telemetry or `buster-telemetry-fallback.jsonl` | fallback lines use explicit artifact evidence when Redis is unavailable |
-| OpenClaw agent observer | `plugins/openclaw-agent-observer/src/index.ts`; `hook-normalizers.ts`; `redis-writer.ts` | OpenClaw hook/model usage streams and dead-letter entries | invalid config drops events with logged failure; Redis write failures increment writer stats/dead-letter attempts |
+| OpenClaw agent observer | `plugins/openclaw-agent-observer/src/index.ts`; `hook-normalizers.ts`; `redis-writer.ts` | runtime agent events, OpenClaw hook/model usage streams, and dead-letter entries | invalid config drops events with logged failure; Redis write failures increment writer stats/dead-letter attempts |
 | Kubernetes logs | pod containers | `kubectl logs` output | no central source-proven aggregation yet |
 
 Operators collect pod logs with `kubectl logs` today. There is no source-proven central aggregation for Buster sandbox stdout/stderr beyond runtime files and pod logs.
@@ -56,6 +56,14 @@ kubectl exec -n "$NAMESPACE" deployment/agent-buster -c kubeclaw -- openclaw gat
 ```
 
 Inside project workspaces, pipeline artifacts under `.swarm/logs/**` are the primary audit trail. Redis telemetry streams are the live structured event channel. Discord webhook delivery is best-effort and writes audit evidence when configured.
+
+The `kubeclaw-agent-observer` plugin is the source-owned agent runtime observability path. It registers the known OpenClaw hook family, prefers the runtime `events.onAgentEvent` bus for live agent output, falls back to the host agent-event subscription bridge when the runtime facade is absent, and exposes Gateway methods `kubeclaw.agentObserver.status` and `kubeclaw.agentObserver.selfTest`. Its Redis streams are:
+
+- `pipeline:agent-observability:control:v1`
+- `pipeline:agent-observability:payload:v1`
+- `pipeline:agent-observability:deadletter:v1`
+
+Control-stream events carry lifecycle/routing facts such as session, agent, and subagent state. Payload-stream events carry larger tool, model, prompt, response, and general agent-output payloads after the plugin applies the configured masking profile and size fuse.
 
 ## Explicit Non-Claims
 

@@ -48,9 +48,9 @@ const sources = new Map([
   ['mock:config', "export function loadConfig() { return { config: { project: 'demo', repo_root: '/repo', paths: {} }, progress: { modules: {}, gates: {}, execution_order: [] }, pluginRegistry: {} }; }"],
   ['mock:blueprint', "export function listBlueprints() { return []; } export async function releaseBlueprint() { return { status: 'success' }; }"],
   ['mock:context', "export function createPipelineContext(init) { return { ...init, setTempDir(dir) { this._tmpDir = dir; return this; } }; }"],
-  ['mock:logger', "globalThis.__activeLogContext = globalThis.__activeLogContext || null; export function setActiveContext(ctx) { globalThis.__activeLogContext = ctx; } export function clearActiveContext() { globalThis.__activeLogContext = null; } export function getActiveContext() { return globalThis.__activeLogContext; }"],
+  ['mock:logger', "globalThis.__activeLogContext = globalThis.__activeLogContext || null; export function log() {} export function initContextLogging() {} export function setActiveContext(ctx) { globalThis.__activeLogContext = ctx; } export function clearActiveContext() { globalThis.__activeLogContext = null; } export function getActiveContext() { return globalThis.__activeLogContext; }"],
   ['mock:temp', "export function createTempManager() { return { dir: null, init() { this.dir = '/tmp/nova-cli-test'; }, cleanup() {} }; }"],
-  ['mock:status', "export function initLogDir() {}"],
+  ['mock:status', "globalThis.__initLogDirCalls = 0; export function initLogDir() { globalThis.__initLogDirCalls += 1; } export async function closeLogDir() {} export function getInitLogDirCalls() { return globalThis.__initLogDirCalls; }"],
   ['mock:runtime', "export function createRunId() { return 'run-test'; } export function createRunStats() { return { errors: [] }; }"],
   ['mock:runner', "export async function runPipeline() { return 0; } export function printStatus() {} export function dryRun() {}"],
   ['mock:policy', "export const VALID_THINKING_LEVELS = ['low']; export function validateThinkingLevel() {}"],
@@ -72,6 +72,7 @@ const mocks = new Map([
 export async function resolve(specifier, context, nextResolve) {
   if (mocks.has(specifier)) return { url: mocks.get(specifier), shortCircuit: true };
   if (specifier.endsWith('/core/logger.ts')) return { url: 'mock:logger', shortCircuit: true };
+  if (specifier.endsWith('/services/status-store.ts')) return { url: 'mock:status', shortCircuit: true };
   return nextResolve(specifier, context);
 }
 export async function load(url, context, nextLoad) {
@@ -83,9 +84,10 @@ export async function load(url, context, nextLoad) {
   const script = `
 import { main } from '../../../../skills/nova/pipeline/cli.ts';
 import { getActiveContext } from '../../../../skills/nova/pipeline/core/logger.ts';
+import { getInitLogDirCalls } from '../../../../skills/nova/pipeline/services/status-store.ts';
 process.argv = [process.execPath, 'mock-cli-test', '--project', 'demo', '--status'];
 const exitCode = await main();
-console.log(JSON.stringify({ exitCode, activeContext: getActiveContext() }));
+console.log(JSON.stringify({ exitCode, activeContext: getActiveContext(), initLogDirCalls: getInitLogDirCalls() }));
 `;
   const child = spawnSync(process.execPath, ['--loader', loaderPath, '--input-type=module', '--eval', script], {
     cwd: __dirname,
@@ -96,5 +98,6 @@ console.log(JSON.stringify({ exitCode, activeContext: getActiveContext() }));
   assert.deepEqual(JSON.parse(child.stdout), {
     exitCode: 0,
     activeContext: null,
+    initLogDirCalls: 0,
   });
 });

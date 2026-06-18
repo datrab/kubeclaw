@@ -34,6 +34,8 @@ const rateLimitPath = path.join(sourceRoot, 'skills/buster/pipeline/services/rat
 const discordPath = path.join(sourceRoot, 'skills/buster/pipeline/services/discord.ts');
 const baseImagesPath = path.join(sourceRoot, 'skills/buster/pipeline/services/base-images.ts');
 const gatewayHealthPath = path.join(sourceRoot, 'skills/buster/pipeline/services/gateway-health.ts');
+const busterOpenClawPluginRuntimePath = path.join(sourceRoot, 'skills/buster/pipeline/services/openclaw-plugin-runtime.ts');
+const commonOpenClawPluginRuntimePath = path.join(sourceRoot, 'skills/common/pipeline/services/openclaw-plugin-runtime.ts');
 const suiteRunnerPath = path.join(sourceRoot, 'skills/buster/pipeline/runners/suite-runner.ts');
 const a11ySuitePath = path.join(sourceRoot, 'skills/buster/pipeline/suites/a11y.ts');
 const apiSuitePath = path.join(sourceRoot, 'skills/buster/pipeline/suites/api.ts');
@@ -70,6 +72,8 @@ const rateLimitSource = fs.readFileSync(rateLimitPath, 'utf8');
 const discordSource = fs.readFileSync(discordPath, 'utf8');
 const baseImagesSource = fs.readFileSync(baseImagesPath, 'utf8');
 const gatewayHealthSource = fs.readFileSync(gatewayHealthPath, 'utf8');
+const busterOpenClawPluginRuntimeSource = fs.readFileSync(busterOpenClawPluginRuntimePath, 'utf8');
+const commonOpenClawPluginRuntimeSource = fs.readFileSync(commonOpenClawPluginRuntimePath, 'utf8');
 const suiteRunnerSource = fs.readFileSync(suiteRunnerPath, 'utf8');
 const a11ySuiteSource = fs.readFileSync(a11ySuitePath, 'utf8');
 const apiSuiteSource = fs.readFileSync(apiSuitePath, 'utf8');
@@ -99,6 +103,12 @@ assert.equal(mainSource.includes("from './pipeline/services/session-monitor.ts'"
 assert.equal(mainSource.includes('ensureTaskConsumerGroup'), true, 'buster-pipeline should initialize the task queue through the TaskQueue boundary');
 assert.equal(mainSource.includes("redisClient.xgroup('CREATE'"), false, 'buster-pipeline should not create Redis groups directly');
 assert.equal(mainSource.includes("from './pipeline/services/capabilities.ts'"), true, 'typed buster entrypoint should use the Buster capability contract at startup');
+assert.equal(mainSource.includes("from './pipeline/services/openclaw-plugin-runtime.ts'"), true, 'typed buster entrypoint should use shared OpenClaw observer plugin runtime control');
+assert.equal(mainSource.includes('createOpenClawAgentObserverPluginController(loadBusterPlatformConfig())'), true, 'Buster startup should enable the observer plugin from swarm.config.json');
+assert.equal(mainSource.includes('await openClawAgentObserverPlugin.start();'), true, 'Buster startup should enable observer plugin before task polling');
+assert.equal(mainSource.includes('await openClawAgentObserverPlugin.stop();'), true, 'Buster shutdown should disable observer plugin during cleanup');
+assert.equal(busterOpenClawPluginRuntimeSource.includes('../../../common/pipeline/services/openclaw-plugin-runtime.ts'), true, 'Buster OpenClaw plugin wrapper should re-export the common controller');
+assert.equal(commonOpenClawPluginRuntimeSource.includes("['plugins', action, pluginId]"), true, 'common OpenClaw plugin runtime should own enable/disable command construction');
 assert.equal(capabilitiesSource.includes('BUSTER_CAPABILITIES'), true, 'Buster capability contract should define canonical capabilities');
 assert.equal(capabilitiesSource.includes('appendDurableOperatorAlert'), true, 'Buster capability denials must write durable operator alerts');
 assert.equal(capabilitiesSource.includes('explicitCandidates.length > 0'), true, 'Buster capability alerts should not write repo-root .swarm fallback when explicit log targets exist');
@@ -287,6 +297,8 @@ for (const disallowed of [
 }
 
 const mainMod = await import(pathToFileURL(mainPath).href);
+const busterOpenClawPluginRuntimeMod = await import(pathToFileURL(busterOpenClawPluginRuntimePath).href);
+const commonOpenClawPluginRuntimeMod = await import(pathToFileURL(commonOpenClawPluginRuntimePath).href);
 const baseImagesMod = await import(pathToFileURL(baseImagesPath).href);
 const helpersMod = await import(pathToFileURL(helpersPath).href);
 const monitorMod = await import(pathToFileURL(monitorPath).href);
@@ -296,6 +308,11 @@ const validationMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/b
 
 assert.equal(baseImagesMod.validateBaseImageRef('node:20-slim').ok, false, 'bare base image refs must not be normalized or accepted');
 assert.equal(baseImagesMod.validateBaseImageRef('docker.io/library/node:20-slim').ok, true, 'fully qualified base image refs should validate');
+assert.equal(
+  busterOpenClawPluginRuntimeMod.createOpenClawAgentObserverPluginController,
+  commonOpenClawPluginRuntimeMod.createOpenClawAgentObserverPluginController,
+  'Buster OpenClaw plugin runtime wrapper must re-export the common controller',
+);
 
 assert.throws(() => suiteRunnerMod.validateSuiteNames(['build', 'missing-suite']), (error) => {
   assert.equal(error.code, 'BUSTER_SUITE_REQUEST_INVALID');

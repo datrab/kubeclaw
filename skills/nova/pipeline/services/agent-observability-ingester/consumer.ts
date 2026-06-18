@@ -478,7 +478,9 @@ export class AgentObservabilityIngester {
       while (this.running && !this.stopped) {
         try {
           await this.processNext(ctx);
+          if (!this.running || this.stopped) break;
           await this.checkPressure(ctx);
+          if (!this.running || this.stopped) break;
           await this.trim();
         } catch (error) {
           this.stats.failed += 1;
@@ -507,15 +509,22 @@ export class AgentObservabilityIngester {
     this.stopped = true;
     this.running = false;
     const loopTask = this.loopTask;
-    if (loopTask) await loopTask;
     const redis = this.redis;
-    this.redis = null;
-    this.redisReady = false;
-    this.groupReady = false;
+    if (redis?.disconnect) {
+      this.redis = null;
+      this.redisReady = false;
+      this.groupReady = false;
+      redis.disconnect();
+    }
+    if (loopTask) await loopTask;
     if (!redis) return;
+    if (this.redis === redis) {
+      this.redis = null;
+      this.redisReady = false;
+      this.groupReady = false;
+    }
     try {
       if (redis.quit) await redis.quit();
-      else if (redis.disconnect) redis.disconnect();
     } catch (error) {
       this.stats.lastError = errorMessage(error);
       this.logOnce('redis-close', `agent observability ingester Redis close failed: ${this.stats.lastError}`);

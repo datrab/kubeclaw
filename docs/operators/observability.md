@@ -120,16 +120,29 @@ telemetry builder in skills/nova/pipeline/services/telemetry/builders.ts
   -> pipeline:telemetry:<project>:<run_id>
 ```
 
-OpenClaw hook observability is separate. The `kubeclaw-agent-observer` plugin registers OpenClaw hooks in `plugins/openclaw-agent-observer/src/index.ts`, normalizes hook/model usage events in `hook-normalizers.ts`, and writes Redis events through `redis-writer.ts`. Its config defaults come from `agent_observability.plugin_control.*` and `agent_observability.ingester.*` in `swarm.config.json`.
+OpenClaw agent observability is separate from pipeline telemetry. The `kubeclaw-agent-observer` plugin registers OpenClaw hooks in `plugins/openclaw-agent-observer/src/index.ts`, prefers the runtime agent event bus for live agent output, normalizes hook/model usage/runtime events in `hook-normalizers.ts`, and writes Redis events through `redis-writer.ts`. Its config defaults come from `agent_observability.plugin_control.*` and `agent_observability.ingester.*` in `swarm.config.json`.
+
+The observer Gateway methods are:
+
+```text
+kubeclaw.agentObserver.status
+kubeclaw.agentObserver.selfTest
+```
+
+`status` reports enabled state, registered hooks, runtime-event subscription state, diagnostic subscription state, Redis connectivity, and writer counters. `selfTest` emits a synthetic terminal agent event, flushes the writer, and returns the same status payload so operators can verify the observer-to-Redis write path.
 
 Inspect observer streams and dead letters with the stream names configured by the plugin source:
 
 ```bash
-redis-cli -h redis-master.kubeclaw.svc.cluster.local --scan --pattern '*agent*observability*'
-redis-cli -h redis-master.kubeclaw.svc.cluster.local --scan --pattern '*openclaw*'
+redis-cli -h redis-master.kubeclaw.svc.cluster.local \
+  XREVRANGE pipeline:agent-observability:control:v1 + - COUNT 20
+redis-cli -h redis-master.kubeclaw.svc.cluster.local \
+  XREVRANGE pipeline:agent-observability:payload:v1 + - COUNT 20
+redis-cli -h redis-master.kubeclaw.svc.cluster.local \
+  XREVRANGE pipeline:agent-observability:deadletter:v1 + - COUNT 20
 ```
 
-Open question: this repository verifies observer plugin packaging and source-level stream policy, but it does not include a live cluster check proving every OpenClaw hook fires in production.
+The repository verifies observer packaging, runtime agent event subscription behavior, status/self-test method registration, source-level stream policy, and deployment wiring. Production diagnosis should still compare stream contents with the specific run/session being investigated, because missing entries can mean the plugin is disabled, Redis is unavailable, or the runtime did not emit the event family being inspected.
 
 ## Discord Audit
 
@@ -150,7 +163,7 @@ If Discord is quiet but artifacts and Redis show progress, continue the operatio
 - Buster not consuming tasks: inspect `buster-pipeline` logs, worker status, Redis connectivity, and `BUSTER_TASK_STREAM`
 - Redis telemetry empty: inspect `buster-telemetry-fallback.jsonl`, Redis connectivity, and local artifact logs
 - Discord missing: inspect `discord.jsonl`; webhook delivery can fail while the pipeline continues
-- Observer stream quiet: check `agent_observability.plugin_control.enabled`, plugin runtime logs, Redis connectivity, and whether OpenClaw emitted the hook family being inspected
+- Observer stream quiet: check `kubeclaw.agentObserver.status`, `agent_observability.plugin_control.enabled`, plugin runtime logs, Redis connectivity, dead-letter entries, and whether OpenClaw emitted the runtime event or hook family being inspected
 
 ## Related Pages
 

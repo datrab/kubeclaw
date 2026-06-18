@@ -49,7 +49,7 @@ Important defaults:
 - `pre_check.enabled`: `true`
 - `pre_check.timeout_seconds`: `60`
 - `agents.buster.dispatch`: `redis`
-- `fallback_model`: `codex-5.4`
+- `fallback_model`: `gpt-5.4`
 - `plugins.enabled`: `true`
 - `plugins.allowCustomModules`: `false`
 
@@ -130,9 +130,9 @@ Keep only intentional overrides in runtime config; use the chart source as the d
   "version": 1,
   "defaults": {
     "models": {
-      "forge": "codex-5.4",
-      "buster": "codex-5.4",
-      "echo": "codex-5.4"
+      "forge": "gpt-5.4",
+      "buster": "gpt-5.4",
+      "echo": "gpt-5.4"
     }
   },
   "execution_order": ["01-scaffold", "02-api", "gate:final-buster"],

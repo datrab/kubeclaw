@@ -101,6 +101,34 @@ export function initLogDir(config, ctx) {
   log('INFO', `Log directory initialized: ${logDir}`);
 }
 
+function closeWriteStream(stream) {
+  if (!stream || typeof stream.end !== 'function') return Promise.resolve();
+  if (stream.destroyed || stream.closed) return Promise.resolve();
+  return new Promise((resolve) => {
+    stream.end(resolve);
+  });
+}
+
+export async function closeLogDir(config, ctx = null) {
+  const streams = [
+    config?._pipelineLogFd,
+    config?._runPipelineLogFd,
+    ctx?._pipelineLogFd,
+    ctx?._runPipelineLogFd,
+  ].filter(Boolean);
+  for (const stream of [...new Set(streams)]) {
+    await closeWriteStream(stream);
+  }
+  if (config) {
+    config._pipelineLogFd = null;
+    config._runPipelineLogFd = null;
+  }
+  if (ctx) {
+    ctx._pipelineLogFd = null;
+    ctx._runPipelineLogFd = null;
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Status operations
 // ---------------------------------------------------------------------------

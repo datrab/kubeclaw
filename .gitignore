@@ -17,6 +17,7 @@ Thumbs.db
 
 # Logs
 *.log
+active-run.lock.json
 
 # Temp
 /tmp/

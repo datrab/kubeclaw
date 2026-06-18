@@ -21,6 +21,8 @@ const contract = await import(path.join(sourceRoot, 'skills/common/pipeline/agen
 
 const packageJson = JSON.parse(fs.readFileSync(path.join(pluginRoot, 'package.json'), 'utf8'));
 assert.deepEqual(packageJson.openclaw.runtimeExtensions, ['./dist/index.js']);
+const pluginManifest = JSON.parse(fs.readFileSync(path.join(pluginRoot, 'openclaw.plugin.json'), 'utf8'));
+assert.equal(pluginManifest.configSchema.properties.enabled.default, true, 'observer plugin manifest default must match runtime default-enabled behavior');
 
 for (const file of fs.readdirSync(path.join(pluginRoot, 'src'), { recursive: true })) {
   if (!String(file).endsWith('.ts')) continue;
@@ -142,11 +144,53 @@ const observer = plugin.createOpenClawAgentObserver({
   },
 });
 
-const api = { hooks: [], services: [], on(name, handler, opts) { this.hooks.push({ name, handler, opts }); }, registerService(service) { this.services.push(service); } };
+const api = {
+  hooks: [],
+  services: [],
+  gatewayMethods: [],
+  agentEventSubscriptions: [],
+  runtimeAgentEventHandlers: [],
+  runtime: {
+    events: {
+      onAgentEvent(handler) {
+        api.runtimeAgentEventHandlers.push(handler);
+        return () => {
+          api.runtimeAgentEventHandlers = api.runtimeAgentEventHandlers.filter((candidate) => candidate !== handler);
+        };
+      },
+    },
+  },
+  on(name, handler, opts) { this.hooks.push({ name, handler, opts }); },
+  registerGatewayMethod(method, handler, opts) { this.gatewayMethods.push({ method, handler, opts }); },
+  registerAgentEventSubscription(subscription) { this.agentEventSubscriptions.push(subscription); },
+  registerService(service) { this.services.push(service); },
+};
 plugin.registerOpenClawAgentObserver(api, observer);
 assert.deepEqual(api.hooks.map((hook) => hook.name), [...contract.AGENT_OBSERVABILITY_HOOKS]);
+assert.equal(api.hooks.some((hook) => hook.name === 'model_usage'), false);
 assert.equal(api.hooks.every((hook) => hook.opts.priority === -100 && hook.opts.timeoutMs === 1000), true);
+assert.equal(api.agentEventSubscriptions.length, 0, 'runtime event facade should be preferred over host bridge to avoid duplicate writes');
+assert.equal(api.runtimeAgentEventHandlers.length, 1);
+assert.deepEqual(api.gatewayMethods.map((entry) => entry.method), ['kubeclaw.agentObserver.status', 'kubeclaw.agentObserver.selfTest']);
 assert.equal(api.services.length, 1);
+
+const fallbackApi = {
+  hooks: [],
+  services: [],
+  agentEventSubscriptions: [],
+  on(name, handler, opts) { this.hooks.push({ name, handler, opts }); },
+  registerAgentEventSubscription(subscription) { this.agentEventSubscriptions.push(subscription); },
+  registerService(service) { this.services.push(service); },
+};
+plugin.registerOpenClawAgentObserver(fallbackApi, plugin.createOpenClawAgentObserver({
+  initialConfig: { enabled: true, redisNetworkIsolation: 'isolated' },
+  env: {},
+  logger: makeLogger(),
+  redisClientFactory: () => new FakeRedis(),
+}));
+assert.equal(fallbackApi.agentEventSubscriptions.length, 1);
+assert.equal(fallbackApi.agentEventSubscriptions[0].id, 'kubeclaw-agent-observer.agent-events');
+assert(fallbackApi.agentEventSubscriptions[0].streams.includes('lifecycle'));
 assert.equal(api.services[0].id, 'kubeclaw-agent-observer');
 api.services[0].start();
 assert.equal(typeof diagnosticHandler, 'function');
@@ -228,29 +272,6 @@ assert.equal(written.event.payload.cost_usd, 0.123);
 assert.equal(written.event.payload.usage.input, 111);
 assert.equal(written.event.payload.context.limit, 200000);
 
-const modelUsageHook = api.hooks.find((hook) => hook.name === 'model_usage');
-modelUsageHook.handler({
-  sessionKey: 'agent:forge:session-1',
-  costUsd: 0.456,
-  context: { limit: 200000, used: 34567 },
-  model: 'claude-sonnet-4-6',
-  provider: 'anthropic',
-  durationMs: 2345,
-  usage: { input: 333, output: 444, total: 777 },
-}, {
-  runId: 'run-1',
-  sessionKey: 'agent:forge:session-1',
-});
-await observer.flush();
-assert.equal(redis.commands.length, 4);
-written = parseWritten(redis.commands[3]);
-assert.equal(written.stream, contract.AGENT_OBSERVABILITY_CONTROL_STREAM);
-assert.equal(written.event.type, 'openclaw.model.usage');
-assert.equal(written.event.identity.run_id, 'run-1');
-assert.equal(written.event.payload.hook, 'model_usage');
-assert.equal(written.event.payload.cost_usd, 0.456);
-assert.equal(written.event.payload.usage.total, 777);
-
 const agentEndHook = api.hooks.find((hook) => hook.name === 'agent_end');
 agentEndHook.handler({
   success: true,
@@ -260,8 +281,8 @@ agentEndHook.handler({
   ctx: { runId: 'run-1', sessionKey: 'agent:forge:session-1' },
 });
 await observer.flush();
-assert.equal(redis.commands.length, 5);
-written = parseWritten(redis.commands[4]);
+assert.equal(redis.commands.length, 4);
+written = parseWritten(redis.commands[3]);
 assert.equal(written.stream, contract.AGENT_OBSERVABILITY_CONTROL_STREAM);
 assert.equal(written.event.type, 'openclaw.agent.ended');
 assert.equal(written.event.payload.outcome, 'success');
@@ -414,6 +435,63 @@ assert.equal(runtimeConfigObserver.getStats().droppedQueueFull, 1);
 let runtimeWritten = parseWritten(runtimeConfigRedis.commands[0]);
 assert.equal(runtimeWritten.event.identity.session_key, 'ctx-session');
 
+const agentEventRedis = new FakeRedis();
+const agentEventObserver = plugin.createOpenClawAgentObserver({
+  initialConfig: { enabled: true, maxQueuePerStream: 10, redisNetworkIsolation: 'isolated' },
+  env: {},
+  logger: makeLogger(),
+  redisClientFactory: () => agentEventRedis,
+});
+agentEventObserver.handleAgentEvent({
+  runId: 'run-agent-event',
+  sessionKey: 'agent:codex:observer-smoke',
+  sessionId: 'session-agent-event',
+  stream: 'lifecycle',
+  data: {
+    phase: 'end',
+    startedAt: 100,
+    endedAt: 250,
+    stopReason: 'completed',
+  },
+});
+agentEventObserver.handleAgentEvent({
+  runId: 'run-agent-event',
+  stream: 'assistant',
+  data: { text: 'OBSERVER_SMOKE_OK' },
+});
+await agentEventObserver.flush();
+assert.equal(agentEventRedis.commands.length, 2);
+runtimeWritten = parseWritten(agentEventRedis.commands[0]);
+assert.equal(runtimeWritten.stream, contract.AGENT_OBSERVABILITY_CONTROL_STREAM);
+assert.equal(runtimeWritten.event.type, 'openclaw.agent.ended');
+assert.equal(runtimeWritten.event.identity.run_id, 'run-agent-event');
+assert.equal(runtimeWritten.event.identity.session_key, 'agent:codex:observer-smoke');
+assert.equal(runtimeWritten.event.payload.outcome, 'success');
+assert.equal(runtimeWritten.event.payload.reason, 'completed');
+runtimeWritten = parseWritten(agentEventRedis.commands[1]);
+assert.equal(runtimeWritten.stream, contract.AGENT_OBSERVABILITY_PAYLOAD_STREAM);
+assert.equal(runtimeWritten.event.type, 'openclaw.llm.output');
+assert.equal(runtimeWritten.event.payload.assistant_response, 'OBSERVER_SMOKE_OK');
+
+const dedupeRedis = new FakeRedis();
+const dedupeObserver = plugin.createOpenClawAgentObserver({
+  initialConfig: { enabled: true, maxQueuePerStream: 10, redisNetworkIsolation: 'isolated' },
+  env: {},
+  logger: makeLogger(),
+  redisClientFactory: () => dedupeRedis,
+});
+const duplicateAgentEvent = {
+  runId: 'run-dedupe',
+  sessionKey: 'agent:codex:dedupe',
+  stream: 'lifecycle',
+  seq: 2,
+  data: { phase: 'end', stopReason: 'completed' },
+};
+dedupeObserver.handleAgentEvent(duplicateAgentEvent);
+dedupeObserver.handleAgentEvent(duplicateAgentEvent);
+await dedupeObserver.flush();
+assert.equal(dedupeRedis.commands.length, 1);
+
 const hookConfigRedis = new FakeRedis();
 const hookConfigObserver = plugin.createOpenClawAgentObserver({
   initialConfig: { enabled: false, redisNetworkIsolation: 'isolated' },
@@ -427,6 +505,7 @@ assert.equal(hookConfigRedis.commands.length, 1);
 
 const disabledRedis = new FakeRedis();
 const disabledObserver = plugin.createOpenClawAgentObserver({
+  initialConfig: { enabled: false },
   env: {},
   logger: makeLogger(),
   redisClientFactory: () => disabledRedis,
@@ -436,8 +515,18 @@ await disabledObserver.flush();
 assert.equal(disabledRedis.commands.length, 0);
 assert.equal(disabledObserver.getStats().droppedDisabled, 0, 'disabled hooks should return before writer enqueue');
 
+const defaultEnabledRedis = new FakeRedis();
+const defaultEnabledObserver = plugin.createOpenClawAgentObserver({
+  env: {},
+  logger: makeLogger(),
+  redisClientFactory: () => defaultEnabledRedis,
+});
+defaultEnabledObserver.handleHook('agent_end', { success: true, ctx: { runId: 'default-enabled' } });
+await defaultEnabledObserver.flush();
+assert.equal(defaultEnabledRedis.commands.length, 1, 'enabled plugin entries must emit without needing duplicate enabled config');
+
 await observer.stop();
 assert.equal(redis.closed, true);
 assert.equal(diagnosticsUnsubscribed, true);
 
-console.log(JSON.stringify({ ok: true, checked: 109 }));
+console.log(JSON.stringify({ ok: true, checked: 130 }));

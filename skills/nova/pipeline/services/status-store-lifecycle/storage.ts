@@ -4,8 +4,11 @@ import path from 'path';
 import { ensurePipelineRunLogDir } from '../../core/paths.ts';
 
 export function ensureRunLogDir(config) {
-  const runLogDir = ensurePipelineRunLogDir(config);
+  const runLogDir = config?._lifecycleReadOnly === true
+    ? (config?._lifecycleReadOnlyRunLogDir || null)
+    : ensurePipelineRunLogDir(config);
   if (!runLogDir) {
+    if (config?._lifecycleReadOnly === true) return null;
     throw new Error('lifecycle storage requires an initialized pipeline run log directory');
   }
   return runLogDir;
@@ -13,8 +16,9 @@ export function ensureRunLogDir(config) {
 
 export function lifecycleDir(config) {
   const runLogDir = ensureRunLogDir(config);
+  if (!runLogDir) return null;
   const dir = path.join(runLogDir, 'lifecycle');
-  fs.mkdirSync(dir, { recursive: true });
+  if (config?._lifecycleReadOnly !== true) fs.mkdirSync(dir, { recursive: true });
   return dir;
 }
 

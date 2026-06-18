@@ -111,9 +111,9 @@ Without thresholds, many suites record evidence but do not fail the task. With t
   "version": 1,
   "defaults": {
     "models": {
-      "forge": "codex-5.4",
-      "buster": "codex-5.4",
-      "echo": "codex-5.4"
+      "forge": "gpt-5.4",
+      "buster": "gpt-5.4",
+      "echo": "gpt-5.4"
     }
   },
   "execution_order": ["01-scaffold", "02-api", "gate:final-buster"],

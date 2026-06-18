@@ -71,6 +71,10 @@ run_step "deterministic contract suite" \
   --source-root "$REPO_DIR" \
   --contract "$CONTRACT_PATH" \
   --label-prefix "fast-verification"
+
+run_step "docs check" \
+  npm run docs:check
+
 if [[ "${SKIP_FAST_BEHAVIOR:-0}" != "1" ]]; then
   run_step "behavior fast areas: $BEHAVIOR_AREAS" \
     node tests/verification/behavior/verify.mjs \

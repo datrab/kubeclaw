@@ -59,7 +59,7 @@ Audience: reference reader, developer
 - `agents.buster.redis_js_path`: `/app/skills/pipeline/tools/redis.ts`
 - `agents.echo.dispatch`: `subagent`
 - `agents.echo.acp_agent_id`: `codex`
-- `fallback_model`: `codex-5.4`
+- `fallback_model`: `gpt-5.4`
 - `review_defaults.timeout_minutes`: `30`
 - `review_defaults.max_fix_cycles`: `3`
 - `review_defaults.lint_tier`: `full`

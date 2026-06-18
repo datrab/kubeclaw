@@ -201,15 +201,23 @@ spec:
               }
 
               const defaults = config?.agents?.defaults;
+              if (defaults) {
+                defaults.thinkingDefault = 'off';
+                defaults.reasoningDefault = 'off';
+              }
+              if (defaults?.model) defaults.model.primary = 'openai/gpt-5.4';
               if (defaults?.model?.fallbacks) {
                 defaults.model.fallbacks = defaults.model.fallbacks.map((entry) => (
-                  entry === 'openai-codex/gpt-5.5' ? 'openai/gpt-5.5' : entry
-                ));
+                  entry === 'openai-codex/gpt-5.5' ? 'openai/gpt-5.5'
+                    : entry === 'openai-codex/gpt-5.4' ? 'openai/gpt-5.4'
+                      : entry
+                )).filter((entry, index, values) => entry !== defaults.model.primary && values.indexOf(entry) === index);
               }
               if (defaults?.models) {
                 delete defaults.models['openai-codex/gpt-5.5'];
-                defaults.models['openai/gpt-5.5'] = {
-                  ...(defaults.models['openai/gpt-5.5'] || {}),
+                delete defaults.models['openai-codex/gpt-5.4'];
+                defaults.models['openai/gpt-5.4'] = {
+                  ...(defaults.models['openai/gpt-5.4'] || {}),
                   agentRuntime: { id: 'codex' },
                 };
                 defaults.models['litellm/{{ .Values.litellm.defaultModel }}'] =
@@ -224,6 +232,14 @@ spec:
               config.plugins.entries.litellm = {
                 ...(config.plugins.entries.litellm || {}),
                 enabled: true,
+              };
+              config.plugins.entries['kubeclaw-agent-observer'] = {
+                ...(config.plugins.entries['kubeclaw-agent-observer'] || {}),
+                enabled: false,
+                hooks: {
+                  ...(config.plugins.entries['kubeclaw-agent-observer']?.hooks || {}),
+                  allowConversationAccess: true,
+                },
               };
 
               fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\n`);

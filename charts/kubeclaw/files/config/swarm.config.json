@@ -85,7 +85,7 @@
     }
   },
 
-  "fallback_model": "codex-5.4",
+  "fallback_model": "gpt-5.4",
 
   "review_defaults": {
     "timeout_minutes": 30,

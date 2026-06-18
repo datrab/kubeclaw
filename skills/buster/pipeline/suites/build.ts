@@ -121,7 +121,8 @@ function parseErrors(output: string, source = 'stderr'): Finding[] {
     const trimmed = line.trim();
     if (!trimmed) continue;
 
-    if (/error TS\d+:/i.test(trimmed)) findings.push(createFinding(SEVERITY.CRITICAL, trimmed, { rule: 'typescript' }));
+    if (/image not known|no such image|manifest unknown/i.test(trimmed)) findings.push(createFinding(SEVERITY.CRITICAL, trimmed, { rule: 'image-unavailable' }));
+    else if (/error TS\d+:/i.test(trimmed)) findings.push(createFinding(SEVERITY.CRITICAL, trimmed, { rule: 'typescript' }));
     else if (/npm ERR!/i.test(trimmed)) findings.push(createFinding(SEVERITY.CRITICAL, trimmed, { rule: 'npm' }));
     else if (/SyntaxError|ReferenceError|TypeError/i.test(trimmed)) findings.push(createFinding(SEVERITY.CRITICAL, trimmed, { rule: 'runtime' }));
     else if (/ModuleNotFoundError|ImportError/i.test(trimmed)) findings.push(createFinding(SEVERITY.CRITICAL, trimmed, { rule: 'python-import' }));
@@ -134,6 +135,39 @@ function parseErrors(output: string, source = 'stderr'): Finding[] {
   }
 
   return findings.slice(0, 20);
+}
+
+function dockerfileFromImages(dockerfilePath: string): string[] {
+  const text = fs.readFileSync(dockerfilePath, 'utf8');
+  const images: string[] = [];
+  for (const line of text.split(/\r?\n/)) {
+    const match = line.match(/^\s*FROM\s+(?:--platform=\S+\s+)?([^\s]+)/i);
+    if (match?.[1] && !match[1].startsWith('$')) images.push(match[1]);
+  }
+  return [...new Set(images)];
+}
+
+async function ensureDockerfileBaseImagesCached(dockerfilePath: string): Promise<Finding[]> {
+  const findings: Finding[] = [];
+  for (const imageRef of dockerfileFromImages(dockerfilePath)) {
+    if (imageRef.startsWith('localhost/')) continue;
+    try {
+      await execFileAsync('podman', ['image', 'exists', imageRef], { timeout: 5000, encoding: 'utf8', env: buildSubprocessEnv() });
+    } catch (_existsError) {
+      log(`Base image missing locally, pulling before build: ${imageRef}`);
+      try {
+        await execFileAsync('podman', ['pull', imageRef], { timeout: 300000, encoding: 'utf8', maxBuffer: 20 * 1024 * 1024, env: buildSubprocessEnv() });
+      } catch (pullError) {
+        const output = errorOutput(pullError);
+        findings.push(createFinding(
+          SEVERITY.CRITICAL,
+          `Dockerfile base image "${imageRef}" is not available locally and automatic pull failed: ${output.trim().slice(0, 1000) || errorMessage(pullError)}`,
+          { rule: 'dockerfile-base-image' },
+        ));
+      }
+    }
+  }
+  return findings;
 }
 
 function unquoteYamlScalar(value: string): string {
@@ -353,6 +387,11 @@ async function buildServer(config: AnyRecord, context: BuildContext): Promise<Bu
     if (dockerfileImageFindings.length > 0) {
       const output = dockerfileImageFindings.map((finding) => finding.message).join('\n');
       return { ok: false, findings: dockerfileImageFindings, output };
+    }
+    const baseImageFindings = await ensureDockerfileBaseImagesCached(dockerfile);
+    if (baseImageFindings.length > 0) {
+      const output = baseImageFindings.map((finding) => finding.message).join('\n');
+      return { ok: false, findings: baseImageFindings, output };
     }
     const buildContext = config.build_context ? resolveRepoScopedPath(config.build_context, { field: 'serve.build_context' }) : path.dirname(dockerfile);
     const buildTimeout = (config.build_timeout || 300) * 1000;

@@ -301,7 +301,7 @@ Audience: operator, developer
 
 ## Summary
 
-This page lists deployment verification commands from the first generated inventory slice plus source-backed local checks used during the documentation rebuild.
+This page lists deployment verification commands plus source-backed local checks.
 
 ${generatedNotice(deploy.generatedFrom)}
 ## Deployment Verification Commands
@@ -314,17 +314,23 @@ ${generatedEnd()}
 ## Local Documentation And Deployment Checks
 
 \`\`\`bash
+./tests/verification/run-fast-verification.sh
+./tests/verification/run-full-verification.sh
 npm run docs:inventory:check
 npm run docs:generate:check
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 git diff --check
 \`\`\`
 
+The fast/full verification wrappers are silent on clean passes. Passing warning output prints warning lines. Failed steps print the failed step name plus buffered output. Use \`--verbose\` or \`VERIFICATION_VERBOSE=1\` to stream step banners and passing output.
+
 ## Claim-To-Test Map
 
 | Claim class | Source or verifier |
 | --- | --- |
 | Documentation inventory and generated references are current | \`npm run docs:inventory:check\`; \`npm run docs:generate:check\`; \`node scripts/docs-check.mjs\` |
+| Fast local runtime, contract, and selected behavior checks pass | \`./tests/verification/run-fast-verification.sh\` |
+| Exhaustive local verification surfaces pass | \`./tests/verification/run-full-verification.sh\` |
 | Deployment manifests, NetworkPolicies, service exposure, PVCs, config mounts, and sandbox surfaces match source | \`node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"\` |
 | Documentation surface links and generated docs expectations stay valid | \`node tests/verification/behavior/verify.mjs --source-root "$PWD" --area docs-surface\` |
 | Telemetry docs match the event envelope and sink contracts | \`node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry-docs\` |

@@ -99,6 +99,7 @@ assert.equal(fullSource.includes('tests/verification/run-local-acp-verification.
 assert.equal(fullSource.includes('LIVE_REDIS_SMOKE_REQUIRED=1'), true, 'full wrapper should require live Redis smoke instead of allowing a silent skip');
 assert.equal(fullSource.includes('tests/verification/live/redis-backend-smoke.mjs'), true, 'full wrapper should include live Redis backend smoke');
 assert.equal(fullSource.includes('npm run docs:check'), true, 'full wrapper should include docs checks');
+assert.equal(fastSource.includes('npm run docs:check'), true, 'fast wrapper should include docs checks');
 assert.equal(fullSource.includes('git diff --check'), true, 'full wrapper should include whitespace checks');
 assert.equal(fullSource.includes('ACP launch reachability is local-only and is not part of the default clean-checkout gate.'), false, 'full wrapper should not describe ACP as outside the full gate');
 assert.equal(fastSource.includes('SKIP_FAST_BEHAVIOR'), true, 'fast wrapper should keep fast-only behavior skip switch');

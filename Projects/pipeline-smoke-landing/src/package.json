@@ -1,0 +1,16 @@
+{
+  "name": "pipeline-smoke-landing",
+  "version": "1.0.0",
+  "description": "Small OpenClaw pipeline smoke-test landing page.",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

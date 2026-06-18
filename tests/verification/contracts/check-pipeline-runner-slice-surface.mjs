@@ -28,6 +28,7 @@ const loopPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-ru
 const stateMachinePath = path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner-state-machine.ts');
 const terminalPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner-terminal.ts');
 const openClawPluginRuntimePath = path.join(sourceRoot, 'skills/nova/pipeline/services/openclaw-plugin-runtime.ts');
+const commonOpenClawPluginRuntimePath = path.join(sourceRoot, 'skills/common/pipeline/services/openclaw-plugin-runtime.ts');
 const agentObservabilityRuntimePath = path.join(sourceRoot, 'skills/nova/pipeline/services/agent-observability-runtime.ts');
 
 const mainSource = fs.readFileSync(mainPath, 'utf8');
@@ -42,6 +43,7 @@ const loopSource = fs.readFileSync(loopPath, 'utf8');
 const stateMachineSource = fs.readFileSync(stateMachinePath, 'utf8');
 const terminalSource = fs.readFileSync(terminalPath, 'utf8');
 const openClawPluginRuntimeSource = fs.readFileSync(openClawPluginRuntimePath, 'utf8');
+const commonOpenClawPluginRuntimeSource = fs.readFileSync(commonOpenClawPluginRuntimePath, 'utf8');
 const agentObservabilityRuntimeSource = fs.readFileSync(agentObservabilityRuntimePath, 'utf8');
 
 for (const marker of [
@@ -198,6 +200,7 @@ const loopMod = await import(pathToFileURL(loopPath).href);
 const terminalMod = await import(pathToFileURL(terminalPath).href);
 const stateMachineMod = await import(pathToFileURL(stateMachinePath).href);
 const openClawPluginRuntimeMod = await import(pathToFileURL(openClawPluginRuntimePath).href);
+const commonOpenClawPluginRuntimeMod = await import(pathToFileURL(commonOpenClawPluginRuntimePath).href);
 const agentObservabilityRuntimeMod = await import(pathToFileURL(agentObservabilityRuntimePath).href);
 
 for (const [mod, name] of [
@@ -314,12 +317,18 @@ assert.deepEqual(
 );
 
 for (const marker of [
+  '../../../common/pipeline/services/openclaw-plugin-runtime.ts',
+]) {
+  assert.equal(openClawPluginRuntimeSource.includes(marker), true, `Nova OpenClaw plugin wrapper should include ${marker}`);
+}
+
+for (const marker of [
   "spawnSync(command, args,",
   "['plugins', action, pluginId]",
   "runPluginCommand('enable'",
   "runPluginCommand('disable'",
 ]) {
-  assert.equal(openClawPluginRuntimeSource.includes(marker), true, `OpenClaw plugin runtime controller should include ${marker}`);
+  assert.equal(commonOpenClawPluginRuntimeSource.includes(marker), true, `common OpenClaw plugin runtime controller should include ${marker}`);
 }
 
 for (const marker of [
@@ -331,7 +340,12 @@ for (const marker of [
 }
 
 const pluginCommands = [];
-const pluginController = openClawPluginRuntimeMod.createOpenClawAgentObserverPluginController({
+assert.equal(
+  openClawPluginRuntimeMod.createOpenClawAgentObserverPluginController,
+  commonOpenClawPluginRuntimeMod.createOpenClawAgentObserverPluginController,
+  'Nova OpenClaw plugin runtime wrapper must re-export the common controller',
+);
+const pluginController = commonOpenClawPluginRuntimeMod.createOpenClawAgentObserverPluginController({
   agent_observability: {
     plugin_control: {
       enabled: true,

@@ -10,6 +10,7 @@ declare const process: {
 const DEFAULT_SWARM_CONFIG_PATH = '/home/node/.openclaw/swarm.config.json';
 
 let cachedPolicy: Record<string, any> | null = null;
+let cachedPlatformConfig: Record<string, any> | null = null;
 
 function isRecord(value: unknown): value is Record<string, any> {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
@@ -31,8 +32,7 @@ function requireNonEmptyString(record: Record<string, any>, field: string, label
 
 export function loadBusterRuntimePolicy(): Record<string, any> {
   if (cachedPolicy) return cachedPolicy;
-  const configPath = process.env.SWARM_CONFIG || DEFAULT_SWARM_CONFIG_PATH;
-  const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  const config = loadBusterPlatformConfig();
   if (!isRecord(config?.buster)) {
     throw new Error('config.buster: required platform config object in swarm.config.json');
   }
@@ -50,6 +50,14 @@ export function loadBusterRuntimePolicy(): Record<string, any> {
   return cachedPolicy;
 }
 
+export function loadBusterPlatformConfig(): Record<string, any> {
+  if (cachedPlatformConfig) return cachedPlatformConfig;
+  const configPath = process.env.SWARM_CONFIG || DEFAULT_SWARM_CONFIG_PATH;
+  cachedPlatformConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  return cachedPlatformConfig;
+}
+
 export function resetBusterRuntimePolicyForTests(): void {
   cachedPolicy = null;
+  cachedPlatformConfig = null;
 }

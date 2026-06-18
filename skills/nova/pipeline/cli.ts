@@ -7,13 +7,15 @@
 import { fileURLToPath } from 'url';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
+// @ts-expect-error Node built-in ambient types are not installed for this migration island.
+import path from 'path';
 import { registerShutdownHooks } from './agents/shutdown.ts';
 import { loadConfig } from './core/config.ts';
 import { listBlueprints, releaseBlueprint } from './services/blueprint.ts';
 import { createPipelineContext } from './core/context.ts';
 import { setActiveContext, clearActiveContext } from './core/logger.ts';
 import { createTempManager } from './core/temp.ts';
-import { initLogDir } from './services/status-store.ts';
+import { closeLogDir, initLogDir } from './services/status-store.ts';
 import { createRunId, createRunStats } from './core/runtime.ts';
 import { runPipeline, printStatus, dryRun } from './runners/pipeline-runner.ts';
 import { validateThinkingLevel, VALID_THINKING_LEVELS } from './core/policy.ts';
@@ -31,6 +33,24 @@ const __currentPath = fs.realpathSync(fileURLToPath(import.meta.url));
 const __entryPath = (process.argv[1] && fs.existsSync(process.argv[1]))
   ? fs.realpathSync(process.argv[1])
   : process.argv[1];
+
+function prepareReadOnlyLifecycleContext(config: AnyRecord = {}) {
+  config._lifecycleReadOnly = true;
+  const swarmDir = config?.paths?.swarm_dir;
+  const latestPath = swarmDir ? path.join(swarmDir, 'logs', 'pipeline', 'latest.json') : null;
+  if (!latestPath || !fs.existsSync(latestPath)) return;
+  try {
+    const latest = JSON.parse(fs.readFileSync(latestPath, 'utf8'));
+    const runId = typeof latest?.run_id === 'string' ? latest.run_id.trim() : '';
+    if (!runId) return;
+    if (runId.includes('\0') || runId.includes('/') || runId.includes('\\') || runId === '.' || runId === '..') return;
+    config._runId = config._runId || runId;
+    config.run_id = config.run_id || runId;
+    config._lifecycleReadOnlyRunLogDir = path.join(swarmDir, 'logs', 'pipeline', 'runs', runId);
+  } catch (_error) {
+    return;
+  }
+}
 
 export function normalizeNovaCliFlags(rawFlags: AnyRecord = {}, env: AnyRecord = {}) {
   return Object.freeze({
@@ -140,6 +160,9 @@ Exit codes:
     return PROCESS_FAILURE_CODE;
   }
 
+  let activeConfig: AnyRecord | null = null;
+  let activeContext: AnyRecord | null = null;
+
   return await (async () => {
     try {
       // Initialize temp directory first; config-aware shutdown hooks/logging follow after config load
@@ -158,6 +181,7 @@ Exit codes:
       }
 
       const { config, progress, pluginRegistry } = loadConfig(flags.project, { repoRoot: flags.repo });
+      activeConfig = config;
 
       const runtimeOverrides = (flags.runtimeModel || flags.runtimeThinking) ? {
         model:    flags.runtimeModel    || null,
@@ -167,14 +191,6 @@ Exit codes:
         if (flags.runtimeModel)    log('INFO', `Runtime model override: ${flags.runtimeModel}`);
         if (flags.runtimeThinking) log('INFO', `Runtime thinking override: ${flags.runtimeThinking}`);
       }
-
-      const runId = createRunId();
-      const stats = createRunStats();
-      const ctx = createPipelineContext({ config, progress, runId, stats, novaChannel: flags.novaChannel, pluginRegistry, runtimeOverrides });
-      ctx.setTempDir(tempManager.dir);
-      setActiveContext(ctx);
-      initLogDir(config, ctx);
-      registerShutdownHooks(config);
 
       // Blueprint commands
       if (flags.blueprintList) {
@@ -198,8 +214,17 @@ Exit codes:
         return PROCESS_SUCCESS_CODE;
       }
 
-      if (flags.status)  { printStatus(config, progress); cleanupTempDir(); process.exitCode = PROCESS_SUCCESS_CODE; return PROCESS_SUCCESS_CODE; }
-      if (flags.dryRun)  { dryRun(config, progress); cleanupTempDir(); process.exitCode = PROCESS_SUCCESS_CODE; return PROCESS_SUCCESS_CODE; }
+      if (flags.status)  { prepareReadOnlyLifecycleContext(config); printStatus(config, progress); cleanupTempDir(); process.exitCode = PROCESS_SUCCESS_CODE; return PROCESS_SUCCESS_CODE; }
+      if (flags.dryRun)  { prepareReadOnlyLifecycleContext(config); dryRun(config, progress); cleanupTempDir(); process.exitCode = PROCESS_SUCCESS_CODE; return PROCESS_SUCCESS_CODE; }
+
+      const runId = createRunId();
+      const stats = createRunStats();
+      const ctx = createPipelineContext({ config, progress, runId, stats, novaChannel: flags.novaChannel, pluginRegistry, runtimeOverrides });
+      activeContext = ctx;
+      ctx.setTempDir(tempManager.dir);
+      setActiveContext(ctx);
+      initLogDir(config, ctx);
+      registerShutdownHooks(config);
 
       // Resolve bounded operator guidance from --prompt or --prompt-file.
       const promptIngress = resolveNovaPromptIngress({
@@ -230,6 +255,7 @@ Exit codes:
       process.exitCode = PROCESS_FAILURE_CODE;
       return PROCESS_FAILURE_CODE;
     } finally {
+      await closeLogDir(activeConfig, activeContext);
       clearActiveContext();
     }
   })();

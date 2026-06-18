@@ -1,0 +1,6 @@
+{"ts":"2026-06-18T17:59:45.102Z","level":"INFO","component":"lint-report","msg":"Detected project types: javascript","data":{"markers":{"javascript":"/home/node/.openclaw/workspace/git-repo/package.json"}}}
+{"ts":"2026-06-18T17:59:45.103Z","level":"INFO","component":"lint-report","msg":"Scope: module path Projects/pipeline-smoke-landing/src/.swarm/modules/01-foundation"}
+{"ts":"2026-06-18T17:59:45.103Z","level":"INFO","component":"lint-report","msg":"Starting lint report (tier: pre-check, types: javascript)"}
+{"ts":"2026-06-18T17:59:45.104Z","level":"INFO","component":"lint-report","msg":"Running 0 tools (tier: pre-check)","data":{"tools":[]}}
+{"ts":"2026-06-18T17:59:45.104Z","level":"OK","component":"lint-report","msg":"Report written to /tmp/swarm-pipeline-lint-pre-check-01-foundation-1781805584973-bav4gp.json"}
+{"ts":"2026-06-18T17:59:45.104Z","level":"OK","component":"lint-report","msg":"Summary: 0 errors, 0 warnings (0 ok, 0 skipped, 0 failed)"}

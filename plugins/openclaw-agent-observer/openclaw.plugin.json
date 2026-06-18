@@ -10,7 +10,7 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
-      "enabled": { "type": "boolean", "default": false },
+      "enabled": { "type": "boolean", "default": true },
       "redisHost": { "type": "string" },
       "redisPort": { "type": "number" },
       "redisUsername": { "type": "string" },

@@ -35,7 +35,7 @@ export async function sendTaskCompletionSignal({
     const outputFileResult = ensureBusterOutputFile(payload, {
       outcome,
       reason,
-      summary: agentResultForCompletion?.summary || reason || suitesInfo.suiteSummary || '',
+      summary: agentResultForCompletion?.summary || reason || suitesInfo.suiteDetailSummary || suitesInfo.suiteSummary || '',
     });
     logger.info('TASK', `Buster output_file ready: ${outputFileResult.path}`, {
       source: outputFileResult.source,
@@ -55,7 +55,7 @@ export async function sendTaskCompletionSignal({
       ? buildPreTestVerdict(moduleId, project, suitesInfo)
       : null;
     const completionSummary = !spawnedSubagent && suitesInfo.suiteSummary
-      ? suitesInfo.suiteSummary
+      ? (suitesInfo.suiteDetailSummary || suitesInfo.suiteSummary)
       : (agentResultForCompletion?.summary || reason || suitesInfo.suiteSummary || '');
     const rateLimitMaxPauses = outcome === 'RATE_LIMITED'
       ? resolveBusterRateLimitMaxPauses(payload, sessionResultForCompletion || {})

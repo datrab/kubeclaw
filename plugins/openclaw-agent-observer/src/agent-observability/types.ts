@@ -9,7 +9,7 @@ import type {
 export type AgentObservabilityIngressEventType = (typeof AGENT_OBSERVABILITY_INGRESS_EVENT_TYPES)[number];
 export type AgentObservabilityHook = (typeof AGENT_OBSERVABILITY_HOOKS)[number];
 export type AgentObservabilityDiagnostic = (typeof AGENT_OBSERVABILITY_DIAGNOSTICS)[number];
-export type AgentObservabilityPayloadHook = AgentObservabilityHook | 'model_usage';
+export type AgentObservabilityPayloadHook = AgentObservabilityHook | 'model_usage' | 'subagent_spawning';
 export type AgentObservabilityStreamKind = 'control' | 'payload';
 export type AgentObservabilityMaskingProfile = typeof AGENT_OBSERVABILITY_MASKING_PROFILE;
 export type AgentObservabilityMaskMarker = typeof AGENT_OBSERVABILITY_MASK_BASIC_API_KEY_PATTERN;

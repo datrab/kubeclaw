@@ -10,6 +10,8 @@ Document the verification commands and CI surfaces visible in this repository.
 ## Local commands
 
 ```bash
+./tests/verification/run-fast-verification.sh
+./tests/verification/run-full-verification.sh
 npm run docs:check
 node tests/verification/behavior/verify.mjs --source-root "$PWD" --area docs-surface
 node tests/verification/behavior/verify.mjs --source-root "$PWD" --area deployment-surface
@@ -20,6 +22,8 @@ node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --sour
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 git diff --check
 ```
+
+The fast/full verification wrappers are silent on clean passes. Passing warning output prints warning lines. Failed steps print the failed step name plus buffered output. Use `--verbose` or `VERIFICATION_VERBOSE=1` to stream step banners and passing output.
 
 Render deployment manifests before deployment-related checks:
 
@@ -40,6 +44,8 @@ CI/image documentation is in `../deployment/ci-and-image-publishing.md`. The cur
 
 | Area | Command | Use when |
 | --- | --- | --- |
+| fast local verification | `./tests/verification/run-fast-verification.sh` | local runtime, contract, docs, and selected behavior confidence |
+| full verification | `./tests/verification/run-full-verification.sh` | exhaustive local verification with live subagent, ACP, Redis, docs, whitespace, deployment, contract, and behavior surfaces |
 | docs inventory and generated references | `npm run docs:check` | any doc, generator, generated inventory, chart/value/script reference changes |
 | deployment truth | `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` | chart, values, deploy script, images, secrets, NetworkPolicy, or live operator docs change |
 | pipeline behavior | `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline` | module/gate scheduling, config, state, or runner behavior changes |

@@ -433,7 +433,27 @@ async function emitSuiteCompleted(tctx: unknown, moduleId: string | undefined, s
   });
 }
 
-export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOptions = {}): Promise<{ results: SuiteResult[]; suiteSummary: string; criticalFailed: boolean }> {
+export function buildSuiteSummary(results: readonly SuiteVerdict[]): string {
+  return results
+    .map((result) => `${suiteIcon(result.status)} ${result.suite}`)
+    .join(' ');
+}
+
+export function buildDetailedSuiteSummary(results: readonly SuiteVerdict[]): string {
+  return results
+    .map((result) => {
+      const detail = result.findings?.[0]?.message
+        || result.error
+        || result.reason
+        || null;
+      return detail
+        ? `${result.suite}: ${result.status} - ${detail}`
+        : `${result.suite}: ${result.status}`;
+    })
+    .join(' | ');
+}
+
+export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOptions = {}): Promise<{ results: SuiteResult[]; suiteSummary: string; suiteDetailSummary: string; criticalFailed: boolean }> {
   const { payload = {}, moduleId, attempt, telemetryContext: tctx, logDir = null } = opts;
   const suiteIdentity = requireSuiteIdentity(moduleId, payload.project);
 
@@ -549,11 +569,10 @@ export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOpt
 
   await writeResults(suiteMap, resolvedModuleId, project, swarmResultsDir, attempt, tctx);
 
-  const suiteSummary = results
-    .map((result) => `${suiteIcon(result.status)} ${result.suite}`)
-    .join(' ');
+  const suiteSummary = buildSuiteSummary(results);
+  const suiteDetailSummary = buildDetailedSuiteSummary(results);
 
-  return { results, suiteSummary, criticalFailed };
+  return { results, suiteSummary, suiteDetailSummary, criticalFailed };
 }
 
 export const EXECUTION_ORDER = [

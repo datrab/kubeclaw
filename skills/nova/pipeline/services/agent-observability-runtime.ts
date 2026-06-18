@@ -10,6 +10,26 @@ function ingesterConfig(config = {}) {
   return config?.agent_observability?.ingester || { enabled: false };
 }
 
+function positiveNumber(value, fallback) {
+  const num = Number(value);
+  return Number.isFinite(num) && num >= 0 ? num : fallback;
+}
+
+function withTimeout(promise, timeoutMs) {
+  if (timeoutMs === 0) return promise;
+  let timer;
+  const timeout = new Promise((resolve) => {
+    timer = setTimeout(() => resolve({ timedOut: true }), timeoutMs);
+    timer.unref?.();
+  });
+  return Promise.race([
+    promise.then((value) => ({ value, timedOut: false })),
+    timeout,
+  ]).finally(() => {
+    if (timer) clearTimeout(timer);
+  });
+}
+
 export function startAgentObservabilityIngester(config, ctx = {}, opts = {}) {
   const runtimeConfig = ingesterConfig(config);
   if (runtimeConfig.enabled !== true) {
@@ -31,6 +51,7 @@ export function startAgentObservabilityIngester(config, ctx = {}, opts = {}) {
   });
   const loopDelayMs = Number(runtimeConfig.loopDelayMs ?? 250);
   const healthCheckEvery = Number(runtimeConfig.healthCheckEvery ?? 10);
+  const stopTimeoutMs = positiveNumber(runtimeConfig.stopTimeoutMs ?? opts.stopTimeoutMs, 2000);
   const reportDegraded = opts.recordObservabilityDegraded || recordObservabilityDegraded;
   let stopped = false;
   let tick = 0;
@@ -72,11 +93,20 @@ export function startAgentObservabilityIngester(config, ctx = {}, opts = {}) {
     stats: () => (typeof ingester.getStats === 'function' ? ingester.getStats() : null),
     async stop() {
       stopped = true;
+      let stopTimedOut = false;
+      if (typeof ingester.stop === 'function') {
+        const stopResult = await withTimeout(Promise.resolve().then(() => ingester.stop()), stopTimeoutMs);
+        stopTimedOut = stopTimedOut || stopResult?.timedOut === true;
+      }
       try {
-        await task;
+        const loopResult = await withTimeout(task, stopTimeoutMs);
+        stopTimedOut = stopTimedOut || loopResult?.timedOut === true;
       } catch (_error) { /* loop errors are logged above */ }
-      if (typeof ingester.stop === 'function') await ingester.stop();
-      log('INFO', '[agent-observability-ingester] runtime loop stopped');
+      if (stopTimedOut) {
+        log('WARN', `[agent-observability-ingester] runtime loop stop timed out after ${stopTimeoutMs}ms`);
+      } else {
+        log('INFO', '[agent-observability-ingester] runtime loop stopped');
+      }
     },
   };
 }

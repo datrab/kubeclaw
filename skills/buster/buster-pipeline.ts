@@ -44,7 +44,8 @@ import {
   parseCapabilitiesEnv,
 } from './pipeline/services/capabilities.ts';
 import { doSandboxCleanup } from './pipeline/services/pipeline-helpers.ts';
-import { loadBusterRuntimePolicy } from './pipeline/services/runtime-policy.ts';
+import { loadBusterPlatformConfig, loadBusterRuntimePolicy } from './pipeline/services/runtime-policy.ts';
+import { createOpenClawAgentObserverPluginController } from './pipeline/services/openclaw-plugin-runtime.ts';
 import {
   AGENT_NAME,
   CONSUMER_NAME,
@@ -88,6 +89,7 @@ interface BusterEntrypointDeps {
 }
 
 let shuttingDown = false;
+let openClawAgentObserverPlugin: ReturnType<typeof createOpenClawAgentObserverPluginController> | null = null;
 const runtimeLoopAbort = new AbortController();
 const BUSTER_RUNTIME_LOOP_POLICY = Object.freeze({
   errorBackoffMs: 3000,
@@ -208,6 +210,18 @@ export async function shutdown(signal: string, opts: ShutdownOptions = {}): Prom
       detail: disconnectError,
     });
   }
+  try {
+    if (openClawAgentObserverPlugin) await openClawAgentObserverPlugin.stop();
+  } catch (observerError: unknown) {
+    reportBusterRuntimeDiagnostic({
+      component: 'agent_observability',
+      surface: 'shutdown',
+      reason: 'shutdown_observer_plugin_stop_failed',
+      detail: observerError,
+    });
+  } finally {
+    openClawAgentObserverPlugin = null;
+  }
   console.log(`[SHUTDOWN] ✅ Clean exit (code ${exitCode}).`);
   process.exit(exitCode);
 }
@@ -221,51 +235,61 @@ export async function main(): Promise<void> {
   console.log(` Stream:  ${STREAM_KEY}`);
   console.log(` Gateway: ${resolveGatewayInvokeUrl()}`);
 
-  await waitForGateway({ shutdown });
-  startBusterHeartbeat();
-  const startupRecovery = await recoverOrphanedActiveSession();
-  if (startupRecovery?.ok === false) {
-    console.error('[RECOVERY] ❌ Buster startup recovery blocked because persisted session evidence is not lifecycle authority.');
-    throw new Error('BUSTER_RECOVERY_BLOCKED: persisted session evidence is diagnostic-only');
-  }
-  assertStartupSandboxCleanupComplete(await doSandboxCleanup('startup', {}));
-  startGatewayHealthMonitor({ isShuttingDown: () => shuttingDown, shutdown });
+  try {
+    openClawAgentObserverPlugin = createOpenClawAgentObserverPluginController(loadBusterPlatformConfig());
+    await openClawAgentObserverPlugin.start();
 
-  const platformCapabilities = parseCapabilitiesEnv(process.env.BUSTER_PLATFORM_CAPABILITIES || '');
-  if (hasBusterCapability(platformCapabilities, BUSTER_CAPABILITIES.IMAGE_PREPULL)) {
-    await ensureBaseImages(undefined, {
-      capabilities: platformCapabilities,
-      alertContext: {
-        project: process.env.BUSTER_PROJECT || null,
-        logDir: getLastRunLogDir(),
-      },
-    });
-  } else {
-    console.log('[BASE_IMAGES] Skipping pre-pull; platform capability image_prepull is not configured.');
-  }
+    await waitForGateway({ shutdown });
+    startBusterHeartbeat();
+    const startupRecovery = await recoverOrphanedActiveSession();
+    if (startupRecovery?.ok === false) {
+      console.error('[RECOVERY] ❌ Buster startup recovery blocked because persisted session evidence is not lifecycle authority.');
+      throw new Error('BUSTER_RECOVERY_BLOCKED: persisted session evidence is diagnostic-only');
+    }
+    assertStartupSandboxCleanupComplete(await doSandboxCleanup('startup', {}));
+    startGatewayHealthMonitor({ isShuttingDown: () => shuttingDown, shutdown });
 
-  const consumerGroup = await ensureTaskConsumerGroup();
-  console.log(`[REDIS] Consumer group ${consumerGroup.created ? 'created' : 'exists'}: ${GROUP_NAME}`);
-
-  console.log(`[REDIS] Pending reclaim enabled: idle >= ${loadBusterRuntimePolicy().task_pending_reclaim_idle_ms}ms → ${CONSUMER_NAME}`);
-
-  console.log('[BUSTER PIPELINE] ✅ Ready. Polling for tasks...');
-  while (!shuttingDown) {
-    try {
-      await processOneQueuedTask(processTask);
-    } catch (e: unknown) {
-      reportBusterRuntimeDiagnostic({
-        component: 'buster_runtime_loop',
-        surface: 'task_poll_loop',
-        reason: 'task_poll_loop_failed',
-        detail: e,
+    const platformCapabilities = parseCapabilitiesEnv(process.env.BUSTER_PLATFORM_CAPABILITIES || '');
+    if (hasBusterCapability(platformCapabilities, BUSTER_CAPABILITIES.IMAGE_PREPULL)) {
+      await ensureBaseImages(undefined, {
+        capabilities: platformCapabilities,
+        alertContext: {
+          project: process.env.BUSTER_PROJECT || null,
+          logDir: getLastRunLogDir(),
+        },
       });
-      console.error('[LOOP]', safeErrorMessage(e));
+    } else {
+      console.log('[BASE_IMAGES] Skipping pre-pull; platform capability image_prepull is not configured.');
+    }
+
+    const consumerGroup = await ensureTaskConsumerGroup();
+    console.log(`[REDIS] Consumer group ${consumerGroup.created ? 'created' : 'exists'}: ${GROUP_NAME}`);
+
+    console.log(`[REDIS] Pending reclaim enabled: idle >= ${loadBusterRuntimePolicy().task_pending_reclaim_idle_ms}ms → ${CONSUMER_NAME}`);
+
+    console.log('[BUSTER PIPELINE] ✅ Ready. Polling for tasks...');
+    while (!shuttingDown) {
       try {
-        await sleep(BUSTER_RUNTIME_LOOP_POLICY.errorBackoffMs, { signal: runtimeLoopAbort.signal });
-      } catch (sleepError: unknown) {
-        if (!shuttingDown) throw sleepError;
+        await processOneQueuedTask(processTask);
+      } catch (e: unknown) {
+        reportBusterRuntimeDiagnostic({
+          component: 'buster_runtime_loop',
+          surface: 'task_poll_loop',
+          reason: 'task_poll_loop_failed',
+          detail: e,
+        });
+        console.error('[LOOP]', safeErrorMessage(e));
+        try {
+          await sleep(BUSTER_RUNTIME_LOOP_POLICY.errorBackoffMs, { signal: runtimeLoopAbort.signal });
+        } catch (sleepError: unknown) {
+          if (!shuttingDown) throw sleepError;
+        }
       }
+    }
+  } finally {
+    if (!shuttingDown && openClawAgentObserverPlugin) {
+      await openClawAgentObserverPlugin.stop();
+      openClawAgentObserverPlugin = null;
     }
   }
 }

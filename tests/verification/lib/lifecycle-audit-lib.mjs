@@ -24,6 +24,7 @@ export const SHARED_PIPELINE_HELPER_PATHS = [
   'pipeline/services/discord-fields.ts',
   'pipeline/services/discord-fields-contract.ts',
   'pipeline/services/observability-health.ts',
+  'pipeline/services/openclaw-plugin-runtime.ts',
   'pipeline/services/rate-limit-contract.ts',
   'pipeline/services/redis-message-contract.ts',
   'pipeline/services/pipeline-event-contract.ts',

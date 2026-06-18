@@ -150,7 +150,7 @@ export async function processTask(payload, opts = {}) {
   let reason     = 'unknown';
   let stage      = 'task-started';
   let spawnedSubagent = false;
-  let suitesInfo = { results: [], suiteSummary: '', criticalFailed: false };
+  let suitesInfo = { results: [], suiteSummary: '', suiteDetailSummary: '', criticalFailed: false };
   let sessionKeyForCompletion = null;
   let sessionResultForCompletion = null;
   let agentResultForCompletion = null;
@@ -255,7 +255,7 @@ export async function processTask(payload, opts = {}) {
 
     if (suitesInfo.criticalFailed) {
       outcome = 'FAIL';
-      reason  = `NO_SUBAGENT: ${suitesInfo.suiteSummary || 'critical suite failure'}`;
+      reason  = `NO_SUBAGENT: ${suitesInfo.suiteDetailSummary || suitesInfo.suiteSummary || 'critical suite failure'}`;
       return taskResult();
     }
 
