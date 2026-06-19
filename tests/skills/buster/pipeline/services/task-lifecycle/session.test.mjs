@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
 import test from 'node:test';
 
 import {
@@ -65,6 +67,56 @@ test('publishTaskOutcome normalizes monitor hard-timeout results', () => {
   assert.equal(discordCalls.length, 1);
   assert.match(discordCalls[0].message.title, /Session Timeout/);
   assert.equal(discordCalls[0].context.session_key, 'session-123');
+});
+
+test('publishTaskOutcome stamps child-written output_file identity', () => {
+  const discordCalls = [];
+  const outputFile = path.join('.swarm', 'test-output', `session-${Date.now()}-${Math.random()}.json`);
+  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
+  fs.writeFileSync(outputFile, JSON.stringify({
+    artifact_type: 'buster_output',
+    status: 'PASS',
+    summary: 'fresh child pass',
+    completed_at: '2026-06-19T13:00:00Z',
+  }));
+
+  try {
+    const published = publishTaskOutcome({
+      payload: {
+        task_type: 'module_test',
+        module_id: 'mod',
+        project: 'project',
+        run_id: 'run-current',
+        attempt: 2,
+        dispatch_id: 'dispatch-current',
+        output_file: outputFile,
+      },
+      sessionData: testSessionData(),
+      sessionResult: { terminal: true },
+      elapsedSeconds: 12,
+      timeoutSeconds: 60,
+      moduleId: 'mod',
+      project: 'project',
+      commitHash: null,
+      currentDiscordContext: (extra = {}) => extra,
+      discord: (message, context) => discordCalls.push({ message, context }),
+      logger: noopLogger(),
+      dispatchIdForCompletion: 'dispatch-current',
+    });
+    const artifact = JSON.parse(fs.readFileSync(outputFile, 'utf8'));
+
+    assert.equal(published.outcome, 'PASS');
+    assert.equal(published.reason, 'output_file_pass');
+    assert.equal(published.agentResult.repaired_identity, true);
+    assert.equal(artifact.run_id, 'run-current');
+    assert.equal(artifact.attempt, '2');
+    assert.equal(artifact.dispatch_id, 'dispatch-current');
+    assert.equal(artifact.completion_key, 'run-current:2:dispatch-current');
+    assert.equal(discordCalls.length, 1);
+    assert.match(discordCalls[0].message.title, /Session Complete/);
+  } finally {
+    fs.rmSync(outputFile, { force: true });
+  }
 });
 
 test('monitorTaskSession clears active session when termination after monitor error throws', async () => {

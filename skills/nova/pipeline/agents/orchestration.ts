@@ -325,16 +325,61 @@ function resolveConfiguredBusterCapabilities(owner: AnyRecord = {}) {
   return Array.isArray(value) ? [...new Set(value.map((entry) => String(entry || '').trim()).filter(Boolean))] : [];
 }
 
-function buildBusterTestConfig(owner: AnyRecord = {}, config: AnyRecord = {}) {
+function stablePortOffset(input: string) {
+  let hash = 2166136261;
+  for (let i = 0; i < input.length; i += 1) {
+    hash ^= input.charCodeAt(i);
+    hash = Math.imul(hash, 16777619) >>> 0;
+  }
+  return hash % 20000;
+}
+
+function deriveIsolatedServePort({
+  config = {},
+  targetId = '',
+  attempt = null,
+  dispatchId = '',
+}: AnyRecord = {}) {
+  const runId = config?._runId || config?.run_id || '';
+  if (!runId || !targetId || !Number.isInteger(attempt) || attempt < 1) return null;
+  return 20000 + stablePortOffset(`${runId}:${targetId}:${attempt}:${dispatchId || ''}`);
+}
+
+function isolateServePortForBuster(testConfig: AnyRecord, opts: AnyRecord = {}) {
+  const serve = testConfig?.serve && typeof testConfig.serve === 'object' ? testConfig.serve : null;
+  if (!serve || !Number.isInteger(serve.port) || serve.port <= 0) return testConfig;
+  if (typeof serve.start_cmd !== 'string' || !serve.start_cmd.trim()) return testConfig;
+
+  const port = deriveIsolatedServePort(opts);
+  if (!port || port === serve.port) return testConfig;
+
+  const escapedPort = String(serve.port).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const startCmd = serve.start_cmd.replace(new RegExp(`(^|\\s)PORT=${escapedPort}(?=\\s|$)`), `$1PORT=${port}`);
+  if (startCmd === serve.start_cmd) return testConfig;
+
+  return {
+    ...testConfig,
+    serve: {
+      ...serve,
+      port,
+      start_cmd: startCmd,
+      configured_port: serve.port,
+      port_source: 'pipeline_isolated_per_dispatch',
+    },
+  };
+}
+
+export function buildBusterTestConfig(owner: AnyRecord = {}, config: AnyRecord = {}, opts: AnyRecord = {}) {
   const testConfig = owner?.test_config && typeof owner.test_config === 'object' ? owner.test_config : {};
   const configuredTimeout = testConfig.suite_timeout_ms ?? config.buster.suite_timeout_ms;
   if (!Number.isInteger(configuredTimeout) || configuredTimeout <= 0) {
     throw new Error('Buster payload requires positive test_config.suite_timeout_ms or config.buster.suite_timeout_ms');
   }
-  return {
+  const normalized = {
     ...testConfig,
     suite_timeout_ms: configuredTimeout,
   };
+  return isolateServePortForBuster(normalized, opts);
 }
 
 export function buildBusterPayload(
@@ -371,13 +416,13 @@ export function buildBusterPayload(
   if (taskType === 'module_test') {
     const mod = progress.modules[moduleId];
     const timeoutSeconds = (mod?.timeout_minutes ?? config.default_timeout_minutes) * 60;
-    return { ...base, stage_id: 'worker:module_buster', worker_type: 'module_buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: modelToHarness(resolvedModel) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId }, module_path: mod ? modulePathRef(config, mod.dir) : null, buster_md_path: mod ? moduleBusterMdPathRef(config, mod.dir) : null, output_file: mod ? moduleBusterOutputPathRef(config, mod.dir) : null, suites: mod?.test_suites || null, test_config: buildBusterTestConfig(mod, config), capabilities: resolveConfiguredBusterCapabilities(mod), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: mod ? moduleLogDir(config, mod.dir) : null, pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
+    return { ...base, stage_id: 'worker:module_buster', worker_type: 'module_buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: modelToHarness(resolvedModel) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId }, module_path: mod ? modulePathRef(config, mod.dir) : null, buster_md_path: mod ? moduleBusterMdPathRef(config, mod.dir) : null, output_file: mod ? moduleBusterOutputPathRef(config, mod.dir) : null, suites: mod?.test_suites || null, test_config: buildBusterTestConfig(mod, config, { config, targetId: moduleId, attempt, dispatchId }), capabilities: resolveConfiguredBusterCapabilities(mod), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: mod ? moduleLogDir(config, mod.dir) : null, pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
   }
   if (taskType !== 'gate_test') throw new Error(`Buster payload builder does not support task_type '${taskType}'`);
   const gate = opts.gate || progress.gates?.[moduleId] || {};
   const gateTimeout = gate.timeout_minutes ?? config.default_timeout_minutes;
   const timeoutSeconds = gateTimeout * 60;
-  return { ...base, stage_id: 'gate:buster', gate_type: 'buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: modelToHarness(resolvedModel) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId }, gate_id: moduleId, gate_title: gate.title || moduleId, work_dir: gateWorkDirPathRef(config), output_file: gateOutputPathRef(config, gate), instructions_file: gateInstructionsPathRef(config, gate), suites: gate.test_suites || null, test_config: buildBusterTestConfig(gate, config), capabilities: resolveConfiguredBusterCapabilities(gate), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: gateLogDir(config, moduleId), pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
+  return { ...base, stage_id: 'gate:buster', gate_type: 'buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: modelToHarness(resolvedModel) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId }, gate_id: moduleId, gate_title: gate.title || moduleId, work_dir: gateWorkDirPathRef(config), output_file: gateOutputPathRef(config, gate), instructions_file: gateInstructionsPathRef(config, gate), suites: gate.test_suites || null, test_config: buildBusterTestConfig(gate, config, { config, targetId: moduleId, attempt, dispatchId }), capabilities: resolveConfiguredBusterCapabilities(gate), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: gateLogDir(config, moduleId), pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
 }
 
 export async function dispatchRedisTask(

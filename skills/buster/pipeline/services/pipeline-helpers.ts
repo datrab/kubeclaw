@@ -119,7 +119,11 @@ export function writeBusterOutputFile(payload = {}, result = {}) {
   const rawStatus = String(result.status || result.outcome || 'FAIL').toUpperCase();
   const status = rawStatus === 'PASS' ? 'PASS' : 'FAIL';
   const summary = result.summary || result.reason || `Buster ${status}`;
+  const artifactData = result.data && typeof result.data === 'object' && !Array.isArray(result.data)
+    ? result.data
+    : {};
   writeJsonFileAtomic(outputFilePath, {
+    ...artifactData,
     artifact_type: 'buster_output',
     task_type: payload?.task_type || null,
     module_id: payload?.module_id || payload?.module || null,
@@ -130,6 +134,14 @@ export function writeBusterOutputFile(payload = {}, result = {}) {
     completed_at: result.completed_at || new Date().toISOString(),
   });
   return outputFilePath;
+}
+
+export function clearBusterOutputFile(payload = {}) {
+  const outputFilePath = resolveBusterOutputFilePath(payload);
+  if (!outputFilePath) throw new Error('Buster task payload missing required output_file');
+  const existed = fs.existsSync(outputFilePath);
+  if (existed) fs.rmSync(outputFilePath, { force: true });
+  return { path: outputFilePath, removed: existed };
 }
 
 export function ensureBusterOutputFile(payload = {}, result = {}) {
@@ -156,7 +168,7 @@ export function ensureBusterOutputFile(payload = {}, result = {}) {
   return { ok: true, path: outputFilePath, source: 'written', status: result.outcome === 'PASS' ? 'PASS' : 'FAIL', replaced_reason: existing.reason || null };
 }
 
-export function resolveBusterAgentResult(payload = {}, sessionResult = {}) {
+export function resolveBusterAgentResult(payload = {}, sessionResult = {}, opts = {}) {
   if (sessionResult?.reason === 'rate_limited') {
     return {
       outcome: 'RATE_LIMITED',
@@ -204,6 +216,22 @@ export function resolveBusterAgentResult(payload = {}, sessionResult = {}) {
   }
   const identity = validateCompletionIdentity(payload, result.data);
   if (!identity.ok) {
+    if (opts?.repairOutputFileIdentity === true) {
+      writeBusterOutputFile(payload, {
+        data: result.data,
+        status,
+        summary: result.data?.summary || result.data?.reason || `Buster ${status}`,
+        reason: result.data?.reason || null,
+        completed_at: result.data?.completed_at || new Date().toISOString(),
+      });
+      return {
+        outcome: status,
+        reason: status === 'PASS' ? 'output_file_pass' : 'output_file_fail',
+        summary: result.data?.summary || result.data?.reason || `Buster ${status}`,
+        source: 'output_file',
+        repaired_identity: true,
+      };
+    }
     return {
       outcome: 'FAIL',
       reason: 'output_file_identity_mismatch',

@@ -67,6 +67,7 @@ export function saveLifecycleReadModels(config, readModels) {
     generated_at: new Date().toISOString(),
   };
   config._lifecycleReadModelsCache = cloneSerializable(next);
+  if (!filePath) return cloneSerializable(next);
   writeJsonAtomic(filePath, next);
   return next;
 }

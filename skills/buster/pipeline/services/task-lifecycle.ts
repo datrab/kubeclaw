@@ -13,6 +13,7 @@ import { sendDiscord } from './discord.ts';
 import {
   buildSuiteResultsEmbed,
   buildTaskFailureEmbed,
+  clearBusterOutputFile,
 } from './pipeline-helpers.ts';
 
 import { validateBusterTaskPayload } from './task-validation.ts';
@@ -217,6 +218,11 @@ export async function processTask(payload, opts = {}) {
       notifyTaskFailure(moduleId, project, { reason, stage, attempt, taskType, commitHash }, currentDiscordContext());
       return taskResult();
     }
+
+    const clearedOutput = clearBusterOutputFile(payload);
+    logger.info('TASK', `Prepared Buster output_file: ${clearedOutput.path}`, {
+      removed_stale: clearedOutput.removed,
+    });
 
     stage = 'run-suites';
     logger.step('run-suites');

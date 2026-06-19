@@ -5,7 +5,10 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { computeFilesChanged } from '../../../../../skills/nova/pipeline/agents/orchestration.ts';
+import {
+  buildBusterTestConfig,
+  computeFilesChanged,
+} from '../../../../../skills/nova/pipeline/agents/orchestration.ts';
 
 function git(cwd, args) {
   return execFileSync('git', ['-C', cwd, ...args], {
@@ -63,4 +66,54 @@ test('computeFilesChanged suppresses telemetry when baseline cwd is missing', ()
   });
 
   assert.deepEqual(result, { filesChanged: null, baselineTracked: false });
+});
+
+test('buildBusterTestConfig isolates standard PORT-based serve commands per dispatch', () => {
+  const result = buildBusterTestConfig({
+    test_config: {
+      serve: {
+        port: 43101,
+        start_cmd: 'PORT=43101 npm start',
+        health_path: '/health',
+      },
+    },
+  }, {
+    run_id: 'run-test',
+    buster: { suite_timeout_ms: 120000 },
+  }, {
+    config: { run_id: 'run-test' },
+    targetId: '01-foundation',
+    attempt: 2,
+    dispatchId: 'buster-module-01-foundation-test',
+  });
+
+  assert.equal(result.suite_timeout_ms, 120000);
+  assert.notEqual(result.serve.port, 43101);
+  assert.match(result.serve.start_cmd, /^PORT=\d+ npm start$/);
+  assert.equal(result.serve.start_cmd.includes('43101'), false);
+  assert.equal(result.serve.configured_port, 43101);
+  assert.equal(result.serve.port_source, 'pipeline_isolated_per_dispatch');
+});
+
+test('buildBusterTestConfig leaves non-standard serve commands unchanged', () => {
+  const result = buildBusterTestConfig({
+    test_config: {
+      serve: {
+        port: 43101,
+        start_cmd: 'npm start -- --port 43101',
+      },
+    },
+  }, {
+    run_id: 'run-test',
+    buster: { suite_timeout_ms: 120000 },
+  }, {
+    config: { run_id: 'run-test' },
+    targetId: '01-foundation',
+    attempt: 1,
+    dispatchId: 'buster-module-01-foundation-test',
+  });
+
+  assert.equal(result.serve.port, 43101);
+  assert.equal(result.serve.start_cmd, 'npm start -- --port 43101');
+  assert.equal(result.serve.configured_port, undefined);
 });

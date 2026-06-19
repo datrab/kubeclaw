@@ -12,7 +12,10 @@ import {
   readLifecycleEvents,
 } from '../../../../../skills/nova/pipeline/services/status-store-lifecycle.ts';
 import { buildLifecycleIdempotencyKey } from '../../../../../skills/nova/pipeline/services/status-store-lifecycle/idempotency.ts';
-import { createDefaultLifecycleReadModels } from '../../../../../skills/nova/pipeline/services/status-store-lifecycle/read-models.ts';
+import {
+  createDefaultLifecycleReadModels,
+  saveLifecycleReadModels,
+} from '../../../../../skills/nova/pipeline/services/status-store-lifecycle/read-models.ts';
 import { appendJsonLine, lifecycleEventsPath } from '../../../../../skills/nova/pipeline/services/status-store-lifecycle/storage.ts';
 
 function makeConfig() {
@@ -78,6 +81,22 @@ test('idempotent lifecycle retry catches read models up from canonical events', 
   assert.equal(retry.readModels.modules.alpha.status, 'IN_PROGRESS');
   assert.equal(readModels.last_event_id, event.event_id);
   assert.equal(readModels.modules.alpha.status, 'IN_PROGRESS');
+});
+
+test('read-only lifecycle read-model save updates cache without requiring a file path', () => {
+  const config = makeConfig();
+  config._lifecycleReadOnly = true;
+  const readModels = createDefaultLifecycleReadModels(config);
+  readModels.gates.review = {
+    gate_id: 'review',
+    status: 'PENDING',
+  };
+
+  const saved = saveLifecycleReadModels(config, readModels);
+
+  assert.equal(saved.gates.review.status, 'PENDING');
+  assert.equal(config._lifecycleReadModelsCache.gates.review.status, 'PENDING');
+  assert.equal(fs.existsSync(path.join(config.paths.swarm_dir, 'logs')), false);
 });
 
 test('gate wait refs include attempt so approval retries do not dedupe prior waits', () => {

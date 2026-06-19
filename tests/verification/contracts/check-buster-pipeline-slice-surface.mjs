@@ -246,7 +246,7 @@ assert.equal(suiteRunnerSource.includes('export async function runSuiteWithTimeo
 assert.equal(suiteRunnerSource.includes('clearTimeout(timeoutId)'), true, 'suite runner must clear suite timeout handles after suite completion');
 assert.equal(suiteRunnerSource.includes("emitEvent(tctx, 'observability.degraded'"), true, 'suite result write failures should emit structured degraded diagnostics');
 assert.equal(suiteRunnerSource.includes("reason: classification"), true, 'suite result write diagnostics should preserve failure classification');
-assert.equal(taskLifecycleSessionSource.includes('resolveBusterAgentResult(payload, sessionResult)'), true, 'buster task lifecycle should derive spawned child outcomes from canonical result artifacts');
+assert.equal(taskLifecycleSessionSource.includes('resolveBusterAgentResult(payload, sessionResult, { repairOutputFileIdentity: true })'), true, 'buster task lifecycle should derive spawned child outcomes from canonical result artifacts and stamp current task identity');
 assert.equal(taskCompletionSource.includes("opts.outcome || 'FAIL'"), false, 'buster completion records must not default missing outcome to FAIL');
 assert.equal(taskCompletionSource.includes("opts.reason || 'unknown'"), false, 'buster completion records must not default missing reason to unknown');
 assert.equal(taskCompletionSource.includes('Buster completion requires explicit outcome and reason'), true, 'buster completion records should require explicit outcome and reason');

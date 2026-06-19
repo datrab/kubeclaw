@@ -6,6 +6,7 @@ import test from 'node:test';
 import {
   buildSessionSpawnEmbed,
   buildSuiteResultsEmbed,
+  clearBusterOutputFile,
   ensureBusterOutputFile,
   resolveBusterAgentResult,
   resolveBusterOutputFilePath,
@@ -66,6 +67,47 @@ test('resolveBusterAgentResult rejects a stale terminal output_file identity', (
     assert.equal(result.outcome, 'FAIL');
     assert.equal(result.reason, 'output_file_identity_mismatch');
     assert.match(result.summary, /run_id/);
+  } finally {
+    cleanup(outputPath);
+  }
+});
+
+test('clearBusterOutputFile removes stale target artifact before a new task run', () => {
+  const task = payload();
+  const outputPath = resolveBusterOutputFilePath(task);
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+  fs.writeFileSync(outputPath, JSON.stringify({ status: 'PASS', summary: 'old pass' }));
+
+  const result = clearBusterOutputFile(task);
+
+  assert.equal(result.path, outputPath);
+  assert.equal(result.removed, true);
+  assert.equal(fs.existsSync(outputPath), false);
+});
+
+test('resolveBusterAgentResult can stamp current identity onto child-written output_file', () => {
+  const task = payload();
+  const outputPath = resolveBusterOutputFilePath(task);
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+  fs.writeFileSync(outputPath, JSON.stringify({
+    artifact_type: 'buster_output',
+    status: 'PASS',
+    summary: 'fresh child pass',
+    findings: [],
+    completed_at: '2026-06-19T13:00:00Z',
+  }));
+
+  try {
+    const result = resolveBusterAgentResult(task, { terminal: true }, { repairOutputFileIdentity: true });
+    const artifact = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+    assert.equal(result.outcome, 'PASS');
+    assert.equal(result.reason, 'output_file_pass');
+    assert.equal(result.repaired_identity, true);
+    assert.equal(artifact.run_id, task.run_id);
+    assert.equal(artifact.attempt, String(task.attempt));
+    assert.equal(artifact.dispatch_id, task.dispatch_id);
+    assert.equal(artifact.completion_key, `${task.run_id}:${task.attempt}:${task.dispatch_id}`);
+    assert.deepEqual(artifact.findings, []);
   } finally {
     cleanup(outputPath);
   }

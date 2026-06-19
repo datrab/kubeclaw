@@ -112,7 +112,7 @@ function resolveTaskAgentResult(payload: BusterTaskPayload, sessionResult: Sessi
     };
   }
 
-  return resolveBusterAgentResult(payload, sessionResult) as Record<string, unknown>;
+  return resolveBusterAgentResult(payload, sessionResult, { repairOutputFileIdentity: true }) as Record<string, unknown>;
 }
 
 export async function spawnTaskSession({
