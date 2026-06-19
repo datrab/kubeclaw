@@ -111,7 +111,7 @@ function getGateStats(config) {
  * Returns the poll result for the caller to handle.
  * @private
  */
-async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, timeout, instructions, attempt) {
+async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, timeout, instructions, attempt, busterGatePolicy = {}) {
   getGateStats(config).total_buster_attempts++;
   const commitHash = deps.headHash(config);
   const completionIdentity = createBusterGateCompletionIdentity({
@@ -119,6 +119,11 @@ async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, t
     gateId,
     attempt,
   });
+  completionIdentity.model = model || null;
+  completionIdentity.model_source = busterGatePolicy.model_source || null;
+  completionIdentity.reasoning_level = busterGatePolicy.thinking_supported === false ? 'not supported' : (busterGatePolicy.thinking || 'default');
+  completionIdentity.thinking_source = busterGatePolicy.thinking_source || null;
+  completionIdentity.runtime = 'redis_dispatch';
   const gateRateLimitStatusOptions = buildBusterGateRateLimitStatusOptions({ gateId, gate, completionIdentity });
   const busterPromptResult = deps.buildBusterGatePrompt(config, gateId, gate, instructions, commitHash, attempt, completionIdentity);
   const busterPrompt = busterPromptResult.prompt;
@@ -191,6 +196,12 @@ async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, t
   try {
     await deps.spawnAgent(config, progress, 'buster', gateId, model, busterPrompt, {
       ...buildBusterGateSpawnOptions(gate, completionIdentity),
+      model_source: completionIdentity.model_source,
+      reasoning_level: completionIdentity.reasoning_level,
+      thinking: busterGatePolicy.thinking || null,
+      thinking_source: completionIdentity.thinking_source,
+      thinking_supported: busterGatePolicy.thinking_supported ?? null,
+      runtime_kind: completionIdentity.runtime,
       deps: deps._explicitDeps,
     });
     const gateLabel = deps.acpLabel('buster', gateId);
@@ -382,7 +393,7 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
           level: 'CRITICAL',
           title: `Buster Gate Setup Failed: ${gate.title}`,
           description: `Gate instructions could not be read: ${e.message}`,
-          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: getRunId(config), gate_id: gateId, gate_type: gate.type, attempt }),
+          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: getRunId(config), gate_id: gateId, gate_type: gate.type, attempt, model, reasoning_level: busterGatePolicy.thinking_supported === false ? 'not supported' : (busterGatePolicy.thinking || 'default'), thinking_source: busterGatePolicy.thinking_source || null, runtime: 'redis_dispatch' }),
         },
       },
     });
@@ -452,7 +463,7 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
 
   const result = await withSessionRateLimitRecovery(
     config,
-    () => (deps.runOnce || _runBusterGateOnce)(deps, config, progress, gateId, gate, model, timeout, instructions, attempt),
+    () => (deps.runOnce || _runBusterGateOnce)(deps, config, progress, gateId, gate, model, timeout, instructions, attempt, busterGatePolicy),
     createTrackedGateSessionRateLimitRecoveryOptions(config, {
       sleepFn: deps.sleep,
       discordFn: deps.discord,

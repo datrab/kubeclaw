@@ -126,3 +126,54 @@ test('Buster completion signal stamps current pipeline identity before Redis com
     fs.rmSync(outputPath, { force: true });
   }
 });
+
+test('Buster completion signal does not emit Redis when output_file verify fails', async () => {
+  const payload = makePayload();
+  const outputPath = resolveBusterOutputFilePath(payload);
+  const completionState = createTaskCompletionState();
+  const emitted = [];
+  const errors = [];
+
+  try {
+    await sendTaskCompletionSignal({
+      payload,
+      completionState,
+      spawnedSubagent: true,
+      suitesInfo: { results: [], suiteSummary: '', suiteDetailSummary: '' },
+      agentResultForCompletion: { summary: 'child did not write output_file', source: 'output_file' },
+      sessionResultForCompletion: { terminal: true },
+      moduleId: payload.module_id,
+      project: payload.project,
+      outcome: 'FAIL',
+      reason: 'output_file_missing',
+      runId: payload.run_id,
+      attempt: payload.attempt,
+      dispatchIdForCompletion: payload.dispatch_id,
+      sessionKeyForCompletion: 'session-current',
+      logger: {
+        info() {},
+        error(_tag, msg) {
+          errors.push(msg);
+        },
+      },
+      deps: {
+        verifyAndPush: async () => ({ status: 'error', action: 'cleanup_failed', error: 'scope check failed' }),
+        getRedisClient: () => ({}),
+        emitTaskCompletion: async (...args) => {
+          emitted.push(args);
+          return { ok: true, stream: payload.completion_stream, id: '1-0' };
+        },
+      },
+    });
+
+    const artifact = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+    assert.equal(artifact.status, 'FAIL');
+    assert.equal(artifact.reason, 'output_file_missing');
+    assert.equal(emitted.length, 0);
+    assert.equal(completionState.terminal, false);
+    assert.match(completionState.error, /scope check failed/);
+    assert.equal(errors.some((msg) => /Failed to send completion signal/.test(msg)), true);
+  } finally {
+    fs.rmSync(outputPath, { force: true });
+  }
+});

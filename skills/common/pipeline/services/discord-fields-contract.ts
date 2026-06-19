@@ -41,6 +41,19 @@ export const DISCORD_FIELD_SPECS: Record<string, any> = Object.freeze({
   PHASE: Object.freeze({ name: 'Phase', keys: ['phase'], inline: true }),
   PHASE_OR_AGENT_TYPE: Object.freeze({ name: 'Phase', keys: ['phase', 'agent_type'], inline: true }),
   ATTEMPT: Object.freeze({ name: 'Attempt', keys: ['attempt'], inline: true, format: (value: unknown) => `${value}` }),
+  MODEL: Object.freeze({ name: 'Model', keys: ['model'], inline: true }),
+  MODEL_SOURCE: Object.freeze({ name: 'Model Source', keys: ['modelSource', 'model_source'], inline: true }),
+  REASONING_LEVEL: Object.freeze({
+    name: 'Reasoning',
+    keys: ['reasoningLevel', 'reasoning_level', 'thinking', 'thinking_level'],
+    inline: true,
+    format: (value: unknown, identity: UnknownRecord) => {
+      const level = value == null || value === '' ? 'default' : String(value);
+      const source = readIdentityValue(identity, ['reasoningSource', 'reasoning_source', 'thinkingSource', 'thinking_source']);
+      return source ? `${level} (${source})` : level;
+    },
+  }),
+  RUNTIME_KIND: Object.freeze({ name: 'Runtime', keys: ['runtime', 'runtimeKind', 'runtime_kind'], inline: true }),
   DISPATCH_ID: Object.freeze({ name: 'Dispatch', keys: ['dispatchId', 'dispatch_id'], inline: false }),
   GATEWAY_LABEL: Object.freeze({ name: 'Gateway Label', keys: ['gatewayLabel', 'gateway_label'], inline: false }),
   SESSION_KEY: Object.freeze({ name: 'Session', keys: ['sessionKey', 'session_key'], inline: false }),
@@ -66,6 +79,9 @@ export const DISCORD_IDENTITY_FIELD_SETS: Record<string, readonly any[]> = Objec
     DISCORD_FIELD_SPECS.DISPATCH_ID,
     DISCORD_FIELD_SPECS.GATEWAY_LABEL,
     DISCORD_FIELD_SPECS.SESSION_KEY,
+    DISCORD_FIELD_SPECS.MODEL,
+    DISCORD_FIELD_SPECS.REASONING_LEVEL,
+    DISCORD_FIELD_SPECS.RUNTIME_KIND,
   ]),
   gate_dispatch: Object.freeze([
     DISCORD_FIELD_SPECS.RUN_ID,
@@ -80,6 +96,9 @@ export const DISCORD_IDENTITY_FIELD_SETS: Record<string, readonly any[]> = Objec
     DISCORD_FIELD_SPECS.DISPATCH_ID,
     DISCORD_FIELD_SPECS.GATEWAY_LABEL,
     DISCORD_FIELD_SPECS.SESSION_KEY,
+    DISCORD_FIELD_SPECS.MODEL,
+    DISCORD_FIELD_SPECS.REASONING_LEVEL,
+    DISCORD_FIELD_SPECS.RUNTIME_KIND,
   ]),
   approval_gate: Object.freeze([
     DISCORD_FIELD_SPECS.RUN_ID,
@@ -93,6 +112,9 @@ export const DISCORD_IDENTITY_FIELD_SETS: Record<string, readonly any[]> = Objec
     DISCORD_FIELD_SPECS.DISPATCH_ID,
     DISCORD_FIELD_SPECS.GATEWAY_LABEL,
     DISCORD_FIELD_SPECS.SESSION_KEY,
+    DISCORD_FIELD_SPECS.MODEL,
+    DISCORD_FIELD_SPECS.REASONING_LEVEL,
+    DISCORD_FIELD_SPECS.RUNTIME_KIND,
   ]),
   pipeline: Object.freeze([
     DISCORD_FIELD_SPECS.RUN_ID,
@@ -104,6 +126,9 @@ export const DISCORD_IDENTITY_FIELD_SETS: Record<string, readonly any[]> = Objec
     DISCORD_FIELD_SPECS.DISPATCH_ID,
     DISCORD_FIELD_SPECS.GATEWAY_LABEL,
     DISCORD_FIELD_SPECS.SESSION_KEY,
+    DISCORD_FIELD_SPECS.MODEL,
+    DISCORD_FIELD_SPECS.REASONING_LEVEL,
+    DISCORD_FIELD_SPECS.RUNTIME_KIND,
   ]),
   rate_limit_session: Object.freeze([
     DISCORD_FIELD_SPECS.RUN_ID,
@@ -115,6 +140,9 @@ export const DISCORD_IDENTITY_FIELD_SETS: Record<string, readonly any[]> = Objec
     DISCORD_FIELD_SPECS.DISPATCH_ID,
     DISCORD_FIELD_SPECS.GATEWAY_LABEL,
     DISCORD_FIELD_SPECS.SESSION_KEY,
+    DISCORD_FIELD_SPECS.MODEL,
+    DISCORD_FIELD_SPECS.REASONING_LEVEL,
+    DISCORD_FIELD_SPECS.RUNTIME_KIND,
   ]),
 });
 

@@ -201,12 +201,15 @@ const terminal = await ensureTaskTerminalBeforeAck(redis, {
   phase: 'contract_valid_task_terminal_guarantee',
 });
 assert.equal(terminal.ok, true);
-assert.equal(terminal.mode, 'synthesized_failure_completion_before_ack');
-assert.equal(redis.records(completionStream).length, 1);
-assert.equal(redis.records(completionStream)[0].fields.run_id, validPayload.run_id);
-assert.equal(redis.records(completionStream)[0].fields.dispatch_id, validPayload.dispatch_id);
-assert.equal(redis.records(completionStream)[0].fields.outcome, 'FAIL');
-assert.equal(redis.records(completionStream)[0].fields.source, 'buster-pipeline-task-queue');
+assert.equal(terminal.mode, 'dead_letter');
+assert.equal(terminal.stream, deadLetterStream);
+assert.equal(redis.records(completionStream).length, 0);
+assert.equal(redis.records(deadLetterStream).length, 1);
+assert.equal(redis.records(deadLetterStream)[0].fields.run_id, validPayload.run_id);
+assert.equal(redis.records(deadLetterStream)[0].fields.dispatch_id, validPayload.dispatch_id);
+assert.equal(redis.records(deadLetterStream)[0].fields.reason, 'task_failed_before_terminal_completion');
+assert.equal(redis.records(deadLetterStream)[0].fields.phase, 'contract_valid_task_terminal_guarantee');
+assert.match(redis.records(deadLetterStream)[0].fields.detail, /artifact push failed/);
 
 await queue.ack(read.id);
 await queue.trim(50);
@@ -243,10 +246,10 @@ await writeTaskDeadLetter(redis, {
   detail: invalidErrors.join('; '),
   phase: 'task_envelope_validation',
 });
-assert.equal(redis.records(deadLetterStream).length, 1);
-assert.equal(redis.records(deadLetterStream)[0].fields.reason, 'invalid_task_entry_schema');
-assert.equal(redis.records(deadLetterStream)[0].fields.redis_id, invalidRead.id);
-assert.equal(redis.records(completionStream).length, 1, 'invalid envelope must dead-letter without synthesizing a clean completion');
+assert.equal(redis.records(deadLetterStream).length, 2);
+assert.equal(redis.records(deadLetterStream).at(-1).fields.reason, 'invalid_task_entry_schema');
+assert.equal(redis.records(deadLetterStream).at(-1).fields.redis_id, invalidRead.id);
+assert.equal(redis.records(completionStream).length, 0, 'invalid envelope must dead-letter without synthesizing a clean completion');
 
 await queue.ack(invalidRead.id);
 assert.deepEqual(redis.pendingIds(taskStream, groupName), []);
@@ -287,8 +290,8 @@ const missingCompletionTerminal = await ensureTaskTerminalBeforeAck(redis, {
 });
 assert.equal(missingCompletionTerminal.ok, true);
 assert.equal(missingCompletionTerminal.mode, 'dead_letter');
-assert.equal(redis.records(completionStream).length, 1, 'missing completion_stream must not synthesize a clean completion');
-assert.equal(redis.records(deadLetterStream).length, 2);
+assert.equal(redis.records(completionStream).length, 0, 'missing completion_stream must not synthesize a clean completion');
+assert.equal(redis.records(deadLetterStream).length, 3);
 assert.equal(redis.records(deadLetterStream).at(-1).fields.redis_id, missingCompletionRead.id);
 assert.equal(redis.records(deadLetterStream).at(-1).fields.detail, 'missing_completion_stream');
 assert.deepEqual(redis.pendingIds(taskStream, groupName), [missingCompletionPublished.id], 'missing completion_stream must remain pending until dead-letter proof exists');

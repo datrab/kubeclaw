@@ -330,3 +330,97 @@ test('module Buster phase treats Redis output_file identity mismatch as infra wi
   assert.equal(handleModuleFailCalls, 0);
   assert.equal(buildRetryResultCalls, 0);
 });
+
+test('module Buster phase treats Redis missing output_file as infra without Forge retry', async () => {
+  const config = configWithBusterWorker();
+  const dispatchId = 'buster-module-module-a-1781884965455-1';
+  const sessionKey = 'agent:main:subagent:9f044c9e-7675-4751-a3b9-373702f8dea8';
+  const missingSummary = 'output_file missing: /tmp/module-a/.swarm/modules/01-foundation/buster-output.json';
+  let savedStatus = {
+    status: STATUS.READY_FOR_TESTING,
+    current_phase: null,
+    fail_count: 0,
+    history: [],
+    cost: {},
+  };
+  let handleModuleFailCalls = 0;
+  let buildRetryResultCalls = 0;
+
+  const deps = {
+    resolvePolicy: () => ({ model: 'buster-model', model_source: 'test' }),
+    logEffectivePolicy: () => {},
+    buildBusterModulePrompt: () => ({ prompt: 'buster prompt' }),
+    savePrompt: () => {},
+    validateBusterConfig: () => {},
+    setShutdownContext: () => {},
+    clearShutdownContext: () => {},
+    nowMs: () => 1781884965455,
+    discord: async () => {},
+    archiveModuleCompletions: async () => ({ failed: false }),
+    spawnAgent: async () => ({
+      dispatch_id: dispatchId,
+      run_id: 'run-identity-proof',
+      session_key: sessionKey,
+      gateway_label: dispatchId,
+      stream_log_path: '/tmp/buster-proof.log',
+    }),
+    pollDualWithRateLimitRecovery: async () => ({
+      ok: false,
+      status: {
+        status: STATUS.FAIL,
+        _redis_entry: {
+          status: STATUS.FAIL,
+          source: 'buster-pipeline',
+          reason: 'output_file_missing',
+          summary: missingSummary,
+          run_id: 'run-identity-proof',
+          attempt: '1',
+          dispatch_id: dispatchId,
+          gateway_label: dispatchId,
+          session_key: sessionKey,
+          completion_key: `run-identity-proof:1:${dispatchId}`,
+        },
+      },
+    }),
+    killAgent: async () => {},
+    saveStreamLog: () => {},
+    saveStatus: (_config, _dir, previousOrStatus, transition = null) => {
+      savedStatus = clone(transition?.status || previousOrStatus);
+    },
+    loadStatus: () => clone(savedStatus),
+  };
+
+  const result = await runModuleBusterPhase({
+    config,
+    progress: {},
+    moduleId: 'module-a',
+    mod: { title: 'Module A', test_suites: ['unit'] },
+    dir: 'module-a',
+    status: savedStatus,
+    timeout: 1,
+    maxFails: 2,
+    deps,
+    recalledMemoryIds: [],
+    handleModuleFail: async () => {
+      handleModuleFailCalls += 1;
+      throw new Error('missing Buster output_file must not enter Forge retry policy');
+    },
+    buildRetryResult: () => {
+      buildRetryResultCalls += 1;
+      throw new Error('missing Buster output_file must not build retry result');
+    },
+  });
+
+  assert.equal(result.retry, false);
+  assert.equal(result.result.outcome, 'blocked');
+  assert.equal(result.result.nextAction, 'halt');
+  assert.equal(result.result.issueType, 'environment');
+  assert.equal(result.result.diagnostics.summary, 'Buster output_file missing — infrastructure issue (not sent to Forge)');
+  assert.equal(result.result.diagnostics.metadata.failure_class, 'output_file_missing');
+  assert.equal(result.result.diagnostics.metadata.forge_preserved, true);
+  assert.equal(savedStatus.status, STATUS.BLOCKED);
+  assert.equal(savedStatus.fail_count, 0);
+  assert.equal(savedStatus.blockedReason, 'output_file_missing');
+  assert.equal(handleModuleFailCalls, 0);
+  assert.equal(buildRetryResultCalls, 0);
+});

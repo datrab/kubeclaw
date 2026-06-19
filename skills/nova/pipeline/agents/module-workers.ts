@@ -43,6 +43,11 @@ function pollRedisEntry(pollResult: AnyRecord | null = null): AnyRecord | null {
   return objectOrNull(pollStatus(pollResult)?._redis_entry);
 }
 
+const BUSTER_OUTPUT_ARTIFACT_FAILURES = new Set([
+  'output_file_identity_mismatch',
+  'output_file_missing',
+]);
+
 function statusEvidenceFields(pollResult: AnyRecord | null = null): AnyRecord {
   const status = pollStatus(pollResult);
   const redisEntry = pollRedisEntry(pollResult);
@@ -105,11 +110,11 @@ function resolveModuleBusterFailureClass(pollResult: AnyRecord = {}) {
   if (reason === 'parse_corrupted') return 'parse_corrupted';
   if (reason === 'rate_limit_exhausted') return 'rate_limit_exhausted';
   if (reason === 'completion_archive_failed') return 'completion_archive_failed';
-  if (reason === 'output_file_identity_mismatch') return 'output_file_identity_mismatch';
+  if (BUSTER_OUTPUT_ARTIFACT_FAILURES.has(reason)) return reason;
   const redisReason = typeof pollResult?.status?._redis_entry?.reason === 'string'
     ? pollResult.status._redis_entry.reason.trim().toLowerCase()
     : '';
-  if (redisReason === 'output_file_identity_mismatch') return 'output_file_identity_mismatch';
+  if (BUSTER_OUTPUT_ARTIFACT_FAILURES.has(redisReason)) return redisReason;
   if (redisReason === 'completion_archive_failed') return 'completion_archive_failed';
   return null;
 }
@@ -156,7 +161,7 @@ function busterControlForPollResult(pollResult: AnyRecord = {}, failureClass: st
   }
   if (failureClass === 'spawn_failed'
       || failureClass === 'completion_archive_failed'
-      || failureClass === 'output_file_identity_mismatch') {
+      || BUSTER_OUTPUT_ARTIFACT_FAILURES.has(failureClass || '')) {
     return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error', failureClass };
   }
   return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error', failureClass: failureClass || 'unclassified_poll_failure' };
@@ -179,6 +184,7 @@ export async function runModuleForgeWorker({
   const {
     model,
     thinking = null,
+    thinkingSource = null,
   } = workerInput?.worker?.backendConfig || {};
   const moduleId = workerInput.ids.moduleId;
   const moduleDir = workerInput.executionContext.moduleDir;
@@ -212,6 +218,7 @@ export async function runModuleForgeWorker({
       run_id: runId,
       attempt,
       trackingLabel: forgeSessionLabel,
+      thinking_source: thinkingSource,
     });
   } catch (e: any) {
     clearShutdownContextFn();
@@ -373,7 +380,15 @@ export async function runModuleBusterWorker({
     onDispatched = null,
     onFinalized = null,
   } = workerInput;
-  const { model } = workerInput?.worker?.backendConfig || {};
+  const {
+    model,
+    modelSource = null,
+    thinking = null,
+    thinkingSource = null,
+    thinkingSupported = null,
+    reasoningLevel = thinkingSupported === false ? 'not supported' : (thinking || null),
+    runtimeKind = null,
+  } = workerInput?.worker?.backendConfig || {};
   const moduleId = workerInput.ids.moduleId;
   const moduleDir = workerInput.executionContext.moduleDir;
   const timeoutMinutes = workerInput.executionContext.timeoutMinutes;
@@ -444,6 +459,12 @@ export async function runModuleBusterWorker({
       run_id: runId,
       attempt,
       dispatch_id: dispatchId,
+      model_source: modelSource,
+      thinking,
+      thinking_source: thinkingSource,
+      thinking_supported: thinkingSupported,
+      reasoning_level: reasoningLevel,
+      runtime_kind: runtimeKind,
     });
   } catch (e: any) {
     clearShutdownContextFn();
@@ -470,8 +491,11 @@ export async function runModuleBusterWorker({
     dispatch_id: workerDispatch?.dispatch_id || dispatchId || null,
     run_id: workerDispatch?.run_id || runId || null,
     attempt,
-    runtime: null,
-    model,
+    runtime: workerDispatch?.runtime || runtimeKind || null,
+    model: workerDispatch?.model || model || null,
+    model_source: workerDispatch?.model_source || modelSource || null,
+    reasoning_level: workerDispatch?.reasoning_level || reasoningLevel || null,
+    thinking_source: workerDispatch?.thinking_source || thinkingSource || null,
     agent_id: null,
     phase: 'buster',
   };

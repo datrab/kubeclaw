@@ -95,6 +95,7 @@ export async function runModuleBusterPhase({
         maxFails,
         deps,
         busterModel,
+        busterPolicy,
         maxBusterCrashRetries,
         busterAttempt,
       });

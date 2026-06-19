@@ -155,8 +155,7 @@ export async function runModuleForgePhase({
         title: `Module ${moduleId} started`,
         description: mod.title,
         fields: [
-          ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { run_id: getRunId(config), module_id: moduleId, attempt: currentAttemptNumber(status), gateway_label: resolveStatusGatewayLabel(status) }),
-          { name: 'Model', value: forgeModel },
+          ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { run_id: getRunId(config), module_id: moduleId, attempt: currentAttemptNumber(status), gateway_label: resolveStatusGatewayLabel(status), model: forgeModel, reasoning_level: forgePolicy.thinking || 'default', thinking_source: forgePolicy.thinking_source, runtime: 'session' }),
           { name: 'Harness', value: forgeHarness },
           { name: 'Retry Budget', value: `${status.fail_count + 1}/${maxFails}` },
         ],
@@ -209,6 +208,7 @@ export async function runModuleForgePhase({
     maxFails,
     model: forgeModel,
     thinking: forgePolicy.thinking,
+    thinkingSource: forgePolicy.thinking_source,
     timeoutMinutes: timeout,
     headBefore: headBeforeForge,
     novaPromptProvided: Boolean(novaPrompt),
@@ -228,6 +228,9 @@ export async function runModuleForgePhase({
         attempt: currentAttemptNumber(status),
         runtime: dispatch.runtime || null,
         model: forgeModel,
+        model_source: forgePolicy.model_source || null,
+        reasoning_level: forgePolicy.thinking || 'default',
+        thinking_source: forgePolicy.thinking_source || null,
         agent_id: dispatch.agent_id || forgeHarness,
         phase: 'forge',
         started_at: new Date().toISOString(),
@@ -598,11 +601,14 @@ export async function runModuleForgePhase({
     attempt: currentAttemptNumber(status),
     gateway_label: resolveStatusGatewayLabel(status),
     session_key: forgeSessionKey,
+    model: forgeModel,
+    reasoning_level: forgePolicy.thinking || 'default',
+    thinking_source: forgePolicy.thinking_source,
+    runtime: 'session',
   };
   await deps.discord(config, 'OK', `Module ${moduleId} Forge complete → ${forgeNextStep}`, mod.title, [
     ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, forgeCompletionCorrelation),
     { name: 'Forge Duration', value: formatDurationCompact(forgeDurationSec) },
-    { name: 'Model', value: forgeModel },
     { name: 'Retry Budget', value: `${status.fail_count + 1}/${maxFails}` },
   ], { correlation: forgeCompletionCorrelation });
 

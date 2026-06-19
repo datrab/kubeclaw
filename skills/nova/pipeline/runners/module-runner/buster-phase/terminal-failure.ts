@@ -80,25 +80,35 @@ export async function handleBusterFailOrBlockedStatus({
   }
   const isCrash = failureClass === 'infra_crash';
   const isPreTest = failureClass === 'pretest_infra' || failureClass === 'pretest_config' || failureClass === 'pretest_code';
-  const isOutputIdentityMismatch = failureClass === 'output_file_identity_mismatch';
+  const isOutputArtifactFailure = failureClass === 'output_file_identity_mismatch' || failureClass === 'output_file_missing';
 
-  if (isOutputIdentityMismatch) {
+  if (isOutputArtifactFailure) {
     const mismatchDispatchId = (resolveResultDispatchId(resultRedisEntry) ?? resolveCompletionDispatchId(status, completionIdentity));
     const mismatchGatewayLabel = (resolveResultGatewayLabel(resultRedisEntry) ?? resolveCompletionGatewayLabel(status, completionIdentity));
     const mismatchSessionKey = (resolveResultSessionKey(resultRedisEntry) ?? resolveStatusSessionKey(status) ?? completionSessionKey);
-    const reason = resultRedisEntry?.summary || status?.completion_summary || 'Buster output_file identity mismatch';
+    const outputFailureLabel = failureClass === 'output_file_missing'
+      ? 'Buster output_file missing'
+      : 'Buster output_file identity mismatch';
+    const outputFailureAction = failureClass === 'output_file_missing'
+      ? 'Inspect why Buster did not write buster-output.json, then resume Buster.'
+      : 'Inspect Buster output_file identity/correlation state, then resume Buster.';
+    const outputFailureDescription = failureClass === 'output_file_missing'
+      ? 'This is a Buster/runtime output artifact failure, not an app-code verdict. Forge output preserved.'
+      : 'This is an infrastructure/correlation failure, not an app-code verdict. Forge output preserved.';
+    const outputFailureBlockedReason = failureClass;
+    const reason = resultRedisEntry?.summary || status?.completion_summary || outputFailureLabel;
     log('ERROR', `Module ${moduleId}: ${reason} — infrastructure issue, not routing to Forge`);
 
     const blockedTransition = markModuleBlocked(
       status,
       'buster',
-      `${reason}. Infrastructure issue — Forge cannot fix stale or mismatched Buster output identity.`,
-      { reason: 'output_file_identity_mismatch' },
+      `${reason}. Infrastructure issue — Forge cannot fix Buster output artifact failures.`,
+      { reason: outputFailureBlockedReason },
     );
     deps.saveStatus(config, dir, status, blockedTransition);
 
-    await deps.discord(config, 'CRITICAL', `Module ${moduleId} BLOCKED — Buster output identity`,
-      `${reason}. This is an infrastructure/correlation failure, not an app-code verdict. Forge output preserved.`, [
+    await deps.discord(config, 'CRITICAL', `Module ${moduleId} BLOCKED — ${outputFailureLabel}`,
+      `${reason}. ${outputFailureDescription}`, [
         ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, {
           run_id: completionIdentity.runId ?? completionIdentity.run_id ?? getRunId(config),
           module_id: moduleId,
@@ -106,8 +116,13 @@ export async function handleBusterFailOrBlockedStatus({
           dispatch_id: mismatchDispatchId,
           gateway_label: mismatchGatewayLabel,
           session_key: mismatchSessionKey,
+          model: completionIdentity.model || null,
+          model_source: completionIdentity.model_source || null,
+          reasoning_level: completionIdentity.reasoning_level || null,
+          thinking_source: completionIdentity.thinking_source || null,
+          runtime: completionIdentity.runtime || null,
         }),
-        { name: 'Action', value: 'Inspect Buster output_file identity/correlation state, then resume Buster.', inline: false },
+        { name: 'Action', value: outputFailureAction, inline: false },
       ], {
         correlation: {
           run_id: completionIdentity.runId ?? completionIdentity.run_id ?? getRunId(config),
@@ -127,7 +142,7 @@ export async function handleBusterFailOrBlockedStatus({
       'buster',
       busterModel,
       status?.status ?? STATUS.TESTING,
-      `Buster output_file identity mismatch — Forge output preserved: ${reason}`,
+      `${outputFailureLabel} — Forge output preserved: ${reason}`,
       {
         dispatchId: mismatchDispatchId,
         gatewayLabel: mismatchGatewayLabel,
@@ -136,7 +151,7 @@ export async function handleBusterFailOrBlockedStatus({
     );
 
     return { terminal: buildModuleBlockedTerminalResult(config, moduleId, {
-      reason: `Buster output_file identity mismatch — infrastructure issue (not sent to Forge)`,
+      reason: `${outputFailureLabel} — infrastructure issue (not sent to Forge)`,
       issueType: 'environment',
       runId: resultRedisEntry?.run_id ?? completionIdentity.runId ?? getRunId(config),
       moduleDir: dir,

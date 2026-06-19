@@ -1,6 +1,7 @@
 
-import { buildCompletionIdentityFields } from './pipeline-helpers.ts';
+import { buildCompletionIdentityFields, ensureBusterOutputFile } from './pipeline-helpers.ts';
 import { safeErrorMessage } from './runtime-diagnostics.ts';
+import verifyAndPush from '../tools/verify-task.ts';
 import {
   REDIS_PIPELINE_MESSAGE_SCHEMA_VERSION,
   assertRedisCompletionEntry,
@@ -77,6 +78,32 @@ export async function emitTaskCompletion(redisClient, payload = {}, opts = {}) {
   return { ok: true, stream: payload.completion_stream, id: published.id };
 }
 
+export async function publishTaskCompletionWithArtifact(redisClient, payload = {}, opts = {}) {
+  const { outcome, reason } = opts;
+  if (!outcome || !reason) throw new Error('Buster completion requires explicit outcome and reason');
+  if (!payload?.completion_stream) return { ok: false, skipped: true, reason: 'missing_completion_stream' };
+  if (!payload?.output_file) throw new Error('Buster completion requires output_file artifact path');
+
+  const moduleId = opts.moduleId || resolveModuleId(payload);
+  const ensureOutputFile = opts.ensureBusterOutputFile || ensureBusterOutputFile;
+  const verifyTask = opts.verifyAndPush || verifyAndPush;
+  const outputFileResult = ensureOutputFile(payload, {
+    outcome,
+    reason,
+    summary: opts.artifactSummary || opts.summary || reason,
+  });
+  const verifyResult = await verifyTask('buster', payload.project, {
+    commitMessage: opts.commitMessage || `[BUSTER] ${payload?.task_type || 'task'} ${moduleId}: output artifact`,
+  });
+  if (verifyResult?.status && verifyResult.status !== 'success') {
+    throw new Error(`output_file verify failed: ${verifyResult.error || verifyResult.action || 'unknown'}`);
+  }
+
+  const emitCompletion = opts.emitTaskCompletion || emitTaskCompletion;
+  const emitted = await emitCompletion(redisClient, payload, opts);
+  return { ...emitted, outputFileResult, verifyResult };
+}
+
 export function resolveDeadLetterStream(streamKey, payload = {}) {
   return payload?.dead_letter_stream || process.env.BUSTER_TASK_DEAD_LETTER_STREAM || `${streamKey}${DEFAULT_DEAD_LETTER_SUFFIX}`;
 }
@@ -132,6 +159,7 @@ export async function ensureTaskTerminalBeforeAck(redisClient, opts = {}) {
   const payload = opts.payload ?? {};
   const processResult = opts.processResult ?? null;
   const taskError = opts.error ?? null;
+  const completionError = opts.completionError || processResult?.completion?.error;
 
   if (didProcessResultEmitTerminalCompletion(processResult)) {
     return { ok: true, mode: 'completion_already_emitted', stream: processResult.completion.stream };
@@ -139,34 +167,17 @@ export async function ensureTaskTerminalBeforeAck(redisClient, opts = {}) {
 
   let reason = opts.reason;
   if (!reason) reason = processResult?.reason;
-  if (!reason && processResult?.completion?.error) {
-    reason = `task_completion_precondition_failed: ${safeErrorMessage(processResult.completion.error)}`;
+  if (!reason && completionError) {
+    reason = `task_completion_precondition_failed: ${safeErrorMessage(completionError)}`;
   }
   if (!reason && !payload?.completion_stream) reason = 'missing_completion_stream';
   if (!reason && taskError) reason = `task_runtime_failure: ${safeErrorMessage(taskError)}`;
   if (!reason) reason = 'task_failed_before_completion';
-  const summary = opts.summary || reason;
-
-  if (payload?.completion_stream) {
-    try {
-      const emitted = await emitTaskCompletion(redisClient, payload, {
-        moduleId: opts.moduleId,
-        outcome: 'FAIL',
-        reason,
-        summary,
-        source: opts.source || 'buster-pipeline-task-queue',
-      });
-      if (emitted.ok) return { ok: true, mode: 'synthesized_failure_completion_before_ack', stream: emitted.stream };
-    } catch (completionError) {
-      opts.completionError = completionError;
-    }
-  }
-
   try {
     const deadLetter = await writeTaskDeadLetter(redisClient, {
       ...opts,
       reason: opts.deadLetterReason || 'task_failed_before_terminal_completion',
-      detail: opts.completionError || taskError || reason,
+      detail: completionError || taskError || reason,
       phase: opts.phase || (taskError ? 'process_task_error' : 'completion_missing'),
     });
     return { ok: true, mode: 'dead_letter', stream: deadLetter.stream };

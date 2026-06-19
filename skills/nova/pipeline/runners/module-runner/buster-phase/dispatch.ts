@@ -61,6 +61,7 @@ export async function executeBusterAttemptDispatch({
   maxFails,
   deps,
   busterModel,
+  busterPolicy = {},
   maxBusterCrashRetries,
   busterAttempt,
 }: AnyRecord = {}) {
@@ -71,6 +72,16 @@ export async function executeBusterAttemptDispatch({
     attempt: status.fail_count + 1,
     busterAttempt,
     nowMs: resolveModuleBusterIdentityNowMs(deps),
+  });
+  const busterReasoningLevel = busterPolicy.thinking_supported === false
+    ? 'not supported'
+    : (busterPolicy.thinking || 'default');
+  Object.assign(completionIdentity, {
+    model: busterModel || null,
+    model_source: busterPolicy.model_source || null,
+    reasoning_level: busterReasoningLevel,
+    thinking_source: busterPolicy.thinking_source || null,
+    runtime: 'redis_dispatch',
   });
 
   if (requestedSuites.length === 0) {
@@ -132,6 +143,11 @@ export async function executeBusterAttemptDispatch({
         dispatch_id: completionIdentity.dispatchId,
         gateway_label: completionIdentity.gateway_label,
         session_key: completionIdentity.sessionKey,
+        model: completionIdentity.model,
+        model_source: completionIdentity.model_source,
+        reasoning_level: completionIdentity.reasoning_level,
+        thinking_source: completionIdentity.thinking_source,
+        runtime: completionIdentity.runtime,
       };
       await deps.discord(config, 'CRITICAL', `Module ${moduleId} — Config Invalid`,
         `Pre-dispatch validation caught config issues. Fix progress.json before retrying.`,
@@ -171,6 +187,11 @@ export async function executeBusterAttemptDispatch({
         dispatch_id: completionIdentity.dispatchId,
         gateway_label: completionIdentity.gateway_label,
         session_key: completionIdentity.sessionKey,
+        model: completionIdentity.model,
+        model_source: completionIdentity.model_source,
+        reasoning_level: completionIdentity.reasoning_level,
+        thinking_source: completionIdentity.thinking_source,
+        runtime: completionIdentity.runtime,
       }),
       { name: 'Phase', value: 'buster', inline: true },
       { name: 'Queued Suites', value: requestedSuites.join(', '), inline: true },
@@ -203,6 +224,7 @@ export async function executeBusterAttemptDispatch({
     busterPrompt,
     completionIdentity,
     busterModel,
+    busterPolicy,
     maxBusterCrashRetries,
     busterAttempt,
   });

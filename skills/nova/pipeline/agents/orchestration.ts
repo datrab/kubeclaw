@@ -162,6 +162,7 @@ export async function spawnAcpAgent(
   const runtime = resolveRuntime({ model: resolvedModel });
   const useSubagent = runtime === 'subagent';
   const thinkingLevel = opts.thinking || null;
+  const thinkingSource = opts.thinking_source || opts.thinkingSource || null;
   const telemetryIdentity = {
     run_id: runId,
     project: config?.project || null,
@@ -209,6 +210,8 @@ export async function spawnAcpAgent(
       telemetry_attempt: opts.attempt ?? null,
       telemetry_dispatch_id: dispatchId,
       telemetry_substep: opts.substep || null,
+      telemetry_thinking: thinkingLevel,
+      telemetry_thinking_source: thinkingSource,
     });
     captureBaselineFiles(trackingKey, cwd);
     assertRequiredAgentStartupEvidence(await waitForRequiredAgentStartupEvidence(config, {
@@ -241,9 +244,12 @@ export async function spawnAcpAgent(
       dispatchId,
       gatewayLabel,
       sessionKey: sessionData.childSessionKey,
+      model: resolvedModel,
+      reasoningLevel: thinkingLevel || 'default',
+      thinkingSource,
+      runtime: useSubagent ? 'subagent' : 'acp',
     }, [
       { name: 'Agent', value: agentId, inline: true },
-      { name: 'Model', value: resolvedModel, inline: true },
     ]), { correlation: spawnDiscordCorrelation }).catch((e) => {
       log('DEBUG', `Agent spawn Discord notice failed for ${gatewayLabel}: ${e?.message || e}`);
     });
@@ -408,6 +414,10 @@ export function buildBusterPayload(
   };
   const resolvedModel = canonicalizeModelId(opts.model) || opts.model || null;
   const sessionRuntime = resolveRuntime({ model: resolvedModel });
+  const thinkingSupported = opts.thinking_supported ?? opts.thinkingSupported ?? null;
+  const thinking = opts.thinking ?? null;
+  const thinkingSource = opts.thinking_source ?? opts.thinkingSource ?? null;
+  const reasoningLevel = opts.reasoning_level ?? opts.reasoningLevel ?? (thinkingSupported === false ? 'not supported' : (thinking || null));
   const runId = opts.run_id || config.run_id || config._runId || null;
   const { attempt, dispatch_id: dispatchId } = opts;
   if (!Number.isInteger(attempt) || attempt < 1) throw new Error(`Buster ${taskType} payload requires explicit positive integer attempt`);
@@ -416,13 +426,13 @@ export function buildBusterPayload(
   if (taskType === 'module_test') {
     const mod = progress.modules[moduleId];
     const timeoutSeconds = (mod?.timeout_minutes ?? config.default_timeout_minutes) * 60;
-    return { ...base, stage_id: 'worker:module_buster', worker_type: 'module_buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: modelToHarness(resolvedModel) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId }, module_path: mod ? modulePathRef(config, mod.dir) : null, buster_md_path: mod ? moduleBusterMdPathRef(config, mod.dir) : null, output_file: mod ? moduleBusterOutputPathRef(config, mod.dir) : null, suites: mod?.test_suites || null, test_config: buildBusterTestConfig(mod, config, { config, targetId: moduleId, attempt, dispatchId }), capabilities: resolveConfiguredBusterCapabilities(mod), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: mod ? moduleLogDir(config, mod.dir) : null, pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
+    return { ...base, stage_id: 'worker:module_buster', worker_type: 'module_buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: modelToHarness(resolvedModel) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel }, model: resolvedModel, model_source: opts.model_source ?? opts.modelSource ?? null, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel, runtime: sessionRuntime, module_path: mod ? modulePathRef(config, mod.dir) : null, buster_md_path: mod ? moduleBusterMdPathRef(config, mod.dir) : null, output_file: mod ? moduleBusterOutputPathRef(config, mod.dir) : null, suites: mod?.test_suites || null, test_config: buildBusterTestConfig(mod, config, { config, targetId: moduleId, attempt, dispatchId }), capabilities: resolveConfiguredBusterCapabilities(mod), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: mod ? moduleLogDir(config, mod.dir) : null, pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
   }
   if (taskType !== 'gate_test') throw new Error(`Buster payload builder does not support task_type '${taskType}'`);
   const gate = opts.gate || progress.gates?.[moduleId] || {};
   const gateTimeout = gate.timeout_minutes ?? config.default_timeout_minutes;
   const timeoutSeconds = gateTimeout * 60;
-  return { ...base, stage_id: 'gate:buster', gate_type: 'buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: modelToHarness(resolvedModel) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId }, gate_id: moduleId, gate_title: gate.title || moduleId, work_dir: gateWorkDirPathRef(config), output_file: gateOutputPathRef(config, gate), instructions_file: gateInstructionsPathRef(config, gate), suites: gate.test_suites || null, test_config: buildBusterTestConfig(gate, config, { config, targetId: moduleId, attempt, dispatchId }), capabilities: resolveConfiguredBusterCapabilities(gate), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: gateLogDir(config, moduleId), pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
+  return { ...base, stage_id: 'gate:buster', gate_type: 'buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: modelToHarness(resolvedModel) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel }, model: resolvedModel, model_source: opts.model_source ?? opts.modelSource ?? null, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel, runtime: sessionRuntime, gate_id: moduleId, gate_title: gate.title || moduleId, work_dir: gateWorkDirPathRef(config), output_file: gateOutputPathRef(config, gate), instructions_file: gateInstructionsPathRef(config, gate), suites: gate.test_suites || null, test_config: buildBusterTestConfig(gate, config, { config, targetId: moduleId, attempt, dispatchId }), capabilities: resolveConfiguredBusterCapabilities(gate), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: gateLogDir(config, moduleId), pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
 }
 
 export async function dispatchRedisTask(
@@ -447,7 +457,18 @@ export async function dispatchRedisTask(
     const redisDispatch = await getRedisDispatchModule(config, agentType, opts);
     const result = await redisDispatch.publishTask(agentType, taskType, taskPayload, 1);
     log('OK', `Redis task dispatched to ${agentType}: ${JSON.stringify(result)}`);
-    return { ...result, dispatch_id: taskPayload.dispatch_id || null, gateway_label: taskPayload.session?.label || null, run_id: taskPayload.run_id || null, attempt: taskPayload.attempt || null };
+    return {
+      ...result,
+      dispatch_id: taskPayload.dispatch_id || null,
+      gateway_label: taskPayload.session?.label || null,
+      run_id: taskPayload.run_id || null,
+      attempt: taskPayload.attempt || null,
+      runtime: taskPayload.session?.runtime || taskPayload.runtime || null,
+      model: taskPayload.session?.model || taskPayload.model || null,
+      model_source: taskPayload.model_source || null,
+      reasoning_level: taskPayload.reasoning_level || taskPayload.session?.reasoning_level || null,
+      thinking_source: taskPayload.thinking_source || taskPayload.session?.thinking_source || null,
+    };
   } catch (e: any) {
     throw new Error(`Failed to dispatch Redis task to ${agentType}: ${e.message}`);
   }

@@ -2,12 +2,10 @@
 import {
   resolveBusterRateLimitMaxPauses,
   buildPreTestVerdict,
-  ensureBusterOutputFile,
 } from '../pipeline-helpers.ts';
 import { safeErrorMessage } from '../runtime-diagnostics.ts';
 import { getRedisClient } from '../task-queue.ts';
-import { emitTaskCompletion } from '../task-completion.ts';
-import verifyAndPush from '../../tools/verify-task.ts';
+import { publishTaskCompletionWithArtifact } from '../task-completion.ts';
 
 export async function sendTaskCompletionSignal({
   payload,
@@ -33,28 +31,8 @@ export async function sendTaskCompletionSignal({
   completionState.attempted = true;
   completionState.stream = payload.completion_stream;
   try {
-    const ensureOutputFile = deps.ensureBusterOutputFile || ensureBusterOutputFile;
-    const verifyTask = deps.verifyAndPush || verifyAndPush;
     const redisClientFactory = deps.getRedisClient || getRedisClient;
-    const emitCompletion = deps.emitTaskCompletion || emitTaskCompletion;
-
-    const outputFileResult = ensureOutputFile(payload, {
-      outcome,
-      reason,
-      summary: agentResultForCompletion?.summary || reason || suitesInfo.suiteDetailSummary || suitesInfo.suiteSummary || '',
-    });
-    logger.info('TASK', `Buster output_file ready: ${outputFileResult.path}`, {
-      source: outputFileResult.source,
-      status: outputFileResult.status,
-    });
-
-    const verifyResult = await verifyTask('buster', project, {
-      commitMessage: `[BUSTER] ${payload?.task_type || 'task'} ${moduleId}: output artifact`,
-    });
-    logger.info('TASK', `Buster output_file pushed before completion`, {
-      action: verifyResult?.action || null,
-      commit_hash: verifyResult?.commit_hash || null,
-    });
+    const publishCompletion = deps.publishTaskCompletionWithArtifact || publishTaskCompletionWithArtifact;
 
     const redisClient = redisClientFactory();
     const preTestVerdict = !spawnedSubagent
@@ -66,11 +44,12 @@ export async function sendTaskCompletionSignal({
     const rateLimitMaxPauses = outcome === 'RATE_LIMITED'
       ? resolveBusterRateLimitMaxPauses(payload, sessionResultForCompletion || {})
       : null;
-    await emitCompletion(redisClient, payload, {
+    const published = await publishCompletion(redisClient, payload, {
       moduleId,
       outcome,
       reason,
       summary: completionSummary,
+      artifactSummary: agentResultForCompletion?.summary || reason || suitesInfo.suiteDetailSummary || suitesInfo.suiteSummary || '',
       preTestVerdict,
       rateLimitMaxPauses,
       runId,
@@ -78,7 +57,23 @@ export async function sendTaskCompletionSignal({
       dispatchId: dispatchIdForCompletion,
       sessionKey: sessionKeyForCompletion,
       source: 'buster-pipeline',
+      ensureBusterOutputFile: deps.ensureBusterOutputFile,
+      verifyAndPush: deps.verifyAndPush,
+      emitTaskCompletion: deps.emitTaskCompletion,
+      commitMessage: `[BUSTER] ${payload?.task_type || 'task'} ${moduleId}: output artifact`,
     });
+    if (published.outputFileResult) {
+      logger.info('TASK', `Buster output_file ready: ${published.outputFileResult.path}`, {
+        source: published.outputFileResult.source,
+        status: published.outputFileResult.status,
+      });
+    }
+    if (published.verifyResult) {
+      logger.info('TASK', `Buster output_file pushed before completion`, {
+        action: published.verifyResult?.action || null,
+        commit_hash: published.verifyResult?.commit_hash || null,
+      });
+    }
     completionState.terminal = true;
     completionState.error = null;
     logger.info('TASK', `Completion signal sent to ${payload.completion_stream}`);
