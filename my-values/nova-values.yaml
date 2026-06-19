@@ -60,7 +60,7 @@ service:
       nodePort: 30456
 
 resources:
-  requests: { cpu: 100m, memory: 512Mi }
+  requests: { cpu: 1000m, memory: 12288Mi }
   limits: { cpu: 3000m, memory: 24576Mi }
 
 # =============================================================================

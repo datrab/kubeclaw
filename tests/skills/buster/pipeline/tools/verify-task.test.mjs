@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
-import { cleanupForbiddenFile, parsePorcelainStatusPaths } from '../../../../../skills/buster/pipeline/tools/verify-task.ts';
+import verifyAndPush, { cleanupForbiddenFile, parsePorcelainStatusPaths } from '../../../../../skills/buster/pipeline/tools/verify-task.ts';
 
 function git(repoRoot, args) {
   return execFileSync('git', ['-C', repoRoot, ...args], { encoding: 'utf8' }).trim();
@@ -70,5 +70,51 @@ test('cleanupForbiddenFile unstages and deletes staged additions absent from HEA
     assert.equal(git(repoRoot, ['status', '--porcelain']), '');
   } finally {
     fs.rmSync(repoRoot, { recursive: true, force: true });
+  }
+});
+
+test('verifyAndPush commits scoped swarm artifact despite unrelated dirty repo files', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'verify-task-scoped-artifact-'));
+  const remote = path.join(root, 'origin.git');
+  const repoRoot = path.join(root, 'repo');
+  const previousRepoRoot = process.env.REPO_ROOT;
+
+  try {
+    git(root, ['init', '--bare', 'origin.git']);
+    fs.mkdirSync(repoRoot);
+    git(repoRoot, ['init', '-b', 'main']);
+    git(repoRoot, ['config', 'user.email', 'test@example.invalid']);
+    git(repoRoot, ['config', 'user.name', 'Test User']);
+    fs.mkdirSync(path.join(repoRoot, 'Projects/demo/src/.swarm/modules/01'), { recursive: true });
+    fs.mkdirSync(path.join(repoRoot, 'Projects/other/src'), { recursive: true });
+    fs.writeFileSync(path.join(repoRoot, 'README.md'), 'baseline\n');
+    fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/.swarm/progress.json'), '{}\n');
+    fs.writeFileSync(path.join(repoRoot, 'Projects/other/src/app.js'), 'console.log("other");\n');
+    git(repoRoot, ['add', '.']);
+    git(repoRoot, ['commit', '-m', 'baseline']);
+    git(repoRoot, ['remote', 'add', 'origin', remote]);
+    git(repoRoot, ['push', '-u', 'origin', 'main']);
+
+    fs.writeFileSync(
+      path.join(repoRoot, 'Projects/demo/src/.swarm/modules/01/buster-output.json'),
+      '{"status":"PASS"}\n',
+    );
+    fs.writeFileSync(path.join(repoRoot, 'Projects/other/src/app.js'), 'console.log("dirty other");\n');
+    fs.writeFileSync(path.join(repoRoot, 'outside-runtime.tmp'), 'runtime residue\n');
+
+    process.env.REPO_ROOT = repoRoot;
+    const result = await verifyAndPush('buster', 'demo', { commitMessage: '[BUSTER] scoped artifact' });
+
+    assert.equal(result.status, 'success');
+    assert.equal(result.action, 'pushed');
+    assert.equal(git(repoRoot, ['show', '--name-only', '--pretty=format:', 'HEAD']).trim(), 'Projects/demo/src/.swarm/modules/01/buster-output.json');
+    const status = git(repoRoot, ['status', '--porcelain']);
+    assert.match(status, /M Projects\/other\/src\/app\.js/);
+    assert.match(status, /\?\? outside-runtime\.tmp/);
+    assert(result.logs.some((line) => line.includes('Ignoring 2 dirty file(s) outside Projects/demo/')));
+  } finally {
+    if (previousRepoRoot === undefined) delete process.env.REPO_ROOT;
+    else process.env.REPO_ROOT = previousRepoRoot;
+    fs.rmSync(root, { recursive: true, force: true });
   }
 });

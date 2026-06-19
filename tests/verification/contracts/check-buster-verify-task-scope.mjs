@@ -58,6 +58,7 @@ const workflowsSource = fs.readFileSync(path.join(sourceRoot, 'skills/buster/pip
 assert.equal(workflowsSource.includes("['add', '-A']"), false, 'gitPushWithRetry must not stage the entire worktree');
 assert.equal(workflowsSource.includes("['add', '--', ...addPaths]"), true, 'gitPushWithRetry commit mode must use scoped pathspecs');
 assert.equal(workflowsSource.includes('commit mode requires non-empty opts.addPaths'), true, 'gitPushWithRetry commit mode must require explicit pathspecs');
+assert.equal(workflowsSource.includes("'--autostash'"), true, 'gitPushWithRetry must tolerate unrelated dirty runtime state during pull --rebase');
 assert.equal(workflowsSource.includes('origin/${branch}'), false, 'gitSync must not reset to implicit origin/current-branch fallback');
 assert.equal(workflowsSource.includes("error: 'missing_target_hash'"), true, 'gitSync must expose typed missing target hash failure metadata');
 assert.equal(workflowsSource.includes('rebase failed after'), true, 'gitPushWithRetry must fail closed after final rebase failure');

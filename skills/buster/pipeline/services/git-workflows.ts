@@ -209,7 +209,7 @@ export async function gitPushWithRetry(repoRoot: string, branch: string, opts: G
 
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     try {
-      gitExec(repoRoot, ['pull', '--rebase', 'origin', pushBranch], { stdio: 'ignore', timeout: 30000 });
+      gitExec(repoRoot, ['pull', '--rebase', '--autostash', 'origin', pushBranch], { stdio: 'ignore', timeout: 30000 });
     } catch (rebaseErr: unknown) {
       const detail = firstLine(rebaseErr);
       logGit(logger, 'warn', `Rebase attempt ${attempt}/${maxAttempts}: ${detail}`);

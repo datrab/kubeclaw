@@ -115,8 +115,9 @@ function findScopeViolations(files: string[], projectRoot: string, swarmRoot: st
     let reason = '';
 
     if (!isGitPathInside(file, projectRoot)) {
-      reason = `[CROSS-PROJECT] Only files within ${projectRoot}/ are allowed.`;
-    } else if (!isGitPathInside(file, swarmRoot)) {
+      continue;
+    }
+    if (!isGitPathInside(file, swarmRoot)) {
       reason = `[SWARM-SCOPE] This verifier only permits writes inside ${swarmRoot}/.`;
     }
 
@@ -162,12 +163,18 @@ async function verifyAndPush(agentRole: string, currentProject: string, opts: Ve
     throw new Error(`Critical error reading Git status: ${errorMessage(error)}`);
   }
 
-  if (changedFiles.length === 0) {
+  const projectChangedFiles = changedFiles.filter((file) => isGitPathInside(file, projectRoot));
+  const ignoredOutOfProjectFiles = changedFiles.filter((file) => !isGitPathInside(file, projectRoot));
+  if (ignoredOutOfProjectFiles.length > 0) {
+    log(`[Verify] Ignoring ${ignoredOutOfProjectFiles.length} dirty file(s) outside ${projectRoot}/ while committing scoped Buster artifact.`);
+  }
+
+  if (projectChangedFiles.length === 0) {
     log('⚠️ [Verify] No uncommitted changes found. Nothing to do.');
     return { status: 'success', action: 'none', logs };
   }
 
-  const { violations, badFiles } = findScopeViolations(changedFiles, projectRoot, swarmRoot);
+  const { violations, badFiles } = findScopeViolations(projectChangedFiles, projectRoot, swarmRoot);
 
   const cleanupActions: CleanupAction[] = [];
   if (badFiles.length > 0) {
@@ -186,7 +193,7 @@ async function verifyAndPush(agentRole: string, currentProject: string, opts: Ve
       }
     }
 
-    const remainingAfterCleanup = listChangedFiles(repoRoot);
+    const remainingAfterCleanup = listChangedFiles(repoRoot).filter((file) => isGitPathInside(file, projectRoot));
     const remainingBadFiles = badFiles.filter((file) => remainingAfterCleanup.includes(file));
     const failedCleanup = cleanupActions.filter((action) => !action.cleaned);
     if (failedCleanup.length > 0 || remainingBadFiles.length > 0) {
@@ -227,7 +234,7 @@ async function verifyAndPush(agentRole: string, currentProject: string, opts: Ve
       };
     }
 
-    const finalChangedFiles = listChangedFiles(repoRoot);
+    const finalChangedFiles = listChangedFiles(repoRoot).filter((file) => isGitPathInside(file, projectRoot));
     const finalScope = findScopeViolations(finalChangedFiles, projectRoot, swarmRoot);
     if (finalScope.badFiles.length > 0) {
       const error = 'Out-of-scope changes remain after cleanup; refusing commit/push.';
