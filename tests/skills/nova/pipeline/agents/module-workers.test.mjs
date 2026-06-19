@@ -377,6 +377,49 @@ test('module buster classifies output_file identity mismatch as infrastructure b
   assert.deepEqual(calls, ['poll', 'kill', 'save', 'clear']);
 });
 
+test('module buster classifies output_file identity mismatch from Redis entry reason', async () => {
+  const calls = [];
+  const result = await runModuleBusterWorker({
+    config: baseConfig(),
+    progress: {},
+    workerInput: busterInput(),
+    deps: {
+      archiveModuleCompletions: async () => ({ failed: false }),
+      spawnAgent: async () => ({
+        dispatch_id: 'dispatch-1',
+        run_id: 'run-1',
+        session_key: 'session-1',
+        gateway_label: 'gateway-1',
+        stream_log_path: '/tmp/buster.log',
+      }),
+      pollDualWithRateLimitRecovery: async () => {
+        calls.push('poll');
+        return {
+          ok: false,
+          status: {
+            status: 'FAIL',
+            _redis_entry: {
+              reason: 'output_file_identity_mismatch',
+              summary: 'Buster output_file identity mismatch: attempt, dispatch_id, completion_key',
+            },
+          },
+        };
+      },
+      killAgent: async () => calls.push('kill'),
+      loadStatus: () => ({ status: 'FAIL' }),
+      saveStreamLog: () => calls.push('save'),
+      clearShutdownContext: () => calls.push('clear'),
+    },
+  });
+
+  assert.equal(result.schemaVersion, 'v1');
+  assert.equal(result.producerType, 'module_buster');
+  assert.equal(result.nextAction, 'block');
+  assert.equal(result.issueType, 'environment');
+  assert.equal(result.diagnostics.metadata.failure_class, 'output_file_identity_mismatch');
+  assert.deepEqual(calls, ['poll', 'kill', 'save', 'clear']);
+});
+
 test('module buster saves stream log and clears context when finalize hook rejects', async () => {
   const calls = [];
   const result = await runModuleBusterWorker({

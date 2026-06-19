@@ -1,6 +1,0 @@
-{
-  "artifact_type": "forge_completion",
-  "status": "READY_FOR_TESTING",
-  "summary": "Implemented plain Node.js landing page foundation with health endpoint, pure helpers, node:test coverage, and production Dockerfile.",
-  "completed_at": "2026-06-18T21:21:25Z"
-}

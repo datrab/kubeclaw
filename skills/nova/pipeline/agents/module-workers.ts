@@ -97,6 +97,7 @@ function normalizeModuleWorkerInput(workerType: 'module_forge' | 'module_buster'
 function resolveModuleBusterFailureClass(pollResult: AnyRecord = {}) {
   const explicit = pollResult?.failure_class
     || pollResult?.status?.failure_class
+    || pollResult?.status?._redis_entry?.failure_class
     || null;
   if (typeof explicit === 'string' && explicit.trim()) return explicit.trim().toLowerCase();
   const reason = typeof pollResult?.reason === 'string' ? pollResult.reason.trim().toLowerCase() : '';
@@ -105,6 +106,11 @@ function resolveModuleBusterFailureClass(pollResult: AnyRecord = {}) {
   if (reason === 'rate_limit_exhausted') return 'rate_limit_exhausted';
   if (reason === 'completion_archive_failed') return 'completion_archive_failed';
   if (reason === 'output_file_identity_mismatch') return 'output_file_identity_mismatch';
+  const redisReason = typeof pollResult?.status?._redis_entry?.reason === 'string'
+    ? pollResult.status._redis_entry.reason.trim().toLowerCase()
+    : '';
+  if (redisReason === 'output_file_identity_mismatch') return 'output_file_identity_mismatch';
+  if (redisReason === 'completion_archive_failed') return 'completion_archive_failed';
   return null;
 }
 

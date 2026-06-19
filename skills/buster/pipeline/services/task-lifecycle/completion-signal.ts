@@ -25,6 +25,7 @@ export async function sendTaskCompletionSignal({
   dispatchIdForCompletion,
   sessionKeyForCompletion,
   logger,
+  deps = {},
 }) {
   if (!payload?.completion_stream) return;
   if (!outcome || !reason) throw new Error('Buster completion signal requires explicit outcome and reason');
@@ -32,7 +33,12 @@ export async function sendTaskCompletionSignal({
   completionState.attempted = true;
   completionState.stream = payload.completion_stream;
   try {
-    const outputFileResult = ensureBusterOutputFile(payload, {
+    const ensureOutputFile = deps.ensureBusterOutputFile || ensureBusterOutputFile;
+    const verifyTask = deps.verifyAndPush || verifyAndPush;
+    const redisClientFactory = deps.getRedisClient || getRedisClient;
+    const emitCompletion = deps.emitTaskCompletion || emitTaskCompletion;
+
+    const outputFileResult = ensureOutputFile(payload, {
       outcome,
       reason,
       summary: agentResultForCompletion?.summary || reason || suitesInfo.suiteDetailSummary || suitesInfo.suiteSummary || '',
@@ -42,7 +48,7 @@ export async function sendTaskCompletionSignal({
       status: outputFileResult.status,
     });
 
-    const verifyResult = await verifyAndPush('buster', project, {
+    const verifyResult = await verifyTask('buster', project, {
       commitMessage: `[BUSTER] ${payload?.task_type || 'task'} ${moduleId}: output artifact`,
     });
     logger.info('TASK', `Buster output_file pushed before completion`, {
@@ -50,7 +56,7 @@ export async function sendTaskCompletionSignal({
       commit_hash: verifyResult?.commit_hash || null,
     });
 
-    const redisClient = getRedisClient();
+    const redisClient = redisClientFactory();
     const preTestVerdict = !spawnedSubagent
       ? buildPreTestVerdict(moduleId, project, suitesInfo)
       : null;
@@ -60,7 +66,7 @@ export async function sendTaskCompletionSignal({
     const rateLimitMaxPauses = outcome === 'RATE_LIMITED'
       ? resolveBusterRateLimitMaxPauses(payload, sessionResultForCompletion || {})
       : null;
-    await emitTaskCompletion(redisClient, payload, {
+    await emitCompletion(redisClient, payload, {
       moduleId,
       outcome,
       reason,
