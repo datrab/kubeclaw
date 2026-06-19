@@ -70,7 +70,7 @@ function emitApprovalGateVerdict(config, gateId, gate, verdict, reason = null, o
     presentation: options.presentation || {},
   };
 
-  if (verdict === 'GO') onGatePass({ config }, gateId, payload);
+  if (verdict === 'PASS') onGatePass({ config }, gateId, payload);
   else onGateFail({ config }, gateId, payload);
 }
 
@@ -165,12 +165,14 @@ async function resolveTimeout(config, gateId, gate, state, timeoutPolicy, deps) 
   onApprovalResolved({ config }, gateId, APPROVAL_STATUS.TIMED_OUT, null, { gate_type: gate?.type || 'approval' });
 
   if (normalizedTimeoutPolicy === APPROVAL_TIMEOUT_POLICY.CONTINUE) {
-    emitApprovalGateVerdict(config, gateId, gate, 'GO', `Approval timed out after ${state.timeout_minutes} minutes; auto-continued`, {
+    emitApprovalGateVerdict(config, gateId, gate, 'PASS', `Approval timed out after ${state.timeout_minutes} minutes; auto-continued`, {
       presentation: {
         discord: {
           level: 'WARN',
           title: `Approval Timeout (auto-continue): ${gate.title}`,
           description: `Gate \`${gateId}\` timed out after ${state.timeout_minutes} minutes. Configured to auto-continue.`,
+          action: 'continue',
+          next_action: 'continue',
           fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, { run_id: state.run_id, gate_id: gateId, gate_type: gate.type }, [
             { name: 'Gate ID', value: gateId },
             { name: 'Policy', value: APPROVAL_TIMEOUT_POLICY.CONTINUE },
@@ -189,7 +191,7 @@ async function resolveTimeout(config, gateId, gate, state, timeoutPolicy, deps) 
     }, { approvalState: state });
   }
 
-  emitApprovalGateVerdict(config, gateId, gate, 'NO-GO', `Approval timed out after ${state.timeout_minutes} minutes`, {
+  emitApprovalGateVerdict(config, gateId, gate, 'FAIL', `Approval timed out after ${state.timeout_minutes} minutes`, {
     presentation: {
       discord: {
         level: 'CRITICAL',
@@ -288,7 +290,7 @@ async function resolveObservedApprovalState(config, gateId, gate, rawCurrent, ti
       continued: current?.continued,
     });
     onApprovalResolved({ config }, gateId, APPROVAL_STATUS.APPROVED, current.decision_by, { gate_type: gate.type || 'approval' });
-    emitApprovalGateVerdict(config, gateId, gate, 'GO', current.reason || 'Approved by operator', {
+    emitApprovalGateVerdict(config, gateId, gate, 'PASS', current.reason || 'Approved by operator', {
       presentation: {
         discord: {
           level: 'OK',
@@ -329,7 +331,7 @@ async function resolveObservedApprovalState(config, gateId, gate, rawCurrent, ti
       continued: current?.continued,
     });
     onApprovalResolved({ config }, gateId, APPROVAL_STATUS.REJECTED, current.decision_by, { gate_type: gate.type || 'approval' });
-    emitApprovalGateVerdict(config, gateId, gate, 'NO-GO', current.reason || 'Rejected by operator', {
+    emitApprovalGateVerdict(config, gateId, gate, 'FAIL', current.reason || 'Rejected by operator', {
       presentation: {
         discord: {
           level: 'CRITICAL',
@@ -371,7 +373,7 @@ async function resolveObservedApprovalState(config, gateId, gate, rawCurrent, ti
       continued: current?.continued,
     });
     onApprovalResolved({ config }, gateId, APPROVAL_STATUS.CANCELLED, null, { gate_type: gate.type || 'approval' });
-    emitApprovalGateVerdict(config, gateId, gate, 'NO-GO', current?.reason || 'Approval cancelled');
+    emitApprovalGateVerdict(config, gateId, gate, 'FAIL', current?.reason || 'Approval cancelled');
     return {
       result: buildApprovalGateControlResult(config, gateId, gate, {
         status: APPROVAL_STATUS.CANCELLED,
@@ -558,7 +560,7 @@ export async function runApprovalGateEvaluation(config, progress, gateId, opts =
     if (s === APPROVAL_STATUS.APPROVED) {
       log('OK', `Approval gate '${gateId}' already APPROVED — restoring resolved telemetry`);
       replayResolvedApprovalTelemetry(config, gateId, gate, gateState, {
-        verdict: 'GO',
+        verdict: 'PASS',
         fallbackReason: 'Approved by operator',
       });
       deps.writeApprovalDecision(config, gateId, gateState);
@@ -568,7 +570,7 @@ export async function runApprovalGateEvaluation(config, progress, gateId, opts =
     if (s === APPROVAL_STATUS.REJECTED) {
       log('WARN', `Approval gate '${gateId}' already REJECTED — restoring resolved telemetry before halting`);
       replayResolvedApprovalTelemetry(config, gateId, gate, gateState, {
-        verdict: 'NO-GO',
+        verdict: 'FAIL',
         fallbackReason: 'Rejected by operator',
       });
       deps.writeApprovalDecision(config, gateId, gateState);
@@ -583,7 +585,7 @@ export async function runApprovalGateEvaluation(config, progress, gateId, opts =
     if (s === APPROVAL_STATUS.CANCELLED) {
       log('WARN', `Approval gate '${gateId}' already CANCELLED — restoring resolved telemetry before halting`);
       replayResolvedApprovalTelemetry(config, gateId, gate, gateState, {
-        verdict: 'NO-GO',
+        verdict: 'FAIL',
         fallbackReason: 'Approval cancelled',
       });
       deps.writeApprovalDecision(config, gateId, gateState);

@@ -44,7 +44,7 @@ function platformFixCycleDefaults() {
     const reviewGateRunnerMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/runners/review-gate-runner.ts');
     const runtimeCoreMod = await importRuntimeModule(reviewRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   
-    const initialNoGo = {
+    const initialFail = {
       ok: false,
       gateway_label: 'echo-quality',
       session_key: 'agent:main:acp:echo-review-initial',
@@ -74,7 +74,7 @@ function platformFixCycleDefaults() {
         project: 'behavior-review-fix-spawn-failed',
         runId: 'run-review-fix-spawn-failed-1',
         overrides: {
-          runOnce: async () => initialNoGo,
+          runOnce: async () => initialFail,
           resolvePolicy: () => ({ model: 'forge-model', model_source: 'test', thinking: 'high' }),
           logEffectivePolicy: () => {},
           spawnAgent: async () => { throw new Error('gateway unavailable'); },
@@ -90,7 +90,7 @@ function platformFixCycleDefaults() {
         project: 'behavior-review-fix-health-failed',
         runId: 'run-review-fix-health-failed-1',
         overrides: {
-          runOnce: async () => initialNoGo,
+          runOnce: async () => initialFail,
           resolvePolicy: () => ({ model: 'forge-model', model_source: 'test', thinking: 'high' }),
           logEffectivePolicy: () => {},
           spawnAgent: async () => ({}),
@@ -108,7 +108,7 @@ function platformFixCycleDefaults() {
         project: 'behavior-review-fix-no-output',
         runId: 'run-review-fix-no-output-1',
         overrides: {
-          runOnce: async () => initialNoGo,
+          runOnce: async () => initialFail,
           resolvePolicy: () => ({ model: 'forge-model', model_source: 'test', thinking: 'high' }),
           logEffectivePolicy: () => {},
           spawnAgent: async () => ({}),
@@ -127,7 +127,7 @@ function platformFixCycleDefaults() {
         project: 'behavior-review-fix-rate-limit-exhausted',
         runId: 'run-review-fix-rate-limit-exhausted-1',
         overrides: {
-          runOnce: async () => initialNoGo,
+          runOnce: async () => initialFail,
           resolvePolicy: () => ({ model: 'forge-model', model_source: 'test', thinking: 'high' }),
           logEffectivePolicy: () => {},
           spawnAgent: async () => ({}),
@@ -152,7 +152,7 @@ function platformFixCycleDefaults() {
         runId: 'run-review-rereview-error-1',
         overrides: {
           runOnce: (() => {
-            const results = [initialNoGo, { error: 'reviewer transport crashed again' }];
+            const results = [initialFail, { error: 'reviewer transport crashed again' }];
             return async () => results.shift();
           })(),
           resolvePolicy: () => ({ model: 'forge-model', model_source: 'test', thinking: 'high' }),
@@ -221,7 +221,7 @@ const config = {
   
       const isRateLimitScenario = scenario.name === 'fix rate limit exhausted';
       assert.equal(stepExit(result), scenario.expectedExit ?? 1, scenario.name);
-      assert.equal(stepSummary(result), scenario.expectedResultReason ?? "Review gate 'gate:review' NO-GO after 1 fix cycles", scenario.name);
+      assert.equal(stepSummary(result), scenario.expectedResultReason ?? "Review gate 'gate:review' FAIL after 1 fix cycles", scenario.name);
       if (isRateLimitScenario) {
         assert.equal(result.correlation.run_id, scenario.runId, `${scenario.name} missing returned run id`);
         assert.equal(stepMetadata(result).gate, 'gate:review', `${scenario.name} missing returned gate alias`);
@@ -256,10 +256,10 @@ const config = {
         ? ['gate.started', 'gate.verdict', 'gate.verdict', 'retry.exhausted']
         : ['gate.started', 'gate.verdict', 'gate.verdict', 'gate.verdict', 'retry.exhausted']);
       assert.deepEqual(signalEvents.map((event) => event.type), expectedSignalTypes, scenario.name);
-      assert.equal(signalEvents[1].verdict, 'NO-GO', scenario.name);
+      assert.equal(signalEvents[1].verdict, 'FAIL', scenario.name);
       assert.equal(signalEvents[1].fix_cycle, 0, scenario.name);
       if (isRateLimitScenario) {
-        assert.equal(signalEvents[2].verdict, 'NO-GO', scenario.name);
+        assert.equal(signalEvents[2].verdict, 'FAIL', scenario.name);
         assert.equal(signalEvents[2].fix_cycle, 1, scenario.name);
         assert.equal(signalEvents[2].issues_count, scenario.expectedIssuesCount, scenario.name);
         assert.equal(signalEvents[2].attempt, 4, scenario.name);
@@ -278,34 +278,34 @@ const config = {
         assert.equal(signalEvents[3].max_attempts, 3, scenario.name);
         assert.equal(signalEvents[3].max_fails, 3, scenario.name);
       } else if (scenario.expectedSignalTypes) {
-        assert.equal(signalEvents[2].verdict, 'NO-GO', scenario.name);
+        assert.equal(signalEvents[2].verdict, 'FAIL', scenario.name);
         const expectedTerminalFixCycle = Object.hasOwn(scenario, 'expectedTerminalFixCycle')
           ? scenario.expectedTerminalFixCycle
           : 1;
         assert.equal(signalEvents[2].fix_cycle ?? null, expectedTerminalFixCycle, scenario.name);
         assert.equal(signalEvents[2].reason, scenario.expectedSignalReason || scenario.expectedReason, scenario.name);
       } else {
-        assert.equal(signalEvents[2].verdict, 'NO-GO', scenario.name);
+        assert.equal(signalEvents[2].verdict, 'FAIL', scenario.name);
         assert.equal(signalEvents[2].fix_cycle, 1, scenario.name);
         assert.equal(signalEvents[2].reason, scenario.expectedReason, scenario.name);
         if (scenario.expectedIssuesCount !== null) {
           assert.equal(signalEvents[2].issues_count, scenario.expectedIssuesCount, scenario.name);
         }
-        assert.equal(signalEvents[3].verdict, 'NO-GO', scenario.name);
+        assert.equal(signalEvents[3].verdict, 'FAIL', scenario.name);
         assert.equal(signalEvents[3].fix_cycle, 1, scenario.name);
-        assert.equal(signalEvents[3].reason, 'NO-GO after 1 fix cycles', scenario.name);
+        assert.equal(signalEvents[3].reason, 'FAIL after 1 fix cycles', scenario.name);
         assert.equal(signalEvents[4].gate_id, 'gate:review', scenario.name);
         assert.equal(signalEvents[4].module_id, null, scenario.name);
         assert.equal(signalEvents[4].phase, 'review_gate_fix', scenario.name);
         assert.equal(signalEvents[4].session_key, 'agent:main:acp:echo-review-initial', scenario.name);
-        assert.equal(signalEvents[4].reason, "Review gate 'gate:review' NO-GO after 1 fix cycles", scenario.name);
+        assert.equal(signalEvents[4].reason, "Review gate 'gate:review' FAIL after 1 fix cycles", scenario.name);
         assert.equal(signalEvents[4].max_attempts, 1, scenario.name);
         assert.equal(signalEvents[4].max_fails, 1, scenario.name);
       }
     }
   });
 
-  await record('review gate fix-and-rereview cycles emit authoritative NO-GO verdict telemetry before final resolution', async () => {
+  await record('review gate fix-and-rereview cycles emit authoritative FAIL verdict telemetry before final resolution', async () => {
     const { runtimeRoot: reviewRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(reviewRuntimeRoot);
     globalThis.__fakeRedisCalls = [];
@@ -329,7 +329,7 @@ const config = {
           critical_issues: [{ description: 'Unsafe admin mutation remains exposed' }],
         },
       },
-      { ok: true, mergedResult: { status: 'GO' } },
+      { ok: true, mergedResult: { status: 'PASS' } },
     ];
 
         const configDeps2 = {
@@ -385,19 +385,19 @@ const config = {
     const signalEvents = events.filter((event) => event.type !== 'observability.degraded');
     assert.deepEqual(signalEvents.map((event) => event.type), ['gate.started', 'gate.verdict', 'gate.verdict', 'gate.verdict']);
     assert.equal(signalEvents[1].gate_id, 'gate:review');
-    assert.equal(signalEvents[1].verdict, 'NO-GO');
+    assert.equal(signalEvents[1].verdict, 'FAIL');
     assert.equal(signalEvents[1].fix_cycle, 0);
     assert.equal(signalEvents[1].issues_count, 2);
     assert.equal(signalEvents[1].blockers_count, 1);
     assert.equal(signalEvents[1].reason, 'SQL injection risk in user endpoint; Missing auth middleware');
     assert.equal(signalEvents[2].gate_id, 'gate:review');
-    assert.equal(signalEvents[2].verdict, 'NO-GO');
+    assert.equal(signalEvents[2].verdict, 'FAIL');
     assert.equal(signalEvents[2].fix_cycle, 1);
     assert.equal(signalEvents[2].issues_count, 2);
     assert.equal(signalEvents[2].blockers_count, 1);
     assert.equal(signalEvents[2].reason, 'Unsafe admin mutation remains exposed; CSRF protection still missing');
     assert.equal(signalEvents[3].gate_id, 'gate:review');
-    assert.equal(signalEvents[3].verdict, 'GO');
+    assert.equal(signalEvents[3].verdict, 'PASS');
     assert.equal(signalEvents[3].fix_cycle, 2);
   });
 
@@ -410,7 +410,7 @@ const config = {
     const busterGateRunnerMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/runners/buster-gate-runner.ts');
     const runtimeCoreMod = await importRuntimeModule(busterRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
   
-    const initialNoGo = {
+    const initialFail = {
       ok: false,
       reason: 'verdict_fail',
       status: {
@@ -442,7 +442,7 @@ const config = {
         project: 'behavior-buster-fix-spawn-failed',
         runId: 'run-buster-fix-spawn-failed-1',
         overrides: {
-          runOnce: async () => initialNoGo,
+          runOnce: async () => initialFail,
           readGateInstructions: () => 'Run the gate',
           resolvePolicy: () => ({ model: 'forge-model', model_source: 'test' }),
           logEffectivePolicy: () => {},
@@ -459,7 +459,7 @@ const config = {
         project: 'behavior-buster-fix-health-failed',
         runId: 'run-buster-fix-health-failed-1',
         overrides: {
-          runOnce: async () => initialNoGo,
+          runOnce: async () => initialFail,
           readGateInstructions: () => 'Run the gate',
           resolvePolicy: () => ({ model: 'forge-model', model_source: 'test' }),
           logEffectivePolicy: () => {},
@@ -478,7 +478,7 @@ const config = {
         project: 'behavior-buster-fix-no-output',
         runId: 'run-buster-fix-no-output-1',
         overrides: {
-          runOnce: async () => initialNoGo,
+          runOnce: async () => initialFail,
           readGateInstructions: () => 'Run the gate',
           resolvePolicy: () => ({ model: 'forge-model', model_source: 'test' }),
           logEffectivePolicy: () => {},
@@ -500,7 +500,7 @@ const config = {
         project: 'behavior-buster-fix-rate-limit-exhausted',
         runId: 'run-buster-fix-rate-limit-exhausted-1',
         overrides: {
-          runOnce: async () => initialNoGo,
+          runOnce: async () => initialFail,
           readGateInstructions: () => 'Run the gate',
           resolvePolicy: () => ({ model: 'forge-model', model_source: 'test' }),
           logEffectivePolicy: () => {},
@@ -588,12 +588,12 @@ const config = {
       } else {
         assert.deepEqual(signalEvents.map((event) => event.type), ['gate.started', 'gate.verdict', 'gate.verdict', 'gate.verdict', 'retry.exhausted'], scenario.name);
       }
-      assert.equal(signalEvents[1].verdict, 'NO-GO', scenario.name);
+      assert.equal(signalEvents[1].verdict, 'FAIL', scenario.name);
       assert.equal(signalEvents[1].fix_cycle, 0, scenario.name);
       assert.equal(signalEvents[1].issues_count, 2, scenario.name);
       assert.equal(signalEvents[1].reason, 'Accessibility regression; Visual mismatch', scenario.name);
       assert.equal(signalEvents[1].session_key, 'agent:main:acp:gate-buster', scenario.name);
-      assert.equal(signalEvents[2].verdict, 'NO-GO', scenario.name);
+      assert.equal(signalEvents[2].verdict, 'FAIL', scenario.name);
       assert.equal(signalEvents[2].fix_cycle, 1, scenario.name);
       assert.equal(signalEvents[2].issues_count, 2, scenario.name);
       assert.equal(signalEvents[2].reason, scenario.expectedReason, scenario.name);
@@ -604,7 +604,7 @@ const config = {
         assert.equal(signalEvents[2].session_key, 'agent:gatefix-gate:buster-1', scenario.name);
       } else {
         assert.equal(signalEvents[2].session_key, expectedFixCycleSessionKey, scenario.name);
-        assert.equal(signalEvents[3].verdict, 'NO-GO', scenario.name);
+        assert.equal(signalEvents[3].verdict, 'FAIL', scenario.name);
         assert.equal(signalEvents[3].fix_cycle, 1, scenario.name);
         assert.equal(signalEvents[3].reason, 'Fix loop exhausted after 1 attempts', scenario.name);
       }

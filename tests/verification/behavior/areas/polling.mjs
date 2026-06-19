@@ -2290,7 +2290,7 @@ await record('pollStatus emits live transcript and progress telemetry for module
       null,
       gatewayLabel,
       transcriptPath,
-      { model: 'openai-codex/gpt-5.4', runtime: 'acp' },
+      { model: 'openai/gpt-5.4', runtime: 'acp' },
     );
 
     const result = await telemetryPollingMod.pollStatus(config, '01-scaffold', ['READY_FOR_TESTING'], 1, {
@@ -2377,7 +2377,7 @@ await record('pollStatus preserves tracked rate-limit correlation on lifecycle R
       gateway_label: gatewayLabel,
       label: trackingKey,
       runtime: 'acp',
-      model: 'openai-codex/gpt-5.4',
+      model: 'openai/gpt-5.4',
       phase: 'forge',
       projection_source: 'canonical-events',
     };
@@ -2391,7 +2391,7 @@ await record('pollStatus preserves tracked rate-limit correlation on lifecycle R
       gatewayLabel,
       null,
       {
-        model: 'openai-codex/gpt-5.4',
+        model: 'openai/gpt-5.4',
         runtime: 'acp',
         telemetry_attempt: 4,
         telemetry_dispatch_id: 'dispatch-pollstatus-primary-rate-limit-1',
@@ -2486,7 +2486,7 @@ await record('pollStatus preserves tracked rate-limit correlation when ACP monit
       gateway_label: gatewayLabel,
       label: trackingKey,
       runtime: 'acp',
-      model: 'openai-codex/gpt-5.4',
+      model: 'openai/gpt-5.4',
       phase: 'forge',
       projection_source: 'canonical-events',
     };
@@ -2500,7 +2500,7 @@ await record('pollStatus preserves tracked rate-limit correlation when ACP monit
       gatewayLabel,
       transcriptPath,
       {
-        model: 'openai-codex/gpt-5.4',
+        model: 'openai/gpt-5.4',
         runtime: 'acp',
         telemetry_attempt: 4,
         telemetry_dispatch_id: 'dispatch-pollstatus-rate-limit-1',
@@ -2615,7 +2615,7 @@ await record('pollStatus prefers live status dispatch-backed correlation over st
       null,
       staleGatewayLabel,
       transcriptPath,
-      { model: 'openai-codex/gpt-5.4', runtime: 'acp', telemetry_dispatch_id: staleDispatchId },
+      { model: 'openai/gpt-5.4', runtime: 'acp', telemetry_dispatch_id: staleDispatchId },
     );
 
     const result = await telemetryPollingMod.pollStatus(config, '01-scaffold', ['READY_FOR_TESTING'], 1, {
@@ -2867,7 +2867,7 @@ await record('pollForFile emits live transcript and progress telemetry for file-
       gatewayLabel,
       transcriptPath,
       {
-        model: 'openai-codex/gpt-5.4',
+        model: 'openai/gpt-5.4',
         runtime: 'acp',
         telemetry_module_id: 'pipeline-review',
         telemetry_agent_type: 'echo',

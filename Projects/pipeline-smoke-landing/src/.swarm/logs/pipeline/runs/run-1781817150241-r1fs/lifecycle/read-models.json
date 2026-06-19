@@ -1,19 +1,176 @@
 {
   "schemaVersion": "v1",
-  "run_id": "run-1781805196939-8or9",
-  "generated_at": "2026-06-18T17:53:16.954Z",
-  "last_event_id": null,
-  "last_event_type": null,
-  "event_count": 0,
-  "pipeline": null,
+  "run_id": "run-1781817150241-r1fs",
+  "generated_at": "2026-06-18T21:24:26.479Z",
+  "last_event_id": "event-1781817866227-abc6ve",
+  "last_event_type": "pipeline_run.halted",
+  "event_count": 12,
+  "pipeline": {
+    "run_id": "run-1781817150241-r1fs",
+    "run_ref": "run:run-1781817150241-r1fs",
+    "status": "HALTED",
+    "run_mode": "full",
+    "resume": false,
+    "requested_module_id": null,
+    "entrypoint": "pipeline_runner",
+    "started_at": "2026-06-18T21:12:34.208Z",
+    "completed_at": "2026-06-18T21:24:26.227Z",
+    "terminal_status": "blocked",
+    "terminal_decision": {
+      "schemaVersion": "v1",
+      "kind": "pipeline_terminal_decision",
+      "status": "blocked",
+      "action": "notify_operator",
+      "reasonCode": "blocked",
+      "humanReason": null,
+      "scope": "module",
+      "correlation": {
+        "module_id": "01-foundation",
+        "dispatch_id": "buster-module-01-foundation-1781817735773-1",
+        "session_key": "agent:main:subagent:99c79f55-c5a5-4fb8-98c2-6e304a782932",
+        "attempt": 2
+      },
+      "source": null,
+      "metadata": {}
+    },
+    "reason_code": "blocked",
+    "halt_reason": "blocked",
+    "latest_event_type": "pipeline_run.halted",
+    "step_type": "module",
+    "step_id": "01-foundation"
+  },
   "progression": {
-    "modules_total": 0,
+    "modules_total": 1,
     "modules_passed": 0,
     "modules_failed": 0,
-    "modules_blocked": 0,
+    "modules_blocked": 1,
     "modules_active": 0
   },
-  "modules": {},
+  "modules": {
+    "01-foundation": {
+      "module_id": "01-foundation",
+      "title": "Landing page foundation, Dockerfile, and first section",
+      "module_dir": "01-foundation",
+      "current_attempt": 2,
+      "module_attempt_ref": "module_attempt:run-1781817150241-r1fs:01-foundation:2",
+      "status": "BLOCKED",
+      "history": [
+        {
+          "timestamp": "2026-06-18T21:12:40.563Z",
+          "from": "PENDING",
+          "to": "IN_PROGRESS",
+          "agent": "pipeline",
+          "note": "module_attempt.started"
+        },
+        {
+          "timestamp": "2026-06-18T21:17:29.160Z",
+          "from": "IN_PROGRESS",
+          "to": "READY_FOR_TESTING",
+          "agent": "pipeline",
+          "note": "Forge completion evidence: Implemented plain Node.js landing page foundation with health endpoint, pure helpers, node:test coverage, and production Dockerfile."
+        },
+        {
+          "timestamp": "2026-06-18T21:17:33.128Z",
+          "from": "READY_FOR_TESTING",
+          "to": "TESTING",
+          "agent": "pipeline",
+          "note": "module_attempt.testing_started"
+        },
+        {
+          "timestamp": "2026-06-18T21:19:48.143Z",
+          "from": "TESTING",
+          "to": "FAIL",
+          "agent": "pipeline",
+          "note": "Trusted terminal status from Redis completion (buster-pipeline)"
+        },
+        {
+          "timestamp": "2026-06-18T21:19:48.150Z",
+          "from": "FAIL",
+          "to": "FAIL",
+          "agent": "pipeline",
+          "note": "buster failed (attempt 1/2)"
+        },
+        {
+          "timestamp": "2026-06-18T21:19:53.763Z",
+          "from": "FAIL",
+          "to": "IN_PROGRESS",
+          "agent": "pipeline",
+          "note": "module_attempt.started"
+        },
+        {
+          "timestamp": "2026-06-18T21:22:09.853Z",
+          "from": "IN_PROGRESS",
+          "to": "READY_FOR_TESTING",
+          "agent": "pipeline",
+          "note": "Forge completion evidence: Implemented plain Node.js landing page foundation with health endpoint, pure helpers, node:test coverage, and production Dockerfile."
+        },
+        {
+          "timestamp": "2026-06-18T21:22:15.774Z",
+          "from": "READY_FOR_TESTING",
+          "to": "TESTING",
+          "agent": "pipeline",
+          "note": "module_attempt.testing_started"
+        },
+        {
+          "timestamp": "2026-06-18T21:24:25.836Z",
+          "from": "TESTING",
+          "to": "FAIL",
+          "agent": "pipeline",
+          "note": "Trusted terminal status from Redis completion (buster-pipeline)"
+        },
+        {
+          "timestamp": "2026-06-18T21:24:25.840Z",
+          "from": "FAIL",
+          "to": "BLOCKED",
+          "agent": "pipeline",
+          "note": "[buster] Buster output_file identity mismatch: attempt, dispatch_id, completion_key"
+        }
+      ],
+      "current_phase": null,
+      "attempt_started_at": "2026-06-18T21:19:53.763Z",
+      "phase_started_at": null,
+      "completed_at": null,
+      "completion_summary": "Trusted terminal status from Redis completion (buster-pipeline)",
+      "fail_count": 2,
+      "fail_summaries": [
+        {
+          "at": "2026-06-18T21:19:48.143Z",
+          "phase": "buster",
+          "summary": "Trusted terminal status from Redis completion (buster-pipeline)",
+          "attempt": 1
+        },
+        {
+          "at": "2026-06-18T21:19:48.150Z",
+          "phase": "unknown",
+          "summary": "buster failed (attempt 1/2)",
+          "attempt": 1
+        },
+        {
+          "at": "2026-06-18T21:24:25.836Z",
+          "phase": "buster",
+          "summary": "Trusted terminal status from Redis completion (buster-pipeline)",
+          "attempt": 2
+        }
+      ],
+      "last_failure": "Trusted terminal status from Redis completion (buster-pipeline)",
+      "blocked_reason": "[buster] Buster output_file identity mismatch: attempt, dispatch_id, completion_key",
+      "dispatch_id": "buster-module-01-foundation-1781817735773-1",
+      "gateway_label": "buster-module-01-foundation-1781817735773-1",
+      "session_key": "agent:main:subagent:c270b493-84d3-4c43-809c-954511b2ca30",
+      "model": "codex-5.4",
+      "commit_hash": "6c5bad8ef85db6e31e3d6ce7d54fe2eba6e6bbec",
+      "validation": {
+        "attempt": 2,
+        "delivery_lint_passed": true,
+        "delivery_lint_passed_at": "2026-06-18T21:22:15.774Z",
+        "pre_check_passed": true,
+        "pre_check_passed_at": "2026-06-18T21:22:15.774Z"
+      },
+      "projection_source": "canonical-events",
+      "latest_event_type": "module_attempt.blocked",
+      "latest_event_at": "2026-06-18T21:24:25.840Z"
+    }
+  },
   "gates": {
     "module-01-review": {
       "gate_id": "module-01-review",

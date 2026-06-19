@@ -424,7 +424,7 @@ function collectReviewStats(swarmRoot, diagnostics = null) {
 
   for (const file of fs.readdirSync(reviewDir)) {
     if (!file.endsWith('.json') || file === 'EARLY-REVIEW.json' || file === 'MIDPOINT-REVIEW.json' || file === 'FINAL-REVIEW.json') {
-      // Check merged review files (GO/NO-GO summaries)
+      // Check merged review files (PASS/FAIL summaries)
       if (file.endsWith('-REVIEW.json') && !file.startsWith('echo-')) {
         const data = readJsonData(path.join(reviewDir, file), diagnostics);
         if (data?.status) {

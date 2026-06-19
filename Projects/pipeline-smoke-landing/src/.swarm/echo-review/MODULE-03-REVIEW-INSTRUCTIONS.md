@@ -18,7 +18,6 @@ for final Buster validation.
 
 ## Decision Policy
 
-Return GO when the project is ready for final deterministic validation. Return
-NO-GO for broken manifest shape, missing probes, missing tests, or accidental
+Return PASS when the project is ready for final deterministic validation. Return
+FAIL for broken manifest shape, missing probes, missing tests, or accidental
 Tailscale/approval scope.
-

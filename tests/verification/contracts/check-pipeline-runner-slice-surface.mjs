@@ -333,6 +333,8 @@ for (const marker of [
 
 for (const marker of [
   'recordObservabilityDegraded',
+  "component: 'agent_observability_ingester'",
+  "surface: 'redis_control_stream'",
   "reason: 'agent_observability_ingester_loop_failed'",
   'createAgentObservabilityIngester({',
 ]) {
@@ -400,8 +402,11 @@ await new Promise((resolve) => setTimeout(resolve, 5));
 await failingIngesterRuntime.stop();
 assert.equal(failingIngesterRuntime.started, true, 'enabled ingester runtime should start');
 assert.deepEqual(failingIngesterRuntime.stats(), { processed: 0 });
+assert.equal(degradedEvidence[0]?.component, 'agent_observability_ingester', 'loop failures must identify the degraded component');
+assert.equal(degradedEvidence[0]?.surface, 'redis_control_stream', 'loop failures must identify the degraded surface');
 assert.equal(degradedEvidence[0]?.reason, 'agent_observability_ingester_loop_failed', 'loop failures must emit typed degraded evidence');
 assert.equal(degradedEvidence[0]?.source, 'agent_observability_ingester_runtime');
+assert.equal(degradedEvidence[0]?.detail, 'boom', 'loop failures must keep degraded detail schema-valid');
 
 const rawNestedStatusDir = fs.mkdtempSync(path.join(os.tmpdir(), 'contract-correlation-boundary-'));
 const rawNestedStatusConfig = {

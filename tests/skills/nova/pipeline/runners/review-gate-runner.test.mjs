@@ -35,7 +35,7 @@ function makeProgress() {
         type: 'review',
         title: 'Review Gate',
         review_name: 'main',
-        on_nogo: 'fix_and_rereview',
+        on_fail: 'fix_and_rereview',
       },
     },
   };
@@ -71,10 +71,10 @@ test('re-review infrastructure errors block instead of requesting another fix', 
         session_key: 'session-1',
       },
       diagnostics: {
-        issues: [{ description: 'previous NO-GO issue' }],
+        issues: [{ description: 'previous FAIL issue' }],
         last_review: {
-          status: 'NO-GO',
-          critical_issues: [{ description: 'previous NO-GO issue' }],
+          status: 'FAIL',
+          critical_issues: [{ description: 'previous FAIL issue' }],
         },
       },
     },
@@ -121,14 +121,14 @@ test('cleanupReviewFiles stages tracked deletions even when untracked review art
   fs.mkdirSync(path.dirname(reviewerOutputPath), { recursive: true });
   fs.mkdirSync(path.dirname(untrackedReviewerOutputPath), { recursive: true });
   fs.mkdirSync(path.dirname(canonicalOutputPath), { recursive: true });
-  fs.writeFileSync(reviewerOutputPath, '{"status":"NO-GO"}\n');
-  fs.writeFileSync(canonicalOutputPath, '{"status":"NO-GO"}\n');
+  fs.writeFileSync(reviewerOutputPath, '{"status":"FAIL"}\n');
+  fs.writeFileSync(canonicalOutputPath, '{"status":"FAIL"}\n');
   fs.writeFileSync(unrelatedPath, 'original\n');
   git(config.repo_root, ['add', '.']);
   git(config.repo_root, ['commit', '-m', 'initial']);
 
   fs.writeFileSync(unrelatedPath, 'dirty unrelated change\n');
-  fs.writeFileSync(untrackedReviewerOutputPath, '{"status":"NO-GO","transient":true}\n');
+  fs.writeFileSync(untrackedReviewerOutputPath, '{"status":"FAIL","transient":true}\n');
 
   await cleanupReviewFiles(config, gate, [{ label: 'echo' }, { label: 'shadow' }]);
 

@@ -93,7 +93,7 @@ Full deployment path:
 ./scripts/deploy.sh all
 ```
 
-For upgrades, the agent commands use `helm upgrade --install`. Infra also uses Helm upgrade for Redis, PostgreSQL, Qdrant, and the Tailscale Kubernetes Operator, and `kubectl apply` for LiteLLM, registry resources, and the namespace fence.
+For upgrades, the agent commands use `helm upgrade --install`, delete the matching agent pods, and wait for replacement pods to become Ready so reused image tags are pulled. Infra also uses Helm upgrade for Redis, PostgreSQL, Qdrant, and the Tailscale Kubernetes Operator, and `kubectl apply` for LiteLLM, registry resources, and the namespace fence.
 
 ## Upgrade Checklist
 

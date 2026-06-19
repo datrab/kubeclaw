@@ -21,7 +21,7 @@ tests/
 
 ## Boundary rule
 
-- `scripts/` = operator/deployment utilities and temporary compatibility shims
+- `scripts/` = operator/deployment utilities and temporary facades
 - `tests/skills/` = Node unit tests for code that runtime-packages from `skills/`
 - `tests/` = verification, contract guards, fixtures, and harness logic
 

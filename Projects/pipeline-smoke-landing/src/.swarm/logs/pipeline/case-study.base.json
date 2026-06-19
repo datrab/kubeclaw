@@ -1,0 +1,178 @@
+{
+  "project": {
+    "id": "pipeline-smoke-landing",
+    "name": "pipeline-smoke-landing",
+    "generated_at": "2026-06-18T21:24:26.613Z",
+    "status": "incomplete"
+  },
+  "delivery": {
+    "started_at": "2026-06-18T21:19:53.763Z",
+    "completed_at": null,
+    "wall_clock_hours": null,
+    "agent_runtime_hours": null
+  },
+  "modules": {
+    "total": 3,
+    "passed": 0,
+    "blocked": 1,
+    "pending": 2,
+    "first_pass_rate_pct": 0,
+    "avg_attempts_per_module": 0,
+    "total_attempts": 2
+  },
+  "gates": {
+    "total": 4,
+    "passed": 0,
+    "failed": 4,
+    "reviews_total": 0,
+    "critical_issues_found": 0,
+    "deferred_issues_found": 0
+  },
+  "code": {
+    "total_lines": 267,
+    "code_files": 7,
+    "pipeline_config_files": 38,
+    "commits": 12,
+    "contributors": [
+      "Nova"
+    ],
+    "languages": [
+      {
+        "name": "JSON",
+        "lines": 15,
+        "share_pct": 1
+      },
+      {
+        "name": "Other",
+        "lines": 15,
+        "share_pct": 1
+      },
+      {
+        "name": "JavaScript",
+        "lines": 237,
+        "share_pct": 8
+      }
+    ]
+  },
+  "tests": {
+    "unit_test_functions_total": 2,
+    "python_unit_tests": 0,
+    "frontend_unit_tests": 2,
+    "api_test_cases": 0,
+    "suite_runs": 0,
+    "checks_executed": 0,
+    "findings_total": 0,
+    "duration_seconds": 0
+  },
+  "agents": {
+    "forge_spawns": 0,
+    "buster_spawns": 0,
+    "echo_spawns": 0,
+    "gate_fix_spawns": 0,
+    "total_spawns": 0
+  },
+  "scope": {
+    "delivered_modules": [],
+    "delivered_scope_groups": {
+      "platform_backend": [],
+      "frontend_ui": [],
+      "delivery_ops": [],
+      "data_security": [],
+      "other": []
+    }
+  },
+  "highlights": {
+    "hardest_modules": [
+      {
+        "module": "Landing page foundation, Dockerfile, and first section",
+        "fails": 2,
+        "attempts": 2,
+        "status": "BLOCKED"
+      }
+    ],
+    "top_failure_patterns": [
+      {
+        "pattern": "Trusted terminal status from Redis completion (buster-pipeline)",
+        "count": 2
+      },
+      {
+        "pattern": "buster failed (attempt 1/2)",
+        "count": 1
+      }
+    ]
+  },
+  "quality_outcome": {
+    "all_modules_passed": false,
+    "all_gates_passed": false,
+    "final_status": "INCOMPLETE"
+  },
+  "timeline": [
+    {
+      "id": "01-foundation",
+      "title": "Landing page foundation, Dockerfile, and first section",
+      "dir": "01-foundation",
+      "scope_group": "other",
+      "status": "BLOCKED",
+      "failCount": 2,
+      "attempts": 2,
+      "startedAt": "2026-06-18T21:19:53.763Z",
+      "completedAt": null,
+      "completionSummary": "Trusted terminal status from Redis completion (buster-pipeline)",
+      "failSummaries": [
+        {
+          "at": "2026-06-18T21:19:48.143Z",
+          "phase": "buster",
+          "summary": "Trusted terminal status from Redis completion (buster-pipeline)",
+          "attempt": 1
+        },
+        {
+          "at": "2026-06-18T21:19:48.150Z",
+          "phase": "unknown",
+          "summary": "buster failed (attempt 1/2)",
+          "attempt": 1
+        },
+        {
+          "at": "2026-06-18T21:24:25.836Z",
+          "phase": "buster",
+          "summary": "Trusted terminal status from Redis completion (buster-pipeline)",
+          "attempt": 2
+        }
+      ],
+      "forgeDiffStat": null,
+      "historyEntries": 10,
+      "cost": {}
+    },
+    {
+      "id": "02-content-polish",
+      "title": "Second landing-page section and responsive polish",
+      "dir": "02-content-polish",
+      "scope_group": "other",
+      "status": "PENDING",
+      "failCount": 0,
+      "attempts": 0,
+      "startedAt": null,
+      "completedAt": null,
+      "completionSummary": null,
+      "failSummaries": [],
+      "forgeDiffStat": null,
+      "historyEntries": 0,
+      "cost": {}
+    },
+    {
+      "id": "03-kubernetes",
+      "title": "Kubernetes deployment, service, and final section",
+      "dir": "03-kubernetes",
+      "scope_group": "other",
+      "status": "PENDING",
+      "failCount": 0,
+      "attempts": 0,
+      "startedAt": null,
+      "completedAt": null,
+      "completionSummary": null,
+      "failSummaries": [],
+      "forgeDiffStat": null,
+      "historyEntries": 0,
+      "cost": {}
+    }
+  ]
+}

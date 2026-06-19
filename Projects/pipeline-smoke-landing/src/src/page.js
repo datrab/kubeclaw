@@ -2,9 +2,13 @@ function renderStyles() {
   return `
     :root {
       color-scheme: light;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f5f7fb;
-      color: #17202e;
+      --ink: #17202a;
+      --muted: #4a5563;
+      --surface: #ffffff;
+      --line: #d6dde6;
+      --accent: #1d7a8c;
+      --accent-strong: #145c69;
+      --bg: #eef3f7;
     }
 
     * {
@@ -14,10 +18,9 @@ function renderStyles() {
     body {
       margin: 0;
       min-height: 100vh;
-      background:
-        linear-gradient(135deg, rgba(19, 88, 120, 0.14), transparent 34rem),
-        linear-gradient(315deg, rgba(71, 128, 92, 0.14), transparent 30rem),
-        #f5f7fb;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
     }
 
     main {
@@ -29,86 +32,94 @@ function renderStyles() {
 
     #foundation {
       width: min(100%, 68rem);
-      display: grid;
-      gap: 1.5rem;
-      padding: clamp(2rem, 6vw, 4.5rem);
-      border: 1px solid rgba(23, 32, 46, 0.12);
+      padding: clamp(2rem, 6vw, 5rem);
+      background: var(--surface);
+      border: 1px solid var(--line);
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.88);
-      box-shadow: 0 24px 80px rgba(23, 32, 46, 0.12);
+      box-shadow: 0 24px 60px rgba(23, 32, 42, 0.12);
     }
 
     .eyebrow {
-      margin: 0;
-      color: #236059;
-      font-size: 0.78rem;
+      margin: 0 0 0.75rem;
+      color: var(--accent-strong);
+      font-size: 0.84rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0;
       text-transform: uppercase;
     }
 
     h1 {
-      max-width: 13ch;
       margin: 0;
-      font-size: clamp(2.4rem, 8vw, 5.5rem);
-      line-height: 0.98;
-      letter-spacing: 0;
+      max-width: 12ch;
+      font-size: clamp(2.4rem, 7vw, 5.75rem);
+      line-height: 0.95;
     }
 
-    .lede {
-      max-width: 42rem;
-      margin: 0;
-      color: #405064;
-      font-size: clamp(1.05rem, 2vw, 1.35rem);
-      line-height: 1.55;
+    .summary {
+      margin: 1.25rem 0 0;
+      max-width: 46rem;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      line-height: 1.6;
     }
 
-    .details {
+    .status-row {
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
-      margin: 0;
-      padding: 0;
-      list-style: none;
+      margin-top: 2rem;
     }
 
-    .details li {
-      padding: 0.7rem 0.9rem;
-      border: 1px solid rgba(23, 32, 46, 0.1);
-      border-radius: 8px;
-      background: #ffffff;
-      color: #263548;
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.5rem;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      background: #f8fbfc;
+      color: var(--ink);
       font-size: 0.95rem;
+      font-weight: 700;
     }
 
     @media (min-width: 760px) {
       #foundation {
-        grid-template-columns: 1fr minmax(18rem, 0.72fr);
+        display: grid;
+        grid-template-columns: minmax(18rem, 0.9fr) minmax(24rem, 1.1fr);
         align-items: end;
+        gap: 3rem;
       }
 
-      .lede,
-      .details {
-        grid-column: 2;
+      .summary {
+        margin-top: 0;
       }
 
-      h1,
-      .eyebrow {
-        grid-column: 1;
+      .status-row {
+        grid-column: 1 / -1;
       }
     }
+  `;
+}
 
-    @media (max-width: 520px) {
-      main {
-        place-items: stretch;
-        padding: 1rem;
-      }
-
-      #foundation {
-        min-height: calc(100vh - 2rem);
-        align-content: center;
-      }
-    }
+function renderFoundationSection() {
+  return `
+      <section id="foundation" data-module="01-foundation">
+        <div>
+          <p class="eyebrow">OpenClaw pipeline smoke test</p>
+          <h1>Landing Page Foundation</h1>
+        </div>
+        <p class="summary">
+          This first visible section verifies that the OpenClaw pipeline can
+          build, serve, test, and package a plain Node.js landing page before
+          later modules add more sections.
+        </p>
+        <div class="status-row" aria-label="Module status">
+          <span class="status-pill">Service: pipeline-smoke-landing</span>
+          <span class="status-pill">Module: 01-foundation</span>
+          <span class="status-pill">Health: /health</span>
+        </div>
+      </section>
   `;
 }
 
@@ -123,25 +134,14 @@ function renderPage() {
   </head>
   <body>
     <main>
-      <section id="foundation" data-module="01-foundation" aria-labelledby="foundation-title">
-        <p class="eyebrow">OpenClaw pipeline smoke test</p>
-        <h1 id="foundation-title">Pipeline Smoke Landing</h1>
-        <p class="lede">
-          This first section proves the foundation module can serve a plain Node.js
-          landing page, answer health checks, and move through the OpenClaw pipeline.
-        </p>
-        <ul class="details" aria-label="Foundation checks">
-          <li>Module 01 foundation</li>
-          <li>HTML at /</li>
-          <li>JSON health at /health</li>
-        </ul>
-      </section>
+${renderFoundationSection()}
     </main>
   </body>
 </html>`;
 }
 
 module.exports = {
+  renderFoundationSection,
   renderPage,
   renderStyles
 };

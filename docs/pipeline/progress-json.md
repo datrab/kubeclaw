@@ -109,7 +109,7 @@ This is why the same `execution_order` can support fresh starts and resumes. A f
       "type": "review",
       "title": "Midpoint architecture review",
       "review_name": "MIDPOINT-REVIEW",
-      "on_nogo": "fix_and_rereview",
+      "on_fail": "fix_and_rereview",
       "instructions_file": "echo-review/MIDPOINT-REVIEW-INSTRUCTIONS.md",
       "output_file": "logs/echo-review/MIDPOINT-REVIEW.json",
       "lint_tier": "full",
@@ -364,7 +364,7 @@ This shape tells Buster how to build, start, probe, and test the app. If `serve`
   "type": "review",
   "title": "Midpoint architecture review",
   "review_name": "MIDPOINT-REVIEW",
-  "on_nogo": "fix_and_rereview",
+  "on_fail": "fix_and_rereview",
   "instructions_file": "echo-review/MIDPOINT-REVIEW-INSTRUCTIONS.md",
   "output_file": "logs/echo-review/MIDPOINT-REVIEW.json",
   "lint_tier": "full",
@@ -372,7 +372,7 @@ This shape tells Buster how to build, start, probe, and test the app. If `serve`
 }
 ```
 
-This gate asks for reviewer judgment after deterministic lint evidence is available. If the reviewer returns NO-GO, Forge gets a focused fix prompt and the gate can rerun.
+This gate asks for reviewer judgment after deterministic lint evidence is available. If the reviewer returns FAIL, Forge gets a focused fix prompt and the gate can rerun.
 
 ### Final Buster Gate
 

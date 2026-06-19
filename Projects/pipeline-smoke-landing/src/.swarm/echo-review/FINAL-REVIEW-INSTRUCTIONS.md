@@ -18,7 +18,6 @@ Dockerfile, and Kubernetes manifest.
 
 ## Decision Policy
 
-Return GO when the repo is ready to be used as the first end-to-end pipeline
-evidence run. Return NO-GO for unresolved test failures, confusing operator
+Return PASS when the repo is ready to be used as the first end-to-end pipeline
+evidence run. Return FAIL for unresolved test failures, confusing operator
 instructions, or production-looking claims that are not true for this smoke app.
-

@@ -435,7 +435,7 @@ export async function registerResumeIdempotenceArea({
     const gateStartedEvents = result.events.filter((event) => event.type === 'gate.started' && event.gate_id === 'release-approval');
     const approvalRequestedEvents = result.events.filter((event) => event.type === 'approval.requested' && event.gate_id === 'release-approval');
     const approvalResolvedEvents = result.events.filter((event) => event.type === 'approval.resolved' && event.gate_id === 'release-approval');
-    const gateGoVerdictEvents = result.events.filter((event) => event.type === 'gate.verdict' && event.gate_id === 'release-approval' && event.verdict === 'GO');
+    const gateGoVerdictEvents = result.events.filter((event) => event.type === 'gate.verdict' && event.gate_id === 'release-approval' && event.verdict === 'PASS');
 
     assert.equal(gateStartedEvents.length, 1);
     assert.equal(approvalRequestedEvents.length, 1);

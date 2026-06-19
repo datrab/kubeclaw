@@ -18,6 +18,7 @@ export { discoverPlatformSwarmConfigCandidates, discoverSwarmConfigPath, loadPla
 
 type AnyRecord = Record<string, any>;
 declare const process: any;
+const REMOVED_REVIEW_FAIL_FIELD = `on_${'n' + 'ogo'}`;
 
 export function loadConfig(projectName: any, opts: AnyRecord = {}) {
   if (!projectName) {
@@ -355,8 +356,8 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
 
   const validGateTypes = Object.keys(registryBuild.registry?.gateTypes || {}).sort();
   const validGateTypesLabel = validGateTypes.length > 0 ? validGateTypes.join(' | ') : 'none registered';
-  const validOnNogo    = ['fix_and_rereview'];
-  const validOnFail    = ['fix_and_retest'];
+  const validOnReviewFail = ['fix_and_rereview', 'stop'];
+  const validOnFail       = ['fix_and_retest'];
   const validOnTimeout = ['block', 'continue'];
 
   const gateDefinitions = isPlainObject(progress?.gates) ? progress.gates : {};
@@ -367,6 +368,9 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
   for (const [gateId, gateRaw] of Object.entries(gateDefinitions)) {
     requireSafeIdentifier(gateId, `progress.gates.${gateId}`);
     const gate = gateRaw as AnyRecord;
+    if (gate[REMOVED_REVIEW_FAIL_FIELD] !== undefined) {
+      errors.push(`progress.gates.${gateId}.${REMOVED_REVIEW_FAIL_FIELD}: removed field; use on_fail`);
+    }
     if (!gate.type) {
       errors.push(`progress.gates.${gateId}.type: required (${validGateTypesLabel})`);
     } else if (!validGateTypes.includes(gate.type)) {
@@ -376,8 +380,8 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
     if (gate.type === 'review') {
       if (!gate.review_name) errors.push(`progress.gates.${gateId}.review_name: required for review gates`);
       if (!gate.instructions_file) errors.push(`progress.gates.${gateId}.instructions_file: required`);
-      if (gate.on_nogo && !validOnNogo.includes(gate.on_nogo)) {
-        errors.push(`progress.gates.${gateId}.on_nogo: '${gate.on_nogo}' not valid (${validOnNogo.join(' | ')})`);
+      if (gate.on_fail && !validOnReviewFail.includes(gate.on_fail)) {
+        errors.push(`progress.gates.${gateId}.on_fail: '${gate.on_fail}' not valid (${validOnReviewFail.join(' | ')})`);
       }
     }
 

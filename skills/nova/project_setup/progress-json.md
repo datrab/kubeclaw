@@ -98,7 +98,7 @@ Set `"stages": ["forge"]` to skip per-module Buster testing. The module passes w
   "type": "review",
   "title": "Midpoint Review",
   "review_name": "MIDPOINT-REVIEW",
-  "on_nogo": "fix_and_rereview",
+  "on_fail": "fix_and_rereview",
   "instructions_file": "echo-review/MIDPOINT-REVIEW-INSTRUCTIONS.md",
   "output_file": "logs/echo-review/MIDPOINT-REVIEW.json",
   "review_output_dir": "logs/echo-review",
@@ -122,7 +122,7 @@ Set `"stages": ["forge"]` to skip per-module Buster testing. The module passes w
 | `type` | **yes** | — | `"review"` |
 | `title` | **yes** | — | Human-readable title |
 | `review_name` | **yes** | — | Review identifier (used in filenames) |
-| `on_nogo` | no | `"fix_and_rereview"` | What to do on NO-GO: `"fix_and_rereview"` or `"stop"` |
+| `on_fail` | no | `"fix_and_rereview"` | What to do on FAIL: `"fix_and_rereview"` or `"stop"` |
 | `instructions_file` | **yes** | — | Path to review instructions (relative to `.swarm/`) |
 | `output_file` | **yes** | — | Path for review JSON output (relative to `.swarm/`) |
 | `review_output_dir` | no | — | Directory for review artifacts (relative to `.swarm/`) |
@@ -538,7 +538,7 @@ Controls how task payloads are dispatched to Forge agents.
       "type": "review",
       "title": "Midpoint Review",
       "review_name": "MIDPOINT-REVIEW",
-      "on_nogo": "fix_and_rereview",
+      "on_fail": "fix_and_rereview",
       "instructions_file": "echo-review/MIDPOINT-REVIEW-INSTRUCTIONS.md",
       "output_file": "logs/echo-review/MIDPOINT-REVIEW.json",
       "review_output_dir": "logs/echo-review",
@@ -554,7 +554,7 @@ Controls how task payloads are dispatched to Forge agents.
       "type": "review",
       "title": "Final Review",
       "review_name": "FINAL-REVIEW",
-      "on_nogo": "fix_and_rereview",
+      "on_fail": "fix_and_rereview",
       "instructions_file": "echo-review/FINAL-REVIEW-INSTRUCTIONS.md",
       "output_file": "logs/echo-review/FINAL-REVIEW.json",
       "review_output_dir": "logs/echo-review",

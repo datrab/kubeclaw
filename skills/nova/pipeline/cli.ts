@@ -262,4 +262,7 @@ Exit codes:
 }
 
 // Also run directly if invoked as script
-if (__currentPath === __entryPath) await main();
+if (__currentPath === __entryPath) {
+  const exitCode = await main();
+  process.exit(exitCode ?? process.exitCode ?? PROCESS_SUCCESS_CODE);
+}

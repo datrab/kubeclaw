@@ -224,7 +224,7 @@ export function onGateStarted(ctx, gateId, gate = {}, options = {}) {
 }
 
 /**
- * Emit gate.verdict with verdict="GO".
+ * Emit gate.verdict with verdict="PASS".
  * @param {object} ctx
  * @param {string} gateId
  * @param {object} [data] - { gate_type, issues_count, blockers_count, fix_cycle, duration_seconds }
@@ -234,7 +234,7 @@ export function onGatePass(ctx, gateId, data = {}) {
     run_id: data.run_id || getRunId(ctx?.config || {}) || ctx?.runId || null,
     gate_id: gateId,
     gate_type: data.gate_type || null,
-    verdict: 'GO',
+    verdict: 'PASS',
     issues_count: data.issues_count ?? null,
     blockers_count: data.blockers_count ?? null,
     fix_cycle: data.fix_cycle ?? null,
@@ -248,13 +248,13 @@ export function onGatePass(ctx, gateId, data = {}) {
     gateId,
     gateType: payload.gate_type || null,
     attempt: data.attempt ?? null,
-    stateSnapshot: { verdict: 'GO', status: 'PASS' },
+    stateSnapshot: { verdict: 'PASS', status: 'PASS' },
     presentation: data.presentation || {},
   });
 }
 
 /**
- * Emit gate.verdict with verdict="NO-GO".
+ * Emit gate.verdict with verdict="FAIL".
  * @param {object} ctx
  * @param {string} gateId
  * @param {object} data - enriched telemetry payload
@@ -284,7 +284,7 @@ export function onGateFail(ctx, gateId, data = {}) {
     run_id: data.run_id || getRunId(ctx?.config || {}) || ctx?.runId || null,
     gate_id: gateId,
     gate_type: data.gate_type || null,
-    verdict: 'NO-GO',
+    verdict: 'FAIL',
     issues_count: data.issues_count ?? null,
     blockers_count: data.blockers_count ?? null,
     fix_cycle: data.fix_cycle ?? null,
@@ -300,7 +300,7 @@ export function onGateFail(ctx, gateId, data = {}) {
     gateId,
     gateType: payload.gate_type || null,
     attempt: payload.attempt,
-    stateSnapshot: { verdict: 'NO-GO', status: 'FAIL' },
+    stateSnapshot: { verdict: 'FAIL', status: 'FAIL' },
     presentation,
   });
 }

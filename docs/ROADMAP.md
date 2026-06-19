@@ -9,11 +9,11 @@ This page keeps future direction separate from current operator behavior. Items 
 
 ## Current Documentation Rebuild
 
-The original near-term roadmap was the documentation rebuild in `DOCUMENTATION_REBUILD_PLAN.md`. Current execution context is now the 2026-06-12 coverage audit, topic map, matrix, enrichment plan, and enrichment changelog under `docs/archive/audits/`.
+The original near-term roadmap was the documentation rebuild in `DOCUMENTATION_REBUILD_PLAN.md`. Current execution context is now the active topic map plus the 2026-06-12 enrichment changelog under `docs/archive/audits/`.
 
 Current sequence:
 
-1. Keep P0/P1 docs source-grounded and update the coverage matrix when enriching them.
+1. Keep P0/P1 docs source-grounded and update the topic map when enriching them.
 2. Expand generated inventory for the remaining drift-prone references.
 3. Finish clean-cluster quickstart verification before promising live first-run behavior.
 4. Split active limitations from long resolved-history tracker content where useful.

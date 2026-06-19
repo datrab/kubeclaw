@@ -189,9 +189,9 @@ Review gates do four important things:
 1. check whether the gate has already completed
 2. generate deterministic lint evidence when required
 3. spawn the configured reviewer
-4. parse GO/NO-GO output into typed gate control results
+4. parse PASS/FAIL output into typed gate control results
 
-If the result is NO-GO and policy allows remediation, Forge gets a fix prompt, commits/pushes changes when successful, and the reviewer runs again. The loop stops at the configured max fix cycles.
+If the result is FAIL and policy allows remediation, Forge gets a fix prompt, commits/pushes changes when successful, and the reviewer runs again. The loop stops at the configured max fix cycles.
 
 Why this exists: review gates let the project insert judgment checkpoints without turning every module into a human approval point.
 
@@ -309,11 +309,11 @@ pre-dispatch validation
 
 This is why `progress.json` suite config should be precise. Missing `serve.start_cmd`, wrong manifest paths, or empty typed suites can block before any real test runs.
 
-### Review Gate Returns NO-GO
+### Review Gate Returns FAIL
 
 ```text
 full lint evidence
-  -> reviewer output says NO-GO
+  -> reviewer output says FAIL
   -> issues are extracted
   -> Forge receives fix prompt with issue context
   -> changes are committed/pushed

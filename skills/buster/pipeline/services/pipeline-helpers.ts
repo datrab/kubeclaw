@@ -234,7 +234,7 @@ export function buildPreTestVerdict(moduleId, project, suitesInfo = {}) {
 }
 
 /**
- * Build a suite results embed (GO / NO-GO style with inline findings).
+ * Build a suite results embed (PASS / FAIL style with inline findings).
  */
 export function buildSuiteResultsEmbed(moduleId, project, suitesInfo) {
   const { suiteSummary, criticalFailed, results = [] } = suitesInfo;
@@ -261,7 +261,7 @@ export function buildSuiteResultsEmbed(moduleId, project, suitesInfo) {
     return s.length <= max ? s : `${s.slice(0, max - 1)}…`;
   };
   const fields = [
-    { name: 'Status',  value: pass ? 'GO' : 'NO-GO', inline: true },
+    { name: 'Status',  value: pass ? 'PASS' : 'FAIL', inline: true },
     { name: 'Module',  value: String(moduleId),       inline: true },
     { name: 'Project', value: String(project || '—'), inline: true },
     { name: 'Passed',  value: String(passCount),      inline: true },
@@ -281,7 +281,7 @@ export function buildSuiteResultsEmbed(moduleId, project, suitesInfo) {
     fields.push({ name: 'Skipped Suites', value: truncate(skipSuites.join(', ')), inline: false });
   }
   return {
-    title:     pass ? `✅ Suite Results: GO — ${moduleId}` : `🚫 Suite Results: NO-GO — ${moduleId}`,
+    title:     pass ? `✅ Suite Results: PASS — ${moduleId}` : `🚫 Suite Results: FAIL — ${moduleId}`,
     color:     pass ? 5763719 : 15158332,
     fields,
     footer:    EMBED_FOOTER,
@@ -293,8 +293,11 @@ export function buildSuiteResultsEmbed(moduleId, project, suitesInfo) {
  * Build a session spawn embed (green, includes runtime type).
  */
 export function buildSessionSpawnEmbed(moduleId, project, sessionData) {
+  const agentRole = String(sessionData.agentRole || sessionData.agent_type || 'Buster')
+    .trim()
+    .replace(/^\w/, (char) => char.toUpperCase());
   return {
-    title:  `🚀 Session Spawned: ${moduleId}`,
+    title:  `🚀 ${agentRole} Session Spawned: ${moduleId}`,
     color:  5763719,
     fields: [
       { name: 'Status',  value: 'Spawned',                                  inline: true },

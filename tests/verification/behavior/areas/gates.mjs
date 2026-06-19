@@ -977,7 +977,7 @@ const config = {
     assert.equal(events[0].gate_type, null);
     assert.equal(events[1].gate_id, 'gate:missing');
     assert.equal(events[1].gate_type, null);
-    assert.equal(events[1].verdict, 'NO-GO');
+    assert.equal(events[1].verdict, 'FAIL');
     assert.equal(events[1].reason, "Gate registry missing in progress.json while dispatching 'gate:missing'");
   });
   
@@ -1066,7 +1066,7 @@ const config = {
     assert.equal(events[0].gate_type, null);
     assert.equal(events[1].gate_id, 'gate:missing');
     assert.equal(events[1].gate_type, null);
-    assert.equal(events[1].verdict, 'NO-GO');
+    assert.equal(events[1].verdict, 'FAIL');
     assert.equal(events[1].reason, "Gate 'gate:missing' not found in progress.json");
   });
   
@@ -1157,7 +1157,7 @@ const config = {
     assert.equal(events[0].gate_type, 'mystery');
     assert.equal(events[1].gate_id, 'gate:unknown');
     assert.equal(events[1].gate_type, 'mystery');
-    assert.equal(events[1].verdict, 'NO-GO');
+    assert.equal(events[1].verdict, 'FAIL');
     assert.equal(events[1].reason, "Unknown gate type 'mystery' for gate 'gate:unknown'");
   });
   
@@ -1250,7 +1250,7 @@ const config = {
     assert.equal(events[0].gate_type, 'review');
     assert.equal(events[1].gate_id, 'gate:review');
     assert.equal(events[1].gate_type, 'review');
-    assert.equal(events[1].verdict, 'NO-GO');
+    assert.equal(events[1].verdict, 'FAIL');
     assert.equal(events[1].reason, "No reviewers configured for gate 'gate:review'");
   });
   
@@ -1350,7 +1350,7 @@ const config = {
     assert.equal(events[0].gate_type, 'buster');
     assert.equal(events[1].gate_id, 'gate:buster');
     assert.equal(events[1].gate_type, 'buster');
-    assert.equal(events[1].verdict, 'NO-GO');
+    assert.equal(events[1].verdict, 'FAIL');
     assert.equal(events[1].reason, "Gate 'gate:buster' instructions read failed: missing instructions file");
   });
   
@@ -1465,7 +1465,7 @@ const config = {
     assert.deepEqual(events.map((event) => event.type), ['gate.started', 'gate.verdict']);
     assert.equal(events[1].gate_id, 'gate:buster');
     assert.equal(events[1].gate_type, 'buster');
-    assert.equal(events[1].verdict, 'NO-GO');
+    assert.equal(events[1].verdict, 'FAIL');
     assert.equal(events[1].reason, "Gate 'gate:buster' ended unexpectedly");
   });
   
@@ -1522,11 +1522,11 @@ const config = {
     assert.equal(events[0].gate_type, 'review');
     assert.equal(events[1].gate_id, 'gate:review');
     assert.equal(events[1].gate_type, 'review');
-    assert.equal(events[1].verdict, 'NO-GO');
+    assert.equal(events[1].verdict, 'FAIL');
     assert.equal(events[1].reason, 'Review failed: reviewer transport crashed');
   });
 
-  await record('review gate malformed output fails closed instead of regex-falling through to GO', async () => {
+  await record('review gate malformed output fails closed instead of regex-falling through to PASS', async () => {
     for (const reviewCase of [
       {
         name: 'nonjson',
@@ -1644,7 +1644,7 @@ const config = {
           generateLintReport: () => ({ report: null, error: 'lint disabled in test' }),
           formatLintReportForReviewer: () => 'lint block',
           readGateInstructions: () => 'Review the code',
-          buildReviewerPrompt: () => ({ prompt: 'Return GO or NO-GO' }),
+          buildReviewerPrompt: () => ({ prompt: 'Return PASS or FAIL' }),
           resolvePolicy: () => ({ model: 'echo-model', model_source: 'test', thinking: 'high' }),
           logEffectivePolicy: () => {},
           spawnReviewerAgent: async () => ({}),
@@ -1702,7 +1702,7 @@ const config = {
     assert.deepEqual(events.map((event) => event.type), ['gate.started', 'gate.verdict']);
     assert.equal(events[1].gate_id, 'gate:review');
     assert.equal(events[1].gate_type, 'review');
-    assert.equal(events[1].verdict, 'NO-GO');
+    assert.equal(events[1].verdict, 'FAIL');
     assert.equal(events[1].session_key, sessionKey);
     assert.equal(events[1].reason, 'Review failed: Review file not received (session_ended_no_output (adapter command missing))');
   });
@@ -1734,7 +1734,7 @@ const config = {
             generateLintReport: () => ({ report: null, error: 'lint disabled in test' }),
             formatLintReportForReviewer: () => 'lint block',
             readGateInstructions: () => 'Review the code',
-            buildReviewerPrompt: () => ({ prompt: 'Return GO or NO-GO' }),
+            buildReviewerPrompt: () => ({ prompt: 'Return PASS or FAIL' }),
             resolvePolicy: () => ({ model: 'echo-model', model_source: 'test', thinking: 'high' }),
             logEffectivePolicy: () => {},
             spawnReviewerAgent: async () => ({}),
@@ -1817,7 +1817,7 @@ const config = {
           generateLintReport: () => ({ report: null, error: 'lint disabled in test' }),
           formatLintReportForReviewer: () => 'lint block',
           readGateInstructions: () => 'Review the code',
-          buildReviewerPrompt: () => ({ prompt: 'Return GO or NO-GO' }),
+          buildReviewerPrompt: () => ({ prompt: 'Return PASS or FAIL' }),
           resolvePolicy: () => ({ model: 'echo-model', model_source: 'test', thinking: 'high' }),
           logEffectivePolicy: () => {},
           spawnReviewerAgent: async () => ({}),
@@ -1882,7 +1882,7 @@ const config = {
     assert.equal(events[1].agent_type, 'echo');
     assert.equal(events[1].pause_count, 1);
     assert.equal(events[2].gate_id, 'gate:review');
-    assert.equal(events[2].verdict, 'NO-GO');
+    assert.equal(events[2].verdict, 'FAIL');
     assert.equal(events[2].session_key, sessionKey);
     assert.equal(events[2].dispatch_id, dispatchId);
     assert.equal(events[2].reason, "Review gate 'gate:review' exceeded max rate limit pauses");
@@ -1924,7 +1924,7 @@ const config = {
           generateLintReport: () => ({ report: null, error: 'lint disabled in test' }),
           formatLintReportForReviewer: () => 'lint block',
           readGateInstructions: () => 'Review the code',
-          buildReviewerPrompt: () => ({ prompt: 'Return GO or NO-GO' }),
+          buildReviewerPrompt: () => ({ prompt: 'Return PASS or FAIL' }),
           resolvePolicy: () => ({ model: 'echo-model', model_source: 'test', thinking: 'high' }),
           logEffectivePolicy: () => {},
           spawnReviewerAgent: async () => ({}),
@@ -1941,7 +1941,7 @@ const config = {
               return { ok: false, reason: 'rate_limited', status: { attempt: 2, reason: 'provider overloaded', provider: 'anthropic', dispatch_id: dispatchId, session_key: sessionKey } };
             }
             fs.mkdirSync(path.dirname(outputFilePath), { recursive: true });
-            fs.writeFileSync(outputFilePath, JSON.stringify({ status: 'GO', summary: 'looks good' }, null, 2));
+            fs.writeFileSync(outputFilePath, JSON.stringify({ status: 'PASS', summary: 'looks good' }, null, 2));
             return { ok: true, status: { attempt: 2, session_key: sessionKey, gateway_label: 'echo-quality' } };
           },
           killReviewerAgent: async () => true,
@@ -2052,7 +2052,7 @@ const config = {
           generateLintReport: () => ({ report: null, error: 'lint disabled in test' }),
           formatLintReportForReviewer: () => 'lint block',
           readGateInstructions: () => 'Review the code',
-          buildReviewerPrompt: () => ({ prompt: 'Return GO or NO-GO' }),
+          buildReviewerPrompt: () => ({ prompt: 'Return PASS or FAIL' }),
           resolvePolicy: () => ({ model: 'echo-model', model_source: 'test', thinking: 'high' }),
           logEffectivePolicy: () => {},
           runOnce: async () => reviewRateLimitResult,
@@ -2115,7 +2115,7 @@ const config = {
     const events = gateRuntimeEvents(xaddEvents, streamKey);
     const verdictEvent = events.find((event) => event.type === 'gate.verdict');
     const retryExhaustedEvent = events.find((event) => event.type === 'retry.exhausted');
-    assert.equal(verdictEvent.verdict, 'NO-GO');
+    assert.equal(verdictEvent.verdict, 'FAIL');
     assert.equal(verdictEvent.attempt, 4);
     assert.equal(verdictEvent.dispatch_id, dispatchId);
     assert.equal(verdictEvent.gateway_label, 'echo-quality');
@@ -2231,7 +2231,7 @@ const config = {
     const events = gateRuntimeEvents(xaddEvents, streamKey);
     const verdictEvent = events.find((event) => event.type === 'gate.verdict');
     const retryExhaustedEvent = events.find((event) => event.type === 'retry.exhausted');
-    assert.equal(verdictEvent.verdict, 'NO-GO');
+    assert.equal(verdictEvent.verdict, 'FAIL');
     assert.equal(verdictEvent.gate_type, 'buster');
     assert.equal(verdictEvent.attempt, 4);
     assert.equal(verdictEvent.dispatch_id, dispatchId);

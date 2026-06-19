@@ -4,6 +4,8 @@ import path from 'node:path';
 import test from 'node:test';
 
 import {
+  buildSessionSpawnEmbed,
+  buildSuiteResultsEmbed,
   ensureBusterOutputFile,
   resolveBusterAgentResult,
   resolveBusterOutputFilePath,
@@ -95,4 +97,35 @@ test('ensureBusterOutputFile replaces a stale terminal output_file identity', ()
   } finally {
     cleanup(outputPath);
   }
+});
+
+test('suite results embed uses PASS/FAIL operator wording', () => {
+  const passEmbed = buildSuiteResultsEmbed('01-foundation', 'project', {
+    criticalFailed: false,
+    suiteSummary: 'build passed; health passed',
+    results: [
+      { suite: 'build', status: 'PASS' },
+      { suite: 'health', status: 'PASS' },
+    ],
+  });
+  assert.equal(passEmbed.title, '✅ Suite Results: PASS — 01-foundation');
+  assert.equal(passEmbed.fields.find((field) => field.name === 'Status')?.value, 'PASS');
+
+  const failEmbed = buildSuiteResultsEmbed('01-foundation', 'project', {
+    criticalFailed: true,
+    suiteSummary: 'unit failed',
+    results: [
+      { suite: 'unit', status: 'FAIL', reason: 'expected button text was missing' },
+    ],
+  });
+  assert.equal(failEmbed.title, '🚫 Suite Results: FAIL — 01-foundation');
+  assert.equal(failEmbed.fields.find((field) => field.name === 'Status')?.value, 'FAIL');
+});
+
+test('session spawn embed names the Buster role', () => {
+  const embed = buildSessionSpawnEmbed('01-foundation', 'project', {
+    runtime: 'subagent',
+    childSessionKey: 'agent:main:subagent:buster-session',
+  });
+  assert.equal(embed.title, '🚀 Buster Session Spawned: 01-foundation');
 });

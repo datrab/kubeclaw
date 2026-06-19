@@ -63,6 +63,8 @@ Deploy both after infrastructure is ready:
 ./scripts/deploy.sh agents
 ```
 
+The deploy script applies the Helm release, deletes the matching agent pods, then waits for the replacement pods to become Ready. This forces Nova and Buster to take the latest image even when an image tag is reused.
+
 ## Nova Deployment
 
 Nova uses `ghcr.io/datrab/kubeclaw-general:latest` in production values. It renders without a service account, without sandbox volumes, and with `allowPrivilegeEscalation: false` plus `capabilities.drop: [ALL]` because sandbox mode is disabled. The service exposes:

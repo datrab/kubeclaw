@@ -146,7 +146,7 @@ SCRIPT
 RUN chmod +x /usr/local/bin/sandbox-*
 
 # 6. KubeClaw skills — runtime surface is /app/skills only.
-#    Buster repo-local compatibility shims are copied first, then canonical
+#    Buster repo-local skill files are copied first, then canonical
 #    shared implementations from skills/common/pipeline overwrite the matching
 #    /app/skills/pipeline paths.
 RUN mkdir -p /app/skills

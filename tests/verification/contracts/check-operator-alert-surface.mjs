@@ -296,7 +296,7 @@ await telemetryMod.onGateFail({
       title: "Gate 'gate:buster' Spawn Failed",
       description: 'Buster agent could not be spawned: spawn unavailable',
       fields: [
-        { name: 'Status', value: 'NO-GO' },
+        { name: 'Status', value: 'FAIL' },
         { name: 'Next Action', value: 'Inspect Buster gateway and rerun the gate' },
         { name: 'Gate', value: 'gate:buster' },
       ],

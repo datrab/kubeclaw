@@ -421,7 +421,7 @@ const validNovaTelemetryPayloads = {
   'cost.update': { module_id: '01', cost_usd: 0.12, total_cost_usd: 0.34, input_tokens: 10, output_tokens: 20 },
   'error.escalation': { module_id: '01', fail_count: 2, last_failure: 'tests failed', action: 'needs_nova' },
   'gate.started': { gate_id: 'review', gate_type: 'review', title: 'Review', reviewers: ['raven'] },
-  'gate.verdict': { gate_id: 'review', gate_type: 'review', verdict: 'GO', issues_count: 0 },
+  'gate.verdict': { gate_id: 'review', gate_type: 'review', verdict: 'PASS', issues_count: 0 },
   'module.started': { module_id: '01', model: 'claude-sonnet', attempt: 1 },
   'module.status_changed': { module_id: '01', old_status: 'IN_PROGRESS', new_status: 'PASS', attempt: 1 },
   'observability.degraded': { component: 'telemetry_sink', surface: 'redis', reason: 'redis_emit_failed', detail: 'down' },
@@ -967,14 +967,14 @@ assert.equal(gateVerdictWithDispatch.run_id, sharedRunId);
 assert.equal(gateVerdictWithDispatch.dispatch_id, 'dispatch-gate-contract-1');
 assert.equal(gateVerdictWithDispatch.gateway_label, 'buster-gate-contract-1');
 assert.equal(gateVerdictWithDispatch.session_key, 'agent:buster:gate-contract-1');
-assert.equal(gateVerdictWithDispatch.verdict, 'GO');
-const gateNoGoVerdictWithDispatch = pipelineEvents.find((event) => event.type === 'gate.verdict' && event.gate_id === 'gate:dispatch-fail');
-assert(gateNoGoVerdictWithDispatch, 'missing gate.verdict NO-GO dispatch correlation event');
-assert.equal(gateNoGoVerdictWithDispatch.run_id, sharedRunId);
-assert.equal(gateNoGoVerdictWithDispatch.dispatch_id, 'dispatch-gate-contract-2');
-assert.equal(gateNoGoVerdictWithDispatch.gateway_label, 'buster-gate-contract-2');
-assert.equal(gateNoGoVerdictWithDispatch.session_key, 'agent:buster:gate-contract-2');
-assert.equal(gateNoGoVerdictWithDispatch.verdict, 'NO-GO');
+assert.equal(gateVerdictWithDispatch.verdict, 'PASS');
+const gateFailVerdictWithDispatch = pipelineEvents.find((event) => event.type === 'gate.verdict' && event.gate_id === 'gate:dispatch-fail');
+assert(gateFailVerdictWithDispatch, 'missing gate.verdict FAIL dispatch correlation event');
+assert.equal(gateFailVerdictWithDispatch.run_id, sharedRunId);
+assert.equal(gateFailVerdictWithDispatch.dispatch_id, 'dispatch-gate-contract-2');
+assert.equal(gateFailVerdictWithDispatch.gateway_label, 'buster-gate-contract-2');
+assert.equal(gateFailVerdictWithDispatch.session_key, 'agent:buster:gate-contract-2');
+assert.equal(gateFailVerdictWithDispatch.verdict, 'FAIL');
 
 const gateRetryExhaustedWithDispatch = pipelineEvents.find((event) => event.type === 'retry.exhausted' && event.gate_id === 'gate:dispatch');
 assert(gateRetryExhaustedWithDispatch, 'missing retry.exhausted dispatch correlation event');

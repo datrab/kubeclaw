@@ -32,7 +32,7 @@ export async function performReviewGateFixAttempt({ config, progress, gateId, co
 
   log('STEP', `Review fix cycle ${cycle}/${maxFixCycles} (request_fix)`);
   if (currentIssues.length === 0) {
-    log('WARN', 'NO-GO but no extractable issues — escalating');
+    log('WARN', 'FAIL but no extractable issues — escalating');
     return {
       mode: 'terminal',
       controlResult: await buildReviewRemediationExhaustedControlResult(config, gateId, gate, controlResult, { gateStartedAt }),

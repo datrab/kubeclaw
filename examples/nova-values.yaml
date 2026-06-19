@@ -111,7 +111,7 @@ workspace:
 
     ## Escalation
     3 fails on same module → BLOCKED → alert operator
-    Echo NO-GO → alert operator
+    Echo FAIL → alert operator
     Agent crash/hang → kill, retry once, then BLOCKED
     Git conflict → alert operator, stop
 

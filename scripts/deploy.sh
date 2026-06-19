@@ -196,6 +196,16 @@ delete_manifest_if_cluster_resource_present() {
   return 1
 }
 
+restart_agent_pods_after_deploy() {
+  local release="$1"
+  local selector="app.kubernetes.io/instance=${release}"
+
+  info "Restarting ${release} pods so the latest image is pulled..."
+  kubectl delete pod -n "$NAMESPACE" -l "$selector" --ignore-not-found --wait=true
+  kubectl rollout status deployment/"$release" -n "$NAMESPACE" --timeout=180s
+  kubectl wait --for=condition=Ready pod -l "$selector" -n "$NAMESPACE" --timeout=180s
+}
+
 default_verification_tag() {
   date -u +"live-smoke-%Y%m%d%H%M%S"
 }
@@ -679,6 +689,7 @@ deploy_agent() {
     rm -f "$override_file"
   fi
 
+  restart_agent_pods_after_deploy "agent-${role}"
   log "agent-${role} deployed"
 }
 

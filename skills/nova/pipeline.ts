@@ -10,6 +10,7 @@ import { fileURLToPath } from 'url';
 
 declare const process: {
   argv: string[];
+  exit(code?: number): never;
 };
 
 const currentPath = fs.realpathSync(fileURLToPath(import.meta.url));
@@ -19,5 +20,6 @@ const entryPath = process.argv[1] && fs.existsSync(process.argv[1])
 
 if (currentPath === entryPath) {
   const { main } = await import('./pipeline/cli.ts');
-  await main();
+  const exitCode = await main();
+  process.exit(exitCode ?? 0);
 }

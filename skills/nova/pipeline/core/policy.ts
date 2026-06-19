@@ -26,6 +26,7 @@ import { getActiveContext, log } from './logger.ts';
 import { getRunId } from './runtime.ts';
 import { pipelineLogDir } from './paths.ts';
 import { emitPolicyAuditAppendWarning } from '../services/system-io-warning.ts';
+import { canonicalizeModelId } from '../agents/runtime.ts';
 
 export const VALID_THINKING_LEVELS = ['none', 'low', 'medium', 'high', 'xhigh', 'adaptive'];
 
@@ -47,8 +48,8 @@ export function validateThinkingLevel(value: unknown, context = 'thinking') {
 
 function normalize(v: any) {
   if (!v) return null;
-  if (typeof v === 'string') return v.trim() || null;
-  if (typeof v === 'object' && typeof v.model === 'string') return v.model.trim() || null;
+  if (typeof v === 'string') return canonicalizeModelId(v);
+  if (typeof v === 'object' && typeof v.model === 'string') return canonicalizeModelId(v.model);
   return null;
 }
 

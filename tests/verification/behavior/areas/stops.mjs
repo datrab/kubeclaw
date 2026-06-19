@@ -164,7 +164,7 @@ const config = {
       assert.equal(signalEvents[0].gate_type, 'buster', scenario.name);
       assert.equal(signalEvents[1].gate_id, 'gate:buster', scenario.name);
       assert.equal(signalEvents[1].gate_type, 'buster', scenario.name);
-      assert.equal(signalEvents[1].verdict, 'NO-GO', scenario.name);
+      assert.equal(signalEvents[1].verdict, 'FAIL', scenario.name);
       assert.equal(signalEvents[1].reason, scenario.expectedVerdictReason ?? scenario.expectedReason, scenario.name);
       assert.equal(signalEvents[1].session_key, 'agent:main:acp:gate-buster', scenario.name);
       if (scenario.name === "rate limit exhausted") {

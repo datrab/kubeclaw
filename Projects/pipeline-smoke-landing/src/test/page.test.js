@@ -1,9 +1,8 @@
 const assert = require("node:assert/strict");
 const test = require("node:test");
-
 const { renderPage } = require("../src/page");
 
-test("renderPage includes required foundation markup", () => {
+test("renderPage includes required landing page foundation markup", () => {
   const html = renderPage();
 
   assert.match(html, /<title>Pipeline Smoke Landing<\/title>/);

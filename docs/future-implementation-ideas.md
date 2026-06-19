@@ -43,6 +43,107 @@ Important constraints, risks, or related files.
 
 _Add future implementation ideas here._
 
+## Automate progress.json generation and normalization
+
+Status: candidate
+Area: pipeline
+Priority: high
+
+### Summary
+
+Add a source-backed `progress.json` generator/normalizer that can derive stable project workflow fields from `.swarm` module files, gate instruction files, app files, platform defaults, and a generated scaffold form with only the remaining blanks left for an agent or operator to fill.
+
+### Why it matters
+
+`progress.json` is a major manual error surface. Recent cleanup found that active project files can keep stale gate fields and stale review verdict wording after the runtime contract changes. A generator should make routine fields deterministic, create the form for the remaining decisions, and provide a diff before writing.
+
+### Generated scaffold form
+
+The explicit setup file should not start as a blank document. The project setup script creates `progress.scaffold.json` from discovered project facts, with defaults, candidate values, and clear `TODO` placeholders only where human or agent judgment is required.
+
+Implemented first shape:
+
+```json
+{
+  "_schema": "progress-scaffold/v1",
+  "description": "TODO: one-sentence project purpose",
+  "notes": [
+    "TODO: operator-visible scope note"
+  ],
+  "policy": {
+    "arch_validation": { "enabled": true },
+    "pipeline_review": { "enabled": false },
+    "case_study": { "enabled": false },
+    "telemetry": { "enabled": true }
+  },
+  "execution_order": ["01-foundation", "TODO: place gate:final-review among [01-foundation]"],
+  "modules": {},
+  "gates": {}
+}
+```
+
+The generator treats missing `TODO` values as blocking diagnostics, treats accepted inferred values as structured input, and keeps the final `progress.json` machine-oriented.
+
+### Two-track implementation
+
+The work should split into a project setup track and a runtime validation track.
+
+Project setup skill/script:
+
+- The first script is `skills/nova/project_setup/tools/progress-scaffold.ts`.
+- The skill tells the agent to create module files, gate instruction files, Buster files, and the intended execution order first.
+- The agent then runs the script to generate `progress.scaffold.json` from the project files already present.
+- The generated form lists concrete values for fillable fields where possible, such as enabled/disabled toggles, review/Buster/approval gate types, preview modes, cleanup policies, inferred ports, health paths, Forge-only modules, and final validation gates.
+- The skill should tell the agent exactly which fields require judgment and which choices are allowed, rather than asking it to author the full `progress.json` shape.
+- After the gaps are filled, rerunning the same script with `--apply` validates and writes `.swarm/progress.json`.
+
+Pipeline validator:
+
+- Make pipeline config validation strict for fields with checkable truth: object shapes, required keys, enum values, safe paths, gate references, execution order references, module directories, required files, model aliases, suite names, and stale field names.
+- Validate content when the repository gives deterministic evidence, such as `test-spec.json` existence for `api`, baseline metadata for `visual-reg`, Dockerfile/manifest paths, service names, health paths, ports, package test scripts, and Kubernetes manifest shape.
+- Use form-only validation when semantic correctness is dynamic or ambiguous. Examples: whether a note is a good operator note, whether a review instruction is sufficiently nuanced, whether a gate placement is product-wise ideal, or whether inferred content matches the author's intent.
+- Form-only validation should still fail missing required text, unresolved `TODO`, wrong type, invalid enum, unsafe path, or references to files that do not exist.
+- Diagnostics should distinguish `strict_content_check` from `form_check` so operators know whether the pipeline proved the content or only proved the shape.
+
+### Derivation map
+
+| `progress.json` area | Likely source | Automation level |
+| --- | --- | --- |
+| `project` | `Projects/<project>/src/.swarm` path | derive |
+| `version` | generator schema version | derive |
+| `description`, `notes` | generated scaffold form plus optional `ARCHITECTURE.md` front matter | explicit with generated blanks |
+| `defaults.models`, `defaults.thinking`, `payload.rate_limit` | platform defaults plus optional project intent overrides | default and normalize |
+| `arch_validation`, `pipeline_review`, `case_study`, `telemetry` | generated scaffold form policy toggles | explicit, with defaults |
+| `modules.<id>.dir` | `.swarm/modules/<dir>` inventory | derive |
+| `modules.<id>.title` | first heading in module `FORGE.md` | derive with override |
+| `modules.<id>.substeps` | child directories containing `FORGE.md` | derive |
+| `modules.<id>.stages` | presence of `BUSTER.md`, `test-spec.json`, baselines, or suite hints | infer, then add confirmation prompts for non-trivial cases |
+| `modules.<id>.depends_on` | module number/order plus explicit dependency annotations | mostly derive; gate dependencies remain explicit |
+| `modules.<id>.test_suites` | `BUSTER.md`, `test-spec.json`, `baselines/`, manifest paths, Dockerfile/app files | infer and validate |
+| `modules.<id>.test_config.serve` | package scripts, Dockerfile, health endpoint docs, port usage | infer best-effort, require confirmation |
+| `modules.<id>.test_config.unit` | `package.json`, pytest/vitest/node:test files, `FORGE.md` Unit Tests section | infer |
+| `modules.<id>.test_config.api` | `test-spec.json` location | derive |
+| `modules.<id>.test_config.manifest` | Kubernetes YAML paths and required env in manifests | infer and validate |
+| `modules.<id>.test_config.k8s` | Kubernetes manifests, service name, container port, health probes | infer with explicit preview/cleanup policy |
+| `gates.<id>` | files under `.swarm/echo-review/`, `.swarm/buster-test/`, and generated scaffold execution order | derive fields, keep placement explicit |
+| `execution_order` | module directory sort plus generated scaffold gaps for gate insertion | explicit with generated blanks |
+| `phases` | architecture/module grouping metadata | derive when present, informational only |
+
+### Proposed automation
+
+1. Add the project setup script that emits discovered facts and `progress.scaffold.json`. First pass exists at `skills/nova/project_setup/tools/progress-scaffold.ts`.
+2. Update the project setup skill to tell agents to create module/gate files, choose execution order/gate placement, run the script, and fill only the generated form gaps. First pass is documented in `skills/nova/project_setup/SKILL.md`.
+3. Add a read-only analyzer mode that emits a canonical candidate object and diagnostics without writing.
+4. Add a normalizer mode that rewrites stale field names, canonical verdict wording, model aliases, and path shapes inside an existing `progress.json`.
+5. Add strict validator coverage for checkable fields and explicit form-check diagnostics for dynamic fields.
+6. Add or improve generator behavior that reads the discovered facts plus filled scaffold form and shows a clearer diff against `progress.json`.
+7. Keep apply mode gated on clean scaffold validation and current project setup docs.
+8. Add verification that active project examples and smoke projects do not contain stale gate fields or stale verdict wording.
+
+### Notes
+
+Related files: `skills/nova/project_setup/progress-json.md`, `skills/nova/project_setup/module-files.md`, `docs/reference/progress-json.md`, `skills/nova/pipeline/core/config.ts`, `skills/nova/pipeline/services/validation.ts`, and `Projects/pipeline-smoke-landing/src/.swarm/progress.json`.
+
 ## Add hostname-aware egress policy
 
 Status: idea

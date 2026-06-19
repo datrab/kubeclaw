@@ -17,7 +17,6 @@ pipeline continues.
 
 ## Decision Policy
 
-Return GO when the foundation is clean enough for the pipeline test to proceed.
-Return NO-GO only for issues that would hide pipeline failures, break Buster
+Return PASS when the foundation is clean enough for the pipeline test to proceed.
+Return FAIL only for issues that would hide pipeline failures, break Buster
 validation, or make later modules ambiguous.
-

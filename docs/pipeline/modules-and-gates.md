@@ -121,7 +121,7 @@ The status output is safer than guessing from one artifact because it is project
 
 Current gate types:
 
-- `review`: Echo/reviewer sessions evaluate artifacts. `on_nogo` can stop or trigger fix-and-rereview cycles.
+- `review`: Echo/reviewer sessions evaluate artifacts. `on_fail` can stop or trigger fix-and-rereview cycles.
 - `approval`: Nova writes approval request artifacts and waits for an operator decision or timeout policy.
 - `buster`: Buster runs a gate-level test task. `on_fail` can stop or trigger fix-and-retest cycles.
 
@@ -136,9 +136,9 @@ completion check
   -> resolve reviewers and lint policy
   -> run required lint evidence
   -> spawn reviewer
-  -> parse output as GO/NO-GO
-  -> on NO-GO: request Forge fix when policy allows
-  -> rerun until GO or max fix cycles exhausted
+  -> parse output as PASS/FAIL
+  -> on FAIL: request Forge fix when policy allows
+  -> rerun until PASS or max fix cycles exhausted
 ```
 
 Buster gate internals:

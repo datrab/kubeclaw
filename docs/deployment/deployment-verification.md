@@ -35,7 +35,7 @@ Live smoke through `scripts/deploy.sh`:
 
 Live smoke requires a cluster and checks rollout, pod readiness, in-pod `openclaw gateway status`, `/app/skills`, and `/home/node/.openclaw/swarm.config.json`. Pod readiness now includes gateway health, Redis ping plus a health stream write, configured registry endpoints, and enabled LiteLLM/Qdrant checks. Buster readiness also checks the Buster process heartbeat.
 
-`verify-live` is stronger than `smoke`: it builds local general and sandbox images, pushes them to the configured push registry, proves the cluster can pull both pushed runtime images with temporary pods, redeploys agents with those images, and then runs the same pod smoke checks. It requires Docker, Helm, kubectl, a deployed registry-local service, and an explicit cluster-visible pull path.
+`verify-live` is stronger than `smoke`: it builds local general and sandbox images, pushes them to the configured push registry, proves the cluster can pull both pushed runtime images with temporary pods, redeploys agents with those images, recreates the agent pods, and then runs the same pod smoke checks. It requires Docker, Helm, kubectl, a deployed registry-local service, and an explicit cluster-visible pull path.
 
 Final-preview Tailscale ingress also requires the Tailscale Kubernetes Operator. `./scripts/deploy.sh infra` installs it by default, waits for the operator pod to be Ready, and fails closed if `tailscale/operator-oauth` is missing; `TAILSCALE_OPERATOR_ENABLED=false` is only for non-preview development setups.
 

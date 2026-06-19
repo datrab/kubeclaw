@@ -16,6 +16,7 @@ This page documents where the skill lives, what runtime code owns the behavior i
 | Skill entrypoint | `skills/nova/project_setup/SKILL.md` | Step-by-step project setup instructions |
 | Progress reference | `skills/nova/project_setup/progress-json.md` | Field-level project config reference |
 | Module file guide | `skills/nova/project_setup/module-files.md` | `FORGE.md`, `BUSTER.md`, `test-spec.json`, and visual baseline guidance |
+| Progress scaffold tool | `skills/nova/project_setup/tools/progress-scaffold.ts` | Generates `progress.scaffold.json`, validates gaps, and writes `progress.json` |
 | Pipeline skill | `skills/nova/pipeline/SKILL.md` | Runtime CLI commands after setup exists |
 
 Trigger the skill for work like creating a project from scratch, preparing an architecture branch, writing module files, configuring `progress.json`, or adding Buster/review gates.
@@ -28,6 +29,7 @@ The setup skill is documentation, not a separate implementation. These source fi
 | --- | --- | --- |
 | Project config path | `skills/nova/pipeline/core/config.ts` | `Projects/<project>/src/.swarm/progress.json` |
 | Platform/project config split | `skills/nova/pipeline/core/config.ts`; `charts/kubeclaw/files/config/swarm.config.json` | platform fields in `swarm.config.json`; workflow fields in `progress.json` |
+| Progress scaffold generation | `skills/nova/project_setup/tools/progress-scaffold.ts` | module/gate files first, generated scaffold gaps, strict/form-check diagnostics, `progress.json` apply |
 | Model and thinking policy | `skills/nova/pipeline/core/policy.ts` | `progress.defaults.models`, per-module/gate overrides, platform `fallback_model` |
 | Execution order | `skills/nova/pipeline/runners/pipeline-runner-scheduling.ts` | module IDs plus `gate:<id>` and registered validator stages |
 | Blueprint release | `skills/nova/pipeline/services/blueprint.ts` | architecture branch `.swarm/modules/<dir>` files released per module |
@@ -42,6 +44,7 @@ A complete project setup commits the `.swarm` contract to the architecture branc
 
 ```text
 Projects/<project>/src/.swarm/
+├── progress.scaffold.json
 ├── progress.json
 ├── echo-review/
 │   └── <GATE>-INSTRUCTIONS.md
@@ -55,6 +58,19 @@ Projects/<project>/src/.swarm/
 ```
 
 Not every module needs every file. Forge-only modules need `FORGE.md`; modules with a Buster stage need `BUSTER.md`; `api` suites need `test-spec.json`; `visual-reg` suites need reviewed baseline metadata and PNGs.
+
+Generate and apply the scaffold with:
+
+```bash
+npm run progress:scaffold -- --project <project>
+npm run progress:scaffold -- --project <project> --apply
+```
+
+Validate the TypeScript scaffold tool after changing it:
+
+```bash
+npm run progress:scaffold:typecheck
+```
 
 ## Current Contract
 

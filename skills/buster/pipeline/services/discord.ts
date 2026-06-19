@@ -123,6 +123,23 @@ function truncateDiscordField(value: unknown, maxLength = 1024): string {
   return text.length <= maxLength ? text : `${text.slice(0, Math.max(0, maxLength - 1))}…`;
 }
 
+function normalizeOperatorStatusText(value: unknown): string {
+  return String(value ?? '');
+}
+
+function normalizeOperatorModelText(value: unknown): string {
+  return String(value ?? '')
+    .replace(/\bopenai-codex\//gi, 'openai/')
+    .replace(/\bcodex-(\d[\w.-]*)\b/gi, 'gpt-$1');
+}
+
+function normalizeOperatorFieldValue(field: DiscordField = {}): string {
+  const statusNormalized = normalizeOperatorStatusText(field.value);
+  return String(field.name || '').trim().toLowerCase() === 'model'
+    ? normalizeOperatorModelText(statusNormalized)
+    : statusNormalized;
+}
+
 function normalizeMessage(message: AnyRecord): DiscordPayload {
   if (Array.isArray(message?.files) && message.files.length > 0) {
     throw new Error('Discord file attachments are not supported by sendDiscord');
@@ -163,22 +180,18 @@ function buildCorrelationContext(context: DiscordContext = {}): CorrelationConte
 }
 
 function defaultImpact(correlation: Partial<CorrelationContext> = {}): string {
-  if (correlation.gate_id) return `Buster reported an operator-visible event for gate ${correlation.gate_id}.`;
-  if (correlation.module_id) return `Buster reported an operator-visible event for module ${correlation.module_id}.`;
-  return 'Buster reported an operator-visible event.';
+  if (correlation.gate_id) return `Buster reported a pipeline event for gate ${correlation.gate_id}.`;
+  if (correlation.module_id) return `Buster reported a pipeline event for module ${correlation.module_id}.`;
+  return 'Buster reported a pipeline event.';
 }
 
 function defaultAction(correlation: Partial<CorrelationContext> = {}): string {
-  if (correlation.run_id) return `Open latest.json for run ${correlation.run_id}, then inspect the run-scoped pipeline and Discord artifacts.`;
-  return 'Inspect the run-scoped pipeline and Discord artifacts, then use the Buster diagnostic copy if run artifacts are unavailable.';
+  if (correlation.run_id) return `Read the notification content for run ${correlation.run_id}, then fix or resume according to the listed status.`;
+  return 'Read the notification content, then fix or resume according to the listed status.';
 }
 
-function defaultEvidence(correlation: Partial<CorrelationContext> = {}): string {
-  const evidence: string[] = [];
-  if (correlation.pipeline_run_log_path) evidence.push(`run pipeline: ${correlation.pipeline_run_log_path}`);
-  if (correlation.pipeline_run_log_path) evidence.push(`run discord: ${path.join(path.dirname(correlation.pipeline_run_log_path), 'discord.jsonl')}`);
-  if (correlation.log_dir) evidence.push(`buster diagnostic: ${path.join(correlation.log_dir, 'discord.jsonl')}`);
-  return evidence.length ? evidence.join('\n') : 'Run-scoped Discord artifact; Buster diagnostic discord.jsonl if run path is unavailable.';
+function defaultEvidence(_correlation: Partial<CorrelationContext> = {}): string {
+  return 'No structured embed fields were provided; use the notification content as the operator-visible evidence.';
 }
 
 function discordHealthKey(correlation: Partial<CorrelationContext> = {}, surface = 'webhook'): string {
@@ -293,19 +306,96 @@ function existingFieldNames(embed: DiscordEmbed = {}): Set<string> {
   return new Set((embed.fields || []).map((field) => String(field?.name || '').trim().toLowerCase()));
 }
 
-function appendCorrelationFields(embed: DiscordEmbed = {}, correlation: CorrelationContext): DiscordEmbed {
-  const fields = Array.isArray(embed.fields) ? [...embed.fields] : [];
-  const names = existingFieldNames(embed);
+function fieldValue(embed: DiscordEmbed = {}, name: string): string | null {
+  const target = name.trim().toLowerCase();
+  const field = (embed.fields || []).find((candidate) => String(candidate?.name || '').trim().toLowerCase() === target);
+  const value = normalizeOperatorFieldValue(field || {}).trim();
+  return value ? value : null;
+}
 
-  if (!names.has('impact')) {
-    fields.push({ name: 'Impact', value: truncateDiscordField(correlation.impact || defaultImpact(correlation)), inline: false });
-  }
-  if (!names.has('action')) {
-    fields.push({ name: 'Action', value: truncateDiscordField(correlation.action || defaultAction(correlation)), inline: false });
-  }
-  if (!names.has('evidence')) {
-    fields.push({ name: 'Evidence', value: truncateDiscordField(correlation.evidence || defaultEvidence(correlation)), inline: false });
-  }
+function actionabilityEvidenceFromEmbed(embed: DiscordEmbed = {}): string {
+  const skipNames = new Set(['impact', 'action', 'evidence', 'run', 'run id', 'attempt', 'dispatch', 'session']);
+  const lines = (embed.fields || [])
+    .filter((field) => !skipNames.has(String(field?.name || '').trim().toLowerCase()))
+    .map((field) => {
+      const name = String(field?.name || 'Field').trim();
+      const value = normalizeOperatorFieldValue(field).trim();
+      return value ? `${name}: ${value}` : null;
+    })
+    .filter(Boolean);
+  if (lines.length) return truncateDiscordField(lines.join('\n'));
+  return truncateDiscordField(`${normalizeOperatorStatusText(embed.title || 'Notification')}: ${normalizeOperatorStatusText(embed.description || 'No additional details provided.')}`);
+}
+
+function actionabilityImpactFromEmbed(embed: DiscordEmbed = {}, correlation: Partial<CorrelationContext> = {}): string {
+  const status = fieldValue(embed, 'Status');
+  const summary = fieldValue(embed, 'Summary') || fieldValue(embed, 'Issue') || normalizeOperatorStatusText(embed.description || '');
+  const subject = correlation.gate_id
+    ? `gate ${correlation.gate_id}`
+    : correlation.module_id
+      ? `module ${correlation.module_id}`
+      : 'this run';
+  return truncateDiscordField(`${normalizeOperatorStatusText(embed.title || 'Buster notification')} for ${subject}${status ? ` reported ${status}` : ''}.${summary ? ` ${summary}` : ''}`);
+}
+
+function actionabilityActionFromEmbed(embed: DiscordEmbed = {}): string {
+  const status = (fieldValue(embed, 'Status') || '').toUpperCase();
+  if (status === 'PASS') return 'No operator action required; continue with the next pipeline step.';
+  if (status === 'FAIL') return 'Fix the listed failed suite or infrastructure issue, then resume or rerun the pipeline step.';
+  if (/spawned/i.test(String(embed.title || ''))) return 'Wait for the spawned Buster session to finish, then inspect the completion notification.';
+  return 'Read the notification fields and act on the listed status, issue, or failure reason.';
+}
+
+function actionabilityFieldNeedsReplacement(name: string, value: unknown): boolean {
+  const normalizedName = String(name || '').trim().toLowerCase();
+  const text = String(value ?? '').trim();
+  if (!text) return true;
+  if (normalizedName === 'impact' && /^Buster reported an operator-visible event/i.test(text)) return true;
+  if (normalizedName === 'action' && /(open latest\.json|inspect the run-scoped pipeline and Discord artifacts?|inspect.*artifacts?)/i.test(text)) return true;
+  if (normalizedName === 'evidence' && /(run pipeline:|run discord:|buster diagnostic:|latest\.json|discord\.jsonl)/i.test(text)) return true;
+  return false;
+}
+
+function upsertActionabilityField(fields: DiscordField[], names: Set<string>, name: 'Impact' | 'Action' | 'Evidence', value: string): void {
+  const normalizedName = name.toLowerCase();
+  const index = fields.findIndex((field) => String(field?.name || '').trim().toLowerCase() === normalizedName);
+  if (index >= 0 && !actionabilityFieldNeedsReplacement(normalizedName, fields[index]?.value)) return;
+  const field = { name, value: truncateDiscordField(value), inline: false };
+  if (index >= 0) fields[index] = { ...fields[index], ...field };
+  else fields.push(field);
+  names.add(normalizedName);
+}
+
+function actionabilityFieldFromPayload(payload: DiscordPayload, name: string): string | null {
+  const embed = Array.isArray(payload.embeds) ? payload.embeds[0] : null;
+  if (!embed) return null;
+  return fieldValue(embed, name);
+}
+
+function appendCorrelationFields(embed: DiscordEmbed = {}, correlation: CorrelationContext): DiscordEmbed {
+  const fields = Array.isArray(embed.fields)
+    ? embed.fields.map((field) => ({ ...field, value: normalizeOperatorFieldValue(field) }))
+    : [];
+  const names = existingFieldNames(embed);
+  const normalizedEmbed = {
+    ...embed,
+    title: normalizeOperatorStatusText(embed.title || ''),
+    description: normalizeOperatorStatusText(embed.description || ''),
+    fields,
+  };
+
+  const impact = !actionabilityFieldNeedsReplacement('impact', correlation.impact)
+    ? String(correlation.impact)
+    : actionabilityImpactFromEmbed(normalizedEmbed, correlation);
+  const action = !actionabilityFieldNeedsReplacement('action', correlation.action)
+    ? String(correlation.action)
+    : actionabilityActionFromEmbed(normalizedEmbed);
+  const evidence = !actionabilityFieldNeedsReplacement('evidence', correlation.evidence)
+    ? String(correlation.evidence)
+    : actionabilityEvidenceFromEmbed(normalizedEmbed);
+  upsertActionabilityField(fields, names, 'Impact', impact);
+  upsertActionabilityField(fields, names, 'Action', action);
+  upsertActionabilityField(fields, names, 'Evidence', evidence);
 
   if (correlation.run_id && !names.has('run') && !names.has('run id') && !names.has('run_id')) {
     fields.push({ name: 'Run', value: `\`${correlation.run_id}\``, inline: true });
@@ -326,7 +416,7 @@ function appendCorrelationFields(embed: DiscordEmbed = {}, correlation: Correlat
     fields.push({ name: 'Session', value: `\`${correlation.session_key}\``, inline: false });
   }
 
-  return { ...embed, fields };
+  return { ...normalizedEmbed, fields };
 }
 
 function persistDiscordArtifact(payload: DiscordPayload, correlation: CorrelationContext): void {
@@ -346,9 +436,9 @@ function persistDiscordArtifact(payload: DiscordPayload, correlation: Correlatio
     dispatch_id: correlation.dispatch_id,
     session_key: correlation.session_key,
     actionability: {
-      impact: correlation.impact || defaultImpact(correlation),
-      action: correlation.action || defaultAction(correlation),
-      evidence: correlation.evidence || defaultEvidence(correlation),
+      impact: !actionabilityFieldNeedsReplacement('impact', correlation.impact) ? correlation.impact : actionabilityFieldFromPayload(payload, 'Impact') || defaultImpact(correlation),
+      action: !actionabilityFieldNeedsReplacement('action', correlation.action) ? correlation.action : actionabilityFieldFromPayload(payload, 'Action') || defaultAction(correlation),
+      evidence: !actionabilityFieldNeedsReplacement('evidence', correlation.evidence) ? correlation.evidence : actionabilityFieldFromPayload(payload, 'Evidence') || defaultEvidence(correlation),
     },
     payload,
   };

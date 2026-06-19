@@ -101,3 +101,63 @@ console.log(JSON.stringify({ exitCode, activeContext: getActiveContext(), initLo
     initLogDirCalls: 0,
   });
 });
+
+test('direct CLI invocation exits after terminal cleanup even with dangling handles', (t) => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nova-cli-direct-exit-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+
+  const loaderPath = path.join(root, 'mock-cli-loader.mjs');
+  fs.writeFileSync(loaderPath, `
+const sources = new Map([
+  ['mock:shutdown', "export function registerShutdownHooks() {}"],
+  ['mock:config', "export function loadConfig() { return { config: { project: 'demo', repo_root: '/repo', paths: {} }, progress: { modules: {}, gates: {}, execution_order: [] }, pluginRegistry: {} }; }"],
+  ['mock:blueprint', "export function listBlueprints() { return []; } export async function releaseBlueprint() { return { status: 'success' }; }"],
+  ['mock:context', "export function createPipelineContext(init) { return { ...init, setTempDir(dir) { this._tmpDir = dir; return this; } }; }"],
+  ['mock:logger', "export function log() {} export function setActiveContext() {} export function clearActiveContext() {}"],
+  ['mock:temp', "export function createTempManager() { return { dir: null, init() { this.dir = '/tmp/nova-cli-direct-exit'; }, cleanup() {} }; }"],
+  ['mock:status', "export function initLogDir() {} export async function closeLogDir() {}"],
+  ['mock:runtime', "export function createRunId() { return 'run-test'; } export function createRunStats() { return { errors: [] }; }"],
+  ['mock:runner', "export async function runPipeline() { setInterval(() => {}, 1000); return 0; } export function printStatus() {} export function dryRun() {}"],
+  ['mock:policy', "export const VALID_THINKING_LEVELS = ['low']; export function validateThinkingLevel() {}"],
+  ['mock:prompt', "export const PROMPT_INGRESS_MAX_BYTES = 1024; export function resolveNovaPromptIngress() { return { prompt: null, metadata: null }; }"],
+]);
+const mocks = new Map([
+  ['./agents/shutdown.ts', 'mock:shutdown'],
+  ['./core/config.ts', 'mock:config'],
+  ['./services/blueprint.ts', 'mock:blueprint'],
+  ['./core/context.ts', 'mock:context'],
+  ['./core/logger.ts', 'mock:logger'],
+  ['./core/temp.ts', 'mock:temp'],
+  ['./services/status-store.ts', 'mock:status'],
+  ['./core/runtime.ts', 'mock:runtime'],
+  ['./runners/pipeline-runner.ts', 'mock:runner'],
+  ['./core/policy.ts', 'mock:policy'],
+  ['./services/prompt-ingress.ts', 'mock:prompt'],
+]);
+export async function resolve(specifier, context, nextResolve) {
+  if (mocks.has(specifier)) return { url: mocks.get(specifier), shortCircuit: true };
+  return nextResolve(specifier, context);
+}
+export async function load(url, context, nextLoad) {
+  if (sources.has(url)) return { format: 'module', source: sources.get(url), shortCircuit: true };
+  return nextLoad(url, context);
+}
+`);
+
+  const child = spawnSync(process.execPath, [
+    '--loader',
+    loaderPath,
+    path.resolve(__dirname, '../../../../skills/nova/pipeline/cli.ts'),
+    '--project',
+    'demo',
+    '--nova-channel',
+    '1513760211779981353',
+  ], {
+    cwd: __dirname,
+    encoding: 'utf8',
+    timeout: 2000,
+  });
+
+  assert.notEqual(child.error?.code, 'ETIMEDOUT', child.stderr);
+  assert.equal(child.status, 0, child.stderr);
+});

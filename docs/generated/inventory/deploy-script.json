@@ -162,6 +162,7 @@
     "show_optional_kubectl_table",
     "delete_namespaced_resource_if_present",
     "delete_manifest_if_cluster_resource_present",
+    "restart_agent_pods_after_deploy",
     "default_verification_tag",
     "write_image_override_file",
     "build_local_image",
@@ -202,12 +203,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 348,
-    "secrets": 392,
-    "tailscale": 451,
-    "infra": 542,
-    "agents": 685,
-    "smoke": 796,
-    "teardown": 935
+    "setup": 358,
+    "secrets": 402,
+    "tailscale": 461,
+    "infra": 552,
+    "agents": 696,
+    "smoke": 807,
+    "teardown": 946
   }
 }

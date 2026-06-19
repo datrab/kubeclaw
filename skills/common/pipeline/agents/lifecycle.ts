@@ -20,7 +20,7 @@ import {
   spawnGatewaySession,
 } from '../integrations/gateway.ts';
 import { parseSessionState, isStoppedSessionState } from './session-semantics.ts';
-import { resolveRuntime } from './runtime.ts';
+import { canonicalizeModelId, resolveRuntime } from './runtime.ts';
 import { isBudgetExhaustedError, sleep } from '../timing.ts';
 import {
   assertValidKillSessionResult,
@@ -323,7 +323,7 @@ function resolveCleanupConfirmTimeoutMs(value: any, confirmTimeoutMs: number) {
 
 export async function spawnSession(payload: AnyRecord, prompt: any, timeoutSeconds: any, opts: AnyRecord = {}) {
   const session = payload?.session || {};
-  const model = requiredNonEmptyString(opts.model ?? session.model, 'session.model');
+  const model = requiredNonEmptyString(canonicalizeModelId(opts.model ?? session.model), 'session.model');
   const runtime = resolveExplicitRuntime(opts.runtime ?? session.runtime);
   const agentId = requiredNonEmptyString(opts.agentId ?? session.agentId, 'session.agentId');
   const cwd = requiredNonEmptyString(opts.cwd ?? session.cwd, 'session.cwd');

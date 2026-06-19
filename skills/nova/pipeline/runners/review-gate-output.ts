@@ -24,7 +24,7 @@ export function extractReviewIssues(mergedResult) {
   return issues;
 }
 
-export function summarizeReviewNoGoReason(issues, mergedResult) {
+export function summarizeReviewFailReason(issues, mergedResult) {
   const descriptions = (issues || [])
     .map((issue) => issue?.description)
     .filter(Boolean);
@@ -37,7 +37,7 @@ export function summarizeReviewNoGoReason(issues, mergedResult) {
   const critical = Array.isArray(mergedResult?.critical_issues) ? mergedResult.critical_issues.length : 0;
   if (blockers > 0) return `${blockers} blocking issue(s) found during review`;
   if (critical > 0) return `${critical} critical issue(s) found during review`;
-  return 'Review returned NO-GO';
+  return 'Review returned FAIL';
 }
 
 export function buildReviewGateFindings(issues = []) {
@@ -55,13 +55,13 @@ export function buildReviewGateFindings(issues = []) {
   }));
 }
 
-function validateGoIssueList(reviewResult, key) {
+function validatePassIssueList(reviewResult, key) {
   if (!Object.prototype.hasOwnProperty.call(reviewResult, key)) return null;
   if (!Array.isArray(reviewResult[key])) {
-    return `Review output status GO requires ${key} to be an empty array when present`;
+    return `Review output status PASS requires ${key} to be an empty array when present`;
   }
   if (reviewResult[key].length > 0) {
-    return `Review output status GO contradicts ${key}: ${reviewResult[key].length} critical issue(s) declared`;
+    return `Review output status PASS contradicts ${key}: ${reviewResult[key].length} critical issue(s) declared`;
   }
   return null;
 }
@@ -94,9 +94,9 @@ export function parseReviewOutputContent(content) {
   }
 
   const status = String(reviewResult.status || '').trim().toUpperCase();
-  if (status === 'GO') {
+  if (status === 'PASS') {
     for (const key of ['critical_issues', 'critical_blockers']) {
-      const contractError = validateGoIssueList(reviewResult, key);
+      const contractError = validatePassIssueList(reviewResult, key);
       if (contractError) {
         return {
           ok: false,
@@ -111,16 +111,16 @@ export function parseReviewOutputContent(content) {
     }
     return {
       ok: true,
-      decision: 'go',
+      decision: 'pass',
       mergedResult: reviewResult,
       normalizedStatus: status,
       displayStatus: reviewResult.status,
     };
   }
-  if (status === 'NO-GO') {
+  if (status === 'FAIL') {
     return {
       ok: false,
-      decision: 'nogo',
+      decision: 'fail',
       mergedResult: reviewResult,
       normalizedStatus: status,
       displayStatus: reviewResult.status,
@@ -131,7 +131,7 @@ export function parseReviewOutputContent(content) {
     ok: false,
     decision: 'invalid_contract',
     error: status
-      ? `Review output status must be GO or NO-GO, got '${reviewResult.status}'`
+      ? `Review output status must be PASS or FAIL, got '${reviewResult.status}'`
       : 'Review output missing required status',
     invalid_contract: true,
     mergedResult: reviewResult,

@@ -143,7 +143,7 @@ const activeDocFiles = [
 const activeDocDebt = [
   {
     label: 'active docs compatibility guidance',
-    re: /compatibility projections|(^|[^A-Z0-9_])GATEWAY_URL\b|(^|[^A-Z0-9_])GATEWAY_TOKEN\b|env fallback: `SWARM_CONFIG`|telemetry\.stream_key|\bstream_key\b|sendTask|legacy status files|compatibility shims|compatibility shim|\bgate-status\.json\b|\bstatus\.json\b/,
+    re: /compatibility projections|(^|[^A-Z0-9_])GATEWAY_URL\b|(^|[^A-Z0-9_])GATEWAY_TOKEN\b|env fallback: `SWARM_CONFIG`|telemetry\.stream_key|\bstream_key\b|sendTask|legacy status files|compatibility\s+shims?|\bgate-status\.json\b|\bstatus\.json\b/,
   },
 ];
 

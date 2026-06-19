@@ -184,10 +184,10 @@ export function loadPackagingRules(sourceRoot, overlayRoot) {
   }
 
   if (generalDockerfile.indexOf('COPY skills/nova/ /app/skills/') > generalDockerfile.indexOf('COPY skills/common/ /app/skills/')) {
-    throw new Error('docker/Dockerfile.general must copy skills/nova before skills/common so common overwrites compatibility shims');
+    throw new Error('docker/Dockerfile.general must copy skills/nova before skills/common so common materializes shared facades');
   }
   if (sandboxDockerfile.indexOf('COPY skills/buster/ /app/skills/') > sandboxDockerfile.indexOf('COPY skills/common/ /app/skills/')) {
-    throw new Error('docker/Dockerfile.sandbox must copy skills/buster before skills/common so common overwrites compatibility shims');
+    throw new Error('docker/Dockerfile.sandbox must copy skills/buster before skills/common so common materializes shared facades');
   }
 
   return {

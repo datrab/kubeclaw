@@ -176,6 +176,49 @@ export async function handleFailedPollResult({
       },
     }) };
   }
+  if (reasonCode === 'output_file_identity_mismatch') {
+    const reason = workerMeta.status_message || status?.completion_summary || 'Buster output_file identity mismatch';
+    log('ERROR', `Module ${moduleId}: ${reason} — failing closed without Buster crash retry`);
+    const blockedTransition = markModuleBlocked(
+      status,
+      'buster',
+      `${reason}. Infrastructure issue — Forge cannot fix stale or mismatched Buster output identity.`,
+      { reason: 'output_file_identity_mismatch' },
+    );
+    deps.saveStatus(config, dir, status, blockedTransition);
+    const mismatchCorrelation = {
+      run_id: completionIdentity.runId ?? completionIdentity.run_id ?? getRunId(config),
+      module_id: moduleId,
+      attempt: completionIdentity.attempt ?? currentAttemptNumber(status),
+      dispatch_id: completionIdentity.dispatchId || null,
+      gateway_label: resolveCompletionGatewayLabel(status, completionIdentity),
+      session_key: pollSessionKey,
+    };
+    await deps.discord(config, 'CRITICAL', `Module ${moduleId} BLOCKED — Buster output identity`,
+      `${reason}. This is an infrastructure/correlation failure, not an app-code verdict. Forge output preserved.`, [
+        ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, mismatchCorrelation),
+        { name: 'Action', value: 'Inspect Buster output_file identity/correlation state, then resume Buster.', inline: false },
+      ],
+      { correlation: mismatchCorrelation },
+    );
+    return { terminal: buildModuleBlockedTerminalResult(config, moduleId, {
+      reason: 'Buster output_file identity mismatch — infrastructure issue (not sent to Forge)',
+      issueType: 'environment',
+      runId: completionIdentity.runId ?? getRunId(config),
+      moduleDir: dir,
+      attempt: completionIdentity.attempt ?? currentAttemptNumber(status),
+      phase: 'buster',
+      dispatchId: completionIdentity.dispatchId,
+      gatewayLabel: resolveCompletionGatewayLabel(status, completionIdentity),
+      sessionKey: pollSessionKey,
+      metadata: {
+        failure_class: reasonCode,
+        status_authority: statusAuthority.source,
+        forge_preserved: true,
+        ...(statusAuthority.degraded ? { degraded: statusAuthority.degraded } : {}),
+      },
+    }) };
+  }
 
   // Crash-retryable: timeout, parse corruption, catch-all
   if (!isLastBusterAttempt) {

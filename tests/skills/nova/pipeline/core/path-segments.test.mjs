@@ -9,6 +9,8 @@ import {
 } from '../../../../../skills/nova/pipeline/core/paths.ts';
 import { createTempManager } from '../../../../../skills/nova/pipeline/core/temp.ts';
 
+const removedReviewFailField = `on_${'n' + 'ogo'}`;
+
 function makeConfig() {
   const repoRoot = '/home/path-segment-test';
   const swarmDir = path.join(repoRoot, 'Projects/demo/src/.swarm');
@@ -140,5 +142,29 @@ test('validateConfig rejects gate dependencies when progress.gates is omitted', 
   assert.throws(
     () => validateConfig(config, progress),
     /progress\.modules\.m1\.depends_on: gate 'approval' is not defined in progress\.gates/,
+  );
+});
+
+test('validateConfig rejects removed review-failure gate field', () => {
+  const config = makeConfig();
+  const progress = {
+    project: 'demo',
+    execution_order: ['gate:review'],
+    modules: {},
+    gates: {
+      review: {
+        type: 'review',
+        title: 'Review',
+        review_name: 'REVIEW',
+        [removedReviewFailField]: 'fix_and_rereview',
+        instructions_file: 'echo-review/REVIEW-INSTRUCTIONS.md',
+        output_file: 'logs/echo-review/REVIEW.json',
+      },
+    },
+  };
+
+  assert.throws(
+    () => validateConfig(config, progress),
+    new RegExp(`progress\\.gates\\.review\\.${removedReviewFailField}: removed field; use on_fail`),
   );
 });

@@ -49,7 +49,7 @@ RUN if ! command -v helm &>/dev/null; then \
 RUN chown -R root:root /app
 
 # 7. KubeClaw skills
-#    Runtime surface is /app/skills only. Nova repo-local compatibility shims
+#    Runtime surface is /app/skills only. Nova repo-local skill files
 #    are copied first, then canonical shared implementations from
 #    skills/common/pipeline overwrite the matching /app/skills/pipeline paths.
 RUN mkdir -p /app/skills

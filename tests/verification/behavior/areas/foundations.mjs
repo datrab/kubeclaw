@@ -116,8 +116,8 @@ await record('packaged helper runtime surface is owned by canonical common imple
     assert.equal(sandboxRuntimeText, commonText, `sandbox image should materialize common ${relPath}`);
     for (const area of ['nova', 'buster']) {
       const shimText = readOverlayText(sourceRoot, overlayRoot, `skills/${area}/${relPath}`);
-      assert(shimText.includes('export * from'), `${area} should keep a repo-local compatibility shim for ${relPath}`);
-      assert(shimText.includes('common/pipeline'), `${area} shim should point to the common owner for ${relPath}`);
+      assert(shimText.includes('export * from'), `${area} should keep a repo-local common facade for ${relPath}`);
+      assert(shimText.includes('common/pipeline'), `${area} facade should point to the common owner for ${relPath}`);
     }
   }
 });
@@ -2200,8 +2200,8 @@ await record('shared helper ownership stays local-shimmed and the public pipelin
     'skills/buster/pipeline/lifecycle-state.ts',
   ]) {
     const shimText = readOverlayText(sourceRoot, overlayRoot, relPath);
-    assert(shimText.includes('export * from'), `${relPath} should remain as a repo-local compatibility shim`);
-    assert(shimText.includes('common/pipeline'), `${relPath} shim should point to the common owner`);
+    assert(shimText.includes('export * from'), `${relPath} should remain as a repo-local common facade`);
+    assert(shimText.includes('common/pipeline'), `${relPath} facade should point to the common owner`);
   }
   assert(novaOrchestrationText.includes("../integrations/gateway.ts"));
   assert(novaModuleRunnerText.includes("./module-runner/attempt.ts"));

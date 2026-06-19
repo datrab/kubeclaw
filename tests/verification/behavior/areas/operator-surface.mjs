@@ -574,8 +574,8 @@ await record('Buster gate-owned Discord artifacts preserve canonical gate correl
   assert.equal(entry.dispatch_id, 'dispatch-gate-review-1');
   assert.equal(entry.session_key, 'agent:main:acp:gate-review');
   assert.equal(entry.actionability.impact, 'Gate review is blocked until Buster evidence is inspected.');
-  assert.equal(entry.actionability.action, 'Inspect the run-scoped Discord artifact and decide whether to retry.');
-  assert.equal(entry.actionability.evidence, 'run discord: synthetic-run-discord.jsonl');
+  assert.match(entry.actionability.action, /Read the notification fields/);
+  assert.match(entry.actionability.evidence, /Issue: Tests still failing/);
   assert.equal(fieldNames.includes('Impact'), true);
   assert.equal(fieldNames.includes('Action'), true);
   assert.equal(fieldNames.includes('Evidence'), true);
@@ -617,9 +617,10 @@ await record('Buster Discord alerts add default operator impact/action/evidence 
   const entry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'runs', 'run-buster-actionability-1', 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
 
   assert.match(fieldByName.Impact, /gate gate:buster-actionability/);
-  assert.match(fieldByName.Action, /latest\.json/);
-  assert.match(fieldByName.Evidence, /run discord:/);
-  assert.match(fieldByName.Evidence, /buster diagnostic:/);
+  assert.match(fieldByName.Action, /Read the notification fields/);
+  assert.match(fieldByName.Evidence, /Buster actionability default/);
+  assert.doesNotMatch(fieldByName.Action, /latest\.json/);
+  assert.doesNotMatch(fieldByName.Evidence, /discord\.jsonl/);
   assert.equal(entry.actionability.impact, fieldByName.Impact);
   assert.equal(entry.actionability.action, fieldByName.Action);
   assert.equal(entry.actionability.evidence, fieldByName.Evidence);
@@ -886,7 +887,7 @@ await record('Nova git soft-fail callers emit degraded telemetry outside git ret
         getTrackedAgent: () => ({ sessionKey: 'agent:echo:soft-fail-review', gatewayLabel: 'echo-quality', streamLogPath: null }),
         pollForFile: async (_config, outputPath) => {
           fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-          fs.writeFileSync(outputPath, JSON.stringify({ status: 'GO' }, null, 2));
+          fs.writeFileSync(outputPath, JSON.stringify({ status: 'PASS' }, null, 2));
           return { ok: true, status: { session_key: 'agent:echo:soft-fail-review' } };
         },
         killReviewerAgent: async () => true,
@@ -1203,7 +1204,7 @@ await record('observability docs use the current dotted telemetry event names', 
   assert.equal(observabilityDoc.includes('`pipeline.started`'), true);
   assert.equal(observabilityDoc.includes('`module.status_changed`'), true);
   assert.equal(observabilityDoc.includes('`gate.verdict`'), true);
-  assert.equal(observabilityDoc.includes('| `gate.verdict` | Gate returns GO or NO-GO |'), true);
+  assert.equal(observabilityDoc.includes('| `gate.verdict` | Gate returns PASS or FAIL |'), true);
   assert.equal(observabilityDoc.includes('| `gate.verdict` | Gate passes, fails, or blocks |'), false);
   assert.equal(observabilityDoc.includes('| `agent.spawned` | Session-backed agent work (Forge, Echo, subagent-backed fixes) spawned |'), true);
   assert.equal(observabilityDoc.includes('| `agent.spawned` | Agent (Forge, Echo, Buster) spawned |'), false);

@@ -29,7 +29,7 @@ import { discord } from '../integrations/discord.ts';
 import { resolveRegisteredRedisAdapter } from '../services/adapter-registry.ts';
 import { reaperAfterKill } from './shutdown.ts';
 import { waitForSessionIdle } from './acp-monitor.ts';
-import { modelToHarness, resolveRuntime } from './runtime.ts';
+import { canonicalizeModelId, modelToHarness, resolveRuntime } from './runtime.ts';
 import { getTrackedAgent, spawnSession, trackAgent, untrackAgent } from './lifecycle.ts';
 import { terminateSession } from './session-termination.ts';
 import { runModuleBusterWorker, runModuleForgeWorker } from './module-workers.ts';
@@ -136,6 +136,11 @@ export function acpLabel(agentType: string, moduleId: string) {
   return `${agentType}-${moduleId}`;
 }
 
+function displayAgentRole(agentType: string) {
+  const normalized = String(agentType || 'Agent').trim();
+  return normalized ? normalized.replace(/^\w/, (char) => char.toUpperCase()) : 'Agent';
+}
+
 export async function spawnAcpAgent(
   config: AnyRecord,
   agentType: string,
@@ -145,15 +150,16 @@ export async function spawnAcpAgent(
   opts: AnyRecord = {},
 ) {
   const agentConfig = config.agents[agentType];
+  const resolvedModel = canonicalizeModelId(model) || model;
   const trackingKey = opts.trackingLabel || acpLabel(agentType, moduleId);
   const dispatchTs = Date.now();
   const gatewayLabel = `${trackingKey}-${dispatchTs}`;
   const runId = opts.run_id || config?._runId || config?.run_id || null;
   const dispatchId = opts.dispatch_id || `${trackingKey}-dispatch-${dispatchTs}`;
-  const agentId = modelToHarness(model) || agentConfig.acp_agent_id;
+  const agentId = modelToHarness(resolvedModel) || agentConfig.acp_agent_id;
   if (!agentId) throw new Error(`ACP dispatch for '${agentType}' requires explicit acp_agent_id or model harness mapping`);
   const cwd = agentConfig.cwd || config.repo_root;
-  const runtime = resolveRuntime({ model });
+  const runtime = resolveRuntime({ model: resolvedModel });
   const useSubagent = runtime === 'subagent';
   const thinkingLevel = opts.thinking || null;
   const telemetryIdentity = {
@@ -175,10 +181,10 @@ export async function spawnAcpAgent(
 
   try {
     const sessionData = await spawnSession({
-      session: { model, runtime, agentId, cwd, label: gatewayLabel },
+      session: { model: resolvedModel, runtime, agentId, cwd, label: gatewayLabel },
     }, taskPrompt, agentConfig?.timeout_seconds || null, {
       runtime,
-      model,
+      model: resolvedModel,
       agentId,
       cwd,
       label: gatewayLabel,
@@ -189,9 +195,9 @@ export async function spawnAcpAgent(
       observabilityIdentity: telemetryIdentity,
     });
 
-    log('OK', `${useSubagent ? 'Subagent' : 'ACP'} session spawned: ${gatewayLabel} → ${sessionData.childSessionKey}${sessionData.streamLogPath ? ` (stream: ${sessionData.streamLogPath})` : ''}`, { agent: agentId, model, sessionKey: sessionData.childSessionKey, runId: sessionData.runId, dispatchId, stream: sessionData.streamLogPath });
+    log('OK', `${useSubagent ? 'Subagent' : 'ACP'} session spawned: ${gatewayLabel} → ${sessionData.childSessionKey}${sessionData.streamLogPath ? ` (stream: ${sessionData.streamLogPath})` : ''}`, { agent: agentId, model: resolvedModel, sessionKey: sessionData.childSessionKey, runId: sessionData.runId, dispatchId, stream: sessionData.streamLogPath });
     trackAgent(config, trackingKey, sessionData.childSessionKey, agentId, gatewayLabel, sessionData.streamLogPath, {
-      model,
+      model: resolvedModel,
       runtime: useSubagent ? 'subagent' : 'acp',
       moduleId,
       run_id: runId,
@@ -226,7 +232,7 @@ export async function spawnAcpAgent(
       gateway_label: gatewayLabel,
       session_key: sessionData.childSessionKey,
     };
-    discord(config, 'INFO', `🔬 ${useSubagent ? 'Subagent' : 'ACP'} Session Spawned: ${agentType}/${moduleId}`, 'Agent is now working.', buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.LIFECYCLE, {
+    discord(config, 'INFO', `🔬 ${displayAgentRole(agentType)} ${useSubagent ? 'Subagent' : 'ACP'} Session Spawned: ${agentType}/${moduleId}`, 'Agent is now working.', buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.LIFECYCLE, {
       runId,
       moduleId: telemetryModuleId(opts, moduleId),
       gateId: opts.gate_id || null,
@@ -237,7 +243,7 @@ export async function spawnAcpAgent(
       sessionKey: sessionData.childSessionKey,
     }, [
       { name: 'Agent', value: agentId, inline: true },
-      { name: 'Model', value: model, inline: true },
+      { name: 'Model', value: resolvedModel, inline: true },
     ]), { correlation: spawnDiscordCorrelation }).catch((e) => {
       log('DEBUG', `Agent spawn Discord notice failed for ${gatewayLabel}: ${e?.message || e}`);
     });
@@ -355,7 +361,8 @@ export function buildBusterPayload(
       max_cooldown_s: cooldownSeconds,
     },
   };
-  const sessionRuntime = resolveRuntime({ model: opts.model || null });
+  const resolvedModel = canonicalizeModelId(opts.model) || opts.model || null;
+  const sessionRuntime = resolveRuntime({ model: resolvedModel });
   const runId = opts.run_id || config.run_id || config._runId || null;
   const { attempt, dispatch_id: dispatchId } = opts;
   if (!Number.isInteger(attempt) || attempt < 1) throw new Error(`Buster ${taskType} payload requires explicit positive integer attempt`);
@@ -364,13 +371,13 @@ export function buildBusterPayload(
   if (taskType === 'module_test') {
     const mod = progress.modules[moduleId];
     const timeoutSeconds = (mod?.timeout_minutes ?? config.default_timeout_minutes) * 60;
-    return { ...base, stage_id: 'worker:module_buster', worker_type: 'module_buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: opts.model || null, runtime: sessionRuntime, agentId: modelToHarness(opts.model) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId }, module_path: mod ? modulePathRef(config, mod.dir) : null, buster_md_path: mod ? moduleBusterMdPathRef(config, mod.dir) : null, output_file: mod ? moduleBusterOutputPathRef(config, mod.dir) : null, suites: mod?.test_suites || null, test_config: buildBusterTestConfig(mod, config), capabilities: resolveConfiguredBusterCapabilities(mod), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: mod ? moduleLogDir(config, mod.dir) : null, pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
+    return { ...base, stage_id: 'worker:module_buster', worker_type: 'module_buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: modelToHarness(resolvedModel) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId }, module_path: mod ? modulePathRef(config, mod.dir) : null, buster_md_path: mod ? moduleBusterMdPathRef(config, mod.dir) : null, output_file: mod ? moduleBusterOutputPathRef(config, mod.dir) : null, suites: mod?.test_suites || null, test_config: buildBusterTestConfig(mod, config), capabilities: resolveConfiguredBusterCapabilities(mod), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: mod ? moduleLogDir(config, mod.dir) : null, pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
   }
   if (taskType !== 'gate_test') throw new Error(`Buster payload builder does not support task_type '${taskType}'`);
   const gate = opts.gate || progress.gates?.[moduleId] || {};
   const gateTimeout = gate.timeout_minutes ?? config.default_timeout_minutes;
   const timeoutSeconds = gateTimeout * 60;
-  return { ...base, stage_id: 'gate:buster', gate_type: 'buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: opts.model || null, runtime: sessionRuntime, agentId: modelToHarness(opts.model) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId }, gate_id: moduleId, gate_title: gate.title || moduleId, work_dir: gateWorkDirPathRef(config), output_file: gateOutputPathRef(config, gate), instructions_file: gateInstructionsPathRef(config, gate), suites: gate.test_suites || null, test_config: buildBusterTestConfig(gate, config), capabilities: resolveConfiguredBusterCapabilities(gate), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: gateLogDir(config, moduleId), pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
+  return { ...base, stage_id: 'gate:buster', gate_type: 'buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: modelToHarness(resolvedModel) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId }, gate_id: moduleId, gate_title: gate.title || moduleId, work_dir: gateWorkDirPathRef(config), output_file: gateOutputPathRef(config, gate), instructions_file: gateInstructionsPathRef(config, gate), suites: gate.test_suites || null, test_config: buildBusterTestConfig(gate, config), capabilities: resolveConfiguredBusterCapabilities(gate), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: gateLogDir(config, moduleId), pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
 }
 
 export async function dispatchRedisTask(
@@ -412,12 +419,13 @@ export async function spawnAgent(
 ) {
   const agentConfig = config.agents[agentType];
   if (!agentConfig) throw new Error(`Unknown agent type: ${agentType}`);
+  const resolvedModel = canonicalizeModelId(model) || model;
   if (agentConfig.dispatch === 'redis') {
     const taskType = opts.taskType || 'module_test';
-    opts.model = model;
+    opts.model = resolvedModel;
     return await dispatchRedisTask(config, progress, agentType, moduleId, taskType, taskPrompt, opts.status, opts);
   }
-  return spawnAcpAgent(config, agentType, moduleId, model, taskPrompt, opts);
+  return spawnAcpAgent(config, agentType, moduleId, resolvedModel, taskPrompt, opts);
 }
 
 export async function killAgent(config: AnyRecord, agentType: string, moduleId: string, graceful: boolean = false, opts: AnyRecord = {}) {

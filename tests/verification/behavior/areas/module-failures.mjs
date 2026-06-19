@@ -64,7 +64,7 @@ export async function registerModuleFailuresArea({
 
 function platformModuleFailureDefaults() {
   return {
-    fallback_model: 'openai-codex/gpt-5.4',
+    fallback_model: 'openai/gpt-5.4',
     default_timeout_minutes: 30,
     default_max_fails: 3,
     rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },

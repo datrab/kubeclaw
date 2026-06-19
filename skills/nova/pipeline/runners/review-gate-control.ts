@@ -13,7 +13,7 @@ import { buildGateRemediationRequestControlResult } from '../services/remediatio
 import {
   buildReviewGateFindings,
   extractReviewIssues,
-  summarizeReviewNoGoReason,
+  summarizeReviewFailReason,
 } from './review-gate-output.ts';
 
 export const REVIEW_GATE_FAILURE_CLASSES = Object.freeze([
@@ -172,7 +172,7 @@ export function buildReviewRequestFixControlResult(config, gateId, gate, reviewR
   if (!('gatewayLabel' in opts) || !('sessionKey' in opts)) throw new Error(`Review gate '${gateId}' remediation requires explicit correlation`);
   const gatewayLabel = opts.gatewayLabel ?? null;
   const sessionKey = opts.sessionKey ?? null;
-  const summary = summarizeReviewNoGoReason(issues, reviewResult?.mergedResult);
+  const summary = summarizeReviewFailReason(issues, reviewResult?.mergedResult);
 
   return buildGateRemediationRequestControlResult({
     producerType: 'review',

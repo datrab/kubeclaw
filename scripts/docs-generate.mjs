@@ -374,7 +374,7 @@ ${generatedEnd()}
 | --- | --- | --- |
 | \`npm run docs:check:generated\` | generated inventory and generated reference pages | stale \`docs/generated/inventory/*.json\` or stale generated reference Markdown |
 | \`npm run docs:check:refs\` | local Markdown links and cited repository paths in active docs/current audit artifacts | missing doc, script, workflow, chart, config, test, skill, plugin, or root file path |
-| \`npm run docs:check:coverage\` | coverage matrix and topic-map consistency | untracked active docs, invalid ratings, adequate rows without accepted rationale, weak ratings without explicit allowance, vague topic-map weakness language |
+| \`npm run docs:check:coverage\` | documentation topic-map consistency | missing active docs referenced by the topic map or vague topic-map weakness language |
 | \`git diff --check\` | whitespace hygiene in changed files | trailing whitespace or conflict-marker-like whitespace errors |
 
 ## Maintenance Notes

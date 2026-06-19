@@ -89,7 +89,7 @@ try {
     role: 'diagnostic',
     label: 'review',
     format: 'json',
-    content: { status: 'NO-GO', gate_id: 'review' },
+    content: { status: 'FAIL', gate_id: 'review' },
     metadata: { gate_id: 'review', attempt: 2 },
   });
   assert.equal(persisted.artifact.authority.role, PIPELINE_ARTIFACT_AUTHORITY_ROLES.PLUGIN_ARTIFACT_REFERENCE);

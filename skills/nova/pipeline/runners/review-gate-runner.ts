@@ -1,8 +1,8 @@
 // runners/review-gate-runner.ts — Review gate runner
 // Handles the review gate lifecycle:
-//   1. Completion check (content-aware: NO-GO files are not complete)
+//   1. Completion check (content-aware: FAIL files are not complete)
 //   2. Lint report generation (deterministic static analysis)
-//   3. Echo reviewer spawn → poll output file → parse GO/NO-GO
+//   3. Echo reviewer spawn → poll output file → parse PASS/FAIL
 //   4. Fix-and-rereview loop (Forge fixes issues, Echo re-reviews)
 
 import { selectDeps } from '../core/deps.ts';
@@ -46,7 +46,7 @@ import {
 import {
   buildReviewGateFindings,
   extractReviewIssues,
-  summarizeReviewNoGoReason,
+  summarizeReviewFailReason,
 } from './review-gate-output.ts';
 import {
   buildReviewGateControlResult,
@@ -279,7 +279,7 @@ export async function cleanupReviewFiles(config, gate, reviewers) {
   }
 }
 
-function buildReviewNoGoFields(config, reviewResult, issues = []) {
+function buildReviewFailFields(config, reviewResult, issues = []) {
   const fields = [];
   for (let i = 0; i < Math.min(issues.length, 3); i++) {
     fields.push({ name: `Issue ${i + 1}`, value: truncateForDiscord(issues[i].description, 200), inline: false });
@@ -309,7 +309,7 @@ export async function buildReviewRemediationExhaustedControlResult(config, gateI
     issues_count: Array.isArray(issues) ? issues.length : extractReviewIssues(lastReview).length,
     fix_cycle: maxFixCycles,
     duration_seconds: Math.round((Date.now() - gateStartedAt) / 1000),
-    reason: `NO-GO after ${maxFixCycles} fix cycles`,
+    reason: `FAIL after ${maxFixCycles} fix cycles`,
     session_key: latestReviewSessionKey,
     presentation: {
       discord: {
@@ -325,7 +325,7 @@ export async function buildReviewRemediationExhaustedControlResult(config, gateI
     phase: 'review_gate_fix',
     attempt: maxFixCycles,
     maxAttempts: maxFixCycles,
-    reason: `Review gate '${gateId}' NO-GO after ${maxFixCycles} fix cycles`,
+    reason: `Review gate '${gateId}' FAIL after ${maxFixCycles} fix cycles`,
     sessionKey: latestReviewSessionKey,
     gatewayLabel: latestReviewGatewayLabel,
   });
@@ -334,14 +334,14 @@ export async function buildReviewRemediationExhaustedControlResult(config, gateI
     producerType: 'review',
     nextAction: GATE_CONTROL_ACTIONS.BLOCK,
     issueType: 'code',
-    summary: `Review gate '${gateId}' NO-GO after ${maxFixCycles} fix cycles`,
+    summary: `Review gate '${gateId}' FAIL after ${maxFixCycles} fix cycles`,
     findings: buildReviewGateFindings(issues),
     metadata: {
       gate_id: gateId,
       gate_type: gate?.type || 'review',
       run_id: getRunId(config) || config?._runId || config?.run_id || null,
       gate: gateId,
-      reason: `Review gate '${gateId}' NO-GO after ${maxFixCycles} fix cycles`,
+      reason: `Review gate '${gateId}' FAIL after ${maxFixCycles} fix cycles`,
       fix_cycles: maxFixCycles,
       last_review: cloneSerializable(lastReview),
       gateway_label: latestReviewGatewayLabel,
@@ -364,7 +364,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
 
   const reviewConfig = opts.reviewConfig || resolveReviewConfig(config, progress, gate);
   const { reviewers } = reviewConfig;
-  const noGoAction = gate.on_nogo || 'fix_and_rereview';
+  const failAction = gate.on_fail || 'fix_and_rereview';
   const remediation = opts.remediation || readGateRemediationSpec(opts.controlResult) || null;
   const maxRateLimitPauses = config.rate_limit.max_pauses_per_module;
   const attempt = Number(opts.attempt || 1);
@@ -374,7 +374,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
     log('STEP', `═══════════════════════════════════════════════════════`);
     log('STEP', `  REVIEW GATE: ${gate.title}`);
     log('STEP', `  Reviewer: ${reviewConfig.primaryReviewer?.label || 'none'} | lint_tier: ${reviewConfig.lintTier}`);
-    log('STEP', `  on_nogo: ${noGoAction} | max_fix_cycles: ${reviewConfig.maxFixCycles}`);
+    log('STEP', `  on_fail: ${failAction} | max_fix_cycles: ${reviewConfig.maxFixCycles}`);
     log('STEP', `═══════════════════════════════════════════════════════`);
   }
 
@@ -386,9 +386,9 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
       try {
         const data = JSON.parse(fs.readFileSync(outPath, 'utf8'));
         const s = String(data.status || '').trim().toUpperCase();
-        if (s === 'GO') {
+        if (s === 'PASS') {
           isCompleted = true;
-        } else if (s === 'NO-GO') {
+        } else if (s === 'FAIL') {
           if (opts.novaPrompt) {
             skipInitialReview = true;
             log('INFO', `Review gate '${gateId}' is ${data.status} + Nova prompt provided — skipping initial review, going to Forge fix`);
@@ -449,7 +449,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
           fields: [
             ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate.type, attempt }),
             { name: 'Reviewer', value: reviewerLabel || 'none' },
-            { name: 'on_nogo', value: noGoAction },
+            { name: 'on_fail', value: failAction },
           ],
         },
       },
@@ -592,7 +592,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
 
   if (reviewResult.ok) {
     const reviewSessionKey = resolveResultSessionKey(reviewResult);
-    log('OK', `Review gate '${gateId}' GO${attempt > 1 ? ` after ${attempt - 1} fix cycle(s)` : ''}`);
+    log('OK', `Review gate '${gateId}' PASS${attempt > 1 ? ` after ${attempt - 1} fix cycle(s)` : ''}`);
     getGateStats(config).gates_completed.push(gateId);
     onGatePass(_telemetryCtx(config), gateId, {
       gate_type: gate.type,
@@ -602,7 +602,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
       presentation: {
         discord: {
           level: 'OK',
-          title: `Review: ${gate.title} GO`,
+          title: `Review: ${gate.title} PASS`,
           description: attempt > 1 ? `Passed after ${attempt - 1} fix cycle(s)` : 'Review approved',
           fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate.type, attempt, gateway_label: resolveResultGatewayLabel(reviewResult), session_key: reviewSessionKey }),
         },
@@ -611,11 +611,11 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
     return buildReviewGateControlResult(config, gateId, gate, { outcome_class: 'passed', attempt }, { ...opts, input: { ids: { attempt } } });
   }
 
-  log('WARN', `Review gate '${gateId}' NO-GO`);
+  log('WARN', `Review gate '${gateId}' FAIL`);
   const issues = extractReviewIssues(reviewResult.mergedResult);
   log('INFO', `${issues.length} critical issue(s) extracted from review`);
-  const noGoFields = buildReviewNoGoFields(config, reviewResult, issues);
-  const noGoReason = summarizeReviewNoGoReason(issues, reviewResult?.mergedResult);
+  const failFields = buildReviewFailFields(config, reviewResult, issues);
+  const failReason = summarizeReviewFailReason(issues, reviewResult?.mergedResult);
 
   onGateFail(_telemetryCtx(config), gateId, {
     gate_type: gate.type,
@@ -623,21 +623,21 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
     blockers_count: Array.isArray(reviewResult?.mergedResult?.critical_blockers) ? reviewResult.mergedResult.critical_blockers.length : null,
     fix_cycle: Math.max(0, attempt - 1),
     duration_seconds: Math.round((Date.now() - gateStartedAt) / 1000),
-    reason: noGoReason,
+    reason: failReason,
     session_key: resolveResultSessionKey(reviewResult),
     presentation: {
       discord: {
         level: 'WARN',
-        title: attempt > 1 ? 'Review Fix: Still NO-GO' : `Review: ${gate.title} NO-GO — Fix & Re-Review`,
+        title: attempt > 1 ? 'Review Fix: Still FAIL' : `Review: ${gate.title} FAIL — Fix & Re-Review`,
         description: attempt > 1 ? `Cycle ${attempt - 1}/${reviewConfig.maxFixCycles} for ${gate.title}. Echo still found ${issues.length} issue(s).` : `${issues.length} critical issue(s). Starting fix-and-rereview cycle.`,
-        fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate.type, attempt, gateway_label: resolveResultGatewayLabel(reviewResult), session_key: resolveResultSessionKey(reviewResult) }, noGoFields),
+        fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate.type, attempt, gateway_label: resolveResultGatewayLabel(reviewResult), session_key: resolveResultSessionKey(reviewResult) }, failFields),
       },
     },
   });
 
-  if (noGoAction !== 'fix_and_rereview') {
+  if (failAction !== 'fix_and_rereview') {
     return buildReviewGateControlResult(config, gateId, gate, {
-      reason: `Review gate '${gateId}' NO-GO`,
+      reason: `Review gate '${gateId}' FAIL`,
       failure_class: 'verdict_fail',
       outcome_class: 'needs_nova',
       attempt,

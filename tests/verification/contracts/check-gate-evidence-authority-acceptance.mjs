@@ -54,13 +54,13 @@ const reviewGate = { type: 'review' };
 const reviewBlock = buildReviewGateControlResult(config, reviewGateId, reviewGate, {
   outcome_class: 'needs_nova',
   failure_class: 'verdict_fail',
-  reason: 'Review returned NO-GO',
+  reason: 'Review returned FAIL',
   attempt,
   dispatch_id: 'dispatch-review',
   gateway_label: 'gateway-review',
   session_key: 'session-review',
   last_review: {
-    status: 'NO-GO',
+    status: 'FAIL',
     issues: [{ title: 'Fix issue', severity: 'critical' }],
   },
 });
@@ -141,7 +141,7 @@ assertAuthority(busterFix, { expectedDispatchId: dispatchId, requireDispatchId: 
 
 const reviewFix = buildReviewRequestFixControlResult(config, reviewGateId, reviewGate, {
   mergedResult: {
-    status: 'NO-GO',
+    status: 'FAIL',
     issues: [{ title: 'Review issue', severity: 'critical' }],
   },
 }, {

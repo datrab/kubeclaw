@@ -104,6 +104,7 @@ function resolveModuleBusterFailureClass(pollResult: AnyRecord = {}) {
   if (reason === 'parse_corrupted') return 'parse_corrupted';
   if (reason === 'rate_limit_exhausted') return 'rate_limit_exhausted';
   if (reason === 'completion_archive_failed') return 'completion_archive_failed';
+  if (reason === 'output_file_identity_mismatch') return 'output_file_identity_mismatch';
   return null;
 }
 
@@ -147,7 +148,9 @@ function busterControlForPollResult(pollResult: AnyRecord = {}, failureClass: st
   if (failureClass === 'rate_limit_exhausted') {
     return { nextAction: 'block', issueType: 'environment', outcomeClass: 'rate_limited', failureClass };
   }
-  if (failureClass === 'spawn_failed' || failureClass === 'completion_archive_failed') {
+  if (failureClass === 'spawn_failed'
+      || failureClass === 'completion_archive_failed'
+      || failureClass === 'output_file_identity_mismatch') {
     return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error', failureClass };
   }
   return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error', failureClass: failureClass || 'unclassified_poll_failure' };

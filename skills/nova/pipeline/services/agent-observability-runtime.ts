@@ -72,9 +72,11 @@ export function startAgentObservabilityIngester(config, ctx = {}, opts = {}) {
           log('WARN', `[agent-observability-ingester] runtime loop failed: ${error?.message || String(error)}`);
           try {
             await reportDegraded({ ...ctx, config }, {
+              component: 'agent_observability_ingester',
+              surface: 'redis_control_stream',
               reason: 'agent_observability_ingester_loop_failed',
               source: 'agent_observability_ingester_runtime',
-              detail: { error: error?.message || String(error) },
+              detail: error?.message || String(error),
             });
           } catch (reportError) {
             log('WARN', `[agent-observability-ingester] degraded evidence failed: ${reportError?.message || String(reportError)}`);

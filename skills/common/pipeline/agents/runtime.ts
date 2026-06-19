@@ -10,10 +10,18 @@ export function modelToHarness(modelId: any) {
   return null;
 }
 
+export function canonicalizeModelId(modelId: any) {
+  if (!modelId) return null;
+  const raw = String(modelId).trim();
+  if (!raw) return null;
+  return raw
+    .replace(/^openai-codex\//i, 'openai/')
+    .replace(/^codex-(?=\d)/i, 'gpt-');
+}
+
 export function isSubagentModel(modelId: any) {
-  const m = String(modelId || '').toLowerCase();
+  const m = String(canonicalizeModelId(modelId) || '').toLowerCase();
   return m.startsWith('openai/')
-    || m.startsWith('openai-codex/')
     || m.includes('gpt-5')
     || m.includes('codex');
 }

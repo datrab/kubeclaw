@@ -1125,7 +1125,7 @@ const config = {
     assert.equal(events[1].gate_type, null);
     assert.equal(events[2].gate_id, 'missing');
     assert.equal(events[2].gate_type, null);
-    assert.equal(events[2].verdict, 'NO-GO');
+    assert.equal(events[2].verdict, 'FAIL');
     assert.equal(events[2].reason, "Gate registry missing in progress.json while dispatching 'missing'");
     assert.equal(events[3].gate_id, 'missing');
     assert.equal(events[3].reason, 'error');
@@ -1550,7 +1550,7 @@ const config = {
           writeSummary: () => {},
           runGate: async (_config, _progress, gateId) => {
             assert.equal(validatorCalls.length, 1, 'review gate must not dispatch before full_lint passes');
-            fs.writeFileSync(path.join(swarmDir, 'review-output.json'), JSON.stringify({ status: 'GO' }));
+            fs.writeFileSync(path.join(swarmDir, 'review-output.json'), JSON.stringify({ status: 'PASS' }));
             return makeStepResult({
               stepType: 'gate',
               stepId: gateId,

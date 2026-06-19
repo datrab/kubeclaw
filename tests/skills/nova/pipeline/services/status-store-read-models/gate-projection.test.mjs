@@ -22,7 +22,7 @@ function makeConfig() {
 }
 
 test('projectGateSchedulerState preserves canonical failed gate output statuses', () => {
-  for (const status of ['FAIL', 'NO-GO', 'BLOCKED']) {
+  for (const status of ['FAIL', 'FAIL', 'BLOCKED']) {
     const config = makeConfig();
     const gate = {
       type: 'buster',

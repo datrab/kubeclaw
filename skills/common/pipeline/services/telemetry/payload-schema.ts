@@ -46,7 +46,7 @@ const boolean: Validator = (value: any) => typeof value === 'boolean';
 const object: Validator = (value: any) => isPlainObject(value);
 const array: Validator = (value: any) => Array.isArray(value);
 const stringArray: Validator = (value: any) => Array.isArray(value) && value.every((item: any) => typeof item === 'string');
-const verdict: Validator = (value: any) => value === 'GO' || value === 'NO-GO';
+const verdict: Validator = (value: any) => value === 'PASS' || value === 'FAIL';
 const any: Validator = () => true;
 const arrayOrObject: Validator = (value: any) => Array.isArray(value) || isPlainObject(value);
 const jsonScalar: Validator = (value: any) => value === null || ['string', 'number', 'boolean'].includes(typeof value);

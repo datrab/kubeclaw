@@ -397,10 +397,10 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
     };
   }
 
-  if (parsedReview.decision === 'go') {
-    log('INFO', `Review result: ${parsedReview.displayStatus} — GO`);
+  if (parsedReview.decision === 'pass') {
+    log('INFO', `Review result: ${parsedReview.displayStatus} — PASS`);
     return { ok: true, mergedResult: parsedReview.mergedResult, mergedFilePath: outputFilePath, gateway_label: echoGatewayLabel, session_key: echoSessionKey };
   }
-  log('INFO', `Review result: ${parsedReview.displayStatus} — NO-GO`);
+  log('INFO', `Review result: ${parsedReview.displayStatus} — FAIL`);
   return { ok: false, mergedResult: parsedReview.mergedResult, mergedFilePath: outputFilePath, gateway_label: echoGatewayLabel, session_key: echoSessionKey };
 }

@@ -131,9 +131,9 @@ for (const filePath of runtimeFiles) {
   if (approved.has(rel)) continue;
   const source = fs.readFileSync(filePath, 'utf8');
   assert.equal(
-    /compatibility shim|repo-local facade for .*common|common-pipeline re-export/i.test(source),
+    /compatibility\s+shim|repo-local facade for .*common|common-pipeline re-export/i.test(source),
     false,
-    `${rel} must not introduce an unapproved common facade or compatibility shim`,
+    `${rel} must not introduce an unapproved common facade`,
   );
 }
 

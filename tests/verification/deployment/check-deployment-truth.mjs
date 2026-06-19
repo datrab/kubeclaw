@@ -1067,6 +1067,9 @@ assertIncludes(deployScript, 'controller_image_repo="${BUSTER_CONTROLLER_IMAGE_R
 assertIncludes(deployScript, 'controller_image_tag="${BUSTER_CONTROLLER_IMAGE_TAG:-${NAMESPACE_CONTROLLER_IMAGE_TAG:-}}"', 'Buster deploy overrides must keep the namespace controller on the dedicated controller image tag');
 assertIncludes(deployScript, '--set probes.dependencies.litellm.enabled=false', 'Agent deployment must disable LiteLLM readiness checks when LiteLLM infrastructure is intentionally disabled');
 assertIncludes(deployScript, '--set probes.dependencies.qdrant.enabled=false', 'Agent deployment must disable Qdrant readiness checks when Qdrant infrastructure is intentionally disabled');
+assertIncludes(deployScript, 'restart_agent_pods_after_deploy() {', 'Agent deployment must force pod recreation after Helm apply so reused image tags are pulled');
+assertIncludes(deployScript, 'kubectl delete pod -n "$NAMESPACE" -l "$selector" --ignore-not-found --wait=true', 'Agent deployment must delete pods by release selector after Helm apply');
+assertIncludes(deployScript, 'restart_agent_pods_after_deploy "agent-${role}"', 'Agent deployment must restart pods for both single-agent and all-agent deploy commands');
 assertIncludes(deployScript, 'DISABLE_IMAGE_PULL_SECRETS=1', 'Live deployment verification must drop GHCR pull secrets when redeploying against registry-local');
 assertIncludes(deployScript, 'cmd_smoke_agent() {', 'Deploy script must expose a canonical single-agent smoke command');
 assertIncludes(deployScript, 'cmd_smoke() {', 'Deploy script must expose a canonical multi-agent smoke command');

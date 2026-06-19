@@ -40,7 +40,7 @@ export async function registerAgentLifecycleArea({
 }) {
 function platformAgentLifecycleDefaults() {
   return {
-    fallback_model: 'openai-codex/gpt-5.4',
+    fallback_model: 'openai/gpt-5.4',
     rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },
     buster: {
       suite_timeout_ms: 300000,
@@ -127,7 +127,7 @@ await record('session-backed Forge spawns pass observer identity without core ag
 
     const topLevelEntry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
     const runScopedEntry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'runs', runId, 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
-    assert.equal(topLevelEntry.title, '🔬 ACP Session Spawned: forge/01');
+    assert.equal(topLevelEntry.title, '🔬 Forge ACP Session Spawned: forge/01');
     assert.equal(topLevelEntry.run_id, runId);
     assert.equal(runScopedEntry.run_id, runId);
     assert.equal(runScopedEntry.gateway_label, topLevelEntry.gateway_label);
@@ -185,7 +185,7 @@ await record('subagent-backed Forge spawns preserve subagent runtime semantics a
   };
 
   try {
-    const spawnResult = await orchestrationTestMod.spawnAcpAgent(config, 'forge', '01', 'openai-codex/gpt-5.4', 'Implement the module', {
+    const spawnResult = await orchestrationTestMod.spawnAcpAgent(config, 'forge', '01', 'openai/gpt-5.4', 'Implement the module', {
       module_id: '01',
       attempt: 3,
       thinking: 'high',
@@ -200,7 +200,7 @@ await record('subagent-backed Forge spawns preserve subagent runtime semantics a
     const spawnRequests = requests.filter((req) => req?.tool === 'sessions_spawn');
     assert.equal(spawnRequests.length, 1);
     assert.equal(spawnRequests[0]?.args?.runtime, 'subagent');
-    assert.equal(spawnRequests[0]?.args?.model, 'openai-codex/gpt-5.4');
+    assert.equal(spawnRequests[0]?.args?.model, 'openai/gpt-5.4');
     assert.equal(spawnRequests[0]?.args?.agentId ?? null, null);
     assert.equal(spawnRequests[0]?.args?.streamTo ?? null, null);
     assert.equal(spawnRequests[0]?.args?.thinking ?? null, null);
@@ -217,7 +217,7 @@ await record('subagent-backed Forge spawns preserve subagent runtime semantics a
 
     const topLevelEntry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
     const runScopedEntry = JSON.parse(fs.readFileSync(path.join(logRoot, 'pipeline', 'runs', runId, 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
-    assert.equal(topLevelEntry.title, '🔬 Subagent Session Spawned: forge/01');
+    assert.equal(topLevelEntry.title, '🔬 Forge Subagent Session Spawned: forge/01');
     assert.equal(topLevelEntry.run_id, runId);
     assert.equal(runScopedEntry.run_id, runId);
     assert.equal(runScopedEntry.gateway_label, topLevelEntry.gateway_label);
@@ -670,7 +670,7 @@ const config = {
       'Run the unit suite',
       { forge_commit_hash: 'abc123' },
       {
-        model: 'openai-codex/gpt-5.4',
+        model: 'openai/gpt-5.4',
         run_id: 'run-dispatch-direct-1',
         attempt: 2,
         dispatch_id: 'dispatch-buster-01-attempt-2',
@@ -752,7 +752,7 @@ await record('dispatchRedisTask resolves Redis test adapters per config in one p
     'module_test',
     'Run the first unit suite',
     { forge_commit_hash: 'abc123' },
-    { model: 'openai-codex/gpt-5.4', run_id: 'run-first', attempt: 1, dispatch_id: 'dispatch-first', deps: firstFixture.deps },
+    { model: 'openai/gpt-5.4', run_id: 'run-first', attempt: 1, dispatch_id: 'dispatch-first', deps: firstFixture.deps },
   );
   const secondResult = await orchestrationTestMod.dispatchRedisTask(
     secondFixture.config,
@@ -762,7 +762,7 @@ await record('dispatchRedisTask resolves Redis test adapters per config in one p
     'module_test',
     'Run the second unit suite',
     { forge_commit_hash: 'def456' },
-    { model: 'openai-codex/gpt-5.4', run_id: 'run-second', attempt: 1, dispatch_id: 'dispatch-second', deps: secondFixture.deps },
+    { model: 'openai/gpt-5.4', run_id: 'run-second', attempt: 1, dispatch_id: 'dispatch-second', deps: secondFixture.deps },
   );
 
   assert.equal(firstResult.id, 'first-adapter');
@@ -816,7 +816,7 @@ await record('dispatchRedisTask stays fail-closed when redis_js_path is not a re
       'Run the unit suite',
       { forge_commit_hash: 'abc123' },
       {
-        model: 'openai-codex/gpt-5.4',
+        model: 'openai/gpt-5.4',
         run_id: 'run-dispatch-invalid-1',
         attempt: 1,
         dispatch_id: 'dispatch-invalid-1',

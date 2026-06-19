@@ -228,7 +228,7 @@ assert.equal(busterVerdictFail.nextAction, 'block');
 assert.equal(busterVerdictFail.issueType, 'code');
 assert.equal(busterVerdictFail.diagnostics.typed.gate.outcomeClass, 'needs_nova');
 assert.equal(
-  busterTerminalMod.assertBusterGateEvaluationResult({ ok: false, reason: 'verdict_fail', status: { reason: 'NO-GO' } }).type,
+  busterTerminalMod.assertBusterGateEvaluationResult({ ok: false, reason: 'verdict_fail', status: { reason: 'FAIL' } }).type,
   busterTerminalMod.BUSTER_GATE_EVALUATION_RESULT_TYPES.VERDICT_FAIL,
   'Buster gate terminal should classify the canonical verdict_fail reason as verdict_fail',
 );
@@ -293,7 +293,7 @@ assert.deepEqual(helperMod.validateTypedGateControlResult(typed, {
   allowedNextActions: ['pass', 'block'],
 }), []);
 
-for (const aliasStatus of ['GO', 'OK', 'APPROVED', 'NO-GO', 'REJECTED', 'CANCELLED', 'PENDING_APPROVAL']) {
+for (const aliasStatus of ['OK', 'APPROVED', 'REJECTED', 'CANCELLED', 'PENDING_APPROVAL']) {
   const aliasTyped = helperMod.buildTypedGateControlResult({
     producerType: 'review',
     nextAction: aliasStatus === 'PENDING_APPROVAL' ? 'wait' : 'block',

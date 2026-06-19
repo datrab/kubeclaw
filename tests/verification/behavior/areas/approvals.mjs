@@ -270,7 +270,7 @@ const config = {
   assert.equal(events[0].gate_id, 'release-approval');
   assert.equal(events[1].timeout_policy, 'BLOCK');
   assert.equal(events[2].status, 'APPROVED');
-  assert.equal(events[3].verdict, 'GO');
+  assert.equal(events[3].verdict, 'PASS');
 });
 
 await record('approval signal wait reloads persisted deadline before timeout decisions', async () => {
@@ -763,7 +763,7 @@ const config = {
   assert.equal(events[1].gate_type, 'approval');
   assert.equal(events[1].timeout_policy, 'BLOCK');
   assert.equal(events[2].gate_type, 'approval');
-  assert.equal(events[3].verdict, 'GO');
+  assert.equal(events[3].verdict, 'PASS');
   assert.equal(events[3].gate_type, 'approval');
 });
 
@@ -828,7 +828,7 @@ const config = {
   assert.equal(events[1].timeout_policy, 'BLOCK');
   assert.equal(events[2].choice, 'TIMED_OUT');
   assert.equal(events[2].gate_type, 'approval');
-  assert.equal(events[3].verdict, 'NO-GO');
+  assert.equal(events[3].verdict, 'FAIL');
   assert.equal(events[3].gate_type, 'approval');
   assert.equal(events[3].reason, 'Approval timed out after 0 minutes');
 });
@@ -981,7 +981,7 @@ const config = {
   assert.equal(events[2].resolved_by, 'nova');
   assert.equal(events[3].gate_id, 'release-approval');
   assert.equal(events[3].gate_type, 'approval');
-  assert.equal(events[3].verdict, 'NO-GO');
+  assert.equal(events[3].verdict, 'FAIL');
   assert.equal(events[3].reason, 'Needs changes');
 });
 

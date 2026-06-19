@@ -210,7 +210,7 @@ node tests/verification/behavior/verify.mjs --area pipeline
 
 ## Relationship To OpenClaw
 
-KubeClaw config selects dispatch mode, model IDs, agent IDs, and observability/plugin behavior. Provider credentials, model availability, and gateway behavior are OpenClaw-owned concerns. Use KubeClaw docs to understand which model IDs and secrets are referenced; use OpenClaw docs to configure provider credentials and gateway behavior.
+KubeClaw config selects dispatch mode, model IDs, agent IDs, and observability/plugin behavior. Pipeline model policy canonicalizes older Codex/OpenAI aliases before logging policy or dispatching work, so `openai-codex/gpt-5.4` is sent to workers and subagents as `openai/gpt-5.4`, and `codex-5.4` is sent as `gpt-5.4`. Provider credentials, model availability, and gateway behavior are OpenClaw-owned concerns. Use KubeClaw docs to understand which model IDs and secrets are referenced; use OpenClaw docs to configure provider credentials and gateway behavior.
 
 ## Sources
 

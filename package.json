@@ -9,6 +9,8 @@
     "docs:check:generated": "npm run docs:inventory:check && npm run docs:generate:check",
     "docs:check:refs": "node scripts/docs-check-refs.mjs",
     "docs:check:coverage": "node scripts/docs-check-coverage.mjs",
-    "docs:check": "npm run docs:check:generated && node scripts/docs-check.mjs && npm run docs:check:refs && npm run docs:check:coverage"
+    "docs:check": "npm run docs:check:generated && node scripts/docs-check.mjs && npm run docs:check:refs && npm run docs:check:coverage",
+    "progress:scaffold:typecheck": "tsc --noEmit -p skills/nova/project_setup/tsconfig.json",
+    "progress:scaffold": "node skills/nova/project_setup/tools/progress-scaffold.ts"
   }
 }

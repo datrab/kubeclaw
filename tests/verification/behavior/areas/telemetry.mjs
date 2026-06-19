@@ -109,7 +109,7 @@ await record('completion selection stays scoped to run and attempt identity inst
     'Run unit suites',
     { forge_commit_hash: 'abc123' },
     {
-      model: 'openai-codex/gpt-5.4',
+      model: 'openai/gpt-5.4',
       run_id: 'run-current',
       attempt: 2,
       dispatch_id: 'dispatch-current',

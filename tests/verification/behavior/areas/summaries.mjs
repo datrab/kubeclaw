@@ -76,7 +76,7 @@ function terminationResult(sessionKey = 'summary-session') {
 
 function platformSummaryDefaults() {
   return {
-    fallback_model: 'openai-codex/gpt-5.4',
+    fallback_model: 'openai/gpt-5.4',
     default_timeout_minutes: 30,
     rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },
   };
@@ -335,7 +335,7 @@ const config = {
     assert.equal(events[0].summary_type, 'pipeline_review');
     assert.equal(events[0].attempt, attempt);
     assert.equal(events[0].gateway_label, null);
-    assert.equal(events[0].model, 'openai-codex/gpt-5.4');
+    assert.equal(events[0].model, 'openai/gpt-5.4');
     assert.equal(events[0].runtime, 'subagent');
     assert.equal(events[1].module_id, 'pipeline-review');
     assert.equal(events[1].dispatch_id, dispatchId);
@@ -359,7 +359,7 @@ const config = {
     assert.equal(events[3].dispatch_id, dispatchId);
     assert.equal(events[3].session_key, exhaustedSessionKey);
     assert.equal(events[3].gateway_label, null);
-    assert.equal(events[3].model, 'openai-codex/gpt-5.4');
+    assert.equal(events[3].model, 'openai/gpt-5.4');
     assert.equal(events[3].runtime, 'subagent');
 
     const canonical = rateLimitMod.buildSessionRateLimitExhaustedResult(
@@ -430,7 +430,7 @@ const config = {
     assert.equal(events[0].summary_type, 'pipeline_review');
     assert.equal(events[0].attempt, attempt);
     assert.equal(events[0].gateway_label, null);
-    assert.equal(events[0].model, 'openai-codex/gpt-5.4');
+    assert.equal(events[0].model, 'openai/gpt-5.4');
     assert.equal(events[0].runtime, 'subagent');
     assert.equal(events[1].summary_type, 'pipeline_review');
     assert.equal(events[1].attempt, attempt);
@@ -439,7 +439,7 @@ const config = {
     assert.equal(events[1].session_key, sessionKey);
     assert.equal(events[1].gateway_label, null);
     assert.notEqual(events[1].gateway_label, 'legacy-review-label-only');
-    assert.equal(events[1].model, 'openai-codex/gpt-5.4');
+    assert.equal(events[1].model, 'openai/gpt-5.4');
     assert.equal(events[1].runtime, 'subagent');
   });
 
@@ -559,7 +559,7 @@ const config = {
     assert.equal(killed.length, 1);
     assert.equal(killed[0].key, sessionKey);
     assert.equal(killed[0].opts.runtime, 'subagent');
-    assert.equal(killed[0].opts.model, 'openai-codex/gpt-5.4');
+    assert.equal(killed[0].opts.model, 'openai/gpt-5.4');
     assert.equal(killed[0].opts.agentId, 'gpt-5.4_pipeline-review');
     assert.equal(killed[0].opts.label, tracked[0].label);
   });
@@ -1191,7 +1191,7 @@ const config = {
           markdown: '# Summary\n',
           data: { status: 'ok' },
           caseStudyBase: { project: 'behavior-project-summary-discord' },
-          embeds: [{ title: 'Project Summary Embed', fields: [{ name: 'Status', value: 'GO', inline: true }] }],
+          embeds: [{ title: 'Project Summary Embed', fields: [{ name: 'Status', value: 'PASS', inline: true }] }],
         }),
       },
     };
@@ -1237,7 +1237,7 @@ const config = {
     const oldWebhook = process.env.DISCORD_WEBHOOK;
     process.env.DISCORD_WEBHOOK = 'https://example.invalid/webhook';
     try {
-      await projectSummaryMod.postToDiscord([{ title: 'Direct Project Summary Tool Embed', fields: [{ name: 'Status', value: 'GO', inline: true }] }], {
+      await projectSummaryMod.postToDiscord([{ title: 'Direct Project Summary Tool Embed', fields: [{ name: 'Status', value: 'PASS', inline: true }] }], {
         project,
         repoDir: repoRoot,
         configPath,

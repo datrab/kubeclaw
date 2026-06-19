@@ -145,7 +145,7 @@ Config still uses lower-case `on_timeout` values (`block` / `continue`), but per
 
 ### Model/Thinking Policy Log (`core/policy.ts`)
 
-`core/policy.ts` owns model/thinking override resolution and appends an effective-policy record to `.swarm/logs/pipeline/model-policy.jsonl` for each spawn path that resolves policy. Records which model ran and why (runtime override, scope policy, project default, platform fallback).
+`core/policy.ts` owns model/thinking override resolution and appends an effective-policy record to `.swarm/logs/pipeline/model-policy.jsonl` for each spawn path that resolves policy. Records which canonical model ran and why (runtime override, scope policy, project default, platform fallback). Older Codex/OpenAI aliases are normalized before policy logging and worker/session dispatch.
 
 ### Observability
 

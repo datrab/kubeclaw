@@ -9,15 +9,15 @@
   ],
   "defaults": {
     "models": {
-      "forge": "gpt-5.5",
-      "buster": "gpt-5.5",
-      "echo": "gpt-5.5",
-      "arch_validator": "gpt-5.5"
+      "forge": "codex-5.4",
+      "buster": "codex-5.4",
+      "echo": "codex-5.4",
+      "arch_validator": "codex-5.4"
     },
     "reviewers": [
       {
         "label": "echo-codex",
-        "model": "gpt-5.5",
+        "model": "codex-5.4",
         "dispatch": "subagent",
         "agent_id": "codex"
       }
@@ -31,12 +31,12 @@
   },
   "arch_validation": {
     "enabled": true,
-    "model": "gpt-5.5",
+    "model": "codex-5.4",
     "thinking_level": "adaptive"
   },
   "pipeline_review": {
     "enabled": true,
-    "model": "gpt-5.5",
+    "model": "codex-5.4",
     "thinking_level": "high",
     "agent_id": "codex",
     "instructions_file": "pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md",
@@ -45,7 +45,7 @@
   },
   "case_study": {
     "enabled": true,
-    "model": "gpt-5.5",
+    "model": "codex-5.4",
     "thinking_level": "adaptive",
     "agent_id": "codex",
     "output_file": "logs/pipeline/case-study.md",
@@ -152,12 +152,12 @@
       "type": "review",
       "title": "Module 01 review gate",
       "review_name": "MODULE-01-REVIEW",
-      "on_nogo": "fix_and_rereview",
+      "on_fail": "fix_and_rereview",
       "instructions_file": "echo-review/MODULE-01-REVIEW-INSTRUCTIONS.md",
       "output_file": "logs/echo-review/MODULE-01-REVIEW.json",
       "review_output_dir": "logs/echo-review",
       "primary_reviewer": "echo-codex",
-      "forge_model": "gpt-5.5",
+      "forge_model": "codex-5.4",
       "forge_thinking_level": "adaptive",
       "timeout_minutes": 45,
       "max_fix_cycles": 2,
@@ -167,12 +167,12 @@
       "type": "review",
       "title": "Module 03 review gate",
       "review_name": "MODULE-03-REVIEW",
-      "on_nogo": "fix_and_rereview",
+      "on_fail": "fix_and_rereview",
       "instructions_file": "echo-review/MODULE-03-REVIEW-INSTRUCTIONS.md",
       "output_file": "logs/echo-review/MODULE-03-REVIEW.json",
       "review_output_dir": "logs/echo-review",
       "primary_reviewer": "echo-codex",
-      "forge_model": "gpt-5.5",
+      "forge_model": "codex-5.4",
       "forge_thinking_level": "adaptive",
       "timeout_minutes": 45,
       "max_fix_cycles": 2,
@@ -184,8 +184,8 @@
       "on_fail": "fix_and_retest",
       "instructions_file": "buster-test/FINAL-BUSTER.md",
       "output_file": "buster-test/FINAL-BUSTER-RESULT.json",
-      "model": "gpt-5.5",
-      "forge_model": "gpt-5.5",
+      "model": "codex-5.4",
+      "forge_model": "codex-5.4",
       "timeout_minutes": 90,
       "max_fix_cycles": 2,
       "test_suites": [
@@ -258,12 +258,12 @@
       "type": "review",
       "title": "Final review",
       "review_name": "FINAL-REVIEW",
-      "on_nogo": "fix_and_rereview",
+      "on_fail": "fix_and_rereview",
       "instructions_file": "echo-review/FINAL-REVIEW-INSTRUCTIONS.md",
       "output_file": "logs/echo-review/FINAL-REVIEW.json",
       "review_output_dir": "logs/echo-review",
       "primary_reviewer": "echo-codex",
-      "forge_model": "gpt-5.5",
+      "forge_model": "codex-5.4",
       "forge_thinking_level": "adaptive",
       "timeout_minutes": 60,
       "max_fix_cycles": 2,

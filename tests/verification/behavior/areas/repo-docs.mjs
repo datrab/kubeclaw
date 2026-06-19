@@ -131,7 +131,7 @@ await record('verification docs and hardening trackers point at tests-owned veri
   assert.equal(phasePlan.includes('Remaining blocker before full Phase 4 acceptance: `OP-DEP-03`'), true);
   assert.equal(phasePlan.includes('`OP-DEP-05` messy source-to-artifact provenance'), false);
   assert.equal(phaseCompletionChecklist.includes('Accepted inside this Phase 4 scope already:\n- `OP-PERF-01`\n- `OP-PERF-02`\n- `OP-PERF-03`\n- `OP-DEP-02`\n- `OP-DEP-05`'), true);
-  assert.equal(readinessChecklist.includes('retained only as a compatibility shim'), false);
+  assert.equal(/retained only as a compatibility\s+shim/i.test(readinessChecklist), false);
   assert.equal(readinessChecklist.includes('`kubeclaw-main/scripts/*.mjs` wrappers remain in place as the stable operator and automation command surface'), false);
   assert.equal(readinessChecklist.includes('there is no remaining `scripts/phase8-verify.mjs`'), true);
   assert.equal(readinessChecklist.includes('`tests/verification/behavior/verify.mjs`'), true);

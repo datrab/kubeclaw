@@ -54,6 +54,78 @@ function mergeDiscordCorrelation(base = {}, extra = {}) {
   };
 }
 
+function normalizeOperatorStatusText(value) {
+  return String(value ?? '');
+}
+
+function normalizeOperatorModelText(value) {
+  return String(value ?? '')
+    .replace(/\bopenai-codex\//gi, 'openai/')
+    .replace(/\bcodex-(\d[\w.-]*)\b/gi, 'gpt-$1');
+}
+
+function normalizeOperatorFieldValue(field = {}) {
+  const raw = field?.value == null ? '' : String(field.value);
+  const statusNormalized = normalizeOperatorStatusText(raw);
+  return String(field?.name || '').trim().toLowerCase() === 'model'
+    ? normalizeOperatorModelText(statusNormalized)
+    : statusNormalized;
+}
+
+function actionabilityFieldNeedsReplacement(name, value) {
+  const normalizedName = String(name || '').trim().toLowerCase();
+  const text = String(value ?? '').trim();
+  if (!text) return true;
+  if (normalizedName === 'impact' && /^Buster reported an operator-visible event/i.test(text)) return true;
+  if (normalizedName === 'action' && /(open latest\.json|inspect the run-scoped pipeline and Discord artifacts?|inspect.*artifacts?)/i.test(text)) return true;
+  if (normalizedName === 'evidence' && /(run pipeline:|run discord:|buster diagnostic:|latest\.json|discord\.jsonl)/i.test(text)) return true;
+  return false;
+}
+
+function operatorEmbedEvidenceSummary(embed = {}) {
+  const skipNames = new Set(['impact', 'action', 'evidence', 'run', 'run id', 'attempt', 'dispatch', 'session']);
+  const lines = (embed.fields || [])
+    .filter((field) => !skipNames.has(String(field?.name || '').trim().toLowerCase()))
+    .map((field) => {
+      const name = String(field?.name || 'Field').trim();
+      const value = normalizeOperatorFieldValue(field).trim();
+      return value ? `${name}: ${value}` : null;
+    })
+    .filter(Boolean);
+  return lines.length ? lines.join('\n') : `${embed.title || 'Notification'}${embed.description ? `\n${embed.description}` : ''}`;
+}
+
+function replacementActionabilityValue(name, embed = {}) {
+  const evidenceSummary = operatorEmbedEvidenceSummary(embed);
+  const normalizedName = String(name || '').trim().toLowerCase();
+  if (normalizedName === 'impact') return `${embed.title || 'Pipeline notification'}${embed.description ? `: ${embed.description}` : ''}`;
+  if (normalizedName === 'action') return 'Read the notification fields and act on the listed status, issue, or failure reason.';
+  if (normalizedName === 'evidence') return evidenceSummary;
+  return evidenceSummary;
+}
+
+function normalizeOperatorEmbed(embed = {}) {
+  const normalized = {
+    ...embed,
+    title: normalizeOperatorStatusText(embed.title || ''),
+    description: normalizeOperatorStatusText(embed.description || ''),
+    fields: Array.isArray(embed.fields)
+      ? embed.fields.map((field) => ({
+          ...field,
+          value: normalizeOperatorFieldValue(field),
+        }))
+      : embed.fields,
+  };
+  if (!Array.isArray(normalized.fields)) return normalized;
+  normalized.fields = normalized.fields.map((field) => {
+    const name = String(field?.name || '').trim().toLowerCase();
+    if (!['impact', 'action', 'evidence'].includes(name)) return field;
+    if (!actionabilityFieldNeedsReplacement(name, field?.value)) return field;
+    return { ...field, value: replacementActionabilityValue(name, normalized), inline: false };
+  });
+  return normalized;
+}
+
 function reportDiscordIncident(config = {}, classification, message, error = null, options = {}) {
   reportClassifiedNonBlockingError({
     log,
@@ -233,14 +305,15 @@ function resolveInjectedDiscord(opts = {}, method = 'discord') {
 export async function discord(config: any, level: any, title: any, description: any, fields: any[] = [], opts: any = {}) {
   try {
     const runId = config?._runId || config?.run_id || null;
+    const normalizedEmbed = normalizeOperatorEmbed({ title, description, fields });
     const safeEmbed = sanitizeDiscordMessage({
-      embeds: [{ title, description, fields }],
-    }).embeds?.[0] || { title, description, fields };
+      embeds: [normalizedEmbed],
+    }).embeds?.[0] || normalizedEmbed;
     const correlation = mergeDiscordCorrelation(
       emptyDiscordCorrelation(),
       normalizeDiscordCorrelation(opts.correlation || {}),
     );
-    await appendDiscordAuditEntries(config, level, [{ ...safeEmbed, fields }], { correlation });
+    await appendDiscordAuditEntries(config, level, [{ ...safeEmbed, fields: safeEmbed.fields || [] }], { correlation });
     const injectedDiscord = resolveInjectedDiscord(opts, 'discord');
     if (typeof injectedDiscord === 'function') {
       await injectedDiscord(config, level, safeEmbed.title, safeEmbed.description, safeEmbed.fields || [], { correlation });
@@ -253,10 +326,10 @@ export async function discord(config: any, level: any, title: any, description: 
     const icons = { INFO: 'ℹ️', WARN: '⚠️', CRITICAL: '🚨', OK: '✅' };
     const payload = sanitizeDiscordMessage({
       embeds: [{
-        title: `${icons[level] || ''} ${title}`,
-        description,
+        title: `${icons[level] || ''} ${safeEmbed.title}`,
+        description: safeEmbed.description,
         color: colors[level] || 0x95a5a6,
-        fields: fields.map(f => ({ name: f.name, value: String(f.value), inline: f.inline ?? true })),
+        fields: (safeEmbed.fields || []).map(f => ({ name: f.name, value: String(f.value), inline: f.inline ?? true })),
         footer: { text: `KubeClaw Pipeline · ${config.project}${runId ? ` · ${runId}` : ''}` },
         timestamp: new Date().toISOString(),
       }],
@@ -296,7 +369,7 @@ export async function discordEmbeds(config: any, embeds: any[] = [], opts: any =
     const level = opts.level || 'INFO';
     const safeEmbeds = sanitizeDiscordMessage({
       embeds: embeds.map((embed) => ({
-        ...embed,
+        ...normalizeOperatorEmbed(embed),
         footer: embed?.footer || { text: `KubeClaw Pipeline · ${config?.project || 'unknown'}${runId ? ` · ${runId}` : ''}` },
         timestamp: embed?.timestamp || new Date().toISOString(),
       })),
@@ -305,9 +378,9 @@ export async function discordEmbeds(config: any, embeds: any[] = [], opts: any =
       emptyDiscordCorrelation(),
       normalizeDiscordCorrelation(opts.correlation || {}),
     );
-    await appendDiscordAuditEntries(config, level, safeEmbeds.map((safeEmbed, index) => ({
+    await appendDiscordAuditEntries(config, level, safeEmbeds.map((safeEmbed) => ({
       ...safeEmbed,
-      fields: embeds[index]?.fields || safeEmbed.fields,
+      fields: safeEmbed.fields || [],
     })), { correlation, correlations: opts.correlations, auditTargets: opts.auditTargets });
     const injectedDiscordEmbeds = resolveInjectedDiscord(opts, 'discordEmbeds');
     if (typeof injectedDiscordEmbeds === 'function') {

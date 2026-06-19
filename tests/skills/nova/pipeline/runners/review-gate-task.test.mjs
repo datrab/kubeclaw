@@ -109,7 +109,7 @@ function makeSuccessfulDeps({ outputFilePath, canonicalOutputPath, onCommit }) {
     },
     async pollForFile() {
       fs.writeFileSync(outputFilePath, JSON.stringify({
-        status: 'GO',
+        status: 'PASS',
         critical_issues: [],
         deferred_issues: [],
         summary: 'review passed',
@@ -195,7 +195,7 @@ test('runReviewGateOnce removes stale review output even when archival fails', a
   const outputFilePath = reviewOutputPath(config, gate, 'echo');
   fs.mkdirSync(path.dirname(outputFilePath), { recursive: true });
   fs.writeFileSync(outputFilePath, JSON.stringify({
-    status: 'GO',
+    status: 'PASS',
     critical_issues: [],
     deferred_issues: [],
     summary: 'stale pass',

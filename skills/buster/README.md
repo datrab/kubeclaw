@@ -6,7 +6,7 @@ Buster Pipeline — automated test harness for KubeClaw Swarm modules. Dequeues 
 
 ```
 buster/
-  buster-pipeline.ts       Executable compatibility shim for node /app/skills/buster-pipeline.ts
+  buster-pipeline.ts       Executable packaged entrypoint for node /app/skills/buster-pipeline.ts
   buster-pipeline.ts       Typed runtime entrypoint, startup/shutdown loop, narrow start/status API
   CONVENTIONS.md           Subagent operational conventions
   Dockerfile.sandbox       Sandbox container definition
@@ -69,8 +69,8 @@ Redis task stream
       │
       ▼
  decision: criticalFailed?
-  ├── YES → NO_SPAWN: emit plugin.event decision, return FAIL
-  └── NO  → SPAWN
+  ├── critical failure found → NO_SPAWN: emit plugin.event decision, return FAIL
+  └── critical checks clear  → SPAWN
               │
               ▼
          spawn subagent (ACP session via shared common lifecycle helper)

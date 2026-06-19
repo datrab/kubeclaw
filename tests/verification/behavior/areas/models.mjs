@@ -25,7 +25,10 @@ export async function registerModelsArea({
 
   await record('Codex/OpenAI model -> subagent', async () => {
     assert.equal(runtimeMod.resolveRuntime({ model: 'openai/gpt-5' }), 'subagent');
+    assert.equal(runtimeMod.resolveRuntime({ model: 'openai/gpt-5.4' }), 'subagent');
     assert.equal(runtimeMod.resolveRuntime({ model: 'openai-codex/gpt-5.4' }), 'subagent');
+    assert.equal(runtimeMod.canonicalizeModelId('openai-codex/gpt-5.4'), 'openai/gpt-5.4');
+    assert.equal(runtimeMod.canonicalizeModelId('codex-5.4'), 'gpt-5.4');
     assert.equal(runtimeMod.modelToHarness('openai/gpt-5'), 'codex');
   });
   

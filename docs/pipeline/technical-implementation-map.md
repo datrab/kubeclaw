@@ -227,7 +227,7 @@ Why: human decisions are part of runtime state. They need durable refs and legal
 
 Source: `review-gate-control.ts`, `review-gate-fix-cycle.ts`, `gate-forge-fix-cycle.ts`, `services/gate-fix-scaffold.ts`, `prompts/gate-fix.ts`.
 
-Review and Buster gates can produce NO-GO/FAIL findings, spawn Forge fix sessions, monitor them, then rerun the gate until pass or configured fix limits are exhausted.
+Review and Buster gates can produce FAIL/FAIL findings, spawn Forge fix sessions, monitor them, then rerun the gate until pass or configured fix limits are exhausted.
 
 Why: gate failures often need targeted remediation without rerunning the whole pipeline from the beginning.
 

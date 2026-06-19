@@ -3,9 +3,9 @@ import test from 'node:test';
 
 import { parseReviewOutputContent } from '../../../../../skills/nova/pipeline/runners/review-gate-output.ts';
 
-test('parseReviewOutputContent rejects GO with critical_issues', () => {
+test('parseReviewOutputContent rejects PASS with critical_issues', () => {
   const result = parseReviewOutputContent(JSON.stringify({
-    status: 'GO',
+    status: 'PASS',
     critical_issues: [{ description: 'real blocker' }],
     deferred_issues: [],
     summary: 'x',
@@ -16,9 +16,9 @@ test('parseReviewOutputContent rejects GO with critical_issues', () => {
   assert.equal(result.invalid_contract, true);
 });
 
-test('parseReviewOutputContent rejects GO with critical_blockers', () => {
+test('parseReviewOutputContent rejects PASS with critical_blockers', () => {
   const result = parseReviewOutputContent(JSON.stringify({
-    status: 'GO',
+    status: 'PASS',
     critical_issues: [],
     critical_blockers: [{ description: 'legacy blocker' }],
     deferred_issues: [],
@@ -30,21 +30,21 @@ test('parseReviewOutputContent rejects GO with critical_blockers', () => {
   assert.equal(result.invalid_contract, true);
 });
 
-test('parseReviewOutputContent accepts GO with empty or absent critical lists', () => {
+test('parseReviewOutputContent accepts PASS with empty or absent critical lists', () => {
   const withEmptyIssues = parseReviewOutputContent(JSON.stringify({
-    status: 'GO',
+    status: 'PASS',
     critical_issues: [],
     deferred_issues: [],
     summary: 'x',
   }));
   const withAbsentIssues = parseReviewOutputContent(JSON.stringify({
-    status: 'GO',
+    status: 'PASS',
     deferred_issues: [],
     summary: 'x',
   }));
 
   assert.equal(withEmptyIssues.ok, true);
-  assert.equal(withEmptyIssues.decision, 'go');
+  assert.equal(withEmptyIssues.decision, 'pass');
   assert.equal(withAbsentIssues.ok, true);
-  assert.equal(withAbsentIssues.decision, 'go');
+  assert.equal(withAbsentIssues.decision, 'pass');
 });

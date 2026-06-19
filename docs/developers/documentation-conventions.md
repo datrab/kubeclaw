@@ -286,7 +286,7 @@ npm run docs:check
 git diff --check
 ```
 
-`npm run docs:check` runs stale generated inventory checks, stale generated reference checks, local Markdown link checks, generated-section marker checks, core operator page shape checks, target-state guardrails for pages marked current, SVG diagram smoke checks, cited repository path checks, coverage-matrix checks, and topic-map checks.
+`npm run docs:check` runs stale generated inventory checks, stale generated reference checks, local Markdown link checks, generated-section marker checks, core operator page shape checks, target-state guardrails for pages marked current, SVG diagram smoke checks, cited repository path checks, and topic-map checks.
 
 ## Drift Guardrails
 
@@ -296,7 +296,7 @@ Use these commands before closing any docs or source change that affects documen
 | --- | --- | --- |
 | `npm run docs:check:generated` | generated JSON inventory and generated reference pages | a source workflow/script/value file changed without `npm run docs:inventory && npm run docs:generate` |
 | `npm run docs:check:refs` | local Markdown links and cited repository paths in active docs/current audit artifacts | a doc points at a deleted or renamed script, chart, workflow, test, skill, plugin, config, or local Markdown page |
-| `npm run docs:check:coverage` | coverage matrix and topic map | an active docs file is untracked, a rating is invalid, an `adequate` row lacks accepted rationale, or vague weakness language returns |
+| `npm run docs:check:coverage` | documentation topic map | a topic-map path points at a deleted active doc or vague weakness language returns |
 | `npm run docs:check` | full docs guardrail bundle | any of the above plus existing Markdown/generated marker/page-shape checks |
 | `git diff --check` | whitespace hygiene | trailing whitespace or diff formatting problems |
 
@@ -309,7 +309,7 @@ npm run docs:inventory
 npm run docs:generate
 ```
 
-If `docs:check:refs` fails, fix the cited path or rewrite the sentence so it no longer claims a concrete source path. `docs/archive/**` is optional historical material and is intentionally outside docs checks. If `docs:check:coverage` fails, update the active coverage matrix and topic map in the same change.
+If `docs:check:refs` fails, fix the cited path or rewrite the sentence so it no longer claims a concrete source path. `docs/archive/**` is optional historical material and is intentionally outside docs checks. If `docs:check:coverage` fails, update the active topic map in the same change.
 
 Update docs in the same change when touching:
 

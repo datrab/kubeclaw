@@ -1,0 +1,360 @@
+{
+  "code": {
+    "totalLines": 4102,
+    "codeLines": 267,
+    "totalFiles": 45,
+    "codeFiles": 7,
+    "swarmFiles": 38,
+    "byLang": {
+      "Markdown": {
+        "total": 472,
+        "code": 0,
+        "swarm": 472
+      },
+      "JSON": {
+        "total": 743,
+        "code": 15,
+        "swarm": 728
+      },
+      "Other": {
+        "total": 2650,
+        "code": 15,
+        "swarm": 2635
+      },
+      "JavaScript": {
+        "total": 237,
+        "code": 237,
+        "swarm": 0
+      }
+    },
+    "commitCount": 12,
+    "authors": [
+      "Nova"
+    ],
+    "firstCommit": "2026-06-17T15:17:25+00:00",
+    "lastCommit": "2026-06-18T21:22:11+00:00"
+  },
+  "unitCensus": {
+    "python": {
+      "files": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "frontend": {
+      "files": 2,
+      "functions": 2,
+      "lines": 25
+    },
+    "totalFunctions": 2,
+    "totalFiles": 2
+  },
+  "apiCensus": {
+    "specs": [],
+    "totalCases": 0
+  },
+  "pipeline": {
+    "lifecycleSource": "latest_pointer",
+    "lifecycleReadModelsPath": "/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/logs/pipeline/runs/run-1781817150241-r1fs/lifecycle/read-models.json",
+    "moduleCount": 3,
+    "gateCount": 4,
+    "totalCompleted": 0,
+    "totalBlocked": 1,
+    "totalPending": 2,
+    "totalAttempts": 2,
+    "passedFirstTry": 0,
+    "firstPassRate": 0,
+    "avgAttempts": 0,
+    "totalDuration": 0,
+    "elapsedHours": null,
+    "earliestStart": "2026-06-18T21:19:53.763Z",
+    "latestComplete": null,
+    "tokens": {
+      "forgeIn": 0,
+      "forgeOut": 0,
+      "busterIn": 0,
+      "busterOut": 0,
+      "total": 0
+    },
+    "hardestModules": [
+      {
+        "id": "01-foundation",
+        "title": "Landing page foundation, Dockerfile, and first section",
+        "dir": "01-foundation",
+        "scope_group": "other",
+        "status": "BLOCKED",
+        "failCount": 2,
+        "attempts": 2,
+        "startedAt": "2026-06-18T21:19:53.763Z",
+        "completedAt": null,
+        "completionSummary": "Trusted terminal status from Redis completion (buster-pipeline)",
+        "failSummaries": [
+          {
+            "at": "2026-06-18T21:19:48.143Z",
+            "phase": "buster",
+            "summary": "Trusted terminal status from Redis completion (buster-pipeline)",
+            "attempt": 1
+          },
+          {
+            "at": "2026-06-18T21:19:48.150Z",
+            "phase": "unknown",
+            "summary": "buster failed (attempt 1/2)",
+            "attempt": 1
+          },
+          {
+            "at": "2026-06-18T21:24:25.836Z",
+            "phase": "buster",
+            "summary": "Trusted terminal status from Redis completion (buster-pipeline)",
+            "attempt": 2
+          }
+        ],
+        "forgeDiffStat": null,
+        "historyEntries": 10,
+        "cost": {}
+      }
+    ],
+    "failPatterns": [
+      [
+        "Trusted terminal status from Redis completion (buster-pipeline)",
+        2
+      ],
+      [
+        "buster failed (attempt 1/2)",
+        1
+      ]
+    ],
+    "gateStats": [
+      {
+        "id": "module-01-review",
+        "type": "review",
+        "title": "Module 01 review gate",
+        "status": "PENDING",
+        "note": null
+      },
+      {
+        "id": "module-03-review",
+        "type": "review",
+        "title": "Module 03 review gate",
+        "status": "PENDING",
+        "note": null
+      },
+      {
+        "id": "final-buster",
+        "type": "buster",
+        "title": "Final Buster validation",
+        "status": "PENDING",
+        "note": null
+      },
+      {
+        "id": "final-review",
+        "type": "review",
+        "title": "Final review",
+        "status": "PENDING",
+        "note": null
+      }
+    ],
+    "moduleStats": [
+      {
+        "id": "01-foundation",
+        "title": "Landing page foundation, Dockerfile, and first section",
+        "dir": "01-foundation",
+        "scope_group": "other",
+        "status": "BLOCKED",
+        "failCount": 2,
+        "attempts": 2,
+        "startedAt": "2026-06-18T21:19:53.763Z",
+        "completedAt": null,
+        "completionSummary": "Trusted terminal status from Redis completion (buster-pipeline)",
+        "failSummaries": [
+          {
+            "at": "2026-06-18T21:19:48.143Z",
+            "phase": "buster",
+            "summary": "Trusted terminal status from Redis completion (buster-pipeline)",
+            "attempt": 1
+          },
+          {
+            "at": "2026-06-18T21:19:48.150Z",
+            "phase": "unknown",
+            "summary": "buster failed (attempt 1/2)",
+            "attempt": 1
+          },
+          {
+            "at": "2026-06-18T21:24:25.836Z",
+            "phase": "buster",
+            "summary": "Trusted terminal status from Redis completion (buster-pipeline)",
+            "attempt": 2
+          }
+        ],
+        "forgeDiffStat": null,
+        "historyEntries": 10,
+        "cost": {}
+      },
+      {
+        "id": "02-content-polish",
+        "title": "Second landing-page section and responsive polish",
+        "dir": "02-content-polish",
+        "scope_group": "other",
+        "status": "PENDING",
+        "failCount": 0,
+        "attempts": 0,
+        "startedAt": null,
+        "completedAt": null,
+        "completionSummary": null,
+        "failSummaries": [],
+        "forgeDiffStat": null,
+        "historyEntries": 0,
+        "cost": {}
+      },
+      {
+        "id": "03-kubernetes",
+        "title": "Kubernetes deployment, service, and final section",
+        "dir": "03-kubernetes",
+        "scope_group": "other",
+        "status": "PENDING",
+        "failCount": 0,
+        "attempts": 0,
+        "startedAt": null,
+        "completedAt": null,
+        "completionSummary": null,
+        "failSummaries": [],
+        "forgeDiffStat": null,
+        "historyEntries": 0,
+        "cost": {}
+      }
+    ]
+  },
+  "tests": {
+    "suiteAgg": {},
+    "totalRuns": 0,
+    "totalChecks": 0,
+    "totalChecksPassed": 0,
+    "totalFindings": 0,
+    "totalDuration": 0,
+    "perModule": []
+  },
+  "reviews": {
+    "reviews": [],
+    "totalCritical": 0,
+    "totalDeferred": 0
+  },
+  "agents": {
+    "forge": 0,
+    "buster": 0,
+    "echo": 0,
+    "gateFix": 0,
+    "reviewFix": 0,
+    "total": 0,
+    "source": "pipeline_jsonl_agent_spawned"
+  },
+  "diagnostics": [
+    {
+      "ts": "2026-06-18T21:24:26.591Z",
+      "source": "json",
+      "status": "missing",
+      "path": "/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/logs/echo-review/MODULE-01-REVIEW.json",
+      "optional": true,
+      "reason": "ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/logs/echo-review/MODULE-01-REVIEW.json'"
+    },
+    {
+      "ts": "2026-06-18T21:24:26.591Z",
+      "source": "json",
+      "status": "missing",
+      "path": "/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/logs/echo-review/MODULE-03-REVIEW.json",
+      "optional": true,
+      "reason": "ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/logs/echo-review/MODULE-03-REVIEW.json'"
+    },
+    {
+      "ts": "2026-06-18T21:24:26.592Z",
+      "source": "json",
+      "status": "missing",
+      "path": "/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/buster-test/FINAL-BUSTER-RESULT.json",
+      "optional": true,
+      "reason": "ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/buster-test/FINAL-BUSTER-RESULT.json'"
+    },
+    {
+      "ts": "2026-06-18T21:24:26.592Z",
+      "source": "json",
+      "status": "missing",
+      "path": "/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/logs/echo-review/FINAL-REVIEW.json",
+      "optional": true,
+      "reason": "ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/logs/echo-review/FINAL-REVIEW.json'"
+    },
+    {
+      "ts": "2026-06-18T21:24:26.592Z",
+      "source": "json",
+      "status": "missing",
+      "path": "/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/modules/01-foundation/test-results/runner-verdict.json",
+      "optional": true,
+      "reason": "ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/modules/01-foundation/test-results/runner-verdict.json'"
+    },
+    {
+      "ts": "2026-06-18T21:24:26.592Z",
+      "source": "json",
+      "status": "missing",
+      "path": "/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/modules/02-content-polish/test-results/runner-verdict.json",
+      "optional": true,
+      "reason": "ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/modules/02-content-polish/test-results/runner-verdict.json'"
+    },
+    {
+      "ts": "2026-06-18T21:24:26.592Z",
+      "source": "json",
+      "status": "missing",
+      "path": "/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/modules/03-kubernetes/test-results/runner-verdict.json",
+      "optional": true,
+      "reason": "ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/modules/03-kubernetes/test-results/runner-verdict.json'"
+    },
+    {
+      "ts": "2026-06-18T21:24:26.600Z",
+      "source": "agent_invocations",
+      "status": "unknown_agent_type",
+      "path": "/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/logs/pipeline/pipeline.jsonl",
+      "line": 695,
+      "optional": true,
+      "agent_type": "main"
+    },
+    {
+      "ts": "2026-06-18T21:24:26.601Z",
+      "source": "agent_invocations",
+      "status": "unknown_agent_type",
+      "path": "/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/logs/pipeline/pipeline.jsonl",
+      "line": 982,
+      "optional": true,
+      "agent_type": "main"
+    },
+    {
+      "ts": "2026-06-18T21:24:26.602Z",
+      "source": "agent_invocations",
+      "status": "unknown_agent_type",
+      "path": "/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/logs/pipeline/pipeline.jsonl",
+      "line": 1159,
+      "optional": true,
+      "agent_type": "main"
+    },
+    {
+      "ts": "2026-06-18T21:24:26.608Z",
+      "source": "agent_invocations",
+      "status": "unknown_agent_type",
+      "path": "/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/logs/pipeline/runs/run-1781817150241-r1fs/pipeline.jsonl",
+      "line": 695,
+      "optional": true,
+      "agent_type": "main"
+    },
+    {
+      "ts": "2026-06-18T21:24:26.609Z",
+      "source": "agent_invocations",
+      "status": "unknown_agent_type",
+      "path": "/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/logs/pipeline/runs/run-1781817150241-r1fs/pipeline.jsonl",
+      "line": 982,
+      "optional": true,
+      "agent_type": "main"
+    },
+    {
+      "ts": "2026-06-18T21:24:26.609Z",
+      "source": "agent_invocations",
+      "status": "unknown_agent_type",
+      "path": "/home/node/.openclaw/workspace/git-repo/Projects/pipeline-smoke-landing/src/.swarm/logs/pipeline/runs/run-1781817150241-r1fs/pipeline.jsonl",
+      "line": 1159,
+      "optional": true,
+      "agent_type": "main"
+    }
+  ]
+}

@@ -82,7 +82,7 @@ jobs:
         run: node scripts/docs-check.mjs
       - name: Check cited repository references
         run: npm run docs:check:refs
-      - name: Check coverage matrix and topic map
+      - name: Check documentation topic map
         run: npm run docs:check:coverage
       - name: Check whitespace
         run: git diff --check

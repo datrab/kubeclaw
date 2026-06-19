@@ -3,9 +3,9 @@
 | Field | Value |
 | --- | --- |
 | redacted | true |
-| chars | 7310 |
-| lines | 171 |
-| sha256 | f03747e835433533 |
+| chars | 7035 |
+| lines | 167 |
+| sha256 | 2af8ece1a62b91c9 |
 | agent_type | buster |
 | attempt | 1 |
 | module_dir | 01-foundation |

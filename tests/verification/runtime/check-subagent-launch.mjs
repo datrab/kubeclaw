@@ -6,7 +6,7 @@ import { parseLaunchArgs, verifyLaunchReachability } from './session-launch-lib.
 try {
   const options = parseLaunchArgs(process.argv.slice(2), {
     runtime: 'subagent',
-    model: 'openai-codex/gpt-5.4',
+    model: 'openai/gpt-5.4',
     labelPrefix: 'verify-subagent-launch',
     prompt: 'Reply with READY and stop.',
     timeoutSeconds: 120,

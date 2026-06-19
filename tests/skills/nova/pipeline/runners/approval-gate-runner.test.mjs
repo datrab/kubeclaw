@@ -98,7 +98,7 @@ test('approval gate timeout with CONTINUE emits passing verdict telemetry', asyn
   const verdicts = events.filter((event) => event.type === 'gate.verdict' && event.gate_id === 'deploy');
 
   assert.equal(verdicts.length, 1);
-  assert.equal(verdicts[0].verdict, 'GO');
+  assert.equal(verdicts[0].verdict, 'PASS');
 });
 
 test('approval gate wait resolves persisted TIMED_OUT CONTINUE signal as pass', async () => {

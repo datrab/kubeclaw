@@ -80,6 +80,79 @@ export async function handleBusterFailOrBlockedStatus({
   }
   const isCrash = failureClass === 'infra_crash';
   const isPreTest = failureClass === 'pretest_infra' || failureClass === 'pretest_config' || failureClass === 'pretest_code';
+  const isOutputIdentityMismatch = failureClass === 'output_file_identity_mismatch';
+
+  if (isOutputIdentityMismatch) {
+    const mismatchDispatchId = (resolveResultDispatchId(resultRedisEntry) ?? resolveCompletionDispatchId(status, completionIdentity));
+    const mismatchGatewayLabel = (resolveResultGatewayLabel(resultRedisEntry) ?? resolveCompletionGatewayLabel(status, completionIdentity));
+    const mismatchSessionKey = (resolveResultSessionKey(resultRedisEntry) ?? resolveStatusSessionKey(status) ?? completionSessionKey);
+    const reason = resultRedisEntry?.summary || status?.completion_summary || 'Buster output_file identity mismatch';
+    log('ERROR', `Module ${moduleId}: ${reason} — infrastructure issue, not routing to Forge`);
+
+    const blockedTransition = markModuleBlocked(
+      status,
+      'buster',
+      `${reason}. Infrastructure issue — Forge cannot fix stale or mismatched Buster output identity.`,
+      { reason: 'output_file_identity_mismatch' },
+    );
+    deps.saveStatus(config, dir, status, blockedTransition);
+
+    await deps.discord(config, 'CRITICAL', `Module ${moduleId} BLOCKED — Buster output identity`,
+      `${reason}. This is an infrastructure/correlation failure, not an app-code verdict. Forge output preserved.`, [
+        ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, {
+          run_id: completionIdentity.runId ?? completionIdentity.run_id ?? getRunId(config),
+          module_id: moduleId,
+          attempt: currentAttemptNumber(status),
+          dispatch_id: mismatchDispatchId,
+          gateway_label: mismatchGatewayLabel,
+          session_key: mismatchSessionKey,
+        }),
+        { name: 'Action', value: 'Inspect Buster output_file identity/correlation state, then resume Buster.', inline: false },
+      ], {
+        correlation: {
+          run_id: completionIdentity.runId ?? completionIdentity.run_id ?? getRunId(config),
+          module_id: moduleId,
+          attempt: currentAttemptNumber(status),
+          dispatch_id: mismatchDispatchId,
+          gateway_label: mismatchGatewayLabel,
+          session_key: mismatchSessionKey,
+        },
+      });
+
+    emitTerminalModuleFailTelemetry(
+      config,
+      moduleId,
+      status,
+      mod,
+      'buster',
+      busterModel,
+      status?.status ?? STATUS.TESTING,
+      `Buster output_file identity mismatch — Forge output preserved: ${reason}`,
+      {
+        dispatchId: mismatchDispatchId,
+        gatewayLabel: mismatchGatewayLabel,
+        sessionKey: mismatchSessionKey,
+      },
+    );
+
+    return { terminal: buildModuleBlockedTerminalResult(config, moduleId, {
+      reason: `Buster output_file identity mismatch — infrastructure issue (not sent to Forge)`,
+      issueType: 'environment',
+      runId: resultRedisEntry?.run_id ?? completionIdentity.runId ?? getRunId(config),
+      moduleDir: dir,
+      attempt: resultRedisEntry?.attempt ?? completionIdentity.attempt ?? currentAttemptNumber(status),
+      phase: 'buster',
+      dispatchId: mismatchDispatchId,
+      gatewayLabel: mismatchGatewayLabel,
+      sessionKey: mismatchSessionKey,
+      metadata: {
+        failure_class: failureClass,
+        redis_source: source,
+        forge_preserved: true,
+        output_file_reason: resultRedisEntry?.reason ?? status?.reason ?? null,
+      },
+    }) };
+  }
 
   // ── Category 1: Infrastructure crash ──
   if (isCrash && !isLastBusterAttempt) {

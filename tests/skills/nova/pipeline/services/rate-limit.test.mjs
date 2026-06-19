@@ -296,7 +296,7 @@ test('gate failure telemetry emits when exhaustion beforeReturn hook fails', asy
   assert.ok(pipelineEvents.some((event) => (
     event.type === 'gate.verdict'
     && event.gate_id === 'review-gate'
-    && event.verdict === 'NO-GO'
+    && event.verdict === 'FAIL'
     && event.reason === 'rate_limit_exhausted'
   )));
 

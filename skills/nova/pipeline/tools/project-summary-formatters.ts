@@ -112,7 +112,7 @@ export function buildCaseStudyBase(project, code, pipeline, tests, unitCensus, a
       id: project,
       name: String(project || ''),
       generated_at: new Date().toISOString(),
-      status: (pipeline.totalCompleted || 0) === (pipeline.moduleCount || 0) && (pipeline.gateStats || []).every(g => ['GO','PASS'].includes(g.status)) ? 'complete' : 'incomplete',
+      status: (pipeline.totalCompleted || 0) === (pipeline.moduleCount || 0) && (pipeline.gateStats || []).every(g => ['PASS','PASS'].includes(g.status)) ? 'complete' : 'incomplete',
     },
     delivery: {
       started_at: pipeline.earliestStart || null,
@@ -131,8 +131,8 @@ export function buildCaseStudyBase(project, code, pipeline, tests, unitCensus, a
     },
     gates: {
       total: pipeline.gateCount || 0,
-      passed: (pipeline.gateStats || []).filter(g => ['GO','PASS'].includes(g.status)).length,
-      failed: (pipeline.gateStats || []).filter(g => !['GO','PASS'].includes(g.status)).length,
+      passed: (pipeline.gateStats || []).filter(g => ['PASS','PASS'].includes(g.status)).length,
+      failed: (pipeline.gateStats || []).filter(g => !['PASS','PASS'].includes(g.status)).length,
       reviews_total: (reviews.reviews || []).length,
       critical_issues_found: reviews.totalCritical || 0,
       deferred_issues_found: reviews.totalDeferred || 0,
@@ -172,8 +172,8 @@ export function buildCaseStudyBase(project, code, pipeline, tests, unitCensus, a
     },
     quality_outcome: {
       all_modules_passed: (pipeline.totalCompleted || 0) === (pipeline.moduleCount || 0),
-      all_gates_passed: (pipeline.gateStats || []).every(g => ['GO','PASS'].includes(g.status)),
-      final_status: (pipeline.totalCompleted || 0) === (pipeline.moduleCount || 0) && (pipeline.gateStats || []).every(g => ['GO','PASS'].includes(g.status)) ? 'GO' : 'INCOMPLETE',
+      all_gates_passed: (pipeline.gateStats || []).every(g => ['PASS','PASS'].includes(g.status)),
+      final_status: (pipeline.totalCompleted || 0) === (pipeline.moduleCount || 0) && (pipeline.gateStats || []).every(g => ['PASS','PASS'].includes(g.status)) ? 'PASS' : 'INCOMPLETE',
     },
     timeline: pipeline.moduleStats || [],
   };
@@ -219,7 +219,7 @@ export function buildMarkdown(project, code, pipeline, tests, unitCensus, apiCen
   L.push('| Metric | Value |');
   L.push('|---|---|');
   L.push(`| Modules | ${pipeline.totalCompleted} completed, ${pipeline.totalBlocked} blocked, ${pipeline.totalPending} pending (of ${pipeline.moduleCount}) |`);
-  L.push(`| Gates | ${pipeline.gateCount} (${(pipeline.gateStats || []).filter(g => ['GO','PASS'].includes(g.status)).length} passed) |`);
+  L.push(`| Gates | ${pipeline.gateCount} (${(pipeline.gateStats || []).filter(g => ['PASS','PASS'].includes(g.status)).length} passed) |`);
   L.push(`| Total Pipeline Attempts | ${pipeline.totalAttempts} |`);
   L.push(`| First-Pass Rate | ${pipeline.firstPassRate}% (${pipeline.passedFirstTry}/${pipeline.moduleCount}) |`);
   L.push(`| Avg Attempts per Module | ${pipeline.avgAttempts} |`);
@@ -372,13 +372,13 @@ export function buildDiscordEmbeds(project, code, pipeline, tests, unitCensus, a
     .join('\n') || 'All passed first try! 🎉';
 
   const gateStr = (pipeline.gateStats || [])
-    .map(g => `${['GO','PASS'].includes(g.status)?'✅':['NO-GO','FAIL'].includes(g.status)?'❌':'⏳'} ${g.title}`)
+    .map(g => `${['PASS','PASS'].includes(g.status)?'✅':['FAIL','FAIL'].includes(g.status)?'❌':'⏳'} ${g.title}`)
     .join('\n') || '—';
 
   const totalTests = totalTestSurface(unitCensus, apiCensus);
   const pythonTests = pythonUnitFunctions(unitCensus);
   const frontendTests = frontendUnitFunctions(unitCensus);
-  const passedGates = (pipeline.gateStats || []).filter(g => ['GO','PASS'].includes(g.status)).length;
+  const passedGates = (pipeline.gateStats || []).filter(g => ['PASS','PASS'].includes(g.status)).length;
   const scope = groupDeliveredScope((pipeline.moduleStats || []).filter(m => m.status === 'PASS'));
   const scopeSummary = [
     ...(scope.platform_backend || []).slice(0, 2),
@@ -417,7 +417,7 @@ export function buildDiscordEmbeds(project, code, pipeline, tests, unitCensus, a
     title: `🧾 Case Study Summary: ${project}`,
     color: (pipeline.totalCompleted === pipeline.moduleCount && passedGates === pipeline.gateCount) ? 5763719 : 16776960,
     fields: [
-      { name: '✅ Final Status', value: (pipeline.totalCompleted === pipeline.moduleCount && passedGates === pipeline.gateCount) ? 'GO / COMPLETE' : 'INCOMPLETE', inline: true },
+      { name: '✅ Final Status', value: (pipeline.totalCompleted === pipeline.moduleCount && passedGates === pipeline.gateCount) ? 'PASS / COMPLETE' : 'INCOMPLETE', inline: true },
       { name: '⏱️ Delivery', value: `${pipeline.elapsedHours || '—'}h wall clock`, inline: true },
       { name: '🔄 Attempts', value: `${pipeline.totalAttempts}`, inline: true },
       { name: '📦 Scope', value: scopeSummary, inline: false },

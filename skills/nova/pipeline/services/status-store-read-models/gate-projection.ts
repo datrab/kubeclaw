@@ -23,9 +23,9 @@ export const GATE_STATUS_AUTHORITY_ROLES = Object.freeze({
   ABSENT: 'absent',
 });
 
-const GATE_OUTPUT_PASS_STATUSES = new Set(['PASS', 'GO', 'OK', 'APPROVED']);
-const GATE_OUTPUT_FAIL_STATUSES = new Set(['FAIL', 'ISSUES_FOUND', 'NO-GO', 'NOGO', 'BLOCKED']);
-const GATE_STATUS_TERMINAL_STATUSES = new Set(['PASS', 'GO', 'OK', 'APPROVED', 'FAIL', 'ISSUES_FOUND', 'NO-GO', 'NOGO', 'BLOCKED']);
+const GATE_OUTPUT_PASS_STATUSES = new Set(['PASS', 'OK', 'APPROVED']);
+const GATE_OUTPUT_FAIL_STATUSES = new Set(['FAIL', 'ISSUES_FOUND', 'BLOCKED']);
+const GATE_STATUS_TERMINAL_STATUSES = new Set([...GATE_OUTPUT_PASS_STATUSES, ...GATE_OUTPUT_FAIL_STATUSES]);
 
 function normalizeGateOutputStatus(value) {
   return String(value || '').trim().toUpperCase();

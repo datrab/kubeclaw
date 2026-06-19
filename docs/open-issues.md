@@ -1181,7 +1181,7 @@ Type: bug
 
 ### Affected files
 
-- `skills/nova/pipeline/tools/project-summary-formatters.ts` — updated `buildCaseStudyBase()`, markdown complexity highlights, and Discord hardest-module output to prefer nested `unitCensus.python.functions`, `unitCensus.frontend.functions`, and `failCount`, with legacy alias fallback.
+- `skills/nova/pipeline/tools/project-summary-formatters.ts` — updated `buildCaseStudyBase()`, markdown complexity highlights, and Discord hardest-module output to prefer nested `unitCensus.python.functions`, `unitCensus.frontend.functions`, and `failCount`, with older flattened input names treated as diagnostic fallback only.
 - `tests/verification/behavior/areas/summaries.mjs` — added coverage that case-study base, markdown, and Discord embeds preserve Python/frontend unit-test counts and hardest-module fail counts from collector-shaped input.
 
 ### Problem / in-depth issue description
@@ -1205,7 +1205,7 @@ unitCensus.frontendBlocks
 m.fails
 ```
 
-As a result, `caseStudyBase.tests.unit_test_functions_total`, `python_unit_tests`, `frontend_unit_tests`, and `highlights.hardest_modules[].fails` could be zero even when the raw summary data contained tests and failing modules. The formatter now normalizes current collector fields first and keeps legacy flattened/fails aliases as fallback only.
+As a result, `caseStudyBase.tests.unit_test_functions_total`, `python_unit_tests`, `frontend_unit_tests`, and `highlights.hardest_modules[].fails` could be zero even when the raw summary data contained tests and failing modules. The formatter now normalizes current collector fields first and treats older flattened/fails aliases as diagnostic fallback only.
 
 ### Impact
 
@@ -1213,7 +1213,7 @@ The generated case-study base under-reports test surface and module complexity. 
 
 ### Next step
 
-Resolved by adding formatter normalization for nested unit census fields and hardest-module `failCount` values, preserving legacy flattened/fails fallbacks. Focused run: `node tests/verification/behavior/verify.mjs --area summaries` passed with 26 checks.
+Resolved by adding formatter normalization for nested unit census fields and hardest-module `failCount` values while keeping older flattened/fails inputs diagnostic-only. Focused run: `node tests/verification/behavior/verify.mjs --area summaries` passed with 26 checks.
 
 ### Links / files
 
@@ -1636,7 +1636,7 @@ Type: schema-validation
 - `skills/nova/pipeline/services/acp-gateway-contract.ts` — added Nova repo-local re-export facade for the common contract owner.
 - `skills/buster/pipeline/services/acp-gateway-contract.ts` — added Buster repo-local re-export facade for the common contract owner.
 - `tests/verification/contracts/check-acp-gateway-contract-surface.mjs` — added focused contract coverage for the new helpers and caller wiring.
-- `tests/verification/lib/lifecycle-audit-lib.mjs` — updated shared-helper inventory for the new common helper and shims.
+- `tests/verification/lib/lifecycle-audit-lib.mjs` — updated shared-helper inventory for the new common helper and repo-local common facades.
 - `tests/verification/lib/run-contract-suite.sh` — added the focused contract check to the contract suite.
 
 ### Problem / in-depth issue description
@@ -1647,7 +1647,7 @@ Resolved by adding `skills/common/pipeline/services/acp-gateway-contract.ts` as 
 
 ### Impact
 
-Medium. ACP monitor and lifecycle result objects are shared across Nova and Buster compatibility paths. Shape drift can affect terminal detection, session cleanup, rate-limit recovery, and restart/recovery behavior while still passing basic import checks.
+Medium. ACP monitor and lifecycle result objects are shared across Nova and Buster common helper paths. Shape drift can affect terminal detection, session cleanup, rate-limit recovery, and restart/recovery behavior while still passing basic import checks.
 
 ### Next step
 
