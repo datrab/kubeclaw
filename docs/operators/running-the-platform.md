@@ -35,7 +35,7 @@ Refresh runtime images for both agents:
 ./scripts/deploy.sh image both
 ```
 
-Deploy a code bundle to one agent:
+Deploy a specific pinned code bundle to one agent:
 
 ```bash
 NOVA_CODE_BUNDLE_ARCHIVE_URL=... \
@@ -43,7 +43,7 @@ NOVA_CODE_BUNDLE_EXPECTED_COMMIT=<sha> \
 ./scripts/deploy.sh code nova
 ```
 
-`image` uses a rollout restart after Helm apply so mutable tags are pulled without deleting pods by selector. `code` changes only the selected bundle inputs and waits for the Helm-triggered rollout.
+`image` uses a rollout restart after Helm apply so mutable tags are pulled without deleting pods by selector. `code` changes only the selected bundle inputs and waits for the Helm-triggered rollout. By default it resolves the latest published remote `main` bundle; explicit commit and archive overrides remain available for pinning.
 
 Collect logs:
 

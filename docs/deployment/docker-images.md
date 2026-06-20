@@ -46,9 +46,11 @@ The deployment script no longer builds images locally. Runtime image changes sho
 Code-only skill updates should flow through CI-published GitHub release bundles and be applied with:
 
 ```bash
-NOVA_CODE_BUNDLE_EXPECTED_COMMIT=<sha> ./scripts/deploy.sh code nova
-BUSTER_CODE_BUNDLE_EXPECTED_COMMIT=<sha> ./scripts/deploy.sh code buster
+./scripts/deploy.sh code nova
+./scripts/deploy.sh code buster
 ```
+
+Set `NOVA_CODE_BUNDLE_EXPECTED_COMMIT` or `BUSTER_CODE_BUNDLE_EXPECTED_COMMIT` only when pinning a specific published bundle SHA instead of taking the latest remote `main`.
 
 Those bundles preserve the existing `/app/skills` runtime contract:
 

@@ -42,7 +42,15 @@ Operators can rerun only the guided secret setup with:
 ./scripts/deploy.sh secrets
 ```
 
-For code-only redeploys, the script also supports:
+For code-only redeploys, the default path is:
+
+```bash
+./scripts/deploy.sh code
+```
+
+It resolves the latest published remote `main` bundles automatically.
+
+The script also supports explicit pinning:
 
 ```bash
 NOVA_CODE_BUNDLE_ARCHIVE_URL=... \

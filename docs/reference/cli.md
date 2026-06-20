@@ -23,7 +23,6 @@ Generated from: `scripts/deploy.sh`
 | `./scripts/deploy.sh agent <name>` | Deploy single agent (nova\|buster) |
 | `./scripts/deploy.sh image` | Deploy both agents using image/runtime values |
 | `./scripts/deploy.sh image <name>` | Deploy one agent using image/runtime values |
-| `./scripts/deploy.sh code <target>` | Deploy code bundles for nova\|buster\|both |
 | `./scripts/deploy.sh smoke` | Run pod-level smoke checks for Nova + Buster |
 | `./scripts/deploy.sh smoke-agent <name>` | Run pod-level smoke checks for one agent |
 | `./scripts/deploy.sh all` | Full deployment (setup + infra + agents) |

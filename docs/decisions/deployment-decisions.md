@@ -49,7 +49,7 @@ Verification: deployment truth includes "Rendered init flow keeps persistent con
 
 Decision: the operator deploy surface should split runtime image deploys from code-bundle deploys, and local deploy must not build images.
 
-Reason: normal redeploy speed matters more than keeping a local image-build verification loop in the operator path. `scripts/deploy.sh image [target]` now refreshes mutable runtime tags through rollout restart, while `scripts/deploy.sh code [target]` updates explicit bundle inputs and waits for the Helm-driven rollout.
+Reason: normal redeploy speed matters more than keeping a local image-build verification loop in the operator path. `scripts/deploy.sh image [target]` now refreshes mutable runtime tags through rollout restart, while `scripts/deploy.sh code [target]` updates explicit bundle inputs and waits for the Helm-driven rollout. Omitting the code target deploys all agents by default, matching the `agents` command shape.
 
 Source proof: `scripts/deploy.sh` functions `deploy_agent`, `cmd_image`, `cmd_code`, `restart_agent_deployment`, and `wait_for_agent_rollout`.
 

@@ -13,7 +13,7 @@
 #   ./deploy.sh agent <name>       Deploy single agent (nova|buster)
 #   ./deploy.sh image              Deploy both agents using image/runtime values
 #   ./deploy.sh image <name>       Deploy one agent using image/runtime values
-#   ./deploy.sh code <target>      Deploy code bundles for nova|buster|both
+#   ./deploy.sh code [target]      Deploy code bundles for all agents or one target
 #   ./deploy.sh smoke              Run pod-level smoke checks for Nova + Buster
 #   ./deploy.sh smoke-agent <name> Run pod-level smoke checks for one agent
 #   ./deploy.sh all                Full deployment (setup + infra + agents)
@@ -27,6 +27,7 @@
 #   AGENT_HELM_TIMEOUT   Helm wait timeout for agent upgrades (default: 45m)
 #   AGENT_ROLLOUT_TIMEOUT  Pod/deployment readiness timeout for agents (default: 45m)
 #   CODE_BUNDLE_GITHUB_REPOSITORY      owner/repo override for derived GitHub release bundle URLs
+#   CODE_BUNDLE_DEFAULT_REF            Git ref to resolve when code deploy omits an explicit expected commit (default: refs/heads/main)
 #   CODE_BUNDLE_RELEASE_TAG            GitHub release tag for published bundles (default: agent-code-bundles)
 #   NOVA_CODE_BUNDLE_ARCHIVE_URL       Resolved Nova bundle archive URL for code deploy
 #   NOVA_CODE_BUNDLE_EXPECTED_COMMIT   Expected Nova source commit for code deploy
@@ -66,6 +67,7 @@ KUBECLAW_DEPLOY_LITELLM="${KUBECLAW_DEPLOY_LITELLM:-true}"
 ALLOW_PARTIAL_INFRA="${ALLOW_PARTIAL_INFRA:-false}"
 AGENT_HELM_TIMEOUT="${AGENT_HELM_TIMEOUT:-45m}"
 AGENT_ROLLOUT_TIMEOUT="${AGENT_ROLLOUT_TIMEOUT:-45m}"
+CODE_BUNDLE_DEFAULT_REF="${CODE_BUNDLE_DEFAULT_REF:-refs/heads/main}"
 CODE_BUNDLE_RELEASE_TAG="${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}"
 
 export NAMESPACE
@@ -319,6 +321,30 @@ default_bundle_archive_url() {
   echo "https://github.com/${repository}/releases/download/${CODE_BUNDLE_RELEASE_TAG}/${role}-${expected_commit}.tgz"
 }
 
+default_bundle_expected_commit() {
+  local ref="$CODE_BUNDLE_DEFAULT_REF"
+  local resolved=""
+
+  if resolved="$(git -C "$REPO_DIR" ls-remote --exit-code origin "$ref" 2>/dev/null | awk 'NR==1 {print $1}')" && [[ -n "$resolved" ]]; then
+    echo "$resolved"
+    return 0
+  fi
+
+  if [[ "$ref" == "refs/heads/main" ]] || [[ "$ref" == "main" ]]; then
+    if resolved="$(git -C "$REPO_DIR" rev-parse --verify origin/main 2>/dev/null)" && [[ -n "$resolved" ]]; then
+      echo "$resolved"
+      return 0
+    fi
+  fi
+
+  if resolved="$(git -C "$REPO_DIR" rev-parse --verify HEAD 2>/dev/null)" && [[ -n "$resolved" ]]; then
+    echo "$resolved"
+    return 0
+  fi
+
+  return 1
+}
+
 bundle_env_for_role() {
   local role="$1"
   local field="$2"
@@ -344,7 +370,7 @@ resolve_deploy_targets() {
     both) echo "nova buster" ;;
     nova|buster) echo "$target" ;;
     *)
-      err "Usage: $0 code <nova|buster|both> or $0 image <nova|buster|both>"
+      err "Usage: $0 code [nova|buster] or $0 image [nova|buster|both]"
       return 1
       ;;
   esac
@@ -732,8 +758,11 @@ deploy_agent() {
     bundle_archive_url="$(bundle_env_for_role "$role" archive_url)"
 
     if [[ -z "$bundle_expected_commit" ]]; then
-      err "${role} code deploy requires $(tr '[:lower:]' '[:upper:]' <<< "$role")_CODE_BUNDLE_EXPECTED_COMMIT"
-      return 1
+      if ! bundle_expected_commit="$(default_bundle_expected_commit)"; then
+        err "${role} code deploy requires $(tr '[:lower:]' '[:upper:]' <<< "$role")_CODE_BUNDLE_EXPECTED_COMMIT or a resolvable ${CODE_BUNDLE_DEFAULT_REF}"
+        return 1
+      fi
+      info "Resolved ${role} code bundle commit from ${CODE_BUNDLE_DEFAULT_REF}: ${bundle_expected_commit}"
     fi
     if [[ -z "$bundle_archive_url" ]]; then
       if ! bundle_archive_url="$(default_bundle_archive_url "$role" "$bundle_expected_commit")"; then
@@ -1104,7 +1133,7 @@ case "${1:-}" in
     echo "  agents             Deploy agents (Nova + Buster) using image/runtime values"
     echo "  agent <name>       Deploy single agent (nova|buster) using image/runtime values"
     echo "  image [target]     Image deploy for nova|buster|both (default: both)"
-    echo "  code [target]      Code-bundle deploy for nova|buster|both (default: both)"
+    echo "  code [target]      Code-bundle deploy for all agents by default, or one target (nova|buster)"
     echo "  all                Full deployment (setup + infra + agents)"
     echo "  smoke              Run pod-level smoke checks for Nova + Buster"
     echo "  smoke-agent <name> Run pod-level smoke checks for one agent"
