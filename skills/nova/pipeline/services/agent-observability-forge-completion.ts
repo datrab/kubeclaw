@@ -262,6 +262,7 @@ export function createAgentEndedTelemetryReader(config, opts = {}) {
   const blockMs = opts.blockMs ?? DEFAULT_XREAD_BLOCK_MS;
   let lastId = opts.startId || '$';
   let client = null;
+  let redisReady = false;
 
   function redis() {
     if (client) return client;
@@ -276,9 +277,24 @@ export function createAgentEndedTelemetryReader(config, opts = {}) {
     return client;
   }
 
+  async function ensureRedisReady() {
+    const current = redis();
+    if (redisReady) return current;
+    const status = typeof current.status === 'string' ? current.status : '';
+    if (typeof current.connect === 'function' && status !== 'ready') {
+      await current.connect();
+    }
+    if (typeof current.ping === 'function') {
+      await current.ping();
+    }
+    redisReady = true;
+    return current;
+  }
+
   return {
     async read(identity) {
-      const result = await redis().xread('BLOCK', String(blockMs), 'COUNT', '10', 'STREAMS', stream, lastId);
+      const current = await ensureRedisReady();
+      const result = await current.xread('BLOCK', String(blockMs), 'COUNT', '10', 'STREAMS', stream, lastId);
       let matched = null;
       for (const entry of decodeXreadEntries(result)) {
         if (entry.id) lastId = entry.id;
@@ -292,6 +308,7 @@ export function createAgentEndedTelemetryReader(config, opts = {}) {
       if (!client) return;
       const current = client;
       client = null;
+      redisReady = false;
       try {
         if (typeof current.disconnect === 'function') current.disconnect();
         else void current.quit?.().catch?.(() => {});

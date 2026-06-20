@@ -168,3 +168,19 @@ test('validateConfig rejects removed review-failure gate field', () => {
     new RegExp(`progress\\.gates\\.review\\.${removedReviewFailField}: removed field; use on_fail`),
   );
 });
+
+test('validateConfig requires telemetry when agent observability is required', () => {
+  const config = makeConfig();
+  config.agent_observability = { required: true, startup_evidence_timeout_ms: 0 };
+  const progress = {
+    project: 'demo',
+    execution_order: [],
+    modules: {},
+    gates: {},
+  };
+
+  assert.throws(
+    () => validateConfig(config, progress),
+    /config\.telemetry\.enabled: must be true when config\.agent_observability\.required is true/,
+  );
+});

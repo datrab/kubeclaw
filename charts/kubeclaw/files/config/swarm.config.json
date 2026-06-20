@@ -41,6 +41,10 @@
     "monitor_poll_ms": 10000
   },
 
+  "telemetry": {
+    "enabled": true
+  },
+
   "agent_observability": {
     "required": true,
     "startup_evidence_timeout_ms": 15000,

@@ -59,6 +59,59 @@ test('agent ended telemetry reader advances past ignored stream entries', async 
   assert.deepEqual(cursors, ['0-0', '1-0']);
 });
 
+test('agent ended telemetry reader connects lazy Redis clients before xread', async () => {
+  const calls = [];
+
+  class FakeRedis {
+    constructor() {
+      this.status = 'wait';
+    }
+
+    on() {}
+
+    async connect() {
+      calls.push('connect');
+      this.status = 'ready';
+    }
+
+    async ping() {
+      calls.push('ping');
+      return 'PONG';
+    }
+
+    async xread(...args) {
+      calls.push(['xread', ...args]);
+      return xreadResult('1-0', {
+        type: 'agent.ended',
+        agent_type: 'forge',
+        run_id: 'run-a',
+        module_id: 'module-a',
+        outcome: 'success',
+      });
+    }
+
+    disconnect() {
+      calls.push('disconnect');
+    }
+  }
+
+  const reader = createAgentEndedTelemetryReader({
+    project: 'project-a',
+    telemetry: { enabled: true },
+  }, {
+    RedisCtor: FakeRedis,
+    runId: 'run-a',
+    stream: 'telemetry-stream',
+    startId: '0-0',
+  });
+
+  const event = await reader.read({ run_id: 'run-a', module_id: 'module-a' });
+  reader.close();
+
+  assert.equal(event?.type, 'agent.ended');
+  assert.deepEqual(calls.slice(0, 3), ['connect', 'ping', ['xread', 'BLOCK', '1', 'COUNT', '10', 'STREAMS', 'telemetry-stream', '0-0']]);
+});
+
 test('forge completion control path ignores only scoped runtime control files', () => {
   const config = {
     repo_root: '/repo',

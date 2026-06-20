@@ -305,6 +305,9 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
         errors.push('config.agent_observability.startup_evidence_timeout_ms: must be a non-negative number');
       }
     }
+    if (config.agent_observability.required === true && config.telemetry?.enabled !== true) {
+      errors.push('config.telemetry.enabled: must be true when config.agent_observability.required is true');
+    }
   }
 
   // case_study.enabled — boolean

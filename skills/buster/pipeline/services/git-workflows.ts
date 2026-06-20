@@ -52,6 +52,16 @@ export interface GitPushResult {
   hash: string;
 }
 
+function titleCaseAgent(value: string): string {
+  const normalized = String(value || '').trim().replace(/[-_]+/g, ' ');
+  if (!normalized) return 'Buster';
+  return normalized
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((part) => part[0].toUpperCase() + part.slice(1).toLowerCase())
+    .join(' ');
+}
+
 function firstLine(error: unknown): string {
   if (error instanceof Error) return (error.message || String(error)).split('\n')[0] || 'unknown';
   return String(error || 'unknown').split('\n')[0] || 'unknown';
@@ -71,6 +81,43 @@ function gitHashMatchesTarget(actualHash: string, targetHash: string): boolean {
 
 function logGit(logger: GitLogger | null, level: 'info' | 'warn', msg: string): void {
   if (logger) logger[level]?.('GIT', msg);
+}
+
+function gitConfigValue(repoRoot: string, key: string): string | null {
+  try {
+    const value = gitExec(repoRoot, ['config', '--get', key]);
+    return value || null;
+  } catch (_error: unknown) {
+    return null;
+  }
+}
+
+function ensureGitIdentity(repoRoot: string, logger: GitLogger | null): void {
+  const existingName = gitConfigValue(repoRoot, 'user.name');
+  const existingEmail = gitConfigValue(repoRoot, 'user.email');
+  if (existingName && existingEmail) return;
+
+  const agent = String(process.env.CURRENT_AGENT || process.env.AGENT_NAME || 'buster').trim() || 'buster';
+  const fallbackName = `${titleCaseAgent(agent)} Agent`;
+  const fallbackEmail = `${agent.toLowerCase()}@kubeclaw.swarm`;
+
+  if (!existingName) {
+    gitExec(repoRoot, ['config', 'user.name', fallbackName]);
+    logGit(logger, 'info', `Configured local git user.name for ${agent}`);
+  }
+  if (!existingEmail) {
+    gitExec(repoRoot, ['config', 'user.email', fallbackEmail]);
+    logGit(logger, 'info', `Configured local git user.email for ${agent}`);
+  }
+}
+
+function hasScopedStagedChanges(repoRoot: string, addPaths: string[]): boolean {
+  try {
+    gitExec(repoRoot, ['diff', '--cached', '--quiet', '--', ...addPaths]);
+    return false;
+  } catch (_error: unknown) {
+    return true;
+  }
 }
 
 // ─── gitSync ─────────────────────────────────────────────────────────────────
@@ -203,8 +250,12 @@ export async function gitPushWithRetry(repoRoot: string, branch: string, opts: G
 
   if (opts.commitMessage) {
     const addPaths = normalizeScopedAddPaths(opts.addPaths);
-    gitExec(repoRoot, ['add', '--', ...addPaths], { stdio: 'ignore' });
-    gitExec(repoRoot, ['commit', '-m', opts.commitMessage], { stdio: 'ignore' });
+    ensureGitIdentity(repoRoot, logger);
+    gitExec(repoRoot, ['add', '--', ...addPaths]);
+    if (!hasScopedStagedChanges(repoRoot, addPaths)) {
+      return { pushed: false, hash: gitExec(repoRoot, ['rev-parse', '--short', 'HEAD']) };
+    }
+    gitExec(repoRoot, ['commit', '-m', opts.commitMessage]);
   }
 
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {

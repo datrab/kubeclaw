@@ -260,11 +260,24 @@ async function verifyAndPush(agentRole: string, currentProject: string, opts: Ve
       warn: (_scope: unknown, msg: string) => log(`⚠️ [Verify] ${msg}`),
       info: (_scope: unknown, msg: string) => log(msg),
     };
-    const { hash: commitHash } = await gitPushWithRetry(repoRoot, currentBranch, {
+    const { hash: commitHash, pushed } = await gitPushWithRetry(repoRoot, currentBranch, {
       logger: gitLogger,
       commitMessage,
       addPaths: [swarmRoot],
     });
+
+    if (!pushed) {
+      log('⚠️ [Verify] No scoped staged changes remained after add/cleanup. Nothing to push.');
+      return {
+        status: 'success',
+        action: badFiles.length > 0 ? 'reverted_all_bad_files' : 'none',
+        logs,
+        commit_hash: commitHash,
+        ...(badFiles.length > 0 ? {
+          cleanup_proof: { intended_cleanup_count: badFiles.length, actions: cleanupActions, remaining_forbidden_files: [] },
+        } : {}),
+      };
+    }
 
     log(`✅ [Verify] Push successful! (${commitHash})`);
     return {

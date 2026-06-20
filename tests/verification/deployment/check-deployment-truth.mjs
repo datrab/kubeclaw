@@ -389,6 +389,7 @@ const renderedSwarmConfigMap = findRenderedDocument(rendered, {
   name: 'agent-nova-swarm-config',
 });
 const renderedSwarmConfig = extractLiteralDataBlock(renderedSwarmConfigMap, 'swarm.config.json');
+const renderedSwarmConfigJson = JSON.parse(renderedSwarmConfig);
 const renderedSemgrepConfig = extractLiteralDataBlock(renderedSwarmConfigMap, '.semgrep.yml');
 const renderedBusterGatewayConfigMap = findRenderedDocument(renderedBuster, {
   kind: 'ConfigMap',
@@ -835,6 +836,11 @@ assert.deepEqual(
   renderedBusterGatewayConfig.plugins?.entries?.['kubeclaw-agent-observer']?.hooks,
   { allowConversationAccess: true },
   'Rendered Buster gateway config must grant observer hook conversation access for pipeline-controlled enablement',
+);
+assert.equal(
+  renderedSwarmConfigJson?.telemetry?.enabled,
+  true,
+  'Rendered swarm.config.json must enable pipeline telemetry when agent observability is required',
 );
 assert.deepEqual(
   renderedBusterGatewayConfig.models?.providers?.litellm?.apiKey,

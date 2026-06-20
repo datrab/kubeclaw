@@ -118,3 +118,40 @@ test('verifyAndPush commits scoped swarm artifact despite unrelated dirty repo f
     fs.rmSync(root, { recursive: true, force: true });
   }
 });
+
+test('verifyAndPush treats empty scoped stage as success without push', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'verify-task-noop-scope-'));
+  const remote = path.join(root, 'origin.git');
+  const repoRoot = path.join(root, 'repo');
+  const previousRepoRoot = process.env.REPO_ROOT;
+
+  try {
+    git(root, ['init', '--bare', 'origin.git']);
+    fs.mkdirSync(repoRoot);
+    git(repoRoot, ['init', '-b', 'main']);
+    git(repoRoot, ['config', 'user.email', 'test@example.invalid']);
+    git(repoRoot, ['config', 'user.name', 'Test User']);
+    fs.mkdirSync(path.join(repoRoot, 'Projects/demo/src/.swarm/modules/01'), { recursive: true });
+    fs.writeFileSync(path.join(repoRoot, 'README.md'), 'baseline\n');
+    fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/.swarm/progress.json'), '{}\n');
+    fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/app.js'), 'baseline\n');
+    git(repoRoot, ['add', '.']);
+    git(repoRoot, ['commit', '-m', 'baseline']);
+    git(repoRoot, ['remote', 'add', 'origin', remote]);
+    git(repoRoot, ['push', '-u', 'origin', 'main']);
+
+    fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/app.js'), 'changed\n');
+
+    process.env.REPO_ROOT = repoRoot;
+    const result = await verifyAndPush('buster', 'demo', { commitMessage: '[BUSTER] noop artifact' });
+
+    assert.equal(result.status, 'success');
+    assert.equal(result.action, 'none');
+    assert.equal(git(repoRoot, ['rev-list', '--count', 'HEAD']), '1');
+    assert.match(git(repoRoot, ['status', '--porcelain']), /^M Projects\/demo\/src\/app\.js$/m);
+  } finally {
+    if (previousRepoRoot === undefined) delete process.env.REPO_ROOT;
+    else process.env.REPO_ROOT = previousRepoRoot;
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
