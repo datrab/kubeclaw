@@ -250,8 +250,22 @@ spec:
               echo "==> 4a. OpenClaw Plugin Cache"
               if [ -d /opt/openclaw-plugin-npm ]; then
                 mkdir -p /config/npm
-                cp -a /opt/openclaw-plugin-npm/. /config/npm/
-                echo "    Seeded OpenClaw external plugins from image cache"
+                IMAGE_PLUGIN_CACHE_VERSION=""
+                CONFIG_PLUGIN_CACHE_VERSION=""
+                if [ -f /opt/openclaw-plugin-npm/.kubeclaw-plugin-cache-version ]; then
+                  IMAGE_PLUGIN_CACHE_VERSION="$(cat /opt/openclaw-plugin-npm/.kubeclaw-plugin-cache-version 2>/dev/null || true)"
+                fi
+                if [ -f /config/npm/.kubeclaw-plugin-cache-version ]; then
+                  CONFIG_PLUGIN_CACHE_VERSION="$(cat /config/npm/.kubeclaw-plugin-cache-version 2>/dev/null || true)"
+                fi
+                if [ -n "$IMAGE_PLUGIN_CACHE_VERSION" ] && [ "$IMAGE_PLUGIN_CACHE_VERSION" = "$CONFIG_PLUGIN_CACHE_VERSION" ]; then
+                  echo "    OpenClaw external plugin cache already current; skipping reseed"
+                else
+                  rm -rf /config/npm/*
+                  find /config/npm -mindepth 1 -maxdepth 1 -name '.*' -exec rm -rf {} +
+                  cp -a /opt/openclaw-plugin-npm/. /config/npm/
+                  echo "    Seeded OpenClaw external plugins from image cache"
+                fi
               else
                 echo "    WARNING: baked OpenClaw plugin npm cache not found"
               fi

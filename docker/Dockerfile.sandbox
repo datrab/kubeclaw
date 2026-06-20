@@ -173,6 +173,10 @@ RUN mkdir -p /tmp/openclaw-plugin-home \
     && HOME=/tmp/openclaw-plugin-home openclaw plugins install @openclaw/discord \
     && mkdir -p /opt/openclaw-plugin-npm \
     && cp -a /tmp/openclaw-plugin-home/.openclaw/npm/. /opt/openclaw-plugin-npm/ \
+    && (
+      cd /opt/openclaw-plugin-npm \
+      && find . -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}' > /opt/openclaw-plugin-npm/.kubeclaw-plugin-cache-version
+    ) \
     && rm -rf /tmp/openclaw-plugin-home
 
 # 9. Runtime environment

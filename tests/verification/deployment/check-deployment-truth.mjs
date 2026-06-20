@@ -680,7 +680,9 @@ assert.equal(rendered.includes('mountPath: /app/config'), false, 'Rendered deplo
 assert.equal(rendered.includes('sed -i "s|__LITELLM_API_KEY__|'), false, 'Rendered init container must not substitute secrets into the retained config PVC with sed');
 assert.equal(rendered.includes('sed -i "s|__DISCORD_TOKEN__|'), false, 'Rendered init container must not substitute Discord tokens into the retained config PVC with sed');
 assertIncludes(rendered, 'openclaw.json source normalized with canonical refs and SecretRefs', 'Rendered init container must normalize persistent openclaw.json with canonical model refs and SecretRefs');
-assertIncludes(rendered, 'Seeded OpenClaw external plugins from image cache', 'Rendered init container must seed configured external plugins without startup network installs');
+assertIncludes(rendered, '.kubeclaw-plugin-cache-version', 'Rendered init container must compare a baked plugin-cache version stamp');
+assertIncludes(rendered, 'OpenClaw external plugin cache already current; skipping reseed', 'Rendered init container must skip plugin cache reseeding when the baked cache is unchanged');
+assertIncludes(rendered, 'Seeded OpenClaw external plugins from image cache', 'Rendered init container must still seed configured external plugins when the baked cache changes');
 assertIncludes(rendered, 'openclaw.json mirrored into runtime config', 'Rendered init container must mirror OpenClaw config into runtime diagnostics');
 assertIncludes(rendered, 'chmod 700 /config', 'Rendered init container must harden the OpenClaw state directory permissions');
 assertIncludes(rendered, 'chmod 600 /config/openclaw.json', 'Rendered init container must harden openclaw.json permissions');
@@ -959,7 +961,9 @@ assert.equal(deploymentTemplate.includes('subPath: openclaw.json'), false, 'Depl
 assertIncludes(deploymentTemplate, 'mountPath: /home/node/.openclaw/swarm.config.json', 'Deployment template must overlay runtime swarm.config.json onto the normal config path');
 assertIncludes(deploymentTemplate, 'subPath: swarm.config.json', 'Deployment template must mount only the runtime swarm.config.json file over the persistent source');
 assertIncludes(deploymentTemplate, 'openclaw.json source normalized with canonical refs and SecretRefs', 'Deployment template must normalize persistent openclaw.json with canonical model refs and SecretRefs');
-assertIncludes(deploymentTemplate, 'Seeded OpenClaw external plugins from image cache', 'Deployment template must seed configured external plugins from the baked image cache');
+assertIncludes(deploymentTemplate, '.kubeclaw-plugin-cache-version', 'Deployment template must compare a baked plugin-cache version stamp');
+assertIncludes(deploymentTemplate, 'OpenClaw external plugin cache already current; skipping reseed', 'Deployment template must skip plugin cache reseeding when the baked cache is unchanged');
+assertIncludes(deploymentTemplate, 'Seeded OpenClaw external plugins from image cache', 'Deployment template must still seed configured external plugins from the baked image cache when needed');
 assertIncludes(deploymentTemplate, 'openclaw.json mirrored into runtime config', 'Deployment template must mirror openclaw.json into the runtime diagnostics surface');
 assertIncludes(deploymentTemplate, 'chmod 700 /config', 'Deployment template must harden the OpenClaw state directory permissions');
 assertIncludes(deploymentTemplate, 'chmod 600 /config/openclaw.json', 'Deployment template must harden openclaw.json permissions');
@@ -1004,6 +1008,7 @@ for (const [label, dockerfile] of [
   assertIncludes(dockerfile, 'openclaw plugins install @openclaw/acpx', `${label} must bake the official ACPX plugin into the image cache`);
   assertIncludes(dockerfile, 'openclaw plugins install @openclaw/discord', `${label} must bake the official Discord plugin into the image cache`);
   assertIncludes(dockerfile, '/opt/openclaw-plugin-npm', `${label} must expose the baked OpenClaw npm plugin cache for init seeding`);
+  assertIncludes(dockerfile, '.kubeclaw-plugin-cache-version', `${label} must write a baked plugin cache version stamp for incremental init seeding`);
 }
 assertIncludes(namespaceControllerDockerfile, 'FROM node:22-bookworm-slim', 'Namespace controller Dockerfile must use a lightweight Node image');
 assertIncludes(namespaceControllerDockerfile, 'COPY scripts/buster-namespace-controller.mjs /app/scripts/buster-namespace-controller.mjs', 'Namespace controller Dockerfile must package the namespace controller entrypoint');
@@ -1091,6 +1096,8 @@ assertIncludes(deployScript, 'resolve_deploy_targets() {', 'Deploy script must d
 assertIncludes(deployScript, 'cmd_image() {', 'Deploy script must expose a dedicated image deploy surface');
 assertIncludes(deployScript, 'cmd_code() {', 'Deploy script must expose a dedicated code deploy surface');
 assertIncludes(deployScript, 'derive_github_repository() {', 'Deploy script must derive the GitHub repository for bundle release URLs when possible');
+assertIncludes(deployScript, 'repo="${repo#ssh://git@github.com/}"', 'Deploy script must support ssh:// GitHub remotes when deriving bundle release URLs');
+assertIncludes(deployScript, '([^/@]+@)?github\\.com/', 'Deploy script must support authenticated HTTPS GitHub remotes when deriving bundle release URLs');
 assertIncludes(deployScript, 'default_bundle_archive_url() {', 'Deploy script must define the canonical GitHub release asset URL shape for bundles');
 assertIncludes(deployScript, 'default_bundle_expected_commit() {', 'Deploy script must define a helper for default code-bundle commit resolution');
 assertIncludes(deployScript, 'git -C "$REPO_DIR" ls-remote --exit-code origin "$ref"', 'Deploy script must resolve omitted code bundle commits from the latest remote ref');

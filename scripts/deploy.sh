@@ -299,8 +299,10 @@ derive_github_repository() {
   local repo
   repo="$remote_url"
   repo="${repo#git@github.com:}"
-  repo="${repo#https://github.com/}"
-  repo="${repo#http://github.com/}"
+  repo="${repo#ssh://git@github.com/}"
+  if [[ "$repo" == "$remote_url" && "$remote_url" =~ ^https?://([^/@]+@)?github\.com/(.+)$ ]]; then
+    repo="${BASH_REMATCH[2]}"
+  fi
   repo="${repo%.git}"
   if [[ "$repo" == "$remote_url" || "$repo" != */* ]]; then
     return 1

@@ -11,7 +11,7 @@ Document what the runtime images contain.
 
 `docker/Dockerfile.general` builds the Nova/Forge/Echo runtime from `ghcr.io/openclaw/openclaw:latest`. It installs system tools, TypeScript/lint tooling, Python lint tools, semgrep, hadolint `2.12.0`, kubeconform `0.6.4`, Helm when absent, Nova skills, common skills, the OpenClaw agent observer plugin extension, and an image-baked npm cache for the official `@openclaw/acpx` and `@openclaw/discord` plugins.
 
-`docker/Dockerfile.sandbox` builds the Buster runtime from `ghcr.io/openclaw/openclaw:latest`. It installs Podman/buildah/slirp/fuse-overlayfs, Chromium, nginx, jq, tree, ripgrep, Lighthouse, Playwright, axe, pixelmatch, pngjs, ws, agent-browser, k6 `v0.54.0`, sandbox helper scripts, Buster skills, common skills, the observer plugin extension, and the same official external plugin cache.
+`docker/Dockerfile.sandbox` builds the Buster runtime from `ghcr.io/openclaw/openclaw:latest`. It installs Podman/buildah/slirp/fuse-overlayfs, Chromium, nginx, jq, tree, ripgrep, Lighthouse, Playwright, axe, pixelmatch, pngjs, ws, agent-browser, k6 `v0.54.0`, sandbox helper scripts, Buster skills, common skills, the observer plugin extension, and the same official external plugin cache plus a baked cache-version stamp for incremental init seeding.
 
 `docker/Dockerfile.namespace-controller` builds the Buster namespace controller from `node:22-bookworm-slim`. It copies only `scripts/buster-namespace-controller.mjs` and runs it as the non-root `node` user. It does not inherit the OpenClaw runtime image.
 
