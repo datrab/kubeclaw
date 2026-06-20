@@ -134,8 +134,8 @@ jobs:
       - name: Build Nova and Buster bundles
         run: |
           mkdir -p dist
-          ./scripts/package-agent-skill-bundle.sh nova "dist/nova-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
-          ./scripts/package-agent-skill-bundle.sh buster "dist/buster-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
+          bash ./scripts/package-agent-skill-bundle.sh nova "dist/nova-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
+          bash ./scripts/package-agent-skill-bundle.sh buster "dist/buster-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
           (
             cd dist
             sha256sum "nova-${GITHUB_SHA}.tgz" "buster-${GITHUB_SHA}.tgz" > "SHA256SUMS-${GITHUB_SHA}.txt"
