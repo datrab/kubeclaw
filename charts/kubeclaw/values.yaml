@@ -30,6 +30,16 @@ image:
 imagePullSecrets: []
   # - name: ghcr-secret
 
+codeBundle:
+  enabled: false
+  # Concrete archive download URL resolved by deploy tooling or CI.
+  archiveUrl: ""
+  expectedCommit: ""
+  contractVersion: "v1"
+  auth:
+    existingSecret: ""
+    existingSecretKey: "token"
+
 # =============================================================================
 # GATEWAY
 # =============================================================================

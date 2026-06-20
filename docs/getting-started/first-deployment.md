@@ -23,7 +23,7 @@ The deployment truth check validates rendered Kubernetes resources, confirms exp
 
 The chart expects a Kubernetes namespace such as `kubeclaw`, a shared secret named `openclaw-shared-secrets`, Redis/Qdrant/LiteLLM infrastructure, and agent PVCs. `scripts/deploy.sh` is the deployment helper for applying production values, and `my-values/setup-secrets.sh` is the local secret setup helper.
 
-The implemented command sequence is:
+The implemented image-based command sequence is:
 
 ```bash
 ./scripts/deploy.sh setup
@@ -32,7 +32,7 @@ The implemented command sequence is:
 ./scripts/deploy.sh smoke
 ```
 
-`setup` creates or verifies the namespace, adds Bitnami/Qdrant/Tailscale Helm repos, runs the secret setup helper when a TTY is available, and notes that local-image verification needs an explicit private registry pull path. If `NAMESPACE` is unset and a TTY is available, it asks for a workspace namespace every time. Press Enter to use the remembered/default namespace, or type a new namespace to deploy another pipeline namespace and remember that value.
+`setup` creates or verifies the namespace, adds Bitnami/Qdrant/Tailscale Helm repos, and runs the secret setup helper when a TTY is available. If `NAMESPACE` is unset and a TTY is available, it asks for a workspace namespace every time. Press Enter to use the remembered/default namespace, or type a new namespace to deploy another pipeline namespace and remember that value.
 
 `infra` installs required Redis, registry mirror, registry-local, the Buster namespace fence, and the Tailscale operator. It also installs optional PostgreSQL, Qdrant, and LiteLLM unless their switches are disabled. `agents` installs Nova and Buster with production values. `smoke` waits for both agent deployments, checks dependency-aware pod readiness, runs `openclaw gateway status` in the `kubeclaw` container, and verifies `/app/skills` plus `/home/node/.openclaw/swarm.config.json`.
 
@@ -42,14 +42,15 @@ Operators can rerun only the guided secret setup with:
 ./scripts/deploy.sh secrets
 ```
 
-For live image verification, the script also supports:
+For code-only redeploys, the script also supports:
 
 ```bash
-./scripts/deploy.sh build-local-images
-./scripts/deploy.sh verify-live
+NOVA_CODE_BUNDLE_ARCHIVE_URL=... \
+NOVA_CODE_BUNDLE_EXPECTED_COMMIT=<sha> \
+./scripts/deploy.sh code nova
 ```
 
-`verify-live` builds the general and sandbox images, pushes them to `registry-local`, redeploys agents with those image tags, disables image pull secrets for that verification run, and then runs smoke checks.
+`code` updates the selected bundle input for the targeted agent and waits for the Helm-driven rollout. It does not build images locally.
 
 ## Required live inputs
 

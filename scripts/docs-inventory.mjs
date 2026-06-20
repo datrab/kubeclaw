@@ -20,8 +20,9 @@ function parseHeaderUsage(scriptText) {
   const commands = [];
   const lines = scriptText.split('\n');
   const invocationForms = [
-    'build-local-images [tag]',
-    'verify-live [tag]',
+    'image <name>',
+    'code <target>',
+    'image',
     'smoke-agent <name>',
     'teardown-agents',
     'teardown-all',

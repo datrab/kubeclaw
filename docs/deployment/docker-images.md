@@ -34,16 +34,27 @@ The root `.dockerignore` keeps runtime image build contexts narrow. It defaults 
 
 `.dockerignore` starts with `**`, then allows only `docker/`, `skills/`, `plugins/openclaw-agent-observer/`, and `scripts/buster-namespace-controller.mjs`. This is intentional: deployment values, local state, `.github/`, `node_modules`, logs, `.env` files, key material, and decrypted secret-shaped files must not enter the image build context.
 
-## Local Image Verification
+## Operator Deployment Use
 
-The canonical local build path is in `scripts/deploy.sh`:
+The deployment script no longer builds images locally. Runtime image changes should flow through CI-published GHCR images and be applied with:
 
 ```bash
-./scripts/deploy.sh build-local-images [tag]
-./scripts/deploy.sh verify-live [tag]
+./scripts/deploy.sh image both
+./scripts/deploy.sh smoke
 ```
 
-`build-local-images` builds `docker/Dockerfile.general`, `docker/Dockerfile.sandbox`, and `docker/Dockerfile.namespace-controller`, tags them under the host-visible registry target from `LOCAL_REGISTRY_PUSH`, and pushes them. `verify-live` then proves the cluster-visible registry target from `LOCAL_REGISTRY_PULL` by starting temporary pods from all deployed images before redeploying Nova and Buster. Because `registry-local` is ClusterIP by default, live local-image verification needs an explicit private push/pull path before use.
+Code-only skill updates should flow through CI-published GitHub release bundles and be applied with:
+
+```bash
+NOVA_CODE_BUNDLE_EXPECTED_COMMIT=<sha> ./scripts/deploy.sh code nova
+BUSTER_CODE_BUNDLE_EXPECTED_COMMIT=<sha> ./scripts/deploy.sh code buster
+```
+
+Those bundles preserve the existing `/app/skills` runtime contract:
+
+- Nova pod = `skills/nova` plus `skills/common` overlays
+- Buster pod = `skills/buster` plus `skills/common` overlays
+- shared files from `skills/common` still replace the repo-local re-export facades in matching runtime paths
 
 ## Pinning Risk
 
@@ -53,8 +64,8 @@ The Dockerfiles and production values currently use `latest` for the OpenClaw ba
 
 ```bash
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
-./scripts/deploy.sh build-local-images live-smoke
-./scripts/deploy.sh verify-live live-smoke
+./scripts/deploy.sh image both
+./scripts/deploy.sh smoke
 ```
 
-The repository check proves source and rendered-manifest contracts. The deploy script commands prove the local Docker daemon, registry push target, cluster pull target, rollout, and smoke path in a live environment.
+The repository check proves source and rendered-manifest contracts. The deploy script commands prove rollout and smoke behavior in a live environment.

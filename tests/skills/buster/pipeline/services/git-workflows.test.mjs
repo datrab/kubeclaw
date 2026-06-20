@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -137,6 +137,51 @@ test('gitPushWithRetry returns without commit when scoped add stages nothing', a
     assert.equal(result.hash, beforeHash);
     assert.equal(git(repo, ['rev-parse', '--short', 'HEAD']), beforeHash);
     assert.match(git(repo, ['status', '--porcelain']), /^M other\.txt$/m);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('gitPushWithRetry auto-resolves scoped rebase conflicts in favor of local Buster output', async () => {
+  const root = mkdtempSync(path.join(tmpdir(), 'git-workflows-buster-rebase-'));
+  const remote = path.join(root, 'remote.git');
+  const repo = path.join(root, 'repo');
+  const other = path.join(root, 'other');
+
+  try {
+    git(root, ['init', '--bare', remote]);
+    git(root, ['clone', remote, repo]);
+    git(repo, ['config', 'user.email', 'test@example.com']);
+    git(repo, ['config', 'user.name', 'Test User']);
+    mkdirSync(path.join(repo, 'Projects/demo/src/.swarm/modules/01'), { recursive: true });
+    writeFileSync(path.join(repo, 'Projects/demo/src/.swarm/modules/01/result.json'), '{"status":"base"}\n');
+    git(repo, ['add', 'Projects/demo/src/.swarm/modules/01/result.json']);
+    git(repo, ['commit', '-m', 'initial']);
+    git(repo, ['push', '-u', 'origin', 'master']);
+
+    git(root, ['clone', remote, other]);
+    git(other, ['config', 'user.email', 'other@example.com']);
+    git(other, ['config', 'user.name', 'Other User']);
+    mkdirSync(path.join(other, 'Projects/demo/src/.swarm/modules/01'), { recursive: true });
+    writeFileSync(path.join(other, 'Projects/demo/src/.swarm/modules/01/result.json'), '{"status":"remote"}\n');
+    git(other, ['add', 'Projects/demo/src/.swarm/modules/01/result.json']);
+    git(other, ['commit', '-m', 'remote']);
+    git(other, ['push', 'origin', 'master']);
+
+    writeFileSync(path.join(repo, 'Projects/demo/src/.swarm/modules/01/result.json'), '{"status":"local"}\n');
+
+    const result = await gitPushWithRetry(repo, 'master', {
+      maxAttempts: 1,
+      retryDelayMs: 1,
+      commitMessage: 'buster output',
+      addPaths: ['Projects/demo/src/.swarm'],
+    });
+
+    assert.equal(result.pushed, true);
+    assert.equal(
+      git(repo, ['show', 'origin/master:Projects/demo/src/.swarm/modules/01/result.json']),
+      '{"status":"local"}',
+    );
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

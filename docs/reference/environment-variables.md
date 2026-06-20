@@ -15,7 +15,13 @@ Generated from: `scripts/deploy.sh`, `my-values/setup-secrets.sh`
 
 | Name | Description | Deploy default | Secret setup default |
 | --- | --- | --- | --- |
+| `AGENT_HELM_TIMEOUT` | Helm wait timeout for agent upgrades (default: 45m) | `45m` |  |
+| `AGENT_ROLLOUT_TIMEOUT` | Pod/deployment readiness timeout for agents (default: 45m) | `45m` |  |
 | `ALLOW_PARTIAL_INFRA` | true\|false (default: false) | `false` |  |
+| `BUSTER_CODE_BUNDLE_ARCHIVE_URL` | Resolved Buster bundle archive URL for code deploy |  |  |
+| `BUSTER_CODE_BUNDLE_EXPECTED_COMMIT` | Expected Buster source commit for code deploy |  |  |
+| `CODE_BUNDLE_GITHUB_REPOSITORY` | owner/repo override for derived GitHub release bundle URLs |  |  |
+| `CODE_BUNDLE_RELEASE_TAG` | GitHub release tag for published bundles (default: agent-code-bundles) | `agent-code-bundles` |  |
 | `KUBECLAW_DEPLOY_LITELLM` | true\|false (default: true) | `true` | `true` |
 | `KUBECLAW_DEPLOY_POSTGRESQL` | true\|false (default: true) | `true` | `true` |
 | `KUBECLAW_DEPLOY_QDRANT` | true\|false (default: true) | `true` | `true` |
@@ -23,9 +29,9 @@ Generated from: `scripts/deploy.sh`, `my-values/setup-secrets.sh`
 | `KUBECLAW_SECRET_SETUP_MODE` | auto\|interactive\|noninteractive (default: auto) |  | `auto` |
 | `KUBECLAW_SECRETS_OVERWRITE` | true\|false (default: false) |  | `false` |
 | `KUBECLAW_WORKSPACE_PROMPT` | auto\|true\|false (default: auto) | `auto` |  |
-| `LOCAL_REGISTRY_PULL` | Cluster-visible pull target for verify-live |  |  |
-| `LOCAL_REGISTRY_PUSH` | Host-visible push target for build-local-images |  |  |
 | `NAMESPACE` | Target namespace (default: kubeclaw) | `kubeclaw` | `kubeclaw` |
+| `NOVA_CODE_BUNDLE_ARCHIVE_URL` | Resolved Nova bundle archive URL for code deploy |  |  |
+| `NOVA_CODE_BUNDLE_EXPECTED_COMMIT` | Expected Nova source commit for code deploy |  |  |
 | `SRC_NS` | Namespace to copy existing app Secrets from (default: default) |  | `default` |
 | `TAILSCALE_OAUTH_CLIENT_ID` | Optional bootstrap source for Secret/operator-oauth |  |  |
 | `TAILSCALE_OAUTH_CLIENT_SECRET` | Optional bootstrap source for Secret/operator-oauth |  |  |
@@ -42,14 +48,14 @@ Generated from: `scripts/deploy.sh`, `my-values/setup-secrets.sh`
 | Namespace and workspace prompt | `scripts/deploy.sh`; `my-values/setup-secrets.sh` | selects the Kubernetes namespace and optionally records `my-values/.workspace-namespace` for local operator convenience | `./scripts/deploy.sh status`; generated inventory check |
 | Component switches | `scripts/deploy.sh`; `my-values/setup-secrets.sh` | controls optional PostgreSQL, Qdrant, LiteLLM, and Tailscale setup paths; `ALLOW_PARTIAL_INFRA` changes rollout failures from fail-closed to warning | deployment truth plus live rollout status |
 | Secret setup controls | `my-values/setup-secrets.sh` | chooses interactive/noninteractive/auto resolution, overwrite behavior, source namespace copies, and Tailscale OAuth bootstrap | `kubectl -n "$NAMESPACE" get secret ...`; `kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" get secret operator-oauth` |
-| Local image verification | `scripts/deploy.sh` | separates host-visible image push target from cluster-visible pull target for `build-local-images` and `verify-live` | `./scripts/deploy.sh build-local-images [tag]`; `./scripts/deploy.sh verify-live [tag]` |
+| Code bundle selection | `scripts/deploy.sh` | derives GitHub release bundle URLs from repository + commit unless explicit archive URLs are provided | `NOVA_CODE_BUNDLE_EXPECTED_COMMIT=<sha> ./scripts/deploy.sh code nova`; `BUSTER_CODE_BUNDLE_EXPECTED_COMMIT=<sha> ./scripts/deploy.sh code buster` |
 
 ## Failure Modes
 
 - Invalid boolean-like values can skip expected component paths or keep optional setup enabled; use the exact values listed in this table.
 - Noninteractive secret setup warns when a required source is unavailable instead of inventing credentials.
 - `ALLOW_PARTIAL_INFRA=true` is for troubleshooting only; the default infra path should fail closed on required rollout failures.
-- Local image verification requires both `LOCAL_REGISTRY_PUSH` and `LOCAL_REGISTRY_PULL` when the host-visible and cluster-visible registry names differ.
+- Code deploy requires the expected commit for each targeted agent and, for private repositories, a bundle auth Secret the pod can use to fetch GitHub release assets.
 
 ## Checks
 

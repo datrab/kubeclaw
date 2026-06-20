@@ -78,7 +78,7 @@ Passing checks are quiet by default and print the final JSON summary. Runtime lo
 - `tests/verification/behavior-verification.md` is the behavior verification explainer
 - `tests/verification/packaging-verification.md` is the packaging verification explainer
 - `scripts/` is the home for operator utilities like `deploy.sh` and `setup.sh`
-- `scripts/deploy.sh build-local-images [tag]`, `scripts/deploy.sh verify-live [tag]`, `scripts/deploy.sh smoke`, and `scripts/deploy.sh smoke-agent <nova|buster>` are the live deployment command surface
+- `scripts/deploy.sh image [nova|buster|both]`, `scripts/deploy.sh code [nova|buster|both]`, `scripts/deploy.sh smoke`, and `scripts/deploy.sh smoke-agent <nova|buster>` are the live deployment command surface
 
 ## Replay And Audit Artifacts
 

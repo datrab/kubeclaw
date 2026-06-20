@@ -170,4 +170,5 @@ test('session spawn embed names the Buster role', () => {
     childSessionKey: 'agent:main:subagent:buster-session',
   });
   assert.equal(embed.title, '🚀 Buster Session Spawned: 01-foundation');
+  assert.equal(embed.color, 3447003);
 });

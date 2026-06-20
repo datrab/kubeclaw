@@ -318,7 +318,7 @@ export function buildSuiteResultsEmbed(moduleId, project, suitesInfo) {
 }
 
 /**
- * Build a session spawn embed (green, includes runtime type).
+ * Build a session spawn embed (info blue, includes runtime type).
  */
 export function buildSessionSpawnEmbed(moduleId, project, sessionData) {
   const agentRole = String(sessionData.agentRole || sessionData.agent_type || 'Buster')
@@ -326,7 +326,7 @@ export function buildSessionSpawnEmbed(moduleId, project, sessionData) {
     .replace(/^\w/, (char) => char.toUpperCase());
   return {
     title:  `🚀 ${agentRole} Session Spawned: ${moduleId}`,
-    color:  5763719,
+    color:  3447003,
     fields: [
       { name: 'Status',  value: 'Spawned',                                  inline: true },
       { name: 'Module',  value: String(moduleId),                            inline: true },

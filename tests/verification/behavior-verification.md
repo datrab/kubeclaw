@@ -55,7 +55,7 @@ ACP launch reachability:
 
 Fast/full wrappers are silent on clean passes unless a step emits warning output. Use `--verbose` or `VERIFICATION_VERBOSE=1` to stream step banners and passing output. A failed step prints its buffered output and exits red. Rerun underlying entrypoints directly when you need the full downstream failure set after a red wrapper run.
 
-`scripts/deploy.sh verify-live [tag]` plus `scripts/deploy.sh smoke` and `scripts/deploy.sh smoke-agent <nova|buster>` are operator-run live-cluster surfaces. They require Docker plus cluster access and are not executed by the repo-only deployment truth guard.
+`scripts/deploy.sh image [nova|buster|both]`, `scripts/deploy.sh code [nova|buster|both]`, `scripts/deploy.sh smoke`, and `scripts/deploy.sh smoke-agent <nova|buster>` are operator-run live-cluster surfaces. They require cluster access and are not executed by the repo-only deployment truth guard.
 
 ## Direct Commands
 

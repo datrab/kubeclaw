@@ -45,10 +45,23 @@ Source proof: `charts/kubeclaw/templates/configmap-gateway.yaml`, `charts/kubecl
 
 Verification: deployment truth includes "Rendered init flow keeps persistent config secret-free and renders secrets only into runtime config".
 
-## Local Registry Verification
+## Deploy Mode Split
 
-Decision: local image verification has separate host-visible push and cluster-visible pull targets.
+Decision: the operator deploy surface should split runtime image deploys from code-bundle deploys, and local deploy must not build images.
 
-Reason: `registry-local` is internal to the cluster by default, so `./scripts/deploy.sh build-local-images [tag]` needs `LOCAL_REGISTRY_PUSH` while `./scripts/deploy.sh verify-live [tag]` needs `LOCAL_REGISTRY_PULL`.
+Reason: normal redeploy speed matters more than keeping a local image-build verification loop in the operator path. `scripts/deploy.sh image [target]` now refreshes mutable runtime tags through rollout restart, while `scripts/deploy.sh code [target]` updates explicit bundle inputs and waits for the Helm-driven rollout.
 
-Source proof: `scripts/deploy.sh` functions `cmd_build_local_images`, `verify_cluster_image_pull`, and `cmd_verify_live`; values files consume the rendered overrides during live verification.
+Source proof: `scripts/deploy.sh` functions `deploy_agent`, `cmd_image`, `cmd_code`, `restart_agent_deployment`, and `wait_for_agent_rollout`.
+
+## Agent Code Bundle Storage
+
+Decision: the Nova and Buster code-only deploy path uses GitHub release assets as the durable bundle store, with one predictable asset per agent per commit SHA under the `agent-code-bundles` release tag.
+
+Reason: the current pod loader consumes plain archive URLs, and the runtime contract must preserve the existing `/app/skills` surface. GitHub release assets are the simplest durable GitHub-native distribution path that fits the current fetch model without adding OCI pull tooling inside the pod.
+
+Current contract:
+
+- Nova bundle = final `/app/skills` tree built from `skills/nova` then `skills/common`
+- Buster bundle = final `/app/skills` tree built from `skills/buster` then `skills/common`
+- `scripts/deploy.sh code` derives the GitHub release URL from repository + commit by default
+- explicit bundle URLs still override the derived path when needed

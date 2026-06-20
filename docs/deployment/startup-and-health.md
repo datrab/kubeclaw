@@ -85,7 +85,7 @@ Init writes `/runtime-config/kubeclaw-health.mjs`. Kubernetes calls this script 
 - `readinessProbe`: decides whether the pod should receive traffic/work
 - `livenessProbe`: decides whether Kubernetes should restart the container
 
-Startup and readiness share the dependency-aware checks. They verify:
+Startup verification is the deep first-boot gate. It verifies:
 
 - `/home/node/.openclaw/openclaw.json`
 - `/home/node/.openclaw/swarm.config.json`
@@ -96,6 +96,21 @@ Startup and readiness share the dependency-aware checks. They verify:
 - LiteLLM `/health` when enabled
 - Qdrant `/readyz` when enabled
 - configured registry `/v2/` endpoints when enabled
+
+On success or failure it writes persistent records under the retained OpenClaw home:
+
+- `/home/node/.openclaw/logs/startup-verification.json`
+- `/home/node/.openclaw/logs/startup-verification.jsonl`
+
+Readiness is intentionally cheaper. It verifies:
+
+- drain marker absence
+- startup verification already passed
+- `/home/node/.openclaw/openclaw.json`
+- `/home/node/.openclaw/swarm.config.json`
+- `/app/skills`
+- OpenClaw gateway `/health`
+- Redis `PING`
 - Buster heartbeat freshness when the agent is Buster
 
 Readiness also checks the drain marker. `preStop` writes `KUBECLAW_DRAIN_FILE` before Kubernetes sends `SIGTERM`, so terminating containers stop reporting Ready during rollouts, evictions, or node drains.
@@ -163,7 +178,13 @@ Run the same health script manually inside the gateway container:
 
 ```bash
 kubectl -n "$NAMESPACE" exec deploy/agent-nova -c kubeclaw -- \
+  node /runtime-config/kubeclaw-health.mjs startup-status
+
+kubectl -n "$NAMESPACE" exec deploy/agent-nova -c kubeclaw -- \
   node /runtime-config/kubeclaw-health.mjs readiness
+
+kubectl -n "$NAMESPACE" exec deploy/agent-buster -c kubeclaw -- \
+  node /runtime-config/kubeclaw-health.mjs startup-status
 
 kubectl -n "$NAMESPACE" exec deploy/agent-buster -c kubeclaw -- \
   node /runtime-config/kubeclaw-health.mjs readiness
@@ -183,13 +204,13 @@ kubectl -n "$NAMESPACE" logs deploy/agent-buster -c buster-pipeline --tail=200
 | startup doctor log is missing | `postStart` did not run or runtime config was not generated | describe pod events, then check `/runtime-config/kubeclaw-startup-doctor.sh` |
 | startup doctor skipped | gateway `/health` did not become healthy before `waitSeconds` | gateway logs and `openclaw.json` |
 | readiness fails on Redis | Redis Secret, DNS, password, or service availability | `REDIS_HOST`, `REDIS_PASSWORD`, Redis pod readiness |
-| readiness fails on Redis stream | Redis reachable but write path is blocked or misconfigured | stream name, Redis ACL/password, Redis logs |
-| readiness fails on LiteLLM | LiteLLM service, API key, PostgreSQL, or provider config | LiteLLM pod logs and `litellm-secrets` |
-| readiness fails on Qdrant | Qdrant service or persistence issue | Qdrant pod readiness and logs |
-| readiness fails on registries | local registry/mirror service unavailable to the namespace | registry pods and NetworkPolicy |
+| startup verification fails on Redis stream | Redis reachable but write path is blocked or misconfigured | stream name, Redis ACL/password, Redis logs |
+| startup verification fails on LiteLLM | LiteLLM service, API key, PostgreSQL, or provider config | LiteLLM pod logs and `litellm-secrets` |
+| startup verification fails on Qdrant | Qdrant service or persistence issue | Qdrant pod readiness and logs |
+| startup verification fails on registries | local registry/mirror service unavailable to the namespace | registry pods and NetworkPolicy |
 | Buster readiness fails on heartbeat | Buster pipeline process is stopped, wedged, or still starting | `buster-pipeline` logs and heartbeat path in `swarm.config.json` |
 | liveness restarts gateway | local OpenClaw gateway process is unhealthy | gateway logs, config, and startup doctor log |
 
 ## Boundaries
 
-Repository checks prove rendered startup hooks, probe wiring, mounted runtime paths, and generated helper script content. They do not prove live provider credentials, external DNS, actual registry reachability, live CNI enforcement, or Tailscale tailnet policy. Use `./scripts/deploy.sh smoke`, `./scripts/deploy.sh verify-live`, and live `kubectl describe/logs/exec` checks for those surfaces.
+Repository checks prove rendered startup hooks, probe wiring, mounted runtime paths, and generated helper script content. They do not prove live provider credentials, external DNS, actual registry reachability, live CNI enforcement, or Tailscale tailnet policy. Use `./scripts/deploy.sh smoke`, `./scripts/deploy.sh image`, `./scripts/deploy.sh code`, and live `kubectl describe/logs/exec` checks for those surfaces.

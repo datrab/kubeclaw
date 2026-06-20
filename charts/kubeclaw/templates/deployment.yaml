@@ -298,8 +298,10 @@ spec:
               if [ -f /config/eslint.config.mjs ]; then
                 cp -Lf /config/eslint.config.mjs /runtime-config/eslint.config.mjs
               fi
+              rm -f /runtime-config/code-bundle-manifest.json
               cat > /runtime-config/kubeclaw-health.mjs <<'HEALTH_SCRIPT'
               import fs from 'fs';
+              import path from 'path';
               import { createRequire } from 'module';
 
               const require = createRequire(import.meta.url);
@@ -307,6 +309,8 @@ spec:
               const agent = process.env.AGENT_NAME || 'unknown';
               const containerRole = process.env.KUBECLAW_CONTAINER_ROLE || 'agent';
               const timeoutMs = Number.parseInt(process.env.KUBECLAW_HEALTH_TIMEOUT_MS || '5000', 10);
+              const startupStatusPath = process.env.KUBECLAW_HEALTH_STARTUP_STATUS_PATH || '/home/node/.openclaw/logs/startup-verification.json';
+              const startupEventLogPath = process.env.KUBECLAW_HEALTH_STARTUP_EVENT_LOG_PATH || '/home/node/.openclaw/logs/startup-verification.jsonl';
               const failures = [];
 
               function enabled(name, defaultValue = false) {
@@ -335,6 +339,37 @@ spec:
                 const stat = fs.statSync(path);
                 if (type === 'file' && !stat.isFile()) throw new Error(`${path} is not a file`);
                 if (type === 'dir' && !stat.isDirectory()) throw new Error(`${path} is not a directory`);
+              }
+
+              function ensureParentDir(targetPath) {
+                fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+              }
+
+              function readBundleManifest() {
+                const manifestPath = process.env.KUBECLAW_CODE_BUNDLE_MANIFEST || '/runtime-config/code-bundle-manifest.json';
+                requirePath(manifestPath, 'file');
+                return JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+              }
+
+              function writeStartupVerification(ok, detailFailures = []) {
+                const record = {
+                  ok,
+                  mode: 'startup',
+                  agent,
+                  containerRole,
+                  checkedAt: new Date().toISOString(),
+                  failures: Array.isArray(detailFailures) ? detailFailures : [],
+                };
+                ensureParentDir(startupStatusPath);
+                ensureParentDir(startupEventLogPath);
+                fs.writeFileSync(startupStatusPath, `${JSON.stringify(record, null, 2)}\n`, 'utf8');
+                fs.appendFileSync(startupEventLogPath, `${JSON.stringify(record)}\n`, 'utf8');
+                return record;
+              }
+
+              function readStartupVerification() {
+                requirePath(startupStatusPath, 'file');
+                return JSON.parse(fs.readFileSync(startupStatusPath, 'utf8'));
               }
 
               let cachedSwarmConfig = null;
@@ -451,6 +486,14 @@ spec:
                 if (fs.existsSync(path)) throw new Error(`${path} exists; container is draining`);
               }
 
+              function checkStartupVerificationStatus() {
+                if (!enabled('KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER', true)) return;
+                const record = readStartupVerification();
+                if (record?.ok !== true) {
+                  throw new Error(`startup verification did not pass: ${JSON.stringify(record?.failures || [])}`);
+                }
+              }
+
               function checkBusterHeartbeat() {
                 if (agent !== 'buster' || !enabled('KUBECLAW_HEALTH_CHECK_BUSTER_HEARTBEAT', true)) return;
                 const path = busterHeartbeatPath();
@@ -460,27 +503,61 @@ spec:
                 if (age > maxAgeMs) throw new Error(`${path} age ${Math.round(age)}ms exceeds ${maxAgeMs}ms`);
               }
 
-              if (mode === 'liveness') {
+              function checkCodeBundle() {
+                if (!enabled('KUBECLAW_CODE_BUNDLE_ENABLED', false)) return;
+                const manifest = readBundleManifest();
+                const expectedAgent = process.env.KUBECLAW_CODE_BUNDLE_AGENT || agent;
+                const expectedCommit = String(process.env.KUBECLAW_CODE_BUNDLE_EXPECTED_COMMIT || '').trim();
+                const expectedContract = String(process.env.KUBECLAW_CODE_BUNDLE_CONTRACT_VERSION || '').trim();
+                if (manifest?.agent !== expectedAgent) {
+                  throw new Error(`bundle agent ${manifest?.agent || '<missing>'} does not match ${expectedAgent}`);
+                }
+                if (expectedCommit && manifest?.commit !== expectedCommit) {
+                  throw new Error(`bundle commit ${manifest?.commit || '<missing>'} does not match ${expectedCommit}`);
+                }
+                if (expectedContract && manifest?.contractVersion !== expectedContract) {
+                  throw new Error(`bundle contract ${manifest?.contractVersion || '<missing>'} does not match ${expectedContract}`);
+                }
+              }
+
+              if (mode === 'startup-status') {
+                await check('startup verification status', checkStartupVerificationStatus);
+              } else if (mode === 'liveness') {
                 if (containerRole !== 'buster-pipeline' && enabled('KUBECLAW_HEALTH_CHECK_GATEWAY', true)) {
                   await check('gateway', checkGateway);
                 }
               } else {
-                await check('drain state', checkDrainState);
                 await check('runtime openclaw config', () => requirePath('/home/node/.openclaw/openclaw.json', 'file'));
                 await check('runtime swarm config', () => requirePath('/home/node/.openclaw/swarm.config.json', 'file'));
+                await check('code bundle', checkCodeBundle);
                 await check('skills', () => requirePath('/app/skills', 'dir'));
-                if (enabled('KUBECLAW_HEALTH_CHECK_GATEWAY', true)) await check('gateway', checkGateway);
-                if (enabled('KUBECLAW_HEALTH_CHECK_REDIS', true)) await check('redis ping', checkRedis);
-                if (enabled('KUBECLAW_HEALTH_CHECK_REDIS_STREAM', true)) await check('redis stream', checkRedisStream);
-                if (enabled('KUBECLAW_HEALTH_CHECK_LITELLM', false)) await check('litellm', checkLiteLLM);
-                if (enabled('KUBECLAW_HEALTH_CHECK_QDRANT', false)) await check('qdrant', checkQdrant);
-                if (enabled('KUBECLAW_HEALTH_CHECK_REGISTRIES', false)) await check('registries', checkRegistries);
-                await check('buster heartbeat', checkBusterHeartbeat);
+                if (mode === 'startup') {
+                  if (enabled('KUBECLAW_HEALTH_CHECK_GATEWAY', true)) await check('gateway', checkGateway);
+                  if (enabled('KUBECLAW_HEALTH_CHECK_REDIS', true)) await check('redis ping', checkRedis);
+                  if (enabled('KUBECLAW_HEALTH_CHECK_REDIS_STREAM', true)) await check('redis stream', checkRedisStream);
+                  if (enabled('KUBECLAW_HEALTH_CHECK_LITELLM', false)) await check('litellm', checkLiteLLM);
+                  if (enabled('KUBECLAW_HEALTH_CHECK_QDRANT', false)) await check('qdrant', checkQdrant);
+                  if (enabled('KUBECLAW_HEALTH_CHECK_REGISTRIES', false)) await check('registries', checkRegistries);
+                } else {
+                  await check('drain state', checkDrainState);
+                  await check('startup verification status', checkStartupVerificationStatus);
+                  if (enabled('KUBECLAW_HEALTH_CHECK_GATEWAY', true)) await check('gateway', checkGateway);
+                  if (enabled('KUBECLAW_HEALTH_CHECK_REDIS', true)) await check('redis ping', checkRedis);
+                  await check('buster heartbeat', checkBusterHeartbeat);
+                }
               }
 
               if (failures.length > 0) {
+                if (mode === 'startup') {
+                  const record = writeStartupVerification(false, failures);
+                  console.error(JSON.stringify(record));
+                }
                 console.error(JSON.stringify({ ok: false, mode, agent, failures }));
                 process.exit(1);
+              }
+              if (mode === 'startup') {
+                const record = writeStartupVerification(true);
+                console.log(JSON.stringify(record));
               }
               console.log(JSON.stringify({ ok: true, mode, agent }));
               HEALTH_SCRIPT
@@ -538,6 +615,103 @@ spec:
               # Base: /app/skills/ already contains OpenClaw + KubeClaw skills (from image)
               echo "    Copying skills from image..."
               cp -r /app/skills/. /skills-merged/
+              if [ "${CODE_BUNDLE_ENABLED}" = "true" ]; then
+                echo "==> 5a. Code Bundle"
+                echo "    Bundle contract: final /app/skills overlay tree for ${AGENT_NAME}"
+                if [ -z "${CODE_BUNDLE_ARCHIVE_URL}" ]; then
+                  echo "    ERROR: codeBundle.enabled=true but CODE_BUNDLE_ARCHIVE_URL is empty" >&2
+                  exit 1
+                fi
+                BUNDLE_TMP_ROOT="/tmp/code-bundle"
+                BUNDLE_ARCHIVE="${BUNDLE_TMP_ROOT}/bundle.tgz"
+                rm -rf "$BUNDLE_TMP_ROOT"
+                mkdir -p "$BUNDLE_TMP_ROOT/extracted"
+                echo "    Downloading bundle archive..."
+                node <<'NODE'
+              const fs = require('fs');
+              const { Readable } = require('stream');
+              const { pipeline } = require('stream/promises');
+
+              async function main() {
+                const url = process.env.CODE_BUNDLE_ARCHIVE_URL;
+                const output = process.env.CODE_BUNDLE_ARCHIVE_PATH;
+                const token = process.env.CODE_BUNDLE_AUTH_TOKEN || '';
+                const headers = {};
+                if (token) headers.Authorization = `Bearer ${token}`;
+                const response = await fetch(url, { headers, redirect: 'follow' });
+                if (!response.ok) {
+                  throw new Error(`bundle download failed with HTTP ${response.status}`);
+                }
+                await pipeline(Readable.fromWeb(response.body), fs.createWriteStream(output));
+              }
+
+              main().catch((error) => {
+                console.error(error?.stack || String(error));
+                process.exit(1);
+              });
+              NODE
+                tar -xzf "$BUNDLE_ARCHIVE" -C "$BUNDLE_TMP_ROOT/extracted"
+                BUNDLE_TMP_ROOT="$BUNDLE_TMP_ROOT" node <<'NODE'
+              const fs = require('fs');
+              const path = require('path');
+
+              const tempRoot = process.env.BUNDLE_TMP_ROOT;
+              const extractedRoot = path.join(tempRoot, 'extracted');
+              const manifestOut = '/runtime-config/code-bundle-manifest.json';
+              const expectedAgent = process.env.AGENT_NAME;
+              const expectedCommit = String(process.env.CODE_BUNDLE_EXPECTED_COMMIT || '').trim();
+              const expectedContract = String(process.env.CODE_BUNDLE_CONTRACT_VERSION || '').trim();
+
+              function isDirectory(candidate) {
+                try {
+                  return fs.statSync(candidate).isDirectory();
+                } catch {
+                  return false;
+                }
+              }
+
+              function manifestCandidates(root) {
+                const direct = path.join(root, 'manifest.json');
+                const candidates = [];
+                if (fs.existsSync(direct)) candidates.push(root);
+                for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
+                  if (!entry.isDirectory()) continue;
+                  const nested = path.join(root, entry.name, 'manifest.json');
+                  if (fs.existsSync(nested)) candidates.push(path.join(root, entry.name));
+                }
+                return candidates;
+              }
+
+              const candidates = manifestCandidates(extractedRoot);
+              if (candidates.length !== 1) {
+                throw new Error(`expected exactly one bundle root with manifest.json, found ${candidates.length}`);
+              }
+
+              const bundleRoot = candidates[0];
+              const manifestPath = path.join(bundleRoot, 'manifest.json');
+              const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+              const skillsPath = path.join(bundleRoot, 'skills');
+
+              if (!isDirectory(skillsPath)) {
+                throw new Error('bundle must contain a top-level skills/ directory');
+              }
+              if (manifest.agent !== expectedAgent) {
+                throw new Error(`bundle agent ${manifest.agent || '<missing>'} does not match ${expectedAgent}`);
+              }
+              if (expectedCommit && manifest.commit !== expectedCommit) {
+                throw new Error(`bundle commit ${manifest.commit || '<missing>'} does not match ${expectedCommit}`);
+              }
+              if (expectedContract && manifest.contractVersion !== expectedContract) {
+                throw new Error(`bundle contract ${manifest.contractVersion || '<missing>'} does not match ${expectedContract}`);
+              }
+
+              for (const entry of fs.readdirSync(skillsPath)) {
+                fs.cpSync(path.join(skillsPath, entry), path.join('/skills-merged', entry), { recursive: true, force: true });
+              }
+              fs.copyFileSync(manifestPath, manifestOut);
+              console.log(`    bundle manifest accepted: ${manifest.agent}@${manifest.commit}`);
+              NODE
+              fi
               protected_skill_overlay() {
                 case "$1" in
                   pipeline|pipeline/*|pipeline.ts|common|common/*|nova/pipeline|nova/pipeline/*|buster/pipeline|buster/pipeline/*|redis.ts|buster-pipeline.ts|verify-task.ts)
@@ -575,6 +749,26 @@ spec:
               value: {{ .Values.workspace.overrideOnRestart | default false | quote }}
             - name: OVERRIDE_SWARM_CONFIG
               value: {{ .Values.swarmConfig.overrideOnRestart | default false | quote }}
+            - name: CODE_BUNDLE_ENABLED
+              value: {{ .Values.codeBundle.enabled | default false | quote }}
+            - name: CODE_BUNDLE_ARCHIVE_URL
+              value: {{ .Values.codeBundle.archiveUrl | default "" | quote }}
+            - name: CODE_BUNDLE_EXPECTED_COMMIT
+              value: {{ .Values.codeBundle.expectedCommit | default "" | quote }}
+            - name: CODE_BUNDLE_CONTRACT_VERSION
+              value: {{ .Values.codeBundle.contractVersion | default "v1" | quote }}
+            - name: CODE_BUNDLE_ARCHIVE_PATH
+              value: "/tmp/code-bundle/bundle.tgz"
+            {{- if .Values.codeBundle.auth.existingSecret }}
+            - name: CODE_BUNDLE_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.codeBundle.auth.existingSecret }}
+                  key: {{ .Values.codeBundle.auth.existingSecretKey | default "token" }}
+            {{- else }}
+            - name: CODE_BUNDLE_AUTH_TOKEN
+              value: ""
+            {{- end }}
             - name: LITELLM_API_KEY
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.litellmSecretName" . }}, key: {{ include "kubeclaw.litellmSecretKey" . }} } }
             - name: DISCORD_TOKEN
@@ -643,6 +837,16 @@ spec:
               value: {{ .Values.agentRole | default "default" | quote }}
             - name: KUBECLAW_CONTAINER_ROLE
               value: {{- if and (eq (.Values.agentRole | default "") "buster") (.Values.busterPipeline.enabled | default false) }} "gateway"{{- else }} "agent"{{- end }}
+            - name: KUBECLAW_CODE_BUNDLE_ENABLED
+              value: {{ .Values.codeBundle.enabled | default false | quote }}
+            - name: KUBECLAW_CODE_BUNDLE_AGENT
+              value: {{ .Values.agentRole | default "default" | quote }}
+            - name: KUBECLAW_CODE_BUNDLE_EXPECTED_COMMIT
+              value: {{ .Values.codeBundle.expectedCommit | default "" | quote }}
+            - name: KUBECLAW_CODE_BUNDLE_CONTRACT_VERSION
+              value: {{ .Values.codeBundle.contractVersion | default "v1" | quote }}
+            - name: KUBECLAW_CODE_BUNDLE_MANIFEST
+              value: "/runtime-config/code-bundle-manifest.json"
             - name: GIT_REPO_URL
               value: {{ .Values.agent.git.repoUrl | quote }}
             - name: REPO_ROOT
@@ -695,6 +899,12 @@ spec:
               value: {{ .Values.shutdown.preStopDrainSeconds | default 5 | quote }}
             - name: KUBECLAW_HEALTH_TIMEOUT_MS
               value: {{ mul (.Values.probes.readiness.timeoutSeconds | default 10 | int) 1000 | quote }}
+            - name: KUBECLAW_HEALTH_STARTUP_STATUS_PATH
+              value: "/home/node/.openclaw/logs/startup-verification.json"
+            - name: KUBECLAW_HEALTH_STARTUP_EVENT_LOG_PATH
+              value: "/home/node/.openclaw/logs/startup-verification.jsonl"
+            - name: KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER
+              value: "true"
             - name: KUBECLAW_HEALTH_CHECK_GATEWAY
               value: {{ .Values.probes.dependencies.gateway.enabled | quote }}
             - name: KUBECLAW_HEALTH_CHECK_REDIS
@@ -873,6 +1083,16 @@ spec:
               value: {{ .Values.agentRole | default "default" | quote }}
             - name: KUBECLAW_CONTAINER_ROLE
               value: "buster-pipeline"
+            - name: KUBECLAW_CODE_BUNDLE_ENABLED
+              value: {{ .Values.codeBundle.enabled | default false | quote }}
+            - name: KUBECLAW_CODE_BUNDLE_AGENT
+              value: {{ .Values.agentRole | default "default" | quote }}
+            - name: KUBECLAW_CODE_BUNDLE_EXPECTED_COMMIT
+              value: {{ .Values.codeBundle.expectedCommit | default "" | quote }}
+            - name: KUBECLAW_CODE_BUNDLE_CONTRACT_VERSION
+              value: {{ .Values.codeBundle.contractVersion | default "v1" | quote }}
+            - name: KUBECLAW_CODE_BUNDLE_MANIFEST
+              value: "/runtime-config/code-bundle-manifest.json"
             - name: BUSTER_PLATFORM_CAPABILITIES
               value: {{ join "," (.Values.busterPipeline.platformCapabilities | default list) | quote }}
             - name: GIT_REPO_URL
@@ -927,6 +1147,12 @@ spec:
               value: {{ .Values.shutdown.preStopDrainSeconds | default 5 | quote }}
             - name: KUBECLAW_HEALTH_TIMEOUT_MS
               value: {{ mul (.Values.probes.readiness.timeoutSeconds | default 10 | int) 1000 | quote }}
+            - name: KUBECLAW_HEALTH_STARTUP_STATUS_PATH
+              value: "/home/node/.openclaw/logs/startup-verification.json"
+            - name: KUBECLAW_HEALTH_STARTUP_EVENT_LOG_PATH
+              value: "/home/node/.openclaw/logs/startup-verification.jsonl"
+            - name: KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER
+              value: "true"
             - name: KUBECLAW_HEALTH_CHECK_GATEWAY
               value: {{ .Values.probes.dependencies.gateway.enabled | quote }}
             - name: KUBECLAW_HEALTH_CHECK_REDIS

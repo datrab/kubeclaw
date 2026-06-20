@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { pollGeneric } from '../../../../../skills/nova/pipeline/services/polling.ts';
+import { pollForgeCompletion, pollGeneric } from '../../../../../skills/nova/pipeline/services/polling.ts';
 import { waitForModuleBusterCompletion } from '../../../../../skills/nova/pipeline/services/polling-dual.ts';
 import { loadLifecycleReadModels, saveLifecycleReadModels } from '../../../../../skills/nova/pipeline/services/status-store-lifecycle.ts';
 
@@ -139,4 +139,30 @@ test('module completion wait preserves attempt zero in event identity', async (t
   assert.equal(result.ok, false);
   assert.equal(result.reason, 'timeout');
   assert.equal(result.status, null);
+});
+
+test('pollForgeCompletion accepts a valid forge completion artifact without waiting for session end', async (t) => {
+  const config = makeModuleCompletionConfig();
+  t.after(() => {
+    fs.rmSync(config.repo_root, { recursive: true, force: true });
+  });
+
+  config.poll_interval_seconds = 1;
+  const moduleDir = 'module-a-dir';
+  const moduleRoot = path.join(config.paths.modules_dir, moduleDir);
+  fs.mkdirSync(moduleRoot, { recursive: true });
+  fs.writeFileSync(path.join(moduleRoot, 'forge-completion.json'), JSON.stringify({
+    artifact_type: 'forge_completion',
+    status: 'READY_FOR_TESTING',
+    summary: 'ready now',
+    completed_at: '2026-06-20T12:05:24Z',
+  }, null, 2));
+
+  const result = await pollForgeCompletion(config, moduleDir, 1);
+
+  assert.equal(result.ok, true);
+  assert.equal(result.reason, 'forge_completion');
+  assert.equal(result.status?.status, 'READY_FOR_TESTING');
+  assert.equal(result.status?.source, 'forge_completion_artifact');
+  assert.equal(result.status?.summary, 'ready now');
 });

@@ -28,12 +28,16 @@
       "description": "Deploy single agent (nova|buster)"
     },
     {
-      "invocation": "./scripts/deploy.sh build-local-images [tag]",
-      "description": "Build + push verification images to registry-local"
+      "invocation": "./scripts/deploy.sh image",
+      "description": "Deploy both agents using image/runtime values"
     },
     {
-      "invocation": "./scripts/deploy.sh verify-live [tag]",
-      "description": "Build local images, redeploy agents, run pod smoke"
+      "invocation": "./scripts/deploy.sh image <name>",
+      "description": "Deploy one agent using image/runtime values"
+    },
+    {
+      "invocation": "./scripts/deploy.sh code <target>",
+      "description": "Deploy code bundles for nova|buster|both"
     },
     {
       "invocation": "./scripts/deploy.sh smoke",
@@ -71,9 +75,9 @@
     "tailscale",
     "agents",
     "agent",
+    "image",
+    "code",
     "all",
-    "build-local-images",
-    "verify-live",
     "smoke",
     "smoke-agent",
     "status",
@@ -87,12 +91,36 @@
       "description": "Target namespace (default: kubeclaw)"
     },
     {
-      "name": "LOCAL_REGISTRY_PUSH",
-      "description": "Host-visible push target for build-local-images"
+      "name": "AGENT_HELM_TIMEOUT",
+      "description": "Helm wait timeout for agent upgrades (default: 45m)"
     },
     {
-      "name": "LOCAL_REGISTRY_PULL",
-      "description": "Cluster-visible pull target for verify-live"
+      "name": "AGENT_ROLLOUT_TIMEOUT",
+      "description": "Pod/deployment readiness timeout for agents (default: 45m)"
+    },
+    {
+      "name": "CODE_BUNDLE_GITHUB_REPOSITORY",
+      "description": "owner/repo override for derived GitHub release bundle URLs"
+    },
+    {
+      "name": "CODE_BUNDLE_RELEASE_TAG",
+      "description": "GitHub release tag for published bundles (default: agent-code-bundles)"
+    },
+    {
+      "name": "NOVA_CODE_BUNDLE_ARCHIVE_URL",
+      "description": "Resolved Nova bundle archive URL for code deploy"
+    },
+    {
+      "name": "NOVA_CODE_BUNDLE_EXPECTED_COMMIT",
+      "description": "Expected Nova source commit for code deploy"
+    },
+    {
+      "name": "BUSTER_CODE_BUNDLE_ARCHIVE_URL",
+      "description": "Resolved Buster bundle archive URL for code deploy"
+    },
+    {
+      "name": "BUSTER_CODE_BUNDLE_EXPECTED_COMMIT",
+      "description": "Expected Buster source commit for code deploy"
     },
     {
       "name": "TAILSCALE_OPERATOR_ENABLED",
@@ -137,8 +165,14 @@
   ],
   "defaults": {
     "NAMESPACE": "kubeclaw",
-    "LOCAL_REGISTRY_PUSH": null,
-    "LOCAL_REGISTRY_PULL": null,
+    "AGENT_HELM_TIMEOUT": "45m",
+    "AGENT_ROLLOUT_TIMEOUT": "45m",
+    "CODE_BUNDLE_GITHUB_REPOSITORY": null,
+    "CODE_BUNDLE_RELEASE_TAG": "agent-code-bundles",
+    "NOVA_CODE_BUNDLE_ARCHIVE_URL": null,
+    "NOVA_CODE_BUNDLE_EXPECTED_COMMIT": null,
+    "BUSTER_CODE_BUNDLE_ARCHIVE_URL": null,
+    "BUSTER_CODE_BUNDLE_EXPECTED_COMMIT": null,
     "TAILSCALE_OPERATOR_ENABLED": null,
     "TAILSCALE_OAUTH_CLIENT_ID": null,
     "TAILSCALE_OAUTH_CLIENT_SECRET": null,
@@ -162,11 +196,14 @@
     "show_optional_kubectl_table",
     "delete_namespaced_resource_if_present",
     "delete_manifest_if_cluster_resource_present",
-    "restart_agent_pods_after_deploy",
-    "default_verification_tag",
-    "write_image_override_file",
-    "build_local_image",
-    "verify_cluster_image_pull",
+    "wait_for_agent_rollout",
+    "restart_agent_deployment",
+    "append_image_override_file",
+    "append_code_bundle_override_file",
+    "derive_github_repository",
+    "default_bundle_archive_url",
+    "bundle_env_for_role",
+    "resolve_deploy_targets",
     "is_valid_namespace",
     "prompt_workspace_namespace_if_needed",
     "component_enabled",
@@ -180,8 +217,8 @@
     "cmd_infra",
     "deploy_agent",
     "cmd_agents",
-    "cmd_build_local_images",
-    "cmd_verify_live",
+    "cmd_image",
+    "cmd_code",
     "cmd_status",
     "cmd_smoke_agent",
     "cmd_smoke",
@@ -203,12 +240,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 358,
-    "secrets": 402,
-    "tailscale": 461,
-    "infra": 552,
-    "agents": 696,
-    "smoke": 807,
-    "teardown": 946
+    "setup": 422,
+    "secrets": 466,
+    "tailscale": 525,
+    "infra": 616,
+    "agents": 800,
+    "smoke": 869,
+    "teardown": 1008
   }
 }

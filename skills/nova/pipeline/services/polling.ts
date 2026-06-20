@@ -424,11 +424,11 @@ export async function pollStatus(config, moduleDir, expectedStatuses, timeoutMin
   }, timeoutMinutes, moduleDir, opts);
 }
 
-// ─── Forge Completion Polling (agent.ended + typed artifact authority) ──
-// Forge completion is normally closed by canonical agent.ended telemetry and
-// meaningful git evidence. When the worker session is already terminal and hook
-// evidence is unavailable, the typed forge-completion.json artifact is the
-// durable worker contract and may authorize the terminal Forge result.
+// ─── Forge Completion Polling (typed artifact + agent.ended authority) ──
+// Forge completion closes as soon as the worker writes a valid typed
+// forge-completion.json artifact. Canonical agent.ended telemetry remains
+// useful for diff-derived readiness, but Nova no longer waits on hook/session
+// timing once the worker has published its durable completion contract.
 
 export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opts = {}) {
   const { sessionLabel } = opts;
@@ -475,6 +475,31 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
     });
   }
 
+  function completionFromArtifact(identity, transcript = null) {
+    const artifact = readForgeCompletionArtifact(config, moduleDir);
+    if (!artifact.found) return null;
+    if (!artifact.valid) {
+      return {
+        parse_error: true,
+        logMsg: 'forge_completion=invalid waiting_for_rewrite',
+        logKey: 'forge_completion=invalid',
+      };
+    }
+    return {
+      done: true,
+      result: pollResult(true, 'forge_completion', {
+        ...artifact.artifact,
+        source: 'forge_completion_artifact',
+        module_id: identity.module_id,
+        dispatch_id: identity.dispatch_id,
+        gateway_label: identity.gateway_label,
+        session_key: identity.session_key,
+      }, {
+        ...(transcript ? { transcript } : {}),
+      }),
+    };
+  }
+
   try {
     return await pollGeneric(config, async () => {
       const tracked = sessionLabel ? getTrackedAgent(sessionLabel) : null;
@@ -488,6 +513,9 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
         sessionKey: pollIdentity.session_key || opts.sessionKey,
         gatewayLabel: pollIdentity.gateway_label || opts.gatewayLabel || sessionLabel,
       });
+
+      const artifactCompletion = completionFromArtifact(identity);
+      if (artifactCompletion) return artifactCompletion;
 
       if (!observedAgentEnded && hookReader) {
         try {
@@ -563,20 +591,8 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
         if (acpState.terminal) {
           const terminalDetail = sanitizeTranscriptDetail(acpState.detail);
           const transcript = sanitizeAcpTranscriptEvidence(acpState.transcript);
-          const artifact = readForgeCompletionArtifact(config, moduleDir);
-          if (artifact.found && artifact.valid) {
-            return {
-              done: true,
-              result: pollResult(true, 'forge_completion', {
-                ...artifact.artifact,
-                source: 'forge_completion_artifact',
-                module_id: pollIdentity.module_id || moduleDir,
-                dispatch_id: pollIdentity.dispatch_id || null,
-                gateway_label: pollIdentity.gateway_label || sessionLabel || null,
-                session_key: pollIdentity.session_key || null,
-              }, { transcript }),
-            };
-          }
+          const artifactCompletionWithTranscript = completionFromArtifact(identity, transcript);
+          if (artifactCompletionWithTranscript?.done) return artifactCompletionWithTranscript;
           const missingHookStatus = {
             status: STATUS.FAIL,
             source: 'acp_session_monitor_diagnostic',

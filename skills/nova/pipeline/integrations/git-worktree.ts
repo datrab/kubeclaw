@@ -12,13 +12,15 @@ import { FAIL_PATTERNS, classifyGitPushError } from '../services/failures/classi
 import { transitionModuleStatus } from '../lifecycle-state.ts';
 import { sleep } from '../timing.ts';
 import { buildSubprocessEnv } from '../security.ts';
+import { projectSrcPath, relPath } from '../core/paths.ts';
+import { collectMeaningfulForgeDiffEvidence } from '../services/agent-observability-forge-completion.ts';
 
 type AnyRecord = Record<string, any>;
 type PorcelainEntry = { raw: string; status: string; path: string };
 type StashEntry = { ref: string; sha: string; subject: string };
 type GitStructuredError = Error & { code?: string; gitSync?: AnyRecord; pollingGit?: AnyRecord };
 type RuntimeStashState = { stashRef: string | null; stashSha?: string | null; paths: string[] } | null;
-type GitCommitPushOptions = { addPaths?: string[]; captureHash?: boolean; softFail?: boolean; budget?: any; signal?: any };
+type GitCommitPushOptions = { addPaths?: string[]; conflictPaths?: string[]; captureHash?: boolean; softFail?: boolean; budget?: any; signal?: any };
 
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
@@ -43,6 +45,62 @@ function normalizeRepoPathForRuntimeCheck(relPathName: unknown): string {
     .replace(/^(?:\.\/)+/, '')
     .replace(/^\/+/, '');
   return `/${normalized}`;
+}
+
+function normalizeRepoRelativePath(relPathName: unknown): string {
+  return String(relPathName || '')
+    .replace(/\\/g, '/')
+    .replace(/^\/+/, '')
+    .replace(/^(?:\.\/)+/, '')
+    .trim();
+}
+
+function normalizeScopedGitPaths(paths: unknown): string[] {
+  if (!Array.isArray(paths)) return [];
+  return [...new Set(paths.map(normalizeRepoRelativePath).filter(Boolean))];
+}
+
+function pathMatchesScopedPathspec(repoRelativePath: string, pathspecs: string[] = []): boolean {
+  const normalizedPath = normalizeRepoRelativePath(repoRelativePath);
+  if (!normalizedPath) return false;
+  return pathspecs.some((pathspec) => normalizedPath === pathspec || normalizedPath.startsWith(`${pathspec}/`));
+}
+
+function continueRebaseFavoringLocal(config: AnyRecord, allowedConflicts: string[], label: string): boolean {
+  while (true) {
+    const conflicts = getConflictedPaths(config.repo_root).map(normalizeRepoRelativePath).filter(Boolean);
+    if (conflicts.length === 0) break;
+
+    if (conflicts.some((file) => !pathMatchesScopedPathspec(file, allowedConflicts))) {
+      log('WARN', `${label} encountered conflicts outside the scoped allowlist`);
+      return false;
+    }
+
+    for (const file of conflicts) {
+      gitExec(config.repo_root, ['checkout', '--theirs', '--', file], { stdio: 'ignore' });
+      gitExec(config.repo_root, ['add', '--', file], { stdio: 'ignore' });
+    }
+
+    try {
+      gitExec(config.repo_root, ['rebase', '--continue'], {
+        stdio: 'ignore',
+        env: buildSubprocessEnv({ GIT_EDITOR: 'true' }),
+      });
+    } catch (error) {
+      if (!isRebaseInProgress(config.repo_root)) break;
+      const stillConflicted = getConflictedPaths(config.repo_root).map(normalizeRepoRelativePath).filter(Boolean);
+      if (stillConflicted.length === 0) throw error;
+      if (stillConflicted.some((file) => !pathMatchesScopedPathspec(file, allowedConflicts))) {
+        log('WARN', `${label} advanced into conflicts outside the scoped allowlist`);
+        return false;
+      }
+    }
+
+    if (!isRebaseInProgress(config.repo_root)) break;
+  }
+
+  invalidateHeadHash(config);
+  return true;
 }
 
 function parsePorcelainEntries(repoRoot: string, args: string[] = ['status', '--porcelain', '--untracked-files=all']): PorcelainEntry[] {
@@ -158,7 +216,7 @@ function collectRuntimeStateStash(config: AnyRecord): RuntimeStashState {
   if (stashPaths.length === 0) return null;
 
   const beforeShas = new Set(listStashEntries(config.repo_root).map(entry => entry.sha));
-  gitExec(config.repo_root, ['stash', 'push', '--include-untracked', '-m', 'pipeline-pre-push-runtime-state'], { stdio: 'ignore' });
+  gitExec(config.repo_root, ['stash', 'push', '--include-untracked', '-m', 'pipeline-pre-push-runtime-state', '--', ...stashPaths], { stdio: 'ignore' });
   const afterEntries = listStashEntries(config.repo_root);
   const stashEntry = afterEntries.find(entry => !beforeShas.has(entry.sha)) || null;
 
@@ -166,7 +224,11 @@ function collectRuntimeStateStash(config: AnyRecord): RuntimeStashState {
   return { stashRef: stashEntry?.ref || null, stashSha: stashEntry?.sha || null, paths: stashPaths };
 }
 
-function restoreRuntimeStateStash(config: AnyRecord, stashState: RuntimeStashState) {
+function restoreRuntimeStateStash(
+  config: AnyRecord,
+  stashState: RuntimeStashState,
+  opts: { allowedConflictPaths?: string[]; allowDeferredScopedResolve?: boolean } = {},
+) {
   if (!stashState?.stashRef && !stashState?.paths?.length) return;
 
   const stashRef = resolveStashRefBySha(config.repo_root, stashState);
@@ -175,6 +237,7 @@ function restoreRuntimeStateStash(config: AnyRecord, stashState: RuntimeStashSta
     return;
   }
 
+  const normalizedAllowedConflictPaths = normalizeScopedGitPaths(opts.allowedConflictPaths || []);
   try {
     gitExec(config.repo_root, ['stash', 'pop', stashRef], { stdio: 'ignore' });
     log('DEBUG', 'Restored stashed runtime-state worktree after push');
@@ -182,6 +245,19 @@ function restoreRuntimeStateStash(config: AnyRecord, stashState: RuntimeStashSta
   } catch (popErr) {
     const conflicts = getConflictedPaths(config.repo_root);
     if (conflicts.length === 0) throw popErr;
+
+    if (
+      opts.allowDeferredScopedResolve !== false
+      && normalizedAllowedConflictPaths.length > 0
+      && conflicts.every((file) => pathMatchesScopedPathspec(file, normalizedAllowedConflictPaths))
+      && continueRebaseFavoringLocal(config, normalizedAllowedConflictPaths, 'Deferred scoped rebase auto-resolve')
+    ) {
+      log('WARN', 'Scoped rebase conflict surfaced during runtime-state restore — retrying stash restore after local conflict resolution');
+      return restoreRuntimeStateStash(config, stashState, {
+        allowedConflictPaths: normalizedAllowedConflictPaths,
+        allowDeferredScopedResolve: false,
+      });
+    }
 
     const runtimeConflicts = conflicts.filter(file => isRuntimeStatePath(normalizeRepoPathForRuntimeCheck(file)));
     if (runtimeConflicts.length !== conflicts.length) {
@@ -301,7 +377,26 @@ function tryAutoResolveRebaseForRuntimeState(config: AnyRecord): boolean {
   return true;
 }
 
-function _gitPullCore(config: AnyRecord) {
+function tryAutoResolveRebaseForScopedPaths(config: AnyRecord, allowedPaths: string[] = []): boolean {
+  const normalizedAllowedPaths = normalizeScopedGitPaths(allowedPaths);
+  if (normalizedAllowedPaths.length === 0) return false;
+
+  const conflicts = getConflictedPaths(config.repo_root).map(normalizeRepoRelativePath).filter(Boolean);
+  if (conflicts.length === 0) return false;
+  if (conflicts.some((file) => !pathMatchesScopedPathspec(file, normalizedAllowedPaths))) {
+    const nonScoped = conflicts.filter((file) => !pathMatchesScopedPathspec(file, normalizedAllowedPaths));
+    log('WARN', `Scoped rebase has out-of-scope conflicts — refusing auto-resolve: ${nonScoped.join(', ')}`);
+    return false;
+  }
+
+  log('WARN', `Auto-resolving ${conflicts.length} scoped rebase conflict(s) in favor of the local handoff snapshot`);
+  const resolved = continueRebaseFavoringLocal(config, normalizedAllowedPaths, 'Scoped rebase auto-resolve');
+  if (!resolved) return false;
+  log('OK', 'Scoped rebase auto-resolved using local handoff content');
+  return true;
+}
+
+function _gitPullCore(config: AnyRecord, opts: { allowedConflictPaths?: string[] } = {}) {
   try {
     gitExec(config.repo_root, ['pull', '--rebase', '--quiet'], { stdio: 'ignore' });
     invalidateHeadHash(config);
@@ -312,11 +407,17 @@ function _gitPullCore(config: AnyRecord) {
     incrementStat(config, 'git_pull_failures');
 
     // Check if we're stuck in a rebase
-    const isRebasing = isRebaseInProgress(config.repo_root);
+    const activeConflicts = getConflictedPaths(config.repo_root);
+    const isRebasing = isRebaseInProgress(config.repo_root)
+      || activeConflicts.length > 0
+      || /\bCONFLICT\b|could not apply|rebase/i.test(msg);
 
     if (isRebasing) {
       log('WARN', 'Git pull left repo in REBASING state');
       try {
+        if (tryAutoResolveRebaseForScopedPaths(config, opts.allowedConflictPaths || [])) {
+          return { attempted: true, ok: true, recovered: 'scoped_local_auto_resolve' };
+        }
         if (tryAutoResolveRebaseForRuntimeState(config)) {
           return { attempted: true, ok: true, recovered: 'runtime_auto_resolve' };
         }
@@ -406,9 +507,15 @@ export async function gitPushWithRetry(config: AnyRecord, maxRetries = 3, delayM
  * @param {boolean} opts.softFail - Log warning instead of throwing on error (default: false)
  * @returns {{ committed: boolean, hash?: string }}
  */
-export async function gitCommitAndPush(config: AnyRecord, message: string, { addPaths = ['-A'], captureHash = false, softFail = false, budget = null, signal = null }: GitCommitPushOptions = {}): Promise<{ committed: boolean; hash?: string; error?: string }> {
+export async function gitCommitAndPush(config: AnyRecord, message: string, { addPaths = ['-A'], conflictPaths = [], captureHash = false, softFail = false, budget = null, signal = null }: GitCommitPushOptions = {}): Promise<{ committed: boolean; hash?: string; error?: string }> {
   try {
-    gitExec(config.repo_root, ['add', ...addPaths], { stdio: 'ignore' });
+    const broadAddMode = Array.isArray(addPaths) && addPaths.some((entry) => String(entry || '').startsWith('-'));
+    const normalizedAddPaths = broadAddMode ? [] : normalizeScopedGitPaths(addPaths);
+    if (!broadAddMode && normalizedAddPaths.length > 0) {
+      gitExec(config.repo_root, ['add', '--', ...normalizedAddPaths], { stdio: 'ignore' });
+    } else {
+      gitExec(config.repo_root, ['add', ...addPaths], { stdio: 'ignore' });
+    }
 
     const staged = gitExec(config.repo_root, ['diff', '--cached', '--name-only']);
     if (!staged) {
@@ -424,7 +531,7 @@ export async function gitCommitAndPush(config: AnyRecord, message: string, { add
     const stashState = collectRuntimeStateStash(config);
 
     try {
-      const pullResult = gitPullBeforePush(config);
+      const pullResult = _gitPullCore(config, { allowedConflictPaths: normalizeScopedGitPaths(conflictPaths) });
       if (pullResult?.ok === false) {
         throw createStructuredGitError(
           config,
@@ -443,7 +550,9 @@ export async function gitCommitAndPush(config: AnyRecord, message: string, { add
       }
       await gitPushWithRetry(config, 3, 5000, { budget, signal });
     } finally {
-      restoreRuntimeStateStash(config, stashState);
+      restoreRuntimeStateStash(config, stashState, {
+        allowedConflictPaths: normalizeScopedGitPaths(conflictPaths),
+      });
     }
 
     const hash = captureHash ? gitExec(config.repo_root, ['rev-parse', 'HEAD']) : undefined;
@@ -477,12 +586,21 @@ export async function gitSyncBeforeBuster(config: AnyRecord, moduleDir: string, 
   log('STEP', 'Git sync: committing and pushing Forge output before Buster');
 
   try {
+    const meaningfulPaths = normalizeScopedGitPaths(status?.meaningful_paths);
+    const diffEvidence = meaningfulPaths.length > 0
+      ? { ok: true, hasMeaningfulChanges: true, paths: meaningfulPaths }
+      : collectMeaningfulForgeDiffEvidence(config, moduleDir, { headBefore: status?.head_before || null });
+    const scopedPaths = normalizeScopedGitPaths(diffEvidence?.paths);
+    const addPaths = scopedPaths.length > 0
+      ? scopedPaths
+      : [normalizeRepoRelativePath(relPath(config, projectSrcPath(config)))].filter(Boolean);
+
     // Commit any uncommitted Forge output + push.
     // If Forge already committed (porcelain empty), gitCommitAndPush returns committed:false.
     // In that case we STILL need to push — Forge may have committed but not pushed.
     const result = await gitCommitAndPush(config,
       `[pipeline] Module ${status.module_id}: Forge output — ready for Buster`,
-      { captureHash: true }
+      { addPaths, conflictPaths: scopedPaths, captureHash: true }
     );
 
     if (!result.committed) {

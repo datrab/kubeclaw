@@ -86,7 +86,7 @@ ${generatedEnd()}
 | setup and secrets | \`scripts/deploy.sh\`; \`my-values/setup-secrets.sh\` | namespace, required Kubernetes Secrets, Helm repositories, optional workspace namespace record | missing command, invalid secret setup mode, missing required Secret keys |
 | infra | \`scripts/deploy.sh\`; \`my-values/infra/*.yaml\` | Redis, optional PostgreSQL/Qdrant/LiteLLM, registry helpers, NetworkPolicies, namespace fence | rollout timeout, Helm repo failure, invalid manifest, partial infra warning when \`ALLOW_PARTIAL_INFRA=true\` |
 | agents | \`charts/kubeclaw/templates/*.yaml\`; \`my-values/nova-values.yaml\`; \`my-values/buster-values.yaml\` | \`Deployment/agent-nova\`, \`Deployment/agent-buster\`, Services, PVCs, runtime ConfigMaps | Helm render failure, image pull failure, init-container Git/config/skill error |
-| smoke and verify-live | \`scripts/deploy.sh\`; chart health script | pod smoke output, cluster image-pull preflight, local image override values | gateway health failure, Redis/LiteLLM dependency failure, local registry push/pull mismatch |
+| image, code, and smoke | \`scripts/deploy.sh\`; chart health script | targeted rollouts, bundle/image selection, pod smoke output | rollout timeout, bundle download failure, gateway health failure, Redis/LiteLLM dependency failure |
 | teardown | \`scripts/deploy.sh\` | removed Helm releases/resources according to selected teardown scope | confirmation prompt mismatch, retained PVCs or Secrets that need manual review |
 
 ## Verification
@@ -267,14 +267,14 @@ ${generatedEnd()}
 | Namespace and workspace prompt | \`scripts/deploy.sh\`; \`my-values/setup-secrets.sh\` | selects the Kubernetes namespace and optionally records \`my-values/.workspace-namespace\` for local operator convenience | \`./scripts/deploy.sh status\`; generated inventory check |
 | Component switches | \`scripts/deploy.sh\`; \`my-values/setup-secrets.sh\` | controls optional PostgreSQL, Qdrant, LiteLLM, and Tailscale setup paths; \`ALLOW_PARTIAL_INFRA\` changes rollout failures from fail-closed to warning | deployment truth plus live rollout status |
 | Secret setup controls | \`my-values/setup-secrets.sh\` | chooses interactive/noninteractive/auto resolution, overwrite behavior, source namespace copies, and Tailscale OAuth bootstrap | \`kubectl -n "$NAMESPACE" get secret ...\`; \`kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" get secret operator-oauth\` |
-| Local image verification | \`scripts/deploy.sh\` | separates host-visible image push target from cluster-visible pull target for \`build-local-images\` and \`verify-live\` | \`./scripts/deploy.sh build-local-images [tag]\`; \`./scripts/deploy.sh verify-live [tag]\` |
+| Code bundle selection | \`scripts/deploy.sh\` | derives GitHub release bundle URLs from repository + commit unless explicit archive URLs are provided | \`NOVA_CODE_BUNDLE_EXPECTED_COMMIT=<sha> ./scripts/deploy.sh code nova\`; \`BUSTER_CODE_BUNDLE_EXPECTED_COMMIT=<sha> ./scripts/deploy.sh code buster\` |
 
 ## Failure Modes
 
 - Invalid boolean-like values can skip expected component paths or keep optional setup enabled; use the exact values listed in this table.
 - Noninteractive secret setup warns when a required source is unavailable instead of inventing credentials.
 - \`ALLOW_PARTIAL_INFRA=true\` is for troubleshooting only; the default infra path should fail closed on required rollout failures.
-- Local image verification requires both \`LOCAL_REGISTRY_PUSH\` and \`LOCAL_REGISTRY_PULL\` when the host-visible and cluster-visible registry names differ.
+- Code deploy requires the expected commit for each targeted agent and, for private repositories, a bundle auth Secret the pod can use to fetch GitHub release assets.
 
 ## Checks
 
@@ -293,7 +293,7 @@ node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PW
 }
 
 function renderVerification(deploy) {
-  const commands = deploy.commands.filter((command) => /smoke|status|verify|build-local/.test(command.invocation));
+  const commands = deploy.commands.filter((command) => /smoke|status|image|code/.test(command.invocation));
   return `# Verification Commands
 
 Status: generated reference

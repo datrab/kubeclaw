@@ -21,8 +21,9 @@ Generated from: `scripts/deploy.sh`
 | `./scripts/deploy.sh tailscale` | Deploy Tailscale Kubernetes Operator |
 | `./scripts/deploy.sh agents` | Deploy agents (Nova + Buster) |
 | `./scripts/deploy.sh agent <name>` | Deploy single agent (nova\|buster) |
-| `./scripts/deploy.sh build-local-images [tag]` | Build + push verification images to registry-local |
-| `./scripts/deploy.sh verify-live [tag]` | Build local images, redeploy agents, run pod smoke |
+| `./scripts/deploy.sh image` | Deploy both agents using image/runtime values |
+| `./scripts/deploy.sh image <name>` | Deploy one agent using image/runtime values |
+| `./scripts/deploy.sh code <target>` | Deploy code bundles for nova\|buster\|both |
 | `./scripts/deploy.sh smoke` | Run pod-level smoke checks for Nova + Buster |
 | `./scripts/deploy.sh smoke-agent <name>` | Run pod-level smoke checks for one agent |
 | `./scripts/deploy.sh all` | Full deployment (setup + infra + agents) |
@@ -39,9 +40,9 @@ Generated from: `scripts/deploy.sh`
 - `tailscale`
 - `agents`
 - `agent`
+- `image`
+- `code`
 - `all`
-- `build-local-images`
-- `verify-live`
 - `smoke`
 - `smoke-agent`
 - `status`
@@ -73,7 +74,7 @@ Generated from: `scripts/deploy.sh`
 | setup and secrets | `scripts/deploy.sh`; `my-values/setup-secrets.sh` | namespace, required Kubernetes Secrets, Helm repositories, optional workspace namespace record | missing command, invalid secret setup mode, missing required Secret keys |
 | infra | `scripts/deploy.sh`; `my-values/infra/*.yaml` | Redis, optional PostgreSQL/Qdrant/LiteLLM, registry helpers, NetworkPolicies, namespace fence | rollout timeout, Helm repo failure, invalid manifest, partial infra warning when `ALLOW_PARTIAL_INFRA=true` |
 | agents | `charts/kubeclaw/templates/*.yaml`; `my-values/nova-values.yaml`; `my-values/buster-values.yaml` | `Deployment/agent-nova`, `Deployment/agent-buster`, Services, PVCs, runtime ConfigMaps | Helm render failure, image pull failure, init-container Git/config/skill error |
-| smoke and verify-live | `scripts/deploy.sh`; chart health script | pod smoke output, cluster image-pull preflight, local image override values | gateway health failure, Redis/LiteLLM dependency failure, local registry push/pull mismatch |
+| image, code, and smoke | `scripts/deploy.sh`; chart health script | targeted rollouts, bundle/image selection, pod smoke output | rollout timeout, bundle download failure, gateway health failure, Redis/LiteLLM dependency failure |
 | teardown | `scripts/deploy.sh` | removed Helm releases/resources according to selected teardown scope | confirmation prompt mismatch, retained PVCs or Secrets that need manual review |
 
 ## Verification

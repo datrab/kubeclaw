@@ -34,6 +34,15 @@ image:
 imagePullSecrets:
   - name: ghcr-secret
 
+codeBundle:
+  enabled: false
+  archiveUrl: ""
+  expectedCommit: ""
+  contractVersion: "v1"
+  auth:
+    existingSecret: ""
+    existingSecretKey: "token"
+
 auth:
   existingSecret: "openclaw-shared-secrets"
   existingSecretKey: "gatewayToken-buster"

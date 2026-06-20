@@ -5,7 +5,8 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { __gitWorktreeTest } from '../../../../../skills/nova/pipeline/integrations/git-worktree.ts';
+import { __gitWorktreeTest, gitSyncBeforeBuster } from '../../../../../skills/nova/pipeline/integrations/git-worktree.ts';
+import { createRunStats } from '../../../../../skills/nova/pipeline/core/runtime.ts';
 
 function git(repoRoot, args) {
   return execFileSync('git', ['-C', repoRoot, ...args], {
@@ -30,6 +31,30 @@ function makeRepo() {
   git(repoRoot, ['add', 'README.md', 'user.txt']);
   git(repoRoot, ['commit', '-m', 'initial']);
   return repoRoot;
+}
+
+function makeRemoteRepo() {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'git-worktree-remote-'));
+  const remote = path.join(root, 'remote.git');
+  const repoRoot = path.join(root, 'repo');
+  const otherRoot = path.join(root, 'other');
+
+  git(root, ['init', '--bare', remote]);
+  git(root, ['clone', remote, repoRoot]);
+  git(repoRoot, ['config', 'user.name', 'Test']);
+  git(repoRoot, ['config', 'user.email', 'test@example.com']);
+
+  fs.mkdirSync(path.join(repoRoot, 'Projects/demo/src/.swarm/modules/01-foundation'), { recursive: true });
+  fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/package.json'), '{\n  "name": "demo"\n}\n');
+  git(repoRoot, ['add', 'Projects/demo/src/package.json']);
+  git(repoRoot, ['commit', '-m', 'initial']);
+  git(repoRoot, ['push', '-u', 'origin', 'master']);
+
+  git(root, ['clone', remote, otherRoot]);
+  git(otherRoot, ['config', 'user.name', 'Other']);
+  git(otherRoot, ['config', 'user.email', 'other@example.com']);
+
+  return { root, remote, repoRoot, otherRoot };
 }
 
 function stashSubjects(repoRoot) {
@@ -107,4 +132,56 @@ test('rebase detection resolves gitdir paths for linked worktrees', () => {
 
   assert.equal(fs.existsSync(path.join(linkedRoot, '.git', 'rebase-merge')), false);
   assert.equal(__gitWorktreeTest.isRebaseInProgress(linkedRoot), true);
+});
+
+test('gitSyncBeforeBuster commits only meaningful forge paths and auto-resolves scoped rebase conflicts', async () => {
+  const { root, repoRoot, otherRoot } = makeRemoteRepo();
+
+  try {
+    fs.writeFileSync(path.join(otherRoot, 'Projects/demo/src/package.json'), '{\n  "name": "remote"\n}\n');
+    git(otherRoot, ['add', 'Projects/demo/src/package.json']);
+    git(otherRoot, ['commit', '-m', 'remote update']);
+    git(otherRoot, ['push', 'origin', 'master']);
+
+    fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/package.json'), '{\n  "name": "local"\n}\n');
+    const runtimeLog = path.join(repoRoot, 'Projects/demo/src/.swarm/logs/pipeline/runtime.jsonl');
+    fs.mkdirSync(path.dirname(runtimeLog), { recursive: true });
+    fs.writeFileSync(runtimeLog, '{"event":"live"}\n');
+
+    const config = {
+      repo_root: repoRoot,
+      project: 'demo',
+      _runId: 'run-git-sync-before-buster-test',
+      _runStats: createRunStats('2026-06-20T00:00:00.000Z'),
+      paths: {
+        swarm_dir: path.join(repoRoot, 'Projects/demo/src/.swarm'),
+        modules_dir: path.join(repoRoot, 'Projects/demo/src/.swarm/modules'),
+      },
+    };
+    const status = {
+      module_id: '01-foundation',
+      meaningful_paths: ['Projects/demo/src/package.json'],
+    };
+
+    const result = await gitSyncBeforeBuster(config, '01-foundation', status);
+
+    assert.match(result.commitHash, /^[0-9a-f]{40}$/);
+    assert.equal(fs.readFileSync(path.join(repoRoot, 'Projects/demo/src/package.json'), 'utf8'), '{\n  "name": "local"\n}\n');
+    assert.equal(fs.readFileSync(runtimeLog, 'utf8'), '{"event":"live"}\n');
+
+    const committedFiles = git(repoRoot, ['show', '--name-only', '--pretty=format:', 'HEAD'])
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean);
+    assert.deepEqual(committedFiles, ['Projects/demo/src/package.json']);
+
+    git(repoRoot, ['fetch', 'origin', 'master']);
+    assert.equal(
+      git(repoRoot, ['show', 'origin/master:Projects/demo/src/package.json']),
+      '{\n  "name": "local"\n}',
+    );
+    assert.match(git(repoRoot, ['status', '--porcelain']), /^\?\? Projects\/demo\/src\/\.swarm\/$/m);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
 });

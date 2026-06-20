@@ -15,7 +15,7 @@ Generated from: `.github/workflows/build-images.yaml`, `.github/workflows/docs-c
 
 | Workflow | Triggers | Path filters | Schedules | Jobs | Commands/actions |
 | --- | --- | --- | --- | --- | --- |
-| `.github/workflows/build-images.yaml` (Build Docker Images) | `push`, `schedule`, `workflow_dispatch` | `docker/**`<br>`skills/**`<br>`scripts/buster-namespace-controller.mjs` | `0 3 * * *` | `check-base-image`, `build` | `uses: actions/checkout@v4`<br>`uses: docker/build-push-action@v5`<br>`uses: docker/login-action@v3`<br>`uses: docker/metadata-action@v5`<br>`uses: docker/setup-buildx-action@v3` |
+| `.github/workflows/build-images.yaml` (Build Runtime Images And Skill Bundles) | `push`, `schedule`, `workflow_dispatch` | `docker/**`<br>`skills/**`<br>`scripts/buster-namespace-controller.mjs` | `0 3 * * *` | `check-base-image`, `build`, `bundle-skills` | `uses: actions/checkout@v4`<br>`uses: docker/build-push-action@v5`<br>`uses: docker/login-action@v3`<br>`uses: docker/metadata-action@v5`<br>`uses: docker/setup-buildx-action@v3` |
 | `.github/workflows/docs-checks.yaml` (Docs Checks) | `pull_request`, `push`, `workflow_dispatch` | `docs/**`<br>`scripts/docs-*.mjs`<br>`scripts/deploy.sh`<br>`package.json`<br>`package-lock.json`<br>`.github/workflows/**`<br>`my-values/**`<br>`charts/kubeclaw/**`<br>`deploy/**`<br>`docker/**`<br>`tests/**`<br>`skills/**`<br>`plugins/**` |  | `docs` | `git diff --check`<br>`node scripts/docs-check.mjs`<br>`npm run docs:check:coverage`<br>`npm run docs:check:generated`<br>`npm run docs:check:refs`<br>`npm run docs:inventory && npm run docs:generate`<br>`uses: actions/checkout@v4`<br>`uses: actions/setup-node@v4` |
 
 

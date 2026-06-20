@@ -29,22 +29,21 @@ Pod readiness is dependency-aware. It checks OpenClaw gateway health, Redis `PIN
 
 The full startup order, startup doctor behavior, probe budgets, and failure signals are documented in [Startup and health checks](../deployment/startup-and-health.md).
 
-Build and push local verification images to an explicit private registry endpoint:
+Refresh runtime images for both agents:
 
 ```bash
-LOCAL_REGISTRY_PUSH=registry.example.com/kubeclaw \
-./scripts/deploy.sh build-local-images
+./scripts/deploy.sh image both
 ```
 
-Build local images, redeploy agents against the matching cluster-visible pull endpoint, and smoke:
+Deploy a code bundle to one agent:
 
 ```bash
-LOCAL_REGISTRY_PUSH=registry.example.com/kubeclaw \
-LOCAL_REGISTRY_PULL=registry.example.com/kubeclaw \
-./scripts/deploy.sh verify-live
+NOVA_CODE_BUNDLE_ARCHIVE_URL=... \
+NOVA_CODE_BUNDLE_EXPECTED_COMMIT=<sha> \
+./scripts/deploy.sh code nova
 ```
 
-`verify-live` starts temporary pull-check pods from the pushed general and sandbox images before redeploying agents. If the cluster-visible pull endpoint is wrong for either runtime image, verification fails before the existing Nova/Buster deployments are changed.
+`image` uses a rollout restart after Helm apply so mutable tags are pulled without deleting pods by selector. `code` changes only the selected bundle inputs and waits for the Helm-triggered rollout.
 
 Collect logs:
 
@@ -86,7 +85,7 @@ Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/pipeline.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/summary.json
 ```
 
-5. Use `verify-live` after image or chart changes that need proof against the actual cluster pull path.
+5. Use `image` after runtime image or chart changes, and `code` after bundle-only agent updates.
 
 ## Restart Expectations
 
@@ -102,4 +101,4 @@ Both agent deployments use `strategy.type: Recreate` and persistent config/works
 | Redis work queue | `XPENDING`/`XLEN` on `swarm:buster:tasks` | pending work drains or has explainable dead-letter/completion records |
 | Telemetry | run-scoped `pipeline.jsonl`, Redis telemetry stream, optional observer output | event identity includes project and run ID; external sinks may degrade without owning scheduler truth |
 
-Use `verify-live` after image, registry, or chart changes. Use behavior/contract verifiers for source changes that do not require a live cluster.
+Use `image` after image or chart changes. Use `code` after agent bundle changes. Use behavior/contract verifiers for source changes that do not require a live cluster.

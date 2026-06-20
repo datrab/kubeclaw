@@ -5,6 +5,8 @@
 // Buster-specific Git workflows built on shared Git primitives.
 // Destructive sync/push policy remains Buster-owned.
 
+// @ts-expect-error Node built-in ambient types are not installed for this migration island.
+import fs from 'fs';
 import { getRepoRoot, gitExec, getCurrentBranch } from '../git-primitives.ts';
 import { sleep } from '../timing.ts';
 import type { TimeBudget } from '../timing.ts';
@@ -205,6 +207,83 @@ function normalizeScopedAddPaths(addPaths: unknown): string[] {
   return normalized;
 }
 
+function normalizeRepoRelativePath(value: unknown): string {
+  return String(value || '')
+    .replace(/\\/g, '/')
+    .replace(/^\/+/, '')
+    .replace(/^(?:\.\/)+/, '')
+    .trim();
+}
+
+function pathMatchesScopedPathspec(filePath: string, pathspecs: string[] = []): boolean {
+  const normalizedFilePath = normalizeRepoRelativePath(filePath);
+  if (!normalizedFilePath) return false;
+  return pathspecs.some((pathspec) => normalizedFilePath === pathspec || normalizedFilePath.startsWith(`${pathspec}/`));
+}
+
+function isRebaseInProgress(repoRoot: string): boolean {
+  try {
+    const rebaseMergePath = gitExec(repoRoot, ['rev-parse', '--git-path', 'rebase-merge']);
+    const rebaseApplyPath = gitExec(repoRoot, ['rev-parse', '--git-path', 'rebase-apply']);
+    return fs.existsSync(rebaseMergePath) || fs.existsSync(rebaseApplyPath);
+  } catch (_error: unknown) {
+    return false;
+  }
+}
+
+function getConflictedPaths(repoRoot: string): string[] {
+  try {
+    return gitExec(repoRoot, ['diff', '--name-only', '--diff-filter=U'])
+      .split('\n')
+      .map((line) => normalizeRepoRelativePath(line))
+      .filter(Boolean);
+  } catch (_error: unknown) {
+    return [];
+  }
+}
+
+function tryAutoResolveRebaseForScopedPaths(repoRoot: string, addPaths: string[], logger: GitLogger | null): boolean {
+  const conflicts = getConflictedPaths(repoRoot);
+  if (conflicts.length === 0) return false;
+  if (conflicts.some((file) => !pathMatchesScopedPathspec(file, addPaths))) {
+    const nonScoped = conflicts.filter((file) => !pathMatchesScopedPathspec(file, addPaths));
+    logGit(logger, 'warn', `Scoped Buster rebase has out-of-scope conflicts: ${nonScoped.join(', ')}`);
+    return false;
+  }
+
+  logGit(logger, 'warn', `Auto-resolving ${conflicts.length} scoped Buster rebase conflict(s) in favor of local task output`);
+  while (true) {
+    const activeConflicts = getConflictedPaths(repoRoot);
+    if (activeConflicts.length === 0) break;
+    if (activeConflicts.some((file) => !pathMatchesScopedPathspec(file, addPaths))) return false;
+
+    for (const file of activeConflicts) {
+      gitExec(repoRoot, ['checkout', '--theirs', '--', file], { stdio: 'ignore' });
+      gitExec(repoRoot, ['add', '--', file], { stdio: 'ignore' });
+    }
+
+    try {
+      gitExec(repoRoot, ['rebase', '--continue'], {
+        stdio: 'ignore',
+        env: {
+          ...process.env,
+          GIT_EDITOR: 'true',
+        },
+      });
+    } catch (error: unknown) {
+      if (!isRebaseInProgress(repoRoot)) break;
+      const stillConflicted = getConflictedPaths(repoRoot);
+      if (stillConflicted.length === 0) throw error;
+      if (stillConflicted.some((file) => !pathMatchesScopedPathspec(file, addPaths))) return false;
+    }
+
+    if (!isRebaseInProgress(repoRoot)) break;
+  }
+
+  logGit(logger, 'info', 'Scoped Buster rebase auto-resolved');
+  return true;
+}
+
 function normalizePushBranch(branch: unknown): string {
   if (typeof branch !== 'string') {
     throw new Error('gitPushWithRetry branch must be a valid branch name');
@@ -264,12 +343,16 @@ export async function gitPushWithRetry(repoRoot: string, branch: string, opts: G
     } catch (rebaseErr: unknown) {
       const detail = firstLine(rebaseErr);
       logGit(logger, 'warn', `Rebase attempt ${attempt}/${maxAttempts}: ${detail}`);
-      try { gitExec(repoRoot, ['rebase', '--abort'], { stdio: 'ignore' }); } catch (_error: unknown) { /* best-effort abort */ }
-      if (attempt < maxAttempts) {
-        await sleep(retryDelayMs * Math.pow(2, attempt - 1), { budget, signal });
-        continue;
+      if (tryAutoResolveRebaseForScopedPaths(repoRoot, opts.commitMessage ? normalizeScopedAddPaths(opts.addPaths) : [], logger)) {
+        // Rebase is already completed above. Continue to push on this same attempt.
+      } else {
+        try { gitExec(repoRoot, ['rebase', '--abort'], { stdio: 'ignore' }); } catch (_error: unknown) { /* best-effort abort */ }
+        if (attempt < maxAttempts) {
+          await sleep(retryDelayMs * Math.pow(2, attempt - 1), { budget, signal });
+          continue;
+        }
+        throw new Error(`gitPushWithRetry rebase failed after ${maxAttempts} attempt(s): ${detail}`);
       }
-      throw new Error(`gitPushWithRetry rebase failed after ${maxAttempts} attempt(s): ${detail}`);
     }
 
     try {

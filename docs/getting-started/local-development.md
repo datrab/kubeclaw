@@ -18,7 +18,7 @@ Useful local tools:
 - `jq`
 - `git`
 - `kubectl` for live namespace inspection
-- `docker` only for local image build or `verify-live`
+- `docker` only if you are editing Dockerfiles or reproducing image build issues outside the normal deploy path
 
 ## Basic Checks
 

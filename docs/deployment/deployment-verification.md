@@ -30,12 +30,14 @@ Live smoke through `scripts/deploy.sh`:
 ./scripts/deploy.sh smoke
 ./scripts/deploy.sh smoke-agent nova
 ./scripts/deploy.sh smoke-agent buster
-./scripts/deploy.sh verify-live
 ```
 
-Live smoke requires a cluster and checks rollout, pod readiness, in-pod `openclaw gateway status`, `/app/skills`, and `/home/node/.openclaw/swarm.config.json`. Pod readiness now includes gateway health, Redis ping plus a health stream write, configured registry endpoints, and enabled LiteLLM/Qdrant checks. Buster readiness also checks the Buster process heartbeat.
+Live smoke requires a cluster and checks rollout, pod readiness, in-pod `openclaw gateway status`, persisted startup verification status, in-pod readiness, `/app/skills`, and `/home/node/.openclaw/swarm.config.json`. Startup verification now owns the deep first-boot checks such as Redis stream writes, registry reachability, and enabled LiteLLM/Qdrant validation. Readiness stays cheaper with drain state, startup marker, gateway health, Redis `PING`, and Buster heartbeat freshness.
 
-`verify-live` is stronger than `smoke`: it builds local general and sandbox images, pushes them to the configured push registry, proves the cluster can pull both pushed runtime images with temporary pods, redeploys agents with those images, recreates the agent pods, and then runs the same pod smoke checks. It requires Docker, Helm, kubectl, a deployed registry-local service, and an explicit cluster-visible pull path.
+Deploy modes:
+
+- `./scripts/deploy.sh image [nova|buster|both]` refreshes mutable runtime tags through `kubectl rollout restart` after Helm apply.
+- `./scripts/deploy.sh code [nova|buster|both]` updates bundle inputs and waits for the Helm-driven rollout. The default path derives GitHub release asset URLs from the repository and expected commit; explicit archive URLs still override it.
 
 Final-preview Tailscale ingress also requires the Tailscale Kubernetes Operator. `./scripts/deploy.sh infra` installs it by default, waits for the operator pod to be Ready, and fails closed if `tailscale/operator-oauth` is missing; `TAILSCALE_OPERATOR_ENABLED=false` is only for non-preview development setups.
 
@@ -60,7 +62,7 @@ During this documentation pass, `node tests/verification/deployment/check-deploy
 
 ## What Is Not Verified Locally
 
-The local deployment truth check does not prove secret values, external Vertex AI access, Discord delivery, live PVC mutation/rotation behavior, dependency outage readiness behavior, node firewall rules, Tailscale exposure, or real Buster suite execution. Use `./scripts/deploy.sh smoke`, `./scripts/deploy.sh verify-live`, and behavior/runtime tests for those surfaces.
+The local deployment truth check does not prove secret values, external Vertex AI access, Discord delivery, live PVC mutation/rotation behavior, dependency outage readiness behavior, node firewall rules, Tailscale exposure, or real Buster suite execution. Use `./scripts/deploy.sh smoke`, the `image` or `code` deploy paths, and behavior/runtime tests for those surfaces.
 
 ## Common Failures
 
@@ -75,6 +77,7 @@ The local deployment truth check does not prove secret values, external Vertex A
 | Chart renders for Nova and Buster | `charts/kubeclaw/templates/*.yaml`; `my-values/nova-values.yaml`; `my-values/buster-values.yaml` | `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` | render, kubeconform, and deployment-shape checks pass |
 | Secrets and config are wired, not literal runtime values | `charts/kubeclaw/templates/secret.yaml`; `configmap-gateway.yaml`; `deployment.yaml`; `my-values/setup-secrets.sh` | deployment truth plus `kubectl -n "$NAMESPACE" get secret ...` in live cluster | rendered manifests reference expected Secret names and keys |
 | Agent pods can start locally enough for smoke | `scripts/deploy.sh`; `charts/kubeclaw/templates/deployment.yaml` | `./scripts/deploy.sh smoke` or `./scripts/deploy.sh smoke-agent nova` | health script reports gateway/config/dependency checks |
-| Local image path matches cluster pull path | `scripts/deploy.sh`; `my-values/infra/k3s-registries.yaml` | `./scripts/deploy.sh verify-live [tag]` | preflight pull pod becomes Ready, then agent smoke checks pass |
+| Image deploy refreshes mutable runtime tags cleanly | `scripts/deploy.sh` | `./scripts/deploy.sh image [target]` | Helm apply succeeds, rollout restart completes, smoke checks pass |
+| Code deploy applies the selected bundle cleanly | `scripts/deploy.sh`; `charts/kubeclaw/templates/deployment.yaml`; `.github/workflows/build-images.yaml` | `./scripts/deploy.sh code [target]` with expected commit envs | init downloads and validates the GitHub-published `/app/skills` bundle, rollout completes, smoke checks pass |
 
 Preserve failed render output and live `kubectl describe pod` output when escalating. They identify whether the failure belongs to source templates, values, credentials, image pulls, runtime config, or external providers.

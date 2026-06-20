@@ -11,9 +11,9 @@
 #   ./deploy.sh tailscale          Deploy Tailscale Kubernetes Operator
 #   ./deploy.sh agents             Deploy agents (Nova + Buster)
 #   ./deploy.sh agent <name>       Deploy single agent (nova|buster)
-#   ./deploy.sh build-local-images [tag]
-#                                  Build + push verification images to registry-local
-#   ./deploy.sh verify-live [tag]  Build local images, redeploy agents, run pod smoke
+#   ./deploy.sh image              Deploy both agents using image/runtime values
+#   ./deploy.sh image <name>       Deploy one agent using image/runtime values
+#   ./deploy.sh code <target>      Deploy code bundles for nova|buster|both
 #   ./deploy.sh smoke              Run pod-level smoke checks for Nova + Buster
 #   ./deploy.sh smoke-agent <name> Run pod-level smoke checks for one agent
 #   ./deploy.sh all                Full deployment (setup + infra + agents)
@@ -24,8 +24,14 @@
 #
 # Environment variables:
 #   NAMESPACE            Target namespace (default: kubeclaw)
-#   LOCAL_REGISTRY_PUSH  Host-visible push target for build-local-images
-#   LOCAL_REGISTRY_PULL  Cluster-visible pull target for verify-live
+#   AGENT_HELM_TIMEOUT   Helm wait timeout for agent upgrades (default: 45m)
+#   AGENT_ROLLOUT_TIMEOUT  Pod/deployment readiness timeout for agents (default: 45m)
+#   CODE_BUNDLE_GITHUB_REPOSITORY      owner/repo override for derived GitHub release bundle URLs
+#   CODE_BUNDLE_RELEASE_TAG            GitHub release tag for published bundles (default: agent-code-bundles)
+#   NOVA_CODE_BUNDLE_ARCHIVE_URL       Resolved Nova bundle archive URL for code deploy
+#   NOVA_CODE_BUNDLE_EXPECTED_COMMIT   Expected Nova source commit for code deploy
+#   BUSTER_CODE_BUNDLE_ARCHIVE_URL     Resolved Buster bundle archive URL for code deploy
+#   BUSTER_CODE_BUNDLE_EXPECTED_COMMIT   Expected Buster source commit for code deploy
 #   TAILSCALE_OPERATOR_ENABLED     true|false (default: true)
 #   TAILSCALE_OAUTH_CLIENT_ID      Optional bootstrap source for Secret/operator-oauth
 #   TAILSCALE_OAUTH_CLIENT_SECRET  Optional bootstrap source for Secret/operator-oauth
@@ -58,6 +64,9 @@ KUBECLAW_DEPLOY_POSTGRESQL="${KUBECLAW_DEPLOY_POSTGRESQL:-true}"
 KUBECLAW_DEPLOY_QDRANT="${KUBECLAW_DEPLOY_QDRANT:-true}"
 KUBECLAW_DEPLOY_LITELLM="${KUBECLAW_DEPLOY_LITELLM:-true}"
 ALLOW_PARTIAL_INFRA="${ALLOW_PARTIAL_INFRA:-false}"
+AGENT_HELM_TIMEOUT="${AGENT_HELM_TIMEOUT:-45m}"
+AGENT_ROLLOUT_TIMEOUT="${AGENT_ROLLOUT_TIMEOUT:-45m}"
+CODE_BUNDLE_RELEASE_TAG="${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}"
 
 export NAMESPACE
 export KUBECLAW_DEPLOY_POSTGRESQL
@@ -196,29 +205,28 @@ delete_manifest_if_cluster_resource_present() {
   return 1
 }
 
-restart_agent_pods_after_deploy() {
+wait_for_agent_rollout() {
   local release="$1"
   local selector="app.kubernetes.io/instance=${release}"
-
-  info "Restarting ${release} pods so the latest image is pulled..."
-  kubectl delete pod -n "$NAMESPACE" -l "$selector" --ignore-not-found --wait=true
-  kubectl rollout status deployment/"$release" -n "$NAMESPACE" --timeout=180s
-  kubectl wait --for=condition=Ready pod -l "$selector" -n "$NAMESPACE" --timeout=180s
+  kubectl rollout status deployment/"$release" -n "$NAMESPACE" --timeout="$AGENT_ROLLOUT_TIMEOUT"
+  kubectl wait --for=condition=Ready pod -l "$selector" -n "$NAMESPACE" --timeout="$AGENT_ROLLOUT_TIMEOUT"
 }
 
-default_verification_tag() {
-  date -u +"live-smoke-%Y%m%d%H%M%S"
+restart_agent_deployment() {
+  local release="$1"
+
+  info "Restarting ${release} deployment to pull the selected runtime image..."
+  kubectl rollout restart deployment/"$release" -n "$NAMESPACE"
+  wait_for_agent_rollout "$release"
 }
 
-write_image_override_file() {
+append_image_override_file() {
   local output_path="$1"
   local image_repo="$2"
   local image_tag="$3"
   local disable_pull_secrets="$4"
   local controller_image_repo="${5:-}"
   local controller_image_tag="${6:-}"
-
-  : > "$output_path"
 
   if [[ -n "$image_repo" || -n "$image_tag" ]]; then
     echo "image:" >> "$output_path"
@@ -247,43 +255,99 @@ write_image_override_file() {
   fi
 }
 
-build_local_image() {
-  local name="$1"
-  local dockerfile="$2"
-  local push_repo="$3"
-  local tag="$4"
+append_code_bundle_override_file() {
+  local output_path="$1"
+  local archive_url="$2"
+  local expected_commit="$3"
+  local contract_version="$4"
+  local auth_secret="${5:-}"
+  local auth_key="${6:-token}"
 
-  header "Build: ${name}"
-  docker build -f "$REPO_DIR/$dockerfile" -t "$push_repo:$tag" "$REPO_DIR"
-  docker push "$push_repo:$tag"
-  log "${name} image pushed: $push_repo:$tag"
+  cat >> "$output_path" <<EOF
+codeBundle:
+  enabled: true
+  archiveUrl: "$archive_url"
+  expectedCommit: "$expected_commit"
+  contractVersion: "$contract_version"
+EOF
+
+  if [[ -n "$auth_secret" ]]; then
+    cat >> "$output_path" <<EOF
+  auth:
+    existingSecret: "$auth_secret"
+    existingSecretKey: "$auth_key"
+EOF
+  fi
 }
 
-verify_cluster_image_pull() {
-  local image="$1"
-  local pod="kubeclaw-image-pull-check"
-  local wait_output
-
-  info "Preflighting cluster image pull: $image"
-  kubectl delete pod "$pod" -n "$NAMESPACE" --ignore-not-found --wait=true >/dev/null
-  kubectl run "$pod" \
-    -n "$NAMESPACE" \
-    --image="$image" \
-    --restart=Never \
-    --image-pull-policy=Always \
-    --command -- sh -c 'sleep 30'
-
-  if wait_output=$(kubectl wait --for=condition=Ready "pod/$pod" -n "$NAMESPACE" --timeout=120s 2>&1); then
-    kubectl delete pod "$pod" -n "$NAMESPACE" --ignore-not-found --wait=false >/dev/null
-    log "Cluster can pull $image"
+derive_github_repository() {
+  if [[ -n "${CODE_BUNDLE_GITHUB_REPOSITORY:-}" ]]; then
+    echo "$CODE_BUNDLE_GITHUB_REPOSITORY"
     return 0
   fi
 
-  err "Cluster cannot pull $image"
-  echo "$wait_output" >&2
-  kubectl describe pod "$pod" -n "$NAMESPACE" >&2
-  kubectl delete pod "$pod" -n "$NAMESPACE" --ignore-not-found --wait=false >/dev/null
-  return 1
+  local remote_url
+  if ! remote_url="$(git -C "$REPO_DIR" config --get remote.origin.url 2>/dev/null)"; then
+    return 1
+  fi
+  if [[ -z "$remote_url" ]]; then
+    return 1
+  fi
+
+  local repo
+  repo="$remote_url"
+  repo="${repo#git@github.com:}"
+  repo="${repo#https://github.com/}"
+  repo="${repo#http://github.com/}"
+  repo="${repo%.git}"
+  if [[ "$repo" == "$remote_url" || "$repo" != */* ]]; then
+    return 1
+  fi
+  echo "$repo"
+}
+
+default_bundle_archive_url() {
+  local role="$1"
+  local expected_commit="$2"
+  local repository
+
+  repository="$(derive_github_repository)" || return 1
+  if [[ -z "$expected_commit" ]]; then
+    return 1
+  fi
+
+  echo "https://github.com/${repository}/releases/download/${CODE_BUNDLE_RELEASE_TAG}/${role}-${expected_commit}.tgz"
+}
+
+bundle_env_for_role() {
+  local role="$1"
+  local field="$2"
+
+  case "$role:$field" in
+    nova:archive_url) echo "${NOVA_CODE_BUNDLE_ARCHIVE_URL:-}" ;;
+    nova:expected_commit) echo "${NOVA_CODE_BUNDLE_EXPECTED_COMMIT:-}" ;;
+    nova:contract_version) echo "${NOVA_CODE_BUNDLE_CONTRACT_VERSION:-v1}" ;;
+    nova:auth_secret) echo "${NOVA_CODE_BUNDLE_AUTH_SECRET:-}" ;;
+    nova:auth_key) echo "${NOVA_CODE_BUNDLE_AUTH_SECRET_KEY:-token}" ;;
+    buster:archive_url) echo "${BUSTER_CODE_BUNDLE_ARCHIVE_URL:-}" ;;
+    buster:expected_commit) echo "${BUSTER_CODE_BUNDLE_EXPECTED_COMMIT:-}" ;;
+    buster:contract_version) echo "${BUSTER_CODE_BUNDLE_CONTRACT_VERSION:-v1}" ;;
+    buster:auth_secret) echo "${BUSTER_CODE_BUNDLE_AUTH_SECRET:-}" ;;
+    buster:auth_key) echo "${BUSTER_CODE_BUNDLE_AUTH_SECRET_KEY:-token}" ;;
+    *) return 1 ;;
+  esac
+}
+
+resolve_deploy_targets() {
+  local target="${1:-both}"
+  case "$target" in
+    both) echo "nova buster" ;;
+    nova|buster) echo "$target" ;;
+    *)
+      err "Usage: $0 code <nova|buster|both> or $0 image <nova|buster|both>"
+      return 1
+      ;;
+  esac
 }
 
 # ─── Setup (namespace + repos) ───────────────────────────────────────────
@@ -627,11 +691,17 @@ cmd_infra() {
 
 deploy_agent() {
   local role="$1"
+  local mode="${2:-image}"
   local values_file="$VALUES_DIR/${role}-values.yaml"
   local image_repo=""
   local image_tag=""
   local controller_image_repo=""
   local controller_image_tag=""
+  local bundle_archive_url=""
+  local bundle_expected_commit=""
+  local bundle_contract_version=""
+  local bundle_auth_secret=""
+  local bundle_auth_key=""
   local override_file=""
   local disable_pull_secrets="${DISABLE_IMAGE_PULL_SECRETS:-0}"
   local helm_args=()
@@ -654,16 +724,46 @@ deploy_agent() {
       ;;
   esac
 
-  if [[ -n "$image_repo" || -n "$image_tag" || -n "$controller_image_repo" || -n "$controller_image_tag" || "$disable_pull_secrets" == "1" ]]; then
+  if [[ "$mode" == "code" ]]; then
+    bundle_expected_commit="$(bundle_env_for_role "$role" expected_commit)"
+    bundle_contract_version="$(bundle_env_for_role "$role" contract_version)"
+    bundle_auth_secret="$(bundle_env_for_role "$role" auth_secret)"
+    bundle_auth_key="$(bundle_env_for_role "$role" auth_key)"
+    bundle_archive_url="$(bundle_env_for_role "$role" archive_url)"
+
+    if [[ -z "$bundle_expected_commit" ]]; then
+      err "${role} code deploy requires $(tr '[:lower:]' '[:upper:]' <<< "$role")_CODE_BUNDLE_EXPECTED_COMMIT"
+      return 1
+    fi
+    if [[ -z "$bundle_archive_url" ]]; then
+      if ! bundle_archive_url="$(default_bundle_archive_url "$role" "$bundle_expected_commit")"; then
+        bundle_archive_url=""
+      fi
+    fi
+    if [[ -z "$bundle_archive_url" ]]; then
+      err "${role} code deploy requires $(tr '[:lower:]' '[:upper:]' <<< "$role")_CODE_BUNDLE_ARCHIVE_URL or a derivable GitHub repository"
+      return 1
+    fi
+  fi
+
+  if [[ -n "$image_repo" || -n "$image_tag" || -n "$controller_image_repo" || -n "$controller_image_tag" || "$disable_pull_secrets" == "1" || "$mode" == "code" ]]; then
     override_file="$(mktemp)"
-    write_image_override_file "$override_file" "$image_repo" "$image_tag" "$disable_pull_secrets" "$controller_image_repo" "$controller_image_tag"
+    : > "$override_file"
+  fi
+
+  if [[ -n "$override_file" && ( -n "$image_repo" || -n "$image_tag" || -n "$controller_image_repo" || -n "$controller_image_tag" || "$disable_pull_secrets" == "1" ) ]]; then
+    append_image_override_file "$override_file" "$image_repo" "$image_tag" "$disable_pull_secrets" "$controller_image_repo" "$controller_image_tag"
+  fi
+
+  if [[ -n "$override_file" && "$mode" == "code" ]]; then
+    append_code_bundle_override_file "$override_file" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_contract_version" "$bundle_auth_secret" "$bundle_auth_key"
   fi
 
   helm_args=(
     upgrade --install "agent-${role}" "$CHART_DIR"
     --namespace "$NAMESPACE"
     --values "$values_file"
-    --wait --timeout 180s
+    --wait --timeout "$AGENT_HELM_TIMEOUT"
   )
 
   if ! component_enabled "$KUBECLAW_DEPLOY_LITELLM"; then
@@ -677,7 +777,7 @@ deploy_agent() {
     helm_args+=(--values "$override_file")
   fi
 
-  info "Deploying agent-${role}..."
+  info "Deploying agent-${role} (${mode})..."
   if ! helm "${helm_args[@]}"; then
     if [[ -n "$override_file" ]]; then
       rm -f "$override_file"
@@ -689,16 +789,20 @@ deploy_agent() {
     rm -f "$override_file"
   fi
 
-  restart_agent_pods_after_deploy "agent-${role}"
-  log "agent-${role} deployed"
+  if [[ "$mode" == "image" ]]; then
+    restart_agent_deployment "agent-${role}"
+  else
+    wait_for_agent_rollout "agent-${role}"
+  fi
+  log "agent-${role} deployed (${mode})"
 }
 
 cmd_agents() {
-  header "Agents"
+  header "Agents (image deploy)"
   # Nova = orchestrator + Forge/Echo as ACP subagents (all in one pod)
   # Buster = isolated tester (separate pod with Podman sandbox)
   for role in nova buster; do
-    deploy_agent "$role"
+    deploy_agent "$role" image
   done
 
   echo ""
@@ -707,66 +811,22 @@ cmd_agents() {
     | awk '{print "  " $1 " → " $3}'
 }
 
-cmd_build_local_images() {
-  local tag="${1:-$(default_verification_tag)}"
-  local push_registry="${LOCAL_REGISTRY_PUSH:-}"
-
-  require_command docker
-  require_command kubectl
-
-  header "Local verification image build"
-  if [[ -z "$push_registry" ]]; then
-    err "LOCAL_REGISTRY_PUSH is required because registry-local is ClusterIP by default."
-    info "Set it to a private registry endpoint that Docker can push to."
-    return 1
-  fi
-  kubectl get deployment registry-local -n "$NAMESPACE" >/dev/null
-  kubectl rollout status deployment/registry-local -n "$NAMESPACE" --timeout=60s
-  info "Push registry: $push_registry"
-  info "Verification tag: $tag"
-
-  build_local_image "general" "docker/Dockerfile.general" "$push_registry/kubeclaw-general" "$tag"
-  build_local_image "sandbox" "docker/Dockerfile.sandbox" "$push_registry/kubeclaw-sandbox" "$tag"
-  build_local_image "namespace-controller" "docker/Dockerfile.namespace-controller" "$push_registry/kubeclaw-namespace-controller" "$tag"
+cmd_image() {
+  local roles
+  roles="$(resolve_deploy_targets "${1:-both}")" || return 1
+  header "Image Deploy"
+  for role in $roles; do
+    deploy_agent "$role" image
+  done
 }
 
-cmd_verify_live() {
-  local tag="${1:-$(default_verification_tag)}"
-  local pull_registry="${LOCAL_REGISTRY_PULL:-}"
-
-  require_command docker
-  require_command helm
-  require_command kubectl
-
-  header "Live deployment verification"
-  if [[ -z "$pull_registry" ]]; then
-    err "LOCAL_REGISTRY_PULL is required because registry-local is ClusterIP by default."
-    info "Set it to the registry endpoint that cluster nodes can pull from."
-    return 1
-  fi
-  info "Preparing local verification images for tag: $tag"
-  cmd_build_local_images "$tag"
-
-  local general_image="$pull_registry/kubeclaw-general:$tag"
-  local sandbox_image="$pull_registry/kubeclaw-sandbox:$tag"
-  local namespace_controller_image="$pull_registry/kubeclaw-namespace-controller:$tag"
-
-  verify_cluster_image_pull "$general_image"
-  verify_cluster_image_pull "$sandbox_image"
-  verify_cluster_image_pull "$namespace_controller_image"
-
-  GENERAL_IMAGE_REPOSITORY="$pull_registry/kubeclaw-general"
-  GENERAL_IMAGE_TAG="$tag"
-  SANDBOX_IMAGE_REPOSITORY="$pull_registry/kubeclaw-sandbox"
-  SANDBOX_IMAGE_TAG="$tag"
-  NAMESPACE_CONTROLLER_IMAGE_REPOSITORY="$pull_registry/kubeclaw-namespace-controller"
-  NAMESPACE_CONTROLLER_IMAGE_TAG="$tag"
-  DISABLE_IMAGE_PULL_SECRETS=1
-
-  info "Redeploying agents against registry-local tag: $tag"
-  cmd_agents
-  cmd_smoke
-  log "Live deployment verification passed for tag: $tag"
+cmd_code() {
+  local roles
+  roles="$(resolve_deploy_targets "${1:-both}")" || return 1
+  header "Code Deploy"
+  for role in $roles; do
+    deploy_agent "$role" code
+  done
 }
 
 # ─── Status ──────────────────────────────────────────────────────────────
@@ -796,9 +856,11 @@ cmd_smoke_agent() {
   header "Smoke: ${release}"
   kubectl get deployment "$release" -n "$NAMESPACE" >/dev/null
   kubectl get svc "$release" -n "$NAMESPACE" >/dev/null
-  kubectl rollout status deployment/$release -n "$NAMESPACE" --timeout=180s
-  kubectl wait --for=condition=Ready pod -l "app.kubernetes.io/instance=$release" -n "$NAMESPACE" --timeout=180s
+  kubectl rollout status deployment/$release -n "$NAMESPACE" --timeout="$AGENT_ROLLOUT_TIMEOUT"
+  kubectl wait --for=condition=Ready pod -l "app.kubernetes.io/instance=$release" -n "$NAMESPACE" --timeout="$AGENT_ROLLOUT_TIMEOUT"
   kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- openclaw gateway status
+  kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- node /runtime-config/kubeclaw-health.mjs startup-status
+  kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- node /runtime-config/kubeclaw-health.mjs readiness
   kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- test -d /app/skills
   kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- test -f /home/node/.openclaw/swarm.config.json
   log "${release} smoke passed"
@@ -991,7 +1053,13 @@ case "${1:-}" in
       err "Usage: $0 agent <nova|buster>"
       exit 1
     fi
-    deploy_agent "$2"
+    deploy_agent "$2" image
+    ;;
+  image)
+    cmd_image "${2:-both}"
+    ;;
+  code)
+    cmd_code "${2:-both}"
     ;;
   all)
     cmd_setup
@@ -1000,12 +1068,6 @@ case "${1:-}" in
     echo ""
     header "Deployment Complete"
     cmd_status
-    ;;
-  build-local-images)
-    cmd_build_local_images "${2:-}"
-    ;;
-  verify-live)
-    cmd_verify_live "${2:-}"
     ;;
   smoke)
     cmd_smoke
@@ -1039,11 +1101,10 @@ case "${1:-}" in
     echo "  secrets            Create/copy/prompt required Kubernetes secrets"
     echo "  infra              Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM"
     echo "  tailscale          Deploy Tailscale Kubernetes Operator"
-    echo "  agents             Deploy agents (Nova + Buster)"
-    echo "  agent <name>       Deploy single agent (nova|buster)"
-    echo "  build-local-images [tag]"
-    echo "                     Build + push verification images to registry-local"
-    echo "  verify-live [tag]  Build local images, redeploy agents, run pod smoke"
+    echo "  agents             Deploy agents (Nova + Buster) using image/runtime values"
+    echo "  agent <name>       Deploy single agent (nova|buster) using image/runtime values"
+    echo "  image [target]     Image deploy for nova|buster|both (default: both)"
+    echo "  code [target]      Code-bundle deploy for nova|buster|both (default: both)"
     echo "  all                Full deployment (setup + infra + agents)"
     echo "  smoke              Run pod-level smoke checks for Nova + Buster"
     echo "  smoke-agent <name> Run pod-level smoke checks for one agent"
@@ -1054,6 +1115,10 @@ case "${1:-}" in
     echo ""
     echo "Environment:"
     echo "  NAMESPACE=$NAMESPACE"
+    echo "  NOVA_CODE_BUNDLE_ARCHIVE_URL=${NOVA_CODE_BUNDLE_ARCHIVE_URL:-}"
+    echo "  NOVA_CODE_BUNDLE_EXPECTED_COMMIT=${NOVA_CODE_BUNDLE_EXPECTED_COMMIT:-}"
+    echo "  BUSTER_CODE_BUNDLE_ARCHIVE_URL=${BUSTER_CODE_BUNDLE_ARCHIVE_URL:-}"
+    echo "  BUSTER_CODE_BUNDLE_EXPECTED_COMMIT=${BUSTER_CODE_BUNDLE_EXPECTED_COMMIT:-}"
     echo "  TAILSCALE_OPERATOR_ENABLED=${TAILSCALE_OPERATOR_ENABLED:-true}"
     echo "  TAILSCALE_OPERATOR_NAMESPACE=$TAILSCALE_OPERATOR_NAMESPACE"
     exit 1

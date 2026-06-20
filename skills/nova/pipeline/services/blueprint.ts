@@ -57,6 +57,19 @@ function buildBlueprintDiscordFields(identity: AnyRecord = {}, extra: AnyRecord[
   return [...(identity.run_id ? [{ name: 'Run ID', value: identity.run_id, inline: true }] : []), ...extra];
 }
 
+function ensureRemoteBranchRef(config: AnyRecord, branch: string, operation: string) {
+  const remoteTrackingRef = `refs/remotes/origin/${branch}`;
+  const fetchRefspec = `refs/heads/${branch}:${remoteTrackingRef}`;
+
+  try {
+    gitExec(config.repo_root, ['fetch', 'origin', fetchRefspec], { stdio: 'ignore' });
+  } catch (e) {
+    throw new Error(`Cannot fetch architecture branch '${branch}' before ${operation}: ${errorMessage(e)}`);
+  }
+
+  return `origin/${branch}`;
+}
+
 function pushWithRecovery(config: AnyRecord, branch: string) {
   const repoRoot = config.repo_root;
   const pushResult = gitSpawnSync(repoRoot, ['push', '--force-with-lease', 'origin', branch]);
@@ -124,10 +137,9 @@ function commitSelectedPaths(config: AnyRecord, message: string, addPaths: strin
 export function listBlueprints(config: AnyRecord) {
   const branch = `${config.project}/architecture`;
   const dir = relPath(config, config.paths.modules_dir);
-  try { gitExec(config.repo_root, ['fetch', 'origin', branch], { stdio: 'ignore' }); }
-  catch (e) { throw new Error(`Cannot fetch architecture branch '${branch}' before listing blueprints: ${errorMessage(e)}`); }
+  const branchRef = ensureRemoteBranchRef(config, branch, 'listing blueprints');
   try {
-    const out = gitExec(config.repo_root, ['ls-tree', '-d', '--name-only', `origin/${branch}`, `${dir}/`]);
+    const out = gitExec(config.repo_root, ['ls-tree', '-d', '--name-only', branchRef, `${dir}/`]);
     return out.split('\n').filter(Boolean).map((fileName: string) => path.basename(fileName));
   } catch (e) {
     throw new Error(`Cannot read architecture branch '${branch}': ${errorMessage(e)}`);
@@ -136,6 +148,7 @@ export function listBlueprints(config: AnyRecord) {
 
 export async function releaseBlueprint(config: AnyRecord, progress: AnyRecord, moduleId: string, moduleDir: string, stages: string[] = ['forge', 'buster']) {
   const branch = `${config.project}/architecture`;
+  const branchRef = ensureRemoteBranchRef(config, branch, 'blueprint release');
   const targetPath = relPath(config, modulePath(config, moduleDir));
   const moduleConfig = progress.modules[moduleId] || {};
 
@@ -145,9 +158,6 @@ export async function releaseBlueprint(config: AnyRecord, progress: AnyRecord, m
     log('WARN', `Module ${moduleId} already has status ${existingStatus.status} — skipping blueprint release`);
     return { status: 'skipped', reason: `existing status: ${existingStatus.status}`, module: moduleDir };
   }
-
-  try { gitExec(config.repo_root, ['fetch', 'origin', branch], { stdio: 'ignore' }); }
-  catch (e) { throw new Error(`Cannot fetch architecture branch '${branch}' before blueprint release: ${errorMessage(e)}`); }
 
   const requiredFiles = [];
   if (stages.includes('forge')) {
@@ -160,11 +170,11 @@ export async function releaseBlueprint(config: AnyRecord, progress: AnyRecord, m
   if (stages.includes('buster')) requiredFiles.push('BUSTER.md');
 
   for (const file of requiredFiles) {
-    try { gitExec(config.repo_root, ['cat-file', '-e', `origin/${branch}:${targetPath}/${file}`], { stdio: 'ignore' }); }
+    try { gitExec(config.repo_root, ['cat-file', '-e', `${branchRef}:${targetPath}/${file}`], { stdio: 'ignore' }); }
     catch (e) { throw new Error(`Blueprint incomplete: ${file} not found for ${moduleId} in architecture branch at ${targetPath}: ${errorMessage(e)}`); }
   }
 
-  try { gitExec(config.repo_root, ['checkout', `origin/${branch}`, '--', targetPath], { stdio: 'ignore' }); }
+  try { gitExec(config.repo_root, ['checkout', branchRef, '--', targetPath], { stdio: 'ignore' }); }
   catch (e) { throw new Error(`Blueprint checkout failed: ${errorMessage(e)}`); }
 
   const blueprintFilePath = targetPath;
@@ -188,8 +198,8 @@ export async function releaseGateFiles(config: AnyRecord, progress: AnyRecord) {
   const gates = progress.gates;
   if (!gates || Object.keys(gates).length === 0) return;
   const branch = `${config.project}/architecture`;
-
-  try { gitExec(config.repo_root, ['fetch', 'origin', branch], { stdio: 'ignore' }); }
+  let branchRef: string;
+  try { branchRef = ensureRemoteBranchRef(config, branch, 'gate file release'); }
   catch (e) {
     const degraded = [buildBlueprintDegradedEvidence('blueprint_gate_fetch_failed', 'release_gate_files', e)];
     log('WARN', `Could not fetch origin/${branch} for gate files: ${errorMessage(e)}`);
@@ -209,7 +219,7 @@ export async function releaseGateFiles(config: AnyRecord, progress: AnyRecord) {
   const checkedOutPaths: string[] = [];
   const degraded: BlueprintDegradedEvidence[] = [];
   for (const targetPath of gateDirRefs) {
-    try { gitExec(config.repo_root, ['cat-file', '-e', `origin/${branch}:${targetPath}`], { stdio: 'ignore' }); }
+    try { gitExec(config.repo_root, ['cat-file', '-e', `${branchRef}:${targetPath}`], { stdio: 'ignore' }); }
     catch (e) { log('DEBUG', `Gate dir '${targetPath}' not found in architecture branch — skipping: ${errorMessage(e)}`); continue; }
 
     const localPath = path.join(config.repo_root, targetPath);
@@ -218,7 +228,7 @@ export async function releaseGateFiles(config: AnyRecord, progress: AnyRecord) {
       continue;
     }
     try {
-      gitExec(config.repo_root, ['checkout', `origin/${branch}`, '--', targetPath], { stdio: 'ignore' });
+      gitExec(config.repo_root, ['checkout', branchRef, '--', targetPath], { stdio: 'ignore' });
       checkedOut.push(targetPath);
       checkedOutPaths.push(targetPath);
       log('OK', `Gate files released: ${targetPath}/`);
@@ -243,7 +253,8 @@ export async function releaseGateFiles(config: AnyRecord, progress: AnyRecord) {
 
 export async function syncControlFiles(config: AnyRecord, progress: AnyRecord) {
   const branch = `${config.project}/architecture`;
-  try { gitExec(config.repo_root, ['fetch', 'origin', branch], { stdio: 'ignore' }); }
+  let branchRef: string;
+  try { branchRef = ensureRemoteBranchRef(config, branch, 'control file sync'); }
   catch (e) {
     const degraded = [buildBlueprintDegradedEvidence('blueprint_control_fetch_failed', 'sync_control_files', e)];
     log('WARN', `syncControlFiles: could not fetch architecture branch — skipping without local-cache fallback: ${errorMessage(e)}`);
@@ -254,11 +265,11 @@ export async function syncControlFiles(config: AnyRecord, progress: AnyRecord) {
   const synced: SyncedControlFile[] = [];
   const degraded: BlueprintDegradedEvidence[] = [];
   function syncFile(archPath: string) {
-    try { gitExec(config.repo_root, ['cat-file', '-e', `origin/${branch}:${archPath}`], { stdio: 'ignore' }); }
+    try { gitExec(config.repo_root, ['cat-file', '-e', `${branchRef}:${archPath}`], { stdio: 'ignore' }); }
     catch (e) { log('DEBUG', `[blueprint-sync] ${archPath} missing in architecture branch — skipping: ${errorMessage(e)}`); return; }
 
     let archContent;
-    try { archContent = gitExec(config.repo_root, ['show', `origin/${branch}:${archPath}`]); } catch (e) { log('DEBUG', `[blueprint-sync] could not read ${archPath} from architecture branch: ${errorMessage(e)}`); return; }
+    try { archContent = gitExec(config.repo_root, ['show', `${branchRef}:${archPath}`]); } catch (e) { log('DEBUG', `[blueprint-sync] could not read ${archPath} from architecture branch: ${errorMessage(e)}`); return; }
     const localAbsPath = path.join(config.repo_root, archPath);
     let localContent = null;
     try { localContent = fs.readFileSync(localAbsPath, 'utf8'); } catch (e) { if ((e as AnyRecord)?.code !== 'ENOENT') log('DEBUG', `[blueprint-sync] could not read local ${archPath}: ${errorMessage(e)}`); }
@@ -321,3 +332,7 @@ export async function syncControlFiles(config: AnyRecord, progress: AnyRecord) {
 
   return { synced: synced.length, files: synced, degraded };
 }
+
+export const __blueprintTest = {
+  ensureRemoteBranchRef,
+};

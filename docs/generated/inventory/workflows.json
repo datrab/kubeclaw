@@ -7,7 +7,7 @@
   "workflows": [
     {
       "path": ".github/workflows/build-images.yaml",
-      "name": "Build Docker Images",
+      "name": "Build Runtime Images And Skill Bundles",
       "triggers": [
         "push",
         "schedule",
@@ -23,7 +23,8 @@
       ],
       "jobs": [
         "check-base-image",
-        "build"
+        "build",
+        "bundle-skills"
       ],
       "commandAndActionRefs": [
         "uses: actions/checkout@v4",
