@@ -8,6 +8,7 @@ import { getRunId } from '../core/runtime.ts';
 import { runDeliveryLintValidation, formatValidationFailures } from './validation.ts';
 import { runPreCheck, generateLintReport } from './lint.ts';
 import { buildModuleValidatorControlResult } from './contracts/validator-control-result.ts';
+import { resolveModuleCommit } from './status-store-lifecycle/refs.ts';
 
 const EXECUTION_FAILED_VALIDATOR_POLICY = Object.freeze({ nextAction: 'block', issueType: 'environment', outcomeClass: 'execution_failed' });
 
@@ -187,14 +188,17 @@ export function runFullLintValidatorStage(config, progress = {}, input = {}, opt
   const stageId = opts.stageId || input?.ids?.stageId || 'validator:full_lint';
   const moduleId = getModuleId(input);
   const moduleDir = getModuleDir(input);
+  const moduleStatus = getModuleStatus(input);
   const producerType = stageProducerType(input, opts);
   if (!producerType) return missingProducerControl(config, input, stageId);
   const lintTier = input?.validator?.config?.tier || opts.lintTier || 'full';
   const logPath = input?.validator?.config?.logPath || opts.logPath || null;
   log('STEP', `Full lint validator: running tier ${lintTier}`);
   const { report, error } = generateLintReport(config, lintTier, {
+    moduleDir,
     moduleId: moduleId || getGateId(input) || 'full_lint',
-    moduleDir: moduleDir || undefined,
+    forgeDiffStat: moduleStatus?.forge_diff_stat || null,
+    commitHash: resolveModuleCommit(moduleStatus),
     logPath,
   });
   const archivePath = archiveFullLintReport(config, report, input, moduleDir, stageId);

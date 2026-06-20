@@ -501,6 +501,7 @@ export default async function buildSuite(context: BuildContext): Promise<SuiteVe
       metadata: {
         tool: type === 'server' ? 'podman-run' : 'sandbox-build',
         serve_type: type,
+        ...(serve.image ? { image: String(serve.image) } : {}),
         ...(result.outputSize ? { output_size: result.outputSize } : {}),
         ...(result.port ? { port: result.port } : {}),
       },

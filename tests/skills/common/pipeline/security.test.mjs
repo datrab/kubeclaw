@@ -12,6 +12,12 @@ test('subprocess env overrides must be explicitly allowlisted', () => {
     /not allowlisted/,
   );
 
+  const defaultEnv = buildSubprocessEnv(
+    { GIT_EDITOR: 'true' },
+    { sourceEnv: { PATH: '/usr/bin' } },
+  );
+  assert.equal(defaultEnv.GIT_EDITOR, 'true');
+
   const env = buildSubprocessEnv(
     {
       PATH: '/custom/bin',

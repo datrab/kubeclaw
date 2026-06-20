@@ -12,6 +12,8 @@ import {
   isScheduledValidatorComplete,
   markScheduledValidatorComplete,
 } from '../../../../../skills/nova/pipeline/runners/pipeline-runner-scheduling/validator-completions.ts';
+import { runScheduledValidator } from '../../../../../skills/nova/pipeline/runners/pipeline-runner-scheduling.ts';
+import { resolveGateTargetModule } from '../../../../../skills/nova/pipeline/runners/gate-target-module.ts';
 import { completePipeline } from '../../../../../skills/nova/pipeline/runners/pipeline-runner-terminal.ts';
 
 function testConfig(dir) {
@@ -159,6 +161,92 @@ test('scheduled validator completion cache is isolated by run id when config is 
 
   markScheduledValidatorComplete(config, key);
   assert.equal(isScheduledValidatorComplete(config, key), true);
+});
+
+test('resolveGateTargetModule infers the reviewed module from execution order', () => {
+  const progress = {
+    execution_order: ['01-foundation', 'gate:module-01-review', '02-content-polish'],
+    modules: {
+      '01-foundation': { dir: '01-foundation' },
+      '02-content-polish': { dir: '02-content-polish' },
+    },
+    gates: {
+      'module-01-review': { type: 'review' },
+    },
+  };
+
+  assert.deepEqual(resolveGateTargetModule(progress, 'module-01-review'), {
+    moduleId: '01-foundation',
+    moduleDir: '01-foundation',
+    source: 'execution_order',
+  });
+});
+
+test('scheduled review-gate full_lint carries the target module directory into validator input', async () => {
+  const capturedInputs = [];
+  const config = {
+    project: 'pipeline-runner-test',
+    _runId: 'run-review-gate-validator',
+    run_id: 'run-review-gate-validator',
+    paths: { swarm_dir: path.join(os.tmpdir(), 'pipeline-runner-test-swarm') },
+    pluginRegistry: {
+      enabled: true,
+      stageOwners: {
+        'validator.run': {
+          'validator:full_lint': {
+            manifest: {
+              moduleId: 'test.validator.full_lint',
+              kind: 'validator',
+              hookFamily: 'validator.run',
+              stageIds: ['validator:full_lint'],
+              capabilities: [],
+              sourceType: 'local',
+              trustTier: 'trusted',
+            },
+            implementation: {
+              run: async ({ input }) => {
+                capturedInputs.push(input);
+                return {
+                  schemaVersion: 'v1',
+                  producerKind: 'validator',
+                  producerType: 'full_lint',
+                  nextAction: 'pass',
+                  diagnostics: {
+                    summary: 'Full lint passed',
+                    typed: { validator: { outcomeClass: 'passed' } },
+                  },
+                };
+              },
+            },
+          },
+        },
+      },
+    },
+  };
+  const progress = {
+    execution_order: ['01-foundation', 'gate:review'],
+    modules: {
+      '01-foundation': { dir: 'Projects/app/src/modules/01-foundation', title: 'Foundation' },
+    },
+    gates: {
+      review: { type: 'review', lint_tier: 'full' },
+    },
+  };
+
+  const result = await runScheduledValidator(config, progress, 'validator:full_lint', {
+    scope: 'module',
+    moduleId: '01-foundation',
+    gateId: 'review',
+    scheduleKey: 'mandatory:before:gate:review:validator:full_lint',
+    scheduleReason: 'mandatory_full_lint_before_review',
+    validatorConfig: { tier: 'full' },
+  });
+
+  assert.equal(result.nextAction, 'pass');
+  assert.equal(capturedInputs.length, 1);
+  assert.equal(capturedInputs[0].ids.scope, 'module');
+  assert.equal(capturedInputs[0].ids.moduleDir, 'Projects/app/src/modules/01-foundation');
+  assert.equal(capturedInputs[0].executionContext.moduleDir, 'Projects/app/src/modules/01-foundation');
 });
 
 test('terminal generator completion cache is isolated by run id when config is reused', async () => {

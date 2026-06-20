@@ -167,6 +167,12 @@ function busterControlForPollResult(pollResult: AnyRecord = {}, failureClass: st
   return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error', failureClass: failureClass || 'unclassified_poll_failure' };
 }
 
+function retryableStartupFailure(error: AnyRecord = null) {
+  const reason = typeof error?.reason === 'string' ? error.reason.trim().toLowerCase() : '';
+  return error?.observability_required === true
+    || reason === 'missing_agent_observability_startup_evidence';
+}
+
 export async function runModuleForgeWorker({
   config,
   progress,
@@ -223,10 +229,10 @@ export async function runModuleForgeWorker({
   } catch (e: any) {
     clearShutdownContextFn();
     return buildModuleForgeWorkerControlResult(config, workerInput, {
-      nextAction: 'block',
+      nextAction: retryableStartupFailure(e) ? 'retry' : 'block',
       issueType: 'environment',
-      outcomeClass: 'error',
-      reason: 'spawn_failed',
+      outcomeClass: retryableStartupFailure(e) ? 'retrying' : 'error',
+      reason: retryableStartupFailure(e) ? 'startup_evidence_missing' : 'spawn_failed',
       error: e.message,
       gatewayLabel: e?.gateway_label || null,
       sessionKey: e?.session_key || null,
@@ -398,6 +404,7 @@ export async function runModuleBusterWorker({
 
   const archive = deps.archiveModuleCompletions || archiveModuleCompletions;
   const spawn = deps.spawnAgent || spawnAgent;
+  const verifyAlive = deps.verifyAgentAlive || verifyAgentAlive;
   const kill = deps.killAgent || killAgent;
   const poll = deps.pollDualWithRateLimitRecovery || pollDualWithRateLimitRecovery;
   const loadStatusFn = deps.loadStatus || loadStatus;
@@ -469,11 +476,11 @@ export async function runModuleBusterWorker({
   } catch (e: any) {
     clearShutdownContextFn();
     return buildModuleBusterWorkerControlResult(config, workerInput, {
-      nextAction: 'block',
+      nextAction: retryableStartupFailure(e) ? 'retry' : 'block',
       issueType: 'environment',
-      outcomeClass: 'error',
-      reason: 'spawn_failed',
-      failureClass: 'spawn_failed',
+      outcomeClass: retryableStartupFailure(e) ? 'retrying' : 'error',
+      reason: retryableStartupFailure(e) ? 'startup_evidence_missing' : 'spawn_failed',
+      failureClass: retryableStartupFailure(e) ? 'healthcheck_failed' : 'spawn_failed',
       error: e.message,
       dispatchId: dispatchId || null,
       gatewayLabel: e?.gateway_label || null,
@@ -499,6 +506,25 @@ export async function runModuleBusterWorker({
     agent_id: null,
     phase: 'buster',
   };
+
+  if (!(await verifyAlive(config, 'buster', moduleId))) {
+    await kill(config, 'buster', moduleId, false);
+    clearShutdownContextFn();
+    return buildModuleBusterWorkerControlResult(config, workerInput, {
+      nextAction: 'retry',
+      issueType: 'environment',
+      outcomeClass: 'retrying',
+      reason: 'healthcheck_failed',
+      failureClass: 'healthcheck_failed',
+      error: 'Buster agent failed health check — session not running after spawn',
+      dispatchId: dispatch.dispatch_id,
+      gatewayLabel: dispatch.gateway_label,
+      sessionKey: dispatch.session_key,
+      streamLogPath: dispatch.stream_log_path,
+      attempt,
+      runId: dispatch.run_id,
+    });
+  }
 
   try {
     if (typeof onDispatched === 'function') {

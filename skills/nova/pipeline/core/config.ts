@@ -190,6 +190,7 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
   requireNumber(config, 'default_timeout_minutes', 'config.default_timeout_minutes', { min: 0, allowZero: false });
   requireNumber(config, 'default_max_fails', 'config.default_max_fails', { min: 0 });
   requireNumber(config, 'auto_retry_threshold', 'config.auto_retry_threshold', { min: 0 });
+  requireNumber(config, 'agent_startup_retry_budget', 'config.agent_startup_retry_budget', { min: 0 });
   requireNumber(config, 'session_nudge_threshold', 'config.session_nudge_threshold', { min: 0, max: 1 });
 
   if (!isPlainObject(config.rate_limit)) {
@@ -331,7 +332,7 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
     '_doc',
     'project', 'repo_root', 'paths', 'agents', 'fallback_model', 'gates',
     'poll_interval_seconds', 'default_timeout_minutes', 'default_max_fails',
-    'auto_retry_threshold', 'session_nudge_threshold',
+    'auto_retry_threshold', 'agent_startup_retry_budget', 'session_nudge_threshold',
     'acp_monitor', 'telemetry', 'case_study', 'arch_validation',
     'agent_observability', 'agent_observability_forge_completion_settle_ms',
     'plugins', 'discord_alerts', 'pre_check', 'review_defaults', 'buster',

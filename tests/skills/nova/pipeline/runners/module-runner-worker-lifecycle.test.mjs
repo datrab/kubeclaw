@@ -5,6 +5,8 @@ import path from 'node:path';
 import test from 'node:test';
 
 import { createRunStats } from '../../../../../skills/nova/pipeline/core/runtime.ts';
+import { STATUS } from '../../../../../skills/nova/pipeline/core/constants.ts';
+import { buildModuleForgeWorkerControlResult } from '../../../../../skills/nova/pipeline/agents/module-worker-control-results.ts';
 import { executeBusterWorkerAttempt } from '../../../../../skills/nova/pipeline/runners/module-runner-buster-worker.ts';
 import { runModuleForgePhase } from '../../../../../skills/nova/pipeline/runners/module-runner-forge.ts';
 import { resolveExpectedCompletionSessionKey } from '../../../../../skills/nova/pipeline/runners/module-runner/buster-phase/identity.ts';
@@ -37,6 +39,7 @@ function configWithWorker(stageId, moduleId) {
     project: 'module-runner-worker-lifecycle-test',
     _runId: 'run-worker-lifecycle',
     _runStats: createRunStats(),
+    agent_startup_retry_budget: 2,
     repo_root: root,
     paths: {
       modules_dir: modulesDir,
@@ -108,11 +111,74 @@ test('forge worker dispatch-then-throw clears persisted active_agent and preserv
     deps,
   });
 
-  assert.equal(result.terminal.result.exit, 1);
-  assert.equal(result.terminal.result.session_key, 'forge-session');
-  assert.equal(result.terminal.result.gateway_label, 'forge-gateway');
+  assert.equal(result.terminal.result.outcome, 'error');
+  assert.equal(result.terminal.result.correlation.session_key, 'forge-session');
+  assert.equal(result.terminal.result.correlation.gateway_label, 'forge-gateway');
   assert.equal(savedStatus.active_agent, null);
   assert.equal(result.status.active_agent, null);
+});
+
+test('forge startup retries use dedicated swarm config budget before succeeding', async () => {
+  const config = configWithWorker('worker:module_forge', 'builtin.worker.module_forge');
+  let savedStatus = statusFixture();
+  let workerCalls = 0;
+  const deps = {
+    runPreflightValidation: () => ({ passed: true }),
+    resolvePolicy: () => ({ model: 'forge-model', thinking: null, model_source: 'test', thinking_source: 'test' }),
+    modelToHarness: () => 'forge-harness',
+    logEffectivePolicy: () => {},
+    buildForgePrompt: () => ({ prompt: 'forge prompt', recalledMemoryIds: [] }),
+    savePrompt: () => {},
+    saveStatus: (_config, _dir, nextStatus) => {
+      savedStatus = JSON.parse(JSON.stringify(nextStatus));
+    },
+    loadStatus: () => JSON.parse(JSON.stringify(savedStatus)),
+    setShutdownContext: () => {},
+    invalidateHeadHash: () => {},
+    headHash: () => 'head-before',
+    acpLabel: () => 'forge-module-a',
+    discord: async () => {},
+    runModuleForgeWorker: async (ctx) => {
+      workerCalls += 1;
+      if (workerCalls < 3) {
+        return buildModuleForgeWorkerControlResult(config, ctx, {
+          nextAction: 'retry',
+          issueType: 'environment',
+          outcomeClass: 'retrying',
+          reason: 'healthcheck_failed',
+          error: 'agent not running after spawn',
+        });
+      }
+      return buildModuleForgeWorkerControlResult(config, ctx, {
+        nextAction: 'pass',
+        outcomeClass: 'passed',
+        reason: 'passed',
+        finalStatus: {
+          status: STATUS.READY_FOR_TESTING,
+          summary: 'Forge completion evidence ready',
+        },
+      });
+    },
+  };
+
+  const result = await runModuleForgePhase({
+    config,
+    progress: {},
+    moduleId: 'module-a',
+    mod: { title: 'Module A', stages: ['forge', 'buster'] },
+    dir: 'module-a',
+    status: savedStatus,
+    maxFails: 1,
+    timeout: 1,
+    novaPrompt: null,
+    stages: ['forge', 'buster'],
+    deps,
+  });
+
+  assert.equal(workerCalls, 3);
+  assert.equal(result.terminal, null);
+  assert.equal(savedStatus.fail_count, 0);
+  assert.equal(savedStatus.status, STATUS.READY_FOR_TESTING);
 });
 
 test('buster worker dispatch-then-throw clears persisted active_agent and preserves terminal correlation', async () => {
@@ -163,10 +229,10 @@ test('buster worker dispatch-then-throw clears persisted active_agent and preser
     busterAttempt: 1,
   });
 
-  assert.equal(result.terminal.result.exit, 1);
-  assert.equal(result.terminal.result.dispatch_id, 'buster-dispatch');
-  assert.equal(result.terminal.result.session_key, 'buster-session');
-  assert.equal(result.terminal.result.gateway_label, 'buster-gateway');
+  assert.equal(result.terminal.result.outcome, 'error');
+  assert.equal(result.terminal.result.correlation.dispatch_id, 'buster-dispatch');
+  assert.equal(result.terminal.result.correlation.session_key, 'buster-session');
+  assert.equal(result.terminal.result.correlation.gateway_label, 'buster-gateway');
   assert.equal(savedStatus.session_key, 'buster-session');
   assert.equal(savedStatus.dispatch_id, 'buster-dispatch');
   assert.equal(savedStatus.gateway_label, 'buster-gateway');

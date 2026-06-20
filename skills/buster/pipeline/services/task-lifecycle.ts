@@ -78,6 +78,66 @@ function collectAppTestCredentials(suitesInfo = {}) {
   return credentials;
 }
 
+function formatPreTestResultLine(result = {}) {
+  const suite = String(result?.suite || 'unknown');
+  const status = String(result?.status || 'UNKNOWN');
+  const detail = result?.findings?.[0]?.message
+    || result?.error
+    || result?.reason
+    || null;
+  return detail ? `- ${suite}: ${status} - ${detail}` : `- ${suite}: ${status}`;
+}
+
+function appendPreTestResultsToPrompt(prompt, suitesInfo = {}) {
+  const results = Array.isArray(suitesInfo?.results) ? suitesInfo.results : [];
+  if (results.length === 0) return prompt || '';
+
+  const buildResult = results.find((result) => result?.suite === 'build') || null;
+  const healthResult = results.find((result) => result?.suite === 'health') || null;
+  const buildPassed = buildResult?.status === 'PASS';
+  const healthPassed = healthResult?.status === 'PASS';
+  const healthUrl = typeof healthResult?.metadata?.url === 'string' ? healthResult.metadata.url : null;
+  const buildPort = buildResult?.metadata?.port ?? null;
+  const buildTool = typeof buildResult?.metadata?.tool === 'string' ? buildResult.metadata.tool : null;
+  const imageRef = typeof buildResult?.metadata?.image === 'string'
+    ? buildResult.metadata.image
+    : (typeof buildResult?.metadata?.image_ref === 'string' ? buildResult.metadata.image_ref : null);
+
+  const section = [
+    '',
+    '---',
+    '',
+    '## Pre-Test Results',
+    '',
+    `Summary: ${suitesInfo?.suiteSummary || 'No suite summary available.'}`,
+    '',
+    ...results.map(formatPreTestResultLine),
+    '',
+    'These deterministic pre-test results are authoritative for build and initial app startup.',
+    'Do not rerun build or start commands just to reconfirm them.',
+  ];
+
+  if (buildPassed || healthPassed) {
+    section.push(
+      'Do not run `npm run build`, `docker build`, `podman build`, `npm start`, or start a second local server unless you are investigating a new failure the pre-test runner did not already cover.',
+    );
+  }
+  if (buildPassed && buildTool) {
+    section.push(`Build authority: ${buildTool} already produced the runnable artifact for this attempt.`);
+  }
+  if (imageRef) {
+    section.push(`Runtime image: \`${imageRef}\``);
+  }
+  if (healthUrl) {
+    section.push(`Running app URL: \`${healthUrl}\``);
+  } else if (healthPassed && buildPort) {
+    section.push(`Running app port: \`${buildPort}\``);
+  }
+
+  section.push('', '');
+  return `${prompt || ''}${section.join('\n')}`;
+}
+
 function appendAppTestCredentialsToPrompt(prompt, suitesInfo = {}) {
   const credentials = collectAppTestCredentials(suitesInfo);
   if (credentials.length === 0) return prompt || '';
@@ -268,7 +328,10 @@ export async function processTask(payload, opts = {}) {
     stage = 'spawn-session';
     logger.step('spawn-session');
 
-    const prompt = appendAppTestCredentialsToPrompt(payload?.prompt || '', suitesInfo);
+    const prompt = appendAppTestCredentialsToPrompt(
+      appendPreTestResultsToPrompt(payload?.prompt || '', suitesInfo),
+      suitesInfo,
+    );
     const spawnResult = await spawnTaskSession({
       payload,
       prompt,
@@ -465,3 +528,8 @@ export async function processTask(payload, opts = {}) {
     if (finalCleanupFailed) return taskResult();
   }
 }
+
+export const __taskLifecycleTest = {
+  appendAppTestCredentialsToPrompt,
+  appendPreTestResultsToPrompt,
+};

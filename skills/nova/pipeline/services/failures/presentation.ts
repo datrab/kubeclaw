@@ -251,7 +251,7 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
         entry.error = errMsg;
         entry.delivery_acknowledged = false;
         log('WARN', `${terminalStatus} Nova injection delivery unknown for channel ${channelId} and ${stepType} ${targetId} (Gateway response aborted before acknowledgement)`);
-        await discordNotify(config, 'CRITICAL', `Nova injection delivery UNKNOWN: ${targetId}`, `Cronjob could not confirm Nova injection delivery for ${stepType} ${targetId}; Gateway response aborted before acknowledgement. Manual verification required.`, [
+        await discordNotify(config, 'CRITICAL', `Nova injection delivery UNKNOWN: ${targetId}`, `Pipeline could not confirm Nova handoff delivery for ${stepType} ${targetId}; Gateway response aborted before acknowledgement. Manual verification required.`, [
           ...buildFailureDiscordFields(injectionDiscordIdentity),
           { name: 'Status', value: terminalStatus },
           { name: 'Action', value: terminalAction },
@@ -266,7 +266,7 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
         entry.status = 'failed';
         entry.error = errMsg;
         log('WARN', `Failed to inject ${terminalStatus} into Nova channel ${channelId}: ${errMsg}`);
-        await discordNotify(config, 'CRITICAL', `Nova injection FAILED: ${targetId}`, `Cronjob could not inject Nova into Discord for ${stepType} ${targetId}. Manual intervention required.`, [
+        await discordNotify(config, 'CRITICAL', `Nova injection FAILED: ${targetId}`, `Pipeline could not deliver the Nova handoff for ${stepType} ${targetId}. Manual intervention required.`, [
           ...buildFailureDiscordFields(injectionDiscordIdentity),
           { name: 'Status', value: terminalStatus },
           { name: 'Action', value: terminalAction },
@@ -283,7 +283,7 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
     entry.status = 'ok';
     log('OK', `${terminalStatus} injected into Nova channel ${channelId} for ${stepType} ${targetId}`);
     try {
-      await discordNotify(config, 'WARN', `Nova injection sent: ${targetId}`, `Cronjob injected Nova into Discord channel for ${stepType} ${targetId}.`, [
+      await discordNotify(config, 'WARN', `Nova injection sent: ${targetId}`, `Pipeline sent the Nova handoff for ${stepType} ${targetId}.`, [
         ...buildFailureDiscordFields(injectionDiscordIdentity),
         { name: 'Status', value: terminalStatus },
         { name: 'Action', value: terminalAction },

@@ -4,6 +4,7 @@ import path from 'node:path';
 import test from 'node:test';
 
 import { createRunStats } from '../../../../../skills/nova/pipeline/core/runtime.ts';
+import { appendModuleLifecycleEvent } from '../../../../../skills/nova/pipeline/services/status-store.ts';
 import { reviewOutputPath, runReviewGateOnce } from '../../../../../skills/nova/pipeline/runners/review-gate-task.ts';
 
 function makeConfig() {
@@ -261,6 +262,92 @@ test('runReviewGateOnce writes canonical gate output before publishing review ar
 
   assert.equal(result.ok, true);
   assert.equal(commitObservedCanonical, true);
+});
+
+test('runReviewGateOnce scopes full lint to the reviewed module when gate order implies one', async () => {
+  const config = makeConfig();
+  const gateId = 'module-01-review';
+  const gate = {
+    type: 'review',
+    title: 'Review Gate',
+    review_name: 'main',
+    review_output_dir: 'echo-reviews',
+  };
+  const reviewConfig = {
+    reviewers: [{ label: 'echo', model: 'test-model' }],
+    primaryReviewer: { label: 'echo', model: 'test-model' },
+    timeout: 1,
+    lintTier: 'full',
+    lintRequired: true,
+  };
+  const outputFilePath = reviewOutputPath(config, gate, 'echo');
+  let lintArgs = null;
+
+  appendModuleLifecycleEvent(config, '01-foundation', {
+    module_id: '01-foundation',
+    title: 'Foundation',
+    current_attempt: 1,
+  }, {
+    eventType: 'module_attempt.started',
+    oldStatus: 'PENDING',
+  });
+
+  appendModuleLifecycleEvent(config, '01-foundation', {
+    module_id: '01-foundation',
+    title: 'Foundation',
+    current_attempt: 1,
+    completion_summary: 'passed',
+    commit_hash: 'abc123',
+  }, {
+    eventType: 'module_attempt.passed',
+    oldStatus: 'TESTING',
+  });
+
+  const deps = {
+    ...makeSuccessfulDeps({
+      outputFilePath,
+      canonicalOutputPath: path.join(config.paths.swarm_dir, 'unused.json'),
+      onCommit() {},
+    }),
+    generateLintReport(_config, _tier, opts) {
+      lintArgs = opts;
+      return {
+        report: {
+          summary: {
+            total_errors: 0,
+            total_warnings: 0,
+          },
+        },
+        error: null,
+      };
+    },
+  };
+
+  const result = await runReviewGateOnce({
+    deps,
+    config,
+    progress: {
+      execution_order: ['01-foundation', 'gate:module-01-review'],
+      modules: {
+        '01-foundation': { dir: '01-foundation' },
+      },
+      gates: {
+        'module-01-review': gate,
+      },
+    },
+    gateId,
+    gate,
+    reviewConfig,
+    reviewAttempt: 1,
+  });
+
+  assert.equal(result.ok, true);
+  assert.deepEqual(lintArgs, {
+    moduleId: '01-foundation',
+    forgeDiffStat: null,
+    commitHash: 'abc123',
+    logPath: path.join(config.paths.swarm_dir, 'logs', 'gates', gateId, 'lint', 'full-trace-attempt-1.jsonl'),
+  });
 });
 
 test('runReviewGateOnce validates review output before publishing artifacts', async () => {

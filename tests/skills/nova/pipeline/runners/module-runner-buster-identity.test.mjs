@@ -6,6 +6,7 @@ import test from 'node:test';
 
 import { createRunStats } from '../../../../../skills/nova/pipeline/core/runtime.ts';
 import { STATUS } from '../../../../../skills/nova/pipeline/core/constants.ts';
+import { buildModuleBusterWorkerControlResult } from '../../../../../skills/nova/pipeline/agents/module-worker-control-results.ts';
 import { shouldApplyRedisCompletionToStatus } from '../../../../../skills/nova/pipeline/services/completion-adjudicator.ts';
 import { runModuleBusterPhase } from '../../../../../skills/nova/pipeline/runners/module-runner/buster-phase.ts';
 import { resolveExpectedCompletionSessionKey } from '../../../../../skills/nova/pipeline/runners/module-runner/buster-phase/identity.ts';
@@ -40,8 +41,12 @@ function configWithBusterWorker() {
     project: 'module-buster-identity-proof',
     _runId: 'run-identity-proof',
     _runStats: createRunStats(),
+    agent_startup_retry_budget: 2,
     repo_root: root,
     buster: { max_crash_retries: 1 },
+    agents: {
+      buster: { dispatch: 'redis' },
+    },
     paths: {
       modules_dir: modulesDir,
       swarm_dir: root,
@@ -423,4 +428,81 @@ test('module Buster phase treats Redis missing output_file as infra without Forg
   assert.equal(savedStatus.blockedReason, 'output_file_missing');
   assert.equal(handleModuleFailCalls, 0);
   assert.equal(buildRetryResultCalls, 0);
+});
+
+test('module Buster phase retries startup failures with dedicated swarm config budget before PASS', async () => {
+  const config = configWithBusterWorker();
+  let savedStatus = {
+    status: STATUS.READY_FOR_TESTING,
+    current_phase: null,
+    fail_count: 0,
+    history: [],
+    cost: {},
+  };
+  let workerCalls = 0;
+
+  const deps = {
+    resolvePolicy: () => ({ model: 'buster-model', model_source: 'test' }),
+    logEffectivePolicy: () => {},
+    buildBusterModulePrompt: () => ({ prompt: 'buster prompt' }),
+    savePrompt: () => {},
+    validateBusterConfig: () => {},
+    setShutdownContext: () => {},
+    clearShutdownContext: () => {},
+    nowMs: () => 1781884965455,
+    discord: async () => {},
+    runModuleBusterWorker: async (ctx) => {
+      workerCalls += 1;
+      if (workerCalls < 3) {
+        return buildModuleBusterWorkerControlResult(config, ctx, {
+          nextAction: 'retry',
+          issueType: 'environment',
+          outcomeClass: 'retrying',
+          reason: 'healthcheck_failed',
+          failureClass: 'healthcheck_failed',
+          error: 'agent not running after spawn',
+          dispatchId: `dispatch-${workerCalls}`,
+        });
+      }
+      return buildModuleBusterWorkerControlResult(config, ctx, {
+        nextAction: 'pass',
+        outcomeClass: 'passed',
+        finalStatus: {
+          status: STATUS.PASS,
+          summary: 'Buster passed after startup retry',
+        },
+        dispatchId: 'dispatch-pass',
+      });
+    },
+    saveStreamLog: () => {},
+    saveStatus: (_config, _dir, previousOrStatus, transition = null) => {
+      savedStatus = clone(transition?.status || previousOrStatus);
+    },
+    loadStatus: () => clone(savedStatus),
+  };
+
+  const result = await runModuleBusterPhase({
+    config,
+    progress: {},
+    moduleId: 'module-a',
+    mod: { title: 'Module A', test_suites: ['unit'] },
+    dir: 'module-a',
+    status: savedStatus,
+    timeout: 1,
+    maxFails: 2,
+    deps,
+    recalledMemoryIds: [],
+    handleModuleFail: async () => {
+      throw new Error('startup retry success must not enter handleModuleFail');
+    },
+    buildRetryResult: () => {
+      throw new Error('startup retry success must not build retry result');
+    },
+  });
+
+  assert.equal(workerCalls, 3);
+  assert.equal(result.retry, false);
+  assert.equal(result.result.outcome, 'passed');
+  assert.equal(savedStatus.fail_count, 0);
+  assert.equal(savedStatus.status, STATUS.PASS);
 });

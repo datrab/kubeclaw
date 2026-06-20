@@ -25,6 +25,7 @@ const DEFAULT_SUBPROCESS_ENV_ALLOWLIST = Object.freeze([
   'TMP',
   'TERM',
   'CI',
+  'GIT_EDITOR',
   'NODE_ENV',
   'XDG_RUNTIME_DIR',
   'XDG_CONFIG_HOME',

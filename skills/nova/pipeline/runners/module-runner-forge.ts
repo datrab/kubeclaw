@@ -103,6 +103,10 @@ function workerSummary(controlResult: AnyRecord | null = null): string | null {
   return typeof summary === 'string' && summary.trim() ? summary.trim() : null;
 }
 
+function isRetryableStartupWorkerReason(reason: string | null = null): boolean {
+  return reason === 'healthcheck_failed' || reason === 'startup_evidence_missing';
+}
+
 export async function runModuleForgePhase({
   config,
   progress,
@@ -244,79 +248,92 @@ export async function runModuleForgePhase({
     },
   };
 
-  let executeForgeWorker;
-  let forgeOwnerRecord;
+  const agentStartupRetryBudget = config.agent_startup_retry_budget;
+  let forgeWorkerMetadata: AnyRecord = {};
+  let forgeWorkerTypedMetadata: AnyRecord = {};
+  let forgeWorkerSummary: string | null = null;
+  let forgeFinalStatus: AnyRecord | null = null;
+  let workerReason: string | null = null;
   let forgeWorkerControlResult: AnyRecord | null = null;
-  try {
-    ({ handler: executeForgeWorker, record: forgeOwnerRecord } = requireStageHandler(config, 'worker.execute', forgeStageId, 'execute'));
-    ensureModulePluginLogDirs(config);
-    const pluginInvocation = buildModuleWorkerPluginInvocation(moduleId, status, forgeStageId, {
-      attempt: currentAttemptNumber(status),
-    });
-    const pluginContext = createPluginContext({
-      config,
-      progress,
-      hookFamily: 'worker.execute',
-      stageId: forgeStageId,
-      record: forgeOwnerRecord,
-      invocation: pluginInvocation,
-      stateSnapshot: async () => forgeExecutionInput.stateSnapshot,
-      environmentMetadata: {
-        moduleId,
-        phase: 'forge',
-        workerType: 'module_forge',
-        model: forgeModel,
-        thinking: forgePolicy.thinking || null,
-      },
-      effects: buildWorkerPluginEffects(config, progress, forgeStageId, forgeWorkerInput, deps),
-    });
 
-    const rawForgeWorkerResult: unknown = await executeForgeWorker(
-      buildPluginInvocationEnvelope(forgeExecutionInput, pluginContext, { workerInput: forgeWorkerInput }),
-      pluginContext,
-    );
-    const controlResult = normalizeModuleForgeWorkerResult(config, forgeExecutionInput, rawForgeWorkerResult, { stageId: forgeStageId, moduleId: forgeOwnerRecord.manifest.moduleId, pluginInvocation });
-    forgeWorkerControlResult = controlResult;
-  } catch (error) {
-    const reason = `Module Forge worker execution failed: ${errorMessage(error)}`;
-    log('ERROR', reason);
-    const failureGatewayLabel = status?.active_agent?.gateway_label ?? resolveStatusGatewayLabel(status);
-    const failureSessionKey = status?.active_agent?.session_key ?? resolveStatusSessionKey(status);
-    status = clearForgeActiveAgentAfterWorkerFailure({ config, dir, status, deps });
-    emitTerminalModuleFailTelemetry(
-      config,
-      moduleId,
-      status,
-      mod,
-      'forge',
-      forgeModel,
-      status?.status ?? STATUS.IN_PROGRESS,
-      reason,
-      {
-        gatewayLabel: failureGatewayLabel,
-        sessionKey: failureSessionKey,
-      },
-    );
-    return {
-      status,
-      recalledMemoryIds,
-      terminal: buildModuleErrorTerminalResult(config, moduleId, {
-        reason,
-        moduleDir: dir,
+  for (let startupRetryCount = 0; ; startupRetryCount++) {
+    let executeForgeWorker;
+    let forgeOwnerRecord;
+    try {
+      ({ handler: executeForgeWorker, record: forgeOwnerRecord } = requireStageHandler(config, 'worker.execute', forgeStageId, 'execute'));
+      ensureModulePluginLogDirs(config);
+      const pluginInvocation = buildModuleWorkerPluginInvocation(moduleId, status, forgeStageId, {
         attempt: currentAttemptNumber(status),
-        phase: 'forge',
-        gatewayLabel: failureGatewayLabel,
-        sessionKey: failureSessionKey,
-        ...((error as AnyRecord)?.diagnostics ? { diagnostics: { contract_invalid: true, contract_diagnostic: (error as AnyRecord).diagnostics } } : {}),
-      }),
-    };
+      });
+      const pluginContext = createPluginContext({
+        config,
+        progress,
+        hookFamily: 'worker.execute',
+        stageId: forgeStageId,
+        record: forgeOwnerRecord,
+        invocation: pluginInvocation,
+        stateSnapshot: async () => forgeExecutionInput.stateSnapshot,
+        environmentMetadata: {
+          moduleId,
+          phase: 'forge',
+          workerType: 'module_forge',
+          model: forgeModel,
+          thinking: forgePolicy.thinking || null,
+        },
+        effects: buildWorkerPluginEffects(config, progress, forgeStageId, forgeWorkerInput, deps),
+      });
+
+      const rawForgeWorkerResult: unknown = await executeForgeWorker(
+        buildPluginInvocationEnvelope(forgeExecutionInput, pluginContext, { workerInput: forgeWorkerInput }),
+        pluginContext,
+      );
+      forgeWorkerControlResult = normalizeModuleForgeWorkerResult(config, forgeExecutionInput, rawForgeWorkerResult, { stageId: forgeStageId, moduleId: forgeOwnerRecord.manifest.moduleId, pluginInvocation });
+    } catch (error) {
+      const reason = `Module Forge worker execution failed: ${errorMessage(error)}`;
+      log('ERROR', reason);
+      const failureGatewayLabel = status?.active_agent?.gateway_label ?? resolveStatusGatewayLabel(status);
+      const failureSessionKey = status?.active_agent?.session_key ?? resolveStatusSessionKey(status);
+      status = clearForgeActiveAgentAfterWorkerFailure({ config, dir, status, deps });
+      emitTerminalModuleFailTelemetry(
+        config,
+        moduleId,
+        status,
+        mod,
+        'forge',
+        forgeModel,
+        status?.status ?? STATUS.IN_PROGRESS,
+        reason,
+        {
+          gatewayLabel: failureGatewayLabel,
+          sessionKey: failureSessionKey,
+        },
+      );
+      return {
+        status,
+        recalledMemoryIds,
+        terminal: buildModuleErrorTerminalResult(config, moduleId, {
+          reason,
+          moduleDir: dir,
+          attempt: currentAttemptNumber(status),
+          phase: 'forge',
+          gatewayLabel: failureGatewayLabel,
+          sessionKey: failureSessionKey,
+          ...((error as AnyRecord)?.diagnostics ? { diagnostics: { contract_invalid: true, contract_diagnostic: (error as AnyRecord).diagnostics } } : {}),
+        }),
+      };
+    }
+
+    forgeWorkerMetadata = workerMetadata(forgeWorkerControlResult);
+    forgeWorkerTypedMetadata = workerTypedMetadata(forgeWorkerControlResult);
+    forgeWorkerSummary = workerSummary(forgeWorkerControlResult);
+    forgeFinalStatus = forgeWorkerMetadata.final_status || null;
+    workerReason = forgeWorkerMetadata.reason || workerOutcomeClass(forgeWorkerControlResult) || forgeWorkerTypedMetadata.outcomeClass || null;
+    if (!isRetryableStartupWorkerReason(workerReason) || startupRetryCount >= agentStartupRetryBudget) {
+      break;
+    }
+    log('WARN', `Module ${moduleId}: Forge startup failed (${workerReason}) — retrying agent startup ${startupRetryCount + 1}/${agentStartupRetryBudget}`);
   }
 
-  const forgeWorkerMetadata = workerMetadata(forgeWorkerControlResult);
-  const forgeWorkerTypedMetadata = workerTypedMetadata(forgeWorkerControlResult);
-  const forgeWorkerSummary = workerSummary(forgeWorkerControlResult);
-  const forgeFinalStatus = forgeWorkerMetadata.final_status || null;
-  const workerReason = forgeWorkerMetadata.reason || workerOutcomeClass(forgeWorkerControlResult) || forgeWorkerTypedMetadata.outcomeClass || null;
   const forgeSessionKey = (forgeWorkerMetadata.session_key ?? resolveStatusSessionKey(status));
   const terminalDetail = typeof forgeWorkerMetadata.status_detail === 'string' && forgeWorkerMetadata.status_detail.trim()
     ? forgeWorkerMetadata.status_detail.trim()

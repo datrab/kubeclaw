@@ -6,6 +6,24 @@ import { findFiles } from './discovery.ts';
 import { tryParseJson } from './parsers.ts';
 import { makeParseFailureResult, makeWarningResult } from './report.ts';
 
+function scopedChangedFiles(ctx, predicate) {
+  if (!Array.isArray(ctx.changedFiles) || ctx.changedFiles.length === 0) return null;
+  return ctx.changedFiles
+    .filter(file => predicate(file.split(path.sep).join('/')))
+    .map(file => path.join(ctx.repoRoot, file));
+}
+
+function findChartDirForFile(repoRoot, filePath) {
+  let cursor = path.dirname(filePath);
+  const repoBoundary = path.resolve(repoRoot);
+  while (cursor.startsWith(repoBoundary)) {
+    if (fs.existsSync(path.join(cursor, 'Chart.yaml'))) return cursor;
+    if (cursor === repoBoundary) break;
+    cursor = path.dirname(cursor);
+  }
+  return null;
+}
+
 export function registerContainerYamlTools(registerTool) {
   // ── hadolint (Dockerfile linting) ──
   registerTool({
@@ -16,7 +34,8 @@ export function registerContainerYamlTools(registerTool) {
     detect: (ctx) => ctx.projectTypes.has('docker'),
     run: (ctx) => {
       const scanRoot = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
-      const dockerfiles = findFiles(scanRoot, f => /^Dockerfile|\.dockerfile$/i.test(f), 3);
+      const dockerfiles = scopedChangedFiles(ctx, file => /^Dockerfile|\.dockerfile$/i.test(path.basename(file)))
+        || findFiles(scanRoot, f => /^Dockerfile|\.dockerfile$/i.test(f), 3);
       if (dockerfiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
 
       const allFindings = [];
@@ -59,7 +78,16 @@ export function registerContainerYamlTools(registerTool) {
       const scanRoot = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
 
       // Find Chart.yaml and lint from its parent directory
-      const chartFiles = findFiles(scanRoot, f => f === 'Chart.yaml', 3);
+      const changedChartDirs = Array.isArray(ctx.changedFiles) && ctx.changedFiles.length > 0
+        ? [...new Set(
+          ctx.changedFiles
+            .map(file => findChartDirForFile(ctx.repoRoot, path.join(ctx.repoRoot, file)))
+            .filter(Boolean),
+        )]
+        : null;
+      const chartFiles = changedChartDirs
+        ? changedChartDirs.map(chartDir => path.join(chartDir, 'Chart.yaml'))
+        : findFiles(scanRoot, f => f === 'Chart.yaml', 3);
       if (chartFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
 
       const allFindings = [];
@@ -112,7 +140,8 @@ export function registerContainerYamlTools(registerTool) {
     detect: (ctx) => ctx.projectTypes.has('helm'),
     run: (ctx) => {
       const scanRoot = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
-      const yamlFiles = findFiles(scanRoot, f => (f.endsWith('.yaml') || f.endsWith('.yml')) && !f.includes('values'), 4);
+      const yamlFiles = scopedChangedFiles(ctx, file => (file.endsWith('.yaml') || file.endsWith('.yml')) && !file.includes('values'))
+        || findFiles(scanRoot, f => (f.endsWith('.yaml') || f.endsWith('.yml')) && !f.includes('values'), 4);
       if (yamlFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
 
       const result = safeExec('kubeconform', ['-output', 'json', '-summary', ...yamlFiles], {

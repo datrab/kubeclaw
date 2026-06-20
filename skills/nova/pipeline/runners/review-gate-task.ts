@@ -17,7 +17,10 @@ import { persistGateActiveSession, clearGateActiveSession } from '../services/ga
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
 import { emitGitCommitPushSoftFailDegraded } from '../services/git-soft-fail-observability.ts';
 import { appendDurableOperatorAlert } from '../services/durable-operator-alert.ts';
+import { resolveModuleCommit } from '../services/status-store-lifecycle/refs.ts';
 import { parseReviewOutputContent } from './review-gate-output.ts';
+import { resolveGateTargetModule } from './gate-target-module.ts';
+import { loadAuthoritativeModuleState } from './pipeline-runner-shared.ts';
 
 function telemetryCtx(config) {
   return { config, runId: getRunId(config) };
@@ -99,8 +102,13 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
   let lintBlock = '';
   const lintDir = gateLintLogDir(config, gateId);
   const tracePath = lintDir ? path.join(lintDir, `full-trace-attempt-${reviewAttempt}.jsonl`) : null;
+  const targetModule = resolveGateTargetModule(progress, gateId);
+  const targetModuleState = targetModule.moduleId ? loadAuthoritativeModuleState(config, progress, targetModule.moduleId) : null;
   const { report: lintReport, error: lintError } = deps.generateLintReport(config, lintTier || 'full', {
-    moduleId: gateId,
+    moduleDir: targetModule.moduleDir || null,
+    moduleId: targetModule.moduleId || gateId,
+    forgeDiffStat: targetModuleState?.forge_diff_stat || null,
+    commitHash: resolveModuleCommit(targetModuleState),
     logPath: tracePath,
   });
 

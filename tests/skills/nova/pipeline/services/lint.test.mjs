@@ -96,3 +96,65 @@ process.exit(1);
   assert.match(result.error, /shellcheck/);
   assert.match(result.error, /parser exception/);
 });
+
+test('generateLintReport limits changed-files scope to the target module', () => {
+  const dir = fs.mkdtempSync(path.join('/home', 'lint-report-scope-test-'));
+  const modulesDir = path.join(dir, '.swarm', 'modules');
+  const moduleDir = 'Projects/app/src/modules/01-foundation';
+  const lintReportPath = path.join(dir, 'lint-report-fixture.mjs');
+  const moduleRoot = path.join(modulesDir, moduleDir);
+  fs.mkdirSync(moduleRoot, { recursive: true });
+  fs.writeFileSync(path.join(moduleRoot, 'index.ts'), 'export const ok = true;\n');
+
+  fs.writeFileSync(lintReportPath, `
+import fs from 'node:fs';
+
+const valueAfter = (flag) => {
+  const index = process.argv.indexOf(flag);
+  return index >= 0 ? process.argv[index + 1] : null;
+};
+
+const output = valueAfter('--output');
+const modulePath = valueAfter('--module-path');
+const changedFiles = valueAfter('--changed-files');
+
+fs.writeFileSync(output, JSON.stringify({
+  tier: valueAfter('--tier') || 'full',
+  timestamp: '2026-06-20T00:00:00.000Z',
+  scope: modulePath,
+  changed_files: changedFiles ? changedFiles.split(',') : [],
+  tools: {},
+  summary: {
+    total_errors: 0,
+    total_warnings: 0,
+    tools_ok: 0,
+    tools_skipped: 0,
+    tools_failed: 0
+  }
+}));
+`);
+
+  const result = generateLintReport({
+    repo_root: dir,
+    project: 'fixture',
+    paths: {
+      modules_dir: modulesDir,
+      swarm_dir: path.join(dir, '.swarm'),
+    },
+    pre_check: {
+      lint_report_path: lintReportPath,
+      timeout_seconds: 1,
+    },
+  }, 'full', {
+    moduleDir,
+    moduleId: '01-foundation',
+    changedFiles: [
+      'Projects/app/src/modules/01-foundation/index.ts',
+      'Projects/other/src/unrelated.ts',
+    ],
+  });
+
+  assert.equal(result.error, null);
+  assert.equal(result.report.scope, '.swarm/modules/Projects/app/src/modules/01-foundation');
+  assert.deepEqual(result.report.changed_files, ['Projects/app/src/modules/01-foundation/index.ts']);
+});

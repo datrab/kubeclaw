@@ -13,6 +13,7 @@
   "default_timeout_minutes": 300,
   "default_max_fails": 8,
   "auto_retry_threshold": 7,
+  "agent_startup_retry_budget": 3,
   "session_nudge_threshold": 0.75,
 
   "rate_limit": {

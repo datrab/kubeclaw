@@ -13,10 +13,53 @@ function nodeExec(scriptPath, args, opts = {}) {
   return typeof result === 'string' ? result.trim() : '';
 }
 
+function execText(command, args, opts = {}) {
+  const defaults = { encoding: 'utf8', timeout: 30000, maxBuffer: 10 * 1024 * 1024, env: buildSubprocessEnv() };
+  const result = execFileSync(command, args, { ...defaults, ...opts });
+  return typeof result === 'string' ? result.trim() : '';
+}
+
 function tmpFile(prefix, moduleId = '', ext = '.tmp') {
   const ts = Date.now();
   const rand = Math.random().toString(36).slice(2, 8);
   return path.join('/tmp', `swarm-pipeline-${prefix}-${moduleId}-${ts}-${rand}${ext}`);
+}
+
+function changedFilesFromDiffStat(forgeDiffStat = '') {
+  return String(forgeDiffStat || '')
+    .split('\n')
+    .map(line => line.trim().split(/\s+\|/)[0]?.trim())
+    .filter(f => f && !f.includes('changed') && !f.includes('insertion') && !f.includes('deletion'));
+}
+
+function changedFilesFromCommit(config, commitHash = null) {
+  if (typeof commitHash !== 'string' || !commitHash.trim()) return [];
+  try {
+    const output = execText('git', ['-C', config.repo_root, 'show', '--pretty=format:', '--name-only', commitHash]);
+    return output
+      .split('\n')
+      .map(line => line.trim())
+      .filter(Boolean);
+  } catch (error) {
+    log('WARN', `Unable to derive changed files from commit ${commitHash}: ${error.message}`);
+    return [];
+  }
+}
+
+function normalizeRepoRelativePath(filePath = '') {
+  const normalized = String(filePath || '').replace(/\\/g, '/').replace(/^\/+/, '');
+  return normalized.replace(/^\.\//, '');
+}
+
+function scopeChangedFilesToModule(moduleDir = null, changedFiles = []) {
+  if (!moduleDir || !Array.isArray(changedFiles) || changedFiles.length === 0) return changedFiles;
+  const normalizedModuleDir = normalizeRepoRelativePath(moduleDir).replace(/\/+$/, '');
+  if (!normalizedModuleDir) return changedFiles;
+  const modulePrefix = `${normalizedModuleDir}/`;
+  return changedFiles.filter((filePath) => {
+    const normalizedFilePath = normalizeRepoRelativePath(filePath);
+    return normalizedFilePath === normalizedModuleDir || normalizedFilePath.startsWith(modulePrefix);
+  });
 }
 
 /**
@@ -24,7 +67,7 @@ function tmpFile(prefix, moduleId = '', ext = '.tmp') {
  *
  * @param {object} config - Pipeline config
  * @param {string} tier   - 'pre-check' or 'buster'
- * @param {object} opts   - { moduleDir, moduleId, forgeDiffStat, timeoutMs, logPath }
+ * @param {object} opts   - { moduleDir, moduleId, forgeDiffStat, changedFiles, commitHash, timeoutMs, logPath }
  * @returns {{ report: object|null, error: string|null }}
  */
 export function generateLintReport(config, tier, opts = {}) {
@@ -70,15 +113,12 @@ export function generateLintReport(config, tier, opts = {}) {
     args.push('--module-path', modRelPath);
   }
 
-  if (opts.forgeDiffStat) {
-    const changedFiles = opts.forgeDiffStat
-      .split('\n')
-      .map(line => line.trim().split(/\s+\|/)[0]?.trim())
-      .filter(f => f && !f.includes('changed') && !f.includes('insertion') && !f.includes('deletion'));
-
-    if (changedFiles.length > 0) {
-      args.push('--changed-files', changedFiles.join(','));
-    }
+  const explicitChangedFiles = Array.isArray(opts.changedFiles) ? opts.changedFiles.filter(Boolean) : [];
+  const changedFiles = scopeChangedFilesToModule(opts.moduleDir, explicitChangedFiles.length > 0
+    ? explicitChangedFiles
+    : (opts.forgeDiffStat ? changedFilesFromDiffStat(opts.forgeDiffStat) : changedFilesFromCommit(config, opts.commitHash)));
+  if (changedFiles.length > 0) {
+    args.push('--changed-files', changedFiles.join(','));
   }
 
   log('STEP', `Lint report: running lint-report.ts --tier ${cliTier}`);

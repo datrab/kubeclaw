@@ -39,6 +39,7 @@ import {
   buildStageRefs,
 } from './stage-envelope-primitives.ts';
 import { countByStatus, buildGeneratorArtifactRefs } from './pipeline-runner-scheduling/snapshots.ts';
+import { resolveGateTargetModule } from './gate-target-module.ts';
 import {
   isScheduledValidatorComplete,
   markScheduledValidatorComplete,
@@ -216,6 +217,7 @@ function buildValidatorRunInput(config: AnyRecord, progress: AnyRecord, stageId:
       resume: opts.resume === true,
       hasStartedModules: opts.hasStartedModules === true,
       archEnabled: opts.archEnabled !== false,
+      ...(moduleConfig?.dir ? { moduleDir: moduleConfig.dir } : {}),
       scheduleKey: opts.scheduleKey || null,
       scheduleReason: opts.scheduleReason || null,
       orderIndex: opts.orderIndex ?? null,
@@ -597,18 +599,20 @@ function firstPendingScheduledValidator(config: AnyRecord, progress: AnyRecord, 
   return null;
 }
 
-function mandatoryReviewFullLintSchedule(config: AnyRecord, gateId: string, gate: AnyRecord): AnyRecord | null {
+function mandatoryReviewFullLintSchedule(config: AnyRecord, progress: AnyRecord, gateId: string, gate: AnyRecord): AnyRecord | null {
   if (gate?.['type'] !== 'review') return null;
   if (!resolveStageOwner(config, 'validator.run', 'validator:full_lint')) return null;
+  const targetModule = resolveGateTargetModule(progress, gateId);
   return {
     stage: 'validator:full_lint',
     timing: 'before',
     before: `gate:${gateId}`,
     ref: `gate:${gateId}`,
-    scope: 'pipeline',
+    scope: targetModule.moduleId ? 'module' : 'pipeline',
     mode: 'mandatory',
     key: `mandatory:before:gate:${gateId}:validator:full_lint`,
     gateId,
+    moduleId: targetModule.moduleId,
     scheduleReason: 'mandatory_full_lint_before_review',
     validatorConfig: {
       tier: gate?.lint_tier || 'full',
@@ -651,7 +655,7 @@ export function findNextStep(config: AnyRecord, progress: AnyRecord, deps: AnyRe
       const beforeConfigured = firstPendingScheduledValidator(config, progress, 'before', `gate:${gateId}`);
       if (beforeConfigured) return beforeConfigured;
 
-      const mandatoryFullLint = mandatoryReviewFullLintSchedule(config, gateId, gate);
+      const mandatoryFullLint = mandatoryReviewFullLintSchedule(config, progress, gateId, gate);
       if (mandatoryFullLint && !isScheduledValidatorComplete(config, String(mandatoryFullLint.key))) {
         return buildValidatorNextStep(mandatoryFullLint, mandatoryFullLint.scheduleReason);
       }

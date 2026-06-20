@@ -7,7 +7,14 @@ import {
 } from '../../../../../skills/nova/pipeline/agents/module-workers.ts';
 
 function baseConfig() {
-  return { project: 'module-workers-test', _runId: 'run-1' };
+  return {
+    project: 'module-workers-test',
+    _runId: 'run-1',
+    agents: {
+      forge: { dispatch: 'acp' },
+      buster: { dispatch: 'acp' },
+    },
+  };
 }
 
 function forgeInput(overrides = {}) {
@@ -240,6 +247,27 @@ test('module forge scopes lifecycle labels by run and attempt', async () => {
   ]);
 });
 
+test('module forge retries when startup evidence never appears during spawn', async () => {
+  const result = await runModuleForgeWorker({
+    config: baseConfig(),
+    progress: {},
+    workerInput: forgeInput(),
+    deps: {
+      spawnAgent: async () => {
+        const error = new Error('Required agent observability evidence missing');
+        error.reason = 'missing_agent_observability_startup_evidence';
+        error.observability_required = true;
+        throw error;
+      },
+      clearShutdownContext: () => {},
+    },
+  });
+
+  assert.equal(result.producerType, 'module_forge');
+  assert.equal(result.nextAction, 'retry');
+  assert.equal(result.diagnostics.metadata.reason, 'startup_evidence_missing');
+});
+
 test('module buster cleans up and returns typed block when dispatch hook rejects', async () => {
   const calls = [];
   const result = await runModuleBusterWorker({
@@ -259,6 +287,7 @@ test('module buster cleans up and returns typed block when dispatch hook rejects
         gateway_label: 'gateway-1',
         stream_log_path: '/tmp/buster.log',
       }),
+      verifyAgentAlive: async () => true,
       pollDualWithRateLimitRecovery: async () => {
         calls.push('poll');
         return { ok: true };
@@ -275,6 +304,57 @@ test('module buster cleans up and returns typed block when dispatch hook rejects
   assert.equal(result.nextAction, 'block');
   assert.equal(result.diagnostics.metadata.reason, 'dispatch_hook_failed');
   assert.deepEqual(calls, ['kill', 'save', 'clear']);
+});
+
+test('module buster retries when startup evidence never appears during spawn', async () => {
+  const result = await runModuleBusterWorker({
+    config: baseConfig(),
+    progress: {},
+    workerInput: busterInput(),
+    deps: {
+      archiveModuleCompletions: async () => ({ failed: false }),
+      spawnAgent: async () => {
+        const error = new Error('Required agent observability evidence missing');
+        error.reason = 'missing_agent_observability_startup_evidence';
+        error.observability_required = true;
+        throw error;
+      },
+      clearShutdownContext: () => {},
+    },
+  });
+
+  assert.equal(result.producerType, 'module_buster');
+  assert.equal(result.nextAction, 'retry');
+  assert.equal(result.diagnostics.metadata.reason, 'startup_evidence_missing');
+  assert.equal(result.diagnostics.metadata.failure_class, 'healthcheck_failed');
+});
+
+test('module buster retries when agent fails health check immediately after spawn', async () => {
+  const calls = [];
+  const result = await runModuleBusterWorker({
+    config: baseConfig(),
+    progress: {},
+    workerInput: busterInput(),
+    deps: {
+      archiveModuleCompletions: async () => ({ failed: false }),
+      spawnAgent: async () => ({
+        dispatch_id: 'dispatch-1',
+        run_id: 'run-1',
+        session_key: 'session-1',
+        gateway_label: 'gateway-1',
+        stream_log_path: '/tmp/buster.log',
+      }),
+      verifyAgentAlive: async () => false,
+      killAgent: async () => calls.push('kill'),
+      clearShutdownContext: () => calls.push('clear'),
+    },
+  });
+
+  assert.equal(result.producerType, 'module_buster');
+  assert.equal(result.nextAction, 'retry');
+  assert.equal(result.diagnostics.metadata.reason, 'healthcheck_failed');
+  assert.equal(result.diagnostics.metadata.failure_class, 'healthcheck_failed');
+  assert.deepEqual(calls, ['kill', 'clear']);
 });
 
 test('module buster contains thrown archive errors as typed blocks', async () => {
@@ -316,6 +396,7 @@ test('module buster returns typed block for unclassified poll failure', async ()
         gateway_label: 'gateway-1',
         stream_log_path: '/tmp/buster.log',
       }),
+      verifyAgentAlive: async () => true,
       pollDualWithRateLimitRecovery: async () => {
         calls.push('poll');
         return { ok: false, reason: 'redis_missing', status: { status: 'BLOCKED' } };
@@ -350,6 +431,7 @@ test('module buster classifies output_file identity mismatch as infrastructure b
         gateway_label: 'gateway-1',
         stream_log_path: '/tmp/buster.log',
       }),
+      verifyAgentAlive: async () => true,
       pollDualWithRateLimitRecovery: async () => {
         calls.push('poll');
         return {
@@ -392,6 +474,7 @@ test('module buster classifies output_file identity mismatch from Redis entry re
         gateway_label: 'gateway-1',
         stream_log_path: '/tmp/buster.log',
       }),
+      verifyAgentAlive: async () => true,
       pollDualWithRateLimitRecovery: async () => {
         calls.push('poll');
         return {
@@ -435,6 +518,7 @@ test('module buster classifies missing output_file from Redis entry reason as in
         gateway_label: 'gateway-1',
         stream_log_path: '/tmp/buster.log',
       }),
+      verifyAgentAlive: async () => true,
       pollDualWithRateLimitRecovery: async () => {
         calls.push('poll');
         return {
@@ -489,6 +573,7 @@ test('module buster saves stream log and clears context when finalize hook rejec
         gateway_label: 'gateway-1',
         stream_log_path: '/tmp/buster.log',
       }),
+      verifyAgentAlive: async () => true,
       pollDualWithRateLimitRecovery: async () => {
         calls.push('poll');
         return { ok: true };
@@ -521,6 +606,7 @@ test('module buster returns typed block when save stream log rejects after poll'
         gateway_label: 'gateway-1',
         stream_log_path: '/tmp/buster.log',
       }),
+      verifyAgentAlive: async () => true,
       pollDualWithRateLimitRecovery: async () => {
         calls.push('poll');
         return { ok: true };

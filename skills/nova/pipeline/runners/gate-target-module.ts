@@ -1,0 +1,42 @@
+type AnyRecord = Record<string, any>;
+
+function normalizeModuleStepId(stepId: string): string | null {
+  if (typeof stepId !== 'string' || !stepId.trim()) return null;
+  if (stepId.startsWith('gate:') || stepId.startsWith('validator:')) return null;
+  return stepId.startsWith('module:') ? stepId.slice('module:'.length) : stepId;
+}
+
+function explicitGateModuleId(progress: AnyRecord = {}, gateId = ''): string | null {
+  const gate = progress?.gates?.[gateId] || {};
+  const explicit = gate.module_id || gate.moduleId || gate.target_module_id || gate.targetModuleId || null;
+  if (typeof explicit !== 'string' || !explicit.trim()) return null;
+  return progress?.modules?.[explicit] ? explicit : null;
+}
+
+export function resolveGateTargetModule(progress: AnyRecord = {}, gateId = ''): { moduleId: string | null; moduleDir: string | null; source: string } {
+  const explicit = explicitGateModuleId(progress, gateId);
+  if (explicit) {
+    return {
+      moduleId: explicit,
+      moduleDir: progress?.modules?.[explicit]?.dir || null,
+      source: 'gate_config',
+    };
+  }
+
+  const executionOrder = Array.isArray(progress?.execution_order) ? progress.execution_order : [];
+  const gateStepId = `gate:${gateId}`;
+  const gateIndex = executionOrder.findIndex((stepId: unknown) => stepId === gateStepId);
+  if (gateIndex >= 0) {
+    for (let index = gateIndex - 1; index >= 0; index -= 1) {
+      const moduleId = normalizeModuleStepId(String(executionOrder[index] || ''));
+      if (!moduleId || !progress?.modules?.[moduleId]) continue;
+      return {
+        moduleId,
+        moduleDir: progress.modules[moduleId]?.dir || null,
+        source: 'execution_order',
+      };
+    }
+  }
+
+  return { moduleId: null, moduleDir: null, source: 'none' };
+}

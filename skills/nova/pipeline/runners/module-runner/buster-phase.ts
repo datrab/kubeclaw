@@ -49,6 +49,10 @@ function workerSummary(controlResult: AnyRecord | null = null): string | null {
   return typeof summary === 'string' && summary.trim() ? summary.trim() : null;
 }
 
+function isRetryableStartupWorkerReason(reason: string | null = null): boolean {
+  return reason === 'healthcheck_failed' || reason === 'startup_evidence_missing';
+}
+
 export async function runModuleBusterPhase({
   config,
   progress,
@@ -81,6 +85,8 @@ export async function runModuleBusterPhase({
     onPhaseStarted(_telemetryCtx(config), moduleId, 'buster', busterModel);
 
     const maxBusterCrashRetries = config.buster.max_crash_retries;
+    const agentStartupRetryBudget = config.agent_startup_retry_budget;
+    let startupRetryCount = 0;
 
     for (let busterAttempt = 1; busterAttempt <= maxBusterCrashRetries + 1; busterAttempt++) {
       const isLastBusterAttempt = busterAttempt > maxBusterCrashRetries;
@@ -107,6 +113,13 @@ export async function runModuleBusterPhase({
       const { busterWorkerControlResult, busterSessionKey } = workerOutcome;
       const busterWorkerMetadata = workerMetadata(busterWorkerControlResult);
       const busterWorkerTypedMetadata = workerTypedMetadata(busterWorkerControlResult);
+      const startupWorkerReason = busterWorkerMetadata.reason || workerOutcomeClass(busterWorkerControlResult) || busterWorkerTypedMetadata.outcomeClass || null;
+      if (isRetryableStartupWorkerReason(startupWorkerReason) && startupRetryCount < agentStartupRetryBudget) {
+        startupRetryCount += 1;
+        log('WARN', `Module ${moduleId}: Buster startup failed (${startupWorkerReason}) — retrying agent startup ${startupRetryCount}/${agentStartupRetryBudget}`);
+        busterAttempt -= 1;
+        continue;
+      }
       const redisEntry = busterWorkerMetadata.redis_entry || null;
       const typedPassBusterStatus = busterWorkerControlResult?.nextAction === 'pass' && workerOutcomeClass(busterWorkerControlResult) === 'passed'
         ? {
@@ -125,6 +138,7 @@ export async function runModuleBusterPhase({
         : typedPassBusterStatus;
       completionIdentity.dispatchId = busterWorkerMetadata.dispatch_id || completionIdentity.dispatchId;
       completionIdentity.gateway_label = busterWorkerMetadata.gateway_label || completionIdentity.gateway_label || null;
+      startupRetryCount = 0;
 
       if (busterWorkerMetadata.reason === 'spawn_failed') {
         return handleBusterSpawnFailure({
