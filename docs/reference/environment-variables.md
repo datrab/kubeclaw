@@ -22,6 +22,7 @@ Generated from: `scripts/deploy.sh`, `my-values/setup-secrets.sh`
 | `BUSTER_CODE_BUNDLE_EXPECTED_COMMIT` | Expected Buster source commit for code deploy |  |  |
 | `CODE_BUNDLE_DEFAULT_REF` | Git ref to resolve when code deploy omits an explicit expected commit (default: refs/heads/main) | `refs/heads/main` |  |
 | `CODE_BUNDLE_GITHUB_REPOSITORY` | owner/repo override for derived GitHub release bundle URLs |  |  |
+| `CODE_BUNDLE_PREFLIGHT_SKIP` | true\|false to skip bundle URL existence checks before code deploy (default: false) | `false` |  |
 | `CODE_BUNDLE_RELEASE_TAG` | GitHub release tag for published bundles (default: agent-code-bundles) | `agent-code-bundles` |  |
 | `KUBECLAW_DEPLOY_LITELLM` | true\|false (default: true) | `true` | `true` |
 | `KUBECLAW_DEPLOY_POSTGRESQL` | true\|false (default: true) | `true` | `true` |

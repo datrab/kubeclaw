@@ -68,16 +68,16 @@ RUN cd /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer \
     && rm -rf /tmp/kubeclaw-openclaw-plugins
 
 # 9. Official external OpenClaw plugins
-#    These install into OpenClaw's npm plugin layout during image build. Pod
+#    These install into a dedicated OpenClaw home slice during image build. Pod
 #    init seeds the mounted OpenClaw home from this baked cache, avoiding first
-#    boot network installs.
+#    boot network installs and preserving the plugin metadata OpenClaw expects.
 RUN mkdir -p /tmp/openclaw-plugin-home \
     && HOME=/tmp/openclaw-plugin-home openclaw plugins install @openclaw/acpx \
     && HOME=/tmp/openclaw-plugin-home openclaw plugins install @openclaw/discord \
-    && mkdir -p /opt/openclaw-plugin-npm \
-    && cp -a /tmp/openclaw-plugin-home/.openclaw/npm/. /opt/openclaw-plugin-npm/ \
-    && cd /opt/openclaw-plugin-npm \
-    && find . -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}' > /opt/openclaw-plugin-npm/.kubeclaw-plugin-cache-version \
+    && mkdir -p /opt/openclaw-plugin-home \
+    && cp -a /tmp/openclaw-plugin-home/.openclaw/. /opt/openclaw-plugin-home/ \
+    && cd /opt/openclaw-plugin-home/npm \
+    && find . -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}' > /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version \
     && rm -rf /tmp/openclaw-plugin-home
 
 # 10. Environment

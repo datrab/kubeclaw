@@ -248,26 +248,60 @@ spec:
               fi
 
               echo "==> 4a. OpenClaw Plugin Cache"
-              if [ -d /opt/openclaw-plugin-npm ]; then
+              if [ -d /opt/openclaw-plugin-home ]; then
                 mkdir -p /config/npm
+                mkdir -p /config/state
                 IMAGE_PLUGIN_CACHE_VERSION=""
                 CONFIG_PLUGIN_CACHE_VERSION=""
-                if [ -f /opt/openclaw-plugin-npm/.kubeclaw-plugin-cache-version ]; then
-                  IMAGE_PLUGIN_CACHE_VERSION="$(cat /opt/openclaw-plugin-npm/.kubeclaw-plugin-cache-version 2>/dev/null || true)"
+                if [ -f /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version ]; then
+                  IMAGE_PLUGIN_CACHE_VERSION="$(cat /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version 2>/dev/null || true)"
                 fi
-                if [ -f /config/npm/.kubeclaw-plugin-cache-version ]; then
-                  CONFIG_PLUGIN_CACHE_VERSION="$(cat /config/npm/.kubeclaw-plugin-cache-version 2>/dev/null || true)"
+                if [ -f /config/.kubeclaw-plugin-cache-version ]; then
+                  CONFIG_PLUGIN_CACHE_VERSION="$(cat /config/.kubeclaw-plugin-cache-version 2>/dev/null || true)"
                 fi
                 if [ -n "$IMAGE_PLUGIN_CACHE_VERSION" ] && [ "$IMAGE_PLUGIN_CACHE_VERSION" = "$CONFIG_PLUGIN_CACHE_VERSION" ]; then
                   echo "    OpenClaw external plugin cache already current; skipping reseed"
                 else
                   rm -rf /config/npm/*
                   find /config/npm -mindepth 1 -maxdepth 1 -name '.*' -exec rm -rf {} +
-                  cp -a /opt/openclaw-plugin-npm/. /config/npm/
+                  rm -rf /config/state/*
+                  find /config/state -mindepth 1 -maxdepth 1 -name '.*' -exec rm -rf {} +
+                  cp -a /opt/openclaw-plugin-home/npm/. /config/npm/
+                  if [ -d /opt/openclaw-plugin-home/state ]; then
+                    cp -a /opt/openclaw-plugin-home/state/. /config/state/
+                  fi
+                  if [ -f /opt/openclaw-plugin-home/openclaw.json ] && [ -f /config/openclaw.json ]; then
+                    node <<'NODE'
+              const fs = require('fs');
+              const bakedPath = '/opt/openclaw-plugin-home/openclaw.json';
+              const configPath = '/config/openclaw.json';
+              const baked = JSON.parse(fs.readFileSync(bakedPath, 'utf8'));
+              const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+              const bakedEntries = baked?.plugins?.entries && typeof baked.plugins.entries === 'object'
+                ? baked.plugins.entries
+                : {};
+              config.plugins = config.plugins || {};
+              config.plugins.entries = config.plugins.entries || {};
+              for (const [pluginId, bakedEntry] of Object.entries(bakedEntries)) {
+                const currentEntry = config.plugins.entries[pluginId];
+                config.plugins.entries[pluginId] = {
+                  ...(bakedEntry && typeof bakedEntry === 'object' ? bakedEntry : {}),
+                  ...(currentEntry && typeof currentEntry === 'object' ? currentEntry : {}),
+                };
+              }
+              fs.writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
+              console.log('    Merged OpenClaw plugin entries from image cache into persistent config');
+              NODE
+                  fi
+                  if [ -f /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version ]; then
+                    cp -f /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version /config/.kubeclaw-plugin-cache-version
+                  else
+                    rm -f /config/.kubeclaw-plugin-cache-version
+                  fi
                   echo "    Seeded OpenClaw external plugins from image cache"
                 fi
               else
-                echo "    WARNING: baked OpenClaw plugin npm cache not found"
+                echo "    WARNING: baked OpenClaw plugin home cache not found"
               fi
               mkdir -p /config/agents/main/sessions
 

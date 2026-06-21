@@ -29,6 +29,7 @@
 #   CODE_BUNDLE_GITHUB_REPOSITORY      owner/repo override for derived GitHub release bundle URLs
 #   CODE_BUNDLE_DEFAULT_REF            Git ref to resolve when code deploy omits an explicit expected commit (default: refs/heads/main)
 #   CODE_BUNDLE_RELEASE_TAG            GitHub release tag for published bundles (default: agent-code-bundles)
+#   CODE_BUNDLE_PREFLIGHT_SKIP         true|false to skip bundle URL existence checks before code deploy (default: false)
 #   NOVA_CODE_BUNDLE_ARCHIVE_URL       Resolved Nova bundle archive URL for code deploy
 #   NOVA_CODE_BUNDLE_EXPECTED_COMMIT   Expected Nova source commit for code deploy
 #   BUSTER_CODE_BUNDLE_ARCHIVE_URL     Resolved Buster bundle archive URL for code deploy
@@ -69,6 +70,7 @@ AGENT_HELM_TIMEOUT="${AGENT_HELM_TIMEOUT:-45m}"
 AGENT_ROLLOUT_TIMEOUT="${AGENT_ROLLOUT_TIMEOUT:-45m}"
 CODE_BUNDLE_DEFAULT_REF="${CODE_BUNDLE_DEFAULT_REF:-refs/heads/main}"
 CODE_BUNDLE_RELEASE_TAG="${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}"
+CODE_BUNDLE_PREFLIGHT_SKIP="${CODE_BUNDLE_PREFLIGHT_SKIP:-false}"
 
 export NAMESPACE
 export KUBECLAW_DEPLOY_POSTGRESQL
@@ -345,6 +347,50 @@ default_bundle_expected_commit() {
   fi
 
   return 1
+}
+
+verify_bundle_archive_url() {
+  local role="$1"
+  local archive_url="$2"
+  local expected_commit="$3"
+  local auth_secret="${4:-}"
+
+  if [[ "${CODE_BUNDLE_PREFLIGHT_SKIP,,}" == "true" ]]; then
+    warn "Skipping ${role} bundle archive preflight because CODE_BUNDLE_PREFLIGHT_SKIP=true."
+    return 0
+  fi
+
+  if [[ -n "$auth_secret" ]]; then
+    warn "Skipping ${role} bundle archive preflight because runtime auth uses Kubernetes Secret ${auth_secret}."
+    return 0
+  fi
+
+  if ! command -v curl >/dev/null 2>&1; then
+    warn "Skipping ${role} bundle archive preflight because curl is not installed."
+    return 0
+  fi
+
+  local status=""
+  local method="HEAD"
+  if ! status="$(curl -fsSLI -o /dev/null -w '%{http_code}' "$archive_url" 2>/dev/null)"; then
+    method="GET"
+    if ! status="$(curl -fsSL -o /dev/null -w '%{http_code}' "$archive_url" 2>/dev/null)"; then
+      err "${role} code bundle is not available: ${archive_url}"
+      err "Expected published asset: ${role}-${expected_commit}.tgz under release tag ${CODE_BUNDLE_RELEASE_TAG}"
+      err "Push the commit to main and wait for the bundle publication workflow, or set $(tr '[:lower:]' '[:upper:]' <<< "$role")_CODE_BUNDLE_ARCHIVE_URL explicitly."
+      return 1
+    fi
+  fi
+
+  case "$status" in
+    2*|3*)
+      return 0
+      ;;
+    *)
+      err "${role} code bundle preflight returned HTTP ${status} via ${method}: ${archive_url}"
+      return 1
+      ;;
+  esac
 }
 
 bundle_env_for_role() {
@@ -775,6 +821,7 @@ deploy_agent() {
       err "${role} code deploy requires $(tr '[:lower:]' '[:upper:]' <<< "$role")_CODE_BUNDLE_ARCHIVE_URL or a derivable GitHub repository"
       return 1
     fi
+    verify_bundle_archive_url "$role" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_auth_secret"
   fi
 
   if [[ -n "$image_repo" || -n "$image_tag" || -n "$controller_image_repo" || -n "$controller_image_tag" || "$disable_pull_secrets" == "1" || "$mode" == "code" ]]; then

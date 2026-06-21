@@ -1,12 +1,7 @@
 name: Build Runtime Images And Skill Bundles
 on:
-  # Rebuild when Dockerfiles, skills, or processor change
   push:
     branches: [main]
-    paths:
-      - 'docker/**'
-      - 'skills/**'
-      - 'scripts/buster-namespace-controller.mjs'
   # Nightly check for base image updates (OpenClaw releases)
   schedule:
     - cron: '0 3 * * *'  # 3am UTC daily
@@ -24,6 +19,28 @@ env:
   NAMESPACE_CONTROLLER_IMAGE: ghcr.io/${{ github.repository_owner }}/kubeclaw-namespace-controller
   PRISM_IMAGE: ghcr.io/${{ github.repository_owner }}/kubeclaw-prism-preview
 jobs:
+  detect-build-inputs:
+    name: Detect Image Build Inputs
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    outputs:
+      image_inputs_changed: ${{ steps.filter.outputs.image_inputs }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Detect image-affecting changes
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            image_inputs:
+              - 'docker/**'
+              - 'skills/**'
+              - 'plugins/openclaw-agent-observer/**'
+              - 'scripts/buster-namespace-controller.mjs'
+              - 'scripts/package-agent-skill-bundle.sh'
   check-base-image:
     name: Check for base image updates
     runs-on: ubuntu-latest
@@ -53,13 +70,13 @@ jobs:
   build:
     name: Build & Push
     runs-on: ubuntu-latest
-    needs: [check-base-image]
-    # Run if: push, manual trigger, or base image changed
+    needs: [detect-build-inputs, check-base-image]
+    # Run if: manual trigger, base image changed on schedule, or image inputs changed on push
     if: |
       always() &&
-      (github.event_name == 'push' ||
-       github.event_name == 'workflow_dispatch' ||
-       needs.check-base-image.outputs.changed == 'true')
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event_name == 'schedule' && needs.check-base-image.outputs.changed == 'true') ||
+       (github.event_name == 'push' && needs.detect-build-inputs.outputs.image_inputs_changed == 'true'))
     permissions:
       contents: read
       packages: write
@@ -117,12 +134,11 @@ jobs:
   bundle-skills:
     name: Package & Publish Skill Bundles
     runs-on: ubuntu-latest
-    needs: [check-base-image]
+    needs: [detect-build-inputs, check-base-image]
     if: |
       always() &&
       (github.event_name == 'push' ||
-       github.event_name == 'workflow_dispatch' ||
-       needs.check-base-image.outputs.changed == 'true')
+       github.event_name == 'workflow_dispatch')
     permissions:
       contents: write
     env:

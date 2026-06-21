@@ -107,6 +107,10 @@
       "description": "GitHub release tag for published bundles (default: agent-code-bundles)"
     },
     {
+      "name": "CODE_BUNDLE_PREFLIGHT_SKIP",
+      "description": "true|false to skip bundle URL existence checks before code deploy (default: false)"
+    },
+    {
       "name": "NOVA_CODE_BUNDLE_ARCHIVE_URL",
       "description": "Resolved Nova bundle archive URL for code deploy"
     },
@@ -170,6 +174,7 @@
     "CODE_BUNDLE_GITHUB_REPOSITORY": null,
     "CODE_BUNDLE_DEFAULT_REF": "refs/heads/main",
     "CODE_BUNDLE_RELEASE_TAG": "agent-code-bundles",
+    "CODE_BUNDLE_PREFLIGHT_SKIP": "false",
     "NOVA_CODE_BUNDLE_ARCHIVE_URL": null,
     "NOVA_CODE_BUNDLE_EXPECTED_COMMIT": null,
     "BUSTER_CODE_BUNDLE_ARCHIVE_URL": null,
@@ -204,6 +209,7 @@
     "derive_github_repository",
     "default_bundle_archive_url",
     "default_bundle_expected_commit",
+    "verify_bundle_archive_url",
     "bundle_env_for_role",
     "resolve_deploy_targets",
     "is_valid_namespace",
@@ -242,12 +248,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 450,
-    "secrets": 494,
-    "tailscale": 553,
-    "infra": 644,
-    "agents": 831,
-    "smoke": 900,
-    "teardown": 1039
+    "setup": 496,
+    "secrets": 540,
+    "tailscale": 599,
+    "infra": 690,
+    "agents": 878,
+    "smoke": 947,
+    "teardown": 1086
   }
 }

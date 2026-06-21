@@ -682,6 +682,7 @@ assert.equal(rendered.includes('sed -i "s|__DISCORD_TOKEN__|'), false, 'Rendered
 assertIncludes(rendered, 'openclaw.json source normalized with canonical refs and SecretRefs', 'Rendered init container must normalize persistent openclaw.json with canonical model refs and SecretRefs');
 assertIncludes(rendered, '.kubeclaw-plugin-cache-version', 'Rendered init container must compare a baked plugin-cache version stamp');
 assertIncludes(rendered, 'OpenClaw external plugin cache already current; skipping reseed', 'Rendered init container must skip plugin cache reseeding when the baked cache is unchanged');
+assertIncludes(rendered, 'Merged OpenClaw plugin entries from image cache into persistent config', 'Rendered init container must merge baked plugin entries into persistent openclaw.json during reseed');
 assertIncludes(rendered, 'Seeded OpenClaw external plugins from image cache', 'Rendered init container must still seed configured external plugins when the baked cache changes');
 assertIncludes(rendered, 'openclaw.json mirrored into runtime config', 'Rendered init container must mirror OpenClaw config into runtime diagnostics');
 assertIncludes(rendered, 'chmod 700 /config', 'Rendered init container must harden the OpenClaw state directory permissions');
@@ -963,6 +964,7 @@ assertIncludes(deploymentTemplate, 'subPath: swarm.config.json', 'Deployment tem
 assertIncludes(deploymentTemplate, 'openclaw.json source normalized with canonical refs and SecretRefs', 'Deployment template must normalize persistent openclaw.json with canonical model refs and SecretRefs');
 assertIncludes(deploymentTemplate, '.kubeclaw-plugin-cache-version', 'Deployment template must compare a baked plugin-cache version stamp');
 assertIncludes(deploymentTemplate, 'OpenClaw external plugin cache already current; skipping reseed', 'Deployment template must skip plugin cache reseeding when the baked cache is unchanged');
+assertIncludes(deploymentTemplate, 'Merged OpenClaw plugin entries from image cache into persistent config', 'Deployment template must merge baked plugin entries into persistent openclaw.json during reseed');
 assertIncludes(deploymentTemplate, 'Seeded OpenClaw external plugins from image cache', 'Deployment template must still seed configured external plugins from the baked image cache when needed');
 assertIncludes(deploymentTemplate, 'openclaw.json mirrored into runtime config', 'Deployment template must mirror openclaw.json into the runtime diagnostics surface');
 assertIncludes(deploymentTemplate, 'chmod 700 /config', 'Deployment template must harden the OpenClaw state directory permissions');
@@ -990,6 +992,9 @@ assertIncludes(imageBuildWorkflow, 'docker/build-push-action@v5', 'Image-build w
 assertIncludes(imageBuildWorkflow, 'image_suffix: kubeclaw-general', 'Image-build workflow must publish the kubeclaw-general image');
 assertIncludes(imageBuildWorkflow, 'docker/Dockerfile.namespace-controller', 'Image-build workflow must build the namespace controller image from docker/Dockerfile.namespace-controller');
 assertIncludes(imageBuildWorkflow, 'image_suffix: kubeclaw-namespace-controller', 'Image-build workflow must publish the kubeclaw-namespace-controller image');
+assertIncludes(imageBuildWorkflow, 'dorny/paths-filter@v3', 'Build workflow must detect image-affecting changes without suppressing bundle publication on unrelated pushes');
+assertIncludes(imageBuildWorkflow, 'plugins/openclaw-agent-observer/**', 'Build workflow change detection must include the baked observer plugin source');
+assertIncludes(imageBuildWorkflow, 'scripts/package-agent-skill-bundle.sh', 'Build workflow change detection must include the bundle packager script');
 assertIncludes(imageBuildWorkflow, 'Package & Publish Skill Bundles', 'Build workflow must include the durable skill-bundle publication job');
 assertIncludes(imageBuildWorkflow, './scripts/package-agent-skill-bundle.sh nova', 'Build workflow must package the Nova /app/skills bundle');
 assertIncludes(imageBuildWorkflow, './scripts/package-agent-skill-bundle.sh buster', 'Build workflow must package the Buster /app/skills bundle');
@@ -1007,7 +1012,7 @@ for (const [label, dockerfile] of [
 ]) {
   assertIncludes(dockerfile, 'openclaw plugins install @openclaw/acpx', `${label} must bake the official ACPX plugin into the image cache`);
   assertIncludes(dockerfile, 'openclaw plugins install @openclaw/discord', `${label} must bake the official Discord plugin into the image cache`);
-  assertIncludes(dockerfile, '/opt/openclaw-plugin-npm', `${label} must expose the baked OpenClaw npm plugin cache for init seeding`);
+  assertIncludes(dockerfile, '/opt/openclaw-plugin-home', `${label} must expose the baked OpenClaw plugin home cache for init seeding`);
   assertIncludes(dockerfile, '.kubeclaw-plugin-cache-version', `${label} must write a baked plugin cache version stamp for incremental init seeding`);
 }
 assertIncludes(namespaceControllerDockerfile, 'FROM node:22-bookworm-slim', 'Namespace controller Dockerfile must use a lightweight Node image');
@@ -1104,6 +1109,9 @@ assertIncludes(deployScript, 'git -C "$REPO_DIR" ls-remote --exit-code origin "$
 assertIncludes(deployScript, 'Resolved ${role} code bundle commit from ${CODE_BUNDLE_DEFAULT_REF}', 'Deploy script must report which default ref supplied the code bundle commit');
 assertIncludes(deployScript, 'CODE_BUNDLE_RELEASE_TAG="${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}"', 'Deploy script must expose the stable default bundle release tag');
 assertIncludes(deployScript, 'CODE_BUNDLE_DEFAULT_REF="${CODE_BUNDLE_DEFAULT_REF:-refs/heads/main}"', 'Deploy script must default omitted code deploy commits to the latest remote main ref');
+assertIncludes(deployScript, 'verify_bundle_archive_url() {', 'Deploy script must preflight bundle archive availability before rolling a code deploy');
+assertIncludes(deployScript, 'method="GET"', 'Deploy script bundle preflight must fall back to a real GET when HEAD is not accepted');
+assertIncludes(deployScript, 'CODE_BUNDLE_PREFLIGHT_SKIP', 'Deploy script must expose a controlled bundle preflight escape hatch');
 assertIncludes(deployScript, 'CODE_BUNDLE_GITHUB_REPOSITORY', 'Deploy script must advertise the GitHub repository override for derived bundle URLs');
 assertIncludes(deployScript, 'NOVA_CODE_BUNDLE_ARCHIVE_URL', 'Deploy script must advertise the Nova code bundle deploy input');
 assertIncludes(deployScript, 'BUSTER_CODE_BUNDLE_ARCHIVE_URL', 'Deploy script must advertise the Buster code bundle deploy input');
