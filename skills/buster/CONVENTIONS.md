@@ -105,38 +105,38 @@ No "it seems broken". Exact data.
 
 ## Browser Testing
 
-`agent-browser` is the primary tool for interactive browser testing inside the sandbox.
+Use Playwright against the sandbox Chromium install for browser testing inside the sandbox.
 
-### Common commands
+### Common patterns
 
-| Command | Description |
-|---|---|
-| `agent-browser open <url>` | Navigate to a URL |
-| `agent-browser snapshot -i` | Print accessible element tree (for finding selectors) |
-| `agent-browser click <selector>` | Click an element |
-| `agent-browser fill <selector> <value>` | Fill an input field |
-| `agent-browser get <selector>` | Get element text/value |
-| `agent-browser wait <selector>` | Wait for element to appear |
-| `agent-browser errors` | List JS runtime errors (React crashes, undefined access) |
-| `agent-browser console` | Show browser console output |
-| `agent-browser screenshot` | Capture a screenshot |
-| `agent-browser diff <baseline>` | Visual diff against a baseline image |
-| `agent-browser eval <js>` | Evaluate JavaScript in the page context |
+Use Playwright when you need deterministic browser checks: rendered text, click flows, console/runtime errors, screenshots, and regression assertions.
 
-### When to use agent-browser vs Playwright
+Useful tactics:
 
-- **agent-browser** — preferred for interactive exploration: checking what rendered, clicking around, inspecting errors, verifying visible text. No script required.
-- **Playwright** — use when you need deterministic programmatic scripting: loops, complex assertions, multi-step flows that must be reproducible as a `.spec.js` test.
+- capture `page.on('console', ...)` and `page.on('pageerror', ...)` before navigation
+- use `page.locator(...)` plus `expect(...)` for stable assertions
+- save screenshots when layout or rendering is part of the check
+- keep one-off repro scripts small and delete them when they are no longer useful
 
 ### Checking for JS errors
 
-After navigating to a page, always run `agent-browser errors` to surface React crashes, undefined-property accesses, and other runtime failures that may not be visible in the UI.
+After navigating to a page, always inspect Playwright `console` and `pageerror` events to surface React crashes, undefined-property accesses, and other runtime failures that may not be visible in the UI.
 
 ```bash
-agent-browser open http://localhost:3000/dashboard
-agent-browser errors       # any React or JS errors?
-agent-browser console      # any console.error / warnings?
-agent-browser snapshot -i  # inspect rendered elements
+node - <<'EOF'
+const { chromium } = require('playwright');
+
+(async () => {
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage();
+  page.on('console', (msg) => console.log('[console]', msg.type(), msg.text()));
+  page.on('pageerror', (err) => console.log('[pageerror]', err.message));
+  await page.goto('http://localhost:3000/dashboard', { waitUntil: 'networkidle' });
+  console.log(await page.locator('body').innerText());
+  await page.screenshot({ path: '/tmp/dashboard.png', fullPage: true });
+  await browser.close();
+})();
+EOF
 ```
 
 ---

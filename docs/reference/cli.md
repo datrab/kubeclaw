@@ -20,7 +20,7 @@ Generated from: `scripts/deploy.sh`
 | `./scripts/deploy.sh infra` | Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM |
 | `./scripts/deploy.sh tailscale` | Deploy Tailscale Kubernetes Operator |
 | `./scripts/deploy.sh agents` | Deploy agents (Nova + Buster) |
-| `./scripts/deploy.sh agent <name>` | Deploy single agent (nova\|buster) |
+| `./scripts/deploy.sh agent <name>` | [--with-code]  Deploy single agent (nova\|buster), optionally followed by code deploy |
 | `./scripts/deploy.sh image` | Deploy both agents using image/runtime values |
 | `./scripts/deploy.sh image <name>` | Deploy one agent using image/runtime values |
 | `./scripts/deploy.sh smoke` | Run pod-level smoke checks for Nova + Buster |

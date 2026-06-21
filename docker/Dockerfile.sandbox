@@ -45,11 +45,6 @@ RUN npx playwright install --with-deps chromium \
     && echo "  ✅ Playwright browsers installed at /ms-playwright" \
     && ls /ms-playwright/
 
-# agent-browser — CLI browser automation for Buster subagent
-RUN npm install -g agent-browser \
-    && agent-browser install --with-deps \
-    && echo "  ✅ agent-browser installed"
-
 # k6 load testing tool
 ARG K6_VERSION=v0.54.0
 RUN set -eux; \

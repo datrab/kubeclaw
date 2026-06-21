@@ -25,7 +25,7 @@
     },
     {
       "invocation": "./scripts/deploy.sh agent <name>",
-      "description": "Deploy single agent (nova|buster)"
+      "description": "[--with-code]  Deploy single agent (nova|buster), optionally followed by code deploy"
     },
     {
       "invocation": "./scripts/deploy.sh image",
@@ -227,6 +227,7 @@
     "cmd_agents",
     "cmd_image",
     "cmd_code",
+    "cmd_agent",
     "cmd_status",
     "cmd_smoke_agent",
     "cmd_smoke",
@@ -253,7 +254,7 @@
     "tailscale": 599,
     "infra": 690,
     "agents": 878,
-    "smoke": 947,
-    "teardown": 1086
+    "smoke": 979,
+    "teardown": 1118
   }
 }

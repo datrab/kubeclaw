@@ -1024,7 +1024,6 @@ assert.equal(
   'Namespace controller Dockerfile must not inherit the OpenClaw runtime image',
 );
 assertIncludes(sandboxDockerfile, 'RUN npm install -g lighthouse serve playwright', 'Sandbox Dockerfile must fail closed when browser test tool installation fails');
-assertIncludes(sandboxDockerfile, '&& agent-browser install --with-deps', 'Sandbox Dockerfile must fail closed when agent-browser dependency installation fails');
 assertLine(dockerignore, '**', 'Docker build context must default-deny repository files');
 assertLine(dockerignore, '!docker/Dockerfile.namespace-controller', 'Docker build context must include the namespace controller Dockerfile');
 assertLine(dockerignore, '!skills/**', 'Docker build context must include runtime skills');
@@ -1098,8 +1097,11 @@ assertIncludes(deployScript, 'archiveUrl: "$archive_url"', 'Deploy script code b
 assertIncludes(deployScript, 'expectedCommit: "$expected_commit"', 'Deploy script code bundle overrides must pin the expected commit');
 assertIncludes(deployScript, 'bundle_env_for_role() {', 'Deploy script must resolve per-agent code bundle env surfaces');
 assertIncludes(deployScript, 'resolve_deploy_targets() {', 'Deploy script must define a shared target resolver for image and code deploys');
+assertIncludes(deployScript, 'cmd_agent() {', 'Deploy script must expose a dedicated single-agent deploy surface');
 assertIncludes(deployScript, 'cmd_image() {', 'Deploy script must expose a dedicated image deploy surface');
 assertIncludes(deployScript, 'cmd_code() {', 'Deploy script must expose a dedicated code deploy surface');
+assertIncludes(deployScript, '--with-code', 'Deploy script must support an explicit combined agent deploy flag');
+assertIncludes(deployScript, 'cmd_smoke_agent "$role"', 'Combined agent deploys must smoke-check the target before and after code rollout');
 assertIncludes(deployScript, 'derive_github_repository() {', 'Deploy script must derive the GitHub repository for bundle release URLs when possible');
 assertIncludes(deployScript, 'repo="${repo#ssh://git@github.com/}"', 'Deploy script must support ssh:// GitHub remotes when deriving bundle release URLs');
 assertIncludes(deployScript, '([^/@]+@)?github\\.com/', 'Deploy script must support authenticated HTTPS GitHub remotes when deriving bundle release URLs');

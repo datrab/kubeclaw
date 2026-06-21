@@ -10,7 +10,7 @@
 #   ./deploy.sh infra              Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM
 #   ./deploy.sh tailscale          Deploy Tailscale Kubernetes Operator
 #   ./deploy.sh agents             Deploy agents (Nova + Buster)
-#   ./deploy.sh agent <name>       Deploy single agent (nova|buster)
+#   ./deploy.sh agent <name> [--with-code]  Deploy single agent (nova|buster), optionally followed by code deploy
 #   ./deploy.sh image              Deploy both agents using image/runtime values
 #   ./deploy.sh image <name>       Deploy one agent using image/runtime values
 #   ./deploy.sh code [target]      Deploy code bundles for all agents or one target
@@ -907,6 +907,38 @@ cmd_code() {
   done
 }
 
+cmd_agent() {
+  local role="${1:-}"
+  local with_code=0
+  local extra_arg="${2:-}"
+
+  if [[ -z "$role" ]]; then
+    err "Usage: $0 agent <nova|buster> [--with-code]"
+    return 1
+  fi
+
+  case "$extra_arg" in
+    "")
+      ;;
+    --with-code)
+      with_code=1
+      ;;
+    *)
+      err "Usage: $0 agent <nova|buster> [--with-code]"
+      return 1
+      ;;
+  esac
+
+  header "Agent Deploy: ${role}"
+  deploy_agent "$role" image
+
+  if [[ "$with_code" == "1" ]]; then
+    cmd_smoke_agent "$role"
+    deploy_agent "$role" code
+    cmd_smoke_agent "$role"
+  fi
+}
+
 # ─── Status ──────────────────────────────────────────────────────────────
 
 cmd_status() {
@@ -1127,11 +1159,7 @@ case "${1:-}" in
     cmd_agents
     ;;
   agent)
-    if [[ -z "${2:-}" ]]; then
-      err "Usage: $0 agent <nova|buster>"
-      exit 1
-    fi
-    deploy_agent "$2" image
+    cmd_agent "${2:-}" "${3:-}"
     ;;
   image)
     cmd_image "${2:-both}"
@@ -1180,7 +1208,8 @@ case "${1:-}" in
     echo "  infra              Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM"
     echo "  tailscale          Deploy Tailscale Kubernetes Operator"
     echo "  agents             Deploy agents (Nova + Buster) using image/runtime values"
-    echo "  agent <name>       Deploy single agent (nova|buster) using image/runtime values"
+    echo "  agent <name> [--with-code]  Deploy single agent using image/runtime values"
+    echo "                    Add --with-code to also smoke, deploy code, and smoke again"
     echo "  image [target]     Image deploy for nova|buster|both (default: both)"
     echo "  code [target]      Code-bundle deploy for all agents by default, or one target (nova|buster)"
     echo "  all                Full deployment (setup + infra + agents)"
