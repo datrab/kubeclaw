@@ -685,12 +685,59 @@ spec:
               const { Readable } = require('stream');
               const { pipeline } = require('stream/promises');
 
+              function parseGitHubReleaseUrl(raw) {
+                try {
+                  const parsed = new URL(raw);
+                  const match = parsed.pathname.match(/^\/([^/]+)\/([^/]+)\/releases\/download\/([^/]+)\/([^/]+)$/);
+                  if (!match) return null;
+                  return {
+                    owner: match[1],
+                    repo: match[2],
+                    tag: decodeURIComponent(match[3]),
+                    assetName: decodeURIComponent(match[4]),
+                  };
+                } catch {
+                  return null;
+                }
+              }
+
               async function main() {
-                const url = process.env.CODE_BUNDLE_ARCHIVE_URL;
+                let url = process.env.CODE_BUNDLE_ARCHIVE_URL;
                 const output = process.env.CODE_BUNDLE_ARCHIVE_PATH;
                 const token = process.env.CODE_BUNDLE_AUTH_TOKEN || '';
-                const headers = {};
-                if (token) headers.Authorization = `Bearer ${token}`;
+                let headers = {};
+
+                const releaseInfo = token ? parseGitHubReleaseUrl(url) : null;
+                if (releaseInfo) {
+                  const apiHeaders = {
+                    Authorization: `Bearer ${token}`,
+                    Accept: 'application/vnd.github+json',
+                    'X-GitHub-Api-Version': '2022-11-28',
+                  };
+                  const releaseResponse = await fetch(
+                    `https://api.github.com/repos/${releaseInfo.owner}/${releaseInfo.repo}/releases/tags/${encodeURIComponent(releaseInfo.tag)}`,
+                    { headers: apiHeaders, redirect: 'follow' },
+                  );
+                  if (!releaseResponse.ok) {
+                    throw new Error(`bundle release lookup failed with HTTP ${releaseResponse.status}`);
+                  }
+                  const release = await releaseResponse.json();
+                  const asset = Array.isArray(release.assets)
+                    ? release.assets.find((entry) => entry && entry.name === releaseInfo.assetName)
+                    : null;
+                  if (!asset?.url) {
+                    throw new Error(`bundle release asset not found: ${releaseInfo.assetName}`);
+                  }
+                  url = asset.url;
+                  headers = {
+                    Authorization: `Bearer ${token}`,
+                    Accept: 'application/octet-stream',
+                    'X-GitHub-Api-Version': '2022-11-28',
+                  };
+                } else if (token) {
+                  headers.Authorization = `Bearer ${token}`;
+                }
+
                 const response = await fetch(url, { headers, redirect: 'follow' });
                 if (!response.ok) {
                   throw new Error(`bundle download failed with HTTP ${response.status}`);
