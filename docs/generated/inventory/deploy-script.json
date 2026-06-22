@@ -206,6 +206,8 @@
     "restart_agent_deployment",
     "append_image_override_file",
     "append_code_bundle_override_file",
+    "yaml_get_section_key",
+    "yaml_get_nested_section_key",
     "derive_github_repository_from_image_repository",
     "derive_github_repository",
     "default_bundle_archive_url",
@@ -250,12 +252,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 515,
-    "secrets": 559,
-    "tailscale": 618,
-    "infra": 709,
-    "agents": 897,
-    "smoke": 998,
-    "teardown": 1137
+    "setup": 595,
+    "secrets": 639,
+    "tailscale": 698,
+    "infra": 789,
+    "agents": 992,
+    "smoke": 1093,
+    "teardown": 1232
   }
 }

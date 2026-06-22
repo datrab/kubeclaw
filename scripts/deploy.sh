@@ -284,6 +284,86 @@ EOF
   fi
 }
 
+yaml_get_section_key() {
+  local file="$1"
+  local section="$2"
+  local key="$3"
+
+  awk -v section="$section" -v key="$key" '
+    function trim(value) {
+      sub(/^[[:space:]]+/, "", value)
+      sub(/[[:space:]]+$/, "", value)
+      gsub(/^"/, "", value)
+      gsub(/"$/, "", value)
+      gsub(/^'\''/, "", value)
+      gsub(/'\''$/, "", value)
+      return value
+    }
+
+    $0 ~ ("^" section ":[[:space:]]*$") {
+      in_section = 1
+      next
+    }
+
+    in_section && $0 ~ /^[^[:space:]]/ {
+      in_section = 0
+    }
+
+    in_section && $0 ~ ("^[[:space:]]{2}" key ":[[:space:]]*") {
+      value = $0
+      sub("^[[:space:]]{2}" key ":[[:space:]]*", "", value)
+      print trim(value)
+      exit
+    }
+  ' "$file"
+}
+
+yaml_get_nested_section_key() {
+  local file="$1"
+  local section="$2"
+  local subsection="$3"
+  local key="$4"
+
+  awk -v section="$section" -v subsection="$subsection" -v key="$key" '
+    function trim(value) {
+      sub(/^[[:space:]]+/, "", value)
+      sub(/[[:space:]]+$/, "", value)
+      gsub(/^"/, "", value)
+      gsub(/"$/, "", value)
+      gsub(/^'\''/, "", value)
+      gsub(/'\''$/, "", value)
+      return value
+    }
+
+    $0 ~ ("^" section ":[[:space:]]*$") {
+      in_section = 1
+      in_subsection = 0
+      next
+    }
+
+    in_section && $0 ~ /^[^[:space:]]/ {
+      in_section = 0
+      in_subsection = 0
+    }
+
+    in_section && $0 ~ ("^[[:space:]]{2}" subsection ":[[:space:]]*$") {
+      in_subsection = 1
+      next
+    }
+
+    in_section && in_subsection && $0 ~ /^[[:space:]]{2}[A-Za-z0-9_-]+:[[:space:]]*$/ && $0 !~ ("^[[:space:]]{2}" subsection ":[[:space:]]*$") {
+      in_subsection = 0
+    }
+
+    in_section && in_subsection && $0 ~ ("^[[:space:]]{4}" key ":[[:space:]]*") {
+      value = $0
+      sub("^[[:space:]]{4}" key ":[[:space:]]*", "", value)
+      print trim(value)
+      exit
+    }
+  ' "$file"
+}
+
 derive_github_repository_from_image_repository() {
   local image_repository="${1:-}"
 
@@ -817,12 +897,27 @@ deploy_agent() {
       ;;
   esac
 
+  if [[ -z "$image_repo" ]]; then
+    image_repo="$(yaml_get_section_key "$values_file" image repository)"
+  fi
+
   if [[ "$mode" == "code" ]]; then
     bundle_expected_commit="$(bundle_env_for_role "$role" expected_commit)"
     bundle_contract_version="$(bundle_env_for_role "$role" contract_version)"
     bundle_auth_secret="$(bundle_env_for_role "$role" auth_secret)"
     bundle_auth_key="$(bundle_env_for_role "$role" auth_key)"
     bundle_archive_url="$(bundle_env_for_role "$role" archive_url)"
+
+    if [[ -z "$bundle_auth_secret" ]]; then
+      bundle_auth_secret="$(yaml_get_nested_section_key "$values_file" codeBundle auth existingSecret)"
+    fi
+    if [[ -z "$bundle_auth_key" || "$bundle_auth_key" == "token" ]]; then
+      local values_auth_key=""
+      values_auth_key="$(yaml_get_nested_section_key "$values_file" codeBundle auth existingSecretKey)"
+      if [[ -n "$values_auth_key" ]]; then
+        bundle_auth_key="$values_auth_key"
+      fi
+    fi
 
     if [[ -z "$bundle_expected_commit" ]]; then
       if ! bundle_expected_commit="$(default_bundle_expected_commit)"; then
