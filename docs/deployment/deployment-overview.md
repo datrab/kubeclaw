@@ -41,7 +41,7 @@ For code-only updates:
 ./scripts/deploy.sh code nova
 ```
 
-By default the deploy script resolves the latest remote `main` commit, then derives the GitHub release asset URL from the current repository and `CODE_BUNDLE_RELEASE_TAG=agent-code-bundles`. Set `NOVA_CODE_BUNDLE_EXPECTED_COMMIT`, `BUSTER_CODE_BUNDLE_EXPECTED_COMMIT`, `NOVA_CODE_BUNDLE_ARCHIVE_URL`, or `BUSTER_CODE_BUNDLE_ARCHIVE_URL` only when overriding that default source.
+By default the deploy script resolves the latest remote `main` commit, then derives the GitHub release asset URL from `CODE_BUNDLE_GITHUB_REPOSITORY` when set, otherwise from the deployed `ghcr.io/<owner>/kubeclaw-*` image owner, and finally falls back to the local Git remote. Set `NOVA_CODE_BUNDLE_EXPECTED_COMMIT`, `BUSTER_CODE_BUNDLE_EXPECTED_COMMIT`, `NOVA_CODE_BUNDLE_ARCHIVE_URL`, or `BUSTER_CODE_BUNDLE_ARCHIVE_URL` only when overriding that default source.
 
 `scripts/setup.sh` is a guarded legacy Git repository bootstrap. It is not the normal platform deployment flow.
 

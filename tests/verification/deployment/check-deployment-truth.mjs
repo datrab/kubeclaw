@@ -966,6 +966,8 @@ assertIncludes(deploymentTemplate, '.kubeclaw-plugin-cache-version', 'Deployment
 assertIncludes(deploymentTemplate, 'OpenClaw external plugin cache already current; skipping reseed', 'Deployment template must skip plugin cache reseeding when the baked cache is unchanged');
 assertIncludes(deploymentTemplate, 'Merged OpenClaw plugin entries from image cache into persistent config', 'Deployment template must merge baked plugin entries into persistent openclaw.json during reseed');
 assertIncludes(deploymentTemplate, 'Seeded OpenClaw external plugins from image cache', 'Deployment template must still seed configured external plugins from the baked image cache when needed');
+assertIncludes(deploymentTemplate, 'openclaw plugins registry --refresh', 'Deployment template must refresh the persisted plugin registry from the baked cache before gateway startup');
+assertIncludes(deploymentTemplate, 'Refreshed persisted OpenClaw plugin registry before startup', 'Deployment template must log successful pre-start plugin registry refresh');
 assertIncludes(deploymentTemplate, 'openclaw.json mirrored into runtime config', 'Deployment template must mirror openclaw.json into the runtime diagnostics surface');
 assertIncludes(deploymentTemplate, 'chmod 700 /config', 'Deployment template must harden the OpenClaw state directory permissions');
 assertIncludes(deploymentTemplate, 'chmod 600 /config/openclaw.json', 'Deployment template must harden openclaw.json permissions');
@@ -1102,6 +1104,8 @@ assertIncludes(deployScript, 'cmd_image() {', 'Deploy script must expose a dedic
 assertIncludes(deployScript, 'cmd_code() {', 'Deploy script must expose a dedicated code deploy surface');
 assertIncludes(deployScript, '--with-code', 'Deploy script must support an explicit combined agent deploy flag');
 assertIncludes(deployScript, 'cmd_smoke_agent "$role"', 'Combined agent deploys must smoke-check the target before and after code rollout');
+assertIncludes(deployScript, 'derive_github_repository_from_image_repository() {', 'Deploy script must derive the bundle GitHub repository from deployed image ownership when available');
+assertIncludes(deployScript, 'ghcr\\.io/([^/]+)/kubeclaw', 'Deploy script must map kubeclaw GHCR image ownership back to the GitHub bundle repository');
 assertIncludes(deployScript, 'derive_github_repository() {', 'Deploy script must derive the GitHub repository for bundle release URLs when possible');
 assertIncludes(deployScript, 'repo="${repo#ssh://git@github.com/}"', 'Deploy script must support ssh:// GitHub remotes when deriving bundle release URLs');
 assertIncludes(deployScript, '([^/@]+@)?github\\.com/', 'Deploy script must support authenticated HTTPS GitHub remotes when deriving bundle release URLs');

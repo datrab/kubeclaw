@@ -284,9 +284,27 @@ EOF
   fi
 }
 
+derive_github_repository_from_image_repository() {
+  local image_repository="${1:-}"
+
+  if [[ "$image_repository" =~ ^ghcr\.io/([^/]+)/kubeclaw([-.][A-Za-z0-9._-]+)?$ ]]; then
+    echo "${BASH_REMATCH[1]}/kubeclaw"
+    return 0
+  fi
+
+  return 1
+}
+
 derive_github_repository() {
+  local image_repository="${1:-}"
+
   if [[ -n "${CODE_BUNDLE_GITHUB_REPOSITORY:-}" ]]; then
     echo "$CODE_BUNDLE_GITHUB_REPOSITORY"
+    return 0
+  fi
+
+  if derive_github_repository_from_image_repository "$image_repository" >/dev/null 2>&1; then
+    derive_github_repository_from_image_repository "$image_repository"
     return 0
   fi
 
@@ -315,9 +333,10 @@ derive_github_repository() {
 default_bundle_archive_url() {
   local role="$1"
   local expected_commit="$2"
+  local image_repository="${3:-}"
   local repository
 
-  repository="$(derive_github_repository)" || return 1
+  repository="$(derive_github_repository "$image_repository")" || return 1
   if [[ -z "$expected_commit" ]]; then
     return 1
   fi
@@ -813,7 +832,7 @@ deploy_agent() {
       info "Resolved ${role} code bundle commit from ${CODE_BUNDLE_DEFAULT_REF}: ${bundle_expected_commit}"
     fi
     if [[ -z "$bundle_archive_url" ]]; then
-      if ! bundle_archive_url="$(default_bundle_archive_url "$role" "$bundle_expected_commit")"; then
+      if ! bundle_archive_url="$(default_bundle_archive_url "$role" "$bundle_expected_commit" "$image_repo")"; then
         bundle_archive_url=""
       fi
     fi

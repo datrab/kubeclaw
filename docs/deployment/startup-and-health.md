@@ -28,6 +28,7 @@ The init container does the durable setup:
 - initializes `/config/openclaw.json` when the retained config is absent
 - normalizes retained OpenClaw config to canonical provider/model refs and env SecretRefs
 - seeds image-baked external OpenClaw plugin home state into `/config` only when the baked plugin-cache version changes
+- refreshes the persisted OpenClaw plugin registry from that baked cache before the gateway starts
 - writes chart-owned `swarm.config.json`, `.semgrep.yml`, and `eslint.config.mjs`
 - renders pod-local runtime config into `/runtime-config`
 - merges packaged skills and allowed custom skills into `/skills-merged`

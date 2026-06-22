@@ -206,6 +206,7 @@
     "restart_agent_deployment",
     "append_image_override_file",
     "append_code_bundle_override_file",
+    "derive_github_repository_from_image_repository",
     "derive_github_repository",
     "default_bundle_archive_url",
     "default_bundle_expected_commit",
@@ -249,12 +250,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 496,
-    "secrets": 540,
-    "tailscale": 599,
-    "infra": 690,
-    "agents": 878,
-    "smoke": 979,
-    "teardown": 1118
+    "setup": 515,
+    "secrets": 559,
+    "tailscale": 618,
+    "infra": 709,
+    "agents": 897,
+    "smoke": 998,
+    "teardown": 1137
   }
 }

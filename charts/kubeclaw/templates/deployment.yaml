@@ -300,6 +300,11 @@ spec:
                   fi
                   echo "    Seeded OpenClaw external plugins from image cache"
                 fi
+                if HOME=/config openclaw plugins registry --refresh; then
+                  echo "    Refreshed persisted OpenClaw plugin registry before startup"
+                else
+                  echo "    WARNING: failed to refresh persisted OpenClaw plugin registry from baked cache"
+                fi
               else
                 echo "    WARNING: baked OpenClaw plugin home cache not found"
               fi
