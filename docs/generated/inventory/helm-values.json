@@ -90,6 +90,11 @@
       "secretReferences": [
         {
           "key": "existingSecret",
+          "value": "github-bundle-reader",
+          "line": 21
+        },
+        {
+          "key": "existingSecret",
           "value": "openclaw-shared-secrets",
           "line": 25
         },
@@ -153,6 +158,11 @@
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
           "line": 12
+        },
+        {
+          "key": "existingSecret",
+          "value": "github-bundle-reader",
+          "line": 43
         },
         {
           "key": "existingSecret",

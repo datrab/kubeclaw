@@ -40,7 +40,7 @@ codeBundle:
   expectedCommit: ""
   contractVersion: "v1"
   auth:
-    existingSecret: ""
+    existingSecret: "github-bundle-reader"
     existingSecretKey: "token"
 
 auth:
