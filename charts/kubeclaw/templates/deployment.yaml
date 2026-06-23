@@ -179,71 +179,13 @@ spec:
                 console.log('    removed obsolete kubeclaw-agent-observer plugin load path');
               }
 
-              if (config?.auth?.profiles) {
-                for (const [profileId, profile] of Object.entries(config.auth.profiles)) {
-                  if (profileId.startsWith('openai-codex:') || profile?.provider === 'openai-codex') {
-                    delete config.auth.profiles[profileId];
-                  }
-                }
-                if (!config.auth.profiles['openai:chatgpt-d.trabucco@tutamail.com']) {
-                  config.auth.profiles['openai:chatgpt-d.trabucco@tutamail.com'] = {
-                    provider: 'openai',
-                    mode: 'oauth',
-                  };
-                }
-              }
-              if (Array.isArray(config?.auth?.order?.openai)) {
-                config.auth.order.openai = config.auth.order.openai
-                  .filter((entry) => !String(entry).startsWith('openai-codex:'));
-                if (!config.auth.order.openai.includes('openai:chatgpt-d.trabucco@tutamail.com')) {
-                  config.auth.order.openai.push('openai:chatgpt-d.trabucco@tutamail.com');
-                }
-              }
-
               const defaults = config?.agents?.defaults;
-              if (defaults) {
-                defaults.thinkingDefault = 'off';
-                defaults.reasoningDefault = 'off';
-              }
-              if (defaults?.model) defaults.model.primary = 'openai/gpt-5.4';
-              if (defaults?.model?.fallbacks) {
-                defaults.model.fallbacks = defaults.model.fallbacks.map((entry) => (
-                  entry === 'openai-codex/gpt-5.5' ? 'openai/gpt-5.5'
-                    : entry === 'openai-codex/gpt-5.4' ? 'openai/gpt-5.4'
-                      : entry
-                )).filter((entry, index, values) => entry !== defaults.model.primary && values.indexOf(entry) === index);
-              }
-              if (defaults?.models) {
-                delete defaults.models['openai-codex/gpt-5.5'];
-                delete defaults.models['openai-codex/gpt-5.4'];
-                defaults.models['openai/gpt-5.4'] = {
-                  ...(defaults.models['openai/gpt-5.4'] || {}),
-                  agentRuntime: { id: 'codex' },
-                };
-                defaults.models['litellm/{{ .Values.litellm.defaultModel }}'] =
-                  defaults.models['litellm/{{ .Values.litellm.defaultModel }}'] || {};
-              }
-
               if (config?.models?.providers?.litellm) config.models.providers.litellm.apiKey = litellmSecretRef;
               if (defaults?.memorySearch?.remote) defaults.memorySearch.remote.apiKey = litellmSecretRef;
               if (config?.channels?.discord) config.channels.discord.token = discordSecretRef;
-              config.plugins = config.plugins || {};
-              config.plugins.entries = config.plugins.entries || {};
-              config.plugins.entries.litellm = {
-                ...(config.plugins.entries.litellm || {}),
-                enabled: true,
-              };
-              config.plugins.entries['kubeclaw-agent-observer'] = {
-                ...(config.plugins.entries['kubeclaw-agent-observer'] || {}),
-                enabled: false,
-                hooks: {
-                  ...(config.plugins.entries['kubeclaw-agent-observer']?.hooks || {}),
-                  allowConversationAccess: true,
-                },
-              };
 
               fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\n`);
-              console.log('    openclaw.json source normalized with canonical refs and SecretRefs');
+              console.log('    openclaw.json source refreshed managed SecretRefs and safe migrations');
               NODE
               fi
 
@@ -337,10 +279,6 @@ spec:
 
               echo "==> 4c. Runtime Config"
               mkdir -p /runtime-config
-              if [ -f /config/openclaw.json ]; then
-                cp -Lf /config/openclaw.json /runtime-config/openclaw.json
-                echo "    openclaw.json rendered into runtime config"
-              fi
               if [ -f /config/swarm.config.json ]; then
                 node -e 'const fs=require("fs"); const source="/config/swarm.config.json"; const target="/runtime-config/swarm.config.json"; const config=JSON.parse(fs.readFileSync(source,"utf8")); if (process.env.DISCORD_WEBHOOK) config.discord_webhook_url=process.env.DISCORD_WEBHOOK; fs.writeFileSync(target, JSON.stringify(config,null,2)+"\n");'
                 echo "    swarm.config.json rendered into runtime config"
@@ -647,29 +585,11 @@ spec:
                 .finally(() => clearTimeout(timeout));
               NODE
                   if [ "$?" -eq 0 ]; then
-                    echo "[$(date -Iseconds)] gateway healthy; staging writable OpenClaw home for doctor"
-                    DOCTOR_ROOT="/tmp/openclaw-startup-doctor"
-                    DOCTOR_HOME="${DOCTOR_ROOT}/home/node"
-                    DOCTOR_CONFIG_DIR="${DOCTOR_HOME}/.openclaw"
-                    rm -rf "$DOCTOR_ROOT"
-                    mkdir -p "$DOCTOR_CONFIG_DIR"
-                    cp -a /config/. "$DOCTOR_CONFIG_DIR/"
-                    if [ -f /runtime-config/openclaw.json ]; then
-                      cp -Lf /runtime-config/openclaw.json "$DOCTOR_CONFIG_DIR/openclaw.json"
-                    fi
-                    if [ -f /runtime-config/swarm.config.json ]; then
-                      cp -Lf /runtime-config/swarm.config.json "$DOCTOR_CONFIG_DIR/swarm.config.json"
-                    fi
-                    echo "[$(date -Iseconds)] gateway healthy; running openclaw doctor --fix"
-                    HOME="$DOCTOR_HOME" \
-                    SWARM_CONFIG="$DOCTOR_CONFIG_DIR/swarm.config.json" \
+                    echo "[$(date -Iseconds)] gateway healthy; running openclaw doctor --fix against persistent home"
+                    HOME="/home/node" \
+                    SWARM_CONFIG="/home/node/.openclaw/swarm.config.json" \
                     node /app/openclaw.mjs doctor --fix --non-interactive
                     STATUS="$?"
-                    if [ "$STATUS" -eq 0 ] && [ -f "$DOCTOR_CONFIG_DIR/openclaw.json" ]; then
-                      cat "$DOCTOR_CONFIG_DIR/openclaw.json" > /config/openclaw.json
-                      cat "$DOCTOR_CONFIG_DIR/openclaw.json" > /runtime-config/openclaw.json
-                      echo "[$(date -Iseconds)] synced repaired openclaw.json back to persistent and runtime config"
-                    fi
                     echo "[$(date -Iseconds)] openclaw doctor --fix exited with status ${STATUS}"
                     exit 0
                   fi
@@ -1065,9 +985,6 @@ spec:
             - name: config
               mountPath: /home/node/.openclaw
             - name: runtime-config
-              mountPath: /home/node/.openclaw/openclaw.json
-              subPath: openclaw.json
-            - name: runtime-config
               mountPath: /home/node/.openclaw/swarm.config.json
               subPath: swarm.config.json
             - name: runtime-config
@@ -1307,9 +1224,6 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /home/node/.openclaw
-            - name: runtime-config
-              mountPath: /home/node/.openclaw/openclaw.json
-              subPath: openclaw.json
             - name: runtime-config
               mountPath: /home/node/.openclaw/swarm.config.json
               subPath: swarm.config.json

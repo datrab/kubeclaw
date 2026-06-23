@@ -9,7 +9,7 @@ Document how `openclaw.json` is rendered, persisted, and materialized at runtime
 
 ## Current Behavior
 
-The chart renders `openclaw.json` in `ConfigMap/<release>-config`. The init container copies it to `/config/openclaw.json` only when the persisted source file is absent, then normalizes retained configs in place. The main container mounts the retained config PVC at `/home/node/.openclaw`, overlays `/runtime-config/openclaw.json` at `/home/node/.openclaw/openclaw.json`, and exposes the same retained source at `/home/node/.openclaw-persisted`.
+The chart renders `openclaw.json` in `ConfigMap/<release>-config`. The init container copies it to `/config/openclaw.json` only when the persisted source file is absent, then refreshes retained configs in place. The main container mounts the retained config PVC at `/home/node/.openclaw`, leaves `/home/node/.openclaw/openclaw.json` as the real writable runtime file, and exposes the same retained source at `/home/node/.openclaw-persisted`.
 
 The rendered config includes:
 
@@ -22,7 +22,7 @@ The rendered config includes:
 - tool policy for coding profile, sessions, session spawn, and full exec
 - Discord channel configuration when enabled
 
-Init normalizes persisted `openclaw.json` so LiteLLM, memory search, and Discord token fields use env SecretRefs instead of literal secrets. It also migrates legacy `openai-codex/*` refs to canonical `openai/*` refs, enables the LiteLLM plugin entry, configures `commands.ownerAllowFrom` from values, removes an obsolete `plugins.load.paths` entry for `/app/openclaw-plugins/kubeclaw-agent-observer`, and seeds official external plugins from the image-baked npm cache. `/runtime-config/openclaw.json` is the runtime-mounted copy. The startup doctor runs against a temporary writable home after gateway health and syncs repaired `openclaw.json` back into both `/config` and `/runtime-config`. `swarm.config.json` is still rendered through `/runtime-config` because it can receive `DISCORD_WEBHOOK`.
+Init refreshes persisted `openclaw.json` so LiteLLM, memory search, and Discord token fields use env SecretRefs instead of literal secrets. It also removes the obsolete `plugins.load.paths` entry for `/app/openclaw-plugins/kubeclaw-agent-observer` and seeds official external plugins from the image-baked npm cache. Existing non-secret runtime edits stay in the persistent file across redeploys. The startup doctor runs after gateway health directly against that live persistent OpenClaw home. `swarm.config.json` is still rendered through `/runtime-config` because it can receive `DISCORD_WEBHOOK`.
 
 ## Source And Runtime Paths
 
@@ -30,7 +30,6 @@ Init normalizes persisted `openclaw.json` so LiteLLM, memory search, and Discord
 | --- | --- | --- | --- | --- |
 | Chart source config | `charts/kubeclaw/templates/configmap-gateway.yaml` | ConfigMap key `openclaw.json`; values `litellm.endpoint`, `litellm.defaultModel`, `litellm.models`, `discord.enabled`, `commands.ownerAllowFrom`, `commands.allowFromDiscord`, `gateway.port` | Helm render | source config with env SecretRefs |
 | Persistent source config | init block in `charts/kubeclaw/templates/deployment.yaml` | `/config/openclaw.json`; mounted as `/home/node/.openclaw/openclaw.json`; exposed as `/home/node/.openclaw-persisted/openclaw.json` | pod start; first write plus migrations | writable retained config with canonical model refs and SecretRefs |
-| Runtime config copy | init block in `charts/kubeclaw/templates/deployment.yaml` | `/runtime-config/openclaw.json` | every pod start | runtime-mounted copy of the retained OpenClaw config |
 | Secret inputs | `charts/kubeclaw/templates/deployment.yaml`; `my-values/setup-secrets.sh` | `LITELLM_API_KEY`, `DISCORD_TOKEN`, `OPENCLAW_GATEWAY_TOKEN`, `ANTHROPIC_API_KEY`, `STITCH_API_KEY` | environment creation from Kubernetes Secrets | runtime credentials available to gateway/container |
 | Health and gateway | deployment template health script; OpenClaw gateway command | `/runtime-config/kubeclaw-health.mjs`, gateway port `18789`, bridge port `18790` | readiness/liveness and runtime command start | dependency-aware health checks and `openclaw gateway status` |
 
@@ -53,5 +52,5 @@ kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- openclaw gatew
 
 ## Open Issues
 
-- Operator edits should target `/home/node/.openclaw-persisted/openclaw.json` when they need the durable source file, and token fields should stay as SecretRef objects.
+- Operator and runtime edits should target `/home/node/.openclaw/openclaw.json`, which is the same durable retained file exposed again at `/home/node/.openclaw-persisted/openclaw.json`. Token fields should stay as SecretRef objects.
 - Existing PVC config is preserved unless migration or manual override changes it, so chart config changes may not apply automatically.
