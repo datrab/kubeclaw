@@ -45,7 +45,7 @@ function configWithBusterWorker() {
     repo_root: root,
     buster: { max_crash_retries: 1 },
     agents: {
-      buster: { dispatch: 'redis' },
+      buster: { dispatch: 'acp', acp_agent_id: 'buster' },
     },
     paths: {
       modules_dir: modulesDir,
@@ -275,6 +275,7 @@ test('module Buster phase treats Redis output_file identity mismatch as infra wi
       gateway_label: dispatchId,
       stream_log_path: '/tmp/buster-proof.log',
     }),
+    verifyAgentAlive: async () => true,
     pollDualWithRateLimitRecovery: async () => ({
       ok: false,
       status: {
@@ -369,6 +370,7 @@ test('module Buster phase treats Redis missing output_file as infra without Forg
       gateway_label: dispatchId,
       stream_log_path: '/tmp/buster-proof.log',
     }),
+    verifyAgentAlive: async () => true,
     pollDualWithRateLimitRecovery: async () => ({
       ok: false,
       status: {

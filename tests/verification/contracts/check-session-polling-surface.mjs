@@ -15,11 +15,13 @@ function parseArgs(argv = process.argv.slice(2)) {
 const { sourceRoot } = parseArgs();
 const pollingSessionEndPath = path.join(sourceRoot, 'skills/nova/pipeline/services/polling-session-end.ts');
 const pollingPath = path.join(sourceRoot, 'skills/nova/pipeline/services/polling.ts');
-const gitWorktreePath = path.join(sourceRoot, 'skills/nova/pipeline/integrations/git-worktree.ts');
+const gitWorktreePath = path.join(sourceRoot, 'skills/common/pipeline/integrations/git-worktree.ts');
+const novaGitWorktreeShimPath = path.join(sourceRoot, 'skills/nova/pipeline/integrations/git-worktree.ts');
 const pollingSessionEndTestPath = path.join(sourceRoot, 'tests/skills/nova/pipeline/services/polling-session-end.test.mjs');
 const pollingSessionEndSource = fs.readFileSync(pollingSessionEndPath, 'utf8');
 const pollingSource = fs.readFileSync(pollingPath, 'utf8');
 const gitWorktreeSource = fs.readFileSync(gitWorktreePath, 'utf8');
+const novaGitWorktreeShimSource = fs.readFileSync(novaGitWorktreeShimPath, 'utf8');
 const pollingSessionEndTestSource = fs.readFileSync(pollingSessionEndTestPath, 'utf8');
 const runtimePollingSource = `${pollingSessionEndSource}\n${pollingSource}\n${gitWorktreeSource}`;
 
@@ -74,7 +76,12 @@ assert.equal(
 assert.equal(
   gitWorktreeSource.includes('export function gitPullBeforePush('),
   true,
-  'git worktree integration should keep explicit caller-owned before-push pull',
+  'shared git worktree integration should keep explicit caller-owned before-push pull',
+);
+assert.equal(
+  novaGitWorktreeShimSource.includes("export * from '../../../common/pipeline/integrations/git-worktree.ts';"),
+  true,
+  'Nova git worktree should remain a thin shared-implementation shim',
 );
 
 for (const requiredTest of [

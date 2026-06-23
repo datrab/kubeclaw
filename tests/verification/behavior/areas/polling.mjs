@@ -742,7 +742,8 @@ const result = await pollingMod.pollDual({
     paths: { swarm_dir: swarmDir, modules_dir: modulesDir },
     agents: {
       buster: {
-        dispatch: 'redis',
+        dispatch: 'acp',
+        acp_agent_id: 'buster',
         redis_js_path: redisModulePath,
       },
     },
@@ -830,7 +831,8 @@ const result = await pollingMod.pollDual({
     paths: { swarm_dir: swarmDir, modules_dir: modulesDir },
     agents: {
       buster: {
-        dispatch: 'redis',
+        dispatch: 'acp',
+        acp_agent_id: 'buster',
         redis_js_path: redisModulePath,
       },
     },
@@ -915,7 +917,8 @@ const result = await pollingMod.pollDual({
     paths: { swarm_dir: swarmDir, modules_dir: modulesDir },
     agents: {
       buster: {
-        dispatch: 'redis',
+        dispatch: 'acp',
+        acp_agent_id: 'buster',
         redis_js_path: redisModulePath,
       },
     },
@@ -998,7 +1001,8 @@ const result = await pollingMod.pollDual({
     ...pollConfig,
     agents: {
       buster: {
-        dispatch: 'redis',
+        dispatch: 'acp',
+        acp_agent_id: 'buster',
         redis_js_path: redisModulePath,
       },
     },

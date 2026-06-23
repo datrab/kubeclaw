@@ -4,11 +4,14 @@
 // checks with optional agent-level judgment to identify project definition
 // defects that would cause wasted execution time or silent failures.
 //
-// Two-phase execution:
+// Default execution:
 //   Phase 1 — Deterministic checks: file presence, progress.json coherence,
 //              dependency graph, gate references, test-spec validity, model config.
+//
+// Optional execution:
 //   Phase 2 — Agent judgment:      architecture coherence, gap/overlap detection,
-//              dependency ordering analysis (skipped when gateway unavailable).
+//              dependency ordering analysis. This must use the canonical spawned
+//              agent/session flow, not a separate direct completion path.
 //
 // Blocking policy:
 //   severity='blocking' → pipeline must halt before module 01
@@ -27,9 +30,12 @@ import path from 'path';
 import { log } from '../core/logger.ts';
 import { getRunId } from '../core/runtime.ts';
 import { archValidatorLogDir } from '../core/paths.ts';
-import { completeGatewayPrompt } from '../integrations/gateway.ts';
 import { resolvePolicy, logEffectivePolicy } from '../core/config.ts';
 import { writeRedactedPromptArtifact } from '../redaction.ts';
+import { spawnSession } from '../agents/lifecycle.ts';
+import { terminateSession } from '../agents/session-termination.ts';
+import { pollForFile } from './polling.ts';
+import { modelToHarness, resolveRuntime } from '../agents/runtime.ts';
 
 import {
   FINDING_CODES,
@@ -41,9 +47,51 @@ import {
 
 export { FINDING_CODES, SCOPE, SEVERITY };
 
+function validatorAgentOutputPath(config) {
+  const logDir = archValidatorLogDir(config);
+  return logDir ? path.join(logDir, 'agent-findings.json') : null;
+}
+
+function normalizeAgentFinding(rawFinding) {
+  if (!rawFinding || typeof rawFinding !== 'object' || Array.isArray(rawFinding)) {
+    throw new Error('each agent finding must be an object');
+  }
+
+  const finding = rawFinding;
+  const id = typeof finding.id === 'string' && finding.id.trim() ? finding.id.trim() : null;
+  const severity = typeof finding.severity === 'string' ? finding.severity.trim() : null;
+  const scope = typeof finding.scope === 'string' ? finding.scope.trim() : null;
+  const explanation = typeof finding.explanation === 'string' && finding.explanation.trim()
+    ? finding.explanation.trim()
+    : null;
+  const remediation = typeof finding.remediation === 'string' && finding.remediation.trim()
+    ? finding.remediation.trim()
+    : null;
+  const paths = Array.isArray(finding.paths)
+    ? finding.paths.filter((entry) => typeof entry === 'string' && entry.trim()).map((entry) => entry.trim())
+    : [];
+
+  if (!id) throw new Error('each agent finding requires non-empty string id');
+  if (!Object.values(SEVERITY).includes(severity)) throw new Error(`agent finding '${id}' has invalid severity '${severity}'`);
+  if (!Object.values(SCOPE).includes(scope)) throw new Error(`agent finding '${id}' has invalid scope '${scope}'`);
+  if (!explanation) throw new Error(`agent finding '${id}' requires non-empty explanation`);
+  if (!remediation) throw new Error(`agent finding '${id}' requires non-empty remediation`);
+
+  return { id, severity, scope, paths, explanation, remediation };
+}
+
+function parseAgentFindingsFile(outputFilePath) {
+  const raw = fs.readFileSync(outputFilePath, 'utf8');
+  const parsed = JSON.parse(raw);
+  if (!Array.isArray(parsed)) {
+    throw new Error('agent output must be a JSON array');
+  }
+  return parsed.map(normalizeAgentFinding);
+}
+
 // ── Agent-based judgment ──────────────────────────────────────────────────────
 
-export function buildValidatorPrompt(progress, config, deterministicFindings) {
+export function buildValidatorPrompt(progress, config, deterministicFindings, outputFilePath) {
   const modules = Object.entries(progress.modules || {}).map(([id, m]) => ({
     id,
     dir: m.dir,
@@ -91,7 +139,10 @@ Review the project definition above for:
 4. Structural coherence — does the overall project definition make sense as a pipeline?
 
 ## Response Format
-Respond with a JSON array of findings. Each finding must have:
+Write a JSON array of findings to this exact file path:
+\`${outputFilePath}\`
+
+Each finding must have:
 - id: string (stable code like OVERLAP_DETECTED, COVERAGE_GAP, DEPENDENCY_ORDER_VIOLATION, etc.)
 - severity: "info" | "warn" | "error" | "blocking"
 - scope: "project" | "module" | "gate" | "dependency_graph" | "test_spec" | "config"
@@ -99,9 +150,9 @@ Respond with a JSON array of findings. Each finding must have:
 - explanation: string (one to two sentences)
 - remediation: string (one actionable fix)
 
-If you find no issues, respond with an empty array: []
+If you find no issues, write an empty array: []
 
-Respond ONLY with the JSON array, no other text.`;
+Do not write markdown. Do not print the findings in chat. Your job is complete only after the JSON file exists at the path above.`;
 }
 
 async function runAgentJudgment(progress, config, deterministicFindings, opts = {}) {
@@ -110,64 +161,98 @@ async function runAgentJudgment(progress, config, deterministicFindings, opts = 
     return [];
   }
 
-  // Skip if disabled via project config
-  if (config.arch_validation?.agent_enabled === false) {
-    log('INFO', '[arch-validator] Agent judgment disabled by config');
+  // Agent judgment is opt-in. Deterministic validation remains the reliable default path.
+  const agentEnabled = progress?.arch_validation?.agent_enabled ?? config.arch_validation?.agent_enabled ?? false;
+  if (agentEnabled !== true) {
+    log('INFO', '[arch-validator] Agent judgment disabled (explicit opt-in required)');
     return [];
   }
 
-  const prompt = buildValidatorPrompt(progress, config, deterministicFindings);
+  const deps = opts.deps || {};
+  const spawnSessionFn = deps.spawnSession || spawnSession;
+  const pollForFileFn = deps.pollForFile || pollForFile;
+  const terminateSessionFn = deps.terminateSession || terminateSession;
+  const modelToHarnessFn = deps.modelToHarness || modelToHarness;
+  const resolveRuntimeFn = deps.resolveRuntime || resolveRuntime;
+  const outputFilePath = validatorAgentOutputPath(config);
+  if (!outputFilePath) {
+    throw new Error('architecture validator agent output path is unavailable');
+  }
+
+  fs.mkdirSync(path.dirname(outputFilePath), { recursive: true });
+  try {
+    if (fs.existsSync(outputFilePath)) fs.unlinkSync(outputFilePath);
+  } catch (_error) {
+    // best-effort cleanup only
+  }
+
+  const prompt = buildValidatorPrompt(progress, config, deterministicFindings, outputFilePath);
   const policy = resolvePolicy(config, progress, 'arch_validator', {
     scopeModel: progress?.arch_validation?.model,
     scopeThinking: progress?.arch_validation?.thinking_level,
-    dispatchPath: 'subagent',
+    dispatchPath: config?.agents?.echo?.dispatch === 'subagent' ? 'subagent' : 'acp',
   });
   logEffectivePolicy(config, { scope: 'arch_validator', agent: 'arch_validator', ...policy });
-  const { model, thinking } = policy;
+  const model = policy.model;
+  const runtime = resolveRuntimeFn({ runtime: config?.agents?.echo?.dispatch, model });
+  const agentId = modelToHarnessFn(model) || config?.agents?.echo?.acp_agent_id || 'claude';
+  const cwd = config.repo_root;
+  const label = `arch-validator-${Date.now()}`;
+  const timeoutMinutes = progress?.arch_validation?.timeout_minutes
+    ?? config?.arch_validation?.timeout_minutes
+    ?? 15;
+  let sessionData = null;
 
-  log('INFO', `[arch-validator] Running agent judgment — model: ${model}`);
   try {
-    const result = await completeGatewayPrompt({
+    sessionData = await spawnSessionFn({
+      session: { model, runtime, agentId, cwd, label },
+    }, prompt, timeoutMinutes * 60, {
+      runtime,
       model,
-      thinking,
-      prompt,
-      system: 'You are an architecture validation agent. Respond only with a valid JSON array of findings.',
-    }, 120000);
+      agentId,
+      cwd,
+      label,
+      thinking: policy.thinking || null,
+      trackActive: false,
+      observabilityIdentity: {
+        run_id: getRunId(config) || config?._runId || config?.run_id || null,
+        project: config?.project || progress?.project || null,
+        agent_type: 'arch_validator',
+        dispatch_id: label,
+        gateway_label: label,
+      },
+    });
 
-    const text = result?.content || result?.text || result?.choices?.[0]?.message?.content || result?.raw || '';
-    const jsonMatch = text.match(/\[[\s\S]*\]/);
-    if (!jsonMatch) {
-      log('WARN', '[arch-validator] Agent response did not contain a JSON array');
+    const pollResult = await pollForFileFn(config, outputFilePath, timeoutMinutes, 'Architecture Validator', sessionData.childSessionKey || label);
+    if (!pollResult?.ok) {
       return [makeFinding(
-        FINDING_CODES.AGENT_JUDGMENT_PARSE_ERROR, SEVERITY.WARN, SCOPE.PROJECT,
-        [],
-        'Architecture validator agent response could not be parsed as a JSON findings array',
-        'Review agent judgment output manually in the validator artifacts.',
+        FINDING_CODES.AGENT_JUDGMENT_EXECUTION_ERROR, SEVERITY.ERROR, SCOPE.PROJECT,
+        ['progress.json'],
+        `Architecture validator agent did not produce findings output: ${pollResult?.reason || 'unknown failure'}`,
+        'Check validator agent session logs and prompt artifacts, then rerun the pipeline.',
       )];
     }
-
-    let agentFindings;
-    try {
-      agentFindings = JSON.parse(jsonMatch[0]);
-    } catch (_error) {
-      return [makeFinding(
-        FINDING_CODES.AGENT_JUDGMENT_PARSE_ERROR, SEVERITY.WARN, SCOPE.PROJECT,
-        [],
-        'Architecture validator agent returned malformed JSON',
-        'Review validator-prompt.md and agent response in architecture-validator/ artifacts.',
-      )];
-    }
-
-    if (!Array.isArray(agentFindings)) return [];
-    return agentFindings.filter(f => f && typeof f.id === 'string');
-  } catch (e) {
-    log('WARN', `[arch-validator] Agent judgment failed: ${e.message} — skipping`);
+    return parseAgentFindingsFile(outputFilePath);
+  } catch (error) {
     return [makeFinding(
-      FINDING_CODES.AGENT_JUDGMENT_SKIPPED, SEVERITY.WARN, SCOPE.PROJECT,
-      [],
-      `Architecture validator agent call failed: ${e.message}`,
-      'Verify gateway is reachable and arch_validator model is configured. Proceed manually if blocked.',
+      FINDING_CODES.AGENT_JUDGMENT_EXECUTION_ERROR, SEVERITY.ERROR, SCOPE.PROJECT,
+      ['progress.json'],
+      `Architecture validator agent execution failed: ${error?.message || error}`,
+      'Check validator agent session logs and prompt artifacts, then rerun the pipeline.',
     )];
+  } finally {
+    if (sessionData?.childSessionKey) {
+      try {
+        await terminateSessionFn(sessionData.childSessionKey, {
+          runtime,
+          model,
+          agentId,
+          label,
+        });
+      } catch (error) {
+        log('DEBUG', `[arch-validator] Session cleanup failed (non-critical): ${error?.message || error}`);
+      }
+    }
   }
 }
 
@@ -480,8 +565,8 @@ export async function runArchValidator(config, progress, opts = {}) {
     // Phase 1: Deterministic structural checks
     const deterministicFindings = runDeterministicArchitectureChecks(progress, config);
 
-    // Phase 2: Agent judgment (skipped gracefully when unavailable or disabled)
-    agentPrompt = buildValidatorPrompt(progress, config, deterministicFindings);
+    // Phase 2: Agent judgment (opt-in, canonical spawned-session execution)
+    agentPrompt = buildValidatorPrompt(progress, config, deterministicFindings, validatorAgentOutputPath(config));
     const agentFindings = await runAgentJudgment(progress, config, deterministicFindings, opts);
 
     allFindings = [...deterministicFindings, ...agentFindings];

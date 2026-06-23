@@ -30,7 +30,8 @@ import {
 import { getTrackedAgent } from '../../agents/lifecycle.ts';
 import { setShutdownContext, clearShutdownContext } from '../../agents/shutdown.ts';
 import { discord } from '../../integrations/discord.ts';
-import { gitSyncBeforeBuster, gitCommitAndPush } from '../../integrations/git-worktree.ts';
+import { gitCommitAndPush } from '../../integrations/git-worktree.ts';
+import { gitSyncBeforeBuster } from '../../services/git-sync-before-buster.ts';
 import { buildForgePrompt } from '../../prompts/forge.ts';
 import { buildBusterModulePrompt } from '../../prompts/buster-module.ts';
 import { checkDependencies } from '../../services/dependencies.ts';

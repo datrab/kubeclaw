@@ -204,6 +204,38 @@ test('readNext allows idle blocking read to exceed command timeout by poll block
   assert.deepEqual(entries, []);
 });
 
+test('trim logs and continues when Redis housekeeping times out', async () => {
+  const warnings = [];
+  const redis = {
+    xtrim: async (_stream, _strategy, _approx, len) => {
+      if (len === 1000) {
+        await new Promise((resolve) => setTimeout(resolve, 25));
+      }
+      return 1;
+    },
+  };
+  const ingester = new AgentObservabilityIngester({
+    config: {
+      enabled: true,
+      redisCommandTimeoutMs: 10,
+      deadLetterMaxLen: 1000,
+      controlStreamMaxLen: 2000,
+    },
+    env: {},
+    logger: {
+      info: () => {},
+      error: () => {},
+      debug: () => {},
+      warn: (message) => warnings.push(String(message)),
+    },
+    redisClientFactory: () => redis,
+  });
+
+  await ingester.trim();
+
+  assert.equal(warnings.some((entry) => entry.includes('agent observability dead-letter XTRIM failed')), true);
+});
+
 test('stop waits for in-flight start loop before closing Redis', async () => {
   const raw = JSON.stringify(makeIngressEvent());
   const xackCalls = [];

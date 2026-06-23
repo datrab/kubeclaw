@@ -216,14 +216,6 @@ wait_for_agent_rollout() {
   kubectl wait --for=condition=Ready pod -l "$selector" -n "$NAMESPACE" --timeout="$AGENT_ROLLOUT_TIMEOUT"
 }
 
-restart_agent_deployment() {
-  local release="$1"
-
-  info "Restarting ${release} deployment to pull the selected runtime image..."
-  kubectl rollout restart deployment/"$release" -n "$NAMESPACE"
-  wait_for_agent_rollout "$release"
-}
-
 append_image_override_file() {
   local output_path="$1"
   local image_repo="$2"
@@ -981,11 +973,7 @@ deploy_agent() {
     rm -f "$override_file"
   fi
 
-  if [[ "$mode" == "image" ]]; then
-    restart_agent_deployment "agent-${role}"
-  else
-    wait_for_agent_rollout "agent-${role}"
-  fi
+  wait_for_agent_rollout "agent-${role}"
   log "agent-${role} deployed (${mode})"
 }
 

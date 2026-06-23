@@ -18,7 +18,7 @@ pipeline/
   integrations/
     discord.ts         Discord webhook/audit integration using shared webhook transport
     gateway.ts         Typed Gateway operation facades
-    git-worktree.ts    Nova Git worktree/stash/pull/push policy
+    git-worktree.ts    Thin Nova facade for shared Git worktree/stash/pull/push policy
     redis.ts           Redis module loader and stream helpers
   agents/
     runtime.ts         Runtime/harness resolution shim to shared pipeline helpers
@@ -42,6 +42,7 @@ pipeline/
   services/
     blueprint.ts       Blueprint release and control-file sync
     failures/          Failure classification, presentation, escalation, and retry policy
+    git-sync-before-buster.ts Forge→Buster handoff commit/push orchestration
     polling.ts         Polling engine: status, Redis, dual-channel, rate-limit recovery
     rate-limit.ts      Rate-limit detection and recovery
     status-store.ts    Module/gate status read/write, log directory management
@@ -82,6 +83,7 @@ Helpers that are intentionally **not** re-exported from `index.ts`:
 - context/config-first run-state helpers in `core/runtime.ts`
 - plugin context helpers in `core/context.ts`
 - git plumbing in `core/git-context.ts` / `integrations/git-worktree.ts`
+- Forge→Buster handoff orchestration in `services/git-sync-before-buster.ts`
 - polling primitives in `services/polling.ts`
 - agent, prompt, path, and status internals in their owned modules
 

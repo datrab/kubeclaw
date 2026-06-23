@@ -1424,7 +1424,7 @@ const config = {
         busterGate: {
           discord: async (...args) => { discordCalls.push(args); },
           readGateInstructions: () => 'Gate instructions',
-          resolvePolicy: () => ({ model: 'buster-model', model_source: 'test', thinking: 'not_supported_on_redis' }),
+          resolvePolicy: () => ({ model: 'buster-model', model_source: 'test', thinking: 'high', thinking_source: 'project_default' }),
           logEffectivePolicy: () => {},
         },
       };

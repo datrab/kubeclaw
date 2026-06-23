@@ -33,7 +33,6 @@ The init container does the durable setup:
 - renders pod-local runtime config into `/runtime-config`
 - merges packaged skills and allowed custom skills into `/skills-merged`
 - writes the generated health and startup-doctor helper scripts
-- hardens `/config` and `openclaw.json` permissions
 
 Runtime containers then mount:
 
@@ -43,7 +42,7 @@ Runtime containers then mount:
 - merged skills at `/app/skills`
 - pod-local runtime config at `/runtime-config`
 
-`openclaw.json` is a normal writable file in the retained OpenClaw home. The chart intentionally does not bind-mount it through `subPath` because `openclaw doctor` repairs config by writing a temporary file and atomically renaming it over `openclaw.json`.
+`openclaw.json` is mounted from `/runtime-config/openclaw.json` through `subPath`, so the retained `/config/openclaw.json` stays durable while the gateway reads a staged runtime copy.
 
 ## Startup Doctor
 
@@ -52,9 +51,11 @@ The gateway container has a `postStart` hook when `gateway.startupDoctor.enabled
 The helper:
 
 1. waits for the local gateway `/health` endpoint
-2. runs `node /app/openclaw.mjs doctor --fix` once
-3. writes logs to `/home/node/.openclaw/logs/startup-doctor.log`
-4. exits without failing the container if the gateway never becomes healthy before the wait budget
+2. stages a writable temporary OpenClaw home under `/tmp/openclaw-startup-doctor`
+3. runs `node /app/openclaw.mjs doctor --fix --non-interactive` once against that staged copy
+4. syncs the repaired `openclaw.json` back into both `/config/openclaw.json` and `/runtime-config/openclaw.json`
+5. writes logs to `/home/node/.openclaw/logs/startup-doctor.log`
+6. exits without failing the container if the gateway never becomes healthy before the wait budget
 
 The relevant values are:
 
@@ -203,7 +204,7 @@ kubectl -n "$NAMESPACE" logs deploy/agent-buster -c buster-pipeline --tail=200
 | Symptom | Likely surface | First check |
 | --- | --- | --- |
 | startup doctor log is missing | `postStart` did not run or runtime config was not generated | describe pod events, then check `/runtime-config/kubeclaw-startup-doctor.sh` |
-| startup doctor skipped | gateway `/health` did not become healthy before `waitSeconds` | gateway logs and `openclaw.json` |
+| startup doctor skipped | gateway `/health` did not become healthy before `waitSeconds` | gateway logs and `/runtime-config/openclaw.json` |
 | readiness fails on Redis | Redis Secret, DNS, password, or service availability | `REDIS_HOST`, `REDIS_PASSWORD`, Redis pod readiness |
 | startup verification fails on Redis stream | Redis reachable but write path is blocked or misconfigured | stream name, Redis ACL/password, Redis logs |
 | startup verification fails on LiteLLM | LiteLLM service, API key, PostgreSQL, or provider config | LiteLLM pod logs and `litellm-secrets` |

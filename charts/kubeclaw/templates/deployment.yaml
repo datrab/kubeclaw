@@ -339,7 +339,7 @@ spec:
               mkdir -p /runtime-config
               if [ -f /config/openclaw.json ]; then
                 cp -Lf /config/openclaw.json /runtime-config/openclaw.json
-                echo "    openclaw.json mirrored into runtime config"
+                echo "    openclaw.json rendered into runtime config"
               fi
               if [ -f /config/swarm.config.json ]; then
                 node -e 'const fs=require("fs"); const source="/config/swarm.config.json"; const target="/runtime-config/swarm.config.json"; const config=JSON.parse(fs.readFileSync(source,"utf8")); if (process.env.DISCORD_WEBHOOK) config.discord_webhook_url=process.env.DISCORD_WEBHOOK; fs.writeFileSync(target, JSON.stringify(config,null,2)+"\n");'
@@ -647,9 +647,29 @@ spec:
                 .finally(() => clearTimeout(timeout));
               NODE
                   if [ "$?" -eq 0 ]; then
+                    echo "[$(date -Iseconds)] gateway healthy; staging writable OpenClaw home for doctor"
+                    DOCTOR_ROOT="/tmp/openclaw-startup-doctor"
+                    DOCTOR_HOME="${DOCTOR_ROOT}/home/node"
+                    DOCTOR_CONFIG_DIR="${DOCTOR_HOME}/.openclaw"
+                    rm -rf "$DOCTOR_ROOT"
+                    mkdir -p "$DOCTOR_CONFIG_DIR"
+                    cp -a /config/. "$DOCTOR_CONFIG_DIR/"
+                    if [ -f /runtime-config/openclaw.json ]; then
+                      cp -Lf /runtime-config/openclaw.json "$DOCTOR_CONFIG_DIR/openclaw.json"
+                    fi
+                    if [ -f /runtime-config/swarm.config.json ]; then
+                      cp -Lf /runtime-config/swarm.config.json "$DOCTOR_CONFIG_DIR/swarm.config.json"
+                    fi
                     echo "[$(date -Iseconds)] gateway healthy; running openclaw doctor --fix"
-                    node /app/openclaw.mjs doctor --fix
+                    HOME="$DOCTOR_HOME" \
+                    SWARM_CONFIG="$DOCTOR_CONFIG_DIR/swarm.config.json" \
+                    node /app/openclaw.mjs doctor --fix --non-interactive
                     STATUS="$?"
+                    if [ "$STATUS" -eq 0 ] && [ -f "$DOCTOR_CONFIG_DIR/openclaw.json" ]; then
+                      cat "$DOCTOR_CONFIG_DIR/openclaw.json" > /config/openclaw.json
+                      cat "$DOCTOR_CONFIG_DIR/openclaw.json" > /runtime-config/openclaw.json
+                      echo "[$(date -Iseconds)] synced repaired openclaw.json back to persistent and runtime config"
+                    fi
                     echo "[$(date -Iseconds)] openclaw doctor --fix exited with status ${STATUS}"
                     exit 0
                   fi
@@ -835,8 +855,6 @@ spec:
 
               echo "==> 6. Fixing Permissions"
               chown -R 0:0 /workspace /config /runtime-config /root/.ssh /skills-merged
-              chmod 700 /config
-              chmod 600 /config/openclaw.json
               echo "==> Init Complete."
               ls -la /workspace/
 
@@ -1046,6 +1064,9 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /home/node/.openclaw
+            - name: runtime-config
+              mountPath: /home/node/.openclaw/openclaw.json
+              subPath: openclaw.json
             - name: runtime-config
               mountPath: /home/node/.openclaw/swarm.config.json
               subPath: swarm.config.json
@@ -1286,6 +1307,9 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /home/node/.openclaw
+            - name: runtime-config
+              mountPath: /home/node/.openclaw/openclaw.json
+              subPath: openclaw.json
             - name: runtime-config
               mountPath: /home/node/.openclaw/swarm.config.json
               subPath: swarm.config.json

@@ -474,7 +474,7 @@ export function buildModuleBusterRunInput(config: AnyRecord, moduleId: string, m
         thinkingSource: opts?.thinkingSource || null,
         thinkingSupported: opts?.thinkingSupported ?? null,
         reasoningLevel: opts?.thinkingSupported === false ? 'not supported' : (opts?.thinking || 'default'),
-        runtimeKind: 'redis_dispatch',
+        runtimeKind: 'session',
       },
     },
     artifacts: buildModuleBusterArtifactRefs(config, dir, mod),

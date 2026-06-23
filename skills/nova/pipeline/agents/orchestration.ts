@@ -253,7 +253,24 @@ export async function spawnAcpAgent(
     ]), { correlation: spawnDiscordCorrelation }).catch((e) => {
       log('DEBUG', `Agent spawn Discord notice failed for ${gatewayLabel}: ${e?.message || e}`);
     });
-    return { label: trackingKey, childSessionKey: sessionData.childSessionKey, runId, dispatchId, streamLogPath: sessionData.streamLogPath };
+    return {
+      label: trackingKey,
+      childSessionKey: sessionData.childSessionKey,
+      runId,
+      dispatchId,
+      streamLogPath: sessionData.streamLogPath,
+      session_key: sessionData.childSessionKey,
+      stream_log_path: sessionData.streamLogPath || null,
+      gateway_label: gatewayLabel,
+      dispatch_id: dispatchId,
+      run_id: runId,
+      runtime: useSubagent ? 'subagent' : 'acp',
+      model: resolvedModel,
+      model_source: opts.model_source ?? opts.modelSource ?? null,
+      reasoning_level: thinkingLevel || null,
+      thinking_source: thinkingSource,
+      agent_id: agentId,
+    };
   } catch (e: any) {
     startupEvidenceReader.close?.();
     const spawnFailureDiscordCorrelation = {
@@ -447,7 +464,9 @@ export async function dispatchRedisTask(
 ) {
   const agentConfig = config.agents[agentType];
   log('STEP', `Dispatching to Redis: ${agentType} (module: ${moduleId}, type: ${taskType})`);
-  const taskPayload = (taskType === 'module_test' || taskType === 'gate_test') ? buildBusterPayload(config, progress, moduleId, taskType, payload, status, opts) : { module: moduleId, project: config.project, message: payload, timestamp: new Date().toISOString() };
+  const taskPayload = (taskType === 'module_test' || taskType === 'gate_test')
+    ? buildBusterPayload(config, progress, moduleId, taskType, payload, status, opts)
+    : { module: moduleId, project: config.project, message: payload, timestamp: new Date().toISOString() };
 
   try {
     if (agentConfig?.dispatch !== 'redis') {

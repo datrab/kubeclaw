@@ -89,9 +89,10 @@ const payload = buildBusterPayload(
     dispatch_id: dispatchId,
     model: 'gpt-5-codex',
     model_source: 'project_default',
-    thinking_source: 'not_supported_on_redis',
-    thinking_supported: false,
-    reasoning_level: 'not supported',
+    thinking: 'high',
+    thinking_source: 'project_default',
+    thinking_supported: true,
+    reasoning_level: 'high',
   },
 );
 
@@ -105,11 +106,11 @@ assert.equal(payload.session.timeout_seconds, payload.timeout_seconds);
 assert.equal(payload.session.runtime, 'subagent');
 assert.equal(payload.session.agentId, 'codex');
 assert.equal(payload.model_source, 'project_default');
-assert.equal(payload.thinking_source, 'not_supported_on_redis');
-assert.equal(payload.thinking_supported, false);
-assert.equal(payload.reasoning_level, 'not supported');
-assert.equal(payload.session.thinking_source, 'not_supported_on_redis');
-assert.equal(payload.session.reasoning_level, 'not supported');
+assert.equal(payload.thinking_source, 'project_default');
+assert.equal(payload.thinking_supported, true);
+assert.equal(payload.reasoning_level, 'high');
+assert.equal(payload.session.thinking_source, 'project_default');
+assert.equal(payload.session.reasoning_level, 'high');
 assert.equal(payload.test_config.suite_timeout_ms, 120000);
 assert.deepEqual(payload.suites, ['build', 'unit']);
 
@@ -188,9 +189,10 @@ const gatePayload = buildBusterPayload(
     dispatch_id: gateDispatchId,
     model: 'gpt-5-codex',
     model_source: 'project_default',
-    thinking_source: 'not_supported_on_redis',
-    thinking_supported: false,
-    reasoning_level: 'not supported',
+    thinking: 'high',
+    thinking_source: 'project_default',
+    thinking_supported: true,
+    reasoning_level: 'high',
     gate: progress.gates[gateId],
   },
 );
@@ -205,11 +207,11 @@ assert.equal(gatePayload.session.timeout_seconds, gatePayload.timeout_seconds);
 assert.equal(gatePayload.session.runtime, 'subagent');
 assert.equal(gatePayload.session.agentId, 'codex');
 assert.equal(gatePayload.model_source, 'project_default');
-assert.equal(gatePayload.thinking_source, 'not_supported_on_redis');
-assert.equal(gatePayload.thinking_supported, false);
-assert.equal(gatePayload.reasoning_level, 'not supported');
-assert.equal(gatePayload.session.thinking_source, 'not_supported_on_redis');
-assert.equal(gatePayload.session.reasoning_level, 'not supported');
+assert.equal(gatePayload.thinking_source, 'project_default');
+assert.equal(gatePayload.thinking_supported, true);
+assert.equal(gatePayload.reasoning_level, 'high');
+assert.equal(gatePayload.session.thinking_source, 'project_default');
+assert.equal(gatePayload.session.reasoning_level, 'high');
 assert.equal(gatePayload.test_config.suite_timeout_ms, 180000);
 assert.deepEqual(gatePayload.suites, ['manifest']);
 

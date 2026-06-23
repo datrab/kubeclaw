@@ -12,10 +12,11 @@ function makeSwarmConfig() {
   return {
     agents: {
       forge: { dispatch: 'acp', acp_agent_id: 'forge' },
-      buster: { dispatch: 'redis', redis_js_path: '/home/node/redis.js' },
+      buster: { dispatch: 'redis', redis_js_path: '/home/node/pipeline/tools/redis.ts' },
       echo: { dispatch: 'acp', acp_agent_id: 'echo' },
     },
     fallback_model: 'model',
+    agent_startup_retry_budget: 0,
     poll_interval_seconds: 1,
     default_timeout_minutes: 1,
     default_max_fails: 0,

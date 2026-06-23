@@ -128,7 +128,7 @@ export async function registerMigratedSeamsArea({
                     worker: {
                       schemaVersion: 'v1',
                       outcomeClass: 'passed',
-                      backendKind: 'session',
+                      backendKind: 'redis_dispatch',
                       dispatchRef: input?.refs?.moduleAttemptRef || null,
                       metadata: { outcomeClass: 'passed', attempt },
                     },

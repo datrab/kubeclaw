@@ -24,7 +24,7 @@ function makeConfig() {
     },
     agents: {
       forge: { dispatch: 'acp', acp_agent_id: 'forge' },
-      buster: { dispatch: 'redis', redis_js_path: '/home/node/redis.js' },
+      buster: { dispatch: 'acp', acp_agent_id: 'buster' },
       echo: { dispatch: 'acp', acp_agent_id: 'echo' },
     },
     fallback_model: 'model',

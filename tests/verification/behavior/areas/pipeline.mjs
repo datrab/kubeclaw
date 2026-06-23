@@ -2316,6 +2316,79 @@ const afterWorkConfig = {
     assert.equal(writtenReport.findings[0].severity, 'blocking');
   });
 
+  await record('architecture validator agent judgment uses canonical spawned session mechanics when enabled', async () => {
+    const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
+    const archValidatorMod = await importRuntimeModule(pipelineRuntimeRoot, '/app/skills/pipeline/services/arch-validator.ts');
+
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-arch-validator-agent-session-'));
+    const modulesDir = path.join(tempRoot, 'modules');
+    const moduleDir = path.join(modulesDir, '01-scaffold');
+    fs.mkdirSync(moduleDir, { recursive: true });
+    fs.writeFileSync(path.join(moduleDir, 'FORGE.md'), '# Forge\n');
+
+    const config = {
+      project: 'behavior-arch-validator-agent-session',
+      paths: {
+        swarm_dir: path.join(tempRoot, 'swarm'),
+        modules_dir: modulesDir,
+        progress_file: 'progress.json',
+      },
+    };
+    const progress = {
+      project: 'behavior-arch-validator-agent-session',
+      arch_validation: {
+        agent_enabled: true,
+      },
+      execution_order: ['01'],
+      modules: {
+        '01': { title: 'Scaffold', dir: '01-scaffold', stages: ['forge'] },
+      },
+      gates: {},
+    };
+
+    const outputPath = path.join(config.paths.swarm_dir, 'logs', 'architecture-validator', 'agent-findings.json');
+    const calls = [];
+    const result = await archValidatorMod.runArchValidator(config, progress, {
+      deps: {
+        spawnSession: async (_payload, prompt) => {
+          calls.push({ type: 'spawn', prompt });
+          fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+          fs.writeFileSync(outputPath, JSON.stringify([
+            {
+              id: 'COVERAGE_GAP',
+              severity: 'warn',
+              scope: 'project',
+              paths: [],
+              explanation: 'Agent judgment found a plausible coverage gap.',
+              remediation: 'Review execution order coverage.',
+            },
+          ], null, 2));
+          return {
+            childSessionKey: 'session-arch-validator-1',
+            streamLogPath: path.join(tempRoot, 'arch-validator.jsonl'),
+          };
+        },
+        pollForFile: async (_config, filePath) => {
+          calls.push({ type: 'poll', filePath });
+          return { ok: fs.existsSync(filePath), reason: 'target_reached', status: { file: filePath } };
+        },
+        terminateSession: async (sessionKey) => {
+          calls.push({ type: 'terminate', sessionKey });
+          return { confirmed: true, state: 'closed' };
+        },
+      },
+    });
+
+    assert.equal(result.blocked, false);
+    assert.equal(result.findings.some((finding) => finding.id === 'COVERAGE_GAP'), true);
+    assert.equal(calls.some((entry) => entry.type === 'spawn'), true);
+    assert.equal(calls.some((entry) => entry.type === 'poll' && entry.filePath === outputPath), true);
+    assert.equal(calls.some((entry) => entry.type === 'terminate' && entry.sessionKey === 'session-arch-validator-1'), true);
+    const spawnCall = calls.find((entry) => entry.type === 'spawn');
+    assert.equal(typeof spawnCall?.prompt, 'string');
+    assert.equal(spawnCall.prompt.includes(outputPath), true);
+  });
+
   await record('pipeline completion schedules generators through explicit stage owners in core-defined order', async () => {
     const { runtimeRoot: pipelineRuntimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
     installFakeRedis(pipelineRuntimeRoot);

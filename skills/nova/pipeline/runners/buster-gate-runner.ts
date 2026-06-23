@@ -123,7 +123,7 @@ async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, t
   completionIdentity.model_source = busterGatePolicy.model_source || null;
   completionIdentity.reasoning_level = busterGatePolicy.thinking_supported === false ? 'not supported' : (busterGatePolicy.thinking || 'default');
   completionIdentity.thinking_source = busterGatePolicy.thinking_source || null;
-  completionIdentity.runtime = 'redis_dispatch';
+  completionIdentity.runtime = 'session';
   const gateRateLimitStatusOptions = buildBusterGateRateLimitStatusOptions({ gateId, gate, completionIdentity });
   const busterPromptResult = deps.buildBusterGatePrompt(config, gateId, gate, instructions, commitHash, attempt, completionIdentity);
   const busterPrompt = busterPromptResult.prompt;
@@ -168,7 +168,7 @@ async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, t
     }
   }
 
-  // Archive stale Redis completions for this gate before dispatching while preserving the active dispatch identity.
+  // Archive stale completion entries for this gate before dispatching while preserving the active dispatch identity.
   const archiveResult = await deps.archiveModuleCompletions(
     config,
     gateId,
@@ -176,19 +176,19 @@ async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, t
     { ...buildBusterGateArchiveTarget(gateId, gate), deps: deps._explicitDeps }
   );
   if (archiveResult?.failed) {
-    const reason = `Gate '${gateId}' Redis completion archive failed before Buster dispatch: ${archiveResult.error || 'unknown'}`;
+    const reason = `Gate '${gateId}' completion archive failed before Buster dispatch: ${archiveResult.error || 'unknown'}`;
     log('ERROR', reason);
     return deps.pollResult(false, 'completion_archive_failed', {
       gate: gateId,
       status: STATUS.FAIL,
       reason,
       error: archiveResult.error || null,
-      source: 'redis_archive',
+      source: 'completion_archive',
       run_id: completionIdentity.runId,
       attempt: completionIdentity.attempt,
       dispatch_id: completionIdentity.dispatchId,
       gateway_label: completionIdentity.gateway_label,
-      _source: 'redis_archive',
+      _source: 'completion_archive',
       archive_failure: archiveResult,
     });
   }
@@ -393,7 +393,7 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
           level: 'CRITICAL',
           title: `Buster Gate Setup Failed: ${gate.title}`,
           description: `Gate instructions could not be read: ${e.message}`,
-          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: getRunId(config), gate_id: gateId, gate_type: gate.type, attempt, model, reasoning_level: busterGatePolicy.thinking_supported === false ? 'not supported' : (busterGatePolicy.thinking || 'default'), thinking_source: busterGatePolicy.thinking_source || null, runtime: 'redis_dispatch' }),
+          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: getRunId(config), gate_id: gateId, gate_type: gate.type, attempt, model, reasoning_level: busterGatePolicy.thinking_supported === false ? 'not supported' : (busterGatePolicy.thinking || 'default'), thinking_source: busterGatePolicy.thinking_source || null, runtime: 'session' }),
         },
       },
     });
@@ -407,11 +407,11 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
 
   const busterGatePolicy = deps.resolvePolicy(config, progress, 'buster', {
     scopeModel: gate.model || null,
-    dispatchPath: 'redis',
+    dispatchPath: config?.agents?.buster?.dispatch || 'acp',
   });
   const model = busterGatePolicy.model;
   deps.logEffectivePolicy(config, { scope: 'gate_buster', agent: 'buster', gateId, ...busterGatePolicy });
-  log('INFO', `Gate '${gateId}' model: ${model ?? '(none)'} [${busterGatePolicy.model_source}] thinking: not_supported_on_redis`);
+  log('INFO', `Gate '${gateId}' model: ${model ?? '(none)'} [${busterGatePolicy.model_source}] thinking: ${busterGatePolicy.thinking || 'default'} (${busterGatePolicy.thinking_source})`);
   const timeout = gate.timeout_minutes ?? config.default_timeout_minutes;
   const maxFixCycles = gate.max_fix_cycles ?? config.default_max_fails;
   const hasFixLoop = gate.on_fail === 'fix_and_retest';

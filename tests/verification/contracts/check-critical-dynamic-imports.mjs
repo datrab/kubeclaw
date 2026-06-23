@@ -53,7 +53,7 @@ assert.equal(
   'observability service should own OpenClaw model.usage aggregation',
 );
 
-assert.equal(orchestrationSource.includes("import { resolveRegisteredRedisAdapter } from '../services/adapter-registry.ts';"), true, 'orchestration should resolve Redis dispatch through the static adapter registry');
+assert.equal(orchestrationSource.includes("import { resolveRegisteredRedisAdapter } from '../services/adapter-registry.ts';"), false, 'orchestration should not retain the removed Redis dispatch adapter path');
 assert.equal(countDynamicImports(orchestrationSource), 0, 'orchestration should not keep config-path dynamic imports');
 assert.equal(orchestrationSource.includes('pathToFileURL'), false, 'orchestration should not convert config paths to import URLs');
 
@@ -103,7 +103,7 @@ function assertUnknownAdapter(fn, label) {
 }
 
 assertUnknownAdapter(() => resolveRegisteredRedisAdapter({
-  agents: { buster: { dispatch: 'redis', redis_js_path: '/app/skills/redis.ts' } },
+  agents: { buster: { dispatch: 'acp', acp_agent_id: 'buster', redis_js_path: '/app/skills/redis.ts' } },
 }, { agentType: 'buster', source: 'legacy root alias' }), 'removed Redis root alias');
 assertUnknownAdapter(() => resolveRegisteredProjectSummaryGenerator({
   paths: { project_summary_js: '/app/skills/project-summary.ts' },

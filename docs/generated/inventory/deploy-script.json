@@ -203,7 +203,6 @@
     "delete_namespaced_resource_if_present",
     "delete_manifest_if_cluster_resource_present",
     "wait_for_agent_rollout",
-    "restart_agent_deployment",
     "append_image_override_file",
     "append_code_bundle_override_file",
     "yaml_get_section_key",
@@ -252,12 +251,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 595,
-    "secrets": 639,
-    "tailscale": 698,
-    "infra": 789,
-    "agents": 992,
-    "smoke": 1093,
-    "teardown": 1232
+    "setup": 587,
+    "secrets": 631,
+    "tailscale": 690,
+    "infra": 781,
+    "agents": 980,
+    "smoke": 1081,
+    "teardown": 1220
   }
 }

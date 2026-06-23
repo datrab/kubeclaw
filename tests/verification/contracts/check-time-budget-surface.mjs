@@ -23,6 +23,7 @@ const rateLimitPath = path.join(sourceRoot, 'skills/nova/pipeline/services/rate-
 const eventContractPath = path.join(sourceRoot, 'skills/common/pipeline/services/pipeline-event-contract.ts');
 const commonGatewayPath = path.join(sourceRoot, 'skills/common/pipeline/integrations/gateway.ts');
 const commonLifecyclePath = path.join(sourceRoot, 'skills/common/pipeline/agents/lifecycle.ts');
+const commonGitWorktreePath = path.join(sourceRoot, 'skills/common/pipeline/integrations/git-worktree.ts');
 const moduleRunnerPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner.ts');
 const novaGitWorktreePath = path.join(sourceRoot, 'skills/nova/pipeline/integrations/git-worktree.ts');
 const busterGitWorkflowsPath = path.join(sourceRoot, 'skills/buster/pipeline/services/git-workflows.ts');
@@ -35,6 +36,7 @@ const rateLimitSource = fs.readFileSync(rateLimitPath, 'utf8');
 const eventContractSource = fs.readFileSync(eventContractPath, 'utf8');
 const commonGatewaySource = fs.readFileSync(commonGatewayPath, 'utf8');
 const commonLifecycleSource = fs.readFileSync(commonLifecyclePath, 'utf8');
+const commonGitWorktreeSource = fs.readFileSync(commonGitWorktreePath, 'utf8');
 const moduleRunnerSource = fs.readFileSync(moduleRunnerPath, 'utf8');
 const novaGitWorktreeSource = fs.readFileSync(novaGitWorktreePath, 'utf8');
 const busterGitWorkflowsSource = fs.readFileSync(busterGitWorkflowsPath, 'utf8');
@@ -65,7 +67,8 @@ assert.equal(commonGatewaySource.includes('await sleep(retryDelayMs, { budget, s
 assert.equal(commonGatewaySource.includes('throwIfCallerAborted(signal, budget)'), true, 'gateway retries must propagate caller aborts instead of retrying them');
 assert.equal(commonLifecycleSource.includes('await sleep(retryDelayMs, { budget, signal })'), true, 'session spawn retry waits must be abortable and budget-aware');
 assert.equal(moduleRunnerSource.includes('deps.sleep(5000, { budget: opts.budget || null, signal: opts.signal || null })'), true, 'module retry wait must receive caller budget/signal');
-assert.equal(novaGitWorktreeSource.includes('await sleep(delayMs, { budget, signal })'), true, 'Nova git push retry waits must be abortable and budget-aware');
+assert.equal(commonGitWorktreeSource.includes('await sleep(delayMs, { budget, signal })'), true, 'shared git push retry waits must be abortable and budget-aware');
+assert.equal(novaGitWorktreeSource.includes("export * from '../../../common/pipeline/integrations/git-worktree.ts';"), true, 'Nova git worktree must re-export the shared implementation authority');
 assert.equal(busterGitWorkflowsSource.includes('await sleep(retryDelayMs * Math.pow(2, attempt - 1), { budget, signal })'), true, 'Buster git retry backoff must use shared abortable sleep');
 assert.equal(busterGitWorkflowsSource.includes('new Promise(resolve => setTimeout'), false, 'Buster git retry backoff must not use raw fixed sleeps');
 

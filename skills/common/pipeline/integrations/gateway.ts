@@ -16,7 +16,6 @@ export const GATEWAY_INVOKE_POLICIES = {
   sessionSend: { timeoutMs: 15000, maxRetries: 3, retryDelayMs: 5000 },
   subagentKill: { timeoutMs: 30000, maxRetries: 3, retryDelayMs: 5000 },
   subagentList: { timeoutMs: 30000, maxRetries: 3, retryDelayMs: 5000 },
-  completion: { timeoutMs: 120000, maxRetries: 3, retryDelayMs: 5000 },
   health: { timeoutMs: 5000 },
 } as const;
 
@@ -301,13 +300,6 @@ export async function killGatewaySubagent(target: string, timeoutMs = GATEWAY_IN
 export async function listGatewaySubagents(timeoutMs = GATEWAY_INVOKE_POLICIES.subagentList.timeoutMs, opts: GatewayInvokeOptions = {}) {
   return gatewayInvoke('subagents', { action: 'list' }, timeoutMs, {
     ...GATEWAY_INVOKE_POLICIES.subagentList,
-    ...opts,
-  });
-}
-
-export async function completeGatewayPrompt(args: unknown, timeoutMs = GATEWAY_INVOKE_POLICIES.completion.timeoutMs, opts: GatewayInvokeOptions = {}) {
-  return gatewayInvoke('complete', args, timeoutMs, {
-    ...GATEWAY_INVOKE_POLICIES.completion,
     ...opts,
   });
 }

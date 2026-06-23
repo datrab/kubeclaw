@@ -47,8 +47,8 @@ await record('Shared Discord identity builder preserves canonical field ordering
     gateway_label: 'dispatch-buster-05-attempt-2',
     session_key: 'agent:main:acp:buster-05-attempt-2',
     model: 'gpt-5.4',
-    reasoning_level: 'not supported',
-    thinking_source: 'not_supported_on_redis',
+    reasoning_level: 'high',
+    thinking_source: 'project_default',
     runtime: 'redis_dispatch',
   });
 
@@ -60,7 +60,7 @@ await record('Shared Discord identity builder preserves canonical field ordering
     { name: 'Gateway Label', value: 'dispatch-buster-05-attempt-2', inline: false },
     { name: 'Session', value: 'agent:main:acp:buster-05-attempt-2', inline: false },
     { name: 'Model', value: 'gpt-5.4', inline: true },
-    { name: 'Reasoning', value: 'not supported (not_supported_on_redis)', inline: true },
+    { name: 'Reasoning', value: 'high (project_default)', inline: true },
     { name: 'Runtime', value: 'redis_dispatch', inline: true },
   ]);
 

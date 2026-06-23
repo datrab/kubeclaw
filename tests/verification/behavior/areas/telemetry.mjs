@@ -829,7 +829,8 @@ const config = {
     pluginRegistry: registry,
     agents: {
       buster: {
-        dispatch: 'redis',
+        dispatch: 'acp',
+        acp_agent_id: 'buster',
         redis_js_path: fakeRedisModulePath,
       },
     },

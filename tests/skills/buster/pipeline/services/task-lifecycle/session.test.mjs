@@ -4,6 +4,7 @@ import path from 'node:path';
 import test from 'node:test';
 
 import {
+  spawnTaskSession,
   killTaskSession,
   monitorTaskSession,
   publishTaskOutcome,
@@ -25,6 +26,57 @@ function testSessionData() {
     label: 'dispatch-123',
   };
 }
+
+test('spawnTaskSession forwards thinking_level from Redis payload into spawnSession', async () => {
+  const spawnCalls = [];
+
+  const result = await spawnTaskSession({
+    payload: {
+      project: 'project',
+      run_id: 'run-1',
+      dispatch_id: 'dispatch-123',
+      attempt: 2,
+      session: {
+        runtime: 'acp',
+        model: 'gpt-5.4',
+        agentId: 'buster',
+        cwd: '.',
+        label: 'dispatch-123',
+        thinking_level: 'high',
+      },
+    },
+    prompt: 'test prompt',
+    timeoutSeconds: 60,
+    moduleId: 'mod',
+    project: 'project',
+    taskType: 'module_test',
+    logger: noopLogger(),
+    tctx: {},
+    currentDiscordContext: (extra = {}) => extra,
+    discord: () => {},
+    dispatchIdForCompletion: 'dispatch-123',
+    budget: null,
+    signal: null,
+    testHooks: {
+      async spawnSession(payload, prompt, timeoutSeconds, opts) {
+        spawnCalls.push({ payload, prompt, timeoutSeconds, opts });
+        return {
+          childSessionKey: 'session-123',
+          streamLogPath: '/tmp/session.log',
+          runtime: 'acp',
+          model: 'gpt-5.4',
+          agentId: 'buster',
+          label: 'dispatch-123',
+        };
+      },
+    },
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(spawnCalls.length, 1);
+  assert.equal(spawnCalls[0].opts.thinking, 'high');
+  assert.equal(spawnCalls[0].payload.session.thinking_level, 'high');
+});
 
 test('publishTaskOutcome normalizes monitor hard-timeout results', () => {
   const discordCalls = [];

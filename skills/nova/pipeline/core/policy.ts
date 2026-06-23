@@ -10,14 +10,9 @@
 //   5. no value (null)   — caller surfaces missing config
 //
 // THINKING SUPPORT BOUNDARIES:
-//   ACP / subagent paths (Forge, Echo/reviewer): fully supported.
-//   Redis / Buster dispatch: NOT supported.
-//     Rationale: Buster receives a JSON task payload dispatched over Redis.
-//     The Redis dispatcher does not have a channel to forward thinking settings
-//     to the Buster agent; any thinking value would be silently discarded by the
-//     harness layer. Rather than pretend it applies, the policy resolver
-//     explicitly records thinking_source as 'not_supported_on_redis' so that
-//     post-run analysis can see the boundary was respected rather than confused.
+//   ACP / subagent paths: fully supported.
+//   Redis / Buster dispatch: supported when the Redis payload carries the
+//   thinking level through to the Buster session launch.
 
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
@@ -31,10 +26,10 @@ import { canonicalizeModelId } from '../agents/runtime.ts';
 export const VALID_THINKING_LEVELS = ['none', 'low', 'medium', 'high', 'xhigh', 'adaptive'];
 
 /** Dispatch paths that support forwarding thinking to the agent harness. */
-export const THINKING_SUPPORTED_PATHS = ['acp', 'subagent'];
+export const THINKING_SUPPORTED_PATHS = ['acp', 'subagent', 'redis'];
 
 /** Dispatch paths where thinking parameters are silently dropped by the harness. */
-export const THINKING_UNSUPPORTED_PATHS = ['redis'];
+export const THINKING_UNSUPPORTED_PATHS = [];
 
 export function validateThinkingLevel(value: unknown, context = 'thinking') {
   if (value === null || value === undefined || value === '') return;

@@ -119,7 +119,7 @@ await record('runtime run identity remains explicit per context/config in one pr
 });
 
 await record('shared gateway helper exposes typed gateway operation surfaces', async () => {
-  for (const name of ['getGatewaySessionStatus', 'spawnGatewaySession', 'sendGatewaySessionMessage', 'killGatewaySubagent', 'listGatewaySubagents', 'completeGatewayPrompt', 'checkGatewayHealth']) {
+  for (const name of ['getGatewaySessionStatus', 'spawnGatewaySession', 'sendGatewaySessionMessage', 'killGatewaySubagent', 'listGatewaySubagents', 'checkGatewayHealth']) {
     assert.equal(typeof gatewayMod[name], 'function');
   }
   assert.equal(typeof gatewayMod.resolveGatewayBaseUrl, 'function');

@@ -76,10 +76,10 @@ export async function runModuleBusterPhase({
     setLogScope(moduleId, 'buster');
     const busterPolicy = deps.resolvePolicy(config, progress, 'buster', {
       scopeModel: mod.buster_model || null,
-      dispatchPath: 'redis',
+      dispatchPath: config?.agents?.buster?.dispatch || 'acp',
     });
     const busterModel = busterPolicy.model;
-    log('STEP', `Phase: BUSTER (model: ${busterModel ?? '(none)'}, thinking: not_supported_on_redis, model_source: ${busterPolicy.model_source})`);
+    log('STEP', `Phase: BUSTER (model: ${busterModel ?? '(none)'}, thinking: ${busterPolicy.thinking || 'default'}, thinking_source: ${busterPolicy.thinking_source}, model_source: ${busterPolicy.model_source})`);
     deps.logEffectivePolicy(config, { scope: 'module_buster', agent: 'buster', moduleId, ...busterPolicy });
     getModuleStats(config).total_buster_attempts++;
     onPhaseStarted(_telemetryCtx(config), moduleId, 'buster', busterModel);

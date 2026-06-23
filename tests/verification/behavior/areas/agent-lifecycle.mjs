@@ -589,214 +589,56 @@ await record('agent kill stops the session without core agent.killed telemetry',
   }
 });
 
-await record('dispatchRedisTask imports the Redis dispatch abstraction directly without spawning a temp node wrapper', async () => {
+await record('spawnAgent routes Buster through the canonical session spawn path', async () => {
   const orchestrationRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
   installFakeRedis(orchestrationRuntimeRoot);
   globalThis.__fakeRedisCalls = [];
   globalThis.__fakeRedisCounters = Object.create(null);
 
   const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.ts');
+  const lifecycleTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/lifecycle.ts');
+  const runtimeCoreMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/core/runtime.ts');
 
-  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-redis-dispatch-direct-'));
+  const requests = [];
+  const gateway = await startGatewayServer(async ({ body }) => {
+    requests.push(body);
+    if (body?.tool === 'sessions_spawn') {
+      return { result: { details: { status: 'accepted', childSessionKey: 'agent:main:acp:buster-spawn-1', runId: 'buster-spawn-run-1' } } };
+    }
+    return { result: { details: { ok: true } } };
+  });
+
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-session-spawn-'));
   const swarmDir = path.join(repoRoot, '.swarm');
   const modulesDir = path.join(swarmDir, 'modules');
   fs.mkdirSync(path.join(modulesDir, '01'), { recursive: true });
-
-  const behaviorTempRoot = path.join(os.homedir(), '.openclaw', 'tmp');
-  fs.mkdirSync(behaviorTempRoot, { recursive: true });
-  const fakeRedisModuleDir = fs.mkdtempSync(path.join(behaviorTempRoot, 'behavior-redis-dispatch-'));
-  const fakeRedisModulePath = path.join(fakeRedisModuleDir, 'redis-dispatch-direct.mjs');
-  const callPath = path.join(fakeRedisModuleDir, 'dispatch-call.json');
-  const fakeBinDir = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-redis-dispatch-bin-'));
-  const nodeTrapLog = path.join(fakeBinDir, 'node-trap.log');
-
-  writeExecutable(path.join(fakeBinDir, 'node'), `#!/bin/sh\necho "$@" >> ${nodeTrapLog}\nexit 88\n`);
-
-  process.env.BEHAVIOR_REDIS_DISPATCH_CALL_PATH = callPath;
-  fs.writeFileSync(fakeRedisModulePath, `
-import fs from 'fs';
-
-export default {
-  async publishTask(targetAgent, type, payload, iteration = 1) {
-    fs.writeFileSync(process.env.BEHAVIOR_REDIS_DISPATCH_CALL_PATH, JSON.stringify({
-      targetAgent,
-      type,
-      payload,
-      iteration,
-    }, null, 2));
-    return { status: 'sent', id: 'behavior-redis-dispatch-1', stream: 'swarm:buster:tasks' };
-  },
-};
-`);
-
-    const deps = {
-      adapters: {
-        redis: (await import(`file://${fakeRedisModulePath}`)).default,
-      },
-    };
-const config = {
-    ...platformAgentLifecycleDefaults(),
-    project: 'behavior-redis-dispatch-direct',
-    repo_root: repoRoot,
-    paths: {
-      swarm_dir: swarmDir,
-      modules_dir: modulesDir,
-    },
-    agents: {
-      buster: {
-        dispatch: 'redis',
-        redis_js_path: fakeRedisModulePath,
-      },
-    },
-      };
-
-  const progress = {
-    modules: {
-      '01': { dir: '01', timeout_minutes: 5, test_suites: ['unit'] },
-    },
-    gates: {},
-  };
-
-  const prevPath = process.env.PATH;
-  process.env.PATH = fakeBinDir;
-
-  try {
-    const result = await orchestrationTestMod.dispatchRedisTask(
-      config,
-      progress,
-      'buster',
-      '01',
-      'module_test',
-      'Run the unit suite',
-      { forge_commit_hash: 'abc123' },
-      {
-        model: 'openai/gpt-5.4',
-        run_id: 'run-dispatch-direct-1',
-        attempt: 2,
-        dispatch_id: 'dispatch-buster-01-attempt-2',
-        deps,
-      },
-    );
-
-    assert.equal(result.status, 'sent');
-    assert.equal(result.id, 'behavior-redis-dispatch-1');
-    assert.equal(result.stream, 'swarm:buster:tasks');
-    assert.equal(result.run_id, 'run-dispatch-direct-1');
-    assert.equal(result.attempt, 2);
-    assert.equal(result.dispatch_id, 'dispatch-buster-01-attempt-2');
-    assert.equal(fs.existsSync(nodeTrapLog), false);
-
-    const dispatchCall = JSON.parse(fs.readFileSync(callPath, 'utf8'));
-    assert.equal(dispatchCall.targetAgent, 'buster');
-    assert.equal(dispatchCall.type, 'module_test');
-    assert.equal(dispatchCall.iteration, 1);
-    assert.equal(dispatchCall.payload.module_id, '01');
-    assert.equal(dispatchCall.payload.run_id, 'run-dispatch-direct-1');
-    assert.equal(dispatchCall.payload.attempt, 2);
-    assert.equal(dispatchCall.payload.dispatch_id, 'dispatch-buster-01-attempt-2');
-    assert.equal(dispatchCall.payload.session.label, 'dispatch-buster-01-attempt-2');
-  } finally {
-    delete process.env.BEHAVIOR_REDIS_DISPATCH_CALL_PATH;
-    process.env.PATH = prevPath;
-    fs.rmSync(fakeRedisModuleDir, { recursive: true, force: true });
-    fs.rmSync(fakeBinDir, { recursive: true, force: true });
-  }
-});
-
-await record('dispatchRedisTask resolves Redis test adapters per config in one process', async () => {
-  const orchestrationRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
-  installFakeRedis(orchestrationRuntimeRoot);
-  globalThis.__fakeRedisCalls = [];
-  globalThis.__fakeRedisCounters = Object.create(null);
-
-  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.ts');
-  const calls = [];
-
-  function makeConfig(project, adapterId) {
-    const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), `behavior-redis-dispatch-${adapterId}-`));
-    const swarmDir = path.join(repoRoot, '.swarm');
-    const modulesDir = path.join(swarmDir, 'modules');
-    fs.mkdirSync(path.join(modulesDir, '01'), { recursive: true });
-    const deps = {
-      adapters: {
-        redis: {
-          async publishTask(targetAgent, type, payload, iteration = 1) {
-            calls.push({ adapterId, targetAgent, type, project: payload.project, iteration });
-            return { status: 'sent', id: adapterId, stream: `swarm:${adapterId}:tasks` };
-          },
-        },
-      },
-    };
-    const config = {
-      ...platformAgentLifecycleDefaults(),
-      project,
-      repo_root: repoRoot,
-      paths: { swarm_dir: swarmDir, modules_dir: modulesDir },
-      agents: { buster: { dispatch: 'redis', redis_adapter: 'pipeline-redis' } },
-    };
-    return { config, deps };
-  }
-
-  const progress = {
-    modules: { '01': { dir: '01', timeout_minutes: 5, test_suites: ['unit'] } },
-    gates: {},
-  };
-  const firstFixture = makeConfig('behavior-redis-dispatch-first', 'first-adapter');
-  const secondFixture = makeConfig('behavior-redis-dispatch-second', 'second-adapter');
-
-  const firstResult = await orchestrationTestMod.dispatchRedisTask(
-    firstFixture.config,
-    progress,
-    'buster',
-    '01',
-    'module_test',
-    'Run the first unit suite',
-    { forge_commit_hash: 'abc123' },
-    { model: 'openai/gpt-5.4', run_id: 'run-first', attempt: 1, dispatch_id: 'dispatch-first', deps: firstFixture.deps },
-  );
-  const secondResult = await orchestrationTestMod.dispatchRedisTask(
-    secondFixture.config,
-    progress,
-    'buster',
-    '01',
-    'module_test',
-    'Run the second unit suite',
-    { forge_commit_hash: 'def456' },
-    { model: 'openai/gpt-5.4', run_id: 'run-second', attempt: 1, dispatch_id: 'dispatch-second', deps: secondFixture.deps },
-  );
-
-  assert.equal(firstResult.id, 'first-adapter');
-  assert.equal(secondResult.id, 'second-adapter');
-  assert.deepEqual(calls.map((entry) => entry.adapterId), ['first-adapter', 'second-adapter']);
-  assert.deepEqual(calls.map((entry) => entry.project), ['behavior-redis-dispatch-first', 'behavior-redis-dispatch-second']);
-});
-
-await record('dispatchRedisTask stays fail-closed when redis_js_path is not a registered adapter', async () => {
-  const orchestrationRuntimeRoot = materializeRuntimeTree(sourceRoot, overlayRoot, 'general').runtimeRoot;
-  installFakeRedis(orchestrationRuntimeRoot);
-  globalThis.__fakeRedisCalls = [];
-  globalThis.__fakeRedisCounters = Object.create(null);
-
-  const orchestrationTestMod = await importRuntimeModule(orchestrationRuntimeRoot, '/app/skills/pipeline/agents/orchestration.ts');
-  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-redis-dispatch-invalid-'));
-  const swarmDir = path.join(repoRoot, '.swarm');
-  const modulesDir = path.join(swarmDir, 'modules');
-  fs.mkdirSync(path.join(modulesDir, '01'), { recursive: true });
+  const runId = 'run-buster-session-spawn-1';
+  const prevGatewayUrl = process.env.OPENCLAW_GATEWAY_URL;
+  process.env.OPENCLAW_GATEWAY_URL = gateway.url;
 
   const config = {
     ...platformAgentLifecycleDefaults(),
-    project: 'behavior-redis-dispatch-invalid',
+    project: 'behavior-buster-session-spawn',
     repo_root: repoRoot,
+    telemetry: { enabled: true },
     paths: {
       swarm_dir: swarmDir,
       modules_dir: modulesDir,
     },
     agents: {
       buster: {
-        dispatch: 'redis',
-        redis_js_path: '/tmp/behavior-invalid-redis-dispatch.mjs',
+        dispatch: 'acp',
+        acp_agent_id: 'buster',
+        cwd: repoRoot,
+        timeout_seconds: 2700,
       },
     },
+    _runId: runId,
+    run_id: runId,
+    _disable_discord_webhooks: true,
+    discord_webhook_url: 'https://example.invalid/webhook',
+    _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
+    pluginRegistry: await buildBuiltInRegistry(orchestrationRuntimeRoot),
   };
 
   const progress = {
@@ -806,27 +648,43 @@ await record('dispatchRedisTask stays fail-closed when redis_js_path is not a re
     gates: {},
   };
 
-  await assert.rejects(
-    orchestrationTestMod.dispatchRedisTask(
+  try {
+    const result = await orchestrationTestMod.spawnAgent(
       config,
       progress,
       'buster',
       '01',
-      'module_test',
+      'openai/gpt-5.4',
       'Run the unit suite',
-      { forge_commit_hash: 'abc123' },
       {
-        model: 'openai/gpt-5.4',
-        run_id: 'run-dispatch-invalid-1',
-        attempt: 1,
-        dispatch_id: 'dispatch-invalid-1',
+        taskType: 'module_test',
+        run_id: runId,
+        attempt: 2,
+        dispatch_id: 'dispatch-buster-01-attempt-2',
       },
-    ),
-    (err) => {
-      assert.equal(err.message.includes('Failed to dispatch Redis task to buster: agents.buster Redis adapter:'), true);
-      assert.equal(err.message.includes('is not a registered adapter'), true);
-      return true;
-    },
-  );
+    );
+    await flushAsync();
+
+    assert.equal(result.childSessionKey, 'agent:main:acp:buster-spawn-1');
+    assert.equal(result.dispatch_id, 'dispatch-buster-01-attempt-2');
+    assert.equal(result.runtime, 'acp');
+
+    const spawnRequests = requests.filter((req) => req?.tool === 'sessions_spawn');
+    assert.equal(spawnRequests.length, 1);
+    assert.equal(spawnRequests[0]?.args?.runId, runId);
+    assert.equal(spawnRequests[0]?.args?.project, config.project);
+    assert.equal(spawnRequests[0]?.args?.agentType, 'buster');
+    assert.equal(spawnRequests[0]?.args?.moduleId, '01');
+    assert.equal(spawnRequests[0]?.args?.dispatchId, 'dispatch-buster-01-attempt-2');
+    assert.equal(spawnRequests[0]?.args?.metadata?.attempt, 2);
+
+    const tracked = lifecycleTestMod.getTrackedAgent('buster-01');
+    assert.equal(tracked?.runtime, 'acp');
+    assert.equal(tracked?.sessionKey, 'agent:main:acp:buster-spawn-1');
+  } finally {
+    lifecycleTestMod.untrackAgent('buster-01');
+    process.env.OPENCLAW_GATEWAY_URL = prevGatewayUrl;
+    await gateway.close();
+  }
 });
 }

@@ -408,14 +408,20 @@ export class AgentObservabilityIngester {
   async trim(): Promise<void> {
     const redis = await this.ensureRedisReady();
     if (!redis.xtrim) return;
-    await this.redisCall(
-      () => redis.xtrim?.(AGENT_OBSERVABILITY_CONTROL_STREAM, 'MAXLEN', '~', this.config.controlStreamMaxLen),
-      'agent observability control XTRIM',
-    );
-    await this.redisCall(
-      () => redis.xtrim?.(AGENT_OBSERVABILITY_DEADLETTER_STREAM, 'MAXLEN', '~', this.config.deadLetterMaxLen),
-      'agent observability dead-letter XTRIM',
-    );
+    const trimTargets: Array<[AgentObservabilityStreamKey | typeof AGENT_OBSERVABILITY_DEADLETTER_STREAM, number, string]> = [
+      [AGENT_OBSERVABILITY_CONTROL_STREAM, this.config.controlStreamMaxLen, 'agent observability control XTRIM'],
+      [AGENT_OBSERVABILITY_DEADLETTER_STREAM, this.config.deadLetterMaxLen, 'agent observability dead-letter XTRIM'],
+    ];
+    for (const [streamKey, maxLen, description] of trimTargets) {
+      try {
+        await this.redisCall(
+          () => redis.xtrim?.(streamKey, 'MAXLEN', '~', maxLen),
+          description,
+        );
+      } catch (error) {
+        this.logger.warn?.(`[agent-observability-ingester] ${description} failed: ${errorMessage(error)}`);
+      }
+    }
   }
 
   async checkPressure(ctx: unknown = {}): Promise<AgentObservabilityPressureStatus> {

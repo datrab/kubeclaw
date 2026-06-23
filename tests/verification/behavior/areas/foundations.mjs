@@ -162,7 +162,7 @@ await record('packaged pipeline entrypoints load cleanly', async () => {
   for (const key of ['FAIL_PATTERNS', 'extractAgentFailReason', 'extractPreTestFailReason', 'getFailedSuiteNames', 'handleFail', 'injectNeedsNova']) {
     assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, key), false);
   }
-  for (const key of ['modelToHarness', 'isSubagentModel', 'resolveRuntime', 'acpLabel', 'spawnAcpAgent', 'killAcpAgent', 'spawnAgent', 'killAgent', 'steerAgent', 'verifyAgentAlive', 'dispatchRedisTask', 'buildBusterPayload', 'spawnReviewerAgent', 'killReviewerAgent']) {
+  for (const key of ['modelToHarness', 'isSubagentModel', 'resolveRuntime', 'acpLabel', 'spawnAcpAgent', 'killAcpAgent', 'spawnAgent', 'killAgent', 'steerAgent', 'verifyAgentAlive', 'buildBusterPayload', 'spawnReviewerAgent', 'killReviewerAgent']) {
     assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, key), false);
   }
   for (const key of ['createRunId', 'createRunStats', 'bindRunContext', 'resolveRunContext', 'getRunState', 'getRunId', 'getRunStats', 'output', 'loadProgress']) {
@@ -914,7 +914,7 @@ await record('config validation derives accepted gate types from the startup plu
     },
     agents: {
       forge: { dispatch: 'acp', acp_agent_id: 'codex' },
-      buster: { dispatch: 'redis', redis_js_path: '/app/skills/pipeline/tools/redis.ts' },
+      buster: { dispatch: 'acp', acp_agent_id: 'buster' },
       echo: { dispatch: 'acp', acp_agent_id: 'codex' },
     },
     fallback_model: 'test-fallback-model',
@@ -1061,11 +1061,11 @@ await record('config validation derives accepted gate types from the startup plu
     /config\.default_timeout_minutes: required in swarm\.config\.json/
   );
 
-  const missingBusterRedisPath = buildConfig();
-  delete missingBusterRedisPath.agents.buster.redis_js_path;
+  const missingBusterAgentId = buildConfig();
+  delete missingBusterAgentId.agents.buster.acp_agent_id;
   assert.throws(
-    () => configMod.validateConfig(missingBusterRedisPath, validProgress),
-    /config\.agents\.buster\.redis_js_path: required for redis dispatch agents in swarm\.config\.json/
+    () => configMod.validateConfig(missingBusterAgentId, validProgress),
+    /Buster acp_agent_id missing/
   );
 
   const removedTelemetryStreamKeyConfig = buildConfig();

@@ -63,7 +63,6 @@ for (const wrapperName of [
   'sendGatewaySessionMessage',
   'killGatewaySubagent',
   'listGatewaySubagents',
-  'completeGatewayPrompt',
   'checkGatewayHealth',
 ]) {
   assert.equal(
@@ -78,7 +77,6 @@ for (const [relPath, marker] of [
   ['skills/common/pipeline/agents/lifecycle.ts', 'sendGatewaySessionMessage'],
   ['skills/common/pipeline/agents/acp-monitor.ts', 'getGatewaySessionStatus'],
   ['skills/nova/pipeline/services/failures/presentation.ts', 'sendGatewaySessionMessage'],
-  ['skills/nova/pipeline/services/arch-validator.ts', 'completeGatewayPrompt'],
   ['skills/nova/pipeline/services/polling-session-end.ts', 'sendGatewaySessionMessage'],
   ['skills/nova/pipeline/agents/orchestration.ts', 'sendGatewaySessionMessage'],
   ['skills/nova/pipeline/agents/orchestration-healthcheck.ts', 'getGatewaySessionStatus'],

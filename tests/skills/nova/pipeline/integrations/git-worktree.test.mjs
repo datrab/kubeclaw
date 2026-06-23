@@ -5,7 +5,8 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { __gitWorktreeTest, gitSyncBeforeBuster } from '../../../../../skills/nova/pipeline/integrations/git-worktree.ts';
+import { __gitWorktreeTest, gitCommitAndPush, isRuntimeStatePath } from '../../../../../skills/nova/pipeline/integrations/git-worktree.ts';
+import { gitSyncBeforeBuster } from '../../../../../skills/nova/pipeline/services/git-sync-before-buster.ts';
 import { createRunStats } from '../../../../../skills/nova/pipeline/core/runtime.ts';
 
 function git(repoRoot, args) {
@@ -134,6 +135,24 @@ test('rebase detection resolves gitdir paths for linked worktrees', () => {
   assert.equal(__gitWorktreeTest.isRebaseInProgress(linkedRoot), true);
 });
 
+test('runtime-state classifier treats pipeline-generated module artifacts as safe auto-heal files', () => {
+  const runtimePaths = [
+    'Projects/demo/src/.swarm/progress.json',
+    'Projects/demo/src/.swarm/modules/01-foundation/forge-completion.json',
+    'Projects/demo/src/.swarm/modules/01-foundation/buster-completion.json',
+    'Projects/demo/src/.swarm/modules/01-foundation/forge-output.json',
+    'Projects/demo/src/.swarm/modules/01-foundation/status.json',
+    'Projects/demo/src/.swarm/modules/01-foundation/runtime-summary.md',
+  ];
+  const nonRuntimePaths = [
+    'Projects/demo/src/.swarm/modules/01-foundation/FORGE.md',
+    'Projects/demo/src/.swarm/modules/01-foundation/implementation.js',
+  ];
+
+  for (const relPath of runtimePaths) assert.equal(isRuntimeStatePath(relPath), true, relPath);
+  for (const relPath of nonRuntimePaths) assert.equal(isRuntimeStatePath(relPath), false, relPath);
+});
+
 test('gitSyncBeforeBuster commits only meaningful forge paths and auto-resolves scoped rebase conflicts', async () => {
   const { root, repoRoot, otherRoot } = makeRemoteRepo();
 
@@ -147,6 +166,7 @@ test('gitSyncBeforeBuster commits only meaningful forge paths and auto-resolves 
     const runtimeLog = path.join(repoRoot, 'Projects/demo/src/.swarm/logs/pipeline/runtime.jsonl');
     fs.mkdirSync(path.dirname(runtimeLog), { recursive: true });
     fs.writeFileSync(runtimeLog, '{"event":"live"}\n');
+    fs.writeFileSync(path.join(repoRoot, 'README-outside-project.md'), 'leave me dirty\n');
 
     const config = {
       repo_root: repoRoot,
@@ -168,6 +188,7 @@ test('gitSyncBeforeBuster commits only meaningful forge paths and auto-resolves 
     assert.match(result.commitHash, /^[0-9a-f]{40}$/);
     assert.equal(fs.readFileSync(path.join(repoRoot, 'Projects/demo/src/package.json'), 'utf8'), '{\n  "name": "local"\n}\n');
     assert.equal(fs.readFileSync(runtimeLog, 'utf8'), '{"event":"live"}\n');
+    assert.equal(fs.readFileSync(path.join(repoRoot, 'README-outside-project.md'), 'utf8'), 'leave me dirty\n');
 
     const committedFiles = git(repoRoot, ['show', '--name-only', '--pretty=format:', 'HEAD'])
       .split('\n')
@@ -180,7 +201,43 @@ test('gitSyncBeforeBuster commits only meaningful forge paths and auto-resolves 
       git(repoRoot, ['show', 'origin/master:Projects/demo/src/package.json']),
       '{\n  "name": "local"\n}',
     );
-    assert.match(git(repoRoot, ['status', '--porcelain']), /^\?\? Projects\/demo\/src\/\.swarm\/$/m);
+    const porcelain = git(repoRoot, ['status', '--porcelain']);
+    assert.match(porcelain, /^\?\? Projects\/demo\/src\/\.swarm\/$/m);
+    assert.match(porcelain, /^\?\? README-outside-project\.md$/m);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('gitCommitAndPush defaults to project-scoped staging and ignores unrelated dirty files', async () => {
+  const { root, repoRoot } = makeRemoteRepo();
+
+  try {
+    fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/package.json'), '{\n  "name": "demo-local"\n}\n');
+    fs.writeFileSync(path.join(repoRoot, 'README-outside-project.md'), 'outside dirty\n');
+
+    const config = {
+      repo_root: repoRoot,
+      project: 'demo',
+      _runId: 'run-git-commit-project-scope-test',
+      _runStats: createRunStats('2026-06-20T00:00:00.000Z'),
+      paths: {
+        swarm_dir: path.join(repoRoot, 'Projects/demo/src/.swarm'),
+        modules_dir: path.join(repoRoot, 'Projects/demo/src/.swarm/modules'),
+      },
+    };
+
+    const result = await gitCommitAndPush(config, '[pipeline] Project-scoped default staging');
+
+    assert.equal(result.committed, true);
+    const committedFiles = git(repoRoot, ['show', '--name-only', '--pretty=format:', 'HEAD'])
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean);
+    assert.deepEqual(committedFiles, ['Projects/demo/src/package.json']);
+
+    const porcelain = git(repoRoot, ['status', '--porcelain']);
+    assert.match(porcelain, /^\?\? README-outside-project\.md$/m);
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }

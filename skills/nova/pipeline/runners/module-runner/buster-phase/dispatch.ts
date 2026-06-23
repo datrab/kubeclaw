@@ -81,7 +81,7 @@ export async function executeBusterAttemptDispatch({
     model_source: busterPolicy.model_source || null,
     reasoning_level: busterReasoningLevel,
     thinking_source: busterPolicy.thinking_source || null,
-    runtime: 'redis_dispatch',
+    runtime: 'session',
   });
 
   if (requestedSuites.length === 0) {

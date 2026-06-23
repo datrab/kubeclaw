@@ -63,6 +63,7 @@ interface SessionTerminationResult {
 }
 
 interface SessionTestHooks {
+  spawnSession?: typeof spawnSession;
   monitorSession?: typeof monitorSession;
   terminateSession?: typeof terminateSession;
   clearActiveSession?: typeof clearActiveSession;
@@ -89,6 +90,10 @@ function normalizeRequiredString(value: unknown): string | null {
   if (typeof value !== 'string') return null;
   const trimmed = value.trim();
   return trimmed ? trimmed : null;
+}
+
+function normalizeThinking(value: unknown): string | null {
+  return normalizeRequiredString(value);
 }
 
 function normalizeRuntime(value: unknown): 'acp' | 'subagent' | null {
@@ -129,6 +134,7 @@ export async function spawnTaskSession({
   dispatchIdForCompletion,
   budget = null,
   signal = null,
+  testHooks = {},
 }: {
   payload: BusterTaskPayload;
   prompt: string;
@@ -143,6 +149,7 @@ export async function spawnTaskSession({
   dispatchIdForCompletion: string | null;
   budget?: unknown;
   signal?: AbortSignal | null;
+  testHooks?: SessionTestHooks;
 }): Promise<{
   ok: boolean;
   reason?: string;
@@ -155,9 +162,16 @@ export async function spawnTaskSession({
   const agentId = normalizeRequiredString(payload?.session?.agentId) || normalizeRequiredString(payload?.session?.agent_id);
   const cwd = normalizeRequiredString(payload?.session?.cwd);
   const label = normalizeRequiredString(payload?.session?.label);
+  const thinking = normalizeThinking(
+    payload?.session?.thinking
+    ?? payload?.session?.thinking_level
+    ?? payload?.thinking
+    ?? payload?.thinking_level,
+  );
+  const spawnChildSession = testHooks.spawnSession || spawnSession;
   let sessionData: SessionData;
   try {
-    sessionData = await spawnSession({
+    sessionData = await spawnChildSession({
       ...payload,
       session: {
         ...payload.session,
@@ -173,6 +187,7 @@ export async function spawnTaskSession({
       agentId,
       cwd,
       label,
+      thinking,
       activeStatePath: resolveBusterActiveSessionPath(cwd),
       budget,
       signal,
