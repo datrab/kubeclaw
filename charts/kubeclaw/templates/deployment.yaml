@@ -242,13 +242,52 @@ spec:
                   fi
                   echo "    Seeded OpenClaw external plugins from image cache"
                 fi
-                if HOME=/config openclaw plugins registry --refresh; then
-                  echo "    Refreshed persisted OpenClaw plugin registry before startup"
-                else
-                  echo "    WARNING: failed to refresh persisted OpenClaw plugin registry from baked cache"
-                fi
               else
                 echo "    WARNING: baked OpenClaw plugin home cache not found"
+              fi
+              ensure_official_plugin() {
+                plugin_id="$1"
+                package_name="$2"
+                package_glob="$3"
+                should_install="$(PLUGIN_ID="$plugin_id" node <<'NODE'
+              const fs = require('fs');
+              const pluginId = process.env.PLUGIN_ID;
+              const path = '/config/openclaw.json';
+              try {
+                const config = JSON.parse(fs.readFileSync(path, 'utf8'));
+                const entry = config?.plugins?.entries?.[pluginId];
+                if (entry === false) process.exit(1);
+                if (entry && typeof entry === 'object' && entry.enabled === false) process.exit(1);
+                if (pluginId === 'discord' && !config?.channels?.discord) process.exit(1);
+                process.stdout.write('true');
+              } catch {
+                process.exit(1);
+              }
+              NODE
+                )"
+                if [ "$should_install" != "true" ]; then
+                  echo "    ${plugin_id} not configured; skipping install check"
+                  return 0
+                fi
+                if find /config/npm/projects -maxdepth 1 -type d -name "$package_glob" | grep -q . 2>/dev/null; then
+                  echo "    ${plugin_id} plugin already present in persistent plugin home"
+                  return 0
+                fi
+                echo "    Installing missing official plugin ${plugin_id} (${package_name}) into persistent plugin home"
+                if HOME=/config openclaw plugins install "$package_name"; then
+                  echo "    Installed missing official plugin ${plugin_id}"
+                  return 0
+                fi
+                echo "    ERROR: failed to install required official plugin ${plugin_id}" >&2
+                return 1
+              }
+              mkdir -p /config/npm/projects
+              ensure_official_plugin acpx @openclaw/acpx 'openclaw-acpx-*'
+              ensure_official_plugin discord @openclaw/discord 'openclaw-discord-*'
+              if HOME=/config openclaw plugins registry --refresh; then
+                echo "    Refreshed persisted OpenClaw plugin registry before startup"
+              else
+                echo "    WARNING: failed to refresh persisted OpenClaw plugin registry from baked cache"
               fi
               mkdir -p /config/agents/main/sessions
 

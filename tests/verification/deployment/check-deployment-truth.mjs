@@ -684,6 +684,9 @@ assertIncludes(rendered, '.kubeclaw-plugin-cache-version', 'Rendered init contai
 assertIncludes(rendered, 'OpenClaw external plugin cache already current; skipping reseed', 'Rendered init container must skip plugin cache reseeding when the baked cache is unchanged');
 assertIncludes(rendered, 'Merged OpenClaw plugin entries from image cache into persistent config', 'Rendered init container must merge baked plugin entries into persistent openclaw.json during reseed');
 assertIncludes(rendered, 'Seeded OpenClaw external plugins from image cache', 'Rendered init container must still seed configured external plugins when the baked cache changes');
+assertIncludes(rendered, 'ensure_official_plugin acpx @openclaw/acpx', 'Rendered init container must self-heal missing ACPX installs before gateway startup');
+assertIncludes(rendered, 'ensure_official_plugin discord @openclaw/discord', 'Rendered init container must self-heal missing Discord installs before gateway startup');
+assertIncludes(rendered, 'openclaw plugins install "$package_name"', 'Rendered init container must use the official plugin installer for missing required plugins');
 assertIncludes(rendered, 'swarm.config.json rendered into runtime config', 'Rendered init container must render webhook-expanded swarm.config.json only into runtime config');
 assertIncludes(rendered, 'swarm.config.json written from chart source', 'Rendered init container must overwrite persisted swarm.config.json from chart source');
 assertIncludes(rendered, 'delete config.discord_webhook_url', 'Rendered init container must remove webhook secrets from persistent swarm.config.json');
@@ -965,6 +968,8 @@ assertIncludes(deploymentTemplate, '.kubeclaw-plugin-cache-version', 'Deployment
 assertIncludes(deploymentTemplate, 'OpenClaw external plugin cache already current; skipping reseed', 'Deployment template must skip plugin cache reseeding when the baked cache is unchanged');
 assertIncludes(deploymentTemplate, 'Merged OpenClaw plugin entries from image cache into persistent config', 'Deployment template must merge baked plugin entries into persistent openclaw.json during reseed');
 assertIncludes(deploymentTemplate, 'Seeded OpenClaw external plugins from image cache', 'Deployment template must still seed configured external plugins from the baked image cache when needed');
+assertIncludes(deploymentTemplate, 'ensure_official_plugin acpx @openclaw/acpx', 'Deployment template must self-heal missing ACPX installs before gateway startup');
+assertIncludes(deploymentTemplate, 'ensure_official_plugin discord @openclaw/discord', 'Deployment template must self-heal missing Discord installs before gateway startup');
 assertIncludes(deploymentTemplate, 'openclaw plugins registry --refresh', 'Deployment template must refresh the persisted plugin registry from the baked cache before gateway startup');
 assertIncludes(deploymentTemplate, 'Refreshed persisted OpenClaw plugin registry before startup', 'Deployment template must log successful pre-start plugin registry refresh');
 assertIncludes(deploymentTemplate, 'HOME="/home/node"', 'Deployment template startup doctor must run directly against the persistent OpenClaw home');
