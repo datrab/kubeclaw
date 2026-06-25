@@ -6,6 +6,7 @@ import test from 'node:test';
 import {
   AGENT_OBSERVABILITY_CONTROL_STREAM,
   AGENT_OBSERVABILITY_DEADLETTER_STREAM,
+  AGENT_OBSERVABILITY_PAYLOAD_STREAM,
   AGENT_OBSERVABILITY_REDIS_DATA_FIELD,
 } from '../../../../../../skills/nova/pipeline/agent-observability/src/index.ts';
 import { aggregateUsage } from '../../../../../../skills/nova/pipeline/services/observability.ts';
@@ -80,6 +81,26 @@ function makeCostConfig() {
   };
 }
 
+function makeIngesterConfig(overrides = {}) {
+  return {
+    enabled: true,
+    groupName: 'kubeclaw-agent-observability-ingester',
+    consumerName: 'kubeclaw-agent-observability-ingester-1',
+    pollBlockMs: 1000,
+    reclaimIdleMs: 60000,
+    redisCommandTimeoutMs: 1000,
+    loopDelayMs: 250,
+    trimIntervalMs: 5000,
+    stopTimeoutMs: 2000,
+    deadLetterMaxLen: 1000,
+    controlStreamMaxLen: 10000,
+    payloadStreamMaxLen: 5000,
+    controlLagDegradedThreshold: 1000,
+    payloadPressureDegradedThreshold: 10000,
+    ...overrides,
+  };
+}
+
 test('processEntry dead-letters non-throwing telemetry emit failures', async () => {
   const xackCalls = [];
   const xaddCalls = [];
@@ -94,10 +115,9 @@ test('processEntry dead-letters non-throwing telemetry emit failures', async () 
     },
   };
   const ingester = new AgentObservabilityIngester({
-    config: {
-      enabled: true,
+    config: makeIngesterConfig({
       redisCommandTimeoutMs: 100,
-    },
+    }),
     env: {},
     redisClientFactory: () => redis,
     emitEvent: async () => ({
@@ -147,10 +167,9 @@ test('model usage snapshots are idempotent when an ack failure causes replay', a
     xadd: async () => 'deadletter-1',
   };
   const ingester = new AgentObservabilityIngester({
-    config: {
-      enabled: true,
+    config: makeIngesterConfig({
       redisCommandTimeoutMs: 100,
-    },
+    }),
     env: {},
     redisClientFactory: () => redis,
     emitEvent: async (_ctx, _type, payload) => {
@@ -190,11 +209,10 @@ test('readNext allows idle blocking read to exceed command timeout by poll block
     }),
   };
   const ingester = new AgentObservabilityIngester({
-    config: {
-      enabled: true,
+    config: makeIngesterConfig({
       pollBlockMs: 20,
       redisCommandTimeoutMs: 20,
-    },
+    }),
     env: {},
     redisClientFactory: () => redis,
   });
@@ -206,8 +224,10 @@ test('readNext allows idle blocking read to exceed command timeout by poll block
 
 test('trim logs and continues when Redis housekeeping times out', async () => {
   const warnings = [];
+  const xtrimCalls = [];
   const redis = {
-    xtrim: async (_stream, _strategy, _approx, len) => {
+    xtrim: async (stream, _strategy, _approx, len) => {
+      xtrimCalls.push([stream, len]);
       if (len === 1000) {
         await new Promise((resolve) => setTimeout(resolve, 25));
       }
@@ -215,12 +235,12 @@ test('trim logs and continues when Redis housekeeping times out', async () => {
     },
   };
   const ingester = new AgentObservabilityIngester({
-    config: {
-      enabled: true,
+    config: makeIngesterConfig({
       redisCommandTimeoutMs: 10,
       deadLetterMaxLen: 1000,
       controlStreamMaxLen: 2000,
-    },
+      payloadStreamMaxLen: 3000,
+    }),
     env: {},
     logger: {
       info: () => {},
@@ -234,6 +254,11 @@ test('trim logs and continues when Redis housekeeping times out', async () => {
   await ingester.trim();
 
   assert.equal(warnings.some((entry) => entry.includes('agent observability dead-letter XTRIM failed')), true);
+  assert.deepEqual(xtrimCalls, [
+    [AGENT_OBSERVABILITY_CONTROL_STREAM, 2000],
+    [AGENT_OBSERVABILITY_PAYLOAD_STREAM, 3000],
+    [AGENT_OBSERVABILITY_DEADLETTER_STREAM, 1000],
+  ]);
 });
 
 test('stop waits for in-flight start loop before closing Redis', async () => {
@@ -273,10 +298,9 @@ test('stop waits for in-flight start loop before closing Redis', async () => {
   }
 
   const ingester = new AgentObservabilityIngester({
-    config: {
-      enabled: true,
+    config: makeIngesterConfig({
       redisCommandTimeoutMs: 1000,
-    },
+    }),
     env: {},
     redisClientFactory: makeRedis,
     emitEvent: async () => {
@@ -315,10 +339,9 @@ test('stop closes Redis when in-flight loop task has already failed', async () =
     },
   };
   const ingester = new AgentObservabilityIngester({
-    config: {
-      enabled: true,
+    config: makeIngesterConfig({
       redisCommandTimeoutMs: 1000,
-    },
+    }),
     env: {},
     redisClientFactory: () => redis,
   });

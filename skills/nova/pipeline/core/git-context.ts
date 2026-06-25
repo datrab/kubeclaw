@@ -6,5 +6,6 @@ export {
   getCurrentBranch,
   headHash,
   invalidateHeadHash,
+  setGitRuntimePolicy,
   setRepoRoot,
 } from '../git-primitives.ts';

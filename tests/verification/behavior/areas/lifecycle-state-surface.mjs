@@ -10,6 +10,15 @@ export async function registerLifecycleStateSurfaceArea({
   pipelineIndexMod,
   lifecycleStateMod,
 }) {
+  const forgeCompletionObservability = {
+    profile: 'test',
+    profiles: {
+      test: {
+        forge_completion: { xread_block_ms: 1, settle_ms: 0 },
+      },
+    },
+  };
+
   await record('lifecycle-state prompt and helper surfaces stay behavior-led on critical paths', async () => {
     const forgePromptMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/prompts/forge.ts');
     const busterPromptMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/prompts/buster-module.ts');
@@ -117,7 +126,7 @@ export async function registerLifecycleStateSurfaceArea({
     }, null, 2));
     const forgeCompletionPoll = await pollingMod.pollForgeCompletion({
       ...config,
-      agent_observability_forge_completion_settle_ms: 0,
+      agent_observability: forgeCompletionObservability,
     }, '01', 1, {
       moduleId: '01',
       agentEndedReader: {
@@ -158,7 +167,7 @@ export async function registerLifecycleStateSurfaceArea({
         gateway_url: terminalGateway.url,
         gateway_token: '',
         poll_interval_seconds: 0,
-        agent_observability_forge_completion_settle_ms: 0,
+        agent_observability: forgeCompletionObservability,
         acp_monitor: {
           unknown_poll_limit: 1,
           stale_poll_limit: 1,

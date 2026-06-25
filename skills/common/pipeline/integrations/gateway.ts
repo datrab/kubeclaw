@@ -10,14 +10,6 @@ declare const process: {
 };
 
 export const LOCAL_DEVELOPMENT_GATEWAY_BASE_URL = 'http://127.0.0.1:18789';
-export const GATEWAY_INVOKE_POLICIES = {
-  sessionStatus: { timeoutMs: 10000, maxRetries: 3, retryDelayMs: 5000 },
-  sessionSpawn: { timeoutMs: 30000, maxRetries: 3, retryDelayMs: 5000 },
-  sessionSend: { timeoutMs: 15000, maxRetries: 3, retryDelayMs: 5000 },
-  subagentKill: { timeoutMs: 30000, maxRetries: 3, retryDelayMs: 5000 },
-  subagentList: { timeoutMs: 30000, maxRetries: 3, retryDelayMs: 5000 },
-  health: { timeoutMs: 5000 },
-} as const;
 
 type GatewayHeaders = Record<string, string>;
 type GatewayBody = Record<string, unknown>;
@@ -269,44 +261,42 @@ export async function gatewayInvoke(
   });
 }
 
-export async function getGatewaySessionStatus(sessionKey: string, timeoutMs = GATEWAY_INVOKE_POLICIES.sessionStatus.timeoutMs, opts: GatewayInvokeOptions = {}) {
+export async function getGatewaySessionStatus(sessionKey: string, timeoutMs: number, opts: GatewayInvokeOptions = {}) {
   return gatewayInvoke('session_status', { sessionKey }, timeoutMs, {
-    ...GATEWAY_INVOKE_POLICIES.sessionStatus,
     ...opts,
   });
 }
 
-export async function spawnGatewaySession(args: unknown, timeoutMs = GATEWAY_INVOKE_POLICIES.sessionSpawn.timeoutMs, opts: GatewayInvokeOptions = {}) {
+export async function spawnGatewaySession(args: unknown, timeoutMs: number, opts: GatewayInvokeOptions = {}) {
   return gatewayInvoke('sessions_spawn', args, timeoutMs, {
-    ...GATEWAY_INVOKE_POLICIES.sessionSpawn,
     ...opts,
   });
 }
 
-export async function sendGatewaySessionMessage(sessionKey: string, message: string, timeoutMs = GATEWAY_INVOKE_POLICIES.sessionSend.timeoutMs, opts: GatewayInvokeOptions = {}) {
+export async function sendGatewaySessionMessage(sessionKey: string, message: string, timeoutMs: number, opts: GatewayInvokeOptions = {}) {
   return gatewayInvoke('sessions_send', { sessionKey, message }, timeoutMs, {
-    ...GATEWAY_INVOKE_POLICIES.sessionSend,
     ...opts,
   });
 }
 
-export async function killGatewaySubagent(target: string, timeoutMs = GATEWAY_INVOKE_POLICIES.subagentKill.timeoutMs, opts: GatewayInvokeOptions = {}) {
+export async function killGatewaySubagent(target: string, timeoutMs: number, opts: GatewayInvokeOptions = {}) {
   return gatewayInvoke('subagents', { action: 'kill', target }, timeoutMs, {
-    ...GATEWAY_INVOKE_POLICIES.subagentKill,
     ...opts,
   });
 }
 
-export async function listGatewaySubagents(timeoutMs = GATEWAY_INVOKE_POLICIES.subagentList.timeoutMs, opts: GatewayInvokeOptions = {}) {
+export async function listGatewaySubagents(timeoutMs: number, opts: GatewayInvokeOptions = {}) {
   return gatewayInvoke('subagents', { action: 'list' }, timeoutMs, {
-    ...GATEWAY_INVOKE_POLICIES.subagentList,
     ...opts,
   });
 }
 
-export async function checkGatewayHealth({ gatewayUrl, gatewayToken, timeoutMs = GATEWAY_INVOKE_POLICIES.health.timeoutMs, signal = null }: GatewayHealthOptions = {}) {
+export async function checkGatewayHealth({ gatewayUrl, gatewayToken, timeoutMs, signal = null }: GatewayHealthOptions = {}) {
+  if (!Number.isFinite(timeoutMs) || Number(timeoutMs) < 0) {
+    throw new Error('Gateway health timeoutMs must be explicit and non-negative');
+  }
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  const timeout = setTimeout(() => controller.abort(), Number(timeoutMs));
   const cleanupAbort = bridgeAbort(controller, signal);
   const url = resolveGatewayHealthUrl(gatewayUrl);
   const headers = optionalGatewayHeaders(gatewayToken, {});

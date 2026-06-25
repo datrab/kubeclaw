@@ -16,10 +16,12 @@ test('gateway invoke options do not leak timeoutMs into request body', async (t)
     return new Response('{}', { status: 200 });
   };
 
-  await getGatewaySessionStatus('session-1', undefined, {
+  await getGatewaySessionStatus('session-1', 1, {
     gatewayUrl: 'http://gateway.example',
     gatewayToken: '',
     timeoutMs: 1,
+    maxRetries: 1,
+    retryDelayMs: 0,
   });
 
   assert.deepEqual(requestBody, {

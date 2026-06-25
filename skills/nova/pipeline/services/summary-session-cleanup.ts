@@ -1,5 +1,6 @@
 import { log } from '../core/logger.ts';
 import { assertValidSessionTerminationResult } from './acp-gateway-contract.ts';
+import { sessionLifecyclePolicies } from '../core/session-policy.ts';
 
 function resolveValue(value) {
   return typeof value === 'function' ? value() : value;
@@ -45,6 +46,7 @@ export function createTrackedSummarySessionCleanup(deps = {}, identity = {}, opt
     if (shouldTerminate) {
       try {
         diagnostics.termination = assertValidSessionTerminationResult(await deps.terminateSession(resolved.sessionKey, {
+          ...sessionLifecyclePolicies(resolved.config),
           runtime: resolved.runtime,
           model: resolved.model,
           agentId: resolved.agentId,

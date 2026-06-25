@@ -15,8 +15,11 @@ export interface AgentObservabilityIngesterConfig {
   reclaimIdleMs: number;
   redisCommandTimeoutMs: number;
   loopDelayMs: number;
+  trimIntervalMs: number;
+  stopTimeoutMs: number;
   deadLetterMaxLen: number;
   controlStreamMaxLen: number;
+  payloadStreamMaxLen: number;
   controlLagDegradedThreshold: number;
   payloadPressureDegradedThreshold: number;
 }
@@ -54,23 +57,33 @@ function typedString(config: UnknownRecord, field: string): string | undefined {
   return normalized || undefined;
 }
 
+function requiredString(config: UnknownRecord, field: string): string {
+  const value = typedString(config, field);
+  if (value === undefined) throw new Error(`${field} is required when agent observability ingester is enabled`);
+  return value;
+}
+
 function envString(env: UnknownRecord, field: string): string | undefined {
   const normalized = String(env[field] ?? '').trim();
   return normalized || undefined;
 }
 
-function positiveInteger(config: UnknownRecord, field: string, fallback: number): number {
+function requiredPositiveInteger(config: UnknownRecord, field: string): number {
   const value = config[field];
-  if (value === undefined || value === null) return fallback;
+  if (value === undefined || value === null) {
+    throw new Error(`${field} is required when agent observability ingester is enabled`);
+  }
   if (typeof value !== 'number' || !Number.isInteger(value) || value <= 0) {
     throw new Error(`${field} must be a positive integer`);
   }
   return value;
 }
 
-function nonNegativeInteger(config: UnknownRecord, field: string, fallback: number): number {
+function requiredNonNegativeInteger(config: UnknownRecord, field: string): number {
   const value = config[field];
-  if (value === undefined || value === null) return fallback;
+  if (value === undefined || value === null) {
+    throw new Error(`${field} is required when agent observability ingester is enabled`);
+  }
   if (typeof value !== 'number' || !Number.isInteger(value) || value < 0) {
     throw new Error(`${field} must be a non-negative integer`);
   }
@@ -112,18 +125,22 @@ export function resolveAgentObservabilityIngesterConfig(
   env: UnknownRecord = process.env,
 ): AgentObservabilityIngesterConfig {
   const config = asRecord(input);
+  const enabled = typedBoolean(config, 'enabled', false);
   const resolved: AgentObservabilityIngesterConfig = {
-    enabled: typedBoolean(config, 'enabled', false),
-    groupName: typedString(config, 'groupName') ?? 'kubeclaw-agent-observability-ingester',
-    consumerName: typedString(config, 'consumerName') ?? 'kubeclaw-agent-observability-ingester-1',
-    pollBlockMs: positiveInteger(config, 'pollBlockMs', 1000),
-    reclaimIdleMs: positiveInteger(config, 'reclaimIdleMs', 60000),
-    redisCommandTimeoutMs: positiveInteger(config, 'redisCommandTimeoutMs', 1000),
-    loopDelayMs: positiveInteger(config, 'loopDelayMs', 250),
-    deadLetterMaxLen: positiveInteger(config, 'deadLetterMaxLen', 1000),
-    controlStreamMaxLen: positiveInteger(config, 'controlStreamMaxLen', 10000),
-    controlLagDegradedThreshold: nonNegativeInteger(config, 'controlLagDegradedThreshold', 1000),
-    payloadPressureDegradedThreshold: nonNegativeInteger(config, 'payloadPressureDegradedThreshold', 10000),
+    enabled,
+    groupName: enabled ? requiredString(config, 'groupName') : '',
+    consumerName: enabled ? requiredString(config, 'consumerName') : '',
+    pollBlockMs: enabled ? requiredPositiveInteger(config, 'pollBlockMs') : 0,
+    reclaimIdleMs: enabled ? requiredPositiveInteger(config, 'reclaimIdleMs') : 0,
+    redisCommandTimeoutMs: enabled ? requiredPositiveInteger(config, 'redisCommandTimeoutMs') : 0,
+    loopDelayMs: enabled ? requiredPositiveInteger(config, 'loopDelayMs') : 0,
+    trimIntervalMs: enabled ? requiredPositiveInteger(config, 'trimIntervalMs') : 0,
+    stopTimeoutMs: enabled ? requiredNonNegativeInteger(config, 'stopTimeoutMs') : 0,
+    deadLetterMaxLen: enabled ? requiredPositiveInteger(config, 'deadLetterMaxLen') : 0,
+    controlStreamMaxLen: enabled ? requiredPositiveInteger(config, 'controlStreamMaxLen') : 0,
+    payloadStreamMaxLen: enabled ? requiredPositiveInteger(config, 'payloadStreamMaxLen') : 0,
+    controlLagDegradedThreshold: enabled ? requiredNonNegativeInteger(config, 'controlLagDegradedThreshold') : 0,
+    payloadPressureDegradedThreshold: enabled ? requiredNonNegativeInteger(config, 'payloadPressureDegradedThreshold') : 0,
   };
 
   const redisTls = typedBoolean(config, 'redisTls', envBoolean(env, 'REDIS_TLS') ?? envBoolean(env, 'REDIS_TLS_ENABLED') ?? false);

@@ -12,6 +12,15 @@ import { spawnAgent, killAgent } from './orchestration.ts';
 
 type AnyRecord = Record<string, any>;
 
+const FORGE_SUCCESSFUL_KILL_POLICY = Object.freeze({
+  graceMs: 10_000,
+  statusTimeoutMs: 5_000,
+  requestTimeoutMs: 5_000,
+  stopRequestTimeoutMs: 5_000,
+  listTimeoutMs: 5_000,
+  acpxTimeoutMs: 5_000,
+});
+
 function defaultAcpLabel(agentType: string, moduleId: string, opts: AnyRecord = {}) {
   const suffix = [
     normalizeString(opts.runId) ? `run-${normalizeString(opts.runId)}` : null,
@@ -295,7 +304,10 @@ export async function runModuleForgeWorker({
     try {
       forgeStreamPath = getTracked(forgeSessionLabel)?.streamLogPath || forgeStreamPath;
       try {
-        await kill(config, 'forge', moduleId, pollResult?.ok || false, { trackingLabel: forgeSessionLabel });
+        await kill(config, 'forge', moduleId, pollResult?.ok || false, {
+          trackingLabel: forgeSessionLabel,
+          ...(pollResult?.ok ? FORGE_SUCCESSFUL_KILL_POLICY : {}),
+        });
       } catch (e: any) {
         hookError = hookError || e;
         hookFailureReason = hookFailureReason || 'cleanup_failed';

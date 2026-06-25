@@ -10,21 +10,23 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
-      "enabled": { "type": "boolean", "default": true },
+      "enabled": { "type": "boolean" },
       "redisHost": { "type": "string" },
       "redisPort": { "type": "number" },
       "redisUsername": { "type": "string" },
       "redisPassword": { "type": "string" },
       "redisTls": { "type": "boolean" },
       "redisNetworkIsolation": { "type": ["boolean", "string"] },
-      "maxEventBytes": { "type": "number", "default": 3145728 },
-      "maxQueuePerStream": { "type": "number", "default": 100 },
-      "redisCommandTimeoutMs": { "type": "number", "default": 1000 },
-      "streamMaxLen": { "type": "number", "default": 10000 },
-      "deadLetterMaxLen": { "type": "number", "default": 1000 },
-      "controlWriteMaxAttempts": { "type": "number", "default": 3 },
-      "controlWriteRetryBaseMs": { "type": "number", "default": 100 },
-      "controlWriteRetryMaxMs": { "type": "number", "default": 1000 }
+      "maxEventBytes": { "type": "number" },
+      "maxQueuePerStream": { "type": "number" },
+      "redisCommandTimeoutMs": { "type": "number" },
+      "streamMaxLen": { "type": "number" },
+      "deadLetterMaxLen": { "type": "number" },
+      "controlWriteMaxAttempts": { "type": "number" },
+      "controlWriteRetryBaseMs": { "type": "number" },
+      "controlWriteRetryMaxMs": { "type": "number" },
+      "hookPriority": { "type": "number" },
+      "hookTimeoutMs": { "type": "number" }
     }
   },
   "uiHints": {

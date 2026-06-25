@@ -18,11 +18,16 @@ import type {
   AgentObservabilitySpanCompletenessSummary,
 } from './types.ts';
 
-const DEFAULT_CONTROL_LAG_THRESHOLD = 1_000;
-const DEFAULT_PAYLOAD_PRESSURE_THRESHOLD = 10_000;
-
 function stringValue(value: unknown): string | undefined {
   return typeof value === 'string' && value.trim() ? value : undefined;
+}
+
+function requiredNumberValue(value: unknown, label: string): number {
+  const normalized = numberValue(value);
+  if (normalized === null) {
+    throw new Error(`${label}: required numeric threshold`);
+  }
+  return normalized;
 }
 
 function numberValue(value: unknown): number | null {
@@ -230,13 +235,23 @@ function identityGaps(records: AgentObservabilityNormalizedEvidenceRecord[]): Ag
 }
 
 function pressureSummary(input?: AgentObservabilityRedisPressureSnapshot): AgentObservabilityRedisPressureSummary {
+  if (!input) {
+    return {
+      control_pending: null,
+      control_lag: null,
+      payload_length: null,
+      payload_bytes: null,
+      memory_bytes: null,
+      degraded: [],
+    };
+  }
   const controlPending = numberValue(input?.controlPending) ?? null;
   const controlLag = numberValue(input?.controlLag) ?? controlPending;
   const payloadLength = numberValue(input?.payloadLength) ?? null;
   const payloadBytes = numberValue(input?.payloadBytes) ?? null;
   const memoryBytes = numberValue(input?.memoryBytes) ?? null;
-  const controlLagThreshold = numberValue(input?.controlLagThreshold) ?? DEFAULT_CONTROL_LAG_THRESHOLD;
-  const payloadPressureThreshold = numberValue(input?.payloadPressureThreshold) ?? DEFAULT_PAYLOAD_PRESSURE_THRESHOLD;
+  const controlLagThreshold = requiredNumberValue(input?.controlLagThreshold, 'redisPressure.controlLagThreshold');
+  const payloadPressureThreshold = requiredNumberValue(input?.payloadPressureThreshold, 'redisPressure.payloadPressureThreshold');
   const payloadBytesThreshold = numberValue(input?.payloadBytesThreshold);
   const memoryPressureThreshold = numberValue(input?.memoryPressureThreshold);
   const degraded: string[] = [];

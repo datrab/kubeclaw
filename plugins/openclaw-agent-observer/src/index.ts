@@ -186,6 +186,13 @@ export class OpenClawAgentObserver {
     return this.writer.getStats();
   }
 
+  hookPolicy(): Pick<AgentObserverConfig, 'hookPriority' | 'hookTimeoutMs'> {
+    return {
+      hookPriority: this.config.hookPriority,
+      hookTimeoutMs: this.config.hookTimeoutMs,
+    };
+  }
+
   getStatus(): Record<string, unknown> {
     return {
       enabled: this.config.enabled,
@@ -350,13 +357,14 @@ export function registerOpenClawAgentObserver(api: OpenClawPluginApi, observer?:
     initialConfig: api.pluginConfig,
     logger: api.logger,
   });
+  const hookPolicy = activeObserver.hookPolicy();
   for (const hook of knownAgentObservabilityHooks() as readonly AgentObservabilityHook[]) {
     api.on(
       hook,
       (event: unknown, context?: unknown) => {
         activeObserver.handleHook(hook, event, context);
       },
-      { priority: -100, timeoutMs: 1000 },
+      { priority: hookPolicy.hookPriority, timeoutMs: hookPolicy.hookTimeoutMs },
     );
   }
 

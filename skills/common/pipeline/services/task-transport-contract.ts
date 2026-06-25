@@ -67,9 +67,18 @@ export function createRedisTaskQueue(redisClient: UnknownRecord, opts: UnknownRe
   const streamKey = opts.streamKey;
   const groupName = opts.groupName;
   const consumerName = opts.consumerName;
-  const pollInterval = opts.pollInterval ?? 2000;
-  const reclaimIdleMs = opts.reclaimIdleMs ?? 60000;
-  const maxLen = opts.maxLen ?? 250;
+  const pollInterval = Number(opts.pollInterval);
+  const reclaimIdleMs = Number(opts.reclaimIdleMs);
+  const maxLen = Number(opts.maxLen);
+  if (!Number.isFinite(pollInterval) || pollInterval <= 0) {
+    throw new PipelineTransportContractError('TaskQueue pollInterval must be explicit and > 0');
+  }
+  if (!Number.isFinite(reclaimIdleMs) || reclaimIdleMs <= 0) {
+    throw new PipelineTransportContractError('TaskQueue reclaimIdleMs must be explicit and > 0');
+  }
+  if (!Number.isFinite(maxLen) || maxLen <= 0) {
+    throw new PipelineTransportContractError('TaskQueue maxLen must be explicit and > 0');
+  }
   const eventBus = createRedisEventBus(redisClient);
 
   const queue: UnknownRecord = {

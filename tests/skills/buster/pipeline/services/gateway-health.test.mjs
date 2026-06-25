@@ -1,7 +1,38 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import test from 'node:test';
 
-test('startGatewayHealthMonitor returns the interval handle so callers can clear it', async () => {
+function withSwarmConfig(t, overrides = {}) {
+  const originalSwarmConfig = process.env.SWARM_CONFIG;
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gateway-health-config-'));
+  const configPath = path.join(dir, 'swarm.config.json');
+  const config = {
+    gateway: {
+      invoke: { health: { timeout_ms: 1 } },
+      health: {
+        ready_timeout_ms: 120000,
+        ready_interval_ms: 3000,
+        monitor_interval_ms: 60000,
+        max_failures: 3,
+        ...overrides,
+      },
+    },
+  };
+  fs.writeFileSync(configPath, JSON.stringify(config));
+  process.env.SWARM_CONFIG = configPath;
+  t.after(async () => {
+    const { resetBusterRuntimePolicyForTests } = await import('../../../../../skills/buster/pipeline/services/runtime-policy.ts');
+    resetBusterRuntimePolicyForTests();
+    if (originalSwarmConfig === undefined) delete process.env.SWARM_CONFIG;
+    else process.env.SWARM_CONFIG = originalSwarmConfig;
+    fs.rmSync(dir, { recursive: true, force: true });
+  });
+}
+
+test('startGatewayHealthMonitor returns the interval handle so callers can clear it', async (t) => {
+  withSwarmConfig(t);
   const originalSetInterval = globalThis.setInterval;
   const originalClearInterval = globalThis.clearInterval;
   const intervalHandle = { id: 'gateway-health-interval' };
@@ -19,12 +50,12 @@ test('startGatewayHealthMonitor returns the interval handle so callers can clear
   };
 
   try {
-    const { startGatewayHealthMonitor, GATEWAY_HEALTH_INTERVAL } = await import('../../../../../skills/buster/pipeline/services/gateway-health.ts');
+    const { startGatewayHealthMonitor } = await import('../../../../../skills/buster/pipeline/services/gateway-health.ts');
     const returnedHandle = startGatewayHealthMonitor({ shutdown: () => {} });
 
     assert.equal(returnedHandle, intervalHandle);
     assert.equal(typeof scheduledCallback, 'function');
-    assert.equal(scheduledDelay, GATEWAY_HEALTH_INTERVAL);
+    assert.equal(scheduledDelay, 60000);
 
     clearInterval(returnedHandle);
     assert.equal(clearedHandle, intervalHandle);
@@ -34,7 +65,8 @@ test('startGatewayHealthMonitor returns the interval handle so callers can clear
   }
 });
 
-test('waitForGateway without shutdown throws a structured gateway timeout error', async () => {
+test('waitForGateway without shutdown throws a structured gateway timeout error', async (t) => {
+  withSwarmConfig(t);
   const originalNow = Date.now;
   let now = 0;
   Date.now = () => {
@@ -59,7 +91,8 @@ test('waitForGateway without shutdown throws a structured gateway timeout error'
   }
 });
 
-test('startGatewayHealthMonitor without shutdown throws a structured health failure error', async () => {
+test('startGatewayHealthMonitor without shutdown throws a structured health failure error', async (t) => {
+  withSwarmConfig(t);
   const originalSetInterval = globalThis.setInterval;
   const originalFetch = globalThis.fetch;
   const originalGatewayUrl = process.env.OPENCLAW_GATEWAY_URL;
@@ -100,7 +133,8 @@ test('startGatewayHealthMonitor without shutdown throws a structured health fail
   }
 });
 
-test('startGatewayHealthMonitor treats thrown health checks as failures', async () => {
+test('startGatewayHealthMonitor treats thrown health checks as failures', async (t) => {
+  withSwarmConfig(t);
   const originalSetInterval = globalThis.setInterval;
   const originalFetch = globalThis.fetch;
   const originalOpenClawGatewayUrl = process.env.OPENCLAW_GATEWAY_URL;

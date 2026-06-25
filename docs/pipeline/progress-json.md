@@ -168,9 +168,9 @@ Gate `instructions_file` and `output_file` exist because gates need durable, ins
   "description": "Example application",
   "defaults": {
     "models": {
-      "forge": "gpt-5.4",
-      "buster": "gpt-5.4",
-      "echo": "gpt-5.4"
+      "forge": "gpt-5.5",
+      "buster": "gpt-5.5",
+      "echo": "gpt-5.5"
     }
   },
   "execution_order": ["01-scaffold", "02-api", "gate:final-review", "gate:final-buster"],

@@ -444,9 +444,11 @@ spec:
 
               async function openRedis() {
                 const Redis = require('ioredis');
+                if (!process.env.REDIS_HOST) throw new Error('REDIS_HOST is required');
+                if (!process.env.REDIS_PORT) throw new Error('REDIS_PORT is required');
                 const redis = new Redis({
-                  host: process.env.REDIS_HOST || 'redis-master.kubeclaw.svc.cluster.local',
-                  port: Number.parseInt(process.env.REDIS_PORT || '6379', 10),
+                  host: process.env.REDIS_HOST,
+                  port: Number.parseInt(process.env.REDIS_PORT, 10),
                   username: process.env.REDIS_USERNAME || undefined,
                   password: process.env.REDIS_PASSWORD || undefined,
                   lazyConnect: true,

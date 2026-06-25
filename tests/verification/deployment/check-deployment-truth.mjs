@@ -836,14 +836,14 @@ assert.equal(
   'Rendered Buster gateway config must use canonical OpenAI refs instead of legacy openai-codex refs',
 );
 assert.deepEqual(
-  renderedBusterGatewayConfig.agents?.defaults?.models?.['openai/gpt-5.4']?.agentRuntime,
+  renderedBusterGatewayConfig.agents?.defaults?.models?.['openai/gpt-5.5']?.agentRuntime,
   { id: 'codex' },
-  'Rendered Buster gateway config must keep Codex auth routing on canonical GPT 5.4 model refs',
+  'Rendered Buster gateway config must keep Codex auth routing on canonical GPT 5.5 model refs',
 );
 assert.equal(
   renderedBusterGatewayConfig.agents?.defaults?.model?.primary,
-  'openai/gpt-5.4',
-  'Rendered Buster gateway config must default to GPT 5.4',
+  'openai/gpt-5.5',
+  'Rendered Buster gateway config must default to GPT 5.5',
 );
 assert.equal(
   renderedBusterGatewayConfig.agents?.defaults?.thinkingDefault,

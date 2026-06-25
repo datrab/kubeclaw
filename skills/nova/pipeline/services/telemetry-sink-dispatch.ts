@@ -15,7 +15,6 @@ const MISSING_SINK_REASONS = Object.freeze([
   'telemetry_sink_registry_disabled',
   'telemetry_sink_listener_missing',
 ]);
-const DEFAULT_TELEMETRY_SINK_TIMEOUT_MS = 5000;
 
 function buildTelemetrySinkInvocation(input = {}) {
   return {
@@ -83,12 +82,12 @@ async function restoreMissingSinkIfNeeded(ctx = {}, input = {}) {
 
 function resolveTelemetrySinkTimeoutMs(ctx = {}, options = {}) {
   const configured = options.telemetrySinkTimeoutMs
-    ?? options.sinkTimeoutMs
-    ?? ctx?.config?.telemetry?.sink_timeout_ms
-    ?? ctx?.config?.telemetry?.sinkTimeoutMs
-    ?? DEFAULT_TELEMETRY_SINK_TIMEOUT_MS;
+    ?? ctx?.config?.telemetry?.sink_timeout_ms;
   const timeoutMs = Number(configured);
-  return Number.isFinite(timeoutMs) && timeoutMs > 0 ? timeoutMs : DEFAULT_TELEMETRY_SINK_TIMEOUT_MS;
+  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
+    throw new Error('config.telemetry.sink_timeout_ms: required positive number in swarm.config.json');
+  }
+  return timeoutMs;
 }
 
 function observeWithTimeout(observePromise, timeoutMs, moduleId) {

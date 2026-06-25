@@ -1230,6 +1230,7 @@ await record('shared telemetry loader uses secure Redis transport contract', asy
     run_id: 'run-telemetry-loader-1',
     enabled: true,
     redisHost: '127.0.0.1',
+    redisPort: 6379,
     enforceSecureMode: false,
   });
   assert(busterCtx?.redis, 'buster telemetry should resolve packaged ioredis through the shared secure loader with explicit local verification options');

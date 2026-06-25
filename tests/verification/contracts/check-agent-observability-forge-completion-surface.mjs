@@ -16,6 +16,18 @@ function parseArgs(argv = process.argv.slice(2)) {
 const { sourceRoot } = parseArgs();
 const service = await import(path.join(sourceRoot, 'skills/nova/pipeline/services/agent-observability-forge-completion.ts'));
 const polling = await import(path.join(sourceRoot, 'skills/nova/pipeline/services/polling.ts'));
+const modulesDir = path.join(sourceRoot, 'Projects/pipeline-smoke-landing/src/.swarm/modules');
+
+function forgeCompletionObservability() {
+  return {
+    profile: 'test',
+    profiles: {
+      test: {
+        forge_completion: { xread_block_ms: 1, settle_ms: 0 },
+      },
+    },
+  };
+}
 
 const identity = {
   run_id: 'run-ao5',
@@ -79,10 +91,16 @@ assert.deepEqual(readyStatus.meaningful_paths, ['src/index.js']);
 let readerClosed = false;
 const pollResult = await polling.pollForgeCompletion({
   project: 'contract-test',
+  repo_root: sourceRoot,
+  paths: { modules_dir: modulesDir },
   _runId: 'run-ao5',
   poll_interval_seconds: 0,
+  polling: {
+    progress_log_interval_ms: 1,
+    session_progress_emit_interval_ms: 1,
+  },
   telemetry: { enabled: false },
-  agent_observability_forge_completion_settle_ms: 0,
+  agent_observability: forgeCompletionObservability(),
 }, '01', 1, {
   moduleId: '01',
   runId: 'run-ao5',
@@ -107,10 +125,16 @@ assert.equal(pollResult.status.source, service.AGENT_OBSERVABILITY_FORGE_COMPLET
 
 const noWork = await polling.pollForgeCompletion({
   project: 'contract-test',
+  repo_root: sourceRoot,
+  paths: { modules_dir: modulesDir },
   _runId: 'run-ao5',
   poll_interval_seconds: 0,
+  polling: {
+    progress_log_interval_ms: 1,
+    session_progress_emit_interval_ms: 1,
+  },
   telemetry: { enabled: false },
-  agent_observability_forge_completion_settle_ms: 0,
+  agent_observability: forgeCompletionObservability(),
 }, '01', 1, {
   moduleId: '01',
   agentEndedReader: { async read() { return agentEnded; }, close() {} },

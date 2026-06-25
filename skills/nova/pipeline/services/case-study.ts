@@ -28,6 +28,7 @@ import { buildGeneratorArtifactRef, buildGeneratorResult } from './contracts/gen
 import { createTrackedSummarySessionCleanup } from './summary-session-cleanup.ts';
 import { getPipelineArtifactBundle } from './artifact-bundle.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from './discord-fields.ts';
+import { sessionLifecyclePolicies } from '../core/session-policy.ts';
 
 function buildCaseStudyDiscordFields(identity = {}, extra = []) {
   return buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, identity, extra);
@@ -57,6 +58,13 @@ const DEFAULT_CASE_STUDY_DEPS = {
 
 function getCaseStudyDeps(config, overrides = {}) {
   return { ...DEFAULT_CASE_STUDY_DEPS, ...selectDeps(overrides, 'caseStudy') };
+}
+
+function requirePositiveTimeoutMinutes(value, label) {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
+    throw new Error(`${label}: required positive number in swarm.config.json`);
+  }
+  return value;
 }
 
 export function caseStudyOutputPath(config, cs = {}) {
@@ -174,6 +182,9 @@ export async function generateCaseStudy(config, progress, opts = {}) {
     label = `case-study-${Date.now()}`;
     const cwd = config.repo_root;
     const thinking = cs.thinking_level || null;
+    const timeoutMin = progressCs.timeout_minutes !== undefined
+      ? requirePositiveTimeoutMinutes(progressCs.timeout_minutes, 'progress.case_study.timeout_minutes')
+      : requirePositiveTimeoutMinutes(configCs.timeout_minutes, 'config.case_study.timeout_minutes');
     onSummaryStarted({ config }, 'case_study', {
       attempt: caseStudyAttempt,
       gateway_label: caseStudyGatewayLabel,
@@ -184,7 +195,8 @@ export async function generateCaseStudy(config, progress, opts = {}) {
 
     const sessionData = await deps.spawnSession({
       session: { model, runtime: dispatch, agentId, cwd, label },
-    }, instructions, (cs.timeout_minutes || 30) * 60, {
+    }, instructions, timeoutMin * 60, {
+      ...sessionLifecyclePolicies(config),
       runtime: dispatch,
       model,
       agentId,
@@ -216,7 +228,6 @@ export async function generateCaseStudy(config, progress, opts = {}) {
     });
 
     const outputFilePath = caseStudyOutputPath(config, cs);
-    const timeoutMin = cs.timeout_minutes || 30;
     const maxRateLimitPauses = config.rate_limit.max_pauses_per_module;
     const caseStudyRateLimitRecovery = createTrackedSummarySessionRateLimitRecoveryOptions(config, {
       sleepFn: deps.sleep,

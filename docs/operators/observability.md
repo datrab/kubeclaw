@@ -120,7 +120,7 @@ telemetry builder in skills/nova/pipeline/services/telemetry/builders.ts
   -> pipeline:telemetry:<project>:<run_id>
 ```
 
-OpenClaw agent observability is separate from pipeline telemetry. The `kubeclaw-agent-observer` plugin registers OpenClaw hooks in `plugins/openclaw-agent-observer/src/index.ts`, prefers the runtime agent event bus for live agent output, normalizes hook/model usage/runtime events in `hook-normalizers.ts`, and writes Redis events through `redis-writer.ts`. Its config defaults come from `agent_observability.plugin_control.*` and `agent_observability.ingester.*` in `swarm.config.json`.
+OpenClaw agent observability is separate from pipeline telemetry. The `kubeclaw-agent-observer` plugin registers OpenClaw hooks in `plugins/openclaw-agent-observer/src/index.ts`, prefers the runtime agent event bus for live agent output, normalizes hook/model usage/runtime events in `hook-normalizers.ts`, and writes Redis events through `redis-writer.ts`. Its runtime values come from `agent_observability.plugin_control.*` and `agent_observability.ingester.*` in `swarm.config.json`.
 
 The observer Gateway methods are:
 

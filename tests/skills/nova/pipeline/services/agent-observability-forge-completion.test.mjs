@@ -10,6 +10,17 @@ function xreadResult(id, event) {
   return [['telemetry-stream', [[id, ['data', JSON.stringify(event)]]]]];
 }
 
+function observabilityConfig() {
+  return {
+    profile: 'test',
+    profiles: {
+      test: {
+        forge_completion: { xread_block_ms: 1, settle_ms: 0 },
+      },
+    },
+  };
+}
+
 test('agent ended telemetry reader advances past ignored stream entries', async () => {
   const cursors = [];
 
@@ -44,6 +55,7 @@ test('agent ended telemetry reader advances past ignored stream entries', async 
   const reader = createAgentEndedTelemetryReader({
     project: 'project-a',
     telemetry: { enabled: true },
+    agent_observability: observabilityConfig(),
   }, {
     RedisCtor: FakeRedis,
     runId: 'run-a',
@@ -98,6 +110,7 @@ test('agent ended telemetry reader connects lazy Redis clients before xread', as
   const reader = createAgentEndedTelemetryReader({
     project: 'project-a',
     telemetry: { enabled: true },
+    agent_observability: observabilityConfig(),
   }, {
     RedisCtor: FakeRedis,
     runId: 'run-a',

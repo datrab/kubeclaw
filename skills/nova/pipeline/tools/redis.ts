@@ -4,10 +4,38 @@ import fs from 'fs';
 import path from 'path';
 import { parseCliFlagValues } from '../cli-args.ts';
 import { createRedisClient, loadRedisCtor } from '../telemetry.ts';
-import { createRedisTaskQueue } from '../services/task-transport-contract.ts';
+import { createRedisEventBus } from '../services/task-transport-contract.ts';
 
 // --- CONFIG ---
-const REDIS_READY_TIMEOUT_MS = Number.parseInt(process.env.REDIS_READY_TIMEOUT_MS || '10000', 10);
+const DEFAULT_SWARM_CONFIG_PATH = '/home/node/.openclaw/swarm.config.json';
+
+function loadSwarmConfig() {
+  const configPath = process.env.SWARM_CONFIG || DEFAULT_SWARM_CONFIG_PATH;
+  return JSON.parse(fs.readFileSync(configPath, 'utf8'));
+}
+
+function requirePositiveNumber(value, label) {
+  const numberValue = Number(value);
+  if (!Number.isFinite(numberValue) || numberValue <= 0) {
+    throw new Error(`${label}: required positive number in swarm.config.json`);
+  }
+  return numberValue;
+}
+
+function redisToolPolicy() {
+  const config = loadSwarmConfig();
+  const runtime = config?.buster?.runtime;
+  const completion = config?.redis_completion;
+  if (!runtime || typeof runtime !== 'object') throw new Error('config.buster.runtime: required platform config object');
+  if (!completion || typeof completion !== 'object') throw new Error('config.redis_completion: required platform config object');
+  return {
+    readyTimeoutMs: requirePositiveNumber(config?.gateway?.health?.ready_timeout_ms, 'config.gateway.health.ready_timeout_ms'),
+    taskStream: String(runtime.task_stream || '').trim(),
+    archiveMaxLen: requirePositiveNumber(completion.archive_max_len, 'config.redis_completion.archive_max_len'),
+    tailScanBatchSize: requirePositiveNumber(completion.tail_scan_batch_size, 'config.redis_completion.tail_scan_batch_size'),
+    tailScanLimit: requirePositiveNumber(completion.tail_scan_limit, 'config.redis_completion.tail_scan_limit'),
+  };
+}
 
 let _redis = null;
 function getRedis() {
@@ -23,7 +51,8 @@ function getRedis() {
   return _redis;
 }
 
-function waitForRedisReady(redis, timeoutMs = REDIS_READY_TIMEOUT_MS) {
+function waitForRedisReady(redis, timeoutMs) {
+  if (timeoutMs === undefined || timeoutMs === null) throw new Error('waitForRedisReady requires explicit timeoutMs');
   if (redis.status === 'ready') return Promise.resolve();
 
   return new Promise((resolve, reject) => {
@@ -164,7 +193,11 @@ async function logToDiscord(sender, target, type, iter, payload) {
   } catch (e) { /* ignore */ }
 }
 
-const BUSTER_STREAM = process.env.BUSTER_TASK_STREAM || 'swarm:buster:tasks';
+function busterTaskStream() {
+  const stream = redisToolPolicy().taskStream;
+  if (!stream) throw new Error('config.buster.runtime.task_stream: required non-empty string');
+  return stream;
+}
 
 // ─── Log Callback ──────────────────────────────────────────────────────────
 // Set by pipeline.ts after import to write Redis operations to redis-ops.jsonl.
@@ -230,19 +263,19 @@ const lib = {
     const myName = process.env.AGENT_NAME || 'nova';
     const redis = getRedis();
 
-    await waitForRedisReady(redis);
+    await waitForRedisReady(redis, redisToolPolicy().readyTimeoutMs);
 
     const taskEntry = buildRedisTaskStreamEntry({ type, sender: myName, source: myName, payload, iteration });
     assertRedisTaskEntry(taskEntry, { requireStreamId: false, requireCanonicalEnvelope: true });
 
-    const queue = createRedisTaskQueue(redis, { streamKey: BUSTER_STREAM });
-    const published = await queue.publishTask(BUSTER_STREAM, taskEntry);
+    const taskStream = busterTaskStream();
+    const published = await createRedisEventBus(redis).publish(taskStream, taskEntry);
     const id = published.id;
 
-    console.error(`[Redis] Sent ${id} to ${BUSTER_STREAM}`);
-    emitLog({ op: 'dispatch', target: targetAgent, type, stream: BUSTER_STREAM, redis_id: id, payload_keys: Object.keys(payload), payload_size: JSON.stringify(payload).length });
+    console.error(`[Redis] Sent ${id} to ${taskStream}`);
+    emitLog({ op: 'dispatch', target: targetAgent, type, stream: taskStream, redis_id: id, payload_keys: Object.keys(payload), payload_size: JSON.stringify(payload).length });
     await logToDiscord(myName, 'buster', type, iteration, payload);
-    return { status: 'sent', id, stream: BUSTER_STREAM };
+    return { status: 'sent', id, stream: taskStream };
   },
 
   // ── Pipeline Completion Stream Functions ──────────────────────────────────
@@ -270,7 +303,11 @@ const lib = {
       });
       return null;
     }
-    const result = await scanLatestCompletionFromTail(redis, streamKey, moduleId, normalizedExpected);
+    const policy = redisToolPolicy();
+    const result = await scanLatestCompletionFromTail(redis, streamKey, moduleId, normalizedExpected, {
+      batchSize: policy.tailScanBatchSize,
+      scanLimit: policy.tailScanLimit,
+    });
     const match = result.match;
     emitLog({
       op: 'read_completion',
@@ -295,9 +332,14 @@ const lib = {
    * @param {number} maxLen - Max archive stream length (trimmed with ~ approximation)
    * @returns {{ archived: number }}
    */
-  async archiveCompletions(streamKey, archiveStreamKey, moduleId, maxLen = 1000, activeIdentity = {}) {
+  async archiveCompletions(streamKey, archiveStreamKey, moduleId, maxLen, activeIdentity = {}, opts = {}) {
     const redis = getRedis();
-    const result = await archiveCompletionsChunked(redis, streamKey, archiveStreamKey, moduleId, maxLen, { activeIdentity });
+    const policy = redisToolPolicy();
+    const archiveMaxLen = maxLen ?? policy.archiveMaxLen;
+    const result = await archiveCompletionsChunked(redis, streamKey, archiveStreamKey, moduleId, archiveMaxLen, {
+      activeIdentity,
+      batchSize: opts.batchSize ?? policy.tailScanBatchSize,
+    });
     emitLog({
       op: 'archive',
       stream: streamKey,
@@ -381,12 +423,13 @@ async function main(args = process.argv.slice(2)) {
       const module = flags.module;
       if (!stream || !module) throw new Error('Missing --stream or --module');
       const archiveStream = stream + ':log';
-      const res = await lib.archiveCompletions(stream, archiveStream, module, 1000, {
+      const policy = redisToolPolicy();
+      const res = await lib.archiveCompletions(stream, archiveStream, module, policy.archiveMaxLen, {
         run_id: flags['run-id'] || undefined,
         attempt: flags.attempt || undefined,
         dispatch_id: flags['dispatch-id'] || undefined,
         session_key: flags['session-key'] || undefined,
-      });
+      }, { batchSize: policy.tailScanBatchSize });
       console.log(JSON.stringify(res));
       return;
     }

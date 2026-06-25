@@ -34,22 +34,41 @@ Audience: reference reader, developer
 - `buster.runtime.heartbeat_interval_ms`: `1000`
 - `buster.runtime.task_poll_interval_ms`: `2000`
 - `buster.runtime.task_pending_reclaim_idle_ms`: `60000`
+- `buster.runtime.completion_event_block_ms`: `0`
+- `buster.runtime.completion_recovery_scan_interval_ms`: `5000`
 - `buster.runtime.task_stream_max_len`: `250`
 - `acp_monitor.unknown_poll_limit`: `10`
 - `acp_monitor.stale_poll_limit`: `10`
 - `acp_monitor.max_transcript_extensions`: `3`
 - `acp_monitor.transcript_grace_ms`: `300000`
 - `acp_monitor.monitor_poll_ms`: `10000`
+- `agent_observability.required`: `true`
+- `agent_observability.profile`: `standard`
+- `agent_observability.profiles.standard.payload.max_event_bytes`: `3145728`
+- `agent_observability.profiles.standard.startup_evidence.timeout_ms`: `15000`
+- `agent_observability.profiles.standard.startup_evidence.block_ms`: `250`
+- `agent_observability.profiles.standard.forge_completion.xread_block_ms`: `1`
+- `agent_observability.profiles.standard.forge_completion.settle_ms`: `15000`
+- `agent_observability.profiles.standard.redis.command_timeout_ms`: `5000`
+- `agent_observability.profiles.standard.streams.stream_max_len`: `10000`
+- `agent_observability.profiles.standard.streams.dead_letter_max_len`: `1000`
+- `agent_observability.profiles.standard.plugin.max_queue_per_stream`: `100`
+- `agent_observability.profiles.standard.plugin.control_write.max_attempts`: `3`
+- `agent_observability.profiles.standard.plugin.hook.timeout_ms`: `1000`
+- `agent_observability.profiles.standard.plugin_control.timeout_ms`: `10000`
+- `agent_observability.profiles.standard.ingester.read.block_ms`: `1000`
+- `agent_observability.profiles.standard.ingester.loop.delay_ms`: `250`
+- `agent_observability.profiles.standard.ingester.trim.interval_ms`: `5000`
+- `agent_observability.profiles.standard.ingester.pressure.control_lag_degraded_threshold`: `1000`
+- `agent_observability.plugin.enabled`: `true`
 - `agent_observability.plugin_control.enabled`: `true`
 - `agent_observability.plugin_control.pluginId`: `kubeclaw-agent-observer`
 - `agent_observability.plugin_control.command`: `openclaw`
-- `agent_observability.plugin_control.timeoutMs`: `10000`
 - `agent_observability.plugin_control.disableOnStop`: `true`
 - `agent_observability.ingester.enabled`: `true`
 - `agent_observability.ingester.redisNetworkIsolation`: `isolated`
-- `agent_observability.ingester.loopDelayMs`: `250`
-- `agent_observability.ingester.healthCheckEvery`: `10`
-- `agent_observability.ingester.redisCommandTimeoutMs`: `1000`
+- `agent_observability.ingester.groupName`: `kubeclaw-agent-observability-ingester`
+- `agent_observability.ingester.consumerName`: `kubeclaw-agent-observability-ingester-1`
 - `pre_check.enabled`: `true`
 - `pre_check.lint_report_path`: `/app/skills/pipeline/tools/lint-report.ts`
 - `pre_check.timeout_seconds`: `60`
@@ -59,7 +78,7 @@ Audience: reference reader, developer
 - `agents.buster.redis_js_path`: `/app/skills/pipeline/tools/redis.ts`
 - `agents.echo.dispatch`: `subagent`
 - `agents.echo.acp_agent_id`: `codex`
-- `fallback_model`: `gpt-5.4`
+- `fallback_model`: `gpt-5.5`
 - `review_defaults.timeout_minutes`: `30`
 - `review_defaults.max_fix_cycles`: `3`
 - `review_defaults.lint_tier`: `full`
@@ -98,6 +117,8 @@ Audience: reference reader, developer
       "heartbeat_interval_ms": 1000,
       "task_poll_interval_ms": 2000,
       "task_pending_reclaim_idle_ms": 60000,
+      "completion_event_block_ms": 0,
+      "completion_recovery_scan_interval_ms": 5000,
       "task_stream_max_len": 250
     }
   },
@@ -141,7 +162,7 @@ Audience: reference reader, developer
 | `buster.suite_timeout_ms` | positive number | Deterministic suite timeout. |
 | `buster.max_crash_retries` | number `>= 0` | Buster crash retry budget. |
 | `buster.runtime.heartbeat_path` | non-empty string | Buster readiness uses this path; deployment truth rejects the old `BUSTER_HEARTBEAT_PATH` env fallback. |
-| `buster.runtime.heartbeat_interval_ms`, `task_poll_interval_ms`, `task_pending_reclaim_idle_ms`, `task_stream_max_len` | positive numbers | Worker heartbeat, polling, pending reclaim, and stream trimming. |
+| `buster.runtime.heartbeat_interval_ms`, `task_poll_interval_ms`, `task_pending_reclaim_idle_ms`, `completion_event_block_ms`, `completion_recovery_scan_interval_ms`, `task_stream_max_len` | non-negative/positive numbers | Worker heartbeat, polling, pending reclaim, completion live-wait blocking, completion recovery, and stream trimming. |
 | `discord_alerts.info`, `warn`, `critical`, `ok` | booleans | Operator alert filtering. |
 | `pre_check.enabled`, `pre_check.lint_report_path`, `pre_check.timeout_seconds` | boolean, non-empty string, positive number | Delivery lint/pre-check validator. |
 | `review_defaults.timeout_minutes`, `max_fix_cycles`, `lint_tier`, `lint_required` | positive number, number `>= 0`, non-empty string, boolean | Review gate defaults; `review_defaults.reviewers` is rejected. |

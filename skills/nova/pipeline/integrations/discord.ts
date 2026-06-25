@@ -338,6 +338,7 @@ export async function discord(config: any, level: any, title: any, description: 
       await postDiscordWebhook(config.discord_webhook_url, {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
+        timeoutMs: config?.discord?.webhook_timeout_ms,
       });
       await recordDiscordWebhookRestored(config, correlation);
     } catch (err) {
@@ -394,6 +395,7 @@ export async function discordEmbeds(config: any, embeds: any[] = [], opts: any =
       await postDiscordWebhook(config.discord_webhook_url, {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ embeds: safeEmbeds }),
+        timeoutMs: config?.discord?.webhook_timeout_ms,
       });
       await recordDiscordWebhookRestored(config, correlation);
     } catch (err) {

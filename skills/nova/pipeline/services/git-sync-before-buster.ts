@@ -57,7 +57,7 @@ export async function gitSyncBeforeBuster(config: AnyRecord, moduleDir: string, 
     if (!result.committed) {
       log('INFO', 'No uncommitted changes (Forge already committed) — pushing existing commits');
       gitPullBeforePush(config);
-      await gitPushWithRetry(config, 3, 5000, { budget, signal });
+      await gitPushWithRetry(config, { budget, signal });
     }
 
     const commitHash = result.hash || gitExec(config.repo_root, ['rev-parse', 'HEAD']);

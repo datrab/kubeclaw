@@ -44,7 +44,15 @@ function isProcessAlive(pid) {
   }
 }
 
-function withGateActiveSessionMutationLock(activeSessionPath, fn, { staleMs = 300000, timeoutMs = 30000 } = {}) {
+function withGateActiveSessionMutationLock(config, activeSessionPath, fn, opts = {}) {
+  const staleMs = opts.staleMs ?? config?.locks?.gate_active_session_stale_ms;
+  const timeoutMs = opts.timeoutMs ?? config?.locks?.gate_active_session_timeout_ms;
+  if (typeof staleMs !== 'number' || !Number.isFinite(staleMs) || staleMs < 0) {
+    throw new Error('config.locks.gate_active_session_stale_ms is required in swarm.config.json');
+  }
+  if (typeof timeoutMs !== 'number' || !Number.isFinite(timeoutMs) || timeoutMs < 0) {
+    throw new Error('config.locks.gate_active_session_timeout_ms is required in swarm.config.json');
+  }
   const lockPath = `${activeSessionPath}.lock`;
   fs.mkdirSync(path.dirname(lockPath), { recursive: true });
   const ownerToken = `${process.pid}:${Date.now()}:${Math.random().toString(36).slice(2)}`;
@@ -245,7 +253,7 @@ export function persistGateActiveSession(config, gateId, label, entry, extra = {
     log('DEBUG', `Skipping weak gate active-session evidence for ${gateId}: incomplete identity`);
     return false;
   }
-  return withGateActiveSessionMutationLock(activeSessionPath, () => {
+  return withGateActiveSessionMutationLock(config, activeSessionPath, () => {
     writeJsonAtomic(activeSessionPath, {
       ...extra,
       gate_id: gateId,
@@ -272,7 +280,7 @@ export function clearGateActiveSession(config, gateId, expectedIdentity = null) 
     log('DEBUG', `Skipping active gate session cleanup for ${gateId}: incomplete expected identity`);
     return false;
   }
-  return withGateActiveSessionMutationLock(activeSessionPath, () => {
+  return withGateActiveSessionMutationLock(config, activeSessionPath, () => {
     if (expectedIdentity) {
       const current = readJsonIfPresent(activeSessionPath);
       if (!current.exists) return false;

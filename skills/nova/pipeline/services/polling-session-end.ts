@@ -27,6 +27,7 @@ import { appendDurableOperatorAlert } from './telemetry.ts';
 import { createBudgetFromMinutes, isBudgetExhaustedError } from '../timing.ts';
 import { createPipelineEventBus, waitForAny } from './pipeline-event-contract.ts';
 import { moduleLogDir } from '../core/paths.ts';
+import { gatewayInvokePolicy } from '../core/session-policy.ts';
 
 function appendDurableSessionEndAlert(config, identity = {}, reason, extra = {}) {
   appendDurableOperatorAlert(config, identity.gate_id ? 'gate.operator_alert' : 'module.operator_alert', {
@@ -173,8 +174,14 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
   const budget = opts.budget || createBudgetFromMinutes(timeoutMinutes, { label: logLabel });
   const startTime = Date.now();
   const nudgeThreshold = config.session_nudge_threshold;
-  const sessionEndGraceMs = config.session_end_grace_ms ?? 15000;
-  const sessionProgressLogIntervalMs = config.session_progress_log_interval_ms ?? 30000;
+  const sessionEndGraceMs = config.polling?.session_end_grace_ms;
+  const sessionProgressLogIntervalMs = config.polling?.session_progress_log_interval_ms;
+  if (typeof sessionEndGraceMs !== 'number' || !Number.isFinite(sessionEndGraceMs) || sessionEndGraceMs < 0) {
+    throw new Error('config.polling.session_end_grace_ms is required in swarm.config.json');
+  }
+  if (typeof sessionProgressLogIntervalMs !== 'number' || !Number.isFinite(sessionProgressLogIntervalMs) || sessionProgressLogIntervalMs < 0) {
+    throw new Error('config.polling.session_progress_log_interval_ms is required in swarm.config.json');
+  }
   let nudgeSent = false;
 
   // Resolve sessionKey from label
@@ -217,7 +224,10 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
   let _lastProgressEmit = startTime;
   let _lastSessionProgressLogAt = 0;
   let _lastSessionProgressStateKey = null;
-  const PROGRESS_INTERVAL_MS = config.session_progress_emit_interval_ms ?? 30000;
+  const progressIntervalMs = config.polling?.session_progress_emit_interval_ms;
+  if (typeof progressIntervalMs !== 'number' || !Number.isFinite(progressIntervalMs) || progressIntervalMs < 0) {
+    throw new Error('config.polling.session_progress_emit_interval_ms is required in swarm.config.json');
+  }
 
   function _mirrorSubagentTranscript() {
     const destDir = moduleLogDir(config, _moduleId);
@@ -354,7 +364,7 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
         label: _telemetryIdentity.label || sessionLabel,
         agentType: _agentType,
         lastEmitAt: _lastProgressEmit,
-        intervalMs: PROGRESS_INTERVAL_MS,
+        intervalMs: progressIntervalMs,
         elapsedSeconds: Math.round((Date.now() - startTime) / 1000),
       });
 
@@ -497,11 +507,12 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
       nudgeSent = true;
       const remainingMin = Math.round(budget.remainingMs() / 60000);
       try {
+        const sendPolicy = gatewayInvokePolicy(config, 'session_send');
         await sendGatewaySessionMessage(
           sessionKey,
           `TIMEOUT WARNING: You have ~${remainingMin} minutes remaining. Complete your current task and write your output files now. Unfinished work will be lost.`,
-          10000,
-          { budget, signal: budget.signal },
+          sendPolicy.timeoutMs,
+          { ...sendPolicy, budget, signal: budget.signal },
         );
       } catch (error) {
         appendDurableSessionEndAlert(config, _rateLimitIdentity, 'timeout_nudge_failed', {

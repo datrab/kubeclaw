@@ -19,7 +19,7 @@ import {
 import { loadBusterRuntimePolicy } from './runtime-policy.ts';
 
 export const AGENT_NAME = process.env.AGENT_NAME || 'buster';
-export const STREAM_KEY = process.env.BUSTER_TASK_STREAM || `swarm:${AGENT_NAME}:tasks`;
+export const STREAM_KEY = loadBusterRuntimePolicy().task_stream;
 export const GROUP_NAME = `${AGENT_NAME}-group`;
 export const CONSUMER_NAME = `${AGENT_NAME}-buster-pipeline-${hostname()}`;
 

@@ -13,6 +13,7 @@ import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError } from '.
 import { sanitizeDiscordMessage } from '../redaction.ts';
 import { postDiscordWebhook } from '../integrations/discord-webhook.ts';
 import { createObservabilityHealthState } from './observability-health.ts';
+import { loadBusterPlatformConfig } from './runtime-policy.ts';
 
 declare const process: {
   env: Record<string, string | undefined>;
@@ -47,6 +48,15 @@ interface DiscordContext extends AnyRecord {
   actionability?: AnyRecord | null;
   webhook_url?: unknown;
   disableDiscordWebhooks?: boolean;
+}
+
+function discordWebhookTimeoutMs(): number {
+  const config = loadBusterPlatformConfig();
+  const timeoutMs = Number(config?.discord?.webhook_timeout_ms);
+  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
+    throw new Error('config.discord.webhook_timeout_ms: required positive number in swarm.config.json');
+  }
+  return timeoutMs;
 }
 
 interface CorrelationContext extends AnyRecord {
@@ -221,6 +231,7 @@ function buildTelemetryContext(correlation: CorrelationContext): { ctx: AnyRecor
       attempt: correlation.attempt ?? null,
       dispatch_id: correlation.dispatch_id || null,
       session_key: correlation.session_key || null,
+      streamMaxLen: loadBusterPlatformConfig()?.telemetry?.stream_max_len,
       emitter: 'buster/pipeline/services/discord',
     }),
     owned: true,
@@ -494,6 +505,7 @@ export function sendDiscord(message: AnyRecord | null | undefined, context: Disc
   void postDiscordWebhook(correlation.webhook_url, {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
+    timeoutMs: discordWebhookTimeoutMs(),
   })
     .then(() => {
       emitDiscordRestoredIfNeeded(correlation, 'webhook', 'webhook_delivery_failed', 'Buster Discord webhook delivery restored');
@@ -522,6 +534,7 @@ export async function deliverDiscordWebhookRequest(request: AnyRecord = {}, cont
     webhook_url: _webhook_url,
     ...transportOptions
   } = normalizedRequest;
+  transportOptions.timeoutMs = transportOptions.timeoutMs ?? discordWebhookTimeoutMs();
 
   try {
     const result = await postDiscordWebhook(correlation.webhook_url, transportOptions);

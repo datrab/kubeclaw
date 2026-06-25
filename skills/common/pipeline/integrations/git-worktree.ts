@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import { log } from '../../../nova/pipeline/core/logger.ts';
 import { getRunStats } from '../../../nova/pipeline/core/runtime.ts';
-import { getRepoRoot, gitExec, headHash, invalidateHeadHash, setRepoRoot } from '../git-primitives.ts';
+import { getRepoRoot, gitExec, headHash, invalidateHeadHash, setGitRuntimePolicy, setRepoRoot } from '../git-primitives.ts';
 import { FAIL_PATTERNS, classifyGitPushError } from '../../../nova/pipeline/services/failures/classification.ts';
 import { sleep } from '../timing.ts';
 import { buildSubprocessEnv } from '../security.ts';
@@ -16,13 +16,14 @@ type PorcelainEntry = { raw: string; status: string; path: string };
 type StashEntry = { ref: string; sha: string; subject: string };
 type GitStructuredError = Error & { code?: string; gitSync?: AnyRecord; pollingGit?: AnyRecord };
 type RuntimeStashState = { stashRef: string | null; stashSha?: string | null; paths: string[] } | null;
+type PreservationStashState = { stashRef: string | null; stashSha?: string | null; paths: string[] } | null;
 type GitCommitPushOptions = { addPaths?: string[]; conflictPaths?: string[]; captureHash?: boolean; softFail?: boolean; budget?: any; signal?: any };
 
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
-export { getRepoRoot, gitExec, headHash, invalidateHeadHash, setRepoRoot } from '../git-primitives.ts';
+export { getRepoRoot, gitExec, headHash, invalidateHeadHash, setGitRuntimePolicy, setRepoRoot } from '../git-primitives.ts';
 export { classifyGitPushError } from '../../../nova/pipeline/services/failures/classification.ts';
 
 function incrementStat(config: AnyRecord, key: string) {
@@ -149,6 +150,11 @@ function parseProjectScopedPorcelainEntries(config: AnyRecord): PorcelainEntry[]
   return parsePorcelainEntries(config.repo_root, projectScopedStatusArgs(config));
 }
 
+function parseOutOfScopePorcelainEntries(config: AnyRecord): PorcelainEntry[] {
+  return parsePorcelainEntries(config.repo_root)
+    .filter((entry) => entry.path && !isPathWithinProjectScope(config, entry.path));
+}
+
 function partitionRuntimeStateEntries(entries: PorcelainEntry[] = []) {
   const runtimeEntries: PorcelainEntry[] = [];
   const nonRuntimeEntries: PorcelainEntry[] = [];
@@ -178,6 +184,16 @@ function resolveStashRefBySha(repoRoot: string, stashState: RuntimeStashState): 
   if (!stashState?.stashSha) return stashState?.stashRef || null;
   const entry = listStashEntries(repoRoot).find(stashEntry => stashEntry.sha === stashState.stashSha);
   return entry?.ref || null;
+}
+
+function dropRuntimeStash(repoRoot: string, stashState: RuntimeStashState) {
+  const currentStashRef = resolveStashRefBySha(repoRoot, stashState);
+  if (!currentStashRef) return;
+  try {
+    gitExec(repoRoot, ['stash', 'drop', currentStashRef], { stdio: 'ignore' });
+  } catch (dropErr) {
+    log('WARN', `Runtime-state stash drop failed after restore handling: ${errorMessage(dropErr).split('\n')[0]}`);
+  }
 }
 
 function getConflictedPaths(repoRoot: string): string[] {
@@ -219,36 +235,52 @@ function collectRuntimeStateStash(config: AnyRecord): RuntimeStashState {
   const entries = parseProjectScopedPorcelainEntries(config);
   if (entries.length === 0) return null;
 
-  const { runtimeEntries, nonRuntimeEntries } = partitionRuntimeStateEntries(entries);
-  if (nonRuntimeEntries.length > 0) {
-    const unsafePaths = nonRuntimeEntries.map(entry => entry.path);
-    throw createStructuredGitError(
-      config,
-      FAIL_PATTERNS.GIT_SYNC_FAILED,
-      `[${FAIL_PATTERNS.GIT_SYNC_FAILED}] Refusing to stash non-runtime local changes before pull-rebase.\n` +
-        `  Unsafe paths: ${unsafePaths.slice(0, 10).join(', ')}\n` +
-        `  Recovery:\n` +
-        `    cd ${config.repo_root}\n` +
-        `    git status\n` +
-        `    # Commit, discard, or move these files manually, then resume the full pipeline:\n` +
-        `    node pipeline.ts --project ${config.project} --resume`,
-      {
-        reason: 'non_runtime_dirty_paths',
-        unsafe_paths: unsafePaths,
-      },
-    );
-  }
-
-  const stashPaths = [...new Set(runtimeEntries.map(entry => entry.path).filter(Boolean))];
+  const stashPaths = [...new Set(entries.map(entry => entry.path).filter(Boolean))];
   if (stashPaths.length === 0) return null;
 
   const beforeShas = new Set(listStashEntries(config.repo_root).map(entry => entry.sha));
-  gitExec(config.repo_root, ['stash', 'push', '--include-untracked', '-m', 'pipeline-pre-push-runtime-state', '--', ...stashPaths], { stdio: 'ignore' });
+  gitExec(config.repo_root, ['stash', 'push', '--include-untracked', '-m', 'pipeline-pre-push-project-worktree', '--', ...stashPaths], { stdio: 'ignore' });
   const afterEntries = listStashEntries(config.repo_root);
   const stashEntry = afterEntries.find(entry => !beforeShas.has(entry.sha)) || null;
 
-  log('DEBUG', `Stashed ${stashPaths.length} runtime-state path(s) before pull-rebase`);
+  log('DEBUG', `Stashed ${stashPaths.length} project worktree path(s) before pull-rebase`);
   return { stashRef: stashEntry?.ref || null, stashSha: stashEntry?.sha || null, paths: stashPaths };
+}
+
+function collectOutOfScopeWorktreeStash(config: AnyRecord): PreservationStashState {
+  const entries = parseOutOfScopePorcelainEntries(config);
+  const stashPaths = [...new Set(entries.map(entry => entry.path).filter(Boolean))];
+  if (stashPaths.length === 0) return null;
+
+  const beforeShas = new Set(listStashEntries(config.repo_root).map(entry => entry.sha));
+  gitExec(config.repo_root, ['stash', 'push', '--include-untracked', '-m', 'pipeline-preserve-out-of-scope-worktree', '--', ...stashPaths], { stdio: 'ignore' });
+  const afterEntries = listStashEntries(config.repo_root);
+  const stashEntry = afterEntries.find(entry => !beforeShas.has(entry.sha)) || null;
+
+  log('DEBUG', `Stashed ${stashPaths.length} out-of-scope worktree path(s) before pull-rebase fallback`);
+  return { stashRef: stashEntry?.ref || null, stashSha: stashEntry?.sha || null, paths: stashPaths };
+}
+
+function restoreOutOfScopeWorktreeStash(config: AnyRecord, stashState: PreservationStashState) {
+  if (!stashState?.stashRef && !stashState?.paths?.length) return;
+
+  const stashRef = resolveStashRefBySha(config.repo_root, stashState);
+  if (!stashRef) {
+    log('WARN', 'Out-of-scope worktree stash entry was not found during restore');
+    return;
+  }
+
+  try {
+    gitExec(config.repo_root, ['stash', 'pop', stashRef], { stdio: 'ignore' });
+    log('DEBUG', 'Restored stashed out-of-scope worktree after push');
+  } catch (popErr) {
+    log('WARN', `Out-of-scope worktree stash restore failed; preserving stash for manual recovery: ${errorMessage(popErr).split('\n')[0]}`);
+    try {
+      gitExec(config.repo_root, ['reset', '--merge'], { stdio: 'ignore' });
+    } catch (resetErr) {
+      log('WARN', `Out-of-scope stash cleanup reset failed: ${errorMessage(resetErr).split('\n')[0]}`);
+    }
+  }
 }
 
 function restoreRuntimeStateStash(
@@ -267,11 +299,26 @@ function restoreRuntimeStateStash(
   const normalizedAllowedConflictPaths = normalizeScopedGitPaths(opts.allowedConflictPaths || []);
   try {
     gitExec(config.repo_root, ['stash', 'pop', stashRef], { stdio: 'ignore' });
-    log('DEBUG', 'Restored stashed runtime-state worktree after push');
+    log('DEBUG', 'Restored stashed project worktree after push');
     return;
   } catch (popErr) {
     const conflicts = filterProjectScopedPaths(config, getConflictedPaths(config.repo_root));
-    if (conflicts.length === 0) throw popErr;
+    if (conflicts.length === 0) {
+      const entries = parseProjectScopedPorcelainEntries(config);
+      const stashedPaths = normalizeScopedGitPaths(stashState.paths || []);
+      const stashedPathsRestored = stashedPaths.every((file) => {
+        if (entries.some((entry) => normalizeRepoRelativePath(entry.path) === file)) return true;
+        return fs.existsSync(path.join(config.repo_root, file));
+      });
+
+      if (stashedPathsRestored) {
+        log('WARN', 'Project worktree stash restore reported a non-conflict failure, but the stashed paths are already present locally — treating restore as satisfied');
+        dropRuntimeStash(config.repo_root, stashState);
+        return;
+      }
+
+      throw popErr;
+    }
 
     if (
       opts.allowDeferredScopedResolve !== false
@@ -286,14 +333,15 @@ function restoreRuntimeStateStash(
       });
     }
 
-    const runtimeConflicts = conflicts.filter(file => isRuntimeStatePath(normalizeRepoPathForRuntimeCheck(file)));
-    if (runtimeConflicts.length !== conflicts.length) {
-      const nonRuntimeConflicts = conflicts.filter(file => !isRuntimeStatePath(normalizeRepoPathForRuntimeCheck(file)));
+    const stashedPaths = normalizeScopedGitPaths(stashState.paths || []);
+    const restorableConflicts = conflicts.filter(file => pathMatchesScopedPathspec(file, stashedPaths));
+    if (restorableConflicts.length !== conflicts.length) {
+      const unexpectedConflicts = conflicts.filter(file => !pathMatchesScopedPathspec(file, stashedPaths));
       throw createStructuredGitError(
         config,
         FAIL_PATTERNS.GIT_REBASE_CONFLICT,
-        `[${FAIL_PATTERNS.GIT_REBASE_CONFLICT}] Restoring stashed local changes after pull-rebase produced non-runtime conflicts.\n` +
-          `  Conflicted paths: ${nonRuntimeConflicts.slice(0, 10).join(', ')}\n` +
+        `[${FAIL_PATTERNS.GIT_REBASE_CONFLICT}] Restoring stashed local project changes after pull-rebase produced unexpected conflicts.\n` +
+          `  Conflicted paths: ${unexpectedConflicts.slice(0, 10).join(', ')}\n` +
           `  Recovery:\n` +
           `    cd ${config.repo_root}\n` +
           `    git status\n` +
@@ -309,22 +357,15 @@ function restoreRuntimeStateStash(
       );
     }
 
-    log('WARN', `Stash pop conflicted on runtime-state files only — restoring stashed versions for ${runtimeConflicts.join(', ')}`);
-    for (const file of runtimeConflicts) {
+    log('WARN', `Stash pop conflicted on stashed project files — restoring stashed versions for ${restorableConflicts.join(', ')}`);
+    for (const file of restorableConflicts) {
       gitExec(config.repo_root, ['checkout', '--theirs', '--', file], { stdio: 'ignore' });
       gitExec(config.repo_root, ['add', '--', file], { stdio: 'ignore' });
     }
 
-    const currentStashRef = resolveStashRefBySha(config.repo_root, stashState);
-    if (currentStashRef) {
-      try {
-        gitExec(config.repo_root, ['stash', 'drop', currentStashRef], { stdio: 'ignore' });
-      } catch (dropErr) {
-        log('WARN', `Runtime-state stash drop failed after conflict cleanup: ${errorMessage(dropErr).split('\n')[0]}`);
-      }
-    }
+    dropRuntimeStash(config.repo_root, stashState);
 
-    log('DEBUG', 'Resolved runtime-state stash conflicts in favor of the stashed runtime state');
+    log('DEBUG', 'Resolved project worktree stash conflicts in favor of the stashed local state');
   }
 }
 
@@ -441,7 +482,7 @@ function _gitPullCore(config: AnyRecord, opts: { allowedConflictPaths?: string[]
     const activeConflicts = getConflictedPaths(config.repo_root);
     const isRebasing = isRebaseInProgress(config.repo_root)
       || activeConflicts.length > 0
-      || /\bCONFLICT\b|could not apply|rebase/i.test(msg);
+      || /\bCONFLICT\b|could not apply/i.test(msg);
 
     if (isRebasing) {
       log('WARN', 'Git pull left repo in REBASING state');
@@ -481,14 +522,60 @@ function _gitPullCore(config: AnyRecord, opts: { allowedConflictPaths?: string[]
 }
 
 export function gitPullBeforePush(config: AnyRecord) {
-  return _gitPullCore(config);
+  const projectStash = collectRuntimeStateStash(config);
+  const outOfScopeStash = collectOutOfScopeWorktreeStash(config);
+  try {
+    const pullResult = _gitPullCore(config, {
+      allowedConflictPaths: normalizeScopedGitPaths(filterProjectScopedPaths(config, resolveDefaultGitAddPaths(config))),
+    });
+    if (pullResult?.ok === false) {
+      throw createStructuredGitError(
+        config,
+        FAIL_PATTERNS.GIT_SYNC_FAILED,
+        `[${FAIL_PATTERNS.GIT_SYNC_FAILED}] Git pull-before-push failed.\n` +
+          `  Reason: ${pullResult.reason || 'git pull failed'}\n` +
+          `  Recovery:\n` +
+          `    cd ${config.repo_root}\n` +
+          `    git status\n` +
+          `    node pipeline.ts --project ${config.project} --resume`,
+        {
+          reason: 'pull_before_push_failed',
+          pull_result: pullResult,
+        },
+      );
+    }
+    return pullResult;
+  } finally {
+    restoreOutOfScopeWorktreeStash(config, outOfScopeStash);
+    restoreRuntimeStateStash(config, projectStash, {
+      allowedConflictPaths: normalizeScopedGitPaths(filterProjectScopedPaths(config, resolveDefaultGitAddPaths(config))),
+    });
+  }
 }
 
-export async function gitPushWithRetry(config: AnyRecord, maxRetries = 3, delayMs = 5000, opts: { budget?: any; signal?: any } = {}) {
+function gitPushPolicy(config: AnyRecord): { maxRetries: number; delayMs: number; timeoutMs: number } {
+  const policy = config?.git;
+  if (!policy || typeof policy !== 'object') {
+    throw new Error('config.git: required platform config object for git push retry policy');
+  }
+  const maxRetries = Number(policy.push_max_retries);
+  const delayMs = Number(policy.push_retry_delay_ms);
+  const timeoutMs = Number(policy.push_timeout_ms);
+  if (!Number.isFinite(maxRetries) || maxRetries <= 0) throw new Error('config.git.push_max_retries: required positive number');
+  if (!Number.isFinite(delayMs) || delayMs < 0) throw new Error('config.git.push_retry_delay_ms: required non-negative number');
+  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) throw new Error('config.git.push_timeout_ms: required positive number');
+  return { maxRetries, delayMs, timeoutMs };
+}
+
+export async function gitPushWithRetry(config: AnyRecord, opts: { budget?: any; signal?: any; maxRetries?: number; delayMs?: number; timeoutMs?: number } = {}) {
+  const policy = gitPushPolicy(config);
+  const maxRetries = opts.maxRetries ?? policy.maxRetries;
+  const delayMs = opts.delayMs ?? policy.delayMs;
+  const timeoutMs = opts.timeoutMs ?? policy.timeoutMs;
   const { budget = null, signal = null } = opts;
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      gitExec(config.repo_root, ['push', 'origin', 'HEAD'], { stdio: 'ignore', timeout: 60000 });
+      gitExec(config.repo_root, ['push', 'origin', 'HEAD'], { stdio: 'ignore', timeout: timeoutMs });
       log('OK', `Git push succeeded (attempt ${attempt}/${maxRetries})`);
       return;
     } catch (e) {
@@ -525,27 +612,49 @@ export async function gitCommitAndPush(config: AnyRecord, message: string, { add
     invalidateHeadHash(config);
 
     const stashState = collectRuntimeStateStash(config);
+    const hasOutOfScopeDirty = parseOutOfScopePorcelainEntries(config).length > 0;
+    let outOfScopeStash: PreservationStashState = null;
+    let pushed = false;
 
     try {
-      const pullResult = _gitPullCore(config, { allowedConflictPaths: normalizeScopedGitPaths(conflictPaths) });
-      if (pullResult?.ok === false) {
-        throw createStructuredGitError(
-          config,
-          FAIL_PATTERNS.GIT_SYNC_FAILED,
-          `[${FAIL_PATTERNS.GIT_SYNC_FAILED}] Git pull-before-push failed.\n` +
-            `  Reason: ${pullResult.reason || 'git pull failed'}\n` +
-            `  Recovery:\n` +
-            `    cd ${config.repo_root}\n` +
-            `    git status\n` +
-            `    node pipeline.ts --project ${config.project} --resume`,
-          {
-            reason: 'pull_before_push_failed',
-            pull_result: pullResult,
-          },
-        );
+      if (hasOutOfScopeDirty) {
+        log('INFO', 'Out-of-scope local changes detected — skipping proactive pull and attempting direct push');
+        try {
+          await gitPushWithRetry(config, { maxRetries: 1, delayMs: 0, budget, signal });
+          pushed = true;
+        } catch (pushErr) {
+          log('WARN', `Direct push failed with out-of-scope local changes present — stashing unrelated worktree changes and falling back to pull-rebase: ${errorMessage(pushErr).split('\n')[0]}`);
+          outOfScopeStash = collectOutOfScopeWorktreeStash(config);
+        }
       }
-      await gitPushWithRetry(config, 3, 5000, { budget, signal });
+
+      if (!pushed) {
+        const pullResult = _gitPullCore(config, {
+          allowedConflictPaths: normalizeScopedGitPaths([
+            ...conflictPaths,
+            ...filterProjectScopedPaths(config, resolveDefaultGitAddPaths(config)),
+          ]),
+        });
+        if (pullResult?.ok === false) {
+          throw createStructuredGitError(
+            config,
+            FAIL_PATTERNS.GIT_SYNC_FAILED,
+            `[${FAIL_PATTERNS.GIT_SYNC_FAILED}] Git pull-before-push failed.\n` +
+              `  Reason: ${pullResult.reason || 'git pull failed'}\n` +
+              `  Recovery:\n` +
+              `    cd ${config.repo_root}\n` +
+              `    git status\n` +
+              `    node pipeline.ts --project ${config.project} --resume`,
+            {
+              reason: 'pull_before_push_failed',
+              pull_result: pullResult,
+            },
+          );
+        }
+        await gitPushWithRetry(config, { budget, signal });
+      }
     } finally {
+      restoreOutOfScopeWorktreeStash(config, outOfScopeStash);
       restoreRuntimeStateStash(config, stashState, {
         allowedConflictPaths: normalizeScopedGitPaths(conflictPaths),
       });

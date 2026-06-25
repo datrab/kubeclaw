@@ -259,8 +259,8 @@ assert.equal(`${mainSource}\n${taskLifecycleCombinedSource}`.includes("source: '
 assert.equal(helpersSource.includes('result_status'), false, 'buster artifact reader must not accept status.json result_status fallback');
 assert.equal(helpersSource.includes('result_artifact_path'), false, 'buster artifact reader must not accept legacy result_artifact_path fallback');
 assert.equal(helpersSource.includes('output_file_invalid_status'), true, 'buster artifact reader should fail closed on invalid output_file status');
-assert.equal(taskLifecycleCompletionSource.includes("import verifyAndPush from '../../tools/verify-task.ts'"), true, 'buster completion emission must use verify-task.ts before Redis completion');
-assert.equal(taskLifecycleCompletionSource.indexOf('await verifyAndPush(') < taskLifecycleCompletionSource.indexOf('await emitTaskCompletion('), true, 'buster must push output_file before emitting Redis completion');
+assert.equal(taskCompletionSource.includes("import verifyAndPush from '../tools/verify-task.ts'"), true, 'buster completion emission must use verify-task.ts before Redis completion');
+assert.equal(taskCompletionSource.indexOf('await verifyTask(') < taskCompletionSource.indexOf('await emitCompletion('), true, 'buster must push output_file before emitting Redis completion');
 assert.equal(busterConventionsSource.includes('Update `status.json`'), false, 'buster conventions must not instruct child agents to update status.json directly');
 assert.equal(busterConventionsSource.includes('lifecycle update command'), false, 'buster conventions must not refer to stale prompt-provided lifecycle update commands');
 assert.equal(busterConventionsSource.includes('for `module_test` and `gate_test`, write raw, directly parseable JSON to `output_file`'), true, 'buster conventions should require every task to write raw JSON to the prompt-provided output_file');

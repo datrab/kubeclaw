@@ -3,7 +3,6 @@ import { log } from '../core/logger.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
 import { discord } from '../integrations/discord.ts';
 import { reaperAfterKill } from './shutdown.ts';
-import { waitForSessionIdle } from './acp-monitor.ts';
 import { modelToHarness, resolveRuntime } from './runtime.ts';
 import { getTrackedAgent, spawnSession, trackAgent, untrackAgent } from './lifecycle.ts';
 import { terminateSession } from './session-termination.ts';
@@ -12,6 +11,7 @@ import {
   createAgentLifecycleTelemetryReader,
   waitForRequiredAgentStartupEvidence,
 } from '../services/agent-observability-required.ts';
+import { sessionLifecyclePolicies } from '../core/session-policy.ts';
 
 type AnyRecord = Record<string, any>;
 
@@ -29,7 +29,8 @@ export async function spawnReviewerAgent(
   const runId = config?._runId || config?.run_id || null;
   const dispatchId = opts.dispatch_id || `${trackingKey}-dispatch-${dispatchTs}`;
   const model = resolvePolicy(config, progress, 'echo', { scopeModel: reviewer.model }).model;
-  const agentId = modelToHarness(model) || reviewer.agent_id || 'claude';
+  const agentId = modelToHarness(model) || reviewer.agent_id || config.agents.echo?.acp_agent_id;
+  if (!agentId) throw new Error(`Reviewer '${reviewer.label}' requires explicit agent id in reviewer.agent_id or config.agents.echo.acp_agent_id`);
   const cwd = config.agents.echo?.cwd || config.repo_root;
   const thinkingLevel = opts.thinking || reviewer.thinking_level || null;
   const runtime = resolveRuntime({ runtime: reviewer.dispatch, model });
@@ -54,6 +55,7 @@ export async function spawnReviewerAgent(
     const sessionData = await spawnSession({
       session: { model, runtime, agentId, cwd, label: gatewayLabel },
     }, instructions, reviewer?.timeout_seconds || null, {
+      ...sessionLifecyclePolicies(config),
       runtime,
       model,
       agentId,
@@ -158,13 +160,10 @@ export async function killReviewerAgent(
     untrackAgent(label);
     return false;
   }
-  if (graceful) {
-    log('INFO', `Waiting for reviewer session to become idle: ${label}`);
-    await waitForSessionIdle(sessionKey, { ...config.acp_monitor, streamLogPath: entry?.streamLogPath || null });
-  }
   log('STEP', `Destroying reviewer session: ${label} (${sessionKey})`);
   const runtime = entry?.runtime;
   const termination = await terminateSession(sessionKey, {
+    ...sessionLifecyclePolicies(config),
     runtime,
     model: entry?.model || null,
     agentId: entry.agentId,

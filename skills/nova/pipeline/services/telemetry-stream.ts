@@ -2,7 +2,7 @@ import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError } from '.
 import { sanitizeTelemetryPayload } from '../redaction.ts';
 import {
   TELEMETRY_SEQ_TTL_SECONDS,
-  TELEMETRY_STREAM_MAXLEN,
+  requireTelemetryStreamMaxLen,
   getTelemetrySeqKey,
   getTelemetryStreamKey,
   createRedisClient,
@@ -146,7 +146,7 @@ export async function emitTelemetryStreamEvent(config, eventType, payload = {}, 
   try {
     const seq = await allocateSeq(redis, identity.seqKey);
     const event = buildTelemetryStreamEvent(eventType, payload, identity, seq, opts, emittedAt);
-    await redis.xadd(streamKey, 'MAXLEN', '~', String(TELEMETRY_STREAM_MAXLEN), '*', 'data', JSON.stringify(event));
+    await redis.xadd(streamKey, 'MAXLEN', '~', String(requireTelemetryStreamMaxLen(config?.telemetry?.stream_max_len)), '*', 'data', JSON.stringify(event));
     return {
       ok: true,
       skipped: false,

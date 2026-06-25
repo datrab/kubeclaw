@@ -39,7 +39,10 @@ export function publishAcpTranscriptDelta(ctx, identity = {}, acpState = {}, opt
 export function maybeEmitAcpPollProgress(ctx, identity = {}, acpState = {}, opts = {}) {
   const now = opts.now || Date.now();
   const lastEmitAt = opts.lastEmitAt || 0;
-  const intervalMs = opts.intervalMs ?? 30000;
+  const intervalMs = opts.intervalMs;
+  if (typeof intervalMs !== 'number' || !Number.isFinite(intervalMs) || intervalMs < 0) {
+    throw new Error('maybeEmitAcpPollProgress requires explicit intervalMs from swarm.config.json');
+  }
   if (now - lastEmitAt < intervalMs) return lastEmitAt;
 
   return now;

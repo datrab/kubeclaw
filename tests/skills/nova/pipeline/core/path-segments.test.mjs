@@ -11,6 +11,46 @@ import { createTempManager } from '../../../../../skills/nova/pipeline/core/temp
 
 const removedReviewFailField = `on_${'n' + 'ogo'}`;
 
+function observabilityConfig() {
+  return {
+    required: true,
+    profile: 'test',
+    profiles: {
+      test: {
+        payload: { max_event_bytes: 3145728 },
+        startup_evidence: { timeout_ms: 0, block_ms: 1 },
+        forge_completion: { xread_block_ms: 1, settle_ms: 0 },
+        redis: { command_timeout_ms: 1 },
+        streams: { stream_max_len: 1, dead_letter_max_len: 1 },
+        plugin: {
+          max_queue_per_stream: 1,
+          control_write: { max_attempts: 1, retry_base_ms: 1, retry_max_ms: 1 },
+          hook: { priority: 0, timeout_ms: 1 },
+        },
+        plugin_control: { timeout_ms: 1 },
+        ingester: {
+          read: { block_ms: 1, reclaim_idle_ms: 1 },
+          loop: { delay_ms: 1, health_check_every: 0, stop_timeout_ms: 1 },
+          trim: { interval_ms: 1, payload_stream_max_len: 1 },
+          pressure: { control_lag_degraded_threshold: 0, payload_pressure_degraded_threshold: 0 },
+        },
+      },
+    },
+    plugin: { enabled: true },
+    plugin_control: {
+      enabled: true,
+      pluginId: 'kubeclaw-agent-observer',
+      command: 'openclaw',
+      disableOnStop: true,
+    },
+    ingester: {
+      enabled: true,
+      groupName: 'kubeclaw-agent-observability-ingester',
+      consumerName: 'kubeclaw-agent-observability-ingester-1',
+    },
+  };
+}
+
 function makeConfig() {
   const repoRoot = '/home/path-segment-test';
   const swarmDir = path.join(repoRoot, 'Projects/demo/src/.swarm');
@@ -42,6 +82,8 @@ function makeConfig() {
         heartbeat_interval_ms: 1,
         task_poll_interval_ms: 1,
         task_pending_reclaim_idle_ms: 1,
+        completion_event_block_ms: 0,
+        completion_recovery_scan_interval_ms: 1,
         task_stream_max_len: 1,
       },
     },
@@ -171,7 +213,7 @@ test('validateConfig rejects removed review-failure gate field', () => {
 
 test('validateConfig requires telemetry when agent observability is required', () => {
   const config = makeConfig();
-  config.agent_observability = { required: true, startup_evidence_timeout_ms: 0 };
+  config.agent_observability = observabilityConfig();
   const progress = {
     project: 'demo',
     execution_order: [],

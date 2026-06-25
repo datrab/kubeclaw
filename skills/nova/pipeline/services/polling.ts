@@ -107,7 +107,10 @@ export function pollResult(ok, reason, status = null, extra = {}) {
  */
 export async function pollGeneric(config, checkFn, timeoutMinutes, label = 'poll', opts = {}) {
   const interval = config.poll_interval_seconds * 1000;
-  const progressLogIntervalMs = config.poll_progress_log_interval_ms ?? 30000;
+  const progressLogIntervalMs = config.polling?.progress_log_interval_ms;
+  if (typeof progressLogIntervalMs !== 'number' || !Number.isFinite(progressLogIntervalMs) || progressLogIntervalMs < 0) {
+    throw new Error('config.polling.progress_log_interval_ms is required in swarm.config.json');
+  }
   const budget = opts.budget || createBudgetFromMinutes(timeoutMinutes, { label });
   const startTime = Date.now();
   let consecutiveParseFailures = 0;
@@ -199,7 +202,10 @@ export async function pollForFile(config, filePath, timeoutMinutes, label = 'fil
   const ctx = { config };
   const startTime = Date.now();
   let lastProgressEmit = startTime;
-  const PROGRESS_INTERVAL_MS = config.session_progress_emit_interval_ms ?? 30000;
+  const progressIntervalMs = config.polling?.session_progress_emit_interval_ms;
+  if (typeof progressIntervalMs !== 'number' || !Number.isFinite(progressIntervalMs) || progressIntervalMs < 0) {
+    throw new Error('config.polling.session_progress_emit_interval_ms is required in swarm.config.json');
+  }
 
   return pollGeneric(config, async () => {
     // Signal A: Output file exists → success (always wins)
@@ -229,7 +235,7 @@ export async function pollForFile(config, filePath, timeoutMinutes, label = 'fil
         label: pollIdentity.label,
         agentType: liveAgentType,
         lastEmitAt: lastProgressEmit,
-        intervalMs: PROGRESS_INTERVAL_MS,
+        intervalMs: progressIntervalMs,
         elapsedSeconds: Math.round((Date.now() - startTime) / 1000),
       });
 
@@ -304,7 +310,10 @@ export async function pollStatus(config, moduleDir, expectedStatuses, timeoutMin
   const ctx = { config };
   const startTime = Date.now();
   let lastProgressEmit = startTime;
-  const PROGRESS_INTERVAL_MS = config.session_progress_emit_interval_ms ?? 30000;
+  const progressIntervalMs = config.polling?.session_progress_emit_interval_ms;
+  if (typeof progressIntervalMs !== 'number' || !Number.isFinite(progressIntervalMs) || progressIntervalMs < 0) {
+    throw new Error('config.polling.session_progress_emit_interval_ms is required in swarm.config.json');
+  }
 
   return pollGeneric(config, async () => {
     // ── Channel 1: lifecycle read model (local signal) ──
@@ -357,7 +366,7 @@ export async function pollStatus(config, moduleDir, expectedStatuses, timeoutMin
         label: pollIdentity.label,
         agentType: liveAgentType,
         lastEmitAt: lastProgressEmit,
-        intervalMs: PROGRESS_INTERVAL_MS,
+        intervalMs: progressIntervalMs,
         elapsedSeconds: Math.round((Date.now() - startTime) / 1000),
       });
 
@@ -440,7 +449,10 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
   const ctx = { config };
   const startTime = Date.now();
   let lastProgressEmit = startTime;
-  const PROGRESS_INTERVAL_MS = config.session_progress_emit_interval_ms ?? 30000;
+  const progressIntervalMs = config.polling?.session_progress_emit_interval_ms;
+  if (typeof progressIntervalMs !== 'number' || !Number.isFinite(progressIntervalMs) || progressIntervalMs < 0) {
+    throw new Error('config.polling.session_progress_emit_interval_ms is required in swarm.config.json');
+  }
   const settleMs = agentEndedSettleMs(config, opts);
   let hookReader = createAgentEndedTelemetryReader(config, opts);
   let hookReaderDegraded = !hookReader;
@@ -555,7 +567,7 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
           label: pollIdentity.label,
           agentType: liveAgentType,
           lastEmitAt: lastProgressEmit,
-          intervalMs: PROGRESS_INTERVAL_MS,
+          intervalMs: progressIntervalMs,
           elapsedSeconds: Math.round((Date.now() - startTime) / 1000),
         });
 

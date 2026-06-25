@@ -13,7 +13,7 @@ import path from 'path';
 
 import {
   TELEMETRY_SEQ_TTL_SECONDS,
-  TELEMETRY_STREAM_MAXLEN,
+  requireTelemetryStreamMaxLen,
   getTelemetrySeqKey,
   getTelemetryStreamKey,
   createRedisClient,
@@ -21,6 +21,7 @@ import {
 } from '../telemetry.ts';
 import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError } from '../noncritical-reporting.ts';
 import { sanitizeTelemetryPayload } from '../redaction.ts';
+import { loadBusterPlatformConfig } from './runtime-policy.ts';
 import {
   assertTelemetryEventPayload,
   buildPluginTelemetryPayload,
@@ -51,6 +52,7 @@ interface TelemetryOptions extends AnyRecord {
   gate_id?: string | null;
   gate_type?: string | null;
   enabled?: boolean | undefined;
+  streamMaxLen?: number | undefined;
 }
 
 interface TelemetryIdentity {
@@ -95,6 +97,7 @@ export interface BusterTelemetryContext extends AnyRecord {
   sessionKey: string | null;
   gateId: string | null;
   gateType: string | null;
+  streamMaxLen: number;
   _health: TelemetryHealth;
 }
 
@@ -112,6 +115,13 @@ function errorMessage(error: unknown, fallback = 'unknown'): string {
   return error && typeof error === 'object' && typeof (error as ErrorLike).message === 'string'
     ? (error as ErrorLike).message as string
     : String(error || fallback);
+}
+
+function resolveTelemetryStreamMaxLen(opts: TelemetryOptions = {}): number {
+  if (opts.streamMaxLen !== undefined) {
+    return requireTelemetryStreamMaxLen(opts.streamMaxLen, 'telemetry.streamMaxLen');
+  }
+  return requireTelemetryStreamMaxLen(loadBusterPlatformConfig()?.telemetry?.stream_max_len);
 }
 
 function reportBusterTelemetryIncident(ctxOrOpts: TelemetryOptions | BusterTelemetryContext = {}, classification: string, error: unknown, message: string, options: AnyRecord = {}): void {
@@ -264,6 +274,7 @@ function createContext(opts: TelemetryOptions = {}, overrides: ContextOverrides 
     sessionKey: opts.session_key ?? null,
     gateId: opts.gate_id ?? null,
     gateType: opts.gate_type ?? null,
+    streamMaxLen: resolveTelemetryStreamMaxLen(opts),
     _health: overrides.health || {
       redis: identity.ok
         ? { degraded: false, degradedAt: null }
@@ -369,7 +380,7 @@ async function emitRestoredIfNeeded(ctx: BusterTelemetryContext): Promise<void> 
     appendPipelineArtifactEvent(ctx, event);
     await ctx.redis
       .multi()
-      .xadd(ctx.streamKey, 'MAXLEN', '~', String(TELEMETRY_STREAM_MAXLEN), '*', 'data', JSON.stringify(event))
+      .xadd(ctx.streamKey, 'MAXLEN', '~', String(ctx.streamMaxLen), '*', 'data', JSON.stringify(event))
       .expire(ctx.seqKey, TELEMETRY_SEQ_TTL_SECONDS)
       .exec();
     ctx._health.redis = { degraded: false, degradedAt: null };
@@ -477,7 +488,7 @@ export async function emitEvent(ctx: unknown, type: string, data: AnyRecord = {}
     appendPipelineArtifactEvent(telemetryCtx, event);
     await telemetryCtx.redis
       .multi()
-      .xadd(telemetryCtx.streamKey, 'MAXLEN', '~', String(TELEMETRY_STREAM_MAXLEN), '*', 'data', JSON.stringify(event))
+      .xadd(telemetryCtx.streamKey, 'MAXLEN', '~', String(telemetryCtx.streamMaxLen), '*', 'data', JSON.stringify(event))
       .expire(telemetryCtx.seqKey, TELEMETRY_SEQ_TTL_SECONDS)
       .exec();
     await emitRestoredIfNeeded(telemetryCtx);

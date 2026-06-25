@@ -89,6 +89,13 @@ function parseAgentFindingsFile(outputFilePath) {
   return parsed.map(normalizeAgentFinding);
 }
 
+function requirePositiveTimeoutMinutes(value, label) {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
+    throw new Error(`${label}: required positive number`);
+  }
+  return value;
+}
+
 // ── Agent-based judgment ──────────────────────────────────────────────────────
 
 export function buildValidatorPrompt(progress, config, deterministicFindings, outputFilePath) {
@@ -187,20 +194,25 @@ async function runAgentJudgment(progress, config, deterministicFindings, opts = 
   }
 
   const prompt = buildValidatorPrompt(progress, config, deterministicFindings, outputFilePath);
+  const echoDispatch = config?.agents?.echo?.dispatch;
+  if (echoDispatch !== 'acp' && echoDispatch !== 'subagent') {
+    throw new Error('config.agents.echo.dispatch: required canonical spawned-session dispatch in swarm.config.json');
+  }
   const policy = resolvePolicy(config, progress, 'arch_validator', {
     scopeModel: progress?.arch_validation?.model,
     scopeThinking: progress?.arch_validation?.thinking_level,
-    dispatchPath: config?.agents?.echo?.dispatch === 'subagent' ? 'subagent' : 'acp',
+    dispatchPath: echoDispatch,
   });
   logEffectivePolicy(config, { scope: 'arch_validator', agent: 'arch_validator', ...policy });
   const model = policy.model;
-  const runtime = resolveRuntimeFn({ runtime: config?.agents?.echo?.dispatch, model });
-  const agentId = modelToHarnessFn(model) || config?.agents?.echo?.acp_agent_id || 'claude';
+  const runtime = resolveRuntimeFn({ runtime: echoDispatch, model });
+  const agentId = modelToHarnessFn(model) || config?.agents?.echo?.acp_agent_id;
+  if (!agentId) throw new Error('config.agents.echo.acp_agent_id: required for architecture validator spawned session');
   const cwd = config.repo_root;
   const label = `arch-validator-${Date.now()}`;
-  const timeoutMinutes = progress?.arch_validation?.timeout_minutes
-    ?? config?.arch_validation?.timeout_minutes
-    ?? 15;
+  const timeoutMinutes = progress?.arch_validation?.timeout_minutes !== undefined
+    ? requirePositiveTimeoutMinutes(progress.arch_validation.timeout_minutes, 'progress.arch_validation.timeout_minutes')
+    : requirePositiveTimeoutMinutes(config?.arch_validation?.timeout_minutes, 'config.arch_validation.timeout_minutes');
   let sessionData = null;
 
   try {

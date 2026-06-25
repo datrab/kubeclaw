@@ -13,8 +13,6 @@ import {
   normalizeApprovalTimeoutPolicy,
 } from '../runners/approval-gate-shared.ts';
 
-export const DEFAULT_APPROVAL_SIGNAL_DEBOUNCE_MS = 25;
-
 function isTerminalStatus(status) {
   return status === APPROVAL_STATUS.APPROVED
     || status === APPROVAL_STATUS.REJECTED
@@ -111,7 +109,13 @@ export function createApprovalSignalEventAdapter(config, opts = {}) {
     gate_id: gateId,
     ...(config?._runId || config?.run_id ? { run_id: config._runId || config.run_id } : {}),
   };
-  const debounceMs = opts.debounceMs ?? DEFAULT_APPROVAL_SIGNAL_DEBOUNCE_MS;
+  if (opts.debounceMs === undefined || opts.debounceMs === null) {
+    throw new TypeError('ApprovalSignalEventAdapter requires debounceMs');
+  }
+  const debounceMs = Number(opts.debounceMs);
+  if (!Number.isFinite(debounceMs) || debounceMs < 0) {
+    throw new TypeError('ApprovalSignalEventAdapter debounceMs must be a non-negative number');
+  }
   const loadState = typeof opts.loadState === 'function'
     ? opts.loadState
     : () => JSON.parse(fs.readFileSync(statePath, 'utf8'));

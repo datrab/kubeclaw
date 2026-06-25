@@ -39,6 +39,7 @@ import {
 import { buildGeneratorResult } from './contracts/generator-result.ts';
 import { createTrackedSummarySessionCleanup } from './summary-session-cleanup.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from './discord-fields.ts';
+import { sessionLifecyclePolicies } from '../core/session-policy.ts';
 
 function buildPipelineReviewDiscordFields(identity = {}, extra = []) {
   return buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, identity, extra);
@@ -73,6 +74,13 @@ const COMPLETED_TERMINAL_STATUSES = new Set([0, 'succeeded', 'completed']);
 
 function getPipelineReviewDeps(config, overrides = {}) {
   return { ...DEFAULT_PIPELINE_REVIEW_DEPS, ...selectDeps(overrides, 'pipelineReview') };
+}
+
+function requirePositiveTimeoutMinutes(value, label) {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
+    throw new Error(`${label}: required positive number in swarm.config.json`);
+  }
+  return value;
 }
 
 function normalizeLatestSummaryStatus(terminalStatus) {
@@ -347,6 +355,9 @@ export async function generatePipelineReview(config, progress, opts = {}) {
     reviewGatewayLabel = null;
     const cwd = config.repo_root;
     const thinking = pr.thinking_level || null;
+    const timeoutMin = pr.timeout_minutes !== undefined
+      ? requirePositiveTimeoutMinutes(pr.timeout_minutes, 'config.pipeline_review.timeout_minutes')
+      : requirePositiveTimeoutMinutes(config.review_defaults?.timeout_minutes, 'config.review_defaults.timeout_minutes');
     onSummaryStarted({ config }, 'pipeline_review', {
       attempt: reviewAttempt,
       gateway_label: reviewGatewayLabel,
@@ -356,7 +367,8 @@ export async function generatePipelineReview(config, progress, opts = {}) {
     log('STEP', `Spawning pipeline review (${dispatch}): ${agentId} / ${model}`);
     const sessionData = await deps.spawnSession({
       session: { model, runtime: dispatch, agentId, cwd, label },
-    }, instructions, (pr.timeout_minutes || 45) * 60, {
+    }, instructions, timeoutMin * 60, {
+      ...sessionLifecyclePolicies(config),
       runtime: dispatch,
       model,
       agentId,
@@ -387,7 +399,6 @@ export async function generatePipelineReview(config, progress, opts = {}) {
       log('DEBUG', `Pipeline review spawn Discord notice failed: ${e?.message || e}`);
     });
     const outputFilePath = pipelineReviewOutputPath(config, pr);
-    const timeoutMin = pr.timeout_minutes || 45;
     const maxRateLimitPauses = config.rate_limit.max_pauses_per_module;
     const reviewRateLimitRecovery = createTrackedSummarySessionRateLimitRecoveryOptions(config, {
       sleepFn: deps.sleep,

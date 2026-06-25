@@ -2,14 +2,11 @@
 // Keeps gateway liveness policy outside the main Buster pipeline entrypoint.
 
 import { checkGatewayHealth as checkCommonGatewayHealth } from '../integrations/gateway.ts';
-
-export const GATEWAY_READY_TIMEOUT = 120000; // 120s
-export const GATEWAY_READY_INTERVAL = 3000;  // poll every 3s
-export const GATEWAY_HEALTH_INTERVAL = 60000; // periodic check every 60s
-export const GATEWAY_HEALTH_MAX_FAILURES = 3;
+import { loadBusterGatewayHealthPolicy } from './runtime-policy.ts';
 
 export async function checkGatewayHealth() {
-  return checkCommonGatewayHealth({ timeoutMs: 5000 });
+  const policy = loadBusterGatewayHealthPolicy();
+  return checkCommonGatewayHealth({ timeoutMs: policy.invokeTimeoutMs });
 }
 
 async function defaultGatewayShutdown(signal: string, opts: Record<string, any> = {}) {
@@ -21,27 +18,29 @@ async function defaultGatewayShutdown(signal: string, opts: Record<string, any> 
 
 export async function waitForGateway({ shutdown }: { shutdown?: (signal: string, opts?: Record<string, any>) => any } = {}): Promise<void> {
   const shutdownGateway = shutdown || defaultGatewayShutdown;
-  console.log(`[GATEWAY] Waiting for gateway readiness (max ${GATEWAY_READY_TIMEOUT / 1000}s)...`);
-  const deadline = Date.now() + GATEWAY_READY_TIMEOUT;
+  const policy = loadBusterGatewayHealthPolicy();
+  console.log(`[GATEWAY] Waiting for gateway readiness (max ${policy.readyTimeoutMs / 1000}s)...`);
+  const deadline = Date.now() + policy.readyTimeoutMs;
   while (Date.now() < deadline) {
     if (await checkGatewayHealth()) {
       console.log('[GATEWAY] ✅ Gateway ready.');
       return;
     }
-    await new Promise(r => setTimeout(r, GATEWAY_READY_INTERVAL));
+    await new Promise(r => setTimeout(r, policy.readyIntervalMs));
   }
   console.error('[GATEWAY] ❌ Gateway not ready within timeout. Starting structured shutdown.');
   await shutdownGateway('GATEWAY_READY_TIMEOUT', {
     exitCode: 1,
     cleanupStage: 'gateway-ready-timeout',
     reason: 'gateway_ready_timeout',
-    detail: `Gateway was not ready within ${GATEWAY_READY_TIMEOUT / 1000}s`,
+    detail: `Gateway was not ready within ${policy.readyTimeoutMs / 1000}s`,
     emitGatewayDegraded: true,
   });
 }
 
 export function startGatewayHealthMonitor({ isShuttingDown = () => false, shutdown }: { isShuttingDown?: () => boolean; shutdown?: (signal: string, opts?: Record<string, any>) => any } = {}): ReturnType<typeof setInterval> {
   const shutdownGateway = shutdown || defaultGatewayShutdown;
+  const policy = loadBusterGatewayHealthPolicy();
   let consecutiveFailures = 0;
   return setInterval(async () => {
     if (isShuttingDown()) return;
@@ -54,8 +53,8 @@ export function startGatewayHealthMonitor({ isShuttingDown = () => false, shutdo
     }
     if (!healthy) {
       consecutiveFailures++;
-      console.warn(`[GATEWAY] ⚠️ Health check failed (${consecutiveFailures}/${GATEWAY_HEALTH_MAX_FAILURES})`);
-      if (consecutiveFailures >= GATEWAY_HEALTH_MAX_FAILURES) {
+      console.warn(`[GATEWAY] ⚠️ Health check failed (${consecutiveFailures}/${policy.maxFailures})`);
+      if (consecutiveFailures >= policy.maxFailures) {
         console.error('[GATEWAY] ❌ Gateway unreachable. Starting structured shutdown.');
         await shutdownGateway('GATEWAY_HEALTH_FAILED', {
           exitCode: 1,
@@ -69,5 +68,5 @@ export function startGatewayHealthMonitor({ isShuttingDown = () => false, shutdo
       if (consecutiveFailures > 0) console.log(`[GATEWAY] ✅ Recovered after ${consecutiveFailures} failed check(s).`);
       consecutiveFailures = 0;
     }
-  }, GATEWAY_HEALTH_INTERVAL);
+  }, policy.monitorIntervalMs);
 }

@@ -185,6 +185,8 @@ export class AgentObservabilityIngester {
   private running = false;
   private stopped = false;
   private loopTask: Promise<void> | null = null;
+  private trimTask: Promise<void> | null = null;
+  private lastTrimAt = 0;
   private readonly stats: AgentObservabilityIngesterStats = {
     read: 0,
     emitted: 0,
@@ -410,6 +412,7 @@ export class AgentObservabilityIngester {
     if (!redis.xtrim) return;
     const trimTargets: Array<[AgentObservabilityStreamKey | typeof AGENT_OBSERVABILITY_DEADLETTER_STREAM, number, string]> = [
       [AGENT_OBSERVABILITY_CONTROL_STREAM, this.config.controlStreamMaxLen, 'agent observability control XTRIM'],
+      [AGENT_OBSERVABILITY_PAYLOAD_STREAM, this.config.payloadStreamMaxLen, 'agent observability payload XTRIM'],
       [AGENT_OBSERVABILITY_DEADLETTER_STREAM, this.config.deadLetterMaxLen, 'agent observability dead-letter XTRIM'],
     ];
     for (const [streamKey, maxLen, description] of trimTargets) {
@@ -422,6 +425,24 @@ export class AgentObservabilityIngester {
         this.logger.warn?.(`[agent-observability-ingester] ${description} failed: ${errorMessage(error)}`);
       }
     }
+  }
+
+  private shouldTrim(now = Date.now()): boolean {
+    return (now - this.lastTrimAt) >= this.config.trimIntervalMs;
+  }
+
+  private scheduleTrim(): void {
+    if (this.trimTask) return;
+    this.lastTrimAt = Date.now();
+    let task: Promise<void>;
+    task = this.trim()
+      .catch((error) => {
+        this.logger.warn?.(`[agent-observability-ingester] agent observability trim failed: ${errorMessage(error)}`);
+      })
+      .finally(() => {
+        if (this.trimTask === task) this.trimTask = null;
+      });
+    this.trimTask = task;
   }
 
   async checkPressure(ctx: unknown = {}): Promise<AgentObservabilityPressureStatus> {
@@ -487,7 +508,9 @@ export class AgentObservabilityIngester {
           if (!this.running || this.stopped) break;
           await this.checkPressure(ctx);
           if (!this.running || this.stopped) break;
-          await this.trim();
+          if (this.shouldTrim()) {
+            this.scheduleTrim();
+          }
         } catch (error) {
           this.stats.failed += 1;
           this.redisReady = false;

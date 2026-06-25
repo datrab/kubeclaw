@@ -149,6 +149,7 @@ test('module forge returns typed block when cleanup kill rejects after poll', as
 
 test('module forge carries successful poll status even before Nova lifecycle transition', async () => {
   const calls = [];
+  let killCall = null;
   const result = await runModuleForgeWorker({
     config: baseConfig(),
     progress: {},
@@ -174,7 +175,10 @@ test('module forge carries successful poll status even before Nova lifecycle tra
           },
         };
       },
-      killAgent: async () => calls.push('kill'),
+      killAgent: async (_config, _agentType, _moduleId, graceful, opts) => {
+        killCall = { graceful, opts };
+        calls.push('kill');
+      },
       loadStatus: () => ({ status: 'IN_PROGRESS' }),
       saveStreamLog: () => calls.push('save'),
       clearShutdownContext: () => calls.push('clear'),
@@ -187,6 +191,18 @@ test('module forge carries successful poll status even before Nova lifecycle tra
   assert.equal(result.diagnostics.metadata.reason, 'forge_completion');
   assert.equal(result.diagnostics.metadata.final_status.status, 'READY_FOR_TESTING');
   assert.deepEqual(calls, ['spawn', 'poll', 'kill', 'save', 'clear']);
+  assert.deepEqual(killCall, {
+    graceful: true,
+    opts: {
+      trackingLabel: 'forge-mod-a',
+      graceMs: 10000,
+      statusTimeoutMs: 5000,
+      requestTimeoutMs: 5000,
+      stopRequestTimeoutMs: 5000,
+      listTimeoutMs: 5000,
+      acpxTimeoutMs: 5000,
+    },
+  });
 });
 
 test('module forge scopes lifecycle labels by run and attempt', async () => {

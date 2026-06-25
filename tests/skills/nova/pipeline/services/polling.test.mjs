@@ -24,6 +24,33 @@ function makeModuleCompletionConfig() {
       swarm_dir: swarmDir,
       modules_dir: modulesDir,
     },
+    buster: {
+      runtime: {
+        completion_event_block_ms: 0,
+        completion_recovery_scan_interval_ms: 1,
+      },
+    },
+    redis_completion: {
+      tail_scan_batch_size: 100,
+      tail_scan_limit: 1000,
+    },
+    event_adapters: {
+      local_evidence_debounce_ms: 1,
+    },
+    agent_observability: {
+      profile: 'test',
+      profiles: {
+        test: {
+          forge_completion: { xread_block_ms: 1, settle_ms: 0 },
+        },
+      },
+    },
+    polling: {
+      progress_log_interval_ms: 1,
+      session_progress_emit_interval_ms: 1,
+      session_progress_log_interval_ms: 1,
+      session_end_grace_ms: 0,
+    },
     _runId: 'run-test',
     run_id: 'run-test',
   };
@@ -54,6 +81,9 @@ test('pollGeneric preserves rate-limit lifecycle mutation metadata', async () =>
 
   const result = await pollGeneric({
     poll_interval_seconds: 1,
+    polling: {
+      progress_log_interval_ms: 1,
+    },
   }, async () => ({
     rate_limited: true,
     status,
@@ -139,6 +169,85 @@ test('module completion wait preserves attempt zero in event identity', async (t
   assert.equal(result.ok, false);
   assert.equal(result.reason, 'timeout');
   assert.equal(result.status, null);
+});
+
+test('module completion wait recovers canonical Redis completion from tail scan when live stream delivery is missed', async (t) => {
+  class FakeRedis {
+    constructor() {
+      this.waiting = null;
+    }
+    on() {}
+    async xread() {
+      return new Promise((resolve) => {
+        this.waiting = resolve;
+      });
+    }
+    disconnect() {
+      this.waiting?.(null);
+    }
+  }
+
+  const config = makeModuleCompletionConfig();
+  t.after(() => {
+    fs.rmSync(config.repo_root, { recursive: true, force: true });
+  });
+  const moduleId = 'module-a';
+  const moduleDir = 'module-a-dir';
+  fs.mkdirSync(path.join(config.paths.modules_dir, moduleDir), { recursive: true });
+  saveModuleStatus(config, moduleId, moduleDir, 'TESTING');
+
+  const result = await waitForModuleBusterCompletion(
+    config,
+    moduleDir,
+    moduleId,
+    ['PASS', 'FAIL', 'BLOCKED'],
+    0.01,
+    {
+      run_id: 'run-test',
+      attempt: 1,
+      dispatch_id: 'dispatch-test',
+      session_key: 'session-test',
+    },
+    (ok, reason, status = null, extra = {}) => ({ ok, reason, status, ...extra }),
+    {
+      deps: {
+        completionEventAdapters: { RedisCtor: FakeRedis },
+        createDedicatedRedisCompletionClient: () => ({
+          on() {},
+          disconnect() {},
+        }),
+        scanLatestCompletionFromTail: async () => ({
+          match: {
+            _id: '5-0',
+            schema_version: 'v1',
+            type: 'completion',
+            stream_role: 'completion',
+            project: 'module-completion-test',
+            target_kind: 'module',
+            target_id: 'module-a',
+            module: 'module-a',
+            status: 'PASS',
+            outcome: 'PASS',
+            source: 'buster-pipeline',
+            run_id: 'run-test',
+            attempt: '1',
+            dispatch_id: 'dispatch-test',
+            session_key: 'session-test',
+            timestamp: '2026-06-24T00:00:00.000Z',
+          },
+          scanned: 1,
+          batches: 1,
+          truncated: false,
+        }),
+      },
+    },
+  );
+
+  assert.equal(result.ok, true);
+  assert.equal(result.reason, 'target_reached');
+  assert.equal(result.status?.status, 'PASS');
+  assert.equal(result.status?._source, 'redis');
+  assert.equal(result.status?._redis_entry?._id, '5-0');
 });
 
 test('pollForgeCompletion accepts a valid forge completion artifact without waiting for session end', async (t) => {

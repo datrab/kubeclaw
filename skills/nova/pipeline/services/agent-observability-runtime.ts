@@ -1,18 +1,16 @@
 import { log } from '../core/logger.ts';
 import { createAgentObservabilityIngester } from './agent-observability-ingester/index.ts';
+import { agentObservabilityIngesterConfig } from './agent-observability-config.ts';
 import { recordObservabilityDegraded } from './observability.ts';
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function ingesterConfig(config = {}) {
-  return config?.agent_observability?.ingester || { enabled: false };
-}
-
-function positiveNumber(value, fallback) {
+function requireNonNegativeNumber(value, field) {
   const num = Number(value);
-  return Number.isFinite(num) && num >= 0 ? num : fallback;
+  if (Number.isFinite(num) && num >= 0) return num;
+  throw new Error(`agent_observability.ingester.${field} must be a non-negative number`);
 }
 
 function withTimeout(promise, timeoutMs) {
@@ -31,7 +29,7 @@ function withTimeout(promise, timeoutMs) {
 }
 
 export function startAgentObservabilityIngester(config, ctx = {}, opts = {}) {
-  const runtimeConfig = ingesterConfig(config);
+  const runtimeConfig = agentObservabilityIngesterConfig(config);
   if (runtimeConfig.enabled !== true) {
     return {
       started: false,
@@ -49,9 +47,9 @@ export function startAgentObservabilityIngester(config, ctx = {}, opts = {}) {
     recordObservabilityDegraded: opts.recordObservabilityDegraded,
     recordObservabilityRestored: opts.recordObservabilityRestored,
   });
-  const loopDelayMs = Number(runtimeConfig.loopDelayMs ?? 250);
-  const healthCheckEvery = Number(runtimeConfig.healthCheckEvery ?? 10);
-  const stopTimeoutMs = positiveNumber(runtimeConfig.stopTimeoutMs ?? opts.stopTimeoutMs, 2000);
+  const loopDelayMs = requireNonNegativeNumber(runtimeConfig.loopDelayMs, 'loopDelayMs');
+  const healthCheckEvery = requireNonNegativeNumber(runtimeConfig.healthCheckEvery, 'healthCheckEvery');
+  const stopTimeoutMs = requireNonNegativeNumber(runtimeConfig.stopTimeoutMs, 'stopTimeoutMs');
   const reportDegraded = opts.recordObservabilityDegraded || recordObservabilityDegraded;
   let stopped = false;
   let tick = 0;

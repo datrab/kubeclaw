@@ -194,6 +194,7 @@ export async function processTask(payload, opts = {}) {
     dispatch_id: dispatchIdForCompletion,
     gate_id: gateId,
     gate_type: gateType,
+    streamMaxLen: opts.platformConfig?.telemetry?.stream_max_len,
   });
 
   const logger = createLogger({

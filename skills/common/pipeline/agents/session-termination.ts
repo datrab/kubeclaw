@@ -10,33 +10,41 @@ import {
   assertValidSessionTerminationResult,
 } from '../services/acp-gateway-contract.ts';
 
-export const SESSION_TERMINATION_POLICY_DEFAULTS = Object.freeze({
-  graceMs: 5000,
-  maxGraceMs: 10000,
-  pollMs: 500,
-  gatewayRequestMaxMs: 1000,
-  cleanupConfirmTimeoutMs: 0,
-});
 const GRACE_EXPIRED = Symbol('sessionTerminationGraceExpired');
 
-function resolvePolicyMs(value: any, fallback: number, field: string, { min = 0, max = Infinity } = {}) {
-  const numeric = Number(value ?? fallback);
+function resolvePolicyMs(value: any, field: string, { min = 0, max = Infinity } = {}) {
+  const numeric = Number(value);
   if (!Number.isFinite(numeric) || numeric < min) throw new Error(`Session termination policy ${field} must be a finite number >= ${min}`);
   return Math.min(Math.round(numeric), max);
 }
 
 export function resolveSessionTerminationPolicy(opts: AnyRecord = {}) {
-  const graceMs = resolvePolicyMs(opts.graceMs, SESSION_TERMINATION_POLICY_DEFAULTS.graceMs, 'graceMs', { max: SESSION_TERMINATION_POLICY_DEFAULTS.maxGraceMs });
-  const gatewayRequestMs = Math.min(SESSION_TERMINATION_POLICY_DEFAULTS.gatewayRequestMaxMs, Math.max(graceMs, 1));
+  const policy = opts.terminationPolicy && typeof opts.terminationPolicy === 'object' && !Array.isArray(opts.terminationPolicy)
+    ? opts.terminationPolicy
+    : opts;
+  const maxGraceMs = resolvePolicyMs(policy.maxGraceMs, 'maxGraceMs');
+  const gatewayRequestMaxMs = resolvePolicyMs(policy.gatewayRequestMaxMs, 'gatewayRequestMaxMs', { min: 1 });
+  const graceMs = resolvePolicyMs(policy.graceMs, 'graceMs', { max: maxGraceMs });
+  for (const [field, value] of Object.entries({
+    statusTimeoutMs: policy.statusTimeoutMs,
+    requestTimeoutMs: policy.requestTimeoutMs,
+    stopRequestTimeoutMs: policy.stopRequestTimeoutMs,
+    listTimeoutMs: policy.listTimeoutMs,
+    acpxTimeoutMs: policy.acpxTimeoutMs,
+  })) {
+    if (Number(value) > gatewayRequestMaxMs) {
+      throw new Error(`Session termination policy ${field} must be <= gatewayRequestMaxMs`);
+    }
+  }
   return {
     graceMs,
-    confirmPollMs: resolvePolicyMs(opts.confirmPollMs, SESSION_TERMINATION_POLICY_DEFAULTS.pollMs, 'confirmPollMs', { min: 1, max: Math.max(graceMs, 1) }),
-    cleanupConfirmTimeoutMs: resolvePolicyMs(opts.cleanupConfirmTimeoutMs, SESSION_TERMINATION_POLICY_DEFAULTS.cleanupConfirmTimeoutMs, 'cleanupConfirmTimeoutMs'),
-    statusTimeoutMs: resolvePolicyMs(opts.statusTimeoutMs, gatewayRequestMs, 'statusTimeoutMs'),
-    requestTimeoutMs: resolvePolicyMs(opts.requestTimeoutMs, gatewayRequestMs, 'requestTimeoutMs'),
-    stopRequestTimeoutMs: resolvePolicyMs(opts.stopRequestTimeoutMs, gatewayRequestMs, 'stopRequestTimeoutMs'),
-    listTimeoutMs: resolvePolicyMs(opts.listTimeoutMs, gatewayRequestMs, 'listTimeoutMs'),
-    acpxTimeoutMs: resolvePolicyMs(opts.acpxTimeoutMs, gatewayRequestMs, 'acpxTimeoutMs'),
+    confirmPollMs: resolvePolicyMs(policy.confirmPollMs, 'confirmPollMs', { min: 1, max: Math.max(graceMs, 1) }),
+    cleanupConfirmTimeoutMs: resolvePolicyMs(policy.cleanupConfirmTimeoutMs, 'cleanupConfirmTimeoutMs'),
+    statusTimeoutMs: resolvePolicyMs(policy.statusTimeoutMs, 'statusTimeoutMs'),
+    requestTimeoutMs: resolvePolicyMs(policy.requestTimeoutMs, 'requestTimeoutMs'),
+    stopRequestTimeoutMs: resolvePolicyMs(policy.stopRequestTimeoutMs, 'stopRequestTimeoutMs'),
+    listTimeoutMs: resolvePolicyMs(policy.listTimeoutMs, 'listTimeoutMs'),
+    acpxTimeoutMs: resolvePolicyMs(policy.acpxTimeoutMs, 'acpxTimeoutMs'),
   };
 }
 
@@ -121,17 +129,22 @@ export async function terminateSession(childSessionKey: any, opts: AnyRecord = {
     }
   }
   const { killSession: _killSession, ...killOpts } = opts;
-  const killPromise = Promise.resolve().then(() => killSessionFn(childSessionKey, {
-    ...killOpts,
-    signal: killController.signal,
-    confirmTimeoutMs: graceMs,
-    cleanupConfirmTimeoutMs: policy.cleanupConfirmTimeoutMs,
+  const killPolicy = {
+    ...(opts.killPolicy || {}),
+    acpConfirmTimeoutMs: graceMs,
+    subagentConfirmTimeoutMs: graceMs,
     confirmPollMs: policy.confirmPollMs,
+    cleanupConfirmTimeoutMs: policy.cleanupConfirmTimeoutMs,
     statusTimeoutMs: policy.statusTimeoutMs,
     requestTimeoutMs: policy.requestTimeoutMs,
     stopRequestTimeoutMs: policy.stopRequestTimeoutMs,
     listTimeoutMs: policy.listTimeoutMs,
     acpxTimeoutMs: policy.acpxTimeoutMs,
+  };
+  const killPromise = Promise.resolve().then(() => killSessionFn(childSessionKey, {
+    ...killOpts,
+    killPolicy,
+    signal: killController.signal,
   }));
   killPromise.catch(() => {});
   try {
@@ -187,6 +200,8 @@ export async function terminateActiveSession(opts: AnyRecord = {}) {
   }
   const result = await terminateSession(session.childSessionKey, {
     ...opts,
+    terminationPolicy: opts.terminationPolicy,
+    killPolicy: opts.killPolicy ?? session.killPolicy,
     runtime: opts.runtime ?? session.runtime,
     model: opts.model ?? session.model ?? null,
     agentId: opts.agentId ?? session.agentId,

@@ -41,6 +41,32 @@ function waitFor(promise, ms = 1000) {
   return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
 }
 
+function observabilityConfig(overrides = {}) {
+  return {
+    ingester: {
+      enabled: true,
+      groupName: 'kubeclaw-agent-observability-ingester',
+      consumerName: 'kubeclaw-agent-observability-ingester-1',
+    },
+    profile: 'test',
+    profiles: {
+      test: {
+        redis: { command_timeout_ms: 50 },
+        streams: { stream_max_len: 10000, dead_letter_max_len: 1000 },
+        ingester: {
+          read: { block_ms: 5, reclaim_idle_ms: 60000 },
+          loop: { delay_ms: 1, stop_timeout_ms: 2000, health_check_every: 0 },
+          trim: { interval_ms: 5000, payload_stream_max_len: 5000 },
+          pressure: {
+            control_lag_degraded_threshold: 1000,
+            payload_pressure_degraded_threshold: 10000,
+          },
+        },
+      },
+    },
+  };
+}
+
 test('runtime forwards ingester dependency injection options', async () => {
   const raw = JSON.stringify(makeIngressEvent());
   const xackCalls = [];
@@ -67,15 +93,7 @@ test('runtime forwards ingester dependency injection options', async () => {
   };
   const config = {
     project: 'project-test',
-    agent_observability: {
-      ingester: {
-        enabled: true,
-        pollBlockMs: 5,
-        redisCommandTimeoutMs: 50,
-        loopDelayMs: 1,
-        healthCheckEvery: 0,
-      },
-    },
+    agent_observability: observabilityConfig(),
   };
   const runtime = startAgentObservabilityIngester(config, { requestId: 'ctx-test' }, {
     logger: {

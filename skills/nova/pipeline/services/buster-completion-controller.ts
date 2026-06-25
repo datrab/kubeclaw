@@ -148,7 +148,7 @@ function buildRedisCompletionResult({
   };
 }
 
-export function resolveBusterCompletionEvent({
+export async function resolveBusterCompletionEvent({
   event,
   targetKind = 'module',
   targetId = null,
@@ -185,7 +185,7 @@ export function resolveBusterCompletionEvent({
 
   if (event?.type === 'local.evidence.updated') {
     if (typeof resolveLocalEvidence === 'function') {
-      const localResult = resolveLocalEvidence(event);
+      const localResult = await resolveLocalEvidence(event);
       if (localResult) return localResult;
     }
     return {
@@ -238,7 +238,7 @@ export async function waitForBusterCompletion({
       ...(budget ? { budget } : {}),
     });
     const localStatus = typeof getLocalStatus === 'function' ? getLocalStatus() : null;
-    const result = resolveBusterCompletionEvent({
+    const result = await resolveBusterCompletionEvent({
       event,
       targetKind,
       targetId,

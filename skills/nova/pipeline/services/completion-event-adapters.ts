@@ -9,9 +9,6 @@ import { decodeRedisStreamEntry } from './task-transport-contract.ts';
 import { normalizeRedisPipelineEnvelope } from './redis-message-contract.ts';
 import { assertPipelineEventBusAdapter } from './pipeline-event-contract.ts';
 
-export const DEFAULT_LOCAL_EVIDENCE_DEBOUNCE_MS = 100;
-export const DEFAULT_REDIS_COMPLETION_BLOCK_MS = 0;
-
 export function createDedicatedRedisCompletionClient(opts = {}) {
   const RedisCtor = opts.RedisCtor || loadRedisCtor();
   return createRedisClient(RedisCtor, opts, {
@@ -78,7 +75,13 @@ function decodeXreadEntries(results = []) {
 export function createRedisCompletionEventAdapter(config, opts = {}) {
   const eventBus = assertPipelineEventBusAdapter(opts.eventBus, 'RedisCompletionEventAdapter eventBus');
   const stream = opts.stream || completionStreamKey(config);
-  const blockMs = opts.blockMs ?? DEFAULT_REDIS_COMPLETION_BLOCK_MS;
+  if (opts.blockMs === undefined || opts.blockMs === null) {
+    throw new TypeError('RedisCompletionEventAdapter requires blockMs');
+  }
+  const blockMs = Number(opts.blockMs);
+  if (!Number.isFinite(blockMs) || blockMs < 0) {
+    throw new TypeError('RedisCompletionEventAdapter blockMs must be a non-negative number');
+  }
   const startId = opts.startId || '$';
   const fatalIdentity = opts.identity || {};
   const controller = new AbortController();
@@ -205,7 +208,13 @@ export function createLocalEvidenceEventAdapter(config, opts = {}) {
   const eventBus = assertPipelineEventBusAdapter(opts.eventBus, 'LocalEvidenceEventAdapter eventBus');
   const evidencePaths = uniquePaths(opts.paths || []);
   const identity = opts.identity || {};
-  const debounceMs = opts.debounceMs ?? DEFAULT_LOCAL_EVIDENCE_DEBOUNCE_MS;
+  if (opts.debounceMs === undefined || opts.debounceMs === null) {
+    throw new TypeError('LocalEvidenceEventAdapter requires debounceMs');
+  }
+  const debounceMs = Number(opts.debounceMs);
+  if (!Number.isFinite(debounceMs) || debounceMs < 0) {
+    throw new TypeError('LocalEvidenceEventAdapter debounceMs must be a non-negative number');
+  }
   const controller = new AbortController();
   const signal = controller.signal;
   const watchers = [];

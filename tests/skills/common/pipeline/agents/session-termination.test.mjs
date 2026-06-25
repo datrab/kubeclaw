@@ -4,11 +4,43 @@ import { setTimeout as delay } from 'node:timers/promises';
 
 import { terminateSession } from '../../../../../skills/common/pipeline/agents/session-termination.ts';
 
+function terminationPolicy(graceMs) {
+  return {
+    graceMs,
+    maxGraceMs: Math.max(graceMs, 100),
+    confirmPollMs: 1,
+    gatewayRequestMaxMs: 1,
+    cleanupConfirmTimeoutMs: 0,
+    statusTimeoutMs: 1,
+    requestTimeoutMs: 1,
+    stopRequestTimeoutMs: 1,
+    listTimeoutMs: 1,
+    acpxTimeoutMs: 1,
+  };
+}
+
+const killPolicy = {
+  acpConfirmTimeoutMs: 50,
+  subagentConfirmTimeoutMs: 50,
+  confirmPollMs: 1,
+  cleanupConfirmTimeoutMs: 0,
+  statusTimeoutMs: 1,
+  requestTimeoutMs: 1,
+  stopRequestTimeoutMs: 1,
+  listTimeoutMs: 1,
+  acpxTimeoutMs: 1,
+  stopMessage: '/stop',
+  statusGateway: { timeoutMs: 1, maxRetries: 1, retryDelayMs: 0 },
+  requestGateway: { timeoutMs: 1, maxRetries: 1, retryDelayMs: 0 },
+  stopGateway: { timeoutMs: 1, maxRetries: 1, retryDelayMs: 0 },
+  listGateway: { timeoutMs: 1, maxRetries: 1, retryDelayMs: 0 },
+};
+
 test('terminateSession observes a successful kill that completes within graceMs', async () => {
   let forwardedOptions = null;
   const result = await terminateSession('session:test', {
-    graceMs: 50,
-    confirmPollMs: 1,
+    terminationPolicy: terminationPolicy(50),
+    killPolicy,
     killSession: async (_sessionKey, opts) => {
       forwardedOptions = opts;
       await delay(5);
@@ -25,15 +57,15 @@ test('terminateSession observes a successful kill that completes within graceMs'
   assert.equal(result.confirmed, true);
   assert.equal(result.state, 'stopped');
   assert.equal(result.unconfirmed, false);
-  assert.equal(forwardedOptions.confirmTimeoutMs, 50);
+  assert.equal(forwardedOptions.killPolicy.acpConfirmTimeoutMs, 50);
   assert.equal('killSession' in forwardedOptions, false);
 });
 
 test('terminateSession stops waiting when kill exceeds graceMs', async () => {
   const started = Date.now();
   const result = await terminateSession('session:test', {
-    graceMs: 10,
-    confirmPollMs: 1,
+    terminationPolicy: terminationPolicy(10),
+    killPolicy,
     killSession: async () => new Promise(() => {}),
   });
 
@@ -51,8 +83,8 @@ test('terminateSession aborts the kill workflow when grace expires', async () =>
   let delayedSideEffectRan = false;
 
   const result = await terminateSession('session:test', {
-    graceMs: 10,
-    confirmPollMs: 1,
+    terminationPolicy: terminationPolicy(10),
+    killPolicy,
     killSession: async (_sessionKey, opts) => {
       observedSignal = opts.signal;
       const outcome = await new Promise((resolve) => {

@@ -4,9 +4,9 @@
   "description": "Minimal source-backed example project workflow",
   "defaults": {
     "models": {
-      "forge": "gpt-5.4",
-      "buster": "gpt-5.4",
-      "echo": "gpt-5.4"
+      "forge": "gpt-5.5",
+      "buster": "gpt-5.5",
+      "echo": "gpt-5.5"
     }
   },
   "execution_order": [

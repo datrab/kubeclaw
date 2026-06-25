@@ -4,6 +4,7 @@ import { getGatewaySessionStatus } from '../integrations/gateway.ts';
 import { parseSessionState, readAcpTranscriptState, transcriptShowsProgress } from './acp-monitor.ts';
 import { getTrackedAgent } from './lifecycle.ts';
 import { sleep } from '../timing.ts';
+import { gatewayInvokePolicy } from '../core/session-policy.ts';
 
 type AnyRecord = Record<string, any>;
 
@@ -90,11 +91,19 @@ function updateHealthCheckObservability(
   delete entry.healthCheckObservability;
 }
 
-export async function verifyAgentAlive(config: AnyRecord, agentType: string, moduleId: string, waitMsOrOpts: number | AnyRecord = 8000) {
+function sessionHealthCheckWaitMs(config: AnyRecord): number {
+  const value = config?.session?.health_check_wait_ms;
+  if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) {
+    throw new Error('config.session.health_check_wait_ms: required non-negative number in swarm.config.json');
+  }
+  return value;
+}
+
+export async function verifyAgentAlive(config: AnyRecord, agentType: string, moduleId: string, waitMsOrOpts: number | AnyRecord = {}) {
   const agentConfig = config.agents[agentType];
   if (!agentConfig) return false;
   if (agentConfig.dispatch === 'redis') return true;
-  const waitMs = typeof waitMsOrOpts === 'number' ? waitMsOrOpts : waitMsOrOpts?.waitMs ?? 8000;
+  const waitMs = typeof waitMsOrOpts === 'number' ? waitMsOrOpts : (waitMsOrOpts?.waitMs ?? sessionHealthCheckWaitMs(config));
   const trackingLabel = typeof waitMsOrOpts === 'object' ? waitMsOrOpts?.trackingLabel || null : null;
   await sleep(waitMs);
   const label = trackingLabel || agentLabel(agentType, moduleId);
@@ -105,7 +114,8 @@ export async function verifyAgentAlive(config: AnyRecord, agentType: string, mod
     return false;
   }
   try {
-    const raw = await getGatewaySessionStatus(sessionKey, 10000);
+    const statusPolicy = gatewayInvokePolicy(config, 'session_status');
+    const raw = await getGatewaySessionStatus(sessionKey, statusPolicy.timeoutMs, statusPolicy);
     const result = raw?.result?.details || raw;
     const { state } = parseSessionState(result);
     if (/^(closed|error)$/i.test(state)) {

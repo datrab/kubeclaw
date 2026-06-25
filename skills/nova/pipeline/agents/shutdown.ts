@@ -10,6 +10,7 @@ import { transitionModuleStatus } from '../lifecycle-state.ts';
 import { getTrackedAgent, listTrackedAgents, trackAgent, untrackAgent } from './lifecycle.ts';
 import { terminateSession } from './session-termination.ts';
 import { buildSubprocessEnv } from '../security.ts';
+import { sessionLifecyclePolicies } from '../core/session-policy.ts';
 
 declare const process: any;
 type AnyRecord = Record<string, any>;
@@ -150,9 +151,10 @@ export async function reaperAfterKill(agentId: string | null, sessionKey: string
   } catch (e: any) { log('DEBUG', `ACP reaper skipped (non-fatal): ${e.message}`); }
 }
 
-async function stopTrackedSession(label: string, entry: AnyRecord, gatewayUrl: string | null, gatewayToken: string | null) {
+async function stopTrackedSession(config: AnyRecord, label: string, entry: AnyRecord, gatewayUrl: string | null, gatewayToken: string | null) {
   const sessionKey = entry?.sessionKey;
   const result = await terminateSession(sessionKey, {
+    ...sessionLifecyclePolicies(config),
     runtime: entry?.runtime || null,
     model: entry?.model || null,
     agentId: entry?.agentId || null,
@@ -174,7 +176,7 @@ async function performSignalShutdown(signal: string, stateConfig: AnyRecord | nu
       const sessionKey = entry?.sessionKey || entry;
       if (!sessionKey) continue;
       try {
-        const result = await stopTrackedSession(label, entry, gatewayUrl, gatewayToken);
+        const result = await stopTrackedSession(stateConfig || {}, label, entry, gatewayUrl, gatewayToken);
         log('INFO', `Shutdown: stop ${result.confirmed ? 'confirmed' : 'unconfirmed'} for session '${label}' (${sessionKey}, ${result.state})`);
       } catch (e: any) {
         log('WARN', `Shutdown: failed to stop session '${label}' (${sessionKey}): ${e.message}`);

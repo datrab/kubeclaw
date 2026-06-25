@@ -45,11 +45,13 @@ Important defaults:
 - `buster.runtime.heartbeat_interval_ms`: `1000`
 - `buster.runtime.task_poll_interval_ms`: `2000`
 - `buster.runtime.task_pending_reclaim_idle_ms`: `60000`
+- `buster.runtime.completion_event_block_ms`: `0`
+- `buster.runtime.completion_recovery_scan_interval_ms`: `5000`
 - `buster.runtime.task_stream_max_len`: `250`
 - `pre_check.enabled`: `true`
 - `pre_check.timeout_seconds`: `60`
 - `agents.buster.dispatch`: `redis`
-- `fallback_model`: `gpt-5.4`
+- `fallback_model`: `gpt-5.5`
 - `plugins.enabled`: `true`
 - `plugins.allowCustomModules`: `false`
 
@@ -101,6 +103,8 @@ For a slower local test cluster:
       "heartbeat_interval_ms": 1000,
       "task_poll_interval_ms": 2000,
       "task_pending_reclaim_idle_ms": 60000,
+      "completion_event_block_ms": 0,
+      "completion_recovery_scan_interval_ms": 5000,
       "task_stream_max_len": 250
     }
   },
@@ -130,9 +134,9 @@ Keep only intentional overrides in runtime config; use the chart source as the d
   "version": 1,
   "defaults": {
     "models": {
-      "forge": "gpt-5.4",
-      "buster": "gpt-5.4",
-      "echo": "gpt-5.4"
+      "forge": "gpt-5.5",
+      "buster": "gpt-5.5",
+      "echo": "gpt-5.5"
     }
   },
   "execution_order": ["01-scaffold", "02-api", "gate:final-buster"],
@@ -186,7 +190,7 @@ Path helpers reject absolute paths, parent traversal, null bytes, and repository
 | model defaults | requires `fallback_model`; rejects top-level `models` | platform has only fallback model; role-specific defaults belong in `progress.json defaults.models` | `config.models` error |
 | retry and polling | requires numeric `poll_interval_seconds`, `default_timeout_minutes`, `default_max_fails`, `auto_retry_threshold`, `session_nudge_threshold` in range `0..1` | scheduler and rate-limit handling use these as runtime defaults | missing/non-number errors |
 | `rate_limit` | requires object plus `cooldown_hours`, `max_pauses_per_module`, `cooldown_buffer_ms` | rate-limit recovery and pause accounting | missing object or invalid number errors |
-| `buster` | requires object, `suite_timeout_ms`, `max_crash_retries`, and `runtime.heartbeat_path`, `heartbeat_interval_ms`, `task_poll_interval_ms`, `task_pending_reclaim_idle_ms`, `task_stream_max_len` | Buster readiness, polling, pending reclaim, and stream trimming | Buster readiness/config startup failure |
+| `buster` | requires object, `suite_timeout_ms`, `max_crash_retries`, and `runtime.heartbeat_path`, `heartbeat_interval_ms`, `task_poll_interval_ms`, `task_pending_reclaim_idle_ms`, `completion_event_block_ms`, `completion_recovery_scan_interval_ms`, `task_stream_max_len` | Buster readiness, polling, pending reclaim, completion live-wait blocking, completion recovery, and stream trimming | Buster readiness/config startup failure |
 | `discord_alerts` | requires booleans for `info`, `warn`, `critical`, `ok` | operator alert filtering | boolean validation errors |
 | `pre_check` | requires `enabled`, `lint_report_path`, `timeout_seconds` | delivery lint/pre-check validator | startup validation error or missing lint tool later |
 | `review_defaults` | requires `timeout_minutes`, `max_fix_cycles`, `lint_tier`, `lint_required`; rejects `reviewers` | review gate defaults; reviewer/model defaults stay in project gates | validation error |

@@ -19,6 +19,19 @@ function makeConfig() {
     paths: {
       swarm_dir: swarmDir,
     },
+    buster: {
+      runtime: {
+        completion_event_block_ms: 0,
+        completion_recovery_scan_interval_ms: 1,
+      },
+    },
+    redis_completion: {
+      tail_scan_batch_size: 100,
+      tail_scan_limit: 1000,
+    },
+    event_adapters: {
+      local_evidence_debounce_ms: 1,
+    },
     _runId: 'run-test',
     run_id: 'run-test',
   };
@@ -163,7 +176,85 @@ test('gate completion stops Redis adapter when local adapter start throws', asyn
   assert.deepEqual(calls, [
     'redis:start',
     'local:start',
-    'local:stop:gate_completion_finished',
-    'redis:stop:gate_completion_finished',
+    'local:stop:redis_completion_finished',
+    'redis:stop:redis_completion_finished',
   ]);
+});
+
+test('gate completion recovers canonical Redis completion from tail scan when live stream delivery is missed', async () => {
+  class FakeRedis {
+    constructor() {
+      this.waiting = null;
+    }
+    on() {}
+    async xread() {
+      return new Promise((resolve) => {
+        this.waiting = resolve;
+      });
+    }
+    disconnect() {
+      this.waiting?.(null);
+    }
+  }
+
+  const config = makeConfig();
+  const gate = {
+    type: 'buster',
+    output_file: 'buster-output.json',
+  };
+
+  const result = await waitBusterGateCompletionEvidence({
+    deps: {
+      pollResult: (ok, reason, data) => ({ ok, reason, data }),
+      _explicitDeps: {
+        completionEventAdapters: { RedisCtor: FakeRedis },
+        createDedicatedRedisCompletionClient: () => ({
+          on() {},
+          disconnect() {},
+        }),
+        scanLatestCompletionFromTail: async () => ({
+          match: {
+            _id: '9-0',
+            schema_version: 'v1',
+            type: 'completion',
+            stream_role: 'completion',
+            project: 'test-project',
+            target_kind: 'gate',
+            target_id: 'buster',
+            gate_id: 'buster',
+            gate_type: 'buster',
+            status: 'PASS',
+            outcome: 'PASS',
+            source: 'buster-pipeline',
+            run_id: 'run-test',
+            attempt: '1',
+            dispatch_id: 'dispatch-test',
+            session_key: 'session-test',
+            timestamp: '2026-06-24T00:00:00.000Z',
+          },
+          scanned: 1,
+          batches: 1,
+          truncated: false,
+        }),
+      },
+    },
+    config,
+    gateId: 'buster',
+    gate,
+    completionIdentity: {
+      runId: 'run-test',
+      attempt: '1',
+      dispatchId: 'dispatch-test',
+      sessionKey: 'session-test',
+      gateway_label: 'gateway-test',
+    },
+    gateRateLimitStatusOptions: {},
+    timeoutMinutes: 1,
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(result.reason, 'target_reached');
+  assert.equal(result.data.status, 'PASS');
+  assert.equal(result.data._source, 'redis');
+  assert.equal(result.data._redis_entry._id, '9-0');
 });

@@ -57,7 +57,10 @@ test('scanLatestCompletionFromTail ignores malformed non-current completion sour
     },
   };
 
-  const result = await scanLatestCompletionFromTail(redis, 'stream', 'module-a', identity);
+  const result = await scanLatestCompletionFromTail(redis, 'stream', 'module-a', identity, {
+    batchSize: 100,
+    scanLimit: 1000,
+  });
 
   assert.equal(result.match?._id, '1-0');
   assert.equal(result.match?.source, 'buster-pipeline');

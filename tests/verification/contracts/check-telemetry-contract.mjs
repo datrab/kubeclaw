@@ -587,6 +587,7 @@ const busterCtxA = busterTelemetry.createTelemetryContext({
   run_id: sharedRunId,
   enabled: true,
   redisHost: '127.0.0.1',
+  redisPort: 6379,
   enforceSecureMode: false,
 });
 assert.equal(busterCtxA.streamKey, sharedStreamKey);
@@ -599,6 +600,7 @@ const busterCtxB = busterTelemetry.createTelemetryContext({
   run_id: sharedRunId,
   enabled: true,
   redisHost: '127.0.0.1',
+  redisPort: 6379,
   enforceSecureMode: false,
 });
 assert.equal(busterCtxB.streamKey, sharedStreamKey);
@@ -854,6 +856,7 @@ const invalidBusterCtx = busterTelemetry.createTelemetryContext({
   enabled: true,
   pipeline_run_log_path: invalidBusterRunLog,
   redisHost: '127.0.0.1',
+  redisPort: 6379,
   enforceSecureMode: false,
 });
 const invalidBusterResult = await busterTelemetry.emitEvent(invalidBusterCtx, 'plugin.event', {

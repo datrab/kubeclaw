@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { __gitWorktreeTest, gitCommitAndPush, isRuntimeStatePath } from '../../../../../skills/nova/pipeline/integrations/git-worktree.ts';
+import { __gitWorktreeTest, gitCommitAndPush, isRuntimeStatePath, setGitRuntimePolicy } from '../../../../../skills/nova/pipeline/integrations/git-worktree.ts';
 import { gitSyncBeforeBuster } from '../../../../../skills/nova/pipeline/services/git-sync-before-buster.ts';
 import { createRunStats } from '../../../../../skills/nova/pipeline/core/runtime.ts';
 
@@ -23,6 +23,7 @@ function git(repoRoot, args) {
 }
 
 function makeRepo() {
+  setGitRuntimePolicy(gitPolicy());
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'git-worktree-test-'));
   git(repoRoot, ['init']);
   git(repoRoot, ['config', 'user.name', 'Test']);
@@ -35,6 +36,7 @@ function makeRepo() {
 }
 
 function makeRemoteRepo() {
+  setGitRuntimePolicy(gitPolicy());
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'git-worktree-remote-'));
   const remote = path.join(root, 'remote.git');
   const repoRoot = path.join(root, 'repo');
@@ -68,9 +70,23 @@ function resolveGitPath(repoRoot, gitPathName) {
   return path.isAbsolute(resolved) ? resolved : path.join(repoRoot, resolved);
 }
 
+function gitPolicy() {
+  return {
+    timeout_ms: 30000,
+    max_buffer_bytes: 52428800,
+    push_timeout_ms: 60000,
+    push_max_retries: 3,
+    push_retry_delay_ms: 1,
+  };
+}
+
+function testConfig(repoRoot, extra = {}) {
+  return { repo_root: repoRoot, project: 'test', git: gitPolicy(), ...extra };
+}
+
 test('runtime stash restore preserves pre-existing user stash', () => {
   const repoRoot = makeRepo();
-  const config = { repo_root: repoRoot, project: 'test' };
+  const config = testConfig(repoRoot);
 
   fs.writeFileSync(path.join(repoRoot, 'user.txt'), 'user change\n');
   git(repoRoot, ['stash', 'push', '-m', 'user-stash']);
@@ -84,7 +100,7 @@ test('runtime stash restore preserves pre-existing user stash', () => {
   assert.match(stashState?.stashSha || '', /^[0-9a-f]{40}$/);
   const stashesAfterCollect = stashSubjects(repoRoot);
   assert.equal(stashesAfterCollect.length, 2);
-  assert.match(stashesAfterCollect[0] || '', /pipeline-pre-push-runtime-state$/);
+  assert.match(stashesAfterCollect[0] || '', /pipeline-pre-push-project-worktree$/);
   assert.match(stashesAfterCollect[1] || '', /user-stash$/);
 
   __gitWorktreeTest.restoreRuntimeStateStash(config, stashState);
@@ -98,7 +114,7 @@ test('runtime stash restore preserves pre-existing user stash', () => {
 
 test('runtime stash restore keeps stashed content when runtime file conflicts', () => {
   const repoRoot = makeRepo();
-  const config = { repo_root: repoRoot, project: 'test' };
+  const config = testConfig(repoRoot);
   const runtimePath = path.join(repoRoot, '.swarm', 'logs', 'runtime.log');
 
   fs.mkdirSync(path.dirname(runtimePath), { recursive: true });
@@ -118,6 +134,40 @@ test('runtime stash restore keeps stashed content when runtime file conflicts', 
   assert.equal(fs.readFileSync(runtimePath, 'utf8'), 'stashed runtime state\n');
   assert.deepEqual(stashSubjects(repoRoot), []);
   assert.equal(git(repoRoot, ['diff', '--name-only', '--diff-filter=U']), '');
+});
+
+test('runtime stash restore treats recreated runtime files as already restored when stash pop fails without merge conflicts', () => {
+  const repoRoot = makeRepo();
+  const config = {
+    repo_root: repoRoot,
+    project: 'demo',
+    git: gitPolicy(),
+    paths: {
+      swarm_dir: path.join(repoRoot, 'Projects/demo/src/.swarm'),
+      modules_dir: path.join(repoRoot, 'Projects/demo/src/.swarm/modules'),
+    },
+  };
+  const runtimeLog = path.join(repoRoot, 'Projects/demo/src/.swarm/logs/pipeline/pipeline.jsonl');
+  const completionFile = path.join(repoRoot, 'Projects/demo/src/.swarm/modules/01-foundation/forge-completion.json');
+
+  fs.mkdirSync(path.dirname(runtimeLog), { recursive: true });
+  fs.mkdirSync(path.dirname(completionFile), { recursive: true });
+  fs.writeFileSync(runtimeLog, '{"event":"stashed"}\n');
+  fs.writeFileSync(completionFile, '{"status":"READY_FOR_TESTING"}\n');
+
+  const stashState = __gitWorktreeTest.collectRuntimeStateStash(config);
+  assert.equal(stashSubjects(repoRoot).length, 1);
+
+  fs.mkdirSync(path.dirname(runtimeLog), { recursive: true });
+  fs.mkdirSync(path.dirname(completionFile), { recursive: true });
+  fs.writeFileSync(runtimeLog, '{"event":"recreated"}\n');
+  fs.writeFileSync(completionFile, '{"status":"RECREATED"}\n');
+
+  __gitWorktreeTest.restoreRuntimeStateStash(config, stashState);
+
+  assert.equal(fs.readFileSync(runtimeLog, 'utf8'), '{"event":"recreated"}\n');
+  assert.equal(fs.readFileSync(completionFile, 'utf8'), '{"status":"RECREATED"}\n');
+  assert.deepEqual(stashSubjects(repoRoot), []);
 });
 
 test('rebase detection resolves gitdir paths for linked worktrees', () => {
@@ -171,6 +221,7 @@ test('gitSyncBeforeBuster commits only meaningful forge paths and auto-resolves 
     const config = {
       repo_root: repoRoot,
       project: 'demo',
+      git: gitPolicy(),
       _runId: 'run-git-sync-before-buster-test',
       _runStats: createRunStats('2026-06-20T00:00:00.000Z'),
       paths: {
@@ -219,6 +270,7 @@ test('gitCommitAndPush defaults to project-scoped staging and ignores unrelated 
     const config = {
       repo_root: repoRoot,
       project: 'demo',
+      git: gitPolicy(),
       _runId: 'run-git-commit-project-scope-test',
       _runStats: createRunStats('2026-06-20T00:00:00.000Z'),
       paths: {
@@ -238,6 +290,124 @@ test('gitCommitAndPush defaults to project-scoped staging and ignores unrelated 
 
     const porcelain = git(repoRoot, ['status', '--porcelain']);
     assert.match(porcelain, /^\?\? README-outside-project\.md$/m);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('gitCommitAndPush skips proactive pull when tracked out-of-scope files are dirty', async () => {
+  const { root, repoRoot } = makeRemoteRepo();
+
+  try {
+    fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/package.json'), '{\n  "name": "demo-local"\n}\n');
+    fs.writeFileSync(path.join(repoRoot, 'README.md'), 'tracked out-of-scope dirty\n');
+
+    const config = {
+      repo_root: repoRoot,
+      project: 'demo',
+      git: gitPolicy(),
+      _runId: 'run-git-commit-out-of-scope-dirty-test',
+      _runStats: createRunStats('2026-06-20T00:00:00.000Z'),
+      paths: {
+        swarm_dir: path.join(repoRoot, 'Projects/demo/src/.swarm'),
+        modules_dir: path.join(repoRoot, 'Projects/demo/src/.swarm/modules'),
+      },
+    };
+
+    const result = await gitCommitAndPush(config, '[pipeline] Skip proactive pull for out-of-scope dirtiness');
+
+    assert.equal(result.committed, true);
+    assert.equal(fs.readFileSync(path.join(repoRoot, 'README.md'), 'utf8'), 'tracked out-of-scope dirty\n');
+    assert.equal(
+      git(repoRoot, ['show', 'origin/master:Projects/demo/src/package.json']),
+      '{\n  "name": "demo-local"\n}',
+    );
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('gitCommitAndPush falls back to pull-rebase after direct push rejection when out-of-scope files are dirty', async () => {
+  const { root, repoRoot, otherRoot } = makeRemoteRepo();
+
+  try {
+    fs.writeFileSync(path.join(otherRoot, 'user.txt'), 'remote advancement\n');
+    git(otherRoot, ['add', 'user.txt']);
+    git(otherRoot, ['commit', '-m', 'remote advancement']);
+    git(otherRoot, ['push', 'origin', 'master']);
+
+    fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/package.json'), '{\n  "name": "demo-rebased"\n}\n');
+    fs.writeFileSync(path.join(repoRoot, 'README.md'), 'tracked out-of-scope dirty\n');
+
+    const config = {
+      repo_root: repoRoot,
+      project: 'demo',
+      git: gitPolicy(),
+      _runId: 'run-git-commit-out-of-scope-rejected-test',
+      _runStats: createRunStats('2026-06-20T00:00:00.000Z'),
+      paths: {
+        swarm_dir: path.join(repoRoot, 'Projects/demo/src/.swarm'),
+        modules_dir: path.join(repoRoot, 'Projects/demo/src/.swarm/modules'),
+      },
+    };
+
+    const result = await gitCommitAndPush(config, '[pipeline] Fallback rebase after out-of-scope dirty push rejection');
+
+    assert.equal(result.committed, true);
+    assert.equal(fs.readFileSync(path.join(repoRoot, 'README.md'), 'utf8'), 'tracked out-of-scope dirty\n');
+    assert.equal(
+      git(repoRoot, ['show', 'origin/master:Projects/demo/src/package.json']),
+      '{\n  "name": "demo-rebased"\n}',
+    );
+    assert.equal(git(repoRoot, ['show', 'origin/master:user.txt']), 'remote advancement');
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('gitCommitAndPush preserves uncommitted project files during pull-rebase', async () => {
+  const { root, repoRoot, otherRoot } = makeRemoteRepo();
+
+  try {
+    const extraProjectFile = path.join(repoRoot, 'Projects/demo/src/local-notes.md');
+    fs.writeFileSync(extraProjectFile, 'base notes\n');
+    git(repoRoot, ['add', 'Projects/demo/src/local-notes.md']);
+    git(repoRoot, ['commit', '-m', 'add local notes']);
+    git(repoRoot, ['push', 'origin', 'master']);
+
+    git(otherRoot, ['pull', '--rebase']);
+    fs.writeFileSync(path.join(otherRoot, 'user.txt'), 'remote advancement\n');
+    git(otherRoot, ['add', 'user.txt']);
+    git(otherRoot, ['commit', '-m', 'remote advancement']);
+    git(otherRoot, ['push', 'origin', 'master']);
+
+    fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/package.json'), '{\n  "name": "demo-preserved"\n}\n');
+    fs.writeFileSync(extraProjectFile, 'uncommitted project notes\n');
+
+    const config = {
+      repo_root: repoRoot,
+      project: 'demo',
+      git: gitPolicy(),
+      _runId: 'run-git-commit-project-dirty-preserved-test',
+      _runStats: createRunStats('2026-06-20T00:00:00.000Z'),
+      paths: {
+        swarm_dir: path.join(repoRoot, 'Projects/demo/src/.swarm'),
+        modules_dir: path.join(repoRoot, 'Projects/demo/src/.swarm/modules'),
+      },
+    };
+
+    const result = await gitCommitAndPush(config, '[pipeline] Preserve project dirtiness', {
+      addPaths: ['Projects/demo/src/package.json'],
+    });
+
+    assert.equal(result.committed, true);
+    assert.equal(fs.readFileSync(extraProjectFile, 'utf8'), 'uncommitted project notes\n');
+    assert.equal(
+      git(repoRoot, ['show', 'origin/master:Projects/demo/src/package.json']),
+      '{\n  "name": "demo-preserved"\n}',
+    );
+    assert.equal(git(repoRoot, ['show', 'origin/master:Projects/demo/src/local-notes.md']), 'base notes');
+    assert.match(git(repoRoot, ['status', '--porcelain']), /^ ?M Projects\/demo\/src\/local-notes\.md$/m);
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }

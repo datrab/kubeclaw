@@ -135,7 +135,17 @@ function createIngester(redis, extra = {}) {
   return ingesterModule.createAgentObservabilityIngester({
     config: {
       enabled: true,
+      groupName: 'kubeclaw-agent-observability-ingester',
+      consumerName: 'kubeclaw-agent-observability-ingester-1',
+      pollBlockMs: 1000,
+      reclaimIdleMs: 60000,
       redisCommandTimeoutMs: 1000,
+      loopDelayMs: 250,
+      trimIntervalMs: 5000,
+      stopTimeoutMs: 2000,
+      deadLetterMaxLen: 1000,
+      controlStreamMaxLen: 10000,
+      payloadStreamMaxLen: 5000,
       controlLagDegradedThreshold: 1,
       payloadPressureDegradedThreshold: 1,
       redisNetworkIsolation: 'isolated',
@@ -170,17 +180,67 @@ assert.throws(
   'ingester config must not string-coerce enabled from runtime config',
 );
 assert.throws(
-  () => ingesterModule.resolveAgentObservabilityIngesterConfig({ pollBlockMs: '1000' }, {}),
+  () => ingesterModule.resolveAgentObservabilityIngesterConfig({
+    enabled: true,
+    groupName: 'kubeclaw-agent-observability-ingester',
+    consumerName: 'kubeclaw-agent-observability-ingester-1',
+    pollBlockMs: '1000',
+    reclaimIdleMs: 60000,
+    redisCommandTimeoutMs: 5000,
+    loopDelayMs: 250,
+    trimIntervalMs: 5000,
+    stopTimeoutMs: 2000,
+    deadLetterMaxLen: 1000,
+    controlStreamMaxLen: 10000,
+    payloadStreamMaxLen: 5000,
+    controlLagDegradedThreshold: 1000,
+    payloadPressureDegradedThreshold: 10000,
+  }, {}),
   /pollBlockMs must be a positive integer/,
   'ingester config must not string-coerce numeric runtime config',
 );
+assert.throws(
+  () => ingesterModule.resolveAgentObservabilityIngesterConfig({ enabled: true }, {}),
+  /groupName is required when agent observability ingester is enabled/,
+  'enabled ingester config must not rely on code defaults for operational values',
+);
 assert.equal(
-  ingesterModule.resolveAgentObservabilityIngesterConfig({ enabled: true }, { REDIS_TLS: 'true' }).redisTls,
+  ingesterModule.resolveAgentObservabilityIngesterConfig({
+    enabled: true,
+    groupName: 'kubeclaw-agent-observability-ingester',
+    consumerName: 'kubeclaw-agent-observability-ingester-1',
+    pollBlockMs: 1000,
+    reclaimIdleMs: 60000,
+    redisCommandTimeoutMs: 5000,
+    loopDelayMs: 250,
+    trimIntervalMs: 5000,
+    stopTimeoutMs: 2000,
+    deadLetterMaxLen: 1000,
+    controlStreamMaxLen: 10000,
+    payloadStreamMaxLen: 5000,
+    controlLagDegradedThreshold: 1000,
+    payloadPressureDegradedThreshold: 10000,
+  }, { REDIS_TLS: 'true' }).redisTls,
   true,
   'deployment env booleans remain accepted at the environment boundary',
 );
 assert.equal(
-  ingesterModule.resolveAgentObservabilityIngesterConfig({ enabled: true }, { REDIS_TLS_ENABLED: 'true' }).redisTls,
+  ingesterModule.resolveAgentObservabilityIngesterConfig({
+    enabled: true,
+    groupName: 'kubeclaw-agent-observability-ingester',
+    consumerName: 'kubeclaw-agent-observability-ingester-1',
+    pollBlockMs: 1000,
+    reclaimIdleMs: 60000,
+    redisCommandTimeoutMs: 5000,
+    loopDelayMs: 250,
+    trimIntervalMs: 5000,
+    stopTimeoutMs: 2000,
+    deadLetterMaxLen: 1000,
+    controlStreamMaxLen: 10000,
+    payloadStreamMaxLen: 5000,
+    controlLagDegradedThreshold: 1000,
+    payloadPressureDegradedThreshold: 10000,
+  }, { REDIS_TLS_ENABLED: 'true' }).redisTls,
   true,
   'deployment env aliases remain accepted at the environment boundary',
 );
@@ -378,7 +438,7 @@ pressure = await pressureIngester.checkPressure({});
 assert.deepEqual(pressure.degraded, []);
 assert.equal(restored.length, 2);
 await pressureIngester.trim();
-assert.equal(pressureRedis.calls.filter((call) => call.op === 'xtrim').length, 2);
+assert.equal(pressureRedis.calls.filter((call) => call.op === 'xtrim').length, 3);
 
 await ingester.stop();
 assert.equal(redis.closed, true);

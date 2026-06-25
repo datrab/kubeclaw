@@ -84,9 +84,9 @@ await record('waitForSessionIdle honors the strict total timeout when gateway st
     pollMs: 5,
     unknown_poll_limit: 10,
     stale_poll_limit: 10,
-    maxTranscriptExtensions: 1,
-    transcriptGraceMs: 60,
-    monitorPollMs: 5,
+    max_transcript_extensions: 1,
+    transcript_grace_ms: 60,
+    monitor_poll_ms: 5,
   });
   const elapsedMs = Date.now() - started;
 

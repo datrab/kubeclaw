@@ -407,7 +407,7 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
 
   const busterGatePolicy = deps.resolvePolicy(config, progress, 'buster', {
     scopeModel: gate.model || null,
-    dispatchPath: config?.agents?.buster?.dispatch || 'acp',
+    dispatchPath: config?.agents?.buster?.dispatch,
   });
   const model = busterGatePolicy.model;
   deps.logEffectivePolicy(config, { scope: 'gate_buster', agent: 'buster', gateId, ...busterGatePolicy });

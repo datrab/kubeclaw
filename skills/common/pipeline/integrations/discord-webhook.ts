@@ -1,4 +1,3 @@
-const DEFAULT_TIMEOUT_MS = 10000;
 const MAX_ERROR_BODY_PREVIEW = 500;
 
 type DiscordWebhookDeliveryDetails = {
@@ -111,7 +110,14 @@ export async function postDiscordWebhook(url: string, options: DiscordWebhookOpt
   const headers = { ...(options.headers || {}) };
 
   try {
-    const { signal, cleanup } = requestAbortSignal(options.signal, options.timeoutMs ?? DEFAULT_TIMEOUT_MS);
+    if (options.timeoutMs === undefined || options.timeoutMs === null) {
+      throw new DiscordWebhookDeliveryError('discord webhook timeoutMs is required');
+    }
+    const timeoutMs = Number(options.timeoutMs);
+    if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
+      throw new DiscordWebhookDeliveryError('discord webhook timeoutMs must be a positive number');
+    }
+    const { signal, cleanup } = requestAbortSignal(options.signal, timeoutMs);
     try {
       const request: RequestInit = {
         method: 'POST',

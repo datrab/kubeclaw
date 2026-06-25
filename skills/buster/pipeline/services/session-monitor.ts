@@ -5,10 +5,10 @@ import {
   monitorStateFromAcpEvent,
 } from '../agents/acp-monitor.ts';
 import {
-  SESSION_TERMINATION_POLICY_DEFAULTS,
   terminateSession,
 } from '../agents/session-termination.ts';
 import { resolveGatewayBaseUrl, resolveGatewayToken } from '../integrations/gateway.ts';
+import { loadBusterSessionPolicies } from './runtime-policy.ts';
 
 import { emitEvent, emitPluginEvent } from './telemetry.ts';
 import {
@@ -53,10 +53,11 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
   const hardDeadlineMs = Number.isFinite(timeoutSeconds) && timeoutSeconds > 0
     ? spawnedAt + (timeoutSeconds * 1000)
     : null;
-  const requestedKillGraceMs = Number(payload?.acp_monitor?.kill_grace_ms ?? meta.killGraceMs ?? SESSION_TERMINATION_POLICY_DEFAULTS.graceMs) || SESSION_TERMINATION_POLICY_DEFAULTS.graceMs;
+  const sessionPolicies = loadBusterSessionPolicies();
+  const requestedKillGraceMs = Number(meta.killGraceMs ?? sessionPolicies.terminationPolicy.graceMs);
   const killGraceMs = Math.min(
     Math.max(requestedKillGraceMs, cfg.monitorPollMs),
-    SESSION_TERMINATION_POLICY_DEFAULTS.maxGraceMs,
+    sessionPolicies.terminationPolicy.maxGraceMs,
   );
 
   const gatewayUrl   = resolveGatewayBaseUrl(meta.gatewayUrl ?? payload?.gateway_url);
@@ -76,6 +77,7 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
     ...cfg,
     gatewayUrl,
     gatewayToken,
+    gatewayStatusPolicy: sessionPolicies.gatewayStatusPolicy,
   };
 
   const rlConfig = payload?.rate_limit || {};
@@ -131,6 +133,7 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
 
     await stopAdapter('hard_timeout');
     const termination = assertValidSessionTerminationResult(await terminateChild(childSessionKey, {
+      ...sessionPolicies,
       runtime: payload?.session?.runtime,
       model: payload?.session?.model || null,
       agentId: payload?.session?.agentId || null,

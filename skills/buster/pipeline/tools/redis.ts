@@ -8,9 +8,10 @@ import fs from 'fs';
 import { parseCliFlagValues } from '../cli-args.ts';
 import { createRedisClient, loadRedisCtor } from '../telemetry.ts';
 import { resolveDiscordWebhookUrl } from '../services/runtime.ts';
+import { loadBusterPlatformConfig } from '../services/runtime-policy.ts';
 import { formatSummaryForDiscord, summarizePayloadForDiscord } from '../redaction.ts';
 import { assertRedisTaskEntry, buildRedisTaskStreamEntry } from '../services/redis-message-contract.ts';
-import { createRedisTaskQueue } from '../services/task-transport-contract.ts';
+import { createRedisEventBus, createRedisTaskQueue } from '../services/task-transport-contract.ts';
 import { sendDiscord } from '../services/discord.ts';
 
 // DELETE_LEGACY: direct completion emission and implicit sender/consumer
@@ -34,7 +35,15 @@ interface ReadOptions {
 }
 
 let _redis: RedisClient | null = null;
-const REDIS_READY_TIMEOUT_MS = Number.parseInt(process.env.REDIS_READY_TIMEOUT_MS || '10000', 10);
+
+function redisReadyTimeoutMs(): number {
+  const config = loadBusterPlatformConfig();
+  const timeoutMs = Number(config?.gateway?.health?.ready_timeout_ms);
+  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
+    throw new Error('config.gateway.health.ready_timeout_ms: required positive number in swarm.config.json');
+  }
+  return timeoutMs;
+}
 
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error || 'unknown error');
@@ -59,7 +68,7 @@ function getRedis(): RedisClient {
   return _redis as RedisClient;
 }
 
-export function waitForRedisReady(redis: RedisClient, timeoutMs = REDIS_READY_TIMEOUT_MS): Promise<void> {
+export function waitForRedisReady(redis: RedisClient, timeoutMs = redisReadyTimeoutMs()): Promise<void> {
   if (redis.status === 'ready') return Promise.resolve();
 
   return new Promise((resolve, reject) => {
@@ -158,8 +167,7 @@ const lib = {
     const taskEntry = buildRedisTaskStreamEntry({ type, sender, source, payload, iteration });
     assertRedisTaskEntry(taskEntry, { requireStreamId: false, requireCanonicalEnvelope: true });
 
-    const queue = createRedisTaskQueue(redis, { streamKey });
-    const published = await queue.publishTask(streamKey, taskEntry);
+    const published = await createRedisEventBus(redis).publish(streamKey, taskEntry);
     const id = published.id;
 
     console.error(`[Redis] Sent ${id} to ${streamKey}`);

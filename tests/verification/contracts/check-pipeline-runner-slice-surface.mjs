@@ -389,7 +389,7 @@ await disabledIngesterRuntime.stop();
 
 const degradedEvidence = [];
 const failingIngesterRuntime = agentObservabilityRuntimeMod.startAgentObservabilityIngester({
-  agent_observability: { ingester: { enabled: true, loopDelayMs: 1, healthCheckEvery: 1 } },
+  agent_observability: { ingester: { enabled: true, loopDelayMs: 1, healthCheckEvery: 1, stopTimeoutMs: 1 } },
 }, { project: 'contract-runtime-degraded' }, {
   ingester: {
     processNext: async () => { throw new Error('boom'); },

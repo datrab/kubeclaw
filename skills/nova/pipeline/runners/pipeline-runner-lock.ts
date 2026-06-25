@@ -33,9 +33,6 @@ function pipelineRunLockPath(config: AnyRecord): string {
 
 export const PIPELINE_RUN_CONCURRENCY_LIMIT = 1;
 const PIPELINE_RUN_LOCK_SCHEMA_VERSION = 1;
-const DEFAULT_PIPELINE_RUN_LOCK_LEASE_MS = 120000;
-const DEFAULT_PIPELINE_RUN_LOCK_HEARTBEAT_MS = 30000;
-const PIPELINE_RUN_LOCK_MUTATION_STALE_MS = 5000;
 
 function nowMs(): number {
   return Date.now();
@@ -45,18 +42,23 @@ function isoFromMs(ms: number): string {
   return new Date(ms).toISOString();
 }
 
-function positiveNumber(value: unknown, fallback: number): number {
+function positiveNumber(value: unknown, label: string): number {
   const num = Number(value);
-  return Number.isFinite(num) && num > 0 ? num : fallback;
+  if (!Number.isFinite(num) || num <= 0) throw new Error(`${label}: required positive number in swarm.config.json`);
+  return num;
 }
 
 function pipelineRunLockLeaseMs(config: AnyRecord): number {
-  return Math.max(2000, positiveNumber(config?.pipeline_run_lock_lease_ms, DEFAULT_PIPELINE_RUN_LOCK_LEASE_MS));
+  return Math.max(2000, positiveNumber(config?.locks?.pipeline_run_lock_lease_ms, 'config.locks.pipeline_run_lock_lease_ms'));
 }
 
 function pipelineRunLockHeartbeatMs(config: AnyRecord, leaseMs = pipelineRunLockLeaseMs(config)): number {
-  const configured = positiveNumber(config?.pipeline_run_lock_heartbeat_ms, DEFAULT_PIPELINE_RUN_LOCK_HEARTBEAT_MS);
+  const configured = positiveNumber(config?.locks?.pipeline_run_lock_heartbeat_ms, 'config.locks.pipeline_run_lock_heartbeat_ms');
   return Math.max(1000, Math.min(configured, Math.floor(leaseMs / 2)));
+}
+
+function pipelineRunLockMutationStaleMs(config: AnyRecord): number {
+  return positiveNumber(config?.locks?.pipeline_run_lock_mutation_stale_ms, 'config.locks.pipeline_run_lock_mutation_stale_ms');
 }
 
 function readPipelineRunLock(lockPath: string): AnyRecord | null {
@@ -90,7 +92,7 @@ function pipelineRunLockMutationOwnerPath(mutationDir: string): string {
   return path.join(mutationDir, 'owner.json');
 }
 
-function pipelineRunLockMutationOwner(): AnyRecord {
+function pipelineRunLockMutationOwner(config: AnyRecord): AnyRecord {
   const acquiredAtMs = nowMs();
   return {
     schema_version: PIPELINE_RUN_LOCK_SCHEMA_VERSION,
@@ -98,11 +100,11 @@ function pipelineRunLockMutationOwner(): AnyRecord {
     pid: process.pid,
     hostname: os.hostname(),
     acquired_at: isoFromMs(acquiredAtMs),
-    stale_at: isoFromMs(acquiredAtMs + PIPELINE_RUN_LOCK_MUTATION_STALE_MS),
+    stale_at: isoFromMs(acquiredAtMs + pipelineRunLockMutationStaleMs(config)),
   };
 }
 
-function readPipelineRunLockMutationSnapshot(mutationDir: string, atMs = nowMs()): AnyRecord {
+function readPipelineRunLockMutationSnapshot(config: AnyRecord, mutationDir: string, atMs = nowMs()): AnyRecord {
   const ownerPath = pipelineRunLockMutationOwnerPath(mutationDir);
   try {
     const owner = JSON.parse(fs.readFileSync(ownerPath, 'utf8'));
@@ -124,7 +126,7 @@ function readPipelineRunLockMutationSnapshot(mutationDir: string, atMs = nowMs()
     return {
       hasOwner: false,
       token: null,
-      stale: atMs - stat.mtimeMs >= PIPELINE_RUN_LOCK_MUTATION_STALE_MS,
+      stale: atMs - stat.mtimeMs >= pipelineRunLockMutationStaleMs(config),
     };
   } catch (_err) {
     return { hasOwner: false, token: null, stale: true };
@@ -137,8 +139,8 @@ function sameStaleMutationOwner(before: AnyRecord, after: AnyRecord): boolean {
   return after.hasOwner !== true;
 }
 
-function reclaimStalePipelineRunLockMutation(mutationDir: string): boolean {
-  const before = readPipelineRunLockMutationSnapshot(mutationDir);
+function reclaimStalePipelineRunLockMutation(config: AnyRecord, mutationDir: string): boolean {
+  const before = readPipelineRunLockMutationSnapshot(config, mutationDir);
   if (!before.stale) return false;
 
   const reclaimDir = path.join(mutationDir, 'reclaiming');
@@ -146,7 +148,7 @@ function reclaimStalePipelineRunLockMutation(mutationDir: string): boolean {
   try {
     fs.mkdirSync(reclaimDir);
     claimed = true;
-    const after = readPipelineRunLockMutationSnapshot(mutationDir);
+    const after = readPipelineRunLockMutationSnapshot(config, mutationDir);
     if (!sameStaleMutationOwner(before, after)) return false;
     fs.rmSync(mutationDir, { recursive: true, force: true });
     claimed = false;
@@ -161,13 +163,13 @@ function reclaimStalePipelineRunLockMutation(mutationDir: string): boolean {
   }
 }
 
-function acquirePipelineRunLockMutation(lockPath: string): string {
+function acquirePipelineRunLockMutation(config: AnyRecord, lockPath: string): string {
   const mutationDir = `${lockPath}.mutation`;
   while (true) {
     try {
       fs.mkdirSync(mutationDir);
       try {
-        fs.writeFileSync(pipelineRunLockMutationOwnerPath(mutationDir), `${JSON.stringify(pipelineRunLockMutationOwner(), null, 2)}\n`);
+        fs.writeFileSync(pipelineRunLockMutationOwnerPath(mutationDir), `${JSON.stringify(pipelineRunLockMutationOwner(config), null, 2)}\n`);
       } catch (err) {
         try { fs.rmSync(mutationDir, { recursive: true, force: true }); } catch (_cleanupErr) { /* best effort */ }
         throw err;
@@ -175,13 +177,13 @@ function acquirePipelineRunLockMutation(lockPath: string): string {
       return mutationDir;
     } catch (err) {
       if ((err as AnyRecord).code !== 'EEXIST') throw err;
-      if (!reclaimStalePipelineRunLockMutation(mutationDir)) throw err;
+      if (!reclaimStalePipelineRunLockMutation(config, mutationDir)) throw err;
     }
   }
 }
 
-function withPipelineRunLockMutation<T>(lockPath: string, fn: () => T): T {
-  const mutationDir = acquirePipelineRunLockMutation(lockPath);
+function withPipelineRunLockMutation<T>(config: AnyRecord, lockPath: string, fn: () => T): T {
+  const mutationDir = acquirePipelineRunLockMutation(config, lockPath);
   try {
     return fn();
   } finally {
@@ -320,7 +322,7 @@ function writePipelineRunLock(lockPath: string, owner: AnyRecord): void {
 }
 
 function replacePipelineRunLockIfOwner(lockPath: string, owner: AnyRecord, token: string): AnyRecord {
-  return withPipelineRunLockMutation(lockPath, () => {
+  return withPipelineRunLockMutation(config, lockPath, () => {
     const current = readPipelineRunLock(lockPath);
     if (!hasPipelineRunLockLeaseContract(current) || current?.token !== token) {
       throw new Error('pipeline_run_lock_owner_lost');
@@ -456,7 +458,7 @@ export function acquirePipelineRunLock(config: AnyRecord, opts: AnyRecord = {}):
       }
       appendDurableRunLockAlert(config, existing, 'pipeline_run_lock_stale_reclaimed');
       try {
-        withPipelineRunLockMutation(lockPath, () => {
+        withPipelineRunLockMutation(config, lockPath, () => {
           const current = readPipelineRunLock(lockPath);
           if (isPipelineRunLockActive(current) || !isPipelineRunLockReclaimable(current)) {
             throw pipelineRunLockReclaimRaceLost();

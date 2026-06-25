@@ -10,13 +10,47 @@ declare const process: any;
 
 type AnyRecord = Record<string, any>;
 
-const DEFAULT_GIT_TIMEOUT_MS = 30000;
-const DEFAULT_GIT_MAX_BUFFER = 50 * 1024 * 1024;
 const DEFAULT_RUNTIME_REPO_ROOT = '/home/node/.openclaw/workspace/git-repo';
+const DEFAULT_SWARM_CONFIG_PATH = '/home/node/.openclaw/swarm.config.json';
 
 const repoRootCache = new Map();
 const headHashCache = new Map();
 let defaultRepoRoot: string | null = null;
+let gitRuntimePolicy: AnyRecord | null = null;
+
+function requirePositiveNumber(value: unknown, label: string): number {
+  const numberValue = Number(value);
+  if (!Number.isFinite(numberValue) || numberValue <= 0) {
+    throw new Error(`${label}: required positive number in swarm.config.json`);
+  }
+  return numberValue;
+}
+
+function resolveGitRuntimePolicy(): AnyRecord {
+  if (gitRuntimePolicy) return gitRuntimePolicy;
+  const configPath = process.env.SWARM_CONFIG || DEFAULT_SWARM_CONFIG_PATH;
+  const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  const policy = config?.git;
+  if (!policy || typeof policy !== 'object' || Array.isArray(policy)) {
+    throw new Error('config.git: required platform config object in swarm.config.json');
+  }
+  gitRuntimePolicy = Object.freeze({
+    timeout_ms: requirePositiveNumber(policy.timeout_ms, 'config.git.timeout_ms'),
+    max_buffer_bytes: requirePositiveNumber(policy.max_buffer_bytes, 'config.git.max_buffer_bytes'),
+  });
+  return gitRuntimePolicy;
+}
+
+export function setGitRuntimePolicy(policy: AnyRecord | null = null) {
+  if (!policy) {
+    gitRuntimePolicy = null;
+    return;
+  }
+  gitRuntimePolicy = Object.freeze({
+    timeout_ms: requirePositiveNumber(policy.timeout_ms, 'config.git.timeout_ms'),
+    max_buffer_bytes: requirePositiveNumber(policy.max_buffer_bytes, 'config.git.max_buffer_bytes'),
+  });
+}
 
 function resolveRepoInput(input: any) {
   if (typeof input === 'string') return path.resolve(input);
@@ -69,10 +103,11 @@ export function getRepoRoot(startDir?: any) {
 }
 
 export function gitExec(repoRoot: any, args: any[], opts: AnyRecord = {}) {
+  const policy = resolveGitRuntimePolicy();
   const defaults = {
     encoding: 'utf8',
-    timeout: DEFAULT_GIT_TIMEOUT_MS,
-    maxBuffer: DEFAULT_GIT_MAX_BUFFER,
+    timeout: policy.timeout_ms,
+    maxBuffer: policy.max_buffer_bytes,
     env: buildSubprocessEnv(),
   };
   const result = execFileSync('git', ['-C', repoRoot, ...args], { ...defaults, ...opts });

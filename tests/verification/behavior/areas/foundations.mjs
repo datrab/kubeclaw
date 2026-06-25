@@ -932,6 +932,8 @@ await record('config validation derives accepted gate types from the startup plu
         heartbeat_interval_ms: 1000,
         task_poll_interval_ms: 2000,
         task_pending_reclaim_idle_ms: 60000,
+        completion_event_block_ms: 0,
+        completion_recovery_scan_interval_ms: 5000,
         task_stream_max_len: 250,
       },
     },
@@ -990,22 +992,46 @@ await record('config validation derives accepted gate types from the startup plu
   const currentPlatformConfig = buildConfig();
   currentPlatformConfig._doc = 'operator note';
   currentPlatformConfig.agent_observability = {
+    required: true,
+    profile: 'standard',
+    profiles: {
+      standard: {
+        payload: { max_event_bytes: 3145728 },
+        startup_evidence: { timeout_ms: 15000, block_ms: 250 },
+        forge_completion: { xread_block_ms: 1, settle_ms: 0 },
+        redis: { command_timeout_ms: 5000 },
+        streams: { stream_max_len: 10000, dead_letter_max_len: 1000 },
+        plugin: {
+          max_queue_per_stream: 100,
+          control_write: { max_attempts: 3, retry_base_ms: 100, retry_max_ms: 1000 },
+          hook: { priority: -100, timeout_ms: 1000 },
+        },
+        plugin_control: { timeout_ms: 10000 },
+        ingester: {
+          read: { block_ms: 1000, reclaim_idle_ms: 60000 },
+          loop: { delay_ms: 250, health_check_every: 10, stop_timeout_ms: 2000 },
+          trim: { interval_ms: 5000, payload_stream_max_len: 5000 },
+          pressure: {
+            control_lag_degraded_threshold: 1000,
+            payload_pressure_degraded_threshold: 10000,
+          },
+        },
+      },
+    },
+    plugin: { enabled: true },
     plugin_control: {
       enabled: true,
       pluginId: 'kubeclaw-agent-observer',
       command: 'openclaw',
-      timeoutMs: 10000,
       disableOnStop: true,
     },
     ingester: {
       enabled: true,
       redisNetworkIsolation: 'isolated',
-      loopDelayMs: 250,
-      healthCheckEvery: 10,
-      redisCommandTimeoutMs: 1000,
+      groupName: 'kubeclaw-agent-observability-ingester',
+      consumerName: 'kubeclaw-agent-observability-ingester-1',
     },
   };
-  currentPlatformConfig.agent_observability_forge_completion_settle_ms = 0;
   assert.doesNotThrow(
     () => configMod.validateConfig(currentPlatformConfig, validProgress),
     'current platform observability config keys should pass strict top-level validation',
@@ -2219,7 +2245,7 @@ await record('shared helper ownership stays local-shimmed and the public pipelin
   assert.equal(lifecycleText.includes("from './acp-monitor.ts'"), false);
   assert.equal(acpMonitorText.includes("new URL('./shutdown.js', import.meta.url)"), false);
   assert.equal(acpMonitorText.includes('invokeGatewayTool('), false);
-  assert(acpMonitorText.includes('getGatewaySessionStatus(sessionKey, 10000, {'));
+  assert(acpMonitorText.includes('getGatewaySessionStatus(sessionKey, policy.timeoutMs, {'));
   assert.equal(acpMonitorText.includes('gatewayInvoke('), false);
   assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'gatewayKillSync'), false);
   assert.equal(Object.prototype.hasOwnProperty.call(pipelineIndexMod, 'acpxCleanupSync'), false);
@@ -2598,6 +2624,8 @@ await record('Buster consumer reclaims pending tasks before reading new deliveri
         heartbeat_interval_ms: 1000,
         task_poll_interval_ms: 2000,
         task_pending_reclaim_idle_ms: 60000,
+        completion_event_block_ms: 0,
+        completion_recovery_scan_interval_ms: 5000,
         task_stream_max_len: 250,
       },
     },

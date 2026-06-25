@@ -10,7 +10,6 @@ import os from 'os';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 import {
-  GATEWAY_INVOKE_POLICIES,
   getGatewaySessionStatus,
   killGatewaySubagent,
   listGatewaySubagents,
@@ -41,29 +40,81 @@ type ExecFileAsync = (command: string, args: string[], options?: Record<string, 
 
 const execFileAsyncDefault = promisify(execFile) as ExecFileAsync;
 
-export const SESSION_SPAWN_POLICY_DEFAULTS = Object.freeze({
-  gateway: GATEWAY_INVOKE_POLICIES.sessionSpawn,
-  thread: false,
-  mode: 'run',
-  cleanup: 'keep',
-  streamTo: 'parent',
-});
-
-export const SESSION_KILL_POLICY_DEFAULTS = Object.freeze({
-  acpConfirmTimeoutMs: 15000,
-  subagentConfirmTimeoutMs: 120000,
-  confirmPollMs: 2000,
-  cleanupConfirmTimeoutMs: 'match_confirm_timeout',
-  statusTimeoutMs: GATEWAY_INVOKE_POLICIES.sessionStatus.timeoutMs,
-  requestTimeoutMs: GATEWAY_INVOKE_POLICIES.subagentKill.timeoutMs,
-  stopRequestTimeoutMs: GATEWAY_INVOKE_POLICIES.sessionSend.timeoutMs,
-  listTimeoutMs: GATEWAY_INVOKE_POLICIES.subagentList.timeoutMs,
-  acpxTimeoutMs: 10000,
-  stopMessage: '/stop',
-});
-
 function log(level: any, msg: any) {
   console.log(`[LIFECYCLE] [${level}] ${msg}`);
+}
+
+function requireFiniteMs(value: any, fieldName: string, { min = 0 }: AnyRecord = {}) {
+  const number = Number(value);
+  if (!Number.isFinite(number) || number < min) {
+    throw new Error(`${fieldName} must be explicit and >= ${min}`);
+  }
+  return Math.round(number);
+}
+
+function requirePositiveInteger(value: any, fieldName: string) {
+  const number = Number(value);
+  if (!Number.isInteger(number) || number < 1) {
+    throw new Error(`${fieldName} must be explicit and >= 1`);
+  }
+  return number;
+}
+
+function requireGatewayPolicy(value: any, fieldName: string) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error(`${fieldName} must be explicit session gateway policy`);
+  }
+  return {
+    timeoutMs: requireFiniteMs(value.timeoutMs, `${fieldName}.timeoutMs`),
+    maxRetries: requirePositiveInteger(value.maxRetries, `${fieldName}.maxRetries`),
+    retryDelayMs: requireFiniteMs(value.retryDelayMs, `${fieldName}.retryDelayMs`),
+  };
+}
+
+function resolveSpawnPolicy(opts: AnyRecord = {}) {
+  const policy = opts.spawnPolicy;
+  if (!policy || typeof policy !== 'object' || Array.isArray(policy)) {
+    throw new Error('spawnSession requires explicit opts.spawnPolicy from swarm.config.json');
+  }
+  const mode = requiredNonEmptyString(policy.mode, 'spawnPolicy.mode');
+  const cleanup = requiredNonEmptyString(policy.cleanup, 'spawnPolicy.cleanup');
+  const streamTo = requiredNonEmptyString(policy.streamTo, 'spawnPolicy.streamTo');
+  if (typeof policy.thread !== 'boolean') {
+    throw new Error('spawnPolicy.thread must be explicit boolean');
+  }
+  return {
+    gateway: requireGatewayPolicy(policy.gateway, 'spawnPolicy.gateway'),
+    thread: policy.thread,
+    mode,
+    cleanup,
+    streamTo,
+  };
+}
+
+function resolveKillPolicy(opts: AnyRecord = {}, isSubagent: boolean) {
+  const policy = opts.killPolicy;
+  if (!policy || typeof policy !== 'object' || Array.isArray(policy)) {
+    throw new Error('killSession requires explicit opts.killPolicy from swarm.config.json');
+  }
+  const confirmTimeoutMs = requireFiniteMs(
+    isSubagent ? policy.subagentConfirmTimeoutMs : policy.acpConfirmTimeoutMs,
+    isSubagent ? 'killPolicy.subagentConfirmTimeoutMs' : 'killPolicy.acpConfirmTimeoutMs',
+  );
+  return {
+    confirmTimeoutMs,
+    confirmPollMs: requireFiniteMs(policy.confirmPollMs, 'killPolicy.confirmPollMs', { min: 1 }),
+    cleanupConfirmTimeoutMs: policy.cleanupConfirmTimeoutMs,
+    statusTimeoutMs: requireFiniteMs(policy.statusTimeoutMs, 'killPolicy.statusTimeoutMs'),
+    requestTimeoutMs: requireFiniteMs(policy.requestTimeoutMs, 'killPolicy.requestTimeoutMs'),
+    stopRequestTimeoutMs: requireFiniteMs(policy.stopRequestTimeoutMs, 'killPolicy.stopRequestTimeoutMs'),
+    listTimeoutMs: requireFiniteMs(policy.listTimeoutMs, 'killPolicy.listTimeoutMs'),
+    statusGateway: requireGatewayPolicy(policy.statusGateway, 'killPolicy.statusGateway'),
+    requestGateway: requireGatewayPolicy(policy.requestGateway, 'killPolicy.requestGateway'),
+    stopGateway: requireGatewayPolicy(policy.stopGateway, 'killPolicy.stopGateway'),
+    listGateway: requireGatewayPolicy(policy.listGateway, 'killPolicy.listGateway'),
+    acpxTimeoutMs: requireFiniteMs(policy.acpxTimeoutMs, 'killPolicy.acpxTimeoutMs'),
+    stopMessage: requiredNonEmptyString(policy.stopMessage, 'killPolicy.stopMessage'),
+  };
 }
 
 // ── Active session state tracking ───────────────────────────────────────────
@@ -119,7 +170,7 @@ async function readSessionLifecycleState(
   childSessionKey: any,
   gatewayUrl: any,
   gatewayToken: any,
-  timeoutMs: number = SESSION_KILL_POLICY_DEFAULTS.statusTimeoutMs,
+  timeoutMs: number,
   waitOptions: AnyRecord = {},
 ): Promise<AnyRecord> {
   try {
@@ -141,9 +192,9 @@ async function waitForSessionStop(
   childSessionKey: any,
   gatewayUrl: any,
   gatewayToken: any,
-  timeoutMs: number = SESSION_KILL_POLICY_DEFAULTS.acpConfirmTimeoutMs,
-  pollMs: number = SESSION_KILL_POLICY_DEFAULTS.confirmPollMs,
-  statusTimeoutMs: number = SESSION_KILL_POLICY_DEFAULTS.statusTimeoutMs,
+  timeoutMs: number,
+  pollMs: number,
+  statusTimeoutMs: number,
   waitOptions: AnyRecord = {},
 ): Promise<AnyRecord> {
   const deadline = Date.now() + Math.max(timeoutMs, 0);
@@ -225,7 +276,8 @@ function normalizeGatewayError(endpoint: string, err: any) {
   return err;
 }
 
-async function requestGateway(operation: AnyFunction, endpoint: string, operationArg: any, timeoutMs: number = 30000, waitOptions: AnyRecord = {}) {
+async function requestGateway(operation: AnyFunction, endpoint: string, operationArg: any, timeoutMs: number, waitOptions: AnyRecord = {}) {
+  requireFiniteMs(timeoutMs, `gateway ${endpoint} timeoutMs`);
   try {
     return await operation(operationArg, timeoutMs, waitOptions);
   } catch (err) {
@@ -285,7 +337,7 @@ export async function acpxCleanup(agentId: any, gatewayLabel: any, opts: AnyReco
   try {
     await execFileAsync('acpx', [agentId, 'sessions', 'close', '--name', gatewayLabel], {
       stdio: 'ignore',
-      timeout: opts.timeoutMs ?? 10000,
+      timeout: requireFiniteMs(opts.timeoutMs, 'acpxCleanup.timeoutMs'),
       env: buildSubprocessEnv(),
       signal: abort.signal,
     });
@@ -317,7 +369,7 @@ function resolveExplicitRuntime(value: any) {
 }
 
 function resolveCleanupConfirmTimeoutMs(value: any, confirmTimeoutMs: number) {
-  if (value === SESSION_KILL_POLICY_DEFAULTS.cleanupConfirmTimeoutMs) return confirmTimeoutMs;
+  if (value === 'match_confirm_timeout') return confirmTimeoutMs;
   return value;
 }
 
@@ -336,10 +388,10 @@ export async function spawnSession(payload: AnyRecord, prompt: any, timeoutSecon
   });
   const isSubagent = runtime === 'subagent';
   const thinking = opts.thinking ?? session.thinking ?? null;
-  const spawnGatewayPolicy = SESSION_SPAWN_POLICY_DEFAULTS.gateway;
-  const maxRetries = opts.maxRetries ?? spawnGatewayPolicy.maxRetries;
-  const retryDelayMs = opts.retryDelayMs ?? spawnGatewayPolicy.retryDelayMs;
-  const requestTimeoutMs = opts.requestTimeoutMs ?? spawnGatewayPolicy.timeoutMs;
+  const spawnPolicy = resolveSpawnPolicy(opts);
+  const maxRetries = spawnPolicy.gateway.maxRetries;
+  const retryDelayMs = spawnPolicy.gateway.retryDelayMs;
+  const requestTimeoutMs = spawnPolicy.gateway.timeoutMs;
   const budget = opts.budget || null;
   const signal = opts.signal || null;
   const shouldTrackActive = opts.trackActive !== false;
@@ -353,9 +405,9 @@ export async function spawnSession(payload: AnyRecord, prompt: any, timeoutSecon
     label,
     model,
     cwd,
-    thread: opts.thread ?? SESSION_SPAWN_POLICY_DEFAULTS.thread,
-    mode: opts.mode ?? SESSION_SPAWN_POLICY_DEFAULTS.mode,
-    cleanup: opts.cleanup ?? SESSION_SPAWN_POLICY_DEFAULTS.cleanup,
+    thread: opts.thread ?? spawnPolicy.thread,
+    mode: opts.mode ?? spawnPolicy.mode,
+    cleanup: opts.cleanup ?? spawnPolicy.cleanup,
   };
   if (observabilityIdentity) {
     spawnArgs.runId = observabilityIdentity.run_id ?? observabilityIdentity.runId ?? null;
@@ -380,7 +432,7 @@ export async function spawnSession(payload: AnyRecord, prompt: any, timeoutSecon
   }
   if (!isSubagent) {
     spawnArgs.agentId = agentId;
-    spawnArgs.streamTo = opts.streamTo ?? SESSION_SPAWN_POLICY_DEFAULTS.streamTo;
+    spawnArgs.streamTo = opts.streamTo ?? spawnPolicy.streamTo;
     if (thinking) spawnArgs.thinking = thinking;
   }
 
@@ -389,7 +441,14 @@ export async function spawnSession(payload: AnyRecord, prompt: any, timeoutSecon
   let lastErr;
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      const raw = await requestGateway(spawnGatewaySession, 'session spawn', spawnArgs, requestTimeoutMs, { gatewayUrl, gatewayToken, budget, signal });
+      const raw = await requestGateway(spawnGatewaySession, 'session spawn', spawnArgs, requestTimeoutMs, {
+        gatewayUrl,
+        gatewayToken,
+        maxRetries,
+        retryDelayMs,
+        budget,
+        signal,
+      });
       const result: AnyRecord = raw?.result?.details || raw;
       if (result.status !== 'accepted') throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
 
@@ -468,19 +527,18 @@ export async function killSession(childSessionKey: any, opts: AnyRecord = {}) {
   const runtime = resolveRuntime({ runtime: opts.runtime, model: opts.model || null });
   const isSubagent = runtime === 'subagent';
   const label = opts.label || '';
-  const confirmTimeoutMs = opts.confirmTimeoutMs ?? (isSubagent
-    ? SESSION_KILL_POLICY_DEFAULTS.subagentConfirmTimeoutMs
-    : SESSION_KILL_POLICY_DEFAULTS.acpConfirmTimeoutMs);
-  const confirmPollMs = opts.confirmPollMs ?? SESSION_KILL_POLICY_DEFAULTS.confirmPollMs;
+  const killPolicy = resolveKillPolicy(opts, isSubagent);
+  const confirmTimeoutMs = killPolicy.confirmTimeoutMs;
+  const confirmPollMs = killPolicy.confirmPollMs;
   const cleanupConfirmTimeoutMs = resolveCleanupConfirmTimeoutMs(
-    opts.cleanupConfirmTimeoutMs ?? SESSION_KILL_POLICY_DEFAULTS.cleanupConfirmTimeoutMs,
+    killPolicy.cleanupConfirmTimeoutMs,
     confirmTimeoutMs,
   );
-  const statusTimeoutMs = opts.statusTimeoutMs ?? SESSION_KILL_POLICY_DEFAULTS.statusTimeoutMs;
-  const requestTimeoutMs = opts.requestTimeoutMs ?? SESSION_KILL_POLICY_DEFAULTS.requestTimeoutMs;
-  const stopRequestTimeoutMs = opts.stopRequestTimeoutMs ?? SESSION_KILL_POLICY_DEFAULTS.stopRequestTimeoutMs;
-  const listTimeoutMs = opts.listTimeoutMs ?? SESSION_KILL_POLICY_DEFAULTS.listTimeoutMs;
-  const acpxTimeoutMs = opts.acpxTimeoutMs ?? SESSION_KILL_POLICY_DEFAULTS.acpxTimeoutMs;
+  const statusTimeoutMs = killPolicy.statusTimeoutMs;
+  const requestTimeoutMs = killPolicy.requestTimeoutMs;
+  const stopRequestTimeoutMs = killPolicy.stopRequestTimeoutMs;
+  const listTimeoutMs = killPolicy.listTimeoutMs;
+  const acpxTimeoutMs = killPolicy.acpxTimeoutMs;
   const budget = opts.budget || null;
   const signal = opts.signal || null;
   const waitOptions = { budget, signal };
@@ -492,7 +550,11 @@ export async function killSession(childSessionKey: any, opts: AnyRecord = {}) {
   let cleanupAttempted = false;
 
   throwIfCallerAbort(signal, budget);
-  let confirmation = await readSessionLifecycleState(childSessionKey, gatewayUrl, gatewayToken, statusTimeoutMs, waitOptions);
+  let confirmation = await readSessionLifecycleState(childSessionKey, gatewayUrl, gatewayToken, statusTimeoutMs, {
+    ...waitOptions,
+    maxRetries: killPolicy.statusGateway.maxRetries,
+    retryDelayMs: killPolicy.statusGateway.retryDelayMs,
+  });
   if (!confirmation.active && isStoppedSessionState(confirmation.state)) {
     confirmed = true;
     state = confirmation.state || state;
@@ -502,7 +564,13 @@ export async function killSession(childSessionKey: any, opts: AnyRecord = {}) {
 
   if (isSubagent) {
     try {
-      await requestGateway(killGatewaySubagent, 'subagent kill', childSessionKey, requestTimeoutMs, { gatewayUrl, gatewayToken, ...waitOptions });
+      await requestGateway(killGatewaySubagent, 'subagent kill', childSessionKey, requestTimeoutMs, {
+        gatewayUrl,
+        gatewayToken,
+        maxRetries: killPolicy.requestGateway.maxRetries,
+        retryDelayMs: killPolicy.requestGateway.retryDelayMs,
+        ...waitOptions,
+      });
       requested = true;
       log('INFO', `Subagent kill requested for session: ${childSessionKey}`);
     } catch (err) {
@@ -514,11 +582,17 @@ export async function killSession(childSessionKey: any, opts: AnyRecord = {}) {
   if (!requested) {
     try {
       await requestGateway(
-        (sessionKey: any, timeoutMs: number, waitOptions: AnyRecord) => sendGatewaySessionMessage(sessionKey, opts.stopMessage ?? SESSION_KILL_POLICY_DEFAULTS.stopMessage, timeoutMs, waitOptions),
+        (sessionKey: any, timeoutMs: number, waitOptions: AnyRecord) => sendGatewaySessionMessage(sessionKey, killPolicy.stopMessage, timeoutMs, waitOptions),
         'session message',
         childSessionKey,
         stopRequestTimeoutMs,
-        { gatewayUrl, gatewayToken, ...waitOptions },
+        {
+          gatewayUrl,
+          gatewayToken,
+          maxRetries: killPolicy.stopGateway.maxRetries,
+          retryDelayMs: killPolicy.stopGateway.retryDelayMs,
+          ...waitOptions,
+        },
       );
       requested = true;
       log('INFO', `Stop requested for session: ${childSessionKey}`);
@@ -528,7 +602,11 @@ export async function killSession(childSessionKey: any, opts: AnyRecord = {}) {
     }
   }
 
-  confirmation = await waitForSessionStop(childSessionKey, gatewayUrl, gatewayToken, confirmTimeoutMs, confirmPollMs, statusTimeoutMs, waitOptions);
+  confirmation = await waitForSessionStop(childSessionKey, gatewayUrl, gatewayToken, confirmTimeoutMs, confirmPollMs, statusTimeoutMs, {
+    ...waitOptions,
+    maxRetries: killPolicy.statusGateway.maxRetries,
+    retryDelayMs: killPolicy.statusGateway.retryDelayMs,
+  });
   confirmed = confirmation.confirmed;
   state = confirmation.state || state;
 
@@ -539,7 +617,13 @@ export async function killSession(childSessionKey: any, opts: AnyRecord = {}) {
         'subagent list',
         null,
         listTimeoutMs,
-        { gatewayUrl, gatewayToken, ...waitOptions },
+        {
+          gatewayUrl,
+          gatewayToken,
+          maxRetries: killPolicy.listGateway.maxRetries,
+          retryDelayMs: killPolicy.listGateway.retryDelayMs,
+          ...waitOptions,
+        },
       );
       if (subagentListConfirmsInactive(listResult, childSessionKey, label)) {
         confirmed = true;
@@ -557,7 +641,11 @@ export async function killSession(childSessionKey: any, opts: AnyRecord = {}) {
     cleanupAttempted = true;
     log('WARN', `Session '${childSessionKey}' still active after stop request (${state}) - closing ACP harness session`);
     await acpxCleanup(opts.agentId, label, { timeoutMs: acpxTimeoutMs, ...waitOptions });
-    confirmation = await waitForSessionStop(childSessionKey, gatewayUrl, gatewayToken, cleanupConfirmTimeoutMs, confirmPollMs, statusTimeoutMs, waitOptions);
+    confirmation = await waitForSessionStop(childSessionKey, gatewayUrl, gatewayToken, cleanupConfirmTimeoutMs, confirmPollMs, statusTimeoutMs, {
+      ...waitOptions,
+      maxRetries: killPolicy.statusGateway.maxRetries,
+      retryDelayMs: killPolicy.statusGateway.retryDelayMs,
+    });
     confirmed = confirmation.confirmed;
     state = confirmation.state || state;
   }
@@ -578,6 +666,7 @@ export async function killActiveSession() {
   }
   log('INFO', `killActiveSession: killing ${session.childSessionKey} (${session.label})`);
   const result = await killSession(session.childSessionKey, {
+    killPolicy: session.killPolicy,
     runtime: session.runtime,
     model: session.model || null,
     agentId: session.agentId,

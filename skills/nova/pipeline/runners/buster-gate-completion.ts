@@ -2,18 +2,23 @@
 // Active runner path waits on Redis/local evidence events.
 // The caller still owns agent lifecycle, session cleanup, and retry/fix policy.
 
-import { selectDeps } from '../core/deps.ts';
 import { log } from '../core/logger.ts';
 import { STATUS } from '../core/constants.ts';
-import { gateOutputPath } from '../core/paths.ts';
+import { completionStreamKey, gateOutputPath } from '../core/paths.ts';
 import { appendDurableOperatorAlert } from '../services/telemetry.ts';
 import { projectGateCompletionState } from '../services/status-store.ts';
-import { createPipelineEventBus } from '../services/pipeline-event-contract.ts';
+import { waitForResilientRedisCompletion } from '../../../common/pipeline/services/redis-wait.ts';
 import {
-  createRedisCompletionEventAdapter as defaultCreateRedisCompletionEventAdapter,
-  createLocalEvidenceEventAdapter as defaultCreateLocalEvidenceEventAdapter,
+  createDedicatedRedisCompletionClient,
+  createLocalEvidenceEventAdapter,
+  createRedisCompletionEventAdapter,
 } from '../services/completion-event-adapters.ts';
-import { waitForBusterCompletion } from '../services/buster-completion-controller.ts';
+import {
+  resolveBusterCompletionEvent,
+  waitForBusterCompletion,
+} from '../services/buster-completion-controller.ts';
+import { logRedisOperation, logRedisReceived } from '../services/redis-log.ts';
+import { scanLatestCompletionFromTail } from '../services/redis-completion.ts';
 import {
   buildGateSessionRateLimitStatus,
   buildGateTerminalOwnedRedisRateLimitExitResult,
@@ -32,16 +37,6 @@ function buildExpectedRedisIdentity(completionIdentity) {
   return {
     ...buildPollIdentityFields(completionIdentity),
     gateway_label: completionIdentity.gateway_label,
-  };
-}
-
-function buildGateEventIdentity(gateId, completionIdentity) {
-  return {
-    gate_id: gateId,
-    run_id: completionIdentity.runId,
-    attempt: completionIdentity.attempt,
-    dispatch_id: completionIdentity.dispatchId,
-    ...(completionIdentity.sessionKey ? { session_key: completionIdentity.sessionKey } : {}),
   };
 }
 
@@ -114,6 +109,7 @@ function mapRedisControllerCompletion({ deps, gateId, gate, completionIdentity, 
       gateway_label: redisEntry.gateway_label || completionIdentity.gateway_label,
       session_key: redisEntry.session_key || null,
       _source: 'redis',
+      _redis_entry: redisEntry,
     }) };
   }
 
@@ -128,6 +124,7 @@ function mapRedisControllerCompletion({ deps, gateId, gate, completionIdentity, 
       gateway_label: redisEntry.gateway_label || completionIdentity.gateway_label,
       session_key: redisEntry.session_key || null,
       _source: 'redis',
+      _redis_entry: redisEntry,
     }) };
   }
 
@@ -214,48 +211,36 @@ export async function waitBusterGateCompletionEvidence({
   gateRateLimitStatusOptions,
   timeoutMinutes,
 }) {
-  const eventBus = createPipelineEventBus();
-  const controller = new AbortController();
   const activeCompletionIdentity = buildBusterGateActiveCompletionIdentity(completionIdentity);
-  const identity = buildGateEventIdentity(gateId, completionIdentity);
   const timeoutMs = timeoutMinutes * 60 * 1000;
-  const adapterDeps = selectDeps(deps?._explicitDeps, 'completionEventAdapters');
-  const RedisCtor = adapterDeps?.RedisCtor;
-  const createRedisCompletionEventAdapter = adapterDeps?.createRedisCompletionEventAdapter || defaultCreateRedisCompletionEventAdapter;
-  const createLocalEvidenceEventAdapter = adapterDeps?.createLocalEvidenceEventAdapter || defaultCreateLocalEvidenceEventAdapter;
-  const redisAdapter = createRedisCompletionEventAdapter(config, {
-    eventBus,
-    identity,
-    startId: '0-0',
-    ...(RedisCtor ? { RedisCtor } : {}),
-  });
-  const localAdapter = createLocalEvidenceEventAdapter(config, {
-    eventBus,
-    identity,
-    paths: buildGateWatchPaths(config, gateId, gate),
-    emitExisting: true,
-  });
-  const completionWait = waitForBusterCompletion({
-    eventBus,
-    identity,
-    targetKind: 'gate',
-    targetId: gateId,
-    expectedStatuses: [STATUS.PASS, STATUS.FAIL],
-    expectedIdentity: activeCompletionIdentity,
-    signal: controller.signal,
-    timeoutMs,
-    getLocalStatus: () => projectGateCompletionState(config, gateId, gate, { activeDispatch: activeCompletionIdentity }),
-    statusSource: 'output_file',
-  });
-  completionWait.catch?.(() => {});
-  let redisDone = null;
 
   try {
-    redisDone = redisAdapter.start();
-    redisDone?.catch?.(() => {});
-    localAdapter.start();
-
-    const controllerResult = await completionWait;
+    const controllerResult = await waitForResilientRedisCompletion({
+      config,
+      streamKey: deps?._explicitDeps?.streamKey || completionStreamKey(config),
+      targetKind: 'gate',
+      targetId: gateId,
+      expectedStatuses: [STATUS.PASS, STATUS.FAIL],
+      expectedIdentity: activeCompletionIdentity,
+      timeoutMs,
+      watchPaths: buildGateWatchPaths(config, gateId, gate),
+      getLocalStatus: () => projectGateCompletionState(config, gateId, gate, { activeDispatch: activeCompletionIdentity }),
+      statusSource: 'output_file',
+      deps: deps?._explicitDeps,
+      redisBlockMs: config?.buster?.runtime?.completion_event_block_ms,
+      recoveryScanIntervalMs: config?.buster?.runtime?.completion_recovery_scan_interval_ms,
+      tailScanBatchSize: config?.redis_completion?.tail_scan_batch_size,
+      tailScanLimit: config?.redis_completion?.tail_scan_limit,
+      createRedisCompletionEventAdapter,
+      createLocalEvidenceEventAdapter,
+      createRedisClient: createDedicatedRedisCompletionClient,
+      scanLatestCompletionFromTail,
+      waitForCompletion: waitForBusterCompletion,
+      resolveCompletionEvent: resolveBusterCompletionEvent,
+      log,
+      logRedisOperation,
+      logRedisReceived,
+    });
     return mapBusterGateControllerResult({
       deps,
       config,
@@ -281,10 +266,5 @@ export async function waitBusterGateCompletionEvidence({
       });
     }
     throw error;
-  } finally {
-    controller.abort('gate_completion_finished');
-    localAdapter?.stop?.('gate_completion_finished');
-    redisAdapter?.stop('gate_completion_finished');
-    await redisDone?.catch?.(() => {});
   }
 }

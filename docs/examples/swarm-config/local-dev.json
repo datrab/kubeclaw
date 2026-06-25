@@ -16,6 +16,89 @@
     "max_pauses_per_module": 3,
     "cooldown_buffer_ms": 5000
   },
+  "polling": {
+    "progress_log_interval_ms": 30000,
+    "session_progress_emit_interval_ms": 30000,
+    "session_progress_log_interval_ms": 30000,
+    "session_end_grace_ms": 15000
+  },
+  "locks": {
+    "lifecycle_append_stale_ms": 300000,
+    "lifecycle_append_timeout_ms": 30000,
+    "gate_active_session_stale_ms": 300000,
+    "gate_active_session_timeout_ms": 30000,
+    "pipeline_run_lock_lease_ms": 120000,
+    "pipeline_run_lock_heartbeat_ms": 30000,
+    "pipeline_run_lock_mutation_stale_ms": 5000,
+    "pipeline_run_lock_abort_settle_ms": 5000
+  },
+  "gateway": {
+    "invoke": {
+      "session_status": {
+        "timeout_ms": 10000,
+        "max_retries": 3,
+        "retry_delay_ms": 5000
+      },
+      "session_spawn": {
+        "timeout_ms": 30000,
+        "max_retries": 3,
+        "retry_delay_ms": 5000
+      },
+      "session_send": {
+        "timeout_ms": 15000,
+        "max_retries": 3,
+        "retry_delay_ms": 5000
+      },
+      "subagent_kill": {
+        "timeout_ms": 30000,
+        "max_retries": 3,
+        "retry_delay_ms": 5000
+      },
+      "subagent_list": {
+        "timeout_ms": 30000,
+        "max_retries": 3,
+        "retry_delay_ms": 5000
+      },
+      "health": {
+        "timeout_ms": 5000
+      }
+    },
+    "health": {
+      "ready_timeout_ms": 120000,
+      "ready_interval_ms": 3000,
+      "monitor_interval_ms": 60000,
+      "max_failures": 3
+    }
+  },
+  "session": {
+    "spawn": {
+      "thread": false,
+      "mode": "run",
+      "cleanup": "keep",
+      "stream_to": "parent"
+    },
+    "kill": {
+      "acp_confirm_timeout_ms": 15000,
+      "subagent_confirm_timeout_ms": 120000,
+      "confirm_poll_ms": 2000,
+      "cleanup_confirm_timeout_ms": "match_confirm_timeout",
+      "acpx_timeout_ms": 10000,
+      "stop_message": "/stop"
+    },
+    "termination": {
+      "grace_ms": 5000,
+      "max_grace_ms": 10000,
+      "poll_ms": 500,
+      "gateway_request_max_ms": 1000,
+      "cleanup_confirm_timeout_ms": 0,
+      "status_timeout_ms": 1000,
+      "request_timeout_ms": 1000,
+      "stop_request_timeout_ms": 1000,
+      "list_timeout_ms": 1000,
+      "acpx_timeout_ms": 1000
+    },
+    "health_check_wait_ms": 8000
+  },
   "buster": {
     "suite_timeout_ms": 180000,
     "max_crash_retries": 2,
@@ -24,7 +107,10 @@
       "heartbeat_interval_ms": 1000,
       "task_poll_interval_ms": 2000,
       "task_pending_reclaim_idle_ms": 60000,
-      "task_stream_max_len": 250
+      "completion_event_block_ms": 0,
+      "completion_recovery_scan_interval_ms": 5000,
+      "task_stream_max_len": 250,
+      "task_stream": "swarm:buster:tasks"
     }
   },
   "acp_monitor": {
@@ -35,24 +121,83 @@
     "monitor_poll_ms": 10000
   },
   "telemetry": {
-    "enabled": true
+    "enabled": true,
+    "stream_max_len": 10000,
+    "sink_timeout_ms": 5000
   },
   "agent_observability": {
+    "required": true,
+    "profile": "standard",
+    "profiles": {
+      "standard": {
+        "payload": {
+          "max_event_bytes": 3145728
+        },
+        "startup_evidence": {
+          "timeout_ms": 15000,
+          "block_ms": 250
+        },
+        "forge_completion": {
+          "xread_block_ms": 1,
+          "settle_ms": 15000
+        },
+        "redis": {
+          "command_timeout_ms": 5000
+        },
+        "streams": {
+          "stream_max_len": 10000,
+          "dead_letter_max_len": 1000
+        },
+        "plugin": {
+          "max_queue_per_stream": 100,
+          "control_write": {
+            "max_attempts": 3,
+            "retry_base_ms": 100,
+            "retry_max_ms": 1000
+          },
+          "hook": {
+            "priority": -100,
+            "timeout_ms": 1000
+          }
+        },
+        "plugin_control": {
+          "timeout_ms": 10000
+        },
+        "ingester": {
+          "read": {
+            "block_ms": 1000,
+            "reclaim_idle_ms": 60000
+          },
+          "loop": {
+            "delay_ms": 250,
+            "health_check_every": 10,
+            "stop_timeout_ms": 2000
+          },
+          "trim": {
+            "interval_ms": 5000,
+            "payload_stream_max_len": 5000
+          },
+          "pressure": {
+            "control_lag_degraded_threshold": 1000,
+            "payload_pressure_degraded_threshold": 10000
+          }
+        }
+      }
+    },
+    "plugin": {
+      "enabled": true
+    },
     "plugin_control": {
       "enabled": true,
       "pluginId": "kubeclaw-agent-observer",
       "command": "openclaw",
-      "timeoutMs": 10000,
       "disableOnStop": true
     },
     "ingester": {
       "enabled": true,
       "redisNetworkIsolation": "isolated",
-      "loopDelayMs": 250,
-      "healthCheckEvery": 10,
-      "redisCommandTimeoutMs": 1000,
-      "controlLagDegradedThreshold": 1000,
-      "payloadPressureDegradedThreshold": 10000
+      "groupName": "kubeclaw-agent-observability-ingester",
+      "consumerName": "kubeclaw-agent-observability-ingester-1"
     }
   },
   "pre_check": {
@@ -76,7 +221,7 @@
       "cwd": null
     }
   },
-  "fallback_model": "gpt-5.4",
+  "fallback_model": "gpt-5.5",
   "review_defaults": {
     "timeout_minutes": 30,
     "max_fix_cycles": 2,
@@ -90,5 +235,33 @@
     "modules": {},
     "stageOwners": {},
     "restrictedCapabilityAllowlist": {}
+  },
+  "_doc": "Platform-level config. Loaded from /home/node/.openclaw/swarm.config.json with SWARM_CONFIG as a secondary candidate. Project/repo_root/paths are derived by loadConfig — do NOT set them here.",
+  "agent_startup_retry_budget": 3,
+  "git": {
+    "timeout_ms": 30000,
+    "max_buffer_bytes": 52428800,
+    "push_timeout_ms": 60000,
+    "push_max_retries": 3,
+    "push_retry_delay_ms": 5000
+  },
+  "redis_completion": {
+    "archive_max_len": 1000,
+    "tail_scan_batch_size": 100,
+    "tail_scan_limit": 1000
+  },
+  "event_adapters": {
+    "local_evidence_debounce_ms": 100,
+    "approval_signal_debounce_ms": 25
+  },
+  "discord": {
+    "webhook_timeout_ms": 10000
+  },
+  "arch_validation": {
+    "agent_enabled": false,
+    "timeout_minutes": 15
+  },
+  "case_study": {
+    "timeout_minutes": 30
   }
 }

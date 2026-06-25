@@ -28,7 +28,6 @@ import { sendGatewaySessionMessage } from '../integrations/gateway.ts';
 import { discord } from '../integrations/discord.ts';
 import { resolveRegisteredRedisAdapter } from '../services/adapter-registry.ts';
 import { reaperAfterKill } from './shutdown.ts';
-import { waitForSessionIdle } from './acp-monitor.ts';
 import { canonicalizeModelId, modelToHarness, resolveRuntime } from './runtime.ts';
 import { getTrackedAgent, spawnSession, trackAgent, untrackAgent } from './lifecycle.ts';
 import { terminateSession } from './session-termination.ts';
@@ -36,6 +35,7 @@ import { runModuleBusterWorker, runModuleForgeWorker } from './module-workers.ts
 import { killReviewerAgent, spawnReviewerAgent } from './reviewer-lifecycle.ts';
 import { buildSubprocessEnv } from '../security.ts';
 import { getPipelineArtifactBundle } from '../services/artifact-bundle.ts';
+import { gatewayInvokePolicy, sessionLifecyclePolicies } from '../core/session-policy.ts';
 import {
   assertRequiredAgentStartupEvidence,
   createAgentLifecycleTelemetryReader,
@@ -184,6 +184,7 @@ export async function spawnAcpAgent(
     const sessionData = await spawnSession({
       session: { model: resolvedModel, runtime, agentId, cwd, label: gatewayLabel },
     }, taskPrompt, agentConfig?.timeout_seconds || null, {
+      ...sessionLifecyclePolicies(config),
       runtime,
       model: resolvedModel,
       agentId,
@@ -317,16 +318,14 @@ export async function killAcpAgent(
     untrackAgent(label);
     return false;
   }
-  if (graceful) {
-    log('INFO', `Waiting for session to become idle: ${label}`);
-    await waitForSessionIdle(sessionKey, { ...config.acp_monitor, streamLogPath: entry?.streamLogPath || null });
-  }
   const runtime = entry?.runtime;
   const entryModel = entry?.model || '';
   const isSubagent = resolveRuntime({ runtime, model: entryModel }) === 'subagent';
 
   log('STEP', `Destroying ${isSubagent ? 'subagent' : 'ACP'} session: ${label} (${sessionKey})`);
   const termination = await terminateSession(sessionKey, {
+    ...sessionLifecyclePolicies(config),
+    ...(graceful && opts.graceMs ? { graceMs: opts.graceMs } : {}),
     runtime,
     model: entryModel,
     agentId: entry.agentId,
@@ -541,6 +540,7 @@ export async function steerAgent(
     log('WARN', `No sessionKey tracked for '${label}' — cannot steer`);
     return;
   }
-  try { await sendGatewaySessionMessage(sessionKey, message, 15000); }
+  const sendPolicy = gatewayInvokePolicy(config, 'session_send');
+  try { await sendGatewaySessionMessage(sessionKey, message, sendPolicy.timeoutMs, sendPolicy); }
   catch (e: any) { log('WARN', `ACP steer failed for '${label}': ${e.message}`); }
 }

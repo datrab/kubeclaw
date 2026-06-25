@@ -19,9 +19,10 @@ import {
 } from './pipeline-runner-start.ts';
 import { runPipelineLoop } from './pipeline-runner-loop.ts';
 
-function positiveNumber(value, fallback) {
+function positiveNumber(value, label) {
   const num = Number(value);
-  return Number.isFinite(num) && num >= 0 ? num : fallback;
+  if (!Number.isFinite(num) || num < 0) throw new Error(`${label}: required non-negative number in swarm.config.json`);
+  return num;
 }
 
 async function waitForInFlightPipelineSteps(inFlightSteps, timeoutMs) {
@@ -137,7 +138,7 @@ export async function runPipeline(config, progress, opts = {}) {
       if (runOpts.pipelineRunLockSignal?.aborted && inFlightSteps.size > 0) {
         await waitForInFlightPipelineSteps(
           inFlightSteps,
-          positiveNumber(config.pipeline_run_lock_abort_settle_ms ?? opts.pipelineRunLockAbortSettleMs, 5000),
+          positiveNumber(config?.locks?.pipeline_run_lock_abort_settle_ms ?? opts.pipelineRunLockAbortSettleMs, 'config.locks.pipeline_run_lock_abort_settle_ms'),
         );
         if (inFlightSteps.size > 0) {
           log('ERROR', `Pipeline run lock lost with ${inFlightSteps.size} in-flight step(s) still unsettled after abort grace period`);

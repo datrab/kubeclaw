@@ -219,8 +219,14 @@ function nextExclusiveStreamId(id) {
 export async function scanLatestCompletionFromTail(redis, streamKey, moduleId, expected = {}, opts = {}) {
   const normalizedExpected = normalizeExpectedCompletionIdentity(expected);
   const requireAgent = Object.keys(normalizedExpected).length > 0;
-  const batchSize = Math.max(1, Number(opts.batchSize || 100));
-  const scanLimit = Math.max(batchSize, Number(opts.scanLimit || 1000));
+  if (opts.batchSize === undefined || opts.scanLimit === undefined) {
+    throw new TypeError('scanLatestCompletionFromTail requires explicit batchSize and scanLimit');
+  }
+  const batchSize = Math.max(1, Number(opts.batchSize));
+  const scanLimit = Math.max(batchSize, Number(opts.scanLimit));
+  if (!Number.isFinite(batchSize) || !Number.isFinite(scanLimit)) {
+    throw new TypeError('scanLatestCompletionFromTail batchSize and scanLimit must be finite numbers');
+  }
 
   let nextEnd = '+';
   let scanned = 0;
@@ -291,8 +297,15 @@ export async function scanLatestCompletionFromTail(redis, streamKey, moduleId, e
   };
 }
 
-export async function archiveCompletionsChunked(redis, streamKey, archiveStreamKey, moduleId, maxLen = 1000, opts = {}) {
-  const batchSize = Math.max(1, Number(opts.batchSize || 100));
+export async function archiveCompletionsChunked(redis, streamKey, archiveStreamKey, moduleId, maxLen, opts = {}) {
+  if (maxLen === undefined || opts.batchSize === undefined) {
+    throw new TypeError('archiveCompletionsChunked requires explicit maxLen and batchSize');
+  }
+  const archiveMaxLen = Math.max(1, Number(maxLen));
+  const batchSize = Math.max(1, Number(opts.batchSize));
+  if (!Number.isFinite(archiveMaxLen) || !Number.isFinite(batchSize)) {
+    throw new TypeError('archiveCompletionsChunked maxLen and batchSize must be finite numbers');
+  }
   const activeIdentity = normalizeExpectedCompletionIdentity(opts.activeIdentity || opts.expectedIdentity || opts.expected || {});
   const hasActiveIdentity = hasStrongExpectedCompletionIdentity(activeIdentity);
   let nextStart = '-';
@@ -330,8 +343,8 @@ export async function archiveCompletionsChunked(redis, streamKey, archiveStreamK
     nextStart = nextExclusiveStreamId(entries[entries.length - 1][0]);
   }
 
-  if (maxLen > 0) {
-    await redis.xtrim(archiveStreamKey, 'MAXLEN', '~', maxLen);
+  if (archiveMaxLen > 0) {
+    await redis.xtrim(archiveStreamKey, 'MAXLEN', '~', archiveMaxLen);
   }
 
   return { archived, scanned, batches, active_identity: activeIdentity, identity_scoped: hasActiveIdentity };

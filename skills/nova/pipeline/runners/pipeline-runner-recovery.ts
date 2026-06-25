@@ -18,6 +18,7 @@ import { appendDurableOperatorAlert, onModuleStatusChanged } from '../services/t
 import { observeAcpMonitorSurfaces } from '../services/acp-observability.ts';
 import { terminateSession } from '../agents/session-termination.ts';
 import { reaperAfterKill } from '../agents/shutdown.ts';
+import { sessionLifecyclePolicies } from '../core/session-policy.ts';
 import { getRetryStatusForPhase, markModuleLifecycleIntent, transitionModuleStatus } from '../lifecycle-state.ts';
 import {
   STALE_RECOVERY_ACTIONS,
@@ -149,16 +150,6 @@ async function assertRecoverySessionIdentityConfirmed(config: AnyRecord, {
   throw new Error(reason);
 }
 
-function recoveryStopConfirmOptions(config: AnyRecord): AnyRecord {
-  const timeoutMs = Number(config?.recovery_session_stop_confirm_timeout_ms ?? 15000);
-  const pollMs = Number(config?.recovery_session_stop_confirm_poll_ms ?? 2000);
-  return {
-    confirmTimeoutMs: Number.isFinite(timeoutMs) && timeoutMs >= 0 ? timeoutMs : 15000,
-    confirmPollMs: Number.isFinite(pollMs) && pollMs > 0 ? pollMs : 2000,
-    cleanupConfirmTimeoutMs: Number.isFinite(timeoutMs) && timeoutMs >= 0 ? timeoutMs : 15000,
-  };
-}
-
 async function reconcileActiveStaleSession(config: AnyRecord, {
   scope,
   moduleId = null,
@@ -222,11 +213,11 @@ async function reconcileActiveStaleSession(config: AnyRecord, {
   }
 
   const stopResult = await terminateSession(active.session_key, {
+    ...sessionLifecyclePolicies(config),
     runtime: active.runtime || null,
     model: active.model || null,
     agentId: active.agent_id || null,
     label: gatewayLabel || diagnosticLabel || null,
-    ...recoveryStopConfirmOptions(config),
     cleanup: async () => {
       if ((active.runtime || '').toLowerCase() !== 'subagent') {
         await (reaperAfterKill as any)(active.agent_id || null, active.session_key, gatewayLabel || diagnosticLabel || null);

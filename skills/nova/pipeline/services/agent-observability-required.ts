@@ -5,11 +5,9 @@ import { createRedisClient, loadRedisCtor } from '../telemetry.ts';
 import { getPipelineArtifactBundle } from './artifact-bundle.ts';
 import { getTelemetryStreamKeyForRun, isTelemetryEnabled } from './telemetry-stream.ts';
 import { sleep } from '../timing.ts';
+import { agentObservabilityConfig, agentObservabilityStartupWait } from './agent-observability-config.ts';
 
 type AnyRecord = Record<string, any>;
-
-const DEFAULT_STARTUP_TIMEOUT_MS = 15000;
-const DEFAULT_READ_BLOCK_MS = 250;
 
 function nonEmpty(value: unknown): string | null {
   const normalized = String(value ?? '').trim();
@@ -17,7 +15,7 @@ function nonEmpty(value: unknown): string | null {
 }
 
 function requiredConfig(config: AnyRecord = {}) {
-  return config?.agent_observability ?? {};
+  return agentObservabilityConfig(config);
 }
 
 export function isAgentObservabilityRequired(config: AnyRecord = {}) {
@@ -25,8 +23,11 @@ export function isAgentObservabilityRequired(config: AnyRecord = {}) {
 }
 
 export function agentObservabilityStartupTimeoutMs(config: AnyRecord = {}) {
-  const value = Number(requiredConfig(config).startup_evidence_timeout_ms ?? DEFAULT_STARTUP_TIMEOUT_MS);
-  return Number.isFinite(value) && value >= 0 ? value : DEFAULT_STARTUP_TIMEOUT_MS;
+  return agentObservabilityStartupWait(config).timeoutMs;
+}
+
+function agentObservabilityStartupReadBlockMs(config: AnyRecord = {}) {
+  return agentObservabilityStartupWait(config).blockMs;
 }
 
 function decodeRedisEntry(rawEntry: unknown) {
@@ -146,7 +147,7 @@ export function createAgentLifecycleTelemetryReader(config: AnyRecord = {}, opts
   if (opts.reader) return opts.reader;
   const runId = opts.runId ?? opts.run_id ?? getRunId(config) ?? '';
   const stream = opts.stream ?? getTelemetryStreamKeyForRun(config, runId);
-  const blockMs = opts.blockMs ?? DEFAULT_READ_BLOCK_MS;
+  const blockMs = opts.blockMs ?? agentObservabilityStartupReadBlockMs(config);
   const artifacts = getPipelineArtifactBundle(config);
   const pipelineJsonlPaths = Array.isArray(opts.pipelineLogPaths)
     ? opts.pipelineLogPaths.filter(Boolean)

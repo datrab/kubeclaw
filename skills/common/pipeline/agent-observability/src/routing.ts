@@ -1,7 +1,6 @@
 import {
   AGENT_OBSERVABILITY_ABSOLUTE_MAX_EVENT_BYTES,
   AGENT_OBSERVABILITY_CONTROL_STREAM,
-  AGENT_OBSERVABILITY_DEFAULT_MAX_EVENT_BYTES,
   AGENT_OBSERVABILITY_PAYLOAD_STREAM,
   AGENT_OBSERVABILITY_PAYLOAD_TOO_LARGE_REASON,
 } from './constants.ts';
@@ -30,7 +29,9 @@ export function selectAgentObservabilityStreamKey(type: AgentObservabilityIngres
 }
 
 export function normalizeAgentObservabilityMaxEventBytes(value: unknown): number {
-  if (value === undefined || value === null || value === '') return AGENT_OBSERVABILITY_DEFAULT_MAX_EVENT_BYTES;
+  if (value === undefined || value === null || value === '') {
+    throw new Error('agent observability max event bytes is required');
+  }
   const numberValue = Number(value);
   if (!Number.isInteger(numberValue) || numberValue <= 0) {
     throw new Error('agent observability max event bytes must be a positive integer');
@@ -47,7 +48,7 @@ export function measureAgentObservabilityEventBytes(event: AgentObservabilityIng
 
 export function checkAgentObservabilityPayloadSize(
   event: AgentObservabilityIngressEventV1,
-  maxBytes = AGENT_OBSERVABILITY_DEFAULT_MAX_EVENT_BYTES,
+  maxBytes: number,
 ): AgentObservabilityPayloadSizeCheckV1 {
   const normalizedMax = normalizeAgentObservabilityMaxEventBytes(maxBytes);
   const bytes = measureAgentObservabilityEventBytes(event);

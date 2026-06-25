@@ -10,6 +10,7 @@ import { getRunId } from '../core/runtime.ts';
 import { gitExec, headHash, invalidateHeadHash } from '../integrations/git-worktree.ts';
 import { createRedisClient, loadRedisCtor } from '../telemetry.ts';
 import { getTelemetryStreamKeyForRun } from './telemetry-stream.ts';
+import { agentObservabilityForgeCompletionWait } from './agent-observability-config.ts';
 
 export const AGENT_OBSERVABILITY_FORGE_COMPLETION_SOURCE = 'agent_observability_agent_ended';
 export const AGENT_OBSERVABILITY_FORGE_READY_REASON = 'agent_ended_meaningful_diff';
@@ -17,8 +18,6 @@ export const AGENT_OBSERVABILITY_FORGE_NO_WORK_REASON = 'agent_ended_no_meaningf
 export const AGENT_OBSERVABILITY_FORGE_FALLBACK_READY_REASON = 'session_ended_meaningful_diff';
 export const AGENT_OBSERVABILITY_FORGE_FALLBACK_NO_WORK_REASON = 'session_ended_no_meaningful_diff';
 
-const DEFAULT_SETTLE_MS = 15000;
-const DEFAULT_XREAD_BLOCK_MS = 1;
 const RUNTIME_PATH_PREFIXES = [
   '.swarm/',
   'logs/',
@@ -259,7 +258,7 @@ export function createAgentEndedTelemetryReader(config, opts = {}) {
   if (!runId || !project) return null;
 
   const stream = opts.stream || getTelemetryStreamKeyForRun(config, runId);
-  const blockMs = opts.blockMs ?? DEFAULT_XREAD_BLOCK_MS;
+  const blockMs = opts.blockMs ?? agentEndedReadBlockMs(config);
   let lastId = opts.startId || '$';
   let client = null;
   let redisReady = false;
@@ -319,10 +318,23 @@ export function createAgentEndedTelemetryReader(config, opts = {}) {
   };
 }
 
-export function shouldSettleAgentEnded(seenAtMs, nowMs = Date.now(), settleMs = DEFAULT_SETTLE_MS) {
+export function shouldSettleAgentEnded(seenAtMs, nowMs = Date.now(), settleMs) {
+  if (!Number.isFinite(Number(settleMs)) || Number(settleMs) < 0) {
+    throw new Error('agent_observability forge completion settle_ms must be a non-negative number');
+  }
   return seenAtMs > 0 && nowMs - seenAtMs < settleMs;
 }
 
 export function agentEndedSettleMs(config = {}, opts = {}) {
-  return opts.agentEndedSettleMs ?? opts.settleMs ?? config.agent_observability_forge_completion_settle_ms ?? config.session_end_grace_ms ?? DEFAULT_SETTLE_MS;
+  const value = opts.agentEndedSettleMs ?? opts.settleMs ?? agentObservabilityForgeCompletionWait(config).settleMs;
+  const normalized = Number(value);
+  if (Number.isFinite(normalized) && normalized >= 0) return normalized;
+  throw new Error('agent_observability forge completion settle_ms must be a non-negative number');
+}
+
+export function agentEndedReadBlockMs(config = {}, opts = {}) {
+  const value = opts.blockMs ?? agentObservabilityForgeCompletionWait(config).xreadBlockMs;
+  const normalized = Number(value);
+  if (Number.isFinite(normalized) && normalized >= 0) return normalized;
+  throw new Error('agent_observability forge completion xread_block_ms must be a non-negative number');
 }

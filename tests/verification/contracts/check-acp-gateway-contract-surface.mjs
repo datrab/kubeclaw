@@ -197,8 +197,8 @@ assert.equal(httpErr.httpBody, '{"error":"down"}');
 assert.deepEqual(contractMod.validateGatewayInvokeError(httpErr), []);
 
 const terminationSource = fs.readFileSync(path.join(sourceRoot, 'skills/common/pipeline/agents/session-termination.ts'), 'utf8');
-assert.equal(terminationSource.includes('SESSION_TERMINATION_POLICY_DEFAULTS'), true, 'termination timing defaults must be policy-scoped');
-assert.equal(terminationSource.includes('maxGraceMs: 10000'), true, 'termination controller must hard-cap grace period at 10 seconds');
+assert.equal(terminationSource.includes('SESSION_TERMINATION_POLICY_DEFAULTS'), false, 'termination timing defaults must not live in code');
+assert.equal(terminationSource.includes('maxGraceMs: 10000'), false, 'termination max grace must come from swarm.config.json policy');
 assert.equal(terminationSource.includes('resolveSessionTerminationPolicy'), true, 'termination controller must resolve timing through the policy helper');
 assert.equal(terminationSource.includes('terminationGraceMs'), false, 'termination controller must not accept legacy grace aliases');
 assert.equal(terminationSource.includes('opts.confirmTimeoutMs'), false, 'termination controller must not accept confirmTimeoutMs as a grace alias');
@@ -206,15 +206,27 @@ assert.equal(terminationSource.includes('return SESSION_TERMINATION_POLICY_DEFAU
 assert.equal(terminationSource.includes('Promise.race'), true, 'termination controller must race teardown against its isolated grace budget');
 assert.equal(terminationSource.includes('assertValidSessionTerminationResult(result)'), true, 'termination controller must validate canonical result before returning');
 const terminationMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/common/pipeline/agents/session-termination.ts')).href);
-assert.throws(() => terminationMod.resolveSessionTerminationPolicy({ graceMs: -1 }), /graceMs must be a finite number >= 0/);
-assert.throws(() => terminationMod.resolveSessionTerminationPolicy({ confirmPollMs: 0 }), /confirmPollMs must be a finite number >= 1/);
+const explicitTerminationPolicy = {
+  graceMs: 1,
+  maxGraceMs: 10,
+  confirmPollMs: 1,
+  gatewayRequestMaxMs: 1,
+  cleanupConfirmTimeoutMs: 0,
+  statusTimeoutMs: 1,
+  requestTimeoutMs: 1,
+  stopRequestTimeoutMs: 1,
+  listTimeoutMs: 1,
+  acpxTimeoutMs: 1,
+};
+assert.throws(() => terminationMod.resolveSessionTerminationPolicy({ ...explicitTerminationPolicy, graceMs: -1 }), /graceMs must be a finite number >= 0/);
+assert.throws(() => terminationMod.resolveSessionTerminationPolicy({ ...explicitTerminationPolicy, confirmPollMs: 0 }), /confirmPollMs must be a finite number >= 1/);
 
 const lifecycleSource = fs.readFileSync(path.join(sourceRoot, 'skills/common/pipeline/agents/lifecycle.ts'), 'utf8');
-assert.equal(lifecycleSource.includes('SESSION_SPAWN_POLICY_DEFAULTS'), true, 'session spawn timing/defaults must be policy-scoped');
-assert.equal(lifecycleSource.includes('SESSION_KILL_POLICY_DEFAULTS'), true, 'session kill timing/defaults must be policy-scoped');
-assert.equal(lifecycleSource.includes("cleanupConfirmTimeoutMs: 'match_confirm_timeout'"), true, 'session kill cleanup confirmation policy must explicitly match confirm timeout');
+assert.equal(lifecycleSource.includes('SESSION_SPAWN_POLICY_DEFAULTS'), false, 'session spawn timing/defaults must not live in code');
+assert.equal(lifecycleSource.includes('SESSION_KILL_POLICY_DEFAULTS'), false, 'session kill timing/defaults must not live in code');
+assert.equal(lifecycleSource.includes("'match_confirm_timeout'"), true, 'session kill cleanup confirmation policy must explicitly support match-confirm-timeout from swarm.config.json');
 assert.equal(lifecycleSource.includes('function resolveCleanupConfirmTimeoutMs'), true, 'session kill cleanup confirmation sentinel must be resolved after option merging');
-assert.equal(lifecycleSource.includes('opts.cleanupConfirmTimeoutMs ?? SESSION_KILL_POLICY_DEFAULTS.cleanupConfirmTimeoutMs'), true, 'session kill cleanup confirmation must merge caller and policy before sentinel resolution');
+assert.equal(lifecycleSource.includes('opts.cleanupConfirmTimeoutMs ?? SESSION_KILL_POLICY_DEFAULTS.cleanupConfirmTimeoutMs'), false, 'session kill cleanup confirmation must not fall back to code defaults');
 assert.equal(lifecycleSource.includes('opts.maxRetries ?? 3'), false, 'spawnSession must not use anonymous retry defaults');
 assert.equal(lifecycleSource.includes('opts.retryDelayMs ?? 5000'), false, 'spawnSession must not use anonymous retry delay defaults');
 assert.equal(lifecycleSource.includes("spawnGatewaySession, 'session spawn', spawnArgs, 30000"), false, 'spawnSession must not use anonymous gateway request timeout');
@@ -223,7 +235,7 @@ assert.equal(lifecycleSource.includes('opts.confirmTimeoutMs ?? (isSubagent ? 12
 assert.equal(lifecycleSource.includes('opts.cleanupConfirmTimeoutMs ?? confirmTimeoutMs'), false, 'killSession cleanup confirmation timeout must resolve through named policy');
 
 const acpMonitorSource = fs.readFileSync(path.join(sourceRoot, 'skills/common/pipeline/agents/acp-monitor.ts'), 'utf8');
-assert.equal(acpMonitorSource.includes('SESSION_IDLE_POLICY_DEFAULTS'), true, 'session idle timing defaults must be policy-scoped');
+assert.equal(acpMonitorSource.includes('SESSION_IDLE_POLICY_DEFAULTS'), false, 'session idle timing defaults must not live in code');
 assert.equal(acpMonitorSource.includes('optsOrGraceMs'), false, 'waitForSessionIdle must not accept legacy positional grace arguments');
 assert.equal(acpMonitorSource.includes('maybeTimeoutMs'), false, 'waitForSessionIdle must not accept legacy positional timeout arguments');
 assert.equal(acpMonitorSource.includes('isNovaSignature'), false, 'ACP monitor must not keep legacy Nova positional signature detection');
@@ -235,11 +247,6 @@ assert.equal(acpMonitorSource.includes('request.trackedAgent || await resolveTra
 assert.equal(acpMonitorSource.includes('entry?.streamLogPath ?? request.streamLogPath ?? null'), true, 'ACP monitor Nova path must keep tracked transcript path precedence');
 
 const lifecycleMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/common/pipeline/agents/lifecycle.ts')).href);
-assert.equal(
-  lifecycleMod.SESSION_KILL_POLICY_DEFAULTS.cleanupConfirmTimeoutMs,
-  'match_confirm_timeout',
-  'session kill cleanup confirmation policy must be exported as an explicit match-confirm rule',
-);
 await assert.rejects(
   () => lifecycleMod.spawnSession({ session: { runtime: 'acp', agentId: 'claude', cwd: sourceRoot, label: 'missing-model' } }, 'prompt', null),
   /spawnSession requires explicit session\.model/,

@@ -7,8 +7,6 @@ declare const process: {
   env: Record<string, string | undefined>;
 };
 
-export const DEFAULT_REDIS_HOST = 'redis-master.kubeclaw.svc.cluster.local';
-export const DEFAULT_REDIS_PORT = 6379;
 export const REDIS_TRANSPORT_POLICY_ERROR_CODE = 'SECURE_REDIS_TRANSPORT_POLICY_VIOLATION';
 export const MISSING_DEPENDENCY_ERROR_CODE = 'MISSING_DEPENDENCY';
 
@@ -86,7 +84,10 @@ function normalizeIsolation(value: unknown) {
 }
 
 function normalizeRedisPort(value: unknown) {
-  const normalized = String(value ?? DEFAULT_REDIS_PORT).trim();
+  if (value === undefined || value === null || value === '') {
+    throw new RedisTransportPolicyError('REDIS_PORT is required', { port: value });
+  }
+  const normalized = String(value).trim();
   const port = /^[0-9]+$/.test(normalized) ? Number(normalized) : NaN;
   if (!Number.isInteger(port) || port <= 0 || port > 65535) {
     throw new RedisTransportPolicyError('REDIS_PORT must be an integer between 1 and 65535', { port: value });
@@ -108,8 +109,9 @@ function isLocalRedisHost(host: unknown) {
 }
 
 export function resolveRedisTransportConfig(opts: RedisTransportOptions = {}, env: Record<string, string | undefined> = process.env) {
-  const host = normalizeString(opts.host ?? opts.redisHost ?? env.REDIS_HOST) || DEFAULT_REDIS_HOST;
-  const port = normalizeRedisPort(opts.port ?? opts.redisPort ?? env.REDIS_PORT ?? DEFAULT_REDIS_PORT);
+  const host = normalizeString(opts.host ?? opts.redisHost ?? env.REDIS_HOST);
+  if (!host) throw new RedisTransportPolicyError('REDIS_HOST is required', { host });
+  const port = normalizeRedisPort(opts.port ?? opts.redisPort ?? env.REDIS_PORT);
   const password = normalizeString(opts.password ?? opts.redisPassword ?? env.REDIS_PASSWORD) || undefined;
   const username = normalizeString(opts.username ?? opts.redisUsername ?? env.REDIS_USERNAME) || undefined;
   const tlsEnabled = normalizeBoolean(opts.tls ?? opts.redisTls ?? env.REDIS_TLS ?? env.REDIS_TLS_ENABLED);

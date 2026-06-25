@@ -22,7 +22,7 @@ const contract = await import(path.join(sourceRoot, 'skills/common/pipeline/agen
 const packageJson = JSON.parse(fs.readFileSync(path.join(pluginRoot, 'package.json'), 'utf8'));
 assert.deepEqual(packageJson.openclaw.runtimeExtensions, ['./dist/index.js']);
 const pluginManifest = JSON.parse(fs.readFileSync(path.join(pluginRoot, 'openclaw.plugin.json'), 'utf8'));
-assert.equal(pluginManifest.configSchema.properties.enabled.default, true, 'observer plugin manifest default must match runtime default-enabled behavior');
+assert.equal(pluginManifest.configSchema.properties.enabled.default, undefined, 'observer plugin manifest must not supply hidden runtime defaults');
 
 for (const file of fs.readdirSync(path.join(pluginRoot, 'src'), { recursive: true })) {
   if (!String(file).endsWith('.ts')) continue;
@@ -122,18 +122,31 @@ function parseWritten(command) {
   return { stream, maxlen, event: JSON.parse(data) };
 }
 
+function observerConfig(overrides = {}) {
+  return {
+    enabled: true,
+    maxEventBytes: 3145728,
+    maxQueuePerStream: 10,
+    redisCommandTimeoutMs: 1000,
+    streamMaxLen: 10000,
+    deadLetterMaxLen: 1000,
+    controlWriteMaxAttempts: 3,
+    controlWriteRetryBaseMs: 1,
+    controlWriteRetryMaxMs: 1,
+    hookPriority: -100,
+    hookTimeoutMs: 1000,
+    redisNetworkIsolation: 'isolated',
+    ...overrides,
+  };
+}
+
 const logger = makeLogger();
 const redis = new FakeRedis();
 let diagnosticHandler = null;
 let diagnosticsUnsubscribed = false;
 const observer = plugin.createOpenClawAgentObserver({
   logger,
-  initialConfig: {
-    enabled: true,
-    maxQueuePerStream: 10,
-    redisCommandTimeoutMs: 1000,
-    redisNetworkIsolation: 'isolated',
-  },
+  initialConfig: observerConfig(),
   env: {},
   redisClientFactory: () => redis,
   diagnosticSubscriberFactory: (handler) => {
@@ -183,7 +196,7 @@ const fallbackApi = {
   registerService(service) { this.services.push(service); },
 };
 plugin.registerOpenClawAgentObserver(fallbackApi, plugin.createOpenClawAgentObserver({
-  initialConfig: { enabled: true, redisNetworkIsolation: 'isolated' },
+  initialConfig: observerConfig(),
   env: {},
   logger: makeLogger(),
   redisClientFactory: () => new FakeRedis(),
@@ -290,7 +303,7 @@ assert.equal(written.event.payload.final_messages[0].content, 'final message');
 
 const priorityRedis = new FakeRedis();
 const priorityObserver = plugin.createOpenClawAgentObserver({
-  initialConfig: { enabled: true, maxQueuePerStream: 10, redisNetworkIsolation: 'isolated' },
+  initialConfig: observerConfig(),
   env: {},
   logger: makeLogger(),
   redisClientFactory: () => priorityRedis,
@@ -304,13 +317,7 @@ assert.equal(parseWritten(priorityRedis.commands[1]).stream, contract.AGENT_OBSE
 
 const retryRedis = new FailNTimesRedis(2);
 const retryObserver = plugin.createOpenClawAgentObserver({
-  initialConfig: {
-    enabled: true,
-    redisNetworkIsolation: 'isolated',
-    controlWriteMaxAttempts: 3,
-    controlWriteRetryBaseMs: 1,
-    controlWriteRetryMaxMs: 1,
-  },
+  initialConfig: observerConfig(),
   env: {},
   logger: makeLogger(),
   redisClientFactory: () => retryRedis,
@@ -325,14 +332,7 @@ assert.equal(retryObserver.getStats().droppedWriteFailureControl, 0);
 
 const deadLetterRedis = new FailControlStreamRedis();
 const deadLetterObserver = plugin.createOpenClawAgentObserver({
-  initialConfig: {
-    enabled: true,
-    redisNetworkIsolation: 'isolated',
-    controlWriteMaxAttempts: 3,
-    controlWriteRetryBaseMs: 1,
-    controlWriteRetryMaxMs: 1,
-    deadLetterMaxLen: 7,
-  },
+  initialConfig: observerConfig({ deadLetterMaxLen: 7 }),
   env: {},
   logger: makeLogger(),
   redisClientFactory: () => deadLetterRedis,
@@ -353,7 +353,7 @@ assert.equal(typeof deadLetterObserver.getStats().lastErrorAt, 'string');
 
 const payloadFailureRedis = new FailNTimesRedis(1);
 const payloadFailureObserver = plugin.createOpenClawAgentObserver({
-  initialConfig: { enabled: true, redisNetworkIsolation: 'isolated', controlWriteMaxAttempts: 3 },
+  initialConfig: observerConfig(),
   env: {},
   logger: makeLogger(),
   redisClientFactory: () => payloadFailureRedis,
@@ -366,7 +366,7 @@ assert.equal(payloadFailureObserver.getStats().deadLetterWritten, 0);
 
 const slowRedis = new SlowRedis();
 const slowObserver = plugin.createOpenClawAgentObserver({
-  initialConfig: { enabled: true, redisNetworkIsolation: 'isolated' },
+  initialConfig: observerConfig(),
   env: {},
   logger: makeLogger(),
   redisClientFactory: () => slowRedis,
@@ -387,11 +387,7 @@ assert.equal(stopped, true);
 
 const queueRedis = new FakeRedis();
 const queueObserver = plugin.createOpenClawAgentObserver({
-  initialConfig: {
-    enabled: true,
-    maxQueuePerStream: 1,
-    redisNetworkIsolation: 'isolated',
-  },
+  initialConfig: observerConfig({ maxQueuePerStream: 1 }),
   env: {},
   logger: makeLogger(),
   redisClientFactory: () => queueRedis,
@@ -404,11 +400,7 @@ assert.equal(queueObserver.getStats().droppedQueueFull, 1);
 
 const oversizeRedis = new FakeRedis();
 const oversizeObserver = plugin.createOpenClawAgentObserver({
-  initialConfig: {
-    enabled: true,
-    maxEventBytes: 256,
-    redisNetworkIsolation: 'isolated',
-  },
+  initialConfig: observerConfig({ maxEventBytes: 256 }),
   env: {},
   logger: makeLogger(),
   redisClientFactory: () => oversizeRedis,
@@ -420,7 +412,7 @@ assert.equal(oversizeObserver.getStats().droppedOversize, 1);
 
 const runtimeConfigRedis = new FakeRedis();
 const runtimeConfigObserver = plugin.createOpenClawAgentObserver({
-  initialConfig: { enabled: true, maxQueuePerStream: 10, redisNetworkIsolation: 'isolated' },
+  initialConfig: observerConfig(),
   env: {},
   logger: makeLogger(),
   redisClientFactory: () => runtimeConfigRedis,
@@ -437,7 +429,7 @@ assert.equal(runtimeWritten.event.identity.session_key, 'ctx-session');
 
 const agentEventRedis = new FakeRedis();
 const agentEventObserver = plugin.createOpenClawAgentObserver({
-  initialConfig: { enabled: true, maxQueuePerStream: 10, redisNetworkIsolation: 'isolated' },
+  initialConfig: observerConfig(),
   env: {},
   logger: makeLogger(),
   redisClientFactory: () => agentEventRedis,
@@ -475,7 +467,7 @@ assert.equal(runtimeWritten.event.payload.assistant_response, 'OBSERVER_SMOKE_OK
 
 const dedupeRedis = new FakeRedis();
 const dedupeObserver = plugin.createOpenClawAgentObserver({
-  initialConfig: { enabled: true, maxQueuePerStream: 10, redisNetworkIsolation: 'isolated' },
+  initialConfig: observerConfig({ maxQueuePerStream: 10 }),
   env: {},
   logger: makeLogger(),
   redisClientFactory: () => dedupeRedis,
@@ -494,7 +486,7 @@ assert.equal(dedupeRedis.commands.length, 1);
 
 const hookConfigRedis = new FakeRedis();
 const hookConfigObserver = plugin.createOpenClawAgentObserver({
-  initialConfig: { enabled: false, redisNetworkIsolation: 'isolated' },
+  initialConfig: observerConfig({ enabled: false }),
   env: {},
   logger: makeLogger(),
   redisClientFactory: () => hookConfigRedis,
@@ -505,7 +497,7 @@ assert.equal(hookConfigRedis.commands.length, 1);
 
 const disabledRedis = new FakeRedis();
 const disabledObserver = plugin.createOpenClawAgentObserver({
-  initialConfig: { enabled: false },
+  initialConfig: observerConfig({ enabled: false }),
   env: {},
   logger: makeLogger(),
   redisClientFactory: () => disabledRedis,
@@ -515,15 +507,15 @@ await disabledObserver.flush();
 assert.equal(disabledRedis.commands.length, 0);
 assert.equal(disabledObserver.getStats().droppedDisabled, 0, 'disabled hooks should return before writer enqueue');
 
-const defaultEnabledRedis = new FakeRedis();
-const defaultEnabledObserver = plugin.createOpenClawAgentObserver({
-  env: {},
-  logger: makeLogger(),
-  redisClientFactory: () => defaultEnabledRedis,
-});
-defaultEnabledObserver.handleHook('agent_end', { success: true, ctx: { runId: 'default-enabled' } });
-await defaultEnabledObserver.flush();
-assert.equal(defaultEnabledRedis.commands.length, 1, 'enabled plugin entries must emit without needing duplicate enabled config');
+assert.throws(
+  () => plugin.createOpenClawAgentObserver({
+    env: {},
+    logger: makeLogger(),
+    redisClientFactory: () => new FakeRedis(),
+  }),
+  /enabled must be configured as a boolean/,
+  'observer startup without swarm/plugin config should fail fast instead of using hidden defaults',
+);
 
 await observer.stop();
 assert.equal(redis.closed, true);

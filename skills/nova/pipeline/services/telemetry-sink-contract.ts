@@ -13,6 +13,13 @@ const TELEMETRY_SINK_PRIORITIES: Record<string, number> = Object.freeze({
   redis: 100,
   discord: 300,
 });
+function telemetrySinkPriority(sinkId: string): number {
+  const priority = TELEMETRY_SINK_PRIORITIES[sinkId];
+  if (typeof priority !== 'number') {
+    throw new Error(`Telemetry sink priority missing for '${sinkId}'`);
+  }
+  return priority;
+}
 
 function canonicalRef(prefix: string, value: unknown): string | null {
   if (value == null || value === '') return null;
@@ -313,7 +320,7 @@ function buildTelemetrySinkDefinition({ sinkId, displayName, description, capabi
       displayName,
       description,
       defaultEnabled: true,
-      priority: TELEMETRY_SINK_PRIORITIES[sinkId] ?? 1000,
+      priority: telemetrySinkPriority(sinkId),
     },
     implementation: { observe },
   };

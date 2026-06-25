@@ -76,7 +76,7 @@ export async function runModuleBusterPhase({
     setLogScope(moduleId, 'buster');
     const busterPolicy = deps.resolvePolicy(config, progress, 'buster', {
       scopeModel: mod.buster_model || null,
-      dispatchPath: config?.agents?.buster?.dispatch || 'acp',
+      dispatchPath: config?.agents?.buster?.dispatch,
     });
     const busterModel = busterPolicy.model;
     log('STEP', `Phase: BUSTER (model: ${busterModel ?? '(none)'}, thinking: ${busterPolicy.thinking || 'default'}, thinking_source: ${busterPolicy.thinking_source}, model_source: ${busterPolicy.model_source})`);

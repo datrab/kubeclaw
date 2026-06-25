@@ -11,6 +11,19 @@ import {
   waitForRequiredAgentStartupEvidence,
 } from '../../../../../skills/nova/pipeline/services/agent-observability-required.ts';
 
+function observabilityConfig({ timeoutMs = 10, blockMs = 1, required = true } = {}) {
+  return {
+    required,
+    profile: 'test',
+    profiles: {
+      test: {
+        payload: { max_event_bytes: 3145728 },
+        startup_evidence: { timeout_ms: timeoutMs, block_ms: blockMs },
+      },
+    },
+  };
+}
+
 test('startup evidence matches exact plugin-derived lifecycle identity', async () => {
   const identity = {
     run_id: 'run-test',
@@ -40,7 +53,7 @@ test('startup evidence matches exact plugin-derived lifecycle identity', async (
   const result = await waitForRequiredAgentStartupEvidence({
     project: 'project-test',
     telemetry: { enabled: true },
-    agent_observability: { required: true, startup_evidence_timeout_ms: 10 },
+    agent_observability: observabilityConfig(),
   }, identity, {
     reader: {
       async read(readIdentity, types) {
@@ -97,7 +110,7 @@ test('required startup evidence fails closed when plugin telemetry is absent', a
   const result = await waitForRequiredAgentStartupEvidence({
     project: 'project-test',
     telemetry: { enabled: true },
-    agent_observability: { required: true, startup_evidence_timeout_ms: 0 },
+    agent_observability: observabilityConfig({ timeoutMs: 0 }),
   }, identity, {
     reader: {
       async read() { return null; },
@@ -161,6 +174,7 @@ test('startup evidence reader connects lazy Redis clients before xread', async (
   const reader = createAgentLifecycleTelemetryReader({
     project: 'project-test',
     telemetry: { enabled: true },
+    agent_observability: observabilityConfig({ blockMs: 250, required: false }),
   }, {
     RedisCtor: FakeRedis,
     runId: 'run-test',
@@ -229,6 +243,7 @@ test('startup evidence reader falls back to pipeline jsonl when telemetry stream
   const reader = createAgentLifecycleTelemetryReader({
     project: 'project-test',
     telemetry: { enabled: true },
+    agent_observability: observabilityConfig({ blockMs: 250, required: false }),
   }, {
     RedisCtor: FakeRedis,
     runId: 'run-test',

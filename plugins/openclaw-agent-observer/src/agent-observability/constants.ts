@@ -11,7 +11,6 @@ export const AGENT_OBSERVABILITY_REDIS_DATA_FIELD = 'data' as const;
 export const AGENT_OBSERVABILITY_MASKING_PROFILE = 'kubeclaw-agent-observer-v1-minimal-api-key-mask' as const;
 export const AGENT_OBSERVABILITY_MASK_BASIC_API_KEY_PATTERN = 'basic_api_key_pattern' as const;
 
-export const AGENT_OBSERVABILITY_DEFAULT_MAX_EVENT_BYTES = 3 * 1024 * 1024;
 export const AGENT_OBSERVABILITY_ABSOLUTE_MAX_EVENT_BYTES = 5 * 1024 * 1024;
 export const AGENT_OBSERVABILITY_PAYLOAD_TOO_LARGE_REASON = 'agent_observability_payload_too_large' as const;
 

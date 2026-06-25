@@ -7,7 +7,19 @@ import { logRedisOperation } from './redis-log.ts';
 import { emitObservabilityDegraded } from './telemetry.ts';
 import { resolveRegisteredRedisAdapter } from './adapter-registry.ts';
 
-const COMPLETION_ARCHIVE_MAX_LEN = 1000;
+function requireRedisCompletionPolicy(config) {
+  const policy = config?.redis_completion;
+  if (!policy || typeof policy !== 'object') {
+    throw new Error('config.redis_completion: required platform config object');
+  }
+  for (const field of ['archive_max_len', 'tail_scan_batch_size']) {
+    const value = Number(policy[field]);
+    if (!Number.isFinite(value) || value <= 0) {
+      throw new Error(`config.redis_completion.${field}: required positive number`);
+    }
+  }
+  return policy;
+}
 
 function buildCompletionArchiveFailureResult(moduleId, stream, archiveStream, activeIdentity = {}, error = null) {
   const message = error?.message || String(error || 'redis completion archive unavailable');
@@ -82,7 +94,10 @@ export async function archiveModuleCompletions(config, moduleId, activeIdentity 
       log('WARN', `Completion archive failed for ${moduleId}: ${error.message}`);
       return buildCompletionArchiveFailureResult(moduleId, stream, archiveStream, activeIdentity, error);
     }
-    const result = await redisMod.archiveCompletions(stream, archiveStream, moduleId, COMPLETION_ARCHIVE_MAX_LEN, activeIdentity);
+    const policy = requireRedisCompletionPolicy(config);
+    const result = await redisMod.archiveCompletions(stream, archiveStream, moduleId, policy.archive_max_len, activeIdentity, {
+      batchSize: policy.tail_scan_batch_size,
+    });
     if (result.archived > 0) {
       log('INFO', `Archived ${result.archived} old completion(s) for ${moduleId} → ${archiveStream}`);
     }

@@ -103,8 +103,8 @@ export function publishTranscriptDelta(ctx: any, identity: AnyRecord, newLines: 
 
 // ── Config ───────────────────────────────────────────────────────────────────
 
-function readRequiredNonNegativeNumber(src: AnyRecord, snakeKey: string, camelKey: string, errors: string[]) {
-  const raw = src?.[snakeKey] ?? src?.[camelKey];
+function readRequiredNonNegativeNumber(src: AnyRecord, snakeKey: string, errors: string[]) {
+  const raw = src?.[snakeKey];
   if (raw === undefined || raw === null || raw === '') {
     errors.push(`${snakeKey} is required`);
     return null;
@@ -117,17 +117,27 @@ function readRequiredNonNegativeNumber(src: AnyRecord, snakeKey: string, camelKe
   return value;
 }
 
+function resolveGatewayStatusPolicy(config: AnyRecord = {}) {
+  const policy = config?.gateway?.invoke?.session_status || null;
+  if (!policy || typeof policy !== 'object' || Array.isArray(policy)) return null;
+  const timeoutMs = policy.timeout_ms;
+  const maxRetries = policy.max_retries;
+  const retryDelayMs = policy.retry_delay_ms;
+  if (!Number.isFinite(timeoutMs) || !Number.isInteger(maxRetries) || !Number.isFinite(retryDelayMs)) return null;
+  return { timeoutMs, maxRetries, retryDelayMs };
+}
+
 export function getAcpMonitorConfig(input: AnyRecord = {}) {
   const src = input?.acp_monitor && typeof input.acp_monitor === 'object'
     ? input.acp_monitor
     : input;
   const errors: string[] = [];
 
-  const unknownPollLimit = readRequiredNonNegativeNumber(src, 'unknown_poll_limit', 'unknownPollLimit', errors);
-  const stalePollLimit = readRequiredNonNegativeNumber(src, 'stale_poll_limit', 'stalePollLimit', errors);
-  const maxTranscriptExtensions = readRequiredNonNegativeNumber(src, 'max_transcript_extensions', 'maxTranscriptExtensions', errors);
-  const transcriptGraceMs = readRequiredNonNegativeNumber(src, 'transcript_grace_ms', 'transcriptGraceMs', errors);
-  const monitorPollMs = readRequiredNonNegativeNumber(src, 'monitor_poll_ms', 'monitorPollMs', errors);
+  const unknownPollLimit = readRequiredNonNegativeNumber(src, 'unknown_poll_limit', errors);
+  const stalePollLimit = readRequiredNonNegativeNumber(src, 'stale_poll_limit', errors);
+  const maxTranscriptExtensions = readRequiredNonNegativeNumber(src, 'max_transcript_extensions', errors);
+  const transcriptGraceMs = readRequiredNonNegativeNumber(src, 'transcript_grace_ms', errors);
+  const monitorPollMs = readRequiredNonNegativeNumber(src, 'monitor_poll_ms', errors);
 
   if (errors.length > 0) {
     throw new Error(`ACP monitor config invalid: ${errors.join('; ')}`);
@@ -270,7 +280,12 @@ export function transcriptShowsProgress(transcript: AnyRecord | null) {
 // ── Core state builder ───────────────────────────────────────────────────────
 
 async function fetchSessionStatus(sessionKey: any, gatewayUrl: any, gatewayToken: any, opts: AnyRecord = {}) {
-  return getGatewaySessionStatus(sessionKey, 10000, {
+  const policy = opts.gatewayStatusPolicy;
+  if (!policy || typeof policy !== 'object' || !Number.isFinite(policy.timeoutMs)) {
+    throw new Error('ACP monitor requires explicit gatewayStatusPolicy from swarm.config.json');
+  }
+  return getGatewaySessionStatus(sessionKey, policy.timeoutMs, {
+    ...policy,
     gatewayUrl,
     gatewayToken,
     budget: opts.budget || null,
@@ -395,6 +410,7 @@ export async function getAcpMonitorState(request: AnyRecord) {
     const monitorCfg = getAcpMonitorConfig(config);
     return getDirectAcpMonitorState(sessionKey, streamLogPath, previousState, {
       ...monitorCfg,
+      gatewayStatusPolicy: resolveGatewayStatusPolicy(config),
       gatewayUrl: config.gatewayUrl ?? config.gateway_url,
       gatewayToken: config.gatewayToken ?? config.gateway_token,
     });
@@ -602,11 +618,6 @@ function isBudgetOwnedPipelineEventAbort(error: any, budget: AnyRecord) {
 
 // ── Wait for Idle ────────────────────────────────────────────────────────────
 
-export const SESSION_IDLE_POLICY_DEFAULTS = Object.freeze({
-  extraGraceMs: 120000,
-  totalTimeoutMs: 600000,
-});
-
 export async function waitForSessionIdle(childSessionKey: any, opts: AnyRecord = {}) {
   if (!opts || typeof opts !== 'object' || Array.isArray(opts)) {
     throw new TypeError('waitForSessionIdle requires an options object with acp_monitor policy fields');
@@ -615,8 +626,14 @@ export async function waitForSessionIdle(childSessionKey: any, opts: AnyRecord =
   const gatewayUrl = resolveGatewayBaseUrl(opts.gatewayUrl);
   const gatewayToken = resolveGatewayToken(opts.gatewayToken);
   const monitorCfg = getAcpMonitorConfig(opts);
-  const extraGraceMs = opts.extraGraceMs ?? SESSION_IDLE_POLICY_DEFAULTS.extraGraceMs;
-  const totalTimeoutMs = opts.totalTimeoutMs ?? SESSION_IDLE_POLICY_DEFAULTS.totalTimeoutMs;
+  if (!Number.isFinite(opts.extraGraceMs) || opts.extraGraceMs < 0) {
+    throw new Error('waitForSessionIdle requires explicit extraGraceMs from swarm.config.json');
+  }
+  if (!Number.isFinite(opts.totalTimeoutMs) || opts.totalTimeoutMs <= 0) {
+    throw new Error('waitForSessionIdle requires explicit totalTimeoutMs from swarm.config.json');
+  }
+  const extraGraceMs = opts.extraGraceMs;
+  const totalTimeoutMs = opts.totalTimeoutMs;
   const budget = opts.budget || createBudget({ timeoutMs: totalTimeoutMs, signal: opts.signal, label: 'acp-session-idle' });
   const eventBus = opts.eventBus || createPipelineEventBus();
   const adapter = createAcpMonitorEventAdapter(childSessionKey, opts.streamLogPath || null, {
@@ -628,6 +645,7 @@ export async function waitForSessionIdle(childSessionKey: any, opts: AnyRecord =
       ...monitorCfg,
       gatewayUrl,
       gatewayToken,
+      gatewayStatusPolicy: opts.gatewayStatusPolicy,
     },
     stopOnTerminal: false,
   });

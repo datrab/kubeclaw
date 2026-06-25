@@ -21,6 +21,13 @@ const NOTIFICATION_SINK_PRIORITIES: Record<string, number> = Object.freeze({
   structured_event_artifact: 200,
   discord: 300,
 });
+function notificationSinkPriority(sinkId: string): number {
+  const priority = NOTIFICATION_SINK_PRIORITIES[sinkId];
+  if (typeof priority !== 'number') {
+    throw new Error(`Notification sink priority missing for '${sinkId}'`);
+  }
+  return priority;
+}
 function canonicalRef(prefix: string, value: unknown): string | null {
   if (value == null || value === '') return null;
   const normalized = String(value).trim();
@@ -323,7 +330,7 @@ function buildNotificationDefinition({ sinkId, hookId, displayName, description,
       displayName,
       description,
       defaultEnabled,
-      priority: NOTIFICATION_SINK_PRIORITIES[sinkId] ?? 1000,
+      priority: notificationSinkPriority(sinkId),
     },
     implementation: { observe },
   };

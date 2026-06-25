@@ -44,7 +44,7 @@ import {
   parseCapabilitiesEnv,
 } from './pipeline/services/capabilities.ts';
 import { doSandboxCleanup } from './pipeline/services/pipeline-helpers.ts';
-import { loadBusterPlatformConfig, loadBusterRuntimePolicy } from './pipeline/services/runtime-policy.ts';
+import { loadBusterPlatformConfig, loadBusterRuntimePolicy, loadBusterSessionPolicies } from './pipeline/services/runtime-policy.ts';
 import { createOpenClawAgentObserverPluginController } from './pipeline/services/openclaw-plugin-runtime.ts';
 import {
   AGENT_NAME,
@@ -173,7 +173,7 @@ export async function shutdown(signal: string, opts: ShutdownOptions = {}): Prom
     }).catch((err: unknown) => console.warn(`[SHUTDOWN] Gateway degradation telemetry failed: ${safeErrorMessage(err)}`));
   }
   try {
-    await terminateActiveSession();
+    await terminateActiveSession(loadBusterSessionPolicies());
   } catch (killError: unknown) {
     reportBusterRuntimeDiagnostic({
       component: 'buster_session',

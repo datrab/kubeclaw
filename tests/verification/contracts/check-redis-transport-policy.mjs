@@ -34,37 +34,37 @@ try {
 }
 
 assert.throws(
-  () => transport.resolveRedisTransportConfig({ redisHost: 'redis-master.kubeclaw.svc.cluster.local' }, {}),
+  () => transport.resolveRedisTransportConfig({ redisHost: 'redis-master.kubeclaw.svc.cluster.local', redisPort: 6379 }, {}),
   (error) => error?.code === 'SECURE_REDIS_TRANSPORT_POLICY_VIOLATION'
     && String(error.message).includes('Secure Redis transport policy violation'),
   'non-local Redis without auth, TLS, or documented isolation must fail closed',
 );
 
 {
-  const resolved = transport.resolveRedisTransportConfig({ redisHost: 'redis-master.kubeclaw.svc.cluster.local', redisPassword: 'secret' }, {});
+  const resolved = transport.resolveRedisTransportConfig({ redisHost: 'redis-master.kubeclaw.svc.cluster.local', redisPort: 6379, redisPassword: 'secret' }, {});
   assert.equal(resolved.redisOptions.password, 'secret');
   assert.equal(resolved.policy.authenticated, true);
 }
 
 {
-  const resolved = transport.resolveRedisTransportConfig({ redisHost: 'redis-master.kubeclaw.svc.cluster.local', redisTls: true }, {});
+  const resolved = transport.resolveRedisTransportConfig({ redisHost: 'redis-master.kubeclaw.svc.cluster.local', redisPort: 6379, redisTls: true }, {});
   assert.deepEqual(resolved.redisOptions.tls, {});
   assert.equal(resolved.policy.tls, true);
 }
 
 {
-  const resolved = transport.resolveRedisTransportConfig({ redisHost: 'redis-master.kubeclaw.svc.cluster.local', redisNetworkIsolation: 'documented' }, {});
+  const resolved = transport.resolveRedisTransportConfig({ redisHost: 'redis-master.kubeclaw.svc.cluster.local', redisPort: 6379, redisNetworkIsolation: 'documented' }, {});
   assert.equal(resolved.redisOptions.host, 'redis-master.kubeclaw.svc.cluster.local');
   assert.equal(resolved.policy.networkIsolation, true);
 }
 
 {
-  const resolved = transport.resolveRedisTransportConfig({ redisHost: '127.0.0.1', enforceSecureMode: false }, {});
+  const resolved = transport.resolveRedisTransportConfig({ redisHost: '127.0.0.1', redisPort: 6379, enforceSecureMode: false }, {});
   assert.equal(resolved.policy.insecureLocalVerification, true);
 }
 
 assert.throws(
-  () => transport.resolveRedisTransportConfig({ redisHost: 'redis-master.kubeclaw.svc.cluster.local', enforceSecureMode: false }, {}),
+  () => transport.resolveRedisTransportConfig({ redisHost: 'redis-master.kubeclaw.svc.cluster.local', redisPort: 6379, enforceSecureMode: false }, {}),
   /insecure verification mode is restricted to localhost/,
   'explicit insecure verification mode must not permit non-local Redis endpoints',
 );
@@ -79,7 +79,7 @@ assert.throws(
   }
   const client = transport.createRedisClient(
     FakeRedis,
-    { redisHost: '127.0.0.1', enforceSecureMode: false },
+    { redisHost: '127.0.0.1', redisPort: 6379, enforceSecureMode: false },
     { host: 'redis-master.kubeclaw.svc.cluster.local', maxRetriesPerRequest: 1 },
     {},
   );
