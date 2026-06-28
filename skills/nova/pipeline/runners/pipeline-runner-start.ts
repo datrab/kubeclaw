@@ -59,9 +59,9 @@ function writeConfigValidationSnapshot(config: AnyRecord): void {
     const snapshot = {
       ts: new Date().toISOString(),
       project: config.project,
-      run_id: config._runId || config.run_id || null,
+      run_id: config._runId ?? config.run_id ?? null,
       fallback_model: config.fallback_model,
-      config_validation_issues: config._runStats?.config_validation_issues || [],
+      config_validation_issues: config._runStats?.config_validation_issues ?? [],
     };
     fs.writeFileSync(path.join(runLogDir, 'config-validation.json'), JSON.stringify(snapshot, null, 2));
   } catch (_error) { /* non-critical */ }
@@ -99,7 +99,7 @@ export async function startPipelineRun(config: AnyRecord, progress: AnyRecord, o
   log('STEP', `║  PIPELINE: ${config.project.toUpperCase().padEnd(38)}║`);
   log('STEP', `╚═══════════════════════════════════════════════════╝`);
   const existingPipelineState = loadLifecycleReadModels(config)?.pipeline || null;
-  const runId = config._runId || config.run_id || null;
+  const runId = config._runId ?? config.run_id ?? null;
   const resumeExistingRun = opts.resume === true
     && existingPipelineState?.run_id === runId
     && existingPipelineState?.status;
@@ -115,7 +115,7 @@ export async function startPipelineRun(config: AnyRecord, progress: AnyRecord, o
         level: 'INFO',
         title: `Pipeline started: ${config.project}`,
         description: buildStartDescription(config, progress, opts, deps),
-        fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: config._runId || config.run_id || 'unknown' }),
+        fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: config._runId ?? config.run_id ?? 'unknown' }),
       },
     },
   });
@@ -173,7 +173,7 @@ export async function runSingleModulePipeline(config: AnyRecord, progress: AnyRe
   });
   deps.output({ exit: singleModuleExitCode, ...resultWithStatusCorrelation });
   const singleModuleDiscordCorrelation = {
-    run_id: config._runId || config.run_id || null,
+    run_id: config._runId ?? config.run_id ?? null,
     module_id: opts.module,
     step_type: 'module',
     attempt: singleModuleAttempt,

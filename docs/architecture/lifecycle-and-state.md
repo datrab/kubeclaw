@@ -103,5 +103,5 @@ Verification:
 ```bash
 node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"
 node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"
-node tests/verification/behavior/verify.mjs --area restart-recovery
+node --test tests/verification/e2e/*.test.mjs
 ```

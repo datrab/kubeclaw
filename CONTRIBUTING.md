@@ -31,8 +31,8 @@ node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PW
 git diff --check
 ```
 
-Behavior areas can be run with:
+Real E2E scenarios can be run with:
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area <area>
+node --test tests/verification/e2e/*.test.mjs
 ```

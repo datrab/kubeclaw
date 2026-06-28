@@ -58,7 +58,7 @@ By default the deploy script resolves the latest remote `main` commit, then deri
 helm template kubeclaw charts/kubeclaw -f my-values/nova-values.yaml
 helm template kubeclaw charts/kubeclaw -f my-values/buster-values.yaml
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area deployment-surface
+node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 ```
 
 ## Related Pages

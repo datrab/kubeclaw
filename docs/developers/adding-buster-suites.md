@@ -113,13 +113,13 @@ Add tests for:
 Run:
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area operator-surface
+node --test tests/verification/e2e/*.test.mjs
 ```
 
 Run task validation tests if payload shape changes:
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area runtime-monitor
+node --test tests/verification/e2e/*.test.mjs
 ```
 
 ## Sources

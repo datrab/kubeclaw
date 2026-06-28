@@ -139,5 +139,5 @@ Change behavior by editing the profile when the value should change for everyone
 node --test tests/skills/nova/pipeline/core/config-profiles.test.mjs
 node --test tests/skills/nova/pipeline/core/config-plugin-registry.test.mjs
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area foundations
+node --test tests/verification/e2e/*.test.mjs
 ```

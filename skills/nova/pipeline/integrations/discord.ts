@@ -276,8 +276,8 @@ async function recordDiscordAuditRestored(config = {}, correlation = {}) {
 }
 
 async function appendDiscordAuditEntries(config = {}, level = 'INFO', embeds = [], opts = {}) {
-  const runId = config?._runId || config?.run_id || null;
-  const batchCorrelation = normalizeDiscordCorrelation(opts.correlation || {});
+  const runId = config?._runId ?? config?.run_id ?? null;
+  const batchCorrelation = normalizeDiscordCorrelation(opts.correlation ?? {});
   const embedCorrelations = Array.isArray(opts.correlations) ? opts.correlations : [];
   const correlation = batchCorrelation;
   if (!Array.isArray(embeds) || !embeds.length) return { ok: true, correlation };
@@ -292,8 +292,8 @@ async function appendDiscordAuditEntries(config = {}, level = 'INFO', embeds = [
       );
       const entry = sanitizeJsonEgress({
         ts: new Date().toISOString(),
-        project: config?.project || null,
-        run_id: runId || entryCorrelation.run_id,
+        project: config?.project ?? null,
+        run_id: runId ?? entryCorrelation.run_id,
         session_key: entryCorrelation.session_key,
         gateway_label: entryCorrelation.gateway_label,
         attempt: entryCorrelation.attempt,
@@ -304,7 +304,7 @@ async function appendDiscordAuditEntries(config = {}, level = 'INFO', embeds = [
         level,
         title: safeEmbed.title,
         description: safeEmbed.description,
-        fields: safeEmbed.fields || [],
+        fields: safeEmbed.fields ?? [],
       }, 'discord_audit_entry');
       for (const target of targets) {
         fs.mkdirSync(path.dirname(target), { recursive: true });
@@ -335,7 +335,7 @@ function deliveryReceiptFromResult(config = {}, level = 'INFO', correlation = {}
   return sanitizeJsonEgress({
     ts: new Date().toISOString(),
     project: config?.project || null,
-    run_id: config?._runId || config?.run_id || correlation.run_id || null,
+    run_id: config?._runId ?? config?.run_id ?? correlation.run_id ?? null,
     level,
     ok: result?.ok === true,
     http_status: result?.status ?? null,

@@ -112,7 +112,7 @@ Add or update behavior tests for:
 Useful existing area:
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area gates
+node --test tests/verification/e2e/*.test.mjs
 ```
 
 ## Sources
@@ -122,7 +122,7 @@ node tests/verification/behavior/verify.mjs --source-root "$PWD" --area gates
 - `skills/nova/pipeline/runners/buster-gate-task.ts`
 - `skills/nova/pipeline/runners/buster-gate-terminal.ts`
 - `skills/nova/pipeline/core/constants.ts`
-- `tests/verification/behavior/areas/gates.mjs`
+- `tests/verification/e2e/*.test.mjs`
 
 ## Gate Contract Checklist
 
@@ -138,4 +138,4 @@ node tests/verification/behavior/verify.mjs --source-root "$PWD" --area gates
 
 A gate that waits for approval, requests a fix, or blocks must preserve enough identity for resume. Do not clear active-session identity, dispatch IDs, or gate artifacts as a cleanup shortcut. If a gate cannot prove terminal evidence, prefer `action_required` or `blocked` with artifacts over silent success.
 
-Run `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area gates` plus the terminal/step-result contract checks when the gate result shape changes.
+Run `node --test tests/verification/e2e/*.test.mjs` plus the terminal/step-result contract checks when the gate result shape changes.

@@ -36,7 +36,7 @@ The KubeClaw pipeline separates orchestration from test execution. Nova owns pip
 ## Verification
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
+node --test tests/verification/e2e/*.test.mjs
 node tests/verification/contracts/check-pipeline-runner-slice-surface.mjs --source-root "$PWD"
 node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"
 node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"

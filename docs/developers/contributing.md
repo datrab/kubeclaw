@@ -29,10 +29,10 @@ Give contributors a docs-local path for code, docs, examples, and verification c
 
 | Work type | Main paths to inspect | Common outputs | Checks |
 | --- | --- | --- | --- |
-| Documentation | `docs/**`; `scripts/docs-check.mjs`; `docs/developers/documentation-conventions.md` | active Markdown, diagrams, examples, audit artifacts | `npm run docs:check`; `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area docs-surface` |
+| Documentation | `docs/**`; `scripts/docs-check.mjs`; `docs/developers/documentation-conventions.md` | active Markdown, diagrams, examples, audit artifacts | `npm run docs:check`; `npm run docs:check` |
 | Generated reference | `scripts/docs-inventory.mjs`; `scripts/docs-generate.mjs`; `docs/generated/inventory/*.json`; `docs/reference/*.md` | generated inventory JSON and generated reference sections | `npm run docs:inventory:check`; `npm run docs:generate:check` |
 | Deployment | `scripts/deploy.sh`; `my-values/setup-secrets.sh`; `charts/kubeclaw/templates/*.yaml`; `my-values/*.yaml`; `my-values/infra/*.yaml` | rendered manifests, Secrets, PVCs, NetworkPolicies, Services | deployment truth and Helm render |
-| Nova pipeline | `skills/nova/pipeline/cli.ts`; `skills/nova/pipeline/core/*.ts`; `skills/nova/pipeline/runners/*.ts`; `skills/nova/pipeline/services/*.ts` | lifecycle state, artifacts, terminal decisions, telemetry | pipeline behavior and contract checks |
+| Nova pipeline | `skills/nova/pipeline/cli.ts`; `skills/nova/pipeline/core/*.ts`; `skills/nova/pipeline/runners/*.ts`; `skills/nova/pipeline/services/*.ts` | lifecycle state, artifacts, terminal decisions, telemetry | pipeline E2E behavior and contract checks |
 | Buster pipeline | `skills/buster/buster-pipeline.ts`; `skills/buster/pipeline/services/*.ts`; `skills/buster/pipeline/suites/*.ts` | Redis task/completion/dead-letter streams, suite verdicts | Buster contract check and focused unit tests |
 
 ## Commands
@@ -48,7 +48,7 @@ git diff --check
 For pipeline or worker changes, add:
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
+node --test tests/verification/e2e/*.test.mjs
 node tests/verification/contracts/check-pipeline-runner-slice-surface.mjs --source-root "$PWD"
 node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"
 ```

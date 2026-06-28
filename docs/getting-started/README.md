@@ -26,10 +26,10 @@ helm template agent-nova charts/kubeclaw -n kubeclaw -f my-values/nova-values.ya
 helm template agent-buster charts/kubeclaw -n kubeclaw -f my-values/buster-values.yaml >/tmp/kubeclaw-buster-render.yaml
 ```
 
-If you are changing pipeline behavior, add:
+If you are changing pipeline E2E behavior, add:
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
+node --test tests/verification/e2e/*.test.mjs
 ```
 
 ## Source-Backed Orientation

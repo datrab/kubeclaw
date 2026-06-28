@@ -9,8 +9,8 @@ Show where to add tests when behavior or documentation changes.
 
 ## Verification layers
 
-- Behavior areas: `tests/verification/behavior/areas/*.mjs`
-- Behavior harness: `tests/verification/behavior/verify.mjs`
+- Real E2E scenarios: `tests/verification/e2e/*.test.mjs`
+- Real E2E harness: `tests/verification/e2e/run-real-pipeline-e2e.mjs`
 - Deployment truth: `tests/verification/deployment/check-deployment-truth.mjs`
 - Runtime smoke checks: `tests/verification/runtime/`
 - Contract checks: `tests/verification/contracts/`
@@ -31,17 +31,17 @@ Deployment checks should compare chart/source truth with rendered manifests. Use
 
 When a documentation change adds or strengthens an operational claim, add or update the narrowest proof:
 
-- docs inventory/generated-reference claims: `scripts/docs-check.mjs`, `scripts/docs-inventory.mjs`, `scripts/docs-generate.mjs`, or `tests/verification/behavior/areas/docs-surface.mjs`
+- docs inventory/generated-reference claims: `scripts/docs-check.mjs`, `scripts/docs-inventory.mjs`, `scripts/docs-generate.mjs`, or `scripts/docs-check.mjs`
 - deployment/chart/security/storage claims: `tests/verification/deployment/check-deployment-truth.mjs`
-- lifecycle/status/recovery claims: `tests/verification/contracts/check-status-store-slice-surface.mjs` or `tests/verification/behavior/areas/restart-recovery.mjs`
+- lifecycle/status/recovery claims: `tests/verification/contracts/check-status-store-slice-surface.mjs` or `tests/verification/e2e/real-run-evidence.test.mjs`
 - Buster task/suite/ACK/dead-letter claims: `tests/verification/contracts/check-buster-pipeline-slice-surface.mjs` and focused Buster service tests
-- telemetry/observability claims: `tests/verification/behavior/areas/telemetry-docs.mjs` and telemetry contract tests
+- telemetry/observability claims: `tests/verification/contracts/check-telemetry-contract.mjs` and telemetry contract tests
 
 Update `../reference/verification-commands.md` when a new command becomes part of the operator/developer proof surface.
 
 ## Worked Pattern
 
-1. Pick the narrowest verifier that owns the claim. Use behavior areas for runnable behavior, contract checks for API/surface invariants, deployment truth for rendered Kubernetes/deploy-script claims, and docs checks for generated/reference drift.
+1. Pick the narrowest verifier that owns the claim. Use real E2E scenarios for runnable behavior, contract checks for API/surface invariants, deployment truth for rendered Kubernetes/deploy-script claims, and docs checks for generated/reference drift.
 2. Add a fixture or overlay that proves one reader-visible claim. Avoid a broad "contains text" assertion when a structured parser can inspect JSON, YAML, Helm output, or exported constants.
 3. Make failure output point to the source owner and the broken invariant.
 4. Add the command to the page that made the claim, not just to the test file.

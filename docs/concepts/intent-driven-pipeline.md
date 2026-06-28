@@ -42,6 +42,6 @@ The current implemented loop is source-backed by `skills/nova/pipeline/cli.ts`, 
 - Missing or unsafe project/config paths: run `node --test tests/skills/nova/pipeline/core/config-plugin-registry.test.mjs tests/skills/nova/pipeline/core/path-segments.test.mjs`.
 - Lifecycle drift or illegal status mutation: run `node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"`.
 - Buster task identity, completion, or dead-letter issues: run `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"`.
-- Broad pipeline regression: run `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline`.
+- Broad pipeline regression: run `node --test tests/verification/e2e/*.test.mjs`.
 
 Do not document future intent categories as current runtime behavior until they have source owners, config, commands, artifacts, failure handling, and verification.

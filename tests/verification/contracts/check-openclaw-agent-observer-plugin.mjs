@@ -39,7 +39,10 @@ for (const file of fs.readdirSync(path.join(pluginRoot, 'src'), { recursive: tru
   const full = path.join(pluginRoot, 'src', file);
   const text = fs.readFileSync(full, 'utf8');
   assert(!text.includes('skills/common'), `${file} must not import repo-local common skills`);
-  const allowedProfileRead = String(file) === 'config.ts' && text.includes('/app/skills/pipeline/core/config-profiles/standard.json');
+  const allowedProfileRead = String(file) === 'config.ts' && (
+    text.includes('/app/skills/pipeline/config-profiles/standard.json') ||
+    text.includes('/app/skills/pipeline/core/config-profiles/standard.json')
+  );
   assert(
     !text.includes('/app/skills') || allowedProfileRead,
     `${file} must not import production skill paths except the standard config profile artifact`,

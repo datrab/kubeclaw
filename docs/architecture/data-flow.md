@@ -76,7 +76,7 @@ This authority order is why the recommended stuck-run trace starts with `--statu
 | Config and progress loading | `skills/nova/pipeline/core/config.ts`; `skills/nova/pipeline/core/platform-config.ts`; `charts/kubeclaw/files/config/swarm.config.json` | project, repo root, `.swarm/progress.json`, plugin registry summary | `node --test tests/skills/nova/pipeline/core/config-plugin-registry.test.mjs tests/skills/nova/pipeline/core/path-segments.test.mjs` |
 | Pipeline lifecycle and read models | `skills/nova/pipeline/services/status-store.ts`; `skills/nova/pipeline/services/status-store-lifecycle/**` | `canonical-events.jsonl`, `read-models.json`, run-scoped `pipeline.jsonl` | `node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"` |
 | Buster task and completion stream | `skills/buster/pipeline/services/task-queue.ts`; `task-validation.ts`; `task-completion.ts` | `swarm:<agent>:tasks`, completion stream, `:dead-letter` stream | `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"` |
-| Telemetry and operator mirrors | `skills/nova/pipeline/services/telemetry*.ts`; `skills/common/pipeline/telemetry.ts` | `pipeline:telemetry:<project>:<run_id>`, `discord.jsonl`, fallback telemetry JSONL | `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry-docs` |
+| Telemetry and operator mirrors | `skills/nova/pipeline/services/telemetry*.ts`; `skills/common/pipeline/telemetry.ts` | `pipeline:telemetry:<project>:<run_id>`, `discord.jsonl`, fallback telemetry JSONL | `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"` |
 
 ## Common Breakpoints
 

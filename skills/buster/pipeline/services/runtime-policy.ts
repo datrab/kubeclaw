@@ -2,7 +2,7 @@
 
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-import { expandSwarmConfig } from '../../../nova/pipeline/core/platform-config.ts';
+import { expandSwarmConfig } from '../platform-config.ts';
 
 declare const process: {
   env: Record<string, string | undefined>;

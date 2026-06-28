@@ -116,8 +116,3 @@ run_step "docs check" \
 
 run_step "whitespace check" \
   git diff --check
-
-run_step "behavior harness" \
-  node tests/verification/behavior/verify.mjs \
-  --source-root "$REPO_DIR" \
-  --contract "$CONTRACT_PATH"

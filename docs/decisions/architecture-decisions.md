@@ -17,7 +17,7 @@ Reason: The pipeline already uses Redis task, completion, replay, and telemetry 
 
 Source proof: `skills/buster/pipeline/services/task-queue.ts` owns `BUSTER_TASK_STREAM`, consumer group setup, pending reclaim, ACK ordering, and malformed task dead-letter behavior. `skills/buster/pipeline/services/task-completion.ts` owns completion and dead-letter fields. `skills/nova/pipeline/services/telemetry-stream.ts` and `skills/common/pipeline/redis-transport.ts` own telemetry stream writing.
 
-Verification: `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"` and `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry-docs`.
+Verification: `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"` and `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"`.
 
 ## Lifecycle Events As State Authority
 
@@ -27,7 +27,7 @@ Reason: Status files, Discord messages, Redis completions, and artifact bundles 
 
 Source proof: `skills/nova/pipeline/services/status-store.ts` exports lifecycle append/read helpers and guards direct writes to lifecycle-owned fields. `skills/nova/pipeline/services/status-store-lifecycle/appenders.ts` owns event append behavior. `skills/nova/pipeline/services/artifact-bundle.ts` owns `latest.json`, run-scoped replay, operator mirrors, and diagnostic fallback artifact roles.
 
-Verification: `node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"` and `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area restart-recovery`.
+Verification: `node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"` and `node --test tests/verification/e2e/*.test.mjs`.
 
 ## Source-backed documentation
 

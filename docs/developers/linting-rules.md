@@ -125,7 +125,7 @@ node skills/nova/pipeline/tools/lint-report.ts \
 Run behavior verification:
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
+node --test tests/verification/e2e/*.test.mjs
 ```
 
 ## Sources
@@ -152,4 +152,4 @@ node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
 - parse failure finding: tool output format changed or command failed unexpectedly.
 - `tools_failed` greater than zero: treat as environment/tooling issue, not clean code.
 
-Run the lint-report unit tests when changing parsing/discovery and the pipeline behavior area when changing how lint results affect module/gate decisions.
+Run the lint-report unit tests when changing parsing/discovery and the pipeline E2E behavior area when changing how lint results affect module/gate decisions.

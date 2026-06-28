@@ -27,9 +27,9 @@ Use this section when changing KubeClaw source code, verification, generated doc
 
 | Change | Start with | Source owner | Minimum verification |
 | --- | --- | --- | --- |
-| Docs or examples | `contributing.md`; `documentation-conventions.md`; `../examples/README.md` | `docs/**`; `scripts/docs-check.mjs`; `scripts/docs-inventory.mjs`; `scripts/docs-generate.mjs` | `npm run docs:check`; docs-surface behavior area for layout/check changes |
-| Pipeline orchestration | `adding-pipeline-features.md`; `adding-gates.md`; `../pipeline/README.md` | `skills/nova/pipeline/cli.ts`; `core/config.ts`; `runners/*.ts`; `services/status-store.ts` | pipeline behavior area and affected contract checks |
-| Project setup docs or skill | `project-setup.md`; `../pipeline/progress-json.md`; `../reference/progress-json.md` | `skills/nova/project_setup/*.md`; `skills/nova/pipeline/core/config.ts`; `skills/nova/pipeline/core/policy.ts`; `skills/buster/pipeline/services/task-validation.ts` | docs-surface and telemetry-docs behavior areas |
+| Docs or examples | `contributing.md`; `documentation-conventions.md`; `../examples/README.md` | `docs/**`; `scripts/docs-check.mjs`; `scripts/docs-inventory.mjs`; `scripts/docs-generate.mjs` | `npm run docs:check`; docs check for layout/check changes |
+| Pipeline orchestration | `adding-pipeline-features.md`; `adding-gates.md`; `../pipeline/README.md` | `skills/nova/pipeline/cli.ts`; `core/config.ts`; `runners/*.ts`; `services/status-store.ts` | pipeline E2E behavior area and affected contract checks |
+| Project setup docs or skill | `project-setup.md`; `../pipeline/progress-json.md`; `../reference/progress-json.md` | `skills/nova/project_setup/*.md`; `skills/nova/pipeline/core/config.ts`; `skills/nova/pipeline/core/policy.ts`; `skills/buster/pipeline/services/task-validation.ts` | docs-surface and telemetry-docs real E2E scenarios |
 | Plugin or hook behavior | `hooks-and-plugins.md`; `../concepts/extensibility-model.md` | `skills/nova/pipeline/core/registry.ts`; `skills/nova/pipeline/core/registry/*.ts`; `charts/kubeclaw/files/config/swarm.config.json` | config plugin registry test |
 | Buster suites or worker tasks | `adding-buster-suites.md`; `../pipeline/workers-and-buster.md` | `skills/buster/pipeline/suites/*.ts`; `services/task-queue.ts`; `services/task-validation.ts`; `services/task-completion.ts` | Buster contract check and focused Buster unit tests |
 | Observability | `adding-observability-sinks.md`; `../reference/observability-sinks.md` | `skills/nova/pipeline/services/telemetry*.ts`; `skills/common/pipeline/telemetry.ts`; `plugins/openclaw-agent-observer/src/index.ts` | telemetry-docs behavior area and telemetry contract check |
@@ -40,7 +40,7 @@ Use this section when changing KubeClaw source code, verification, generated doc
 ```bash
 npm run docs:check
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
+node --test tests/verification/e2e/*.test.mjs
 node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"
 git diff --check
 ```

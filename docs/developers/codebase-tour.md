@@ -33,13 +33,13 @@ The Helm chart under `charts/kubeclaw/` controls pod shape. `my-values/` provide
 - Observability: use `skills/nova/pipeline/services/telemetry*.ts` for pipeline events and `plugins/openclaw-agent-observer/src/**` for OpenClaw hook ingestion.
 - Deployment shape: use `charts/kubeclaw/templates/deployment.yaml`, `pvc.yaml`, `configmap-swarm-config.yaml`, `my-values/nova-values.yaml`, `my-values/buster-values.yaml`, and `my-values/infra/network-policies.yaml`.
 
-Before extending one of these areas, find the matching verification surface. Common anchors are `tests/skills/nova/pipeline/core/config-plugin-registry.test.mjs`, `tests/skills/nova/pipeline/core/path-segments.test.mjs`, `tests/verification/contracts/check-status-store-slice-surface.mjs`, `tests/verification/contracts/check-buster-pipeline-slice-surface.mjs`, `tests/verification/behavior/areas/telemetry-docs.mjs`, and `tests/verification/deployment/check-deployment-truth.mjs`.
+Before extending one of these areas, find the matching verification surface. Common anchors are `tests/skills/nova/pipeline/core/config-plugin-registry.test.mjs`, `tests/skills/nova/pipeline/core/path-segments.test.mjs`, `tests/verification/contracts/check-status-store-slice-surface.mjs`, `tests/verification/contracts/check-buster-pipeline-slice-surface.mjs`, `tests/verification/contracts/check-telemetry-contract.mjs`, and `tests/verification/deployment/check-deployment-truth.mjs`.
 
 ## Change-To-Check Map
 
 | You are changing | Inspect first | Run first |
 | --- | --- | --- |
-| platform config or plugin registry | `skills/nova/pipeline/core/config.ts`; `core/platform-config.ts`; `core/registry/*.ts`; `charts/kubeclaw/files/config/swarm.config.json` | config/plugin registry tests and `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline` |
+| platform config or plugin registry | `skills/nova/pipeline/core/config.ts`; `core/platform-config.ts`; `core/registry/*.ts`; `charts/kubeclaw/files/config/swarm.config.json` | config/plugin registry tests and `node --test tests/verification/e2e/*.test.mjs` |
 | lifecycle, status, or recovery | `skills/nova/pipeline/services/status-store*.ts`; `session-authority.ts`; `pipeline-runner-recovery.ts` | `check-status-store-slice-surface.mjs`; `restart-recovery` behavior area |
 | Buster task or suite behavior | `skills/buster/pipeline/services/task-*.ts`; `pipeline/runners/suite-runner.ts`; `pipeline/suites/*.ts` | Buster service/suite tests and `check-buster-pipeline-slice-surface.mjs` |
 | deployment, values, secrets, images | `scripts/deploy.sh`; `my-values/setup-secrets.sh`; `charts/kubeclaw/templates/*.yaml`; Dockerfiles | deployment truth and Helm render commands |

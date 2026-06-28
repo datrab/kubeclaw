@@ -31,7 +31,7 @@ Before changing or adding a diagram:
 
 ```bash
 npm run docs:check
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area docs-surface
+npm run docs:check
 ```
 
 `scripts/docs-check.mjs` verifies that every SVG in this directory has an `<svg>` root, a `<title>`, and a `<desc>`. It does not verify that the diagram content matches source, so content changes still require manual source inspection.

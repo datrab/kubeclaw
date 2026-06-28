@@ -97,8 +97,8 @@ The runtime accepts built-in gate types through the startup plugin registry. Tod
 Use these checks after changing the skill or setup docs:
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area docs-surface
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry-docs
+npm run docs:check
+node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"
 npm run docs:check
 ```
 
@@ -107,7 +107,7 @@ Use these checks after changing the runtime behavior the skill describes:
 ```bash
 node --test tests/skills/nova/pipeline/core/config-plugin-registry.test.mjs
 node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
+node --test tests/verification/e2e/*.test.mjs
 ```
 
 ## Drift Guards

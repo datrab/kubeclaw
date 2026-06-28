@@ -58,33 +58,33 @@ function errorMessage(error: unknown): string {
 }
 
 function buildGeneratorStateSnapshot(config: AnyRecord, progress: AnyRecord, opts: AnyRecord = {}, deps: AnyRecord = {}) {
-  const moduleStatuses = Object.entries(progress?.modules || {}).map(([moduleId, mod = {}]: [string, any]) => {
+  const moduleStatuses = Object.entries(progress?.modules ?? {}).map(([moduleId, mod = {}]: [string, any]) => {
     void mod;
     const authoritative = loadAuthoritativeModuleState(config, progress, moduleId);
-    return authoritative?.status || STATUS.PENDING;
+    return authoritative?.status ?? STATUS.PENDING;
   });
-  const gateStatuses = Object.keys(progress?.gates || {}).map((gateId: string) => {
-    const gate = progress.gates[gateId] || null;
+  const gateStatuses = Object.keys(progress?.gates ?? {}).map((gateId: string) => {
+    const gate = progress.gates[gateId] ?? null;
     const gateProjection = projectPipelineGateState(config, gateId, gate, deps);
-    return gateProjection?.status || 'PENDING';
+    return gateProjection?.status ?? 'PENDING';
   });
 
   return {
     pipeline: {
-      project: config?.project || null,
+      project: config?.project ?? null,
       run_id: getRunId(config),
       terminal_status: opts.terminalStatus ?? null,
       terminal_decision: opts.terminalDecision ?? null,
-      reason_code: opts.reasonCode || null,
-      schedule_reason: opts.scheduleReason || null,
-      mode: opts.mode || 'full',
+      reason_code: opts.reasonCode ?? null,
+      schedule_reason: opts.scheduleReason ?? null,
+      mode: opts.mode ?? 'full',
     },
     modules: {
-      total: Object.keys(progress?.modules || {}).length,
+      total: Object.keys(progress?.modules ?? {}).length,
       status_counts: countByStatus(moduleStatuses),
     },
     gates: {
-      total: Object.keys(progress?.gates || {}).length,
+      total: Object.keys(progress?.gates ?? {}).length,
       status_counts: countByStatus(gateStatuses),
     },
   };
@@ -329,7 +329,7 @@ export function projectValidatorControlResultToStepResult(config: AnyRecord, con
     : outcome === PIPELINE_STEP_OUTCOMES.BLOCKED ? PIPELINE_TERMINAL_ACTIONS.NOTIFY_OPERATOR
       : PIPELINE_TERMINAL_ACTIONS.STOP;
   const correlation = {
-    run_id: config?._runId || config?.run_id || getRunId(config) || null,
+    run_id: config?._runId ?? config?.run_id ?? getRunId(config) ?? null,
     validator_stage_id: stageId,
     validator_type: controlResult?.producerType || validatorProducerType(stageId),
     schedule_key: opts.scheduleKey || null,
@@ -685,7 +685,7 @@ export function findNextStep(config: AnyRecord, progress: AnyRecord, deps: AnyRe
       const gateProjection = projectPipelineGateState(config, gateId, gate, deps);
 
       if (gateProjection?.scheduler_consumed === true || gateProjection?.completed === true) {
-        const source = gateProjection?.completion_source || gateProjection?.projection_source || 'gate_read_model';
+        const source = gateProjection?.completion_source ?? gateProjection?.projection_source ?? 'gate_read_model';
         const status = gateProjection?.status || 'CONSUMED';
         log('INFO', `Gate '${gateId}' already consumed via gate read model (${status}, source=${source}) — skipping`);
         const afterConfigured = firstPendingScheduledValidator(config, progress, 'after', `gate:${gateId}`);

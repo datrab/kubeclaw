@@ -5,7 +5,7 @@ Audience: operator, maintainer, developer
 
 ## Overview
 
-KubeClaw records pipeline behavior in local artifacts, Redis telemetry streams, Discord notifications, and Buster task outputs. Operators should start with local artifacts because they are durable and source-scoped; Redis and Discord are live observability surfaces.
+KubeClaw records pipeline E2E behavior in local artifacts, Redis telemetry streams, Discord notifications, and Buster task outputs. Operators should start with local artifacts because they are durable and source-scoped; Redis and Discord are live observability surfaces.
 
 ## Event Layers
 

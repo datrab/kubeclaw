@@ -2,9 +2,14 @@ import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'runtime/check-buster-startup-smoke' });
 import assert from 'assert';
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import { pathToFileURL } from 'url';
 import { spawnSync } from 'child_process';
+import {
+  importRuntimeModule,
+  materializeRuntimeTree,
+} from '../lib/lifecycle-audit-lib.mjs';
 
 function parseArgs(argv = process.argv.slice(2)) {
   const args = { sourceRoot: process.cwd() };
@@ -87,6 +92,26 @@ assert.equal(
   true,
   'buster --status JSON should include lastRunLogDir',
 );
+
+const runtimeRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-runtime-smoke-'));
+try {
+  materializeRuntimeTree(sourceRoot, null, 'sandbox', runtimeRoot);
+  const runtimeGitPrimitives = path.join(runtimeRoot, 'app', 'skills', 'pipeline', 'git-primitives.ts');
+  const runtimeGitPrimitivesSource = fs.readFileSync(runtimeGitPrimitives, 'utf8');
+  assert.equal(
+    runtimeGitPrimitivesSource.includes('/app/nova/'),
+    false,
+    'packaged Buster git-primitives must not import Nova runtime paths',
+  );
+  assert.equal(
+    runtimeGitPrimitivesSource.includes("from './platform-config.ts'"),
+    true,
+    'packaged Buster git-primitives must import adjacent shared platform-config',
+  );
+  await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/git-primitives.ts');
+} finally {
+  fs.rmSync(runtimeRoot, { recursive: true, force: true });
+}
 
 quietConsole.restore();
 console.log('Buster startup smoke passed');

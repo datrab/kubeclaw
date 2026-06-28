@@ -8,13 +8,9 @@ This directory is the canonical home for repo verification entrypoints and verif
 ./tests/verification/run-fast-verification.sh
 ```
 
-The fast wrapper avoids Helm, kubeconform, live subagent, ACP, Redis, and cluster dependencies. It runs Nova/Buster startup smokes, local runtime guards, contract checks, docs checks, and selected fast behavior areas.
+The fast wrapper avoids Helm, kubeconform, live subagent, ACP, Redis, and cluster dependencies. It runs the canonical real pipeline E2E fast scenario, Nova/Buster startup smokes, local runtime guards, contract checks, and docs checks.
 
-Controls:
-
-- `BEHAVIOR_AREAS=a,b` selects fast behavior areas
-- `SKIP_FAST_BEHAVIOR=1` runs contract/runtime-only feedback
-- `--verbose` or `VERIFICATION_VERBOSE=1` streams step banners and passing output
+Use `--verbose` or `VERIFICATION_VERBOSE=1` to stream step banners and passing output.
 
 ## Full Verification
 
@@ -22,7 +18,7 @@ Controls:
 ./tests/verification/run-full-verification.sh
 ```
 
-The full wrapper is exhaustive and fail-fast. It runs deployment truth, runtime guards, Nova/Buster startup smokes, live subagent and ACP launch smokes, required live Redis smoke, the deterministic contract suite, docs checks, whitespace checks, and the full behavior harness.
+The full wrapper is exhaustive and fail-fast. It runs the canonical real pipeline E2E full scenario, retry success scenario, failure matrix, deployment truth, runtime guards, Nova/Buster startup smokes, live subagent and ACP launch smokes, required live Redis smoke, the deterministic contract suite, docs checks, and whitespace checks.
 
 Wrapper output:
 
@@ -50,22 +46,18 @@ ACP launch reachability can also be checked directly:
 - `tests/verification/deployment/check-deployment-truth.mjs`: deployment-surface guard
 - `tests/verification/contracts/check-telemetry-contract.mjs`: telemetry contract guard
 - `tests/verification/lib/run-contract-suite.sh`: deterministic contract-suite helper
-- `tests/verification/behavior/verify.mjs`: behavior harness
-
-## Direct Behavior Harness
+## Direct Real E2E Harness
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD"
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --list-areas
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area repo-docs
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --areas foundations,polling
+node tests/verification/e2e/run-real-pipeline-e2e.mjs --mode fast
+node tests/verification/e2e/run-real-pipeline-e2e.mjs --mode full
+node tests/verification/e2e/run-real-pipeline-failure-matrix.mjs --mode full --continue-on-failure
 ```
 
-Passing checks are quiet by default and print the final JSON summary. Runtime logs for a check are buffered and printed if that check fails. Use `--verbose` or `VERIFICATION_VERBOSE=1` to stream runtime logs and include passed check names.
+The matrix writes structured result JSON and renders Markdown review reports from those results.
 
 ## Prerequisites
 
-- direct behavior-harness runs require `python` on `PATH`
 - the fast/full wrappers provide a local verification convenience shim from `python` to `python3` when only `python3` is installed
 - on Debian or Ubuntu, install `python3` plus `python-is-python3`
 - `docker/Dockerfile.general` satisfies the general verifier environment
@@ -75,7 +67,7 @@ Passing checks are quiet by default and print the final JSON summary. Runtime lo
 - `skills/nova/pipeline.ts` is the bounded compatibility entrypoint and thin compatibility entrypoint shim for the modular Nova pipeline implementation under `skills/nova/pipeline/`
 - `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` is the authoritative telemetry contract for canonical inventory, stream identity, and compatibility boundaries
 - `docs/telemetry-event-schema.md` is the event-by-event payload reference and stays in inventory parity with that contract
-- `tests/verification/behavior-verification.md` is the behavior verification explainer
+- `tests/verification/e2e/README.md` is the canonical real pipeline E2E harness explainer
 - `tests/verification/packaging-verification.md` is the packaging verification explainer
 - `scripts/` is the home for operator utilities like `deploy.sh` and `setup.sh`
 - `scripts/deploy.sh image [nova|buster|both]`, `scripts/deploy.sh code [nova|buster|both]`, `scripts/deploy.sh smoke`, and `scripts/deploy.sh smoke-agent <nova|buster>` are the live deployment command surface

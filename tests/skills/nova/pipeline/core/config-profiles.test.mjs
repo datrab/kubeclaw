@@ -12,6 +12,8 @@ import { validateConfig } from '../../../../../skills/nova/pipeline/core/config.
 
 const sourceRoot = path.resolve(new URL('../../../../../', import.meta.url).pathname);
 const compactConfigPath = path.join(sourceRoot, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json');
+const novaStandardProfilePath = path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'core', 'config-profiles', 'standard.json');
+const commonStandardProfilePath = path.join(sourceRoot, 'skills', 'common', 'pipeline', 'config-profiles', 'standard.json');
 const examplesDir = path.join(sourceRoot, 'docs', 'examples', 'swarm-config');
 
 function loadCompactConfig() {
@@ -66,6 +68,13 @@ test('standard compact swarm config expands to the complete runtime config shape
   assert.equal(expanded.gateway.invoke.session_spawn.timeout_ms, 30000);
   assert.equal(expanded.session.kill.stop_message, '/stop');
   assert.equal(expanded.buster.runtime.task_stream, 'swarm:buster:tasks');
+});
+
+test('shared runtime standard profile stays identical to the Nova reference profile', () => {
+  assert.equal(
+    fs.readFileSync(commonStandardProfilePath, 'utf8'),
+    fs.readFileSync(novaStandardProfilePath, 'utf8'),
+  );
 });
 
 test('authored swarm config stays compact for humans and agents', () => {

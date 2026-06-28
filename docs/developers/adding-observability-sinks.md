@@ -100,7 +100,7 @@ Example config shape:
 Run telemetry-related behavior checks:
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry
+node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"
 ```
 
 Then verify docs and generated references:

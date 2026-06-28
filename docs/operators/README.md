@@ -45,8 +45,8 @@ Use these guides to install, run, debug, recover, maintain, and secure KubeClaw.
 ```bash
 npm run docs:check
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area deployment-surface
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area runtime-monitor
+node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
+node --test tests/verification/e2e/*.test.mjs
 git diff --check
 ```
 

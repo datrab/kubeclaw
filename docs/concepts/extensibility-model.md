@@ -21,12 +21,12 @@ KubeClaw is extended through source-owned seams: Nova pipeline features, plugin 
 
 | Extension | Source owner | Inputs | Outputs | Verification |
 | --- | --- | --- | --- | --- |
-| Pipeline stage behavior | `skills/nova/pipeline/runners/module-runner.ts`; `skills/nova/pipeline/runners/gate-runner.ts`; `skills/nova/pipeline/runners/waitable-gate-engine.ts` | `.swarm/progress.json`, stage IDs, module/gate config, runtime policy | lifecycle transitions, artifacts, terminal decisions | `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline` |
+| Pipeline stage behavior | `skills/nova/pipeline/runners/module-runner.ts`; `skills/nova/pipeline/runners/gate-runner.ts`; `skills/nova/pipeline/runners/waitable-gate-engine.ts` | `.swarm/progress.json`, stage IDs, module/gate config, runtime policy | lifecycle transitions, artifacts, terminal decisions | `node --test tests/verification/e2e/*.test.mjs` |
 | Plugin registry modules | `skills/nova/pipeline/core/registry.ts`; `skills/nova/pipeline/core/registry/*.ts`; `charts/kubeclaw/files/config/swarm.config.json` | `plugins.enabled`, `plugins.modules`, `plugins.stageOwners`, `plugins.extraModulePaths`, hook/gate manifests | startup-frozen registry, stage owners, gate type owners | `node --test tests/skills/nova/pipeline/core/config-plugin-registry.test.mjs` |
 | Buster suites | `skills/buster/pipeline/suites/*.ts`; `skills/buster/pipeline/runners/suite-runner.ts`; `skills/buster/pipeline/services/capabilities.ts` | task suites, capability flags, app URL/commands, Kubernetes or browser config | suite verdicts and Buster completion payloads | `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"` |
-| Verification areas | `tests/verification/behavior/areas/*.mjs`; `tests/verification/contracts/*.mjs`; `tests/verification/deployment/check-deployment-truth.mjs` | source root, claim-specific fixtures, rendered manifests | pass/fail output and checked counts | `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area docs-surface` |
+| Verification areas | `tests/verification/e2e/*.test.mjs`; `tests/verification/contracts/*.mjs`; `tests/verification/deployment/check-deployment-truth.mjs` | source root, claim-specific fixtures, rendered manifests | pass/fail output and checked counts | `npm run docs:check` |
 | Generated docs references | `scripts/docs-inventory.mjs`; `scripts/docs-generate.mjs`; `scripts/docs-check.mjs` | deploy script, secret helper, values files, generated inventory JSON | generated sections in reference pages | `npm run docs:check` |
-| Observability sinks | `skills/nova/pipeline/services/telemetry-sink-contract.ts`; `skills/nova/pipeline/services/telemetry/dispatch.ts`; `plugins/openclaw-agent-observer/src/index.ts` | flat telemetry event envelopes and sink config | Redis streams, Discord artifacts, observer plugin streams | `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry-docs` |
+| Observability sinks | `skills/nova/pipeline/services/telemetry-sink-contract.ts`; `skills/nova/pipeline/services/telemetry/dispatch.ts`; `plugins/openclaw-agent-observer/src/index.ts` | flat telemetry event envelopes and sink config | Redis streams, Discord artifacts, observer plugin streams | `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"` |
 
 ## Runtime Boundaries
 
@@ -39,9 +39,9 @@ KubeClaw is extended through source-owned seams: Nova pipeline features, plugin 
 
 ```bash
 node --test tests/skills/nova/pipeline/core/config-plugin-registry.test.mjs
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
+node --test tests/verification/e2e/*.test.mjs
 node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry-docs
+node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"
 npm run docs:check
 ```
 

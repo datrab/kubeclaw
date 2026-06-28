@@ -13,10 +13,10 @@ Document the verification commands and CI surfaces visible in this repository.
 ./tests/verification/run-fast-verification.sh
 ./tests/verification/run-full-verification.sh
 npm run docs:check
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area docs-surface
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area deployment-surface
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry-docs
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area restart-recovery
+npm run docs:check
+node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
+node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"
+node --test tests/verification/e2e/*.test.mjs
 node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"
 node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
@@ -48,9 +48,9 @@ CI/image documentation is in `../deployment/ci-and-image-publishing.md`. The cur
 | full verification | `./tests/verification/run-full-verification.sh` | exhaustive local verification with live subagent, ACP, Redis, docs, whitespace, deployment, contract, and behavior surfaces |
 | docs inventory and generated references | `npm run docs:check` | any doc, generator, generated inventory, chart/value/script reference changes |
 | deployment truth | `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` | chart, values, deploy script, images, secrets, NetworkPolicy, or live operator docs change |
-| pipeline behavior | `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline` | module/gate scheduling, config, state, or runner behavior changes |
+| pipeline E2E behavior | `node --test tests/verification/e2e/*.test.mjs` | module/gate scheduling, config, state, or runner behavior changes |
 | Buster contract | `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"` | Buster task, Redis, suite, completion, ACK, or dead-letter behavior changes |
 | status/recovery contract | `node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"` | lifecycle, read model, artifact, recovery, or status docs change |
-| telemetry docs/contract | `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry-docs` and `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"` | telemetry event, sink, observer, or generated event docs change |
+| telemetry docs/contract | `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"` and `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"` | telemetry event, sink, observer, or generated event docs change |
 
 Record any command that remains local-only in the changed doc. Do not imply CI protects a behavior unless a workflow actually runs that verifier.

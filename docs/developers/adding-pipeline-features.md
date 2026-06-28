@@ -5,7 +5,7 @@ Audience: developer
 
 ## Purpose
 
-Describe the safest path for adding Nova pipeline behavior.
+Describe the safest path for adding Nova pipeline E2E behavior.
 
 ## Approach
 
@@ -39,7 +39,7 @@ Terminal behavior must use typed `terminal_status`, `terminal_decision`, and `re
 | New plugin/extension hook | `skills/nova/pipeline/core/registry.ts`; `skills/nova/pipeline/core/registry/validation.ts`; `skills/nova/pipeline/core/context.ts` | stage owner, capability allowlist, and invocation envelope must be explicit | plugin registry entry and bounded invocation envelope | config registry tests plus `node tests/verification/contracts/check-stage-envelope-primitives-surface.mjs --source-root "$PWD"` |
 | New module or gate execution behavior | `skills/nova/pipeline/runners/module-runner.ts`; `skills/nova/pipeline/runners/gate-runner.ts`; focused runner file | use typed worker/gate control result and terminal decision helpers | lifecycle events, status read model, artifacts, telemetry | runner unit tests plus `node tests/verification/contracts/check-module-runner-slice-surface.mjs --source-root "$PWD"` |
 | New Buster task field or suite capability | `skills/buster/pipeline/services/task-validation.ts`; `skills/buster/pipeline/services/capabilities.ts`; suite runner files | Buster task payload must validate identity, capability, timeout, and repo-relative path boundaries | Redis completion or dead-letter before ACK | `node --test tests/skills/buster/pipeline/services/task-validation.test.mjs tests/skills/buster/pipeline/services/task-completion.test.mjs`; Buster contract check |
-| New artifact or telemetry surface | `skills/nova/pipeline/services/artifact-bundle.ts`; `skills/nova/pipeline/services/telemetry/builders.ts`; `skills/nova/pipeline/services/telemetry/dispatch.ts`; `skills/nova/pipeline/services/telemetry-sink-contract.ts` | event envelope stays flat; artifact path stays inside run/plugin artifact roots | `pipeline.jsonl`, Redis telemetry stream, artifact index or summary file | `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry-docs`; telemetry contract check |
+| New artifact or telemetry surface | `skills/nova/pipeline/services/artifact-bundle.ts`; `skills/nova/pipeline/services/telemetry/builders.ts`; `skills/nova/pipeline/services/telemetry/dispatch.ts`; `skills/nova/pipeline/services/telemetry-sink-contract.ts` | event envelope stays flat; artifact path stays inside run/plugin artifact roots | `pipeline.jsonl`, Redis telemetry stream, artifact index or summary file | `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"`; telemetry contract check |
 
 ## Failure Modes To Preserve
 
@@ -57,8 +57,8 @@ Common closeout set:
 
 ```bash
 npm run docs:check
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry-docs
+node --test tests/verification/e2e/*.test.mjs
+node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"
 node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"
 node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"
 git diff --check

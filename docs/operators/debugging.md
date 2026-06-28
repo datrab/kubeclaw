@@ -86,6 +86,6 @@ Common deployment failures show up before the main process starts:
 | Runtime config | `/config/openclaw.json`, `/runtime-config/openclaw.json`, `/home/node/.openclaw/swarm.config.json` inside the pod | rendered config, SecretRef normalization, and active swarm config path |
 | Pipeline artifacts | `.swarm/logs/pipeline/latest.json`, `runs/<run_id>/pipeline.jsonl`, `summary.json`, lifecycle read models | run state, durable audit log, terminal status, and recovery identity |
 | Redis streams | `swarm:<agent>:tasks`, completion stream, `:dead-letter`, telemetry stream | live work queue, Buster completion/dead-letter, and observability events |
-| Docs/source proof | deployment truth, behavior areas, contract checks | whether the repository still matches the documented claim |
+| Docs/source proof | deployment truth, real E2E scenarios, contract checks | whether the repository still matches the documented claim |
 
 If layers disagree, prefer durable pipeline artifacts over presentation surfaces. Discord messages and external sink output are useful audit evidence, but they are not scheduler truth.

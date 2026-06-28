@@ -42,7 +42,7 @@ export TAILSCALE_OPERATOR_ENABLED=false
 
 ```bash
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area deployment-surface
+node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 kubectl -n "$NAMESPACE" get pods,svc,pvc,networkpolicy
 ```
 

@@ -11,7 +11,7 @@ Reason: The runner and status store write lifecycle, `latest.json`, summaries, a
 
 Source proof: `skills/nova/pipeline/runners/pipeline-runner.ts`, `skills/nova/pipeline/runners/pipeline-runner-terminal.ts`, `skills/nova/pipeline/services/status-store.ts`, `skills/nova/pipeline/services/status-store-lifecycle/appenders.ts`, and `skills/nova/pipeline/services/artifact-bundle.ts`.
 
-Verification: `node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"` and `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area restart-recovery`.
+Verification: `node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"` and `node --test tests/verification/e2e/*.test.mjs`.
 
 ## Buster typed tasks
 

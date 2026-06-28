@@ -52,7 +52,7 @@ Orient new readers to the repository before they edit docs, deployment files, pi
 ```bash
 npm run docs:check
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area docs-surface
+npm run docs:check
 ```
 
 ## Source Of Truth Order

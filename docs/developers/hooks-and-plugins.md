@@ -145,7 +145,7 @@ Runtime plugin failures should return typed control results or explicit degraded
 Run the behavior verification area that covers registry/operator surfaces when plugin behavior changes:
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area operator-surface
+node --test tests/verification/e2e/*.test.mjs
 ```
 
 Also run docs/reference checks when plugin docs or generated references change:

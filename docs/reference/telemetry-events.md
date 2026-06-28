@@ -62,8 +62,8 @@ The envelope is flat. Event-specific fields live beside `v`, `type`, `ts`, `run_
 Verification:
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry-docs
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area docs-surface
+node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"
+npm run docs:check
 ```
 
 ## Generated From

@@ -22,7 +22,7 @@ Use this section when you need to understand which part of the system owns a beh
 | Concept | Current owner | Main artifacts or state | Verification |
 | --- | --- | --- | --- |
 | Platform deployment | `scripts/deploy.sh`; `my-values/setup-secrets.sh`; `charts/kubeclaw/templates/*.yaml`; `my-values/*.yaml`; `my-values/infra/*.yaml` | Kubernetes namespace, Secrets, Helm releases, PVCs, ConfigMaps, NetworkPolicies, Services | `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` |
-| Pipeline orchestration | `skills/nova/pipeline/cli.ts`; `skills/nova/pipeline/core/config.ts`; `skills/nova/pipeline/runners/*.ts` | `.swarm/progress.json`, module/gate lifecycle, terminal decisions | `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline` |
+| Pipeline orchestration | `skills/nova/pipeline/cli.ts`; `skills/nova/pipeline/core/config.ts`; `skills/nova/pipeline/runners/*.ts` | `.swarm/progress.json`, module/gate lifecycle, terminal decisions | `node --test tests/verification/e2e/*.test.mjs` |
 | Buster worker boundary | `skills/buster/buster-pipeline.ts`; `skills/buster/pipeline/services/task-*.ts`; `skills/buster/pipeline/runners/suite-runner.ts` | Redis task/completion/dead-letter streams, suite verdicts, diagnostics | `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"` |
 | State and evidence | `skills/nova/pipeline/services/status-store.ts`; `skills/nova/pipeline/services/artifact-bundle.ts`; `skills/nova/pipeline/services/telemetry*.ts` | `canonical-events.jsonl`, `read-models.json`, `latest.json`, run-scoped `pipeline.jsonl`, telemetry streams | `node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"` |
 | Documentation and reference generation | `scripts/docs-check.mjs`; `scripts/docs-inventory.mjs`; `scripts/docs-generate.mjs` | `docs/generated/inventory/*.json`, generated sections in reference docs | `npm run docs:check` |
@@ -34,14 +34,14 @@ From the repository root:
 ```bash
 npm run docs:check
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
+node --test tests/verification/e2e/*.test.mjs
 ```
 
 Failure signals:
 
 - A docs check failure means a link, generated reference, diagram metadata, or required operator-doc section drifted.
 - A deployment truth failure means a claim about Helm, images, NetworkPolicies, runtime config, Services, RBAC, or smoke checks no longer matches source.
-- A pipeline behavior or contract failure means concept text about lifecycle, task handoff, status, or telemetry needs to be rechecked before publishing.
+- A pipeline E2E behavior or contract failure means concept text about lifecycle, task handoff, status, or telemetry needs to be rechecked before publishing.
 
 ## Known Limits
 

@@ -48,8 +48,8 @@ function prepareResumeLifecycleContext(config: AnyRecord = {}) {
     const runId = typeof latest?.run_id === 'string' ? latest.run_id.trim() : '';
     if (!runId) return;
     if (runId.includes('\0') || runId.includes('/') || runId.includes('\\') || runId === '.' || runId === '..') return;
-    config._runId = config._runId || runId;
-    config.run_id = config.run_id || runId;
+    config._runId ??= runId;
+    config.run_id ??= runId;
     config._lifecycleReadOnlyRunLogDir = path.join(swarmDir, 'logs', 'pipeline', 'runs', runId);
   } catch (_error) {
     return;
@@ -58,14 +58,14 @@ function prepareResumeLifecycleContext(config: AnyRecord = {}) {
 
 export function normalizeNovaCliFlags(rawFlags: AnyRecord = {}, env: AnyRecord = {}) {
   return Object.freeze({
-    project: rawFlags.project || env.CURRENT_PROJECT,
-    repo: rawFlags.repo || env.REPO_ROOT,
+    project: rawFlags.project ?? env.CURRENT_PROJECT,
+    repo: rawFlags.repo ?? env.REPO_ROOT,
     module: rawFlags.module,
     blueprint: rawFlags.blueprint,
     blueprintList: rawFlags['blueprint-list'] === true,
     prompt: rawFlags.prompt,
     promptFile: rawFlags['prompt-file'],
-    novaChannel: rawFlags['nova-channel'] || env.NOVA_CHANNEL,
+    novaChannel: rawFlags['nova-channel'] ?? env.NOVA_CHANNEL,
     runtimeModel: rawFlags.model,
     runtimeThinking: rawFlags.thinking,
     resume: rawFlags.resume === true,

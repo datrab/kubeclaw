@@ -17,14 +17,12 @@ const { sourceRoot } = parseArgs();
 const helperPath = path.join(sourceRoot, 'tests/verification/lib/run-contract-suite.sh');
 const shellHelperPath = path.join(sourceRoot, 'tests/verification/lib/verification-shell.sh');
 const cleanupPath = path.join(sourceRoot, 'tests/verification/lib/cleanup-home-artifacts.sh');
-const behaviorPath = path.join(sourceRoot, 'tests/verification/behavior/verify.mjs');
 const fastPath = path.join(sourceRoot, 'tests/verification/run-fast-verification.sh');
 const fullPath = path.join(sourceRoot, 'tests/verification/run-full-verification.sh');
 
 const helperSource = fs.readFileSync(helperPath, 'utf8');
 const shellHelperSource = fs.readFileSync(shellHelperPath, 'utf8');
 const cleanupSource = fs.readFileSync(cleanupPath, 'utf8');
-const behaviorSource = fs.readFileSync(behaviorPath, 'utf8');
 const fastSource = fs.readFileSync(fastPath, 'utf8');
 const fullSource = fs.readFileSync(fullPath, 'utf8');
 
@@ -49,7 +47,9 @@ assert.equal(cleanupSource.includes('operator-alert-fallback-contract-*'), true,
 assert.equal(cleanupSource.includes('observability-ingester-test-*'), true, 'cleanup helper should cover observability ingester artifacts');
 assert.equal(cleanupSource.includes('[[ "$HOME_ROOT" != "/home" ]]'), true, 'cleanup helper should refuse broad non-/home roots');
 assert.equal(cleanupSource.includes('[[ "$WORKSPACE_ROOT" != "/home/node/.openclaw/workspace" ]]'), true, 'cleanup helper should refuse unexpected workspace roots');
-assert.equal(behaviorSource.includes('tests/verification/lib/cleanup-home-artifacts.sh'), true, 'behavior harness should run shared artifact cleanup directly');
+assert.equal(fs.existsSync(path.join(sourceRoot, 'tests/verification/behavior/verify.mjs')), false, 'retired behavior harness should stay removed');
+assert.equal(fastSource.includes('tests/verification/behavior/verify.mjs'), false, 'fast wrapper should not invoke retired behavior harness');
+assert.equal(fullSource.includes('tests/verification/behavior/verify.mjs'), false, 'full wrapper should not invoke retired behavior harness');
 assert.equal(/for contract in \\/.test(fastSource), false, 'fast wrapper should not own a private contract list');
 assert.equal(/run_step "buster operator surface"/.test(fullSource), false, 'full wrapper should not keep stale hand-expanded contract steps');
 assert.equal(helperSource.includes('check-verification-wrapper-surface.mjs'), true, 'shared contract helper should include this drift guard');
@@ -102,8 +102,8 @@ assert.equal(fullSource.includes('npm run docs:check'), true, 'full wrapper shou
 assert.equal(fastSource.includes('npm run docs:check'), true, 'fast wrapper should include docs checks');
 assert.equal(fullSource.includes('git diff --check'), true, 'full wrapper should include whitespace checks');
 assert.equal(fullSource.includes('ACP launch reachability is local-only and is not part of the default clean-checkout gate.'), false, 'full wrapper should not describe ACP as outside the full gate');
-assert.equal(fastSource.includes('SKIP_FAST_BEHAVIOR'), true, 'fast wrapper should keep fast-only behavior skip switch');
-assert.equal(fastSource.includes('--areas "$BEHAVIOR_AREAS"'), true, 'fast wrapper should keep selected behavior area support');
+assert.equal(fastSource.includes('SKIP_FAST_BEHAVIOR'), false, 'fast wrapper should not keep retired behavior skip switch');
+assert.equal(fastSource.includes('BEHAVIOR_AREAS'), false, 'fast wrapper should not keep retired behavior area selection');
 
 quietConsole.restore();
 console.log(JSON.stringify({ ok: true, checked: requiredContracts.length, contracts: listed.length }));

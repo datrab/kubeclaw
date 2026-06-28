@@ -4,7 +4,6 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 CONTRACT_PATH="$REPO_DIR/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md"
-BEHAVIOR_AREAS="${BEHAVIOR_AREAS:-foundations,runtime-surface,redaction-surface,shell-boundary}"
 source "$REPO_DIR/tests/verification/lib/verification-shell.sh"
 
 TEMP_DIR="$(mktemp -d)"
@@ -77,16 +76,3 @@ run_step "deterministic contract suite" \
 
 run_step "docs check" \
   npm run docs:check
-
-if [[ "${SKIP_FAST_BEHAVIOR:-0}" != "1" ]]; then
-  run_step "behavior fast areas: $BEHAVIOR_AREAS" \
-    node tests/verification/behavior/verify.mjs \
-    --source-root "$REPO_DIR" \
-    --contract "$CONTRACT_PATH" \
-    --areas "$BEHAVIOR_AREAS"
-else
-  if verification_verbose_enabled; then
-    echo ""
-    echo "[fast-verification] skipping behavior areas because SKIP_FAST_BEHAVIOR=1"
-  fi
-fi

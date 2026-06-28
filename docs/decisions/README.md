@@ -20,7 +20,7 @@ Use these pages when a reader needs to know why the current implementation is sh
 
 | Decision area | Source owners | Verification |
 | --- | --- | --- |
-| Architecture | `skills/nova/pipeline/runners/*.ts`; `skills/nova/pipeline/services/status-store.ts`; `skills/buster/pipeline/services/task-queue.ts`; `scripts/docs-check.mjs` | `node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline`; `npm run docs:check` |
+| Architecture | `skills/nova/pipeline/runners/*.ts`; `skills/nova/pipeline/services/status-store.ts`; `skills/buster/pipeline/services/task-queue.ts`; `scripts/docs-check.mjs` | `node --test tests/verification/e2e/*.test.mjs`; `npm run docs:check` |
 | Deployment | `scripts/deploy.sh`; `charts/kubeclaw/templates/*.yaml`; `my-values/*.yaml`; `my-values/infra/*.yaml`; Dockerfiles and workflows | `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` |
 | Pipeline contracts | `skills/nova/pipeline/services/contracts/*.ts`; `skills/buster/pipeline/services/task-*.ts`; `skills/nova/pipeline/core/registry.ts` | pipeline terminal/step-result contract checks; Buster and registry tests |
 | Security | `charts/kubeclaw/templates/secret.yaml`; `charts/kubeclaw/templates/rbac.yaml`; `my-values/infra/network-policies.yaml`; `skills/common/pipeline/security.ts`; `skills/common/pipeline/redaction.ts` | deployment truth; security and redaction tests |

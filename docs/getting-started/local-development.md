@@ -32,12 +32,12 @@ node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PW
 git diff --check
 ```
 
-For behavior areas:
+For real E2E scenarios:
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area docs-surface
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area deployment-surface
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
+npm run docs:check
+node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
+node --test tests/verification/e2e/*.test.mjs
 ```
 
 For generated references:
@@ -51,10 +51,10 @@ npm run docs:generate:check
 
 | Change | Inspect | Run |
 | --- | --- | --- |
-| Docs links, diagrams, examples, conventions | `docs/**`; `scripts/docs-check.mjs`; `tests/verification/behavior/areas/docs-surface.mjs` | `npm run docs:check`; docs-surface behavior area |
+| Docs links, diagrams, examples, conventions | `docs/**`; `scripts/docs-check.mjs`; `scripts/docs-check.mjs` | `npm run docs:check`; docs check |
 | Generated reference output | `scripts/docs-inventory.mjs`; `scripts/docs-generate.mjs`; `docs/generated/inventory/*.json` | `npm run docs:inventory:check`; `npm run docs:generate:check` |
 | Deployment script, values, chart, images | `scripts/deploy.sh`; `my-values/**`; `charts/kubeclaw/**`; `docker/**`; `.github/workflows/build-images.yaml` | Helm render; deployment truth; deployment-surface behavior area |
-| Nova pipeline | `skills/nova/pipeline/cli.ts`; `core/**`; `runners/**`; `services/**` | pipeline behavior area; pipeline/status-store contract checks |
+| Nova pipeline | `skills/nova/pipeline/cli.ts`; `core/**`; `runners/**`; `services/**` | pipeline E2E behavior area; pipeline/status-store contract checks |
 | Buster worker | `skills/buster/buster-pipeline.ts`; `skills/buster/pipeline/services/**`; `skills/buster/pipeline/suites/**` | Buster contract check; focused Buster unit tests |
 | Telemetry and observer | `skills/nova/pipeline/services/telemetry*.ts`; `skills/common/pipeline/telemetry.ts`; `plugins/openclaw-agent-observer/src/**` | telemetry-docs behavior area; telemetry contract check |
 
@@ -69,7 +69,7 @@ npm run docs:generate:check
 
 - `docs:inventory:check` or `docs:generate:check` failure means generated files are stale; regenerate or update the generator.
 - Deployment truth failure means rendered source behavior and docs/examples are out of sync.
-- A behavior verifier failure should be treated as source or test drift, not a documentation-only problem, until the failing assertion is understood.
+- A real E2E verifier failure should be treated as source or test drift, not a documentation-only problem, until the failing assertion is understood.
 - `git diff --check` failure means whitespace errors need cleanup before handoff.
 
 ## Working Rules
@@ -77,5 +77,5 @@ npm run docs:generate:check
 - If you change Helm templates or production values, render Nova and Buster.
 - If you change deployment documentation, run the deployment truth check.
 - If you change docs layout, run `docs-surface`.
-- If you change pipeline behavior, choose the narrow behavior area that covers the modified surface and add coverage when needed.
+- If you change pipeline E2E behavior, choose the narrow behavior area that covers the modified surface and add coverage when needed.
 - If behavior cannot be verified from local source or tests, document it as an open question instead of a fact.

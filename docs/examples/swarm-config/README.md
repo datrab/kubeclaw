@@ -52,7 +52,7 @@ kubectl -n kubeclaw exec deploy/agent-nova -- \
 ```bash
 node --test tests/skills/nova/pipeline/core/config-plugin-registry.test.mjs
 node --test tests/skills/nova/pipeline/core/path-segments.test.mjs
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
+node --test tests/verification/e2e/*.test.mjs
 ```
 
 ## Limits

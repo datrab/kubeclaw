@@ -112,6 +112,6 @@ Verification:
 
 ```bash
 node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area restart-recovery
+node --test tests/verification/e2e/*.test.mjs
 node tests/verification/contracts/check-artifact-authority-slice-surface.mjs --source-root "$PWD"
 ```

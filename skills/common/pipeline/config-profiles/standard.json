@@ -1,0 +1,253 @@
+{
+  "_doc": "Expanded standard swarm profile. Versioned product baseline for strict, deterministic, high-retention pipeline runtime behavior.",
+  "discord_webhook_url": "",
+  "discord_alerts": {
+    "info": true,
+    "warn": true,
+    "critical": true,
+    "ok": true
+  },
+  "pipeline_defaults": {
+    "timeout_minutes": 300,
+    "max_fails": 8,
+    "auto_retry_threshold": 7,
+    "agent_startup_retry_budget": 3,
+    "session_nudge_threshold": 0.75
+  },
+  "rate_limit": {
+    "cooldown_hours": 2,
+    "max_pauses_per_module": 5,
+    "cooldown_buffer_ms": 5000
+  },
+  "polling": {
+    "interval_seconds": 30,
+    "progress_interval_ms": 30000,
+    "session_end_grace_ms": 15000
+  },
+  "locks": {
+    "lifecycle_append": {
+      "stale_ms": 300000,
+      "timeout_ms": 30000
+    },
+    "gate_active_session": {
+      "stale_ms": 300000,
+      "timeout_ms": 30000
+    },
+    "pipeline_run": {
+      "lease_ms": 120000,
+      "heartbeat_ms": 30000,
+      "mutation_stale_ms": 5000,
+      "abort_settle_ms": 5000
+    }
+  },
+  "git": {
+    "command": {
+      "timeout_ms": 30000,
+      "max_buffer_bytes": 52428800
+    },
+    "push": {
+      "timeout_ms": 60000,
+      "max_attempts": 3,
+      "retry_delay_ms": 5000
+    }
+  },
+  "redis_completion": {
+    "archive_max_len": 1000,
+    "tail_scan_batch_size": 100,
+    "tail_scan_limit": 1000
+  },
+  "event_adapters": {
+    "local_evidence_debounce_ms": 100,
+    "approval_signal_debounce_ms": 25
+  },
+  "discord": {
+    "webhook_timeout_ms": 10000
+  },
+  "gateway": {
+    "invoke": {
+      "retry": {
+        "max_attempts": 3,
+        "retry_delay_ms": 5000
+      },
+      "session_status": {
+        "timeout_ms": 10000
+      },
+      "session_spawn": {
+        "timeout_ms": 30000
+      },
+      "session_send": {
+        "timeout_ms": 15000
+      },
+      "subagent_kill": {
+        "timeout_ms": 30000
+      },
+      "subagent_list": {
+        "timeout_ms": 30000
+      },
+      "health": {
+        "timeout_ms": 5000
+      }
+    },
+    "health": {
+      "timeout_ms": 120000,
+      "interval_ms": 3000,
+      "monitor_interval_ms": 60000,
+      "max_failures": 3
+    }
+  },
+  "session": {
+    "health_check_timeout_ms": 10000,
+    "spawn": {
+      "thread": false,
+      "mode": "run",
+      "cleanup": "keep",
+      "stream_to": "parent"
+    },
+    "kill": {
+      "acp_confirm_timeout_ms": 15000,
+      "subagent_confirm_timeout_ms": 120000,
+      "confirm_poll_ms": 2000,
+      "cleanup_confirm_timeout_ms": "match_confirm_timeout",
+      "acpx_timeout_ms": 10000,
+      "stop_message": "/stop"
+    },
+    "termination": {
+      "grace_ms": 5000,
+      "max_grace_ms": 10000,
+      "poll_ms": 500,
+      "gateway_request_max_ms": 1000,
+      "cleanup_confirm_timeout_ms": 0,
+      "gateway_operation_timeout_ms": 1000,
+      "acpx_timeout_ms": 1000
+    }
+  },
+  "buster": {
+    "runtime": {
+      "task_stream": "swarm:buster:tasks",
+      "heartbeat_path": "/tmp/kubeclaw-buster-heartbeat",
+      "heartbeat_interval_ms": 1000,
+      "task_poll_interval_ms": 2000,
+      "task_pending_reclaim_idle_ms": 60000,
+      "completion_event_block_ms": 0,
+      "completion_recovery_scan_interval_ms": 5000,
+      "task_stream_max_len": 250,
+      "suite_timeout_ms": 300000,
+      "max_crash_retries": 2
+    }
+  },
+  "acp_monitor": {
+    "poll_limit": 10,
+    "max_transcript_extensions": 3,
+    "transcript_grace_ms": 300000,
+    "monitor_poll_ms": 10000
+  },
+  "telemetry": {
+    "enabled": true,
+    "sink_timeout_ms": 5000,
+    "stream_max_len": 10000
+  },
+  "arch_validation": {
+    "enabled": true,
+    "agent_enabled": false,
+    "timeout_minutes": 15
+  },
+  "agent_observability": {
+    "required": true,
+    "payload": {
+      "max_event_bytes": 3145728
+    },
+    "startup_evidence": {
+      "timeout_ms": 15000,
+      "block_ms": 250
+    },
+    "forge_completion": {
+      "xread_block_ms": 1,
+      "settle_ms": 15000
+    },
+    "streams": {
+      "stream_max_len": 10000,
+      "dead_letter_max_len": 1000
+    },
+    "plugin": {
+      "enabled": true,
+      "max_queue_per_stream": 100,
+      "control_write": {
+        "max_attempts": 3,
+        "retry_base_ms": 100,
+        "retry_max_ms": 1000
+      },
+      "hook": {
+        "priority": -100,
+        "timeout_ms": 1000
+      }
+    },
+    "plugin_control": {
+      "enabled": true,
+      "pluginId": "kubeclaw-agent-observer",
+      "command": "openclaw",
+      "disableOnStop": true,
+      "timeout_ms": 10000
+    },
+    "ingester": {
+      "enabled": true,
+      "redisNetworkIsolation": "isolated",
+      "groupName": "kubeclaw-agent-observability-ingester",
+      "consumerName": "kubeclaw-agent-observability-ingester-1",
+      "read_block_ms": 1000,
+      "reclaim_idle_ms": 60000,
+      "redis_command_timeout_ms": 5000,
+      "loop": {
+        "delay_ms": 250,
+        "health_check_every": 10,
+        "stop_timeout_ms": 2000
+      },
+      "trim": {
+        "interval_ms": 5000,
+        "payload_stream_max_len": 5000
+      },
+      "pressure": {
+        "control_lag_degraded_threshold": 1000,
+        "payload_pressure_degraded_threshold": 10000
+      }
+    }
+  },
+  "pre_check": {
+    "enabled": true,
+    "lint_report_path": "/app/skills/pipeline/tools/lint-report.ts",
+    "timeout_seconds": 60
+  },
+  "agents": {
+    "forge": {
+      "dispatch": "subagent",
+      "acp_agent_id": "codex",
+      "cwd": null
+    },
+    "buster": {
+      "dispatch": "redis",
+      "redis_js_path": "/app/skills/pipeline/tools/redis.ts"
+    },
+    "echo": {
+      "dispatch": "subagent",
+      "acp_agent_id": "codex",
+      "cwd": null
+    }
+  },
+  "fallback_model": "gpt-5.5",
+  "review_defaults": {
+    "timeout_minutes": 30,
+    "max_fix_cycles": 3,
+    "lint_tier": "full",
+    "lint_required": true
+  },
+  "case_study": {
+    "timeout_minutes": 30
+  },
+  "plugins": {
+    "enabled": true,
+    "allowCustomModules": false,
+    "extraModulePaths": [],
+    "modules": {},
+    "stageOwners": {},
+    "restrictedCapabilityAllowlist": {}
+  }
+}

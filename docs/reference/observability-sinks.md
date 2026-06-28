@@ -83,7 +83,7 @@ Failure invariant: sink delivery never upgrades a module/gate to PASS or FAIL. I
 Verification:
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area telemetry-docs
+node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"
 node tests/verification/contracts/check-openclaw-agent-observer-plugin.mjs --source-root "$PWD"
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 ```

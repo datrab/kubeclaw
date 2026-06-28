@@ -150,7 +150,7 @@ async function runPlannedPipelineStep({ config, progress, opts, deps, plan, runV
       results: results.map((entry: PromiseSettledResult<AnyRecord>, index: number) => {
         const moduleId = moduleIds[index];
         if (entry.status === 'fulfilled') return entry.value;
-        const reason = entry.reason instanceof Error ? entry.reason.message : String(entry.reason || 'unknown module batch failure');
+        const reason = entry.reason instanceof Error ? entry.reason.message : String(entry.reason ?? 'unknown module batch failure');
         return {
           moduleId,
           result: buildPipelineStepResult({

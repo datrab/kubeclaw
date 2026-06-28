@@ -84,7 +84,7 @@ function runtimeErrorResult(config, error) {
       },
     },
     correlation: {
-      run_id: config?._runId || config?.run_id || null,
+      run_id: config?._runId ?? config?.run_id ?? null,
     },
     terminalAction: PIPELINE_TERMINAL_ACTIONS.STOP,
     terminalScope: PIPELINE_TERMINAL_SCOPES.PIPELINE,
@@ -118,7 +118,7 @@ export async function runPipeline(config, progress, opts = {}) {
   const stepAbortController = typeof AbortController === 'function' ? new AbortController() : null;
   const forwardExternalAbort = () => {
     if (stepAbortController && !stepAbortController.signal.aborted) {
-      stepAbortController.abort(opts.signal.reason || 'pipeline_run_aborted');
+      stepAbortController.abort(opts.signal.reason ?? 'pipeline_run_aborted');
     }
   };
   if (opts.signal?.aborted) forwardExternalAbort();
@@ -128,18 +128,18 @@ export async function runPipeline(config, progress, opts = {}) {
     onPipelineRunLockLost(reason) {
       opts.onPipelineRunLockLost?.(reason);
       if (lockAbortController && !lockAbortController.signal.aborted) {
-        lockAbortController.abort(reason || 'pipeline_run_lock_lost');
+        lockAbortController.abort(reason ?? 'pipeline_run_lock_lost');
       }
       if (stepAbortController && !stepAbortController.signal.aborted) {
-        stepAbortController.abort(reason || 'pipeline_run_lock_lost');
+        stepAbortController.abort(reason ?? 'pipeline_run_lock_lost');
       }
     },
   });
   const runOpts = {
     ...opts,
     assertPipelineRunLockActive: () => runLock.heartbeat?.assertActive?.(),
-    pipelineRunLockSignal: lockAbortController?.signal || null,
-    signal: stepAbortController?.signal || opts.signal || null,
+    pipelineRunLockSignal: lockAbortController?.signal ?? null,
+    signal: stepAbortController?.signal ?? opts.signal ?? null,
     trackPipelineStep(promise) {
       if (!promise || typeof promise.finally !== 'function') return;
       inFlightSteps.add(promise);
@@ -153,13 +153,13 @@ export async function runPipeline(config, progress, opts = {}) {
   try {
     openClawAgentObserverPlugin = createOpenClawAgentObserverPluginController(
       config,
-      runOpts.openClawAgentObserverPlugin || {},
+      runOpts.openClawAgentObserverPlugin ?? {},
     );
     await openClawAgentObserverPlugin.start();
     agentObservabilityIngester = startAgentObservabilityIngester(config, {
-      runId: config._runId || config.run_id || null,
-      project: config.project || null,
-    }, runOpts.agentObservabilityIngester || {});
+      runId: config._runId ?? config.run_id ?? null,
+      project: config.project ?? null,
+    }, runOpts.agentObservabilityIngester ?? {});
     await reconcileStaleModuleState(config, progress);
     await reconcileStaleGateSessions(config, progress);
 

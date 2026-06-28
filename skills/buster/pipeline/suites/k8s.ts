@@ -22,12 +22,13 @@ import { buildCleanupKubernetesLabels, buildCleanupPodmanLabelArgs, trackSandbox
 import { dumpYamlDocuments, loadYamlDocuments } from './manifest.ts';
 import { resolveRepoScopedPath } from './repo-paths.ts';
 import { buildSubprocessEnv } from '../security.ts';
+import { buildPreviewCredentialCommand, normalizeTestCredentialSpecs, parseSecretNameFromRef } from './k8s-credentials.ts';
+import type { TestCredentialSpec } from './k8s-credentials.ts';
 
 type AnyRecord = Record<string, any>;
 type SuiteLog = (msg: string) => void;
 type Check = { name: string; passed: boolean; detail: string };
 type NamespaceLeaseStatus = { namespaceName: string; previewUrl: string | null; exposurePhase: string | null; exposureHostname: string | null; credentialsRef: string | null; credentialsAvailable: boolean; message: string | null };
-type TestCredentialSpec = { secretName: string; keys: string[]; purpose: string | null };
 
 interface K8sContext {
   payload?: AnyRecord;
@@ -284,80 +285,8 @@ function normalizeLeaseStatus(lease: AnyRecord = {}): NamespaceLeaseStatus {
   };
 }
 
-function parseSecretNameFromRef(ref: string | null): string | null {
-  if (typeof ref !== 'string' || !ref.trim()) return null;
-  const trimmed = ref.trim();
-  const prefixed = trimmed.match(/^secret\/([A-Za-z0-9._-]+)$/);
-  if (prefixed) return prefixed[1];
-  if (/^[A-Za-z0-9._-]+$/.test(trimmed)) return trimmed;
-  return null;
-}
-
 function uniqueStrings(values: string[]): string[] {
   return [...new Set(values.map((value) => String(value || '').trim()).filter(Boolean))];
-}
-
-function normalizeSecretName(value: unknown): string | null {
-  if (typeof value !== 'string' || !value.trim()) return null;
-  const parsed = parseSecretNameFromRef(value);
-  return parsed && /^[A-Za-z0-9._-]+$/.test(parsed) ? parsed : null;
-}
-
-function normalizeCredentialKeys(value: unknown): string[] {
-  return Array.isArray(value)
-    ? uniqueStrings(value.filter((key): key is string => typeof key === 'string' && Boolean(key.trim())))
-    : [];
-}
-
-export function normalizeTestCredentialSpecs(k8sCfg: AnyRecord = {}, previewCfg: AnyRecord = {}): TestCredentialSpec[] {
-  const specs: TestCredentialSpec[] = [];
-  const configured = Array.isArray(k8sCfg.test_credentials) ? k8sCfg.test_credentials : [];
-
-  for (const entry of configured) {
-    if (!isObjectDoc(entry)) continue;
-    const secretName = normalizeSecretName(entry.secret ?? entry.secret_name ?? entry.credentials_ref);
-    const keys = normalizeCredentialKeys(entry.keys ?? entry.credentials_keys);
-    if (!secretName || keys.length === 0) continue;
-    specs.push({
-      secretName,
-      keys,
-      purpose: typeof entry.purpose === 'string' && entry.purpose.trim() ? entry.purpose.trim() : null,
-    });
-  }
-
-  const previewReveal = previewCfg.reveal_credentials === true || previewCfg.credentials_delivery === 'discord';
-  const previewSecret = normalizeSecretName(previewCfg.credentials_secret_name ?? previewCfg.credentials_ref);
-  const previewKeys = normalizeCredentialKeys(previewCfg.credentials_keys);
-  if (previewReveal && previewSecret && previewKeys.length > 0) {
-    specs.push({
-      secretName: previewSecret,
-      keys: previewKeys,
-      purpose: 'final-preview login',
-    });
-  }
-
-  const seen = new Set<string>();
-  return specs.filter((spec) => {
-    const key = `${spec.secretName}:${spec.keys.join(',')}:${spec.purpose || ''}`;
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-}
-
-function shellSingleQuote(value: string): string {
-  return `'${String(value).replace(/'/g, `'\\''`)}'`;
-}
-
-function buildPreviewCredentialCommand(secretName: string | null, keys: string[]): string | null {
-  if (!secretName) return null;
-  const namespaceArg = shellSingleQuote(KUBECLAW_NS);
-  const secretArg = shellSingleQuote(secretName);
-  if (keys.length > 0) {
-    const keyList = keys.map(shellSingleQuote).join(' ');
-    return `for k in ${keyList}; do printf '%s: ' "$k"; kubectl -n ${namespaceArg} get secret ${secretArg} -o "go-template={{ index .data \\"$k\\" | base64decode }}"; printf '\\n'; done`;
-  }
-  return `kubectl -n ${namespaceArg} get secret ${secretArg} -o 'go-template={{range $k,$v := .data}}{{printf "%s: " $k}}{{base64decode $v}}{{"\\n"}}{{end}}'`;
 }
 
 function decodeSecretDataValue(value: unknown): string {
@@ -592,7 +521,7 @@ export default async function k8sSuite(context: K8sContext): Promise<SuiteVerdic
         : []);
   const previewCredentialSecretName = previewCredentialsSecretName || parseSecretNameFromRef(previewCredentialsRef);
   const previewCredentialCommand = previewRevealCredentials
-    ? buildPreviewCredentialCommand(previewCredentialSecretName, previewCredentialsKeys)
+    ? buildPreviewCredentialCommand(previewCredentialSecretName, previewCredentialsKeys, KUBECLAW_NS)
     : null;
   const previewExpectedText = typeof previewCfg.expected_text === 'string' && previewCfg.expected_text
     ? previewCfg.expected_text

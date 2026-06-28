@@ -121,7 +121,7 @@ Buster rejects malformed work before execution, dead-letters invalid payloads be
 ## Verification Map
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area pipeline
+node --test tests/verification/e2e/*.test.mjs
 node tests/verification/contracts/check-pipeline-runner-slice-surface.mjs --source-root "$PWD"
 node tests/verification/contracts/check-pipeline-step-result-surface.mjs --source-root "$PWD"
 node tests/verification/contracts/check-manual-degraded-terminal-acceptance.mjs --source-root "$PWD"

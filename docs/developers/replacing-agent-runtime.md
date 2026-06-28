@@ -116,8 +116,8 @@ Recommended sequence:
 Run these before making a runtime adapter the default:
 
 ```bash
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area agent-lifecycle
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area runtime-monitor
+node --test tests/verification/e2e/*.test.mjs
+node --test tests/verification/e2e/*.test.mjs
 node tests/verification/contracts/check-acp-gateway-contract-surface.mjs --source-root "$PWD"
 node tests/verification/contracts/check-pipeline-step-result-surface.mjs --source-root "$PWD"
 ```

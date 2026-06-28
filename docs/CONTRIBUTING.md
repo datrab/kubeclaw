@@ -13,7 +13,7 @@ Root-level contribution rules live in `../CONTRIBUTING.md`. This page explains h
 
 - Change documentation: start with `developers/documentation-conventions.md`.
 - Change deployment behavior: update the relevant deployment/operator page and generated inventory.
-- Change pipeline behavior: update `pipeline/`, `operators/running-the-pipeline.md`, and affected reference pages.
+- Change pipeline E2E behavior: update `pipeline/`, `operators/running-the-pipeline.md`, and affected reference pages.
 - Add a gate: use `developers/adding-gates.md`.
 - Add a Buster suite: use `developers/adding-buster-suites.md`.
 - Add verification: use `developers/adding-verification.md`.
@@ -35,7 +35,7 @@ Run the narrow check for the area you touched. Common checks:
 git diff --check
 npm run docs:check
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
-node tests/verification/behavior/verify.mjs --source-root "$PWD" --area <area>
+node --test tests/verification/e2e/*.test.mjs
 ```
 
 When source changes can affect generated docs, regenerate before checking:

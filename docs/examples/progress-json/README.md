@@ -88,7 +88,7 @@ When adapting `end-to-end.json`, change these fields before running:
 | Example field | Runtime owner | Check |
 | --- | --- | --- |
 | `project`, `repo_root`, and `paths` | `skills/nova/pipeline/core/config.ts` | config/path tests |
-| `execution_order`, modules, gates | `skills/nova/pipeline/runners/pipeline-runner*.ts` | pipeline behavior area |
+| `execution_order`, modules, gates | `skills/nova/pipeline/runners/pipeline-runner*.ts` | pipeline E2E behavior area |
 | `test_config`, suites, paths, capabilities | `skills/buster/pipeline/services/task-validation.ts`; `suite-runner.ts` | Buster task validation and suite tests |
 | gate outputs and instructions | `skills/nova/pipeline/core/paths.ts`; gate runners | gate behavior area and status-store contract |
 | lifecycle status interpretation | `skills/nova/pipeline/services/status-store*.ts` | status-store contract check |

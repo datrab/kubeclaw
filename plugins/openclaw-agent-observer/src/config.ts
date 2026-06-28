@@ -4,7 +4,6 @@ import fs from 'node:fs';
 
 declare const process: { env: Record<string, unknown> };
 
-const DEFAULT_SWARM_CONFIG_PATH = '/home/node/.openclaw/swarm.config.json';
 const STANDARD_PROFILE_NAME = 'standard';
 const STANDARD_FEATURES: UnknownRecord = {
   observability: true,
@@ -71,6 +70,7 @@ function assertExactObject(input: unknown, expected: UnknownRecord, label: strin
 function loadStandardProfile(env: UnknownRecord): UnknownRecord {
   const candidates = [
     stringValue(env.KUBECLAW_SWARM_STANDARD_PROFILE),
+    '/app/skills/pipeline/config-profiles/standard.json',
     '/app/skills/pipeline/core/config-profiles/standard.json',
     new URL('../../../skills/nova/pipeline/core/config-profiles/standard.json', import.meta.url),
   ].filter(Boolean) as Array<string | URL>;
@@ -126,7 +126,8 @@ function expandPlatformConfigForObserver(platformConfig: UnknownRecord, env: Unk
 }
 
 function loadSwarmAgentObserverConfig(env: UnknownRecord): UnknownRecord {
-  const configPath = String(env.SWARM_CONFIG || DEFAULT_SWARM_CONFIG_PATH).trim();
+  const configPath = stringValue(env.SWARM_CONFIG);
+  if (!configPath) return {};
   try {
     const platformConfig = expandPlatformConfigForObserver(JSON.parse(fs.readFileSync(configPath, 'utf8')), env);
     const agentObservability = asRecord(platformConfig?.agent_observability);
