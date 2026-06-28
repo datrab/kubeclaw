@@ -205,7 +205,7 @@ assert.equal(truthDriftSource.includes('function collectModuleArtifactRefs(modul
 
 assert.equal(pollingSource.includes("from './completion-adjudicator.ts'"), true, 'polling should import shared completion adjudication');
 assert.equal(pollingSource.includes('projectCompletionState,') || pollingSource.includes('projectCompletionState\n'), true, 'polling should re-export centralized completion projection helpers');
-assert.equal(pollingDualSource.includes('waitForBusterCompletion({'), true, 'pollDual should route Redis completions through the centralized Buster completion controller');
+assert.equal(pollingDualSource.includes('waitForCompletion: waitForBusterCompletion'), true, 'pollDual should route Redis completions through the centralized Buster completion controller');
 assert.equal(busterCompletionControllerSource.includes('adjudicateCompletionEvidence({'), true, 'Buster completion controller should classify Redis completions through centralized arbitration');
 
 for (const marker of [
@@ -295,6 +295,9 @@ const config = {
   project: 'status-store-slice-contract',
   repo_root: tmpRoot,
   _runId: 'run-status-store-slice-1',
+  locks: {
+    lifecycle_append: { stale_ms: 300000, timeout_ms: 30000 },
+  },
   paths: {
     swarm_dir: path.join(tmpRoot, '.swarm'),
     modules_dir: path.join(tmpRoot, 'modules'),

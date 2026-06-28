@@ -1,6 +1,7 @@
 import {
   buildBuiltInRegistry,
   getFieldValue,
+  platformTestDefaults,
   stepExit,
   stepMetadata,
 } from './helpers.mjs';
@@ -63,23 +64,28 @@ export async function registerModuleFailuresArea({
 	}
 
 function platformModuleFailureDefaults() {
+  const defaults = platformTestDefaults();
   return {
+    ...defaults,
     fallback_model: 'openai/gpt-5.4',
     default_timeout_minutes: 30,
     default_max_fails: 3,
-    rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },
+    rate_limit: { ...defaults.rate_limit, max_pauses_per_module: 3, cooldown_hours: 0 },
     buster: {
-      suite_timeout_ms: 300000,
-      max_crash_retries: 0,
       runtime: {
+        task_stream: 'swarm:buster:tasks',
         heartbeat_path: '/tmp/kubeclaw-buster-heartbeat',
         heartbeat_interval_ms: 1000,
         task_poll_interval_ms: 2000,
         task_pending_reclaim_idle_ms: 60000,
+        completion_event_block_ms: 0,
+        completion_recovery_scan_interval_ms: 5000,
         task_stream_max_len: 250,
+        suite_timeout_ms: 300000,
+        max_crash_retries: 2,
       },
     },
-    pre_check: { enabled: false, lint_report_path: '/app/skills/pipeline/tools/lint-report.ts', timeout_seconds: 60 },
+    pre_check: { enabled: false, lint_report_path: '/app/skills/pipeline/tools/lint-report.ts', policy: 'pre_check' },
     review_defaults: { timeout_minutes: 30, max_fix_cycles: 3, lint_tier: 'full', lint_required: false },
   };
 }
@@ -244,7 +250,7 @@ const config = {
     project: 'behavior-module-forge-stage-owner',
     default_timeout_minutes: 30,
     default_max_fails: 3,
-    telemetry: { enabled: false },
+    telemetry: { ...platformModuleFailureDefaults().telemetry, enabled: false },
     paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
     pluginRegistry: testRegistry,
     _runId: runId,
@@ -350,7 +356,7 @@ const config = {
     project: 'behavior-module-forge-stage-invalid',
     default_timeout_minutes: 30,
     default_max_fails: 3,
-    telemetry: { enabled: true },
+    telemetry: platformModuleFailureDefaults().telemetry,
     paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
     pluginRegistry: testRegistry,
     _runId: runId,
@@ -502,7 +508,7 @@ const config = {
     project: 'behavior-module-buster-stage-owner',
     default_timeout_minutes: 30,
     default_max_fails: 3,
-    telemetry: { enabled: false },
+    telemetry: { ...platformModuleFailureDefaults().telemetry, enabled: false },
     paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
     pluginRegistry: testRegistry,
     _runId: runId,
@@ -607,7 +613,7 @@ const config = {
     project: 'behavior-module-buster-stage-invalid',
     default_timeout_minutes: 30,
     default_max_fails: 3,
-    telemetry: { enabled: true },
+    telemetry: platformModuleFailureDefaults().telemetry,
     paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
     pluginRegistry: testRegistry,
     _runId: runId,
@@ -733,7 +739,7 @@ await record('module-runner appends terminal ACP detail to Forge no-change failu
     project: 'behavior-forge-no-change-detail',
     default_timeout_minutes: 30,
     default_max_fails: 3,
-    telemetry: { enabled: false },
+    telemetry: { ...platformModuleFailureDefaults().telemetry, enabled: false },
     pluginRegistry: registry,
     paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
     _runId: runId,
@@ -818,7 +824,7 @@ const config = {
     default_timeout_minutes: 30,
     default_max_fails: 3,
     paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
-    telemetry: { enabled: true },
+    telemetry: platformModuleFailureDefaults().telemetry,
     pluginRegistry: registry,
     _runId: runId,
     run_id: runId,
@@ -901,7 +907,7 @@ const config = {
     default_timeout_minutes: 30,
     default_max_fails: 3,
     paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
-    telemetry: { enabled: true },
+    telemetry: platformModuleFailureDefaults().telemetry,
     _runId: runId,
     run_id: runId,
     _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
@@ -980,7 +986,7 @@ const config = {
     default_timeout_minutes: 30,
     default_max_fails: 3,
     paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
-    telemetry: { enabled: true },
+    telemetry: platformModuleFailureDefaults().telemetry,
     _runId: runId,
     run_id: runId,
     _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
@@ -1075,7 +1081,7 @@ const config = {
     default_timeout_minutes: 30,
     default_max_fails: 3,
     paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
-    telemetry: { enabled: true },
+    telemetry: platformModuleFailureDefaults().telemetry,
     _runId: runId,
     run_id: runId,
     _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
@@ -1159,7 +1165,7 @@ const config = {
     default_timeout_minutes: 30,
     default_max_fails: 3,
     paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
-    telemetry: { enabled: true },
+    telemetry: platformModuleFailureDefaults().telemetry,
     _runId: runId,
     run_id: runId,
     _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
@@ -1263,7 +1269,7 @@ const config = {
     project: 'behavior-forge-poll-git-correlation',
     default_timeout_minutes: 30,
     default_max_fails: 3,
-    telemetry: { enabled: false },
+    telemetry: { ...platformModuleFailureDefaults().telemetry, enabled: false },
     pluginRegistry: registry,
     paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
     _runId: 'run-forge-poll-git-correlation-1',
@@ -1353,7 +1359,7 @@ const config = {
     project: 'behavior-buster-poll-git-correlation',
     default_timeout_minutes: 30,
     default_max_fails: 3,
-    telemetry: { enabled: false },
+    telemetry: { ...platformModuleFailureDefaults().telemetry, enabled: false },
     pluginRegistry: registry,
     paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
     _runId: 'run-buster-poll-git-correlation-1',
@@ -1494,7 +1500,7 @@ const config = {
     default_max_fails: 3,
     _disable_discord_webhooks: true,
     paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
-    telemetry: { enabled: true },
+    telemetry: platformModuleFailureDefaults().telemetry,
     pluginRegistry: registry,
     _runId: runId,
     run_id: runId,
@@ -1634,10 +1640,13 @@ const config = {
     default_max_fails: 3,
     buster: {
       ...platformModuleFailureDefaults().buster,
-      max_crash_retries: 1,
+      runtime: {
+        ...platformModuleFailureDefaults().buster.runtime,
+        max_crash_retries: 1,
+      },
     },
     _disable_discord_webhooks: true,
-    telemetry: { enabled: true },
+    telemetry: platformModuleFailureDefaults().telemetry,
     pluginRegistry: registry,
     _runId: runId,
     run_id: runId,
@@ -1782,7 +1791,7 @@ const config = {
     project: 'behavior-buster-pretest-infra-dispatch',
     default_timeout_minutes: 30,
     default_max_fails: 3,
-    telemetry: { enabled: true },
+    telemetry: platformModuleFailureDefaults().telemetry,
     _disable_discord_webhooks: true,
     pluginRegistry: registry,
     _runId: runId,
@@ -1907,7 +1916,7 @@ const config = {
     project: 'behavior-buster-pretest-repeat-dispatch',
     default_timeout_minutes: 30,
     default_max_fails: 3,
-    telemetry: { enabled: true },
+    telemetry: platformModuleFailureDefaults().telemetry,
     _disable_discord_webhooks: true,
     pluginRegistry: registry,
     _runId: runId,
@@ -2099,7 +2108,7 @@ const config = {
     project: 'behavior-buster-pretest-code-retry',
     default_timeout_minutes: 30,
     default_max_fails: 3,
-    telemetry: { enabled: true },
+    telemetry: platformModuleFailureDefaults().telemetry,
     _disable_discord_webhooks: true,
     pluginRegistry: registry,
     _runId: runId,
@@ -2185,7 +2194,7 @@ await record('failure-service blocked results keep dispatch correlation through 
     ...platformModuleFailureDefaults(),
     project: 'behavior-failure-service-blocked-dispatch',
     default_max_fails: 2,
-    telemetry: { enabled: true },
+    telemetry: platformModuleFailureDefaults().telemetry,
     _disable_discord_webhooks: true,
     pluginRegistry: registry,
     _runId: 'run-failure-service-blocked-dispatch-1',
@@ -2309,10 +2318,11 @@ await record('module-runner early terminal failure paths still emit module FAIL 
           modules: { '01': { title: 'Scaffold', dir: '01-scaffold', stages: ['forge'] } },
         },
         config: {
+          ...platformModuleFailureDefaults(),
           default_timeout_minutes: 30,
           default_max_fails: 3,
           paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: path.join(repoRoot, 'modules') },
-          telemetry: { enabled: true },
+          telemetry: platformModuleFailureDefaults().telemetry,
                   },
         deps: {
             moduleRunner: {
@@ -2351,10 +2361,11 @@ await record('module-runner early terminal failure paths still emit module FAIL 
           modules: { '01': { title: 'Scaffold', dir: '01-scaffold', stages: ['forge'] } },
         },
         config: {
+          ...platformModuleFailureDefaults(),
           default_timeout_minutes: 30,
           default_max_fails: 3,
           paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
-          telemetry: { enabled: true },
+          telemetry: platformModuleFailureDefaults().telemetry,
                   },
         deps: {
             moduleRunner: {
@@ -2386,10 +2397,11 @@ await record('module-runner early terminal failure paths still emit module FAIL 
           modules: { '01': { title: 'Scaffold', dir: '01-scaffold', stages: ['forge'] } },
         },
         config: {
+          ...platformModuleFailureDefaults(),
           default_timeout_minutes: 30,
           default_max_fails: 3,
           paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
-          telemetry: { enabled: true },
+          telemetry: platformModuleFailureDefaults().telemetry,
                   },
         deps: {
             moduleRunner: {
@@ -2428,10 +2440,11 @@ await record('module-runner early terminal failure paths still emit module FAIL 
           modules: { '01': { title: 'Scaffold', dir: '01-scaffold', stages: ['buster'] } },
         },
         config: {
+          ...platformModuleFailureDefaults(),
           default_timeout_minutes: 30,
           default_max_fails: 3,
           paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
-          telemetry: { enabled: true },
+          telemetry: platformModuleFailureDefaults().telemetry,
                   },
         deps: {
             moduleRunner: {
@@ -2460,10 +2473,11 @@ await record('module-runner early terminal failure paths still emit module FAIL 
           modules: { '01': { title: 'Scaffold', dir: '01-scaffold', stages: ['buster'], test_suites: ['smoke'] } },
         },
         config: {
+          ...platformModuleFailureDefaults(),
           default_timeout_minutes: 30,
           default_max_fails: 3,
           paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
-          telemetry: { enabled: true },
+          telemetry: platformModuleFailureDefaults().telemetry,
                   },
         deps: {
             moduleRunner: {
@@ -2496,10 +2510,11 @@ await record('module-runner early terminal failure paths still emit module FAIL 
           modules: { '01': { title: 'Scaffold', dir: '01-scaffold', stages: ['buster'], test_suites: ['smoke'] } },
         },
         config: {
+          ...platformModuleFailureDefaults(),
           default_timeout_minutes: 30,
           default_max_fails: 3,
           paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
-          telemetry: { enabled: true },
+          telemetry: platformModuleFailureDefaults().telemetry,
                   },
         deps: {
             moduleRunner: {
@@ -2541,10 +2556,11 @@ await record('module-runner early terminal failure paths still emit module FAIL 
           modules: { '01': { title: 'Scaffold', dir: '01-scaffold', stages: ['forge', 'buster'] } },
         },
         config: {
+          ...platformModuleFailureDefaults(),
           default_timeout_minutes: 30,
           default_max_fails: 3,
           paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: modulesRoot },
-          telemetry: { enabled: true },
+          telemetry: platformModuleFailureDefaults().telemetry,
                   },
         deps: {
             moduleRunner: {
@@ -2566,7 +2582,7 @@ await record('module-runner early terminal failure paths still emit module FAIL 
     const config = {
       ...platformModuleFailureDefaults(),
       project: scenario.project,
-      telemetry: { enabled: true },
+      telemetry: platformModuleFailureDefaults().telemetry,
       _runId: scenario.runId,
       run_id: scenario.runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
@@ -2807,8 +2823,8 @@ const config = {
       project: scenario.project,
       default_timeout_minutes: 30,
       default_max_fails: 3,
-      rate_limit: { max_pauses_per_module: 2 },
-      telemetry: { enabled: true },
+      rate_limit: { ...platformModuleFailureDefaults().rate_limit, max_pauses_per_module: 2 },
+      telemetry: platformModuleFailureDefaults().telemetry,
       _runId: scenario.runId,
       run_id: scenario.runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
@@ -2918,8 +2934,8 @@ await record('module polling rate-limit recovery reuses the shared session owner
     const config = {
       ...platformModuleFailureDefaults(),
       project: `behavior-module-shared-rate-limit-${scenario.name}`,
-      rate_limit: { max_pauses_per_module: 2, cooldown_hours: 0 },
-      telemetry: { enabled: true },
+      rate_limit: { ...platformModuleFailureDefaults().rate_limit, max_pauses_per_module: 2, cooldown_hours: 0 },
+      telemetry: platformModuleFailureDefaults().telemetry,
       _disable_discord_webhooks: true,
       _runId: runId,
       run_id: runId,

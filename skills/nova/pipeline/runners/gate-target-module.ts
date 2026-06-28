@@ -7,8 +7,16 @@ function normalizeModuleStepId(stepId: string): string | null {
 }
 
 function explicitGateModuleId(progress: AnyRecord = {}, gateId = ''): string | null {
-  const gate = progress?.gates?.[gateId] || {};
-  const explicit = gate.module_id || gate.moduleId || gate.target_module_id || gate.targetModuleId || null;
+  const gate = progress?.gates?.[gateId] ? progress.gates[gateId] : {};
+  const explicit = gate.module_id
+    ? gate.module_id
+    : gate.moduleId
+      ? gate.moduleId
+      : gate.target_module_id
+        ? gate.target_module_id
+        : gate.targetModuleId
+          ? gate.targetModuleId
+          : null;
   if (typeof explicit !== 'string' || !explicit.trim()) return null;
   return progress?.modules?.[explicit] ? explicit : null;
 }
@@ -28,8 +36,10 @@ export function resolveGateTargetModule(progress: AnyRecord = {}, gateId = ''): 
   const gateIndex = executionOrder.findIndex((stepId: unknown) => stepId === gateStepId);
   if (gateIndex >= 0) {
     for (let index = gateIndex - 1; index >= 0; index -= 1) {
-      const moduleId = normalizeModuleStepId(String(executionOrder[index] || ''));
-      if (!moduleId || !progress?.modules?.[moduleId]) continue;
+      const stepId = executionOrder[index] ? executionOrder[index] : '';
+      const moduleId = normalizeModuleStepId(String(stepId));
+      if (!moduleId) continue;
+      if (!progress?.modules?.[moduleId]) continue;
       return {
         moduleId,
         moduleDir: progress.modules[moduleId]?.dir || null,

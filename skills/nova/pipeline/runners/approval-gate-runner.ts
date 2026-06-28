@@ -22,6 +22,7 @@
 
 import { selectDeps } from '../core/deps.ts';
 import { log } from '../core/logger.ts';
+import { getPipelineDefaultsConfig } from '../services/runtime-defaults.ts';
 import { syncApprovalWaitState } from '../services/status-store.ts';
 import { recordApprovalGateOutcome, buildGovernanceEmbedFields } from '../services/governance-context.ts';
 import { onApprovalRequested, onApprovalResolved, onGateStarted, onGatePass, onGateFail } from '../services/telemetry.ts';
@@ -61,6 +62,14 @@ export {
   isApprovalGateControlResult,
   normalizeApprovalTimeoutPolicy,
 };
+
+function eventAdapterNumber(config, field) {
+  const value = Number(config?.event_adapters?.[field]);
+  if (!Number.isFinite(value)) {
+    throw new Error(`config.event_adapters.${field}: required number in swarm.config.json`);
+  }
+  return value;
+}
 
 function emitApprovalGateVerdict(config, gateId, gate, verdict, reason = null, options = {}) {
   const payload = {
@@ -463,7 +472,7 @@ async function waitForApprovalSignalFlow(config, gateId, gate, state, progress, 
     eventBus,
     gateId,
     gate,
-    debounceMs: config?.event_adapters?.approval_signal_debounce_ms,
+    debounceMs: eventAdapterNumber(config, 'approval_signal_debounce_ms'),
     loadState: deps.loadGateState,
     waitRef: observed.state?.wait_ref || opts?.input?.refs?.waitRef || null,
     emitExisting: true,
@@ -519,7 +528,7 @@ export async function runApprovalGateEvaluation(config, progress, gateId, opts =
   const gate = progress.gates[gateId];
   if (!gate) throw new Error(`Approval gate '${gateId}' not found`);
 
-  const timeoutMinutes  = gate.timeout_minutes ?? config.default_timeout_minutes;
+  const timeoutMinutes  = gate.timeout_minutes ?? getPipelineDefaultsConfig(config).timeout_minutes;
   const timeoutPolicy   = resolveApprovalTimeoutPolicyFromGate(gate, gateId);
   const deps            = getApprovalGateRunnerDeps(config, opts.deps);
 

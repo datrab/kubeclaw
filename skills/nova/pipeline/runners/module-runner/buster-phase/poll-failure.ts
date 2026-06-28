@@ -1,7 +1,7 @@
 import { STATUS } from '../../../core/constants.ts';
 import { log } from '../../../core/logger.ts';
 import { getRunId } from '../../../core/runtime.ts';
-import { finalizeModuleSessionRateLimitExit } from '../../../services/rate-limit.ts';
+import { finalizeModuleSessionRateLimitExit, getRateLimitConfig } from '../../../services/rate-limit.ts';
 import {
   transitionModuleStatus,
   markModuleBlocked,
@@ -97,7 +97,7 @@ export async function handleFailedPollResult({
         gateway_label: resolveCompletionGatewayLabel(status, completionIdentity),
         session_key: pollSessionKey,
       },
-      maxPauses: config.rate_limit.max_pauses_per_module,
+      maxPauses: getRateLimitConfig(config).max_pauses_per_module,
       logLevel: 'ERROR',
       logMessage: `Module ${moduleId} rate limit pauses exhausted in buster phase`,
     } as AnyRecord);

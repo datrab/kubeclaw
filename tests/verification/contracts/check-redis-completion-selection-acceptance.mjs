@@ -1,10 +1,19 @@
 #!/usr/bin/env node
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
+import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 import {
   scanLatestCompletionFromTail,
   selectLatestCompletion,
 } from '../../../skills/nova/pipeline/services/redis-completion.ts';
+import { resolveRedisCompletionPolicy } from '../../../skills/nova/pipeline/services/redis-completion-policy.ts';
+
+const sourceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
+const compactConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json'), 'utf8'));
+const redisCompletionPolicy = resolveRedisCompletionPolicy(expandSwarmConfig(compactConfig));
 
 const identity = Object.freeze({
   run_id: 'run-completion',
@@ -91,7 +100,10 @@ const redis = {
     ];
   },
 };
-const scan = await scanLatestCompletionFromTail(redis, 'swarm:pipeline:completion-contract:completions', '01-completion', identity);
+const scan = await scanLatestCompletionFromTail(redis, 'swarm:pipeline:completion-contract:completions', '01-completion', identity, {
+  batchSize: redisCompletionPolicy.tailScanBatchSize,
+  scanLimit: redisCompletionPolicy.tailScanLimit,
+});
 assert.equal(scan.match.outcome, 'COMPLETION_CONFLICT');
 assert.equal(scan.conflict.outcome, 'COMPLETION_CONFLICT');
 assert.equal(scan.scanned, 3);

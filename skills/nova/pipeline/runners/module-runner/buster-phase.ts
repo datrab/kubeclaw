@@ -16,6 +16,7 @@ import { handleFailedPollResult } from './buster-phase/poll-failure.ts';
 import { handleBusterPassStatus } from './buster-phase/terminal-pass.ts';
 import { handleBusterFailOrBlockedStatus } from './buster-phase/terminal-failure.ts';
 import { executeBusterAttemptDispatch } from './buster-phase/dispatch.ts';
+import { getBusterRuntimeConfig, getPipelineDefaultsConfig } from '../../services/runtime-defaults.ts';
 
 type AnyRecord = Record<string, any>;
 
@@ -84,8 +85,9 @@ export async function runModuleBusterPhase({
     getModuleStats(config).total_buster_attempts++;
     onPhaseStarted(_telemetryCtx(config), moduleId, 'buster', busterModel);
 
-    const maxBusterCrashRetries = config.buster.max_crash_retries;
-    const agentStartupRetryBudget = config.agent_startup_retry_budget;
+    const busterRuntime = getBusterRuntimeConfig(config);
+    const maxBusterCrashRetries = busterRuntime.max_crash_retries;
+    const agentStartupRetryBudget = getPipelineDefaultsConfig(config).agent_startup_retry_budget;
     let startupRetryCount = 0;
 
     for (let busterAttempt = 1; busterAttempt <= maxBusterCrashRetries + 1; busterAttempt++) {
@@ -241,6 +243,7 @@ export async function runModuleBusterPhase({
       if (status.status === STATUS.FAIL || status.status === STATUS.BLOCKED) {
         const terminalFailure = await handleBusterFailOrBlockedStatus({
           config,
+          progress,
           moduleId,
           mod,
           dir,

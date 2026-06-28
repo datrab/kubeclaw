@@ -42,7 +42,6 @@ await record('public docs root stays reserved for active control files and gener
   assert.deepEqual(rootFiles, [
     'CONTRIBUTING.md',
     'DOCUMENTATION_AUDIT.md',
-    'DOCUMENTATION_COVERAGE_MATRIX.md',
     'DOCUMENTATION_HANDOFF_PROMPT.md',
     'DOCUMENTATION_PLAN.md',
     'DOCUMENTATION_REBUILD_PLAN.md',
@@ -53,6 +52,7 @@ await record('public docs root stays reserved for active control files and gener
     'ROADMAP.md',
     'future-implementation-ideas.md',
     'open-issues.md',
+    'telemetry-event-schema.md',
   ]);
 });
 
@@ -64,15 +64,17 @@ await record('documentation handoff prompt requires completing every phase befor
   assert.equal(prompt.includes('Do not stop at a proposal, partial phase, or partial documentation set unless genuinely blocked or forced to hand off at a completed-file boundary.'), true);
 });
 
-await record('pipeline README points to archived source docs instead of stale governance project paths', async () => {
+await record('pipeline README points to live source docs instead of stale governance project paths', async () => {
   const readmePath = path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'README.md');
   const readme = fs.readFileSync(readmePath, 'utf8');
   assert.equal(readme.includes('Projects/governance/src/docs/'), false);
+  assert.equal(readme.includes('docs/archive/legacy-root-docs/'), false);
   for (const relPath of [
-    'docs/archive/legacy-root-docs/observability-reference.md',
-    'docs/archive/legacy-root-docs/architecture-validator-reference.md',
-    'docs/archive/legacy-root-docs/telemetry-event-schema.md',
-    'docs/archive/legacy-root-docs/pipeline-reference-v10.md',
+    'docs/architecture/observability-model.md',
+    'docs/pipeline/architecture.md',
+    'docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md',
+    'docs/telemetry-event-schema.md',
+    'docs/pipeline/technical-implementation-map.md',
   ]) {
     assert.equal(readme.includes(`\`${relPath}\``), true);
     assert.equal(fs.existsSync(path.join(sourceRoot, relPath)), true);
@@ -82,17 +84,18 @@ await record('pipeline README points to archived source docs instead of stale go
 await record('project setup progress docs keep ACP monitor config platform-owned', async () => {
   const progressJsonGuide = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'project_setup', 'progress-json.md'), 'utf8');
   const swarmConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json'), 'utf8'));
+  const standardProfile = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'core', 'config-profiles', 'standard.json'), 'utf8'));
 
   assert.equal(progressJsonGuide.includes('## ACP Monitor'), false);
   assert.equal(progressJsonGuide.includes('payload.acp_monitor'), false);
   assert.equal(progressJsonGuide.includes('| `acp_monitor` |'), false);
   assert.equal(progressJsonGuide.includes('ACP monitor timing is platform-owned and belongs in `swarm.config.json`, not `progress.json`.'), true);
-  assert.deepEqual(Object.keys(swarmConfig.acp_monitor).sort(), [
+  assert.equal(swarmConfig.profile, 'standard');
+  assert.deepEqual(Object.keys(standardProfile.acp_monitor).sort(), [
     'max_transcript_extensions',
     'monitor_poll_ms',
-    'stale_poll_limit',
+    'poll_limit',
     'transcript_grace_ms',
-    'unknown_poll_limit',
   ]);
 });
 
@@ -132,7 +135,7 @@ await record('project setup and Prism docs use current visual-reg baseline autho
 await record('observability docs expose latest.json as the operator pointer to the newest run-scoped audit tree', async () => {
   const observabilityDoc = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'observability-reference.md'), 'utf8');
   const readme = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'README.md'), 'utf8');
-  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md'), 'utf8');
+  const telemetrySchema = fs.readFileSync(path.join(sourceRoot, 'docs', 'telemetry-event-schema.md'), 'utf8');
 
   assert.equal(observabilityDoc.includes('.swarm/logs/pipeline/latest.json'), true);
   assert.equal(observabilityDoc.includes('Pointer to the most recent run-scoped audit tree'), true);

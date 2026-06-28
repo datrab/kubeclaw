@@ -207,10 +207,13 @@ async function withCanonicalBusterRuntimePolicy(queueRoot, run) {
   fs.writeFileSync(swarmConfigPath, JSON.stringify({
     buster: {
       runtime: {
+        task_stream: 'swarm:buster:tasks',
         heartbeat_path: path.join(root, 'heartbeat.json'),
         heartbeat_interval_ms: 1000,
         task_poll_interval_ms: 2000,
         task_pending_reclaim_idle_ms: 60000,
+        completion_event_block_ms: 0,
+        completion_recovery_scan_interval_ms: 5000,
         task_stream_max_len: 250,
       },
     },
@@ -331,7 +334,7 @@ await record('Buster monitor publishes transcript deltas with canonical session 
       dispatch_id: 'dispatch-1',
       session: { label: 'buster-dispatch-1' },
       rate_limit: { max_pauses: 5, initial_cooldown_s: 7200, max_cooldown_s: 7200 },
-      acp_monitor: { unknown_poll_limit: 10, stale_poll_limit: 10, max_transcript_extensions: 3, transcript_grace_ms: 300000, monitor_poll_ms: 1 },
+      acp_monitor: { poll_limit: 10, max_transcript_extensions: 3, transcript_grace_ms: 300000, monitor_poll_ms: 1 },
     },
     ctx,
     {
@@ -377,7 +380,7 @@ await record('Buster monitor returns rate-limit pause budget for terminal comple
       attempt: 3,
       dispatch_id: 'dispatch-rate-limited',
       rate_limit: { max_pauses: 0, initial_cooldown_s: 0, max_cooldown_s: 0 },
-      acp_monitor: { unknown_poll_limit: 10, stale_poll_limit: 10, max_transcript_extensions: 3, transcript_grace_ms: 300000, monitor_poll_ms: 1 },
+      acp_monitor: { poll_limit: 10, max_transcript_extensions: 3, transcript_grace_ms: 300000, monitor_poll_ms: 1 },
     },
     null,
     {
@@ -434,8 +437,7 @@ await record('Buster-owned gate cooldowns emit canonical gate-scoped pause telem
     provider: 'anthropic',
     detail: '429 Too Many Requests',
     acpMonitorConfig: {
-      unknown_poll_limit: 10,
-      stale_poll_limit: 10,
+      poll_limit: 10,
       max_transcript_extensions: 3,
       transcript_grace_ms: 300000,
       monitor_poll_ms: 10000,
@@ -479,8 +481,7 @@ await record('Buster gate cooldowns do not invent gate_type from gate_test task 
     provider: 'anthropic',
     detail: '429 Too Many Requests',
     acpMonitorConfig: {
-      unknown_poll_limit: 10,
-      stale_poll_limit: 10,
+      poll_limit: 10,
       max_transcript_extensions: 3,
       transcript_grace_ms: 300000,
       monitor_poll_ms: 10000,

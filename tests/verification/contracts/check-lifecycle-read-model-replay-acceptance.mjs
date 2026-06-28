@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
+import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 import {
   appendModuleLifecycleEvent,
   appendPipelineLifecycleEvent,
@@ -15,12 +17,15 @@ import {
 } from '../../../skills/nova/pipeline/services/status-store.ts';
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'lifecycle-read-model-replay-contract-'));
+const sourceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
+const compactConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json'), 'utf8'));
 
 try {
   const runId = 'run-lifecycle-replay';
   const moduleId = '01-replay';
   const gateId = 'approval';
   const config = {
+    ...expandSwarmConfig(compactConfig),
     project: 'lifecycle-replay-contract',
     repo_root: root,
     run_id: runId,

@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { resolveDiscordWebhookUrl } from './runtime.ts';
+import { requireTelemetryStreamMaxLenFromConfig } from '../telemetry.ts';
 import {
   createTelemetryContext,
   emitEvent,
@@ -52,9 +53,12 @@ interface DiscordContext extends AnyRecord {
 
 function discordWebhookTimeoutMs(): number {
   const config = loadBusterPlatformConfig();
-  const timeoutMs = Number(config?.discord?.webhook_timeout_ms);
-  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
-    throw new Error('config.discord.webhook_timeout_ms: required positive number in swarm.config.json');
+  if (!config?.discord || typeof config.discord !== 'object' || Array.isArray(config.discord)) {
+    throw new Error('config.discord: required platform config object in swarm.config.json');
+  }
+  const timeoutMs = config.discord.webhook_timeout_ms;
+  if (!Number.isInteger(timeoutMs) || timeoutMs <= 0) {
+    throw new Error('config.discord.webhook_timeout_ms: required positive integer in swarm.config.json');
   }
   return timeoutMs;
 }
@@ -205,7 +209,9 @@ function defaultEvidence(_correlation: Partial<CorrelationContext> = {}): string
 }
 
 function discordHealthKey(correlation: Partial<CorrelationContext> = {}, surface = 'webhook'): string {
-  return `${surface}:${correlation.project || 'unknown'}:${correlation.run_id || 'unknown'}`;
+  const project = correlation.project ? correlation.project : 'unknown';
+  const runId = correlation.run_id ? correlation.run_id : 'unknown';
+  return `${surface}:${project}:${runId}`;
 }
 
 function resolveDiscordAuditTargets(correlation: Partial<CorrelationContext> = {}): string[] {
@@ -222,16 +228,16 @@ function buildTelemetryContext(correlation: CorrelationContext): { ctx: AnyRecor
   return {
     ctx: createTelemetryContext({
       project: correlation.project,
-      module_id: correlation.module_id || correlation.gate_id || 'buster-discord',
+      module_id: correlation.module_id ? correlation.module_id : correlation.gate_id ? correlation.gate_id : 'buster-discord',
       run_id: correlation.run_id,
       enabled: correlation.telemetry_enabled,
-      log_dir: correlation.log_dir || null,
-      pipeline_log_path: correlation.pipeline_log_path || null,
-      pipeline_run_log_path: correlation.pipeline_run_log_path || null,
+      log_dir: correlation.log_dir ? correlation.log_dir : null,
+      pipeline_log_path: correlation.pipeline_log_path ? correlation.pipeline_log_path : null,
+      pipeline_run_log_path: correlation.pipeline_run_log_path ? correlation.pipeline_run_log_path : null,
       attempt: correlation.attempt ?? null,
-      dispatch_id: correlation.dispatch_id || null,
-      session_key: correlation.session_key || null,
-      streamMaxLen: loadBusterPlatformConfig()?.telemetry?.stream_max_len,
+      dispatch_id: correlation.dispatch_id ? correlation.dispatch_id : null,
+      session_key: correlation.session_key ? correlation.session_key : null,
+      streamMaxLen: requireTelemetryStreamMaxLenFromConfig(loadBusterPlatformConfig()),
       emitter: 'buster/pipeline/services/discord',
     }),
     owned: true,
@@ -335,25 +341,32 @@ function actionabilityEvidenceFromEmbed(embed: DiscordEmbed = {}): string {
     })
     .filter(Boolean);
   if (lines.length) return truncateDiscordField(lines.join('\n'));
-  return truncateDiscordField(`${normalizeOperatorStatusText(embed.title || 'Notification')}: ${normalizeOperatorStatusText(embed.description || 'No additional details provided.')}`);
+  const title = embed.title ? embed.title : 'Notification';
+  const description = embed.description ? embed.description : 'No additional details provided.';
+  return truncateDiscordField(`${normalizeOperatorStatusText(title)}: ${normalizeOperatorStatusText(description)}`);
 }
 
 function actionabilityImpactFromEmbed(embed: DiscordEmbed = {}, correlation: Partial<CorrelationContext> = {}): string {
   const status = fieldValue(embed, 'Status');
-  const summary = fieldValue(embed, 'Summary') || fieldValue(embed, 'Issue') || normalizeOperatorStatusText(embed.description || '');
+  const summaryField = fieldValue(embed, 'Summary');
+  const issueField = fieldValue(embed, 'Issue');
+  const description = embed.description ? embed.description : '';
+  const summary = summaryField ? summaryField : issueField ? issueField : normalizeOperatorStatusText(description);
   const subject = correlation.gate_id
     ? `gate ${correlation.gate_id}`
     : correlation.module_id
       ? `module ${correlation.module_id}`
       : 'this run';
-  return truncateDiscordField(`${normalizeOperatorStatusText(embed.title || 'Buster notification')} for ${subject}${status ? ` reported ${status}` : ''}.${summary ? ` ${summary}` : ''}`);
+  const title = embed.title ? embed.title : 'Buster notification';
+  return truncateDiscordField(`${normalizeOperatorStatusText(title)} for ${subject}${status ? ` reported ${status}` : ''}.${summary ? ` ${summary}` : ''}`);
 }
 
 function actionabilityActionFromEmbed(embed: DiscordEmbed = {}): string {
-  const status = (fieldValue(embed, 'Status') || '').toUpperCase();
+  const statusField = fieldValue(embed, 'Status');
+  const status = (statusField ? statusField : '').toUpperCase();
   if (status === 'PASS') return 'No operator action required; continue with the next pipeline step.';
   if (status === 'FAIL') return 'Fix the listed failed suite or infrastructure issue, then resume or rerun the pipeline step.';
-  if (/spawned/i.test(String(embed.title || ''))) return 'Wait for the spawned Buster session to finish, then inspect the completion notification.';
+  if (/spawned/i.test(String(embed.title ? embed.title : ''))) return 'Wait for the spawned Buster session to finish, then inspect the completion notification.';
   return 'Read the notification fields and act on the listed status, issue, or failure reason.';
 }
 
@@ -483,7 +496,7 @@ function discordWebhookDeliveryMuted(context: DiscordContext = {}): boolean {
   // `_disable_discord_webhooks`/`disable_discord_webhooks` aliases are not
   // accepted inside the Buster Discord owner.
   if (context.disableDiscordWebhooks === true) return true;
-  const env = String(process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS || '').trim().toLowerCase();
+  const env = String(process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS ?? '').trim().toLowerCase();
   return env === '1' || env === 'true' || env === 'yes';
 }
 

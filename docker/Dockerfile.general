@@ -8,13 +8,129 @@ USER root
 RUN apt-get update && apt-get install -y --no-install-recommends \
     sudo curl wget git openssh-client jq nano tree net-tools iputils-ping dnsutils ripgrep \
     build-essential python3 python3-pip python3-venv python-is-python3 ffmpeg \
+    podman buildah slirp4netns fuse-overlayfs uidmap passwd \
+    chromium netcat-openbsd nmap nginx \
     shellcheck yamllint \
     && rm -rf /var/lib/apt/lists/*
 
 # 2. Global skill dependencies + lint tools (JS/TS)
 RUN mkdir -p /root/.npm && npm config set cache /root/.npm --global \
     && npm install -g ioredis uuid @qdrant/js-client-rest \
-       typescript eslint knip madge
+       typescript eslint knip madge \
+       js-yaml playwright lighthouse serve @axe-core/playwright pixelmatch pngjs ws
+
+# 2a. Podman-in-Pod runtime surface used by the real E2E Buster-compatible
+#     simulator path. Nova still receives only narrow lease-client Kubernetes
+#     RBAC; this enables local image build/push and browser suites, not direct
+#     namespace authority.
+RUN echo "root:100000:65536" >> /etc/subuid && \
+    echo "root:100000:65536" >> /etc/subgid
+
+RUN mkdir -p /etc/containers /run/containers/storage /var/lib/containers/storage && \
+    printf '[storage]\ndriver = "vfs"\nrunroot = "/run/containers/storage"\ngraphroot = "/var/lib/containers/storage"\n' \
+      > /etc/containers/storage.conf && \
+    printf 'unqualified-search-registries = ["docker.io", "ghcr.io"]\n\n[[registry]]\nprefix = "docker.io"\nlocation = "docker.io"\n\n[[registry.mirror]]\nlocation = "registry-mirror.kubeclaw.svc.cluster.local:5000"\ninsecure = true\n\n[[registry]]\nlocation = "registry-local.kubeclaw.svc.cluster.local:5001"\ninsecure = true\n' \
+      > /etc/containers/registries.conf && \
+    printf '[engine]\ncgroup_manager = "cgroupfs"\nevents_logger = "file"\nruntime = "crun"\n' \
+      > /etc/containers/containers.conf
+
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+RUN npx playwright install --with-deps chromium \
+    && echo "Playwright browsers installed at /ms-playwright" \
+    && ls /ms-playwright/
+
+# k6 load testing tool
+ARG K6_VERSION=v0.54.0
+RUN set -eux; \
+    ARCH=$(dpkg --print-architecture); \
+    case "$ARCH" in \
+      amd64) K6_ARCH="amd64" ;; \
+      arm64) K6_ARCH="arm64" ;; \
+      *) echo "Unsupported arch: $ARCH" && exit 1 ;; \
+    esac; \
+    URL="https://github.com/grafana/k6/releases/download/${K6_VERSION}/k6-${K6_VERSION}-linux-${K6_ARCH}.tar.gz"; \
+    curl -fsSL "$URL" | tar xz --strip-components=1 -C /usr/local/bin k6-${K6_VERSION}-linux-${K6_ARCH}/k6; \
+    k6 version
+
+RUN mkdir -p /sandbox/{www,results,scripts} && chown -R root:root /sandbox
+
+COPY <<'NGINXCONF' /etc/nginx/sites-available/sandbox
+server {
+    listen 9999;
+    root /sandbox/www;
+    index index.html;
+    add_header X-Frame-Options "DENY" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    location / { try_files $uri $uri/ =404; }
+}
+NGINXCONF
+RUN ln -sf /etc/nginx/sites-available/sandbox /etc/nginx/sites-enabled/sandbox && \
+    rm -f /etc/nginx/sites-enabled/default
+
+COPY <<'SCRIPT' /usr/local/bin/sandbox-run
+#!/bin/bash
+set -euo pipefail
+IMAGE="${1:?Usage: sandbox-run <image> [command]}"
+CMD="${2:-}"
+NAME="sb-$(date +%s)-$RANDOM"
+TIMEOUT="${SANDBOX_TIMEOUT:-300}"
+ARGS=(--name "$NAME" --rm --network host --memory 2g --cpus 2 --pids-limit 256 --tmpfs /tmp:size=512m -v /sandbox:/sandbox:rw -e SANDBOX=true -e NODE_ENV=test)
+if [[ -n "$CMD" ]]; then
+  timeout "$TIMEOUT" podman run "${ARGS[@]}" "$IMAGE" sh -c "$CMD"
+else
+  podman run -d "${ARGS[@]}" "$IMAGE"
+  echo "[SANDBOX] $NAME running. Stop: sandbox-kill $NAME"
+fi
+SCRIPT
+
+COPY <<'SCRIPT' /usr/local/bin/sandbox-build
+#!/bin/bash
+set -euo pipefail
+IMAGE="${1:?Usage: sandbox-build <image> <project-dir> <build-cmd>}"
+PROJECT="${2:?Provide project directory}"
+BUILD_CMD="${3:?Provide build command}"
+TIMEOUT="${SANDBOX_TIMEOUT:-300}"
+[[ ! -d "$PROJECT" ]] && echo "[BUILD] Not found: $PROJECT" && exit 1
+rm -rf /sandbox/www/*
+timeout "$TIMEOUT" podman run --rm --network host --memory 2g --cpus 2 --pids-limit 256 --tmpfs /tmp:size=512m -v "$PROJECT":/src:ro -v /sandbox/www:/output:rw "$IMAGE" sh -c "cp -r /src/. /build && cd /build && $BUILD_CMD && (cp -r dist/* /output/ 2>/dev/null || cp -r build/* /output/ 2>/dev/null || cp -r out/* /output/ 2>/dev/null || echo 'WARN: no standard output dir found')"
+echo "[BUILD] Output: /sandbox/www/ ($(du -sh /sandbox/www/ 2>/dev/null | cut -f1))"
+SCRIPT
+
+COPY <<'SCRIPT' /usr/local/bin/sandbox-serve
+#!/bin/bash
+SRC="${1:-.}"
+rm -rf /sandbox/www/*
+cp -r "$SRC"/. /sandbox/www/ 2>/dev/null || cp -r "$SRC" /sandbox/www/
+nginx 2>/dev/null; nginx -s reload 2>/dev/null || nginx
+echo "[SANDBOX] http://localhost:9999"
+SCRIPT
+
+COPY <<'SCRIPT' /usr/local/bin/sandbox-cleanup
+#!/bin/bash
+echo "[SANDBOX] Cleaning up..."
+podman stop -a 2>/dev/null; podman rm -a -f 2>/dev/null; podman image prune -a -f 2>/dev/null
+rm -rf /sandbox/www/* /sandbox/results/*
+nginx -s stop 2>/dev/null
+echo "[SANDBOX] Clean."
+SCRIPT
+
+COPY <<'SCRIPT' /usr/local/bin/sandbox-kill
+#!/bin/bash
+podman stop "${1:?Usage: sandbox-kill <n>}" 2>/dev/null && echo "Stopped: $1" || echo "Not found: $1"
+SCRIPT
+
+COPY <<'SCRIPT' /usr/local/bin/sandbox-stop
+#!/bin/bash
+nginx -s stop 2>/dev/null && echo "[SANDBOX] nginx stopped." || true
+SCRIPT
+
+COPY <<'SCRIPT' /usr/local/bin/sandbox-ps
+#!/bin/bash
+podman ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}" 2>/dev/null
+podman stats --no-stream --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}" 2>/dev/null || true
+SCRIPT
+
+RUN chmod +x /usr/local/bin/sandbox-*
 
 # 3. Python lint tools (stable, no hash issues)
 RUN pip install --break-system-packages --no-cache-dir \
@@ -29,6 +145,7 @@ RUN python3 -m venv /opt/semgrep \
 # 5. Binary tools — pinned versions for reproducible builds
 ARG HADOLINT_VERSION=2.12.0
 ARG KUBECONFORM_VERSION=0.6.4
+ARG KUBECTL_VERSION=1.36.2
 
 # hadolint — Dockerfile linter
 RUN wget -qO /usr/local/bin/hadolint \
@@ -39,6 +156,11 @@ RUN wget -qO /usr/local/bin/hadolint \
 RUN wget -qO- \
     https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz \
     | tar xz -C /usr/local/bin/
+
+# kubectl — live Kubernetes verification and Buster namespace lease checks
+RUN wget -qO /usr/local/bin/kubectl \
+    https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl \
+    && chmod +x /usr/local/bin/kubectl
 
 # helm (if not already in base image)
 RUN if ! command -v helm &>/dev/null; then \

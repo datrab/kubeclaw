@@ -42,6 +42,8 @@ Project-global:
 - `.swarm/logs/pipeline/discord.jsonl`
 - `.swarm/logs/pipeline/summary.json`
 
+`latest.json` is the operator pointer to the newest run-scoped audit tree and records the run `telemetry_stream_key` alongside the replay artifact bundle.
+
 Run-scoped:
 
 - `.swarm/logs/pipeline/runs/<run_id>/pipeline.jsonl`

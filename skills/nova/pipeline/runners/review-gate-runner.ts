@@ -30,6 +30,7 @@ import { onGateStarted, onGatePass, onGateFail } from '../services/telemetry.ts'
 import {
   emitGateRetryExhausted,
   finalizeGateSessionRateLimitExit,
+  getRateLimitConfig,
 } from '../services/rate-limit.ts';
 import {
   resolveResultDispatchId,
@@ -59,6 +60,7 @@ import {
   reviewOutputPath,
   runReviewGateOnce,
 } from './review-gate-task.ts';
+import { getReviewDefaultsConfig } from '../services/runtime-defaults.ts';
 
 function _telemetryCtx(config) {
   return getActiveContext() || { config, runId: config?.run_id || config?._runId || '' };
@@ -169,7 +171,7 @@ function resolveReviewLintPolicy(gate, defaults, lintTier) {
 }
 
 function resolveReviewConfig(config, progress, gate) {
-  const defaults = isPlainObject(config.review_defaults) ? config.review_defaults : {};
+  const defaults = getReviewDefaultsConfig(config);
   const projectDefaults = isPlainObject(progress?.defaults) ? progress.defaults : {};
   const { reviewers, source: reviewersSource } = resolveReviewers(gate, projectDefaults);
   const primary = resolvePrimaryReviewer(gate, projectDefaults, reviewers, reviewersSource);
@@ -366,7 +368,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
   const { reviewers } = reviewConfig;
   const failAction = gate.on_fail || 'fix_and_rereview';
   const remediation = opts.remediation || readGateRemediationSpec(opts.controlResult) || null;
-  const maxRateLimitPauses = config.rate_limit.max_pauses_per_module;
+  const maxRateLimitPauses = getRateLimitConfig(config).max_pauses_per_module;
   const attempt = Number(opts.attempt || 1);
   const gateStartedAt = opts.gateStartedAt ?? Date.now();
 
@@ -565,7 +567,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
     const reviewGatewayLabel = resolveResultGatewayLabel(reviewResult);
     const reviewFailureFields = buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate.type, attempt, dispatch_id: reviewDispatchId, gateway_label: reviewGatewayLabel, session_key: reviewSessionKey });
     const transcriptState = describeReviewTranscriptActivityState(reviewResult.transcript);
-    if (transcriptState) reviewFailureFields.push({ name: 'Transcript', value: transcriptState, inline: false });
+    if (transcriptState) reviewFailureFields.push({ name: 'Transcript Activity', value: transcriptState, inline: false });
     onGateFail(_telemetryCtx(config), gateId, {
       gate_type: gate.type,
       duration_seconds: Math.round((Date.now() - gateStartedAt) / 1000),

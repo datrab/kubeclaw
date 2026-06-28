@@ -171,16 +171,17 @@ All governance observability artifacts live under `.swarm/logs/`:
 
 `.swarm/logs/pipeline/latest.json` points operators at the newest run-scoped `pipeline.jsonl`, `discord.jsonl`, `nova-injections.jsonl`, `buster-telemetry-fallback.jsonl`, `redis/redis-exchanges.jsonl`, `redis/redis-ops.jsonl`, and `summary.json` under `.swarm/logs/pipeline/runs/<run-id>/`, and records the canonical live `telemetry_stream_key` for that run.
 
-`scripts/deploy.sh build-local-images [tag]`, `scripts/deploy.sh verify-live [tag]`, and `scripts/deploy.sh smoke` / `scripts/deploy.sh smoke-agent <nova|buster>` are the canonical live deployment command surface; `.swarm/logs/pipeline/latest.json` plus the run-scoped audit bundle are the canonical replay/audit surface for that deployment path.
+`.github/workflows/build-images.yaml`, `scripts/deploy.sh image [nova|buster|both]`, `scripts/deploy.sh code [nova|buster|both]`, and `scripts/deploy.sh smoke` / `scripts/deploy.sh smoke-agent <nova|buster>` are the canonical live deployment command surface; `.swarm/logs/pipeline/latest.json` plus the run-scoped audit bundle are the canonical replay/audit surface for that deployment path.
 
 ### Governance Docs
 
 | Topic | Reference |
 |---|---|
-| Full observability layout | `docs/archive/legacy-root-docs/observability-reference.md` |
-| Architecture validator reference | `docs/archive/legacy-root-docs/architecture-validator-reference.md` |
-| Telemetry contract | `docs/archive/legacy-root-docs/telemetry-event-schema.md` |
-| Pipeline reference | `docs/archive/legacy-root-docs/pipeline-reference-v10.md` |
+| Full observability layout | `docs/architecture/observability-model.md` |
+| Architecture validator reference | `docs/pipeline/architecture.md` |
+| Telemetry contract | `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` |
+| Telemetry schema | `docs/telemetry-event-schema.md` |
+| Pipeline reference | `docs/pipeline/technical-implementation-map.md` |
 
 ---
 

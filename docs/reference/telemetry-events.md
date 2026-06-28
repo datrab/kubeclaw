@@ -5,7 +5,9 @@ Audience: reference reader, maintainer
 
 ## Summary
 
-Telemetry events use a structured envelope and run-scoped Redis stream. Known event payloads are validated by `skills/common/pipeline/services/telemetry/payload-schema.ts`.
+Telemetry events use a structured envelope and run-scoped Redis stream. Canonical inventory and stream semantics are owned by `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`. Event-by-event payload fields are owned by `docs/telemetry-event-schema.md`.
+
+Known event payloads are validated by `skills/common/pipeline/services/telemetry/payload-schema.ts`.
 
 ## Envelope Fields
 
@@ -22,42 +24,12 @@ Telemetry events use a structured envelope and run-scoped Redis stream. Known ev
 
 - stream: `pipeline:telemetry:<project>:<run_id>`
 - sequence key: `pipeline:telemetry:seq:<project>:<run_id>`
-- default max stream length: `10000`
+- max stream length: `telemetry.stream_max_len` in `swarm.config.json`
 - sequence TTL: seven days
 
 ## Event Families
 
-Common current families include:
-
-- `pipeline.started`
-- `pipeline.completed`
-- `pipeline.halted`
-- `pipeline.operator_alert`
-- `module.started`
-- `module.completed`
-- `module.failed`
-- `module.blocked`
-- `module.retry_scheduled`
-- `module.status_changed`
-- `gate.started`
-- `gate.completed`
-- `approval.requested`
-- `approval.resolved`
-- `rate_limit.detected`
-- `retry.scheduled`
-- `retry.exhausted`
-- `observability.degraded`
-- `observability.restored`
-- `agent.spawn.requested`
-- `agent.spawned`
-- `agent.progress`
-- `agent.killed`
-- `agent.ended`
-- `agent.llm.input.summary`
-- `agent.llm.output.summary`
-- `agent.tool.started`
-- `agent.tool.finished`
-- `plugin.event`
+The canonical event inventory lives in `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`.
 
 ## Terminal Fields
 

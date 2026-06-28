@@ -19,6 +19,10 @@ export function requireTelemetryStreamMaxLen(value: unknown, label = 'config.tel
   return Number(value);
 }
 
+export function requireTelemetryStreamMaxLenFromConfig(config: Record<string, any> = {}) {
+  return requireTelemetryStreamMaxLen(config?.telemetry?.stream_max_len);
+}
+
 function normalizeTelemetryIdentityPart(value: unknown, field: string) {
   const normalized = String(value ?? '').trim();
   if (!normalized) {

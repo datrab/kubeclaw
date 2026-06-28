@@ -88,7 +88,7 @@ Current platform-level config supports:
 
 - `pre_check.enabled`
 - `pre_check.lint_report_path`
-- `pre_check.timeout_seconds`
+- `pre_check.policy`
 - optional `pre_check.semgrep_config_path`
 
 CLI flags inside `lint-report.ts` include:

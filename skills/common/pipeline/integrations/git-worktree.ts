@@ -4,10 +4,7 @@
 import fs from 'fs';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
-import { log } from '../../../nova/pipeline/core/logger.ts';
-import { getRunStats } from '../../../nova/pipeline/core/runtime.ts';
 import { getRepoRoot, gitExec, headHash, invalidateHeadHash, setGitRuntimePolicy, setRepoRoot } from '../git-primitives.ts';
-import { FAIL_PATTERNS, classifyGitPushError } from '../../../nova/pipeline/services/failures/classification.ts';
 import { sleep } from '../timing.ts';
 import { buildSubprocessEnv } from '../security.ts';
 
@@ -19,15 +16,46 @@ type RuntimeStashState = { stashRef: string | null; stashSha?: string | null; pa
 type PreservationStashState = { stashRef: string | null; stashSha?: string | null; paths: string[] } | null;
 type GitCommitPushOptions = { addPaths?: string[]; conflictPaths?: string[]; captureHash?: boolean; softFail?: boolean; budget?: any; signal?: any };
 
+function requireNumber(obj: AnyRecord, field: string, label: string, { positive = false, integer = false }: { positive?: boolean; integer?: boolean } = {}): number {
+  const value = obj?.[field];
+  if (typeof value !== 'number' || !Number.isFinite(value) || (positive && value <= 0) || (integer && !Number.isInteger(value))) {
+    throw new Error(`${label}.${field}: required${positive ? ' positive' : ''}${integer ? ' integer' : ''} number in swarm.config.json`);
+  }
+  return value;
+}
+
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
 export { getRepoRoot, gitExec, headHash, invalidateHeadHash, setGitRuntimePolicy, setRepoRoot } from '../git-primitives.ts';
-export { classifyGitPushError } from '../../../nova/pipeline/services/failures/classification.ts';
+
+export const FAIL_PATTERNS = {
+  GIT_REBASE_CONFLICT: 'GIT_REBASE_CONFLICT',
+  GIT_SYNC_FAILED: 'GIT_SYNC_FAILED',
+  GIT_PUSH_REJECTED: 'GIT_PUSH_REJECTED',
+  GIT_PUSH_FAILED: 'GIT_PUSH_FAILED',
+} as const;
+
+export function classifyGitPushError(errorMessage: unknown): string {
+  const msg = String(errorMessage || '');
+  if (/\[rejected\]|non-fast-forward|updates were rejected/i.test(msg)) return FAIL_PATTERNS.GIT_PUSH_REJECTED;
+  if (/authentication failed|publickey|permission denied \(publickey\)|could not read.*passphrase/i.test(msg)) return FAIL_PATTERNS.GIT_PUSH_FAILED;
+  if (/timeout|timed out|connection (refused|reset)|network (error|unreachable)/i.test(msg)) return FAIL_PATTERNS.GIT_PUSH_FAILED;
+  if (/git sync failed|failed before buster handoff/i.test(msg)) return FAIL_PATTERNS.GIT_SYNC_FAILED;
+  return FAIL_PATTERNS.GIT_PUSH_FAILED;
+}
+
+function log(level: string, message: string): void {
+  const normalizedLevel = String(level || 'INFO').toUpperCase();
+  const writer = normalizedLevel === 'ERROR' || normalizedLevel === 'WARN'
+    ? console.error
+    : console.log;
+  writer(`[${normalizedLevel}] ${message}`);
+}
 
 function incrementStat(config: AnyRecord, key: string) {
-  const stats = getRunStats(config);
+  const stats = config?._runStats || null;
   if (stats && typeof stats[key] === 'number') stats[key]++;
 }
 
@@ -554,16 +582,13 @@ export function gitPullBeforePush(config: AnyRecord) {
 }
 
 function gitPushPolicy(config: AnyRecord): { maxRetries: number; delayMs: number; timeoutMs: number } {
-  const policy = config?.git;
-  if (!policy || typeof policy !== 'object') {
+  const push = config?.git?.push;
+  if (!push || typeof push !== 'object' || Array.isArray(push)) {
     throw new Error('config.git: required platform config object for git push retry policy');
   }
-  const maxRetries = Number(policy.push_max_retries);
-  const delayMs = Number(policy.push_retry_delay_ms);
-  const timeoutMs = Number(policy.push_timeout_ms);
-  if (!Number.isFinite(maxRetries) || maxRetries <= 0) throw new Error('config.git.push_max_retries: required positive number');
-  if (!Number.isFinite(delayMs) || delayMs < 0) throw new Error('config.git.push_retry_delay_ms: required non-negative number');
-  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) throw new Error('config.git.push_timeout_ms: required positive number');
+  const maxRetries = requireNumber(push, 'max_attempts', 'config.git.push', { positive: true, integer: true });
+  const delayMs = requireNumber(push, 'retry_delay_ms', 'config.git.push');
+  const timeoutMs = requireNumber(push, 'timeout_ms', 'config.git.push', { positive: true, integer: true });
   return { maxRetries, delayMs, timeoutMs };
 }
 

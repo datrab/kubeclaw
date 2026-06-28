@@ -7,7 +7,7 @@ import { STATUS } from '../core/constants.ts';
 import { completionStreamKey, gateOutputPath } from '../core/paths.ts';
 import { appendDurableOperatorAlert } from '../services/telemetry.ts';
 import { projectGateCompletionState } from '../services/status-store.ts';
-import { waitForResilientRedisCompletion } from '../../../common/pipeline/services/redis-wait.ts';
+import { waitForResilientRedisCompletion } from '../services/redis-wait.ts';
 import {
   createDedicatedRedisCompletionClient,
   createLocalEvidenceEventAdapter,
@@ -19,11 +19,20 @@ import {
 } from '../services/buster-completion-controller.ts';
 import { logRedisOperation, logRedisReceived } from '../services/redis-log.ts';
 import { scanLatestCompletionFromTail } from '../services/redis-completion.ts';
+import { resolveRedisCompletionPolicy } from '../services/redis-completion-policy.ts';
 import {
   buildGateSessionRateLimitStatus,
   buildGateTerminalOwnedRedisRateLimitExitResult,
 } from '../services/rate-limit.ts';
 import { buildBusterGateActiveCompletionIdentity } from './buster-gate-task.ts';
+
+function busterRuntimePolicyNumber(config, field) {
+  const value = config?.buster?.runtime?.[field];
+  if (typeof value !== 'number' || !Number.isFinite(value)) {
+    throw new Error(`config.buster.runtime.${field}: required number in swarm.config.json`);
+  }
+  return value;
+}
 
 function buildPollIdentityFields(completionIdentity) {
   return {
@@ -215,6 +224,7 @@ export async function waitBusterGateCompletionEvidence({
   const timeoutMs = timeoutMinutes * 60 * 1000;
 
   try {
+    const redisCompletionPolicy = resolveRedisCompletionPolicy(config);
     const controllerResult = await waitForResilientRedisCompletion({
       config,
       streamKey: deps?._explicitDeps?.streamKey || completionStreamKey(config),
@@ -227,10 +237,10 @@ export async function waitBusterGateCompletionEvidence({
       getLocalStatus: () => projectGateCompletionState(config, gateId, gate, { activeDispatch: activeCompletionIdentity }),
       statusSource: 'output_file',
       deps: deps?._explicitDeps,
-      redisBlockMs: config?.buster?.runtime?.completion_event_block_ms,
-      recoveryScanIntervalMs: config?.buster?.runtime?.completion_recovery_scan_interval_ms,
-      tailScanBatchSize: config?.redis_completion?.tail_scan_batch_size,
-      tailScanLimit: config?.redis_completion?.tail_scan_limit,
+      redisBlockMs: busterRuntimePolicyNumber(config, 'completion_event_block_ms'),
+      recoveryScanIntervalMs: busterRuntimePolicyNumber(config, 'completion_recovery_scan_interval_ms'),
+      tailScanBatchSize: redisCompletionPolicy.tailScanBatchSize,
+      tailScanLimit: redisCompletionPolicy.tailScanLimit,
       createRedisCompletionEventAdapter,
       createLocalEvidenceEventAdapter,
       createRedisClient: createDedicatedRedisCompletionClient,

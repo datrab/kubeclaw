@@ -1,3 +1,5 @@
+import { platformTestDefaults } from './helpers.mjs';
+
 export async function registerLifecycleStateSurfaceArea({
   record,
   fs,
@@ -11,12 +13,7 @@ export async function registerLifecycleStateSurfaceArea({
   lifecycleStateMod,
 }) {
   const forgeCompletionObservability = {
-    profile: 'test',
-    profiles: {
-      test: {
-        forge_completion: { xread_block_ms: 1, settle_ms: 0 },
-      },
-    },
+    forge_completion: { xread_block_ms: 1, settle_ms: 0 },
   };
 
   await record('lifecycle-state prompt and helper surfaces stay behavior-led on critical paths', async () => {
@@ -41,6 +38,7 @@ export async function registerLifecycleStateSurfaceArea({
     fs.writeFileSync(path.join(moduleDir, 'BUSTER.md'), '# Buster\nRun smoke checks.\n');
 
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-lifecycle-surface',
       repo_root: repoRoot,
       paths: {
@@ -48,7 +46,8 @@ export async function registerLifecycleStateSurfaceArea({
         modules_dir: modulesRoot,
       },
       agents: {
-        forge: { cwd: repoRoot },
+        ...platformTestDefaults().agents,
+        forge: { ...platformTestDefaults().agents.forge, cwd: repoRoot },
       },
     };
 
@@ -126,7 +125,7 @@ export async function registerLifecycleStateSurfaceArea({
     }, null, 2));
     const forgeCompletionPoll = await pollingMod.pollForgeCompletion({
       ...config,
-      agent_observability: forgeCompletionObservability,
+      agent_observability: { ...config.agent_observability, required: false, ...forgeCompletionObservability },
     }, '01', 1, {
       moduleId: '01',
       agentEndedReader: {
@@ -149,7 +148,7 @@ export async function registerLifecycleStateSurfaceArea({
       },
     });
     assert.equal(forgeCompletionPoll.ok, true);
-    assert.equal(forgeCompletionPoll.reason, 'agent_ended_meaningful_diff');
+    assert.equal(forgeCompletionPoll.reason, 'forge_completion');
     assert.equal(forgeCompletionPoll.status.status, 'READY_FOR_TESTING');
 
     const terminalGateway = await startGatewayServer(async () => ({
@@ -167,10 +166,9 @@ export async function registerLifecycleStateSurfaceArea({
         gateway_url: terminalGateway.url,
         gateway_token: '',
         poll_interval_seconds: 0,
-        agent_observability: forgeCompletionObservability,
+        agent_observability: { ...config.agent_observability, required: false, ...forgeCompletionObservability },
         acp_monitor: {
-          unknown_poll_limit: 1,
-          stale_poll_limit: 1,
+          poll_limit: 1,
           max_transcript_extensions: 3,
           transcript_grace_ms: 300000,
           monitor_poll_ms: 0,

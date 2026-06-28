@@ -21,8 +21,14 @@ function testConfig(dir) {
     project: 'pipeline-runner-test',
     _runId: 'run-observer-setup-fails',
     paths: { swarm_dir: dir },
-    pipeline_run_lock_lease_ms: 2000,
-    pipeline_run_lock_heartbeat_ms: 1000,
+    locks: {
+      pipeline_run: {
+        lease_ms: 2000,
+        heartbeat_ms: 1000,
+        mutation_stale_ms: 1,
+        abort_settle_ms: 0,
+      },
+    },
   };
   Object.defineProperty(config, 'agent_observability', {
     get() {
@@ -81,6 +87,9 @@ function completedRunConfig(dir, calls) {
     run_id: 'run-terminal-resume',
     repo_root: dir,
     paths: { swarm_dir: path.join(dir, '.swarm') },
+    locks: {
+      lifecycle_append: { stale_ms: 1, timeout_ms: 1 },
+    },
   };
   config.pluginRegistry = buildPluginRegistry({
     enabled: true,

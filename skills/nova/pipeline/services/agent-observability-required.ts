@@ -87,7 +87,7 @@ function eventGatewayLabel(event: AnyRecord) {
 }
 
 function isStartupLifecycleType(type: unknown) {
-  return type === 'agent.spawned' || type === 'agent.session.started';
+  return new Set(['agent.spawned', 'agent.session.started']).has(String(type));
 }
 
 export function matchesAgentLifecycleTelemetry(event: AnyRecord = {}, identity: AnyRecord = {}, types: string[] = []) {

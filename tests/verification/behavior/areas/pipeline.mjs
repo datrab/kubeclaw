@@ -11,6 +11,7 @@ import {
 import {
   buildBuiltInRegistry,
   makeStepResult,
+  platformTestDefaults,
   readJsonl,
   assertTypedTerminalEvent,
 } from './helpers.mjs';
@@ -242,12 +243,13 @@ export async function registerPipelineArea({
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-single-module-halt',
       paths: {
         swarm_dir: '/tmp/behavior-single-module-halt/swarm',
         modules_dir: '/tmp/behavior-single-module-halt/modules',
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       pluginRegistry: registry,
       _runId: 'run-single-module-halt-1',
       run_id: 'run-single-module-halt-1',
@@ -359,12 +361,13 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-single-module-typed-step',
       paths: {
         swarm_dir: '/tmp/behavior-single-module-typed-step/swarm',
         modules_dir: '/tmp/behavior-single-module-typed-step/modules',
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       pluginRegistry: registry,
       _runId: 'run-single-module-typed-step-1',
       run_id: 'run-single-module-typed-step-1',
@@ -461,12 +464,13 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-single-module-rate-limited',
       paths: {
         swarm_dir: '/tmp/behavior-single-module-rate-limited/swarm',
         modules_dir: '/tmp/behavior-single-module-rate-limited/modules',
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       pluginRegistry: registry,
       _runId: 'run-single-module-rate-limited-1',
       run_id: 'run-single-module-rate-limited-1',
@@ -555,13 +559,14 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-single-module-failcount-halt',
       repo_root: repoRoot,
       paths: {
         swarm_dir: swarmDir,
         modules_dir: modulesDir,
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       pluginRegistry: registry,
       _runId: 'run-single-module-failcount-halt-1',
       run_id: 'run-single-module-failcount-halt-1',
@@ -659,13 +664,14 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-full-pipeline-failcount-halt',
       repo_root: repoRoot,
       paths: {
         swarm_dir: swarmDir,
         modules_dir: modulesDir,
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       pluginRegistry: registry,
       _runId: 'run-full-pipeline-failcount-halt-1',
       run_id: 'run-full-pipeline-failcount-halt-1',
@@ -754,13 +760,14 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-single-module-blocked',
       repo_root: repoRoot,
       paths: {
         swarm_dir: swarmDir,
         modules_dir: modulesDir,
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       pluginRegistry: registry,
       _runId: 'run-single-module-blocked-1',
       run_id: 'run-single-module-blocked-1',
@@ -855,13 +862,14 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-full-pipeline-blocked',
       repo_root: repoRoot,
       paths: {
         swarm_dir: swarmDir,
         modules_dir: modulesDir,
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       pluginRegistry: registry,
       _runId: 'run-full-pipeline-blocked-1',
       run_id: 'run-full-pipeline-blocked-1',
@@ -1018,12 +1026,13 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-fresh-blocked-finalizer',
       paths: {
         swarm_dir: '/tmp/behavior-fresh-blocked-finalizer/swarm',
         modules_dir: '/tmp/behavior-fresh-blocked-finalizer/modules',
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       pluginRegistry: testRegistry,
       _runId: 'run-fresh-blocked-finalizer-1',
       run_id: 'run-fresh-blocked-finalizer-1',
@@ -1095,12 +1104,13 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-gate-registry-pipeline',
       paths: {
         swarm_dir: swarmDir,
         modules_dir: path.join(swarmDir, 'modules'),
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       pluginRegistry: registry,
       _runId: 'run-gate-registry-pipeline-1',
       run_id: 'run-gate-registry-pipeline-1',
@@ -1196,12 +1206,13 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-pipeline-gate-type-stop',
       paths: {
         swarm_dir: swarmDir,
         modules_dir: `${root}/modules`,
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       pluginRegistry: registry,
       _runId: 'run-pipeline-gate-type-stop-1',
       run_id: 'run-pipeline-gate-type-stop-1',
@@ -1330,12 +1341,13 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-pipeline-gate-rate-limited',
       paths: {
         swarm_dir: swarmDir,
         modules_dir: `${root}/modules`,
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       pluginRegistry: registry,
       _runId: 'run-pipeline-gate-rate-limited-1',
       run_id: 'run-pipeline-gate-rate-limited-1',
@@ -1449,12 +1461,13 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-arch-validation-block',
       paths: {
         swarm_dir: '/tmp/behavior-arch-validation-block/swarm',
         modules_dir: '/tmp/behavior-arch-validation-block/modules',
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       _runId: 'run-arch-validation-block-1',
       run_id: 'run-arch-validation-block-1',
       pluginRegistry: testRegistry,
@@ -1563,9 +1576,10 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-full-lint-before-review',
       paths: { swarm_dir: swarmDir, modules_dir: path.join(repoRoot, 'modules') },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       _runId: 'run-full-lint-before-review-1',
       run_id: 'run-full-lint-before-review-1',
       pluginRegistry: testRegistry,
@@ -1646,9 +1660,10 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-full-lint-request-fix',
       paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: path.join(repoRoot, 'modules') },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       _runId: 'run-full-lint-request-fix-1',
       run_id: 'run-full-lint-request-fix-1',
       pluginRegistry: testRegistry,
@@ -1751,9 +1766,10 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-scheduled-full-lint',
       paths: { swarm_dir: path.join(repoRoot, '.swarm'), modules_dir: path.join(repoRoot, 'modules') },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       _runId: 'run-scheduled-full-lint-1',
       run_id: 'run-scheduled-full-lint-1',
       pluginRegistry: testRegistry,
@@ -1843,12 +1859,13 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-arch-validation-pass',
       paths: {
         swarm_dir: '/tmp/behavior-arch-validation-pass/swarm',
         modules_dir: '/tmp/behavior-arch-validation-pass/modules',
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       _runId: 'run-arch-validation-pass-1',
       run_id: 'run-arch-validation-pass-1',
       pluginRegistry: testRegistry,
@@ -1914,12 +1931,13 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-arch-validation-error',
       paths: {
         swarm_dir: '/tmp/behavior-arch-validation-error/swarm',
         modules_dir: '/tmp/behavior-arch-validation-error/modules',
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       _runId: 'run-arch-validation-error-1',
       run_id: 'run-arch-validation-error-1',
       pluginRegistry: testRegistry,
@@ -1981,12 +1999,13 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-arch-validation-registry-miss',
       paths: {
         swarm_dir: '/tmp/behavior-arch-validation-registry-miss/swarm',
         modules_dir: '/tmp/behavior-arch-validation-registry-miss/modules',
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       _runId: 'run-arch-validation-registry-miss-1',
       run_id: 'run-arch-validation-registry-miss-1',
       pluginRegistry: {
@@ -2087,12 +2106,13 @@ const config = {
         },
       };
 const beforeWorkConfig = {
+      ...platformTestDefaults(),
       project: 'behavior-arch-validation-resume-before-work',
       paths: {
         swarm_dir: '/tmp/behavior-arch-validation-resume-before-work/swarm',
         modules_dir: '/tmp/behavior-arch-validation-resume-before-work/modules',
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       _runId: 'run-arch-validation-resume-before-work-1',
       run_id: 'run-arch-validation-resume-before-work-1',
       pluginRegistry: testRegistry,
@@ -2145,12 +2165,13 @@ const beforeWorkConfig = {
         },
       };
 const afterWorkConfig = {
+      ...platformTestDefaults(),
       project: 'behavior-arch-validation-resume-after-work',
       paths: {
         swarm_dir: '/tmp/behavior-arch-validation-resume-after-work/swarm',
         modules_dir: '/tmp/behavior-arch-validation-resume-after-work/modules',
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       _runId: 'run-arch-validation-resume-after-work-1',
       run_id: 'run-arch-validation-resume-after-work-1',
       pluginRegistry: testRegistry,
@@ -2192,6 +2213,7 @@ const afterWorkConfig = {
     fs.writeFileSync(path.join(moduleDir, 'FORGE.md'), '# Forge\n');
 
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-arch-validator-artifacts',
       paths: {
         swarm_dir: path.join(tempRoot, 'swarm'),
@@ -2246,6 +2268,7 @@ const afterWorkConfig = {
       gates: {},
     };
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-arch-validator-exec-order-entry',
       paths: { progress_file: 'progress.json' },
     };
@@ -2280,6 +2303,7 @@ const afterWorkConfig = {
 
     const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-arch-validator-internal-error-'));
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-arch-validator-internal-error',
       paths: {
         swarm_dir: path.join(tempRoot, 'swarm'),
@@ -2327,6 +2351,7 @@ const afterWorkConfig = {
     fs.writeFileSync(path.join(moduleDir, 'FORGE.md'), '# Forge\n');
 
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-arch-validator-agent-session',
       paths: {
         swarm_dir: path.join(tempRoot, 'swarm'),
@@ -2450,13 +2475,14 @@ const afterWorkConfig = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-generator-stage-order',
       repo_root: repoRoot,
       paths: {
         swarm_dir: path.join(repoRoot, '.swarm'),
         modules_dir: path.join(repoRoot, 'modules'),
       },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       pluginRegistry: testRegistry,
       _runId: 'run-generator-stage-order-1',
       run_id: 'run-generator-stage-order-1',
@@ -2523,13 +2549,14 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-generator-blocked-halt',
       repo_root: repoRoot,
       paths: {
         swarm_dir: path.join(repoRoot, '.swarm'),
         modules_dir: path.join(repoRoot, 'modules'),
       },
-      telemetry: { enabled: false },
+      telemetry: { ...platformTestDefaults().telemetry, enabled: false },
       pluginRegistry: {
         ...registry,
         stageOwners: {
@@ -2605,13 +2632,14 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-generator-arch-block',
       repo_root: repoRoot,
       paths: {
         swarm_dir: path.join(repoRoot, '.swarm'),
         modules_dir: path.join(repoRoot, 'modules'),
       },
-      telemetry: { enabled: false },
+      telemetry: { ...platformTestDefaults().telemetry, enabled: false },
       pluginRegistry: {
         ...registry,
         stageOwners: {
@@ -2674,13 +2702,14 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-generator-single-module',
       repo_root: repoRoot,
       paths: {
         swarm_dir: path.join(repoRoot, '.swarm'),
         modules_dir: path.join(repoRoot, 'modules'),
       },
-      telemetry: { enabled: false },
+      telemetry: { ...platformTestDefaults().telemetry, enabled: false },
       pluginRegistry: {
         ...registry,
         stageOwners: {
@@ -2724,12 +2753,13 @@ const config = {
         },
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-raw-exit-rejected',
       paths: {
         swarm_dir: '/tmp/behavior-raw-exit-rejected/swarm',
         modules_dir: '/tmp/behavior-raw-exit-rejected/modules',
       },
-      telemetry: { enabled: false },
+      telemetry: { ...platformTestDefaults().telemetry, enabled: false },
       pluginRegistry: withStubbedGeneratorStages(await buildBuiltInRegistry(pipelineRuntimeRoot)),
       _runId: 'run-raw-exit-rejected-1',
       run_id: 'run-raw-exit-rejected-1',

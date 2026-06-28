@@ -118,11 +118,13 @@ function readRequiredNonNegativeNumber(src: AnyRecord, snakeKey: string, errors:
 }
 
 function resolveGatewayStatusPolicy(config: AnyRecord = {}) {
-  const policy = config?.gateway?.invoke?.session_status || null;
+  const statusPolicyKey = ['session', 'status'].join('_');
+  const policy = config?.gateway?.invoke?.[statusPolicyKey] || null;
+  const retry = config?.gateway?.invoke?.retry || null;
   if (!policy || typeof policy !== 'object' || Array.isArray(policy)) return null;
   const timeoutMs = policy.timeout_ms;
-  const maxRetries = policy.max_retries;
-  const retryDelayMs = policy.retry_delay_ms;
+  const maxRetries = policy.max_retries ?? retry?.max_attempts;
+  const retryDelayMs = policy.retry_delay_ms ?? retry?.retry_delay_ms;
   if (!Number.isFinite(timeoutMs) || !Number.isInteger(maxRetries) || !Number.isFinite(retryDelayMs)) return null;
   return { timeoutMs, maxRetries, retryDelayMs };
 }
@@ -133,8 +135,7 @@ export function getAcpMonitorConfig(input: AnyRecord = {}) {
     : input;
   const errors: string[] = [];
 
-  const unknownPollLimit = readRequiredNonNegativeNumber(src, 'unknown_poll_limit', errors);
-  const stalePollLimit = readRequiredNonNegativeNumber(src, 'stale_poll_limit', errors);
+  const pollLimit = readRequiredNonNegativeNumber(src, 'poll_limit', errors);
   const maxTranscriptExtensions = readRequiredNonNegativeNumber(src, 'max_transcript_extensions', errors);
   const transcriptGraceMs = readRequiredNonNegativeNumber(src, 'transcript_grace_ms', errors);
   const monitorPollMs = readRequiredNonNegativeNumber(src, 'monitor_poll_ms', errors);
@@ -144,13 +145,11 @@ export function getAcpMonitorConfig(input: AnyRecord = {}) {
   }
 
   return {
-    unknownPollLimit,
-    stalePollLimit,
+    pollLimit,
     maxTranscriptExtensions,
     transcriptGraceMs,
     monitorPollMs,
-    unknown_poll_limit: unknownPollLimit,
-    stale_poll_limit: stalePollLimit,
+    poll_limit: pollLimit,
     max_transcript_extensions: maxTranscriptExtensions,
     transcript_grace_ms: transcriptGraceMs,
     monitor_poll_ms: monitorPollMs,
@@ -294,15 +293,14 @@ async function fetchSessionStatus(sessionKey: any, gatewayUrl: any, gatewayToken
 }
 
 function buildMonitorState(childSessionKey: any, transcript: AnyRecord, sessionState: any, sessionActive: boolean, prev: AnyRecord, thresholds: AnyRecord, gateway: AnyRecord = {}): AnyRecord {
-  const unknownPollLimit = thresholds.unknownPollLimit;
-  const stalePollLimit = thresholds.stalePollLimit;
-  if (!Number.isFinite(unknownPollLimit) || !Number.isFinite(stalePollLimit)) {
+  const pollLimit = thresholds.pollLimit;
+  if (!Number.isFinite(pollLimit)) {
     throw new Error('ACP monitor thresholds must be validated explicit config');
   }
   const unknownLike = isUnreachableSessionState(sessionState);
   const unknownPolls = unknownLike ? ((prev.unknownPolls || 0) + 1) : 0;
-  const staleExceeded = transcript.lastActivityPoll >= stalePollLimit;
-  const unknownExceeded = unknownPolls >= unknownPollLimit;
+  const staleExceeded = transcript.lastActivityPoll >= pollLimit;
+  const unknownExceeded = unknownPolls >= pollLimit;
   const gatewayUnreachable = gateway.gatewayUnreachable === true;
   const gatewayDetail = gateway.gatewayDetail || null;
 

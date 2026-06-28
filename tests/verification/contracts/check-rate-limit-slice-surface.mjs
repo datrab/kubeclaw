@@ -108,7 +108,7 @@ for (const [mod, name] of [
 assert.equal(Object.prototype.hasOwnProperty.call(mainMod, 'handleRateLimit'), false, 'legacy handleRateLimit wrapper must be deleted');
 assert.equal(mainSource.includes('pauseCount = 1, maxPauses = 5'), false, 'rate-limit surface must not keep hard-coded wrapper pause defaults');
 assert.equal(mainSource.includes('cooldown_buffer_ms ?? 5000'), false, 'rate-limit surface must not keep hidden cooldown buffer fallback');
-assert.equal(mainSource.includes('config.rate_limit.cooldown_buffer_ms'), true, 'rate-limit cooldown buffer must come from platform config');
+assert.equal(mainSource.includes('config?.rate_limit?.cooldown_buffer_ms'), true, 'rate-limit cooldown buffer must come from direct swarm config');
 assert.equal(buildersSource.includes('projectModuleSchedulerState('), true, 'tracked module rate-limit status must consume canonical module scheduler projections');
 assert.equal(buildersSource.includes("import { loadStatus }"), false, 'tracked module rate-limit status must not import legacy-shaped loadStatus snapshots');
 assert.equal(buildersSource.includes('?? moduleDir'), false, 'tracked module rate-limit status must not synthesize module identity from the directory');

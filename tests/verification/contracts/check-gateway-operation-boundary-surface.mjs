@@ -34,6 +34,11 @@ const allowedFacadePaths = new Set([
   'skills/nova/pipeline/integrations/gateway.ts',
   'skills/buster/pipeline/integrations/gateway.ts',
 ]);
+const configOwnerPaths = new Set([
+  'skills/nova/pipeline/core/config.ts',
+  'skills/nova/pipeline/core/session-policy.ts',
+  'skills/buster/pipeline/services/runtime-policy.ts',
+]);
 const scannedFiles = [
   ...walk(path.join(sourceRoot, 'skills/common/pipeline')),
   ...walk(path.join(sourceRoot, 'skills/nova')),
@@ -42,7 +47,7 @@ const scannedFiles = [
 
 for (const filePath of scannedFiles) {
   const relPath = path.relative(sourceRoot, filePath).replace(/\\/g, '/');
-  if (filePath === gatewayOwner || gatewayOwnerTests.has(relPath) || allowedFacadePaths.has(relPath)) continue;
+  if (filePath === gatewayOwner || gatewayOwnerTests.has(relPath) || allowedFacadePaths.has(relPath) || configOwnerPaths.has(relPath)) continue;
   const source = fs.readFileSync(filePath, 'utf8');
   assert.equal(
     /\bgatewayInvoke\b/.test(source),

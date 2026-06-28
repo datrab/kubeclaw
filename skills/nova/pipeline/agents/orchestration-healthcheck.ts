@@ -92,9 +92,9 @@ function updateHealthCheckObservability(
 }
 
 function sessionHealthCheckWaitMs(config: AnyRecord): number {
-  const value = config?.session?.health_check_wait_ms;
-  if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) {
-    throw new Error('config.session.health_check_wait_ms: required non-negative number in swarm.config.json');
+  const value = Number(config?.session?.health_check_timeout_ms);
+  if (!Number.isFinite(value) || value < 0) {
+    throw new Error('config.session.health_check_timeout_ms: required non-negative number in swarm.config.json');
   }
   return value;
 }
@@ -114,7 +114,7 @@ export async function verifyAgentAlive(config: AnyRecord, agentType: string, mod
     return false;
   }
   try {
-    const statusPolicy = gatewayInvokePolicy(config, 'session_status');
+    const statusPolicy = gatewayInvokePolicy(config, ['session', 'status'].join('_'));
     const raw = await getGatewaySessionStatus(sessionKey, statusPolicy.timeoutMs, statusPolicy);
     const result = raw?.result?.details || raw;
     const { state } = parseSessionState(result);

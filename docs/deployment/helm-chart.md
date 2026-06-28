@@ -33,20 +33,25 @@ Rendered Nova resources from `my-values/nova-values.yaml`:
 Rendered Buster resources from `my-values/buster-values.yaml`:
 
 - `ServiceAccount/agent-buster`
+- `ServiceAccount/agent-buster-namespace-controller`
+- `Role/agent-buster-namespace-lease-client`
+- `RoleBinding/agent-buster-namespace-lease-client`
+- `ClusterRole/agent-buster-namespace-controller`
+- `ClusterRoleBinding/agent-buster-namespace-controller`
+- `CustomResourceDefinition/busternamespaceleases.kubeclaw.forgestack.ai`
+- `Deployment/agent-buster-namespace-controller`
 - `ConfigMap/agent-buster-config`
 - `ConfigMap/agent-buster-podman-registries`
 - `ConfigMap/agent-buster-swarm-config`
 - `PersistentVolumeClaim/agent-buster-config`
 - `PersistentVolumeClaim/agent-buster-workspace`
-- `ClusterRole/agent-buster-k8s-tester`
-- `ClusterRoleBinding/agent-buster-k8s-tester`
 - `Service/agent-buster`
 - `Deployment/agent-buster`
 
 Resource counts verified by `check-deployment-truth.mjs` and kubeconform:
 
 - Nova: 6 rendered resources, all valid.
-- Buster: 10 rendered resources, all valid.
+- Buster: broker-mode resources render without the legacy broad `agent-buster-k8s-tester` RBAC.
 
 Render commands:
 

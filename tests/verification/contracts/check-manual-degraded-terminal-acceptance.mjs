@@ -6,7 +6,9 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
+import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 import {
   completePipeline,
   processExitCodeForTerminalStatus,
@@ -24,6 +26,8 @@ const previousWebhook = process.env.DISCORD_WEBHOOK;
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'manual-degraded-terminal-contract-'));
 const repo = path.join(root, 'repo');
 const swarmDir = path.join(repo, '.swarm');
+const sourceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
+const compactConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json'), 'utf8'));
 
 try {
   fs.mkdirSync(repo, { recursive: true });
@@ -39,6 +43,7 @@ try {
   const outputs = [];
   const summaries = [];
   const config = {
+    ...expandSwarmConfig(compactConfig),
     project: 'manual-degraded-terminal-contract',
     repo_root: repo,
     run_id: 'run-degraded-terminal',

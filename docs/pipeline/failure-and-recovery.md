@@ -28,7 +28,7 @@ Terminal artifacts include `terminal_status`, `terminal_decision`, and `reason_c
 
 Module retries are controlled by platform defaults and project/module overrides:
 
-- `default_max_fails` in `swarm.config.json`
+- `max_fails` in `swarm.config.json`
 - module `max_fails` in `progress.json`
 - `auto_retry_threshold` in `swarm.config.json`
 - rate-limit policy under `rate_limit`

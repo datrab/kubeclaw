@@ -99,7 +99,8 @@ function ensureGitIdentity(repoRoot: string, logger: GitLogger | null): void {
   const existingEmail = gitConfigValue(repoRoot, 'user.email');
   if (existingName && existingEmail) return;
 
-  const agent = String(process.env.CURRENT_AGENT || process.env.AGENT_NAME || 'buster').trim() || 'buster';
+  const rawAgent = process.env.CURRENT_AGENT ? process.env.CURRENT_AGENT : process.env.AGENT_NAME ? process.env.AGENT_NAME : 'buster';
+  const agent = String(rawAgent).trim() ? String(rawAgent).trim() : 'buster';
   const fallbackName = `${titleCaseAgent(agent)} Agent`;
   const fallbackEmail = `${agent.toLowerCase()}@kubeclaw.swarm`;
 

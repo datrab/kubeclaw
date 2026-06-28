@@ -56,7 +56,7 @@ const busterTaskLifecycleSource = fs.readFileSync(path.join(sourceRoot, 'skills'
 const busterSuiteRunnerSource = fs.readFileSync(path.join(sourceRoot, 'skills', 'buster', 'pipeline', 'runners', 'suite-runner.ts'), 'utf8');
 const sharedTelemetrySource = fs.readFileSync(path.join(sourceRoot, 'skills', 'common', 'pipeline', 'telemetry.ts'), 'utf8');
 const agentObservabilityMappingSource = fs.readFileSync(path.join(sourceRoot, 'skills', 'common', 'pipeline', 'agent-observability', 'src', 'mapping.ts'), 'utf8');
-const telemetrySchemaPath = path.join(sourceRoot, 'docs', 'archive', 'legacy-root-docs', 'telemetry-event-schema.md');
+const telemetrySchemaPath = path.join(sourceRoot, 'docs', 'telemetry-event-schema.md');
 const telemetrySchemaText = fs.readFileSync(telemetrySchemaPath, 'utf8');
 const telemetrySchemaEvents = extractTelemetrySchemaEventNames(telemetrySchemaPath);
 const missingSchemaEvents = [...contractEvents].filter((name) => !telemetrySchemaEvents.has(name)).sort();
@@ -136,9 +136,9 @@ assert.equal(
   'Buster telemetry must classify weak canonical stream identity as missing_identity',
 );
 assert.equal(
-  sharedTelemetrySource.includes('export const TELEMETRY_STREAM_MAXLEN = 10000'),
+  sharedTelemetrySource.includes('requireTelemetryStreamMaxLen'),
   true,
-  'shared telemetry constants must own the canonical Redis live-window max length',
+  'shared telemetry helpers must validate the config-owned canonical Redis live-window max length',
 );
 const sharedTelemetryMod = await import(`${pathToFileURL(path.join(sourceRoot, 'skills', 'common', 'pipeline', 'telemetry.ts')).href}?fresh=${Date.now()}`);
 assert.throws(
@@ -157,14 +157,14 @@ assert.equal(
   'shared telemetry key builder must preserve canonical project/run key format',
 );
 assert.equal(
-  novaTelemetryStreamSource.includes('TELEMETRY_STREAM_MAXLEN'),
+  novaTelemetryStreamSource.includes('requireTelemetryStreamMaxLenFromConfig(config)'),
   true,
-  'Nova Redis telemetry must use the shared stream max length constant',
+  'Nova Redis telemetry must read the canonical stream max length from swarm.config.json through the shared policy validator',
 );
 assert.equal(
-  busterTelemetrySource.includes('TELEMETRY_STREAM_MAXLEN'),
+  busterTelemetrySource.includes('requireTelemetryStreamMaxLenFromConfig(loadBusterPlatformConfig())'),
   true,
-  'Buster Redis telemetry must use the shared stream max length constant',
+  'Buster Redis telemetry must read the canonical stream max length from swarm.config.json through the shared policy validator',
 );
 assert.equal(
   busterTelemetrySource.includes('DEFAULT_STREAM_MAXLEN'),
@@ -424,8 +424,8 @@ const validNovaTelemetryPayloads = {
   'gate.verdict': { gate_id: 'review', gate_type: 'review', verdict: 'PASS', issues_count: 0 },
   'module.started': { module_id: '01', model: 'claude-sonnet', attempt: 1 },
   'module.status_changed': { module_id: '01', old_status: 'IN_PROGRESS', new_status: 'PASS', attempt: 1 },
-  'observability.degraded': { component: 'telemetry_sink', surface: 'redis', reason: 'redis_emit_failed', detail: 'down' },
-  'observability.restored': { component: 'telemetry_sink', surface: 'redis', reason: 'redis_emit_failed', restored_after_ms: 10 },
+  'observability.degraded': { component: 'fast', surface: 'redis', reason: 'redis_emit_failed', detail: 'down' },
+  'observability.restored': { component: 'fast', surface: 'redis', reason: 'redis_emit_failed', restored_after_ms: 10 },
   'phase.completed': { module_id: '01', phase: 'forge' },
   'phase.started': { module_id: '01', phase: 'forge', model: 'claude-sonnet' },
   'pipeline.completed': { terminal_status: 'succeeded', reason_code: null, duration_seconds: 5, modules_passed: 1, modules_failed: 0, modules_total: 1, total_cost_usd: 0.1 },
@@ -589,6 +589,7 @@ const busterCtxA = busterTelemetry.createTelemetryContext({
   redisHost: '127.0.0.1',
   redisPort: 6379,
   enforceSecureMode: false,
+  streamMaxLen: 10000,
 });
 assert.equal(busterCtxA.streamKey, sharedStreamKey);
 
@@ -602,6 +603,7 @@ const busterCtxB = busterTelemetry.createTelemetryContext({
   redisHost: '127.0.0.1',
   redisPort: 6379,
   enforceSecureMode: false,
+  streamMaxLen: 10000,
 });
 assert.equal(busterCtxB.streamKey, sharedStreamKey);
 await busterTelemetry.emitPluginEvent(busterCtxB, 'session_monitor', { module_id: 'mod-a', elapsed_seconds: 3 });
@@ -614,9 +616,37 @@ const { runtimeRoot: generalRoot } = materializeRuntimeTree(sourceRoot, overlayR
 installFakeRedis(generalRoot);
 const runtimeCore = await importRuntimeModule(generalRoot, '/app/skills/pipeline/core/runtime.ts');
 const builtInRegistry = await buildBuiltInRegistry(generalRoot);
-const config = {
-  project: 'proj',
-  telemetry: { enabled: true },
+  const config = {
+    project: 'proj',
+    pipeline_defaults: {
+      timeout_minutes: 30,
+      max_fails: 3,
+      auto_retry_threshold: 2,
+      agent_startup_retry_budget: 2,
+      session_nudge_threshold: 0.75,
+    },
+    rate_limit: {
+      cooldown_hours: 0,
+      max_pauses_per_module: 3,
+      cooldown_buffer_ms: 0,
+    },
+    review_defaults: {
+      timeout_minutes: 30,
+      max_fix_cycles: 3,
+      lint_tier: 'full',
+      lint_required: false,
+    },
+    case_study: { timeout_minutes: 30 },
+    arch_validation: {
+      enabled: true,
+      agent_enabled: false,
+      timeout_minutes: 15,
+    },
+  telemetry: { enabled: true, stream_max_len: 10000, sink_timeout_ms: 5000 },
+  locks: {
+    lifecycle_append: { stale_ms: 300000, timeout_ms: 30000 },
+    gate_active_session: { stale_ms: 300000, timeout_ms: 30000 },
+  },
   gates: { 'gate:quality': { type: 'review', title: 'Quality' } },
   compatibility: { legacy_module_status_bootstrap_mode: 'migration_only' },
   resume: false,
@@ -688,6 +718,7 @@ const sinkSnapshotPlugin = {
 };
 const sinkSnapshotConfig = {
   project: 'proj',
+  telemetry: { sink_timeout_ms: 5000 },
   _runId: sharedRunId,
   run_id: sharedRunId,
   pluginRegistry: {
@@ -858,6 +889,7 @@ const invalidBusterCtx = busterTelemetry.createTelemetryContext({
   redisHost: '127.0.0.1',
   redisPort: 6379,
   enforceSecureMode: false,
+  streamMaxLen: 10000,
 });
 const invalidBusterResult = await busterTelemetry.emitEvent(invalidBusterCtx, 'plugin.event', {
   plugin_id: 'buster',
@@ -1155,18 +1187,28 @@ const moduleRunnerMod = await importFresh(generalRoot, '/app/skills/pipeline/run
 const moduleRunnerRegistry = await buildBuiltInRegistry(generalRoot);
 const crashConfig = {
   project: 'proj',
-  telemetry: { enabled: true },
-  default_timeout_minutes: 15,
-  default_max_fails: 3,
+  telemetry: { enabled: true, stream_max_len: 10000, sink_timeout_ms: 5000 },
+  pipeline_defaults: {
+    timeout_minutes: 15,
+    max_fails: 3,
+    auto_retry_threshold: 0,
+    agent_startup_retry_budget: 0,
+    session_nudge_threshold: 0,
+  },
+  agents: {
+    buster: { dispatch: 'redis' },
+  },
   buster: {
-    suite_timeout_ms: 300000,
-    max_crash_retries: 0,
     runtime: {
       heartbeat_path: '/tmp/kubeclaw-buster-heartbeat',
       heartbeat_interval_ms: 1000,
       task_poll_interval_ms: 2000,
       task_pending_reclaim_idle_ms: 60000,
+      completion_event_block_ms: 0,
+      completion_recovery_scan_interval_ms: 5000,
       task_stream_max_len: 250,
+      suite_timeout_ms: 300000,
+      max_crash_retries: 0,
     },
   },
   _runId: sharedRunId,
@@ -1271,7 +1313,7 @@ const rateLimitModulesDir = path.join(rateLimitSwarmDir, 'modules');
 fs.mkdirSync(path.join(rateLimitModulesDir, 'mod-rate'), { recursive: true });
 const rateLimitConfig = {
   ...config,
-  rate_limit: { cooldown_hours: 0 },
+  rate_limit: { cooldown_hours: 0, max_pauses_per_module: 5, cooldown_buffer_ms: 0 },
   paths: { swarm_dir: rateLimitSwarmDir, modules_dir: rateLimitModulesDir },
   _progress: {
     modules: {

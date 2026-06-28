@@ -32,6 +32,8 @@ It defines project identity, module order, gate order, module settings, gate set
 
 ACP monitor timing is platform-owned and belongs in `swarm.config.json`.
 
+When enabled, all pipeline events (module status, agent lifecycle, gate verdicts, cost updates) are published to the canonical run-scoped stream `pipeline:telemetry:<project>:<run_id>`. See `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` for the canonical event inventory and `docs/telemetry-event-schema.md` for event-by-event payload fields and examples.
+
 ## Module Fields
 
 - `title`: human-readable name.

@@ -356,12 +356,24 @@ serviceAccount:
 
 busterNamespaceBroker:
   enabled: false
+  # Grants the agent ServiceAccount permission to request ephemeral test
+  # namespaces through BusterNamespaceLease CRs. Buster gets this permission
+  # whenever broker mode is enabled. Other roles, such as Nova E2E, must opt in
+  # explicitly and still do not receive namespace/workload authority.
+  leaseClient:
+    enabled: false
+    verificationRead:
+      enabled: false
+      tailscaleOAuthSecretName: operator-oauth
   leaseApiGroup: kubeclaw.forgestack.ai
   leaseApiVersion: v1alpha1
   allowedPrefixes:
     - test
   defaultTtlSeconds: 7200
   controller:
+    # Additional service accounts that receive the same namespaced runner Role
+    # inside broker-created test namespaces. Use "namespace/name" form.
+    additionalRunnerServiceAccounts: []
     image:
       repository: ghcr.io/datrab/kubeclaw-namespace-controller
       tag: latest

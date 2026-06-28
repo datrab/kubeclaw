@@ -15,6 +15,16 @@ type DiscordWebhookOptions = {
   timeoutMs?: number;
 };
 
+async function readJsonBody(response: Response) {
+  const contentType = response.headers?.get?.('content-type') || '';
+  if (!/json/i.test(contentType)) return null;
+  try {
+    return await response.json();
+  } catch (_error) {
+    return null;
+  }
+}
+
 export class DiscordWebhookDeliveryError extends Error {
   code: string;
   status?: number;
@@ -137,7 +147,13 @@ export async function postDiscordWebhook(url: string, options: DiscordWebhookOpt
         );
       }
 
-      return { ok: true, status: response.status, statusText: response.statusText || '' };
+      const responseBody = await readJsonBody(response);
+      return {
+        ok: true,
+        status: response.status,
+        statusText: response.statusText || '',
+        body: responseBody,
+      };
     } finally {
       cleanup();
     }

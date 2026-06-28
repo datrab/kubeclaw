@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import assert from 'assert';
 import { pathToFileURL } from 'url';
+import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 
 function parseArgs(argv = process.argv.slice(2)) {
   const args = { sourceRoot: process.cwd() };
@@ -15,6 +16,8 @@ function parseArgs(argv = process.argv.slice(2)) {
 }
 
 const { sourceRoot } = parseArgs();
+const compactSwarmConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts/kubeclaw/files/config/swarm.config.json'), 'utf8'));
+const expandedStandardConfig = expandSwarmConfig(compactSwarmConfig);
 const helperPath = path.join(sourceRoot, 'skills/nova/pipeline/services/contracts/worker-control-result.ts');
 const orchestrationPath = path.join(sourceRoot, 'skills/nova/pipeline/agents/orchestration.ts');
 const moduleWorkerControlResultsPath = path.join(sourceRoot, 'skills/nova/pipeline/agents/module-worker-control-results.ts');
@@ -196,7 +199,7 @@ assert.throws(
 
 assert.equal(typeof moduleWorkersMod.runModuleForgeWorker, 'function', 'module workers should export runModuleForgeWorker');
 const defaultDependencyForgeResult = await moduleWorkersMod.runModuleForgeWorker({
-  config: { project: 'contract-test', _runId: 'run-default-deps' },
+  config: { ...expandedStandardConfig, project: 'contract-test', _runId: 'run-default-deps' },
   progress: {},
   workerInput: {
     ids: { moduleId: 'default-deps-module', attempt: 1 },
@@ -218,7 +221,7 @@ assert.equal(defaultDependencyForgeResult?.producerType, 'module_forge', 'Forge 
 assert.equal(defaultDependencyForgeResult?.nextAction, 'pass', 'Forge worker default dependency path should complete without injected getTrackedAgent');
 
 const defaultDependencyBusterResult = await moduleWorkersMod.runModuleBusterWorker({
-  config: { project: 'contract-test', _runId: 'run-default-deps' },
+  config: { ...expandedStandardConfig, project: 'contract-test', _runId: 'run-default-deps' },
   progress: {},
   workerInput: {
     ids: { moduleId: 'default-deps-module', attempt: 1, dispatchId: 'dispatch-default-deps' },

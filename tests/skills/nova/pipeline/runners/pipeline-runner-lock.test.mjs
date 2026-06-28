@@ -14,8 +14,14 @@ function testConfig(dir, runId) {
     project: 'lock-test',
     _runId: runId,
     paths: { swarm_dir: dir },
-    pipeline_run_lock_lease_ms: 2000,
-    pipeline_run_lock_heartbeat_ms: 1000,
+    locks: {
+      pipeline_run: {
+        lease_ms: 2000,
+        heartbeat_ms: 1000,
+        mutation_stale_ms: 1,
+        abort_settle_ms: 0,
+      },
+    },
   };
 }
 

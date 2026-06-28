@@ -17,12 +17,28 @@ import {
   runSingleModulePipeline,
   preparePipelineStart,
 } from './pipeline-runner-start.ts';
+import { finalizeTerminalHalt } from './pipeline-runner-terminal.ts';
 import { runPipelineLoop } from './pipeline-runner-loop.ts';
+import {
+  buildPipelineStepResult,
+  PIPELINE_STEP_ACTIONS,
+  PIPELINE_STEP_OUTCOMES,
+  PIPELINE_STEP_TYPES,
+} from '../services/contracts/pipeline-step-result.ts';
+import {
+  PIPELINE_TERMINAL_ACTIONS,
+  PIPELINE_TERMINAL_SCOPES,
+} from '../services/contracts/terminal-decision.ts';
+import { maybeCrashForRealE2E } from '../services/real-e2e-crash-injection.ts';
 
 function positiveNumber(value, label) {
   const num = Number(value);
   if (!Number.isFinite(num) || num < 0) throw new Error(`${label}: required non-negative number in swarm.config.json`);
   return num;
+}
+
+function pipelineRunAbortSettleMs(config) {
+  return positiveNumber(config?.locks?.pipeline_run?.abort_settle_ms, 'config.locks.pipeline_run.abort_settle_ms');
 }
 
 async function waitForInFlightPipelineSteps(inFlightSteps, timeoutMs) {
@@ -44,6 +60,38 @@ function abortReason(signal) {
 
 function errorMessage(error) {
   return error instanceof Error ? error.message : String(error);
+}
+
+function runtimeErrorCode(error) {
+  return error?.code || error?.name || 'PIPELINE_RUNTIME_ERROR';
+}
+
+function runtimeErrorResult(config, error) {
+  const code = runtimeErrorCode(error);
+  const message = errorMessage(error);
+  return buildPipelineStepResult({
+    stepType: PIPELINE_STEP_TYPES.PIPELINE,
+    stepId: 'runtime_config',
+    nextAction: PIPELINE_STEP_ACTIONS.HALT,
+    outcome: PIPELINE_STEP_OUTCOMES.ERROR,
+    issueType: 'environment',
+    reason: message,
+    diagnostics: {
+      summary: message,
+      metadata: {
+        error_code: code,
+        error_name: error?.name || null,
+      },
+    },
+    correlation: {
+      run_id: config?._runId || config?.run_id || null,
+    },
+    terminalAction: PIPELINE_TERMINAL_ACTIONS.STOP,
+    terminalScope: PIPELINE_TERMINAL_SCOPES.PIPELINE,
+    terminalReasonCode: code,
+    terminalHumanReason: message,
+    terminalSource: 'pipeline:runtime_config',
+  });
 }
 
 async function abortablePipelineRunPromise(promise, signal) {
@@ -130,7 +178,18 @@ export async function runPipeline(config, progress, opts = {}) {
     return await runPipelineLoop(config, progress, runOpts);
   } catch (error) {
     runError = error;
-    throw error;
+    try {
+      return await finalizeTerminalHalt(config, progress, {
+        stepType: 'pipeline',
+        stepId: 'runtime_config',
+        result: runtimeErrorResult(config, error),
+        opts: runOpts,
+        summaryReason: runtimeErrorCode(error),
+        scheduleProjectSummaryOnBlocked: false,
+      });
+    } catch (_terminalError) {
+      throw error;
+    }
   } finally {
     let cleanupError = null;
     try {
@@ -138,7 +197,9 @@ export async function runPipeline(config, progress, opts = {}) {
       if (runOpts.pipelineRunLockSignal?.aborted && inFlightSteps.size > 0) {
         await waitForInFlightPipelineSteps(
           inFlightSteps,
-          positiveNumber(config?.locks?.pipeline_run_lock_abort_settle_ms ?? opts.pipelineRunLockAbortSettleMs, 'config.locks.pipeline_run_lock_abort_settle_ms'),
+          opts.pipelineRunLockAbortSettleMs == null
+            ? pipelineRunAbortSettleMs(config)
+            : positiveNumber(opts.pipelineRunLockAbortSettleMs, 'opts.pipelineRunLockAbortSettleMs'),
         );
         if (inFlightSteps.size > 0) {
           log('ERROR', `Pipeline run lock lost with ${inFlightSteps.size} in-flight step(s) still unsettled after abort grace period`);
@@ -152,6 +213,10 @@ export async function runPipeline(config, progress, opts = {}) {
     } finally {
       releasePipelineRunLock(runLock);
     }
+    maybeCrashForRealE2E(config, progress, 'during_cleanup', {
+      step_type: 'pipeline',
+      step_id: 'runner_cleanup',
+    });
     if (cleanupError && !runError) throw cleanupError;
   }
 }

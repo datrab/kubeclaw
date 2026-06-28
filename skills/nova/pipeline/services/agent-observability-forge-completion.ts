@@ -336,5 +336,5 @@ export function agentEndedReadBlockMs(config = {}, opts = {}) {
   const value = opts.blockMs ?? agentObservabilityForgeCompletionWait(config).xreadBlockMs;
   const normalized = Number(value);
   if (Number.isFinite(normalized) && normalized >= 0) return normalized;
-  throw new Error('agent_observability forge completion xread_block_ms must be a non-negative number');
+  throw new Error('agent_observability forge completion read block policy must resolve to a non-negative number');
 }

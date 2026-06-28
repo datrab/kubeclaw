@@ -79,8 +79,10 @@ The `prism-preview` sidecar uses `ghcr.io/datrab/kubeclaw-prism-preview:latest`,
 Buster uses `ghcr.io/datrab/kubeclaw-sandbox:latest` in production values. It renders:
 
 - `ServiceAccount/agent-buster`
-- `ClusterRole/agent-buster-k8s-tester`
-- `ClusterRoleBinding/agent-buster-k8s-tester`
+- `Role/agent-buster-namespace-lease-client`
+- `RoleBinding/agent-buster-namespace-lease-client`
+- `CustomResourceDefinition/busternamespaceleases.kubeclaw.forgestack.ai`
+- `Deployment/agent-buster-namespace-controller`
 - `ConfigMap/agent-buster-podman-registries`
 - `podman-storage`, `podman-registries`, and `sandbox-workspace` volumes
 

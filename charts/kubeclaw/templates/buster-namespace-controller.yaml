@@ -107,6 +107,8 @@ spec:
               value: {{ include "kubeclaw.fullname" . | quote }}
             - name: BUSTER_SERVICE_ACCOUNT_NAMESPACE
               value: {{ .Release.Namespace | quote }}
+            - name: BUSTER_ADDITIONAL_RUNNER_SERVICE_ACCOUNTS
+              value: {{ join "," .Values.busterNamespaceBroker.controller.additionalRunnerServiceAccounts | quote }}
             - name: BUSTER_LEASE_API_GROUP
               value: {{ .Values.busterNamespaceBroker.leaseApiGroup | quote }}
             - name: BUSTER_LEASE_API_VERSION

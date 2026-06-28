@@ -143,7 +143,7 @@ Read it like this:
 - `modules.02-api.test_config.serve` tells Buster how to start and probe the app.
 - `gates.midpoint-review` inserts a review checkpoint after `02-api`.
 - `gates.final-buster` runs broader validation after the listed modules complete.
-- `telemetry.enabled` allows run events to publish to Redis telemetry streams.
+- expanded platform config `telemetry.enabled` allows run events to publish to Redis telemetry streams.
 
 ## Why These Fields Exist
 

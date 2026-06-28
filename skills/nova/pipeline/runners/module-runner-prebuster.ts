@@ -11,6 +11,7 @@ import { normalizeTypedValidatorControlResult } from '../services/contracts/vali
 import { assertPipelineStepResult } from '../services/contracts/pipeline-step-result.ts';
 import { transitionModuleStatus } from '../lifecycle-state.ts';
 import { emitOperatorAlert } from '../services/telemetry.ts';
+import { maybeCrashForRealE2E } from '../services/real-e2e-crash-injection.ts';
 import {
   _telemetryCtx,
   buildModuleValidatorPluginInvocation,
@@ -287,6 +288,18 @@ export async function prepareModuleForBuster({
     try {
       const gitSyncTransition = await deps.gitSyncBeforeBuster(config, dir, status);
       deps.saveStatus(config, dir, status, gitSyncTransition);
+      maybeCrashForRealE2E(config, progress, 'during_git_operation', {
+        step_type: 'module',
+        step_id: moduleId,
+        module_id: moduleId,
+        attempt: currentAttemptNumber(status),
+      });
+      maybeCrashForRealE2E(config, progress, 'before_buster_handoff', {
+        step_type: 'module',
+        step_id: moduleId,
+        module_id: moduleId,
+        attempt: currentAttemptNumber(status),
+      });
     } catch (e) {
       log('ERROR', `Git sync before Buster failed: ${errorMessage(e)}`);
       emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'git_sync', null, status?.status ?? STATUS.READY_FOR_TESTING, errorMessage(e));

@@ -24,14 +24,25 @@ const config = {
   run_id: runId,
   _runId: runId,
   _runStats: {},
-  default_timeout_minutes: 30,
-  acp_monitor: { enabled: false },
-  rate_limit: {
-    cooldown_hours: 1,
-    max_pauses_per_module: 0,
+  pipeline_defaults: {
+    timeout_minutes: 30,
+    max_fails: 3,
+    auto_retry_threshold: 2,
+    agent_startup_retry_budget: 2,
+    session_nudge_threshold: 0.75,
   },
+  acp_monitor: {
+    poll_limit: 10,
+    max_transcript_extensions: 3,
+    transcript_grace_ms: 300000,
+    monitor_poll_ms: 10000,
+  },
+  rate_limit: { cooldown_hours: 1, max_pauses_per_module: 0, cooldown_buffer_ms: 0 },
   buster: {
-    suite_timeout_ms: 300000,
+    runtime: {
+      suite_timeout_ms: 300000,
+      max_crash_retries: 2,
+    },
   },
   paths: {
     swarm_dir: swarmDir,

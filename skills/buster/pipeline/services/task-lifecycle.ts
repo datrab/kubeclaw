@@ -7,6 +7,7 @@ import {
   emitPluginEvent,
   closeTelemetry,
 } from './telemetry.ts';
+import { requireTelemetryStreamMaxLenFromConfig } from '../telemetry.ts';
 import { runSuites } from '../runners/suite-runner.ts';
 import { createLogger } from './logger.ts';
 import { sendDiscord } from './discord.ts';
@@ -194,7 +195,7 @@ export async function processTask(payload, opts = {}) {
     dispatch_id: dispatchIdForCompletion,
     gate_id: gateId,
     gate_type: gateType,
-    streamMaxLen: opts.platformConfig?.telemetry?.stream_max_len,
+    streamMaxLen: opts.platformConfig ? requireTelemetryStreamMaxLenFromConfig(opts.platformConfig) : undefined,
   });
 
   const logger = createLogger({

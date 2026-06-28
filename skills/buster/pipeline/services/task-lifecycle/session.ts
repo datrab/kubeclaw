@@ -159,7 +159,8 @@ export async function spawnTaskSession({
 }> {
   const model = normalizeRequiredString(payload?.session?.model);
   const runtime = normalizeRuntime(payload?.session?.runtime);
-  const agentId = normalizeRequiredString(payload?.session?.agentId) || normalizeRequiredString(payload?.session?.agent_id);
+  const primaryAgentId = normalizeRequiredString(payload?.session?.agentId);
+  const agentId = primaryAgentId ? primaryAgentId : normalizeRequiredString(payload?.session?.agent_id);
   const cwd = normalizeRequiredString(payload?.session?.cwd);
   const label = normalizeRequiredString(payload?.session?.label);
   const thinking = normalizeThinking(

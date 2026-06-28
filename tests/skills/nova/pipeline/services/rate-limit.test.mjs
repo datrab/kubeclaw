@@ -42,6 +42,10 @@ function makeConfig() {
       cooldown_hours: 0,
       cooldown_buffer_ms: 0,
     },
+    locks: {
+      lifecycle_append: { stale_ms: 1, timeout_ms: 1 },
+      gate_active_session: { stale_ms: 1, timeout_ms: 1 },
+    },
     _progress: {
       modules: {
         alpha: {

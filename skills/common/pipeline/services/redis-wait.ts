@@ -23,6 +23,14 @@ function selectDeps(explicit = null, scope = null) {
   return { ...scoped, ...flat };
 }
 
+function eventAdapterNumber(config, field) {
+  const value = Number(config?.event_adapters?.[field]);
+  if (!Number.isFinite(value)) {
+    throw new Error(`config.event_adapters.${field}: required number in swarm.config.json`);
+  }
+  return value;
+}
+
 function requireFn(value, name) {
   if (typeof value === 'function') return value;
   throw new TypeError(`waitForResilientRedisCompletion requires ${name}`);
@@ -159,7 +167,7 @@ export async function waitForResilientRedisCompletion({
     eventBus,
     identity,
     paths: watchPaths.filter(Boolean),
-    debounceMs: config?.event_adapters?.local_evidence_debounce_ms,
+    debounceMs: eventAdapterNumber(config, 'local_evidence_debounce_ms'),
     emitExisting: true,
   });
 

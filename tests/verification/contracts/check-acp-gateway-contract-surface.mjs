@@ -279,7 +279,7 @@ await assert.rejects(
   'getAcpMonitorState must reject legacy positional monitor arguments',
 );
 await assert.rejects(
-  () => acpMonitorMod.getAcpMonitorState({ acp_monitor: { unknown_poll_limit: 1 } }, 'legacy-label', {}),
+  () => acpMonitorMod.getAcpMonitorState({ acp_monitor: { poll_limit: 1 } }, 'legacy-label', {}),
   /getAcpMonitorState requires exactly one options object/,
   'getAcpMonitorState must reject legacy Nova positional monitor arguments',
 );

@@ -14,6 +14,7 @@ import path from 'path';
 import {
   TELEMETRY_SEQ_TTL_SECONDS,
   requireTelemetryStreamMaxLen,
+  requireTelemetryStreamMaxLenFromConfig,
   getTelemetrySeqKey,
   getTelemetryStreamKey,
   createRedisClient,
@@ -121,7 +122,7 @@ function resolveTelemetryStreamMaxLen(opts: TelemetryOptions = {}): number {
   if (opts.streamMaxLen !== undefined) {
     return requireTelemetryStreamMaxLen(opts.streamMaxLen, 'telemetry.streamMaxLen');
   }
-  return requireTelemetryStreamMaxLen(loadBusterPlatformConfig()?.telemetry?.stream_max_len);
+  return requireTelemetryStreamMaxLenFromConfig(loadBusterPlatformConfig());
 }
 
 function reportBusterTelemetryIncident(ctxOrOpts: TelemetryOptions | BusterTelemetryContext = {}, classification: string, error: unknown, message: string, options: AnyRecord = {}): void {

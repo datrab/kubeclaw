@@ -70,6 +70,15 @@ const STATUS = {
   RATE_LIMITED:      'RATE_LIMITED',
 };
 
+function pollingPolicyNumber(config, field, options = {}) {
+  const raw = config?.polling?.[field];
+  const value = Number(raw);
+  if (!Number.isFinite(value) || (options.positive && value <= 0)) {
+    throw new Error(`config.polling.${field}: required ${options.positive ? 'positive ' : ''}number in swarm.config.json`);
+  }
+  return value;
+}
+
 // ─── Primitives ───────────────────────────────────────────────────────────────
 
 /**
@@ -106,11 +115,9 @@ export function pollResult(ok, reason, status = null, extra = {}) {
  * @returns {PollResult}
  */
 export async function pollGeneric(config, checkFn, timeoutMinutes, label = 'poll', opts = {}) {
-  const interval = config.poll_interval_seconds * 1000;
-  const progressLogIntervalMs = config.polling?.progress_log_interval_ms;
-  if (typeof progressLogIntervalMs !== 'number' || !Number.isFinite(progressLogIntervalMs) || progressLogIntervalMs < 0) {
-    throw new Error('config.polling.progress_log_interval_ms is required in swarm.config.json');
-  }
+  const intervalSeconds = pollingPolicyNumber(config, 'interval_seconds', { positive: true });
+  const interval = intervalSeconds * 1000;
+  const progressLogIntervalMs = pollingPolicyNumber(config, 'progress_interval_ms');
   const budget = opts.budget || createBudgetFromMinutes(timeoutMinutes, { label });
   const startTime = Date.now();
   let consecutiveParseFailures = 0;
@@ -118,7 +125,7 @@ export async function pollGeneric(config, checkFn, timeoutMinutes, label = 'poll
   let firstCycle = true;
   let lastProgressLogAt = 0;
   let lastProgressLogKey = null;
-  log('INFO', `[${label}] Polling every ${config.poll_interval_seconds}s | timeout: ${timeoutMinutes}min`);
+  log('INFO', `[${label}] Polling every ${intervalSeconds}s | timeout: ${timeoutMinutes}min`);
 
   try {
     while (true) {
@@ -202,10 +209,7 @@ export async function pollForFile(config, filePath, timeoutMinutes, label = 'fil
   const ctx = { config };
   const startTime = Date.now();
   let lastProgressEmit = startTime;
-  const progressIntervalMs = config.polling?.session_progress_emit_interval_ms;
-  if (typeof progressIntervalMs !== 'number' || !Number.isFinite(progressIntervalMs) || progressIntervalMs < 0) {
-    throw new Error('config.polling.session_progress_emit_interval_ms is required in swarm.config.json');
-  }
+  const progressIntervalMs = pollingPolicyNumber(config, 'progress_interval_ms');
 
   return pollGeneric(config, async () => {
     // Signal A: Output file exists → success (always wins)
@@ -280,7 +284,7 @@ export async function pollForFile(config, filePath, timeoutMinutes, label = 'fil
 
       return {
         done: false,
-        logMsg: `session=${acpState.sessionState} unknown=${acpState.unknownPolls}/${getAcpMonitorConfig(config).unknown_poll_limit} transcript_stale=${acpState.transcriptStalePolls}/${getAcpMonitorConfig(config).stale_poll_limit}`,
+        logMsg: `session=${acpState.sessionState} unknown=${acpState.unknownPolls}/${getAcpMonitorConfig(config).poll_limit} transcript_stale=${acpState.transcriptStalePolls}/${getAcpMonitorConfig(config).poll_limit}`,
         logKey: buildAcpPollLogKey(acpState),
       };
     }
@@ -310,10 +314,7 @@ export async function pollStatus(config, moduleDir, expectedStatuses, timeoutMin
   const ctx = { config };
   const startTime = Date.now();
   let lastProgressEmit = startTime;
-  const progressIntervalMs = config.polling?.session_progress_emit_interval_ms;
-  if (typeof progressIntervalMs !== 'number' || !Number.isFinite(progressIntervalMs) || progressIntervalMs < 0) {
-    throw new Error('config.polling.session_progress_emit_interval_ms is required in swarm.config.json');
-  }
+  const progressIntervalMs = pollingPolicyNumber(config, 'progress_interval_ms');
 
   return pollGeneric(config, async () => {
     // ── Channel 1: lifecycle read model (local signal) ──
@@ -449,10 +450,7 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
   const ctx = { config };
   const startTime = Date.now();
   let lastProgressEmit = startTime;
-  const progressIntervalMs = config.polling?.session_progress_emit_interval_ms;
-  if (typeof progressIntervalMs !== 'number' || !Number.isFinite(progressIntervalMs) || progressIntervalMs < 0) {
-    throw new Error('config.polling.session_progress_emit_interval_ms is required in swarm.config.json');
-  }
+  const progressIntervalMs = pollingPolicyNumber(config, 'progress_interval_ms');
   const settleMs = agentEndedSettleMs(config, opts);
   let hookReader = createAgentEndedTelemetryReader(config, opts);
   let hookReaderDegraded = !hookReader;

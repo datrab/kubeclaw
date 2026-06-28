@@ -21,7 +21,8 @@ function normalizeIdentityValue(value) {
 function buildCompletionKey({ runId = null, attempt = null, dispatchId = null, sessionKey = null } = {}) {
   const normalizedRunId = normalizeIdentityValue(runId);
   const normalizedAttempt = normalizeIdentityValue(attempt);
-  const correlationId = normalizeIdentityValue(dispatchId) || normalizeIdentityValue(sessionKey);
+  const normalizedDispatchId = normalizeIdentityValue(dispatchId);
+  const correlationId = normalizedDispatchId ? normalizedDispatchId : normalizeIdentityValue(sessionKey);
   if (!normalizedRunId || !normalizedAttempt) return null;
   return `${normalizedRunId}:${normalizedAttempt}:${correlationId || 'unscoped'}`;
 }
@@ -116,9 +117,10 @@ function readJsonResult(filePath, source) {
 export function writeBusterOutputFile(payload = {}, result = {}) {
   const outputFilePath = resolveBusterOutputFilePath(payload);
   if (!outputFilePath) throw new Error('Buster task payload missing required output_file');
-  const rawStatus = String(result.status || result.outcome || 'FAIL').toUpperCase();
+  const rawResultStatus = result.status ? result.status : result.outcome ? result.outcome : 'FAIL';
+  const rawStatus = String(rawResultStatus).toUpperCase();
   const status = rawStatus === 'PASS' ? 'PASS' : 'FAIL';
-  const summary = result.summary || result.reason || `Buster ${status}`;
+  const summary = result.summary ? result.summary : result.reason ? result.reason : `Buster ${status}`;
   const artifactData = result.data && typeof result.data === 'object' && !Array.isArray(result.data)
     ? result.data
     : {};
@@ -126,7 +128,7 @@ export function writeBusterOutputFile(payload = {}, result = {}) {
     ...artifactData,
     artifact_type: 'buster_output',
     task_type: payload?.task_type || null,
-    module_id: payload?.module_id || payload?.module || null,
+    module_id: payload?.module_id ? payload.module_id : payload?.module ? payload.module : null,
     ...buildCompletionIdentityFields(payload),
     status,
     summary,

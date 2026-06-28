@@ -20,12 +20,7 @@ const modulesDir = path.join(sourceRoot, 'Projects/pipeline-smoke-landing/src/.s
 
 function forgeCompletionObservability() {
   return {
-    profile: 'test',
-    profiles: {
-      test: {
-        forge_completion: { xread_block_ms: 1, settle_ms: 0 },
-      },
-    },
+    forge_completion: { xread_block_ms: 1, settle_ms: 0 },
   };
 }
 
@@ -94,11 +89,7 @@ const pollResult = await polling.pollForgeCompletion({
   repo_root: sourceRoot,
   paths: { modules_dir: modulesDir },
   _runId: 'run-ao5',
-  poll_interval_seconds: 0,
-  polling: {
-    progress_log_interval_ms: 1,
-    session_progress_emit_interval_ms: 1,
-  },
+  polling: { interval_seconds: 1, progress_interval_ms: 1, session_end_grace_ms: 0 },
   telemetry: { enabled: false },
   agent_observability: forgeCompletionObservability(),
 }, '01', 1, {
@@ -128,11 +119,7 @@ const noWork = await polling.pollForgeCompletion({
   repo_root: sourceRoot,
   paths: { modules_dir: modulesDir },
   _runId: 'run-ao5',
-  poll_interval_seconds: 0,
-  polling: {
-    progress_log_interval_ms: 1,
-    session_progress_emit_interval_ms: 1,
-  },
+  polling: { interval_seconds: 1, progress_interval_ms: 1, session_end_grace_ms: 0 },
   telemetry: { enabled: false },
   agent_observability: forgeCompletionObservability(),
 }, '01', 1, {

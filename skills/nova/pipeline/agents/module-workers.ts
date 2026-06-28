@@ -64,7 +64,9 @@ function statusEvidenceFields(pollResult: AnyRecord | null = null): AnyRecord {
     statusDetail: typeof status?.detail === 'string' && status.detail.trim() ? status.detail.trim() : null,
     statusMessage: typeof status?.message === 'string' && status.message.trim() ? status.message.trim() : null,
     statusErrors: Array.isArray(status?.errors) ? status.errors : null,
-    pollingGit: pollResult?.reason === 'git_error' ? (status?.details || status || null) : null,
+    pollingGit: pollResult?.reason === 'git_error'
+      ? (status?.details ? status.details : status ? status : null)
+      : null,
     completionConflict: pollResult?.reason === 'completion_conflict' ? (status || null) : null,
     redisEntry,
     rateLimitStatus: objectOrNull(pollResult?.rate_limit_status) || (pollResult?.reason === 'rate_limit_exhausted' || pollResult?.reason === 'rate_limited' ? status : null),
@@ -111,7 +113,6 @@ function normalizeModuleWorkerInput(workerType: 'module_forge' | 'module_buster'
 function resolveModuleBusterFailureClass(pollResult: AnyRecord = {}) {
   const explicit = pollResult?.failure_class
     || pollResult?.status?.failure_class
-    || pollResult?.status?._redis_entry?.failure_class
     || null;
   if (typeof explicit === 'string' && explicit.trim()) return explicit.trim().toLowerCase();
   const reason = typeof pollResult?.reason === 'string' ? pollResult.reason.trim().toLowerCase() : '';

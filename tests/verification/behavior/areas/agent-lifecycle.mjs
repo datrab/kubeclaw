@@ -42,20 +42,62 @@ function platformAgentLifecycleDefaults() {
   return {
     fallback_model: 'openai/gpt-5.4',
     rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },
+    gateway: {
+      invoke: {
+        retry: { max_attempts: 1, retry_delay_ms: 100 },
+        session_status: { timeout_ms: 30000 },
+        session_spawn: { timeout_ms: 30000 },
+        session_send: { timeout_ms: 30000 },
+        subagent_kill: { timeout_ms: 30000 },
+        subagent_list: { timeout_ms: 30000 },
+        health: { timeout_ms: 30000 },
+      },
+      health: { timeout_ms: 30000, interval_ms: 3000, monitor_interval_ms: 60000, max_failures: 3 },
+    },
+    session: {
+      health_check_timeout_ms: 30000,
+      spawn: {
+        thread: false,
+        mode: 'run',
+        cleanup: 'keep',
+        stream_to: 'parent',
+      },
+      kill: {
+        acp_confirm_timeout_ms: 15000,
+        subagent_confirm_timeout_ms: 120000,
+        confirm_poll_ms: 2000,
+        cleanup_confirm_timeout_ms: 'match_confirm_timeout',
+        acpx_timeout_ms: 10000,
+        stop_message: '/stop',
+      },
+      termination: {
+        grace_ms: 5000,
+        max_grace_ms: 10000,
+        poll_ms: 500,
+        gateway_request_max_ms: 1000,
+        cleanup_confirm_timeout_ms: 0,
+        gateway_operation_timeout_ms: 1000,
+        acpx_timeout_ms: 1000,
+      },
+    },
+    agent_observability: {
+      startup_evidence: { timeout_ms: 0, block_ms: 1 },
+    },
     buster: {
-      suite_timeout_ms: 300000,
-      max_crash_retries: 2,
       runtime: {
         heartbeat_path: '/tmp/kubeclaw-buster-heartbeat',
         heartbeat_interval_ms: 1000,
         task_poll_interval_ms: 2000,
         task_pending_reclaim_idle_ms: 60000,
+        completion_event_block_ms: 0,
+        completion_recovery_scan_interval_ms: 5000,
         task_stream_max_len: 250,
+        suite_timeout_ms: 300000,
+        max_crash_retries: 2,
       },
     },
     acp_monitor: {
-      unknown_poll_limit: 10,
-      stale_poll_limit: 10,
+      poll_limit: 10,
       max_transcript_extensions: 3,
       transcript_grace_ms: 300000,
       monitor_poll_ms: 10000,
@@ -323,12 +365,30 @@ await record('kill path keeps ACP cleanup distinct from subagent stop behavior',
   writeExecutable(path.join(fakeBinDir, 'acpx'), `#!/bin/sh\necho "$@" >> ${acpxLog}\n`);
   const prevPath = process.env.PATH;
   process.env.PATH = `${fakeBinDir}:${prevPath}`;
+  const gatewayPolicy = { timeoutMs: 1000, maxRetries: 1, retryDelayMs: 1 };
+  const killPolicy = {
+    acpConfirmTimeoutMs: 15000,
+    subagentConfirmTimeoutMs: 120000,
+    confirmPollMs: 1,
+    cleanupConfirmTimeoutMs: 0,
+    statusTimeoutMs: 1000,
+    requestTimeoutMs: 1000,
+    stopRequestTimeoutMs: 1000,
+    listTimeoutMs: 1000,
+    statusGateway: gatewayPolicy,
+    requestGateway: gatewayPolicy,
+    stopGateway: gatewayPolicy,
+    listGateway: gatewayPolicy,
+    acpxTimeoutMs: 1000,
+    stopMessage: '/stop',
+  };
   try {
     await lifecycleMod.killSession('agent:main:subagent:1', {
       runtime: 'subagent',
       label: 'subagent-check',
       gatewayUrl: gateway.url,
       gatewayToken: '',
+      killPolicy,
     });
     await lifecycleMod.killSession('agent:main:acp:1', {
       runtime: 'acp',
@@ -336,6 +396,7 @@ await record('kill path keeps ACP cleanup distinct from subagent stop behavior',
       label: 'acp-check',
       gatewayUrl: gateway.url,
       gatewayToken: '',
+      killPolicy,
     });
     const subagentKillRequests = requests.filter((req) => req?.tool === 'subagents' && req?.args?.action === 'kill');
     const stopRequests = requests.filter((req) => req?.tool === 'sessions_send');
@@ -361,6 +422,23 @@ await record('termination controller returns canonical unconfirmed result within
     if (body?.tool === 'session_status') return { result: { details: { status: 'running' } } };
     return { result: { details: { ok: true } } };
   });
+  const gatewayPolicy = { timeoutMs: 1000, maxRetries: 1, retryDelayMs: 1 };
+  const killPolicy = {
+    acpConfirmTimeoutMs: 1000,
+    subagentConfirmTimeoutMs: 1000,
+    confirmPollMs: 10,
+    cleanupConfirmTimeoutMs: 0,
+    statusTimeoutMs: 20,
+    requestTimeoutMs: 20,
+    stopRequestTimeoutMs: 20,
+    listTimeoutMs: 20,
+    statusGateway: gatewayPolicy,
+    requestGateway: gatewayPolicy,
+    stopGateway: gatewayPolicy,
+    listGateway: gatewayPolicy,
+    acpxTimeoutMs: 20,
+    stopMessage: '/stop',
+  };
   try {
     const result = await terminationMod.terminateSession('agent:main:acp:unconfirmed', {
       runtime: 'acp',
@@ -368,11 +446,17 @@ await record('termination controller returns canonical unconfirmed result within
       label: 'unconfirmed-check',
       gatewayUrl: gateway.url,
       gatewayToken: '',
-      graceMs: 100,
+      graceMs: 1000,
+      maxGraceMs: 1000,
+      confirmPollMs: 10,
+      gatewayRequestMaxMs: 20,
+      cleanupConfirmTimeoutMs: 0,
       statusTimeoutMs: 20,
       requestTimeoutMs: 20,
       stopRequestTimeoutMs: 20,
+      listTimeoutMs: 20,
       acpxTimeoutMs: 20,
+      killPolicy,
     });
     assert.deepEqual(Object.keys(result).sort(), [
       'cleanupAttempted',
@@ -390,7 +474,7 @@ await record('termination controller returns canonical unconfirmed result within
     assert.equal(result.confirmed, false);
     assert.equal(result.unconfirmed, true);
     assert.equal(result.terminal, false);
-    assert.equal(result.graceMs, 100);
+    assert.equal(result.graceMs, 1000);
     assert(requests.some((req) => req?.tool === 'sessions_send'), 'termination should request a stop through the gateway');
   } finally {
     await gateway.close();

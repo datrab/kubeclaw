@@ -15,6 +15,7 @@ import {
   createTrackedSummarySessionRateLimitExhaustionOptions,
   createTrackedSummarySessionRateLimitRecoveryOptions,
   finalizeSummarySessionRateLimitExit,
+  getRateLimitConfig,
   resolveTrackedSessionRateLimitOutcome,
   withSessionRateLimitRecovery,
 } from './rate-limit.ts';
@@ -29,6 +30,7 @@ import { createTrackedSummarySessionCleanup } from './summary-session-cleanup.ts
 import { getPipelineArtifactBundle } from './artifact-bundle.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from './discord-fields.ts';
 import { sessionLifecyclePolicies } from '../core/session-policy.ts';
+import { getCaseStudyConfig } from './runtime-defaults.ts';
 
 function buildCaseStudyDiscordFields(identity = {}, extra = []) {
   return buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, identity, extra);
@@ -141,7 +143,7 @@ export async function generateCaseStudy(config, progress, opts = {}) {
   const deps = getCaseStudyDeps(config, opts.deps);
   // progress.json case_study overrides config case_study
   const progressCs = progress?.case_study || {};
-  const configCs = config.case_study || {};
+  const configCs = getCaseStudyConfig(config);
   const cs = { ...configCs, ...progressCs };
   if (!cs.enabled) {
     return buildGeneratorResult('case_study', {
@@ -228,7 +230,7 @@ export async function generateCaseStudy(config, progress, opts = {}) {
     });
 
     const outputFilePath = caseStudyOutputPath(config, cs);
-    const maxRateLimitPauses = config.rate_limit.max_pauses_per_module;
+    const maxRateLimitPauses = getRateLimitConfig(config).max_pauses_per_module;
     const caseStudyRateLimitRecovery = createTrackedSummarySessionRateLimitRecoveryOptions(config, {
       sleepFn: deps.sleep,
       discordFn: deps.discord,

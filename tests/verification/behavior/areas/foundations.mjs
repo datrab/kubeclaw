@@ -914,20 +914,67 @@ await record('config validation derives accepted gate types from the startup plu
     },
     agents: {
       forge: { dispatch: 'acp', acp_agent_id: 'codex' },
-      buster: { dispatch: 'acp', acp_agent_id: 'buster' },
+      buster: { dispatch: 'redis', redis_js_path: '/app/skills/pipeline/tools/redis.ts' },
       echo: { dispatch: 'acp', acp_agent_id: 'codex' },
     },
     fallback_model: 'test-fallback-model',
-    poll_interval_seconds: 30,
-    default_timeout_minutes: 45,
-    default_max_fails: 3,
-    auto_retry_threshold: 2,
-    session_nudge_threshold: 0.75,
+    pipeline_defaults: {
+      timeout_minutes: 45,
+      max_fails: 3,
+      auto_retry_threshold: 2,
+      agent_startup_retry_budget: 3,
+      session_nudge_threshold: 0.75,
+    },
     rate_limit: { cooldown_hours: 2, max_pauses_per_module: 5, cooldown_buffer_ms: 5000 },
+    polling: { interval_seconds: 30, progress_interval_ms: 30000, session_end_grace_ms: 15000 },
+    locks: {
+      lifecycle_append: { stale_ms: 300000, timeout_ms: 30000 },
+      gate_active_session: { stale_ms: 300000, timeout_ms: 30000 },
+      pipeline_run: { lease_ms: 120000, heartbeat_ms: 30000, mutation_stale_ms: 5000, abort_settle_ms: 5000 },
+    },
+    git: {
+      command: { timeout_ms: 30000, max_buffer_bytes: 52428800 },
+      push: { timeout_ms: 60000, max_attempts: 3, retry_delay_ms: 5000 },
+    },
+    redis_completion: { archive_max_len: 1000, tail_scan_batch_size: 100, tail_scan_limit: 1000 },
+    event_adapters: { local_evidence_debounce_ms: 100, approval_signal_debounce_ms: 25 },
+    discord: { webhook_timeout_ms: 10000 },
+    gateway: {
+      invoke: {
+        retry: { max_attempts: 1, retry_delay_ms: 0 },
+        session_status: { timeout_ms: 10000 },
+        session_spawn: { timeout_ms: 30000 },
+        session_send: { timeout_ms: 15000 },
+        subagent_kill: { timeout_ms: 30000 },
+        subagent_list: { timeout_ms: 30000 },
+        health: { timeout_ms: 5000 },
+      },
+      health: { timeout_ms: 120000, interval_ms: 3000, monitor_interval_ms: 60000, max_failures: 3 },
+    },
+    session: {
+      health_check_timeout_ms: 10000,
+      spawn: { thread: false, mode: 'run', cleanup: 'keep', stream_to: 'parent' },
+      kill: {
+        acp_confirm_timeout_ms: 15000,
+        subagent_confirm_timeout_ms: 120000,
+        confirm_poll_ms: 2000,
+        cleanup_confirm_timeout_ms: 'match_confirm_timeout',
+        acpx_timeout_ms: 10000,
+        stop_message: '/stop',
+      },
+      termination: {
+        grace_ms: 5000,
+        max_grace_ms: 10000,
+        poll_ms: 500,
+        gateway_request_max_ms: 1000,
+        cleanup_confirm_timeout_ms: 0,
+        gateway_operation_timeout_ms: 1000,
+        acpx_timeout_ms: 1000,
+      },
+    },
     buster: {
-      suite_timeout_ms: 300000,
-      max_crash_retries: 2,
       runtime: {
+        task_stream: 'swarm:buster:tasks',
         heartbeat_path: '/tmp/kubeclaw-buster-heartbeat',
         heartbeat_interval_ms: 1000,
         task_poll_interval_ms: 2000,
@@ -935,18 +982,17 @@ await record('config validation derives accepted gate types from the startup plu
         completion_event_block_ms: 0,
         completion_recovery_scan_interval_ms: 5000,
         task_stream_max_len: 250,
+        suite_timeout_ms: 300000,
+        max_crash_retries: 2,
       },
     },
     discord_alerts: { info: true, warn: true, critical: true, ok: true },
     pre_check: { enabled: true, lint_report_path: '/app/skills/pipeline/tools/lint-report.ts', timeout_seconds: 60 },
     review_defaults: { timeout_minutes: 30, max_fix_cycles: 3, lint_tier: 'full', lint_required: false },
-    acp_monitor: {
-      unknown_poll_limit: 10,
-      stale_poll_limit: 10,
-      max_transcript_extensions: 3,
-      transcript_grace_ms: 300000,
-      monitor_poll_ms: 10000,
-    },
+    case_study: { timeout_minutes: 30 },
+    arch_validation: { enabled: true, agent_enabled: false, timeout_minutes: 15 },
+    telemetry: { enabled: false, stream_max_len: 10000, sink_timeout_ms: 5000 },
+    acp_monitor: { poll_limit: 10, max_transcript_extensions: 3, transcript_grace_ms: 300000, monitor_poll_ms: 10000 },
     plugins: {
       enabled: true,
       allowCustomModules: false,
@@ -993,45 +1039,40 @@ await record('config validation derives accepted gate types from the startup plu
   currentPlatformConfig._doc = 'operator note';
   currentPlatformConfig.agent_observability = {
     required: true,
-    profile: 'standard',
-    profiles: {
-      standard: {
-        payload: { max_event_bytes: 3145728 },
-        startup_evidence: { timeout_ms: 15000, block_ms: 250 },
-        forge_completion: { xread_block_ms: 1, settle_ms: 0 },
-        redis: { command_timeout_ms: 5000 },
-        streams: { stream_max_len: 10000, dead_letter_max_len: 1000 },
-        plugin: {
-          max_queue_per_stream: 100,
-          control_write: { max_attempts: 3, retry_base_ms: 100, retry_max_ms: 1000 },
-          hook: { priority: -100, timeout_ms: 1000 },
-        },
-        plugin_control: { timeout_ms: 10000 },
-        ingester: {
-          read: { block_ms: 1000, reclaim_idle_ms: 60000 },
-          loop: { delay_ms: 250, health_check_every: 10, stop_timeout_ms: 2000 },
-          trim: { interval_ms: 5000, payload_stream_max_len: 5000 },
-          pressure: {
-            control_lag_degraded_threshold: 1000,
-            payload_pressure_degraded_threshold: 10000,
-          },
-        },
-      },
+    payload: { max_event_bytes: 3145728 },
+    startup_evidence: { timeout_ms: 15000, block_ms: 250 },
+    forge_completion: { xread_block_ms: 1, settle_ms: 0 },
+    streams: { stream_max_len: 10000, dead_letter_max_len: 1000 },
+    plugin: {
+      enabled: true,
+      max_queue_per_stream: 100,
+      control_write: { max_attempts: 3, retry_base_ms: 100, retry_max_ms: 1000 },
+      hook: { priority: -100, timeout_ms: 1000 },
     },
-    plugin: { enabled: true },
     plugin_control: {
       enabled: true,
       pluginId: 'kubeclaw-agent-observer',
       command: 'openclaw',
       disableOnStop: true,
+      timeout_ms: 10000,
     },
     ingester: {
       enabled: true,
       redisNetworkIsolation: 'isolated',
       groupName: 'kubeclaw-agent-observability-ingester',
       consumerName: 'kubeclaw-agent-observability-ingester-1',
+      read_block_ms: 1000,
+      reclaim_idle_ms: 60000,
+      redis_command_timeout_ms: 5000,
+      loop: { delay_ms: 250, health_check_every: 10, stop_timeout_ms: 2000 },
+      trim: { interval_ms: 5000, payload_stream_max_len: 5000 },
+      pressure: {
+        control_lag_degraded_threshold: 1000,
+        payload_pressure_degraded_threshold: 10000,
+      },
     },
   };
+  currentPlatformConfig.telemetry.enabled = true;
   assert.doesNotThrow(
     () => configMod.validateConfig(currentPlatformConfig, validProgress),
     'current platform observability config keys should pass strict top-level validation',
@@ -1046,10 +1087,10 @@ await record('config validation derives accepted gate types from the startup plu
   }
 
   const stringNumericConfig = buildConfig();
-  stringNumericConfig.default_timeout_minutes = '45';
+  stringNumericConfig.pipeline_defaults.timeout_minutes = '45';
   assert.throws(
     () => configMod.validateConfig(stringNumericConfig, validProgress),
-    /config\.default_timeout_minutes: must be a number > 0/
+    /config\.pipeline_defaults\.timeout_minutes: must be a number > 0/
   );
 
   const deprecatedModelsConfig = buildConfig();
@@ -1081,17 +1122,17 @@ await record('config validation derives accepted gate types from the startup plu
   );
 
   const missingTimeoutConfig = buildConfig();
-  delete missingTimeoutConfig.default_timeout_minutes;
+  delete missingTimeoutConfig.pipeline_defaults.timeout_minutes;
   assert.throws(
     () => configMod.validateConfig(missingTimeoutConfig, validProgress),
-    /config\.default_timeout_minutes: required in swarm\.config\.json/
+    /config\.pipeline_defaults\.timeout_minutes: required in swarm\.config\.json/
   );
 
-  const missingBusterAgentId = buildConfig();
-  delete missingBusterAgentId.agents.buster.acp_agent_id;
+  const missingBusterRedisAdapter = buildConfig();
+  delete missingBusterRedisAdapter.agents.buster.redis_js_path;
   assert.throws(
-    () => configMod.validateConfig(missingBusterAgentId, validProgress),
-    /Buster acp_agent_id missing/
+    () => configMod.validateConfig(missingBusterRedisAdapter, validProgress),
+    /config\.agents\.buster\.redis_js_path: required for redis dispatch agents/
   );
 
   const removedTelemetryStreamKeyConfig = buildConfig();
@@ -1668,6 +1709,7 @@ await record('canonical lifecycle append boundary updates downstream read models
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),
     },
+    locks: { lifecycle_append: { stale_ms: 300000, timeout_ms: 30000 } },
     _runId: 'run-canonical-lifecycle',
   };
   config._progress = {
@@ -1784,6 +1826,7 @@ await record('authoritative module state does not bootstrap without lifecycle mo
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),
     },
+    locks: { lifecycle_append: { stale_ms: 300000, timeout_ms: 30000 } },
     _runId: 'run-authoritative-module-state',
   };
   config._progress = {
@@ -1850,6 +1893,7 @@ await record('saveStatus rejects guarded lifecycle field changes without lifecyc
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),
     },
+    locks: { lifecycle_append: { stale_ms: 300000, timeout_ms: 30000 } },
     _runId: 'run-status-save-guard',
   };
 
@@ -1896,6 +1940,7 @@ await record('shared approval wait substrate dedupes replay, collapses conflicti
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),
     },
+    locks: { lifecycle_append: { stale_ms: 300000, timeout_ms: 30000 } },
     _runId: 'run-approval-lifecycle',
   };
 
@@ -2051,6 +2096,7 @@ await record('durable cooldown replay survives restart-sensitive module recovery
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),
     },
+    locks: { lifecycle_append: { stale_ms: 300000, timeout_ms: 30000 } },
     _runId: 'run-cooldown-replay',
   };
   ensureDir(path.join(logDir, 'pipeline', 'runs', config._runId));
@@ -2144,6 +2190,7 @@ await record('durable cooldown replay also clears persisted gate cooldowns befor
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),
     },
+    locks: { lifecycle_append: { stale_ms: 300000, timeout_ms: 30000 } },
     _runId: 'run-gate-cooldown-replay',
   };
 
@@ -2484,6 +2531,7 @@ await record('pipeline runtime lock serializes shared-swarm runs and reclaims on
     repo_root: '/tmp/behavior-repo',
     _runId: 'run-123',
     paths: { swarm_dir: swarmDir },
+    locks: { pipeline_run: { lease_ms: 120000, heartbeat_ms: 30000, mutation_stale_ms: 5000, abort_settle_ms: 5000 } },
   };
   const otherProjectConfig = {
     ...config,
@@ -2545,6 +2593,41 @@ await record('pipeline runtime lock serializes shared-swarm runs and reclaims on
 
 await record('Buster monitor enforces hard wall-clock timeouts with explicit kill confirmation', async () => {
   const killCalls = [];
+  const previousSwarmConfig = process.env.SWARM_CONFIG;
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-monitor-config-'));
+  const swarmConfigPath = path.join(root, 'swarm.config.json');
+  fs.writeFileSync(swarmConfigPath, JSON.stringify({
+    gateway: {
+      invoke: {
+        retry: { max_attempts: 1, retry_delay_ms: 0 },
+        session_status: { timeout_ms: 10000 },
+        session_send: { timeout_ms: 15000 },
+        subagent_kill: { timeout_ms: 30000 },
+        subagent_list: { timeout_ms: 30000 },
+      },
+    },
+    session: {
+      kill: {
+        acp_confirm_timeout_ms: 15000,
+        subagent_confirm_timeout_ms: 120000,
+        confirm_poll_ms: 2000,
+        cleanup_confirm_timeout_ms: 'match_confirm_timeout',
+        acpx_timeout_ms: 10000,
+        stop_message: '/stop',
+      },
+      termination: {
+        grace_ms: 5000,
+        max_grace_ms: 10000,
+        poll_ms: 500,
+        gateway_request_max_ms: 1000,
+        cleanup_confirm_timeout_ms: 0,
+        gateway_operation_timeout_ms: 1000,
+        acpx_timeout_ms: 1000,
+      },
+    },
+  }));
+  process.env.SWARM_CONFIG = swarmConfigPath;
+  busterRuntimePolicyMod.resetBusterRuntimePolicyForTests();
   const result = await busterSessionMonitorMod.monitorSession(
     'agent:main:acp:timeout',
     null,
@@ -2559,8 +2642,7 @@ await record('Buster monitor enforces hard wall-clock timeouts with explicit kil
       },
       rate_limit: { max_pauses: 5, initial_cooldown_s: 7200, max_cooldown_s: 7200 },
       acp_monitor: {
-        unknown_poll_limit: 10,
-        stale_poll_limit: 10,
+        poll_limit: 10,
         max_transcript_extensions: 3,
         transcript_grace_ms: 300000,
         monitor_poll_ms: 10000,
@@ -2609,6 +2691,10 @@ await record('Buster monitor enforces hard wall-clock timeouts with explicit kil
   assert.equal(result.reason, 'session_timeout_kill_confirmed');
   assert.equal(result.termination.confirmed, true);
   assert.equal(result.termination.unconfirmed, false);
+  busterRuntimePolicyMod.resetBusterRuntimePolicyForTests();
+  if (previousSwarmConfig === undefined) delete process.env.SWARM_CONFIG;
+  else process.env.SWARM_CONFIG = previousSwarmConfig;
+  fs.rmSync(root, { recursive: true, force: true });
 });
 
 await record('Buster consumer reclaims pending tasks before reading new deliveries', async () => {
@@ -2620,6 +2706,7 @@ await record('Buster consumer reclaims pending tasks before reading new deliveri
   fs.writeFileSync(swarmConfigPath, JSON.stringify({
     buster: {
       runtime: {
+        task_stream: 'swarm:buster:tasks',
         heartbeat_path: path.join(root, 'heartbeat.json'),
         heartbeat_interval_ms: 1000,
         task_poll_interval_ms: 2000,

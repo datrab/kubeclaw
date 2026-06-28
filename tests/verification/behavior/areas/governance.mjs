@@ -31,6 +31,29 @@ function explicitPluginConfig() {
   };
 }
 
+function governanceRuntimeDefaults() {
+  return {
+    locks: {
+      lifecycle_append: {
+        stale_ms: 300000,
+        timeout_ms: 30000,
+      },
+    },
+    pipeline_defaults: {
+      timeout_minutes: 300,
+      max_fails: 8,
+      auto_retry_threshold: 7,
+      agent_startup_retry_budget: 3,
+      session_nudge_threshold: 0.75,
+    },
+    telemetry: {
+      enabled: false,
+      sink_timeout_ms: 5000,
+      stream_max_len: 10000,
+    },
+  };
+}
+
 export async function registerGovernanceArea({
   record,
   sourceRoot,
@@ -56,8 +79,9 @@ export async function registerGovernanceArea({
         },
       };
 const config = {
+      ...governanceRuntimeDefaults(),
       project: 'behavior-approval-artifacts',
-      telemetry: { enabled: false },
+      telemetry: governanceRuntimeDefaults().telemetry,
       _runId: 'run-approval-artifacts-1',
       run_id: 'run-approval-artifacts-1',
       plugins: explicitPluginConfig(),
@@ -116,8 +140,9 @@ const config = {
         },
       };
 const config = {
+      ...governanceRuntimeDefaults(),
       project: 'behavior-approval-transitions',
-      telemetry: { enabled: false },
+      telemetry: governanceRuntimeDefaults().telemetry,
       _runId: 'run-approval-transitions-1',
       run_id: 'run-approval-transitions-1',
       plugins: explicitPluginConfig(),
@@ -185,8 +210,9 @@ const config = {
         },
       };
 const config = {
+      ...governanceRuntimeDefaults(),
       project: 'behavior-governance-approval-summary',
-      telemetry: { enabled: false },
+      telemetry: governanceRuntimeDefaults().telemetry,
       _runId: 'run-governance-approval-summary-1',
       run_id: 'run-governance-approval-summary-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-11T00:00:00.000Z'),
@@ -249,8 +275,9 @@ const config = {
         },
       };
 const config = {
+      ...governanceRuntimeDefaults(),
       project: 'behavior-governance-approval-timeout-continue',
-      telemetry: { enabled: false },
+      telemetry: governanceRuntimeDefaults().telemetry,
       _runId: 'run-governance-approval-timeout-continue-1',
       run_id: 'run-governance-approval-timeout-continue-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-11T00:00:00.000Z'),
@@ -307,8 +334,9 @@ const config = {
     fs.mkdirSync(logDir, { recursive: true });
 
     const config = {
+      ...governanceRuntimeDefaults(),
       project: 'behavior-governance-approval-cancelled',
-      telemetry: { enabled: false },
+      telemetry: governanceRuntimeDefaults().telemetry,
       _runId: 'run-governance-approval-cancelled-1',
       run_id: 'run-governance-approval-cancelled-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-11T00:00:00.000Z'),
@@ -359,8 +387,9 @@ const config = {
     fs.mkdirSync(logDir, { recursive: true });
 
     const config = {
+      ...governanceRuntimeDefaults(),
       project: 'behavior-governance-arch-summary',
-      telemetry: { enabled: false },
+      telemetry: governanceRuntimeDefaults().telemetry,
       _runId: 'run-governance-arch-summary-1',
       run_id: 'run-governance-arch-summary-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-11T00:00:00.000Z'),

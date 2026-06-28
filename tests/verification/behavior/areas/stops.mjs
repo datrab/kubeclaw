@@ -12,6 +12,7 @@ import {
 import {
   buildBuiltInRegistry,
   gateRuntimeEvents,
+  platformTestDefaults,
   stepExit,
   stepMetadata,
   stepRateLimit,
@@ -119,16 +120,17 @@ export async function registerStopsArea({
           },
         };
 const config = {
+        ...platformTestDefaults(),
         project: scenario.project,
         paths: { swarm_dir: `/tmp/${scenario.project}-swarm` },
-        telemetry: { enabled: true },
+        telemetry: platformTestDefaults().telemetry,
         _runId: scenario.runId,
         run_id: scenario.runId,
         _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
         pluginRegistry: await buildBuiltInRegistry(busterRuntimeRoot),
         default_timeout_minutes: 5,
         default_max_fails: 2,
-        rate_limit: scenario.rateLimit || { max_pauses_per_module: 2, cooldown_hours: 0 },
+        rate_limit: { ...platformTestDefaults().rate_limit, ...(scenario.rateLimit || { max_pauses_per_module: 2, cooldown_hours: 0 }) },
               };
   
       const progress = {

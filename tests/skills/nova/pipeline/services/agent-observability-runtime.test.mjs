@@ -47,23 +47,17 @@ function observabilityConfig(overrides = {}) {
       enabled: true,
       groupName: 'kubeclaw-agent-observability-ingester',
       consumerName: 'kubeclaw-agent-observability-ingester-1',
-    },
-    profile: 'test',
-    profiles: {
-      test: {
-        redis: { command_timeout_ms: 50 },
-        streams: { stream_max_len: 10000, dead_letter_max_len: 1000 },
-        ingester: {
-          read: { block_ms: 5, reclaim_idle_ms: 60000 },
-          loop: { delay_ms: 1, stop_timeout_ms: 2000, health_check_every: 0 },
-          trim: { interval_ms: 5000, payload_stream_max_len: 5000 },
-          pressure: {
-            control_lag_degraded_threshold: 1000,
-            payload_pressure_degraded_threshold: 10000,
-          },
-        },
+      read_block_ms: 5,
+      reclaim_idle_ms: 60000,
+      redis_command_timeout_ms: 50,
+      loop: { delay_ms: 1, stop_timeout_ms: 2000, health_check_every: 0 },
+      trim: { interval_ms: 5000, payload_stream_max_len: 5000 },
+      pressure: {
+        control_lag_degraded_threshold: 1000,
+        payload_pressure_degraded_threshold: 10000,
       },
     },
+    streams: { stream_max_len: 10000, dead_letter_max_len: 1000 },
   };
 }
 

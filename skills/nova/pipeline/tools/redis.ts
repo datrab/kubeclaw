@@ -3,37 +3,34 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 import { parseCliFlagValues } from '../cli-args.ts';
+import { expandSwarmConfig } from '../core/platform-config.ts';
 import { createRedisClient, loadRedisCtor } from '../telemetry.ts';
 import { createRedisEventBus } from '../services/task-transport-contract.ts';
+import { resolveRedisCompletionPolicy } from '../services/redis-completion-policy.ts';
 
 // --- CONFIG ---
 const DEFAULT_SWARM_CONFIG_PATH = '/home/node/.openclaw/swarm.config.json';
 
 function loadSwarmConfig() {
   const configPath = process.env.SWARM_CONFIG || DEFAULT_SWARM_CONFIG_PATH;
-  return JSON.parse(fs.readFileSync(configPath, 'utf8'));
-}
-
-function requirePositiveNumber(value, label) {
-  const numberValue = Number(value);
-  if (!Number.isFinite(numberValue) || numberValue <= 0) {
-    throw new Error(`${label}: required positive number in swarm.config.json`);
-  }
-  return numberValue;
+  return expandSwarmConfig(JSON.parse(fs.readFileSync(configPath, 'utf8')));
 }
 
 function redisToolPolicy() {
   const config = loadSwarmConfig();
   const runtime = config?.buster?.runtime;
-  const completion = config?.redis_completion;
   if (!runtime || typeof runtime !== 'object') throw new Error('config.buster.runtime: required platform config object');
-  if (!completion || typeof completion !== 'object') throw new Error('config.redis_completion: required platform config object');
+  const completionPolicy = resolveRedisCompletionPolicy(config);
+  const readyTimeoutMs = Number(config?.gateway?.health?.timeout_ms);
+  if (!Number.isInteger(readyTimeoutMs) || readyTimeoutMs <= 0) {
+    throw new Error('config.gateway.health.timeout_ms: required positive integer in swarm.config.json');
+  }
   return {
-    readyTimeoutMs: requirePositiveNumber(config?.gateway?.health?.ready_timeout_ms, 'config.gateway.health.ready_timeout_ms'),
+    readyTimeoutMs,
     taskStream: String(runtime.task_stream || '').trim(),
-    archiveMaxLen: requirePositiveNumber(completion.archive_max_len, 'config.redis_completion.archive_max_len'),
-    tailScanBatchSize: requirePositiveNumber(completion.tail_scan_batch_size, 'config.redis_completion.tail_scan_batch_size'),
-    tailScanLimit: requirePositiveNumber(completion.tail_scan_limit, 'config.redis_completion.tail_scan_limit'),
+    archiveMaxLen: completionPolicy.archiveMaxLen,
+    tailScanBatchSize: completionPolicy.tailScanBatchSize,
+    tailScanLimit: completionPolicy.tailScanLimit,
   };
 }
 
@@ -442,6 +439,7 @@ async function main(args = process.argv.slice(2)) {
 
 export { main };
 export { waitForRedisReady };
+export const __redisToolTest = { loadSwarmConfig, redisToolPolicy };
 
 // --- CLI WRAPPER (Robust: Symlink-Aware + Async Exit) ---
 const currentPath = fs.realpathSync(fileURLToPath(import.meta.url));

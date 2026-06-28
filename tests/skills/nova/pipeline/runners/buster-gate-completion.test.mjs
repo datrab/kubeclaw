@@ -21,17 +21,16 @@ function makeConfig() {
     },
     buster: {
       runtime: {
+        heartbeat_interval_ms: 1,
+        task_poll_interval_ms: 1,
+        task_pending_reclaim_idle_ms: 1,
         completion_event_block_ms: 0,
         completion_recovery_scan_interval_ms: 1,
+        task_stream_max_len: 1,
       },
     },
-    redis_completion: {
-      tail_scan_batch_size: 100,
-      tail_scan_limit: 1000,
-    },
-    event_adapters: {
-      local_evidence_debounce_ms: 1,
-    },
+    redis_completion: { archive_max_len: 1000, tail_scan_batch_size: 100, tail_scan_limit: 1000 },
+    event_adapters: { local_evidence_debounce_ms: 1, approval_signal_debounce_ms: 1 },
     _runId: 'run-test',
     run_id: 'run-test',
   };

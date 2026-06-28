@@ -8,6 +8,7 @@ import { getRunId, getRunStats } from '../core/runtime.ts';
 import { relPath, gateLogDir, gateLintLogDir, gateOutputPath, reviewGateOutputPath } from '../core/paths.ts';
 import {
   createTrackedGateSessionRateLimitRecoveryOptions,
+  getRateLimitConfig,
   withSessionRateLimitRecovery,
 } from '../services/rate-limit.ts';
 import { resolveStatusSessionKey } from '../services/correlation.ts';
@@ -31,7 +32,9 @@ export function reviewOutputPath(config, gate, reviewerLabel) {
 }
 
 function trackedGatewayLabel(agent = null) {
-  return agent?.gatewayLabel || agent?.gateway_label || null;
+  if (agent?.gatewayLabel) return agent.gatewayLabel;
+  if (agent?.gateway_label) return agent.gateway_label;
+  return null;
 }
 
 function formatReviewPollFailureReason(pollRes) {
@@ -212,7 +215,7 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
   let echoSessionKey = null;
   let echoDispatchId = null;
   let echoGatewayLabel = null;
-  const maxRateLimitPauses = config.rate_limit.max_pauses_per_module;
+  const maxRateLimitPauses = getRateLimitConfig(config).max_pauses_per_module;
   let rateLimitPauses = 0;
   try {
     clearGateActiveSession(config, gateId);

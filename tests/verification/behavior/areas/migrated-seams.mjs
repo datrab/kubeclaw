@@ -1,4 +1,5 @@
 import {
+  platformTestDefaults,
   stepExit,
 } from './helpers.mjs';
 
@@ -22,14 +23,17 @@ export async function registerMigratedSeamsArea({
 
   function canonicalBusterPolicy(root) {
     return {
-      suite_timeout_ms: 300000,
-      max_crash_retries: 0,
       runtime: {
+        task_stream: 'swarm:buster:tasks',
         heartbeat_path: path.join(root, 'buster-heartbeat.json'),
         heartbeat_interval_ms: 1000,
         task_poll_interval_ms: 2000,
         task_pending_reclaim_idle_ms: 60000,
+        completion_event_block_ms: 0,
+        completion_recovery_scan_interval_ms: 5000,
         task_stream_max_len: 250,
+        suite_timeout_ms: 300000,
+        max_crash_retries: 0,
       },
     };
   }
@@ -264,16 +268,17 @@ export async function registerMigratedSeamsArea({
   function buildModuleConfig({ label, fixture, registry, runtimeCoreMod, runId }) {
     const deps = { moduleRunner: moduleRunnerNoExternalOverrides(label) };
     const config = {
+      ...platformTestDefaults(),
       project: `behavior-${label}`,
       repo_root: fixture.repoRoot,
       default_timeout_minutes: 30,
       default_max_fails: 3,
       buster: canonicalBusterPolicy(fixture.repoRoot),
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       pre_check: { enabled: false },
       fallback_model: 'anthropic/claude-sonnet-4-6',
       auto_retry_threshold: 2,
-      rate_limit: { cooldown_hours: 0, max_pauses_per_module: 3 },
+      rate_limit: { ...platformTestDefaults().rate_limit, cooldown_hours: 0, max_pauses_per_module: 3 },
       review_defaults: { timeout_minutes: 30, max_fix_cycles: 3, lint_tier: 'full', lint_required: false },
       _runId: runId,
       run_id: runId,
@@ -317,16 +322,17 @@ export async function registerMigratedSeamsArea({
         moduleRunner: moduleRunnerNoExternalOverrides('migrated-seam'),
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-migrated-module-happy-seam',
       repo_root: repoRoot,
       default_timeout_minutes: 30,
       default_max_fails: 3,
       buster: canonicalBusterPolicy(repoRoot),
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       pre_check: { enabled: false },
       fallback_model: 'anthropic/claude-sonnet-4-6',
       auto_retry_threshold: 2,
-      rate_limit: { cooldown_hours: 0, max_pauses_per_module: 3 },
+      rate_limit: { ...platformTestDefaults().rate_limit, cooldown_hours: 0, max_pauses_per_module: 3 },
       review_defaults: { timeout_minutes: 30, max_fix_cycles: 3, lint_tier: 'full', lint_required: false },
       _runId: runId,
       run_id: runId,
@@ -434,16 +440,17 @@ const config = {
         moduleRunner: moduleRunnerNoExternalOverrides('migrated-many-seam'),
       };
 const config = {
+      ...platformTestDefaults(),
       project: 'behavior-migrated-many-module-seam',
       repo_root: repoRoot,
       default_timeout_minutes: 30,
       default_max_fails: 3,
       buster: canonicalBusterPolicy(repoRoot),
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       pre_check: { enabled: false },
       fallback_model: 'anthropic/claude-sonnet-4-6',
       auto_retry_threshold: 2,
-      rate_limit: { cooldown_hours: 0, max_pauses_per_module: 3 },
+      rate_limit: { ...platformTestDefaults().rate_limit, cooldown_hours: 0, max_pauses_per_module: 3 },
       review_defaults: { timeout_minutes: 30, max_fix_cycles: 3, lint_tier: 'full', lint_required: false },
       _runId: runId,
       run_id: runId,

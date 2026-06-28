@@ -2,7 +2,7 @@
 import fs from 'fs';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { execFileSync } from 'child_process';
-import { loadStatus, saveStatus } from '../services/status-store.ts';
+import { appendPipelineLifecycleEvent, loadStatus, saveStatus } from '../services/status-store.ts';
 import { log } from '../core/logger.ts';
 import { resolveGatewayInvokeUrl, resolveGatewayToken } from '../integrations/gateway.ts';
 import { closeTelemetryRedis } from '../services/telemetry.ts';
@@ -90,7 +90,7 @@ function isSessionEnvLinked(env: AnyRecord | null, sessionKey: string, gatewayLa
 export function buildVictimSet(agentId: string | null, sessionKey: string, gatewayLabel: string | null = null, opts: AnyRecord = {}) {
   const table = opts.parsePsTable ? opts.parsePsTable() : parsePsTable();
   if (!table) return [];
-  const readEnv = opts.readProcEnv || readProcEnv;
+  const readEnv = opts.readProcEnv ? opts.readProcEnv : readProcEnv;
 
   const tracked = getTrackedEntryBySessionKey(sessionKey);
   const resolvedGatewayLabel = gatewayLabel || tracked?.gatewayLabel || null;
@@ -195,6 +195,25 @@ async function performSignalShutdown(signal: string, stateConfig: AnyRecord | nu
       }
     } catch (e: any) {
       log('WARN', `Shutdown: failed to persist interrupted module status: ${e?.message || e}`);
+    }
+  }
+
+  if (stateConfig) {
+    try {
+      appendPipelineLifecycleEvent(stateConfig, 'pipeline_run.halted', {
+        result: {
+          terminal_status: 'cancelled',
+          terminal_decision: {
+            reasonCode: `PIPELINE_CANCELLED_BY_${String(signal || 'signal').toUpperCase()}`,
+          },
+          reason: `PIPELINE_CANCELLED_BY_${String(signal || 'signal').toUpperCase()}`,
+        },
+        stepType: 'pipeline',
+        stepId: 'user_cancellation',
+        haltReason: `pipeline_cancelled_by_${String(signal || 'signal').toLowerCase()}`,
+      });
+    } catch (e: any) {
+      log('WARN', `Shutdown: failed to persist pipeline cancellation lifecycle event: ${e?.message || e}`);
     }
   }
 

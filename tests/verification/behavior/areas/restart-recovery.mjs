@@ -1,5 +1,6 @@
 import {
   buildBuiltInRegistry,
+  platformTestDefaults,
 } from './helpers.mjs';
 
 export async function registerRestartRecoveryArea({
@@ -40,6 +41,7 @@ export async function registerRestartRecoveryArea({
 }) {
 function platformRestartRecoveryDefaults() {
   return {
+    ...platformTestDefaults(),
     fallback_model: 'openai/gpt-5.4',
     default_timeout_minutes: 30,
     default_max_fails: 3,
@@ -47,8 +49,7 @@ function platformRestartRecoveryDefaults() {
     pre_check: { enabled: false, lint_report_path: '/app/skills/pipeline/tools/lint-report.ts', timeout_seconds: 60 },
     review_defaults: { timeout_minutes: 30, max_fix_cycles: 3, lint_tier: 'full', lint_required: false },
     acp_monitor: {
-      unknown_poll_limit: 10,
-      stale_poll_limit: 10,
+      poll_limit: 10,
       max_transcript_extensions: 3,
       transcript_grace_ms: 300000,
       monitor_poll_ms: 10000,
@@ -247,7 +248,7 @@ const config = {
     repo_root: repoRoot,
     _runId: 'run-reconcile',
     run_id: 'run-reconcile',
-    telemetry: { enabled: true },
+    telemetry: platformRestartRecoveryDefaults().telemetry,
     _runStats: {},
     pluginRegistry: withStubbedGeneratorStages(await buildBuiltInRegistry(reconcileRuntimeRoot)),
     paths: {
@@ -256,7 +257,7 @@ const config = {
     },
     poll_interval_seconds: 1,
     default_timeout_minutes: 1,
-    arch_validation: { enabled: false },
+    arch_validation: { ...platformRestartRecoveryDefaults().arch_validation, enabled: false },
       };
 
   const progress = {
@@ -267,7 +268,7 @@ const config = {
       'review-01': { type: 'review' },
     },
     execution_order: [],
-    arch_validation: { enabled: false },
+    arch_validation: { ...platformRestartRecoveryDefaults().arch_validation, enabled: false },
   };
 
   const module01Status = {
@@ -430,7 +431,7 @@ const config = {
     repo_root: repoRoot,
     _runId: 'run-terminal-reconcile',
     run_id: 'run-terminal-reconcile',
-    telemetry: { enabled: true },
+    telemetry: platformRestartRecoveryDefaults().telemetry,
     _disable_discord_webhooks: true,
     _runStats: {},
     pluginRegistry: withStubbedGeneratorStages(await buildBuiltInRegistry(reconcileRuntimeRoot)),
@@ -438,7 +439,7 @@ const config = {
       swarm_dir: swarmDir,
       modules_dir: modulesDir,
     },
-    arch_validation: { enabled: false },
+    arch_validation: { ...platformRestartRecoveryDefaults().arch_validation, enabled: false },
       };
 
   const progress = {
@@ -449,7 +450,7 @@ const config = {
       'review-terminal': { type: 'review', title: 'Terminal Review' },
     },
     execution_order: [],
-    arch_validation: { enabled: false },
+    arch_validation: { ...platformRestartRecoveryDefaults().arch_validation, enabled: false },
   };
 
   const module04Status = {
@@ -565,7 +566,7 @@ const config = {
     repo_root: repoRoot,
     _runId: 'run-no-session-reconcile',
     run_id: 'run-no-session-reconcile',
-    telemetry: { enabled: true },
+    telemetry: platformRestartRecoveryDefaults().telemetry,
     _disable_discord_webhooks: true,
     _runStats: {},
     pluginRegistry: withStubbedGeneratorStages(await buildBuiltInRegistry(reconcileRuntimeRoot)),
@@ -573,7 +574,7 @@ const config = {
       swarm_dir: swarmDir,
       modules_dir: modulesDir,
     },
-    arch_validation: { enabled: false },
+    arch_validation: { ...platformRestartRecoveryDefaults().arch_validation, enabled: false },
       };
 
   const progress = {
@@ -582,7 +583,7 @@ const config = {
     },
     gates: {},
     execution_order: [],
-    arch_validation: { enabled: false },
+    arch_validation: { ...platformRestartRecoveryDefaults().arch_validation, enabled: false },
   };
 
   const module02Status = {
@@ -660,7 +661,7 @@ await record('restart-time stale recovery blocks visibly when orphan kill is unc
     repo_root: repoRoot,
     _runId: 'run-unconfirmed-reconcile',
     run_id: 'run-unconfirmed-reconcile',
-    telemetry: { enabled: true },
+    telemetry: platformRestartRecoveryDefaults().telemetry,
     _disable_discord_webhooks: true,
     paths: {
       swarm_dir: swarmDir,
@@ -810,7 +811,7 @@ await record('restart-time stale recovery blocks weak active-agent identity befo
     repo_root: repoRoot,
     _runId: 'run-weak-identity-reconcile',
     run_id: 'run-weak-identity-reconcile',
-    telemetry: { enabled: true },
+    telemetry: platformRestartRecoveryDefaults().telemetry,
     _disable_discord_webhooks: true,
     paths: {
       swarm_dir: swarmDir,

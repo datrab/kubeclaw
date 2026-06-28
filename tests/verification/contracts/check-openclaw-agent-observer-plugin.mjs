@@ -17,6 +17,7 @@ function parseArgs(argv = process.argv.slice(2)) {
 const { sourceRoot } = parseArgs();
 const pluginRoot = path.join(sourceRoot, 'plugins/openclaw-agent-observer');
 const plugin = await import(path.join(pluginRoot, 'src/index.ts'));
+const pluginConfig = await import(path.join(pluginRoot, 'src/config.ts'));
 const contract = await import(path.join(sourceRoot, 'skills/common/pipeline/agent-observability/src/index.ts'));
 
 const packageJson = JSON.parse(fs.readFileSync(path.join(pluginRoot, 'package.json'), 'utf8'));
@@ -24,12 +25,25 @@ assert.deepEqual(packageJson.openclaw.runtimeExtensions, ['./dist/index.js']);
 const pluginManifest = JSON.parse(fs.readFileSync(path.join(pluginRoot, 'openclaw.plugin.json'), 'utf8'));
 assert.equal(pluginManifest.configSchema.properties.enabled.default, undefined, 'observer plugin manifest must not supply hidden runtime defaults');
 
+const compactResolvedConfig = pluginConfig.resolveAgentObserverConfig({}, {
+  SWARM_CONFIG: path.join(sourceRoot, 'charts/kubeclaw/files/config/swarm.config.json'),
+  KUBECLAW_SWARM_STANDARD_PROFILE: path.join(sourceRoot, 'skills/nova/pipeline/core/config-profiles/standard.json'),
+});
+assert.equal(compactResolvedConfig.enabled, true);
+assert.equal(compactResolvedConfig.maxEventBytes, 3145728);
+assert.equal(compactResolvedConfig.redisCommandTimeoutMs, 5000);
+assert.equal(compactResolvedConfig.hookTimeoutMs, 1000);
+
 for (const file of fs.readdirSync(path.join(pluginRoot, 'src'), { recursive: true })) {
   if (!String(file).endsWith('.ts')) continue;
   const full = path.join(pluginRoot, 'src', file);
   const text = fs.readFileSync(full, 'utf8');
   assert(!text.includes('skills/common'), `${file} must not import repo-local common skills`);
-  assert(!text.includes('/app/skills'), `${file} must not import production skill paths`);
+  const allowedProfileRead = String(file) === 'config.ts' && text.includes('/app/skills/pipeline/core/config-profiles/standard.json');
+  assert(
+    !text.includes('/app/skills') || allowedProfileRead,
+    `${file} must not import production skill paths except the standard config profile artifact`,
+  );
 }
 
 class FakeRedis {

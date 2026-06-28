@@ -283,6 +283,7 @@ const statusStoreMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipel
 const rateLimitMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/rate-limit.ts');
 const monitorMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/agents/acp-monitor.ts');
 const redisLogMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/redis-log.ts');
+const telemetryServiceMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/telemetry.ts');
 const artifactBundleMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/artifact-bundle.ts');
 const correlationMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/correlation.ts');
 const pathsMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/paths.ts');
@@ -295,6 +296,11 @@ const busterBaseImagesMod = await importRuntimeModule(sandboxRuntimeRoot, '/app/
 const busterCapabilitiesMod = await importRuntimeModule(sandboxRuntimeRoot, '/app/skills/pipeline/services/capabilities.ts');
 const busterTaskQueueMod = await importRuntimeModule(sandboxRuntimeRoot, '/app/skills/pipeline/services/task-queue.ts');
 const busterRecoveryMod = await importRuntimeModule(sandboxRuntimeRoot, '/app/skills/pipeline/services/orphan-recovery.ts');
+
+async function cleanupRuntimeResources() {
+  await pipelineRedisMod.default?.disconnect?.();
+  await telemetryServiceMod.closeTelemetryRedis?.();
+}
 
 const sharedAreaDeps = {
   record,
@@ -335,6 +341,7 @@ const sharedAreaDeps = {
   rateLimitMod,
   monitorMod,
   redisLogMod,
+  telemetryServiceMod,
   artifactBundleMod,
   correlationMod,
   pathsMod,
@@ -392,6 +399,7 @@ try {
     await registerArea();
   }
 } finally {
+  await cleanupRuntimeResources();
   cleanupGeneratedVerificationSwarmArtifacts();
 }
 
@@ -404,3 +412,4 @@ console.log(JSON.stringify({
   failed: 0,
   ...(verboseLogs ? { checks } : {}),
 }, null, 2));
+process.exit(0);

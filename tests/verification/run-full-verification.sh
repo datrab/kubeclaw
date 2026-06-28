@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
-CONTRACT_PATH="$REPO_DIR/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md"
+CONTRACT_PATH="$REPO_DIR/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md"
 source "$REPO_DIR/tests/verification/lib/verification-shell.sh"
 
 TEMP_DIR="$(mktemp -d)"
@@ -61,6 +61,19 @@ if [[ -z "${OPENCLAW_GATEWAY_URL:-}" && -n "${OPENCLAW_GATEWAY_PORT:-}" ]]; then
 fi
 "$REPO_DIR/tests/verification/lib/cleanup-home-artifacts.sh"
 
+run_step "canonical real pipeline e2e: full" \
+  node tests/verification/e2e/run-real-pipeline-e2e.mjs \
+  --mode full
+
+run_step "canonical real pipeline e2e: retry success" \
+  node tests/verification/e2e/run-real-pipeline-e2e.mjs \
+  --mode full \
+  --scenario forge-retry-then-success
+
+run_step "canonical real pipeline e2e: failure matrix" \
+  node tests/verification/e2e/run-real-pipeline-failure-matrix.mjs \
+  --mode full
+
 run_step "deployment truth" \
   node tests/verification/deployment/check-deployment-truth.mjs \
   --source-root "$REPO_DIR"
@@ -85,7 +98,9 @@ run_step "subagent launch" \
   node tests/verification/runtime/check-subagent-launch.mjs
 
 run_step "ACP launch" \
-  tests/verification/run-local-acp-verification.sh
+  tests/verification/run-local-acp-verification.sh \
+  --model "${FULL_VERIFICATION_ACP_MODEL:-gpt-5-codex}" \
+  --agent-id "${FULL_VERIFICATION_ACP_AGENT_ID:-codex}"
 
 run_step "live Redis backend smoke" \
   env LIVE_REDIS_SMOKE_REQUIRED=1 node tests/verification/live/redis-backend-smoke.mjs

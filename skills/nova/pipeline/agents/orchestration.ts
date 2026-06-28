@@ -27,6 +27,9 @@ import {
 import { sendGatewaySessionMessage } from '../integrations/gateway.ts';
 import { discord } from '../integrations/discord.ts';
 import { resolveRegisteredRedisAdapter } from '../services/adapter-registry.ts';
+import { getRateLimitConfig } from '../services/rate-limit.ts';
+import { getBusterRuntimeConfig, getPipelineDefaultsConfig } from '../services/runtime-defaults.ts';
+import { getAcpMonitorConfig } from './acp-monitor.ts';
 import { reaperAfterKill } from './shutdown.ts';
 import { canonicalizeModelId, modelToHarness, resolveRuntime } from './runtime.ts';
 import { getTrackedAgent, spawnSession, trackAgent, untrackAgent } from './lifecycle.ts';
@@ -151,18 +154,20 @@ export async function spawnAcpAgent(
 ) {
   const agentConfig = config.agents[agentType];
   const resolvedModel = canonicalizeModelId(model) || model;
-  const trackingKey = opts.trackingLabel || acpLabel(agentType, moduleId);
+  const trackingKey = opts.trackingLabel ? opts.trackingLabel : acpLabel(agentType, moduleId);
   const dispatchTs = Date.now();
   const gatewayLabel = `${trackingKey}-${dispatchTs}`;
-  const runId = opts.run_id || config?._runId || config?.run_id || null;
-  const dispatchId = opts.dispatch_id || `${trackingKey}-dispatch-${dispatchTs}`;
+  const runId = opts.run_id ? opts.run_id : config?._runId ? config._runId : config?.run_id ? config.run_id : null;
+  const dispatchId = opts.dispatch_id ? opts.dispatch_id : `${trackingKey}-dispatch-${dispatchTs}`;
   const agentId = modelToHarness(resolvedModel) || agentConfig.acp_agent_id;
   if (!agentId) throw new Error(`ACP dispatch for '${agentType}' requires explicit acp_agent_id or model harness mapping`);
   const cwd = agentConfig.cwd || config.repo_root;
-  const runtime = resolveRuntime({ model: resolvedModel });
+  const runtime = agentConfig.dispatch === 'acp'
+    ? 'acp'
+    : resolveRuntime({ model: resolvedModel });
   const useSubagent = runtime === 'subagent';
   const thinkingLevel = opts.thinking || null;
-  const thinkingSource = opts.thinking_source || opts.thinkingSource || null;
+  const thinkingSource = opts.thinking_source ? opts.thinking_source : opts.thinkingSource ? opts.thinkingSource : null;
   const telemetryIdentity = {
     run_id: runId,
     project: config?.project || null,
@@ -310,7 +315,7 @@ export async function killAcpAgent(
   graceful: boolean = false,
   opts: AnyRecord = {},
 ) {
-  const label = opts.trackingLabel || acpLabel(agentType, moduleId);
+  const label = opts.trackingLabel ? opts.trackingLabel : acpLabel(agentType, moduleId);
   const entry = getTrackedAgent(label);
   const sessionKey = entry?.sessionKey;
   if (!sessionKey) {
@@ -362,7 +367,7 @@ function deriveIsolatedServePort({
   attempt = null,
   dispatchId = '',
 }: AnyRecord = {}) {
-  const runId = config?._runId || config?.run_id || '';
+  const runId = config?._runId ? config._runId : config?.run_id ? config.run_id : '';
   if (!runId || !targetId || !Number.isInteger(attempt) || attempt < 1) return null;
   return 20000 + stablePortOffset(`${runId}:${targetId}:${attempt}:${dispatchId || ''}`);
 }
@@ -393,9 +398,10 @@ function isolateServePortForBuster(testConfig: AnyRecord, opts: AnyRecord = {}) 
 
 export function buildBusterTestConfig(owner: AnyRecord = {}, config: AnyRecord = {}, opts: AnyRecord = {}) {
   const testConfig = owner?.test_config && typeof owner.test_config === 'object' ? owner.test_config : {};
-  const configuredTimeout = testConfig.suite_timeout_ms ?? config.buster.suite_timeout_ms;
+  const busterRuntime = getBusterRuntimeConfig(config);
+  const configuredTimeout = testConfig.suite_timeout_ms ?? busterRuntime.suite_timeout_ms;
   if (!Number.isInteger(configuredTimeout) || configuredTimeout <= 0) {
-    throw new Error('Buster payload requires positive test_config.suite_timeout_ms or config.buster.suite_timeout_ms');
+    throw new Error('Buster payload requires positive test_config.suite_timeout_ms or config.buster.runtime.suite_timeout_ms');
   }
   const normalized = {
     ...testConfig,
@@ -413,7 +419,7 @@ export function buildBusterPayload(
   status: AnyRecord | null,
   opts: AnyRecord = {},
 ) {
-  const cooldownSeconds = Math.round(config.rate_limit.cooldown_hours * 60 * 60);
+  const cooldownSeconds = Math.round(getRateLimitConfig(config).cooldown_hours * 60 * 60);
   const base = {
     task_type: taskType,
     module: moduleId,
@@ -421,9 +427,9 @@ export function buildBusterPayload(
     commit_hash: status?.forge_commit_hash || null,
     timestamp: new Date().toISOString(),
     completion_stream: completionStreamKey(config),
-    acp_monitor: config.acp_monitor,
+    acp_monitor: getAcpMonitorConfig(config),
     rate_limit: {
-      max_pauses: config.rate_limit.max_pauses_per_module,
+      max_pauses: getRateLimitConfig(config).max_pauses_per_module,
       initial_cooldown_s: cooldownSeconds,
       max_cooldown_s: cooldownSeconds,
     },
@@ -441,12 +447,14 @@ export function buildBusterPayload(
   const artifacts = getPipelineArtifactBundle(config);
   if (taskType === 'module_test') {
     const mod = progress.modules[moduleId];
-    const timeoutSeconds = (mod?.timeout_minutes ?? config.default_timeout_minutes) * 60;
+    const pipelineDefaults = getPipelineDefaultsConfig(config);
+    const timeoutSeconds = (mod?.timeout_minutes ?? pipelineDefaults.timeout_minutes) * 60;
     return { ...base, stage_id: 'worker:module_buster', worker_type: 'module_buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: modelToHarness(resolvedModel) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel }, model: resolvedModel, model_source: opts.model_source ?? opts.modelSource ?? null, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel, runtime: sessionRuntime, module_path: mod ? modulePathRef(config, mod.dir) : null, buster_md_path: mod ? moduleBusterMdPathRef(config, mod.dir) : null, output_file: mod ? moduleBusterOutputPathRef(config, mod.dir) : null, suites: mod?.test_suites || null, test_config: buildBusterTestConfig(mod, config, { config, targetId: moduleId, attempt, dispatchId }), capabilities: resolveConfiguredBusterCapabilities(mod), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: mod ? moduleLogDir(config, mod.dir) : null, pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
   }
   if (taskType !== 'gate_test') throw new Error(`Buster payload builder does not support task_type '${taskType}'`);
   const gate = opts.gate || progress.gates?.[moduleId] || {};
-  const gateTimeout = gate.timeout_minutes ?? config.default_timeout_minutes;
+  const pipelineDefaults = getPipelineDefaultsConfig(config);
+  const gateTimeout = gate.timeout_minutes ?? pipelineDefaults.timeout_minutes;
   const timeoutSeconds = gateTimeout * 60;
   return { ...base, stage_id: 'gate:buster', gate_type: 'buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: modelToHarness(resolvedModel) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel }, model: resolvedModel, model_source: opts.model_source ?? opts.modelSource ?? null, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel, runtime: sessionRuntime, gate_id: moduleId, gate_title: gate.title || moduleId, work_dir: gateWorkDirPathRef(config), output_file: gateOutputPathRef(config, gate), instructions_file: gateInstructionsPathRef(config, gate), suites: gate.test_suites || null, test_config: buildBusterTestConfig(gate, config, { config, targetId: moduleId, attempt, dispatchId }), capabilities: resolveConfiguredBusterCapabilities(gate), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: gateLogDir(config, moduleId), pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
 }

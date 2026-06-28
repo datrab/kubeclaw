@@ -45,9 +45,11 @@ assertExcludes(adapterRegistry, "'/app/skills/redis.ts'", 'Removed root Redis al
 assertExcludes(adapterRegistry, "'/app/skills/project-summary.ts'", 'Removed root project-summary alias must stay absent');
 
 const swarmConfig = read(sourceRoot, 'charts/kubeclaw/files/config/swarm.config.json');
-assertIncludes(swarmConfig, '"/app/skills/pipeline/tools/lint-report.ts"', 'Chart config must use canonical lint-report runtime delegate path');
-assertIncludes(swarmConfig, '"/app/skills/pipeline/tools/redis.ts"', 'Chart config must use canonical Redis runtime delegate path');
-assertExcludes(swarmConfig, '"/app/skills/lint-report.ts"', 'Chart config must not reference removed root lint-report alias');
+const standardProfile = read(sourceRoot, 'skills/nova/pipeline/core/config-profiles/standard.json');
+assertIncludes(swarmConfig, '"profile": "standard"', 'Chart config must select the standard compact profile');
+assertIncludes(standardProfile, '"/app/skills/pipeline/tools/lint-report.ts"', 'Standard profile must use canonical lint-report runtime delegate path');
+assertIncludes(standardProfile, '"/app/skills/pipeline/tools/redis.ts"', 'Standard profile must use canonical Redis runtime delegate path');
+assertExcludes(standardProfile, '"/app/skills/lint-report.ts"', 'Standard profile must not reference removed root lint-report alias');
 
 for (const relativePath of [
   'skills/nova/pipeline/cli.ts',

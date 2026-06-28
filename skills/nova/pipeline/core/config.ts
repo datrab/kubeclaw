@@ -5,14 +5,14 @@ import fs from 'fs';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 import { log } from './logger.ts';
-import { discoverPlatformSwarmConfigCandidates, discoverSwarmConfigPath, loadPlatformSwarmConfig } from './platform-config.ts';
+import { discoverPlatformSwarmConfigCandidates, discoverSwarmConfigPath, loadPlatformSwarmConfig, normalizeSwarmConfigInPlace } from './platform-config.ts';
 import { assertSafePathSegment, validateSafePath } from './paths.ts';
 import { getRepoRoot, setGitRuntimePolicy, setRepoRoot } from './git-context.ts';
 import { resolvePolicy, validateThinkingLevel, logEffectivePolicy, VALID_THINKING_LEVELS, THINKING_SUPPORTED_PATHS, THINKING_UNSUPPORTED_PATHS } from './policy.ts';
 import { buildPluginRegistry } from './registry.ts';
 
 export { resolvePolicy, validateThinkingLevel, logEffectivePolicy, VALID_THINKING_LEVELS, THINKING_SUPPORTED_PATHS, THINKING_UNSUPPORTED_PATHS };
-export { discoverPlatformSwarmConfigCandidates, discoverSwarmConfigPath, loadPlatformSwarmConfig };
+export { discoverPlatformSwarmConfigCandidates, discoverSwarmConfigPath, loadPlatformSwarmConfig, normalizeSwarmConfigInPlace };
 
 // ─── Exported functions ───────────────────────────────────────────────────────
 
@@ -84,12 +84,13 @@ export function loadConfig(projectName: any, opts: AnyRecord = {}) {
   log('INFO', `[plugins] startup registry ready: ${pluginRegistry.summary.enabledModules}/${pluginRegistry.summary.discoveredModules} modules enabled, ${pluginRegistry.summary.stageOwnerCount} stage owner(s)`);
 
   setRepoRoot(config.repo_root);
-  setGitRuntimePolicy(config.git);
+  setGitRuntimePolicy(config);
 
   return { config, progress, pluginRegistry };
 }
 
 export function validateConfig(config: AnyRecord, progress: AnyRecord) {
+  normalizeSwarmConfigInPlace(config);
   const errors: string[] = [];
 
   if (Object.prototype.hasOwnProperty.call(config || {}, '_testOverrides')) {
@@ -124,6 +125,7 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
   requireField(config, 'agents.buster');
   requireField(config, 'agents.echo');
   requireField(config, 'fallback_model');
+  requireField(config, 'pipeline_defaults');
   requireField(config, 'rate_limit');
   requireField(config, 'discord_alerts');
   requireField(config, 'pre_check');
@@ -156,7 +158,6 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
     }
     return raw;
   };
-
   if (config.agents?.buster?.dispatch !== 'redis') {
     errors.push('config.agents.buster.dispatch: required platform value \'redis\' in swarm.config.json');
   }
@@ -187,43 +188,46 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
     errors.push('config.models: role-specific model defaults belong in progress.json defaults.models; swarm.config.json must only set fallback_model');
   }
 
-  requireNumber(config, 'poll_interval_seconds', 'config.poll_interval_seconds', { min: 0, allowZero: false });
-  requireNumber(config, 'default_timeout_minutes', 'config.default_timeout_minutes', { min: 0, allowZero: false });
-  requireNumber(config, 'default_max_fails', 'config.default_max_fails', { min: 0 });
-  requireNumber(config, 'auto_retry_threshold', 'config.auto_retry_threshold', { min: 0 });
-  requireNumber(config, 'agent_startup_retry_budget', 'config.agent_startup_retry_budget', { min: 0 });
-  requireNumber(config, 'session_nudge_threshold', 'config.session_nudge_threshold', { min: 0, max: 1 });
+  if (!isPlainObject(config.pipeline_defaults)) {
+    errors.push('config.pipeline_defaults: required platform config object');
+    config.pipeline_defaults = {};
+  }
+  requireNumber(config.pipeline_defaults, 'timeout_minutes', 'config.pipeline_defaults.timeout_minutes', { min: 0, allowZero: false });
+  requireNumber(config.pipeline_defaults, 'max_fails', 'config.pipeline_defaults.max_fails', { min: 0 });
+  requireNumber(config.pipeline_defaults, 'auto_retry_threshold', 'config.pipeline_defaults.auto_retry_threshold', { min: 0 });
+  requireNumber(config.pipeline_defaults, 'agent_startup_retry_budget', 'config.pipeline_defaults.agent_startup_retry_budget', { min: 0 });
+  requireNumber(config.pipeline_defaults, 'session_nudge_threshold', 'config.pipeline_defaults.session_nudge_threshold', { min: 0, max: 1 });
 
   if (!isPlainObject(config.rate_limit)) {
     errors.push('config.rate_limit: required platform config object');
     config.rate_limit = {};
   }
+
   requireNumber(config.rate_limit, 'cooldown_hours', 'config.rate_limit.cooldown_hours', { min: 0 });
   requireNumber(config.rate_limit, 'max_pauses_per_module', 'config.rate_limit.max_pauses_per_module', { min: 0 });
   requireNumber(config.rate_limit, 'cooldown_buffer_ms', 'config.rate_limit.cooldown_buffer_ms', { min: 0 });
 
   if (!isPlainObject(config.polling)) { errors.push('config.polling: required platform config object'); config.polling = {}; }
-  requireNumber(config.polling, 'progress_log_interval_ms', 'config.polling.progress_log_interval_ms', { min: 0 });
-  requireNumber(config.polling, 'session_progress_emit_interval_ms', 'config.polling.session_progress_emit_interval_ms', { min: 0 });
-  requireNumber(config.polling, 'session_progress_log_interval_ms', 'config.polling.session_progress_log_interval_ms', { min: 0 });
+  requireNumber(config.polling, 'interval_seconds', 'config.polling.interval_seconds', { min: 0, allowZero: false });
+  requireNumber(config.polling, 'progress_interval_ms', 'config.polling.progress_interval_ms', { min: 0 });
   requireNumber(config.polling, 'session_end_grace_ms', 'config.polling.session_end_grace_ms', { min: 0 });
 
   if (!isPlainObject(config.locks)) { errors.push('config.locks: required platform config object'); config.locks = {}; }
-  requireNumber(config.locks, 'lifecycle_append_stale_ms', 'config.locks.lifecycle_append_stale_ms', { min: 0 });
-  requireNumber(config.locks, 'lifecycle_append_timeout_ms', 'config.locks.lifecycle_append_timeout_ms', { min: 0 });
-  requireNumber(config.locks, 'gate_active_session_stale_ms', 'config.locks.gate_active_session_stale_ms', { min: 0 });
-  requireNumber(config.locks, 'gate_active_session_timeout_ms', 'config.locks.gate_active_session_timeout_ms', { min: 0 });
-  requireNumber(config.locks, 'pipeline_run_lock_lease_ms', 'config.locks.pipeline_run_lock_lease_ms', { min: 0, allowZero: false });
-  requireNumber(config.locks, 'pipeline_run_lock_heartbeat_ms', 'config.locks.pipeline_run_lock_heartbeat_ms', { min: 0, allowZero: false });
-  requireNumber(config.locks, 'pipeline_run_lock_mutation_stale_ms', 'config.locks.pipeline_run_lock_mutation_stale_ms', { min: 0, allowZero: false });
-  requireNumber(config.locks, 'pipeline_run_lock_abort_settle_ms', 'config.locks.pipeline_run_lock_abort_settle_ms', { min: 0 });
+  requireNumber(config.locks.lifecycle_append, 'stale_ms', 'config.locks.lifecycle_append.stale_ms', { min: 0 });
+  requireNumber(config.locks.lifecycle_append, 'timeout_ms', 'config.locks.lifecycle_append.timeout_ms', { min: 0 });
+  requireNumber(config.locks.gate_active_session, 'stale_ms', 'config.locks.gate_active_session.stale_ms', { min: 0 });
+  requireNumber(config.locks.gate_active_session, 'timeout_ms', 'config.locks.gate_active_session.timeout_ms', { min: 0 });
+  requireNumber(config.locks.pipeline_run, 'lease_ms', 'config.locks.pipeline_run.lease_ms', { min: 0, allowZero: false });
+  requireNumber(config.locks.pipeline_run, 'heartbeat_ms', 'config.locks.pipeline_run.heartbeat_ms', { min: 0, allowZero: false });
+  requireNumber(config.locks.pipeline_run, 'mutation_stale_ms', 'config.locks.pipeline_run.mutation_stale_ms', { min: 0, allowZero: false });
+  requireNumber(config.locks.pipeline_run, 'abort_settle_ms', 'config.locks.pipeline_run.abort_settle_ms', { min: 0 });
 
   if (!isPlainObject(config.git)) { errors.push('config.git: required platform config object'); config.git = {}; }
-  requireNumber(config.git, 'timeout_ms', 'config.git.timeout_ms', { min: 0, allowZero: false });
-  requireNumber(config.git, 'max_buffer_bytes', 'config.git.max_buffer_bytes', { min: 0, allowZero: false });
-  requireNumber(config.git, 'push_timeout_ms', 'config.git.push_timeout_ms', { min: 0, allowZero: false });
-  requireNumber(config.git, 'push_max_retries', 'config.git.push_max_retries', { min: 0, allowZero: false });
-  requireNumber(config.git, 'push_retry_delay_ms', 'config.git.push_retry_delay_ms', { min: 0 });
+  requireNumber(config.git.command, 'timeout_ms', 'config.git.command.timeout_ms', { min: 0, allowZero: false });
+  requireNumber(config.git.command, 'max_buffer_bytes', 'config.git.command.max_buffer_bytes', { min: 0, allowZero: false });
+  requireNumber(config.git.push, 'timeout_ms', 'config.git.push.timeout_ms', { min: 0, allowZero: false });
+  requireNumber(config.git.push, 'max_attempts', 'config.git.push.max_attempts', { min: 0, allowZero: false });
+  requireNumber(config.git.push, 'retry_delay_ms', 'config.git.push.retry_delay_ms', { min: 0 });
 
   if (!isPlainObject(config.redis_completion)) { errors.push('config.redis_completion: required platform config object'); config.redis_completion = {}; }
   requireNumber(config.redis_completion, 'archive_max_len', 'config.redis_completion.archive_max_len', { min: 0, allowZero: false });
@@ -237,33 +241,30 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
   if (!isPlainObject(config.discord)) { errors.push('config.discord: required platform config object'); config.discord = {}; }
   requireNumber(config.discord, 'webhook_timeout_ms', 'config.discord.webhook_timeout_ms', { min: 0, allowZero: false });
 
-  const requireGatewayInvokePolicy = (owner: any, field: string, label: string) => {
-    if (!isPlainObject(owner?.[field])) {
+  const requireGatewayInvokePolicy = (field: string) => {
+    const label = `config.gateway.invoke.${field}`;
+    if (!isPlainObject(config.gateway.invoke?.[field])) {
       errors.push(`${label}: required platform config object`);
-      return;
+      config.gateway.invoke[field] = {};
     }
-    requireNumber(owner[field], 'timeout_ms', `${label}.timeout_ms`, { min: 0 });
-    requireNumber(owner[field], 'max_retries', `${label}.max_retries`, { min: 0, allowZero: false });
-    requireNumber(owner[field], 'retry_delay_ms', `${label}.retry_delay_ms`, { min: 0 });
+    requireNumber(config.gateway.invoke[field], 'timeout_ms', `${label}.timeout_ms`, { min: 0 });
   };
   if (!isPlainObject(config.gateway)) { errors.push('config.gateway: required platform config object'); config.gateway = {}; }
   if (!isPlainObject(config.gateway.invoke)) { errors.push('config.gateway.invoke: required platform config object'); config.gateway.invoke = {}; }
-  for (const field of ['session_status', 'session_spawn', 'session_send', 'subagent_kill', 'subagent_list']) {
-    requireGatewayInvokePolicy(config.gateway.invoke, field, `config.gateway.invoke.${field}`);
-  }
-  if (!isPlainObject(config.gateway.invoke.health)) {
-    errors.push('config.gateway.invoke.health: required platform config object');
-  } else {
-    requireNumber(config.gateway.invoke.health, 'timeout_ms', 'config.gateway.invoke.health.timeout_ms', { min: 0 });
+  if (!isPlainObject(config.gateway.invoke.retry)) { errors.push('config.gateway.invoke.retry: required platform config object'); config.gateway.invoke.retry = {}; }
+  requireNumber(config.gateway.invoke.retry, 'max_attempts', 'config.gateway.invoke.retry.max_attempts', { min: 0, allowZero: false });
+  requireNumber(config.gateway.invoke.retry, 'retry_delay_ms', 'config.gateway.invoke.retry.retry_delay_ms', { min: 0 });
+  for (const field of ['session_status', 'session_spawn', 'session_send', 'subagent_kill', 'subagent_list', 'health']) {
+    requireGatewayInvokePolicy(field);
   }
   if (!isPlainObject(config.gateway.health)) { errors.push('config.gateway.health: required platform config object'); config.gateway.health = {}; }
-  requireNumber(config.gateway.health, 'ready_timeout_ms', 'config.gateway.health.ready_timeout_ms', { min: 0, allowZero: false });
-  requireNumber(config.gateway.health, 'ready_interval_ms', 'config.gateway.health.ready_interval_ms', { min: 0, allowZero: false });
+  requireNumber(config.gateway.health, 'timeout_ms', 'config.gateway.health.timeout_ms', { min: 0, allowZero: false });
+  requireNumber(config.gateway.health, 'interval_ms', 'config.gateway.health.interval_ms', { min: 0, allowZero: false });
   requireNumber(config.gateway.health, 'monitor_interval_ms', 'config.gateway.health.monitor_interval_ms', { min: 0, allowZero: false });
   requireNumber(config.gateway.health, 'max_failures', 'config.gateway.health.max_failures', { min: 0, allowZero: false });
 
   if (!isPlainObject(config.session)) { errors.push('config.session: required platform config object'); config.session = {}; }
-  requireNumber(config.session, 'health_check_wait_ms', 'config.session.health_check_wait_ms', { min: 0 });
+  requireNumber(config.session, 'health_check_timeout_ms', 'config.session.health_check_timeout_ms', { min: 0 });
   if (!isPlainObject(config.session.spawn)) { errors.push('config.session.spawn: required platform config object'); config.session.spawn = {}; }
   requireBoolean(config.session.spawn.thread, 'config.session.spawn.thread');
   requireNonEmptyString(config.session.spawn.mode, 'config.session.spawn.mode');
@@ -279,20 +280,14 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
   requireNumber(config.session.kill, 'acpx_timeout_ms', 'config.session.kill.acpx_timeout_ms', { min: 0 });
   requireNonEmptyString(config.session.kill.stop_message, 'config.session.kill.stop_message');
   if (!isPlainObject(config.session.termination)) { errors.push('config.session.termination: required platform config object'); config.session.termination = {}; }
-  requireNumber(config.session.termination, 'grace_ms', 'config.session.termination.grace_ms', { min: 0 });
-  requireNumber(config.session.termination, 'max_grace_ms', 'config.session.termination.max_grace_ms', { min: 0 });
-  requireNumber(config.session.termination, 'poll_ms', 'config.session.termination.poll_ms', { min: 0, allowZero: false });
-  requireNumber(config.session.termination, 'gateway_request_max_ms', 'config.session.termination.gateway_request_max_ms', { min: 0, allowZero: false });
-  requireNumber(config.session.termination, 'cleanup_confirm_timeout_ms', 'config.session.termination.cleanup_confirm_timeout_ms', { min: 0 });
-  requireNumber(config.session.termination, 'status_timeout_ms', 'config.session.termination.status_timeout_ms', { min: 0, allowZero: false });
-  requireNumber(config.session.termination, 'request_timeout_ms', 'config.session.termination.request_timeout_ms', { min: 0, allowZero: false });
-  requireNumber(config.session.termination, 'stop_request_timeout_ms', 'config.session.termination.stop_request_timeout_ms', { min: 0, allowZero: false });
-  requireNumber(config.session.termination, 'list_timeout_ms', 'config.session.termination.list_timeout_ms', { min: 0, allowZero: false });
-  requireNumber(config.session.termination, 'acpx_timeout_ms', 'config.session.termination.acpx_timeout_ms', { min: 0, allowZero: false });
+  for (const field of ['grace_ms', 'max_grace_ms', 'cleanup_confirm_timeout_ms']) {
+    requireNumber(config.session.termination, field, `config.session.termination.${field}`, { min: 0 });
+  }
+  for (const field of ['poll_ms', 'gateway_request_max_ms', 'gateway_operation_timeout_ms', 'acpx_timeout_ms']) {
+    requireNumber(config.session.termination, field, `config.session.termination.${field}`, { min: 0, allowZero: false });
+  }
 
   if (!isPlainObject(config.buster)) { errors.push('config.buster: required platform config object'); config.buster = {}; }
-  requireNumber(config.buster, 'suite_timeout_ms', 'config.buster.suite_timeout_ms', { min: 0, allowZero: false });
-  requireNumber(config.buster, 'max_crash_retries', 'config.buster.max_crash_retries', { min: 0 });
   if (!isPlainObject(config.buster.runtime)) {
     errors.push('config.buster.runtime: required platform config object');
     config.buster.runtime = {};
@@ -305,6 +300,8 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
   requireNumber(config.buster.runtime, 'completion_event_block_ms', 'config.buster.runtime.completion_event_block_ms', { min: 0 });
   requireNumber(config.buster.runtime, 'completion_recovery_scan_interval_ms', 'config.buster.runtime.completion_recovery_scan_interval_ms', { min: 0, allowZero: false });
   requireNumber(config.buster.runtime, 'task_stream_max_len', 'config.buster.runtime.task_stream_max_len', { min: 0, allowZero: false });
+  requireNumber(config.buster.runtime, 'suite_timeout_ms', 'config.buster.runtime.suite_timeout_ms', { min: 0, allowZero: false });
+  requireNumber(config.buster.runtime, 'max_crash_retries', 'config.buster.runtime.max_crash_retries', { min: 0 });
 
   if (!isPlainObject(config.discord_alerts)) {
     errors.push('config.discord_alerts: required platform config object');
@@ -344,6 +341,7 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
     errors.push('config.arch_validation: required platform config object');
     config.arch_validation = {};
   }
+  requireBoolean(config.arch_validation.enabled, 'config.arch_validation.enabled');
   requireBoolean(config.arch_validation.agent_enabled, 'config.arch_validation.agent_enabled');
   requireNumber(config.arch_validation, 'timeout_minutes', 'config.arch_validation.timeout_minutes', { min: 0, allowZero: false });
 
@@ -370,23 +368,10 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
     errors.push('config.acp_monitor: required platform config object');
     config.acp_monitor = {};
   }
-
-  for (const field of [
-    'unknown_poll_limit',
-    'stale_poll_limit',
-    'max_transcript_extensions',
-    'transcript_grace_ms',
-    'monitor_poll_ms',
-  ]) {
-    if (config.acp_monitor[field] === undefined || config.acp_monitor[field] === null || config.acp_monitor[field] === '') {
-      errors.push(`config.acp_monitor.${field}: required in swarm.config.json`);
-      continue;
-    }
-    const value = config.acp_monitor[field];
-    if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) {
-      errors.push(`config.acp_monitor.${field}: must be a non-negative number`);
-    }
-  }
+  requireNumber(config.acp_monitor, 'poll_limit', 'config.acp_monitor.poll_limit', { min: 0 });
+  requireNumber(config.acp_monitor, 'max_transcript_extensions', 'config.acp_monitor.max_transcript_extensions', { min: 0 });
+  requireNumber(config.acp_monitor, 'transcript_grace_ms', 'config.acp_monitor.transcript_grace_ms', { min: 0 });
+  requireNumber(config.acp_monitor, 'monitor_poll_ms', 'config.acp_monitor.monitor_poll_ms', { min: 0 });
 
   // telemetry.enabled — boolean
   if (!isPlainObject(config.telemetry)) { errors.push('config.telemetry: required platform config object'); config.telemetry = {}; }
@@ -404,52 +389,42 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
       errors.push('config.agent_observability: must be an object when provided');
       config.agent_observability = {};
     } else {
-      requireNonEmptyString(agentObservability.profile, 'config.agent_observability.profile');
-      if (!isPlainObject(agentObservability.profiles)) errors.push('config.agent_observability.profiles: required object');
-      const profile = isPlainObject(agentObservability.profiles?.[agentObservability.profile])
-        ? agentObservability.profiles[agentObservability.profile]
-        : {};
-      if (!isPlainObject(agentObservability.profiles?.[agentObservability.profile])) {
-        errors.push(`config.agent_observability.profile: references missing config.agent_observability.profiles.${agentObservability.profile}`);
-      }
       requireBoolean(agentObservability.required, 'config.agent_observability.required');
-      if (!isPlainObject(profile.payload)) {
-        errors.push('config.agent_observability profile payload: required object');
+      if (!isPlainObject(agentObservability.payload)) {
+        errors.push('config.agent_observability.payload: required object');
       } else {
-        requireNumber(profile.payload, 'max_event_bytes', 'config.agent_observability profile payload max_event_bytes', { min: 0, allowZero: false });
+        requireNumber(agentObservability.payload, 'max_event_bytes', 'config.agent_observability.payload.max_event_bytes', { min: 0, allowZero: false });
       }
-      if (!isPlainObject(profile.startup_evidence)) {
-        errors.push('config.agent_observability profile startup_evidence: required object');
+      if (!isPlainObject(agentObservability.startup_evidence)) {
+        errors.push('config.agent_observability.startup_evidence: required object');
       } else {
-        requireNumber(profile.startup_evidence, 'timeout_ms', 'config.agent_observability profile startup_evidence timeout_ms');
-        requireNumber(profile.startup_evidence, 'block_ms', 'config.agent_observability profile startup_evidence block_ms');
+        requireNumber(agentObservability.startup_evidence, 'timeout_ms', 'config.agent_observability.startup_evidence.timeout_ms', { min: 0 });
+        requireNumber(agentObservability.startup_evidence, 'block_ms', 'config.agent_observability.startup_evidence.block_ms', { min: 0 });
       }
-      if (!isPlainObject(profile.forge_completion)) {
-        errors.push('config.agent_observability profile forge_completion: required object');
+      if (!isPlainObject(agentObservability.forge_completion)) {
+        errors.push('config.agent_observability.forge_completion: required object');
       } else {
-        requireNumber(profile.forge_completion, 'xread_block_ms', 'config.agent_observability profile forge_completion xread_block_ms');
-        requireNumber(profile.forge_completion, 'settle_ms', 'config.agent_observability profile forge_completion settle_ms');
+        requireNumber(agentObservability.forge_completion, 'xread_block_ms', 'config.agent_observability.forge_completion.xread_block_ms', { min: 0 });
+        requireNumber(agentObservability.forge_completion, 'settle_ms', 'config.agent_observability.forge_completion.settle_ms', { min: 0 });
       }
       if (!isPlainObject(agentObservability.plugin)) {
         errors.push('config.agent_observability.plugin: required object');
       } else {
         requireBoolean(agentObservability.plugin.enabled, 'config.agent_observability.plugin.enabled');
-        const pluginProfile = isPlainObject(profile.plugin) ? profile.plugin : {};
-        const streams = isPlainObject(profile.streams) ? profile.streams : {};
-        const controlWrite = isPlainObject(pluginProfile.control_write) ? pluginProfile.control_write : {};
-        const hook = isPlainObject(pluginProfile.hook) ? pluginProfile.hook : {};
-        if (!isPlainObject(profile.redis)) errors.push('config.agent_observability profile redis: required object');
-        if (!isPlainObject(profile.streams)) errors.push('config.agent_observability profile streams: required object');
-        if (!isPlainObject(profile.plugin)) errors.push('config.agent_observability profile plugin: required object');
-        requireNumber(profile.redis || {}, 'command_timeout_ms', 'config.agent_observability profile redis command_timeout_ms', { min: 0, allowZero: false });
-        requireNumber(pluginProfile, 'max_queue_per_stream', 'config.agent_observability profile plugin max_queue_per_stream', { min: 0, allowZero: false });
+        const streams = isPlainObject(agentObservability.streams) ? agentObservability.streams : {};
+        const hook = isPlainObject(agentObservability.plugin.hook) ? agentObservability.plugin.hook : {};
+        const controlWrite = isPlainObject(agentObservability.plugin.control_write) ? agentObservability.plugin.control_write : {};
+        if (!isPlainObject(agentObservability.streams)) errors.push('config.agent_observability.streams: required object');
+        requireNumber(agentObservability.plugin, 'max_queue_per_stream', 'config.agent_observability.plugin.max_queue_per_stream', { min: 0, allowZero: false });
         requireNumber(streams, 'stream_max_len', 'config.agent_observability plugin streams stream_max_len', { min: 0, allowZero: false });
         requireNumber(streams, 'dead_letter_max_len', 'config.agent_observability plugin streams dead_letter_max_len', { min: 0, allowZero: false });
-        requireNumber(controlWrite, 'max_attempts', 'config.agent_observability plugin control write max_attempts', { min: 0, allowZero: false });
-        requireNumber(controlWrite, 'retry_base_ms', 'config.agent_observability plugin control write retry_base_ms', { min: 0, allowZero: false });
-        requireNumber(controlWrite, 'retry_max_ms', 'config.agent_observability plugin control write retry_max_ms', { min: 0, allowZero: false });
-        requireNumber(hook, 'priority', 'config.agent_observability plugin hook priority');
-        requireNumber(hook, 'timeout_ms', 'config.agent_observability plugin hook timeout_ms', { min: 0, allowZero: false });
+        if (!isPlainObject(agentObservability.plugin.control_write)) errors.push('config.agent_observability.plugin.control_write: required object');
+        requireNumber(controlWrite, 'max_attempts', 'config.agent_observability.plugin.control_write.max_attempts', { min: 0, allowZero: false });
+        requireNumber(controlWrite, 'retry_base_ms', 'config.agent_observability.plugin.control_write.retry_base_ms', { min: 0, allowZero: false });
+        requireNumber(controlWrite, 'retry_max_ms', 'config.agent_observability.plugin.control_write.retry_max_ms', { min: 0, allowZero: false });
+        if (!isPlainObject(agentObservability.plugin.hook)) errors.push('config.agent_observability.plugin.hook: required object');
+        requireNumber(hook, 'priority', 'config.agent_observability plugin hook priority', { min: -Infinity });
+        requireNumber(hook, 'timeout_ms', 'config.agent_observability.plugin.hook.timeout_ms', { min: 0, allowZero: false });
       }
       if (!isPlainObject(agentObservability.plugin_control)) {
         errors.push('config.agent_observability.plugin_control: required object');
@@ -457,7 +432,7 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
         requireBoolean(agentObservability.plugin_control.enabled, 'config.agent_observability.plugin_control.enabled');
         requireNonEmptyString(agentObservability.plugin_control.pluginId, 'config.agent_observability.plugin_control.pluginId');
         requireNonEmptyString(agentObservability.plugin_control.command, 'config.agent_observability.plugin_control.command');
-        requireNumber(isPlainObject(profile.plugin_control) ? profile.plugin_control : {}, 'timeout_ms', 'config.agent_observability profile plugin_control timeout_ms', { min: 0, allowZero: false });
+        requireNumber(agentObservability.plugin_control, 'timeout_ms', 'config.agent_observability.plugin_control.timeout_ms', { min: 0, allowZero: false });
       }
       if (!isPlainObject(agentObservability.ingester)) {
         errors.push('config.agent_observability.ingester: required object');
@@ -465,23 +440,23 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
         requireBoolean(agentObservability.ingester.enabled, 'config.agent_observability.ingester.enabled');
         requireNonEmptyString(agentObservability.ingester.groupName, 'config.agent_observability.ingester.groupName');
         requireNonEmptyString(agentObservability.ingester.consumerName, 'config.agent_observability.ingester.consumerName');
-        const streams = isPlainObject(profile.streams) ? profile.streams : {};
-        const ingesterProfile = isPlainObject(profile.ingester) ? profile.ingester : {};
-        const read = isPlainObject(ingesterProfile.read) ? ingesterProfile.read : {};
-        const loop = isPlainObject(ingesterProfile.loop) ? ingesterProfile.loop : {};
-        const trim = isPlainObject(ingesterProfile.trim) ? ingesterProfile.trim : {};
-        const pressure = isPlainObject(ingesterProfile.pressure) ? ingesterProfile.pressure : {};
-        if (!isPlainObject(profile.ingester)) errors.push('config.agent_observability profile ingester: required object');
-        requireNumber(profile.redis || {}, 'command_timeout_ms', 'config.agent_observability ingester redis command_timeout_ms', { min: 0, allowZero: false });
-        requireNumber(read, 'block_ms', 'config.agent_observability ingester read block_ms', { min: 0, allowZero: false });
-        requireNumber(read, 'reclaim_idle_ms', 'config.agent_observability ingester read reclaim_idle_ms', { min: 0, allowZero: false });
-        requireNumber(loop, 'delay_ms', 'config.agent_observability ingester loop delay_ms', { min: 0, allowZero: false });
-        requireNumber(loop, 'health_check_every', 'config.agent_observability ingester loop health_check_every');
-        requireNumber(loop, 'stop_timeout_ms', 'config.agent_observability ingester loop stop_timeout_ms');
-        requireNumber(trim, 'interval_ms', 'config.agent_observability ingester trim interval_ms', { min: 0, allowZero: false });
+        const streams = isPlainObject(agentObservability.streams) ? agentObservability.streams : {};
+        const trim = isPlainObject(agentObservability.ingester.trim) ? agentObservability.ingester.trim : {};
+        const loop = isPlainObject(agentObservability.ingester.loop) ? agentObservability.ingester.loop : {};
+        const pressure = isPlainObject(agentObservability.ingester.pressure) ? agentObservability.ingester.pressure : {};
+        requireNumber(agentObservability.ingester, 'read_block_ms', 'config.agent_observability.ingester.read_block_ms', { min: 0, allowZero: false });
+        requireNumber(agentObservability.ingester, 'reclaim_idle_ms', 'config.agent_observability.ingester.reclaim_idle_ms', { min: 0, allowZero: false });
+        requireNumber(agentObservability.ingester, 'redis_command_timeout_ms', 'config.agent_observability.ingester.redis_command_timeout_ms', { min: 0, allowZero: false });
+        if (!isPlainObject(agentObservability.ingester.loop)) errors.push('config.agent_observability.ingester.loop: required object');
+        requireNumber(loop, 'delay_ms', 'config.agent_observability.ingester.loop.delay_ms', { min: 0, allowZero: false });
+        requireNumber(loop, 'health_check_every', 'config.agent_observability.ingester.loop.health_check_every');
+        requireNumber(loop, 'stop_timeout_ms', 'config.agent_observability.ingester.loop.stop_timeout_ms');
+        if (!isPlainObject(agentObservability.ingester.trim)) errors.push('config.agent_observability.ingester.trim: required object');
+        requireNumber(trim, 'interval_ms', 'config.agent_observability.ingester.trim.interval_ms', { min: 0, allowZero: false });
         requireNumber(streams, 'dead_letter_max_len', 'config.agent_observability ingester streams dead_letter_max_len', { min: 0, allowZero: false });
         requireNumber(streams, 'stream_max_len', 'config.agent_observability ingester streams stream_max_len', { min: 0, allowZero: false });
         requireNumber(trim, 'payload_stream_max_len', 'config.agent_observability ingester trim payload_stream_max_len', { min: 0, allowZero: false });
+        if (!isPlainObject(agentObservability.ingester.pressure)) errors.push('config.agent_observability.ingester.pressure: required object');
         requireNumber(pressure, 'control_lag_degraded_threshold', 'config.agent_observability ingester pressure control_lag_degraded_threshold');
         requireNumber(pressure, 'payload_pressure_degraded_threshold', 'config.agent_observability ingester pressure payload_pressure_degraded_threshold');
       }
@@ -511,8 +486,7 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
   const KNOWN_TOP_LEVEL_FIELDS = new Set([
     '_doc',
     'project', 'repo_root', 'paths', 'agents', 'fallback_model', 'gates',
-    'poll_interval_seconds', 'default_timeout_minutes', 'default_max_fails',
-    'auto_retry_threshold', 'agent_startup_retry_budget', 'session_nudge_threshold',
+    'pipeline_defaults',
     'acp_monitor', 'telemetry', 'case_study', 'arch_validation',
     'agent_observability',
     'plugins', 'discord_alerts', 'pre_check', 'review_defaults', 'buster',

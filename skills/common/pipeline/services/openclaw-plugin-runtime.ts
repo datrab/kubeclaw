@@ -7,31 +7,10 @@ function controlConfig(config = {}) {
   return config?.agent_observability?.plugin_control || {};
 }
 
-function observabilityProfile(config = {}) {
-  const observability = config?.agent_observability;
-  const profileName = String(observability?.profile ?? '').trim();
-  if (!profileName) throw new Error('agent_observability.profile is required when plugin control is enabled');
-  const profiles = observability?.profiles;
-  if (!profiles || typeof profiles !== 'object' || Array.isArray(profiles)) {
-    throw new Error('agent_observability.profiles is required when plugin control is enabled');
-  }
-  const profile = profiles[profileName];
-  if (!profile || typeof profile !== 'object' || Array.isArray(profile)) {
-    throw new Error(`agent_observability.profile references missing profile '${profileName}'`);
-  }
-  return profile;
-}
-
 function requireString(config, field) {
   const value = String(config?.[field] ?? '').trim();
   if (value) return value;
   throw new Error(`agent_observability.plugin_control.${field} is required when plugin control is enabled`);
-}
-
-function requirePositiveNumber(config, field) {
-  const value = Number(config?.[field]);
-  if (Number.isFinite(value) && value > 0) return value;
-  throw new Error(`agent_observability.plugin_control.${field} must be a positive number`);
 }
 
 function commandResultText(result) {
@@ -52,10 +31,13 @@ function runtimeLogger(opts = {}) {
   return opts.logger || console;
 }
 
-function runPluginCommand(action, rootConfig, runtimeConfig, opts = {}) {
+function runPluginCommand(action, runtimeConfig, opts = {}) {
   const pluginId = requireString(runtimeConfig, 'pluginId');
   const command = requireString(runtimeConfig, 'command');
-  const timeoutMs = requirePositiveNumber(observabilityProfile(rootConfig).plugin_control, 'timeout_ms');
+  const timeoutMs = Number(runtimeConfig.timeout_ms);
+  if (!Number.isInteger(timeoutMs) || timeoutMs <= 0) {
+    throw new Error('agent_observability.plugin_control.timeout_ms is required when plugin control is enabled');
+  }
   const runner = opts.commandRunner || defaultCommandRunner;
   const args = ['plugins', action, pluginId];
   const result = runner(command, args, { timeoutMs, pluginId, action });
@@ -88,7 +70,7 @@ export function createOpenClawAgentObserverPluginController(config = {}, opts = 
       return started;
     },
     async start() {
-      const result = runPluginCommand('enable', config, runtimeConfig, opts);
+      const result = runPluginCommand('enable', runtimeConfig, opts);
       started = true;
       logger.info?.(`[openclaw-plugin-runtime] enabled ${runtimeConfig.pluginId}`);
       return result;
@@ -96,7 +78,7 @@ export function createOpenClawAgentObserverPluginController(config = {}, opts = 
     async stop() {
       if (runtimeConfig.disableOnStop === false || !started) return { skipped: true };
       try {
-        const result = runPluginCommand('disable', config, runtimeConfig, opts);
+      const result = runPluginCommand('disable', runtimeConfig, opts);
         started = false;
         logger.info?.(`[openclaw-plugin-runtime] disabled ${runtimeConfig.pluginId}`);
         return result;

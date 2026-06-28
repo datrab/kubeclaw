@@ -3,6 +3,7 @@ import path from 'path';
 
 import { log, getActiveContext } from '../../core/logger.ts';
 import { getRunId } from '../../core/runtime.ts';
+import { gatewayInvokePolicy } from '../../core/session-policy.ts';
 import { discord } from '../../integrations/discord.ts';
 import { sendGatewaySessionMessage } from '../../integrations/gateway.ts';
 import { getPipelineArtifactBundle } from '../artifact-bundle.ts';
@@ -239,10 +240,11 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
   const message = messageLines.join('\n');
   const injectionDiscordIdentity = { run_id: runId, step_type: stepType, step_id: targetId, gate_id: gateId, gate_type: gateType, attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: childSessionKey };
   const injectionDiscordCorrelation = buildFailureDiscordCorrelation(injectionDiscordIdentity);
+  const sendPolicy = gatewayInvokePolicy(config, 'session_send');
 
   try {
     try {
-      await gatewaySend(targetSessionKey, message, 15000);
+      await gatewaySend(targetSessionKey, message, sendPolicy.timeoutMs, sendPolicy);
     } catch (e) {
       const errMsg = e?.message?.split('\n')[0] || 'unknown error';
       const isAbort = /aborted|abort/i.test(errMsg);

@@ -79,17 +79,20 @@ function isProcessAlive(pid) {
   }
 }
 
+function requireNumber(obj, field, label) {
+  const value = obj?.[field];
+  if (typeof value !== 'number' || !Number.isFinite(value)) {
+    throw new Error(`${label}.${field}: required number in swarm.config.json`);
+  }
+  return value;
+}
+
 export function withLifecycleAppendLock(config, fn, opts = {}) {
   const lockPath = lifecycleAppendLockPath(config);
   if (!lockPath) return fn();
-  const staleMs = opts.staleMs ?? config?.locks?.lifecycle_append_stale_ms;
-  const timeoutMs = opts.timeoutMs ?? config?.locks?.lifecycle_append_timeout_ms;
-  if (typeof staleMs !== 'number' || !Number.isFinite(staleMs) || staleMs < 0) {
-    throw new Error('config.locks.lifecycle_append_stale_ms is required in swarm.config.json');
-  }
-  if (typeof timeoutMs !== 'number' || !Number.isFinite(timeoutMs) || timeoutMs < 0) {
-    throw new Error('config.locks.lifecycle_append_timeout_ms is required in swarm.config.json');
-  }
+  const lockConfig = config?.locks?.lifecycle_append;
+  const staleMs = opts.staleMs ?? requireNumber(lockConfig, 'stale_ms', 'config.locks.lifecycle_append');
+  const timeoutMs = opts.timeoutMs ?? requireNumber(lockConfig, 'timeout_ms', 'config.locks.lifecycle_append');
 
   fs.mkdirSync(path.dirname(lockPath), { recursive: true });
   const ownerToken = `${process.pid}:${Date.now()}:${Math.random().toString(36).slice(2)}`;

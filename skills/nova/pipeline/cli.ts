@@ -36,6 +36,10 @@ const __entryPath = (process.argv[1] && fs.existsSync(process.argv[1]))
 
 function prepareReadOnlyLifecycleContext(config: AnyRecord = {}) {
   config._lifecycleReadOnly = true;
+  prepareResumeLifecycleContext(config);
+}
+
+function prepareResumeLifecycleContext(config: AnyRecord = {}) {
   const swarmDir = config?.paths?.swarm_dir;
   const latestPath = swarmDir ? path.join(swarmDir, 'logs', 'pipeline', 'latest.json') : null;
   if (!latestPath || !fs.existsSync(latestPath)) return;
@@ -217,13 +221,15 @@ Exit codes:
       if (flags.status)  { prepareReadOnlyLifecycleContext(config); printStatus(config, progress); cleanupTempDir(); process.exitCode = PROCESS_SUCCESS_CODE; return PROCESS_SUCCESS_CODE; }
       if (flags.dryRun)  { prepareReadOnlyLifecycleContext(config); dryRun(config, progress); cleanupTempDir(); process.exitCode = PROCESS_SUCCESS_CODE; return PROCESS_SUCCESS_CODE; }
 
-      const runId = createRunId();
+      if (flags.resume) prepareResumeLifecycleContext(config);
+      const runId = config._runId || config.run_id || createRunId();
       const stats = createRunStats();
       const ctx = createPipelineContext({ config, progress, runId, stats, novaChannel: flags.novaChannel, pluginRegistry, runtimeOverrides });
       activeContext = ctx;
       ctx.setTempDir(tempManager.dir);
       setActiveContext(ctx);
-      initLogDir(config, ctx);
+      config._resume = flags.resume;
+      initLogDir(config, ctx, { resume: flags.resume });
       registerShutdownHooks(config);
 
       // Resolve bounded operator guidance from --prompt or --prompt-file.

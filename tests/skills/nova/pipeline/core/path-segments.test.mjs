@@ -14,39 +14,33 @@ const removedReviewFailField = `on_${'n' + 'ogo'}`;
 function observabilityConfig() {
   return {
     required: true,
-    profile: 'test',
-    profiles: {
-      test: {
-        payload: { max_event_bytes: 3145728 },
-        startup_evidence: { timeout_ms: 0, block_ms: 1 },
-        forge_completion: { xread_block_ms: 1, settle_ms: 0 },
-        redis: { command_timeout_ms: 1 },
-        streams: { stream_max_len: 1, dead_letter_max_len: 1 },
-        plugin: {
-          max_queue_per_stream: 1,
-          control_write: { max_attempts: 1, retry_base_ms: 1, retry_max_ms: 1 },
-          hook: { priority: 0, timeout_ms: 1 },
-        },
-        plugin_control: { timeout_ms: 1 },
-        ingester: {
-          read: { block_ms: 1, reclaim_idle_ms: 1 },
-          loop: { delay_ms: 1, health_check_every: 0, stop_timeout_ms: 1 },
-          trim: { interval_ms: 1, payload_stream_max_len: 1 },
-          pressure: { control_lag_degraded_threshold: 0, payload_pressure_degraded_threshold: 0 },
-        },
-      },
+    payload: { max_event_bytes: 3145728 },
+    startup_evidence: { timeout_ms: 0, block_ms: 1 },
+    forge_completion: { xread_block_ms: 1, settle_ms: 0 },
+    streams: { stream_max_len: 1, dead_letter_max_len: 1 },
+    plugin: {
+      enabled: true,
+      max_queue_per_stream: 1,
+      control_write: { max_attempts: 1, retry_base_ms: 1, retry_max_ms: 1 },
+      hook: { priority: 0, timeout_ms: 1 },
     },
-    plugin: { enabled: true },
     plugin_control: {
       enabled: true,
       pluginId: 'kubeclaw-agent-observer',
       command: 'openclaw',
       disableOnStop: true,
+      timeout_ms: 1,
     },
     ingester: {
       enabled: true,
       groupName: 'kubeclaw-agent-observability-ingester',
       consumerName: 'kubeclaw-agent-observability-ingester-1',
+      read_block_ms: 1,
+      reclaim_idle_ms: 1,
+      redis_command_timeout_ms: 1,
+      loop: { delay_ms: 1, health_check_every: 0, stop_timeout_ms: 1 },
+      trim: { interval_ms: 1, payload_stream_max_len: 1 },
+      pressure: { control_lag_degraded_threshold: 0, payload_pressure_degraded_threshold: 0 },
     },
   };
 }
@@ -68,15 +62,21 @@ function makeConfig() {
       echo: { dispatch: 'acp', acp_agent_id: 'echo' },
     },
     fallback_model: 'model',
-    poll_interval_seconds: 1,
-    default_timeout_minutes: 1,
-    default_max_fails: 0,
-    auto_retry_threshold: 0,
-    session_nudge_threshold: 0,
+    pipeline_defaults: {
+      timeout_minutes: 1,
+      max_fails: 0,
+      auto_retry_threshold: 0,
+      agent_startup_retry_budget: 0,
+      session_nudge_threshold: 0,
+    },
     rate_limit: { cooldown_hours: 0, max_pauses_per_module: 0, cooldown_buffer_ms: 0 },
+    polling: { interval_seconds: 1, progress_interval_ms: 1, session_end_grace_ms: 0 },
+    locks: {
+      lifecycle_append: { stale_ms: 1, timeout_ms: 1 },
+      gate_active_session: { stale_ms: 1, timeout_ms: 1 },
+      pipeline_run: { lease_ms: 1, heartbeat_ms: 1, mutation_stale_ms: 1, abort_settle_ms: 1 },
+    },
     buster: {
-      suite_timeout_ms: 1,
-      max_crash_retries: 0,
       runtime: {
         heartbeat_path: '/tmp/kubeclaw-buster-heartbeat',
         heartbeat_interval_ms: 1,
@@ -85,11 +85,15 @@ function makeConfig() {
         completion_event_block_ms: 0,
         completion_recovery_scan_interval_ms: 1,
         task_stream_max_len: 1,
+        suite_timeout_ms: 1,
+        max_crash_retries: 0,
       },
     },
     discord_alerts: { info: false, warn: false, critical: false, ok: false },
     pre_check: { enabled: false, lint_report_path: '/home/node/lint.js', timeout_seconds: 1 },
     review_defaults: { timeout_minutes: 1, max_fix_cycles: 0, lint_tier: 'pre-check', lint_required: false },
+    case_study: { timeout_minutes: 1 },
+    arch_validation: { enabled: true, agent_enabled: false, timeout_minutes: 1 },
     plugins: {
       enabled: true,
       allowCustomModules: false,
@@ -98,13 +102,7 @@ function makeConfig() {
       stageOwners: {},
       restrictedCapabilityAllowlist: {},
     },
-    acp_monitor: {
-      unknown_poll_limit: 0,
-      stale_poll_limit: 0,
-      max_transcript_extensions: 0,
-      transcript_grace_ms: 0,
-      monitor_poll_ms: 0,
-    },
+    acp_monitor: { poll_limit: 0, max_transcript_extensions: 0, transcript_grace_ms: 0, monitor_poll_ms: 0 },
   };
 }
 

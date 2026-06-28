@@ -21,9 +21,9 @@ The separate `agent-buster-namespace-controller` ServiceAccount receives cluster
 
 The Buster namespace fence is a ValidatingAdmissionPolicy and binding. It denies direct namespace CREATE/DELETE operations by `system:serviceaccount:kubeclaw:agent-buster`, and it limits `system:serviceaccount:kubeclaw:agent-buster-namespace-controller` to labeled KubeClaw-managed namespaces beginning with `test-`.
 
-### Legacy Non-Broker Fallback
+### Broker Required For Kubernetes Suites
 
-When broker mode is disabled, the chart still contains a legacy fallback ClusterRole that can create/delete namespaces and work with workload resources, including `pods/exec`. Do not treat that fallback as the production Buster RBAC model. Production values should keep `busterNamespaceBroker.enabled=true` so Buster uses lease-client RBAC and the namespace controller owns namespace lifecycle.
+When broker mode is disabled, the chart does not render Kubernetes tester RBAC. Kubernetes suites must use `busterNamespaceBroker.enabled=true`, lease-client RBAC, and the namespace controller. Missing broker permissions should fail verification instead of silently falling back to broad namespace authority.
 
 Buster sandbox mode renders privileged security context, unconfined AppArmor/seccomp, privilege escalation, and added capabilities. It mounts Podman storage and `/sandbox` `emptyDir` volumes.
 

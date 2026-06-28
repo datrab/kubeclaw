@@ -15,7 +15,7 @@ Use examples when you need a concrete shape to adapt, review, or compare against
 | --- | --- | --- | --- |
 | [Values](values/README.md) | choosing local/dev or staging-like deployment flags before using `scripts/deploy.sh` | `scripts/deploy.sh`; `charts/kubeclaw/values.yaml`; `my-values/nova-values.yaml`; `my-values/buster-values.yaml`; `my-values/infra/*.yaml` | deployment truth and Helm render |
 | [Secrets](secrets/README.md) | seeing placeholder-only Secret creation commands or reviewing required Secret names/keys | `my-values/setup-secrets.sh`; `charts/kubeclaw/templates/secret.yaml`; `charts/kubeclaw/templates/deployment.yaml` | `npm run docs:inventory:check`; live `kubectl get secret` |
-| [Swarm config](swarm-config/README.md) | comparing platform config examples to the current default runtime config | `charts/kubeclaw/files/config/swarm.config.json`; `skills/nova/pipeline/core/config.ts`; `skills/nova/pipeline/core/registry.ts` | JSON validation and config registry tests |
+| [Swarm config](swarm-config/README.md) | comparing compact platform config examples to the current standard profile | `charts/kubeclaw/files/config/swarm.config.json`; `skills/nova/pipeline/core/config-profiles/standard.json`; `skills/nova/pipeline/core/config.ts`; `skills/nova/pipeline/core/registry.ts` | JSON validation and config registry tests |
 | [Progress JSON](progress-json/README.md) | understanding project workflow shape and runtime status examples | `skills/nova/pipeline/core/config.ts`; `skills/nova/pipeline/runners/*.ts`; `skills/nova/pipeline/services/status-store.ts` | pipeline behavior and status-store checks |
 
 ## Verification Notes

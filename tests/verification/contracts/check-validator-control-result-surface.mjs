@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import assert from 'assert';
 import { pathToFileURL } from 'url';
+import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 
 function parseArgs(argv = process.argv.slice(2)) {
   const args = { sourceRoot: process.cwd() };
@@ -15,6 +16,8 @@ function parseArgs(argv = process.argv.slice(2)) {
 }
 
 const { sourceRoot } = parseArgs();
+const compactSwarmConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts/kubeclaw/files/config/swarm.config.json'), 'utf8'));
+const expandedStandardConfig = expandSwarmConfig(compactSwarmConfig);
 const helperPath = path.join(sourceRoot, 'skills/nova/pipeline/services/contracts/validator-control-result.ts');
 const moduleValidatorsPath = path.join(sourceRoot, 'skills/nova/pipeline/services/module-validators.ts');
 const lintPath = path.join(sourceRoot, 'skills/nova/pipeline/services/lint.ts');
@@ -102,7 +105,7 @@ for (const exportName of [
   assert.equal(typeof moduleValidatorsMod[exportName], 'function', `module validators helper should export ${exportName}`);
 }
 
-const config = { project: 'validator-control-contract', _runId: 'run-validator-control-contract-1' };
+const config = { ...expandedStandardConfig, project: 'validator-control-contract', _runId: 'run-validator-control-contract-1' };
 const pass = helperMod.buildModuleValidatorControlResult(config, { passed: true }, {
   producerType: 'pre_check', stageId: 'validator:pre_check', moduleId: '01', moduleDir: '/workspace/modules/01', nextAction: 'pass', outcomeClass: 'passed',
 });
@@ -142,7 +145,7 @@ assert.deepEqual(
 );
 
 const deliveryPass = moduleValidatorsMod.runDeliveryLintValidatorStage(
-  { project: 'validator-control-contract', _runId: 'run-validator-control-contract-1', paths: { modules_dir: '/tmp' }, repo_root: '/tmp' },
+  { ...expandedStandardConfig, project: 'validator-control-contract', _runId: 'run-validator-control-contract-1', paths: { ...expandedStandardConfig.paths, modules_dir: '/tmp' }, repo_root: '/tmp' },
   { modules: { '01': { test_config: {} } } },
   {
     ids: { runId: 'run-validator-control-contract-1', moduleId: '01', stageId: 'validator:delivery_lint', producerType: 'delivery_lint' },
@@ -153,7 +156,7 @@ assert.equal(deliveryPass.producerType, 'delivery_lint');
 assert.equal(deliveryPass.nextAction, 'pass');
 
 const preCheckPass = await moduleValidatorsMod.runPreCheckValidatorStage(
-  { project: 'validator-control-contract', _runId: 'run-validator-control-contract-1', pre_check: { enabled: false }, paths: { modules_dir: '/tmp' }, repo_root: '/tmp' },
+  { ...expandedStandardConfig, project: 'validator-control-contract', _runId: 'run-validator-control-contract-1', pre_check: { ...expandedStandardConfig.pre_check, enabled: false }, paths: { ...expandedStandardConfig.paths, modules_dir: '/tmp' }, repo_root: '/tmp' },
   { modules: { '01': {} } },
   {
     ids: { runId: 'run-validator-control-contract-1', moduleId: '01', stageId: 'validator:pre_check', producerType: 'pre_check' },
@@ -195,10 +198,11 @@ fs.writeFileSync(output, JSON.stringify({
   fs.mkdirSync(path.join(modulesDir, moduleDir), { recursive: true });
   const beforePreCheckTmp = new Set(fs.readdirSync('/tmp'));
   const lintResult = await lintMod.runPreCheck({
+    ...expandedStandardConfig,
     project: 'validator-control-contract-lint-attempt',
     repo_root: repoRoot,
-    paths: { modules_dir: modulesDir, swarm_dir: path.join(repoRoot, '.swarm') },
-    pre_check: { lint_report_path: lintReportPath, timeout_seconds: 60 },
+    paths: { ...expandedStandardConfig.paths, modules_dir: modulesDir, swarm_dir: path.join(repoRoot, '.swarm') },
+    pre_check: { ...expandedStandardConfig.pre_check, lint_report_path: lintReportPath, timeout_seconds: 60 },
   }, moduleDir, {}, moduleDir);
   assert.equal(lintResult.passed, true, 'pre-check should pass with fake clean lint report and missing fail_count');
   const lintDir = path.join(logDir, 'modules', moduleDir, 'lint');
@@ -213,11 +217,12 @@ fs.writeFileSync(output, JSON.stringify({
 
   const beforeFullLintTmp = new Set(fs.readdirSync('/tmp'));
   const fullLintResult = moduleValidatorsMod.runFullLintValidatorStage({
+    ...expandedStandardConfig,
     project: 'validator-control-contract-lint-attempt',
     repo_root: repoRoot,
-    paths: { modules_dir: modulesDir, swarm_dir: path.join(repoRoot, '.swarm') },
+    paths: { ...expandedStandardConfig.paths, modules_dir: modulesDir, swarm_dir: path.join(repoRoot, '.swarm') },
     _runId: 'run-validator-control-contract-lint-attempt',
-    pre_check: { lint_report_path: lintReportPath },
+    pre_check: { ...expandedStandardConfig.pre_check, lint_report_path: lintReportPath },
   }, {}, {
     ids: { runId: 'run-validator-control-contract-lint-attempt', gateId: 'review', stageId: 'validator:full_lint', producerType: 'full_lint' },
     executionContext: { scheduleKey: 'mandatory:before:gate:review:validator:full_lint' },
@@ -280,6 +285,7 @@ for (const [label, rawResult, expectedError] of [
   }, 'block action requires issueType'],
 ]) {
   const archResult = await schedulingMod.runScheduledValidator({
+    ...expandedStandardConfig,
     project: `validator-control-contract-${label.replace(/\s+/g, '-')}`,
     _runId: 'run-validator-control-contract-arch-1',
     pluginRegistry: buildArchitectureValidatorRegistry(rawResult),

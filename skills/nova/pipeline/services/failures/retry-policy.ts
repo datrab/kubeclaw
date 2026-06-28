@@ -26,6 +26,7 @@ import {
   telemetryCtx,
   truncateForDiscord,
 } from './presentation.ts';
+import { getPipelineDefaultsConfig } from '../runtime-defaults.ts';
 
 const STATUS = {
   FAIL: 'FAIL',
@@ -52,7 +53,7 @@ export function resolveAutoRetryThreshold(config, progress, moduleIdOrGateId) {
     moduleConf?.auto_retry_threshold ??
     gateConf?.auto_retry_threshold ??
     progress?.auto_retry_threshold ??
-    config.auto_retry_threshold
+    getPipelineDefaultsConfig(config).auto_retry_threshold
   );
 }
 

@@ -214,6 +214,14 @@ function rulesGrantResource(rules, resource) {
   return (rules || []).some((rule) => (rule?.resources || []).includes(resource));
 }
 
+function rulesGrantResourceVerbs(rules, resource, verbs) {
+  return (rules || []).some((rule) => {
+    const resources = rule?.resources || [];
+    const ruleVerbs = rule?.verbs || [];
+    return resources.includes(resource) && verbs.every((verb) => ruleVerbs.includes(verb));
+  });
+}
+
 function dockerRunInstructions(text) {
   const instructionStart = /^\s*(?:FROM|ARG|ENV|USER|WORKDIR|COPY|ADD|LABEL|EXPOSE|ENTRYPOINT|CMD|SHELL|STOPSIGNAL|HEALTHCHECK|VOLUME|ONBUILD)\b/;
   const instructions = [];
@@ -319,6 +327,24 @@ const renderedBusterGatewayUrlOverride = execFileSync('helm', [
   stdio: ['ignore', 'pipe', 'pipe'],
 });
 
+const renderedBusterBrokerDisabled = execFileSync('helm', [
+  'template',
+  'agent-buster',
+  chartDir,
+  '--set-string',
+  'agentRole=buster',
+  '--set',
+  'serviceAccount.create=true',
+  '--set',
+  'serviceAccount.automount=true',
+  '--set',
+  'busterNamespaceBroker.enabled=false',
+], {
+  cwd: sourceRoot,
+  encoding: 'utf8',
+  stdio: ['ignore', 'pipe', 'pipe'],
+});
+
 const kubeconformSummary = execFileSync('kubeconform', ['-strict', '-summary', '-ignore-missing-schemas'], {
   cwd: sourceRoot,
   input: rendered,
@@ -404,6 +430,10 @@ const renderedBusterDeployment = findRenderedNamedDocument(renderedBuster, {
 });
 const renderedObjects = parseYamlDocuments(rendered, 'rendered Nova manifest');
 const renderedBusterObjects = parseYamlDocuments(renderedBuster, 'rendered Buster manifest');
+const renderedBusterBrokerDisabledObjects = parseYamlDocuments(
+  renderedBusterBrokerDisabled,
+  'rendered broker-disabled Buster manifest',
+);
 const networkPolicyObjects = parseYamlFile(networkPoliciesPath);
 const busterNamespaceFenceObjects = parseYamlFile(busterNamespaceFencePath);
 const localInfraObjects = [
@@ -431,6 +461,12 @@ const busterPipelineContainerObject = containerByName(busterDeploymentObject, 'b
 const busterNamespaceControllerContainerObject = containerByName(busterNamespaceControllerDeploymentObject, 'controller');
 const busterNamespaceControllerPrefixEnvObject = (busterNamespaceControllerContainerObject.env || [])
   .find((entry) => entry?.name === 'BUSTER_ALLOWED_NAMESPACE_PREFIXES');
+const busterNamespaceControllerAdditionalRunnerEnvObject = (busterNamespaceControllerContainerObject.env || [])
+  .find((entry) => entry?.name === 'BUSTER_ADDITIONAL_RUNNER_SERVICE_ACCOUNTS');
+const novaLeaseClientRoleObject = findObject(renderedObjects, 'Role', 'agent-nova-namespace-lease-client');
+const novaLeaseClientRoleBindingObject = findObject(renderedObjects, 'RoleBinding', 'agent-nova-namespace-lease-client');
+const novaVerificationReadClusterRoleObject = findObject(renderedObjects, 'ClusterRole', 'agent-nova-verification-read');
+const novaVerificationReadClusterRoleBindingObject = findObject(renderedObjects, 'ClusterRoleBinding', 'agent-nova-verification-read');
 const busterLeaseClientRoleObject = findObject(renderedBusterObjects, 'Role', 'agent-buster-namespace-lease-client');
 const busterLeaseCrdObject = findObject(renderedBusterObjects, 'CustomResourceDefinition', `busternamespaceleases.kubeclaw.forgestack.ai`);
 const busterLeaseStatusProperties = busterLeaseCrdObject?.spec?.versions?.[0]?.schema?.openAPIV3Schema?.properties?.status?.properties || {};
@@ -460,9 +496,93 @@ assert.equal(
   'Structured Buster render must not include the legacy broad k8s tester ClusterRole',
 );
 assert.equal(
+  renderedBusterBrokerDisabledObjects.some(
+    (object) => object?.kind === 'ClusterRole' && objectName(object) === 'agent-buster-k8s-tester',
+  ),
+  false,
+  'Broker-disabled Buster render must not fall back to the legacy broad k8s tester ClusterRole',
+);
+assert.equal(
   renderedBusterObjects.some((object) => rulesGrantResource(object?.rules, 'pods/exec')),
   false,
   'Structured Buster render must not grant pods/exec to the agent runtime',
+);
+assert.equal(
+  renderedObjects.some((object) => object?.kind === 'CustomResourceDefinition' && objectName(object) === 'busternamespaceleases.kubeclaw.forgestack.ai'),
+  false,
+  'Structured Nova render must not own the BusterNamespaceLease CRD',
+);
+assert.equal(
+  renderedObjects.some((object) => object?.kind === 'Deployment' && objectName(object) === 'agent-nova-namespace-controller'),
+  false,
+  'Structured Nova render must not run the Buster namespace controller',
+);
+assert.equal(
+  renderedObjects.some((object) => object?.kind === 'ClusterRole' && objectName(object) === 'agent-nova-k8s-tester'),
+  false,
+  'Structured Nova render must not include a broad k8s tester ClusterRole',
+);
+assert.equal(
+  renderedObjects.some((object) => rulesGrantResource(object?.rules, 'namespaces')),
+  false,
+  'Structured Nova render must not grant direct namespace control',
+);
+assert.equal(
+  renderedObjects.some((object) => rulesGrantResource(object?.rules, 'pods/exec')),
+  false,
+  'Structured Nova render must not grant pods/exec',
+);
+assert.equal(
+  rulesGrantResource(novaLeaseClientRoleObject.rules, 'busternamespaceleases'),
+  true,
+  'Structured Nova lease-client Role must grant BusterNamespaceLease access',
+);
+assert.equal(
+  rulesGrantResource(novaLeaseClientRoleObject.rules, 'busternamespaceleases/status'),
+  true,
+  'Structured Nova lease-client Role must grant read-only BusterNamespaceLease status access',
+);
+assert.equal(
+  rulesGrantResourceVerbs(novaLeaseClientRoleObject.rules, 'deployments', ['get', 'list', 'watch']),
+  true,
+  'Structured Nova lease-client Role must grant read-only Deployment visibility for broker preflight',
+);
+assert.equal(
+  rulesGrantResourceVerbs(novaLeaseClientRoleObject.rules, 'services', ['get', 'list']),
+  true,
+  'Structured Nova lease-client Role must grant read-only Service visibility for broker preflight',
+);
+assert.equal(
+  novaLeaseClientRoleBindingObject.subjects?.[0]?.name,
+  'agent-nova',
+  'Structured Nova lease-client RoleBinding must bind only the Nova ServiceAccount',
+);
+assert.equal(
+  rulesGrantResourceVerbs(novaVerificationReadClusterRoleObject.rules, 'pods', ['get', 'list', 'watch']),
+  true,
+  'Structured Nova verification read ClusterRole must grant read-only pod visibility for Tailscale operator preflight',
+);
+assert.equal(
+  rulesGrantResourceVerbs(novaVerificationReadClusterRoleObject.rules, 'secrets', ['get']),
+  true,
+  'Structured Nova verification read ClusterRole must grant named Tailscale OAuth Secret visibility',
+);
+assert.deepEqual(
+  novaVerificationReadClusterRoleObject.rules
+    .find((rule) => (rule?.resources || []).includes('secrets'))
+    ?.resourceNames,
+  ['operator-oauth'],
+  'Structured Nova verification read ClusterRole must limit Secret visibility to operator-oauth',
+);
+assert.equal(
+  rulesGrantResourceVerbs(novaVerificationReadClusterRoleObject.rules, 'ingressclasses', ['get']),
+  true,
+  'Structured Nova verification read ClusterRole must grant read-only Tailscale IngressClass visibility',
+);
+assert.equal(
+  novaVerificationReadClusterRoleBindingObject.subjects?.[0]?.name,
+  'agent-nova',
+  'Structured Nova verification read ClusterRoleBinding must bind only the Nova ServiceAccount',
 );
 assert.equal(
   rulesGrantResource(busterLeaseClientRoleObject.rules, 'busternamespaceleases'),
@@ -495,6 +615,11 @@ assert.equal(
   'Buster namespace controller must receive only the test namespace prefix',
 );
 assert.equal(
+  busterNamespaceControllerAdditionalRunnerEnvObject?.value,
+  'kubeclaw/agent-nova',
+  'Buster namespace controller must bind Nova as an additional runner only inside broker-created test namespaces',
+);
+assert.equal(
   String(busterNamespaceControllerPrefixEnvObject?.value || '').includes('buster'),
   false,
   'Buster namespace controller must not allow legacy buster namespace prefixes',
@@ -523,6 +648,21 @@ assertIncludes(
   busterNamespaceControllerScript,
   '63 - prefix.length - 1',
   'Buster namespace controller must keep normalized namespaces within the DNS label length limit',
+);
+assertIncludes(
+  busterNamespaceControllerScript,
+  'BUSTER_ADDITIONAL_RUNNER_SERVICE_ACCOUNTS',
+  'Buster namespace controller must read additional runner ServiceAccounts from explicit broker config',
+);
+assertIncludes(
+  busterNamespaceControllerScript,
+  'function parseServiceAccountRefs(value)',
+  'Buster namespace controller must validate additional runner ServiceAccount references',
+);
+assertIncludes(
+  busterNamespaceControllerScript,
+  '...additionalRunnerServiceAccounts.map',
+  'Buster namespace controller must bind additional runner ServiceAccounts in broker-created namespaces',
 );
 assert.equal(
   rulesGrantResource(busterLeaseClientRoleObject.rules, 'namespaces'),
@@ -581,6 +721,11 @@ assert.deepEqual(
   'Structured Buster gateway container must mount bounded sandbox storage',
 );
 assert.deepEqual(
+  containerMountPaths(novaGatewayContainerObject).filter((mountPath) => ['/var/lib/containers', '/sandbox'].includes(mountPath)).sort(),
+  ['/sandbox', '/var/lib/containers'],
+  'Structured Nova gateway container must mount bounded sandbox storage for contained real E2E execution',
+);
+assert.deepEqual(
   containerMountPaths(busterPipelineContainerObject).filter((mountPath) => ['/var/lib/containers', '/sandbox'].includes(mountPath)).sort(),
   ['/sandbox', '/var/lib/containers'],
   'Structured Buster pipeline container must mount bounded sandbox storage',
@@ -599,7 +744,10 @@ for (const [label, container] of [
 }
 assert.equal(resourceQuantity(busterGatewayContainerObject, 'limits', 'ephemeral-storage'), '50Gi', 'Structured Buster gateway ephemeral-storage limit must be 50Gi');
 assert.equal(resourceQuantity(busterPipelineContainerObject, 'limits', 'ephemeral-storage'), '50Gi', 'Structured Buster pipeline ephemeral-storage limit must be 50Gi');
+assert.equal(volumeByName(novaDeploymentObject, 'podman-storage')?.emptyDir?.sizeLimit, '50Gi', 'Structured Nova Podman emptyDir storage must be capped at 50Gi');
 assert.equal(volumeByName(busterDeploymentObject, 'podman-storage')?.emptyDir?.sizeLimit, '50Gi', 'Structured Buster Podman emptyDir storage must be capped at 50Gi');
+assert.equal(novaDeploymentObject.spec?.template?.spec?.shareProcessNamespace, false, 'Structured Nova sandbox deployment must not share the pod process namespace');
+assert.equal(novaGatewayContainerObject.securityContext?.privileged, true, 'Structured Nova sandbox deployment must retain privileged Podman-in-Pod execution');
 assert.equal(busterGatewayContainerObject.livenessProbe?.periodSeconds >= 10, true, 'Buster gateway liveness period must tolerate sandbox pressure');
 assert.equal(busterGatewayContainerObject.livenessProbe?.timeoutSeconds >= 5, true, 'Buster gateway liveness timeout must tolerate sandbox pressure');
 assert.equal(busterGatewayContainerObject.livenessProbe?.failureThreshold >= 6, true, 'Buster gateway liveness failure threshold must avoid transient restart loops');
@@ -619,8 +767,8 @@ assertNetworkPolicy(
 assertNetworkPolicy(
   'kubeclaw-agents-egress',
   (policy) => policyHasPodSelector(policy, { 'app.kubernetes.io/name': 'kubeclaw' })
-    && [22, 80, 443, 6379, 6333, 6334, 4000, 5000, 5001].every((port) => policyPorts(policy, 'egress').includes(port)),
-  'Structured NetworkPolicy baseline must preserve agent service, Git, web, and registry egress',
+    && [22, 80, 443, 6379, 6333, 6334, 4000, 5000, 5001, 18789, 18790].every((port) => policyPorts(policy, 'egress').includes(port)),
+  'Structured NetworkPolicy baseline must preserve agent service, Git, web, registry, and agent-to-agent egress',
 );
 assertNetworkPolicy(
   'kubeclaw-redis-ingress',
@@ -771,6 +919,8 @@ assertIncludes(networkPolicies, 'name: kubeclaw-postgresql-ingress', 'Network po
 assertIncludes(networkPolicies, 'name: kubeclaw-qdrant-ingress', 'Network policies must restrict Qdrant ingress to agents');
 assertIncludes(networkPolicies, 'name: kubeclaw-registry-local-ingress', 'Network policies must keep registry-local cluster-internal');
 assertIncludes(networkPolicies, 'port: 22', 'Agent egress must preserve Git SSH access');
+assertIncludes(networkPolicies, 'port: 18789', 'Agent egress must preserve OpenClaw gateway access to Buster');
+assertIncludes(networkPolicies, 'port: 18790', 'Agent egress must preserve OpenClaw bridge access to Buster');
 assertIncludes(networkPolicies, 'port: 443', 'Agent, LiteLLM, and registry-mirror egress must preserve HTTPS access');
 assertIncludes(renderedBuster, 'name: openclaw-shared-secrets, key: gatewayToken-buster', 'Buster gateway must use the Buster gateway token secret key');
 assertIncludes(renderedBuster, 'name: redis-secrets', 'Buster deployment must keep Redis secret wiring');
@@ -812,8 +962,18 @@ assertIncludes(
 );
 assertIncludes(
   rbacSandboxDocs,
-  'Legacy Non-Broker Fallback',
-  'RBAC docs must keep broad tester RBAC scoped to the legacy non-broker fallback',
+  'Broker Required For Kubernetes Suites',
+  'RBAC docs must require broker mode for Kubernetes suites',
+);
+assertIncludes(
+  rbacSandboxDocs,
+  'the chart does not render Kubernetes tester RBAC',
+  'RBAC docs must document that broker-disabled Buster gets no broad Kubernetes tester RBAC',
+);
+assert.equal(
+  rbacSandboxDocs.includes('legacy fallback ClusterRole'),
+  false,
+  'RBAC docs must not document the removed broad tester fallback',
 );
 assert.equal(
   rbacSandboxDocs.includes('production Buster renders `ClusterRole/agent-buster-k8s-tester`'),
@@ -856,9 +1016,26 @@ assert.deepEqual(
   'Rendered Buster gateway config must grant observer hook conversation access for pipeline-controlled enablement',
 );
 assert.equal(
-  renderedSwarmConfigJson?.telemetry?.enabled,
-  true,
-  'Rendered swarm.config.json must enable pipeline telemetry when agent observability is required',
+  renderedSwarmConfigJson?.profile,
+  'standard',
+  'Rendered swarm.config.json must use the standard profile as the strict runtime baseline',
+);
+assert.deepEqual(
+  renderedSwarmConfigJson?.features,
+  { observability: true, buster: true, discord_alerts: true },
+  'Rendered compact swarm.config.json must enable the standard feature set',
+);
+assert.deepEqual(
+  renderedSwarmConfigJson?.tuning,
+  {
+    safety_margins: 'high',
+    retention: 'high',
+    alerts: 'rich',
+    logs: 'verbose',
+    checks: 'strict',
+    determinism: 'strict',
+  },
+  'Rendered compact swarm.config.json must request the strict standard tuning set',
 );
 assert.deepEqual(
   renderedBusterGatewayConfig.models?.providers?.litellm?.apiKey,
@@ -1011,6 +1188,18 @@ assertIncludes(packageSkillBundleScript, '"runtimeSurface": "/app/skills"', 'Bun
 assertIncludes(packageSkillBundleScript, '"bundleKind": "app-skills-overlay"', 'Bundle packaging manifest must describe the overlay-style bundle contract');
 assertDockerInstallCommandsFailClosed(generalDockerfile, 'General Dockerfile');
 assertDockerInstallCommandsFailClosed(sandboxDockerfile, 'Sandbox Dockerfile');
+assertIncludes(generalDockerfile, 'ARG KUBECTL_VERSION=', 'General Dockerfile must pin kubectl for live Kubernetes verification');
+assertIncludes(generalDockerfile, 'https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl', 'General Dockerfile must install kubectl from the pinned Kubernetes release');
+assertIncludes(generalDockerfile, 'chmod +x /usr/local/bin/kubectl', 'General Dockerfile must make kubectl executable in PATH');
+assertIncludes(generalDockerfile, 'podman buildah slirp4netns fuse-overlayfs uidmap passwd', 'General Dockerfile must include Podman-in-Pod tooling for contained real E2E Buster execution');
+assertIncludes(generalDockerfile, '/etc/containers/storage.conf', 'General Dockerfile must configure Podman storage for contained real E2E builds');
+assertIncludes(generalDockerfile, 'registry-local.kubeclaw.svc.cluster.local:5001', 'General Dockerfile must trust the in-cluster local registry for real E2E image pushes');
+assertIncludes(generalDockerfile, 'js-yaml playwright lighthouse serve @axe-core/playwright pixelmatch pngjs ws', 'General Dockerfile must include browser and manifest tooling used by real Buster suites');
+assertIncludes(generalDockerfile, 'PLAYWRIGHT_BROWSERS_PATH=/ms-playwright', 'General Dockerfile must install Playwright browsers into the runtime path');
+assertIncludes(generalDockerfile, 'K6_VERSION=', 'General Dockerfile must include k6 for full Buster load-suite capability');
+assertIncludes(generalDockerfile, 'mkdir -p /sandbox/{www,results,scripts}', 'General Dockerfile must create the sandbox workspace used by Buster suites');
+assertIncludes(generalDockerfile, '/usr/local/bin/sandbox-build', 'General Dockerfile must include sandbox-build for static build serving');
+assertIncludes(generalDockerfile, '/usr/local/bin/sandbox-cleanup', 'General Dockerfile must include sandbox cleanup helpers for real E2E runs');
 for (const [label, dockerfile] of [
   ['General Dockerfile', generalDockerfile],
   ['Sandbox Dockerfile', sandboxDockerfile],
@@ -1248,7 +1437,8 @@ const result = {
     'Buster namespace controller normalizes human lease namespace requests into test-* namespaces',
     'Buster namespace fence denies direct Buster namespace lifecycle and constrains the controller to managed test namespaces',
     'Rendered Buster broker mode omits the legacy broad k8s tester ClusterRole and pods/exec grant',
-    'RBAC docs distinguish broker-mode lease-client Buster authority from namespace-controller and legacy fallback authority',
+    'Broker-disabled Buster render does not fall back to legacy broad Kubernetes tester RBAC',
+    'RBAC docs distinguish broker-mode lease-client Buster authority from namespace-controller authority',
     'Rendered Buster Podman registries preserve registry-local live-verification pull path',
     'registry-local stays ClusterIP while LiteLLM preserves its temporary NodePort',
     'NetworkPolicies define default-deny ingress and egress with explicit service allowances',

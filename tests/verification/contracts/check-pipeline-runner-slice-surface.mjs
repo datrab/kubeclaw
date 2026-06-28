@@ -353,8 +353,8 @@ const pluginController = commonOpenClawPluginRuntimeMod.createOpenClawAgentObser
       enabled: true,
       pluginId: 'kubeclaw-agent-observer',
       command: 'openclaw',
-      timeoutMs: 1234,
       disableOnStop: true,
+      timeout_ms: 1234,
     },
   },
 }, {
@@ -389,7 +389,20 @@ await disabledIngesterRuntime.stop();
 
 const degradedEvidence = [];
 const failingIngesterRuntime = agentObservabilityRuntimeMod.startAgentObservabilityIngester({
-  agent_observability: { ingester: { enabled: true, loopDelayMs: 1, healthCheckEvery: 1, stopTimeoutMs: 1 } },
+  agent_observability: {
+    streams: { stream_max_len: 1, dead_letter_max_len: 1 },
+    ingester: {
+      enabled: true,
+      groupName: 'contract',
+      consumerName: 'contract-1',
+      read_block_ms: 1,
+      reclaim_idle_ms: 1,
+      redis_command_timeout_ms: 1,
+      loop: { delay_ms: 1, health_check_every: 1, stop_timeout_ms: 1 },
+      trim: { interval_ms: 1, payload_stream_max_len: 1 },
+      pressure: { control_lag_degraded_threshold: 0, payload_pressure_degraded_threshold: 0 },
+    },
+  },
 }, { project: 'contract-runtime-degraded' }, {
   ingester: {
     processNext: async () => { throw new Error('boom'); },

@@ -36,6 +36,7 @@ import { spawnSession } from '../agents/lifecycle.ts';
 import { terminateSession } from '../agents/session-termination.ts';
 import { pollForFile } from './polling.ts';
 import { modelToHarness, resolveRuntime } from '../agents/runtime.ts';
+import { getArchValidationConfig } from './runtime-defaults.ts';
 
 import {
   FINDING_CODES,
@@ -50,6 +51,15 @@ export { FINDING_CODES, SCOPE, SEVERITY };
 function validatorAgentOutputPath(config) {
   const logDir = archValidatorLogDir(config);
   return logDir ? path.join(logDir, 'agent-findings.json') : null;
+}
+
+function resolveArchValidatorRunId(config, preferred = null) {
+  if (preferred) return preferred;
+  const runtimeRunId = getRunId(config);
+  if (runtimeRunId) return runtimeRunId;
+  if (config?._runId) return config._runId;
+  if (config?.run_id) return config.run_id;
+  return null;
 }
 
 function normalizeAgentFinding(rawFinding) {
@@ -169,18 +179,19 @@ async function runAgentJudgment(progress, config, deterministicFindings, opts = 
   }
 
   // Agent judgment is opt-in. Deterministic validation remains the reliable default path.
-  const agentEnabled = progress?.arch_validation?.agent_enabled ?? config.arch_validation?.agent_enabled ?? false;
+  const archConfig = getArchValidationConfig(config);
+  const agentEnabled = progress?.arch_validation?.agent_enabled ?? archConfig.agent_enabled;
   if (agentEnabled !== true) {
     log('INFO', '[arch-validator] Agent judgment disabled (explicit opt-in required)');
     return [];
   }
 
-  const deps = opts.deps || {};
-  const spawnSessionFn = deps.spawnSession || spawnSession;
-  const pollForFileFn = deps.pollForFile || pollForFile;
-  const terminateSessionFn = deps.terminateSession || terminateSession;
-  const modelToHarnessFn = deps.modelToHarness || modelToHarness;
-  const resolveRuntimeFn = deps.resolveRuntime || resolveRuntime;
+  const deps = opts.deps ? opts.deps : {};
+  const spawnSessionFn = deps.spawnSession ? deps.spawnSession : spawnSession;
+  const pollForFileFn = deps.pollForFile ? deps.pollForFile : pollForFile;
+  const terminateSessionFn = deps.terminateSession ? deps.terminateSession : terminateSession;
+  const modelToHarnessFn = deps.modelToHarness ? deps.modelToHarness : modelToHarness;
+  const resolveRuntimeFn = deps.resolveRuntime ? deps.resolveRuntime : resolveRuntime;
   const outputFilePath = validatorAgentOutputPath(config);
   if (!outputFilePath) {
     throw new Error('architecture validator agent output path is unavailable');
@@ -212,7 +223,7 @@ async function runAgentJudgment(progress, config, deterministicFindings, opts = 
   const label = `arch-validator-${Date.now()}`;
   const timeoutMinutes = progress?.arch_validation?.timeout_minutes !== undefined
     ? requirePositiveTimeoutMinutes(progress.arch_validation.timeout_minutes, 'progress.arch_validation.timeout_minutes')
-    : requirePositiveTimeoutMinutes(config?.arch_validation?.timeout_minutes, 'config.arch_validation.timeout_minutes');
+    : requirePositiveTimeoutMinutes(archConfig.timeout_minutes, 'config.arch_validation.timeout_minutes');
   let sessionData = null;
 
   try {
@@ -227,7 +238,7 @@ async function runAgentJudgment(progress, config, deterministicFindings, opts = 
       thinking: policy.thinking || null,
       trackActive: false,
       observabilityIdentity: {
-        run_id: getRunId(config) || config?._runId || config?.run_id || null,
+        run_id: resolveArchValidatorRunId(config),
         project: config?.project || progress?.project || null,
         agent_type: 'arch_validator',
         dispatch_id: label,
@@ -419,7 +430,7 @@ function buildControlSummary({ blocked = false, findings = [], executionFailed =
 
 export function buildArchitectureValidatorControlResult(config, result = {}, opts = {}) {
   const findings = Array.isArray(result?.findings) ? result.findings : [];
-  const runId = result?.run_id || getRunId(config) || config?._runId || config?.run_id || null;
+  const runId = resolveArchValidatorRunId(config, result?.run_id);
   const project = result?.project || config?.project || 'unknown';
   const timestamp = result?.timestamp || new Date().toISOString();
   const executionFailed = opts.executionFailed === true;
@@ -523,7 +534,7 @@ export function extractArchValidatorReport(result, config) {
       findings: Array.isArray(metadata.raw_findings) ? metadata.raw_findings : [],
       timestamp: metadata.timestamp || new Date().toISOString(),
       project: metadata.project || config?.project || 'unknown',
-      run_id: metadata.run_id || getRunId(config) || config?._runId || config?.run_id || null,
+      run_id: resolveArchValidatorRunId(config, metadata.run_id),
       execution_failed: metadata.execution_failed === true || metadata.contract_invalid === true,
       error: metadata.error || null,
       artifact_paths: metadata.artifact_paths || buildArtifactPaths(config),
@@ -535,7 +546,7 @@ export function extractArchValidatorReport(result, config) {
     findings: Array.isArray(result?.findings) ? result.findings : [],
     timestamp: result?.timestamp || new Date().toISOString(),
     project: result?.project || config?.project || 'unknown',
-    run_id: result?.run_id || getRunId(config) || config?._runId || config?.run_id || null,
+    run_id: resolveArchValidatorRunId(config, result?.run_id),
     execution_failed: false,
     error: null,
     artifact_paths: buildArtifactPaths(config),

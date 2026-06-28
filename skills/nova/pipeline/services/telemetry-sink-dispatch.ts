@@ -84,8 +84,8 @@ function resolveTelemetrySinkTimeoutMs(ctx = {}, options = {}) {
   const configured = options.telemetrySinkTimeoutMs
     ?? ctx?.config?.telemetry?.sink_timeout_ms;
   const timeoutMs = Number(configured);
-  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
-    throw new Error('config.telemetry.sink_timeout_ms: required positive number in swarm.config.json');
+  if (!Number.isInteger(timeoutMs) || timeoutMs <= 0) {
+    throw new Error('config.telemetry.sink_timeout_ms: required positive integer in swarm.config.json');
   }
   return timeoutMs;
 }

@@ -1,6 +1,7 @@
 import {
   buildBuiltInRegistry,
   gateRuntimeEvents,
+  platformTestDefaults,
 } from './helpers.mjs';
 
 export async function registerResumeIdempotenceArea({
@@ -224,10 +225,11 @@ export async function registerResumeIdempotenceArea({
       },
     };
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-resume-idempotent',
       repo_root: repoRoot,
       resume: true,
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       paths: {
         swarm_dir: swarmDir,
         modules_dir: modulesDir,
@@ -362,12 +364,13 @@ export async function registerResumeIdempotenceArea({
             });
           },
         },
-      };
+    };
     const config = {
+      ...platformTestDefaults(),
       project: progress.project,
       repo_root: repoRoot,
       resume: true,
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       paths: {
         swarm_dir: swarmDir,
         modules_dir: modulesDir,

@@ -4,6 +4,8 @@ import assert from 'assert';
 import fs from 'fs';
 import path from 'path';
 import { pathToFileURL } from 'url';
+import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
+import { resolveRedisCompletionPolicy } from '../../../skills/nova/pipeline/services/redis-completion-policy.ts';
 
 function parseArgs(argv = process.argv.slice(2)) {
   const args = { sourceRoot: process.cwd() };
@@ -14,6 +16,8 @@ function parseArgs(argv = process.argv.slice(2)) {
 }
 
 const { sourceRoot } = parseArgs();
+const compactSwarmConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts/kubeclaw/files/config/swarm.config.json'), 'utf8'));
+const redisCompletionPolicy = resolveRedisCompletionPolicy(expandSwarmConfig(compactSwarmConfig));
 const redisToolPath = path.join(sourceRoot, 'skills/nova/pipeline/tools/redis.ts');
 const completionServicePath = path.join(sourceRoot, 'skills/nova/pipeline/services/redis-completion.ts');
 const commonRedisContractPath = path.join(sourceRoot, 'skills/common/pipeline/services/redis-message-contract.ts');
@@ -306,6 +310,9 @@ const scanInvalid = await completionServiceMod.scanLatestCompletionFromTail(fake
   run_id: 'run-current',
   attempt: 2,
   dispatch_id: 'dispatch-current',
+}, {
+  batchSize: redisCompletionPolicy.tailScanBatchSize,
+  scanLimit: redisCompletionPolicy.tailScanLimit,
 });
 assert.equal(scanInvalid.match.source, 'completion-invalid');
 assert.equal(scanInvalid.conflict.source, 'completion-invalid');

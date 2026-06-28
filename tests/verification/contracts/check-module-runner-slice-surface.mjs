@@ -117,7 +117,7 @@ assert.equal(busterDispatchSource.includes("|| 'none'"), false, 'Buster queued n
 assert.equal(busterDispatchSource.includes("value: 'none'"), false, 'Buster queued notification must not use a none fallback for suites');
 assert.equal(busterPhaseSource.includes('?? 2'), false, 'Buster crash retry policy must not use an anonymous literal fallback');
 assert.equal(busterPhaseSource.includes('mod.max_buster_crash_retries'), false, 'Buster crash retry policy must use platform config, not module override policy');
-assert.equal(busterPhaseSource.includes('config.buster.max_crash_retries'), true, 'Buster crash retry policy must be read from required platform config');
+assert.equal(busterPhaseSource.includes('getBusterRuntimeConfig(config)'), true, 'Buster crash retry policy must be read from required runtime policy config');
 assert.equal(forgeSource.includes('poll_result'), false, 'Forge worker routing must not read poll_result compatibility metadata');
 assert.equal(busterPhaseSource.includes('poll_result'), false, 'Buster worker routing must not read poll_result compatibility metadata');
 assert.equal(busterPollFailureSource.includes('poll_result'), false, 'Buster poll-failure routing must not read poll_result compatibility metadata');

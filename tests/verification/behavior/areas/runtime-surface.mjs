@@ -1,5 +1,6 @@
 import {
   buildBuiltInRegistry,
+  platformTestDefaults,
 } from './helpers.mjs';
 
 export async function registerRuntimeSurfaceArea({
@@ -189,6 +190,7 @@ await record('redis exchange artifacts are object JSONL, not double-encoded stri
   const logRoot = path.join(swarmDir, 'logs');
   const runtimeCoreMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const config = {
+    ...platformTestDefaults(),
     project: 'behavior-redis-exchange-jsonl',
     paths: { swarm_dir: swarmDir },
     _runId: 'run-redis-exchange-jsonl',
@@ -228,6 +230,7 @@ await record('redis artifact logging reports append failures without blocking ca
   fs.writeFileSync(path.join(runLogDir, 'redis'), 'not a directory');
 
   const config = {
+    ...platformTestDefaults(),
     project: 'behavior-redis-log-failure',
     paths: { swarm_dir: swarmDir },
     _runId: 'run-redis-log-failure',
@@ -273,6 +276,7 @@ await record('structured observability events mirror to both operator-tail and r
   const observabilityMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/observability.ts');
   const runtimeCoreMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/runtime.ts');
   const config = {
+    ...platformTestDefaults(),
     project: 'behavior-demo',
     paths: { swarm_dir: swarmDir },
     _runId: runId,
@@ -314,6 +318,7 @@ await record('artifact authority drift reports stale pointers and fallback evide
   const statusStoreMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/status-store.ts');
   const artifactMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/artifact-bundle.ts');
   const config = {
+    ...platformTestDefaults(),
     project: 'behavior-artifact-authority-drift',
     repo_root: root,
     _runId: runId,
@@ -404,8 +409,9 @@ await record('successful telemetry emits mirror to both operator-tail and run-sc
   const logRoot = path.join(repoRoot, '.swarm', 'logs');
   const runId = 'run-telemetry-mirror-1';
   const config = {
+    ...platformTestDefaults(),
     project: 'behavior-telemetry-mirror',
-    telemetry: { enabled: true },
+    telemetry: platformTestDefaults().telemetry,
     paths: { swarm_dir: path.join(repoRoot, '.swarm') },
     _runId: runId,
     run_id: runId,
@@ -540,6 +546,7 @@ await record('notification dispatch preserves one immutable fact snapshot, order
 
   const { registry } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { builtinModules: customModules });
   const config = {
+    ...platformTestDefaults(),
     project: 'behavior-notification-dispatch',
     _runId: 'run-notification-dispatch-1',
     run_id: 'run-notification-dispatch-1',
@@ -579,8 +586,9 @@ await record('notification dispatch fails visibly when a hook has no enabled lis
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-notification-missing-listener-'));
   const logRoot = path.join(repoRoot, '.swarm', 'logs');
   const config = {
+    ...platformTestDefaults(),
     project: 'behavior-notification-missing-listener',
-    telemetry: { enabled: true },
+    telemetry: platformTestDefaults().telemetry,
     paths: { swarm_dir: path.join(repoRoot, '.swarm') },
     _runId: runId,
     run_id: runId,
@@ -646,8 +654,9 @@ await record('structured event sink degradation records observability.degraded a
 
   const runId = 'run-structured-sink-1';
   const config = {
+    ...platformTestDefaults(),
     project: 'behavior-structured-sink',
-    telemetry: { enabled: true },
+    telemetry: platformTestDefaults().telemetry,
     paths: { swarm_dir: blockedSwarmDir },
     _runId: runId,
     run_id: runId,

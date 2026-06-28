@@ -40,11 +40,70 @@ export async function registerTelemetryArea({
   busterPipelineMod,
 }) {
 const EXPLICIT_ACP_MONITOR_CONFIG = {
-  unknown_poll_limit: 10,
-  stale_poll_limit: 10,
+  poll_limit: 10,
   max_transcript_extensions: 3,
   transcript_grace_ms: 300000,
   monitor_poll_ms: 10000,
+};
+
+const EXPLICIT_PIPELINE_DEFAULTS = {
+  timeout_minutes: 5,
+  max_fails: 1,
+  auto_retry_threshold: 2,
+  agent_startup_retry_budget: 2,
+  session_nudge_threshold: 0.75,
+};
+
+const EXPLICIT_REDIS_COMPLETION_CONFIG = {
+  archive_max_len: 500,
+  tail_scan_batch_size: 50,
+  tail_scan_limit: 100,
+};
+
+const EXPLICIT_BUSTER_RUNTIME_CONFIG = {
+  heartbeat_path: '/tmp/kubeclaw-buster-heartbeat',
+  heartbeat_interval_ms: 1000,
+  task_poll_interval_ms: 2000,
+  task_pending_reclaim_idle_ms: 60000,
+  completion_event_block_ms: 0,
+  completion_recovery_scan_interval_ms: 5000,
+  task_stream_max_len: 250,
+  suite_timeout_ms: 300000,
+  max_crash_retries: 2,
+};
+
+const EXPLICIT_EVENT_ADAPTERS_CONFIG = {
+  local_evidence_debounce_ms: 100,
+};
+
+const EXPLICIT_LOCKS_CONFIG = {
+  lifecycle_append: {
+    stale_ms: 300000,
+    timeout_ms: 30000,
+  },
+  gate_active_session: {
+    stale_ms: 300000,
+    timeout_ms: 30000,
+  },
+};
+
+const EXPLICIT_GATEWAY_CONFIG = {
+  invoke: {
+    retry: { max_attempts: 1, retry_delay_ms: 100 },
+    session_status: { timeout_ms: 30000 },
+    session_spawn: { timeout_ms: 30000 },
+    session_send: { timeout_ms: 30000 },
+    subagent_kill: { timeout_ms: 30000 },
+    subagent_list: { timeout_ms: 30000 },
+    health: { timeout_ms: 30000 },
+  },
+  health: { timeout_ms: 30000, interval_ms: 3000, monitor_interval_ms: 60000, max_failures: 3 },
+};
+
+const EXPLICIT_TELEMETRY_CONFIG = {
+  enabled: true,
+  sink_timeout_ms: 5000,
+  stream_max_len: 1000,
 };
 
 function canonicalCompletionFields(fields, project = 'behavior-demo') {
@@ -69,22 +128,23 @@ await record('completion selection stays scoped to run and attempt identity inst
     repo_root: repoRoot,
     _runId: 'run-current',
     run_id: 'run-current',
-    default_timeout_minutes: 5,
+    pipeline_defaults: EXPLICIT_PIPELINE_DEFAULTS,
     rate_limit: { cooldown_hours: 2, max_pauses_per_module: 5 },
     buster: {
-      suite_timeout_ms: 300000,
-      max_crash_retries: 2,
       runtime: {
         heartbeat_path: '/tmp/kubeclaw-buster-heartbeat',
         heartbeat_interval_ms: 1000,
         task_poll_interval_ms: 2000,
         task_pending_reclaim_idle_ms: 60000,
+        completion_event_block_ms: 0,
+        completion_recovery_scan_interval_ms: 5000,
         task_stream_max_len: 250,
+        suite_timeout_ms: 300000,
+        max_crash_retries: 2,
       },
     },
     acp_monitor: {
-      unknown_poll_limit: 10,
-      stale_poll_limit: 10,
+      poll_limit: 10,
       max_transcript_extensions: 3,
       transcript_grace_ms: 300000,
       monitor_poll_ms: 10000,
@@ -125,7 +185,12 @@ await record('completion selection stays scoped to run and attempt identity inst
   assert.equal(Object.prototype.hasOwnProperty.call(payload, 'status_json_path'), false);
   assert.equal(payload.pipeline_log_path.endsWith('/.swarm/logs/pipeline/pipeline.jsonl'), true);
   assert.equal(payload.pipeline_run_log_path.endsWith('/.swarm/logs/pipeline/runs/run-current/pipeline.jsonl'), true);
-  assert.deepEqual(payload.acp_monitor, config.acp_monitor);
+  assert.deepEqual({
+    poll_limit: payload.acp_monitor.poll_limit,
+    max_transcript_extensions: payload.acp_monitor.max_transcript_extensions,
+    transcript_grace_ms: payload.acp_monitor.transcript_grace_ms,
+    monitor_poll_ms: payload.acp_monitor.monitor_poll_ms,
+  }, config.acp_monitor);
   assert.deepEqual(payload.rate_limit, { max_pauses: 5, initial_cooldown_s: 7200, max_cooldown_s: 7200 });
 
   const entries = [
@@ -194,6 +259,7 @@ await record('Buster telemetry mirrors successful events into canonical pipeline
     module_id: '07',
     run_id: 'run-buster-1',
     enabled: true,
+    streamMaxLen: 10000,
     log_dir: path.join(logRoot, 'modules', '07'),
     pipeline_log_path: pipelineLogPath,
     pipeline_run_log_path: pipelineRunLogPath,
@@ -265,6 +331,7 @@ module.exports = class BrokenRedis {
     module_id: '07',
     run_id: 'run-buster-fallback-1',
     enabled: true,
+    streamMaxLen: 10000,
     log_dir: logDir,
     pipeline_log_path: pipelineLogPath,
     pipeline_run_log_path: pipelineRunLogPath,
@@ -316,6 +383,7 @@ module.exports = class BrokenRedis {
     module_id: '07',
     run_id: 'run-buster-fallback-gate-1',
     enabled: true,
+    streamMaxLen: 10000,
     pipeline_run_log_path: gateRunLogPath,
     attempt: 2,
     dispatch_id: 'dispatch-buster-fallback-gate-1',
@@ -348,6 +416,7 @@ await record('Buster telemetry explicit disabled mode is intentional and emits n
     module_id: '07',
     run_id: 'run-buster-disabled-1',
     enabled: false,
+    streamMaxLen: 10000,
     log_dir: logDir,
     pipeline_run_log_path: pipelineRunLogPath,
     attempt: 1,
@@ -375,18 +444,16 @@ await record('ACP observability does not promote monitor lookup labels into cano
   const config = {
     project: 'behavior-acp-observability-joinability',
     acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
-    telemetry: { enabled: true },
+    gateway: EXPLICIT_GATEWAY_CONFIG,
+    telemetry: EXPLICIT_TELEMETRY_CONFIG,
     _runId: runId,
     run_id: runId,
     _runStats: telemetryRuntimeCoreMod.createRunStats('2026-04-17T00:00:00.000Z'),
     pluginRegistry: await buildBuiltInRegistry(telemetryRuntimeRoot),
   };
 
-  const gateway = await startGatewayServer(async () => {
-    throw new Error('gateway unavailable during ACP observability joinability check');
-  });
   const prevGatewayUrl = process.env.OPENCLAW_GATEWAY_URL;
-  process.env.OPENCLAW_GATEWAY_URL = gateway.url;
+  process.env.OPENCLAW_GATEWAY_URL = 'http://127.0.0.1:1';
   try {
     await acpObservabilityMod.observeAcpMonitorSurfaces(config, 'agent:main:acp:display-session-label-only', {}, {
       maxPolls: 1,
@@ -396,7 +463,6 @@ await record('ACP observability does not promote monitor lookup labels into cano
     });
     await flushAsync();
   } finally {
-    await gateway.close();
     if (prevGatewayUrl === undefined) delete process.env.OPENCLAW_GATEWAY_URL;
     else process.env.OPENCLAW_GATEWAY_URL = prevGatewayUrl;
   }
@@ -458,6 +524,9 @@ await record('pollDual fails closed when Redis completion event adapter errors',
 const config = {
     project: 'behavior-polldual-redis-adapter-fail',
     acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
+    redis_completion: EXPLICIT_REDIS_COMPLETION_CONFIG,
+    buster: { runtime: EXPLICIT_BUSTER_RUNTIME_CONFIG },
+    event_adapters: EXPLICIT_EVENT_ADAPTERS_CONFIG,
     telemetry: { enabled: true },
     poll_interval_seconds: 0.01,
     poll_progress_log_interval_ms: 100000,
@@ -523,14 +592,16 @@ await record('buster gate fails closed when Redis completion event adapter error
 const config = {
     project: 'behavior-buster-gate-redis-adapter-fail',
     acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
+    redis_completion: EXPLICIT_REDIS_COMPLETION_CONFIG,
+    buster: { runtime: EXPLICIT_BUSTER_RUNTIME_CONFIG },
+    event_adapters: EXPLICIT_EVENT_ADAPTERS_CONFIG,
     repo_root: repoRoot,
     telemetry: { enabled: true },
     _runId: runId,
     run_id: runId,
     _runStats: runtimeCoreMod.createRunStats('2026-04-11T00:00:00.000Z'),
     pluginRegistry: registry,
-    default_timeout_minutes: 5,
-    default_max_fails: 1,
+    pipeline_defaults: EXPLICIT_PIPELINE_DEFAULTS,
     rate_limit: { max_pauses_per_module: 2, cooldown_hours: 0 },
     paths: { swarm_dir: swarmDir },
       };
@@ -821,8 +892,9 @@ export default {
 const config = {
     project: 'behavior-archive-failure',
     acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
+    redis_completion: EXPLICIT_REDIS_COMPLETION_CONFIG,
     repo_root: repoRoot,
-    telemetry: { enabled: true },
+    telemetry: EXPLICIT_TELEMETRY_CONFIG,
     _runId: runId,
     run_id: runId,
     _runStats: runtimeCoreMod.createRunStats('2026-04-11T00:00:00.000Z'),
@@ -898,6 +970,7 @@ await record('buster gate rate-limit pauses emit canonical gate telemetry once',
     module_id: 'gate:quality',
     run_id: 'run-gate-1',
     enabled: true,
+    streamMaxLen: 10000,
     log_dir: logDir,
   });
 
@@ -928,8 +1001,7 @@ await record('buster gate rate-limit pauses emit canonical gate telemetry once',
               provider: 'anthropic',
               detail: '429 Too Many Requests',
               acpMonitorConfig: {
-                unknown_poll_limit: 10,
-                stale_poll_limit: 10,
+                poll_limit: 10,
                 max_transcript_extensions: 3,
                 transcript_grace_ms: 300000,
                 monitor_poll_ms: 10000,
@@ -970,8 +1042,12 @@ await record('buster gate rate-limit pauses emit canonical gate telemetry once',
 const config = {
     project: 'behavior-gate-rate-limit',
     acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
+    redis_completion: EXPLICIT_REDIS_COMPLETION_CONFIG,
+    buster: { runtime: EXPLICIT_BUSTER_RUNTIME_CONFIG },
+    event_adapters: EXPLICIT_EVENT_ADAPTERS_CONFIG,
+    locks: EXPLICIT_LOCKS_CONFIG,
     repo_root: repoRoot,
-    telemetry: { enabled: true },
+    telemetry: EXPLICIT_TELEMETRY_CONFIG,
     _runId: 'run-gate-1',
     run_id: 'run-gate-1',
     _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
@@ -985,8 +1061,7 @@ const config = {
       max_pauses_per_module: 2,
       cooldown_hours: 0,
     },
-    default_timeout_minutes: 5,
-    default_max_fails: 1,
+    pipeline_defaults: EXPLICIT_PIPELINE_DEFAULTS,
       };
 
   const progress = {
@@ -1050,11 +1125,12 @@ await record('Nova and Buster share a run-global monotonic seq on the canonical 
     module_id: '01',
     run_id: runId,
     enabled: true,
+    streamMaxLen: 10000,
   });
   const config = {
     project: 'behavior-shared-seq',
     acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
-    telemetry: { enabled: true },
+    telemetry: EXPLICIT_TELEMETRY_CONFIG,
     _runId: runId,
     run_id: runId,
     _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
@@ -1144,16 +1220,16 @@ await record('buster gate polling treats Buster Pipeline-owned RATE_LIMITED comp
 const config = {
     project: 'behavior-buster-terminal-owned-rate-limit',
     acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
+    locks: EXPLICIT_LOCKS_CONFIG,
     repo_root: fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-buster-terminal-owned-rate-limit-')),
     paths: { swarm_dir: '/tmp/behavior-buster-terminal-owned-rate-limit-swarm' },
     agents: { buster: {} },
-    telemetry: { enabled: true },
+    telemetry: EXPLICIT_TELEMETRY_CONFIG,
     _runId: 'run-buster-terminal-owned-rate-limit-1',
     run_id: 'run-buster-terminal-owned-rate-limit-1',
     _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
     pluginRegistry: registry,
-    default_timeout_minutes: 5,
-    default_max_fails: 1,
+    pipeline_defaults: EXPLICIT_PIPELINE_DEFAULTS,
     rate_limit: { max_pauses_per_module: 2, cooldown_hours: 0 },
       };
 
@@ -1229,6 +1305,7 @@ await record('shared telemetry loader uses secure Redis transport contract', asy
     module_id: '01',
     run_id: 'run-telemetry-loader-1',
     enabled: true,
+    streamMaxLen: 10000,
     redisHost: '127.0.0.1',
     redisPort: 6379,
     enforceSecureMode: false,

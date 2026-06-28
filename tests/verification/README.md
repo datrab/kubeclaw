@@ -73,8 +73,8 @@ Passing checks are quiet by default and print the final JSON summary. Runtime lo
 ## Current Authority
 
 - `skills/nova/pipeline.ts` is the bounded compatibility entrypoint and thin compatibility entrypoint shim for the modular Nova pipeline implementation under `skills/nova/pipeline/`
-- `docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` is the authoritative telemetry contract for canonical inventory, stream identity, and compatibility boundaries
-- `docs/archive/legacy-root-docs/telemetry-event-schema.md` is the event-by-event payload reference and stays in inventory parity with that contract
+- `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` is the authoritative telemetry contract for canonical inventory, stream identity, and compatibility boundaries
+- `docs/telemetry-event-schema.md` is the event-by-event payload reference and stays in inventory parity with that contract
 - `tests/verification/behavior-verification.md` is the behavior verification explainer
 - `tests/verification/packaging-verification.md` is the packaging verification explainer
 - `scripts/` is the home for operator utilities like `deploy.sh` and `setup.sh`

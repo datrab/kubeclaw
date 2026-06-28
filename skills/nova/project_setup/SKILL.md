@@ -307,6 +307,7 @@ Final-preview shape for the last Buster gate:
     "preview": {
       "provider": "tailscale-ingress",
       "path": "/",
+      "expected_text": "<app>",
       "credentials_ref": "secret/<preview-login-secret>",
       "reveal_credentials": true,
       "credentials_keys": ["username", "password"]
@@ -320,6 +321,7 @@ Final-preview shape for the last Buster gate:
 - `image_name` match is substring: any `image:` line containing it gets overridden with the test registry tag
 - Normal test namespaces use lease cleanup. Final previews use `cleanup_policy: "keep"` so the app remains live after the final Buster run
 - `preview.provider: "tailscale-ingress"` requires the Tailscale Kubernetes Operator in the cluster
+- `preview.expected_text` makes the final-preview suite fetch the served Tailscale URL and fail if the run-specific marker is missing
 - `reveal_credentials: true` verifies the preview credential Secret and sends a copy-paste retrieval command to Discord
 - `test_credentials` is the only place to allow prompt-visible app test credentials; never include production, registry, deploy-key, or provider Secrets
 - Suite is `critical: true` — failure blocks the LLM subagent spawn

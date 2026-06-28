@@ -7,7 +7,7 @@ import {
   gitExec,
   gitPullBeforePush,
   gitPushWithRetry,
-} from '../../../common/pipeline/integrations/git-worktree.ts';
+} from '../integrations/git-worktree.ts';
 import { FAIL_PATTERNS } from './failures/classification.ts';
 import { log } from '../core/logger.ts';
 

@@ -50,7 +50,7 @@ import {
   AGENT_NAME,
   CONSUMER_NAME,
   GROUP_NAME,
-  STREAM_KEY,
+  getTaskStreamKey,
   disconnectRedisClient,
   ensureTaskConsumerGroup,
   processOneQueuedTask,
@@ -232,7 +232,7 @@ process.on('SIGINT',  () => { void shutdown('SIGINT'); });
 export async function main(): Promise<void> {
   console.log('[BUSTER PIPELINE v2.0] Starting (Buster — Suite Runner + ACP)...');
   console.log(` Agent:   ${AGENT_NAME}`);
-  console.log(` Stream:  ${STREAM_KEY}`);
+  console.log(` Stream:  ${getTaskStreamKey()}`);
   console.log(` Gateway: ${resolveGatewayInvokeUrl()}`);
 
   try {

@@ -12,6 +12,7 @@ import {
   buildBuiltInRegistry,
   getFieldValue,
   makeStepResult,
+  platformTestDefaults,
 } from './helpers.mjs';
 
 function withStubbedGeneratorStages(registry) {
@@ -75,10 +76,13 @@ function terminationResult(sessionKey = 'summary-session') {
 }
 
 function platformSummaryDefaults() {
+  const defaults = platformTestDefaults();
   return {
+    ...defaults,
     fallback_model: 'openai/gpt-5.4',
     default_timeout_minutes: 30,
-    rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },
+    case_study: { timeout_minutes: 30 },
+    rate_limit: { ...defaults.rate_limit, max_pauses_per_module: 3, cooldown_hours: 0 },
   };
 }
 
@@ -202,7 +206,7 @@ const config = {
       project: 'behavior-pipeline-review-transcript',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: 'run-pipeline-review-transcript-1',
       run_id: 'run-pipeline-review-transcript-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
@@ -274,12 +278,12 @@ const config = {
       project: 'behavior-pipeline-review-rate-limit',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: 'run-pipeline-review-rate-limit-1',
       run_id: 'run-pipeline-review-rate-limit-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
       pluginRegistry: await buildBuiltInRegistry(summaryRuntimeRoot),
-      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
+      rate_limit: { ...platformSummaryDefaults().rate_limit, max_pauses_per_module: 1, cooldown_hours: 0 },
           };
 
     const reviewRateLimitExit = await summaryMod.generatePipelineReview(config, { pipeline_review: { attempt } }, { deps: configDeps2 });
@@ -405,7 +409,7 @@ const config = {
       project: 'behavior-pipeline-review-no-output',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: 'run-pipeline-review-no-output-1',
       run_id: 'run-pipeline-review-no-output-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
@@ -479,7 +483,7 @@ const config = {
       project: 'behavior-pipeline-review-terminal-detail',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: 'run-pipeline-review-terminal-detail-1',
       run_id: 'run-pipeline-review-terminal-detail-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
@@ -537,7 +541,7 @@ const config = {
       project: 'behavior-pipeline-review-cleanup-exception',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: 'run-pipeline-review-cleanup-exception-1',
       run_id: 'run-pipeline-review-cleanup-exception-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
@@ -618,16 +622,16 @@ const config = {
       project: 'behavior-case-study-rate-limit',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: 'run-case-study-rate-limit-1',
       run_id: 'run-case-study-rate-limit-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
       pluginRegistry: await buildBuiltInRegistry(caseStudyRuntimeRoot),
-      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
-      case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6' },
+      rate_limit: { ...platformSummaryDefaults().rate_limit, max_pauses_per_module: 1, cooldown_hours: 0 },
+      case_study: { ...platformSummaryDefaults().case_study, enabled: true, model: 'anthropic/claude-sonnet-4-6' },
           };
 
-    const caseStudyRateLimitExit = await caseStudyMod.generateCaseStudy(config, { case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6', attempt } }, { deps: configDeps6 });
+    const caseStudyRateLimitExit = await caseStudyMod.generateCaseStudy(config, { case_study: { ...platformSummaryDefaults().case_study, enabled: true, model: 'anthropic/claude-sonnet-4-6', attempt } }, { deps: configDeps6 });
     await flushAsync();
 
     assert.equal(pollCount, 2);
@@ -751,15 +755,15 @@ const config = {
       project: 'behavior-case-study-no-output',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: 'run-case-study-no-output-1',
       run_id: 'run-case-study-no-output-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
       pluginRegistry: await buildBuiltInRegistry(caseStudyRuntimeRoot),
-      case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6' },
+      case_study: { ...platformSummaryDefaults().case_study, enabled: true, model: 'anthropic/claude-sonnet-4-6' },
           };
 
-    await caseStudyMod.generateCaseStudy(config, { case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6', attempt } }, { deps: configDeps7 });
+    await caseStudyMod.generateCaseStudy(config, { case_study: { ...platformSummaryDefaults().case_study, enabled: true, model: 'anthropic/claude-sonnet-4-6', attempt } }, { deps: configDeps7 });
     await flushAsync();
 
     assert.deepEqual(discordCalls.map((call) => call.title), [
@@ -826,12 +830,12 @@ const config = {
       project: 'behavior-case-study-terminal-detail',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: 'run-case-study-terminal-detail-1',
       run_id: 'run-case-study-terminal-detail-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
       pluginRegistry: await buildBuiltInRegistry(caseStudyRuntimeRoot),
-      case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6' },
+      case_study: { ...platformSummaryDefaults().case_study, enabled: true, model: 'anthropic/claude-sonnet-4-6' },
           };
 
     await caseStudyMod.generateCaseStudy(config, {}, { deps: configDeps8 });
@@ -886,15 +890,15 @@ const config = {
       project: 'behavior-case-study-cleanup-exception',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: 'run-case-study-cleanup-exception-1',
       run_id: 'run-case-study-cleanup-exception-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
       pluginRegistry: await buildBuiltInRegistry(caseStudyRuntimeRoot),
-      case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6' },
+      case_study: { ...platformSummaryDefaults().case_study, enabled: true, model: 'anthropic/claude-sonnet-4-6' },
           };
 
-    const result = await caseStudyMod.generateCaseStudy(config, { case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6', attempt: 4 } }, { deps: configDeps9 });
+    const result = await caseStudyMod.generateCaseStudy(config, { case_study: { ...platformSummaryDefaults().case_study, enabled: true, model: 'anthropic/claude-sonnet-4-6', attempt: 4 } }, { deps: configDeps9 });
     await flushAsync();
 
     assert.equal(result.outputs.status, 'failed');
@@ -950,12 +954,12 @@ const config = {
       project: 'behavior-case-study-success',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: 'run-case-study-success-1',
       run_id: 'run-case-study-success-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
       pluginRegistry: await buildBuiltInRegistry(caseStudyRuntimeRoot),
-      case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6' },
+      case_study: { ...platformSummaryDefaults().case_study, enabled: true, model: 'anthropic/claude-sonnet-4-6' },
           };
 
     await caseStudyMod.generateCaseStudy(config, {}, { deps: configDeps10 });
@@ -1003,7 +1007,7 @@ const config = {
       project: 'behavior-project-summary-ok',
       repo_root: repoRoot,
       paths: { swarm_dir: path.join(repoRoot, '.swarm') },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: 'run-project-summary-ok-1',
       run_id: 'run-project-summary-ok-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
@@ -1153,7 +1157,7 @@ const config = {
       ...platformSummaryDefaults(),
       project: 'behavior-project-summary-fail',
       repo_root: repoRoot,
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: 'run-project-summary-fail-1',
       run_id: 'run-project-summary-fail-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
@@ -1305,14 +1309,14 @@ const config = {
       project: 'behavior-pipeline-review-rate-limit-discord',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: runId,
       run_id: runId,
       _disable_discord_webhooks: true,
       discord_webhook_url: 'https://example.invalid/webhook',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
       pluginRegistry: await buildBuiltInRegistry(summaryRuntimeRoot),
-      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
+      rate_limit: { ...platformSummaryDefaults().rate_limit, max_pauses_per_module: 1, cooldown_hours: 0 },
           };
 
     await summaryMod.generatePipelineReview(config, { pipeline_review: { attempt: 4 } }, { deps: configDeps12 });
@@ -1403,18 +1407,18 @@ const config = {
       project: 'behavior-case-study-rate-limit-discord',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: runId,
       run_id: runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
       pluginRegistry: await buildBuiltInRegistry(caseStudyRuntimeRoot),
       _disable_discord_webhooks: true,
       discord_webhook_url: 'https://example.invalid/webhook',
-      rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
-      case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6' },
+      rate_limit: { ...platformSummaryDefaults().rate_limit, max_pauses_per_module: 1, cooldown_hours: 0 },
+      case_study: { ...platformSummaryDefaults().case_study, enabled: true, model: 'anthropic/claude-sonnet-4-6' },
           };
 
-    await caseStudyMod.generateCaseStudy(config, { case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6', attempt } }, { deps: configDeps13 });
+    await caseStudyMod.generateCaseStudy(config, { case_study: { ...platformSummaryDefaults().case_study, enabled: true, model: 'anthropic/claude-sonnet-4-6', attempt } }, { deps: configDeps13 });
     await flushAsync();
 
     const topLevelEntries = fs.readFileSync(path.join(logRoot, 'pipeline', 'discord.jsonl'), 'utf8').trim().split('\n').map((line) => JSON.parse(line));
@@ -1474,7 +1478,7 @@ const config = {
       project: 'behavior-summary-rate-limit-default-fields',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: runId,
       run_id: runId,
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
@@ -1572,7 +1576,7 @@ const config = {
       project: 'behavior-pipeline-review-no-output-discord',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: runId,
       run_id: runId,
       _disable_discord_webhooks: true,
@@ -1645,14 +1649,14 @@ const config = {
       project: 'behavior-case-study-no-output-discord',
       repo_root: repoRoot,
       paths: { swarm_dir: swarmDir },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       _runId: 'run-case-study-no-output-discord-1',
       run_id: 'run-case-study-no-output-discord-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
       pluginRegistry: await buildBuiltInRegistry(caseStudyRuntimeRoot),
       _disable_discord_webhooks: true,
       discord_webhook_url: 'https://example.invalid/webhook',
-      case_study: { enabled: true, model: 'anthropic/claude-sonnet-4-6' },
+      case_study: { ...platformSummaryDefaults().case_study, enabled: true, model: 'anthropic/claude-sonnet-4-6' },
           };
 
     await caseStudyMod.generateCaseStudy(config, {}, { deps: configDeps15 });
@@ -1745,7 +1749,7 @@ const config = {
         swarm_dir: swarmDir,
         modules_dir: path.join(swarmDir, 'modules'),
       },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       pluginRegistry: registry,
       _runId: 'run-pipeline-summary-ok-1',
       run_id: 'run-pipeline-summary-ok-1',
@@ -1840,7 +1844,7 @@ const config = {
         swarm_dir: swarmDir,
         modules_dir: path.join(swarmDir, 'modules'),
       },
-      telemetry: { enabled: true },
+      telemetry: platformSummaryDefaults().telemetry,
       pluginRegistry: registry,
       _runId: 'run-pipeline-summary-halt-1',
       run_id: 'run-pipeline-summary-halt-1',

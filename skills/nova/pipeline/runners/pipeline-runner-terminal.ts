@@ -53,6 +53,7 @@ import { getPipelineArtifactBundle } from '../services/artifact-bundle.ts';
 import { getRunId } from '../core/runtime.ts';
 import { resolvePipelineRunLogDir } from '../core/paths.ts';
 import { deliverFinalPreviews } from '../services/preview-delivery.ts';
+import { maybeCrashForRealE2E } from '../services/real-e2e-crash-injection.ts';
 
 type AnyRecord = Record<string, any>;
 type TerminalGeneratorRunState = {
@@ -470,6 +471,10 @@ export async function completePipeline(config: AnyRecord, progress: AnyRecord, o
         fields: completionFields,
       },
     },
+  });
+  maybeCrashForRealE2E(config, progress, 'after_final_review_before_summary', {
+    step_type: 'pipeline',
+    step_id: 'pipeline_complete',
   });
   emitPipelineSummaryLifecycle(config, ctx, 'succeeded', 'PIPELINE_COMPLETE', progress, deps.writeSummary);
   try {

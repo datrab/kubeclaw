@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import path from 'node:path';
 import { parseArgs } from '../lib/lifecycle-audit-lib.mjs';
 import { spawnSession, killSession } from '../../../skills/common/pipeline/agents/lifecycle.ts';
 import {
@@ -10,6 +11,24 @@ import { gatewayInvoke, resolveGatewayBaseUrl, resolveGatewayToken } from '../..
 import { modelToHarness, resolveRuntime } from '../../../skills/common/pipeline/agents/runtime.ts';
 import { createBudget, isBudgetExhaustedError } from '../../../skills/common/pipeline/timing.ts';
 import { createPipelineEventBus, waitForAny } from '../../../skills/common/pipeline/services/pipeline-event-contract.ts';
+import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
+import { gatewayInvokePolicy, sessionKillPolicy, sessionSpawnPolicy } from '../../../skills/nova/pipeline/core/session-policy.ts';
+
+const COMPACT_SWARM_CONFIG_REL_PATH = path.join('charts', 'kubeclaw', 'files', 'config', 'swarm.config.json');
+
+function loadVerificationSwarmConfig(sourceRoot = process.env.REPO_ROOT || process.cwd()) {
+  const configPath = path.join(sourceRoot, COMPACT_SWARM_CONFIG_REL_PATH);
+  return expandSwarmConfig(JSON.parse(fs.readFileSync(configPath, 'utf8')));
+}
+
+function loadVerificationSessionPolicies() {
+  const config = loadVerificationSwarmConfig();
+  return {
+    spawnPolicy: sessionSpawnPolicy(config),
+    killPolicy: sessionKillPolicy(config),
+    gatewayStatusPolicy: gatewayInvokePolicy(config, 'session_status'),
+  };
+}
 
 function asBool(value, fallback = false) {
   if (value === undefined || value === null || value === '') return fallback;
@@ -70,7 +89,7 @@ export function parseLaunchArgs(argv = process.argv.slice(2), defaults = {}) {
   };
 }
 
-export async function observeSessionLaunch(sessionKey, { gatewayUrl, gatewayToken, pollAttempts = 8, pollMs = 1000 } = {}) {
+export async function observeSessionLaunch(sessionKey, { gatewayUrl, gatewayToken, pollAttempts = 8, pollMs = 1000, gatewayStatusPolicy = null } = {}) {
   const observedStates = [];
   const errors = [];
   const errorKinds = [];
@@ -86,11 +105,11 @@ export async function observeSessionLaunch(sessionKey, { gatewayUrl, gatewayToke
     monitorOpts: {
       gatewayUrl,
       gatewayToken,
-      unknown_poll_limit: pollAttempts,
-      stale_poll_limit: pollAttempts,
+      poll_limit: pollAttempts,
       max_transcript_extensions: 0,
       transcript_grace_ms: 0,
       monitor_poll_ms: pollMs,
+      gatewayStatusPolicy,
     },
     stopOnTerminal: false,
   });
@@ -252,6 +271,14 @@ function resolveLaunchObservationIssue(observed = {}) {
 
 export async function verifyLaunchReachability(options) {
   const runtime = resolveRuntime({ runtime: options.runtime, model: options.model });
+  const sessionPolicies = loadVerificationSessionPolicies();
+  const spawnPolicy = {
+    ...sessionPolicies.spawnPolicy,
+    gateway: {
+      ...sessionPolicies.spawnPolicy.gateway,
+      maxRetries: 1,
+    },
+  };
   const spawnOptions = {
     runtime,
     model: options.model,
@@ -263,6 +290,7 @@ export async function verifyLaunchReachability(options) {
     maxRetries: 1,
     trackActive: false,
     cleanup: 'keep',
+    spawnPolicy,
   };
 
   const sessionData = await spawnSession({
@@ -280,6 +308,7 @@ export async function verifyLaunchReachability(options) {
     gatewayToken: options.gatewayToken,
     pollAttempts: options.pollAttempts,
     pollMs: options.pollMs,
+    gatewayStatusPolicy: sessionPolicies.gatewayStatusPolicy,
   });
 
   const streamLogExists = Boolean(sessionData.streamLogPath && fs.existsSync(sessionData.streamLogPath));
@@ -293,9 +322,7 @@ export async function verifyLaunchReachability(options) {
       label: options.label,
       gatewayUrl: options.gatewayUrl,
       gatewayToken: options.gatewayToken,
-      confirmTimeoutMs: 30000,
-      cleanupConfirmTimeoutMs: 30000,
-      confirmPollMs: 500,
+      killPolicy: sessionPolicies.killPolicy,
     });
   }
 

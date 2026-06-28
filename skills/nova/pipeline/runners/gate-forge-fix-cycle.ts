@@ -5,7 +5,7 @@ import { log } from '../core/logger.ts';
 import { getRunId } from '../core/runtime.ts';
 import { buildDiscordIdentitySurfaceFields } from '../services/discord-fields.ts';
 import { emitGitCommitPushSoftFailDegraded } from '../services/git-soft-fail-observability.ts';
-import { finalizeGateSessionRateLimitExit } from '../services/rate-limit.ts';
+import { finalizeGateSessionRateLimitExit, getRateLimitConfig } from '../services/rate-limit.ts';
 import { finishGateForgeFixCycleScaffold, startGateForgeFixCycleScaffold } from '../services/gate-fix-scaffold.ts';
 
 function gateFixMessage(messages, key, context) {
@@ -179,7 +179,7 @@ export async function runGateForgeFixCycle({
         gateway_label: resolveFixCycleGatewayLabel(),
         session_key: resolveFixCycleSessionKey(),
       },
-      maxPauses: config.rate_limit.max_pauses_per_module,
+      maxPauses: getRateLimitConfig(config).max_pauses_per_module,
       reason: exhaustedReason,
       resultOverrides: { outcome_class: 'rate_limited' },
       telemetryCtx: telemetryCtx(config),

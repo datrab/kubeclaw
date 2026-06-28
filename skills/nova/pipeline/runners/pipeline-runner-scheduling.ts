@@ -34,6 +34,7 @@ import {
   hasAnyStartedModules,
   projectPipelineGateState,
 } from './pipeline-runner-shared.ts';
+import { checkDependencies as checkModuleDependencies } from '../services/dependencies.ts';
 import {
   buildStagePluginInvocation,
   buildStageRefs,
@@ -44,6 +45,7 @@ import {
   isScheduledValidatorComplete,
   markScheduledValidatorComplete,
 } from './pipeline-runner-scheduling/validator-completions.ts';
+import { getArchValidationConfig } from '../services/runtime-defaults.ts';
 
 export { isScheduledValidatorComplete, markScheduledValidatorComplete };
 
@@ -174,7 +176,7 @@ function buildValidatorRunInput(config: AnyRecord, progress: AnyRecord, stageId:
     ? loadAuthoritativeModuleState(config, progress, moduleId)
     : null;
   const stageConfig = {
-    ...(stageId === 'validator:architecture' && config?.arch_validation && typeof config.arch_validation === 'object' ? config.arch_validation : {}),
+    ...(stageId === 'validator:architecture' ? getArchValidationConfig(config) : {}),
     ...(stageId === 'validator:architecture' && progress?.arch_validation && typeof progress.arch_validation === 'object' ? progress.arch_validation : {}),
     ...(config?.validators?.[validatorName] && typeof config.validators[validatorName] === 'object' ? config.validators[validatorName] : {}),
     ...(progress?.validators?.config?.[validatorName] && typeof progress.validators.config[validatorName] === 'object' ? progress.validators.config[validatorName] : {}),
@@ -574,6 +576,44 @@ export function resolveConfiguredValidatorSchedule(progress: AnyRecord = {}): An
     .filter(Boolean);
 }
 
+function normalizeExecutionModuleId(progress: AnyRecord, stepId: unknown): string | null {
+  if (typeof stepId !== 'string' || !stepId.trim() || stepId.startsWith('gate:') || stepId.startsWith('validator:')) return null;
+  const moduleId = stepId.startsWith('module:') ? stepId.slice('module:'.length) : stepId;
+  if (!moduleId) return null;
+  return progress?.modules?.[moduleId] ? moduleId : null;
+}
+
+function moduleDependsOnAny(progress: AnyRecord, moduleId: string, blockedDependencyIds: Set<string>): boolean {
+  const dependsOn = Array.isArray(progress?.modules?.[moduleId]?.depends_on) ? progress.modules[moduleId].depends_on : [];
+  return dependsOn.some((dependency: string) => blockedDependencyIds.has(String(dependency || '').replace(/^module:/, '')));
+}
+
+function moduleIsReadyForBatch(config: AnyRecord, progress: AnyRecord, moduleId: string, deps: AnyRecord = {}, blockedDependencyIds = new Set<string>()): boolean {
+  const lifecycleModule = loadAuthoritativeModuleState(config, progress, moduleId);
+  if (lifecycleModule?.status === STATUS.PASS || lifecycleModule?.status === STATUS.BLOCKED) return false;
+  if (moduleDependsOnAny(progress, moduleId, blockedDependencyIds)) return false;
+  const dependencyChecker = deps.checkDependencies || checkModuleDependencies;
+  const dependencyState = dependencyChecker(config, progress, moduleId);
+  return dependencyState?.met === true;
+}
+
+function collectReadyModuleBatch(config: AnyRecord, progress: AnyRecord, deps: AnyRecord = {}, startIndex = 0): string[] {
+  const executionOrder = Array.isArray(progress?.execution_order) ? progress.execution_order : [];
+  const batch: string[] = [];
+  const batchIds = new Set<string>();
+  for (let index = startIndex; index < executionOrder.length; index += 1) {
+    const moduleId = normalizeExecutionModuleId(progress, executionOrder[index]);
+    if (!moduleId) break;
+    if (!moduleIsReadyForBatch(config, progress, moduleId, deps, batchIds)) {
+      if (batch.length > 0) break;
+      continue;
+    }
+    batch.push(moduleId);
+    batchIds.add(moduleId);
+  }
+  return batch;
+}
+
 function scheduleMatchesRef(schedule: AnyRecord = {}, timing: string, ref: string): boolean {
   return schedule?.timing === timing && schedule?.ref === ref;
 }
@@ -623,7 +663,8 @@ function mandatoryReviewFullLintSchedule(config: AnyRecord, progress: AnyRecord,
 export function findNextStep(config: AnyRecord, progress: AnyRecord, deps: AnyRecord = {}): AnyRecord {
   const executionOrder = Array.isArray(progress?.execution_order) ? progress.execution_order : [];
   const gates = progress?.gates || null;
-  for (const stepId of executionOrder) {
+  for (let orderIndex = 0; orderIndex < executionOrder.length; orderIndex += 1) {
+    const stepId = executionOrder[orderIndex];
     if (typeof stepId === 'string' && stepId.startsWith('validator:')) {
       const schedule = {
         stage: stepId,
@@ -682,6 +723,11 @@ export function findNextStep(config: AnyRecord, progress: AnyRecord, deps: AnyRe
     if (lifecycleModule?.status === STATUS.BLOCKED) return { type: 'blocked', id: moduleId };
     if (lifecycleModule?.status === STATUS.FAIL) log('INFO', `Module ${moduleId} is FAIL (${lifecycleModule.fail_count || 0} attempts) — will retry`);
     else if (lifecycleModule?.status && lifecycleModule.status !== STATUS.PENDING) log('INFO', `Module ${moduleId} resuming from ${lifecycleModule.status}`);
+    const readyBatch = collectReadyModuleBatch(config, progress, deps, orderIndex);
+    if (readyBatch.length > 1 && readyBatch[0] === moduleId) {
+      log('INFO', `Running ready module batch: ${readyBatch.join(', ')}`);
+      return { type: 'module_batch', ids: readyBatch };
+    }
     return { type: 'module', id: moduleId };
   }
   return { type: 'done' };

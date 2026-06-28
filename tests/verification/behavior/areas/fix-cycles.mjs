@@ -18,6 +18,7 @@ import {
   stepMetadata,
   stepRateLimit,
   stepGateStatus,
+  platformTestDefaults,
 } from './helpers.mjs';
 
 export async function registerFixCyclesArea({
@@ -29,8 +30,10 @@ export async function registerFixCyclesArea({
   xaddEvents,
 }) {
 function platformFixCycleDefaults() {
+  const defaults = platformTestDefaults();
   return {
-    rate_limit: { max_pauses_per_module: 5, cooldown_hours: 0 },
+    ...defaults,
+    rate_limit: { ...defaults.rate_limit, max_pauses_per_module: 5, cooldown_hours: 0 },
     review_defaults: { timeout_minutes: 5, max_fix_cycles: 1, lint_tier: 'full', lint_required: false },
   };
 }
@@ -194,7 +197,7 @@ const config = {
         project: scenario.project,
         repo_root: `/tmp/${scenario.project}`,
         paths: { swarm_dir: `/tmp/${scenario.project}/swarm` },
-        telemetry: { enabled: true },
+        telemetry: platformFixCycleDefaults().telemetry,
         _runId: scenario.runId,
         run_id: scenario.runId,
         _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
@@ -352,7 +355,7 @@ const config = {
       project: 'behavior-review-fix-cycles',
       repo_root: '/tmp/behavior-review-fix-cycles',
       paths: { swarm_dir: '/tmp/behavior-review-fix-cycles/swarm' },
-      telemetry: { enabled: true },
+      telemetry: platformFixCycleDefaults().telemetry,
       _runId: 'run-review-fix-cycles-1',
       run_id: 'run-review-fix-cycles-1',
       _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),
@@ -538,7 +541,7 @@ const config = {
         project: scenario.project,
         repo_root: `/tmp/${scenario.project}`,
         paths: { swarm_dir: `/tmp/${scenario.project}/swarm` },
-        telemetry: { enabled: true },
+        telemetry: platformFixCycleDefaults().telemetry,
         _runId: scenario.runId,
         run_id: scenario.runId,
         _runStats: runtimeCoreMod.createRunStats('2026-04-09T00:00:00.000Z'),

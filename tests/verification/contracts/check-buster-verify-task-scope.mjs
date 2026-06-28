@@ -5,6 +5,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { execFileSync } from 'child_process';
+import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 import {
   buildSwarmScope,
   isGitPathInside,
@@ -22,6 +23,12 @@ function parseArgs(argv = process.argv.slice(2)) {
 }
 
 const { sourceRoot } = parseArgs();
+const previousSwarmConfig = process.env.SWARM_CONFIG;
+const expandedConfigDir = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-verify-scope-config-'));
+const expandedConfigPath = path.join(expandedConfigDir, 'swarm.config.effective.json');
+const compactConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json'), 'utf8'));
+fs.writeFileSync(expandedConfigPath, `${JSON.stringify(expandSwarmConfig(compactConfig), null, 2)}\n`);
+process.env.SWARM_CONFIG = expandedConfigPath;
 
 assert.equal(validateProjectSlug('foo'), 'foo');
 assert.equal(validateProjectSlug('foo.bar-1_2'), 'foo.bar-1_2');
@@ -98,6 +105,9 @@ const statusAfterScopedCommit = git(repo, ['status', '--porcelain']);
 assert.equal(statusAfterScopedCommit.includes('?? unrelated.txt'), true, 'unrelated file should remain uncommitted');
 assert.equal(statusAfterScopedCommit.includes('?? missing-addpaths.txt'), true, 'file from rejected broad commit should remain uncommitted');
 fs.rmSync(tmp, { recursive: true, force: true });
+fs.rmSync(expandedConfigDir, { recursive: true, force: true });
+if (previousSwarmConfig === undefined) delete process.env.SWARM_CONFIG;
+else process.env.SWARM_CONFIG = previousSwarmConfig;
 
 quietConsole.restore();
 console.log(JSON.stringify({ ok: true, checked: 34 }));

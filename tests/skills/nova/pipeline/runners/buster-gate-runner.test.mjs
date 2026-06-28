@@ -18,10 +18,18 @@ function makeConfig() {
       swarm_dir: swarmDir,
       modules_dir: path.join(swarmDir, 'modules'),
     },
-    rate_limit: {
-      max_pauses_per_module: 0,
+    pipeline_defaults: {
+      timeout_minutes: 1,
+      max_fails: 0,
+      auto_retry_threshold: 0,
+      agent_startup_retry_budget: 0,
+      session_nudge_threshold: 0,
     },
-    default_timeout_minutes: 1,
+    rate_limit: { max_pauses_per_module: 0, cooldown_hours: 0, cooldown_buffer_ms: 0 },
+    locks: {
+      lifecycle_append: { stale_ms: 1, timeout_ms: 1 },
+      gate_active_session: { stale_ms: 1, timeout_ms: 1 },
+    },
     _runId: 'run-test',
     run_id: 'run-test',
     _runStats: createRunStats(),
@@ -67,6 +75,7 @@ test('buster gate completion clears active session when killAgent does not kill 
         ok: true,
         reason: 'target_reached',
         status: {
+          status: 'PASS',
           _source: 'redis',
           run_id: completionIdentity.runId,
           attempt: completionIdentity.attempt,

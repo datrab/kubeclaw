@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
-CONTRACT_PATH="$REPO_DIR/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md"
+CONTRACT_PATH="$REPO_DIR/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md"
 BEHAVIOR_AREAS="${BEHAVIOR_AREAS:-foundations,runtime-surface,redaction-surface,shell-boundary}"
 source "$REPO_DIR/tests/verification/lib/verification-shell.sh"
 
@@ -49,7 +49,10 @@ cd "$REPO_DIR"
 export REPO_ROOT="$REPO_DIR"
 "$REPO_DIR/tests/verification/lib/cleanup-home-artifacts.sh"
 
-# Runtime smoke only: no Helm, kubeconform, live subagent, ACP, Redis, or cluster dependencies.
+run_step "canonical real pipeline e2e: fast" \
+  node tests/verification/e2e/run-real-pipeline-e2e.mjs \
+  --mode fast
+
 run_step "nova startup smoke" \
   node tests/verification/runtime/check-nova-startup-smoke.mjs \
   --source-root "$REPO_DIR"

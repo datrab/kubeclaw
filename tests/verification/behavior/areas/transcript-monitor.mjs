@@ -1,5 +1,6 @@
 import {
   buildBuiltInRegistry,
+  platformTestDefaults,
 } from './helpers.mjs';
 
 export async function registerTranscriptMonitorArea({
@@ -82,8 +83,7 @@ await record('waitForSessionIdle honors the strict total timeout when gateway st
     extraGraceMs: 0,
     totalTimeoutMs: 10,
     pollMs: 5,
-    unknown_poll_limit: 10,
-    stale_poll_limit: 10,
+    poll_limit: 10,
     max_transcript_extensions: 1,
     transcript_grace_ms: 60,
     monitor_poll_ms: 5,
@@ -124,10 +124,11 @@ await record('verifyAgentAlive reuses transcript delta state, suppresses duplica
   console.error = (...args) => { stderr.push(args.map(String).join(' ')); };
 
   const config = {
+    ...platformTestDefaults(),
     project: 'behavior-verify-agent-alive',
     repo_root: repoRoot,
-    telemetry: { enabled: true },
-    agents: { forge: { cwd: repoRoot } },
+    telemetry: platformTestDefaults().telemetry,
+    agents: { ...platformTestDefaults().agents, forge: { ...platformTestDefaults().agents.forge, cwd: repoRoot } },
     paths: { swarm_dir: swarmDir },
     _runId: runId,
     run_id: runId,
@@ -208,10 +209,11 @@ await record('verifyAgentAlive emits degraded observability before rejecting unk
   process.env.OPENCLAW_GATEWAY_URL = gateway.url;
 
   const config = {
+    ...platformTestDefaults(),
     project: 'behavior-verify-agent-alive-stale',
     repo_root: repoRoot,
-    telemetry: { enabled: true },
-    agents: { forge: { cwd: repoRoot } },
+    telemetry: platformTestDefaults().telemetry,
+    agents: { ...platformTestDefaults().agents, forge: { ...platformTestDefaults().agents.forge, cwd: repoRoot } },
     paths: { swarm_dir: swarmDir },
     _runId: runId,
     run_id: runId,

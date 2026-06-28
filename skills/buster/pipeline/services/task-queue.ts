@@ -19,9 +19,12 @@ import {
 import { loadBusterRuntimePolicy } from './runtime-policy.ts';
 
 export const AGENT_NAME = process.env.AGENT_NAME || 'buster';
-export const STREAM_KEY = loadBusterRuntimePolicy().task_stream;
 export const GROUP_NAME = `${AGENT_NAME}-group`;
 export const CONSUMER_NAME = `${AGENT_NAME}-buster-pipeline-${hostname()}`;
+
+export function getTaskStreamKey() {
+  return loadBusterRuntimePolicy().task_stream;
+}
 
 let RedisCtor = null;
 let redis = null;
@@ -69,7 +72,7 @@ export async function disconnectRedisClient() {
 function getTaskQueue(redisClient = getRedisClient()) {
   const runtimePolicy = loadBusterRuntimePolicy();
   return createRedisTaskQueue(redisClient, {
-    streamKey: STREAM_KEY,
+    streamKey: getTaskStreamKey(),
     groupName: GROUP_NAME,
     consumerName: CONSUMER_NAME,
     pollInterval: runtimePolicy.task_poll_interval_ms,
@@ -113,7 +116,7 @@ async function writeMalformedDeadLetterBeforeAck(redisClient, taskQueue, taskCon
   try {
     await writeTaskDeadLetter(redisClient, {
       ...taskContext,
-      streamKey: STREAM_KEY,
+      streamKey: getTaskStreamKey(),
       phase: taskContext.phase || 'malformed_task',
     });
   } catch (deadLetterError) {
@@ -143,7 +146,7 @@ export async function processOneQueuedTask(processTask) {
     console.warn(`[TASK] ⚠️ Malformed task payload JSON for ${id}: ${safeErrorMessage(error)}`);
     appendMalformedTaskArtifact({
       redis_id: id,
-      stream: STREAM_KEY,
+      stream: getTaskStreamKey(),
       sender: data.sender || 'unknown',
       redis_type: data.type || 'unknown',
       reason: 'payload_json_parse_failed',
@@ -215,7 +218,7 @@ export async function processOneQueuedTask(processTask) {
 
   if (!processError) {
     const terminalResult = await ensureTaskTerminalBeforeAck(redisClient, {
-      streamKey: STREAM_KEY,
+      streamKey: getTaskStreamKey(),
       id,
       data,
       payload,
@@ -236,7 +239,7 @@ export async function processOneQueuedTask(processTask) {
     console.warn(`[TASK] ⚠️ Malformed task rejected: ${safeErrorMessage(processError)}`);
     appendMalformedTaskArtifact({
       redis_id: id,
-      stream: STREAM_KEY,
+      stream: getTaskStreamKey(),
       sender,
       redis_type: taskType,
       effective_type: effectiveType,
@@ -280,7 +283,7 @@ export async function processOneQueuedTask(processTask) {
   }
 
   const terminalResult = await ensureTaskTerminalBeforeAck(redisClient, {
-    streamKey: STREAM_KEY,
+    streamKey: getTaskStreamKey(),
     id,
     data,
     payload,

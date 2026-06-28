@@ -31,6 +31,8 @@ Projects/<project>/src/.swarm/logs/pipeline/discord.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/summary.json
 ```
 
+`latest.json` is the operator pointer to the newest run-scoped audit tree and records the run `telemetry_stream_key` alongside the replay artifact bundle.
+
 Run-scoped artifacts:
 
 ```text
@@ -124,7 +126,7 @@ Sink input validation requires a run ID, run reference, primary reference, event
 
 ## Agent Observability
 
-`swarm.config.json` enables the OpenClaw agent observer plugin controller and ingester by default. Current defaults:
+The compact `swarm.config.json` selects the `standard` profile, which expands to enable the OpenClaw agent observer plugin controller and ingester by default. Current effective `standard` values:
 
 - plugin ID: `kubeclaw-agent-observer`
 - plugin command: `openclaw`
@@ -167,7 +169,7 @@ rg '"observability.degraded|observability.restored"' Projects/my-project/src/.sw
 ## Troubleshooting
 
 - Missing Discord messages: check `discord.jsonl` and webhook configuration. Continue using local artifacts for authority.
-- Missing Redis telemetry: check `buster-telemetry-fallback.jsonl`, Redis connectivity, and `agent_observability.ingester` settings.
+- Missing Redis telemetry: check `buster-telemetry-fallback.jsonl`, Redis connectivity, and expanded `agent_observability.ingester` settings.
 - Missing `latest.json`: the run may have failed before log initialization.
 - Summary missing but pipeline has logs: inspect terminal completion errors in run-scoped `pipeline.jsonl`.
 - Redis stream empty but artifacts present: Redis sink may be degraded; use local artifacts and recover Redis separately.

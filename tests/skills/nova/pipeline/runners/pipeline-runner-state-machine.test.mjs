@@ -3,7 +3,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 
-import { runPipelineStateMachine } from '../../../../../skills/nova/pipeline/runners/pipeline-runner-state-machine.ts';
+import {
+  PIPELINE_RUNNER_ACTIONS,
+  planPipelineStep,
+  runPipelineStateMachine,
+} from '../../../../../skills/nova/pipeline/runners/pipeline-runner-state-machine.ts';
 
 function testConfig() {
   const root = fs.mkdtempSync(path.join(process.cwd(), '.tmp-pipeline-state-machine-'));
@@ -135,4 +139,10 @@ test('pipeline state machine passes the run signal into validator steps', async 
   );
 
   assert.equal(receivedSignal, controller.signal);
+});
+
+test('pipeline state machine plans module batches as a first-class action', () => {
+  const plan = planPipelineStep({ type: 'module_batch', ids: ['01-nginx', '02-nginx'] });
+  assert.equal(plan.action, PIPELINE_RUNNER_ACTIONS.RUN_MODULE_BATCH);
+  assert.deepEqual(plan.next.ids, ['01-nginx', '02-nginx']);
 });

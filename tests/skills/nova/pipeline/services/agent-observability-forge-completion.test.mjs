@@ -12,12 +12,7 @@ function xreadResult(id, event) {
 
 function observabilityConfig() {
   return {
-    profile: 'test',
-    profiles: {
-      test: {
-        forge_completion: { xread_block_ms: 1, settle_ms: 0 },
-      },
-    },
+    forge_completion: { xread_block_ms: 1, settle_ms: 0 },
   };
 }
 

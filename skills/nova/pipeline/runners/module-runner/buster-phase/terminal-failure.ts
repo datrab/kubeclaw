@@ -25,6 +25,7 @@ import {
   buildModuleBlockedTerminalResult,
   buildModuleNeedsNovaTerminalResult,
 } from '../terminal-results.ts';
+import { maybeCrashForRealE2E } from '../../../services/real-e2e-crash-injection.ts';
 
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../../../services/discord-fields.ts';
 
@@ -32,6 +33,7 @@ type AnyRecord = Record<string, any>;
 
 export async function handleBusterFailOrBlockedStatus({
   config,
+  progress,
   moduleId,
   mod,
   dir,
@@ -96,7 +98,11 @@ export async function handleBusterFailOrBlockedStatus({
       ? 'This is a Buster/runtime output artifact failure, not an app-code verdict. Forge output preserved.'
       : 'This is an infrastructure/correlation failure, not an app-code verdict. Forge output preserved.';
     const outputFailureBlockedReason = failureClass;
-    const reason = resultRedisEntry?.summary || status?.completion_summary || outputFailureLabel;
+    const reason = resultRedisEntry?.summary
+      ? resultRedisEntry.summary
+      : status?.completion_summary
+        ? status.completion_summary
+        : outputFailureLabel;
     log('ERROR', `Module ${moduleId}: ${reason} — infrastructure issue, not routing to Forge`);
 
     const blockedTransition = markModuleBlocked(
@@ -413,13 +419,31 @@ export async function handleBusterFailOrBlockedStatus({
           { name: 'Subagent Spawned?', value: 'No', inline: true },
         ],
       });
-    if (failResult._retry) return { terminal: buildRetryResult(failResult, status) };
+    if (failResult._retry) {
+      maybeCrashForRealE2E(config, progress, 'after_failed_gate_before_retry', {
+        step_type: 'module',
+        step_id: moduleId,
+        module_id: moduleId,
+        attempt: resultRedisEntry?.attempt ?? completionIdentity.attempt ?? currentAttemptNumber(status),
+        dispatch_id: completionIdentity.dispatchId,
+      });
+      return { terminal: buildRetryResult(failResult, status) };
+    }
     return { terminal: { retry: false, result: failResult } };
   }
 
   // ── Category 3: Agent test failure (normal) ──
   const failResult = await handleModuleFail(status, 'buster',
     deps.extractAgentFailReason(status, 'buster'), { recalledMemoryIds, dispatch_id: completionIdentity.dispatchId, gateway_label: resolveCompletionGatewayLabel(status, completionIdentity), session_key: completionSessionKey });
-  if (failResult._retry) return { terminal: buildRetryResult(failResult, status) };
+  if (failResult._retry) {
+    maybeCrashForRealE2E(config, progress, 'after_failed_gate_before_retry', {
+      step_type: 'module',
+      step_id: moduleId,
+      module_id: moduleId,
+      attempt: resultRedisEntry?.attempt ?? completionIdentity.attempt ?? currentAttemptNumber(status),
+      dispatch_id: completionIdentity.dispatchId,
+    });
+    return { terminal: buildRetryResult(failResult, status) };
+  }
   return { terminal: { retry: false, result: failResult } };
 }

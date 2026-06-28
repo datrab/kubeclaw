@@ -28,6 +28,14 @@ function normalizeAttempt(value) {
   return Number.isFinite(numeric) ? numeric : null;
 }
 
+function discordWebhookTimeoutMs(config) {
+  const timeoutMs = Number(config?.discord?.webhook_timeout_ms);
+  if (!Number.isInteger(timeoutMs) || timeoutMs <= 0) {
+    throw new Error('config.discord.webhook_timeout_ms: required positive integer in swarm.config.json');
+  }
+  return timeoutMs;
+}
+
 function normalizeDiscordCorrelation(source = {}) {
   return {
     run_id: source?.run_id || null,
@@ -161,12 +169,54 @@ function formatDiscordAuditFailureDetail(err) {
   return 'discord audit log write failed';
 }
 
+function appendDiscordBlockingDegradedEvidence(config = {}, entry = {}) {
+  if (!config || typeof config !== 'object') return;
+  if (!Array.isArray(config._degradedEvidence)) config._degradedEvidence = [];
+  config._degradedEvidence.push({
+    code: entry.code || entry.reason || 'discord_webhook_degraded',
+    component: 'discord',
+    surface: entry.surface || 'webhook',
+    reason: entry.reason || 'webhook_delivery_failed',
+    detail: entry.detail || null,
+    message: entry.detail || entry.reason || 'Discord webhook delivery degraded',
+    resolved: false,
+  });
+}
+
 async function recordDiscordWebhookDegraded(config = {}, correlation = {}, err) {
+  appendDiscordBlockingDegradedEvidence(config, {
+    code: 'discord_webhook_delivery_failed',
+    surface: 'webhook',
+    reason: 'webhook_delivery_failed',
+    detail: formatDiscordDeliveryFailureDetail(err),
+  });
   await recordObservabilityDegraded({ config }, {
     component: 'discord',
     surface: 'webhook',
     reason: 'webhook_delivery_failed',
     detail: formatDiscordDeliveryFailureDetail(err),
+    gateway_label: correlation.gateway_label || null,
+    module_id: correlation.module_id || null,
+    gate_id: correlation.gate_id || null,
+    gate_type: correlation.gate_type || null,
+    session_key: correlation.session_key || null,
+    attempt: correlation.attempt ?? null,
+    dispatch_id: correlation.dispatch_id || null,
+  });
+}
+
+async function recordDiscordWebhookMissing(config = {}, correlation = {}) {
+  appendDiscordBlockingDegradedEvidence(config, {
+    code: 'discord_webhook_url_missing',
+    surface: 'webhook',
+    reason: 'webhook_url_missing',
+    detail: 'discord webhook delivery skipped: config.discord_webhook_url is missing',
+  });
+  await recordObservabilityDegraded({ config }, {
+    component: 'discord',
+    surface: 'webhook',
+    reason: 'webhook_url_missing',
+    detail: 'discord webhook delivery skipped: config.discord_webhook_url is missing',
     gateway_label: correlation.gateway_label || null,
     module_id: correlation.module_id || null,
     gate_id: correlation.gate_id || null,
@@ -270,6 +320,44 @@ async function appendDiscordAuditEntries(config = {}, level = 'INFO', embeds = [
   }
 }
 
+function deliveryReceiptTargets(config = {}) {
+  const artifacts = getPipelineArtifactBundle(config);
+  return [
+    artifacts.pipeline_dir ? path.join(artifacts.pipeline_dir, 'discord-deliveries.jsonl') : null,
+    artifacts.run_log_dir ? path.join(artifacts.run_log_dir, 'discord-deliveries.jsonl') : null,
+  ].filter(Boolean);
+}
+
+function deliveryReceiptFromResult(config = {}, level = 'INFO', correlation = {}, result = {}, embeds = []) {
+  const message = result?.body && typeof result.body === 'object' && !Array.isArray(result.body)
+    ? result.body
+    : {};
+  return sanitizeJsonEgress({
+    ts: new Date().toISOString(),
+    project: config?.project || null,
+    run_id: config?._runId || config?.run_id || correlation.run_id || null,
+    level,
+    ok: result?.ok === true,
+    http_status: result?.status ?? null,
+    status_text: result?.statusText || null,
+    message_id: message.id || null,
+    channel_id: message.channel_id || null,
+    webhook_message_returned: Boolean(message.id),
+    title: embeds[0]?.title || null,
+    correlation: normalizeDiscordCorrelation(correlation),
+  }, 'discord_delivery_receipt');
+}
+
+function appendDiscordDeliveryReceipt(config = {}, level = 'INFO', correlation = {}, result = {}, embeds = []) {
+  const targets = deliveryReceiptTargets(config);
+  if (!targets.length) return;
+  const receipt = deliveryReceiptFromResult(config, level, correlation, result, embeds);
+  for (const target of targets) {
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.appendFileSync(target, `${JSON.stringify(receipt)}\n`);
+  }
+}
+
 
 function discordWebhookDeliveryMuted(config = {}) {
   if (config?._disable_discord_webhooks) return true;
@@ -320,8 +408,11 @@ export async function discord(config: any, level: any, title: any, description: 
       return;
     }
     if (discordWebhookDeliveryMuted(config)) return;
-    if (!config.discord_webhook_url) return;
     if (!config.discord_alerts?.[level.toLowerCase()]) return;
+    if (!config.discord_webhook_url) {
+      await recordDiscordWebhookMissing(config, correlation);
+      return;
+    }
     const colors = { INFO: 0x3498db, WARN: 0xe67e22, CRITICAL: 0xe74c3c, OK: 0x2ecc71 };
     const icons = { INFO: 'ℹ️', WARN: '⚠️', CRITICAL: '🚨', OK: '✅' };
     const payload = sanitizeDiscordMessage({
@@ -335,11 +426,12 @@ export async function discord(config: any, level: any, title: any, description: 
       }],
     });
     try {
-      await postDiscordWebhook(config.discord_webhook_url, {
+      const result = await postDiscordWebhook(config.discord_webhook_url, {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
-        timeoutMs: config?.discord?.webhook_timeout_ms,
+        timeoutMs: discordWebhookTimeoutMs(config),
       });
+      appendDiscordDeliveryReceipt(config, level, correlation, result, payload.embeds || []);
       await recordDiscordWebhookRestored(config, correlation);
     } catch (err) {
       await recordDiscordWebhookDegraded(config, correlation, err);
@@ -389,14 +481,18 @@ export async function discordEmbeds(config: any, embeds: any[] = [], opts: any =
       return;
     }
     if (discordWebhookDeliveryMuted(config)) return;
-    if (!config?.discord_webhook_url) return;
     if (!config.discord_alerts?.[String(level).toLowerCase()]) return;
+    if (!config?.discord_webhook_url) {
+      await recordDiscordWebhookMissing(config, correlation);
+      return;
+    }
     try {
-      await postDiscordWebhook(config.discord_webhook_url, {
+      const result = await postDiscordWebhook(config.discord_webhook_url, {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ embeds: safeEmbeds }),
-        timeoutMs: config?.discord?.webhook_timeout_ms,
+        timeoutMs: discordWebhookTimeoutMs(config),
       });
+      appendDiscordDeliveryReceipt(config, level, correlation, result, safeEmbeds);
       await recordDiscordWebhookRestored(config, correlation);
     } catch (err) {
       await recordDiscordWebhookDegraded(config, correlation, err);

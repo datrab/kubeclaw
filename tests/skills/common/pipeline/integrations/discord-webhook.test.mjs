@@ -74,3 +74,22 @@ test('discord webhook timeout falls back when AbortSignal.timeout is unavailable
   assert.equal(requestSignal.aborted, true);
   assert.ok(Date.now() - startedAt < 1000);
 });
+
+test('discord webhook returns parsed JSON response body when Discord wait mode is enabled', async () => {
+  const result = await postDiscordWebhook('https://discord.example/webhook?wait=true', {
+    body: '{}',
+    timeoutMs: 1000,
+    fetchImpl: async () => ({
+      ok: true,
+      status: 200,
+      statusText: 'OK',
+      headers: { get: (name) => (String(name).toLowerCase() === 'content-type' ? 'application/json' : null) },
+      json: async () => ({ id: 'message-1', channel_id: 'channel-1' }),
+    }),
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(result.status, 200);
+  assert.equal(result.body.id, 'message-1');
+  assert.equal(result.body.channel_id, 'channel-1');
+});

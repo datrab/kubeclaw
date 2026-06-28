@@ -20,7 +20,10 @@ function compactRecord(obj = {}) {
 }
 
 function resolveModuleId(payload = {}) {
-  return payload.module_id || payload.module || payload.gate_id || 'unknown';
+  if (payload.module_id) return payload.module_id;
+  if (payload.module) return payload.module;
+  if (payload.gate_id) return payload.gate_id;
+  return 'unknown';
 }
 
 export function createTaskCompletionState() {
@@ -30,7 +33,7 @@ export function createTaskCompletionState() {
 export function buildTaskCompletionRecord(payload = {}, opts = {}) {
   const { outcome, reason } = opts;
   if (!outcome || !reason) throw new Error('Buster completion requires explicit outcome and reason');
-  const moduleId = opts.moduleId || resolveModuleId(payload);
+  const moduleId = opts.moduleId ? opts.moduleId : resolveModuleId(payload);
   const identityFields = buildCompletionIdentityFields(payload, {
     runId: opts.runId ?? payload.run_id,
     attempt: opts.attempt ?? payload.attempt,
@@ -45,21 +48,21 @@ export function buildTaskCompletionRecord(payload = {}, opts = {}) {
     stream_role: 'completion',
     project: payload?.project,
     target_kind: target.target_kind,
-    target_id: target.target_id || moduleId,
+    target_id: target.target_id ? target.target_id : moduleId,
     module: moduleId,
     gate_id: target.gate_id,
     gate_type: payload?.gate_type ?? payload?.gateType,
     status: outcome === 'PASS' ? 'PASS' : 'FAIL',
     outcome,
-    source: opts.source || 'buster-pipeline',
+    source: opts.source ? opts.source : 'buster-pipeline',
     reason,
-    summary: opts.summary || reason || '',
+    summary: opts.summary ? opts.summary : reason ? reason : '',
     ...(outcome === 'RATE_LIMITED' && opts.rateLimitMaxPauses !== null && opts.rateLimitMaxPauses !== undefined
       ? { max_rate_limit_pauses: String(opts.rateLimitMaxPauses) }
       : {}),
     ...(opts.preTestVerdict ? { verdict: JSON.stringify(opts.preTestVerdict) } : {}),
     ...identityFields,
-    timestamp: String(opts.timestamp || Date.now()),
+    timestamp: String(opts.timestamp ? opts.timestamp : Date.now()),
   };
 }
 
@@ -84,28 +87,30 @@ export async function publishTaskCompletionWithArtifact(redisClient, payload = {
   if (!payload?.completion_stream) return { ok: false, skipped: true, reason: 'missing_completion_stream' };
   if (!payload?.output_file) throw new Error('Buster completion requires output_file artifact path');
 
-  const moduleId = opts.moduleId || resolveModuleId(payload);
-  const ensureOutputFile = opts.ensureBusterOutputFile || ensureBusterOutputFile;
-  const verifyTask = opts.verifyAndPush || verifyAndPush;
+  const moduleId = opts.moduleId ? opts.moduleId : resolveModuleId(payload);
+  const ensureOutputFile = opts.ensureBusterOutputFile ? opts.ensureBusterOutputFile : ensureBusterOutputFile;
+  const verifyTask = opts.verifyAndPush ? opts.verifyAndPush : verifyAndPush;
   const outputFileResult = ensureOutputFile(payload, {
     outcome,
     reason,
-    summary: opts.artifactSummary || opts.summary || reason,
+    summary: opts.artifactSummary ? opts.artifactSummary : opts.summary ? opts.summary : reason,
   });
   const verifyResult = await verifyTask('buster', payload.project, {
-    commitMessage: opts.commitMessage || `[BUSTER] ${payload?.task_type || 'task'} ${moduleId}: output artifact`,
+    commitMessage: opts.commitMessage ? opts.commitMessage : `[BUSTER] ${payload?.task_type ? payload.task_type : 'task'} ${moduleId}: output artifact`,
   });
   if (verifyResult?.status && verifyResult.status !== 'success') {
     throw new Error(`output_file verify failed: ${verifyResult.error || verifyResult.action || 'unknown'}`);
   }
 
-  const emitCompletion = opts.emitTaskCompletion || emitTaskCompletion;
+  const emitCompletion = opts.emitTaskCompletion ? opts.emitTaskCompletion : emitTaskCompletion;
   const emitted = await emitCompletion(redisClient, payload, opts);
   return { ...emitted, outputFileResult, verifyResult };
 }
 
 export function resolveDeadLetterStream(streamKey, payload = {}) {
-  return payload?.dead_letter_stream || process.env.BUSTER_TASK_DEAD_LETTER_STREAM || `${streamKey}${DEFAULT_DEAD_LETTER_SUFFIX}`;
+  if (payload?.dead_letter_stream) return payload.dead_letter_stream;
+  if (process.env.BUSTER_TASK_DEAD_LETTER_STREAM) return process.env.BUSTER_TASK_DEAD_LETTER_STREAM;
+  return `${streamKey}${DEFAULT_DEAD_LETTER_SUFFIX}`;
 }
 
 export function buildTaskDeadLetterFields({
@@ -132,7 +137,7 @@ export function buildTaskDeadLetterFields({
     redis_type: taskType,
     effective_type: effectiveType,
     project: payload?.project,
-    module_id: payload?.module_id || payload?.module,
+    module_id: payload?.module_id ? payload.module_id : payload?.module,
     gate_id: payload?.gate_id,
     run_id: payload?.run_id,
     attempt: payload?.attempt,
@@ -159,7 +164,7 @@ export async function ensureTaskTerminalBeforeAck(redisClient, opts = {}) {
   const payload = opts.payload ?? {};
   const processResult = opts.processResult ?? null;
   const taskError = opts.error ?? null;
-  const completionError = opts.completionError || processResult?.completion?.error;
+  let completionError = opts.completionError || processResult?.completion?.error;
 
   if (didProcessResultEmitTerminalCompletion(processResult)) {
     return { ok: true, mode: 'completion_already_emitted', stream: processResult.completion.stream };
@@ -173,12 +178,28 @@ export async function ensureTaskTerminalBeforeAck(redisClient, opts = {}) {
   if (!reason && !payload?.completion_stream) reason = 'missing_completion_stream';
   if (!reason && taskError) reason = `task_runtime_failure: ${safeErrorMessage(taskError)}`;
   if (!reason) reason = 'task_failed_before_completion';
+
+  if (payload?.completion_stream && !completionError) {
+    try {
+      const completion = await emitTaskCompletion(redisClient, payload, {
+        outcome: 'FAIL',
+        reason,
+        summary: reason,
+        moduleId: opts.moduleId,
+        source: 'buster-pipeline',
+      });
+      if (completion?.ok) return { ok: true, mode: 'synthesized_failure_completion', stream: completion.stream };
+    } catch (error) {
+      completionError ||= error;
+    }
+  }
+
   try {
     const deadLetter = await writeTaskDeadLetter(redisClient, {
       ...opts,
-      reason: opts.deadLetterReason || 'task_failed_before_terminal_completion',
-      detail: completionError || taskError || reason,
-      phase: opts.phase || (taskError ? 'process_task_error' : 'completion_missing'),
+      reason: opts.deadLetterReason ? opts.deadLetterReason : 'task_failed_before_terminal_completion',
+      detail: completionError ? completionError : taskError ? taskError : reason,
+      phase: opts.phase ? opts.phase : (taskError ? 'process_task_error' : 'completion_missing'),
     });
     return { ok: true, mode: 'dead_letter', stream: deadLetter.stream };
   } catch (deadLetterError) {

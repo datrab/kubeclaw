@@ -8,7 +8,7 @@ import fs from 'fs';
 import { parseCliFlagValues } from '../cli-args.ts';
 import { createRedisClient, loadRedisCtor } from '../telemetry.ts';
 import { resolveDiscordWebhookUrl } from '../services/runtime.ts';
-import { loadBusterPlatformConfig } from '../services/runtime-policy.ts';
+import { loadBusterGatewayHealthPolicy } from '../services/runtime-policy.ts';
 import { formatSummaryForDiscord, summarizePayloadForDiscord } from '../redaction.ts';
 import { assertRedisTaskEntry, buildRedisTaskStreamEntry } from '../services/redis-message-contract.ts';
 import { createRedisEventBus, createRedisTaskQueue } from '../services/task-transport-contract.ts';
@@ -37,12 +37,7 @@ interface ReadOptions {
 let _redis: RedisClient | null = null;
 
 function redisReadyTimeoutMs(): number {
-  const config = loadBusterPlatformConfig();
-  const timeoutMs = Number(config?.gateway?.health?.ready_timeout_ms);
-  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
-    throw new Error('config.gateway.health.ready_timeout_ms: required positive number in swarm.config.json');
-  }
-  return timeoutMs;
+  return loadBusterGatewayHealthPolicy().readyTimeoutMs;
 }
 
 function errorMessage(error: unknown): string {

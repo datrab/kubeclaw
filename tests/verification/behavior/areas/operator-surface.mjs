@@ -1,5 +1,6 @@
 import {
   buildBuiltInRegistry,
+  platformTestDefaults,
 } from './helpers.mjs';
 
 export async function registerOperatorSurfaceArea({
@@ -209,8 +210,9 @@ await record('Discord webhook delivery failures emit explicit degraded observabi
   process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS = '';
   try {
     await discordRuntimeMod.discord({
+      ...platformTestDefaults(),
       project: 'behavior-discord-webhook-fail',
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       _runId: runId,
       run_id: runId,
       paths: { swarm_dir: path.join(root, '.swarm') },
@@ -276,8 +278,9 @@ await record('Discord webhook delivery recovery emits explicit restored observab
   process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS = '';
   try {
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-discord-webhook-restore',
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       _runId: runId,
       run_id: runId,
       paths: { swarm_dir: path.join(root, '.swarm') },
@@ -383,9 +386,13 @@ await record('Redis-dispatched task alerts now flow through canonical Discord au
   const oldWebhook = process.env.DISCORD_WEBHOOK;
   const oldDiscordMute = process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS;
   const oldAgentName = process.env.AGENT_NAME;
+  const oldSwarmConfig = process.env.SWARM_CONFIG;
+  const swarmConfigPath = path.join(root, 'swarm.config.json');
+  fs.writeFileSync(swarmConfigPath, `${JSON.stringify(platformTestDefaults(), null, 2)}\n`);
   process.env.DISCORD_WEBHOOK = 'https://example.invalid/webhook';
   process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS = '1';
   process.env.AGENT_NAME = 'nova';
+  process.env.SWARM_CONFIG = swarmConfigPath;
 
   try {
     const redisToolMod = await importRuntimeModule(redisRuntimeRoot, '/app/skills/pipeline/tools/redis.ts');
@@ -404,6 +411,8 @@ await record('Redis-dispatched task alerts now flow through canonical Discord au
     process.env.DISCORD_WEBHOOK = oldWebhook;
     process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS = oldDiscordMute;
     process.env.AGENT_NAME = oldAgentName;
+    if (oldSwarmConfig === undefined) delete process.env.SWARM_CONFIG;
+    else process.env.SWARM_CONFIG = oldSwarmConfig;
   }
 
   const topLevelEntry = JSON.parse(fs.readFileSync(path.join(logDir, 'pipeline', 'discord.jsonl'), 'utf8').trim().split('\n').at(-1));
@@ -438,8 +447,9 @@ await record('Discord audit-log write failures emit explicit degraded observabil
   fs.writeFileSync(runLogDir, 'not-a-directory\n');
 
   const config = {
+    ...platformTestDefaults(),
     project: 'behavior-discord-audit-restore',
-    telemetry: { enabled: true },
+    telemetry: platformTestDefaults().telemetry,
     _runId: runId,
     run_id: runId,
     paths: { swarm_dir: path.join(root, '.swarm') },
@@ -681,7 +691,11 @@ await record('Buster Discord webhook failures emit canonical degraded telemetry'
   const webhook = await startGatewayServer(async () => { throw new Error('discord rejected'); });
 
   const oldMute = process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS;
+  const oldSwarmConfig = process.env.SWARM_CONFIG;
+  const swarmConfigPath = path.join(root, 'swarm.config.json');
+  fs.writeFileSync(swarmConfigPath, `${JSON.stringify(platformTestDefaults(), null, 2)}\n`);
   process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS = '';
+  process.env.SWARM_CONFIG = swarmConfigPath;
   try {
     busterDiscordMod.sendDiscord({
       title: 'Buster Discord webhook failure',
@@ -699,6 +713,7 @@ await record('Buster Discord webhook failures emit canonical degraded telemetry'
       pipeline_log_path: path.join(logRoot, 'pipeline', 'pipeline.jsonl'),
       pipeline_run_log_path: path.join(logRoot, 'pipeline', 'runs', 'run-buster-discord-webhook-fail-1', 'pipeline.jsonl'),
       telemetry_enabled: true,
+      webhook_timeout_ms: platformTestDefaults().discord.webhook_timeout_ms,
       webhook_url: webhook.url,
     });
     await flushAsync();
@@ -718,6 +733,8 @@ await record('Buster Discord webhook failures emit canonical degraded telemetry'
     await webhook.close();
     if (oldMute === undefined) delete process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS;
     else process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS = oldMute;
+    if (oldSwarmConfig === undefined) delete process.env.SWARM_CONFIG;
+    else process.env.SWARM_CONFIG = oldSwarmConfig;
   }
 });
 
@@ -733,6 +750,12 @@ await record('Buster visual-reg Discord helpers route HTTP delivery through shar
   const webhook = await startGatewayServer(async () => { throw new Error('discord rejected'); });
   const logs = [];
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-visual-reg-discord-http-fail-'));
+  const oldMute = process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS;
+  const oldSwarmConfig = process.env.SWARM_CONFIG;
+  const swarmConfigPath = path.join(root, 'swarm.config.json');
+  fs.writeFileSync(swarmConfigPath, `${JSON.stringify(platformTestDefaults(), null, 2)}\n`);
+  process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS = '';
+  process.env.SWARM_CONFIG = swarmConfigPath;
   const actualPath = path.join(root, 'actual.png');
   fs.writeFileSync(actualPath, Buffer.from([0x89, 0x50, 0x4e, 0x47]));
   const tctx = busterTelemetryMod.createTelemetryContext({
@@ -753,8 +776,6 @@ await record('Buster visual-reg Discord helpers route HTTP delivery through shar
     session_key: 'agent:buster:visual-reg-discord-shared',
     telemetry_context: tctx,
   };
-  const oldMute = process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS;
-  process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS = '';
 
   let summaryFailure;
   let singleFailure;
@@ -797,6 +818,8 @@ await record('Buster visual-reg Discord helpers route HTTP delivery through shar
     await busterTelemetryMod.closeTelemetry(tctx);
     if (oldMute === undefined) delete process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS;
     else process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS = oldMute;
+    if (oldSwarmConfig === undefined) delete process.env.SWARM_CONFIG;
+    else process.env.SWARM_CONFIG = oldSwarmConfig;
     fs.rmSync(root, { recursive: true, force: true });
   }
 
@@ -837,13 +860,14 @@ await record('Nova git soft-fail callers emit degraded telemetry outside git ret
   const runLogDir = path.join(logDir, 'pipeline', 'runs', 'run-git-soft-fail-observability-1');
   fs.mkdirSync(runLogDir, { recursive: true });
   const config = {
+    ...platformTestDefaults(),
     project: 'behavior-git-soft-fail-observability',
     repo_root: root,
     _runId: 'run-git-soft-fail-observability-1',
     run_id: 'run-git-soft-fail-observability-1',
     pluginRegistry: registry,
-    telemetry: { enabled: true },
-    rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
+    telemetry: platformTestDefaults().telemetry,
+    rate_limit: { ...platformTestDefaults().rate_limit, max_pauses_per_module: 1, cooldown_hours: 0 },
     paths: { swarm_dir: path.join(root, '.swarm') },
     _runStats: {
       total_echo_reviews: 0,
@@ -932,7 +956,7 @@ await record('model-policy audit append failures emit Redis-oriented system.io_w
       _runId: 'run-policy-io-warning-1',
       run_id: 'run-policy-io-warning-1',
       paths: { swarm_dir: path.join(root, '.swarm') },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
     }, {
       scope: 'module_forge',
       agent: 'forge',
@@ -980,7 +1004,7 @@ await record('pipeline JSONL append failures emit Redis-oriented system.io_warni
         project: 'behavior-pipeline-log-io-warning',
         _runId: 'run-pipeline-log-io-warning-1',
         run_id: 'run-pipeline-log-io-warning-1',
-        telemetry: { enabled: true },
+        telemetry: platformTestDefaults().telemetry,
       },
       stats: { errors: [] },
       _pipelineLogPath: path.join(blockedDir, 'pipeline.jsonl'),
@@ -1023,7 +1047,7 @@ await record('prompt artifact write failures emit Redis-oriented system.io_warni
       _runId: 'run-prompt-io-warning-1',
       run_id: 'run-prompt-io-warning-1',
       paths: { swarm_dir: path.join(root, '.swarm') },
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       _progress: { modules: { '01': { dir: '01' } } },
     }, '01', 'forge', 3, 'test prompt');
     await flushAsync();
@@ -1109,7 +1133,11 @@ await record('Buster visual-reg Discord delivery results project truthful teleme
   const address = server.address();
   const webhookUrl = `http://127.0.0.1:${address.port}`;
   const oldMute = process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS;
+  const oldSwarmConfig = process.env.SWARM_CONFIG;
+  const swarmConfigPath = path.join(root, 'swarm.config.json');
+  fs.writeFileSync(swarmConfigPath, `${JSON.stringify(platformTestDefaults(), null, 2)}\n`);
   process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS = '';
+  process.env.SWARM_CONFIG = swarmConfigPath;
 
   try {
     const skipped = await visualDiscordMod.discordSummary('01', [], 'PASS', false, { webhookUrl: '' });
@@ -1146,6 +1174,8 @@ await record('Buster visual-reg Discord delivery results project truthful teleme
   } finally {
     if (oldMute === undefined) delete process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS;
     else process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS = oldMute;
+    if (oldSwarmConfig === undefined) delete process.env.SWARM_CONFIG;
+    else process.env.SWARM_CONFIG = oldSwarmConfig;
     await new Promise((resolve, reject) => server.close((err) => (err ? reject(err) : resolve())));
     fs.rmSync(root, { recursive: true, force: true });
   }
@@ -1169,6 +1199,7 @@ await record('Buster logger append failures emit canonical degraded telemetry', 
     module: '01',
     run_id: 'run-buster-logger-degraded-1',
     enabled: true,
+    streamMaxLen: platformTestDefaults().telemetry.stream_max_len,
     log_dir: logDir,
     attempt: 1,
     dispatch_id: 'dispatch-buster-logger-degraded-1',

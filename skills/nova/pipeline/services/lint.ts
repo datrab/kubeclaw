@@ -58,8 +58,17 @@ function scopeChangedFilesToModule(moduleDir = null, changedFiles = []) {
   const modulePrefix = `${normalizedModuleDir}/`;
   return changedFiles.filter((filePath) => {
     const normalizedFilePath = normalizeRepoRelativePath(filePath);
-    return normalizedFilePath === normalizedModuleDir || normalizedFilePath.startsWith(modulePrefix);
+    if (normalizedFilePath === normalizedModuleDir) return true;
+    return normalizedFilePath.startsWith(modulePrefix);
   });
+}
+
+function preCheckTimeoutMs(config) {
+  const timeoutSeconds = Number(config?.pre_check?.timeout_seconds);
+  if (!Number.isFinite(timeoutSeconds) || timeoutSeconds <= 0) {
+    throw new Error('config.pre_check.timeout_seconds must be a positive number');
+  }
+  return timeoutSeconds * 1000;
 }
 
 /**
@@ -88,7 +97,7 @@ export function generateLintReport(config, tier, opts = {}) {
     return { report: null, error: error.message, setup_failed: true, error_code: error.code, diagnostic: error };
   }
 
-  const timeout = opts.timeoutMs ?? (tier === 'pre-check' ? config.pre_check.timeout_seconds * 1000 : 120000);
+  const timeout = opts.timeoutMs ?? (tier === 'pre-check' ? preCheckTimeoutMs(config) : 120000);
   const outputPath = tmpFile(`lint-${tier}`, opts.moduleId || 'report', '.json');
 
   const args = [
@@ -264,7 +273,7 @@ export async function runPreCheck(config, moduleDir, status, moduleId) {
     return { passed: true, report: null, error: null };
   }
 
-  const timeout = config.pre_check.timeout_seconds * 1000;
+  const timeout = preCheckTimeoutMs(config);
   const failCount = Number(status?.fail_count);
   const attempt = (Number.isFinite(failCount) ? Math.trunc(failCount) : 0) + 1;
   const lintDir = moduleLintLogDir(config, moduleDir);

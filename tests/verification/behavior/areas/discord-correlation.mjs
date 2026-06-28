@@ -1,3 +1,5 @@
+import { platformTestDefaults } from './helpers.mjs';
+
 export async function registerDiscordCorrelationArea({
   record,
   sourceRoot,
@@ -152,6 +154,7 @@ await record('Discord audit uses structured correlation instead of rendered fiel
   const runLogDir = path.join(logDir, 'pipeline', 'runs', 'run-discord-display-label-1');
 
   const config = {
+    ...platformTestDefaults(),
     project: 'behavior-discord-display-label',
     _runId: 'run-discord-display-label-1',
     run_id: 'run-discord-display-label-1',
@@ -300,6 +303,7 @@ await record('Nova injection Discord alerts preserve session correlation', async
 
   const sessionKey = 'agent:main:acp:nova-inject-01';
   const config = {
+    ...platformTestDefaults(),
     project: 'behavior-nova-inject',
     _runId: 'run-nova-inject-1',
     run_id: 'run-nova-inject-1',
@@ -395,6 +399,7 @@ await record('Gate-owned Nova injections preserve gate_type across message, audi
 
   const sessionKey = 'agent:main:acp:nova-inject-gate-review';
   const config = {
+    ...platformTestDefaults(),
     project: 'behavior-nova-inject-gate',
     _runId: 'run-nova-inject-gate-1',
     run_id: 'run-nova-inject-gate-1',

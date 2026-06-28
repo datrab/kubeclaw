@@ -26,12 +26,20 @@ import {
   resolveStatusGatewayLabel,
   resolveStatusSessionKey,
 } from './correlation.ts';
-
 export * from './rate-limit-builders.ts';
 export * from './rate-limit-exit.ts';
 
 export function createRateLimitPauseState(initialCount = 0) {
   return { count: initialCount };
+}
+
+export function getRateLimitConfig(config) {
+  const rateLimit = config?.rate_limit || {};
+  return {
+    max_pauses_per_module: Number(rateLimit.max_pauses_per_module),
+    cooldown_hours: Number(rateLimit.cooldown_hours),
+    cooldown_buffer_ms: Number(rateLimit.cooldown_buffer_ms),
+  };
 }
 
 async function finalizeConfiguredSessionRateLimitExhaustion(config, options = {}, exhaustedCtx = {}) {
@@ -87,10 +95,11 @@ function buildRateLimitDiscordCorrelation(status = {}) {
 
 export async function handleSessionRateLimit(config, status = {}, options = {}) {
   const pauseCount = options.pauseCount ?? 1;
-  const maxPauses = options.maxPauses ?? (config.rate_limit.max_pauses_per_module);
-  const cooldownHours = options.cooldownHours ?? (config.rate_limit.cooldown_hours);
+  const rateLimitConfig = getRateLimitConfig(config);
+  const maxPauses = options.maxPauses ?? rateLimitConfig.max_pauses_per_module;
+  const cooldownHours = options.cooldownHours ?? rateLimitConfig.cooldown_hours;
   const cooldownMs = Math.ceil(cooldownHours * 60 * 60 * 1000);
-  const cooldownBufferMs = options.cooldownBufferMs ?? config.rate_limit.cooldown_buffer_ms;
+  const cooldownBufferMs = options.cooldownBufferMs ?? rateLimitConfig.cooldown_buffer_ms;
   const resumeAt = new Date(Date.now() + cooldownMs);
   const detail = options.getDetail ? options.getDetail(status) : defaultSessionRateLimitDetail(status);
   const ctx = { status, pauseCount, maxPauses, cooldownHours, cooldownMs, resumeAt, detail };
@@ -218,7 +227,7 @@ export async function handleSessionRateLimit(config, status = {}, options = {}) 
 
 export async function processSessionRateLimit(config, status = {}, options = {}) {
   const pauseCount = options.pauseCount ?? 1;
-  const maxPauses = options.maxPauses ?? (config.rate_limit.max_pauses_per_module);
+  const maxPauses = options.maxPauses ?? getRateLimitConfig(config).max_pauses_per_module;
   const normalizedStatus = options.normalizeStatus
     ? options.normalizeStatus(status, pauseCount)
     : { ...(status || {}) };
@@ -454,7 +463,7 @@ export async function withRateLimitRecovery(config, moduleDir, pollFn, options =
 export async function withSessionRateLimitRecovery(config, pollFn, options = {}) {
   const pauseState = options.pauseState || null;
   let rateLimitPauses = pauseState?.count ?? 0;
-  const maxPauses = options.maxPauses ?? (config.rate_limit.max_pauses_per_module);
+  const maxPauses = options.maxPauses ?? getRateLimitConfig(config).max_pauses_per_module;
 
   while (true) {
     const result = await pollFn();

@@ -10,6 +10,7 @@ import {
 
 import {
   buildBuiltInRegistry,
+  platformTestDefaults,
 } from './helpers.mjs';
 
 export async function registerModelsArea({
@@ -81,8 +82,9 @@ export async function registerModelsArea({
     const swarmDir = path.join(repoRoot, '.swarm');
     const runId = 'run-pipeline-start-models-1';
     const config = {
+      ...platformTestDefaults(),
       project: 'behavior-pipeline-start-models',
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       paths: { swarm_dir: swarmDir },
       _runId: runId,
       run_id: runId,

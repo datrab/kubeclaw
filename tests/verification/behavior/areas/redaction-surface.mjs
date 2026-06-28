@@ -2,6 +2,7 @@ import { pathToFileURL } from 'url';
 
 import {
   buildBuiltInRegistry,
+  platformTestDefaults,
 } from './helpers.mjs';
 
 function listFiles(fs, path, root) {
@@ -148,9 +149,10 @@ export async function registerRedactionSurfaceArea({
     const secrets = Object.values(rawSecrets);
 
     const config = {
+      ...platformTestDefaults(),
 	      project: 'behavior-redaction-nova',
 	      repo_root: repoRoot,
-	      telemetry: { enabled: true },
+	      telemetry: platformTestDefaults().telemetry,
 	      _runId: runId,
       run_id: runId,
       _disable_discord_webhooks: true,
@@ -265,13 +267,15 @@ export async function registerRedactionSurfaceArea({
     };
     const secrets = Object.values(rawSecrets);
     const config = {
+      ...platformTestDefaults(),
 	      project: 'behavior-redaction-egress',
 	      repo_root: repoRoot,
 	      _runId: runId,
       run_id: runId,
       _disable_discord_webhooks: true,
       fallback_model: 'gpt-test',
-      rate_limit: { max_pauses_per_module: 0 },
+      rate_limit: { ...platformTestDefaults().rate_limit, max_pauses_per_module: 0 },
+      case_study: { timeout_minutes: 1 },
       _runStats: runtimeCoreMod.createRunStats('2026-04-17T00:00:00.000Z'),
       _progress: { modules: { '01': { dir: '01', title: 'Module 01' } } },
       paths: { swarm_dir: swarmDir, modules_dir: modulesDir },
@@ -416,6 +420,8 @@ export async function registerRedactionSurfaceArea({
 	      module_id: '07',
 	      run_id: runId,
 	      enabled: true,
+        telemetry: platformTestDefaults().telemetry,
+        streamMaxLen: platformTestDefaults().telemetry.stream_max_len,
 	      log_dir: moduleLogDir,
 	      pipeline_log_path: pipelineLogPath,
 	      pipeline_run_log_path: pipelineRunLogPath,

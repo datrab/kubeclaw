@@ -26,29 +26,25 @@ function makeModuleCompletionConfig() {
     },
     buster: {
       runtime: {
+        heartbeat_interval_ms: 1,
+        task_poll_interval_ms: 1,
+        task_pending_reclaim_idle_ms: 1,
         completion_event_block_ms: 0,
         completion_recovery_scan_interval_ms: 1,
+        task_stream_max_len: 1,
       },
     },
-    redis_completion: {
-      tail_scan_batch_size: 100,
-      tail_scan_limit: 1000,
-    },
+    redis_completion: { archive_max_len: 1000, tail_scan_batch_size: 100, tail_scan_limit: 1000 },
     event_adapters: {
       local_evidence_debounce_ms: 1,
+      approval_signal_debounce_ms: 1,
     },
     agent_observability: {
-      profile: 'test',
-      profiles: {
-        test: {
-          forge_completion: { xread_block_ms: 1, settle_ms: 0 },
-        },
-      },
+      forge_completion: { xread_block_ms: 1, settle_ms: 0 },
     },
     polling: {
-      progress_log_interval_ms: 1,
-      session_progress_emit_interval_ms: 1,
-      session_progress_log_interval_ms: 1,
+      interval_seconds: 1,
+      progress_interval_ms: 1,
       session_end_grace_ms: 0,
     },
     _runId: 'run-test',
@@ -80,9 +76,10 @@ test('pollGeneric preserves rate-limit lifecycle mutation metadata', async () =>
   };
 
   const result = await pollGeneric({
-    poll_interval_seconds: 1,
     polling: {
-      progress_log_interval_ms: 1,
+      interval_seconds: 1,
+      progress_interval_ms: 1,
+      session_end_grace_ms: 0,
     },
   }, async () => ({
     rate_limited: true,
@@ -256,7 +253,6 @@ test('pollForgeCompletion accepts a valid forge completion artifact without wait
     fs.rmSync(config.repo_root, { recursive: true, force: true });
   });
 
-  config.poll_interval_seconds = 1;
   const moduleDir = 'module-a-dir';
   const moduleRoot = path.join(config.paths.modules_dir, moduleDir);
   fs.mkdirSync(moduleRoot, { recursive: true });

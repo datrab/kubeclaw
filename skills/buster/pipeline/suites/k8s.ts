@@ -513,6 +513,16 @@ async function httpHealthCheck(url: string, log: SuiteLog): Promise<number> {
   return code;
 }
 
+async function httpTextCheck(url: string, expectedText: string | null, log: SuiteLog): Promise<string> {
+  log(`Preview check: ${url}`);
+  const { stdout } = await execFileAsync('curl', ['-sfL', '--connect-timeout', '10', '--max-time', '30', url], { timeout: 45000, encoding: 'utf8', maxBuffer: 2 * 1024 * 1024, env: buildSubprocessEnv() });
+  if (expectedText && !stdout.includes(expectedText)) {
+    throw new Error(`Preview URL did not serve expected text "${expectedText}"`);
+  }
+  log(`Preview check: received ${stdout.length} byte(s)${expectedText ? ` containing "${expectedText}"` : ''}`);
+  return stdout;
+}
+
 function configFailure(startTime: number, message: string, rule: string): SuiteVerdict {
   return createSuiteVerdict('k8s', STATUS.FAIL, {
     critical: true,
@@ -584,6 +594,9 @@ export default async function k8sSuite(context: K8sContext): Promise<SuiteVerdic
   const previewCredentialCommand = previewRevealCredentials
     ? buildPreviewCredentialCommand(previewCredentialSecretName, previewCredentialsKeys)
     : null;
+  const previewExpectedText = typeof previewCfg.expected_text === 'string' && previewCfg.expected_text
+    ? previewCfg.expected_text
+    : (typeof k8sCfg.preview_expected_text === 'string' && k8sCfg.preview_expected_text ? k8sCfg.preview_expected_text : null);
   const testCredentialSpecs = normalizeTestCredentialSpecs(k8sCfg, {
     ...previewCfg,
     credentials_ref: previewCredentialsRef,
@@ -639,6 +652,7 @@ export default async function k8sSuite(context: K8sContext): Promise<SuiteVerdic
   let leaseStatus: NamespaceLeaseStatus | null = null;
   let previewLeaseStatus: NamespaceLeaseStatus | null = null;
   let testCredentials: AnyRecord[] = [];
+  let previewBodyBytes: number | null = null;
 
   const runStep = async (name: string, started: string, action: () => Promise<string>): Promise<void> => {
     if (criticalFailed) return;
@@ -721,9 +735,21 @@ export default async function k8sSuite(context: K8sContext): Promise<SuiteVerdic
   if (!criticalFailed && purpose === 'final-preview' && previewExposureProvider === 'tailscale-ingress') {
     await runStep('preview-url', `Waiting up to ${previewUrlTimeoutSeconds}s for Tailscale URL`, async () => {
       previewLeaseStatus = await waitForPreviewUrl(leaseName, previewUrlTimeoutSeconds, log);
-      return previewLeaseStatus.previewUrl
-        ? `Preview: ${previewLeaseStatus.previewUrl}`
-        : `Preview pending: ${previewLeaseStatus.message ?? previewLeaseStatus.exposurePhase ?? 'pending'}`;
+      if (!previewLeaseStatus.previewUrl) {
+        throw new Error(`Preview URL missing: ${previewLeaseStatus.message ?? previewLeaseStatus.exposurePhase ?? 'pending'}`);
+      }
+      return `Preview: ${previewLeaseStatus.previewUrl}`;
+    });
+  }
+  if (!criticalFailed && purpose === 'final-preview' && previewExposureProvider === 'tailscale-ingress') {
+    await runStep('preview-health-check', `Fetching Tailscale preview URL`, async () => {
+      const previewUrl = previewLeaseStatus?.previewUrl;
+      if (!previewUrl) throw new Error('Preview URL unavailable before health check');
+      const body = await httpTextCheck(previewUrl, previewExpectedText, log);
+      previewBodyBytes = body.length;
+      return previewExpectedText
+        ? `Preview URL served expected text "${previewExpectedText}"`
+        : 'Preview URL served HTTP content';
     });
   }
 
@@ -756,6 +782,8 @@ export default async function k8sSuite(context: K8sContext): Promise<SuiteVerdic
       preview_credentials_ref: finalLeaseStatus?.credentialsRef || previewCredentialsRef,
       preview_credentials_available: finalLeaseStatus?.credentialsAvailable === true,
       preview_credentials_command: previewCredentialCommand,
+      preview_expected_text: previewExpectedText,
+      preview_body_bytes: previewBodyBytes,
       test_credentials: testCredentials,
       cleanup_policy: cleanupPolicy,
       purpose,

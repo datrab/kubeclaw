@@ -72,16 +72,15 @@ function resolveGitPath(repoRoot, gitPathName) {
 
 function gitPolicy() {
   return {
-    timeout_ms: 30000,
-    max_buffer_bytes: 52428800,
-    push_timeout_ms: 60000,
-    push_max_retries: 3,
-    push_retry_delay_ms: 1,
+    git: {
+      command: { timeout_ms: 30000, max_buffer_bytes: 52428800 },
+      push: { timeout_ms: 60000, max_attempts: 3, retry_delay_ms: 1 },
+    },
   };
 }
 
 function testConfig(repoRoot, extra = {}) {
-  return { repo_root: repoRoot, project: 'test', git: gitPolicy(), ...extra };
+  return { repo_root: repoRoot, project: 'test', ...gitPolicy(), ...extra };
 }
 
 test('runtime stash restore preserves pre-existing user stash', () => {
@@ -141,7 +140,7 @@ test('runtime stash restore treats recreated runtime files as already restored w
   const config = {
     repo_root: repoRoot,
     project: 'demo',
-    git: gitPolicy(),
+    ...gitPolicy(),
     paths: {
       swarm_dir: path.join(repoRoot, 'Projects/demo/src/.swarm'),
       modules_dir: path.join(repoRoot, 'Projects/demo/src/.swarm/modules'),
@@ -221,7 +220,7 @@ test('gitSyncBeforeBuster commits only meaningful forge paths and auto-resolves 
     const config = {
       repo_root: repoRoot,
       project: 'demo',
-      git: gitPolicy(),
+      ...gitPolicy(),
       _runId: 'run-git-sync-before-buster-test',
       _runStats: createRunStats('2026-06-20T00:00:00.000Z'),
       paths: {
@@ -270,7 +269,7 @@ test('gitCommitAndPush defaults to project-scoped staging and ignores unrelated 
     const config = {
       repo_root: repoRoot,
       project: 'demo',
-      git: gitPolicy(),
+      ...gitPolicy(),
       _runId: 'run-git-commit-project-scope-test',
       _runStats: createRunStats('2026-06-20T00:00:00.000Z'),
       paths: {
@@ -305,7 +304,7 @@ test('gitCommitAndPush skips proactive pull when tracked out-of-scope files are 
     const config = {
       repo_root: repoRoot,
       project: 'demo',
-      git: gitPolicy(),
+      ...gitPolicy(),
       _runId: 'run-git-commit-out-of-scope-dirty-test',
       _runStats: createRunStats('2026-06-20T00:00:00.000Z'),
       paths: {
@@ -342,7 +341,7 @@ test('gitCommitAndPush falls back to pull-rebase after direct push rejection whe
     const config = {
       repo_root: repoRoot,
       project: 'demo',
-      git: gitPolicy(),
+      ...gitPolicy(),
       _runId: 'run-git-commit-out-of-scope-rejected-test',
       _runStats: createRunStats('2026-06-20T00:00:00.000Z'),
       paths: {
@@ -387,7 +386,7 @@ test('gitCommitAndPush preserves uncommitted project files during pull-rebase', 
     const config = {
       repo_root: repoRoot,
       project: 'demo',
-      git: gitPolicy(),
+      ...gitPolicy(),
       _runId: 'run-git-commit-project-dirty-preserved-test',
       _runStats: createRunStats('2026-06-20T00:00:00.000Z'),
       paths: {

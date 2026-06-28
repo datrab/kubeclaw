@@ -16,6 +16,7 @@ import {
   buildModuleSessionRateLimitStatus,
   createTrackedGateSessionRateLimitExhaustedResultOptions,
   createTrackedModuleSessionRateLimitExhaustedResultOptions,
+  getRateLimitConfig,
 } from './rate-limit.ts';
 import { buildSessionProgressStateKey, resolveSessionPollIdentity } from './polling-identity.ts';
 import {
@@ -28,6 +29,16 @@ import { createBudgetFromMinutes, isBudgetExhaustedError } from '../timing.ts';
 import { createPipelineEventBus, waitForAny } from './pipeline-event-contract.ts';
 import { moduleLogDir } from '../core/paths.ts';
 import { gatewayInvokePolicy } from '../core/session-policy.ts';
+import { getPipelineDefaultsConfig } from './runtime-defaults.ts';
+
+function pollingPolicyNumber(config, field, options = {}) {
+  const raw = config?.polling?.[field];
+  const value = Number(raw);
+  if (!Number.isFinite(value) || (options.positive && value <= 0)) {
+    throw new Error(`config.polling.${field}: required ${options.positive ? 'positive ' : ''}number in swarm.config.json`);
+  }
+  return value;
+}
 
 function appendDurableSessionEndAlert(config, identity = {}, reason, extra = {}) {
   appendDurableOperatorAlert(config, identity.gate_id ? 'gate.operator_alert' : 'module.operator_alert', {
@@ -75,7 +86,7 @@ function worktreeChangeSignature(config, ignoredPaths = []) {
     };
   }
   try {
-    const porcelain = gitExec(config.repo_root, ['status', '--porcelain', '--untracked-files=all']);
+    const porcelain = gitExec(config, ['status', '--porcelain', '--untracked-files=all']);
     if (!porcelain) return { ok: true, signature: '' };
     const ignoreAbs = ignoredPaths.filter(Boolean).map((entry) => path.resolve(entry));
     const entries = porcelain.split('\n')
@@ -95,8 +106,8 @@ function worktreeChangeSignature(config, ignoredPaths = []) {
         const digest = crypto.createHash('sha256').update(fs.readFileSync(abs)).digest('hex');
         return `${line}\0untracked:${stat.mode}:${stat.size}:${digest}`;
       }
-      const worktreeDiff = gitExec(config.repo_root, ['diff', '--binary', '--', relPath]);
-      const stagedDiff = gitExec(config.repo_root, ['diff', '--cached', '--binary', '--', relPath]);
+      const worktreeDiff = gitExec(config, ['diff', '--binary', '--', relPath]);
+      const stagedDiff = gitExec(config, ['diff', '--cached', '--binary', '--', relPath]);
       const digest = crypto.createHash('sha256')
         .update(worktreeDiff)
         .update('\0')
@@ -170,18 +181,12 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
     gateway: { active: false, degradedAt: null },
     transcript: { active: false, degradedAt: null },
   };
-  const interval = config.poll_interval_seconds * 1000;
+  const interval = pollingPolicyNumber(config, 'interval_seconds', { positive: true }) * 1000;
   const budget = opts.budget || createBudgetFromMinutes(timeoutMinutes, { label: logLabel });
   const startTime = Date.now();
-  const nudgeThreshold = config.session_nudge_threshold;
-  const sessionEndGraceMs = config.polling?.session_end_grace_ms;
-  const sessionProgressLogIntervalMs = config.polling?.session_progress_log_interval_ms;
-  if (typeof sessionEndGraceMs !== 'number' || !Number.isFinite(sessionEndGraceMs) || sessionEndGraceMs < 0) {
-    throw new Error('config.polling.session_end_grace_ms is required in swarm.config.json');
-  }
-  if (typeof sessionProgressLogIntervalMs !== 'number' || !Number.isFinite(sessionProgressLogIntervalMs) || sessionProgressLogIntervalMs < 0) {
-    throw new Error('config.polling.session_progress_log_interval_ms is required in swarm.config.json');
-  }
+  const nudgeThreshold = getPipelineDefaultsConfig(config).session_nudge_threshold;
+  const sessionEndGraceMs = pollingPolicyNumber(config, 'session_end_grace_ms');
+  const sessionProgressLogIntervalMs = pollingPolicyNumber(config, 'progress_interval_ms');
   let nudgeSent = false;
 
   // Resolve sessionKey from label
@@ -220,14 +225,11 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
     attempt,
   });
   let _rateLimitPauses = 0;
-  const _maxRateLimitPauses = config.rate_limit.max_pauses_per_module;
+  const _maxRateLimitPauses = getRateLimitConfig(config).max_pauses_per_module;
   let _lastProgressEmit = startTime;
   let _lastSessionProgressLogAt = 0;
   let _lastSessionProgressStateKey = null;
-  const progressIntervalMs = config.polling?.session_progress_emit_interval_ms;
-  if (typeof progressIntervalMs !== 'number' || !Number.isFinite(progressIntervalMs) || progressIntervalMs < 0) {
-    throw new Error('config.polling.session_progress_emit_interval_ms is required in swarm.config.json');
-  }
+  const progressIntervalMs = pollingPolicyNumber(config, 'progress_interval_ms');
 
   function _mirrorSubagentTranscript() {
     const destDir = moduleLogDir(config, _moduleId);
@@ -281,7 +283,10 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
       identity: _telemetryIdentity,
       budget,
       pollMs: interval,
-      monitorOpts: config,
+      monitorOpts: {
+        ...config,
+        gatewayStatusPolicy: gatewayInvokePolicy(config, ['session', 'status'].join('_')),
+      },
       initialState: acpState,
       stopOnTerminal: false,
       ...(opts.getAcpMonitorState ? { getAcpMonitorState: opts.getAcpMonitorState } : {}),

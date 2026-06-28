@@ -5,6 +5,7 @@
 
 import { log } from '../core/logger.ts';
 import { onRetryScheduled } from '../services/telemetry.ts';
+import { maybeCrashForRealE2E } from '../services/real-e2e-crash-injection.ts';
 import {
   _telemetryCtx,
   setLogScope,
@@ -65,6 +66,14 @@ export async function runModule(config: AnyRecord, progress: AnyRecord, moduleId
       gateway_label: attempt.gateway_label ?? null,
       session_key: attempt.session_key ?? null,
       reason: attempt.last_fail?.summary || null,
+    });
+    maybeCrashForRealE2E(config, progress, 'during_retry_cycle', {
+      step_type: 'module',
+      step_id: moduleId,
+      module_id: moduleId,
+      failed_attempt: attempt.fail_count,
+      next_attempt: attempt.fail_count + 1,
+      dispatch_id: attempt.dispatch_id ?? null,
     });
     await deps.sleep(5000, { budget: opts.budget || null, signal: opts.signal || null }); // Allow gateway to release session labels before retry
   }

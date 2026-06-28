@@ -1,267 +1,37 @@
 {
-  "discord_webhook_url": "",
-  "discord_alerts": {
-    "info": true,
-    "warn": true,
-    "critical": true,
-    "ok": true
+  "_doc": "Example compact swarm config for a local exception. It still uses the standard profile; only known effective config paths may be overridden.",
+  "profile": "standard",
+  "features": {
+    "observability": true,
+    "buster": true,
+    "discord_alerts": true
   },
-  "poll_interval_seconds": 30,
-  "default_timeout_minutes": 180,
-  "default_max_fails": 4,
-  "auto_retry_threshold": 3,
-  "session_nudge_threshold": 0.75,
-  "rate_limit": {
-    "cooldown_hours": 1,
-    "max_pauses_per_module": 3,
-    "cooldown_buffer_ms": 5000
+  "tuning": {
+    "safety_margins": "high",
+    "retention": "high",
+    "alerts": "rich",
+    "logs": "verbose",
+    "checks": "strict",
+    "determinism": "strict"
   },
-  "polling": {
-    "progress_log_interval_ms": 30000,
-    "session_progress_emit_interval_ms": 30000,
-    "session_progress_log_interval_ms": 30000,
-    "session_end_grace_ms": 15000
-  },
-  "locks": {
-    "lifecycle_append_stale_ms": 300000,
-    "lifecycle_append_timeout_ms": 30000,
-    "gate_active_session_stale_ms": 300000,
-    "gate_active_session_timeout_ms": 30000,
-    "pipeline_run_lock_lease_ms": 120000,
-    "pipeline_run_lock_heartbeat_ms": 30000,
-    "pipeline_run_lock_mutation_stale_ms": 5000,
-    "pipeline_run_lock_abort_settle_ms": 5000
-  },
-  "gateway": {
-    "invoke": {
-      "session_status": {
-        "timeout_ms": 10000,
-        "max_retries": 3,
-        "retry_delay_ms": 5000
-      },
-      "session_spawn": {
-        "timeout_ms": 30000,
-        "max_retries": 3,
-        "retry_delay_ms": 5000
-      },
-      "session_send": {
-        "timeout_ms": 15000,
-        "max_retries": 3,
-        "retry_delay_ms": 5000
-      },
-      "subagent_kill": {
-        "timeout_ms": 30000,
-        "max_retries": 3,
-        "retry_delay_ms": 5000
-      },
-      "subagent_list": {
-        "timeout_ms": 30000,
-        "max_retries": 3,
-        "retry_delay_ms": 5000
-      },
-      "health": {
-        "timeout_ms": 5000
-      }
+  "overrides": {
+    "pipeline_defaults": {
+      "timeout_minutes": 180,
+      "max_fails": 4,
+      "auto_retry_threshold": 3
     },
-    "health": {
-      "ready_timeout_ms": 120000,
-      "ready_interval_ms": 3000,
-      "monitor_interval_ms": 60000,
-      "max_failures": 3
-    }
-  },
-  "session": {
-    "spawn": {
-      "thread": false,
-      "mode": "run",
-      "cleanup": "keep",
-      "stream_to": "parent"
-    },
-    "kill": {
-      "acp_confirm_timeout_ms": 15000,
-      "subagent_confirm_timeout_ms": 120000,
-      "confirm_poll_ms": 2000,
-      "cleanup_confirm_timeout_ms": "match_confirm_timeout",
-      "acpx_timeout_ms": 10000,
-      "stop_message": "/stop"
-    },
-    "termination": {
-      "grace_ms": 5000,
-      "max_grace_ms": 10000,
-      "poll_ms": 500,
-      "gateway_request_max_ms": 1000,
-      "cleanup_confirm_timeout_ms": 0,
-      "status_timeout_ms": 1000,
-      "request_timeout_ms": 1000,
-      "stop_request_timeout_ms": 1000,
-      "list_timeout_ms": 1000,
-      "acpx_timeout_ms": 1000
-    },
-    "health_check_wait_ms": 8000
-  },
-  "buster": {
-    "suite_timeout_ms": 180000,
-    "max_crash_retries": 2,
-    "runtime": {
-      "heartbeat_path": "/tmp/kubeclaw-buster-heartbeat",
-      "heartbeat_interval_ms": 1000,
-      "task_poll_interval_ms": 2000,
-      "task_pending_reclaim_idle_ms": 60000,
-      "completion_event_block_ms": 0,
-      "completion_recovery_scan_interval_ms": 5000,
-      "task_stream_max_len": 250,
-      "task_stream": "swarm:buster:tasks"
-    }
-  },
-  "acp_monitor": {
-    "unknown_poll_limit": 10,
-    "stale_poll_limit": 10,
-    "max_transcript_extensions": 3,
-    "transcript_grace_ms": 300000,
-    "monitor_poll_ms": 10000
-  },
-  "telemetry": {
-    "enabled": true,
-    "stream_max_len": 10000,
-    "sink_timeout_ms": 5000
-  },
-  "agent_observability": {
-    "required": true,
-    "profile": "standard",
-    "profiles": {
-      "standard": {
-        "payload": {
-          "max_event_bytes": 3145728
-        },
-        "startup_evidence": {
-          "timeout_ms": 15000,
-          "block_ms": 250
-        },
-        "forge_completion": {
-          "xread_block_ms": 1,
-          "settle_ms": 15000
-        },
-        "redis": {
-          "command_timeout_ms": 5000
-        },
-        "streams": {
-          "stream_max_len": 10000,
-          "dead_letter_max_len": 1000
-        },
-        "plugin": {
-          "max_queue_per_stream": 100,
-          "control_write": {
-            "max_attempts": 3,
-            "retry_base_ms": 100,
-            "retry_max_ms": 1000
-          },
-          "hook": {
-            "priority": -100,
-            "timeout_ms": 1000
-          }
-        },
-        "plugin_control": {
-          "timeout_ms": 10000
-        },
-        "ingester": {
-          "read": {
-            "block_ms": 1000,
-            "reclaim_idle_ms": 60000
-          },
-          "loop": {
-            "delay_ms": 250,
-            "health_check_every": 10,
-            "stop_timeout_ms": 2000
-          },
-          "trim": {
-            "interval_ms": 5000,
-            "payload_stream_max_len": 5000
-          },
-          "pressure": {
-            "control_lag_degraded_threshold": 1000,
-            "payload_pressure_degraded_threshold": 10000
-          }
-        }
-      }
-    },
-    "plugin": {
-      "enabled": true
-    },
-    "plugin_control": {
-      "enabled": true,
-      "pluginId": "kubeclaw-agent-observer",
-      "command": "openclaw",
-      "disableOnStop": true
-    },
-    "ingester": {
-      "enabled": true,
-      "redisNetworkIsolation": "isolated",
-      "groupName": "kubeclaw-agent-observability-ingester",
-      "consumerName": "kubeclaw-agent-observability-ingester-1"
-    }
-  },
-  "pre_check": {
-    "enabled": true,
-    "lint_report_path": "/app/skills/pipeline/tools/lint-report.ts",
-    "timeout_seconds": 60
-  },
-  "agents": {
-    "forge": {
-      "dispatch": "subagent",
-      "acp_agent_id": "codex",
-      "cwd": null
+    "rate_limit": {
+      "cooldown_hours": 1,
+      "max_pauses_per_module": 3
     },
     "buster": {
-      "dispatch": "redis",
-      "redis_js_path": "/app/skills/pipeline/tools/redis.ts"
+      "runtime": {
+        "suite_timeout_ms": 180000
+      }
     },
-    "echo": {
-      "dispatch": "subagent",
-      "acp_agent_id": "codex",
-      "cwd": null
+    "review_defaults": {
+      "max_fix_cycles": 2
     }
   },
-  "fallback_model": "gpt-5.5",
-  "review_defaults": {
-    "timeout_minutes": 30,
-    "max_fix_cycles": 2,
-    "lint_tier": "full",
-    "lint_required": true
-  },
-  "plugins": {
-    "enabled": true,
-    "allowCustomModules": false,
-    "extraModulePaths": [],
-    "modules": {},
-    "stageOwners": {},
-    "restrictedCapabilityAllowlist": {}
-  },
-  "_doc": "Platform-level config. Loaded from /home/node/.openclaw/swarm.config.json with SWARM_CONFIG as a secondary candidate. Project/repo_root/paths are derived by loadConfig — do NOT set them here.",
-  "agent_startup_retry_budget": 3,
-  "git": {
-    "timeout_ms": 30000,
-    "max_buffer_bytes": 52428800,
-    "push_timeout_ms": 60000,
-    "push_max_retries": 3,
-    "push_retry_delay_ms": 5000
-  },
-  "redis_completion": {
-    "archive_max_len": 1000,
-    "tail_scan_batch_size": 100,
-    "tail_scan_limit": 1000
-  },
-  "event_adapters": {
-    "local_evidence_debounce_ms": 100,
-    "approval_signal_debounce_ms": 25
-  },
-  "discord": {
-    "webhook_timeout_ms": 10000
-  },
-  "arch_validation": {
-    "agent_enabled": false,
-    "timeout_minutes": 15
-  },
-  "case_study": {
-    "timeout_minutes": 30
-  }
+  "discord_webhook_url": ""
 }

@@ -15,8 +15,22 @@ function testConfig(runId = 'run-invalid-timeout-policy') {
     project: 'approval-gate-test',
     _runId: runId,
     run_id: runId,
-    default_timeout_minutes: 5,
+    pipeline_defaults: {
+      timeout_minutes: 5,
+      max_fails: 0,
+      auto_retry_threshold: 0,
+      agent_startup_retry_budget: 0,
+      session_nudge_threshold: 0,
+    },
     paths: { swarm_dir: dir },
+    locks: {
+      lifecycle_append: { stale_ms: 1, timeout_ms: 1 },
+      gate_active_session: { stale_ms: 1, timeout_ms: 1 },
+    },
+    event_adapters: {
+      local_evidence_debounce_ms: 1,
+      approval_signal_debounce_ms: 1,
+    },
   };
 }
 

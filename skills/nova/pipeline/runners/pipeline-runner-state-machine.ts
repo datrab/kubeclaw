@@ -2,6 +2,16 @@
 
 import { resumeDurableCooldownForStep } from '../services/rate-limit.ts';
 import {
+  buildPipelineStepResult,
+  PIPELINE_STEP_ACTIONS,
+  PIPELINE_STEP_OUTCOMES,
+  PIPELINE_STEP_TYPES,
+} from '../services/contracts/pipeline-step-result.ts';
+import {
+  PIPELINE_TERMINAL_ACTIONS,
+  PIPELINE_TERMINAL_SCOPES,
+} from '../services/contracts/terminal-decision.ts';
+import {
   completePipeline,
   haltPipeline,
   normalizeStepResultForPipeline,
@@ -15,6 +25,7 @@ export const PIPELINE_RUNNER_ACTIONS = Object.freeze({
   RUN_VALIDATOR: 'run_validator',
   RUN_GATE: 'run_gate',
   RUN_MODULE: 'run_module',
+  RUN_MODULE_BATCH: 'run_module_batch',
 });
 
 export function planPipelineStep(next: AnyRecord = {}): AnyRecord {
@@ -22,6 +33,7 @@ export function planPipelineStep(next: AnyRecord = {}): AnyRecord {
   if (next?.type === 'blocked') return { action: PIPELINE_RUNNER_ACTIONS.HALT_BLOCKED, next };
   if (next?.type === 'validator') return { action: PIPELINE_RUNNER_ACTIONS.RUN_VALIDATOR, next };
   if (next?.type === 'gate') return { action: PIPELINE_RUNNER_ACTIONS.RUN_GATE, next };
+  if (next?.type === 'module_batch' && Array.isArray(next.ids) && next.ids.length > 0) return { action: PIPELINE_RUNNER_ACTIONS.RUN_MODULE_BATCH, next };
   if (next?.type === 'module' && next?.id) return { action: PIPELINE_RUNNER_ACTIONS.RUN_MODULE, next };
   throw new Error(`Unknown typed pipeline step: ${JSON.stringify(next)}`);
 }
@@ -126,7 +138,56 @@ async function runPlannedPipelineStep({ config, progress, opts, deps, plan, runV
   if (plan.action === PIPELINE_RUNNER_ACTIONS.RUN_GATE) {
     return abortablePipelineStep(deps.runGate(config, progress, next.id, { novaPrompt: opts.novaPrompt, deps: opts.deps, budget: opts.budget || null, signal: opts.signal || null }), opts);
   }
+  if (plan.action === PIPELINE_RUNNER_ACTIONS.RUN_MODULE_BATCH) {
+    const moduleIds = [...new Set(next.ids.map((id: unknown) => String(id)).filter(Boolean))];
+    const results = await abortablePipelineStep(Promise.allSettled(moduleIds.map(async (moduleId: string) => ({
+      moduleId,
+      result: await deps.runModule(config, progress, moduleId, { novaPrompt: opts.novaPrompt, deps: opts.deps, budget: opts.budget || null, signal: opts.signal || null }),
+    }))), opts);
+    return {
+      kind: 'module_batch_result',
+      module_ids: moduleIds,
+      results: results.map((entry: PromiseSettledResult<AnyRecord>, index: number) => {
+        const moduleId = moduleIds[index];
+        if (entry.status === 'fulfilled') return entry.value;
+        const reason = entry.reason instanceof Error ? entry.reason.message : String(entry.reason || 'unknown module batch failure');
+        return {
+          moduleId,
+          result: buildPipelineStepResult({
+            stepType: PIPELINE_STEP_TYPES.MODULE,
+            stepId: moduleId,
+            nextAction: PIPELINE_STEP_ACTIONS.HALT,
+            outcome: PIPELINE_STEP_OUTCOMES.ERROR,
+            issueType: 'environment',
+            reason,
+            diagnostics: {
+              summary: reason,
+              metadata: { module_batch_rejection: true },
+            },
+            correlation: {
+              step_type: PIPELINE_STEP_TYPES.MODULE,
+              step_id: moduleId,
+              module_id: moduleId,
+            },
+            terminalAction: PIPELINE_TERMINAL_ACTIONS.STOP,
+            terminalScope: PIPELINE_TERMINAL_SCOPES.MODULE,
+          }),
+        };
+      }),
+    };
+  }
   return abortablePipelineStep(deps.runModule(config, progress, next.id, { novaPrompt: opts.novaPrompt, deps: opts.deps, budget: opts.budget || null, signal: opts.signal || null }), opts);
+}
+
+function normalizeBatchResults(batchResult: AnyRecord = {}) {
+  if (batchResult?.kind !== 'module_batch_result' || !Array.isArray(batchResult.results)) return null;
+  return batchResult.results.map((entry: AnyRecord = {}) => ({
+    moduleId: entry.moduleId,
+    normalized: normalizeStepResultForPipeline(entry.result, {
+      stepType: 'module',
+      stepId: entry.moduleId,
+    }),
+  }));
 }
 
 export async function runPipelineStateMachine({
@@ -151,6 +212,17 @@ export async function runPipelineStateMachine({
 
     const result = await runPlannedPipelineStep({ config, progress, opts, deps, plan, runValidatorStep });
     assertPipelineStepActive(opts);
+    const batchResults = normalizeBatchResults(result);
+    if (batchResults) {
+      const failed = batchResults.find((entry: AnyRecord) => !entry.normalized.shouldContinue);
+      if (failed) {
+        return haltPipeline(config, progress, {
+          type: 'module',
+          id: failed.moduleId,
+        }, failed.normalized.stepResult, opts);
+      }
+      continue;
+    }
     const normalized = normalizeStepResultForPipeline(result, {
       stepType: plan.next.type,
       stepId: plan.next.id,

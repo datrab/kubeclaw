@@ -7,7 +7,7 @@ import {
   resolveStatusSessionKey,
   resolveStatusGatewayLabel,
 } from '../services/correlation.ts';
-import { finalizeModuleSessionRateLimitExit } from '../services/rate-limit.ts';
+import { finalizeModuleSessionRateLimitExit, getRateLimitConfig } from '../services/rate-limit.ts';
 import { normalizeTypedValidatorControlResult } from '../services/contracts/validator-control-result.ts';
 import { assertPipelineStepResult } from '../services/contracts/pipeline-step-result.ts';
 import {
@@ -24,6 +24,7 @@ import {
   onPhaseCompleted,
   emitOperatorAlert,
 } from '../services/telemetry.ts';
+import { getPipelineDefaultsConfig } from '../services/runtime-defaults.ts';
 import {
   _telemetryCtx,
   buildModuleForgeRunInput,
@@ -248,7 +249,7 @@ export async function runModuleForgePhase({
     },
   };
 
-  const agentStartupRetryBudget = config.agent_startup_retry_budget;
+  const agentStartupRetryBudget = getPipelineDefaultsConfig(config).agent_startup_retry_budget;
   let forgeWorkerMetadata: AnyRecord = {};
   let forgeWorkerTypedMetadata: AnyRecord = {};
   let forgeWorkerSummary: string | null = null;
@@ -486,7 +487,7 @@ export async function runModuleForgePhase({
           gateway_label: (forgeWorkerMetadata.gateway_label ?? resolveStatusGatewayLabel(status)),
           session_key: forgeSessionKey,
         },
-        maxPauses: config.rate_limit.max_pauses_per_module,
+        maxPauses: getRateLimitConfig(config).max_pauses_per_module,
         logLevel: 'ERROR',
         logMessage: `Module ${moduleId} rate limit pauses exhausted in forge phase`,
       } as AnyRecord);

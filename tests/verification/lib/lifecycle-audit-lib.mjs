@@ -13,6 +13,7 @@ export const SHARED_PIPELINE_HELPER_PATHS = [
   'pipeline/agent-observability/src/index.ts',
   'pipeline/integrations/discord-webhook.ts',
   'pipeline/integrations/gateway.ts',
+  'pipeline/integrations/git-worktree.ts',
   'pipeline/cli-args.ts',
   'pipeline/git-primitives.ts',
   'pipeline/lifecycle-state.ts',
@@ -27,6 +28,7 @@ export const SHARED_PIPELINE_HELPER_PATHS = [
   'pipeline/services/openclaw-plugin-runtime.ts',
   'pipeline/services/rate-limit-contract.ts',
   'pipeline/services/redis-message-contract.ts',
+  'pipeline/services/redis-wait.ts',
   'pipeline/services/pipeline-event-contract.ts',
   'pipeline/services/task-transport-contract.ts',
   'pipeline/services/telemetry/payload-schema.ts',
@@ -34,7 +36,7 @@ export const SHARED_PIPELINE_HELPER_PATHS = [
   'pipeline/timing.ts',
 ];
 
-export const DEFAULT_TELEMETRY_CONTRACT_REL_PATH = 'docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md';
+export const DEFAULT_TELEMETRY_CONTRACT_REL_PATH = 'docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md';
 
 export function expectedPackagedRuntimeOwners(image) {
   const owners = Object.fromEntries(

@@ -22,6 +22,26 @@ function createRepo() {
   return repoRoot;
 }
 
+function gitPolicyConfig(repoRoot, extra = {}) {
+  const { git: gitConfig = {}, ...rest } = extra;
+  return {
+    repo_root: repoRoot,
+    pipeline_defaults: {
+      timeout_minutes: 30,
+      max_fails: 3,
+      auto_retry_threshold: 2,
+      agent_startup_retry_budget: 2,
+      session_nudge_threshold: 2,
+    },
+    rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0, cooldown_buffer_ms: 0 },
+    git: {
+      command: { timeout_ms: 30000, max_buffer_bytes: 52428800 },
+      ...gitConfig,
+    },
+    ...rest,
+  };
+}
+
 function createBudgetExhaustingAfterThrowCalls(maxThrowCalls) {
   const controller = new AbortController();
   let throwCalls = 0;
@@ -97,24 +117,21 @@ function terminalMonitorState(sessionKey, overrides = {}) {
 }
 
 function createPollingConfig(repoRoot, overrides = {}) {
-  return {
-    repo_root: repoRoot,
+  return gitPolicyConfig(repoRoot, {
     project: 'polling-session-end-test',
     _runId: 'run-polling-session-end',
-    poll_interval_seconds: 0.01,
-    session_nudge_threshold: 2,
-    session_end_grace_ms: 1,
-    session_progress_emit_interval_ms: 60000,
-    session_progress_log_interval_ms: 60000,
-    unknown_poll_limit: 99,
-    stale_poll_limit: 99,
+    polling: {
+      interval_seconds: 0.01,
+      progress_interval_ms: 60000,
+      session_end_grace_ms: 1,
+    },
+    poll_limit: 99,
     max_transcript_extensions: 0,
     transcript_grace_ms: 0,
     monitor_poll_ms: 10,
-    rate_limit: { max_pauses_per_module: 1 },
     paths: { swarm_dir: path.join(repoRoot, '.swarm') },
     ...overrides,
-  };
+  });
 }
 
 test('tracked gate session identity drives session-end rate-limit scope', () => {
@@ -161,10 +178,10 @@ test('worktreeChangeSignature detects edits to an already-dirty tracked file', (
   git(repoRoot, ['commit', '-m', 'initial']);
 
   fs.writeFileSync(filePath, 'dirty baseline\n');
-  const baseline = worktreeChangeSignature({ repo_root: repoRoot });
+  const baseline = worktreeChangeSignature(gitPolicyConfig(repoRoot));
 
   fs.writeFileSync(filePath, 'dirty baseline\nagent edit\n');
-  const changed = worktreeChangeSignature({ repo_root: repoRoot });
+  const changed = worktreeChangeSignature(gitPolicyConfig(repoRoot));
 
   assert.equal(baseline.ok, true);
   assert.equal(changed.ok, true);
@@ -183,23 +200,20 @@ test('pollForSessionEnd timeout preserves late HEAD movement as changes', async 
   git(repoRoot, ['commit', '-m', 'initial']);
   fs.mkdirSync(path.dirname(streamLogPath), { recursive: true });
 
-  const config = {
-    repo_root: repoRoot,
+  const config = gitPolicyConfig(repoRoot, {
     project: 'polling-session-end-test',
     _runId: 'run-timeout-head-move',
-    poll_interval_seconds: 0.01,
-    session_nudge_threshold: 2,
-    session_end_grace_ms: 60000,
-    session_progress_emit_interval_ms: 60000,
-    session_progress_log_interval_ms: 60000,
-    unknown_poll_limit: 99,
-    stale_poll_limit: 99,
+    polling: {
+      interval_seconds: 0.01,
+      progress_interval_ms: 60000,
+      session_end_grace_ms: 60000,
+    },
+    poll_limit: 99,
     max_transcript_extensions: 0,
     transcript_grace_ms: 0,
     monitor_poll_ms: 10,
-    rate_limit: { max_pauses_per_module: 1 },
     paths: { swarm_dir: path.join(repoRoot, '.swarm') },
-  };
+  });
   const budget = createBudgetExhaustingAfterThrowCalls(5);
   let committed = false;
 
@@ -210,14 +224,14 @@ test('pollForSessionEnd timeout preserves late HEAD movement as changes', async 
     const result = await pollForSessionEnd(config, label, 1, 'timeout-head-move-test', {
       budget,
       moduleId: 'module-timeout-head-move',
-      getAcpMonitorState: async (childSessionKey) => {
+      getAcpMonitorState: async (request) => {
         if (!committed) {
           fs.writeFileSync(trackedFile, 'original\nagent edit\n');
           git(repoRoot, ['add', 'tracked.txt']);
           git(repoRoot, ['commit', '-m', 'agent edit']);
           committed = true;
         }
-        return activeMonitorState(childSessionKey);
+        return activeMonitorState(request.childSessionKey);
       },
     });
 
@@ -252,12 +266,12 @@ test('pollForSessionEnd completes only after ACP terminal state and reports loca
     const result = await pollForSessionEnd(config, label, 1, 'terminal-with-changes-test', {
       budget: createOpenBudget(),
       moduleId: 'module-terminal-with-changes',
-      getAcpMonitorState: async (childSessionKey) => {
+      getAcpMonitorState: async (request) => {
         if (!edited) {
           fs.writeFileSync(trackedFile, 'original\nagent edit\n');
           edited = true;
         }
-        return terminalMonitorState(childSessionKey);
+        return terminalMonitorState(request.childSessionKey);
       },
     });
 
@@ -291,7 +305,7 @@ test('pollForSessionEnd completes after ACP terminal state without local changes
     const result = await pollForSessionEnd(config, label, 1, 'terminal-no-changes-test', {
       budget: createOpenBudget(),
       moduleId: 'module-terminal-no-changes',
-      getAcpMonitorState: async (childSessionKey) => terminalMonitorState(childSessionKey),
+      getAcpMonitorState: async (request) => terminalMonitorState(request.childSessionKey),
     });
 
     assert.equal(result.completed, true);
@@ -347,10 +361,10 @@ test('worktreeChangeSignature detects edits inside an already-untracked director
   const untrackedFile = path.join(untrackedDir, 'note.txt');
   fs.mkdirSync(untrackedDir);
   fs.writeFileSync(untrackedFile, 'dirty baseline\n');
-  const baseline = worktreeChangeSignature({ repo_root: repoRoot });
+  const baseline = worktreeChangeSignature(gitPolicyConfig(repoRoot));
 
   fs.writeFileSync(untrackedFile, 'dirty baseline\nagent edit\n');
-  const changed = worktreeChangeSignature({ repo_root: repoRoot });
+  const changed = worktreeChangeSignature(gitPolicyConfig(repoRoot));
 
   assert.equal(baseline.ok, true);
   assert.equal(changed.ok, true);

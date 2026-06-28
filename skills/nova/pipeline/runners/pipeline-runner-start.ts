@@ -9,6 +9,7 @@ import { appendPipelineLifecycleEvent } from '../services/status-store.ts';
 import { ensurePipelineRunLogDir } from '../core/paths.ts';
 import { STATUS } from '../core/constants.ts';
 import { extractArchValidatorReport } from '../services/arch-validator.ts';
+import { loadLifecycleReadModels } from '../services/status-store-lifecycle.ts';
 import {
   onPipelineStarted,
   onPipelineHalted,
@@ -41,6 +42,7 @@ import {
   normalizeStepResultForPipeline,
 } from './pipeline-runner-terminal.ts';
 import { getPipelineRunnerDeps } from './pipeline-runner-deps.ts';
+import { getArchValidationConfig } from '../services/runtime-defaults.ts';
 
 type AnyRecord = Record<string, any>;
 
@@ -96,7 +98,16 @@ export async function startPipelineRun(config: AnyRecord, progress: AnyRecord, o
   log('STEP', `╔═══════════════════════════════════════════════════╗`);
   log('STEP', `║  PIPELINE: ${config.project.toUpperCase().padEnd(38)}║`);
   log('STEP', `╚═══════════════════════════════════════════════════╝`);
-  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress, opts });
+  const existingPipelineState = loadLifecycleReadModels(config)?.pipeline || null;
+  const runId = config._runId || config.run_id || null;
+  const resumeExistingRun = opts.resume === true
+    && existingPipelineState?.run_id === runId
+    && existingPipelineState?.status;
+  if (!resumeExistingRun) {
+    appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress, opts });
+  }
+
+  if (resumeExistingRun) return;
 
   await onPipelineStarted(ctx, progress, {
     presentation: {
@@ -181,7 +192,8 @@ export async function runSingleModulePipeline(config: AnyRecord, progress: AnyRe
 async function maybeRunArchitectureValidation(config: AnyRecord, progress: AnyRecord, opts: AnyRecord, deps: AnyRecord, ctx: AnyRecord): Promise<any> {
   // Pre-pipeline architecture validation — runs on fresh starts and on resume
   // only if no module work has started yet. progress.json overrides swarm.config.
-  const archEnabled = progress.arch_validation?.enabled ?? config.arch_validation?.enabled ?? true;
+  const archConfig = getArchValidationConfig(config);
+  const archEnabled = progress.arch_validation?.enabled ?? archConfig.enabled;
   const hasStartedModules = hasAnyStartedModules(config, progress, deps);
   const shouldRunArchValidation = archEnabled
     && !opts.skipArchValidation

@@ -1,4 +1,4 @@
-// core/session-policy.ts — map swarm.config.json session/gateway policy into runtime options
+// core/session-policy.ts — map swarm.config.json session/gateway config into runtime options
 
 type AnyRecord = Record<string, any>;
 
@@ -25,10 +25,11 @@ function requireString(value: any, label: string): string {
 
 function invokePolicy(config: AnyRecord, key: string): AnyRecord {
   const policy = requireObject(config?.gateway?.invoke?.[key], `config.gateway.invoke.${key}`);
+  const retry = requireObject(config?.gateway?.invoke?.retry, 'config.gateway.invoke.retry');
   return {
     timeoutMs: requireNumber(policy.timeout_ms, `config.gateway.invoke.${key}.timeout_ms`),
-    maxRetries: requireNumber(policy.max_retries, `config.gateway.invoke.${key}.max_retries`),
-    retryDelayMs: requireNumber(policy.retry_delay_ms, `config.gateway.invoke.${key}.retry_delay_ms`),
+    maxRetries: requireNumber(retry.max_attempts, 'config.gateway.invoke.retry.max_attempts'),
+    retryDelayMs: requireNumber(retry.retry_delay_ms, 'config.gateway.invoke.retry.retry_delay_ms'),
   };
 }
 
@@ -77,10 +78,10 @@ export function sessionTerminationPolicy(config: AnyRecord): AnyRecord {
     confirmPollMs: requireNumber(termination.poll_ms, 'config.session.termination.poll_ms'),
     gatewayRequestMaxMs: requireNumber(termination.gateway_request_max_ms, 'config.session.termination.gateway_request_max_ms'),
     cleanupConfirmTimeoutMs: requireNumber(termination.cleanup_confirm_timeout_ms, 'config.session.termination.cleanup_confirm_timeout_ms'),
-    statusTimeoutMs: requireNumber(termination.status_timeout_ms, 'config.session.termination.status_timeout_ms'),
-    requestTimeoutMs: requireNumber(termination.request_timeout_ms, 'config.session.termination.request_timeout_ms'),
-    stopRequestTimeoutMs: requireNumber(termination.stop_request_timeout_ms, 'config.session.termination.stop_request_timeout_ms'),
-    listTimeoutMs: requireNumber(termination.list_timeout_ms, 'config.session.termination.list_timeout_ms'),
+    statusTimeoutMs: requireNumber(termination.gateway_operation_timeout_ms, 'config.session.termination.gateway_operation_timeout_ms'),
+    requestTimeoutMs: requireNumber(termination.gateway_operation_timeout_ms, 'config.session.termination.gateway_operation_timeout_ms'),
+    stopRequestTimeoutMs: requireNumber(termination.gateway_operation_timeout_ms, 'config.session.termination.gateway_operation_timeout_ms'),
+    listTimeoutMs: requireNumber(termination.gateway_operation_timeout_ms, 'config.session.termination.gateway_operation_timeout_ms'),
     acpxTimeoutMs: requireNumber(termination.acpx_timeout_ms, 'config.session.termination.acpx_timeout_ms'),
   };
 }

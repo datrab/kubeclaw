@@ -1,8 +1,11 @@
-{{- if .Values.serviceAccount.create -}}
-{{- if and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole "buster") }}
+{{- $leaseClientEnabled := and .Values.busterNamespaceBroker.enabled (or (eq .Values.agentRole "buster") .Values.busterNamespaceBroker.leaseClient.enabled) -}}
+{{- $verificationReadEnabled := and $leaseClientEnabled .Values.busterNamespaceBroker.leaseClient.verificationRead.enabled -}}
+{{- if and .Values.serviceAccount.create $leaseClientEnabled }}
 ---
 # Buster may request ephemeral namespaces but cannot create/delete namespaces or
-# mutate workloads outside broker-created namespace RoleBindings.
+# mutate workloads outside broker-created namespace RoleBindings. Nova may opt
+# into this same lease-client role for real E2E verification without receiving
+# direct Kubernetes workload permissions.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -17,6 +20,12 @@ rules:
   - apiGroups: ["{{ .Values.busterNamespaceBroker.leaseApiGroup }}"]
     resources: ["busternamespaceleases/status"]
     verbs: ["get"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get", "list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -33,51 +42,42 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "kubeclaw.fullname" . }}
     namespace: {{ .Release.Namespace }}
-{{- else }}
+{{- end }}
+{{- if and .Values.serviceAccount.create $verificationReadEnabled }}
 ---
-# Legacy fallback for non-broker Buster deployments. Production Buster values
-# should enable busterNamespaceBroker so this broad role is not rendered.
+# Read-only visibility for Nova's real E2E capability probe. This does not grant
+# namespace/workload mutation and does not expose arbitrary Secret reads.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "kubeclaw.fullname" . }}-k8s-tester
+  name: {{ include "kubeclaw.fullname" . }}-verification-read
   labels:
     {{- include "kubeclaw.labels" . | nindent 4 }}
 rules:
   - apiGroups: [""]
-    resources: ["namespaces"]
-    verbs: ["create", "get", "list", "delete"]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
   - apiGroups: [""]
-    resources:
-      - pods
-      - pods/log
-      - pods/exec
-      - services
-      - endpoints
-      - configmaps
-      - secrets
-      - persistentvolumeclaims
-      - serviceaccounts
-    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
-  - apiGroups: ["apps"]
-    resources:
-      - deployments
-      - replicasets
-    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+    resources: ["secrets"]
+    resourceNames: ["{{ .Values.busterNamespaceBroker.leaseClient.verificationRead.tailscaleOAuthSecretName }}"]
+    verbs: ["get"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingressclasses"]
+    resourceNames: ["tailscale"]
+    verbs: ["get"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ include "kubeclaw.fullname" . }}-k8s-tester
+  name: {{ include "kubeclaw.fullname" . }}-verification-read
   labels:
     {{- include "kubeclaw.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ include "kubeclaw.fullname" . }}-k8s-tester
+  name: {{ include "kubeclaw.fullname" . }}-verification-read
 subjects:
   - kind: ServiceAccount
     name: {{ include "kubeclaw.fullname" . }}
     namespace: {{ .Release.Namespace }}
-{{- end }}
 {{- end }}

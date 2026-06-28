@@ -6,6 +6,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 
 const required = process.env.LIVE_REDIS_SMOKE_REQUIRED === '1' || process.argv.includes('--required');
 const enabled = required || process.env.LIVE_REDIS_SMOKE === '1' || process.env.KUBECLAW_LIVE_REDIS_SMOKE === '1';
@@ -42,6 +44,15 @@ const groupName = 'buster-group';
 process.env.AGENT_NAME = 'buster';
 process.env.BUSTER_TASK_STREAM = taskStream;
 process.env.BUSTER_PROJECT = project;
+
+const sourceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
+const compactSwarmConfigPath = path.join(sourceRoot, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json');
+const expandedConfigDir = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-live-redis-config-'));
+const expandedConfigPath = path.join(expandedConfigDir, 'swarm.config.effective.json');
+const expandedConfig = expandSwarmConfig(JSON.parse(fs.readFileSync(compactSwarmConfigPath, 'utf8')));
+expandedConfig.buster.runtime.task_stream = taskStream;
+fs.writeFileSync(expandedConfigPath, `${JSON.stringify(expandedConfig, null, 2)}\n`);
+process.env.SWARM_CONFIG = expandedConfigPath;
 
 function git(args, cwd, opts = {}) {
   const output = execFileSync('git', args, { cwd, encoding: 'utf8', stdio: opts.stdio || 'pipe' });
@@ -177,6 +188,7 @@ console.log(JSON.stringify({
   try { if (redis) await redis.del(taskStream, completionStream, `${completionStream}:log`); } catch (e) { console.warn(`cleanup redis del failed: ${e?.message || e}`); }
   try { await redisTool?.disconnect?.(); } catch (e) { console.warn(`cleanup redis tool disconnect failed: ${e?.message || e}`); }
   try { await busterTaskQueue?.disconnectRedisClient?.(); } catch (e) { console.warn(`cleanup buster redis disconnect failed: ${e?.message || e}`); }
+  try { fs.rmSync(expandedConfigDir, { recursive: true, force: true }); } catch (e) { console.warn(`cleanup expanded config failed: ${e?.message || e}`); }
   if (fixture?.root && process.env.LIVE_REDIS_SMOKE_KEEP_ARTIFACTS !== '1') {
     fs.rmSync(fixture.root, { recursive: true, force: true });
   }

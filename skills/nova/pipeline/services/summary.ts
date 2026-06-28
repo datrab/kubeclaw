@@ -28,6 +28,7 @@ import {
   createTrackedSummarySessionRateLimitExhaustionOptions,
   createTrackedSummarySessionRateLimitRecoveryOptions,
   finalizeSummarySessionRateLimitExit,
+  getRateLimitConfig,
   resolveTrackedSessionRateLimitOutcome,
   withSessionRateLimitRecovery,
 } from './rate-limit.ts';
@@ -40,6 +41,7 @@ import { buildGeneratorResult } from './contracts/generator-result.ts';
 import { createTrackedSummarySessionCleanup } from './summary-session-cleanup.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from './discord-fields.ts';
 import { sessionLifecyclePolicies } from '../core/session-policy.ts';
+import { getReviewDefaultsConfig } from './runtime-defaults.ts';
 
 function buildPipelineReviewDiscordFields(identity = {}, extra = []) {
   return buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, identity, extra);
@@ -355,9 +357,10 @@ export async function generatePipelineReview(config, progress, opts = {}) {
     reviewGatewayLabel = null;
     const cwd = config.repo_root;
     const thinking = pr.thinking_level || null;
+    const reviewDefaults = getReviewDefaultsConfig(config);
     const timeoutMin = pr.timeout_minutes !== undefined
       ? requirePositiveTimeoutMinutes(pr.timeout_minutes, 'config.pipeline_review.timeout_minutes')
-      : requirePositiveTimeoutMinutes(config.review_defaults?.timeout_minutes, 'config.review_defaults.timeout_minutes');
+      : requirePositiveTimeoutMinutes(reviewDefaults.timeout_minutes, 'config.review_defaults.timeout_minutes');
     onSummaryStarted({ config }, 'pipeline_review', {
       attempt: reviewAttempt,
       gateway_label: reviewGatewayLabel,
@@ -399,7 +402,7 @@ export async function generatePipelineReview(config, progress, opts = {}) {
       log('DEBUG', `Pipeline review spawn Discord notice failed: ${e?.message || e}`);
     });
     const outputFilePath = pipelineReviewOutputPath(config, pr);
-    const maxRateLimitPauses = config.rate_limit.max_pauses_per_module;
+    const maxRateLimitPauses = getRateLimitConfig(config).max_pauses_per_module;
     const reviewRateLimitRecovery = createTrackedSummarySessionRateLimitRecoveryOptions(config, {
       sleepFn: deps.sleep,
       discordFn: deps.discord,

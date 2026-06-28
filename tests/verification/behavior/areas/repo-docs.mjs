@@ -43,9 +43,9 @@ await record('behavior verification doc reflects the live repo-based workflow', 
   assert.equal(behaviorDoc.includes('use the live repo root as the source of truth'), true);
   assert.equal(statusArtifactsReference.includes('`.swarm/<gate_id>-gate-status.json`'), true, 'status/artifact reference must list approval gate persisted state');
   assert.equal(modulesAndGatesDoc.includes('persist approval state in `.swarm/<gate_id>-gate-status.json`'), true, 'modules/gates docs must list approval gate persisted state');
-  assert.equal(behaviorDoc.includes('`<repo-root>/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`'), true);
-  assert.equal(behaviorDoc.includes('treat `docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` as the authoritative inventory, stream-identity, and contract-boundary spec'), true);
-  assert.equal(behaviorDoc.includes('treat `docs/archive/legacy-root-docs/telemetry-event-schema.md` as the authoritative event-by-event payload reference, kept in exact inventory parity with that contract'), true);
+  assert.equal(behaviorDoc.includes('`<repo-root>/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`'), true);
+  assert.equal(behaviorDoc.includes('treat `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` as the authoritative inventory, stream-identity, and contract-boundary spec'), true);
+  assert.equal(behaviorDoc.includes('treat `docs/telemetry-event-schema.md` as the authoritative event-by-event payload reference, kept in exact inventory parity with that contract'), true);
   assert.equal(behaviorDoc.includes('`pipeline:telemetry:<project>:<run_id>`'), true);
   assert.equal(behaviorDoc.includes('run verifiers against current source'), true);
   assert.equal(behaviorDoc.includes('take pass totals from the live JSON output of `tests/verification/behavior/verify.mjs`'), true);
@@ -72,8 +72,8 @@ await record('behavior verification doc reflects the live repo-based workflow', 
   assert.equal(behaviorDoc.includes('Passed: `9`'), false);
   assert.equal(behaviorDoc.includes('Passed: `193`'), false);
 
-  assert.equal(verificationReadme.includes('`docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` is the authoritative telemetry contract for canonical inventory, stream identity, and compatibility boundaries'), true);
-  assert.equal(verificationReadme.includes('`docs/archive/legacy-root-docs/telemetry-event-schema.md` is the event-by-event payload reference and stays in inventory parity with that contract'), true);
+  assert.equal(verificationReadme.includes('`docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` is the authoritative telemetry contract for canonical inventory, stream identity, and compatibility boundaries'), true);
+  assert.equal(verificationReadme.includes('`docs/telemetry-event-schema.md` is the event-by-event payload reference and stays in inventory parity with that contract'), true);
 });
 
 await record('verification docs and hardening trackers point at tests-owned verifier entrypoints, not stale scripts wrappers', async () => {

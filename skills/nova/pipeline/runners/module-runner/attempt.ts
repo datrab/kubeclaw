@@ -39,6 +39,7 @@ import { runPreflightValidation, formatValidationFailures } from '../../services
 import { emitTerminalModuleFailTelemetry } from '../module-runner-shared.ts';
 import { runModuleAttemptStateMachine } from './state-machine.ts';
 import { buildModuleErrorTerminalResult } from './terminal-results.ts';
+import { getPipelineDefaultsConfig } from '../../services/runtime-defaults.ts';
 
 type AnyRecord = Record<string, any>;
 
@@ -92,12 +93,13 @@ export function getModuleRunnerDeps(config: AnyRecord, overrides: AnyRecord = {}
 export function resolveModuleRunContext(config: AnyRecord, progress: AnyRecord, moduleId: string) {
   const mod = progress.modules[moduleId];
   if (!mod) throw new Error(`Module ${moduleId} not in progress.json`);
+  const pipelineDefaults = getPipelineDefaultsConfig(config);
 
   return {
     mod,
     dir: mod.dir,
-    timeout: mod.timeout_minutes ?? config.default_timeout_minutes,
-    maxFails: mod.max_fails ?? config.default_max_fails,
+    timeout: mod.timeout_minutes ?? pipelineDefaults.timeout_minutes,
+    maxFails: mod.max_fails ?? pipelineDefaults.max_fails,
   };
 }
 

@@ -23,6 +23,7 @@ import {
   createRateLimitPauseState,
   createTrackedGateSessionRateLimitRecoveryOptions,
   emitGateRetryExhausted,
+  getRateLimitConfig,
   withSessionRateLimitRecovery,
 } from '../services/rate-limit.ts';
 import { readGateInstructions, buildBusterGatePrompt } from '../prompts/buster-gate.ts';
@@ -32,6 +33,7 @@ import { getTrackedAgent } from '../agents/lifecycle.ts';
 import { getActiveContext } from '../core/logger.ts';
 import { onGateStarted, onGateFail } from '../services/telemetry.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
+import { getPipelineDefaultsConfig } from '../services/runtime-defaults.ts';
 import { writeRedactedPromptArtifact } from '../redaction.ts';
 import { readGateRemediationSpec } from '../services/remediation-handoff.ts';
 import { persistGateActiveSession, clearGateActiveSession } from '../services/gate-active-session.ts';
@@ -62,11 +64,17 @@ import {
 } from './buster-gate-control.ts';
 
 function _telemetryCtx(config, deps = null) {
-  return { ...(getActiveContext() || { config, runId: config?.run_id || config?._runId || '' }), deps };
+  const active = getActiveContext() || {};
+  return {
+    ...active,
+    config: active.config ? active.config : config,
+    runId: active.runId ? active.runId : config?.run_id ? config.run_id : config?._runId ? config._runId : '',
+    deps,
+  };
 }
 
 async function emitBusterGateFixCycleFail(config, gateId, gateType, cycle, gateStartedAt, reason, extra = {}) {
-  await onGateFail(_telemetryCtx(config, extra?.deps || null), gateId, {
+  await onGateFail(_telemetryCtx(config, extra?.deps ? extra.deps : null), gateId, {
     gate_type: gateType,
     fix_cycle: cycle,
     duration_seconds: Math.round((Date.now() - gateStartedAt) / 1000),
@@ -119,10 +127,10 @@ async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, t
     gateId,
     attempt,
   });
-  completionIdentity.model = model || null;
-  completionIdentity.model_source = busterGatePolicy.model_source || null;
-  completionIdentity.reasoning_level = busterGatePolicy.thinking_supported === false ? 'not supported' : (busterGatePolicy.thinking || 'default');
-  completionIdentity.thinking_source = busterGatePolicy.thinking_source || null;
+  completionIdentity.model = model ? model : null;
+  completionIdentity.model_source = busterGatePolicy.model_source ? busterGatePolicy.model_source : null;
+  completionIdentity.reasoning_level = busterGatePolicy.thinking_supported === false ? 'not supported' : (busterGatePolicy.thinking ? busterGatePolicy.thinking : 'default');
+  completionIdentity.thinking_source = busterGatePolicy.thinking_source ? busterGatePolicy.thinking_source : null;
   completionIdentity.runtime = 'session';
   const gateRateLimitStatusOptions = buildBusterGateRateLimitStatusOptions({ gateId, gate, completionIdentity });
   const busterPromptResult = deps.buildBusterGatePrompt(config, gateId, gate, instructions, commitHash, attempt, completionIdentity);
@@ -253,7 +261,8 @@ export async function buildBusterRemediationExhaustedControlResult(config, gateI
   const remediation = readGateRemediationSpec(controlResult) || {};
   const metadata = controlResult?.diagnostics?.metadata || {};
   const gateStartedAt = opts.gateStartedAt ?? (remediation?.startedAt ? new Date(remediation.startedAt).getTime() : Date.now());
-  const maxFixCycles = Number(remediation?.policy?.maxFixCycles || metadata?.fix_attempts || config.default_max_fails);
+  const pipelineDefaults = getPipelineDefaultsConfig(config);
+  const maxFixCycles = Number(remediation?.policy?.maxFixCycles || metadata?.fix_attempts || pipelineDefaults.max_fails);
   const issues = remediation?.diagnostics?.issues || metadata?.remaining_issues || [];
   const latestGateDispatchId = remediation?.correlation?.dispatch_id || metadata?.dispatch_id || null;
   const latestGateGatewayLabel = remediation?.correlation?.gateway_label || metadata?.gateway_label || null;
@@ -377,6 +386,14 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
     } catch (_error) { /* ok */ }
   }
 
+  const busterGatePolicy = deps.resolvePolicy(config, progress, 'buster', {
+    scopeModel: gate.model || null,
+    dispatchPath: config?.agents?.buster?.dispatch,
+  });
+  const model = busterGatePolicy.model;
+  deps.logEffectivePolicy(config, { scope: 'gate_buster', agent: 'buster', gateId, ...busterGatePolicy });
+  log('INFO', `Gate '${gateId}' model: ${model ?? '(none)'} [${busterGatePolicy.model_source}] thinking: ${busterGatePolicy.thinking || 'default'} (${busterGatePolicy.thinking_source})`);
+
   let instructions;
   try {
     instructions = deps.readGateInstructions(config, gate);
@@ -404,16 +421,9 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
       attempt,
     }, { ...opts, input: { ids: { attempt } } });
   }
-
-  const busterGatePolicy = deps.resolvePolicy(config, progress, 'buster', {
-    scopeModel: gate.model || null,
-    dispatchPath: config?.agents?.buster?.dispatch,
-  });
-  const model = busterGatePolicy.model;
-  deps.logEffectivePolicy(config, { scope: 'gate_buster', agent: 'buster', gateId, ...busterGatePolicy });
-  log('INFO', `Gate '${gateId}' model: ${model ?? '(none)'} [${busterGatePolicy.model_source}] thinking: ${busterGatePolicy.thinking || 'default'} (${busterGatePolicy.thinking_source})`);
-  const timeout = gate.timeout_minutes ?? config.default_timeout_minutes;
-  const maxFixCycles = gate.max_fix_cycles ?? config.default_max_fails;
+  const pipelineDefaults = getPipelineDefaultsConfig(config);
+  const timeout = gate.timeout_minutes ?? pipelineDefaults.timeout_minutes;
+  const maxFixCycles = gate.max_fix_cycles ?? pipelineDefaults.max_fails;
   const hasFixLoop = gate.on_fail === 'fix_and_retest';
 
   if (hasFixLoop && maxFixCycles < 1) {
@@ -458,7 +468,7 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
     });
   }
 
-  const maxRateLimitPauses = config.rate_limit.max_pauses_per_module;
+  const maxRateLimitPauses = getRateLimitConfig(config).max_pauses_per_module;
   const gateRateLimitPauseState = createRateLimitPauseState();
 
   const result = await withSessionRateLimitRecovery(

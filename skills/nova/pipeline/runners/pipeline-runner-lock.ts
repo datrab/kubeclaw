@@ -42,23 +42,25 @@ function isoFromMs(ms: number): string {
   return new Date(ms).toISOString();
 }
 
-function positiveNumber(value: unknown, label: string): number {
-  const num = Number(value);
-  if (!Number.isFinite(num) || num <= 0) throw new Error(`${label}: required positive number in swarm.config.json`);
-  return num;
+function requirePipelineRunLockNumber(config: AnyRecord, field: string): number {
+  const value = config?.locks?.pipeline_run?.[field];
+  if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
+    throw new Error(`config.locks.pipeline_run.${field}: required positive number in swarm.config.json`);
+  }
+  return value;
 }
 
 function pipelineRunLockLeaseMs(config: AnyRecord): number {
-  return Math.max(2000, positiveNumber(config?.locks?.pipeline_run_lock_lease_ms, 'config.locks.pipeline_run_lock_lease_ms'));
+  return Math.max(2000, requirePipelineRunLockNumber(config, 'lease_ms'));
 }
 
 function pipelineRunLockHeartbeatMs(config: AnyRecord, leaseMs = pipelineRunLockLeaseMs(config)): number {
-  const configured = positiveNumber(config?.locks?.pipeline_run_lock_heartbeat_ms, 'config.locks.pipeline_run_lock_heartbeat_ms');
+  const configured = requirePipelineRunLockNumber(config, 'heartbeat_ms');
   return Math.max(1000, Math.min(configured, Math.floor(leaseMs / 2)));
 }
 
 function pipelineRunLockMutationStaleMs(config: AnyRecord): number {
-  return positiveNumber(config?.locks?.pipeline_run_lock_mutation_stale_ms, 'config.locks.pipeline_run_lock_mutation_stale_ms');
+  return requirePipelineRunLockNumber(config, 'mutation_stale_ms');
 }
 
 function readPipelineRunLock(lockPath: string): AnyRecord | null {

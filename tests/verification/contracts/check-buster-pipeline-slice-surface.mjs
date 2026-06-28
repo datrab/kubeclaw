@@ -125,7 +125,7 @@ assert.equal(suiteRunnerSource.includes('missing_suite_timeout_ms'), true, 'suit
 assert.equal(suiteRunnerSource.includes("moduleId || 'unknown'"), false, 'suite runner must not default missing module identity to unknown');
 assert.equal(suiteRunnerSource.includes("project : 'unknown'"), false, 'suite runner must not default missing project identity to unknown');
 assert.equal(orchestrationSource.includes('BUSTER_SUITE_RUNNER_DEFAULT_POLICY'), false, 'Nova Buster payload producer must not preserve local suite timeout code defaults');
-assert.equal(orchestrationSource.includes('config.buster.suite_timeout_ms'), true, 'Nova Buster payload producer should read suite timeout from canonical platform config');
+assert.equal(orchestrationSource.includes('getBusterRuntimeConfig(config)'), true, 'Nova Buster payload producer should resolve suite timeout from canonical runtime policy config');
 assert.equal(orchestrationSource.includes('config.buster_suite_timeout_ms'), false, 'Nova Buster payload producer must not preserve legacy top-level suite timeout alias');
 assert.equal(suiteRunnerSource.includes('payload?.config'), false, 'suite runner must not preserve payload.config fallback beside typed test_config');
 assert.equal(capabilitiesSource.includes('payload?.config'), false, 'Buster capability policy must not preserve payload.config fallback beside typed test_config');

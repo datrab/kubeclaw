@@ -5,6 +5,7 @@ import os from 'os';
 import path from 'path';
 import assert from 'assert';
 import { pathToFileURL } from 'url';
+import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 
 function parseArgs(argv = process.argv.slice(2)) {
   const args = { sourceRoot: process.cwd() };
@@ -16,6 +17,8 @@ function parseArgs(argv = process.argv.slice(2)) {
 }
 
 const { sourceRoot } = parseArgs();
+const compactSwarmConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts/kubeclaw/files/config/swarm.config.json'), 'utf8'));
+const expandedStandardConfig = expandSwarmConfig(compactSwarmConfig);
 
 function listFiles(dir, predicate, out = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -214,6 +217,22 @@ const runtimeMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/nova
 const { registry, errors } = registryMod.buildPluginRegistry({ enabled: true, allowCustomModules: false, extraModulePaths: [], modules: {}, stageOwners: {}, restrictedCapabilityAllowlist: {} }, { throwOnError: false });
 assert.equal(errors.length, 0);
 
+function operatorAlertTestConfig({ project, root, runId, registry, runtimeMod }) {
+  return {
+    ...expandedStandardConfig,
+    project,
+    telemetry: {
+      ...expandedStandardConfig.telemetry,
+      enabled: false,
+    },
+    paths: { swarm_dir: root },
+    _runId: runId,
+    run_id: runId,
+    _runStats: runtimeMod.createRunStats('2026-04-25T00:00:00.000Z'),
+    pluginRegistry: registry,
+  };
+}
+
 const directAlertRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'operator-alert-contract-'));
 const directLogDir = path.join(directAlertRoot, 'logs');
 const directRunLogDir = path.join(directLogDir, 'pipeline', 'runs', 'run-operator-alert-1');
@@ -227,13 +246,13 @@ const directDeps = {
 };
 await telemetryMod.emitOperatorAlert({
   config: {
-    project: 'behavior-operator-alert',
-    telemetry: { enabled: false },
-    paths: { swarm_dir: directAlertRoot },
-    _runId: 'run-operator-alert-1',
-    run_id: 'run-operator-alert-1',
-    _runStats: runtimeMod.createRunStats('2026-04-25T00:00:00.000Z'),
-    pluginRegistry: registry,
+    ...operatorAlertTestConfig({
+      project: 'behavior-operator-alert',
+      root: directAlertRoot,
+      runId: 'run-operator-alert-1',
+      registry,
+      runtimeMod,
+    }),
   },
   deps: directDeps,
 }, 'module.operator_alert', {
@@ -278,13 +297,13 @@ assert.equal(fs.existsSync(path.join(directLogDir, 'pipeline', 'operator-alerts.
 const fallbackAlertRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'operator-alert-fallback-contract-'));
 await telemetryMod.onGateFail({
   config: {
-    project: 'behavior-operator-fallback',
-    telemetry: { enabled: false },
-    paths: { swarm_dir: fallbackAlertRoot },
-    _runId: 'run-operator-fallback-1',
-    run_id: 'run-operator-fallback-1',
-    _runStats: runtimeMod.createRunStats('2026-04-25T00:00:00.000Z'),
-    pluginRegistry: registry,
+    ...operatorAlertTestConfig({
+      project: 'behavior-operator-fallback',
+      root: fallbackAlertRoot,
+      runId: 'run-operator-fallback-1',
+      registry,
+      runtimeMod,
+    }),
   },
   deps: fallbackDeps,
 }, 'gate:buster', {
@@ -314,13 +333,13 @@ assert.equal(fallbackCalls.length, 1, 'onGateFail should deliver operator presen
 
   await telemetryMod.onGatePass({
     config: {
-      project: 'behavior-operator-fallback',
-      telemetry: { enabled: false },
-      paths: { swarm_dir: fallbackAlertRoot },
-      _runId: 'run-operator-fallback-1',
-      run_id: 'run-operator-fallback-1',
-      _runStats: runtimeMod.createRunStats('2026-04-25T00:00:00.000Z'),
-      pluginRegistry: registry,
+      ...operatorAlertTestConfig({
+        project: 'behavior-operator-fallback',
+        root: fallbackAlertRoot,
+        runId: 'run-operator-fallback-1',
+        registry,
+        runtimeMod,
+      }),
     },
     deps: fallbackDeps,
   }, 'gate:buster', {

@@ -29,31 +29,32 @@ Secondary candidate:
 SWARM_CONFIG
 ```
 
-Important defaults:
+The chart-authored file is compact. It declares the `standard` profile, standard feature set, strict tuning intent, and rare structured overrides. Runtime code expands that through `skills/nova/pipeline/core/config-profiles/standard.json` before validation, so pipeline callers still consume a full effective config.
 
-- `poll_interval_seconds`: `30`
-- `default_timeout_minutes`: `300`
-- `default_max_fails`: `8`
-- `auto_retry_threshold`: `7`
-- `session_nudge_threshold`: `0.75`
-- `rate_limit.cooldown_hours`: `2`
-- `rate_limit.max_pauses_per_module`: `5`
-- `rate_limit.cooldown_buffer_ms`: `5000`
-- `buster.suite_timeout_ms`: `300000`
-- `buster.max_crash_retries`: `2`
-- `buster.runtime.heartbeat_path`: `/tmp/kubeclaw-buster-heartbeat`
-- `buster.runtime.heartbeat_interval_ms`: `1000`
-- `buster.runtime.task_poll_interval_ms`: `2000`
-- `buster.runtime.task_pending_reclaim_idle_ms`: `60000`
-- `buster.runtime.completion_event_block_ms`: `0`
-- `buster.runtime.completion_recovery_scan_interval_ms`: `5000`
-- `buster.runtime.task_stream_max_len`: `250`
-- `pre_check.enabled`: `true`
-- `pre_check.timeout_seconds`: `60`
-- `agents.buster.dispatch`: `redis`
-- `fallback_model`: `gpt-5.5`
-- `plugins.enabled`: `true`
-- `plugins.allowCustomModules`: `false`
+Current authored shape:
+
+```json
+{
+  "profile": "standard",
+  "features": {
+    "observability": true,
+    "buster": true,
+    "discord_alerts": true
+  },
+  "tuning": {
+    "safety_margins": "high",
+    "retention": "high",
+    "alerts": "rich",
+    "logs": "verbose",
+    "checks": "strict",
+    "determinism": "strict"
+  },
+  "overrides": {},
+  "discord_webhook_url": ""
+}
+```
+
+`standard` is the canonical safe baseline: longer safety margins, high retention, rich alerts, verbose logs, strict checks, deterministic behavior, and no silent fallbacks.
 
 ## Project Config
 
@@ -87,44 +88,36 @@ Project config owns:
 
 ## Example Platform Override
 
-For a slower local test cluster:
+For a local exception, keep the standard profile and add only the specific structured override:
 
 ```json
 {
-  "poll_interval_seconds": 30,
-  "default_timeout_minutes": 300,
-  "default_max_fails": 8,
-  "auto_retry_threshold": 7,
-  "buster": {
-    "suite_timeout_ms": 300000,
-    "max_crash_retries": 2,
-    "runtime": {
-      "heartbeat_path": "/tmp/kubeclaw-buster-heartbeat",
-      "heartbeat_interval_ms": 1000,
-      "task_poll_interval_ms": 2000,
-      "task_pending_reclaim_idle_ms": 60000,
-      "completion_event_block_ms": 0,
-      "completion_recovery_scan_interval_ms": 5000,
-      "task_stream_max_len": 250
+  "profile": "standard",
+  "features": {
+    "observability": true,
+    "buster": true,
+    "discord_alerts": true
+  },
+  "tuning": {
+    "safety_margins": "high",
+    "retention": "high",
+    "alerts": "rich",
+    "logs": "verbose",
+    "checks": "strict",
+    "determinism": "strict"
+  },
+  "overrides": {
+    "session": {
+      "kill": {
+        "subagent_confirm_timeout_ms": 180000
+      }
     }
   },
-  "agents": {
-    "forge": { "dispatch": "subagent", "acp_agent_id": "codex", "cwd": null },
-    "buster": { "dispatch": "redis", "redis_js_path": "/app/skills/pipeline/tools/redis.ts" },
-    "echo": { "dispatch": "subagent", "acp_agent_id": "codex", "cwd": null }
-  },
-  "plugins": {
-    "enabled": true,
-    "allowCustomModules": false,
-    "extraModulePaths": [],
-    "modules": {},
-    "stageOwners": {},
-    "restrictedCapabilityAllowlist": {}
-  }
+  "discord_webhook_url": ""
 }
 ```
 
-Keep only intentional overrides in runtime config; use the chart source as the default reference.
+Override paths must already exist in the expanded standard profile. Typos and unknown paths fail validation.
 
 ## Example Project Shape
 
@@ -182,20 +175,21 @@ Path helpers reject absolute paths, parent traversal, null bytes, and repository
 
 ### Platform Validation Table
 
-`skills/nova/pipeline/core/config.ts` treats missing platform-owned fields as startup errors. `loadConfig()` derives `project`, `repo_root`, `paths.swarm_dir`, `paths.modules_dir`, and `paths.progress_file` from the operator input and repository layout; those derived values do not belong in the chart source file.
+`skills/nova/pipeline/core/config.ts` treats missing platform-owned fields as startup errors after profile expansion. `loadConfig()` derives `project`, `repo_root`, `paths.swarm_dir`, `paths.modules_dir`, and `paths.progress_file` from the operator input and repository layout; those derived values do not belong in the chart source file.
 
 | Config area | Required or rejected fields | Owner and behavior | Failure mode |
 | --- | --- | --- | --- |
 | `agents` | requires `forge`, `buster`, `echo`; every agent needs `dispatch`; ACP/subagent agents need `acp_agent_id`; Redis agents need `redis_js_path`; Buster must be `redis` | `validateConfig()` and `validateBusterConfig()` | startup throws `Config validation failed`; unsafe `redis_js_path` rejected by `validateSafePath()` |
 | model defaults | requires `fallback_model`; rejects top-level `models` | platform has only fallback model; role-specific defaults belong in `progress.json defaults.models` | `config.models` error |
-| retry and polling | requires numeric `poll_interval_seconds`, `default_timeout_minutes`, `default_max_fails`, `auto_retry_threshold`, `session_nudge_threshold` in range `0..1` | scheduler and rate-limit handling use these as runtime defaults | missing/non-number errors |
+| profile expansion | requires `profile: "standard"` plus exact standard `features` and `tuning` declarations | `platform-config.ts` expands the authored file to the full runtime shape | unknown profile, feature, tuning, or override path errors |
+| retry and polling | expanded config requires `polling.interval_seconds`, `progress_interval_ms`, `session_end_grace_ms`, and `pipeline_defaults.timeout_minutes`, `max_fails`, `auto_retry_threshold`, `agent_startup_retry_budget`, `session_nudge_threshold` | scheduler and rate-limit handling use these as runtime defaults | missing/non-number errors |
 | `rate_limit` | requires object plus `cooldown_hours`, `max_pauses_per_module`, `cooldown_buffer_ms` | rate-limit recovery and pause accounting | missing object or invalid number errors |
-| `buster` | requires object, `suite_timeout_ms`, `max_crash_retries`, and `runtime.heartbeat_path`, `heartbeat_interval_ms`, `task_poll_interval_ms`, `task_pending_reclaim_idle_ms`, `completion_event_block_ms`, `completion_recovery_scan_interval_ms`, `task_stream_max_len` | Buster readiness, polling, pending reclaim, completion live-wait blocking, completion recovery, and stream trimming | Buster readiness/config startup failure |
+| `buster` | requires direct `runtime` fields for heartbeat, task transport, completion wait, stream trimming, suite timeout, and crash retry values | Buster readiness, polling, pending reclaim, completion live-wait blocking, completion recovery, stream trimming, suite timeout, and crash retries | Buster readiness/config startup failure |
 | `discord_alerts` | requires booleans for `info`, `warn`, `critical`, `ok` | operator alert filtering | boolean validation errors |
-| `pre_check` | requires `enabled`, `lint_report_path`, `timeout_seconds` | delivery lint/pre-check validator | startup validation error or missing lint tool later |
+| `pre_check` | requires `enabled`, `lint_report_path`, and `timeout_seconds` | delivery lint/pre-check validator | startup validation error or missing lint tool later |
 | `review_defaults` | requires `timeout_minutes`, `max_fix_cycles`, `lint_tier`, `lint_required`; rejects `reviewers` | review gate defaults; reviewer/model defaults stay in project gates | validation error |
 | `plugins` | requires booleans `enabled`, `allowCustomModules`, array `extraModulePaths`, objects `modules`, `stageOwners`, `restrictedCapabilityAllowlist` | `buildPluginRegistry()` normalizes built-ins, stage owners, trust tiers, and capability allowlists | registry errors such as unknown owner, conflict, invalid capability |
-| `acp_monitor` | requires `unknown_poll_limit`, `stale_poll_limit`, `max_transcript_extensions`, `transcript_grace_ms`, `monitor_poll_ms` | ACP transcript/session monitor timing | startup validation error |
+| `acp_monitor` | requires direct `poll_limit`, `max_transcript_extensions`, `transcript_grace_ms`, `monitor_poll_ms` | ACP transcript/session monitor timing | startup validation error |
 | unknown fields | rejects top-level fields not in the known allowlist | prevents silent runtime drift | `config.<key>: unknown top-level config field` |
 
 ### Project Boundary

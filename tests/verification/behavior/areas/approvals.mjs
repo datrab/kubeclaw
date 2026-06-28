@@ -47,6 +47,27 @@ export async function registerApprovalsArea({
 function platformApprovalDefaults() {
   return {
     default_timeout_minutes: 30,
+    locks: {
+      lifecycle_append: {
+        stale_ms: 300000,
+        timeout_ms: 30000,
+      },
+    },
+    telemetry: {
+      enabled: true,
+      sink_timeout_ms: 5000,
+      stream_max_len: 10000,
+    },
+    event_adapters: {
+      approval_signal_debounce_ms: 25,
+    },
+    pipeline_defaults: {
+      timeout_minutes: 300,
+      max_fails: 8,
+      auto_retry_threshold: 7,
+      agent_startup_retry_budget: 3,
+      session_nudge_threshold: 0.75,
+    },
   };
 }
 
@@ -127,7 +148,7 @@ await record('approval gates execute through gate stage owners and preserve time
 const config = {
     ...platformApprovalDefaults(),
     project: 'behavior-approval-stage-pass',
-    telemetry: { enabled: true },
+    telemetry: platformApprovalDefaults().telemetry,
     paths: {
       swarm_dir: swarmDir,
       modules_dir: path.join(root, 'modules'),
@@ -231,7 +252,7 @@ await record('approval wait actions execute through the generic runGate wait con
 const config = {
     ...platformApprovalDefaults(),
     project: 'behavior-approval-generic-wait',
-    telemetry: { enabled: true },
+    telemetry: platformApprovalDefaults().telemetry,
     paths: {
       swarm_dir: swarmDir,
       modules_dir: path.join(root, 'modules'),
@@ -339,7 +360,7 @@ await record('approval signal wait reloads persisted deadline before timeout dec
 const config = {
     ...platformApprovalDefaults(),
     project: 'behavior-approval-deadline-reload',
-    telemetry: { enabled: true },
+    telemetry: platformApprovalDefaults().telemetry,
     paths: {
       swarm_dir: swarmDir,
       modules_dir: path.join(root, 'modules'),
@@ -423,7 +444,7 @@ await record('approval gate stage-owner block results preserve rejection semanti
   const config = {
     ...platformApprovalDefaults(),
     project: 'behavior-approval-stage-block',
-    telemetry: { enabled: true },
+    telemetry: platformApprovalDefaults().telemetry,
     paths: {
       swarm_dir: swarmDir,
       modules_dir: path.join(root, 'modules'),
@@ -494,7 +515,7 @@ await record('approval gate invalid stage contracts fail closed with authoritati
   const config = {
     ...platformApprovalDefaults(),
     project: 'behavior-approval-stage-invalid',
-    telemetry: { enabled: true },
+    telemetry: platformApprovalDefaults().telemetry,
     paths: {
       swarm_dir: swarmDir,
       modules_dir: path.join(root, 'modules'),
@@ -589,7 +610,7 @@ await record('approval gate wait control results require typed wait payload', as
   const config = {
     ...platformApprovalDefaults(),
     project: 'behavior-approval-wait-missing-payload',
-    telemetry: { enabled: true },
+    telemetry: platformApprovalDefaults().telemetry,
     paths: {
       swarm_dir: swarmDir,
       modules_dir: path.join(root, 'modules'),
@@ -727,7 +748,7 @@ await record('approval gates emit canonical gate telemetry on operator approval'
 const config = {
     ...platformApprovalDefaults(),
     project: 'behavior-approval-gate',
-    telemetry: { enabled: true },
+    telemetry: platformApprovalDefaults().telemetry,
     _runId: 'run-approval-1',
     run_id: 'run-approval-1',
     paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-gate-swarm-')) },
@@ -792,7 +813,7 @@ await record('approval gate timeouts emit canonical failure gate telemetry', asy
 const config = {
     ...platformApprovalDefaults(),
     project: 'behavior-approval-timeout',
-    telemetry: { enabled: true },
+    telemetry: platformApprovalDefaults().telemetry,
     _runId: 'run-approval-timeout-1',
     run_id: 'run-approval-timeout-1',
     paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-timeout-swarm-')) },
@@ -859,7 +880,7 @@ await record('approval timeout policies normalize to canonical uppercase in runt
 const config = {
     ...platformApprovalDefaults(),
     project: 'behavior-approval-continue',
-    telemetry: { enabled: true },
+    telemetry: platformApprovalDefaults().telemetry,
     _runId: 'run-approval-continue-1',
     run_id: 'run-approval-continue-1',
     paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-continue-swarm-')) },
@@ -939,7 +960,7 @@ await record('approval gate restart-time rejection still emits authoritative res
 const config = {
     ...platformApprovalDefaults(),
     project: 'behavior-approval-resume-rejected',
-    telemetry: { enabled: true },
+    telemetry: platformApprovalDefaults().telemetry,
     _runId: 'run-approval-resume-rejected-1',
     run_id: 'run-approval-resume-rejected-1',
     paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-approval-resume-rejected-swarm-')) },
@@ -1010,7 +1031,7 @@ const config = {
     ...platformApprovalDefaults(),
     project: 'behavior-approval-corrupted',
     repo_root: repoRoot,
-    telemetry: { enabled: true },
+    telemetry: platformApprovalDefaults().telemetry,
     paths: {
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),
@@ -1079,7 +1100,7 @@ const config = {
     ...platformApprovalDefaults(),
     project: 'behavior-approval-unknown-state',
     repo_root: repoRoot,
-    telemetry: { enabled: true },
+    telemetry: platformApprovalDefaults().telemetry,
     paths: {
       swarm_dir: swarmDir,
       modules_dir: path.join(repoRoot, 'modules'),

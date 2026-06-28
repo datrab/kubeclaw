@@ -5,6 +5,7 @@ import { STATUS } from '../core/constants.ts';
 import { log } from '../core/logger.ts';
 import { requireStageHandler } from '../core/registry.ts';
 import { setModuleActiveAgent, clearModuleActiveAgent } from '../lifecycle-state.ts';
+import { maybeCrashForRealE2E } from '../services/real-e2e-crash-injection.ts';
 import {
   buildModuleBusterRunInput,
   buildModuleWorkerPluginInvocation,
@@ -109,6 +110,15 @@ export async function executeBusterWorkerAttempt({
       status.gateway_label = dispatch.gateway_label || null;
       busterSessionKey = dispatch.session_key || null;
       deps.saveStatus(config, dir, status);
+      const crashDetails = {
+        step_type: 'module',
+        step_id: moduleId,
+        module_id: moduleId,
+        attempt: completionIdentity.attempt,
+        dispatch_id: completionIdentity.dispatchId,
+      };
+      maybeCrashForRealE2E(config, progress, 'after_buster_task_enqueue', crashDetails);
+      maybeCrashForRealE2E(config, progress, 'during_buster_wait', crashDetails);
     },
     onFinalized: async ({ status: finalizedStatus = null, session_key: finalizedSessionKey = null }: AnyRecord = {}) => {
       status = mergeFinalizedStatus(deps.loadStatus(config, dir) || status, finalizedStatus);

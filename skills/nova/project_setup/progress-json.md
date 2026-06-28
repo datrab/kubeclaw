@@ -279,7 +279,7 @@ Redis stream telemetry for external consumers (e.g. ClawDeck dashboard).
 |---|---|---|---|
 | `enabled` | no | `false` | Enable Redis event publishing |
 
-When enabled, all pipeline events (module status, agent lifecycle, gate verdicts, cost updates) are published to the canonical run-scoped stream `pipeline:telemetry:<project>:<run_id>`. See `docs/archive/legacy-root-docs/telemetry-event-schema.md` for the full event catalog.
+When enabled, all pipeline events (module status, agent lifecycle, gate verdicts, cost updates) are published to the canonical run-scoped stream `pipeline:telemetry:<project>:<run_id>`. See `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` for the canonical event inventory and `docs/telemetry-event-schema.md` for event-by-event payload fields and examples.
 
 ---
 
@@ -361,6 +361,7 @@ Normal module and gate runs should use the default `purpose: "pretest"` and `cle
   "preview": {
     "provider": "tailscale-ingress",
     "path": "/",
+    "expected_text": "my-app",
     "credentials_ref": "secret/app-preview-login",
     "reveal_credentials": true,
     "credentials_keys": ["username", "password"]
@@ -387,12 +388,13 @@ Normal module and gate runs should use the default `purpose: "pretest"` and `cle
 | `preview.provider` | `tailscale-ingress` for final-preview | `tailscale-ingress` creates an Ingress with `ingressClassName: tailscale`; use `off` to disable |
 | `preview.path` | `/` | Public preview path |
 | `preview.hostname` | generated | Optional tailnet hostname label for the Tailscale Ingress |
+| `preview.expected_text` | `null` | Optional text that must be present in the fetched preview URL response body |
 | `preview.credentials_ref` | `null` | Human/operator reference, commonly `secret/<name>` |
 | `preview.reveal_credentials` | `false` | When true, verify the preview credential Secret and include a copy-paste retrieval command in Discord |
 | `preview.credentials_secret_name` | derived from `credentials_ref` | Source Secret name for credential retrieval |
 | `preview.credentials_keys` | all keys | Secret keys to retrieve, for example `["username", "password"]` |
 
-Final-preview Tailscale URLs require the Tailscale Kubernetes Operator to be installed by deployment. The pipeline records the resulting tailnet URL and a non-secret credential retrieval command in the k8s verdict metadata; Nova uses that metadata for Discord delivery. `test_credentials` is the explicit allowlist for credentials Buster may see in prompt context for authenticated tests; do not put infrastructure, registry, deploy-key, or provider Secrets there.
+Final-preview Tailscale URLs require the Tailscale Kubernetes Operator to be installed by deployment. The k8s suite waits for the lease `status.previewUrl`, fetches that URL, and fails closed when `preview.expected_text` is configured but absent from the response body. The pipeline records the resulting tailnet URL and a non-secret credential retrieval command in the k8s verdict metadata; Nova uses that metadata for Discord delivery. `test_credentials` is the explicit allowlist for credentials Buster may see in prompt context for authenticated tests; do not put infrastructure, registry, deploy-key, or provider Secrets there.
 
 ### test_config.manifest
 

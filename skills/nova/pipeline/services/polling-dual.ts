@@ -10,7 +10,7 @@ import {
   buildModuleSessionRateLimitStatus,
 } from "./rate-limit.ts";
 import { appendDurableOperatorAlert } from "./telemetry.ts";
-import { waitForResilientRedisCompletion } from "../../../common/pipeline/services/redis-wait.ts";
+import { waitForResilientRedisCompletion } from "./redis-wait.ts";
 import {
   createDedicatedRedisCompletionClient,
   createLocalEvidenceEventAdapter,
@@ -22,11 +22,20 @@ import {
 } from "./buster-completion-controller.ts";
 import { logRedisOperation, logRedisReceived } from "./redis-log.ts";
 import { scanLatestCompletionFromTail } from "./redis-completion.ts";
+import { resolveRedisCompletionPolicy } from "./redis-completion-policy.ts";
 import { isBudgetExhaustedError } from "../timing.ts";
 
 const STATUS = {
   FAIL: "FAIL",
 };
+
+function busterRuntimePolicyNumber(config, field) {
+  const value = config?.buster?.runtime?.[field];
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    throw new Error(`config.buster.runtime.${field}: required number in swarm.config.json`);
+  }
+  return value;
+}
 
 function buildModuleRateLimitStatusOptions(
   config,
@@ -253,6 +262,7 @@ export async function waitForModuleBusterCompletion(
   const budget = opts.budget || null;
 
   try {
+    const redisCompletionPolicy = resolveRedisCompletionPolicy(config);
     const controllerResult = await waitForResilientRedisCompletion({
       config,
       streamKey: opts.deps?.streamKey || completionStreamKey(config),
@@ -266,10 +276,10 @@ export async function waitForModuleBusterCompletion(
       statusSource: "local_lifecycle",
       deps: opts.deps,
       budget,
-      redisBlockMs: config?.buster?.runtime?.completion_event_block_ms,
-      recoveryScanIntervalMs: config?.buster?.runtime?.completion_recovery_scan_interval_ms,
-      tailScanBatchSize: config?.redis_completion?.tail_scan_batch_size,
-      tailScanLimit: config?.redis_completion?.tail_scan_limit,
+      redisBlockMs: busterRuntimePolicyNumber(config, "completion_event_block_ms"),
+      recoveryScanIntervalMs: busterRuntimePolicyNumber(config, "completion_recovery_scan_interval_ms"),
+      tailScanBatchSize: redisCompletionPolicy.tailScanBatchSize,
+      tailScanLimit: redisCompletionPolicy.tailScanLimit,
       createRedisCompletionEventAdapter,
       createLocalEvidenceEventAdapter,
       createRedisClient: createDedicatedRedisCompletionClient,

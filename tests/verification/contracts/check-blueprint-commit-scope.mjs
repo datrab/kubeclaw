@@ -7,6 +7,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
+import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 
 function parseArgs(argv = process.argv.slice(2)) {
   const args = { sourceRoot: process.cwd() };
@@ -63,6 +64,12 @@ function setupBlueprintRepo(prefix) {
 }
 
 const { sourceRoot } = parseArgs();
+const previousSwarmConfig = process.env.SWARM_CONFIG;
+const expandedConfigDir = fs.mkdtempSync(path.join(os.tmpdir(), 'blueprint-commit-scope-config-'));
+const expandedConfigPath = path.join(expandedConfigDir, 'swarm.config.effective.json');
+const compactConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json'), 'utf8'));
+fs.writeFileSync(expandedConfigPath, `${JSON.stringify(expandSwarmConfig(compactConfig), null, 2)}\n`);
+process.env.SWARM_CONFIG = expandedConfigPath;
 const blueprintPath = path.join(sourceRoot, 'skills/nova/pipeline/services/blueprint.ts');
 const { releaseBlueprint } = await import(pathToFileURL(blueprintPath).href);
 
@@ -113,6 +120,10 @@ const { releaseBlueprint } = await import(pathToFileURL(blueprintPath).href);
     fs.rmSync(fixture.root, { recursive: true, force: true });
   }
 }
+
+fs.rmSync(expandedConfigDir, { recursive: true, force: true });
+if (previousSwarmConfig === undefined) delete process.env.SWARM_CONFIG;
+else process.env.SWARM_CONFIG = previousSwarmConfig;
 
 quietConsole.restore();
 console.log('Blueprint commit scope guard verified');

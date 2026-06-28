@@ -14,13 +14,8 @@ import {
 function observabilityConfig({ timeoutMs = 10, blockMs = 1, required = true } = {}) {
   return {
     required,
-    profile: 'test',
-    profiles: {
-      test: {
-        payload: { max_event_bytes: 3145728 },
-        startup_evidence: { timeout_ms: timeoutMs, block_ms: blockMs },
-      },
-    },
+    payload: { max_event_bytes: 3145728 },
+    startup_evidence: { timeout_ms: timeoutMs, block_ms: blockMs },
   };
 }
 

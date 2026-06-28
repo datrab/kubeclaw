@@ -12,8 +12,8 @@ function withSwarmConfig(t, overrides = {}) {
     gateway: {
       invoke: { health: { timeout_ms: 1 } },
       health: {
-        ready_timeout_ms: 120000,
-        ready_interval_ms: 3000,
+        timeout_ms: 120000,
+        interval_ms: 3000,
         monitor_interval_ms: 60000,
         max_failures: 3,
         ...overrides,

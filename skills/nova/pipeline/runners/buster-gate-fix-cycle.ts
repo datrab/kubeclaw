@@ -9,6 +9,7 @@ import { DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
 import { readGateRemediationSpec } from '../services/remediation-handoff.ts';
 import { cloneSerializable } from '../services/contracts/gate-control-result.ts';
 import { runGateForgeFixCycle } from './gate-forge-fix-cycle.ts';
+import { getPipelineDefaultsConfig } from '../services/runtime-defaults.ts';
 
 function patchBusterRemediationControlResult(controlResult, updates = {}) {
   const cloned = cloneSerializable(controlResult);
@@ -45,7 +46,8 @@ export async function performBusterGateFixAttempt({ config, progress, gateId, co
 
   const remediation = readGateRemediationSpec(controlResult) || {};
   const cycle = Number(opts.cycle || remediation?.policy?.nextFixCycle || 1);
-  const maxFixCycles = Number(remediation?.policy?.maxFixCycles || gate.max_fix_cycles || config.default_max_fails);
+  const pipelineDefaults = getPipelineDefaultsConfig(config);
+  const maxFixCycles = Number(remediation?.policy?.maxFixCycles || gate.max_fix_cycles || pipelineDefaults.max_fails);
   const gateStartedAt = opts.gateStartedAt ?? (remediation?.startedAt ? new Date(remediation.startedAt).getTime() : Date.now());
   const issues = remediation?.diagnostics?.issues || [];
   const fixHistory = opts.fixHistory || [];
@@ -118,7 +120,7 @@ export async function performBusterGateFixAttempt({ config, progress, gateId, co
       },
     },
     phase: 'buster_gate_fix',
-    timeoutMinutes: gate.timeout_minutes ?? config.default_timeout_minutes,
+    timeoutMinutes: gate.timeout_minutes ?? pipelineDefaults.timeout_minutes,
     artifactLogLabel: 'Gate fix',
     emitFixCycleFail: emitBusterGateFixCycleFail,
     getGateStats,

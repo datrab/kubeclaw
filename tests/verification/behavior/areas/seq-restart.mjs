@@ -1,5 +1,6 @@
 import {
   buildBuiltInRegistry,
+  platformTestDefaults,
 } from './helpers.mjs';
 
 export async function registerSeqRestartArea({
@@ -39,10 +40,12 @@ export async function registerSeqRestartArea({
       module_id: '01',
       run_id: runId,
       enabled: true,
+      streamMaxLen: platformTestDefaults().telemetry.stream_max_len,
     });
     const novaConfigA = {
+      ...platformTestDefaults(),
       project,
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       _runId: runId,
       run_id: runId,
       _runStats: runtimeCoreA.createRunStats('2026-04-17T00:00:00.000Z'),
@@ -73,11 +76,13 @@ export async function registerSeqRestartArea({
       module_id: '01',
       run_id: runId,
       enabled: true,
+      streamMaxLen: platformTestDefaults().telemetry.stream_max_len,
     });
     const novaConfigB = {
+      ...platformTestDefaults(),
       project,
       resume: true,
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       _runId: runId,
       run_id: runId,
       _runStats: runtimeCoreB.createRunStats('2026-04-17T00:01:00.000Z'),
@@ -131,12 +136,14 @@ export async function registerSeqRestartArea({
       module_id: '01',
       run_id: runId,
       enabled: true,
+      streamMaxLen: platformTestDefaults().telemetry.stream_max_len,
       pipeline_log_path: pipelineLogPath,
       pipeline_run_log_path: pipelineRunLogPath,
     });
     const novaConfig = {
+      ...platformTestDefaults(),
       project,
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
       _runId: runId,
       run_id: runId,
       _runStats: runtimeCore.createRunStats('2026-04-17T00:00:00.000Z'),
@@ -176,13 +183,15 @@ export async function registerSeqRestartArea({
     const telemetryStreamMod = await importRuntimeModule(runtimeRootForWeakIdentity, '/app/skills/pipeline/services/telemetry-stream.ts');
 
     const missingRun = await telemetryStreamMod.emitTelemetryStreamEvent({
+      ...platformTestDefaults(),
       project: 'behavior-weak-telemetry-identity',
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
     }, 'module.started', { module_id: '01' });
     const missingProject = await telemetryStreamMod.emitTelemetryStreamEvent({
+      ...platformTestDefaults(),
       _runId: 'run-weak-telemetry-identity-1',
       run_id: 'run-weak-telemetry-identity-1',
-      telemetry: { enabled: true },
+      telemetry: platformTestDefaults().telemetry,
     }, 'module.started', { module_id: '01' });
 
     assert.equal(missingRun.ok, false);
@@ -208,11 +217,13 @@ export async function registerSeqRestartArea({
       project: 'behavior-buster-weak-telemetry-identity',
       module: '01',
       enabled: true,
+      streamMaxLen: platformTestDefaults().telemetry.stream_max_len,
     });
     const missingProjectCtx = busterTelemetryMod.createTelemetryContext({
       module: '01',
       runId: 'run-buster-weak-telemetry-identity-1',
       enabled: true,
+      streamMaxLen: platformTestDefaults().telemetry.stream_max_len,
     });
 
     assert.equal(missingRunCtx.streamKey, null);

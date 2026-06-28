@@ -59,16 +59,97 @@ const gitMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core
 const pollingMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/services/polling.ts');
 const timingMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/timing.ts');
 const EXPLICIT_ACP_MONITOR_CONFIG = {
-  unknown_poll_limit: 10,
-  stale_poll_limit: 10,
+  poll_limit: 10,
   max_transcript_extensions: 3,
   transcript_grace_ms: 300000,
   monitor_poll_ms: 10000,
 };
+const EXPLICIT_LIFECYCLE_LOCKS_CONFIG = {
+  lifecycle_append: {
+    stale_ms: 300000,
+    timeout_ms: 30000,
+  },
+};
 
 function platformPollingDefaults() {
   return {
+    gateway: {
+      invoke: {
+        retry: {
+          max_attempts: 3,
+          retry_delay_ms: 5000,
+        },
+        session_status: {
+          timeout_ms: 10000,
+        },
+        session_send: {
+          timeout_ms: 15000,
+        },
+      },
+    },
+    pipeline_defaults: {
+      timeout_minutes: 300,
+      max_fails: 8,
+      auto_retry_threshold: 7,
+      agent_startup_retry_budget: 3,
+      session_nudge_threshold: 0.75,
+    },
+    git: {
+      command: {
+        timeout_ms: 30000,
+        max_buffer_bytes: 52428800,
+      },
+    },
+    locks: EXPLICIT_LIFECYCLE_LOCKS_CONFIG,
+    polling: {
+      interval_seconds: 0.01,
+      progress_interval_ms: 1000,
+      session_end_grace_ms: 0,
+    },
+    telemetry: {
+      enabled: true,
+      sink_timeout_ms: 5000,
+      stream_max_len: 10000,
+    },
     rate_limit: { max_pauses_per_module: 3, cooldown_hours: 0 },
+  };
+}
+
+function explicitPollingPolicy(intervalSeconds, progressIntervalMs = 1000) {
+  return {
+    polling: {
+      interval_seconds: intervalSeconds,
+      progress_interval_ms: progressIntervalMs,
+    },
+  };
+}
+
+function explicitRedisCompletionPolicy() {
+  return {
+    redis_completion: {
+      archive_max_len: 100,
+      tail_scan_batch_size: 10,
+      tail_scan_limit: 10,
+    },
+  };
+}
+
+function explicitBusterRuntimePolicy() {
+  return {
+    buster: {
+      runtime: {
+        completion_event_block_ms: 100,
+        completion_recovery_scan_interval_ms: 100,
+      },
+    },
+  };
+}
+
+function explicitEventAdapterPolicy() {
+  return {
+    event_adapters: {
+      local_evidence_debounce_ms: 10,
+    },
   };
 }
 
@@ -125,7 +206,13 @@ await record('pollGeneric consumes a strict shared budget without internal exten
   let calls = 0;
 
   const result = await pollingMod.pollGeneric(
-    { repo_root: repoRoot, poll_interval_seconds: 0.05 },
+    {
+      repo_root: repoRoot,
+      polling: {
+        interval_seconds: 0.05,
+        progress_interval_ms: 1000,
+      },
+    },
     async () => {
       calls += 1;
       return { done: false, logMsg: 'pending' };
@@ -195,7 +282,12 @@ await record('pollGeneric checks immediately before waiting the first interval',
   const started = Date.now();
   let calls = 0;
   const result = await pollingMod.pollGeneric(
-    { poll_interval_seconds: 0.2 },
+    {
+      polling: {
+        interval_seconds: 0.2,
+        progress_interval_ms: 1000,
+      },
+    },
     async () => {
       calls += 1;
       return { done: true, result: { ok: true, reason: 'immediate', data: { calls } } };
@@ -225,14 +317,16 @@ await record('Redis completion archive adapter resolves per config instead of ca
       return { archived: 1, adapter: 'B' };
     },
   };
-    const configADeps = { adapters: { redis: adapterA } };
-const configA = {
+  const configADeps = { adapters: { redis: adapterA } };
+  const configA = {
     project: 'behavior-polling-redis-adapter-a',
-      };
-    const configBDeps = { adapters: { redis: adapterB } };
-const configB = {
+    ...explicitRedisCompletionPolicy(),
+  };
+  const configBDeps = { adapters: { redis: adapterB } };
+  const configB = {
     project: 'behavior-polling-redis-adapter-b',
-      };
+    ...explicitRedisCompletionPolicy(),
+  };
 
   const archiveResultA = await pollingMod.archiveModuleCompletions(configA, '01', { dispatch_id: 'dispatch-a' }, { deps: configADeps });
   const archiveResultB = await pollingMod.archiveModuleCompletions(configB, '02', { dispatch_id: 'dispatch-b' }, { deps: configBDeps });
@@ -250,7 +344,7 @@ await record('pollGeneric throttles repeated unchanged progress logs', async () 
     let calls = 0;
     const repoRoot = createCleanPollingRepo('behavior-poll-progress-throttle-');
     const result = await pollingMod.pollGeneric(
-      { repo_root: repoRoot, poll_interval_seconds: 0.01, poll_progress_log_interval_ms: 1000 },
+      { repo_root: repoRoot, ...explicitPollingPolicy(0.01) },
       async () => {
         calls += 1;
         if (calls >= 4) return { done: true, result: { ok: true, reason: 'done', data: { calls } } };
@@ -277,7 +371,7 @@ await record('pollGeneric can throttle changing progress text when a stable logK
     let calls = 0;
     const repoRoot = createCleanPollingRepo('behavior-poll-progress-logkey-');
     const result = await pollingMod.pollGeneric(
-      { repo_root: repoRoot, poll_interval_seconds: 0.01, poll_progress_log_interval_ms: 1000 },
+      { repo_root: repoRoot, ...explicitPollingPolicy(0.01) },
       async () => {
         calls += 1;
         if (calls >= 4) return { done: true, result: { ok: true, reason: 'done', data: { calls } } };
@@ -584,6 +678,7 @@ await record('shared tracked gate recovery preserves cached cooldown correlation
     project: 'behavior-gate-tracked-rate-limit',
     rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0 },
     paths: { swarm_dir: fs.mkdtempSync(path.join(os.tmpdir(), 'behavior-gate-tracked-rate-limit-swarm-')) },
+    locks: EXPLICIT_LIFECYCLE_LOCKS_CONFIG,
     _runId: 'run-gate-tracked-rate-limit-1',
     run_id: 'run-gate-tracked-rate-limit-1',
   };
@@ -740,6 +835,10 @@ const result = await pollingMod.pollDual({
     run_id: 'run-poll-dual-terminal-owned-rate-limit-1',
     acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
     paths: { swarm_dir: swarmDir, modules_dir: modulesDir },
+    ...explicitPollingPolicy(0.01),
+    ...explicitRedisCompletionPolicy(),
+    ...explicitBusterRuntimePolicy(),
+    ...explicitEventAdapterPolicy(),
     agents: {
       buster: {
         dispatch: 'acp',
@@ -747,7 +846,6 @@ const result = await pollingMod.pollDual({
         redis_js_path: redisModulePath,
       },
     },
-        poll_interval_seconds: 0.01,
   }, '01-scaffold', '01', ['PASS'], 1, {
     run_id: 'run-poll-dual-terminal-owned-rate-limit-1',
     attempt: 4,
@@ -829,6 +927,10 @@ const result = await pollingMod.pollDual({
     run_id: 'run-poll-dual-redis-rate-limited-1',
     acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
     paths: { swarm_dir: swarmDir, modules_dir: modulesDir },
+    ...explicitPollingPolicy(0.01),
+    ...explicitRedisCompletionPolicy(),
+    ...explicitBusterRuntimePolicy(),
+    ...explicitEventAdapterPolicy(),
     agents: {
       buster: {
         dispatch: 'acp',
@@ -836,7 +938,6 @@ const result = await pollingMod.pollDual({
         redis_js_path: redisModulePath,
       },
     },
-        poll_interval_seconds: 0.01,
   }, '01-scaffold', '01', ['PASS'], 1, {
     run_id: 'run-poll-dual-redis-rate-limited-1',
     attempt: 4,
@@ -873,6 +974,7 @@ await record('pollDual ignores Redis terminal completion without active dispatch
     _runId: 'run-poll-dual-unconfirmed-redis-1',
     run_id: 'run-poll-dual-unconfirmed-redis-1',
     paths: { swarm_dir: swarmDir, modules_dir: modulesDir },
+    locks: EXPLICIT_LIFECYCLE_LOCKS_CONFIG,
   };
   const readModels = statusStoreMod.loadLifecycleReadModels(fixtureConfig);
   readModels.modules['01'] = {
@@ -915,6 +1017,11 @@ const result = await pollingMod.pollDual({
     run_id: 'run-poll-dual-unconfirmed-redis-1',
     acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
     paths: { swarm_dir: swarmDir, modules_dir: modulesDir },
+    locks: EXPLICIT_LIFECYCLE_LOCKS_CONFIG,
+    ...explicitPollingPolicy(0.01),
+    ...explicitRedisCompletionPolicy(),
+    ...explicitBusterRuntimePolicy(),
+    ...explicitEventAdapterPolicy(),
     agents: {
       buster: {
         dispatch: 'acp',
@@ -922,7 +1029,6 @@ const result = await pollingMod.pollDual({
         redis_js_path: redisModulePath,
       },
     },
-        poll_interval_seconds: 0.01,
   }, '01-scaffold', '01', ['PASS'], 0.001, {
     run_id: 'run-poll-dual-unconfirmed-redis-1',
     attempt: 1,
@@ -969,6 +1075,7 @@ await record('pollDual fails closed when Redis terminal completion conflicts wit
     run_id: 'run-poll-dual-conflict-1',
     acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
     paths: { swarm_dir: swarmDir, modules_dir: modulesDir },
+    locks: EXPLICIT_LIFECYCLE_LOCKS_CONFIG,
     _progress: { modules: { '01': { dir: '01-scaffold' } }, gates: {}, execution_order: ['01'] },
   };
   const readModels = statusStoreMod.loadLifecycleReadModels(pollConfig);
@@ -999,6 +1106,10 @@ await record('pollDual fails closed when Redis terminal completion conflicts wit
 
 const result = await pollingMod.pollDual({
     ...pollConfig,
+    ...explicitPollingPolicy(0.01),
+    ...explicitRedisCompletionPolicy(),
+    ...explicitBusterRuntimePolicy(),
+    ...explicitEventAdapterPolicy(),
     agents: {
       buster: {
         dispatch: 'acp',
@@ -1006,7 +1117,6 @@ const result = await pollingMod.pollDual({
         redis_js_path: redisModulePath,
       },
     },
-        poll_interval_seconds: 0.01,
   }, '01-scaffold', '01', ['PASS'], 1, {
     run_id: 'run-poll-dual-conflict-1',
     attempt: 1,
@@ -1162,6 +1272,10 @@ await record('pollForSessionEnd keeps active-session logs throttled even when el
       poll_interval_seconds: 0.01,
       session_end_grace_ms: 0,
       session_progress_log_interval_ms: 60000,
+      polling: {
+        ...platformPollingDefaults().polling,
+        progress_interval_ms: 60000,
+      },
       acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
       paths: { swarm_dir: path.join(repoRoot, '.swarm') },
     };
@@ -1268,6 +1382,10 @@ await record('pollForSessionEnd sends at most one timeout nudge when sessions_se
       poll_interval_seconds: 0.01,
       session_end_grace_ms: 0,
       session_nudge_threshold: 0,
+      pipeline_defaults: {
+        ...platformPollingDefaults().pipeline_defaults,
+        session_nudge_threshold: 0,
+      },
       acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
       paths: { swarm_dir: swarmDir },
     };
@@ -1675,7 +1793,7 @@ await record('pollForSessionEnd recovers ACP rate limits without misclassifying 
       ...platformPollingDefaults(),
       project: 'behavior-session-rate-limit',
       repo_root: repoRoot,
-      telemetry: { enabled: true },
+      telemetry: platformPollingDefaults().telemetry,
       poll_interval_seconds: 0.01,
       session_end_grace_ms: 0,
       rate_limit: { cooldown_hours: 0, max_pauses_per_module: 1 },
@@ -1804,7 +1922,7 @@ await record('pollForSessionEnd preserves tracked rate-limit Discord correlation
         ...platformPollingDefaults(),
         project: scenario.project,
         repo_root: repoRoot,
-        telemetry: { enabled: true },
+        telemetry: platformPollingDefaults().telemetry,
         poll_interval_seconds: 0.01,
         session_end_grace_ms: 0,
         rate_limit: { cooldown_hours: 0, max_pauses_per_module: 1 },
@@ -1932,7 +2050,7 @@ await record('pollForSessionEnd normalizes exhausted gate-fix rate-limit status 
         ...platformPollingDefaults(),
         project: scenario.project,
         repo_root: repoRoot,
-        telemetry: { enabled: true },
+        telemetry: platformPollingDefaults().telemetry,
         poll_interval_seconds: 0.01,
         session_end_grace_ms: 0,
         rate_limit: { cooldown_hours: 0, max_pauses_per_module: 0 },
@@ -2027,7 +2145,7 @@ await record('pollForSessionEnd leaves gate-backed transcript and progress telem
       ...platformPollingDefaults(),
       project: 'behavior-session-gate-telemetry',
       repo_root: repoRoot,
-      telemetry: { enabled: true },
+      telemetry: platformPollingDefaults().telemetry,
       poll_interval_seconds: 0.01,
       session_end_grace_ms: 0,
       session_progress_emit_interval_ms: 0,
@@ -2113,7 +2231,7 @@ await record('pollForSessionEnd emits explicit degraded observability when trans
       ...platformPollingDefaults(),
       project: 'behavior-demo',
       repo_root: repoRoot,
-      telemetry: { enabled: true },
+      telemetry: platformPollingDefaults().telemetry,
       poll_interval_seconds: 0.01,
       session_end_grace_ms: 0,
       acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
@@ -2179,9 +2297,22 @@ await record('pollStatus observability preserves top-level module session correl
       ...platformPollingDefaults(),
       project: 'behavior-pollstatus-obsv',
       repo_root: repoRoot,
-      telemetry: { enabled: true },
+      telemetry: platformPollingDefaults().telemetry,
+      gateway: {
+        ...platformPollingDefaults().gateway,
+        invoke: {
+          ...platformPollingDefaults().gateway.invoke,
+          retry: {
+            max_attempts: 1,
+            retry_delay_ms: 0,
+          },
+          session_status: {
+            timeout_ms: 100,
+          },
+        },
+      },
       poll_interval_seconds: 0.01,
-      acp_monitor: { unknown_poll_limit: 1, stale_poll_limit: 0, max_transcript_extensions: 3, transcript_grace_ms: 300000, monitor_poll_ms: 0 },
+      acp_monitor: { poll_limit: 0, max_transcript_extensions: 3, transcript_grace_ms: 300000, monitor_poll_ms: 0 },
       _runId: runId,
       run_id: runId,
       _runStats: telemetryRuntimeCoreMod.createRunStats('2026-04-10T00:00:00.000Z'),
@@ -2259,7 +2390,7 @@ await record('pollStatus emits live transcript and progress telemetry for module
       ...platformPollingDefaults(),
       project: 'behavior-pollstatus-live',
       repo_root: repoRoot,
-      telemetry: { enabled: true },
+      telemetry: platformPollingDefaults().telemetry,
       poll_interval_seconds: 0.01,
       session_progress_emit_interval_ms: 0,
       session_end_grace_ms: 0,
@@ -2349,7 +2480,7 @@ await record('pollStatus preserves tracked rate-limit correlation on lifecycle R
       ...platformPollingDefaults(),
       project: 'behavior-pollstatus-primary-rate-limit',
       repo_root: repoRoot,
-      telemetry: { enabled: true },
+      telemetry: platformPollingDefaults().telemetry,
       poll_interval_seconds: 0.01,
       acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
       _runId: runId,
@@ -2457,7 +2588,7 @@ await record('pollStatus preserves tracked rate-limit correlation when ACP monit
       ...platformPollingDefaults(),
       project: 'behavior-pollstatus-rate-limit',
       repo_root: repoRoot,
-      telemetry: { enabled: true },
+      telemetry: platformPollingDefaults().telemetry,
       poll_interval_seconds: 0.01,
       session_progress_emit_interval_ms: 0,
       acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
@@ -2576,7 +2707,7 @@ await record('pollStatus prefers live status dispatch-backed correlation over st
       ...platformPollingDefaults(),
       project: 'behavior-pollstatus-live-dispatch-fallback',
       repo_root: repoRoot,
-      telemetry: { enabled: true },
+      telemetry: platformPollingDefaults().telemetry,
       poll_interval_seconds: 0.01,
       session_progress_emit_interval_ms: 0,
       session_end_grace_ms: 0,
@@ -2762,7 +2893,7 @@ await record('pollForFile observability preserves tracked gate session correlati
       ...platformPollingDefaults(),
       project: 'behavior-pollfile-obsv',
       repo_root: repoRoot,
-      telemetry: { enabled: true },
+      telemetry: platformPollingDefaults().telemetry,
       poll_interval_seconds: 0.01,
       session_end_grace_ms: 0,
       acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,
@@ -2852,7 +2983,7 @@ await record('pollForFile emits live transcript and progress telemetry for file-
       ...platformPollingDefaults(),
       project: 'behavior-pollfile-live-telemetry',
       repo_root: repoRoot,
-      telemetry: { enabled: true },
+      telemetry: platformPollingDefaults().telemetry,
       poll_interval_seconds: 0.01,
       session_progress_emit_interval_ms: 0,
       acp_monitor: EXPLICIT_ACP_MONITOR_CONFIG,

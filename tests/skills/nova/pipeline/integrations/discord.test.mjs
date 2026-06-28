@@ -17,6 +17,9 @@ function makeConfig() {
     _runId: 'run-discord-embeds-test',
     run_id: 'run-discord-embeds-test',
     discord_webhook_url: 'https://discord.example/webhook',
+    discord: {
+      webhook_timeout_ms: 10000,
+    },
     discord_alerts: {
       info: false,
       warn: true,
@@ -31,7 +34,13 @@ test('discordEmbeds honors level-based webhook gating', async () => {
   const calls = [];
   globalThis.fetch = async (url, init) => {
     calls.push({ url, init });
-    return { ok: true, status: 204, statusText: 'No Content' };
+    return {
+      ok: true,
+      status: 200,
+      statusText: 'OK',
+      headers: { get: (name) => (String(name).toLowerCase() === 'content-type' ? 'application/json' : null) },
+      json: async () => ({ id: 'discord-message-1', channel_id: 'discord-channel-1' }),
+    };
   };
 
   try {
@@ -59,7 +68,13 @@ test('discord delivery and audit keep canonical verdict and model wording readab
   const calls = [];
   globalThis.fetch = async (url, init) => {
     calls.push({ url, init });
-    return { ok: true, status: 204, statusText: 'No Content' };
+    return {
+      ok: true,
+      status: 200,
+      statusText: 'OK',
+      headers: { get: (name) => (String(name).toLowerCase() === 'content-type' ? 'application/json' : null) },
+      json: async () => ({ id: 'discord-message-1', channel_id: 'discord-channel-1' }),
+    };
   };
 
   try {
@@ -85,6 +100,13 @@ test('discord delivery and audit keep canonical verdict and model wording readab
     assert.equal(auditEntry.fields.find((field) => field.name === 'Status')?.value, 'FAIL');
     assert.equal(auditEntry.fields.find((field) => field.name === 'Model')?.value, 'openai/gpt-5.4');
     assert.match(auditEntry.fields.find((field) => field.name === 'Evidence')?.value, /Status: FAIL/);
+
+    const receiptPath = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config.run_id, 'discord-deliveries.jsonl');
+    const receiptEntry = JSON.parse(fs.readFileSync(receiptPath, 'utf8').trim().split('\n').at(-1));
+    assert.equal(receiptEntry.ok, true);
+    assert.equal(receiptEntry.message_id, 'discord-message-1');
+    assert.equal(receiptEntry.channel_id, 'discord-channel-1');
+    assert.equal(receiptEntry.webhook_message_returned, true);
   } finally {
     globalThis.fetch = originalFetch;
   }

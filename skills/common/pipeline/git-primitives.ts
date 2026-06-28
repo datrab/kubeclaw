@@ -5,6 +5,7 @@ import fs from 'fs';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 import { buildSubprocessEnv } from './security.ts';
+import { expandSwarmConfig } from '../../nova/pipeline/core/platform-config.ts';
 
 declare const process: any;
 
@@ -18,26 +19,29 @@ const headHashCache = new Map();
 let defaultRepoRoot: string | null = null;
 let gitRuntimePolicy: AnyRecord | null = null;
 
-function requirePositiveNumber(value: unknown, label: string): number {
-  const numberValue = Number(value);
-  if (!Number.isFinite(numberValue) || numberValue <= 0) {
-    throw new Error(`${label}: required positive number in swarm.config.json`);
+function requireNumber(obj: AnyRecord, field: string, label: string): number {
+  const value = obj?.[field];
+  if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0 || !Number.isInteger(value)) {
+    throw new Error(`${label}.${field}: required positive integer in swarm.config.json`);
   }
-  return numberValue;
+  return value;
+}
+
+function resolveGitRuntimePolicyFromConfig(config: AnyRecord): AnyRecord {
+  const command = config?.git?.command;
+  if (!command || typeof command !== 'object' || Array.isArray(command)) {
+    throw new Error('config.git: required platform config object in swarm.config.json');
+  }
+  return Object.freeze({
+    timeout_ms: requireNumber(command, 'timeout_ms', 'config.git.command'),
+    max_buffer_bytes: requireNumber(command, 'max_buffer_bytes', 'config.git.command'),
+  });
 }
 
 function resolveGitRuntimePolicy(): AnyRecord {
   if (gitRuntimePolicy) return gitRuntimePolicy;
   const configPath = process.env.SWARM_CONFIG || DEFAULT_SWARM_CONFIG_PATH;
-  const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-  const policy = config?.git;
-  if (!policy || typeof policy !== 'object' || Array.isArray(policy)) {
-    throw new Error('config.git: required platform config object in swarm.config.json');
-  }
-  gitRuntimePolicy = Object.freeze({
-    timeout_ms: requirePositiveNumber(policy.timeout_ms, 'config.git.timeout_ms'),
-    max_buffer_bytes: requirePositiveNumber(policy.max_buffer_bytes, 'config.git.max_buffer_bytes'),
-  });
+  gitRuntimePolicy = resolveGitRuntimePolicyFromConfig(expandSwarmConfig(JSON.parse(fs.readFileSync(configPath, 'utf8'))));
   return gitRuntimePolicy;
 }
 
@@ -46,10 +50,7 @@ export function setGitRuntimePolicy(policy: AnyRecord | null = null) {
     gitRuntimePolicy = null;
     return;
   }
-  gitRuntimePolicy = Object.freeze({
-    timeout_ms: requirePositiveNumber(policy.timeout_ms, 'config.git.timeout_ms'),
-    max_buffer_bytes: requirePositiveNumber(policy.max_buffer_bytes, 'config.git.max_buffer_bytes'),
-  });
+  gitRuntimePolicy = resolveGitRuntimePolicyFromConfig(policy);
 }
 
 function resolveRepoInput(input: any) {
@@ -103,14 +104,17 @@ export function getRepoRoot(startDir?: any) {
 }
 
 export function gitExec(repoRoot: any, args: any[], opts: AnyRecord = {}) {
-  const policy = resolveGitRuntimePolicy();
+  const policy = repoRoot?.git
+    ? resolveGitRuntimePolicyFromConfig(repoRoot)
+    : resolveGitRuntimePolicy();
+  const resolvedRepoRoot = resolveRepoInput(repoRoot);
   const defaults = {
     encoding: 'utf8',
     timeout: policy.timeout_ms,
     maxBuffer: policy.max_buffer_bytes,
     env: buildSubprocessEnv(),
   };
-  const result = execFileSync('git', ['-C', repoRoot, ...args], { ...defaults, ...opts });
+  const result = execFileSync('git', ['-C', resolvedRepoRoot, ...args], { ...defaults, ...opts });
   return typeof result === 'string' ? result.trim() : '';
 }
 

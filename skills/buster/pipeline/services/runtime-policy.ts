@@ -2,6 +2,7 @@
 
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
+import { expandSwarmConfig } from '../../../nova/pipeline/core/platform-config.ts';
 
 declare const process: {
   env: Record<string, string | undefined>;
@@ -62,7 +63,7 @@ export function loadBusterRuntimePolicy(): Record<string, any> {
 export function loadBusterPlatformConfig(): Record<string, any> {
   if (cachedPlatformConfig) return cachedPlatformConfig;
   const configPath = process.env.SWARM_CONFIG || DEFAULT_SWARM_CONFIG_PATH;
-  cachedPlatformConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  cachedPlatformConfig = expandSwarmConfig(JSON.parse(fs.readFileSync(configPath, 'utf8')));
   return cachedPlatformConfig;
 }
 
@@ -70,27 +71,26 @@ export function loadBusterSessionPolicies(): Record<string, any> {
   const config = loadBusterPlatformConfig();
   const session = config.session;
   const gateway = config.gateway;
-  if (!isRecord(session?.termination)) throw new Error('config.session.termination: required platform config object in swarm.config.json');
   if (!isRecord(session?.kill)) throw new Error('config.session.kill: required platform config object in swarm.config.json');
-  if (!isRecord(gateway?.invoke?.session_status)) throw new Error('config.gateway.invoke.session_status: required platform config object in swarm.config.json');
-  if (!isRecord(gateway?.invoke?.session_send)) throw new Error('config.gateway.invoke.session_send: required platform config object in swarm.config.json');
-  if (!isRecord(gateway?.invoke?.subagent_kill)) throw new Error('config.gateway.invoke.subagent_kill: required platform config object in swarm.config.json');
-  if (!isRecord(gateway?.invoke?.subagent_list)) throw new Error('config.gateway.invoke.subagent_list: required platform config object in swarm.config.json');
-  const status = gateway.invoke.session_status;
-  const kill = gateway.invoke.subagent_kill;
-  const send = gateway.invoke.session_send;
-  const list = gateway.invoke.subagent_list;
-  const termination = session.termination;
+  if (!isRecord(session?.termination)) throw new Error('config.session.termination: required platform config object in swarm.config.json');
+  if (!isRecord(gateway?.invoke)) throw new Error('config.gateway.invoke: required platform config object in swarm.config.json');
+  if (!isRecord(gateway.invoke.retry)) throw new Error('config.gateway.invoke.retry: required platform config object in swarm.config.json');
   const killPolicy = session.kill;
-  const gatewayPolicy = (record: Record<string, any>, label: string) => ({
-    timeoutMs: requireNonNegativeNumber(record, 'timeout_ms', `${label}.timeout_ms`),
-    maxRetries: requirePositiveInteger(record, 'max_retries', `${label}.max_retries`),
-    retryDelayMs: requireNonNegativeNumber(record, 'retry_delay_ms', `${label}.retry_delay_ms`),
-  });
-  const statusGateway = gatewayPolicy(status, 'config.gateway.invoke.session_status');
-  const requestGateway = gatewayPolicy(kill, 'config.gateway.invoke.subagent_kill');
-  const stopGateway = gatewayPolicy(send, 'config.gateway.invoke.session_send');
-  const listGateway = gatewayPolicy(list, 'config.gateway.invoke.subagent_list');
+  const terminationPolicy = session.termination;
+  const retryPolicy = gateway.invoke.retry;
+  const gatewayPolicy = (field: string, label: string) => {
+    const invokePolicy = gateway.invoke[field];
+    if (!isRecord(invokePolicy)) throw new Error(`${label}: required platform config object in swarm.config.json`);
+    return {
+      timeoutMs: requireNonNegativeNumber(invokePolicy, 'timeout_ms', `${label}.timeout_ms`),
+      maxRetries: requirePositiveInteger(retryPolicy, 'max_attempts', 'config.gateway.invoke.retry.max_attempts'),
+      retryDelayMs: requireNonNegativeNumber(retryPolicy, 'retry_delay_ms', 'config.gateway.invoke.retry.retry_delay_ms'),
+    };
+  };
+  const statusGateway = gatewayPolicy('session_status', 'config.gateway.invoke.session_status');
+  const requestGateway = gatewayPolicy('subagent_kill', 'config.gateway.invoke.subagent_kill');
+  const stopGateway = gatewayPolicy('session_send', 'config.gateway.invoke.session_send');
+  const listGateway = gatewayPolicy('subagent_list', 'config.gateway.invoke.subagent_list');
   return {
     gatewayStatusPolicy: statusGateway,
     killPolicy: {
@@ -112,16 +112,16 @@ export function loadBusterSessionPolicies(): Record<string, any> {
       stopMessage: requireNonEmptyString(killPolicy, 'stop_message', 'config.session.kill.stop_message'),
     },
     terminationPolicy: {
-      graceMs: requireNonNegativeNumber(termination, 'grace_ms', 'config.session.termination.grace_ms'),
-      maxGraceMs: requireNonNegativeNumber(termination, 'max_grace_ms', 'config.session.termination.max_grace_ms'),
-      confirmPollMs: requirePositiveInteger(termination, 'poll_ms', 'config.session.termination.poll_ms'),
-      gatewayRequestMaxMs: requirePositiveInteger(termination, 'gateway_request_max_ms', 'config.session.termination.gateway_request_max_ms'),
-      cleanupConfirmTimeoutMs: requireNonNegativeNumber(termination, 'cleanup_confirm_timeout_ms', 'config.session.termination.cleanup_confirm_timeout_ms'),
-      statusTimeoutMs: requirePositiveInteger(termination, 'status_timeout_ms', 'config.session.termination.status_timeout_ms'),
-      requestTimeoutMs: requirePositiveInteger(termination, 'request_timeout_ms', 'config.session.termination.request_timeout_ms'),
-      stopRequestTimeoutMs: requirePositiveInteger(termination, 'stop_request_timeout_ms', 'config.session.termination.stop_request_timeout_ms'),
-      listTimeoutMs: requirePositiveInteger(termination, 'list_timeout_ms', 'config.session.termination.list_timeout_ms'),
-      acpxTimeoutMs: requirePositiveInteger(termination, 'acpx_timeout_ms', 'config.session.termination.acpx_timeout_ms'),
+      graceMs: requireNonNegativeNumber(terminationPolicy, 'grace_ms', 'config.session.termination.grace_ms'),
+      maxGraceMs: requireNonNegativeNumber(terminationPolicy, 'max_grace_ms', 'config.session.termination.max_grace_ms'),
+      confirmPollMs: requirePositiveInteger(terminationPolicy, 'poll_ms', 'config.session.termination.poll_ms'),
+      gatewayRequestMaxMs: requirePositiveInteger(terminationPolicy, 'gateway_request_max_ms', 'config.session.termination.gateway_request_max_ms'),
+      cleanupConfirmTimeoutMs: requireNonNegativeNumber(terminationPolicy, 'cleanup_confirm_timeout_ms', 'config.session.termination.cleanup_confirm_timeout_ms'),
+      statusTimeoutMs: requirePositiveInteger(terminationPolicy, 'gateway_operation_timeout_ms', 'config.session.termination.gateway_operation_timeout_ms'),
+      requestTimeoutMs: requirePositiveInteger(terminationPolicy, 'gateway_operation_timeout_ms', 'config.session.termination.gateway_operation_timeout_ms'),
+      stopRequestTimeoutMs: requirePositiveInteger(terminationPolicy, 'gateway_operation_timeout_ms', 'config.session.termination.gateway_operation_timeout_ms'),
+      listTimeoutMs: requirePositiveInteger(terminationPolicy, 'gateway_operation_timeout_ms', 'config.session.termination.gateway_operation_timeout_ms'),
+      acpxTimeoutMs: requirePositiveInteger(terminationPolicy, 'acpx_timeout_ms', 'config.session.termination.acpx_timeout_ms'),
     },
   };
 }
@@ -130,14 +130,12 @@ export function loadBusterGatewayHealthPolicy(): Record<string, any> {
   const config = loadBusterPlatformConfig();
   if (!isRecord(config?.gateway?.invoke?.health)) throw new Error('config.gateway.invoke.health: required platform config object in swarm.config.json');
   if (!isRecord(config?.gateway?.health)) throw new Error('config.gateway.health: required platform config object in swarm.config.json');
-  const healthInvoke = config.gateway.invoke.health;
-  const health = config.gateway.health;
   return {
-    invokeTimeoutMs: requireNonNegativeNumber(healthInvoke, 'timeout_ms', 'config.gateway.invoke.health.timeout_ms'),
-    readyTimeoutMs: requirePositiveInteger(health, 'ready_timeout_ms', 'config.gateway.health.ready_timeout_ms'),
-    readyIntervalMs: requirePositiveInteger(health, 'ready_interval_ms', 'config.gateway.health.ready_interval_ms'),
-    monitorIntervalMs: requirePositiveInteger(health, 'monitor_interval_ms', 'config.gateway.health.monitor_interval_ms'),
-    maxFailures: requirePositiveInteger(health, 'max_failures', 'config.gateway.health.max_failures'),
+    invokeTimeoutMs: requireNonNegativeNumber(config.gateway.invoke.health, 'timeout_ms', 'config.gateway.invoke.health.timeout_ms'),
+    readyTimeoutMs: requirePositiveInteger(config.gateway.health, 'timeout_ms', 'config.gateway.health.timeout_ms'),
+    readyIntervalMs: requirePositiveInteger(config.gateway.health, 'interval_ms', 'config.gateway.health.interval_ms'),
+    monitorIntervalMs: requirePositiveInteger(config.gateway.health, 'monitor_interval_ms', 'config.gateway.health.monitor_interval_ms'),
+    maxFailures: requirePositiveInteger(config.gateway.health, 'max_failures', 'config.gateway.health.max_failures'),
   };
 }
 

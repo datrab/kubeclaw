@@ -17,18 +17,21 @@ const args = parseArgs();
 const { sourceRoot, overlayRoot } = resolveRoots(args);
 const { runtimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
 const pipelineRunnerMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/runners/pipeline-runner-lock.ts');
+const platformConfigMod = await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/core/platform-config.ts');
 const launchLibMod = await importRuntimeModule(sourceRoot, '/tests/verification/runtime/session-launch-lib.mjs');
 
 const helperDir = fs.mkdtempSync(path.join(os.tmpdir(), 'final-gate-hardening-'));
 const helperPath = path.join(helperDir, 'try-run-lock.mjs');
 const runtimeModulePath = path.join(runtimeRoot, 'app', 'skills', 'pipeline', 'runners', 'pipeline-runner-lock.ts');
+const platformConfigModulePath = path.join(runtimeRoot, 'app', 'skills', 'pipeline', 'core', 'platform-config.ts');
 
 fs.writeFileSync(helperPath, `
 import { pathToFileURL } from 'node:url';
 
-const [, , runtimeModulePath, rawConfig] = process.argv;
+const [, , runtimeModulePath, platformConfigModulePath, rawConfig] = process.argv;
 const pipelineRunnerMod = await import(pathToFileURL(runtimeModulePath).href);
-const config = JSON.parse(rawConfig);
+const platformConfigMod = await import(pathToFileURL(platformConfigModulePath).href);
+const config = platformConfigMod.expandSwarmConfig(JSON.parse(rawConfig));
 
 try {
   const lock = pipelineRunnerMod.acquirePipelineRunLock(config, { module: '99' });
@@ -41,6 +44,26 @@ try {
 `.trimStart());
 
 const checks = [];
+
+function compactStandardConfig(runtimeFields) {
+  return {
+    profile: 'standard',
+    features: {
+      observability: true,
+      buster: true,
+      discord_alerts: true,
+    },
+    tuning: {
+      safety_margins: 'high',
+      retention: 'high',
+      alerts: 'rich',
+      logs: 'verbose',
+      checks: 'strict',
+      determinism: 'strict',
+    },
+    ...runtimeFields,
+  };
+}
 
 async function runCheck(name, fn) {
   try {
@@ -59,12 +82,13 @@ await runCheck('same-project pipeline run concurrency is explicitly bounded to o
   assert.equal(pipelineRunnerMod.PIPELINE_RUN_CONCURRENCY_LIMIT, 1);
 
   const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'final-gate-lock-'));
-  const lockConfig = {
+  const compactLockConfig = compactStandardConfig({
     project: 'verification-demo',
     repo_root: '/tmp/verification-demo',
-    _runId: 'run-main',
     paths: { swarm_dir: swarmDir },
-  };
+  });
+  const lockConfig = platformConfigMod.expandSwarmConfig(compactLockConfig);
+  lockConfig._runId = 'run-main';
   const lockPath = path.join(swarmDir, 'logs', 'pipeline', 'active-run.lock.json');
 
   const lock = pipelineRunnerMod.acquirePipelineRunLock(lockConfig, { module: '01' });
@@ -80,7 +104,7 @@ await runCheck('same-project pipeline run concurrency is explicitly bounded to o
     );
     assert.equal(fs.existsSync(lockPath), true);
 
-    const blocked = spawnSync(process.execPath, [helperPath, runtimeModulePath, JSON.stringify({
+    const blocked = spawnSync(process.execPath, [helperPath, runtimeModulePath, platformConfigModulePath, JSON.stringify({
       ...lockConfig,
       _runId: 'run-child-blocked',
     })], {
@@ -104,19 +128,20 @@ await runCheck('same-project pipeline run concurrency is explicitly bounded to o
 
 await runCheck('pipeline run lock releases cleanly for the rightful owner and allows a later process to acquire the lock', async () => {
   const swarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'final-gate-release-'));
-  const lockConfig = {
+  const compactLockConfig = compactStandardConfig({
     project: 'verification-demo',
     repo_root: '/tmp/verification-demo',
-    _runId: 'run-main-release',
     paths: { swarm_dir: swarmDir },
-  };
+  });
+  const lockConfig = platformConfigMod.expandSwarmConfig(compactLockConfig);
+  lockConfig._runId = 'run-main-release';
   const lockPath = path.join(swarmDir, 'logs', 'pipeline', 'active-run.lock.json');
   const lock = pipelineRunnerMod.acquirePipelineRunLock(lockConfig, { module: '02' });
 
   pipelineRunnerMod.releasePipelineRunLock(lock);
   assert.equal(fs.existsSync(lockPath), false);
 
-  const retry = spawnSync(process.execPath, [helperPath, runtimeModulePath, JSON.stringify({
+  const retry = spawnSync(process.execPath, [helperPath, runtimeModulePath, platformConfigModulePath, JSON.stringify({
     ...lockConfig,
     _runId: 'run-child-after-release',
   })], {

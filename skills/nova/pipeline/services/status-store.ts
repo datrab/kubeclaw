@@ -64,7 +64,7 @@ export {
 // Log directory init
 // ---------------------------------------------------------------------------
 
-export function initLogDir(config, ctx) {
+export function initLogDir(config, ctx, opts = {}) {
   const logDir = ensureProjectLogDir(config);
   const pipelineDir = pipelineLogDir(config);
   fs.mkdirSync(pipelineDir, { recursive: true });
@@ -96,7 +96,9 @@ export function initLogDir(config, ctx) {
     }), null, 2)
   );
 
-  resetLifecycleStore(config);
+  if (opts.resume !== true && config?._resume !== true) {
+    resetLifecycleStore(config);
+  }
   initContextLogging(ctx, pipelineLogFd, runPipelineLogFd);
   log('INFO', `Log directory initialized: ${logDir}`);
 }

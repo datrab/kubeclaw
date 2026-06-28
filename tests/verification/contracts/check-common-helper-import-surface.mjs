@@ -6,6 +6,7 @@ import path from 'path';
 import assert from 'assert';
 import { execFileSync } from 'child_process';
 import { effectiveFiles, SHARED_PIPELINE_HELPER_PATHS } from '../lib/lifecycle-audit-lib.mjs';
+import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 import {
   getRepoRoot,
   gitExec,
@@ -35,6 +36,12 @@ function walk(dir, out = []) {
 }
 
 const { sourceRoot, overlayRoot } = parseArgs();
+const previousSwarmConfig = process.env.SWARM_CONFIG;
+const expandedConfigDir = fs.mkdtempSync(path.join(os.tmpdir(), 'common-helper-import-config-'));
+const expandedConfigPath = path.join(expandedConfigDir, 'swarm.config.effective.json');
+const compactConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json'), 'utf8'));
+fs.writeFileSync(expandedConfigPath, `${JSON.stringify(expandSwarmConfig(compactConfig), null, 2)}\n`);
+process.env.SWARM_CONFIG = expandedConfigPath;
 const commonFiles = [...effectiveFiles(sourceRoot, overlayRoot, 'skills/common/pipeline').keys()]
   .map((relPath) => relPath.replace(/\\/g, '/'))
   .filter((relPath) => SHARED_PIPELINE_HELPER_PATHS.includes(path.posix.join('pipeline', relPath)))
@@ -108,6 +115,9 @@ try {
   assert.equal(headHash({ repo_root: path.join(gitTempRoot, 'missing-repo') }), null, 'unavailable headHash should surface typed null instead of magic empty string');
 } finally {
   fs.rmSync(gitTempRoot, { recursive: true, force: true });
+  fs.rmSync(expandedConfigDir, { recursive: true, force: true });
+  if (previousSwarmConfig === undefined) delete process.env.SWARM_CONFIG;
+  else process.env.SWARM_CONFIG = previousSwarmConfig;
 }
 
 const pipelineReadme = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/README.md'), 'utf8');

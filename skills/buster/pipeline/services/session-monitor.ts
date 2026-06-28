@@ -166,8 +166,7 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
 
   logger.info('MONITOR', `Monitoring session ${childSessionKey}`, {
     pollMs: cfg.monitorPollMs,
-    unknownLimit: cfg.unknownPollLimit,
-    staleLimit: cfg.stalePollLimit,
+    pollLimit: cfg.pollLimit,
     timeoutSeconds: hardDeadlineMs ? timeoutSeconds : null,
   });
 

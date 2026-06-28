@@ -6,8 +6,8 @@ Behavior verification is source-backed and repo-root based. The runnable harness
 
 - use the live repo root as the source of truth
 - run verifiers against current source
-- treat `docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` as the authoritative inventory, stream-identity, and contract-boundary spec
-- treat `docs/archive/legacy-root-docs/telemetry-event-schema.md` as the authoritative event-by-event payload reference, kept in exact inventory parity with that contract
+- treat `docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md` as the authoritative inventory, stream-identity, and contract-boundary spec
+- treat `docs/telemetry-event-schema.md` as the authoritative event-by-event payload reference, kept in exact inventory parity with that contract
 - treat `.swarm/logs/pipeline/latest.json` plus `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,buster-telemetry-fallback.jsonl,redis/redis-exchanges.jsonl,redis/redis-ops.jsonl,summary.json}` as the canonical replay/audit bundle, with Redis audit artifacts also mirrored under `.swarm/logs/redis/{redis-exchanges.jsonl,redis-ops.jsonl}`
 - take pass totals from the live JSON output of `tests/verification/behavior/verify.mjs`
 
@@ -20,7 +20,7 @@ Current source root:
 Current telemetry contract:
 
 ```text
-<repo-root>/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md
+<repo-root>/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md
 ```
 
 Canonical telemetry stream is `pipeline:telemetry:<project>:<run_id>`:
@@ -80,7 +80,7 @@ node tests/verification/behavior/verify.mjs \
   --areas foundations,fix-cycles
 ```
 
-Both `tests/verification/contracts/check-telemetry-contract.mjs` and `tests/verification/behavior/verify.mjs` default `--contract` to `<repo-root>/docs/archive/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`. Pass `--contract` only when intentionally checking a different markdown contract file.
+Both `tests/verification/contracts/check-telemetry-contract.mjs` and `tests/verification/behavior/verify.mjs` default `--contract` to `<repo-root>/docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md`. Pass `--contract` only when intentionally checking a different markdown contract file.
 
 ## Prerequisites
 

@@ -7,6 +7,7 @@ const apiGroup = process.env.BUSTER_LEASE_API_GROUP || 'kubeclaw.forgestack.ai';
 const apiVersion = process.env.BUSTER_LEASE_API_VERSION || 'v1alpha1';
 const busterServiceAccountName = process.env.BUSTER_SERVICE_ACCOUNT_NAME || 'agent-buster';
 const busterServiceAccountNamespace = process.env.BUSTER_SERVICE_ACCOUNT_NAMESPACE || namespace;
+const additionalRunnerServiceAccounts = parseServiceAccountRefs(process.env.BUSTER_ADDITIONAL_RUNNER_SERVICE_ACCOUNTS || '');
 const allowedPrefixes = new Set((process.env.BUSTER_ALLOWED_NAMESPACE_PREFIXES || 'test').split(',').map((value) => value.trim()).filter(Boolean));
 const defaultTtlSeconds = Number(process.env.BUSTER_DEFAULT_TTL_SECONDS || 7200);
 const pollIntervalMs = Number(process.env.BUSTER_CONTROLLER_POLL_MS || 3000);
@@ -125,6 +126,22 @@ function sanitizeLabelValue(value, fallback = 'unknown') {
     .replace(/^-+|-+$/g, '')
     .slice(0, 63);
   return normalized || fallback;
+}
+
+function parseServiceAccountRefs(value) {
+  return String(value || '')
+    .split(',')
+    .map((entry) => entry.trim())
+    .filter(Boolean)
+    .map((entry) => {
+      const [namespacePart, namePart] = entry.includes('/') ? entry.split('/', 2) : [busterServiceAccountNamespace, entry];
+      const namespaceName = sanitizeDnsLabel(namespacePart, '');
+      const serviceAccountName = sanitizeDnsLabel(namePart, '');
+      if (!namespaceName || !serviceAccountName) {
+        throw new Error(`invalid BUSTER_ADDITIONAL_RUNNER_SERVICE_ACCOUNTS entry: ${entry}`);
+      }
+      return { namespace: namespaceName, name: serviceAccountName };
+    });
 }
 
 function ownerLabels(lease, namespaceName) {
@@ -280,6 +297,19 @@ function namespaceRole(namespaceName) {
 }
 
 function namespaceRoleBinding(namespaceName) {
+  const subjects = [
+    {
+      kind: 'ServiceAccount',
+      name: busterServiceAccountName,
+      namespace: busterServiceAccountNamespace,
+    },
+    ...additionalRunnerServiceAccounts.map((serviceAccount) => ({
+      kind: 'ServiceAccount',
+      name: serviceAccount.name,
+      namespace: serviceAccount.namespace,
+    })),
+  ];
+
   return {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'RoleBinding',
@@ -292,13 +322,7 @@ function namespaceRoleBinding(namespaceName) {
       kind: 'Role',
       name: 'buster-namespace-runner',
     },
-    subjects: [
-      {
-        kind: 'ServiceAccount',
-        name: busterServiceAccountName,
-        namespace: busterServiceAccountNamespace,
-      },
-    ],
+    subjects,
   };
 }
 
