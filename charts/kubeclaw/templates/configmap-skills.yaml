@@ -2,8 +2,8 @@
 ConfigMap for user-provided custom skills.
 Only created if customSkills are defined in values.yaml.
 
-KubeClaw system skills (redis.ts, memory.js, pipeline.ts, etc.) are baked into the
-Docker image at /app/skills and do NOT need to be in a ConfigMap.
+KubeClaw system skills (redis.ts, memory.js, pipeline.ts, etc.) are delivered by
+code bundles to /app/skills and do NOT need to be in a ConfigMap.
 
 This ConfigMap is for additional user-defined skills that overlay on top of /app/skills.
 It is extension-only: the init container rejects protected core runtime paths, so

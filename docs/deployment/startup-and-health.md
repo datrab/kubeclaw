@@ -31,7 +31,7 @@ The init container does the durable setup:
 - refreshes the persisted OpenClaw plugin registry from that baked cache before the gateway starts
 - writes chart-owned `swarm.config.json`, `.semgrep.yml`, and `eslint.config.mjs`
 - renders pod-local runtime config into `/runtime-config`
-- merges packaged skills and allowed custom skills into `/skills-merged`
+- overlays code bundle skills and allowed custom skills into `/skills-merged`
 - writes the generated health and startup-doctor helper scripts
 
 Runtime containers then mount:

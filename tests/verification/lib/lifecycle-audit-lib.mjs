@@ -145,8 +145,6 @@ export function loadPackagingRules(sourceRoot, overlayRoot) {
   const requiredGeneral = [
     'sudo curl wget git openssh-client jq',
     'RUN mkdir -p /app/skills',
-    'COPY skills/nova/ /app/skills/',
-    'COPY skills/common/ /app/skills/',
     'node "$(npm root -g)/typescript/bin/tsc" -p tsconfig.build.json',
     'mkdir -p /app/dist/extensions/kubeclaw-agent-observer',
     'cp -R package.json openclaw.plugin.json src dist /app/dist/extensions/kubeclaw-agent-observer/',
@@ -154,8 +152,6 @@ export function loadPackagingRules(sourceRoot, overlayRoot) {
   const requiredSandbox = [
     'curl wget git openssh-client netcat-openbsd',
     'RUN mkdir -p /app/skills',
-    'COPY skills/buster/ /app/skills/',
-    'COPY skills/common/ /app/skills/',
     'npm install -g ioredis js-yaml uuid @qdrant/js-client-rest typescript',
     'node "$(npm root -g)/typescript/bin/tsc" -p tsconfig.build.json',
     'mkdir -p /app/dist/extensions/kubeclaw-agent-observer',
@@ -184,13 +180,9 @@ export function loadPackagingRules(sourceRoot, overlayRoot) {
     if (dockerfile.includes('/app/common')) {
       throw new Error(`${relPath} must not materialize shared pipeline helpers under /app/common`);
     }
-  }
-
-  if (generalDockerfile.indexOf('COPY skills/nova/ /app/skills/') > generalDockerfile.indexOf('COPY skills/common/ /app/skills/')) {
-    throw new Error('docker/Dockerfile.general must copy skills/nova before skills/common so common materializes shared facades');
-  }
-  if (sandboxDockerfile.indexOf('COPY skills/buster/ /app/skills/') > sandboxDockerfile.indexOf('COPY skills/common/ /app/skills/')) {
-    throw new Error('docker/Dockerfile.sandbox must copy skills/buster before skills/common so common materializes shared facades');
+    if (dockerfile.includes('COPY skills/')) {
+      throw new Error(`${relPath} must not bake fast-changing agent skills; use code bundles for /app/skills`);
+    }
   }
 
   return {

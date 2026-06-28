@@ -807,11 +807,11 @@ assert.equal(rendered.includes('nodePort: 30073'), false, 'Rendered Nova gateway
 assertIncludes(rendered, 'name: agent-nova-prism-preview', 'Rendered Nova preview must use a dedicated preview Service');
 assertIncludes(rendered, 'nodePort: 30456', 'Rendered Nova preview must preserve the temporary Prism preview NodePort');
 assertIncludes(rendered, 'kind: Deployment', 'Helm render must include a Deployment');
-assertIncludes(rendered, 'cp -r /app/skills/. /skills-merged/', 'Rendered init container must merge packaged skills into the runtime overlay');
+assertIncludes(rendered, 'cp -r /app/skills/. /skills-merged/', 'Rendered init container must prepare the durable empty image skills baseline before the code bundle overlay');
 assertIncludes(rendered, 'codeBundle.enabled=true but CODE_BUNDLE_ARCHIVE_URL is empty', 'Rendered init container must fail closed when code bundles are enabled without a resolved archive URL');
 assertIncludes(rendered, 'bundle manifest accepted', 'Rendered init container must validate and log accepted code bundle manifests');
 assertIncludes(rendered, 'value: "/runtime-config/code-bundle-manifest.json"', 'Rendered deployment must expose the code bundle manifest path to runtime containers');
-assertIncludes(rendered, 'cp -r /init-skills/. /skills-merged/', 'Rendered init container must overlay custom skills after packaged skills');
+assertIncludes(rendered, 'cp -r /init-skills/. /skills-merged/', 'Rendered init container must overlay custom skills after code bundle skills');
 assertIncludes(rendered, 'customSkills may not override protected runtime skill path', 'Rendered init container must block custom skill overlays from replacing core runtime paths');
 assertIncludes(rendered, 'pipeline|pipeline/*|pipeline.ts|common|common/*|nova/pipeline|nova/pipeline/*|buster/pipeline|buster/pipeline/*|redis.ts|buster-pipeline.ts|verify-task.ts', 'Rendered init container must keep the protected runtime skill denylist');
 assertIncludes(rendered, 'mountPath: /app/skills', 'Rendered pod must mount the merged skills directory into /app/skills');
@@ -1092,7 +1092,8 @@ assertIncludes(chartValues, 'codeBundle:', 'Chart defaults must define the code 
 assertIncludes(chartValues, 'archiveUrl: ""', 'Chart defaults must keep code bundle archive URL explicit');
 assertIncludes(novaValues, 'codeBundle:', 'Nova production values must expose the code bundle surface');
 assertIncludes(busterValues, 'codeBundle:', 'Buster production values must expose the code bundle surface');
-assertIncludes(deploymentTemplate, 'cp -r /app/skills/. /skills-merged/', 'Deployment template must retain the packaged-skill merge step');
+assertIncludes(deploymentTemplate, 'cp -r /app/skills/. /skills-merged/', 'Deployment template must retain the durable empty image skills baseline step');
+assertIncludes(deploymentTemplate, 'Code bundles own the final /app/skills runtime tree.', 'Deployment template must document that fast-changing skills come from code bundles');
 assertIncludes(deploymentTemplate, 'rm -f /runtime-config/code-bundle-manifest.json', 'Deployment template must clear stale bundle manifest state on each init');
 assertIncludes(deploymentTemplate, 'CODE_BUNDLE_ARCHIVE_URL', 'Deployment template must expose a resolved bundle archive URL to init');
 assertIncludes(deploymentTemplate, 'CODE_BUNDLE_AUTH_TOKEN', 'Deployment template must support authenticated bundle downloads');
@@ -1165,7 +1166,7 @@ assertIncludes(deploymentTemplate, 'cp -Lf /config/.semgrep.yml /runtime-config/
 assertIncludes(serviceTemplate, '.Values.service.extraPorts', 'Service template must continue rendering configured extra service ports');
 assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/swarm.config.json"', 'Swarm config template must source swarm.config.json from the chart artifact by default');
 assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/.semgrep.yml"', 'Swarm config template must source .semgrep.yml from the chart artifact by default');
-assertIncludes(customSkillsConfigMapTemplate, 'Docker image at /app/skills', 'Custom skills ConfigMap comment must match the runtime skills mount path');
+assertIncludes(customSkillsConfigMapTemplate, 'code bundles to /app/skills', 'Custom skills ConfigMap comment must match the code-bundle runtime skills mount path');
 assertIncludes(customSkillsConfigMapTemplate, 'extension-only', 'Custom skills ConfigMap comment must define customSkills as extension-only');
 assertIncludes(customSkillsConfigMapTemplate, 'cannot be used as a compatibility patch path', 'Custom skills ConfigMap comment must forbid core runtime compatibility patching');
 assert.equal(customSkillsConfigMapTemplate.includes('/app/skills-kubeclaw'), false, 'Custom skills ConfigMap comment must not point at the stale skills path');
@@ -1176,7 +1177,8 @@ assertIncludes(imageBuildWorkflow, 'docker/Dockerfile.namespace-controller', 'Im
 assertIncludes(imageBuildWorkflow, 'image_suffix: kubeclaw-namespace-controller', 'Image-build workflow must publish the kubeclaw-namespace-controller image');
 assertIncludes(imageBuildWorkflow, 'dorny/paths-filter@v3', 'Build workflow must detect image-affecting changes without suppressing bundle publication on unrelated pushes');
 assertIncludes(imageBuildWorkflow, 'plugins/openclaw-agent-observer/**', 'Build workflow change detection must include the baked observer plugin source');
-assertIncludes(imageBuildWorkflow, 'scripts/package-agent-skill-bundle.sh', 'Build workflow change detection must include the bundle packager script');
+assert.equal(imageBuildWorkflow.includes("- 'skills/**'"), false, 'Image-build workflow must not rebuild runtime images for skill-only changes');
+assert.equal(imageBuildWorkflow.includes("- 'scripts/package-agent-skill-bundle.sh'"), false, 'Image-build workflow must not rebuild runtime images for bundle packager-only changes');
 assertIncludes(imageBuildWorkflow, 'Package & Publish Skill Bundles', 'Build workflow must include the durable skill-bundle publication job');
 assertIncludes(imageBuildWorkflow, './scripts/package-agent-skill-bundle.sh nova', 'Build workflow must package the Nova /app/skills bundle');
 assertIncludes(imageBuildWorkflow, './scripts/package-agent-skill-bundle.sh buster', 'Build workflow must package the Buster /app/skills bundle');
@@ -1188,6 +1190,8 @@ assertIncludes(packageSkillBundleScript, '"runtimeSurface": "/app/skills"', 'Bun
 assertIncludes(packageSkillBundleScript, '"bundleKind": "app-skills-overlay"', 'Bundle packaging manifest must describe the overlay-style bundle contract');
 assertDockerInstallCommandsFailClosed(generalDockerfile, 'General Dockerfile');
 assertDockerInstallCommandsFailClosed(sandboxDockerfile, 'Sandbox Dockerfile');
+assert.equal(generalDockerfile.includes('COPY skills/'), false, 'General runtime image must not bake fast-changing agent skills');
+assert.equal(sandboxDockerfile.includes('COPY skills/'), false, 'Sandbox runtime image must not bake fast-changing agent skills');
 assertIncludes(generalDockerfile, 'ARG KUBECTL_VERSION=', 'General Dockerfile must pin kubectl for live Kubernetes verification');
 assertIncludes(generalDockerfile, 'https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl', 'General Dockerfile must install kubectl from the pinned Kubernetes release');
 assertIncludes(generalDockerfile, 'chmod +x /usr/local/bin/kubectl', 'General Dockerfile must make kubectl executable in PATH');
@@ -1220,7 +1224,8 @@ assert.equal(
 assertIncludes(sandboxDockerfile, 'RUN npm install -g lighthouse serve playwright', 'Sandbox Dockerfile must fail closed when browser test tool installation fails');
 assertLine(dockerignore, '**', 'Docker build context must default-deny repository files');
 assertLine(dockerignore, '!docker/Dockerfile.namespace-controller', 'Docker build context must include the namespace controller Dockerfile');
-assertLine(dockerignore, '!skills/**', 'Docker build context must include runtime skills');
+assert.equal(dockerignore.includes('!skills/'), false, 'Docker build context must not include agent skills; code bundles own /app/skills');
+assert.equal(dockerignore.includes('!skills/**'), false, 'Docker build context must not include agent skills recursively; code bundles own /app/skills');
 assertLine(dockerignore, '!plugins/openclaw-agent-observer/**', 'Docker build context must include observer plugin source');
 assertLine(dockerignore, '!scripts/buster-namespace-controller.mjs', 'Docker build context must include the namespace controller entrypoint');
 assertLine(dockerignore, 'my-values/', 'Docker build context must exclude deployment values');
@@ -1339,7 +1344,7 @@ assertIncludes(deployScript, 'kubectl wait --for=condition=Ready pod -l "app.kub
 assertIncludes(deployScript, 'kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- openclaw gateway status', 'Deploy smoke must verify the in-pod OpenClaw gateway status');
 assertIncludes(deployScript, 'kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- node /runtime-config/kubeclaw-health.mjs startup-status', 'Deploy smoke must assert the persisted startup verification marker');
 assertIncludes(deployScript, 'kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- node /runtime-config/kubeclaw-health.mjs readiness', 'Deploy smoke must re-run cheap readiness checks inside the pod');
-assertIncludes(deployScript, 'kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- test -d /app/skills', 'Deploy smoke must verify packaged skills are present in the running pod');
+assertIncludes(deployScript, 'kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- test -d /app/skills', 'Deploy smoke must verify the runtime skills mount is present in the running pod');
 assertIncludes(deployScript, 'kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- test -f /home/node/.openclaw/swarm.config.json', 'Deploy smoke must verify runtime swarm config is present in the running pod');
 assertIncludes(deployScript, 'remove_destructive_infra() {', 'Deploy script must keep destructive infra teardown under a shared helper');
 assertIncludes(deployScript, 'run_destructive_teardown() {', 'Deploy script must centralize destructive teardown logic behind a shared helper');
@@ -1446,7 +1451,7 @@ const result = {
     'Local infra manifests pass kubeconform where Kubernetes schemas are available',
     'Rendered Buster Deployment removes the legacy stream-processor sidecar',
     'Chart and production values remove processor configuration',
-    'Rendered Deployment preserves packaged-skills merge before custom overlay',
+    'Rendered Deployment preserves code-bundle skill merge before custom overlay',
     'Rendered Deployment blocks customSkills from overriding core runtime paths',
     'Rendered pod mounts merged skills at /app/skills',
     'Rendered Deployment pins SWARM_CONFIG to /home/node/.openclaw/swarm.config.json',
@@ -1475,7 +1480,7 @@ const result = {
     'Live deployment verification redeploys Nova and Buster against registry-local before smoke runs',
     'Deploy script exposes canonical pod-level smoke commands for the deployed agents',
     'Deploy smoke waits for rollout and pod readiness before checking the live pod surface',
-    'Deploy smoke verifies in-pod gateway status, packaged skills, and runtime swarm config',
+    'Deploy smoke verifies in-pod gateway status, runtime skills mount, and runtime swarm config',
     'Deploy teardown and destroy commands share one destructive implementation surface',
     'Deploy script classifies optional setup/status/teardown failures instead of using broad silent fallbacks',
     'Setup scripts classify optional failures, fence legacy broad git setup behind explicit opt-in, and document tracked deploy values',

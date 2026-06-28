@@ -2,15 +2,11 @@
 
 ## Scope
 
-Packaging verification covers the real packaged runtime surface that the materialized general and sandbox images would expose under `/app/skills`, not just the source tree layout.
+Packaging verification covers the real code-bundle runtime surface that Nova and Buster expose under `/app/skills`, not just the source tree layout.
 
 Authoritative packaging rules:
-- `docker/Dockerfile.general` builds `/app/skills` from `skills/common` plus `skills/nova`, while excluding the Nova-local copies of:
-  - `pipeline/integrations/gateway.ts`
-  - `pipeline/agents/acp-monitor.js`
-- `docker/Dockerfile.sandbox` builds `/app/skills` from `skills/common` plus `skills/buster`, while excluding the common copy of:
-  - `redis.ts`
-- `charts/kubeclaw/templates/deployment.yaml` merges image-baked `/app/skills/.` into `/skills-merged/`, overlays optional `/init-skills/.`, then mounts `/skills-merged` back onto `/app/skills`
+- `scripts/package-agent-skill-bundle.sh` builds `/app/skills` bundles from the role-specific skill tree plus `skills/common`
+- `charts/kubeclaw/templates/deployment.yaml` prepares the durable empty image baseline, overlays the required code bundle, overlays optional `/init-skills/.`, then mounts `/skills-merged` back onto `/app/skills`
 
 Current verification policy:
 - use the live repo root as the source of truth
@@ -21,15 +17,15 @@ Current verification policy:
 ## Guardrail coverage
 
 The packaging guard fails if any of the following regress:
-- packaged runtime path collisions
+- code-bundle runtime path collisions
 - broken relative imports in the materialized `/app/skills/**` tree
 - `// @ts-nocheck` directives in runtime TypeScript sources
 - general-image `pipeline.ts` import failure
 - general-image `pipeline/index.ts` import failure
-- packaged owner drift for the shared pipeline helper surface under `/app/skills/pipeline/**`
-- packaged owner drift for sandbox `/app/skills/pipeline/tools/redis.ts`
+- bundle owner drift for the shared pipeline helper surface under `/app/skills/pipeline/**`
+- bundle owner drift for sandbox `/app/skills/pipeline/tools/redis.ts`
 
-This protects the packaged runtime surface against overlay/copy-order regressions and broken cross-skill relative imports after Docker/chart layering.
+This protects the code-bundle runtime surface against overlay/copy-order regressions and broken cross-skill relative imports after bundle/chart layering.
 
 ## Reproducible check
 

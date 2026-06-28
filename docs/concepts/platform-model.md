@@ -54,7 +54,7 @@ kubectl -n "$NAMESPACE" get pods,svc,pvc,networkpolicy
 
 - Missing or incomplete Secrets surface during `./scripts/deploy.sh secrets`, `./scripts/deploy.sh infra`, or agent rollout.
 - LiteLLM readiness failures usually point at `litellm-secrets`, `postgresql-secrets`, `google-sa-key`, or provider config.
-- Gateway smoke failures point at the in-pod OpenClaw gateway status, packaged skills, or runtime swarm config.
+- Gateway smoke failures point at the in-pod OpenClaw gateway status, deployed code bundle, or runtime swarm config.
 - Deployment truth failures mean a platform claim in docs no longer matches scripts, values, templates, Dockerfiles, or expected NetworkPolicy count.
 
 ## Limits

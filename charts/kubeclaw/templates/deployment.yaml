@@ -646,8 +646,9 @@ spec:
 
               echo "==> 5. Skills Merge"
               mkdir -p /skills-merged
-              # Base: /app/skills/ already contains OpenClaw + KubeClaw skills (from image)
-              echo "    Copying skills from image..."
+              # Base image intentionally carries no fast-changing agent skill code.
+              # Code bundles own the final /app/skills runtime tree.
+              echo "    Preparing image skills mount baseline..."
               cp -r /app/skills/. /skills-merged/
               if [ "${CODE_BUNDLE_ENABLED}" = "true" ]; then
                 echo "==> 5a. Code Bundle"

@@ -441,8 +441,8 @@ eslintConfigMjs: ""
 # =============================================================================
 # CUSTOM SKILLS (optional)
 # =============================================================================
-# KubeClaw system skills (redis.ts, memory.js, pipeline.ts, etc.) are baked
-# into the Docker image. This section is ONLY for additional user-defined skills.
+# KubeClaw system skills (redis.ts, memory.js, pipeline.ts, etc.) are delivered
+# by code bundles. This section is ONLY for additional user-defined skills.
 #
 # Example:
 #   customSkills:

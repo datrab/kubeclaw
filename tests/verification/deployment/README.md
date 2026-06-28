@@ -26,7 +26,7 @@ Canonical operator evidence split:
 - Redis audit artifacts remain under `.swarm/logs/redis/{redis-exchanges.jsonl,redis-ops.jsonl}` plus the run-scoped `.swarm/logs/pipeline/runs/<run_id>/redis/` mirror
 
 Live scope:
-- `scripts/deploy.sh smoke` checks rollout, pod readiness, in-pod OpenClaw gateway status, packaged skills, and runtime swarm config on a real cluster
+- `scripts/deploy.sh smoke` checks rollout, pod readiness, in-pod OpenClaw gateway status, runtime skills mount, and runtime swarm config on a real cluster
 - `scripts/deploy.sh image [target]` refreshes the selected mutable runtime image tags already published by CI and then relies on smoke
 - `scripts/deploy.sh code [target]` deploys GitHub-published `/app/skills` bundles addressed by expected commit, then relies on smoke
 

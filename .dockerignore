@@ -1,14 +1,11 @@
-# Keep image build contexts narrow. Dockerfiles currently copy only skills, the
-# observer plugin source, and the namespace controller entrypoint.
+# Keep image build contexts narrow. Runtime images contain durable tools and
+# baked plugins only; agent skills are delivered by code bundles.
 **
 
 !docker/
 !docker/Dockerfile.general
 !docker/Dockerfile.sandbox
 !docker/Dockerfile.namespace-controller
-
-!skills/
-!skills/**
 
 !plugins/
 !plugins/openclaw-agent-observer/

@@ -140,13 +140,10 @@ SCRIPT
 
 RUN chmod +x /usr/local/bin/sandbox-*
 
-# 6. KubeClaw skills — runtime surface is /app/skills only.
-#    Buster repo-local skill files are copied first, then canonical
-#    shared implementations from skills/common/pipeline overwrite the matching
-#    /app/skills/pipeline paths.
+# 6. KubeClaw skills mount point
+#    Agent skill code is delivered by the code-bundle overlay at deploy time.
+#    Images intentionally keep only durable tools/runtime dependencies here.
 RUN mkdir -p /app/skills
-COPY skills/buster/ /app/skills/
-COPY skills/common/ /app/skills/
 
 # 7. KubeClaw OpenClaw plugins
 #    Runtime surface is OpenClaw's bundled plugin tree. The agent observer

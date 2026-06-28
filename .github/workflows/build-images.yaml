@@ -37,10 +37,8 @@ jobs:
           filters: |
             image_inputs:
               - 'docker/**'
-              - 'skills/**'
               - 'plugins/openclaw-agent-observer/**'
               - 'scripts/buster-namespace-controller.mjs'
-              - 'scripts/package-agent-skill-bundle.sh'
   check-base-image:
     name: Check for base image updates
     runs-on: ubuntu-latest

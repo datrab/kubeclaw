@@ -49,7 +49,7 @@ kubectl -n "$NAMESPACE" get pods,svc,pvc,networkpolicy
 ## Failure Signals
 
 - `./scripts/deploy.sh infra` still trying to wait for Qdrant, PostgreSQL, LiteLLM, or Tailscale means the component flags were not exported or normalized as expected.
-- `./scripts/deploy.sh smoke` failure points at agent rollout, in-pod OpenClaw gateway status, packaged skills, or runtime swarm config.
+- `./scripts/deploy.sh smoke` failure points at agent rollout, in-pod OpenClaw gateway status, deployed code bundle, or runtime swarm config.
 - Missing NetworkPolicies means the core infra/security baseline did not apply even though optional services were disabled.
 
 ## When Not To Use This

@@ -84,7 +84,7 @@ Operational invariants:
 
 ### Common Runtime
 
-`skills/common/pipeline/**` contains shared security, gateway, Discord webhook, Redis transport, telemetry, lifecycle, and contract helpers. Dockerfiles copy role-local skills first and common skills second, so shared implementations overwrite matching `/app/skills/pipeline` facades in the image.
+`skills/common/pipeline/**` contains shared security, gateway, Discord webhook, Redis transport, telemetry, lifecycle, and contract helpers. Code bundles materialize role-local skills first and common skills second, so shared implementations overwrite matching `/app/skills/pipeline` facades in the runtime `/app/skills` tree. Runtime images intentionally do not bake these fast-changing skills.
 
 The shared runtime is where cross-role contracts should live. Examples include telemetry payload schema, Redis message contracts, Discord field contracts, lifecycle-state helpers, and security utilities. Keep role-specific policy in Nova or Buster, and keep shared message validation in common code so both sides fail consistently.
 

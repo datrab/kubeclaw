@@ -13,7 +13,7 @@ Both agent deployments use `strategy.type: Recreate`, persistent config/workspac
 
 The init container:
 
-- backs up original image skills and existing OpenClaw config
+- prepares the durable empty skills mount and existing OpenClaw config
 - installs SSH key material from the Git secret
 - pins GitHub known hosts
 - clones `GIT_REPO_URL` into `/workspace/git-repo`, or safely fast-forwards an existing clean checkout
@@ -25,7 +25,7 @@ The init container:
 - writes or preserves source `swarm.config.json`, `.semgrep.yml`, and `eslint.config.mjs`
 - mirrors OpenClaw config into `/runtime-config` for diagnostics and renders runtime `swarm.config.json`
 - maps `DISCORD_WEBHOOK` only into the runtime `swarm.config.json`
-- merges packaged skills and optional custom skills into `/skills-merged`
+- overlays the selected code bundle and optional custom skills into `/skills-merged`
 - rejects custom overlays targeting protected runtime paths
 
 Nova starts the default gateway command:

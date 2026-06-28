@@ -11,7 +11,9 @@ Document the current GitHub Actions workflow for runtime images and agent skill 
 
 `.github/workflows/build-images.yaml` runs on:
 
-- pushes to `main` that touch `docker/**`, `skills/**`, or `scripts/buster-namespace-controller.mjs`
+- pushes to `main` that touch durable image inputs such as `docker/**`,
+  `plugins/openclaw-agent-observer/**`, or
+  `scripts/buster-namespace-controller.mjs`
 - daily schedule at `03:00 UTC`
 - manual `workflow_dispatch`
 
@@ -24,7 +26,9 @@ The image build job publishes a matrix:
 
 Images are pushed to GHCR under the repository owner with `latest`, SHA, and date tags. The workflow has `contents: read` and `packages: write` for images, plus `contents: write` for bundle release assets.
 
-The same workflow also packages durable per-agent `/app/skills` bundles:
+The same workflow also packages durable per-agent `/app/skills` bundles on
+every push and manual dispatch. Skill-only changes publish new bundles without
+rebuilding runtime images:
 
 - Nova bundle = `skills/nova` overlaid by `skills/common`
 - Buster bundle = `skills/buster` overlaid by `skills/common`
@@ -35,7 +39,12 @@ Open issue: the scheduled base-image check inspects `ghcr.io/openclaw/openclaw:2
 
 ## Build Inputs and Outputs
 
-The workflow rebuilds when Dockerfiles, skills, or the Buster namespace controller script change on `main`. It does not run on documentation-only changes. Manual runs can force a rebuild with `workflow_dispatch.force_rebuild`, although the build job condition already runs all matrix builds for manual dispatch.
+The workflow rebuilds runtime images when Dockerfiles, baked plugin source, or
+the Buster namespace controller script change on `main`. It does not rebuild
+images for `skills/**` changes; those are delivered through skill bundles. It
+does not run on documentation-only changes. Manual runs can force a rebuild
+with `workflow_dispatch.force_rebuild`, although the build job condition already
+runs all matrix builds for manual dispatch.
 
 For each image matrix entry, `docker/metadata-action` creates:
 
@@ -56,8 +65,8 @@ Those assets contain the effective `/app/skills` tree, not a second runtime layo
 
 | Image | Source | Runtime consumer | Important contents | Verification |
 | --- | --- | --- | --- | --- |
-| `kubeclaw-general` | `docker/Dockerfile.general` | Nova/Forge/Echo style agents through `my-values/nova-values.yaml` | OpenClaw base image, Nova skills, common skills, TypeScript/lint tooling, Python lint tools, Semgrep, hadolint, kubeconform, kubectl, Helm, observer plugin, baked `@openclaw/acpx` and `@openclaw/discord` npm cache | deployment truth checks the workflow still builds from `docker/Dockerfile.general`; Dockerfile install commands fail closed |
-| `kubeclaw-sandbox` | `docker/Dockerfile.sandbox` | Buster through `my-values/buster-values.yaml` | Podman/buildah, Playwright/Chromium, Lighthouse, k6, nginx, sandbox helpers, Buster skills, common skills, observer plugin, baked `@openclaw/acpx` and `@openclaw/discord` npm cache | deployment truth checks sandbox image, privileged runtime, Podman storage, resource bounds, and Buster container split |
+| `kubeclaw-general` | `docker/Dockerfile.general` | Nova/Forge/Echo style agents through `my-values/nova-values.yaml` | OpenClaw base image, TypeScript/lint tooling, Python lint tools, Semgrep, hadolint, kubeconform, kubectl, Helm, observer plugin, baked `@openclaw/acpx` and `@openclaw/discord` npm cache | deployment truth checks the workflow still builds from `docker/Dockerfile.general`; Dockerfile install commands fail closed; agent skills are excluded from the image |
+| `kubeclaw-sandbox` | `docker/Dockerfile.sandbox` | Buster through `my-values/buster-values.yaml` | Podman/buildah, Playwright/Chromium, Lighthouse, k6, nginx, sandbox helpers, observer plugin, baked `@openclaw/acpx` and `@openclaw/discord` npm cache | deployment truth checks sandbox image, privileged runtime, Podman storage, resource bounds, Buster container split, and that agent skills are excluded from the image |
 | `kubeclaw-namespace-controller` | `docker/Dockerfile.namespace-controller` | Buster namespace controller through `busterNamespaceBroker.controller.image.*` | `node:22-bookworm-slim`, `scripts/buster-namespace-controller.mjs`, non-root `node` user | deployment truth checks the controller does not inherit the OpenClaw runtime image and live verification preflights its pull path |
 | `kubeclaw-prism-preview` | `docker/Dockerfile.prism-preview` | Nova Prism preview sidecar in `my-values/nova-values.yaml` | `node:20-alpine`, `serve`, `/designs`, port `3456` | Helm render proves the sidecar mount and port; live preview behavior depends on files under workspace `prism/designs` |
 
@@ -75,6 +84,9 @@ Those assets contain the effective `/app/skills` tree, not a second runtime layo
 - If bundle assets move to another repository or release tag, update `CODE_BUNDLE_GITHUB_REPOSITORY`, `CODE_BUNDLE_RELEASE_TAG`, or explicit `*_CODE_BUNDLE_ARCHIVE_URL` inputs in the operator environment.
 - If a build succeeds but pods cannot pull images, use `./scripts/deploy.sh image [target]`, `./scripts/deploy.sh smoke`, and direct `kubectl describe pod` output to debug the cluster pull path. Local deploy no longer builds images.
 - If a code deploy fails to download a bundle, inspect the release asset URL, repository privacy, and the optional bundle auth Secret mounted through `codeBundle.auth.*`.
+- If `/app/skills` contains stale code, deploy the code bundle with
+  `./scripts/deploy.sh code [target]` or `./scripts/deploy.sh agent <name>
+  --with-code`; do not rebuild runtime images for skill changes.
 - Deployment verification intentionally checks that install commands in Dockerfiles do not continue silently with `|| true` or suppressed install stderr.
 
 Useful commands:
