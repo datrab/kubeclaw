@@ -36,7 +36,7 @@ function normalizeRelPath(value = '') {
 }
 
 function porcelainPath(line = '') {
-  const raw = String(line).slice(3).trim();
+  const raw = String(line).replace(/^[ MADRCU?!]{1,2}\s+/, '').trim();
   return normalizeRelPath(raw.includes(' -> ') ? raw.split(' -> ').pop() : raw);
 }
 
@@ -51,6 +51,20 @@ function moduleRelativePath(config, moduleDir, fileName) {
   if (!modulesDir || !config?.repo_root || !moduleDir) return null;
   const abs = path.resolve(modulesDir, moduleDir, fileName);
   return normalizeRelPath(path.relative(config.repo_root, abs));
+}
+
+function projectScopeRelPath(config) {
+  const repoRoot = config?.repo_root;
+  const swarmDir = config?.paths?.swarm_dir;
+  if (!repoRoot || !swarmDir) return null;
+  return normalizeRelPath(path.relative(repoRoot, path.dirname(swarmDir)));
+}
+
+function isProjectScopedPath(config, relPath) {
+  const scope = projectScopeRelPath(config);
+  if (!scope) return true;
+  const normalized = normalizeRelPath(relPath);
+  return normalized === scope || normalized.startsWith(`${scope}/`);
 }
 
 function buildIgnoredPathSet(config, moduleDir, extraIgnoredPaths = []) {
@@ -124,7 +138,7 @@ export function collectMeaningfulForgeDiffEvidence(config, moduleDir, opts = {})
   const addPath = (relPath) => {
     const normalized = normalizeRelPath(relPath);
     if (!normalized) return;
-    if (isForgeCompletionControlPath(normalized, config, moduleDir, extraIgnoredPaths)) ignored.add(normalized);
+    if (!isProjectScopedPath(config, normalized) || isForgeCompletionControlPath(normalized, config, moduleDir, extraIgnoredPaths)) ignored.add(normalized);
     else meaningful.add(normalized);
   };
 
