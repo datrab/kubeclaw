@@ -27,6 +27,46 @@ function testSessionData() {
   };
 }
 
+function testSessionPolicies() {
+  return {
+    spawnPolicy: {
+      gateway: {
+        timeoutMs: 30000,
+        maxRetries: 3,
+        retryDelayMs: 5000,
+      },
+      thread: false,
+      mode: 'run',
+      cleanup: 'keep',
+      streamTo: 'parent',
+    },
+    killPolicy: {
+      acpConfirmTimeoutMs: 15000,
+      subagentConfirmTimeoutMs: 120000,
+      confirmPollMs: 2000,
+      cleanupConfirmTimeoutMs: 'match_confirm_timeout',
+      statusTimeoutMs: 10000,
+      requestTimeoutMs: 30000,
+      stopRequestTimeoutMs: 15000,
+      listTimeoutMs: 30000,
+      acpxTimeoutMs: 10000,
+      stopMessage: '/stop',
+    },
+    terminationPolicy: {
+      graceMs: 5000,
+      maxGraceMs: 10000,
+      confirmPollMs: 500,
+      gatewayRequestMaxMs: 1000,
+      cleanupConfirmTimeoutMs: 0,
+      statusTimeoutMs: 1000,
+      requestTimeoutMs: 1000,
+      stopRequestTimeoutMs: 1000,
+      listTimeoutMs: 1000,
+      acpxTimeoutMs: 1000,
+    },
+  };
+}
+
 test('spawnTaskSession forwards thinking_level from Redis payload into spawnSession', async () => {
   const spawnCalls = [];
 
@@ -55,6 +95,7 @@ test('spawnTaskSession forwards thinking_level from Redis payload into spawnSess
     currentDiscordContext: (extra = {}) => extra,
     discord: () => {},
     dispatchIdForCompletion: 'dispatch-123',
+    sessionPolicies: testSessionPolicies(),
     budget: null,
     signal: null,
     testHooks: {
@@ -75,6 +116,7 @@ test('spawnTaskSession forwards thinking_level from Redis payload into spawnSess
   assert.equal(result.ok, true);
   assert.equal(spawnCalls.length, 1);
   assert.equal(spawnCalls[0].opts.thinking, 'high');
+  assert.deepEqual(spawnCalls[0].opts.spawnPolicy, testSessionPolicies().spawnPolicy);
   assert.equal(spawnCalls[0].payload.session.thinking_level, 'high');
 });
 
