@@ -40,6 +40,13 @@ function configWithWorker(stageId, moduleId) {
     _runId: 'run-worker-lifecycle',
     _runStats: createRunStats(),
     agent_startup_retry_budget: 2,
+    pipeline_defaults: {
+      timeout_minutes: 30,
+      max_fails: 3,
+      auto_retry_threshold: 2,
+      agent_startup_retry_budget: 2,
+      session_nudge_threshold: 0.75,
+    },
     repo_root: root,
     paths: {
       modules_dir: modulesDir,
