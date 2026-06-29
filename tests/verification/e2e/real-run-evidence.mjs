@@ -49,6 +49,16 @@ function readJsonLines(filePath) {
     .map((line) => JSON.parse(line));
 }
 
+function readJsonIfPresent(filePath) {
+  const text = readTextIfPresent(filePath);
+  if (!text) return null;
+  try {
+    return JSON.parse(text);
+  } catch {
+    return null;
+  }
+}
+
 function isPlainObject(value) {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
 }
@@ -160,7 +170,7 @@ function requireAnyFile(workspace, candidates, code) {
 function validateSummaryForWorkspace(workspace) {
   return (data) => {
   if (!data || typeof data !== 'object') return { ok: false, reason: 'REAL_E2E_SUMMARY_NOT_OBJECT' };
-  if (data.run_id !== workspace.runId) return { ok: false, reason: 'REAL_E2E_SUMMARY_RUN_ID_MISMATCH', expected_run_id: workspace.runId, actual_run_id: data.run_id || null };
+  if (!expectedRunIdsForWorkspace(workspace).has(data.run_id)) return { ok: false, reason: 'REAL_E2E_SUMMARY_RUN_ID_MISMATCH', expected_run_ids: [...expectedRunIdsForWorkspace(workspace)], actual_run_id: data.run_id || null };
   if (data.project !== workspace.projectName) return { ok: false, reason: 'REAL_E2E_SUMMARY_PROJECT_MISMATCH', expected_project: workspace.projectName, actual_project: data.project || null };
   if (data.terminal_status !== 'succeeded') return { ok: false, reason: 'REAL_E2E_SUMMARY_NOT_SUCCEEDED', terminal_status: data.terminal_status || null };
   if (!data.governance || typeof data.governance !== 'object') return { ok: false, reason: 'REAL_E2E_SUMMARY_MISSING_GOVERNANCE' };
@@ -641,11 +651,51 @@ function requireDiscordDeliveryReceipt(workspace) {
 }
 
 function pipelineLogCandidates(workspace) {
+  const runsDir = path.join(workspace.swarmDir, 'logs/pipeline/runs');
+  const runScopedCandidates = [];
+  if (pathExists(runsDir)) {
+    for (const entry of fs.readdirSync(runsDir, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue;
+      runScopedCandidates.push(
+        path.join(runsDir, entry.name, 'lifecycle/canonical-events.jsonl'),
+        path.join(runsDir, entry.name, 'pipeline.jsonl'),
+      );
+    }
+  }
   return [
     path.join(workspace.swarmDir, 'logs/pipeline/runs', workspace.runId, 'lifecycle/canonical-events.jsonl'),
     path.join(workspace.swarmDir, 'logs/pipeline/runs', workspace.runId, 'pipeline.jsonl'),
+    ...runScopedCandidates,
     path.join(workspace.swarmDir, 'logs/pipeline/pipeline.jsonl'),
-  ];
+  ].filter((candidate, index, all) => all.indexOf(candidate) === index);
+}
+
+function detectedPipelineRunIds(workspace) {
+  const ids = new Set();
+  const summary = readJsonIfPresent(path.join(workspace.swarmDir, 'logs/pipeline/summary.json'));
+  const latest = readJsonIfPresent(path.join(workspace.swarmDir, 'logs/pipeline/latest.json'));
+  for (const candidate of [summary?.run_id, latest?.run_id]) {
+    if (typeof candidate !== 'string' || !candidate.trim()) continue;
+    const runId = candidate.trim();
+    if (
+      pathExists(path.join(workspace.swarmDir, 'logs/pipeline/runs', runId, 'lifecycle/canonical-events.jsonl'))
+      || pathExists(path.join(workspace.swarmDir, 'logs/pipeline/runs', runId, 'pipeline.jsonl'))
+    ) {
+      ids.add(runId);
+    }
+  }
+  for (const candidate of [workspace.pipelineRunId, workspace.actualRunId, workspace.runId]) {
+    if (typeof candidate === 'string' && candidate.trim()) ids.add(candidate.trim());
+  }
+  return ids;
+}
+
+function expectedRunIdsForWorkspace(workspace) {
+  return detectedPipelineRunIds(workspace);
+}
+
+function primaryExpectedRunId(workspace) {
+  return [...expectedRunIdsForWorkspace(workspace)][0] || workspace.runId;
 }
 
 function readPipelineEvents(workspace) {
@@ -662,11 +712,12 @@ function readPipelineEvents(workspace) {
 }
 
 function scopedPipelineEvents(workspace, events) {
-  return events.filter((entry) => eventRunId(entry) === workspace.runId && (!eventProject(entry) || eventProject(entry) === workspace.projectName));
+  const expectedRunIds = expectedRunIdsForWorkspace(workspace);
+  return events.filter((entry) => expectedRunIds.has(eventRunId(entry)) && (!eventProject(entry) || eventProject(entry) === workspace.projectName));
 }
 
 function readLifecycleReadModels(workspace) {
-  const filePath = path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', workspace.runId, 'lifecycle', 'read-models.json');
+  const filePath = path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', primaryExpectedRunId(workspace), 'lifecycle', 'read-models.json');
   if (!pathExists(filePath)) {
     return { ok: false, reason: 'REAL_E2E_LIFECYCLE_READ_MODELS_MISSING', path: rel(workspace, filePath), data: null };
   }
@@ -800,6 +851,7 @@ const FINAL_BUSTER_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_
 const FAILURE_CONTRACTS = Object.freeze({
   'approval-deny': Object.freeze({
     terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'gate', step_id: 'operator-approval', terminal_status: 'action_required', failure_class: 'needs_nova' }),
+    setup: Object.freeze({ progress: Object.freeze({ 'execution_order.0': 'gate:operator-approval', 'real_e2e.approval_before_modules': true }) }),
   }),
   'approval-timeout-block': Object.freeze({
     terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'gate', step_id: 'operator-approval', terminal_status: 'action_required', failure_class: 'needs_nova' }),
@@ -1091,6 +1143,16 @@ const FAILURE_CONTRACTS = Object.freeze({
       }),
     }),
   }),
+  'git-merge-conflict': Object.freeze({
+    terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'module', step_id: '01-nginx', terminal_status: 'failed', failure_class: 'git_rebase_conflict', reason_contains: 'GIT_REBASE_CONFLICT' }),
+    setup: Object.freeze({
+      progress: Object.freeze({
+        'real_e2e.intentional_git_failure.component': 'git',
+        'real_e2e.intentional_git_failure.surface': 'merge_conflict',
+        'real_e2e.intentional_git_failure.error_code': 'GIT_REBASE_CONFLICT',
+      }),
+    }),
+  }),
   'git-commit-failure': Object.freeze({
     terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'module', step_id: '01-nginx', terminal_status: 'failed', failure_class: 'failed', reason_contains: '/dev/null/real-e2e-index' }),
     setup: Object.freeze({
@@ -1270,9 +1332,10 @@ function requireScenarioSetupContract(workspace, scenario) {
 function requirePipelineLifecycleSuccessEvidence(workspace) {
   const { events, readFailures } = readPipelineEvents(workspace);
   const scoped = scopedPipelineEvents(workspace, events);
+  const expectedRunId = primaryExpectedRunId(workspace);
   const orderedContracts = assertOrderedContracts(scoped, [
-    pipelineEventContract('pipeline_run.started', { event_type: 'pipeline_run.started', run_id: workspace.runId }),
-    pipelineEventContract('pipeline_run.completed', { event_type: 'pipeline_run.completed', run_id: workspace.runId, terminal_status: 'succeeded' }),
+    pipelineEventContract('pipeline_run.started', { event_type: 'pipeline_run.started', run_id: expectedRunId }),
+    pipelineEventContract('pipeline_run.completed', { event_type: 'pipeline_run.completed', run_id: expectedRunId, terminal_status: 'succeeded' }),
   ], 'REAL_E2E_PIPELINE_LIFECYCLE_ORDER_MISMATCH');
   const started = orderedContracts.ok ? orderedContracts.matches[0].record : null;
   const completed = orderedContracts.ok ? orderedContracts.matches[1].record : null;
@@ -1321,7 +1384,8 @@ function requirePipelineLifecycleFailureEvidence(workspace, scenario) {
   const halted = terminalEvents.at(-1) || null;
   const terminalStatuses = [...scoped.map((entry) => terminalStatusFromEvent(entry)).filter(Boolean), summary?.terminal_status || null].filter(Boolean);
   const hasBlockingTerminal = terminalStatuses.some((status) => status !== 'succeeded');
-  const summaryRunMatches = !summary?.run_id || summary.run_id === workspace.runId;
+  const expectedRunIds = expectedRunIdsForWorkspace(workspace);
+  const summaryRunMatches = !summary?.run_id || expectedRunIds.has(summary.run_id);
   const summaryProjectMatches = !summary?.project || summary.project === workspace.projectName;
   const terminalPresentCheck = halted
     ? assertPresentFields(pipelineEventSchemaFields(halted), ['event_id', 'event_type', 'run_id', 'terminal_status'], 'REAL_E2E_PIPELINE_FAILURE_TERMINAL_FIELD_MISSING')
@@ -1389,7 +1453,7 @@ function requireBusterFailureArtifact(workspace, relativePath, code, expected = 
     if (status !== 'FAIL') return { ok: false, reason: 'REAL_E2E_BUSTER_FAILURE_ARTIFACT_NOT_FAIL', status: data.status || null };
     const expectedFields = {
       artifact_type: 'buster_output',
-      run_id: workspace.runId,
+      run_id: primaryExpectedRunId(workspace),
       ...expected,
     };
     const fieldCheck = assertTypedFields(data, expectedFields, 'REAL_E2E_BUSTER_FAILURE_ARTIFACT_FIELD_MISMATCH');
@@ -1587,6 +1651,7 @@ const FATAL_CONFIG_FAILURE_SCENARIOS = Object.freeze(new Set([
   'git-credential-failure',
   'git-remote-push-failure',
   'git-non-fast-forward',
+  'git-merge-conflict',
   'git-commit-failure',
   'forge-timeout',
   'buster-module-timeout',
