@@ -69,6 +69,13 @@ interface SessionTestHooks {
   clearActiveSession?: typeof clearActiveSession;
 }
 
+interface BusterSessionPolicies {
+  spawnPolicy?: Record<string, unknown>;
+  killPolicy?: Record<string, unknown>;
+  terminationPolicy?: Record<string, unknown>;
+  [key: string]: unknown;
+}
+
 interface DiscordContextInput {
   dispatch_id?: string | null;
   session_key?: string | null;
@@ -134,6 +141,7 @@ export async function spawnTaskSession({
   dispatchIdForCompletion,
   budget = null,
   signal = null,
+  sessionPolicies = {},
   testHooks = {},
 }: {
   payload: BusterTaskPayload;
@@ -149,6 +157,7 @@ export async function spawnTaskSession({
   dispatchIdForCompletion: string | null;
   budget?: unknown;
   signal?: AbortSignal | null;
+  sessionPolicies?: BusterSessionPolicies;
   testHooks?: SessionTestHooks;
 }): Promise<{
   ok: boolean;
@@ -190,6 +199,7 @@ export async function spawnTaskSession({
       label,
       thinking,
       activeStatePath: resolveBusterActiveSessionPath(cwd),
+      spawnPolicy: sessionPolicies.spawnPolicy,
       budget,
       signal,
       observabilityIdentity: {
@@ -244,6 +254,7 @@ export async function monitorTaskSession({
   moduleId,
   timeoutSeconds,
   logger,
+  sessionPolicies = {},
   testHooks = {},
 }: {
   sessionData: SessionData;
@@ -252,6 +263,7 @@ export async function monitorTaskSession({
   moduleId: string;
   timeoutSeconds: number;
   logger: Logger;
+  sessionPolicies?: BusterSessionPolicies;
   testHooks?: SessionTestHooks;
 }): Promise<{ ok: boolean; sessionResult?: SessionResult; elapsedSeconds?: number; reason?: string }> {
   const monitorStart = Date.now();
@@ -279,6 +291,7 @@ export async function monitorTaskSession({
     let termination: SessionTerminationResult | null = null;
     try {
       termination = assertValidSessionTerminationResult(await terminateChildSession(sessionData.childSessionKey, {
+        ...sessionPolicies,
         runtime: sessionData.runtime,
         agentId: sessionData.agentId,
         label:   sessionData.label,
@@ -303,6 +316,7 @@ export async function killTaskSession({
   moduleId,
   tctx,
   logger,
+  sessionPolicies = {},
   testHooks = {},
 }: {
   sessionData: SessionData;
@@ -311,6 +325,7 @@ export async function killTaskSession({
   moduleId: string;
   tctx: TelemetryContext;
   logger: Logger;
+  sessionPolicies?: BusterSessionPolicies;
   testHooks?: SessionTestHooks;
 }): Promise<unknown> {
   const terminateChildSession = testHooks.terminateSession || terminateSession;
@@ -318,6 +333,7 @@ export async function killTaskSession({
   let termination: SessionTerminationResult | null = null;
   try {
     termination = assertValidSessionTerminationResult(sessionResult.termination || await terminateChildSession(sessionData.childSessionKey, {
+      ...sessionPolicies,
       runtime: sessionData.runtime,
       agentId: sessionData.agentId,
       label:   sessionData.label,
