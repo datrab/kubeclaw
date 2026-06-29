@@ -299,6 +299,14 @@ function sortSuites(suiteNames: readonly string[]): string[] {
   });
 }
 
+export function applyBuildRuntimePort(config: Record<string, unknown>, buildResult: SuiteVerdict): void {
+  if (buildResult.suite !== 'build' || buildResult.status !== STATUS.PASS) return;
+  const port = buildResult.metadata?.port;
+  if (!Number.isInteger(port) || port < 1 || port > 65535) return;
+  const serve = isRecord(config.serve) ? config.serve : {};
+  config.serve = { ...serve, port };
+}
+
 function requireSuiteIdentity(moduleId: unknown, project: unknown): { moduleId: string; project: string } {
   const missing: string[] = [];
   const normalizedModuleId = typeof moduleId === 'string' ? moduleId.trim() : '';
@@ -562,6 +570,8 @@ export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOpt
     if ((result.status === STATUS.FAIL || result.status === STATUS.ERROR) && result.critical) {
       criticalFailed = true;
     }
+
+    applyBuildRuntimePort(context.config, result);
 
     suiteMap[suiteName] = result;
     results.push({ ...result, duration_seconds: Math.round((Date.now() - startMs) / 1000) });
