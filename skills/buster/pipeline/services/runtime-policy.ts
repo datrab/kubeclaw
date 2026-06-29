@@ -71,10 +71,12 @@ export function loadBusterSessionPolicies(): Record<string, any> {
   const config = loadBusterPlatformConfig();
   const session = config.session;
   const gateway = config.gateway;
+  if (!isRecord(session?.spawn)) throw new Error('config.session.spawn: required platform config object in swarm.config.json');
   if (!isRecord(session?.kill)) throw new Error('config.session.kill: required platform config object in swarm.config.json');
   if (!isRecord(session?.termination)) throw new Error('config.session.termination: required platform config object in swarm.config.json');
   if (!isRecord(gateway?.invoke)) throw new Error('config.gateway.invoke: required platform config object in swarm.config.json');
   if (!isRecord(gateway.invoke.retry)) throw new Error('config.gateway.invoke.retry: required platform config object in swarm.config.json');
+  const spawnPolicy = session.spawn;
   const killPolicy = session.kill;
   const terminationPolicy = session.termination;
   const retryPolicy = gateway.invoke.retry;
@@ -88,11 +90,19 @@ export function loadBusterSessionPolicies(): Record<string, any> {
     };
   };
   const statusGateway = gatewayPolicy('session_status', 'config.gateway.invoke.session_status');
+  const spawnGateway = gatewayPolicy('session_spawn', 'config.gateway.invoke.session_spawn');
   const requestGateway = gatewayPolicy('subagent_kill', 'config.gateway.invoke.subagent_kill');
   const stopGateway = gatewayPolicy('session_send', 'config.gateway.invoke.session_send');
   const listGateway = gatewayPolicy('subagent_list', 'config.gateway.invoke.subagent_list');
   return {
     gatewayStatusPolicy: statusGateway,
+    spawnPolicy: {
+      gateway: spawnGateway,
+      thread: spawnPolicy.thread === true,
+      mode: requireNonEmptyString(spawnPolicy, 'mode', 'config.session.spawn.mode'),
+      cleanup: requireNonEmptyString(spawnPolicy, 'cleanup', 'config.session.spawn.cleanup'),
+      streamTo: requireNonEmptyString(spawnPolicy, 'stream_to', 'config.session.spawn.stream_to'),
+    },
     killPolicy: {
       acpConfirmTimeoutMs: requireNonNegativeNumber(killPolicy, 'acp_confirm_timeout_ms', 'config.session.kill.acp_confirm_timeout_ms'),
       subagentConfirmTimeoutMs: requireNonNegativeNumber(killPolicy, 'subagent_confirm_timeout_ms', 'config.session.kill.subagent_confirm_timeout_ms'),
