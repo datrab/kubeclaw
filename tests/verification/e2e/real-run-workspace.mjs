@@ -70,7 +70,40 @@ function projectNameForRun(runId) {
   return `real-pipeline-e2e-${safeRunIdSegment(runId)}`;
 }
 
-function buildProgress({ projectName }) {
+export function architectureBranchNameForProject(projectName) {
+  return `${projectName}/architecture`;
+}
+
+export function isSafeE2ERemoteBranchName(branchName) {
+  return /^verification\/e2e\/[a-z0-9-]+-[a-z0-9-]+$/.test(branchName || '')
+    || /^real-pipeline-e2e-[a-z0-9-]+\/architecture$/.test(branchName || '');
+}
+
+export function isSafeE2ERunBranchName(branchName) {
+  return /^verification\/e2e\/[a-z0-9-]+-[a-z0-9-]+$/.test(branchName || '');
+}
+
+export function assertSafeArchitectureSeedBranches({ worktreeBranch, expectedWorktreeBranch, architectureBranch }) {
+  if (!isSafeE2ERunBranchName(expectedWorktreeBranch)) {
+    throw new Error(`Unsafe expected E2E worktree branch for architecture seed: ${expectedWorktreeBranch || '<missing>'}`);
+  }
+  if (worktreeBranch !== expectedWorktreeBranch) {
+    throw new Error(
+      `Refusing to seed architecture branch from unexpected worktree branch: expected ${expectedWorktreeBranch}, got ${worktreeBranch || '<missing>'}`,
+    );
+  }
+  if (!isSafeE2ERemoteBranchName(architectureBranch) || /^verification\/e2e\//.test(architectureBranch || '')) {
+    throw new Error(`Unsafe architecture branch for E2E seed: ${architectureBranch || '<missing>'}`);
+  }
+}
+
+export function assertSafeRunBranchPublish({ branchName }) {
+  if (!isSafeE2ERunBranchName(branchName)) {
+    throw new Error(`Unsafe E2E run branch publish target: ${branchName || '<missing>'}`);
+  }
+}
+
+export function buildProgress({ projectName }) {
   const model = e2eModel();
   const projectSrc = `Projects/${projectName}/src`;
   return {
@@ -170,8 +203,6 @@ function buildProgress({ projectName }) {
             dockerfile: `${projectSrc}/Dockerfile`,
             build_context: projectSrc,
             build_timeout: 300,
-            smoke_paths: ['/'],
-            smoke_settle_ms: 250,
           },
           unit: {
             test_cmd: 'npm run verify',
@@ -202,7 +233,7 @@ function buildProgress({ projectName }) {
         type: 'approval',
         title: 'Real E2E operator approval gate',
         prompt: 'Approve the real E2E pipeline continuing into final deployment validation.',
-        on_timeout: 'BLOCK',
+        on_timeout: 'block',
         timeout_minutes: 5,
       },
       'final-buster': {
@@ -231,8 +262,6 @@ function buildProgress({ projectName }) {
             dockerfile: `${projectSrc}/Dockerfile`,
             build_context: projectSrc,
             build_timeout: 300,
-            smoke_paths: ['/'],
-            smoke_settle_ms: 250,
           },
           unit: {
             test_cmd: 'npm run verify',
@@ -376,6 +405,124 @@ async function execGit(args, options = {}) {
   });
 }
 
+async function seedArchitectureBranch({ worktreePath, worktreeBranch, projectName, runId }) {
+  const branchName = architectureBranchNameForProject(projectName);
+  const activeBranch = await currentBranch(worktreePath);
+  assertSafeArchitectureSeedBranches({
+    worktreeBranch: activeBranch,
+    expectedWorktreeBranch: worktreeBranch,
+    architectureBranch: branchName,
+  });
+  await execGit(['add', 'Projects'], { cwd: worktreePath, timeout: 60000 });
+  await execGit(['commit', '-m', `[real-e2e] Seed ${projectName} project contract`, '--', 'Projects'], {
+    cwd: worktreePath,
+    timeout: 60000,
+  });
+  await execGit(['branch', '-f', branchName, 'HEAD'], { cwd: worktreePath, timeout: 30000 });
+  await execGit(['push', '--force-with-lease', 'origin', `${branchName}:${branchName}`], {
+    cwd: worktreePath,
+    timeout: 60000,
+  });
+  return { branchName, runId };
+}
+
+async function publishRunBranchUpstream({ worktreePath, branchName }) {
+  assertSafeRunBranchPublish({ branchName });
+  await execGit(['push', '-u', 'origin', `HEAD:${branchName}`], { cwd: worktreePath, timeout: 60000 });
+  return { branchName };
+}
+
+async function configureRunScopedOrigin({ artifactRoot, worktreePath }) {
+  const originPath = path.join(artifactRoot, 'origin.git');
+  const sourceOriginUrl = (await execGit(['remote', 'get-url', 'origin'], {
+    cwd: worktreePath,
+    timeout: 30000,
+  })).stdout.trim();
+  await execGit(['init', '--bare', originPath], { timeout: 60000 });
+  await execGit(['config', 'extensions.worktreeConfig', 'true'], { timeout: 30000 });
+  await execGit(['config', '--worktree', 'remote.origin.pushurl', originPath], { cwd: worktreePath, timeout: 30000 });
+  await execGit(['config', '--worktree', '--add', `url.${originPath}.insteadOf`, sourceOriginUrl], {
+    cwd: worktreePath,
+    timeout: 30000,
+  });
+  return { path: originPath, sourceOriginUrl };
+}
+
+async function configureGitMergeConflictFixture({ workspace, projectName }) {
+  const conflictRemotePath = path.join(workspace.artifactRoot, 'git-conflict-origin.git');
+  const conflictClonePath = path.join(workspace.artifactRoot, 'git-conflict-remote-worktree');
+  const conflictFile = 'REAL_E2E_TRUE_MERGE_CONFLICT.txt';
+  const sourceOriginUrl = workspace.sourceOriginUrl || (await execGit(['remote', 'get-url', 'origin'], {
+    cwd: workspace.worktreePath,
+    timeout: 30000,
+  })).stdout.trim();
+
+  await execGit(['init', '--bare', conflictRemotePath], { timeout: 60000 });
+  if (workspace.runOriginPath) {
+    await execGit(['config', '--worktree', '--unset-all', `url.${workspace.runOriginPath}.insteadOf`], {
+      cwd: workspace.worktreePath,
+      timeout: 30000,
+    }).catch(() => {});
+  }
+  await execGit(['config', '--worktree', 'remote.origin.pushurl', conflictRemotePath], {
+    cwd: workspace.worktreePath,
+    timeout: 30000,
+  });
+  await execGit(['config', '--worktree', '--add', `url.${conflictRemotePath}.insteadOf`, sourceOriginUrl], {
+    cwd: workspace.worktreePath,
+    timeout: 30000,
+  });
+  await execGit(['push', '-u', 'origin', `HEAD:${workspace.branchName}`], { cwd: workspace.worktreePath, timeout: 60000 });
+  await execGit(['push', 'origin', `${workspace.architectureBranchName}:${workspace.architectureBranchName}`], {
+    cwd: workspace.worktreePath,
+    timeout: 60000,
+  });
+
+  writeText(
+    path.join(workspace.worktreePath, conflictFile),
+    [
+      'real_e2e_git_merge_conflict=local',
+      `project=${projectName}`,
+      `branch=${workspace.branchName}`,
+      '',
+    ].join('\n'),
+  );
+  await execGit(['add', '--', conflictFile], { cwd: workspace.worktreePath, timeout: 30000 });
+  await execGit(['commit', '-m', '[real-e2e] Local side of merge conflict', '--', conflictFile], {
+    cwd: workspace.worktreePath,
+    timeout: 60000,
+  });
+
+  await execGit(['clone', conflictRemotePath, conflictClonePath], { timeout: 60000 });
+  await execGit(['checkout', workspace.branchName], { cwd: conflictClonePath, timeout: 30000 });
+  await execGit(['config', 'user.email', 'real-e2e@example.invalid'], { cwd: conflictClonePath, timeout: 30000 });
+  await execGit(['config', 'user.name', 'Real E2E'], { cwd: conflictClonePath, timeout: 30000 });
+  writeText(
+    path.join(conflictClonePath, conflictFile),
+    [
+      'real_e2e_git_merge_conflict=remote',
+      `project=${projectName}`,
+      `branch=${workspace.branchName}`,
+      '',
+    ].join('\n'),
+  );
+  await execGit(['add', '--', conflictFile], { cwd: conflictClonePath, timeout: 30000 });
+  await execGit(['commit', '-m', '[real-e2e] Remote side of merge conflict', '--', conflictFile], {
+    cwd: conflictClonePath,
+    timeout: 60000,
+  });
+  await execGit(['push', 'origin', `HEAD:${workspace.branchName}`], { cwd: conflictClonePath, timeout: 60000 });
+  fs.rmSync(conflictClonePath, { recursive: true, force: true });
+
+  return {
+    remote: conflictRemotePath,
+    branch: workspace.branchName,
+    file: conflictFile,
+    original_origin_url: workspace.runOriginPath || null,
+    source_origin_url: sourceOriginUrl,
+  };
+}
+
 async function execKubectl(args, options = {}) {
   return execFileAsync('kubectl', args, {
     cwd: options.cwd || REPO_ROOT,
@@ -385,8 +532,8 @@ async function execKubectl(args, options = {}) {
   });
 }
 
-async function currentBranch() {
-  const result = await execGit(['rev-parse', '--abbrev-ref', 'HEAD']);
+async function currentBranch(cwd = REPO_ROOT) {
+  const result = await execGit(['rev-parse', '--abbrev-ref', 'HEAD'], { cwd });
   return result.stdout.trim();
 }
 
@@ -416,6 +563,7 @@ export async function createRealE2ERunWorkspace({ mode = 'full', scenarioId = 's
 
   const sourceBranch = await currentBranch();
   await execGit(['worktree', 'add', '-b', branchName, worktreePath, 'HEAD'], { timeout: 60000 });
+  const runOrigin = await configureRunScopedOrigin({ artifactRoot, worktreePath });
 
   const projectSrc = path.join(worktreePath, 'Projects', projectName, 'src');
   fs.mkdirSync(path.dirname(projectSrc), { recursive: true });
@@ -440,6 +588,11 @@ export async function createRealE2ERunWorkspace({ mode = 'full', scenarioId = 's
     );
   }
 
+  const architectureBranch = await seedArchitectureBranch({ worktreePath, worktreeBranch: branchName, projectName, runId });
+  const runBranchUpstream = scenario.id === 'git-merge-conflict'
+    ? null
+    : await publishRunBranchUpstream({ worktreePath, branchName });
+
   const runConfigPath = path.join(artifactRoot, 'swarm.config.json');
   writeJson(runConfigPath, buildRunConfig({ runId, worktreePath, scenarioId: scenario.id }));
   const cleanupManifestPath = path.join(artifactRoot, 'cleanup-manifest.json');
@@ -451,27 +604,41 @@ export async function createRealE2ERunWorkspace({ mode = 'full', scenarioId = 's
     expected_evidence: scenario.expectedEvidence,
     project: projectName,
     branch: branchName,
+    architecture_branch: architectureBranch.branchName,
+    run_branch_upstream: runBranchUpstream?.branchName || null,
     source_branch: sourceBranch,
+    run_origin: runOrigin.path,
     worktree: worktreePath,
     swarm_config: runConfigPath,
     created_at: new Date().toISOString(),
   });
 
-  return {
+  const workspace = {
     runId,
     mode,
     scenario,
     projectName,
     branchName,
+    architectureBranchName: architectureBranch.branchName,
+    runBranchUpstreamName: runBranchUpstream?.branchName || null,
     sourceBranch,
     artifactRoot,
+    runOriginPath: runOrigin.path,
+    sourceOriginUrl: runOrigin.sourceOriginUrl,
     worktreePath,
     projectSrc,
     swarmDir,
     runConfigPath,
     cleanupManifestPath,
     cleanupBlockerWorktreePath: null,
+    gitConflictFixture: null,
   };
+
+  if (scenario.id === 'git-merge-conflict') {
+    workspace.gitConflictFixture = await configureGitMergeConflictFixture({ workspace, projectName });
+  }
+
+  return workspace;
 }
 
 export async function createRealE2EGitCleanupBlocker(workspace) {
@@ -488,6 +655,7 @@ export async function cleanupRealE2ERunWorkspace(workspace, { keepArtifacts = fa
   const cleanup = { ok: true, steps: [] };
   const record = (step, ok, detail = null) => cleanup.steps.push({ step, ok, detail });
   if (!workspace) return cleanup;
+  const gitConflictOriginalOrigin = workspace.gitConflictFixture?.original_origin_url || null;
 
   try {
     const redisTool = (await import('../../../skills/nova/pipeline/tools/redis.ts')).default;
@@ -535,25 +703,6 @@ export async function cleanupRealE2ERunWorkspace(workspace, { keepArtifacts = fa
       if (namespaceName && isSafeE2ENamespaceName(workspace, namespaceName)) namespaceNames.add(namespaceName);
     }
 
-    try {
-      const { stdout } = await execKubectl([
-        'get',
-        'namespaces',
-        '-l',
-        'kubeclaw/managed-by=buster-namespace-controller',
-        '-o',
-        'json',
-      ], { timeout: 30000 });
-      const parsed = JSON.parse(stdout || '{}');
-      const items = Array.isArray(parsed.items) ? parsed.items : [];
-      for (const item of items) {
-        const namespaceName = item?.metadata?.name;
-        if (isSafeE2ENamespaceName(workspace, namespaceName)) namespaceNames.add(namespaceName);
-      }
-    } catch (namespaceListError) {
-      listFailures.push({ resource: 'namespaces', error: namespaceListError?.message || String(namespaceListError) });
-    }
-
     for (const lease of leases) {
       const name = lease?.metadata?.name;
       if (name) {
@@ -567,11 +716,87 @@ export async function cleanupRealE2ERunWorkspace(workspace, { keepArtifacts = fa
       leases: leases.map((item) => item?.metadata?.name).filter(Boolean),
       namespaces: [...namespaceNames],
       list_failures: listFailures,
+      namespace_discovery: 'busternamespacelease-only',
     });
     if (listFailures.length > 0) cleanup.ok = false;
   } catch (error) {
     cleanup.ok = false;
     record('kubernetes_run_resources_delete', false, error?.message || String(error));
+  }
+
+  try {
+    const remoteBranches = [
+      workspace.branchName,
+      workspace.architectureBranchName,
+    ].filter(Boolean).filter(isSafeE2ERemoteBranchName);
+    for (const branchName of remoteBranches) {
+      try {
+        await execGit(['push', 'origin', '--delete', branchName], { cwd: workspace.worktreePath, timeout: 60000 });
+        record('git_remote_branch_delete', true, branchName);
+      } catch (error) {
+        const message = error?.message || String(error);
+        if (/remote ref does not exist|unable to delete/i.test(message)) {
+          record('git_remote_branch_delete', true, { branch: branchName, already_absent: true });
+        } else {
+          cleanup.ok = false;
+          record('git_remote_branch_delete', false, { branch: branchName, error: message });
+        }
+      }
+    }
+  } catch (error) {
+    cleanup.ok = false;
+    record('git_remote_branch_delete', false, error?.message || String(error));
+  }
+
+  if (gitConflictOriginalOrigin) {
+    try {
+      const conflictRemotePath = workspace.gitConflictFixture?.remote || null;
+      const sourceOriginUrl = workspace.gitConflictFixture?.source_origin_url || workspace.sourceOriginUrl || null;
+      if (conflictRemotePath && sourceOriginUrl) {
+        await execGit(['config', '--worktree', '--unset-all', `url.${conflictRemotePath}.insteadOf`], {
+          cwd: workspace.worktreePath,
+          timeout: 30000,
+        }).catch(() => {});
+      }
+      await execGit(['config', '--worktree', 'remote.origin.pushurl', gitConflictOriginalOrigin], {
+        cwd: workspace.worktreePath,
+        timeout: 30000,
+      });
+      if (sourceOriginUrl) {
+        await execGit(['config', '--worktree', '--add', `url.${gitConflictOriginalOrigin}.insteadOf`, sourceOriginUrl], {
+          cwd: workspace.worktreePath,
+          timeout: 30000,
+        });
+      }
+      record('git_origin_restore', true, gitConflictOriginalOrigin);
+    } catch (error) {
+      cleanup.ok = false;
+      record('git_origin_restore', false, error?.message || String(error));
+    }
+
+    if (workspace.architectureBranchName && isSafeE2ERemoteBranchName(workspace.architectureBranchName)) {
+      try {
+        await execGit(['push', 'origin', '--delete', workspace.architectureBranchName], {
+          cwd: workspace.worktreePath,
+          timeout: 60000,
+        });
+        record('git_original_remote_architecture_branch_delete', true, workspace.architectureBranchName);
+      } catch (error) {
+        const message = error?.message || String(error);
+        if (/remote ref does not exist|unable to delete/i.test(message)) {
+          record('git_original_remote_architecture_branch_delete', true, {
+            branch: workspace.architectureBranchName,
+            already_absent: true,
+          });
+        } else {
+          cleanup.ok = false;
+          record('git_original_remote_architecture_branch_delete', false, {
+            branch: workspace.architectureBranchName,
+            error: message,
+          });
+        }
+      }
+    }
   }
 
   try {
@@ -604,6 +829,21 @@ export async function cleanupRealE2ERunWorkspace(workspace, { keepArtifacts = fa
     }
   }
 
+  if (workspace.architectureBranchName) {
+    try {
+      await execGit(['branch', '-D', workspace.architectureBranchName], { timeout: 30000 });
+      record('git_architecture_branch_delete', true, workspace.architectureBranchName);
+    } catch (error) {
+      const message = error?.message || String(error);
+      if (/not found|branch .* not found/i.test(message)) {
+        record('git_architecture_branch_delete', true, { branch: workspace.architectureBranchName, already_absent: true });
+      } else {
+        cleanup.ok = false;
+        record('git_architecture_branch_delete', false, message);
+      }
+    }
+  }
+
   if (!keepArtifacts) {
     try {
       fs.rmSync(workspace.artifactRoot, { recursive: true, force: true });
@@ -628,8 +868,11 @@ export function summarizeWorkspace(workspace) {
     expected_evidence: workspace.scenario?.expectedEvidence || null,
     project: workspace.projectName,
     branch: workspace.branchName,
+    architecture_branch: workspace.architectureBranchName,
     artifact_root: workspace.artifactRoot,
+    run_origin: workspace.runOriginPath || null,
     worktree: workspace.worktreePath,
     swarm_config: workspace.runConfigPath,
+    git_conflict_fixture: workspace.gitConflictFixture,
   } : null;
 }
