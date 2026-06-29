@@ -230,7 +230,7 @@ test('gitSyncBeforeBuster commits only meaningful forge paths and auto-resolves 
     };
     const status = {
       module_id: '01-foundation',
-      meaningful_paths: ['Projects/demo/src/package.json'],
+      meaningful_paths: ['rojects/demo/src/Dockerfile'],
     };
 
     const result = await gitSyncBeforeBuster(config, '01-foundation', status);
