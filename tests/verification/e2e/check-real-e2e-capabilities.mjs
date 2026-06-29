@@ -164,6 +164,54 @@ export function readReusedDiscordDeliveryResult(env = process.env) {
   }
 }
 
+export function readReusedCapabilityProbeResult(env = process.env) {
+  const raw = env.REAL_E2E_CAPABILITY_PROBE_RESULT_JSON;
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+      return {
+        ok: false,
+        mode: env.REAL_E2E_MODE || 'unknown',
+        source_root: REPO_ROOT,
+        hostname: os.hostname(),
+        checks: [],
+        failures: [{
+          ok: false,
+          reason: 'REAL_E2E_REUSED_CAPABILITY_PROBE_INVALID',
+          error: 'REAL_E2E_CAPABILITY_PROBE_RESULT_JSON must be a JSON object',
+        }],
+        reused_from_matrix: true,
+      };
+    }
+    const checks = Array.isArray(parsed.checks) ? parsed.checks : [];
+    const failures = Array.isArray(parsed.failures)
+      ? parsed.failures
+      : checks.filter((check) => check?.ok === false);
+    return {
+      ...parsed,
+      checks,
+      failures,
+      ok: failures.length === 0 && parsed.ok === true,
+      reused_from_matrix: true,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      mode: env.REAL_E2E_MODE || 'unknown',
+      source_root: REPO_ROOT,
+      hostname: os.hostname(),
+      checks: [],
+      failures: [{
+        ok: false,
+        reason: 'REAL_E2E_REUSED_CAPABILITY_PROBE_INVALID',
+        error: error?.message || String(error),
+      }],
+      reused_from_matrix: true,
+    };
+  }
+}
+
 async function checkGatewayStatus() {
   if (!commandExists('openclaw')) {
     return { ok: false, reason: 'INFRA_MISSING_OPENCLAW_CLI', remediation: 'Install or expose the openclaw CLI in the verification pod PATH.' };
@@ -428,22 +476,31 @@ async function checkLocalRegistry() {
   return { ok: ready, reason: ready ? null : 'INFRA_LOCAL_REGISTRY_UNAVAILABLE', namespace, result };
 }
 
-async function checkTailscaleOperator() {
+export function tailscaleOperatorPodListArgs({
+  namespace = process.env.TAILSCALE_OPERATOR_NAMESPACE || 'tailscale',
+  selector = process.env.TAILSCALE_OPERATOR_POD_SELECTOR || 'app=operator',
+} = {}) {
+  return ['-n', namespace, 'get', 'pods', '-l', selector, '-o', 'json'];
+}
+
+export async function checkTailscaleOperator() {
   if (!commandExists('kubectl')) return { ok: false, reason: 'INFRA_MISSING_KUBECTL' };
   const namespace = process.env.TAILSCALE_OPERATOR_NAMESPACE || 'tailscale';
-  const result = await execCapture('kubectl', ['-n', namespace, 'get', 'pods', '-l', 'app.kubernetes.io/name=tailscale-operator', '-o', 'json'], { timeout: 20000 });
-  if (!result.ok) return { ok: false, reason: 'INFRA_MISSING_TAILSCALE_OPERATOR', namespace, result };
+  const selector = process.env.TAILSCALE_OPERATOR_POD_SELECTOR || 'app=operator';
+  const result = await execCapture('kubectl', tailscaleOperatorPodListArgs({ namespace, selector }), { timeout: 20000 });
+  if (!result.ok) return { ok: false, reason: 'INFRA_MISSING_TAILSCALE_OPERATOR', namespace, selector, result };
   let parsed;
   try {
     parsed = JSON.parse(result.stdout);
   } catch {
-    return { ok: false, reason: 'INFRA_TAILSCALE_OPERATOR_NON_JSON', namespace, result };
+    return { ok: false, reason: 'INFRA_TAILSCALE_OPERATOR_NON_JSON', namespace, selector, result };
   }
   const readyPod = (parsed.items || []).find((pod) => (pod.status?.conditions || []).some((condition) => condition.type === 'Ready' && condition.status === 'True'));
   return {
     ok: Boolean(readyPod),
     reason: readyPod ? null : 'INFRA_MISSING_TAILSCALE_OPERATOR',
     namespace,
+    selector,
     pod: readyPod?.metadata?.name || null,
   };
 }
