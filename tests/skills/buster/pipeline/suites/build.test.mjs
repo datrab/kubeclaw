@@ -5,6 +5,10 @@ import test from 'node:test';
 
 import buildSuite from '../../../../../skills/buster/pipeline/suites/build.ts';
 import { resolveRepoDir } from '../../../../../skills/buster/pipeline/suites/repo-paths.ts';
+import {
+  buildPodmanPublishArgs,
+  parsePodmanMappedHostPort,
+} from '../../../../../skills/buster/pipeline/suites/build.ts';
 
 test('buildSuite rejects secretKeyRef satisfied by a differently named secret_yaml', async () => {
   const repoRoot = resolveRepoDir();
@@ -90,4 +94,18 @@ test('buildSuite rejects shorthand Dockerfile FROM images before podman build', 
   } finally {
     fs.rmSync(fixtureDir, { recursive: true, force: true });
   }
+});
+
+test('build suite publishes container ports on ephemeral localhost host ports', () => {
+  assert.deepEqual(buildPodmanPublishArgs(8080), ['-p', '127.0.0.1::8080/tcp']);
+});
+
+test('build suite parses mapped host ports reported by podman', () => {
+  assert.equal(parsePodmanMappedHostPort('127.0.0.1:43127\n', 8080), 43127);
+  assert.equal(parsePodmanMappedHostPort('0.0.0.0:43128->8080/tcp\n', 8080), 43128);
+});
+
+test('build suite rejects invalid published container ports', () => {
+  assert.throws(() => buildPodmanPublishArgs(0), /serve.port/);
+  assert.throws(() => parsePodmanMappedHostPort('127.0.0.1:not-a-port', 8080), /mapped host port/);
 });
