@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
-import { runCapabilityProbe } from './check-real-e2e-capabilities.mjs';
+import { readReusedCapabilityProbeResult, runCapabilityProbe } from './check-real-e2e-capabilities.mjs';
 import {
   cleanupRealE2ERunWorkspace,
   createRealE2EGitCleanupBlocker,
@@ -133,10 +133,19 @@ export function writeResultRecord(resultPath, record) {
 export function summarizeCleanupVerification(cleanup, { keepArtifacts = false, cleanupFailureObserved = false } = {}) {
   const steps = Array.isArray(cleanup?.steps) ? cleanup.steps : [];
   const step = (name) => steps.find((entry) => entry?.step === name) || null;
+  const stepGroup = (name) => steps.filter((entry) => entry?.step === name);
+  const groupedSurface = (name) => {
+    const entries = stepGroup(name);
+    return {
+      ok: entries.length > 0 && entries.every((entry) => entry?.ok === true),
+      detail: entries.map((entry) => entry?.detail ?? null),
+    };
+  };
   const artifactRetained = step('artifact_root_retained');
   const artifactRemoved = step('artifact_root_remove');
   const gitBranchDelete = step('git_branch_delete');
   const gitBranchDeleteAfterBlocker = step('git_branch_delete_after_blocker_cleanup');
+  const gitArchitectureBranchDelete = step('git_architecture_branch_delete');
   const gitBranchOk = gitBranchDelete?.ok === true || (cleanupFailureObserved && gitBranchDeleteAfterBlocker?.ok === true);
   const surfaces = {
     redis: {
@@ -152,15 +161,20 @@ export function summarizeCleanupVerification(cleanup, { keepArtifacts = false, c
       detail: step('git_worktree_remove')?.detail ?? null,
     },
     git_branch: {
-      ok: gitBranchOk,
+      ok: gitBranchOk && (gitArchitectureBranchDelete ? gitArchitectureBranchDelete.ok === true : true),
       detail: gitBranchDelete?.ok === true
-        ? (gitBranchDelete.detail ?? null)
+        ? {
+            run_branch: gitBranchDelete.detail ?? null,
+            architecture_branch: gitArchitectureBranchDelete?.detail ?? null,
+          }
         : {
             first_delete: gitBranchDelete?.detail ?? null,
             recovered_by_blocker_cleanup: cleanupFailureObserved,
             retry_detail: gitBranchDeleteAfterBlocker?.detail ?? null,
+            architecture_branch: gitArchitectureBranchDelete?.detail ?? null,
           },
     },
+    git_remote_branch: groupedSurface('git_remote_branch_delete'),
   };
   const failedSurfaces = Object.entries(surfaces)
     .filter(([, surface]) => surface.ok !== true)
@@ -184,6 +198,7 @@ export function summarizeCleanupVerification(cleanup, { keepArtifacts = false, c
 
 export function artifactPathsForWorkspace(workspace) {
   if (!workspace) return null;
+  const pipelineRunId = discoverPipelineRunId(workspace);
   return {
     artifact_root: workspace.artifactRoot,
     worktree: workspace.worktreePath,
@@ -192,7 +207,7 @@ export function artifactPathsForWorkspace(workspace) {
     swarm_config: workspace.runConfigPath,
     cleanup_manifest: workspace.cleanupManifestPath,
     progress: path.join(workspace.swarmDir, 'progress.json'),
-    lifecycle_events: path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', workspace.runId, 'lifecycle', 'canonical-events.jsonl'),
+    lifecycle_events: path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunId, 'lifecycle', 'canonical-events.jsonl'),
     pipeline_events: path.join(workspace.swarmDir, 'logs', 'pipeline', 'pipeline.jsonl'),
     pipeline_summary: path.join(workspace.swarmDir, 'logs', 'pipeline', 'summary.json'),
     pipeline_latest: path.join(workspace.swarmDir, 'logs', 'pipeline', 'latest.json'),
@@ -204,6 +219,32 @@ export function artifactPathsForWorkspace(workspace) {
     module_echo_review: path.join(workspace.swarmDir, 'logs', 'echo-review', 'MODULE-REVIEW.json'),
     final_echo_review: path.join(workspace.swarmDir, 'logs', 'echo-review', 'FINAL-REVIEW.json'),
   };
+}
+
+function readJsonIfPresent(filePath) {
+  try {
+    if (!fs.existsSync(filePath)) return null;
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+function discoverPipelineRunId(workspace) {
+  const summary = readJsonIfPresent(path.join(workspace.swarmDir, 'logs', 'pipeline', 'summary.json'));
+  const latest = readJsonIfPresent(path.join(workspace.swarmDir, 'logs', 'pipeline', 'latest.json'));
+  for (const candidate of [summary?.run_id, latest?.run_id, workspace.pipelineRunId, workspace.actualRunId, workspace.runId]) {
+    if (typeof candidate !== 'string' || !candidate.trim()) continue;
+    const runId = candidate.trim();
+    if (
+      fs.existsSync(path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', runId, 'lifecycle', 'canonical-events.jsonl'))
+      || fs.existsSync(path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', runId, 'pipeline.jsonl'))
+      || runId === workspace.runId
+    ) {
+      return runId;
+    }
+  }
+  return workspace.runId;
 }
 
 function readOpenClawConfig() {
@@ -230,19 +271,27 @@ function waitForChild(child) {
 
 async function waitForChildWithTimeout(child, label, timeoutMs) {
   let timedOut = false;
+  let timeout = null;
   const result = await Promise.race([
     waitForChild(child),
-    new Promise((resolve) => setTimeout(() => {
-      timedOut = true;
-      child.kill('SIGTERM');
-      resolve(null);
-    }, timeoutMs)),
+    new Promise((resolve) => {
+      timeout = setTimeout(() => {
+        timedOut = true;
+        child.kill('SIGTERM');
+        resolve(null);
+      }, timeoutMs);
+    }),
   ]);
+  clearTimeout(timeout);
   if (result) return { ...result, timed_out: false };
+  let gracefulTimeout = null;
   const graceful = await Promise.race([
     waitForChild(child),
-    new Promise((resolve) => setTimeout(() => resolve(null), 10000)),
+    new Promise((resolve) => {
+      gracefulTimeout = setTimeout(() => resolve(null), 10000);
+    }),
   ]);
+  clearTimeout(gracefulTimeout);
   if (graceful) return { ...graceful, timed_out: timedOut };
   process.stderr.write(`[${label}] forcing SIGKILL after pipeline timeout ${timeoutMs}ms\n`);
   child.kill('SIGKILL');
@@ -253,10 +302,14 @@ async function waitForChildWithTimeout(child, label, timeoutMs) {
 async function stopChild(child, label) {
   if (!child || child.exitCode !== null || child.signalCode !== null) return { alreadyExited: true };
   child.kill('SIGTERM');
+  let timeout = null;
   const result = await Promise.race([
     waitForChild(child),
-    new Promise((resolve) => setTimeout(() => resolve(null), 10000)),
+    new Promise((resolve) => {
+      timeout = setTimeout(() => resolve(null), 10000);
+    }),
   ]);
+  clearTimeout(timeout);
   if (result) return result;
   process.stderr.write(`[${label}] forcing SIGKILL after graceful stop timeout\n`);
   child.kill('SIGKILL');
@@ -632,7 +685,8 @@ async function main() {
     return 0;
   }
 
-  const capabilities = await runCapabilityProbe({ mode: args.mode });
+  const capabilities = readReusedCapabilityProbeResult({ ...process.env, REAL_E2E_MODE: args.mode })
+    || await runCapabilityProbe({ mode: args.mode });
   persist({
     capability_probe: capabilities,
     phases: [
@@ -799,9 +853,9 @@ async function main() {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   try {
-    process.exitCode = await main();
+    process.exit(await main());
   } catch (error) {
     process.stderr.write(`${JSON.stringify({ ok: false, error: error?.message || String(error) }, null, 2)}\n`);
-    process.exitCode = 1;
+    process.exit(1);
   }
 }
