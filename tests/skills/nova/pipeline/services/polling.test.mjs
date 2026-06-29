@@ -65,6 +65,13 @@ function saveModuleStatus(config, moduleId, moduleDir, status) {
   saveLifecycleReadModels(config, readModels);
 }
 
+function createNoopLocalEvidenceEventAdapter() {
+  return {
+    start() { return { watching: 0, paths: [] }; },
+    stop() {},
+  };
+}
+
 test('pollGeneric preserves rate-limit lifecycle mutation metadata', async () => {
   const lifecycleMutation = {
     eventType: 'module.status_changed',
@@ -158,7 +165,10 @@ test('module completion wait preserves attempt zero in event identity', async (t
     (ok, reason, status = null, extra = {}) => ({ ok, reason, status, ...extra }),
     {
       deps: {
-        completionEventAdapters: { RedisCtor: FakeRedis },
+        completionEventAdapters: {
+          RedisCtor: FakeRedis,
+          createLocalEvidenceEventAdapter: createNoopLocalEvidenceEventAdapter,
+        },
       },
     },
   );
@@ -166,6 +176,83 @@ test('module completion wait preserves attempt zero in event identity', async (t
   assert.equal(result.ok, false);
   assert.equal(result.reason, 'timeout');
   assert.equal(result.status, null);
+});
+
+test('module completion wait does not require gateway label in Redis completion events', async (t) => {
+  class FakeRedis {
+    constructor() {
+      this.calls = 0;
+      this.waiting = null;
+    }
+
+    on() {}
+
+    async xread() {
+      this.calls += 1;
+      if (this.calls === 1) {
+        return completionXreadResult('2-0', {
+          _id: '2-0',
+          schema_version: 'v1',
+          type: 'completion',
+          stream_role: 'completion',
+          project: 'module-completion-test',
+          target_kind: 'module',
+          target_id: 'module-a',
+          module: 'module-a',
+          status: 'PASS',
+          outcome: 'PASS',
+          source: 'buster-pipeline',
+          run_id: 'run-test',
+          attempt: '1',
+          dispatch_id: 'dispatch-test',
+          timestamp: '2026-06-03T00:00:00.000Z',
+        });
+      }
+      return new Promise((resolve) => {
+        this.waiting = resolve;
+      });
+    }
+
+    disconnect() {
+      this.waiting?.(null);
+    }
+  }
+
+  const config = makeModuleCompletionConfig();
+  t.after(() => {
+    fs.rmSync(config.repo_root, { recursive: true, force: true });
+  });
+  const moduleId = 'module-a';
+  const moduleDir = 'module-a-dir';
+  fs.mkdirSync(path.join(config.paths.modules_dir, moduleDir), { recursive: true });
+  saveModuleStatus(config, moduleId, moduleDir, 'PASS');
+
+  const result = await waitForModuleBusterCompletion(
+    config,
+    moduleDir,
+    moduleId,
+    ['PASS', 'FAIL', 'BLOCKED'],
+    0.01,
+    {
+      run_id: 'run-test',
+      attempt: 1,
+      dispatch_id: 'dispatch-test',
+      gateway_label: 'buster-module-a-dispatch-test',
+    },
+    (ok, reason, status = null, extra = {}) => ({ ok, reason, status, ...extra }),
+    {
+      deps: {
+        completionEventAdapters: {
+          RedisCtor: FakeRedis,
+          createLocalEvidenceEventAdapter: createNoopLocalEvidenceEventAdapter,
+        },
+      },
+    },
+  );
+
+  assert.equal(result.ok, true);
+  assert.equal(result.reason, 'target_reached');
+  assert.equal(result.status?._redis_entry?._id, '2-0');
 });
 
 test('module completion wait recovers canonical Redis completion from tail scan when live stream delivery is missed', async (t) => {
