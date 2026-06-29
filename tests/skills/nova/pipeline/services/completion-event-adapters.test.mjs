@@ -93,6 +93,54 @@ test('redis completion entries without dispatch identity do not inherit active w
   await done;
 });
 
+test('redis completion adapter treats stop-time disconnect as intentional shutdown', async () => {
+  class FakeRedis {
+    static instance = null;
+
+    constructor() {
+      FakeRedis.instance = this;
+      this.waiting = null;
+    }
+
+    on() {}
+
+    async xread() {
+      return new Promise((_resolve, reject) => {
+        this.waiting = reject;
+      });
+    }
+
+    disconnect() {
+      this.waiting?.(new Error("Stream isn't writeable and enableOfflineQueue options is false"));
+    }
+  }
+
+  const fatalEvents = [];
+  const eventBus = createPipelineEventBus();
+  const originalEmit = eventBus.emit.bind(eventBus);
+  eventBus.emit = (event) => {
+    if (event?.type === 'fatal.error') fatalEvents.push(event);
+    return originalEmit(event);
+  };
+  const adapter = createRedisCompletionEventAdapter({ project: 'test' }, {
+    eventBus,
+    identity: { gate_id: 'gate-a', run_id: 'run-a' },
+    stream: 'completion-stream',
+    startId: '0-0',
+    blockMs: 0,
+    RedisCtor: FakeRedis,
+    host: '127.0.0.1',
+    enforceSecureMode: false,
+  });
+
+  const done = adapter.start();
+  await sleep(10);
+  adapter.stop('test_done');
+  await done;
+
+  assert.deepEqual(fatalEvents, []);
+});
+
 test('local evidence adapter follows target creation through a missing parent directory', async () => {
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'local-evidence-watch-'));
   const targetPath = path.join(tmpDir, 'new-dir', 'output.json');
@@ -108,13 +156,11 @@ test('local evidence adapter follows target creation through a missing parent di
 
   adapter.start();
   try {
-    fs.mkdirSync(path.dirname(targetPath));
-    await sleep(50);
-
     const eventPromise = eventBus.waitForEvent('local.evidence.updated', identity, {
       signal: controller.signal,
       timeoutMs: 500,
     });
+    fs.mkdirSync(path.dirname(targetPath));
     fs.writeFileSync(targetPath, '{"status":"PASS"}\n');
     const event = await eventPromise;
 
