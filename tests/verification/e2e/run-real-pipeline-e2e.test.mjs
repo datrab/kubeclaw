@@ -165,8 +165,11 @@ test('cleanup verification treats retained artifacts as diagnostic while requiri
     steps: [
       { step: 'redis_run_keys_delete', ok: true, detail: { deleted: ['pipeline:telemetry:project:run'] } },
       { step: 'kubernetes_run_resources_delete', ok: true, detail: { leases: ['lease-1'], namespaces: ['test-project-run'] } },
+      { step: 'git_remote_branch_delete', ok: true, detail: 'verification/e2e/success-real-e2e-1' },
+      { step: 'git_remote_branch_delete', ok: true, detail: 'real-pipeline-e2e-real-e2e-1/architecture' },
       { step: 'git_worktree_remove', ok: true },
       { step: 'git_branch_delete', ok: true },
+      { step: 'git_architecture_branch_delete', ok: true },
       { step: 'artifact_root_retained', ok: true, detail: '/tmp/artifacts' },
     ],
   };
@@ -191,8 +194,10 @@ test('cleanup verification fails when infra cleanup fails even if artifacts are 
     steps: [
       { step: 'redis_run_keys_delete', ok: true, detail: { deleted: [] } },
       { step: 'kubernetes_run_resources_delete', ok: false, detail: { list_failures: [{ resource: 'namespaces', error: 'forbidden' }] } },
+      { step: 'git_remote_branch_delete', ok: true, detail: 'verification/e2e/failure-real-e2e-1' },
       { step: 'git_worktree_remove', ok: true },
       { step: 'git_branch_delete', ok: true },
+      { step: 'git_architecture_branch_delete', ok: true },
       { step: 'artifact_root_retained', ok: true, detail: '/tmp/artifacts' },
     ],
   };
@@ -214,10 +219,12 @@ test('cleanup verification records induced git cleanup failure as recovered infr
     steps: [
       { step: 'redis_run_keys_delete', ok: true, detail: { deleted: [] } },
       { step: 'kubernetes_run_resources_delete', ok: true, detail: { leases: [], namespaces: [] } },
+      { step: 'git_remote_branch_delete', ok: true, detail: 'verification/e2e/cleanup-real-e2e-1' },
       { step: 'git_worktree_remove', ok: true },
       { step: 'git_branch_delete', ok: false, detail: 'branch is checked out' },
       { step: 'git_cleanup_blocker_worktree_remove', ok: true, detail: '/tmp/blocker' },
       { step: 'git_branch_delete_after_blocker_cleanup', ok: true },
+      { step: 'git_architecture_branch_delete', ok: true },
       { step: 'artifact_root_remove', ok: true },
     ],
   };
@@ -232,4 +239,32 @@ test('cleanup verification records induced git cleanup failure as recovered infr
   assert.equal(verification.cleanup_failure_observed, true);
   assert.equal(verification.surfaces.git_branch.ok, true);
   assert.equal(verification.artifact_retention.removed, true);
+});
+
+test('cleanup verification fails when any remote e2e branch cleanup fails', () => {
+  const cleanup = {
+    ok: false,
+    steps: [
+      { step: 'redis_run_keys_delete', ok: true, detail: { deleted: [] } },
+      { step: 'kubernetes_run_resources_delete', ok: true, detail: { leases: [], namespaces: [] } },
+      { step: 'git_remote_branch_delete', ok: true, detail: 'verification/e2e/success-real-e2e-1' },
+      { step: 'git_remote_branch_delete', ok: false, detail: { branch: 'real-pipeline-e2e-real-e2e-1/architecture', error: 'denied' } },
+      { step: 'git_worktree_remove', ok: true },
+      { step: 'git_branch_delete', ok: true },
+      { step: 'git_architecture_branch_delete', ok: true },
+      { step: 'artifact_root_remove', ok: true },
+    ],
+  };
+
+  const verification = summarizeCleanupVerification(cleanup, { keepArtifacts: false });
+
+  assert.equal(verification.ok, false);
+  assert.equal(verification.surfaces.git_remote_branch.ok, false);
+  assert.deepEqual(verification.failed_surfaces, [{
+    surface: 'git_remote_branch',
+    detail: [
+      'verification/e2e/success-real-e2e-1',
+      { branch: 'real-pipeline-e2e-real-e2e-1/architecture', error: 'denied' },
+    ],
+  }]);
 });
