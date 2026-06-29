@@ -18,8 +18,8 @@ export function createDedicatedRedisCompletionClient(opts = {}) {
   });
 }
 
-function isIntentionalAbortRedisError(error, signal) {
-  if (!signal?.aborted) return false;
+function isIntentionalAbortRedisError(error, { signal = null, stopping = false } = {}) {
+  if (!signal?.aborted && !stopping) return false;
   const message = String(error?.message || error || '').toLowerCase();
   return message === ''
     || message.includes('connection is closed')
@@ -27,6 +27,9 @@ function isIntentionalAbortRedisError(error, signal) {
     || message.includes('connection forcefully')
     || message.includes('connection ended')
     || message.includes('connection lost')
+    || message.includes('stream isn\'t writeable')
+    || message.includes('stream is not writeable')
+    || message.includes('connection is not writable')
     || message.includes('econnreset')
     || message.includes('abort');
 }
@@ -35,6 +38,15 @@ function emitFatal(eventBus, identity, payload) {
   eventBus.emit({
     type: 'fatal.error',
     source: 'system',
+    identity,
+    payload,
+  });
+}
+
+function emitLocalEvidenceWarning(eventBus, identity, payload) {
+  eventBus.emit({
+    type: 'local.evidence.warning',
+    source: 'local_fs',
     identity,
     payload,
   });
@@ -89,6 +101,7 @@ export function createRedisCompletionEventAdapter(config, opts = {}) {
   let client = null;
   let started = false;
   let donePromise = null;
+  let stopping = false;
 
   const externalSignal = opts.signal;
   const abortFromExternal = () => stop('external_abort');
@@ -98,6 +111,7 @@ export function createRedisCompletionEventAdapter(config, opts = {}) {
   }
 
   function closeClient() {
+    stopping = true;
     if (!client) return;
     const current = client;
     client = null;
@@ -110,6 +124,7 @@ export function createRedisCompletionEventAdapter(config, opts = {}) {
   }
 
   function stop(reason = 'stopped') {
+    stopping = true;
     if (!signal.aborted) controller.abort(reason);
     closeClient();
   }
@@ -119,6 +134,7 @@ export function createRedisCompletionEventAdapter(config, opts = {}) {
     while (!signal.aborted) {
       try {
         const result = await client.xread('BLOCK', String(blockMs), 'STREAMS', stream, lastId);
+        if (signal.aborted || stopping) break;
         for (const entry of decodeXreadEntries(result)) {
           lastId = entry.id;
           if (entry.data.type && entry.data.type !== 'completion') continue;
@@ -134,7 +150,7 @@ export function createRedisCompletionEventAdapter(config, opts = {}) {
           });
         }
       } catch (error) {
-        if (isIntentionalAbortRedisError(error, signal)) break;
+        if (isIntentionalAbortRedisError(error, { signal, stopping })) break;
         emitFatal(eventBus, fatalIdentity, {
           adapter: 'redis_completion',
           stream_key: stream,
@@ -218,7 +234,9 @@ export function createLocalEvidenceEventAdapter(config, opts = {}) {
   const controller = new AbortController();
   const signal = controller.signal;
   const watchers = [];
+  const rescanTimers = [];
   const activeWatchKeys = new Set();
+  const activeRescanKeys = new Set();
   const changedPaths = new Set();
   let timer = null;
   let started = false;
@@ -267,13 +285,32 @@ export function createLocalEvidenceEventAdapter(config, opts = {}) {
       const watcher = watchers.pop();
       try { watcher.close(); } catch (_error) {}
     }
+    while (rescanTimers.length > 0) {
+      clearInterval(rescanTimers.pop());
+    }
     activeWatchKeys.clear();
+    activeRescanKeys.clear();
     if (externalSignal) externalSignal.removeEventListener?.('abort', abortFromExternal);
   }
 
+  function startPathRescan(spec) {
+    const rescanKey = spec.targetPath;
+    if (activeRescanKeys.has(rescanKey)) return;
+    activeRescanKeys.add(rescanKey);
+    const intervalMs = Math.max(10, Math.min(debounceMs || 50, 250));
+    const timer = setInterval(() => {
+      if (signal.aborted) return;
+      const nextSpec = buildWatcherSpecs([spec.targetPath])[0];
+      if (nextSpec?.watchPath && nextSpec.watchPath !== spec.watchPath) startWatcher(nextSpec);
+      if (fs.existsSync(spec.targetPath)) schedule(spec.targetPath);
+    }, intervalMs);
+    rescanTimers.push(timer);
+  }
+
   function startWatcher(spec) {
+    if (!fs.existsSync(spec.targetPath)) startPathRescan(spec);
     if (!spec.watchPath) {
-      emitFatal(eventBus, identity, {
+      emitLocalEvidenceWarning(eventBus, identity, {
         adapter: 'local_evidence',
         reason: 'watch_path_missing',
         path: spec.targetPath,
@@ -304,7 +341,7 @@ export function createLocalEvidenceEventAdapter(config, opts = {}) {
       watchers.push(watcher);
       if (opts.emitExisting === true && fs.existsSync(spec.targetPath)) schedule(spec.targetPath);
     } catch (error) {
-      emitFatal(eventBus, identity, {
+      emitLocalEvidenceWarning(eventBus, identity, {
         adapter: 'local_evidence',
         reason: error?.code === 'ENOSPC' ? 'watcher_limit_reached' : 'watcher_start_failed',
         path: spec.targetPath,
