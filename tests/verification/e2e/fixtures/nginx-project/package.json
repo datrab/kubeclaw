@@ -3,6 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "verify": "test -f src/index.html && test -f k8s/deployment.yaml"
+    "verify": "node scripts/verify-fixture.mjs"
   }
 }
