@@ -159,6 +159,7 @@ Supported scenarios:
 - `git-credential-failure`
 - `git-remote-push-failure`
 - `git-non-fast-forward`
+- `git-merge-conflict`
 - `git-commit-failure`
 - `git-dirty-worktree-preserved`
 - `forge-timeout`
