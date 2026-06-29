@@ -7,7 +7,13 @@ import test from 'node:test';
 import { promisify } from 'node:util';
 
 import { resolvePerfReportPaths } from '../../../../../skills/buster/pipeline/suites/perf.ts';
-import { buildDetailedSuiteSummary, resolveSandboxResultsDir, runSuites, runSuiteWithTimeout } from '../../../../../skills/buster/pipeline/runners/suite-runner.ts';
+import {
+  applyBuildRuntimePort,
+  buildDetailedSuiteSummary,
+  resolveSandboxResultsDir,
+  runSuites,
+  runSuiteWithTimeout,
+} from '../../../../../skills/buster/pipeline/runners/suite-runner.ts';
 
 const execFileAsync = promisify(execFile);
 
@@ -68,6 +74,24 @@ test('detailed suite summary preserves the top failure reason', () => {
   ]);
 
   assert.equal(summary, 'build: FAIL - Dockerfile base image is missing | health: SKIP - build failed | unit: PASS');
+});
+
+test('build runtime host port is propagated to later suites', () => {
+  const config = { serve: { type: 'server', port: 8080, health_path: '/health' } };
+  applyBuildRuntimePort(config, {
+    suite: 'build',
+    status: 'PASS',
+    metadata: {
+      port: 43125,
+      container_port: 8080,
+    },
+  });
+
+  assert.deepEqual(config.serve, {
+    type: 'server',
+    port: 43125,
+    health_path: '/health',
+  });
 });
 
 test('perf report paths use per-run scratch and final artifacts', () => {
