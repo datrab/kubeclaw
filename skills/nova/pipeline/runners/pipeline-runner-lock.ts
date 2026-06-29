@@ -323,7 +323,7 @@ function writePipelineRunLock(lockPath: string, owner: AnyRecord): void {
   fs.renameSync(tempPath, lockPath);
 }
 
-function replacePipelineRunLockIfOwner(lockPath: string, owner: AnyRecord, token: string): AnyRecord {
+function replacePipelineRunLockIfOwner(config: AnyRecord, lockPath: string, owner: AnyRecord, token: string): AnyRecord {
   return withPipelineRunLockMutation(config, lockPath, () => {
     const current = readPipelineRunLock(lockPath);
     if (!hasPipelineRunLockLeaseContract(current) || current?.token !== token) {
@@ -409,7 +409,7 @@ function startPipelineRunLockHeartbeat(config: AnyRecord, lockPath: string, owne
 
     try {
       const nextOwner = refreshPipelineRunLockOwner(currentOwner, config);
-      currentOwner = replacePipelineRunLockIfOwner(lockPath, nextOwner, currentOwner.token);
+      currentOwner = replacePipelineRunLockIfOwner(config, lockPath, nextOwner, currentOwner.token);
     } catch (error) {
       appendDurableRunLockAlert(config, currentOwner, 'pipeline_run_lock_heartbeat_failed', error);
       stop('pipeline_run_lock_heartbeat_failed');
