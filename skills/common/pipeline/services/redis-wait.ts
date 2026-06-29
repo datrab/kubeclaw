@@ -54,7 +54,6 @@ function buildCompletionEventIdentity(targetKind, targetId, expectedIdentity = {
     ...(expectedIdentity.attempt != null && String(expectedIdentity.attempt) !== '' ? { attempt: expectedIdentity.attempt } : {}),
     ...(expectedIdentity.dispatch_id ? { dispatch_id: expectedIdentity.dispatch_id } : {}),
     ...(expectedIdentity.session_key ? { session_key: expectedIdentity.session_key } : {}),
-    ...(expectedIdentity.gateway_label ? { gateway_label: expectedIdentity.gateway_label } : {}),
   };
 }
 
