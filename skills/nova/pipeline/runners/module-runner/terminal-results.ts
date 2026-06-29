@@ -81,6 +81,10 @@ export function buildModuleHaltTerminalResult(config: AnyRecord, moduleId: strin
   metadata = {},
   rateLimit = null,
   terminalAction = null,
+  terminalReasonCode = null,
+  terminalHumanReason = null,
+  terminalSource = null,
+  terminalMetadata = {},
 }: AnyRecord = {}) {
   return {
     retry: false,
@@ -112,6 +116,10 @@ export function buildModuleHaltTerminalResult(config: AnyRecord, moduleId: strin
       rateLimit,
       terminalAction,
       terminalScope: PIPELINE_TERMINAL_SCOPES.MODULE,
+      terminalReasonCode,
+      terminalHumanReason,
+      terminalSource,
+      terminalMetadata,
     }),
   };
 }
