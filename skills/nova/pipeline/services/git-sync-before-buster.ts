@@ -39,10 +39,7 @@ export async function gitSyncBeforeBuster(config: AnyRecord, moduleDir: string, 
   log('STEP', 'Git sync: committing and pushing Forge output before Buster');
 
   try {
-    const meaningfulPaths = normalizeScopedGitPaths(status?.meaningful_paths);
-    const diffEvidence = meaningfulPaths.length > 0
-      ? { ok: true, hasMeaningfulChanges: true, paths: meaningfulPaths }
-      : collectMeaningfulForgeDiffEvidence(config, moduleDir, { headBefore: status?.head_before || null });
+    const diffEvidence = collectMeaningfulForgeDiffEvidence(config, moduleDir, { headBefore: status?.head_before || null });
     const scopedPaths = normalizeScopedGitPaths(diffEvidence?.paths);
     const addPaths = scopedPaths.length > 0
       ? scopedPaths
