@@ -1637,7 +1637,7 @@ test('terminal failure contracts reject the right broad step with the wrong fail
 });
 
 test('Git failure contracts reject generic Git sync failures without exact root cause', () => {
-  for (const scenarioId of ['git-credential-failure', 'git-remote-push-failure', 'git-non-fast-forward', 'git-commit-failure']) {
+  for (const scenarioId of ['git-credential-failure', 'git-remote-push-failure', 'git-non-fast-forward', 'git-merge-conflict', 'git-commit-failure']) {
     const scenario = resolveRealE2EScenario(scenarioId);
     const workspace = createFailureContractWorkspace(scenario, {
       terminalOverrides: { halt_reason: '[GIT_SYNC_FAILED] Git sync failed before Buster handoff: generic git failure' },
@@ -1723,6 +1723,35 @@ test('failure lifecycle evidence rejects stale summary run context', () => {
   assert.equal(lifecycle.ok, false);
   assert.equal(lifecycle.reason, 'REAL_E2E_PIPELINE_FAILURE_CONTRACT_INCOMPLETE');
   assert.equal(lifecycle.summary_run_matches, false);
+});
+
+test('failure evidence accepts file-backed production run id instead of generated e2e wrapper id', async () => {
+  const scenario = resolveRealE2EScenario('git-merge-conflict');
+  const contract = expectedFailureContractForScenario(scenario);
+  const workspace = createWorkspace(scenario, {
+    progressFields: {
+      ...(contract.setup?.progress || {}),
+      ...(contract.setup?.progress_path_suffix
+        ? Object.fromEntries(Object.entries(contract.setup.progress_path_suffix).map(([field, suffix]) => [field, `/tmp/generated${suffix}`]))
+        : {}),
+    },
+    configFields: contract.setup?.config || {},
+  });
+  applyContractSetupFixtures(workspace, contract);
+  const productionRunWorkspace = { ...workspace, runId: 'run-production-1' };
+  appendJsonl(
+    path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', productionRunWorkspace.runId, 'lifecycle', 'canonical-events.jsonl'),
+    contractTerminalEvent(productionRunWorkspace, contract),
+  );
+  writeJson(path.join(workspace.swarmDir, 'logs', 'pipeline', 'summary.json'), {
+    run_id: productionRunWorkspace.runId,
+    project: workspace.projectName,
+    terminal_status: 'failed',
+  });
+
+  const evidence = await verifyExpectedFailureEvidence(workspace, scenario);
+
+  assert.equal(evidence.ok, true);
 });
 
 test('architecture validator block requires the exact production halted event shape', async () => {
