@@ -50,6 +50,7 @@ interface BuildResult {
   output: string;
   outputSize?: string;
   port?: number;
+  containerPort?: number;
 }
 
 interface EnvExtractionResult {
@@ -89,6 +90,38 @@ function requireCanonicalImageRef(image: unknown, field = 'serve.image'): string
   const validation = validateBaseImageRef(ref);
   if (validation.ok) return validation.value;
   throw new Error(`${field} must be a fully qualified image reference with registry/namespace; shorthand image names are not supported (${validation.reason})`);
+}
+
+function requireContainerPort(value: unknown, field = 'serve.port'): number {
+  const port = typeof value === 'string' && /^\d+$/.test(value)
+    ? Number(value)
+    : value;
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    throw new Error(`${field} must be an integer between 1 and 65535`);
+  }
+  return port;
+}
+
+export function buildPodmanPublishArgs(containerPort: number): string[] {
+  requireContainerPort(containerPort);
+  return ['-p', `127.0.0.1::${containerPort}/tcp`];
+}
+
+export function parsePodmanMappedHostPort(output: string, containerPort: number): number {
+  requireContainerPort(containerPort);
+  const text = String(output || '').trim();
+  const patterns = [
+    new RegExp(`(?:0\\.0\\.0\\.0|127\\.0\\.0\\.1|::):([0-9]+)->${containerPort}/tcp`),
+    /(?:0\.0\.0\.0|127\.0\.0\.1|::):([0-9]+)$/,
+    /^([0-9]+)$/,
+  ];
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (!match?.[1]) continue;
+    const port = Number(match[1]);
+    if (Number.isInteger(port) && port >= 1 && port <= 65535) return port;
+  }
+  throw new Error(`podman did not report a mapped host port for ${containerPort}/tcp`);
 }
 
 function validateDockerfileFromImages(dockerfilePath: string): Finding[] {
@@ -370,7 +403,12 @@ async function buildServer(config: AnyRecord, context: BuildContext): Promise<Bu
   }
 
   const startCmd = config.start_cmd || DEFAULTS.start_cmd;
-  const port = config.port || DEFAULTS.port;
+  let port: number;
+  try {
+    port = requireContainerPort(config.port || DEFAULTS.port);
+  } catch (error) {
+    return { ok: false, findings: [createFinding(SEVERITY.CRITICAL, errorMessage(error), { rule: 'serve-port' })], output: errorMessage(error) };
+  }
   const timeout = (config.timeout || DEFAULTS.timeout) * 1000;
   const rawProjectDir = config.project_dir || DEFAULTS.project_dir;
   const projectDir = resolveRepoScopedPath(rawProjectDir, { field: 'serve.project_dir' }) || DEFAULTS.project_dir;
@@ -424,7 +462,7 @@ async function buildServer(config: AnyRecord, context: BuildContext): Promise<Bu
     'run', '-d',
     '--name', containerName,
     ...buildCleanupPodmanLabelArgs(context.payload || {}),
-    '--network', 'host',
+    ...buildPodmanPublishArgs(port),
     '--memory', '2g',
     '--cpus', '2',
     '--pids-limit', '256',
@@ -459,6 +497,15 @@ async function buildServer(config: AnyRecord, context: BuildContext): Promise<Bu
     return { ok: false, findings: parseErrors(output), output };
   }
 
+  let hostPort: number;
+  try {
+    const { stdout } = await execFileAsync('podman', ['port', containerName, `${port}/tcp`], { encoding: 'utf8', timeout: 5000, env: buildSubprocessEnv() });
+    hostPort = parsePodmanMappedHostPort(stdout, port);
+  } catch (error) {
+    const output = errorOutput(error);
+    return { ok: false, findings: parseErrors(output || errorMessage(error), 'server-port'), output };
+  }
+
   log('Waiting 3s for crash detection...');
   await new Promise((resolve) => setTimeout(resolve, 3000));
 
@@ -478,8 +525,8 @@ async function buildServer(config: AnyRecord, context: BuildContext): Promise<Bu
     log(`non-blocking crash-detection probe failed: ${errorMessage(error)}`);
   }
 
-  log(`Server running on port ${port} (container: ${containerName})`);
-  return { ok: true, findings: [], output: '', port };
+  log(`Server running on host port ${hostPort} -> container port ${port} (container: ${containerName})`);
+  return { ok: true, findings: [], output: '', port: hostPort, containerPort: port };
 }
 
 export default async function buildSuite(context: BuildContext): Promise<SuiteVerdict> {
@@ -504,6 +551,7 @@ export default async function buildSuite(context: BuildContext): Promise<SuiteVe
         ...(serve.image ? { image: String(serve.image) } : {}),
         ...(result.outputSize ? { output_size: result.outputSize } : {}),
         ...(result.port ? { port: result.port } : {}),
+        ...(result.containerPort ? { container_port: result.containerPort } : {}),
       },
     });
   }
