@@ -36,6 +36,34 @@ function expireLock(lockPath) {
   }, null, 2) + '\n');
 }
 
+function readLock(lockPath) {
+  return JSON.parse(fs.readFileSync(lockPath, 'utf8'));
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+test('pipeline lock heartbeat refreshes the owner without losing the lock', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-lock-heartbeat-'));
+  const config = testConfig(dir, 'run-heartbeat');
+  config.locks.pipeline_run.lease_ms = 3000;
+  config.locks.pipeline_run.heartbeat_ms = 1000;
+  const lock = acquirePipelineRunLock(config);
+  const first = readLock(lock.path);
+
+  try {
+    await sleep(1200);
+    lock.heartbeat.assertActive();
+    const refreshed = readLock(lock.path);
+    assert.equal(refreshed.token, first.token);
+    assert.notEqual(refreshed.heartbeat_at, first.heartbeat_at);
+    assert.equal(lock.heartbeat.lost, false);
+  } finally {
+    releasePipelineRunLock(lock);
+  }
+});
+
 test('reclaimed pipeline lock makes the previous owner fail its active assertion', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-lock-'));
   const first = acquirePipelineRunLock(testConfig(dir, 'run-a'));
