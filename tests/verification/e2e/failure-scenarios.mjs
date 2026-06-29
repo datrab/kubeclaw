@@ -310,6 +310,13 @@ const SCENARIOS = Object.freeze({
     approvalDecision: 'approve',
     expectedEvidence: 'git_non_fast_forward',
   }),
+  'git-merge-conflict': Object.freeze({
+    id: 'git-merge-conflict',
+    description: 'Real Git sync fails when pull-rebase observes a true divergent merge conflict.',
+    expectedPipelineExit: 'nonzero',
+    approvalDecision: 'approve',
+    expectedEvidence: 'git_merge_conflict',
+  }),
   'git-commit-failure': Object.freeze({
     id: 'git-commit-failure',
     description: 'Real Git sync fails when the commit/index operation cannot write its index.',
@@ -526,6 +533,7 @@ const FULL_FAILURE_MATRIX = Object.freeze([
   'git-credential-failure',
   'git-remote-push-failure',
   'git-non-fast-forward',
+  'git-merge-conflict',
   'git-commit-failure',
   'git-dirty-worktree-preserved',
   'forge-timeout',
@@ -600,6 +608,17 @@ function approvalGate(progress) {
   return gate;
 }
 
+function moveOperatorApprovalBeforeModules(progress) {
+  const approvalRef = 'gate:operator-approval';
+  const order = Array.isArray(progress.execution_order) ? progress.execution_order : [];
+  if (!order.includes(approvalRef)) throw new Error('real E2E execution_order must include operator approval gate');
+  progress.execution_order = [
+    approvalRef,
+    ...order.filter((entry) => entry !== approvalRef),
+  ];
+  progress.real_e2e.approval_before_modules = true;
+}
+
 function moduleConfig(progress) {
   const mod = progress?.modules?.['01-nginx'];
   if (!mod) throw new Error('real E2E progress must define 01-nginx module');
@@ -667,15 +686,19 @@ export function applyRealE2EScenario(progress, scenarioId) {
     };
   }
 
+  if (scenario.id === 'approval-deny') {
+    moveOperatorApprovalBeforeModules(next);
+  }
+
   if (scenario.id === 'approval-timeout-block') {
     const gate = approvalGate(next);
-    gate.on_timeout = 'BLOCK';
+    gate.on_timeout = 'block';
     gate.timeout_minutes = Number(process.env.REAL_E2E_APPROVAL_TIMEOUT_MINUTES || 0.02);
   }
 
   if (scenario.id === 'approval-timeout-continue') {
     const gate = approvalGate(next);
-    gate.on_timeout = 'CONTINUE';
+    gate.on_timeout = 'continue';
     gate.timeout_minutes = Number(process.env.REAL_E2E_APPROVAL_TIMEOUT_MINUTES || 0.02);
   }
 
@@ -922,6 +945,14 @@ export function applyRealE2EScenario(progress, scenarioId) {
       component: 'git',
       surface: 'non_fast_forward',
       error_code: 'GIT_PUSH_REJECTED',
+    };
+  }
+
+  if (scenario.id === 'git-merge-conflict') {
+    next.real_e2e.intentional_git_failure = {
+      component: 'git',
+      surface: 'merge_conflict',
+      error_code: 'GIT_REBASE_CONFLICT',
     };
   }
 
