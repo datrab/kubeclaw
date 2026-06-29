@@ -19,6 +19,7 @@ import {
 
 import { validateBusterTaskPayload } from './task-validation.ts';
 import { safeErrorMessage } from './runtime-diagnostics.ts';
+import { loadBusterSessionPolicies } from './runtime-policy.ts';
 import { createTaskCompletionState } from './task-completion.ts';
 import { runSandboxCleanupStage } from './task-lifecycle/cleanup.ts';
 import { syncTaskRepo } from './task-lifecycle/git-sync.ts';
@@ -218,6 +219,7 @@ export async function processTask(payload, opts = {}) {
   let sessionResultForCompletion = null;
   let agentResultForCompletion = null;
   const completionState = createTaskCompletionState();
+  const sessionPolicies = opts.sessionPolicies || loadBusterSessionPolicies();
   const taskResult = () => ({ outcome, reason, completion: completionState });
   const currentDiscordContext = (extra = {}) => ({
     module_id: moduleId,
@@ -346,6 +348,7 @@ export async function processTask(payload, opts = {}) {
       currentDiscordContext,
       discord,
       dispatchIdForCompletion,
+      sessionPolicies,
     });
     if (!spawnResult.ok) {
       outcome = 'FAIL';
@@ -369,6 +372,7 @@ export async function processTask(payload, opts = {}) {
       moduleId,
       timeoutSeconds,
       logger,
+      sessionPolicies,
     });
     if (!monitorResult.ok) {
       outcome = 'FAIL';
@@ -386,7 +390,7 @@ export async function processTask(payload, opts = {}) {
     stage = 'kill-session';
     logger.step('kill-session');
 
-    await killTaskSession({ sessionData, sessionResult, elapsedSeconds, moduleId, tctx, logger });
+    await killTaskSession({ sessionData, sessionResult, elapsedSeconds, moduleId, tctx, logger, sessionPolicies });
 
     stage = 'determine-outcome';
     logger.step('determine-outcome');
