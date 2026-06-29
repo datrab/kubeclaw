@@ -65,6 +65,7 @@ test('standard compact swarm config expands to the complete runtime config shape
   assert.equal(expanded.profile, undefined);
   assert.equal(expanded.telemetry.enabled, true);
   assert.equal(expanded.agent_observability.required, true);
+  assert.equal(expanded.agent_observability.plugin_control.timeout_ms, 30000);
   assert.equal(expanded.gateway.invoke.session_spawn.timeout_ms, 30000);
   assert.equal(expanded.session.kill.stop_message, '/stop');
   assert.equal(expanded.buster.runtime.task_stream, 'swarm:buster:tasks');
