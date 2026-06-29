@@ -186,7 +186,7 @@
       "pluginId": "kubeclaw-agent-observer",
       "command": "openclaw",
       "disableOnStop": true,
-      "timeout_ms": 10000
+      "timeout_ms": 30000
     },
     "ingester": {
       "enabled": true,
