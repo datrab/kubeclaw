@@ -35,6 +35,11 @@ type AnyRecord = Record<string, any>;
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
+
+function bracketedErrorCode(message: string): string | null {
+  const match = String(message || '').match(/\[([A-Z][A-Z0-9_]+)\]/);
+  return match?.[1] || null;
+}
 function moduleValidatorProducerType(stageId = ''): string {
   return String(stageId || '').split(':')[1] || 'unknown';
 }
@@ -301,17 +306,20 @@ export async function prepareModuleForBuster({
         attempt: currentAttemptNumber(status),
       });
     } catch (e) {
-      log('ERROR', `Git sync before Buster failed: ${errorMessage(e)}`);
-      emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'git_sync', null, status?.status ?? STATUS.READY_FOR_TESTING, errorMessage(e));
+      const message = errorMessage(e);
+      const errorCode = bracketedErrorCode(message);
+      log('ERROR', `Git sync before Buster failed: ${message}`);
+      emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'git_sync', null, status?.status ?? STATUS.READY_FOR_TESTING, message);
       return {
         status,
         terminal: buildModuleErrorTerminalResult(config, moduleId, {
-          reason: errorMessage(e),
+          reason: message,
           moduleDir: dir,
           attempt: currentAttemptNumber(status),
           phase: 'git_sync',
           gatewayLabel: resolveStatusGatewayLabel(status),
           sessionKey: resolveStatusSessionKey(status),
+          ...(errorCode ? { terminalReasonCode: errorCode } : {}),
         }),
       };
     }
