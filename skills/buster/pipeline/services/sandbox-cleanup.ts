@@ -10,6 +10,7 @@ import fs from 'fs';
 import path from 'path';
 import { buildSubprocessEnv } from '../security.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 declare const process: {
   pid: number;
 };
@@ -33,7 +34,6 @@ interface CleanupState {
 
 interface CleanupOptions {
   sandboxRoot?: string;
-  execFileAsync?: ExecFileAsync;
   cleanupPolicy?: CleanupPolicyInput;
 }
 
@@ -104,7 +104,11 @@ const SAFE_NAMESPACE_RE = /^test-/;
 const STATE_LOCK_TIMEOUT_MS = 5000;
 const STATE_LOCK_STALE_MS = 30000;
 const STATE_LOCK_RETRY_MS = 10;
-const KUBECLAW_NS = process.env.KUBECLAW_NAMESPACE || 'kubeclaw';
+function envStringOrDefault(name: string, defaultValue: string): string {
+  const value = process.env[name];
+  return typeof value === 'string' && value.trim() ? value.trim() : defaultValue;
+}
+const KUBECLAW_NS = envStringOrDefault('KUBECLAW_NAMESPACE', 'kubeclaw');
 export const CLEANUP_SCOPE_LABEL = 'openclaw.io/buster-scope';
 
 export const CLEANUP_POLICY = Object.freeze({
@@ -134,10 +138,10 @@ function readDiskUsage(targetPath: string): DiskUsageSnapshot {
   }
   try {
     const stats = fs.statfsSync(targetPath);
-    const blockSize = Number(stats.bsize || 0);
-    const totalBlocks = Number(stats.blocks || 0);
-    const freeBlocks = Number(stats.bfree || 0);
-    const availableBlocks = Number(stats.bavail || 0);
+    const blockSize = Number(stats.bsize);
+    const totalBlocks = Number(stats.blocks);
+    const freeBlocks = Number(stats.bfree);
+    const availableBlocks = Number(stats.bavail);
     const sizeBytes = totalBlocks * blockSize;
     const freeBytes = freeBlocks * blockSize;
     const availableBytes = availableBlocks * blockSize;
@@ -152,7 +156,7 @@ function readDiskUsage(targetPath: string): DiskUsageSnapshot {
       usage_percent: sizeBytes > 0 ? Math.round((usedBytes / sizeBytes) * 10000) / 100 : null,
     };
   } catch (error: unknown) {
-    const detail = error instanceof Error ? error.message : String(error || 'unknown');
+    const detail = error instanceof Error ? error.message : String(selectDefinedValue(() => (error), () => ('disk_usage_error_detail_missing')));
     return {
       path: targetPath,
       exists: true,
@@ -174,37 +178,60 @@ function readSandboxDiskUsage(sandboxRoot: string): Record<string, DiskUsageSnap
 }
 
 function normalizeResourceValue(value: unknown): string | null {
-  if (value === undefined || value === null) return null;
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
   const trimmed = String(value).trim();
-  return trimmed || null;
+  return selectTruthyValue(() => (trimmed), () => (null));
 }
 
-function sanitizeStateToken(value: unknown, fallback = 'unknown'): string {
-  const normalized = normalizeResourceValue(value) || fallback;
+function requiredResourceValue(value: unknown, label: string): string {
+  const normalized = normalizeResourceValue(value);
+  if (!normalized) throw new Error(`${label}: required non-empty cleanup scope value`);
+  return normalized;
+}
+
+function sanitizeStateToken(value: unknown, label: string): string {
+  const normalized = requiredResourceValue(value, label);
   const safe = normalized.replace(/[^A-Za-z0-9._-]+/g, '-').replace(/^-+|-+$/g, '');
-  return safe || fallback;
+  if (!safe) throw new Error(`${label}: cleanup scope value has no safe token characters`);
+  return safe;
 }
 
-function uniqueValues(values: unknown[] = []): string[] {
-  return [...new Set((values || []).map(normalizeResourceValue).filter((value): value is string => Boolean(value)))];
+function cleanupScopeSubject(payload: CleanupPayload): unknown {
+  if (payload?.module_id !== undefined) return payload.module_id;
+  if (payload?.gate_id !== undefined) return payload.gate_id;
+  return payload?.task_type;
 }
 
-function mergeState(base: Partial<CleanupState> = {}, extra: Partial<CleanupState> = {}): CleanupState {
+function cleanupSandboxRoot(options: CleanupOptions): string {
+  if (options.sandboxRoot !== undefined) return requiredResourceValue(options.sandboxRoot, 'cleanup sandboxRoot');
+  return DEFAULT_SANDBOX_ROOT;
+}
+
+function uniqueValues(values: unknown[]): string[] {
+  return [...new Set(values.map(normalizeResourceValue).filter((value): value is string => Boolean(value)))];
+}
+
+function stateArray(state: Partial<CleanupState>, field: keyof CleanupState): string[] {
+  const value = state[field];
+  return Array.isArray(value) ? value : [];
+}
+
+function mergeState(base: Partial<CleanupState>, extra: Partial<CleanupState>): CleanupState {
   return {
-    containers: uniqueValues([...(base.containers || []), ...(extra.containers || [])]),
-    images: uniqueValues([...(base.images || []), ...(extra.images || [])]),
-    namespaces: uniqueValues([...(base.namespaces || []), ...(extra.namespaces || [])]),
+    containers: uniqueValues([...stateArray(base, 'containers'), ...stateArray(extra, 'containers')]),
+    images: uniqueValues([...stateArray(base, 'images'), ...stateArray(extra, 'images')]),
+    namespaces: uniqueValues([...stateArray(base, 'namespaces'), ...stateArray(extra, 'namespaces')]),
   };
 }
 
-function removeState(base: Partial<CleanupState> = {}, removed: Partial<CleanupState> = {}): CleanupState {
-  const removedContainers = new Set(removed.containers || []);
-  const removedImages = new Set(removed.images || []);
-  const removedNamespaces = new Set(removed.namespaces || []);
+function removeState(base: Partial<CleanupState>, removed: Partial<CleanupState>): CleanupState {
+  const removedContainers = new Set(stateArray(removed, 'containers'));
+  const removedImages = new Set(stateArray(removed, 'images'));
+  const removedNamespaces = new Set(stateArray(removed, 'namespaces'));
   return {
-    containers: uniqueValues(base.containers || []).filter((value) => !removedContainers.has(value)),
-    images: uniqueValues(base.images || []).filter((value) => !removedImages.has(value)),
-    namespaces: uniqueValues(base.namespaces || []).filter((value) => !removedNamespaces.has(value)),
+    containers: uniqueValues(stateArray(base, 'containers')).filter((value) => !removedContainers.has(value)),
+    images: uniqueValues(stateArray(base, 'images')).filter((value) => !removedImages.has(value)),
+    namespaces: uniqueValues(stateArray(base, 'namespaces')).filter((value) => !removedNamespaces.has(value)),
   };
 }
 
@@ -213,11 +240,11 @@ function buildEmptyState(): CleanupState {
 }
 
 function hasTrackedResources(state: CleanupState): boolean {
-  return Boolean(state.containers.length || state.images.length || state.namespaces.length);
+  return Boolean(selectTruthyValue(() => (selectTruthyValue(() => (state.containers.length), () => (state.images.length))), () => (state.namespaces.length)));
 }
 
 function hasCleanupScope(payload: CleanupPayload | null | undefined): boolean {
-  return Boolean(payload && (payload.run_id || payload.module_id || payload.gate_id || payload.dispatch_id));
+  return Boolean(payload && (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (payload.run_id), () => (payload.module_id))), () => (payload.gate_id))), () => (payload.dispatch_id))));
 }
 
 function ensureWithinSandboxRoot(root: string, targetPath: string): string {
@@ -234,10 +261,10 @@ function resolveCleanupStateDir(sandboxRoot = DEFAULT_SANDBOX_ROOT): string {
 }
 
 export function buildCleanupScopeKey(payload: CleanupPayload = {}): string {
-  const project = sanitizeStateToken(payload?.project, 'project');
-  const moduleOrGate = sanitizeStateToken(payload?.module_id || payload?.gate_id || payload?.task_type, 'task');
-  const attempt = sanitizeStateToken(payload?.attempt, '1');
-  const runId = sanitizeStateToken(payload?.run_id || payload?.dispatch_id, 'run');
+  const project = sanitizeStateToken(payload?.project, 'cleanup payload project');
+  const moduleOrGate = sanitizeStateToken(cleanupScopeSubject(payload), 'cleanup payload module/gate/task');
+  const attempt = sanitizeStateToken(payload?.attempt, 'cleanup payload attempt');
+  const runId = sanitizeStateToken(payload?.run_id, 'cleanup payload run_id');
   return `${project}--${moduleOrGate}--attempt-${attempt}--${runId}`;
 }
 
@@ -246,15 +273,17 @@ export function buildCleanupScopeLabel(payload: CleanupPayload = {}): string {
 }
 
 export function buildCleanupPodmanLabelArgs(payload: CleanupPayload = {}): string[] {
+  if (!hasCleanupScope(payload)) return [];
   return ['--label', `${CLEANUP_SCOPE_LABEL}=${buildCleanupScopeLabel(payload)}`];
 }
 
 export function buildCleanupKubernetesLabels(payload: CleanupPayload = {}): Record<string, string> {
+  if (!hasCleanupScope(payload)) return {};
   return { [CLEANUP_SCOPE_LABEL]: buildCleanupScopeLabel(payload) };
 }
 
 export function getCleanupStatePath(payload: CleanupPayload = {}, options: CleanupOptions = {}): string {
-  const sandboxRoot = options.sandboxRoot || DEFAULT_SANDBOX_ROOT;
+  const sandboxRoot = cleanupSandboxRoot(options);
   const scopeKey = buildCleanupScopeKey(payload);
   return path.join(resolveCleanupStateDir(sandboxRoot), `${scopeKey}.json`);
 }
@@ -273,11 +302,11 @@ function readStateFile(statePath: string): { state: CleanupState; diagnostic: Cl
   try {
     const parsed = JSON.parse(fs.readFileSync(statePath, 'utf8')) as Partial<CleanupState> | null;
     return {
-      state: mergeState(buildEmptyState(), parsed || {}),
+      state: mergeState(buildEmptyState(), selectDefinedValue(() => (parsed), () => ({}))),
       diagnostic: cleanupStateDiagnostic(statePath, 'loaded'),
     };
   } catch (error: unknown) {
-    const detail = error instanceof Error ? error.message : String(error || 'unknown');
+    const detail = error instanceof Error ? error.message : String(selectDefinedValue(() => (error), () => ('cleanup_state_parse_detail_missing')));
     return {
       state: buildEmptyState(),
       diagnostic: cleanupStateDiagnostic(statePath, 'corrupt', 'cleanup_state_corrupt', detail),
@@ -346,7 +375,7 @@ function writeStateFileAtomic(statePath: string, state: CleanupState): void {
 }
 
 export function listCleanupStatePaths(options: CleanupOptions = {}): string[] {
-  const sandboxRoot = options.sandboxRoot || DEFAULT_SANDBOX_ROOT;
+  const sandboxRoot = cleanupSandboxRoot(options);
   const stateDir = resolveCleanupStateDir(sandboxRoot);
   if (!fs.existsSync(stateDir)) return [];
   return fs.readdirSync(stateDir)
@@ -356,10 +385,17 @@ export function listCleanupStatePaths(options: CleanupOptions = {}): string[] {
 }
 
 export function trackSandboxResources(payload: CleanupPayload = {}, resources: Partial<CleanupState> = {}, options: CleanupOptions = {}): { statePath: string; state: CleanupState; cleanup_state_diagnostics: CleanupStateDiagnostic[] } {
+  if (!hasCleanupScope(payload)) {
+    return {
+      statePath: '',
+      state: mergeState(buildEmptyState(), resources),
+      cleanup_state_diagnostics: [cleanupStateDiagnostic('cleanup-scope-absent', 'missing', 'cleanup_scope_absent')],
+    };
+  }
   const statePath = getCleanupStatePath(payload, options);
   return withStateFileLock(statePath, () => {
     const current = readStateFile(statePath);
-    const nextState = mergeState(current.state, resources || {});
+    const nextState = mergeState(current.state, resources);
     writeStateFileAtomic(statePath, nextState);
     return { statePath, state: nextState, cleanup_state_diagnostics: [current.diagnostic] };
   });
@@ -378,26 +414,27 @@ async function runExecFile(execFileAsync: ExecFileAsync, command: string, args: 
     return { ok: true };
   } catch (error: unknown) {
     const err = error as { stderr?: string; stdout?: string; message?: string };
-    const detail = `${err?.stderr || ''}${err?.stdout || ''}${err?.message || ''}`;
+    const detailParts = [err?.stderr, err?.stdout, err?.message].filter((part): part is string => typeof part === 'string' && part.length > 0);
+    const detail = detailParts.join('');
     if (ignore && ignore.test(detail)) {
       return { ok: false, ignored: true };
     }
-    return { ok: false, error: detail.trim() || err?.message || `${command} failed` };
+    const errorDetail = detail.trim();
+    return { ok: false, error: errorDetail ? errorDetail : `${command} failed without detail` };
   }
 }
 
 function splitLines(output: unknown): string[] {
-  return String(output || '').split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  return String(selectDefinedValue(() => (output), () => (''))).split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
 }
 
 async function discoverLabeledResources(payload: CleanupPayload = {}, options: CleanupOptions = {}): Promise<CleanupState> {
   if (!hasCleanupScope(payload)) return buildEmptyState();
-  const execFileAsync = options.execFileAsync || execFileAsyncDefault;
   const label = `${CLEANUP_SCOPE_LABEL}=${buildCleanupScopeLabel(payload)}`;
   const discovered = buildEmptyState();
 
   try {
-    const { stdout } = await execFileAsync('podman', ['ps', '-a', '--filter', `label=${label}`, '--format', '{{.Names}}'], {
+    const { stdout } = await execFileAsyncDefault('podman', ['ps', '-a', '--filter', `label=${label}`, '--format', '{{.Names}}'], {
       timeout: 10000,
       encoding: 'utf8',
       env: buildSubprocessEnv(),
@@ -408,7 +445,7 @@ async function discoverLabeledResources(payload: CleanupPayload = {}, options: C
   }
 
   try {
-    const { stdout } = await execFileAsync('podman', ['images', '--filter', `label=${label}`, '--format', '{{.Repository}}:{{.Tag}}'], {
+    const { stdout } = await execFileAsyncDefault('podman', ['images', '--filter', `label=${label}`, '--format', '{{.Repository}}:{{.Tag}}'], {
       timeout: 10000,
       encoding: 'utf8',
       env: buildSubprocessEnv(),
@@ -419,7 +456,7 @@ async function discoverLabeledResources(payload: CleanupPayload = {}, options: C
   }
 
   try {
-    const { stdout } = await execFileAsync('kubectl', ['get', 'namespace', '-l', label, '-o', 'jsonpath={range .items[*]}{.metadata.name}{"\\n"}{end}'], {
+    const { stdout } = await execFileAsyncDefault('kubectl', ['get', 'namespace', '-l', label, '-o', 'jsonpath={range .items[*]}{.metadata.name}{"\\n"}{end}'], {
       timeout: 10000,
       encoding: 'utf8',
       env: buildSubprocessEnv(),
@@ -433,7 +470,7 @@ async function discoverLabeledResources(payload: CleanupPayload = {}, options: C
 }
 
 function shouldClearSandboxOutputs(stage: string): boolean {
-  return stage === 'pre' || stage === 'startup' || stage === 'shutdown';
+  return selectTruthyValue(() => (selectTruthyValue(() => (stage === 'pre'), () => (stage === 'startup'))), () => (stage === 'shutdown'));
 }
 
 function inferCleanupPolicyName(stage: string, payload: CleanupPayload | null | undefined): CleanupPolicyName {
@@ -476,16 +513,16 @@ function isTrackedResourceScope(value: unknown): value is TrackedResourceScope {
 }
 
 function normalizeCleanupPolicy(stage: string, payload: CleanupPayload | null | undefined, options: CleanupOptions = {}): CleanupPolicyProfile {
-  const requested = options.cleanupPolicy || inferCleanupPolicyName(stage, payload);
+  const requested = options.cleanupPolicy !== undefined ? options.cleanupPolicy : inferCleanupPolicyName(stage, payload);
   if (typeof requested === 'string') return cleanupPolicyProfile(requested);
   if (requested && typeof requested === 'object' && !Array.isArray(requested)) {
-    const base = cleanupPolicyProfile(requested.name || inferCleanupPolicyName(stage, payload));
-    const trackedResources = requested.trackedResources || base.trackedResources;
+    const base = cleanupPolicyProfile(requested.name);
+    const trackedResources = requested.trackedResources !== undefined ? requested.trackedResources : base.trackedResources;
     return {
-      name: requested.name || base.name,
+      name: base.name,
       trackedResources: isTrackedResourceScope(trackedResources) ? trackedResources : base.trackedResources,
-      sandboxOutputs: requested.sandboxOutputs ?? base.sandboxOutputs,
-      processCleanup: requested.processCleanup ?? base.processCleanup,
+      sandboxOutputs: requested.sandboxOutputs !== undefined ? requested.sandboxOutputs : base.sandboxOutputs,
+      processCleanup: requested.processCleanup !== undefined ? requested.processCleanup : base.processCleanup,
     };
   }
   return cleanupPolicyProfile(inferCleanupPolicyName(stage, payload));
@@ -502,21 +539,20 @@ function publicCleanupPolicy(policy: CleanupPolicyProfile): PublicCleanupPolicy 
 
 function resolveCleanupStatePaths(stage: string, payload: CleanupPayload | null | undefined, sandboxRoot: string, policy: CleanupPolicyProfile, policyDenied: PolicyDeniedEntry[]): string[] {
   if (policy.trackedResources === TRACKED_RESOURCE_SCOPE.SCOPED) {
-    if (hasCleanupScope(payload)) return [getCleanupStatePath(payload || {}, { sandboxRoot })];
+    if (hasCleanupScope(payload)) return [getCleanupStatePath(payload, { sandboxRoot })];
     policyDenied.push({ action: 'tracked_resources', reason: 'missing_scoped_payload', stage });
     return [];
   }
   if (policy.trackedResources === TRACKED_RESOURCE_SCOPE.ALL) {
     return listCleanupStatePaths({ sandboxRoot });
   }
-  if (hasCleanupScope(payload) || stage === 'startup' || stage === 'shutdown') {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (hasCleanupScope(payload)), () => (stage === 'startup'))), () => (stage === 'shutdown'))) {
     policyDenied.push({ action: 'tracked_resources', reason: 'policy_disallows_tracked_resources', stage });
   }
   return [];
 }
 
 async function cleanupStateFile(stage: string, statePath: string, options: CleanupOptions = {}): Promise<{ cleaned: CleanupState; errors: string[]; diagnostics: CleanupStateDiagnostic[] }> {
-  const execFileAsync = options.execFileAsync || execFileAsyncDefault;
   const stateRead = readStateFile(statePath);
   const state = stateRead.state;
   const remaining = buildEmptyState();
@@ -528,21 +564,22 @@ async function cleanupStateFile(stage: string, statePath: string, options: Clean
     return { cleaned, errors, diagnostics };
   }
   if (stateRead.diagnostic.status === 'corrupt') {
-    errors.push(`state:${path.basename(statePath)}: corrupt_cleanup_state: ${stateRead.diagnostic.detail || 'invalid json'}`);
+    const corruptDetail = selectDefinedValue(() => (stateRead.diagnostic.detail), () => ('cleanup_state_invalid_json'));
+    errors.push(`state:${path.basename(statePath)}: corrupt_cleanup_state: ${corruptDetail}`);
     return { cleaned, errors, diagnostics };
   }
 
   for (const containerName of state.containers) {
-    const stopResult = await runExecFile(execFileAsync, 'podman', ['stop', containerName], {
+    const stopResult = await runExecFile(execFileAsyncDefault, 'podman', ['stop', containerName], {
       timeout: 30000,
       ignore: /(no such container|no container with name or id|not found)/i,
     });
-    if (stopResult.ok || stopResult.ignored) {
-      const rmResult = await runExecFile(execFileAsync, 'podman', ['rm', '-f', containerName], {
+    if (selectTruthyValue(() => (stopResult.ok), () => (stopResult.ignored))) {
+      const rmResult = await runExecFile(execFileAsyncDefault, 'podman', ['rm', '-f', containerName], {
         timeout: 30000,
         ignore: /(no such container|no container with name or id|not found)/i,
       });
-      if (rmResult.ok || rmResult.ignored) {
+      if (selectTruthyValue(() => (rmResult.ok), () => (rmResult.ignored))) {
         cleaned.containers.push(containerName);
         continue;
       }
@@ -554,11 +591,11 @@ async function cleanupStateFile(stage: string, statePath: string, options: Clean
   }
 
   for (const imageTag of state.images) {
-    const imageResult = await runExecFile(execFileAsync, 'podman', ['image', 'rm', '-f', imageTag], {
+    const imageResult = await runExecFile(execFileAsyncDefault, 'podman', ['image', 'rm', '-f', imageTag], {
       timeout: 30000,
       ignore: /(image not known|no such image|image .* not known|not found)/i,
     });
-    if (imageResult.ok || imageResult.ignored) {
+    if (selectTruthyValue(() => (imageResult.ok), () => (imageResult.ignored))) {
       cleaned.images.push(imageTag);
       continue;
     }
@@ -572,7 +609,7 @@ async function cleanupStateFile(stage: string, statePath: string, options: Clean
       remaining.namespaces.push(namespaceName);
       continue;
     }
-    const leaseResult = await runExecFile(execFileAsync, 'kubectl', ['delete', 'busternamespacelease', namespaceName, '-n', KUBECLAW_NS, '--wait=false'], {
+    const leaseResult = await runExecFile(execFileAsyncDefault, 'kubectl', ['delete', 'busternamespacelease', namespaceName, '-n', KUBECLAW_NS, '--wait=false'], {
       timeout: 15000,
       ignore: /(not found|no resources found|the server doesn't have a resource type)/i,
     });
@@ -585,11 +622,11 @@ async function cleanupStateFile(stage: string, statePath: string, options: Clean
       remaining.namespaces.push(namespaceName);
       continue;
     }
-    const nsResult = await runExecFile(execFileAsync, 'kubectl', ['delete', 'namespace', namespaceName, '--wait=false'], {
+    const nsResult = await runExecFile(execFileAsyncDefault, 'kubectl', ['delete', 'namespace', namespaceName, '--wait=false'], {
       timeout: 15000,
       ignore: /(not found|no resources found)/i,
     });
-    if (nsResult.ok || nsResult.ignored) {
+    if (selectTruthyValue(() => (nsResult.ok), () => (nsResult.ignored))) {
       cleaned.namespaces.push(namespaceName);
       continue;
     }
@@ -616,7 +653,7 @@ async function cleanupStateFile(stage: string, statePath: string, options: Clean
 }
 
 export async function cleanupSandboxResources(stage: string, payload: CleanupPayload | null = null, options: CleanupOptions = {}): Promise<Record<string, unknown>> {
-  const sandboxRoot = options.sandboxRoot || DEFAULT_SANDBOX_ROOT;
+  const sandboxRoot = cleanupSandboxRoot(options);
   const start = Date.now();
   const diskUsageBefore = readSandboxDiskUsage(sandboxRoot);
   const policy = normalizeCleanupPolicy(stage, payload, options);
@@ -635,13 +672,14 @@ export async function cleanupSandboxResources(stage: string, payload: CleanupPay
   const errors: string[] = [];
 
   if (policy.trackedResources !== TRACKED_RESOURCE_SCOPE.NONE && hasCleanupScope(payload)) {
-    const discovered = await discoverLabeledResources(payload || {}, options);
-    if (discovered.containers.length || discovered.images.length || discovered.namespaces.length) {
-      const statePath = getCleanupStatePath(payload || {}, { sandboxRoot });
+    const discovered = await discoverLabeledResources(payload, options);
+    if (selectTruthyValue(() => (selectTruthyValue(() => (discovered.containers.length), () => (discovered.images.length))), () => (discovered.namespaces.length))) {
+      const statePath = getCleanupStatePath(payload, { sandboxRoot });
       const current = readStateFile(statePath);
       cleanupStateDiagnostics.push(current.diagnostic);
       if (current.diagnostic.status === 'corrupt') {
-        errors.push(`state:${path.basename(statePath)}: corrupt_cleanup_state: ${current.diagnostic.detail || 'invalid json'}`);
+        const corruptDetail = selectDefinedValue(() => (current.diagnostic.detail), () => ('cleanup_state_invalid_json'));
+        errors.push(`state:${path.basename(statePath)}: corrupt_cleanup_state: ${corruptDetail}`);
       } else {
         withStateFileLock(statePath, () => {
           const lockedCurrent = readStateFile(statePath);
@@ -672,7 +710,7 @@ export async function cleanupSandboxResources(stage: string, payload: CleanupPay
         clearDirectoryContents(targetDir);
         cleaned.sandbox_paths.push(targetDir);
       } catch (error: unknown) {
-        const detail = error instanceof Error ? error.message : String(error || 'unknown');
+        const detail = error instanceof Error ? error.message : String(selectDefinedValue(() => (error), () => ('sandbox_cleanup_error_detail_missing')));
         errors.push(`sandbox:${targetDir}: ${detail}`);
       }
     }
@@ -681,11 +719,11 @@ export async function cleanupSandboxResources(stage: string, payload: CleanupPay
   }
 
   if (policy.processCleanup) {
-    const nginxResult = await runExecFile(options.execFileAsync || execFileAsyncDefault, 'nginx', ['-s', 'stop'], {
+    const nginxResult = await runExecFile(execFileAsyncDefault, 'nginx', ['-s', 'stop'], {
       timeout: 5000,
       ignore: /(no such file|invalid pid number|signal process started|open\(\) .* failed|not running)/i,
     });
-    if (nginxResult.ok || nginxResult.ignored) {
+    if (selectTruthyValue(() => (nginxResult.ok), () => (nginxResult.ignored))) {
       cleaned.nginx_stopped = true;
     } else {
       errors.push(`nginx: ${nginxResult.error}`);

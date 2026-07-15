@@ -8,8 +8,9 @@ import { fileURLToPath } from 'url';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import process from 'process';
 import { parseCliArgs } from '../cli-args.ts';
-import { BUSTER_CAPABILITIES, assertBusterCapabilities, parseCapabilitiesEnv } from '../services/capabilities.ts';
+import { BUSTER_CAPABILITIES, assertBusterCapabilities, parseCapabilitiesFromEnv } from '../services/capabilities.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // KEEP_TYPED_POLICY: injectable browser/fetch/output/capabilities stay as direct
 // caller adapter surface, CLI defaults to image while rejecting unknown modes,
 // capture warnings converge on canonical missing-file errors, Bot auth header
@@ -34,7 +35,7 @@ interface VisualAuditResult {
 }
 
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error || 'unknown error');
+  return error instanceof Error ? error.message : String(selectTruthyValue(() => (error), () => ('missing_error_detail')));
 }
 
 async function loadChromium(): Promise<AnyRecord> {
@@ -56,7 +57,7 @@ async function visualAudit(
     chromiumImpl = null,
     fetchImpl = globalThis.fetch,
     outputRoot = '/tmp',
-    capabilities = parseCapabilitiesEnv(process.env.BUSTER_CAPABILITIES || ''),
+    capabilities = parseCapabilitiesFromEnv(process.env, 'BUSTER_CAPABILITIES'),
     alertContext = {},
   }: VisualAuditOptions = {},
 ): Promise<VisualAuditResult> {
@@ -65,7 +66,7 @@ async function visualAudit(
     action: 'capture and upload visual audit media',
     required: [BUSTER_CAPABILITIES.BROWSER_AUTOMATION, BUSTER_CAPABILITIES.DISCORD_MEDIA],
   });
-  const chromiumRuntime = chromiumImpl || await loadChromium();
+  const chromiumRuntime = await chromiumRuntimeAuthority(chromiumImpl);
   const isVideo = mode === 'video';
   fs.mkdirSync(outputRoot, { recursive: true });
   const outputDir = fs.mkdtempSync(path.join(outputRoot, 'audit-'));
@@ -88,7 +89,7 @@ async function visualAudit(
         await page.goto(url, { waitUntil: 'networkidle', timeout: 15000 });
 
         if (isVideo) {
-          await page.evaluate(() => window.scrollBy(0, document.body.scrollHeight || 1000));
+          await page.evaluate(() => window.scrollBy(0, selectDefinedValue(() => (document.body.scrollHeight), () => (1000))));
           await page.waitForTimeout(3000);
           await context.close();
 
@@ -116,7 +117,7 @@ async function visualAudit(
       if (browser.isConnected()) await browser.close();
     }
 
-    if (!fileToSend || !fs.existsSync(fileToSend)) {
+    if (selectTruthyValue(() => (!fileToSend), () => (!fs.existsSync(fileToSend)))) {
       throw new Error(`Audit file (${mode}) was not created.`);
     }
 
@@ -151,6 +152,11 @@ async function visualAudit(
   }
 }
 
+async function chromiumRuntimeAuthority(chromiumImpl) {
+  if (chromiumImpl) return chromiumImpl;
+  return loadChromium();
+}
+
 const currentPath = fs.realpathSync(fileURLToPath(import.meta.url));
 const entryPath = (process.argv[1] && fs.existsSync(process.argv[1]))
   ? fs.realpathSync(process.argv[1])
@@ -174,7 +180,7 @@ if (currentPath === entryPath) {
     console.log(JSON.stringify({ status: 'error', error: 'URL required as parameter.' }));
     process.exit(1);
   }
-  if (!channel || !token) {
+  if (selectTruthyValue(() => (!channel), () => (!token))) {
     console.log(JSON.stringify({ status: 'error', error: 'DISCORD_TOKEN and DISCORD_CHANNEL are missing.' }));
     process.exit(1);
   }

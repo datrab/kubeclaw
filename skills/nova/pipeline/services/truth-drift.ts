@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/truth-drift.js — explicit scheduler truth drift reports
 
 import {
@@ -17,7 +18,7 @@ function collectModuleArtifactRefs(moduleProjection = {}) {
 
 function collectGateArtifactRefs(gateProjection = {}) {
   return {
-    output_path: gateProjection?.output?.path || gateProjection?.output_path || gateProjection?.gate_output_path || null,
+    output_path: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (gateProjection?.output?.path), () => (gateProjection?.output_path))), () => (gateProjection?.gate_output_path))), () => (null)),
   };
 }
 
@@ -25,8 +26,12 @@ function redisCompletionEntryPresent(redisEntry) {
   return redisEntry !== null && redisEntry !== undefined;
 }
 
+function redisCompletionHasStatus(redisEntry) {
+  return typeof redisEntry?.status === 'string' && redisEntry.status.trim() !== '';
+}
+
 function withMalformedGateCompletionDrift(adjudication, redisEntry) {
-  if (!redisCompletionEntryPresent(redisEntry) || String(redisEntry?.status || '').trim()) {
+  if (selectTruthyValue(() => (!redisCompletionEntryPresent(redisEntry)), () => (redisCompletionHasStatus(redisEntry)))) {
     return adjudication;
   }
 
@@ -34,7 +39,7 @@ function withMalformedGateCompletionDrift(adjudication, redisEntry) {
     ...(Array.isArray(adjudication?.drift) ? adjudication.drift : []),
     {
       code: 'redis_completion_missing_status',
-      redis_status: redisEntry?.status ?? null,
+      redis_status: selectDefinedValue(() => (redisEntry?.status), () => (null)),
       redis_entry: redisEntry,
     },
   ];
@@ -63,7 +68,7 @@ export function projectModuleTruthDrift(config, moduleId, moduleConfig = null, {
     expectedStatuses,
     expectedIdentity,
     redisEntry,
-    status: status || statusRead?.data || null,
+    status: selectTruthyValue(() => (selectTruthyValue(() => (status), () => (statusRead?.data))), () => (null)),
     statusSource: 'local_lifecycle',
   });
   const drift = [
@@ -86,9 +91,8 @@ export function projectGateTruthDrift(config, gateId, gate = null, {
   redisEntry = null,
   expectedIdentity = {},
   expectedStatuses = ['PASS', 'FAIL'],
-  deps = {},
 } = {}) {
-  const schedulerReadModelProjection = projectGateSchedulerState(config, gateId, gate, deps);
+  const schedulerReadModelProjection = projectGateSchedulerState(config, gateId, gate);
   const completionAdjudication = redisCompletionEntryPresent(redisEntry)
     ? withMalformedGateCompletionDrift(
         adjudicateCompletionEvidence({
@@ -109,7 +113,7 @@ export function projectGateTruthDrift(config, gateId, gate = null, {
   return {
     entity_kind: 'gate',
     entity_id: gateId,
-    gate_type: gate?.type || null,
+    gate_type: selectTruthyValue(() => (gate?.type), () => (null)),
     drift_detected: drift.length > 0,
     drift,
     scheduler_projection: schedulerReadModelProjection,

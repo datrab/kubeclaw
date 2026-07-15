@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 // pipeline/cli.js — CLI entry point for the modular pipeline.
 // Internal helpers (initTempDir, output, log, dryRun) will be co-located here
 // as extraction proceeds in later modules.
@@ -20,7 +21,7 @@ import { createRunId, createRunStats } from './core/runtime.ts';
 import { runPipeline, printStatus, dryRun } from './runners/pipeline-runner.ts';
 import { validateThinkingLevel, VALID_THINKING_LEVELS } from './core/policy.ts';
 import { parseCliFlagValues } from './cli-args.ts';
-import { redactSecrets, sanitizeJsonEgress } from './redaction.ts';
+import { limitEgressText, sanitizeJsonEgress } from './egress.ts';
 import { resolveNovaPromptIngress, PROMPT_INGRESS_MAX_BYTES } from './services/prompt-ingress.ts';
 
 declare const process: any;
@@ -34,6 +35,26 @@ const __entryPath = (process.argv[1] && fs.existsSync(process.argv[1]))
   ? fs.realpathSync(process.argv[1])
   : process.argv[1];
 
+function errorMessage(error: AnyRecord) {
+  return typeof error?.message === 'string' && error.message ? error.message : String(error);
+}
+
+function runtimeOverridesFromFlags(flags: AnyRecord) {
+  if (!flags.runtimeModel && !flags.runtimeThinking) return null;
+  return {
+    model:    selectDefinedValue(() => (flags.runtimeModel), () => (null)),
+    thinking: selectDefinedValue(() => (flags.runtimeThinking), () => (null)),
+  };
+}
+
+function blueprintStages(mod: AnyRecord) {
+  return Array.isArray(mod.stages) ? mod.stages : ['forge', 'buster'];
+}
+
+function cliRunId(config: AnyRecord) {
+  return selectDefinedValue(() => (selectDefinedValue(() => (config._runId), () => (config.run_id))), () => (createRunId()));
+}
+
 function prepareReadOnlyLifecycleContext(config: AnyRecord = {}) {
   config._lifecycleReadOnly = true;
   prepareResumeLifecycleContext(config);
@@ -42,14 +63,14 @@ function prepareReadOnlyLifecycleContext(config: AnyRecord = {}) {
 function prepareResumeLifecycleContext(config: AnyRecord = {}) {
   const swarmDir = config?.paths?.swarm_dir;
   const latestPath = swarmDir ? path.join(swarmDir, 'logs', 'pipeline', 'latest.json') : null;
-  if (!latestPath || !fs.existsSync(latestPath)) return;
+  if (selectTruthyValue(() => (!latestPath), () => (!fs.existsSync(latestPath)))) return;
   try {
     const latest = JSON.parse(fs.readFileSync(latestPath, 'utf8'));
     const runId = typeof latest?.run_id === 'string' ? latest.run_id.trim() : '';
     if (!runId) return;
-    if (runId.includes('\0') || runId.includes('/') || runId.includes('\\') || runId === '.' || runId === '..') return;
-    config._runId ??= runId;
-    config.run_id ??= runId;
+    if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (runId.includes('\0')), () => (runId.includes('/')))), () => (runId.includes('\\')))), () => (runId === '.'))), () => (runId === '..'))) return;
+    config._runId = runId;
+    config.run_id = runId;
     config._lifecycleReadOnlyRunLogDir = path.join(swarmDir, 'logs', 'pipeline', 'runs', runId);
   } catch (_error) {
     return;
@@ -58,14 +79,14 @@ function prepareResumeLifecycleContext(config: AnyRecord = {}) {
 
 export function normalizeNovaCliFlags(rawFlags: AnyRecord = {}, env: AnyRecord = {}) {
   return Object.freeze({
-    project: rawFlags.project ?? env.CURRENT_PROJECT,
-    repo: rawFlags.repo ?? env.REPO_ROOT,
+    project: selectDefinedValue(() => (rawFlags.project), () => (env.CURRENT_PROJECT)),
+    repo: selectDefinedValue(() => (rawFlags.repo), () => (env.REPO_ROOT)),
     module: rawFlags.module,
     blueprint: rawFlags.blueprint,
     blueprintList: rawFlags['blueprint-list'] === true,
     prompt: rawFlags.prompt,
     promptFile: rawFlags['prompt-file'],
-    novaChannel: rawFlags['nova-channel'] ?? env.NOVA_CHANNEL,
+    novaChannel: selectDefinedValue(() => (rawFlags['nova-channel']), () => (env.NOVA_CHANNEL)),
     runtimeModel: rawFlags.model,
     runtimeThinking: rawFlags.thinking,
     resume: rawFlags.resume === true,
@@ -84,7 +105,7 @@ export async function main() {
       resolve(undefined);
     });
   });
-  let log = (level, msg) => console.error(`[${level}]`, redactSecrets(msg, Number.POSITIVE_INFINITY));
+  let log = (level, msg) => console.error(`[${level}]`, limitEgressText(msg, Number.POSITIVE_INFINITY));
 
   let flags;
   try {
@@ -108,7 +129,7 @@ export async function main() {
     });
     flags = normalizeNovaCliFlags(rawFlags, process.env);
   } catch (e: any) {
-    const message = e?.message || String(e);
+    const message = errorMessage(e);
     log('ERROR', message);
     await output({ exit: PROCESS_FAILURE_CODE, error: message });
     cleanupTempDir();
@@ -187,11 +208,8 @@ Exit codes:
       const { config, progress, pluginRegistry } = loadConfig(flags.project, { repoRoot: flags.repo });
       activeConfig = config;
 
-      const runtimeOverrides = (flags.runtimeModel || flags.runtimeThinking) ? {
-        model:    flags.runtimeModel    || null,
-        thinking: flags.runtimeThinking || null,
-      } : null;
-      if (flags.runtimeModel || flags.runtimeThinking) {
+      const runtimeOverrides = runtimeOverridesFromFlags(flags);
+      if (selectTruthyValue(() => (flags.runtimeModel), () => (flags.runtimeThinking))) {
         if (flags.runtimeModel)    log('INFO', `Runtime model override: ${flags.runtimeModel}`);
         if (flags.runtimeThinking) log('INFO', `Runtime thinking override: ${flags.runtimeThinking}`);
       }
@@ -211,7 +229,7 @@ Exit codes:
           process.exitCode = PROCESS_FAILURE_CODE;
           return PROCESS_FAILURE_CODE;
         }
-        const result = await releaseBlueprint(config, progress, flags.blueprint, mod.dir, mod.stages || ['forge', 'buster']);
+        const result = await releaseBlueprint(config, progress, flags.blueprint, mod.dir, blueprintStages(mod));
         await output(result);
         cleanupTempDir();
         process.exitCode = PROCESS_SUCCESS_CODE;
@@ -222,7 +240,7 @@ Exit codes:
       if (flags.dryRun)  { prepareReadOnlyLifecycleContext(config); dryRun(config, progress); cleanupTempDir(); process.exitCode = PROCESS_SUCCESS_CODE; return PROCESS_SUCCESS_CODE; }
 
       if (flags.resume) prepareResumeLifecycleContext(config);
-      const runId = config._runId || config.run_id || createRunId();
+      const runId = cliRunId(config);
       const stats = createRunStats();
       const ctx = createPipelineContext({ config, progress, runId, stats, novaChannel: flags.novaChannel, pluginRegistry, runtimeOverrides });
       activeContext = ctx;
@@ -241,7 +259,7 @@ Exit codes:
       const novaPrompt = promptIngress.prompt;
       if (promptIngress.metadata) {
         const meta = promptIngress.metadata;
-        log('INFO', `Operator remediation directive accepted (source=${meta.source}, chars=${meta.chars}, bytes=${meta.bytes}, redactions=${meta.redactions}${meta.prompt_file ? `, file=${meta.prompt_file}` : ''})`);
+        log('INFO', `Operator remediation directive accepted (source=${meta.source}, chars=${meta.chars}, bytes=${meta.bytes}${meta.prompt_file ? `, file=${meta.prompt_file}` : ''})`);
       }
 
       const exitCode = await runPipeline(config, progress, {
@@ -270,5 +288,5 @@ Exit codes:
 // Also run directly if invoked as script
 if (__currentPath === __entryPath) {
   const exitCode = await main();
-  process.exit(exitCode ?? process.exitCode ?? PROCESS_SUCCESS_CODE);
+  process.exit(exitCode);
 }

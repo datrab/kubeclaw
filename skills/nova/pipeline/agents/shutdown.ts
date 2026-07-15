@@ -12,13 +12,43 @@ import { terminateSession } from './session-termination.ts';
 import { buildSubprocessEnv } from '../security.ts';
 import { sessionLifecyclePolicies } from '../core/session-policy.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 declare const process: any;
 type AnyRecord = Record<string, any>;
 type PsRow = { pid: number, ppid: number, command: string };
 
 const STATUS = { PASS: 'PASS', BLOCKED: 'BLOCKED', FAIL: 'FAIL' };
 const PROCESS_FAILURE_CODE = 1;
+const DEFAULT_CANCEL_SIGNAL = 'signal';
 const _shutdownState: AnyRecord = { config: null, statusDir: null, currentLabel: null, shuttingDown: false };
+
+function objectRecord(value: unknown): AnyRecord {
+  return value !== null && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : {};
+}
+
+function textValue(value: unknown): string {
+  if (typeof value !== 'string') return '';
+  return value.trim();
+}
+
+function errorMessage(error: unknown): string {
+  if (error && typeof error === 'object' && 'message' in error) {
+    const message = (error as AnyRecord).message;
+    if (typeof message === 'string' && message.trim()) return message;
+  }
+  return String(error);
+}
+
+function firstDefined(...values: unknown[]) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return null;
+}
+
+function signalName(signal: unknown): string {
+  return selectTruthyValue(() => (textValue(signal)), () => (DEFAULT_CANCEL_SIGNAL));
+}
 
 function parsePsTable(): PsRow[] | null {
   try {
@@ -35,7 +65,7 @@ function parsePsTable(): PsRow[] | null {
   } catch (_error) { return null; }
 }
 function collectDescendants(rootPid: number, byParent: Map<number, PsRow[]>, acc: Set<number> = new Set()) {
-  const children = byParent.get(rootPid) || [];
+  const children = selectDefinedValue(() => (byParent.get(rootPid)), () => ([]));
   for (const child of children) {
     if (acc.has(child.pid)) continue;
     acc.add(child.pid);
@@ -46,7 +76,7 @@ function collectDescendants(rootPid: number, byParent: Map<number, PsRow[]>, acc
 function signalPid(pid: number, signal: string) { try { process.kill(pid, signal); return true; } catch (_error) { return false; } }
 function pidAlive(pid: number) { try { process.kill(pid, 0); return true; } catch (_error) { return false; } }
 function isWrapperCommand(command: string | null) {
-  return /\bclaude-agent-acp\b|\bnpm\s+exec\b.*\bacp\b|\bacpx\b/i.test(command || '');
+  return /\bclaude-agent-acp\b|\bnpm\s+exec\b.*\bacp\b|\bacpx\b/i.test(textValue(command));
 }
 function readProcEnv(pid: number): AnyRecord | null {
   try {
@@ -64,7 +94,7 @@ function readProcEnv(pid: number): AnyRecord | null {
   }
 }
 function isTrackedAcpEnv(env: AnyRecord | null, project: string | null) {
-  if (!env || env.OPENCLAW_SHELL !== 'acp') return false;
+  if (selectTruthyValue(() => (!env), () => (env.OPENCLAW_SHELL !== 'acp'))) return false;
   if (project && env.CURRENT_PROJECT && env.CURRENT_PROJECT !== project) return false;
   return true;
 }
@@ -75,17 +105,16 @@ function getTrackedEntryBySessionKey(sessionKey: string) {
   return null;
 }
 function isSessionLinked(command: string | null, agentId: string | null, sessionKey: string, gatewayLabel: string | null = null) {
-  const hay = String(command || '');
-  return (!!gatewayLabel && hay.includes(gatewayLabel)) || (!!sessionKey && hay.includes(sessionKey)) || (!!agentId && hay.includes(agentId));
+  const hay = textValue(command);
+  return selectTruthyValue(() => (selectTruthyValue(() => ((!!gatewayLabel && hay.includes(gatewayLabel))), () => ((!!sessionKey && hay.includes(sessionKey))))), () => ((!!agentId && hay.includes(agentId))));
 }
 function isSessionIdentityLinked(command: string | null, sessionKey: string, gatewayLabel: string | null = null) {
-  const hay = String(command || '');
-  return (!!gatewayLabel && hay.includes(gatewayLabel)) || (!!sessionKey && hay.includes(sessionKey));
+  const hay = textValue(command);
+  return selectTruthyValue(() => ((!!gatewayLabel && hay.includes(gatewayLabel))), () => ((!!sessionKey && hay.includes(sessionKey))));
 }
 function isSessionEnvLinked(env: AnyRecord | null, sessionKey: string, gatewayLabel: string | null = null) {
   if (!env) return false;
-  return (!!sessionKey && [env.SESSION_KEY, env.OPENCLAW_SESSION_KEY, env.ACP_SESSION_KEY, env.CHILD_SESSION_KEY].includes(sessionKey))
-    || (!!gatewayLabel && [env.GATEWAY_LABEL, env.OPENCLAW_GATEWAY_LABEL, env.ACP_GATEWAY_LABEL].includes(gatewayLabel));
+  return selectTruthyValue(() => ((!!sessionKey && [env.SESSION_KEY, env.OPENCLAW_SESSION_KEY, env.ACP_SESSION_KEY, env.CHILD_SESSION_KEY].includes(sessionKey))), () => ((!!gatewayLabel && [env.GATEWAY_LABEL, env.OPENCLAW_GATEWAY_LABEL, env.ACP_GATEWAY_LABEL].includes(gatewayLabel))));
 }
 export function buildVictimSet(agentId: string | null, sessionKey: string, gatewayLabel: string | null = null, opts: AnyRecord = {}) {
   const table = opts.parsePsTable ? opts.parsePsTable() : parsePsTable();
@@ -93,8 +122,8 @@ export function buildVictimSet(agentId: string | null, sessionKey: string, gatew
   const readEnv = opts.readProcEnv ? opts.readProcEnv : readProcEnv;
 
   const tracked = getTrackedEntryBySessionKey(sessionKey);
-  const resolvedGatewayLabel = gatewayLabel || tracked?.gatewayLabel || null;
-  const project = tracked?.project || _shutdownState.config?.project || null;
+  const resolvedGatewayLabel = selectTruthyValue(() => (selectTruthyValue(() => (gatewayLabel), () => (tracked?.gatewayLabel))), () => (null));
+  const project = selectTruthyValue(() => (selectTruthyValue(() => (tracked?.project), () => (_shutdownState.config?.project))), () => (null));
   const byParent = new Map<number, PsRow[]>();
   const byPid = new Map<number, PsRow>();
   for (const row of table) {
@@ -107,7 +136,7 @@ export function buildVictimSet(agentId: string | null, sessionKey: string, gatew
     if (row.pid === process.pid) return false;
     const isWrapper = isWrapperCommand(row.command);
     const env = isWrapper ? readEnv(row.pid) : null;
-    if (isSessionIdentityLinked(row.command, sessionKey, resolvedGatewayLabel) || isSessionEnvLinked(env, sessionKey, resolvedGatewayLabel)) {
+    if (selectTruthyValue(() => (isSessionIdentityLinked(row.command, sessionKey, resolvedGatewayLabel)), () => (isSessionEnvLinked(env, sessionKey, resolvedGatewayLabel)))) {
       if (isWrapper) return true;
       return isTrackedAcpEnv(readEnv(row.pid), project);
     }
@@ -155,13 +184,13 @@ async function stopTrackedSession(config: AnyRecord, label: string, entry: AnyRe
   const sessionKey = entry?.sessionKey;
   const result = await terminateSession(sessionKey, {
     ...sessionLifecyclePolicies(config),
-    runtime: entry?.runtime || null,
-    model: entry?.model || null,
-    agentId: entry?.agentId || null,
-    label: entry?.gatewayLabel || label,
+    runtime: selectTruthyValue(() => (entry?.runtime), () => (null)),
+    model: selectTruthyValue(() => (entry?.model), () => (null)),
+    agentId: selectTruthyValue(() => (entry?.agentId), () => (null)),
+    label: firstDefined(entry?.gatewayLabel, label),
     gatewayUrl,
     gatewayToken,
-    cleanup: async () => reaperAfterKill(entry?.agentId || null, sessionKey, entry?.gatewayLabel || label || null),
+    cleanup: async () => reaperAfterKill(selectTruthyValue(() => (entry?.agentId), () => (null)), sessionKey, selectTruthyValue(() => (selectTruthyValue(() => (entry?.gatewayLabel), () => (label))), () => (null))),
   });
   return result;
 }
@@ -173,10 +202,10 @@ async function performSignalShutdown(signal: string, stateConfig: AnyRecord | nu
 
   if (trackedAgents.length > 0) {
     for (const [label, entry] of trackedAgents) {
-      const sessionKey = entry?.sessionKey || entry;
+      const sessionKey = firstDefined(entry?.sessionKey, entry);
       if (!sessionKey) continue;
       try {
-        const result = await stopTrackedSession(stateConfig || {}, label, entry, gatewayUrl, gatewayToken);
+        const result = await stopTrackedSession(objectRecord(stateConfig), label, entry, gatewayUrl, gatewayToken);
         log('INFO', `Shutdown: stop ${result.confirmed ? 'confirmed' : 'unconfirmed'} for session '${label}' (${sessionKey}, ${result.state})`);
       } catch (e: any) {
         log('WARN', `Shutdown: failed to stop session '${label}' (${sessionKey}): ${e.message}`);
@@ -194,7 +223,7 @@ async function performSignalShutdown(signal: string, stateConfig: AnyRecord | nu
         saveStatus(stateConfig, statusDir, status, interruptedTransition);
       }
     } catch (e: any) {
-      log('WARN', `Shutdown: failed to persist interrupted module status: ${e?.message || e}`);
+      log('WARN', `Shutdown: failed to persist interrupted module status: ${errorMessage(e)}`);
     }
   }
 
@@ -204,23 +233,23 @@ async function performSignalShutdown(signal: string, stateConfig: AnyRecord | nu
         result: {
           terminal_status: 'cancelled',
           terminal_decision: {
-            reasonCode: `PIPELINE_CANCELLED_BY_${String(signal || 'signal').toUpperCase()}`,
+            reasonCode: `PIPELINE_CANCELLED_BY_${signalName(signal).toUpperCase()}`,
           },
-          reason: `PIPELINE_CANCELLED_BY_${String(signal || 'signal').toUpperCase()}`,
+          reason: `PIPELINE_CANCELLED_BY_${signalName(signal).toUpperCase()}`,
         },
         stepType: 'pipeline',
         stepId: 'user_cancellation',
-        haltReason: `pipeline_cancelled_by_${String(signal || 'signal').toLowerCase()}`,
+        haltReason: `pipeline_cancelled_by_${signalName(signal).toLowerCase()}`,
       });
     } catch (e: any) {
-      log('WARN', `Shutdown: failed to persist pipeline cancellation lifecycle event: ${e?.message || e}`);
+      log('WARN', `Shutdown: failed to persist pipeline cancellation lifecycle event: ${errorMessage(e)}`);
     }
   }
 
   try {
     await closeTelemetryRedis();
   } catch (e: any) {
-    log('DEBUG', `Shutdown: telemetry Redis close failed (non-critical): ${e?.message || e}`);
+    log('DEBUG', `Shutdown: telemetry Redis close failed (non-critical): ${errorMessage(e)}`);
   }
 }
 
@@ -232,11 +261,11 @@ export function registerShutdownHooks(config: AnyRecord) {
     }
     _shutdownState.shuttingDown = true;
     log('WARN', `Received ${signal} — initiating graceful shutdown`);
-    const stateConfig = config || _shutdownState.config;
+    const stateConfig = firstDefined(config, _shutdownState.config);
     const { statusDir } = _shutdownState;
-    void performSignalShutdown(signal, stateConfig, statusDir)
+      void performSignalShutdown(signal, stateConfig, statusDir)
       .catch((err: any) => {
-        log('WARN', `Shutdown cleanup failed (non-fatal): ${err?.message || err}`);
+        log('WARN', `Shutdown cleanup failed (non-fatal): ${errorMessage(err)}`);
       })
       .finally(() => {
         process.exit(PROCESS_FAILURE_CODE);
@@ -249,7 +278,7 @@ export function setShutdownContext(config: AnyRecord, agentType: string, moduleI
   _shutdownState.config = config;
   _shutdownState.statusDir = statusDir;
   const agentConf = config.agents?.[agentType];
-  if (!agentConf || agentConf.dispatch !== 'redis') {
+  if (selectTruthyValue(() => (!agentConf), () => (agentConf.dispatch !== 'redis'))) {
     const label = `${agentType}-${moduleId}`;
     if (!getTrackedAgent(label)) trackAgent(config, label, null, null, null, null);
     _shutdownState.currentLabel = label;

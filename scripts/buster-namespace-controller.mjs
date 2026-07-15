@@ -434,18 +434,6 @@ async function ensurePreviewExposure(lease, namespaceName) {
     };
   }
 
-  let credentialsAvailable = false;
-  if (exposure.revealCredentials) {
-    if (!exposure.credentialsSecretName) {
-      throw new Error('preview credential reveal requested but no credentialsSecretName or credentialsRef secret was provided');
-    }
-    const secret = await kube(`/api/v1/namespaces/${namespace}/secrets/${exposure.credentialsSecretName}`);
-    credentialsAvailable = secretHasCredentialKeys(secret, exposure.credentialsKeys);
-    if (!credentialsAvailable) {
-      throw new Error(`preview credential secret ${exposure.credentialsSecretName} did not contain any readable credential keys`);
-    }
-  }
-
   try {
     await kube(`/api/v1/namespaces/${namespaceName}/services/${exposure.serviceName}`);
   } catch (error) {
@@ -458,6 +446,18 @@ async function ensurePreviewExposure(lease, namespaceName) {
       credentialsAvailable,
       message: `Waiting for Service/${exposure.serviceName} before creating Tailscale ingress`,
     };
+  }
+
+  let credentialsAvailable = false;
+  if (exposure.revealCredentials) {
+    if (!exposure.credentialsSecretName) {
+      throw new Error('preview credential reveal requested but no credentialsSecretName or credentialsRef secret was provided');
+    }
+    const secret = await kube(`/api/v1/namespaces/${namespaceName}/secrets/${exposure.credentialsSecretName}`);
+    credentialsAvailable = secretHasCredentialKeys(secret, exposure.credentialsKeys);
+    if (!credentialsAvailable) {
+      throw new Error(`preview credential secret ${exposure.credentialsSecretName} did not contain any readable credential keys`);
+    }
   }
 
   const ingress = await createOrPatch({
@@ -510,6 +510,21 @@ async function deleteNamespace(namespaceName) {
   } catch (error) {
     if (error.statusCode !== 404) throw error;
   }
+  await waitForNamespaceDeleted(namespaceName);
+}
+
+async function waitForNamespaceDeleted(namespaceName) {
+  const deadline = Date.now() + 120000;
+  while (Date.now() < deadline) {
+    try {
+      await kube(`/api/v1/namespaces/${namespaceName}`);
+    } catch (error) {
+      if (error.statusCode === 404) return;
+      throw error;
+    }
+    await sleep(pollIntervalMs);
+  }
+  throw new Error(`namespace ${namespaceName} was not deleted before cleanup timeout`);
 }
 
 async function reconcileDeletedLease(lease, namespaceName) {

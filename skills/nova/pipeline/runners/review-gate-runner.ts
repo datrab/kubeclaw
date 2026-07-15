@@ -1,9 +1,10 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // runners/review-gate-runner.ts — Review gate runner
 // Handles the review gate lifecycle:
 //   1. Completion check (content-aware: FAIL files are not complete)
 //   2. Lint report generation (deterministic static analysis)
 //   3. Echo reviewer spawn → poll output file → parse PASS/FAIL
-//   4. Fix-and-rereview loop (Forge fixes issues, Echo re-reviews)
+//   4. FAIL becomes action-required; review gates do not auto-fix.
 
 import { selectDeps } from '../core/deps.ts';
 import fs from 'fs';
@@ -12,12 +13,11 @@ import { log } from '../core/logger.ts';
 import { STATUS } from '../core/constants.ts';
 import { getRunId, getRunStats } from '../core/runtime.ts';
 import { resolvePolicy, logEffectivePolicy } from '../core/config.ts';
-import { relPath, gateOutputPath } from '../core/paths.ts';
+import { gateOutputPath } from '../core/paths.ts';
 import { gitExec, invalidateHeadHash } from '../core/git-context.ts';
 import { discord } from '../integrations/discord.ts';
 import { gitCommitAndPush } from '../integrations/git-worktree.ts';
 import { archiveGateOutputIfPresent } from '../services/status-store.ts';
-import { truncateForDiscord } from '../services/failures/presentation.ts';
 import { pollForFile, sleep } from '../services/polling.ts';
 import { generateLintReport, formatLintReportForReviewer } from '../services/lint.ts';
 import { readGateInstructions } from '../prompts/buster-gate.ts';
@@ -26,44 +26,83 @@ import { acpLabel, spawnAgent, killAgent, verifyAgentAlive, spawnReviewerAgent, 
 import { getTrackedAgent } from '../agents/lifecycle.ts';
 import { pollForSessionEnd } from '../services/polling.ts';
 import { getActiveContext } from '../core/logger.ts';
-import { onGateStarted, onGatePass, onGateFail } from '../services/telemetry.ts';
+import { onGateStarted } from '../services/telemetry.ts';
 import {
-  emitGateRetryExhausted,
   finalizeGateSessionRateLimitExit,
   getRateLimitConfig,
 } from '../services/rate-limit.ts';
 import {
-  resolveResultDispatchId,
   resolveResultSessionKey,
   resolveResultGatewayLabel,
 } from '../services/correlation.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
-import { readGateRemediationSpec } from '../services/remediation-handoff.ts';
 import {
-  GATE_CONTROL_ACTIONS,
-  buildTypedGateControlResult,
-  cloneSerializable,
-} from '../services/contracts/gate-control-result.ts';
-import {
-  buildReviewGateFindings,
   extractReviewIssues,
   summarizeReviewFailReason,
 } from './review-gate-output.ts';
+import { GATE_CONTROL_ACTIONS } from '../services/contracts/gate-control-result.ts';
 import {
   buildReviewGateControlResult,
-  buildReviewRequestFixControlResult,
   coerceReviewGateControlResult,
 } from './review-gate-control.ts';
-import { performReviewGateFixAttempt } from './review-gate-fix-cycle.ts';
 import {
-  describeReviewTranscriptActivityState,
   reviewOutputPath,
   runReviewGateOnce,
 } from './review-gate-task.ts';
 import { getReviewDefaultsConfig } from '../services/runtime-defaults.ts';
 
+const REVIEW_GATE_TYPE = 'review';
+const REVIEW_GATE_FAIL_ACTION_STOP = 'stop';
+const REVIEW_GATE_FIRST_ATTEMPT = 1;
+const REVIEW_GATE_NO_REVIEWER = 'none';
+const REVIEW_GATE_MISSING_STATUS = 'missing';
+const TELEMETRY_CONTEXT_MISSING_RUN_ID = '';
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function selectPresentValue(...values) {
+  return values.find((value) => value !== undefined && value !== null && value !== '');
+}
+
+function requireRunId(config) {
+  const runId = getRunId(config);
+  if (!runId) throw new Error('Review gate requires typed run id');
+  return runId;
+}
+
+function requireReviewerLabel(reviewer) {
+  const label = reviewerLabel(reviewer);
+  if (!label) throw new Error('Review gate reviewer requires typed label');
+  return label;
+}
+
+function reviewerLabels(reviewers) {
+  return reviewers.map(requireReviewerLabel);
+}
+
+function resolveGateStartedAt(opts, remediation = null) {
+  if (opts.gateStartedAt !== undefined) return opts.gateStartedAt;
+  if (remediation?.startedAt) return new Date(remediation.startedAt).getTime();
+  return Date.now();
+}
+
+function resolveReviewConfigOption(config, progress, gate, opts) {
+  if (opts.reviewConfig !== undefined) return opts.reviewConfig;
+  return resolveReviewConfig(config, progress, gate);
+}
+
+function normalizedUpperText(value) {
+  return typeof value === 'string' ? value.trim().toUpperCase() : '';
+}
+
 function _telemetryCtx(config) {
-  return getActiveContext() || { config, runId: config?.run_id || config?._runId || '' };
+  return selectTruthyValue(() => (getActiveContext()), () => ({ config, runId: selectPresentValue(config?.run_id, config?._runId, TELEMETRY_CONTEXT_MISSING_RUN_ID) }));
 }
 
 const DEFAULT_DEPS = {
@@ -123,25 +162,18 @@ function resolveReviewers(gate, projectDefaults) {
 
 function reviewerLabel(reviewer) {
   if (typeof reviewer === 'string') return reviewer;
-  return reviewer?.label || reviewer?.id || reviewer?.name || null;
+  return selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (reviewer?.label), () => (reviewer?.id))), () => (reviewer?.name))), () => (null));
 }
 
 function resolvePrimaryReviewer(gate, projectDefaults, reviewers, reviewersSource) {
-  const explicit =
-    gate?.primaryReviewer ||
-    gate?.primary_reviewer ||
-    gate?.primary_reviewer_label ||
-    projectDefaults?.primaryReviewer ||
-    projectDefaults?.primary_reviewer ||
-    projectDefaults?.primary_reviewer_label ||
-    null;
-  const explicitLabel = reviewerLabel(explicit) || (typeof explicit === 'string' ? explicit : null);
+  const explicit = selectDefinedValue(() => (selectDefinedValue(() => (gate?.primary_reviewer), () => (projectDefaults?.primary_reviewer))), () => (null));
+  const explicitLabel = reviewerLabel(explicit);
   if (explicitLabel) {
     const reviewer = reviewers.find((candidate) => reviewerLabel(candidate) === explicitLabel);
     return {
-      reviewer: reviewer || { label: explicitLabel },
-      policy: reviewer ? 'explicit_primary_reviewer' : 'explicit_primary_reviewer_label',
-      source: reviewer ? reviewersSource : 'primary_reviewer_label',
+      reviewer: selectDefinedValue(() => (reviewer), () => (null)),
+      policy: reviewer ? 'explicit_primary_reviewer' : 'primary_reviewer_not_configured',
+      source: reviewer ? reviewersSource : 'primary_reviewer',
     };
   }
   if (reviewers.length === 1) {
@@ -160,11 +192,12 @@ function resolvePrimaryReviewer(gate, projectDefaults, reviewers, reviewersSourc
 }
 
 function resolveReviewLintPolicy(gate, defaults, lintTier) {
-  const rawRequired =
-    gate?.lint_required ??
-    gate?.review_lint_required ??
-    defaults?.lint_required ??
-    defaults?.review_lint_required;
+  let rawRequired;
+  if (gate?.lint_required !== undefined) {
+    rawRequired = gate.lint_required;
+  } else {
+    rawRequired = defaults?.lint_required;
+  }
   if (rawRequired === false) return { lintRequired: false, source: 'explicit_optional_review_lint' };
   if (rawRequired === true) return { lintRequired: true, source: 'explicit_required_review_lint' };
   return { lintRequired: Boolean(lintTier), source: 'configured_review_lint_required' };
@@ -175,9 +208,9 @@ function resolveReviewConfig(config, progress, gate) {
   const projectDefaults = isPlainObject(progress?.defaults) ? progress.defaults : {};
   const { reviewers, source: reviewersSource } = resolveReviewers(gate, projectDefaults);
   const primary = resolvePrimaryReviewer(gate, projectDefaults, reviewers, reviewersSource);
-  const timeout = coercePositiveNumber(gate.timeout_minutes ?? defaults.timeout_minutes);
-  const maxFixCycles = coerceNonNegativeNumber(gate.max_fix_cycles ?? defaults.max_fix_cycles);
-  const lintTier = gate.lint_tier ?? defaults.lint_tier;
+  const timeout = coercePositiveNumber(gate.timeout_minutes);
+  const maxFixCycles = coerceNonNegativeNumber(selectDefinedValue(() => (gate.max_fix_cycles), () => (0)));
+  const lintTier = gate.lint_tier
   const lintPolicy = resolveReviewLintPolicy(gate, defaults, lintTier);
   return {
     reviewers,
@@ -197,32 +230,19 @@ function resolveReviewConfig(config, progress, gate) {
 
 function reviewConfigErrors(gateId, reviewConfig) {
   const errors = [];
-  if (!Array.isArray(reviewConfig.reviewers) || reviewConfig.reviewers.length === 0) {
+  if (selectTruthyValue(() => (!Array.isArray(reviewConfig.reviewers)), () => (reviewConfig.reviewers.length === 0))) {
     errors.push(`No reviewers configured for gate '${gateId}'`);
   }
   if (!reviewConfig.primaryReviewer) {
     errors.push(`Review gate '${gateId}' requires an explicit primary reviewer policy`);
   }
-  if (!Number.isFinite(reviewConfig.timeout) || reviewConfig.timeout <= 0) {
+  if (selectTruthyValue(() => (!Number.isFinite(reviewConfig.timeout)), () => (reviewConfig.timeout <= 0))) {
     errors.push(`Review gate '${gateId}' requires typed review timeout policy`);
-  }
-  if (!Number.isFinite(reviewConfig.maxFixCycles) || reviewConfig.maxFixCycles < 0) {
-    errors.push(`Review gate '${gateId}' requires typed max fix-cycle policy`);
   }
   if (!reviewConfig.lintTier) {
     errors.push(`Review gate '${gateId}' requires typed review lint tier policy`);
   }
   return errors;
-}
-
-async function emitReviewGateFixCycleFail(config, gateId, gateType, cycle, gateStartedAt, reason, extra = {}) {
-  await onGateFail(_telemetryCtx(config), gateId, {
-    gate_type: gateType,
-    fix_cycle: cycle,
-    duration_seconds: Math.round((Date.now() - gateStartedAt) / 1000),
-    reason,
-    ...extra,
-  });
 }
 
 /**
@@ -281,124 +301,39 @@ export async function cleanupReviewFiles(config, gate, reviewers) {
   }
 }
 
-function buildReviewFailFields(config, reviewResult, issues = []) {
-  const fields = [];
-  for (let i = 0; i < Math.min(issues.length, 3); i++) {
-    fields.push({ name: `Issue ${i + 1}`, value: truncateForDiscord(issues[i].description, 200), inline: false });
-  }
-  if (issues.length > 3) {
-    const artifactRef = reviewResult?.mergedFilePath ? relPath(config, reviewResult.mergedFilePath) : 'review output';
-    fields.push({ name: `+ ${issues.length - 3} more`, value: `See full report: ${artifactRef}`, inline: false });
-  }
-  return fields;
-}
-
-export async function buildReviewRemediationExhaustedControlResult(config, gateId, gate, controlResult, opts = {}) {
-  const remediation = readGateRemediationSpec(controlResult) || {};
-  const metadata = controlResult?.diagnostics?.metadata || {};
-  const gateStartedAt = opts.gateStartedAt ?? (remediation?.startedAt ? new Date(remediation.startedAt).getTime() : Date.now());
-  const maxFixCycles = Number(remediation?.policy?.maxFixCycles || metadata?.fix_cycles);
-  if (!Number.isFinite(maxFixCycles) || maxFixCycles < 1) throw new Error(`Review remediation exhaustion for '${gateId}' is missing typed maxFixCycles`);
-  const latestReviewGatewayLabel = remediation?.correlation?.gateway_label || metadata?.gateway_label || null;
-  const latestReviewSessionKey = remediation?.correlation?.session_key || metadata?.session_key || null;
-  const lastReview = remediation?.diagnostics?.last_review || metadata?.last_review || null;
-  const issues = remediation?.diagnostics?.issues || extractReviewIssues(lastReview);
-
-  log('ERROR', `Review gate '${gateId}' fix_and_rereview exhausted (${maxFixCycles} cycles)`);
-  getGateStats(config).gates_failed.push(gateId);
-  await onGateFail(_telemetryCtx(config), gateId, {
-    gate_type: gate.type,
-    issues_count: Array.isArray(issues) ? issues.length : extractReviewIssues(lastReview).length,
-    fix_cycle: maxFixCycles,
-    duration_seconds: Math.round((Date.now() - gateStartedAt) / 1000),
-    reason: `FAIL after ${maxFixCycles} fix cycles`,
-    session_key: latestReviewSessionKey,
-    presentation: {
-      discord: {
-        level: 'CRITICAL',
-        title: `Review: ${gate.title} BLOCKED`,
-        description: `Fix-and-rereview exhausted after ${maxFixCycles} cycles. Nova must intervene.`,
-        fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate.type, attempt: maxFixCycles, gateway_label: latestReviewGatewayLabel, session_key: latestReviewSessionKey }),
-      },
-    },
-  });
-  emitGateRetryExhausted(_telemetryCtx(config), gateId, {
-    gateType: gate.type,
-    phase: 'review_gate_fix',
-    attempt: maxFixCycles,
-    maxAttempts: maxFixCycles,
-    reason: `Review gate '${gateId}' FAIL after ${maxFixCycles} fix cycles`,
-    sessionKey: latestReviewSessionKey,
-    gatewayLabel: latestReviewGatewayLabel,
-  });
-
-  return buildTypedGateControlResult({
-    producerType: 'review',
-    nextAction: GATE_CONTROL_ACTIONS.BLOCK,
-    issueType: 'code',
-    summary: `Review gate '${gateId}' FAIL after ${maxFixCycles} fix cycles`,
-    findings: buildReviewGateFindings(issues),
-    metadata: {
-      gate_id: gateId,
-      gate_type: gate?.type || 'review',
-      run_id: getRunId(config) || config?._runId || config?.run_id || null,
-      gate: gateId,
-      reason: `Review gate '${gateId}' FAIL after ${maxFixCycles} fix cycles`,
-      fix_cycles: maxFixCycles,
-      last_review: cloneSerializable(lastReview),
-      gateway_label: latestReviewGatewayLabel,
-      session_key: latestReviewSessionKey,
-    },
-    gateRunStatus: STATUS.FAIL,
-    outcomeClass: 'needs_nova',
-    recommendation: 'stop',
-    metrics: {
-      fix_cycles: maxFixCycles,
-      issues_count: Array.isArray(issues) ? issues.length : 0,
-    },
-  });
-}
-
 export async function runReviewGateEvaluation(config, progress, gateId, opts = {}) {
   const deps = getReviewGateRunnerDeps(config, opts.deps);
   const gate = progress.gates[gateId];
   if (!gate) throw new Error(`Review gate '${gateId}' not found`);
 
-  const reviewConfig = opts.reviewConfig || resolveReviewConfig(config, progress, gate);
+  const reviewConfig = resolveReviewConfigOption(config, progress, gate, opts);
   const { reviewers } = reviewConfig;
-  const failAction = gate.on_fail || 'fix_and_rereview';
-  const remediation = opts.remediation || readGateRemediationSpec(opts.controlResult) || null;
+  const failAction = REVIEW_GATE_FAIL_ACTION_STOP;
   const maxRateLimitPauses = getRateLimitConfig(config).max_pauses_per_module;
-  const attempt = Number(opts.attempt || 1);
-  const gateStartedAt = opts.gateStartedAt ?? Date.now();
+  const attempt = Number(selectDefinedValue(() => (opts.attempt), () => (REVIEW_GATE_FIRST_ATTEMPT)));
+  const gateStartedAt = resolveGateStartedAt(opts);
 
   if (!opts.skipStartedTelemetry) {
     log('STEP', `═══════════════════════════════════════════════════════`);
     log('STEP', `  REVIEW GATE: ${gate.title}`);
-    log('STEP', `  Reviewer: ${reviewConfig.primaryReviewer?.label || 'none'} | lint_tier: ${reviewConfig.lintTier}`);
+    log('STEP', `  Reviewer: ${selectPresentValue(reviewConfig.primaryReviewer?.label, REVIEW_GATE_NO_REVIEWER)} | lint_tier: ${reviewConfig.lintTier}`);
     log('STEP', `  on_fail: ${failAction} | max_fix_cycles: ${reviewConfig.maxFixCycles}`);
     log('STEP', `═══════════════════════════════════════════════════════`);
   }
 
-  let skipInitialReview = false;
   if (attempt === 1 && gate.output_file) {
     const outPath = gateOutputPath(config, gate);
     if (fs.existsSync(outPath)) {
       let isCompleted = false;
       try {
         const data = JSON.parse(fs.readFileSync(outPath, 'utf8'));
-        const s = String(data.status || '').trim().toUpperCase();
+        const s = normalizedUpperText(data.status);
         if (s === 'PASS') {
           isCompleted = true;
         } else if (s === 'FAIL') {
-          if (opts.novaPrompt) {
-            skipInitialReview = true;
-            log('INFO', `Review gate '${gateId}' is ${data.status} + Nova prompt provided — skipping initial review, going to Forge fix`);
-          } else {
-            log('INFO', `Review gate '${gateId}' output file exists but status is '${data.status}' — re-running`);
-          }
+          log('INFO', `Review gate '${gateId}' output file exists but status is '${data.status}' — re-running`);
         } else {
-          log('WARN', `Review gate '${gateId}' output file has invalid status '${data.status || 'missing'}' — re-running`);
+          log('WARN', `Review gate '${gateId}' output file has invalid status '${selectPresentValue(data.status, REVIEW_GATE_MISSING_STATUS)}' — re-running`);
         }
       } catch (e) {
         log('WARN', `Review gate '${gateId}' output file is not valid JSON — re-running (${e.message})`);
@@ -418,39 +353,27 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
     if (!opts.skipStartedTelemetry) {
       await onGateStarted(_telemetryCtx(config), gateId, {
         ...gate,
-        reviewers: reviewers.map(r => r.label || r.model || String(r)),
+        reviewers: reviewerLabels(reviewers),
       });
     }
-    await onGateFail(_telemetryCtx(config), gateId, {
-      gate_type: gate.type,
-      reason: setupErrors[0],
-      presentation: {
-        discord: {
-          level: 'CRITICAL',
-          title: `Review Gate Misconfigured: ${gate.title}`,
-          description: `${setupErrors[0]}.`,
-          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate.type, attempt }),
-        },
-      },
-    });
     return buildReviewGateControlResult(config, gateId, gate, { reason: setupReason, failure_class: 'config_invalid', outcome_class: 'error', attempt }, opts);
   }
 
   const primaryReviewer = reviewConfig.primaryReviewer;
-  const reviewerLabel = primaryReviewer?.label || null;
+  const reviewerLabel = selectTruthyValue(() => (primaryReviewer?.label), () => (null));
   if (!opts.skipStartedTelemetry) {
     await onGateStarted(_telemetryCtx(config), gateId, {
-      ...gate,
-      reviewers: reviewers.map(r => r.label || r.model || String(r)),
+        ...gate,
+        reviewers: reviewerLabels(reviewers),
     }, {
       presentation: {
         discord: {
           level: 'INFO',
           title: `Review Gate: ${gate.title}`,
-          description: `Reviewer: ${reviewerLabel || 'none'} with lint report (tier: ${reviewConfig.lintTier}, ${reviewConfig.lintRequired ? 'required' : 'optional'})`,
+          description: `Reviewer: ${selectPresentValue(reviewerLabel, REVIEW_GATE_NO_REVIEWER)} with lint report (tier: ${reviewConfig.lintTier}, ${reviewConfig.lintRequired ? 'required' : 'optional'})`,
           fields: [
-            ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate.type, attempt }),
-            { name: 'Reviewer', value: reviewerLabel || 'none' },
+            ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: requireRunId(config), gate_id: gateId, gate_type: gate.type, attempt }),
+            { name: 'Reviewer', value: selectPresentValue(reviewerLabel, REVIEW_GATE_NO_REVIEWER) },
             { name: 'on_fail', value: failAction },
           ],
         },
@@ -458,14 +381,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
     });
   }
 
-  let reviewResult;
-  if (skipInitialReview) {
-    const outPath = gateOutputPath(config, gate);
-    const existingData = JSON.parse(fs.readFileSync(outPath, 'utf8'));
-    reviewResult = { ok: false, mergedResult: existingData };
-    log('INFO', 'Loaded existing review result for Forge fix (skipped Echo)');
-  } else {
-    reviewResult = deps.runOnce
+  const reviewResult = deps.runOnce
       ? await deps.runOnce(deps, config, progress, gateId, gate, reviewConfig, attempt)
       : await runReviewGateOnce({
         deps,
@@ -476,7 +392,6 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
         reviewConfig,
         reviewAttempt: attempt,
       });
-  }
 
   if (reviewResult.rate_limit_exhausted) {
     const exhaustedReason = `Review gate '${gateId}' exceeded max rate limit pauses`;
@@ -497,19 +412,19 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
       telemetryCtx: _telemetryCtx(config),
       runId: getRunId(config),
       discordFn: deps.discord,
-      discordTitle: attempt > 1 ? `Review Re-Review Rate Limit Exhausted: ${gate.title}` : `Review Gate Rate Limit Exhausted: ${gate.title}`,
-      discordDescription: (exitResult) => `${attempt > 1 ? 'Re-review' : 'Review'} attempt ${exitResult.attempt} exceeded max ACP rate limit pauses (${exitResult.max_rate_limit_pauses}).`,
+      discordTitle: `Review Gate Rate Limit Exhausted: ${gate.title}`,
+      discordDescription: (exitResult) => `Review attempt ${exitResult.attempt} exceeded max ACP rate limit pauses (${exitResult.max_rate_limit_pauses}).`,
       beforeReturn: () => {
         getGateStats(config).gates_failed.push(gateId);
       },
       gateFailureData: (exitResult) => ({
-        fix_cycle: Math.max(0, (exitResult.attempt ?? 1) - 1),
+        fix_cycle: Math.max(0, (selectDefinedValue(() => (exitResult.attempt), () => (REVIEW_GATE_FIRST_ATTEMPT))) - 1),
         duration_seconds: Math.round((Date.now() - gateStartedAt) / 1000),
         presentation: {
           discord: {
             level: 'CRITICAL',
-            title: attempt > 1 ? `Review Re-Review Rate Limit Exhausted: ${gate.title}` : `Review Gate Rate Limit Exhausted: ${gate.title}`,
-            description: `${attempt > 1 ? 'Re-review' : 'Review'} attempt ${exitResult.attempt} exceeded max ACP rate limit pauses (${exitResult.max_rate_limit_pauses}).`,
+            title: `Review Gate Rate Limit Exhausted: ${gate.title}`,
+            description: `Review attempt ${exitResult.attempt} exceeded max ACP rate limit pauses (${exitResult.max_rate_limit_pauses}).`,
             fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, {
               run_id: getRunId(config),
               gate_id: gateId,
@@ -522,7 +437,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
           },
         },
       }),
-      logMessage: `${attempt > 1 ? 'Review re-review' : 'Review gate'} '${gateId}' rate limit pauses exhausted`,
+      logMessage: `Review gate '${gateId}' rate limit pauses exhausted`,
     });
     return buildReviewGateControlResult(config, gateId, gate, {
       ...reviewRateLimitExit,
@@ -535,22 +450,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
     if (reviewResult.invalid_contract) {
       log('ERROR', `Review gate '${gateId}' invalid output contract: ${reviewResult.error}`);
       const reviewSessionKey = resolveResultSessionKey(reviewResult);
-      const reviewDispatchId = resolveResultDispatchId(reviewResult);
       const reviewGatewayLabel = resolveResultGatewayLabel(reviewResult);
-      await onGateFail(_telemetryCtx(config), gateId, {
-        gate_type: gate.type,
-        duration_seconds: Math.round((Date.now() - gateStartedAt) / 1000),
-        reason: `Review invalid output: ${reviewResult.error}`,
-        session_key: reviewSessionKey,
-        presentation: {
-          discord: {
-            level: 'CRITICAL',
-            title: `Review Gate Invalid Output: ${gate.title}`,
-            description: `Review invalid output: ${reviewResult.error}`,
-            fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate.type, attempt, dispatch_id: reviewDispatchId, gateway_label: reviewGatewayLabel, session_key: reviewSessionKey }),
-          },
-        },
-      });
       return buildReviewGateControlResult(config, gateId, gate, {
         reason: `Review invalid output: ${reviewResult.error}`,
         failure_class: 'invalid_contract',
@@ -563,25 +463,7 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
 
     log('ERROR', `Review gate '${gateId}' failed: ${reviewResult.error}`);
     const reviewSessionKey = resolveResultSessionKey(reviewResult);
-    const reviewDispatchId = resolveResultDispatchId(reviewResult);
     const reviewGatewayLabel = resolveResultGatewayLabel(reviewResult);
-    const reviewFailureFields = buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate.type, attempt, dispatch_id: reviewDispatchId, gateway_label: reviewGatewayLabel, session_key: reviewSessionKey });
-    const transcriptState = describeReviewTranscriptActivityState(reviewResult.transcript);
-    if (transcriptState) reviewFailureFields.push({ name: 'Transcript Activity', value: transcriptState, inline: false });
-    onGateFail(_telemetryCtx(config), gateId, {
-      gate_type: gate.type,
-      duration_seconds: Math.round((Date.now() - gateStartedAt) / 1000),
-      reason: `Review failed: ${reviewResult.error}`,
-      session_key: reviewSessionKey,
-      presentation: {
-        discord: {
-          level: 'CRITICAL',
-          title: `Review Gate Failed: ${gate.title}`,
-          description: `Review failed: ${reviewResult.error}`,
-          fields: reviewFailureFields,
-        },
-      },
-    });
     return buildReviewGateControlResult(config, gateId, gate, {
       reason: `Review failed: ${reviewResult.error}`,
       failure_class: 'review_failed',
@@ -594,126 +476,45 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
 
   if (reviewResult.ok) {
     const reviewSessionKey = resolveResultSessionKey(reviewResult);
-    log('OK', `Review gate '${gateId}' PASS${attempt > 1 ? ` after ${attempt - 1} fix cycle(s)` : ''}`);
-    getGateStats(config).gates_completed.push(gateId);
-    onGatePass(_telemetryCtx(config), gateId, {
-      gate_type: gate.type,
-      fix_cycle: Math.max(0, attempt - 1),
-      duration_seconds: Math.round((Date.now() - gateStartedAt) / 1000),
+    const merged = objectRecord(reviewResult.mergedResult);
+    const criticalIssues = arrayValue(merged.critical_issues).length + arrayValue(merged.critical_blockers).length;
+    const deferredIssues = arrayValue(merged.deferred_issues).length;
+    const findingsCount = arrayValue(merged.findings).length;
+    log('OK', `Review gate '${gateId}' PASS`);
+    return buildReviewGateControlResult(config, gateId, gate, {
+      outcome_class: 'passed',
+      attempt,
+      gateway_label: resolveResultGatewayLabel(reviewResult),
       session_key: reviewSessionKey,
-      presentation: {
-        discord: {
-          level: 'OK',
-          title: `Review: ${gate.title} PASS`,
-          description: attempt > 1 ? `Passed after ${attempt - 1} fix cycle(s)` : 'Review approved',
-          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate.type, attempt, gateway_label: resolveResultGatewayLabel(reviewResult), session_key: reviewSessionKey }),
-        },
-      },
-    });
-    return buildReviewGateControlResult(config, gateId, gate, { outcome_class: 'passed', attempt }, { ...opts, input: { ids: { attempt } } });
+      critical_issues_count: criticalIssues,
+      deferred_issues_count: deferredIssues,
+      findings_count: findingsCount,
+      duration_seconds: Math.round((Date.now() - gateStartedAt) / 1000),
+    }, { ...opts, input: { ids: { attempt } } });
   }
 
   log('WARN', `Review gate '${gateId}' FAIL`);
   const issues = extractReviewIssues(reviewResult.mergedResult);
   log('INFO', `${issues.length} critical issue(s) extracted from review`);
-  const failFields = buildReviewFailFields(config, reviewResult, issues);
   const failReason = summarizeReviewFailReason(issues, reviewResult?.mergedResult);
 
-  onGateFail(_telemetryCtx(config), gateId, {
-    gate_type: gate.type,
-    issues_count: issues.length,
-    blockers_count: Array.isArray(reviewResult?.mergedResult?.critical_blockers) ? reviewResult.mergedResult.critical_blockers.length : null,
-    fix_cycle: Math.max(0, attempt - 1),
-    duration_seconds: Math.round((Date.now() - gateStartedAt) / 1000),
-    reason: failReason,
-    session_key: resolveResultSessionKey(reviewResult),
-    presentation: {
-      discord: {
-        level: 'WARN',
-        title: attempt > 1 ? 'Review Fix: Still FAIL' : `Review: ${gate.title} FAIL — Fix & Re-Review`,
-        description: attempt > 1 ? `Cycle ${attempt - 1}/${reviewConfig.maxFixCycles} for ${gate.title}. Echo still found ${issues.length} issue(s).` : `${issues.length} critical issue(s). Starting fix-and-rereview cycle.`,
-        fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate.type, attempt, gateway_label: resolveResultGatewayLabel(reviewResult), session_key: resolveResultSessionKey(reviewResult) }, failFields),
-      },
-    },
-  });
-
-  if (failAction !== 'fix_and_rereview') {
-    return buildReviewGateControlResult(config, gateId, gate, {
-      reason: `Review gate '${gateId}' FAIL`,
-      failure_class: 'verdict_fail',
-      outcome_class: 'needs_nova',
-      attempt,
-      last_review: reviewResult.mergedResult,
-      gateway_label: resolveResultGatewayLabel(reviewResult),
-      session_key: resolveResultSessionKey(reviewResult),
-    }, { ...opts, input: { ids: { attempt } } });
-  }
-
-  return buildReviewRequestFixControlResult(config, gateId, gate, reviewResult, reviewConfig, {
+  return buildReviewGateControlResult(config, gateId, gate, {
+    reason: `Review gate '${gateId}' FAIL`,
+    failure_class: 'verdict_fail',
+    outcome_class: 'needs_nova',
     attempt,
-    reviewerLabel,
-    gateStartedAt,
-    issues,
+    last_review: reviewResult.mergedResult,
     gatewayLabel: resolveResultGatewayLabel(reviewResult),
     sessionKey: resolveResultSessionKey(reviewResult),
-  });
-}
-
-export async function runReviewGateFixAttempt(config, progress, gateId, controlResult, opts = {}) {
-  const deps = getReviewGateRunnerDeps(config, opts.deps);
-  const gate = progress.gates[gateId];
-  return performReviewGateFixAttempt({
-    config,
-    progress,
-    gateId,
-    controlResult,
-    opts,
-    deps,
-    gate,
-    reviewConfig: opts.reviewConfig || resolveReviewConfig(config, progress, gate),
-    callbacks: {
-      buildReviewGateControlResult,
-      buildReviewRemediationExhaustedControlResult,
-      cleanupReviewFiles,
-      emitReviewGateFixCycleFail,
-      getGateStats,
-      telemetryCtx: _telemetryCtx,
-    },
-  });
-}
-
-
-export function createReviewGateRemediationController({ config, progress, gateId, gate, opts = {}, gateStartedAt }) {
-  const reviewConfig = opts.reviewConfig || resolveReviewConfig(config, progress, gate);
-  const fixHistory = opts.fixHistory || [];
-  return {
-    evaluateGate: ({ attempt, controlResult: remediationControlResult, remediation }) => runReviewGateEvaluation(config, progress, gateId, {
-      attempt,
-      gateStartedAt,
-      reviewConfig,
-      skipStartedTelemetry: true,
-      controlResult: remediationControlResult,
-      remediation,
-      deps: opts.deps,
-    }),
-    performFix: ({ controlResult, cycle }) => runReviewGateFixAttempt(config, progress, gateId, controlResult, {
-      cycle,
-      novaPrompt: opts?.novaPrompt || null,
-      gateStartedAt,
-      reviewConfig,
-      fixHistory,
-      deps: opts.deps,
-    }),
-    buildExhaustedControlResult: ({ controlResult }) => buildReviewRemediationExhaustedControlResult(config, gateId, gate, controlResult, { gateStartedAt }),
-  };
+  }, { ...opts, input: { ids: { attempt } } });
 }
 
 export function getReviewGateControlAdapter() {
   return Object.freeze({
-    mode: 'remediable',
+    mode: 'standard',
     label: 'Review',
+    allowedNextActions: [GATE_CONTROL_ACTIONS.PASS, GATE_CONTROL_ACTIONS.BLOCK],
     coerce: coerceReviewGateControlResult,
-    createRemediationController: createReviewGateRemediationController,
   });
 }
 

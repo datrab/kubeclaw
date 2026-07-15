@@ -1,50 +1,65 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { acpxCleanup } from '../../../../../skills/common/pipeline/agents/lifecycle.ts';
+import { acpxCleanup, spawnSession } from '../../../../../skills/common/pipeline/agents/lifecycle.ts';
 
-test('acpxCleanup aborts an in-flight ACP close when the caller signal aborts', async () => {
-  const controller = new AbortController();
-  let observedSignal = null;
-
-  const cleanupPromise = acpxCleanup('agent:test', 'session:test', {
-    signal: controller.signal,
-    execFileAsync: async (_command, _args, options = {}) => {
-      observedSignal = options.signal;
-      await new Promise((resolve, reject) => {
-        observedSignal.addEventListener('abort', () => reject(new Error('aborted')), { once: true });
-      });
+function testSpawnPolicy(maxRetries = 3) {
+  return {
+    mode: 'isolated',
+    cleanup: 'on_exit',
+    streamTo: 'pipeline',
+    thread: false,
+    gateway: {
+      timeoutMs: 1000,
+      maxRetries,
+      retryDelayMs: 0,
     },
-  });
+  };
+}
 
-  controller.abort('termination_grace_expired');
-
-  await assert.rejects(cleanupPromise, /aborted|termination_grace_expired/);
-  assert.equal(observedSignal, controller.signal);
-  assert.equal(observedSignal.aborted, true);
+test('acpxCleanup treats ACP close failure as non-critical cleanup', async () => {
+  await acpxCleanup('agent:test', 'session:test', { timeoutMs: 1 });
 });
 
-test('acpxCleanup aborts an in-flight ACP close when the budget signal aborts', async () => {
-  const caller = new AbortController();
-  const budget = new AbortController();
-  let observedSignal = null;
+test('spawnSession does not retry Gateway 400 contract errors', async (t) => {
+  const oldFetch = globalThis.fetch;
+  const oldGatewayUrl = process.env.OPENCLAW_GATEWAY_URL;
+  const oldGatewayToken = process.env.OPENCLAW_GATEWAY_TOKEN;
+  let calls = 0;
 
-  const cleanupPromise = acpxCleanup('agent:test', 'session:test', {
-    signal: caller.signal,
-    budget: { signal: budget.signal },
-    execFileAsync: async (_command, _args, options = {}) => {
-      observedSignal = options.signal;
-      await new Promise((resolve, reject) => {
-        observedSignal.addEventListener('abort', () => reject(new Error('budget aborted')), { once: true });
-      });
-    },
+  process.env.OPENCLAW_GATEWAY_URL = 'http://gateway.test';
+  process.env.OPENCLAW_GATEWAY_TOKEN = 'token';
+  globalThis.fetch = async () => {
+    calls += 1;
+    return new Response('bad request', { status: 400, statusText: 'Bad Request' });
+  };
+  t.after(() => {
+    globalThis.fetch = oldFetch;
+    if (oldGatewayUrl === undefined) delete process.env.OPENCLAW_GATEWAY_URL;
+    else process.env.OPENCLAW_GATEWAY_URL = oldGatewayUrl;
+    if (oldGatewayToken === undefined) delete process.env.OPENCLAW_GATEWAY_TOKEN;
+    else process.env.OPENCLAW_GATEWAY_TOKEN = oldGatewayToken;
   });
 
-  budget.abort('kill_session_budget_exhausted');
-
-  await assert.rejects(cleanupPromise, /budget aborted|kill_session_budget_exhausted/);
-  assert.notEqual(observedSignal, caller.signal);
-  assert.notEqual(observedSignal, budget.signal);
-  assert.equal(observedSignal.aborted, true);
-  assert.equal(caller.signal.aborted, false);
+  await assert.rejects(
+    spawnSession({
+      session: {
+        model: 'gpt-5.4',
+        runtime: 'subagent',
+        agentId: 'codex',
+        cwd: '/tmp',
+        label: 'reviewfix-module-review-1',
+      },
+    }, 'fix this', 60, {
+      spawnPolicy: testSpawnPolicy(3),
+      model: 'gpt-5.4',
+      runtime: 'subagent',
+      agentId: 'codex',
+      cwd: '/tmp',
+      label: 'reviewfix-module-review-1',
+      trackActive: false,
+    }),
+    /Gateway session spawn contract invalid.*400 Bad Request/,
+  );
+  assert.equal(calls, 1);
 });

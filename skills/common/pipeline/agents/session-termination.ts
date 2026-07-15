@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 type AnyFunction = (...args: any[]) => any;
 
@@ -12,9 +13,45 @@ import {
 
 const GRACE_EXPIRED = Symbol('sessionTerminationGraceExpired');
 
+function errorMessage(error: unknown): string {
+  if (error && typeof error === 'object' && 'message' in error) {
+    const message = (error as AnyRecord).message;
+    if (typeof message === 'string' && message.trim()) return message;
+  }
+  return String(error);
+}
+
+function firstDefined(...values: any[]) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return null;
+}
+
+function cleanupAttempted(killResult: AnyRecord, cleanup: AnyRecord) {
+  return selectTruthyValue(() => (killResult.cleanupAttempted === true), () => (cleanup.attempted === true));
+}
+
+function cleanupConfirmed(killResult: AnyRecord, cleanup: AnyRecord) {
+  if (killResult.cleanupAttempted === true && killResult.confirmed === true) return true;
+  return cleanup.confirmed === true;
+}
+
+function activeSessionTerminationOptions(opts: AnyRecord, session: AnyRecord) {
+  return {
+    ...opts,
+    terminationPolicy: opts.terminationPolicy,
+    killPolicy: firstDefined(opts.killPolicy, session.killPolicy),
+    runtime: firstDefined(opts.runtime, session.runtime),
+    model: firstDefined(opts.model, session.model),
+    agentId: firstDefined(opts.agentId, session.agentId),
+    label: firstDefined(opts.label, session.gatewayLabel, session.label),
+  };
+}
+
 function resolvePolicyMs(value: any, field: string, { min = 0, max = Infinity } = {}) {
   const numeric = Number(value);
-  if (!Number.isFinite(numeric) || numeric < min) throw new Error(`Session termination policy ${field} must be a finite number >= ${min}`);
+  if (selectTruthyValue(() => (!Number.isFinite(numeric)), () => (numeric < min))) throw new Error(`Session termination policy ${field} must be a finite number >= ${min}`);
   return Math.min(Math.round(numeric), max);
 }
 
@@ -59,12 +96,12 @@ function buildTerminationResult({
   graceMs,
 }: AnyRecord) {
   const result = {
-    sessionKey: sessionKey || null,
+    sessionKey: selectTruthyValue(() => (sessionKey), () => (null)),
     requested: requested === true,
     confirmed: confirmed === true,
     unconfirmed: confirmed !== true,
     terminal: confirmed === true,
-    state: state || 'unknown',
+    state: state ? state : 'session_stop_status_not_reported',
     cleanupAttempted: cleanupAttempted === true,
     cleanupConfirmed: cleanupConfirmed === true,
     cleanupError: cleanupError ? String(cleanupError) : null,
@@ -79,7 +116,7 @@ async function runCleanup(cleanup: any, context: AnyRecord) {
     await cleanup(context);
     return { attempted: true, confirmed: true, error: null };
   } catch (error) {
-    return { attempted: true, confirmed: false, error: (error as any)?.message || String(error) };
+    return { attempted: true, confirmed: false, error: errorMessage(error) };
   }
 }
 
@@ -118,7 +155,7 @@ export async function terminateSession(childSessionKey: any, opts: AnyRecord = {
   let killResult;
   const killSessionFn = typeof opts.killSession === 'function' ? opts.killSession : killSession;
   const killController = new AbortController();
-  const externalSignal = opts.signal || null;
+  const externalSignal = selectTruthyValue(() => (opts.signal), () => (null));
   let removeExternalAbortListener: AnyFunction | null = null;
   if (externalSignal) {
     if (externalSignal.aborted) killController.abort(externalSignal.reason);
@@ -130,7 +167,7 @@ export async function terminateSession(childSessionKey: any, opts: AnyRecord = {
   }
   const { killSession: _killSession, ...killOpts } = opts;
   const killPolicy = {
-    ...(opts.killPolicy || {}),
+    ...(selectDefinedValue(() => (opts.killPolicy), () => ({}))),
     acpConfirmTimeoutMs: graceMs,
     subagentConfirmTimeoutMs: graceMs,
     confirmPollMs: policy.confirmPollMs,
@@ -168,7 +205,7 @@ export async function terminateSession(childSessionKey: any, opts: AnyRecord = {
       state: 'termination_error',
       cleanupAttempted: false,
       cleanupConfirmed: false,
-      cleanupError: (error as any)?.message || String(error),
+      cleanupError: errorMessage(error),
       graceMs,
     });
   } finally {
@@ -186,8 +223,8 @@ export async function terminateSession(childSessionKey: any, opts: AnyRecord = {
     requested: killResult.requested,
     confirmed: killResult.confirmed,
     state: killResult.state,
-    cleanupAttempted: killResult.cleanupAttempted || cleanup.attempted,
-    cleanupConfirmed: (killResult.cleanupAttempted && killResult.confirmed) || cleanup.confirmed,
+    cleanupAttempted: cleanupAttempted(killResult, cleanup),
+    cleanupConfirmed: cleanupConfirmed(killResult, cleanup),
     cleanupError: cleanup.error,
     graceMs,
   });
@@ -198,15 +235,7 @@ export async function terminateActiveSession(opts: AnyRecord = {}) {
   if (!session) {
     return await terminateSession(null, opts);
   }
-  const result = await terminateSession(session.childSessionKey, {
-    ...opts,
-    terminationPolicy: opts.terminationPolicy,
-    killPolicy: opts.killPolicy ?? session.killPolicy,
-    runtime: opts.runtime ?? session.runtime,
-    model: opts.model ?? session.model ?? null,
-    agentId: opts.agentId ?? session.agentId,
-    label: opts.label ?? session.gatewayLabel ?? session.label,
-  }) as AnyRecord;
+  const result = await terminateSession(session.childSessionKey, activeSessionTerminationOptions(opts, session)) as AnyRecord;
   clearActiveSession({ preserveFile: result.unconfirmed });
   return result;
 }

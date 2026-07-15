@@ -20,6 +20,20 @@ The pipeline uses several event-like surfaces with different authority:
 
 Do not treat these as interchangeable. Lifecycle events decide state. The other surfaces explain, transport, or enrich state.
 
+## Completion Authority
+
+Phase and gate runners do not own terminal state. They produce completion evidence, then the lifecycle reducer appends the canonical event and projects read models.
+
+The boundary is:
+
+```text
+runner evidence -> Completion -> lifecycle reducer -> lifecycle event spine -> read models -> sinks/plugins/reports
+```
+
+A completion records only the completed target, phase, attempt, status, evidence authority, optional typed reason, and optional observation. Session identity is observation/control metadata. It is required for live operations such as monitor, kill, or rate-limit handling, but it is not required to accept terminal evidence that is already proven by run ID, attempt, dispatch ID, and the configured authority.
+
+Sinks such as Discord consume lifecycle events and read models. They may render messages, links, summaries, and diagnostics, but they must not decide whether a module or gate passed.
+
 ## Primary Artifact Paths
 
 Project-global pipeline artifacts:
@@ -45,6 +59,8 @@ Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/redis/redis-exchanges.
 Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/redis/redis-ops.jsonl
 ```
 
+`nova-injections.jsonl` is the needs-Nova handoff audit. The canonical delivery proof is the Gateway `message.send` receipt for the launch channel; Gateway `session_send`, cron injection, and Discord webhooks are not needs-Nova handoff authorities.
+
 Module and gate helpers also write Buster outputs, gate outputs, approval request/decision files, lint reports, review outputs, architecture validator logs, and plugin artifacts under the project `.swarm` tree.
 
 Lifecycle artifacts:
@@ -69,6 +85,7 @@ Exact paths can vary for gate tasks and overridden `log_dir` values, but every t
 | Evidence | Strong enough to change state? | Required identity or fields | Troubleshooting use |
 | --- | --- | --- | --- |
 | lifecycle event/read model | yes | run ref plus module/gate/wait/cooldown refs | determine current scheduler state and legal next action |
+| Completion | yes, after lifecycle reducer append | target kind/id, phase, attempt, status, authority | canonical boundary for phase/gate terminal evidence |
 | Buster completion | candidate only | `run_id`, `attempt`, `dispatch_id`, target id, completion stream | unblock Nova only after completion adjudication |
 | Buster dead-letter | no direct state mutation | Redis id, stream, reason, phase, payload identity when available | explain task failure before ACK |
 | telemetry event | no | run id, run ref, primary ref, event type, payload, ISO timestamp | dashboard/debug timeline |

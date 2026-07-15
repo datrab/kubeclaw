@@ -5,6 +5,7 @@ import { pipelineLogDir, resolvePipelineRunLogDir, validateSafePath } from '../c
 import { isPlainObject } from './validation.ts';
 import { getTelemetryStreamKey } from '../telemetry.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 const ARTIFACT_INLINE_FORMATS = new Set(['json', 'text', 'markdown']);
 const ARTIFACT_PERSIST_FORMATS = new Set([...ARTIFACT_INLINE_FORMATS, 'file_copy']);
 const ARTIFACT_INDEX_LOCK_STALE_MS = 5 * 60 * 1000;
@@ -48,9 +49,15 @@ const DIAGNOSTIC_FALLBACK_SURFACES = new Set([
   PIPELINE_ARTIFACT_SURFACES.FALLBACK_TELEMETRY,
 ]);
 
-function sanitizeSegment(value, fallback = 'unknown') {
-  const normalized = String(value || fallback).trim().replace(/[^a-zA-Z0-9._-]+/g, '_');
-  return normalized && !/^\.+$/.test(normalized) ? normalized : fallback;
+function sanitizeSegment(value, label = 'Artifact segment') {
+  const normalized = String(selectDefinedValue(() => (value), () => (''))).trim().replace(/[^a-zA-Z0-9._-]+/g, '_');
+  if (!normalized) {
+    throw new Error(`${label} must produce a non-empty artifact path segment`);
+  }
+  if (/^\.+$/.test(normalized)) {
+    throw new Error(`${label} must not be dot-only`);
+  }
+  return normalized;
 }
 
 function toPortableRelativePath(basePath, targetPath) {
@@ -60,7 +67,7 @@ function toPortableRelativePath(basePath, targetPath) {
 
 function assertPathInside(candidatePath, rootPath, label) {
   const relativePath = path.relative(path.resolve(rootPath), path.resolve(candidatePath));
-  if (relativePath === '' || (relativePath && !relativePath.startsWith('..') && !path.isAbsolute(relativePath))) {
+  if (selectTruthyValue(() => (relativePath === ''), () => ((relativePath && !relativePath.startsWith('..') && !path.isAbsolute(relativePath))))) {
     return candidatePath;
   }
   throw new Error(`${label} must resolve inside plugin artifact root`);
@@ -82,10 +89,14 @@ function writeJson(filePath, value) {
 }
 
 function assertNonEmptyString(value, label) {
-  if (typeof value !== 'string' || !value.trim()) {
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) {
     throw new Error(`${label} must be a non-empty string`);
   }
   return value.trim();
+}
+
+function requireArtifactRepoRoot(config) {
+  return assertNonEmptyString(config?.repo_root, 'config.repo_root');
 }
 
 function assertOptionalObject(value, label) {
@@ -96,29 +107,103 @@ function assertOptionalObject(value, label) {
   return { ...value };
 }
 
+function numberOrNull(value) {
+  const numberValue = Number(value);
+  return Number.isFinite(numberValue) ? numberValue : null;
+}
+
+function countFacts(value) {
+  return isPlainObject(value)
+    ? {
+        total: numberOrNull(value.total),
+        completed: numberOrNull(value.completed),
+        failed_or_blocked: numberOrNull(value.failed_or_blocked),
+        pending: numberOrNull(value.pending),
+        status_counts: isPlainObject(value.status_counts) ? { ...value.status_counts } : {},
+      }
+    : {
+        total: null,
+        completed: null,
+        failed_or_blocked: null,
+        pending: null,
+        status_counts: {},
+      };
+}
+
+export function buildRunTestSummary(runFacts = null) {
+  const agents = isPlainObject(runFacts?.agents) ? runFacts.agents : {};
+  return {
+    source: runFacts ? 'run_facts' : 'not_available',
+    modules: countFacts(runFacts?.modules),
+    gates: countFacts(runFacts?.gates),
+    attempts: {
+      forge: numberOrNull(agents.forge),
+      buster: numberOrNull(agents.buster),
+      echo: numberOrNull(agents.echo),
+      total_agents: numberOrNull(agents.total),
+    },
+  };
+}
+
+export function buildRunCostSummary({
+  usageAggregate = null,
+  budgetStatus = null,
+  costReportPath = null,
+} = {}) {
+  const usage = isPlainObject(usageAggregate?.run) ? usageAggregate.run : {};
+  const inputTokens = numberOrNull(usage.input_tokens);
+  const outputTokens = numberOrNull(usage.output_tokens);
+  return {
+    source: usageAggregate ? 'model_usage' : 'not_available',
+    total_input_tokens: inputTokens,
+    total_output_tokens: outputTokens,
+    total_tokens: inputTokens != null && outputTokens != null ? inputTokens + outputTokens : null,
+    estimated_cost_usd: numberOrNull(usage.estimated_cost_usd),
+    budget_threshold_status: selectDefinedValue(() => (budgetStatus), () => (null)),
+    cost_report_path: selectDefinedValue(() => (costReportPath), () => (null)),
+  };
+}
+
+function assertCanonicalArtifactIdentity(artifact = {}) {
+  if (!isPlainObject(artifact)) return;
+  const removedAliases = [
+    ['runId', 'run_id'],
+    ['sessionKey', 'session_key'],
+    ['dispatchId', 'dispatch_id'],
+  ];
+  for (const [removedAlias, canonicalField] of removedAliases) {
+    if (Object.prototype.hasOwnProperty.call(artifact, removedAlias)) {
+      throw new Error(`Artifact identity must use canonical '${canonicalField}' field; removed alias '${removedAlias}' is not accepted`);
+    }
+  }
+}
+
 function resolveArtifactExtension(request) {
   if (request.format === 'json') return '.json';
   if (request.format === 'markdown') return '.md';
   if (request.format === 'text') return '.txt';
   if (request.format === 'file_copy') {
-    const sourceExt = path.extname(request.sourcePath || '').trim();
-    return sourceExt || '.bin';
+    const sourceExt = path.extname(selectDefinedValue(() => (request.sourcePath), () => (''))).trim();
+    return selectDefinedValue(() => (sourceExt), () => ('.bin'));
   }
   return '.dat';
 }
 
-function resolveArtifactLanePaths(config = {}, { hookFamily = 'unknown', stageId = 'unknown', moduleId = 'unknown' } = {}) {
-  const runId = config?._runId || config?.run_id || getRunId(config) || null;
+function resolveArtifactLanePaths(config = {}, { hookFamily = null, stageId = null, moduleId = null } = {}) {
+  const runId = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (config?._runId), () => (config?.run_id))), () => (getRunId(config)))), () => (null));
   const runLogDir = resolvePipelineRunLogDir(config, runId);
   if (!runLogDir) {
     throw new Error('Plugin artifact lane requires a resolved pipeline run log directory');
   }
   const pluginArtifactsRoot = path.join(runLogDir, 'plugin-artifacts');
+  const laneModuleId = sanitizeSegment(assertNonEmptyString(moduleId, 'Plugin artifact moduleId'), 'Plugin artifact moduleId');
+  const laneHookFamily = sanitizeSegment(assertNonEmptyString(hookFamily, 'Plugin artifact hookFamily'), 'Plugin artifact hookFamily');
+  const laneStageId = sanitizeSegment(assertNonEmptyString(stageId, 'Plugin artifact stageId'), 'Plugin artifact stageId');
   const laneDir = path.join(
     pluginArtifactsRoot,
-    sanitizeSegment(moduleId),
-    sanitizeSegment(hookFamily),
-    sanitizeSegment(stageId),
+    laneModuleId,
+    laneHookFamily,
+    laneStageId,
   );
   const dataDir = path.join(laneDir, 'data');
 
@@ -140,8 +225,7 @@ function writeArtifactIndex(indexPath, entries) {
 }
 
 function sameArtifactIndexEntry(left, right) {
-  return Boolean((left?.path && right?.path && left.path === right.path)
-    || (left?.abs_path && right?.abs_path && left.abs_path === right.abs_path));
+  return Boolean(selectTruthyValue(() => ((left?.path && right?.path && left.path === right.path)), () => ((left?.abs_path && right?.abs_path && left.abs_path === right.abs_path))));
 }
 
 function sleep(ms) {
@@ -208,7 +292,7 @@ function normalizeArtifactRef(config, entry) {
 function validateArtifactQuery(query = {}) {
   if (!isPlainObject(query)) throw new Error('Artifact query must be a plain object');
   const limit = query.limit == null ? null : Number(query.limit);
-  if (limit != null && (!Number.isInteger(limit) || limit < 1)) {
+  if (limit != null && (selectTruthyValue(() => (!Number.isInteger(limit)), () => (limit < 1)))) {
     throw new Error('Artifact query limit must be a positive integer when provided');
   }
   return {
@@ -226,7 +310,7 @@ export function classifyPipelineArtifactSurface(surface = null, artifact = {}) {
   if (RUN_SCOPED_REPLAY_SURFACES.has(normalizedSurface)) return PIPELINE_ARTIFACT_AUTHORITY_ROLES.RUN_SCOPED_REPLAY;
   if (OPERATOR_MIRROR_SURFACES.has(normalizedSurface)) return PIPELINE_ARTIFACT_AUTHORITY_ROLES.OPERATOR_MIRROR;
   if (DIAGNOSTIC_FALLBACK_SURFACES.has(normalizedSurface)) return PIPELINE_ARTIFACT_AUTHORITY_ROLES.DIAGNOSTIC_FALLBACK;
-  if (artifact?.artifact_fallback === true || artifact?.seq === null) return PIPELINE_ARTIFACT_AUTHORITY_ROLES.DIAGNOSTIC_FALLBACK;
+  if (selectTruthyValue(() => (artifact?.artifact_fallback === true), () => (artifact?.seq === null))) return PIPELINE_ARTIFACT_AUTHORITY_ROLES.DIAGNOSTIC_FALLBACK;
   return PIPELINE_ARTIFACT_AUTHORITY_ROLES.OPERATOR_MIRROR;
 }
 
@@ -237,30 +321,32 @@ export function buildPipelineArtifactAuthorityPolicy({
   expectedSessionKey = null,
   expectedDispatchId = null,
 } = {}) {
+  assertCanonicalArtifactIdentity(artifact);
   const role = classifyPipelineArtifactSurface(surface, artifact);
-  const artifactRunId = artifact?.run_id || artifact?.runId || null;
-  const artifactSessionKey = artifact?.session_key || artifact?.sessionKey || null;
-  const artifactDispatchId = artifact?.dispatch_id || artifact?.dispatchId || null;
-  const runIdMatches = !expectedRunId || !artifactRunId || String(expectedRunId) === String(artifactRunId);
-  const sessionKeyMatches = !expectedSessionKey || !artifactSessionKey || String(expectedSessionKey) === String(artifactSessionKey);
-  const dispatchIdMatches = !expectedDispatchId || !artifactDispatchId || String(expectedDispatchId) === String(artifactDispatchId);
-  const fallbackEvidence = artifact?.artifact_fallback === true || artifact?.seq === null || role === PIPELINE_ARTIFACT_AUTHORITY_ROLES.DIAGNOSTIC_FALLBACK;
-  const identityDrift = Boolean((expectedRunId && artifactRunId && !runIdMatches)
-    || (expectedSessionKey && artifactSessionKey && !sessionKeyMatches)
-    || (expectedDispatchId && artifactDispatchId && !dispatchIdMatches));
+  const artifactRunId = selectTruthyValue(() => (artifact?.run_id), () => (null));
+  const artifactSessionKey = selectTruthyValue(() => (artifact?.session_key), () => (null));
+  const artifactDispatchId = selectTruthyValue(() => (artifact?.dispatch_id), () => (null));
+  const runIdMatches = selectTruthyValue(() => (selectTruthyValue(() => (!expectedRunId), () => (!artifactRunId))), () => (String(expectedRunId) === String(artifactRunId)));
+  const sessionKeyMatches = selectTruthyValue(() => (selectTruthyValue(() => (!expectedSessionKey), () => (!artifactSessionKey))), () => (String(expectedSessionKey) === String(artifactSessionKey)));
+  const dispatchIdMatches = selectTruthyValue(() => (selectTruthyValue(() => (!expectedDispatchId), () => (!artifactDispatchId))), () => (String(expectedDispatchId) === String(artifactDispatchId)));
+  const artifactMarkedFallback = artifact?.artifact_fallback === true;
+  const artifactMissingSequence = artifact?.seq === null;
+  const roleMarksDiagnosticFallback = role === PIPELINE_ARTIFACT_AUTHORITY_ROLES.DIAGNOSTIC_FALLBACK;
+  const fallbackEvidence = [artifactMarkedFallback, artifactMissingSequence, roleMarksDiagnosticFallback].some(Boolean);
+  const identityDrift = Boolean(selectTruthyValue(() => (selectTruthyValue(() => ((expectedRunId && artifactRunId && !runIdMatches)), () => ((expectedSessionKey && artifactSessionKey && !sessionKeyMatches)))), () => ((expectedDispatchId && artifactDispatchId && !dispatchIdMatches))));
   const stalePointer = Boolean(role === PIPELINE_ARTIFACT_AUTHORITY_ROLES.LATEST_POINTER && identityDrift);
   return {
     code: identityDrift ? 'artifact_identity_drift' : `${role}_evidence`,
     role,
-    surface: surface || null,
+    surface: selectTruthyValue(() => (surface), () => (null)),
     artifact_run_id: artifactRunId,
-    expected_run_id: expectedRunId || null,
+    expected_run_id: selectTruthyValue(() => (expectedRunId), () => (null)),
     run_id_matches: runIdMatches,
     artifact_session_key: artifactSessionKey,
-    expected_session_key: expectedSessionKey || null,
+    expected_session_key: selectTruthyValue(() => (expectedSessionKey), () => (null)),
     session_key_matches: sessionKeyMatches,
     artifact_dispatch_id: artifactDispatchId,
-    expected_dispatch_id: expectedDispatchId || null,
+    expected_dispatch_id: selectTruthyValue(() => (expectedDispatchId), () => (null)),
     dispatch_id_matches: dispatchIdMatches,
     fallback_evidence: fallbackEvidence,
     identity_drift: identityDrift,
@@ -272,7 +358,7 @@ export function buildPipelineArtifactAuthorityPolicy({
     allow_ordering_authority: false,
     operator_replay_authority: role === PIPELINE_ARTIFACT_AUTHORITY_ROLES.RUN_SCOPED_REPLAY && runIdMatches && !fallbackEvidence,
     operator_pointer_only: role === PIPELINE_ARTIFACT_AUTHORITY_ROLES.LATEST_POINTER,
-    diagnostic_evidence_only: fallbackEvidence || role === PIPELINE_ARTIFACT_AUTHORITY_ROLES.DIAGNOSTIC_FALLBACK,
+    diagnostic_evidence_only: [fallbackEvidence, roleMarksDiagnosticFallback].some(Boolean),
   };
 }
 
@@ -284,11 +370,12 @@ export function projectPipelineArtifactEvidence({
   expectedSessionKey = null,
   expectedDispatchId = null,
 } = {}) {
+  assertCanonicalArtifactIdentity(artifact);
   const authority = buildPipelineArtifactAuthorityPolicy({ surface, artifact, expectedRunId, expectedSessionKey, expectedDispatchId });
   return {
-    surface: surface || null,
-    path: artifactPath || null,
-    run_id: artifact?.run_id || artifact?.runId || null,
+    surface: selectTruthyValue(() => (surface), () => (null)),
+    path: selectTruthyValue(() => (artifactPath), () => (null)),
+    run_id: selectTruthyValue(() => (artifact?.run_id), () => (null)),
     role: authority.role,
     authority,
   };
@@ -313,7 +400,7 @@ function validatePersistArtifactRequest(request = {}) {
       throw new Error(`Artifact content is required when format='${format}'`);
     }
     if (format === 'json') {
-      if (!(typeof request.content === 'string' || isPlainObject(request.content) || Array.isArray(request.content))) {
+      if (!(selectTruthyValue(() => (selectTruthyValue(() => (typeof request.content === 'string'), () => (isPlainObject(request.content)))), () => (Array.isArray(request.content))))) {
         throw new Error("Artifact json content must be a string, object, or array");
       }
     } else if (typeof request.content !== 'string') {
@@ -347,7 +434,7 @@ function writeArtifactPayload(targetPath, request) {
     return;
   }
 
-  if (request.format === 'text' || request.format === 'markdown') {
+  if (selectTruthyValue(() => (request.format === 'text'), () => (request.format === 'markdown'))) {
     fs.writeFileSync(targetPath, request.content);
     return;
   }
@@ -361,7 +448,7 @@ function writeArtifactPayload(targetPath, request) {
 }
 
 export function getPipelineArtifactBundle(config = {}) {
-  const runId = config?._runId || config?.run_id || getRunId(config) || null;
+  const runId = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (config?._runId), () => (config?.run_id))), () => (getRunId(config)))), () => (null));
   const pipelineDir = pipelineLogDir(config);
   const runLogDir = resolvePipelineRunLogDir(config, runId);
   const runDir = runId ? `runs/${runId}` : null;
@@ -412,8 +499,9 @@ export function getPipelineArtifactBundle(config = {}) {
 
 export function getPluginArtifactBundle(config = {}, { hookFamily = null, stageId = null, moduleId = null } = {}) {
   const paths = resolveArtifactLanePaths(config, { hookFamily, stageId, moduleId });
-  const relativeLaneDir = toPortableRelativePath(config?.repo_root || paths.runLogDir, paths.laneDir);
-  const relativeIndexPath = toPortableRelativePath(config?.repo_root || paths.runLogDir, paths.indexPath);
+  const repoRoot = requireArtifactRepoRoot(config);
+  const relativeLaneDir = toPortableRelativePath(repoRoot, paths.laneDir);
+  const relativeIndexPath = toPortableRelativePath(repoRoot, paths.indexPath);
   return {
     run_id: paths.runId,
     lane_dir: paths.laneDir,
@@ -434,10 +522,16 @@ export function buildLatestPointer(config = {}, {
   startedAt = null,
   completedAt = null,
   terminalStatus = null,
+  terminalDecision = null,
+  runFacts = null,
+  usageAggregate = null,
+  budgetStatus = null,
+  costReportPath = null,
 } = {}) {
   const artifacts = getPipelineArtifactBundle(config);
   return {
     run_id: artifacts.run_id,
+    pipeline_run_id: artifacts.run_id,
     status,
     telemetry_stream_key: artifacts.telemetry_stream_key,
     authority: buildPipelineArtifactAuthorityPolicy({
@@ -457,6 +551,13 @@ export function buildLatestPointer(config = {}, {
     started_at: startedAt,
     completed_at: completedAt,
     terminal_status: terminalStatus,
+    terminal_decision: terminalDecision,
+    run_facts: runFacts,
+    module_statuses: runFacts?.modules || null,
+    modules: runFacts?.modules || null,
+    gates: runFacts?.gates || null,
+    tests: buildRunTestSummary(runFacts),
+    cost: buildRunCostSummary({ usageAggregate, budgetStatus, costReportPath }),
   };
 }
 
@@ -492,7 +593,7 @@ export function createPluginArtifactsApi(config = {}, {
   return {
     async get(ref) {
       const lookupRef = assertNonEmptyString(ref, 'Artifact ref');
-      const match = getEntries().find((entry) => entry.path === lookupRef || entry.requestId === lookupRef || entry.abs_path === lookupRef);
+      const match = getEntries().find((entry) => selectTruthyValue(() => (selectTruthyValue(() => (entry.path === lookupRef), () => (entry.requestId === lookupRef))), () => (entry.abs_path === lookupRef)));
       return match ? normalizeArtifactRef(config, match) : null;
     },
 
@@ -516,18 +617,18 @@ export function createPluginArtifactsApi(config = {}, {
         ? path.basename(normalizedRequest.suggestedPath, path.extname(normalizedRequest.suggestedPath))
         : null;
       const fileName = [
-        sanitizeSegment(normalizedRequest.type),
-        normalizedRequest.role ? sanitizeSegment(normalizedRequest.role) : null,
-        normalizedRequest.label ? sanitizeSegment(normalizedRequest.label) : null,
-        suggestionBase ? sanitizeSegment(suggestionBase) : null,
-        sanitizeSegment(requestId),
+        sanitizeSegment(normalizedRequest.type, 'Artifact type'),
+        normalizedRequest.role ? sanitizeSegment(normalizedRequest.role, 'Artifact role') : null,
+        normalizedRequest.label ? sanitizeSegment(normalizedRequest.label, 'Artifact label') : null,
+        suggestionBase ? sanitizeSegment(suggestionBase, 'Artifact suggestedPath') : null,
+        sanitizeSegment(requestId, 'Artifact request id'),
       ].filter(Boolean).join('__') + extension;
       const absPath = path.join(lanePaths.dataDir, fileName);
       writeArtifactPayload(absPath, normalizedRequest);
 
       const artifactRef = {
         type: normalizedRequest.type,
-        path: toPortableRelativePath(config?.repo_root || lanePaths.runLogDir, absPath),
+        path: toPortableRelativePath(requireArtifactRepoRoot(config), absPath),
         ...(normalizedRequest.label ? { label: normalizedRequest.label } : {}),
         ...(normalizedRequest.role ? { role: normalizedRequest.role } : {}),
       };
@@ -549,12 +650,12 @@ export function createPluginArtifactsApi(config = {}, {
         requestId,
         recordedAt,
         format: normalizedRequest.format,
-        metadata: normalizedRequest.metadata || null,
+        metadata: selectTruthyValue(() => (normalizedRequest.metadata), () => (null)),
         invocation: {
-          moduleId: invocation?.moduleId ?? null,
-          gateId: invocation?.gateId ?? null,
-          attempt: invocation?.attempt ?? null,
-          dispatchId: invocation?.dispatchId ?? null,
+          moduleId: selectDefinedValue(() => (invocation?.moduleId), () => (null)),
+          gateId: selectDefinedValue(() => (invocation?.gateId), () => (null)),
+          attempt: selectDefinedValue(() => (invocation?.attempt), () => (null)),
+          dispatchId: selectDefinedValue(() => (invocation?.dispatchId), () => (null)),
         },
       };
 

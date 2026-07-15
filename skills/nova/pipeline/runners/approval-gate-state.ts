@@ -1,6 +1,8 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // runners/approval-gate-state.ts — approval gate persistence and audit artifacts
 
 import fs from 'fs';
+import path from 'path';
 import { log } from '../core/logger.ts';
 import { approvalGateArtifactPaths, approvalGateArtifactRefPaths, gateStatusPath } from '../core/paths.ts';
 import { discord as discordIntegration } from '../integrations/discord.ts';
@@ -13,6 +15,31 @@ import {
 } from './approval-gate-shared.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
 import { appendDurableOperatorAlert } from '../services/durable-operator-alert.ts';
+
+const APPROVAL_GATE_TYPE = 'approval';
+const APPROVAL_STATE_PARSE_ERROR = 'Failed to parse approval gate state';
+const APPROVAL_STATE_INVALID_JSON = 'invalid JSON';
+const APPROVAL_STATE_MISSING_STATUS = 'missing';
+const APPROVAL_STATE_MISSING_PATH = 'missing_state_path';
+const APPROVAL_STATE_MISSING_PARSE_ERROR = 'missing_parse_error';
+const APPROVAL_STATE_MISSING_PROJECT = 'missing_project';
+const APPROVAL_STATE_MISSING_RUN_ID = 'missing_recovery_target_id';
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function selectPresentValue(...values) {
+  return values.find((value) => value !== undefined && value !== null && value !== '');
+}
+
+function gateRef(gateId) {
+  return `gate:${gateId}`;
+}
+
+function approvalGateType(...sources) {
+  return selectPresentValue(...sources, APPROVAL_GATE_TYPE);
+}
 
 function errorMessage(error) {
   return error instanceof Error ? error.message : String(error);
@@ -46,9 +73,9 @@ export function loadApprovalGateState(config, gateId) {
     return {
       _corrupted_gate_state: true,
       gate_id: gateId,
-      gate_type: 'approval',
-      project: config?.project || null,
-      parse_error: errorMessage(error) || 'Failed to parse approval gate state',
+      gate_type: APPROVAL_GATE_TYPE,
+      project: selectTruthyValue(() => (config?.project), () => (null)),
+      parse_error: selectPresentValue(errorMessage(error), APPROVAL_STATE_PARSE_ERROR),
       parse_error_path: p,
       parse_error_preview: preview,
     };
@@ -56,20 +83,23 @@ export function loadApprovalGateState(config, gateId) {
 }
 
 function buildCorruptedApprovalStateReason(gateId, state = {}) {
-  const parseError = state?.parse_error || 'invalid JSON';
-  const filePath = state?.parse_error_path || `gate:${gateId}`;
+  const parseError = selectPresentValue(state?.parse_error, APPROVAL_STATE_INVALID_JSON);
+  const filePath = selectPresentValue(state?.parse_error_path, gateRef(gateId));
   return `Approval gate '${gateId}' has corrupted persisted state at '${filePath}': ${parseError}`;
+}
+
+function invalidApprovalStatusAuthority(state = {}) {
+  if (selectTruthyValue(() => (state?.status == null), () => (String(state.status).trim() === ''))) return APPROVAL_STATE_MISSING_STATUS;
+  return String(state.status);
 }
 
 function buildInvalidApprovalStateReason(gateId, state = {}) {
   if (state?.invalid_state_error) {
-    const filePath = state?.state_path || `gate:${gateId}`;
+    const filePath = selectPresentValue(state?.state_path, gateRef(gateId));
     return `Approval gate '${gateId}' has invalid persisted state at '${filePath}': ${state.invalid_state_error}; refusing to reopen or reset approval automatically`;
   }
-  const status = state?.status == null || String(state.status).trim() === ''
-    ? 'missing'
-    : String(state.status);
-  const filePath = state?.state_path || `gate:${gateId}`;
+  const status = invalidApprovalStatusAuthority(state);
+  const filePath = selectPresentValue(state?.state_path, gateRef(gateId));
   return `Approval gate '${gateId}' has invalid persisted state status '${status}' at '${filePath}'; refusing to reopen or reset approval automatically`;
 }
 
@@ -79,18 +109,19 @@ export async function failClosedOnCorruptedApprovalState(config, gateId, gate, s
     ? state.parse_error_preview.replace(/\s+/g, ' ').trim().slice(0, 200)
     : '(unavailable)';
   const correlation = {
-    run_id: config._runId || config.run_id || null,
+    run_id: selectTruthyValue(() => (selectTruthyValue(() => (config._runId), () => (config.run_id))), () => (null)),
     gate_id: gateId,
-    gate_type: gate?.type || 'approval',
+    gate_type: approvalGateType(gate?.type),
   };
 
   log('ERROR', `${reason}. Refusing to start a fresh approval flow over corrupted persisted state.`);
-  await deps.discord(config, 'CRITICAL', `Approval state corrupted: ${gate?.title || gateId}`,
+  const corruptedStateTitle = gate?.title ? gate.title : gateId;
+  await deps.discord(config, 'CRITICAL', `Approval state corrupted: ${corruptedStateTitle}`,
     `Gate \`${gateId}\` has unreadable persisted approval state. Refusing to reopen or reset the wait automatically. Operator intervention required.`,
     buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, correlation, [
       { name: 'Action', value: 'Failing closed. Repair or remove the corrupted gate-state file before retrying.', inline: false },
-      { name: 'State file', value: `\`${state?.parse_error_path || 'unknown'}\``, inline: false },
-      { name: 'Parse error', value: (state?.parse_error || 'unknown').slice(0, 1000), inline: false },
+      { name: 'State file', value: `\`${selectPresentValue(state?.parse_error_path, APPROVAL_STATE_MISSING_PATH)}\``, inline: false },
+      { name: 'Parse error', value: selectPresentValue(state?.parse_error, APPROVAL_STATE_MISSING_PARSE_ERROR).slice(0, 1000), inline: false },
       { name: 'Preview', value: preview ? `\`${preview}\`` : '(unavailable)', inline: false },
       { name: 'Audit trail', value: `\`.swarm/logs/gates/${gateId}/\``, inline: false },
     ]),
@@ -108,23 +139,24 @@ export async function failClosedOnCorruptedApprovalState(config, gateId, gate, s
 
 export async function failClosedOnInvalidApprovalState(config, gateId, gate, state, deps) {
   const stateWithPath = {
-    ...(state || {}),
+    ...objectRecord(state),
     state_path: gateStatusPath(config, gateId),
   };
   const reason = buildInvalidApprovalStateReason(gateId, stateWithPath);
   const correlation = {
-    run_id: config._runId || config.run_id || null,
+    run_id: selectTruthyValue(() => (selectTruthyValue(() => (config._runId), () => (config.run_id))), () => (null)),
     gate_id: gateId,
-    gate_type: gate?.type || 'approval',
+    gate_type: approvalGateType(gate?.type),
   };
 
   log('ERROR', `${reason}. Operator intervention required.`);
-  await deps.discord(config, 'CRITICAL', `Approval state invalid: ${gate?.title || gateId}`,
+  const invalidStateTitle = gate?.title ? gate.title : gateId;
+  await deps.discord(config, 'CRITICAL', `Approval state invalid: ${invalidStateTitle}`,
     `Gate \`${gateId}\` has illegal persisted approval state. Refusing to reopen or reset the wait automatically. Operator intervention required.`,
     buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, correlation, [
       { name: 'Action', value: 'Failing closed. Repair or remove the invalid gate-state file before retrying.', inline: false },
       { name: 'State file', value: `\`${stateWithPath.state_path}\``, inline: false },
-      { name: 'Status', value: String(state?.status ?? 'missing').slice(0, 200), inline: true },
+      { name: 'Status', value: String(selectDefinedValue(() => (state?.status), () => (APPROVAL_STATE_MISSING_STATUS))).slice(0, 200), inline: true },
       ...(state?.invalid_state_error ? [{ name: 'Invalid state', value: String(state.invalid_state_error).slice(0, 1000), inline: false }] : []),
       { name: 'Allowed statuses', value: Object.values(APPROVAL_STATUS).join(', '), inline: false },
     ]),
@@ -145,10 +177,11 @@ export function saveApprovalGateState(config, gateId, state) {
   const tmp = p + '.tmp';
   state = normalizeApprovalGateState(state, {
     gate_id: gateId,
-    gate_type: state?.gate_type || 'approval',
+    gate_type: approvalGateType(state?.gate_type),
     project: config.project,
   });
   state.updated_at = new Date().toISOString();
+  fs.mkdirSync(path.dirname(p), { recursive: true });
   fs.writeFileSync(tmp, JSON.stringify(state, null, 2) + '\n');
   fs.renameSync(tmp, p);
 }
@@ -159,16 +192,22 @@ export function appendApprovalTransition(config, gateId, from, to, note = '', id
     fs.mkdirSync(paths.dir, { recursive: true });
     const entry = {
       ts: new Date().toISOString(),
-      run_id: identity.run_id || config._runId || config.run_id || null,
-      project: identity.project || config.project || null,
-      gate_id: identity.gate_id || gateId,
-      gate_type: identity.gate_type || null,
+      run_id: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (identity.run_id), () => (config._runId))), () => (config.run_id))), () => (null)),
+      project: selectTruthyValue(() => (selectTruthyValue(() => (identity.project), () => (config.project))), () => (null)),
+      gate_id: approvalTransitionGateId(identity, gateId),
+      gate_type: selectTruthyValue(() => (identity.gate_type), () => (null)),
       from,
       to,
       note,
     };
     fs.appendFileSync(paths.transitionsJsonl, JSON.stringify(entry) + '\n');
   } catch (error) { recordApprovalAuditDegraded(config, gateId, 'transitions.jsonl', error); }
+}
+
+function approvalTransitionGateId(identity, gateId) {
+  if (typeof identity?.gate_id === 'string' && identity.gate_id.trim()) return identity.gate_id.trim();
+  if (typeof gateId === 'string' && gateId.trim()) return gateId.trim();
+  throw new Error('Approval transition requires gate_id');
 }
 
 export function writeApprovalRequest(config, gateId, gate, state) {
@@ -179,7 +218,7 @@ export function writeApprovalRequest(config, gateId, gate, state) {
 
   const payload = {
     gate_id:      gateId,
-    gate_type:    state.gate_type || gate.type || 'approval',
+    gate_type:    approvalGateType(state.gate_type, gate.type),
     gate_title:   gate.title,
     run_id:       state.run_id,
     project:      config.project,
@@ -214,7 +253,7 @@ export function writeApprovalDecision(config, gateId, state) {
   const paths = approvalGateArtifactPaths(config, gateId); if (!paths) return;
   state = normalizeApprovalGateState(state, {
     gate_id: gateId,
-    gate_type: state?.gate_type || 'approval',
+    gate_type: approvalGateType(state?.gate_type),
     project: config.project,
   });
   try {
@@ -227,8 +266,8 @@ export function writeApprovalDecision(config, gateId, state) {
 }
 
 function buildRequestMarkdown(gateId, gate, state, artifactRefs = {}) {
-  state = normalizeApprovalGateState(state, { gate_id: gateId, gate_type: gate?.type || 'approval' });
-  const deadline = state.deadline ? new Date(state.deadline).toUTCString() : 'unknown';
+  state = normalizeApprovalGateState(state, { gate_id: gateId, gate_type: approvalGateType(gate?.type) });
+  const deadline = state.deadline ? new Date(state.deadline).toUTCString()  : 'approval_deadline_missing';
   const timeoutNote = isApprovalTimeoutContinue(state.timeout_policy)
     ? `${APPROVAL_TIMEOUT_POLICY.CONTINUE} — Pipeline will CONTINUE automatically on timeout.`
     : `${APPROVAL_TIMEOUT_POLICY.BLOCK} — Pipeline will BLOCK and escalate on timeout.`;
@@ -237,9 +276,9 @@ function buildRequestMarkdown(gateId, gate, state, artifactRefs = {}) {
     `# Approval Required: ${gate.title}`,
     '',
     `**Gate ID:** \`${gateId}\``,
-    `**Gate Type:** ${state.gate_type || gate?.type || 'approval'}`,
-    `**Project:** ${state.project || 'unknown'}`,
-    `**Run ID:** ${state.run_id || 'unknown'}`,
+    `**Gate Type:** ${approvalGateType(state.gate_type, gate?.type)}`,
+    `**Project:** ${selectPresentValue(state.project, APPROVAL_STATE_MISSING_PROJECT)}`,
+    `**Run ID:** ${selectPresentValue(state.run_id, APPROVAL_STATE_MISSING_RUN_ID)}`,
     `**Requested at:** ${state.requested_at}`,
     `**Deadline:** ${deadline}`,
     `**Timeout policy:** ${timeoutNote}`,

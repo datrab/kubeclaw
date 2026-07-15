@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // runners/buster-gate-task.js — pure Buster gate dispatch payload helpers
 // Keep this module side-effect free: the runner owns spawning, polling, Redis, lifecycle, and telemetry.
 
@@ -20,7 +21,7 @@ export function buildBusterGateRateLimitStatusOptions({ gateId, gate, completion
     gateId,
     gateType: gate.type,
     identity: {
-      agent_type: gate.type || 'buster',
+      agent_type: selectDefinedValue(() => (gate.type), () => ('buster')),
       run_id: completionIdentity.runId,
       attempt: completionIdentity.attempt,
       dispatch_id: completionIdentity.dispatchId,
@@ -48,12 +49,19 @@ export function buildBusterGateArchiveTarget(gateId, gate) {
 }
 
 export function buildBusterGateSpawnOptions(gate, completionIdentity) {
+  const commitHash = typeof completionIdentity.commitHash === 'string'
+    ? completionIdentity.commitHash.trim()
+    : '';
+  if (!commitHash) {
+    throw new Error('Buster gate spawn options require commitHash');
+  }
   return {
     taskType: 'gate_test',
     gate,
     run_id: completionIdentity.runId,
     attempt: completionIdentity.attempt,
     dispatch_id: completionIdentity.dispatchId,
+    commit_hash: commitHash,
   };
 }
 
@@ -76,15 +84,28 @@ export function buildBusterGateActiveCompletionIdentity(completionIdentity) {
 }
 
 export function applyTrackedBusterGateIdentity(completionIdentity, trackedGate = null) {
-  completionIdentity.dispatchId = trackedGate?.telemetry_dispatch_id || trackedGate?.dispatch_id || completionIdentity.dispatchId;
-  completionIdentity.gateway_label = trackedGate?.gatewayLabel || completionIdentity.gateway_label;
-  completionIdentity.sessionKey = trackedGate?.sessionKey || null;
+  completionIdentity.dispatchId = trackedBusterGateDispatchId(completionIdentity, trackedGate);
+  completionIdentity.gateway_label = trackedBusterGateGatewayLabel(completionIdentity, trackedGate);
+  completionIdentity.sessionKey = selectTruthyValue(() => (trackedGate?.sessionKey), () => (null));
   return completionIdentity;
+}
+
+function trackedBusterGateDispatchId(completionIdentity, trackedGate = null) {
+  if (trackedGate?.telemetry_dispatch_id) return trackedGate.telemetry_dispatch_id;
+  if (trackedGate?.dispatch_id) return trackedGate.dispatch_id;
+  if (completionIdentity?.dispatchId) return completionIdentity.dispatchId;
+  throw new Error('Buster gate tracked identity requires dispatch id');
+}
+
+function trackedBusterGateGatewayLabel(completionIdentity, trackedGate = null) {
+  if (trackedGate?.gatewayLabel) return trackedGate.gatewayLabel;
+  if (completionIdentity?.gateway_label) return completionIdentity.gateway_label;
+  return null;
 }
 
 export function syncBusterGateRateLimitStatusOptions(statusOptions, completionIdentity) {
   statusOptions.identity = {
-    ...(statusOptions.identity || {}),
+    ...(selectDefinedValue(() => (statusOptions.identity), () => ({}))),
     dispatch_id: completionIdentity.dispatchId,
     gateway_label: completionIdentity.gateway_label,
     session_key: completionIdentity.sessionKey,

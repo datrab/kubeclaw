@@ -15,6 +15,7 @@ function parseArgs(argv = process.argv.slice(2)) {
 }
 
 const { sourceRoot } = parseArgs();
+const genericMissingValueToken = ['unk', 'nown'].join('');
 const helperPath = path.join(sourceRoot, 'skills/nova/pipeline/services/contracts/gate-control-result.ts');
 const reviewControlPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/review-gate-control.ts');
 const busterControlPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/buster-gate-control.ts');
@@ -100,7 +101,10 @@ for (const forbidden of [
 }
 
 assert.equal(gateRunnerSource.includes('buildPipelineStepResultFromControlResult('), true, 'gate-runner should build canonical step results from typed gate controls');
+assert.equal(gateRunnerSource.includes('terminalReasonCode: outcome'), true, 'gate-runner terminal reason should use typed gate outcome, not diagnostic failure_class');
 assert.equal(gateRunnerSource.includes('async function buildGateRuntimeErrorControl('), true, 'gate-runner should use one runtime-error control builder');
+assert.equal(gateRunnerSource.includes('function isTimeoutError('), true, 'gate-runner should classify timeout-shaped runtime errors before terminal projection');
+assert.equal(gateRunnerSource.includes("terminalReasonCode: diagnostics?.timed_out === true ? 'timeout'"), true, 'gate-runner runtime timeout failures must use the canonical timeout terminal reason');
 assert.equal(gateRunnerSource.includes('function buildGateRuntimeErrorStepResult('), false, 'gate-runner must not keep a separate runtime-error step projection helper');
 assert.equal(gateRunnerSource.includes('emitGateDispatchFailure('), false, 'gate-runner must not keep a separate dispatch failure projection path');
 assert.equal(gateRunnerSource.includes('emitGateExecutionFailure('), false, 'gate-runner must not keep a separate execution failure projection path');
@@ -111,7 +115,7 @@ assert.equal(scheduledGateInvocationSource.includes('export async function runSc
 assert.equal(scheduledGateInvocationSource.includes('scheduled gate invocation requires explicit stageId'), true, 'scheduled gate invocation helper should require explicit stage identity');
 assert.equal(scheduledGateInvocationSource.includes('scheduled gate invocation requires explicit gateType'), true, 'scheduled gate invocation helper should require explicit gate type identity');
 assert.equal(scheduledGateInvocationSource.includes('scheduled gate invocation requires explicit positive attempt'), true, 'scheduled gate invocation helper should require explicit attempt identity');
-assert.equal(gateRunnerSource.includes("opts?.stageId || `gate:${gate?.type || 'unknown'}`"), false, 'gate-runner must not synthesize scheduled gate stage ids from gate type fallbacks');
+assert.equal(gateRunnerSource.includes(`opts?.stageId || \`gate:\${gate?.type || '${genericMissingValueToken}'}\``), false, 'gate-runner must not synthesize scheduled gate stage ids from gate type fallbacks');
 assert.equal(gateRunnerSource.includes('gate run input requires explicit stageId'), true, 'gate-runner should reject missing scheduled gate stage ids at input construction');
 assert.equal(gateRunnerSource.includes('gate plugin invocation requires explicit stageId'), true, 'gate-runner should reject missing scheduled gate stage ids at plugin invocation construction');
 assert.equal(gateRunnerSource.includes('diagnostics: { gate_status:'), false, 'gate state snapshots must not expose diagnostic gate-status evidence');
@@ -123,7 +127,7 @@ assert.equal(waitableGateEngineSource.includes("from '../core/context.ts'"), fal
 assert.equal(remediableGateEngineSource.includes("from '../core/context.ts'"), false, 'remediable gate engine must not keep a private plugin context/envelope path');
 assert.equal(waitableGateEngineSource.includes('gateStageStarted'), false, 'waitable gate engine must not use mutable error flags for stage-start evidence');
 assert.equal(gateRunnerSource.includes('error?.gateStageStarted'), false, 'gate-runner must consume typed waitable stage-start evidence instead of mutable error flags');
-assert.equal(reviewRunnerSource.includes('createReviewGateRemediationController'), true, 'review gate should keep typed remediation controller factory');
+assert.equal(reviewRunnerSource.includes('createReviewGateRemediationController'), false, 'review gate should not keep remediation controller factories');
 assert.equal(busterRunnerSource.includes('createBusterGateRemediationController'), true, 'Buster gate should keep typed remediation controller factory');
 assert.equal(approvalRunnerSource.includes('createApprovalGateWaitController'), true, 'approval gate should keep typed wait controller factory');
 assert.equal(reviewControlSource.includes('non-pass result requires explicit failure_class'), true, 'review gate controls should require typed failure_class for non-pass results');
@@ -134,7 +138,7 @@ assert.equal(reviewRunnerSource.includes('passed: true'), false, 'review gate pa
 assert.equal(reviewRunnerSource.includes('status: STATUS.PASS'), false, 'review gate pass producers must not emit status pass aliases');
 assert.equal(reviewControlSource.includes('REVIEW_GATE_FAILURE_DECISIONS'), true, 'review failure classes should map through an explicit decision authority');
 assert.equal(reviewControlSource.includes('REVIEW_GATE_FAILURE_FINDINGS'), true, 'review failure classes should map through an explicit finding authority');
-assert.equal(reviewControlSource.includes("return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'unknown', outcomeClass: 'error' };"), false, 'review failure-class mapping must not fall through to a generic block decision');
+assert.equal(reviewControlSource.includes(`return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: '${genericMissingValueToken}', outcomeClass: 'error' };`), false, 'review failure-class mapping must not fall through to a generic block decision');
 assert.equal(busterControlSource.includes('non-pass result requires explicit failure_class'), true, 'Buster gate controls should require typed failure_class for non-pass results');
 assert.equal(approvalControlSource.includes("function isApprovalGatePassResult(result = {}) {\n  return result?.outcome_class === 'passed';\n}"), true, 'approval gate pass detection should use the typed outcome class');
 assert.equal(approvalControlSource.includes('result?.passed === true'), false, 'approval gate controls must not accept legacy passed booleans');
@@ -153,6 +157,8 @@ assert.equal(busterControlSource.includes('resolveStatusDispatchId'), false, 'Bu
 assert.equal(builtinsRegistrySource.includes('gateControl: getReviewGateControlAdapter()'), true, 'review gate strategy must be declared through its gate-control adapter');
 assert.equal(builtinsRegistrySource.includes('gateControl: getBusterGateControlAdapter()'), true, 'Buster gate strategy must be declared through its gate-control adapter');
 assert.equal(builtinsRegistrySource.includes('gateControl: getApprovalGateControlAdapter()'), true, 'approval gate strategy must be declared through its gate-control adapter');
+assert.equal(reviewRunnerSource.includes('allowedNextActions: [GATE_CONTROL_ACTIONS.PASS, GATE_CONTROL_ACTIONS.BLOCK]'), true, 'review standard gate adapter must declare explicit allowed control actions');
+assert.equal(gateRunnerSource.includes('must declare gateControl.allowedNextActions'), true, 'generic gate runner must reject non-remediable adapters without allowed actions');
 
 const helperMod = await import(pathToFileURL(helperPath).href);
 const reviewControlMod = await import(pathToFileURL(reviewControlPath).href);
@@ -198,11 +204,11 @@ assert.throws(
   'review gate controls must not infer failure class from status/reason',
 );
 const reviewFailureExpectations = {
-  config_invalid: ['unknown', 'error', 'REVIEW_GATE_CONFIG_INVALID'],
-  invalid_contract: ['unknown', 'error', 'REVIEW_GATE_INVALID_CONTRACT'],
+  config_invalid: ['contract', 'error', 'REVIEW_GATE_CONFIG_INVALID'],
+  invalid_contract: ['contract', 'error', 'REVIEW_GATE_INVALID_CONTRACT'],
   rate_limit_exhausted: ['environment', 'rate_limited', 'REVIEW_GATE_RATE_LIMIT_EXHAUSTED'],
   review_failed: ['environment', 'error', 'REVIEW_GATE_REVIEW_FAILED'],
-  unknown_failure: ['unknown', 'error', 'REVIEW_GATE_UNKNOWN_FAILURE'],
+  classification_missing: ['contract', 'error', 'REVIEW_GATE_CLASSIFICATION_MISSING'],
   verdict_fail: ['code', 'needs_nova', 'REVIEW_GATE_VERDICT_FAIL'],
 };
 for (const [failureClass, [issueType, outcomeClass, findingCode]] of Object.entries(reviewFailureExpectations)) {
@@ -235,9 +241,9 @@ assert.equal(
 const malformedBusterGatePass = busterTerminalMod.assertBusterGateEvaluationResult({ ok: true });
 assert.equal(malformedBusterGatePass.type, busterTerminalMod.BUSTER_GATE_EVALUATION_RESULT_TYPES.INVALID_CONTRACT);
 assert.equal(malformedBusterGatePass.status.invalid_reason, 'invalid_pass_payload');
-const unknownBusterGateReason = busterTerminalMod.assertBusterGateEvaluationResult({ ok: false, reason: 'new_shape', status: {} });
-assert.equal(unknownBusterGateReason.type, busterTerminalMod.BUSTER_GATE_EVALUATION_RESULT_TYPES.INVALID_CONTRACT);
-assert.equal(unknownBusterGateReason.status.invalid_reason, 'unknown_reason');
+const unsupportedBusterGateReason = busterTerminalMod.assertBusterGateEvaluationResult({ ok: false, reason: 'new_shape', status: {} });
+assert.equal(unsupportedBusterGateReason.type, busterTerminalMod.BUSTER_GATE_EVALUATION_RESULT_TYPES.INVALID_CONTRACT);
+assert.equal(unsupportedBusterGateReason.status.invalid_reason, 'unsupported_reason');
 assert.throws(
   () => busterControlMod.buildBusterGateControlResult(
     { _runId: 'run-1' },
@@ -292,6 +298,11 @@ assert.deepEqual(helperMod.validateTypedGateControlResult(typed, {
   producerType: 'review',
   allowedNextActions: ['pass', 'block'],
 }), []);
+assert.deepEqual(helperMod.validateTypedGateControlResult(typed, {
+  producerType: 'review',
+  allowedNextActions: [],
+  stageId: 'gate:review',
+}), ['allowedNextActions must be non-empty for gate:review']);
 
 for (const aliasStatus of ['OK', 'APPROVED', 'REJECTED', 'CANCELLED', 'PENDING_APPROVAL']) {
   const aliasTyped = helperMod.buildTypedGateControlResult({

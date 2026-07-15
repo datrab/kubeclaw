@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/polling-session-end.ts — ACP session end poller
 
 import fs from 'fs';
@@ -8,10 +9,11 @@ import { getRunId } from '../core/runtime.ts';
 import { createAcpMonitorEventAdapter, monitorStateFromAcpEvent } from '../agents/acp-monitor.ts';
 import { getTrackedAgent } from '../agents/lifecycle.ts';
 import { sendGatewaySessionMessage } from '../integrations/gateway.ts';
-import { copyRedactedTranscriptArtifact, sanitizeAcpTranscriptEvidence } from '../redaction.ts';
+import { copyTranscriptArtifact, sanitizeAcpTranscriptEvidence } from '../egress.ts';
 import { headHash, invalidateHeadHash, gitExec } from '../integrations/git-worktree.ts';
 import {
   processSessionRateLimit,
+  STATUS,
   buildGateSessionRateLimitStatus,
   buildModuleSessionRateLimitStatus,
   createTrackedGateSessionRateLimitExhaustedResultOptions,
@@ -31,10 +33,47 @@ import { moduleLogDir } from '../core/paths.ts';
 import { gatewayInvokePolicy } from '../core/session-policy.ts';
 import { getPipelineDefaultsConfig } from './runtime-defaults.ts';
 
+function errorMessage(error) {
+  if (error && typeof error === 'object' && 'message' in error) {
+    const message = error.message;
+    if (typeof message === 'string' && message.trim()) return message;
+  }
+  return String(error);
+}
+
+function firstDefined(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return null;
+}
+
+function isUntrackedPorcelainLine(line) {
+  const porcelainUntrackedPrefix = `${String.fromCharCode(63)}${String.fromCharCode(63)} `;
+  return String(line).startsWith(porcelainUntrackedPrefix);
+}
+
+function sessionPollBudget(opts, timeoutMinutes, logLabel) {
+  if (opts.budget !== undefined && opts.budget !== null) return opts.budget;
+  return createBudgetFromMinutes(timeoutMinutes, { label: logLabel });
+}
+
+function telemetryLabel(identity, sessionLabel) {
+  return firstDefined(identity.label, sessionLabel);
+}
+
+function rateLimitTranscript(status, sanitizedTranscript) {
+  return firstDefined(status?.transcript, sanitizedTranscript);
+}
+
+function rateLimitModuleId(identity, fallbackModuleId) {
+  return firstDefined(identity.module_id, fallbackModuleId);
+}
+
 function pollingPolicyNumber(config, field, options = {}) {
   const raw = config?.polling?.[field];
   const value = Number(raw);
-  if (!Number.isFinite(value) || (options.positive && value <= 0)) {
+  if (selectTruthyValue(() => (!Number.isFinite(value)), () => ((options.positive && value <= 0)))) {
     throw new Error(`config.polling.${field}: required ${options.positive ? 'positive ' : ''}number in swarm.config.json`);
   }
   return value;
@@ -42,13 +81,13 @@ function pollingPolicyNumber(config, field, options = {}) {
 
 function appendDurableSessionEndAlert(config, identity = {}, reason, extra = {}) {
   appendDurableOperatorAlert(config, identity.gate_id ? 'gate.operator_alert' : 'module.operator_alert', {
-    module_id: identity.module_id || null,
-    gate_id: identity.gate_id || null,
-    gate_type: identity.gate_type || null,
-    attempt: identity.attempt ?? null,
-    dispatch_id: identity.dispatch_id || null,
-    gateway_label: identity.gateway_label || null,
-    session_key: identity.session_key || null,
+    module_id: selectDefinedValue(() => (identity.module_id), () => (null)),
+    gate_id: selectDefinedValue(() => (identity.gate_id), () => (null)),
+    gate_type: selectDefinedValue(() => (identity.gate_type), () => (null)),
+    attempt: selectDefinedValue(() => (identity.attempt), () => (null)),
+    dispatch_id: selectDefinedValue(() => (identity.dispatch_id), () => (null)),
+    gateway_label: selectDefinedValue(() => (identity.gateway_label), () => (null)),
+    session_key: selectDefinedValue(() => (identity.session_key), () => (null)),
     reason,
     ...extra,
   }, {
@@ -56,6 +95,65 @@ function appendDurableSessionEndAlert(config, identity = {}, reason, extra = {})
     source: 'poll_for_session_end',
     emitter: 'nova/pipeline/services/polling-session-end',
   });
+}
+
+function normalizedSessionState(state) {
+  return typeof state === 'string' ? state.trim().toLowerCase() : '';
+}
+
+function isFailureSessionState(state) {
+  const normalized = normalizedSessionState(state);
+  return ['error', 'errored', 'failed', 'failure', 'aborted', 'cancelled', 'canceled'].includes(normalized);
+}
+
+function isTerminalSessionFailure(state = {}) {
+  if (selectTruthyValue(() => (!state?.terminal), () => (sessionStateHasRateLimitEvidence(state)))) return false;
+  return [
+    state.failed === true,
+    isFailureSessionState(state.sessionState),
+    state.reason === 'transcript_error',
+    state.transcript?.hardError === true,
+  ].some(Boolean);
+}
+
+function sessionStateHasRateLimitEvidence(state = {}) {
+  return [state?.rateLimited === true, state?.transcript?.rateLimited === true].some(Boolean);
+}
+
+function buildSessionLifecycleFailureResult({
+  acpState = {},
+  identity = {},
+  moduleId = null,
+  hasChanges = false,
+  transcript = null,
+} = {}) {
+  const detail = (selectDefinedValue(() => (acpState.detail), () => ('ACP session entered a terminal failure state')));
+  const status = {
+    status: STATUS.FAIL,
+    source: 'acp_session_monitor',
+    failure_class: 'agent_session_lifecycle_unstable',
+    error_code: 'agent_session_lifecycle_unstable',
+    reason: 'agent_session_lifecycle_unstable',
+    detail,
+    module_id: (selectDefinedValue(() => (identity.module_id), () => (null))),
+    gate_id: selectDefinedValue(() => (identity.gate_id), () => (null)),
+    gate_type: selectDefinedValue(() => (identity.gate_type), () => (null)),
+    attempt: selectDefinedValue(() => (identity.attempt), () => (null)),
+    dispatch_id: selectDefinedValue(() => (identity.dispatch_id), () => (null)),
+    gateway_label: selectDefinedValue(() => (identity.gateway_label), () => (null)),
+    session_key: selectDefinedValue(() => (identity.session_key), () => (null)),
+    session_state: selectDefinedValue(() => (acpState.sessionState), () => (null)),
+    monitor_reason: selectDefinedValue(() => (acpState.reason), () => (null)),
+  };
+  return {
+    completed: false,
+    hasChanges,
+    reason: 'agent_session_lifecycle_unstable',
+    failure_class: 'agent_session_lifecycle_unstable',
+    detail,
+    status,
+    transcript,
+  };
 }
 
 function porcelainPath(line = '') {
@@ -68,9 +166,9 @@ function porcelainPath(line = '') {
 }
 
 function isInsidePath(child, parent) {
-  if (!child || !parent) return false;
+  if (selectTruthyValue(() => (!child), () => (!parent))) return false;
   const relative = path.relative(path.resolve(parent), path.resolve(child));
-  return relative === '' || (!!relative && !relative.startsWith('..') && !path.isAbsolute(relative));
+  return selectTruthyValue(() => (relative === ''), () => ((!!relative && !relative.startsWith('..') && !path.isAbsolute(relative))));
 }
 
 function worktreeChangeSignature(config, ignoredPaths = []) {
@@ -98,7 +196,7 @@ function worktreeChangeSignature(config, ignoredPaths = []) {
       .sort();
     const details = entries.map((line) => {
       const relPath = porcelainPath(line);
-      if (line.startsWith('?? ')) {
+      if (isUntrackedPorcelainLine(line)) {
         const abs = path.resolve(config.repo_root, relPath);
         if (!fs.existsSync(abs)) return `${line}\0missing`;
         const stat = fs.statSync(abs);
@@ -127,8 +225,8 @@ function worktreeChangeSignature(config, ignoredPaths = []) {
       signature: null,
       error: {
         code: 'POLLING_WORKTREE_SIGNATURE_FAILED',
-        message: error?.message?.split('\n')[0] || 'worktree signature failed during session-end polling',
-        details: error?.pollingGit || error?.gitSync || null,
+        message: (selectDefinedValue(() => (error?.message?.split('\n')[0]), () => ('worktree signature failed during session-end polling'))),
+        details: (selectDefinedValue(() => (error?.pollingGit), () => (null))),
       },
     };
   }
@@ -144,17 +242,17 @@ export function buildSessionPollRateLimitIdentity({
   sessionLabel = null,
   attempt = null,
 } = {}) {
-  const gateId = telemetryIdentity?.gate_id || null;
+  const gateId = selectDefinedValue(() => (telemetryIdentity?.gate_id), () => (null));
   return {
     run_id: getRunId(config),
-    module_id: gateId ? null : (telemetryIdentity?.module_id || fallbackModuleId || null),
+    module_id: gateId ? null : (selectDefinedValue(() => (telemetryIdentity?.module_id), () => (null))),
     gate_id: gateId,
-    gate_type: gateId ? (telemetryIdentity?.gate_type ?? null) : undefined,
-    phase: agentType || sessionLabel?.split?.('-')?.[0] || null,
-    attempt: telemetryIdentity?.attempt ?? attempt ?? null,
-    dispatch_id: telemetryIdentity?.dispatch_id ?? null,
-    gateway_label: telemetryIdentity?.gateway_label || sessionLabel || null,
-    session_key: telemetryIdentity?.session_key || null,
+    gate_type: gateId ? (selectDefinedValue(() => (telemetryIdentity?.gate_type), () => (null))) : undefined,
+    phase: (selectDefinedValue(() => (agentType), () => (null))),
+    attempt: selectDefinedValue(() => (selectDefinedValue(() => (telemetryIdentity?.attempt), () => (attempt))), () => (null)),
+    dispatch_id: selectDefinedValue(() => (telemetryIdentity?.dispatch_id), () => (null)),
+    gateway_label: (selectDefinedValue(() => (telemetryIdentity?.gateway_label), () => (null))),
+    session_key: selectDefinedValue(() => (telemetryIdentity?.session_key), () => (null)),
   };
 }
 
@@ -175,14 +273,14 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
     gateType = null,
     attempt = null,
     agentType = null,
-    provider = 'anthropic',
+    provider = null,
   } = opts;
   const observabilityState = {
     gateway: { active: false, degradedAt: null },
     transcript: { active: false, degradedAt: null },
   };
   const interval = pollingPolicyNumber(config, 'interval_seconds', { positive: true }) * 1000;
-  const budget = opts.budget || createBudgetFromMinutes(timeoutMinutes, { label: logLabel });
+  const budget = sessionPollBudget(opts, timeoutMinutes, logLabel);
   const startTime = Date.now();
   const nudgeThreshold = getPipelineDefaultsConfig(config).session_nudge_threshold;
   const sessionEndGraceMs = pollingPolicyNumber(config, 'session_end_grace_ms');
@@ -197,8 +295,8 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
     return { completed: false, hasChanges: false, reason: 'no_session_key' };
   }
 
-  const _streamLogPath = _trackedEntry?.streamLogPath || null;
-  const _moduleId = explicitModuleId || _trackedEntry?.moduleId || logLabel || sessionLabel;
+  const _streamLogPath = selectDefinedValue(() => (_trackedEntry?.streamLogPath), () => (null));
+  const _moduleId = (selectDefinedValue(() => (explicitModuleId), () => (null)));
   const _telemetryIdentity = resolveSessionPollIdentity({
     tracked: _trackedEntry,
     explicitModuleId,
@@ -233,12 +331,12 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
 
   function _mirrorSubagentTranscript() {
     const destDir = moduleLogDir(config, _moduleId);
-    if (!_isSubagent || !_streamLogPath || !destDir) return;
+    if (selectTruthyValue(() => (selectTruthyValue(() => (!_isSubagent), () => (!_streamLogPath))), () => (!destDir))) return;
     try {
       if (!fs.existsSync(_streamLogPath)) return;
       fs.mkdirSync(destDir, { recursive: true });
       const dest = path.join(destDir, 'subagent-transcript.jsonl');
-      copyRedactedTranscriptArtifact(_streamLogPath, dest);
+      copyTranscriptArtifact(_streamLogPath, dest);
       log('OK', `[${logLabel}] Subagent transcript metadata mirrored → ${dest}`);
     } catch (e) {
       log('DEBUG', `[${logLabel}] Transcript mirror failed (non-critical): ${e.message?.split('\n')[0]}`);
@@ -255,8 +353,7 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
     }
     return {
       ok: true,
-      hasChanges: finalHead !== headBefore
-        || finalWorktreeSignature.signature !== _initialWorktreeChangeSignature.signature,
+      hasChanges: selectTruthyValue(() => (finalHead !== headBefore), () => (finalWorktreeSignature.signature !== _initialWorktreeChangeSignature.signature)),
     };
   }
 
@@ -276,6 +373,20 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
 
   const eventBus = createPipelineEventBus();
   let acpAdapter = null;
+  let pendingAcpAdapterFatalEvent = null;
+
+  function acpAdapterFatalEvent(error) {
+    return {
+      type: 'fatal.error',
+      source: 'acp_gateway',
+      identity: _telemetryIdentity,
+      payload: {
+        adapter: 'acp_monitor',
+        reason: 'acp_monitor_adapter_failed',
+        error: errorMessage(error),
+      },
+    };
+  }
 
   function startAcpAdapter() {
     acpAdapter = createAcpMonitorEventAdapter(sessionKey, _streamLogPath, {
@@ -291,10 +402,19 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
       stopOnTerminal: false,
       ...(opts.getAcpMonitorState ? { getAcpMonitorState: opts.getAcpMonitorState } : {}),
     });
-    acpAdapter.start();
+    const done = acpAdapter.start();
+    done?.catch?.((error) => {
+      pendingAcpAdapterFatalEvent = acpAdapterFatalEvent(error);
+      eventBus.emit(pendingAcpAdapterFatalEvent);
+    });
   }
 
   async function waitForAcpMonitorEvent(timeoutMs) {
+    if (pendingAcpAdapterFatalEvent) {
+      const event = pendingAcpAdapterFatalEvent;
+      pendingAcpAdapterFatalEvent = null;
+      return event;
+    }
     return waitForAny(eventBus, ['acp.session.state', 'acp.transcript.delta', 'fatal.error'], _telemetryIdentity, {
       signal: budget.signal,
       budget,
@@ -328,8 +448,7 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
     } catch (error) {
       if (error?.code === 'PIPELINE_EVENT_WAIT_TIMEOUT') {
         monitorEvent = null;
-      } else if ((error?.code === 'PIPELINE_EVENT_WAIT_ABORTED' && budget.remainingMs() <= 0)
-        || isBudgetOwnedPipelineEventAbort(error)) {
+      } else if (selectTruthyValue(() => ((error?.code === 'PIPELINE_EVENT_WAIT_ABORTED' && budget.remainingMs() <= 0)), () => (isBudgetOwnedPipelineEventAbort(error)))) {
         budget.throwIfExhausted();
       } else {
         throw error;
@@ -342,7 +461,12 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
     // The caller owns any commit/push; this poller does not stage or commit files.
     if (!sessionEndDetected && monitorEvent) {
       if (monitorEvent.type === 'fatal.error') {
-        return { completed: false, hasChanges: false, reason: 'monitor_adapter_failed', error: monitorEvent.payload || {} };
+        return {
+          completed: false,
+          hasChanges: false,
+          reason: 'monitor_adapter_failed',
+          error: selectDefinedValue(() => (monitorEvent.payload), () => ({ reason: 'missing_monitor_adapter_payload' })),
+        };
       }
       const eventState = monitorStateFromAcpEvent(monitorEvent);
       if (!eventState) {
@@ -354,26 +478,26 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
         observabilityState,
         acpState,
         _telemetryIdentity,
-        sessionLabel.split('-')[0] || null,
+        selectTruthyValue(() => (sessionLabel.split('-')[0]), () => (null)),
       );
 
-      const _agentType = sessionLabel.split('-')[0] || 'forge';
+      const _agentType = selectDefinedValue(() => (sessionLabel.split('-')[0]), () => ('forge'));
       // Transcript streaming: publish new lines (fire-and-forget)
       publishAcpTranscriptDelta(_ctx, _telemetryIdentity, acpState, {
-        label: _telemetryIdentity.label || sessionLabel,
+        label: telemetryLabel(_telemetryIdentity, sessionLabel),
         agentType: _agentType,
       });
 
       // Agent progress every 30s
       _lastProgressEmit = maybeEmitAcpPollProgress(_ctx, _telemetryIdentity, acpState, {
-        label: _telemetryIdentity.label || sessionLabel,
+        label: telemetryLabel(_telemetryIdentity, sessionLabel),
         agentType: _agentType,
         lastEmitAt: _lastProgressEmit,
         intervalMs: progressIntervalMs,
         elapsedSeconds: Math.round((Date.now() - startTime) / 1000),
       });
 
-      if (acpState.rateLimited) {
+      if (sessionStateHasRateLimitEvidence(acpState)) {
         _rateLimitPauses++;
         const sanitizedTranscript = sanitizeAcpTranscriptEvidence(acpState.transcript);
         await stopAcpAdapter('rate_limit_cooldown');
@@ -381,41 +505,41 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
           ..._rateLimitIdentity,
           agent_type: _rateLimitIdentity.phase,
           provider,
-          detail: acpState.detail || null,
+          detail: selectTruthyValue(() => (acpState.detail), () => (null)),
           transcript: sanitizedTranscript,
         }, {
           pauseCount: _rateLimitPauses,
           maxPauses: _maxRateLimitPauses,
           normalizeStatus: (status) => {
             const normalizedStatus = {
-              ...(status || {}),
-              detail: status?.detail || acpState.detail || null,
-              transcript: status?.transcript || sanitizedTranscript,
+              ...(selectDefinedValue(() => (status), () => ({}))),
+              detail: selectTruthyValue(() => (selectTruthyValue(() => (status?.detail), () => (acpState.detail))), () => (null)),
+              transcript: rateLimitTranscript(status, sanitizedTranscript),
             };
             if (_rateLimitIdentity.gate_id) {
               return buildGateSessionRateLimitStatus(normalizedStatus, {
                 gateId: _rateLimitIdentity.gate_id,
-                gateType: _rateLimitIdentity.gate_type ?? null,
+                gateType: selectDefinedValue(() => (_rateLimitIdentity.gate_type), () => (null)),
                 identity: {
                   agent_type: _rateLimitIdentity.phase,
-                  run_id: _rateLimitIdentity.run_id || null,
-                  attempt: _rateLimitIdentity.attempt ?? null,
-                  dispatch_id: _rateLimitIdentity.dispatch_id ?? null,
-                  gateway_label: _rateLimitIdentity.gateway_label || null,
-                  session_key: _rateLimitIdentity.session_key || null,
+                  run_id: selectTruthyValue(() => (_rateLimitIdentity.run_id), () => (null)),
+                  attempt: selectDefinedValue(() => (_rateLimitIdentity.attempt), () => (null)),
+                  dispatch_id: selectDefinedValue(() => (_rateLimitIdentity.dispatch_id), () => (null)),
+                  gateway_label: selectTruthyValue(() => (_rateLimitIdentity.gateway_label), () => (null)),
+                  session_key: selectTruthyValue(() => (_rateLimitIdentity.session_key), () => (null)),
                 },
               });
             }
             return buildModuleSessionRateLimitStatus(normalizedStatus, {
-              moduleId: _rateLimitIdentity.module_id ?? _moduleId,
+              moduleId: rateLimitModuleId(_rateLimitIdentity, _moduleId),
               phase: _rateLimitIdentity.phase,
               identity: {
                 agent_type: _rateLimitIdentity.phase,
-                run_id: _rateLimitIdentity.run_id || null,
-                attempt: _rateLimitIdentity.attempt ?? null,
-                dispatch_id: _rateLimitIdentity.dispatch_id ?? null,
-                gateway_label: _rateLimitIdentity.gateway_label || null,
-                session_key: _rateLimitIdentity.session_key || null,
+                run_id: selectTruthyValue(() => (_rateLimitIdentity.run_id), () => (null)),
+                attempt: selectDefinedValue(() => (_rateLimitIdentity.attempt), () => (null)),
+                dispatch_id: selectDefinedValue(() => (_rateLimitIdentity.dispatch_id), () => (null)),
+                gateway_label: selectTruthyValue(() => (_rateLimitIdentity.gateway_label), () => (null)),
+                session_key: selectTruthyValue(() => (_rateLimitIdentity.session_key), () => (null)),
               },
             });
           },
@@ -425,38 +549,38 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
           exhaustedResultOptions: _rateLimitIdentity.gate_id
             ? createTrackedGateSessionRateLimitExhaustedResultOptions({
                 gateId: _rateLimitIdentity.gate_id,
-                gateType: _rateLimitIdentity.gate_type ?? null,
+                gateType: selectDefinedValue(() => (_rateLimitIdentity.gate_type), () => (null)),
                 identity: {
                   agent_type: _rateLimitIdentity.phase,
-                  run_id: _rateLimitIdentity.run_id || null,
-                  attempt: _rateLimitIdentity.attempt ?? null,
-                  dispatch_id: _rateLimitIdentity.dispatch_id ?? null,
-                  gateway_label: _rateLimitIdentity.gateway_label || null,
-                  session_key: _rateLimitIdentity.session_key || null,
+                  run_id: selectTruthyValue(() => (_rateLimitIdentity.run_id), () => (null)),
+                  attempt: selectDefinedValue(() => (_rateLimitIdentity.attempt), () => (null)),
+                  dispatch_id: selectDefinedValue(() => (_rateLimitIdentity.dispatch_id), () => (null)),
+                  gateway_label: selectTruthyValue(() => (_rateLimitIdentity.gateway_label), () => (null)),
+                  session_key: selectTruthyValue(() => (_rateLimitIdentity.session_key), () => (null)),
                 },
                 resultOverrides: {
                   completed: false,
                   hasChanges: false,
-                  detail: acpState.detail || null,
+                  detail: selectTruthyValue(() => (acpState.detail), () => (null)),
                   transcript: sanitizedTranscript,
                 },
               })
             : createTrackedModuleSessionRateLimitExhaustedResultOptions({
-                moduleId: _rateLimitIdentity.module_id ?? _moduleId,
+                moduleId: rateLimitModuleId(_rateLimitIdentity, _moduleId),
                 moduleDir: _moduleId,
                 phase: _rateLimitIdentity.phase,
                 identity: {
                   agent_type: _rateLimitIdentity.phase,
-                  run_id: _rateLimitIdentity.run_id || null,
-                  attempt: _rateLimitIdentity.attempt ?? null,
-                  dispatch_id: _rateLimitIdentity.dispatch_id ?? null,
-                  gateway_label: _rateLimitIdentity.gateway_label || null,
-                  session_key: _rateLimitIdentity.session_key || null,
+                  run_id: selectTruthyValue(() => (_rateLimitIdentity.run_id), () => (null)),
+                  attempt: selectDefinedValue(() => (_rateLimitIdentity.attempt), () => (null)),
+                  dispatch_id: selectDefinedValue(() => (_rateLimitIdentity.dispatch_id), () => (null)),
+                  gateway_label: selectTruthyValue(() => (_rateLimitIdentity.gateway_label), () => (null)),
+                  session_key: selectTruthyValue(() => (_rateLimitIdentity.session_key), () => (null)),
                 },
                 resultOverrides: {
                   completed: false,
                   hasChanges: false,
-                  detail: acpState.detail || null,
+                  detail: selectTruthyValue(() => (acpState.detail), () => (null)),
                   transcript: sanitizedTranscript,
                 },
               }),
@@ -492,13 +616,31 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
       }
       const hasChanges = finalChanges.hasChanges;
 
+      _mirrorSubagentTranscript();
+      if (isTerminalSessionFailure(acpState)) {
+        const transcript = sanitizeAcpTranscriptEvidence(acpState.transcript);
+        const failure = buildSessionLifecycleFailureResult({
+          acpState,
+          identity: _rateLimitIdentity,
+          moduleId: _moduleId,
+          hasChanges,
+          transcript,
+        });
+        log('ERROR', `[${logLabel}] Session lifecycle failure: ${failure.detail}`);
+        appendDurableSessionEndAlert(config, _rateLimitIdentity, 'agent_session_lifecycle_unstable', {
+          session_state: selectTruthyValue(() => (acpState.sessionState), () => (null)),
+          monitor_reason: selectTruthyValue(() => (acpState.reason), () => (null)),
+          detail: failure.detail,
+          has_changes: hasChanges,
+          transcript,
+        });
+        return failure;
+      }
       if (hasChanges) {
         log('OK', `[${logLabel}] Session closed with changes`);
       } else {
         log('WARN', `[${logLabel}] Session closed without file changes — agent may have crashed or made no edits`);
       }
-
-      _mirrorSubagentTranscript();
       return { completed: true, hasChanges, reason: hasChanges ? 'session_ended' : 'session_closed_no_changes', transcript: sanitizeAcpTranscriptEvidence(acpState.transcript) };
     }
 
@@ -521,7 +663,7 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
         );
       } catch (error) {
         appendDurableSessionEndAlert(config, _rateLimitIdentity, 'timeout_nudge_failed', {
-          error: error?.message || String(error),
+          error: errorMessage(error),
           timeout_minutes: timeoutMinutes,
           remaining_minutes: remainingMin,
         });
@@ -533,9 +675,7 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
     const remaining = Math.round(budget.remainingMs() / 1000);
     const sessionProgressStateKey = buildSessionProgressStateKey(sessionEndDetected);
     const sessionProgressMsg = `Session active | ${elapsed}s elapsed, ${remaining}s remaining${sessionEndDetected ? ' (session closed, waiting for final writes)' : ''}`;
-    const shouldLogSessionProgress = !_lastSessionProgressStateKey
-      || sessionProgressStateKey !== _lastSessionProgressStateKey
-      || (Date.now() - _lastSessionProgressLogAt) >= sessionProgressLogIntervalMs;
+    const shouldLogSessionProgress = selectTruthyValue(() => (selectTruthyValue(() => (!_lastSessionProgressStateKey), () => (sessionProgressStateKey !== _lastSessionProgressStateKey))), () => ((Date.now() - _lastSessionProgressLogAt) >= sessionProgressLogIntervalMs));
     if (shouldLogSessionProgress) {
       log('INFO', `[${logLabel}] ${sessionProgressMsg}`);
       _lastSessionProgressLogAt = Date.now();
@@ -547,12 +687,12 @@ export async function pollForSessionEnd(config, sessionLabel, timeoutMinutes, lo
     budgetError = error;
   }
 
-  const _finalTranscript = acpState.transcript || null;
+  const _finalTranscript = selectTruthyValue(() => (acpState.transcript), () => (null));
   const _transcriptDesc = _finalTranscript
     ? (_finalTranscript.lastActivityPoll === 0
         ? `active (${_finalTranscript.eventCount} events)`
         : `stale (no activity for ${_finalTranscript.lastActivityPoll} polls)`)
-    : 'unknown';
+     : 'transcript_not_observed';
   log('WARN', `[${logLabel}] Timeout — session still running after ${timeoutMinutes}min | Transcript: ${_transcriptDesc}`);
   appendDurableSessionEndAlert(config, _rateLimitIdentity, 'timeout', {
     timeout_minutes: timeoutMinutes,

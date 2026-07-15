@@ -117,11 +117,6 @@ function makeEvent(type, payload, identity = {}) {
       ...identity,
     },
     payload,
-    masking: {
-      profile: contract.AGENT_OBSERVABILITY_MASKING_PROFILE,
-      content: 'full',
-      masked: [],
-    },
   };
   assert.equal(contract.validateAgentObservabilityIngressEvent(event).ok, true);
   return event;
@@ -224,27 +219,6 @@ assert.equal(
   true,
   'deployment env booleans remain accepted at the environment boundary',
 );
-assert.equal(
-  ingesterModule.resolveAgentObservabilityIngesterConfig({
-    enabled: true,
-    groupName: 'kubeclaw-agent-observability-ingester',
-    consumerName: 'kubeclaw-agent-observability-ingester-1',
-    pollBlockMs: 1000,
-    reclaimIdleMs: 60000,
-    redisCommandTimeoutMs: 5000,
-    loopDelayMs: 250,
-    trimIntervalMs: 5000,
-    stopTimeoutMs: 2000,
-    deadLetterMaxLen: 1000,
-    controlStreamMaxLen: 10000,
-    payloadStreamMaxLen: 5000,
-    controlLagDegradedThreshold: 1000,
-    payloadPressureDegradedThreshold: 10000,
-  }, { REDIS_TLS_ENABLED: 'true' }).redisTls,
-  true,
-  'deployment env aliases remain accepted at the environment boundary',
-);
-
 const emitted = [];
 const redis = new FakeRedis();
 redis.newEntries.push(entry('1-0', makeEvent('openclaw.agent.ended', {

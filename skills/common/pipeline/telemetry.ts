@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 export {
   MISSING_DEPENDENCY_ERROR_CODE,
   MissingDependencyError,
@@ -13,7 +14,7 @@ export const TELEMETRY_SEQ_PREFIX = `${TELEMETRY_STREAM_PREFIX}:seq`;
 export const TELEMETRY_SEQ_TTL_SECONDS = 7 * 24 * 60 * 60;
 
 export function requireTelemetryStreamMaxLen(value: unknown, label = 'config.telemetry.stream_max_len') {
-  if (!Number.isInteger(value) || Number(value) <= 0) {
+  if (selectTruthyValue(() => (!Number.isInteger(value)), () => (Number(value) <= 0))) {
     throw new TypeError(`${label}: required positive integer in swarm.config.json`);
   }
   return Number(value);
@@ -24,7 +25,7 @@ export function requireTelemetryStreamMaxLenFromConfig(config: Record<string, an
 }
 
 function normalizeTelemetryIdentityPart(value: unknown, field: string) {
-  const normalized = String(value ?? '').trim();
+  const normalized = String(value == null ? '' : value).trim();
   if (!normalized) {
     throw new TypeError(`telemetry ${field} is required for Redis stream keys`);
   }

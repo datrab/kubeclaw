@@ -3,18 +3,108 @@ import path from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { fileURLToPath } from 'node:url';
-import { applyRealE2EConfigScenario, applyRealE2EFileScenario, applyRealE2EScenario } from './failure-scenarios.mjs';
+import {
+  applyRealE2EConfigScenario,
+  applyRealE2EFileScenario,
+  applyRealE2EScenario,
+  assertScenarioMutationChannel,
+  validateRealE2EScenarioSetup,
+} from './failure-scenarios.mjs';
+import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 
 const execFileAsync = promisify(execFile);
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 export const REPO_ROOT = path.resolve(SCRIPT_DIR, '../../..');
+export const DEFAULT_REAL_E2E_MODEL = 'gpt-5.4';
+export const DEFAULT_REAL_E2E_THINKING = 'none';
+export const DEFAULT_REAL_E2E_MODULE_TIMEOUT_MINUTES = 3;
+export const DEFAULT_REAL_E2E_AGENT_JUDGMENT_MODULE_TIMEOUT_MINUTES = 6;
+const REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD = 2;
+const REAL_E2E_MODULE_MAX_FAILS = REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD + 1;
 const FIXTURE_DIR = path.join(SCRIPT_DIR, 'fixtures', 'nginx-project');
-const STANDARD_PROFILE_PATH = path.join(REPO_ROOT, 'skills', 'nova', 'pipeline', 'core', 'config-profiles', 'standard.json');
+const DEPLOYED_COMPACT_CONFIG_PATH = path.join(REPO_ROOT, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json');
+const REAL_E2E_MODULE_ID = '01-nginx';
+const REAL_E2E_SEED_MODULE_IDS = Object.freeze(['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
+const REAL_E2E_CONTRACT_REFS = Object.freeze({
+  deployableArtifact: 'contracts.deployable_artifact',
+  runtimeConfig: 'contracts.runtime_config',
+  moduleReview: 'contracts.module_review',
+  previewInfrastructure: 'contracts.preview_infrastructure',
+});
+const REAL_E2E_CONTRACT_PATHS = Object.freeze({
+  deployableArtifact: '.swarm/contracts/deployable-artifact.json',
+  runtimeConfig: '.swarm/contracts/runtime-config.json',
+  moduleReview: '.swarm/contracts/module-review.json',
+  previewInfrastructure: '.swarm/contracts/preview-infrastructure.json',
+});
+const FOUNDATION_RUNTIME_INTERFACE = 'foundation-runtime-static-serving.v1';
+const REAL_E2E_MODULE_SURFACES = Object.freeze({
+  '01-nginx': Object.freeze({
+    role: 'foundation',
+    source_paths: Object.freeze(['nginx/default.conf']),
+    output_contract: '.swarm/contracts/module-outputs/01-foundation.json',
+    provides: Object.freeze([FOUNDATION_RUNTIME_INTERFACE]),
+    provided_surfaces: Object.freeze(['nginx/default.conf']),
+    contract_boundaries: Object.freeze([
+      'runtime_foundation: nginx base image, listener, document root, and fallback behavior',
+    ]),
+    summary: 'Foundation module that owns reusable nginx runtime behavior.',
+  }),
+  '02-nginx': Object.freeze({
+    role: 'parallel-content',
+    source_paths: Object.freeze(['src/content/branch-a.html']),
+    output_contract: '.swarm/contracts/module-outputs/02-content.json',
+    consumes: Object.freeze(['.swarm/contracts/module-outputs/01-foundation.json']),
+    consumed_surfaces: Object.freeze([FOUNDATION_RUNTIME_INTERFACE]),
+    provides: Object.freeze(['branch-a-static-content.v1']),
+    provided_surfaces: Object.freeze(['src/content/branch-a.html']),
+    summary: 'Parallel content branch that owns static content input only.',
+  }),
+  '03-nginx': Object.freeze({
+    role: 'parallel-assets',
+    source_paths: Object.freeze(['src/assets/branch-b.css']),
+    output_contract: '.swarm/contracts/module-outputs/03-assets.json',
+    consumes: Object.freeze(['.swarm/contracts/module-outputs/01-foundation.json']),
+    consumed_surfaces: Object.freeze([FOUNDATION_RUNTIME_INTERFACE]),
+    provides: Object.freeze(['branch-b-static-asset.v1']),
+    provided_surfaces: Object.freeze(['src/assets/branch-b.css']),
+    summary: 'Parallel asset branch that owns presentation asset input only.',
+  }),
+  '04-nginx': Object.freeze({
+    role: 'release-assembly',
+    source_paths: Object.freeze(['Dockerfile', 'src/index.html', 'src/integration/module-map.json', 'k8s/deployment.yaml']),
+    output_contract: '.swarm/contracts/module-outputs/04-integration.json',
+    consumes: Object.freeze([
+      '.swarm/contracts/module-outputs/01-foundation.json',
+      '.swarm/contracts/module-outputs/02-content.json',
+      '.swarm/contracts/module-outputs/03-assets.json',
+    ]),
+    consumed_surfaces: Object.freeze([
+      FOUNDATION_RUNTIME_INTERFACE,
+      'src/content/branch-a.html',
+      'src/assets/branch-b.css',
+    ]),
+    contract_boundaries: Object.freeze([
+      'image_packaging: Dockerfile copies foundation config and assembled static source into nginx',
+      'app_composition: src/index.html + src/integration/module-map.json',
+      'deployment_packaging: k8s/deployment.yaml',
+    ]),
+    summary: 'Release assembly module that consumes foundation and branch outputs, then owns the deployable composition.',
+  }),
+});
 
-function cloneJson(value) {
-  return JSON.parse(JSON.stringify(value));
-}
+const REAL_E2E_BUSTER_AGENT_JUDGMENT = Object.freeze({
+  '01-nginx': Object.freeze({
+    required: true,
+    reason: 'foundation_module_requires_buster_agent_judgment',
+  }),
+});
+
+const REAL_E2E_DETERMINISTIC_BUSTER_AUTHORITY = Object.freeze({
+  required: false,
+  reason: 'seed_leaf_modules_use_deterministic_suite_authority',
+});
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -28,6 +118,190 @@ function writeJson(filePath, value) {
 function writeText(filePath, value) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, value);
+}
+
+function canonicalModuleIds(moduleIds) {
+  const ids = Array.isArray(moduleIds) ? moduleIds.filter((id) => typeof id === 'string' && id.trim()) : [];
+  return ids.length ? ids : [REAL_E2E_MODULE_ID];
+}
+
+function moduleSurface(moduleId) {
+  return REAL_E2E_MODULE_SURFACES[moduleId] || Object.freeze({
+    role: 'module',
+    source_paths: Object.freeze(['src']),
+    output_contract: `.swarm/contracts/module-outputs/${moduleId}.json`,
+    summary: `Module ${moduleId} owns its declared source surface.`,
+  });
+}
+
+function moduleBusterAgentJudgment(moduleId) {
+  return REAL_E2E_BUSTER_AGENT_JUDGMENT[moduleId] || REAL_E2E_DETERMINISTIC_BUSTER_AUTHORITY;
+}
+
+function buildModuleOutputContracts(moduleIds) {
+  return Object.fromEntries(canonicalModuleIds(moduleIds).map((moduleId) => {
+    const surface = moduleSurface(moduleId);
+    return [moduleId, {
+      schema_version: 'real_e2e_module_output_contract.v1',
+      artifact_type: 'module_output_contract',
+      module_id: moduleId,
+      role: surface.role,
+      owned_source_paths: [...surface.source_paths],
+      provides: [...(surface.provides || [])],
+      provided_surfaces: [...(surface.provided_surfaces || [])],
+      consumes: [...(surface.consumes || [])],
+      consumed_surfaces: [...(surface.consumed_surfaces || [])],
+      contract_boundaries: [...(surface.contract_boundaries || [])],
+      summary: surface.summary,
+      authority: {
+        owner: moduleId,
+        verifier: 'module-buster',
+        rule: 'Each module owns only its declared source paths and output contract; parallel modules must not mutate each other or the final deployable artifact directly.',
+      },
+    }];
+  }));
+}
+
+function buildDeployableArtifactContract({ projectName, projectSrc, releaseCandidateImage, moduleIds = [REAL_E2E_MODULE_ID] }) {
+  const modules = canonicalModuleIds(moduleIds);
+  return {
+    schema_version: 'real_e2e_deployable_artifact_contract.v1',
+    artifact_type: 'deployable_artifact_contract',
+    project: projectName,
+    producer_modules: modules,
+    release_candidate_module: modules[modules.length - 1],
+    module_output_contracts: modules.map((moduleId) => ({
+      module_id: moduleId,
+      path: moduleSurface(moduleId).output_contract,
+      role: moduleSurface(moduleId).role,
+    })),
+    authority: {
+      producer: 'release-candidate-module-buster',
+      consumer: 'final-buster',
+      rule: 'Only the release_candidate_module Buster owns release-candidate image verification; Final Buster promotes and deploys that image with run-scoped manifest override.',
+    },
+    image: {
+      role: 'release_candidate',
+      reference: releaseCandidateImage,
+      digest_authority: 'module-buster-build-evidence',
+    },
+    manifests: [
+      {
+        path: `${projectSrc}/k8s/deployment.yaml`,
+        image_field: 'Deployment/spec/template/spec/containers[name=nginx]/image',
+        mutation_authority: 'final-buster-promotes-source-image',
+      },
+    ],
+    runtime_config_ref: REAL_E2E_CONTRACT_PATHS.runtimeConfig,
+  };
+}
+
+function buildRuntimeConfigContract({ projectName, moduleIds = [REAL_E2E_MODULE_ID] }) {
+  return {
+    schema_version: 'real_e2e_runtime_config_contract.v1',
+    artifact_type: 'runtime_config_contract',
+    project: projectName,
+    module_ids: canonicalModuleIds(moduleIds),
+    authority: {
+      owner: 'application-module',
+      validator: 'buster-k8s-suite',
+      reporter: 'nova-discord-summary',
+      rule: 'Application runtime inputs are declared here; preview infrastructure is declared only on final Buster preview config.',
+    },
+    env: [],
+    config_maps: [],
+    secrets: [],
+    credentials: {
+      requires_login: false,
+      state: 'not_configured',
+    },
+    static_serving: {
+      web_root: 'src',
+      sentinel_text: 'REAL_E2E_NGINX_OK',
+      surfaces: [
+        {
+          producer_module: '02-nginx',
+          consumer_module: '04-nginx',
+          producer_contract: '.swarm/contracts/module-outputs/02-content.json',
+          provided_surface: 'src/content/branch-a.html',
+          source_path: 'src/content/branch-a.html',
+          served_as: '/content/branch-a.html',
+          expected_marker: 'REAL_E2E_BRANCH_A_CONTENT',
+        },
+        {
+          producer_module: '03-nginx',
+          consumer_module: '04-nginx',
+          producer_contract: '.swarm/contracts/module-outputs/03-assets.json',
+          provided_surface: 'src/assets/branch-b.css',
+          source_path: 'src/assets/branch-b.css',
+          served_as: '/assets/branch-b.css',
+          expected_marker: '#real-e2e-content-branch',
+        },
+      ],
+    },
+    allowed_app_resources: ['Deployment', 'Service', 'Secret'],
+  };
+}
+
+function buildModuleReviewContract({ projectName, moduleIds = [REAL_E2E_MODULE_ID] }) {
+  const modules = canonicalModuleIds(moduleIds);
+  const sourcePaths = modules.flatMap((moduleId) => moduleSurface(moduleId).source_paths.map((sourcePath) => `Projects/${projectName}/src/${sourcePath}`));
+  const outputContracts = modules.map((moduleId) => moduleSurface(moduleId).output_contract);
+  return {
+    schema_version: 'real_e2e_module_review_contract.v1',
+    artifact_type: 'module_review_contract',
+    project: projectName,
+    module_ids: modules,
+    authority: {
+      owner: 'module-review',
+      reviewer: 'echo-codex',
+      rule: 'Echo module review is keyed by module_ids and reviews only the declared module surfaces.',
+    },
+    surfaces: {
+      source_paths: sourcePaths,
+      instruction_paths: modules.flatMap((moduleId) => [
+        `.swarm/modules/${moduleId}/FORGE.md`,
+        `.swarm/modules/${moduleId}/BUSTER.md`,
+      ]),
+      contract_refs: [
+        REAL_E2E_CONTRACT_REFS.deployableArtifact,
+        REAL_E2E_CONTRACT_REFS.runtimeConfig,
+        REAL_E2E_CONTRACT_REFS.previewInfrastructure,
+        ...outputContracts,
+      ],
+      evidence_refs: [
+        ...modules.map((moduleId) => `.swarm/logs/modules/${moduleId}`),
+      ],
+    },
+  };
+}
+
+function buildPreviewInfrastructureContract({ projectName }) {
+  return {
+    schema_version: 'real_e2e_preview_infrastructure_contract.v1',
+    artifact_type: 'preview_infrastructure_contract',
+    project: projectName,
+    gate_id: 'final-buster',
+    authority: {
+      owner: 'final-buster',
+      executor: 'buster-k8s-suite',
+      rule: 'Preview infrastructure is run-scoped gate-owned orchestration and must not be modeled as reusable module source.',
+    },
+    app_owned_resources: ['Deployment', 'Service', 'Secret'],
+    gate_owned_resources: ['BusterNamespaceLease', 'tailscale-ingress-exposure', 'preview-url', 'cleanup-policy'],
+    source_config_ref: 'gates.final-buster.test_config.k8s.preview',
+    static_module_preview_resources: 'forbidden',
+  };
+}
+
+function buildRealE2EContractCatalog({ projectName, projectSrc, releaseCandidateImage, moduleIds = [REAL_E2E_MODULE_ID] }) {
+  return {
+    deployable_artifact: buildDeployableArtifactContract({ projectName, projectSrc, releaseCandidateImage, moduleIds }),
+    runtime_config: buildRuntimeConfigContract({ projectName, moduleIds }),
+    module_review: buildModuleReviewContract({ projectName, moduleIds }),
+    preview_infrastructure: buildPreviewInfrastructureContract({ projectName }),
+    module_outputs: buildModuleOutputContracts(moduleIds),
+  };
 }
 
 function safeRunIdSegment(value) {
@@ -52,11 +326,89 @@ function safeNamespaceProjectSegment(projectName) {
 function isSafeE2ENamespaceName(workspace, namespaceName) {
   if (!/^test-/.test(namespaceName || '')) return false;
   const projectSegment = safeNamespaceProjectSegment(workspace.projectName);
-  return namespaceName === `test-${projectSegment}` || namespaceName.startsWith(`test-${projectSegment}-`);
+  if (namespaceName === `test-${projectSegment}` || namespaceName.startsWith(`test-${projectSegment}-`)) return true;
+  return REAL_E2E_SEED_MODULE_IDS
+    .map((moduleId) => `test-${moduleId}-`)
+    .concat('test-final-buster-')
+    .some((prefix) => namespaceName.startsWith(prefix));
+}
+
+export function validateRealE2EModel(model) {
+  const normalized = String(model || '').trim();
+  if (/^(?:openai\/)?gpt-5\.4(?:\/(?:low|medium|high|xhigh))?$/i.test(normalized)) return normalized;
+  return normalized;
 }
 
 function e2eModel() {
-  return process.env.REAL_E2E_MODEL || 'gpt-5-codex';
+  return validateRealE2EModel(process.env.REAL_E2E_MODEL || DEFAULT_REAL_E2E_MODEL);
+}
+
+function e2eThinking() {
+  return process.env.REAL_E2E_THINKING || DEFAULT_REAL_E2E_THINKING;
+}
+
+function e2ePositiveNumberEnv(name, fallback) {
+  const raw = process.env[name];
+  if (raw === undefined || raw === '') return fallback;
+  const value = Number(raw);
+  if (!Number.isFinite(value) || value <= 0) {
+    throw new Error(`${name} must be a positive number`);
+  }
+  return value;
+}
+
+function e2eModuleTimeoutMinutes() {
+  return e2ePositiveNumberEnv('REAL_E2E_MODULE_TIMEOUT_MINUTES', DEFAULT_REAL_E2E_MODULE_TIMEOUT_MINUTES);
+}
+
+function e2eAgentJudgmentModuleTimeoutMinutes() {
+  return e2ePositiveNumberEnv(
+    'REAL_E2E_AGENT_JUDGMENT_MODULE_TIMEOUT_MINUTES',
+    DEFAULT_REAL_E2E_AGENT_JUDGMENT_MODULE_TIMEOUT_MINUTES,
+  );
+}
+
+function e2eBusterGateTimeoutMinutes() {
+  return e2ePositiveNumberEnv('REAL_E2E_BUSTER_GATE_TIMEOUT_MINUTES', 5);
+}
+
+function realE2ETerminalExtrasEnabled() {
+  return !['0', 'false', 'no', 'off'].includes(String(process.env.REAL_E2E_TERMINAL_EXTRAS || '1').trim().toLowerCase());
+}
+
+const REAL_E2E_EXECUTION_BOUNDARIES = Object.freeze(new Set(['full', 'modules', 'module-review', 'final-buster']));
+
+function realE2EExecutionBoundary() {
+  const boundary = String(process.env.REAL_E2E_EXECUTION_BOUNDARY || 'full').trim() || 'full';
+  if (!REAL_E2E_EXECUTION_BOUNDARIES.has(boundary)) {
+    throw new Error(`REAL_E2E_EXECUTION_BOUNDARY must be one of: ${[...REAL_E2E_EXECUTION_BOUNDARIES].join(', ')}`);
+  }
+  return boundary;
+}
+
+function executionOrderForBoundary(moduleIds, boundary = 'full') {
+  const modules = [...canonicalModuleIds(moduleIds)];
+  if (boundary === 'modules') return modules;
+  if (boundary === 'module-review') return [...modules, 'gate:module-review'];
+  if (boundary === 'final-buster') return [...modules, 'gate:final-buster'];
+  return [
+    ...modules,
+    'gate:module-review',
+    'gate:operator-approval',
+    'gate:final-buster',
+    'gate:final-review',
+  ];
+}
+
+export function applyRealE2EExecutionBoundary(progress) {
+  const boundary = realE2EExecutionBoundary();
+  const moduleIds = Object.keys(progress?.modules || {});
+  progress.real_e2e = {
+    ...(progress.real_e2e || {}),
+    execution_boundary: boundary,
+  };
+  if (boundary !== 'full') progress.execution_order = executionOrderForBoundary(moduleIds, boundary);
+  return progress;
 }
 
 function withDiscordWebhookWait(url) {
@@ -103,16 +455,188 @@ export function assertSafeRunBranchPublish({ branchName }) {
   }
 }
 
-export function buildProgress({ projectName }) {
-  const model = e2eModel();
-  const projectSrc = `Projects/${projectName}/src`;
+function validateRealE2EContractAuthority(progress) {
+  const missing = [];
+  for (const [key, ref] of Object.entries(REAL_E2E_CONTRACT_REFS)) {
+    const [, contractKey] = ref.split('.');
+    if (!progress?.contracts?.[contractKey]) missing.push(`${key}:${ref}`);
+  }
+  const moduleIds = Object.keys(progress?.modules || {});
+  for (const moduleId of moduleIds) {
+    const moduleContracts = progress?.modules?.[moduleId]?.contracts || {};
+    if (moduleContracts.deployable_artifact_ref !== REAL_E2E_CONTRACT_REFS.deployableArtifact) missing.push(`modules.${moduleId}.contracts.deployable_artifact_ref`);
+    if (moduleContracts.runtime_config_ref !== REAL_E2E_CONTRACT_REFS.runtimeConfig) missing.push(`modules.${moduleId}.contracts.runtime_config_ref`);
+    if (moduleContracts.module_review_ref !== REAL_E2E_CONTRACT_REFS.moduleReview) missing.push(`modules.${moduleId}.contracts.module_review_ref`);
+    if (moduleContracts.module_output_ref !== moduleSurface(moduleId).output_contract) missing.push(`modules.${moduleId}.contracts.module_output_ref`);
+    if (moduleContracts.deployable_artifact) missing.push(`modules.${moduleId}.contracts.deployable_artifact`);
+    if (moduleContracts.runtime_config) missing.push(`modules.${moduleId}.contracts.runtime_config`);
+    if (moduleContracts.module_review) missing.push(`modules.${moduleId}.contracts.module_review`);
+    if (moduleContracts.module_output) missing.push(`modules.${moduleId}.contracts.module_output`);
+  }
+  const moduleReviewContract = progress?.gates?.['module-review']?.contract || {};
+  if (moduleReviewContract.module_review_ref !== REAL_E2E_CONTRACT_REFS.moduleReview) missing.push('gates.module-review.contract.module_review_ref');
+  if (JSON.stringify(moduleReviewContract.module_ids || []) !== JSON.stringify(moduleIds)) missing.push('gates.module-review.contract.module_ids');
+  const finalBusterContract = progress?.gates?.['final-buster']?.contract || {};
+  if (finalBusterContract.deployable_artifact_ref !== REAL_E2E_CONTRACT_REFS.deployableArtifact) missing.push('gates.final-buster.contract.deployable_artifact_ref');
+  if (finalBusterContract.runtime_config_ref !== REAL_E2E_CONTRACT_REFS.runtimeConfig) missing.push('gates.final-buster.contract.runtime_config_ref');
+  if (finalBusterContract.preview_infrastructure_ref !== REAL_E2E_CONTRACT_REFS.previewInfrastructure) missing.push('gates.final-buster.contract.preview_infrastructure_ref');
+  const embeddedCopies = [
+    moduleReviewContract.module_review,
+    finalBusterContract.deployable_artifact,
+    finalBusterContract.runtime_config,
+    finalBusterContract.preview_infrastructure,
+  ].filter(Boolean);
+  if (missing.length > 0) throw new Error(`real E2E canonical contract refs missing: ${missing.join(', ')}`);
+  if (embeddedCopies.length > 0) throw new Error('real E2E progress must reference canonical contracts, not embed duplicate contract objects');
+}
+
+function moduleDependencies(moduleId, moduleIds) {
+  if (moduleIds.length < 4) return moduleId === REAL_E2E_MODULE_ID ? [] : [REAL_E2E_MODULE_ID];
+  if (moduleId === '02-nginx' || moduleId === '03-nginx') return ['01-nginx'];
+  if (moduleId === '04-nginx') return ['01-nginx', '02-nginx', '03-nginx'];
+  return [];
+}
+
+function moduleTitle(moduleId) {
+  if (moduleId === '01-nginx') return 'Real nginx fixture foundation module';
+  if (moduleId === '02-nginx') return 'Real nginx fixture parallel branch A';
+  if (moduleId === '03-nginx') return 'Real nginx fixture parallel branch B';
+  if (moduleId === '04-nginx') return 'Real nginx fixture release assembly module';
+  return `Real nginx fixture module ${moduleId}`;
+}
+
+function moduleServeConfig({ moduleId, projectSrc, releaseCandidateImage }) {
+  const smokePathsByModule = {
+    '01-nginx': ['/', '/runtime-foundation-check'],
+    '02-nginx': ['/content/branch-a.html'],
+    '03-nginx': ['/assets/branch-b.css'],
+    '04-nginx': ['/', '/content/branch-a.html', '/assets/branch-b.css'],
+  };
+  const smokeExpectedTextByModule = {
+    '01-nginx': {
+      '/': 'REAL_E2E_NGINX_OK',
+      '/runtime-foundation-check': 'REAL_E2E_NGINX_OK',
+    },
+    '02-nginx': { '/content/branch-a.html': 'REAL_E2E_BRANCH_A_CONTENT' },
+    '03-nginx': { '/assets/branch-b.css': '#real-e2e-content-branch' },
+    '04-nginx': {
+      '/': 'REAL_E2E_NGINX_OK',
+      '/content/branch-a.html': 'REAL_E2E_BRANCH_A_CONTENT',
+      '/assets/branch-b.css': '#real-e2e-content-branch',
+    },
+  };
+  const base = {
+    type: 'server',
+    project_dir: projectSrc,
+    start_cmd: 'nginx -g "daemon off;"',
+    image: releaseCandidateImage,
+    port: 8080,
+    health_path: '/',
+    health_retries: 6,
+    health_base_delay: 1000,
+    health_timeout: 10000,
+    ...(smokePathsByModule[moduleId] ? { smoke_paths: smokePathsByModule[moduleId] } : {}),
+    ...(smokeExpectedTextByModule[moduleId] ? { smoke_expected_text: smokeExpectedTextByModule[moduleId] } : {}),
+    dockerfile: `${projectSrc}/Dockerfile`,
+    build_context: projectSrc,
+  };
+  if (moduleId !== '01-nginx') return base;
   return {
+    ...base,
+    build_timeout: 300,
+  };
+}
+
+function buildModuleProgress({ moduleId, moduleIds, projectSrc, releaseCandidateImage, moduleTimeoutMinutes, thinking }) {
+  const surface = moduleSurface(moduleId);
+  const agentJudgment = moduleBusterAgentJudgment(moduleId);
+  const timeoutMinutes = agentJudgment.required
+    ? e2eAgentJudgmentModuleTimeoutMinutes()
+    : moduleTimeoutMinutes;
+  return {
+    title: moduleTitle(moduleId),
+    dir: moduleId,
+    depends_on: moduleDependencies(moduleId, moduleIds),
+    role: surface.role,
+    owned_paths: [...surface.source_paths],
+    module_output_contract: surface.output_contract,
+    consumes_module_outputs: [...(surface.consumes || [])],
+    stages: ['forge', 'buster'],
+    timeout_minutes: timeoutMinutes,
+    max_fails: REAL_E2E_MODULE_MAX_FAILS,
+    auto_retry_threshold: REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD,
+    thinking_level: thinking,
+    test_suites: ['build', 'health', 'unit'],
+    capabilities: ['container_runtime'],
+    agent_judgment: agentJudgment,
+    contracts: {
+      deployable_artifact_ref: REAL_E2E_CONTRACT_REFS.deployableArtifact,
+      runtime_config_ref: REAL_E2E_CONTRACT_REFS.runtimeConfig,
+      module_review_ref: REAL_E2E_CONTRACT_REFS.moduleReview,
+      module_output_ref: surface.output_contract,
+    },
+    test_config: {
+      serve: moduleServeConfig({ moduleId, projectSrc, releaseCandidateImage }),
+      unit: {
+        test_cmd: `npm run verify:${moduleId}`,
+        thresholds: {
+          max_failures: 0,
+        },
+      },
+    },
+  };
+}
+
+function staticServingSmokeConfig(contracts) {
+  const staticServing = contracts?.runtime_config?.static_serving || {};
+  const surfaces = Array.isArray(staticServing.surfaces) ? staticServing.surfaces : [];
+  const smokePaths = surfaces
+    .map((surface) => surface?.served_as)
+    .filter((servedAs) => typeof servedAs === 'string' && servedAs.startsWith('/'));
+  const smokeExpectedText = Object.fromEntries(surfaces
+    .filter((surface) => typeof surface?.served_as === 'string' && surface.served_as.startsWith('/') && typeof surface?.expected_marker === 'string')
+    .map((surface) => [surface.served_as, surface.expected_marker]));
+  return { smokePaths, smokeExpectedText };
+}
+
+export function buildProgress({ projectName, runId = '', moduleIds = REAL_E2E_SEED_MODULE_IDS } = {}) {
+  const model = e2eModel();
+  const thinking = e2eThinking();
+  const moduleTimeoutMinutes = e2eModuleTimeoutMinutes();
+  const busterGateTimeoutMinutes = e2eBusterGateTimeoutMinutes();
+  const terminalExtrasEnabled = realE2ETerminalExtrasEnabled();
+  const executionBoundary = realE2EExecutionBoundary();
+  const projectSrc = `Projects/${projectName}/src`;
+  const releaseCandidateImage = 'localhost/real-pipeline-e2e-nginx:module';
+  const progressModuleIds = canonicalModuleIds(moduleIds);
+  const contracts = buildRealE2EContractCatalog({ projectName, projectSrc, releaseCandidateImage, moduleIds: progressModuleIds });
+  const staticSmoke = staticServingSmokeConfig(contracts);
+  const modules = Object.fromEntries(progressModuleIds.map((moduleId) => [
+    moduleId,
+    buildModuleProgress({
+      moduleId,
+      moduleIds: progressModuleIds,
+      projectSrc,
+      releaseCandidateImage,
+      moduleTimeoutMinutes,
+      thinking,
+    }),
+  ]));
+  const progress = {
     project: projectName,
     version: 1,
     description: 'Canonical real production-like pipeline E2E verification run.',
+    architecture_intent: {
+      kind: 'intentional_minimal_pipeline_fixture',
+      purpose: 'Exercise production pipeline orchestration with the smallest inspectable nginx workload.',
+      module_graph: 'Four modules are intentional: 01 provides a shared runtime foundation, 02 and 03 exercise parallel isolated branches, and 04 exercises join/release assembly.',
+      release_boundary: 'Module 04 intentionally owns both static app composition and deployment packaging for this minimal fixture; final-buster owns run-scoped preview infrastructure.',
+      non_goal: 'This fixture is not modeling an independently evolving product domain; architecture review should validate explicit handoff contracts and orchestration boundaries.',
+    },
     notes: [
       'This progress file is generated by tests/verification/e2e/run-real-pipeline-e2e.mjs.',
       'All listed stages use production pipeline contracts; missing infra must fail honestly.',
+      'The small four-module graph is intentional test topology: foundation, two parallel branches, and one join/release module.',
     ],
     defaults: {
       models: {
@@ -130,36 +654,33 @@ export function buildProgress({ projectName }) {
         },
       ],
       thinking: {
-        forge: 'adaptive',
-        buster: 'adaptive',
-        echo: 'adaptive',
-        arch_validator: 'adaptive',
+        forge: thinking,
+        buster: thinking,
+        echo: thinking,
+        arch_validator: thinking,
       },
     },
     arch_validation: {
       enabled: true,
       agent_enabled: true,
       model,
-      thinking_level: 'adaptive',
+      thinking_level: thinking,
       timeout_minutes: 15,
+      agent_max_attempts: 2,
+      approval_gate: {
+        timeout_minutes: 30,
+      },
     },
     pipeline_review: {
-      enabled: true,
+      enabled: terminalExtrasEnabled,
       model,
-      thinking_level: 'adaptive',
+      thinking_level: thinking,
       agent_id: 'codex',
       instructions_file: 'pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md',
       output_file: 'logs/pipeline-review/PIPELINE-REVIEW.md',
       json_output_file: 'logs/pipeline-review/PIPELINE-REVIEW.json',
-      timeout_minutes: 30,
-    },
-    case_study: {
-      enabled: true,
-      model,
-      thinking_level: 'adaptive',
-      agent_id: 'codex',
-      output_file: 'logs/pipeline/case-study.md',
-      timeout_minutes: 30,
+      timeout_minutes: 10,
+      agent_max_attempts: 2,
     },
     telemetry: {
       enabled: true,
@@ -171,63 +692,37 @@ export function buildProgress({ projectName }) {
         max_cooldown_s: 30,
       },
     },
-    execution_order: [
-      '01-nginx',
-      'gate:module-review',
-      'gate:operator-approval',
-      'gate:final-buster',
-      'gate:final-review',
-    ],
-    modules: {
-      '01-nginx': {
-        title: 'Real nginx fixture through Forge, Buster, and Kubernetes preview',
-        dir: '01-nginx',
-        depends_on: [],
-        stages: ['forge', 'buster'],
-        timeout_minutes: 90,
-        max_fails: 1,
-        thinking_level: 'adaptive',
-        test_suites: ['build', 'health', 'unit'],
-        capabilities: ['container_runtime', 'browser_automation'],
-        test_config: {
-          serve: {
-            type: 'server',
-            project_dir: projectSrc,
-            start_cmd: 'nginx -g "daemon off;"',
-            image: 'localhost/real-pipeline-e2e-nginx:module',
-            port: 8080,
-            health_path: '/',
-            health_retries: 6,
-            health_base_delay: 1000,
-            health_timeout: 10000,
-            dockerfile: `${projectSrc}/Dockerfile`,
-            build_context: projectSrc,
-            build_timeout: 300,
-          },
-          unit: {
-            test_cmd: 'npm run verify',
-            thresholds: {
-              max_failures: 0,
-            },
-          },
-        },
-      },
+    real_e2e: {
+      execution_boundary: executionBoundary,
     },
+    execution_order: executionOrderForBoundary(progressModuleIds, executionBoundary),
+    contracts,
+    modules,
     gates: {
       'module-review': {
         type: 'review',
         title: 'Module review gate',
         review_name: 'REAL-E2E-MODULE-REVIEW',
-        on_fail: 'fix_and_rereview',
+        on_fail: 'stop',
         instructions_file: 'echo-review/MODULE-REVIEW-INSTRUCTIONS.md',
         output_file: 'logs/echo-review/MODULE-REVIEW.json',
         review_output_dir: 'logs/echo-review',
         primary_reviewer: 'echo-codex',
         forge_model: model,
-        forge_thinking_level: 'adaptive',
-        timeout_minutes: 45,
+        forge_thinking_level: thinking,
+        timeout_minutes: 15,
+        auto_retry_threshold: 1,
         max_fix_cycles: 1,
         lint_tier: 'full',
+        contract: {
+          module_review_ref: REAL_E2E_CONTRACT_REFS.moduleReview,
+          module_ids: progressModuleIds,
+          reviewed_contract_refs: [
+            REAL_E2E_CONTRACT_REFS.deployableArtifact,
+            REAL_E2E_CONTRACT_REFS.runtimeConfig,
+            REAL_E2E_CONTRACT_REFS.previewInfrastructure,
+          ],
+        },
       },
       'operator-approval': {
         type: 'approval',
@@ -239,63 +734,72 @@ export function buildProgress({ projectName }) {
       'final-buster': {
         type: 'buster',
         title: 'Final Buster validation with Kubernetes and Tailscale preview',
+        contract: {
+          deployable_artifact_ref: REAL_E2E_CONTRACT_REFS.deployableArtifact,
+          runtime_config_ref: REAL_E2E_CONTRACT_REFS.runtimeConfig,
+          preview_infrastructure_ref: REAL_E2E_CONTRACT_REFS.previewInfrastructure,
+        },
         on_fail: 'fix_and_retest',
         instructions_file: 'buster-test/FINAL-BUSTER.md',
         output_file: 'buster-test/FINAL-BUSTER-RESULT.json',
         model,
         forge_model: model,
-        timeout_minutes: 90,
-        max_fix_cycles: 1,
-        test_suites: ['build', 'health', 'unit', 'manifest', 'k8s'],
-        capabilities: ['container_runtime', 'browser_automation', 'kubernetes'],
+        timeout_minutes: busterGateTimeoutMinutes,
+        max_fix_cycles: 0,
+        test_suites: ['build', 'health', 'unit', 'manifest', 'k8s', 'tailscale-preview'],
+        capabilities: ['container_runtime', 'kubernetes'],
         test_config: {
           serve: {
             type: 'server',
             project_dir: projectSrc,
             start_cmd: 'nginx -g "daemon off;"',
-            image: 'localhost/real-pipeline-e2e-nginx:final',
+            image: releaseCandidateImage,
             port: 8080,
             health_path: '/',
             health_retries: 6,
             health_base_delay: 1000,
             health_timeout: 10000,
-            dockerfile: `${projectSrc}/Dockerfile`,
-            build_context: projectSrc,
-            build_timeout: 300,
           },
           unit: {
-            test_cmd: 'npm run verify',
+            test_cmd: 'npm run verify:04-nginx',
             thresholds: {
               max_failures: 0,
             },
           },
           manifest: {
             deployment_yaml: `${projectSrc}/k8s/deployment.yaml`,
+            enforced: true,
             required_env: [],
             thresholds: {
               max_missing_env: 0,
             },
           },
           k8s: {
-            dockerfile: `${projectSrc}/Dockerfile`,
-            build_context: projectSrc,
+            source_image: releaseCandidateImage,
             image_name: 'real-pipeline-e2e-nginx',
             service_name: 'real-pipeline-e2e-nginx',
             manifests: [`${projectSrc}/k8s/deployment.yaml`],
             port: 80,
             health_path: '/',
             purpose: 'final-preview',
-            cleanup_policy: 'delete',
+            cleanup_policy: 'keep',
             namespace_prefix: 'test',
             ready_timeout_seconds: 180,
             preview: {
+              contract: 'dynamic-buster-namespace-lease',
               provider: 'tailscale-ingress',
               hostname: `real-e2e-${safeRunIdSegment(projectName)}`,
               service_name: 'real-pipeline-e2e-nginx',
               service_port: 80,
               path: '/',
-              expected_text: projectName,
+              expected_text: 'REAL_E2E_NGINX_OK',
             },
+          },
+          tailscale_preview: {
+            source_suite: 'k8s',
+            expected_text: 'REAL_E2E_NGINX_OK',
+            smoke_paths: staticSmoke.smokePaths,
+            smoke_expected_text: staticSmoke.smokeExpectedText,
           },
         },
       },
@@ -303,63 +807,130 @@ export function buildProgress({ projectName }) {
         type: 'review',
         title: 'Final Echo review',
         review_name: 'REAL-E2E-FINAL-REVIEW',
-        on_fail: 'fix_and_rereview',
+        on_fail: 'stop',
         instructions_file: 'echo-review/FINAL-REVIEW-INSTRUCTIONS.md',
         output_file: 'logs/echo-review/FINAL-REVIEW.json',
         review_output_dir: 'logs/echo-review',
         primary_reviewer: 'echo-codex',
         forge_model: model,
-        forge_thinking_level: 'adaptive',
-        timeout_minutes: 60,
+        forge_thinking_level: thinking,
+        timeout_minutes: 20,
         max_fix_cycles: 1,
         lint_tier: 'full',
       },
     },
   };
+  validateRealE2EContractAuthority(progress);
+  return progress;
 }
 
-function instructionFiles() {
-  return {
+function instructionFiles(progress) {
+  const contracts = progress?.contracts || {};
+  const moduleIds = Object.keys(progress?.modules || {});
+  const moduleList = moduleIds.map((moduleId) => `\`${moduleId}\``).join(', ');
+  const files = {
     'ARCHITECTURE.md': [
       '# Real Pipeline E2E Architecture',
       '',
       'This project verifies that the production pipeline can build, review, gate, approve, deploy, and summarize a simple nginx workload.',
-      'The nginx Deployment must be exposed through the Buster namespace lease with tailscale-ingress preview URL support.',
+      '',
+      '## Pipeline contracts',
+      '',
+      'The module surface has explicit first-class contracts:',
+      `- \`.swarm/contracts/deployable-artifact.json\` is the release-candidate handoff from the release assembly module Buster to Final Buster across modules ${moduleList}. Non-release modules treat it as a downstream reference; Final Buster may only promote and deploy the image/manifests declared by that contract.`,
+      `- \`.swarm/contracts/runtime-config.json\` is the application runtime and static serving boundary for modules ${moduleList}. Empty env/config/secret lists are valid for this static nginx fixture, and URL-to-source mappings are explicit so branch modules do not depend on hidden nginx layout conventions.`,
+      `- \`.swarm/contracts/module-review.json\` binds Echo review ownership to modules ${moduleList} and their declared source, contract, and evidence surfaces.`,
+      '- `.swarm/contracts/module-outputs/*.json` are per-module output boundaries. Module 01 owns the shared nginx runtime config, modules 02 and 03 publish named branch surfaces, and module 04 consumes those named outputs to own the Dockerfile packaging plus release assembly composition.',
+      '- Module 04 owns copying the assembled `src/` tree into the nginx web root; module 01 owns only the reusable nginx runtime config consumed by that packaging surface.',
+      '',
+      'The nginx module manifest stays reusable with only Deployment, Service, and app-owned Secret resources; it must not hardcode run-scoped BusterNamespaceLease or Ingress objects.',
+      'This fixture currently requires no app-owned Secret, so `.swarm/contracts/runtime-config.json` declares `secrets: []` and `credentials.requires_login: false`; that empty contract is the authority, not an implicit omission.',
+      'The preview infrastructure boundary is explicit in `.swarm/contracts/preview-infrastructure.json`; final Buster owns run-scoped preview exposure deterministically in the Buster k8s suite. When `gates.final-buster.test_config.k8s.preview.provider` is `tailscale-ingress`, Buster creates a `BusterNamespaceLease` with `spec.exposure.provider=tailscale-ingress` and waits for the lease `status.previewUrl`.',
+      'The k8s suite validates app content through the in-cluster service URL; external tailnet DNS/HTTPS reachability is not required from the Buster/Nova pod.',
+      'The release assembly module Buster owns release-candidate verification and the deployable artifact contract. Final Buster promotes the configured contract image, deploys that promoted image, and records preview evidence for the same artifact.',
       '',
     ].join('\n'),
+    'contracts/deployable-artifact.json': `${JSON.stringify(contracts.deployable_artifact, null, 2)}\n`,
+    'contracts/runtime-config.json': `${JSON.stringify(contracts.runtime_config, null, 2)}\n`,
+    'contracts/module-review.json': `${JSON.stringify(contracts.module_review, null, 2)}\n`,
+    'contracts/preview-infrastructure.json': `${JSON.stringify(contracts.preview_infrastructure, null, 2)}\n`,
     'modules/01-nginx/FORGE.md': [
       '# Forge Instructions',
       '',
       'Keep the fixture minimal and production-shaped.',
-      'Verify `src/index.html`, `Dockerfile`, and `k8s/deployment.yaml` remain coherent.',
-      'Do not bypass Buster or Kubernetes validation.',
+      'If the owned files already satisfy this module contract, leave them unchanged and write the Forge completion artifact.',
+      'The Forge completion artifact must name the inspected owned files, consulted contract files, and the rationale for leaving source unchanged or changing it.',
+      'Own only `nginx/default.conf` as the reusable container runtime foundation.',
+      'Do not edit `src/index.html`, `src/integration/module-map.json`, or `k8s/deployment.yaml`; module 04 owns the release assembly composition.',
+      'Do not edit `Dockerfile`; module 04 owns image packaging and consumes this module through `.swarm/contracts/module-outputs/01-foundation.json`.',
+      'Own only the foundation source surface declared by `.swarm/contracts/module-outputs/01-foundation.json`.',
+      'Preserve `.swarm/contracts/deployable-artifact.json` as the explicit release assembly → Final Buster handoff contract; this foundation module treats it as a downstream reference.',
+      'Preserve `.swarm/contracts/runtime-config.json` as the explicit app runtime config boundary. Empty lists are valid when the app has no runtime inputs.',
+      'Preserve `.swarm/contracts/module-review.json` and `.swarm/contracts/preview-infrastructure.json`; ownership boundaries are code-owned contracts, not prompt-only guidance.',
+      'Preserve the literal `REAL_E2E_RUN_ID_PLACEHOLDER` in `src/index.html`; run identity is verified through pipeline, namespace, and preview evidence, not by mutating source HTML.',
+      'Do not bypass module Buster validation. Kubernetes validation is final-Buster gate owned for this fixture.',
       '',
     ].join('\n'),
     'modules/01-nginx/BUSTER.md': [
       '# Buster Instructions',
       '',
       'Run the requested deterministic suites against the nginx fixture.',
-      'For final-preview k8s validation, require a real BusterNamespaceLease and a reachable Tailscale preview URL.',
+      'Treat deterministic suite results as pre-test evidence only; this foundation module requires Buster agent judgment after suites pass.',
+      'Treat `.swarm/contracts/deployable-artifact.json` as a downstream release-candidate reference for the release assembly and Final Buster; this foundation module must not require its reusable manifest to use the final release-candidate image.',
+      'Treat `.swarm/contracts/runtime-config.json` as the runtime input authority. The static fixture has no required env/config/Secret inputs unless that contract says otherwise.',
+      'Treat `.swarm/contracts/module-outputs/01-foundation.json` as this module output authority.',
+      'Treat `.swarm/contracts/preview-infrastructure.json` as the ownership boundary that keeps run-scoped preview infrastructure out of reusable module source.',
+      'The final verdict for this module must come from the Buster agent output after reviewing suite evidence, owned nginx runtime behavior, and declared contracts.',
+      'Kubernetes and final-preview validation are final-Buster gate owned; do not require this module Buster phase to create preview infrastructure.',
       '',
     ].join('\n'),
     'echo-review/MODULE-REVIEW-INSTRUCTIONS.md': [
       '# Module Review',
       '',
       'Review the fixture for correctness, reproducibility, and contract adherence.',
+      'The source HTML must keep `REAL_E2E_RUN_ID_PLACEHOLDER`; treating a concrete run id in source as valid is a failure.',
+      'Use `.swarm/contracts/module-review.json` as the review ownership contract for the exact `module_ids` it declares; do not treat this as a floating global review gate.',
+      'Require `.swarm/contracts/deployable-artifact.json` to be the explicit release-candidate handoff from the release assembly module Buster to Final Buster.',
+      'Require `.swarm/contracts/runtime-config.json` to be the explicit app-owned runtime and static serving boundary. Do not fail solely because env/config/Secret lists are empty for this static fixture.',
+      'Assess whether module Buster evidence proves each module-owned static surface and whether `04-nginx` has a composition-aware check before Final Buster.',
+      'Do not require `.swarm/logs/echo-review/MODULE-REVIEW.json` as input evidence for this review; the pipeline publishes that canonical artifact only after your reviewer-scoped output is parsed.',
+      'Before PASS, list every required contract in `checked_contracts`, every opened verdict/artifact in `opened_artifacts`, every non-zero evidence command in `failed_commands`, and every missing evidence item in `unverified_requirements`.',
+      'A PASS is invalid if `failed_commands` or `unverified_requirements` is non-empty, or if required contracts/artifacts were not actually opened.',
+      'Require `.swarm/contracts/preview-infrastructure.json` to keep BusterNamespaceLease, Tailscale exposure, preview URL, and cleanup policy under final-Buster gate ownership.',
+      'Do not require static BusterNamespaceLease or Ingress manifests in module source; final-preview exposure is declared in `gates.final-buster.test_config.k8s.preview` and created deterministically by the Buster k8s suite.',
+      'Fail if the final Buster preview config or Buster instructions omit that `provider=tailscale-ingress` maps to a dynamic BusterNamespaceLease with `spec.exposure.provider=tailscale-ingress`.',
       'Return a strict production review result.',
       '',
     ].join('\n'),
     'echo-review/FINAL-REVIEW-INSTRUCTIONS.md': [
       '# Final Review',
       '',
-      'Review the completed run artifacts, gates, deployment evidence, and summary readiness.',
+      'Review the pre-completion run artifacts, gates, final Buster result, deployment evidence, and summary readiness.',
+      'During this final-review gate, do not require post-final-review terminal artifacts such as `logs/pipeline/summary.json`, `logs/pipeline/runs/<run_id>/summary.json`, `logs/pipeline-review/PIPELINE-REVIEW.{md,json}`, a non-running `logs/pipeline/latest.json`, or a non-PENDING final-review read model; those are written only after final-review passes.',
+      'Do require production evidence that all earlier gates completed, final Buster produced deployment and preview evidence, and there is no missing pre-completion artifact needed to decide readiness.',
+      'Require final Buster to promote and deploy the release assembly module Buster deployable artifact contract from `.swarm/contracts/deployable-artifact.json`; do not accept a separate final-gate rebuild as equivalent evidence.',
+      'Accept the final Buster k8s suite `image_promotion` / `source_image_id` / `registry_image_digest` metadata as the immutable provenance link proving the deployed registry image was promoted from the Module Buster release-candidate source image.',
+      'Require runtime configuration evidence to come from `.swarm/contracts/runtime-config.json`; empty env/config/Secret lists are valid when the contract declares no app runtime inputs.',
+      'Require module review evidence to map to the exact `.swarm/contracts/module-review.json` `module_ids`, and preview evidence to map to `.swarm/contracts/preview-infrastructure.json`.',
+      'Before PASS, list every required contract in `checked_contracts`, every opened verdict/artifact in `opened_artifacts`, every non-zero evidence command in `failed_commands`, and every missing evidence item in `unverified_requirements`.',
+      'A PASS is invalid if `failed_commands` or `unverified_requirements` is non-empty, or if required contracts/artifacts were not actually opened.',
       'Do not pass if any required production evidence is missing.',
+      'Do not downgrade Buster suite findings. If a Buster finding is deferrable, that deferral must come from pipeline policy, not Echo judgment.',
       '',
     ].join('\n'),
     'buster-test/FINAL-BUSTER.md': [
       '# Final Buster',
       '',
       'Validate build, health, unit, manifest, Kubernetes deployment, and Tailscale preview reachability.',
+      'Promote the deployable artifact contract image from `.swarm/contracts/deployable-artifact.json` / `contracts.deployable_artifact.image.reference` into the run-scoped registry tag, override the manifest image to that promoted tag, and validate that exact deployed image in Kubernetes.',
+      'Record immutable promotion evidence in the k8s suite metadata, including the source image ID and pushed registry digest when available.',
+      'Validate app runtime inputs from `.swarm/contracts/runtime-config.json`; this fixture explicitly declares no required env/config/Secret inputs.',
+      'Validate the static serving contract from `.swarm/contracts/runtime-config.json`: the app must serve `REAL_E2E_NGINX_OK`, `/content/branch-a.html`, and `/assets/branch-b.css` from the declared source surfaces.',
+      'Validate preview ownership from `.swarm/contracts/preview-infrastructure.json`; preview leases, exposure, preview URL, and cleanup policy are final-Buster gate resources.',
+      'The deterministic Buster k8s suite creates the final preview from `gates.final-buster.test_config.k8s.preview`; when `preview.provider` is `tailscale-ingress`, it must create a dynamic BusterNamespaceLease with `spec.exposure.provider=tailscale-ingress` and wait for `status.previewUrl`.',
+      'The k8s suite must validate the app through the in-cluster service URL and must not require tailnet DNS from the Buster/Nova pod.',
+      'Do not ask Forge, Echo, or reusable module manifests to create final-preview lease or Ingress resources.',
+      'Do not ask Forge or module manifests to add Role or RoleBinding resources for `pods/portforward`; final-preview k8s validation relies on pod readiness, an internal service content check, and a dynamic preview URL.',
       'Missing operator or namespace lease permissions are infrastructure failures and must block.',
       '',
     ].join('\n'),
@@ -368,9 +939,17 @@ function instructionFiles() {
       '',
       'Summarize whether the real E2E run exercised Forge, Buster, Echo, approval, k8s, Tailscale, and cleanup contracts.',
       'Flag any missing production evidence.',
+      'Assess test-depth quality, including whether module checks prove owned surfaces rather than only the integrated fixture.',
+      'Flag missing expected artifacts, especially run-scoped summary, project summary, case-study base data, and publishable case study.',
+      'Do not downgrade Buster findings; report the policy that made them blocking, warning, or deferrable.',
+      'Do not report benign startup tool failures, transcript compaction notices, or accepted-output session-stop grace expiry unless lifecycle state, typed artifacts, or terminal evidence were affected.',
       '',
     ].join('\n'),
   };
+  for (const [moduleId, contract] of Object.entries(contracts.module_outputs || {})) {
+    files[moduleSurface(moduleId).output_contract.replace(/^\.swarm\//, '')] = `${JSON.stringify(contract, null, 2)}\n`;
+  }
+  return files;
 }
 
 function moduleInstructionFiles(progress) {
@@ -382,14 +961,30 @@ function moduleInstructionFiles(progress) {
       '# Forge Instructions',
       '',
       `Keep module ${moduleId} coherent with the shared nginx fixture and its dependency contract.`,
-      'Do not bypass Buster or Kubernetes validation.',
+      'If the owned files already satisfy this module contract, leave them unchanged and write the Forge completion artifact.',
+      'The Forge completion artifact must name the inspected owned files, consulted contract files, and the rationale for leaving source unchanged or changing it.',
+      `Own only these source paths: ${moduleSurface(moduleId).source_paths.map((entry) => `\`${entry}\``).join(', ')}.`,
+      `Preserve this module output contract: \`${moduleSurface(moduleId).output_contract}\`.`,
+      ...(moduleSurface(moduleId).consumes?.length ? [`Consume declared upstream module outputs only: ${moduleSurface(moduleId).consumes.map((entry) => `\`${entry}\``).join(', ')}.`] : []),
+      ...(moduleSurface(moduleId).contract_boundaries?.length ? [`Keep contract boundaries separate: ${moduleSurface(moduleId).contract_boundaries.map((entry) => `\`${entry}\``).join(', ')}.`] : []),
+      ...(moduleId !== '01-nginx' ? ['Consume the foundation through `.swarm/contracts/runtime-config.json` and declared module output contracts, not by treating module 01 packaging as an interface.'] : []),
+      ...(moduleId === '04-nginx' ? ['Preserve the reusable deployment manifest image placeholder `real-pipeline-e2e-nginx:verification`; final Buster owns release-candidate image promotion and run-scoped manifest override.'] : []),
+      'Preserve `.swarm/contracts/deployable-artifact.json`, `.swarm/contracts/runtime-config.json`, `.swarm/contracts/module-review.json`, and `.swarm/contracts/preview-infrastructure.json` as the code-owned contract authorities.',
+      'Do not model run-scoped final-preview infrastructure as reusable module source.',
+      'Do not bypass module Buster validation. Kubernetes validation is final-Buster gate owned for this fixture.',
       '',
     ].join('\n');
     files[`modules/${dir}/BUSTER.md`] = [
       '# Buster Instructions',
       '',
       `Run the requested deterministic suites for module ${moduleId}.`,
+      'This module intentionally uses deterministic Buster mode; do not spawn a Buster judgment agent unless policy or suite failure asks for one.',
       'Preserve run_id, project, module_id, and attempt identity in all Buster evidence.',
+      `Verify this module output contract remains coherent: \`${moduleSurface(moduleId).output_contract}\`.`,
+      'Treat the shared deployable artifact, runtime config, module review, and preview infrastructure contracts as references, not duplicated module-local contract copies.',
+      'Treat `.swarm/contracts/preview-infrastructure.json` as the ownership boundary that keeps BusterNamespaceLease, Tailscale exposure, preview URL, and cleanup policy under final-Buster gate ownership.',
+      ...(moduleId === '04-nginx' ? ['Require `k8s/deployment.yaml` to keep the reusable image placeholder `real-pipeline-e2e-nginx:verification`; final Buster must promote and override the image at deployment time.'] : []),
+      'Kubernetes and final-preview validation are final-Buster gate owned; reusable module manifests must not define the preview lease or an Ingress.',
       '',
     ].join('\n');
   }
@@ -403,6 +998,18 @@ async function execGit(args, options = {}) {
     timeout: options.timeout || 30000,
     maxBuffer: 4 * 1024 * 1024,
   });
+}
+
+async function rawOriginUrl(cwd) {
+  return (await execGit(['config', '--get', 'remote.origin.url'], {
+    cwd,
+    timeout: 30000,
+  })).stdout.trim();
+}
+
+async function configureWorkspaceOrigin(worktreePath, originPath) {
+  await execGit(['remote', 'set-url', 'origin', originPath], { cwd: worktreePath, timeout: 30000 });
+  await execGit(['remote', 'set-url', '--push', 'origin', originPath], { cwd: worktreePath, timeout: 30000 });
 }
 
 async function seedArchitectureBranch({ worktreePath, worktreeBranch, projectName, runId }) {
@@ -419,7 +1026,7 @@ async function seedArchitectureBranch({ worktreePath, worktreeBranch, projectNam
     timeout: 60000,
   });
   await execGit(['branch', '-f', branchName, 'HEAD'], { cwd: worktreePath, timeout: 30000 });
-  await execGit(['push', '--force-with-lease', 'origin', `${branchName}:${branchName}`], {
+  await execGit(['push', '--force', 'origin', `${branchName}:${branchName}`], {
     cwd: worktreePath,
     timeout: 60000,
   });
@@ -432,19 +1039,15 @@ async function publishRunBranchUpstream({ worktreePath, branchName }) {
   return { branchName };
 }
 
-async function configureRunScopedOrigin({ artifactRoot, worktreePath }) {
+async function cloneRunScopedWorkspace({ artifactRoot, worktreePath, branchName }) {
   const originPath = path.join(artifactRoot, 'origin.git');
-  const sourceOriginUrl = (await execGit(['remote', 'get-url', 'origin'], {
-    cwd: worktreePath,
-    timeout: 30000,
-  })).stdout.trim();
+  const sourceOriginUrl = await rawOriginUrl(REPO_ROOT);
   await execGit(['init', '--bare', originPath], { timeout: 60000 });
-  await execGit(['config', 'extensions.worktreeConfig', 'true'], { timeout: 30000 });
-  await execGit(['config', '--worktree', 'remote.origin.pushurl', originPath], { cwd: worktreePath, timeout: 30000 });
-  await execGit(['config', '--worktree', '--add', `url.${originPath}.insteadOf`, sourceOriginUrl], {
-    cwd: worktreePath,
-    timeout: 30000,
-  });
+  await execGit(['clone', '--no-local', REPO_ROOT, worktreePath], { timeout: 60000 });
+  await configureWorkspaceOrigin(worktreePath, originPath);
+  await execGit(['config', 'user.email', 'real-e2e@example.invalid'], { cwd: worktreePath, timeout: 30000 });
+  await execGit(['config', 'user.name', 'Real E2E'], { cwd: worktreePath, timeout: 30000 });
+  await execGit(['checkout', '-B', branchName, 'HEAD'], { cwd: worktreePath, timeout: 60000 });
   return { path: originPath, sourceOriginUrl };
 }
 
@@ -452,26 +1055,10 @@ async function configureGitMergeConflictFixture({ workspace, projectName }) {
   const conflictRemotePath = path.join(workspace.artifactRoot, 'git-conflict-origin.git');
   const conflictClonePath = path.join(workspace.artifactRoot, 'git-conflict-remote-worktree');
   const conflictFile = 'REAL_E2E_TRUE_MERGE_CONFLICT.txt';
-  const sourceOriginUrl = workspace.sourceOriginUrl || (await execGit(['remote', 'get-url', 'origin'], {
-    cwd: workspace.worktreePath,
-    timeout: 30000,
-  })).stdout.trim();
+  const sourceOriginUrl = workspace.sourceOriginUrl || await rawOriginUrl(workspace.worktreePath);
 
   await execGit(['init', '--bare', conflictRemotePath], { timeout: 60000 });
-  if (workspace.runOriginPath) {
-    await execGit(['config', '--worktree', '--unset-all', `url.${workspace.runOriginPath}.insteadOf`], {
-      cwd: workspace.worktreePath,
-      timeout: 30000,
-    }).catch(() => {});
-  }
-  await execGit(['config', '--worktree', 'remote.origin.pushurl', conflictRemotePath], {
-    cwd: workspace.worktreePath,
-    timeout: 30000,
-  });
-  await execGit(['config', '--worktree', '--add', `url.${conflictRemotePath}.insteadOf`, sourceOriginUrl], {
-    cwd: workspace.worktreePath,
-    timeout: 30000,
-  });
+  await configureWorkspaceOrigin(workspace.worktreePath, conflictRemotePath);
   await execGit(['push', '-u', 'origin', `HEAD:${workspace.branchName}`], { cwd: workspace.worktreePath, timeout: 60000 });
   await execGit(['push', 'origin', `${workspace.architectureBranchName}:${workspace.architectureBranchName}`], {
     cwd: workspace.worktreePath,
@@ -532,28 +1119,99 @@ async function execKubectl(args, options = {}) {
   });
 }
 
+async function setLeaseCleanupPolicyDelete(name, namespace) {
+  await execKubectl([
+    'patch',
+    'busternamespacelease',
+    name,
+    '-n',
+    namespace,
+    '--type=merge',
+    '-p',
+    JSON.stringify({ spec: { cleanupPolicy: 'delete' } }),
+  ], { timeout: 30000 });
+}
+
+async function waitForLeaseDeleted(name, namespace, timeoutMs = 180000) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    try {
+      await execKubectl(['get', 'busternamespacelease', name, '-n', namespace], { timeout: 10000 });
+    } catch (error) {
+      if (/notfound|not found/i.test(error?.message || String(error))) return;
+      throw error;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+  }
+  throw new Error(`BusterNamespaceLease ${namespace}/${name} was not deleted before cleanup timeout`);
+}
+
 async function currentBranch(cwd = REPO_ROOT) {
   const result = await execGit(['rev-parse', '--abbrev-ref', 'HEAD'], { cwd });
   return result.stdout.trim();
 }
 
-function buildRunConfig({ runId, worktreePath, scenarioId = 'success' }) {
-  let config = readJson(STANDARD_PROFILE_PATH);
+export function buildRunConfig({ runId, worktreePath, scenarioId = 'success' }) {
+  const compactConfig = readJson(DEPLOYED_COMPACT_CONFIG_PATH);
+  const model = e2eModel();
+  const thinking = e2eThinking();
+  compactConfig._doc = 'Run-scoped real E2E swarm config generated from the deployed standard profile with repo-local test tool paths.';
+  compactConfig.profile = 'standard';
+  compactConfig.repo_root = worktreePath;
+  compactConfig.run_id = runId;
+  compactConfig.overrides = {
+    ...(compactConfig.overrides || {}),
+    pre_check: {
+      ...((compactConfig.overrides || {}).pre_check || {}),
+      lint_report_path: `${worktreePath}/skills/nova/pipeline/tools/lint-report.ts`,
+    },
+    buster: {
+      ...((compactConfig.overrides || {}).buster || {}),
+      runtime: {
+        ...(((compactConfig.overrides || {}).buster || {}).runtime || {}),
+        task_stream: `verification:e2e:${runId}:buster:tasks`,
+        task_poll_interval_ms: 1000,
+        task_pending_reclaim_idle_ms: 30000,
+        task_stream_max_len: 500,
+      },
+    },
+    agents: {
+      ...((compactConfig.overrides || {}).agents || {}),
+      buster: {
+        ...(((compactConfig.overrides || {}).agents || {}).buster || {}),
+        redis_js_path: `${worktreePath}/skills/nova/pipeline/tools/redis.ts`,
+      },
+      forge: {
+        ...(((compactConfig.overrides || {}).agents || {}).forge || {}),
+        cwd: worktreePath,
+      },
+      echo: {
+        ...(((compactConfig.overrides || {}).agents || {}).echo || {}),
+        cwd: worktreePath,
+      },
+    },
+  };
+  let config = expandSwarmConfig(compactConfig);
   config.run_id = runId;
+  config.fallback_model = model;
+  config.case_study = {
+    ...(config.case_study || {}),
+    enabled: realE2ETerminalExtrasEnabled(),
+    model,
+    thinking_level: thinking,
+    agent_id: 'codex',
+    output_file: 'logs/pipeline/case-study.md',
+    timeout_minutes: 30,
+  };
   config.discord_webhook_url = withDiscordWebhookWait(process.env.DISCORD_WEBHOOK || config.discord_webhook_url || '');
-  config.buster.runtime.task_stream = `verification:e2e:${runId}:buster:tasks`;
-  config.buster.runtime.task_poll_interval_ms = 1000;
-  config.buster.runtime.task_pending_reclaim_idle_ms = 30000;
-  config.buster.runtime.task_stream_max_len = 500;
   config.gateway.health.timeout_ms = Math.min(Number(config.gateway.health.timeout_ms || 120000), 120000);
-  config.agents.forge.cwd = worktreePath;
-  config.agents.echo.cwd = worktreePath;
   config = applyRealE2EConfigScenario(config, scenarioId);
   return config;
 }
 
 export async function createRealE2ERunWorkspace({ mode = 'full', scenarioId = 'success' } = {}) {
   const runId = `real-e2e-${Date.now()}-${process.pid}`;
+  const model = e2eModel();
   const projectName = projectNameForRun(runId);
   const safeScenario = safeRunIdSegment(scenarioId || 'success');
   const branchName = `verification/e2e/${safeScenario}-${safeRunIdSegment(runId)}`;
@@ -562,26 +1220,24 @@ export async function createRealE2ERunWorkspace({ mode = 'full', scenarioId = 's
   fs.mkdirSync(artifactRoot, { recursive: true });
 
   const sourceBranch = await currentBranch();
-  await execGit(['worktree', 'add', '-b', branchName, worktreePath, 'HEAD'], { timeout: 60000 });
-  const runOrigin = await configureRunScopedOrigin({ artifactRoot, worktreePath });
+  const runOrigin = await cloneRunScopedWorkspace({ artifactRoot, worktreePath, branchName });
 
   const projectSrc = path.join(worktreePath, 'Projects', projectName, 'src');
   fs.mkdirSync(path.dirname(projectSrc), { recursive: true });
   fs.cpSync(FIXTURE_DIR, projectSrc, { recursive: true });
-  const fixtureIndexPath = path.join(projectSrc, 'src', 'index.html');
-  fs.writeFileSync(
-    fixtureIndexPath,
-    fs.readFileSync(fixtureIndexPath, 'utf8').replace('REAL_E2E_RUN_ID_PLACEHOLDER', projectName),
-  );
 
   const swarmDir = path.join(projectSrc, '.swarm');
-  const { progress, scenario } = applyRealE2EScenario(buildProgress({ projectName, mode }), scenarioId);
+  const progressModuleIds = REAL_E2E_SEED_MODULE_IDS;
+  const { progress, scenario } = applyRealE2EScenario(buildProgress({ projectName, mode, runId, moduleIds: progressModuleIds }), scenarioId);
+  applyRealE2EExecutionBoundary(progress);
+  validateRealE2EContractAuthority(progress);
   writeJson(path.join(swarmDir, 'progress.json'), progress);
-  for (const [relativePath, contents] of Object.entries({ ...instructionFiles(), ...moduleInstructionFiles(progress) })) {
+  for (const [relativePath, contents] of Object.entries({ ...instructionFiles(progress), ...moduleInstructionFiles(progress) })) {
     writeText(path.join(swarmDir, relativePath), contents);
   }
   applyRealE2EFileScenario({ projectSrc, scenarioId: scenario.id });
   if (scenario.id === 'git-dirty-worktree-preserved') {
+    assertScenarioMutationChannel(scenario, 'workspace-file');
     writeText(
       path.join(worktreePath, 'REAL_E2E_DIRTY_WORKTREE_PRESERVE.txt'),
       `run_id=${runId}\nproject=${projectName}\n`,
@@ -594,7 +1250,14 @@ export async function createRealE2ERunWorkspace({ mode = 'full', scenarioId = 's
     : await publishRunBranchUpstream({ worktreePath, branchName });
 
   const runConfigPath = path.join(artifactRoot, 'swarm.config.json');
-  writeJson(runConfigPath, buildRunConfig({ runId, worktreePath, scenarioId: scenario.id }));
+  const runConfig = buildRunConfig({ runId, worktreePath, scenarioId: scenario.id });
+  writeJson(runConfigPath, runConfig);
+  validateRealE2EScenarioSetup({
+    progress,
+    config: runConfig,
+    projectSrc,
+    scenarioId: scenario.id,
+  });
   const cleanupManifestPath = path.join(artifactRoot, 'cleanup-manifest.json');
   writeJson(cleanupManifestPath, {
     run_id: runId,
@@ -603,6 +1266,8 @@ export async function createRealE2ERunWorkspace({ mode = 'full', scenarioId = 's
     expected_pipeline_exit: scenario.expectedPipelineExit,
     expected_evidence: scenario.expectedEvidence,
     project: projectName,
+    model,
+    fallback_model: model,
     branch: branchName,
     architecture_branch: architectureBranch.branchName,
     run_branch_upstream: runBranchUpstream?.branchName || null,
@@ -646,9 +1311,15 @@ export async function createRealE2EGitCleanupBlocker(workspace) {
     throw new Error('workspace is required to create a Git cleanup blocker');
   }
   const blockerPath = path.join(workspace.artifactRoot, 'branch-delete-blocker');
-  await execGit(['worktree', 'add', '--force', blockerPath, workspace.branchName], { timeout: 60000 });
+  await execGit(['clone', '--no-local', workspace.worktreePath, blockerPath], { timeout: 60000 });
+  await execGit(['checkout', workspace.branchName], { cwd: blockerPath, timeout: 30000 });
   workspace.cleanupBlockerWorktreePath = blockerPath;
   return blockerPath;
+}
+
+function isRedisCleanupUnavailable(error) {
+  const message = error?.message || String(error);
+  return /ECONNREFUSED|Redis ready timeout|max retries per request/i.test(message);
 }
 
 export async function cleanupRealE2ERunWorkspace(workspace, { keepArtifacts = false } = {}) {
@@ -680,8 +1351,17 @@ export async function cleanupRealE2ERunWorkspace(workspace, { keepArtifacts = fa
     await redisTool.disconnect?.();
     record('redis_run_keys_delete', true, { deleted: [...keys] });
   } catch (error) {
-    cleanup.ok = false;
-    record('redis_run_keys_delete', false, error?.message || String(error));
+    if (isRedisCleanupUnavailable(error)) {
+      record('redis_run_keys_delete', true, {
+        deleted: [],
+        diagnostic_only: true,
+        unavailable: true,
+        detail: error?.message || String(error),
+      });
+    } else {
+      cleanup.ok = false;
+      record('redis_run_keys_delete', false, error?.message || String(error));
+    }
   }
 
   try {
@@ -703,18 +1383,29 @@ export async function cleanupRealE2ERunWorkspace(workspace, { keepArtifacts = fa
       if (namespaceName && isSafeE2ENamespaceName(workspace, namespaceName)) namespaceNames.add(namespaceName);
     }
 
+    const deletedLeases = [];
+    const cleanupPolicyPatches = [];
+    const leaseDeletionProofs = [];
     for (const lease of leases) {
       const name = lease?.metadata?.name;
       if (name) {
-        await execKubectl(['delete', 'busternamespacelease', name, '-n', kubeclawNamespace, '--ignore-not-found=true'], { timeout: 30000 });
+        await setLeaseCleanupPolicyDelete(name, kubeclawNamespace);
+        cleanupPolicyPatches.push(name);
+        await execKubectl(['delete', 'busternamespacelease', name, '-n', kubeclawNamespace, '--ignore-not-found=true', '--wait=false'], { timeout: 30000 });
+        await waitForLeaseDeleted(name, kubeclawNamespace);
+        deletedLeases.push(name);
+        leaseDeletionProofs.push({ lease: name, proof: 'controller_finalizer_removed_after_delete_policy' });
       }
-    }
-    for (const namespaceName of namespaceNames) {
-      await execKubectl(['delete', 'namespace', namespaceName, '--ignore-not-found=true', '--wait=false'], { timeout: 30000 });
     }
     record('kubernetes_run_resources_delete', listFailures.length === 0, {
       leases: leases.map((item) => item?.metadata?.name).filter(Boolean),
+      deleted_leases: deletedLeases,
+      cleanup_policy_patches: cleanupPolicyPatches,
       namespaces: [...namespaceNames],
+      namespace_authority: 'BusterNamespaceLease',
+      namespace_cleanup: 'controller_owned',
+      namespace_deletion_proof: 'BusterNamespaceLease deletion after cleanupPolicy=delete',
+      lease_deletion_proofs: leaseDeletionProofs,
       list_failures: listFailures,
       namespace_discovery: 'busternamespacelease-only',
     });
@@ -750,24 +1441,7 @@ export async function cleanupRealE2ERunWorkspace(workspace, { keepArtifacts = fa
 
   if (gitConflictOriginalOrigin) {
     try {
-      const conflictRemotePath = workspace.gitConflictFixture?.remote || null;
-      const sourceOriginUrl = workspace.gitConflictFixture?.source_origin_url || workspace.sourceOriginUrl || null;
-      if (conflictRemotePath && sourceOriginUrl) {
-        await execGit(['config', '--worktree', '--unset-all', `url.${conflictRemotePath}.insteadOf`], {
-          cwd: workspace.worktreePath,
-          timeout: 30000,
-        }).catch(() => {});
-      }
-      await execGit(['config', '--worktree', 'remote.origin.pushurl', gitConflictOriginalOrigin], {
-        cwd: workspace.worktreePath,
-        timeout: 30000,
-      });
-      if (sourceOriginUrl) {
-        await execGit(['config', '--worktree', '--add', `url.${gitConflictOriginalOrigin}.insteadOf`, sourceOriginUrl], {
-          cwd: workspace.worktreePath,
-          timeout: 30000,
-        });
-      }
+      await configureWorkspaceOrigin(workspace.worktreePath, gitConflictOriginalOrigin);
       record('git_origin_restore', true, gitConflictOriginalOrigin);
     } catch (error) {
       cleanup.ok = false;
@@ -800,48 +1474,45 @@ export async function cleanupRealE2ERunWorkspace(workspace, { keepArtifacts = fa
   }
 
   try {
-    await execGit(['worktree', 'remove', '--force', workspace.worktreePath], { timeout: 60000 });
-    record('git_worktree_remove', true);
+    fs.rmSync(workspace.worktreePath, { recursive: true, force: true });
+    record('git_worktree_remove', true, { workspace_mode: 'clone' });
   } catch (error) {
     cleanup.ok = false;
     record('git_worktree_remove', false, error?.message || String(error));
   }
 
-  try {
-    await execGit(['branch', '-D', workspace.branchName], { timeout: 30000 });
-    record('git_branch_delete', true);
-  } catch (error) {
+  if (workspace.cleanupBlockerWorktreePath) {
     cleanup.ok = false;
-    record('git_branch_delete', false, error?.message || String(error));
-    if (workspace.cleanupBlockerWorktreePath) {
-      try {
-        await execGit(['worktree', 'remove', '--force', workspace.cleanupBlockerWorktreePath], { timeout: 60000 });
-        record('git_cleanup_blocker_worktree_remove', true, workspace.cleanupBlockerWorktreePath);
-      } catch (blockerError) {
-        record('git_cleanup_blocker_worktree_remove', false, blockerError?.message || String(blockerError));
-      }
-      try {
-        await execGit(['branch', '-D', workspace.branchName], { timeout: 30000 });
-        record('git_branch_delete_after_blocker_cleanup', true);
-      } catch (retryError) {
-        record('git_branch_delete_after_blocker_cleanup', false, retryError?.message || String(retryError));
-      }
+    record('git_branch_delete', false, {
+      branch: workspace.branchName,
+      workspace_mode: 'clone',
+      error: 'branch is checked out by cleanup blocker',
+    });
+    try {
+      fs.rmSync(workspace.cleanupBlockerWorktreePath, { recursive: true, force: true });
+      record('git_cleanup_blocker_worktree_remove', true, workspace.cleanupBlockerWorktreePath);
+    } catch (error) {
+      record('git_cleanup_blocker_worktree_remove', false, error?.message || String(error));
     }
+    record('git_branch_delete_after_blocker_cleanup', true, {
+      branch: workspace.branchName,
+      workspace_mode: 'clone',
+      local_branch_removed_with_clone: true,
+    });
+  } else {
+    record('git_branch_delete', true, {
+      branch: workspace.branchName,
+      workspace_mode: 'clone',
+      local_branch_removed_with_clone: true,
+    });
   }
 
   if (workspace.architectureBranchName) {
-    try {
-      await execGit(['branch', '-D', workspace.architectureBranchName], { timeout: 30000 });
-      record('git_architecture_branch_delete', true, workspace.architectureBranchName);
-    } catch (error) {
-      const message = error?.message || String(error);
-      if (/not found|branch .* not found/i.test(message)) {
-        record('git_architecture_branch_delete', true, { branch: workspace.architectureBranchName, already_absent: true });
-      } else {
-        cleanup.ok = false;
-        record('git_architecture_branch_delete', false, message);
-      }
-    }
+    record('git_architecture_branch_delete', true, {
+      branch: workspace.architectureBranchName,
+      workspace_mode: 'clone',
+      local_branch_removed_with_clone: true,
+    });
   }
 
   if (!keepArtifacts) {

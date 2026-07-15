@@ -75,6 +75,8 @@ Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/redis/redis-exchanges.
 Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/redis/redis-ops.jsonl
 ```
 
+Needs-Nova handoffs are operator-visible only when the run-scoped `nova-injections.jsonl` row records a Gateway `message.send` receipt for the launch channel with a concrete `message_id` and `channel_id`.
+
 Find and inspect the latest run:
 
 ```bash

@@ -1,8 +1,9 @@
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
 import { getActiveContext } from './logger.ts';
-import { sanitizeJsonEgress } from '../redaction.ts';
+import { sanitizeJsonEgress } from '../egress.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type RunStats = ReturnType<typeof createRunStats>;
 type RunContextLike = {
   runId?: string | null;
@@ -35,7 +36,7 @@ export function createRunStats(startedAt = new Date().toISOString()) {
 }
 
 export function bindRunContext(config: Record<string, any> | null, ctx: RunContextLike | null) {
-  if (!config || !ctx) return ctx;
+  if (selectTruthyValue(() => (!config), () => (!ctx))) return ctx;
   config._runId = ctx.runId;
   config.run_id = ctx.runId;
   config._runStats = ctx.stats;
@@ -48,7 +49,7 @@ function resolveContextInput(input: RunContextLike | null = null) {
       runId: input.runId,
       stats: input.stats,
       context: input,
-      config: input.config || null,
+      config: selectTruthyValue(() => (input.config), () => (null)),
     };
   }
   return null;
@@ -56,8 +57,8 @@ function resolveContextInput(input: RunContextLike | null = null) {
 
 function resolveConfigProjection(config: ConfigProjection = null) {
   if (!config) return null;
-  const runId = config._runId || config.run_id || null;
-  const stats = config._runStats || null;
+  const runId = selectTruthyValue(() => (selectTruthyValue(() => (config._runId), () => (config.run_id))), () => (null));
+  const stats = selectTruthyValue(() => (config._runStats), () => (null));
   if (!runId && !stats) return null;
   if (!runId) throw new Error('run context is missing run id; pass PipelineContext or bind config._runId/run_id');
   if (!stats) throw new Error('run context is missing stats; pass PipelineContext or bind config._runStats');
@@ -82,7 +83,7 @@ export function resolveRunContext(config: RunContextLike | ConfigProjection = nu
       runId: active.runId,
       stats: active.stats,
       context: active,
-      config: active.config || config || null,
+      config: selectTruthyValue(() => (selectTruthyValue(() => (active.config), () => (config))), () => (null)),
     };
   }
 
@@ -90,7 +91,7 @@ export function resolveRunContext(config: RunContextLike | ConfigProjection = nu
 }
 
 export function getRunId(config: RunContextLike | ConfigProjection = null) {
-  const directRunId = (config as any)?.runId || (config as any)?._runId || (config as any)?.run_id || null;
+  const directRunId = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => ((config as any)?.runId), () => ((config as any)?._runId))), () => ((config as any)?.run_id))), () => (null));
   if (directRunId) return directRunId;
   const active = getActiveContext();
   if (active?.runId) return active.runId;
@@ -101,6 +102,14 @@ export function getRunStats(config: RunContextLike | ConfigProjection = null) {
   return resolveRunContext(config).stats;
 }
 
+export function getOptionalRunStats(config: RunContextLike | ConfigProjection = null) {
+  try {
+    return resolveRunContext(config).stats;
+  } catch (_error) {
+    return null;
+  }
+}
+
 export function getRunState(config: RunContextLike | ConfigProjection = null) {
   const { runId, stats } = resolveRunContext(config);
   return { runId, stats };
@@ -109,7 +118,12 @@ export function getRunState(config: RunContextLike | ConfigProjection = null) {
 export function isoNow(value: any = new Date()) {
   if (value instanceof Date) return value.toISOString();
   if (typeof value === 'string') return new Date(value).toISOString();
-  return new Date(value || Date.now()).toISOString();
+  return new Date(timestampAuthority(value)).toISOString();
+}
+
+function timestampAuthority(value) {
+  if (value) return value;
+  return Date.now();
 }
 
 export function createOpaqueId(prefix = 'id') {

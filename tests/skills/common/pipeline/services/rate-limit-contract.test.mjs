@@ -26,8 +26,8 @@ test('formatRateLimitEmbed handles missing and malformed cooldowns', () => {
   for (const cooldownMs of [undefined, null, '', 'not-a-number', -1]) {
     const embed = formatRateLimitEmbed({}, 1, 3, cooldownMs);
 
-    assert.equal(fieldValue(embed, 'Cooldown'), 'unknown');
-    assert.equal(fieldValue(embed, 'Resume at'), 'unknown');
+    assert.equal(fieldValue(embed, 'Cooldown'), 'cooldown_missing');
+    assert.equal(fieldValue(embed, 'Resume at'), 'resume_time_missing');
   }
 });
 
@@ -44,4 +44,12 @@ test('buildRateLimitDetectedPayload coerces numeric strings for telemetry schema
   assert.equal(payload.retry_after_seconds, 600);
   assert.equal(payload.pause_count, 2);
   assert.equal(payload.max_pauses, 3);
+});
+
+test('buildRateLimitDetectedPayload omits provider when no canonical provider is known', () => {
+  const payload = buildRateLimitDetectedPayload({}, {
+    cooldownMs: 600000,
+  });
+
+  assert.equal(Object.hasOwn(payload, 'provider'), false);
 });

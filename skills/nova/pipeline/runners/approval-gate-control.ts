@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // runners/approval-gate-control.js — typed control-result helpers for approval gates
 
 import {
@@ -11,8 +12,29 @@ import {
   resolveApprovalTimeoutPolicyFromState,
 } from './approval-gate-shared.ts';
 
+const APPROVAL_GATE_TYPE = 'approval';
+const APPROVAL_FAILED_STATUS = 'FAILED';
+const CORRUPTED_STATE_STATUS = 'CORRUPTED_STATE';
+const INVALID_STATE_STATUS = 'INVALID_STATE';
+
+function selectPresentValue(...values) {
+  return values.find((value) => value !== undefined && value !== null && value !== '');
+}
+
+function normalizedStatus(value) {
+  return typeof value === 'string' ? value.trim().toUpperCase() : '';
+}
+
+function approvalGateType(gate) {
+  return selectPresentValue(gate?.type, APPROVAL_GATE_TYPE);
+}
+
+function approvalReason(result, fallback) {
+  return selectPresentValue(result?.reason, fallback);
+}
+
 function buildApprovalControlSummary(gateId, result = {}) {
-  const status = String(result?.status || '').trim().toUpperCase();
+  const status = normalizedStatus(result?.status);
   if (isApprovalGatePassResult(result) && status === APPROVAL_STATUS.APPROVED) {
     return `Approval gate '${gateId}' approved`;
   }
@@ -20,49 +42,49 @@ function buildApprovalControlSummary(gateId, result = {}) {
     return `Approval gate '${gateId}' timed out and auto-continued`;
   }
   if (status === APPROVAL_STATUS.REJECTED) {
-    return result?.reason || `Approval gate '${gateId}' rejected`;
+    return approvalReason(result, `Approval gate '${gateId}' rejected`);
   }
   if (status === APPROVAL_STATUS.CANCELLED) {
-    return result?.reason || `Approval gate '${gateId}' cancelled`;
+    return approvalReason(result, `Approval gate '${gateId}' cancelled`);
   }
   if (status === APPROVAL_STATUS.TIMED_OUT) {
-    return result?.reason || `Approval gate '${gateId}' timed out`;
+    return approvalReason(result, `Approval gate '${gateId}' timed out`);
   }
-  if (result?.status === 'CORRUPTED_STATE' || result?.corrupted_state === true) {
-    return result?.reason || `Approval gate '${gateId}' has corrupted persisted state`;
+  if (selectTruthyValue(() => (result?.status === CORRUPTED_STATE_STATUS), () => (result?.corrupted_state === true))) {
+    return approvalReason(result, `Approval gate '${gateId}' has corrupted persisted state`);
   }
-  return result?.reason || `Approval gate '${gateId}' failed`;
+  return approvalReason(result, `Approval gate '${gateId}' failed`);
 }
 
 function buildApprovalFindings(result = {}) {
-  const status = String(result?.status || '').trim().toUpperCase();
+  const status = normalizedStatus(result?.status);
   if (isApprovalGatePassResult(result)) return [];
 
-  if (result?.status === 'CORRUPTED_STATE' || result?.corrupted_state === true) {
+  if (selectTruthyValue(() => (result?.status === CORRUPTED_STATE_STATUS), () => (result?.corrupted_state === true))) {
     return [{
       code: 'APPROVAL_STATE_CORRUPTED',
       severity: 'critical',
-      message: result?.reason || 'Approval gate persisted state is corrupted',
+      message: approvalReason(result, 'Approval gate persisted state is corrupted'),
       category: 'approval',
-      target: result?.gate_id || null,
+      target: selectTruthyValue(() => (result?.gate_id), () => (null)),
       retryable: false,
       environmentIssue: false,
     }];
   }
 
   return [{
-    code: `APPROVAL_${status || 'FAILED'}`,
+    code: `APPROVAL_${selectPresentValue(status, APPROVAL_FAILED_STATUS)}`,
     severity: 'error',
-    message: result?.reason || `Approval gate resolved as ${status || 'FAILED'}`,
+    message: approvalReason(result, `Approval gate resolved as ${selectPresentValue(status, APPROVAL_FAILED_STATUS)}`),
     category: 'approval',
-    target: result?.gate_id || null,
+    target: selectTruthyValue(() => (result?.gate_id), () => (null)),
     retryable: false,
     environmentIssue: false,
   }];
 }
 
 function approvalGateDecisionForResult(result = {}) {
-  const status = String(result?.status || '').trim().toUpperCase();
+  const status = normalizedStatus(result?.status);
   if (isApprovalGatePassResult(result)) {
     if (status === APPROVAL_STATUS.TIMED_OUT && result?.continued === true) {
       return { nextAction: GATE_CONTROL_ACTIONS.PASS, issueType: 'policy', outcomeClass: 'passed' };
@@ -73,16 +95,16 @@ function approvalGateDecisionForResult(result = {}) {
       outcomeClass: 'passed',
     };
   }
-  if (status === 'CORRUPTED_STATE' || result?.corrupted_state === true) {
-    return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'unknown', outcomeClass: 'needs_nova' };
+  if (selectTruthyValue(() => (status === CORRUPTED_STATE_STATUS), () => (result?.corrupted_state === true))) {
+    return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'contract', outcomeClass: 'needs_nova' };
   }
-  if (status === 'INVALID_STATE' || result?.invalid_state === true) {
-    return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'unknown', outcomeClass: 'needs_nova' };
+  if (selectTruthyValue(() => (status === INVALID_STATE_STATUS), () => (result?.invalid_state === true))) {
+    return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'contract', outcomeClass: 'needs_nova' };
   }
   if ([APPROVAL_STATUS.REJECTED, APPROVAL_STATUS.CANCELLED, APPROVAL_STATUS.TIMED_OUT].includes(status)) {
     return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'policy', outcomeClass: 'needs_nova' };
   }
-  return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'unknown', outcomeClass: 'error' };
+  return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'contract', outcomeClass: 'error' };
 }
 
 function canonicalApprovalGateRunStatus(status, result = {}) {
@@ -114,33 +136,49 @@ function tryResolveApprovalTimeoutPolicyFromState(stateAuthority, gateId) {
   }
 }
 
+function requireApprovalStateAuthority(opts = {}, gateId) {
+  const state = selectDefinedValue(() => (opts?.approvalState), () => (opts?.input?.stateSnapshot?.gate));
+  if (selectTruthyValue(() => (!state), () => (typeof state !== 'object'))) {
+    throw new Error(`approval gate '${gateId}' persisted state requires timeout_policy authority`);
+  }
+  return state;
+}
+
+function isTimedOutApproval(status, result = {}) {
+  return selectTruthyValue(() => (result?.timed_out === true), () => (status === APPROVAL_STATUS.TIMED_OUT));
+}
+
+function approvalSchedulerConsumed(status, result = {}) {
+  return selectTruthyValue(() => (status === APPROVAL_STATUS.APPROVED), () => ((status === APPROVAL_STATUS.TIMED_OUT && result?.continued === true)));
+}
+
 export function buildApprovalGateControlResult(config, gateId, gate, result = {}, opts = {}) {
-  const runId = config?._runId || config?.run_id || null;
-  const status = String(result?.status || '').trim().toUpperCase() || null;
+  const runId = selectTruthyValue(() => (selectTruthyValue(() => (config?._runId), () => (config?.run_id))), () => (null));
+  const status = selectTruthyValue(() => (normalizedStatus(result?.status)), () => (null));
   assertApprovalGateResultContract(gateId, status, result);
   const decision = approvalGateDecisionForResult(result);
-  const stateAuthority = opts?.approvalState || opts?.input?.stateSnapshot?.gate;
-  const attempt = result?.attempt ?? stateAuthority?.attempt ?? opts?.input?.ids?.attempt ?? null;
-  const dispatchId = result?.dispatch_id || result?.dispatchId || stateAuthority?.dispatch_id || stateAuthority?.dispatchId || opts?.input?.ids?.dispatchId || opts?.input?.ids?.dispatch_id || null;
-  const timeoutPolicy = result?.corrupted_state === true || result?.invalid_state === true || status === 'CORRUPTED_STATE' || status === 'INVALID_STATE'
+  const stateAuthority = requireApprovalStateAuthority(opts, gateId);
+  const attempt = selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (result?.attempt), () => (stateAuthority?.attempt))), () => (opts?.input?.ids?.attempt))), () => (null));
+  const dispatchId = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (result?.dispatch_id), () => (result?.dispatchId))), () => (stateAuthority?.dispatch_id))), () => (stateAuthority?.dispatchId))), () => (opts?.input?.ids?.dispatchId))), () => (opts?.input?.ids?.dispatch_id))), () => (null));
+  const timeoutPolicy = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (result?.corrupted_state === true), () => (result?.invalid_state === true))), () => (status === CORRUPTED_STATE_STATUS))), () => (status === INVALID_STATE_STATUS))
     ? tryResolveApprovalTimeoutPolicyFromState(stateAuthority, gateId)
     : resolveApprovalTimeoutPolicyFromState(stateAuthority, gateId);
   const metadata = {
     gate_id: gateId,
-    gate_type: gate?.type || 'approval',
+    gate_type: approvalGateType(gate),
     run_id: runId,
     attempt,
     dispatch_id: dispatchId,
-    reason: result?.reason || null,
+    reason: selectTruthyValue(() => (result?.reason), () => (null)),
     timeout_policy: timeoutPolicy,
     continued: result?.continued === true,
-    timed_out: result?.timed_out === true || status === APPROVAL_STATUS.TIMED_OUT,
-    decision_by: result?.decision_by || null,
-    decision_via: result?.decision_via || null,
-    corrupted_state: result?.corrupted_state === true || result?.status === 'CORRUPTED_STATE',
-    invalid_state: result?.invalid_state === true || result?.status === 'INVALID_STATE',
-    wait_ref: opts?.input?.refs?.waitRef || null,
-    scheduler_consumed: status === APPROVAL_STATUS.APPROVED || (status === APPROVAL_STATUS.TIMED_OUT && result?.continued === true),
+    timed_out: isTimedOutApproval(status, result),
+    decision_by: selectTruthyValue(() => (result?.decision_by), () => (null)),
+    decision_via: selectTruthyValue(() => (result?.decision_via), () => (null)),
+    corrupted_state: selectTruthyValue(() => (result?.corrupted_state === true), () => (result?.status === CORRUPTED_STATE_STATUS)),
+    invalid_state: selectTruthyValue(() => (result?.invalid_state === true), () => (result?.status === INVALID_STATE_STATUS)),
+    wait_ref: selectTruthyValue(() => (opts?.input?.refs?.waitRef), () => (null)),
+    scheduler_consumed: approvalSchedulerConsumed(status, result),
     domain_status: status,
   };
 
@@ -156,17 +194,17 @@ export function buildApprovalGateControlResult(config, gateId, gate, result = {}
     recommendation: decision.nextAction === 'pass' ? 'proceed' : 'stop',
     metrics: {
       continued: result?.continued === true,
-      timed_out: result?.timed_out === true || status === APPROVAL_STATUS.TIMED_OUT,
+      timed_out: isTimedOutApproval(status, result),
     },
   });
 }
 
 export function buildApprovalGateWaitControlResult(config, gateId, gate, gateState = {}, opts = {}) {
-  const runId = config?._runId || config?.run_id || gateState?.run_id || null;
+  const runId = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (config?._runId), () => (config?.run_id))), () => (gateState?.run_id))), () => (null));
   const timeoutPolicy = resolveApprovalTimeoutPolicyFromState(gateState, gateId);
-  const waitRef = gateState?.wait_ref || opts?.input?.refs?.waitRef || null;
-  const attempt = gateState?.attempt ?? opts?.input?.ids?.attempt ?? null;
-  const dispatchId = gateState?.dispatch_id || gateState?.dispatchId || opts?.input?.ids?.dispatchId || opts?.input?.ids?.dispatch_id || null;
+  const waitRef = selectTruthyValue(() => (selectTruthyValue(() => (gateState?.wait_ref), () => (opts?.input?.refs?.waitRef))), () => (null));
+  const attempt = selectDefinedValue(() => (selectDefinedValue(() => (gateState?.attempt), () => (opts?.input?.ids?.attempt))), () => (null));
+  const dispatchId = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (gateState?.dispatch_id), () => (gateState?.dispatchId))), () => (opts?.input?.ids?.dispatchId))), () => (opts?.input?.ids?.dispatch_id))), () => (null));
   return buildTypedGateControlResult({
     producerType: 'approval',
     nextAction: GATE_CONTROL_ACTIONS.WAIT,
@@ -175,28 +213,28 @@ export function buildApprovalGateWaitControlResult(config, gateId, gate, gateSta
     findings: [],
     metadata: {
       gate_id: gateId,
-      gate_type: gate?.type || 'approval',
+      gate_type: approvalGateType(gate),
       run_id: runId,
       attempt,
       dispatch_id: dispatchId,
       timeout_policy: timeoutPolicy,
-      deadline: gateState?.deadline || null,
-      timeout_minutes: gateState?.timeout_minutes ?? null,
-      requested_at: gateState?.requested_at || null,
+      deadline: selectTruthyValue(() => (gateState?.deadline), () => (null)),
+      timeout_minutes: selectDefinedValue(() => (gateState?.timeout_minutes), () => (null)),
+      requested_at: selectTruthyValue(() => (gateState?.requested_at), () => (null)),
       wait_ref: waitRef,
     },
     gateRunStatus: 'WAIT',
     outcomeClass: 'waiting',
     recommendation: 'wait',
     metrics: {
-      timeout_minutes: gateState?.timeout_minutes ?? null,
+      timeout_minutes: selectDefinedValue(() => (gateState?.timeout_minutes), () => (null)),
     },
     wait: {
       schemaVersion: 'v1',
       waitKind: 'approval',
       waitRef,
       status: APPROVAL_STATUS.PENDING_APPROVAL,
-      deadline: gateState?.deadline || null,
+      deadline: selectTruthyValue(() => (gateState?.deadline), () => (null)),
       timeoutPolicy,
       signalKinds: ['approve', 'reject', 'cancel', 'timeout_continue', 'timeout_block'],
     },

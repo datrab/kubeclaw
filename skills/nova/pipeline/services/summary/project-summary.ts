@@ -4,12 +4,13 @@ import path from 'path';
 import { log } from '../../core/logger.ts';
 import { relPath } from '../../core/paths.ts';
 import { discord, discordEmbeds } from '../../integrations/discord.ts';
-import { sanitizeJsonEgress, sanitizeMarkdownText } from '../../redaction.ts';
+import { sanitizeJsonEgress, sanitizeMarkdownText } from '../../egress.ts';
 import { onSummaryStarted, onSummaryCompleted } from '../telemetry.ts';
 import { buildGeneratorArtifactRef, buildGeneratorResult } from '../contracts/generator-result.ts';
 import { resolveRegisteredProjectSummaryGenerator } from '../adapter-registry.ts';
 import { getPipelineArtifactBundle } from '../artifact-bundle.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 function buildProjectSummaryDiscordFields(identity = {}, extra = []) {
   return [...(identity.run_id ? [{ name: 'Run ID', value: identity.run_id, inline: true }] : []), ...extra];
 }
@@ -24,10 +25,8 @@ function buildProjectSummaryArtifactFields(config, summaryData = {}) {
 }
 
 async function loadProjectSummaryGenerator(config, opts = {}) {
-  const { generateSummary, key } = resolveRegisteredProjectSummaryGenerator(config, {
-    generatorOverride: opts.generatorOverride,
-    deps: opts.deps,
-  });
+  void opts;
+  const { generateSummary, key } = resolveRegisteredProjectSummaryGenerator(config);
   log('DEBUG', `[summary] Project summary generator loaded from registry: ${key}`);
   return generateSummary;
 }
@@ -71,7 +70,7 @@ export async function generateProjectSummary(config, opts = {}) {
         await discordEmbeds(config, summaryEmbeds, { level: 'INFO' });
         log('OK', 'Project summary posted to Discord');
       } catch (e) {
-        log('WARN', `Project summary Discord post failed (non-critical): ${e.message || e}`);
+        log('WARN', `Project summary Discord post failed (non-critical): ${summaryErrorMessage(e)}`);
       }
     }
     onSummaryCompleted(ctx, 'project_summary', { status: 'ok', ...summaryData });
@@ -87,12 +86,12 @@ export async function generateProjectSummary(config, opts = {}) {
       },
     });
   } catch (e) {
-    onSummaryCompleted(ctx, 'project_summary', { status: 'failed', reason: e.message || 'unknown', ...summaryData });
+    onSummaryCompleted(ctx, 'project_summary', { status: 'failed', reason: selectTruthyValue(() => (e.message), () => ('missing_error_message')), ...summaryData });
     log('WARN', `Project summary generation failed (non-critical): ${e.message}`);
-    await discord(config, 'WARN', '📦 Project Summary Failed', `Project summary generation failed: ${e.message?.split('\n')[0] || 'unknown'}`,
+    await discord(config, 'WARN', '📦 Project Summary Failed', `Project summary generation failed: ${selectTruthyValue(() => (e.message?.split('\n')[0]), () => ('missing_error_message'))}`,
       buildProjectSummaryDiscordFields({ run_id: runId }, buildProjectSummaryArtifactFields(config, summaryData))
     ).catch((discordError) => {
-      log('DEBUG', `Project summary failure Discord notice failed: ${discordError?.message || discordError}`);
+      log('DEBUG', `Project summary failure Discord notice failed: ${summaryErrorMessage(discordError)}`);
     });
     return buildGeneratorResult('project_summary', {
       artifacts: [
@@ -102,9 +101,14 @@ export async function generateProjectSummary(config, opts = {}) {
       ],
       outputs: {
         status: 'failed',
-        reason: e.message || 'unknown',
+        reason: selectTruthyValue(() => (e.message), () => ('missing_error_message')),
         ...summaryData,
       },
     });
   }
+}
+
+function summaryErrorMessage(error) {
+  if (error?.message) return error.message;
+  return String(error);
 }

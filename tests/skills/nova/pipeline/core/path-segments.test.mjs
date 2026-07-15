@@ -5,6 +5,8 @@ import test from 'node:test';
 import { loadConfig, validateConfig } from '../../../../../skills/nova/pipeline/core/config.ts';
 import {
   gateStatusPath,
+  moduleBusterOutputPathRef,
+  moduleBusterTestWorkspacePathRef,
   moduleLogDir,
 } from '../../../../../skills/nova/pipeline/core/paths.ts';
 import { createTempManager } from '../../../../../skills/nova/pipeline/core/temp.ts';
@@ -52,6 +54,7 @@ function makeConfig() {
     project: 'demo',
     repo_root: repoRoot,
     paths: {
+      project_src_dir: path.join(repoRoot, 'Projects/demo/src'),
       swarm_dir: swarmDir,
       progress_file: path.join(swarmDir, 'progress.json'),
       modules_dir: path.join(swarmDir, 'modules'),
@@ -119,6 +122,30 @@ test('identifier based path helpers reject traversal-shaped segments', () => {
   );
 });
 
+test('module Buster artifact refs follow module source authority when runtime swarm is shared', () => {
+  const parentRepo = '/home/path-segment-parent';
+  const moduleRepo = '/home/path-segment-module-worktree';
+  const config = {
+    ...makeConfig(),
+    repo_root: moduleRepo,
+    paths: {
+      ...makeConfig().paths,
+      project_src_dir: path.join(moduleRepo, 'Projects/demo/src'),
+      swarm_dir: path.join(parentRepo, 'Projects/demo/src/.swarm'),
+      modules_dir: path.join(moduleRepo, 'Projects/demo/src/.swarm/modules'),
+    },
+  };
+
+  assert.equal(
+    moduleBusterOutputPathRef(config, '02-nginx'),
+    'Projects/demo/src/.swarm/modules/02-nginx/buster-output.json',
+  );
+  assert.equal(
+    moduleBusterTestWorkspacePathRef(config, '02-nginx', 1),
+    'Projects/demo/src/.swarm/modules/02-nginx/tests/attempt-1',
+  );
+});
+
 test('loadConfig rejects traversal-shaped project names before filesystem probing', () => {
   assert.throws(
     () => loadConfig('../outside', {
@@ -126,6 +153,22 @@ test('loadConfig rejects traversal-shaped project names before filesystem probin
       swarmConfigPath: '/missing/swarm.config.json',
     }),
     /project name: identifier must be a single safe path segment/,
+  );
+});
+
+test('validateConfig rejects duplicate case study config in progress', () => {
+  const config = makeConfig();
+  const progress = {
+    project: 'demo',
+    execution_order: [],
+    modules: {},
+    gates: {},
+    case_study: { enabled: true },
+  };
+
+  assert.throws(
+    () => validateConfig(config, progress),
+    /progress\.case_study: case study generator config belongs in swarm\.config\.json config\.case_study/,
   );
 });
 
@@ -196,7 +239,7 @@ test('validateConfig rejects removed review-failure gate field', () => {
         type: 'review',
         title: 'Review',
         review_name: 'REVIEW',
-        [removedReviewFailField]: 'fix_and_rereview',
+        [removedReviewFailField]: 'stop',
         instructions_file: 'echo-review/REVIEW-INSTRUCTIONS.md',
         output_file: 'logs/echo-review/REVIEW.json',
       },

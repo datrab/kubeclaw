@@ -1,4 +1,6 @@
-import { AgentObservabilityIngester } from './consumer.ts';
+import {
+  AgentObservabilityIngester,
+} from './consumer.ts';
 
 export { resolveAgentObservabilityIngesterConfig } from './config.ts';
 export type { AgentObservabilityIngesterConfig } from './config.ts';

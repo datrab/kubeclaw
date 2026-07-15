@@ -24,7 +24,7 @@ Lifecycle storage lives under each run directory:
 ```text
 .swarm/logs/pipeline/runs/<run_id>/lifecycle/canonical-events.jsonl
 .swarm/logs/pipeline/runs/<run_id>/lifecycle/read-models.json
-.swarm/logs/pipeline/runs/<run_id>/lifecycle/append.lock/
+.swarm/logs/pipeline/runs/<run_id>/lifecycle/append.lock
 ```
 
 The append path is:
@@ -83,7 +83,7 @@ This authority split is deliberate. It lets Nova recover from restarts without t
 | --- | --- | --- | --- |
 | canonical lifecycle events | `.swarm/logs/pipeline/runs/<run_id>/lifecycle/canonical-events.jsonl` | `status-store-lifecycle/appenders.ts` | append-only scheduler truth; every event needs type, primary ref, idempotency key, and legality check |
 | lifecycle read models | `.swarm/logs/pipeline/runs/<run_id>/lifecycle/read-models.json` | `status-store-lifecycle/read-models.ts`; `projections.ts` | scheduler read surface rebuilt from canonical events |
-| append lock | `.swarm/logs/pipeline/runs/<run_id>/lifecycle/append.lock/owner.json` | `status-store-lifecycle/storage.ts` | serializes concurrent recovery, wait, cooldown, and completion appends |
+| append lock | `.swarm/logs/pipeline/runs/<run_id>/lifecycle/append.lock` | `status-store-lifecycle/storage.ts` | transient atomic file lock; serializes concurrent recovery, wait, cooldown, and completion appends without adding a recursive artifact subtree |
 | latest pointer | `.swarm/logs/pipeline/latest.json` | `artifact-bundle.ts`; `status-store.ts` | discovery pointer to active/latest run, not full state authority |
 | active session authority | read model `active_sessions.modules` and `active_sessions.gates` | `session-authority.ts`; `pipeline-runner-recovery.ts` | requires `run_id`, `attempt`, `dispatch_id`, `session_key`; diagnostic files cannot rehydrate authority |
 | Redis completion | `swarm:pipeline:<project>:completions` | Nova completion adjudicator; Buster `task-completion.ts` | accepted only when terminal evidence matches active dispatch identity |

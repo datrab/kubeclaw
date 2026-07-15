@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/dependencies.js — Module dependency checker
 
 import { log } from '../core/logger.ts';
@@ -5,7 +6,7 @@ import { STATUS } from '../core/constants.ts';
 import { projectGateSchedulerState, projectModuleSchedulerState } from './status-store.ts';
 
 function isGateConsumed(projection = {}) {
-  return projection?.scheduler_consumed === true || projection?.completed === true;
+  return selectTruthyValue(() => (projection?.scheduler_consumed === true), () => (projection?.completed === true));
 }
 
 function dependencyGateLabel(gate = null) {
@@ -19,7 +20,7 @@ function evaluateGateDependency(config, gateId, gate) {
   }
 
   const label = dependencyGateLabel(gate);
-  const status = String(projection?.status || '').toUpperCase();
+  const status = String(selectDefinedValue(() => (projection?.status), () => (''))).toUpperCase();
 
   if (projection?.gate_output_exists && projection?.gate_output_status) {
     log('INFO', `Dependency not met: gate '${gateId}' has status '${projection.gate_output_status}'`);
@@ -48,13 +49,14 @@ function evaluateGateDependency(config, gateId, gate) {
  * @returns {{ met: boolean, reason?: string }}
  */
 export function checkDependencies(config, progress, moduleId) {
+  const authorityConfig = config?._sharedPipelineConfig || config;
   const mod = progress.modules[moduleId];
   if (!mod) {
     log('ERROR', `checkDependencies: module ${moduleId} not found in progress.json`);
     return { met: false, reason: `Module ${moduleId} not found` };
   }
 
-  for (const dep of mod.depends_on || []) {
+  for (const dep of selectDefinedValue(() => (mod.depends_on), () => ([]))) {
     if (dep.startsWith('gate:')) {
       const gateId = dep.replace('gate:', '');
       const gate = progress.gates?.[gateId];
@@ -63,7 +65,7 @@ export function checkDependencies(config, progress, moduleId) {
         return { met: false, reason: `Gate '${gateId}' not defined` };
       }
 
-      const gateResult = evaluateGateDependency(config, gateId, gate);
+      const gateResult = evaluateGateDependency(authorityConfig, gateId, gate);
       if (!gateResult.met) return gateResult;
       continue;
     }
@@ -73,10 +75,10 @@ export function checkDependencies(config, progress, moduleId) {
       log('WARN', `Dependency '${dep}' not defined in progress.json for module ${moduleId}`);
       return { met: false, reason: `Dependency '${dep}' not defined` };
     }
-    const depProjection = projectModuleSchedulerState(config, dep, depMod);
-    if (!depProjection || depProjection.status !== STATUS.PASS) {
-      log('INFO', `Dependency not met: module ${dep} (${depMod.title}) is ${depProjection?.status || 'NOT_STARTED'}`);
-      return { met: false, reason: `Module ${dep} (${depMod.title}) is ${depProjection?.status || 'NOT_STARTED'}` };
+    const depProjection = projectModuleSchedulerState(authorityConfig, dep, depMod);
+    if (selectTruthyValue(() => (!depProjection), () => (depProjection.status !== STATUS.PASS))) {
+      log('INFO', `Dependency not met: module ${dep} (${depMod.title}) is ${selectDefinedValue(() => (depProjection?.status), () => ('NOT_STARTED'))}`);
+      return { met: false, reason: `Module ${dep} (${depMod.title}) is ${selectDefinedValue(() => (depProjection?.status), () => ('NOT_STARTED'))}` };
     }
   }
 

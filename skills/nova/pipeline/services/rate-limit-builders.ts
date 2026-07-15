@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/rate-limit-builders.js — Rate-limit status builders, notifier factories, and exhaustion option scaffolding
 
 import { log } from '../core/logger.ts';
@@ -46,41 +47,75 @@ export const STATUS = {
   RATE_LIMITED:      'RATE_LIMITED',
 };
 
+const SESSION_RATE_LIMIT_DETAIL = 'rate limit detected';
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : null;
+}
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function selectPresentValue(...values) {
+  return values.find((value) => value !== undefined && value !== null);
+}
+
+function callRateLimitResolver(resolver, status) {
+  if (typeof resolver !== 'function') return {};
+  return selectDefinedValue(() => (objectRecord(resolver(status))), () => ({}));
+}
+
+function resolvedOptionRecord(value, ctx) {
+  const resolved = resolveRateLimitOption(value, ctx);
+  return selectDefinedValue(() => (objectRecord(resolved)), () => ({}));
+}
+
+function statusRecord(value) {
+  return selectDefinedValue(() => (objectRecord(value)), () => ({}));
+}
+
 function currentAttemptNumber(status) {
-  return status?.attempt ?? null;
+  return selectDefinedValue(() => (status?.attempt), () => (null));
 }
 
 function resolveCommitHash(status) {
-  return status?.commit_hash
-    || status?.forge_commit_hash
-    || status?.buster_commit_hash
-    || status?.forge_commit
-    || status?.buster_commit
-    || null;
+  return selectDefinedValue(() => (status?.commit_hash), () => (null));
+}
+
+function moduleIdentityFields(status, moduleId) {
+  if (status?.module_id != null) return { module_id: status.module_id };
+  if (moduleId != null) return { module_id: moduleId };
+  return {};
 }
 
 export function buildModuleStatusTelemetry(status, overrides = {}) {
-  const dispatchId = overrides.dispatch_id
-    ?? resolveStatusDispatchId(status);
-  const sessionKey = overrides.session_key
-    ?? resolveStatusSessionKey(status);
-  const gatewayLabel = overrides.gateway_label
-    ?? resolveStatusGatewayLabel(status);
+  const dispatchId = overrides.dispatch_id !== undefined
+    ? overrides.dispatch_id
+    : resolveStatusDispatchId(status);
+  const sessionKey = overrides.session_key !== undefined
+    ? overrides.session_key
+    : resolveStatusSessionKey(status);
+  const gatewayLabel = overrides.gateway_label !== undefined
+    ? overrides.gateway_label
+    : resolveStatusGatewayLabel(status);
+  const attempt = overrides.attempt !== undefined ? overrides.attempt : currentAttemptNumber(status);
+  const commitHash = overrides.commit_hash !== undefined ? overrides.commit_hash : resolveCommitHash(status);
 
   return {
-    title: status?.title || null,
-    old_status: overrides.old_status ?? status?.status ?? null,
-    new_status: overrides.new_status ?? null,
-    attempt: overrides.attempt ?? currentAttemptNumber(status),
+    title: selectTruthyValue(() => (status?.title), () => (null)),
+    old_status: selectDefinedValue(() => (selectDefinedValue(() => (overrides.old_status), () => (status?.status))), () => (null)),
+    new_status: selectDefinedValue(() => (overrides.new_status), () => (null)),
+    attempt,
     dispatch_id: dispatchId,
     gateway_label: gatewayLabel,
     session_key: sessionKey,
-    phase: overrides.phase ?? status?.current_phase ?? null,
-    model: overrides.model ?? status?.active_agent?.model ?? status?.model ?? null,
-    duration_seconds: overrides.duration_seconds ?? null,
-    cost_estimate_usd: overrides.cost_estimate_usd ?? null,
-    commit_hash: overrides.commit_hash ?? resolveCommitHash(status),
-    reason: overrides.reason ?? null,
+    phase: selectDefinedValue(() => (selectDefinedValue(() => (overrides.phase), () => (status?.current_phase))), () => (null)),
+    model: selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (overrides.model), () => (status?.active_agent?.model))), () => (status?.model))), () => (null)),
+    duration_seconds: selectDefinedValue(() => (overrides.duration_seconds), () => (null)),
+    cost_estimate_usd: selectDefinedValue(() => (overrides.cost_estimate_usd), () => (null)),
+    commit_hash: commitHash,
+    reason: selectDefinedValue(() => (overrides.reason), () => (null)),
   };
 }
 
@@ -100,20 +135,20 @@ export function emitGateRetryExhausted(telemetryCtx, gateId, {
 } = {}) {
   return onRetryExhausted(telemetryCtx, gateId, {
     gate_id: gateId,
-    gate_type: gateType || null,
-    attempt: attempt ?? null,
+    gate_type: selectTruthyValue(() => (gateType), () => (null)),
+    attempt: selectDefinedValue(() => (attempt), () => (null)),
     phase,
-    dispatch_id: dispatchId || null,
-    gateway_label: gatewayLabel || null,
-    session_key: sessionKey || null,
-    reason: reason || null,
-    max_attempts: maxAttempts ?? null,
-    max_fails: maxAttempts ?? null,
+    dispatch_id: selectTruthyValue(() => (dispatchId), () => (null)),
+    gateway_label: selectTruthyValue(() => (gatewayLabel), () => (null)),
+    session_key: selectTruthyValue(() => (sessionKey), () => (null)),
+    reason: selectTruthyValue(() => (reason), () => (null)),
+    max_attempts: selectDefinedValue(() => (maxAttempts), () => (null)),
+    max_fails: selectDefinedValue(() => (maxAttempts), () => (null)),
   });
 }
 
 export function defaultSessionRateLimitDetail(status = {}) {
-  return status?.detail || status?.reason || status?.summary || 'rate limit detected';
+  return selectPresentValue(status?.detail, status?.reason, status?.summary, SESSION_RATE_LIMIT_DETAIL);
 }
 
 export function buildSessionRateLimitExhaustedResult(status = {}, pauseCount = 0, maxPauses = 0, extras = {}) {
@@ -130,21 +165,19 @@ export function buildSessionRateLimitExhaustedResult(status = {}, pauseCount = 0
 }
 
 export function resolveSessionRateLimitExhaustedStatus(result = {}) {
-  return result?.rate_limit_status || null;
+  return selectTruthyValue(() => (result?.rate_limit_status), () => (null));
 }
 
 export function resolveSessionRateLimitMaxPauses(result = {}, maxPauses = null) {
-  return result?.max_rate_limit_pauses
-    ?? result?.rate_limit_status?.max_rate_limit_pauses
-    ?? maxPauses
-    ?? null;
+  if (result?.max_rate_limit_pauses !== undefined) return result.max_rate_limit_pauses;
+  if (result?.rate_limit_status?.max_rate_limit_pauses !== undefined) return result.rate_limit_status.max_rate_limit_pauses;
+  return selectDefinedValue(() => (maxPauses), () => (null));
 }
 
 export function resolveSessionRateLimitRunId(result = {}, runId = null) {
-  return result?.run_id
-    ?? result?.rate_limit_status?.run_id
-    ?? runId
-    ?? null;
+  if (result?.run_id !== undefined) return result.run_id;
+  if (result?.rate_limit_status?.run_id !== undefined) return result.rate_limit_status.run_id;
+  return selectDefinedValue(() => (runId), () => (null));
 }
 
 export function resolveRateLimitOption(value, ctx) {
@@ -155,14 +188,14 @@ export function resolveRateLimitOption(value, ctx) {
 }
 
 export function resolveRateLimitIdentity(identity = {}, ctx = {}) {
-  const resolved = resolveRateLimitOption(identity, ctx) || {};
+  const resolved = resolvedOptionRecord(identity, ctx);
   return {
-    agent_type: resolveRateLimitOption(resolved.agent_type, ctx) ?? null,
-    run_id: resolveRateLimitOption(resolved.run_id, ctx) ?? null,
-    attempt: resolveRateLimitOption(resolved.attempt, ctx) ?? null,
-    dispatch_id: resolveRateLimitOption(resolved.dispatch_id, ctx) ?? null,
-    gateway_label: resolveRateLimitOption(resolved.gateway_label, ctx) ?? null,
-    session_key: resolveRateLimitOption(resolved.session_key, ctx) ?? null,
+    agent_type: selectDefinedValue(() => (resolveRateLimitOption(resolved.agent_type, ctx)), () => (null)),
+    run_id: selectDefinedValue(() => (resolveRateLimitOption(resolved.run_id, ctx)), () => (null)),
+    attempt: selectDefinedValue(() => (resolveRateLimitOption(resolved.attempt, ctx)), () => (null)),
+    dispatch_id: selectDefinedValue(() => (resolveRateLimitOption(resolved.dispatch_id, ctx)), () => (null)),
+    gateway_label: selectDefinedValue(() => (resolveRateLimitOption(resolved.gateway_label, ctx)), () => (null)),
+    session_key: selectDefinedValue(() => (resolveRateLimitOption(resolved.session_key, ctx)), () => (null)),
   };
 }
 
@@ -171,22 +204,22 @@ export function buildGateSessionRateLimitStatus(status = {}, {
   gateType = null,
   identity = {},
 } = {}) {
-  const resolvedGateId = gateId ?? status?.gate_id ?? status?.gate ?? null;
-  const resolvedGateType = gateType ?? status?.gate_type ?? null;
+  const resolvedGateId = selectDefinedValue(() => (selectDefinedValue(() => (gateId), () => (status?.gate_id))), () => (null));
+  const resolvedGateType = selectDefinedValue(() => (gateType), () => (null));
   const resolvedIdentity = resolveRateLimitIdentity(identity, { status });
-  const resolvedAgentType = status?.agent_type ?? resolvedIdentity.agent_type ?? resolvedGateType ?? null;
+  const resolvedAgentType = selectDefinedValue(() => (status?.agent_type), () => (null));
 
   return {
-    ...(status || {}),
+    ...statusRecord(status),
     status: STATUS.RATE_LIMITED,
-    ...(resolvedGateId == null ? {} : { gate: resolvedGateId, gate_id: resolvedGateId }),
+    ...(resolvedGateId == null ? {} : { gate_id: resolvedGateId }),
     ...(resolvedGateType == null ? {} : { gate_type: resolvedGateType }),
     ...(resolvedAgentType == null ? {} : { agent_type: resolvedAgentType }),
-    run_id: status?.run_id ?? resolvedIdentity.run_id ?? null,
-    attempt: status?.attempt ?? resolvedIdentity.attempt ?? null,
-    dispatch_id: (resolveStatusDispatchId(status) ?? resolvedIdentity.dispatch_id ?? null),
-    gateway_label: (resolveStatusGatewayLabel(status) ?? resolvedIdentity.gateway_label ?? null),
-    session_key: (resolveStatusSessionKey(status) ?? resolvedIdentity.session_key ?? null),
+    run_id: selectDefinedValue(() => (selectDefinedValue(() => (status?.run_id), () => (resolvedIdentity.run_id))), () => (null)),
+    attempt: selectDefinedValue(() => (selectDefinedValue(() => (status?.attempt), () => (resolvedIdentity.attempt))), () => (null)),
+    dispatch_id: resolvedIdentity.dispatch_id,
+    gateway_label: resolvedIdentity.gateway_label,
+    session_key: resolvedIdentity.session_key,
   };
 }
 
@@ -216,15 +249,11 @@ export function createTrackedGateSessionRateLimitStatusBuilder({
   };
 
   const updateTrackedCorrelation = (status = null, ctx = { status }) => {
-    const externalCorrelation = typeof updateCorrelation === 'function'
-      ? (updateCorrelation(status) || {})
-      : {};
+    const externalCorrelation = callRateLimitResolver(updateCorrelation, status);
     const resolvedIdentity = resolveRateLimitIdentity(identity, ctx);
 
-    trackedCorrelation.dispatch_id = externalCorrelation.dispatch_id
-      ?? (resolveStatusDispatchId(status) ?? trackedCorrelation.dispatch_id ?? resolvedIdentity.dispatch_id ?? null);
-    trackedCorrelation.gateway_label = externalCorrelation.gateway_label
-      ?? (resolveStatusGatewayLabel(status) ?? trackedCorrelation.gateway_label ?? resolvedIdentity.gateway_label ?? null);
+    trackedCorrelation.dispatch_id = selectDefinedValue(() => (externalCorrelation.dispatch_id), () => (null));
+    trackedCorrelation.gateway_label = selectDefinedValue(() => (externalCorrelation.gateway_label), () => (null));
 
     return { ...trackedCorrelation };
   };
@@ -238,9 +267,9 @@ export function createTrackedGateSessionRateLimitStatusBuilder({
       gateType,
       identity: {
         ...resolvedIdentity,
-        dispatch_id: correlation.dispatch_id ?? null,
-        gateway_label: correlation.gateway_label ?? null,
-        session_key: (resolveStatusSessionKey(status) ?? resolvedIdentity.session_key ?? null),
+        dispatch_id: selectDefinedValue(() => (correlation.dispatch_id), () => (null)),
+        gateway_label: selectDefinedValue(() => (correlation.gateway_label), () => (null)),
+        session_key: resolvedIdentity.session_key,
       },
     });
   };
@@ -262,26 +291,24 @@ export function createTrackedGateSessionRateLimitExhaustedResultOptions({
   resultOverrides = {},
   exit = null,
 } = {}) {
-  return ({ result = {}, status = result?.status || {}, maxPauses } = {}) => {
+  return ({ result = {}, status = statusRecord(result?.status), maxPauses } = {}) => {
     const ctx = { result, status, maxPauses };
-    const correlation = typeof updateCorrelation === 'function'
-      ? (updateCorrelation(status) || {})
-      : {};
-    const resolvedStatusOverrides = resolveRateLimitOption(statusOverrides, ctx) || {};
-    const resolvedResultOverrides = resolveRateLimitOption(resultOverrides, ctx) || {};
+    const correlation = callRateLimitResolver(updateCorrelation, status);
+    const resolvedStatusOverrides = resolvedOptionRecord(statusOverrides, ctx);
+    const resolvedResultOverrides = resolvedOptionRecord(resultOverrides, ctx);
     const resolvedIdentity = resolveRateLimitIdentity(identity, ctx);
     const resolvedExit = resolveRateLimitOption(exit, ctx);
     const gateIdentity = {
-      ...(gateId == null ? {} : { gate: gateId, gate_id: gateId }),
+      ...(gateId == null ? {} : { gate_id: gateId }),
       ...(gateType == null ? {} : { gate_type: gateType }),
     };
 
     return {
       identity: {
         ...resolvedIdentity,
-        dispatch_id: correlation.dispatch_id ?? resolvedIdentity.dispatch_id ?? null,
-        gateway_label: correlation.gateway_label ?? resolvedIdentity.gateway_label ?? null,
-        session_key: (resolveStatusSessionKey(status) ?? resolvedIdentity.session_key ?? null),
+        dispatch_id: selectDefinedValue(() => (correlation.dispatch_id), () => (null)),
+        gateway_label: selectDefinedValue(() => (correlation.gateway_label), () => (null)),
+        session_key: resolvedIdentity.session_key,
       },
       maxPauses,
       statusOverrides: {
@@ -306,14 +333,14 @@ export function createTrackedModuleSessionRateLimitExhaustedResultOptions({
   resultOverrides = {},
   exit = null,
 } = {}) {
-  return ({ result = {}, status = result?.status || {}, maxPauses } = {}) => {
+  return ({ result = {}, status = statusRecord(result?.status), maxPauses } = {}) => {
     const ctx = { result, status, maxPauses };
-    const resolvedStatusOverrides = resolveRateLimitOption(statusOverrides, ctx) || {};
-    const resolvedResultOverrides = resolveRateLimitOption(resultOverrides, ctx) || {};
+    const resolvedStatusOverrides = resolvedOptionRecord(statusOverrides, ctx);
+    const resolvedResultOverrides = resolvedOptionRecord(resultOverrides, ctx);
     const resolvedIdentity = resolveRateLimitIdentity(identity, ctx);
     const resolvedExit = resolveRateLimitOption(exit, ctx);
     const moduleIdentity = {
-      ...(moduleId == null ? {} : { module: moduleId, module_id: moduleId }),
+      ...(moduleId == null ? {} : { module_id: moduleId }),
       ...(moduleDir == null ? {} : { module_dir: moduleDir }),
       ...(phase == null ? {} : { phase, current_phase: phase }),
     };
@@ -321,7 +348,7 @@ export function createTrackedModuleSessionRateLimitExhaustedResultOptions({
     return {
       identity: {
         ...resolvedIdentity,
-        session_key: (resolveStatusSessionKey(status) ?? resolvedIdentity.session_key ?? null),
+        session_key: resolvedIdentity.session_key,
       },
       maxPauses,
       statusOverrides: {
@@ -342,22 +369,22 @@ export function buildModuleSessionRateLimitStatus(status = {}, {
   phase = null,
   identity = {},
 } = {}) {
-  const currentPhase = status?.current_phase ?? status?.phase ?? phase ?? null;
+  const currentPhase = selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (status?.current_phase), () => (status?.phase))), () => (phase))), () => (null));
   const resolvedIdentity = resolveRateLimitIdentity(identity, { status });
-  const resolvedAgentType = status?.agent_type ?? resolvedIdentity.agent_type ?? currentPhase ?? null;
+  const resolvedAgentType = selectDefinedValue(() => (status?.agent_type), () => (null));
 
   return {
-    ...(status || {}),
+    ...statusRecord(status),
     status: STATUS.RATE_LIMITED,
-    ...(status?.module_id != null || moduleId != null ? { module_id: status?.module_id ?? moduleId } : {}),
+    ...moduleIdentityFields(status, moduleId),
     ...(currentPhase == null ? {} : { current_phase: currentPhase, phase: currentPhase }),
     ...(resolvedAgentType == null ? {} : { agent_type: resolvedAgentType }),
-    run_id: status?.run_id ?? resolvedIdentity.run_id ?? null,
-    attempt: status?.attempt ?? resolvedIdentity.attempt ?? null,
-    dispatch_id: (status?.active_agent?.dispatch_id ?? resolveStatusDispatchId(status) ?? resolvedIdentity.dispatch_id ?? null),
-    gateway_label: (status?.active_agent?.gateway_label ?? resolveStatusGatewayLabel(status) ?? resolvedIdentity.gateway_label ?? null),
-    session_key: (status?.active_agent?.session_key ?? resolveStatusSessionKey(status) ?? resolvedIdentity.session_key ?? null),
-    model: status?.model ?? status?.active_agent?.model ?? null,
+    run_id: selectDefinedValue(() => (selectDefinedValue(() => (status?.run_id), () => (resolvedIdentity.run_id))), () => (null)),
+    attempt: selectDefinedValue(() => (selectDefinedValue(() => (status?.attempt), () => (resolvedIdentity.attempt))), () => (null)),
+    dispatch_id: resolvedIdentity.dispatch_id,
+    gateway_label: resolvedIdentity.gateway_label,
+    session_key: resolvedIdentity.session_key,
+    model: selectDefinedValue(() => (selectDefinedValue(() => (status?.model), () => (status?.active_agent?.model))), () => (null)),
   };
 }
 
@@ -365,20 +392,20 @@ export function buildSummarySessionRateLimitStatus(status = {}, {
   moduleId = null,
   identity = {},
 } = {}) {
-  const resolvedModuleId = status?.module_id ?? moduleId ?? null;
+  const resolvedModuleId = selectDefinedValue(() => (selectDefinedValue(() => (status?.module_id), () => (moduleId))), () => (null));
   const resolvedIdentity = resolveRateLimitIdentity(identity, { status });
-  const resolvedAgentType = status?.agent_type ?? resolvedIdentity.agent_type ?? null;
+  const resolvedAgentType = selectDefinedValue(() => (status?.agent_type), () => (null));
 
   return {
-    ...(status || {}),
+    ...statusRecord(status),
     status: STATUS.RATE_LIMITED,
     ...(resolvedModuleId == null ? {} : { module_id: resolvedModuleId }),
     ...(resolvedAgentType == null ? {} : { agent_type: resolvedAgentType }),
-    run_id: status?.run_id ?? resolvedIdentity.run_id ?? null,
-    attempt: status?.attempt ?? resolvedIdentity.attempt ?? null,
-    dispatch_id: (resolveStatusDispatchId(status) ?? resolvedIdentity.dispatch_id ?? null),
-    gateway_label: (resolveStatusGatewayLabel(status) ?? resolvedIdentity.gateway_label ?? null),
-    session_key: (resolveStatusSessionKey(status) ?? resolvedIdentity.session_key ?? null),
+    run_id: selectDefinedValue(() => (selectDefinedValue(() => (status?.run_id), () => (resolvedIdentity.run_id))), () => (null)),
+    attempt: selectDefinedValue(() => (selectDefinedValue(() => (status?.attempt), () => (resolvedIdentity.attempt))), () => (null)),
+    dispatch_id: resolvedIdentity.dispatch_id,
+    gateway_label: resolvedIdentity.gateway_label,
+    session_key: resolvedIdentity.session_key,
   };
 }
 
@@ -387,18 +414,16 @@ export function buildTrackedSummarySessionRateLimitStatus(status = {}, {
   identity = {},
   updateCorrelation = null,
 } = {}) {
-  const correlation = typeof updateCorrelation === 'function'
-    ? (updateCorrelation(status) || {})
-    : {};
+  const correlation = callRateLimitResolver(updateCorrelation, status);
   const resolvedIdentity = resolveRateLimitIdentity(identity, { status });
 
   return buildSummarySessionRateLimitStatus(status, {
     moduleId,
     identity: {
       ...resolvedIdentity,
-      dispatch_id: correlation.dispatch_id ?? resolvedIdentity.dispatch_id ?? null,
-      gateway_label: correlation.gateway_label ?? resolvedIdentity.gateway_label ?? null,
-      session_key: (resolveStatusSessionKey(status) ?? resolvedIdentity.session_key ?? null),
+      dispatch_id: selectDefinedValue(() => (correlation.dispatch_id), () => (null)),
+      gateway_label: selectDefinedValue(() => (correlation.gateway_label), () => (null)),
+      session_key: resolvedIdentity.session_key,
     },
   });
 }
@@ -413,17 +438,15 @@ export function createSummarySessionRateLimitDiscordNotifier(config, {
   resumeDescription = 'Resuming session.',
 } = {}) {
   const buildNotifierFields = (status) => {
-    const correlation = typeof updateCorrelation === 'function'
-      ? (updateCorrelation(status) || {})
-      : {};
+    const correlation = callRateLimitResolver(updateCorrelation, status);
     const resolvedIdentity = resolveRateLimitIdentity(identity, { status });
 
     return [
       ...buildFields({
         run_id: resolvedIdentity.run_id,
-        dispatch_id: (resolveStatusDispatchId(status) ?? correlation.dispatch_id ?? resolvedIdentity.dispatch_id ?? null),
-        gateway_label: (resolveStatusGatewayLabel(status) ?? correlation.gateway_label ?? resolvedIdentity.gateway_label ?? null),
-        session_key: (resolveStatusSessionKey(status) ?? resolvedIdentity.session_key ?? null),
+        dispatch_id: selectDefinedValue(() => (correlation.dispatch_id), () => (resolvedIdentity.dispatch_id)),
+        gateway_label: selectDefinedValue(() => (correlation.gateway_label), () => (resolvedIdentity.gateway_label)),
+        session_key: resolvedIdentity.session_key,
       }),
       ...(resolveRateLimitOption(agentId, { status }) ? [{ name: 'Agent', value: resolveRateLimitOption(agentId, { status }), inline: true }] : []),
       ...(resolveRateLimitOption(model, { status }) ? [{ name: 'Model', value: resolveRateLimitOption(model, { status }), inline: true }] : []),
@@ -458,14 +481,10 @@ export function createTrackedSummarySessionRateLimitRecoveryOptions(config, {
     gateway_label: null,
   };
   const updateTrackedCorrelation = (status = null) => {
-    const externalCorrelation = typeof updateCorrelation === 'function'
-      ? (updateCorrelation(status) || {})
-      : {};
+    const externalCorrelation = callRateLimitResolver(updateCorrelation, status);
     const resolvedIdentity = resolveRateLimitIdentity(identity, { status });
-    trackedCorrelation.dispatch_id = externalCorrelation.dispatch_id
-      ?? (resolveStatusDispatchId(status) ?? trackedCorrelation.dispatch_id ?? resolvedIdentity.dispatch_id ?? null);
-    trackedCorrelation.gateway_label = externalCorrelation.gateway_label
-      ?? (resolveStatusGatewayLabel(status) ?? trackedCorrelation.gateway_label ?? resolvedIdentity.gateway_label ?? null);
+    trackedCorrelation.dispatch_id = selectDefinedValue(() => (externalCorrelation.dispatch_id), () => (null));
+    trackedCorrelation.gateway_label = selectDefinedValue(() => (externalCorrelation.gateway_label), () => (null));
     return { ...trackedCorrelation };
   };
   const rateLimitDiscord = createSummarySessionRateLimitDiscordNotifier(config, {
@@ -503,20 +522,16 @@ export function resolveTrackedSessionRateLimitOutcome(result = {}, recoveryOptio
   gatewayLabel = null,
   lastStatus = null,
 } = {}) {
-  const status = result?.rate_limit_status || result?.status || null;
-  const trackedCorrelation = typeof recoveryOptions?.getTrackedCorrelation === 'function'
-    ? (recoveryOptions.getTrackedCorrelation(status) || {})
-    : {};
-  const resolvedDispatchId = trackedCorrelation.dispatch_id
-    ?? (resolveStatusDispatchId(status) ?? dispatchId ?? null);
-  const resolvedGatewayLabel = trackedCorrelation.gateway_label
-    ?? (resolveStatusGatewayLabel(status) ?? gatewayLabel ?? null);
+  const status = selectTruthyValue(() => (selectTruthyValue(() => (result?.rate_limit_status), () => (result?.status))), () => (null));
+  const trackedCorrelation = callRateLimitResolver(recoveryOptions?.getTrackedCorrelation, status);
+  const resolvedDispatchId = selectDefinedValue(() => (trackedCorrelation.dispatch_id), () => ((selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(status)), () => (dispatchId))), () => (null)))));
+  const resolvedGatewayLabel = selectDefinedValue(() => (trackedCorrelation.gateway_label), () => ((selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusGatewayLabel(status)), () => (gatewayLabel))), () => (null)))));
 
   return {
-    attempt: resolveResultAttempt(result) ?? attempt ?? null,
+    attempt: selectDefinedValue(() => (selectDefinedValue(() => (resolveResultAttempt(result)), () => (attempt))), () => (null)),
     dispatchId: resolvedDispatchId,
     gatewayLabel: resolvedGatewayLabel,
-    status: status || lastStatus || null,
+    status: selectTruthyValue(() => (selectTruthyValue(() => (status), () => (lastStatus))), () => (null)),
   };
 }
 
@@ -530,25 +545,23 @@ export function createGateSessionRateLimitDiscordNotifier(config, {
   resumeDescription = 'Resuming gate.',
 } = {}) {
   const buildNotifierFields = (status) => {
-    const correlation = typeof updateCorrelation === 'function'
-      ? (updateCorrelation(status) || {})
-      : {};
+    const correlation = callRateLimitResolver(updateCorrelation, status);
     const extraNotifierFields = typeof extraFields === 'function'
-      ? (extraFields(status) || [])
-      : extraFields;
+      ? arrayValue(extraFields(status))
+      : arrayValue(extraFields);
     const resolvedIdentity = resolveRateLimitIdentity(identity, { status });
 
     return [
       ...buildSessionRateLimitDiscordFields({
-        run_id: status?.run_id || resolvedIdentity.run_id,
+        run_id: selectDefinedValue(() => (status?.run_id), () => (resolvedIdentity.run_id)),
         ...(gateId == null ? {} : { gate_id: gateId }),
         ...(gateType == null ? {} : { gate_type: gateType }),
-        attempt: status?.attempt ?? resolvedIdentity.attempt ?? null,
-        dispatch_id: (resolveStatusDispatchId(status) ?? correlation.dispatch_id ?? resolvedIdentity.dispatch_id ?? null),
-        gateway_label: (resolveStatusGatewayLabel(status) ?? correlation.gateway_label ?? resolvedIdentity.gateway_label ?? null),
-        session_key: (resolveStatusSessionKey(status) ?? resolvedIdentity.session_key ?? null),
+        attempt: selectDefinedValue(() => (selectDefinedValue(() => (status?.attempt), () => (resolvedIdentity.attempt))), () => (null)),
+        dispatch_id: selectDefinedValue(() => (correlation.dispatch_id), () => (resolvedIdentity.dispatch_id)),
+        gateway_label: selectDefinedValue(() => (correlation.gateway_label), () => (resolvedIdentity.gateway_label)),
+        session_key: resolvedIdentity.session_key,
       }),
-      ...(extraNotifierFields || []),
+      ...extraNotifierFields,
     ];
   };
 

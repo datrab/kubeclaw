@@ -1,8 +1,35 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/arch-validator-checks.ts — deterministic architecture validation checks
 
 import fs from 'fs';
 import path from 'path';
 import { gateInstructionsPath, moduleBusterMdPath, modulePath } from '../core/paths.ts';
+const PROGRESS_FILE_LABEL = 'progress.json';
+const MODULE_DEFAULT_STAGES = Object.freeze(['forge', 'buster']);
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function progressFilePath(config) {
+  return selectDefinedValue(() => (config.paths?.progress_file), () => (PROGRESS_FILE_LABEL));
+}
+
+function progressModules(progress) {
+  return objectRecord(progress?.modules);
+}
+
+function progressGates(progress) {
+  return objectRecord(progress?.gates);
+}
+
+function moduleDependsOn(mod) {
+  return arrayValue(mod?.depends_on);
+}
 
 // ── Severity levels ───────────────────────────────────────────────────────────
 
@@ -20,6 +47,8 @@ export const SCOPE = {
   MODULE:           'module',
   GATE:             'gate',
   DEPENDENCY_GRAPH: 'dependency_graph',
+  DOMAIN_MODEL:     'domain_model',
+  INTEGRATION_BOUNDARY: 'integration_boundary',
   TEST_SPEC:        'test_spec',
   CONFIG:           'config',
 };
@@ -90,7 +119,7 @@ function summarizeProgressValue(value) {
 
 export function checkProgress(progress, config) {
   const findings = [];
-  const progressFile = config.paths?.progress_file || 'progress.json';
+  const progressFile = progressFilePath(config);
 
   if (!progress.project) {
     findings.push(makeFinding(
@@ -120,7 +149,7 @@ export function checkProgress(progress, config) {
     ));
   }
 
-  if (!progress.modules || typeof progress.modules !== 'object') {
+  if (selectTruthyValue(() => (!progress.modules), () => (typeof progress.modules !== 'object'))) {
     findings.push(makeFinding(
       FINDING_CODES.PROGRESS_MISSING_FIELD, SEVERITY.BLOCKING, SCOPE.PROJECT,
       [progressFile],
@@ -130,10 +159,10 @@ export function checkProgress(progress, config) {
     return findings;
   }
 
-  const gates = progress.gates || {};
+  const gates = progressGates(progress);
 
   for (const [index, stepId] of progress.execution_order.entries()) {
-    if (typeof stepId !== 'string' || stepId.trim() === '') {
+    if (selectTruthyValue(() => (typeof stepId !== 'string'), () => (stepId.trim() === ''))) {
       findings.push(makeFinding(
         FINDING_CODES.EXEC_ORDER_ENTRY_INVALID, SEVERITY.BLOCKING, SCOPE.PROJECT,
         [progressFile],
@@ -168,7 +197,7 @@ export function checkProgress(progress, config) {
   }
 
   if (progress.validators !== undefined) {
-    if (!progress.validators || typeof progress.validators !== 'object' || Array.isArray(progress.validators)) {
+    if (selectTruthyValue(() => (selectTruthyValue(() => (!progress.validators), () => (typeof progress.validators !== 'object'))), () => (Array.isArray(progress.validators)))) {
       findings.push(makeFinding(
         FINDING_CODES.PROGRESS_MISSING_FIELD, SEVERITY.BLOCKING, SCOPE.PROJECT,
         [progressFile],
@@ -184,10 +213,10 @@ export function checkProgress(progress, config) {
       ));
     } else if (Array.isArray(progress.validators.schedule)) {
       for (const [index, entry] of progress.validators.schedule.entries()) {
-        const stage = entry?.stage || entry?.validator || entry?.validator_stage || entry?.id || null;
-        const after = entry?.after || entry?.after_step || null;
-        const before = entry?.before || entry?.before_step || null;
-        if (!stage || typeof stage !== 'string' || !stage.startsWith('validator:')) {
+        const stage = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (entry?.stage), () => (entry?.validator))), () => (entry?.validator_stage))), () => (entry?.id))), () => (null));
+        const after = selectTruthyValue(() => (selectTruthyValue(() => (entry?.after), () => (entry?.after_step))), () => (null));
+        const before = selectTruthyValue(() => (selectTruthyValue(() => (entry?.before), () => (entry?.before_step))), () => (null));
+        if (selectTruthyValue(() => (selectTruthyValue(() => (!stage), () => (typeof stage !== 'string'))), () => (!stage.startsWith('validator:')))) {
           findings.push(makeFinding(
             FINDING_CODES.PROGRESS_MISSING_FIELD, SEVERITY.BLOCKING, SCOPE.PROJECT,
             [progressFile],
@@ -266,7 +295,7 @@ export function checkModuleFiles(progress, config) {
   const modulesDir = config.paths?.modules_dir;
   if (!modulesDir) return findings;
 
-  for (const [modId, mod] of Object.entries(progress.modules || {})) {
+  for (const [modId, mod] of Object.entries(progressModules(progress))) {
     if (!mod.dir) continue; // already flagged by checkProgress
 
     let modDir;
@@ -275,13 +304,13 @@ export function checkModuleFiles(progress, config) {
     } catch (error) {
       findings.push(makeFinding(
         FINDING_CODES.MODULE_MISSING_DIR, SEVERITY.BLOCKING, SCOPE.MODULE,
-        [config.paths?.progress_file || 'progress.json'],
+        [progressFilePath(config)],
         `Module '${modId}' has unsafe dir '${mod.dir}': ${error.message}`,
         `Set modules.${modId}.dir to a relative path inside the modules root.`,
       ));
       continue;
     }
-    const stages = Array.isArray(mod.stages) ? mod.stages : ['forge', 'buster'];
+    const stages = Array.isArray(mod.stages) ? mod.stages : [...MODULE_DEFAULT_STAGES];
 
     // FORGE.md — blocking: without it Forge cannot be instructed
     const forgePath = path.join(modDir, 'FORGE.md');
@@ -368,7 +397,7 @@ export function checkTestSpec(modId, testSpec, relTestSpecPath) {
 export function checkGateFiles(progress, config) {
   const findings = [];
 
-  for (const [gateId, gate] of Object.entries(progress.gates || {})) {
+  for (const [gateId, gate] of Object.entries(progressGates(progress))) {
     if (gate.instructions_file) {
       let instrPath;
       try {
@@ -376,7 +405,7 @@ export function checkGateFiles(progress, config) {
       } catch (error) {
         findings.push(makeFinding(
           FINDING_CODES.GATE_INSTRUCTIONS_MISSING, SEVERITY.BLOCKING, SCOPE.GATE,
-          [config.paths?.progress_file || 'progress.json'],
+          [progressFilePath(config)],
           `Gate '${gateId}' has unsafe instructions_file '${gate.instructions_file}': ${error.message}`,
           `Set gate '${gateId}' instructions_file to a relative path inside .swarm with no parent traversal.`,
         ));
@@ -400,12 +429,12 @@ export function checkGateFiles(progress, config) {
 
 export function checkDependencyGraph(progress, config) {
   const findings = [];
-  const progressFile = config.paths?.progress_file || 'progress.json';
-  const knownModules = new Set(Object.keys(progress.modules || {}));
-  const knownGates = progress.gates || {};
+  const progressFile = progressFilePath(config);
+  const knownModules = new Set(Object.keys(progressModules(progress)));
+  const knownGates = progressGates(progress);
 
-  for (const [modId, mod] of Object.entries(progress.modules || {})) {
-    for (const dep of (mod.depends_on || [])) {
+  for (const [modId, mod] of Object.entries(progressModules(progress))) {
+    for (const dep of moduleDependsOn(mod)) {
       if (typeof dep === 'string' && dep.startsWith('gate:')) {
         const gateId = dep.slice('gate:'.length);
         if (!knownGates[gateId]) {
@@ -466,9 +495,9 @@ export function checkModelConfig(config, progress = null) {
   }
 
   if (progress) {
-    for (const [modId, mod] of Object.entries(progress.modules || {})) {
+    for (const [modId, mod] of Object.entries(progressModules(progress))) {
       if (mod.forge_model !== undefined && mod.forge_model !== null) {
-        if (typeof mod.forge_model !== 'string' || !mod.forge_model.trim()) {
+        if (selectTruthyValue(() => (typeof mod.forge_model !== 'string'), () => (!mod.forge_model.trim()))) {
           findings.push(makeFinding(
             FINDING_CODES.MODULE_FORGE_MODEL_MALFORMED, SEVERITY.WARN, SCOPE.CONFIG,
             [],
@@ -479,9 +508,9 @@ export function checkModelConfig(config, progress = null) {
       }
     }
 
-    for (const [gateId, gate] of Object.entries(progress.gates || {})) {
+    for (const [gateId, gate] of Object.entries(progressGates(progress))) {
       if (gate.model !== undefined && gate.model !== null) {
-        if (typeof gate.model !== 'string' || !gate.model.trim()) {
+        if (selectTruthyValue(() => (typeof gate.model !== 'string'), () => (!gate.model.trim()))) {
           findings.push(makeFinding(
             FINDING_CODES.GATE_MODEL_MALFORMED, SEVERITY.WARN, SCOPE.CONFIG,
             [],

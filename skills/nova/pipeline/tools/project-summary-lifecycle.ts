@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export function addDiagnostic(diagnostics, entry = {}) {
   if (!Array.isArray(diagnostics)) return;
   diagnostics.push({
@@ -20,7 +21,7 @@ export function readJsonRecord(filePath, diagnostics = null, { optional = true }
         status: 'malformed',
         path: filePath,
         optional,
-        reason: error?.message || 'unknown',
+        reason: selectTruthyValue(() => (error?.message), () => ('missing_error_message')),
       };
       addDiagnostic(diagnostics, diag);
       return { ok: false, data: null, diagnostic: diag };
@@ -32,7 +33,7 @@ export function readJsonRecord(filePath, diagnostics = null, { optional = true }
       status: missing ? 'missing' : 'unavailable',
       path: filePath,
       optional,
-      reason: error?.message || 'unknown',
+      reason: selectTruthyValue(() => (error?.message), () => ('missing_error_message')),
     };
     addDiagnostic(diagnostics, diag);
     return { ok: false, data: null, diagnostic: diag };
@@ -51,7 +52,7 @@ export function extToLang(ext) {
     '.json':'JSON','.md':'Markdown','.yaml':'YAML','.yml':'YAML',
     '.sql':'SQL','.sh':'Shell','.bash':'Shell','.dockerfile':'Docker',
   };
-  return m[ext] || 'Other';
+  return selectDefinedValue(() => (m[ext]), () => ('Other'));
 }
 
 export function discoverLatestLifecycleReadModels(swarmRoot, readJsonData, diagnostics = null) {

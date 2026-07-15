@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
-import { ensureTaskConsumerGroup, processOneQueuedTask, disconnectRedisClient } from '../../../skills/buster/pipeline/services/task-queue.ts';
+import { ensureTaskConsumerGroup, processOneQueuedTask, disconnectRedisClient, getRedisClient } from '../../../skills/buster/pipeline/services/task-queue.ts';
 import { processTask } from '../../../skills/buster/pipeline/services/task-lifecycle.ts';
+import { publishTaskCompletionWithArtifact } from '../../../skills/buster/pipeline/services/task-completion.ts';
+import { assertScenarioMutationChannel } from './failure-scenarios.mjs';
 
 function parseArgs(argv) {
   const args = {
@@ -38,7 +40,61 @@ function realE2EScenario() {
 }
 
 function busterTaskProcessorForScenario() {
+  if (realE2EScenario() === 'buster-module-infra-failure') {
+    assertScenarioMutationChannel(realE2EScenario(), 'buster-simulator');
+    return async (payload) => {
+      const moduleId = payload?.module_id || payload?.module || null;
+      const taskType = payload?.task_type || null;
+      if (moduleId !== '01-nginx' || taskType !== 'module_test') return processTask(payload);
+
+      const reason = 'REAL_E2E_BUSTER_INFRA_UNAVAILABLE: simulated Buster worker infrastructure failure';
+      process.stdout.write(`${JSON.stringify({
+        ok: true,
+        phase: 'buster-simulator-infra-failure',
+        scenario: realE2EScenario(),
+        module_id: moduleId,
+        task_type: taskType,
+        failure_class: 'infra_error',
+      })}\n`);
+      const completion = await publishTaskCompletionWithArtifact(getRedisClient(), payload, {
+        outcome: 'FAIL',
+        reason,
+        summary: reason,
+        source: 'buster-pipeline',
+        failureClass: 'infra_error',
+        moduleId,
+        artifactData: {
+          real_e2e_expected_evidence: 'buster_module_infra_failure',
+          failure_class: 'infra_error',
+          suites: {
+            infra: {
+              suite: 'infra',
+              status: 'FAIL',
+              critical: true,
+              findings: [{
+                severity: 'critical',
+                message: reason,
+                rule: 'real-e2e-buster-infra-unavailable',
+              }],
+            },
+          },
+        },
+      });
+      return {
+        outcome: 'FAIL',
+        reason,
+        completion: {
+          attempted: true,
+          terminal: true,
+          stream: completion?.stream || payload?.completion_stream || null,
+          error: null,
+        },
+      };
+    };
+  }
+
   if (realE2EScenario() === 'buster-module-timeout') {
+    assertScenarioMutationChannel(realE2EScenario(), 'buster-simulator');
     return async (payload) => {
       const delayMs = Number(process.env.REAL_E2E_BUSTER_DELAY_MS || 5000);
       process.stdout.write(`${JSON.stringify({
@@ -54,23 +110,8 @@ function busterTaskProcessorForScenario() {
     };
   }
 
-  if (realE2EScenario() === 'buster-missing-output-file') {
-    return (payload) => {
-      const mutated = { ...payload };
-      delete mutated.output_file;
-      process.stdout.write(`${JSON.stringify({
-        ok: true,
-        phase: 'buster-simulator-mutated-missing-output-file',
-        scenario: realE2EScenario(),
-        original_output_file: payload?.output_file || null,
-        module_id: payload?.module_id || payload?.module || null,
-        task_type: payload?.task_type || null,
-      })}\n`);
-      return processTask(mutated);
-    };
-  }
-
   if (realE2EScenario() !== 'buster-invalid-completion-identity') return processTask;
+  assertScenarioMutationChannel(realE2EScenario(), 'buster-simulator');
   return (payload) => {
     const mutated = {
       ...payload,

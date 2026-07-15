@@ -11,11 +11,12 @@ import {
   closeTelemetry,
 } from './telemetry.ts';
 import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError } from '../noncritical-reporting.ts';
-import { sanitizeDiscordMessage } from '../redaction.ts';
+import { sanitizeDiscordMessage } from '../egress.ts';
 import { postDiscordWebhook } from '../integrations/discord-webhook.ts';
 import { createObservabilityHealthState } from './observability-health.ts';
 import { loadBusterPlatformConfig } from './runtime-policy.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 declare const process: {
   env: Record<string, string | undefined>;
   stderr: { write(text: string): void };
@@ -53,11 +54,11 @@ interface DiscordContext extends AnyRecord {
 
 function discordWebhookTimeoutMs(): number {
   const config = loadBusterPlatformConfig();
-  if (!config?.discord || typeof config.discord !== 'object' || Array.isArray(config.discord)) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!config?.discord), () => (typeof config.discord !== 'object'))), () => (Array.isArray(config.discord)))) {
     throw new Error('config.discord: required platform config object in swarm.config.json');
   }
   const timeoutMs = config.discord.webhook_timeout_ms;
-  if (!Number.isInteger(timeoutMs) || timeoutMs <= 0) {
+  if (selectTruthyValue(() => (!Number.isInteger(timeoutMs)), () => (timeoutMs <= 0))) {
     throw new Error('config.discord.webhook_timeout_ms: required positive integer in swarm.config.json');
   }
   return timeoutMs;
@@ -101,57 +102,68 @@ interface DiscordPayload {
 
 const _discordHealth = createObservabilityHealthState();
 
+function firstDefined<T>(...values: T[]): T | undefined {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return undefined;
+}
+
 function reportBusterDiscordIncident(context: DiscordContext | CorrelationContext = {}, classification: string, error: unknown, message: string, options: DiscordIncidentOptions = {}): void {
   reportClassifiedNonBlockingError({
     reporter: 'buster-discord',
     classification,
     incidentKey: buildNonBlockingIncidentKey(
       'buster-discord',
-      context?.project || 'unknown',
-      context?.run_id || 'unknown',
-      context?.module_id || 'global',
+      selectTruthyValue(() => (context?.project), () => ('missing_project')),
+      selectTruthyValue(() => (context?.run_id), () => ('missing_run_id')),
+      selectTruthyValue(() => (context?.module_id), () => ('scope_global')),
       classification,
-      options.scope || 'global'
+      selectTruthyValue(() => (options.scope), () => ('scope_global'))
     ),
     message,
     error,
-    includeErrorDetail: options.includeErrorDetail ?? true,
-    level: options.level || 'WARN',
+    includeErrorDetail: options.includeErrorDetail !== false,
+    level: typeof options.level === 'string' && options.level.trim() ? options.level : 'WARN',
     fallback: (_level: string, line: string) => process.stderr.write(`${line}\n`),
   });
 }
 
 function normalizeIdentity(value: unknown): string | null {
-  if (value === undefined || value === null || value === '') return null;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return null;
   return String(value);
 }
 
 function normalizeAttempt(value: unknown): string | number | null {
-  if (value === undefined || value === null || value === '') return null;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return null;
   const numeric = Number(value);
   return Number.isFinite(numeric) ? numeric : normalizeIdentity(value);
 }
 
 function truncateDiscordField(value: unknown, maxLength = 1024): string {
-  const text = String(value || '').trim();
+  const text = normalizeOperatorStatusText(value).trim();
   return text.length <= maxLength ? text : `${text.slice(0, Math.max(0, maxLength - 1))}…`;
 }
 
 function normalizeOperatorStatusText(value: unknown): string {
-  return String(value ?? '');
+  return value == null ? '' : String(value);
 }
 
 function normalizeOperatorModelText(value: unknown): string {
-  return String(value ?? '')
+  return normalizeOperatorStatusText(value)
     .replace(/\bopenai-codex\//gi, 'openai/')
     .replace(/\bcodex-(\d[\w.-]*)\b/gi, 'gpt-$1');
 }
 
 function normalizeOperatorFieldValue(field: DiscordField = {}): string {
   const statusNormalized = normalizeOperatorStatusText(field.value);
-  return String(field.name || '').trim().toLowerCase() === 'model'
+  return normalizeOperatorStatusText(field.name).trim().toLowerCase() === 'model'
     ? normalizeOperatorModelText(statusNormalized)
     : statusNormalized;
+}
+
+function hasExplicitDiscordPayload(message: AnyRecord): boolean {
+  return selectTruthyValue(() => (selectTruthyValue(() => (Array.isArray(message?.embeds)), () => (message?.content !== undefined))), () => (message?.files !== undefined));
 }
 
 function normalizeMessage(message: AnyRecord): DiscordPayload {
@@ -160,9 +172,9 @@ function normalizeMessage(message: AnyRecord): DiscordPayload {
   }
 
   return sanitizeDiscordMessage(
-    (message?.embeds || message?.content || message?.files)
+    hasExplicitDiscordPayload(message)
       ? {
-          content: message.content || undefined,
+          content: selectTruthyValue(() => (message.content), () => (undefined)),
           embeds: Array.isArray(message.embeds) ? message.embeds : undefined,
           files: [],
         }
@@ -170,8 +182,14 @@ function normalizeMessage(message: AnyRecord): DiscordPayload {
   ) as DiscordPayload;
 }
 
+type ActionabilityKey = 'impact' | 'action' | 'evidence';
+
+function contextActionabilityField(context: DiscordContext, actionability: AnyRecord, key: ActionabilityKey): string | null {
+  return normalizeIdentity(firstDefined(context[key], actionability[key]));
+}
+
 function buildCorrelationContext(context: DiscordContext = {}): CorrelationContext {
-  const actionability = context.actionability || {};
+  const actionability = context.actionability && typeof context.actionability === 'object' ? context.actionability : {};
   return {
     module_id: normalizeIdentity(context.module_id),
     gate_id: normalizeIdentity(context.gate_id),
@@ -184,12 +202,12 @@ function buildCorrelationContext(context: DiscordContext = {}): CorrelationConte
     log_dir: normalizeIdentity(context.log_dir),
     pipeline_log_path: normalizeIdentity(context.pipeline_log_path),
     pipeline_run_log_path: normalizeIdentity(context.pipeline_run_log_path),
-    telemetry_context: context.telemetry_context || null,
+    telemetry_context: selectTruthyValue(() => (context.telemetry_context), () => (null)),
     telemetry_enabled: context.telemetry_enabled,
-    impact: normalizeIdentity(context.impact ?? actionability.impact),
-    action: normalizeIdentity(context.action ?? actionability.action),
-    evidence: normalizeIdentity(context.evidence ?? actionability.evidence),
-    webhook_url: resolveDiscordWebhookUrl(context.webhook_url ?? null),
+    impact: contextActionabilityField(context, actionability, 'impact'),
+    action: contextActionabilityField(context, actionability, 'action'),
+    evidence: contextActionabilityField(context, actionability, 'evidence'),
+    webhook_url: resolveDiscordWebhookUrl(selectDefinedValue(() => (context.webhook_url), () => (null))),
   };
 }
 
@@ -209,8 +227,8 @@ function defaultEvidence(_correlation: Partial<CorrelationContext> = {}): string
 }
 
 function discordHealthKey(correlation: Partial<CorrelationContext> = {}, surface = 'webhook'): string {
-  const project = correlation.project ? correlation.project : 'unknown';
-  const runId = correlation.run_id ? correlation.run_id : 'unknown';
+  const project = correlation.project ? correlation.project : 'missing_project';
+  const runId = correlation.run_id ? correlation.run_id : 'missing_run_id';
   return `${surface}:${project}:${runId}`;
 }
 
@@ -222,9 +240,16 @@ function resolveDiscordAuditTargets(correlation: Partial<CorrelationContext> = {
   return [...new Set(targets)];
 }
 
+function resolveDiscordDeliveryReceiptTargets(correlation: Partial<CorrelationContext> = {}): string[] {
+  const targets: string[] = [];
+  if (correlation.pipeline_log_path) targets.push(path.join(path.dirname(correlation.pipeline_log_path), 'discord-deliveries.jsonl'));
+  if (correlation.pipeline_run_log_path) targets.push(path.join(path.dirname(correlation.pipeline_run_log_path), 'discord-deliveries.jsonl'));
+  return [...new Set(targets)];
+}
+
 function buildTelemetryContext(correlation: CorrelationContext): { ctx: AnyRecord | null; owned: boolean } {
   if (correlation.telemetry_context) return { ctx: correlation.telemetry_context, owned: false };
-  if (!correlation.project || !correlation.run_id) return { ctx: null, owned: false };
+  if (selectTruthyValue(() => (!correlation.project), () => (!correlation.run_id))) return { ctx: null, owned: false };
   return {
     ctx: createTelemetryContext({
       project: correlation.project,
@@ -234,7 +259,7 @@ function buildTelemetryContext(correlation: CorrelationContext): { ctx: AnyRecor
       log_dir: correlation.log_dir ? correlation.log_dir : null,
       pipeline_log_path: correlation.pipeline_log_path ? correlation.pipeline_log_path : null,
       pipeline_run_log_path: correlation.pipeline_run_log_path ? correlation.pipeline_run_log_path : null,
-      attempt: correlation.attempt ?? null,
+      attempt: selectDefinedValue(() => (correlation.attempt), () => (null)),
       dispatch_id: correlation.dispatch_id ? correlation.dispatch_id : null,
       session_key: correlation.session_key ? correlation.session_key : null,
       streamMaxLen: requireTelemetryStreamMaxLenFromConfig(loadBusterPlatformConfig()),
@@ -267,7 +292,7 @@ function formatWebhookDeliveryDetail(error: unknown): string {
   if (typeof err.status === 'number') {
     return `Buster Discord webhook delivery failed: HTTP ${err.status}${err.statusText ? ` ${err.statusText}` : ''}`;
   }
-  return `Buster Discord webhook delivery failed: ${err.cause?.code || err.code || err.message || 'unknown'}`;
+  return `Buster Discord webhook delivery failed: ${selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (err.cause?.code), () => (err.code))), () => (err.message))), () => ('missing_delivery_error_detail'))}`;
 }
 
 function emitDiscordHealthChange(correlation: CorrelationContext, type: string, payload: AnyRecord): void {
@@ -276,12 +301,12 @@ function emitDiscordHealthChange(correlation: CorrelationContext, type: string, 
     surface: payload.surface,
     reason: payload.reason,
     detail: payload.detail,
-    module_id: correlation.module_id || null,
-    gate_id: correlation.gate_id || null,
-    gate_type: correlation.gate_type || null,
-    attempt: correlation.attempt ?? null,
-    dispatch_id: correlation.dispatch_id || null,
-    session_key: correlation.session_key || null,
+    module_id: selectTruthyValue(() => (correlation.module_id), () => (null)),
+    gate_id: selectTruthyValue(() => (correlation.gate_id), () => (null)),
+    gate_type: selectTruthyValue(() => (correlation.gate_type), () => (null)),
+    attempt: selectDefinedValue(() => (correlation.attempt), () => (null)),
+    dispatch_id: selectTruthyValue(() => (correlation.dispatch_id), () => (null)),
+    session_key: selectTruthyValue(() => (correlation.session_key), () => (null)),
     ...payload,
   });
 }
@@ -307,12 +332,12 @@ function emitDiscordRestoredIfNeeded(correlation: CorrelationContext, surface: s
     surface,
     reason,
     detail,
-    module_id: correlation.module_id || null,
-    gate_id: correlation.gate_id || null,
-    gate_type: correlation.gate_type || null,
-    attempt: correlation.attempt ?? null,
-    dispatch_id: correlation.dispatch_id || null,
-    session_key: correlation.session_key || null,
+    module_id: selectTruthyValue(() => (correlation.module_id), () => (null)),
+    gate_id: selectTruthyValue(() => (correlation.gate_id), () => (null)),
+    gate_type: selectTruthyValue(() => (correlation.gate_type), () => (null)),
+    attempt: selectDefinedValue(() => (correlation.attempt), () => (null)),
+    dispatch_id: selectTruthyValue(() => (correlation.dispatch_id), () => (null)),
+    session_key: selectTruthyValue(() => (correlation.session_key), () => (null)),
     degraded_at: transition.degradedAt,
     restored_at: transition.restoredAt,
     restored_after_ms: transition.restoredAfterMs,
@@ -320,22 +345,25 @@ function emitDiscordRestoredIfNeeded(correlation: CorrelationContext, surface: s
 }
 
 function existingFieldNames(embed: DiscordEmbed = {}): Set<string> {
-  return new Set((embed.fields || []).map((field) => String(field?.name || '').trim().toLowerCase()));
+  const fields = Array.isArray(embed.fields) ? embed.fields : [];
+  return new Set(fields.map((field) => normalizeOperatorStatusText(field?.name).trim().toLowerCase()));
 }
 
 function fieldValue(embed: DiscordEmbed = {}, name: string): string | null {
   const target = name.trim().toLowerCase();
-  const field = (embed.fields || []).find((candidate) => String(candidate?.name || '').trim().toLowerCase() === target);
-  const value = normalizeOperatorFieldValue(field || {}).trim();
+  const fields = Array.isArray(embed.fields) ? embed.fields : [];
+  const field = fields.find((candidate) => normalizeOperatorStatusText(candidate?.name).trim().toLowerCase() === target);
+  const value = field ? normalizeOperatorFieldValue(field).trim() : '';
   return value ? value : null;
 }
 
 function actionabilityEvidenceFromEmbed(embed: DiscordEmbed = {}): string {
   const skipNames = new Set(['impact', 'action', 'evidence', 'run', 'run id', 'attempt', 'dispatch', 'session']);
-  const lines = (embed.fields || [])
-    .filter((field) => !skipNames.has(String(field?.name || '').trim().toLowerCase()))
+  const fields = Array.isArray(embed.fields) ? embed.fields : [];
+  const lines = fields
+    .filter((field) => !skipNames.has(normalizeOperatorStatusText(field?.name).trim().toLowerCase()))
     .map((field) => {
-      const name = String(field?.name || 'Field').trim();
+      const name = selectTruthyValue(() => (normalizeOperatorStatusText(field?.name).trim()), () => ('Missing field name'));
       const value = normalizeOperatorFieldValue(field).trim();
       return value ? `${name}: ${value}` : null;
     })
@@ -371,8 +399,8 @@ function actionabilityActionFromEmbed(embed: DiscordEmbed = {}): string {
 }
 
 function actionabilityFieldNeedsReplacement(name: string, value: unknown): boolean {
-  const normalizedName = String(name || '').trim().toLowerCase();
-  const text = String(value ?? '').trim();
+  const normalizedName = normalizeOperatorStatusText(name).trim().toLowerCase();
+  const text = normalizeOperatorStatusText(value).trim();
   if (!text) return true;
   if (normalizedName === 'impact' && /^Buster reported an operator-visible event/i.test(text)) return true;
   if (normalizedName === 'action' && /(open latest\.json|inspect the run-scoped pipeline and Discord artifacts?|inspect.*artifacts?)/i.test(text)) return true;
@@ -382,7 +410,7 @@ function actionabilityFieldNeedsReplacement(name: string, value: unknown): boole
 
 function upsertActionabilityField(fields: DiscordField[], names: Set<string>, name: 'Impact' | 'Action' | 'Evidence', value: string): void {
   const normalizedName = name.toLowerCase();
-  const index = fields.findIndex((field) => String(field?.name || '').trim().toLowerCase() === normalizedName);
+  const index = fields.findIndex((field) => normalizeOperatorStatusText(field?.name).trim().toLowerCase() === normalizedName);
   if (index >= 0 && !actionabilityFieldNeedsReplacement(normalizedName, fields[index]?.value)) return;
   const field = { name, value: truncateDiscordField(value), inline: false };
   if (index >= 0) fields[index] = { ...fields[index], ...field };
@@ -403,8 +431,8 @@ function appendCorrelationFields(embed: DiscordEmbed = {}, correlation: Correlat
   const names = existingFieldNames(embed);
   const normalizedEmbed = {
     ...embed,
-    title: normalizeOperatorStatusText(embed.title || ''),
-    description: normalizeOperatorStatusText(embed.description || ''),
+    title: normalizeOperatorStatusText(embed.title),
+    description: normalizeOperatorStatusText(embed.description),
     fields,
   };
 
@@ -443,6 +471,18 @@ function appendCorrelationFields(embed: DiscordEmbed = {}, correlation: Correlat
   return { ...normalizedEmbed, fields };
 }
 
+function resolvedActionabilityField(
+  payload: DiscordPayload,
+  correlation: CorrelationContext,
+  key: ActionabilityKey,
+  label: string,
+  defaultValue: (correlation: Partial<CorrelationContext>) => string
+): string {
+  if (!actionabilityFieldNeedsReplacement(key, correlation[key])) return correlation[key] as string;
+  const fromPayload = actionabilityFieldFromPayload(payload, label);
+  return fromPayload ? fromPayload : defaultValue(correlation);
+}
+
 function persistDiscordArtifact(payload: DiscordPayload, correlation: CorrelationContext): void {
   const targets = resolveDiscordAuditTargets(correlation);
   if (!targets.length) return;
@@ -460,9 +500,9 @@ function persistDiscordArtifact(payload: DiscordPayload, correlation: Correlatio
     dispatch_id: correlation.dispatch_id,
     session_key: correlation.session_key,
     actionability: {
-      impact: !actionabilityFieldNeedsReplacement('impact', correlation.impact) ? correlation.impact : actionabilityFieldFromPayload(payload, 'Impact') || defaultImpact(correlation),
-      action: !actionabilityFieldNeedsReplacement('action', correlation.action) ? correlation.action : actionabilityFieldFromPayload(payload, 'Action') || defaultAction(correlation),
-      evidence: !actionabilityFieldNeedsReplacement('evidence', correlation.evidence) ? correlation.evidence : actionabilityFieldFromPayload(payload, 'Evidence') || defaultEvidence(correlation),
+      impact: resolvedActionabilityField(payload, correlation, 'impact', 'Impact', defaultImpact),
+      action: resolvedActionabilityField(payload, correlation, 'action', 'Action', defaultAction),
+      evidence: resolvedActionabilityField(payload, correlation, 'evidence', 'Evidence', defaultEvidence),
     },
     payload,
   };
@@ -474,7 +514,7 @@ function persistDiscordArtifact(payload: DiscordPayload, correlation: Correlatio
       fs.appendFileSync(target, JSON.stringify(entry) + '\n');
     } catch (error) {
       const err = errorRecord(error);
-      failures.push(`${target}: ${err.code || err.message || 'unknown'}`);
+      failures.push(`${target}: ${selectTruthyValue(() => (selectTruthyValue(() => (err.code), () => (err.message))), () => ('missing_error_detail'))}`);
     }
   }
 
@@ -491,13 +531,69 @@ function persistDiscordArtifact(payload: DiscordPayload, correlation: Correlatio
   emitDiscordRestoredIfNeeded(correlation, 'audit_log', 'audit_write_failed', 'Buster Discord audit writes restored');
 }
 
+function firstEmbedTitle(payload: DiscordPayload): string | null {
+  const embed = Array.isArray(payload.embeds) ? payload.embeds[0] : null;
+  const title = normalizeOperatorStatusText(embed?.title).trim();
+  return title ? title : null;
+}
+
+function persistDiscordDeliveryReceipt(payload: DiscordPayload, correlation: CorrelationContext, level: string, result: AnyRecord = {}): void {
+  const targets = resolveDiscordDeliveryReceiptTargets(correlation);
+  if (!targets.length) return;
+  const receipt = {
+    ts: new Date().toISOString(),
+    source: 'buster',
+    project: correlation.project,
+    run_id: correlation.run_id,
+    level,
+    ok: true,
+    http_status: selectDefinedValue(() => (result.status), () => (200)),
+    status_text: selectDefinedValue(() => (result.statusText), () => ('OK')),
+    message_id: selectTruthyValue(() => (result.body?.id), () => (result.message_id || null)),
+    channel_id: selectTruthyValue(() => (result.body?.channel_id), () => (result.channel_id || null)),
+    webhook_message_returned: Boolean(result.body?.id || result.message_id),
+    title: firstEmbedTitle(payload),
+    correlation: {
+      run_id: correlation.run_id,
+      session_key: correlation.session_key,
+      attempt: correlation.attempt,
+      module_id: correlation.module_id,
+      gate_id: correlation.gate_id,
+      gate_type: correlation.gate_type,
+      dispatch_id: correlation.dispatch_id,
+    },
+  };
+  for (const target of targets) {
+    try {
+      fs.mkdirSync(path.dirname(target), { recursive: true });
+      fs.appendFileSync(target, JSON.stringify(receipt) + '\n');
+    } catch (error) {
+      reportBusterDiscordIncident(correlation, 'delivery_receipt_write_failed', error, 'Buster Discord delivery receipt write failed', {
+        level: 'DEBUG',
+        scope: 'delivery_receipt',
+      });
+    }
+  }
+}
+
+function persistDiscordAuditReceipt(payload: DiscordPayload, correlation: CorrelationContext, level: string, reason: string): void {
+  persistDiscordDeliveryReceipt(payload, correlation, level, {
+    status: 0,
+    statusText: reason,
+    message_id: null,
+    channel_id: null,
+    body: null,
+  });
+}
+
 function discordWebhookDeliveryMuted(context: DiscordContext = {}): boolean {
   // STRICTIFY_TS_SLICE: context mute uses one canonical typed option. Legacy
   // `_disable_discord_webhooks`/`disable_discord_webhooks` aliases are not
   // accepted inside the Buster Discord owner.
   if (context.disableDiscordWebhooks === true) return true;
-  const env = String(process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS ?? '').trim().toLowerCase();
-  return env === '1' || env === 'true' || env === 'yes';
+  const rawEnv = process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS;
+  const env = selectTruthyValue(() => (rawEnv === undefined), () => (rawEnv === null)) ? '' : String(rawEnv).trim().toLowerCase();
+  return selectTruthyValue(() => (selectTruthyValue(() => (env === '1'), () => (env === 'true'))), () => (env === 'yes'));
 }
 
 export function sendDiscord(message: AnyRecord | null | undefined, context: DiscordContext = {}): DiscordPayload | null {
@@ -507,20 +603,27 @@ export function sendDiscord(message: AnyRecord | null | undefined, context: Disc
   const normalized = normalizeMessage(message);
   const payload = {
     content: normalized.content,
-    embeds: (normalized.embeds || []).map((embed: DiscordEmbed) => appendCorrelationFields(embed, correlation)),
+    embeds: (Array.isArray(normalized.embeds) ? normalized.embeds : []).map((embed: DiscordEmbed) => appendCorrelationFields(embed, correlation)),
   };
 
   persistDiscordArtifact(payload, correlation);
 
-  if (discordWebhookDeliveryMuted(context)) return payload;
-  if (!correlation.webhook_url) return payload;
+  if (discordWebhookDeliveryMuted(context)) {
+    persistDiscordAuditReceipt(payload, correlation, normalizeIdentity(context.level) || 'INFO', 'muted');
+    return payload;
+  }
+  if (!correlation.webhook_url) {
+    persistDiscordAuditReceipt(payload, correlation, normalizeIdentity(context.level) || 'INFO', 'missing_webhook');
+    return payload;
+  }
 
   void postDiscordWebhook(correlation.webhook_url, {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
     timeoutMs: discordWebhookTimeoutMs(),
   })
-    .then(() => {
+    .then((result) => {
+      persistDiscordDeliveryReceipt(payload, correlation, normalizeIdentity(context.level) || 'INFO', result || {});
       emitDiscordRestoredIfNeeded(correlation, 'webhook', 'webhook_delivery_failed', 'Buster Discord webhook delivery restored');
     })
     .catch((error) => {
@@ -534,10 +637,10 @@ export function sendDiscord(message: AnyRecord | null | undefined, context: Disc
 }
 
 export async function deliverDiscordWebhookRequest(request: AnyRecord = {}, context: DiscordContext = {}): Promise<AnyRecord> {
-  const normalizedRequest = request || {};
+  const normalizedRequest = request;
   const correlation = buildCorrelationContext({
     ...context,
-    webhook_url: normalizedRequest.webhook_url ?? context.webhook_url ?? null,
+    webhook_url: selectDefinedValue(() => (normalizedRequest.webhook_url), () => (null)),
   });
 
   if (discordWebhookDeliveryMuted(context)) return { ok: true, skipped: true, muted: true };
@@ -547,7 +650,7 @@ export async function deliverDiscordWebhookRequest(request: AnyRecord = {}, cont
     webhook_url: _webhook_url,
     ...transportOptions
   } = normalizedRequest;
-  transportOptions.timeoutMs = transportOptions.timeoutMs ?? discordWebhookTimeoutMs();
+  if (!Number.isFinite(transportOptions.timeoutMs)) transportOptions.timeoutMs = discordWebhookTimeoutMs();
 
   try {
     const result = await postDiscordWebhook(correlation.webhook_url, transportOptions);

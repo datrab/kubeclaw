@@ -746,8 +746,7 @@ Bounded LLM input summary promoted only when explicitly enabled by agent-observa
   "model": "claude-sonnet-4-6",
   "prompt_chars": 4200,
   "system_prompt_chars": 1200,
-  "history_message_count": 8,
-  "masking_profile": "kubeclaw-agent-observer-v1-minimal-api-key-mask"
+  "history_message_count": 8
 }
 ```
 
@@ -765,8 +764,6 @@ Bounded LLM input summary promoted only when explicitly enabled by agent-observa
 | system_prompt_chars | number\|null | Character count of system prompt |
 | history_message_count | number\|null | Number of prior messages |
 | request | object\|null | Bounded request metadata |
-| masking_profile | string\|null | Applied masking profile |
-| masked | string[]\|null | Mask patterns applied |
 
 ### agent.llm.output.summary
 
@@ -798,8 +795,6 @@ Bounded LLM output summary. Full provider/assistant responses remain in raw agen
 | usage | object\|null | Token/cost usage summary |
 | input_tokens | number\|null | Input token count summary |
 | output_tokens | number\|null | Output token count summary |
-| masking_profile | string\|null | Applied masking profile |
-| masked | string[]\|null | Mask patterns applied |
 
 ### agent.tool.started
 
@@ -827,8 +822,6 @@ Tool-call start summary from OpenClaw hooks. Full params remain in the raw paylo
 | tool_call_id | string\|null | Tool call correlation key |
 | params_bytes | number\|null | Serialized params byte count |
 | param_keys | string[]\|null | Top-level param keys when params are object-shaped |
-| masking_profile | string\|null | Applied masking profile |
-| masked | string[]\|null | Mask patterns applied |
 
 ### agent.tool.finished
 
@@ -860,8 +853,6 @@ Tool-call terminal summary. Full params/results remain in raw agent-observabilit
 | result_bytes | number\|null | Serialized result byte count |
 | error | object\|null | Structured error metadata when available |
 | error_message | string\|null | Error message summary |
-| masking_profile | string\|null | Applied masking profile |
-| masked | string[]\|null | Mask patterns applied |
 
 ### agent.model.started
 

@@ -9,6 +9,7 @@ import {
   normalizeActiveSessionIdentity,
 } from './session-authority.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export const GATE_ACTIVE_SESSION_EVIDENCE_ROLES = Object.freeze({
   LIFECYCLE_AUTHORITY: 'lifecycle_read_model_authority',
   RECOVERY_EVIDENCE: 'gate_active_session_recovery_evidence',
@@ -34,6 +35,14 @@ function sleepSync(ms) {
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
 }
 
+function errorMessage(error) {
+  if (error && typeof error === 'object' && 'message' in error) {
+    const message = error.message;
+    if (typeof message === 'string' && message.trim()) return message;
+  }
+  return String(error);
+}
+
 function isProcessAlive(pid) {
   if (!pid) return false;
   try {
@@ -46,7 +55,7 @@ function isProcessAlive(pid) {
 
 function requireNumber(obj, field, label) {
   const value = obj?.[field];
-  if (typeof value !== 'number' || !Number.isFinite(value)) {
+  if (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value)))) {
     throw new Error(`${label}.${field}: required number in swarm.config.json`);
   }
   return value;
@@ -54,8 +63,8 @@ function requireNumber(obj, field, label) {
 
 function withGateActiveSessionMutationLock(config, activeSessionPath, fn, opts = {}) {
   const lockConfig = config?.locks?.gate_active_session;
-  const staleMs = opts.staleMs ?? requireNumber(lockConfig, 'stale_ms', 'config.locks.gate_active_session');
-  const timeoutMs = opts.timeoutMs ?? requireNumber(lockConfig, 'timeout_ms', 'config.locks.gate_active_session');
+  const staleMs = opts.staleMs
+  const timeoutMs = opts.timeoutMs
   const lockPath = `${activeSessionPath}.lock`;
   fs.mkdirSync(path.dirname(lockPath), { recursive: true });
   const ownerToken = `${process.pid}:${Date.now()}:${Math.random().toString(36).slice(2)}`;
@@ -110,47 +119,58 @@ function withGateActiveSessionMutationLock(config, activeSessionPath, fn, opts =
 }
 
 function readJsonIfPresent(filePath) {
-  if (!filePath || !fs.existsSync(filePath)) return { exists: false, data: null };
+  if (selectTruthyValue(() => (!filePath), () => (!fs.existsSync(filePath)))) return { exists: false, data: null };
   try {
     return { exists: true, data: JSON.parse(fs.readFileSync(filePath, 'utf8')) };
   } catch (error) {
-    return { exists: true, data: null, parse_error: error?.message || String(error) };
+    return { exists: true, data: null, parse_error: errorMessage(error) };
   }
 }
 
+function firstDefined(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return undefined;
+}
+
 function normalizeGateActiveSessionEntry(entry = null, gateId = null, { requireStrong = false } = {}) {
-  if (!entry || typeof entry !== 'object') return null;
+  if (selectTruthyValue(() => (!entry), () => (typeof entry !== 'object'))) return null;
   const identity = normalizeActiveSessionIdentity(entry);
   if (requireStrong && !hasStrongActiveSessionIdentity(identity)) return null;
   return {
     ...entry,
-    gate_id: entry.gate_id || gateId || null,
+    gate_id: selectTruthyValue(() => (selectTruthyValue(() => (entry.gate_id), () => (gateId))), () => (null)),
     run_id: identity.run_id,
     attempt: identity.attempt,
     dispatch_id: identity.dispatch_id,
     session_key: identity.session_key,
     gateway_label: identity.gateway_label,
-    label: entry.label || identity.diagnostic_label || null,
+    label: selectTruthyValue(() => (selectTruthyValue(() => (entry.label), () => (identity.diagnostic_label))), () => (null)),
     runtime: identity.runtime,
     model: identity.model,
     stream_log_path: identity.stream_log_path,
-    agent_id: entry.agent_id || entry.agentId || null,
+    agent_id: selectTruthyValue(() => (selectTruthyValue(() => (entry.agent_id), () => (entry.agentId))), () => (null)),
   };
 }
 
 function normalizeGateActiveSessionCleanupIdentity(identity = null) {
-  if (!identity || typeof identity !== 'object') return null;
+  if (selectTruthyValue(() => (!identity), () => (typeof identity !== 'object'))) return null;
   return normalizeActiveSessionIdentity({
-    run_id: identity.run_id ?? identity.runId,
-    attempt: identity.attempt ?? identity.telemetry_attempt,
-    dispatch_id: identity.dispatch_id ?? identity.dispatchId ?? identity.telemetry_dispatch_id,
-    session_key: identity.session_key ?? identity.sessionKey ?? identity.childSessionKey,
-    gateway_label: identity.gateway_label ?? identity.gatewayLabel,
+    run_id: firstDefined(identity.run_id, identity.runId),
+    attempt: firstDefined(identity.attempt, identity.telemetry_attempt),
+    dispatch_id: selectDefinedValue(() => (identity.dispatch_id), () => (identity.telemetry_dispatch_id)),
+    session_key: firstDefined(identity.session_key, identity.sessionKey, identity.childSessionKey),
+    gateway_label: firstDefined(identity.gateway_label, identity.gatewayLabel),
   });
 }
 
+function hasGateRecoveryEvidence(policy, fileRead) {
+  return Boolean(selectTruthyValue(() => (selectTruthyValue(() => (policy.recovery_identity), () => (policy.gate_active_session_file))), () => (fileRead.parse_error)));
+}
+
 function strongGateActiveSessionIdentityMatches(expectedIdentity = null, observedIdentity = null) {
-  const confirmation = buildActiveSessionConfirmation(expectedIdentity || {}, observedIdentity || {});
+  const confirmation = buildActiveSessionConfirmation(selectDefinedValue(() => (expectedIdentity), () => ({})), selectDefinedValue(() => (observedIdentity), () => ({})));
   return confirmation.missing_expected_fields.length === 0
     && confirmation.missing_observed_fields.length === 0
     && confirmation.mismatched_fields.length === 0;
@@ -159,7 +179,7 @@ function strongGateActiveSessionIdentityMatches(expectedIdentity = null, observe
 function getLifecycleGateActiveSession(config, gateId) {
   if (!gateId) return null;
   return normalizeGateActiveSessionEntry(
-    loadLifecycleReadModels(config)?.active_sessions?.gates?.[gateId] || null,
+    selectTruthyValue(() => (loadLifecycleReadModels(config)?.active_sessions?.gates?.[gateId]), () => (null)),
     gateId,
     { requireStrong: true },
   );
@@ -174,7 +194,7 @@ export function buildGateActiveSessionRecoveryPolicy({
   const lifecycleIdentity = normalizeGateActiveSessionEntry(lifecycleActiveSession, gateId, { requireStrong: true });
   const fileIdentity = normalizeGateActiveSessionEntry(gateActiveSessionFile, gateId, { requireStrong: true });
   const trackedIdentity = normalizeGateActiveSessionEntry(trackedAgent, gateId, { requireStrong: true });
-  const hasLifecycleAuthority = hasStrongActiveSessionIdentity(lifecycleIdentity || {});
+  const hasLifecycleAuthority = hasStrongActiveSessionIdentity(selectDefinedValue(() => (lifecycleIdentity), () => ({})));
   const fileConfirmation = hasLifecycleAuthority && fileIdentity
     ? buildActiveSessionConfirmation(lifecycleIdentity, fileIdentity)
     : null;
@@ -232,25 +252,25 @@ export function resolveGateActiveSessionRecoveryEvidence(config, gateId, { track
     gate_id: gateId,
     path: activeSessionPath,
     file_exists: fileRead.exists === true,
-    file_parse_error: fileRead.parse_error || null,
+    file_parse_error: selectTruthyValue(() => (fileRead.parse_error), () => (null)),
     file: fileRead.data,
     policy,
     active: policy.recovery_identity,
-    has_recovery_evidence: Boolean(policy.recovery_identity || policy.gate_active_session_file || fileRead.parse_error),
+    has_recovery_evidence: hasGateRecoveryEvidence(policy, fileRead),
   };
 }
 
 export function persistGateActiveSession(config, gateId, label, entry, extra = {}) {
   const activeSessionPath = gateActiveSessionPath(config, gateId); if (!activeSessionPath) return false;
   const identity = normalizeActiveSessionIdentity({
-    run_id: extra.run_id || entry?.run_id || config?._runId || config?.run_id || null,
-    attempt: extra.attempt ?? entry?.attempt ?? entry?.telemetry_attempt ?? null,
-    dispatch_id: extra.dispatch_id || entry?.dispatch_id || entry?.telemetry_dispatch_id || null,
-    session_key: entry?.sessionKey || entry?.session_key || extra.session_key || null,
-    gateway_label: extra.gateway_label || entry?.gatewayLabel || entry?.gateway_label || null,
-    runtime: entry?.runtime || extra.runtime || null,
-    model: entry?.model || extra.model || null,
-    stream_log_path: entry?.streamLogPath || entry?.stream_log_path || extra.stream_log_path || null,
+    run_id: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (extra.run_id), () => (entry?.run_id))), () => (config?._runId))), () => (config?.run_id))), () => (null)),
+    attempt: selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (extra.attempt), () => (entry?.attempt))), () => (entry?.telemetry_attempt))), () => (null)),
+    dispatch_id: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (extra.dispatch_id), () => (entry?.dispatch_id))), () => (entry?.telemetry_dispatch_id))), () => (null)),
+    session_key: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (entry?.sessionKey), () => (entry?.session_key))), () => (extra.session_key))), () => (null)),
+    gateway_label: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (extra.gateway_label), () => (entry?.gatewayLabel))), () => (entry?.gateway_label))), () => (null)),
+    runtime: selectTruthyValue(() => (selectTruthyValue(() => (entry?.runtime), () => (extra.runtime))), () => (null)),
+    model: selectTruthyValue(() => (selectTruthyValue(() => (entry?.model), () => (extra.model))), () => (null)),
+    stream_log_path: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (entry?.streamLogPath), () => (entry?.stream_log_path))), () => (extra.stream_log_path))), () => (null)),
   });
   if (!hasStrongActiveSessionIdentity(identity)) {
     log('DEBUG', `Skipping weak gate active-session evidence for ${gateId}: incomplete identity`);
@@ -269,7 +289,7 @@ export function persistGateActiveSession(config, gateId, label, entry, extra = {
       gateway_label: identity.gateway_label,
       runtime: identity.runtime,
       model: identity.model,
-      agent_id: entry?.agentId || entry?.agent_id || null,
+      agent_id: selectTruthyValue(() => (selectTruthyValue(() => (entry?.agentId), () => (entry?.agent_id))), () => (null)),
       tracked_at: new Date().toISOString(),
     });
     return true;
@@ -297,7 +317,7 @@ export function clearGateActiveSession(config, gateId, expectedIdentity = null) 
       fs.unlinkSync(activeSessionPath);
       return true;
     } catch (e) {
-      if (e?.code !== 'ENOENT') log('DEBUG', `Failed to clear active gate session for ${gateId}: ${e?.message || e}`);
+      if (e?.code !== 'ENOENT') log('DEBUG', `Failed to clear active gate session for ${gateId}: ${selectTruthyValue(() => (e?.message), () => (e))}`);
       return false;
     }
   });

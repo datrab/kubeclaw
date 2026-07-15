@@ -44,6 +44,49 @@ test('healthSuite rejects escaped health and smoke paths before fetch', async ()
   }
 });
 
+test('healthSuite validates smoke paths with HTTP checks only', async () => {
+  const originalFetch = globalThis.fetch;
+  const urls = [];
+  globalThis.fetch = async (url) => {
+    urls.push(String(url));
+    return new Response(String(url).endsWith('/content/branch-a.html') ? 'REAL_E2E_BRANCH_A_CONTENT' : 'ok', { status: 200 });
+  };
+
+  try {
+    const verdict = await healthSuite({
+      config: { serve: { port: 4321, health_path: '/', smoke_paths: ['/content/branch-a.html'], smoke_expected_text: { '/content/branch-a.html': 'REAL_E2E_BRANCH_A_CONTENT' } } },
+      logSink: null,
+    });
+
+    assert.equal(verdict.status, 'PASS');
+    assert.deepEqual(urls, [
+      'http://localhost:4321/',
+      'http://localhost:4321/content/branch-a.html',
+    ]);
+    assert.deepEqual(verdict.metadata.smoke_paths, ['/content/branch-a.html']);
+    assert.deepEqual(verdict.metadata.smoke_expected_text, { '/content/branch-a.html': 'REAL_E2E_BRANCH_A_CONTENT' });
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('healthSuite fails smoke checks when expected response text is missing', async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response('wrong body', { status: 200 });
+
+  try {
+    const verdict = await healthSuite({
+      config: { serve: { port: 4321, health_path: '/', smoke_paths: ['/content/branch-a.html'], smoke_expected_text: { '/content/branch-a.html': 'REAL_E2E_BRANCH_A_CONTENT' } } },
+      logSink: null,
+    });
+
+    assert.equal(verdict.status, 'FAIL');
+    assert.equal(verdict.findings.some((finding) => finding.rule === 'smoke-response-text'), true);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test('securitySuite rejects escaped paths before fetch', async () => {
   const originalFetch = globalThis.fetch;
   let fetchCalls = 0;
@@ -54,7 +97,7 @@ test('securitySuite rejects escaped paths before fetch', async () => {
 
   try {
     const verdict = await securitySuite({
-      config: { serve: { port: 4321 }, security: { paths: ['@example.test/'] } },
+      config: { serve: { type: 'static', port: 4321 }, security: { paths: ['@example.test/'] } },
       logSink: null,
     });
 

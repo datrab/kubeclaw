@@ -6,6 +6,7 @@ import type {
   AgentObservabilityJsonValue,
 } from '../../agent-observability/src/index.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type JsonRecord = Record<string, AgentObservabilityJsonValue | undefined>;
 
 export interface AgentObservabilityTelemetryEmission {
@@ -38,12 +39,12 @@ function stringValue(value: unknown): string | null {
 }
 
 function jsonSize(value: unknown): number | null {
-  if (value === undefined || value === null) return null;
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
   return new TextEncoder().encode(JSON.stringify(value)).byteLength;
 }
 
 function charCount(value: unknown): number | null {
-  if (value === undefined || value === null) return null;
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
   if (typeof value === 'string') return value.length;
   return JSON.stringify(value).length;
 }
@@ -61,7 +62,7 @@ function jsonObjectOrNull(value: unknown): JsonRecord | null {
 }
 
 function errorMessage(value: unknown): string | null {
-  if (value === undefined || value === null) return null;
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
   if (typeof value === 'string') return value;
   if (isJsonObject(value) && typeof value.message === 'string') return value.message;
   return JSON.stringify(value);
@@ -77,14 +78,14 @@ function usageNumber(usage: unknown, ...keys: string[]): number | null {
 }
 
 function identityPayload(event: AgentObservabilityIngressEventV1): JsonRecord {
-  const identity = event.identity || {};
+  const identity = selectDefinedValue(() => (event.identity), () => ({}));
   return {
-    module_id: identity.module_id ?? null,
-    gate_id: identity.gate_id ?? null,
-    agent_type: identity.agent_type ?? identity.agent_id ?? null,
-    session_key: identity.session_key ?? null,
-    dispatch_id: identity.dispatch_id ?? null,
-    gateway_label: identity.gateway_label ?? null,
+    module_id: selectDefinedValue(() => (identity.module_id), () => (null)),
+    gate_id: selectDefinedValue(() => (identity.gate_id), () => (null)),
+    agent_type: selectDefinedValue(() => (selectDefinedValue(() => (identity.agent_type), () => (identity.agent_id))), () => (null)),
+    session_key: selectDefinedValue(() => (identity.session_key), () => (null)),
+    dispatch_id: selectDefinedValue(() => (identity.dispatch_id), () => (null)),
+    gateway_label: selectDefinedValue(() => (identity.gateway_label), () => (null)),
   };
 }
 
@@ -98,20 +99,13 @@ function baseOptions(event: AgentObservabilityIngressEventV1): AgentObservabilit
   return options;
 }
 
-function maskingPayload(event: AgentObservabilityIngressEventV1): JsonRecord {
-  return {
-    masking_profile: event.masking.profile,
-    masked: [...event.masking.masked],
-  };
-}
-
 function pluginEventPayload(event: AgentObservabilityIngressEventV1): JsonRecord {
   return {
     plugin_id: 'openclaw-agent-observer',
     plugin_event: event.type,
     ...identityPayload(event),
-    outcome: 'outcome' in event.payload ? event.payload.outcome ?? null : null,
-    reason: 'reason' in event.payload ? event.payload.reason ?? null : null,
+    outcome: 'outcome' in event.payload ? selectDefinedValue(() => (event.payload.outcome), () => (null)) : null,
+    reason: 'reason' in event.payload ? selectDefinedValue(() => (event.payload.reason), () => (null)) : null,
     duration_seconds: 'duration_ms' in event.payload ? seconds(event.payload.duration_ms) : null,
     details: {
       ingress_type: event.type,
@@ -119,7 +113,6 @@ function pluginEventPayload(event: AgentObservabilityIngressEventV1): JsonRecord
       source_ts: event.ts,
       identity: asJsonValue(event.identity),
       payload: asJsonValue(event.payload),
-      masking: asJsonValue(event.masking),
     },
   };
 }
@@ -129,13 +122,13 @@ function spawnRequestedPayload(event: AgentObservabilityIngressEventV1): JsonRec
   if (payload.hook !== 'subagent_spawning') return pluginEventPayload(event);
   return {
     ...identityPayload(event),
-    agent_type: event.identity.agent_type ?? payload.agent_id ?? event.identity.agent_id ?? null,
-    requester_session_key: payload.requester_session_key ?? event.identity.parent_session_key ?? event.identity.session_key ?? null,
-    child_run_id: payload.child_run_id ?? null,
-    mode: payload.mode ?? null,
-    spawn_mode: payload.spawn_mode ?? null,
-    thread: payload.thread ?? null,
-    expects_completion_message: payload.expects_completion_message ?? null,
+    agent_type: selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (event.identity.agent_type), () => (payload.agent_id))), () => (event.identity.agent_id))), () => (null)),
+    requester_session_key: selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (payload.requester_session_key), () => (event.identity.parent_session_key))), () => (event.identity.session_key))), () => (null)),
+    child_run_id: selectDefinedValue(() => (payload.child_run_id), () => (null)),
+    mode: selectDefinedValue(() => (payload.mode), () => (null)),
+    spawn_mode: selectDefinedValue(() => (payload.spawn_mode), () => (null)),
+    thread: selectDefinedValue(() => (payload.thread), () => (null)),
+    expects_completion_message: selectDefinedValue(() => (payload.expects_completion_message), () => (null)),
     requester_origin: jsonObjectOrNull(payload.requester_origin),
     requested_at: event.ts,
   };
@@ -146,12 +139,12 @@ function spawnedPayload(event: AgentObservabilityIngressEventV1): JsonRecord {
   const childSessionKey = 'child_session_key' in payload ? payload.child_session_key : null;
   const agentId = 'agent_id' in payload ? payload.agent_id : null;
   return {
-    agent_type: event.identity.agent_type ?? agentId ?? event.identity.agent_id ?? null,
-    label: event.identity.gateway_label ?? null,
-    module_id: event.identity.module_id ?? null,
-    gate_id: event.identity.gate_id ?? null,
-    session_key: event.identity.child_session_key ?? childSessionKey ?? event.identity.session_key ?? null,
-    dispatch_id: event.identity.dispatch_id ?? null,
+    agent_type: selectDefinedValue(() => (event.identity.agent_type), () => (null)),
+    label: selectDefinedValue(() => (event.identity.gateway_label), () => (null)),
+    module_id: selectDefinedValue(() => (event.identity.module_id), () => (null)),
+    gate_id: selectDefinedValue(() => (event.identity.gate_id), () => (null)),
+    session_key: selectDefinedValue(() => (event.identity.child_session_key), () => (null)),
+    dispatch_id: selectDefinedValue(() => (event.identity.dispatch_id), () => (null)),
   };
 }
 
@@ -160,12 +153,12 @@ function deliveryTargetPayload(event: AgentObservabilityIngressEventV1): JsonRec
   if (payload.hook !== 'subagent_delivery_target') return pluginEventPayload(event);
   return {
     ...identityPayload(event),
-    agent_type: event.identity.agent_type ?? payload.agent_id ?? event.identity.agent_id ?? null,
-    requester_session_key: payload.requester_session_key ?? event.identity.parent_session_key ?? event.identity.session_key ?? null,
-    child_session_key: payload.child_session_key ?? event.identity.child_session_key ?? null,
-    child_run_id: payload.child_run_id ?? null,
-    spawn_mode: payload.spawn_mode ?? payload.mode ?? null,
-    expects_completion_message: payload.expects_completion_message ?? null,
+    agent_type: selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (event.identity.agent_type), () => (payload.agent_id))), () => (event.identity.agent_id))), () => (null)),
+    requester_session_key: selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (payload.requester_session_key), () => (event.identity.parent_session_key))), () => (event.identity.session_key))), () => (null)),
+    child_session_key: selectDefinedValue(() => (selectDefinedValue(() => (payload.child_session_key), () => (event.identity.child_session_key))), () => (null)),
+    child_run_id: selectDefinedValue(() => (payload.child_run_id), () => (null)),
+    spawn_mode: selectDefinedValue(() => (selectDefinedValue(() => (payload.spawn_mode), () => (payload.mode))), () => (null)),
+    expects_completion_message: selectDefinedValue(() => (payload.expects_completion_message), () => (null)),
     requester_origin: jsonObjectOrNull(payload.requester_origin),
     targeted_at: event.ts,
   };
@@ -176,9 +169,9 @@ function agentEndedPayload(event: AgentObservabilityIngressEventV1, scope = 'age
   return {
     ...identityPayload(event),
     agent_scope: scope,
-    label: event.identity.gateway_label ?? null,
-    outcome: 'outcome' in payload ? payload.outcome ?? null : null,
-    reason: 'reason' in payload ? payload.reason ?? null : null,
+    label: selectDefinedValue(() => (event.identity.gateway_label), () => (null)),
+    outcome: 'outcome' in payload ? selectDefinedValue(() => (payload.outcome), () => (null)) : null,
+    reason: 'reason' in payload ? selectDefinedValue(() => (payload.reason), () => (null)) : null,
     duration_seconds: 'duration_ms' in payload ? seconds(payload.duration_ms) : null,
     final_message_count: 'final_messages' in payload && Array.isArray(payload.final_messages) ? payload.final_messages.length : null,
     error: 'error' in payload ? jsonObjectOrNull(payload.error) : null,
@@ -192,14 +185,13 @@ function llmInputSummaryPayload(event: AgentObservabilityIngressEventV1): JsonRe
   if (payload.hook !== 'llm_input') return pluginEventPayload(event);
   return {
     ...identityPayload(event),
-    provider: payload.provider ?? null,
-    model: payload.model ?? null,
-    model_call_id: event.identity.model_call_id ?? null,
+    provider: selectDefinedValue(() => (payload.provider), () => (null)),
+    model: selectDefinedValue(() => (payload.model), () => (null)),
+    model_call_id: selectDefinedValue(() => (event.identity.model_call_id), () => (null)),
     prompt_chars: charCount(payload.prompt),
     system_prompt_chars: charCount(payload.system_prompt),
     history_message_count: payload.history_messages.length,
     request: jsonObjectOrNull(payload.request),
-    ...maskingPayload(event),
   };
 }
 
@@ -208,16 +200,15 @@ function llmOutputSummaryPayload(event: AgentObservabilityIngressEventV1): JsonR
   if (payload.hook !== 'llm_output') return pluginEventPayload(event);
   return {
     ...identityPayload(event),
-    provider: payload.provider ?? null,
-    model: payload.model ?? null,
-    model_call_id: event.identity.model_call_id ?? null,
+    provider: selectDefinedValue(() => (payload.provider), () => (null)),
+    model: selectDefinedValue(() => (payload.model), () => (null)),
+    model_call_id: selectDefinedValue(() => (event.identity.model_call_id), () => (null)),
     response_chars: charCount(payload.response),
     assistant_response_chars: charCount(payload.assistant_response),
     history_message_count: Array.isArray(payload.history_messages) ? payload.history_messages.length : null,
     usage: jsonObjectOrNull(payload.usage),
     input_tokens: usageNumber(payload.usage, 'input_tokens', 'tokens_in'),
     output_tokens: usageNumber(payload.usage, 'output_tokens', 'tokens_out'),
-    ...maskingPayload(event),
   };
 }
 
@@ -228,10 +219,9 @@ function toolStartedPayload(event: AgentObservabilityIngressEventV1): JsonRecord
   return {
     ...identityPayload(event),
     tool_name: payload.tool_name,
-    tool_call_id: event.identity.tool_call_id ?? null,
+    tool_call_id: selectDefinedValue(() => (event.identity.tool_call_id), () => (null)),
     params_bytes: jsonSize(payload.params),
     param_keys: params ? Object.keys(params) : null,
-    ...maskingPayload(event),
   };
 }
 
@@ -241,14 +231,15 @@ function toolFinishedPayload(event: AgentObservabilityIngressEventV1): JsonRecor
   return {
     ...identityPayload(event),
     tool_name: payload.tool_name,
-    tool_call_id: event.identity.tool_call_id ?? null,
-    outcome: payload.outcome ?? null,
-    reason: (payload as { reason?: string | null }).reason ?? null,
+    tool_call_id: selectDefinedValue(() => (event.identity.tool_call_id), () => (null)),
+    outcome: selectDefinedValue(() => (payload.outcome), () => (null)),
+    reason: selectDefinedValue(() => ((payload as {
+    reason?: string | null;
+}).reason), () => (null)),
     duration_seconds: seconds(payload.duration_ms),
     result_bytes: jsonSize(payload.result),
     error: jsonObjectOrNull(payload.error),
     error_message: errorMessage(payload.error),
-    ...maskingPayload(event),
   };
 }
 
@@ -257,9 +248,9 @@ function modelStartedPayload(event: AgentObservabilityIngressEventV1): JsonRecor
   if (payload.hook !== 'model_call_started') return pluginEventPayload(event);
   return {
     ...identityPayload(event),
-    provider: payload.provider ?? null,
-    model: payload.model ?? null,
-    model_call_id: event.identity.model_call_id ?? null,
+    provider: selectDefinedValue(() => (payload.provider), () => (null)),
+    model: selectDefinedValue(() => (payload.model), () => (null)),
+    model_call_id: selectDefinedValue(() => (event.identity.model_call_id), () => (null)),
     request: jsonObjectOrNull(payload.request),
   };
 }
@@ -269,11 +260,13 @@ function modelEndedPayload(event: AgentObservabilityIngressEventV1): JsonRecord 
   if (payload.hook !== 'model_call_ended') return pluginEventPayload(event);
   return {
     ...identityPayload(event),
-    provider: payload.provider ?? null,
-    model: payload.model ?? null,
-    model_call_id: event.identity.model_call_id ?? null,
-    outcome: payload.outcome ?? null,
-    reason: (payload as { reason?: string | null }).reason ?? null,
+    provider: selectDefinedValue(() => (payload.provider), () => (null)),
+    model: selectDefinedValue(() => (payload.model), () => (null)),
+    model_call_id: selectDefinedValue(() => (event.identity.model_call_id), () => (null)),
+    outcome: selectDefinedValue(() => (payload.outcome), () => (null)),
+    reason: selectDefinedValue(() => ((payload as {
+    reason?: string | null;
+}).reason), () => (null)),
     duration_seconds: seconds(payload.duration_ms),
     usage: jsonObjectOrNull(payload.usage),
     input_tokens: usageNumber(payload.usage, 'input_tokens', 'tokens_in'),
@@ -289,18 +282,18 @@ function costUpdatePayload(event: AgentObservabilityIngressEventV1, aggregate?: 
   if (payload.hook !== 'model_usage') return pluginEventPayload(event);
   const inputTokens = usageNumber(payload.usage, 'input', 'input_tokens', 'tokens_in');
   const outputTokens = usageNumber(payload.usage, 'output', 'output_tokens', 'tokens_out');
-  const totalCostUsd = aggregate?.totalCostUsd ?? null;
+  const totalCostUsd = selectDefinedValue(() => (aggregate?.totalCostUsd), () => (null));
   return {
-    module_id: event.identity.module_id ?? null,
-    agent_type: event.identity.agent_type ?? event.identity.agent_id ?? null,
-    label: event.identity.gateway_label ?? null,
-    cost_usd: payload.cost_usd ?? null,
+    module_id: selectDefinedValue(() => (event.identity.module_id), () => (null)),
+    agent_type: selectDefinedValue(() => (selectDefinedValue(() => (event.identity.agent_type), () => (event.identity.agent_id))), () => (null)),
+    label: selectDefinedValue(() => (event.identity.gateway_label), () => (null)),
+    cost_usd: selectDefinedValue(() => (payload.cost_usd), () => (null)),
     total_cost_usd: totalCostUsd,
     input_tokens: inputTokens,
     output_tokens: outputTokens,
-    gate_id: event.identity.gate_id ?? null,
-    model: payload.model ?? null,
-    estimated_cost_usd: payload.cost_usd ?? null,
+    gate_id: selectDefinedValue(() => (event.identity.gate_id), () => (null)),
+    model: selectDefinedValue(() => (payload.model), () => (null)),
+    estimated_cost_usd: selectDefinedValue(() => (payload.cost_usd), () => (null)),
     cumulative_cost_usd: totalCostUsd,
     tokens_in: inputTokens,
     tokens_out: outputTokens,
@@ -312,8 +305,8 @@ function sessionStartedPayload(event: AgentObservabilityIngressEventV1): JsonRec
   if (payload.hook !== 'session_start') return pluginEventPayload(event);
   return {
     ...identityPayload(event),
-    session_key: payload.session_key ?? event.identity.session_key ?? null,
-    session_id: payload.session_id ?? event.identity.session_id ?? null,
+    session_key: selectDefinedValue(() => (selectDefinedValue(() => (payload.session_key), () => (event.identity.session_key))), () => (null)),
+    session_id: selectDefinedValue(() => (selectDefinedValue(() => (payload.session_id), () => (event.identity.session_id))), () => (null)),
     started_at: event.ts,
   };
 }
@@ -323,10 +316,10 @@ function sessionEndedPayload(event: AgentObservabilityIngressEventV1): JsonRecor
   if (payload.hook !== 'session_end') return pluginEventPayload(event);
   return {
     ...identityPayload(event),
-    session_key: payload.session_key ?? event.identity.session_key ?? null,
-    session_id: payload.session_id ?? event.identity.session_id ?? null,
-    outcome: payload.outcome ?? null,
-    reason: payload.reason ?? null,
+    session_key: selectDefinedValue(() => (selectDefinedValue(() => (payload.session_key), () => (event.identity.session_key))), () => (null)),
+    session_id: selectDefinedValue(() => (selectDefinedValue(() => (payload.session_id), () => (event.identity.session_id))), () => (null)),
+    outcome: selectDefinedValue(() => (payload.outcome), () => (null)),
+    reason: selectDefinedValue(() => (payload.reason), () => (null)),
     duration_seconds: seconds(payload.duration_ms),
     error: jsonObjectOrNull(payload.error),
     error_message: errorMessage(payload.error),
@@ -373,7 +366,7 @@ export function mapAgentObservabilityEventToTelemetry(
   options: AgentObservabilityMapperOptions = {},
 ): AgentObservabilityTelemetryEmission | null {
   const mapping = getAgentObservabilityTelemetryMapping(event.type);
-  if (!mapping?.promoted_by_default || !mapping.current_telemetry_type) return null;
+  if (selectTruthyValue(() => (!mapping?.promoted_by_default), () => (!mapping.current_telemetry_type))) return null;
 
   return {
     eventType: mapping.current_telemetry_type,

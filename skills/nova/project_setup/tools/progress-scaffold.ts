@@ -33,6 +33,27 @@ type ScaffoldError = Error & { diagnostics?: Diagnostic[] };
 const SCHEMA = 'progress-scaffold/v1';
 const DEFAULT_SCAFFOLD_FILE = 'progress.scaffold.json';
 const TODO_PREFIX = 'TODO:';
+const PROGRESS_SCAFFOLD_DEFAULTS = Object.freeze({
+  module_timeout_minutes: 300,
+  module_max_fails: 3,
+  thinking_level: 'adaptive',
+  review_on_fail: 'stop',
+  review_output_dir: 'logs/echo-review',
+  review_timeout_minutes: 45,
+  review_max_fix_cycles: 0,
+  review_lint_tier: 'full',
+  buster_on_fail: 'fix_and_retest',
+  buster_timeout_minutes: 90,
+  buster_max_fix_cycles: 3,
+  version: 1,
+  policy: Object.freeze({
+    arch_validation: Object.freeze({ enabled: true }),
+    pipeline_review: Object.freeze({ enabled: false }),
+    case_study: Object.freeze({ enabled: false }),
+    telemetry: Object.freeze({ enabled: true }),
+    payload: Object.freeze({}),
+  }),
+});
 const VALID_SUITES = new Set([
   'build',
   'health',
@@ -48,13 +69,14 @@ const VALID_SUITES = new Set([
   'k8s',
 ]);
 const VALID_GATE_TYPES = new Set(['review', 'buster', 'approval']);
-const VALID_REVIEW_ON_FAIL = new Set(['fix_and_rereview', 'stop']);
+const VALID_REVIEW_ON_FAIL = new Set(['stop']);
 const VALID_BUSTER_ON_FAIL = new Set(['fix_and_retest']);
 const VALID_ON_TIMEOUT = new Set(['block', 'continue']);
 const VALID_STAGES = new Set(['forge', 'buster']);
 const VALID_PREVIEW = new Set(['off', 'tailscale-ingress']);
 const VALID_CLEANUP_POLICY = new Set(['delete', 'keep']);
-const REMOVED_REVIEW_FAIL_FIELD = `on_${'n' + 'ogo'}`;
+const VISUAL_REG_PATHS_FIELD = 'paths_file';
+const REMOVED_VISUAL_REG_PATH_FIELD = 'path';
 
 function usage() {
   return `Usage:
@@ -91,7 +113,7 @@ function parseArgs(argv: string[]): Args {
     if (arg === '--apply') args.apply = true;
     else if (arg === '--check') args.check = true;
     else if (arg === '--print') args.print = true;
-    else if (arg === '--help' || arg === '-h') args.help = true;
+    else if (isHelpArg(arg)) args.help = true;
     else if (arg === '--project') args.project = requireValue(argv, ++i, arg);
     else if (arg === '--repo') args.repo = requireValue(argv, ++i, arg);
     else if (arg === '--swarm') args.swarm = requireValue(argv, ++i, arg);
@@ -102,6 +124,11 @@ function parseArgs(argv: string[]): Args {
   if (args.apply && args.check) throw new Error('Use either --apply or --check, not both.');
   if (!args.help && !args.project && !args.swarm) throw new Error('Provide --project <name> or --swarm <path>.');
   return args;
+}
+
+function isHelpArg(arg: string): boolean {
+  if (arg === '--help') return true;
+  return arg === '-h';
 }
 
 function requireValue(argv: string[], index: number, flag: string): string {
@@ -121,7 +148,7 @@ function findRepoRoot(startDir = process.cwd()): string {
 }
 
 function resolveContext(args: Args): Context {
-  const repoRoot = path.resolve(args.repo || findRepoRoot());
+  const repoRoot = path.resolve(args.repo !== null ? args.repo : findRepoRoot());
   if (!fs.existsSync(path.join(repoRoot, '.git'))) {
     throw new Error(`Repo root is not a git repository: ${repoRoot}`);
   }
@@ -182,6 +209,36 @@ function isPlainObject(value: unknown): value is AnyRecord {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
 }
 
+function objectOrEmpty(value: unknown): AnyRecord {
+  return isPlainObject(value) ? value : {};
+}
+
+function entriesOf(value: unknown): Array<[string, any]> {
+  return Object.entries(objectOrEmpty(value));
+}
+
+function objectKeys(value: unknown): string[] {
+  return Object.keys(objectOrEmpty(value));
+}
+
+function valueOrDefault<T>(value: T | null | undefined, defaultValue: T): T {
+  if (value === undefined || value === null) return defaultValue;
+  if (typeof value === 'string' && value.length === 0) return defaultValue;
+  return value;
+}
+
+function nonEmptyStringOrDefault(value: unknown, defaultValue: string): string {
+  return typeof value === 'string' && value.trim().length > 0 ? value : defaultValue;
+}
+
+function scaffoldValueOrDefault<T>(scaffold: AnyRecord, progress: AnyRecord, key: string, defaultValue: T): T {
+  const scaffoldValue = scaffold[key];
+  if (scaffoldValue !== undefined && scaffoldValue !== null) return scaffoldValue;
+  const progressValue = progress[key];
+  if (progressValue !== undefined && progressValue !== null) return progressValue;
+  return defaultValue;
+}
+
 function omitEmpty(value: unknown): any {
   if (!isPlainObject(value)) return value;
   const out: AnyRecord = {};
@@ -216,7 +273,7 @@ function naturalSort(a: unknown, b: unknown): number {
 function firstHeading(markdown: string, fallback: string): string {
   const match = markdown.match(/^#\s+(.+?)\s*$/m);
   if (!match) return titleFromId(fallback);
-  return (match[1] || '')
+  return valueOrDefault(match[1], '')
     .replace(/^Module\s+[A-Za-z0-9._-]+\s+[—-]\s+/i, '')
     .trim();
 }
@@ -244,7 +301,7 @@ function upperNameFromId(id: string): string {
 }
 
 function existingModuleIdForDir(existingProgress: AnyRecord, dir: string): string {
-  for (const [id, mod] of Object.entries(existingProgress?.modules || {})) {
+  for (const [id, mod] of entriesOf(existingProgress.modules)) {
     if (isPlainObject(mod) && mod.dir === dir) return id;
   }
   return dir;
@@ -319,7 +376,7 @@ function inferTestConfig({
     config.serve = {
       type: 'server',
       project_dir: projectDir,
-      start_cmd: scripts.start || 'npm start',
+      start_cmd: nonEmptyStringOrDefault(scripts.start, 'npm start'),
       image: `localhost/${project}:${moduleId}`,
       port: 3000,
       health_path: '/health',
@@ -331,7 +388,7 @@ function inferTestConfig({
     }
   }
   if (suites.includes('unit')) {
-    config.unit = { test_cmd: scripts.test || 'npm test' };
+    config.unit = { test_cmd: nonEmptyStringOrDefault(scripts.test, 'npm test') };
   }
   if (suites.includes('api')) {
     config.api = { spec_file: relFromSwarm(path.join(projectSrcDir, '.swarm'), path.join(moduleDir, 'test-spec.json')) };
@@ -367,7 +424,7 @@ function discoverModules(ctx: Context, existingProgress: AnyRecord): AnyRecord {
   for (const dir of listDirs(modulesDir)) {
     const moduleDir = path.join(modulesDir, dir);
     const id = existingModuleIdForDir(existingProgress, dir);
-    const existing = existingProgress?.modules?.[id] || {};
+    const existing = objectOrEmpty(objectOrEmpty(existingProgress.modules)[id]);
     const forgeText = readTextIfExists(path.join(moduleDir, 'FORGE.md'));
     const hasBuster = fs.existsSync(path.join(moduleDir, 'BUSTER.md'));
     const substeps = inferSubsteps(moduleDir);
@@ -378,7 +435,7 @@ function discoverModules(ctx: Context, existingProgress: AnyRecord): AnyRecord {
         : ['forge'];
     const testSuites = inferSuites(moduleDir, forgeText, stages.includes('buster'), existing.test_suites);
     modules[id] = omitEmpty({
-      title: existing.title || firstHeading(forgeText, id),
+      title: nonEmptyStringOrDefault(existing.title, firstHeading(forgeText, id)),
       dir,
       substeps: Array.isArray(existing.substeps) && existing.substeps.length > 0
         ? existing.substeps
@@ -387,9 +444,9 @@ function discoverModules(ctx: Context, existingProgress: AnyRecord): AnyRecord {
           : undefined,
       depends_on: Array.isArray(existing.depends_on) ? existing.depends_on : [],
       stages,
-      timeout_minutes: existing.timeout_minutes || 300,
-      max_fails: existing.max_fails || 3,
-      thinking_level: existing.thinking_level || 'adaptive',
+      timeout_minutes: valueOrDefault(existing.timeout_minutes, PROGRESS_SCAFFOLD_DEFAULTS.module_timeout_minutes),
+      max_fails: valueOrDefault(existing.max_fails, PROGRESS_SCAFFOLD_DEFAULTS.module_max_fails),
+      thinking_level: nonEmptyStringOrDefault(existing.thinking_level, PROGRESS_SCAFFOLD_DEFAULTS.thinking_level),
       forge_model: existing.forge_model,
       forge_subagent: existing.forge_subagent,
       session: existing.session,
@@ -415,24 +472,24 @@ function discoverReviewGates(ctx: Context, existingProgress: AnyRecord): AnyReco
   for (const file of listFiles(reviewDir, (name: string) => /\.md$/i.test(name))) {
     const relPath = relFromSwarm(ctx.swarmDir, file);
     const existingEntry = findExistingGateByFile(existingProgress, 'instructions_file', relPath);
-    const id = existingEntry?.id || slugFromName(path.basename(file));
-    const existing = existingEntry?.gate || {};
-    const reviewName = existing.review_name || upperNameFromId(id);
+    const id = existingEntry?.id !== undefined && existingEntry.id !== null ? existingEntry.id : slugFromName(path.basename(file));
+    const existing = objectOrEmpty(existingEntry?.gate);
+    const reviewName = nonEmptyStringOrDefault(existing.review_name, upperNameFromId(id));
     gates[id] = normalizeGateFields(omitEmpty({
       type: 'review',
-      title: existing.title || titleFromId(id),
+      title: nonEmptyStringOrDefault(existing.title, titleFromId(id)),
       review_name: reviewName,
-      on_fail: existing.on_fail || existing[REMOVED_REVIEW_FAIL_FIELD] || 'fix_and_rereview',
-      instructions_file: existing.instructions_file || relPath,
-      output_file: existing.output_file || `logs/echo-review/${reviewName}.json`,
-      review_output_dir: existing.review_output_dir || 'logs/echo-review',
+      on_fail: nonEmptyStringOrDefault(existing.on_fail, PROGRESS_SCAFFOLD_DEFAULTS.review_on_fail),
+      instructions_file: nonEmptyStringOrDefault(existing.instructions_file, relPath),
+      output_file: nonEmptyStringOrDefault(existing.output_file, `logs/echo-review/${reviewName}.json`),
+      review_output_dir: nonEmptyStringOrDefault(existing.review_output_dir, PROGRESS_SCAFFOLD_DEFAULTS.review_output_dir),
       reviewers: existing.reviewers,
       primary_reviewer: existing.primary_reviewer,
       forge_model: existing.forge_model,
-      forge_thinking_level: existing.forge_thinking_level || 'adaptive',
-      timeout_minutes: existing.timeout_minutes || 45,
-      max_fix_cycles: existing.max_fix_cycles || 3,
-      lint_tier: existing.lint_tier || 'full',
+      forge_thinking_level: nonEmptyStringOrDefault(existing.forge_thinking_level, PROGRESS_SCAFFOLD_DEFAULTS.thinking_level),
+      timeout_minutes: valueOrDefault(existing.timeout_minutes, PROGRESS_SCAFFOLD_DEFAULTS.review_timeout_minutes),
+      max_fix_cycles: valueOrDefault(existing.max_fix_cycles, PROGRESS_SCAFFOLD_DEFAULTS.review_max_fix_cycles),
+      lint_tier: nonEmptyStringOrDefault(existing.lint_tier, PROGRESS_SCAFFOLD_DEFAULTS.review_lint_tier),
     }));
   }
   return gates;
@@ -445,20 +502,20 @@ function discoverBusterGates(ctx: Context, existingProgress: AnyRecord): AnyReco
   for (const file of listFiles(busterDir, (name: string) => /\.md$/i.test(name))) {
     const relPath = relFromSwarm(ctx.swarmDir, file);
     const existingEntry = findExistingGateByFile(existingProgress, 'instructions_file', relPath);
-    const id = existingEntry?.id || slugFromName(path.basename(file));
-    const existing = existingEntry?.gate || {};
+    const id = existingEntry?.id !== undefined && existingEntry.id !== null ? existingEntry.id : slugFromName(path.basename(file));
+    const existing = objectOrEmpty(existingEntry?.gate);
     const requiredSuites = inferRequiredSuites(readTextIfExists(file));
     const suites = Array.isArray(existing.test_suites) ? existing.test_suites : (requiredSuites.length ? requiredSuites : ['build', 'health', 'unit']);
     gates[id] = normalizeGateFields(omitEmpty({
       type: 'buster',
-      title: existing.title || titleFromId(id),
-      on_fail: existing.on_fail || 'fix_and_retest',
-      instructions_file: existing.instructions_file || relPath,
-      output_file: existing.output_file || `buster-test/${upperNameFromId(id)}-RESULT.json`,
+      title: nonEmptyStringOrDefault(existing.title, titleFromId(id)),
+      on_fail: nonEmptyStringOrDefault(existing.on_fail, PROGRESS_SCAFFOLD_DEFAULTS.buster_on_fail),
+      instructions_file: nonEmptyStringOrDefault(existing.instructions_file, relPath),
+      output_file: nonEmptyStringOrDefault(existing.output_file, `buster-test/${upperNameFromId(id)}-RESULT.json`),
       model: existing.model,
       forge_model: existing.forge_model,
-      timeout_minutes: existing.timeout_minutes || 90,
-      max_fix_cycles: existing.max_fix_cycles || 3,
+      timeout_minutes: valueOrDefault(existing.timeout_minutes, PROGRESS_SCAFFOLD_DEFAULTS.buster_timeout_minutes),
+      max_fix_cycles: valueOrDefault(existing.max_fix_cycles, PROGRESS_SCAFFOLD_DEFAULTS.buster_max_fix_cycles),
       test_suites: suites,
       capabilities: existing.capabilities,
       test_config: inferTestConfig({
@@ -476,22 +533,20 @@ function discoverBusterGates(ctx: Context, existingProgress: AnyRecord): AnyReco
 }
 
 function findExistingGateByFile(existingProgress: AnyRecord, field: string, value: string): { id: string; gate: AnyRecord } | null {
-  for (const [id, gate] of Object.entries(existingProgress?.gates || {})) {
+  for (const [id, gate] of entriesOf(existingProgress.gates)) {
     if (isPlainObject(gate) && gate[field] === value) return { id, gate };
   }
   return null;
 }
 
 function normalizeGateFields(gate: AnyRecord): AnyRecord {
-  if (gate[REMOVED_REVIEW_FAIL_FIELD] && !gate.on_fail) gate.on_fail = gate[REMOVED_REVIEW_FAIL_FIELD];
-  delete gate[REMOVED_REVIEW_FAIL_FIELD];
   return gate;
 }
 
 function deriveExecutionOrder(existingProgress: AnyRecord, modules: AnyRecord, gates: AnyRecord): string[] {
   if (Array.isArray(existingProgress?.execution_order)) return existingProgress.execution_order;
-  const moduleIds = Object.keys(modules || {}).sort(naturalSort);
-  const gateIds = Object.keys(gates || {}).sort(naturalSort);
+  const moduleIds = objectKeys(modules).sort(naturalSort);
+  const gateIds = objectKeys(gates).sort(naturalSort);
   if (gateIds.length === 0) return moduleIds;
   return [
     ...moduleIds,
@@ -500,15 +555,15 @@ function deriveExecutionOrder(existingProgress: AnyRecord, modules: AnyRecord, g
 }
 
 function buildScaffold(ctx: Context): AnyRecord {
-  const existingProgress = readJsonIfExists(ctx.progressFile) || {};
-  const existingScaffold = readJsonIfExists(ctx.scaffoldFile) || {};
+  const existingProgress = objectOrEmpty(readJsonIfExists(ctx.progressFile));
+  const existingScaffold = objectOrEmpty(readJsonIfExists(ctx.scaffoldFile));
   const modules = discoverModules(ctx, existingProgress);
   const discoveredGates = {
     ...discoverReviewGates(ctx, existingProgress),
     ...discoverBusterGates(ctx, existingProgress),
   };
   const gates: AnyRecord = {};
-  for (const [id, gate] of Object.entries({ ...(existingProgress.gates || {}), ...discoveredGates })) {
+  for (const [id, gate] of Object.entries({ ...objectOrEmpty(existingProgress.gates), ...discoveredGates })) {
     gates[id] = normalizeGateFields({ ...(isPlainObject(gate) ? gate : {}) });
   }
 
@@ -521,18 +576,18 @@ function buildScaffold(ctx: Context): AnyRecord {
       'Run with --check in CI or before committing.',
     ],
     project: ctx.project,
-    version: existingScaffold.version || existingProgress.version || 1,
-    description: existingScaffold.description || existingProgress.description || `${TODO_PREFIX} one-sentence project purpose`,
-    notes: existingScaffold.notes || existingProgress.notes || [`${TODO_PREFIX} operator-visible scope note`],
-    defaults: existingScaffold.defaults || existingProgress.defaults || {},
-    policy: existingScaffold.policy || {
-      arch_validation: existingProgress.arch_validation || { enabled: true },
-      pipeline_review: existingProgress.pipeline_review || { enabled: false },
-      case_study: existingProgress.case_study || { enabled: false },
-      telemetry: existingProgress.telemetry || { enabled: true },
-      payload: existingProgress.payload || {},
+    version: scaffoldValueOrDefault(existingScaffold, existingProgress, 'version', PROGRESS_SCAFFOLD_DEFAULTS.version),
+    description: scaffoldValueOrDefault(existingScaffold, existingProgress, 'description', `${TODO_PREFIX} one-sentence project purpose`),
+    notes: scaffoldValueOrDefault(existingScaffold, existingProgress, 'notes', [`${TODO_PREFIX} operator-visible scope note`]),
+    defaults: scaffoldValueOrDefault(existingScaffold, existingProgress, 'defaults', {}),
+    policy: isPlainObject(existingScaffold.policy) ? existingScaffold.policy : {
+      arch_validation: valueOrDefault(existingProgress.arch_validation, PROGRESS_SCAFFOLD_DEFAULTS.policy.arch_validation),
+      pipeline_review: valueOrDefault(existingProgress.pipeline_review, PROGRESS_SCAFFOLD_DEFAULTS.policy.pipeline_review),
+      case_study: valueOrDefault(existingProgress.case_study, PROGRESS_SCAFFOLD_DEFAULTS.policy.case_study),
+      telemetry: valueOrDefault(existingProgress.telemetry, PROGRESS_SCAFFOLD_DEFAULTS.policy.telemetry),
+      payload: valueOrDefault(existingProgress.payload, PROGRESS_SCAFFOLD_DEFAULTS.policy.payload),
     },
-    execution_order: existingScaffold.execution_order || deriveExecutionOrder(existingProgress, modules, gates),
+    execution_order: valueOrDefault(existingScaffold.execution_order, deriveExecutionOrder(existingProgress, modules, gates)),
     modules: cleanModules(mergeExistingObjects(modules, existingScaffold.modules)),
     gates: mergeExistingObjects(gates, existingScaffold.gates),
   };
@@ -540,7 +595,7 @@ function buildScaffold(ctx: Context): AnyRecord {
 
 function cleanModules(modules: AnyRecord): AnyRecord {
   const out: AnyRecord = {};
-  for (const [id, mod] of Object.entries(modules || {})) {
+  for (const [id, mod] of entriesOf(modules)) {
     if (!isPlainObject(mod)) {
       out[id] = mod;
       continue;
@@ -573,8 +628,8 @@ function buildExecutionOrder(scaffold: AnyRecord, diagnostics: Diagnostic[]): st
 }
 
 function validateExecutionOrder(scaffold: AnyRecord, diagnostics: Diagnostic[]): void {
-  const moduleIds = new Set(Object.keys(scaffold.modules || {}));
-  const gateIds = new Set(Object.keys(scaffold.gates || {}));
+  const moduleIds = new Set(objectKeys(scaffold.modules));
+  const gateIds = new Set(objectKeys(scaffold.gates));
   const seen = new Set();
   for (const [index, entry] of scaffold.execution_order.entries()) {
     const field = `execution_order.${index}`;
@@ -589,7 +644,7 @@ function validateExecutionOrder(scaffold: AnyRecord, diagnostics: Diagnostic[]):
     const key = entry.startsWith('gate:') ? entry.slice('gate:'.length) : entry;
     const known = entry.startsWith('gate:') ? gateIds.has(key) : moduleIds.has(key);
     if (!known) {
-      diagnostics.push(error('strict_content_check', `execution_order references unknown ${entry.startsWith('gate:') ? 'gate' : 'module'} '${key}'`, field));
+      diagnostics.push(error('strict_content_check', `execution_order references unrecognized ${entry.startsWith('gate:') ? 'gate' : 'module'} '${key}'`, field));
       continue;
     }
     if (seen.has(entry)) diagnostics.push(error('form_check', `execution_order repeats '${entry}'`, field));
@@ -608,7 +663,7 @@ function scaffoldToProgress(scaffold: AnyRecord, ctx: Context): { progress: AnyR
 
   const progress = omitEmpty({
     project: scaffold.project,
-    version: scaffold.version || 1,
+    version: valueOrDefault(scaffold.version, PROGRESS_SCAFFOLD_DEFAULTS.version),
     description: scaffold.description,
     notes: scaffold.notes,
     defaults: scaffold.defaults,
@@ -619,7 +674,7 @@ function scaffoldToProgress(scaffold: AnyRecord, ctx: Context): { progress: AnyR
     payload: scaffold.policy?.payload,
     execution_order: executionOrder,
     modules: scaffold.modules,
-    gates: Object.fromEntries(Object.entries(scaffold.gates || {}).map(([id, gate]) => [id, normalizeGateFields({ ...(isPlainObject(gate) ? gate : {}) })])),
+    gates: Object.fromEntries(entriesOf(scaffold.gates).map(([id, gate]) => [id, normalizeGateFields({ ...objectOrEmpty(gate) })])),
   });
   return { progress, diagnostics };
 }
@@ -664,9 +719,9 @@ function collectTodoDiagnostics(value: unknown, diagnostics: Diagnostic[], pathL
 
 function validateModules(scaffold: AnyRecord, ctx: Context, diagnostics: Diagnostic[]): void {
   const modulesDir = path.join(ctx.swarmDir, 'modules');
-  const moduleIds = new Set(Object.keys(scaffold.modules || {}));
-  const gateIds = new Set(Object.keys(scaffold.gates || {}));
-  for (const [id, mod] of Object.entries(scaffold.modules || {})) {
+  const moduleIds = new Set(objectKeys(scaffold.modules));
+  const gateIds = new Set(objectKeys(scaffold.gates));
+  for (const [id, mod] of entriesOf(scaffold.modules)) {
     try { assertSafeSegment(id, `module id '${id}'`); }
     catch (err) { diagnostics.push(error('form_check', errorMessage(err), `modules.${id}`)); }
     if (!isPlainObject(mod)) {
@@ -686,13 +741,13 @@ function validateModules(scaffold: AnyRecord, ctx: Context, diagnostics: Diagnos
     else {
       for (const dep of mod.depends_on) {
         if (typeof dep !== 'string') diagnostics.push(error('form_check', `module '${id}' dependency must be a string`, `modules.${id}.depends_on`));
-        else if (dep.startsWith('gate:') && !gateIds.has(dep.slice('gate:'.length))) diagnostics.push(error('strict_content_check', `module '${id}' dependency references unknown gate '${dep}'`, `modules.${id}.depends_on`));
-        else if (!dep.startsWith('gate:') && !moduleIds.has(dep)) diagnostics.push(error('strict_content_check', `module '${id}' dependency references unknown module '${dep}'`, `modules.${id}.depends_on`));
+        else if (dep.startsWith('gate:') && !gateIds.has(dep.slice('gate:'.length))) diagnostics.push(error('strict_content_check', `module '${id}' dependency references unrecognized gate '${dep}'`, `modules.${id}.depends_on`));
+        else if (!dep.startsWith('gate:') && !moduleIds.has(dep)) diagnostics.push(error('strict_content_check', `module '${id}' dependency references unrecognized module '${dep}'`, `modules.${id}.depends_on`));
       }
     }
     if (mod.stages !== undefined) validateStringArray(mod.stages, VALID_STAGES, diagnostics, `modules.${id}.stages`);
     if (mod.test_suites !== undefined) validateStringArray(mod.test_suites, VALID_SUITES, diagnostics, `modules.${id}.test_suites`);
-    validateTestConfig(mod.test_config, mod.test_suites || [], ctx, diagnostics, `modules.${id}.test_config`);
+    validateTestConfig(mod.test_config, Array.isArray(mod.test_suites) ? mod.test_suites : [], ctx, diagnostics, `modules.${id}.test_config`);
   }
 }
 
@@ -714,14 +769,13 @@ function validateForgeFiles(id: string, mod: AnyRecord, moduleDir: string, diagn
 }
 
 function validateGates(scaffold: AnyRecord, ctx: Context, diagnostics: Diagnostic[]): void {
-  for (const [id, gate] of Object.entries(scaffold.gates || {})) {
+  for (const [id, gate] of entriesOf(scaffold.gates)) {
     try { assertSafeSegment(id, `gate id '${id}'`); }
     catch (err) { diagnostics.push(error('form_check', errorMessage(err), `gates.${id}`)); }
     if (!isPlainObject(gate)) {
       diagnostics.push(error('form_check', `gate '${id}' must be an object`, `gates.${id}`));
       continue;
     }
-    if (gate[REMOVED_REVIEW_FAIL_FIELD] !== undefined) diagnostics.push(error('form_check', `gate '${id}' uses removed field ${REMOVED_REVIEW_FAIL_FIELD}; use on_fail`, `gates.${id}.${REMOVED_REVIEW_FAIL_FIELD}`));
     if (!VALID_GATE_TYPES.has(gate.type)) diagnostics.push(error('form_check', `gate '${id}' type must be one of ${[...VALID_GATE_TYPES].join(', ')}`, `gates.${id}.type`));
     if (!gate.title) diagnostics.push(error('form_check', `gate '${id}' needs title`, `gates.${id}.title`));
     if (gate.type === 'review') validateReviewGate(id, gate, ctx, diagnostics);
@@ -733,7 +787,7 @@ function validateGates(scaffold: AnyRecord, ctx: Context, diagnostics: Diagnosti
 function validateReviewGate(id: string, gate: AnyRecord, ctx: Context, diagnostics: Diagnostic[]): void {
   if (!gate.review_name) diagnostics.push(error('form_check', `review gate '${id}' needs review_name`, `gates.${id}.review_name`));
   if (gate.on_fail !== undefined && !VALID_REVIEW_ON_FAIL.has(gate.on_fail)) {
-    diagnostics.push(error('form_check', `review gate '${id}' on_fail must be fix_and_rereview or stop`, `gates.${id}.on_fail`));
+    diagnostics.push(error('form_check', `review gate '${id}' on_fail must be stop`, `gates.${id}.on_fail`));
   }
   requireExistingSwarmFile(ctx, gate.instructions_file, diagnostics, `gates.${id}.instructions_file`);
   if (!gate.output_file) diagnostics.push(error('form_check', `review gate '${id}' needs output_file`, `gates.${id}.output_file`));
@@ -746,7 +800,7 @@ function validateBusterGate(id: string, gate: AnyRecord, ctx: Context, diagnosti
   requireExistingSwarmFile(ctx, gate.instructions_file, diagnostics, `gates.${id}.instructions_file`);
   if (!gate.output_file) diagnostics.push(error('form_check', `buster gate '${id}' needs output_file`, `gates.${id}.output_file`));
   validateStringArray(gate.test_suites, VALID_SUITES, diagnostics, `gates.${id}.test_suites`);
-  validateTestConfig(gate.test_config, gate.test_suites || [], ctx, diagnostics, `gates.${id}.test_config`);
+  validateTestConfig(gate.test_config, Array.isArray(gate.test_suites) ? gate.test_suites : [], ctx, diagnostics, `gates.${id}.test_config`);
 }
 
 function validateApprovalGate(id: string, gate: AnyRecord, diagnostics: Diagnostic[]): void {
@@ -756,7 +810,7 @@ function validateApprovalGate(id: string, gate: AnyRecord, diagnostics: Diagnost
 }
 
 function validatePolicy(scaffold: AnyRecord, diagnostics: Diagnostic[]): void {
-  const policy = scaffold.policy || {};
+  const policy = objectOrEmpty(scaffold.policy);
   for (const field of ['arch_validation', 'pipeline_review', 'case_study', 'telemetry']) {
     if (policy[field] !== undefined && !isPlainObject(policy[field])) {
       diagnostics.push(error('form_check', `policy.${field} must be an object`, `policy.${field}`));
@@ -785,7 +839,13 @@ function validateTestConfig(testConfig: unknown, suites: unknown, ctx: Context, 
     return;
   }
   if (suites.includes('api')) requireExistingSwarmFile(ctx, testConfig.api?.spec_file, diagnostics, `${pathLabel}.api.spec_file`);
-  if (suites.includes('visual-reg')) requireExistingSwarmFile(ctx, testConfig['visual-reg']?.paths_file || testConfig['visual-reg']?.path, diagnostics, `${pathLabel}.visual-reg`);
+  if (suites.includes('visual-reg')) {
+    const visualRegConfig = testConfig['visual-reg'];
+    if (isPlainObject(visualRegConfig) && visualRegConfig[REMOVED_VISUAL_REG_PATH_FIELD] !== undefined) {
+      diagnostics.push(error('form_check', `${pathLabel}.visual-reg.${REMOVED_VISUAL_REG_PATH_FIELD} is removed; use ${VISUAL_REG_PATHS_FIELD}`, `${pathLabel}.visual-reg.${REMOVED_VISUAL_REG_PATH_FIELD}`));
+    }
+    requireExistingSwarmFile(ctx, visualRegConfig?.[VISUAL_REG_PATHS_FIELD], diagnostics, `${pathLabel}.visual-reg.${VISUAL_REG_PATHS_FIELD}`);
+  }
   if (suites.includes('unit') && typeof testConfig.unit?.test_cmd !== 'string') {
     diagnostics.push(error('form_check', `${pathLabel}.unit.test_cmd must be a string`, `${pathLabel}.unit.test_cmd`));
   }
@@ -799,7 +859,7 @@ function validateTestConfig(testConfig: unknown, suites: unknown, ctx: Context, 
     validateRepoPath(ctx, testConfig.manifest?.deployment_yaml, diagnostics, `${pathLabel}.manifest.deployment_yaml`);
   }
   if (suites.includes('k8s')) {
-    const k8s = testConfig.k8s || {};
+    const k8s = objectOrEmpty(testConfig.k8s);
     validateRepoPath(ctx, k8s.dockerfile, diagnostics, `${pathLabel}.k8s.dockerfile`);
     if (!Array.isArray(k8s.manifests) || k8s.manifests.length === 0) diagnostics.push(error('form_check', `${pathLabel}.k8s.manifests must be a non-empty array`, `${pathLabel}.k8s.manifests`));
     else for (const manifest of k8s.manifests) validateRepoPath(ctx, manifest, diagnostics, `${pathLabel}.k8s.manifests`);

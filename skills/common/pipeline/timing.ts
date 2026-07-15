@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 // Common timing primitives for wait/retry loops.
 // No runtime authority or lifecycle semantics live here.
 
@@ -21,6 +22,9 @@ type BudgetExtensionMeta = {
   reason?: string;
   bufferMs?: number;
 };
+const DEFAULT_BUDGET_REASON = 'budget_exhausted';
+const DEFAULT_BUDGET_LABEL = 'budget';
+const RATE_LIMIT_COOLDOWN_REASON = 'rate_limit_cooldown';
 
 export type TimeBudget = {
   readonly deadlineMs: number;
@@ -45,8 +49,19 @@ export class BudgetExhaustedError extends Error {
     this.code = 'BUDGET_EXHAUSTED';
     this.deadlineMs = Number.isFinite(details.deadlineMs) ? details.deadlineMs as number : null;
     this.remainingMs = Number.isFinite(details.remainingMs) ? details.remainingMs as number : 0;
-    this.reason = details.reason || 'budget_exhausted';
+    this.reason = selectDefinedValue(() => (textValue(details.reason)), () => (DEFAULT_BUDGET_REASON));
   }
+}
+
+function textValue(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const normalized = value.trim();
+  return normalized ? normalized : null;
+}
+
+function nonNegativeMs(value: unknown): number {
+  const parsed = Number(value);
+  return Math.max(0, Number.isFinite(parsed) ? parsed : 0);
 }
 
 function abortError(signal: AbortSignal | null | undefined) {
@@ -67,15 +82,20 @@ function toDeadlineMs(input: BudgetInput = {}) {
 }
 
 export function isBudgetExhaustedError(error: unknown) {
-  return (error as { name?: string; code?: string } | null)?.name === 'BudgetExhaustedError'
-    || (error as { name?: string; code?: string } | null)?.code === 'BUDGET_EXHAUSTED';
+  return selectTruthyValue(() => ((error as {
+    name?: string;
+    code?: string;
+} | null)?.name === 'BudgetExhaustedError'), () => ((error as {
+    name?: string;
+    code?: string;
+} | null)?.code === 'BUDGET_EXHAUSTED'));
 }
 
 export function createBudget(input: BudgetInput = {}): TimeBudget {
   let deadlineMs = toDeadlineMs(input);
   const controller = new AbortController();
-  const upstream = input.signal || null;
-  const label = input.label || 'budget';
+  const upstream = selectTruthyValue(() => (input.signal), () => (null));
+  const label = selectDefinedValue(() => (textValue(input.label)), () => (DEFAULT_BUDGET_LABEL));
   const extensions: Array<{ ms: number; reason: string; at: string }> = [];
   let deadlineTimer: ReturnType<typeof setTimeout> | null = null;
   let upstreamAbortHandler: (() => void) | null = null;
@@ -101,7 +121,7 @@ export function createBudget(input: BudgetInput = {}): TimeBudget {
   }
 
   function removeUpstreamAbortListener() {
-    if (!upstream || !upstreamAbortHandler) return;
+    if (selectTruthyValue(() => (!upstream), () => (!upstreamAbortHandler))) return;
     upstream.removeEventListener('abort', upstreamAbortHandler);
     upstreamAbortHandler = null;
   }
@@ -144,20 +164,20 @@ export function createBudget(input: BudgetInput = {}): TimeBudget {
       }
     },
     extend(ms: number, meta: BudgetExtensionMeta = {}) {
-      if (meta.authorized !== true || !meta.reason) {
+      if (selectTruthyValue(() => (meta.authorized !== true), () => (!meta.reason))) {
         throw new TypeError('Budget extension requires explicit authorization and reason');
       }
-      const extensionMs = Math.max(0, Number(ms) || 0);
+      const extensionMs = nonNegativeMs(ms);
       deadlineMs += extensionMs;
       extensions.push({ ms: extensionMs, reason: meta.reason, at: new Date().toISOString() });
       scheduleDeadlineAbort();
       return deadlineMs;
     },
     extendForRateLimit(cooldownMs: number, meta: BudgetExtensionMeta = {}) {
-      const bufferMs = Math.max(0, Number(meta.bufferMs) || 0);
-      return budget.extend((Number(cooldownMs) || 0) + bufferMs, {
+      const bufferMs = nonNegativeMs(meta.bufferMs);
+      return budget.extend(nonNegativeMs(cooldownMs) + bufferMs, {
         authorized: true,
-        reason: meta.reason || 'rate_limit_cooldown',
+        reason: selectDefinedValue(() => (textValue(meta.reason)), () => (RATE_LIMIT_COOLDOWN_REASON)),
       });
     },
     async sleep(ms: number) {
@@ -169,12 +189,12 @@ export function createBudget(input: BudgetInput = {}): TimeBudget {
 }
 
 export function createBudgetFromMinutes(timeoutMinutes: number, options: Omit<BudgetInput, 'timeoutMs'> = {}) {
-  return createBudget({ ...options, timeoutMs: Math.max(0, Number(timeoutMinutes) || 0) * 60 * 1000 });
+  return createBudget({ ...options, timeoutMs: nonNegativeMs(timeoutMinutes) * 60 * 1000 });
 }
 
 export function sleep(ms: number, options: { budget?: TimeBudget | null; signal?: AbortSignal | null } = {}) {
-  const durationMs = Math.max(0, Number(ms) || 0);
-  const budget = options.budget || null;
+  const durationMs = nonNegativeMs(ms);
+  const budget = selectTruthyValue(() => (options.budget), () => (null));
   const signals = [options.signal, budget?.signal].filter(Boolean) as AbortSignal[];
 
   for (const signal of signals) {

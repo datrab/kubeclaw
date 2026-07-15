@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Skill: project-summary — Project Lifecycle Report
 // ═══════════════════════════════════════════════════════════════
@@ -30,7 +31,7 @@ import { getRepoRoot } from '../core/git-context.ts';
 import { loadPlatformSwarmConfig } from '../core/platform-config.ts';
 import { discordEmbeds } from '../integrations/discord.ts';
 import { normalizeLifecycleStatus } from '../lifecycle-state.ts';
-import { sanitizeJsonEgress, sanitizeMarkdownText } from '../redaction.ts';
+import { sanitizeJsonEgress, sanitizeMarkdownText } from '../egress.ts';
 import { buildSubprocessEnv, resolveScopedPath, validateAllowedPath } from '../security.ts';
 import { buildCaseStudyBase, buildDiscordEmbeds, buildMarkdown, pct } from './project-summary-formatters.ts';
 import { addDiagnostic, discoverLatestLifecycleReadModels, extToLang, readJsonData, readJsonRecord } from './project-summary-lifecycle.ts';
@@ -39,8 +40,78 @@ import { addDiagnostic, discoverLatestLifecycleReadModels, extToLang, readJsonDa
 
 function log(msg) { console.log(`[SUMMARY] ${sanitizeMarkdownText(msg)}`); }
 
+function firstDefined(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return undefined;
+}
+
+function isRecord(value) {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function recordOrEmpty(value) {
+  return isRecord(value) ? value : {};
+}
+
+function arrayOrEmpty(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function entriesOf(value) {
+  return Object.entries(recordOrEmpty(value));
+}
+
+function keysOf(value) {
+  return Object.keys(recordOrEmpty(value));
+}
+
+function countMatches(text, regex) {
+  const matches = String(text).match(regex);
+  return matches ? matches.length : 0;
+}
+
+function numberOrZero(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : 0;
+}
+
+function integerTextOrZero(value) {
+  const parsed = Number.parseInt(String(value), 10);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function firstNonEmptyLine(value) {
+  return selectDefinedValue(() => (String(value).split('\n').find((line) => line.trim().length > 0)), () => (null));
+}
+
+function requiredNonEmptyConfigString(value, field) {
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) {
+    throw new Error(`${field}: required non-empty string in normalized swarm config`);
+  }
+  return value.trim();
+}
+
+function optionalEnvString(name) {
+  const value = process.env[name];
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
+  const normalized = String(value).trim();
+  return normalized.length > 0 ? normalized : null;
+}
+
+function envFlag(name) {
+  const value = optionalEnvString(name);
+  const normalized = value === null ? '' : value.toLowerCase();
+  return ['1', 'true', 'yes', 'on'].includes(normalized);
+}
+
+function projectSummaryDiscordMuted(opts = {}) {
+  return [opts.disableDiscordWebhooks === true, envFlag('KUBECLAW_DISABLE_DISCORD_WEBHOOKS')].some(Boolean);
+}
+
 function resolveRepoDir(repoDir = null) {
-  const explicitRepo = repoDir || process.env.REPO_ROOT || null;
+  const explicitRepo = selectDefinedValue(() => (repoDir), () => (null));
   let resolvedRepo;
   if (explicitRepo) {
     resolvedRepo = path.resolve(explicitRepo);
@@ -73,7 +144,7 @@ function git(repoDir, args, diagnostics = null) {
       source: 'git',
       status: 'unavailable',
       command: ['git', '-C', repoDir, ...args],
-      reason: error?.message || 'unknown',
+      reason: selectTruthyValue(() => (error?.message), () => ('missing_error_message')),
     };
     addDiagnostic(diagnostics, diag);
     return { ok: false, stdout: '', diagnostic: diag };
@@ -87,10 +158,10 @@ function gitText(repoDir, args, diagnostics = null) {
 // ── Resolve project paths ───────────────────────────────────────
 
 function validateProjectSelector(project) {
-  if (!project || typeof project !== 'string') {
+  if (selectTruthyValue(() => (!project), () => (typeof project !== 'string'))) {
     throw new Error('project-summary.project: project is empty or not a string');
   }
-  if (project.includes('\0') || project === '.' || project === '..' || /[\\/]/.test(project) || project.split(/[\\/]/).includes('..')) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (project.includes('\0')), () => (project === '.'))), () => (project === '..'))), () => (/[\\/]/.test(project)))), () => (project.split(/[\\/]/).includes('..')))) {
     throw new Error(`project-summary.project: invalid project selector '${project}'`);
   }
   return project;
@@ -101,7 +172,7 @@ function resolveProjectPaths(project, repoDir, configPath) {
     ? loadPlatformSwarmConfig(configPath)
     : loadPlatformSwarmConfig();
   const safeProject = validateProjectSelector(project);
-  const projectsRoot = resolveScopedPath(swarmConfig.projects_root || 'Projects', {
+  const projectsRoot = resolveScopedPath(requiredNonEmptyConfigString(swarmConfig.projects_root, 'config.projects_root'), {
     baseDir: repoDir,
     scopeDir: repoDir,
     field: 'project-summary.projectsRoot',
@@ -165,7 +236,7 @@ function collectCodeStats(repoDir, projectRoot, diagnostics = null) {
     if (!fs.existsSync(filePath)) continue;
     try {
       const stat = fs.statSync(filePath);
-      if (stat.isDirectory() || stat.size > 2 * 1024 * 1024) continue;
+      if (selectTruthyValue(() => (stat.isDirectory()), () => (stat.size > 2 * 1024 * 1024))) continue;
       const ext = path.extname(file).toLowerCase();
       if (binaryExts.has(ext)) continue;
       const content = fs.readFileSync(filePath, 'utf8');
@@ -182,13 +253,13 @@ function collectCodeStats(repoDir, projectRoot, diagnostics = null) {
 
   const swarmFiles = tracked.filter(f => f.includes('.swarm/')).length;
   const codeFiles = totalFiles - swarmFiles;
-  const commitCount = parseInt(gitText(repoDir, ['rev-list', '--count', 'HEAD', '--', relProject], diagnostics) || '0');
+  const commitCount = integerTextOrZero(gitText(repoDir, ['rev-list', '--count', 'HEAD', '--', relProject], diagnostics));
   const authors = [...new Set(gitText(repoDir, ['log', '--format=%aN', '--', relProject], diagnostics).split('\n').filter(Boolean))].sort();
-  const firstCommit = gitText(repoDir, ['log', '--reverse', '--format=%aI', '--', relProject], diagnostics).split('\n').find(Boolean) || '';
+  const firstCommit = firstNonEmptyLine(gitText(repoDir, ['log', '--reverse', '--format=%aI', '--', relProject], diagnostics));
   const lastCommit = gitText(repoDir, ['log', '-1', '--format=%aI', '--', relProject], diagnostics);
 
   return { totalLines, codeLines, totalFiles, codeFiles, swarmFiles, byLang, commitCount, authors,
-    firstCommit: firstCommit || null, lastCommit: lastCommit || null };
+    firstCommit, lastCommit: firstNonEmptyLine(lastCommit) };
 }
 
 // ── 2. Unit Test Census (from source code) ──────────────────────
@@ -210,7 +281,7 @@ function collectUnitTestCensus(projectRoot) {
         // Python: any test_*.py file anywhere in the project
         if (entry.name.startsWith('test_') && entry.name.endsWith('.py')) {
           const content = fs.readFileSync(full, 'utf8');
-          const funcs = (content.match(/(?:def|async def) test_/g) || []).length;
+          const funcs = countMatches(content, /(?:def|async def) test_/g);
           if (funcs > 0) {
             result.python.files++;
             result.python.functions += funcs;
@@ -222,7 +293,7 @@ function collectUnitTestCensus(projectRoot) {
         // Frontend: any *.test.{ts,tsx,js,jsx} or *.spec.{ts,tsx,js,jsx}
         if (/\.(test|spec)\.(ts|tsx|js|jsx)$/.test(entry.name)) {
           const content = fs.readFileSync(full, 'utf8');
-          const blocks = (content.match(/\bit\(|\btest\(|\bdescribe\(/g) || []).length;
+          const blocks = countMatches(content, /\bit\(|\btest\(|\bdescribe\(/g);
           if (blocks > 0) {
             result.frontend.files++;
             result.frontend.functions += blocks;
@@ -253,7 +324,16 @@ function collectApiTestCensus(swarmRoot, diagnostics = null) {
       if (entry.name !== 'test-spec.json') continue;
       const data = readJsonData(full, diagnostics);
       if (!data?.tests) continue;
-      const modDir = path.relative(swarmRoot, full).split('/')[1] || 'gate';
+      const [, modDir = null] = path.relative(swarmRoot, full).split('/');
+      if (!modDir) {
+        addDiagnostic(diagnostics, {
+          source: 'api_test_census',
+          status: 'module_dir_missing',
+          path: full,
+          optional: true,
+        });
+        continue;
+      }
       const count = data.tests.length;
       specs.push({ module: modDir, count });
       totalCases += count;
@@ -266,10 +346,11 @@ function collectApiTestCensus(swarmRoot, diagnostics = null) {
 // ── 4. Pipeline Stats (lifecycle read models) ───────────────────
 
 function collectPipelineStats(progress, swarmRoot, diagnostics = null) {
-  const modules = progress.modules || {};
-  const gates = progress.gates || {};
+  const modules = recordOrEmpty(progress.modules);
+  const gates = recordOrEmpty(progress.gates);
   const lifecycleSnapshot = discoverLatestLifecycleReadModels(swarmRoot, readJsonData, diagnostics);
-  const lifecycleModules = lifecycleSnapshot.data?.modules || {};
+  const lifecycleModules = recordOrEmpty(lifecycleSnapshot.data?.modules);
+  const lifecycleGates = recordOrEmpty(lifecycleSnapshot.data?.gates);
 
   const moduleStats = [];
   let totalAttempts = 0, totalDuration = 0;
@@ -277,25 +358,31 @@ function collectPipelineStats(progress, swarmRoot, diagnostics = null) {
   let passedFirstTry = 0, totalCompleted = 0, totalBlocked = 0, totalPending = 0;
   let earliestStart = null, latestComplete = null;
 
-  for (const [id, mod] of Object.entries(modules)) {
-    const status = normalizeLifecycleStatus(lifecycleModules[id] || {});
-    const attempts = Number(status.current_attempt || 0) > 0
+  for (const [id, mod] of entriesOf(modules)) {
+    const moduleConfig = recordOrEmpty(mod);
+    const status = normalizeLifecycleStatus(recordOrEmpty(lifecycleModules[id]));
+    const failCount = numberOrZero(status.fail_count);
+    const currentAttempt = numberOrZero(status.current_attempt);
+    const cost = recordOrEmpty(status.cost);
+    const attempts = currentAttempt > 0
       ? Number(status.current_attempt)
-      : (status.fail_count || 0) + (status.status === 'PASS' ? 1 : 0);
+      : failCount + (status.status === 'PASS' ? 1 : 0);
 
     const stat = {
-      id, title: mod.title, dir: mod.dir,
-      scope_group: mod.scope_group ?? mod.scopeGroup ?? mod.scope?.group ?? mod.category ?? mod.metadata?.scope_group ?? mod.metadata?.scopeGroup ?? 'other',
-      status: status.status || 'PENDING',
-      failCount: status.fail_count || 0,
+      id, title: moduleConfig.title, dir: moduleConfig.dir,
+      scope_group: selectDefinedValue(() => (moduleConfig.scope_group), () => (null)),
+      status: selectDefinedValue(() => (status.status), () => ('PENDING')),
+      failCount,
       attempts,
-      startedAt: status.started_at || status.attempt_started_at || null,
-      completedAt: status.completed_at || null,
-      completionSummary: status.completion_summary || null,
-      failSummaries: status.fail_summaries || [],
-      forgeDiffStat: status.forge_diff_stat || null,
-      historyEntries: (status.history || []).length,
-      cost: status.cost || {},
+      startedAt: selectDefinedValue(() => (selectDefinedValue(() => (status.started_at), () => (status.attempt_started_at))), () => (null)),
+      completedAt: selectDefinedValue(() => (status.completed_at), () => (null)),
+      blockedPhase: selectDefinedValue(() => (selectDefinedValue(() => (status.blockedPhase), () => (status.blocked_phase))), () => (null)),
+      blockedReason: selectDefinedValue(() => (selectDefinedValue(() => (status.reason), () => (status.completion_summary))), () => (null)),
+      completionSummary: selectDefinedValue(() => (status.completion_summary), () => (null)),
+      failSummaries: arrayOrEmpty(status.fail_summaries),
+      forgeDiffStat: selectDefinedValue(() => (status.forge_diff_stat), () => (null)),
+      historyEntries: arrayOrEmpty(status.history).length,
+      cost,
     };
 
     if (stat.status === 'PASS') { totalCompleted++; if (stat.failCount === 0) passedFirstTry++; }
@@ -303,14 +390,14 @@ function collectPipelineStats(progress, swarmRoot, diagnostics = null) {
     else totalPending++;
 
     totalAttempts += stat.attempts;
-    totalDuration += stat.cost.total_duration_seconds || 0;
-    totalForgeIn += stat.cost.forge_tokens_in || 0;
-    totalForgeOut += stat.cost.forge_tokens_out || 0;
-    totalBusterIn += stat.cost.buster_tokens_in || 0;
-    totalBusterOut += stat.cost.buster_tokens_out || 0;
+    totalDuration += numberOrZero(stat.cost.total_duration_seconds);
+    totalForgeIn += numberOrZero(stat.cost.forge_tokens_in);
+    totalForgeOut += numberOrZero(stat.cost.forge_tokens_out);
+    totalBusterIn += numberOrZero(stat.cost.buster_tokens_in);
+    totalBusterOut += numberOrZero(stat.cost.buster_tokens_out);
 
-    if (stat.startedAt) { const d = new Date(stat.startedAt); if (!earliestStart || d < earliestStart) earliestStart = d; }
-    if (stat.completedAt) { const d = new Date(stat.completedAt); if (!latestComplete || d > latestComplete) latestComplete = d; }
+    if (stat.startedAt) { const d = new Date(stat.startedAt); if (selectTruthyValue(() => (!earliestStart), () => (d < earliestStart))) earliestStart = d; }
+    if (stat.completedAt) { const d = new Date(stat.completedAt); if (selectTruthyValue(() => (!latestComplete), () => (d > latestComplete))) latestComplete = d; }
 
     moduleStats.push(stat);
   }
@@ -319,20 +406,39 @@ function collectPipelineStats(progress, swarmRoot, diagnostics = null) {
   const failPatterns = {};
   for (const mod of moduleStats) {
     for (const fail of mod.failSummaries) {
-      const p = (fail.summary || 'unknown').slice(0, 80).replace(/Module \d+[a-z]?:?\s*/i, '').trim();
-      failPatterns[p] = (failPatterns[p] || 0) + 1;
+      const summary = typeof fail?.summary === 'string' && fail.summary.trim()
+        ? fail.summary
+        : 'failure_summary_missing';
+      const p = summary.slice(0, 80).replace(/Module \d+[a-z]?:?\s*/i, '').trim();
+      failPatterns[p] = numberOrZero(failPatterns[p]) + 1;
     }
   }
 
   // Gate stats
   const gateStats = [];
-  for (const [gateId, gate] of Object.entries(gates)) {
+  for (const [gateId, gate] of entriesOf(gates)) {
+    const lifecycleGate = normalizeLifecycleStatus(recordOrEmpty(lifecycleGates[gateId]));
     const outPath = gate.output_file ? path.join(swarmRoot, gate.output_file) : null;
     const result = outPath ? readJsonData(outPath, diagnostics) : null;
+    const status = selectDefinedValue(
+      () => (lifecycleGate.status),
+      () => (result?.status),
+      () => (result?.verdict),
+      () => ('PENDING'),
+    );
     gateStats.push({
       id: gateId, type: gate.type, title: gate.title,
-      status: result?.status || 'PENDING',
-      note: result?.note || null,
+      status,
+      note: selectDefinedValue(
+        () => (lifecycleGate.note),
+        () => (lifecycleGate.reason),
+        () => (result?.note),
+        () => (result?.summary),
+        () => (null),
+      ),
+      startedAt: selectDefinedValue(() => (lifecycleGate.started_at), () => (null)),
+      completedAt: selectDefinedValue(() => (lifecycleGate.completed_at), () => (null)),
+      outputPath: outPath,
     });
   }
 
@@ -343,15 +449,15 @@ function collectPipelineStats(progress, swarmRoot, diagnostics = null) {
   return {
     lifecycleSource: lifecycleSnapshot.source,
     lifecycleReadModelsPath: lifecycleSnapshot.path,
-    moduleCount: Object.keys(modules).length,
-    gateCount: Object.keys(gates).length,
+    moduleCount: keysOf(modules).length,
+    gateCount: keysOf(gates).length,
     totalCompleted, totalBlocked, totalPending,
     totalAttempts, passedFirstTry,
     firstPassRate: pct(passedFirstTry, totalCompleted),
     avgAttempts: totalCompleted > 0 ? Math.round((totalAttempts / totalCompleted) * 10) / 10 : 0,
     totalDuration, elapsedHours,
-    earliestStart: earliestStart?.toISOString() || null,
-    latestComplete: latestComplete?.toISOString() || null,
+    earliestStart: selectTruthyValue(() => (earliestStart?.toISOString()), () => (null)),
+    latestComplete: selectTruthyValue(() => (latestComplete?.toISOString()), () => (null)),
     tokens: {
       forgeIn: totalForgeIn, forgeOut: totalForgeOut,
       busterIn: totalBusterIn, busterOut: totalBusterOut,
@@ -370,7 +476,7 @@ function collectTestResults(swarmRoot, modules, diagnostics = null) {
   let totalRuns = 0, totalChecks = 0, totalChecksPassed = 0, totalFindings = 0, totalDuration = 0;
   const perModule = [];
 
-  for (const [id, mod] of Object.entries(modules)) {
+  for (const [id, mod] of entriesOf(modules)) {
     const verdictPath = path.join(swarmRoot, 'modules', mod.dir, 'test-results', 'runner-verdict.json');
     const verdict = readJsonData(verdictPath, diagnostics);
     if (!verdict?.suites) continue;
@@ -378,7 +484,7 @@ function collectTestResults(swarmRoot, modules, diagnostics = null) {
     totalRuns++;
     let modChecks = 0, modPassed = 0, modFindings = 0;
 
-    for (const [suiteName, s] of Object.entries(verdict.suites)) {
+    for (const [suiteName, s] of entriesOf(verdict.suites)) {
       if (!suiteAgg[suiteName]) suiteAgg[suiteName] = { runs: 0, pass: 0, fail: 0, skip: 0, error: 0, checks: 0, checksPassed: 0, findings: 0, durationMs: 0 };
       const agg = suiteAgg[suiteName];
       agg.runs++;
@@ -386,27 +492,27 @@ function collectTestResults(swarmRoot, modules, diagnostics = null) {
       else if (s.status === 'FAIL') agg.fail++;
       else if (s.status === 'SKIP') agg.skip++;
       else if (s.status === 'ERROR') agg.error++;
-      agg.checks += s.checks_total || 0;
-      agg.checksPassed += s.checks_passed || 0;
-      agg.findings += (s.findings || []).length;
-      agg.durationMs += s.duration_ms || 0;
+      agg.checks += numberOrZero(s.checks_total);
+      agg.checksPassed += numberOrZero(s.checks_passed);
+      agg.findings += arrayOrEmpty(s.findings).length;
+      agg.durationMs += numberOrZero(s.duration_ms);
 
-      modChecks += s.checks_total || 0;
-      modPassed += s.checks_passed || 0;
-      modFindings += (s.findings || []).length;
+      modChecks += numberOrZero(s.checks_total);
+      modPassed += numberOrZero(s.checks_passed);
+      modFindings += arrayOrEmpty(s.findings).length;
     }
 
     totalChecks += modChecks;
     totalChecksPassed += modPassed;
     totalFindings += modFindings;
-    totalDuration += verdict.duration_ms || 0;
+    totalDuration += numberOrZero(verdict.duration_ms);
 
     perModule.push({
       id, title: mod.title,
       status: verdict.overall_status,
       suites: Object.keys(verdict.suites),
       checks: modChecks, passed: modPassed, findings: modFindings,
-      durationMs: verdict.duration_ms || 0,
+      durationMs: numberOrZero(verdict.duration_ms),
     });
   }
 
@@ -423,12 +529,12 @@ function collectReviewStats(swarmRoot, diagnostics = null) {
   let totalCritical = 0, totalDeferred = 0;
 
   for (const file of fs.readdirSync(reviewDir)) {
-    if (!file.endsWith('.json') || file === 'EARLY-REVIEW.json' || file === 'MIDPOINT-REVIEW.json' || file === 'FINAL-REVIEW.json') {
+    if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (!file.endsWith('.json')), () => (file === 'EARLY-REVIEW.json'))), () => (file === 'MIDPOINT-REVIEW.json'))), () => (file === 'FINAL-REVIEW.json'))) {
       // Check merged review files (PASS/FAIL summaries)
       if (file.endsWith('-REVIEW.json') && !file.startsWith('echo-')) {
         const data = readJsonData(path.join(reviewDir, file), diagnostics);
         if (data?.status) {
-          reviews.push({ file, type: 'summary', status: data.status, note: data.note || null });
+          reviews.push({ file, type: 'summary', status: data.status, note: selectDefinedValue(() => (data.note), () => (null)) });
         }
       }
       continue;
@@ -437,16 +543,16 @@ function collectReviewStats(swarmRoot, diagnostics = null) {
     const data = readJsonData(path.join(reviewDir, file), diagnostics);
     if (!data) continue;
 
-    const critical = (data.critical_issues || []).length;
-    const deferred = (data.deferred_issues || []).length;
+    const critical = arrayOrEmpty(data.critical_issues).length;
+    const deferred = arrayOrEmpty(data.deferred_issues).length;
     totalCritical += critical;
     totalDeferred += deferred;
 
     reviews.push({
       file, type: 'detail',
-      status: data.status || 'unknown',
+      status: selectDefinedValue(() => (data.status), () => ('review_status_missing')),
       critical, deferred,
-      summary: (data.summary || '').slice(0, 200),
+      summary: String(selectDefinedValue(() => (data.summary), () => (''))).slice(0, 200),
     });
   }
 
@@ -468,28 +574,52 @@ function discoverPipelineEventLogs(swarmRoot) {
   return [...new Set(logs)];
 }
 
+const PROJECT_SUMMARY_AGENT_KIND_BY_TOKEN = Object.freeze({
+  forge: 'forge',
+  module_forge: 'forge',
+  buster: 'buster',
+  module_buster: 'buster',
+  echo: 'echo',
+  review: 'echo',
+  reviewer: 'echo',
+  gate_fix: 'gateFix',
+  forge_gatefix: 'gateFix',
+  gatefix: 'gateFix',
+  review_fix: 'reviewFix',
+  forge_reviewfix: 'reviewFix',
+  reviewfix: 'reviewFix',
+});
+
 function normalizeAgentInvocationKind(event = {}) {
-  const raw = String(
-    event.agent_type
-      ?? event.agentType
-      ?? event.payload?.agent_type
-      ?? event.payload?.agentType
-      ?? ''
-  ).trim().toLowerCase().replace(/[-\s]+/g, '_');
+  const agentType = firstDefined(event.agent_type, event.agentType, event.payload?.agent_type, event.payload?.agentType, event.label, event.gateway_label, event.gatewayLabel, null);
+  if (agentType === null) return null;
+  const raw = String(agentType).trim().toLowerCase().replace(/[-\s]+/g, '_');
   if (!raw) return null;
-  if (raw === 'forge' || raw === 'module_forge') return 'forge';
-  if (raw === 'buster' || raw === 'module_buster') return 'buster';
-  if (raw === 'echo' || raw === 'review' || raw === 'reviewer') return 'echo';
-  if (raw === 'gate_fix' || raw === 'forge_gatefix' || raw === 'gatefix') return 'gateFix';
-  if (raw === 'review_fix' || raw === 'forge_reviewfix' || raw === 'reviewfix') return 'reviewFix';
+  const direct = selectDefinedValue(() => (PROJECT_SUMMARY_AGENT_KIND_BY_TOKEN[raw]), () => (null));
+  if (direct) return direct;
+  if (raw.startsWith('forge_')) return 'forge';
+  if (raw.startsWith('buster_')) return 'buster';
+  if (raw.startsWith('echo_')) return 'echo';
+  if (raw.startsWith('gate_fix_')) return 'gateFix';
+  if (raw.startsWith('review_fix_')) return 'reviewFix';
   return null;
 }
 
+function eventDedupPart(value) {
+  return selectTruthyValue(() => (value === undefined), () => (value === null)) ? '' : String(value);
+}
+
 function eventDedupKey(event = {}, filePath, lineNumber) {
-  return event.event_id
-    ?? event.id
-    ?? event.trace_id
-    ?? `${event.run_id || event.runId || ''}:${event.type || ''}:${event.agent_type || event.agentType || ''}:${event.session_key || event.sessionKey || ''}:${event.dispatch_id || event.dispatchId || ''}:${event.ts || event.timestamp || ''}:${filePath}:${lineNumber}`;
+  return selectDefinedValue(() => (firstDefined(event.event_id, event.id, event.trace_id)), () => ([
+    eventDedupPart(selectDefinedValue(() => (event.run_id), () => (event.runId))),
+    eventDedupPart(event.type),
+    eventDedupPart(firstDefined(event.agent_type, event.agentType)),
+    eventDedupPart(selectDefinedValue(() => (event.session_key), () => (event.sessionKey))),
+    eventDedupPart(selectDefinedValue(() => (event.dispatch_id), () => (event.dispatchId))),
+    eventDedupPart(selectDefinedValue(() => (event.ts), () => (event.timestamp))),
+    filePath,
+    String(lineNumber),
+].join(':')));
 }
 
 function collectAgentInvocations(swarmRoot, diagnostics = null) {
@@ -515,7 +645,7 @@ function collectAgentInvocations(swarmRoot, diagnostics = null) {
         status: 'unavailable',
         path: filePath,
         optional: true,
-        reason: error?.message || 'unknown',
+        reason: selectTruthyValue(() => (error?.message), () => ('missing_error_message')),
       });
       continue;
     }
@@ -532,7 +662,7 @@ function collectAgentInvocations(swarmRoot, diagnostics = null) {
           path: filePath,
           line: lineNumber,
           optional: true,
-          reason: error?.message || 'unknown',
+          reason: selectTruthyValue(() => (error?.message), () => ('missing_error_message')),
         });
         continue;
       }
@@ -544,11 +674,11 @@ function collectAgentInvocations(swarmRoot, diagnostics = null) {
       if (!kind) {
         addDiagnostic(diagnostics, {
           source: 'agent_invocations',
-          status: 'unknown_agent_type',
+          status: 'unsupported_agent_type',
           path: filePath,
           line: lineNumber,
           optional: true,
-          agent_type: event.agent_type ?? event.agentType ?? null,
+          agent_type: firstDefined(event.agent_type, event.agentType, null),
         });
         continue;
       }
@@ -566,25 +696,47 @@ function collectAgentInvocations(swarmRoot, diagnostics = null) {
 
 function buildProjectSummaryDiscordFields(identity = {}, extra = []) {
   const fields = [];
-  if (identity.runId || identity.run_id) fields.push({ name: 'Run ID', value: identity.runId || identity.run_id, inline: true });
+  if (identity.runId) fields.push({ name: 'Run ID', value: identity.runId, inline: true });
   return [...fields, ...extra];
+}
+
+function projectSummaryArtifactDisplayPath(context, pathField, displayField) {
+  const artifactPath = context[pathField];
+  if (!artifactPath) return null;
+  const displayPath = context[displayField];
+  return selectTruthyValue(() => (displayPath), () => (artifactPath));
 }
 
 function buildProjectSummaryArtifactFields(context = {}) {
   const fields = [];
-  if (context.outputFile) fields.push({ name: 'Markdown', value: `\`${context.outputFileDisplay || context.outputFile}\``, inline: false });
-  if (context.jsonOutputPath) fields.push({ name: 'Data', value: `\`${context.jsonOutputPathDisplay || context.jsonOutputPath}\``, inline: false });
+  const markdownPath = projectSummaryArtifactDisplayPath(context, 'outputFile', 'outputFileDisplay');
+  const dataPath = projectSummaryArtifactDisplayPath(context, 'jsonOutputPath', 'jsonOutputPathDisplay');
+  if (markdownPath) fields.push({ name: 'Markdown', value: `\`${markdownPath}\``, inline: false });
+  if (dataPath) fields.push({ name: 'Data', value: `\`${dataPath}\``, inline: false });
   return fields;
 }
 
 function resolveDiscordContext(opts = {}) {
-  const project = opts.project || process.env.CURRENT_PROJECT || null;
+  const project = opts.project !== undefined && opts.project !== null && String(opts.project).trim()
+    ? opts.project
+    : optionalEnvString('CURRENT_PROJECT');
   const repoDir = resolveRepoDir(opts.repoDir);
-  const configPath = opts.configPath || null;
+  const configPath = opts.configPath ? opts.configPath : null;
   const { swarmRoot } = resolveProjectPaths(project, repoDir, configPath);
   const logDir = path.join(swarmRoot, 'logs');
-  const latest = readJsonData(path.join(logDir, 'pipeline', 'latest.json'), null) || {};
-  const runId = opts.runId || process.env.RUN_ID || process.env.PIPELINE_RUN_ID || latest.run_id || null;
+  const latest = recordOrEmpty(readJsonData(path.join(logDir, 'pipeline', 'latest.json'), null));
+  let runId = null;
+  if (opts.runId !== undefined && opts.runId !== null && String(opts.runId).trim()) {
+    runId = opts.runId;
+  } else {
+    const runIdEnv = optionalEnvString('RUN_ID');
+    if (runIdEnv !== null) {
+      runId = runIdEnv;
+    } else {
+      const pipelineRunIdEnv = optionalEnvString('PIPELINE_RUN_ID');
+      runId = pipelineRunIdEnv !== null ? pipelineRunIdEnv : (latest.run_id !== undefined ? latest.run_id : null);
+    }
+  }
   const runLogDir = runId ? path.join(logDir, 'pipeline', 'runs', runId) : null;
   const outputFile = opts.outputFile ? path.resolve(opts.outputFile) : null;
   const jsonOutputPath = opts.jsonOutputPath ? path.resolve(opts.jsonOutputPath) : null;
@@ -604,8 +756,14 @@ function resolveDiscordContext(opts = {}) {
 }
 
 async function postToDiscord(embeds, opts = {}) {
-  const url = opts.discordWebhookUrl || process.env.DISCORD_WEBHOOK;
+  const url = opts.discordWebhookUrl !== undefined && opts.discordWebhookUrl !== null && String(opts.discordWebhookUrl).trim()
+    ? opts.discordWebhookUrl
+    : optionalEnvString('DISCORD_WEBHOOK');
   if (!url) { log('DISCORD_WEBHOOK not set — skipping'); return false; }
+  if (projectSummaryDiscordMuted(opts)) {
+    log('Discord: summary webhook muted by runtime config');
+    return false;
+  }
   try {
     const context = resolveDiscordContext(opts);
     const config = {
@@ -614,12 +772,12 @@ async function postToDiscord(embeds, opts = {}) {
       _runId: context.runId,
       run_id: context.runId,
       discord_webhook_url: url,
-      _disable_discord_webhooks: opts.disableDiscordWebhooks === true,
+      _disable_discord_webhooks: false,
       telemetry: { enabled: Boolean(context.runId) },
     };
     const summaryEmbeds = (Array.isArray(embeds) ? embeds : []).map((embed = {}) => ({
       ...embed,
-      fields: buildProjectSummaryDiscordFields({ run_id: context.runId }, [
+      fields: buildProjectSummaryDiscordFields({ runId: context.runId }, [
         ...(Array.isArray(embed.fields) ? embed.fields : []),
         ...buildProjectSummaryArtifactFields(context),
       ]),
@@ -638,7 +796,9 @@ async function postToDiscord(embeds, opts = {}) {
 // ═══════════════════════════════════════════════════════════════
 
 async function generateSummary(opts = {}) {
-  const project    = opts.project || process.env.CURRENT_PROJECT;
+  const project    = opts.project !== undefined && opts.project !== null && String(opts.project).trim()
+    ? opts.project
+    : optionalEnvString('CURRENT_PROJECT');
   const repoDir    = validateAllowedPath(resolveRepoDir(opts.repoDir), 'project-summary.repoDir');
   const configPath = opts.configPath
     ? validateAllowedPath(opts.configPath, 'project-summary.configPath')
@@ -667,7 +827,7 @@ async function generateSummary(opts = {}) {
   const pipeline = collectPipelineStats(progress, swarmRoot, diagnostics);
 
   log('Collecting test suite results...');
-  const tests = collectTestResults(swarmRoot, progress.modules || {}, diagnostics);
+  const tests = collectTestResults(swarmRoot, recordOrEmpty(progress.modules), diagnostics);
 
   log('Collecting review stats...');
   const reviews = collectReviewStats(swarmRoot, diagnostics);
@@ -712,9 +872,15 @@ async function main(args = process.argv.slice(2)) {
     },
   });
 
-  const project = flags.project || process.env.CURRENT_PROJECT;
-  const output  = flags.output || null;
-  const repoDir = flags.repo || null;
+  const project = flags.project !== undefined && flags.project !== null && String(flags.project).trim()
+    ? String(flags.project).trim()
+    : optionalEnvString('CURRENT_PROJECT');
+  const output = flags.output !== undefined && flags.output !== null && String(flags.output).trim()
+    ? String(flags.output).trim()
+    : null;
+  const repoDir = flags.repo !== undefined && flags.repo !== null && String(flags.repo).trim()
+    ? String(flags.repo).trim()
+    : null;
 
   if (!project) { console.error('Usage: node project-summary.ts --project <n> [--discord] [--output <file>] [--json] [--repo <path>]'); process.exit(2); }
 
@@ -743,5 +909,13 @@ if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
     .catch((err) => { console.error(`Error: ${sanitizeMarkdownText(err.message)}`); process.exit(1); });
 }
 
-export { generateSummary, main, postToDiscord, resolveProjectPaths };
+export {
+  buildProjectSummaryArtifactFields,
+  buildProjectSummaryDiscordFields,
+  generateSummary,
+  main,
+  normalizeAgentInvocationKind,
+  postToDiscord,
+  resolveProjectPaths,
+};
 export default main;

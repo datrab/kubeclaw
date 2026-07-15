@@ -107,13 +107,13 @@ try {
     reason: 'terminal_agent_error_without_valid_output',
     summary: 'terminal agent error cannot pass without valid output',
   });
-  assert.equal(replacement.source, 'written');
-  assert.equal(replacement.replaced_reason, 'output_file_identity_mismatch');
-  const replacedArtifact = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
-  assert.equal(replacedArtifact.status, 'FAIL');
-  assert.equal(replacedArtifact.run_id, payload.run_id);
-  assert.equal(replacedArtifact.dispatch_id, payload.dispatch_id);
-  assert.match(replacedArtifact.reason, /^output_file_identity_mismatch:/);
+  assert.equal(replacement.ok, false);
+  assert.equal(replacement.source, 'existing');
+  assert.match(replacement.reason, /^output_file_identity_mismatch:/);
+  const staleArtifact = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+  assert.equal(staleArtifact.status, 'PASS');
+  assert.equal(staleArtifact.run_id, 'run-stale');
+  assert.equal(staleArtifact.dispatch_id, 'dispatch-stale');
 
   console.log(JSON.stringify({
     ok: true,

@@ -19,7 +19,7 @@ export const SHARED_PIPELINE_HELPER_PATHS = [
   'pipeline/lifecycle-state.ts',
   'pipeline/noncritical-reporting.ts',
   'pipeline/platform-config.ts',
-  'pipeline/redaction.ts',
+  'pipeline/egress.ts',
   'pipeline/redis-transport.ts',
   'pipeline/security.ts',
   'pipeline/services/acp-gateway-contract.ts',

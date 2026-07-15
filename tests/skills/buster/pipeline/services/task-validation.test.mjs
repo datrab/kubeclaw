@@ -6,6 +6,20 @@ import { execFileSync } from 'node:child_process';
 import test from 'node:test';
 
 import { MalformedBusterTaskError, validateBusterTaskPayload } from '../../../../../skills/buster/pipeline/services/task-validation.ts';
+import { BUSTER_CAPABILITIES } from '../../../../../skills/buster/pipeline/services/capabilities.ts';
+
+function git(cwd, args) {
+  return execFileSync('git', ['-C', cwd, ...args], {
+    encoding: 'utf8',
+    env: {
+      ...process.env,
+      GIT_AUTHOR_NAME: 'Buster Test',
+      GIT_AUTHOR_EMAIL: 'buster@example.test',
+      GIT_COMMITTER_NAME: 'Buster Test',
+      GIT_COMMITTER_EMAIL: 'buster@example.test',
+    },
+  }).trim();
+}
 
 function validPayload(overrides = {}) {
   return {
@@ -37,6 +51,59 @@ function validPayload(overrides = {}) {
 
 test('validateBusterTaskPayload accepts session.cwd in the current repository', () => {
   assert.equal(validateBusterTaskPayload(validPayload()).moduleId, 'mod');
+});
+
+test('validateBusterTaskPayload accepts session.cwd in a linked module worktree', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-linked-worktree-'));
+  const repoRoot = path.join(root, 'repo');
+  const moduleWorktree = path.join(root, 'worktrees', 'module-02');
+  fs.mkdirSync(repoRoot, { recursive: true });
+  git(repoRoot, ['init', '-b', 'main']);
+  git(repoRoot, ['config', 'user.name', 'Buster Test']);
+  git(repoRoot, ['config', 'user.email', 'buster@example.test']);
+  fs.writeFileSync(path.join(repoRoot, 'README.md'), 'seed\n');
+  git(repoRoot, ['add', 'README.md']);
+  git(repoRoot, ['commit', '-m', 'seed']);
+  fs.mkdirSync(path.dirname(moduleWorktree), { recursive: true });
+  git(repoRoot, ['worktree', 'add', '-b', 'module-02', moduleWorktree, 'HEAD']);
+
+  const priorRepoRoot = process.env.REPO_ROOT;
+  process.env.REPO_ROOT = repoRoot;
+  try {
+    assert.equal(validateBusterTaskPayload(validPayload({
+      session: { ...validPayload().session, cwd: moduleWorktree },
+    })).moduleId, 'mod');
+  } finally {
+    if (priorRepoRoot === undefined) delete process.env.REPO_ROOT;
+    else process.env.REPO_ROOT = priorRepoRoot;
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('validateBusterTaskPayload accepts canonical kubernetes capability', () => {
+  const identity = validateBusterTaskPayload(validPayload({
+    task_type: 'gate_test',
+    module_id: 'final-buster',
+    gate_id: 'final-buster',
+    stage_id: 'gate:buster',
+    worker_type: undefined,
+    suites: ['k8s'],
+    capabilities: [
+      BUSTER_CAPABILITIES.CONTAINER_RUNTIME,
+      BUSTER_CAPABILITIES.KUBERNETES,
+    ],
+  }));
+  assert.equal(identity.taskType, 'gate_test');
+  assert.deepEqual(identity.capabilities, ['container_runtime', 'kubernetes']);
+});
+
+test('validateBusterTaskPayload rejects unsupported capability names', () => {
+  assert.throws(
+    () => validateBusterTaskPayload(validPayload({ capabilities: ['container_runtime', 'magic_cluster'] })),
+    (error) => error instanceof MalformedBusterTaskError
+      && error.details.reason === 'unsupported_capabilities'
+      && error.details.unsupported_capabilities.includes('magic_cluster'),
+  );
 });
 
 test('validateBusterTaskPayload rejects absolute session.cwd outside the current repository', () => {
@@ -96,5 +163,27 @@ test('validateBusterTaskPayload requires completion_stream identity', () => {
     () => validateBusterTaskPayload(validPayload({ completion_stream: undefined })),
     (error) => error instanceof MalformedBusterTaskError
       && error.missing_fields.includes('completion_stream'),
+  );
+});
+
+test('validateBusterTaskPayload accepts the canonical agent_judgment policy shape', () => {
+  assert.equal(validateBusterTaskPayload(validPayload({
+    agent_judgment: {
+      required: false,
+      reason: 'deterministic_suites_authoritative',
+    },
+  })).moduleId, 'mod');
+});
+
+test('validateBusterTaskPayload rejects malformed agent_judgment policy', () => {
+  assert.throws(
+    () => validateBusterTaskPayload(validPayload({ agent_judgment: true })),
+    (error) => error instanceof MalformedBusterTaskError
+      && error.details.reason === 'invalid_agent_judgment_shape',
+  );
+  assert.throws(
+    () => validateBusterTaskPayload(validPayload({ agent_judgment: { required: 'yes' } })),
+    (error) => error instanceof MalformedBusterTaskError
+      && error.details.reason === 'invalid_agent_judgment_required',
   );
 });

@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // runners/module-runner-prebuster.ts — pre-Buster validation and git preparation
 
 import { buildPluginInvocationEnvelope, createPluginContext } from '../core/context.ts';
@@ -11,7 +12,7 @@ import { normalizeTypedValidatorControlResult } from '../services/contracts/vali
 import { assertPipelineStepResult } from '../services/contracts/pipeline-step-result.ts';
 import { transitionModuleStatus } from '../lifecycle-state.ts';
 import { emitOperatorAlert } from '../services/telemetry.ts';
-import { maybeCrashForRealE2E } from '../services/real-e2e-crash-injection.ts';
+import { emitPipelineCheckpoint } from '../services/pipeline-checkpoint.ts';
 import {
   _telemetryCtx,
   buildModuleValidatorPluginInvocation,
@@ -24,9 +25,11 @@ import {
   markValidationPassed,
 } from './module-runner-shared.ts';
 import {
+  buildModuleBlockedTerminalResult,
   buildModuleErrorTerminalResult,
   buildRetryResult,
 } from './module-runner/terminal-results.ts';
+import { applyModuleRunnerCompletion } from './module-runner/completions.ts';
 
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
 
@@ -37,27 +40,32 @@ function errorMessage(error: unknown): string {
 }
 
 function bracketedErrorCode(message: string): string | null {
-  const match = String(message || '').match(/\[([A-Z][A-Z0-9_]+)\]/);
-  return match?.[1] || null;
+  const match = String(selectDefinedValue(() => (message), () => (''))).match(/\[([A-Z][A-Z0-9_]+)\]/);
+  return selectTruthyValue(() => (match?.[1]), () => (null));
 }
 function moduleValidatorProducerType(stageId = ''): string {
-  return String(stageId || '').split(':')[1] || 'unknown';
+  const producerType = String(selectDefinedValue(() => (stageId), () => (''))).split(':')[1];
+  return selectDefinedValue(() => (producerType), () => ('missing_stage_type'));
+}
+
+function objectRecord(value: unknown): AnyRecord {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : {};
+}
+
+function findingList(value: unknown): AnyRecord[] {
+  return Array.isArray(value) ? value : [];
 }
 
 function moduleValidatorSummary(controlResult: AnyRecord = {}) {
-  return controlResult?.diagnostics?.summary
-    || controlResult?.diagnostics?.metadata?.error
-    || `${moduleValidatorProducerType(controlResult?.diagnostics?.typed?.validator?.stageId)} validator failed`;
+  return selectDefinedValue(() => (selectDefinedValue(() => (controlResult?.diagnostics?.summary), () => (controlResult?.diagnostics?.metadata?.error))), () => (`${moduleValidatorProducerType(controlResult?.diagnostics?.typed?.validator?.stageId)} validator failed`));
 }
 
 function moduleValidatorMetadata(controlResult: AnyRecord = {}) {
-  return controlResult?.diagnostics?.metadata
-    || controlResult?.diagnostics?.typed?.validator?.metadata
-    || {};
+  return objectRecord(selectDefinedValue(() => (controlResult?.diagnostics?.metadata), () => (controlResult?.diagnostics?.typed?.validator?.metadata)));
 }
 
 function moduleValidatorCodes(controlResult: AnyRecord = {}) {
-  const codes = (controlResult?.diagnostics?.findings || [])
+  const codes = findingList(controlResult?.diagnostics?.findings)
     .map((finding: AnyRecord) => finding?.code)
     .filter(Boolean);
   return codes.length > 0 ? codes.join(', ') : 'none';
@@ -113,19 +121,65 @@ function buildModuleValidatorContractDiagnostics(error: AnyRecord) {
 function buildModuleValidatorBlockTerminal(config: AnyRecord, moduleId: string, stageId: string, reason: string, controlResult: AnyRecord | null = null, diagnostics: AnyRecord = {}, {
   dir = null,
   status = null,
+  phase = stageId,
+}: AnyRecord = {}) {
+  return buildModuleBlockedTerminalResult(config, moduleId, {
+    reason,
+    moduleDir: dir,
+    attempt: currentAttemptNumber(status),
+    phase,
+    gatewayLabel: resolveStatusGatewayLabel(status),
+    sessionKey: resolveStatusSessionKey(status),
+    terminalReasonCode: 'infra_error',
+    metadata: {
+      failure_class: 'infra_error',
+      validator: stageId,
+      validator_result: controlResult,
+    },
+    diagnostics,
+  });
+}
+
+function buildModuleValidatorErrorTerminal(config: AnyRecord, moduleId: string, stageId: string, reason: string, diagnostics: AnyRecord = {}, {
+  dir = null,
+  status = null,
+  phase = stageId,
 }: AnyRecord = {}) {
   return buildModuleErrorTerminalResult(config, moduleId, {
     reason,
     moduleDir: dir,
     attempt: currentAttemptNumber(status),
-    phase: stageId,
+    phase,
+    gatewayLabel: resolveStatusGatewayLabel(status),
+    sessionKey: resolveStatusSessionKey(status),
+    terminalReasonCode: 'invalid_contract',
+    metadata: {
+      failure_class: 'invalid_contract',
+      validator: stageId,
+      validator_result: null,
+    },
+    diagnostics,
+  });
+}
+
+function persistModuleValidatorBlocked({ config, dir, status, deps, phase, reason }: AnyRecord) {
+  applyModuleRunnerCompletion({
+    deps,
+    config,
+    dir,
+    status,
+    moduleId: status?.module_id,
+    phase,
+    attempt: currentAttemptNumber(status),
+    completionStatus: 'BLOCKED',
+    authority: { kind: 'deterministic_check' },
+    reasonCode: reason,
+    summary: reason,
     gatewayLabel: resolveStatusGatewayLabel(status),
     sessionKey: resolveStatusSessionKey(status),
     metadata: {
-      validator: stageId,
-      validator_result: controlResult,
+      fail_count: selectDefinedValue(() => (status?.fail_count), () => (null)),
     },
-    diagnostics,
   });
 }
 
@@ -180,7 +234,8 @@ export async function prepareModuleForBuster({
       } catch (error) {
         const reason = `Delivery lint validator execution failed: ${errorMessage(error)}`;
         log('ERROR', reason);
-        return { status, terminal: buildModuleValidatorBlockTerminal(config, moduleId, 'validator:delivery_lint', reason, null, buildModuleValidatorContractDiagnostics(error as AnyRecord), { dir, status }) };
+        persistModuleValidatorBlocked({ config, dir, status, deps, phase: 'delivery_lint', reason });
+        return { status, terminal: buildModuleValidatorErrorTerminal(config, moduleId, 'validator:delivery_lint', reason, buildModuleValidatorContractDiagnostics(error as AnyRecord), { dir, status, phase: 'delivery_lint' }) };
       }
 
       if (deliveryLintControl.nextAction !== 'pass') {
@@ -203,7 +258,8 @@ export async function prepareModuleForBuster({
           { correlation: deliveryLintCorrelation },
         );
         if (deliveryLintControl.nextAction === 'block') {
-          return { status, terminal: buildModuleValidatorBlockTerminal(config, moduleId, 'validator:delivery_lint', reason, deliveryLintControl, {}, { dir, status }) };
+          persistModuleValidatorBlocked({ config, dir, status, deps, phase: 'delivery_lint', reason });
+          return { status, terminal: buildModuleValidatorBlockTerminal(config, moduleId, 'validator:delivery_lint', reason, deliveryLintControl, {}, { dir, status, phase: 'delivery_lint' }) };
         }
         const failResult = await handleModuleFail(status, 'delivery_lint', reason, { recalledMemoryIds });
         return failResult._retry
@@ -231,7 +287,8 @@ export async function prepareModuleForBuster({
       } catch (error) {
         const reason = `Pre-check validator execution failed: ${errorMessage(error)}`;
         log('ERROR', reason);
-        return { status, terminal: buildModuleValidatorBlockTerminal(config, moduleId, 'validator:pre_check', reason, null, buildModuleValidatorContractDiagnostics(error as AnyRecord), { dir, status }) };
+        persistModuleValidatorBlocked({ config, dir, status, deps, phase: 'pre_check', reason });
+        return { status, terminal: buildModuleValidatorErrorTerminal(config, moduleId, 'validator:pre_check', reason, buildModuleValidatorContractDiagnostics(error as AnyRecord), { dir, status, phase: 'pre_check' }) };
       }
       if (preCheckControl.nextAction !== 'pass') {
         const precheckReason = moduleValidatorSummary(preCheckControl);
@@ -254,7 +311,8 @@ export async function prepareModuleForBuster({
           }] : []),
         ], { correlation: precheckCorrelation });
         if (preCheckControl.nextAction === 'block') {
-          return { status, terminal: buildModuleValidatorBlockTerminal(config, moduleId, 'validator:pre_check', precheckReason, preCheckControl, {}, { dir, status }) };
+          persistModuleValidatorBlocked({ config, dir, status, deps, phase: 'pre_check', reason: precheckReason });
+          return { status, terminal: buildModuleValidatorBlockTerminal(config, moduleId, 'validator:pre_check', precheckReason, preCheckControl, {}, { dir, status, phase: 'pre_check' }) };
         }
         const failResult = await handleModuleFail(status, 'pre_check', precheckReason, { recalledMemoryIds });
         return failResult._retry
@@ -270,7 +328,7 @@ export async function prepareModuleForBuster({
   const validation = ensureValidationState(status);
   if (stages.includes('forge') && stages.includes('buster')
       && status.status === STATUS.READY_FOR_TESTING
-      && (!validation.delivery_lint_passed || !validation.pre_check_passed)) {
+      && (selectTruthyValue(() => (!validation.delivery_lint_passed), () => (!validation.pre_check_passed)))) {
     return {
       status,
       terminal: buildModuleErrorTerminalResult(config, moduleId, {
@@ -288,18 +346,17 @@ export async function prepareModuleForBuster({
   }
 
   if (stages.includes('buster')
-      && (status.status === STATUS.READY_FOR_TESTING
-        || (status.status === STATUS.TESTING && status.current_phase === 'buster'))) {
+      && (selectTruthyValue(() => (status.status === STATUS.READY_FOR_TESTING), () => ((status.status === STATUS.TESTING && status.current_phase === 'buster'))))) {
     try {
       const gitSyncTransition = await deps.gitSyncBeforeBuster(config, dir, status);
       deps.saveStatus(config, dir, status, gitSyncTransition);
-      maybeCrashForRealE2E(config, progress, 'during_git_operation', {
+      emitPipelineCheckpoint(config, 'during_git_operation', {
         step_type: 'module',
         step_id: moduleId,
         module_id: moduleId,
         attempt: currentAttemptNumber(status),
       });
-      maybeCrashForRealE2E(config, progress, 'before_buster_handoff', {
+      emitPipelineCheckpoint(config, 'before_buster_handoff', {
         step_type: 'module',
         step_id: moduleId,
         module_id: moduleId,
@@ -309,7 +366,7 @@ export async function prepareModuleForBuster({
       const message = errorMessage(e);
       const errorCode = bracketedErrorCode(message);
       log('ERROR', `Git sync before Buster failed: ${message}`);
-      emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'git_sync', null, status?.status ?? STATUS.READY_FOR_TESTING, message);
+      emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'git_sync', null, status?.status);
       return {
         status,
         terminal: buildModuleErrorTerminalResult(config, moduleId, {

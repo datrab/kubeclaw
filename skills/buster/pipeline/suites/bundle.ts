@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Suite: bundle — Build Output Size Check
 // ═══════════════════════════════════════════════════════════════
@@ -62,7 +63,7 @@ function createLog(logSink: LogSink | null | undefined): (msg: string) => void {
 }
 
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error || 'unknown error');
+  return error instanceof Error ? error.message : String(selectTruthyValue(() => (error), () => ('missing_error_detail')));
 }
 
 function timeoutWithinSuite(timeoutMs: number, context: BundleContext): number {
@@ -128,9 +129,9 @@ function missingOutputFailure(startTime: number, wwwDir: string, log: (msg: stri
 export default async function bundleSuite(context: BundleContext): Promise<SuiteVerdict> {
   const log = createLog(context.logSink);
   const startTime = Date.now();
-  const config = context.config?.bundle || {};
-  const wwwDir = validateAllowedPath(config.www_dir || DEFAULTS.www_dir, 'bundle.www_dir');
-  const thresholds = config.thresholds || null;
+  const config = selectDefinedValue(() => (context.config?.bundle), () => ({}));
+  const wwwDir = validateAllowedPath(bundleWwwDirAuthority(config), 'bundle.www_dir');
+  const thresholds = selectTruthyValue(() => (config.thresholds), () => (null));
   const enforced = thresholds !== null;
   const mode = evidenceMode(enforced);
 
@@ -146,7 +147,7 @@ export default async function bundleSuite(context: BundleContext): Promise<Suite
       signal: context.suiteAbortSignal,
     });
     const first = String(output).trim().split(/\s+/)[0];
-    const parsed = Number.parseInt(first || '', 10);
+    const parsed = Number.parseInt(selectDefinedValue(() => (first), () => ('')), 10);
     if (Number.isFinite(parsed)) totalSizeKb = parsed;
     else sizeProbeError = `bundle size probe degraded: du output did not start with a size: ${String(output).slice(0, 120)}`;
   } catch (error) {
@@ -161,14 +162,14 @@ export default async function bundleSuite(context: BundleContext): Promise<Suite
     .slice(0, 5)
     .map((file) => `${file.path} (${file.size_kb} KB)`);
 
-  log(`Size: ${totalSizeKb === null ? 'unknown' : `${totalSizeKb} KB`} (${fileCount} files) — mode: ${mode}`);
+  log(`Size: ${totalSizeKb === null ? 'missing_bundle_size' : `${totalSizeKb} KB`} (${fileCount} files) — mode: ${mode}`);
 
   const findings: Finding[] = [];
   let checksFailed = 0;
   const checksTotal = 2;
 
   if (sizeProbeError) {
-    findings.push(createFinding(SEVERITY.MODERATE, 'Bundle size is unknown because size probe failed', { rule: 'bundle-size-unknown' }));
+    findings.push(createFinding(SEVERITY.MODERATE, 'Bundle size is unavailable because size probe failed', { rule: 'bundle-size-unavailable' }));
   }
   if (scan.degraded) {
     findings.push(createFinding(SEVERITY.MINOR, `Bundle file scan degraded (${scan.probe_errors.length} probe error${scan.probe_errors.length === 1 ? '' : 's'})`, { rule: 'bundle-scan-degraded' }));
@@ -181,7 +182,7 @@ export default async function bundleSuite(context: BundleContext): Promise<Suite
     if (maxSizeKb != null) {
       if (totalSizeKb === null) {
         checksFailed++;
-        findings.push(createFinding(SEVERITY.SERIOUS, 'Cannot enforce max_size_kb because bundle size is unknown', { rule: 'max-size-unknown' }));
+        findings.push(createFinding(SEVERITY.SERIOUS, 'Cannot enforce max_size_kb because bundle size is unavailable', { rule: 'max-size-unavailable' }));
       } else if (totalSizeKb > maxSizeKb) {
         checksFailed++;
         findings.push(createFinding(SEVERITY.SERIOUS, `Bundle size ${totalSizeKb} KB exceeds max ${maxSizeKb} KB`, { rule: 'max-size' }));
@@ -202,7 +203,7 @@ export default async function bundleSuite(context: BundleContext): Promise<Suite
   const status: SuiteStatus = (enforced && checksFailed > 0) ? STATUS.FAIL : STATUS.PASS;
   const icon = status === STATUS.PASS ? '✅' : '⚠️';
 
-  log(`${icon} ${mode}: ${totalSizeKb === null ? 'unknown size' : `${totalSizeKb} KB`}, ${fileCount} files (${duration_ms}ms)`);
+  log(`${icon} ${mode}: ${totalSizeKb === null ? 'missing_size' : `${totalSizeKb} KB`}, ${fileCount} files (${duration_ms}ms)`);
 
   return createSuiteVerdict('bundle', status, {
     critical: false,
@@ -217,9 +218,19 @@ export default async function bundleSuite(context: BundleContext): Promise<Suite
       file_count: fileCount,
       largest_files: largestFiles,
       mode,
-      degraded: Boolean(sizeProbeError || scan.degraded),
+      degraded: bundleScanDegraded(sizeProbeError, scan),
       probe_errors: [sizeProbeError, ...scan.probe_errors].filter(Boolean),
       ...(enforced ? { thresholds } : {}),
     },
   });
+}
+
+function bundleWwwDirAuthority(config: AnyRecord): string {
+  if (config.www_dir !== undefined && config.www_dir !== null) return config.www_dir;
+  return DEFAULTS.www_dir;
+}
+
+function bundleScanDegraded(sizeProbeError: unknown, scan: AnyRecord): boolean {
+  if (sizeProbeError) return true;
+  return scan.degraded === true;
 }

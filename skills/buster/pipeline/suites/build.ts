@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Suite: build — Compile + Serve
 // ═══════════════════════════════════════════════════════════════
@@ -59,6 +60,17 @@ interface EnvExtractionResult {
   findings: Finding[];
 }
 
+interface NormalizedServeConfig extends AnyRecord {
+  type: 'static' | 'server';
+  image: string;
+  configured_image: boolean;
+  build_cmd: string;
+  start_cmd: string;
+  port: number;
+  project_dir: string;
+  timeout: number;
+}
+
 const execFileAsync = promisify(execFile) as any;
 
 const DEFAULTS = {
@@ -71,6 +83,10 @@ const DEFAULTS = {
   timeout:   300,
 };
 
+export function buildDockerfileBuildCleanupLabelArgs(configuredImage: boolean, payload: AnyRecord = {}): string[] {
+  return configuredImage ? [] : buildCleanupPodmanLabelArgs(payload);
+}
+
 let _logSink: LogSink | null = null;
 function log(msg: string): void {
   console.log(`[SUITE] [BUILD] ${msg}`);
@@ -78,15 +94,24 @@ function log(msg: string): void {
 }
 
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error || 'unknown error');
+  if (error instanceof Error) return error.message;
+  if (error === undefined) return 'error_detail_missing';
+  if (error === null) return 'error_detail_null';
+  return String(error);
 }
 
 function errorOutput(error: any): string {
-  return String(`${error?.stderr || ''}${error?.stdout || ''}` || errorMessage(error));
+  const stderr = typeof error?.stderr === 'string' ? error.stderr : '';
+  const stdout = typeof error?.stdout === 'string' ? error.stdout : '';
+  const output = `${stderr}${stdout}`;
+  return output ? output : errorMessage(error);
 }
 
 function requireCanonicalImageRef(image: unknown, field = 'serve.image'): string {
-  const ref = String(image || '').trim();
+  if (selectTruthyValue(() => (typeof image !== 'string'), () => (!image.trim()))) {
+    throw new Error(`${field} must be a non-empty fully qualified image reference`);
+  }
+  const ref = image.trim();
   const validation = validateBaseImageRef(ref);
   if (validation.ok) return validation.value;
   throw new Error(`${field} must be a fully qualified image reference with registry/namespace; shorthand image names are not supported (${validation.reason})`);
@@ -96,7 +121,7 @@ function requireContainerPort(value: unknown, field = 'serve.port'): number {
   const port = typeof value === 'string' && /^\d+$/.test(value)
     ? Number(value)
     : value;
-  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!Number.isInteger(port)), () => (port < 1))), () => (port > 65535))) {
     throw new Error(`${field} must be an integer between 1 and 65535`);
   }
   return port;
@@ -109,7 +134,7 @@ export function buildPodmanPublishArgs(containerPort: number): string[] {
 
 export function parsePodmanMappedHostPort(output: string, containerPort: number): number {
   requireContainerPort(containerPort);
-  const text = String(output || '').trim();
+  const text = String(output).trim();
   const patterns = [
     new RegExp(`(?:0\\.0\\.0\\.0|127\\.0\\.0\\.1|::):([0-9]+)->${containerPort}/tcp`),
     /(?:0\.0\.0\.0|127\.0\.0\.1|::):([0-9]+)$/,
@@ -132,7 +157,7 @@ function validateDockerfileFromImages(dockerfilePath: string): Finding[] {
     const match = lines[i]?.match(/^\s*FROM\s+(?:--platform=\S+\s+)?([^\s]+)/i);
     if (!match) continue;
     const imageRef = match[1];
-    if (!imageRef || imageRef.startsWith('$')) {
+    if (selectTruthyValue(() => (!imageRef), () => (imageRef.startsWith('$')))) {
       findings.push(createFinding(SEVERITY.CRITICAL, `Dockerfile FROM at line ${i + 1} must use a literal fully qualified image reference`, { rule: 'dockerfile-from-image' }));
       continue;
     }
@@ -145,7 +170,7 @@ function validateDockerfileFromImages(dockerfilePath: string): Finding[] {
 }
 
 function parseErrors(output: string, source = 'stderr'): Finding[] {
-  if (!output || !output.trim()) return [];
+  if (selectTruthyValue(() => (!output), () => (!output.trim()))) return [];
 
   const findings: Finding[] = [];
   const lines = output.split('\n');
@@ -194,7 +219,7 @@ async function ensureDockerfileBaseImagesCached(dockerfilePath: string): Promise
         const output = errorOutput(pullError);
         findings.push(createFinding(
           SEVERITY.CRITICAL,
-          `Dockerfile base image "${imageRef}" is not available locally and automatic pull failed: ${output.trim().slice(0, 1000) || errorMessage(pullError)}`,
+          `Dockerfile base image "${imageRef}" is not available locally and automatic pull failed: ${selectTruthyValue(() => (output.trim().slice(0, 1000)), () => (errorMessage(pullError)))}`,
           { rule: 'dockerfile-base-image' },
         ));
       }
@@ -207,30 +232,52 @@ function unquoteYamlScalar(value: string): string {
   return value.trim().replace(/^['"]|['"]$/g, '');
 }
 
+function normalizeServeConfig(config: AnyRecord | undefined): NormalizedServeConfig {
+  const serve = selectDefinedValue(() => (config), () => ({}));
+  const type = serve.type === 'server' ? 'server' : 'static';
+  const projectDirInput = typeof serve.project_dir === 'string' && serve.project_dir.trim()
+    ? serve.project_dir
+    : DEFAULTS.project_dir;
+  const configuredImage = typeof serve.image === 'string' && serve.image.trim();
+  return {
+    ...serve,
+    type,
+    image: configuredImage ? serve.image : DEFAULTS.image,
+    configured_image: Boolean(configuredImage),
+    build_cmd: typeof serve.build_cmd === 'string' && serve.build_cmd.trim() ? serve.build_cmd : DEFAULTS.build_cmd,
+    start_cmd: typeof serve.start_cmd === 'string' && serve.start_cmd.trim() ? serve.start_cmd : DEFAULTS.start_cmd,
+    port: requireContainerPort(serve.port === undefined ? DEFAULTS.port : serve.port),
+    project_dir: selectDefinedValue(() => (resolveRepoScopedPath(projectDirInput, { field: 'serve.project_dir' })), () => (DEFAULTS.project_dir)),
+    timeout: Number.isFinite(serve.timeout) ? Number(serve.timeout) : DEFAULTS.timeout,
+  };
+}
+
 function parseSimpleYamlDocument(content: string): AnyRecord {
   const doc: AnyRecord = {};
   const kindMatch = content.match(/^\s*kind:\s*([^\n#]+)/m);
-  if (kindMatch) doc.kind = unquoteYamlScalar(kindMatch[1] || '');
+  if (kindMatch?.[1]) doc.kind = unquoteYamlScalar(kindMatch[1]);
   const metadataNameMatch = content.match(/^\s*metadata:\s*\n(?:\s+[^\n]*\n)*?\s+name:\s*([^\n#]+)/m);
-  if (metadataNameMatch) doc.metadata = { name: unquoteYamlScalar(metadataNameMatch[1] || '') };
+  if (metadataNameMatch?.[1]) doc.metadata = { name: unquoteYamlScalar(metadataNameMatch[1]) };
   if (doc.kind === 'Secret') {
     const data: AnyRecord = {};
     const dataMatch = content.match(/^\s*data:\s*\n([\s\S]*?)(?=^\S|$)/m);
-    for (const line of (dataMatch?.[1] || '').split(/\r?\n/)) {
+    const dataBlock = dataMatch?.[1];
+    for (const line of dataBlock === undefined ? [] : dataBlock.split(/\r?\n/)) {
       const match = line.match(/^\s+([A-Za-z0-9_.-]+):\s*([^\n#]+)/);
-      if (match) data[match[1]] = unquoteYamlScalar(match[2] || '');
+      if (match?.[1] && match[2]) data[match[1]] = unquoteYamlScalar(match[2]);
     }
     doc.data = data;
   }
   const env: AnyRecord[] = [];
   const secretRefRe = /-\s+name:\s*([^\n#]+)\s*\n\s+valueFrom:\s*\n\s+secretKeyRef:\s*\n\s+name:\s*([^\n#]+)\s*\n\s+key:\s*([^\n#]+)/g;
   for (const match of content.matchAll(secretRefRe)) {
+    if (selectTruthyValue(() => (selectTruthyValue(() => (!match[1]), () => (!match[2]))), () => (!match[3]))) continue;
     env.push({
-      name: unquoteYamlScalar(match[1] || ''),
+      name: unquoteYamlScalar(match[1]),
       valueFrom: {
         secretKeyRef: {
-          name: unquoteYamlScalar(match[2] || ''),
-          key: unquoteYamlScalar(match[3] || ''),
+          name: unquoteYamlScalar(match[2]),
+          key: unquoteYamlScalar(match[3]),
         },
       },
     });
@@ -245,7 +292,9 @@ async function loadYamlDocument(content: string): Promise<AnyRecord> {
   try {
     // @ts-expect-error Optional runtime dependency declaration is not installed for this migration island.
     const jsYaml = await import('js-yaml');
-    return (jsYaml.default?.load(content) ?? jsYaml.load(content) ?? {}) as AnyRecord;
+    const loader = selectDefinedValue(() => (jsYaml.default?.load), () => (jsYaml.load));
+    const parsed = loader(content);
+    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed as AnyRecord : {};
   } catch (error) {
     if (!String(errorMessage(error)).includes('Cannot find package')) throw error;
     return parseSimpleYamlDocument(content);
@@ -286,8 +335,12 @@ async function extractEnvFromManifest(deploymentYamlPath: string, secretYamlPath
     } else {
       try {
         const secretDoc = await loadYamlDocument(fs.readFileSync(secretYamlPath, 'utf8'));
-        secretName = String(secretDoc?.metadata?.name || '');
-        secretData = secretDoc?.data || {};
+        if (selectTruthyValue(() => (typeof secretDoc?.metadata?.name !== 'string'), () => (!secretDoc.metadata.name.trim()))) {
+          findings.push(createFinding(SEVERITY.CRITICAL, 'serve.secret_yaml metadata.name is required', { rule: 'serve-secret-yaml' }));
+        } else {
+          secretName = secretDoc.metadata.name;
+        }
+        secretData = secretDoc?.data && typeof secretDoc.data === 'object' ? secretDoc.data : {};
         secretLoaded = true;
       } catch (error) {
         findings.push(createFinding(SEVERITY.CRITICAL, `serve.secret_yaml could not be parsed: ${errorMessage(error)}`, { rule: 'serve-secret-yaml' }));
@@ -306,7 +359,8 @@ async function extractEnvFromManifest(deploymentYamlPath: string, secretYamlPath
     const ref = entry.valueFrom?.secretKeyRef;
     if (!ref) continue;
     if (secretLoaded && String(ref.name) !== secretName) {
-      findings.push(createFinding(SEVERITY.CRITICAL, `Secret ref ${ref.name}.${ref.key} is not covered by serve.secret_yaml ${secretName || '(unnamed)'}`, { rule: 'serve-secret-ref' }));
+      const loadedSecretName = secretName.trim() ? secretName : 'secret_name_missing';
+      findings.push(createFinding(SEVERITY.CRITICAL, `Secret ref ${ref.name}.${ref.key} is not covered by serve.secret_yaml ${loadedSecretName}`, { rule: 'serve-secret-ref' }));
       continue;
     }
     const encoded = secretData[ref.key];
@@ -324,17 +378,17 @@ async function extractEnvFromManifest(deploymentYamlPath: string, secretYamlPath
   return { ok: findings.length === 0, env: result, findings };
 }
 
-async function buildStatic(config: AnyRecord): Promise<BuildResult> {
+async function buildStatic(config: NormalizedServeConfig): Promise<BuildResult> {
   let image: string;
   try {
-    image = requireCanonicalImageRef(config.image || DEFAULTS.image);
+    image = requireCanonicalImageRef(config.image);
   } catch (error) {
     return { ok: false, findings: [createFinding(SEVERITY.CRITICAL, errorMessage(error), { rule: 'serve-image' })], output: errorMessage(error) };
   }
 
-  const buildCmd = config.build_cmd || DEFAULTS.build_cmd;
-  const projectDir = resolveRepoScopedPath(config.project_dir || DEFAULTS.project_dir, { field: 'build.project_dir' }) || DEFAULTS.project_dir;
-  const timeout = (config.timeout || DEFAULTS.timeout) * 1000;
+  const buildCmd = config.build_cmd;
+  const projectDir = config.project_dir;
+  const timeout = config.timeout * 1000;
 
   log(`Static build: image=${image} cmd="${buildCmd}" dir=${projectDir}`);
 
@@ -348,7 +402,7 @@ async function buildStatic(config: AnyRecord): Promise<BuildResult> {
   }
 
   const wwwDir = '/sandbox/www';
-  if (!fs.existsSync(wwwDir) || fs.readdirSync(wwwDir).length === 0) {
+  if (selectTruthyValue(() => (!fs.existsSync(wwwDir)), () => (fs.readdirSync(wwwDir).length === 0))) {
     return { ok: false, findings: [createFinding(SEVERITY.CRITICAL, `Build output empty: ${wwwDir}`, { rule: 'build-output' })], output: '' };
   }
 
@@ -368,13 +422,14 @@ async function buildStatic(config: AnyRecord): Promise<BuildResult> {
     if (running) await execFileAsync('nginx', ['-s', 'reload'], { timeout: 10000, encoding: 'utf8', env: buildSubprocessEnv() });
     else await execFileAsync('nginx', [], { timeout: 10000, encoding: 'utf8', env: buildSubprocessEnv() });
   } catch (error: any) {
-    return { ok: false, findings: [createFinding(SEVERITY.CRITICAL, `nginx start failed: ${errorMessage(error)}`, { rule: 'nginx' })], output: String(error?.stderr || '') };
+    const output = typeof error?.stderr === 'string' ? error.stderr : '';
+    return { ok: false, findings: [createFinding(SEVERITY.CRITICAL, `nginx start failed: ${errorMessage(error)}`, { rule: 'nginx' })], output };
   }
 
-  let outputSize = 'unknown';
+  let outputSize = 'missing_build_output_size';
   try {
     const { stdout } = await execFileAsync('du', ['-sh', '/sandbox/www/'], { encoding: 'utf8', env: buildSubprocessEnv() });
-    outputSize = stdout.trim().split(/\s+/)[0] || 'unknown';
+    outputSize = selectTruthyValue(() => (stdout.trim().split(/\s+/)[0]), () => ('missing_build_output_size'));
   } catch (error) {
     log(`non-blocking output-size probe failed: ${errorMessage(error)}`);
   }
@@ -384,7 +439,7 @@ async function buildStatic(config: AnyRecord): Promise<BuildResult> {
 }
 
 function normaliseStartCmd(cmd: string, projectDir: string): string {
-  if (!cmd || !projectDir) return cmd;
+  if (selectTruthyValue(() => (!cmd), () => (!projectDir))) return cmd;
   let normalised = cmd;
   const rawDir = stripRepoDirPrefix(projectDir, REPO_DIR);
   if (rawDir) {
@@ -394,24 +449,24 @@ function normaliseStartCmd(cmd: string, projectDir: string): string {
   return normalised;
 }
 
-async function buildServer(config: AnyRecord, context: BuildContext): Promise<BuildResult> {
+async function buildServer(config: NormalizedServeConfig, context: BuildContext): Promise<BuildResult> {
   let image: string;
   try {
-    image = requireCanonicalImageRef(config.image || DEFAULTS.image);
+    image = requireCanonicalImageRef(config.image);
   } catch (error) {
     return { ok: false, findings: [createFinding(SEVERITY.CRITICAL, errorMessage(error), { rule: 'serve-image' })], output: errorMessage(error) };
   }
 
-  const startCmd = config.start_cmd || DEFAULTS.start_cmd;
+  const startCmd = config.start_cmd;
   let port: number;
   try {
-    port = requireContainerPort(config.port || DEFAULTS.port);
+    port = requireContainerPort(config.port);
   } catch (error) {
     return { ok: false, findings: [createFinding(SEVERITY.CRITICAL, errorMessage(error), { rule: 'serve-port' })], output: errorMessage(error) };
   }
-  const timeout = (config.timeout || DEFAULTS.timeout) * 1000;
-  const rawProjectDir = config.project_dir || DEFAULTS.project_dir;
-  const projectDir = resolveRepoScopedPath(rawProjectDir, { field: 'serve.project_dir' }) || DEFAULTS.project_dir;
+  const timeout = config.timeout * 1000;
+  const rawProjectDir = config.project_dir;
+  const projectDir = config.project_dir;
   const containerName = `sb-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
   let runImage = image;
   let useVolume = true;
@@ -432,16 +487,16 @@ async function buildServer(config: AnyRecord, context: BuildContext): Promise<Bu
       return { ok: false, findings: baseImageFindings, output };
     }
     const buildContext = config.build_context ? resolveRepoScopedPath(config.build_context, { field: 'serve.build_context' }) : path.dirname(dockerfile);
-    const buildTimeout = (config.build_timeout || 300) * 1000;
-    const imageTag = config.image || `localhost/build-${containerName}`;
+    const buildTimeout = (Number.isFinite(config.build_timeout) ? Number(config.build_timeout) : DEFAULTS.timeout) * 1000;
+    const imageTag = config.configured_image ? config.image : `localhost/build-${containerName}`;
 
-    if (!config.image) trackSandboxResources(context.payload || {}, { images: [imageTag] });
+    if (!config.configured_image) trackSandboxResources(selectDefinedValue(() => (context.payload), () => ({})), { images: [imageTag] });
     log(`Dockerfile build: file=${dockerfile} context=${buildContext} tag=${imageTag}`);
 
     try {
       const { stdout } = await execFileAsync('podman', [
         'build',
-        ...buildCleanupPodmanLabelArgs(context.payload || {}),
+        ...buildDockerfileBuildCleanupLabelArgs(config.configured_image, selectDefinedValue(() => (context.payload), () => ({}))),
         '--pull=never',
         '-t', imageTag,
         '-f', dockerfile,
@@ -456,12 +511,12 @@ async function buildServer(config: AnyRecord, context: BuildContext): Promise<Bu
     }
   }
 
-  trackSandboxResources(context.payload || {}, { containers: [containerName] });
+  trackSandboxResources(selectDefinedValue(() => (context.payload), () => ({})), { containers: [containerName] });
   const normalisedCmd = normaliseStartCmd(startCmd, rawProjectDir);
   const args = [
     'run', '-d',
     '--name', containerName,
-    ...buildCleanupPodmanLabelArgs(context.payload || {}),
+    ...buildCleanupPodmanLabelArgs(selectDefinedValue(() => (context.payload), () => ({}))),
     ...buildPodmanPublishArgs(port),
     '--memory', '2g',
     '--cpus', '2',
@@ -503,7 +558,7 @@ async function buildServer(config: AnyRecord, context: BuildContext): Promise<Bu
     hostPort = parsePodmanMappedHostPort(stdout, port);
   } catch (error) {
     const output = errorOutput(error);
-    return { ok: false, findings: parseErrors(output || errorMessage(error), 'server-port'), output };
+    return { ok: false, findings: parseErrors(serverPortErrorOutput(output, error), 'server-port'), output };
   }
 
   log('Waiting 3s for crash detection...');
@@ -511,15 +566,16 @@ async function buildServer(config: AnyRecord, context: BuildContext): Promise<Bu
 
   try {
     const { stdout } = await execFileAsync('podman', ['ps', '--filter', `name=${containerName}`, '--format', '{{.Names}}'], { encoding: 'utf8', timeout: 5000, env: buildSubprocessEnv() });
-    if (!stdout || !stdout.includes(containerName)) {
+    if (selectTruthyValue(() => (!stdout), () => (!stdout.includes(containerName)))) {
       let crashLogs = '';
       try {
         const { stdout: logsOut, stderr: logsErr } = await execFileAsync('podman', ['logs', containerName], { encoding: 'utf8', timeout: 5000, maxBuffer: 2 * 1024 * 1024, env: buildSubprocessEnv() });
-        crashLogs = `${logsOut || ''}${logsErr || ''}`.trim().split('\n').slice(-30).join('\n');
+        crashLogs = `${logsOut}${logsErr}`.trim().split('\n').slice(-30).join('\n');
       } catch (error) {
         log(`non-blocking crash-log capture failed: ${errorMessage(error)}`);
       }
-      return { ok: false, findings: parseErrors(crashLogs || `Server process exited within 3s (port ${port})`, 'server-crash'), output: crashLogs };
+      const crashDetail = crashLogs.trim() ? crashLogs : `Server process exited within 3s (port ${port})`;
+      return { ok: false, findings: parseErrors(crashDetail, 'server-crash'), output: crashLogs };
     }
   } catch (error) {
     log(`non-blocking crash-detection probe failed: ${errorMessage(error)}`);
@@ -529,11 +585,16 @@ async function buildServer(config: AnyRecord, context: BuildContext): Promise<Bu
   return { ok: true, findings: [], output: '', port: hostPort, containerPort: port };
 }
 
+function serverPortErrorOutput(output: string, error: unknown): string {
+  if (typeof output === 'string' && output.length > 0) return output;
+  return errorMessage(error);
+}
+
 export default async function buildSuite(context: BuildContext): Promise<SuiteVerdict> {
-  _logSink = context.logSink || null;
+  _logSink = selectTruthyValue(() => (context.logSink), () => (null));
   const startTime = Date.now();
-  const serve = context.config?.serve || {};
-  const type = serve.type || DEFAULTS.type;
+  const serve = normalizeServeConfig(context.config?.serve);
+  const type = serve.type;
   const result = type === 'server' ? await buildServer(serve, context) : await buildStatic(serve);
   const duration_ms = Date.now() - startTime;
 
@@ -548,7 +609,7 @@ export default async function buildSuite(context: BuildContext): Promise<SuiteVe
       metadata: {
         tool: type === 'server' ? 'podman-run' : 'sandbox-build',
         serve_type: type,
-        ...(serve.image ? { image: String(serve.image) } : {}),
+        image: serve.image,
         ...(result.outputSize ? { output_size: result.outputSize } : {}),
         ...(result.port ? { port: result.port } : {}),
         ...(result.containerPort ? { container_port: result.containerPort } : {}),
@@ -566,7 +627,7 @@ export default async function buildSuite(context: BuildContext): Promise<SuiteVe
     metadata: {
       tool: type === 'server' ? 'podman-run' : 'sandbox-build',
       serve_type: type,
-      raw_output: (result.output || '').slice(0, 2000),
+      raw_output: result.output.slice(0, 2000),
     },
   });
 }

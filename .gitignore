@@ -18,6 +18,7 @@ Thumbs.db
 # Logs
 *.log
 active-run.lock.json
+/.swarm/
 
 # Temp
 /tmp/

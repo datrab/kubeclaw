@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // prompts/gate-fix.ts — Gate fix cycle prompt builder
 
 import { relPath, projectSrcPath, swarmRoot } from '../core/paths.ts';
@@ -28,7 +29,7 @@ export function buildGateFixPrompt(config, gate, issues, attempt, maxAttempts, f
       if (!prev.hasChanges) {
         header.push(`${prev.attempt}. **Attempt ${prev.attempt}:** Forge crashed or produced no changes.`);
       } else {
-        const issueList = prev.issues.map(i => i.title || i.description).join('; ');
+        const issueList = prev.issues.map(i => selectTruthyValue(() => (i.title), () => (i.description))).join('; ');
         header.push(`${prev.attempt}. **Attempt ${prev.attempt}:** Applied changes but issues persisted: ${issueList}`);
       }
     }
@@ -62,5 +63,5 @@ export function buildGateFixPrompt(config, gate, issues, attempt, maxAttempts, f
     '',
   ].join('\n');
 
-  return makePromptResult(prompt, { phase: 'gate-fix', moduleId: gate.id || '', attempt });
+  return makePromptResult(prompt, { phase: 'gate-fix', moduleId: selectDefinedValue(() => (gate.id), () => ('')), attempt });
 }

@@ -143,7 +143,7 @@ Final Buster gates use the k8s suite config in project `.swarm/progress.json`:
     "cleanup_policy": "keep",
     "test_credentials": [
       {
-        "secret": "<preview-login-secret>",
+        "secret_name": "<preview-login-secret>",
         "keys": ["username", "password"],
         "purpose": "login to the app under test"
       }
@@ -182,4 +182,4 @@ kubectl logs -n tailscale deployment/tailscale-operator
 
 Discord has URL but no credential command
 
-Confirm `preview.reveal_credentials: true`, `preview.credentials_ref` or `preview.credentials_secret_name`, and that the referenced Secret contains the listed `credentials_keys`. Preview credentials stay in Kubernetes Secrets; Nova should post a copy-paste `kubectl` command instead of plaintext login values.
+Confirm `preview.reveal_credentials: true`, `preview.credentials_ref` or `preview.credentials_secret_name`, and that the app manifests create the referenced Secret with the listed `credentials_keys` in the leased namespace. Preview credentials stay in Kubernetes Secrets; Nova should post a copy-paste `kubectl` command instead of plaintext login values.

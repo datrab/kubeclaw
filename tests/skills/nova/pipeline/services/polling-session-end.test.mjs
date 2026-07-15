@@ -38,6 +38,13 @@ function gitPolicyConfig(repoRoot, extra = {}) {
       command: { timeout_ms: 30000, max_buffer_bytes: 52428800 },
       ...gitConfig,
     },
+    gateway: {
+      invoke: {
+        session_status: { timeout_ms: 1000 },
+        session_send: { timeout_ms: 1000 },
+        retry: { max_attempts: 0, retry_delay_ms: 0 },
+      },
+    },
     ...rest,
   };
 }
@@ -113,6 +120,8 @@ function terminalMonitorState(sessionKey, overrides = {}) {
     sessionTerminal: true,
     stopped: true,
     failed: overrides.failed === true,
+    rateLimited: overrides.rateLimited === true,
+    transcript: overrides.transcript || activeMonitorState(sessionKey).transcript,
   };
 }
 
@@ -130,6 +139,13 @@ function createPollingConfig(repoRoot, overrides = {}) {
     transcript_grace_ms: 0,
     monitor_poll_ms: 10,
     paths: { swarm_dir: path.join(repoRoot, '.swarm') },
+    gateway: {
+      invoke: {
+        session_status: { timeout_ms: 1000 },
+        session_send: { timeout_ms: 1000 },
+        retry: { max_attempts: 0, retry_delay_ms: 0 },
+      },
+    },
     ...overrides,
   });
 }
@@ -146,12 +162,14 @@ test('tracked gate session identity drives session-end rate-limit scope', () => 
       sessionKey: 'session-01',
     },
     explicitModuleId: 'module-fallback',
+    gateType: 'review',
     sessionLabel: 'review-gate-review-01',
   });
   const rateLimitIdentity = buildSessionPollRateLimitIdentity({
     config: { _runId: 'run-01' },
     telemetryIdentity,
     fallbackModuleId: 'module-fallback',
+    agentType: 'review',
     sessionLabel: 'review-gate-review-01',
   });
 
@@ -311,6 +329,181 @@ test('pollForSessionEnd completes after ACP terminal state without local changes
     assert.equal(result.completed, true);
     assert.equal(result.hasChanges, false);
     assert.equal(result.reason, 'session_closed_no_changes');
+  } finally {
+    untrackAgent(label);
+  }
+});
+
+test('pollForSessionEnd returns typed lifecycle failure for terminal error state', async () => {
+  const repoRoot = createRepo();
+  const label = 'forge-terminal-error';
+  const sessionKey = 'session-terminal-error';
+  const streamLogPath = path.join(repoRoot, '.swarm', 'logs', 'stream.jsonl');
+  const trackedFile = path.join(repoRoot, 'tracked.txt');
+
+  fs.writeFileSync(trackedFile, 'original\n');
+  git(repoRoot, ['add', 'tracked.txt']);
+  git(repoRoot, ['commit', '-m', 'initial']);
+  fs.mkdirSync(path.dirname(streamLogPath), { recursive: true });
+
+  const config = createPollingConfig(repoRoot, { _runId: 'run-terminal-error' });
+
+  trackAgent(config, label, sessionKey, 'agent-terminal-error', label, streamLogPath, {
+    moduleId: 'module-terminal-error',
+  });
+  try {
+    const result = await pollForSessionEnd(config, label, 1, 'terminal-error-test', {
+      budget: createOpenBudget(),
+      moduleId: 'module-terminal-error',
+      getAcpMonitorState: async (request) => terminalMonitorState(request.childSessionKey, {
+        sessionState: 'error',
+        reason: 'session_terminal',
+        detail: 'session entered terminal error state',
+        failed: true,
+      }),
+    });
+
+    assert.equal(result.completed, false);
+    assert.equal(result.hasChanges, false);
+    assert.equal(result.reason, 'agent_session_lifecycle_unstable');
+    assert.equal(result.failure_class, 'agent_session_lifecycle_unstable');
+    assert.equal(result.status?.failure_class, 'agent_session_lifecycle_unstable');
+    assert.equal(result.status?.module_id, 'module-terminal-error');
+    assert.equal(result.status?.session_state, 'error');
+  } finally {
+    untrackAgent(label);
+  }
+});
+
+test('pollForSessionEnd preserves structured rate-limit exhaustion path', async () => {
+  const repoRoot = createRepo();
+  const label = 'forge-rate-limit-terminal';
+  const sessionKey = 'session-rate-limit-terminal';
+  const streamLogPath = path.join(repoRoot, '.swarm', 'logs', 'stream.jsonl');
+  const trackedFile = path.join(repoRoot, 'tracked.txt');
+
+  fs.writeFileSync(trackedFile, 'original\n');
+  git(repoRoot, ['add', 'tracked.txt']);
+  git(repoRoot, ['commit', '-m', 'initial']);
+  fs.mkdirSync(path.dirname(streamLogPath), { recursive: true });
+
+  const config = createPollingConfig(repoRoot, {
+    _runId: 'run-rate-limit-terminal',
+    rate_limit: { max_pauses_per_module: 0, cooldown_hours: 0, cooldown_buffer_ms: 0 },
+  });
+
+  trackAgent(config, label, sessionKey, 'agent-rate-limit-terminal', label, streamLogPath, {
+    moduleId: 'module-rate-limit-terminal',
+  });
+  try {
+    const result = await pollForSessionEnd(config, label, 1, 'rate-limit-terminal-test', {
+      budget: createOpenBudget(),
+      moduleId: 'module-rate-limit-terminal',
+      getAcpMonitorState: async (request) => ({
+        ...terminalMonitorState(request.childSessionKey, {
+          sessionState: 'error',
+          reason: 'rate_limited',
+          detail: '429 rate limit from provider control stream',
+          failed: true,
+        }),
+        rateLimited: true,
+        transcript: {
+          ...activeMonitorState(request.childSessionKey).transcript,
+          rateLimited: true,
+          lastDetail: '429 rate limit from provider control stream',
+        },
+      }),
+    });
+
+    assert.equal(result.completed, false);
+    assert.equal(result.reason, 'rate_limit_exhausted');
+    assert.equal(result.rate_limit_exhausted, true);
+    assert.equal(result.rate_limit_status?.module_id, 'module-rate-limit-terminal');
+    assert.equal(result.status?.module_id, 'module-rate-limit-terminal');
+  } finally {
+    untrackAgent(label);
+  }
+});
+
+test('pollForSessionEnd classifies terminal usage-limit errors as rate-limit exhaustion', async () => {
+  const repoRoot = createRepo();
+  const label = 'forge-usage-limit-terminal';
+  const sessionKey = 'session-usage-limit-terminal';
+  const streamLogPath = path.join(repoRoot, '.swarm', 'logs', 'stream.jsonl');
+  const trackedFile = path.join(repoRoot, 'tracked.txt');
+
+  fs.writeFileSync(trackedFile, 'original\n');
+  git(repoRoot, ['add', 'tracked.txt']);
+  git(repoRoot, ['commit', '-m', 'initial']);
+  fs.mkdirSync(path.dirname(streamLogPath), { recursive: true });
+
+  const config = createPollingConfig(repoRoot, {
+    _runId: 'run-usage-limit-terminal',
+    rate_limit: { max_pauses_per_module: 0, cooldown_hours: 0, cooldown_buffer_ms: 0 },
+  });
+
+  trackAgent(config, label, sessionKey, 'agent-usage-limit-terminal', label, streamLogPath, {
+    moduleId: 'module-usage-limit-terminal',
+  });
+  try {
+    const result = await pollForSessionEnd(config, label, 1, 'usage-limit-terminal-test', {
+      budget: createOpenBudget(),
+      moduleId: 'module-usage-limit-terminal',
+      getAcpMonitorState: async (request) => terminalMonitorState(request.childSessionKey, {
+        sessionState: 'error',
+        reason: 'session_terminal',
+        detail: '5h usage limit reached for model gpt-5.4',
+        failed: true,
+        rateLimited: true,
+      }),
+    });
+
+    assert.equal(result.completed, false);
+    assert.equal(result.reason, 'rate_limit_exhausted');
+    assert.equal(result.rate_limit_exhausted, true);
+    assert.equal(result.rate_limit_status?.module_id, 'module-usage-limit-terminal');
+    assert.notEqual(result.status?.failure_class, 'agent_session_lifecycle_unstable');
+  } finally {
+    untrackAgent(label);
+  }
+});
+
+test('pollForSessionEnd does not classify terminal usage-limit text without typed rate-limit evidence', async () => {
+  const repoRoot = createRepo();
+  const label = 'forge-usage-limit-text-only';
+  const sessionKey = 'session-usage-limit-text-only';
+  const streamLogPath = path.join(repoRoot, '.swarm', 'logs', 'stream.jsonl');
+  const trackedFile = path.join(repoRoot, 'tracked.txt');
+
+  fs.writeFileSync(trackedFile, 'original\n');
+  git(repoRoot, ['add', 'tracked.txt']);
+  git(repoRoot, ['commit', '-m', 'initial']);
+  fs.mkdirSync(path.dirname(streamLogPath), { recursive: true });
+
+  const config = createPollingConfig(repoRoot, {
+    _runId: 'run-usage-limit-text-only',
+    rate_limit: { max_pauses_per_module: 0, cooldown_hours: 0, cooldown_buffer_ms: 0 },
+  });
+
+  trackAgent(config, label, sessionKey, 'agent-usage-limit-text-only', label, streamLogPath, {
+    moduleId: 'module-usage-limit-text-only',
+  });
+  try {
+    const result = await pollForSessionEnd(config, label, 1, 'usage-limit-text-only-test', {
+      budget: createOpenBudget(),
+      moduleId: 'module-usage-limit-text-only',
+      getAcpMonitorState: async (request) => terminalMonitorState(request.childSessionKey, {
+        sessionState: 'error',
+        reason: 'session_terminal',
+        detail: '5h usage limit reached for model gpt-5.4',
+        failed: true,
+      }),
+    });
+
+    assert.equal(result.completed, false);
+    assert.equal(result.reason, 'agent_session_lifecycle_unstable');
+    assert.equal(result.rate_limit_exhausted, undefined);
+    assert.equal(result.status?.failure_class, 'agent_session_lifecycle_unstable');
   } finally {
     untrackAgent(label);
   }

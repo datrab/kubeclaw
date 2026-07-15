@@ -151,6 +151,36 @@ test('buildMarkdown supports legacy and partial census shapes', () => {
   assert.match(markdown, /\| Total Test Functions \| 9 \|/);
 });
 
+test('buildMarkdown reports blocked module state explicitly', () => {
+  const pipeline = {
+    ...minimalPipeline(),
+    totalCompleted: 0,
+    totalBlocked: 1,
+    totalPending: 0,
+    gateStats: [{ title: 'Final', status: 'PENDING' }],
+    moduleStats: [{
+      id: '02-nginx',
+      title: 'Content branch',
+      status: 'BLOCKED',
+      blockedPhase: 'preflight_contract',
+      blockedReason: 'SERVE_DOCKERFILE_NOT_DECLARED',
+    }],
+  };
+  const markdown = buildMarkdown(
+    'blocked-summary',
+    minimalCode(),
+    pipeline,
+    { totalRuns: 0, totalChecks: 0, totalFindings: 0, totalDuration: 0 },
+    { pythonFunctions: 0, frontendBlocks: 0 },
+    { totalCases: 0 },
+    minimalReviews(),
+    minimalAgents(),
+  );
+
+  assert.match(markdown, /- \*\*Final Status:\*\* BLOCKED/);
+  assert.match(markdown, /- \*\*Blocking Point:\*\* Content branch \/ preflight_contract — SERVE_DOCKERFILE_NOT_DECLARED/);
+});
+
 test('buildDiscordEmbeds supports legacy and partial census shapes', () => {
   const embeds = buildDiscordEmbeds(
     'legacy-census-discord',

@@ -45,8 +45,20 @@ import {
   isScheduledValidatorComplete,
   markScheduledValidatorComplete,
 } from './pipeline-runner-scheduling/validator-completions.ts';
-import { getArchValidationConfig } from '../services/runtime-defaults.ts';
+import { getArchValidationConfig, getReviewDefaultsConfig } from '../services/runtime-defaults.ts';
+import { buildDependencyGraph, collectReadyBatch } from '../scheduler.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+
+const loggedConsumedGateKeys = new Set<string>();
+
+function logGateConsumedOnce(config: AnyRecord, gateId: string, status: string, source: string) {
+  const runId = selectDefinedValue(() => (selectDefinedValue(() => (config?._runId), () => (config?.run_id))), () => ('run_unknown'));
+  const key = `${runId}:${gateId}:${status}:${source}`;
+  if (loggedConsumedGateKeys.has(key)) return;
+  loggedConsumedGateKeys.add(key);
+  log('DEBUG', `Gate '${gateId}' already consumed via gate read model (${status}, source=${source}) — skipping`);
+}
 export { isScheduledValidatorComplete, markScheduledValidatorComplete };
 
 type AnyRecord = Record<string, any>;
@@ -57,34 +69,75 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
+function isRecord(value: unknown): value is AnyRecord {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function recordOrEmpty(value: unknown): AnyRecord {
+  return isRecord(value) ? value : {};
+}
+
+function keysOf(value: unknown): string[] {
+  return Object.keys(recordOrEmpty(value));
+}
+
+function entriesOf(value: unknown): [string, any][] {
+  return Object.entries(recordOrEmpty(value));
+}
+
+function optionalText(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() ? value.trim() : null;
+}
+
+function requiredText(value: unknown, field: string): string {
+  const text = optionalText(value);
+  if (!text) throw new Error(`${field}: required non-empty string`);
+  return text;
+}
+
+function requiredGeneratorMode(opts: AnyRecord): string {
+  return requiredText(opts.mode, 'generator.mode');
+}
+
+function stageTypeFromStageId(stageId: string, field: string): string {
+  const type = selectDefinedValue(() => (optionalText(String(stageId).split(':')[1])), () => (optionalText(stageId)));
+  if (!type) throw new Error(`${field}: required stage type`);
+  return type;
+}
+
+function moduleStatusForGeneratorSnapshot(authoritative: AnyRecord | null): string {
+  if (typeof authoritative?.status === 'string' && authoritative.status.trim()) return authoritative.status.trim();
+  return STATUS.PENDING;
+}
+
 function buildGeneratorStateSnapshot(config: AnyRecord, progress: AnyRecord, opts: AnyRecord = {}, deps: AnyRecord = {}) {
-  const moduleStatuses = Object.entries(progress?.modules ?? {}).map(([moduleId, mod = {}]: [string, any]) => {
+  const moduleStatuses = entriesOf(progress?.modules).map(([moduleId, mod = {}]: [string, any]) => {
     void mod;
     const authoritative = loadAuthoritativeModuleState(config, progress, moduleId);
-    return authoritative?.status ?? STATUS.PENDING;
+    return moduleStatusForGeneratorSnapshot(authoritative);
   });
-  const gateStatuses = Object.keys(progress?.gates ?? {}).map((gateId: string) => {
-    const gate = progress.gates[gateId] ?? null;
+  const gateStatuses = keysOf(progress?.gates).map((gateId: string) => {
+    const gate = selectDefinedValue(() => (progress.gates[gateId]), () => (null));
     const gateProjection = projectPipelineGateState(config, gateId, gate, deps);
-    return gateProjection?.status ?? 'PENDING';
+    return selectDefinedValue(() => (gateProjection?.status), () => ('PENDING'));
   });
 
   return {
     pipeline: {
-      project: config?.project ?? null,
+      project: selectDefinedValue(() => (config?.project), () => (null)),
       run_id: getRunId(config),
-      terminal_status: opts.terminalStatus ?? null,
-      terminal_decision: opts.terminalDecision ?? null,
-      reason_code: opts.reasonCode ?? null,
-      schedule_reason: opts.scheduleReason ?? null,
-      mode: opts.mode ?? 'full',
+      terminal_status: selectDefinedValue(() => (opts.terminalStatus), () => (null)),
+      terminal_decision: selectDefinedValue(() => (opts.terminalDecision), () => (null)),
+      reason_code: selectDefinedValue(() => (opts.reasonCode), () => (null)),
+      schedule_reason: selectDefinedValue(() => (opts.scheduleReason), () => (null)),
+      mode: requiredGeneratorMode(opts),
     },
     modules: {
-      total: Object.keys(progress?.modules ?? {}).length,
+      total: keysOf(progress?.modules).length,
       status_counts: countByStatus(moduleStatuses),
     },
     gates: {
-      total: Object.keys(progress?.gates ?? {}).length,
+      total: keysOf(progress?.gates).length,
       status_counts: countByStatus(gateStatuses),
     },
   };
@@ -106,7 +159,7 @@ function resolveGeneratorInputConfig(config: AnyRecord, progress: AnyRecord, gen
 
 function buildGeneratorRunInput(config: AnyRecord, progress: AnyRecord, stageId: string, opts: AnyRecord = {}, deps: AnyRecord = {}) {
   const runId = getRunId(config);
-  const generatorType = String(stageId || '').split(':')[1] || stageId || 'unknown';
+  const generatorType = stageTypeFromStageId(stageId, 'generator.stageId');
   const refs = buildStageRefs({
     runRef: { prefix: 'run', parts: [runId] },
     moduleRef: opts.moduleId ? { prefix: 'module', parts: [opts.moduleId] } : null,
@@ -129,49 +182,49 @@ function buildGeneratorRunInput(config: AnyRecord, progress: AnyRecord, stageId:
     summaries: buildGeneratorArtifactRefs(config),
     stateSnapshot: buildGeneratorStateSnapshot(config, progress, opts, deps),
     executionContext: {
-      scheduleReason: opts.scheduleReason || null,
-      mode: opts.mode || 'full',
-      terminalStatus: opts.terminalStatus ?? null,
-      terminalDecision: opts.terminalDecision ?? null,
-      reasonCode: opts.reasonCode || null,
-      orderIndex: opts.orderIndex ?? null,
+      scheduleReason: optionalText(opts.scheduleReason),
+      mode: requiredGeneratorMode(opts),
+      terminalStatus: selectDefinedValue(() => (opts.terminalStatus), () => (null)),
+      terminalDecision: selectDefinedValue(() => (opts.terminalDecision), () => (null)),
+      reasonCode: optionalText(opts.reasonCode),
+      orderIndex: selectDefinedValue(() => (opts.orderIndex), () => (null)),
     },
   };
 }
 
 function buildGeneratorPluginInvocation(stageId: string, opts: AnyRecord = {}) {
   return buildStagePluginInvocation(stageId, {
-    moduleId: opts.moduleId || null,
-    gateId: opts.gateId || null,
-    causationRef: opts.causationRef || null,
+    moduleId: optionalText(opts.moduleId),
+    gateId: optionalText(opts.gateId),
+    causationRef: optionalText(opts.causationRef),
   });
 }
 
 function buildValidatorStateSnapshot(config: AnyRecord, progress: AnyRecord, opts: AnyRecord = {}, deps: AnyRecord = {}) {
   return {
     pipeline: {
-      project: config?.project || null,
+      project: optionalText(config?.project),
       run_id: getRunId(config),
       resume: opts.resume === true,
       arch_validation_enabled: opts.archEnabled !== false,
       has_started_modules: opts.hasStartedModules === true,
     },
     modules: {
-      total: Object.keys(progress?.modules || {}).length,
+      total: keysOf(progress?.modules).length,
       started: hasAnyStartedModules(config, progress, deps),
     },
     gates: {
-      total: Object.keys(progress?.gates || {}).length,
+      total: keysOf(progress?.gates).length,
     },
   };
 }
 
 function buildValidatorRunInput(config: AnyRecord, progress: AnyRecord, stageId: string, opts: AnyRecord = {}, deps: AnyRecord = {}) {
   const runId = getRunId(config);
-  const validatorName = String(stageId || '').split(':')[1] || stageId || 'unknown';
-  const moduleId = opts.moduleId || null;
-  const gateId = opts.gateId || null;
-  const moduleConfig = moduleId ? progress?.modules?.[moduleId] || null : null;
+  const validatorName = stageTypeFromStageId(stageId, 'validator.stageId');
+  const moduleId = optionalText(opts.moduleId);
+  const gateId = optionalText(opts.gateId);
+  const moduleConfig = moduleId ? (selectDefinedValue(() => (progress?.modules?.[moduleId]), () => (null))) : null;
   const moduleState = moduleId
     ? loadAuthoritativeModuleState(config, progress, moduleId)
     : null;
@@ -193,9 +246,9 @@ function buildValidatorRunInput(config: AnyRecord, progress: AnyRecord, stageId:
     ids: {
       runId,
       validatorName,
-      scope: opts.scope || (moduleId ? 'module' : (gateId ? 'gate' : 'run')),
+      scope: selectDefinedValue(() => (optionalText(opts.scope)), () => ((moduleId ? 'module' : (gateId ? 'gate' : 'run')))),
       stageId,
-      ...(moduleId ? { moduleId, moduleDir: moduleConfig?.dir || null } : {}),
+      ...(moduleId ? { moduleId, moduleDir: selectDefinedValue(() => (moduleConfig?.dir), () => (null)) } : {}),
       ...(gateId ? { gateId } : {}),
     },
     validator: {
@@ -204,14 +257,14 @@ function buildValidatorRunInput(config: AnyRecord, progress: AnyRecord, stageId:
     },
     module: moduleId ? {
       moduleId,
-      dir: moduleConfig?.dir || null,
-      title: moduleConfig?.title || null,
-      config: moduleConfig || {},
-      status: moduleState || null,
+      dir: selectDefinedValue(() => (moduleConfig?.dir), () => (null)),
+      title: selectDefinedValue(() => (moduleConfig?.title), () => (null)),
+      config: recordOrEmpty(moduleConfig),
+      status: selectDefinedValue(() => (moduleState), () => (null)),
     } : null,
     gate: gateId ? {
       gateId,
-      config: progress?.gates?.[gateId] || null,
+      config: selectDefinedValue(() => (progress?.gates?.[gateId]), () => (null)),
     } : null,
     artifacts: [],
     stateSnapshot: buildValidatorStateSnapshot(config, progress, opts, deps),
@@ -220,9 +273,9 @@ function buildValidatorRunInput(config: AnyRecord, progress: AnyRecord, stageId:
       hasStartedModules: opts.hasStartedModules === true,
       archEnabled: opts.archEnabled !== false,
       ...(moduleConfig?.dir ? { moduleDir: moduleConfig.dir } : {}),
-      scheduleKey: opts.scheduleKey || null,
-      scheduleReason: opts.scheduleReason || null,
-      orderIndex: opts.orderIndex ?? null,
+      scheduleKey: optionalText(opts.scheduleKey),
+      scheduleReason: optionalText(opts.scheduleReason),
+      orderIndex: selectDefinedValue(() => (opts.orderIndex), () => (null)),
     },
   };
 }
@@ -230,9 +283,9 @@ function buildValidatorRunInput(config: AnyRecord, progress: AnyRecord, stageId:
 function buildValidatorPluginInvocation(stageId: string, opts: AnyRecord = {}) {
   return buildStagePluginInvocation(stageId, {
     resume: opts.resume === true,
-    moduleId: opts.moduleId || null,
-    gateId: opts.gateId || null,
-    causationRef: opts.causationRef || null,
+    moduleId: optionalText(opts.moduleId),
+    gateId: optionalText(opts.gateId),
+    causationRef: optionalText(opts.causationRef),
   });
 }
 
@@ -243,7 +296,7 @@ function validateArchitectureValidatorControlResult(result: AnyRecord, stageId =
     allowedNextActions: ['pass', 'block'],
   });
   if (typeof stageId === 'string' && stageId === 'validator:architecture') {
-    const metadata = result?.diagnostics?.metadata || result?.diagnostics?.typed?.validator?.metadata || {};
+    const metadata = selectDefinedValue(() => (selectDefinedValue(() => (result?.diagnostics?.metadata), () => (result?.diagnostics?.typed?.validator?.metadata))), () => ({}));
     if (metadata?.blocked === true && result.nextAction !== 'block') {
       errors.push('blocked validator metadata must map to nextAction=block');
     }
@@ -257,23 +310,23 @@ function normalizeArchitectureValidatorResult(config: AnyRecord, rawResult: unkn
   if (errors.length > 0) {
     throw createContractInvalidError(`Architecture validator returned invalid control result: ${errors.join('; ')}`, {
       label: 'Architecture validator',
-      stageId: opts.stageId || 'validator:architecture',
+      stageId: selectDefinedValue(() => (optionalText(opts.stageId)), () => ('validator:architecture')),
       hookFamily: 'validator.run',
-      moduleId: opts.moduleId || null,
+      moduleId: optionalText(opts.moduleId),
       producerKind: 'validator',
       producerType: 'architecture',
       validationErrors: errors,
       rawResult,
       coercedResult: controlResult,
-      input: opts.input || null,
-      invocation: opts.pluginInvocation || null,
+      input: selectDefinedValue(() => (opts.input), () => (null)),
+      invocation: selectDefinedValue(() => (opts.pluginInvocation), () => (null)),
     });
   }
   return controlResult;
 }
 
 function validatorProducerType(stageId = ''): string {
-  return String(stageId || '').split(':')[1] || stageId || 'unknown';
+  return stageTypeFromStageId(stageId, 'validator.stageId');
 }
 
 function isArchitectureValidatorStage(stageId = ''): boolean {
@@ -282,17 +335,27 @@ function isArchitectureValidatorStage(stageId = ''): boolean {
 
 function buildFailedValidatorControlResult(config: AnyRecord, stageId: string, opts: AnyRecord = {}) {
   if (isArchitectureValidatorStage(stageId)) {
-    return buildArchitectureValidatorControlResult(config, { blocked: true, findings: [] }, opts);
+    return buildArchitectureValidatorControlResult(config, {
+      blocked: true,
+      project: optionalText(config?.project),
+      timestamp: new Date().toISOString(),
+      run_id: getRunId(config),
+      findings: [],
+    }, {
+      ...opts,
+      executionFailed: true,
+      error: selectDefinedValue(() => (optionalText(opts.error)), () => ('validator_execution_error_missing')),
+    });
   }
   return buildModuleValidatorControlResult(config, {
     passed: false,
     blocked: true,
-    error: opts.error || 'unknown validator execution error',
+    error: selectDefinedValue(() => (optionalText(opts.error)), () => ('validator_execution_error_missing')),
   }, {
     ...opts,
     producerType: validatorProducerType(stageId),
     stageId,
-    scope: opts.scope || 'pipeline',
+    scope: selectDefinedValue(() => (optionalText(opts.scope)), () => ('pipeline')),
     ...EXECUTION_FAILED_VALIDATOR_POLICY,
   });
 }
@@ -305,22 +368,19 @@ function normalizeScheduledValidatorResult(config: AnyRecord, stageId: string, r
     producerType: validatorProducerType(stageId),
     label: `${stageId} validator`,
     stageId,
-    moduleId: opts.moduleId || null,
-    input: opts.input || null,
-    invocation: opts.pluginInvocation || null,
+    moduleId: optionalText(opts.moduleId),
+    input: selectDefinedValue(() => (opts.input), () => (null)),
+    invocation: selectDefinedValue(() => (opts.pluginInvocation), () => (null)),
   });
 }
 
 export function projectValidatorControlResultToStepResult(config: AnyRecord, controlResult: AnyRecord = {}, opts: AnyRecord = {}) {
-  const stageId = opts.stageId || `validator:${controlResult?.producerType || 'unknown'}`;
-  const stepId = opts.stepId || stageId;
+  const stageId = selectDefinedValue(() => (optionalText(opts.stageId)), () => (`validator:${selectDefinedValue(() => (controlResult?.producerType), () => ('producer_type_missing'))}`));
+  const stepId = selectDefinedValue(() => (optionalText(opts.stepId)), () => (stageId));
   const validatorOutcomeClass = controlResult?.diagnostics?.typed?.validator?.outcomeClass;
-  const typedValidatorMetadata = controlResult?.diagnostics?.typed?.validator?.metadata || {};
-  const validatorMetadata = controlResult?.diagnostics?.metadata || {};
-  const invalidOrExecutionFailed = typedValidatorMetadata?.contract_invalid === true
-    || typedValidatorMetadata?.execution_failed === true
-    || validatorMetadata?.contract_invalid === true
-    || validatorMetadata?.execution_failed === true;
+  const typedValidatorMetadata = selectDefinedValue(() => (controlResult?.diagnostics?.typed?.validator?.metadata), () => ({}));
+  const validatorMetadata = selectDefinedValue(() => (controlResult?.diagnostics?.metadata), () => ({}));
+  const invalidOrExecutionFailed = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (typedValidatorMetadata?.contract_invalid === true), () => (typedValidatorMetadata?.execution_failed === true))), () => (validatorMetadata?.contract_invalid === true))), () => (validatorMetadata?.execution_failed === true));
   const outcome = invalidOrExecutionFailed ? PIPELINE_STEP_OUTCOMES.ERROR
     : validatorOutcomeClass === 'blocked' ? PIPELINE_STEP_OUTCOMES.BLOCKED
     : controlResult?.nextAction === 'pass' ? PIPELINE_STEP_OUTCOMES.PASSED
@@ -329,12 +389,12 @@ export function projectValidatorControlResultToStepResult(config: AnyRecord, con
     : outcome === PIPELINE_STEP_OUTCOMES.BLOCKED ? PIPELINE_TERMINAL_ACTIONS.NOTIFY_OPERATOR
       : PIPELINE_TERMINAL_ACTIONS.STOP;
   const correlation = {
-    run_id: config?._runId ?? config?.run_id ?? getRunId(config) ?? null,
+    run_id: selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (config?._runId), () => (config?.run_id))), () => (getRunId(config)))), () => (null)),
     validator_stage_id: stageId,
-    validator_type: controlResult?.producerType || validatorProducerType(stageId),
-    schedule_key: opts.scheduleKey || null,
-    module_id: opts.moduleId || null,
-    gate_id: opts.gateId || null,
+    validator_type: selectDefinedValue(() => (controlResult?.producerType), () => (validatorProducerType(stageId))),
+    schedule_key: optionalText(opts.scheduleKey),
+    module_id: optionalText(opts.moduleId),
+    gate_id: optionalText(opts.gateId),
   };
 
   if (controlResult?.nextAction === 'request_fix') {
@@ -345,11 +405,11 @@ export function projectValidatorControlResultToStepResult(config: AnyRecord, con
       stepId,
       nextAction: PIPELINE_STEP_ACTIONS.HALT,
       outcome: requestFixOutcome,
-      issueType: controlResult.issueType || 'code',
-      summary: controlResult?.diagnostics?.summary || 'Validator requested a fix',
+      issueType: selectDefinedValue(() => (controlResult.issueType), () => ('code')),
+      summary: selectDefinedValue(() => (controlResult?.diagnostics?.summary), () => ('validator_fix_requested')),
       diagnostics: {
-        findings: controlResult?.diagnostics?.findings || [],
-        metadata: controlResult?.diagnostics?.metadata || {},
+        findings: Array.isArray(controlResult?.diagnostics?.findings) ? controlResult.diagnostics.findings : [],
+        metadata: recordOrEmpty(controlResult?.diagnostics?.metadata),
       },
       correlation,
       controlResult,
@@ -368,31 +428,31 @@ export function projectValidatorControlResultToStepResult(config: AnyRecord, con
   });
 }
 
-export function validateGeneratorExecutionResult(result: AnyRecord, stageId = 'generator:unknown') {
-  const expectedProducerType = String(stageId || '').split(':')[1] || stageId || 'unknown';
+export function validateGeneratorExecutionResult(result: AnyRecord, stageId = 'generator:missing_generator_type') {
+  const expectedProducerType = stageTypeFromStageId(stageId, 'generator.stageId');
   const errors = validateGeneratorResult(result, {
     producerType: expectedProducerType,
     stageId,
   });
   if (result?.outputs && typeof result.outputs === 'object' && !Array.isArray(result.outputs)
-    && (typeof result.outputs.status !== 'string' || !result.outputs.status.trim())) {
+    && (selectTruthyValue(() => (typeof result.outputs.status !== 'string'), () => (!result.outputs.status.trim())))) {
     errors.push('outputs.status must be a non-empty string');
   }
   return errors;
 }
 
-function normalizeGeneratorExecutionResult(rawResult: unknown, stageId = 'generator:unknown', opts: AnyRecord = {}) {
-  const producerType = String(stageId || '').split(':')[1] || stageId || 'unknown';
+function normalizeGeneratorExecutionResult(rawResult: unknown, stageId = 'generator:missing_generator_type', opts: AnyRecord = {}) {
+  const producerType = stageTypeFromStageId(stageId, 'generator.stageId');
   const generatorResult = normalizeGeneratorResult(rawResult, {
     producerType,
     label: `Generator '${stageId}'`,
     stageId,
-    moduleId: opts.moduleId || null,
-    input: opts.input || null,
-    invocation: opts.pluginInvocation || null,
+    moduleId: optionalText(opts.moduleId),
+    input: selectDefinedValue(() => (opts.input), () => (null)),
+    invocation: selectDefinedValue(() => (opts.pluginInvocation), () => (null)),
   });
   const errors: string[] = [];
-  if (typeof generatorResult.outputs.status !== 'string' || !generatorResult.outputs.status.trim()) {
+  if (selectTruthyValue(() => (typeof generatorResult.outputs.status !== 'string'), () => (!generatorResult.outputs.status.trim()))) {
     errors.push('outputs.status must be a non-empty string');
   }
   if (errors.length > 0) {
@@ -400,14 +460,14 @@ function normalizeGeneratorExecutionResult(rawResult: unknown, stageId = 'genera
       label: `Generator '${stageId}'`,
       stageId,
       hookFamily: 'generator.run',
-      moduleId: opts.moduleId || null,
+      moduleId: optionalText(opts.moduleId),
       producerKind: 'generator',
       producerType,
       validationErrors: errors,
       rawResult,
       coercedResult: generatorResult,
-      input: opts.input || null,
-      invocation: opts.pluginInvocation || null,
+      input: selectDefinedValue(() => (opts.input), () => (null)),
+      invocation: selectDefinedValue(() => (opts.pluginInvocation), () => (null)),
     });
   }
   return generatorResult;
@@ -427,7 +487,7 @@ export async function runScheduledValidator(config: AnyRecord, progress: AnyReco
       input: validatorInput,
       stageId,
       executionFailed: true,
-      error: errorMessage(error) || 'unknown validator registry resolution error',
+      error: selectDefinedValue(() => (optionalText(errorMessage(error))), () => ('validator_registry_resolution_error_missing')),
     });
   }
 
@@ -445,7 +505,7 @@ export async function runScheduledValidator(config: AnyRecord, progress: AnyReco
       hasStartedModules: opts.hasStartedModules === true,
       archEnabled: opts.archEnabled !== false,
     },
-    signal: opts.signal || null,
+    signal: selectDefinedValue(() => (opts.signal), () => (null)),
   });
 
   try {
@@ -464,7 +524,7 @@ export async function runScheduledValidator(config: AnyRecord, progress: AnyReco
       executionFailed: true,
       contractInvalid: isContractInvalidError(error),
       contractDiagnostic,
-      error: errorMessage(error) || 'unknown validator execution error',
+      error: selectDefinedValue(() => (optionalText(errorMessage(error))), () => ('validator_execution_error_missing')),
     });
   }
 }
@@ -479,12 +539,12 @@ export async function runScheduledGenerator(config: AnyRecord, progress: AnyReco
     return {
       schemaVersion: 'v1',
       producerKind: 'generator',
-      producerType: String(stageId || '').split(':')[1] || stageId || 'unknown',
+      producerType: stageTypeFromStageId(stageId, 'generator.stageId'),
       outputs: {
         status: 'failed',
       },
       diagnostics: {
-        error: errorMessage(error) || 'unknown generator registry resolution error',
+        error: selectDefinedValue(() => (optionalText(errorMessage(error))), () => ('generator_registry_resolution_error_missing')),
       },
     };
   }
@@ -500,11 +560,11 @@ export async function runScheduledGenerator(config: AnyRecord, progress: AnyReco
     invocation: pluginInvocation,
     stateSnapshot: async () => generatorInput.stateSnapshot,
     environmentMetadata: {
-      scheduleReason: opts.scheduleReason || null,
-      mode: opts.mode || 'full',
-      terminalStatus: opts.terminalStatus ?? null,
-      terminalDecision: opts.terminalDecision ?? null,
-      reasonCode: opts.reasonCode || null,
+      scheduleReason: optionalText(opts.scheduleReason),
+      mode: requiredGeneratorMode(opts),
+      terminalStatus: selectDefinedValue(() => (opts.terminalStatus), () => (null)),
+      terminalDecision: selectDefinedValue(() => (opts.terminalDecision), () => (null)),
+      reasonCode: optionalText(opts.reasonCode),
     },
     injectedDeps: deps,
   });
@@ -517,7 +577,7 @@ export async function runScheduledGenerator(config: AnyRecord, progress: AnyReco
     return normalizeGeneratorExecutionResult(rawResult, stageId, { moduleId: record.manifest.moduleId, input: generatorInput, pluginInvocation });
   } catch (error) {
     log('WARN', `[generator] ${stageId} degraded: ${errorMessage(error)}`);
-    const message = errorMessage(error) || 'unknown';
+    const message = selectDefinedValue(() => (optionalText(errorMessage(error))), () => ('generator_execution_error_missing'));
     const contractInvalid = isContractInvalidError(error);
     const contractDiagnostic = getContractInvalidDiagnostic(error);
     return {
@@ -537,24 +597,24 @@ export async function runScheduledGenerator(config: AnyRecord, progress: AnyReco
 }
 
 function normalizeScheduleRef(progress: AnyRecord, ref: unknown): string | null {
-  if (!ref || typeof ref !== 'string') return null;
+  if (selectTruthyValue(() => (!ref), () => (typeof ref !== 'string'))) return null;
   const normalized = ref.trim();
   if (!normalized) return null;
-  if (normalized.startsWith('module:') || normalized.startsWith('gate:') || normalized.startsWith('validator:')) return normalized;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (normalized.startsWith('module:')), () => (normalized.startsWith('gate:')))), () => (normalized.startsWith('validator:')))) return normalized;
   if (progress?.modules?.[normalized]) return `module:${normalized}`;
   if (progress?.gates?.[normalized]) return `gate:${normalized}`;
   return normalized;
 }
 
 function normalizeValidatorScheduleEntry(progress: AnyRecord, entry: AnyRecord = {}, index = 0): AnyRecord | null {
-  const stage = entry.stage || entry.validator || entry.validator_stage || entry.id || null;
-  if (!stage || typeof stage !== 'string' || !stage.startsWith('validator:')) return null;
-  const after = normalizeScheduleRef(progress, entry.after || entry.after_step || null);
-  const before = normalizeScheduleRef(progress, entry.before || entry.before_step || null);
+  const stage = selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (optionalText(entry.stage)), () => (optionalText(entry.validator)))), () => (optionalText(entry.validator_stage)))), () => (optionalText(entry.id)));
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!stage), () => (typeof stage !== 'string'))), () => (!stage.startsWith('validator:')))) return null;
+  const after = normalizeScheduleRef(progress, selectDefinedValue(() => (optionalText(entry.after)), () => (optionalText(entry.after_step))));
+  const before = normalizeScheduleRef(progress, selectDefinedValue(() => (optionalText(entry.before)), () => (optionalText(entry.before_step))));
   const timing = before ? 'before' : (after ? 'after' : 'inline');
-  const ref = before || after || `schedule:${index}`;
-  const scope = entry.scope || 'pipeline';
-  const key = entry.key || `${timing}:${ref}:${stage}:${scope}:${index}`;
+  const ref = selectDefinedValue(() => (selectDefinedValue(() => (before), () => (after))), () => (`schedule:${index}`));
+  const scope = selectDefinedValue(() => (optionalText(entry.scope)), () => ('pipeline'));
+  const key = selectDefinedValue(() => (optionalText(entry.key)), () => (`${timing}:${ref}:${stage}:${scope}:${index}`));
   return {
     ...entry,
     stage,
@@ -564,8 +624,8 @@ function normalizeValidatorScheduleEntry(progress: AnyRecord, entry: AnyRecord =
     ref,
     scope,
     key,
-    orderIndex: entry.orderIndex ?? entry.order_index ?? index,
-    mode: entry.mode || 'mandatory',
+    orderIndex: selectDefinedValue(() => (entry.orderIndex), () => (index)),
+    mode: selectDefinedValue(() => (optionalText(entry.mode)), () => ('mandatory')),
   };
 }
 
@@ -577,41 +637,46 @@ export function resolveConfiguredValidatorSchedule(progress: AnyRecord = {}): An
 }
 
 function normalizeExecutionModuleId(progress: AnyRecord, stepId: unknown): string | null {
-  if (typeof stepId !== 'string' || !stepId.trim() || stepId.startsWith('gate:') || stepId.startsWith('validator:')) return null;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (typeof stepId !== 'string'), () => (!stepId.trim()))), () => (stepId.startsWith('gate:')))), () => (stepId.startsWith('validator:')))) return null;
   const moduleId = stepId.startsWith('module:') ? stepId.slice('module:'.length) : stepId;
   if (!moduleId) return null;
   return progress?.modules?.[moduleId] ? moduleId : null;
 }
 
-function moduleDependsOnAny(progress: AnyRecord, moduleId: string, blockedDependencyIds: Set<string>): boolean {
+function moduleDependencyIds(progress: AnyRecord, moduleId: string): string[] {
   const dependsOn = Array.isArray(progress?.modules?.[moduleId]?.depends_on) ? progress.modules[moduleId].depends_on : [];
-  return dependsOn.some((dependency: string) => blockedDependencyIds.has(String(dependency || '').replace(/^module:/, '')));
+  return dependsOn
+    .map((dependency: string) => String(selectDefinedValue(() => (dependency), () => (''))).replace(/^module:/, ''))
+    .filter((dependency: string) => dependency && progress?.modules?.[dependency]);
 }
 
-function moduleIsReadyForBatch(config: AnyRecord, progress: AnyRecord, moduleId: string, deps: AnyRecord = {}, blockedDependencyIds = new Set<string>()): boolean {
+function moduleIsReadyForBatch(config: AnyRecord, progress: AnyRecord, moduleId: string, deps: AnyRecord = {}): boolean {
   const lifecycleModule = loadAuthoritativeModuleState(config, progress, moduleId);
-  if (lifecycleModule?.status === STATUS.PASS || lifecycleModule?.status === STATUS.BLOCKED) return false;
-  if (moduleDependsOnAny(progress, moduleId, blockedDependencyIds)) return false;
-  const dependencyChecker = deps.checkDependencies || checkModuleDependencies;
-  const dependencyState = dependencyChecker(config, progress, moduleId);
+  if (selectTruthyValue(() => (lifecycleModule?.status === STATUS.PASS), () => (lifecycleModule?.status === STATUS.BLOCKED))) return false;
+  const dependencyState = checkModuleDependencies(config, progress, moduleId);
   return dependencyState?.met === true;
 }
 
 function collectReadyModuleBatch(config: AnyRecord, progress: AnyRecord, deps: AnyRecord = {}, startIndex = 0): string[] {
   const executionOrder = Array.isArray(progress?.execution_order) ? progress.execution_order : [];
-  const batch: string[] = [];
-  const batchIds = new Set<string>();
-  for (let index = startIndex; index < executionOrder.length; index += 1) {
-    const moduleId = normalizeExecutionModuleId(progress, executionOrder[index]);
-    if (!moduleId) break;
-    if (!moduleIsReadyForBatch(config, progress, moduleId, deps, batchIds)) {
-      if (batch.length > 0) break;
-      continue;
-    }
-    batch.push(moduleId);
-    batchIds.add(moduleId);
-  }
-  return batch;
+  const moduleOrder = executionOrder.map((stepId: unknown) => normalizeExecutionModuleId(progress, stepId)).filter(Boolean) as string[];
+  const graph = buildDependencyGraph(moduleOrder.map((moduleId) => ({
+    id: moduleId,
+    dependencies: moduleDependencyIds(progress, moduleId),
+  })));
+  return collectReadyBatch({
+    orderedIds: moduleOrder,
+    startIndex,
+    dependencyIds: (moduleId) => graph.dependencyIds(moduleId),
+    isCandidateReady: (moduleId) => moduleIsReadyForBatch(config, progress, moduleId, deps),
+  });
+}
+
+function moduleOrderIndex(progress: AnyRecord, moduleId: string): number {
+  const executionOrder = Array.isArray(progress?.execution_order) ? progress.execution_order : [];
+  const moduleOrder = executionOrder.map((stepId: unknown) => normalizeExecutionModuleId(progress, stepId)).filter(Boolean) as string[];
+  const index = moduleOrder.indexOf(moduleId);
+  return index >= 0 ? index : 0;
 }
 
 function scheduleMatchesRef(schedule: AnyRecord = {}, timing: string, ref: string): boolean {
@@ -624,7 +689,7 @@ function buildValidatorNextStep(schedule: AnyRecord, reason: string | null = nul
     id: schedule.stage,
     schedule: {
       ...schedule,
-      scheduleReason: reason || schedule.scheduleReason || schedule.reason || null,
+      scheduleReason: selectDefinedValue(() => (selectDefinedValue(() => (optionalText(reason)), () => (optionalText(schedule.scheduleReason)))), () => (optionalText(schedule.reason))),
     },
   };
 }
@@ -643,6 +708,7 @@ function mandatoryReviewFullLintSchedule(config: AnyRecord, progress: AnyRecord,
   if (gate?.['type'] !== 'review') return null;
   if (!resolveStageOwner(config, 'validator.run', 'validator:full_lint')) return null;
   const targetModule = resolveGateTargetModule(progress, gateId);
+  const reviewDefaults = getReviewDefaultsConfig(config);
   return {
     stage: 'validator:full_lint',
     timing: 'before',
@@ -655,14 +721,14 @@ function mandatoryReviewFullLintSchedule(config: AnyRecord, progress: AnyRecord,
     moduleId: targetModule.moduleId,
     scheduleReason: 'mandatory_full_lint_before_review',
     validatorConfig: {
-      tier: gate?.lint_tier || 'full',
+      tier: selectDefinedValue(() => (optionalText(gate?.lint_tier)), () => (reviewDefaults.lint_tier)),
     },
   };
 }
 
 export function findNextStep(config: AnyRecord, progress: AnyRecord, deps: AnyRecord = {}): AnyRecord {
   const executionOrder = Array.isArray(progress?.execution_order) ? progress.execution_order : [];
-  const gates = progress?.gates || null;
+  const gates = recordOrEmpty(progress?.gates);
   for (let orderIndex = 0; orderIndex < executionOrder.length; orderIndex += 1) {
     const stepId = executionOrder[orderIndex];
     if (typeof stepId === 'string' && stepId.startsWith('validator:')) {
@@ -684,10 +750,10 @@ export function findNextStep(config: AnyRecord, progress: AnyRecord, deps: AnyRe
       const gate = gates?.[gateId];
       const gateProjection = projectPipelineGateState(config, gateId, gate, deps);
 
-      if (gateProjection?.scheduler_consumed === true || gateProjection?.completed === true) {
-        const source = gateProjection?.completion_source ?? gateProjection?.projection_source ?? 'gate_read_model';
-        const status = gateProjection?.status || 'CONSUMED';
-        log('INFO', `Gate '${gateId}' already consumed via gate read model (${status}, source=${source}) — skipping`);
+      if (selectTruthyValue(() => (gateProjection?.scheduler_consumed === true), () => (gateProjection?.completed === true))) {
+        const source = selectDefinedValue(() => (gateProjection?.completion_source), () => ('gate_read_model'));
+        const status = selectDefinedValue(() => (gateProjection?.status), () => ('GATE_STATUS_CONSUMED'));
+        logGateConsumedOnce(config, gateId, status, source);
         const afterConfigured = firstPendingScheduledValidator(config, progress, 'after', `gate:${gateId}`);
         if (afterConfigured) return afterConfigured;
         continue;
@@ -704,7 +770,7 @@ export function findNextStep(config: AnyRecord, progress: AnyRecord, deps: AnyRe
       return { type: 'gate', id: gateId };
     }
 
-    if (typeof stepId !== 'string' || !stepId.trim()) {
+    if (selectTruthyValue(() => (typeof stepId !== 'string'), () => (!stepId.trim()))) {
       throw new Error(`Invalid execution_order step '${String(stepId)}': expected module id, module:<id>, gate:<id>, or validator:<id>`);
     }
 
@@ -721,9 +787,9 @@ export function findNextStep(config: AnyRecord, progress: AnyRecord, deps: AnyRe
       continue;
     }
     if (lifecycleModule?.status === STATUS.BLOCKED) return { type: 'blocked', id: moduleId };
-    if (lifecycleModule?.status === STATUS.FAIL) log('INFO', `Module ${moduleId} is FAIL (${lifecycleModule.fail_count || 0} attempts) — will retry`);
+    if (lifecycleModule?.status === STATUS.FAIL) log('INFO', `Module ${moduleId} is FAIL (${Number(selectDefinedValue(() => (lifecycleModule.fail_count), () => (0)))} attempts) — will retry`);
     else if (lifecycleModule?.status && lifecycleModule.status !== STATUS.PENDING) log('INFO', `Module ${moduleId} resuming from ${lifecycleModule.status}`);
-    const readyBatch = collectReadyModuleBatch(config, progress, deps, orderIndex);
+    const readyBatch = collectReadyModuleBatch(config, progress, deps, moduleOrderIndex(progress, moduleId));
     if (readyBatch.length > 1 && readyBatch[0] === moduleId) {
       log('INFO', `Running ready module batch: ${readyBatch.join(', ')}`);
       return { type: 'module_batch', ids: readyBatch };
@@ -741,11 +807,8 @@ function appendStartupDegradedEvidence(config: AnyRecord, evidence: unknown): vo
 }
 
 export async function preparePipeline(config: AnyRecord, progress: AnyRecord, deps: AnyRecord = {}) {
-  const releaseGateFilesFn = deps.releaseGateFiles || releaseGateFiles;
-  const syncControlFilesFn = deps.syncControlFiles || syncControlFiles;
-
   try {
-    const result = await releaseGateFilesFn(config, progress);
+    const result = await releaseGateFiles(config, progress);
     appendStartupDegradedEvidence(config, result?.degraded);
   }
   catch (e) {
@@ -755,7 +818,7 @@ export async function preparePipeline(config: AnyRecord, progress: AnyRecord, de
   }
 
   try {
-    const result = await syncControlFilesFn(config, progress);
+    const result = await syncControlFiles(config, progress);
     appendStartupDegradedEvidence(config, result?.degraded);
   }
   catch (e) {

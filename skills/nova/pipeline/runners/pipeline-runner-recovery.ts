@@ -37,14 +37,45 @@ import {
 } from '../services/session-authority.ts';
 import { ensureProjectLogDir } from '../core/paths.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
+const TERMINAL_MONITOR_DETAIL = 'terminal';
+const IDENTITY_UNCONFIRMED_STATE = 'identity_unconfirmed';
+const GATE_RECOVERY_PHASE = 'gate';
+const PENDING_STATUS = 'PENDING';
 
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
+function objectRecord(value: unknown): AnyRecord {
+  return value !== null && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : {};
+}
+
+function textValue(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const normalized = value.trim();
+  return normalized ? normalized : null;
+}
+
+function firstTextValue(...values: unknown[]): string | null {
+  for (const value of values) {
+    const normalized = textValue(value);
+    if (normalized) return normalized;
+  }
+  return null;
+}
+
+function runtimeName(active: AnyRecord): string | null {
+  return textValue(active.runtime);
+}
+
+function identityUnconfirmedCode(recoveryEvidence: AnyRecord): string {
+  return selectDefinedValue(() => (textValue(recoveryEvidence?.policy?.code)), () => (IDENTITY_UNCONFIRMED_STATE));
+}
+
 function resolveRecoveryAttempt(status: AnyRecord | null, active: AnyRecord | null = null): number | null {
-  const value = active?.attempt ?? status?.current_attempt ?? status?.attempt ?? null;
+  const value = selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (active?.attempt), () => (status?.current_attempt))), () => (status?.attempt))), () => (null));
   if (typeof value === 'number' && Number.isFinite(value)) return value;
   if (typeof value === 'string' && value.trim()) {
     const parsed = Number(value);
@@ -54,7 +85,7 @@ function resolveRecoveryAttempt(status: AnyRecord | null, active: AnyRecord | nu
 }
 
 function resolveRecoveryGatewayLabel(status: AnyRecord | null, active: AnyRecord | null = null): string | null {
-  return active?.gateway_label ?? status?.gateway_label ?? null;
+  return selectDefinedValue(() => (selectDefinedValue(() => (active?.gateway_label), () => (status?.gateway_label))), () => (null));
 }
 
 function resolveDiagnosticLabel(active: AnyRecord | null = null): string | null {
@@ -63,12 +94,40 @@ function resolveDiagnosticLabel(active: AnyRecord | null = null): string | null 
   return active.label;
 }
 
+function recoveryModuleDir(moduleId: string, mod: AnyRecord): string {
+  const dir = firstTextValue(mod?.dir, moduleId);
+  if (!dir) throw new Error(`module ${moduleId}: recovery requires module dir authority`);
+  return dir;
+}
+
+function recoveryDispatchIdValue(active: AnyRecord | null, status: AnyRecord | null): string | null {
+  return firstTextValue(active?.dispatch_id, resolveStatusDispatchId(status));
+}
+
+function recoverySessionKeyValue(active: AnyRecord | null, status: AnyRecord | null): string | null {
+  return firstTextValue(active?.session_key, resolveStatusSessionKey(status));
+}
+
+function requireRecoveryAction(recoveryAction: unknown, scope: string, id: string): string {
+  const action = textValue(recoveryAction);
+  if (!action) throw new Error(`${scope} ${id}: stale recovery selected without recovery action authority`);
+  return action;
+}
+
+function recoveryTransitionStatus(status: AnyRecord, recoveryTargetStatus: string | null): string {
+  const statusValue = textValue(status?.status);
+  if (statusValue) return statusValue;
+  const targetStatus = textValue(recoveryTargetStatus);
+  if (targetStatus) return targetStatus;
+  throw new Error('stale recovery transition requires status authority');
+}
+
 function diagnosticLabelField(diagnosticLabel: string | null): AnyRecord[] {
   return diagnosticLabel ? [{ name: 'Diagnostic Label', value: diagnosticLabel, inline: true }] : [];
 }
 
 function recoveryRunId(config: AnyRecord): string | null {
-  return getRunId(config) || null;
+  return selectTruthyValue(() => (getRunId(config)), () => (null));
 }
 
 function buildRecoveryDiscordCorrelation({
@@ -82,14 +141,14 @@ function buildRecoveryDiscordCorrelation({
   sessionKey = null,
 }: AnyRecord = {}): AnyRecord {
   return {
-    run_id: runId || null,
-    module_id: moduleId || null,
-    gate_id: gateId || null,
-    gate_type: gateType || null,
-    attempt: attempt ?? null,
-    dispatch_id: dispatchId || null,
-    gateway_label: gatewayLabel || null,
-    session_key: sessionKey || null,
+    run_id: selectTruthyValue(() => (runId), () => (null)),
+    module_id: selectTruthyValue(() => (moduleId), () => (null)),
+    gate_id: selectTruthyValue(() => (gateId), () => (null)),
+    gate_type: selectTruthyValue(() => (gateType), () => (null)),
+    attempt: selectDefinedValue(() => (attempt), () => (null)),
+    dispatch_id: selectTruthyValue(() => (dispatchId), () => (null)),
+    gateway_label: selectTruthyValue(() => (gatewayLabel), () => (null)),
+    session_key: selectTruthyValue(() => (sessionKey), () => (null)),
   };
 }
 
@@ -104,7 +163,7 @@ function removeFileIfPresent(filePath: string | null): void {
 
 function buildRecoverySessionAuthority(_config: AnyRecord, active: AnyRecord | null = null, gatewayEvidence: AnyRecord | null = null): AnyRecord {
   return buildActiveSessionAuthorityPolicy({
-    lifecycleActiveSession: active || null,
+    lifecycleActiveSession: selectTruthyValue(() => (active), () => (null)),
     gatewayEvidence,
     requireGatewayConfirmation: Boolean(gatewayEvidence),
   } as AnyRecord) as AnyRecord;
@@ -115,7 +174,7 @@ async function assertRecoverySessionIdentityConfirmed(config: AnyRecord, {
   moduleId = null,
   gateId = null,
   gateType = null,
-  previousPhase = 'unknown',
+  previousPhase = 'missing_previous_phase',
   attempt = null,
   dispatchId = null,
   gatewayLabel = null,
@@ -155,7 +214,7 @@ async function reconcileActiveStaleSession(config: AnyRecord, {
   moduleId = null,
   gateId = null,
   gateType = null,
-  previousPhase = 'unknown',
+  previousPhase = 'missing_previous_phase',
   active = null,
   attempt = null,
   dispatchId = null,
@@ -176,7 +235,7 @@ async function reconcileActiveStaleSession(config: AnyRecord, {
     attempt,
     dispatchId,
     gatewayLabel,
-    sessionKey: active?.session_key || null,
+    sessionKey: selectTruthyValue(() => (active?.session_key), () => (null)),
     diagnosticLabel,
     statusBeforeReset,
     activeSessionPath,
@@ -187,12 +246,12 @@ async function reconcileActiveStaleSession(config: AnyRecord, {
     ...monitorIdentity,
     gateway_label: gatewayLabel,
     diagnostic_label: diagnosticLabel,
-    session_key: active.session_key || null,
+    session_key: selectDefinedValue(() => (active.session_key), () => (null)),
     attempt,
-    dispatch_id: dispatchId || null,
+    dispatch_id: selectTruthyValue(() => (dispatchId), () => (null)),
     agent_type: previousPhase,
   }, {
-    streamLogPath: active.stream_log_path || null,
+    streamLogPath: selectTruthyValue(() => (active.stream_log_path), () => (null)),
   });
   const definitelyStopped = isDefinitivelyStoppedMonitorState(mon);
   const sessionAuthority = buildRecoverySessionAuthority(config, active, {
@@ -203,7 +262,7 @@ async function reconcileActiveStaleSession(config: AnyRecord, {
 
   if (definitelyStopped) {
     const note = describeStaleRecovery(previousPhase, STALE_RECOVERY_ACTIONS.OBSERVED_TERMINAL, {
-      detail: mon.lastDetail || mon.lastSummary || 'terminal',
+      detail: selectDefinedValue(() => (firstTextValue(mon.lastDetail, mon.lastSummary)), () => (TERMINAL_MONITOR_DETAIL)),
     });
     return {
       recoveryAction: STALE_RECOVERY_ACTIONS.OBSERVED_TERMINAL,
@@ -214,13 +273,13 @@ async function reconcileActiveStaleSession(config: AnyRecord, {
 
   const stopResult = await terminateSession(active.session_key, {
     ...sessionLifecyclePolicies(config),
-    runtime: active.runtime || null,
-    model: active.model || null,
-    agentId: active.agent_id || null,
-    label: gatewayLabel || diagnosticLabel || null,
+    runtime: runtimeName(active),
+    model: selectTruthyValue(() => (active.model), () => (null)),
+    agentId: selectTruthyValue(() => (active.agent_id), () => (null)),
+    label: selectTruthyValue(() => (selectTruthyValue(() => (gatewayLabel), () => (diagnosticLabel))), () => (null)),
     cleanup: async () => {
-      if ((active.runtime || '').toLowerCase() !== 'subagent') {
-        await (reaperAfterKill as any)(active.agent_id || null, active.session_key, gatewayLabel || diagnosticLabel || null);
+      if (runtimeName(active)?.toLowerCase() !== 'subagent') {
+        await (reaperAfterKill as any)(selectTruthyValue(() => (active.agent_id), () => (null)), active.session_key, selectTruthyValue(() => (selectTruthyValue(() => (gatewayLabel), () => (diagnosticLabel))), () => (null)));
       }
     },
   }) as AnyRecord;
@@ -235,18 +294,18 @@ async function reconcileActiveStaleSession(config: AnyRecord, {
       attempt,
       dispatchId,
       gatewayLabel,
-      sessionKey: active.session_key || null,
+      sessionKey: selectDefinedValue(() => (active.session_key), () => (null)),
       diagnosticLabel,
       statusBeforeReset,
       activeSessionPath,
       stopResult,
       sessionAuthority: buildRecoverySessionAuthority(config, active, {
         confirmed: false,
-        state: stopResult?.state || null,
+        state: selectTruthyValue(() => (stopResult?.state), () => (null)),
         observed_via: 'kill_confirmation',
       }),
     });
-    throw new Error(`${unconfirmedErrorSubject} could not be confirmed stopped (${stopResult?.state || 'unknown'})`);
+    throw new Error(`${unconfirmedErrorSubject} could not be confirmed stopped (${selectTruthyValue(() => (stopResult?.state), () => ('stop_confirmation_state_missing'))})`);
   }
 
   const note = describeStaleRecovery(previousPhase, STALE_RECOVERY_ACTIONS.KILLED_ORPHAN, {
@@ -261,7 +320,7 @@ async function reconcileActiveStaleSession(config: AnyRecord, {
 
 function runRefs(config: AnyRecord, scope: string, id: string, sessionKey: string | null): AnyRecord {
   const runId = recoveryRunId(config);
-  const recoveryId = `recovery_blocked:${runId || 'no-run-id'}:${scope}:${id || 'unknown'}:${sessionKey || 'no-session'}`;
+  const recoveryId = `recovery_blocked:${selectTruthyValue(() => (runId), () => ('no-run-id'))}:${scope}:${selectTruthyValue(() => (id), () => ('missing_recovery_target_id'))}:${selectTruthyValue(() => (sessionKey), () => ('no-session'))}`;
   return {
     primary_ref: { kind: 'recovery_blocked', id: recoveryId },
     run_id: runId,
@@ -274,7 +333,7 @@ async function recordUnconfirmedRecoveryBlock(config: AnyRecord, {
   moduleId = null,
   gateId = null,
   gateType = null,
-  previousPhase = 'unknown',
+  previousPhase = 'missing_previous_phase',
   attempt = null,
   dispatchId = null,
   gatewayLabel = null,
@@ -287,8 +346,8 @@ async function recordUnconfirmedRecoveryBlock(config: AnyRecord, {
   reason: explicitReason = null,
   sessionAuthority = null,
 } : AnyRecord = {}): Promise<void> {
-  const id = moduleId || gateId || 'unknown';
-  const reason = explicitReason || `Recovery blocked: stale ${scope} session stop was not confirmed (${stopResult?.state || 'unknown'})`;
+  const id = selectTruthyValue(() => (selectTruthyValue(() => (moduleId), () => (gateId))), () => ('missing_recovery_target_id'));
+  const reason = selectTruthyValue(() => (explicitReason), () => (`Recovery blocked: stale ${scope} session stop was not confirmed (${selectTruthyValue(() => (stopResult?.state), () => ('stop_confirmation_state_missing'))})`));
   try {
     appendLifecycleEvent(config, {
       type: 'recovery.stale_blocked',
@@ -310,7 +369,7 @@ async function recordUnconfirmedRecoveryBlock(config: AnyRecord, {
         recovery_target_status: 'unchanged',
         stop_requested: stopResult?.requested === true,
         stop_confirmed: stopResult?.confirmed === true,
-        stop_state: stopResult?.state || null,
+        stop_state: selectTruthyValue(() => (stopResult?.state), () => (null)),
         session_authority: sessionAuthority,
         cleanup_attempted: stopResult?.cleanupAttempted === true,
         reason,
@@ -354,9 +413,9 @@ export { PIPELINE_RUN_CONCURRENCY_LIMIT, acquirePipelineRunLock, releasePipeline
 
 export async function reconcileStaleModuleState(config: AnyRecord, progress: AnyRecord): Promise<void> {
   const now = new Date().toISOString();
-  const moduleEntries = Object.entries(progress.modules || {}) as [string, AnyRecord][];
+  const moduleEntries = Object.entries(objectRecord(progress.modules)) as [string, AnyRecord][];
   for (const [moduleId, mod] of moduleEntries) {
-    const dir = mod?.dir || moduleId;
+    const dir = recoveryModuleDir(moduleId, mod);
     const status = loadStatus(config, dir);
     if (!status) continue;
     if (!['IN_PROGRESS', 'TESTING'].includes(status.status)) continue;
@@ -366,8 +425,8 @@ export async function reconcileStaleModuleState(config: AnyRecord, progress: Any
     let note = null;
     let recoveryAction = null;
     let sessionAuthority = null;
-    const active = status.active_agent || null;
-    const previousPhase = status.current_phase || 'unknown';
+    const active = selectTruthyValue(() => (status.active_agent), () => (null));
+    const previousPhase = selectTruthyValue(() => (status.current_phase), () => ('missing_phase'));
     const recoveryAttempt = resolveRecoveryAttempt(status, active);
     const recoveryGatewayLabel = resolveRecoveryGatewayLabel(status, active);
     const recoveryDiagnosticLabel = resolveDiagnosticLabel(active);
@@ -379,9 +438,9 @@ export async function reconcileStaleModuleState(config: AnyRecord, progress: Any
           moduleId,
           previousPhase,
           attempt: recoveryAttempt,
-          dispatchId: active.dispatch_id || null,
+          dispatchId: selectDefinedValue(() => (active.dispatch_id), () => (null)),
           gatewayLabel: recoveryGatewayLabel,
-          sessionKey: active.session_key || null,
+          sessionKey: selectDefinedValue(() => (active.session_key), () => (null)),
           diagnosticLabel: recoveryDiagnosticLabel,
           statusBeforeReset: oldStatus,
           active,
@@ -417,16 +476,17 @@ export async function reconcileStaleModuleState(config: AnyRecord, progress: Any
     }
 
     if (!shouldReset) continue;
-    const recoveryDispatchId = active?.dispatch_id ?? resolveStatusDispatchId(status);
-    const recoverySessionKey = active?.session_key || resolveStatusSessionKey(status);
+    const recoveryDispatchId = recoveryDispatchIdValue(active, status);
+    const recoverySessionKey = recoverySessionKeyValue(active, status);
     const recoveryTargetStatus = getRetryStatusForPhase(previousPhase);
+    const recoveryActionForReset = requireRecoveryAction(recoveryAction, 'module', moduleId);
     appendStaleRecoveryLifecycleEvent(config, {
       moduleId,
       dir,
       status,
       attempt: recoveryAttempt,
       recoveryTargetStatus,
-      recoveryAction,
+      recoveryAction: recoveryActionForReset,
       reason: note,
       sessionKey: recoverySessionKey,
       dispatchId: recoveryDispatchId,
@@ -448,18 +508,18 @@ export async function reconcileStaleModuleState(config: AnyRecord, progress: Any
     if (recoveryTargetStatus === 'PENDING') {
       recoveryTransition = markModuleLifecycleIntent(status, 'stale_recovery_reset_for_retry', {
         oldStatus,
-        newStatus: status.status || recoveryTargetStatus,
+        newStatus: recoveryTransitionStatus(status, recoveryTargetStatus),
         previousPhase,
-        phase: status.current_phase || null,
+        phase: selectTruthyValue(() => (status.current_phase), () => (null)),
         now,
         note,
       });
     }
     saveStatus(config, dir, status, recoveryTransition as any);
-    onModuleStatusChanged({ config, runId: recoveryRunId(config) || '' }, moduleId, {
-      title: mod?.title || null,
+    onModuleStatusChanged({ config, runId: selectDefinedValue(() => (recoveryRunId(config)), () => ('')) }, moduleId, {
+      title: selectTruthyValue(() => (mod?.title), () => (null)),
       old_status: oldStatus,
-      new_status: status.status || null,
+      new_status: selectTruthyValue(() => (status.status), () => (null)),
       phase: previousPhase,
       attempt: recoveryAttempt,
       dispatch_id: recoveryDispatchId,
@@ -482,8 +542,8 @@ export async function reconcileStaleModuleState(config: AnyRecord, progress: Any
           ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: recoveryRunId(config), module_id: moduleId, attempt: recoveryAttempt, dispatch_id: recoveryDispatchId, gateway_label: recoveryGatewayLabel, session_key: recoverySessionKey }),
           ...diagnosticLabelField(recoveryDiagnosticLabel),
           { name: 'Previous Phase', value: previousPhase, inline: true },
-          { name: 'Recovery Action', value: recoveryAction || STALE_RECOVERY_ACTIONS.RESET_WITHOUT_SESSION, inline: true },
-          { name: 'Status Reset To', value: status.status || 'PENDING', inline: true },
+          { name: 'Recovery Action', value: recoveryActionForReset, inline: true },
+          { name: 'Status Reset To', value: selectDefinedValue(() => (textValue(status.status)), () => (PENDING_STATUS)), inline: true },
           { name: 'Meaning', value: 'No fresh suite result exists yet. This message is recovery from an earlier interrupted child session.', inline: false },
         ], { correlation: recoveryDiscordCorrelation });
     } catch (e) {
@@ -495,37 +555,37 @@ export async function reconcileStaleModuleState(config: AnyRecord, progress: Any
 export async function reconcileStaleGateSessions(config: AnyRecord, progress: AnyRecord): Promise<void> {
   if (!ensureProjectLogDir(config)) return;
 
-  for (const gateId of Object.keys(progress.gates || {})) {
+  for (const gateId of Object.keys(objectRecord(progress.gates))) {
     const recoveryEvidence = resolveGateActiveSessionRecoveryEvidence(config, gateId);
     const activePath = recoveryEvidence.path;
     if (!recoveryEvidence.has_recovery_evidence) continue;
 
     const active = recoveryEvidence.active;
     if (!active?.session_key) {
-      const weakLifecycle = recoveryEvidence.policy?.lifecycle_active_session || null;
+      const weakLifecycle = selectTruthyValue(() => (recoveryEvidence.policy?.lifecycle_active_session), () => (null));
       if (weakLifecycle) {
         await recordUnconfirmedRecoveryBlock(config, {
           scope: 'gate',
           gateId,
           gateType: getProgressGateType(progress, gateId),
-          previousPhase: weakLifecycle.phase || 'gate',
-          attempt: weakLifecycle.attempt ?? null,
-          dispatchId: weakLifecycle.dispatch_id || null,
-          gatewayLabel: weakLifecycle.gateway_label || null,
-          sessionKey: weakLifecycle.session_key || null,
+          previousPhase: selectDefinedValue(() => (textValue(weakLifecycle.phase)), () => (GATE_RECOVERY_PHASE)),
+          attempt: selectDefinedValue(() => (weakLifecycle.attempt), () => (null)),
+          dispatchId: selectTruthyValue(() => (weakLifecycle.dispatch_id), () => (null)),
+          gatewayLabel: selectTruthyValue(() => (weakLifecycle.gateway_label), () => (null)),
+          sessionKey: selectTruthyValue(() => (weakLifecycle.session_key), () => (null)),
           diagnosticLabel: resolveDiagnosticLabel(weakLifecycle),
           activeSessionPath: activePath,
-          stopResult: { requested: false, confirmed: false, state: recoveryEvidence.policy?.code || 'identity_unconfirmed' },
+          stopResult: { requested: false, confirmed: false, state: identityUnconfirmedCode(recoveryEvidence) },
           recoveryAction: 'identity_unconfirmed',
-          reason: `Recovery blocked: stale gate session identity was not confirmed (${recoveryEvidence.policy?.code || 'identity_unconfirmed'})`,
+          reason: `Recovery blocked: stale gate session identity was not confirmed (${identityUnconfirmedCode(recoveryEvidence)})`,
           sessionAuthority: recoveryEvidence.policy,
         });
-        throw new Error(`stale gate session identity was not confirmed (${recoveryEvidence.policy?.code || 'identity_unconfirmed'})`);
+        throw new Error(`stale gate session identity was not confirmed (${identityUnconfirmedCode(recoveryEvidence)})`);
       }
       continue;
     }
 
-    const previousPhase = active.phase || 'gate';
+    const previousPhase = selectDefinedValue(() => (textValue(active.phase)), () => (GATE_RECOVERY_PHASE));
     const gateType = getProgressGateType(progress, gateId);
     const gateRecoveryGatewayLabel = resolveRecoveryGatewayLabel(null, active);
     const gateRecoveryDiagnosticLabel = resolveDiagnosticLabel(active);
@@ -538,10 +598,10 @@ export async function reconcileStaleGateSessions(config: AnyRecord, progress: An
         gateId,
         gateType,
         previousPhase,
-        attempt: active.attempt ?? null,
-        dispatchId: active.dispatch_id || null,
+        attempt: selectDefinedValue(() => (active.attempt), () => (null)),
+        dispatchId: selectDefinedValue(() => (active.dispatch_id), () => (null)),
         gatewayLabel: gateRecoveryGatewayLabel,
-        sessionKey: active.session_key || null,
+        sessionKey: selectDefinedValue(() => (active.session_key), () => (null)),
         diagnosticLabel: gateRecoveryDiagnosticLabel,
         activeSessionPath: activePath,
         active,
@@ -552,16 +612,17 @@ export async function reconcileStaleGateSessions(config: AnyRecord, progress: An
       recoveryAction = recovered.recoveryAction;
       note = recovered.note;
       sessionAuthority = recovered.sessionAuthority;
+      const gateRecoveryAction = requireRecoveryAction(recoveryAction, 'gate', gateId);
 
       appendStaleRecoveryLifecycleEvent(config, {
         gateId,
         gateType,
-        attempt: active.attempt ?? null,
+        attempt: selectDefinedValue(() => (active.attempt), () => (null)),
         recoveryTargetStatus: 'PENDING',
-        recoveryAction: recoveryAction || STALE_RECOVERY_ACTIONS.KILLED_ORPHAN,
+        recoveryAction: gateRecoveryAction,
         reason: note,
-        sessionKey: active.session_key || null,
-        dispatchId: active.dispatch_id || null,
+        sessionKey: selectDefinedValue(() => (active.session_key), () => (null)),
+        dispatchId: selectDefinedValue(() => (active.dispatch_id), () => (null)),
         gatewayLabel: gateRecoveryGatewayLabel,
         staleEvidence: {
           previous_phase: previousPhase,
@@ -580,16 +641,16 @@ export async function reconcileStaleGateSessions(config: AnyRecord, progress: An
           runId: recoveryRunId(config),
           gateId,
           gateType,
-          attempt: active.attempt ?? null,
-          dispatchId: active.dispatch_id || null,
+          attempt: selectDefinedValue(() => (active.attempt), () => (null)),
+          dispatchId: selectDefinedValue(() => (active.dispatch_id), () => (null)),
           gatewayLabel: gateRecoveryGatewayLabel,
-          sessionKey: active.session_key || null,
+          sessionKey: selectDefinedValue(() => (active.session_key), () => (null)),
         });
         await discord(config, 'WARN', `Gate ${gateId} — Recovered stale ${previousPhase} session`, note, [
-          ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: recoveryRunId(config), gate_id: gateId, gate_type: gateType, attempt: active.attempt ?? null, dispatch_id: active.dispatch_id || null, gateway_label: gateRecoveryGatewayLabel, session_key: active.session_key || null }),
+          ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: recoveryRunId(config), gate_id: gateId, gate_type: gateType, attempt: selectDefinedValue(() => (active.attempt), () => (null)), dispatch_id: selectDefinedValue(() => (active.dispatch_id), () => (null)), gateway_label: gateRecoveryGatewayLabel, session_key: selectDefinedValue(() => (active.session_key), () => (null)) }),
           ...diagnosticLabelField(gateRecoveryDiagnosticLabel),
           { name: 'Previous Phase', value: previousPhase, inline: true },
-          { name: 'Recovery Action', value: recoveryAction || STALE_RECOVERY_ACTIONS.KILLED_ORPHAN, inline: true },
+          { name: 'Recovery Action', value: gateRecoveryAction, inline: true },
           { name: 'Action', value: 'Cleared stale gate session state', inline: true },
         ], { correlation: recoveryDiscordCorrelation });
       } catch (e) {

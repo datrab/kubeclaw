@@ -3,6 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "verify": "node scripts/verify-fixture.mjs"
+    "verify": "node scripts/verify-fixture.mjs",
+    "verify:01-nginx": "node scripts/verify-fixture.mjs --module 01-nginx",
+    "verify:02-nginx": "node scripts/verify-fixture.mjs --module 02-nginx",
+    "verify:03-nginx": "node scripts/verify-fixture.mjs --module 03-nginx",
+    "verify:04-nginx": "node scripts/verify-fixture.mjs --module 04-nginx"
   }
 }

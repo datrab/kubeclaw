@@ -22,71 +22,86 @@ import {
   resolveStatusCorrelationProvenance,
 } from '../services/correlation.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export function _telemetryCtx(config) {
-  return getActiveContext() || { config, runId: config?.run_id || config?._runId || '' };
+  return selectDefinedValue(() => (getActiveContext()), () => ({ config, runId: selectDefinedValue(() => (selectDefinedValue(() => (config?.run_id), () => (config?._runId))), () => ('')) }));
+}
+
+function firstDefined(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return undefined;
 }
 
 function resolveProjectedAttempt(result) {
-  return result?.attempt ?? result?.rate_limit_status?.attempt ?? null;
+  return selectDefinedValue(() => (selectDefinedValue(() => (result?.attempt), () => (result?.rate_limit_status?.attempt))), () => (null));
 }
 
 function resolveProjectedDispatchId(result) {
-  return result?.dispatch_id ?? result?.rate_limit_status?.dispatch_id ?? null;
+  return selectDefinedValue(() => (selectDefinedValue(() => (result?.dispatch_id), () => (result?.rate_limit_status?.dispatch_id))), () => (null));
 }
 
 function resolveProjectedGatewayLabel(result) {
-  return result?.gateway_label ?? result?.rate_limit_status?.gateway_label ?? null;
+  return selectDefinedValue(() => (selectDefinedValue(() => (result?.gateway_label), () => (result?.rate_limit_status?.gateway_label))), () => (null));
 }
 
 function resolveProjectedSessionKey(result) {
-  return result?.session_key ?? result?.rate_limit_status?.session_key ?? null;
+  return selectDefinedValue(() => (selectDefinedValue(() => (result?.session_key), () => (result?.rate_limit_status?.session_key))), () => (null));
 }
 
 export function getResultGateType(result) {
-  return result?.gate_type
-    ?? result?.status?.gate_type
-    ?? result?.gate?.type
-    ?? null;
+  return firstDefined(result?.gate_type, result?.status?.gate_type, result?.gate?.type, null);
 }
 
 export function getProgressGateType(progress, gateId) {
-  return progress?.gates?.[gateId]?.type || null;
+  return selectTruthyValue(() => (progress?.gates?.[gateId]?.type), () => (null));
 }
 
 export function resolvePipelineGateType(progress, stepType, stepId, result = null) {
   if (stepType !== 'gate') return null;
-  return getResultGateType(result)
-    ?? getProgressGateType(progress, stepId)
-    ?? null;
+  return firstDefined(getResultGateType(result), getProgressGateType(progress, stepId), null);
+}
+
+function resultGateTypeAuthority(progress, stepId, result, gateType = null) {
+  return firstDefined(gateType, getResultGateType(result), getProgressGateType(progress, stepId), null);
+}
+
+function isRateLimitExhausted(result) {
+  return Boolean(selectTruthyValue(() => (result?.rate_limit_exhausted === true), () => (result?.rate_limit_status?.rate_limit_exhausted === true)));
+}
+
+function authoritativeModuleState(config, progress, moduleId, schedulerStatus) {
+  return firstDefined(loadAuthoritativeModuleState(config, progress, moduleId), schedulerStatus, null);
 }
 
 export function buildEscalationPayload(stepType, stepId, result, action, gateType = null) {
   return {
-    action: action || null,
-    fail_count: result?.fail_count ?? null,
-    last_failure: result?.reason || action || null,
+    action: selectTruthyValue(() => (action), () => (null)),
+    fail_count: selectDefinedValue(() => (result?.fail_count), () => (null)),
+    last_failure: selectTruthyValue(() => (selectTruthyValue(() => (result?.reason), () => (action))), () => (null)),
     session_key: resolveResultSessionKey(result),
     attempt: resolveResultAttempt(result),
     dispatch_id: resolveResultDispatchId(result),
     gateway_label: resolveResultGatewayLabel(result),
     ...(stepType === 'module' ? { module_id: stepId } : {}),
-    ...(stepType === 'gate' ? { gate_id: stepId, gate_type: gateType ?? getResultGateType(result) ?? null } : {}),
-    ...(stepType === 'validator' ? { validator_id: stepId, validator_stage_id: result?.validator_stage_id || result?.validator || null } : {}),
-    terminal_status: result?.terminal_status ?? result?.terminal?.status ?? null,
-    terminal_decision: result?.terminal_decision ?? result?.terminal?.decision ?? null,
+    ...(stepType === 'gate' ? { gate_id: stepId, gate_type: resultGateTypeAuthority(null, stepId, result, gateType) } : {}),
+    ...(stepType === 'validator' ? { validator_id: stepId, validator_stage_id: selectTruthyValue(() => (selectTruthyValue(() => (result?.validator_stage_id), () => (result?.validator))), () => (null)) } : {}),
+    terminal_status: selectDefinedValue(() => (selectDefinedValue(() => (result?.terminal_status), () => (result?.terminal?.status))), () => (null)),
+    terminal_decision: selectDefinedValue(() => (selectDefinedValue(() => (result?.terminal_decision), () => (result?.terminal?.decision))), () => (null)),
   };
 }
 
 export function buildPipelineHaltPayload(stepType, stepId, result, reason, gateType = null) {
-  const maxRateLimitPauses = result?.max_rate_limit_pauses ?? result?.rate_limit_status?.max_rate_limit_pauses ?? null;
-  const rateLimitExhausted = result?.rate_limit_exhausted === true || result?.rate_limit_status?.rate_limit_exhausted === true;
-  const terminalStatus = result?.terminal_status ?? result?.terminal?.status ?? null;
+  const maxRateLimitPauses = selectDefinedValue(() => (result?.max_rate_limit_pauses), () => (null));
+  const rateLimitExhausted = isRateLimitExhausted(result);
+  const terminalStatus = selectDefinedValue(() => (selectDefinedValue(() => (result?.terminal_status), () => (result?.terminal?.status))), () => (null));
   return {
-    step_type: stepType || null,
-    step_id: stepId || null,
-    reason: reason || 'UNKNOWN',
+    step_type: selectTruthyValue(() => (stepType), () => (null)),
+    step_id: selectTruthyValue(() => (stepId), () => (null)),
+    reason: selectDefinedValue(() => (reason), () => ('UNKNOWN')),
     terminal_status: terminalStatus,
-    terminal_decision: result?.terminal_decision ?? result?.terminal?.decision ?? null,
+    terminal_decision: selectDefinedValue(() => (selectDefinedValue(() => (result?.terminal_decision), () => (result?.terminal?.decision))), () => (null)),
     session_key: resolveResultSessionKey(result),
     attempt: resolveResultAttempt(result),
     dispatch_id: resolveResultDispatchId(result),
@@ -96,8 +111,8 @@ export function buildPipelineHaltPayload(stepType, stepId, result, reason, gateT
       max_rate_limit_pauses: maxRateLimitPauses,
     } : {}),
     ...(stepType === 'module' ? { module_id: stepId } : {}),
-    ...(stepType === 'gate' ? { gate_id: stepId, gate_type: gateType ?? getResultGateType(result) ?? null } : {}),
-    ...(stepType === 'validator' ? { validator_id: stepId, validator_stage_id: result?.validator_stage_id || result?.validator || null } : {}),
+    ...(stepType === 'gate' ? { gate_id: stepId, gate_type: resultGateTypeAuthority(null, stepId, result, gateType) } : {}),
+    ...(stepType === 'validator' ? { validator_id: stepId, validator_stage_id: selectTruthyValue(() => (selectTruthyValue(() => (result?.validator_stage_id), () => (result?.validator))), () => (null)) } : {}),
   };
 }
 
@@ -107,18 +122,18 @@ export function projectPipelineGateState(config, gateId, gate, deps = {}) {
 
 export function loadModuleStatus(config, progress, moduleId, deps = {}) {
   void deps;
-  const moduleConfig = progress?.modules?.[moduleId] || null;
+  const moduleConfig = selectTruthyValue(() => (progress?.modules?.[moduleId]), () => (null));
   return projectModuleSchedulerState(config, moduleId, moduleConfig);
 }
 
 export function loadAuthoritativeModuleState(config, progress, moduleId) {
-  const moduleConfig = progress?.modules?.[moduleId] || null;
+  const moduleConfig = selectTruthyValue(() => (progress?.modules?.[moduleId]), () => (null));
   return projectModuleSchedulerState(config, moduleId, moduleConfig);
 }
 
 export function hasModuleStarted(status) {
-  if (!status || typeof status !== 'object') return false;
-  if (status.started_at || status.current_phase) return true;
+  if (selectTruthyValue(() => (!status), () => (typeof status !== 'object'))) return false;
+  if (selectTruthyValue(() => (status.started_at), () => (status.current_phase))) return true;
   if (status.current_attempt != null) return true;
   if (Array.isArray(status.history) && status.history.length > 0) return true;
   return status.status && status.status !== STATUS.PENDING;
@@ -126,7 +141,7 @@ export function hasModuleStarted(status) {
 
 export function hasAnyStartedModules(config, progress, deps = {}) {
   return progress.execution_order.some(stepId => {
-    if (stepId.startsWith('gate:') || stepId.startsWith('validator:')) return false;
+    if (selectTruthyValue(() => (stepId.startsWith('gate:')), () => (stepId.startsWith('validator:')))) return false;
     const moduleId = stepId.startsWith('module:') ? stepId.slice('module:'.length) : stepId;
     const mod = progress.modules[moduleId];
     if (!mod) return false;
@@ -137,8 +152,8 @@ export function hasAnyStartedModules(config, progress, deps = {}) {
 
 export function buildBlockedModuleResult(config, progress, moduleId, deps = {}) {
   const status = loadModuleStatus(config, progress, moduleId, deps);
-  const authoritative = loadAuthoritativeModuleState(config, progress, moduleId) || status;
-  const reason = authoritative?.blocked_reason || status?.blockedReason || status?.note || 'BLOCKED';
+  const authoritative = authoritativeModuleState(config, progress, moduleId, status);
+  const reason = selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (authoritative?.blocked_reason), () => (status?.blockedReason))), () => (status?.note))), () => ('BLOCKED'));
   return buildPipelineStepResult({
     stepType: PIPELINE_STEP_TYPES.MODULE,
     stepId: moduleId,
@@ -150,7 +165,7 @@ export function buildBlockedModuleResult(config, progress, moduleId, deps = {}) 
       summary: reason,
       metadata: {
         blocked_source: 'module_scheduler_projection',
-        fail_count: authoritative?.blocked_fail_count ?? authoritative?.fail_count ?? status?.blockedFailCount ?? status?.fail_count ?? null,
+        fail_count: selectDefinedValue(() => (authoritative?.blocked_fail_count), () => (null)),
         module_status: authoritative,
         scheduler_status: status,
       },
@@ -161,7 +176,7 @@ export function buildBlockedModuleResult(config, progress, moduleId, deps = {}) 
       dispatch_id: null,
       gateway_label: null,
       session_key: null,
-      correlation_provenance: resolveStatusCorrelationProvenance(authoritative || status || null),
+      correlation_provenance: resolveStatusCorrelationProvenance(selectTruthyValue(() => (selectTruthyValue(() => (authoritative), () => (status))), () => (null))),
     },
     terminalAction: PIPELINE_TERMINAL_ACTIONS.NOTIFY_OPERATOR,
     terminalScope: PIPELINE_TERMINAL_SCOPES.MODULE,
@@ -177,20 +192,20 @@ export function buildResultWithStepCorrelation(config, progress, stepType, stepI
   if (stepType === 'gate') {
     return {
       ...result,
-      gate_type: getResultGateType(result) ?? getProgressGateType(progress, stepId),
+      gate_type: resultGateTypeAuthority(progress, stepId, result),
     };
   }
   if (stepType !== 'module') return { ...result };
 
   const rawStatus = loadModuleStatus(config, progress, stepId, deps);
-  const terminalStatus = result?.terminal_status ?? result?.terminal?.status ?? null;
-  const exposeIdentity = terminalStatus !== 'blocked' || result?.attempt != null || result?.dispatch_id != null;
+  const terminalStatus = selectDefinedValue(() => (selectDefinedValue(() => (result?.terminal_status), () => (result?.terminal?.status))), () => (null));
+  const exposeIdentity = selectTruthyValue(() => (selectTruthyValue(() => (terminalStatus !== 'blocked'), () => (result?.attempt != null))), () => (result?.dispatch_id != null));
   return {
     ...result,
     attempt: exposeIdentity ? resolveProjectedAttempt(result) : null,
     dispatch_id: exposeIdentity ? resolveProjectedDispatchId(result) : null,
     gateway_label: exposeIdentity ? resolveProjectedGatewayLabel(result) : null,
     session_key: exposeIdentity ? resolveProjectedSessionKey(result) : null,
-    correlation_provenance: resolveStatusCorrelationProvenance(rawStatus || null),
+    correlation_provenance: resolveStatusCorrelationProvenance(selectTruthyValue(() => (rawStatus), () => (null))),
   };
 }

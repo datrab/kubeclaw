@@ -16,14 +16,21 @@ import {
   writeCostReport,
 } from './observability.ts';
 import { buildGovernanceSummary } from './governance-context.ts';
-import { copyRedactedTranscriptArtifact, sanitizeJsonEgress, sanitizeMarkdownText } from '../redaction.ts';
+import { buildRunFacts } from './run-facts.ts';
+import { copyTranscriptArtifact, sanitizeJsonEgress, sanitizeMarkdownText } from '../egress.ts';
 import {
   onBudgetExceeded,
   onBudgetWarning,
   onSummaryStarted,
   onSummaryCompleted,
 } from './telemetry.ts';
-import { buildLatestPointer, buildSummaryArtifactBundle, getPipelineArtifactBundle } from './artifact-bundle.ts';
+import {
+  buildLatestPointer,
+  buildRunCostSummary,
+  buildRunTestSummary,
+  buildSummaryArtifactBundle,
+  getPipelineArtifactBundle,
+} from './artifact-bundle.ts';
 import {
   createTrackedSummarySessionRateLimitExhaustionOptions,
   createTrackedSummarySessionRateLimitRecoveryOptions,
@@ -37,28 +44,29 @@ import {
   resolveStatusDispatchId,
   resolveStatusSessionKey,
 } from './correlation.ts';
-import { buildGeneratorResult } from './contracts/generator-result.ts';
+import { buildGeneratorArtifactRef, buildGeneratorResult } from './contracts/generator-result.ts';
 import { createTrackedSummarySessionCleanup } from './summary-session-cleanup.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from './discord-fields.ts';
 import { sessionLifecyclePolicies } from '../core/session-policy.ts';
 import { getReviewDefaultsConfig } from './runtime-defaults.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 function buildPipelineReviewDiscordFields(identity = {}, extra = []) {
   return buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, identity, extra);
 }
 
 function buildPipelineReviewDiscordCorrelation(identity = {}) {
   return {
-    run_id: identity.run_id || null,
-    attempt: identity.attempt ?? null,
-    dispatch_id: identity.dispatch_id || null,
-    gateway_label: identity.gateway_label || null,
-    session_key: identity.session_key || null,
+    run_id: selectTruthyValue(() => (identity.run_id), () => (null)),
+    attempt: selectDefinedValue(() => (identity.attempt), () => (null)),
+    dispatch_id: selectTruthyValue(() => (identity.dispatch_id), () => (null)),
+    gateway_label: selectTruthyValue(() => (identity.gateway_label), () => (null)),
+    session_key: selectTruthyValue(() => (identity.session_key), () => (null)),
   };
 }
 
 function resolvePipelineReviewGatewayLabel(status) {
-  return status?.gateway_label ?? status?.active_agent?.gateway_label ?? null;
+  return selectDefinedValue(() => (selectDefinedValue(() => (status?.gateway_label), () => (status?.active_agent?.gateway_label))), () => (null));
 }
 
 const DEFAULT_PIPELINE_REVIEW_DEPS = {
@@ -69,20 +77,77 @@ const DEFAULT_PIPELINE_REVIEW_DEPS = {
   pollForFile,
   sleep,
   discord,
-  copyRedactedTranscriptArtifact,
+  copyTranscriptArtifact,
 };
 
 const COMPLETED_TERMINAL_STATUSES = new Set([0, 'succeeded', 'completed']);
+const CUMULATIVE_COUNT_ABSENT = 0;
+const PIPELINE_REVIEW_OUTPUT_FILE = 'logs/pipeline-review/PIPELINE-REVIEW.md';
+const PIPELINE_REVIEW_JSON_OUTPUT_FILE = 'logs/pipeline-review/PIPELINE-REVIEW.json';
+const PIPELINE_REVIEW_INSTRUCTIONS_FILE = 'pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md';
+const PIPELINE_REVIEW_SUBAGENT_MODEL = 'gpt5';
+const PIPELINE_REVIEW_HARNESS_AGENT = 'claude';
+const PIPELINE_REVIEW_RATE_LIMIT_EXHAUSTED_REASON = 'rate_limit_exhausted';
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : null;
+}
+
+function reviewConfig(config, progress = null) {
+  return selectDefinedValue(() => (selectDefinedValue(() => (objectRecord(config?.pipeline_review)), () => (objectRecord(progress?.pipeline_review)))), () => ({}));
+}
+
+function budgetConfig(config) {
+  return selectDefinedValue(() => (objectRecord(config?.observability?.budget)), () => ({}));
+}
+
+function cumulativeCount(value) {
+  return selectDefinedValue(() => (value), () => (CUMULATIVE_COUNT_ABSENT));
+}
+
+function requireText(value, label) {
+  if (typeof value === 'string' && value.trim()) return value.trim();
+  throw new Error(`${label}: required non-empty string`);
+}
+
+function errorMessage(error) {
+  return error instanceof Error ? error.message : String(error);
+}
+
+function requireArtifactBundlePath(bundle, key) {
+  return requireText(bundle?.[key], `pipeline artifact bundle.${key}`);
+}
+
+function pipelineReviewPathConfig(pr, key, fallback) {
+  return selectDefinedValue(() => (pr[key]), () => (fallback));
+}
 
 function getPipelineReviewDeps(config, overrides = {}) {
   return { ...DEFAULT_PIPELINE_REVIEW_DEPS, ...selectDeps(overrides, 'pipelineReview') };
 }
 
 function requirePositiveTimeoutMinutes(value, label) {
-  if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value)))), () => (value <= 0))) {
     throw new Error(`${label}: required positive number in swarm.config.json`);
   }
   return value;
+}
+
+function requirePositiveInteger(value, label) {
+  if (!Number.isInteger(value) || value <= 0) throw new Error(`${label}: required positive integer in swarm.config.json`);
+  return value;
+}
+
+function resolvePipelineReviewMaxAttempts(pr) {
+  return requirePositiveInteger(Number(selectDefinedValue(() => (pr.agent_max_attempts), () => (1))), 'config.pipeline_review.agent_max_attempts');
+}
+
+function removePipelineReviewOutputArtifacts(config, pr) {
+  for (const artifactPath of [pipelineReviewOutputPath(config, pr), pipelineReviewJsonPath(config, pr)]) {
+    try {
+      if (fs.existsSync(artifactPath)) fs.unlinkSync(artifactPath);
+    } catch (_error) {}
+  }
 }
 
 function normalizeLatestSummaryStatus(terminalStatus) {
@@ -98,18 +163,18 @@ function normalizeLatestSummaryStatus(terminalStatus) {
  * per-module lifecycle files with best-effort skip semantics.
  */
 export function buildCumulativeSummary(config, progress) {
-  const cumulative = progress?.run_stats?.cumulative || progress?.cumulative || null;
-  if (!cumulative || typeof cumulative !== 'object' || Array.isArray(cumulative)) return null;
+  const cumulative = selectTruthyValue(() => (selectTruthyValue(() => (progress?.run_stats?.cumulative), () => (progress?.cumulative))), () => (null));
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!cumulative), () => (typeof cumulative !== 'object'))), () => (Array.isArray(cumulative)))) return null;
   return {
-    modules_completed: cumulative.modules_completed ?? 0,
-    modules_failed: cumulative.modules_failed ?? 0,
-    modules_blocked: cumulative.modules_blocked ?? 0,
-    total_forge_attempts: cumulative.total_forge_attempts ?? 0,
-    total_buster_attempts: cumulative.total_buster_attempts ?? 0,
+    modules_completed: cumulativeCount(cumulative.modules_completed),
+    modules_failed: cumulativeCount(cumulative.modules_failed),
+    modules_blocked: cumulativeCount(cumulative.modules_blocked),
+    total_forge_attempts: cumulativeCount(cumulative.total_forge_attempts),
+    total_buster_attempts: cumulativeCount(cumulative.total_buster_attempts),
   };
 }
 
-export function writeSummary(config, terminalStatus, reasonCode, ctx = null, progress = null) {
+export function writeSummary(config, terminalStatus, reasonCode, ctx = null, progress = null, terminalDecision = null) {
   const artifactBundle = getPipelineArtifactBundle(config);
   if (!artifactBundle.pipeline_dir) {
     return {
@@ -123,7 +188,7 @@ export function writeSummary(config, terminalStatus, reasonCode, ctx = null, pro
   }
   try {
     const stats = getRunStats(config);
-    const startedAt = stats?.started_at || new Date().toISOString();
+    const startedAt = requireText(stats?.started_at, 'run_stats.started_at');
 
     // Cost/usage snapshot — OpenClaw model.usage aggregate only.
     let budgetStatus = null;
@@ -131,8 +196,8 @@ export function writeSummary(config, terminalStatus, reasonCode, ctx = null, pro
     let usageAggregate = null;
     try {
       usageAggregate = aggregateUsage(config);
-      const report = writeCostReport(config);
-      const warnings = report?.warnings || checkBudgetThresholds(usageAggregate, config?.observability?.budget || {});
+      const report = writeCostReport(config, { progress });
+      const warnings = selectDefinedValue(() => (report?.warnings), () => (checkBudgetThresholds(usageAggregate, budgetConfig(config))));
       emitBudgetWarnings(config, warnings);
       if (ctx) {
         for (const warning of warnings) {
@@ -150,10 +215,19 @@ export function writeSummary(config, terminalStatus, reasonCode, ctx = null, pro
           : 'ok';
       if (report) costReportPath = path.join(costLogDir(config), 'cost-report.json');
     } catch (e) {
-      log('DEBUG', `[summary] Cost report failed (non-critical): ${e.message}`);
+      log('DEBUG', `[summary] Cost report failed (non-critical): ${errorMessage(e)}`);
     }
 
+    const completedAt = new Date().toISOString();
+    const durationSeconds = Math.round((Date.now() - new Date(startedAt).getTime()) / 1000);
     const cumulative = buildCumulativeSummary(config, progress);
+    const runFacts = buildRunFacts(config, progress, {
+      terminal_status: terminalStatus,
+      reason_code: reasonCode,
+      started_at: startedAt,
+      completed_at: completedAt,
+      duration_seconds: durationSeconds,
+    });
 
     const run_stats = {
       modules_completed: stats.modules_completed,
@@ -171,54 +245,66 @@ export function writeSummary(config, terminalStatus, reasonCode, ctx = null, pro
       config_validation_issues: stats.config_validation_issues,
     };
 
-    const completedAt = new Date().toISOString();
+    const relativeCostReportPath = costReportPath
+      ? path.relative(requireText(config.repo_root, 'config.repo_root'), costReportPath)
+      : null;
     const summary = {
       run_id: artifactBundle.run_id,
+      pipeline_run_id: artifactBundle.run_id,
       started_at: startedAt,
       completed_at: completedAt,
       ended_at: completedAt,
-      terminal_status: terminalStatus ?? null,
+      terminal_status: selectDefinedValue(() => (terminalStatus), () => (null)),
+      terminal_decision: selectDefinedValue(() => (terminalDecision), () => (null)),
       reason_code: reasonCode,
       project: config.project,
       telemetry_stream_key: artifactBundle.telemetry_stream_key,
-      duration_seconds: Math.round((Date.now() - new Date(startedAt).getTime()) / 1000),
+      duration_seconds: durationSeconds,
       run_stats,
+      run_facts: runFacts,
+      modules: runFacts.modules,
+      gates: runFacts.gates,
+      tests: buildRunTestSummary(runFacts),
       ...(cumulative ? { cumulative } : {}),
       governance: buildGovernanceSummary(config),
       usage: {
-        total_input_tokens: usageAggregate?.run?.input_tokens ?? null,
-        total_output_tokens: usageAggregate?.run?.output_tokens ?? null,
+        total_input_tokens: selectDefinedValue(() => (usageAggregate?.run?.input_tokens), () => (null)),
+        total_output_tokens: selectDefinedValue(() => (usageAggregate?.run?.output_tokens), () => (null)),
         total_tokens: usageAggregate
-          ? (usageAggregate.run.input_tokens ?? 0) + (usageAggregate.run.output_tokens ?? 0)
+          ? (usageAggregate.run.input_tokens) + (usageAggregate.run.output_tokens)
           : null,
-        cost_usd: usageAggregate?.run?.estimated_cost_usd ?? null,
+        cost_usd: selectDefinedValue(() => (usageAggregate?.run?.estimated_cost_usd), () => (null)),
         cost_availability: usageAggregate?.run?.estimated_cost_usd != null
           ? 'available from OpenClaw model.usage diagnostics'
           : 'unavailable — no OpenClaw model.usage USD aggregate yet',
       },
       budget_threshold_status: budgetStatus,
-      cost_report_path: costReportPath
-        ? path.relative(config.repo_root || artifactBundle.pipeline_dir, costReportPath)
-        : null,
+      cost_report_path: relativeCostReportPath,
+      cost: buildRunCostSummary({ usageAggregate, budgetStatus, costReportPath: relativeCostReportPath }),
       artifacts: buildSummaryArtifactBundle(config),
     };
-    const pipelineDir = artifactBundle.pipeline_dir;
-    const runLogDir = artifactBundle.run_log_dir || pipelineDir;
-    const runSummaryPath = artifactBundle.run_summary_path || path.join(runLogDir, 'summary.json');
-    const pipelineSummaryPath = artifactBundle.pipeline_summary_path || path.join(pipelineDir, 'summary.json');
+    const pipelineDir = requireArtifactBundlePath(artifactBundle, 'pipeline_dir');
+    const runLogDir = requireArtifactBundlePath(artifactBundle, 'run_log_dir');
+    const runSummaryPath = requireArtifactBundlePath(artifactBundle, 'run_summary_path');
+    const pipelineSummaryPath = requireArtifactBundlePath(artifactBundle, 'pipeline_summary_path');
     fs.mkdirSync(runLogDir, { recursive: true });
     const safeSummary = sanitizeJsonEgress(summary, 'pipeline_summary');
     fs.writeFileSync(runSummaryPath, JSON.stringify(safeSummary, null, 2));
     fs.writeFileSync(pipelineSummaryPath, JSON.stringify(safeSummary, null, 2));
 
     // Write latest.json pointer atomically so operators can find the most recent run.
-    const latestPath = artifactBundle.latest_json_path || path.join(pipelineDir, 'latest.json');
+    const latestPath = requireArtifactBundlePath(artifactBundle, 'latest_json_path');
     const latestTmp = latestPath + '.tmp';
     fs.writeFileSync(latestTmp, JSON.stringify(sanitizeJsonEgress(buildLatestPointer(config, {
       status: normalizeLatestSummaryStatus(terminalStatus),
-      startedAt: summary.started_at || null,
-      completedAt: summary.completed_at || null,
+      startedAt: selectTruthyValue(() => (summary.started_at), () => (null)),
+      completedAt: selectTruthyValue(() => (summary.completed_at), () => (null)),
       terminalStatus,
+      terminalDecision: selectDefinedValue(() => (terminalDecision), () => (null)),
+      runFacts,
+      usageAggregate,
+      budgetStatus,
+      costReportPath: relativeCostReportPath,
     }), 'latest_pointer'), null, 2));
     fs.renameSync(latestTmp, latestPath);
 
@@ -232,35 +318,35 @@ export function writeSummary(config, terminalStatus, reasonCode, ctx = null, pro
       reason: null,
     };
   } catch (e) {
-    log('WARN', `Failed to write summary.json: ${e.message}`);
+    log('WARN', `Failed to write summary.json: ${errorMessage(e)}`);
     return {
       output_dir: artifactBundle.pipeline_dir,
       pipeline_summary_path: null,
       summary_json_path: null,
       latest_json_path: null,
       failed: true,
-      reason: e.message || 'unknown',
+      reason: errorMessage(e),
     };
   }
 }
 
 export function pipelineReviewOutputPath(config, pr = {}) {
-  return path.join(swarmRoot(config), pr.output_file || 'logs/pipeline-review/PIPELINE-REVIEW.md');
+  return path.join(swarmRoot(config), pipelineReviewPathConfig(pr, 'output_file', PIPELINE_REVIEW_OUTPUT_FILE));
 }
 
 export function pipelineReviewJsonPath(config, pr = {}) {
-  return path.join(swarmRoot(config), pr.json_output_file || 'logs/pipeline-review/PIPELINE-REVIEW.json');
+  return path.join(swarmRoot(config), pipelineReviewPathConfig(pr, 'json_output_file', PIPELINE_REVIEW_JSON_OUTPUT_FILE));
 }
 
 export function pipelineReviewInstructionsPath(config, pr = {}) {
-  return path.join(swarmRoot(config), pr.instructions_file || 'pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md');
+  return path.join(swarmRoot(config), pipelineReviewPathConfig(pr, 'instructions_file', PIPELINE_REVIEW_INSTRUCTIONS_FILE));
 }
 
 export function pipelineReviewAgentId(model, pr = {}) {
   if (pr.agent_id) return pr.agent_id;
   const dispatch = resolveRuntime({ model });
-  if (dispatch === 'subagent') return `${String(model || 'gpt5').split('/').pop().replace(/[^a-zA-Z0-9._-]+/g, '-')}_pipeline-review`;
-  return modelToHarness(model) || 'claude';
+  if (dispatch === 'subagent') return `${String(selectDefinedValue(() => (model), () => (PIPELINE_REVIEW_SUBAGENT_MODEL))).split('/').pop().replace(/[^a-zA-Z0-9._-]+/g, '-')}_pipeline-review`;
+  return selectDefinedValue(() => (modelToHarness(model)), () => (PIPELINE_REVIEW_HARNESS_AGENT));
 }
 
 export function writePipelineReviewInstructions(config, pr = {}) {
@@ -269,18 +355,18 @@ export function writePipelineReviewInstructions(config, pr = {}) {
   const pathOut = pipelineReviewInstructionsPath(config, pr);
   fs.mkdirSync(path.dirname(pathOut), { recursive: true });
   const artifacts = getPipelineArtifactBundle(config);
-  const pipelineLogPath = artifacts.run_pipeline_jsonl_path || artifacts.global_pipeline_jsonl_path;
-  const summaryJsonPath = artifacts.run_summary_path || artifacts.pipeline_summary_path;
+  const pipelineLogPath = requireArtifactBundlePath(artifacts, 'run_pipeline_jsonl_path');
+  const summaryJsonPath = requireArtifactBundlePath(artifacts, 'run_summary_path');
   const reviewMdPath = relPath(config, out);
   const reviewJsonPath = relPath(config, jsonOut);
-  const runId = getRunId(config);
+  const runId = requireText(getRunId(config), 'run_id');
   const content = `You are reviewing a completed pipeline run for project: ${config.project}
 
 ## Run Data Available
 - Pipeline log: ${pipelineLogPath}
 - Summary JSON: ${summaryJsonPath}
-- Lifecycle read models: check logs/pipeline/runs/${runId || '<run-id>'}/lifecycle/read-models.json
-- Saved prompt artifacts: check module log dirs for forge-prompt-*.md and buster-prompt-*.md; these files contain redacted metadata only, not raw prompt text
+- Lifecycle read models: check logs/pipeline/runs/${runId}/lifecycle/read-models.json
+- Saved prompt artifacts: check module log dirs for forge-prompt-*.md and buster-prompt-*.md
 
 ## What to analyze
 
@@ -298,6 +384,8 @@ Suggest specific prompt improvements.
 ### 4. Test quality signals
 Did Buster tests catch real issues? Were there false positives? Tests that never failed?
 Suggest test improvements for modules that passed too easily.
+Before marking this run healthy, actively look for weak module-owned assertions, ownership leaks, unverified assumptions, and missing expected artifacts.
+Do not treat a passing shared build or generic health check as enough when a module owns a specific route, asset, manifest, or integration contract.
 
 ### 5. Pipeline configuration recommendations
 Based on this run: suggested changes to timeout_minutes, max_fails, auto_retry_threshold per module.
@@ -328,10 +416,12 @@ Write two files:
 
 export async function generatePipelineReview(config, progress, opts = {}) {
   const deps = getPipelineReviewDeps(config, opts.deps);
-  const pr = config.pipeline_review || progress?.pipeline_review || {};
-  const runId = getRunId(config);
+  const pr = reviewConfig(config, progress);
+  const runId = requireText(getRunId(config), 'run_id');
+  const executionAttempt = requirePositiveInteger(Number(selectDefinedValue(() => (opts.pipelineReviewExecutionAttempt), () => (1))), 'pipeline_review.execution_attempt');
+  const maxExecutionAttempts = resolvePipelineReviewMaxAttempts(pr);
   let sessionKey = null;
-  let model = pr.model || progress?.defaults?.models?.echo || config.fallback_model;
+  let model = requireText(pr.model, 'config.pipeline_review.model');
   let agentId = pipelineReviewAgentId(model, pr);
   let label = null;
   let dispatch = null;
@@ -351,12 +441,13 @@ export async function generatePipelineReview(config, progress, opts = {}) {
   }, { summaryType: 'pipeline_review' });
   try {
     dispatch = resolveRuntime({ model });
+    removePipelineReviewOutputArtifacts(config, pr);
     const instructionsPath = writePipelineReviewInstructions(config, pr);
     const instructions = fs.readFileSync(instructionsPath, 'utf8');
     label = `pipeline-review-${Date.now()}`;
     reviewGatewayLabel = null;
     const cwd = config.repo_root;
-    const thinking = pr.thinking_level || null;
+    const thinking = selectTruthyValue(() => (pr.thinking_level), () => (null));
     const reviewDefaults = getReviewDefaultsConfig(config);
     const timeoutMin = pr.timeout_minutes !== undefined
       ? requirePositiveTimeoutMinutes(pr.timeout_minutes, 'config.pipeline_review.timeout_minutes')
@@ -379,13 +470,13 @@ export async function generatePipelineReview(config, progress, opts = {}) {
       label,
       thinking,
       trackActive: false,
-      budget: opts.budget || null,
-      signal: opts.signal || null,
+      budget: selectDefinedValue(() => (opts.budget), () => (null)),
+      signal: selectDefinedValue(() => (opts.signal), () => (null)),
     });
-    sessionKey = sessionData.childSessionKey;
-    const streamLogPath = sessionData.streamLogPath || null;
+    sessionKey = requireText(sessionData.childSessionKey, 'pipeline_review.session_key');
+    const streamLogPath = selectDefinedValue(() => (sessionData.streamLogPath), () => (null));
     trackingKey = `pipeline-review-${agentId}`;
-    reviewAttempt = resolveResultAttempt(sessionData) ?? reviewAttempt ?? null;
+    reviewAttempt = selectDefinedValue(() => (selectDefinedValue(() => (resolveResultAttempt(sessionData)), () => (reviewAttempt))), () => (null));
     deps.trackAgent(config, trackingKey, sessionKey, agentId, label, streamLogPath, {
       model,
       runtime: dispatch,
@@ -399,7 +490,7 @@ export async function generatePipelineReview(config, progress, opts = {}) {
       { name: 'Agent', value: agentId, inline: true },
       { name: 'Dispatch', value: dispatch, inline: true },
     ]), { correlation: buildPipelineReviewDiscordCorrelation(spawnDiscordIdentity) }).catch((e) => {
-      log('DEBUG', `Pipeline review spawn Discord notice failed: ${e?.message || e}`);
+      log('DEBUG', `Pipeline review spawn Discord notice failed: ${errorMessage(e)}`);
     });
     const outputFilePath = pipelineReviewOutputPath(config, pr);
     const maxRateLimitPauses = getRateLimitConfig(config).max_pauses_per_module;
@@ -411,7 +502,7 @@ export async function generatePipelineReview(config, progress, opts = {}) {
       identity: {
         agent_type: 'echo',
         run_id: runId,
-        attempt: reviewAttempt ?? 1,
+        attempt: selectDefinedValue(() => (reviewAttempt), () => (resolveResultAttempt(pr))),
         dispatch_id: reviewDispatchId,
         gateway_label: reviewGatewayLabel,
         session_key: sessionKey,
@@ -434,14 +525,14 @@ export async function generatePipelineReview(config, progress, opts = {}) {
     });
     reviewAttempt = trackedReviewOutcome.attempt;
     reviewDispatchId = trackedReviewOutcome.dispatchId;
-    reviewGatewayLabel = (resolvePipelineReviewGatewayLabel(trackedReviewOutcome.status) ?? reviewGatewayLabel ?? null);
+    reviewGatewayLabel = (selectDefinedValue(() => (selectDefinedValue(() => (resolvePipelineReviewGatewayLabel(trackedReviewOutcome.status)), () => (reviewGatewayLabel))), () => (null)));
     lastReviewStatus = trackedReviewOutcome.status;
 
     const archiveDir = path.join(swarmRoot(config), 'logs', 'pipeline-review');
     fs.mkdirSync(archiveDir, { recursive: true });
     const ts = new Date().toISOString().replace(/[:.]/g, '-');
     if (dispatch === 'acp' && streamLogPath && fs.existsSync(streamLogPath)) {
-      deps.copyRedactedTranscriptArtifact(streamLogPath, path.join(archiveDir, `pipeline-review-transcript-${ts}.jsonl`));
+      deps.copyTranscriptArtifact(streamLogPath, path.join(archiveDir, `pipeline-review-transcript-${ts}.jsonl`));
     }
 
     await cleanupSummarySession('post-poll');
@@ -474,33 +565,41 @@ export async function generatePipelineReview(config, progress, opts = {}) {
           discordIdentity: { run_id: runId },
         }),
       });
-      reviewAttempt = reviewRateLimitExit.attempt ?? reviewAttempt;
-      lastReviewStatus = reviewRateLimitExit.rate_limit_status || lastReviewStatus;
+      reviewAttempt = requirePositiveTimeoutMinutes(reviewRateLimitExit.attempt, 'pipeline_review.rate_limit_exit.attempt');
+      lastReviewStatus = selectDefinedValue(() => (reviewRateLimitExit.rate_limit_status), () => (null));
       return {
         ...reviewRateLimitExit,
         ...buildGeneratorResult('pipeline_review', {
           outputs: {
             status: 'failed',
-            reason: reviewRateLimitExit.reason || 'rate_limit_exhausted',
+            reason: selectDefinedValue(() => (reviewRateLimitExit.reason), () => (PIPELINE_REVIEW_RATE_LIMIT_EXHAUSTED_REASON)),
             rate_limit_exhausted: true,
           },
           diagnostics: {
-            rate_limit_status: reviewRateLimitExit.rate_limit_status || null,
+            rate_limit_status: selectDefinedValue(() => (reviewRateLimitExit.rate_limit_status), () => (null)),
           },
         }),
       };
     }
     if (!pollRes.ok) {
-      reviewAttempt = resolveResultAttempt(pollRes) ?? reviewAttempt ?? null;
+      reviewAttempt = selectDefinedValue(() => (selectDefinedValue(() => (resolveResultAttempt(pollRes)), () => (reviewAttempt))), () => (null));
       const failureReason = pollRes?.status?.detail
         ? `${pollRes.reason} (${pollRes.status.detail})`
         : pollRes.reason;
+      const failureClass = pollRes?.reason === 'timeout' ? 'timeout' : 'pipeline_review_failed';
+      if (pollRes?.reason === 'session_ended_no_output' && executionAttempt < maxExecutionAttempts) {
+        log('WARN', `Pipeline review produced no output (${failureReason}); retrying attempt ${executionAttempt + 1}/${maxExecutionAttempts}`);
+        return generatePipelineReview(config, progress, {
+          ...opts,
+          pipelineReviewExecutionAttempt: executionAttempt + 1,
+        });
+      }
       const noOutputDiscordIdentity = {
         run_id: runId,
         attempt: reviewAttempt,
-        dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? reviewDispatchId ?? null),
-        gateway_label: (resolvePipelineReviewGatewayLabel(pollRes?.status) ?? reviewGatewayLabel ?? null),
-        session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
+        dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(pollRes?.status)), () => (reviewDispatchId))), () => (null))),
+        gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolvePipelineReviewGatewayLabel(pollRes?.status)), () => (reviewGatewayLabel))), () => (null))),
+        session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(pollRes?.status)), () => (sessionKey))), () => (null))),
       };
       await deps.discord(config, 'WARN', '📋 Pipeline Review: No Output', `Review agent finished without producing a report. Reason: ${failureReason}`, [
         ...buildPipelineReviewDiscordFields(noOutputDiscordIdentity),
@@ -508,9 +607,37 @@ export async function generatePipelineReview(config, progress, opts = {}) {
         { name: 'Agent', value: agentId, inline: true },
         { name: 'Model', value: model, inline: true },
       ], { correlation: buildPipelineReviewDiscordCorrelation(noOutputDiscordIdentity) }).catch((e) => {
-        log('DEBUG', `Pipeline review timeout/failure Discord notice failed: ${e?.message || e}`);
+        log('DEBUG', `Pipeline review timeout/failure Discord notice failed: ${errorMessage(e)}`);
       });
-      throw new Error(`Pipeline review failed: ${failureReason}`);
+      onSummaryCompleted({ config }, 'pipeline_review', {
+        attempt: reviewAttempt,
+        status: 'failed',
+        reason: `Pipeline review failed: ${failureReason}`,
+        dispatch_id: noOutputDiscordIdentity.dispatch_id,
+        session_key: noOutputDiscordIdentity.session_key,
+        gateway_label: noOutputDiscordIdentity.gateway_label,
+        model,
+        runtime: dispatch,
+      });
+      log('WARN', `Pipeline review failed: ${failureReason}`);
+      return buildGeneratorResult('pipeline_review', {
+        outputs: {
+          status: 'failed',
+          reason: `Pipeline review failed after ${executionAttempt} attempt(s): ${failureReason}`,
+          failure_class: failureClass,
+          attempt: reviewAttempt,
+          execution_attempt: executionAttempt,
+          runtime: dispatch,
+          model,
+        },
+        diagnostics: {
+          failure_class: failureClass,
+          max_execution_attempts: maxExecutionAttempts,
+          dispatch_id: noOutputDiscordIdentity.dispatch_id,
+          session_key: noOutputDiscordIdentity.session_key,
+          gateway_label: noOutputDiscordIdentity.gateway_label,
+        },
+      });
     }
 
     try {
@@ -529,9 +656,9 @@ export async function generatePipelineReview(config, progress, opts = {}) {
       const completeDiscordIdentity = {
         run_id: runId,
         attempt: reviewAttempt,
-        dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? reviewDispatchId ?? null),
-        gateway_label: (resolvePipelineReviewGatewayLabel(pollRes?.status) ?? reviewGatewayLabel ?? null),
-        session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
+        dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(pollRes?.status)), () => (reviewDispatchId))), () => (null))),
+        gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolvePipelineReviewGatewayLabel(pollRes?.status)), () => (reviewGatewayLabel))), () => (null))),
+        session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(pollRes?.status)), () => (sessionKey))), () => (null))),
       };
       fields.unshift(...buildPipelineReviewDiscordFields(completeDiscordIdentity));
       await deps.discord(config, 'OK', '📋 Pipeline Review Complete', desc, fields, { correlation: buildPipelineReviewDiscordCorrelation(completeDiscordIdentity) });
@@ -539,9 +666,9 @@ export async function generatePipelineReview(config, progress, opts = {}) {
         attempt: reviewAttempt,
         status: 'ok',
         output: outputFilePath,
-        dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? reviewDispatchId ?? null),
-        session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
-        gateway_label: (resolvePipelineReviewGatewayLabel(pollRes?.status) ?? reviewGatewayLabel ?? null),
+        dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(pollRes?.status)), () => (reviewDispatchId))), () => (null))),
+        session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(pollRes?.status)), () => (sessionKey))), () => (null))),
+        gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolvePipelineReviewGatewayLabel(pollRes?.status)), () => (reviewGatewayLabel))), () => (null))),
         model,
         runtime: dispatch,
       });
@@ -556,28 +683,29 @@ export async function generatePipelineReview(config, progress, opts = {}) {
           status: 'ok',
           output: outputFilePath,
           json_output: pipelineReviewJsonPath(config, pr),
-          dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? reviewDispatchId ?? null),
-          session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
-          gateway_label: (resolvePipelineReviewGatewayLabel(pollRes?.status) ?? reviewGatewayLabel ?? null),
+          dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(pollRes?.status)), () => (reviewDispatchId))), () => (null))),
+          session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(pollRes?.status)), () => (sessionKey))), () => (null))),
+          gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolvePipelineReviewGatewayLabel(pollRes?.status)), () => (reviewGatewayLabel))), () => (null))),
           attempt: reviewAttempt,
           runtime: dispatch,
           model,
         },
       });
     } catch (e) {
-      log('WARN', `Pipeline review Discord post failed (non-critical): ${e.message}`);
+      const postErrorMessage = errorMessage(e);
+      log('WARN', `Pipeline review Discord post failed (non-critical): ${postErrorMessage}`);
       const postErrorDiscordIdentity = {
         run_id: runId,
         attempt: reviewAttempt,
-        dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? reviewDispatchId ?? null),
-        gateway_label: (resolvePipelineReviewGatewayLabel(pollRes?.status) ?? reviewGatewayLabel ?? null),
-        session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
+        dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(pollRes?.status)), () => (reviewDispatchId))), () => (null))),
+        gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolvePipelineReviewGatewayLabel(pollRes?.status)), () => (reviewGatewayLabel))), () => (null))),
+        session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(pollRes?.status)), () => (sessionKey))), () => (null))),
       };
-      await deps.discord(config, 'WARN', '📋 Pipeline Review: Post Error', `Review completed but Discord post failed: ${e.message}`,
+      await deps.discord(config, 'WARN', '📋 Pipeline Review: Post Error', `Review completed but Discord post failed: ${postErrorMessage}`,
         buildPipelineReviewDiscordFields(postErrorDiscordIdentity),
         { correlation: buildPipelineReviewDiscordCorrelation(postErrorDiscordIdentity) },
       ).catch((postErrorNoticeError) => {
-        log('DEBUG', `Pipeline review post-error Discord notice failed: ${postErrorNoticeError?.message || postErrorNoticeError}`);
+        log('DEBUG', `Pipeline review post-error Discord notice failed: ${errorMessage(postErrorNoticeError)}`);
       });
       return buildGeneratorResult('pipeline_review', {
         artifacts: [
@@ -589,55 +717,56 @@ export async function generatePipelineReview(config, progress, opts = {}) {
           status: 'ok',
           output: outputFilePath,
           json_output: pipelineReviewJsonPath(config, pr),
-          dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? reviewDispatchId ?? null),
-          session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
-          gateway_label: (resolvePipelineReviewGatewayLabel(pollRes?.status) ?? reviewGatewayLabel ?? null),
+          dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(pollRes?.status)), () => (reviewDispatchId))), () => (null))),
+          session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(pollRes?.status)), () => (sessionKey))), () => (null))),
+          gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolvePipelineReviewGatewayLabel(pollRes?.status)), () => (reviewGatewayLabel))), () => (null))),
           attempt: reviewAttempt,
           runtime: dispatch,
           model,
         },
         diagnostics: {
-          post_error: e.message || 'unknown',
+          post_error: postErrorMessage,
         },
       });
     }
   } catch (e) {
+    const failureMessage = errorMessage(e);
     onSummaryCompleted({ config }, 'pipeline_review', {
       attempt: reviewAttempt,
       status: 'failed',
-      reason: e.message || 'unknown',
-      dispatch_id: (resolveStatusDispatchId(lastReviewStatus) ?? reviewDispatchId ?? null),
-      session_key: (resolveStatusSessionKey(lastReviewStatus) ?? sessionKey ?? null),
-      gateway_label: (resolvePipelineReviewGatewayLabel(lastReviewStatus) ?? reviewGatewayLabel ?? null),
+      reason: failureMessage,
+      dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(lastReviewStatus)), () => (reviewDispatchId))), () => (null))),
+      session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(lastReviewStatus)), () => (sessionKey))), () => (null))),
+      gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolvePipelineReviewGatewayLabel(lastReviewStatus)), () => (reviewGatewayLabel))), () => (null))),
       model,
       runtime: dispatch,
     });
-    log('WARN', `Pipeline review failed (non-critical): ${e.message}`);
+    log('WARN', `Pipeline review failed (non-critical): ${failureMessage}`);
     const failedDiscordIdentity = {
       run_id: runId,
       attempt: reviewAttempt,
-      dispatch_id: (resolveStatusDispatchId(lastReviewStatus) ?? reviewDispatchId ?? null),
-      gateway_label: (resolvePipelineReviewGatewayLabel(lastReviewStatus) ?? reviewGatewayLabel ?? null),
-      session_key: (resolveStatusSessionKey(lastReviewStatus) ?? sessionKey ?? null),
+      dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(lastReviewStatus)), () => (reviewDispatchId))), () => (null))),
+      gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolvePipelineReviewGatewayLabel(lastReviewStatus)), () => (reviewGatewayLabel))), () => (null))),
+      session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(lastReviewStatus)), () => (sessionKey))), () => (null))),
     };
-    await deps.discord(config, 'WARN', '📋 Pipeline Review Failed', `Review agent error: ${e.message?.split('\n')[0] || 'unknown'}`,
+    await deps.discord(config, 'WARN', '📋 Pipeline Review Failed', `Review agent error: ${failureMessage.split('\n')[0]}`,
       buildPipelineReviewDiscordFields(failedDiscordIdentity),
       { correlation: buildPipelineReviewDiscordCorrelation(failedDiscordIdentity) },
     ).catch((discordError) => {
-      log('DEBUG', `Pipeline review failure Discord notice failed: ${discordError?.message || discordError}`);
+      log('DEBUG', `Pipeline review failure Discord notice failed: ${errorMessage(discordError)}`);
     });
     return buildGeneratorResult('pipeline_review', {
       outputs: {
         status: 'failed',
-        reason: e.message || 'unknown',
+        reason: failureMessage,
         attempt: reviewAttempt,
         runtime: dispatch,
         model,
       },
       diagnostics: {
-        dispatch_id: (resolveStatusDispatchId(lastReviewStatus) ?? reviewDispatchId ?? null),
-        session_key: (resolveStatusSessionKey(lastReviewStatus) ?? sessionKey ?? null),
-        gateway_label: (resolvePipelineReviewGatewayLabel(lastReviewStatus) ?? reviewGatewayLabel ?? null),
+        dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(lastReviewStatus)), () => (reviewDispatchId))), () => (null))),
+        session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(lastReviewStatus)), () => (sessionKey))), () => (null))),
+        gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolvePipelineReviewGatewayLabel(lastReviewStatus)), () => (reviewGatewayLabel))), () => (null))),
       },
     });
   } finally {

@@ -10,40 +10,88 @@ import {
 } from './telemetry-sink-contract.ts';
 import { deepClone, deepFreeze } from './serialization.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 const MISSING_SINK_REASONS = Object.freeze([
   'telemetry_sink_registry_missing',
   'telemetry_sink_registry_disabled',
   'telemetry_sink_listener_missing',
 ]);
+const TELEMETRY_SINK_FAILED_REASON = 'telemetry_sink_failed';
+const TELEMETRY_SINK_ID_MISSING = 'missing_sink_id';
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function textValue(value) {
+  return typeof value === 'string' ? value : '';
+}
+
+function selectPresentValue(...values) {
+  for (const value of values) {
+    if (typeof value === 'string' && value.length > 0) return value;
+  }
+  return '';
+}
 
 function buildTelemetrySinkInvocation(input = {}) {
   return {
-    runId: input?.ids?.runId || null,
-    moduleId: input?.ids?.moduleId || null,
-    gateId: input?.ids?.gateId || null,
-    gateType: input?.ids?.gateType || null,
-    attempt: input?.ids?.attempt ?? null,
-    eventType: input?.event?.type || null,
-    runRef: input?.refs?.runRef || null,
-    primaryRef: input?.refs?.primaryRef || null,
-    moduleAttemptRef: input?.refs?.moduleAttemptRef || null,
-    gateEvaluationRef: input?.refs?.gateEvaluationRef || null,
+    runId: selectTruthyValue(() => (input?.ids?.runId), () => (null)),
+    moduleId: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
+    gateId: selectTruthyValue(() => (input?.ids?.gateId), () => (null)),
+    gateType: selectTruthyValue(() => (input?.ids?.gateType), () => (null)),
+    attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
+    eventType: selectTruthyValue(() => (input?.event?.type), () => (null)),
+    runRef: selectTruthyValue(() => (input?.refs?.runRef), () => (null)),
+    primaryRef: selectTruthyValue(() => (input?.refs?.primaryRef), () => (null)),
+    moduleAttemptRef: selectTruthyValue(() => (input?.refs?.moduleAttemptRef), () => (null)),
+    gateEvaluationRef: selectTruthyValue(() => (input?.refs?.gateEvaluationRef), () => (null)),
   };
 }
 
-function telemetrySinkPayload(input = {}, sinkId = 'unknown', reason = 'telemetry_sink_failed', detail = null, extra = {}) {
+function telemetrySinkPayload(input = {}, sinkId = TELEMETRY_SINK_ID_MISSING, reason = TELEMETRY_SINK_FAILED_REASON, detail = null, extra = {}) {
   return {
     component: 'telemetry_sink',
     surface: sinkId,
     reason,
-    detail: detail || `telemetry sink '${sinkId}' failed`,
-    impacted_event_type: input?.event?.type || null,
-    module_id: input?.ids?.moduleId || null,
-    gate_id: input?.ids?.gateId || null,
-    gate_type: input?.ids?.gateType || null,
-    attempt: input?.ids?.attempt ?? null,
-    stream_key: extra.streamKey || null,
+    detail: selectPresentValue(detail, `telemetry sink '${sinkId}' failed`),
+    impacted_event_type: selectTruthyValue(() => (input?.event?.type), () => (null)),
+    module_id: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
+    gate_id: selectTruthyValue(() => (input?.ids?.gateId), () => (null)),
+    gate_type: selectTruthyValue(() => (input?.ids?.gateType), () => (null)),
+    attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
+    stream_key: selectTruthyValue(() => (extra.streamKey), () => (null)),
   };
+}
+
+function isMissingDiscordWebhook(config = {}) {
+  return !textValue(config?.discord_webhook_url).trim();
+}
+
+function isDiscordTelemetrySink(moduleId) {
+  return moduleId === 'builtin.telemetry.discord';
+}
+
+function discordWebhookMissingPayload(input = {}) {
+  return {
+    component: 'discord',
+    surface: 'webhook',
+    reason: 'webhook_url_missing',
+    detail: 'discord webhook delivery skipped: config.discord_webhook_url is missing',
+    impacted_event_type: selectTruthyValue(() => (input?.event?.type), () => (null)),
+    module_id: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
+    gate_id: selectTruthyValue(() => (input?.ids?.gateId), () => (null)),
+    gate_type: selectTruthyValue(() => (input?.ids?.gateType), () => (null)),
+    attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
+  };
+}
+
+function isCanonicalDiscordWebhookMissing(moduleId, config = {}) {
+  return isDiscordTelemetrySink(moduleId) && isMissingDiscordWebhook(config);
 }
 
 function resolveMissingSinkIncident(config, input) {
@@ -67,7 +115,7 @@ function resolveMissingSinkIncident(config, input) {
 }
 
 async function reportMissingSink(ctx = {}, input = {}) {
-  const config = ctx?.config || {};
+  const config = objectRecord(ctx?.config);
   const incident = resolveMissingSinkIncident(config, input);
   await recordObservabilityDegraded(ctx, telemetrySinkPayload(input, 'registry', incident.reason, incident.detail));
   log('WARN', `[telemetry] ${incident.detail}`);
@@ -81,13 +129,17 @@ async function restoreMissingSinkIfNeeded(ctx = {}, input = {}) {
 }
 
 function resolveTelemetrySinkTimeoutMs(ctx = {}, options = {}) {
-  const configured = options.telemetrySinkTimeoutMs
-    ?? ctx?.config?.telemetry?.sink_timeout_ms;
+  const configured = telemetrySinkTimeoutAuthority(ctx, options);
   const timeoutMs = Number(configured);
-  if (!Number.isInteger(timeoutMs) || timeoutMs <= 0) {
+  if (selectTruthyValue(() => (!Number.isInteger(timeoutMs)), () => (timeoutMs <= 0))) {
     throw new Error('config.telemetry.sink_timeout_ms: required positive integer in swarm.config.json');
   }
   return timeoutMs;
+}
+
+function telemetrySinkTimeoutAuthority(ctx = {}, options = {}) {
+  if (options.telemetrySinkTimeoutMs !== undefined && options.telemetrySinkTimeoutMs !== null) return options.telemetrySinkTimeoutMs;
+  return ctx?.config?.telemetry?.sink_timeout_ms;
 }
 
 function observeWithTimeout(observePromise, timeoutMs, moduleId) {
@@ -106,7 +158,7 @@ function observeWithTimeout(observePromise, timeoutMs, moduleId) {
 
 export async function dispatchTelemetrySinks(ctx = {}, eventType, payload = {}, options = {}) {
   const config = ctx?.config;
-  const progress = ctx?.progress || null;
+  const progress = selectDefinedValue(() => (ctx?.progress), () => (null));
   const input = assertTelemetrySinkInput(buildTelemetrySinkInput(ctx, eventType, payload, options));
   const allListeners = resolveHookListeners(config, TELEMETRY_SINK_HOOK_FAMILY, TELEMETRY_SINK_STAGE_ID);
   const allowedModuleIds = Array.isArray(options.sinkModuleIds)
@@ -139,7 +191,7 @@ export async function dispatchTelemetrySinks(ctx = {}, eventType, payload = {}, 
   for (const record of listeners) {
     const moduleId = record.manifest.moduleId;
     try {
-      const sinkInput = narrowPluginInputForCapabilities(frozenInput, record.manifest.capabilities || []);
+      const sinkInput = narrowPluginInputForCapabilities(frozenInput, arrayValue(record.manifest.capabilities));
       const pluginContext = createPluginContext({
         config,
         progress,
@@ -147,12 +199,12 @@ export async function dispatchTelemetrySinks(ctx = {}, eventType, payload = {}, 
         stageId: TELEMETRY_SINK_STAGE_ID,
         record,
         invocation,
-        stateSnapshot: sinkInput.stateSnapshot || {},
+        stateSnapshot: objectRecord(sinkInput.stateSnapshot),
         environmentMetadata: {
-          telemetryEventType: sinkInput?.event?.type || null,
+          telemetryEventType: selectTruthyValue(() => (sinkInput?.event?.type), () => (null)),
           telemetrySinkModuleId: moduleId,
         },
-        injectedDeps: options.deps || ctx?.deps || null,
+        injectedDeps: selectTruthyValue(() => (selectTruthyValue(() => (options.deps), () => (ctx?.deps))), () => (null)),
       });
       Object.defineProperty(pluginContext, 'telemetrySinkState', {
         value: telemetrySinkState,
@@ -161,14 +213,19 @@ export async function dispatchTelemetrySinks(ctx = {}, eventType, payload = {}, 
       });
       await observeWithTimeout(record.implementation.observe(sinkInput, pluginContext), sinkTimeoutMs, moduleId);
       await recordObservabilityRestored(ctx, telemetrySinkPayload(frozenInput, moduleId, 'telemetry_sink_failed', `telemetry sink '${moduleId}' restored`, {
-        streamKey: telemetrySinkState.redisStreamKey || null,
+        streamKey: selectTruthyValue(() => (telemetrySinkState.redisStreamKey), () => (null)),
       }));
       results.push({ moduleId, ok: true });
     } catch (error) {
-      const detail = error?.message || `telemetry sink '${moduleId}' failed`;
+      const detail = selectPresentValue(error?.message, `telemetry sink '${moduleId}' failed`);
       log('WARN', `[telemetry] sink '${moduleId}' degraded on '${eventType}': ${detail}`);
+      if (isCanonicalDiscordWebhookMissing(moduleId, config)) {
+        await recordObservabilityDegraded(ctx, discordWebhookMissingPayload(frozenInput));
+        results.push({ moduleId, ok: false, error: detail });
+        continue;
+      }
       await recordObservabilityDegraded(ctx, telemetrySinkPayload(frozenInput, moduleId, 'telemetry_sink_failed', detail, {
-        streamKey: error?.streamKey || telemetrySinkState.redisStreamKey || null,
+        streamKey: selectTruthyValue(() => (selectTruthyValue(() => (error?.streamKey), () => (telemetrySinkState.redisStreamKey))), () => (null)),
       }));
       results.push({ moduleId, ok: false, error: detail });
     }

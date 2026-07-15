@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // runners/approval-gate-runner.ts — Human-in-the-loop approval gate
 //
 // Pauses pipeline execution at defined decision points until an operator
@@ -51,7 +52,7 @@ import {
   failClosedOnInvalidApprovalState,
 } from './approval-gate-state.ts';
 import { createPipelineEventBus, waitForAny } from '../services/pipeline-event-contract.ts';
-import { createApprovalSignalEventAdapter } from '../services/approval-signal-event-adapter.ts';
+import { createRedisApprovalSignalEventAdapter } from '../services/approval-signal-event-adapter.ts';
 
 export {
   APPROVAL_STATUS,
@@ -71,12 +72,61 @@ function eventAdapterNumber(config, field) {
   return value;
 }
 
+function approvalGateType(gate, gateId) {
+  if (selectTruthyValue(() => (typeof gate?.type !== 'string'), () => (!gate.type.trim()))) {
+    throw new Error(`approval gate '${gateId}' requires progress.gates.${gateId}.type`);
+  }
+  return gate.type.trim();
+}
+
+function approvalStateIdentityChanged(current, previous) {
+  if (selectTruthyValue(() => (!current), () => (!previous))) return false;
+  return [
+    'timeout_policy',
+    'gate_id',
+    'gate_type',
+    'project',
+  ].some((field) => current[field] !== previous[field]);
+}
+
+function approvalStatusValue(state) {
+  return String(selectDefinedValue(() => (state?.status), () => (''))).trim().toUpperCase();
+}
+
+function optionalApprovalText(value) {
+  return typeof value === 'string' && value.trim() ? value.trim() : null;
+}
+
+function approvalTextOrReason(value, missingReason) {
+  return selectDefinedValue(() => (optionalApprovalText(value)), () => (missingReason));
+}
+
+function approvalRunId(config, state = null) {
+  return selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (optionalApprovalText(state?.run_id)), () => (optionalApprovalText(config._runId)))), () => (optionalApprovalText(config.run_id)))), () => (null));
+}
+
+function requireApprovalRunId(config, gateId) {
+  const runId = approvalRunId(config);
+  if (!runId) {
+    throw new Error(`approval gate '${gateId}' requires config._runId or config.run_id`);
+  }
+  return runId;
+}
+
+function approvalDecisionVia(state) {
+  return optionalApprovalText(state?.decision_via);
+}
+
+function approvalGateDescription(gate, gateId) {
+  return selectDefinedValue(() => (optionalApprovalText(gate.description)), () => (`Pipeline paused at approval gate \`${gateId}\`. Explicit operator decision required to continue.`));
+}
+
 function emitApprovalGateVerdict(config, gateId, gate, verdict, reason = null, options = {}) {
   const payload = {
-    gate_type: gate?.type || 'approval',
+    gate_type: approvalGateType(gate, gateId),
     duration_seconds: null,
     reason,
-    presentation: options.presentation || {},
+    presentation: selectDefinedValue(() => (options.presentation), () => ({})),
   };
 
   if (verdict === 'PASS') onGatePass({ config }, gateId, payload);
@@ -84,19 +134,20 @@ function emitApprovalGateVerdict(config, gateId, gate, verdict, reason = null, o
 }
 
 function replayResolvedApprovalTelemetry(config, gateId, gate, state, { verdict, fallbackReason = null } = {}) {
-  const resolutionStatus = (state?.status || '').toUpperCase() || null;
-  const resolvedBy = state?.decision_by || null;
-  const reason = state?.reason || fallbackReason;
+  const gateType = approvalGateType(gate, gateId);
+  const resolutionStatus = optionalApprovalText(approvalStatusValue(state));
+  const resolvedBy = optionalApprovalText(state?.decision_by);
+  const reason = selectDefinedValue(() => (optionalApprovalText(state?.reason)), () => (fallbackReason));
 
   recordApprovalGateOutcome(config, gateId, gate?.title, resolutionStatus, resolvedBy, reason, {
-    gate_type: gate?.type || 'approval',
-    run_id: state?.run_id || config._runId || config.run_id || null,
-    project: config.project || null,
-    decision_via: state?.decision_via || null,
-    timeout_policy: state?.timeout_policy || null,
+    gate_type: gateType,
+    run_id: approvalRunId(config, state),
+    project: optionalApprovalText(config.project),
+    decision_via: approvalDecisionVia(state),
+    timeout_policy: selectDefinedValue(() => (state?.timeout_policy), () => (null)),
     continued: state?.continued,
   });
-  onApprovalResolved({ config }, gateId, resolutionStatus, resolvedBy, { gate_type: gate?.type || 'approval' });
+  onApprovalResolved({ config }, gateId, resolutionStatus, resolvedBy, { gate_type: gateType });
   emitApprovalGateVerdict(config, gateId, gate, verdict, reason);
 }
 
@@ -108,13 +159,13 @@ function replayResolvedApprovalTelemetry(config, gateId, gate, state, { verdict,
  */
 export function buildApprovalEmbed(config, gateId, gate, state, progress) {
   state = normalizeApprovalGateState(state);
-  const deadline = state.deadline ? new Date(state.deadline).toUTCString() : 'unknown';
+  const deadline = state.deadline ? new Date(state.deadline).toUTCString()  : 'approval_deadline_missing';
   const timeoutNote = isApprovalTimeoutContinue(state.timeout_policy)
     ? `AUTO-CONTINUE after ${state.timeout_minutes}min`
     : `BLOCK after ${state.timeout_minutes}min`;
 
   // Gather execution context from progress
-  const execOrder = progress?.execution_order || [];
+  const execOrder = Array.isArray(progress?.execution_order) ? progress.execution_order : [];
   const gateIdx = execOrder.indexOf(`gate:${gateId}`);
 
   const completedSteps = gateIdx > 0
@@ -132,13 +183,12 @@ export function buildApprovalEmbed(config, gateId, gate, state, progress) {
     ? remainingSteps.slice(0, 3).join(', ') + (remainingSteps.length > 3 ? ` (+${remainingSteps.length - 3} more)` : '')
     : 'none (gate is near end of pipeline)';
 
-  const description = gate.description
-    || `Pipeline paused at approval gate \`${gateId}\`. Explicit operator decision required to continue.`;
+  const description = approvalGateDescription(gate, gateId);
 
   const fields = [
     { name: 'Gate',        value: `\`${gateId}\` — ${gate.title}`, inline: false },
-    { name: 'Project',     value: state.project || config.project || 'unknown', inline: true },
-    { name: 'Run ID',      value: state.run_id || 'unknown', inline: true },
+    { name: 'Project',     value: selectDefinedValue(() => (selectDefinedValue(() => (optionalApprovalText(state.project)), () => (optionalApprovalText(config.project)))), () => ('project_missing')), inline: true },
+    { name: 'Run ID',      value: selectDefinedValue(() => (optionalApprovalText(state.run_id)), () => ('recovery_target_id_missing')), inline: true },
     { name: 'Deadline',    value: deadline, inline: false },
     { name: 'On Timeout',  value: timeoutNote, inline: true },
     { name: 'Completed Steps', value: completedSummary, inline: false },
@@ -162,16 +212,17 @@ function getApprovalGateRunnerDeps(config, overrides = {}) {
 
 async function resolveTimeout(config, gateId, gate, state, timeoutPolicy, deps) {
   const normalizedTimeoutPolicy = resolveApprovalTimeoutPolicyFromState(state, gateId);
+  const gateType = approvalGateType(gate, gateId);
   recordApprovalGateOutcome(config, gateId, gate.title, APPROVAL_STATUS.TIMED_OUT, null,
     `No decision received within ${state.timeout_minutes} minutes`, {
-      gate_type: gate?.type || 'approval',
-      run_id: state?.run_id || config._runId || config.run_id || null,
-      project: config.project || null,
-      decision_via: state?.decision_via || 'timeout',
+      gate_type: gateType,
+      run_id: approvalRunId(config, state),
+      project: optionalApprovalText(config.project),
+      decision_via: selectDefinedValue(() => (approvalDecisionVia(state)), () => ('timeout')),
       timeout_policy: normalizedTimeoutPolicy,
       continued: normalizedTimeoutPolicy === APPROVAL_TIMEOUT_POLICY.CONTINUE,
   });
-  onApprovalResolved({ config }, gateId, APPROVAL_STATUS.TIMED_OUT, null, { gate_type: gate?.type || 'approval' });
+  onApprovalResolved({ config }, gateId, APPROVAL_STATUS.TIMED_OUT, null, { gate_type: gateType });
 
   if (normalizedTimeoutPolicy === APPROVAL_TIMEOUT_POLICY.CONTINUE) {
     emitApprovalGateVerdict(config, gateId, gate, 'PASS', `Approval timed out after ${state.timeout_minutes} minutes; auto-continued`, {
@@ -182,7 +233,7 @@ async function resolveTimeout(config, gateId, gate, state, timeoutPolicy, deps) 
           description: `Gate \`${gateId}\` timed out after ${state.timeout_minutes} minutes. Configured to auto-continue.`,
           action: 'continue',
           next_action: 'continue',
-          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, { run_id: state.run_id, gate_id: gateId, gate_type: gate.type }, [
+          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, { run_id: state.run_id, gate_id: gateId, gate_type: gateType }, [
             { name: 'Gate ID', value: gateId },
             { name: 'Policy', value: APPROVAL_TIMEOUT_POLICY.CONTINUE },
             { name: 'Audit trail', value: `\`.swarm/logs/gates/${gateId}/\`` },
@@ -206,7 +257,7 @@ async function resolveTimeout(config, gateId, gate, state, timeoutPolicy, deps) 
         level: 'CRITICAL',
         title: `Approval Timeout (blocked): ${gate.title}`,
         description: `Gate \`${gateId}\` timed out after ${state.timeout_minutes} minutes. Pipeline halted — operator approval required.`,
-        fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, { run_id: state.run_id, gate_id: gateId, gate_type: gate.type }, [
+        fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, { run_id: state.run_id, gate_id: gateId, gate_type: gateType }, [
           { name: 'Gate ID', value: gateId },
           { name: 'Policy', value: APPROVAL_TIMEOUT_POLICY.BLOCK },
           { name: 'To Approve', value: `\`APPROVE gate:${gateId}\`` },
@@ -234,11 +285,11 @@ function deadlineRemainingMs(state = {}) {
 }
 
 function isPipelineEventWaitTimeout(error) {
-  return error?.name === 'PipelineEventWaitTimeoutError' || error?.code === 'PIPELINE_EVENT_WAIT_TIMEOUT';
+  return selectTruthyValue(() => (error?.name === 'PipelineEventWaitTimeoutError'), () => (error?.code === 'PIPELINE_EVENT_WAIT_TIMEOUT'));
 }
 
 async function failClosedOnApprovalStateNormalizationError(config, gateId, gate, rawState, deps, opts = {}, normalizationError = null) {
-  const invalidStateError = normalizationError?.message || (normalizationError ? String(normalizationError) : 'approval state normalization failed');
+  const invalidStateError = selectDefinedValue(() => (normalizationError?.message), () => ((normalizationError ? String(normalizationError) : 'approval_state_normalization_failed')));
   const invalidState = rawState && typeof rawState === 'object'
     ? { ...rawState, invalid_state_error: invalidStateError }
     : { status: null, invalid_state_error: invalidStateError };
@@ -274,41 +325,39 @@ async function resolveObservedApprovalState(config, gateId, gate, rawCurrent, ti
     throw new Error(`Approval gate '${gateId}' cannot wait because no persisted approval state exists`);
   }
 
-  if (current && rawCurrent && (
-    current.timeout_policy !== rawCurrent.timeout_policy ||
-    current.gate_id !== rawCurrent.gate_id ||
-    current.gate_type !== rawCurrent.gate_type ||
-    current.project !== rawCurrent.project
-  )) {
+  if (approvalStateIdentityChanged(current, rawCurrent)) {
     deps.saveGateState(config, gateId, current);
   }
 
-  const status = String(current?.status || '').trim().toUpperCase();
+  const status = approvalStatusValue(current);
 
   if (status === APPROVAL_STATUS.APPROVED) {
-    log('OK', `Approval gate '${gateId}' APPROVED by ${current.decision_by || 'unknown'}`);
+    const gateType = approvalGateType(gate, gateId);
+    const decisionActor = approvalTextOrReason(current.decision_by, 'decision_actor_missing');
+    const decisionReason = approvalTextOrReason(current.reason, 'approval_reason_not_provided');
+    log('OK', `Approval gate '${gateId}' APPROVED by ${decisionActor}`);
     syncApprovalWaitState(config, gateId, gate, current);
-    deps.appendTransition(config, gateId, APPROVAL_STATUS.PENDING_APPROVAL, APPROVAL_STATUS.APPROVED, current.reason || '', buildApprovalIdentity(config, gateId, gate, current));
+    deps.appendTransition(config, gateId, APPROVAL_STATUS.PENDING_APPROVAL, APPROVAL_STATUS.APPROVED, decisionReason, buildApprovalIdentity(config, gateId, gate, current));
     deps.writeApprovalDecision(config, gateId, current);
     recordApprovalGateOutcome(config, gateId, gate.title, APPROVAL_STATUS.APPROVED, current.decision_by, current.reason, {
-      gate_type: gate?.type || 'approval',
-      run_id: current?.run_id || config._runId || config.run_id || null,
-      project: config.project || null,
-      decision_via: current?.decision_via || null,
-      timeout_policy: current?.timeout_policy || null,
+      gate_type: gateType,
+      run_id: approvalRunId(config, current),
+      project: optionalApprovalText(config.project),
+      decision_via: approvalDecisionVia(current),
+      timeout_policy: selectDefinedValue(() => (current?.timeout_policy), () => (null)),
       continued: current?.continued,
     });
-    onApprovalResolved({ config }, gateId, APPROVAL_STATUS.APPROVED, current.decision_by, { gate_type: gate.type || 'approval' });
-    emitApprovalGateVerdict(config, gateId, gate, 'PASS', current.reason || 'Approved by operator', {
+    onApprovalResolved({ config }, gateId, APPROVAL_STATUS.APPROVED, current.decision_by, { gate_type: gateType });
+    emitApprovalGateVerdict(config, gateId, gate, 'PASS', decisionReason, {
       presentation: {
         discord: {
           level: 'OK',
           title: `Approved: ${gate.title}`,
           description: `Gate \`${gateId}\` approved. Pipeline resuming.`,
-          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, { run_id: current.run_id || config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate.type }, [
-            { name: 'Approved by', value: current.decision_by || 'operator' },
-            { name: 'Decision via', value: current.decision_via || 'unknown' },
-            { name: 'Reason', value: current.reason || 'none' },
+          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, { run_id: selectDefinedValue(() => (approvalRunId(config, current)), () => ('run_id_missing')), gate_id: gateId, gate_type: gateType }, [
+            { name: 'Approved by', value: decisionActor },
+            { name: 'Decision via', value: selectDefinedValue(() => (approvalDecisionVia(current)), () => ('decision_channel_missing')) },
+            { name: 'Reason', value: decisionReason },
           ]),
         },
       },
@@ -318,8 +367,8 @@ async function resolveObservedApprovalState(config, gateId, gate, rawCurrent, ti
         status: APPROVAL_STATUS.APPROVED,
         outcome_class: 'passed',
         gate_id: gateId,
-        decision_by: current.decision_by || null,
-        decision_via: current.decision_via || null,
+        decision_by: optionalApprovalText(current.decision_by),
+        decision_via: approvalDecisionVia(current),
       }, { ...opts, approvalState: current }),
       state: current,
       timeoutPolicy,
@@ -327,28 +376,31 @@ async function resolveObservedApprovalState(config, gateId, gate, rawCurrent, ti
   }
 
   if (status === APPROVAL_STATUS.REJECTED) {
-    log('WARN', `Approval gate '${gateId}' REJECTED by ${current.decision_by || 'unknown'}`);
+    const gateType = approvalGateType(gate, gateId);
+    const decisionActor = approvalTextOrReason(current.decision_by, 'decision_actor_missing');
+    const rejectionReason = approvalTextOrReason(current.reason, 'rejection_reason_missing');
+    log('WARN', `Approval gate '${gateId}' REJECTED by ${decisionActor}`);
     syncApprovalWaitState(config, gateId, gate, current);
-    deps.appendTransition(config, gateId, APPROVAL_STATUS.PENDING_APPROVAL, APPROVAL_STATUS.REJECTED, current.reason || '', buildApprovalIdentity(config, gateId, gate, current));
+    deps.appendTransition(config, gateId, APPROVAL_STATUS.PENDING_APPROVAL, APPROVAL_STATUS.REJECTED, rejectionReason, buildApprovalIdentity(config, gateId, gate, current));
     deps.writeApprovalDecision(config, gateId, current);
     recordApprovalGateOutcome(config, gateId, gate.title, APPROVAL_STATUS.REJECTED, current.decision_by, current.reason, {
-      gate_type: gate?.type || 'approval',
-      run_id: current?.run_id || config._runId || config.run_id || null,
-      project: config.project || null,
-      decision_via: current?.decision_via || null,
-      timeout_policy: current?.timeout_policy || null,
+      gate_type: gateType,
+      run_id: approvalRunId(config, current),
+      project: optionalApprovalText(config.project),
+      decision_via: approvalDecisionVia(current),
+      timeout_policy: selectDefinedValue(() => (current?.timeout_policy), () => (null)),
       continued: current?.continued,
     });
-    onApprovalResolved({ config }, gateId, APPROVAL_STATUS.REJECTED, current.decision_by, { gate_type: gate.type || 'approval' });
-    emitApprovalGateVerdict(config, gateId, gate, 'FAIL', current.reason || 'Rejected by operator', {
+    onApprovalResolved({ config }, gateId, APPROVAL_STATUS.REJECTED, current.decision_by, { gate_type: gateType });
+    emitApprovalGateVerdict(config, gateId, gate, 'FAIL', rejectionReason, {
       presentation: {
         discord: {
           level: 'CRITICAL',
           title: `Rejected: ${gate.title}`,
           description: `Gate \`${gateId}\` rejected. Pipeline halted — operator intervention required.`,
-          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, { run_id: current.run_id || config._runId || config.run_id || 'unknown', gate_id: gateId, gate_type: gate.type }, [
-            { name: 'Rejected by', value: current.decision_by || 'operator' },
-            { name: 'Reason', value: (current.reason || 'none given').slice(0, 200) },
+          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.APPROVAL_GATE, { run_id: selectDefinedValue(() => (approvalRunId(config, current)), () => ('run_id_missing')), gate_id: gateId, gate_type: gateType }, [
+            { name: 'Rejected by', value: decisionActor },
+            { name: 'Reason', value: rejectionReason.slice(0, 200) },
             { name: 'Audit trail', value: `\`.swarm/logs/gates/${gateId}/\`` },
           ]),
         },
@@ -358,10 +410,10 @@ async function resolveObservedApprovalState(config, gateId, gate, rawCurrent, ti
       result: buildApprovalGateControlResult(config, gateId, gate, {
         status: APPROVAL_STATUS.REJECTED,
         outcome_class: 'needs_nova',
-        reason: `Gate '${gateId}' rejected: ${current.reason || 'no reason given'}`,
+        reason: `Gate '${gateId}' rejected: ${rejectionReason}`,
         gate_id: gateId,
-        decision_by: current.decision_by || null,
-        decision_via: current.decision_via || null,
+        decision_by: optionalApprovalText(current.decision_by),
+        decision_via: approvalDecisionVia(current),
       }, { ...opts, approvalState: current }),
       state: current,
       timeoutPolicy,
@@ -369,27 +421,29 @@ async function resolveObservedApprovalState(config, gateId, gate, rawCurrent, ti
   }
 
   if (status === APPROVAL_STATUS.CANCELLED) {
+    const gateType = approvalGateType(gate, gateId);
+    const cancellationReason = approvalTextOrReason(current?.reason, 'cancellation_reason_missing');
     log('WARN', `Approval gate '${gateId}' CANCELLED`);
     syncApprovalWaitState(config, gateId, gate, current);
-    deps.appendTransition(config, gateId, APPROVAL_STATUS.PENDING_APPROVAL, APPROVAL_STATUS.CANCELLED, current?.reason || '', buildApprovalIdentity(config, gateId, gate, current));
+    deps.appendTransition(config, gateId, APPROVAL_STATUS.PENDING_APPROVAL, APPROVAL_STATUS.CANCELLED, cancellationReason, buildApprovalIdentity(config, gateId, gate, current));
     deps.writeApprovalDecision(config, gateId, current);
     recordApprovalGateOutcome(config, gateId, gate.title, APPROVAL_STATUS.CANCELLED, null, current?.reason, {
-      gate_type: gate?.type || 'approval',
-      run_id: current?.run_id || config._runId || config.run_id || null,
-      project: config.project || null,
-      decision_via: current?.decision_via || null,
-      timeout_policy: current?.timeout_policy || null,
+      gate_type: gateType,
+      run_id: approvalRunId(config, current),
+      project: optionalApprovalText(config.project),
+      decision_via: approvalDecisionVia(current),
+      timeout_policy: selectDefinedValue(() => (current?.timeout_policy), () => (null)),
       continued: current?.continued,
     });
-    onApprovalResolved({ config }, gateId, APPROVAL_STATUS.CANCELLED, null, { gate_type: gate.type || 'approval' });
-    emitApprovalGateVerdict(config, gateId, gate, 'FAIL', current?.reason || 'Approval cancelled');
+    onApprovalResolved({ config }, gateId, APPROVAL_STATUS.CANCELLED, null, { gate_type: gateType });
+    emitApprovalGateVerdict(config, gateId, gate, 'FAIL', cancellationReason);
     return {
       result: buildApprovalGateControlResult(config, gateId, gate, {
         status: APPROVAL_STATUS.CANCELLED,
         outcome_class: 'needs_nova',
         reason: `Gate '${gateId}' cancelled`,
         gate_id: gateId,
-        decision_via: current.decision_via || null,
+        decision_via: approvalDecisionVia(current),
       }, { ...opts, approvalState: current }),
       state: current,
       timeoutPolicy,
@@ -398,14 +452,15 @@ async function resolveObservedApprovalState(config, gateId, gate, rawCurrent, ti
 
   if (status === APPROVAL_STATUS.TIMED_OUT) {
     const nextTimeoutPolicy = resolveApprovalTimeoutPolicyFromState(current, gateId);
+    const timeoutReason = approvalTextOrReason(current.reason, `No decision received within ${current.timeout_minutes} minutes`);
     const timedOut = {
       ...current,
       status: APPROVAL_STATUS.TIMED_OUT,
       timeout_policy: nextTimeoutPolicy,
-      resolved_at: current.resolved_at || new Date().toISOString(),
-      decision_via: current.decision_via || 'timeout',
+      resolved_at: selectDefinedValue(() => (current.resolved_at), () => (new Date().toISOString())),
+      decision_via: selectDefinedValue(() => (approvalDecisionVia(current)), () => ('timeout')),
       continued: nextTimeoutPolicy === APPROVAL_TIMEOUT_POLICY.CONTINUE,
-      reason: current.reason || `No decision received within ${current.timeout_minutes} minutes`,
+      reason: timeoutReason,
     };
     log('WARN', `Approval gate '${gateId}' TIMED_OUT via approval signal`);
     syncApprovalWaitState(config, gateId, gate, timedOut);
@@ -463,22 +518,24 @@ async function resolveObservedApprovalState(config, gateId, gate, rawCurrent, ti
 }
 
 async function waitForApprovalSignalFlow(config, gateId, gate, state, progress, timeoutPolicy, deps, opts = {}) {
-  let observed = await resolveObservedApprovalState(config, gateId, gate, deps.loadGateState(config, gateId) || state, timeoutPolicy, deps, opts);
+  const initialObservedState = selectDefinedValue(() => (deps.loadGateState(config, gateId)), () => (state));
+  let observed = await resolveObservedApprovalState(config, gateId, gate, initialObservedState, timeoutPolicy, deps, opts);
   if (observed.result) return observed.result;
 
-  const eventBus = opts.eventBus || createPipelineEventBus();
-  const createSignalAdapter = deps.createSignalAdapter || createApprovalSignalEventAdapter;
-  const adapter = opts.approvalSignalAdapter || createSignalAdapter(config, {
+  const eventBus = selectDefinedValue(() => (opts.eventBus), () => (createPipelineEventBus()));
+  const adapter = selectDefinedValue(() => (opts.approvalSignalAdapter), () => (createRedisApprovalSignalEventAdapter(config, {
     eventBus,
     gateId,
     gate,
+    blockMs: eventAdapterNumber(config, 'approval_signal_debounce_ms'),
     debounceMs: eventAdapterNumber(config, 'approval_signal_debounce_ms'),
     loadState: deps.loadGateState,
-    waitRef: observed.state?.wait_ref || opts?.input?.refs?.waitRef || null,
+    waitRef: selectDefinedValue(() => (selectDefinedValue(() => (observed.state?.wait_ref), () => (opts?.input?.refs?.waitRef))), () => (null)),
     emitExisting: true,
     stopOnTerminal: true,
-  });
-  const identity = { gate_id: gateId, ...(config._runId || config.run_id ? { run_id: config._runId || config.run_id } : {}) };
+})));
+  const runId = approvalRunId(config);
+  const identity = { gate_id: gateId, ...(runId ? { run_id: runId } : {}) };
 
   try {
     let adapterStarted = false;
@@ -511,7 +568,7 @@ async function waitForApprovalSignalFlow(config, gateId, gate, state, progress, 
       if (event.type === 'fatal.error') {
         observed = await resolveObservedApprovalState(config, gateId, gate, deps.loadGateState(config, gateId), observed.timeoutPolicy, deps, opts);
         if (observed.result) return observed.result;
-        throw new Error(`Approval signal adapter failed for gate '${gateId}': ${event.payload?.reason || 'fatal.error'}`);
+        throw new Error(`Approval signal adapter failed for gate '${gateId}': ${selectDefinedValue(() => (event.payload?.reason), () => ('approval_signal_reason_missing'))}`);
       }
 
       observed = await resolveObservedApprovalState(config, gateId, gate, deps.loadGateState(config, gateId), observed.timeoutPolicy, deps, opts);
@@ -528,7 +585,7 @@ export async function runApprovalGateEvaluation(config, progress, gateId, opts =
   const gate = progress.gates[gateId];
   if (!gate) throw new Error(`Approval gate '${gateId}' not found`);
 
-  const timeoutMinutes  = gate.timeout_minutes ?? getPipelineDefaultsConfig(config).timeout_minutes;
+  const timeoutMinutes  = gate.timeout_minutes
   const timeoutPolicy   = resolveApprovalTimeoutPolicyFromGate(gate, gateId);
   const deps            = getApprovalGateRunnerDeps(config, opts.deps);
 
@@ -549,23 +606,18 @@ export async function runApprovalGateEvaluation(config, progress, gateId, opts =
     return failClosedOnApprovalStateNormalizationError(config, gateId, gate, loadedGateState, deps, opts, error);
   }
   if (gateState) {
-    const loadedStatus = String(gateState.status || '').trim().toUpperCase();
+    const loadedStatus = approvalStatusValue(gateState);
     if (!APPROVAL_TERMINAL_OR_WAIT_STATUSES.has(loadedStatus)) {
       return buildApprovalGateControlResult(config, gateId, gate, await failClosedOnInvalidApprovalState(config, gateId, gate, gateState, deps), { ...opts, approvalState: gateState });
     }
   }
-  gateState = normalizeApprovalGateState(syncApprovalWaitState(config, gateId, gate, gateState), buildApprovalIdentity(config, gateId, gate, gateState)) || gateState;
-  if (gateState && loadedGateState && (
-    gateState.timeout_policy !== loadedGateState.timeout_policy ||
-    gateState.gate_id !== loadedGateState.gate_id ||
-    gateState.gate_type !== loadedGateState.gate_type ||
-    gateState.project !== loadedGateState.project
-  )) {
+  gateState = selectDefinedValue(() => (normalizeApprovalGateState(syncApprovalWaitState(config, gateId, gate, gateState), buildApprovalIdentity(config, gateId, gate, gateState))), () => (gateState));
+  if (approvalStateIdentityChanged(gateState, loadedGateState)) {
     deps.saveGateState(config, gateId, gateState);
   }
 
   if (gateState) {
-    const s = (gateState.status || '').toUpperCase();
+    const s = approvalStatusValue(gateState);
 
     if (s === APPROVAL_STATUS.APPROVED) {
       log('OK', `Approval gate '${gateId}' already APPROVED — restoring resolved telemetry`);
@@ -587,7 +639,7 @@ export async function runApprovalGateEvaluation(config, progress, gateId, opts =
       return buildApprovalGateControlResult(config, gateId, gate, {
         status:  APPROVAL_STATUS.REJECTED,
         outcome_class: 'needs_nova',
-        reason:  `Gate '${gateId}' was previously rejected: ${gateState.reason || 'no reason given'}`,
+        reason:  `Gate '${gateId}' was previously rejected: ${approvalTextOrReason(gateState.reason, 'rejection_reason_missing')}`,
         gate_id: gateId,
       }, { ...opts, approvalState: gateState });
     }
@@ -615,7 +667,11 @@ export async function runApprovalGateEvaluation(config, progress, gateId, opts =
     if (s === APPROVAL_STATUS.PENDING_APPROVAL) {
       // Resume — check if timeout already elapsed
       const requestedMs    = new Date(gateState.requested_at).getTime();
-      const stateTimeoutMs = (gateState.timeout_minutes ?? timeoutMinutes) * 60 * 1000;
+      const stateTimeoutMinutes = Number(gateState.timeout_minutes);
+      if (selectTruthyValue(() => (!Number.isFinite(stateTimeoutMinutes)), () => (stateTimeoutMinutes <= 0))) {
+        return buildApprovalGateControlResult(config, gateId, gate, await failClosedOnInvalidApprovalState(config, gateId, gate, gateState, deps), { ...opts, approvalState: gateState });
+      }
+      const stateTimeoutMs = stateTimeoutMinutes * 60 * 1000;
 
       if (Date.now() >= requestedMs + stateTimeoutMs) {
         log('WARN', `Approval gate '${gateId}' timeout elapsed during restart — marking TIMED_OUT`);
@@ -648,12 +704,14 @@ export async function runApprovalGateEvaluation(config, progress, gateId, opts =
   // ── 2. Fresh start — initialize PENDING_APPROVAL ──────────────────────────
   const nowIso      = new Date().toISOString();
   const deadlineIso = new Date(Date.now() + timeoutMinutes * 60 * 1000).toISOString();
+  const gateType = approvalGateType(gate, gateId);
+  const runId = requireApprovalRunId(config, gateId);
 
   gateState = {
     gate_id:             gateId,
-    gate_type:           gate.type || 'approval',
+    gate_type:           gateType,
     status:              APPROVAL_STATUS.PENDING_APPROVAL,
-    run_id:              config._runId || config.run_id || 'unknown',
+    run_id:              runId,
     project:             config.project,
     requested_at:        nowIso,
     deadline:            deadlineIso,
@@ -689,7 +747,7 @@ export async function runApprovalGateEvaluation(config, progress, gateId, opts =
       discord: requestPresentation,
     },
   });
-  onApprovalRequested({ config }, gateId, gate.title, timeoutMinutes, timeoutPolicy, { gate_type: gate.type || 'approval' });
+  onApprovalRequested({ config }, gateId, gate.title, timeoutMinutes, timeoutPolicy, { gate_type: gateType });
 
   // ── 3. Post Discord approval request ──────────────────────────────────────
   // ── 4. Return wait control result for core-owned wait handling ────────────
@@ -714,7 +772,7 @@ export async function waitForApprovalGateSignal(config, progress, gateId, contro
   if (!state) {
     throw new Error(`Approval gate '${gateId}' cannot wait because no persisted approval state exists`);
   }
-  const status = String(state.status || '').trim().toUpperCase();
+  const status = approvalStatusValue(state);
   if (!APPROVAL_TERMINAL_OR_WAIT_STATUSES.has(status)) {
     return buildApprovalGateControlResult(config, gateId, gate, await failClosedOnInvalidApprovalState(config, gateId, gate, state, deps), { ...opts, approvalState: state });
   }
@@ -742,8 +800,8 @@ export function getApprovalGateControlAdapter() {
     createWaitController: createApprovalGateWaitController,
     extraValidate: (controlResult) => {
       const errors = [];
-      const metadata = controlResult?.diagnostics?.metadata || controlResult?.diagnostics?.typed?.gate?.metadata || {};
-      const gateRunStatus = controlResult?.diagnostics?.typed?.gate?.gateRunStatus || null;
+      const metadata = selectDefinedValue(() => (selectDefinedValue(() => (controlResult?.diagnostics?.metadata), () => (controlResult?.diagnostics?.typed?.gate?.metadata))), () => ({}));
+      const gateRunStatus = selectDefinedValue(() => (controlResult?.diagnostics?.typed?.gate?.gateRunStatus), () => (null));
       if (gateRunStatus === APPROVAL_STATUS.TIMED_OUT && metadata?.continued === true && controlResult.nextAction !== GATE_CONTROL_ACTIONS.PASS) {
         errors.push('timeout-continue must map to nextAction=pass');
       }

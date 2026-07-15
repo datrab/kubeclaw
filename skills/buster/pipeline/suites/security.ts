@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Suite: security — HTTP Response Header Audit
 // ═══════════════════════════════════════════════════════════════
@@ -38,8 +39,6 @@ interface HeaderCheck {
 }
 
 const DEFAULTS = {
-  static_port: 9999,
-  server_port: 3000,
   timeout_ms: 10000,
   max_findings: 50,
   min_hsts_max_age: 31536000,
@@ -54,7 +53,7 @@ const HEADER_CHECKS: HeaderCheck[] = [
       if (!val) return { message: 'Missing Strict-Transport-Security (HSTS) header', rule: 'hsts-missing' };
       const maxAgeMatch = val.match(/max-age=(\d+)/);
       if (!maxAgeMatch?.[1]) return { message: 'HSTS header missing max-age directive', rule: 'hsts-max-age' };
-      const minAge = config.min_hsts_max_age ?? DEFAULTS.min_hsts_max_age;
+      const minAge = config.min_hsts_max_age
       const maxAge = Number.parseInt(maxAgeMatch[1], 10);
       if (maxAge < minAge) return { message: `HSTS max-age ${maxAge}s is below minimum ${minAge}s`, rule: 'hsts-max-age-low' };
       return null;
@@ -119,7 +118,39 @@ function createLog(logSink: LogSink | null | undefined): (msg: string) => void {
 }
 
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error || 'unknown error');
+  return error instanceof Error ? error.message : String(selectTruthyValue(() => (error), () => ('missing_error_detail')));
+}
+
+function objectRecord(value: unknown): AnyRecord | null {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : null;
+}
+
+function requireObject(value: unknown, field: string): AnyRecord {
+  const record = objectRecord(value);
+  if (!record) throw new Error(`${field}: required object`);
+  return record;
+}
+
+function requireNonEmptyString(value: unknown, field: string): string {
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) throw new Error(`${field}: required non-empty string`);
+  return value.trim();
+}
+
+function requirePort(value: unknown, field: string): number {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!Number.isInteger(value)), () => (value < 1))), () => (value > 65535))) throw new Error(`${field}: required integer port`);
+  return value;
+}
+
+function requireStringArray(value: unknown, field: string): string[] {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!Array.isArray(value)), () => (value.length === 0))), () => (value.some((entry) => selectTruthyValue(() => (typeof entry !== 'string'), () => (!entry.trim())))))) {
+    throw new Error(`${field}: required non-empty string array`);
+  }
+  return value.map((entry) => entry.trim());
+}
+
+function requireNonNegativeInteger(value: unknown, field: string): number {
+  if (selectTruthyValue(() => (!Number.isInteger(value)), () => (value < 0))) throw new Error(`${field}: required non-negative integer`);
+  return value;
 }
 
 function evidenceMode(enforced: boolean): 'enforced' | 'evidence-only' {
@@ -140,7 +171,7 @@ function checkCookies(headers: Headers): { findings: Finding[]; cookieCount: num
 
   for (const cookie of cookies) {
     const parts = cookie.toLowerCase();
-    const name = cookie.split('=')[0]?.trim() || 'unknown';
+    const name = selectTruthyValue(() => (cookie.split('=')[0]?.trim()), () => ('missing_cookie_name'));
     if (!parts.includes('httponly')) findings.push(createFinding(SEVERITY.SERIOUS, `Cookie "${name}" missing HttpOnly flag`, { rule: 'cookie-httponly', element: name }));
     if (!parts.includes('secure')) findings.push(createFinding(SEVERITY.SERIOUS, `Cookie "${name}" missing Secure flag`, { rule: 'cookie-secure', element: name }));
     if (!parts.includes('samesite')) findings.push(createFinding(SEVERITY.MODERATE, `Cookie "${name}" missing SameSite attribute`, { rule: 'cookie-samesite', element: name }));
@@ -159,17 +190,39 @@ function checkCors(headers: Headers): Finding | null {
 export default async function securitySuite(context: SecurityContext): Promise<SuiteVerdict> {
   const log = createLog(context.logSink);
   const startTime = Date.now();
-  const serve = context.config?.serve || {};
-  const secConf = context.config?.security || {};
-
-  const type = serve.type || 'static';
-  const port = serve.port || (type === 'server' ? DEFAULTS.server_port : DEFAULTS.static_port);
-  const paths: string[] = secConf.paths || [serve.health_path || '/'];
-  const checkCorsEnabled = secConf.check_cors !== false;
-  const thresholds = secConf.thresholds || null;
-  const enforced = thresholds !== null;
+  let serve: AnyRecord;
+  let secConf: AnyRecord;
+  let type: string;
+  let port: number;
+  let paths: string[];
+  let checkCorsEnabled: boolean;
+  let thresholds: AnyRecord | null;
+  let enforced: boolean;
+  let timeoutMs: number;
+  try {
+    serve = requireObject(context.config?.serve, 'test_config.serve');
+    secConf = requireObject(context.config?.security, 'test_config.security');
+    type = requireNonEmptyString(serve.type, 'test_config.serve.type');
+    port = requirePort(serve.port, 'test_config.serve.port');
+    paths = requireStringArray(secConf.paths, 'test_config.security.paths');
+    checkCorsEnabled = secConf.check_cors !== false;
+    thresholds = selectTruthyValue(() => (secConf.thresholds === undefined), () => (secConf.thresholds === null))
+      ? null
+      : requireObject(secConf.thresholds, 'test_config.security.thresholds');
+    enforced = thresholds !== null;
+    timeoutMs = secConf.timeout_ms === undefined
+      ? DEFAULTS.timeout_ms
+      : requireNonNegativeInteger(secConf.timeout_ms, 'test_config.security.timeout_ms');
+  } catch (error) {
+    const message = errorMessage(error);
+    return createSuiteVerdict('security', STATUS.ERROR, {
+      critical: false,
+      duration_ms: Date.now() - startTime,
+      error: message,
+      findings: [createFinding(SEVERITY.CRITICAL, message, { rule: 'security-config' })],
+    });
+  }
   const mode = evidenceMode(enforced);
-  const timeoutMs = secConf.timeout_ms || DEFAULTS.timeout_ms;
 
   let urls: Array<{ path: string; url: string }>;
   try {
@@ -257,7 +310,7 @@ export default async function securitySuite(context: SecurityContext): Promise<S
   }
 
   let suiteStatus: SuiteStatus = STATUS.PASS;
-  if (enforced && failedChecks > (thresholds.max_missing_headers ?? 0)) suiteStatus = STATUS.FAIL;
+  if (enforced && thresholds && failedChecks > requireNonNegativeInteger(thresholds.max_missing_headers, 'test_config.security.thresholds.max_missing_headers')) suiteStatus = STATUS.FAIL;
 
   const passedChecks = totalChecks - failedChecks;
   const duration_ms = Date.now() - startTime;

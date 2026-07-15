@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 const TRUE_VALUES = new Set(['1', 'true', 'yes', 'on', 'enabled']);
 const FALSE_VALUES = new Set(['0', 'false', 'no', 'off', 'disabled']);
 
@@ -34,14 +35,14 @@ function asRecord(value: unknown): UnknownRecord {
 
 function typedBoolean(config: UnknownRecord, field: string, fallback: boolean): boolean {
   const value = config[field];
-  if (value === undefined || value === null) return fallback;
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return fallback;
   if (typeof value !== 'boolean') throw new Error(`${field} must be a boolean`);
   return value;
 }
 
 function envBoolean(env: UnknownRecord, field: string): boolean | undefined {
   const value = env[field];
-  if (value === undefined || value === null || value === '') return undefined;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return undefined;
   if (typeof value === 'boolean') return value;
   const normalized = String(value).trim().toLowerCase();
   if (TRUE_VALUES.has(normalized)) return true;
@@ -51,10 +52,10 @@ function envBoolean(env: UnknownRecord, field: string): boolean | undefined {
 
 function typedString(config: UnknownRecord, field: string): string | undefined {
   const value = config[field];
-  if (value === undefined || value === null) return undefined;
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return undefined;
   if (typeof value !== 'string') throw new Error(`${field} must be a string`);
   const normalized = value.trim();
-  return normalized || undefined;
+  return normalized.length > 0 ? normalized : undefined;
 }
 
 function requiredString(config: UnknownRecord, field: string): string {
@@ -64,16 +65,18 @@ function requiredString(config: UnknownRecord, field: string): string {
 }
 
 function envString(env: UnknownRecord, field: string): string | undefined {
-  const normalized = String(env[field] ?? '').trim();
-  return normalized || undefined;
+  const value = env[field];
+  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return undefined;
+  const normalized = String(value).trim();
+  return normalized.length > 0 ? normalized : undefined;
 }
 
 function requiredPositiveInteger(config: UnknownRecord, field: string): number {
   const value = config[field];
-  if (value === undefined || value === null) {
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) {
     throw new Error(`${field} is required when agent observability ingester is enabled`);
   }
-  if (typeof value !== 'number' || !Number.isInteger(value) || value <= 0) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isInteger(value)))), () => (value <= 0))) {
     throw new Error(`${field} must be a positive integer`);
   }
   return value;
@@ -81,10 +84,10 @@ function requiredPositiveInteger(config: UnknownRecord, field: string): number {
 
 function requiredNonNegativeInteger(config: UnknownRecord, field: string): number {
   const value = config[field];
-  if (value === undefined || value === null) {
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) {
     throw new Error(`${field} is required when agent observability ingester is enabled`);
   }
-  if (typeof value !== 'number' || !Number.isInteger(value) || value < 0) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isInteger(value)))), () => (value < 0))) {
     throw new Error(`${field} must be a non-negative integer`);
   }
   return value;
@@ -92,8 +95,8 @@ function requiredNonNegativeInteger(config: UnknownRecord, field: string): numbe
 
 function typedRedisPort(config: UnknownRecord): number | undefined {
   const value = config.redisPort;
-  if (value === undefined || value === null) return undefined;
-  if (typeof value !== 'number' || !Number.isInteger(value) || value <= 0 || value > 65535) {
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return undefined;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isInteger(value)))), () => (value <= 0))), () => (value > 65535))) {
     throw new Error('redisPort must be an integer between 1 and 65535');
   }
   return value;
@@ -101,9 +104,9 @@ function typedRedisPort(config: UnknownRecord): number | undefined {
 
 function envRedisPort(env: UnknownRecord): number | undefined {
   const value = env.REDIS_PORT;
-  if (value === undefined || value === null || value === '') return undefined;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return undefined;
   const normalized = Number(value);
-  if (!Number.isInteger(normalized) || normalized <= 0 || normalized > 65535) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!Number.isInteger(normalized)), () => (normalized <= 0))), () => (normalized > 65535))) {
     throw new Error('REDIS_PORT must be an integer between 1 and 65535');
   }
   return normalized;
@@ -111,11 +114,11 @@ function envRedisPort(env: UnknownRecord): number | undefined {
 
 function typedNetworkIsolation(config: UnknownRecord): boolean | string | undefined {
   const value = config.redisNetworkIsolation;
-  if (value === undefined || value === null) return undefined;
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return undefined;
   if (typeof value === 'boolean') return value;
   if (typeof value === 'string') {
     const normalized = value.trim();
-    return normalized || undefined;
+    return normalized.length > 0 ? normalized : undefined;
   }
   throw new Error('redisNetworkIsolation must be a boolean or non-empty string');
 }
@@ -143,18 +146,19 @@ export function resolveAgentObservabilityIngesterConfig(
     payloadPressureDegradedThreshold: enabled ? requiredNonNegativeInteger(config, 'payloadPressureDegradedThreshold') : 0,
   };
 
-  const redisTls = typedBoolean(config, 'redisTls', envBoolean(env, 'REDIS_TLS') ?? envBoolean(env, 'REDIS_TLS_ENABLED') ?? false);
+  const redisTls = typedBoolean(config, 'redisTls', selectDefinedValue(() => (envBoolean(env, 'REDIS_TLS')), () => (false)));
   if (redisTls) resolved.redisTls = redisTls;
 
-  const redisHost = typedString(config, 'redisHost') ?? envString(env, 'REDIS_HOST');
+  const redisHost = typedString(config, 'redisHost')
   if (redisHost !== undefined) resolved.redisHost = redisHost;
-  const redisPort = typedRedisPort(config) ?? envRedisPort(env);
+  const configuredRedisPort = typedRedisPort(config);
+  const redisPort = configuredRedisPort !== undefined ? configuredRedisPort : envRedisPort(env);
   if (redisPort !== undefined) resolved.redisPort = redisPort;
-  const redisUsername = typedString(config, 'redisUsername') ?? envString(env, 'REDIS_USERNAME');
+  const redisUsername = typedString(config, 'redisUsername')
   if (redisUsername !== undefined) resolved.redisUsername = redisUsername;
-  const redisPassword = typedString(config, 'redisPassword') ?? envString(env, 'REDIS_PASSWORD');
+  const redisPassword = typedString(config, 'redisPassword')
   if (redisPassword !== undefined) resolved.redisPassword = redisPassword;
-  const redisNetworkIsolation = typedNetworkIsolation(config) ?? envString(env, 'REDIS_NETWORK_ISOLATION');
+  const redisNetworkIsolation = typedNetworkIsolation(config)
   if (redisNetworkIsolation !== undefined) resolved.redisNetworkIsolation = redisNetworkIsolation;
 
   return resolved;

@@ -1,5 +1,6 @@
 {
   "_doc": "Expanded standard swarm profile. Versioned product baseline for strict, deterministic, high-retention pipeline runtime behavior.",
+  "projects_root": "Projects",
   "discord_webhook_url": "",
   "discord_alerts": {
     "info": true,
@@ -240,6 +241,10 @@
     "lint_required": true
   },
   "case_study": {
+    "enabled": true,
+    "model": "gpt-5.5",
+    "agent_id": "codex",
+    "output_file": "logs/pipeline/case-study.md",
     "timeout_minutes": 30
   },
   "plugins": {

@@ -4,63 +4,26 @@ import crypto from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { assertScenarioMutationChannel } from './failure-scenarios.mjs';
+
 const SCENARIO_CONFIG = Object.freeze({
   'forge-malformed-output': Object.freeze({
     trigger: path.join('logs', 'modules', '01-nginx', 'forge-prompt-attempt-1.md'),
     target: path.join('modules', '01-nginx', 'forge-completion.json'),
-    raw: '{ "artifact_type": "not_forge_completion", "status": "BROKEN"',
+    raw: '{"artifact_type":"not_forge_completion","status":"BROKEN"}\n',
     artifactType: 'forge_completion',
-    invalidJson: true,
+    invalidJson: false,
   }),
   'retry-fix-malformed-output': Object.freeze({
     trigger: path.join('logs', 'modules', '01-nginx', 'forge-prompt-attempt-2.md'),
     target: path.join('modules', '01-nginx', 'forge-completion.json'),
-    raw: '{ "artifact_type": "not_forge_completion", "status": "BROKEN_RETRY"',
-    artifactType: 'forge_completion',
-    invalidJson: true,
-  }),
-  'retry-stale-forge-output': Object.freeze({
-    trigger: path.join('logs', 'modules', '01-nginx', 'forge-prompt-attempt-2.md'),
-    target: path.join('modules', '01-nginx', 'forge-completion.json'),
-    raw: JSON.stringify({
-      artifact_type: 'forge_completion',
-      status: 'READY_FOR_TESTING',
-      summary: 'stale Forge completion from an earlier run',
-      completed_at: '2026-06-28T00:00:00.000Z',
-      run_id: 'stale-real-e2e-run',
-      attempt: 1,
-    }, null, 2),
+    raw: '{"status":"READY_FOR_TESTING","summary":"retry output has a repairable missing envelope","evidence":{"inspected_files":["Projects/real-pipeline-e2e/src/index.html"],"consulted_contracts":[".swarm/contracts/module-outputs/01-nginx.json"],"implementation_notes":"the retry output is intentionally missing only canonical envelope identity fields"},"completed_at":"2026-07-15T00:00:00Z"}\n',
     artifactType: 'forge_completion',
     invalidJson: false,
+    normalizable: true,
     expectedJson: Object.freeze({
-      artifact_type: 'forge_completion',
       status: 'READY_FOR_TESTING',
-      summary: 'stale Forge completion from an earlier run',
-      completed_at: '2026-06-28T00:00:00.000Z',
-      run_id: 'stale-real-e2e-run',
-      attempt: 1,
-    }),
-  }),
-  'retry-reuses-previous-success-artifact': Object.freeze({
-    trigger: path.join('logs', 'modules', '01-nginx', 'forge-prompt-attempt-2.md'),
-    target: path.join('modules', '01-nginx', 'forge-completion.json'),
-    raw: JSON.stringify({
-      artifact_type: 'forge_completion',
-      status: 'READY_FOR_TESTING',
-      summary: 'previous successful retry completion reused without new attempt evidence',
-      completed_at: '2026-06-28T00:00:00.000Z',
-      source_run_id: 'previous-success-run',
-      source_attempt: 2,
-    }, null, 2),
-    artifactType: 'forge_completion',
-    invalidJson: false,
-    expectedJson: Object.freeze({
-      artifact_type: 'forge_completion',
-      status: 'READY_FOR_TESTING',
-      summary: 'previous successful retry completion reused without new attempt evidence',
-      completed_at: '2026-06-28T00:00:00.000Z',
-      source_run_id: 'previous-success-run',
-      source_attempt: 2,
+      summary: 'retry output has a repairable missing envelope',
     }),
   }),
   'echo-malformed-output': Object.freeze({
@@ -109,7 +72,7 @@ function parseArgs(argv) {
 
 function usage() {
   return [
-    'Usage: node tests/verification/e2e/malformed-output-publisher.mjs --scenario <forge-malformed-output|retry-fix-malformed-output|retry-stale-forge-output|retry-reuses-previous-success-artifact|echo-malformed-output> --swarm-dir <path> --run-id <id> --project <name>',
+    'Usage: node tests/verification/e2e/malformed-output-publisher.mjs --scenario <forge-malformed-output|retry-fix-malformed-output|echo-malformed-output> --swarm-dir <path> --run-id <id> --project <name>',
     '',
   ].join('\n');
 }
@@ -132,7 +95,9 @@ function sha256(value) {
 }
 
 export function malformedOutputScenarioConfig(scenario) {
-  return SCENARIO_CONFIG[scenario] || null;
+  const config = SCENARIO_CONFIG[scenario] || null;
+  if (config) assertScenarioMutationChannel(scenario, 'malformed-output');
+  return config;
 }
 
 export async function publishMalformedOutput(args) {

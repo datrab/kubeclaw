@@ -8,6 +8,7 @@ import {
   recordUsageSnapshot,
 } from '../observability.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type UnknownRecord = Record<string, unknown>;
 
 export interface ModelUsageAggregateProjection {
@@ -36,6 +37,19 @@ function usageNumber(usage: unknown, ...keys: string[]): number | null {
   return null;
 }
 
+function usageTokenCount(usage: unknown, ...keys: string[]): number {
+  return selectDefinedValue(() => (usageNumber(usage, ...keys)), () => (0));
+}
+
+function currentTokenTotal(value: unknown): number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : 0;
+}
+
+function addNullableCost(currentCost: number | null, deltaCost: number | null): number | null {
+  if (deltaCost === null) return currentCost;
+  return (selectDefinedValue(() => (currentCost), () => (0))) + deltaCost;
+}
+
 function modelUsageDelta(event: AgentObservabilityIngressEventV1): {
   inputTokens: number;
   outputTokens: number;
@@ -43,8 +57,8 @@ function modelUsageDelta(event: AgentObservabilityIngressEventV1): {
 } | null {
   const payload = event.payload;
   if (payload.hook !== 'model_usage') return null;
-  const inputTokens = usageNumber(payload.usage, 'input', 'input_tokens', 'tokens_in') ?? 0;
-  const outputTokens = usageNumber(payload.usage, 'output', 'output_tokens', 'tokens_out') ?? 0;
+  const inputTokens = usageTokenCount(payload.usage, 'input', 'input_tokens', 'tokens_in');
+  const outputTokens = usageTokenCount(payload.usage, 'output', 'output_tokens', 'tokens_out');
   return {
     inputTokens,
     outputTokens,
@@ -59,23 +73,24 @@ export function prepareModelUsageAggregate(
 ): ModelUsageAggregateProjection | null {
   const config = configFromContext(ctx);
   const delta = modelUsageDelta(event);
-  if (!config || !delta) return null;
+  if (selectTruthyValue(() => (!config), () => (!delta))) return null;
 
   const current = aggregateUsage(config as never);
   const alreadyRecorded = hasUsageSnapshotEvent(config as never, opts.eventId);
-  const currentCost = current?.run?.estimated_cost_usd ?? null;
-  const totalCostUsd = alreadyRecorded
-    ? currentCost
-    : delta.costUsd === null
-    ? currentCost
-    : (currentCost ?? 0) + delta.costUsd;
+  const currentCost = selectDefinedValue(() => (current?.run?.estimated_cost_usd), () => (null));
+  const totalCostUsd = alreadyRecorded ? currentCost : addNullableCost(currentCost, delta.costUsd);
 
   return {
     totalCostUsd,
-    totalInputTokens: (current?.run?.input_tokens ?? 0) + (alreadyRecorded ? 0 : delta.inputTokens),
-    totalOutputTokens: (current?.run?.output_tokens ?? 0) + (alreadyRecorded ? 0 : delta.outputTokens),
-    partial: Boolean(current?.run?.partial) || (!alreadyRecorded && delta.costUsd === null),
+    totalInputTokens: currentTokenTotal(current?.run?.input_tokens) + (alreadyRecorded ? 0 : delta.inputTokens),
+    totalOutputTokens: currentTokenTotal(current?.run?.output_tokens) + (alreadyRecorded ? 0 : delta.outputTokens),
+    partial: usageAggregatePartial(current, alreadyRecorded, delta),
   };
+}
+
+function usageAggregatePartial(current: Record<string, any> | null | undefined, alreadyRecorded: boolean, delta: Record<string, any>): boolean {
+  if (Boolean(current?.run?.partial)) return true;
+  return !alreadyRecorded && delta.costUsd === null;
 }
 
 export function commitModelUsageSnapshot(
@@ -85,20 +100,20 @@ export function commitModelUsageSnapshot(
 ): void {
   const config = configFromContext(ctx);
   const delta = modelUsageDelta(event);
-  if (!config || !delta) return;
+  if (selectTruthyValue(() => (!config), () => (!delta))) return;
 
-  const identity = event.identity || {};
+  const identity = isRecord(event.identity) ? event.identity : {};
   recordUsageSnapshot(config as never, {
-    agentType: identity.agent_type ?? identity.agent_id ?? 'unknown',
-    moduleId: identity.module_id ?? undefined,
-    gateId: identity.gate_id ?? undefined,
+    agentType: selectDefinedValue(() => (identity.agent_type), () => ('missing_agent_type')),
+    moduleId: selectDefinedValue(() => (identity.module_id), () => (undefined)),
+    gateId: selectDefinedValue(() => (identity.gate_id), () => (undefined)),
     source: 'openclaw.model.usage',
     inputTokens: delta.inputTokens,
     outputTokens: delta.outputTokens,
     estimatedCostUsd: delta.costUsd,
     partial: delta.costUsd === null,
-    sessionKey: identity.session_key ?? undefined,
-    eventId: opts.eventId ?? undefined,
+    sessionKey: selectDefinedValue(() => (identity.session_key), () => (undefined)),
+    eventId: selectDefinedValue(() => (opts.eventId), () => (undefined)),
   });
 }
 

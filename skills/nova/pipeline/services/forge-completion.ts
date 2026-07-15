@@ -3,19 +3,57 @@ import path from 'path';
 import { STATUS } from '../core/constants.ts';
 import { modulePath } from '../core/paths.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export const FORGE_COMPLETION_ARTIFACT_TYPE = 'forge_completion';
 export const FORGE_COMPLETION_STATUSES = Object.freeze([
   STATUS.READY_FOR_TESTING,
   STATUS.BLOCKED,
 ]);
 
+function nonEmptyStringArray(value) {
+  return Array.isArray(value) && value.some((entry) => typeof entry === 'string' && entry.trim());
+}
+
+function normalizeStringArray(value) {
+  return Array.isArray(value)
+    ? value.map((entry) => typeof entry === 'string' ? entry.trim() : '').filter(Boolean)
+    : [];
+}
+
 export function forgeCompletionArtifactFile(config, moduleDir) {
   return path.join(modulePath(config, moduleDir), 'forge-completion.json');
 }
 
+export function archiveForgeCompletionArtifact(config, moduleDir, attempt) {
+  const file = forgeCompletionArtifactFile(config, moduleDir);
+  if (!fs.existsSync(file)) return null;
+  const archiveFile = path.join(
+    path.dirname(file),
+    `forge-completion.stale-before-attempt-${Number(attempt) || 'unknown'}.json`,
+  );
+  fs.renameSync(file, archiveFile);
+  return archiveFile;
+}
+
+export function invalidForgeCompletionArtifactStatus(config, moduleDir, identity = {}, errors = []) {
+  return {
+    status: STATUS.FAIL,
+    source: 'forge_completion_artifact',
+    summary: 'Forge completion artifact failed active attempt identity validation',
+    completed_at: new Date().toISOString(),
+    module_id: identity.module_id,
+    attempt: identity.attempt,
+    dispatch_id: identity.dispatch_id,
+    gateway_label: identity.gateway_label,
+    session_key: identity.session_key,
+    artifact_path: forgeCompletionArtifactFile(config, moduleDir),
+    status_errors: errors,
+  };
+}
+
 export function validateForgeCompletionArtifact(value) {
   const errors = [];
-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!value), () => (typeof value !== 'object'))), () => (Array.isArray(value)))) {
     return ['completion artifact must be a JSON object'];
   }
 
@@ -25,17 +63,82 @@ export function validateForgeCompletionArtifact(value) {
   if (!FORGE_COMPLETION_STATUSES.includes(value.status)) {
     errors.push(`status must be one of: ${FORGE_COMPLETION_STATUSES.join(', ')}`);
   }
-  if (typeof value.summary !== 'string' || !value.summary.trim()) {
+  if (selectTruthyValue(() => (typeof value.summary !== 'string'), () => (!value.summary.trim()))) {
     errors.push('summary must be a non-empty string');
   }
-  if (typeof value.completed_at !== 'string' || !value.completed_at.trim()) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!value.evidence), () => (typeof value.evidence !== 'object'))), () => (Array.isArray(value.evidence)))) {
+    errors.push('evidence must be an object');
+  } else {
+    if (!nonEmptyStringArray(value.evidence.inspected_files)) {
+      errors.push('evidence.inspected_files must contain at least one non-empty string');
+    }
+    if (!nonEmptyStringArray(value.evidence.consulted_contracts)) {
+      errors.push('evidence.consulted_contracts must contain at least one non-empty string');
+    }
+    if (selectTruthyValue(() => (typeof value.evidence.implementation_notes !== 'string'), () => (!value.evidence.implementation_notes.trim()))) {
+      errors.push('evidence.implementation_notes must be a non-empty string');
+    }
+  }
+  if (selectTruthyValue(() => (typeof value.completed_at !== 'string'), () => (!value.completed_at.trim()))) {
     errors.push('completed_at must be a non-empty string');
   }
 
   return errors;
 }
 
-export function readForgeCompletionArtifact(config, moduleDir) {
+function normalizeIdentityValue(value) {
+  if (value === undefined || value === null || value === '') return null;
+  return String(value);
+}
+
+function normalizeExpectedIdentity(expected = {}) {
+  return {
+    run_id: normalizeIdentityValue(selectDefinedValue(() => (expected.run_id), () => (expected.runId))),
+    module_id: normalizeIdentityValue(selectDefinedValue(() => (expected.module_id), () => (expected.moduleId))),
+    attempt: normalizeIdentityValue(expected.attempt),
+  };
+}
+
+function normalizeForgeCompletionEnvelope(value, expected = {}) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!value), () => (typeof value !== 'object'))), () => (Array.isArray(value)))) {
+    return { value, normalized: false, normalized_fields: [] };
+  }
+  const expectedIdentity = normalizeExpectedIdentity(expected);
+  const next = { ...value };
+  const normalizedFields = [];
+
+  if (next.artifact_type === undefined || next.artifact_type === null || next.artifact_type === '') {
+    next.artifact_type = FORGE_COMPLETION_ARTIFACT_TYPE;
+    normalizedFields.push('artifact_type');
+  }
+  for (const field of ['run_id', 'module_id', 'attempt']) {
+    if ((next[field] === undefined || next[field] === null || next[field] === '') && expectedIdentity[field]) {
+      next[field] = field === 'attempt' ? Number(expectedIdentity[field]) : expectedIdentity[field];
+      normalizedFields.push(field);
+    }
+  }
+
+  if (normalizedFields.length === 0) return { value, normalized: false, normalized_fields: [] };
+  return { value: next, normalized: true, normalized_fields: normalizedFields };
+}
+
+function validateForgeCompletionIdentity(value, expected = {}) {
+  const errors = [];
+  const expectedIdentity = normalizeExpectedIdentity(expected);
+  for (const field of ['run_id', 'module_id', 'attempt']) {
+    const expectedValue = expectedIdentity[field];
+    if (!expectedValue) continue;
+    const actualValue = normalizeIdentityValue(value[field]);
+    if (!actualValue) {
+      errors.push(`${field} must be '${expectedValue}'`);
+    } else if (actualValue !== expectedValue) {
+      errors.push(`${field} must be '${expectedValue}' (got '${actualValue}')`);
+    }
+  }
+  return errors;
+}
+
+export function readForgeCompletionArtifact(config, moduleDir, expectedIdentity = {}) {
   const file = forgeCompletionArtifactFile(config, moduleDir);
   if (!fs.existsSync(file)) return { found: false, file };
 
@@ -46,18 +149,37 @@ export function readForgeCompletionArtifact(config, moduleDir) {
     return { found: true, file, valid: false, errors: [`invalid JSON: ${error.message}`] };
   }
 
-  const errors = validateForgeCompletionArtifact(parsed);
-  if (errors.length > 0) return { found: true, file, valid: false, errors, artifact: parsed };
+  const normalized = normalizeForgeCompletionEnvelope(parsed, expectedIdentity);
+  const artifactValue = normalized.value;
+  const errors = validateForgeCompletionArtifact(artifactValue);
+  const identityErrors = validateForgeCompletionIdentity(artifactValue, expectedIdentity);
+  if (selectTruthyValue(() => (errors.length > 0), () => (identityErrors.length > 0))) {
+    return { found: true, file, valid: false, errors: [...errors, ...identityErrors], artifact: parsed };
+  }
+  if (normalized.normalized) {
+    fs.writeFileSync(file, `${JSON.stringify(artifactValue, null, 2)}\n`);
+  }
 
   return {
     found: true,
     file,
     valid: true,
+    normalized: normalized.normalized,
+    normalized_fields: normalized.normalized_fields,
     artifact: {
       artifact_type: FORGE_COMPLETION_ARTIFACT_TYPE,
-      status: parsed.status,
-      summary: parsed.summary.trim(),
-      completed_at: parsed.completed_at.trim(),
+      run_id: artifactValue.run_id,
+      module_id: artifactValue.module_id,
+      attempt: artifactValue.attempt,
+      status: artifactValue.status,
+      summary: artifactValue.summary.trim(),
+      evidence: {
+        inspected_files: normalizeStringArray(artifactValue.evidence?.inspected_files),
+        consulted_contracts: normalizeStringArray(artifactValue.evidence?.consulted_contracts),
+        implementation_notes: artifactValue.evidence.implementation_notes.trim(),
+      },
+      completed_at: artifactValue.completed_at.trim(),
+      ...(normalized.normalized ? { normalized: true, normalized_fields: normalized.normalized_fields } : {}),
     },
   };
 }

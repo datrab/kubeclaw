@@ -5,6 +5,7 @@ import {
   normalizeGatewayInvokeResult,
 } from '../services/acp-gateway-contract.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 declare const process: {
   env: Record<string, string | undefined>;
 };
@@ -43,7 +44,7 @@ type NetworkLikeError = {
 };
 
 function trimGatewayUrl(value: unknown) {
-  return String(value || '').trim().replace(/\/$/, '');
+  return String(selectDefinedValue(() => (value), () => (''))).trim().replace(/\/$/, '');
 }
 
 function stripInvokeSuffix(value: unknown) {
@@ -112,15 +113,9 @@ function optionalGatewayHeaders(gatewayToken: string | null | undefined, extraHe
 }
 
 function isNetworkError(err: unknown) {
-  const error = (err || {}) as NetworkLikeError;
+  const error = (selectDefinedValue(() => (err), () => ({}))) as NetworkLikeError;
   return !error.httpStatus && (
-    error.name === 'AbortError'
-    || error.code === 'ECONNREFUSED'
-    || error.code === 'ECONNRESET'
-    || error.code === 'ETIMEDOUT'
-    || error.cause?.code === 'ECONNREFUSED'
-    || error.cause?.code === 'ECONNRESET'
-    || /fetch failed|network|socket/i.test(error.message || '')
+    selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (error.name === 'AbortError'), () => (error.code === 'ECONNREFUSED'))), () => (error.code === 'ECONNRESET'))), () => (error.code === 'ETIMEDOUT'))), () => (error.cause?.code === 'ECONNREFUSED'))), () => (error.cause?.code === 'ECONNRESET'))), () => (/fetch failed|network|socket/i.test(selectDefinedValue(() => (error.message), () => ('')))))
   );
 }
 
@@ -161,13 +156,13 @@ async function invokeGatewayTool(tool: string, args: unknown, {
   budget = null,
   signal = null,
 }: GatewayInvokeOptions = {}) {
-  if (!Number.isFinite(timeoutMs) || Number(timeoutMs) < 0) {
+  if (selectTruthyValue(() => (!Number.isFinite(timeoutMs)), () => (Number(timeoutMs) < 0))) {
     throw new Error('Gateway invoke timeoutMs must be explicit and non-negative');
   }
-  if (!Number.isInteger(maxRetries) || Number(maxRetries) < 1) {
+  if (selectTruthyValue(() => (!Number.isInteger(maxRetries)), () => (Number(maxRetries) < 1))) {
     throw new Error('Gateway invoke maxRetries must be explicit and at least 1');
   }
-  if (!Number.isFinite(retryDelayMs) || Number(retryDelayMs) < 0) {
+  if (selectTruthyValue(() => (!Number.isFinite(retryDelayMs)), () => (Number(retryDelayMs) < 0))) {
     throw new Error('Gateway invoke retryDelayMs must be explicit and non-negative');
   }
   const url = resolveGatewayInvokeUrl(gatewayUrl);
@@ -212,7 +207,7 @@ async function invokeGatewayTool(tool: string, args: unknown, {
       const abortReason = controller.signal.reason;
       if (abortReason instanceof BudgetExhaustedError) throw abortReason;
       throwIfCallerAborted(signal, budget);
-      if (!isNetworkError(err) || attempt >= Number(maxRetries)) throw err;
+      if (selectTruthyValue(() => (!isNetworkError(err)), () => (attempt >= Number(maxRetries)))) throw err;
       await sleep(retryDelayMs, { budget, signal });
     } finally {
       clearTimeout(timer);
@@ -240,12 +235,12 @@ export async function gatewayInvoke(
     budget = null,
     signal = null,
     ...bodyFields
-  } = opts || {};
+  } = selectDefinedValue(() => (opts), () => ({}));
 
   return invokeGatewayTool(tool, args, {
     gatewayUrl,
     gatewayToken,
-    timeoutMs: optTimeoutMs ?? timeoutMs,
+    timeoutMs: gatewayTimeoutAuthority(optTimeoutMs, timeoutMs),
     maxRetries,
     retryDelayMs,
     budget,
@@ -261,6 +256,11 @@ export async function gatewayInvoke(
   });
 }
 
+function gatewayTimeoutAuthority(optTimeoutMs: number | null | undefined, timeoutMs: number): number {
+  if (optTimeoutMs !== undefined && optTimeoutMs !== null) return optTimeoutMs;
+  return timeoutMs;
+}
+
 export async function getGatewaySessionStatus(sessionKey: string, timeoutMs: number, opts: GatewayInvokeOptions = {}) {
   return gatewayInvoke('session_status', { sessionKey }, timeoutMs, {
     ...opts,
@@ -274,7 +274,26 @@ export async function spawnGatewaySession(args: unknown, timeoutMs: number, opts
 }
 
 export async function sendGatewaySessionMessage(sessionKey: string, message: string, timeoutMs: number, opts: GatewayInvokeOptions = {}) {
-  return gatewayInvoke('sessions_send', { sessionKey, message }, timeoutMs, {
+  const {
+    sessionSendArgs = {},
+    timeoutSeconds,
+    ...invokeOpts
+  } = opts;
+  const extraArgs = sessionSendArgs && typeof sessionSendArgs === 'object' && !Array.isArray(sessionSendArgs)
+    ? sessionSendArgs
+    : {};
+  return gatewayInvoke('sessions_send', {
+    sessionKey,
+    message,
+    ...extraArgs,
+    ...(timeoutSeconds !== undefined ? { timeoutSeconds } : {}),
+  }, timeoutMs, {
+    ...invokeOpts,
+  });
+}
+
+export async function sendGatewayChannelMessage(channelId: string, message: string, timeoutMs: number, opts: GatewayInvokeOptions = {}) {
+  return gatewayInvoke('message', { action: 'send', channelId, message }, timeoutMs, {
     ...opts,
   });
 }
@@ -292,7 +311,7 @@ export async function listGatewaySubagents(timeoutMs: number, opts: GatewayInvok
 }
 
 export async function checkGatewayHealth({ gatewayUrl, gatewayToken, timeoutMs, signal = null }: GatewayHealthOptions = {}) {
-  if (!Number.isFinite(timeoutMs) || Number(timeoutMs) < 0) {
+  if (selectTruthyValue(() => (!Number.isFinite(timeoutMs)), () => (Number(timeoutMs) < 0))) {
     throw new Error('Gateway health timeoutMs must be explicit and non-negative');
   }
   const controller = new AbortController();

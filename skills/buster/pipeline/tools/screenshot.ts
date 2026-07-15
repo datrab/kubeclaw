@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url';
 import process from 'process';
 import { parseCliArgs } from '../cli-args.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // KEEP_TYPED_POLICY: Docker and runtime-installed Playwright browser layouts are
 // both supported, local HTML previews are valid screenshot inputs, missing
 // Playwright becomes a clear tool error, browser close failures are nonblocking,
@@ -17,7 +18,7 @@ import { parseCliArgs } from '../cli-args.ts';
 // errors during screenshot/baseline capture now fail the capture instead of
 // producing blessed broken baselines.
 
-const processEnv = process.env || {};
+const processEnv = process.env;
 if (!processEnv.PLAYWRIGHT_BROWSERS_PATH && fs.existsSync('/ms-playwright')) {
   processEnv.PLAYWRIGHT_BROWSERS_PATH = '/ms-playwright';
 }
@@ -42,6 +43,13 @@ export interface ScreenshotOptions {
   fullPage?: boolean;
   waitUntil?: string;
   timeout?: number;
+}
+
+interface ResolvedScreenshotOptions {
+  viewport: ScreenshotViewport;
+  fullPage: boolean;
+  waitUntil: string;
+  timeout: number;
 }
 
 export interface ScreenshotResult {
@@ -86,18 +94,63 @@ function log(msg: string): void {
 }
 
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error || 'unknown error');
+  return error instanceof Error ? error.message : String(selectTruthyValue(() => (error), () => ('missing_error_detail')));
+}
+
+function requireViewport(value: unknown, label: string): ScreenshotViewport {
+  const record = value as AnyRecord;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!record), () => (typeof record !== 'object'))), () => (Array.isArray(record)))) {
+    throw new Error(`${label}.viewport is required`);
+  }
+  const width = Number(record.width);
+  const height = Number(record.height);
+  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (!Number.isInteger(width)), () => (width <= 0))), () => (!Number.isInteger(height)))), () => (height <= 0))) {
+    throw new Error(`${label}.viewport requires positive integer width and height`);
+  }
+  return { width, height };
+}
+
+function requireBoolean(value: unknown, label: string): boolean {
+  if (typeof value !== 'boolean') throw new Error(`${label} is required`);
+  return value;
+}
+
+function requirePositiveNumber(value: unknown, label: string): number {
+  const parsed = Number(value);
+  if (selectTruthyValue(() => (!Number.isFinite(parsed)), () => (parsed <= 0))) throw new Error(`${label} is required`);
+  return parsed;
+}
+
+function requireNonEmptyString(value: unknown, label: string): string {
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) throw new Error(`${label} is required`);
+  return value;
+}
+
+function resolveScreenshotOptions(opts: ScreenshotOptions, label: string): ResolvedScreenshotOptions {
+  return {
+    viewport: requireViewport(opts.viewport, label),
+    fullPage: requireBoolean(opts.fullPage, `${label}.fullPage`),
+    waitUntil: requireNonEmptyString(opts.waitUntil, `${label}.waitUntil`),
+    timeout: requirePositiveNumber(opts.timeout, `${label}.timeout`),
+  };
+}
+
+function resolveBaselineOptions(opts: ScreenshotOptions & { settleMs?: number }): ResolvedScreenshotOptions & { settleMs: number } {
+  return {
+    ...resolveScreenshotOptions(opts, 'generateBaselines options'),
+    settleMs: requirePositiveNumber(opts.settleMs, 'generateBaselines options.settleMs'),
+  };
 }
 
 function childFilePath(dir: string, fileName: string, label = 'screenshot output'): string {
-  const raw = String(fileName || '');
-  if (!raw || raw.includes('/') || raw.includes('\\') || raw.includes('\0')) {
+  const raw = String(selectDefinedValue(() => (fileName), () => ('')));
+  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (!raw), () => (raw.includes('/')))), () => (raw.includes('\\')))), () => (raw.includes('\0')))) {
     throw new Error(`${label} must be a file name inside ${dir}`);
   }
   const resolvedDir = path.resolve(dir);
   const resolved = path.resolve(resolvedDir, raw);
   const relative = path.relative(resolvedDir, resolved);
-  if (relative.startsWith('..') || path.isAbsolute(relative)) {
+  if (selectTruthyValue(() => (relative.startsWith('..')), () => (path.isAbsolute(relative)))) {
     throw new Error(`${label} escapes output directory: ${raw}`);
   }
   return resolved;
@@ -147,10 +200,7 @@ function assertNoPageErrors(pageErrors: string[], label: string): void {
 }
 
 export async function takeScreenshot(target: string, outputPath: string, opts: ScreenshotOptions = {}): Promise<ScreenshotResult> {
-  const viewport = opts.viewport || DEFAULTS.viewport;
-  const fullPage = opts.fullPage ?? DEFAULTS.fullPage;
-  const waitUntil = opts.waitUntil || DEFAULTS.waitUntil;
-  const timeout = opts.timeout || DEFAULTS.timeout;
+  const { viewport, fullPage, waitUntil, timeout } = resolveScreenshotOptions(opts, 'takeScreenshot options');
 
   let browser: AnyRecord | null = null;
   try {
@@ -183,12 +233,9 @@ export async function takeScreenshot(target: string, outputPath: string, opts: S
 }
 
 export async function takeScreenshotBatch(targets: ScreenshotBatchTarget[], opts: ScreenshotOptions = {}): Promise<ScreenshotResult[]> {
-  const viewport = opts.viewport || DEFAULTS.viewport;
-  const fullPage = opts.fullPage ?? DEFAULTS.fullPage;
-  const waitUntil = opts.waitUntil || DEFAULTS.waitUntil;
-  const timeout = opts.timeout || DEFAULTS.timeout;
+  const { viewport, fullPage, waitUntil, timeout } = resolveScreenshotOptions(opts, 'takeScreenshotBatch options');
 
-  if (!targets || targets.length === 0) return [];
+  if (selectTruthyValue(() => (!targets), () => (targets.length === 0))) return [];
 
   const results: ScreenshotResult[] = [];
   let browser: AnyRecord | null = null;
@@ -245,11 +292,11 @@ export function parseBaselineRoutes(htmlPath: string): BaselineRoute[] {
   const match = html.match(/<script\s+type="application\/json"\s+data-routes\s*>([\s\S]*?)<\/script>/);
   if (!match?.[1]) throw new Error('No <script data-routes> manifest found in HTML');
   const parsed = JSON.parse(match[1]);
-  if (!Array.isArray(parsed) || parsed.length === 0) throw new Error('data-routes manifest is empty or not an array');
+  if (selectTruthyValue(() => (!Array.isArray(parsed)), () => (parsed.length === 0))) throw new Error('data-routes manifest is empty or not an array');
 
   return parsed.map((route: unknown, index: number) => {
     const record = route as AnyRecord;
-    if (!record || typeof record.name !== 'string' || typeof record.nav !== 'string' || typeof record.path !== 'string') {
+    if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (!record), () => (typeof record.name !== 'string'))), () => (typeof record.nav !== 'string'))), () => (typeof record.path !== 'string'))) {
       throw new Error(`Invalid route entry at index ${index}: name, nav, and path are required`);
     }
     if (!record.path.startsWith('/')) {
@@ -260,9 +307,7 @@ export function parseBaselineRoutes(htmlPath: string): BaselineRoute[] {
 }
 
 export async function generateBaselines(htmlPath: string, outputDir: string, opts: ScreenshotOptions & { settleMs?: number } = {}): Promise<BaselineGenerationResult> {
-  const viewport = opts.viewport || DEFAULTS.viewport;
-  const fullPage = opts.fullPage ?? DEFAULTS.fullPage;
-  const settleMs = opts.settleMs ?? DEFAULTS.settleMs;
+  const { viewport, fullPage, waitUntil, timeout, settleMs } = resolveBaselineOptions(opts);
 
   let routes: BaselineRoute[];
   try {
@@ -284,7 +329,7 @@ export async function generateBaselines(htmlPath: string, outputDir: string, opt
     const pageErrors = attachFailOnPageError(page);
     const url = `file://${htmlPath}?baselines=true`;
 
-    await page.goto(url, { waitUntil: 'networkidle', timeout: DEFAULTS.timeout });
+    await page.goto(url, { waitUntil, timeout });
     assertNoPageErrors(pageErrors, 'baseline preview load');
     log('Preview loaded with ?baselines=true');
 
@@ -353,7 +398,7 @@ if (__currentFile === __entryFile) {
     const htmlPath = positionals[0];
     const outputDir = positionals[1];
 
-    if (!htmlPath || !outputDir) {
+    if (selectTruthyValue(() => (!htmlPath), () => (!outputDir))) {
       console.error('Usage: node screenshot.ts --generate-baselines <preview.html> <output-dir/>');
       process.exit(2);
     }
@@ -366,6 +411,9 @@ if (__currentFile === __entryFile) {
     generateBaselines(absHtml, absDir, {
       viewport: { width, height },
       fullPage: !flags['no-fullpage'],
+      waitUntil: DEFAULTS.waitUntil,
+      timeout: DEFAULTS.timeout,
+      settleMs: DEFAULTS.settleMs,
     }).then((result) => {
       console.log(JSON.stringify(result, null, 2));
       process.exit(result.ok ? 0 : 1);
@@ -377,7 +425,7 @@ if (__currentFile === __entryFile) {
     const target = positionals[0];
     const outputPath = positionals[1];
 
-    if (!target || !outputPath) {
+    if (selectTruthyValue(() => (!target), () => (!outputPath))) {
       console.error('Usage: node screenshot.ts <target> <output.png> [--width N] [--height N] [--no-fullpage]');
       console.error('       node screenshot.ts --generate-baselines <preview.html> <output-dir/>');
       process.exit(2);
@@ -390,6 +438,8 @@ if (__currentFile === __entryFile) {
     takeScreenshot(String(target), String(outputPath), {
       viewport: { width, height },
       fullPage,
+      waitUntil: DEFAULTS.waitUntil,
+      timeout: DEFAULTS.timeout,
     }).then((result) => {
       console.log(JSON.stringify(result, null, 2));
       process.exit(result.ok ? 0 : 1);

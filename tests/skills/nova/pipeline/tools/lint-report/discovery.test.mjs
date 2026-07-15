@@ -6,7 +6,7 @@ import test from 'node:test';
 
 import { buildContext } from '../../../../../../skills/nova/pipeline/tools/lint-report.ts';
 import { registerContainerYamlTools } from '../../../../../../skills/nova/pipeline/tools/lint-report/container-yaml-tools.ts';
-import { detectProjectTypes } from '../../../../../../skills/nova/pipeline/tools/lint-report/discovery.ts';
+import { detectProjectTypes, listPolicySourceFiles } from '../../../../../../skills/nova/pipeline/tools/lint-report/discovery.ts';
 
 test('detectProjectTypes detects nested Helm charts for helm tools', () => {
   const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'helm-discovery-test-'));
@@ -61,4 +61,25 @@ test('buildContext normalizes valid nested module paths before discovery', () =>
 
   assert.equal(ctx.modulePath, path.join('modules', 'app'));
   assert.equal(ctx.projectTypes.has('javascript'), true);
+});
+
+test('listPolicySourceFiles applies the modeled lint ignore policy', () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'lint-report-policy-test-'));
+  const sourcePath = path.join(repoRoot, 'src', 'app.ts');
+  const ignoredPaths = [
+    path.join(repoRoot, 'src', 'app.test.ts'),
+    path.join(repoRoot, 'dist', 'bundle.js'),
+    path.join(repoRoot, 'plugins', 'adapter.ts'),
+    path.join(repoRoot, 'tests', 'app.ts'),
+    path.join(repoRoot, 'src', 'vendor.min.js'),
+  ];
+
+  fs.mkdirSync(path.dirname(sourcePath), { recursive: true });
+  fs.writeFileSync(sourcePath, 'export const app = true;\n');
+  for (const ignoredPath of ignoredPaths) {
+    fs.mkdirSync(path.dirname(ignoredPath), { recursive: true });
+    fs.writeFileSync(ignoredPath, 'export const ignored = true;\n');
+  }
+
+  assert.deepEqual(listPolicySourceFiles(repoRoot), [sourcePath]);
 });

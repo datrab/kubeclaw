@@ -85,6 +85,77 @@ function terminalStateFromDecision(state, decision, reason) {
   };
 }
 
+function waitForRedisReady(redis, timeoutMs = 10000) {
+  if (redis.status === 'ready') return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    const timeout = setTimeout(() => settle(reject, new Error(`Redis did not become ready within ${timeoutMs}ms`)), timeoutMs);
+    const cleanup = () => {
+      clearTimeout(timeout);
+      redis.off?.('ready', onReady);
+      redis.off?.('error', onError);
+      redis.off?.('end', onEnd);
+      redis.off?.('close', onClose);
+    };
+    const settle = (fn, value) => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      fn(value);
+    };
+    const onReady = () => settle(resolve);
+    const onError = (error) => settle(reject, error instanceof Error ? error : new Error(String(error || 'Redis connection failed')));
+    const onEnd = () => settle(reject, new Error('Redis connection ended before ready'));
+    const onClose = () => settle(reject, new Error('Redis connection closed before ready'));
+    redis.once?.('ready', onReady);
+    redis.once?.('error', onError);
+    redis.once?.('end', onEnd);
+    redis.once?.('close', onClose);
+  });
+}
+
+function swarmDirFromStatePath(statePath, gateId) {
+  const fileName = `${gateId}-gate-status.json`;
+  return path.basename(statePath) === fileName ? path.dirname(statePath) : path.dirname(statePath);
+}
+
+async function publishApprovalSignal({ statePath, state }) {
+  const [
+    { createRedisClient, loadRedisCtor },
+    {
+      approvalSignalStreamKey,
+      buildApprovalSignalEvent,
+      publishApprovalSignalEvent,
+    },
+  ] = await Promise.all([
+    import('../../../skills/nova/pipeline/telemetry.ts'),
+    import('../../../skills/nova/pipeline/services/approval-signal-event-adapter.ts'),
+  ]);
+  const gateId = String(state?.gate_id || path.basename(statePath).replace(/-gate-status\.json$/, '')).trim();
+  if (!gateId) throw new Error('approval state gate_id is required to publish approval signal');
+  const config = {
+    project: state.project,
+    _runId: state.run_id,
+    run_id: state.run_id,
+    paths: { swarm_dir: swarmDirFromStatePath(statePath, gateId) },
+  };
+  const event = buildApprovalSignalEvent(config, gateId, { type: state.gate_type || 'approval' }, state, { statePath });
+  const streamKey = approvalSignalStreamKey(config, state);
+  const redis = createRedisClient(loadRedisCtor(), {}, {
+    retryStrategy: (times) => Math.min(times * 100, 2000),
+    maxRetriesPerRequest: 3,
+    enableReadyCheck: true,
+  });
+  redis.on?.('error', () => {});
+  try {
+    await waitForRedisReady(redis, Number(process.env.REAL_E2E_REDIS_READY_TIMEOUT_MS || 10000));
+    return await publishApprovalSignalEvent(redis, streamKey, event, { source: 'real_e2e_approval_operator' });
+  } finally {
+    if (typeof redis.quit === 'function') await redis.quit();
+    else if (typeof redis.disconnect === 'function') redis.disconnect();
+  }
+}
+
 export async function runApprovalOperator({ statePath, decision = 'approve', reason = '', timeoutMs = 10 * 60 * 1000, pollMs = 500 } = {}) {
   const startedAt = Date.now();
   let observations = 0;
@@ -108,11 +179,16 @@ export async function runApprovalOperator({ statePath, decision = 'approve', rea
 
     const next = terminalStateFromDecision(state, decision, reason);
     atomicWriteJson(statePath, next);
+    const published = await publishApprovalSignal({ statePath, state: next });
     return {
       ok: true,
       phase: 'approval-operator-resolved',
       status: next.status,
       decision_via: next.decision_via,
+      approval_signal: {
+        stream: published.stream,
+        redis_id: published.id,
+      },
       observations,
     };
   }

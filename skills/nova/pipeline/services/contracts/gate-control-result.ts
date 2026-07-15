@@ -2,6 +2,7 @@ import { validateGateRemediationControlResult } from '../remediation-handoff.ts'
 import { createContractInvalidError } from '../contract-diagnostics.ts';
 import { cloneSerializable as cloneSerializableValue } from '../serialization.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type UnknownRecord = Record<string, any>;
 type ExtraValidate = ((result: UnknownRecord) => string[] | undefined | null) | null;
 
@@ -44,9 +45,23 @@ const CANONICAL_OUTCOME_CLASSES = new Set([
   'timeout',
   'rate_limited',
 ]);
+const GATE_PRODUCER_TYPE = 'gate';
 
 export function cloneSerializable(value: unknown): any {
   return cloneSerializableValue(value);
+}
+
+function arrayValue(value: unknown): string[] {
+  return Array.isArray(value) ? value : [];
+}
+
+function textValue(value: unknown): string {
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return '';
+  return String(value).trim();
+}
+
+function producerLabel(result: UnknownRecord): string {
+  return selectTruthyValue(() => (textValue(result.producerType)), () => (GATE_PRODUCER_TYPE));
 }
 
 function formatAllowedNextActions(actions: readonly string[] = []): string {
@@ -57,7 +72,7 @@ function formatAllowedNextActions(actions: readonly string[] = []): string {
 }
 
 function normalizeGateStatus(value: unknown): string {
-  return String(value ?? '').trim().toUpperCase();
+  return textValue(value).toUpperCase();
 }
 
 function isPlainObject(value: unknown): value is UnknownRecord {
@@ -86,23 +101,23 @@ function validateGateActionSemantics(result: UnknownRecord, errors: string[]): v
     if (gateStatus && !CANONICAL_GATE_RUN_STATUSES.has(gateStatus)) {
       errors.push("diagnostics.typed.gate.gateRunStatus must be PASS, FAIL, WAIT, or TIMED_OUT");
     }
-    if (!CANONICAL_OUTCOME_CLASSES.has(String(typedGate.outcomeClass || '').trim())) {
+    if (!CANONICAL_OUTCOME_CLASSES.has(textValue(typedGate.outcomeClass))) {
       errors.push('diagnostics.typed.gate.outcomeClass must be a canonical pipeline step outcome');
     }
   }
 
   if (result.nextAction === GATE_CONTROL_ACTIONS.PASS) {
     if (gateStatus === 'FAIL') {
-      errors.push(`pass for ${result.producerType || 'gate'} cannot report failing gateRunStatus '${gateStatus}'`);
+      errors.push(`pass for ${producerLabel(result)} cannot report failing gateRunStatus '${gateStatus}'`);
     }
     if (gateStatus === 'TIMED_OUT' && metadata.continued !== true) {
       errors.push('pass with gateRunStatus TIMED_OUT requires diagnostics.metadata.continued=true');
     }
   }
 
-  if (result.nextAction === GATE_CONTROL_ACTIONS.BLOCK || result.nextAction === GATE_CONTROL_ACTIONS.REQUEST_FIX) {
-    if (gateStatus === 'PASS' || (gateStatus === 'TIMED_OUT' && metadata.continued === true)) {
-      errors.push(`${result.nextAction} for ${result.producerType || 'gate'} cannot report passing gateRunStatus '${gateStatus}'`);
+  if (selectTruthyValue(() => (result.nextAction === GATE_CONTROL_ACTIONS.BLOCK), () => (result.nextAction === GATE_CONTROL_ACTIONS.REQUEST_FIX))) {
+    if (selectTruthyValue(() => (gateStatus === 'PASS'), () => ((gateStatus === 'TIMED_OUT' && metadata.continued === true)))) {
+      errors.push(`${result.nextAction} for ${producerLabel(result)} cannot report passing gateRunStatus '${gateStatus}'`);
     }
   }
 
@@ -112,11 +127,11 @@ function validateGateActionSemantics(result: UnknownRecord, errors: string[]): v
       errors.push('wait action requires diagnostics.typed.wait');
     } else {
       if (wait.schemaVersion !== 'v1') errors.push("diagnostics.typed.wait.schemaVersion must be 'v1'");
-      if (!wait.waitKind || typeof wait.waitKind !== 'string') errors.push('diagnostics.typed.wait.waitKind must be a non-empty string');
-      if (!wait.status || typeof wait.status !== 'string') errors.push('diagnostics.typed.wait.status must be a non-empty string');
+      if (selectTruthyValue(() => (!wait.waitKind), () => (typeof wait.waitKind !== 'string'))) errors.push('diagnostics.typed.wait.waitKind must be a non-empty string');
+      if (selectTruthyValue(() => (!wait.status), () => (typeof wait.status !== 'string'))) errors.push('diagnostics.typed.wait.status must be a non-empty string');
     }
     if (gateStatus && gateStatus !== 'WAIT') {
-      errors.push(`wait for ${result.producerType || 'gate'} cannot report terminal gateRunStatus '${gateStatus}'`);
+      errors.push(`wait for ${producerLabel(result)} cannot report terminal gateRunStatus '${gateStatus}'`);
     }
   }
 }
@@ -157,15 +172,14 @@ export function validateGateEvidenceAuthority(result: unknown, {
   const diagnostics = isPlainObject(result?.diagnostics) ? result.diagnostics : {};
   const metadata = isPlainObject(diagnostics?.metadata) ? diagnostics.metadata : {};
   const remediation = isPlainObject(diagnostics?.typed?.remediation) ? diagnostics.typed.remediation : null;
-  const evidence = remediation ?? metadata;
+  const evidence = gateEvidenceAuthority(remediation, metadata);
   const remediationCorrelation = isPlainObject(remediation?.correlation) ? remediation.correlation : {};
 
   const runId = readMetadataValue(evidence, ['runId', 'run_id']);
   const gateId = readMetadataValue(evidence, ['gateId', 'gate_id']);
   const gateType = readMetadataValue(evidence, ['gateType', 'gate_type']);
   const attempt = readMetadataValue(evidence, ['attempt']);
-  const dispatchId = readMetadataValue(evidence, ['dispatchId', 'dispatch_id'])
-    ?? readMetadataValue(remediationCorrelation, ['dispatchId', 'dispatch_id']);
+  const dispatchId = dispatchIdAuthority(evidence, remediationCorrelation);
 
   if (!runId) errors.push('gate evidence must include run_id');
   if (!gateId) errors.push('gate evidence must include gate_id');
@@ -179,14 +193,24 @@ export function validateGateEvidenceAuthority(result: unknown, {
   if (!valuesMatch(expectedAttempt, attempt)) errors.push('gate evidence attempt does not match expected attempt');
   if (!valuesMatch(expectedDispatchId, dispatchId)) errors.push('gate evidence dispatch_id does not match expected dispatch');
 
-  const pathEvidence = readMetadataValue(metadata, ['path', 'output_file', 'evidence_path', 'request_artifact_path'])
-    ?? readMetadataValue(remediation?.diagnostics ?? {}, ['path', 'output_file', 'evidence_path', 'merged_file_path']);
+  const pathEvidence = readMetadataValue(metadata, ['path', 'output_file', 'evidence_path', 'request_artifact_path']);
   const hasPathEvidence = Boolean(pathEvidence);
   if (hasPathEvidence && [runId, gateId, attempt].some(isMissingEvidenceValue)) {
     errors.push('gate evidence path is diagnostic only without run/gate/attempt identity');
   }
 
   return errors;
+}
+
+function gateEvidenceAuthority(remediation: UnknownRecord | null, metadata: UnknownRecord): UnknownRecord {
+  if (remediation !== null) return remediation;
+  return metadata;
+}
+
+function dispatchIdAuthority(evidence: UnknownRecord, remediationCorrelation: UnknownRecord): unknown {
+  const evidenceDispatchId = readMetadataValue(evidence, ['dispatchId', 'dispatch_id']);
+  if (evidenceDispatchId !== null && evidenceDispatchId !== undefined) return evidenceDispatchId;
+  return readMetadataValue(remediationCorrelation, ['dispatchId', 'dispatch_id']);
 }
 
 export function buildTypedGateControlResult({
@@ -233,7 +257,7 @@ export function isGateControlResult(result: unknown, gateType: string | null = n
     && result.schemaVersion === 'v1'
     && result.producerKind === 'gate'
     && typeof result.producerType === 'string'
-    && (!gateType || result.producerType === gateType)
+    && (selectTruthyValue(() => (!gateType), () => (result.producerType === gateType)))
     && typeof result.nextAction === 'string';
 }
 
@@ -243,34 +267,38 @@ export function isTypedGateControlResult(result: unknown, producerType: string |
 
 export function coerceTypedGateControlResult(result: unknown, { producerType }: { producerType?: string | null | undefined } = {}): UnknownRecord {
   if (isTypedGateControlResult(result, producerType)) return result;
-  throw new Error(`gate:${producerType || 'unknown'} plugin output must be a typed gate control result; compatibility-shaped results are not accepted at the plugin boundary`);
+  throw new Error(`gate:${selectDefinedValue(() => (producerType), () => ('missing_producer_type'))} plugin output must be a typed gate control result; compatibility-shaped results are not accepted at the plugin boundary`);
 }
 
 export function validateGateControlResult(result: unknown, {
   gateType,
   allowedNextActions = GATE_CONTROL_NEXT_ACTIONS,
-  stageId = `gate:${gateType || 'unknown'}`,
+  stageId = `gate:${selectDefinedValue(() => (gateType), () => ('missing_gate_type'))}`,
   extraValidate = null,
 }: GateNormalizeOptions = {}): string[] {
   const errors = [];
-  if (!result || typeof result !== 'object') {
+  if (selectTruthyValue(() => (!result), () => (typeof result !== 'object'))) {
     errors.push('result must be an object');
     return errors;
   }
   const controlResult = result as UnknownRecord;
   if (controlResult.schemaVersion !== 'v1') errors.push("schemaVersion must be 'v1'");
   if (controlResult.producerKind !== 'gate') errors.push("producerKind must be 'gate'");
-  if (typeof gateType !== 'string' || !gateType.trim()) {
+  if (selectTruthyValue(() => (typeof gateType !== 'string'), () => (!gateType.trim()))) {
     errors.push('gateType must be a non-empty string');
   } else if (controlResult.producerType !== gateType) {
     errors.push(`producerType must be '${gateType}'`);
+  }
+  if (!Array.isArray(allowedNextActions) || allowedNextActions.length === 0) {
+    errors.push(`allowedNextActions must be non-empty for ${stageId}`);
+    return errors;
   }
   if (!allowedNextActions.includes(controlResult.nextAction)) {
     errors.push(`nextAction must be ${formatAllowedNextActions(allowedNextActions)} for ${stageId}`);
   }
   validateGateActionSemantics(controlResult, errors);
   if (typeof extraValidate === 'function') {
-    errors.push(...(extraValidate(controlResult) || []));
+    errors.push(...arrayValue(extraValidate(controlResult)));
   }
   return errors;
 }
@@ -279,7 +307,7 @@ export function normalizeGateControlResult(rawResult: unknown, {
   gateType,
   label,
   allowedNextActions = GATE_CONTROL_NEXT_ACTIONS,
-  stageId = `gate:${gateType || 'unknown'}`,
+  stageId = `gate:${selectDefinedValue(() => (gateType), () => ('missing_gate_type'))}`,
   coerce = (value: unknown) => coerceTypedGateControlResult(value, { producerType: gateType }),
   extraValidate = null,
   moduleId = null,
@@ -331,7 +359,7 @@ export function normalizeGateControlResult(rawResult: unknown, {
 export function validateTypedGateControlResult(result: unknown, {
   producerType,
   allowedNextActions = [],
-  stageId = `gate:${producerType || 'unknown'}`,
+  stageId = `gate:${selectDefinedValue(() => (producerType), () => ('missing_producer_type'))}`,
   extraValidate = null,
 }: GateNormalizeOptions = {}): string[] {
   return validateGateControlResult(result, {
@@ -346,7 +374,7 @@ export function normalizeTypedGateControlResult(rawResult: unknown, {
   producerType,
   label,
   allowedNextActions = [],
-  stageId = `gate:${producerType || 'unknown'}`,
+  stageId = `gate:${selectDefinedValue(() => (producerType), () => ('missing_producer_type'))}`,
   coerce,
   extraValidate = null,
   moduleId = null,

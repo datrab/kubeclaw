@@ -7,6 +7,7 @@ import { emitTelemetryStreamEvent } from '../services/telemetry-stream.ts';
 import { cloneReadonlySnapshot, createReadonlySnapshot, deepClone } from '../services/serialization.ts';
 import { discord } from '../integrations/discord.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 const PLUGIN_MODULE_CONFIG = Symbol('PluginContextV1.moduleConfig');
 
 type AnyRecord = Record<string, any>;
@@ -58,6 +59,28 @@ type PluginContextOptions = {
   signal?: any;
 };
 
+function contextRunIdAuthority(runId: string | null, config: NullableRecord) {
+  const explicitRunId = nonEmptyString(runId);
+  if (explicitRunId) return explicitRunId;
+  const contextRunId = nonEmptyString(config?._runId);
+  if (contextRunId) return contextRunId;
+  const configRunId = nonEmptyString(config?.run_id);
+  if (configRunId) return configRunId;
+  return createRunId();
+}
+
+function contextStatsAuthority(stats: AnyRecord | null, config: NullableRecord) {
+  if (objectRecord(stats)) return stats;
+  const configStats = objectRecord(config?._runStats);
+  if (configStats) return configStats;
+  return createRunStats();
+}
+
+function pluginOwnerAuthority(config: NullableRecord, hookFamilyId: string, stageIdValue: string, record: PluginRecord) {
+  if (record) return record;
+  return resolveStageOwner(config, hookFamilyId, stageIdValue);
+}
+
 export class PipelineContext {
   schemaVersion: 'pipeline-context-v1';
   config: NullableRecord;
@@ -93,13 +116,13 @@ export class PipelineContext {
     this.schemaVersion = 'pipeline-context-v1';
     this.config = config;
     this.progress = progress;
-    this.runId = runId || config?._runId || config?.run_id || createRunId();
-    this.novaChannel = novaChannel ?? null;
-    this.stats = stats || config?._runStats || createRunStats();
-    this.logDir = logDir || null;
-    this.runLogDir = runLogDir || null;
-    this.pluginRegistry = pluginRegistry || null;
-    this.runtimeOverrides = runtimeOverrides || null;
+    this.runId = contextRunIdAuthority(runId, config);
+    this.novaChannel = selectDefinedValue(() => (novaChannel), () => (null));
+    this.stats = contextStatsAuthority(stats, config);
+    this.logDir = selectTruthyValue(() => (logDir), () => (null));
+    this.runLogDir = selectTruthyValue(() => (runLogDir), () => (null));
+    this.pluginRegistry = selectTruthyValue(() => (pluginRegistry), () => (null));
+    this.runtimeOverrides = selectTruthyValue(() => (runtimeOverrides), () => (null));
 
     this._logModule = null;
     this._logPhase = null;
@@ -121,8 +144,8 @@ export class PipelineContext {
   setPipelineLogStreams({ pipelineLogFd = null, runPipelineLogFd = null }: PipelineLogStreams = {}) {
     this._pipelineLogFd = pipelineLogFd;
     this._runPipelineLogFd = runPipelineLogFd;
-    this._pipelineLogPath = pipelineLogFd?.path || null;
-    this._runPipelineLogPath = runPipelineLogFd?.path || null;
+    this._pipelineLogPath = selectTruthyValue(() => (pipelineLogFd?.path), () => (null));
+    this._runPipelineLogPath = selectTruthyValue(() => (runPipelineLogFd?.path), () => (null));
     this._logFd = pipelineLogFd;
     this._runLogFd = runPipelineLogFd;
     return this;
@@ -148,24 +171,32 @@ export class PipelineContext {
 }
 
 export function isPipelineContext(value: any) {
-  return value instanceof PipelineContext || value?.schemaVersion === 'pipeline-context-v1';
+  return selectTruthyValue(() => (value instanceof PipelineContext), () => (value?.schemaVersion === 'pipeline-context-v1'));
 }
 
 function hasCapability(capabilities: any, capability: string) {
   return Array.isArray(capabilities) && capabilities.includes(capability);
 }
 
+function nonEmptyString(value: any): string | null {
+  return typeof value === 'string' && value.trim() ? value : null;
+}
+
+function objectRecord(value: any): AnyRecord | null {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : null;
+}
+
 function resolveStateSnapshot(stateSnapshot: any, meta: AnyRecord) {
   if (typeof stateSnapshot === 'function') return stateSnapshot(meta);
-  return stateSnapshot ?? {};
+  return selectDefinedValue(() => (objectRecord(stateSnapshot)), () => ({ state: 'snapshot_absent' }));
 }
 
 function buildEnvironmentContext(config: NullableRecord = {}, record: PluginRecord = {}, metadata: any = undefined) {
   return {
-    project: config?.project || 'unknown',
+    project: selectDefinedValue(() => (nonEmptyString(config?.project)), () => ('missing_project')),
     runtime: 'pipeline',
-    trustTier: record?.resolvedTrustTier || record?.manifest?.trustTier || 'trusted',
-    sourceType: record?.manifest?.sourceType || 'builtin',
+    trustTier: selectDefinedValue(() => (selectDefinedValue(() => (nonEmptyString(record?.resolvedTrustTier)), () => (nonEmptyString(record?.manifest?.trustTier)))), () => ('missing_trust_tier')),
+    sourceType: selectDefinedValue(() => (nonEmptyString(record?.manifest?.sourceType)), () => ('missing_source_type')),
     ...(metadata !== undefined ? { metadata: deepClone(metadata) } : {}),
   };
 }
@@ -191,45 +222,49 @@ function buildReceiptMethod({ moduleId, stageId, surfaceName, handler, allowDefa
 }
 
 function resolveEffectHandlers(effects: AnyRecord = {}) {
+  const resolvedEffects = selectDefinedValue(() => (objectRecord(effects)), () => ({}));
   return {
-    artifacts: effects.artifacts || {},
-    stream: effects.stream || {},
-    telemetry: effects.telemetry || {},
-    waits: effects.waits || {},
-    signals: effects.signals || {},
-    notify: effects.notify || {},
-    workerRuntime: effects.workerRuntime || {},
+    artifacts: selectDefinedValue(() => (objectRecord(resolvedEffects.artifacts)), () => ({})),
+    stream: selectDefinedValue(() => (objectRecord(resolvedEffects.stream)), () => ({})),
+    telemetry: selectDefinedValue(() => (objectRecord(resolvedEffects.telemetry)), () => ({})),
+    waits: selectDefinedValue(() => (objectRecord(resolvedEffects.waits)), () => ({})),
+    signals: selectDefinedValue(() => (objectRecord(resolvedEffects.signals)), () => ({})),
+    notify: selectDefinedValue(() => (objectRecord(resolvedEffects.notify)), () => ({})),
+    workerRuntime: selectDefinedValue(() => (objectRecord(resolvedEffects.workerRuntime)), () => ({})),
   };
 }
 
 function createDefaultStreamEmitHandler(meta: AnyRecord, getInvocationSnapshot: () => AnyRecord) {
   return async ({ request = {} }: { request?: AnyRecord } = {}) => {
+    const normalizedRequest = selectDefinedValue(() => (objectRecord(request)), () => ({}));
     const payload = {
-      level: String(request?.level || 'INFO').toUpperCase(),
-      message: request?.message || null,
-      data: deepClone(request?.data ?? request?.payload ?? null),
+      level: selectDefinedValue(() => (nonEmptyString(normalizedRequest.level)?.toUpperCase()), () => ('INFO')),
+      message: selectDefinedValue(() => (normalizedRequest.message), () => (null)),
+      data: deepClone(selectDefinedValue(() => (selectDefinedValue(() => (normalizedRequest.data), () => (normalizedRequest.payload))), () => (null))),
       hook_family: meta.hookFamily,
       stage_id: meta.stageId,
       module_id: meta.moduleId,
       invocation: getInvocationSnapshot(),
     };
-    appendStructuredEvent(meta.config, request?.eventType || 'plugin.stream', payload);
+    appendStructuredEvent(meta.config, selectDefinedValue(() => (nonEmptyString(normalizedRequest.eventType)), () => ('plugin.stream')), payload);
   };
 }
 
 function createDefaultTelemetryEmitHandler(meta: AnyRecord) {
   return async ({ request = {} }: { request?: AnyRecord } = {}) => {
+    const normalizedRequest = selectDefinedValue(() => (objectRecord(request)), () => ({}));
+    const telemetryPayload = selectDefinedValue(() => (selectDefinedValue(() => (objectRecord(normalizedRequest.payload)), () => (objectRecord(normalizedRequest.data)))), () => ({}));
     await emitTelemetryStreamEvent(
       meta.config,
-      request?.eventType || request?.type || 'plugin.telemetry',
+      selectDefinedValue(() => (selectDefinedValue(() => (nonEmptyString(normalizedRequest.eventType)), () => (nonEmptyString(normalizedRequest.type)))), () => ('plugin.telemetry')),
       {
         hook_family: meta.hookFamily,
         stage_id: meta.stageId,
         module_id: meta.moduleId,
-        ...deepClone(request?.payload || request?.data || {}),
+        ...deepClone(telemetryPayload),
       },
       {
-        runId: meta.config?._runId || meta.config?.run_id || null,
+        runId: selectDefinedValue(() => (selectDefinedValue(() => (meta.config?._runId), () => (meta.config?.run_id))), () => (null)),
         emitter: 'nova/pipeline/core/context',
       },
     );
@@ -238,18 +273,22 @@ function createDefaultTelemetryEmitHandler(meta: AnyRecord) {
 
 function createDefaultNotifyOperatorHandler(meta: AnyRecord, getInvocationSnapshot: () => AnyRecord) {
   return async ({ request = {} }: { request?: AnyRecord } = {}) => {
+    const normalizedRequest = selectDefinedValue(() => (objectRecord(request)), () => ({}));
+    const notificationTitle = selectDefinedValue(() => (nonEmptyString(normalizedRequest.title)), () => (`Plugin operator notification: ${meta.stageId}`));
+    const notificationDescription = selectDefinedValue(() => (selectDefinedValue(() => (nonEmptyString(normalizedRequest.description)), () => (nonEmptyString(normalizedRequest.message)))), () => (''));
+    const invocationIds = selectDefinedValue(() => (objectRecord(getInvocationSnapshot().ids)), () => ({}));
     await discord(
       meta.config,
-      String(request?.level || request?.severity || 'INFO').toUpperCase(),
-      request?.title || `Plugin operator notification: ${meta.stageId}`,
-      request?.description || request?.message || '',
-      Array.isArray(request?.fields)
-        ? request.fields
+      selectDefinedValue(() => (selectDefinedValue(() => (nonEmptyString(normalizedRequest.level)?.toUpperCase()), () => (nonEmptyString(normalizedRequest.severity)?.toUpperCase()))), () => ('INFO')),
+      notificationTitle,
+      notificationDescription,
+      Array.isArray(normalizedRequest.fields)
+        ? normalizedRequest.fields
         : [
             { name: 'Stage', value: meta.stageId, inline: true },
             { name: 'Plugin', value: meta.moduleId, inline: true },
-            ...(request?.message && !request?.description ? [{ name: 'Message', value: String(request.message), inline: false }] : []),
-            { name: 'Invocation', value: JSON.stringify(getInvocationSnapshot().ids || {}), inline: false },
+            ...(normalizedRequest.message && !normalizedRequest.description ? [{ name: 'Message', value: String(normalizedRequest.message), inline: false }] : []),
+            { name: 'Invocation', value: JSON.stringify(invocationIds), inline: false },
           ],
     );
   };
@@ -276,21 +315,22 @@ export function narrowPluginInputForCapabilities(input: any = {}, capabilities: 
 }
 
 export function buildPluginInvocationEnvelope(input: any = {}, pluginContext: any = null, extras: any = {}) {
+  const contextCapabilities = Array.isArray(pluginContext?.capabilities) ? pluginContext.capabilities : [];
   const baseInput = pluginContext
-    ? narrowPluginInputForCapabilities(input, pluginContext.capabilities || [])
+    ? narrowPluginInputForCapabilities(input, contextCapabilities)
     : createReadonlySnapshot(input && typeof input === 'object' ? input : {});
-  const pluginConfig = pluginContext ? (pluginContext[PLUGIN_MODULE_CONFIG] || {}) : null;
+  const pluginConfig = pluginContext ? objectRecord(pluginContext[PLUGIN_MODULE_CONFIG]) : null;
   const pluginInfo = pluginContext ? {
     schemaVersion: 'v1',
-    moduleId: pluginContext.moduleId || null,
-    hookFamily: pluginContext.hookFamily || null,
-    stageId: pluginContext.stageId || null,
-    config: deepClone(pluginConfig || {}),
+    moduleId: selectDefinedValue(() => (pluginContext.moduleId), () => (null)),
+    hookFamily: selectDefinedValue(() => (pluginContext.hookFamily), () => (null)),
+    stageId: selectDefinedValue(() => (pluginContext.stageId), () => (null)),
+    config: deepClone(selectDefinedValue(() => (pluginConfig), () => ({}))),
   } : null;
   const baseInputRecord = baseInput as AnyRecord;
   const envelopeInput = createReadonlySnapshot(pluginInfo ? { ...baseInputRecord, plugin: pluginInfo } : baseInputRecord) as AnyRecord;
   const safeExtras = (pluginContext
-    ? narrowPluginInputForCapabilities(extras, pluginContext.capabilities || [])
+    ? narrowPluginInputForCapabilities(extras, contextCapabilities)
     : (extras && typeof extras === 'object' ? cloneReadonlySnapshot(extras) : {})) as AnyRecord;
   return createReadonlySnapshot({
     ...envelopeInput,
@@ -313,20 +353,20 @@ export function createPluginContext({
   signal = null,
 }: PluginContextOptions = {}) {
   if (!config) throw new Error('createPluginContext requires config');
-  if (typeof hookFamily !== 'string' || !hookFamily.trim()) throw new Error('createPluginContext requires hookFamily');
-  if (typeof stageId !== 'string' || !stageId.trim()) throw new Error('createPluginContext requires stageId');
+  if (selectTruthyValue(() => (typeof hookFamily !== 'string'), () => (!hookFamily.trim()))) throw new Error('createPluginContext requires hookFamily');
+  if (selectTruthyValue(() => (typeof stageId !== 'string'), () => (!stageId.trim()))) throw new Error('createPluginContext requires stageId');
   const hookFamilyId = hookFamily;
   const stageIdValue = stageId;
 
-  const resolvedRecord = record || resolveStageOwner(config, hookFamilyId, stageIdValue);
+  const resolvedRecord = pluginOwnerAuthority(config, hookFamilyId, stageIdValue, record);
   if (!resolvedRecord) {
     throw new Error(`No registered plugin owner found for hookFamily '${hookFamilyId}' stage '${stageIdValue}'`);
   }
 
   const moduleId = resolvedRecord.manifest.moduleId;
-  const capabilities = [...(resolvedRecord.manifest.capabilities || [])];
+  const capabilities = Array.isArray(resolvedRecord.manifest.capabilities) ? [...resolvedRecord.manifest.capabilities] : [];
   const handlers = resolveEffectHandlers(effects);
-  const readonlyModuleConfigSnapshot = createReadonlySnapshot(resolvedRecord.config || {});
+  const readonlyModuleConfigSnapshot = createReadonlySnapshot(selectDefinedValue(() => (objectRecord(resolvedRecord.config)), () => ({})));
   const meta = {
     config,
     progress,
@@ -378,7 +418,7 @@ export function createPluginContext({
     });
   }
 
-  if (hasCapability(capabilities, 'read.artifacts') || hasCapability(capabilities, 'write.artifacts')) {
+  if (selectTruthyValue(() => (hasCapability(capabilities, 'read.artifacts')), () => (hasCapability(capabilities, 'write.artifacts')))) {
     const getDefaultArtifactsApi = () => (createPluginArtifactsApi as any)(config, {
       hookFamily: hookFamilyId,
       stageId: stageIdValue,

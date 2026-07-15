@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/polling-dual.ts — Buster Redis+local lifecycle completion wait helpers.
 // Active module completion waits on event adapters/controllers.
 
@@ -29,9 +30,87 @@ const STATUS = {
   FAIL: "FAIL",
 };
 
+const COMPLETION_ADAPTER_FAILED_ERROR = "completion event adapter failed";
+const COMPLETION_EVENT_CONTROLLER_SOURCE = "event_controller";
+const COMPLETION_EVENT_PENDING_REASON = "pending";
+const COMPLETION_SYSTEM_SOURCE = "system";
+
+function completionFailureClass(entry) {
+  return typeof entry?.failure_class === "string" && entry.failure_class.trim()
+    ? entry.failure_class.trim()
+    : null;
+}
+
+function hasOwn(value, key) {
+  return Object.prototype.hasOwnProperty.call(value, key);
+}
+
+function controllerSource(controllerResult, fallbackSource) {
+  return selectDefinedValue(() => (controllerResult?.source), () => (fallbackSource));
+}
+
+function controllerFailureError(controllerResult) {
+  return selectDefinedValue(() => (selectDefinedValue(() => (controllerResult?.error?.error), () => (controllerResult?.error?.reason))), () => (COMPLETION_ADAPTER_FAILED_ERROR));
+}
+
+function isJsonParseFailure(error) {
+  if (error instanceof SyntaxError) return true;
+  const message = String(selectDefinedValue(() => (error?.message), () => ('')).toLowerCase());
+  return message.includes('json') && (
+    message.includes('parse')
+    || message.includes('unexpected')
+    || message.includes('expected')
+    || message.includes('property name')
+  );
+}
+
+function requireWaitFactory(value, name) {
+  if (typeof value === "function") return value;
+  throw new TypeError(`waitForModuleBusterCompletion requires ${name}`);
+}
+
+function completionWaitFactories(opts = {}) {
+  const explicit = selectTruthyValue(() => (opts.deps), () => ({}));
+  const adapterOverrides = selectTruthyValue(() => (explicit.completionEventAdapters), () => ({}));
+  const hasAdapterFactoryOverride = selectTruthyValue(() => (hasOwn(adapterOverrides, "createRedisCompletionEventAdapter")), () => (hasOwn(adapterOverrides, "createLocalEvidenceEventAdapter")));
+  const hasTailFactoryOverride = selectTruthyValue(() => (hasOwn(explicit, "createDedicatedRedisCompletionClient")), () => (hasOwn(explicit, "scanLatestCompletionFromTail")));
+  if (
+    hasAdapterFactoryOverride
+    && (
+      selectTruthyValue(() => (!hasOwn(adapterOverrides, "createRedisCompletionEventAdapter")), () => (!hasOwn(adapterOverrides, "createLocalEvidenceEventAdapter")))
+    )
+  ) {
+    throw new TypeError("waitForModuleBusterCompletion requires complete completion event adapter overrides");
+  }
+  if (
+    hasTailFactoryOverride
+    && (
+      selectTruthyValue(() => (!hasOwn(explicit, "createDedicatedRedisCompletionClient")), () => (!hasOwn(explicit, "scanLatestCompletionFromTail")))
+    )
+  ) {
+    throw new TypeError("waitForModuleBusterCompletion requires complete Redis tail recovery overrides");
+  }
+  return {
+    RedisCtor: hasOwn(adapterOverrides, "RedisCtor") ? adapterOverrides.RedisCtor : null,
+    redisOptions: hasOwn(adapterOverrides, "redisOptions") ? adapterOverrides.redisOptions : null,
+    createRedisCompletionEventAdapter: hasAdapterFactoryOverride
+      ? requireWaitFactory(adapterOverrides.createRedisCompletionEventAdapter, "createRedisCompletionEventAdapter")
+      : createRedisCompletionEventAdapter,
+    createLocalEvidenceEventAdapter: hasAdapterFactoryOverride
+      ? requireWaitFactory(adapterOverrides.createLocalEvidenceEventAdapter, "createLocalEvidenceEventAdapter")
+      : createLocalEvidenceEventAdapter,
+    createRedisClient: hasTailFactoryOverride
+      ? requireWaitFactory(explicit.createDedicatedRedisCompletionClient, "createDedicatedRedisCompletionClient")
+      : createDedicatedRedisCompletionClient,
+    scanLatestCompletionFromTail: hasTailFactoryOverride
+      ? requireWaitFactory(explicit.scanLatestCompletionFromTail, "scanLatestCompletionFromTail")
+      : scanLatestCompletionFromTail,
+  };
+}
+
 function busterRuntimePolicyNumber(config, field) {
   const value = config?.buster?.runtime?.[field];
-  if (typeof value !== "number" || !Number.isFinite(value)) {
+  if (selectTruthyValue(() => (typeof value !== "number"), () => (!Number.isFinite(value)))) {
     throw new Error(`config.buster.runtime.${field}: required number in swarm.config.json`);
   }
   return value;
@@ -47,11 +126,11 @@ function buildModuleRateLimitStatusOptions(
     phase: "buster",
     identity: {
       agent_type: "buster",
-      run_id: expectedIdentity.run_id ?? getRunId(config) ?? null,
-      attempt: expectedIdentity.attempt ?? null,
-      dispatch_id: expectedIdentity.dispatch_id ?? null,
-      gateway_label: expectedIdentity.gateway_label ?? null,
-      session_key: expectedIdentity.session_key ?? null,
+      run_id: selectDefinedValue(() => (selectDefinedValue(() => (expectedIdentity.run_id), () => (getRunId(config)))), () => (null)),
+      attempt: selectDefinedValue(() => (expectedIdentity.attempt), () => (null)),
+      dispatch_id: selectDefinedValue(() => (expectedIdentity.dispatch_id), () => (null)),
+      gateway_label: selectDefinedValue(() => (expectedIdentity.gateway_label), () => (null)),
+      session_key: selectDefinedValue(() => (expectedIdentity.session_key), () => (null)),
     },
   };
 }
@@ -89,10 +168,10 @@ function appendDurableModuleCompletionAlert(
     "module.operator_alert",
     {
       module_id: moduleId,
-      attempt: expectedIdentity.attempt ?? null,
-      dispatch_id: expectedIdentity.dispatch_id || null,
-      gateway_label: expectedIdentity.gateway_label || null,
-      session_key: expectedIdentity.session_key || null,
+      attempt: selectDefinedValue(() => (expectedIdentity.attempt), () => (null)),
+      dispatch_id: selectTruthyValue(() => (expectedIdentity.dispatch_id), () => (null)),
+      gateway_label: selectTruthyValue(() => (expectedIdentity.gateway_label), () => (null)),
+      session_key: selectTruthyValue(() => (expectedIdentity.session_key), () => (null)),
       reason,
       ...extra,
     },
@@ -125,42 +204,36 @@ function buildModuleControllerPollResult({
       "completion_event_adapter_failed",
       {
         status: STATUS.FAIL,
-        error:
-          controllerResult.error?.error ||
-          controllerResult.error?.reason ||
-          "completion event adapter failed",
-        _source: controllerResult.source || "system",
-        event: controllerResult.event || null,
+        error: controllerFailureError(controllerResult),
+        _source: controllerSource(controllerResult, COMPLETION_SYSTEM_SOURCE),
+        event: selectDefinedValue(() => (controllerResult.event), () => (null)),
       },
     );
     return pollResult(false, "completion_event_adapter_failed", {
       module_id: moduleId,
       status: STATUS.FAIL,
       failure_class: "completion_event_adapter_failed",
-      error:
-        controllerResult.error?.error ||
-        controllerResult.error?.reason ||
-        "completion event adapter failed",
-      _source: controllerResult.source || "system",
-      event: controllerResult.event || null,
+      error: controllerFailureError(controllerResult),
+      _source: controllerSource(controllerResult, COMPLETION_SYSTEM_SOURCE),
+      event: selectDefinedValue(() => (controllerResult.event), () => (null)),
     });
   }
 
   const redisEntry = controllerResult?.redis_entry;
   const completion = controllerResult?.completion;
-  if (!redisEntry?.status || !completion) {
+  if (selectTruthyValue(() => (!redisEntry?.status), () => (!completion))) {
     return pollResult(false, "completion_event_unresolved", {
       module_id: moduleId,
       status: STATUS.FAIL,
-      reason: controllerResult?.reason || "unknown",
+      reason: selectDefinedValue(() => (controllerResult?.reason), () => ("missing_controller_reason")),
       failure_class: "completion_event_unresolved",
-      _source: controllerResult?.source || "event_controller",
+      _source: controllerSource(controllerResult, COMPLETION_EVENT_CONTROLLER_SOURCE),
     });
   }
 
   const localStatus = loadStatus(config, moduleDir);
   const mappedStatus = completion.status;
-  const visibleDrift = (completion.drift || []).filter(
+  const visibleDrift = (Array.isArray(completion.drift) ? completion.drift : []).filter(
     (entry) => entry.code !== "completion_identity_weak",
   );
   if (visibleDrift.length > 0) {
@@ -171,7 +244,7 @@ function buildModuleControllerPollResult({
   }
   log(
     "OK",
-    `Redis completion: status=${redisEntry.status} mapped=${mappedStatus} outcome=${completion.outcome} source=${redisEntry.source || "unknown"} run=${redisEntry.run_id || "—"} attempt=${redisEntry.attempt || "—"} dispatch=${redisEntry.dispatch_id || "—"}`,
+    `Redis completion: status=${redisEntry.status} mapped=${mappedStatus} outcome=${completion.outcome} source=${selectTruthyValue(() => (redisEntry.source), () => ("missing_completion_source"))} run=${selectTruthyValue(() => (redisEntry.run_id), () => ("—"))} attempt=${selectTruthyValue(() => (redisEntry.attempt), () => ("—"))} dispatch=${selectTruthyValue(() => (redisEntry.dispatch_id), () => ("—"))}`,
   );
 
   if (completion.completion_conflict) {
@@ -179,9 +252,9 @@ function buildModuleControllerPollResult({
       module_id: moduleId,
       status: mappedStatus,
       failure_class: "completion_conflict",
-      local_status: localStatus?.status || null,
-      redis_status: redisEntry.status || null,
-      completion_summary: redisEntry.summary || null,
+      local_status: selectTruthyValue(() => (localStatus?.status), () => (null)),
+      redis_status: selectTruthyValue(() => (redisEntry.status), () => (null)),
+      completion_summary: selectTruthyValue(() => (redisEntry.summary), () => (null)),
       _source: "redis",
       _redis_entry: redisEntry,
       authority_policy: completion.authority_policy,
@@ -193,8 +266,8 @@ function buildModuleControllerPollResult({
     return buildModuleTerminalOwnedRedisRateLimitExitResult(redisEntry, {
       expectedIdentity,
       moduleId,
-      completionSummary: redisEntry.summary || null,
-      forgeCommitHash: redisEntry.commit_hash || null,
+      completionSummary: selectTruthyValue(() => (redisEntry.summary), () => (null)),
+      forgeCommitHash: selectTruthyValue(() => (redisEntry.commit_hash), () => (null)),
     });
   }
 
@@ -214,21 +287,25 @@ function buildModuleControllerPollResult({
       module_id: moduleId,
       status: STATUS.FAIL,
       failure_class: "timeout",
-      completion_summary: redisEntry.summary || null,
-      forge_commit_hash: redisEntry.commit_hash || null,
+      completion_summary: selectTruthyValue(() => (redisEntry.summary), () => (null)),
+      forge_commit_hash: selectTruthyValue(() => (redisEntry.commit_hash), () => (null)),
       _source: "redis",
       _redis_entry: redisEntry,
     });
   }
 
   if (completion.targetReached) {
+    const failureClass = completionFailureClass(redisEntry);
     return pollResult(true, "target_reached", {
       module_id: moduleId,
       status: mappedStatus,
-      completion_summary: redisEntry.summary || null,
-      forge_commit_hash: redisEntry.commit_hash || null,
+      completion_summary: selectTruthyValue(() => (redisEntry.summary), () => (null)),
+      forge_commit_hash: selectTruthyValue(() => (redisEntry.commit_hash), () => (null)),
       _source: "redis",
       _redis_entry: redisEntry,
+      ...(failureClass ? { failure_class: failureClass } : {}),
+    }, {
+      ...(failureClass ? { failure_class: failureClass } : {}),
     });
   }
 
@@ -238,14 +315,14 @@ function buildModuleControllerPollResult({
       ...(redisEntry?.failure_class ? {} : { failure_class: "blocked" }),
     });
 
-  return pollResult(false, "completion_event_unresolved", {
-    module_id: moduleId,
-    status: STATUS.FAIL,
-    reason: controllerResult?.reason || "pending",
-    failure_class: "completion_event_unresolved",
-    _source: controllerResult?.source || "event_controller",
-  });
-}
+    return pollResult(false, "completion_event_unresolved", {
+      module_id: moduleId,
+      status: STATUS.FAIL,
+      reason: selectDefinedValue(() => (controllerResult?.reason), () => (COMPLETION_EVENT_PENDING_REASON)),
+      failure_class: "completion_event_unresolved",
+      _source: controllerSource(controllerResult, COMPLETION_EVENT_CONTROLLER_SOURCE),
+    });
+  }
 
 export async function waitForModuleBusterCompletion(
   config,
@@ -259,13 +336,14 @@ export async function waitForModuleBusterCompletion(
 ) {
   const identity = buildModuleCompletionIdentity(moduleId, expectedIdentity);
   const timeoutMs = timeoutMinutes * 60 * 1000;
-  const budget = opts.budget || null;
+  const budget = selectTruthyValue(() => (opts.budget), () => (null));
 
   try {
     const redisCompletionPolicy = resolveRedisCompletionPolicy(config);
+    const waitFactories = completionWaitFactories(opts);
     const controllerResult = await waitForResilientRedisCompletion({
       config,
-      streamKey: opts.deps?.streamKey || completionStreamKey(config),
+    streamKey: dualPollingStreamKeyAuthority(config, opts),
       targetKind: "module",
       targetId: moduleId,
       expectedStatuses,
@@ -274,16 +352,17 @@ export async function waitForModuleBusterCompletion(
       watchPaths: [moduleCompletionWatchPath(config, moduleDir)],
       getLocalStatus: () => loadStatus(config, moduleDir),
       statusSource: "local_lifecycle",
-      deps: opts.deps,
+      RedisCtor: waitFactories.RedisCtor,
+      redisOptions: waitFactories.redisOptions,
       budget,
       redisBlockMs: busterRuntimePolicyNumber(config, "completion_event_block_ms"),
       recoveryScanIntervalMs: busterRuntimePolicyNumber(config, "completion_recovery_scan_interval_ms"),
       tailScanBatchSize: redisCompletionPolicy.tailScanBatchSize,
       tailScanLimit: redisCompletionPolicy.tailScanLimit,
-      createRedisCompletionEventAdapter,
-      createLocalEvidenceEventAdapter,
-      createRedisClient: createDedicatedRedisCompletionClient,
-      scanLatestCompletionFromTail,
+      createRedisCompletionEventAdapter: waitFactories.createRedisCompletionEventAdapter,
+      createLocalEvidenceEventAdapter: waitFactories.createLocalEvidenceEventAdapter,
+      createRedisClient: waitFactories.createRedisClient,
+      scanLatestCompletionFromTail: waitFactories.scanLatestCompletionFromTail,
       waitForCompletion: waitForBusterCompletion,
       resolveCompletionEvent: resolveBusterCompletionEvent,
       log,
@@ -300,8 +379,7 @@ export async function waitForModuleBusterCompletion(
     });
   } catch (error) {
     if (
-      error?.code === "PIPELINE_EVENT_WAIT_TIMEOUT" ||
-      isBudgetExhaustedError(error)
+      selectTruthyValue(() => (error?.code === "PIPELINE_EVENT_WAIT_TIMEOUT"), () => (isBudgetExhaustedError(error)))
     ) {
       appendDurableModuleCompletionAlert(
         config,
@@ -318,6 +396,34 @@ export async function waitForModuleBusterCompletion(
         ...(isBudgetExhaustedError(error) ? { error } : {}),
       });
     }
+    if (isJsonParseFailure(error)) {
+      const errorText = controllerFailureError({ error: { error: error?.message } });
+      appendDurableModuleCompletionAlert(
+        config,
+        moduleId,
+        expectedIdentity,
+        "parse_corrupted",
+        {
+          status: STATUS.FAIL,
+          error: errorText,
+        },
+      );
+      return pollResult(false, "parse_corrupted", {
+        module_id: moduleId,
+        status: STATUS.FAIL,
+        failure_class: "parse_corrupted",
+        error: errorText,
+        _source: "completion_wait",
+      }, {
+        failure_class: "parse_corrupted",
+        error,
+      });
+    }
     throw error;
   }
+}
+
+function dualPollingStreamKeyAuthority(config, opts) {
+  if (opts.deps?.streamKey) return opts.deps.streamKey;
+  return completionStreamKey(config);
 }

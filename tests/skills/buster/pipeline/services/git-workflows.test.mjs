@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -213,6 +213,40 @@ test('gitSync verifies and returns the full HEAD hash', async () => {
     assert.equal(result.actual_hash, targetHash);
     assert.equal(result.actual_hash.length, targetHash.length);
     assert.equal(result.actual_hash, git(repo, ['rev-parse', 'HEAD']));
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('gitSync preserves tracked runtime state while resetting source files', async () => {
+  const root = mkdtempSync(path.join(tmpdir(), 'git-sync-runtime-state-'));
+  const remote = path.join(root, 'remote.git');
+  const repo = path.join(root, 'repo');
+  const runtimePath = 'Projects/demo/src/.swarm/logs/pipeline/runs/run-test/lifecycle/read-models.json';
+
+  try {
+    git(root, ['init', '--bare', remote]);
+    git(root, ['init', repo]);
+    git(repo, ['config', 'user.email', 'test@example.com']);
+    git(repo, ['config', 'user.name', 'Test User']);
+    git(repo, ['checkout', '-b', 'main']);
+    mkdirSync(path.join(repo, path.dirname(runtimePath)), { recursive: true });
+    writeFileSync(path.join(repo, 'source.txt'), 'first\n');
+    writeFileSync(path.join(repo, runtimePath), '{"event_count":1}\n');
+    git(repo, ['add', '.']);
+    git(repo, ['commit', '-m', 'first']);
+    const targetHash = git(repo, ['rev-parse', 'HEAD']);
+    writeFileSync(path.join(repo, 'source.txt'), 'second\n');
+    writeFileSync(path.join(repo, runtimePath), '{"event_count":2}\n');
+    git(repo, ['commit', '-am', 'second']);
+    git(repo, ['remote', 'add', 'origin', remote]);
+    git(repo, ['push', '-u', 'origin', 'main']);
+
+    const result = await gitSync(repo, targetHash);
+
+    assert.equal(result.ok, true);
+    assert.equal(readFileSync(path.join(repo, 'source.txt'), 'utf8'), 'first\n');
+    assert.equal(readFileSync(path.join(repo, runtimePath), 'utf8'), '{"event_count":2}\n');
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

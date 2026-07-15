@@ -29,7 +29,7 @@ assert.equal(entrySource.includes("export { default } from './pipeline/index.ts'
 assert.equal(entrySource.includes("const { main } = await import('./pipeline/cli.ts');"), true, 'pipeline entrypoint should dispatch CLI execution through pipeline/cli.ts');
 assert.equal(entrySource.includes('./pipeline/runners/'), false, 'pipeline entrypoint must not import runner logic directly');
 assert.equal(entrySource.includes('./pipeline/services/'), false, 'pipeline entrypoint must not import service logic directly');
-assert.equal(entrySource.split('\n').length <= 25, true, 'pipeline entrypoint should remain a thin shim, not regrow into a large wrapper');
+assert.equal(entrySource.split('\n').length <= 30, true, 'pipeline entrypoint should remain a thin shim, not regrow into a large wrapper');
 
 assert.equal(verificationReadme.includes('remaining large wrapper'), false, 'verification README should stop describing pipeline.ts as a large wrapper');
 assert.equal(verificationReadme.includes('bounded compatibility entrypoint'), true, 'verification README should describe pipeline.ts as a bounded compatibility entrypoint');

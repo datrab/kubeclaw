@@ -21,27 +21,6 @@ function makeConfig() {
   };
 }
 
-function cleanGateDeps() {
-  const output = {
-    exists: false,
-    data: null,
-    isPass: false,
-    isFail: false,
-    parse_error: false,
-    invalid_contract: false,
-    path: null,
-    status: null,
-  };
-  return {
-    readGateOutput: () => output,
-    readGateCompletionEvidence: () => ({
-      isPass: false,
-      source: null,
-      output,
-    }),
-  };
-}
-
 test('projectGateTruthDrift reports present Redis completion entries with missing status', () => {
   const malformedEntries = [
     { run_id: 'run-1', attempt: '1', dispatch_id: 'dispatch-1' },
@@ -61,7 +40,6 @@ test('projectGateTruthDrift reports present Redis completion entries with missin
           attempt: '1',
           dispatch_id: 'dispatch-1',
         },
-        deps: cleanGateDeps(),
       },
     );
 

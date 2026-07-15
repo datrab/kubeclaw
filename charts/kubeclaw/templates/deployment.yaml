@@ -940,6 +940,8 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.redis.secretName }}
                   key: {{ .Values.redis.secretKey | default "redis-password" }}
+            - name: KUBECLAW_LOCAL_REGISTRY
+              value: {{ .Values.runtimeInfrastructure.localRegistry | quote }}
             - name: QDRANT_URL
               value: {{ .Values.qdrant.url | quote }}
             - name: LITELLM_URL
@@ -1188,6 +1190,8 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.redis.secretName }}
                   key: {{ .Values.redis.secretKey | default "redis-password" }}
+            - name: KUBECLAW_LOCAL_REGISTRY
+              value: {{ .Values.runtimeInfrastructure.localRegistry | quote }}
             - name: QDRANT_URL
               value: {{ .Values.qdrant.url | quote }}
             - name: LITELLM_URL

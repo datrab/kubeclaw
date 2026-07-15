@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Buster Logger — Structured JSON dual-write (stdout + JSONL file)
 // ═══════════════════════════════════════════════════════════════
@@ -38,15 +39,11 @@ interface ErrorLike {
 interface LoggerOptions {
   logPath?: string | null;
   module?: string | null;
-  moduleId?: string | null;
   taskType?: string | null;
   gateId?: string | null;
-  gate_id?: string | null;
   attempt?: unknown;
   dispatchId?: string | null;
-  dispatch_id?: string | null;
   sessionKey?: string | null;
-  session_key?: string | null;
   emitTelemetry?: (type: string, payload: JsonObject) => unknown;
 }
 
@@ -71,7 +68,7 @@ function sanitizeLoggerValue(value: unknown, key = ''): unknown {
       ? sanitizeNonBlockingErrorDetail(`${key}=${value}`)
       : sanitizeNonBlockingErrorDetail(value);
   }
-  if (typeof value === 'number' || typeof value === 'boolean') {
+  if (selectTruthyValue(() => (typeof value === 'number'), () => (typeof value === 'boolean'))) {
     return SECRET_KEY_RE.test(key)
       ? sanitizeNonBlockingErrorDetail(`${key}=${value}`)
       : value;
@@ -97,12 +94,12 @@ function buildLoggerDegradedPayload(opts: LoggerOptions = {}, classification: st
     component: 'buster_logger',
     surface: 'jsonl_file',
     reason: classification,
-    detail: sanitizeNonBlockingErrorDetail(`Buster logger ${classification}: ${errorLike?.code || errorLike?.message || 'unknown'}; target=${sanitizeLogPath(opts.logPath) || 'stdout'}`),
-    module_id: opts.module || opts.moduleId || null,
-    gate_id: opts.gateId || opts.gate_id || null,
-    attempt: opts.attempt ?? null,
-    dispatch_id: opts.dispatchId || opts.dispatch_id || null,
-    session_key: opts.sessionKey || opts.session_key || null,
+    detail: sanitizeNonBlockingErrorDetail(`Buster logger ${classification}: ${selectTruthyValue(() => (selectTruthyValue(() => (errorLike?.code), () => (errorLike?.message))), () => ('missing_logger_error_detail'))}; target=${selectTruthyValue(() => (sanitizeLogPath(opts.logPath)), () => ('stdout'))}`),
+    module_id: selectTruthyValue(() => (opts.module), () => (null)),
+    gate_id: selectTruthyValue(() => (opts.gateId), () => (null)),
+    attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
+    dispatch_id: selectTruthyValue(() => (opts.dispatchId), () => (null)),
+    session_key: selectTruthyValue(() => (opts.sessionKey), () => (null)),
     degraded_at: new Date().toISOString(),
   };
 }
@@ -136,13 +133,13 @@ export function createLogger(opts: LoggerOptions = {}): Logger {
       try {
         opts.emitTelemetry('observability.degraded', buildLoggerDegradedPayload(opts, classification, error));
       } catch (telemetryError) {
-        process.stderr.write(`[buster-logger] degraded telemetry emit failed: ${sanitizeNonBlockingErrorDetail(asErrorLike(telemetryError)?.message || telemetryError)}\n`);
+        process.stderr.write(`[buster-logger] degraded telemetry emit failed: ${sanitizeNonBlockingErrorDetail(selectTruthyValue(() => (asErrorLike(telemetryError)?.message), () => ('missing_telemetry_error_detail')))}\n`);
       }
     }
     reportClassifiedNonBlockingError({
       reporter: 'buster-logger',
       classification,
-      incidentKey: buildNonBlockingIncidentKey('buster-logger', logPath || 'stdout', mod || 'global', taskType || 'global', classification),
+      incidentKey: buildNonBlockingIncidentKey('buster-logger', selectTruthyValue(() => (logPath), () => ('stdout_stream')), selectTruthyValue(() => (mod), () => ('scope_global')), selectTruthyValue(() => (taskType), () => ('scope_global')), classification),
       message,
       error,
       level,
@@ -179,10 +176,16 @@ export function createLogger(opts: LoggerOptions = {}): Logger {
     // file — compact JSON line
     if (logPath) {
       try {
-        appendFileSync(logPath, JSON.stringify(entry) + '\n');
+        const line = JSON.stringify(entry) + '\n';
+        try {
+          appendFileSync(logPath, line);
+        } catch (appendError) {
+          mkdirSync(dirname(logPath), { recursive: true });
+          appendFileSync(logPath, line);
+        }
         if (loggerDegraded && typeof opts.emitTelemetry === 'function') {
           loggerDegraded = false;
-          const restoredReason = loggerDegradedReason || 'log_file_append_failed';
+          const restoredReason = selectTruthyValue(() => (loggerDegradedReason), () => ('missing_logger_degraded_reason'));
           loggerDegradedReason = null;
           try {
             opts.emitTelemetry('observability.restored', {
@@ -190,15 +193,15 @@ export function createLogger(opts: LoggerOptions = {}): Logger {
               surface: 'jsonl_file',
               reason: restoredReason,
               detail: 'Buster logger file append restored',
-              module_id: mod || opts.moduleId || null,
-              gate_id: opts.gateId || opts.gate_id || null,
-              attempt: opts.attempt ?? null,
-              dispatch_id: opts.dispatchId || opts.dispatch_id || null,
-              session_key: opts.sessionKey || opts.session_key || null,
+              module_id: selectTruthyValue(() => (mod), () => (null)),
+              gate_id: selectTruthyValue(() => (opts.gateId), () => (null)),
+              attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
+              dispatch_id: selectTruthyValue(() => (opts.dispatchId), () => (null)),
+              session_key: selectTruthyValue(() => (opts.sessionKey), () => (null)),
               restored_at: new Date().toISOString(),
             });
           } catch (telemetryError) {
-            process.stderr.write(`[buster-logger] restored telemetry emit failed: ${sanitizeNonBlockingErrorDetail(asErrorLike(telemetryError)?.message || telemetryError)}\n`);
+            process.stderr.write(`[buster-logger] restored telemetry emit failed: ${sanitizeNonBlockingErrorDetail(selectTruthyValue(() => (asErrorLike(telemetryError)?.message), () => ('missing_telemetry_error_detail')))}\n`);
           }
         }
       } catch (error) {

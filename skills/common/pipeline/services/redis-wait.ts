@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // Generic resilient Redis wait primitive.
 // Runtime-specific callers provide stream keys, edge adapters, and completion
 // resolution semantics. This module owns the live-wait + local-evidence +
@@ -6,21 +7,16 @@
 import { createPipelineEventBus } from './pipeline-event-contract.ts';
 import { isBudgetExhaustedError } from '../timing.ts';
 
-const DI_SCOPES = new Set(['completionEventAdapters']);
+function errorMessage(error) {
+  if (error && typeof error === 'object' && 'message' in error) {
+    const message = error.message;
+    if (typeof message === 'string' && message.trim()) return message;
+  }
+  return String(error);
+}
 
 function isPlainObject(value) {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
-}
-
-function selectDeps(explicit = null, scope = null) {
-  if (!isPlainObject(explicit)) return {};
-  const scoped = scope && isPlainObject(explicit[scope]) ? explicit[scope] : {};
-  const flat = {};
-  for (const [key, value] of Object.entries(explicit)) {
-    if (DI_SCOPES.has(key) && isPlainObject(value)) continue;
-    flat[key] = value;
-  }
-  return { ...scoped, ...flat };
 }
 
 function eventAdapterNumber(config, field) {
@@ -42,8 +38,12 @@ function requireNonNegativeNumber(value, name) {
   throw new TypeError(`waitForResilientRedisCompletion requires non-negative ${name}`);
 }
 
+function redisScanMetric(value) {
+  return typeof value === 'number' && Number.isFinite(value) ? value : null;
+}
+
 function normalizeIdentityValue(value) {
-  if (value === undefined || value === null || value === '') return null;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return null;
   return String(value);
 }
 
@@ -70,10 +70,10 @@ function buildRecoveryCompletionEvent({
     identity: {
       ...(targetKind === 'gate'
         ? {
-            gate_id: normalizeIdentityValue(entry?.gate_id ?? entry?.target_id) || targetId,
+            gate_id: selectTruthyValue(() => (normalizeIdentityValue(entry?.gate_id)), () => (targetId)),
           }
         : {
-            module_id: normalizeIdentityValue(entry?.module ?? entry?.module_id ?? entry?.target_id) || targetId,
+            module_id: selectTruthyValue(() => (normalizeIdentityValue(entry?.module)), () => (targetId)),
           }),
       ...(entry?.run_id ? { run_id: entry.run_id } : {}),
       ...(entry?.attempt != null && String(entry.attempt) !== '' ? { attempt: entry.attempt } : {}),
@@ -83,7 +83,7 @@ function buildRecoveryCompletionEvent({
     },
     payload: {
       stream_key: streamKey,
-      redis_id: entry?._id || null,
+      redis_id: selectTruthyValue(() => (entry?._id), () => (null)),
       entry,
       recovery_reason: reason,
     },
@@ -109,7 +109,8 @@ export async function waitForResilientRedisCompletion({
   watchPaths,
   getLocalStatus,
   statusSource,
-  deps = null,
+  RedisCtor = null,
+  redisOptions = null,
   budget = null,
   redisBlockMs,
   recoveryScanIntervalMs,
@@ -146,15 +147,10 @@ export async function waitForResilientRedisCompletion({
   const eventBus = createPipelineEventBus();
   const controller = new AbortController();
   const identity = buildCompletionEventIdentity(targetKind, targetId, activeExpectedIdentity);
-  const completionAdapterDeps = selectDeps(deps, 'completionEventAdapters');
-  const redisCompletionDeps = selectDeps(deps);
-  const RedisCtor = completionAdapterDeps?.RedisCtor;
-  const redisAdapterFactory = completionAdapterDeps?.createRedisCompletionEventAdapter || makeRedisAdapter;
-  const localAdapterFactory = completionAdapterDeps?.createLocalEvidenceEventAdapter || makeLocalAdapter;
-  const redisClientFactory = redisCompletionDeps.createDedicatedRedisCompletionClient || makeRedisClient;
-  const scanCompletionTail = redisCompletionDeps.scanLatestCompletionFromTail || scanCompletions;
+  const activeRedisOptions = isPlainObject(redisOptions) ? redisOptions : {};
 
-  const redisAdapter = redisAdapterFactory(config, {
+  const redisAdapter = makeRedisAdapter(config, {
+    ...activeRedisOptions,
     eventBus,
     identity,
     blockMs: activeRedisBlockMs,
@@ -162,7 +158,7 @@ export async function waitForResilientRedisCompletion({
     stream: streamKey,
     ...(RedisCtor ? { RedisCtor } : {}),
   });
-  const localAdapter = localAdapterFactory(config, {
+  const localAdapter = makeLocalAdapter(config, {
     eventBus,
     identity,
     paths: watchPaths.filter(Boolean),
@@ -180,7 +176,7 @@ export async function waitForResilientRedisCompletion({
 
   function getRecoveryClient() {
     if (!recoveryClient) {
-      recoveryClient = redisClientFactory({ ...(RedisCtor ? { RedisCtor } : {}) });
+      recoveryClient = makeRedisClient({ ...activeRedisOptions, ...(RedisCtor ? { RedisCtor } : {}) });
       recoveryClient.on?.('error', () => {});
     }
     return recoveryClient;
@@ -192,7 +188,7 @@ export async function waitForResilientRedisCompletion({
     recoveryScanPromise = (async () => {
       try {
         const redis = getRecoveryClient();
-        const scanResult = await scanCompletionTail(redis, streamKey, targetId, activeExpectedIdentity, {
+        const scanResult = await scanCompletions(redis, streamKey, targetId, activeExpectedIdentity, {
           batchSize: activeTailScanBatchSize,
           scanLimit: activeTailScanLimit,
         });
@@ -202,20 +198,20 @@ export async function waitForResilientRedisCompletion({
           target_id: targetId,
           reason,
           matched: Boolean(scanResult?.match),
-          scanned: scanResult?.scanned ?? 0,
-          batches: scanResult?.batches ?? 0,
+          scanned: redisScanMetric(scanResult?.scanned),
+          batches: redisScanMetric(scanResult?.batches),
           truncated: Boolean(scanResult?.truncated),
         });
         if (!scanResult?.match) return null;
         logRedisReceived(config, 'completion_tail_scan_recovered', targetKind, targetId, {
-          redis_id: scanResult.match._id || null,
-          status: scanResult.match.status || null,
-          outcome: scanResult.match.outcome || null,
-          source: scanResult.match.source || null,
-          run_id: scanResult.match.run_id || null,
-          attempt: scanResult.match.attempt ?? null,
-          dispatch_id: scanResult.match.dispatch_id || null,
-          session_key: scanResult.match.session_key || null,
+          redis_id: selectTruthyValue(() => (scanResult.match._id), () => (null)),
+          status: selectTruthyValue(() => (scanResult.match.status), () => (null)),
+          outcome: selectTruthyValue(() => (scanResult.match.outcome), () => (null)),
+          source: selectTruthyValue(() => (scanResult.match.source), () => (null)),
+          run_id: selectTruthyValue(() => (scanResult.match.run_id), () => (null)),
+          attempt: selectDefinedValue(() => (scanResult.match.attempt), () => (null)),
+          dispatch_id: selectTruthyValue(() => (scanResult.match.dispatch_id), () => (null)),
+          session_key: selectTruthyValue(() => (scanResult.match.session_key), () => (null)),
           reason,
         });
         return resolveEvent({
@@ -236,14 +232,14 @@ export async function waitForResilientRedisCompletion({
       } catch (error) {
         log(
           'WARN',
-          `Completion tail scan recovery failed for ${targetKind} ${targetId}: ${error?.message || String(error)}`,
+    `Completion tail scan recovery failed for ${targetKind} ${targetId}: ${redisWaitErrorDetail(error)}`,
         );
         logRedisOperation(config, {
           op: 'completion_tail_scan_failed',
           target_kind: targetKind,
           target_id: targetId,
           reason,
-          error: error?.message || String(error),
+          error: errorMessage(error),
         });
         return null;
       }
@@ -291,7 +287,7 @@ export async function waitForResilientRedisCompletion({
 
     return await completionWait;
   } catch (error) {
-    if (error?.code === 'PIPELINE_EVENT_WAIT_TIMEOUT' || isBudgetExhaustedError(error)) {
+    if (selectTruthyValue(() => (error?.code === 'PIPELINE_EVENT_WAIT_TIMEOUT'), () => (isBudgetExhaustedError(error)))) {
       const timeoutRecovery = await recoverCompletionFromTail('timeout_recovery', currentLocalStatus());
       if (timeoutRecovery?.resolved) return timeoutRecovery;
     }
@@ -304,4 +300,9 @@ export async function waitForResilientRedisCompletion({
     closeRedisClient(recoveryClient);
     await redisDone?.catch?.(() => {});
   }
+}
+
+function redisWaitErrorDetail(error: any): string {
+  if (error?.message) return error.message;
+  return String(error);
 }

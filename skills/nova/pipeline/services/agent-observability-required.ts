@@ -1,33 +1,46 @@
 import fs from 'fs';
 import { getRunId } from '../core/runtime.ts';
-import { log } from '../core/logger.ts';
+import { getActiveContext, log } from '../core/logger.ts';
 import { createRedisClient, loadRedisCtor } from '../telemetry.ts';
 import { getPipelineArtifactBundle } from './artifact-bundle.ts';
 import { getTelemetryStreamKeyForRun, isTelemetryEnabled } from './telemetry-stream.ts';
 import { sleep } from '../timing.ts';
 import { agentObservabilityConfig, agentObservabilityStartupWait } from './agent-observability-config.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 
+const AGENT_OBSERVABILITY_STREAM_START_ID = '0-0';
+const MISSING_AGENT_OBSERVABILITY_STARTUP_EVIDENCE = 'missing_agent_observability_startup_evidence';
+
 function nonEmpty(value: unknown): string | null {
-  const normalized = String(value ?? '').trim();
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
+  const normalized = String(value).trim();
   return normalized ? normalized : null;
 }
 
-function requiredConfig(config: AnyRecord = {}) {
+function configRecord(config: unknown): AnyRecord {
+  return config && typeof config === 'object' && !Array.isArray(config) ? config as AnyRecord : {};
+}
+
+function requiredConfig(config: unknown) {
   return agentObservabilityConfig(config);
 }
 
-export function isAgentObservabilityRequired(config: AnyRecord = {}) {
+export function isAgentObservabilityRequired(config: unknown = {}) {
   return requiredConfig(config).required === true;
 }
 
-export function agentObservabilityStartupTimeoutMs(config: AnyRecord = {}) {
+export function agentObservabilityStartupTimeoutMs(config: unknown = {}) {
   return agentObservabilityStartupWait(config).timeoutMs;
 }
 
-function agentObservabilityStartupReadBlockMs(config: AnyRecord = {}) {
+function agentObservabilityStartupReadBlockMs(config: unknown = {}) {
   return agentObservabilityStartupWait(config).blockMs;
+}
+
+function redisFieldValue(value: unknown): string {
+  return selectTruthyValue(() => (value === undefined), () => (value === null)) ? '' : String(value);
 }
 
 function decodeRedisEntry(rawEntry: unknown) {
@@ -35,7 +48,7 @@ function decodeRedisEntry(rawEntry: unknown) {
   if (typeof rawEntry[0] !== 'string') return null;
   if (!Array.isArray(rawEntry[1])) return null;
   const data: AnyRecord = {};
-  for (let i = 0; i < rawEntry[1].length; i += 2) data[String(rawEntry[1][i])] = String(rawEntry[1][i + 1] ?? '');
+  for (let i = 0; i < rawEntry[1].length; i += 2) data[String(rawEntry[1][i])] = redisFieldValue(rawEntry[1][i + 1]);
   return { id: rawEntry[0], data };
 }
 
@@ -79,11 +92,11 @@ function matchesKnownWhenPresent(expected: unknown, actual: unknown) {
 }
 
 function eventSessionKey(event: AnyRecord) {
-  return event.session_key ?? event.child_session_key ?? null;
+  return selectDefinedValue(() => (selectDefinedValue(() => (event.session_key), () => (event.child_session_key))), () => (null));
 }
 
 function eventGatewayLabel(event: AnyRecord) {
-  return event.gateway_label ?? event.label ?? null;
+  return selectDefinedValue(() => (selectDefinedValue(() => (event.gateway_label), () => (event.label))), () => (null));
 }
 
 function isStartupLifecycleType(type: unknown) {
@@ -114,7 +127,7 @@ export function matchesAgentLifecycleTelemetry(event: AnyRecord = {}, identity: 
 }
 
 function parsePipelineJsonlLine(line: string) {
-  const trimmed = String(line || '').trim();
+  const trimmed = String(selectDefinedValue(() => (line), () => (''))).trim();
   if (!trimmed) return null;
   try {
     const parsed = JSON.parse(trimmed);
@@ -124,8 +137,57 @@ function parsePipelineJsonlLine(line: string) {
   }
 }
 
+function firstDefined<T>(...values: T[]): T | undefined {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return undefined;
+}
+
+function startupStreamKey(config: AnyRecord, opts: AnyRecord, runId: string): string {
+  if (opts.stream !== undefined && opts.stream !== null) return opts.stream;
+  return getTelemetryStreamKeyForRun(config, runId);
+}
+
+function startupReadBlockMs(config: AnyRecord, opts: AnyRecord): number {
+  return firstDefined(opts.blockMs, agentObservabilityStartupReadBlockMs(config)) as number;
+}
+
+function startupRedisCtor(opts: AnyRecord): unknown {
+  if (opts.RedisCtor !== undefined && opts.RedisCtor !== null) return opts.RedisCtor;
+  return loadRedisCtor();
+}
+
+function startupRetryStrategy(opts: AnyRecord): unknown {
+  const configured = firstDefined(opts.retryStrategy);
+  return configured !== undefined ? configured : ((times: number) => Math.min(times * 100, 1000));
+}
+
+function startupTimeoutMs(config: AnyRecord, opts: AnyRecord): number {
+  return firstDefined(opts.timeoutMs, agentObservabilityStartupTimeoutMs(config)) as number;
+}
+
+function startupEventTypes(opts: AnyRecord): string[] {
+  return firstDefined(opts.types, ['agent.spawned', 'agent.session.started']) as string[];
+}
+
+function startupPipelineJsonlPaths(config: AnyRecord, opts: AnyRecord): string[] {
+  if (Array.isArray(opts.pipelineLogPaths)) return opts.pipelineLogPaths.filter(Boolean);
+  const activeContext = getActiveContext();
+  const contextPaths = [
+    activeContext?._runPipelineLogPath,
+    activeContext?._pipelineLogPath,
+  ].filter(Boolean);
+  const artifacts = getPipelineArtifactBundle(config);
+  return [...new Set([
+    ...contextPaths,
+    artifacts.run_pipeline_jsonl_path,
+    artifacts.global_pipeline_jsonl_path,
+  ].filter(Boolean))];
+}
+
 function findMatchingPipelineJsonlEvent(filePath: string, identity: AnyRecord = {}, types: string[] = []) {
-  if (!filePath || !fs.existsSync(filePath)) return null;
+  if (selectTruthyValue(() => (!filePath), () => (!fs.existsSync(filePath)))) return null;
   let content = '';
   try {
     content = fs.readFileSync(filePath, 'utf8');
@@ -145,22 +207,19 @@ function findMatchingPipelineJsonlEvent(filePath: string, identity: AnyRecord = 
 
 export function createAgentLifecycleTelemetryReader(config: AnyRecord = {}, opts: AnyRecord = {}) {
   if (opts.reader) return opts.reader;
-  const runId = opts.runId ?? opts.run_id ?? getRunId(config) ?? '';
-  const stream = opts.stream ?? getTelemetryStreamKeyForRun(config, runId);
-  const blockMs = opts.blockMs ?? agentObservabilityStartupReadBlockMs(config);
-  const artifacts = getPipelineArtifactBundle(config);
-  const pipelineJsonlPaths = Array.isArray(opts.pipelineLogPaths)
-    ? opts.pipelineLogPaths.filter(Boolean)
-    : [artifacts.run_pipeline_jsonl_path, artifacts.global_pipeline_jsonl_path].filter(Boolean);
-  let lastId = opts.startId ?? '0-0';
+  const runId = firstDefined(opts.runId, '') as string;
+  const stream = startupStreamKey(config, opts, runId);
+  const blockMs = startupReadBlockMs(config, opts);
+  let pipelineJsonlPaths: string[] | null = null;
+  let lastId = selectDefinedValue(() => (opts.startId), () => (AGENT_OBSERVABILITY_STREAM_START_ID));
   let client: AnyRecord | null = null;
   let redisReady = false;
 
   function redis() {
     if (client) return client;
-    const RedisCtor = opts.RedisCtor ?? loadRedisCtor();
-    client = createRedisClient(RedisCtor, opts.redis ?? {}, {
-      retryStrategy: opts.retryStrategy ?? ((times: number) => Math.min(times * 100, 1000)),
+    const RedisCtor = startupRedisCtor(opts);
+    client = createRedisClient(RedisCtor, configRecord(opts.redis), {
+      retryStrategy: startupRetryStrategy(opts),
       maxRetriesPerRequest: 1,
       enableOfflineQueue: false,
       lazyConnect: true,
@@ -197,6 +256,7 @@ export function createAgentLifecycleTelemetryReader(config: AnyRecord = {}, opts
         }
         if (matched) return matched;
       }
+      if (!pipelineJsonlPaths) pipelineJsonlPaths = startupPipelineJsonlPaths(config, opts);
       for (const filePath of pipelineJsonlPaths) {
         const matched = findMatchingPipelineJsonlEvent(filePath, identity, types);
         if (matched) return matched;
@@ -226,11 +286,11 @@ export async function waitForRequiredAgentStartupEvidence(config: AnyRecord = {}
     return { ok: false, skipped: false, reason: 'telemetry_disabled', event: null };
   }
 
-  const timeoutMs = opts.timeoutMs ?? agentObservabilityStartupTimeoutMs(config);
+  const timeoutMs = startupTimeoutMs(config, opts);
   const startedAt = Date.now();
   const deadline = startedAt + timeoutMs;
   const reader = createAgentLifecycleTelemetryReader(config, opts);
-  const types = opts.types ?? ['agent.spawned', 'agent.session.started'];
+  const types = startupEventTypes(opts);
 
   try {
     while (Date.now() <= deadline) {
@@ -251,12 +311,12 @@ export async function waitForRequiredAgentStartupEvidence(config: AnyRecord = {}
     reader.close?.();
   }
 
-  const displayIdentity = identity.gateway_label ?? identity.session_key ?? 'agent session';
+  const displayIdentity = selectDefinedValue(() => (identity.gateway_label), () => ('agent session'));
   log('ERROR', `[agent-observability] required startup evidence missing for ${displayIdentity}`);
   return {
     ok: false,
     skipped: false,
-    reason: 'missing_agent_observability_startup_evidence',
+    reason: MISSING_AGENT_OBSERVABILITY_STARTUP_EVIDENCE,
     event: null,
     elapsed_ms: Date.now() - startedAt,
   };
@@ -264,10 +324,10 @@ export async function waitForRequiredAgentStartupEvidence(config: AnyRecord = {}
 
 export function assertRequiredAgentStartupEvidence(result: AnyRecord, identity: AnyRecord = {}) {
   if (result?.ok) return result;
-  const displayIdentity = identity.gateway_label ?? identity.session_key ?? 'unknown';
-  const reason = result?.reason ?? 'unknown';
+  const displayIdentity = selectDefinedValue(() => (identity.gateway_label), () => ('missing_gateway_label'));
+  const reason = selectDefinedValue(() => (result?.reason), () => ('missing_observability_reason'));
   const err: AnyRecord = new Error(`Required agent observability evidence missing for session '${displayIdentity}': ${reason}`);
-  err.reason = result?.reason ?? 'missing_agent_observability_startup_evidence';
+  err.reason = selectDefinedValue(() => (result?.reason), () => (MISSING_AGENT_OBSERVABILITY_STARTUP_EVIDENCE));
   err.identity = { ...identity };
   err.observability_required = true;
   throw err;

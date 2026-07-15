@@ -2,8 +2,6 @@ import type {
   AGENT_OBSERVABILITY_DIAGNOSTICS,
   AGENT_OBSERVABILITY_HOOKS,
   AGENT_OBSERVABILITY_INGRESS_EVENT_TYPES,
-  AGENT_OBSERVABILITY_MASK_BASIC_API_KEY_PATTERN,
-  AGENT_OBSERVABILITY_MASKING_PROFILE,
 } from './constants.ts';
 
 export type AgentObservabilityIngressEventType = (typeof AGENT_OBSERVABILITY_INGRESS_EVENT_TYPES)[number];
@@ -11,8 +9,6 @@ export type AgentObservabilityHook = (typeof AGENT_OBSERVABILITY_HOOKS)[number];
 export type AgentObservabilityDiagnostic = (typeof AGENT_OBSERVABILITY_DIAGNOSTICS)[number];
 export type AgentObservabilityPayloadHook = AgentObservabilityHook | 'model_usage' | 'subagent_spawning';
 export type AgentObservabilityStreamKind = 'control' | 'payload';
-export type AgentObservabilityMaskingProfile = typeof AGENT_OBSERVABILITY_MASKING_PROFILE;
-export type AgentObservabilityMaskMarker = typeof AGENT_OBSERVABILITY_MASK_BASIC_API_KEY_PATTERN;
 export type AgentObservabilityCanonicalTelemetryType =
   | 'agent.ended'
   | 'agent.spawn.requested'
@@ -52,12 +48,6 @@ export interface AgentObservabilityIdentityV1 {
   model_call_id?: string;
   parent_session_key?: string;
   child_session_key?: string;
-}
-
-export interface AgentObservabilityMaskingV1 {
-  profile: AgentObservabilityMaskingProfile;
-  content: 'full';
-  masked: AgentObservabilityMaskMarker[];
 }
 
 export interface AgentObservabilityHistoryMessageV1 {
@@ -194,7 +184,6 @@ export interface AgentObservabilityIngressEventV1 {
   ts: string;
   identity: AgentObservabilityIdentityV1;
   payload: AgentObservabilityIngressPayloadV1;
-  masking: AgentObservabilityMaskingV1;
 }
 
 export interface AgentObservabilityTelemetryMappingV1 {

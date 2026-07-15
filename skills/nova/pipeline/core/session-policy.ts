@@ -1,23 +1,24 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // core/session-policy.ts — map swarm.config.json session/gateway config into runtime options
 
 type AnyRecord = Record<string, any>;
 
 function requireObject(value: any, label: string): AnyRecord {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!value), () => (typeof value !== 'object'))), () => (Array.isArray(value)))) {
     throw new Error(`${label}: required in swarm.config.json`);
   }
   return value;
 }
 
 function requireNumber(value: any, label: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value)))), () => (value < 0))) {
     throw new Error(`${label}: required non-negative number in swarm.config.json`);
   }
   return value;
 }
 
 function requireString(value: any, label: string): string {
-  if (typeof value !== 'string' || !value.trim()) {
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) {
     throw new Error(`${label}: required non-empty string in swarm.config.json`);
   }
   return value;

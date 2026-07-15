@@ -3,14 +3,17 @@ import fs from 'fs';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 declare const process: {
   env: Record<string, string | undefined>;
 };
 
 export const DEFAULT_SWARM_CONFIG_PATH = '/home/node/.openclaw/swarm.config.json';
 const STANDARD_PROFILE_NAME = 'standard';
-const STANDARD_PROFILE_URL = new URL('./config-profiles/standard.json', import.meta.url);
-const COMPACT_CONFIG_FIELDS = new Set(['_doc', 'profile', 'features', 'tuning', 'overrides', 'discord_webhook_url']);
+const PROFILE_URLS: Record<string, URL> = {
+  [STANDARD_PROFILE_NAME]: new URL('./config-profiles/standard.json', import.meta.url),
+};
+const COMPACT_CONFIG_FIELDS = new Set(['_doc', 'profile', 'features', 'tuning', 'overrides', 'discord_webhook_url', 'run_id']);
 const RUNTIME_DERIVED_FIELDS = new Set(['project', 'repo_root', 'paths']);
 const STANDARD_FEATURES = {
   observability: true,
@@ -36,15 +39,33 @@ function cloneJson<T>(value: T): T {
   return JSON.parse(JSON.stringify(value));
 }
 
-let cachedStandardProfile: AnyRecord | null = null;
+const cachedProfiles = new Map<string, AnyRecord>();
 
-function loadStandardProfile() {
-  if (cachedStandardProfile) return cloneJson(cachedStandardProfile);
+function loadProfile(profileName: string, stack: string[] = []) {
+  if (cachedProfiles.has(profileName)) return cloneJson(cachedProfiles.get(profileName) as AnyRecord);
+  const profileUrl = PROFILE_URLS[profileName];
+  if (!profileUrl) {
+    throw new Error(`config.profile: supported profiles are ${Object.keys(PROFILE_URLS).map((name) => `'${name}'`).join(', ')}`);
+  }
+  if (stack.includes(profileName)) {
+    throw new Error(`config.profile: circular profile inheritance: ${[...stack, profileName].join(' -> ')}`);
+  }
   try {
-    cachedStandardProfile = JSON.parse(fs.readFileSync(STANDARD_PROFILE_URL, 'utf8'));
-    return cloneJson(cachedStandardProfile);
+    const rawProfile = JSON.parse(fs.readFileSync(profileUrl, 'utf8'));
+    let profile;
+    if (typeof rawProfile?.extends === 'string') {
+      profile = loadProfile(rawProfile.extends, [...stack, profileName]);
+      const overrides = configOverrides(rawProfile.overrides, 'profile.overrides');
+      assertOverrideTargets(profile, overrides, [], `profile.${profileName}.overrides`);
+      mergeKnownOverrides(profile, overrides);
+      if (typeof rawProfile._doc === 'string') profile._doc = rawProfile._doc;
+    } else {
+      profile = rawProfile;
+    }
+    cachedProfiles.set(profileName, cloneJson(profile));
+    return cloneJson(profile);
   } catch (error) {
-    throw new Error(`Standard swarm config profile invalid: ${STANDARD_PROFILE_URL.pathname}\n  ${(error as Error).message}`);
+    throw new Error(`Swarm config profile '${profileName}' invalid: ${profileUrl.pathname}\n  ${(error as Error).message}`);
   }
 }
 
@@ -54,7 +75,7 @@ function assertExactObject(input: any, expected: AnyRecord, label: string) {
   }
   for (const key of Object.keys(input)) {
     if (!Object.prototype.hasOwnProperty.call(expected, key)) {
-      throw new Error(`${label}.${key}: unknown key for ${STANDARD_PROFILE_NAME} profile`);
+      throw new Error(`${label}.${key}: unsupported key for ${STANDARD_PROFILE_NAME} profile`);
     }
   }
   for (const [key, expectedValue] of Object.entries(expected)) {
@@ -68,18 +89,24 @@ function hasOwn(value: any, key: string) {
   return Object.prototype.hasOwnProperty.call(value, key);
 }
 
-function assertOverrideTargets(base: AnyRecord, overrides: AnyRecord, pathParts: string[] = []) {
+function configOverrides(value: any, label: string) {
+  if (value === undefined) return {};
+  if (isPlainObject(value)) return value;
+  throw new Error(`${label}: required object when provided`);
+}
+
+function assertOverrideTargets(base: AnyRecord, overrides: AnyRecord, pathParts: string[] = [], labelPrefix = 'overrides') {
   for (const [key, value] of Object.entries(overrides)) {
     const nextPath = [...pathParts, key];
-    const label = `overrides.${nextPath.join('.')}`;
-    if (!isPlainObject(base) || !hasOwn(base, key)) {
-      throw new Error(`${label}: unknown effective config path`);
+    const label = `${labelPrefix}.${nextPath.join('.')}`;
+    if (selectTruthyValue(() => (!isPlainObject(base)), () => (!hasOwn(base, key)))) {
+      throw new Error(`${label}: unsupported effective config path`);
     }
     if (isPlainObject(value)) {
       if (!isPlainObject(base[key])) {
         throw new Error(`${label}: cannot merge object into non-object effective config value`);
       }
-      assertOverrideTargets(base[key], value, nextPath);
+      assertOverrideTargets(base[key], value, nextPath, labelPrefix);
     }
   }
 }
@@ -95,13 +122,36 @@ function mergeKnownOverrides(target: AnyRecord, overrides: AnyRecord) {
   return target;
 }
 
+function substituteProfileTemplates(value: any, context: AnyRecord, pathParts: string[] = []) {
+  if (typeof value === 'string') {
+    return value.replace(/\$\{([a-z_]+)\}/g, (match, key) => {
+      const replacement = context[key];
+      if (selectTruthyValue(() => (typeof replacement !== 'string'), () => (!replacement.trim()))) {
+        throw new Error(`config.${pathParts.join('.')}: profile placeholder ${match} requires config.${key} or ${key.toUpperCase()}`);
+      }
+      return replacement;
+    });
+  }
+  if (Array.isArray(value)) {
+    return value.map((entry, index) => substituteProfileTemplates(entry, context, [...pathParts, String(index)]));
+  }
+  if (isPlainObject(value)) {
+    for (const [key, child] of Object.entries(value)) {
+      value[key] = substituteProfileTemplates(child, context, [...pathParts, key]);
+    }
+  }
+  return value;
+}
+
 export function isCompactSwarmConfig(config: any) {
-  return isPlainObject(config) && (
-    hasOwn(config, 'profile') ||
-    hasOwn(config, 'features') ||
-    hasOwn(config, 'tuning') ||
-    hasOwn(config, 'overrides')
-  );
+  return isPlainObject(config) && hasCompactConfigAuthority(config);
+}
+
+function hasCompactConfigAuthority(config: AnyRecord) {
+  for (const field of ['profile', 'features', 'tuning', 'overrides']) {
+    if (hasOwn(config, field)) return true;
+  }
+  return false;
 }
 
 export function expandSwarmConfig(rawConfig: any) {
@@ -110,12 +160,12 @@ export function expandSwarmConfig(rawConfig: any) {
 
   for (const key of Object.keys(rawConfig)) {
     if (!COMPACT_CONFIG_FIELDS.has(key) && !RUNTIME_DERIVED_FIELDS.has(key)) {
-      throw new Error(`config.${key}: unknown compact swarm config field`);
+      throw new Error(`config.${key}: unsupported compact swarm config field`);
     }
   }
 
-  if (rawConfig.profile !== STANDARD_PROFILE_NAME) {
-    throw new Error(`config.profile: only '${STANDARD_PROFILE_NAME}' is supported`);
+  if (!PROFILE_URLS[rawConfig.profile]) {
+    throw new Error(`config.profile: supported profiles are ${Object.keys(PROFILE_URLS).map((name) => `'${name}'`).join(', ')}`);
   }
   assertExactObject(rawConfig.features, STANDARD_FEATURES, 'config.features');
   assertExactObject(rawConfig.tuning, STANDARD_TUNING, 'config.tuning');
@@ -126,16 +176,20 @@ export function expandSwarmConfig(rawConfig: any) {
     throw new Error('config.discord_webhook_url: must be a string');
   }
 
-  const expanded = loadStandardProfile();
+  const expanded = loadProfile(rawConfig.profile);
   if (rawConfig.discord_webhook_url !== undefined) {
     expanded.discord_webhook_url = rawConfig.discord_webhook_url;
   }
   for (const key of RUNTIME_DERIVED_FIELDS) {
     if (hasOwn(rawConfig, key)) expanded[key] = rawConfig[key];
   }
-  const overrides = rawConfig.overrides || {};
+  if (hasOwn(rawConfig, 'run_id')) expanded.run_id = rawConfig.run_id;
+  const overrides = configOverrides(rawConfig.overrides, 'config.overrides');
   assertOverrideTargets(expanded, overrides);
   mergeKnownOverrides(expanded, overrides);
+  substituteProfileTemplates(expanded, {
+    repo_root: rawConfig.repo_root
+  });
   return expanded;
 }
 

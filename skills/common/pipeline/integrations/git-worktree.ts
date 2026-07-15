@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // integrations/git-worktree.ts — Shared pipeline Git worktree policy
 
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
@@ -7,6 +8,11 @@ import path from 'path';
 import { getRepoRoot, gitExec, headHash, invalidateHeadHash, setGitRuntimePolicy, setRepoRoot } from '../git-primitives.ts';
 import { sleep } from '../timing.ts';
 import { buildSubprocessEnv } from '../security.ts';
+import { isRuntimeStatePath } from '../runtime-state-paths.ts';
+export { isRuntimeStatePath } from '../runtime-state-paths.ts';
+export { allocateModuleWorktree, freezeParallelGitBase } from './module-worktree-allocation.ts';
+export { cleanupModuleWorktree, verifyModuleWorktreeClean } from './module-worktree-maintenance.ts';
+import { MODULE_WORKTREE_DIRTY } from './module-worktree-maintenance.ts';
 
 type AnyRecord = Record<string, any>;
 type PorcelainEntry = { raw: string; status: string; path: string };
@@ -15,10 +21,21 @@ type GitStructuredError = Error & { code?: string; gitSync?: AnyRecord; pollingG
 type RuntimeStashState = { stashRef: string | null; stashSha?: string | null; paths: string[] } | null;
 type PreservationStashState = { stashRef: string | null; stashSha?: string | null; paths: string[] } | null;
 type GitCommitPushOptions = { addPaths?: string[]; conflictPaths?: string[]; captureHash?: boolean; softFail?: boolean; budget?: any; signal?: any };
-
+const GIT_LOG_LEVEL_INFO = 'INFO';
+const GIT_PULL_FAILED_REASON = 'git_pull_failed';
+const GIT_PULL_FAILED_DETAIL = 'git pull failed';
+function textValue(value: unknown): string {
+  return typeof value === 'string' ? value : '';
+}
+function selectPresentValue<T>(...values: T[]): T | undefined {
+  return values.find((value) => value !== undefined && value !== null && value !== '');
+}
+function uniqueTextValues(values: unknown[] = []): string[] {
+  return [...new Set(values.map((value) => textValue(value).trim()).filter(Boolean))];
+}
 function requireNumber(obj: AnyRecord, field: string, label: string, { positive = false, integer = false }: { positive?: boolean; integer?: boolean } = {}): number {
   const value = obj?.[field];
-  if (typeof value !== 'number' || !Number.isFinite(value) || (positive && value <= 0) || (integer && !Number.isInteger(value))) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value)))), () => ((positive && value <= 0)))), () => ((integer && !Number.isInteger(value))))) {
     throw new Error(`${label}.${field}: required${positive ? ' positive' : ''}${integer ? ' integer' : ''} number in swarm.config.json`);
   }
   return value;
@@ -28,6 +45,17 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
+function commandErrorDetail(error: unknown): string {
+  const err = error as { stderr?: unknown; stdout?: unknown; message?: unknown };
+  const BufferCtor = (globalThis as AnyRecord).Buffer;
+  const parts = [err?.stderr, err?.stdout, err?.message]
+    .map((part) => BufferCtor?.isBuffer?.(part) ? part.toString('utf8') : textValue(part))
+    .map((part) => part.trim())
+    .filter(Boolean);
+  const lines = parts.join('\n').split('\n').map((line) => line.trim()).filter(Boolean);
+  return lines.find((line) => /\b(?:fatal|error|conflict|not something we can merge)\b/i.test(line)) || lines[0] || errorMessage(error).split('\n')[0];
+}
+
 export { getRepoRoot, gitExec, headHash, invalidateHeadHash, setGitRuntimePolicy, setRepoRoot } from '../git-primitives.ts';
 
 export const FAIL_PATTERNS = {
@@ -35,10 +63,14 @@ export const FAIL_PATTERNS = {
   GIT_SYNC_FAILED: 'GIT_SYNC_FAILED',
   GIT_PUSH_REJECTED: 'GIT_PUSH_REJECTED',
   GIT_PUSH_FAILED: 'GIT_PUSH_FAILED',
+  MODULE_JOIN_CONFLICT: 'module_join/conflict',
+  MODULE_JOIN_FAILED: 'module_join/merge_failed',
+  MODULE_JOIN_DIRTY: 'module_join/dirty_worktree',
+  MODULE_WORKTREE_DIRTY,
 } as const;
 
 export function classifyGitPushError(errorMessage: unknown): string {
-  const msg = String(errorMessage || '');
+  const msg = textValue(errorMessage);
   if (/\[rejected\]|non-fast-forward|updates were rejected/i.test(msg)) return FAIL_PATTERNS.GIT_PUSH_REJECTED;
   if (/authentication failed|publickey|permission denied \(publickey\)|could not read.*passphrase/i.test(msg)) return FAIL_PATTERNS.GIT_PUSH_FAILED;
   if (/timeout|timed out|connection (refused|reset)|network (error|unreachable)/i.test(msg)) return FAIL_PATTERNS.GIT_PUSH_FAILED;
@@ -47,25 +79,22 @@ export function classifyGitPushError(errorMessage: unknown): string {
 }
 
 function log(level: string, message: string): void {
-  const normalizedLevel = String(level || 'INFO').toUpperCase();
-  const writer = normalizedLevel === 'ERROR' || normalizedLevel === 'WARN'
+  const normalizedLevel = textValue(selectPresentValue(level, GIT_LOG_LEVEL_INFO)).toUpperCase();
+  const writer = selectTruthyValue(() => (normalizedLevel === 'ERROR'), () => (normalizedLevel === 'WARN'))
     ? console.error
     : console.log;
   writer(`[${normalizedLevel}] ${message}`);
 }
 
 function incrementStat(config: AnyRecord, key: string) {
-  const stats = config?._runStats || null;
+  const stats = selectTruthyValue(() => (config?._runStats), () => (null));
   if (stats && typeof stats[key] === 'number') stats[key]++;
 }
-
-const SWARM_RUNTIME_ROOT_SEGMENT = '.swarm';
-const SWARM_RUNTIME_PATH_SEGMENT = `/${SWARM_RUNTIME_ROOT_SEGMENT}/`;
 
 function projectScopePathspec(config: AnyRecord): string {
   const repoRoot = typeof config?.repo_root === 'string' ? config.repo_root : '';
   const swarmDir = typeof config?.paths?.swarm_dir === 'string' ? config.paths.swarm_dir : '';
-  if (!repoRoot || !swarmDir) return '';
+  if (selectTruthyValue(() => (!repoRoot), () => (!swarmDir))) return '';
   return normalizeRepoRelativePath(path.relative(repoRoot, path.dirname(swarmDir)));
 }
 
@@ -74,7 +103,7 @@ function isPathWithinProjectScope(config: AnyRecord, relPathName: unknown): bool
   if (!normalizedPath) return false;
   const scopePathspec = projectScopePathspec(config);
   if (!scopePathspec) return true;
-  return normalizedPath === scopePathspec || normalizedPath.startsWith(`${scopePathspec}/`);
+  return selectTruthyValue(() => (normalizedPath === scopePathspec), () => (normalizedPath.startsWith(`${scopePathspec}/`)));
 }
 
 function projectScopedStatusArgs(config: AnyRecord): string[] {
@@ -95,16 +124,8 @@ function resolveDefaultGitAddPaths(config: AnyRecord): string[] {
   return scopePathspec ? [scopePathspec] : ['-A'];
 }
 
-function normalizeRepoPathForRuntimeCheck(relPathName: unknown): string {
-  const normalized = String(relPathName || '')
-    .replace(/\\/g, '/')
-    .replace(/^(?:\.\/)+/, '')
-    .replace(/^\/+/, '');
-  return `/${normalized}`;
-}
-
 function normalizeRepoRelativePath(relPathName: unknown): string {
-  return String(relPathName || '')
+  return textValue(relPathName)
     .replace(/\\/g, '/')
     .replace(/^\/+/, '')
     .replace(/^(?:\.\/)+/, '')
@@ -119,7 +140,7 @@ function normalizeScopedGitPaths(paths: unknown): string[] {
 function pathMatchesScopedPathspec(repoRelativePath: string, pathspecs: string[] = []): boolean {
   const normalizedPath = normalizeRepoRelativePath(repoRelativePath);
   if (!normalizedPath) return false;
-  return pathspecs.some((pathspec) => normalizedPath === pathspec || normalizedPath.startsWith(`${pathspec}/`));
+  return pathspecs.some((pathspec) => selectTruthyValue(() => (normalizedPath === pathspec), () => (normalizedPath.startsWith(`${pathspec}/`))));
 }
 
 function continueRebaseFavoringLocal(config: AnyRecord, allowedConflicts: string[], label: string): boolean {
@@ -166,10 +187,10 @@ function parsePorcelainEntries(repoRoot: string, args: string[] = ['status', '--
     .map(line => line.trimEnd())
     .filter(Boolean)
     .map(line => {
-      const trimmedUnstagedStatus = line.length > 2 && line[1] === ' ' && line[2] !== ' ' && /^[MADRCUT]$/.test(line[0] || '');
+      const trimmedUnstagedStatus = line.length > 2 && line[1] === ' ' && line[2] !== ' ' && /^[MADRCUT]$/.test(line.charAt(0));
       const status = trimmedUnstagedStatus ? ` ${line[0]}` : line.slice(0, 2);
       const payload = line.slice(trimmedUnstagedStatus ? 2 : 3).trim();
-      const filePath = payload.includes(' -> ') ? (payload.split(' -> ').pop() ?? '').trim() : payload;
+      const filePath = payload.includes(' -> ') ? textValue(payload.split(' -> ').pop()).trim() : payload;
       return { raw: line, status, path: filePath };
     });
 }
@@ -188,7 +209,7 @@ function partitionRuntimeStateEntries(entries: PorcelainEntry[] = []) {
   const nonRuntimeEntries: PorcelainEntry[] = [];
 
   for (const entry of entries) {
-    if (isRuntimeStatePath(normalizeRepoPathForRuntimeCheck(entry.path))) runtimeEntries.push(entry);
+    if (isRuntimeStatePath(entry.path)) runtimeEntries.push(entry);
     else nonRuntimeEntries.push(entry);
   }
 
@@ -209,9 +230,9 @@ function listStashEntries(repoRoot: string): StashEntry[] {
 }
 
 function resolveStashRefBySha(repoRoot: string, stashState: RuntimeStashState): string | null {
-  if (!stashState?.stashSha) return stashState?.stashRef || null;
+  if (!stashState?.stashSha) return selectTruthyValue(() => (stashState?.stashRef), () => (null));
   const entry = listStashEntries(repoRoot).find(stashEntry => stashEntry.sha === stashState.stashSha);
-  return entry?.ref || null;
+  return selectTruthyValue(() => (entry?.ref), () => (null));
 }
 
 function dropRuntimeStash(repoRoot: string, stashState: RuntimeStashState) {
@@ -237,14 +258,9 @@ function gitPath(repoRoot: string, gitPathName: string): string {
 }
 
 function isRebaseInProgress(repoRoot: string): boolean {
-  try {
-    return fs.existsSync(gitPath(repoRoot, 'rebase-merge')) || fs.existsSync(gitPath(repoRoot, 'rebase-apply'));
-  } catch (_error) {
-    return (
-      fs.existsSync(path.join(repoRoot, '.git', 'rebase-merge')) ||
-      fs.existsSync(path.join(repoRoot, '.git', 'rebase-apply'))
-    );
-  }
+  const mergeStatePath = gitPath(repoRoot, 'rebase-merge');
+  const applyStatePath = gitPath(repoRoot, 'rebase-apply');
+  return selectTruthyValue(() => (fs.existsSync(mergeStatePath)), () => (fs.existsSync(applyStatePath)));
 }
 
 function createStructuredGitError(config: AnyRecord | null, code: string, message: string, details: AnyRecord = {}): GitStructuredError {
@@ -252,11 +268,109 @@ function createStructuredGitError(config: AnyRecord | null, code: string, messag
   error.code = code;
   error.gitSync = {
     code,
-    repo_root: config?.repo_root || null,
-    project: config?.project || null,
+    repo_root: selectTruthyValue(() => (config?.repo_root), () => (null)),
+    project: selectTruthyValue(() => (config?.project), () => (null)),
     ...details,
   };
   return error;
+}
+
+export function commitModuleWorktreeChanges(config: AnyRecord, message: string, { addPaths = [], captureHash = true }: GitCommitPushOptions = {}): AnyRecord {
+  const repoRoot = textValue(config?.repo_root);
+  if (!repoRoot) throw new Error('commitModuleWorktreeChanges requires config.repo_root');
+  const requestedAddPaths = Array.isArray(addPaths) && addPaths.length > 0 ? addPaths : resolveDefaultGitAddPaths(config);
+  const broadAddMode = requestedAddPaths.some((entry) => textValue(entry).startsWith('-'));
+  const normalizedAddPaths = broadAddMode ? [] : normalizeScopedGitPaths(requestedAddPaths);
+
+  if (!broadAddMode && normalizedAddPaths.length > 0) {
+    gitExec(repoRoot, ['add', '--', ...normalizedAddPaths], { stdio: 'ignore' });
+  } else {
+    gitExec(repoRoot, ['add', ...requestedAddPaths], { stdio: 'ignore' });
+  }
+
+  const staged = gitExec(repoRoot, ['diff', '--cached', '--name-only']);
+  if (staged) {
+    gitExec(repoRoot, ['commit', '-m', message], { stdio: 'ignore' });
+    invalidateHeadHash(config);
+  }
+
+  const hash = captureHash ? gitExec(repoRoot, ['rev-parse', 'HEAD']).trim() : null;
+  const branch = gitExec(repoRoot, ['rev-parse', '--abbrev-ref', 'HEAD']).trim();
+  log('OK', staged
+    ? `Committed module worktree changes: ${message.slice(0, 60)}${hash ? ` (${hash.substring(0, 8)})` : ''}`
+    : `No staged module worktree changes — using existing commit${hash ? ` (${hash.substring(0, 8)})` : ''}`);
+  return { committed: Boolean(staged), hash, branch };
+}
+
+export function mergeModuleBranches(config: AnyRecord, input: AnyRecord = {}): AnyRecord {
+  const repoRoot = textValue(config?.repo_root);
+  if (!repoRoot) throw new Error('mergeModuleBranches requires config.repo_root');
+  const branches = uniqueTextValues(Array.isArray(input.branches) ? input.branches : []);
+  if (branches.length === 0) return { ok: true, merged_branches: [] };
+  const startHead = gitExec(repoRoot, ['rev-parse', 'HEAD']).trim();
+  const runtimeStash = collectRuntimeOnlyStash(config, 'pipeline-module-join-runtime-state');
+  const merged: string[] = [];
+  let mergeError: GitStructuredError | null = null;
+  try {
+    for (const branch of branches) {
+      try {
+        gitExec(repoRoot, ['merge', '--no-ff', '--no-edit', branch], {
+          env: buildSubprocessEnv({ GIT_EDITOR: 'true' }),
+        });
+        merged.push(branch);
+      } catch (error) {
+        const conflicts = getConflictedPaths(repoRoot);
+        const cause = commandErrorDetail(error);
+        const code = conflicts.length > 0 ? FAIL_PATTERNS.MODULE_JOIN_CONFLICT : FAIL_PATTERNS.MODULE_JOIN_FAILED;
+        try {
+          gitExec(repoRoot, ['merge', '--abort'], { stdio: 'ignore' });
+        } catch (_) {
+          // Best-effort cleanup after a failed merge; the typed error below is authoritative.
+        }
+        if (startHead) gitExec(repoRoot, ['reset', '--hard', startHead], { stdio: 'ignore' });
+        mergeError = createStructuredGitError(config, code, code === FAIL_PATTERNS.MODULE_JOIN_CONFLICT ? `Module branch merge conflict: ${branch}` : `Module branch merge failed: ${branch}`, {
+          branch,
+          merged_branches: merged,
+          conflicted_paths: conflicts,
+          cause,
+        });
+        break;
+      }
+    }
+  } finally {
+    try {
+      restoreRuntimeStateStash(config, runtimeStash);
+    } catch (restoreError) {
+      if (!mergeError) throw restoreError;
+      log('WARN', `Runtime-state restore failed after module join failure: ${commandErrorDetail(restoreError)}`);
+    }
+  }
+  if (mergeError) throw mergeError;
+  invalidateHeadHash(config);
+  return { ok: true, merged_branches: merged, head: gitExec(repoRoot, ['rev-parse', 'HEAD']).trim(), runtime_stash_paths: runtimeStash?.paths || [] };
+}
+
+function collectRuntimeOnlyStash(config: AnyRecord, label: string): RuntimeStashState {
+  const entries = parseProjectScopedPorcelainEntries(config);
+  if (entries.length === 0) return null;
+
+  const { runtimeEntries, nonRuntimeEntries } = partitionRuntimeStateEntries(entries);
+  if (nonRuntimeEntries.length > 0) {
+    throw createStructuredGitError(config, FAIL_PATTERNS.MODULE_JOIN_DIRTY, 'Module join requires a clean non-runtime parent worktree', {
+      dirty_paths: nonRuntimeEntries.map((entry) => entry.raw),
+    });
+  }
+
+  const stashPaths = [...new Set(runtimeEntries.map(entry => entry.path).filter(Boolean))];
+  if (stashPaths.length === 0) return null;
+
+  const beforeShas = new Set(listStashEntries(config.repo_root).map(entry => entry.sha));
+  gitExec(config.repo_root, ['stash', 'push', '--include-untracked', '-m', label, '--', ...stashPaths], { stdio: 'ignore' });
+  const afterEntries = listStashEntries(config.repo_root);
+  const stashEntry = selectTruthyValue(() => (afterEntries.find(entry => !beforeShas.has(entry.sha))), () => (null));
+
+  log('DEBUG', `Stashed ${stashPaths.length} runtime-state path(s) before module join`);
+  return { stashRef: selectTruthyValue(() => (stashEntry?.ref), () => (null)), stashSha: selectTruthyValue(() => (stashEntry?.sha), () => (null)), paths: stashPaths };
 }
 
 function collectRuntimeStateStash(config: AnyRecord): RuntimeStashState {
@@ -269,10 +383,10 @@ function collectRuntimeStateStash(config: AnyRecord): RuntimeStashState {
   const beforeShas = new Set(listStashEntries(config.repo_root).map(entry => entry.sha));
   gitExec(config.repo_root, ['stash', 'push', '--include-untracked', '-m', 'pipeline-pre-push-project-worktree', '--', ...stashPaths], { stdio: 'ignore' });
   const afterEntries = listStashEntries(config.repo_root);
-  const stashEntry = afterEntries.find(entry => !beforeShas.has(entry.sha)) || null;
+  const stashEntry = selectTruthyValue(() => (afterEntries.find(entry => !beforeShas.has(entry.sha))), () => (null));
 
   log('DEBUG', `Stashed ${stashPaths.length} project worktree path(s) before pull-rebase`);
-  return { stashRef: stashEntry?.ref || null, stashSha: stashEntry?.sha || null, paths: stashPaths };
+  return { stashRef: selectTruthyValue(() => (stashEntry?.ref), () => (null)), stashSha: selectTruthyValue(() => (stashEntry?.sha), () => (null)), paths: stashPaths };
 }
 
 function collectOutOfScopeWorktreeStash(config: AnyRecord): PreservationStashState {
@@ -283,10 +397,10 @@ function collectOutOfScopeWorktreeStash(config: AnyRecord): PreservationStashSta
   const beforeShas = new Set(listStashEntries(config.repo_root).map(entry => entry.sha));
   gitExec(config.repo_root, ['stash', 'push', '--include-untracked', '-m', 'pipeline-preserve-out-of-scope-worktree', '--', ...stashPaths], { stdio: 'ignore' });
   const afterEntries = listStashEntries(config.repo_root);
-  const stashEntry = afterEntries.find(entry => !beforeShas.has(entry.sha)) || null;
+  const stashEntry = selectTruthyValue(() => (afterEntries.find(entry => !beforeShas.has(entry.sha))), () => (null));
 
   log('DEBUG', `Stashed ${stashPaths.length} out-of-scope worktree path(s) before pull-rebase fallback`);
-  return { stashRef: stashEntry?.ref || null, stashSha: stashEntry?.sha || null, paths: stashPaths };
+  return { stashRef: selectTruthyValue(() => (stashEntry?.ref), () => (null)), stashSha: selectTruthyValue(() => (stashEntry?.sha), () => (null)), paths: stashPaths };
 }
 
 function restoreOutOfScopeWorktreeStash(config: AnyRecord, stashState: PreservationStashState) {
@@ -324,7 +438,7 @@ function restoreRuntimeStateStash(
     return;
   }
 
-  const normalizedAllowedConflictPaths = normalizeScopedGitPaths(opts.allowedConflictPaths || []);
+  const normalizedAllowedConflictPaths = normalizeScopedGitPaths(opts.allowedConflictPaths);
   try {
     gitExec(config.repo_root, ['stash', 'pop', stashRef], { stdio: 'ignore' });
     log('DEBUG', 'Restored stashed project worktree after push');
@@ -333,7 +447,7 @@ function restoreRuntimeStateStash(
     const conflicts = filterProjectScopedPaths(config, getConflictedPaths(config.repo_root));
     if (conflicts.length === 0) {
       const entries = parseProjectScopedPorcelainEntries(config);
-      const stashedPaths = normalizeScopedGitPaths(stashState.paths || []);
+      const stashedPaths = normalizeScopedGitPaths(stashState.paths);
       const stashedPathsRestored = stashedPaths.every((file) => {
         if (entries.some((entry) => normalizeRepoRelativePath(entry.path) === file)) return true;
         return fs.existsSync(path.join(config.repo_root, file));
@@ -361,7 +475,7 @@ function restoreRuntimeStateStash(
       });
     }
 
-    const stashedPaths = normalizeScopedGitPaths(stashState.paths || []);
+    const stashedPaths = normalizeScopedGitPaths(stashState.paths);
     const restorableConflicts = conflicts.filter(file => pathMatchesScopedPathspec(file, stashedPaths));
     if (restorableConflicts.length !== conflicts.length) {
       const unexpectedConflicts = conflicts.filter(file => !pathMatchesScopedPathspec(file, stashedPaths));
@@ -380,7 +494,7 @@ function restoreRuntimeStateStash(
           reason: 'stash_pop_non_runtime_conflict',
           conflicted_paths: conflicts,
           stash_ref: stashRef,
-          stash_sha: stashState.stashSha || null,
+          stash_sha: selectTruthyValue(() => (stashState.stashSha), () => (null)),
         },
       );
     }
@@ -402,26 +516,6 @@ export const __gitWorktreeTest = {
   isRebaseInProgress,
   restoreRuntimeStateStash,
 };
-
-export function isRuntimeStatePath(relPathName: unknown): boolean {
-  const p = normalizeRepoPathForRuntimeCheck(relPathName);
-  const swarmIndex = p.indexOf(SWARM_RUNTIME_PATH_SEGMENT);
-  if (swarmIndex === -1) return false;
-
-  const swarmPath = p.slice(swarmIndex + SWARM_RUNTIME_PATH_SEGMENT.length);
-  return (
-    swarmPath.startsWith('logs/') ||
-    swarmPath === 'progress.json' ||
-    /^modules\/[^/]+\/(?:forge|buster|review|gate)-completion\.json$/.test(swarmPath) ||
-    /^modules\/[^/]+\/(?:forge|buster|review|gate)-prompt(?:-metadata)?\.json$/.test(swarmPath) ||
-    /^modules\/[^/]+\/(?:forge|buster|review)-transcript-attempt-\d+\.jsonl$/.test(swarmPath) ||
-    /^modules\/[^/]+\/(?:forge|buster|review)-output(?:\.[^/]+)?$/.test(swarmPath) ||
-    /^modules\/[^/]+\/(?:runtime|state|status|summary).*\.(json|jsonl|md)$/.test(swarmPath) ||
-    /^[^/]+-gate-status\.json$/.test(swarmPath) ||
-    /^.*summary.*\.(json|md)$/.test(swarmPath) ||
-    /^.*project-summary.*$/.test(swarmPath)
-  );
-}
 
 function tryAutoResolveRebaseForRuntimeState(config: AnyRecord): boolean {
   const conflicts = filterProjectScopedPaths(
@@ -483,7 +577,7 @@ function tryAutoResolveRebaseForScopedPaths(config: AnyRecord, allowedPaths: str
   const normalizedAllowedPaths = normalizeScopedGitPaths(allowedPaths);
   if (normalizedAllowedPaths.length === 0) return false;
 
-  const conflicts = filterProjectScopedPaths(config, getConflictedPaths(config.repo_root));
+  const conflicts = getConflictedPaths(config.repo_root).map(normalizeRepoRelativePath).filter(Boolean);
   if (conflicts.length === 0) return false;
   if (conflicts.some((file) => !pathMatchesScopedPathspec(file, normalizedAllowedPaths))) {
     const nonScoped = conflicts.filter((file) => !pathMatchesScopedPathspec(file, normalizedAllowedPaths));
@@ -508,44 +602,41 @@ function _gitPullCore(config: AnyRecord, opts: { allowedConflictPaths?: string[]
     const msg = errorMessage(e);
     incrementStat(config, 'git_pull_failures');
     const activeConflicts = getConflictedPaths(config.repo_root);
-    const isRebasing = isRebaseInProgress(config.repo_root)
-      || activeConflicts.length > 0
-      || /\bCONFLICT\b|could not apply/i.test(msg);
+    const isRebasing = selectTruthyValue(() => (selectTruthyValue(() => (isRebaseInProgress(config.repo_root)), () => (activeConflicts.length > 0))), () => (/\bCONFLICT\b|could not apply/i.test(msg)));
 
     if (isRebasing) {
       log('WARN', 'Git pull left repo in REBASING state');
-      try {
-        if (tryAutoResolveRebaseForScopedPaths(config, opts.allowedConflictPaths || [])) {
-          return { attempted: true, ok: true, recovered: 'scoped_local_auto_resolve' };
-        }
-        if (tryAutoResolveRebaseForRuntimeState(config)) {
-          return { attempted: true, ok: true, recovered: 'runtime_auto_resolve' };
-        }
-
-        log('WARN', 'Aborting rebase recovery path');
-        gitExec(config.repo_root, ['rebase', '--abort'], { stdio: 'ignore' });
-        throw new Error(
-          `[${FAIL_PATTERNS.GIT_REBASE_CONFLICT}] Git rebase conflict detected before push — auto-resolution refused.\n` +
-          `  Reason: Conflicted files are outside the runtime-state allowlist (non-runtime source files cannot be auto-resolved safely).\n` +
-          `  Recovery:\n` +
-          `    cd ${config.repo_root}\n` +
-          `    git rebase --abort\n` +
-          `    git pull --rebase origin HEAD\n` +
-          `    # Resolve conflicts manually, then:\n` +
-          `    git add <resolved-files>\n` +
-          `    git rebase --continue\n` +
-          `  Then resume the pipeline:\n` +
-          `    node pipeline.ts --project ${config.project} --resume`
-        );
-      } catch (abortErr) {
-        log('ERROR', `Rebase recovery failed: ${errorMessage(abortErr).split('\n')[0]}`);
-        throw abortErr;
+      if (tryAutoResolveRebaseForScopedPaths(config, opts.allowedConflictPaths)) {
+        return { attempted: true, ok: true, recovered: 'scoped_local_auto_resolve' };
       }
+      if (tryAutoResolveRebaseForRuntimeState(config)) {
+        return { attempted: true, ok: true, recovered: 'runtime_auto_resolve' };
+      }
+
+      log('WARN', 'Aborting rebase recovery path');
+      try {
+        gitExec(config.repo_root, ['rebase', '--abort'], { stdio: 'ignore' });
+      } catch (abortErr) {
+        log('ERROR', `Rebase abort cleanup failed after conflict classification: ${errorMessage(abortErr).split('\n')[0]}`);
+      }
+      throw new Error(
+        `[${FAIL_PATTERNS.GIT_REBASE_CONFLICT}] Git rebase conflict detected before push — auto-resolution refused.\n` +
+        `  Reason: Conflicted files are outside the publication or runtime-state allowlist (unowned source conflicts cannot be auto-resolved safely).\n` +
+        `  Recovery:\n` +
+        `    cd ${config.repo_root}\n` +
+        `    git rebase --abort\n` +
+        `    git pull --rebase origin HEAD\n` +
+        `    # Resolve conflicts manually, then:\n` +
+        `    git add <resolved-files>\n` +
+        `    git rebase --continue\n` +
+        `  Then resume the pipeline:\n` +
+        `    node pipeline.ts --project ${config.project} --resume`
+      );
     } else {
       log('DEBUG', `Git pull failed (non-rebase): ${msg.split('\n')[0]}`);
     }
 
-    return { attempted: true, ok: false, reason: msg.split('\n')[0] || 'git_pull_failed' };
+    return { attempted: true, ok: false, reason: selectPresentValue(msg.split('\n')[0], GIT_PULL_FAILED_REASON) };
   }
 }
 
@@ -561,7 +652,7 @@ export function gitPullBeforePush(config: AnyRecord) {
         config,
         FAIL_PATTERNS.GIT_SYNC_FAILED,
         `[${FAIL_PATTERNS.GIT_SYNC_FAILED}] Git pull-before-push failed.\n` +
-          `  Reason: ${pullResult.reason || 'git pull failed'}\n` +
+          `  Reason: ${selectPresentValue(pullResult.reason, GIT_PULL_FAILED_DETAIL)}\n` +
           `  Recovery:\n` +
           `    cd ${config.repo_root}\n` +
           `    git status\n` +
@@ -583,7 +674,7 @@ export function gitPullBeforePush(config: AnyRecord) {
 
 function gitPushPolicy(config: AnyRecord): { maxRetries: number; delayMs: number; timeoutMs: number } {
   const push = config?.git?.push;
-  if (!push || typeof push !== 'object' || Array.isArray(push)) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!push), () => (typeof push !== 'object'))), () => (Array.isArray(push)))) {
     throw new Error('config.git: required platform config object for git push retry policy');
   }
   const maxRetries = requireNumber(push, 'max_attempts', 'config.git.push', { positive: true, integer: true });
@@ -594,13 +685,13 @@ function gitPushPolicy(config: AnyRecord): { maxRetries: number; delayMs: number
 
 export async function gitPushWithRetry(config: AnyRecord, opts: { budget?: any; signal?: any; maxRetries?: number; delayMs?: number; timeoutMs?: number } = {}) {
   const policy = gitPushPolicy(config);
-  const maxRetries = opts.maxRetries ?? policy.maxRetries;
-  const delayMs = opts.delayMs ?? policy.delayMs;
-  const timeoutMs = opts.timeoutMs ?? policy.timeoutMs;
+  const maxRetries = opts.maxRetries !== undefined ? opts.maxRetries : policy.maxRetries;
+  const delayMs = opts.delayMs !== undefined ? opts.delayMs : policy.delayMs;
+  const timeoutMs = opts.timeoutMs !== undefined ? opts.timeoutMs : policy.timeoutMs;
   const { budget = null, signal = null } = opts;
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      gitExec(config.repo_root, ['push', 'origin', 'HEAD'], { stdio: 'ignore', timeout: timeoutMs });
+      gitExec(config.repo_root, ['push', 'origin', 'HEAD'], { timeout: timeoutMs });
       log('OK', `Git push succeeded (attempt ${attempt}/${maxRetries})`);
       return;
     } catch (e) {
@@ -619,7 +710,7 @@ export async function gitPushWithRetry(config: AnyRecord, opts: { budget?: any; 
 export async function gitCommitAndPush(config: AnyRecord, message: string, { addPaths = [], conflictPaths = [], captureHash = false, softFail = false, budget = null, signal = null }: GitCommitPushOptions = {}): Promise<{ committed: boolean; hash?: string; error?: string }> {
   try {
     const requestedAddPaths = Array.isArray(addPaths) && addPaths.length > 0 ? addPaths : resolveDefaultGitAddPaths(config);
-    const broadAddMode = requestedAddPaths.some((entry) => String(entry || '').startsWith('-'));
+    const broadAddMode = requestedAddPaths.some((entry) => textValue(entry).startsWith('-'));
     const normalizedAddPaths = broadAddMode ? [] : normalizeScopedGitPaths(requestedAddPaths);
     if (!broadAddMode && normalizedAddPaths.length > 0) {
       gitExec(config.repo_root, ['add', '--', ...normalizedAddPaths], { stdio: 'ignore' });
@@ -632,8 +723,13 @@ export async function gitCommitAndPush(config: AnyRecord, message: string, { add
       log('INFO', 'No staged changes — nothing to push');
       return { committed: false };
     }
+    const stagedPaths = normalizeScopedGitPaths(staged.split('\n'));
+    const publicationConflictPaths = normalizeScopedGitPaths([
+      ...stagedPaths,
+      ...conflictPaths,
+    ]);
 
-    gitExec(config.repo_root, ['commit', '-m', message], { stdio: 'ignore' });
+    gitExec(config.repo_root, ['commit', '-m', message]);
     invalidateHeadHash(config);
 
     const stashState = collectRuntimeStateStash(config);
@@ -655,17 +751,14 @@ export async function gitCommitAndPush(config: AnyRecord, message: string, { add
 
       if (!pushed) {
         const pullResult = _gitPullCore(config, {
-          allowedConflictPaths: normalizeScopedGitPaths([
-            ...conflictPaths,
-            ...filterProjectScopedPaths(config, resolveDefaultGitAddPaths(config)),
-          ]),
+          allowedConflictPaths: publicationConflictPaths,
         });
         if (pullResult?.ok === false) {
           throw createStructuredGitError(
             config,
             FAIL_PATTERNS.GIT_SYNC_FAILED,
             `[${FAIL_PATTERNS.GIT_SYNC_FAILED}] Git pull-before-push failed.\n` +
-              `  Reason: ${pullResult.reason || 'git pull failed'}\n` +
+              `  Reason: ${selectPresentValue(pullResult.reason, GIT_PULL_FAILED_DETAIL)}\n` +
               `  Recovery:\n` +
               `    cd ${config.repo_root}\n` +
               `    git status\n` +
@@ -681,7 +774,7 @@ export async function gitCommitAndPush(config: AnyRecord, message: string, { add
     } finally {
       restoreOutOfScopeWorktreeStash(config, outOfScopeStash);
       restoreRuntimeStateStash(config, stashState, {
-        allowedConflictPaths: normalizeScopedGitPaths(conflictPaths),
+        allowedConflictPaths: publicationConflictPaths,
       });
     }
 

@@ -36,6 +36,7 @@ function makeConfig(prefix = 'telemetry-sink-contract-test') {
     },
     _runId: 'run-telemetry-sink-contract',
     run_id: 'run-telemetry-sink-contract',
+    telemetry: { sink_timeout_ms: 1000 },
     pluginRegistry: registry,
   };
 }
@@ -120,6 +121,42 @@ test('telemetry sink preserves top-level Discord status and action fields during
   assert.deepEqual(validateTelemetrySinkInput(input), []);
 });
 
+test('telemetry sink refs use canonical camelCase fields only', () => {
+  const input = buildTelemetrySinkInput({
+    config: makeConfig('telemetry-sink-canonical-refs'),
+  }, 'module.status_changed', {
+    run_id: 'run-telemetry-sink-contract',
+    module_id: 'module-a',
+    attempt: 2,
+  }, {
+    refs: {
+      run_ref: 'run:legacy-snake-run',
+      module_attempt_ref: 'module_attempt:legacy-snake-run:module-a:9',
+      runRef: 'run:canonical-run',
+      moduleAttemptRef: 'module_attempt:canonical-run:module-a:2',
+    },
+    occurredAt: '2026-06-17T00:00:00.000Z',
+  });
+
+  assert.equal(input.refs.runRef, 'run:canonical-run');
+  assert.equal(input.refs.moduleAttemptRef, 'module_attempt:canonical-run:module-a:2');
+  assert.equal(input.refs.primaryRef, 'module_attempt:canonical-run:module-a:2');
+});
+
+test('telemetry sink omits gate evaluation ref when gate attempt is absent', () => {
+  const input = buildTelemetrySinkInput({
+    config: makeConfig('telemetry-sink-gate-ref-without-attempt'),
+  }, 'gate.status_changed', {
+    run_id: 'run-telemetry-sink-contract',
+    gate_id: 'review',
+  }, {
+    occurredAt: '2026-06-17T00:00:00.000Z',
+  });
+
+  assert.equal(input.refs.gateEvaluationRef, null);
+  assert.equal(input.refs.primaryRef, 'gate:review');
+});
+
 test('emitOperatorAlert rejects path-only severe Discord presentation before Discord sink dispatch', async () => {
   const calls = [];
   const result = await emitOperatorAlert({
@@ -185,4 +222,55 @@ test('emitOperatorAlert dispatches valid severe Discord presentation', async () 
   assert.equal(calls.length, 1);
   assert.equal(calls[0].level, 'CRITICAL');
   assert.equal(calls[0].title, 'Pipeline blocked');
+});
+
+test('Discord telemetry sink timeout records canonical missing webhook evidence', async () => {
+  const config = makeConfig('telemetry-sink-discord-missing-webhook');
+  config.discord_webhook_url = '';
+  config.discord_alerts = { critical: true };
+  config.discord = { webhook_timeout_ms: 1 };
+  config.telemetry = { sink_timeout_ms: 1 };
+
+  const result = await emitOperatorAlert({
+    config,
+    deps: {
+      discord: async () => new Promise(() => {}),
+    },
+  }, 'pipeline.operator_alert', {
+    run_id: config._runId,
+    terminal_status: 'BLOCKED',
+    action: 'Fix the deployment config and resume',
+  }, {
+    presentation: {
+      discord: {
+        level: 'CRITICAL',
+        title: 'Pipeline blocked',
+        description: 'Deployment config is invalid.',
+        fields: [
+          { name: 'Status', value: 'BLOCKED' },
+          { name: 'Next Action', value: 'Fix the deployment config and resume' },
+          { name: 'Run ID', value: config._runId },
+        ],
+      },
+    },
+    occurredAt: '2026-06-17T00:00:00.000Z',
+  });
+
+  assert.deepEqual(result.results, [{
+    moduleId: 'builtin.telemetry.discord',
+    ok: false,
+    error: "telemetry sink 'builtin.telemetry.discord' timed out after 1ms",
+  }]);
+
+  const events = fs.readFileSync(path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId, 'pipeline.jsonl'), 'utf8')
+    .trim()
+    .split('\n')
+    .map((line) => JSON.parse(line));
+  assert(events.some((event) => event.type === 'observability.degraded'
+    && event.component === 'discord'
+    && event.surface === 'webhook'
+    && event.reason === 'webhook_url_missing'));
+  assert.equal(events.some((event) => event.type === 'observability.degraded'
+    && event.component === 'telemetry_sink'
+    && event.surface === 'builtin.telemetry.discord'), false);
 });

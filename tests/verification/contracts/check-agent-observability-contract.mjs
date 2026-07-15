@@ -50,7 +50,6 @@ function baseEvent(overrides = {}) {
       model: 'claude-sonnet-4-6',
       request: { temperature: 0.1 },
     },
-    masking: contract.createFullContentMinimalMasking(false),
     ...overrides,
   };
 }
@@ -88,19 +87,6 @@ const invalidLlmOutput = baseEvent({
 result = contract.validateAgentObservabilityIngressEvent(invalidLlmOutput);
 assert.equal(result.ok, false, 'llm_output without response must fail');
 assert(result.errors.includes('payload.response is required'));
-
-const masked = contract.applyMinimalApiKeyMask({
-  prompt: 'Authorization: sk-1234567890abcdef',
-  harmless: 'normal prompt content remains unchanged',
-});
-assert.equal(masked.value.prompt, 'Authorization: [REDACTED_API_KEY]');
-assert.equal(masked.value.harmless, 'normal prompt content remains unchanged');
-assert.deepEqual(masked.masking.masked, [contract.AGENT_OBSERVABILITY_MASK_BASIC_API_KEY_PATTERN]);
-assert.equal(masked.masking.content, 'full');
-
-const unmasked = contract.applyMinimalApiKeyMask({ prompt: 'keep this full prompt' });
-assert.equal(unmasked.value.prompt, 'keep this full prompt');
-assert.deepEqual(unmasked.masking.masked, []);
 
 const oversized = contract.checkAgentObservabilityPayloadSize(
   baseEvent({ payload: { hook: 'llm_input', prompt: 'x'.repeat(512), history_messages: [] } }),

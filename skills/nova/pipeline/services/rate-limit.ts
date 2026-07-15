@@ -26,15 +26,73 @@ import {
   resolveStatusGatewayLabel,
   resolveStatusSessionKey,
 } from './correlation.ts';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { resolveRateLimitCooldown } from './rate-limit-cooldown.ts';
 export * from './rate-limit-builders.ts';
 export * from './rate-limit-exit.ts';
+export { resolveRateLimitCooldown } from './rate-limit-cooldown.ts';
+const RATE_LIMIT_EXHAUSTED_REASON = 'rate_limit_exhausted';
+const DURABLE_COOLDOWN_REPLAY_RESUME_DETAIL = 'Resumed after durable cooldown replay';
+const RATE_LIMIT_SESSION_LABEL = 'session';
+function requireRateLimitConfigSection(config) {
+  const rateLimit = config?.rate_limit;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!rateLimit), () => (typeof rateLimit !== 'object'))), () => (Array.isArray(rateLimit)))) {
+    throw new Error('config.rate_limit is required for rate-limit handling');
+  }
+  return rateLimit;
+}
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function firstDefined(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return null;
+}
+
+function requiredPauseCount(value, label) {
+  const count = Number(value);
+  if (selectTruthyValue(() => (!Number.isFinite(count)), () => (count < 1))) {
+    throw new Error(`${label} requires explicit positive pauseCount`);
+  }
+  return Math.trunc(count);
+}
+
+function selectPresentValue(...values) {
+  for (const value of values) {
+    if (typeof value === 'string' && value.length > 0) return value;
+  }
+  return '';
+}
+
+function errorMessage(error) {
+  if (error && typeof error === 'object' && typeof error.message === 'string' && error.message.trim()) return error.message;
+  return String(error);
+}
+
+function resolveCooldownHours(cooldown) {
+  if (cooldown.cooldownHours !== undefined && cooldown.cooldownHours !== null) return cooldown.cooldownHours;
+  return cooldown.cooldownMs / (60 * 60 * 1000);
+}
+
+function resolveSleepFn(options) {
+  return options.sleepFn !== undefined ? options.sleepFn : sleep;
+}
+
+function requireModuleIdentity(...values) {
+  const moduleId = selectPresentValue(...values);
+  if (!moduleId) throw new Error('tracked module rate-limit sync requires explicit module identity');
+  return moduleId;
+}
 
 export function createRateLimitPauseState(initialCount = 0) {
   return { count: initialCount };
 }
 
 export function getRateLimitConfig(config) {
-  const rateLimit = config?.rate_limit || {};
+  const rateLimit = requireRateLimitConfigSection(config);
   return {
     max_pauses_per_module: Number(rateLimit.max_pauses_per_module),
     cooldown_hours: Number(rateLimit.cooldown_hours),
@@ -48,7 +106,7 @@ async function finalizeConfiguredSessionRateLimitExhaustion(config, options = {}
     const builtExhaustedResult = await options.buildExhaustedResult(exhaustedCtx);
     return finalizeSessionRateLimitExhaustion(builtExhaustedResult, {
       config,
-      reason: builtExhaustedResult?.reason || 'rate_limit_exhausted',
+      reason: selectPresentValue(builtExhaustedResult?.reason, RATE_LIMIT_EXHAUSTED_REASON),
       maxPauses,
     });
   }
@@ -58,11 +116,12 @@ async function finalizeConfiguredSessionRateLimitExhaustion(config, options = {}
   const exhaustedResultOptions = typeof options.exhaustedResultOptions === 'function'
     ? options.exhaustedResultOptions(exhaustedCtx)
     : options.exhaustedResultOptions;
+  const exhaustedResultOptionsRecord = objectRecord(exhaustedResultOptions);
   const {
-    reason = 'rate_limit_exhausted',
+    reason = RATE_LIMIT_EXHAUSTED_REASON,
     resultOverrides = {},
     ...buildOptions
-  } = exhaustedResultOptions || {};
+  } = exhaustedResultOptionsRecord;
   return finalizeSessionRateLimitExhaustion(
     {
       status,
@@ -82,48 +141,57 @@ async function finalizeConfiguredSessionRateLimitExhaustion(config, options = {}
 
 function buildRateLimitDiscordCorrelation(status = {}) {
   return {
-    run_id: status?.run_id || null,
-    module_id: status?.module_id || null,
-    gate_id: status?.gate_id || null,
-    gate_type: status?.gate_type || null,
-    attempt: status?.attempt ?? null,
-    dispatch_id: resolveStatusDispatchId(status) ?? null,
-    gateway_label: resolveStatusGatewayLabel(status) ?? null,
-    session_key: resolveStatusSessionKey(status) ?? null,
+    run_id: selectTruthyValue(() => (status?.run_id), () => (null)),
+    module_id: selectTruthyValue(() => (status?.module_id), () => (null)),
+    gate_id: selectTruthyValue(() => (status?.gate_id), () => (null)),
+    gate_type: selectTruthyValue(() => (status?.gate_type), () => (null)),
+    attempt: selectDefinedValue(() => (status?.attempt), () => (null)),
+    dispatch_id: selectDefinedValue(() => (resolveStatusDispatchId(status)), () => (null)),
+    gateway_label: selectDefinedValue(() => (resolveStatusGatewayLabel(status)), () => (null)),
+    session_key: selectDefinedValue(() => (resolveStatusSessionKey(status)), () => (null)),
   };
 }
 
 export async function handleSessionRateLimit(config, status = {}, options = {}) {
-  const pauseCount = options.pauseCount ?? 1;
+  const pauseCount = requiredPauseCount(options.pauseCount, 'handleSessionRateLimit');
   const rateLimitConfig = getRateLimitConfig(config);
-  const maxPauses = options.maxPauses ?? rateLimitConfig.max_pauses_per_module;
-  const cooldownHours = options.cooldownHours ?? rateLimitConfig.cooldown_hours;
-  const cooldownMs = Math.ceil(cooldownHours * 60 * 60 * 1000);
-  const cooldownBufferMs = options.cooldownBufferMs ?? rateLimitConfig.cooldown_buffer_ms;
-  const resumeAt = new Date(Date.now() + cooldownMs);
+  const maxPauses = rateLimitConfig.max_pauses_per_module;
+  const cooldownBufferMs = rateLimitConfig.cooldown_buffer_ms;
+  const cooldown = resolveRateLimitCooldown(status, rateLimitConfig, {
+    cooldownBufferMs,
+    nowMs: options.nowMs,
+  });
+  const cooldownHours = resolveCooldownHours(cooldown);
+  const cooldownMs = cooldown.cooldownMs;
+  const resumeAt = cooldown.resumeAt;
   const detail = options.getDetail ? options.getDetail(status) : defaultSessionRateLimitDetail(status);
-  const ctx = { status, pauseCount, maxPauses, cooldownHours, cooldownMs, resumeAt, detail };
-  const hasLifecycleTarget = Boolean(status?.module_id || status?.gate_id);
+  const ctx = { status, pauseCount, maxPauses, cooldownHours, cooldownMs, resumeAt, detail, ...cooldown };
+  const hasLifecycleTarget = Boolean(selectTruthyValue(() => (status?.module_id), () => (status?.gate_id)));
   const suppressPausePresentation = typeof options.suppressPausePresentation === 'function'
     ? options.suppressPausePresentation(ctx)
     : options.suppressPausePresentation === true;
 
   if (hasLifecycleTarget) {
     appendCooldownLifecycleEvent(config, 'rate_limit.cooldown_started', {
-      moduleId: status?.module_id || null,
-      gateId: status?.gate_id || null,
-      gateType: status?.gate_type || null,
-      attempt: status?.attempt ?? null,
+      moduleId: selectTruthyValue(() => (status?.module_id), () => (null)),
+      gateId: selectTruthyValue(() => (status?.gate_id), () => (null)),
+      gateType: selectTruthyValue(() => (status?.gate_type), () => (null)),
+      attempt: selectDefinedValue(() => (status?.attempt), () => (null)),
       pauseCount,
       maxPauses,
       cooldownHours,
+      cooldownMs,
+      cooldownSource: cooldown.cooldownSource,
+      cooldownSourceDetail: cooldown.cooldownSourceDetail,
+      cooldownBufferMs: cooldown.cooldownBufferMs,
+      retryAfterSeconds: cooldown.retryAfterSeconds,
       resumeAt: resumeAt.toISOString(),
       detail,
-      agentType: status?.agent_type || status?.phase || null,
-      dispatchId: status?.dispatch_id ?? null,
-      gatewayLabel: status?.gateway_label ?? null,
-      sessionKey: status?.session_key || null,
-      commitHash: status?.commit_hash || null,
+      agentType: selectTruthyValue(() => (selectTruthyValue(() => (status?.agent_type), () => (status?.phase))), () => (null)),
+      dispatchId: selectDefinedValue(() => (status?.dispatch_id), () => (null)),
+      gatewayLabel: selectDefinedValue(() => (status?.gateway_label), () => (null)),
+      sessionKey: selectTruthyValue(() => (status?.session_key), () => (null)),
+      commitHash: selectTruthyValue(() => (status?.commit_hash), () => (null)),
     });
   }
 
@@ -137,28 +205,34 @@ export async function handleSessionRateLimit(config, status = {}, options = {}) 
       await options.emitDetected(ctx);
     } else {
       emitRateLimitDetected({ config }, buildRateLimitDetectedPayload({
-        run_id: getRunId(config) ?? config?._runId ?? config?.run_id ?? null,
-        agent_type: status?.agent_type || status?.phase || null,
-        module_id: status?.module_id || null,
-        gate_id: status?.gate_id || null,
-        gate_type: status?.gate_id != null ? (status?.gate_type ?? null) : undefined,
-        session_key: status?.session_key || null,
-        gateway_label: status?.gateway_label ?? null,
-        attempt: status?.attempt ?? null,
-        dispatch_id: status?.dispatch_id ?? null,
+        run_id: selectDefinedValue(() => (getRunId(config)), () => (null)),
+        agent_type: selectTruthyValue(() => (selectTruthyValue(() => (status?.agent_type), () => (status?.phase))), () => (null)),
+        module_id: selectTruthyValue(() => (status?.module_id), () => (null)),
+        gate_id: selectTruthyValue(() => (status?.gate_id), () => (null)),
+        gate_type: status?.gate_id != null ? (selectDefinedValue(() => (status?.gate_type), () => (null))) : undefined,
+        session_key: selectTruthyValue(() => (status?.session_key), () => (null)),
+        gateway_label: selectDefinedValue(() => (status?.gateway_label), () => (null)),
+        attempt: selectDefinedValue(() => (status?.attempt), () => (null)),
+        dispatch_id: selectDefinedValue(() => (status?.dispatch_id), () => (null)),
       }, {
         provider: status?.provider,
-        allowAnthropicDefault: true,
+        allowAnthropicDefault: false,
         pauseCount,
         maxPauses,
         cooldownMs,
+        cooldownSource: cooldown.cooldownSource,
         resumeAt: resumeAt.toISOString(),
+        retryAfterSeconds: cooldown.retryAfterSeconds,
         detail,
       }));
     }
   }
 
-  const embed = formatRateLimitEmbed(config, { detail }, pauseCount, maxPauses, cooldownMs);
+  const embed = formatRateLimitEmbed(config, {
+    detail,
+    cooldownSource: cooldown.cooldownSource,
+    cooldownSourceDetail: cooldown.cooldownSourceDetail,
+  }, pauseCount, maxPauses, cooldownMs);
   if (!suppressPausePresentation) {
     if (typeof options.sendPauseDiscord === 'function') {
       await options.sendPauseDiscord({ ...ctx, embed });
@@ -167,7 +241,7 @@ export async function handleSessionRateLimit(config, status = {}, options = {}) 
         ...buildSessionRateLimitDiscordFields(status),
         ...embed.fields,
       ], { correlation: buildRateLimitDiscordCorrelation(status) }).catch((e) => {
-        log('DEBUG', `Rate-limit pause Discord notice failed: ${e?.message || e}`);
+        log('DEBUG', `Rate-limit pause Discord notice failed: ${errorMessage(e)}`);
       });
     }
   }
@@ -183,7 +257,7 @@ export async function handleSessionRateLimit(config, status = {}, options = {}) 
     });
   }
 
-  const sleepFn = options.sleepFn || sleep;
+  const sleepFn = resolveSleepFn(options);
   await sleepFn(cooldownMs, options.budget ? { budget: options.budget } : undefined);
 
   const resumeLogMessage = typeof options.resumeLogMessage === 'function'
@@ -197,10 +271,10 @@ export async function handleSessionRateLimit(config, status = {}, options = {}) 
 
   if (hasLifecycleTarget) {
     appendCooldownLifecycleEvent(config, 'rate_limit.cooldown_completed', {
-      moduleId: status?.module_id || null,
-      gateId: status?.gate_id || null,
-      gateType: status?.gate_type || null,
-      attempt: status?.attempt ?? null,
+      moduleId: selectTruthyValue(() => (status?.module_id), () => (null)),
+      gateId: selectTruthyValue(() => (status?.gate_id), () => (null)),
+      gateType: selectTruthyValue(() => (status?.gate_type), () => (null)),
+      attempt: selectDefinedValue(() => (status?.attempt), () => (null)),
       pauseCount,
       maxPauses,
       resumedAt: new Date().toISOString(),
@@ -213,12 +287,12 @@ export async function handleSessionRateLimit(config, status = {}, options = {}) 
   } else {
     const resumeTarget = status?.gate_id
       ? `gate fix ${status.gate_id}`
-      : `session ${status?.module_id || status?.gateway_label || status?.session_key || 'session'}`;
+      : `${RATE_LIMIT_SESSION_LABEL} ${selectPresentValue(status?.module_id, status?.gateway_label, status?.session_key, RATE_LIMIT_SESSION_LABEL)}`;
     await discord(config, 'INFO', 'Rate limit cooldown complete', `Resuming ${resumeTarget}`,
       buildSessionRateLimitDiscordFields(status),
       { correlation: buildRateLimitDiscordCorrelation(status) },
     ).catch((e) => {
-      log('DEBUG', `Rate-limit resume Discord notice failed: ${e?.message || e}`);
+      log('DEBUG', `Rate-limit resume Discord notice failed: ${errorMessage(e)}`);
     });
   }
 
@@ -226,11 +300,11 @@ export async function handleSessionRateLimit(config, status = {}, options = {}) 
 }
 
 export async function processSessionRateLimit(config, status = {}, options = {}) {
-  const pauseCount = options.pauseCount ?? 1;
-  const maxPauses = options.maxPauses ?? getRateLimitConfig(config).max_pauses_per_module;
+  const pauseCount = requiredPauseCount(options.pauseCount, 'processSessionRateLimit');
+  const maxPauses = getRateLimitConfig(config).max_pauses_per_module;
   const normalizedStatus = options.normalizeStatus
     ? options.normalizeStatus(status, pauseCount)
-    : { ...(status || {}) };
+    : { ...objectRecord(status) };
 
   if (pauseCount > maxPauses) {
     const exhaustedCtx = { status: normalizedStatus, pauseCount, maxPauses };
@@ -289,7 +363,7 @@ export function createTrackedModuleSessionRateLimitRecoveryOptions(config, modul
   const rateLimitDiscord = createSessionRateLimitDiscordNotifier(config, {
     discordFn,
     pauseFields: (status) => buildSessionRateLimitDiscordFields(status),
-    resumeDescription: (status) => `Resuming module ${status?.module_id || moduleId || moduleDir}`,
+    resumeDescription: (status) => `Resuming module ${requireModuleIdentity(status?.module_id, moduleId)}`,
     resumeFields: (status) => buildSessionRateLimitDiscordFields(status),
   });
 
@@ -301,14 +375,14 @@ export function createTrackedModuleSessionRateLimitRecoveryOptions(config, modul
     ...(pauseState == null ? {} : { pauseState }),
     ...(pauseLogMessage == null ? {} : { pauseLogMessage }),
     ...(resumeLogMessage == null ? {} : { resumeLogMessage }),
-    exhaustedResultOptions: customExhaustedResultOptions ?? createTrackedModuleSessionRateLimitExhaustedResultOptions({
+    exhaustedResultOptions: firstDefined(customExhaustedResultOptions, createTrackedModuleSessionRateLimitExhaustedResultOptions({
       moduleId,
       moduleDir,
       phase,
       identity,
-    }),
+    })),
     normalizeStatus: (result, pauseCount) => {
-      const normalized = buildTrackedModuleSessionRateLimitStatus(config, moduleDir, result?.status || {}, {
+      const normalized = buildTrackedModuleSessionRateLimitStatus(config, moduleDir, objectRecord(result?.status), {
         ...moduleRecoveryOptions,
         identity: resolveRateLimitIdentity(identity, { result, pauseCount }),
       });
@@ -336,17 +410,17 @@ async function syncModuleRateLimitPause(config, moduleDir, status = {}, options 
   const preStatus = loadStatus(config, moduleDir);
   if (!preStatus) return;
 
-  const currentPhase = status.current_phase ?? options.phase ?? preStatus.current_phase ?? null;
-  const moduleId = status.module_id || preStatus.module_id || options.moduleId || moduleDir;
+  const currentPhase = selectDefinedValue(() => (status.current_phase), () => (null));
+  const moduleId = requireModuleIdentity(status.module_id, preStatus.module_id, options.moduleId);
   const rateLimitedEvent = buildModuleStatusTelemetry(preStatus, {
     old_status: preStatus.status,
     new_status: STATUS.RATE_LIMITED,
     phase: currentPhase,
     reason: `Paused ${ctx.cooldownHours}h (rate limit)`,
-    attempt: status.attempt ?? null,
-    dispatch_id: status.dispatch_id ?? null,
-    gateway_label: status.gateway_label ?? null,
-    session_key: status.session_key ?? null,
+    attempt: selectDefinedValue(() => (status.attempt), () => (null)),
+    dispatch_id: selectDefinedValue(() => (status.dispatch_id), () => (null)),
+    gateway_label: selectDefinedValue(() => (status.gateway_label), () => (null)),
+    session_key: selectDefinedValue(() => (status.session_key), () => (null)),
   });
   const pausedTransition = transitionModuleStatus(preStatus, STATUS.RATE_LIMITED, {
     note: `Paused ${ctx.cooldownHours}h (rate limit)`,
@@ -358,19 +432,19 @@ async function syncModuleRateLimitPause(config, moduleDir, status = {}, options 
 
 async function syncModuleRateLimitResume(config, moduleDir, status = {}, options = {}) {
   const freshStatus = loadStatus(config, moduleDir);
-  if (!freshStatus || freshStatus.status !== STATUS.RATE_LIMITED) return;
+  if (selectTruthyValue(() => (!freshStatus), () => (freshStatus.status !== STATUS.RATE_LIMITED))) return;
 
-  const currentPhase = status.current_phase ?? options.phase ?? freshStatus.current_phase ?? null;
+  const currentPhase = selectDefinedValue(() => (status.current_phase), () => (null));
   const resumedStatus = currentPhase === 'forge' ? STATUS.IN_PROGRESS : STATUS.TESTING;
-  const moduleId = status.module_id || freshStatus.module_id || options.moduleId || moduleDir;
+  const moduleId = requireModuleIdentity(status.module_id, freshStatus.module_id, options.moduleId);
   const resumedEvent = buildModuleStatusTelemetry(freshStatus, {
     old_status: freshStatus.status,
     new_status: resumedStatus,
     phase: currentPhase,
-    attempt: status.attempt ?? null,
-    dispatch_id: status.dispatch_id ?? null,
-    gateway_label: status.gateway_label ?? null,
-    session_key: status.session_key ?? null,
+    attempt: selectDefinedValue(() => (status.attempt), () => (null)),
+    dispatch_id: selectDefinedValue(() => (status.dispatch_id), () => (null)),
+    gateway_label: selectDefinedValue(() => (status.gateway_label), () => (null)),
+    session_key: selectDefinedValue(() => (status.session_key), () => (null)),
   });
   const resumedTransition = transitionModuleStatus(freshStatus, resumedStatus, {
     note: 'Resumed after rate limit cooldown',
@@ -385,7 +459,7 @@ export async function resumeDurableCooldownForStep(config, progress, step, {
   cooldownBufferMs = config?.rate_limit?.cooldown_buffer_ms,
   sleepFn = sleep,
 } = {}) {
-  if (!step?.type || !step?.id) return { resumed: false, cooldown: null };
+  if (selectTruthyValue(() => (!step?.type), () => (!step?.id))) return { resumed: false, cooldown: null };
 
   const cooldown = getLifecycleCooldown(config, {
     stepType: step.type,
@@ -393,7 +467,7 @@ export async function resumeDurableCooldownForStep(config, progress, step, {
   });
 
   if (!cooldown?.open) {
-    return { resumed: false, cooldown: cooldown || null };
+    return { resumed: false, cooldown: selectTruthyValue(() => (cooldown), () => (null)) };
   }
 
   const resumeAt = cooldown.resume_at;
@@ -427,10 +501,10 @@ export async function resumeDurableCooldownForStep(config, progress, step, {
     if (moduleDir) {
       await syncModuleRateLimitResume(config, moduleDir, {
         module_id: step.id,
-        current_phase: cooldown.agent_type || null,
+        current_phase: selectTruthyValue(() => (cooldown.agent_type), () => (null)),
       }, {
         moduleId: step.id,
-        phase: cooldown.agent_type || null,
+        phase: selectTruthyValue(() => (cooldown.agent_type), () => (null)),
       });
     }
   }
@@ -438,12 +512,12 @@ export async function resumeDurableCooldownForStep(config, progress, step, {
   appendCooldownLifecycleEvent(config, 'rate_limit.cooldown_completed', {
     moduleId: step.type === 'module' ? step.id : null,
     gateId: step.type === 'gate' ? step.id : null,
-    gateType: cooldown.gate_type || null,
-    attempt: cooldown.attempt ?? null,
-    pauseCount: cooldown.pause_count ?? null,
-    maxPauses: cooldown.max_pauses ?? null,
+    gateType: selectTruthyValue(() => (cooldown.gate_type), () => (null)),
+    attempt: selectDefinedValue(() => (cooldown.attempt), () => (null)),
+    pauseCount: selectDefinedValue(() => (cooldown.pause_count), () => (null)),
+    maxPauses: selectDefinedValue(() => (cooldown.max_pauses), () => (null)),
     resumedAt: new Date().toISOString(),
-    detail: cooldown.detail || 'Resumed after durable cooldown replay',
+    detail: selectPresentValue(cooldown.detail, DURABLE_COOLDOWN_REPLAY_RESUME_DETAIL),
   });
 
   log('OK', `[cooldown-resume] ${step.type} ${step.id} cooldown complete, resuming work`);
@@ -461,9 +535,9 @@ export async function withRateLimitRecovery(config, moduleDir, pollFn, options =
 }
 
 export async function withSessionRateLimitRecovery(config, pollFn, options = {}) {
-  const pauseState = options.pauseState || null;
-  let rateLimitPauses = pauseState?.count ?? 0;
-  const maxPauses = options.maxPauses ?? getRateLimitConfig(config).max_pauses_per_module;
+  const pauseState = selectTruthyValue(() => (options.pauseState), () => (null));
+  let rateLimitPauses = Number.isFinite(Number(pauseState?.count)) ? Math.trunc(Number(pauseState.count)) : 0;
+  const maxPauses = getRateLimitConfig(config).max_pauses_per_module;
 
   while (true) {
     const result = await pollFn();
@@ -473,7 +547,7 @@ export async function withSessionRateLimitRecovery(config, pollFn, options = {})
     if (pauseState) pauseState.count = rateLimitPauses;
     const status = options.normalizeStatus
       ? options.normalizeStatus(result, rateLimitPauses)
-      : { ...(result?.status || {}) };
+      : { ...objectRecord(result?.status) };
 
     if (rateLimitPauses > maxPauses) {
       const exhaustedCtx = { result, status, pauseCount: rateLimitPauses, maxPauses };

@@ -3,9 +3,10 @@ import path from 'path';
 
 import { ensurePipelineRunLogDir } from '../../core/paths.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 export function ensureRunLogDir(config) {
   const runLogDir = config?._lifecycleReadOnly === true
-    ? (config?._lifecycleReadOnlyRunLogDir || null)
+    ? (selectTruthyValue(() => (config?._lifecycleReadOnlyRunLogDir), () => (null)))
     : ensurePipelineRunLogDir(config);
   if (!runLogDir) {
     if (config?._lifecycleReadOnly === true) return null;
@@ -81,30 +82,54 @@ function isProcessAlive(pid) {
 
 function requireNumber(obj, field, label) {
   const value = obj?.[field];
-  if (typeof value !== 'number' || !Number.isFinite(value)) {
+  if (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value)))) {
     throw new Error(`${label}.${field}: required number in swarm.config.json`);
   }
   return value;
 }
 
-export function withLifecycleAppendLock(config, fn, opts = {}) {
+function readLockOwner(lockPath) {
+  try {
+    return JSON.parse(fs.readFileSync(lockPath, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+function removeOwnedLock(lockPath, ownerToken) {
+  const owner = readLockOwner(lockPath);
+  if (owner?.token === ownerToken) {
+    try {
+      fs.unlinkSync(lockPath);
+    } catch (error) {
+      if (error?.code !== 'ENOENT') throw error;
+    }
+  }
+}
+
+export function withLifecycleAppendLock(config, fn) {
   const lockPath = lifecycleAppendLockPath(config);
   if (!lockPath) return fn();
   const lockConfig = config?.locks?.lifecycle_append;
-  const staleMs = opts.staleMs ?? requireNumber(lockConfig, 'stale_ms', 'config.locks.lifecycle_append');
-  const timeoutMs = opts.timeoutMs ?? requireNumber(lockConfig, 'timeout_ms', 'config.locks.lifecycle_append');
+  const staleMs = requireNumber(lockConfig, 'stale_ms', 'config.locks.lifecycle_append');
+  const timeoutMs = requireNumber(lockConfig, 'timeout_ms', 'config.locks.lifecycle_append');
 
   fs.mkdirSync(path.dirname(lockPath), { recursive: true });
   const ownerToken = `${process.pid}:${Date.now()}:${Math.random().toString(36).slice(2)}`;
   const startedAt = Date.now();
+  const ownerJson = JSON.stringify({
+    pid: process.pid,
+    token: ownerToken,
+    acquired_at: new Date().toISOString(),
+  }) + '\n';
   while (true) {
     try {
-      fs.mkdirSync(lockPath);
-      fs.writeFileSync(path.join(lockPath, 'owner.json'), JSON.stringify({
-        pid: process.pid,
-        token: ownerToken,
-        acquired_at: new Date().toISOString(),
-      }) + '\n');
+      const fd = fs.openSync(lockPath, 'wx');
+      try {
+        fs.writeFileSync(fd, ownerJson);
+      } finally {
+        fs.closeSync(fd);
+      }
       break;
     } catch (error) {
       if (error?.code !== 'EEXIST') throw error;
@@ -116,14 +141,9 @@ export function withLifecycleAppendLock(config, fn, opts = {}) {
         throw statError;
       }
       if (ageMs > staleMs) {
-        let owner = null;
-        try {
-          owner = JSON.parse(fs.readFileSync(path.join(lockPath, 'owner.json'), 'utf8'));
-        } catch {
-          owner = null;
-        }
+        const owner = readLockOwner(lockPath);
         if (!isProcessAlive(owner?.pid)) {
-          fs.rmSync(lockPath, { recursive: true, force: true });
+          fs.rmSync(lockPath, { force: true });
           continue;
         }
       }
@@ -137,11 +157,6 @@ export function withLifecycleAppendLock(config, fn, opts = {}) {
   try {
     return fn();
   } finally {
-    try {
-      const owner = JSON.parse(fs.readFileSync(path.join(lockPath, 'owner.json'), 'utf8'));
-      if (owner?.token === ownerToken) {
-        fs.rmSync(lockPath, { recursive: true, force: true });
-      }
-    } catch {}
+    removeOwnedLock(lockPath, ownerToken);
   }
 }

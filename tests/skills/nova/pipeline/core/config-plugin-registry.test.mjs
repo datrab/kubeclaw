@@ -15,6 +15,7 @@ function makeSwarmConfig() {
       buster: { dispatch: 'redis', redis_js_path: '/home/node/pipeline/tools/redis.ts' },
       echo: { dispatch: 'acp', acp_agent_id: 'echo' },
     },
+    projects_root: 'Projects',
     fallback_model: 'model',
     pipeline_defaults: {
       timeout_minutes: 1,

@@ -6,8 +6,10 @@ import test from 'node:test';
 
 import {
   appendLifecycleEvent,
+  applyGateCompletion,
   appendModuleLifecycleEvent,
   appendWaitLifecycleEvent,
+  applyModuleCompletion,
   loadLifecycleReadModels,
   readLifecycleEvents,
 } from '../../../../../skills/nova/pipeline/services/status-store-lifecycle.ts';
@@ -16,7 +18,12 @@ import {
   createDefaultLifecycleReadModels,
   saveLifecycleReadModels,
 } from '../../../../../skills/nova/pipeline/services/status-store-lifecycle/read-models.ts';
-import { appendJsonLine, lifecycleEventsPath } from '../../../../../skills/nova/pipeline/services/status-store-lifecycle/storage.ts';
+import {
+  appendJsonLine,
+  lifecycleAppendLockPath,
+  lifecycleEventsPath,
+  withLifecycleAppendLock,
+} from '../../../../../skills/nova/pipeline/services/status-store-lifecycle/storage.ts';
 
 function makeConfig() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'lifecycle-store-test-'));
@@ -27,6 +34,13 @@ function makeConfig() {
     repo_root: root,
     paths: {
       swarm_dir: swarmDir,
+    },
+    locks: {
+      lifecycle_append: {
+        stale_ms: 30_000,
+        retry_ms: 1,
+        timeout_ms: 1000,
+      },
     },
     _runId: 'run-test',
     run_id: 'run-test',
@@ -83,6 +97,30 @@ test('idempotent lifecycle retry catches read models up from canonical events', 
   assert.equal(readModels.modules.alpha.status, 'IN_PROGRESS');
 });
 
+test('module lifecycle refs include canonical project identity', () => {
+  const config = makeConfig();
+  try {
+    const result = appendModuleLifecycleEvent(config, 'alpha', {
+      module_id: 'alpha',
+      status: 'PENDING',
+      fail_count: 0,
+      title: 'Alpha',
+    }, {
+      eventType: 'module_attempt.started',
+      oldStatus: 'PENDING',
+      newStatus: 'IN_PROGRESS',
+      attempt: 1,
+      now: '2026-06-03T06:00:00.000Z',
+    });
+
+    assert.equal(result.record.refs.project, 'test-project');
+    assert.equal(result.record.refs.run_id, 'run-test');
+    assert.equal(result.record.refs.module_id, 'alpha');
+  } finally {
+    fs.rmSync(config.repo_root, { recursive: true, force: true });
+  }
+});
+
 test('read-only lifecycle read-model save updates cache without requiring a file path', () => {
   const config = makeConfig();
   config._lifecycleReadOnly = true;
@@ -97,6 +135,52 @@ test('read-only lifecycle read-model save updates cache without requiring a file
   assert.equal(saved.gates.review.status, 'PENDING');
   assert.equal(config._lifecycleReadModelsCache.gates.review.status, 'PENDING');
   assert.equal(fs.existsSync(path.join(config.paths.swarm_dir, 'logs')), false);
+});
+
+test('pipeline checkpoints append as canonical lifecycle diagnostics without changing pipeline state', () => {
+  const config = makeConfig();
+  const refs = {
+    primary_ref: { kind: 'pipeline_run', id: 'run:run-test' },
+    run_id: 'run-test',
+    run_ref: 'run:run-test',
+  };
+
+  const first = appendLifecycleEvent(config, {
+    type: 'pipeline.checkpoint',
+    refs,
+    data: { point: 'post-forge', details: { phase: 'forge' } },
+  });
+  const second = appendLifecycleEvent(config, {
+    type: 'pipeline.checkpoint',
+    refs,
+    data: { point: 'post-forge', details: { phase: 'forge' } },
+  });
+
+  const events = readLifecycleEvents(config);
+  const readModels = loadLifecycleReadModels(config);
+
+  assert.equal(first.deduped, false);
+  assert.equal(second.deduped, true);
+  assert.equal(events.length, 1);
+  assert.equal(events[0].type, 'pipeline.checkpoint');
+  assert.equal(events[0].data.point, 'post-forge');
+  assert.equal(readModels.last_event_type, 'pipeline.checkpoint');
+  assert.equal(readModels.pipeline, null);
+});
+
+test('lifecycle append lock is a transient file so artifact walkers never recurse into it', () => {
+  const config = makeConfig();
+  const lockPath = lifecycleAppendLockPath(config);
+
+  const result = withLifecycleAppendLock(config, () => {
+    const stat = fs.lstatSync(lockPath);
+    assert.equal(stat.isFile(), true);
+    assert.equal(stat.isDirectory(), false);
+    return 'locked';
+  });
+
+  assert.equal(result, 'locked');
+  assert.equal(fs.existsSync(lockPath), false);
 });
 
 test('gate wait refs include attempt so approval retries do not dedupe prior waits', () => {
@@ -245,6 +329,126 @@ test('failed module attempts keep the current attempt when fail_count has not ad
   assert.equal(readModels.modules.alpha.fail_count, 2);
 });
 
+test('module completion applies through lifecycle spine without requiring session identity', () => {
+  const config = makeConfig();
+  const dir = 'alpha';
+  const status = {
+    module_id: 'alpha',
+    title: 'Alpha',
+    status: 'TESTING',
+    current_phase: 'buster',
+    fail_count: 0,
+    history: [],
+  };
+  appendModuleLifecycleEvent(config, dir, status, {
+    eventType: 'module_attempt.started',
+    oldStatus: 'PENDING',
+    newStatus: 'IN_PROGRESS',
+    phase: 'forge',
+    attempt: 1,
+    now: '2026-06-03T06:00:00.000Z',
+  });
+  appendModuleLifecycleEvent(config, dir, status, {
+    eventType: 'module_attempt.testing_started',
+    oldStatus: 'READY_FOR_TESTING',
+    newStatus: 'TESTING',
+    phase: 'buster',
+    attempt: 1,
+    now: '2026-06-03T06:01:00.000Z',
+  });
+
+  const result = applyModuleCompletion(config, dir, status, {
+    target_kind: 'module',
+    target_id: 'alpha',
+    phase: 'buster',
+    attempt: 1,
+    status: 'PASS',
+    authority: {
+      kind: 'redis',
+      dispatch_id: 'dispatch-1',
+      key: 'run-test:1:dispatch-1',
+    },
+    summary: 'Buster PASS from completion evidence',
+  });
+
+  const events = readLifecycleEvents(config);
+  const readModels = loadLifecycleReadModels(config);
+
+  assert.equal(result.status.status, 'PASS');
+  assert.equal(events.length, 3);
+  assert.equal(events[2].type, 'module_attempt.passed');
+  assert.equal(events[2].data.completion.status, 'PASS');
+  assert.equal(events[2].data.completion.authority.kind, 'redis');
+  assert.equal(events[2].refs.session_key, null);
+  assert.equal(readModels.modules.alpha.status, 'PASS');
+  assert.equal(readModels.modules.alpha.current_phase, null);
+});
+
+test('gate completion applies through lifecycle spine with idempotent retry', () => {
+  const config = makeConfig();
+  const gate = { type: 'approval', title: 'Architecture approval' };
+  const completion = {
+    target_kind: 'gate',
+    target_id: 'architecture-approval',
+    phase: 'approval',
+    attempt: 1,
+    status: 'PASS',
+    authority: {
+      kind: 'approval',
+      approval_id: 'approval-1',
+    },
+    summary: 'Architecture findings approved',
+    metadata: {
+      gate_type: 'approval',
+      outcome_class: 'passed',
+    },
+  };
+
+  const first = applyGateCompletion(config, 'architecture-approval', gate, completion);
+  const second = applyGateCompletion(config, 'architecture-approval', gate, completion);
+  const events = readLifecycleEvents(config);
+  const readModels = loadLifecycleReadModels(config);
+
+  assert.equal(first.deduped, false);
+  assert.equal(second.deduped, true);
+  assert.equal(events.length, 1);
+  assert.equal(events[0].type, 'gate_evaluation.passed');
+  assert.equal(events[0].refs.gate_evaluation_ref, 'gate_evaluation:run-test:architecture-approval:1');
+  assert.equal(events[0].data.completion.authority.kind, 'approval');
+  assert.equal(readModels.gates['architecture-approval'].status, 'PASS');
+  assert.equal(readModels.gates['architecture-approval'].completed, true);
+  assert.equal(readModels.gates['architecture-approval'].completion_source, 'lifecycle_completion');
+});
+
+test('failed gate completion is terminal in lifecycle read model', () => {
+  const config = makeConfig();
+  const gate = { type: 'buster', title: 'Final Buster' };
+
+  applyGateCompletion(config, 'final-buster', gate, {
+    target_kind: 'gate',
+    target_id: 'final-buster',
+    phase: 'buster',
+    attempt: 1,
+    status: 'FAIL',
+    authority: { kind: 'artifact', path: '.swarm/buster-test/FINAL-BUSTER-RESULT.json' },
+    reason_code: 'verdict_fail',
+    summary: 'tailscale-preview failed',
+    metadata: {
+      gate_type: 'buster',
+      outcome_class: 'needs_nova',
+    },
+  });
+
+  const events = readLifecycleEvents(config);
+  const readModels = loadLifecycleReadModels(config);
+
+  assert.equal(events[0].type, 'gate_evaluation.failed');
+  assert.equal(readModels.gates['final-buster'].status, 'FAIL');
+  assert.equal(readModels.gates['final-buster'].completed, true);
+  assert.equal(readModels.gates['final-buster'].scheduler_consumed, true);
+  assert.equal(readModels.gates['final-buster'].completed_at, events[0].occurred_at);
+});
+
 test('failed module attempts honor an advanced fail_count for direct terminal updates', () => {
   const config = makeConfig();
   const dir = 'alpha';
@@ -301,4 +505,57 @@ test('failed module attempts honor an advanced fail_count for direct terminal up
   assert.equal(failedEvents[1].refs.attempt, 3);
   assert.equal(readModels.modules.alpha.current_attempt, 3);
   assert.equal(readModels.modules.alpha.fail_count, 3);
+});
+
+test('blocked module attempts project blocked phase and summary from canonical events', () => {
+  const config = makeConfig();
+  const dir = 'alpha';
+  const status = {
+    module_id: 'alpha',
+    title: 'Alpha',
+    status: 'BLOCKED',
+    current_phase: null,
+    fail_count: 1,
+    blockedPhase: 'delivery_lint',
+    blockedReason: '[delivery_lint] SERVE_DOCKERFILE_MISSING at REAL_E2E_MISSING_DOCKERFILE',
+    blockedFailCount: 1,
+    validation: {
+      delivery_lint_passed: false,
+      delivery_lint_passed_at: null,
+      pre_check_passed: false,
+      pre_check_passed_at: null,
+    },
+  };
+
+  appendModuleLifecycleEvent(config, dir, {
+    module_id: 'alpha',
+    title: 'Alpha',
+    status: 'IN_PROGRESS',
+    current_phase: 'forge',
+    fail_count: 0,
+  }, {
+    eventType: 'module_attempt.started',
+    oldStatus: 'PENDING',
+    newStatus: 'IN_PROGRESS',
+    now: '2026-06-03T06:00:00.000Z',
+  });
+  appendModuleLifecycleEvent(config, dir, status, {
+    eventType: 'module_attempt.blocked',
+    oldStatus: 'READY_FOR_TESTING',
+    newStatus: 'BLOCKED',
+    blockedReason: status.blockedReason,
+    blockedPhase: status.blockedPhase,
+    blockedFailCount: status.blockedFailCount,
+    now: '2026-06-03T06:04:00.000Z',
+  });
+
+  const readModels = loadLifecycleReadModels(config);
+  const moduleState = readModels.modules.alpha;
+
+  assert.equal(moduleState.status, 'BLOCKED');
+  assert.equal(moduleState.blocked_phase, 'delivery_lint');
+  assert.equal(moduleState.blocked_reason, status.blockedReason);
+  assert.equal(moduleState.validation.delivery_lint_passed, false);
+  assert.equal(moduleState.fail_summaries.at(-1).phase, 'delivery_lint');
+  assert.match(moduleState.fail_summaries.at(-1).summary, /REAL_E2E_MISSING_DOCKERFILE/);
 });

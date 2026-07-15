@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // pipeline/services/orphan-recovery.ts — Buster startup active-session evidence check
 // Persisted active-session files are read-only diagnostics. Startup must not
 // hydrate local state or kill sessions from file evidence without lifecycle
@@ -11,7 +12,7 @@ import {
 } from './runtime-diagnostics.ts';
 
 function inspectPersistedBusterActiveSession(activeStatePath) {
-  if (!activeStatePath || !fs.existsSync(activeStatePath)) return { exists: false, ok: true };
+  if (selectTruthyValue(() => (!activeStatePath), () => (!fs.existsSync(activeStatePath)))) return { exists: false, ok: true };
   try {
     const data = JSON.parse(fs.readFileSync(activeStatePath, 'utf8'));
     if (!data?.childSessionKey) {
@@ -24,15 +25,15 @@ function inspectPersistedBusterActiveSession(activeStatePath) {
 }
 
 export async function recoverOrphanedActiveSession(options = {}) {
-  const activeStatePath = options.activeStatePath || resolveBusterActiveSessionPath(options.cwd || getRepoRoot());
+  const activeStatePath = activeSessionPathAuthority(options);
   const inspected = inspectPersistedBusterActiveSession(activeStatePath);
   if (!inspected.exists) return { ok: true, found: false, recovered: false, reason: 'no_active_session' };
 
   const diagnostic = reportBusterRuntimeDiagnostic({
     component: 'buster_recovery',
     surface: 'startup',
-    reason: inspected.ok ? 'active_session_file_diagnostic_only' : inspected.reason || 'invalid_active_session_file',
-    detail: inspected.error || inspected.data || `Persisted active-session evidence at ${activeStatePath} is not lifecycle authority`,
+    reason: inspected.ok ? 'active_session_file_diagnostic_only' : selectDefinedValue(() => (inspected.reason), () => ('invalid_active_session_file')),
+    detail: selectDefinedValue(() => (selectDefinedValue(() => (inspected.error), () => (inspected.data))), () => (`Persisted active-session evidence at ${activeStatePath} is not lifecycle authority`)),
   });
 
   return {
@@ -53,4 +54,10 @@ export async function recoverOrphanedActiveSession(options = {}) {
       fenced: true,
     },
   };
+}
+
+function activeSessionPathAuthority(options) {
+  if (typeof options.activeStatePath === 'string' && options.activeStatePath.trim()) return options.activeStatePath;
+  const cwd = typeof options.cwd === 'string' && options.cwd.trim() ? options.cwd : getRepoRoot();
+  return resolveBusterActiveSessionPath(cwd);
 }

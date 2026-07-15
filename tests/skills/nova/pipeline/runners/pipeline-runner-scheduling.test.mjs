@@ -4,7 +4,11 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { findNextStep } from '../../../../../skills/nova/pipeline/runners/pipeline-runner-scheduling.ts';
+import {
+  findNextStep,
+  markScheduledValidatorComplete,
+} from '../../../../../skills/nova/pipeline/runners/pipeline-runner-scheduling.ts';
+import { appendModuleLifecycleEvent } from '../../../../../skills/nova/pipeline/services/status-store.ts';
 
 function config() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-scheduling-'));
@@ -14,7 +18,38 @@ function config() {
     paths: {
       swarm_dir: path.join(root, '.swarm'),
     },
+    locks: {
+      lifecycle_append: {
+        stale_ms: 30_000,
+        timeout_ms: 1000,
+      },
+    },
   };
+}
+
+function markModulePass(cfg, moduleId) {
+  appendModuleLifecycleEvent(cfg, moduleId, {
+    module_id: moduleId,
+    status: 'IN_PROGRESS',
+    current_phase: 'forge',
+    fail_count: 0,
+  }, {
+    eventType: 'module_attempt.started',
+    oldStatus: 'PENDING',
+    newStatus: 'IN_PROGRESS',
+    now: '2026-07-10T00:00:00.000Z',
+  });
+  appendModuleLifecycleEvent(cfg, moduleId, {
+    module_id: moduleId,
+    status: 'PASS',
+    current_phase: 'complete',
+    fail_count: 0,
+  }, {
+    eventType: 'module_attempt.passed',
+    oldStatus: 'READY_FOR_TESTING',
+    newStatus: 'PASS',
+    now: '2026-07-10T00:00:00.000Z',
+  });
 }
 
 function progress({ dependent = false } = {}) {
@@ -31,39 +66,70 @@ function progress({ dependent = false } = {}) {
 }
 
 test('scheduler batches adjacent independent ready modules', () => {
-  const next = findNextStep(config(), progress(), {
-    checkDependencies() {
-      return { met: true };
-    },
-  });
+  const next = findNextStep(config(), progress());
 
   assert.deepEqual(next, { type: 'module_batch', ids: ['01-nginx', '02-nginx'] });
 });
 
 test('scheduler does not batch a module that depends on an earlier pending module', () => {
-  const next = findNextStep(config(), progress({ dependent: true }), {
-    checkDependencies(_config, _progress, moduleId) {
-      return moduleId === '02-nginx'
-        ? { met: false, reason: 'Module 01-nginx is NOT_STARTED' }
-        : { met: true };
-    },
-  });
+  const next = findNextStep(config(), progress({ dependent: true }));
 
   assert.deepEqual(next, { type: 'module', id: '01-nginx' });
 });
 
 test('scheduler keeps module batches contiguous when a later module is ready', () => {
   const prog = progress();
+  prog.modules['02-nginx'].depends_on = ['missing-module'];
   prog.modules['03-nginx'] = { title: 'C', dir: '03-nginx', depends_on: [] };
   prog.execution_order = ['01-nginx', '02-nginx', '03-nginx', 'gate:final-buster'];
 
-  const next = findNextStep(config(), prog, {
-    checkDependencies(_config, _progress, moduleId) {
-      return moduleId === '02-nginx'
-        ? { met: false, reason: 'module 02 deliberately not ready' }
-        : { met: true };
-    },
-  });
+  const next = findNextStep(config(), prog);
 
   assert.deepEqual(next, { type: 'module', id: '01-nginx' });
+});
+
+test('scheduler selects seed DAG as foundation, parallel branches, then assembly', () => {
+  const cfg = config();
+  const prog = {
+    modules: {
+      '01-nginx': { title: 'Foundation', dir: '01-nginx', depends_on: [] },
+      '02-nginx': { title: 'Content branch', dir: '02-nginx', depends_on: ['01-nginx'] },
+      '03-nginx': { title: 'Assets branch', dir: '03-nginx', depends_on: ['01-nginx'] },
+      '04-nginx': { title: 'Release assembly', dir: '04-nginx', depends_on: ['01-nginx', '02-nginx', '03-nginx'] },
+    },
+    gates: {
+      'final-buster': { type: 'buster', title: 'Final Buster' },
+    },
+    execution_order: ['01-nginx', '02-nginx', '03-nginx', '04-nginx', 'gate:final-buster'],
+  };
+
+  assert.deepEqual(findNextStep(cfg, prog), { type: 'module', id: '01-nginx' });
+
+  markModulePass(cfg, '01-nginx');
+  assert.deepEqual(findNextStep(cfg, prog), { type: 'module_batch', ids: ['02-nginx', '03-nginx'] });
+
+  markModulePass(cfg, '02-nginx');
+  markModulePass(cfg, '03-nginx');
+  assert.deepEqual(findNextStep(cfg, prog), { type: 'module', id: '04-nginx' });
+});
+
+test('scheduler batches ready modules after completed inline validators', () => {
+  const cfg = config();
+  const prog = {
+    modules: {
+      '01-nginx': { title: 'Foundation', dir: '01-nginx', depends_on: [] },
+      '02-nginx': { title: 'Content branch', dir: '02-nginx', depends_on: ['01-nginx'] },
+      '03-nginx': { title: 'Assets branch', dir: '03-nginx', depends_on: ['01-nginx'] },
+      '04-nginx': { title: 'Release assembly', dir: '04-nginx', depends_on: ['01-nginx', '02-nginx', '03-nginx'] },
+    },
+    gates: {
+      'final-buster': { type: 'buster', title: 'Final Buster' },
+    },
+    execution_order: ['01-nginx', 'validator:architecture', '02-nginx', '03-nginx', '04-nginx', 'gate:final-buster'],
+  };
+
+  markModulePass(cfg, '01-nginx');
+  markScheduledValidatorComplete(cfg, 'execution_order:validator:architecture');
+
+  assert.deepEqual(findNextStep(cfg, prog), { type: 'module_batch', ids: ['02-nginx', '03-nginx'] });
 });

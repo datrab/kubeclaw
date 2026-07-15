@@ -5,216 +5,210 @@ import os from 'node:os';
 import path from 'node:path';
 
 import {
-  collectFailureMatrixFindings,
+  captureCheckpoint,
+  checkpointDefinition,
+  defaultCheckpointRoot,
+} from './checkpoints.mjs';
+import {
+  failureMatrixExecutionBoundary,
+  listFailureMatrixSuiteIds,
+  listFailureMatrixSuiteScenarioIds,
+  resolveFailureMatrixSuite,
+} from './failure-scenarios.mjs';
+import {
+  buildMatrixSuiteDiscordPresentation,
+  createMatrixSuiteNotifier,
+  formatMatrixSuiteCliLine,
+  formatMatrixSummaryCliLine,
+  hasMatrixDiscordReceipt,
+  matrixSummaryRecord,
   runFailureMatrix,
   runScenario,
-  summarizeScenario,
+  timeoutMsForScenario,
   writeFailureMatrixReport,
 } from './run-real-pipeline-failure-matrix.mjs';
 
-test('failure matrix continue-on-failure completes mixed pass and fail children', async () => {
-  const calls = [];
-  const started = [];
-  const completed = [];
-  const reportCalls = [];
-  const capabilityProbe = {
-    ok: true,
-    checks: [
-      {
-        name: 'Discord production delivery receipt',
-        code: 'discord_delivery',
-        ok: true,
-        duration_ms: 42,
-        configured_target: 'real-channel',
-        run_id: 'real-e2e-discord-capability-1',
-        message_id: 'message-1',
-        channel_id: 'channel-1',
+function write(filePath, value = '{}\n') {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, value);
+}
+
+function createCheckpointBundle({ checkpoint = 'pre-module-buster', seedId = 'seed-1' } = {}) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-matrix-checkpoint-'));
+  const artifactRoot = path.join(root, 'artifact');
+  const projectName = 'seed-project';
+  const swarmDir = path.join(artifactRoot, 'worktree', 'Projects', projectName, 'src', '.swarm');
+  write(path.join(swarmDir, 'progress.json'), JSON.stringify({
+    project: projectName,
+    real_e2e: { scenario_id: 'success' },
+  }, null, 2));
+  write(path.join(swarmDir, 'logs', 'pipeline', 'runs', 'seed-run-1', 'lifecycle', 'canonical-events.jsonl'), [
+    JSON.stringify({ type: 'pipeline_run.started', refs: { run_id: 'seed-run-1' }, data: { project: projectName } }),
+    '',
+  ].join('\n'));
+  write(path.join(swarmDir, 'logs', 'pipeline', 'runs', 'seed-run-1', 'lifecycle', 'read-models.json'), JSON.stringify({
+    schema_version: 'pipeline_lifecycle_read_models.v1',
+    pipeline: { run_id: 'seed-run-1', status: 'running' },
+    modules: {
+      '01-nginx': {
+        module_id: '01-nginx',
+        status: checkpoint === 'during-module-buster-wait' ? 'TESTING' : 'READY_FOR_TESTING',
       },
-    ],
-    failures: [],
-  };
+    },
+  }, null, 2));
+  for (const relativePath of checkpointDefinition(checkpoint).required_swarm_paths) {
+    if (relativePath === 'progress.json') continue;
+    write(path.join(swarmDir, relativePath));
+  }
+  const checkpointRoot = defaultCheckpointRoot(root);
+  const captured = captureCheckpoint({
+    checkpointRoot,
+    checkpoint,
+    seedId,
+    workspace: {
+      runId: 'seed-run-1',
+      projectName,
+      artifactRoot,
+      worktreePath: path.join(artifactRoot, 'worktree'),
+      swarmDir,
+    },
+  });
+  return { checkpointRoot, captured, seedId };
+}
+
+test('failure matrix exposes eight canonical suites covering every case once', () => {
+  assert.deepEqual(listFailureMatrixSuiteIds(), [
+    'full-pipeline-smoke',
+    'module-failure-retry',
+    'human-gates',
+    'final-deployment-buster',
+    'git-authority',
+    'infrastructure-observability',
+    'module-graph',
+    'crash-resume',
+  ]);
+  assert.equal(listFailureMatrixSuiteScenarioIds().length, 46);
+  const ownership = new Map();
+  for (const suiteId of listFailureMatrixSuiteIds()) {
+    for (const scenario of resolveFailureMatrixSuite(suiteId).scenarios) {
+      ownership.set(scenario, (ownership.get(scenario) || 0) + 1);
+    }
+  }
+  assert.equal([...ownership.values()].every((count) => count === 1), true);
+});
+
+test('failure matrix suite cases declare canonical execution boundaries', () => {
+  assert.equal(failureMatrixExecutionBoundary({
+    suite: 'module-failure-retry',
+    scenario: 'forge-retry-then-success',
+  }), 'modules');
+  assert.equal(failureMatrixExecutionBoundary({
+    suite: 'module-failure-retry',
+    scenario: 'retry-buster-pass-echo-rejects',
+  }), 'module-review');
+  assert.equal(failureMatrixExecutionBoundary({
+    suite: 'full-pipeline-smoke',
+    scenario: 'success',
+  }), 'full');
+});
+
+test('failure matrix runs selected suites and rolls case failures into suite failures', async () => {
+  const calls = [];
+  const caseEvents = [];
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-suite-rollup-'));
   const args = {
     mode: 'full',
-    scenarios: ['approval-deny', 'buster-module-failure', 'redis-unavailable'],
+    suites: ['human-gates', 'infrastructure-observability'],
     keepArtifacts: false,
     continueOnFailure: true,
-    reportPath: '/tmp/real-e2e-review.md',
+    reportPath: path.join(root, 'review.md'),
+    checkpointMode: 'full',
   };
 
   const matrix = await runFailureMatrix(args, {
-    runScenarioImpl: async ({ mode, scenario, keepArtifacts, discordDeliveryResult }) => {
-      calls.push({ mode, scenario, keepArtifacts, discordDeliveryResult });
+    runCapabilityProbeImpl: async () => ({ ok: true, checks: [], failures: [] }),
+    runScenarioImpl: async ({ scenario }) => {
+      calls.push(scenario);
+      const ok = scenario !== 'redis-unavailable';
       return {
         scenario,
-        ok: scenario === 'buster-module-failure',
-        exit: { code: scenario === 'buster-module-failure' ? 0 : 1, signal: null },
-        result_path: `/tmp/${scenario}.json`,
-        result: { ok: scenario === 'buster-module-failure', capability_probe: capabilityProbe },
+        ok,
+        exit: { code: ok ? 0 : 1, signal: null },
+        result_path: path.join(root, `${scenario}.json`),
+        result: {
+          ok,
+          assertions: ok ? {} : {
+            failure_evidence: {
+              failures: [{ reason: 'REAL_E2E_REDIS_FAILURE_MISSING' }],
+            },
+          },
+        },
         result_read_failure: null,
       };
     },
-    runCapabilityProbeImpl: async () => capabilityProbe,
-    writeReportImpl: (payload) => {
-      reportCalls.push(payload);
-      return args.reportPath;
-    },
-    onScenarioStarted: (event) => started.push(event),
-    onScenarioCompleted: (event) => completed.push(event),
+    onScenarioStarted: async (event) => caseEvents.push(event),
+    onScenarioCompleted: async (event) => caseEvents.push(event),
   });
 
-  assert.deepEqual(calls.map((call) => call.scenario), args.scenarios);
-  assert.deepEqual(calls[0].discordDeliveryResult, {
-    ok: true,
-    configured_target: 'real-channel',
-    run_id: 'real-e2e-discord-capability-1',
-    message_id: 'message-1',
-    channel_id: 'channel-1',
-  });
-  assert.deepEqual(calls[1].discordDeliveryResult, {
-    ok: true,
-    configured_target: 'real-channel',
-    run_id: 'real-e2e-discord-capability-1',
-    message_id: 'message-1',
-    channel_id: 'channel-1',
-  });
-  assert.deepEqual(calls[2].discordDeliveryResult, calls[1].discordDeliveryResult);
-  assert.deepEqual(started.map((event) => event.scenario), args.scenarios);
-  assert.deepEqual(completed.map((event) => event.scenario), args.scenarios);
+  assert.deepEqual(calls, [
+    ...resolveFailureMatrixSuite('human-gates').scenarios,
+    ...resolveFailureMatrixSuite('infrastructure-observability').scenarios,
+  ]);
   assert.equal(matrix.ok, false);
-  assert.equal(matrix.completed_count, 3);
-  assert.equal(matrix.skipped_count, 0);
-  assert.deepEqual(matrix.failures.map((failure) => failure.scenario), ['approval-deny', 'redis-unavailable']);
-  assert.equal(matrix.report_path, args.reportPath);
-  assert.equal(reportCalls.length, 1);
-  assert.deepEqual(reportCalls[0].failures.map((failure) => failure.scenario), ['approval-deny', 'redis-unavailable']);
+  assert.equal(matrix.completed_count, 2);
+  assert.deepEqual(matrix.failures.map((failure) => failure.suite), ['infrastructure-observability']);
+  assert.equal(matrix.failures[0].failed_case, 'redis-unavailable');
+  assert.equal(matrix.failures[0].cases.length, 5);
+  assert.equal(caseEvents.some((event) => event.phase === 'failure-suite-case-started' && event.scenario === 'redis-unavailable'), true);
+  assert.equal(caseEvents.some((event) => event.phase === 'failure-suite-case-completed' && event.scenario === 'redis-unavailable' && event.status === 'failed'), true);
 });
 
-test('failure matrix scenario timeout writes structured harness failure result', async () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-matrix-timeout-'));
-  const runnerPath = path.join(root, 'never-exits.mjs');
-  fs.writeFileSync(runnerPath, `
-    import fs from 'node:fs';
-    import path from 'node:path';
-    const resultPath = process.argv[process.argv.indexOf('--result-path') + 1];
-    fs.mkdirSync(path.dirname(resultPath), { recursive: true });
-    fs.writeFileSync(resultPath, JSON.stringify({
-      schema_version: 'real_pipeline_e2e_result.v1',
-      ok: false,
-      scenario: { id: 'approval-deny' },
-      errors: []
-    }, null, 2) + '\\n');
-    setInterval(() => process.stdout.write('still running\\n'), 1000);
-  `);
-
-  const result = await runScenario({
+test('failure matrix records aborted case and continues through requested suite cases', async () => {
+  const calls = [];
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-suite-aborted-'));
+  const args = {
     mode: 'full',
-    scenario: 'approval-deny',
+    suites: ['module-failure-retry'],
     keepArtifacts: false,
-    scenarioTimeoutMs: 25,
-    runnerPath,
+    continueOnFailure: true,
+    reportPath: path.join(root, 'review.md'),
+    checkpointMode: 'full',
+  };
+
+  const matrix = await runFailureMatrix(args, {
+    runCapabilityProbeImpl: async () => ({ ok: true, checks: [], failures: [] }),
+    runScenarioImpl: async ({ scenario }) => {
+      calls.push(scenario);
+      if (scenario === 'retry-fix-malformed-output') throw new Error('synthetic case abort');
+      return {
+        scenario,
+        ok: true,
+        exit: { code: 0, signal: null },
+        result_path: path.join(root, `${scenario}.json`),
+        result: { ok: true },
+        result_read_failure: null,
+      };
+    },
   });
 
-  assert.equal(result.ok, false);
-  assert.equal(result.timed_out, true);
-  assert.equal(result.result_read_failure, null);
-  assert.equal(result.result.errors.at(-1).reason, 'REAL_E2E_SCENARIO_TIMEOUT');
-  assert.equal(result.result.errors.at(-1).timeout_ms, 25);
-  assert.equal(result.result.diagnostics.matrix_child.label, 'failure-matrix:approval-deny');
-  assert.equal(fs.existsSync(result.result_path), true);
-  const written = JSON.parse(fs.readFileSync(result.result_path, 'utf8'));
-  assert.equal(written.errors.at(-1).reason, 'REAL_E2E_SCENARIO_TIMEOUT');
+  const suiteCases = resolveFailureMatrixSuite('module-failure-retry').scenarios;
+  assert.deepEqual(calls, suiteCases);
+  assert.equal(matrix.ok, false);
+  assert.equal(matrix.failures[0].failed_case, 'retry-fix-malformed-output');
+  const record = JSON.parse(fs.readFileSync(matrix.failures[0].result_path, 'utf8'));
+  assert.equal(record.completed_case_count, suiteCases.length);
+  assert.equal(record.not_run_case_count, 0);
+  assert.equal(record.cases.find((entry) => entry.scenario === 'retry-fix-malformed-output').status, 'aborted');
 });
 
-test('failure matrix scenario timeout terminates child process group', async () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-matrix-process-group-'));
-  const markerPath = path.join(root, 'orphan-marker.txt');
-  const grandchildPath = path.join(root, 'grandchild.mjs');
-  const runnerPath = path.join(root, 'runner.mjs');
-  fs.writeFileSync(grandchildPath, `
-    import fs from 'node:fs';
-    setTimeout(() => {
-      fs.writeFileSync(${JSON.stringify(markerPath)}, 'orphan still running\\n');
-    }, 500);
-    setInterval(() => {}, 1000);
-  `);
-  fs.writeFileSync(runnerPath, `
-    import fs from 'node:fs';
-    import path from 'node:path';
-    import { spawn } from 'node:child_process';
-    const resultPath = process.argv[process.argv.indexOf('--result-path') + 1];
-    fs.mkdirSync(path.dirname(resultPath), { recursive: true });
-    fs.writeFileSync(resultPath, JSON.stringify({
-      schema_version: 'real_pipeline_e2e_result.v1',
-      ok: false,
-      scenario: { id: 'approval-deny' },
-      errors: []
-    }, null, 2) + '\\n');
-    spawn(process.execPath, [${JSON.stringify(grandchildPath)}], { stdio: 'ignore' }).unref();
-    setInterval(() => process.stdout.write('parent still running\\n'), 1000);
-  `);
-
-  const result = await runScenario({
-    mode: 'full',
-    scenario: 'approval-deny',
-    keepArtifacts: false,
-    scenarioTimeoutMs: 25,
-    runnerPath,
-  });
-  await new Promise((resolve) => setTimeout(resolve, 900));
-
-  assert.equal(result.timed_out, true);
-  assert.equal(fs.existsSync(markerPath), false);
-});
-
-test('failure matrix mutes webhooks for expected non-Discord failures only', async () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-matrix-webhook-mute-'));
-  const runnerPath = path.join(root, 'env-recorder.mjs');
-  fs.writeFileSync(runnerPath, `
-    import fs from 'node:fs';
-    import path from 'node:path';
-    const resultPath = process.argv[process.argv.indexOf('--result-path') + 1];
-    fs.mkdirSync(path.dirname(resultPath), { recursive: true });
-    fs.writeFileSync(resultPath, JSON.stringify({
-      schema_version: 'real_pipeline_e2e_result.v1',
-      ok: true,
-      scenario: { id: process.env.REAL_E2E_SCENARIO },
-      env: { KUBECLAW_DISABLE_DISCORD_WEBHOOKS: process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS || null },
-      errors: []
-    }, null, 2) + '\\n');
-  `);
-
-  const approval = await runScenario({
-    mode: 'full',
-    scenario: 'approval-deny',
-    keepArtifacts: false,
-    runnerPath,
-  });
-  const discord = await runScenario({
-    mode: 'full',
-    scenario: 'discord-unavailable',
-    keepArtifacts: false,
-    runnerPath,
-  });
-  const success = await runScenario({
-    mode: 'full',
-    scenario: 'approval-commentary',
-    keepArtifacts: false,
-    runnerPath,
-  });
-
-  assert.equal(approval.result.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS, '1');
-  assert.equal(discord.result.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS, null);
-  assert.equal(success.result.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS, null);
-});
-
-test('failure matrix fail-fast skips remaining children without continue-on-failure', async () => {
+test('failure matrix fail-fast stops at the first failed suite', async () => {
   const calls = [];
   const args = {
     mode: 'full',
-    scenarios: ['approval-deny', 'buster-module-failure', 'redis-unavailable'],
+    suites: ['infrastructure-observability', 'human-gates'],
     keepArtifacts: false,
     continueOnFailure: false,
-    reportPath: null,
+    checkpointMode: 'full',
   };
 
   const matrix = await runFailureMatrix(args, {
@@ -226,245 +220,321 @@ test('failure matrix fail-fast skips remaining children without continue-on-fail
         ok: false,
         exit: { code: 1, signal: null },
         result_path: `/tmp/${scenario}.json`,
-        result: { ok: false },
+        result: { ok: false, errors: [{ reason: 'expected' }] },
         result_read_failure: null,
       };
     },
-    writeReportImpl: () => {
-      throw new Error('report should not be written without --continue-on-failure or --report-path');
-    },
   });
 
-  assert.deepEqual(calls, ['approval-deny']);
-  assert.equal(matrix.ok, false);
+  assert.deepEqual(calls, ['redis-unavailable']);
   assert.equal(matrix.completed_count, 1);
-  assert.equal(matrix.skipped_count, 2);
-  assert.equal(matrix.report_path, null);
+  assert.equal(matrix.skipped_count, 1);
+  assert.deepEqual(matrix.failures.map((failure) => failure.suite), ['infrastructure-observability']);
 });
 
-test('failure matrix writes one synthetic result per scenario when matrix capabilities fail', async () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-matrix-capabilities-'));
+test('failure matrix seed mode runs the canonical checkpoint seed child only', async () => {
+  const calls = [];
   const args = {
     mode: 'full',
-    scenarios: ['approval-deny', 'buster-module-failure', 'redis-unavailable'],
+    suites: ['module-failure-retry'],
     keepArtifacts: false,
     continueOnFailure: true,
-    reportPath: path.join(root, 'review.md'),
+    reportPath: null,
+    checkpointMode: 'seed',
+    checkpointRoot: fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-seed-only-checkpoints-')),
+    checkpointSeedId: 'seed-only',
   };
-  const capabilityProbe = {
-    ok: false,
-    checks: [{ code: 'tailscale_operator', ok: false }],
-    failures: [{ reason: 'INFRA_MISSING_TAILSCALE_OPERATOR', code: 'tailscale_operator', deployment: 'operator' }],
-  };
-  const scenarioCalls = [];
 
   const matrix = await runFailureMatrix(args, {
-    runCapabilityProbeImpl: async () => capabilityProbe,
-    runScenarioImpl: async ({ scenario }) => {
-      scenarioCalls.push(scenario);
-      throw new Error('child scenarios must not run when matrix capabilities fail');
+    runCapabilityProbeImpl: async () => ({ ok: true, checks: [], failures: [] }),
+    runScenarioImpl: async ({ scenario, keepArtifacts, checkpoint }) => {
+      calls.push({ scenario, keepArtifacts, checkpoint });
+      return {
+        scenario,
+        ok: true,
+        exit: { code: 0, signal: null },
+        result_path: `/tmp/${scenario}.json`,
+        result: { ok: true },
+        result_read_failure: null,
+        checkpoint,
+      };
     },
   });
 
-  assert.deepEqual(scenarioCalls, []);
-  assert.equal(matrix.ok, false);
-  assert.equal(matrix.completed_count, 3);
-  assert.equal(matrix.skipped_count, 0);
-  assert.deepEqual(matrix.failures.map((failure) => failure.scenario), args.scenarios);
-  for (const result of matrix.results) {
-    assert.equal(result.result.capability_probe, capabilityProbe);
-    assert.equal(result.result.phases[0].reused_from_matrix, true);
-    assert.equal(fs.existsSync(result.result_path), true);
-  }
-  const report = fs.readFileSync(args.reportPath, 'utf8');
-  assert.match(report, /#### 3 scenarios: INFRA_MISSING_TAILSCALE_OPERATOR/);
-  assert.match(report, /`approval-deny`, `buster-module-failure`, `redis-unavailable`/);
+  assert.deepEqual(calls.map((call) => call.scenario), ['success']);
+  assert.equal(calls[0].keepArtifacts, true);
+  assert.equal(calls[0].checkpoint.mode, 'seed');
+  assert.equal(matrix.ok, true);
+  assert.equal(matrix.completed_count, 1);
+  assert.equal(matrix.checkpoint_summary.checkpoint_seed_count, 1);
 });
 
-test('failure matrix report groups multiple scenario failures from structured results', () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-matrix-report-'));
-  const reportPath = path.join(root, 'review.md');
-  const contractCleanupFailure = {
-    scenario: 'buster-module-failure',
-    ok: false,
-    exit: { code: 1, signal: null },
-    result_path: path.join(root, 'buster-module-failure.json'),
-    result: {
-      schema_version: 'real_pipeline_e2e_result.v1',
-      ok: false,
-      pipeline: {
-        phase: 'pipeline-run',
-      },
-      assertions: {
-        failure_output_diagnostic: {
-          diagnostic_only: true,
-          matched: false,
-          reason: 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_BUSTER_MODULE_FAILURE',
-        },
-        failure_evidence: {
-          failures: [
-            { code: 'buster_module_failure', reason: 'REAL_E2E_BUSTER_FAILURE_ARTIFACT_NOT_FAIL' },
-          ],
-        },
-      },
-      workspace: {
-        artifact_root: '/tmp/real-e2e-artifacts',
-      },
-      artifact_paths: {
-        project_src: '/tmp/real-e2e-project/src',
-      },
-      diagnostics: {
-        pipeline: {
-          stdout: {
-            tail: 'bounded structured stdout',
-            bytes: 25,
-            truncated: false,
-            tail_limit_bytes: 65536,
-            fatal_line_limit: 20,
-            fatal_lines: [],
-          },
-          stderr: {
-            tail: 'bounded structured stderr',
-            bytes: 25,
-            truncated: false,
-            tail_limit_bytes: 65536,
-            fatal_line_limit: 20,
-            fatal_lines: ['Error: structured fatal line'],
-          },
-        },
-      },
-      cleanup: {
-        cleanup: {
-          steps: [
-            { step: 'kubernetes_namespace_delete', ok: false, detail: 'namespace still terminating' },
-          ],
-        },
-      },
-    },
-    ignored_child_output: 'ignored child stdout\n',
+test('failure matrix reuse mode starts suite cases from valid checkpoints', async () => {
+  const { checkpointRoot, seedId, captured } = createCheckpointBundle({ checkpoint: 'pre-forge' });
+  const calls = [];
+  const args = {
+    mode: 'full',
+    suites: ['full-pipeline-smoke'],
+    keepArtifacts: false,
+    continueOnFailure: false,
+    reportPath: null,
+    checkpointMode: 'reuse',
+    checkpointRoot,
+    checkpointSeedId: seedId,
   };
-  const infraFailure = {
-    scenario: 'redis-unavailable',
-    ok: false,
-    exit: { code: 1, signal: null },
-    result_path: path.join(root, 'redis-unavailable.json'),
-    result: {
-      schema_version: 'real_pipeline_e2e_result.v1',
-      ok: false,
-      capability_probe: {
-        ok: false,
-        failures: [
-          { reason: 'INFRA_REDIS_UNAVAILABLE', name: 'redis', detail: 'connection refused' },
-        ],
-      },
-      phases: [
-        { phase: 'capabilities', ok: false },
-      ],
+
+  const matrix = await runFailureMatrix(args, {
+    runCapabilityProbeImpl: async () => ({ ok: true, checks: [], failures: [] }),
+    runScenarioImpl: async ({ scenario, checkpoint }) => {
+      calls.push({ scenario, checkpoint });
+      return {
+        scenario,
+        ok: true,
+        exit: { code: 0, signal: null },
+        result_path: `/tmp/${scenario}.json`,
+        result: { ok: true },
+        result_read_failure: null,
+        checkpoint,
+      };
     },
-    ignored_child_output: 'ignored infra child stdout\n',
-  };
-  const harnessFailure = {
-    scenario: 'pipeline-summary-failure',
+  });
+
+  assert.deepEqual(calls.map((call) => call.scenario), ['success']);
+  assert.equal(calls[0].checkpoint.mode, 'reuse');
+  assert.equal(calls[0].checkpoint.name, 'pre-forge');
+  assert.equal(calls[0].checkpoint.restore_dir, captured.checkpoint_dir);
+  assert.equal(matrix.checkpoint_summary.checkpoint_reused_count, 1);
+});
+
+test('failure matrix suite Discord presentation and receipt use suite identity', () => {
+  const start = buildMatrixSuiteDiscordPresentation({
+    phase: 'failure-suite-started',
+    suite: 'human-gates',
+    suite_index: 2,
+    suite_count: 8,
+    suite_case_count: 6,
+    suite_cases: resolveFailureMatrixSuite('human-gates').scenarios,
+  });
+  assert.equal(start.level, 'INFO');
+  assert.match(start.title, /Suite 2\/8 started: human-gates/);
+
+  const failed = buildMatrixSuiteDiscordPresentation({
+    phase: 'failure-suite-completed',
+    suite: 'human-gates',
+    suite_index: 2,
+    suite_count: 8,
+    suite_case_count: 6,
     ok: false,
-    exit: { code: 1, signal: null },
-    result_path: path.join(root, 'pipeline-summary-failure.json'),
-    result: null,
-    result_read_failure: {
-      reason: 'REAL_E2E_RESULT_FILE_READ_FAILED',
-      path: path.join(root, 'pipeline-summary-failure.json'),
-      error: 'ENOENT',
-    },
-    ignored_child_output: 'child stdout must not render\nchild stderr must not render\n',
-  };
-  const passedResult = {
-    scenario: 'approval-deny',
+    failed_case: 'approval-deny',
+    cases: [{ scenario: 'approval-deny', ok: false, result: { ok: false, errors: [{ reason: 'expected' }] } }],
+  });
+  assert.equal(failed.level, 'WARN');
+  assert.match(failed.title, /Suite 2\/8 failed: human-gates/);
+  assert.equal(failed.fields.find((field) => field.name === 'Failed Case').value, 'approval-deny');
+
+  const receipts = [{
+    run_id: 'matrix-run-1',
     ok: true,
-    exit: { code: 0, signal: null },
-    result_path: path.join(root, 'approval-deny.json'),
-    result: { ok: true },
-    ignored_child_output: '',
-  };
+    message_id: 'message-1',
+    channel_id: 'channel-1',
+    webhook_message_returned: true,
+    correlation: {
+      gate_id: 'human-gates',
+      gate_type: 'real-e2e-suite',
+    },
+  }];
+  assert.equal(hasMatrixDiscordReceipt(receipts, 'matrix-run-1', { suite: 'human-gates' }), true);
+  assert.equal(hasMatrixDiscordReceipt(receipts, 'matrix-run-1', { suite: 'git-authority' }), false);
 
-  const summary = summarizeScenario(contractCleanupFailure);
-  assert.deepEqual(summary.reasons, [
-    'REAL_E2E_BUSTER_FAILURE_ARTIFACT_NOT_FAIL',
-    'kubernetes_namespace_delete: namespace still terminating',
-  ]);
-  const findings = collectFailureMatrixFindings([contractCleanupFailure, infraFailure, harnessFailure]);
-  assert.equal(findings.infra_blockers.length, 1);
-  assert.equal(findings.contract_failures.length, 1);
-  assert.equal(findings.cleanup_failures.length, 1);
-  assert.equal(findings.harness_failures.length, 1);
+  const caseStart = buildMatrixSuiteDiscordPresentation({
+    phase: 'failure-suite-case-started',
+    suite: 'module-failure-retry',
+    scenario: 'retry-budget-exhausted',
+    case_index: 2,
+    case_count: 11,
+  });
+  assert.equal(caseStart.level, 'INFO');
+  assert.match(caseStart.title, /Suite case 2\/11 started: retry-budget-exhausted/);
 
-  const writtenPath = writeFailureMatrixReport({
+  const caseReceipts = [{
+    run_id: 'matrix-run-1',
+    ok: true,
+    message_id: 'message-2',
+    channel_id: 'channel-1',
+    webhook_message_returned: true,
+    correlation: {
+      gate_id: 'module-failure-retry:retry-budget-exhausted',
+      gate_type: 'real-e2e-suite',
+    },
+  }];
+  assert.equal(hasMatrixDiscordReceipt(caseReceipts, 'matrix-run-1', {
+    phase: 'failure-suite-case-completed',
+    suite: 'module-failure-retry',
+    scenario: 'retry-budget-exhausted',
+  }), true);
+});
+
+test('failure matrix CLI and summary records are suite based', () => {
+  assert.equal(formatMatrixSuiteCliLine({
+    suite: 'human-gates',
+    ok: true,
+    result_path: '/tmp/human-gates.json',
+  }), 'PASS suite=human-gates reason=ok artifact=/tmp/human-gates.json');
+
+  assert.equal(formatMatrixSuiteCliLine({
+    phase: 'failure-suite-skipped',
+    suite: 'git-authority',
+    reason: 'REAL_E2E_SKIPPED_BY_GLOBAL_BLOCKER',
+    result_path: '/tmp/git-authority.json',
+  }), 'SKIP suite=git-authority reason=REAL_E2E_SKIPPED_BY_GLOBAL_BLOCKER artifact=/tmp/git-authority.json');
+
+  assert.equal(formatMatrixSummaryCliLine({
+    ok: false,
+    suite_count: 8,
+    completed_count: 2,
+    skipped_count: 1,
+    failure_count: 1,
+    summary_path: '/tmp/matrix-summary.json',
+    report_path: '/tmp/review.md',
+  }), 'SUMMARY status=FAIL suites=8 completed=2 skipped=1 failed=1 artifact=/tmp/matrix-summary.json report=/tmp/review.md');
+
+  const record = matrixSummaryRecord({
     args: {
       mode: 'full',
-      scenarios: ['approval-deny', 'buster-module-failure', 'redis-unavailable', 'pipeline-summary-failure', 'discord-unavailable'],
+      suites: ['human-gates', 'git-authority'],
       continueOnFailure: true,
-      reportPath,
+      scenarioTimeoutMs: 1,
+      happyPathTimeoutMs: 2,
+      rateLimitTimeoutExtensionMs: 3,
+      globalBlockerThreshold: 4,
     },
-    results: [passedResult, contractCleanupFailure, infraFailure, harnessFailure],
-    failures: [contractCleanupFailure, infraFailure, harnessFailure],
+    matrix: {
+      ok: false,
+      completed_count: 1,
+      skipped_count: 1,
+      failures: [{ suite: 'human-gates', scenario: 'human-gates', result: { ok: false } }],
+      skipped_by_global_blocker: [],
+      report_path: '/tmp/report.md',
+      results: [],
+    },
+    matrixSuiteNotifier: {
+      mode: 'muted',
+      reason: 'test',
+      runId: null,
+    },
+    summaryPath: '/tmp/summary.json',
   });
-
-  assert.equal(writtenPath, reportPath);
-  const report = fs.readFileSync(reportPath, 'utf8');
-  assert.match(report, /# Real Pipeline E2E Failure Matrix Review/);
-  assert.match(report, /### Infra Blockers/);
-  assert.match(report, /#### redis-unavailable: INFRA_REDIS_UNAVAILABLE/);
-  assert.match(report, /### Contract Failures/);
-  assert.match(report, /#### buster-module-failure: REAL_E2E_BUSTER_FAILURE_ARTIFACT_NOT_FAIL/);
-  assert.match(report, /### Cleanup Failures/);
-  assert.match(report, /#### buster-module-failure: kubernetes_namespace_delete/);
-  assert.match(report, /### Harness Failures/);
-  assert.match(report, /#### pipeline-summary-failure: REAL_E2E_RESULT_FILE_READ_FAILED/);
-  assert.match(report, /Failure output diagnostic/);
-  assert.match(report, /REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_BUSTER_MODULE_FAILURE/);
-  assert.match(report, /Bounded diagnostics from result JSON/);
-  assert.match(report, /bounded structured stdout/);
-  assert.doesNotMatch(report, /ignored child stdout/);
-  assert.doesNotMatch(report, /child stdout must not render/);
-  assert.match(report, /## Passed Scenarios/);
-  assert.match(report, /- approval-deny/);
-  assert.match(report, /## Skipped Scenarios/);
-  assert.match(report, /- discord-unavailable/);
+  assert.equal(record.suite_count, 2);
+  assert.equal(record.status, 'FAIL');
 });
 
-test('failure matrix report treats missing structured result as harness failure', () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-matrix-missing-result-'));
+test('failure matrix Discord notifier reports explicit muted mode when disabled', async () => {
+  const notifier = await createMatrixSuiteNotifier({
+    matrixDiscordNotifications: false,
+  });
+
+  assert.equal(notifier.mode, 'muted');
+  assert.equal(notifier.reason, 'disabled_by_cli');
+  assert.deepEqual(await notifier.notify({ suite: 'human-gates' }), {
+    status: 'muted',
+    reason: 'disabled_by_cli',
+  });
+});
+
+test('failure matrix applies longer timeout only to expected happy-path scenarios', () => {
+  assert.equal(
+    timeoutMsForScenario({
+      scenarioConfig: { expectedPipelineExit: 'zero' },
+      scenarioTimeoutMs: 120000,
+      happyPathTimeoutMs: 900000,
+    }),
+    900000,
+  );
+  assert.equal(
+    timeoutMsForScenario({
+      scenarioConfig: { expectedPipelineExit: 'nonzero' },
+      scenarioTimeoutMs: 120000,
+      happyPathTimeoutMs: 900000,
+    }),
+    120000,
+  );
+});
+
+test('failure matrix report includes suite and case result files', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-matrix-suite-report-'));
   const reportPath = path.join(root, 'review.md');
-  const failedResult = {
-    scenario: 'redis-unavailable',
-    ok: false,
-    exit: { code: 1, signal: null },
-    result_path: path.join(root, 'missing.json'),
-    result: null,
-    result_read_failure: {
-      reason: 'REAL_E2E_RESULT_FILE_READ_FAILED',
-      path: path.join(root, 'missing.json'),
-      error: 'ENOENT',
-    },
-    ignored_child_output: 'child stdout diagnostic\nchild stderr diagnostic\n',
-  };
-
-  const summary = summarizeScenario(failedResult);
-  assert.deepEqual(summary.reasons, ['REAL_E2E_RESULT_FILE_READ_FAILED']);
-
   writeFailureMatrixReport({
     args: {
       mode: 'full',
-      scenarios: ['redis-unavailable'],
       continueOnFailure: true,
+      suites: ['human-gates'],
+      checkpointMode: 'reuse',
       reportPath,
     },
-    results: [failedResult],
-    failures: [failedResult],
+    results: [{
+      suite: 'human-gates',
+      scenario: 'human-gates',
+      ok: true,
+      exit: { code: 0, signal: null },
+      result_path: path.join(root, 'human-gates.json'),
+      result: { ok: true },
+      cases: [{
+        scenario: 'approval-deny',
+        ok: true,
+        result_path: path.join(root, 'approval-deny.json'),
+        result: { ok: true },
+        checkpoint: {
+          mode: 'reuse',
+          name: 'post-module-review',
+          restore_dir: path.join(root, 'checkpoint'),
+          estimated_skipped_agent_phase_count: 4,
+          agent_phase_count_to_run: 6,
+        },
+      }],
+    }],
+    failures: [],
   });
 
   const report = fs.readFileSync(reportPath, 'utf8');
-  assert.match(report, /### Harness Failures/);
-  assert.match(report, /REAL_E2E_RESULT_FILE_READ_FAILED/);
-  assert.doesNotMatch(report, /Child stdout tail while result file was unavailable/);
-  assert.doesNotMatch(report, /child stdout diagnostic/);
-  assert.doesNotMatch(report, /child stderr diagnostic/);
+  assert.match(report, /Requested suites: 1/);
+  assert.match(report, /Registry suites: 8/);
+  assert.match(report, /Registry cases: 46/);
+  assert.match(report, /human-gates: passed/);
+  assert.match(report, /approval-deny: passed/);
+  assert.match(report, /Reused checkpoints: 1/);
+});
+
+test('runScenario stamps typed harness-aborted result when child exits before pipeline verdict', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-run-aborted-'));
+  const runnerPath = path.join(root, 'partial-runner.mjs');
+  fs.writeFileSync(runnerPath, `
+    import fs from 'node:fs';
+    import path from 'node:path';
+    const resultPath = process.argv[process.argv.indexOf('--result-path') + 1];
+    fs.mkdirSync(path.dirname(resultPath), { recursive: true });
+    fs.writeFileSync(resultPath, JSON.stringify({
+      schema_version: 'real_pipeline_e2e_result.v1',
+      ok: false,
+      scenario: { id: 'retry-fix-malformed-output' },
+      phases: [{ phase: 'workspace-created', ok: true }]
+    }, null, 2));
+    process.stdout.write('full stdout line from child\\n');
+    process.stderr.write('full stderr line from child\\n');
+    process.exit(1);
+  `);
+
+  const result = await runScenario({
+    mode: 'full',
+    scenario: 'retry-fix-malformed-output',
+    keepArtifacts: false,
+    scenarioTimeoutMs: 30000,
+    runnerPath,
+  });
+
+  assert.equal(result.ok, false);
+  assert.equal(result.result.pipeline.phase, 'harness-aborted');
+  assert.equal(result.result.pipeline.reason, 'REAL_E2E_HARNESS_ABORTED_BEFORE_PIPELINE_RESULT');
+  assert.equal(result.result.assertions.failure_output_diagnostic.reason, 'REAL_E2E_HARNESS_ABORTED_BEFORE_PIPELINE_RESULT');
+  assert.equal(fs.readFileSync(result.child_output_logs.stdout, 'utf8'), 'full stdout line from child\n');
+  assert.equal(fs.readFileSync(result.child_output_logs.stderr, 'utf8'), 'full stderr line from child\n');
 });

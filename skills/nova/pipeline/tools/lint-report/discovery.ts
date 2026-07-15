@@ -4,7 +4,29 @@ import path from 'path';
 import { discoverPlatformSwarmConfigCandidates } from '../../core/platform-config.ts';
 import { log } from './output.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 const discoveryDiagnostics = [];
+const LINT_POLICY_IGNORED_PATH_SEGMENTS = [
+  '/node_modules/',
+  '/dist/',
+  '/build/',
+  '/coverage/',
+  '/plugins/',
+  '/plugin/',
+  '/registry/',
+  '/registries/',
+  '/loader/',
+  '/loaders/',
+  '/migrations/',
+  '/test/',
+  '/tests/',
+  '/__tests__/',
+];
+const LINT_POLICY_IGNORED_FILE_PATTERNS = [
+  /\.(test|spec)\.[jt]sx?$/,
+  /\.min\.(js|mjs|cjs)$/,
+];
+const YAML_FILE_EXTENSIONS = ['.yaml', '.yml'];
 
 function recordDiscoveryDiagnostic(entry = {}) {
   discoveryDiagnostics.push({
@@ -53,22 +75,10 @@ function findNearestTsconfigDir(repoRoot, modulePath = null) {
 
 function isPolicyIgnoredFile(filePath) {
   const normalized = filePath.split(path.sep).join('/');
-  return normalized.includes('/node_modules/')
-    || normalized.includes('/dist/')
-    || normalized.includes('/build/')
-    || normalized.includes('/coverage/')
-    || normalized.includes('/plugins/')
-    || normalized.includes('/plugin/')
-    || normalized.includes('/registry/')
-    || normalized.includes('/registries/')
-    || normalized.includes('/loader/')
-    || normalized.includes('/loaders/')
-    || normalized.includes('/migrations/')
-    || /\.(test|spec)\.[jt]sx?$/.test(normalized)
-    || normalized.includes('/test/')
-    || normalized.includes('/tests/')
-    || normalized.includes('/__tests__/')
-    || /\.min\.(js|mjs|cjs)$/.test(normalized);
+  return [
+    LINT_POLICY_IGNORED_PATH_SEGMENTS.some(segment => normalized.includes(segment)),
+    LINT_POLICY_IGNORED_FILE_PATTERNS.some(pattern => pattern.test(normalized)),
+  ].some(Boolean);
 }
 
 function listPolicySourceFiles(scanRoot) {
@@ -130,7 +140,7 @@ function detectProjectTypes(repoRoot, modulePath) {
   }
 
   // YAML detection — always true if any .yaml/.yml exists (for yamllint)
-  const yamlFiles = findFiles(scanRoot, f => f.endsWith('.yaml') || f.endsWith('.yml'), 2);
+  const yamlFiles = findFiles(scanRoot, f => YAML_FILE_EXTENSIONS.some(extension => f.endsWith(extension)), 2);
   if (yamlFiles.length > 0) {
     types.add('yaml');
   }
@@ -144,7 +154,8 @@ function detectProjectTypes(repoRoot, modulePath) {
  * Lightweight alternative to glob — no dependencies.
  */
 function findFiles(dir, predicate, maxDepth = 3, _depth = 0) {
-  if (_depth > maxDepth || !fs.existsSync(dir)) return [];
+  if (_depth > maxDepth) return [];
+  if (!fs.existsSync(dir)) return [];
   const results = [];
 
   let entries;
@@ -153,13 +164,13 @@ function findFiles(dir, predicate, maxDepth = 3, _depth = 0) {
     recordDiscoveryDiagnostic({
       status: 'unavailable',
       path: dir,
-      reason: error?.message || 'unknown',
+      reason: selectTruthyValue(() => (error?.message), () => ('missing_error_message')),
     });
     return [];
   }
 
   for (const entry of entries) {
-    if (entry.name.startsWith('.') || entry.name === 'node_modules') continue;
+    if ([entry.name.startsWith('.'), entry.name === 'node_modules'].some(Boolean)) continue;
     const fullPath = path.join(dir, entry.name);
     if (entry.isFile() && predicate(entry.name)) {
       results.push(fullPath);

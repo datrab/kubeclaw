@@ -14,6 +14,8 @@ import {
   appendPipelineLifecycleEvent as appendPipelineLifecycleEventImpl,
   appendStaleRecoveryLifecycleEvent as appendStaleRecoveryLifecycleEventImpl,
   appendWaitLifecycleEvent as appendWaitLifecycleEventImpl,
+  applyGateCompletion as applyGateCompletionImpl,
+  applyModuleCompletion as applyModuleCompletionImpl,
   getLifecycleCooldown as getLifecycleCooldownImpl,
   getLifecycleGateState as getLifecycleGateStateImpl,
   getLifecycleModuleState as getLifecycleModuleStateImpl,
@@ -57,6 +59,14 @@ export function cloneSerializable(value) {
 
 export function appendLifecycleEvent(config, proposal = {}) {
   return appendLifecycleEventImpl(config, proposal);
+}
+
+export function applyModuleCompletion(config, dir, status, completion = {}) {
+  return applyModuleCompletionImpl(config, dir, status, completion);
+}
+
+export function applyGateCompletion(config, gateId, gate = {}, completion = {}) {
+  return applyGateCompletionImpl(config, gateId, gate, completion);
 }
 
 export function appendPipelineLifecycleEvent(config, type, opts = {}) {

@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/validation.ts — Preflight contract and delivery lint validation
 //
 // Two validation stages:
@@ -69,7 +70,7 @@ function parseDockerfileCopies(content) {
 function readForgeBlueprint(config, moduleDir, mod = {}) {
   const forgePath = path.join(modulePath(config, moduleDir), 'FORGE.md');
   if (mod?.substeps) {
-    if (!Array.isArray(mod.substeps) || mod.substeps.length === 0) {
+    if (selectTruthyValue(() => (!Array.isArray(mod.substeps)), () => (mod.substeps.length === 0))) {
       return {
         content: null,
         failure: validationFailure(
@@ -82,7 +83,7 @@ function readForgeBlueprint(config, moduleDir, mod = {}) {
     }
     const parts = [];
     for (const stepId of mod.substeps) {
-      if (typeof stepId !== 'string' || !stepId.trim()) {
+      if (selectTruthyValue(() => (typeof stepId !== 'string'), () => (!stepId.trim()))) {
         return {
           content: null,
           failure: validationFailure(
@@ -167,8 +168,8 @@ function invalidServeDockerfileFailure(serveDockerfile, error) {
 }
 
 function validateStaticPath(config, staticPath) {
-  if (staticPath === undefined || staticPath === null || staticPath === '') return null;
-  if (typeof staticPath !== 'string' || !staticPath.trim()) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (staticPath === undefined), () => (staticPath === null))), () => (staticPath === ''))) return null;
+  if (selectTruthyValue(() => (typeof staticPath !== 'string'), () => (!staticPath.trim()))) {
     throw new Error('test_config.serve.static_path must be a non-empty string when set');
   }
   if (staticPath.includes('\0')) throw new Error('test_config.serve.static_path contains a null byte');
@@ -181,6 +182,21 @@ function validateStaticPath(config, staticPath) {
   if (fs.existsSync(candidatePath)) resolveRepoRealPath(config, staticPath, 'test_config.serve.static_path');
 
   return staticPath.replace(/\\/g, '/');
+}
+
+function normalizeComparablePath(value) {
+  return typeof value === 'string'
+    ? value.replace(/\\/g, '/').replace(/^\/+/, '').replace(/^(?:\.\/)+/, '').replace(/\/+$/, '').trim()
+    : '';
+}
+
+function moduleOwnsReferencedPath(mod, reference) {
+  const ref = normalizeComparablePath(reference);
+  const ownedPaths = Array.isArray(mod?.owned_paths) ? mod.owned_paths : [];
+  return ownedPaths
+    .map(normalizeComparablePath)
+    .filter(Boolean)
+    .some((owned) => ref === owned || ref.endsWith(`/${owned}`));
 }
 
 // ─── Public API ───────────────────────────────────────────────────────────────
@@ -197,7 +213,7 @@ function validateStaticPath(config, staticPath) {
  * @returns {{ passed: boolean, failures: object[] }}
  */
 export function runPreflightValidation(mod, moduleDir, config) {
-  const testConfig = mod?.test_config || {};
+  const testConfig = selectDefinedValue(() => (mod?.test_config), () => ({}));
   const failures = [];
 
   const forgeBlueprint = readForgeBlueprint(config, moduleDir, mod);
@@ -207,9 +223,11 @@ export function runPreflightValidation(mod, moduleDir, config) {
   }
   const forgeContent = forgeBlueprint.content;
 
-  // Rule: serve.dockerfile must be named in FORGE.md
+  // Rule: owned serve.dockerfile artifacts must be named in FORGE.md.
+  // Runtime-only Dockerfile references are delivery-lint inputs, not Forge-owned
+  // deliverables for modules that do not list the Dockerfile in owned_paths.
   const serveDockerfile = testConfig.serve?.dockerfile;
-  if (serveDockerfile) {
+  if (serveDockerfile && moduleOwnsReferencedPath(mod, serveDockerfile)) {
     const filename = path.basename(serveDockerfile);
     if (!forgeContent.includes(filename)) {
       failures.push({
@@ -258,7 +276,7 @@ export function runPreflightValidation(mod, moduleDir, config) {
  * @returns {{ passed: boolean, failures: object[] }}
  */
 export function runDeliveryLintValidation(mod, moduleDir, config) {
-  const testConfig = mod?.test_config || {};
+  const testConfig = selectDefinedValue(() => (mod?.test_config), () => ({}));
   const failures = [];
 
   const serveDockerfile = testConfig.serve?.dockerfile;
@@ -355,7 +373,7 @@ export function runDeliveryLintValidation(mod, moduleDir, config) {
  * @returns {string}
  */
 export function formatValidationFailures(failures) {
-  if (!failures || failures.length === 0) return '';
+  if (selectTruthyValue(() => (!failures), () => (failures.length === 0))) return '';
   const header = `VALIDATION FAILED (${failures.length} issue${failures.length === 1 ? '' : 's'}):`;
   const body = failures.map(f => [
     `\n[${f.stage}] ${f.code}`,

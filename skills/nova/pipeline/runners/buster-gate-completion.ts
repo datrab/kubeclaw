@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // runners/buster-gate-completion.js — Buster gate completion evidence wait adapter.
 // Active runner path waits on Redis/local evidence events.
 // The caller still owns agent lifecycle, session cleanup, and retry/fix policy.
@@ -26,12 +27,66 @@ import {
 } from '../services/rate-limit.ts';
 import { buildBusterGateActiveCompletionIdentity } from './buster-gate-task.ts';
 
+const BUSTER_GATE_TYPE = 'buster';
+const COMPLETION_EVENT_CONTROLLER_SOURCE = 'event_controller';
+const COMPLETION_SYSTEM_SOURCE = 'system';
+const MISSING_COMPLETION_SOURCE = 'missing_completion_source';
+const TIMEOUT_REASON = 'timeout';
+
 function busterRuntimePolicyNumber(config, field) {
   const value = config?.buster?.runtime?.[field];
-  if (typeof value !== 'number' || !Number.isFinite(value)) {
+  if (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value)))) {
     throw new Error(`config.buster.runtime.${field}: required number in swarm.config.json`);
   }
   return value;
+}
+
+function hasOwn(value, key) {
+  return Object.prototype.hasOwnProperty.call(value, key);
+}
+
+function requireWaitFactory(value, name) {
+  if (typeof value === 'function') return value;
+  throw new TypeError(`waitBusterGateCompletionEvidence requires ${name}`);
+}
+
+function completionWaitFactories(deps = {}) {
+  const explicit = selectTruthyValue(() => (deps?._explicitDeps), () => ({}));
+  const adapterOverrides = selectTruthyValue(() => (explicit.completionEventAdapters), () => ({}));
+  const hasAdapterFactoryOverride = selectTruthyValue(() => (hasOwn(adapterOverrides, 'createRedisCompletionEventAdapter')), () => (hasOwn(adapterOverrides, 'createLocalEvidenceEventAdapter')));
+  const hasTailFactoryOverride = selectTruthyValue(() => (hasOwn(explicit, 'createDedicatedRedisCompletionClient')), () => (hasOwn(explicit, 'scanLatestCompletionFromTail')));
+  if (
+    hasAdapterFactoryOverride
+    && (
+      selectTruthyValue(() => (!hasOwn(adapterOverrides, 'createRedisCompletionEventAdapter')), () => (!hasOwn(adapterOverrides, 'createLocalEvidenceEventAdapter')))
+    )
+  ) {
+    throw new TypeError('waitBusterGateCompletionEvidence requires complete completion event adapter overrides');
+  }
+  if (
+    hasTailFactoryOverride
+    && (
+      selectTruthyValue(() => (!hasOwn(explicit, 'createDedicatedRedisCompletionClient')), () => (!hasOwn(explicit, 'scanLatestCompletionFromTail')))
+    )
+  ) {
+    throw new TypeError('waitBusterGateCompletionEvidence requires complete Redis tail recovery overrides');
+  }
+  return {
+    RedisCtor: hasOwn(adapterOverrides, 'RedisCtor') ? adapterOverrides.RedisCtor : null,
+    redisOptions: hasOwn(adapterOverrides, 'redisOptions') ? adapterOverrides.redisOptions : null,
+    createRedisCompletionEventAdapter: hasAdapterFactoryOverride
+      ? requireWaitFactory(adapterOverrides.createRedisCompletionEventAdapter, 'createRedisCompletionEventAdapter')
+      : createRedisCompletionEventAdapter,
+    createLocalEvidenceEventAdapter: hasAdapterFactoryOverride
+      ? requireWaitFactory(adapterOverrides.createLocalEvidenceEventAdapter, 'createLocalEvidenceEventAdapter')
+      : createLocalEvidenceEventAdapter,
+    createRedisClient: hasTailFactoryOverride
+      ? requireWaitFactory(explicit.createDedicatedRedisCompletionClient, 'createDedicatedRedisCompletionClient')
+      : createDedicatedRedisCompletionClient,
+    scanLatestCompletionFromTail: hasTailFactoryOverride
+      ? requireWaitFactory(explicit.scanLatestCompletionFromTail, 'scanLatestCompletionFromTail')
+      : scanLatestCompletionFromTail,
+  };
 }
 
 function buildPollIdentityFields(completionIdentity) {
@@ -49,6 +104,14 @@ function buildExpectedRedisIdentity(completionIdentity) {
   };
 }
 
+function completionGatewayLabel(redisEntry, completionIdentity) {
+  return selectDefinedValue(() => (redisEntry.gateway_label), () => (completionIdentity.gateway_label));
+}
+
+function gateCompletionStreamKeyAuthority(config, deps = null) {
+  return selectDefinedValue(() => (deps?._explicitDeps?.streamKey), () => (completionStreamKey(config)));
+}
+
 function buildGateWatchPaths(config, gateId, gate) {
   const outPath = gateOutputPath(config, gate);
   return [outPath].filter(Boolean);
@@ -59,22 +122,30 @@ function parseRedisVerdict(redisEntry = {}) {
   try { return JSON.parse(redisEntry.verdict); } catch (_error) { return null; }
 }
 
+function controllerSource(controllerResult, fallbackSource) {
+  return selectDefinedValue(() => (controllerResult?.source), () => (fallbackSource));
+}
+
+function redisCompletionSource(redisEntry) {
+  return selectDefinedValue(() => (redisEntry?.source), () => (MISSING_COMPLETION_SOURCE));
+}
+
 function mapRedisControllerCompletion({ deps, gateId, gate, completionIdentity, gateRateLimitStatusOptions, redisEntry, completion }) {
-  if (!redisEntry?.status || !completion) return null;
+  if (selectTruthyValue(() => (!redisEntry?.status), () => (!completion))) return null;
 
   const mappedStatus = completion.status;
-  log('OK', `Gate '${gateId}' Redis completion: status=${redisEntry.status} mapped=${mappedStatus} outcome=${completion.outcome} source=${redisEntry.source || 'unknown'} run=${redisEntry.run_id || '—'} attempt=${redisEntry.attempt || '—'} dispatch=${redisEntry.dispatch_id || '—'}`);
+  log('OK', `Gate '${gateId}' Redis completion: status=${redisEntry.status} mapped=${mappedStatus} outcome=${completion.outcome} source=${redisCompletionSource(redisEntry)} run=${selectTruthyValue(() => (redisEntry.run_id), () => ('—'))} attempt=${selectTruthyValue(() => (redisEntry.attempt), () => ('—'))} dispatch=${selectTruthyValue(() => (redisEntry.dispatch_id), () => ('—'))}`);
 
   if (completion.completion_conflict) {
     return { done: true, result: deps.pollResult(false, 'completion_conflict', {
       gate: gateId,
       status: mappedStatus,
       local_status: null,
-      redis_status: redisEntry.status || null,
-      summary: redisEntry.summary || null,
+      redis_status: selectTruthyValue(() => (redisEntry.status), () => (null)),
+      summary: selectTruthyValue(() => (redisEntry.summary), () => (null)),
       ...buildPollIdentityFields(completionIdentity),
       gateway_label: completionIdentity.gateway_label,
-      session_key: completionIdentity.sessionKey || null,
+      session_key: selectTruthyValue(() => (completionIdentity.sessionKey), () => (null)),
       _source: 'redis',
       _redis_entry: redisEntry,
       authority_policy: completion.authority_policy,
@@ -100,11 +171,11 @@ function mapRedisControllerCompletion({ deps, gateId, gate, completionIdentity, 
     return { done: true, result: deps.pollResult(false, 'timeout', {
       gate: gateId,
       status: STATUS.FAIL,
-      reason: redisEntry.reason || redisEntry.summary || 'timeout',
-      source: redisEntry.source || 'unknown',
+      reason: selectDefinedValue(() => (selectDefinedValue(() => (redisEntry.reason), () => (redisEntry.summary))), () => (TIMEOUT_REASON)),
+      source: redisCompletionSource(redisEntry),
       ...buildPollIdentityFields(completionIdentity),
-      gateway_label: redisEntry.gateway_label || completionIdentity.gateway_label,
-      session_key: redisEntry.session_key || null,
+      gateway_label: completionGatewayLabel(redisEntry, completionIdentity),
+      session_key: selectTruthyValue(() => (redisEntry.session_key), () => (null)),
       _source: 'redis',
     }) };
   }
@@ -113,10 +184,10 @@ function mapRedisControllerCompletion({ deps, gateId, gate, completionIdentity, 
     return { done: true, result: deps.pollResult(true, 'target_reached', {
       gate: gateId,
       status: mappedStatus,
-      summary: redisEntry.summary || null,
+      summary: selectTruthyValue(() => (redisEntry.summary), () => (null)),
       ...buildPollIdentityFields(completionIdentity),
-      gateway_label: redisEntry.gateway_label || completionIdentity.gateway_label,
-      session_key: redisEntry.session_key || null,
+      gateway_label: completionGatewayLabel(redisEntry, completionIdentity),
+      session_key: selectTruthyValue(() => (redisEntry.session_key), () => (null)),
       _source: 'redis',
       _redis_entry: redisEntry,
     }) };
@@ -126,12 +197,12 @@ function mapRedisControllerCompletion({ deps, gateId, gate, completionIdentity, 
     return { done: true, result: deps.pollResult(false, 'verdict_fail', {
       gate: gateId,
       status: mappedStatus,
-      reason: redisEntry.reason || redisEntry.summary || 'unknown',
-      source: redisEntry.source || 'unknown',
+      reason: selectTruthyValue(() => (selectTruthyValue(() => (redisEntry.reason), () => (redisEntry.summary))), () => ('missing_completion_reason')),
+      source: redisCompletionSource(redisEntry),
       verdict: parseRedisVerdict(redisEntry),
       ...buildPollIdentityFields(completionIdentity),
-      gateway_label: redisEntry.gateway_label || completionIdentity.gateway_label,
-      session_key: redisEntry.session_key || null,
+      gateway_label: completionGatewayLabel(redisEntry, completionIdentity),
+      session_key: selectTruthyValue(() => (redisEntry.session_key), () => (null)),
       _source: 'redis',
       _redis_entry: redisEntry,
     }) };
@@ -143,11 +214,11 @@ function mapRedisControllerCompletion({ deps, gateId, gate, completionIdentity, 
 function appendDurableGateCompletionAlert(config, gateId, gate, completionIdentity = {}, reason, extra = {}) {
   appendDurableOperatorAlert(config, 'gate.operator_alert', {
     gate_id: gateId,
-    gate_type: gate?.type || gate?.gate_type || 'buster',
-    attempt: completionIdentity.attempt ?? null,
-    dispatch_id: completionIdentity.dispatchId || null,
-    gateway_label: completionIdentity.gateway_label || null,
-    session_key: completionIdentity.sessionKey || null,
+    gate_type: selectDefinedValue(() => (selectDefinedValue(() => (gate?.type), () => (gate?.gate_type))), () => (BUSTER_GATE_TYPE)),
+    attempt: selectDefinedValue(() => (completionIdentity.attempt), () => (null)),
+    dispatch_id: selectTruthyValue(() => (completionIdentity.dispatchId), () => (null)),
+    gateway_label: selectTruthyValue(() => (completionIdentity.gateway_label), () => (null)),
+    session_key: selectTruthyValue(() => (completionIdentity.sessionKey), () => (null)),
     reason,
     ...extra,
   }, {
@@ -169,20 +240,20 @@ function mapBusterGateControllerResult({
   if (controllerResult?.reason === 'fatal_error') {
     appendDurableGateCompletionAlert(config, gateId, gate, completionIdentity, 'completion_event_adapter_failed', {
       status: STATUS.FAIL,
-      error: controllerResult.error?.error || controllerResult.error?.reason || 'completion event adapter failed',
-      source: controllerResult.source || 'system',
-      event: controllerResult.event || null,
+      error: selectDefinedValue(() => (selectDefinedValue(() => (controllerResult.error?.error), () => (controllerResult.error?.reason))), () => ('completion_event_adapter_failed')),
+      source: controllerSource(controllerResult, COMPLETION_SYSTEM_SOURCE),
+      event: selectTruthyValue(() => (controllerResult.event), () => (null)),
     });
     return deps.pollResult(false, 'completion_event_adapter_failed', {
       gate: gateId,
       status: STATUS.FAIL,
-      reason: controllerResult.error?.error || controllerResult.error?.reason || 'completion event adapter failed',
-      source: controllerResult.source || 'system',
+      reason: selectDefinedValue(() => (selectDefinedValue(() => (controllerResult.error?.error), () => (controllerResult.error?.reason))), () => ('completion_event_adapter_failed')),
+      source: controllerSource(controllerResult, COMPLETION_SYSTEM_SOURCE),
       ...buildPollIdentityFields(completionIdentity),
       gateway_label: completionIdentity.gateway_label,
-      session_key: completionIdentity.sessionKey || null,
-      _source: controllerResult.source || 'system',
-      event: controllerResult.event || null,
+      session_key: selectTruthyValue(() => (completionIdentity.sessionKey), () => (null)),
+      _source: controllerSource(controllerResult, COMPLETION_SYSTEM_SOURCE),
+      event: selectTruthyValue(() => (controllerResult.event), () => (null)),
     });
   }
 
@@ -203,11 +274,11 @@ function mapBusterGateControllerResult({
   return deps.pollResult(false, 'completion_event_unresolved', {
     gate: gateId,
     status: STATUS.FAIL,
-    reason: controllerResult?.reason || 'unknown',
-    source: controllerResult?.source || 'event_controller',
+    reason: selectDefinedValue(() => (controllerResult?.reason), () => ('missing_controller_reason')),
+    source: controllerSource(controllerResult, COMPLETION_EVENT_CONTROLLER_SOURCE),
     ...buildPollIdentityFields(completionIdentity),
     gateway_label: completionIdentity.gateway_label,
-    session_key: completionIdentity.sessionKey || null,
+    session_key: selectTruthyValue(() => (completionIdentity.sessionKey), () => (null)),
   });
 }
 
@@ -225,9 +296,10 @@ export async function waitBusterGateCompletionEvidence({
 
   try {
     const redisCompletionPolicy = resolveRedisCompletionPolicy(config);
+    const waitFactories = completionWaitFactories(deps);
     const controllerResult = await waitForResilientRedisCompletion({
       config,
-      streamKey: deps?._explicitDeps?.streamKey || completionStreamKey(config),
+      streamKey: gateCompletionStreamKeyAuthority(config, deps),
       targetKind: 'gate',
       targetId: gateId,
       expectedStatuses: [STATUS.PASS, STATUS.FAIL],
@@ -236,15 +308,16 @@ export async function waitBusterGateCompletionEvidence({
       watchPaths: buildGateWatchPaths(config, gateId, gate),
       getLocalStatus: () => projectGateCompletionState(config, gateId, gate, { activeDispatch: activeCompletionIdentity }),
       statusSource: 'output_file',
-      deps: deps?._explicitDeps,
+      RedisCtor: waitFactories.RedisCtor,
+      redisOptions: waitFactories.redisOptions,
       redisBlockMs: busterRuntimePolicyNumber(config, 'completion_event_block_ms'),
       recoveryScanIntervalMs: busterRuntimePolicyNumber(config, 'completion_recovery_scan_interval_ms'),
       tailScanBatchSize: redisCompletionPolicy.tailScanBatchSize,
       tailScanLimit: redisCompletionPolicy.tailScanLimit,
-      createRedisCompletionEventAdapter,
-      createLocalEvidenceEventAdapter,
-      createRedisClient: createDedicatedRedisCompletionClient,
-      scanLatestCompletionFromTail,
+      createRedisCompletionEventAdapter: waitFactories.createRedisCompletionEventAdapter,
+      createLocalEvidenceEventAdapter: waitFactories.createLocalEvidenceEventAdapter,
+      createRedisClient: waitFactories.createRedisClient,
+      scanLatestCompletionFromTail: waitFactories.scanLatestCompletionFromTail,
       waitForCompletion: waitForBusterCompletion,
       resolveCompletionEvent: resolveBusterCompletionEvent,
       log,
@@ -272,7 +345,7 @@ export async function waitBusterGateCompletionEvidence({
         reason: `Timed out waiting for Buster completion event for gate '${gateId}'`,
         ...buildPollIdentityFields(completionIdentity),
         gateway_label: completionIdentity.gateway_label,
-        session_key: completionIdentity.sessionKey || null,
+        session_key: selectTruthyValue(() => (completionIdentity.sessionKey), () => (null)),
       });
     }
     throw error;

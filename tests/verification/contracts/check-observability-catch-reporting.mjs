@@ -27,7 +27,7 @@ const sourceRoot = path.resolve(args['source-root'] || process.cwd());
 
 const scopedFiles = [
   'skills/common/pipeline/noncritical-reporting.ts',
-  'skills/common/pipeline/redaction.ts',
+  'skills/common/pipeline/egress.ts',
   'skills/nova/pipeline/services/telemetry.ts',
   'skills/nova/pipeline/services/telemetry/builders.ts',
   'skills/nova/pipeline/services/telemetry/dispatch.ts',

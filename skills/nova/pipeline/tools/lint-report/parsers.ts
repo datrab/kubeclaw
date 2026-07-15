@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 /**
  * Safe JSON parse returning structured diagnostics.
  */
@@ -10,13 +11,11 @@ function tryParseJson(str) {
 }
 
 function isIdentifierStart(ch) {
-  return ch === '_' || ch === '$'
-    || (ch >= 'A' && ch <= 'Z')
-    || (ch >= 'a' && ch <= 'z');
+  return selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (ch === '_'), () => (ch === '$'))), () => ((ch >= 'A' && ch <= 'Z')))), () => ((ch >= 'a' && ch <= 'z')));
 }
 
 function isIdentifierPart(ch) {
-  return isIdentifierStart(ch) || (ch >= '0' && ch <= '9');
+  return selectTruthyValue(() => (isIdentifierStart(ch)), () => ((ch >= '0' && ch <= '9')));
 }
 
 function readString(sourceText, start, quote) {
@@ -64,7 +63,7 @@ function tokenizeSource(sourceText) {
       }
       continue;
     }
-    if (ch === '"' || ch === "'") {
+    if (selectTruthyValue(() => (ch === '"'), () => (ch === "'"))) {
       i = readString(sourceText, i, ch);
       continue;
     }

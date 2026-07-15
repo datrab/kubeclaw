@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // Redis completion stream identity, selection, and archival helpers.
 // Kept separate from tools/redis.ts so the CLI remains a thin adapter.
 
@@ -29,14 +30,33 @@ export {
 } from './redis-message-contract.ts';
 
 function normalizeIdentityValue(value) {
-  if (value === undefined || value === null || value === '') return null;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return null;
   return String(value);
+}
+
+function firstDefined(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return null;
+}
+
+function normalizeRunId(record) {
+  return normalizeIdentityValue(firstDefined(record?.run_id, record?.runId));
+}
+
+function normalizeDispatchId(record) {
+  return normalizeIdentityValue(firstDefined(record?.dispatch_id, record?.dispatchId));
+}
+
+function normalizeSessionKey(record) {
+  return normalizeIdentityValue(firstDefined(record?.session_key, record?.sessionKey));
 }
 
 const STRONG_COMPLETION_IDENTITY_FIELDS = Object.freeze(['run_id', 'attempt', 'dispatch_id']);
 
 function isCurrentBusterPipelineCompletion(entry = {}) {
-  return (entry?.source || '').toLowerCase() === 'buster-pipeline';
+  return (selectDefinedValue(() => (entry?.source), () => (''))).toLowerCase() === 'buster-pipeline';
 }
 
 function matchesCompletionTarget(entry = {}, targetId) {
@@ -57,22 +77,22 @@ function matchesCompletionTarget(entry = {}, targetId) {
 function buildInvalidCompletionEntry(entry = {}, validationErrors = [], moduleId = null, expected = {}) {
   const envelope = normalizeRedisPipelineEnvelope(entry);
   return {
-    _id: entry?._id || null,
+    _id: selectTruthyValue(() => (entry?._id), () => (null)),
     type: 'completion',
-    module: moduleId || envelope.target_id || entry?.module || null,
+    module: selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (moduleId), () => (envelope.target_id))), () => (entry?.module))), () => (null)),
     status: 'FAIL',
     outcome: 'COMPLETION_INVALID',
     source: 'completion-invalid',
     reason: 'invalid_completion_entry_schema',
-    summary: `Invalid Redis completion entry for ${moduleId || envelope.target_id || 'unknown'}: ${validationErrors.join('; ')}`,
-    invalid_redis_id: entry?._id || null,
-    invalid_completion_source: entry?.source || null,
-    invalid_completion_status: entry?.status || null,
+    summary: `Invalid Redis completion entry for ${selectDefinedValue(() => (selectDefinedValue(() => (moduleId), () => (envelope.target_id))), () => ('missing_module_id'))}: ${validationErrors.join('; ')}`,
+    invalid_redis_id: selectTruthyValue(() => (entry?._id), () => (null)),
+    invalid_completion_source: selectTruthyValue(() => (entry?.source), () => (null)),
+    invalid_completion_status: selectTruthyValue(() => (entry?.status), () => (null)),
     invalid_completion_errors: validationErrors.join('; '),
-    run_id: normalizeIdentityValue(entry?.run_id ?? entry?.runId),
+    run_id: normalizeRunId(entry),
     attempt: normalizeIdentityValue(entry?.attempt),
-    dispatch_id: normalizeIdentityValue(entry?.dispatch_id ?? entry?.dispatchId),
-    session_key: normalizeIdentityValue(entry?.session_key ?? entry?.sessionKey),
+    dispatch_id: normalizeDispatchId(entry),
+    session_key: normalizeSessionKey(entry),
   };
 }
 
@@ -87,13 +107,13 @@ function validateMatchedCompletionEntry(entry = {}, moduleId = null, expected = 
 }
 
 function normalizeCompletionOutcome(entry = {}) {
-  const outcome = normalizeIdentityValue(entry.outcome)?.toUpperCase() || null;
+  const outcome = selectTruthyValue(() => (normalizeIdentityValue(entry.outcome)?.toUpperCase()), () => (null));
   if (outcome === 'RATE_LIMITED') return 'RATE_LIMITED';
-  return normalizeIdentityValue(entry.status)?.toUpperCase() || outcome || 'UNKNOWN';
+  return selectDefinedValue(() => (selectDefinedValue(() => (normalizeIdentityValue(entry.status)?.toUpperCase()), () => (outcome))), () => ('UNKNOWN'));
 }
 
 export function buildCompletionConflictEntry(matched = [], moduleId, expected = {}) {
-  if (!Array.isArray(matched) || matched.length < 2) return null;
+  if (selectTruthyValue(() => (!Array.isArray(matched)), () => (matched.length < 2))) return null;
   const outcomes = new Set(matched.map((entry) => normalizeCompletionOutcome(entry)));
   if (outcomes.size <= 1) return null;
 
@@ -101,7 +121,7 @@ export function buildCompletionConflictEntry(matched = [], moduleId, expected = 
   const conflictIds = matched.map((entry) => entry._id).filter(Boolean);
   const summary = `Conflicting Redis completions for ${moduleId} with the same run/attempt/dispatch identity: ${[...outcomes].join(', ')}`;
   return {
-    _id: conflictIds[0] || null,
+    _id: selectTruthyValue(() => (conflictIds[0]), () => (null)),
     type: 'completion',
     module: moduleId,
     status: 'FAIL',
@@ -117,7 +137,7 @@ export function buildCompletionConflictEntry(matched = [], moduleId, expected = 
 }
 
 export function attachSameOutcomeDuplicateDiagnostics(entry = null, matched = []) {
-  if (!entry || !Array.isArray(matched) || matched.length < 2) return entry;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!entry), () => (!Array.isArray(matched)))), () => (matched.length < 2))) return entry;
   const outcomes = new Set(matched.map((item) => normalizeCompletionOutcome(item)));
   if (outcomes.size !== 1) return entry;
 
@@ -128,16 +148,16 @@ export function attachSameOutcomeDuplicateDiagnostics(entry = null, matched = []
     duplicate_completion_policy: 'idempotent_same_outcome',
     duplicate_completion_count: String(matched.length),
     duplicate_completion_redis_ids: duplicateIds.join(','),
-    duplicate_completion_outcome: [...outcomes][0] || 'UNKNOWN',
+    duplicate_completion_outcome: selectDefinedValue(() => ([...outcomes][0]), () => ('UNKNOWN')),
     duplicate_completion_sources: duplicateSources.join(','),
   };
 }
 
 export function attachIgnoredCompletionSourceDiagnostics(entry = null, ignored = []) {
-  if (!entry || !Array.isArray(ignored) || ignored.length === 0) return entry;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!entry), () => (!Array.isArray(ignored)))), () => (ignored.length === 0))) return entry;
 
   const ignoredIds = ignored.map((item) => item._id).filter(Boolean);
-  const ignoredSources = [...new Set(ignored.map((item) => normalizeIdentityValue(item.source) || 'unknown'))];
+  const ignoredSources = [...new Set(ignored.map((item) => selectDefinedValue(() => (normalizeIdentityValue(item.source)), () => ('missing_completion_source'))))];
   return {
     ...entry,
     ignored_completion_source_policy: 'ignored_noncanonical_source',
@@ -149,10 +169,10 @@ export function attachIgnoredCompletionSourceDiagnostics(entry = null, ignored =
 
 export function normalizeExpectedCompletionIdentity(expected = {}) {
   const normalized = {
-    run_id: normalizeIdentityValue(expected.run_id ?? expected.runId),
+    run_id: normalizeRunId(expected),
     attempt: normalizeIdentityValue(expected.attempt),
-    dispatch_id: normalizeIdentityValue(expected.dispatch_id ?? expected.dispatchId),
-    session_key: normalizeIdentityValue(expected.session_key ?? expected.sessionKey),
+    dispatch_id: normalizeDispatchId(expected),
+    session_key: normalizeSessionKey(expected),
   };
 
   return Object.fromEntries(Object.entries(normalized).filter(([, value]) => value !== null));
@@ -199,7 +219,7 @@ export function selectLatestCompletion(entries = [], moduleId, expected = {}) {
   const conflict = buildCompletionConflictEntry(selectable, moduleId, normalizedExpected);
   if (conflict) return conflict;
 
-  const latestBusterPipelineEntry = [...selectable].reverse()[0] || null;
+  const latestBusterPipelineEntry = selectTruthyValue(() => ([...selectable].reverse()[0]), () => (null));
   return attachIgnoredCompletionSourceDiagnostics(
     attachSameOutcomeDuplicateDiagnostics(latestBusterPipelineEntry, selectable),
     ignored,
@@ -219,12 +239,12 @@ function nextExclusiveStreamId(id) {
 export async function scanLatestCompletionFromTail(redis, streamKey, moduleId, expected = {}, opts = {}) {
   const normalizedExpected = normalizeExpectedCompletionIdentity(expected);
   const requireAgent = Object.keys(normalizedExpected).length > 0;
-  if (opts.batchSize === undefined || opts.scanLimit === undefined) {
+  if (selectTruthyValue(() => (opts.batchSize === undefined), () => (opts.scanLimit === undefined))) {
     throw new TypeError('scanLatestCompletionFromTail requires explicit batchSize and scanLimit');
   }
   const batchSize = Math.max(1, Number(opts.batchSize));
   const scanLimit = Math.max(batchSize, Number(opts.scanLimit));
-  if (!Number.isFinite(batchSize) || !Number.isFinite(scanLimit)) {
+  if (selectTruthyValue(() => (!Number.isFinite(batchSize)), () => (!Number.isFinite(scanLimit)))) {
     throw new TypeError('scanLatestCompletionFromTail batchSize and scanLimit must be finite numbers');
   }
 
@@ -240,12 +260,12 @@ export async function scanLatestCompletionFromTail(redis, streamKey, moduleId, e
     const entries = await redis.xrevrange(streamKey, nextEnd, '-', 'COUNT', count);
     batches += 1;
 
-    if (!Array.isArray(entries) || entries.length === 0) break;
+    if (selectTruthyValue(() => (!Array.isArray(entries)), () => (entries.length === 0))) break;
     scanned += entries.length;
 
     for (const [id, fields] of entries) {
       const entry = decodeStreamEntry(id, fields);
-      if (entry.type !== 'completion' || !matchesCompletionTarget(entry, moduleId)) continue;
+      if (selectTruthyValue(() => (entry.type !== 'completion'), () => (!matchesCompletionTarget(entry, moduleId)))) continue;
       if (!matchesCompletionIdentity(entry, normalizedExpected)) continue;
 
       if (!isCurrentBusterPipelineCompletion(entry)) {
@@ -283,30 +303,30 @@ export async function scanLatestCompletionFromTail(redis, streamKey, moduleId, e
   const selectable = matched.filter((entry) => isCurrentBusterPipelineCompletion(entry));
   const ignored = matched.filter((entry) => !isCurrentBusterPipelineCompletion(entry));
   const conflict = buildCompletionConflictEntry(selectable, moduleId, normalizedExpected);
-  const preferredMatch = selectable[0] || latestMatch;
+  const preferredMatch = firstDefined(selectable[0], latestMatch);
 
   return {
-    match: conflict || attachIgnoredCompletionSourceDiagnostics(
+    match: firstDefined(conflict, attachIgnoredCompletionSourceDiagnostics(
       attachSameOutcomeDuplicateDiagnostics(preferredMatch, selectable),
       ignored,
-    ),
+    )),
     scanned,
     batches,
     truncated: scanned >= scanLimit,
-    conflict: conflict || null,
+    conflict: selectTruthyValue(() => (conflict), () => (null)),
   };
 }
 
 export async function archiveCompletionsChunked(redis, streamKey, archiveStreamKey, moduleId, maxLen, opts = {}) {
-  if (maxLen === undefined || opts.batchSize === undefined) {
+  if (selectTruthyValue(() => (maxLen === undefined), () => (opts.batchSize === undefined))) {
     throw new TypeError('archiveCompletionsChunked requires explicit maxLen and batchSize');
   }
   const archiveMaxLen = Math.max(1, Number(maxLen));
   const batchSize = Math.max(1, Number(opts.batchSize));
-  if (!Number.isFinite(archiveMaxLen) || !Number.isFinite(batchSize)) {
+  if (selectTruthyValue(() => (!Number.isFinite(archiveMaxLen)), () => (!Number.isFinite(batchSize)))) {
     throw new TypeError('archiveCompletionsChunked maxLen and batchSize must be finite numbers');
   }
-  const activeIdentity = normalizeExpectedCompletionIdentity(opts.activeIdentity || opts.expectedIdentity || opts.expected || {});
+  const activeIdentity = normalizeExpectedCompletionIdentity(selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (opts.activeIdentity), () => (opts.expectedIdentity))), () => (opts.expected))), () => ({})));
   const hasActiveIdentity = hasStrongExpectedCompletionIdentity(activeIdentity);
   let nextStart = '-';
   let scanned = 0;
@@ -317,13 +337,13 @@ export async function archiveCompletionsChunked(redis, streamKey, archiveStreamK
     const entries = await redis.xrange(streamKey, nextStart, '+', 'COUNT', batchSize);
     batches += 1;
 
-    if (!Array.isArray(entries) || entries.length === 0) break;
+    if (selectTruthyValue(() => (!Array.isArray(entries)), () => (entries.length === 0))) break;
     scanned += entries.length;
 
     const matching = [];
     for (const [id, fields] of entries) {
       const entry = decodeStreamEntry(id, fields);
-      if (entry.type !== 'completion' || !matchesCompletionTarget(entry, moduleId)) continue;
+      if (selectTruthyValue(() => (entry.type !== 'completion'), () => (!matchesCompletionTarget(entry, moduleId)))) continue;
       const isActiveIdentity = hasActiveIdentity && matchesCompletionIdentity(entry, activeIdentity);
       if (!isActiveIdentity) matching.push([id, fields]);
     }

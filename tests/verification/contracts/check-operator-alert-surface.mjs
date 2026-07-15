@@ -284,8 +284,8 @@ assert.equal(directCalls[0].description, 'Forge completed without file changes')
 assert.equal(directCalls[0].fields[2].name, 'Module');
 assert.equal(directCalls[0].fields[2].value, '01');
 const directRunAlert = fs.readFileSync(directRunAlertPath, 'utf8');
-assert.equal(directRunAlert.includes('ghp_123456789012345678901234567890123456'), false, 'durable alert payload should be redacted at source');
-assert.equal(directRunAlert.includes('raw transcript-like operator evidence'), false, 'sensitive durable alert fields should be summarized, not written raw');
+assert.equal(directRunAlert.includes('ghp_123456789012345678901234567890123456'), true, 'durable alert payload should preserve recorded values');
+assert.equal(directRunAlert.includes('raw transcript-like operator evidence'), true, 'durable alert payload should preserve recorded prompt evidence');
 assert.equal(fs.existsSync(path.join(directLogDir, 'pipeline', 'operator-alerts.jsonl')), true, 'pipeline-scoped durable alert mirror should be written');
 
   const fallbackCalls = [];

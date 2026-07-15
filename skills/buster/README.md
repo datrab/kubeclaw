@@ -68,9 +68,10 @@ Redis task stream
  run suites (sequentially, with telemetry per suite)
       │
       ▼
- decision: criticalFailed?
-  ├── critical failure found → NO_SPAWN: emit plugin.event decision, return FAIL
-  └── critical checks clear  → SPAWN
+ decision
+  ├── critical failure found → NO_SUBAGENT: emit plugin.event decision, return FAIL
+  ├── deterministic suites passed and agent_judgment.required=false → NO_SUBAGENT: write PASS output_file
+  └── deterministic suites passed and agent_judgment.required=true → SPAWN
               │
               ▼
          spawn subagent (ACP session via shared common lifecycle helper)
@@ -167,7 +168,6 @@ Container image references must be fully qualified with registry and namespace, 
 | `REDIS_TLS` / `REDIS_TLS_ENABLED` | — | Set to `true`/`1` to enable TLS client options |
 | `REDIS_NETWORK_ISOLATION` | — | Set to `isolated`/`documented` only when Kubernetes/network policy is the approved Redis perimeter instead of auth/TLS |
 | `DISCORD_WEBHOOK_URL` | — | Discord webhook for suite result and session embeds |
-| `DISCORD_WEBHOOK` | — | Alternate Discord webhook (used by redis.ts) |
 | `BUSTER_PROJECT` | — | Process-level diagnostic `project_hint` for Buster health artifacts only; task payload `project` is required and is not inferred from this env var |
 | `OPENCLAW_GATEWAY_URL` | — | ACP Gateway URL for session spawn |
 | `OPENCLAW_GATEWAY_TOKEN` | — | ACP Gateway auth token |
@@ -200,6 +200,7 @@ Container image references must be fully qualified with registry and namespace, 
 | `session.cwd` | string | Required session working directory; Buster does not infer the repo root |
 | `session.label` | string | Required session label; Buster does not use dispatch id as a label fallback |
 | `test_config` | object | Suite configuration (see Configuration section) |
+| `agent_judgment.required` | boolean | Canonical switch for post-suite Buster child judgment. `false` means deterministic suites are authoritative and Buster writes the canonical `output_file` itself; `true` means Buster must spawn the child session and consume that session's `output_file`. |
 | `capabilities` | string[] | Explicit task capabilities. Defaults to `[]`; unknown values reject the task. |
 
 ## Capabilities
@@ -208,7 +209,7 @@ Buster is default-deny for destructive/tool-heavy boundaries. Grant only the cap
 
 - `static_web_server` — static build serving through nginx.
 - `container_runtime` — podman build/run/push paths.
-- `kubernetes_api` — kubectl namespace/apply/wait/status paths.
+- `kubernetes` — kubectl namespace/apply/wait/status paths and Buster namespace-controller deployments.
 - `browser_automation` — Playwright/browser suites and visual capture.
 - `lighthouse` — Lighthouse performance audits.
 - `discord_media` — Discord image/video media upload.

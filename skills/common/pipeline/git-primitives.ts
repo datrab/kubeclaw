@@ -7,6 +7,7 @@ import path from 'path';
 import { buildSubprocessEnv } from './security.ts';
 import { expandSwarmConfig } from './platform-config.ts';
 
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 declare const process: any;
 
 type AnyRecord = Record<string, any>;
@@ -21,7 +22,7 @@ let gitRuntimePolicy: AnyRecord | null = null;
 
 function requireNumber(obj: AnyRecord, field: string, label: string): number {
   const value = obj?.[field];
-  if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0 || !Number.isInteger(value)) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value)))), () => (value <= 0))), () => (!Number.isInteger(value)))) {
     throw new Error(`${label}.${field}: required positive integer in swarm.config.json`);
   }
   return value;
@@ -29,7 +30,7 @@ function requireNumber(obj: AnyRecord, field: string, label: string): number {
 
 function resolveGitRuntimePolicyFromConfig(config: AnyRecord): AnyRecord {
   const command = config?.git?.command;
-  if (!command || typeof command !== 'object' || Array.isArray(command)) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!command), () => (typeof command !== 'object'))), () => (Array.isArray(command)))) {
     throw new Error('config.git: required platform config object in swarm.config.json');
   }
   return Object.freeze({
@@ -40,7 +41,10 @@ function resolveGitRuntimePolicyFromConfig(config: AnyRecord): AnyRecord {
 
 function resolveGitRuntimePolicy(): AnyRecord {
   if (gitRuntimePolicy) return gitRuntimePolicy;
-  const configPath = process.env.SWARM_CONFIG || DEFAULT_SWARM_CONFIG_PATH;
+  const configuredPath = process.env.SWARM_CONFIG;
+  const configPath = configuredPath !== undefined && configuredPath !== null && String(configuredPath).trim()
+    ? String(configuredPath)
+    : DEFAULT_SWARM_CONFIG_PATH;
   gitRuntimePolicy = resolveGitRuntimePolicyFromConfig(expandSwarmConfig(JSON.parse(fs.readFileSync(configPath, 'utf8'))));
   return gitRuntimePolicy;
 }
@@ -63,12 +67,12 @@ function resolveRepoInput(input: any) {
 
 function isPathInsideOrEqual(child: string, parent: string) {
   const rel = path.relative(path.resolve(parent), path.resolve(child));
-  return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel));
+  return selectTruthyValue(() => (rel === ''), () => ((!rel.startsWith('..') && !path.isAbsolute(rel))));
 }
 
 function isPackagedRuntimePath(value: string) {
   const resolved = path.resolve(value);
-  return resolved === '/app' || isPathInsideOrEqual(resolved, '/app');
+  return selectTruthyValue(() => (resolved === '/app'), () => (isPathInsideOrEqual(resolved, '/app')));
 }
 
 function resolveRuntimeRepoRoot() {
@@ -78,10 +82,10 @@ function resolveRuntimeRepoRoot() {
 
 export function getRepoRoot(startDir?: any) {
   const runtimeRepoRoot = resolveRuntimeRepoRoot();
-  if ((startDir === undefined || startDir === null || startDir === '') && runtimeRepoRoot) {
+  if ((selectTruthyValue(() => (selectTruthyValue(() => (startDir === undefined), () => (startDir === null))), () => (startDir === ''))) && runtimeRepoRoot) {
     return runtimeRepoRoot;
   }
-  const requestedStart = startDir === undefined || startDir === null || startDir === ''
+  const requestedStart = selectTruthyValue(() => (selectTruthyValue(() => (startDir === undefined), () => (startDir === null))), () => (startDir === ''))
     ? process.cwd()
     : startDir;
   if (runtimeRepoRoot && isPathInsideOrEqual(path.resolve(requestedStart), runtimeRepoRoot)) {
@@ -126,7 +130,7 @@ export function getCurrentBranch(repoRoot: any) {
     currentBranch = 'HEAD';
   }
 
-  if (!currentBranch || currentBranch === 'HEAD') {
+  if (selectTruthyValue(() => (!currentBranch), () => (currentBranch === 'HEAD'))) {
     try {
       const refs = gitExec(repoRoot, [
         'for-each-ref', '--format=%(refname:short)',

@@ -5,9 +5,20 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { __gitWorktreeTest, gitCommitAndPush, isRuntimeStatePath, setGitRuntimePolicy } from '../../../../../skills/nova/pipeline/integrations/git-worktree.ts';
+import {
+  __gitWorktreeTest,
+  allocateModuleWorktree,
+  commitModuleWorktreeChanges,
+  freezeParallelGitBase,
+  gitCommitAndPush,
+  isRuntimeStatePath,
+  mergeModuleBranches,
+  setGitRuntimePolicy,
+  verifyModuleWorktreeClean,
+} from '../../../../../skills/nova/pipeline/integrations/git-worktree.ts';
 import { gitSyncBeforeBuster } from '../../../../../skills/nova/pipeline/services/git-sync-before-buster.ts';
 import { createRunStats } from '../../../../../skills/nova/pipeline/core/runtime.ts';
+import { syncTaskRepo } from '../../../../../skills/buster/pipeline/services/task-lifecycle/git-sync.ts';
 
 function git(repoRoot, args) {
   return execFileSync('git', ['-C', repoRoot, ...args], {
@@ -81,6 +92,46 @@ function gitPolicy() {
 
 function testConfig(repoRoot, extra = {}) {
   return { repo_root: repoRoot, project: 'test', ...gitPolicy(), ...extra };
+}
+
+async function withGitCommandShim({ command, message }, fn) {
+  const shimRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'git-command-shim-'));
+  const shimPath = path.join(shimRoot, 'git');
+  fs.writeFileSync(shimPath, `#!/usr/bin/env node
+const { spawnSync } = require('node:child_process');
+const args = process.argv.slice(2);
+function gitCommand(argv) {
+  for (let index = 0; index < argv.length; index += 1) {
+    const arg = argv[index];
+    if (arg === '-C') {
+      index += 1;
+      continue;
+    }
+    if (arg.startsWith('-')) continue;
+    return arg;
+  }
+  return '';
+}
+if (gitCommand(args) === ${JSON.stringify(command)}) {
+  console.error(${JSON.stringify(message)});
+  process.exit(128);
+}
+const result = spawnSync('/usr/bin/git', args, { stdio: 'inherit', env: process.env });
+if (result.error) {
+  console.error(result.error.message);
+  process.exit(1);
+}
+process.exit(result.status === null ? 1 : result.status);
+`);
+  fs.chmodSync(shimPath, 0o755);
+  const oldPath = process.env.PATH;
+  process.env.PATH = `${shimRoot}${path.delimiter}${oldPath || ''}`;
+  try {
+    return await fn();
+  } finally {
+    process.env.PATH = oldPath;
+    fs.rmSync(shimRoot, { recursive: true, force: true });
+  }
 }
 
 test('runtime stash restore preserves pre-existing user stash', () => {
@@ -188,8 +239,10 @@ test('runtime-state classifier treats pipeline-generated module artifacts as saf
   const runtimePaths = [
     'Projects/demo/src/.swarm/progress.json',
     'Projects/demo/src/.swarm/modules/01-foundation/forge-completion.json',
+    'Projects/demo/src/.swarm/modules/01-foundation/forge-completion.stale-before-attempt-2.json',
     'Projects/demo/src/.swarm/modules/01-foundation/buster-completion.json',
     'Projects/demo/src/.swarm/modules/01-foundation/forge-output.json',
+    'Projects/demo/src/.swarm/modules/01-foundation/buster-output.json',
     'Projects/demo/src/.swarm/modules/01-foundation/status.json',
     'Projects/demo/src/.swarm/modules/01-foundation/runtime-summary.md',
   ];
@@ -259,6 +312,127 @@ test('gitSyncBeforeBuster commits only meaningful forge paths and auto-resolves 
   }
 });
 
+test('gitSyncBeforeBuster commits isolated module worktree output without pull-rebase or remote push', async () => {
+  const { root, repoRoot, remote } = makeRemoteRepo();
+
+  try {
+    const parentConfig = {
+      repo_root: repoRoot,
+      project: 'demo',
+      ...gitPolicy(),
+      _runId: 'run-module-worktree-sync-test',
+    };
+    const base = freezeParallelGitBase(parentConfig);
+    const worktree = allocateModuleWorktree(parentConfig, {
+      runId: 'run-module-worktree-sync-test',
+      moduleId: '02-nginx',
+      attempt: 1,
+      baseCommit: base.base_commit,
+    });
+    const moduleConfig = {
+      ...parentConfig,
+      repo_root: worktree.worktree_path,
+      paths: {
+        swarm_dir: path.join(worktree.worktree_path, 'Projects/demo/src/.swarm'),
+        modules_dir: path.join(worktree.worktree_path, 'Projects/demo/src/.swarm/modules'),
+      },
+      _moduleWorktree: worktree,
+      _runStats: createRunStats('2026-06-20T00:00:00.000Z'),
+    };
+
+    fs.writeFileSync(path.join(worktree.worktree_path, 'Projects/demo/src/package.json'), '{\n  "name": "module-two"\n}\n');
+    fs.mkdirSync(path.join(worktree.worktree_path, 'Projects/demo/src/.swarm/logs/modules/02-nginx'), { recursive: true });
+    fs.writeFileSync(path.join(worktree.worktree_path, 'Projects/demo/src/.swarm/logs/modules/02-nginx/runtime.jsonl'), '{"event":"runtime"}\n');
+
+    const status = { module_id: '02-nginx' };
+    const result = await gitSyncBeforeBuster(moduleConfig, '02-nginx', status);
+
+    assert.match(result.commitHash, /^[0-9a-f]{40}$/);
+    assert.equal(status.forge_commit_hash, result.commitHash);
+    assert.equal(git(worktree.worktree_path, ['rev-parse', 'HEAD']), result.commitHash);
+    assert.throws(
+      () => git(remote, ['show-ref', '--verify', `refs/heads/${worktree.branch}`]),
+      /Command failed/,
+    );
+    assert.equal(
+      git(worktree.worktree_path, ['show', '--name-only', '--pretty=format:', 'HEAD']).trim(),
+      'Projects/demo/src/package.json',
+    );
+
+    const clean = verifyModuleWorktreeClean(worktree.worktree_path);
+    assert.deepEqual(clean.ignored_runtime_paths, ['?? Projects/demo/src/.swarm/logs/modules/02-nginx/runtime.jsonl']);
+
+    const merge = mergeModuleBranches(parentConfig, { branches: [worktree.branch] });
+    assert.equal(merge.ok, true);
+    assert.equal(fs.readFileSync(path.join(repoRoot, 'Projects/demo/src/package.json'), 'utf8'), '{\n  "name": "module-two"\n}\n');
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('Buster task repo sync uses isolated module worktree without resetting parent run worktree', async () => {
+  const { root, repoRoot } = makeRemoteRepo();
+
+  try {
+    const parentConfig = {
+      repo_root: repoRoot,
+      project: 'demo',
+      ...gitPolicy(),
+      _runId: 'run-module-buster-task-sync-test',
+      paths: {
+        swarm_dir: path.join(repoRoot, 'Projects/demo/src/.swarm'),
+        modules_dir: path.join(repoRoot, 'Projects/demo/src/.swarm/modules'),
+      },
+    };
+    const parentHead = git(repoRoot, ['rev-parse', 'HEAD']);
+    const parentRuntimePath = path.join(repoRoot, 'Projects/demo/src/.swarm/logs/pipeline/runs/run-module-buster-task-sync-test/lifecycle/read-models.json');
+    fs.mkdirSync(path.dirname(parentRuntimePath), { recursive: true });
+    fs.writeFileSync(parentRuntimePath, '{"modules":{"01-nginx":{"status":"PASS"}}}\n');
+
+    const base = freezeParallelGitBase(parentConfig);
+    const worktree = allocateModuleWorktree(parentConfig, {
+      runId: 'run-module-buster-task-sync-test',
+      moduleId: '02-nginx',
+      attempt: 1,
+      baseCommit: base.base_commit,
+    });
+    const moduleConfig = {
+      ...parentConfig,
+      repo_root: worktree.worktree_path,
+      paths: {
+        swarm_dir: path.join(worktree.worktree_path, 'Projects/demo/src/.swarm'),
+        modules_dir: path.join(worktree.worktree_path, 'Projects/demo/src/.swarm/modules'),
+      },
+    };
+
+    fs.writeFileSync(path.join(worktree.worktree_path, 'Projects/demo/src/package.json'), '{\n  "name": "module-two"\n}\n');
+    const moduleCommit = commitModuleWorktreeChanges(moduleConfig, '[pipeline] Module 02-nginx: Forge output — ready for Buster').hash;
+
+    const priorRepoRoot = process.env.REPO_ROOT;
+    process.env.REPO_ROOT = repoRoot;
+    try {
+      const result = await syncTaskRepo({
+        payload: { session: { cwd: worktree.worktree_path } },
+        commitHash: moduleCommit,
+        moduleId: '02-nginx',
+        tctx: {},
+        logger: { info: () => {} },
+      });
+
+      assert.equal(result.repoRoot, worktree.worktree_path);
+      assert.equal(result.syncResult.ok, true);
+      assert.equal(git(worktree.worktree_path, ['rev-parse', 'HEAD']), moduleCommit);
+      assert.equal(git(repoRoot, ['rev-parse', 'HEAD']), parentHead);
+      assert.equal(fs.readFileSync(parentRuntimePath, 'utf8'), '{"modules":{"01-nginx":{"status":"PASS"}}}\n');
+    } finally {
+      if (priorRepoRoot === undefined) delete process.env.REPO_ROOT;
+      else process.env.REPO_ROOT = priorRepoRoot;
+    }
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test('gitCommitAndPush defaults to project-scoped staging and ignores unrelated dirty files', async () => {
   const { root, repoRoot } = makeRemoteRepo();
 
@@ -289,6 +463,66 @@ test('gitCommitAndPush defaults to project-scoped staging and ignores unrelated 
 
     const porcelain = git(repoRoot, ['status', '--porcelain']);
     assert.match(porcelain, /^\?\? README-outside-project\.md$/m);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('gitCommitAndPush surfaces Git commit failures at commit authority', async () => {
+  const { root, repoRoot } = makeRemoteRepo();
+
+  try {
+    fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/package.json'), '{\n  "name": "demo-commit-fail"\n}\n');
+
+    const config = {
+      repo_root: repoRoot,
+      project: 'demo',
+      ...gitPolicy(),
+      paths: {
+        swarm_dir: path.join(repoRoot, 'Projects/demo/src/.swarm'),
+        modules_dir: path.join(repoRoot, 'Projects/demo/src/.swarm/modules'),
+      },
+    };
+
+    await withGitCommandShim({
+      command: 'commit',
+      message: 'git commit failed: pre-commit hook declined REAL_E2E_EXPECTED_GIT_COMMIT_FAILURE',
+    }, async () => {
+      await assert.rejects(
+        () => gitCommitAndPush(config, '[pipeline] Intentional commit failure'),
+        /REAL_E2E_EXPECTED_GIT_COMMIT_FAILURE/,
+      );
+    });
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('gitCommitAndPush surfaces Git push failures at push authority', async () => {
+  const { root, repoRoot } = makeRemoteRepo();
+
+  try {
+    fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/package.json'), '{\n  "name": "demo-push-fail"\n}\n');
+
+    const config = {
+      repo_root: repoRoot,
+      project: 'demo',
+      ...gitPolicy(),
+      paths: {
+        swarm_dir: path.join(repoRoot, 'Projects/demo/src/.swarm'),
+        modules_dir: path.join(repoRoot, 'Projects/demo/src/.swarm/modules'),
+      },
+    };
+
+    await withGitCommandShim({
+      command: 'push',
+      message: 'Permission denied (publickey).',
+    }, async () => {
+      await assert.rejects(
+        () => gitCommitAndPush(config, '[pipeline] Intentional push failure'),
+        /Permission denied \(publickey\)/,
+      );
+    });
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }
@@ -359,6 +593,47 @@ test('gitCommitAndPush falls back to pull-rebase after direct push rejection whe
       '{\n  "name": "demo-rebased"\n}',
     );
     assert.equal(git(repoRoot, ['show', 'origin/master:user.txt']), 'remote advancement');
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('gitCommitAndPush auto-resolves conflicts for the staged publication paths', async () => {
+  const { root, repoRoot, otherRoot } = makeRemoteRepo();
+
+  try {
+    fs.writeFileSync(path.join(repoRoot, 'review-output.json'), '{ "status": "base" }\n');
+    git(repoRoot, ['add', 'review-output.json']);
+    git(repoRoot, ['commit', '-m', 'add review output']);
+    git(repoRoot, ['push', 'origin', 'master']);
+
+    git(otherRoot, ['pull', '--rebase']);
+    fs.writeFileSync(path.join(otherRoot, 'review-output.json'), '{ "status": "remote" }\n');
+    git(otherRoot, ['add', 'review-output.json']);
+    git(otherRoot, ['commit', '-m', 'remote review output']);
+    git(otherRoot, ['push', 'origin', 'master']);
+
+    fs.writeFileSync(path.join(repoRoot, 'review-output.json'), '{ "status": "local-publication" }\n');
+
+    const config = {
+      repo_root: repoRoot,
+      project: 'demo',
+      ...gitPolicy(),
+      _runId: 'run-git-commit-staged-conflict-test',
+      _runStats: createRunStats('2026-06-20T00:00:00.000Z'),
+      paths: {
+        swarm_dir: path.join(repoRoot, 'Projects/demo/src/.swarm'),
+        modules_dir: path.join(repoRoot, 'Projects/demo/src/.swarm/modules'),
+      },
+    };
+
+    const result = await gitCommitAndPush(config, '[pipeline] Publish review output', {
+      addPaths: ['review-output.json'],
+    });
+
+    assert.equal(result.committed, true);
+    assert.equal(git(repoRoot, ['show', 'origin/master:review-output.json']), '{ "status": "local-publication" }');
+    assert.equal(git(repoRoot, ['status', '--porcelain']), '');
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }

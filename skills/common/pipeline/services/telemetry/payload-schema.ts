@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type UnknownRecord = Record<string, any>;
 type Validator = (value: any) => boolean;
 interface TelemetryPayloadSchema {
@@ -32,11 +33,11 @@ function isNonEmptyString(value: unknown): value is string {
 }
 
 function optional(validator: Validator): Validator {
-  return (value: any) => value === undefined || validator(value);
+  return (value: any) => selectTruthyValue(() => (value === undefined), () => (validator(value)));
 }
 
 function nullable(validator: Validator): Validator {
-  return (value: any) => value === null || value === undefined || validator(value);
+  return (value: any) => selectTruthyValue(() => (selectTruthyValue(() => (value === null), () => (value === undefined))), () => (validator(value)));
 }
 
 const string: Validator = (value: any) => typeof value === 'string';
@@ -46,12 +47,15 @@ const boolean: Validator = (value: any) => typeof value === 'boolean';
 const object: Validator = (value: any) => isPlainObject(value);
 const array: Validator = (value: any) => Array.isArray(value);
 const stringArray: Validator = (value: any) => Array.isArray(value) && value.every((item: any) => typeof item === 'string');
-const verdict: Validator = (value: any) => value === 'PASS' || value === 'FAIL';
+const VERDICT_VALUES = new Set(['PASS', 'FAIL']);
+const TIMEOUT_POLICY_VALUES = new Set(['BLOCK', 'CONTINUE']);
+const verdict: Validator = (value: any) => VERDICT_VALUES.has(value);
 const any: Validator = () => true;
-const arrayOrObject: Validator = (value: any) => Array.isArray(value) || isPlainObject(value);
-const jsonScalar: Validator = (value: any) => value === null || ['string', 'number', 'boolean'].includes(typeof value);
+const arrayOrObject: Validator = (value: any) => [Array.isArray(value), isPlainObject(value)].some(Boolean);
+const jsonScalar: Validator = (value: any) => value === null ? true : ['string', 'number', 'boolean'].includes(typeof value);
+const timeoutPolicy: Validator = (value: any) => TIMEOUT_POLICY_VALUES.has(value);
 function isJsonSafe(value: any, seen: Set<any> = new Set()): boolean {
-  if (jsonScalar(value)) return typeof value !== 'number' || Number.isFinite(value);
+  if (jsonScalar(value)) return selectTruthyValue(() => (typeof value !== 'number'), () => (Number.isFinite(value)));
   if (Array.isArray(value)) {
     if (seen.has(value)) return false;
     seen.add(value);
@@ -62,7 +66,7 @@ function isJsonSafe(value: any, seen: Set<any> = new Set()): boolean {
   if (!isPlainObject(value)) return false;
   if (seen.has(value)) return false;
   seen.add(value);
-  const ok = Object.values(value).every((item: any) => item === undefined || isJsonSafe(item, seen));
+  const ok = Object.values(value).every((item: any) => selectTruthyValue(() => (item === undefined), () => (isJsonSafe(item, seen))));
   seen.delete(value);
   return ok;
 }
@@ -190,8 +194,6 @@ export const TELEMETRY_PAYLOAD_SCHEMAS: Record<string, TelemetryPayloadSchema> =
     system_prompt_chars: nullable(number),
     history_message_count: nullable(number),
     request: nullable(jsonObject),
-    masking_profile: nullable(nonEmptyString),
-    masked: nullable(stringArray),
   }),
   'agent.llm.output.summary': schema({}, {
     agent_type: nullable(nonEmptyString),
@@ -210,8 +212,6 @@ export const TELEMETRY_PAYLOAD_SCHEMAS: Record<string, TelemetryPayloadSchema> =
     usage: nullable(jsonObject),
     input_tokens: nullable(number),
     output_tokens: nullable(number),
-    masking_profile: nullable(nonEmptyString),
-    masked: nullable(stringArray),
   }),
   'agent.tool.started': schema({ tool_name: nonEmptyString }, {
     agent_type: nullable(nonEmptyString),
@@ -224,8 +224,6 @@ export const TELEMETRY_PAYLOAD_SCHEMAS: Record<string, TelemetryPayloadSchema> =
     tool_call_id: nullable(nonEmptyString),
     params_bytes: nullable(number),
     param_keys: nullable(stringArray),
-    masking_profile: nullable(nonEmptyString),
-    masked: nullable(stringArray),
   }),
   'agent.tool.finished': schema({ tool_name: nonEmptyString }, {
     agent_type: nullable(nonEmptyString),
@@ -242,8 +240,6 @@ export const TELEMETRY_PAYLOAD_SCHEMAS: Record<string, TelemetryPayloadSchema> =
     result_bytes: nullable(number),
     error: nullable(jsonObject),
     error_message: nullable(string),
-    masking_profile: nullable(nonEmptyString),
-    masked: nullable(stringArray),
   }),
   'agent.model.started': schema({}, {
     agent_type: nullable(nonEmptyString),
@@ -325,7 +321,7 @@ export const TELEMETRY_PAYLOAD_SCHEMAS: Record<string, TelemetryPayloadSchema> =
     gate_type: nullable(nonEmptyString),
     gate_title: nullable(string),
     timeout_minutes: nullable(number),
-    timeout_policy: optional((value: any) => value === 'BLOCK' || value === 'CONTINUE'),
+    timeout_policy: optional(timeoutPolicy),
   }),
   'approval.resolved': schema({ approval_id: nonEmptyString }, {
     module_id: nullable(nonEmptyString),
@@ -521,6 +517,7 @@ export const TELEMETRY_PAYLOAD_SCHEMAS: Record<string, TelemetryPayloadSchema> =
     pause_count: nullable(number),
     max_pauses: nullable(number),
     cooldown_ms: nullable(number),
+    cooldown_source: nullable(nonEmptyString),
     resume_at: nullable(nonEmptyString),
     detail: nullable(string),
   }),
@@ -620,8 +617,8 @@ export function validateTelemetryEventPayload(eventType: string, payload: unknow
     return errors;
   }
 
-  const required = eventSchema.required || {};
-  const optionalFields = eventSchema.optional || {};
+  const required = selectDefinedValue(() => (eventSchema.required), () => ({}));
+  const optionalFields = selectDefinedValue(() => (eventSchema.optional), () => ({}));
   const allowed = new Set([...Object.keys(required), ...Object.keys(optionalFields)]);
 
   for (const [field, validator] of Object.entries(required)) {

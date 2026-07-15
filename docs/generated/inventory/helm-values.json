@@ -23,6 +23,7 @@
         "image",
         "imagePullSecrets",
         "codeBundle",
+        "runtimeInfrastructure",
         "gateway",
         "busterPipeline",
         "replicaCount",
@@ -63,7 +64,7 @@
         {
           "key": "secretName",
           "value": "redis-secrets",
-          "line": 185
+          "line": 189
         }
       ]
     },

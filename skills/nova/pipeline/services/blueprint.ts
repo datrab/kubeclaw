@@ -14,12 +14,51 @@ import { gitExec } from '../integrations/git-worktree.ts';
 import { buildSubprocessEnv } from '../security.ts';
 import { getPipelineArtifactBundle } from './artifact-bundle.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 type BlueprintDegradedEvidence = { code: string; surface: string; message: string; path?: string | null };
 type SyncedControlFile = { path: string; action: 'created' | 'updated' };
 
+const GIT_PUSH_FAILED = 'git push failed';
+const GIT_ADD_FAILED = 'git add failed';
+const GIT_COMMIT_FAILED = 'git commit failed';
+const GIT_PULL_REBASE_FAILED = 'git pull --rebase failed';
+
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
+}
+
+function textValue(value: unknown): string {
+  return selectTruthyValue(() => (value === undefined), () => (value === null)) ? '' : String(value);
+}
+
+function gitOutput(result: AnyRecord): string {
+  return `${textValue(result.stderr)}\n${textValue(result.stdout)}`;
+}
+
+function splitLines(value: unknown): string[] {
+  return textValue(value).split('\n').map((line: string) => line.trim()).filter(Boolean);
+}
+
+function objectRecord(value: unknown): AnyRecord | null {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : null;
+}
+
+function modulesRecord(progress: AnyRecord): AnyRecord {
+  return selectDefinedValue(() => (objectRecord(progress?.modules)), () => ({}));
+}
+
+function gatesRecord(progress: AnyRecord): AnyRecord {
+  return selectDefinedValue(() => (objectRecord(progress?.gates)), () => ({}));
+}
+
+function gitFailureText(result: AnyRecord, fallback: string): string {
+  const text = gitOutput(result).trim();
+  return text ? text : fallback;
+}
+
+function blueprintSyncOutputDir(artifacts: AnyRecord): string | null {
+  return selectDefinedValue(() => (selectDefinedValue(() => (artifacts.run_log_dir), () => (artifacts.pipeline_dir))), () => (null));
 }
 
 function buildBlueprintDegradedEvidence(code: string, surface: string, error: unknown, extra: AnyRecord = {}): BlueprintDegradedEvidence {
@@ -50,7 +89,7 @@ function gitSpawnSync(repoRoot: string, args: string[], opts: AnyRecord = {}) {
 
 function getConflictFiles(repoRoot: string): string[] {
   const result = gitSpawnSync(repoRoot, ['diff', '--name-only', '--diff-filter=U']);
-  return (result.stdout || '').split('\n').map((line: string) => line.trim()).filter(Boolean);
+  return splitLines(result.stdout);
 }
 
 function buildBlueprintDiscordFields(identity: AnyRecord = {}, extra: AnyRecord[] = []) {
@@ -75,33 +114,33 @@ function pushWithRecovery(config: AnyRecord, branch: string) {
   const pushResult = gitSpawnSync(repoRoot, ['push', '--force-with-lease', 'origin', branch]);
   if (pushResult.status === 0) return;
 
-  const errText = `${pushResult.stderr || ''}\n${pushResult.stdout || ''}`;
+  const errText = gitOutput(pushResult);
   if (/CONFLICT|rebase conflict/i.test(errText)) {
     const conflictFiles = getConflictFiles(repoRoot);
     throw new Error(`Git rebase conflict detected before push. Involved files: ${conflictFiles.join(', ')}`);
   }
-  throw new Error(errText.trim() || 'git push failed');
+  throw new Error(gitFailureText(pushResult, GIT_PUSH_FAILED));
 }
 
 function normalizeGitPath(filePath: unknown): string {
-  return String(filePath || '').replace(/\\/g, '/').replace(/^\.\//, '').replace(/\/$/, '');
+  return textValue(filePath).replace(/\\/g, '/').replace(/^\.\//, '').replace(/\/$/, '');
 }
 
 function pathMatchesSelection(filePath: string, selectedPaths: string[]): boolean {
   const normalizedFile = normalizeGitPath(filePath);
   return selectedPaths.some((selectedPath: string) => {
     const normalizedSelected = normalizeGitPath(selectedPath);
-    return normalizedFile === normalizedSelected || normalizedFile.startsWith(`${normalizedSelected}/`);
+    return selectTruthyValue(() => (normalizedFile === normalizedSelected), () => (normalizedFile.startsWith(`${normalizedSelected}/`)));
   });
 }
 
 function commitSelectedPaths(config: AnyRecord, message: string, addPaths: string[]) {
   const repoRoot = config.repo_root;
   const addResult = gitSpawnSync(repoRoot, ['add', ...addPaths]);
-  if (addResult.status !== 0) throw new Error(`${addResult.stderr || addResult.stdout || 'git add failed'}`.trim());
+  if (addResult.status !== 0) throw new Error(gitFailureText(addResult, GIT_ADD_FAILED));
 
   const staged = gitSpawnSync(repoRoot, ['diff', '--cached', '--name-only']);
-  const stagedPaths = (staged.stdout || '').split('\n').map((line: string) => line.trim()).filter(Boolean);
+  const stagedPaths = splitLines(staged.stdout);
   if (stagedPaths.length === 0) return { committed: false };
 
   const unrelatedStagedPaths = stagedPaths.filter((stagedPath: string) => !pathMatchesSelection(stagedPath, addPaths));
@@ -113,21 +152,21 @@ function commitSelectedPaths(config: AnyRecord, message: string, addPaths: strin
   }
 
   const commitResult = gitSpawnSync(repoRoot, ['commit', '-m', message, '--', ...addPaths]);
-  const commitText = `${commitResult.stderr || ''}\n${commitResult.stdout || ''}`;
+  const commitText = gitOutput(commitResult);
   if (commitResult.status !== 0) {
     if (nothingToCommit(commitText)) return { committed: false, skipped: true, reason: 'already_committed' };
-    throw new Error(commitText.trim() || 'git commit failed');
+    throw new Error(gitFailureText(commitResult, GIT_COMMIT_FAILED));
   }
 
   const branch = gitSpawnSync(repoRoot, ['rev-parse', '--abbrev-ref', 'HEAD']).stdout.trim();
   const pullResult = gitSpawnSync(repoRoot, ['pull', '--rebase', 'origin', branch]);
   if (pullResult.status !== 0) {
-    const pullText = `${pullResult.stderr || ''}\n${pullResult.stdout || ''}`;
+    const pullText = gitOutput(pullResult);
     if (/CONFLICT|rebase conflict/i.test(pullText)) {
       const conflictFiles = getConflictFiles(repoRoot);
       throw new Error(`Git rebase conflict detected before push. Involved files: ${conflictFiles.join(', ')}`);
     } else {
-      throw new Error(pullText.trim() || 'git pull --rebase failed');
+      throw new Error(gitFailureText(pullResult, GIT_PULL_REBASE_FAILED));
     }
   }
   pushWithRecovery(config, branch);
@@ -150,7 +189,7 @@ export async function releaseBlueprint(config: AnyRecord, progress: AnyRecord, m
   const branch = `${config.project}/architecture`;
   const branchRef = ensureRemoteBranchRef(config, branch, 'blueprint release');
   const targetPath = relPath(config, modulePath(config, moduleDir));
-  const moduleConfig = progress.modules[moduleId] || {};
+  const moduleConfig = selectDefinedValue(() => (objectRecord(modulesRecord(progress)[moduleId])), () => ({}));
 
   log('STEP', `Releasing blueprint for ${moduleId} from ${branch}`);
   const existingStatus = projectModuleSchedulerState(config, moduleId, moduleConfig);
@@ -179,7 +218,7 @@ export async function releaseBlueprint(config: AnyRecord, progress: AnyRecord, m
 
   const blueprintFilePath = targetPath;
   const statusResult = gitSpawnSync(config.repo_root, ['status', '--porcelain', blueprintFilePath]);
-  const isDirty = (statusResult.stdout || '').trim().length > 0;
+  const isDirty = textValue(statusResult.stdout).trim().length > 0;
   if (!isDirty) {
     log('INFO', `Blueprint already released for module ${moduleId} — skipping commit`);
     return { status: 'success', action: 'no_changes', module: moduleDir, skipped: true, reason: 'already_committed' };
@@ -196,7 +235,7 @@ export async function releaseBlueprint(config: AnyRecord, progress: AnyRecord, m
 
 export async function releaseGateFiles(config: AnyRecord, progress: AnyRecord) {
   const gates = progress.gates;
-  if (!gates || Object.keys(gates).length === 0) return;
+  if (selectTruthyValue(() => (!gates), () => (Object.keys(gates).length === 0))) return;
   const branch = `${config.project}/architecture`;
   let branchRef: string;
   try { branchRef = ensureRemoteBranchRef(config, branch, 'gate file release'); }
@@ -220,7 +259,7 @@ export async function releaseGateFiles(config: AnyRecord, progress: AnyRecord) {
   const degraded: BlueprintDegradedEvidence[] = [];
   for (const targetPath of gateDirRefs) {
     try { gitExec(config.repo_root, ['cat-file', '-e', `${branchRef}:${targetPath}`], { stdio: 'ignore' }); }
-    catch (e) { log('DEBUG', `Gate dir '${targetPath}' not found in architecture branch — skipping: ${errorMessage(e)}`); continue; }
+    catch (_e) { continue; }
 
     const localPath = path.join(config.repo_root, targetPath);
     if (fs.existsSync(localPath) && fs.readdirSync(localPath).length > 0) {
@@ -266,10 +305,10 @@ export async function syncControlFiles(config: AnyRecord, progress: AnyRecord) {
   const degraded: BlueprintDegradedEvidence[] = [];
   function syncFile(archPath: string) {
     try { gitExec(config.repo_root, ['cat-file', '-e', `${branchRef}:${archPath}`], { stdio: 'ignore' }); }
-    catch (e) { log('DEBUG', `[blueprint-sync] ${archPath} missing in architecture branch — skipping: ${errorMessage(e)}`); return; }
+    catch (_e) { return; }
 
     let archContent;
-    try { archContent = gitExec(config.repo_root, ['show', `${branchRef}:${archPath}`]); } catch (e) { log('DEBUG', `[blueprint-sync] could not read ${archPath} from architecture branch: ${errorMessage(e)}`); return; }
+    try { archContent = gitExec(config.repo_root, ['show', `${branchRef}:${archPath}`]); } catch (e) { log('WARN', `[blueprint-sync] could not read declared architecture control file ${archPath}: ${errorMessage(e)}`); return; }
     const localAbsPath = path.join(config.repo_root, archPath);
     let localContent = null;
     try { localContent = fs.readFileSync(localAbsPath, 'utf8'); } catch (e) { if ((e as AnyRecord)?.code !== 'ENOENT') log('DEBUG', `[blueprint-sync] could not read local ${archPath}: ${errorMessage(e)}`); }
@@ -284,23 +323,23 @@ export async function syncControlFiles(config: AnyRecord, progress: AnyRecord) {
     }
   }
 
-  for (const [moduleId, mod] of Object.entries(progress.modules || {}) as [string, AnyRecord][]) {
+  for (const [moduleId, mod] of Object.entries(modulesRecord(progress)) as [string, AnyRecord][]) {
     const status = projectModuleSchedulerState(config, moduleId, mod);
-    if (!status || status.status === STATUS.PENDING) continue;
+    if (selectTruthyValue(() => (!status), () => (status.status === STATUS.PENDING))) continue;
     const moduleRel = relPath(config, modulePath(config, mod.dir));
     for (const file of BLUEPRINT_POLICY.include.moduleControlFiles) syncFile(`${moduleRel}/${file}`);
-    const moduleConfig = progress.modules[moduleId] || {};
+    const moduleConfig = selectDefinedValue(() => (objectRecord(modulesRecord(progress)[moduleId])), () => ({}));
     if (moduleConfig.substeps?.length) for (const stepId of moduleConfig.substeps) syncFile(`${moduleRel}/${stepId}/FORGE.md`);
   }
 
   const processedGateDirs = new Set<string>();
-  for (const gate of Object.values(progress.gates || {}) as AnyRecord[]) {
+  for (const gate of Object.values(gatesRecord(progress)) as AnyRecord[]) {
     if (gate.instructions_file) {
       syncFile(gateInstructionsPathRef(config, gate));
       const gateDir = gateInstructionsTopLevelRef(config, gate);
       if (!processedGateDirs.has(gateDir)) {
         processedGateDirs.add(gateDir);
-        const extraFiles = (BLUEPRINT_POLICY.include.gateControlFilesByDir as AnyRecord)[gateDir] || [];
+        const extraFiles = selectDefinedValue(() => ((BLUEPRINT_POLICY.include.gateControlFilesByDir as AnyRecord)[gateDir]), () => ([]));
         for (const file of extraFiles) syncFile(`${swarmRel}/${gateDir}/${file}`);
       }
     }
@@ -322,9 +361,10 @@ export async function syncControlFiles(config: AnyRecord, progress: AnyRecord) {
   }
 
   const artifacts = getPipelineArtifactBundle(config);
-  if (artifacts.run_log_dir || artifacts.pipeline_dir) {
+  const syncOutputDir = blueprintSyncOutputDir(artifacts);
+  if (syncOutputDir) {
     try {
-      fs.writeFileSync(path.join(artifacts.run_log_dir || artifacts.pipeline_dir, 'blueprint-sync.json'), JSON.stringify({ ts: new Date().toISOString(), synced: synced.length, files: synced }, null, 2));
+      fs.writeFileSync(path.join(syncOutputDir, 'blueprint-sync.json'), JSON.stringify({ ts: new Date().toISOString(), synced: synced.length, files: synced }, null, 2));
     } catch (e) {
       log('DEBUG', `[blueprint-sync] failed to write sync summary: ${errorMessage(e)}`);
     }

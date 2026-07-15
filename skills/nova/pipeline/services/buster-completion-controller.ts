@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/buster-completion-controller.ts — OI-42 event-driven Buster completion controller.
 // Phase 4 active path: waits on completion/local/fatal events and projects decisions
 // for the Buster module/gate runner cutover.
@@ -10,18 +11,58 @@ import { waitForAny, PipelineEventContractError } from './pipeline-event-contrac
 export const BUSTER_COMPLETION_EVENT_TYPES = Object.freeze([
   'completion.evidence',
   'local.evidence.updated',
+  'local.evidence.warning',
   'fatal.error',
 ]);
+const REDIS_COMPLETION_SOURCE_AGENT = 'agent';
+const REDIS_COMPLETION_INITIAL_ID = '0-1';
+const REDIS_COMPLETION_SCHEMA_VERSION = 'v1';
+const REDIS_COMPLETION_STREAM_ROLE = 'completion';
+const SYSTEM_SOURCE = 'system';
+const LOCAL_FS_SOURCE = 'local_fs';
+const LOCAL_EVIDENCE_WARNING_REASON = 'local_evidence_warning';
 
 function normalizeValue(value) {
-  if (value === undefined || value === null || value === '') return null;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return null;
   return String(value);
 }
 
+function firstDefined(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return null;
+}
+
+function completionTargetModuleId(rawEntry, targetKind, targetId) {
+  return normalizeValue(firstDefined(rawEntry.module_id, targetKind === 'module' ? targetId : null));
+}
+
+function completionTargetGateId(rawEntry, targetKind, targetId) {
+  return normalizeValue(firstDefined(rawEntry.gate_id, targetKind === 'gate' ? targetId : null));
+}
+
+function completionTimestamp(rawEntry) {
+  const timestamp = normalizeValue(firstDefined(rawEntry.timestamp, rawEntry.ts));
+  if (!timestamp) throw new PipelineEventContractError('Redis completion entry requires timestamp', { field: 'timestamp' });
+  return timestamp;
+}
+
+function completionBudgetTimeout(timeoutRemainingMs, budgetRemainingMs) {
+  if (timeoutRemainingMs == null) return budgetRemainingMs;
+  if (budgetRemainingMs == null) return timeoutRemainingMs;
+  return Math.min(timeoutRemainingMs, budgetRemainingMs);
+}
+
 function safeRedisCompletionSource(source) {
-  return ['buster-pipeline', 'buster-pipeline-task-queue', 'completion-conflict', 'completion-invalid', 'agent'].includes(String(source || ''))
-    ? String(source)
-    : 'agent';
+  const normalizedSource = normalizeValue(source);
+  return ['buster-pipeline', 'buster-pipeline-task-queue', 'completion-conflict', 'completion-invalid', 'agent'].includes(normalizedSource)
+    ? normalizedSource
+    : REDIS_COMPLETION_SOURCE_AGENT;
+}
+
+function objectRecord(value) {
+  return value !== null && typeof value === 'object' && !Array.isArray(value) ? value : {};
 }
 
 export function buildCompletionEventEntry(rawEntry = {}, {
@@ -29,25 +70,25 @@ export function buildCompletionEventEntry(rawEntry = {}, {
   targetKind = 'module',
   targetId = null,
 } = {}) {
-  const moduleId = normalizeValue(rawEntry.module ?? rawEntry.module_id ?? (targetKind === 'module' ? targetId : null));
-  const gateId = normalizeValue(rawEntry.gate_id ?? (targetKind === 'gate' ? targetId : null));
+  const moduleId = completionTargetModuleId(rawEntry, targetKind, targetId);
+  const gateId = completionTargetGateId(rawEntry, targetKind, targetId);
   return {
-    _id: normalizeValue(rawEntry._id) || '0-1',
-    schema_version: normalizeValue(rawEntry.schema_version) || 'v1',
+    _id: selectDefinedValue(() => (normalizeValue(rawEntry._id)), () => (REDIS_COMPLETION_INITIAL_ID)),
+    schema_version: selectDefinedValue(() => (normalizeValue(rawEntry.schema_version)), () => (REDIS_COMPLETION_SCHEMA_VERSION)),
     type: 'completion',
-    stream_role: normalizeValue(rawEntry.stream_role) || 'completion',
-    project: normalizeValue(rawEntry.project) || normalizeValue(config.project) || 'unknown',
+    stream_role: selectDefinedValue(() => (normalizeValue(rawEntry.stream_role)), () => (REDIS_COMPLETION_STREAM_ROLE)),
+    project: selectDefinedValue(() => (selectDefinedValue(() => (normalizeValue(rawEntry.project)), () => (normalizeValue(config.project)))), () => ('missing_project')),
     target_kind: targetKind,
-    target_id: normalizeValue(rawEntry.target_id ?? rawEntry.targetId) || gateId || moduleId || normalizeValue(targetId),
-    module: moduleId || normalizeValue(rawEntry.module),
-    gate_id: gateId || undefined,
-    gate_type: normalizeValue(rawEntry.gate_type ?? rawEntry.gateType),
-    run_id: normalizeValue(rawEntry.run_id ?? rawEntry.runId),
-    attempt: rawEntry.attempt ?? null,
-    dispatch_id: normalizeValue(rawEntry.dispatch_id ?? rawEntry.dispatchId),
-    session_key: normalizeValue(rawEntry.session_key ?? rawEntry.sessionKey),
+    target_id: selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (normalizeValue(selectDefinedValue(() => (rawEntry.target_id), () => (rawEntry.targetId)))), () => (gateId))), () => (moduleId))), () => (normalizeValue(targetId))),
+    module: selectDefinedValue(() => (moduleId), () => (normalizeValue(rawEntry.module))),
+    gate_id: selectTruthyValue(() => (gateId), () => (undefined)),
+    gate_type: normalizeValue(firstDefined(rawEntry.gate_type, rawEntry.gateType)),
+    run_id: normalizeValue(firstDefined(rawEntry.run_id, rawEntry.runId)),
+    attempt: selectDefinedValue(() => (rawEntry.attempt), () => (null)),
+    dispatch_id: normalizeValue(firstDefined(rawEntry.dispatch_id, rawEntry.dispatchId)),
+    session_key: normalizeValue(firstDefined(rawEntry.session_key, rawEntry.sessionKey)),
     source: safeRedisCompletionSource(rawEntry.source),
-    timestamp: normalizeValue(rawEntry.timestamp ?? rawEntry.ts) || new Date().toISOString(),
+    timestamp: completionTimestamp(rawEntry),
     ...rawEntry,
     source: safeRedisCompletionSource(rawEntry.source),
   };
@@ -60,7 +101,7 @@ function defaultExpectedStatuses(targetKind) {
 }
 
 function requireSignal(signal) {
-  if (!signal || typeof signal.addEventListener !== 'function' || typeof signal.removeEventListener !== 'function') {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!signal), () => (typeof signal.addEventListener !== 'function'))), () => (typeof signal.removeEventListener !== 'function'))) {
     throw new PipelineEventContractError('Buster completion controller requires an AbortSignal', { option: 'signal' });
   }
 }
@@ -82,7 +123,7 @@ function buildInvalidCompletionEntry(entry = {}, validationErrors = []) {
 }
 
 function eventRedisEntry(event = {}) {
-  return event?.payload?.entry || null;
+  return selectTruthyValue(() => (event?.payload?.entry), () => (null));
 }
 
 function buildRedisCompletionResult({
@@ -95,9 +136,10 @@ function buildRedisCompletionResult({
   statusSource = 'local_evidence',
   event = null,
 }) {
-  const validationErrors = validateRedisCompletionEntry(redisEntry || {});
+  const redisRecord = objectRecord(redisEntry);
+  const validationErrors = validateRedisCompletionEntry(redisRecord);
   const effectiveRedisEntry = validationErrors.length > 0
-    ? buildInvalidCompletionEntry(redisEntry || {}, validationErrors)
+    ? buildInvalidCompletionEntry(redisRecord, validationErrors)
     : redisEntry;
 
   const completion = adjudicateCompletionEvidence({
@@ -162,11 +204,11 @@ export async function resolveBusterCompletionEvent({
     return {
       resolved: true,
       reason: 'fatal_error',
-      source: event.source || 'system',
+      source: selectDefinedValue(() => (normalizeValue(event.source)), () => (SYSTEM_SOURCE)),
       target_kind: targetKind,
       target_id: targetId,
       event,
-      error: event.payload || {},
+      error: objectRecord(event.payload),
     };
   }
 
@@ -198,10 +240,21 @@ export async function resolveBusterCompletionEvent({
     };
   }
 
+  if (event?.type === 'local.evidence.warning') {
+    return {
+      resolved: false,
+      reason: selectDefinedValue(() => (normalizeValue(event?.payload?.reason)), () => (LOCAL_EVIDENCE_WARNING_REASON)),
+      source: LOCAL_FS_SOURCE,
+      target_kind: targetKind,
+      target_id: targetId,
+      event,
+    };
+  }
+
   return {
     resolved: false,
     reason: 'ignored_event',
-    source: event?.source || null,
+    source: normalizeValue(event?.source),
     target_kind: targetKind,
     target_id: targetId,
     event,
@@ -229,9 +282,7 @@ export async function waitForBusterCompletion({
     budget?.throwIfExhausted?.();
     const timeoutRemainingMs = deadline == null ? undefined : Math.max(0, deadline - Date.now());
     const budgetRemainingMs = budget?.remainingMs ? budget.remainingMs() : undefined;
-    const remainingTimeoutMs = timeoutRemainingMs == null
-      ? budgetRemainingMs
-      : Math.min(timeoutRemainingMs, budgetRemainingMs ?? timeoutRemainingMs);
+    const remainingTimeoutMs = completionBudgetTimeout(timeoutRemainingMs, budgetRemainingMs);
     const event = await waitForAny(eventBus, BUSTER_COMPLETION_EVENT_TYPES, identity, {
       signal,
       timeoutMs: remainingTimeoutMs,
@@ -274,7 +325,7 @@ export function buildGateLocalEvidenceResolver(projectGateCompletionState, {
     return {
       resolved: false,
       reason: 'local_evidence_pending',
-      source: fileCompletion.source || 'local_fs',
+      source: selectDefinedValue(() => (normalizeValue(fileCompletion.source)), () => (LOCAL_FS_SOURCE)),
       target_kind: 'gate',
       target_id: gateId,
       event,

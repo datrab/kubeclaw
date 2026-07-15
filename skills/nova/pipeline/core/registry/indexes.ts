@@ -4,11 +4,28 @@ import {
 } from '../constants.ts';
 import { createRegistryDictionary } from './dictionary.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 type RegistryError = { code: string; message: string; [key: string]: any };
 
 function pushError(errors: RegistryError[], code: string, message: string, details: AnyRecord = {}) {
   errors.push({ code, message, ...details });
+}
+
+function ensureRegistryMap(parent: AnyRecord, key: string): AnyRecord {
+  const existing = parent[key];
+  if (existing !== undefined) return existing;
+  const next = createRegistryDictionary();
+  parent[key] = next;
+  return next;
+}
+
+function ensureRegistryList(parent: AnyRecord, key: string): AnyRecord[] {
+  const existing = parent[key];
+  if (existing !== undefined) return existing;
+  const next: AnyRecord[] = [];
+  parent[key] = next;
+  return next;
 }
 
 export function buildStageOwnerIndex(normalizedConfig: AnyRecord, resolvedRecords: AnyRecord, errors: RegistryError[]) {
@@ -21,9 +38,8 @@ export function buildStageOwnerIndex(normalizedConfig: AnyRecord, resolvedRecord
     if (!record.enabled) continue;
     for (const stageId of record.resolvedStageIds) {
       const hookFamily = record.manifest.hookFamily;
-      candidatesByStage[hookFamily] ??= createRegistryDictionary();
-      candidatesByStage[hookFamily][stageId] ??= [];
-      candidatesByStage[hookFamily][stageId].push(record);
+      const familyCandidates = ensureRegistryMap(candidatesByStage, hookFamily);
+      ensureRegistryList(familyCandidates, stageId).push(record);
       if (!['notification', 'telemetry'].includes(record.manifest.kind)) decisionStages.push({ hookFamily, stageId });
     }
   }
@@ -34,7 +50,7 @@ export function buildStageOwnerIndex(normalizedConfig: AnyRecord, resolvedRecord
     const moduleId = String(moduleIdValue);
     const ownerRecord = resolvedRecords[moduleId];
     if (!ownerRecord) {
-      pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_STAGE_OWNER_UNKNOWN, `config.plugins.stageOwners.${stageId} references unknown module '${moduleId}'`);
+      pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_STAGE_OWNER_UNRECOGNIZED, `config.plugins.stageOwners.${stageId} references unrecognized module '${moduleId}'`);
       continue;
     }
     if (!ownerRecord.enabled) {
@@ -42,7 +58,7 @@ export function buildStageOwnerIndex(normalizedConfig: AnyRecord, resolvedRecord
       continue;
     }
     if (!ownerRecord.resolvedStageIds.includes(stageId)) {
-      pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_STAGE_OWNER_UNKNOWN, `config.plugins.stageOwners.${stageId} cannot select module '${moduleId}' because it does not claim that stage`);
+      pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_STAGE_OWNER_UNRECOGNIZED, `config.plugins.stageOwners.${stageId} cannot select module '${moduleId}' because it does not claim that stage`);
       continue;
     }
     const hookFamily = ownerRecord.manifest.hookFamily;
@@ -50,20 +66,19 @@ export function buildStageOwnerIndex(normalizedConfig: AnyRecord, resolvedRecord
       pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_STAGE_ID_INVALID, `config.plugins.stageOwners.${stageId} is not a valid stage id for kind '${ownerRecord.manifest.kind}'`);
       continue;
     }
-    stageOwners[hookFamily] ??= createRegistryDictionary();
-    stageOwners[hookFamily][stageId] = ownerRecord;
+    ensureRegistryMap(stageOwners, hookFamily)[stageId] = ownerRecord;
   }
 
   for (const [hookFamily, stageMap] of Object.entries(candidatesByStage)) {
-    stageOwners[hookFamily] ??= createRegistryDictionary();
+    const familyOwners = ensureRegistryMap(stageOwners, hookFamily);
     for (const [stageId, candidatesValue] of Object.entries(stageMap)) {
       const candidates = candidatesValue as AnyRecord[];
       if (candidates.every((candidate: AnyRecord) => ['notification', 'telemetry'].includes(candidate?.manifest?.kind))) {
         continue;
       }
-      if (stageOwners[hookFamily][stageId]) continue;
+      if (familyOwners[stageId]) continue;
       if (candidates.length === 1) {
-        stageOwners[hookFamily][stageId] = candidates[0];
+        familyOwners[stageId] = candidates[0];
         continue;
       }
       if (candidates.length > 1) {
@@ -84,10 +99,9 @@ export function buildStageOwnerIndex(normalizedConfig: AnyRecord, resolvedRecord
 export function buildHookIndex(resolvedRecords: AnyRecord) {
   const hookIndex: AnyRecord = createRegistryDictionary();
   for (const record of Object.values(resolvedRecords)) {
-    hookIndex[record.manifest.hookFamily] ??= createRegistryDictionary();
+    const familyIndex = ensureRegistryMap(hookIndex, record.manifest.hookFamily);
     for (const stageId of record.resolvedStageIds) {
-      hookIndex[record.manifest.hookFamily][stageId] ??= [];
-      hookIndex[record.manifest.hookFamily][stageId].push(record);
+      ensureRegistryList(familyIndex, stageId).push(record);
     }
   }
   return hookIndex;
@@ -98,10 +112,9 @@ export function buildGateTypeIndex(normalizedConfig: AnyRecord, resolvedRecords:
 
   const candidatesByGateType: AnyRecord = createRegistryDictionary();
   for (const record of Object.values(resolvedRecords)) {
-    if (!record.enabled || record.manifest.kind !== 'gate') continue;
-    for (const gateType of record.manifest.gateTypes || []) {
-      candidatesByGateType[gateType] ??= [];
-      candidatesByGateType[gateType].push(record);
+    if (selectTruthyValue(() => (!record.enabled), () => (record.manifest.kind !== 'gate'))) continue;
+    for (const gateType of selectDefinedValue(() => (record.manifest.gateTypes), () => ([]))) {
+      ensureRegistryList(candidatesByGateType, gateType).push(record);
     }
   }
 
@@ -118,7 +131,7 @@ export function buildGateTypeIndex(normalizedConfig: AnyRecord, resolvedRecords:
     }
 
     const record = candidates[0];
-    const stageOwner = stageOwners?.['gate.execute']?.[stageId] || null;
+    const stageOwner = selectTruthyValue(() => (stageOwners?.['gate.execute']?.[stageId]), () => (null));
     if (!stageOwner) {
       pushError(
         errors,

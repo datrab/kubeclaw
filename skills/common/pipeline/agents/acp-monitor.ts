@@ -1,6 +1,7 @@
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 declare const Buffer: any;
 type AnyRecord = Record<string, any>;
 type AnyFunction = (...args: any[]) => any;
@@ -36,19 +37,44 @@ const _transcriptRateLimits = new Map(); // agentLabel -> { count, windowStart }
 const TRANSCRIPT_MAX_PER_SEC = 5;
 const VALID_LINE_KINDS = new Set(['assistant', 'assistant_delta', 'tool_call', 'tool_result', 'system_event', 'lifecycle', 'thinking', 'info']);
 
-export function publishTranscriptDelta(ctx: any, identity: AnyRecord, newLines: string[], emitFn: AnyFunction | null) {
-  const agentLabel = identity?.label || null;
-  const moduleId = identity?.module_id ?? null;
-  const gateId = identity?.gate_id ?? null;
-  const gateType = identity?.gate_type ?? null;
-  const sessionKey = identity?.session_key ?? null;
-  const dispatchId = identity?.dispatch_id ?? null;
-  const agentType = identity?.agent_type || agentLabel?.split('-')[0] || 'forge';
+function transcriptRateLimitFor(agentLabel: string, now: number): AnyRecord {
+  const existing = objectRecord(_transcriptRateLimits.get(agentLabel));
+  if (existing) return existing;
+  return { count: 0, windowStart: now };
+}
 
-  if (!emitFn || !newLines || newLines.length === 0) return;
+function objectRecord(value: any): AnyRecord | null {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : null;
+}
+
+function nonEmptyString(value: any): string | null {
+  return typeof value === 'string' && value.trim() ? value : null;
+}
+
+function requiredNonEmptyString(value: any, label: string): string {
+  const text = nonEmptyString(value);
+  if (!text) throw new Error(`ACP monitor requires explicit ${label}`);
+  return text;
+}
+
+function nonNegativeNumber(value: any): number | null {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : null;
+}
+
+export function publishTranscriptDelta(ctx: any, identity: AnyRecord, newLines: string[], emitFn: AnyFunction | null) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!emitFn), () => (!newLines))), () => (newLines.length === 0))) return;
+
+  const agentLabel = requiredNonEmptyString(identity?.label, 'transcript identity.label');
+  const moduleId = selectDefinedValue(() => (identity?.module_id), () => (null));
+  const gateId = selectDefinedValue(() => (identity?.gate_id), () => (null));
+  const gateType = selectDefinedValue(() => (identity?.gate_type), () => (null));
+  const sessionKey = selectDefinedValue(() => (identity?.session_key), () => (null));
+  const dispatchId = selectDefinedValue(() => (identity?.dispatch_id), () => (null));
+  const agentType = requiredNonEmptyString(identity?.agent_type, 'transcript identity.agent_type');
 
   const now = Date.now();
-  const rl = _transcriptRateLimits.get(agentLabel) || { count: 0, windowStart: now };
+  const rl = transcriptRateLimitFor(agentLabel, now);
 
   if (now - rl.windowStart >= 1000) {
     rl.count = 0;
@@ -59,7 +85,7 @@ export function publishTranscriptDelta(ctx: any, identity: AnyRecord, newLines: 
 
   if (wouldExceed) {
     const texts = newLines.map(l => {
-      try { const e = JSON.parse(l); return e?.text || l; } catch (_error) { return l; }
+      try { const e = JSON.parse(l); return selectDefinedValue(() => (e?.text), () => (l)); } catch (_error) { return l; }
     });
     emitFn(ctx, {
       agent_type: agentType,
@@ -81,7 +107,7 @@ export function publishTranscriptDelta(ctx: any, identity: AnyRecord, newLines: 
       try { evt = JSON.parse(line); } catch (_error) { evt = null; }
       const rawKind = evt?.kind;
       const kind = rawKind && VALID_LINE_KINDS.has(rawKind) ? rawKind : 'info';
-      const text = evt?.text || evt?.data?.text || line;
+      const text = selectDefinedValue(() => (selectDefinedValue(() => (evt?.text), () => (evt?.data?.text))), () => (line));
       emitFn(ctx, {
         agent_type: agentType,
         label: agentLabel,
@@ -92,7 +118,7 @@ export function publishTranscriptDelta(ctx: any, identity: AnyRecord, newLines: 
         dispatch_id: dispatchId,
         line_kind: kind,
         text,
-        transcript_offset: evt?.offset ?? null,
+        transcript_offset: selectDefinedValue(() => (evt?.offset), () => (null)),
       });
       rl.count++;
     }
@@ -105,28 +131,65 @@ export function publishTranscriptDelta(ctx: any, identity: AnyRecord, newLines: 
 
 function readRequiredNonNegativeNumber(src: AnyRecord, snakeKey: string, errors: string[]) {
   const raw = src?.[snakeKey];
-  if (raw === undefined || raw === null || raw === '') {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (raw === undefined), () => (raw === null))), () => (raw === ''))) {
     errors.push(`${snakeKey} is required`);
     return null;
   }
   const value = Number(raw);
-  if (!Number.isFinite(value) || value < 0) {
+  if (selectTruthyValue(() => (!Number.isFinite(value)), () => (value < 0))) {
     errors.push(`${snakeKey} must be a non-negative number`);
     return null;
   }
   return value;
 }
 
-function resolveGatewayStatusPolicy(config: AnyRecord = {}) {
-  const statusPolicyKey = ['session', 'status'].join('_');
-  const policy = config?.gateway?.invoke?.[statusPolicyKey] || null;
-  const retry = config?.gateway?.invoke?.retry || null;
-  if (!policy || typeof policy !== 'object' || Array.isArray(policy)) return null;
-  const timeoutMs = policy.timeout_ms;
-  const maxRetries = policy.max_retries ?? retry?.max_attempts;
-  const retryDelayMs = policy.retry_delay_ms ?? retry?.retry_delay_ms;
-  if (!Number.isFinite(timeoutMs) || !Number.isInteger(maxRetries) || !Number.isFinite(retryDelayMs)) return null;
+function requireConfigObject(value: any, source: string) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!value), () => (typeof value !== 'object'))), () => (Array.isArray(value)))) {
+    throw new Error(`ACP monitor requires ${source} object from swarm.config.json`);
+  }
+  return value;
+}
+
+function normalizeGatewayStatusPolicy(statusPolicy: any, retryPolicy: any) {
+  const status = requireConfigObject(statusPolicy, 'gateway.invoke.session_status');
+  const retry = requireConfigObject(retryPolicy, 'gateway.invoke.retry');
+  const timeoutMs = status.timeout_ms;
+  const maxRetries = retry.max_attempts;
+  const retryDelayMs = retry.retry_delay_ms;
+  if (!Number.isFinite(timeoutMs)) {
+    throw new Error('ACP monitor requires numeric gateway.invoke.session_status.timeout_ms from swarm.config.json');
+  }
+  if (selectTruthyValue(() => (!Number.isInteger(maxRetries)), () => (maxRetries < 1))) {
+    throw new Error('ACP monitor requires positive integer gateway.invoke.retry.max_attempts from swarm.config.json');
+  }
+  if (!Number.isFinite(retryDelayMs)) {
+    throw new Error('ACP monitor requires numeric gateway.invoke.retry.retry_delay_ms from swarm.config.json');
+  }
   return { timeoutMs, maxRetries, retryDelayMs };
+}
+
+function assertGatewayStatusPolicy(policy: any, source: string) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!policy), () => (typeof policy !== 'object'))), () => (Array.isArray(policy)))) {
+    throw new Error(`ACP monitor requires ${source} object from swarm.config.json`);
+  }
+  if (!Number.isFinite(policy.timeoutMs)) {
+    throw new Error(`ACP monitor requires numeric ${source}.timeoutMs from swarm.config.json`);
+  }
+  if (!Number.isInteger(policy.maxRetries)) {
+    throw new Error(`ACP monitor requires integer ${source}.maxRetries from swarm.config.json`);
+  }
+  if (!Number.isFinite(policy.retryDelayMs)) {
+    throw new Error(`ACP monitor requires numeric ${source}.retryDelayMs from swarm.config.json`);
+  }
+  return policy;
+}
+
+function readGatewayStatusPolicy(config: AnyRecord = {}) {
+  const statusPolicyKey = ['session', 'status'].join('_');
+  return normalizeGatewayStatusPolicy(
+    config?.gateway?.invoke?.[statusPolicyKey],
+    config?.gateway?.invoke?.retry,
+  );
 }
 
 export function getAcpMonitorConfig(input: AnyRecord = {}) {
@@ -159,20 +222,21 @@ export function getAcpMonitorConfig(input: AnyRecord = {}) {
 // ── Transcript Classification ────────────────────────────────────────────────
 
 export function classifyTranscriptText(text: any) {
-  if (!text) return { kind: 'unknown', detail: '' };
+  if (!text) return { kind: 'transcript_empty', detail: '' };
   const lower = String(text).toLowerCase();
 
-  if (/rate limit|rate-limit|429|too many requests|retry after|quota exceeded/.test(lower)) {
+  if (/rate limit|rate-limit|429|too many requests|retry after|quota exceeded|usage limit|usage-limit|usage cap|usage quota|quota limit/.test(lower)) {
     return { kind: 'rate_limited', detail: String(text).slice(0, 200) };
   }
 
-  if (
-    /acpx exited with code\s*[1-9]\d*/.test(lower)
-    || /run failed/.test(lower)
-    || /spawn failed/.test(lower)
-    || /adapter command missing/.test(lower)
-    || /command not found/.test(lower)
-  ) {
+  const hardErrorPatterns = [
+    /acpx exited with code\s*[1-9]\d*/,
+    /run failed/,
+    /spawn failed/,
+    /adapter command missing/,
+    /command not found/,
+  ];
+  if (hardErrorPatterns.some((pattern) => pattern.test(lower))) {
     return { kind: 'hard_error', detail: String(text).slice(0, 200) };
   }
 
@@ -181,22 +245,27 @@ export function classifyTranscriptText(text: any) {
 
 // ── Transcript State ─────────────────────────────────────────────────────────
 
-export function readAcpTranscriptState(streamLogPath: any, prev: AnyRecord = {}) {
-  const state: AnyRecord = {
-    offset: prev.offset ?? 0,
-    byteOffset: prev.byteOffset ?? 0,
-    eventCount: prev.eventCount ?? 0,
-    lastEventTs: prev.lastEventTs ?? null,
-    lastActivityPoll: prev.lastActivityPoll ?? 0,
-    hardError: prev.hardError ?? false,
-    rateLimited: prev.rateLimited ?? false,
-    terminal: prev.terminal ?? false,
-    lastDetail: prev.lastDetail ?? '',
-    partialLine: prev.partialLine ?? '',
+function normalizePreviousTranscriptState(prev: AnyRecord = {}) {
+  const source = selectDefinedValue(() => (objectRecord(prev)), () => ({}));
+  return assertValidAcpTranscriptState({
+    offset: selectDefinedValue(() => (nonNegativeNumber(source.offset)), () => (0)),
+    byteOffset: selectDefinedValue(() => (nonNegativeNumber(source.byteOffset)), () => (0)),
+    eventCount: selectDefinedValue(() => (nonNegativeNumber(source.eventCount)), () => (0)),
+    lastEventTs: selectDefinedValue(() => (source.lastEventTs), () => (null)),
+    lastActivityPoll: selectDefinedValue(() => (nonNegativeNumber(source.lastActivityPoll)), () => (0)),
+    hardError: source.hardError === true,
+    rateLimited: source.rateLimited === true,
+    terminal: source.terminal === true,
+    lastDetail: typeof source.lastDetail === 'string' ? source.lastDetail : '',
+    partialLine: typeof source.partialLine === 'string' ? source.partialLine : '',
     newLines: [],
-  };
+  }) as AnyRecord;
+}
 
-  if (!streamLogPath || !fs.existsSync(streamLogPath)) return assertValidAcpTranscriptState(state);
+export function readAcpTranscriptState(streamLogPath: any, prev: AnyRecord = {}) {
+  const state: AnyRecord = normalizePreviousTranscriptState(prev);
+
+  if (selectTruthyValue(() => (!streamLogPath), () => (!fs.existsSync(streamLogPath)))) return assertValidAcpTranscriptState(state);
 
   try {
     const stat = fs.statSync(streamLogPath);
@@ -209,7 +278,7 @@ export function readAcpTranscriptState(streamLogPath: any, prev: AnyRecord = {})
     }
 
     if (fileSize === state.byteOffset) {
-      state.lastActivityPoll = (prev.lastActivityPoll || 0) + 1;
+      state.lastActivityPoll += 1;
       return state;
     }
 
@@ -232,7 +301,7 @@ export function readAcpTranscriptState(streamLogPath: any, prev: AnyRecord = {})
     if (combined.endsWith('\n')) {
       state.partialLine = '';
     } else {
-      state.partialLine = rawLines.pop() || '';
+      state.partialLine = selectDefinedValue(() => (rawLines.pop()), () => (''));
     }
 
     const newLines = rawLines.filter(Boolean);
@@ -250,10 +319,10 @@ export function readAcpTranscriptState(streamLogPath: any, prev: AnyRecord = {})
     for (const line of newLines) {
       let evt;
       try { evt = JSON.parse(line); } catch (_error) { continue; }
-      state.lastEventTs = evt.ts || state.lastEventTs;
+      state.lastEventTs = selectDefinedValue(() => (evt.ts), () => (state.lastEventTs));
 
       if (evt.kind === 'lifecycle' && evt.phase === 'error') {
-        const detail = evt?.data?.error || evt?.text || 'ACP lifecycle error';
+        const detail = selectDefinedValue(() => (selectDefinedValue(() => (evt?.data?.error), () => (evt?.text))), () => ('ACP lifecycle error'));
         const cls = classifyTranscriptText(detail);
         state.lastDetail = detail;
         if (cls.kind === 'rate_limited') state.rateLimited = true;
@@ -272,23 +341,23 @@ export function readAcpTranscriptState(streamLogPath: any, prev: AnyRecord = {})
 
 export function transcriptShowsProgress(transcript: AnyRecord | null) {
   if (!transcript) return false;
-  if (transcript.hardError || transcript.terminal) return false;
+  if (selectTruthyValue(() => (transcript.hardError), () => (transcript.terminal))) return false;
   return transcript.eventCount > 0 && transcript.lastActivityPoll === 0;
 }
 
 // ── Core state builder ───────────────────────────────────────────────────────
 
 async function fetchSessionStatus(sessionKey: any, gatewayUrl: any, gatewayToken: any, opts: AnyRecord = {}) {
-  const policy = opts.gatewayStatusPolicy;
-  if (!policy || typeof policy !== 'object' || !Number.isFinite(policy.timeoutMs)) {
-    throw new Error('ACP monitor requires explicit gatewayStatusPolicy from swarm.config.json');
-  }
+  const policy = assertGatewayStatusPolicy(
+    opts.gatewayStatusPolicy,
+    'gatewayStatusPolicy',
+  );
   return getGatewaySessionStatus(sessionKey, policy.timeoutMs, {
     ...policy,
     gatewayUrl,
     gatewayToken,
-    budget: opts.budget || null,
-    signal: opts.signal || null,
+    budget: selectDefinedValue(() => (opts.budget), () => (null)),
+    signal: selectDefinedValue(() => (opts.signal), () => (null)),
   });
 }
 
@@ -298,18 +367,20 @@ function buildMonitorState(childSessionKey: any, transcript: AnyRecord, sessionS
     throw new Error('ACP monitor thresholds must be validated explicit config');
   }
   const unknownLike = isUnreachableSessionState(sessionState);
-  const unknownPolls = unknownLike ? ((prev.unknownPolls || 0) + 1) : 0;
+  const previousUnknownPolls = selectDefinedValue(() => (nonNegativeNumber(prev.unknownPolls)), () => (0));
+  const unknownPolls = unknownLike ? previousUnknownPolls + 1 : 0;
   const staleExceeded = transcript.lastActivityPoll >= pollLimit;
   const unknownExceeded = unknownPolls >= pollLimit;
   const gatewayUnreachable = gateway.gatewayUnreachable === true;
-  const gatewayDetail = gateway.gatewayDetail || null;
+  const gatewayDetail = selectDefinedValue(() => (gateway.gatewayDetail), () => (null));
+  const gatewayRateLimited = gateway.gatewayRateLimited === true;
 
   let terminal = false;
   let reason = null;
 
-  if (transcript.rateLimited) {
+  if ([transcript.rateLimited, gatewayRateLimited].some(Boolean)) {
     reason = ACP_MONITOR_REASONS.RATE_LIMITED;
-  } else if (transcript.hardError || transcript.terminal) {
+  } else if ([transcript.hardError, transcript.terminal].some(Boolean)) {
     terminal = true;
     reason = ACP_MONITOR_REASONS.TRANSCRIPT_ERROR;
   } else if (isSessionTerminalState(sessionState)) {
@@ -317,12 +388,12 @@ function buildMonitorState(childSessionKey: any, transcript: AnyRecord, sessionS
     reason = ACP_MONITOR_REASONS.SESSION_TERMINAL;
   } else if (unknownExceeded && staleExceeded) {
     terminal = true;
-    reason = ACP_MONITOR_REASONS.UNKNOWN_STALE_TIMEOUT;
+    reason = ACP_MONITOR_REASONS.STALE_STATUS_TIMEOUT;
   }
 
-  const detail = transcript.lastDetail || gatewayDetail || sessionState;
+  const detail = (selectDefinedValue(() => (transcript.lastDetail), () => (null)));
   const sessionTerminal = isSessionTerminalState(sessionState);
-  const stopped = !sessionActive && (isStoppedSessionState(sessionState) || isUnreachableSessionState(sessionState));
+  const stopped = !sessionActive && [isStoppedSessionState(sessionState), isUnreachableSessionState(sessionState)].some(Boolean);
 
   return assertValidAcpMonitorState({
     sessionKey: childSessionKey,
@@ -349,23 +420,27 @@ async function getDirectAcpMonitorState(childSessionKey: any, streamLogPath: any
   const gatewayUrl = resolveGatewayBaseUrl(opts.gatewayUrl);
   const gatewayToken = resolveGatewayToken(opts.gatewayToken);
   const monitorCfg = getAcpMonitorConfig(opts);
-  const transcript = readAcpTranscriptState(streamLogPath, prev.transcript || {}) as AnyRecord;
+  const previousTranscript = selectDefinedValue(() => (objectRecord(prev.transcript)), () => ({}));
+  const transcript = readAcpTranscriptState(streamLogPath, previousTranscript) as AnyRecord;
 
   let sessionState = 'no_session_key';
   let sessionActive = false;
   let gatewayUnreachable = false;
   let gatewayDetail = null;
+  let gatewayRateLimited = false;
 
   if (childSessionKey && gatewayUrl) {
     try {
       const raw: any = await fetchSessionStatus(childSessionKey, gatewayUrl, gatewayToken, opts);
-      const statusResult = raw?.result?.details || raw;
+      const statusResult = selectDefinedValue(() => (raw?.result?.details), () => (raw));
       const parsed = parseSessionState(statusResult);
       sessionState = parsed.state;
       sessionActive = parsed.active;
+      gatewayDetail = selectDefinedValue(() => (parsed.detail), () => (null));
+      gatewayRateLimited = parsed.rateLimited === true;
     } catch (err) {
       gatewayUnreachable = true;
-      gatewayDetail = (err as any)?.message || 'session status unreachable';
+      gatewayDetail = (selectDefinedValue(() => ((err as any)?.message), () => ('session status unreachable')));
       if (transcriptShowsProgress(transcript as AnyRecord)) {
         sessionState = 'running';
         sessionActive = true;
@@ -379,38 +454,61 @@ async function getDirectAcpMonitorState(childSessionKey: any, streamLogPath: any
   return buildMonitorState(childSessionKey, transcript, sessionState, sessionActive, prev, monitorCfg, {
     gatewayUnreachable,
     gatewayDetail,
+    gatewayRateLimited,
   });
 }
 
 function resolveTrackedAgent(sessionLabel: any) {
-  return getTrackedAgent(sessionLabel) || {};
+  return selectDefinedValue(() => (objectRecord(getTrackedAgent(sessionLabel))), () => ({}));
 }
 
 function looksLikeSessionKey(value: any) {
   return typeof value === 'string' && value.includes(':');
 }
 
+function resolveConfigSessionLabelOrKey(request: AnyRecord): string | null {
+  const candidate = selectDefinedValue(() => (selectDefinedValue(() => (nonEmptyString(request.sessionLabelOrKey)), () => (nonEmptyString(request.sessionLabel)))), () => (nonEmptyString(request.sessionKey)));
+  return candidate;
+}
+
+function resolveConfigTrackedAgent(request: AnyRecord, sessionLabelOrKey: string | null): AnyRecord {
+  if (request.trackedAgent !== undefined && request.trackedAgent !== null) {
+    return selectDefinedValue(() => (objectRecord(request.trackedAgent)), () => ({}));
+  }
+  if (!sessionLabelOrKey) return {};
+  return resolveTrackedAgent(sessionLabelOrKey);
+}
+
+function resolveMonitorSessionKey(request: AnyRecord, trackedAgent: AnyRecord, sessionLabelOrKey: string | null): string | null {
+  const childSessionKey = nonEmptyString(request.childSessionKey);
+  if (childSessionKey) return childSessionKey;
+  const trackedSessionKey = nonEmptyString(trackedAgent.sessionKey);
+  if (trackedSessionKey) return trackedSessionKey;
+  if (looksLikeSessionKey(sessionLabelOrKey)) return sessionLabelOrKey;
+  return null;
+}
+
 export async function getAcpMonitorState(request: AnyRecord) {
   if (arguments.length !== 1) {
     throw new TypeError('getAcpMonitorState requires exactly one options object');
   }
-  if (!request || typeof request !== 'object' || Array.isArray(request)) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!request), () => (typeof request !== 'object'))), () => (Array.isArray(request)))) {
     throw new TypeError('getAcpMonitorState requires a single options object');
   }
 
   if (request.config) {
     const config = request.config;
-    const sessionLabelOrKey = request.sessionLabelOrKey ?? request.sessionLabel ?? request.sessionKey ?? null;
-    const entry = request.trackedAgent || await resolveTrackedAgent(sessionLabelOrKey);
-    const streamLogPath = entry?.streamLogPath ?? request.streamLogPath ?? null;
-    const previousState = request.previousState ?? {};
-    const sessionKey = request.childSessionKey ?? entry?.sessionKey ?? (looksLikeSessionKey(sessionLabelOrKey) ? sessionLabelOrKey : null);
+    const sessionLabelOrKey = resolveConfigSessionLabelOrKey(request);
+    const entry = resolveConfigTrackedAgent(request, sessionLabelOrKey);
+    const streamLogPath = selectDefinedValue(() => (selectDefinedValue(() => (entry?.streamLogPath), () => (request.streamLogPath))), () => (null));
+    const previousState = selectDefinedValue(() => (objectRecord(request.previousState)), () => ({}));
+    const sessionKey = resolveMonitorSessionKey(request, entry, sessionLabelOrKey);
     const monitorCfg = getAcpMonitorConfig(config);
     return getDirectAcpMonitorState(sessionKey, streamLogPath, previousState, {
       ...monitorCfg,
-      gatewayStatusPolicy: resolveGatewayStatusPolicy(config),
-      gatewayUrl: config.gatewayUrl ?? config.gateway_url,
-      gatewayToken: config.gatewayToken ?? config.gateway_token,
+      gatewayStatusPolicy: readGatewayStatusPolicy(config),
+      gatewayUrl: config.gatewayUrl,
+      gatewayToken: config.gatewayToken,
     });
   }
 
@@ -422,7 +520,7 @@ export async function getAcpMonitorState(request: AnyRecord) {
     monitorOptions = null,
     ...monitorPolicy
   } = request;
-  return getDirectAcpMonitorState(childSessionKey ?? sessionKey, streamLogPath, previousState, monitorOptions || monitorPolicy);
+  return getDirectAcpMonitorState(selectDefinedValue(() => (childSessionKey), () => (sessionKey)), streamLogPath, previousState, selectDefinedValue(() => (objectRecord(monitorOptions)), () => (monitorPolicy)));
 }
 
 
@@ -431,21 +529,21 @@ export async function getAcpMonitorState(request: AnyRecord) {
 function buildAcpEventIdentity(identity: AnyRecord = {}, childSessionKey: any = null) {
   return {
     ...identity,
-    session_key: identity.session_key || identity.sessionKey || childSessionKey || null,
+    session_key: (selectDefinedValue(() => (identity.session_key), () => (null))),
   };
 }
 
 function sessionStateSignature(state: AnyRecord = {}) {
   return JSON.stringify({
-    sessionKey: state.sessionKey || null,
-    sessionState: state.sessionState || null,
+    sessionKey: selectDefinedValue(() => (state.sessionKey), () => (null)),
+    sessionState: selectDefinedValue(() => (state.sessionState), () => (null)),
     sessionActive: state.sessionActive === true,
     gatewayUnreachable: state.gatewayUnreachable === true,
-    gatewayDetail: state.gatewayDetail || null,
+    gatewayDetail: selectDefinedValue(() => (state.gatewayDetail), () => (null)),
     terminal: state.terminal === true,
     rateLimited: state.rateLimited === true,
-    reason: state.reason || null,
-    detail: state.detail || null,
+    reason: selectDefinedValue(() => (state.reason), () => (null)),
+    detail: selectDefinedValue(() => (state.detail), () => (null)),
     failed: state.failed === true,
     sessionTerminal: state.sessionTerminal === true,
     stopped: state.stopped === true,
@@ -454,58 +552,53 @@ function sessionStateSignature(state: AnyRecord = {}) {
 
 function buildSessionStatePayload(state: AnyRecord = {}) {
   return assertValidAcpSessionStateEventPayload({
-    session_key: state.sessionKey || null,
-    session_state: state.sessionState || null,
+    session_key: selectDefinedValue(() => (state.sessionKey), () => (null)),
+    session_state: selectDefinedValue(() => (state.sessionState), () => (null)),
     session_active: state.sessionActive === true,
     gateway_unreachable: state.gatewayUnreachable === true,
-    gateway_detail: state.gatewayDetail || null,
+    gateway_detail: selectDefinedValue(() => (state.gatewayDetail), () => (null)),
     terminal: state.terminal === true,
     rate_limited: state.rateLimited === true,
-    reason: state.reason || null,
-    detail: state.detail || null,
+    reason: selectDefinedValue(() => (state.reason), () => (null)),
+    detail: selectDefinedValue(() => (state.detail), () => (null)),
     monitor_state: state,
   });
 }
 
 function buildTranscriptDeltaPayload(state: AnyRecord = {}) {
-  const transcript = state.transcript || {};
+  const transcript = selectDefinedValue(() => (objectRecord(state.transcript)), () => ({}));
   const newLines = Array.isArray(transcript.newLines) ? transcript.newLines : [];
   return assertValidAcpTranscriptDeltaEventPayload({
-    session_key: state.sessionKey || null,
+    session_key: selectTruthyValue(() => (state.sessionKey), () => (null)),
     new_lines: newLines,
     line_count: newLines.length,
-    transcript_offset: transcript.offset ?? null,
-    byte_offset: transcript.byteOffset ?? null,
+    transcript_offset: selectDefinedValue(() => (transcript.offset), () => (null)),
+    byte_offset: selectDefinedValue(() => (transcript.byteOffset), () => (null)),
     transcript,
     monitor_state: state,
   });
 }
 
 export function createAcpMonitorEventAdapter(childSessionKey: any, streamLogPath: any = null, opts: AnyRecord = {}) {
-  const eventBus = opts.eventBus || createPipelineEventBus();
-  const identity = buildAcpEventIdentity(opts.identity || {}, childSessionKey);
-  const budget = opts.budget || null;
+  const eventBus = opts.eventBus !== undefined ? opts.eventBus : createPipelineEventBus();
+  const identity = buildAcpEventIdentity(selectDefinedValue(() => (objectRecord(opts.identity)), () => ({})), childSessionKey);
+  const budget = selectDefinedValue(() => (opts.budget), () => (null));
   const controller = new AbortController();
   const signal = controller.signal;
-  const externalSignal = opts.signal || null;
-  const monitorOpts = { ...(opts.monitorOpts || opts), budget, signal };
+  const externalSignal = selectDefinedValue(() => (opts.signal), () => (null));
+  const monitorOpts = { ...(selectDefinedValue(() => (objectRecord(opts.monitorOpts)), () => (opts))), budget, signal };
   const monitorCfg = getAcpMonitorConfig(monitorOpts);
-  const pollMs = opts.pollMs ?? monitorCfg.monitorPollMs;
-  const getState: AnyFunction = opts.getAcpMonitorState || ((request: AnyRecord = {}) => getDirectAcpMonitorState(
-    request.childSessionKey,
-    request.streamLogPath,
-    request.previousState,
-    request.monitorOptions,
-  ));
+  const pollMs = opts.pollMs !== undefined ? opts.pollMs : monitorCfg.monitorPollMs;
+  const getState: AnyFunction = selectDefinedValue(() => (opts.getAcpMonitorState), () => (((request: AnyRecord = {}) => getDirectAcpMonitorState(request.childSessionKey, request.streamLogPath, request.previousState, request.monitorOptions))));
   const stopOnTerminal = opts.stopOnTerminal !== false;
-  let previousState: AnyRecord = opts.initialState || {};
+  let previousState: AnyRecord = selectDefinedValue(() => (objectRecord(opts.initialState)), () => ({}));
   let lastSessionSignature: string | null = null;
   let started = false;
   let donePromise: Promise<any> | null = null;
 
   const abortFromExternal = () => stop('external_abort');
   if (externalSignal) {
-    if (externalSignal.aborted) controller.abort(externalSignal.reason || 'external_abort');
+    if (externalSignal.aborted) controller.abort(selectDefinedValue(() => (externalSignal.reason), () => ('external_abort')));
     else externalSignal.addEventListener('abort', abortFromExternal, { once: true });
   }
 
@@ -527,8 +620,8 @@ export function createAcpMonitorEventAdapter(childSessionKey: any, streamLogPath
   }
 
   function emitTranscriptDelta(state: AnyRecord) {
-    const newLines = state?.transcript?.newLines || [];
-    if (!Array.isArray(newLines) || newLines.length === 0) return false;
+    const newLines = selectDefinedValue(() => (state?.transcript?.newLines), () => ([]));
+    if (selectTruthyValue(() => (!Array.isArray(newLines)), () => (newLines.length === 0))) return false;
     eventBus.emit({
       type: 'acp.transcript.delta',
       source: 'acp_gateway',
@@ -558,7 +651,7 @@ export function createAcpMonitorEventAdapter(childSessionKey: any, streamLogPath
       }
       return { stopped: true, reason: signal.aborted ? 'aborted' : 'completed', state: previousState };
     } catch (error) {
-      if (isBudgetExhaustedError(error) || (error as any)?.name === 'AbortError' || (error as any)?.code === 'ABORT_ERR') {
+      if (selectTruthyValue(() => (selectTruthyValue(() => (isBudgetExhaustedError(error)), () => ((error as any)?.name === 'AbortError'))), () => ((error as any)?.code === 'ABORT_ERR'))) {
         return { stopped: true, reason: isBudgetExhaustedError(error) ? 'budget_exhausted' : 'aborted', state: previousState, error };
       }
       eventBus.emit({
@@ -568,7 +661,7 @@ export function createAcpMonitorEventAdapter(childSessionKey: any, streamLogPath
         payload: {
           adapter: 'acp_monitor',
           reason: 'acp_monitor_adapter_failed',
-          error: (error as any)?.message || String(error),
+          error: errorMessage(error),
         },
       });
       throw error;
@@ -595,13 +688,13 @@ export function createAcpMonitorEventAdapter(childSessionKey: any, streamLogPath
 }
 
 export function monitorStateFromAcpEvent(event: AnyRecord = {}) {
-  return event?.payload?.monitor_state || null;
+  return selectTruthyValue(() => (event?.payload?.monitor_state), () => (null));
 }
 
 // ── Terminal Check ───────────────────────────────────────────────────────────
 
 export function isSessionTerminal(stateOrLabel: any) {
-  if (stateOrLabel && typeof stateOrLabel === 'object' && ('terminal' in stateOrLabel || 'sessionState' in stateOrLabel)) {
+  if (stateOrLabel && typeof stateOrLabel === 'object' && ['terminal', 'sessionState'].some(field => field in stateOrLabel)) {
     return !!stateOrLabel.terminal;
   }
 
@@ -617,28 +710,29 @@ function isBudgetOwnedPipelineEventAbort(error: any, budget: AnyRecord) {
 // ── Wait for Idle ────────────────────────────────────────────────────────────
 
 export async function waitForSessionIdle(childSessionKey: any, opts: AnyRecord = {}) {
-  if (!opts || typeof opts !== 'object' || Array.isArray(opts)) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!opts), () => (typeof opts !== 'object'))), () => (Array.isArray(opts)))) {
     throw new TypeError('waitForSessionIdle requires an options object with acp_monitor policy fields');
   }
 
   const gatewayUrl = resolveGatewayBaseUrl(opts.gatewayUrl);
   const gatewayToken = resolveGatewayToken(opts.gatewayToken);
   const monitorCfg = getAcpMonitorConfig(opts);
-  if (!Number.isFinite(opts.extraGraceMs) || opts.extraGraceMs < 0) {
+  if (selectTruthyValue(() => (!Number.isFinite(opts.extraGraceMs)), () => (opts.extraGraceMs < 0))) {
     throw new Error('waitForSessionIdle requires explicit extraGraceMs from swarm.config.json');
   }
-  if (!Number.isFinite(opts.totalTimeoutMs) || opts.totalTimeoutMs <= 0) {
+  if (selectTruthyValue(() => (!Number.isFinite(opts.totalTimeoutMs)), () => (opts.totalTimeoutMs <= 0))) {
     throw new Error('waitForSessionIdle requires explicit totalTimeoutMs from swarm.config.json');
   }
   const extraGraceMs = opts.extraGraceMs;
   const totalTimeoutMs = opts.totalTimeoutMs;
-  const budget = opts.budget || createBudget({ timeoutMs: totalTimeoutMs, signal: opts.signal, label: 'acp-session-idle' });
-  const eventBus = opts.eventBus || createPipelineEventBus();
-  const adapter = createAcpMonitorEventAdapter(childSessionKey, opts.streamLogPath || null, {
+  const budget = opts.budget !== undefined ? opts.budget : createBudget({ timeoutMs: totalTimeoutMs, signal: opts.signal, label: 'acp-session-idle' });
+  const eventBus = opts.eventBus !== undefined ? opts.eventBus : createPipelineEventBus();
+  const pollMs = opts.pollMs !== undefined ? opts.pollMs : monitorCfg.monitorPollMs;
+  const adapter = createAcpMonitorEventAdapter(childSessionKey, selectDefinedValue(() => (opts.streamLogPath), () => (null)), {
     eventBus,
-    identity: buildAcpEventIdentity(opts.identity || {}, childSessionKey),
+    identity: buildAcpEventIdentity(selectDefinedValue(() => (objectRecord(opts.identity)), () => ({})), childSessionKey),
     budget,
-    pollMs: opts.pollMs ?? monitorCfg.monitorPollMs,
+    pollMs,
     monitorOpts: {
       ...monitorCfg,
       gatewayUrl,
@@ -665,10 +759,7 @@ export async function waitForSessionIdle(childSessionKey: any, opts: AnyRecord =
       try {
         event = await waitForMonitorEvent(budget.remainingMs());
       } catch (error) {
-        if (isBudgetExhaustedError(error)
-          || (error as any)?.code === 'PIPELINE_EVENT_WAIT_TIMEOUT'
-          || isBudgetOwnedPipelineEventAbort(error, budget)
-          || ((error as any)?.code === 'PIPELINE_EVENT_WAIT_ABORTED' && budget.remainingMs() <= 0)) break;
+        if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (isBudgetExhaustedError(error)), () => ((error as any)?.code === 'PIPELINE_EVENT_WAIT_TIMEOUT'))), () => (isBudgetOwnedPipelineEventAbort(error, budget)))), () => (((error as any)?.code === 'PIPELINE_EVENT_WAIT_ABORTED' && budget.remainingMs() <= 0)))) break;
         throw error;
       }
 
@@ -697,10 +788,7 @@ export async function waitForSessionIdle(childSessionKey: any, opts: AnyRecord =
           if (graceState) monitorState = graceState;
           continue;
         } catch (error) {
-          if (isBudgetExhaustedError(error)
-            || (error as any)?.code === 'PIPELINE_EVENT_WAIT_TIMEOUT'
-            || isBudgetOwnedPipelineEventAbort(error, budget)
-            || ((error as any)?.code === 'PIPELINE_EVENT_WAIT_ABORTED' && budget.remainingMs() <= 0)) return;
+          if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (isBudgetExhaustedError(error)), () => ((error as any)?.code === 'PIPELINE_EVENT_WAIT_TIMEOUT'))), () => (isBudgetOwnedPipelineEventAbort(error, budget)))), () => (((error as any)?.code === 'PIPELINE_EVENT_WAIT_ABORTED' && budget.remainingMs() <= 0)))) return;
           throw error;
         }
       }

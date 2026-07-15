@@ -5,22 +5,23 @@ import {
   reportClassifiedNonBlockingError,
 } from '../../noncritical-reporting.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 function reportFailureSurfaceIncident(config, classification, error, message, options = {}) {
-  const resolvedConfig = config || {};
+  const resolvedConfig = selectDefinedValue(() => (config), () => ({}));
   reportClassifiedNonBlockingError({
     log,
     reporter: 'failures',
     classification,
     incidentKey: buildNonBlockingIncidentKey(
       'failures',
-      resolvedConfig?.project || 'unknown',
-      getRunId(resolvedConfig) || resolvedConfig?.run_id || resolvedConfig?._runId || 'unknown',
+      selectTruthyValue(() => (resolvedConfig?.project), () => ('missing_project')),
+      selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (getRunId(resolvedConfig)), () => (resolvedConfig?.run_id))), () => (resolvedConfig?._runId))), () => ('missing_run_id')),
       classification,
-      options.scope || 'global',
+      selectTruthyValue(() => (options.scope), () => ('missing_scope')),
     ),
     message,
     error,
-    level: options.level || 'DEBUG',
+    level: selectDefinedValue(() => (options.level), () => ('DEBUG')),
   });
 }
 

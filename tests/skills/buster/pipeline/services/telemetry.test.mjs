@@ -119,7 +119,7 @@ test('payload fields cannot override canonical telemetry envelope fields', async
   assert.deepEqual(redisEvent, artifactEvent);
 });
 
-test('invalid telemetry degraded artifact redacts validation diagnostics', async (t) => {
+test('invalid telemetry degraded artifact preserves validation diagnostics', async (t) => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-telemetry-'));
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   const pipelineLogPath = path.join(dir, 'pipeline.jsonl');
@@ -131,11 +131,10 @@ test('invalid telemetry degraded artifact redacts validation diagnostics', async
   const serialized = JSON.stringify(event);
   assert.equal(event.type, 'observability.degraded');
   assert.equal(event.artifact_fallback, true);
-  assert.match(serialized, /\[redacted-secret\]/);
-  assert.doesNotMatch(serialized, /supersecretvalue123456/);
+  assert.match(serialized, /supersecretvalue123456/);
 });
 
-test('redis degraded artifact redacts runtime error detail', async (t) => {
+test('redis degraded artifact preserves runtime error detail', async (t) => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-telemetry-'));
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   const pipelineLogPath = path.join(dir, 'pipeline.jsonl');
@@ -154,8 +153,8 @@ test('redis degraded artifact redacts runtime error detail', async (t) => {
   const serialized = JSON.stringify(event);
   assert.equal(event.type, 'observability.degraded');
   assert.equal(event.artifact_fallback, true);
-  assert.equal(event.detail, 'redis auth failed with [redacted-secret]');
-  assert.doesNotMatch(serialized, /abcdefghijklmnop1234567890/);
+  assert.equal(event.detail, 'redis auth failed with Bearer abcdefghijklmnop1234567890');
+  assert.match(serialized, /abcdefghijklmnop1234567890/);
 });
 
 test('failed restored redis write keeps degradation pending for retry', async (t) => {

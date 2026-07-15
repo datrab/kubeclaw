@@ -1,4 +1,3 @@
-import { STATUS } from '../../../core/constants.ts';
 import { log } from '../../../core/logger.ts';
 import { getRunId } from '../../../core/runtime.ts';
 import { emitOperatorAlert } from '../../../services/telemetry.ts';
@@ -15,12 +14,28 @@ import { buildModuleErrorTerminalResult } from '../terminal-results.ts';
 
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../../../services/discord-fields.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 
 function workerMetadata(controlResult: AnyRecord | null = null): AnyRecord {
   return controlResult?.diagnostics?.metadata && typeof controlResult.diagnostics.metadata === 'object'
     ? controlResult.diagnostics.metadata
     : {};
+}
+
+function spawnFailureGatewayLabelAuthority(metadata: AnyRecord, status: AnyRecord, completionIdentity: AnyRecord): string | null {
+  if (metadata.gateway_label !== undefined && metadata.gateway_label !== null) return metadata.gateway_label;
+  return resolveCompletionGatewayLabel(status, completionIdentity);
+}
+
+function spawnFailureSessionKeyAuthority(metadata: AnyRecord, status: AnyRecord, completionIdentity: AnyRecord): string | null {
+  if (metadata.session_key !== undefined && metadata.session_key !== null) return metadata.session_key;
+  return resolveCompletionSessionKey(status, completionIdentity);
+}
+
+function spawnFailurePreviousStatus(status: AnyRecord): string {
+  if (typeof status?.status === 'string' && status.status.trim()) return status.status;
+  throw new Error('Buster spawn failure terminal telemetry requires current module status');
 }
 
 export async function handleBusterSpawnFailure({
@@ -36,8 +51,8 @@ export async function handleBusterSpawnFailure({
   const metadata = workerMetadata(busterWorkerControlResult);
   const reason = `Buster spawn failed: ${metadata.error}`;
   log('ERROR', `Module ${moduleId}, attempt ${status.fail_count + 1}/${maxFails}: buster agent spawn failed: ${metadata.error}`);
-  const spawnFailureGatewayLabel = (metadata.gateway_label ?? resolveCompletionGatewayLabel(status, completionIdentity));
-  const spawnFailureSessionKey = (metadata.session_key ?? resolveCompletionSessionKey(status, completionIdentity));
+  const spawnFailureGatewayLabel = spawnFailureGatewayLabelAuthority(metadata, status, completionIdentity);
+  const spawnFailureSessionKey = spawnFailureSessionKeyAuthority(metadata, status, completionIdentity);
   await emitOperatorAlert(_telemetryCtx(config), 'module.operator_alert', {
     module_id: moduleId,
     phase: 'buster',
@@ -76,7 +91,7 @@ export async function handleBusterSpawnFailure({
     mod,
     'buster',
     busterModel,
-    status?.status ?? STATUS.READY_FOR_TESTING,
+    spawnFailurePreviousStatus(status),
     reason,
     {
       dispatchId: completionIdentity.dispatchId,
@@ -86,7 +101,7 @@ export async function handleBusterSpawnFailure({
   );
   return buildModuleErrorTerminalResult(config, moduleId, {
     reason,
-    runId: completionIdentity.runId ?? completionIdentity.run_id ?? null,
+    runId: selectDefinedValue(() => (completionIdentity.runId), () => (null)),
     attempt: currentAttemptNumber(status),
     phase: 'buster',
     dispatchId: completionIdentity.dispatchId,

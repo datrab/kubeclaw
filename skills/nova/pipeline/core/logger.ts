@@ -4,9 +4,10 @@ import fs from 'fs';
 import path from 'path';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { AsyncLocalStorage } from 'async_hooks';
-import { sanitizeJsonEgress } from '../redaction.ts';
+import { sanitizeJsonEgress } from '../egress.ts';
 import { emitPipelineLogAppendWarning } from '../services/system-io-warning.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type PipelineLogContext = {
   runId?: string;
   config?: Record<string, unknown>;
@@ -41,7 +42,11 @@ export function clearActiveContext() {
 }
 
 export function getActiveContext() {
-  return _asyncContext.getStore() || null;
+  return selectTruthyValue(() => (_asyncContext.getStore()), () => (null));
+}
+
+export function runWithActiveContext<T>(ctx: PipelineLogContext, fn: () => T): T {
+  return _asyncContext.run(ctx, fn);
 }
 
 function writeEntry(ctx: PipelineLogContext, entry: LogEntry) {
@@ -56,7 +61,7 @@ function writeEntry(ctx: PipelineLogContext, entry: LogEntry) {
       fs.appendFileSync(target, line);
     } catch (error) {
       emitPipelineLogAppendWarning(ctx.config, target, error, {
-        module_id: safeEntry.module || ctx._logModule || null,
+        module_id: selectTruthyValue(() => (selectTruthyValue(() => (safeEntry.module), () => (ctx._logModule))), () => (null)),
         path_role: target === ctx._runPipelineLogPath ? 'run_pipeline_jsonl' : 'pipeline_jsonl',
       });
     }
@@ -96,8 +101,8 @@ export function initContextLogging(
 ) {
   ctx._pipelineLogFd = pipelineLogFd;
   ctx._runPipelineLogFd = runPipelineLogFd;
-  ctx._pipelineLogPath = pipelineLogFd?.path || null;
-  ctx._runPipelineLogPath = runPipelineLogFd?.path || null;
+  ctx._pipelineLogPath = selectTruthyValue(() => (pipelineLogFd?.path), () => (null));
+  ctx._runPipelineLogPath = selectTruthyValue(() => (runPipelineLogFd?.path), () => (null));
   ctx._logFd = pipelineLogFd;
   ctx._runLogFd = runPipelineLogFd;
 }

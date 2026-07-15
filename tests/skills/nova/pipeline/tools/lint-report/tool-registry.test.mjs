@@ -53,3 +53,27 @@ process.stdout.write(JSON.stringify({
     process.env.PATH = originalPath;
   }
 });
+
+test('knip skips tiny fixtures without dependency graph authority', () => {
+  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'knip-skip-test-'));
+  fs.writeFileSync(path.join(tempRoot, 'package.json'), JSON.stringify({
+    name: 'tiny-fixture',
+    private: true,
+    scripts: {
+      verify: 'node verify.mjs',
+    },
+  }, null, 2));
+  fs.writeFileSync(path.join(tempRoot, 'verify.mjs'), 'console.log("ok");\n');
+
+  const knip = TOOL_REGISTRY.find(tool => tool.id === 'knip');
+  const result = knip.run({
+    repoRoot: tempRoot,
+    modulePath: null,
+    projectTypes: new Set(['javascript']),
+    changedFiles: [],
+  });
+
+  assert.equal(result.errors, 0);
+  assert.equal(result.warnings, 0);
+  assert.equal(result.findings[0].code, 'knip:skipped_no_package_graph');
+});

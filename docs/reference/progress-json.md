@@ -57,7 +57,7 @@ Review gate:
 - `type`: `review`
 - `title`
 - `review_name`
-- `on_fail`: `fix_and_rereview` or `stop`
+- `on_fail`: `stop`
 - `instructions_file`: relative to `.swarm`
 - `output_file`: relative to `.swarm`
 - `review_output_dir`

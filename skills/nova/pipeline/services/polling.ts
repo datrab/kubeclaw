@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/polling.ts — Polling engine and lifecycle/ACP polling
 
 import fs from 'fs';
@@ -16,7 +17,7 @@ import {
   resolveStatusGatewayLabel,
 } from './correlation.ts';
 import { transitionModuleStatus } from '../lifecycle-state.ts';
-import { sanitizeAcpTranscriptEvidence, sanitizeTranscriptDetail } from '../redaction.ts';
+import { sanitizeAcpTranscriptEvidence, sanitizeTranscriptDetail } from '../egress.ts';
 import {
   buildAcpPollLogKey,
   resolveFilePollIdentity,
@@ -42,7 +43,8 @@ import {
   createAgentEndedTelemetryReader,
   shouldSettleAgentEnded,
 } from './agent-observability-forge-completion.ts';
-import { readForgeCompletionArtifact } from './forge-completion.ts';
+import { forgeCompletionArtifactFile, invalidForgeCompletionArtifactStatus, readForgeCompletionArtifact } from './forge-completion.ts';
+import { projectSrcPath } from '../core/paths.ts';
 import { BudgetExhaustedError, createBudgetFromMinutes, isBudgetExhaustedError, sleep } from '../timing.ts';
 
 export { archiveModuleCompletions } from './polling-redis-completion.ts';
@@ -69,14 +71,69 @@ const STATUS = {
   BLOCKED:           'BLOCKED',
   RATE_LIMITED:      'RATE_LIMITED',
 };
+const DEFAULT_FILE_POLL_AGENT_TYPE = 'review';
+const DEFAULT_STATUS_POLL_AGENT_TYPE = 'forge';
+const NO_STATUS_FILE_LOG_STATE = 'no-status-file';
+const MEANINGFUL_DIFF_EVIDENCE_FAILURE = 'Unable to collect meaningful Forge diff evidence';
+
+function objectRecord(value) {
+  return value !== null && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function textValue(value) {
+  if (typeof value !== 'string') return null;
+  const normalized = value.trim();
+  return normalized ? normalized : null;
+}
+
+function requireTextValue(value, field) {
+  const normalized = textValue(value);
+  if (!normalized) {
+    throw new Error(`${field}: required non-empty string`);
+  }
+  return normalized;
+}
+
+function errorMessage(error) {
+  return error instanceof Error ? error.message : String(error);
+}
+
+function pollProgressMessage(check) {
+  return selectDefinedValue(() => (textValue(check?.logMsg)), () => ('pending'));
+}
+
+function pollProgressKey(check, progressMsg) {
+  return selectDefinedValue(() => (textValue(check?.logKey)), () => (progressMsg));
+}
+
+function filePollAgentType(pollIdentity, sessionLabel, label) {
+  return selectDefinedValue(() => (selectDefinedValue(() => (textValue(pollIdentity?.agent_type)), () => (sessionLabelAgentType(selectDefinedValue(() => (textValue(sessionLabel)), () => (label)))))), () => (DEFAULT_FILE_POLL_AGENT_TYPE));
+}
+
+function statusPollAgentType(pollIdentity) {
+  return selectDefinedValue(() => (textValue(pollIdentity?.agent_type)), () => (DEFAULT_STATUS_POLL_AGENT_TYPE));
+}
+
+function statusLogValue(status) {
+  return selectDefinedValue(() => (textValue(status?.status)), () => (NO_STATUS_FILE_LOG_STATE));
+}
+
+function phaseLogValue(status) {
+  return selectDefinedValue(() => (textValue(status?.current_phase)), () => (''));
+}
 
 function pollingPolicyNumber(config, field, options = {}) {
   const raw = config?.polling?.[field];
   const value = Number(raw);
-  if (!Number.isFinite(value) || (options.positive && value <= 0)) {
+  if (selectTruthyValue(() => (!Number.isFinite(value)), () => ((options.positive && value <= 0)))) {
     throw new Error(`config.polling.${field}: required ${options.positive ? 'positive ' : ''}number in swarm.config.json`);
   }
   return value;
+}
+
+function pollingBudget(opts, timeoutMinutes, label) {
+  if (opts.budget) return opts.budget;
+  return createBudgetFromMinutes(timeoutMinutes, { label });
 }
 
 // ─── Primitives ───────────────────────────────────────────────────────────────
@@ -118,7 +175,7 @@ export async function pollGeneric(config, checkFn, timeoutMinutes, label = 'poll
   const intervalSeconds = pollingPolicyNumber(config, 'interval_seconds', { positive: true });
   const interval = intervalSeconds * 1000;
   const progressLogIntervalMs = pollingPolicyNumber(config, 'progress_interval_ms');
-  const budget = opts.budget || createBudgetFromMinutes(timeoutMinutes, { label });
+  const budget = pollingBudget(opts, timeoutMinutes, label);
   const startTime = Date.now();
   let consecutiveParseFailures = 0;
   const maxParseFailures = 10;
@@ -172,21 +229,23 @@ export async function pollGeneric(config, checkFn, timeoutMinutes, label = 'poll
       }
 
     // ── Progress log ──
-      const progressMsg = check.logMsg || 'pending';
-      const progressKey = check.logKey || progressMsg;
+      const progressMsg = pollProgressMessage(check);
+      const progressKey = pollProgressKey(check, progressMsg);
       const elapsed = Math.round((Date.now() - startTime) / 1000);
       const remaining = Math.round(budget.remainingMs() / 1000);
-      const shouldLogProgress = !lastProgressLogKey
-        || progressKey !== lastProgressLogKey
-        || (Date.now() - lastProgressLogAt) >= progressLogIntervalMs;
+      const shouldLogProgress = selectTruthyValue(() => (selectTruthyValue(() => (!lastProgressLogKey), () => (progressKey !== lastProgressLogKey))), () => ((Date.now() - lastProgressLogAt) >= progressLogIntervalMs));
       if (shouldLogProgress) {
-        log('INFO', `[${label}] ${progressMsg} | ${elapsed}s elapsed, ${remaining}s remaining`);
+        log(selectDefinedValue(() => (textValue(check?.logLevel)), () => ('INFO')), `[${label}] ${progressMsg} | ${elapsed}s elapsed, ${remaining}s remaining`);
         lastProgressLogAt = Date.now();
         lastProgressLogKey = progressKey;
       }
     }
   } catch (error) {
     if (!isBudgetExhaustedError(error)) throw error;
+    if (typeof opts.onTimeoutBeforeResult === 'function') {
+      const timeoutResult = await opts.onTimeoutBeforeResult(error);
+      if (timeoutResult) return timeoutResult;
+    }
     log('ERROR', `[${label}] Timeout after ${timeoutMinutes} minutes (${error.name})`);
     return pollResult(false, 'timeout', null, { error });
   }
@@ -227,10 +286,10 @@ export async function pollForFile(config, filePath, timeoutMinutes, label = 'fil
         observabilityState,
         acpState,
         pollIdentity,
-        pollIdentity.agent_type || sessionLabel.split('-')[0] || null,
+        selectTruthyValue(() => (selectTruthyValue(() => (pollIdentity.agent_type), () => (sessionLabel.split('-')[0]))), () => (null)),
       );
 
-      const liveAgentType = pollIdentity.agent_type || sessionLabelAgentType(sessionLabel || label) || 'review';
+      const liveAgentType = filePollAgentType(pollIdentity, sessionLabel, label);
       publishAcpTranscriptDelta(ctx, pollIdentity, acpState, {
         label: pollIdentity.label,
         agentType: liveAgentType,
@@ -251,22 +310,24 @@ export async function pollForFile(config, filePath, timeoutMinutes, label = 'fil
             ...(getRunId(config) == null ? {} : { run_id: getRunId(config) }),
             module_id: pollIdentity.module_id,
             gate_id: pollIdentity.gate_id,
-            ...(pollIdentity.gate_id == null ? {} : { gate_type: pollIdentity.gate_type ?? null }),
+            ...(pollIdentity.gate_id == null ? {} : { gate_type: selectDefinedValue(() => (pollIdentity.gate_type), () => (null)) }),
             session_key: pollIdentity.session_key,
             attempt: pollIdentity.attempt,
             dispatch_id: pollIdentity.dispatch_id,
-            gateway_label: pollIdentity.gateway_label ?? null,
-            current_phase: pollIdentity.agent_type || 'review',
-            agent_type: pollIdentity.agent_type || 'review',
+            gateway_label: selectDefinedValue(() => (pollIdentity.gateway_label), () => (null)),
+            current_phase: liveAgentType,
+            agent_type: liveAgentType,
             reason: acpState.detail,
             detail: acpState.detail,
+            transcript: sanitizeAcpTranscriptEvidence(acpState.transcript),
+            transcript_detail: sanitizeTranscriptDetail(acpState.transcript?.lastDetail),
           },
         };
       }
 
       if (acpState.terminal) {
         const terminalDetail = sanitizeTranscriptDetail(acpState.detail);
-        log('WARN', `[${label}] ACP monitor terminal (${acpState.reason}): ${terminalDetail || acpState.sessionState}`);
+        log('WARN', `[${label}] ACP monitor terminal (${acpState.reason}): ${selectDefinedValue(() => (terminalDetail), () => (acpState.sessionState))}`);
         return {
           done: true,
           result: pollResult(false, 'session_ended_no_output', {
@@ -333,18 +394,20 @@ export async function pollStatus(config, moduleDir, expectedStatuses, timeoutMin
       if (status.status === STATUS.RATE_LIMITED) {
         const tracked = sessionLabel ? getTrackedAgent(sessionLabel) : null;
         const pollIdentity = resolveStatusPollIdentity(moduleDir, status, tracked, sessionLabel);
+        const moduleId = requireTextValue(status.module_id, 'status.module_id');
+        const phase = requireTextValue(selectDefinedValue(() => (pollIdentity.agent_type), () => (status.current_phase)), 'rate_limit.phase');
         return {
           rate_limited: true,
           status: buildModuleSessionRateLimitStatus(status, {
-            moduleId: pollIdentity.module_id || moduleDir,
-            phase: pollIdentity.agent_type || status.current_phase || null,
+            moduleId,
+            phase,
             identity: {
-              agent_type: pollIdentity.agent_type || status.current_phase || null,
-              run_id: getRunId(config) || null,
-              attempt: pollIdentity.attempt ?? null,
-              dispatch_id: pollIdentity.dispatch_id ?? null,
-              gateway_label: pollIdentity.gateway_label ?? null,
-              session_key: pollIdentity.session_key ?? null,
+              agent_type: phase,
+              run_id: selectDefinedValue(() => (getRunId(config)), () => (null)),
+              attempt: selectDefinedValue(() => (pollIdentity.attempt), () => (null)),
+              dispatch_id: selectDefinedValue(() => (pollIdentity.dispatch_id), () => (null)),
+              gateway_label: selectDefinedValue(() => (pollIdentity.gateway_label), () => (null)),
+              session_key: selectDefinedValue(() => (pollIdentity.session_key), () => (null)),
             },
           }),
         };
@@ -356,8 +419,8 @@ export async function pollStatus(config, moduleDir, expectedStatuses, timeoutMin
       acpState = await getAcpMonitorState({ config, sessionLabelOrKey: sessionLabel, previousState: acpState });
       const tracked = getTrackedAgent(sessionLabel);
       const pollIdentity = resolveStatusPollIdentity(moduleDir, status, tracked, sessionLabel);
-      const currentStatus = status || {};
-      const liveAgentType = pollIdentity.agent_type || 'forge';
+      const currentStatus = objectRecord(status);
+      const liveAgentType = statusPollAgentType(pollIdentity);
       updateAcpPollObservability(ctx, observabilityState, acpState, pollIdentity, liveAgentType);
       publishAcpTranscriptDelta(ctx, pollIdentity, acpState, {
         label: pollIdentity.label,
@@ -372,32 +435,33 @@ export async function pollStatus(config, moduleDir, expectedStatuses, timeoutMin
       });
 
       if (acpState.rateLimited) {
+        const moduleId = requireTextValue(pollIdentity.module_id, 'poll_identity.module_id');
         const rateLimitedStatus = {
           ...currentStatus,
           ...(currentStatus.run_id == null && getRunId(config) != null ? { run_id: getRunId(config) } : {}),
-          module_id: currentStatus.module_id || pollIdentity.module_id,
-          ...(currentStatus.gate_id == null && pollIdentity.gate_id == null
+          module_id: selectDefinedValue(() => (textValue(currentStatus.module_id)), () => (moduleId)),
+          ...(pollIdentity.gate_id == null
             ? {}
-            : { gate_id: currentStatus.gate_id || pollIdentity.gate_id, gate_type: currentStatus.gate_type ?? pollIdentity.gate_type ?? null }),
+            : { gate_id: pollIdentity.gate_id, gate_type: selectDefinedValue(() => (pollIdentity.gate_type), () => (null)) }),
           ...(currentStatus.attempt == null && pollIdentity.attempt != null ? { attempt: pollIdentity.attempt } : {}),
           ...(resolveStatusDispatchId(currentStatus) == null && pollIdentity.dispatch_id != null ? { dispatch_id: pollIdentity.dispatch_id } : {}),
           ...(resolveStatusGatewayLabel(currentStatus) == null && pollIdentity.gateway_label != null ? { gateway_label: pollIdentity.gateway_label } : {}),
           ...(resolveStatusSessionKey(currentStatus) == null && pollIdentity.session_key != null ? { session_key: pollIdentity.session_key } : {}),
-          current_phase: currentStatus.current_phase || liveAgentType,
-          agent_type: currentStatus.agent_type || liveAgentType,
+          current_phase: selectDefinedValue(() => (textValue(currentStatus.current_phase)), () => (liveAgentType)),
+          agent_type: selectDefinedValue(() => (textValue(currentStatus.agent_type)), () => (liveAgentType)),
           rate_limit_reason: acpState.detail,
-          detail: currentStatus.detail || acpState.detail,
+          detail: selectDefinedValue(() => (textValue(currentStatus.detail)), () => (acpState.detail)),
         };
         const normalizedRateLimitedStatus = buildModuleSessionRateLimitStatus(rateLimitedStatus, {
-          moduleId: currentStatus.module_id || pollIdentity.module_id || moduleDir,
+          moduleId,
           phase: liveAgentType,
           identity: {
             agent_type: liveAgentType,
-            run_id: getRunId(config) || null,
-            attempt: pollIdentity.attempt ?? null,
-            dispatch_id: pollIdentity.dispatch_id ?? null,
-            gateway_label: pollIdentity.gateway_label ?? null,
-            session_key: pollIdentity.session_key ?? null,
+            run_id: selectDefinedValue(() => (getRunId(config)), () => (null)),
+            attempt: selectDefinedValue(() => (pollIdentity.attempt), () => (null)),
+            dispatch_id: selectDefinedValue(() => (pollIdentity.dispatch_id), () => (null)),
+            gateway_label: selectDefinedValue(() => (pollIdentity.gateway_label), () => (null)),
+            session_key: selectDefinedValue(() => (pollIdentity.session_key), () => (null)),
           },
         });
         const rateLimitTransition = transitionModuleStatus(normalizedRateLimitedStatus, STATUS.RATE_LIMITED, {
@@ -409,12 +473,13 @@ export async function pollStatus(config, moduleDir, expectedStatuses, timeoutMin
 
       if (acpState.terminal) {
         const terminalDetail = sanitizeTranscriptDetail(acpState.detail);
+        const moduleId = requireTextValue(pollIdentity.module_id, 'poll_identity.module_id');
         log('WARN', `Session ${acpState.sessionState} before target lifecycle status (${acpState.reason}${terminalDetail ? `; ${terminalDetail}` : ''})`);
         return {
           done: true,
           result: pollResult(false, 'session_ended_no_changes', {
             ...(status && typeof status === 'object' ? status : {}),
-            module_id: pollIdentity.module_id,
+            module_id: moduleId,
             gate_id: pollIdentity.gate_id,
             session_key: pollIdentity.session_key,
             current_phase: liveAgentType,
@@ -428,8 +493,8 @@ export async function pollStatus(config, moduleDir, expectedStatuses, timeoutMin
       }
     }
 
-    const logStatus = status?.status || 'no-status-file';
-    const logPhase = status?.current_phase || '';
+    const logStatus = statusLogValue(status);
+    const logPhase = phaseLogValue(status);
     return { done: false, logMsg: `status=${logStatus} phase=${logPhase}` };
   }, timeoutMinutes, moduleDir, opts);
 }
@@ -458,6 +523,27 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
   let observedAgentEnded = null;
   let observedAgentEndedAt = 0;
 
+  function buildArtifactIdentity() {
+    const tracked = sessionLabel ? getTrackedAgent(sessionLabel) : null;
+    const moduleId = requireTextValue(selectDefinedValue(() => (opts.moduleId), () => (moduleDir)), 'module_id');
+    const currentStatus = { module_id: moduleId, current_phase: 'forge', status: STATUS.IN_PROGRESS, attempt: selectDefinedValue(() => (opts.attempt), () => (null)), dispatch_id: selectDefinedValue(() => (opts.dispatchId), () => (null)), gateway_label: selectDefinedValue(() => (opts.gatewayLabel), () => (sessionLabel)), session_key: selectDefinedValue(() => (opts.sessionKey), () => (null)) };
+    const pollIdentity = resolveStatusPollIdentity(moduleDir, currentStatus, tracked, sessionLabel);
+    const identityModuleId = requireTextValue(pollIdentity.module_id, 'poll_identity.module_id');
+    return {
+      currentStatus,
+      pollIdentity,
+      identity: buildForgeAgentEndedIdentity(config, moduleDir, {
+        ...opts,
+        trackedAgent: tracked,
+        moduleId: identityModuleId,
+        attempt: selectDefinedValue(() => (pollIdentity.attempt), () => (opts.attempt)),
+        dispatchId: selectDefinedValue(() => (pollIdentity.dispatch_id), () => (opts.dispatchId)),
+        sessionKey: selectDefinedValue(() => (pollIdentity.session_key), () => (opts.sessionKey)),
+        gatewayLabel: selectDefinedValue(() => (selectDefinedValue(() => (pollIdentity.gateway_label), () => (opts.gatewayLabel))), () => (sessionLabel)),
+      }),
+    };
+  }
+
   function diffEvidenceFor(event, source) {
     return collectMeaningfulForgeDiffEvidence(config, moduleDir, {
       ...opts,
@@ -471,8 +557,8 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
     const diffEvidence = diffEvidenceFor(event, source);
     if (!diffEvidence.ok) {
       return pollResult(false, 'git_error', {
-        message: diffEvidence.error?.message || 'Unable to collect meaningful Forge diff evidence',
-        details: diffEvidence.error?.pollingGit || diffEvidence.error?.gitSync || null,
+        message: selectDefinedValue(() => (textValue(diffEvidence.error?.message)), () => (MEANINGFUL_DIFF_EVIDENCE_FAILURE)),
+        details: selectTruthyValue(() => (selectTruthyValue(() => (diffEvidence.error?.pollingGit), () => (diffEvidence.error?.gitSync))), () => (null)),
       });
     }
     const ready = diffEvidence.hasMeaningfulChanges;
@@ -486,9 +572,18 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
   }
 
   function completionFromArtifact(identity, transcript = null) {
-    const artifact = readForgeCompletionArtifact(config, moduleDir);
+    const artifact = readForgeCompletionArtifact(config, moduleDir, identity);
     if (!artifact.found) return null;
     if (!artifact.valid) {
+      const errors = Array.isArray(artifact.errors) ? artifact.errors : [];
+      if (errors.some((entry) => !String(entry).startsWith('invalid JSON:'))) {
+        return {
+          done: true,
+          result: pollResult(false, 'invalid_forge_completion', invalidForgeCompletionArtifactStatus(config, moduleDir, identity, errors), {
+            ...(transcript ? { transcript } : {}),
+          }),
+        };
+      }
       return {
         parse_error: true,
         logMsg: 'forge_completion=invalid waiting_for_rewrite',
@@ -512,17 +607,8 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
 
   try {
     return await pollGeneric(config, async () => {
-      const tracked = sessionLabel ? getTrackedAgent(sessionLabel) : null;
-      const currentStatus = { module_id: opts.moduleId || moduleDir, current_phase: 'forge', status: STATUS.IN_PROGRESS };
-      const pollIdentity = resolveStatusPollIdentity(moduleDir, currentStatus, tracked, sessionLabel);
-      const identity = buildForgeAgentEndedIdentity(config, moduleDir, {
-        ...opts,
-        trackedAgent: tracked,
-        moduleId: pollIdentity.module_id || opts.moduleId || moduleDir,
-        dispatchId: pollIdentity.dispatch_id || opts.dispatchId,
-        sessionKey: pollIdentity.session_key || opts.sessionKey,
-        gatewayLabel: pollIdentity.gateway_label || opts.gatewayLabel || sessionLabel,
-      });
+      const { currentStatus, pollIdentity, identity } = buildArtifactIdentity();
+      const identityModuleId = requireTextValue(pollIdentity.module_id, 'poll_identity.module_id');
 
       const artifactCompletion = completionFromArtifact(identity);
       if (artifactCompletion) return artifactCompletion;
@@ -539,7 +625,7 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
           hookReaderDegraded = true;
           hookReader.close?.();
           hookReader = null;
-          log('WARN', `[${moduleDir}] agent.ended telemetry reader degraded; ACP monitor remains diagnostic only (${error.message || error})`);
+          log('WARN', `[${moduleDir}] agent.ended telemetry reader degraded; ACP monitor remains diagnostic only (${errorMessage(error)})`);
         }
       }
 
@@ -555,7 +641,7 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
 
       if (sessionLabel) {
         acpState = await getAcpMonitorState({ config, sessionLabelOrKey: sessionLabel, previousState: acpState });
-        const liveAgentType = pollIdentity.agent_type || 'forge';
+        const liveAgentType = statusPollAgentType(pollIdentity);
         updateAcpPollObservability(ctx, observabilityState, acpState, pollIdentity, liveAgentType);
         publishAcpTranscriptDelta(ctx, pollIdentity, acpState, {
           label: pollIdentity.label,
@@ -574,25 +660,25 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
             rate_limited: true,
             status: buildModuleSessionRateLimitStatus({
               ...currentStatus,
-              module_id: pollIdentity.module_id || moduleDir,
-              run_id: getRunId(config) || null,
-              attempt: pollIdentity.attempt ?? null,
-              dispatch_id: pollIdentity.dispatch_id ?? null,
-              gateway_label: pollIdentity.gateway_label ?? null,
-              session_key: pollIdentity.session_key ?? null,
+              module_id: identityModuleId,
+              run_id: selectDefinedValue(() => (getRunId(config)), () => (null)),
+              attempt: selectDefinedValue(() => (pollIdentity.attempt), () => (null)),
+              dispatch_id: selectDefinedValue(() => (pollIdentity.dispatch_id), () => (null)),
+              gateway_label: selectDefinedValue(() => (pollIdentity.gateway_label), () => (null)),
+              session_key: selectDefinedValue(() => (pollIdentity.session_key), () => (null)),
               agent_type: liveAgentType,
               rate_limit_reason: acpState.detail,
               detail: acpState.detail,
             }, {
-              moduleId: pollIdentity.module_id || moduleDir,
+              moduleId: identityModuleId,
               phase: liveAgentType,
               identity: {
                 agent_type: liveAgentType,
-                run_id: getRunId(config) || null,
-                attempt: pollIdentity.attempt ?? null,
-                dispatch_id: pollIdentity.dispatch_id ?? null,
-                gateway_label: pollIdentity.gateway_label ?? null,
-                session_key: pollIdentity.session_key ?? null,
+                run_id: selectDefinedValue(() => (getRunId(config)), () => (null)),
+                attempt: selectDefinedValue(() => (pollIdentity.attempt), () => (null)),
+                dispatch_id: selectDefinedValue(() => (pollIdentity.dispatch_id), () => (null)),
+                gateway_label: selectDefinedValue(() => (pollIdentity.gateway_label), () => (null)),
+                session_key: selectDefinedValue(() => (pollIdentity.session_key), () => (null)),
               },
             }),
           };
@@ -603,30 +689,44 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
           const transcript = sanitizeAcpTranscriptEvidence(acpState.transcript);
           const artifactCompletionWithTranscript = completionFromArtifact(identity, transcript);
           if (artifactCompletionWithTranscript?.done) return artifactCompletionWithTranscript;
-          const missingHookStatus = {
+          const missingArtifactStatus = {
             status: STATUS.FAIL,
             source: 'acp_session_monitor_diagnostic',
-            summary: 'Forge session ended without canonical agent.ended telemetry evidence',
-            detail: terminalDetail || acpState.reason || null,
+            summary: 'Forge session ended without canonical forge-completion.json artifact',
+            detail: selectDefinedValue(() => (selectDefinedValue(() => (terminalDetail), () => (acpState.reason))), () => (null)),
             completed_at: new Date().toISOString(),
-            module_id: pollIdentity.module_id || moduleDir,
-            dispatch_id: pollIdentity.dispatch_id || null,
-            gateway_label: pollIdentity.gateway_label || sessionLabel || null,
-            session_key: pollIdentity.session_key || null,
+            module_id: identityModuleId,
+            dispatch_id: selectDefinedValue(() => (pollIdentity.dispatch_id), () => (null)),
+            gateway_label: selectDefinedValue(() => (selectDefinedValue(() => (pollIdentity.gateway_label), () => (sessionLabel))), () => (null)),
+            session_key: selectDefinedValue(() => (pollIdentity.session_key), () => (null)),
             state: acpState.sessionState,
-            reason: acpState.reason || null,
-            missing_authority: 'agent.ended',
+            reason: selectDefinedValue(() => (acpState.reason), () => (null)),
+            missing_authority: 'forge-completion.json',
+            expected_completion_path: forgeCompletionArtifactFile(config, moduleDir),
+            project_src_dir: projectSrcPath(config),
+            swarm_dir: config.paths?.swarm_dir,
+            repo_root: config.repo_root,
           };
-          log('WARN', `Session ${acpState.sessionState} ended without canonical agent.ended evidence (${acpState.reason}${terminalDetail ? `; ${terminalDetail}` : ''})`);
-          return { done: true, result: pollResult(false, 'agent_ended_missing', missingHookStatus, { transcript }) };
+          log('WARN', `Session ${acpState.sessionState} ended without canonical forge-completion.json artifact (${acpState.reason}${terminalDetail ? `; ${terminalDetail}` : ''})`);
+          return { done: true, result: pollResult(false, 'forge_completion_artifact_missing', missingArtifactStatus, { transcript }) };
         }
       }
 
       const fallback = hookReaderDegraded
         ? `fallback=acp_monitor${hookReaderError ? ' reader_degraded' : ' reader_unavailable'}`
         : 'hook=waiting';
-      return { done: false, logMsg: `agent_ended=missing ${fallback}` };
-    }, timeoutMinutes, moduleDir, opts);
+      return {
+        done: false,
+        logMsg: `observer_agent_ended=missing ${fallback}; awaiting typed completion artifact`,
+        logLevel: 'DEBUG',
+      };
+    }, timeoutMinutes, moduleDir, {
+      ...opts,
+      onTimeoutBeforeResult: () => {
+        const finalArtifactCompletion = completionFromArtifact(buildArtifactIdentity().identity);
+        return finalArtifactCompletion?.done ? finalArtifactCompletion.result : null;
+      },
+    });
   } finally {
     hookReader?.close?.();
   }
@@ -656,7 +756,7 @@ export async function pollDual(config, moduleDir, moduleId, expectedStatuses, ti
 
 /** Status-backed rate-limit recovery for legacy/non-Forge callers. */
 export async function pollWithRateLimitRecovery(config, moduleDir, expectedStatuses, timeoutMinutes, opts = {}) {
-  const budget = opts.budget || createBudgetFromMinutes(timeoutMinutes, { label: moduleDir });
+  const budget = pollingBudget(opts, timeoutMinutes, moduleDir);
   return withRateLimitRecovery(config, moduleDir,
     () => pollStatus(config, moduleDir, expectedStatuses, timeoutMinutes, { ...opts, budget }),
     { ...opts, budget, phase: 'forge' });
@@ -664,7 +764,7 @@ export async function pollWithRateLimitRecovery(config, moduleDir, expectedStatu
 
 /** Forge-phase rate-limit recovery (wraps typed completion artifact polling). */
 export async function pollForgeCompletionWithRateLimitRecovery(config, moduleDir, timeoutMinutes, opts = {}) {
-  const budget = opts.budget || createBudgetFromMinutes(timeoutMinutes, { label: moduleDir });
+  const budget = pollingBudget(opts, timeoutMinutes, moduleDir);
   return withRateLimitRecovery(config, moduleDir,
     () => pollForgeCompletion(config, moduleDir, timeoutMinutes, { ...opts, budget }),
     { ...opts, budget, phase: 'forge' });
@@ -672,7 +772,7 @@ export async function pollForgeCompletionWithRateLimitRecovery(config, moduleDir
 
 /** Buster-phase rate-limit recovery (wraps pollDual). */
 export async function pollDualWithRateLimitRecovery(config, moduleDir, moduleId, expectedStatuses, timeoutMinutes, expectedIdentity = {}, opts = {}) {
-  const budget = opts.budget || createBudgetFromMinutes(timeoutMinutes, { label: moduleDir });
+  const budget = pollingBudget(opts, timeoutMinutes, moduleDir);
   return withRateLimitRecovery(config, moduleDir,
     () => pollDual(config, moduleDir, moduleId, expectedStatuses, timeoutMinutes, expectedIdentity, { ...opts, budget }),
     { ...opts, budget, phase: 'buster', moduleId });

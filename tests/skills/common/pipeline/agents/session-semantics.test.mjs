@@ -19,10 +19,10 @@ test('structured failed session states normalize to stopped terminal error', () 
   }
 });
 
-test('parser unknown detail states count as unreachable', () => {
+test('parser unparsed detail states count as unreachable', () => {
   const parsed = parseSessionState({ raw: 'unexpected gateway text' });
 
   assert.equal(parsed.active, false);
-  assert.equal(parsed.state, 'unknown (unexpected gateway text)');
+  assert.equal(parsed.state, 'status_unparsed (unexpected gateway text)');
   assert.equal(isUnreachableSessionState(parsed.state), true);
 });

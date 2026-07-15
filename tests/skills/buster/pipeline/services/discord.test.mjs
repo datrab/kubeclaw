@@ -114,3 +114,50 @@ test('sendDiscord derives readable actionability from notification fields', asyn
   assert.equal(entry.actionability.action, fieldByName.Action);
   assert.equal(entry.actionability.evidence, fieldByName.Evidence);
 });
+
+test('sendDiscord writes run-scoped delivery receipts for Buster progress notifications', async (t) => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-discord-receipt-'));
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  const originalFetch = globalThis.fetch;
+  t.after(() => { globalThis.fetch = originalFetch; });
+
+  globalThis.fetch = async () => ({
+    ok: true,
+    status: 200,
+    statusText: 'OK',
+    headers: { get: () => 'application/json' },
+    json: async () => ({ id: 'message-1', channel_id: 'channel-1' }),
+  });
+
+  const { sendDiscord } = await import('../../../../../skills/buster/pipeline/services/discord.ts');
+  const runId = `run-${process.pid}-receipt`;
+  const runLogPath = path.join(dir, 'runs', runId, 'pipeline.jsonl');
+  sendDiscord({
+    embeds: [{
+      title: '✅ Suite Results: PASS — 01-nginx',
+      fields: [{ name: 'Status', value: 'PASS', inline: true }],
+    }],
+  }, {
+    project: 'project-a',
+    module_id: '01-nginx',
+    run_id: runId,
+    dispatch_id: 'buster-module-01-nginx-1',
+    pipeline_run_log_path: runLogPath,
+    webhook_url: 'https://discord.example/webhook?wait=true',
+  });
+
+  const receiptPath = path.join(path.dirname(runLogPath), 'discord-deliveries.jsonl');
+  for (let attempt = 0; attempt < 20 && !fs.existsSync(receiptPath); attempt += 1) {
+    await new Promise((resolve) => setTimeout(resolve, 10));
+  }
+
+  const [receipt] = readJsonl(receiptPath);
+  assert.equal(receipt.source, 'buster');
+  assert.equal(receipt.run_id, runId);
+  assert.equal(receipt.ok, true);
+  assert.equal(receipt.message_id, 'message-1');
+  assert.equal(receipt.channel_id, 'channel-1');
+  assert.equal(receipt.webhook_message_returned, true);
+  assert.equal(receipt.title, '✅ Suite Results: PASS — 01-nginx');
+  assert.equal(receipt.correlation.dispatch_id, 'buster-module-01-nginx-1');
+});

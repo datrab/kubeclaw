@@ -122,6 +122,10 @@ function makeSuccessfulDeps({ outputFilePath, canonicalOutputPath, onCommit }) {
         status: 'PASS',
         critical_issues: [],
         deferred_issues: [],
+        checked_contracts: ['.swarm/contracts/module-review.json'],
+        opened_artifacts: ['.swarm/logs/modules/01-nginx/buster-output.json'],
+        failed_commands: [],
+        unverified_requirements: [],
         summary: 'review passed',
       }));
       return { ok: true };
@@ -131,8 +135,8 @@ function makeSuccessfulDeps({ outputFilePath, canonicalOutputPath, onCommit }) {
     async killReviewerAgent() {
       return true;
     },
-    async gitCommitAndPush() {
-      onCommit();
+    async gitCommitAndPush(_config, _message, options = {}) {
+      onCommit(options);
       return { committed: true };
     },
   };
@@ -251,13 +255,19 @@ test('runReviewGateOnce writes canonical gate output before publishing review ar
     deps: makeSuccessfulDeps({
       outputFilePath,
       canonicalOutputPath,
-      onCommit() {
+      onCommit(options) {
         assert.equal(fs.existsSync(outputFilePath), true, 'reviewer output should exist before publish');
         assert.equal(fs.existsSync(canonicalOutputPath), true, 'canonical gate output should exist before publish');
         assert.deepEqual(
           JSON.parse(fs.readFileSync(canonicalOutputPath, 'utf8')),
           JSON.parse(fs.readFileSync(outputFilePath, 'utf8')),
         );
+        assert.deepEqual(options.addPaths.sort(), [
+          '.swarm/canonical/review-output.json',
+          '.swarm/echo-reviews/echo-main.json',
+          '.swarm/logs/gates/review-gate',
+        ].sort());
+        assert.deepEqual(options.conflictPaths, options.addPaths);
         commitObservedCanonical = true;
       },
     }),
@@ -352,6 +362,7 @@ test('runReviewGateOnce scopes full lint to the reviewed module when gate order 
 
   assert.equal(result.ok, true);
   assert.deepEqual(lintArgs, {
+    moduleDir: '01-foundation',
     moduleId: '01-foundation',
     forgeDiffStat: null,
     commitHash: 'abc123',

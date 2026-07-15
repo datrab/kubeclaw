@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import {
   readReusedCapabilityProbeResult,
+  resolveProductionCodexLaunchTarget,
   tailscaleOperatorPodListArgs,
 } from './check-real-e2e-capabilities.mjs';
 
@@ -35,4 +36,15 @@ test('reused matrix capability probe preserves structured failures', () => {
   assert.equal(reused.ok, false);
   assert.equal(reused.reused_from_matrix, true);
   assert.deepEqual(reused.failures, probe.failures);
+});
+
+test('configured Codex capability probe follows production smoke dispatch', () => {
+  const target = resolveProductionCodexLaunchTarget({
+    env: {
+      REAL_E2E_CONFIG_PROBE_PROJECT: 'pipeline-smoke-landing',
+    },
+  });
+  assert.equal(target.runtime, 'subagent');
+  assert.equal(target.agentId, 'codex');
+  assert.equal(target.model, 'codex-5.4');
 });

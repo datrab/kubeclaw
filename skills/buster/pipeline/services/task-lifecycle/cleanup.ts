@@ -2,6 +2,7 @@
 import { emitPluginEvent } from '../telemetry.ts';
 import { doSandboxCleanup } from '../pipeline-helpers.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 export async function runSandboxCleanupStage({ payload, moduleId, tctx, logger, stage, logCompletion = false }) {
   const cleanupStart = Date.now();
   await emitPluginEvent(tctx, 'sandbox_cleanup', {
@@ -20,7 +21,7 @@ export async function runSandboxCleanupStage({ payload, moduleId, tctx, logger, 
     phase:            'completed',
     duration_seconds: Math.round((Date.now() - cleanupStart) / 1000),
     ok:               cleanup.ok,
-    disk_usage:       cleanup.disk_usage || null,
+    disk_usage:       selectTruthyValue(() => (cleanup.disk_usage), () => (null)),
   });
 
   if (logCompletion) {

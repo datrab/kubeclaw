@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { buildSubprocessEnv, resolveScopedPath, validateAllowedPath } from '../../../../skills/common/pipeline/security.ts';
+import { buildSubprocessEnv, resolveScopedPath, tokenizeCommandString, validateAllowedPath } from '../../../../skills/common/pipeline/security.ts';
 
 test('subprocess env overrides must be explicitly allowlisted', () => {
   assert.throws(
@@ -38,6 +38,36 @@ test('subprocess env overrides must be explicitly allowlisted', () => {
     PATH: '/custom/bin',
     CUSTOM_SAFE_FLAG: 'enabled',
   });
+});
+
+test('subprocess env preserves Kubernetes in-cluster coordinates', () => {
+  const env = buildSubprocessEnv({}, {
+    sourceEnv: {
+      PATH: '/usr/bin',
+      KUBERNETES_SERVICE_HOST: '10.43.0.1',
+      KUBERNETES_SERVICE_PORT: '443',
+      KUBERNETES_SERVICE_PORT_HTTPS: '443',
+      KUBERNETES_PORT: 'tcp://10.43.0.1:443',
+      KUBERNETES_PORT_443_TCP: 'tcp://10.43.0.1:443',
+      KUBERNETES_PORT_443_TCP_ADDR: '10.43.0.1',
+      KUBERNETES_PORT_443_TCP_PORT: '443',
+      KUBERNETES_PORT_443_TCP_PROTO: 'tcp',
+    },
+  });
+
+  assert.equal(env.KUBERNETES_SERVICE_HOST, '10.43.0.1');
+  assert.equal(env.KUBERNETES_SERVICE_PORT, '443');
+  assert.equal(env.KUBERNETES_PORT_443_TCP_ADDR, '10.43.0.1');
+});
+
+test('tokenizeCommandString accepts direct argv arrays without shell parsing', () => {
+  const command = ['node', '-e', 'console.error("expected"); process.exit(1)'];
+
+  assert.deepEqual(tokenizeCommandString(command, 'unit.test_cmd'), command);
+  assert.throws(
+    () => tokenizeCommandString(['node', ''], 'unit.test_cmd'),
+    /argv entry must be a non-empty string/,
+  );
 });
 
 test('scoped path helpers reject symlinks that escape the allowed directory', () => {

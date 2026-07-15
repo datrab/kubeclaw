@@ -50,6 +50,11 @@ const novaPollingSource = [
   'polling-identity.ts',
   'polling-session-end.ts',
 ].map((file) => fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'services', file), 'utf8')).join('\n');
+const sessionPollIdentityStart = novaPollingSource.indexOf('export function resolveSessionPollIdentity(');
+const sessionPollIdentityEnd = novaPollingSource.indexOf('export function resolveStatusPollIdentity(');
+const sessionPollIdentitySource = novaPollingSource.slice(sessionPollIdentityStart, sessionPollIdentityEnd);
+const sessionPollModuleIdentityMatch = sessionPollIdentitySource.match(/module_id:[\s\S]*?,\n    gate_id:/);
+const sessionPollModuleIdentitySource = sessionPollModuleIdentityMatch ? sessionPollModuleIdentityMatch[0] : '';
 const novaAcpObservabilitySource = fs.readFileSync(path.join(sourceRoot, 'skills', 'nova', 'pipeline', 'services', 'acp-observability.ts'), 'utf8');
 const busterTelemetrySource = fs.readFileSync(path.join(sourceRoot, 'skills', 'buster', 'pipeline', 'services', 'telemetry.ts'), 'utf8');
 const busterTaskLifecycleSource = fs.readFileSync(path.join(sourceRoot, 'skills', 'buster', 'pipeline', 'services', 'task-lifecycle.ts'), 'utf8');
@@ -182,17 +187,17 @@ assert.equal(
   'Buster fallback artifacts must use a shared correlation builder for known join fields',
 );
 assert.equal(
-  busterTelemetrySource.includes('gateId: opts.gate_id ?? null'),
+  busterTelemetrySource.includes('gateId: selectDefinedValue(() => (opts.gate_id), () => (null))'),
   true,
   'Buster telemetry context must preserve known gate id for fallback/degraded joinability',
 );
 assert.equal(
-  busterTelemetrySource.includes('dispatch_id: data.dispatch_id ?? ctx.dispatchId ?? null'),
+  busterTelemetrySource.includes('dispatch_id: selectDefinedValue(() => (selectDefinedValue(() => (data.dispatch_id), () => (ctx.dispatchId))), () => (null))'),
   true,
   'Buster fallback/degraded telemetry must preserve known dispatch_id',
 );
 assert.equal(
-  busterTelemetrySource.includes('session_key: data.session_key ?? ctx.sessionKey ?? null'),
+  busterTelemetrySource.includes('session_key: selectDefinedValue(() => (selectDefinedValue(() => (data.session_key), () => (ctx.sessionKey))), () => (null))'),
   true,
   'Buster fallback/degraded telemetry must preserve known session_key',
 );
@@ -217,12 +222,12 @@ assert.equal(
   'ACP observability must not promote session labels into canonical session_key telemetry identity',
 );
 assert.equal(
-  novaPollingSource.includes('tracked?.telemetry_module_id ?? explicitModuleId ?? tracked?.moduleId ?? logLabel ?? sessionLabel ?? null'),
+  sessionPollModuleIdentitySource.includes('logLabel') || sessionPollModuleIdentitySource.includes('sessionLabel'),
   false,
   'polling session telemetry must not promote log/session labels into canonical module_id',
 );
 assert.equal(
-  novaPollingSource.includes('tracked?.telemetry_module_id ?? explicitModuleId ?? tracked?.moduleId ?? null'),
+  sessionPollModuleIdentitySource.includes('selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (tracked?.telemetry_module_id), () => (explicitModuleId))), () => (tracked?.moduleId))), () => (null))'),
   true,
   'polling session telemetry should derive canonical module_id only from tracked or explicit module identity',
 );
@@ -401,8 +406,8 @@ assert.deepEqual(
 const validNovaTelemetryPayloads = {
   'agent.killed': { agent_type: 'forge', module_id: '01', reason: 'completed', has_changes: false },
   'agent.ended': { agent_type: 'forge', agent_scope: 'agent', module_id: '01', outcome: 'success', duration_seconds: 3, final_message_count: 1, ended_at: '2026-05-16T20:00:00.000Z' },
-  'agent.llm.input.summary': { agent_type: 'forge', module_id: '01', provider: 'anthropic', model: 'claude-sonnet', prompt_chars: 42, history_message_count: 2, masking_profile: 'kubeclaw-agent-observer-v1-minimal-api-key-mask', masked: [] },
-  'agent.llm.output.summary': { agent_type: 'forge', module_id: '01', provider: 'anthropic', model: 'claude-sonnet', response_chars: 24, usage: { input_tokens: 10, output_tokens: 20 }, input_tokens: 10, output_tokens: 20, masking_profile: 'kubeclaw-agent-observer-v1-minimal-api-key-mask', masked: [] },
+  'agent.llm.input.summary': { agent_type: 'forge', module_id: '01', provider: 'anthropic', model: 'claude-sonnet', prompt_chars: 42, history_message_count: 2 },
+  'agent.llm.output.summary': { agent_type: 'forge', module_id: '01', provider: 'anthropic', model: 'claude-sonnet', response_chars: 24, usage: { input_tokens: 10, output_tokens: 20 }, input_tokens: 10, output_tokens: 20 },
   'agent.model.started': { agent_type: 'forge', module_id: '01', provider: 'anthropic', model: 'claude-sonnet', model_call_id: 'model-call-1', request: { temperature: 0.1 } },
   'agent.model.ended': { agent_type: 'forge', module_id: '01', provider: 'anthropic', model: 'claude-sonnet', model_call_id: 'model-call-1', outcome: 'success', duration_seconds: 1, usage: { input_tokens: 10 }, input_tokens: 10 },
   'agent.progress': { agent_type: 'forge', module_id: '01', status: 'active', elapsed_seconds: 3 },
@@ -411,8 +416,8 @@ const validNovaTelemetryPayloads = {
   'agent.spawn.requested': { agent_type: 'forge', module_id: '01', requester_session_key: 'agent:nova:session-parent', spawn_mode: 'session', thread: true, requester_origin: { channel: 'discord' }, requested_at: '2026-05-16T20:00:00.000Z' },
   'agent.spawned': { agent_type: 'forge', label: 'forge-01', module_id: '01', dispatch: 'acp' },
   'agent.delivery.target': { agent_type: 'forge', module_id: '01', requester_session_key: 'agent:nova:session-parent', child_session_key: 'agent:forge:session-1', spawn_mode: 'session', expects_completion_message: true, requester_origin: { channel: 'discord' }, targeted_at: '2026-05-16T20:00:01.000Z' },
-  'agent.tool.started': { agent_type: 'forge', module_id: '01', tool_name: 'read', tool_call_id: 'tool-1', params_bytes: 12, param_keys: ['path'], masking_profile: 'kubeclaw-agent-observer-v1-minimal-api-key-mask', masked: [] },
-  'agent.tool.finished': { agent_type: 'forge', module_id: '01', tool_name: 'read', tool_call_id: 'tool-1', outcome: 'success', duration_seconds: 0.2, result_bytes: 128, masking_profile: 'kubeclaw-agent-observer-v1-minimal-api-key-mask', masked: [] },
+  'agent.tool.started': { agent_type: 'forge', module_id: '01', tool_name: 'read', tool_call_id: 'tool-1', params_bytes: 12, param_keys: ['path'] },
+  'agent.tool.finished': { agent_type: 'forge', module_id: '01', tool_name: 'read', tool_call_id: 'tool-1', outcome: 'success', duration_seconds: 0.2, result_bytes: 128 },
   'agent.transcript': { agent_type: 'forge', module_id: '01', line_kind: 'stdout', text: 'hello' },
   'approval.requested': { approval_id: 'release', prompt: 'Approve?', options: ['APPROVE', 'REJECT'], gate_id: 'release', timeout_policy: 'BLOCK' },
   'approval.resolved': { approval_id: 'release', choice: 'APPROVE', gate_id: 'release', status: 'APPROVE' },
@@ -578,6 +583,13 @@ assert.equal(invalidPluginEvents[0].impacted_event_type, 'plugin.worker.module_b
 const sharedRunId = 'run-1';
 const sharedStreamKey = 'pipeline:telemetry:proj:run-1';
 
+const previousRedisPassword = process.env.REDIS_PASSWORD;
+const previousRedisHost = process.env.REDIS_HOST;
+const previousRedisPort = process.env.REDIS_PORT;
+process.env.REDIS_HOST = '127.0.0.1';
+process.env.REDIS_PORT = '6379';
+process.env.REDIS_PASSWORD = 'verification-redis-password';
+
 const { runtimeRoot: sandboxRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'sandbox');
 installFakeRedis(sandboxRoot);
 const busterTelemetry = await importRuntimeModule(sandboxRoot, '/app/skills/pipeline/services/telemetry.ts');
@@ -586,8 +598,8 @@ const busterCtxA = busterTelemetry.createTelemetryContext({
   module_id: 'mod-a',
   run_id: sharedRunId,
   enabled: true,
-  redisHost: '127.0.0.1',
-  redisPort: 6379,
+  host: '127.0.0.1',
+  port: 6379,
   enforceSecureMode: false,
   streamMaxLen: 10000,
 });
@@ -600,8 +612,8 @@ const busterCtxB = busterTelemetry.createTelemetryContext({
   module_id: 'mod-a',
   run_id: sharedRunId,
   enabled: true,
-  redisHost: '127.0.0.1',
-  redisPort: 6379,
+  host: '127.0.0.1',
+  port: 6379,
   enforceSecureMode: false,
   streamMaxLen: 10000,
 });
@@ -610,14 +622,17 @@ await busterTelemetry.emitPluginEvent(busterCtxB, 'session_monitor', { module_id
 await busterTelemetry.closeTelemetry(busterCtxA);
 await busterTelemetry.closeTelemetry(busterCtxB);
 
-const previousRedisPassword = process.env.REDIS_PASSWORD;
-process.env.REDIS_PASSWORD = 'verification-redis-password';
 const { runtimeRoot: generalRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'general');
 installFakeRedis(generalRoot);
 const runtimeCore = await importRuntimeModule(generalRoot, '/app/skills/pipeline/core/runtime.ts');
 const builtInRegistry = await buildBuiltInRegistry(generalRoot);
   const config = {
     project: 'proj',
+    repo_root: path.join(generalRoot, 'app'),
+    paths: {
+      swarm_dir: path.join(generalRoot, 'workspace', '.swarm'),
+      modules_dir: path.join(generalRoot, 'workspace', '.swarm', 'modules'),
+    },
     pipeline_defaults: {
       timeout_minutes: 30,
       max_fails: 3,
@@ -642,7 +657,14 @@ const builtInRegistry = await buildBuiltInRegistry(generalRoot);
       agent_enabled: false,
       timeout_minutes: 15,
     },
-  telemetry: { enabled: true, stream_max_len: 10000, sink_timeout_ms: 5000 },
+  telemetry: {
+    enabled: true,
+    stream_max_len: 10000,
+    sink_timeout_ms: 5000,
+    host: '127.0.0.1',
+    port: 6379,
+    enforceSecureMode: false,
+  },
   locks: {
     lifecycle_append: { stale_ms: 300000, timeout_ms: 30000 },
     gate_active_session: { stale_ms: 300000, timeout_ms: 30000 },
@@ -853,7 +875,13 @@ await flushAsync();
 await novaTelemetryA.closeTelemetryRedis();
 
 const novaTelemetryB = await importFresh(generalRoot, '/app/skills/pipeline/services/telemetry.ts');
-novaTelemetryB.onPipelineCompleted(ctx, 'succeeded', 'OK', { total_cost_usd: 0.32 });
+novaTelemetryB.onPipelineCompleted(ctx, 'succeeded', 'OK', {
+  modules_passed: 1,
+  modules_failed: 1,
+  modules_blocked: 1,
+  modules_total: 3,
+  total_cost_usd: 0.32,
+});
 await flushAsync();
 await novaTelemetryB.closeTelemetryRedis();
 
@@ -886,8 +914,8 @@ const invalidBusterCtx = busterTelemetry.createTelemetryContext({
   run_id: 'run-invalid-buster-payload',
   enabled: true,
   pipeline_run_log_path: invalidBusterRunLog,
-  redisHost: '127.0.0.1',
-  redisPort: 6379,
+  host: '127.0.0.1',
+  port: 6379,
   enforceSecureMode: false,
   streamMaxLen: 10000,
 });
@@ -1092,6 +1120,7 @@ const failOnlyResult = await failuresMod.handleFail(
 );
 assert.equal(failOnlyResult.kind, 'pipeline_step_result', 'non-terminal module failures should return canonical typed step results');
 assert.equal(failOnlyResult.outcome, 'needs_nova', 'non-terminal module failures should escalate with typed needs_nova when auto-retry is exhausted');
+assert.equal(failOnlyResult.terminal.decision.reasonCode, 'needs_nova', 'needs-Nova escalations must not expose the underlying test failure as the terminal reason');
 assert.equal(failOnlyResult.correlation.attempt, 3);
 assert.equal(failOnlyResult.diagnostics.metadata.module_status?.attempt, 3);
 await flushAsync();
@@ -1187,7 +1216,15 @@ const moduleRunnerMod = await importFresh(generalRoot, '/app/skills/pipeline/run
 const moduleRunnerRegistry = await buildBuiltInRegistry(generalRoot);
 const crashConfig = {
   project: 'proj',
-  telemetry: { enabled: true, stream_max_len: 10000, sink_timeout_ms: 5000 },
+  repo_root: path.join(generalRoot, 'app'),
+  telemetry: {
+    enabled: true,
+    stream_max_len: 10000,
+    sink_timeout_ms: 5000,
+    host: '127.0.0.1',
+    port: 6379,
+    enforceSecureMode: false,
+  },
   pipeline_defaults: {
     timeout_minutes: 15,
     max_fails: 3,
@@ -1248,7 +1285,11 @@ const crashDeps = {
     validateBusterConfig: () => {},
     buildBusterModulePrompt: () => ({ prompt: 'run the buster checks' }),
     archiveModuleCompletions: async () => {},
-    spawnAgent: async () => ({ dispatch_id: 'buster-dispatch-1' }),
+    spawnAgent: async () => ({
+      dispatch_id: 'buster-dispatch-1',
+      gateway_label: 'buster-dispatch-1',
+      session_key: 'agent:crash:session',
+    }),
     killAgent: async () => {},
     setShutdownContext: () => {},
     clearShutdownContext: () => {},
@@ -1363,7 +1404,6 @@ const trackedRateLimitStatus = rateLimitMod.buildTrackedModuleSessionRateLimitSt
 await rateLimitMod.handleSessionRateLimit(rateLimitConfig, trackedRateLimitStatus, {
   ...rateLimitMod.createTrackedModuleSessionRateLimitRecoveryOptions(rateLimitConfig, 'mod-rate'),
   pauseCount: 1,
-  maxPauses: 3,
 });
 await flushAsync();
 
@@ -1371,7 +1411,7 @@ const rateLimitEvents = xaddEvents(sharedStreamKey).slice(rateLimitEventOffset);
 assert.deepEqual(rateLimitEvents.map((event) => event.type), ['rate_limit.detected', 'module.status_changed', 'module.status_changed']);
 assert.equal(rateLimitEvents[0].module_id, 'mod-rate');
 assert.equal(rateLimitEvents[0].pause_count, 1);
-assert.equal(rateLimitEvents[0].max_pauses, 3);
+assert.equal(rateLimitEvents[0].max_pauses, 5);
 assert.equal(rateLimitEvents[1].module_id, 'mod-rate');
 assert.equal(rateLimitEvents[1].old_status, 'TESTING');
 assert.equal(rateLimitEvents[1].new_status, 'RATE_LIMITED');
@@ -1418,6 +1458,10 @@ assert.equal(contractText.includes('When that same gate-owned verdict or exhaust
 const finalPipelineEvents = xaddEvents(sharedStreamKey);
 if (previousRedisPassword === undefined) delete process.env.REDIS_PASSWORD;
 else process.env.REDIS_PASSWORD = previousRedisPassword;
+if (previousRedisHost === undefined) delete process.env.REDIS_HOST;
+else process.env.REDIS_HOST = previousRedisHost;
+if (previousRedisPort === undefined) delete process.env.REDIS_PORT;
+else process.env.REDIS_PORT = previousRedisPort;
 
 quietConsole.restore();
 console.log(JSON.stringify({

@@ -66,7 +66,11 @@ assert.equal(eventContractSource.includes('budget?.remainingMs'), true, 'event w
 assert.equal(commonGatewaySource.includes('await sleep(retryDelayMs, { budget, signal })'), true, 'gateway retry waits must be abortable and budget-aware');
 assert.equal(commonGatewaySource.includes('throwIfCallerAborted(signal, budget)'), true, 'gateway retries must propagate caller aborts instead of retrying them');
 assert.equal(commonLifecycleSource.includes('await sleep(retryDelayMs, { budget, signal })'), true, 'session spawn retry waits must be abortable and budget-aware');
-assert.equal(moduleRunnerSource.includes('deps.sleep(5000, { budget: opts.budget || null, signal: opts.signal || null })'), true, 'module retry wait must receive caller budget/signal');
+assert.equal(
+  moduleRunnerSource.includes('deps.sleep(5000, { budget: selectTruthyValue(() => (opts.budget), () => (null)), signal: selectTruthyValue(() => (opts.signal), () => (null)) })'),
+  true,
+  'module retry wait must receive caller budget/signal',
+);
 assert.equal(commonGitWorktreeSource.includes('await sleep(delayMs, { budget, signal })'), true, 'shared git push retry waits must be abortable and budget-aware');
 assert.equal(novaGitWorktreeSource.includes("export * from '../../../common/pipeline/integrations/git-worktree.ts';"), true, 'Nova git worktree must re-export the shared implementation authority');
 assert.equal(busterGitWorkflowsSource.includes('await sleep(retryDelayMs * Math.pow(2, attempt - 1), { budget, signal })'), true, 'Buster git retry backoff must use shared abortable sleep');

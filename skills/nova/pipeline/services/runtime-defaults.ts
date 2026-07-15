@@ -24,8 +24,13 @@ function requireBoolean(section, field, label) {
   throw new Error(`${label}.${field}: required boolean in swarm.config.json`);
 }
 
+function requireObjectSection(section, label) {
+  if (section && typeof section === 'object' && !Array.isArray(section)) return section;
+  throw new Error(`${label}: required object in swarm.config.json`);
+}
+
 export function getReviewDefaultsConfig(config = {}) {
-  const section = config?.review_defaults || {};
+  const section = requireObjectSection(config?.review_defaults, 'config.review_defaults');
   return {
     timeout_minutes: requireNumber(section, 'timeout_minutes', 'config.review_defaults', { positive: true }),
     max_fix_cycles: requireNumber(section, 'max_fix_cycles', 'config.review_defaults'),
@@ -35,7 +40,7 @@ export function getReviewDefaultsConfig(config = {}) {
 }
 
 export function getCaseStudyConfig(config = {}) {
-  const section = config?.case_study || {};
+  const section = requireObjectSection(config?.case_study, 'config.case_study');
   return {
     ...section,
     timeout_minutes: requireNumber(section, 'timeout_minutes', 'config.case_study', { positive: true }),
@@ -43,7 +48,7 @@ export function getCaseStudyConfig(config = {}) {
 }
 
 export function getArchValidationConfig(config = {}) {
-  const section = config?.arch_validation || {};
+  const section = requireObjectSection(config?.arch_validation, 'config.arch_validation');
   return {
     ...section,
     enabled: requireBoolean(section, 'enabled', 'config.arch_validation'),
@@ -53,7 +58,7 @@ export function getArchValidationConfig(config = {}) {
 }
 
 export function getBusterRuntimeConfig(config = {}) {
-  const runtime = config?.buster?.runtime || {};
+  const runtime = requireObjectSection(config?.buster?.runtime, 'config.buster.runtime');
   return {
     ...runtime,
     suite_timeout_ms: requireNumber(runtime, 'suite_timeout_ms', 'config.buster.runtime', { positive: true, integer: true }),
@@ -62,7 +67,7 @@ export function getBusterRuntimeConfig(config = {}) {
 }
 
 export function getPipelineDefaultsConfig(config = {}) {
-  const section = config?.pipeline_defaults || {};
+  const section = requireObjectSection(config?.pipeline_defaults, 'config.pipeline_defaults');
   return {
     timeout_minutes: requireNumber(section, 'timeout_minutes', 'config.pipeline_defaults', { positive: true }),
     max_fails: requireNumber(section, 'max_fails', 'config.pipeline_defaults', { integer: true }),

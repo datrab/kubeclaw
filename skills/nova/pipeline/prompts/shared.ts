@@ -102,21 +102,38 @@ export function forgeCompletionArtifactPath(config, dir) {
   return relPath(config, path.join(modulePath(config, dir), 'forge-completion.json'));
 }
 
-export function buildForgeCompletionArtifactContract(config, dir) {
+export function buildForgeCompletionArtifactContract(config, dir, identity = {}) {
   const artifactPath = forgeCompletionArtifactPath(config, dir);
+  const runId = identity.run_id || identity.runId || 'run-id-from-prompt';
+  const moduleId = identity.module_id || identity.moduleId || dir;
+  const attempt = identity.attempt || 1;
   return [
     `Write \`${artifactPath}\` as raw, directly parseable JSON. Do not wrap it in Markdown, do not use fenced code blocks, and do not write explanatory text into the file.`,
     'The file content must be one JSON object with exactly this shape:',
     '{',
     '  "artifact_type": "forge_completion",',
+    `  "run_id": "${runId}",`,
+    `  "module_id": "${moduleId}",`,
+    `  "attempt": ${attempt},`,
     '  "status": "READY_FOR_TESTING",',
     '  "summary": "brief implementation summary",',
+    '  "evidence": {',
+    '    "inspected_files": ["relative/path/inspected"],',
+    '    "consulted_contracts": ["relative/path/or/contract/ref"],',
+    '    "implementation_notes": "what changed, or why unchanged source remains compliant"',
+    '  },',
     '  "completed_at": "2026-05-13T14:37:00Z"',
     '}',
     'Schema rules:',
     '- `artifact_type` must be exactly `forge_completion`.',
+    `- \`run_id\` must be exactly \`${runId}\`.`,
+    `- \`module_id\` must be exactly \`${moduleId}\`.`,
+    `- \`attempt\` must be exactly \`${attempt}\`.`,
     '- `status` must be exactly `READY_FOR_TESTING` when the implementation is ready for Buster, or `BLOCKED` only when implementation cannot be completed.',
     '- `summary` must be a non-empty string describing what changed or why the task is blocked.',
+    '- `evidence.inspected_files` must list the owned files or contract files you inspected.',
+    '- `evidence.consulted_contracts` must list the contract files or contract refs used to decide readiness.',
+    '- `evidence.implementation_notes` must explain the implementation changes, or why unchanged source remains compliant.',
     '- `completed_at` must be an ISO-8601 UTC timestamp such as `2026-05-13T14:37:00Z`.',
   ];
 }

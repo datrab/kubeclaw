@@ -10,6 +10,7 @@ import { resolvePerfReportPaths } from '../../../../../skills/buster/pipeline/su
 import {
   applyBuildRuntimePort,
   buildDetailedSuiteSummary,
+  collectReadySuites,
   resolveSandboxResultsDir,
   runSuites,
   runSuiteWithTimeout,
@@ -92,6 +93,29 @@ test('build runtime host port is propagated to later suites', () => {
     port: 43125,
     health_path: '/health',
   });
+});
+
+test('collectReadySuites selects independent Buster suites and waits on declared dependencies', () => {
+  assert.deepEqual(
+    collectReadySuites(['manifest', 'build', 'health', 'unit']),
+    ['manifest', 'unit'],
+  );
+
+  assert.deepEqual(
+    collectReadySuites(['manifest', 'build', 'health', 'unit'], {
+      manifest: { suite: 'manifest', status: 'PASS' },
+      unit: { suite: 'unit', status: 'PASS' },
+    }),
+    ['build'],
+  );
+
+  assert.deepEqual(
+    collectReadySuites(['manifest', 'build', 'health'], {
+      manifest: { suite: 'manifest', status: 'PASS' },
+      build: { suite: 'build', status: 'PASS' },
+    }),
+    ['health'],
+  );
 });
 
 test('perf report paths use per-run scratch and final artifacts', () => {
@@ -178,4 +202,64 @@ test('runSuites writes JSONL suite logs when logDir is fresh', async () => {
   assert.ok(fs.existsSync(logPath));
   const entries = fs.readFileSync(logPath, 'utf8').trim().split('\n').map((line) => JSON.parse(line));
   assert.ok(entries.some((entry) => entry.suite === 'unit'));
+});
+
+test('runSuites treats enforced unit failures as critical', async () => {
+  const result = await runSuites(['unit'], {
+    moduleId: 'mod',
+    payload: {
+      project: 'proj',
+      test_config: {
+        suite_timeout_ms: 5000,
+        unit: {
+          test_cmd: ['node', '-e', 'process.exit(1)'],
+          thresholds: { max_failures: 0 },
+        },
+      },
+    },
+  });
+
+  assert.equal(result.criticalFailed, true);
+  assert.equal(result.results[0].status, 'FAIL');
+  assert.equal(result.results[0].critical, true);
+});
+
+test('runSuites treats every suite error as terminal critical failure', async () => {
+  const result = await runSuites(['unit'], {
+    moduleId: 'mod',
+    payload: {
+      project: 'proj',
+      test_config: {
+        suite_timeout_ms: 5000,
+        unit: {
+          test_cmd: 'node -e "console.error(\\"expected\\"); process.exit(1)"',
+        },
+      },
+    },
+  });
+
+  assert.equal(result.criticalFailed, true);
+  assert.equal(result.results[0].status, 'ERROR');
+  assert.equal(result.results[0].critical, true);
+});
+
+test('runSuites treats rejected unit command configuration as critical', async () => {
+  const result = await runSuites(['unit'], {
+    moduleId: 'mod',
+    payload: {
+      project: 'proj',
+      test_config: {
+        suite_timeout_ms: 5000,
+        unit: {
+          test_cmd: 'node -e "console.error(\\"expected\\"); process.exit(1)"',
+          thresholds: { max_failures: 0 },
+        },
+      },
+    },
+  });
+
+  assert.equal(result.criticalFailed, true);
+  assert.equal(result.results[0].status, 'ERROR');
+  assert.equal(result.results[0].critical, true);
+  assert.match(result.results[0].error, /shell metacharacters are not allowed/);
 });

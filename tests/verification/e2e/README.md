@@ -14,10 +14,14 @@ Both fast and full verification must call this harness. Fast mode may use a smal
 Each canonical runner invocation writes a structured result JSON file. Pass
 `--result-path <file>` to choose the location; otherwise the runner writes under
 `.swarm/real-e2e/results/`. Failure matrix Markdown reviews are rendered from
-those result files. Child stdout/stderr are bounded diagnostics only and are not
-parsed as matrix evidence. Diagnostic streams keep only `tail`, `bytes`,
-`truncated`, `tail_limit_bytes`, `fatal_line_limit`, and the first
-`fatal_lines`; full process logs are never accumulated in memory.
+those result files. Failure matrix stdout is intentionally compact: one
+`PASS|FAIL|SKIP scenario=<id> reason=<code> artifact=<result.json>` line per
+completed scenario and one `SUMMARY` line. Full child stdout/stderr are written
+beside each scenario result as `.stdout.log` and `.stderr.log`; they are never
+mirrored through matrix stdout/stderr. Bounded diagnostics in result JSON keep
+only `tail`, `bytes`, `truncated`, `tail_limit_bytes`, `fatal_line_limit`,
+`fatal_lines`, and the full-log file paths; full process logs are never
+accumulated in memory.
 
 The root wrappers call this harness directly:
 
@@ -58,7 +62,7 @@ Examples:
 - missing namespace lease RBAC: `INFRA_MISSING_BUSTER_NAMESPACE_LEASE_RBAC`
 - missing Discord target/webhook: `INFRA_MISSING_DISCORD_TARGET`, `INFRA_MISSING_DISCORD_WEBHOOK`
 - failed real Discord delivery receipt: `INFRA_DISCORD_DELIVERY_FAILED`, `INFRA_DISCORD_DELIVERY_RECEIPT_MISSING`
-- failed ACP spawn: `INFRA_ACP_SPAWN_FAILED`
+- failed configured Codex spawn: `INFRA_CODEX_SPAWN_FAILED`
 - failed Redis stream write/read: `INFRA_REDIS_FAILED`
 - stale runtime swarm config: `PRODUCTION_CONFIG_CONTRACT_INVALID`
 
@@ -71,6 +75,13 @@ The same probe sends a real production-path Discord message through Nova's Disco
 Nova Kubernetes read access for this probe must remain opt-in. The Helm chart keeps `busterNamespaceBroker.leaseClient.verificationRead.enabled` disabled by default; deployments that enable it for real E2E verification should treat it as read-only probe access for pods, the named Tailscale OAuth secret, and the `tailscale` IngressClass, not as workload or namespace mutation authority.
 
 The run itself uses an expanded run-scoped `SWARM_CONFIG` only to isolate streams and worktree paths after the production config contract has passed.
+
+The generated E2E module and final Buster gate use a short internal timeout by
+default (`REAL_E2E_MODULE_TIMEOUT_MINUTES`, default `5`, and
+`REAL_E2E_BUSTER_GATE_TIMEOUT_MINUTES`, defaulting to the module timeout). The
+matrix scenario timeout remains an outer guard only. This keeps Buster's normal
+session monitor, `buster-output.json` writer, Git push, and Redis completion
+signal as the single canonical authority for Buster terminal results.
 
 ## Post-Run Evidence Contract
 
@@ -86,7 +97,8 @@ A zero exit from the Nova process is not enough. After the production process re
 - Canonical pipeline lifecycle events with typed run, module, gate, ordering, and terminal success evidence.
 - Discord audit log and `discord-deliveries.jsonl` receipt with a Discord-accepted webhook response message id.
 - Buster task stream entries for both module and gate work, decoded from the canonical Redis task envelope.
-- Pipeline telemetry and agent observability stream entries decoded from typed Redis `data` envelopes.
+- Pipeline telemetry stream entries decoded from typed Redis `data` envelopes.
+- Agent observability success evidence from promoted `agent.*` events in the canonical pipeline event spine; raw observer Redis streams are ingress diagnostics.
 
 Expected failure scenarios must also prove a run-scoped failure contract. A
 nonzero exit and matching stderr text are not sufficient; the run must leave
@@ -104,6 +116,22 @@ The E2E suite has one runner and many scenarios. Scenarios may mutate only the
 run-scoped generated project, progress, or config state. They must not write
 fake terminal artifacts or emit alternate completion signals.
 
+Each scenario declares one checkpoint `fault_injection_surface` and the harness
+derives concrete `allowed_mutation_channels` from that surface. Progress,
+config, source-file, environment, Git-shim, malformed-output, crash/cancel, and
+cleanup-blocker entrypoints assert that contract before mutating anything.
+There is no checkpoint fallback path: every matrix scenario must have a
+declared hook contract, and invalid or missing checkpoint bundles fail before
+the scenario runs.
+
+The checkpoint contract itself is root-verified by
+`tests/verification/contracts/check-checkpoint-hook-contracts.mjs`. That guard
+checks all matrix scenarios for explicit hooks, fixture families, fault
+surfaces, expected terminal authority, mutation channels, and deleted legacy
+full-lifecycle fallback symbols. It also enforces compact matrix stdout and
+file-backed full child logs. Matrix execution is not the structural contract
+authority; it only proves live behavior after those contracts are already valid.
+
 `forge-malformed-output` and `echo-malformed-output` use
 `malformed-output-publisher.mjs` as a deterministic failure producer. It waits
 for the real Forge/Echo prompt artifact, writes the malformed control artifact
@@ -117,47 +145,29 @@ Supported scenarios:
 
 - `success`
 - `approval-deny`
-- `approval-commentary`
 - `approval-timeout-block`
-- `approval-timeout-continue`
 - `buster-module-failure`
 - `buster-module-infra-failure`
 - `forge-retry-then-success`
-- `forge-multi-retry-then-success`
 - `retry-budget-exhausted`
 - `retry-fix-malformed-output`
 - `retry-buster-pass-echo-rejects`
-- `retry-stale-forge-output`
-- `retry-reuses-previous-success-artifact`
 - `needs-nova-code-failure`
-- `forge-spawn-gateway-failure`
 - `forge-malformed-output`
 - `architecture-validator-block`
-- `architecture-validator-config-contract-failure`
-- `pipeline-review-config-contract-failure`
-- `echo-gate-config-failure`
 - `echo-malformed-output`
 - `buster-invalid-completion-identity`
-- `buster-missing-output-file`
 - `buster-gate-failure`
 - `k8s-pod-never-ready`
 - `namespace-lease-denied`
-- `tailscale-ingress-creation-failure`
 - `tailscale-preview-url-unreachable`
 - `tailscale-preview-wrong-deployment`
-- `tailscale-unavailable`
 - `pipeline-summary-failure`
 - `redis-unavailable`
-- `redis-transport-policy-failure`
 - `discord-unavailable`
-- `discord-webhook-missing`
 - `k8s-context-invalid`
 - `registry-pull-failure`
-- `registry-credentials-missing`
-- `tailscale-preview-credentials-missing`
-- `required-env-missing`
 - `git-credential-failure`
-- `git-remote-push-failure`
 - `git-non-fast-forward`
 - `git-merge-conflict`
 - `git-commit-failure`
@@ -171,17 +181,20 @@ Supported scenarios:
 - `multi-module-independent-success`
 - `multi-module-dependent-success`
 - `multi-module-dependency-blocked`
-- `multi-module-retry-unlocks-dependent`
-- `multi-module-concurrency-stress`
 - `crash-before-buster-handoff`
 - `crash-after-buster-task-enqueue`
 - `crash-during-buster-wait`
 - `crash-after-failed-gate-before-retry`
-- `crash-during-retry-cycle`
 - `crash-during-git-operation`
 - `crash-after-final-review-before-summary`
 - `crash-during-cleanup`
 - `git-cleanup-failure`
+
+The active failure matrix is the executable scenario registry except for the
+canonical `success` run. Duplicated or overly broad scenarios are deleted from
+the runner and covered by smaller contract tests where needed. Root
+`verify:contracts` fails if a second pruned-scenario registry or full-lifecycle
+fallback is reintroduced.
 
 `run-real-pipeline-failure-matrix.mjs` executes required negative scenarios by
 shelling back into `run-real-pipeline-e2e.mjs`; it has no separate pipeline
@@ -238,3 +251,13 @@ blocker is then removed.
 The production pipeline child is bounded by `REAL_E2E_PIPELINE_TIMEOUT_MS`
 (`45m` in fast mode, `2h` in full mode by default). Timeout termination is a
 real verification failure, not a retry/fallback path.
+
+## Model Defaults
+
+The harness defaults to `gpt-5.4` with thinking `none` for Nova, Forge,
+Buster, Echo, architecture validation, pipeline review, and case study agents.
+The direct Codex capability probe follows the production smoke config dispatch.
+If the smoke config says `subagent`, the probe proves subagent launch; if it
+says `acp`, the probe proves ACP launch. Use `REAL_E2E_MODEL`,
+`REAL_E2E_THINKING`, or `REAL_E2E_AGENT_RUNTIME` only when a run intentionally
+needs an override.

@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 // runners/module-runner/attempt.ts — one module lifecycle attempt
 
 import { selectDeps } from '../../core/deps.ts';
@@ -5,12 +6,12 @@ import { STATUS } from '../../core/constants.ts';
 import { log } from '../../core/logger.ts';
 import { validateBusterConfig, resolvePolicy, logEffectivePolicy } from '../../core/config.ts';
 import { headHash, invalidateHeadHash } from '../../core/git-context.ts';
-import { loadStatus, saveStatus, initStatus, savePrompt, saveStreamLog } from '../../services/status-store.ts';
+import { loadStatus, saveStatus, initStatus, savePrompt, saveStreamLog, applyModuleCompletion } from '../../services/status-store.ts';
 import { releaseBlueprint } from '../../services/blueprint.ts';
 import { extractAgentFailReason, extractPreTestFailReason, getFailedSuiteNames, classifyPreTestFailure, getPassedSuiteNames } from '../../services/failures/classification.ts';
 import { buildPreTestDiscordFields } from '../../services/failures/presentation.ts';
 import { handleFail } from '../../services/failures/retry-policy.ts';
-import { sleep, pollWithRateLimitRecovery, pollDualWithRateLimitRecovery, archiveModuleCompletions } from '../../services/polling.ts';
+import { sleep, pollWithRateLimitRecovery, pollDualWithRateLimitRecovery, pollForgeCompletionWithRateLimitRecovery, archiveModuleCompletions } from '../../services/polling.ts';
 import {
   resolveStatusCorrelationProvenance,
   resolveStatusDispatchId,
@@ -24,6 +25,7 @@ import {
   spawnAgent,
   killAgent,
   verifyAgentAlive,
+  verifyAgentHealth,
   runModuleForgeWorker,
   runModuleBusterWorker,
 } from '../../agents/orchestration.ts';
@@ -43,11 +45,29 @@ import { getPipelineDefaultsConfig } from '../../services/runtime-defaults.ts';
 
 type AnyRecord = Record<string, any>;
 
+function moduleTimeoutAuthority(mod: AnyRecord, pipelineDefaults: AnyRecord): number {
+  const value = mod?.timeout_minutes;
+  if (value !== undefined && value !== null) {
+    const timeout = Number(value);
+    if (Number.isFinite(timeout) && timeout > 0) return timeout;
+    throw new Error('Module timeout_minutes must be a positive number when provided');
+  }
+  const defaultTimeout = Number(pipelineDefaults?.timeout_minutes);
+  if (Number.isFinite(defaultTimeout) && defaultTimeout > 0) return defaultTimeout;
+  throw new Error('Module timeout requires pipeline defaults timeout_minutes');
+}
+
+function dependencyFailureStatusAuthority(dependencyStatus: AnyRecord | null): string {
+  if (typeof dependencyStatus?.status === 'string' && dependencyStatus.status.trim()) return dependencyStatus.status.trim();
+  return STATUS.PENDING;
+}
+
 const DEFAULT_DEPS = {
   checkDependencies,
   sleep,
   loadStatus,
   saveStatus,
+  applyModuleCompletion,
   initStatus,
   savePrompt,
   saveStreamLog,
@@ -61,12 +81,14 @@ const DEFAULT_DEPS = {
   buildPreTestDiscordFields,
   pollWithRateLimitRecovery,
   pollDualWithRateLimitRecovery,
+  pollForgeCompletionWithRateLimitRecovery,
   archiveModuleCompletions,
   acpLabel,
   modelToHarness,
   spawnAgent,
   killAgent,
   verifyAgentAlive,
+  verifyAgentHealth,
   runModuleForgeWorker,
   runModuleBusterWorker,
   setShutdownContext,
@@ -98,13 +120,13 @@ export function resolveModuleRunContext(config: AnyRecord, progress: AnyRecord, 
   return {
     mod,
     dir: mod.dir,
-    timeout: mod.timeout_minutes ?? pipelineDefaults.timeout_minutes,
-    maxFails: mod.max_fails ?? pipelineDefaults.max_fails,
+    timeout: moduleTimeoutAuthority(mod, pipelineDefaults),
+    maxFails: mod.max_fails
   };
 }
 
 function assertTypedModuleAttemptTerminal(terminal: AnyRecord = {}) {
-  if (!terminal || terminal.retry) return terminal;
+  if (selectTruthyValue(() => (!terminal), () => (terminal.retry))) return terminal;
   return {
     ...terminal,
     result: assertPipelineStepResult(terminal.result),
@@ -133,11 +155,11 @@ export async function executeModuleAttempt({
     const dependencyStatus = deps.loadStatus(config, dir);
     const reason = `Dependencies not met: ${dependencyState.reason}`;
     log('ERROR', `Module ${moduleId} dependencies not met: ${dependencyState.reason}`);
-    emitTerminalModuleFailTelemetry(config, moduleId, dependencyStatus, mod, 'dependency_check', null, dependencyStatus?.status ?? STATUS.PENDING, reason);
+    emitTerminalModuleFailTelemetry(config, moduleId, dependencyStatus, mod, 'dependency_check', null, dependencyFailureStatusAuthority(dependencyStatus), reason);
     return buildModuleErrorTerminalResult(config, moduleId, {
       reason,
       moduleDir: dir,
-      attempt: dependencyStatus?.active_agent?.attempt ?? dependencyStatus?.attempt ?? null,
+      attempt: selectDefinedValue(() => (selectDefinedValue(() => (dependencyStatus?.active_agent?.attempt), () => (dependencyStatus?.attempt))), () => (null)),
       phase: 'dependency_check',
       dispatchId: resolveStatusDispatchId(dependencyStatus),
       gatewayLabel: resolveStatusGatewayLabel(dependencyStatus),

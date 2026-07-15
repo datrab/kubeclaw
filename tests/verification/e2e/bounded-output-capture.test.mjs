@@ -1,10 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { PassThrough } from 'node:stream';
 
 import {
   appendStreamCapture,
+  captureChildOutput,
   createChildOutputCapture,
   createStreamCapture,
+  childOutputDiagnostics,
   streamCaptureSnapshot,
 } from './bounded-output-capture.mjs';
 
@@ -99,4 +105,53 @@ test('bounded output capture does not retain unbounded partial or fatal lines', 
   assert.equal(snapshot.fatal_line_text_limit_bytes, 16);
   assert.deepEqual(snapshot.fatal_lines, []);
   assert.deepEqual(fatalSnapshot.fatal_lines, ['fatal error xxxx']);
+});
+
+test('child output capture writes full logs to files without mirroring output', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'bounded-output-full-log-'));
+  const stdoutLogPath = path.join(root, 'child.stdout.log');
+  const stderrLogPath = path.join(root, 'child.stderr.log');
+  const child = {
+    stdout: new PassThrough(),
+    stderr: new PassThrough(),
+  };
+
+  const output = captureChildOutput(child, {
+    label: 'unit-child',
+    mirrorOutput: false,
+    stdoutLogPath,
+    stderrLogPath,
+    tailLimitBytes: 8,
+  });
+
+  child.stdout.write('stdout full log line\n');
+  child.stderr.write('stderr full log line\n');
+
+  assert.equal(fs.readFileSync(stdoutLogPath, 'utf8'), 'stdout full log line\n');
+  assert.equal(fs.readFileSync(stderrLogPath, 'utf8'), 'stderr full log line\n');
+  assert.deepEqual(childOutputDiagnostics('unit-child', output), {
+    label: 'unit-child',
+    stdout_log_path: stdoutLogPath,
+    stderr_log_path: stderrLogPath,
+    stdout: {
+      tail: 'og line\n',
+      bytes: 21,
+      truncated: true,
+      tail_limit_bytes: 8,
+      fatal_line_limit: 20,
+      partial_line_limit_bytes: 8192,
+      fatal_line_text_limit_bytes: 2048,
+      fatal_lines: [],
+    },
+    stderr: {
+      tail: 'og line\n',
+      bytes: 21,
+      truncated: true,
+      tail_limit_bytes: 8,
+      fatal_line_limit: 20,
+      partial_line_limit_bytes: 8192,
+      fatal_line_text_limit_bytes: 2048,
+      fatal_lines: [],
+    },
+  });
 });

@@ -14,9 +14,11 @@ import {
   buildModuleErrorTerminalResult,
   buildModuleNeedsNovaTerminalResult,
 } from '../terminal-results.ts';
+import { buildBusterAgentJudgmentPolicy } from '../../../agents/orchestration.ts';
 
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../../../services/discord-fields.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 
 function errorMessage(error: unknown): string {
@@ -26,9 +28,9 @@ function errorMessage(error: unknown): string {
 export function createModuleBusterCompletionIdentity({ runId, moduleId, attempt, busterAttempt, nowMs }: AnyRecord = {}) {
   if (!runId) throw new Error('Module Buster completion identity requires runId');
   if (!moduleId) throw new Error('Module Buster completion identity requires moduleId');
-  if (!Number.isInteger(attempt) || attempt < 1) throw new Error('Module Buster completion identity requires positive integer attempt');
-  if (!Number.isInteger(busterAttempt) || busterAttempt < 1) throw new Error('Module Buster completion identity requires positive integer busterAttempt');
-  if (!Number.isInteger(nowMs) || nowMs < 0) throw new Error('Module Buster completion identity requires non-negative integer nowMs');
+  if (selectTruthyValue(() => (!Number.isInteger(attempt)), () => (attempt < 1))) throw new Error('Module Buster completion identity requires positive integer attempt');
+  if (selectTruthyValue(() => (!Number.isInteger(busterAttempt)), () => (busterAttempt < 1))) throw new Error('Module Buster completion identity requires positive integer busterAttempt');
+  if (selectTruthyValue(() => (!Number.isInteger(nowMs)), () => (nowMs < 0))) throw new Error('Module Buster completion identity requires non-negative integer nowMs');
   return {
     runId,
     attempt,
@@ -46,8 +48,13 @@ function normalizeRequestedBusterSuites(mod: AnyRecord = {}): string[] {
 
 function resolveModuleBusterIdentityNowMs(deps: AnyRecord = {}): number {
   const value = typeof deps.nowMs === 'function' ? deps.nowMs() : Date.now();
-  if (!Number.isInteger(value) || value < 0) throw new Error('Module Buster identity clock returned invalid nowMs');
+  if (selectTruthyValue(() => (!Number.isInteger(value)), () => (value < 0))) throw new Error('Module Buster identity clock returned invalid nowMs');
   return value;
+}
+
+function statusAfterWorkerOutcome(currentStatus: AnyRecord, workerOutcome: AnyRecord): AnyRecord {
+  if (workerOutcome?.status && typeof workerOutcome.status === 'object') return workerOutcome.status;
+  return currentStatus;
 }
 
 export async function executeBusterAttemptDispatch({
@@ -64,6 +71,7 @@ export async function executeBusterAttemptDispatch({
   busterPolicy = {},
   maxBusterCrashRetries,
   busterAttempt,
+  startupRateLimitPauseCount = 0,
 }: AnyRecord = {}) {
   const requestedSuites = normalizeRequestedBusterSuites(mod);
   const completionIdentity = createModuleBusterCompletionIdentity({
@@ -75,19 +83,19 @@ export async function executeBusterAttemptDispatch({
   });
   const busterReasoningLevel = busterPolicy.thinking_supported === false
     ? 'not supported'
-    : (busterPolicy.thinking || 'default');
+    : (selectDefinedValue(() => (busterPolicy.thinking), () => ('default')));
   Object.assign(completionIdentity, {
-    model: busterModel || null,
-    model_source: busterPolicy.model_source || null,
+    model: selectTruthyValue(() => (busterModel), () => (null)),
+    model_source: selectTruthyValue(() => (busterPolicy.model_source), () => (null)),
     reasoning_level: busterReasoningLevel,
-    thinking_source: busterPolicy.thinking_source || null,
+    thinking_source: selectTruthyValue(() => (busterPolicy.thinking_source), () => (null)),
     runtime: 'session',
   });
 
   if (requestedSuites.length === 0) {
     const reason = 'Buster dispatch requires a typed nonempty test_suites list';
     log('ERROR', `Module ${moduleId} — ${reason}`);
-    emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'buster', busterModel, status?.status ?? STATUS.READY_FOR_TESTING, reason);
+    emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'buster', busterModel, status?.status);
     return { terminal: buildModuleNeedsNovaTerminalResult(config, moduleId, {
       reason,
       runId: completionIdentity.runId,
@@ -98,17 +106,22 @@ export async function executeBusterAttemptDispatch({
       gatewayLabel: resolveStatusGatewayLabel(status),
       sessionKey: resolveStatusSessionKey(status),
       diagnostics: {
-        metadata: { code: 'buster_test_suites_empty', test_suites: mod?.test_suites ?? null },
+        metadata: { code: 'buster_test_suites_empty', test_suites: selectDefinedValue(() => (mod?.test_suites), () => (null)) },
       },
     }) };
   }
 
   let busterPrompt;
   {
-    const promptResult = deps.buildBusterModulePrompt(config, moduleId, mod, dir, status, maxFails, completionIdentity);
+    let promptResult;
+    try {
+      promptResult = deps.buildBusterModulePrompt(config, moduleId, mod, dir, status, maxFails, completionIdentity);
+    } catch (e) {
+      promptResult = { error: errorMessage(e), thrown: true };
+    }
     if (promptResult.error) {
       log('ERROR', `Buster prompt build failed for ${moduleId}: ${promptResult.error}`);
-      emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'buster', busterModel, status?.status ?? STATUS.READY_FOR_TESTING, promptResult.error);
+      emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'buster', busterModel, status?.status);
       return { terminal: buildModuleErrorTerminalResult(config, moduleId, {
         reason: promptResult.error,
         runId: completionIdentity.runId,
@@ -118,12 +131,37 @@ export async function executeBusterAttemptDispatch({
         dispatchId: completionIdentity.dispatchId,
         gatewayLabel: resolveStatusGatewayLabel(status),
         sessionKey: resolveStatusSessionKey(status),
+        metadata: {
+          failure_class: 'buster_prompt_build_failed',
+          thrown: promptResult.thrown === true,
+        },
+        terminalReasonCode: 'buster_prompt_build_failed',
+        terminalHumanReason: `Buster prompt build failed for ${moduleId}: ${promptResult.error}`,
       }) };
     }
     busterPrompt = promptResult.prompt;
   }
 
-  deps.savePrompt(config, dir, 'buster', status.fail_count + 1, busterPrompt);
+  try {
+    deps.savePrompt(config, dir, 'buster', status.fail_count + 1, busterPrompt);
+  } catch (e) {
+    const reason = `Buster prompt artifact write failed: ${errorMessage(e)}`;
+    log('ERROR', `Module ${moduleId} — ${reason}`);
+    emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'buster', busterModel, status?.status);
+    return { terminal: buildModuleErrorTerminalResult(config, moduleId, {
+      reason,
+      runId: completionIdentity.runId,
+      moduleDir: dir,
+      attempt: completionIdentity.attempt,
+      phase: 'buster',
+      dispatchId: completionIdentity.dispatchId,
+      gatewayLabel: resolveStatusGatewayLabel(status),
+      sessionKey: resolveStatusSessionKey(status),
+      metadata: { failure_class: 'buster_prompt_artifact_failed' },
+      terminalReasonCode: 'buster_prompt_artifact_failed',
+      terminalHumanReason: reason,
+    }) };
+  }
 
   // ── Pre-dispatch config validation ──
   // Catches obvious config issues (missing paths, bad binaries) before wasting
@@ -135,7 +173,7 @@ export async function executeBusterAttemptDispatch({
     } catch (e) {
       const reason = `Config validation failed: ${errorMessage(e)}`;
       log('ERROR', `Module ${moduleId} — ${reason}`);
-      emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'buster', busterModel, status?.status ?? STATUS.READY_FOR_TESTING, reason);
+      emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'buster', busterModel, status?.status);
       const configInvalidCorrelation = {
         run_id: completionIdentity.runId,
         module_id: moduleId,
@@ -178,8 +216,13 @@ export async function executeBusterAttemptDispatch({
 
   deps.setShutdownContext(config, 'buster', moduleId, dir);
 
+  const agentJudgment = buildBusterAgentJudgmentPolicy(mod);
+  const agentJudgmentEnabled = agentJudgment.required === true;
+
   await deps.discord(config, 'INFO', `Module ${moduleId} — Buster queued`,
-    `Buster work is queued. Pre-test suites run first; a Buster subagent is spawned only if critical pre-tests pass.`, [
+    agentJudgmentEnabled
+      ? 'Buster work is queued. Deterministic suites run first; the Buster agent is configured to run after the suites pass.'
+      : 'Buster work is queued. Deterministic suites are the final Buster authority for this module.', [
       ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, {
         run_id: completionIdentity.runId,
         module_id: moduleId,
@@ -195,8 +238,10 @@ export async function executeBusterAttemptDispatch({
       }),
       { name: 'Phase', value: 'buster', inline: true },
       { name: 'Queued Suites', value: requestedSuites.join(', '), inline: true },
-      { name: 'Subagent Spawned?', value: 'Not yet', inline: true },
-      { name: 'Next', value: 'Watch for either suite results, a pre-test failure, or a Buster subagent spawn message.', inline: false },
+      { name: 'Agent Judgment', value: agentJudgmentEnabled ? 'enabled' : 'disabled', inline: true },
+      { name: 'Authority', value: agentJudgmentEnabled ? 'Buster agent is required after deterministic suites pass' : 'Deterministic suites are final authority', inline: false },
+      { name: 'Policy Reason', value: String(agentJudgment.reason), inline: false },
+      { name: 'Next', value: agentJudgmentEnabled ? 'Watch for suite results, then Buster agent spawn/result.' : 'Watch for deterministic suite result.', inline: false },
     ],
     {
       correlation: {
@@ -227,11 +272,12 @@ export async function executeBusterAttemptDispatch({
     busterPolicy,
     maxBusterCrashRetries,
     busterAttempt,
+    startupRateLimitPauseCount,
   });
 
   return {
     completionIdentity,
     workerOutcome,
-    status: workerOutcome.status || status,
+    status: statusAfterWorkerOutcome(status, workerOutcome),
   };
 }

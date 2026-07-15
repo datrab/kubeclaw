@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export type AnyRecord = Record<string, any>;
 export type TestCredentialSpec = { secretName: string; keys: string[]; purpose: string | null };
 
@@ -6,11 +7,11 @@ function isObjectDoc(doc: unknown): doc is AnyRecord {
 }
 
 function uniqueStrings(values: string[]): string[] {
-  return [...new Set(values.map((value) => String(value || '').trim()).filter(Boolean))];
+  return [...new Set(values.map((value) => String(selectDefinedValue(() => (value), () => (''))).trim()).filter(Boolean))];
 }
 
 export function parseSecretNameFromRef(ref: string | null): string | null {
-  if (typeof ref !== 'string' || !ref.trim()) return null;
+  if (selectTruthyValue(() => (typeof ref !== 'string'), () => (!ref.trim()))) return null;
   const trimmed = ref.trim();
   const prefixed = trimmed.match(/^secret\/([A-Za-z0-9._-]+)$/);
   if (prefixed) return prefixed[1];
@@ -19,7 +20,7 @@ export function parseSecretNameFromRef(ref: string | null): string | null {
 }
 
 function normalizeSecretName(value: unknown): string | null {
-  if (typeof value !== 'string' || !value.trim()) return null;
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) return null;
   const parsed = parseSecretNameFromRef(value);
   return parsed && /^[A-Za-z0-9._-]+$/.test(parsed) ? parsed : null;
 }
@@ -36,9 +37,9 @@ export function normalizeTestCredentialSpecs(k8sCfg: AnyRecord = {}, previewCfg:
 
   for (const entry of configured) {
     if (!isObjectDoc(entry)) continue;
-    const secretName = normalizeSecretName(entry.secret ?? entry.secret_name ?? entry.credentials_ref);
-    const keys = normalizeCredentialKeys(entry.keys ?? entry.credentials_keys);
-    if (!secretName || keys.length === 0) continue;
+    const secretName = normalizeSecretName(entry.secret_name);
+    const keys = normalizeCredentialKeys(entry.keys);
+    if (selectTruthyValue(() => (!secretName), () => (keys.length === 0))) continue;
     specs.push({
       secretName,
       keys,
@@ -46,8 +47,8 @@ export function normalizeTestCredentialSpecs(k8sCfg: AnyRecord = {}, previewCfg:
     });
   }
 
-  const previewReveal = previewCfg.reveal_credentials === true || previewCfg.credentials_delivery === 'discord';
-  const previewSecret = normalizeSecretName(previewCfg.credentials_secret_name ?? previewCfg.credentials_ref);
+  const previewReveal = selectTruthyValue(() => (previewCfg.reveal_credentials === true), () => (previewCfg.credentials_delivery === 'discord'));
+  const previewSecret = normalizeSecretName(previewCfg.credentials_secret_name);
   const previewKeys = normalizeCredentialKeys(previewCfg.credentials_keys);
   if (previewReveal && previewSecret && previewKeys.length > 0) {
     specs.push({
@@ -59,7 +60,7 @@ export function normalizeTestCredentialSpecs(k8sCfg: AnyRecord = {}, previewCfg:
 
   const seen = new Set<string>();
   return specs.filter((spec) => {
-    const key = `${spec.secretName}:${spec.keys.join(',')}:${spec.purpose || ''}`;
+    const key = `${spec.secretName}:${spec.keys.join(',')}:${selectDefinedValue(() => (spec.purpose), () => (''))}`;
     if (seen.has(key)) return false;
     seen.add(key);
     return true;

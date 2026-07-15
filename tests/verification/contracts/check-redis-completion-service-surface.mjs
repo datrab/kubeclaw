@@ -152,8 +152,9 @@ assert.deepEqual(commonRedisContractMod.normalizeRedisPipelineEnvelope(validGate
   source: 'buster-pipeline',
   timestamp: '2026-05-09T00:00:00.000Z',
 });
-assert.equal(commonRedisContractMod.inferRedisPipelineTargetKind({ module: 'gate:design-review' }), 'gate');
-assert.equal(commonRedisContractMod.inferRedisPipelineTargetKind({ module: '01' }), 'module');
+assert.equal(commonRedisContractMod.inferRedisPipelineTargetKind({ target_id: 'gate:design-review' }), 'gate');
+assert.equal(commonRedisContractMod.inferRedisPipelineTargetKind({ target_id: '01' }), 'module');
+assert.equal(commonRedisContractMod.inferRedisPipelineTargetKind({ module: 'gate:design-review' }), null);
 
 const moduleTaskEntry = commonRedisContractMod.buildRedisTaskStreamEntry({
   type: 'module_test',
@@ -164,7 +165,6 @@ const moduleTaskEntry = commonRedisContractMod.buildRedisTaskStreamEntry({
   payload: {
     task_type: 'module_test',
     module_id: '01',
-    module: '01',
     project: 'proj',
     run_id: 'run-task',
     attempt: 4,

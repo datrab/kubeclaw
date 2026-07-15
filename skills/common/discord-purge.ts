@@ -42,7 +42,7 @@ async function deepPurge(channelId: string, botToken: string): Promise<number> {
     const res = await fetch(`https://discord.com/api/v10/channels/${encodedChannelId}/messages?limit=100`, { headers });
     if (res.status === 429) {
       const err = await readRateLimitBody(res);
-      const retryAfter = err.retry_after || 2;
+      const retryAfter = err.retry_after ?? 2;
       console.error(`[Purge] Rate limit (Fetch)! Waiting ${retryAfter}s...`);
       await new Promise(r => setTimeout(r, retryAfter * 1000));
       continue;
@@ -73,7 +73,7 @@ async function deepPurge(channelId: string, botToken: string): Promise<number> {
          totalDeleted++;
        } else if (delRes.status === 429) {
          const err = await readRateLimitBody(delRes);
-         const retryAfter = err.retry_after || 2;
+         const retryAfter = err.retry_after ?? 2;
          console.error(`[Purge] Rate limit (Single)! Waiting ${retryAfter}s...`);
          await new Promise(r => setTimeout(r, retryAfter * 1000));
          continue;
@@ -91,7 +91,7 @@ async function deepPurge(channelId: string, botToken: string): Promise<number> {
        if (!bulkRes.ok) {
          if (bulkRes.status === 429) {
             const err = await readRateLimitBody(bulkRes);
-            const retryAfter = err.retry_after || 2;
+            const retryAfter = err.retry_after ?? 2;
             console.error(`[Purge] Rate limit (Bulk)! Waiting ${retryAfter}s...`);
             await new Promise(r => setTimeout(r, retryAfter * 1000));
             continue; 
@@ -116,7 +116,7 @@ const currentPath = fs.realpathSync(fileURLToPath(import.meta.url));
 const entryPath = (process.argv[1] && fs.existsSync(process.argv[1])) ? fs.realpathSync(process.argv[1]) : process.argv[1];
 
 if (currentPath === entryPath) {
-  const channel = process.argv[2] || process.env.DISCORD_CHANNEL;
+  const channel = process.argv[2] !== undefined ? process.argv[2] : process.env.DISCORD_CHANNEL;
   const token = process.env.DISCORD_TOKEN; 
 
   if (!channel || !token) {

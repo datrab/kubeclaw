@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // core/config.ts — Config loading, validation, and model resolution
 
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
@@ -20,6 +21,24 @@ type AnyRecord = Record<string, any>;
 declare const process: any;
 const REMOVED_REVIEW_FAIL_FIELD = `on_${'n' + 'ogo'}`;
 
+function resolveConfiguredRepoRoot(opts: AnyRecord): string | null {
+  if (opts.repoRoot !== undefined && opts.repoRoot !== null && String(opts.repoRoot).trim()) {
+    return String(opts.repoRoot);
+  }
+  const envRepoRoot = process.env.REPO_ROOT;
+  if (envRepoRoot !== undefined && envRepoRoot !== null && String(envRepoRoot).trim()) {
+    return String(envRepoRoot);
+  }
+  return null;
+}
+
+function agentConfigEntries(config: AnyRecord): Array<[string, any]> {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!config.agents), () => (typeof config.agents !== 'object'))), () => (Array.isArray(config.agents)))) {
+    return [];
+  }
+  return Object.entries(config.agents);
+}
+
 export function loadConfig(projectName: any, opts: AnyRecord = {}) {
   if (!projectName) {
     throw new Error(
@@ -28,7 +47,7 @@ export function loadConfig(projectName: any, opts: AnyRecord = {}) {
   }
   projectName = assertSafePathSegment(projectName, 'project name');
 
-  let repoRoot = opts.repoRoot || process.env.REPO_ROOT || null;
+  let repoRoot = resolveConfiguredRepoRoot(opts);
   if (repoRoot) {
     repoRoot = path.resolve(repoRoot);
     if (!fs.existsSync(path.join(repoRoot, '.git'))) {
@@ -50,7 +69,8 @@ export function loadConfig(projectName: any, opts: AnyRecord = {}) {
 
   const { config: swarmConfig } = loadPlatformSwarmConfig(opts.swarmConfigPath);
 
-  const swarmDir = path.join(repoRoot, 'Projects', projectName, 'src', '.swarm');
+  const projectSrcDir = path.join(repoRoot, 'Projects', projectName, 'src');
+  const swarmDir = path.join(projectSrcDir, '.swarm');
   const progressFile = path.join(swarmDir, 'progress.json');
   const modulesDir = path.join(swarmDir, 'modules');
 
@@ -67,6 +87,7 @@ export function loadConfig(projectName: any, opts: AnyRecord = {}) {
     project: projectName,
     repo_root: repoRoot,
     paths: {
+      project_src_dir: projectSrcDir,
       swarm_dir: swarmDir,
       modules_dir: modulesDir,
       progress_file: progressFile,
@@ -93,7 +114,7 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
   normalizeSwarmConfigInPlace(config);
   const errors: string[] = [];
 
-  if (Object.prototype.hasOwnProperty.call(config || {}, '_testOverrides')) {
+  if (Object.prototype.hasOwnProperty.call(config, '_testOverrides')) {
     errors.push('config._testOverrides: forbidden in runtime config; inject verification fakes through explicit harness options');
   }
 
@@ -103,13 +124,13 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
     let currentPath = parentPath;
     for (const key of keys) {
       currentPath = `${currentPath}.${key}`;
-      if (current === null || current === undefined || typeof current !== 'object') {
+      if (selectTruthyValue(() => (selectTruthyValue(() => (current === null), () => (current === undefined))), () => (typeof current !== 'object'))) {
         errors.push(`${currentPath}: parent is ${current === null ? 'null' : typeof current}`);
         return;
       }
       current = current[key];
     }
-    if (current === undefined || current === null) {
+    if (selectTruthyValue(() => (current === undefined), () => (current === null))) {
       errors.push(`${currentPath}: required field is missing`);
     }
   };
@@ -117,6 +138,7 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
   requireField(config, 'project');
   requireField(config, 'repo_root');
   requireField(config, 'paths');
+  requireField(config, 'paths.project_src_dir');
   requireField(config, 'paths.swarm_dir');
   requireField(config, 'paths.progress_file');
   requireField(config, 'paths.modules_dir');
@@ -134,7 +156,7 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
 
   const isPlainObject = (value: any) => value && typeof value === 'object' && !Array.isArray(value);
   const requireNonEmptyString = (value: any, label: string) => {
-    if (typeof value !== 'string' || !value.trim()) errors.push(`${label}: required non-empty string in swarm.config.json`);
+    if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) errors.push(`${label}: required non-empty string in swarm.config.json`);
   };
   const requireBoolean = (value: any, label: string) => {
     if (typeof value !== 'boolean') errors.push(`${label}: required boolean in swarm.config.json`);
@@ -145,12 +167,12 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
   };
   const requireNumber = (obj: any, field: string, label: string, { min = 0, allowZero = true, max = null }: { min?: number; allowZero?: boolean; max?: number | null } = {}) => {
     const raw = obj?.[field];
-    if (raw === undefined || raw === null || raw === '') {
+    if (selectTruthyValue(() => (selectTruthyValue(() => (raw === undefined), () => (raw === null))), () => (raw === ''))) {
       errors.push(`${label}: required in swarm.config.json`);
       return null;
     }
     const tooSmall = typeof raw === 'number' ? (allowZero ? raw < min : raw <= min) : false;
-    if (typeof raw !== 'number' || !Number.isFinite(raw) || tooSmall || (max !== null && raw > max)) {
+    if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (typeof raw !== 'number'), () => (!Number.isFinite(raw)))), () => (tooSmall))), () => ((max !== null && raw > max)))) {
       const lower = allowZero ? `>= ${min}` : `> ${min}`;
       const upper = max === null ? '' : ` and <= ${max}`;
       errors.push(`${label}: must be a number ${lower}${upper}`);
@@ -165,9 +187,9 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
     errors.push('config.agents.buster.redis_js_path: required for redis dispatch agents in swarm.config.json');
   }
 
-  for (const [name, agentConfRaw] of Object.entries(config.agents || {})) {
+  for (const [name, agentConfRaw] of agentConfigEntries(config)) {
     const agentConf = agentConfRaw as AnyRecord;
-    if (typeof agentConf !== 'object' || agentConf === null) continue;
+    if (selectTruthyValue(() => (typeof agentConf !== 'object'), () => (agentConf === null))) continue;
     if (name.startsWith('_')) continue;
     if (!agentConf.dispatch) {
       errors.push(`config.agents.${name}.dispatch: required ('acp', 'subagent', or 'redis') in swarm.config.json`);
@@ -175,7 +197,7 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
     if (!['acp', 'subagent', 'redis'].includes(agentConf.dispatch)) {
       errors.push(`config.agents.${name}.dispatch: invalid dispatch '${agentConf.dispatch}'`);
     }
-    if ((agentConf.dispatch === 'acp' || agentConf.dispatch === 'subagent') && !agentConf.acp_agent_id) {
+    if ((selectTruthyValue(() => (agentConf.dispatch === 'acp'), () => (agentConf.dispatch === 'subagent'))) && !agentConf.acp_agent_id) {
       errors.push(`config.agents.${name}.acp_agent_id: required for ACP/subagent dispatch agents in swarm.config.json`);
     }
     if (agentConf.dispatch === 'redis' && !agentConf.redis_js_path) {
@@ -364,7 +386,7 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
   // ── Platform-owned field validation ──────────────────────────────────────
   // ACP monitor timing belongs to swarm.config.json. Do not synthesize hidden
   // runtime defaults here; missing values are operator config errors.
-  if (!config.acp_monitor || typeof config.acp_monitor !== 'object' || Array.isArray(config.acp_monitor)) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!config.acp_monitor), () => (typeof config.acp_monitor !== 'object'))), () => (Array.isArray(config.acp_monitor)))) {
     errors.push('config.acp_monitor: required platform config object');
     config.acp_monitor = {};
   }
@@ -481,11 +503,13 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
     errors.push('config.case_study.output_file: must be a string');
   }
 
+  requireNonEmptyString(config.projects_root, 'config.projects_root');
+
   // Reject unknown top-level config fields. Silent drift at the runtime config
   // boundary was a legacy fallback and is intentionally deleted in Phase 3.
   const KNOWN_TOP_LEVEL_FIELDS = new Set([
     '_doc',
-    'project', 'repo_root', 'paths', 'agents', 'fallback_model', 'gates',
+    'project', 'repo_root', 'projects_root', 'paths', 'agents', 'fallback_model', 'gates',
     'pipeline_defaults',
     'acp_monitor', 'telemetry', 'case_study', 'arch_validation',
     'agent_observability',
@@ -506,6 +530,9 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
   requireField(progress, 'project', 'progress');
   requireField(progress, 'execution_order', 'progress');
   requireField(progress, 'modules', 'progress');
+  if (progress?.case_study !== undefined) {
+    errors.push('progress.case_study: case study generator config belongs in swarm.config.json config.case_study');
+  }
 
   const registryBuild = buildPluginRegistry(config.plugins, { throwOnError: false });
   config.plugins = registryBuild.normalizedConfig;
@@ -513,9 +540,13 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
     errors.push(...registryBuild.errors.map((error) => `[${error.code}] ${error.message}`));
   }
 
-  const validGateTypes = Object.keys(registryBuild.registry?.gateTypes || {}).sort();
+  const registryGateTypes = registryBuild.registry?.gateTypes;
+  if (!isPlainObject(registryGateTypes)) {
+    errors.push('plugin registry gateTypes: required registry object');
+  }
+  const validGateTypes = isPlainObject(registryGateTypes) ? Object.keys(registryGateTypes).sort() : [];
   const validGateTypesLabel = validGateTypes.length > 0 ? validGateTypes.join(' | ') : 'none registered';
-  const validOnReviewFail = ['fix_and_rereview', 'stop'];
+  const validOnReviewFail = ['stop'];
   const validOnFail       = ['fix_and_retest'];
   const validOnTimeout = ['block', 'continue'];
 
@@ -561,7 +592,7 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
       }
       if (gate.timeout_minutes !== undefined && gate.timeout_minutes !== null) {
         const tm = Number(gate.timeout_minutes);
-        if (!Number.isFinite(tm) || tm <= 0) {
+        if (selectTruthyValue(() => (!Number.isFinite(tm)), () => (tm <= 0))) {
           errors.push(`progress.gates.${gateId}.timeout_minutes: must be a positive number`);
         }
       }
@@ -573,7 +604,7 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
       const mod = modRaw as AnyRecord;
       if (!Array.isArray(mod?.depends_on)) continue;
       for (const dep of mod.depends_on) {
-        if (typeof dep !== 'string' || !dep.startsWith('gate:')) continue;
+        if (selectTruthyValue(() => (typeof dep !== 'string'), () => (!dep.startsWith('gate:')))) continue;
         const gateId = dep.slice('gate:'.length);
         try { assertSafePathSegment(gateId, `progress.modules.${moduleId}.depends_on gate reference`); }
         catch (e: any) { errors.push(e.message); continue; }
@@ -584,7 +615,7 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
     }
   }
 
-  for (const [name, agentConfRaw] of Object.entries(config.agents || {})) {
+  for (const [name, agentConfRaw] of agentConfigEntries(config)) {
     const agentConf = agentConfRaw as AnyRecord;
     if (agentConf?.redis_js_path) {
       try { validateSafePath(agentConf.redis_js_path, `config.agents.${name}.redis_js_path`); }

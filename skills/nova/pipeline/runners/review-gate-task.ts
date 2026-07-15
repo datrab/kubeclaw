@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // runners/review-gate-task.ts — Echo review gate task execution
 // Owns one Echo review cycle: lint report, reviewer spawn/poll/kill, artifact handling, and output parsing.
 
@@ -12,7 +13,7 @@ import {
   withSessionRateLimitRecovery,
 } from '../services/rate-limit.ts';
 import { resolveStatusSessionKey } from '../services/correlation.ts';
-import { copyRedactedTranscriptArtifact, writeRedactedPromptArtifact } from '../redaction.ts';
+import { copyTranscriptArtifact, writePromptArtifact } from '../egress.ts';
 import { transcriptShowsProgress } from '../agents/acp-monitor.ts';
 import { persistGateActiveSession, clearGateActiveSession } from '../services/gate-active-session.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
@@ -22,6 +23,8 @@ import { resolveModuleCommit } from '../services/status-store-lifecycle/refs.ts'
 import { parseReviewOutputContent } from './review-gate-output.ts';
 import { resolveGateTargetModule } from './gate-target-module.ts';
 import { loadAuthoritativeModuleState } from './pipeline-runner-shared.ts';
+
+const REVIEW_GATE_TYPE = 'review';
 
 function telemetryCtx(config) {
   return { config, runId: getRunId(config) };
@@ -37,10 +40,86 @@ function trackedGatewayLabel(agent = null) {
   return null;
 }
 
+function resolveReviewLintModuleId(targetModule, gateId) {
+  if (targetModule?.moduleId) return targetModule.moduleId;
+  return gateId;
+}
+
+function resolveReviewDispatchId(currentDispatchId, trackedAgent = null) {
+  if (currentDispatchId) return currentDispatchId;
+  if (trackedAgent?.telemetry_dispatch_id) return trackedAgent.telemetry_dispatch_id;
+  if (trackedAgent?.dispatch_id) return trackedAgent.dispatch_id;
+  return null;
+}
+
+function resolveReviewGatewayLabel(currentGatewayLabel, trackedAgent = null) {
+  if (currentGatewayLabel) return currentGatewayLabel;
+  return trackedGatewayLabel(trackedAgent);
+}
+
+function resolveReviewSessionKey(currentSessionKey, trackedAgent = null) {
+  if (currentSessionKey) return currentSessionKey;
+  return selectDefinedValue(() => (trackedAgent?.sessionKey), () => (null));
+}
+
+function applyReviewRateLimitPauses(currentPauses, pollResult = null) {
+  if (typeof pollResult?.rate_limit_pauses === 'number') return pollResult.rate_limit_pauses;
+  return currentPauses;
+}
+
 function formatReviewPollFailureReason(pollRes) {
-  const reason = pollRes?.reason || 'unknown';
-  const detail = pollRes?.status?.detail || null;
+  const reason = selectDefinedValue(() => (pollRes?.reason), () => ('missing_poll_reason'));
+  const detail = selectDefinedValue(() => (pollRes?.status?.detail), () => (null));
   return detail ? `${reason} (${detail})` : reason;
+}
+
+function reviewGateType(gate) {
+  return selectDefinedValue(() => (gate?.type), () => (REVIEW_GATE_TYPE));
+}
+
+function countReviewItems(value) {
+  return Array.isArray(value) ? value.length : 0;
+}
+
+function reviewDecisionStats(parsedReview = {}) {
+  const merged = parsedReview?.mergedResult || {};
+  return {
+    criticalIssues: countReviewItems(merged.critical_issues) + countReviewItems(merged.critical_blockers),
+    deferredIssues: countReviewItems(merged.deferred_issues),
+    findings: countReviewItems(merged.findings),
+  };
+}
+
+function reviewArtifactPublishPaths(config, paths = []) {
+  return [...new Set(paths
+    .filter(Boolean)
+    .map((artifactPath) => relPath(config, artifactPath).split(path.sep).join('/'))
+    .filter((artifactPath) => artifactPath && !artifactPath.startsWith('../')))];
+}
+
+async function emitEchoReviewResultDiscord({ deps, config, gateId, gate, reviewer, reviewerPolicy, parsedReview, echoStartTime, reviewAttempt, echoGatewayLabel, echoSessionKey }) {
+  const echoDurationSec = Math.round((Date.now() - echoStartTime) / 1000);
+  const echoModel = reviewerPolicy.model;
+  const status = parsedReview?.decision === 'pass' ? 'PASS' : parsedReview?.decision === 'fail' ? 'FAIL' : 'INVALID';
+  const stats = reviewDecisionStats(parsedReview);
+  const correlation = {
+    run_id: selectTruthyValue(() => (selectTruthyValue(() => (config._runId), () => (config.run_id))), () => (null)),
+    gate_id: gateId,
+    gate_type: gate.type,
+    attempt: reviewAttempt,
+    gateway_label: echoGatewayLabel,
+    session_key: echoSessionKey,
+  };
+  await deps.discord(config, status === 'PASS' ? 'OK' : 'WARN', `Echo result: ${gate.title} ${status}`, `Reviewer: ${reviewer.label}`, [
+    ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, correlation),
+    { name: 'Status', value: status, inline: true },
+    { name: 'Critical Issues', value: String(stats.criticalIssues), inline: true },
+    { name: 'Deferred Issues', value: String(stats.deferredIssues), inline: true },
+    { name: 'Findings', value: String(stats.findings), inline: true },
+    { name: 'Duration', value: `${Math.round(echoDurationSec / 60)}min`, inline: true },
+    { name: 'Model', value: echoModel, inline: true },
+    { name: 'Reviewer', value: reviewer.label, inline: true },
+  ], { correlation });
 }
 
 export function describeReviewTranscriptActivityState(transcript) {
@@ -55,14 +134,14 @@ export function describeReviewTranscriptActivityState(transcript) {
 }
 
 function emitReviewArtifactObservability(config, gateId, gate, artifact, error, extra = {}) {
-  const detail = error?.message || String(error || 'unknown artifact error');
+  const detail = selectTruthyValue(() => (error?.message), () => (String(selectTruthyValue(() => (error), () => ('missing_artifact_error_detail')))));
   log('WARN', `Review artifact ${artifact} failed (non-authoritative): ${detail}`);
   appendDurableOperatorAlert(config, 'pipeline.operator_alert', {
     reason: 'review_artifact_write_failed',
     artifact,
     detail,
     gate_id: gateId,
-    gate_type: gate?.type || 'review',
+    gate_type: reviewGateType(gate),
     source: 'review_gate_artifact',
     ...extra,
   }, {
@@ -70,8 +149,8 @@ function emitReviewArtifactObservability(config, gateId, gate, artifact, error, 
     source: 'review_gate_artifact',
     emitter: 'nova/pipeline/runners/review-gate-task',
     gateId,
-    gateType: gate?.type || 'review',
-    attempt: extra.attempt ?? null,
+    gateType: reviewGateType(gate),
+    attempt: selectDefinedValue(() => (extra.attempt), () => (null)),
   });
 }
 
@@ -107,10 +186,11 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
   const tracePath = lintDir ? path.join(lintDir, `full-trace-attempt-${reviewAttempt}.jsonl`) : null;
   const targetModule = resolveGateTargetModule(progress, gateId);
   const targetModuleState = targetModule.moduleId ? loadAuthoritativeModuleState(config, progress, targetModule.moduleId) : null;
-  const { report: lintReport, error: lintError } = deps.generateLintReport(config, lintTier || 'full', {
-    moduleDir: targetModule.moduleDir || null,
-    moduleId: targetModule.moduleId || gateId,
-    forgeDiffStat: targetModuleState?.forge_diff_stat || null,
+  const resolvedLintTier = selectDefinedValue(() => (lintTier), () => ('full'));
+  const { report: lintReport, error: lintError } = deps.generateLintReport(config, resolvedLintTier, {
+    moduleDir: selectTruthyValue(() => (targetModule.moduleDir), () => (null)),
+    moduleId: resolveReviewLintModuleId(targetModule, gateId),
+    forgeDiffStat: selectTruthyValue(() => (targetModuleState?.forge_diff_stat), () => (null)),
     commitHash: resolveModuleCommit(targetModuleState),
     logPath: tracePath,
   });
@@ -129,20 +209,20 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
     log('OK', `Lint report ready: ${lintReport.summary.total_errors} errors, ${lintReport.summary.total_warnings} warnings`);
   } else {
     if (lintRequired) {
-      const reason = `Review lint setup failed: ${lintError || 'unknown lint error'}`;
+      const reason = `Review lint setup failed: ${selectTruthyValue(() => (lintError), () => ('missing_lint_error'))}`;
       appendDurableOperatorAlert(config, 'pipeline.operator_alert', {
         reason: 'review_lint_setup_failed',
         detail: reason,
-        lint_tier: lintTier || 'full',
+        lint_tier: resolvedLintTier,
         gate_id: gateId,
-        gate_type: gate?.type || 'review',
+        gate_type: reviewGateType(gate),
         source: 'review_gate_setup',
       }, {
         severity: 'CRITICAL',
         source: 'review_gate_setup',
         emitter: 'nova/pipeline/runners/review-gate-task',
         gateId,
-        gateType: gate?.type || 'review',
+        gateType: reviewGateType(gate),
         attempt: reviewAttempt,
       });
       return {
@@ -157,7 +237,7 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
       '## 📊 STATIC ANALYSIS REPORT',
       '',
       '⚠️ Lint report generation failed. Review the code manually for type errors, lint issues, and security concerns.',
-      `Error: ${lintError || 'unknown'}`,
+      `Error: ${selectTruthyValue(() => (lintError), () => ('missing_lint_error'))}`,
       '',
       '---',
       '',
@@ -193,7 +273,7 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
   try {
     const logDir = gateLogDir(config, gateId);
     fs.mkdirSync(logDir, { recursive: true });
-    writeRedactedPromptArtifact(path.join(logDir, `echo-prompt-attempt-${reviewAttempt}.md`), reviewerPrompt, { gate_id: gateId, attempt: reviewAttempt, agent_type: 'echo' });
+    writePromptArtifact(path.join(logDir, `echo-prompt-attempt-${reviewAttempt}.md`), reviewerPrompt, { gate_id: gateId, attempt: reviewAttempt, agent_type: 'echo' });
   } catch (error) {
     emitReviewArtifactObservability(config, gateId, gate, 'review_prompt', error, { attempt: reviewAttempt });
   }
@@ -202,12 +282,12 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
 
   // Resolve and log reviewer model/thinking policy before spawn
   const reviewerPolicy = deps.resolvePolicy(config, progress, 'echo', {
-    scopeModel: reviewer.model || null,
-    scopeThinking: reviewer.thinking_level || null,
+    scopeModel: selectTruthyValue(() => (reviewer.model), () => (null)),
+    scopeThinking: selectTruthyValue(() => (reviewer.thinking_level), () => (null)),
     dispatchPath: reviewer.dispatch === 'subagent' ? 'subagent' : 'acp',
   });
   deps.logEffectivePolicy(config, { scope: 'reviewer', agent: 'echo', gateId, ...reviewerPolicy });
-  log('INFO', `Reviewer '${reviewer.label}' model: ${reviewerPolicy.model ?? '(none)'} [${reviewerPolicy.model_source}]${reviewerPolicy.thinking ? `, thinking: ${reviewerPolicy.thinking} [${reviewerPolicy.thinking_source}]` : ''}`);
+  log('INFO', `Reviewer '${reviewer.label}' model: ${selectDefinedValue(() => (reviewerPolicy.model), () => ('model_not_configured'))} [${reviewerPolicy.model_source}]${reviewerPolicy.thinking ? `, thinking: ${reviewerPolicy.thinking} [${reviewerPolicy.thinking_source}]` : ''}`);
 
   const echoTrackingKey = `echo-${reviewer.label}-${gateId}`;
   let pollRes = null;
@@ -232,8 +312,8 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
         attempt: reviewAttempt,
       });
       const trackedEcho = deps.getTrackedAgent(echoTrackingKey);
-      echoSessionKey = trackedEcho?.sessionKey || null;
-      echoDispatchId = trackedEcho?.telemetry_dispatch_id || trackedEcho?.dispatch_id || null;
+      echoSessionKey = selectTruthyValue(() => (trackedEcho?.sessionKey), () => (null));
+      echoDispatchId = selectTruthyValue(() => (selectTruthyValue(() => (trackedEcho?.telemetry_dispatch_id), () => (trackedEcho?.dispatch_id))), () => (null));
       echoGatewayLabel = trackedGatewayLabel(trackedEcho);
     } catch (e) {
       log('ERROR', `Reviewer spawn failed: ${reviewer.label} — ${e.message}`);
@@ -246,7 +326,7 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
         const result = await deps.pollForFile(config, outputFilePath, timeout, `Review '${gateId}'`, echoTrackingKey);
         const trackedEcho = deps.getTrackedAgent(echoTrackingKey);
         echoStreamPath = trackedEcho?.streamLogPath;
-        echoGatewayLabel = echoGatewayLabel || trackedGatewayLabel(trackedEcho);
+        echoGatewayLabel = resolveReviewGatewayLabel(echoGatewayLabel, trackedEcho);
         return result;
       },
       createTrackedGateSessionRateLimitRecoveryOptions(config, {
@@ -258,15 +338,15 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
           agent_type: 'echo',
           run_id: getRunId(config),
           attempt: reviewAttempt,
-          dispatch_id: echoDispatchId || deps.getTrackedAgent(echoTrackingKey)?.telemetry_dispatch_id || deps.getTrackedAgent(echoTrackingKey)?.dispatch_id || null,
-          gateway_label: echoGatewayLabel || trackedGatewayLabel(deps.getTrackedAgent(echoTrackingKey)),
-          session_key: echoSessionKey || deps.getTrackedAgent(echoTrackingKey)?.sessionKey || null,
+          dispatch_id: resolveReviewDispatchId(echoDispatchId, deps.getTrackedAgent(echoTrackingKey)),
+          gateway_label: resolveReviewGatewayLabel(echoGatewayLabel, deps.getTrackedAgent(echoTrackingKey)),
+          session_key: resolveReviewSessionKey(echoSessionKey, deps.getTrackedAgent(echoTrackingKey)),
         },
         updateCorrelation: () => {
           const trackedEcho = deps.getTrackedAgent(echoTrackingKey);
           return {
-            dispatch_id: echoDispatchId || trackedEcho?.telemetry_dispatch_id || trackedEcho?.dispatch_id || null,
-            gateway_label: echoGatewayLabel || trackedGatewayLabel(trackedEcho),
+            dispatch_id: resolveReviewDispatchId(echoDispatchId, trackedEcho),
+            gateway_label: resolveReviewGatewayLabel(echoGatewayLabel, trackedEcho),
           };
         },
         extraFields: [{ name: 'Reviewer', value: reviewer.label }],
@@ -281,19 +361,19 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
         },
       })
     );
-    rateLimitPauses = pollRes?.rate_limit_pauses ?? rateLimitPauses;
+    rateLimitPauses = applyReviewRateLimitPauses(rateLimitPauses, pollRes);
     if (pollRes?.rate_limit_exhausted) return pollRes;
   } finally {
-    echoStreamPath = echoStreamPath || deps.getTrackedAgent(echoTrackingKey)?.streamLogPath;
+    if (!echoStreamPath) echoStreamPath = deps.getTrackedAgent(echoTrackingKey)?.streamLogPath;
     const trackedEchoForCleanup = deps.getTrackedAgent(echoTrackingKey);
     const cleanupIdentity = {
       run_id: getRunId(config),
       attempt: reviewAttempt,
-      dispatch_id: echoDispatchId || trackedEchoForCleanup?.telemetry_dispatch_id || trackedEchoForCleanup?.dispatch_id || null,
-      gateway_label: echoGatewayLabel || trackedGatewayLabel(trackedEchoForCleanup),
-      session_key: echoSessionKey || trackedEchoForCleanup?.sessionKey || null,
+      dispatch_id: resolveReviewDispatchId(echoDispatchId, trackedEchoForCleanup),
+      gateway_label: resolveReviewGatewayLabel(echoGatewayLabel, trackedEchoForCleanup),
+      session_key: resolveReviewSessionKey(echoSessionKey, trackedEchoForCleanup),
     };
-    const killed = await deps.killReviewerAgent(config, gateId, reviewer, pollRes?.ok || false);
+    const killed = await deps.killReviewerAgent(config, gateId, reviewer, pollRes?.ok === true);
     if (killed) clearGateActiveSession(config, gateId, cleanupIdentity);
 
     // Save stream log to centralized log directory
@@ -302,7 +382,7 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
         if (fs.existsSync(echoStreamPath)) {
           const logDir = gateLogDir(config, gateId);
           const destPath = path.join(logDir, `echo-transcript-attempt-${reviewAttempt}.jsonl`);
-          copyRedactedTranscriptArtifact(echoStreamPath, destPath);
+          copyTranscriptArtifact(echoStreamPath, destPath);
           log('OK', `Echo stream metadata saved: gates/${gateId}/echo-transcript-attempt-${reviewAttempt}.jsonl`);
         }
       } catch (e) {
@@ -317,29 +397,12 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
     return {
       ok: false,
       error: `Review file not received (${failureReason})`,
-      session_key: resolveStatusSessionKey(pollRes?.status) ?? echoSessionKey ?? null,
-      transcript: pollRes?.transcript || null,
+      session_key: selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(pollRes?.status)), () => (echoSessionKey))), () => (null)),
+      transcript: selectTruthyValue(() => (pollRes?.transcript), () => (null)),
     };
   }
 
-  // ── Discord: Echo completion summary ──
-  const echoDurationSec = Math.round((Date.now() - echoStartTime) / 1000);
-  const echoModel = reviewerPolicy.model;
-  echoGatewayLabel = echoGatewayLabel || trackedGatewayLabel(deps.getTrackedAgent(echoTrackingKey));
-  const echoCompletionCorrelation = {
-    run_id: config._runId || config.run_id || null,
-    gate_id: gateId,
-    gate_type: gate.type,
-    attempt: reviewAttempt,
-    gateway_label: echoGatewayLabel,
-    session_key: echoSessionKey,
-  };
-  await deps.discord(config, 'INFO', `Echo complete: ${gate.title}`, `Reviewer: ${reviewer.label}`, [
-    ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, echoCompletionCorrelation),
-    { name: 'Duration', value: `${Math.round(echoDurationSec / 60)}min` },
-    { name: 'Model', value: echoModel },
-    { name: 'Reviewer', value: reviewer.label },
-  ], { correlation: echoCompletionCorrelation });
+  echoGatewayLabel = selectTruthyValue(() => (echoGatewayLabel), () => (trackedGatewayLabel(deps.getTrackedAgent(echoTrackingKey))));
 
   // ── Phase 6: Parse review result before publication ──
   let parsedReview;
@@ -353,6 +416,7 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
 
   if (parsedReview.decision === 'invalid_contract') {
     log('ERROR', parsedReview.error);
+    await emitEchoReviewResultDiscord({ deps, config, gateId, gate, reviewer, reviewerPolicy, parsedReview, echoStartTime, reviewAttempt, echoGatewayLabel, echoSessionKey });
     return {
       ok: false,
       error: parsedReview.error,
@@ -364,9 +428,12 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
     };
   }
 
+  await emitEchoReviewResultDiscord({ deps, config, gateId, gate, reviewer, reviewerPolicy, parsedReview, echoStartTime, reviewAttempt, echoGatewayLabel, echoSessionKey });
+
   // ── Phase 7: Stage canonical review output before publication ──
+  let mergedGateOutputPath = null;
   if (gate.output_file) {
-    const mergedGateOutputPath = gateOutputPath(config, gate);
+    mergedGateOutputPath = gateOutputPath(config, gate);
     if (mergedGateOutputPath !== outputFilePath) {
       try {
         fs.mkdirSync(path.dirname(mergedGateOutputPath), { recursive: true });
@@ -386,21 +453,30 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
   }
 
   // ── Phase 8: Commit review output ──
+  const reviewPublishPaths = reviewArtifactPublishPaths(config, [
+    outputFilePath,
+    mergedGateOutputPath,
+    gateLogDir(config, gateId),
+  ]);
   const reviewGitResult = await deps.gitCommitAndPush(config,
     `[pipeline] Review: ${gate.review_name} (${reviewer.label})`,
-    { softFail: true }
+    {
+      softFail: true,
+      addPaths: reviewPublishPaths,
+      conflictPaths: reviewPublishPaths,
+    }
   );
   const reviewPublicationDegraded = emitGitCommitPushSoftFailDegraded(telemetryCtx(config), {
     error: reviewGitResult?.error,
     gate_id: gateId,
-    gate_type: gate.type || 'review',
+    gate_type: reviewGateType(gate),
     attempt: reviewAttempt,
-    session_key: resolveStatusSessionKey(pollRes?.status) ?? echoSessionKey ?? null,
+    session_key: selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(pollRes?.status)), () => (echoSessionKey))), () => (null)),
   });
   if (reviewPublicationDegraded) {
     return {
       ok: false,
-      error: `Review output publication failed: ${reviewGitResult?.error || 'unknown git error'}`,
+      error: `Review output publication failed: ${selectTruthyValue(() => (reviewGitResult?.error), () => ('missing_git_error_detail'))}`,
       output_publication_failed: true,
       mergedFilePath: outputFilePath,
       gateway_label: echoGatewayLabel,

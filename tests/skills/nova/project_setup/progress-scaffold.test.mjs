@@ -8,7 +8,6 @@ import { fileURLToPath } from 'node:url';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../..');
 const script = path.join(repoRoot, 'skills/nova/project_setup/tools/progress-scaffold.ts');
-const removedReviewFailField = `on_${'n' + 'ogo'}`;
 
 function makeRepo() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'progress-scaffold-test-'));
@@ -31,6 +30,15 @@ function run(root, args, options = {}) {
     encoding: 'utf8',
     stdio: options.stdio || 'pipe',
   });
+}
+
+function runFailure(root, args) {
+  try {
+    run(root, args);
+  } catch (error) {
+    return `${error.stdout || ''}${error.stderr || ''}${error.message || ''}`;
+  }
+  throw new Error(`Expected progress scaffold command to fail: ${args.join(' ')}`);
 }
 
 function createBasicProject(root) {
@@ -69,8 +77,7 @@ test('progress scaffold writes a fillable form and apply writes progress.json af
   assert.equal(scaffold.modules['01-foundation'].title, 'Foundation');
   assert.deepEqual(scaffold.modules['01-foundation'].stages, ['forge', 'buster']);
   assert.deepEqual(scaffold.modules['01-foundation'].test_suites, ['build', 'health', 'unit']);
-  assert.equal(scaffold.gates['module-01-review'].on_fail, 'fix_and_rereview');
-  assert.equal(scaffold.gates['module-01-review'][removedReviewFailField], undefined);
+  assert.equal(scaffold.gates['module-01-review'].on_fail, 'stop');
   assert.ok(scaffold.execution_order.some((entry) => entry.startsWith('TODO:')));
 
   assert.throws(
@@ -89,40 +96,41 @@ test('progress scaffold writes a fillable form and apply writes progress.json af
   const progress = readJson(path.join(swarm, 'progress.json'));
   assert.equal(progress.project, 'demo');
   assert.deepEqual(progress.execution_order, ['01-foundation', 'gate:module-01-review']);
-  assert.equal(progress.gates['module-01-review'].on_fail, 'fix_and_rereview');
-  assert.equal(progress.gates['module-01-review'][removedReviewFailField], undefined);
+  assert.equal(progress.gates['module-01-review'].on_fail, 'stop');
 });
 
-test('progress scaffold normalizes stale review-failure field from existing progress', () => {
+test('progress scaffold rejects removed visual-reg path alias', () => {
   const root = makeRepo();
   const swarm = createBasicProject(root);
-  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({
+  writeFile(path.join(swarm, 'baselines/visual-paths.json'), '[]\n');
+  const scaffoldPath = path.join(swarm, 'progress.scaffold.json');
+  writeFile(scaffoldPath, `${JSON.stringify({
+    _schema: 'progress-scaffold/v1',
     project: 'demo',
     version: 1,
-    execution_order: ['01-foundation', 'gate:module-01-review'],
+    description: 'Demo project',
+    notes: ['No preview for the scaffold test.'],
+    policy: {},
+    execution_order: ['01-foundation'],
     modules: {
       '01-foundation': {
         title: 'Foundation',
         dir: '01-foundation',
         depends_on: [],
-        stages: ['forge'],
-        test_suites: [],
+        stages: ['forge', 'buster'],
+        test_suites: ['visual-reg'],
+        test_config: {
+          'visual-reg': {
+            path: 'baselines/visual-paths.json',
+          },
+        },
       },
     },
-    gates: {
-      'module-01-review': {
-        type: 'review',
-        title: 'Module 01 Review',
-        review_name: 'MODULE-01-REVIEW',
-        [removedReviewFailField]: 'fix_and_rereview',
-        instructions_file: 'echo-review/MODULE-01-REVIEW-INSTRUCTIONS.md',
-        output_file: 'logs/echo-review/MODULE-01-REVIEW.json',
-      },
-    },
+    gates: {},
   }, null, 2)}\n`);
 
-  run(root, ['--project', 'demo']);
-  const scaffold = readJson(path.join(swarm, 'progress.scaffold.json'));
-  assert.equal(scaffold.gates['module-01-review'].on_fail, 'fix_and_rereview');
-  assert.equal(scaffold.gates['module-01-review'][removedReviewFailField], undefined);
+  const output = runFailure(root, ['--project', 'demo', '--apply']);
+
+  assert.match(output, /visual-reg\.path is removed; use paths_file/);
+  assert.match(output, /visual-reg\.paths_file must be a non-empty string/);
 });

@@ -5,7 +5,7 @@ Audience: developer, maintainer
 
 ## Purpose
 
-Use this page when adding or adapting telemetry output paths. Observability sinks should preserve the event contract, redact sensitive data, and fail in a way operators can diagnose.
+Use this page when adding or adapting telemetry output paths. Observability sinks should preserve the event contract, keep diagnostic values visible, bound payload size/shape, and fail in a way operators can diagnose.
 
 ## Current Sinks
 
@@ -42,9 +42,9 @@ Required input fields include:
 
 The shared telemetry payload schema validates known event families and allows structured JSON payloads. A new sink should not invent a new envelope. Add new event types to the schema when the event is part of the pipeline contract; use `plugin.event` with `plugin_id`, `plugin_event`, and `details` for plugin-local events.
 
-## Masking And Redaction
+## Egress And Evidence
 
-Sinks must treat these as sensitive:
+Sinks must keep these values under the existing ownership boundaries and avoid adding value-hiding layers:
 
 - provider API keys
 - Discord tokens/webhooks
@@ -53,7 +53,7 @@ Sinks must treat these as sensitive:
 - app-under-test credentials unless explicitly allowlisted for Buster prompt context
 - session transcripts that may contain secrets
 
-Redact before writing to Redis, Discord, local JSONL, or external sinks.
+Do not obscure values before writing to Redis, Discord, local JSONL, or external sinks. Apply only JSON-safe normalization and explicit size/field bounds.
 
 ## Failure Behavior
 
@@ -71,7 +71,7 @@ Do not let optional observability failures convert a successful module into `PAS
 1. Add a plugin with kind `telemetry` and hook family `telemetry.sink`.
 2. Validate the sink input with the existing telemetry sink contract.
 3. Preserve the standard envelope and add sink-specific fields only inside sink output.
-4. Add redaction tests.
+4. Add egress size/shape tests.
 5. Add degradation/restoration handling.
 6. Document operator checks and failure symptoms.
 
@@ -125,12 +125,12 @@ npm run docs:generate:check
 | Event envelope | `skills/common/pipeline/services/telemetry/payload-schema.ts` | accept the shared telemetry payload shape without adding sink-only required fields |
 | Dispatch path | `skills/nova/pipeline/services/telemetry/dispatch.ts`; `skills/nova/pipeline/services/telemetry-stream.ts` | failures are recorded as noncritical sink degradation, not scheduler truth |
 | Sink config | `charts/kubeclaw/files/config/swarm.config.json`; `docs/reference/observability-sinks.md` | new config keys live under the existing observability/plugin-control surfaces |
-| Redaction | `skills/common/pipeline/redaction.ts`; sink implementation | secrets and tokens must be masked before external delivery |
+| Egress | `skills/common/pipeline/egress.ts`; sink implementation | payload values stay visible while JSON shape and size stay bounded before external delivery |
 | Verification | telemetry docs/schema behavior checks and contract tests | generated docs and sink docs stay synchronized with emitted event names |
 
 ## Failure Signals
 
 - sink throws and breaks pipeline control flow: incorrect, sinks must degrade without owning scheduler truth.
 - event appears in Redis but not external sink: inspect sink config and fallback artifacts before changing telemetry builders.
-- sink output contains tokens or full credentials: block the sink until redaction is fixed and covered by tests.
+- sink output loses diagnostic values or violates size/shape bounds: block the sink until egress is fixed and covered by tests.
 - observer runtime capture changes should update `plugins/openclaw-agent-observer/src/index.ts`, `hook-normalizers.ts`, the status/self-test contract check, and the operator stream checks together.

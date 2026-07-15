@@ -44,6 +44,16 @@ test('parsePorcelainStatusPaths keeps normal paths with spaces', () => {
   ]);
 });
 
+test('parsePorcelainStatusPaths tolerates trimmed leading status whitespace', () => {
+  const paths = parsePorcelainStatusPaths(
+    'M Projects/current/src/.swarm/buster-output.json\0',
+  );
+
+  assert.deepEqual(paths, [
+    'Projects/current/src/.swarm/buster-output.json',
+  ]);
+});
+
 test('cleanupForbiddenFile unstages and deletes staged additions absent from HEAD', () => {
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'verify-task-cleanup-test-'));
 
@@ -119,6 +129,54 @@ test('verifyAndPush commits scoped swarm artifact despite unrelated dirty repo f
   }
 });
 
+test('verifyAndPush rebases newer scoped Buster output over prior attempt output', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'verify-task-buster-retry-rebase-'));
+  const remote = path.join(root, 'origin.git');
+  const repoRoot = path.join(root, 'repo');
+  const otherRepo = path.join(root, 'other');
+  const outputRel = 'Projects/demo/src/.swarm/modules/01/buster-output.json';
+  const previousRepoRoot = process.env.REPO_ROOT;
+
+  try {
+    git(root, ['init', '--bare', 'origin.git']);
+    fs.mkdirSync(repoRoot);
+    git(repoRoot, ['init', '-b', 'main']);
+    git(repoRoot, ['config', 'user.email', 'test@example.invalid']);
+    git(repoRoot, ['config', 'user.name', 'Test User']);
+    fs.mkdirSync(path.dirname(path.join(repoRoot, outputRel)), { recursive: true });
+    fs.writeFileSync(path.join(repoRoot, 'README.md'), 'baseline\n');
+    fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/.swarm/progress.json'), '{}\n');
+    fs.writeFileSync(path.join(repoRoot, outputRel), '{"status":"PENDING","dispatch_id":"baseline"}\n');
+    git(repoRoot, ['add', '.']);
+    git(repoRoot, ['commit', '-m', 'baseline']);
+    git(repoRoot, ['remote', 'add', 'origin', remote]);
+    git(repoRoot, ['push', '-u', 'origin', 'main']);
+
+    git(root, ['clone', '--branch', 'main', remote, 'other']);
+    git(otherRepo, ['config', 'user.email', 'test@example.invalid']);
+    git(otherRepo, ['config', 'user.name', 'Test User']);
+    fs.writeFileSync(path.join(otherRepo, outputRel), '{"status":"FAIL","dispatch_id":"attempt-1"}\n');
+    git(otherRepo, ['add', outputRel]);
+    git(otherRepo, ['commit', '-m', '[BUSTER] attempt 1 output']);
+    git(otherRepo, ['push', 'origin', 'HEAD:main']);
+
+    fs.writeFileSync(path.join(repoRoot, outputRel), '{"status":"FAIL","dispatch_id":"attempt-2"}\n');
+
+    process.env.REPO_ROOT = repoRoot;
+    const result = await verifyAndPush('buster', 'demo', { commitMessage: '[BUSTER] attempt 2 output' });
+
+    assert.equal(result.status, 'success');
+    assert.equal(result.action, 'pushed');
+    assert.equal(git(repoRoot, ['status', '--porcelain']), '');
+    const pushed = git(repoRoot, ['show', 'origin/main:Projects/demo/src/.swarm/modules/01/buster-output.json']);
+    assert.equal(pushed.trim(), '{"status":"FAIL","dispatch_id":"attempt-2"}');
+  } finally {
+    if (previousRepoRoot === undefined) delete process.env.REPO_ROOT;
+    else process.env.REPO_ROOT = previousRepoRoot;
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test('verifyAndPush treats empty scoped stage as success without push', async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'verify-task-noop-scope-'));
   const remote = path.join(root, 'origin.git');
@@ -135,12 +193,14 @@ test('verifyAndPush treats empty scoped stage as success without push', async ()
     fs.writeFileSync(path.join(repoRoot, 'README.md'), 'baseline\n');
     fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/.swarm/progress.json'), '{}\n');
     fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/app.js'), 'baseline\n');
+    fs.mkdirSync(path.join(repoRoot, 'Projects/other/src'), { recursive: true });
+    fs.writeFileSync(path.join(repoRoot, 'Projects/other/src/app.js'), 'baseline\n');
     git(repoRoot, ['add', '.']);
     git(repoRoot, ['commit', '-m', 'baseline']);
     git(repoRoot, ['remote', 'add', 'origin', remote]);
     git(repoRoot, ['push', '-u', 'origin', 'main']);
 
-    fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/app.js'), 'changed\n');
+    fs.writeFileSync(path.join(repoRoot, 'Projects/other/src/app.js'), 'changed\n');
 
     process.env.REPO_ROOT = repoRoot;
     const result = await verifyAndPush('buster', 'demo', { commitMessage: '[BUSTER] noop artifact' });
@@ -148,7 +208,7 @@ test('verifyAndPush treats empty scoped stage as success without push', async ()
     assert.equal(result.status, 'success');
     assert.equal(result.action, 'none');
     assert.equal(git(repoRoot, ['rev-list', '--count', 'HEAD']), '1');
-    assert.match(git(repoRoot, ['status', '--porcelain']), /^M Projects\/demo\/src\/app\.js$/m);
+    assert.match(git(repoRoot, ['status', '--porcelain']), /^M Projects\/other\/src\/app\.js$/m);
   } finally {
     if (previousRepoRoot === undefined) delete process.env.REPO_ROOT;
     else process.env.REPO_ROOT = previousRepoRoot;

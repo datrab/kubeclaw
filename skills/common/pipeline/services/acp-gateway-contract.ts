@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type UnknownRecord = Record<string, any>;
 
 function isPlainObject(value: unknown): value is UnknownRecord {
@@ -5,7 +6,7 @@ function isPlainObject(value: unknown): value is UnknownRecord {
 }
 
 function isStringOrNull(value: unknown): boolean {
-  return value === null || typeof value === 'string';
+  return selectTruthyValue(() => (value === null), () => (typeof value === 'string'));
 }
 
 function isNonEmptyString(value: unknown): value is string {
@@ -21,7 +22,7 @@ function isNonNegativeInteger(value: unknown): boolean {
 }
 
 function isNonNegativeIntegerOrNull(value: unknown): boolean {
-  return value === null || isNonNegativeInteger(value);
+  return selectTruthyValue(() => (value === null), () => (isNonNegativeInteger(value)));
 }
 
 function pushExactKeysErrors(errors: string[], value: UnknownRecord, allowedKeys: string[], label: string): void {
@@ -75,7 +76,7 @@ export function validateAcpTranscriptState(state: unknown = {}): string[] {
   pushTypeError(errors, state.lastEventTs, 'lastEventTs', isStringOrNull);
   pushTypeError(errors, state.lastDetail, 'lastDetail', (value: unknown) => typeof value === 'string');
   pushTypeError(errors, state.partialLine, 'partialLine', (value: unknown) => typeof value === 'string');
-  if (!Array.isArray(state.newLines) || !state.newLines.every((line) => typeof line === 'string')) {
+  if (selectTruthyValue(() => (!Array.isArray(state.newLines)), () => (!state.newLines.every((line) => typeof line === 'string')))) {
     errors.push('newLines must be an array of strings');
   }
 
@@ -195,7 +196,7 @@ export function validateAcpTranscriptDeltaEventPayload(payload: unknown = {}): s
   ], '');
 
   pushTypeError(errors, payload.session_key, 'session_key', isStringOrNull);
-  if (!Array.isArray(payload.new_lines) || !payload.new_lines.every((line) => typeof line === 'string')) {
+  if (selectTruthyValue(() => (!Array.isArray(payload.new_lines)), () => (!payload.new_lines.every((line) => typeof line === 'string')))) {
     errors.push('new_lines must be an array of strings');
   }
   pushTypeError(errors, payload.line_count, 'line_count', isNonNegativeInteger);
@@ -329,7 +330,7 @@ export function buildGatewayInvokeHttpError(tool: string, status: number, status
 
 export function validateGatewayInvokeError(error: any = {}): string[] {
   const errors: string[] = [];
-  if (!error || typeof error !== 'object') return ['gateway invoke error must be an object'];
+  if (selectTruthyValue(() => (!error), () => (typeof error !== 'object'))) return ['gateway invoke error must be an object'];
   if (!isNonEmptyString(error.message)) errors.push('message must be a non-empty string');
   if (error.httpStatus !== undefined && !isFiniteNumber(error.httpStatus)) errors.push('httpStatus must be a number when present');
   if (error.httpBody !== undefined && typeof error.httpBody !== 'string' && error.httpBody !== null) {

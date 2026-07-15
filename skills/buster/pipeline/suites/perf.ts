@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Suite: perf — Lighthouse Performance Audit
 // ═══════════════════════════════════════════════════════════════
@@ -72,13 +73,24 @@ function log(msg: string): void {
   if (_logSink) _logSink({ suite: 'perf', msg });
 }
 
-function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error || 'unknown error');
+function objectRecord(value: unknown): AnyRecord | null {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : null;
 }
 
-function safeArtifactSegment(value: unknown, fallback = 'unknown'): string {
-  const segment = String(value || fallback).replace(/[^a-zA-Z0-9._-]+/g, '_').replace(/^\.+/, '');
-  return segment || fallback;
+function nonEmptyString(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() ? value : null;
+}
+
+function errorMessage(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  return error == null ? 'missing_error_detail' : String(error);
+}
+
+function safeArtifactSegment(value: unknown, fallback = 'missing_artifact_segment'): string {
+  const source = selectTruthyValue(() => (value == null), () => (value === '')) ? fallback : value;
+  const segment = String(source).replace(/[^a-zA-Z0-9._-]+/g, '_').replace(/^\.+/, '');
+  if (segment) return segment;
+  return fallback;
 }
 
 function timeoutWithinSuite(timeoutMs: number, context: PerfContext): number {
@@ -90,20 +102,26 @@ function evidenceMode(enforced: boolean): 'enforced' | 'evidence-only' {
   return enforced ? 'enforced' : 'evidence-only';
 }
 
+function lighthouseCategoryName(category: string): string {
+  if (Object.prototype.hasOwnProperty.call(CATEGORY_NAMES, category)) return CATEGORY_NAMES[category];
+  return category;
+}
+
 function scratchRunSegment(context: PerfContext): string {
-  const runSegment = safeArtifactSegment(context.runId || context.run_id, '');
+  const runSegment = safeArtifactSegment(context.runId, '');
   const uniqueSegment = safeArtifactSegment(`${Date.now()}-${Math.random().toString(36).slice(2, 10)}`);
   return runSegment ? `${runSegment}-${uniqueSegment}` : uniqueSegment;
 }
 
 export function resolvePerfReportPaths(context: PerfContext = {}, perfConf: AnyRecord = {}): PerfReportPaths {
-  if (Object.prototype.hasOwnProperty.call(perfConf || {}, 'output_path')) {
+  const normalizedPerfConf = selectDefinedValue(() => (objectRecord(perfConf)), () => ({}));
+  if (Object.prototype.hasOwnProperty.call(normalizedPerfConf, 'output_path')) {
     throw new Error('perf.output_path is no longer supported; Lighthouse reports are written to the module test log directory');
   }
-  const attempt = context.attempt || 1;
-  const moduleSegment = safeArtifactSegment(context.moduleId || context.module);
-  const resultsRoot = context.resultsDir || DEFAULT_RESULTS_DIR;
-  const artifactDir = context.testsLogDir || path.join(resultsRoot, `${moduleSegment}-attempt-${attempt}`);
+  const attempt = selectDefinedValue(() => (context.attempt), () => (1));
+  const moduleSegment = safeArtifactSegment(context.moduleId);
+  const resultsRoot = selectDefinedValue(() => (nonEmptyString(context.resultsDir)), () => (DEFAULT_RESULTS_DIR));
+  const artifactDir = selectDefinedValue(() => (nonEmptyString(context.testsLogDir)), () => (path.join(resultsRoot, `${moduleSegment}-attempt-${attempt}`)));
   const runSegment = scratchRunSegment(context);
   const scratchPath = path.join(artifactDir, `.lighthouse-report-${moduleSegment}-attempt-${attempt}-${runSegment}.tmp.json`);
   const finalPath = path.join(artifactDir, `lighthouse-report-${moduleSegment}-attempt-${attempt}-${runSegment}.json`);
@@ -129,20 +147,20 @@ function toolErrorVerdict(startTime: number, message: string, rule = 'lighthouse
 }
 
 export default async function perfSuite(context: PerfContext): Promise<SuiteVerdict> {
-  _logSink = context.logSink || null;
+  _logSink = selectTruthyValue(() => (context.logSink), () => (null));
   const startTime = Date.now();
-  const serve = context.config?.serve || {};
-  const perfConf = context.config?.perf || {};
+  const serve = selectDefinedValue(() => (objectRecord(context.config?.serve)), () => ({}));
+  const perfConf = selectDefinedValue(() => (objectRecord(context.config?.perf)), () => ({}));
 
-  const type = serve.type || 'static';
-  const port = serve.port || (type === 'server' ? DEFAULTS.server_port : DEFAULTS.static_port);
-  const urlPath = perfConf.path || DEFAULTS.path;
+  const type = selectDefinedValue(() => (nonEmptyString(serve.type)), () => ('static'));
+  const port = selectDefinedValue(() => (serve.port), () => ((type === 'server' ? DEFAULTS.server_port : DEFAULTS.static_port)));
+  const urlPath = selectDefinedValue(() => (nonEmptyString(perfConf.path)), () => (DEFAULTS.path));
   const url = `http://localhost:${port}${urlPath}`;
 
-  const thresholds = perfConf.thresholds || null;
+  const thresholds = objectRecord(perfConf.thresholds);
   const enforced = thresholds !== null;
   const mode = evidenceMode(enforced);
-  const timeout = timeoutWithinSuite((perfConf.timeout || DEFAULTS.timeout) * 1000, context);
+  const timeout = timeoutWithinSuite((selectDefinedValue(() => (perfConf.timeout), () => (DEFAULTS.timeout))) * 1000, context);
 
   let reportPaths: PerfReportPaths;
   try {
@@ -186,11 +204,11 @@ export default async function perfSuite(context: PerfContext): Promise<SuiteVerd
     return toolErrorVerdict(startTime, message);
   }
 
-  const categories = report.categories || {};
+  const categories = selectDefinedValue(() => (objectRecord(report.categories)), () => ({}));
   const scores: Record<string, number> = {};
   for (const [key, cat] of Object.entries(categories)) {
     const category = cat as AnyRecord;
-    scores[key] = Math.round((category.score || 0) * 100);
+    scores[key] = Math.round((selectDefinedValue(() => (category.score), () => (0))) * 100);
   }
 
   log(`Scores: ${Object.entries(scores).map(([key, value]) => `${key}=${value}`).join(', ')}`);
@@ -203,7 +221,7 @@ export default async function perfSuite(context: PerfContext): Promise<SuiteVerd
     for (const [category, rawThreshold] of Object.entries(thresholds)) {
       const threshold = Number(rawThreshold);
       const score = scores[category];
-      const name = CATEGORY_NAMES[category] || category;
+      const name = lighthouseCategoryName(category);
       checksTotal++;
 
       if (score === undefined) {
@@ -220,7 +238,7 @@ export default async function perfSuite(context: PerfContext): Promise<SuiteVerd
   } else {
     for (const [category, score] of Object.entries(scores)) {
       checksTotal++;
-      const name = CATEGORY_NAMES[category] || category;
+      const name = lighthouseCategoryName(category);
       if (score < 50) findings.push(createFinding(SEVERITY.MODERATE, `${name}: score ${score} (low)`, { rule: `lighthouse-${category}` }));
       else if (score < 70) findings.push(createFinding(SEVERITY.MINOR, `${name}: score ${score} (could improve)`, { rule: `lighthouse-${category}` }));
     }

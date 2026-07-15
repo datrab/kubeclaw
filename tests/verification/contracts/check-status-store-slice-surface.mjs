@@ -198,7 +198,12 @@ assert.equal(pollingSource.includes('status || loadStatus(config, moduleDir)'), 
 assert.equal(pollingSource.includes("status || loadStatus(config, moduleDir) || { module_id: moduleDir, current_phase: 'forge' }"), false, 'module polling must not synthesize fallback forge status for ACP observability');
 assert.equal(pollingSource.includes('Lifecycle read models are the only local polling authority for module state.'), true, 'polling docs should describe lifecycle authority explicitly');
 
-assert.equal(completionAdjudicatorSource.includes("source: source || status._source || 'lifecycle_read_model'"), true, 'completion projection should default local authority to lifecycle_read_model');
+assert.equal(completionAdjudicatorSource.includes("const LIFECYCLE_READ_MODEL_SOURCE = 'lifecycle_read_model'"), true, 'completion projection should name the local lifecycle authority source');
+assert.equal(
+  completionAdjudicatorSource.includes('source: selectDefinedValue(() => (mapCompletionSource(source, status._source)), () => (LIFECYCLE_READ_MODEL_SOURCE))'),
+  true,
+  'completion projection should normalize local authority through the named lifecycle source',
+);
 assert.equal(completionAdjudicatorSource.includes("statusSource = 'lifecycle_read_model'"), true, 'completion adjudication should default local status source to lifecycle_read_model');
 assert.equal(completionAdjudicatorSource.includes('status_json_status'), false, 'completion adjudicator drift fields must not retain status_json wording');
 assert.equal(truthDriftSource.includes('function collectModuleArtifactRefs(moduleProjection = {}) {\n  void moduleProjection;\n  return {};\n}'), true, 'module truth drift artifacts must no longer expose removed status paths');
@@ -391,8 +396,8 @@ const moduleTruthDrift = mainMod.projectModuleTruthDrift(config, '01', progress.
   redisEntry: { status: 'PASS', source: 'buster-pipeline' },
   expectedIdentity: { run_id: 'run-status-store-slice-1', attempt: 1, dispatch_id: 'dispatch-1' },
 });
-assert.equal(moduleTruthDrift.drift_detected, true, 'module truth drift report should aggregate completion drift');
-assert.equal(moduleTruthDrift.drift.some((entry) => entry.source === 'completion_adjudicator'), true);
+assert.equal(moduleTruthDrift.drift_detected, false, 'matching terminal Redis/local phase evidence should not be reported as drift');
+assert.equal(moduleTruthDrift.drift.some((entry) => entry.source === 'completion_adjudicator'), false);
 assert.deepEqual(moduleTruthDrift.artifacts, {}, 'module truth drift must not expose removed status artifact paths');
 
 const redisCompletion = pollingMod.projectCompletionState({
@@ -434,7 +439,7 @@ const adjudicatedNonterminal = completionAdjudicatorMod.adjudicateCompletionEvid
 });
 assert.equal(adjudicatedNonterminal.authority_source, 'redis');
 assert.equal(adjudicatedNonterminal.authority_policy.code, 'redis_terminal_confirmed_by_active_dispatch');
-assert.equal(adjudicatedNonterminal.drift.some((entry) => entry.code === 'redis_terminal_confirmed_by_active_dispatch'), true);
+assert.equal(adjudicatedNonterminal.drift_detected, false, 'active-dispatch Redis terminal should advance a non-terminal phase without drift');
 
 const adjudicatedTerminalConflict = completionAdjudicatorMod.adjudicateCompletionEvidence({
   targetKind: 'module',

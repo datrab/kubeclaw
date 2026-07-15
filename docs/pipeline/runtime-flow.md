@@ -115,7 +115,7 @@ Status history is appended to the module status object. Operators should inspect
 
 `execution_order` uses `gate:<id>` entries. The corresponding `gates.<id>` object decides the runner:
 
-- `review`: dispatches reviewer sessions, writes review artifacts, and can trigger fix-and-rereview cycles.
+- `review`: dispatches reviewer sessions, writes review artifacts, and stops on failure.
 - `approval`: writes approval request/decision artifacts and waits for a signal or timeout behavior.
 - `buster`: dispatches a typed Buster gate task and can trigger fix-and-retest cycles.
 

@@ -65,6 +65,51 @@ spec:
   }
 });
 
+test('manifestSuite reports explicit enforced mode without requiring max_issues threshold', async () => {
+  const repoRoot = resolveRepoDir();
+  const fixtureDir = path.join(repoRoot, '.swarm', 'manifest-suite-test', `${process.pid}-enforced`);
+  const manifestPath = path.join(fixtureDir, 'enforced.yaml');
+  const manifestRel = path.relative(repoRoot, manifestPath);
+
+  fs.mkdirSync(fixtureDir, { recursive: true });
+  fs.writeFileSync(manifestPath, `
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  template:
+    spec:
+      containers:
+        - name: app
+          image: registry.example.com/app:test
+          resources:
+            limits:
+              cpu: "1"
+              memory: 256Mi
+`);
+
+  try {
+    const verdict = await manifestSuite({
+      config: {
+        manifest: {
+          deployment_yaml: manifestRel,
+          enforced: true,
+          thresholds: {
+            max_missing_env: 0,
+          },
+        },
+      },
+      logSink: null,
+    });
+
+    assert.equal(verdict.status, 'PASS');
+    assert.equal(verdict.metadata.enforced, true);
+  } finally {
+    fs.rmSync(fixtureDir, { recursive: true, force: true });
+  }
+});
+
 test('manifestSuite counts failed validation categories, not individual findings', async () => {
   const repoRoot = resolveRepoDir();
   const fixtureDir = path.join(repoRoot, '.swarm', 'manifest-suite-test', `${process.pid}-multi-finding`);

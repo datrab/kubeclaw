@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type UnknownRecord = Record<string, any>;
 
 interface DiscordFieldSpec {
@@ -24,7 +25,7 @@ function readIdentityValue(identity: UnknownRecord = {}, keys: string[] = []): u
 
 function normalizeFieldSpec(spec: DiscordFieldSpec = {}): NormalizedDiscordFieldSpec {
   return {
-    name: spec.name || 'Field',
+    name: selectTruthyValue(() => (spec.name), () => ('Missing field name')),
     keys: Array.isArray(spec.keys) ? spec.keys : [],
     inline: spec.inline !== false,
     format: typeof spec.format === 'function' ? spec.format : ((value: unknown) => String(value)),
@@ -48,7 +49,7 @@ export const DISCORD_FIELD_SPECS: Record<string, any> = Object.freeze({
     keys: ['reasoningLevel', 'reasoning_level', 'thinking', 'thinking_level'],
     inline: true,
     format: (value: unknown, identity: UnknownRecord) => {
-      const level = value == null || value === '' ? 'default' : String(value);
+      const level = selectDefinedValue(() => (value == null), () => (value === '')) ? 'default' : String(value);
       const source = readIdentityValue(identity, ['reasoningSource', 'reasoning_source', 'thinkingSource', 'thinking_source']);
       return source ? `${level} (${source})` : level;
     },
@@ -164,10 +165,10 @@ export function buildDiscordIdentityFields(identity: UnknownRecord = {}, fieldSp
 
 export function buildDiscordIdentitySurfaceFields(surface: string, identity: UnknownRecord = {}, extra: UnknownRecord[] = []): UnknownRecord[] {
   const fieldSpecs = DISCORD_IDENTITY_FIELD_SETS[surface];
-  if (!fieldSpecs) throw new Error(`Unknown Discord identity surface '${surface || 'unknown'}'`);
+  if (!fieldSpecs) throw new Error(`Unknown Discord identity surface '${selectTruthyValue(() => (surface), () => ('missing_surface'))}'`);
   return buildDiscordIdentityFields(identity, fieldSpecs, extra);
 }
 
 export function buildSessionRateLimitDiscordFields(identity: UnknownRecord = {}, extra: UnknownRecord[] = []): UnknownRecord[] {
-  return buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.RATE_LIMIT_SESSION || 'rate_limit_session', identity, extra);
+  return buildDiscordIdentitySurfaceFields(selectDefinedValue(() => (DISCORD_IDENTITY_SURFACES.RATE_LIMIT_SESSION), () => ('rate_limit_session')), identity, extra);
 }

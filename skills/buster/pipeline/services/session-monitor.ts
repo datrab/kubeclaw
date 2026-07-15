@@ -21,6 +21,7 @@ import { createBudget } from '../timing.ts';
 import { createPipelineEventBus, waitForAny } from './pipeline-event-contract.ts';
 import { assertValidSessionTerminationResult } from './acp-gateway-contract.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 function buildRateLimitStatus(rlState) {
   return {
     pause_count: rlState.pauseCount,
@@ -28,6 +29,43 @@ function buildRateLimitStatus(rlState) {
     current_cooldown_s: rlState.currentCooldownS,
   };
 }
+
+function sessionStateHasRateLimitEvidence(state = {}) {
+  return selectTruthyValue(() => (state?.rateLimited === true), () => (state?.transcript?.rateLimited === true));
+}
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function nonEmptyString(value) {
+  return typeof value === 'string' && value.trim() ? value.trim() : null;
+}
+
+function numberValue(value) {
+  return typeof value === 'number' && Number.isFinite(value) ? value : null;
+}
+
+function terminateSessionAuthority(hooks) {
+  return typeof hooks.terminateSession === 'function' ? hooks.terminateSession : terminateSession;
+}
+
+function killGraceMsAuthority(meta, sessionPolicies) {
+  if (meta.killGraceMs !== undefined && meta.killGraceMs !== null) return Number(meta.killGraceMs);
+  return Number(sessionPolicies.terminationPolicy.graceMs);
+}
+
+function recoveredGatewayUnreachable(recovery, state) {
+  if (recovery.gatewayUnreachable === true) return true;
+  return state.gatewayUnreachable === true;
+}
+
+const SESSION_STATUS_UNREACHABLE_DETAIL = 'session status unreachable';
+const RATE_LIMIT_RECOVERY_SESSION_STATUS_UNREACHABLE_DETAIL = 'session status unreachable during rate-limit recovery';
 
 /**
  * Monitor an ACP child session until terminal, timeout, or rate-limit abort.
@@ -41,32 +79,33 @@ function buildRateLimitStatus(rlState) {
  * @returns {{ terminal: boolean, reason: string|null, detail: string, state: object }}
  */
 export async function monitorSession(childSessionKey: string, streamLogPath: string | null, payload: Record<string, any> = {}, tctx: any = null, meta: Record<string, any> = {}): Promise<any> {
-  const cfg = getAcpMonitorConfig(payload.acp_monitor || {});
-  const moduleId  = meta.moduleId  || payload?.module_id || 'unknown';
-  const spawnedAt = meta.spawnedAt || Date.now();
-  const logger    = meta.logger    || createLogger({ module: moduleId });
-  const hooks     = meta.testHooks || {};
+  const cfg = getAcpMonitorConfig(payload.acp_monitor);
+  const moduleId  = selectDefinedValue(() => (nonEmptyString(meta.moduleId)), () => (nonEmptyString(payload?.module_id)));
+  if (!moduleId) throw new Error('Buster session monitor requires module_id');
+  const spawnedAt = selectDefinedValue(() => (numberValue(meta.spawnedAt)), () => (Date.now()));
+  const logger    = selectDefinedValue(() => (meta.logger), () => (createLogger({ module: moduleId })));
+  const hooks     = objectRecord(meta.testHooks);
   const now       = typeof hooks.now === 'function' ? hooks.now : Date.now;
-  const getState  = hooks.getAcpMonitorState || null;
-  const terminateChild = hooks.terminateSession || terminateSession;
-  const timeoutSeconds = Number(meta.timeoutSeconds ?? payload?.timeout_seconds ?? payload?.session?.timeout_seconds ?? 0);
+  const getState  = selectTruthyValue(() => (hooks.getAcpMonitorState), () => (null));
+  const terminateChild = terminateSessionAuthority(hooks);
+  const timeoutSeconds = Number(meta.timeoutSeconds);
   const hardDeadlineMs = Number.isFinite(timeoutSeconds) && timeoutSeconds > 0
     ? spawnedAt + (timeoutSeconds * 1000)
     : null;
   const sessionPolicies = loadBusterSessionPolicies();
-  const requestedKillGraceMs = Number(meta.killGraceMs ?? sessionPolicies.terminationPolicy.graceMs);
+  const requestedKillGraceMs = killGraceMsAuthority(meta, sessionPolicies);
   const killGraceMs = Math.min(
     Math.max(requestedKillGraceMs, cfg.monitorPollMs),
     sessionPolicies.terminationPolicy.maxGraceMs,
   );
 
-  const gatewayUrl   = resolveGatewayBaseUrl(meta.gatewayUrl ?? payload?.gateway_url);
-  const gatewayToken = resolveGatewayToken(meta.gatewayToken ?? payload?.gateway_token);
+  const gatewayUrl   = resolveGatewayBaseUrl(meta.gatewayUrl);
+  const gatewayToken = resolveGatewayToken(meta.gatewayToken);
   const eventBus = createPipelineEventBus();
   const adapterIdentity = {
     module_id: moduleId,
-    gate_id: payload?.gate_id || null,
-    dispatch_id: payload?.dispatch_id || payload?.session?.label || null,
+    gate_id: selectTruthyValue(() => (payload?.gate_id), () => (null)),
+    dispatch_id: selectTruthyValue(() => (selectTruthyValue(() => (payload?.dispatch_id), () => (payload?.session?.label))), () => (null)),
     session_key: childSessionKey,
   };
   const runBudget = hardDeadlineMs
@@ -80,7 +119,7 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
     gatewayStatusPolicy: sessionPolicies.gatewayStatusPolicy,
   };
 
-  const rlConfig = payload?.rate_limit || {};
+  const rlConfig = objectRecord(payload?.rate_limit);
   const rlState = createRateLimitState({
     maxPauses:        rlConfig.max_pauses,
     initialCooldownS: rlConfig.initial_cooldown_s,
@@ -117,7 +156,7 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
 
   async function waitForMonitorEvent(timeoutMs = null, budget = runBudget) {
     return waitForAny(eventBus, ['acp.session.state', 'acp.transcript.delta', 'fatal.error'], adapterIdentity, {
-      signal: budget?.signal || adapter?.signal,
+      signal: selectTruthyValue(() => (budget?.signal), () => (adapter?.signal)),
       ...(budget ? { budget } : {}),
       timeoutMs,
     });
@@ -135,9 +174,9 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
     const termination = assertValidSessionTerminationResult(await terminateChild(childSessionKey, {
       ...sessionPolicies,
       runtime: payload?.session?.runtime,
-      model: payload?.session?.model || null,
-      agentId: payload?.session?.agentId || null,
-      label: payload?.session?.label || payload?.dispatch_id || null,
+      model: selectTruthyValue(() => (payload?.session?.model), () => (null)),
+      agentId: selectTruthyValue(() => (payload?.session?.agentId), () => (null)),
+      label: selectTruthyValue(() => (selectTruthyValue(() => (payload?.session?.label), () => (payload?.dispatch_id))), () => (null)),
       graceMs: killGraceMs,
     }));
 
@@ -173,12 +212,12 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
   startAdapter();
 
   try {
-    while (!hardDeadlineMs || now() < hardDeadlineMs) {
+    while (selectTruthyValue(() => (!hardDeadlineMs), () => (now() < hardDeadlineMs))) {
       let event;
       try {
         event = await waitForMonitorEvent(hardDeadlineMs ? Math.max(0, hardDeadlineMs - now()) : null);
       } catch (error) {
-        if (hardDeadlineMs && (error?.code === 'PIPELINE_EVENT_WAIT_TIMEOUT' || error?.code === 'BUDGET_EXHAUSTED' || error?.name === 'BudgetExhaustedError')) {
+        if (hardDeadlineMs && (selectTruthyValue(() => (selectTruthyValue(() => (error?.code === 'PIPELINE_EVENT_WAIT_TIMEOUT'), () => (error?.code === 'BUDGET_EXHAUSTED'))), () => (error?.name === 'BudgetExhaustedError')))) {
           return enforceHardTimeout(prev);
         }
         throw error;
@@ -188,7 +227,7 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
         return {
           terminal: false,
           reason: 'monitor_adapter_failed',
-          detail: event.payload?.error || 'ACP monitor adapter failed',
+          detail: selectTruthyValue(() => (event.payload?.error), () => ('missing_acp_monitor_adapter_error')),
           state: prev,
         };
       }
@@ -199,7 +238,7 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
       pollCount++;
 
       const elapsedSeconds   = Math.round((now() - spawnedAt) / 1000);
-      const transcriptEvents = state.transcript?.eventCount ?? 0;
+      const transcriptEvents = numberValue(state.transcript?.eventCount);
 
       logger.info('MONITOR', `State event #${pollCount}`, {
         sessionState: state.sessionState,
@@ -226,7 +265,7 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
           component: 'acp_monitor',
           surface: 'gateway',
           reason: 'gateway_unreachable',
-          detail: state.gatewayDetail || state.detail || 'session status unreachable',
+          detail: selectDefinedValue(() => (selectDefinedValue(() => (nonEmptyString(state.gatewayDetail)), () => (nonEmptyString(state.detail)))), () => (SESSION_STATUS_UNREACHABLE_DETAIL)),
           module_id: moduleId,
           session_key: childSessionKey,
           agent_type: 'buster',
@@ -250,7 +289,7 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
       }
 
       if (event.type === 'acp.transcript.delta') {
-        const newLines = state.transcript?.newLines || [];
+        const newLines = arrayValue(state.transcript?.newLines);
         if (newLines.length > 0) {
           logger.info('MONITOR', 'Transcript delta observed through diagnostic ACP monitor', {
             lines: newLines.length,
@@ -258,7 +297,7 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
         }
       }
 
-      if (state.rateLimited) {
+      if (sessionStateHasRateLimitEvidence(state)) {
         if (!shouldRetryAfterRateLimit(rlState)) {
           logger.warn('RATE-LIMIT', `Max pauses (${rlState.maxPauses}) exhausted for session ${childSessionKey}`);
           return {
@@ -278,14 +317,14 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
           gatewayToken,
           telemetryCtx: tctx,
           moduleId,
-          gateId: payload?.gate_id || null,
-          gateType: payload?.gate_type || null,
+          gateId: selectTruthyValue(() => (payload?.gate_id), () => (null)),
+          gateType: selectTruthyValue(() => (payload?.gate_type), () => (null)),
           phase: 'buster',
-          project: payload?.project || null,
-          attempt: payload?.attempt ?? null,
-          dispatchId: payload?.dispatch_id || null,
-          gatewayLabel: payload?.session?.label || payload?.dispatch_id || null,
-          detail: state.detail || null,
+          project: selectTruthyValue(() => (payload?.project), () => (null)),
+          attempt: selectDefinedValue(() => (payload?.attempt), () => (null)),
+          dispatchId: selectTruthyValue(() => (payload?.dispatch_id), () => (null)),
+          gatewayLabel: selectTruthyValue(() => (selectTruthyValue(() => (payload?.session?.label), () => (payload?.dispatch_id))), () => (null)),
+          detail: selectTruthyValue(() => (state.detail), () => (null)),
           provider: 'anthropic',
           acpMonitorConfig: cfg,
           ownsCanonicalSignal: true,
@@ -297,7 +336,7 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
             component: 'acp_monitor',
             surface: 'gateway',
             reason: 'gateway_unreachable',
-            detail: recovery.gatewayDetail || 'session status unreachable during rate-limit recovery',
+            detail: selectDefinedValue(() => (nonEmptyString(recovery.gatewayDetail)), () => (RATE_LIMIT_RECOVERY_SESSION_STATUS_UNREACHABLE_DETAIL)),
             module_id: moduleId,
             session_key: childSessionKey,
             agent_type: 'buster',
@@ -311,8 +350,8 @@ export async function monitorSession(childSessionKey: string, streamLogPath: str
           });
           prev = {
             ...state,
-            gatewayUnreachable: recovery.gatewayUnreachable === true || state.gatewayUnreachable === true,
-            gatewayDetail: recovery.gatewayDetail || state.gatewayDetail || null,
+            gatewayUnreachable: recoveredGatewayUnreachable(recovery, state),
+            gatewayDetail: selectTruthyValue(() => (selectTruthyValue(() => (recovery.gatewayDetail), () => (state.gatewayDetail))), () => (null)),
             rateLimited: false,
             transcript:  state.transcript
               ? { ...state.transcript, rateLimited: false }

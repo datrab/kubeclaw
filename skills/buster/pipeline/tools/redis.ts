@@ -9,11 +9,12 @@ import { parseCliFlagValues } from '../cli-args.ts';
 import { createRedisClient, loadRedisCtor } from '../telemetry.ts';
 import { resolveDiscordWebhookUrl } from '../services/runtime.ts';
 import { loadBusterGatewayHealthPolicy } from '../services/runtime-policy.ts';
-import { formatSummaryForDiscord, summarizePayloadForDiscord } from '../redaction.ts';
+import { formatSummaryForDiscord, summarizePayloadForDiscord } from '../egress.ts';
 import { assertRedisTaskEntry, buildRedisTaskStreamEntry } from '../services/redis-message-contract.ts';
 import { createRedisEventBus, createRedisTaskQueue } from '../services/task-transport-contract.ts';
 import { sendDiscord } from '../services/discord.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // DELETE_LEGACY: direct completion emission and implicit sender/consumer
 // identities are removed. Producer and consumer identity must be explicit typed
 // metadata via AGENT_NAME and REDIS_CONSUMER_NAME/AGENT_CONSUMER_NAME.
@@ -41,11 +42,15 @@ function redisReadyTimeoutMs(): number {
 }
 
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error || 'unknown error');
+  return error instanceof Error ? error.message : String(selectTruthyValue(() => (error), () => ('missing_error_detail')));
+}
+
+function stringValue(value: unknown): string {
+  return selectTruthyValue(() => (value === undefined), () => (value === null)) ? '' : String(value);
 }
 
 function getRequiredEnv(name: string, value: unknown): string {
-  const normalized = String(value || '').trim();
+  const normalized = stringValue(value).trim();
   if (!normalized) throw new Error(`${name} is required explicit Redis task identity metadata`);
   return normalized;
 }
@@ -84,7 +89,7 @@ export function waitForRedisReady(redis: RedisClient, timeoutMs = redisReadyTime
       fn(value);
     };
     const onReady = (): void => settle(resolve);
-    const onError = (err: unknown): void => settle(reject, err instanceof Error ? err : new Error(String(err || 'Redis connection failed')));
+    const onError = (err: unknown): void => settle(reject, err instanceof Error ? err : new Error(selectTruthyValue(() => (stringValue(err)), () => ('Redis connection failed'))));
     const onEnd = (): void => settle(reject, new Error('Redis connection ended before ready'));
     const onClose = (): void => settle(reject, new Error('Redis connection closed before ready'));
 
@@ -100,35 +105,46 @@ export function waitForRedisReady(redis: RedisClient, timeoutMs = redisReadyTime
 
 const WEBHOOK_URL = resolveDiscordWebhookUrl();
 
+function shouldNotifyRedisTaskPayload(target: string, taskPayload: AnyRecord): boolean {
+  if (target !== 'buster') return true;
+  return !['module_test', 'gate_test'].includes(String(taskPayload.task_type || ''));
+}
+
 async function logToDiscord(sender: string, target: string, type: string, iter: number | string, payload: unknown): Promise<void> {
   if (!WEBHOOK_URL) return;
   try {
     const taskPayload = payload && typeof payload === 'object' ? payload as AnyRecord : {};
+    if (!shouldNotifyRedisTaskPayload(target, taskPayload)) return;
     const header = `**${sender}** → **${target}**\nType: \`${type}\` | Iter: \`${iter}\``;
     const payloadSummary = summarizePayloadForDiscord(payload, 'task_payload');
     await sendDiscord({
       embeds: [{
         title: `⚡ Task: ${sender} → ${target}`,
         color: 5763719,
-        description: `${header}\n\nPayload redacted by default.`,
+        description: `${header}\n\nPayload shown with bounded formatting.`,
         fields: [{ name: 'Payload', value: formatSummaryForDiscord(payloadSummary), inline: false }],
       }],
     }, {
-      project: taskPayload.project || null,
-      run_id: taskPayload.run_id || null,
-      module_id: taskPayload.gate_id ? null : (taskPayload.module_id || taskPayload.module || null),
-      gate_id: taskPayload.gate_id || null,
-      gate_type: taskPayload.gate_type || taskPayload.gateType || null,
-      attempt: taskPayload.attempt ?? iter,
-      dispatch_id: taskPayload.dispatch_id || null,
-      session_key: taskPayload.session_key || taskPayload.session?.label || null,
-      pipeline_log_path: taskPayload.pipeline_log_path || null,
-      pipeline_run_log_path: taskPayload.pipeline_run_log_path || null,
+      project: selectTruthyValue(() => (taskPayload.project), () => (null)),
+      run_id: selectTruthyValue(() => (taskPayload.run_id), () => (null)),
+      module_id: taskPayload.gate_id ? null : (selectTruthyValue(() => (selectTruthyValue(() => (taskPayload.module_id), () => (taskPayload.module))), () => (null))),
+      gate_id: selectTruthyValue(() => (taskPayload.gate_id), () => (null)),
+      gate_type: selectTruthyValue(() => (taskPayload.gate_type), () => (null)),
+      attempt: taskAttemptAuthority(taskPayload, iter),
+      dispatch_id: selectTruthyValue(() => (taskPayload.dispatch_id), () => (null)),
+      session_key: selectTruthyValue(() => (selectTruthyValue(() => (taskPayload.session_key), () => (taskPayload.session?.label))), () => (null)),
+      pipeline_log_path: selectTruthyValue(() => (taskPayload.pipeline_log_path), () => (null)),
+      pipeline_run_log_path: selectTruthyValue(() => (taskPayload.pipeline_run_log_path), () => (null)),
       webhook_url: WEBHOOK_URL,
     });
   } catch (_error) {
     // Discord is noncritical operator notification policy.
   }
+}
+
+function taskAttemptAuthority(taskPayload: Record<string, any>, iter: number): number {
+  if (taskPayload.attempt !== undefined && taskPayload.attempt !== null) return taskPayload.attempt;
+  return iter;
 }
 
 const TARGET_STREAMS: Record<string, string> = {
@@ -144,12 +160,14 @@ const lib = {
   get client(): RedisClient { return getRedis(); },
 
   async publishTask(targetAgent: string, type: string, payload: unknown, iteration: number | string = 1, options: PublishOptions = {}): Promise<Record<string, unknown>> {
-    const targetKey = String(targetAgent || '').toLowerCase();
+    const targetKey = stringValue(targetAgent).toLowerCase();
     const streamKey = TARGET_STREAMS[targetKey];
     if (!streamKey) throw new Error(`Unknown target: ${targetAgent}`);
 
-    const sender = getRequiredEnv('AGENT_NAME', options.sender || process.env.AGENT_NAME);
-    const source = getRequiredEnv('task source', options.source || sender);
+    const senderInput = options.sender !== undefined ? options.sender : process.env.AGENT_NAME;
+    const sender = getRequiredEnv('AGENT_NAME', senderInput);
+    const sourceInput = options.source !== undefined ? options.source : sender;
+    const source = getRequiredEnv('task source', sourceInput);
     const redis = getRedis();
 
     try {
@@ -174,7 +192,7 @@ const lib = {
     const myName = getRequiredEnv('AGENT_NAME', process.env.AGENT_NAME);
     const consumerIdentity = getRequiredEnv(
       'REDIS_CONSUMER_NAME',
-      options.consumerName || process.env.REDIS_CONSUMER_NAME || process.env.AGENT_CONSUMER_NAME,
+      options.consumerName !== undefined ? options.consumerName : process.env.REDIS_CONSUMER_NAME,
     );
 
     const streamKey = `swarm:${myName}:tasks`;
@@ -224,9 +242,12 @@ if (currentPath === entryPath) {
       if (action === 'send') {
         const target = flags.target;
         const type = flags.type;
-        const iter = flags.iteration || '1';
-        const payload = JSON.parse(flags.payload || '{}');
-        if (!target || !type) throw new Error('Missing --target or --type');
+        const iter = flags.iteration;
+        if (!iter) throw new Error('Missing --iteration');
+        const payloadText = flags.payload;
+        if (!payloadText) throw new Error('Missing --payload');
+        const payload = JSON.parse(payloadText);
+        if (selectTruthyValue(() => (!target), () => (!type))) throw new Error('Missing --target or --type');
 
         const res = await lib.publishTask(target, type, payload, iter);
         console.log(JSON.stringify(res));

@@ -31,10 +31,107 @@ import {
   collectExistingArtifactRefs,
 } from './stage-envelope-primitives.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 
+function optionalText(value: unknown): string | null {
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
+  const text = String(value);
+  return text.trim() ? text : null;
+}
+
+function firstText(...values: unknown[]): string | null {
+  for (const value of values) {
+    const text = optionalText(value);
+    if (text !== null) return text;
+  }
+  return null;
+}
+
+function selectPresentValue(...values: unknown[]): unknown {
+  for (const value of values) {
+    if (value !== undefined && value !== null && value !== '') return value;
+  }
+  return null;
+}
+
+function requiredText(value: unknown, label: string): string {
+  const text = optionalText(value);
+  if (!text) throw new Error(`${label}: required non-empty string`);
+  return text;
+}
+
+function arrayOrEmpty(value: unknown): any[] {
+  return Array.isArray(value) ? value : [];
+}
+
+function cloneArrayOrEmpty(value: unknown): any[] {
+  return cloneSerializable(arrayOrEmpty(value));
+}
+
+function cloneRecordOrEmpty(value: unknown): AnyRecord {
+  return value && typeof value === 'object' && !Array.isArray(value)
+    ? cloneSerializable(value)
+    : {};
+}
+
+function moduleRoot(config: AnyRecord, dir: string): string {
+  return path.join(requiredText(config?.paths?.modules_dir, 'config.paths.modules_dir'), requiredText(dir, 'module.dir'));
+}
+
+function repoRoot(config: AnyRecord): string {
+  return requiredText(config?.repo_root, 'config.repo_root');
+}
+
+function moduleStages(mod: AnyRecord): string[] {
+  return Array.isArray(mod?.stages) ? [...mod.stages] : [];
+}
+
+function failCount(status: AnyRecord): number {
+  if (selectTruthyValue(() => (status?.fail_count === undefined), () => (status?.fail_count === null))) return 0;
+  const value = Number(status.fail_count);
+  if (selectTruthyValue(() => (!Number.isInteger(value)), () => (value < 0))) throw new Error('status.fail_count: expected non-negative integer');
+  return value;
+}
+
+function requiredAttempt(value: unknown, status: AnyRecord): number {
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return currentAttemptNumber(status);
+  const attempt = Number(value);
+  if (selectTruthyValue(() => (!Number.isInteger(attempt)), () => (attempt < 1))) throw new Error('module_worker.attempt: expected positive integer');
+  return attempt;
+}
+
+function stageTypeFromStageId(stageId: unknown, prefix: string): string {
+  const text = requiredText(stageId, 'stageId');
+  const [actualPrefix, stageType] = text.split(':');
+  if (selectTruthyValue(() => (actualPrefix !== prefix), () => (!stageType))) throw new Error(`stageId: expected '${prefix}:<type>'`);
+  return stageType;
+}
+
+function initialBusterAttempt(value: unknown): number {
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return 1;
+  const attempt = Number(value);
+  if (selectTruthyValue(() => (!Number.isInteger(attempt)), () => (attempt < 1))) throw new Error('busterAttempt: expected positive integer');
+  return attempt;
+}
+
+function commitHashFromStatus(status: AnyRecord): string | null {
+  return firstText(
+    status?.commit_hash,
+    status?.forge_commit_hash,
+    status?.buster_commit_hash,
+    status?.forge_commit,
+    status?.buster_commit,
+  );
+}
+
+function cloneOrNull(value: unknown): unknown {
+  return value === undefined ? null : cloneSerializable(value);
+}
+
 export function _telemetryCtx(config: AnyRecord, deps: AnyRecord | null = null) {
-  return { ...(getActiveContext() || { config, runId: config?.run_id || config?._runId || '' }), deps };
+  const active = getActiveContext();
+  return { ...(selectDefinedValue(() => (active), () => ({ config, runId: requiredText(getRunId(config), 'run_id') }))), deps };
 }
 
 export function computeElapsedSeconds(fromIso: unknown, toIso = new Date().toISOString()) {
@@ -44,15 +141,37 @@ export function computeElapsedSeconds(fromIso: unknown, toIso = new Date().toISO
 }
 
 export function getAttemptStartedAt(status: AnyRecord) {
-  return status?.attempt_started_at || status?.started_at || null;
+  return selectTruthyValue(() => (selectTruthyValue(() => (status?.attempt_started_at), () => (status?.started_at))), () => (null));
 }
 
 export function getPhaseStartedAt(status: AnyRecord) {
-  return status?.phase_started_at || getAttemptStartedAt(status);
+  if (status?.phase_started_at !== undefined && status.phase_started_at !== null && status.phase_started_at !== '') return status.phase_started_at;
+  return getAttemptStartedAt(status);
+}
+
+function requiredDispatchId(status: AnyRecord, dispatchId: unknown, label: string): string {
+  if (dispatchId !== null && dispatchId !== undefined) return requiredText(dispatchId, label);
+  return requiredText(resolveStatusDispatchId(status), 'status.dispatch_id');
+}
+
+function requiredGatewayLabel(status: AnyRecord, gatewayLabel: unknown, label: string): string {
+  if (gatewayLabel !== null && gatewayLabel !== undefined) return requiredText(gatewayLabel, label);
+  return requiredText(resolveStatusGatewayLabel(status), 'status.gateway_label');
+}
+
+function requiredSessionKey(status: AnyRecord, sessionKey: unknown, label: string): string {
+  if (sessionKey !== null && sessionKey !== undefined) return requiredText(sessionKey, label);
+  return requiredText(resolveStatusSessionKey(status), 'status.session_key');
+}
+
+function invocationAttempt(status: AnyRecord, opts: AnyRecord = {}): number {
+  if (opts?.attempt !== undefined) return requiredAttempt(opts.attempt, status);
+  return currentAttemptNumber(status);
 }
 
 export function formatDurationCompact(seconds: unknown) {
-  const total = Math.max(0, Math.round(Number(seconds) || 0));
+  const numericSeconds = Number(seconds);
+  const total = Number.isFinite(numericSeconds) ? Math.max(0, Math.round(numericSeconds)) : 0;
   if (total < 60) return `${total}s`;
   const hours = Math.floor(total / 3600);
   const minutes = Math.floor((total % 3600) / 60);
@@ -66,20 +185,20 @@ export function buildTerminalBusterCrashFailEvent(status: AnyRecord, mod: AnyRec
   dispatchId = null,
   gatewayLabel = null,
 }: AnyRecord = {}) {
-  const resolvedDispatchId = dispatchId ?? resolveStatusDispatchId(status);
+  const resolvedDispatchId = requiredDispatchId(status, dispatchId, 'buster crash dispatchId');
   return {
-    title: mod?.title || status?.title || null,
-    old_status: oldStatus || status?.status || null,
+    title: firstText(mod?.title, status?.title),
+    old_status: selectPresentValue(oldStatus, status?.status),
     attempt: currentAttemptNumber(status),
     phase: 'buster',
-    model: model || status?.active_agent?.model || null,
+    model: firstText(model, status?.active_agent?.model),
     dispatch_id: resolvedDispatchId,
-    gateway_label: gatewayLabel ?? resolveStatusGatewayLabel(status),
-    session_key: sessionKey ?? resolveStatusSessionKey(status),
+    gateway_label: requiredGatewayLabel(status, gatewayLabel, 'buster crash gatewayLabel'),
+    session_key: requiredSessionKey(status, sessionKey, 'buster crash sessionKey'),
     duration_seconds: computeElapsedSeconds(getPhaseStartedAt(status)),
     cost_estimate_usd: null,
-    commit_hash: status?.commit_hash || status?.forge_commit_hash || status?.buster_commit_hash || status?.forge_commit || status?.buster_commit || null,
-    reason: reason || null,
+    commit_hash: commitHashFromStatus(status),
+    reason: selectPresentValue(reason),
   };
 }
 
@@ -88,20 +207,20 @@ export function buildTerminalModuleFailEvent(status: AnyRecord, mod: AnyRecord, 
   dispatchId = null,
   gatewayLabel = null,
 }: AnyRecord = {}) {
-  const resolvedDispatchId = dispatchId ?? resolveStatusDispatchId(status);
+  const resolvedDispatchId = requiredDispatchId(status, dispatchId, 'module fail dispatchId');
   return {
-    title: mod?.title || status?.title || null,
-    old_status: oldStatus ?? status?.status ?? null,
+    title: firstText(mod?.title, status?.title),
+    old_status: selectDefinedValue(() => (selectDefinedValue(() => (oldStatus), () => (status?.status))), () => (null)),
     attempt: currentAttemptNumber(status),
-    phase: phase || status?.current_phase || null,
-    model: model || status?.active_agent?.model || null,
+    phase: firstText(phase, status?.current_phase),
+    model: firstText(model, status?.active_agent?.model),
     dispatch_id: resolvedDispatchId,
-    gateway_label: gatewayLabel ?? resolveStatusGatewayLabel(status),
-    session_key: sessionKey ?? resolveStatusSessionKey(status),
-    duration_seconds: computeElapsedSeconds(getPhaseStartedAt(status) || getAttemptStartedAt(status)),
+    gateway_label: requiredGatewayLabel(status, gatewayLabel, 'module fail gatewayLabel'),
+    session_key: requiredSessionKey(status, sessionKey, 'module fail sessionKey'),
+    duration_seconds: computeElapsedSeconds(selectDefinedValue(() => (getPhaseStartedAt(status)), () => (getAttemptStartedAt(status)))),
     cost_estimate_usd: null,
-    commit_hash: status?.commit_hash || status?.forge_commit_hash || status?.buster_commit_hash || status?.forge_commit || status?.buster_commit || null,
-    reason: reason || null,
+    commit_hash: commitHashFromStatus(status),
+    reason: selectPresentValue(reason),
   };
 }
 
@@ -113,19 +232,19 @@ export async function emitTerminalBusterCrashTelemetry(config: AnyRecord, module
   const ctx = _telemetryCtx(config, explicitDeps);
   await onModuleFail(ctx, moduleId, failEvent);
   await onRetryExhausted(ctx, moduleId, {
-    attempt: failEvent?.attempt ?? null,
-    phase: failEvent?.phase || null,
-    dispatch_id: failEvent?.dispatch_id ?? null,
-    gateway_label: failEvent?.gateway_label ?? null,
+    attempt: selectDefinedValue(() => (failEvent?.attempt), () => (null)),
+    phase: firstText(failEvent?.phase),
+    dispatch_id: selectDefinedValue(() => (failEvent?.dispatch_id), () => (null)),
+    gateway_label: selectDefinedValue(() => (failEvent?.gateway_label), () => (null)),
     session_key: resolveResultSessionKey(failEvent),
-    max_attempts: retryBudget ?? null,
-    max_fails: retryBudget ?? null,
-    reason: failEvent?.reason || blockedReason || null,
+    max_attempts: selectDefinedValue(() => (retryBudget), () => (null)),
+    max_fails: selectDefinedValue(() => (retryBudget), () => (null)),
+    reason: selectPresentValue(failEvent?.reason, blockedReason),
   });
   await onModuleBlocked(ctx, moduleId, {
     ...failEvent,
     old_status: STATUS.FAIL,
-    reason: blockedReason || failEvent?.reason || null,
+    reason: selectPresentValue(blockedReason, failEvent?.reason),
   });
 }
 
@@ -138,12 +257,12 @@ export function setLogScope(moduleId: unknown, phase: unknown) {
 }
 
 export function currentAttemptNumber(status: AnyRecord) {
-  return (status?.fail_count || 0) + 1;
+  return failCount(status) + 1;
 }
 
 export function ensureValidationState(status: AnyRecord) {
   const attempt = currentAttemptNumber(status);
-  if (!status.validation || status.validation.attempt !== attempt) {
+  if (selectTruthyValue(() => (!status.validation), () => (status.validation.attempt !== attempt))) {
     status.validation = {
       attempt,
       delivery_lint_passed: false,
@@ -171,8 +290,11 @@ export function ensureModulePluginLogDirs(config: AnyRecord) {
 
 export function buildWorkerPluginEffects(config: AnyRecord, progress: AnyRecord, stageId: string, workerInput: AnyRecord, deps: AnyRecord) {
   const executeWorker = stageId === 'worker:module_buster'
-    ? (deps.runModuleBusterWorker || runModuleBusterWorker)
-    : (deps.runModuleForgeWorker || runModuleForgeWorker);
+    ? deps.runModuleBusterWorker
+    : deps.runModuleForgeWorker;
+  if (typeof executeWorker !== 'function') {
+    throw new Error(`Module worker dispatch requires ${stageId === 'worker:module_buster' ? 'deps.runModuleBusterWorker' : 'deps.runModuleForgeWorker'}`);
+  }
 
   return {
     workerRuntime: {
@@ -182,7 +304,7 @@ export function buildWorkerPluginEffects(config: AnyRecord, progress: AnyRecord,
 }
 
 function buildModuleArtifactRefs(config: AnyRecord, dir: string, mod: AnyRecord) {
-  const moduleRoot = path.join(config?.paths?.modules_dir || '', dir || '');
+  const root = moduleRoot(config, dir);
   const refs = [];
   if (Array.isArray(mod?.substeps) && mod.substeps.length > 0) {
     for (const substep of mod.substeps) {
@@ -190,7 +312,7 @@ function buildModuleArtifactRefs(config: AnyRecord, dir: string, mod: AnyRecord)
         type: 'forge_instructions',
         role: 'input',
         format: 'md',
-        path: path.join(moduleRoot, substep, 'FORGE.md'),
+        path: path.join(root, substep, 'FORGE.md'),
       });
     }
   } else {
@@ -198,7 +320,7 @@ function buildModuleArtifactRefs(config: AnyRecord, dir: string, mod: AnyRecord)
       type: 'forge_instructions',
       role: 'input',
       format: 'md',
-      path: path.join(moduleRoot, 'FORGE.md'),
+      path: path.join(root, 'FORGE.md'),
     });
   }
 
@@ -227,10 +349,10 @@ function buildModuleWorkerRunInputBase(config: AnyRecord, moduleId: string, mod:
     ids: { runId, moduleId, attempt, stageId, ...ids },
     worker,
     workspace: {
-      repoRoot: config?.repo_root || null,
-      moduleDir: path.join(config?.paths?.modules_dir || '', dir || ''),
+      repoRoot: repoRoot(config),
+      moduleDir: moduleRoot(config, dir),
     },
-    artifacts: artifacts || buildModuleArtifactRefs(config, dir, mod),
+    artifacts: selectDefinedValue(() => (artifacts), () => (buildModuleArtifactRefs(config, dir, mod))),
     stateSnapshot,
     executionContext,
     ...(deadline ? { deadline } : {}),
@@ -240,7 +362,7 @@ function buildModuleWorkerRunInputBase(config: AnyRecord, moduleId: string, mod:
 function buildModuleWorkerDeadline(status: AnyRecord, timeoutMinutes: unknown) {
   return {
     timeoutMs: Number.isFinite(Number(timeoutMinutes)) ? Number(timeoutMinutes) * 60 * 1000 : null,
-    startedAt: status?.phase_started_at || status?.attempt_started_at || status?.started_at || null,
+    startedAt: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (status?.phase_started_at), () => (status?.attempt_started_at))), () => (status?.started_at))), () => (null)),
     deadlineAt: null,
   };
 }
@@ -248,26 +370,26 @@ function buildModuleWorkerDeadline(status: AnyRecord, timeoutMinutes: unknown) {
 function buildModuleForgeStateSnapshot(config: AnyRecord, moduleId: string, mod: AnyRecord, dir: string, status: AnyRecord) {
   return {
     pipeline: {
-      project: config?.project || null,
+      project: selectTruthyValue(() => (config?.project), () => (null)),
       run_id: getRunId(config),
     },
     module: {
       module_id: moduleId,
-      title: mod?.title || null,
+      title: selectTruthyValue(() => (mod?.title), () => (null)),
       dir,
-      stages: Array.isArray(mod?.stages) ? [...mod.stages] : ['forge', 'buster'],
-      status: status?.status || null,
-      current_phase: status?.current_phase || null,
-      fail_count: status?.fail_count || 0,
-      validation: cloneSerializable(status?.validation || null),
-      active_agent: cloneSerializable(status?.active_agent || null),
-      fail_summaries: cloneSerializable(status?.fail_summaries || []),
+      stages: moduleStages(mod),
+      status: selectTruthyValue(() => (status?.status), () => (null)),
+      current_phase: selectTruthyValue(() => (status?.current_phase), () => (null)),
+      fail_count: failCount(status),
+      validation: cloneSerializable(selectTruthyValue(() => (status?.validation), () => (null))),
+      active_agent: cloneSerializable(selectTruthyValue(() => (status?.active_agent), () => (null))),
+      fail_summaries: cloneArrayOrEmpty(status?.fail_summaries),
     },
   };
 }
 
 export function buildModuleForgeRunInput(config: AnyRecord, moduleId: string, mod: AnyRecord, dir: string, status: AnyRecord, opts: AnyRecord = {}) {
-  const attempt = Number(opts?.attempt || currentAttemptNumber(status));
+  const attempt = requiredAttempt(opts?.attempt, status);
   const stageId = 'worker:module_forge';
   return buildModuleWorkerRunInputBase(config, moduleId, mod, dir, status, {
     attempt,
@@ -275,13 +397,13 @@ export function buildModuleForgeRunInput(config: AnyRecord, moduleId: string, mo
     worker: {
       workerType: 'module_forge',
       config: {
-        maxFails: opts?.maxFails ?? null,
+        maxFails: selectDefinedValue(() => (opts?.maxFails), () => (null)),
       },
       backendConfig: {
         agentType: 'forge',
-        model: opts?.model || null,
-        thinking: opts?.thinking || null,
-        thinkingSource: opts?.thinkingSource || null,
+        model: optionalText(opts?.model),
+        thinking: optionalText(opts?.thinking),
+        thinkingSource: optionalText(opts?.thinkingSource),
         runtimeKind: 'session',
       },
     },
@@ -289,8 +411,8 @@ export function buildModuleForgeRunInput(config: AnyRecord, moduleId: string, mo
     executionContext: {
       phase: 'forge',
       moduleDir: dir,
-      timeoutMinutes: opts?.timeoutMinutes ?? null,
-      headBefore: opts?.headBefore ?? null,
+      timeoutMinutes: selectDefinedValue(() => (opts?.timeoutMinutes), () => (null)),
+      headBefore: selectDefinedValue(() => (opts?.headBefore), () => (null)),
       novaPromptProvided: opts?.novaPromptProvided === true,
       recalledMemoryIds: Array.isArray(opts?.recalledMemoryIds) ? [...opts.recalledMemoryIds] : [],
     },
@@ -299,8 +421,8 @@ export function buildModuleForgeRunInput(config: AnyRecord, moduleId: string, mo
 }
 
 export function buildModuleValidatorRunInput(config: AnyRecord, moduleId: string, mod: AnyRecord, dir: string, status: AnyRecord, stageId: string, opts: AnyRecord = {}) {
-  const attempt = Number(opts?.attempt || currentAttemptNumber(status));
-  const validatorName = String(stageId || '').split(':')[1] || 'unknown';
+  const attempt = requiredAttempt(opts?.attempt, status);
+  const validatorName = stageTypeFromStageId(stageId, 'validator');
   const runId = getRunId(config);
   const validator = {
     validatorType: validatorName,
@@ -311,11 +433,11 @@ export function buildModuleValidatorRunInput(config: AnyRecord, moduleId: string
     },
   };
   const module = {
-    moduleId,
-    dir,
-    title: mod?.title || null,
-    config: cloneSerializable(mod || {}),
-    status: cloneSerializable(status || {}),
+      moduleId,
+      dir,
+      title: selectTruthyValue(() => (mod?.title), () => (null)),
+      config: cloneRecordOrEmpty(mod),
+      status: cloneRecordOrEmpty(status),
   };
   const runInput = buildModuleWorkerRunInputBase(config, moduleId, mod, dir, status, {
     attempt,
@@ -331,23 +453,23 @@ export function buildModuleValidatorRunInput(config: AnyRecord, moduleId: string
     },
     stateSnapshot: {
       pipeline: {
-        project: config?.project || null,
+        project: selectTruthyValue(() => (config?.project), () => (null)),
         run_id: getRunId(config),
       },
       module: {
         module_id: moduleId,
-        title: mod?.title || null,
+        title: selectTruthyValue(() => (mod?.title), () => (null)),
         dir,
-        status: status?.status || null,
-        current_phase: status?.current_phase || null,
-        fail_count: status?.fail_count || 0,
-        validation: cloneSerializable(status?.validation || null),
-        active_agent: cloneSerializable(status?.active_agent || null),
-        statusRaw: cloneSerializable(status || {}),
+        status: selectTruthyValue(() => (status?.status), () => (null)),
+        current_phase: selectTruthyValue(() => (status?.current_phase), () => (null)),
+        fail_count: failCount(status),
+        validation: cloneSerializable(selectTruthyValue(() => (status?.validation), () => (null))),
+        active_agent: cloneSerializable(selectTruthyValue(() => (status?.active_agent), () => (null))),
+        statusRaw: cloneRecordOrEmpty(status),
       },
     },
     executionContext: {
-      phase: opts?.phase || 'validation',
+      phase: requiredText(opts?.phase, 'validator.phase'),
       moduleDir: dir,
       attempt,
     },
@@ -358,8 +480,8 @@ export function buildModuleValidatorRunInput(config: AnyRecord, moduleId: string
 export function buildModuleWorkerPluginInvocation(moduleId: string, status: AnyRecord, stageId: string, opts: AnyRecord = {}) {
   return buildStagePluginInvocation(stageId, {
     moduleId,
-    attempt: opts?.attempt ?? currentAttemptNumber(status),
-    dispatchId: opts?.dispatchId ?? resolveStatusDispatchId(status),
+    attempt: invocationAttempt(status, opts),
+    dispatchId: opts?.dispatchId !== undefined ? requiredText(opts.dispatchId, 'module worker dispatchId') : optionalText(resolveStatusDispatchId(status)),
     sessionKey: resolveStatusSessionKey(status),
     gatewayLabel: resolveStatusGatewayLabel(status),
   });
@@ -368,8 +490,8 @@ export function buildModuleWorkerPluginInvocation(moduleId: string, status: AnyR
 export function buildModuleValidatorPluginInvocation(moduleId: string, status: AnyRecord, stageId: string, opts: AnyRecord = {}) {
   return buildStagePluginInvocation(stageId, {
     moduleId,
-    attempt: opts?.attempt ?? currentAttemptNumber(status),
-    causationRef: opts?.causationRef || null,
+    attempt: invocationAttempt(status, opts),
+    causationRef: optionalText(opts?.causationRef),
   });
 }
 
@@ -377,28 +499,28 @@ export function normalizeModuleForgeWorkerResult(config: AnyRecord, workerInput:
   return normalizeTypedWorkerControlResult(rawResult, {
     producerType: 'module_forge',
     label: 'Module Forge',
-    stageId: opts?.stageId || 'worker:module_forge',
-    moduleId: opts?.moduleId || 'builtin.worker.module_forge',
+    stageId: requiredText(opts?.stageId, 'module_forge.stageId'),
+    moduleId: requiredText(opts?.moduleId, 'module_forge.moduleId'),
     input: workerInput,
-    invocation: opts?.pluginInvocation || null,
+    invocation: selectTruthyValue(() => (opts?.pluginInvocation), () => (null)),
     coerce: (result: unknown) => coerceModuleForgeWorkerControlResult(config, workerInput, result, opts),
   });
 }
 
 function buildModuleBusterArtifactRefs(config: AnyRecord, dir: string, mod: AnyRecord) {
-  const moduleRoot = path.join(config?.paths?.modules_dir || '', dir || '');
+  const root = moduleRoot(config, dir);
   const refs = [
     {
       type: 'buster_instructions',
       role: 'input',
       format: 'md',
-      path: path.join(moduleRoot, 'BUSTER.md'),
+      path: path.join(root, 'BUSTER.md'),
     },
     {
       type: 'test_spec',
       role: 'input',
       format: 'json',
-      path: path.join(moduleRoot, 'test-spec.json'),
+      path: path.join(root, 'test-spec.json'),
     },
   ];
 
@@ -408,7 +530,7 @@ function buildModuleBusterArtifactRefs(config: AnyRecord, dir: string, mod: AnyR
         type: 'test_suite',
         role: 'input',
         format: 'ts',
-        path: path.join(config?.repo_root || '', 'skills', 'buster', 'pipeline', 'suites', `${suiteName}.ts`),
+        path: path.join(repoRoot(config), 'skills', 'buster', 'pipeline', 'suites', `${suiteName}.ts`),
       });
     }
   }
@@ -419,37 +541,37 @@ function buildModuleBusterArtifactRefs(config: AnyRecord, dir: string, mod: AnyR
 function buildModuleBusterStateSnapshot(config: AnyRecord, moduleId: string, mod: AnyRecord, dir: string, status: AnyRecord, opts: AnyRecord = {}) {
   return {
     pipeline: {
-      project: config?.project || null,
+      project: selectTruthyValue(() => (config?.project), () => (null)),
       run_id: getRunId(config),
     },
     module: {
       module_id: moduleId,
-      title: mod?.title || null,
+      title: selectTruthyValue(() => (mod?.title), () => (null)),
       dir,
-      stages: Array.isArray(mod?.stages) ? [...mod.stages] : ['forge', 'buster'],
-      status: status?.status || null,
-      current_phase: status?.current_phase || null,
-      fail_count: status?.fail_count || 0,
-      validation: cloneSerializable(status?.validation || null),
-      active_agent: cloneSerializable(status?.active_agent || null),
-      fail_summaries: cloneSerializable(status?.fail_summaries || []),
-      completion_summary: status?.completion_summary || null,
-      test_suites: cloneSerializable(mod?.test_suites || []),
-      test_config: cloneSerializable(mod?.test_config || null),
+      stages: moduleStages(mod),
+      status: selectTruthyValue(() => (status?.status), () => (null)),
+      current_phase: selectTruthyValue(() => (status?.current_phase), () => (null)),
+      fail_count: failCount(status),
+      validation: cloneSerializable(selectTruthyValue(() => (status?.validation), () => (null))),
+      active_agent: cloneSerializable(selectTruthyValue(() => (status?.active_agent), () => (null))),
+      fail_summaries: cloneArrayOrEmpty(status?.fail_summaries),
+      completion_summary: selectDefinedValue(() => (status?.completion_summary), () => (null)),
+      test_suites: cloneArrayOrEmpty(mod?.test_suites),
+      test_config: cloneOrNull(mod?.test_config),
     },
     dispatch: {
-      run_id: opts?.runId || null,
-      attempt: opts?.attempt ?? currentAttemptNumber(status),
-      dispatch_id: opts?.dispatchId || null,
-      gateway_label: opts?.gatewayLabel || null,
+      run_id: optionalText(opts?.runId),
+      attempt: invocationAttempt(status, opts),
+      dispatch_id: optionalText(opts?.dispatchId),
+      gateway_label: optionalText(opts?.gatewayLabel),
     },
   };
 }
 
 export function buildModuleBusterRunInput(config: AnyRecord, moduleId: string, mod: AnyRecord, dir: string, status: AnyRecord, opts: AnyRecord = {}) {
-  const attempt = Number(opts?.attempt || currentAttemptNumber(status));
+  const attempt = requiredAttempt(opts?.attempt, status);
   const stageId = 'worker:module_buster';
-  const dispatchId = opts?.dispatchId || null;
+  const dispatchId = optionalText(opts?.dispatchId);
   const runId = getRunId(config);
   return buildModuleWorkerRunInputBase(config, moduleId, mod, dir, status, {
     attempt,
@@ -461,19 +583,19 @@ export function buildModuleBusterRunInput(config: AnyRecord, moduleId: string, m
     worker: {
       workerType: 'module_buster',
       config: {
-        maxFails: opts?.maxFails ?? null,
-        maxCrashRetries: opts?.maxCrashRetries ?? null,
-        testSuites: cloneSerializable(mod?.test_suites || []),
-        testConfig: cloneSerializable(mod?.test_config || null),
+        maxFails: selectDefinedValue(() => (opts?.maxFails), () => (null)),
+        maxCrashRetries: selectDefinedValue(() => (opts?.maxCrashRetries), () => (null)),
+        testSuites: cloneArrayOrEmpty(mod?.test_suites),
+        testConfig: cloneOrNull(mod?.test_config),
       },
       backendConfig: {
         agentType: 'buster',
-        model: opts?.model || null,
-        modelSource: opts?.modelSource || null,
-        thinking: opts?.thinking || null,
-        thinkingSource: opts?.thinkingSource || null,
-        thinkingSupported: opts?.thinkingSupported ?? null,
-        reasoningLevel: opts?.thinkingSupported === false ? 'not supported' : (opts?.thinking || 'default'),
+        model: optionalText(opts?.model),
+        modelSource: optionalText(opts?.modelSource),
+        thinking: optionalText(opts?.thinking),
+        thinkingSource: optionalText(opts?.thinkingSource),
+        thinkingSupported: selectDefinedValue(() => (opts?.thinkingSupported), () => (null)),
+        reasoningLevel: opts?.thinkingSupported === false ? 'not supported' : (selectDefinedValue(() => (optionalText(opts?.thinking)), () => ('thinking_not_configured'))),
         runtimeKind: 'session',
       },
     },
@@ -482,16 +604,16 @@ export function buildModuleBusterRunInput(config: AnyRecord, moduleId: string, m
     executionContext: {
       phase: 'buster',
       moduleDir: dir,
-      timeoutMinutes: opts?.timeoutMinutes ?? null,
-      busterAttempt: opts?.busterAttempt ?? 1,
-      queuedSuites: cloneSerializable(mod?.test_suites || []),
+      timeoutMinutes: selectDefinedValue(() => (opts?.timeoutMinutes), () => (null)),
+      busterAttempt: initialBusterAttempt(opts?.busterAttempt),
+      queuedSuites: cloneArrayOrEmpty(mod?.test_suites),
       completionIdentity: {
-        runId: opts?.runId || null,
+        runId: optionalText(opts?.runId),
         attempt,
         dispatchId,
-        gatewayLabel: opts?.gatewayLabel || null,
+        gatewayLabel: optionalText(opts?.gatewayLabel),
       },
-      validation: cloneSerializable(status?.validation || null),
+      validation: cloneSerializable(selectTruthyValue(() => (status?.validation), () => (null))),
     },
     deadline: buildModuleWorkerDeadline(status, opts?.timeoutMinutes),
   });
@@ -501,10 +623,10 @@ export function normalizeModuleBusterWorkerResult(config: AnyRecord, workerInput
   return normalizeTypedWorkerControlResult(rawResult, {
     producerType: 'module_buster',
     label: 'Module Buster',
-    stageId: opts?.stageId || 'worker:module_buster',
-    moduleId: opts?.moduleId || 'builtin.worker.module_buster',
+    stageId: requiredText(opts?.stageId, 'module_buster.stageId'),
+    moduleId: requiredText(opts?.moduleId, 'module_buster.moduleId'),
     input: workerInput,
-    invocation: opts?.pluginInvocation || null,
+    invocation: selectTruthyValue(() => (opts?.pluginInvocation), () => (null)),
     coerce: (result: unknown) => coerceModuleBusterWorkerControlResult(config, workerInput, result, opts),
   });
 }

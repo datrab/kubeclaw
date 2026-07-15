@@ -858,6 +858,9 @@ assertIncludes(rendered, 'mode === \'startup-status\'', 'Rendered health script 
 assertIncludes(rendered, "redis.xadd(stream, 'MAXLEN'", 'Rendered health script must write a Redis stream smoke entry');
 assertIncludes(rendered, 'registry-local.kubeclaw.svc.cluster.local:5001', 'Rendered health env must include registry-local reachability checks');
 assertIncludes(rendered, 'registry-mirror.kubeclaw.svc.cluster.local:5000', 'Rendered health env must include registry-mirror reachability checks');
+assertIncludes(rendered, 'name: KUBECLAW_LOCAL_REGISTRY', 'Rendered agent env must expose the writable local registry as deployment infrastructure');
+assertIncludes(rendered, 'value: "registry-local.kubeclaw.svc.cluster.local:5001"', 'Rendered local registry env must use the deployment-owned registry endpoint');
+assert.equal(deploymentTemplate.includes('runtimeInfrastructure.localRegistry | default'), false, 'Deployment template must not duplicate local registry defaults after values.yaml owns the deployment authority');
 assertIncludes(rendered, 'KUBECLAW_HEALTH_CHECK_LITELLM', 'Rendered health env must expose optional LiteLLM readiness checks');
 assertIncludes(rendered, 'KUBECLAW_HEALTH_CHECK_QDRANT', 'Rendered health env must expose optional Qdrant readiness checks');
 assertIncludes(rendered, 'cp -Lf "/init-swarm-config/swarm.config.json" "/config/swarm.config.json"', 'Rendered init container must keep swarm.config.json source on the retained config PVC');
@@ -904,6 +907,7 @@ assertMatchCountAtLeast(renderedBusterDeployment, 'mountPath: /var/lib/container
 assertMatchCountAtLeast(renderedBusterDeployment, 'mountPath: /sandbox', 2, 'Buster gateway and pipeline containers must both mount the sandbox workspace');
 assertIncludes(renderedBuster, 'name: agent-buster-podman-registries', 'Buster render must include Podman registry configuration');
 assertIncludes(renderedBuster, 'registry-local.kubeclaw.svc.cluster.local:5001', 'Buster Podman registries must preserve registry-local for live verification images');
+assertIncludes(renderedBuster, 'name: KUBECLAW_LOCAL_REGISTRY', 'Buster runtime must receive local registry coordinates through deployment env');
 assertIncludes(registryLocalManifest, 'type: ClusterIP', 'registry-local must stay cluster-internal by default');
 assert.equal(registryLocalManifest.includes('nodePort: 30051'), false, 'registry-local must not expose its writable registry through NodePort');
 assertIncludes(litellmManifest, 'nodePort: 30050', 'LiteLLM must preserve its temporary operator NodePort');

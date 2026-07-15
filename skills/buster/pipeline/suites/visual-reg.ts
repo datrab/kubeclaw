@@ -18,6 +18,7 @@ import { deliverySkippedCapability, discordSingle, discordSummary } from './visu
 import type { VisualDiscordDeliveryResult } from './visual-reg-discord.ts';
 import { BUSTER_CAPABILITIES, resolveContextCapabilities } from '../services/capabilities.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // DELETE_LEGACY: visual-reg requires explicit reviewed baseline metadata in
 // paths.json plus per-route baseline PNGs. Legacy baseline path config,
 // HTML auto-generation, missing-baseline SKIP, and implicit single-path mode
@@ -115,8 +116,17 @@ function createLog(logSink: LogSink | null = null): LogFn {
   };
 }
 
+function objectRecord(value: unknown): AnyRecord | null {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : null;
+}
+
+function nonEmptyString(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() ? value : null;
+}
+
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error || 'unknown error');
+  if (error instanceof Error) return error.message;
+  return error == null ? 'missing_error_detail' : String(error);
 }
 
 async function compareImages(baselinePath: string, actualPath: string, diffPath: string, pmThreshold: number): Promise<ImageComparison> {
@@ -171,9 +181,9 @@ function resizeBuffer(png: AnyRecord, targetWidth: number, targetHeight: number)
 }
 
 function isDeliveryResult(value: unknown): value is VisualDiscordDeliveryResult {
-  if (!value || typeof value !== 'object') return false;
+  if (selectTruthyValue(() => (!value), () => (typeof value !== 'object'))) return false;
   const record = value as AnyRecord;
-  return (record.status === 'sent' || record.status === 'skipped_no_webhook' || record.status === 'skipped_capability' || record.status === 'failed_noncritical')
+  return (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (record.status === 'sent'), () => (record.status === 'skipped_no_webhook'))), () => (record.status === 'skipped_capability'))), () => (record.status === 'failed_noncritical')))
     && typeof record.sent === 'boolean';
 }
 
@@ -187,7 +197,7 @@ export function summarizeDiscordDelivery(results: VisualDiscordDeliveryResult[] 
 
   const sent = deliveries.filter((delivery) => delivery.status === 'sent' && delivery.sent).length;
   const failed = deliveries.filter((delivery) => delivery.status === 'failed_noncritical').length;
-  const skipped = deliveries.filter((delivery) => delivery.status === 'skipped_no_webhook' || delivery.status === 'skipped_capability').length;
+  const skipped = deliveries.filter((delivery) => selectTruthyValue(() => (delivery.status === 'skipped_no_webhook'), () => (delivery.status === 'skipped_capability'))).length;
   const skippedCapability = deliveries.filter((delivery) => delivery.status === 'skipped_capability').length;
 
   let discordStatus = 'not_attempted';
@@ -255,6 +265,16 @@ function requireRepoScopedPath(value: string | null, field: string): string {
   return value;
 }
 
+function requireVisualRegViewport(vrConf: AnyRecord): { width: number; height: number } {
+  const viewport = objectRecord(vrConf.viewport);
+  const width = Number(viewport?.width);
+  const height = Number(viewport?.height);
+  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (!Number.isInteger(width)), () => (width <= 0))), () => (!Number.isInteger(height)))), () => (height <= 0))) {
+    throw new Error('visual-reg.viewport requires positive integer width and height');
+  }
+  return { width, height };
+}
+
 export function resolveVisualRegProjectDir(serve: AnyRecord = {}): string {
   return serve.project_dir
     ? requireRepoScopedPath(resolveRepoScopedPath(serve.project_dir, { repoDir: DEFAULTS.repo_dir, field: 'serve.project_dir' }), 'serve.project_dir')
@@ -262,7 +282,7 @@ export function resolveVisualRegProjectDir(serve: AnyRecord = {}): string {
 }
 
 export function resolveVisualRegBaselineDir(context: VisualRegContext = {}): string {
-  const moduleSegment = safeModulePathSegment(context.moduleId || context.module || context.payload?.module_id || context.payload?.module);
+  const moduleSegment = safeModulePathSegment(context.moduleId);
   return requireRepoScopedPath(resolveRepoScopedPath(path.join('.swarm', 'modules', moduleSegment, 'baselines'), {
     repoDir: DEFAULTS.repo_dir,
     field: 'visual-reg.baseline_dir',
@@ -270,13 +290,13 @@ export function resolveVisualRegBaselineDir(context: VisualRegContext = {}): str
 }
 
 function resolveArtifactDir(context: VisualRegContext = {}): string {
-  const preferred = context.screenshotsDir || (context.testsLogDir ? path.join(context.testsLogDir, 'visual-reg') : null);
-  return preferred || path.join(context.resultsDir || '/sandbox/results', 'visual-reg');
+  const preferred = selectDefinedValue(() => (nonEmptyString(context.screenshotsDir)), () => ((context.testsLogDir ? path.join(context.testsLogDir, 'visual-reg') : null)));
+  return selectDefinedValue(() => (preferred), () => (path.join(selectDefinedValue(() => (nonEmptyString(context.resultsDir)), () => ('/sandbox/results')), 'visual-reg')));
 }
 
 function resolveChildArtifactPath(dir: string, fileName: string, field: string): string {
-  const raw = String(fileName || '');
-  if (!raw || raw.includes('/') || raw.includes('\\') || raw.includes('\0')) {
+  const raw = fileName == null ? '' : String(fileName);
+  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (!raw), () => (raw.includes('/')))), () => (raw.includes('\\')))), () => (raw.includes('\0')))) {
     throw new Error(`${field} must be a file name inside ${dir}`);
   }
   return requireRepoScopedPath(resolveRepoScopedPath(raw, {
@@ -307,14 +327,14 @@ function parsePathsJson(pathsJsonPath: string): VisualPathEntry[] {
     throw new Error(`Invalid visual-reg paths.json: ${errorMessage(error)}`);
   }
 
-  if (!Array.isArray(parsed) || parsed.length === 0) {
+  if (selectTruthyValue(() => (!Array.isArray(parsed)), () => (parsed.length === 0))) {
     throw new Error('visual-reg paths.json must be a non-empty array of route entries');
   }
 
   const names = new Set<string>();
   return parsed.map((entry, index) => {
     const record = entry as AnyRecord;
-    if (!record || typeof record !== 'object' || typeof record.name !== 'string' || typeof record.path !== 'string') {
+    if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (!record), () => (typeof record !== 'object'))), () => (typeof record.name !== 'string'))), () => (typeof record.path !== 'string'))) {
       throw new Error(`visual-reg paths.json entry ${index} must include string name and path`);
     }
     if (names.has(record.name)) {
@@ -368,10 +388,15 @@ async function runMultiPath(
   }
 
   log(`Taking ${targets.length} screenshots via batch...`);
-  const screenshots = await takeScreenshotBatch(targets, {
-    viewport: vrConf.viewport || { width: 1280, height: 720 },
-    fullPage: vrConf.fullPage ?? true,
-  });
+  const fullPage = vrConf.fullPage === undefined ? true : Boolean(vrConf.fullPage);
+  const screenshots = targets.length > 0
+    ? await takeScreenshotBatch(targets, {
+      viewport: requireVisualRegViewport(vrConf),
+      fullPage,
+      waitUntil: 'networkidle',
+      timeout: 15000,
+    })
+    : [];
 
   for (const entry of pathsJson) {
     if (unsafeNames.has(entry.name)) continue;
@@ -394,8 +419,8 @@ async function runMultiPath(
 
     checksTotal += 1;
 
-    if (!shot || !shot.ok) {
-      const message = shot?.error || 'Screenshot not taken';
+    if (selectTruthyValue(() => (!shot), () => (!shot.ok))) {
+      const message = selectDefinedValue(() => (nonEmptyString(shot?.error)), () => ('Screenshot not taken'));
       log(`ERROR: ${entry.name} — screenshot failed: ${message}`);
       pageResults.push({ name: entry.name, status: STATUS.ERROR, diffPercent: null, diffPath: null, error: message });
       findings.push(createFinding(SEVERITY.MODERATE, `${entry.name}: screenshot failed — ${message}`, { rule: 'screenshot-error' }));
@@ -428,7 +453,8 @@ async function runMultiPath(
     log(`${entry.name}: ${diffPercent}% diff (${diffCount} px of ${width}x${height})`);
 
     let pageStatus: SuiteStatus = STATUS.PASS;
-    if (enforced && diffPercent > (thresholds?.max_diff_percent || 0)) {
+    const maxDiffPercent = selectDefinedValue(() => (thresholds?.max_diff_percent), () => (0));
+    if (enforced && diffPercent > maxDiffPercent) {
       pageStatus = STATUS.FAIL;
       checksFailed += 1;
     } else {
@@ -452,7 +478,7 @@ async function runMultiPath(
           : SEVERITY.MINOR;
       findings.push(createFinding(severity, `${entry.name}: ${diffPercent}% diff (${diffCount} pixels)`, { rule: 'pixel-diff', file: diffPath }));
 
-      if (baselineWidth !== shot.width || baselineHeight !== shot.height) {
+      if (selectTruthyValue(() => (baselineWidth !== shot.width), () => (baselineHeight !== shot.height))) {
         findings.push(createFinding(SEVERITY.MODERATE, `${entry.name}: size mismatch — baseline ${baselineWidth}x${baselineHeight}, actual ${shot.width}x${shot.height}`, { rule: 'size-mismatch' }));
       }
     }
@@ -460,7 +486,7 @@ async function runMultiPath(
     if (context.screenshotsDir) {
       try {
         fs.mkdirSync(context.screenshotsDir, { recursive: true });
-        const att = context.attempt || 1;
+        const att = selectDefinedValue(() => (context.attempt), () => (1));
         if (fs.existsSync(actualPath)) fs.copyFileSync(actualPath, path.join(context.screenshotsDir, `${entry.name}-actual-attempt-${att}.png`));
         if (diffPath && fs.existsSync(diffPath)) fs.copyFileSync(diffPath, path.join(context.screenshotsDir, `${entry.name}-diff-attempt-${att}.png`));
       } catch (error) {
@@ -474,25 +500,25 @@ async function runMultiPath(
 
 export async function runVisualReg(context: Record<string, unknown>): Promise<SuiteVerdict> {
   const ctx = context as VisualRegContext;
-  const log = createLog(ctx.logSink || null);
-  const tctx = ctx.telemetryContext || null;
-  const moduleId = safeModulePathSegment(ctx.moduleId || ctx.module || ctx.payload?.module_id || ctx.payload?.module);
+  const log = createLog(selectDefinedValue(() => (ctx.logSink), () => (null)));
+  const tctx = selectDefinedValue(() => (ctx.telemetryContext), () => (null));
+  const moduleId = safeModulePathSegment(ctx.moduleId);
   const discordDeliveryContext = {
-    project: ctx.project || ctx.config?.project || null,
-    run_id: ctx.runId || ctx.run_id || ctx.config?.runId || ctx.config?.run_id || null,
+    project: selectDefinedValue(() => (nonEmptyString(ctx.project)), () => (nonEmptyString(ctx.config?.project))),
+    run_id: selectDefinedValue(() => (ctx.runId), () => (null)),
     module_id: moduleId,
-    attempt: ctx.attempt ?? null,
-    dispatch_id: ctx.dispatchId ?? ctx.dispatch_id ?? null,
-    session_key: ctx.sessionKey ?? ctx.session_key ?? null,
-    log_dir: ctx.logDir || ctx.testsLogDir || null,
-    pipeline_log_path: ctx.pipelineLogPath || ctx.pipeline_log_path || null,
-    pipeline_run_log_path: ctx.pipelineRunLogPath || ctx.pipeline_run_log_path || null,
+    attempt: selectDefinedValue(() => (ctx.attempt), () => (null)),
+    dispatch_id: selectDefinedValue(() => (ctx.dispatchId), () => (null)),
+    session_key: selectDefinedValue(() => (ctx.sessionKey), () => (null)),
+    log_dir: selectDefinedValue(() => (nonEmptyString(ctx.logDir)), () => (nonEmptyString(ctx.testsLogDir))),
+    pipeline_log_path: selectDefinedValue(() => (ctx.pipelineLogPath), () => (null)),
+    pipeline_run_log_path: selectDefinedValue(() => (ctx.pipelineRunLogPath), () => (null)),
     telemetry_context: tctx,
   };
   const startTime = Date.now();
-  const serve = ctx.config?.serve || {};
-  const vrConf = ctx.config?.['visual-reg'] || {};
-  const webhookUrl = resolveDiscordWebhookUrl() || '';
+  const serve = selectDefinedValue(() => (objectRecord(ctx.config?.serve)), () => ({}));
+  const vrConf = selectDefinedValue(() => (objectRecord(ctx.config?.['visual-reg'])), () => ({}));
+  const webhookUrl = selectDefinedValue(() => (resolveDiscordWebhookUrl()), () => (''));
   let discordCapabilitySkip: VisualDiscordDeliveryResult | null = null;
 
   try {
@@ -512,17 +538,17 @@ export async function runVisualReg(context: Record<string, unknown>): Promise<Su
     }
   }
 
-  const type = serve.type || 'static';
-  const port = serve.port || (type === 'server' ? DEFAULTS.server_port : DEFAULTS.static_port);
+  const type = selectDefinedValue(() => (nonEmptyString(serve.type)), () => ('static'));
+  const port = selectDefinedValue(() => (serve.port), () => ((type === 'server' ? DEFAULTS.server_port : DEFAULTS.static_port)));
   const baseUrl = `http://localhost:${port}`;
   const baselineDir = resolveVisualRegBaselineDir(ctx);
   const artifactDir = resolveArtifactDir(ctx);
   fs.mkdirSync(artifactDir, { recursive: true });
 
-  const thresholds = vrConf.thresholds || null;
+  const thresholds = objectRecord(vrConf.thresholds);
   const enforced = thresholds !== null;
   const mode = enforced ? 'enforced' : 'evidence-only';
-  const pmThreshold = vrConf.pixelmatch?.threshold ?? DEFAULTS.pixelmatch_threshold;
+  const pmThreshold = selectDefinedValue(() => (vrConf.pixelmatch?.threshold), () => (DEFAULTS.pixelmatch_threshold));
 
   log(`Baseline dir: ${baselineDir} (mode: ${mode})`);
 
@@ -549,7 +575,7 @@ export async function runVisualReg(context: Record<string, unknown>): Promise<Su
 
   const overallStatus = resolveVisualRegOverallStatus(pageResults, enforced);
 
-  const discordMode = vrConf.discord || (pathsJson.length > 3 ? 'summary' : 'all');
+  const discordMode = selectDefinedValue(() => (nonEmptyString(vrConf.discord)), () => ((pathsJson.length > 3 ? 'summary' : 'all')));
   const discordDeliveries: VisualDiscordDeliveryResult[] = [];
 
   if (discordCapabilitySkip) {
@@ -564,7 +590,7 @@ export async function runVisualReg(context: Record<string, unknown>): Promise<Su
   } else {
     for (const pr of pageResults) {
       if (pr.actualPath) {
-        discordDeliveries.push(await discordSingle(moduleId, pr.name, pr.actualPath, pr.diffPath || null, pr.diffPercent ?? 0, pr.status, {
+        discordDeliveries.push(await discordSingle(moduleId, pr.name, pr.actualPath, selectDefinedValue(() => (pr.diffPath), () => (null)), selectDefinedValue(() => (pr.diffPercent), () => (0)), pr.status, {
           webhookUrl,
           log,
           deliveryContext: discordDeliveryContext,

@@ -1,9 +1,10 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 
 const _trackedAgents = new Map();
 
 function requireTrackedAgentLabel(label: any, operation: string) {
-  if (typeof label !== 'string' || label.trim() === '') {
+  if (selectTruthyValue(() => (typeof label !== 'string'), () => (label.trim() === ''))) {
     throw new Error(`${operation} requires explicit tracked agent label`);
   }
   return label.trim();
@@ -16,7 +17,7 @@ export function trackAgent(config: AnyRecord, label: any, sessionKey: any, agent
     agentId,
     gatewayLabel,
     streamLogPath,
-    project: config?.project || extra?.project || null,
+    project: selectTruthyValue(() => (selectTruthyValue(() => (config?.project), () => (extra?.project))), () => (null)),
     ...extra,
   };
   _trackedAgents.set(key, entry);
@@ -28,7 +29,7 @@ export function untrackAgent(label: any) {
 }
 
 export function getTrackedAgent(label: any) {
-  return _trackedAgents.get(requireTrackedAgentLabel(label, 'getTrackedAgent')) || null;
+  return selectTruthyValue(() => (_trackedAgents.get(requireTrackedAgentLabel(label, 'getTrackedAgent'))), () => (null));
 }
 
 export function getTrackedAgentCount() {

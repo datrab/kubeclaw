@@ -30,11 +30,6 @@ function makeIngressEvent() {
       child_run_id: 'child-run-test',
       mode: 'default',
     },
-    masking: {
-      profile: 'kubeclaw-agent-observer-v1-minimal-api-key-mask',
-      content: 'full',
-      masked: ['basic_api_key_pattern'],
-    },
   };
 }
 
@@ -60,11 +55,6 @@ function makeModelUsageEvent() {
         output_tokens: 20,
       },
       cost_usd: 0.25,
-    },
-    masking: {
-      profile: 'kubeclaw-agent-observer-v1-minimal-api-key-mask',
-      content: 'full',
-      masked: [],
     },
   };
 }
@@ -222,6 +212,27 @@ test('readNext allows idle blocking read to exceed command timeout by poll block
   assert.deepEqual(entries, []);
 });
 
+test('readNext treats XREADGROUP timeout as idle stream', async () => {
+  const redis = {
+    xgroup: async () => 'OK',
+    xreadgroup: async () => new Promise((resolve) => {
+      setTimeout(() => resolve(null), 50);
+    }),
+  };
+  const ingester = new AgentObservabilityIngester({
+    config: makeIngesterConfig({
+      pollBlockMs: 10,
+      redisCommandTimeoutMs: 10,
+    }),
+    env: {},
+    redisClientFactory: () => redis,
+  });
+
+  const entries = await ingester.readNext();
+
+  assert.deepEqual(entries, []);
+});
+
 test('trim logs and continues when Redis housekeeping times out', async () => {
   const warnings = [];
   const xtrimCalls = [];
@@ -352,4 +363,35 @@ test('stop closes Redis when in-flight loop task has already failed', async () =
   await ingester.stop();
 
   assert.equal(quitCalls, 1);
+});
+
+test('stop treats Redis already-closed errors as draining shutdown noise', async () => {
+  const warnings = [];
+  const debug = [];
+  const redis = {
+    xack: async () => 1,
+    quit: async () => {
+      throw new Error('Connection is closed.');
+    },
+    disconnect: () => {},
+  };
+  const ingester = new AgentObservabilityIngester({
+    config: makeIngesterConfig({
+      redisCommandTimeoutMs: 1000,
+    }),
+    env: {},
+    logger: {
+      info: () => {},
+      error: () => {},
+      warn: (message) => warnings.push(String(message)),
+      debug: (message) => debug.push(String(message)),
+    },
+    redisClientFactory: () => redis,
+  });
+
+  await ingester.ack('1-0');
+  await ingester.stop();
+
+  assert.equal(warnings.length, 0);
+  assert.equal(debug.some((entry) => entry.includes('Redis already closed during draining shutdown')), true);
 });

@@ -21,6 +21,7 @@ import {
   prepareModelUsageAggregate,
 } from './usage-aggregation.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 interface RedisClient {
   status?: string;
   connect?: () => Promise<unknown> | unknown;
@@ -53,6 +54,8 @@ type AgentObservabilityStreamKey =
   | typeof AGENT_OBSERVABILITY_CONTROL_STREAM
   | typeof AGENT_OBSERVABILITY_PAYLOAD_STREAM;
 
+const TELEMETRY_EMIT_FAILED = 'telemetry emit failed';
+
 export interface AgentObservabilityIngesterStats {
   read: number;
   emitted: number;
@@ -73,13 +76,13 @@ export interface AgentObservabilityIngesterOptions {
   config?: unknown;
   env?: Record<string, unknown>;
   logger?: Logger;
-  redisClientFactory?: RedisClientFactory;
+  redisClientFactory: RedisClientFactory;
   emitEvent?: EmitEvent;
   recordObservabilityDegraded?: ObservabilityReporter;
   recordObservabilityRestored?: ObservabilityReporter;
 }
 
-function defaultRedisClientFactory(config: AgentObservabilityIngesterConfig): RedisClient {
+export function createDefaultAgentObservabilityRedisClient(config: AgentObservabilityIngesterConfig): RedisClient {
   const RedisCtor = loadRedisCtor();
   return createRedisClient(
     RedisCtor,
@@ -103,15 +106,28 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
+function isExpectedRedisCloseDuringShutdown(error: unknown): boolean {
+  return /(connection is closed|connection closed|closed before ready|connection ended|stream isn't writeable|write after end)/i.test(errorMessage(error));
+}
+
 function emitFailureError(result: unknown): string | null {
-  if (!result || typeof result !== 'object') return null;
+  if (selectTruthyValue(() => (!result), () => (typeof result !== 'object'))) return null;
   const record = result as Record<string, unknown>;
   if (record.validationError) return null;
   if (record.ok === false && record.skipped !== true) {
-    return errorMessage(record.error ?? record.reason ?? 'telemetry emit failed');
+    return errorMessage(selectDefinedValue(() => (selectDefinedValue(() => (record.error), () => (record.reason))), () => (TELEMETRY_EMIT_FAILED)));
   }
   if (record.error && record.ok !== true && record.skipped !== true) return errorMessage(record.error);
   return null;
+}
+
+function redisFieldValue(value: unknown): string {
+  return selectTruthyValue(() => (value === undefined), () => (value === null)) ? '' : String(value);
+}
+
+function redisCount(value: unknown): number {
+  const count = Number(value);
+  return Number.isFinite(count) && count > 0 ? count : 0;
 }
 
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
@@ -125,10 +141,10 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string)
 }
 
 function streamEntryFromRedis(stream: AgentObservabilityStreamKey, entry: unknown, reclaimed: boolean): StreamEntry | null {
-  if (!Array.isArray(entry) || entry.length < 2 || typeof entry[0] !== 'string' || !Array.isArray(entry[1])) return null;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (!Array.isArray(entry)), () => (entry.length < 2))), () => (typeof entry[0] !== 'string'))), () => (!Array.isArray(entry[1])))) return null;
   const fields: Record<string, string> = {};
   for (let i = 0; i < entry[1].length; i += 2) {
-    fields[String(entry[1][i])] = String(entry[1][i + 1] ?? '');
+    fields[String(entry[1][i])] = redisFieldValue(entry[1][i + 1]);
   }
   return { stream, id: entry[0], data: fields, reclaimed };
 }
@@ -137,10 +153,10 @@ function entriesFromXreadgroup(result: unknown): StreamEntry[] {
   if (!Array.isArray(result)) return [];
   const entries: StreamEntry[] = [];
   for (const streamResult of result) {
-    if (!Array.isArray(streamResult) || streamResult.length < 2) continue;
+    if (selectTruthyValue(() => (!Array.isArray(streamResult)), () => (streamResult.length < 2))) continue;
     const stream = streamResult[0];
     const streamEntries = streamResult[1];
-    if (!isAgentObservabilityStreamKey(stream) || !Array.isArray(streamEntries)) continue;
+    if (selectTruthyValue(() => (!isAgentObservabilityStreamKey(stream)), () => (!Array.isArray(streamEntries)))) continue;
     entries.push(...streamEntries.map((entry) => streamEntryFromRedis(stream, entry, false)).filter((entry): entry is StreamEntry => Boolean(entry)));
   }
   return entries;
@@ -152,9 +168,21 @@ function entriesFromXautoclaim(stream: AgentObservabilityStreamKey, result: unkn
 }
 
 function pendingCount(result: unknown): number {
-  if (Array.isArray(result)) return Number(result[0] ?? 0) || 0;
-  if (result && typeof result === 'object' && 'count' in result) return Number((result as { count: unknown }).count) || 0;
-  return Number(result) || 0;
+  if (Array.isArray(result)) return redisCount(result[0]);
+  if (result && typeof result === 'object' && 'count' in result) return redisCount((result as { count: unknown }).count);
+  return redisCount(result);
+}
+
+function emitEventAuthority(emitEvent: EmitEvent | undefined): EmitEvent {
+  return emitEvent === undefined ? defaultEmitEvent as EmitEvent : emitEvent;
+}
+
+function observabilityDegradedReporterAuthority(reporter: ObservabilityReporter | undefined): ObservabilityReporter {
+  return reporter === undefined ? defaultRecordObservabilityDegraded as ObservabilityReporter : reporter;
+}
+
+function observabilityRestoredReporterAuthority(reporter: ObservabilityReporter | undefined): ObservabilityReporter {
+  return reporter === undefined ? defaultRecordObservabilityRestored as ObservabilityReporter : reporter;
 }
 
 function rawDataForDeadLetter(data: string | undefined): string | null {
@@ -163,7 +191,7 @@ function rawDataForDeadLetter(data: string | undefined): string | null {
 }
 
 function isAgentObservabilityStreamKey(stream: unknown): stream is AgentObservabilityStreamKey {
-  return stream === AGENT_OBSERVABILITY_CONTROL_STREAM || stream === AGENT_OBSERVABILITY_PAYLOAD_STREAM;
+  return selectTruthyValue(() => (stream === AGENT_OBSERVABILITY_CONTROL_STREAM), () => (stream === AGENT_OBSERVABILITY_PAYLOAD_STREAM));
 }
 
 function streamKindForKey(stream: AgentObservabilityStreamKey): 'control' | 'payload' {
@@ -184,6 +212,7 @@ export class AgentObservabilityIngester {
   private groupReady = false;
   private running = false;
   private stopped = false;
+  private lifecycleState: 'idle' | 'running' | 'draining' | 'closed' = 'idle';
   private loopTask: Promise<void> | null = null;
   private trimTask: Promise<void> | null = null;
   private lastTrimAt = 0;
@@ -196,13 +225,16 @@ export class AgentObservabilityIngester {
     failed: 0,
   };
 
-  constructor(options: AgentObservabilityIngesterOptions = {}) {
+  constructor(options: AgentObservabilityIngesterOptions) {
     this.config = resolveAgentObservabilityIngesterConfig(options.config, options.env);
-    this.logger = options.logger ?? console;
-    this.redisClientFactory = options.redisClientFactory ?? defaultRedisClientFactory;
-    this.emitEvent = options.emitEvent ?? defaultEmitEvent as EmitEvent;
-    this.recordObservabilityDegraded = options.recordObservabilityDegraded ?? defaultRecordObservabilityDegraded as ObservabilityReporter;
-    this.recordObservabilityRestored = options.recordObservabilityRestored ?? defaultRecordObservabilityRestored as ObservabilityReporter;
+    this.logger = selectDefinedValue(() => (options.logger), () => (console));
+    if (typeof options.redisClientFactory !== 'function') {
+      throw new Error('AgentObservabilityIngester requires explicit redisClientFactory');
+    }
+    this.redisClientFactory = options.redisClientFactory;
+    this.emitEvent = emitEventAuthority(options.emitEvent);
+    this.recordObservabilityDegraded = observabilityDegradedReporterAuthority(options.recordObservabilityDegraded);
+    this.recordObservabilityRestored = observabilityRestoredReporterAuthority(options.recordObservabilityRestored);
   }
 
   getStats(): AgentObservabilityIngesterStats {
@@ -289,14 +321,20 @@ export class AgentObservabilityIngester {
 
     const redis = await this.ensureRedisReady();
     if (!redis.xreadgroup) throw new Error('Redis client does not expose xreadgroup');
-    const result = await this.redisBlockingReadCall(
-      () => redis.xreadgroup?.(
-        'GROUP', this.config.groupName, this.config.consumerName,
-        'COUNT', 1, 'BLOCK', this.config.pollBlockMs,
-        'STREAMS', AGENT_OBSERVABILITY_CONTROL_STREAM, AGENT_OBSERVABILITY_PAYLOAD_STREAM, '>', '>',
-      ),
-      'agent observability XREADGROUP',
-    );
+    let result;
+    try {
+      result = await this.redisBlockingReadCall(
+        () => redis.xreadgroup?.(
+          'GROUP', this.config.groupName, this.config.consumerName,
+          'COUNT', 1, 'BLOCK', this.config.pollBlockMs,
+          'STREAMS', AGENT_OBSERVABILITY_CONTROL_STREAM, AGENT_OBSERVABILITY_PAYLOAD_STREAM, '>', '>',
+        ),
+        'agent observability XREADGROUP',
+      );
+    } catch (error) {
+      if (String(errorMessage(error)).includes('agent observability XREADGROUP timed out')) return [];
+      throw error;
+    }
     return entriesFromXreadgroup(result);
   }
 
@@ -393,7 +431,7 @@ export class AgentObservabilityIngester {
       reason,
       errors,
       reclaimed: entry.reclaimed,
-      data: rawDataForDeadLetter(raw ?? entry.data[AGENT_OBSERVABILITY_REDIS_DATA_FIELD]),
+      data: rawDataForDeadLetter(raw),
       ts: new Date().toISOString(),
     };
     await this.redisCall(
@@ -454,7 +492,7 @@ export class AgentObservabilityIngester {
       ))
       : 0;
     const payloadLength = redis.xlen
-      ? Number(await this.redisCall(() => redis.xlen?.(AGENT_OBSERVABILITY_PAYLOAD_STREAM), 'agent observability payload XLEN')) || 0
+      ? redisCount(await this.redisCall(() => redis.xlen?.(AGENT_OBSERVABILITY_PAYLOAD_STREAM), 'agent observability payload XLEN'))
       : 0;
     const degraded: string[] = [];
     if (controlPending > this.config.controlLagDegradedThreshold) degraded.push('control_lag');
@@ -498,16 +536,17 @@ export class AgentObservabilityIngester {
   }
 
   start(ctx: unknown = {}): void {
-    if (this.running || !this.config.enabled) return;
+    if (selectTruthyValue(() => (this.running), () => (!this.config.enabled))) return;
     this.running = true;
     this.stopped = false;
+    this.lifecycleState = 'running';
     const loop = async (): Promise<void> => {
       while (this.running && !this.stopped) {
         try {
           await this.processNext(ctx);
-          if (!this.running || this.stopped) break;
+          if (selectTruthyValue(() => (!this.running), () => (this.stopped))) break;
           await this.checkPressure(ctx);
-          if (!this.running || this.stopped) break;
+          if (selectTruthyValue(() => (!this.running), () => (this.stopped))) break;
           if (this.shouldTrim()) {
             this.scheduleTrim();
           }
@@ -535,18 +574,17 @@ export class AgentObservabilityIngester {
   }
 
   async stop(): Promise<void> {
+    if (this.lifecycleState === 'closed') return;
+    this.lifecycleState = 'draining';
     this.stopped = true;
     this.running = false;
     const loopTask = this.loopTask;
     const redis = this.redis;
-    if (redis?.disconnect) {
-      this.redis = null;
-      this.redisReady = false;
-      this.groupReady = false;
-      redis.disconnect();
-    }
     if (loopTask) await loopTask;
-    if (!redis) return;
+    if (!redis) {
+      this.lifecycleState = 'closed';
+      return;
+    }
     if (this.redis === redis) {
       this.redis = null;
       this.redisReady = false;
@@ -556,8 +594,14 @@ export class AgentObservabilityIngester {
       if (redis.quit) await redis.quit();
     } catch (error) {
       this.stats.lastError = errorMessage(error);
-      this.logOnce('redis-close', `agent observability ingester Redis close failed: ${this.stats.lastError}`);
+      if (this.lifecycleState === 'draining' && isExpectedRedisCloseDuringShutdown(error)) {
+        this.logger.debug?.(`[agent-observability-ingester] Redis already closed during draining shutdown: ${this.stats.lastError}`);
+      } else {
+        this.logOnce('redis-close', `agent observability ingester Redis close failed: ${this.stats.lastError}`);
+      }
       if (redis.disconnect) redis.disconnect();
+    } finally {
+      this.lifecycleState = 'closed';
     }
   }
 

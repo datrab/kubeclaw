@@ -17,7 +17,7 @@ Orient new readers to the repository before they edit docs, deployment files, pi
 | `docker/` | general, sandbox, and Prism preview image definitions | changing runtime image contents or build context |
 | `skills/nova/` | Nova pipeline orchestrator entrypoint, CLI, config loading, plugin registry, runners, gates, telemetry, status store, and helpers | changing orchestration behavior |
 | `skills/buster/` | Buster Redis worker, task validation/completion, deterministic suites, browser tooling, sandbox runtime support | changing test execution behavior |
-| `skills/common/` | shared pipeline contracts, transports, lifecycle, redaction, telemetry, security, and service helpers | changing code shared by Nova and Buster |
+| `skills/common/` | shared pipeline contracts, transports, lifecycle, egress, telemetry, security, and service helpers | changing code shared by Nova and Buster |
 | `plugins/openclaw-agent-observer/` | OpenClaw observer plugin packaged into images and gateway config | changing observer plugin routing or ingestion |
 | `tests/verification/` | local behavior, contract, runtime, and deployment checks | proving source-backed documentation claims or behavior changes |
 | `tests/skills/` | focused Node tests for Nova, Buster, common pipeline helpers, and docs-related helpers | validating implementation units |

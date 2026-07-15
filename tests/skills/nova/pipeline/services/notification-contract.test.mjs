@@ -7,6 +7,7 @@ import test from 'node:test';
 import { buildPluginRegistry } from '../../../../../skills/nova/pipeline/core/registry.ts';
 import { dispatchNotificationHook } from '../../../../../skills/nova/pipeline/services/notification-dispatch.ts';
 import {
+  buildNotificationEventInput,
   getBuiltinNotificationPluginDefinitions,
   observeDiscordNotification,
   validateDiscordOperatorPresentation,
@@ -177,4 +178,44 @@ test('Discord operator validation rejects path-only critical but accepts existin
   });
   assert(pathOnlyErrors.includes('critical Discord notification must include verdict/status/outcome'));
   assert(pathOnlyErrors.includes('critical Discord notification must include next action/action'));
+});
+
+test('notification refs use canonical camelCase fields only', () => {
+  const input = buildNotificationEventInput({
+    runId: 'run-notification-canonical',
+    config: { run_id: 'run-notification-canonical' },
+  }, 'module.completed', {
+    ids: {
+      moduleId: 'module-alpha',
+      attempt: 2,
+    },
+    refs: {
+      run_ref: 'run:legacy-snake',
+      runRef: 'run:canonical-camel',
+      module_attempt_ref: 'module_attempt:legacy-snake',
+      moduleAttemptRef: 'module_attempt:canonical-camel',
+      primary_ref: 'module:legacy-primary',
+      primaryRef: 'module:canonical-primary',
+    },
+    occurredAt: '2026-07-04T00:00:00.000Z',
+  });
+
+  assert.equal(input.refs.runRef, 'run:canonical-camel');
+  assert.equal(input.refs.moduleAttemptRef, 'module_attempt:canonical-camel');
+  assert.equal(input.refs.primaryRef, 'module:canonical-primary');
+});
+
+test('notification refs omit gate evaluation ref when gate attempt is absent', () => {
+  const input = buildNotificationEventInput({
+    runId: 'run-notification-canonical',
+    config: { run_id: 'run-notification-canonical' },
+  }, 'gate.completed', {
+    ids: {
+      gateId: 'review',
+    },
+    occurredAt: '2026-07-04T00:00:00.000Z',
+  });
+
+  assert.equal(input.refs.gateEvaluationRef, null);
+  assert.equal(input.refs.primaryRef, 'gate:review');
 });

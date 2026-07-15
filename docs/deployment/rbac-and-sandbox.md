@@ -27,7 +27,7 @@ When broker mode is disabled, the chart does not render Kubernetes tester RBAC. 
 
 Buster sandbox mode renders privileged security context, unconfined AppArmor/seccomp, privilege escalation, and added capabilities. It mounts Podman storage and `/sandbox` `emptyDir` volumes.
 
-Buster runtime code adds a separate default-deny suite capability boundary. Suites require capabilities such as `container_runtime`, `kubernetes_api`, `browser_automation`, `lighthouse`, or `static_web_server` depending on suite and serve config.
+Buster runtime code adds a separate default-deny suite capability boundary. Suites require capabilities such as `container_runtime`, `kubernetes`, `browser_automation`, `lighthouse`, or `static_web_server` depending on suite and serve config.
 
 ## Why Buster Is Different
 

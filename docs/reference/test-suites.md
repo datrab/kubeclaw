@@ -142,7 +142,7 @@ Known Buster capabilities:
 
 - `static_web_server`
 - `container_runtime`
-- `kubernetes_api`
+- `kubernetes`
 - `browser_automation`
 - `lighthouse`
 - `discord_media`

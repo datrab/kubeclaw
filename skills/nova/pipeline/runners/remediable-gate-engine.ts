@@ -6,6 +6,7 @@ import {
   resolveGateRemediationController,
 } from '../services/remediation-handoff.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export async function runRemediableGateControlLoopResult({
   initialControlResult,
   remediationController = null,
@@ -17,7 +18,7 @@ export async function runRemediableGateControlLoopResult({
   gate,
 }) {
   if (typeof normalizeControlResult !== 'function') {
-    throw new Error(`gate:${gate?.type || gateId || 'unknown'} remediable loop requires normalizeControlResult(...)`);
+    throw new Error(`gate:${selectTruthyValue(() => (selectTruthyValue(() => (gate?.type), () => (gateId))), () => ('missing_gate_type'))} remediable loop requires normalizeControlResult(...)`);
   }
 
   const controller = resolveGateRemediationController({
@@ -25,15 +26,15 @@ export async function runRemediableGateControlLoopResult({
     evaluateGate,
     performFix,
     buildExhaustedControlResult,
-  }, `gate:${gate?.type || gateId || 'unknown'}`);
+  }, `gate:${selectTruthyValue(() => (selectTruthyValue(() => (gate?.type), () => (gateId))), () => ('missing_gate_type'))}`);
   let controlResult = initialControlResult;
 
   while (isGateRemediationControlResult(controlResult)) {
     const remediation = readGateRemediationSpec(controlResult);
-    const maxFixCycles = Number(remediation?.policy?.maxFixCycles || 0);
-    const cycle = Number(remediation?.policy?.nextFixCycle || 0);
+    const maxFixCycles = Number(selectDefinedValue(() => (remediation?.policy?.maxFixCycles), () => (0)));
+    const cycle = Number(selectDefinedValue(() => (remediation?.policy?.nextFixCycle), () => (0)));
 
-    if (!Number.isFinite(cycle) || cycle < 1 || cycle > maxFixCycles) {
+    if (selectTruthyValue(() => (selectTruthyValue(() => (!Number.isFinite(cycle)), () => (cycle < 1))), () => (cycle > maxFixCycles))) {
       const exhaustedControlResult = await controller.buildExhaustedControlResult({ controlResult, remediation, gateId, gate });
       return { controlResult: exhaustedControlResult };
     }
@@ -42,14 +43,14 @@ export async function runRemediableGateControlLoopResult({
 
     if (fixOutcome?.mode === 'terminal') {
       if (!fixOutcome.controlResult) {
-        throw new Error(`gate:${gate?.type || gateId || 'unknown'} terminal remediation outcome must return controlResult`);
+        throw new Error(`gate:${selectTruthyValue(() => (selectTruthyValue(() => (gate?.type), () => (gateId))), () => ('missing_gate_type'))} terminal remediation outcome must return controlResult`);
       }
       return { controlResult: fixOutcome.controlResult };
     }
 
     if (fixOutcome?.mode === 'retry_request_fix') {
       controlResult = bumpGateRemediationControlResult(
-        fixOutcome.controlResult || controlResult,
+        retryRequestControlResultAuthority(fixOutcome, controlResult),
         cycle + 1,
       );
       continue;
@@ -60,7 +61,7 @@ export async function runRemediableGateControlLoopResult({
         controlResult = fixOutcome.controlResult;
       }
     } else {
-      throw new Error(`gate:${gate?.type || gateId || 'unknown'} remediation outcome must use typed mode terminal, retry_request_fix, or re_evaluate`);
+      throw new Error(`gate:${selectTruthyValue(() => (selectTruthyValue(() => (gate?.type), () => (gateId))), () => ('missing_gate_type'))} remediation outcome must use typed mode terminal, retry_request_fix, or re_evaluate`);
     }
 
     controlResult = await controller.evaluateGate({
@@ -68,14 +69,14 @@ export async function runRemediableGateControlLoopResult({
       remediationCycle: cycle,
       controlResult,
       remediation,
-      fixOutcomeDegraded: fixOutcome?.degraded || null,
+      fixOutcomeDegraded: selectTruthyValue(() => (fixOutcome?.degraded), () => (null)),
       gateId,
       gate,
     });
 
     if (isGateRemediationControlResult(controlResult)) {
       const nextRemediation = readGateRemediationSpec(controlResult);
-      const nextCycle = Number(nextRemediation?.policy?.nextFixCycle || 0);
+      const nextCycle = Number(selectDefinedValue(() => (nextRemediation?.policy?.nextFixCycle), () => (0)));
       if (Number.isFinite(nextCycle) && nextCycle <= cycle) {
         if (cycle + 1 > maxFixCycles) {
           const exhaustedControlResult = await controller.buildExhaustedControlResult({ controlResult, remediation: nextRemediation, gateId, gate });
@@ -87,6 +88,12 @@ export async function runRemediableGateControlLoopResult({
   }
 
   return { controlResult };
+}
+
+function retryRequestControlResultAuthority(fixOutcome, currentControlResult) {
+  if (fixOutcome?.controlResult) return fixOutcome.controlResult;
+  if (currentControlResult) return currentControlResult;
+  throw new Error('Gate remediation retry_request_fix requires current controlResult authority');
 }
 
 export async function runScheduledRemediableGate({
@@ -113,7 +120,7 @@ export async function runScheduledRemediableGate({
     pluginInvocation,
   });
 
-  const normalizeBase = { input: gateInput, stageId, moduleId: record?.manifest?.moduleId || null, pluginInvocation };
+  const normalizeBase = { input: gateInput, stageId, moduleId: selectTruthyValue(() => (record?.manifest?.moduleId), () => (null)), pluginInvocation };
   const controlResult = normalizeControlResult(rawResult, normalizeBase);
   const remediationController = typeof createRemediationController === 'function'
     ? createRemediationController(controlResult)

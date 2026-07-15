@@ -16,11 +16,6 @@ function makeIngressEvent(type, identity, payload) {
       ...identity,
     },
     payload,
-    masking: {
-      profile: 'kubeclaw-agent-observer-v1-minimal-api-key-mask',
-      content: 'full',
-      masked: [],
-    },
   };
 }
 

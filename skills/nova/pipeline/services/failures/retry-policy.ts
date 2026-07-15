@@ -1,13 +1,12 @@
 import { log } from '../../core/logger.ts';
 import { getRunId, getRunStats } from '../../core/runtime.ts';
-import { markModuleBlocked, transitionModuleStatus } from '../../lifecycle-state.ts';
 import {
   resolveStatusSessionKey,
   resolveStatusDispatchId,
   resolveStatusGatewayLabel,
 } from '../correlation.ts';
 import { normalizeFailureClass } from '../failure-semantics.ts';
-import { saveStatus } from '../status-store.ts';
+import { applyModuleCompletion } from '../status-store.ts';
 import { onModuleBlocked, onModuleFail, onRetryExhausted } from '../telemetry.ts';
 import {
   buildPipelineStepResult,
@@ -28,13 +27,29 @@ import {
 } from './presentation.ts';
 import { getPipelineDefaultsConfig } from '../runtime-defaults.ts';
 
-const STATUS = {
-  FAIL: 'FAIL',
-  BLOCKED: 'BLOCKED',
-};
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
+const MAX_FAILS_REACHED_REASON = 'max_fails_reached';
 
 function shellQuoteArg(value) {
-  return `'${String(value ?? '').replace(/'/g, `'\\''`)}'`;
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) {
+    throw new Error('shellQuoteArg requires a command argument value');
+  }
+  return `'${String(value).replace(/'/g, `'\\''`)}'`;
+}
+
+function discordFields(opts) {
+  return Array.isArray(opts.discordFields) ? opts.discordFields.filter(Boolean) : [];
+}
+
+function failureTimeoutFlag(value) {
+  return value === true;
+}
+
+function firstDefined(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return undefined;
 }
 
 export function buildFullPipelineResumeCommand(config, promptPlaceholder = null) {
@@ -49,17 +64,28 @@ export function buildFullPipelineResumeCommand(config, promptPlaceholder = null)
 export function resolveAutoRetryThreshold(config, progress, moduleIdOrGateId) {
   const moduleConf = progress?.modules?.[moduleIdOrGateId];
   const gateConf = progress?.gates?.[moduleIdOrGateId];
-  return (
-    moduleConf?.auto_retry_threshold ??
-    gateConf?.auto_retry_threshold ??
-    progress?.auto_retry_threshold ??
+  return firstDefined(
+    moduleConf?.auto_retry_threshold,
+    gateConf?.auto_retry_threshold,
+    progress?.auto_retry_threshold,
     getPipelineDefaultsConfig(config).auto_retry_threshold
   );
 }
 
+function autoRetryThresholdAuthority(config, opts, moduleId) {
+  return firstDefined(opts.autoRetryThreshold, resolveAutoRetryThreshold(config, opts.progress, moduleId));
+}
+
+function failureClassForSummary(f) {
+  return firstDefined(f.failure_class, normalizeFailureClass(f.phase, f.summary, {
+    isTimeout: failureTimeoutFlag(f.is_timeout),
+    failurePattern: f.failPattern,
+  }));
+}
+
 export async function handleFail(config, status, moduleDir, moduleId, maxFails, phase, reason, opts = {}) {
-  const isTimeout = opts.isTimeout || false;
-  const previousStatus = status.status || null;
+  const isTimeout = failureTimeoutFlag(opts.isTimeout);
+  const previousStatus = selectTruthyValue(() => (status.status), () => (null));
 
   status.fail_count++;
 
@@ -76,7 +102,7 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
         failurePattern: failPattern,
       }),
       is_timeout: isTimeout,
-      files_changed: status.forge_diff_stat || null,
+      files_changed: selectTruthyValue(() => (status.forge_diff_stat), () => (null)),
     });
   }
 
@@ -90,13 +116,13 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
       module_id: moduleId,
       phase,
       attempt: status.fail_count,
-      dispatch_id: (opts.dispatch_id ?? resolveStatusDispatchId(status) ?? null),
-      gateway_label: (opts.gateway_label ?? resolveStatusGatewayLabel(status) ?? null),
-      session_key: (opts.session_key ?? resolveStatusSessionKey(status) ?? null),
+      dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (opts.dispatch_id), () => (resolveStatusDispatchId(status)))), () => (null))),
+      gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (opts.gateway_label), () => (resolveStatusGatewayLabel(status)))), () => (null))),
+      session_key: (selectDefinedValue(() => (selectDefinedValue(() => (opts.session_key), () => (resolveStatusSessionKey(status)))), () => (null))),
     }),
     { name: 'Fail Count', value: `${status.fail_count}/${maxFails}` },
     ...(isTimeout ? [{ name: 'Timeout', value: 'yes', inline: true }] : []),
-    ...((opts.discordFields || []).filter(Boolean)),
+    ...discordFields(opts),
   ];
 
   const blockedTitle = `Module ${moduleId} BLOCKED`;
@@ -106,33 +132,45 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
   const failEvent = buildModuleFailureTelemetry(status, phase, reason, previousStatus, opts);
 
   if (status.fail_count >= maxFails) {
+    const terminalFailureClass = selectTruthyValue(() => (status.fail_summaries[status.fail_summaries.length - 1]?.failure_class), () => (null));
     const blockedAt = new Date().toISOString();
-    transitionModuleStatus(status, STATUS.FAIL, {
-      note: `${phase} ${isTimeout ? 'timed out' : 'failed'} (attempt ${status.fail_count}/${maxFails})`,
-      now: blockedAt,
+    applyModuleCompletion(config, moduleDir, status, {
+      target_kind: 'module',
+      target_id: moduleId,
+      phase,
+      attempt: status.fail_count,
+      status: 'BLOCKED',
+      authority: { kind: 'worker' },
+      reason_code: terminalFailureClass,
+      summary: `Max retries (${maxFails}) exceeded`,
+      occurred_at: blockedAt,
+      observed: {
+        dispatch_id: selectDefinedValue(() => (selectDefinedValue(() => (opts.dispatch_id), () => (resolveStatusDispatchId(status)))), () => (null)),
+        gateway_label: selectDefinedValue(() => (selectDefinedValue(() => (opts.gateway_label), () => (resolveStatusGatewayLabel(status)))), () => (null)),
+        session_key: selectDefinedValue(() => (selectDefinedValue(() => (opts.session_key), () => (resolveStatusSessionKey(status)))), () => (null)),
+      },
+      metadata: {
+        fail_count: status.fail_count,
+        max_fails: maxFails,
+        reason: selectDefinedValue(() => (reason), () => (MAX_FAILS_REACHED_REASON)),
+      },
     });
-    const blockedTransition = markModuleBlocked(status, phase, `Max retries (${maxFails}) exceeded`, {
-      reason: reason || 'max_fails_reached',
-      failCount: status.fail_count,
-      now: blockedAt,
-    });
-    saveStatus(config, moduleDir, status, blockedTransition);
 
     const ctx = telemetryCtx(config);
     await onModuleFail(ctx, moduleId, failEvent);
     await onRetryExhausted(ctx, moduleId, {
       attempt: status.fail_count,
       phase,
-      dispatch_id: (opts.dispatch_id ?? resolveStatusDispatchId(status) ?? null),
-      gateway_label: (opts.gateway_label ?? resolveStatusGatewayLabel(status) ?? null),
-      session_key: (opts.session_key ?? resolveStatusSessionKey(status) ?? null),
-      reason: reason || null,
+      dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (opts.dispatch_id), () => (resolveStatusDispatchId(status)))), () => (null))),
+      gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (opts.gateway_label), () => (resolveStatusGatewayLabel(status)))), () => (null))),
+      session_key: (selectDefinedValue(() => (selectDefinedValue(() => (opts.session_key), () => (resolveStatusSessionKey(status)))), () => (null))),
+      reason: selectTruthyValue(() => (reason), () => (null)),
       max_attempts: maxFails,
       max_fails: maxFails,
     });
     await onModuleBlocked(ctx, moduleId, {
       ...failEvent,
-      old_status: STATUS.FAIL,
+      old_status: 'FAIL',
       reason: `Max retries (${maxFails}) exceeded${phase ? ` in ${phase}` : ''}`,
       presentation: {
         discord: {
@@ -152,9 +190,9 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
     log('ERROR', `Module ${moduleId} BLOCKED — failed ${maxFails}x in ${phase} phase`);
     const stats = getRunStats(config);
     if (stats) stats.modules_blocked.push(moduleId);
-    const dispatchId = opts.dispatch_id ?? resolveStatusDispatchId(status) ?? null;
-    const gatewayLabel = opts.gateway_label ?? resolveStatusGatewayLabel(status) ?? null;
-    const sessionKey = opts.session_key ?? resolveStatusSessionKey(status) ?? null;
+    const dispatchId = selectDefinedValue(() => (selectDefinedValue(() => (opts.dispatch_id), () => (resolveStatusDispatchId(status)))), () => (null));
+    const gatewayLabel = selectDefinedValue(() => (selectDefinedValue(() => (opts.gateway_label), () => (resolveStatusGatewayLabel(status)))), () => (null));
+    const sessionKey = selectDefinedValue(() => (selectDefinedValue(() => (opts.session_key), () => (resolveStatusSessionKey(status)))), () => (null));
     return buildPipelineStepResult({
       stepType: PIPELINE_STEP_TYPES.MODULE,
       stepId: moduleId,
@@ -181,18 +219,36 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
       },
       terminalAction: PIPELINE_TERMINAL_ACTIONS.NOTIFY_OPERATOR,
       terminalScope: PIPELINE_TERMINAL_SCOPES.MODULE,
+      terminalReasonCode: terminalFailureClass,
     });
   }
 
-  const failTransition = transitionModuleStatus(status, STATUS.FAIL, {
-    note: `${phase} ${isTimeout ? 'timed out' : 'failed'} (attempt ${status.fail_count}/${maxFails})`,
-  });
-  saveStatus(config, moduleDir, status, failTransition);
-
-  const autoRetryThreshold = opts.autoRetryThreshold ?? resolveAutoRetryThreshold(config, opts.progress, moduleId);
+  const autoRetryThreshold = autoRetryThresholdAuthority(config, opts, moduleId);
   const canAutoRetry = !isTimeout && status.fail_count <= autoRetryThreshold;
 
   if (canAutoRetry) {
+    const retryFailureClass = selectTruthyValue(() => (status.fail_summaries[status.fail_summaries.length - 1]?.failure_class), () => (null));
+    applyModuleCompletion(config, moduleDir, status, {
+      target_kind: 'module',
+      target_id: moduleId,
+      phase,
+      attempt: status.fail_count,
+      status: 'FAIL',
+      authority: { kind: 'worker' },
+      reason_code: retryFailureClass,
+      summary: selectTruthyValue(() => (reason), () => (`${phase} failed (attempt ${status.fail_count}/${maxFails})`)),
+      observed: {
+        dispatch_id: selectDefinedValue(() => (selectDefinedValue(() => (opts.dispatch_id), () => (resolveStatusDispatchId(status)))), () => (null)),
+        gateway_label: selectDefinedValue(() => (selectDefinedValue(() => (opts.gateway_label), () => (resolveStatusGatewayLabel(status)))), () => (null)),
+        session_key: selectDefinedValue(() => (selectDefinedValue(() => (opts.session_key), () => (resolveStatusSessionKey(status)))), () => (null)),
+      },
+      metadata: {
+        fail_count: status.fail_count,
+        max_fails: maxFails,
+        auto_retry: true,
+      },
+    });
+
     await onModuleFail(telemetryCtx(config), moduleId, {
       ...failEvent,
       presentation: {
@@ -218,11 +274,11 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
       module_dir: moduleDir,
       attempt: status.fail_count,
       fail_count: status.fail_count,
-      dispatch_id: (opts.dispatch_id ?? resolveStatusDispatchId(status) ?? null),
-      gateway_label: (opts.gateway_label ?? resolveStatusGatewayLabel(status) ?? null),
-      session_key: (opts.session_key ?? resolveStatusSessionKey(status) ?? null),
+      dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (opts.dispatch_id), () => (resolveStatusDispatchId(status)))), () => (null))),
+      gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (opts.gateway_label), () => (resolveStatusGatewayLabel(status)))), () => (null))),
+      session_key: (selectDefinedValue(() => (selectDefinedValue(() => (opts.session_key), () => (resolveStatusSessionKey(status)))), () => (null))),
       max_fails: maxFails,
-      last_fail: status.fail_summaries[status.fail_summaries.length - 1] || null,
+      last_fail: selectTruthyValue(() => (status.fail_summaries[status.fail_summaries.length - 1]), () => (null)),
     };
   }
 
@@ -231,6 +287,28 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
     : `Auto-retry exhausted (${autoRetryThreshold}x). Nova must analyze and provide new prompt.`;
   const stats = getRunStats(config);
   if (stats) stats.modules_failed.push(moduleId);
+  const terminalFailureClass = selectTruthyValue(() => (status.fail_summaries[status.fail_summaries.length - 1]?.failure_class), () => (null));
+  applyModuleCompletion(config, moduleDir, status, {
+    target_kind: 'module',
+    target_id: moduleId,
+    phase,
+    attempt: status.fail_count,
+    status: 'ERROR',
+    authority: { kind: 'worker' },
+    reason_code: terminalFailureClass,
+    summary: selectTruthyValue(() => (reason), () => (`${phase} ${isTimeout ? 'timed out' : 'failed'} (attempt ${status.fail_count}/${maxFails})`)),
+    observed: {
+      dispatch_id: selectDefinedValue(() => (selectDefinedValue(() => (opts.dispatch_id), () => (resolveStatusDispatchId(status)))), () => (null)),
+      gateway_label: selectDefinedValue(() => (selectDefinedValue(() => (opts.gateway_label), () => (resolveStatusGatewayLabel(status)))), () => (null)),
+      session_key: selectDefinedValue(() => (selectDefinedValue(() => (opts.session_key), () => (resolveStatusSessionKey(status)))), () => (null)),
+    },
+    metadata: {
+      fail_count: status.fail_count,
+      max_fails: maxFails,
+      auto_retry_threshold: autoRetryThreshold,
+      is_timeout: isTimeout,
+    },
+  });
 
   await onModuleFail(telemetryCtx(config), moduleId, {
     ...failEvent,
@@ -254,24 +332,22 @@ export async function handleFail(config, status, moduleDir, moduleId, maxFails, 
 }
 
 export function buildNovaEscalation(config, status, moduleId, moduleDir, maxFails, phase, isTimeout, autoRetryThreshold, opts = {}) {
-  const dispatchId = opts.dispatch_id ?? resolveStatusDispatchId(status) ?? null;
-  const gatewayLabel = opts.gateway_label ?? resolveStatusGatewayLabel(status) ?? null;
-  const sessionKey = opts.session_key ?? resolveStatusSessionKey(status) ?? null;
+  const dispatchId = selectDefinedValue(() => (selectDefinedValue(() => (opts.dispatch_id), () => (resolveStatusDispatchId(status)))), () => (null));
+  const gatewayLabel = selectDefinedValue(() => (selectDefinedValue(() => (opts.gateway_label), () => (resolveStatusGatewayLabel(status)))), () => (null));
+  const sessionKey = selectDefinedValue(() => (selectDefinedValue(() => (opts.session_key), () => (resolveStatusSessionKey(status)))), () => (null));
   const runId = getRunId(config);
   const reason = isTimeout
     ? `${phase} timed out — agent did not respond within time limit`
     : `${phase} failed ${status.fail_count}x — auto-retry exhausted, Nova must intervene`;
+  const terminalFailureClass = selectTruthyValue(() => (status.fail_summaries[status.fail_summaries.length - 1]?.failure_class), () => (null));
   const failHistory = status.fail_summaries.map(f => ({
     attempt: f.attempt,
     phase: f.phase,
     summary: f.summary,
     failPattern: f.failPattern,
-    failure_class: f.failure_class || normalizeFailureClass(f.phase, f.summary, {
-      isTimeout: f.is_timeout === true,
-      failurePattern: f.failPattern,
-    }),
-    is_timeout: f.is_timeout || false,
-    files_changed: f.files_changed || null,
+    failure_class: failureClassForSummary(f),
+      is_timeout: failureTimeoutFlag(f.is_timeout),
+    files_changed: selectTruthyValue(() => (f.files_changed), () => (null)),
     timestamp: f.timestamp,
   }));
   const moduleStatus = {
@@ -282,7 +358,7 @@ export function buildNovaEscalation(config, status, moduleId, moduleDir, maxFail
     dispatch_id: dispatchId,
     gateway_label: gatewayLabel,
     session_key: sessionKey,
-    forge_commit_hash: status.forge_commit_hash || null,
+    forge_commit_hash: selectTruthyValue(() => (status.forge_commit_hash), () => (null)),
     cost: status.cost,
   };
   return buildPipelineStepResult({
@@ -302,7 +378,7 @@ export function buildNovaEscalation(config, status, moduleId, moduleDir, maxFail
         auto_retry_threshold: autoRetryThreshold,
         remaining_attempts: maxFails - status.fail_count,
         fail_history: failHistory,
-        last_fail: status.fail_summaries[status.fail_summaries.length - 1] || null,
+        last_fail: selectTruthyValue(() => (status.fail_summaries[status.fail_summaries.length - 1]), () => (null)),
         module_status: moduleStatus,
         resume_command: buildFullPipelineResumeCommand(config, 'YOUR_NEW_APPROACH_HERE'),
       },
@@ -319,5 +395,6 @@ export function buildNovaEscalation(config, status, moduleId, moduleDir, maxFail
     },
     terminalAction: PIPELINE_TERMINAL_ACTIONS.REQUEST_HANDOFF,
     terminalScope: PIPELINE_TERMINAL_SCOPES.MODULE,
+    terminalReasonCode: isTimeout ? terminalFailureClass : 'needs_nova',
   });
 }

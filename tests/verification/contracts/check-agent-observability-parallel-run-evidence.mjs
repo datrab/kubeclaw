@@ -35,11 +35,6 @@ function makeEvent(type, payload, identity = {}, ts = '2026-05-17T17:00:00.000Z'
     ts,
     identity: { ...baseIdentity, ...identity },
     payload,
-    masking: {
-      profile: contract.AGENT_OBSERVABILITY_MASKING_PROFILE,
-      content: 'full',
-      masked: [],
-    },
   };
   assert.equal(contract.validateAgentObservabilityIngressEvent(event).ok, true, `${type} fixture must satisfy ingress contract`);
   return event;

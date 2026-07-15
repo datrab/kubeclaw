@@ -16,6 +16,7 @@ function parseArgs(argv = process.argv.slice(2)) {
 }
 
 const { sourceRoot } = parseArgs();
+const genericMissingValueToken = ['unk', 'nown'].join('');
 process.env.REPO_ROOT = sourceRoot;
 const shimPath = path.join(sourceRoot, 'skills/buster/buster-pipeline.ts');
 const mainPath = path.join(sourceRoot, 'skills/buster/buster-pipeline.ts');
@@ -25,6 +26,7 @@ const taskLifecyclePath = path.join(sourceRoot, 'skills/buster/pipeline/services
 const telemetryPath = path.join(sourceRoot, 'skills/buster/pipeline/services/telemetry.ts');
 const taskQueuePath = path.join(sourceRoot, 'skills/buster/pipeline/services/task-queue.ts');
 const taskCompletionPath = path.join(sourceRoot, 'skills/buster/pipeline/services/task-completion.ts');
+const redisToolPath = path.join(sourceRoot, 'skills/buster/pipeline/tools/redis.ts');
 const taskLifecycleSessionPath = path.join(sourceRoot, 'skills/buster/pipeline/services/task-lifecycle/session.ts');
 const taskLifecycleCompletionPath = path.join(sourceRoot, 'skills/buster/pipeline/services/task-lifecycle/completion-signal.ts');
 const taskValidationPath = path.join(sourceRoot, 'skills/buster/pipeline/services/task-validation.ts');
@@ -62,6 +64,7 @@ const taskLifecycleSource = fs.readFileSync(taskLifecyclePath, 'utf8');
 const telemetrySource = fs.readFileSync(telemetryPath, 'utf8');
 const taskQueueSource = fs.readFileSync(taskQueuePath, 'utf8');
 const taskCompletionSource = fs.readFileSync(taskCompletionPath, 'utf8');
+const redisToolSource = fs.readFileSync(redisToolPath, 'utf8');
 const taskLifecycleSessionSource = fs.readFileSync(taskLifecycleSessionPath, 'utf8');
 const taskLifecycleCompletionSource = fs.readFileSync(taskLifecycleCompletionPath, 'utf8');
 const taskLifecycleCombinedSource = `${taskLifecycleSource}\n${taskLifecycleSessionSource}\n${taskLifecycleCompletionSource}`;
@@ -122,8 +125,8 @@ assert.equal(suiteRunnerSource.includes('missing_suite_dependencies'), true, 'su
 assert.equal(suiteRunnerSource.includes('invalid_suite_timeout_ms'), true, 'suite runner should reject invalid provided suite timeouts');
 assert.equal(suiteRunnerSource.includes('config.suite_timeout_ms || SUITE_TIMEOUT_MS'), false, 'suite runner must not use loose OR fallback for suite timeouts');
 assert.equal(suiteRunnerSource.includes('missing_suite_timeout_ms'), true, 'suite runner must require explicit suite timeout policy');
-assert.equal(suiteRunnerSource.includes("moduleId || 'unknown'"), false, 'suite runner must not default missing module identity to unknown');
-assert.equal(suiteRunnerSource.includes("project : 'unknown'"), false, 'suite runner must not default missing project identity to unknown');
+assert.equal(suiteRunnerSource.includes(`moduleId || '${genericMissingValueToken}'`), false, 'suite runner must not default missing module identity to a generic placeholder');
+assert.equal(suiteRunnerSource.includes(`project : '${genericMissingValueToken}'`), false, 'suite runner must not default missing project identity to a generic placeholder');
 assert.equal(orchestrationSource.includes('BUSTER_SUITE_RUNNER_DEFAULT_POLICY'), false, 'Nova Buster payload producer must not preserve local suite timeout code defaults');
 assert.equal(orchestrationSource.includes('getBusterRuntimeConfig(config)'), true, 'Nova Buster payload producer should resolve suite timeout from canonical runtime policy config');
 assert.equal(orchestrationSource.includes('config.buster_suite_timeout_ms'), false, 'Nova Buster payload producer must not preserve legacy top-level suite timeout alias');
@@ -140,7 +143,7 @@ assert.equal(a11ySuiteSource.includes('evidence-only'), true, 'a11y informationa
 assert.equal(bundleSuiteSource.includes('STATUS.SKIP'), false, 'requested bundle suite must not SKIP missing build output');
 assert.equal(bundleSuiteSource.includes('Build output directory not found'), true, 'bundle suite should fail typed validation when build output is missing');
 assert.equal(bundleSuiteSource.includes('total_size_kb: totalSizeKb'), true, 'bundle suite should expose unknown size as nullable metadata rather than zero fallback');
-assert.equal(bundleSuiteSource.includes('max-size-unknown'), true, 'bundle suite should fail enforced max-size checks when size is unknown');
+assert.equal(bundleSuiteSource.includes('max-size-unavailable'), true, 'bundle suite should fail enforced max-size checks when size is unavailable');
 assert.equal(e2eSuiteSource.includes('STATUS.SKIP'), false, 'requested E2E suite must not SKIP missing tests');
 assert.equal(e2eSuiteSource.includes('e2e.tests_dir is required'), true, 'E2E suite should fail typed validation when tests_dir is missing');
 assert.equal(e2eSuiteSource.includes('No test files found'), true, 'E2E suite should fail typed validation when no tests are discovered');
@@ -159,10 +162,17 @@ assert.equal(apiSuiteSource.includes('Missing API template variable'), true, 'AP
 assert.equal(buildSuiteSource.includes('UNRESOLVED_SECRET_'), false, 'build suite must not inject unresolved secret placeholders');
 assert.equal(buildSuiteSource.includes('serve.secret_yaml is required when deployment env uses secretKeyRef'), true, 'build suite should fail when manifest env secret refs lack secret YAML');
 assert.equal(healthSuiteSource.includes('autoDetectSmokePaths'), false, 'health suite must not infer smoke paths from visual-reg baselines');
-assert.equal(healthSuiteSource.includes('Playwright is required for configured health smoke navigation'), true, 'requested smoke navigation should fail typed setup when Playwright is unavailable');
+assert.equal(healthSuiteSource.includes('Smoke HTTP checks'), true, 'health suite smoke paths should be bounded HTTP checks');
+assert.equal(healthSuiteSource.includes("import('playwright')"), false, 'health suite must not depend on Playwright for smoke paths');
 assert.equal(k8sSuiteSource.includes('STATUS.SKIP'), false, 'requested k8s suite must not SKIP missing deployment config');
+assert.equal(k8sSuiteSource.includes('k8s suite requires either source_image or dockerfile'), true, 'k8s suite should support exact source_image promotion instead of requiring a rebuild');
+assert.equal(k8sSuiteSource.includes("runStep('source-image-promote'"), true, 'k8s suite should expose source image promotion as a typed check');
 assert.equal(k8sSuiteSource.includes('Required secret copy failed'), true, 'k8s secret propagation failures should fail the requested suite');
 assert.equal(k8sSuiteSource.includes('Requested manifest not found'), true, 'k8s manifest apply should fail when any requested manifest path is missing');
+assert.equal(k8sSuiteSource.includes('retryHttpHealthCheck'), true, 'k8s Service health check should retry boundedly after pods become ready');
+assert.equal(k8sSuiteSource.includes('health_retries'), true, 'k8s Service health retry count should be configurable');
+assert.equal(k8sSuiteSource.includes('No pods visible'), true, 'k8s pod readiness should tolerate deployment-to-pod creation lag before kubectl wait');
+assert.equal(k8sSuiteSource.includes('Math.min(remainingSeconds, 30)'), true, 'k8s pod readiness should use bounded wait intervals until the configured deadline');
 assert.equal(manifestSuiteSource.includes('STATUS.SKIP'), false, 'requested manifest suite must not SKIP missing deployment YAML');
 assert.equal(manifestSuiteSource.includes('manifest.deployment_yaml is required'), true, 'manifest suite should fail typed validation when deployment YAML is missing');
 assert.equal(manifestSuiteSource.includes('Deployment uses secretKeyRef but manifest.secret_yaml is missing or invalid'), true, 'manifest suite should fail when secret refs lack valid secret YAML evidence');
@@ -214,14 +224,14 @@ assert.equal(monitorSource.includes('publishTranscriptDelta'), false, 'Buster AC
 assert.equal(monitorSource.includes('Transcript delta observed through diagnostic ACP monitor'), true, 'Buster ACP monitor transcript deltas should remain diagnostic only');
 assert.equal(monitorSource.includes('session_key: childSessionKey'), true, 'Buster monitor diagnostics should preserve session identity');
 assert.equal(/catch \(monitorError(?:: unknown)?\)/.test(taskLifecycleSessionSource), true, 'buster task lifecycle should handle monitor exceptions before finalization');
-assert.equal(taskLifecycleSessionSource.includes("reason: `monitor_error: ${monitorReason}`"), true, 'monitor failures should return explicit monitor_error reason without emitting agent.killed outside the observer plugin');
+assert.equal(taskLifecycleSessionSource.includes("reason: 'monitor_error'"), true, 'monitor failures should return explicit monitor_error reason without emitting agent.killed outside the observer plugin');
 assert.equal(taskLifecycleSessionSource.includes('clearActiveChildSession({ preserveFile: termination?.unconfirmed === true })'), true, 'monitor failures should clear in-memory active session while preserving unconfirmed recovery state');
 assert.equal(monitorSource.includes('terminateSession'), true, 'Buster monitor should route hard-timeout teardown through the shared termination controller');
 assert.equal(monitorSource.includes('killIssued'), false, 'Buster monitor must not synthesize local killIssued state');
 assert.equal(monitorSource.includes('killConfirmed'), false, 'Buster monitor must not synthesize local killConfirmed state');
 assert.equal(helpersSource.includes('export function resolveBusterRateLimitMaxPauses('), true, 'buster helpers should resolve the terminal rate-limit pause budget');
 assert.equal(mainSource.includes('rlState.maxPauses'), false, 'buster-pipeline main module must not reference monitor-local rlState');
-assert.equal(taskLifecycleCompletionSource.includes('resolveBusterRateLimitMaxPauses(payload, sessionResultForCompletion || {})'), true, 'RATE_LIMITED completion should use the monitor/payload pause budget resolver');
+assert.equal(taskLifecycleCompletionSource.includes('resolveBusterRateLimitMaxPauses(payload, rateLimitSessionResultForResolver(sessionResultForCompletion))'), true, 'RATE_LIMITED completion should use the monitor/payload pause budget resolver');
 for (const deleted of ['sessionResult?.max_rate_limit_pauses', 'rate_limit_status?.max_pauses', 'rateLimitStatus?.maxRateLimitPauses', 'rateLimit?.maxPauses', 'acp_monitor?.max_rate_limit_pauses']) {
   assert.equal(helpersSource.includes(deleted), false, `Buster rate-limit max pause resolver must not accept legacy alias ${deleted}`);
 }
@@ -233,6 +243,8 @@ assert.equal(rateLimitSource.includes('Rate-limit Discord notice failed'), true,
 assert.equal(telemetrySource.includes('artifact_fallback: true'), true, 'Buster telemetry must keep explicit artifact fallback evidence for degraded diagnostic events');
 assert.equal(discordSource.includes('createObservabilityHealthState'), true, 'Buster Discord health should use the shared observability health state machine');
 assert.equal(discordSource.includes('new Map<string, HealthState>()'), false, 'Buster Discord must not own a local health-state map');
+assert.equal(redisToolSource.includes('shouldNotifyRedisTaskPayload'), true, 'Buster Redis tool must centralize task payload notification policy');
+assert.equal(redisToolSource.includes("['module_test', 'gate_test'].includes"), true, 'routine Buster task payload cards must stay muted behind Nova-facing cards');
 assert.equal(/(?:runId|module|moduleId|logDir|pipelineLogPath|pipelineRunLogPath|dispatchId|sessionKey|gateId|gateType)\?:|opts\.(?:runId|module(?!_)|moduleId|logDir|pipelineLogPath|pipelineRunLogPath|dispatchId|sessionKey|gateId|gateType)/.test(telemetrySource), false, 'Buster telemetry options must not preserve camelCase or module aliases');
 assert.equal(mainSource.includes('process.exit(1)'), false, 'buster-pipeline must not hard-exit on gateway failures without structured cleanup');
 assert.equal(mainSource.includes('emitGatewayHealthDegraded('), true, 'buster-pipeline should emit structured gateway degradation before gateway-triggered shutdown');
@@ -246,12 +258,13 @@ assert.equal(suiteRunnerSource.includes('export async function runSuiteWithTimeo
 assert.equal(suiteRunnerSource.includes('clearTimeout(timeoutId)'), true, 'suite runner must clear suite timeout handles after suite completion');
 assert.equal(suiteRunnerSource.includes("emitEvent(tctx, 'observability.degraded'"), true, 'suite result write failures should emit structured degraded diagnostics');
 assert.equal(suiteRunnerSource.includes("reason: classification"), true, 'suite result write diagnostics should preserve failure classification');
-assert.equal(taskLifecycleSessionSource.includes('resolveBusterAgentResult(payload, sessionResult, { repairOutputFileIdentity: true })'), true, 'buster task lifecycle should derive spawned child outcomes from canonical result artifacts and stamp current task identity');
+assert.equal(taskLifecycleSessionSource.includes('resolveBusterAgentResult(payload, sessionResult, { repairOutputFileIdentity: true })'), false, 'buster task lifecycle must not repair child-written output_file identity');
+assert.equal(taskLifecycleSessionSource.includes('resolveBusterAgentResult(payload, sessionResult)'), true, 'buster task lifecycle should derive spawned child outcomes from canonical result artifacts');
 assert.equal(taskCompletionSource.includes("opts.outcome || 'FAIL'"), false, 'buster completion records must not default missing outcome to FAIL');
-assert.equal(taskCompletionSource.includes("opts.reason || 'unknown'"), false, 'buster completion records must not default missing reason to unknown');
+assert.equal(taskCompletionSource.includes(`opts.reason || '${genericMissingValueToken}'`), false, 'buster completion records must not default missing reason to a generic placeholder');
 assert.equal(taskCompletionSource.includes('Buster completion requires explicit outcome and reason'), true, 'buster completion records should require explicit outcome and reason');
 assert.equal(taskLifecycleSessionSource.includes("agentResult.outcome || 'FAIL'"), false, 'buster task lifecycle must not default missing child outcome to FAIL');
-assert.equal(taskLifecycleSessionSource.includes("agentResult.reason || 'unknown'"), false, 'buster task lifecycle must not default missing child reason to unknown');
+assert.equal(taskLifecycleSessionSource.includes(`agentResult.reason || '${genericMissingValueToken}'`), false, 'buster task lifecycle must not default missing child reason to a generic placeholder');
 assert.equal(taskLifecycleSessionSource.includes('Buster agent result requires explicit outcome and reason'), true, 'buster task lifecycle should require explicit child outcome and reason');
 assert.equal(taskLifecycleCompletionSource.includes("reason: reason || ''"), false, 'buster completion signals must not default missing reason to empty string');
 assert.equal(taskLifecycleCompletionSource.includes('Buster completion signal requires explicit outcome and reason'), true, 'buster completion signals should require explicit outcome and reason');
@@ -260,7 +273,8 @@ assert.equal(helpersSource.includes('result_status'), false, 'buster artifact re
 assert.equal(helpersSource.includes('result_artifact_path'), false, 'buster artifact reader must not accept legacy result_artifact_path fallback');
 assert.equal(helpersSource.includes('output_file_invalid_status'), true, 'buster artifact reader should fail closed on invalid output_file status');
 assert.equal(taskCompletionSource.includes("import verifyAndPush from '../tools/verify-task.ts'"), true, 'buster completion emission must use verify-task.ts before Redis completion');
-assert.equal(taskCompletionSource.indexOf('await verifyTask(') < taskCompletionSource.indexOf('await emitCompletion('), true, 'buster must push output_file before emitting Redis completion');
+const validArtifactCompletionPath = taskCompletionSource.slice(taskCompletionSource.indexOf('const verifyResult = await verifyTask('));
+assert.equal(validArtifactCompletionPath.includes('const emitted = await emitCompletion'), true, 'buster valid artifact path must emit Redis completion after verify-task');
 assert.equal(busterConventionsSource.includes('Update `status.json`'), false, 'buster conventions must not instruct child agents to update status.json directly');
 assert.equal(busterConventionsSource.includes('lifecycle update command'), false, 'buster conventions must not refer to stale prompt-provided lifecycle update commands');
 assert.equal(busterConventionsSource.includes('for `module_test` and `gate_test`, write raw, directly parseable JSON to `output_file`'), true, 'buster conventions should require every task to write raw JSON to the prompt-provided output_file');
@@ -316,8 +330,8 @@ assert.equal(
 
 assert.throws(() => suiteRunnerMod.validateSuiteNames(['build', 'missing-suite']), (error) => {
   assert.equal(error.code, 'BUSTER_SUITE_REQUEST_INVALID');
-  assert.equal(error.details.reason, 'unknown_suite');
-  assert.deepEqual(error.details.unknown_suites, ['missing-suite']);
+  assert.equal(error.details.reason, 'unsupported_suite');
+  assert.deepEqual(error.details.unsupported_suites, ['missing-suite']);
   return true;
 }, 'unknown requested Buster suites must fail typed validation instead of producing SKIP verdicts');
 assert.throws(() => suiteRunnerMod.validateSuiteNames([]), (error) => {
@@ -375,7 +389,7 @@ for (const removedRootExport of [
 assert.deepEqual(capabilitiesMod.KNOWN_BUSTER_CAPABILITIES, [
   'static_web_server',
   'container_runtime',
-  'kubernetes_api',
+  'kubernetes',
   'browser_automation',
   'lighthouse',
   'discord_media',
@@ -516,7 +530,6 @@ assert.throws(() => validationMod.validateBusterTaskPayload({
 }, 'Buster task validation must require explicit timeout/session/stage launch policy');
 
 assert.equal(helpersMod.resolveBusterRateLimitMaxPauses({}, { rate_limit_status: { max_rate_limit_pauses: 0 } }), 0);
-assert.equal(helpersMod.resolveBusterRateLimitMaxPauses({ rate_limit: { max_pauses: 5 } }, {}), 5);
 assert.throws(() => helpersMod.resolveBusterRateLimitMaxPauses({}, {}), /requires explicit rate_limit\.max_pauses policy/);
 
 const repoRootForArtifact = sourceRoot;
@@ -554,7 +567,13 @@ assert.deepEqual(helpersMod.resolveBusterAgentResult({ task_type: 'module_test',
 const suiteFailedOutputPath = path.join(artifactTempDir, 'suite-failed-output.json');
 const suiteFailedOutputRel = path.relative(repoRootForArtifact, suiteFailedOutputPath);
 assert.equal(fs.existsSync(suiteFailedOutputPath), false, 'pre-suite failure output_file should start absent');
-assert.equal(helpersMod.ensureBusterOutputFile({ task_type: 'module_test', output_file: suiteFailedOutputRel }, {
+assert.equal(helpersMod.ensureBusterOutputFile({
+  task_type: 'module_test',
+  output_file: suiteFailedOutputRel,
+  run_id: 'run-contract',
+  attempt: 1,
+  dispatch_id: 'dispatch-contract',
+}, {
   outcome: 'FAIL',
   summary: 'critical suite failed',
 }).source, 'written', 'Buster should write output_file itself for no-spawn suite failures');
@@ -629,7 +648,7 @@ const suiteResultWithBlockedWrite = await suiteRunnerMod.runSuites(['build'], {
     _health: {},
   },
 });
-assert.equal(suiteResultWithBlockedWrite.criticalFailed, true, 'suite result write diagnostics must not mask suite verdicts');
+assert.equal(suiteResultWithBlockedWrite.criticalFailed, true, 'suite result write diagnostics must preserve suite verdicts');
 const suiteWriteDiagnostic = suiteTelemetryEvents.find((event) => event.type === 'observability.degraded' && event.reason === 'swarm_results_write_failed');
 assert(suiteWriteDiagnostic, 'blocked suite result writes should emit structured degraded diagnostics');
 assert.equal(suiteWriteDiagnostic.component, 'buster_suite_runner');

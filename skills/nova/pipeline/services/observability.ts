@@ -2,18 +2,50 @@ import fs from 'fs';
 import path from 'path';
 import { log } from '../core/logger.ts';
 import { costLogDir } from '../core/paths.ts';
-import { getRunId } from '../core/runtime.ts';
+import { createOpaqueId, getRunId } from '../core/runtime.ts';
 import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError } from '../noncritical-reporting.ts';
 import { appendDurableOperatorAlert } from './durable-operator-alert.ts';
 import { getPipelineArtifactBundle } from './artifact-bundle.ts';
+import { buildRunFacts } from './run-facts.ts';
 import { emitTelemetryStreamEvent } from './telemetry-stream.ts';
 import { TelemetryPayloadInvalidError, validateTelemetryEventPayload } from './telemetry/payload-schema.ts';
 import { createObservabilityHealthState } from './observability-health.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 const _observabilityHealth = createObservabilityHealthState();
+const OBSERVABILITY_HEALTH_SCOPE_DEFAULT = 'default';
+const OBSERVABILITY_SOURCE_PIPELINE = 'pipeline';
+const OBSERVABILITY_PROJECT_MISSING = 'missing_project';
+const STRUCTURED_EVENT_APPEND_FAILED_DETAIL = 'structured event append failed';
+const USAGE_COUNT_MISSING = 0;
+const ESTIMATED_COST_MISSING = null;
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function textValue(value) {
+  return typeof value === 'string' ? value : '';
+}
+
+function selectPresentValue(...values) {
+  for (const value of values) {
+    if (typeof value === 'string' && value.length > 0) return value;
+  }
+  return '';
+}
+
+function numericCount(value) {
+  const count = Number(value);
+  return Number.isFinite(count) ? count : USAGE_COUNT_MISSING;
+}
+
+function budgetThresholdConfig(config) {
+  return objectRecord(config?.observability?.budget);
+}
 
 function payloadForSchemaValidation(payload = {}) {
-  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) return payload;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!payload), () => (typeof payload !== 'object'))), () => (Array.isArray(payload)))) return payload;
   const {
     v,
     type,
@@ -27,18 +59,30 @@ function payloadForSchemaValidation(payload = {}) {
 }
 
 function resolveConfig(input = {}) {
-  return input?.config || input || {};
+  return objectRecord(selectDefinedValue(() => (input?.config), () => (input)));
 }
 
-function normalizeHealthPart(value, fallback = 'unknown') {
-  const normalized = String(value ?? '').trim();
-  return normalized || fallback;
+function requireHealthKeyPart(value, field) {
+  const normalized = textValue(value).trim();
+  if (normalized.length > 0) return normalized;
+  throw new TypeError(`observability health key requires ${field}`);
+}
+
+function explicitRunIdAuthority(config = {}, data = {}, options = {}) {
+  const optionRunId = textValue(options.runId).trim();
+  if (optionRunId) return optionRunId;
+  const dataRunId = textValue(data.run_id).trim();
+  if (dataRunId) return dataRunId;
+  const contextRunId = textValue(config?._runId).trim();
+  if (contextRunId) return contextRunId;
+  const configRunId = textValue(config?.run_id).trim();
+  if (configRunId) return configRunId;
+  return null;
 }
 
 function observabilityRunId(config = {}, data = {}, options = {}) {
-  if (options.runId || data.run_id || config?._runId || config?.run_id) {
-    return options.runId || data.run_id || config?._runId || config?.run_id;
-  }
+  const explicitRunId = explicitRunIdAuthority(config, data, options);
+  if (explicitRunId) return explicitRunId;
   try {
     return getRunId(config);
   } catch (_error) {
@@ -49,55 +93,55 @@ function observabilityRunId(config = {}, data = {}, options = {}) {
 function observabilityHealthKey(config = {}, data = {}, options = {}) {
   if (options.healthKey) return String(options.healthKey);
   const runId = observabilityRunId(config, data, options);
-  const scope = options.scope || data.scope || 'default';
+  const scope = selectPresentValue(options.scope, data.scope, OBSERVABILITY_HEALTH_SCOPE_DEFAULT);
   return [
-    normalizeHealthPart(config?.project),
-    normalizeHealthPart(runId),
-    normalizeHealthPart(data.component),
-    normalizeHealthPart(data.surface),
-    normalizeHealthPart(data.reason),
-    normalizeHealthPart(scope),
+    requireHealthKeyPart(config?.project, 'config.project'),
+    requireHealthKeyPart(runId, 'run_id'),
+    requireHealthKeyPart(data.component, 'component'),
+    requireHealthKeyPart(data.surface, 'surface'),
+    requireHealthKeyPart(data.reason, 'reason'),
+    requireHealthKeyPart(scope, 'scope'),
   ].join(':');
 }
 
 function buildObservabilityPayload(type, config = {}, data = {}, timestamps = {}) {
   const base = {
-    component: data.component || null,
-    surface: data.surface || null,
-    reason: data.reason || null,
-    detail: data.detail || null,
-    module_id: data.module_id || null,
-    gate_id: data.gate_id || null,
-    gate_type: data.gate_id != null || data.gate_type != null ? (data.gate_type ?? null) : undefined,
-    gateway_label: data.gateway_label ?? null,
-    session_key: data.session_key || null,
-    attempt: data.attempt ?? null,
-    dispatch_id: data.dispatch_id || null,
-    agent_type: data.agent_type || null,
-    impacted_event_type: data.impacted_event_type || null,
-    stream_key: data.stream_key || null,
-    hook_id: data.hook_id || null,
-    stage_id: data.stage_id || null,
-    validation_errors: data.validation_errors || null,
-    stdout: data.stdout || null,
-    error: data.error || null,
-    authorization: data.authorization || null,
-    payload: data.payload || null,
-    transcript: data.transcript || null,
+    component: selectTruthyValue(() => (data.component), () => (null)),
+    surface: selectTruthyValue(() => (data.surface), () => (null)),
+    reason: selectTruthyValue(() => (data.reason), () => (null)),
+    detail: selectTruthyValue(() => (data.detail), () => (null)),
+    module_id: selectTruthyValue(() => (data.module_id), () => (null)),
+    gate_id: selectTruthyValue(() => (data.gate_id), () => (null)),
+    gate_type: selectTruthyValue(() => (data.gate_id != null), () => (data.gate_type != null)) ? (selectDefinedValue(() => (data.gate_type), () => (null))) : undefined,
+    gateway_label: selectDefinedValue(() => (data.gateway_label), () => (null)),
+    session_key: selectTruthyValue(() => (data.session_key), () => (null)),
+    attempt: selectDefinedValue(() => (data.attempt), () => (null)),
+    dispatch_id: selectTruthyValue(() => (data.dispatch_id), () => (null)),
+    agent_type: selectTruthyValue(() => (data.agent_type), () => (null)),
+    impacted_event_type: selectTruthyValue(() => (data.impacted_event_type), () => (null)),
+    stream_key: selectTruthyValue(() => (data.stream_key), () => (null)),
+    hook_id: selectTruthyValue(() => (data.hook_id), () => (null)),
+    stage_id: selectTruthyValue(() => (data.stage_id), () => (null)),
+    validation_errors: selectTruthyValue(() => (data.validation_errors), () => (null)),
+    stdout: selectTruthyValue(() => (data.stdout), () => (null)),
+    error: selectTruthyValue(() => (data.error), () => (null)),
+    authorization: selectTruthyValue(() => (data.authorization), () => (null)),
+    payload: selectTruthyValue(() => (data.payload), () => (null)),
+    transcript: selectTruthyValue(() => (data.transcript), () => (null)),
   };
 
   if (type === 'observability.restored') {
     return {
       ...base,
-      degraded_at: timestamps.degradedAt || data.degraded_at || null,
-      restored_at: timestamps.restoredAt || data.restored_at || null,
-      restored_after_ms: timestamps.restoredAfterMs ?? data.restored_after_ms ?? null,
+      degraded_at: selectTruthyValue(() => (selectTruthyValue(() => (timestamps.degradedAt), () => (data.degraded_at))), () => (null)),
+      restored_at: selectTruthyValue(() => (selectTruthyValue(() => (timestamps.restoredAt), () => (data.restored_at))), () => (null)),
+      restored_after_ms: selectDefinedValue(() => (timestamps.restoredAfterMs), () => (null)),
     };
   }
 
   return {
     ...base,
-    degraded_at: timestamps.degradedAt || data.degraded_at || null,
+    degraded_at: selectTruthyValue(() => (selectTruthyValue(() => (timestamps.degradedAt), () => (data.degraded_at))), () => (null)),
   };
 }
 
@@ -110,11 +154,11 @@ function appendObservabilityDiskEvent(config = {}, eventType, payload = {}) {
       classification: `${eventType}_disk_append_failed`,
       incidentKey: buildNonBlockingIncidentKey(
         'observability',
-        config?.project || 'unknown',
-        observabilityRunId(config) || 'unknown',
+        selectDefinedValue(() => (config?.project), () => ('missing_project')),
+        selectDefinedValue(() => (observabilityRunId(config)), () => ('missing_run_id')),
         eventType,
-        payload?.component || 'unknown',
-        payload?.surface || 'unknown',
+        selectDefinedValue(() => (payload?.component), () => ('missing_observability_component')),
+        selectDefinedValue(() => (payload?.surface), () => ('missing_observability_surface')),
       ),
       message: `${eventType} disk append failed`,
       error: result?.error,
@@ -129,14 +173,14 @@ async function emitObservabilityTransition(config = {}, eventType, payload = {},
   const durable = appendDurableOperatorAlert(config, eventType, payload, {
     severity,
     level: severity,
-    source: options.source || 'pipeline',
+    source: selectPresentValue(options.source, OBSERVABILITY_SOURCE_PIPELINE),
     emitter: 'nova/pipeline/services/observability',
     occurredAt: eventType === 'observability.restored' ? payload.restored_at : payload.degraded_at,
     runId: observabilityRunId(config, payload, options),
-    moduleId: payload.module_id || null,
-    gateId: payload.gate_id || null,
-    gateType: payload.gate_type || null,
-    attempt: payload.attempt ?? null,
+    moduleId: selectTruthyValue(() => (payload.module_id), () => (null)),
+    gateId: selectTruthyValue(() => (payload.gate_id), () => (null)),
+    gateType: selectTruthyValue(() => (payload.gate_type), () => (null)),
+    attempt: selectDefinedValue(() => (payload.attempt), () => (null)),
   });
   const disk = appendObservabilityDiskEvent(config, eventType, payload);
   const stream = await emitTelemetryStreamEvent(config, eventType, payload, {
@@ -151,14 +195,14 @@ export async function recordObservabilityDegraded(ctxOrConfig = {}, data = {}, o
   const config = resolveConfig(ctxOrConfig);
   const key = observabilityHealthKey(config, data, options);
   const transition = _observabilityHealth.markDegraded(key, {
-    degraded_at: data.degraded_at || null,
-    reason: data.reason || null,
-    component: data.component || null,
-    surface: data.surface || null,
-    streamKey: data.stream_key || null,
+    degraded_at: selectTruthyValue(() => (data.degraded_at), () => (null)),
+    reason: selectTruthyValue(() => (data.reason), () => (null)),
+    component: selectTruthyValue(() => (data.component), () => (null)),
+    surface: selectTruthyValue(() => (data.surface), () => (null)),
+    streamKey: selectTruthyValue(() => (data.stream_key), () => (null)),
   });
   if (!transition.shouldEmit) {
-    return { emitted: false, duplicate: transition.duplicate, restored: false, key, degradedAt: transition.degradedAt || null };
+    return { emitted: false, duplicate: transition.duplicate, restored: false, key, degradedAt: selectTruthyValue(() => (transition.degradedAt), () => (null)) };
   }
 
   const { degradedAt } = transition;
@@ -176,10 +220,10 @@ export async function recordObservabilityRestored(ctxOrConfig = {}, data = {}, o
   const { previous: prev = {}, degradedAt, restoredAt, restoredAfterMs } = transition;
   const payload = buildObservabilityPayload('observability.restored', config, {
     ...data,
-    stream_key: data.stream_key || prev.streamKey || null,
-    reason: data.reason || prev.reason || null,
-    component: data.component || prev.component || null,
-    surface: data.surface || prev.surface || null,
+    stream_key: selectTruthyValue(() => (selectTruthyValue(() => (data.stream_key), () => (prev.streamKey))), () => (null)),
+    reason: selectTruthyValue(() => (selectTruthyValue(() => (data.reason), () => (prev.reason))), () => (null)),
+    component: selectTruthyValue(() => (selectTruthyValue(() => (data.component), () => (prev.component))), () => (null)),
+    surface: selectTruthyValue(() => (selectTruthyValue(() => (data.surface), () => (prev.surface))), () => (null)),
   }, { degradedAt, restoredAt, restoredAfterMs });
   const outputs = await emitObservabilityTransition(config, 'observability.restored', payload, options);
   return { emitted: true, duplicate: false, restored: true, key, degradedAt, restoredAt, payload, ...outputs };
@@ -205,11 +249,12 @@ export function appendStructuredEvent(config, eventType, payload = {}) {
   try {
     const event = {
       v: 1,
+      event_id: createOpaqueId('event'),
       type: eventType,
       ts: new Date().toISOString(),
       run_id: observabilityRunId(config),
-      project: config.project || '',
-      source: 'pipeline',
+      project: selectPresentValue(config.project, OBSERVABILITY_PROJECT_MISSING),
+      source: OBSERVABILITY_SOURCE_PIPELINE,
       emitter: 'nova/pipeline/services/observability',
       ...payload,
     };
@@ -232,7 +277,7 @@ export async function appendStructuredEventMirror(config, eventType, payload = {
       surface: 'pipeline_jsonl',
       reason: 'structured_event_append_failed',
       detail: 'structured event append restored',
-      impacted_event_type: eventType || null,
+      impacted_event_type: selectTruthyValue(() => (eventType), () => (null)),
     });
     return true;
   }
@@ -240,8 +285,8 @@ export async function appendStructuredEventMirror(config, eventType, payload = {
     component: 'observability',
     surface: 'pipeline_jsonl',
     reason: 'structured_event_append_failed',
-    detail: result?.error?.message || 'structured event append failed',
-    impacted_event_type: eventType || null,
+    detail: selectPresentValue(result?.error?.message, STRUCTURED_EVENT_APPEND_FAILED_DETAIL),
+    impacted_event_type: selectTruthyValue(() => (eventType), () => (null)),
   });
   return false;
 }
@@ -290,10 +335,10 @@ export function recordUsageSnapshot(config: any, opts: Record<string, any> = {})
       ...(attempt != null && { attempt }),
       ...(sessionKey && { session_key: sessionKey }),
       ...(eventId && { event_id: eventId }),
-      source: source || 'unknown',
-      input_tokens: inputTokens ?? null,
-      output_tokens: outputTokens ?? null,
-      estimated_cost_usd: estimatedCostUsd ?? null,
+      source: selectDefinedValue(() => (source), () => ('missing_source')),
+      input_tokens: selectDefinedValue(() => (inputTokens), () => (null)),
+      output_tokens: selectDefinedValue(() => (outputTokens), () => (null)),
+      estimated_cost_usd: selectDefinedValue(() => (estimatedCostUsd), () => (null)),
       partial,
     };
     fs.mkdirSync(logDir, { recursive: true });
@@ -306,7 +351,7 @@ export function recordUsageSnapshot(config: any, opts: Record<string, any> = {})
 export function hasUsageSnapshotEvent(config: any, eventId: string | null | undefined) {
   if (!eventId) return false;
   const logDir = costLogDir(config), snapshotsPath = logDir ? path.join(logDir, 'usage-snapshots.jsonl') : null;
-  if (!snapshotsPath || !fs.existsSync(snapshotsPath)) return false;
+  if (selectTruthyValue(() => (!snapshotsPath), () => (!fs.existsSync(snapshotsPath)))) return false;
 
   try {
     const raw = fs.readFileSync(snapshotsPath, 'utf8').trim();
@@ -336,7 +381,7 @@ const EMPTY_USAGE = () => ({
 });
 
 function computePercentUsed(current, limit) {
-  if (current == null || limit == null || !Number.isFinite(Number(current)) || !Number.isFinite(Number(limit)) || Number(limit) === 0) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (current == null), () => (limit == null))), () => (!Number.isFinite(Number(current))))), () => (!Number.isFinite(Number(limit))))), () => (Number(limit) === 0))) {
     return null;
   }
   return Math.round((Number(current) / Number(limit)) * 1000) / 10;
@@ -346,7 +391,7 @@ function addToSlice(slice, inp, out, cost, partial) {
   slice.input_tokens += inp;
   slice.output_tokens += out;
   if (cost !== null) {
-    slice.estimated_cost_usd = (slice.estimated_cost_usd ?? 0) + cost;
+    slice.estimated_cost_usd = numericCount(slice.estimated_cost_usd) + cost;
   }
   if (partial) slice.partial = true;
 }
@@ -357,7 +402,7 @@ function addToSlice(slice, inp, out, cost, partial) {
  */
 export function aggregateUsage(config, options = {}) {
   const logDir = costLogDir(config), snapshotsPath = logDir ? path.join(logDir, 'usage-snapshots.jsonl') : null;
-  if (!snapshotsPath || !fs.existsSync(snapshotsPath)) return EMPTY_USAGE();
+  if (selectTruthyValue(() => (!snapshotsPath), () => (!fs.existsSync(snapshotsPath)))) return EMPTY_USAGE();
 
   try {
     const raw = fs.readFileSync(snapshotsPath, 'utf8').trim();
@@ -385,9 +430,9 @@ export function aggregateUsage(config, options = {}) {
         seenEventIds.add(s.event_id);
       }
 
-      const inp = s.input_tokens ?? 0;
-      const out = s.output_tokens ?? 0;
-      const cost = s.estimated_cost_usd ?? null;
+      const inp = numericCount(s.input_tokens);
+      const out = numericCount(s.output_tokens);
+      const cost = selectDefinedValue(() => (s.estimated_cost_usd), () => (ESTIMATED_COST_MISSING));
       const partial = !!s.partial;
 
       addToSlice(result.run, inp, out, cost, partial);
@@ -440,8 +485,8 @@ export function aggregateUsage(config, options = {}) {
  */
 export function checkBudgetThresholds(usage, thresholds = {}) {
   const warnings = [];
-  const totalCost = usage?.run?.estimated_cost_usd ?? null;
-  const totalTokens = (usage?.run?.input_tokens ?? 0) + (usage?.run?.output_tokens ?? 0);
+  const totalCost = selectDefinedValue(() => (usage?.run?.estimated_cost_usd), () => (null));
+  const totalTokens = (usage?.run?.input_tokens) + (usage?.run?.output_tokens);
 
   if (thresholds.warn_cost_usd != null && totalCost !== null && totalCost >= thresholds.warn_cost_usd) {
     warnings.push({
@@ -496,7 +541,7 @@ export function checkBudgetThresholds(usage, thresholds = {}) {
 export function isBudgetExceeded(config) {
   try {
     const usage = aggregateUsage(config, { strict: true });
-    const thresholds = config?.observability?.budget || {};
+    const thresholds = budgetThresholdConfig(config);
     const warnings = checkBudgetThresholds(usage, thresholds);
     return warnings.some(w => w.type === 'budget.exceeded');
   } catch (error) {
@@ -504,7 +549,7 @@ export function isBudgetExceeded(config) {
       log,
       reporter: 'observability',
       classification: 'budget_limit_check_failed',
-      incidentKey: buildNonBlockingIncidentKey('observability', config?.project || 'unknown', observabilityRunId(config) || 'unknown', 'budget_limit_check_failed'),
+      incidentKey: buildNonBlockingIncidentKey('observability', selectDefinedValue(() => (config?.project), () => ('missing_project')), selectDefinedValue(() => (observabilityRunId(config)), () => ('missing_run_id')), 'budget_limit_check_failed'),
       message: 'budget limit check failed; treating hard budget state as exceeded pending operator review',
       error,
       level: 'DEBUG',
@@ -518,7 +563,9 @@ export function isBudgetExceeded(config) {
  * Non-blocking.
  */
 export function emitBudgetWarnings(config, warnings = []) {
-  const logDir = costLogDir(config); if (!logDir || !warnings.length) return;
+  const logDir = costLogDir(config);
+  if (!logDir) return;
+  if (selectTruthyValue(() => (!Array.isArray(warnings)), () => (warnings.length === 0))) return;
   try {
     fs.mkdirSync(logDir, { recursive: true });
     for (const w of warnings) {
@@ -542,11 +589,12 @@ export function emitBudgetWarnings(config, warnings = []) {
  *
  * @returns {object|null} the report object, or null on failure
  */
-export function writeCostReport(config) {
+export function writeCostReport(config, options = {}) {
   const logDir = costLogDir(config); if (!logDir) return null;
   try {
     const usage = aggregateUsage(config);
-    const thresholds = config?.observability?.budget || {};
+    const runFacts = buildRunFacts(config, options.progress);
+    const thresholds = budgetThresholdConfig(config);
     const warnings = checkBudgetThresholds(usage, thresholds);
 
     let availabilityStatus;
@@ -557,7 +605,7 @@ export function writeCostReport(config) {
     } else if (usage.run.estimated_cost_usd !== null && usage.run.partial) {
       availabilityStatus = 'partial';
       availabilityNote = 'Some usage snapshots marked partial — totals may be incomplete.';
-    } else if (usage.run.input_tokens > 0 || usage.run.output_tokens > 0) {
+    } else if (selectTruthyValue(() => (usage.run.input_tokens > 0), () => (usage.run.output_tokens > 0))) {
       availabilityStatus = 'tokens_only';
       availabilityNote = 'Dollar cost unavailable for this provider/auth mode. Token counts recorded.';
     } else {
@@ -568,7 +616,8 @@ export function writeCostReport(config) {
     const report = {
       generated_at: new Date().toISOString(),
       run_id: observabilityRunId(config),
-      project: config.project || '',
+      project: selectPresentValue(config.project, OBSERVABILITY_PROJECT_MISSING),
+      run_facts: runFacts,
       usage,
       warnings,
       availability: {
@@ -580,8 +629,8 @@ export function writeCostReport(config) {
     fs.mkdirSync(logDir, { recursive: true });
     fs.writeFileSync(path.join(logDir, 'cost-report.json'), JSON.stringify(report, null, 2));
 
-    const modulesStr = Object.keys(usage.by_module).length;
-    const gatesStr = Object.keys(usage.by_gate).length;
+    const modulesStr = Number.isFinite(Number(runFacts?.modules?.total)) ? Number(runFacts.modules.total) : Object.keys(usage.by_module).length;
+    const gatesStr = Number.isFinite(Number(runFacts?.gates?.total)) ? Number(runFacts.gates.total) : Object.keys(usage.by_gate).length;
     const costStr = usage.run.estimated_cost_usd !== null
       ? `, $${usage.run.estimated_cost_usd.toFixed(4)} total`
       : ', cost unavailable';

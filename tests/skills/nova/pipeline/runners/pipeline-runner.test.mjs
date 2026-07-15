@@ -6,12 +6,15 @@ import test from 'node:test';
 
 import { buildPluginRegistry } from '../../../../../skills/nova/pipeline/core/registry.ts';
 import { PLUGIN_CONFIG_SCHEMA_ANY_OBJECT, PLUGIN_CONTRACT_VERSION } from '../../../../../skills/nova/pipeline/core/constants.ts';
+import { createRunStats } from '../../../../../skills/nova/pipeline/core/runtime.ts';
 import { appendPipelineLifecycleEvent } from '../../../../../skills/nova/pipeline/services/status-store.ts';
 import { runPipeline } from '../../../../../skills/nova/pipeline/runners/pipeline-runner.ts';
+import { preparePipelineStart } from '../../../../../skills/nova/pipeline/runners/pipeline-runner-start.ts';
 import {
   isScheduledValidatorComplete,
   markScheduledValidatorComplete,
 } from '../../../../../skills/nova/pipeline/runners/pipeline-runner-scheduling/validator-completions.ts';
+import { buildPipelineStepResult } from '../../../../../skills/nova/pipeline/services/contracts/pipeline-step-result.ts';
 import { runScheduledValidator } from '../../../../../skills/nova/pipeline/runners/pipeline-runner-scheduling.ts';
 import { resolveGateTargetModule } from '../../../../../skills/nova/pipeline/runners/gate-target-module.ts';
 import { completePipeline } from '../../../../../skills/nova/pipeline/runners/pipeline-runner-terminal.ts';
@@ -69,6 +72,7 @@ function generatorDefinition(stageId, calls) {
     implementation: {
       run: async () => {
         calls.push(stageId);
+        if (typeof calls.inspect === 'function') calls.inspect(stageId);
         return {
           schemaVersion: 'v1',
           producerKind: 'generator',
@@ -80,7 +84,65 @@ function generatorDefinition(stageId, calls) {
   };
 }
 
-function completedRunConfig(dir, calls) {
+function validatorDefinition(stageId, calls, opts = {}) {
+  const producerType = stageId.split(':')[1];
+  const findings = Array.isArray(opts.findings) ? opts.findings : [];
+  return {
+    manifest: {
+      moduleId: `test.${producerType}`,
+      contractVersion: PLUGIN_CONTRACT_VERSION,
+      kind: 'validator',
+      hookFamily: 'validator.run',
+      stageIds: [stageId],
+      capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts'],
+      configSchema: PLUGIN_CONFIG_SCHEMA_ANY_OBJECT,
+      sourceType: 'builtin',
+      trustTier: 'trusted',
+      displayName: stageId,
+      description: stageId,
+      defaultEnabled: true,
+    },
+    implementation: {
+      run: async (input) => {
+        calls.push(stageId);
+        return {
+          schemaVersion: 'v1',
+          producerKind: 'validator',
+          producerType,
+          nextAction: 'pass',
+          diagnostics: {
+            summary: 'Architecture validation passed',
+            findings,
+            metadata: {
+              blocked: false,
+              project: input.stateSnapshot.pipeline.project,
+              run_id: input.ids.runId,
+              timestamp: '2026-07-07T00:00:00.000Z',
+              raw_findings: findings,
+              execution_failed: false,
+              contract_invalid: false,
+            },
+            typed: {
+              validator: {
+                schemaVersion: 'v1',
+                validatorType: producerType,
+                outcomeClass: 'passed',
+                summary: 'Architecture validation passed',
+                metadata: {
+                  blocked: false,
+                  execution_failed: false,
+                  contract_invalid: false,
+                },
+              },
+            },
+          },
+        };
+      },
+    },
+  };
+}
+
+function completedRunConfig(dir, calls, pluginConfig = {}) {
   const config = {
     project: 'pipeline-runner-test',
     _runId: 'run-terminal-resume',
@@ -91,12 +153,13 @@ function completedRunConfig(dir, calls) {
       lifecycle_append: { stale_ms: 1, timeout_ms: 1 },
     },
   };
+  config._runStats = createRunStats();
   config.pluginRegistry = buildPluginRegistry({
     enabled: true,
     allowCustomModules: false,
     extraModulePaths: [],
-    modules: {},
-    stageOwners: {},
+    modules: pluginConfig.modules || {},
+    stageOwners: pluginConfig.stageOwners || {},
     restrictedCapabilityAllowlist: {},
   }, {
     builtinModules: [
@@ -107,6 +170,181 @@ function completedRunConfig(dir, calls) {
   }).registry;
   return config;
 }
+
+test('completePipeline halts when a required terminal generator is disabled', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-terminal-disabled-'));
+  const calls = [];
+  const config = completedRunConfig(dir, calls, {
+    modules: {
+      'test.project_summary': { enabled: false },
+    },
+  });
+  const progress = { modules: {}, gates: {}, execution_order: [] };
+  const runPipelineJsonl = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId, 'pipeline.jsonl');
+
+  fs.mkdirSync(path.dirname(runPipelineJsonl), { recursive: true });
+  fs.writeFileSync(runPipelineJsonl, JSON.stringify({
+    v: 1,
+    type: 'observability.degraded',
+    run_id: config._runId,
+    project: config.project,
+    component: 'discord',
+    surface: 'webhook',
+    reason: 'webhook_url_missing',
+    detail: 'discord webhook delivery skipped: config.discord_webhook_url is missing',
+  }) + '\n');
+
+  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
+  const exitCode = await completePipeline(config, progress, {
+    deps: { pipelineRunner: { writeSummary: () => ({}), output: () => {} } },
+  });
+
+  assert.equal(exitCode, 1);
+  assert.deepEqual(calls, []);
+
+  const readModels = JSON.parse(fs.readFileSync(path.join(
+    config.paths.swarm_dir,
+    'logs',
+    'pipeline',
+    'runs',
+    config._runId,
+    'lifecycle',
+    'read-models.json',
+  ), 'utf8'));
+  assert.equal(readModels.pipeline.status, 'HALTED');
+  assert.equal(readModels.pipeline.step_type, 'generator');
+  assert.equal(readModels.pipeline.step_id, 'generator:project_summary');
+});
+
+test('preparePipelineStart sends architecture validator start and pass notifications', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-arch-notify-'));
+  const calls = [];
+  const config = {
+    project: 'pipeline-arch-notify',
+    _runId: 'run-arch-notify',
+    run_id: 'run-arch-notify',
+    repo_root: dir,
+    fallback_model: 'gpt-5.4',
+    paths: {
+      swarm_dir: path.join(dir, '.swarm'),
+      modules_dir: path.join(dir, '.swarm', 'modules'),
+      progress_file: path.join(dir, '.swarm', 'progress.json'),
+    },
+    arch_validation: { enabled: true, agent_enabled: false, timeout_minutes: 1, model: 'gpt-5.4' },
+  };
+  config.pluginRegistry = buildPluginRegistry({
+    enabled: true,
+    allowCustomModules: false,
+    extraModulePaths: [],
+    modules: {},
+    stageOwners: {},
+    restrictedCapabilityAllowlist: {},
+  }, {
+    builtinModules: [
+      validatorDefinition('validator:architecture', calls),
+    ],
+  }).registry;
+  const discordCalls = [];
+
+  const result = await preparePipelineStart(config, {
+    project: 'pipeline-arch-notify',
+    arch_validation: { enabled: true, approval_gate: { timeout_minutes: 5 } },
+    modules: {},
+    gates: {},
+    execution_order: [],
+  }, {
+    deps: {
+      pipelineRunner: {
+        discord: async (_config, level, title, description, fields) => {
+          discordCalls.push({ level, title, description, fields });
+        },
+      },
+    },
+  });
+
+  assert.equal(result, null);
+  assert.deepEqual(calls, ['validator:architecture']);
+  assert.equal(discordCalls[0].level, 'INFO');
+  assert.equal(discordCalls[0].title, 'Architecture Validator started');
+  assert.equal(discordCalls[1].level, 'OK');
+  assert.equal(discordCalls[1].title, 'Architecture Validator passed');
+});
+
+test('preparePipelineStart lists architecture findings and requires approval before module work', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-arch-approval-'));
+  const calls = [];
+  const finding = {
+    id: 'MODULE_BOUNDARY_BLUR',
+    severity: 'warning',
+    explanation: 'Module ownership boundary is under-modeled.',
+  };
+  const config = {
+    project: 'pipeline-arch-approval',
+    _runId: 'run-arch-approval',
+    run_id: 'run-arch-approval',
+    repo_root: dir,
+    fallback_model: 'gpt-5.4',
+    paths: {
+      swarm_dir: path.join(dir, '.swarm'),
+      modules_dir: path.join(dir, '.swarm', 'modules'),
+      progress_file: path.join(dir, '.swarm', 'progress.json'),
+    },
+    arch_validation: { enabled: true, agent_enabled: false, timeout_minutes: 1, model: 'gpt-5.4' },
+  };
+  config.pluginRegistry = buildPluginRegistry({
+    enabled: true,
+    allowCustomModules: false,
+    extraModulePaths: [],
+    modules: {},
+    stageOwners: {},
+    restrictedCapabilityAllowlist: {},
+  }, {
+    builtinModules: [
+      validatorDefinition('validator:architecture', calls, { findings: [finding] }),
+    ],
+  }).registry;
+  const discordCalls = [];
+  const approvalCalls = [];
+  const progress = {
+    project: 'pipeline-arch-approval',
+    arch_validation: { enabled: true, approval_gate: { timeout_minutes: 5 } },
+    modules: { '01-app': { title: 'App', dir: '01-app' } },
+    gates: { 'operator-approval': { type: 'approval', title: 'Operator approval', timeout_minutes: 5, on_timeout: 'block' } },
+    execution_order: ['module:01-app', 'gate:operator-approval'],
+  };
+
+  const result = await preparePipelineStart(config, progress, {
+    deps: {
+      pipelineRunner: {
+        discord: async (_config, level, title, description, fields) => {
+          discordCalls.push({ level, title, description, fields });
+        },
+        runGate: async (_config, currentProgress, gateId, gateOpts) => {
+          approvalCalls.push({ gateId, gate: currentProgress.gates[gateId], opts: gateOpts });
+          return buildPipelineStepResult({
+            stepType: 'gate',
+            stepId: gateId,
+            nextAction: 'continue',
+            outcome: 'passed',
+            summary: 'Architecture findings approved',
+            terminalAction: 'none',
+            terminalScope: 'gate',
+          });
+        },
+      },
+    },
+  });
+
+  assert.equal(result, null);
+  assert.deepEqual(calls, ['validator:architecture']);
+  assert.equal(discordCalls.length, 1);
+  assert.equal(discordCalls[0].title, 'Architecture Validator started');
+  assert.equal(approvalCalls.length, 1);
+  assert.equal(approvalCalls[0].gateId, 'architecture-approval');
+  assert.equal(approvalCalls[0].opts.attempt, 1);
+  assert.match(approvalCalls[0].gate.description, /MODULE_BOUNDARY_BLUR/);
+  assert.equal(progress.execution_order[0], 'gate:architecture-approval');
+});
 
 test('completePipeline resumes missing terminal generators for completed runs', async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-terminal-'));
@@ -141,13 +379,339 @@ test('completePipeline resumes missing terminal generators for completed runs', 
   });
 
   assert.equal(exitCode, 0);
-  assert.deepEqual(calls, ['generator:pipeline_review', 'generator:case_study']);
+  assert.deepEqual(calls, ['generator:case_study', 'generator:pipeline_review']);
   const saved = JSON.parse(fs.readFileSync(completionPath, 'utf8'));
   assert.deepEqual(saved.completed.map((entry) => entry.stage_id), [
     'generator:case_study',
     'generator:pipeline_review',
     'generator:project_summary',
   ]);
+});
+
+test('completePipeline does not run terminal generators after a persisted terminal halt', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-existing-halt-'));
+  const calls = [];
+  const outputs = [];
+  const config = completedRunConfig(dir, calls);
+  const progress = { modules: {}, gates: {}, execution_order: [] };
+
+  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
+  appendPipelineLifecycleEvent(config, 'pipeline_run.halted', {
+    progress,
+    result: {
+      terminal_status: 'timed_out',
+      terminal_decision: { reasonCode: 'timeout' },
+      reason: 'Pipeline review timed out',
+    },
+    stepType: 'generator',
+    stepId: 'pipeline_review',
+    haltReason: 'timeout',
+  });
+
+  const exitCode = await completePipeline(config, progress, {
+    deps: {
+      pipelineRunner: {
+        output(payload) {
+          outputs.push(payload);
+        },
+      },
+    },
+  });
+
+  assert.equal(exitCode, 1);
+  assert.deepEqual(calls, []);
+  assert.equal(outputs.length, 1);
+  assert.equal(outputs[0].halted_existing, true);
+  assert.equal(outputs[0].terminal_status, 'timed_out');
+  assert.equal(outputs[0].step_type, 'generator');
+  assert.equal(outputs[0].step_id, 'pipeline_review');
+});
+
+test('completePipeline halts when configured final preview lacks final-buster URL evidence', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-final-preview-missing-'));
+  const calls = [];
+  const outputs = [];
+  const config = completedRunConfig(dir, calls);
+  const progress = {
+    modules: {},
+    gates: {
+      'final-buster': {
+        type: 'buster',
+        title: 'Final Buster',
+        test_config: {
+          k8s: {
+            purpose: 'final-preview',
+            preview: { provider: 'tailscale-ingress' },
+          },
+        },
+      },
+    },
+    execution_order: [],
+  };
+
+  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
+  const exitCode = await completePipeline(config, progress, {
+    deps: {
+      pipelineRunner: {
+        writeSummary: () => ({}),
+        output(payload) {
+          outputs.push(payload);
+        },
+      },
+    },
+  });
+
+  assert.equal(exitCode, 1);
+  assert.deepEqual(calls, []);
+
+  const readModels = JSON.parse(fs.readFileSync(path.join(
+    config.paths.swarm_dir,
+    'logs',
+    'pipeline',
+    'runs',
+    config._runId,
+    'lifecycle',
+    'read-models.json',
+  ), 'utf8'));
+  assert.equal(readModels.pipeline.status, 'HALTED');
+  assert.equal(readModels.pipeline.step_type, 'pipeline');
+  assert.equal(readModels.pipeline.step_id, 'final_preview_delivery');
+  assert.equal(readModels.pipeline.halt_reason, 'final_preview_url_missing');
+  assert.equal(outputs.at(-1).terminal_status, 'failed');
+  assert.equal(outputs.at(-1).terminal_decision.reasonCode, 'final_preview_url_missing');
+});
+
+test('completePipeline writes terminal lifecycle and summary before terminal generators', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-terminal-order-'));
+  const calls = [];
+  const config = completedRunConfig(dir, calls);
+  const progress = { modules: {}, gates: {}, execution_order: [] };
+  const summaryPath = path.join(config.paths.swarm_dir, 'runs', config._runId, 'summary.json');
+
+  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
+  calls.inspect = (stageId) => {
+    if (stageId !== 'generator:pipeline_review') return;
+    const readModels = JSON.parse(fs.readFileSync(path.join(
+      config.paths.swarm_dir,
+      'logs',
+      'pipeline',
+      'runs',
+      config._runId,
+      'lifecycle',
+      'read-models.json',
+    ), 'utf8'));
+    assert.equal(readModels.pipeline.status, 'COMPLETED');
+    assert.equal(fs.existsSync(summaryPath), true);
+  };
+
+  const exitCode = await completePipeline(config, progress, {
+    deps: {
+      pipelineRunner: {
+        writeSummary() {
+          fs.mkdirSync(path.dirname(summaryPath), { recursive: true });
+          fs.writeFileSync(summaryPath, JSON.stringify({ ok: true }, null, 2));
+          return { failed: false };
+        },
+        output() {},
+      },
+    },
+  });
+
+  assert.equal(exitCode, 0);
+  assert.deepEqual(calls.slice(), [
+    'generator:project_summary',
+    'generator:case_study',
+    'generator:pipeline_review',
+  ]);
+});
+
+test('completePipeline blocks clean E2E success when required Discord receipt is missing', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-discord-receipt-'));
+  const generatorCalls = [];
+  const config = completedRunConfig(dir, generatorCalls);
+  config._runId = 'run-discord-receipt-required';
+  config.run_id = 'run-discord-receipt-required';
+  const progress = {
+    modules: {},
+    gates: {},
+    execution_order: [],
+    evidence: {
+      require_discord_delivery_receipt: true,
+    },
+  };
+  const outputs = [];
+  const summaries = [];
+
+  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
+
+  const exitCode = await completePipeline(config, progress, {
+    deps: {
+      pipelineRunner: {
+        output(payload) {
+          outputs.push(payload);
+        },
+        writeSummary(_config, terminalStatus, reasonCode) {
+          summaries.push({ terminalStatus, reasonCode });
+          return { failed: false };
+        },
+        async injectNeedsNova() {},
+      },
+    },
+  });
+
+  assert.equal(exitCode, 1);
+  assert.deepEqual(generatorCalls, [
+    'generator:project_summary',
+  ]);
+  assert.equal(outputs[0].terminal_status, 'blocked');
+  assert.equal(outputs[0].terminal_decision.reasonCode, 'degraded_evidence_requires_handoff');
+  assert.equal(outputs[0].degraded_evidence[0].code, 'discord_delivery_receipt_missing');
+  assert.equal(outputs[0].degraded_evidence[0].action_required.includes('canonical restored or acknowledged evidence'), true);
+  assert.equal(summaries.at(-1).reasonCode, 'degraded_evidence_requires_handoff');
+});
+
+test('completePipeline blocks clean success with unresolved observability degraded evidence', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-observability-degraded-'));
+  const config = completedRunConfig(dir, []);
+  const progress = { modules: {}, gates: {}, execution_order: [] };
+  const runPipelineJsonl = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId, 'pipeline.jsonl');
+  const outputs = [];
+
+  fs.mkdirSync(path.dirname(runPipelineJsonl), { recursive: true });
+  fs.writeFileSync(runPipelineJsonl, JSON.stringify({
+    v: 1,
+    type: 'observability.degraded',
+    run_id: config._runId,
+    project: config.project,
+    component: 'discord',
+    surface: 'webhook',
+    reason: 'webhook_url_missing',
+    detail: 'discord webhook delivery skipped: config.discord_webhook_url is missing',
+  }) + '\n');
+
+  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
+  const exitCode = await completePipeline(config, progress, {
+    deps: {
+      pipelineRunner: {
+        output(payload) {
+          outputs.push(payload);
+        },
+        writeSummary: () => ({}),
+        async injectNeedsNova() {},
+      },
+    },
+  });
+
+  assert.equal(exitCode, 1);
+  assert.equal(outputs[0].terminal_status, 'blocked');
+  assert.equal(outputs[0].terminal_decision.reasonCode, 'degraded_evidence_requires_handoff');
+  assert.equal(outputs[0].degraded_evidence[0].code, 'webhook_url_missing');
+  assert.equal(outputs[0].degraded_evidence[0].surface, 'discord:webhook');
+});
+
+test('completePipeline accepts restored observability degraded evidence with matching health key', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-observability-restored-'));
+  const calls = [];
+  const config = completedRunConfig(dir, calls);
+  const progress = { modules: {}, gates: {}, execution_order: [] };
+  const runPipelineJsonl = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId, 'pipeline.jsonl');
+
+  fs.mkdirSync(path.dirname(runPipelineJsonl), { recursive: true });
+  fs.writeFileSync(runPipelineJsonl, [
+    {
+      v: 1,
+      type: 'observability.degraded',
+      run_id: config._runId,
+      project: config.project,
+      component: 'telemetry_sink',
+      surface: 'builtin.telemetry.redis',
+      reason: 'telemetry_sink_failed',
+      detail: 'telemetry sink timed out',
+      impacted_event_type: 'agent.tool.started',
+      degraded_at: '2026-07-11T13:56:31.877Z',
+    },
+    {
+      v: 1,
+      type: 'observability.restored',
+      run_id: config._runId,
+      project: config.project,
+      component: 'telemetry_sink',
+      surface: 'builtin.telemetry.redis',
+      reason: 'telemetry_sink_failed',
+      detail: 'telemetry sink restored',
+      gate_id: 'module-review',
+      gate_type: 'review',
+      impacted_event_type: 'gate.started',
+      restored_at: '2026-07-11T13:56:31.885Z',
+    },
+  ].map((entry) => JSON.stringify(entry)).join('\n') + '\n');
+
+  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
+  const exitCode = await completePipeline(config, progress, {
+    deps: {
+      pipelineRunner: {
+        output() {},
+        writeSummary: () => ({}),
+      },
+    },
+  });
+
+  assert.equal(exitCode, 0);
+  assert.deepEqual(calls, [
+    'generator:project_summary',
+    'generator:case_study',
+    'generator:pipeline_review',
+  ]);
+});
+
+test('completePipeline keeps degraded evidence unresolved when restored health key differs', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-observability-restored-mismatch-'));
+  const calls = [];
+  const config = completedRunConfig(dir, calls);
+  const progress = { modules: {}, gates: {}, execution_order: [] };
+  const runPipelineJsonl = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId, 'pipeline.jsonl');
+  const outputs = [];
+
+  fs.mkdirSync(path.dirname(runPipelineJsonl), { recursive: true });
+  fs.writeFileSync(runPipelineJsonl, [
+    {
+      v: 1,
+      type: 'observability.degraded',
+      run_id: config._runId,
+      project: config.project,
+      component: 'telemetry_sink',
+      surface: 'builtin.telemetry.redis',
+      reason: 'telemetry_sink_failed',
+      detail: 'telemetry sink timed out',
+    },
+    {
+      v: 1,
+      type: 'observability.restored',
+      run_id: config._runId,
+      project: config.project,
+      component: 'telemetry_sink',
+      surface: 'builtin.telemetry.redis',
+      reason: 'telemetry_sink_registry_failed',
+      detail: 'different telemetry sink issue restored',
+    },
+  ].map((entry) => JSON.stringify(entry)).join('\n') + '\n');
+
+  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
+  const exitCode = await completePipeline(config, progress, {
+    deps: {
+      pipelineRunner: {
+        output(payload) {
+          outputs.push(payload);
+        },
+        writeSummary: () => ({}),
+        async injectNeedsNova() {},
+      },
+    },
+  });
+
+  assert.equal(exitCode, 1);
+  assert.equal(outputs[0].terminal_decision.reasonCode, 'degraded_evidence_requires_handoff');
+  assert.equal(outputs[0].degraded_evidence[0].code, 'telemetry_sink_failed');
 });
 
 test('scheduled validator completion cache is isolated by run id when config is reused', () => {
@@ -275,8 +839,8 @@ test('terminal generator completion cache is isolated by run id when config is r
   assert.equal(await completePipeline(config, progress, { deps }), 0);
   assert.deepEqual(calls, [
     'generator:project_summary',
-    'generator:pipeline_review',
     'generator:case_study',
+    'generator:pipeline_review',
   ]);
 
   config._runId = 'run-b';
@@ -289,10 +853,10 @@ test('terminal generator completion cache is isolated by run id when config is r
   assert.equal(await completePipeline(config, progress, { deps }), 0);
   assert.deepEqual(calls, [
     'generator:project_summary',
-    'generator:pipeline_review',
     'generator:case_study',
+    'generator:pipeline_review',
     'generator:project_summary',
-    'generator:pipeline_review',
     'generator:case_study',
+    'generator:pipeline_review',
   ]);
 });

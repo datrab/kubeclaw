@@ -68,7 +68,7 @@
       "type": "review",
       "title": "Final Review",
       "review_name": "FINAL-REVIEW",
-      "on_fail": "fix_and_rereview",
+      "on_fail": "stop",
       "instructions_file": "echo-review/FINAL-REVIEW-INSTRUCTIONS.md",
       "output_file": "logs/echo-review/FINAL-REVIEW.json",
       "review_output_dir": "logs/echo-review",

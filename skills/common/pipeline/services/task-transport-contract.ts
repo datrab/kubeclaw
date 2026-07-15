@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // Shared TaskQueue/EventBus transport boundary for pipeline work streams.
 // Redis remains the production adapter; callers depend on these semantics instead
 // of raw Redis stream calls.
@@ -26,6 +27,10 @@ function assertMethod(adapter: UnknownRecord, method: string, label: string): vo
   }
 }
 
+function transportFieldValue(value: unknown): unknown {
+  return selectTruthyValue(() => (value === undefined), () => (value === null)) ? '' : value;
+}
+
 export function assertTaskQueueAdapter(adapter: UnknownRecord, label = 'TaskQueue adapter'): UnknownRecord {
   for (const method of ['publishTask', 'readNext', 'reclaimPending', 'ack', 'trim']) assertMethod(adapter, method, label);
   return adapter;
@@ -40,11 +45,11 @@ export function flattenTransportFields(fields: UnknownRecord = {}): any[] {
   if (!isPlainObject(fields)) {
     throw new PipelineTransportContractError('transport fields must be an object', { fields });
   }
-  return Object.entries(fields).flatMap(([key, value]) => [key, value ?? '']);
+  return Object.entries(fields).flatMap(([key, value]) => [key, transportFieldValue(value)]);
 }
 
 export function decodeRedisStreamEntry(entry: unknown, reclaimed = false): UnknownRecord | null {
-  if (!Array.isArray(entry) || entry.length < 2) return null;
+  if (selectTruthyValue(() => (!Array.isArray(entry)), () => (entry.length < 2))) return null;
   const [id, fields] = entry;
   if (!Array.isArray(fields)) return null;
   const data: UnknownRecord = {};
@@ -56,7 +61,7 @@ export function createRedisEventBus(redisClient: UnknownRecord): UnknownRecord {
   const eventBus = {
     async publish(streamKey: string, fields: UnknownRecord, opts: UnknownRecord = {}) {
       if (!streamKey) throw new PipelineTransportContractError('EventBus.publish requires streamKey');
-      const id = await redisClient.xadd(streamKey, opts.id || '*', ...flattenTransportFields(fields));
+      const id = await redisClient.xadd(streamKey, selectDefinedValue(() => (opts.id), () => ('*')), ...flattenTransportFields(fields));
       return { ok: true, id, stream: streamKey };
     },
   };
@@ -70,25 +75,25 @@ export function createRedisTaskQueue(redisClient: UnknownRecord, opts: UnknownRe
   const pollInterval = Number(opts.pollInterval);
   const reclaimIdleMs = Number(opts.reclaimIdleMs);
   const maxLen = Number(opts.maxLen);
-  if (!Number.isFinite(pollInterval) || pollInterval <= 0) {
+  if (selectTruthyValue(() => (!Number.isFinite(pollInterval)), () => (pollInterval <= 0))) {
     throw new PipelineTransportContractError('TaskQueue pollInterval must be explicit and > 0');
   }
-  if (!Number.isFinite(reclaimIdleMs) || reclaimIdleMs <= 0) {
+  if (selectTruthyValue(() => (!Number.isFinite(reclaimIdleMs)), () => (reclaimIdleMs <= 0))) {
     throw new PipelineTransportContractError('TaskQueue reclaimIdleMs must be explicit and > 0');
   }
-  if (!Number.isFinite(maxLen) || maxLen <= 0) {
+  if (selectTruthyValue(() => (!Number.isFinite(maxLen)), () => (maxLen <= 0))) {
     throw new PipelineTransportContractError('TaskQueue maxLen must be explicit and > 0');
   }
   const eventBus = createRedisEventBus(redisClient);
 
   const queue: UnknownRecord = {
     async ensureConsumerGroup(startId = '0') {
-      if (!streamKey || !groupName) throw new PipelineTransportContractError('TaskQueue.ensureConsumerGroup requires streamKey and groupName');
+      if (selectTruthyValue(() => (!streamKey), () => (!groupName))) throw new PipelineTransportContractError('TaskQueue.ensureConsumerGroup requires streamKey and groupName');
       try {
         await redisClient.xgroup('CREATE', streamKey, groupName, startId, 'MKSTREAM');
         return { ok: true, created: true, stream: streamKey, group: groupName };
       } catch (error) {
-        if (String((error as Error)?.message || error).includes('BUSYGROUP')) {
+        if (String(selectTruthyValue(() => ((error as Error)?.message), () => (error))).includes('BUSYGROUP')) {
           return { ok: true, created: false, stream: streamKey, group: groupName };
         }
         throw error;
@@ -96,11 +101,11 @@ export function createRedisTaskQueue(redisClient: UnknownRecord, opts: UnknownRe
     },
 
     async publishTask(targetStreamKey: string | null, fields: UnknownRecord) {
-      return eventBus.publish(targetStreamKey || streamKey, fields);
+    return eventBus.publish(taskPublishStreamAuthority(targetStreamKey, streamKey), fields);
     },
 
     async reclaimPending() {
-      if (!streamKey || !groupName || !consumerName) throw new PipelineTransportContractError('TaskQueue.reclaimPending requires streamKey, groupName, and consumerName');
+      if (selectTruthyValue(() => (selectTruthyValue(() => (!streamKey), () => (!groupName))), () => (!consumerName))) throw new PipelineTransportContractError('TaskQueue.reclaimPending requires streamKey, groupName, and consumerName');
       const result = await redisClient.call(
         'XAUTOCLAIM',
         streamKey,
@@ -124,13 +129,13 @@ export function createRedisTaskQueue(redisClient: UnknownRecord, opts: UnknownRe
         'COUNT', 1, 'BLOCK', pollInterval,
         'STREAMS', streamKey, '>',
       );
-      const streamEntries = results?.[0]?.[1] || [];
-      if (!Array.isArray(streamEntries) || streamEntries.length === 0) return null;
+      const streamEntries = selectDefinedValue(() => (results?.[0]?.[1]), () => ([]));
+      if (selectTruthyValue(() => (!Array.isArray(streamEntries)), () => (streamEntries.length === 0))) return null;
       return decodeRedisStreamEntry(streamEntries[0], false);
     },
 
     async ack(id: string) {
-      if (!streamKey || !groupName) throw new PipelineTransportContractError('TaskQueue.ack requires streamKey and groupName');
+      if (selectTruthyValue(() => (!streamKey), () => (!groupName))) throw new PipelineTransportContractError('TaskQueue.ack requires streamKey and groupName');
       await redisClient.xack(streamKey, groupName, id);
       return { ok: true, stream: streamKey, group: groupName, id };
     },
@@ -143,4 +148,9 @@ export function createRedisTaskQueue(redisClient: UnknownRecord, opts: UnknownRe
   };
 
   return assertTaskQueueAdapter(queue, 'Redis TaskQueue adapter');
+}
+
+function taskPublishStreamAuthority(targetStreamKey: string | null | undefined, streamKey: string): string {
+  if (targetStreamKey) return targetStreamKey;
+  return streamKey;
 }

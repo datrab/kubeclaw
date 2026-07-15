@@ -7,7 +7,15 @@ import test from 'node:test';
 import { createRunStats } from '../../../../../skills/nova/pipeline/core/runtime.ts';
 import { STATUS } from '../../../../../skills/nova/pipeline/core/constants.ts';
 import { buildModuleBusterWorkerControlResult } from '../../../../../skills/nova/pipeline/agents/module-worker-control-results.ts';
+import { runModuleBusterWorker } from '../../../../../skills/nova/pipeline/agents/orchestration.ts';
 import { shouldApplyRedisCompletionToStatus } from '../../../../../skills/nova/pipeline/services/completion-adjudicator.ts';
+import {
+  classifyPreTestFailure,
+  extractPreTestFailReason,
+  getFailedSuiteNames,
+  getPassedSuiteNames,
+} from '../../../../../skills/nova/pipeline/services/failures/classification.ts';
+import { buildPreTestDiscordFields } from '../../../../../skills/nova/pipeline/services/failures/presentation.ts';
 import { runModuleBusterPhase } from '../../../../../skills/nova/pipeline/runners/module-runner/buster-phase.ts';
 import { resolveExpectedCompletionSessionKey } from '../../../../../skills/nova/pipeline/runners/module-runner/buster-phase/identity.ts';
 import { handleBusterFailOrBlockedStatus } from '../../../../../skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure.ts';
@@ -77,6 +85,41 @@ function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+function applyModuleCompletionForTest(save) {
+  return (_config, _dir, status, completion) => {
+    const nextStatus = completion.status === STATUS.PASS
+      ? STATUS.PASS
+      : completion.status === STATUS.BLOCKED
+        ? STATUS.BLOCKED
+        : STATUS.FAIL;
+    status.status = nextStatus;
+    status.current_phase = null;
+    status.phase_started_at = null;
+    status.active_agent = null;
+    status.completion_summary = completion.summary || status.completion_summary || null;
+    if (nextStatus === STATUS.PASS) status.completed_at = completion.occurred_at || new Date().toISOString();
+    const lifecycleMutation = {
+      eventType: nextStatus === STATUS.PASS ? 'module_attempt.passed' : `module_attempt.${nextStatus.toLowerCase()}`,
+    };
+    save(clone(status), lifecycleMutation);
+    return {
+      status,
+      lifecycleMutation,
+    };
+  };
+}
+
+function moduleTerminalForAssertion(result) {
+  let current = result;
+  while (current?.terminal || (current?.retry === undefined && current?.result && !current.result.outcome)) {
+    current = current.terminal || current.result;
+  }
+  if (current?.retry !== undefined) return current;
+  if (current?.outcome) return { retry: false, result: current };
+  if (current?.result?.outcome) return { retry: false, result: current.result };
+  return current;
+}
+
 test('Buster Redis completion adjudication rejects mismatched Redis session key', () => {
   const status = {
     status: STATUS.TESTING,
@@ -113,7 +156,7 @@ test('Buster Redis completion adjudication rejects mismatched Redis session key'
     status,
   });
 
-  assert.equal(expectedSessionKey, 'active-session');
+  assert.equal(expectedSessionKey, 'worker-session');
   assert.equal(adjudication.shouldApply, false);
   assert.deepEqual(
     adjudication.adjudication.authority_policy.active_dispatch.optional_mismatched_fields,
@@ -121,7 +164,7 @@ test('Buster Redis completion adjudication rejects mismatched Redis session key'
   );
 });
 
-test('Buster output_file identity mismatch blocks without module retry', async () => {
+test('Buster output_file identity mismatch fails completion contract without module retry', async () => {
   let savedTransition = null;
   let discordCalls = 0;
   const result = await handleBusterFailOrBlockedStatus({
@@ -141,6 +184,9 @@ test('Buster output_file identity mismatch blocks without module retry', async (
       completion_summary: 'Buster output_file identity mismatch: attempt, dispatch_id, completion_key',
     },
     deps: {
+      applyModuleCompletion: applyModuleCompletionForTest((nextStatus) => {
+        savedTransition = { status: nextStatus };
+      }),
       saveStatus: (_config, _dir, _previous, nextStatus) => {
         savedTransition = nextStatus;
       },
@@ -153,6 +199,8 @@ test('Buster output_file identity mismatch blocks without module retry', async (
       run_id: 'run-1',
       attempt: 1,
       dispatch_id: 'dispatch-1',
+      gateway_label: 'gateway-1',
+      session_key: 'session-1',
       source: 'output_file',
       reason: 'output_file_identity_mismatch',
       summary: 'Buster output_file identity mismatch: attempt, dispatch_id, completion_key',
@@ -164,6 +212,7 @@ test('Buster output_file identity mismatch blocks without module retry', async (
       attempt: 1,
       dispatchId: 'dispatch-1',
       gateway_label: 'gateway-1',
+      sessionKey: 'session-1',
     },
     completionSessionKey: 'session-1',
     busterAttempt: 1,
@@ -181,16 +230,264 @@ test('Buster output_file identity mismatch blocks without module retry', async (
   assert.equal(result.retry, undefined);
   assert.equal(result.terminal.retry, false);
   assert.equal(result.terminal.result.nextAction, 'halt');
-  assert.equal(result.terminal.result.outcome, 'blocked');
+  assert.equal(result.terminal.result.outcome, 'error');
   assert.equal(result.terminal.result.issueType, 'environment');
   assert.equal(result.terminal.result.diagnostics.metadata.failure_class, 'output_file_identity_mismatch');
   assert.equal(result.terminal.result.diagnostics.metadata.forge_preserved, true);
-  assert.equal(savedTransition.status.status, STATUS.BLOCKED);
-  assert.equal(savedTransition.status.blockedReason, 'output_file_identity_mismatch');
+  assert.equal(savedTransition.status.status, STATUS.FAIL);
   assert.equal(discordCalls, 1);
 });
 
-test('Buster output_file identity mismatch blocks without Buster crash retry', async () => {
+test('Buster explicit infra_error blocks module without Forge retry', async () => {
+  let savedTransition = null;
+  let discordCalls = 0;
+  const result = await handleBusterFailOrBlockedStatus({
+    config: {
+      project: 'module-buster-infra-test',
+      _runId: 'run-1',
+      paths: { swarm_dir: '/tmp/module-buster-infra-test/.swarm' },
+      _runStats: {},
+    },
+    moduleId: 'module-a',
+    mod: { title: 'Module A', test_suites: ['unit'] },
+    dir: 'module-a',
+    status: {
+      status: STATUS.FAIL,
+      current_phase: 'buster',
+      current_attempt: 1,
+      fail_count: 0,
+      completion_summary: 'REAL_E2E_BUSTER_INFRA_UNAVAILABLE: simulated Buster worker infrastructure failure',
+    },
+    deps: {
+      applyModuleCompletion: applyModuleCompletionForTest((nextStatus) => {
+        savedTransition = { status: nextStatus };
+      }),
+      saveStatus: (_config, _dir, _previous, nextStatus) => {
+        savedTransition = nextStatus;
+      },
+      discord: async () => {
+        discordCalls += 1;
+      },
+    },
+    redisEntry: {
+      status: STATUS.FAIL,
+      run_id: 'run-1',
+      attempt: 1,
+      dispatch_id: 'dispatch-1',
+      gateway_label: 'gateway-1',
+      session_key: 'session-1',
+      source: 'buster-pipeline',
+      failure_class: 'infra_error',
+      reason: 'REAL_E2E_BUSTER_INFRA_UNAVAILABLE',
+      summary: 'REAL_E2E_BUSTER_INFRA_UNAVAILABLE: simulated Buster worker infrastructure failure',
+    },
+    failureClass: 'infra_error',
+    busterModel: 'buster-model',
+    completionIdentity: {
+      runId: 'run-1',
+      attempt: 1,
+      dispatchId: 'dispatch-1',
+      gateway_label: 'gateway-1',
+      sessionKey: 'session-1',
+    },
+    completionSessionKey: 'session-1',
+    busterAttempt: 1,
+    maxBusterCrashRetries: 1,
+    isLastBusterAttempt: false,
+    handleModuleFail: async () => {
+      throw new Error('Buster infra_error must not enter Forge retry policy');
+    },
+    buildRetryResult: () => {
+      throw new Error('Buster infra_error must not build retry result');
+    },
+    recalledMemoryIds: [],
+  });
+
+  assert.equal(result.retry, undefined);
+  assert.equal(result.terminal.retry, false);
+  assert.equal(result.terminal.result.nextAction, 'halt');
+  assert.equal(result.terminal.result.outcome, 'blocked');
+  assert.equal(result.terminal.result.issueType, 'environment');
+  assert.equal(result.terminal.result.terminal.status, 'blocked');
+  assert.equal(result.terminal.result.terminal.decision.reasonCode, 'infra_error');
+  assert.equal(result.terminal.result.diagnostics.metadata.failure_class, 'infra_error');
+  assert.equal(result.terminal.result.diagnostics.metadata.forge_preserved, true);
+  assert.equal(savedTransition.status.status, STATUS.BLOCKED);
+  assert.equal(savedTransition.status.completion_summary.includes('Forge cannot fix this'), true);
+  assert.equal(discordCalls, 1);
+});
+
+test('Buster deterministic pre-test code failure retries Forge without session key', async () => {
+  let handleFailCall = null;
+  const redisEntry = {
+    status: STATUS.FAIL,
+    run_id: 'run-1',
+    attempt: 1,
+    dispatch_id: 'dispatch-1',
+    gateway_label: 'gateway-1',
+    source: 'buster-pipeline',
+    reason: 'NO_SUBAGENT — critical suite failure',
+    summary: 'build: PASS | unit: FAIL | health: PASS',
+    verdict: {
+      suites: {
+        build: { status: 'PASS' },
+        unit: { status: 'FAIL', detail: '1 unit test(s) failed' },
+        health: { status: 'PASS' },
+      },
+    },
+  };
+
+  const result = await handleBusterFailOrBlockedStatus({
+    config: {
+      project: 'module-buster-identity-test',
+      _runId: 'run-1',
+      paths: { swarm_dir: '/tmp/module-buster-identity-test/.swarm' },
+      _runStats: {},
+    },
+    moduleId: 'module-a',
+    mod: { title: 'Module A', test_suites: ['build', 'unit', 'health'] },
+    dir: 'module-a',
+    status: {
+      status: STATUS.FAIL,
+      current_phase: 'buster',
+      current_attempt: 1,
+      fail_count: 0,
+    },
+    deps: {
+      getFailedSuiteNames,
+      getPassedSuiteNames,
+      extractPreTestFailReason,
+      classifyPreTestFailure,
+      buildPreTestDiscordFields,
+    },
+    redisEntry,
+    failureClass: 'pretest_code',
+    busterModel: 'buster-model',
+    completionIdentity: {
+      runId: 'run-1',
+      attempt: 1,
+      dispatchId: 'dispatch-1',
+      gateway_label: 'gateway-1',
+    },
+    completionSessionKey: null,
+    busterAttempt: 1,
+    maxBusterCrashRetries: 1,
+    isLastBusterAttempt: false,
+    handleModuleFail: async (status, phase, reason, opts) => {
+      handleFailCall = { status: clone(status), phase, reason, opts };
+      return {
+        _retry: true,
+        status: {
+          ...status,
+          status: STATUS.READY_FOR_TESTING,
+        },
+      };
+    },
+    buildRetryResult: (failResult) => ({
+      retry: true,
+      status: failResult.status,
+    }),
+    recalledMemoryIds: [],
+  });
+
+  assert.equal(result.terminal.retry, true);
+  assert.equal(result.terminal.status.status, STATUS.READY_FOR_TESTING);
+  assert.equal(handleFailCall.phase, 'buster');
+  assert.match(handleFailCall.reason, /^\[buster\/pre-test\] NO_SUBAGENT/);
+  assert.equal(handleFailCall.opts.dispatch_id, 'dispatch-1');
+  assert.equal(handleFailCall.opts.gateway_label, 'gateway-1');
+  assert.equal(handleFailCall.opts.session_key, null);
+});
+
+test('Repeated Buster pre-test code failure blocks module without result gateway label', async () => {
+  let savedCompletion = null;
+  let discordCalls = 0;
+  const redisEntry = {
+    status: STATUS.FAIL,
+    run_id: 'run-1',
+    attempt: 2,
+    dispatch_id: 'dispatch-2',
+    source: 'buster-pipeline',
+    reason: 'NO_SUBAGENT — critical suite failure',
+    summary: 'build: PASS | unit: FAIL | health: PASS',
+    verdict: {
+      suites: {
+        build: { status: 'PASS' },
+        unit: { status: 'FAIL', detail: '1 unit test(s) failed' },
+        health: { status: 'PASS' },
+      },
+    },
+  };
+
+  const result = await handleBusterFailOrBlockedStatus({
+    config: {
+      project: 'module-buster-identity-test',
+      _runId: 'run-1',
+      paths: { swarm_dir: '/tmp/module-buster-identity-test/.swarm' },
+      _runStats: {},
+    },
+    moduleId: 'module-a',
+    mod: { title: 'Module A', test_suites: ['build', 'unit', 'health'] },
+    dir: 'module-a',
+    status: {
+      status: STATUS.FAIL,
+      current_phase: 'buster',
+      current_attempt: 2,
+      fail_count: 1,
+      fail_summaries: [
+        { summary: '[buster/pre-test] NO_SUBAGENT — critical suite failure (failed suites: unit)' },
+      ],
+    },
+    deps: {
+      getFailedSuiteNames,
+      getPassedSuiteNames,
+      extractPreTestFailReason,
+      classifyPreTestFailure,
+      buildPreTestDiscordFields,
+      applyModuleCompletion: (_config, _dir, _status, completion) => {
+        savedCompletion = clone(completion);
+      },
+      discord: async () => {
+        discordCalls += 1;
+      },
+    },
+    redisEntry,
+    failureClass: 'pretest_code',
+    busterModel: 'buster-model',
+    completionIdentity: {
+      runId: 'run-1',
+      attempt: 2,
+      dispatchId: 'dispatch-2',
+      gateway_label: 'gateway-2',
+    },
+    completionSessionKey: null,
+    busterAttempt: 2,
+    maxBusterCrashRetries: 1,
+    isLastBusterAttempt: false,
+    handleModuleFail: async () => {
+      throw new Error('repeated pre-test failure must not enter Forge retry policy');
+    },
+    buildRetryResult: () => {
+      throw new Error('repeated pre-test failure must not build retry result');
+    },
+    recalledMemoryIds: [],
+  });
+
+  assert.equal(discordCalls, 1);
+  assert.equal(savedCompletion.status, STATUS.BLOCKED);
+  assert.equal(savedCompletion.reason_code, 'test_failure');
+  assert.equal(savedCompletion.observed.gateway_label, 'gateway-2');
+  assert.equal(savedCompletion.metadata.failure_class, 'test_failure');
+  assert.equal(result.terminal.retry, false);
+  assert.equal(result.terminal.result.stepType, 'module');
+  assert.equal(result.terminal.result.stepId, 'module-a');
+  assert.equal(result.terminal.result.outcome, 'blocked');
+  assert.equal(result.terminal.result.terminal.status, 'blocked');
+  assert.equal(result.terminal.result.terminal.decision.reasonCode, 'test_failure');
+  assert.equal(result.terminal.result.diagnostics.metadata.failure_class, 'test_failure');
+});
+
+test('Buster output_file identity mismatch fails completion contract without Buster crash retry', async () => {
   let savedTransition = null;
   let discordCalls = 0;
   const result = await handleFailedPollResult({
@@ -212,6 +509,9 @@ test('Buster output_file identity mismatch blocks without Buster crash retry', a
     },
     timeout: 1,
     deps: {
+      applyModuleCompletion: applyModuleCompletionForTest((nextStatus) => {
+        savedTransition = { status: nextStatus };
+      }),
       saveStatus: (_config, _dir, _previous, nextStatus) => {
         savedTransition = nextStatus;
       },
@@ -234,6 +534,7 @@ test('Buster output_file identity mismatch blocks without Buster crash retry', a
       attempt: 1,
       dispatchId: 'dispatch-1',
       gateway_label: 'gateway-1',
+      sessionKey: 'session-1',
     },
     busterModel: 'buster-model',
     busterAttempt: 1,
@@ -244,16 +545,86 @@ test('Buster output_file identity mismatch blocks without Buster crash retry', a
   assert.equal(result.retry, undefined);
   assert.equal(result.terminal.retry, false);
   assert.equal(result.terminal.result.nextAction, 'halt');
-  assert.equal(result.terminal.result.outcome, 'blocked');
+  assert.equal(result.terminal.result.outcome, 'error');
   assert.equal(result.terminal.result.issueType, 'environment');
   assert.equal(result.terminal.result.diagnostics.metadata.failure_class, 'output_file_identity_mismatch');
   assert.equal(result.terminal.result.diagnostics.metadata.forge_preserved, true);
-  assert.equal(savedTransition.status.status, STATUS.BLOCKED);
-  assert.equal(savedTransition.status.blockedReason, 'output_file_identity_mismatch');
+  assert.equal(savedTransition.status.status, STATUS.FAIL);
   assert.equal(discordCalls, 1);
 });
 
-test('module Buster phase treats Redis output_file identity mismatch as infra without Forge retry', async () => {
+test('Buster crash retry preserves forge commit identity from full module status', async () => {
+  let savedStatus = null;
+  let discordCalls = 0;
+  const result = await handleFailedPollResult({
+    config: {
+      project: 'module-buster-identity-test',
+      _runId: 'run-1',
+      rate_limit: { max_pauses_per_module: 0, cooldown_hours: 0, cooldown_buffer_ms: 0 },
+      paths: { swarm_dir: '/tmp/module-buster-identity-test/.swarm' },
+      _runStats: {},
+    },
+    moduleId: 'module-a',
+    mod: { title: 'Module A', test_suites: ['unit'] },
+    dir: 'module-a',
+    status: {
+      status: STATUS.TESTING,
+      current_phase: 'buster',
+      fail_count: 0,
+      forge_commit_hash: 'abc123def456',
+      active_agent: {
+        dispatch_id: 'dispatch-1',
+        gateway_label: 'gateway-1',
+        session_key: 'session-1',
+      },
+      history: [],
+    },
+    timeout: 5,
+    deps: {
+      saveStatus: (_config, _dir, _previous, transition) => {
+        savedStatus = clone(transition.status);
+      },
+      discord: async () => {
+        discordCalls += 1;
+      },
+    },
+    redisEntry: null,
+    busterWorkerControlResult: {
+      diagnostics: {
+        metadata: {
+          reason: 'timeout',
+          final_status: {
+            status: STATUS.TESTING,
+            current_phase: 'buster',
+            fail_count: 0,
+            completion_summary: 'Buster timed out',
+          },
+        },
+      },
+    },
+    busterSessionKey: 'session-1',
+    completionIdentity: {
+      runId: 'run-1',
+      attempt: 1,
+      dispatchId: 'dispatch-1',
+      gateway_label: 'gateway-1',
+      sessionKey: 'session-1',
+    },
+    busterModel: 'buster-model',
+    busterAttempt: 1,
+    maxBusterCrashRetries: 1,
+    isLastBusterAttempt: false,
+  });
+
+  assert.equal(result.retry, true);
+  assert.equal(result.status.status, STATUS.READY_FOR_TESTING);
+  assert.equal(result.status.forge_commit_hash, 'abc123def456');
+  assert.equal(savedStatus.status, STATUS.READY_FOR_TESTING);
+  assert.equal(savedStatus.forge_commit_hash, 'abc123def456');
+  assert.equal(discordCalls, 1);
+});
+
+test('module Buster phase treats Redis output_file identity mismatch as completion contract failure without Forge retry', async () => {
   const config = configWithBusterWorker();
   const dispatchId = 'buster-module-module-a-1781879465321-1';
   const sessionKey = 'agent:main:subagent:e1414386-cafc-4d85-bfc3-09f1c10e4bfa';
@@ -279,6 +650,7 @@ test('module Buster phase treats Redis output_file identity mismatch as infra wi
     nowMs: () => 1781879465321,
     discord: async () => {},
     archiveModuleCompletions: async () => ({ failed: false }),
+    runModuleBusterWorker,
     spawnAgent: async () => ({
       dispatch_id: dispatchId,
       run_id: 'run-identity-proof',
@@ -286,6 +658,7 @@ test('module Buster phase treats Redis output_file identity mismatch as infra wi
       gateway_label: dispatchId,
       stream_log_path: '/tmp/buster-proof.log',
     }),
+    verifyAgentHealth: async () => ({ ok: true }),
     verifyAgentAlive: async () => true,
     pollDualWithRateLimitRecovery: async () => ({
       ok: false,
@@ -310,6 +683,9 @@ test('module Buster phase treats Redis output_file identity mismatch as infra wi
     saveStatus: (_config, _dir, previousOrStatus, transition = null) => {
       savedStatus = clone(transition?.status || previousOrStatus);
     },
+    applyModuleCompletion: applyModuleCompletionForTest((nextStatus) => {
+      savedStatus = nextStatus;
+    }),
     loadStatus: () => clone(savedStatus),
   };
 
@@ -334,21 +710,20 @@ test('module Buster phase treats Redis output_file identity mismatch as infra wi
     },
   });
 
-  assert.equal(result.retry, false);
-  assert.equal(result.result.outcome, 'blocked');
-  assert.equal(result.result.nextAction, 'halt');
-  assert.equal(result.result.issueType, 'environment');
-  assert.equal(result.result.diagnostics.summary, 'Buster output_file identity mismatch — infrastructure issue (not sent to Forge)');
-  assert.equal(result.result.diagnostics.metadata.failure_class, 'output_file_identity_mismatch');
-  assert.equal(result.result.diagnostics.metadata.forge_preserved, true);
-  assert.equal(savedStatus.status, STATUS.BLOCKED);
+  const terminal = moduleTerminalForAssertion(result);
+  assert.equal(terminal.retry, false);
+  assert.equal(terminal.result.outcome, 'error');
+  assert.equal(terminal.result.nextAction, 'halt');
+  assert.equal(terminal.result.issueType, 'environment');
+  assert.equal(terminal.result.diagnostics.summary, 'Buster output_file identity mismatch — completion contract failure (not sent to Forge)');
+  assert.equal(terminal.result.diagnostics.metadata.failure_class, 'output_file_identity_mismatch');
+  assert.equal(savedStatus.status, STATUS.FAIL);
   assert.equal(savedStatus.fail_count, 0);
-  assert.equal(savedStatus.blockedReason, 'output_file_identity_mismatch');
   assert.equal(handleModuleFailCalls, 0);
   assert.equal(buildRetryResultCalls, 0);
 });
 
-test('module Buster phase treats Redis missing output_file as infra without Forge retry', async () => {
+test('module Buster phase treats Redis missing output_file as completion contract failure without Forge retry', async () => {
   const config = configWithBusterWorker();
   const dispatchId = 'buster-module-module-a-1781884965455-1';
   const sessionKey = 'agent:main:subagent:9f044c9e-7675-4751-a3b9-373702f8dea8';
@@ -374,6 +749,7 @@ test('module Buster phase treats Redis missing output_file as infra without Forg
     nowMs: () => 1781884965455,
     discord: async () => {},
     archiveModuleCompletions: async () => ({ failed: false }),
+    runModuleBusterWorker,
     spawnAgent: async () => ({
       dispatch_id: dispatchId,
       run_id: 'run-identity-proof',
@@ -381,6 +757,7 @@ test('module Buster phase treats Redis missing output_file as infra without Forg
       gateway_label: dispatchId,
       stream_log_path: '/tmp/buster-proof.log',
     }),
+    verifyAgentHealth: async () => ({ ok: true }),
     verifyAgentAlive: async () => true,
     pollDualWithRateLimitRecovery: async () => ({
       ok: false,
@@ -405,6 +782,9 @@ test('module Buster phase treats Redis missing output_file as infra without Forg
     saveStatus: (_config, _dir, previousOrStatus, transition = null) => {
       savedStatus = clone(transition?.status || previousOrStatus);
     },
+    applyModuleCompletion: applyModuleCompletionForTest((nextStatus) => {
+      savedStatus = nextStatus;
+    }),
     loadStatus: () => clone(savedStatus),
   };
 
@@ -429,18 +809,397 @@ test('module Buster phase treats Redis missing output_file as infra without Forg
     },
   });
 
-  assert.equal(result.retry, false);
-  assert.equal(result.result.outcome, 'blocked');
-  assert.equal(result.result.nextAction, 'halt');
-  assert.equal(result.result.issueType, 'environment');
-  assert.equal(result.result.diagnostics.summary, 'Buster output_file missing — infrastructure issue (not sent to Forge)');
-  assert.equal(result.result.diagnostics.metadata.failure_class, 'output_file_missing');
-  assert.equal(result.result.diagnostics.metadata.forge_preserved, true);
-  assert.equal(savedStatus.status, STATUS.BLOCKED);
+  const terminal = moduleTerminalForAssertion(result);
+  assert.equal(terminal.retry, false);
+  assert.equal(terminal.result.outcome, 'error');
+  assert.equal(terminal.result.nextAction, 'halt');
+  assert.equal(terminal.result.issueType, 'environment');
+  assert.equal(terminal.result.diagnostics.summary, 'Buster output_file missing — completion contract failure (not sent to Forge)');
+  assert.equal(terminal.result.diagnostics.metadata.failure_class, 'output_file_missing');
+  assert.equal(savedStatus.status, STATUS.FAIL);
   assert.equal(savedStatus.fail_count, 0);
-  assert.equal(savedStatus.blockedReason, 'output_file_missing');
   assert.equal(handleModuleFailCalls, 0);
   assert.equal(buildRetryResultCalls, 0);
+});
+
+test('module Buster phase preserves forge commit when worker retry status is narrow', async () => {
+  const config = configWithBusterWorker();
+  let savedStatus = {
+    status: STATUS.READY_FOR_TESTING,
+    current_phase: null,
+    fail_count: 0,
+    forge_commit_hash: 'abc123def456',
+    history: [],
+    cost: {},
+  };
+  const seenForgeCommits = [];
+  let workerCalls = 0;
+
+  const deps = {
+    resolvePolicy: () => ({ model: 'buster-model', model_source: 'test' }),
+    logEffectivePolicy: () => {},
+    buildBusterModulePrompt: () => ({ prompt: 'buster prompt' }),
+    savePrompt: () => {},
+    validateBusterConfig: () => {},
+    setShutdownContext: () => {},
+    clearShutdownContext: () => {},
+    nowMs: () => 1781884965455 + workerCalls,
+    discord: async () => {},
+    runModuleBusterWorker: async ({ workerInput }) => {
+      workerCalls += 1;
+      seenForgeCommits.push(workerInput.status?.forge_commit_hash || null);
+      if (workerCalls === 1) {
+        return buildModuleBusterWorkerControlResult(config, workerInput, {
+          nextAction: 'retry',
+          issueType: 'environment',
+          outcomeClass: 'retrying',
+          reason: 'timeout',
+          failureClass: 'timeout',
+          finalStatus: {
+            status: STATUS.TESTING,
+            current_phase: 'buster',
+            fail_count: 0,
+            completion_summary: 'Buster timed out',
+          },
+          dispatchId: 'dispatch-timeout',
+          gatewayLabel: 'gateway-timeout',
+          sessionKey: 'session-timeout',
+        });
+      }
+      return buildModuleBusterWorkerControlResult(config, workerInput, {
+        nextAction: 'pass',
+        outcomeClass: 'passed',
+        finalStatus: {
+          status: STATUS.PASS,
+          summary: 'Buster passed after retry',
+        },
+        dispatchId: 'dispatch-pass',
+        gatewayLabel: 'gateway-pass',
+        sessionKey: 'session-pass',
+      });
+    },
+    saveStreamLog: () => {},
+    saveStatus: (_config, _dir, previousOrStatus, transition = null) => {
+      savedStatus = clone(transition?.status || previousOrStatus);
+    },
+    applyModuleCompletion: applyModuleCompletionForTest((nextStatus) => {
+      savedStatus = nextStatus;
+    }),
+    loadStatus: () => clone(savedStatus),
+  };
+
+  const result = await runModuleBusterPhase({
+    config,
+    progress: {},
+    moduleId: 'module-a',
+    mod: { title: 'Module A', test_suites: ['unit'] },
+    dir: 'module-a',
+    status: savedStatus,
+    timeout: 1,
+    maxFails: 2,
+    deps,
+    recalledMemoryIds: [],
+    handleModuleFail: async () => {
+      throw new Error('Buster retry identity preservation must not enter handleModuleFail');
+    },
+    buildRetryResult: () => {
+      throw new Error('Buster retry identity preservation must not build retry result');
+    },
+  });
+
+  assert.equal(workerCalls, 2);
+  assert.deepEqual(seenForgeCommits, ['abc123def456', 'abc123def456']);
+  assert.equal(result.retry, false);
+  assert.equal(result.result.outcome, 'passed');
+});
+
+test('module Buster phase does not duplicate PASS persistence after Redis completion authority', async () => {
+  const config = configWithBusterWorker();
+  let savedStatus = {
+    status: STATUS.READY_FOR_TESTING,
+    current_phase: null,
+    fail_count: 0,
+    history: [],
+    cost: {},
+  };
+  const savedTransitions = [];
+
+  const deps = {
+    resolvePolicy: () => ({ model: 'buster-model', model_source: 'test' }),
+    logEffectivePolicy: () => {},
+    buildBusterModulePrompt: () => ({ prompt: 'buster prompt' }),
+    savePrompt: () => {},
+    validateBusterConfig: () => {},
+    setShutdownContext: () => {},
+    clearShutdownContext: () => {},
+    nowMs: () => 1781884965455,
+    discord: async () => {},
+    runModuleBusterWorker: async ({ workerInput }) => buildModuleBusterWorkerControlResult(config, workerInput, {
+      nextAction: 'pass',
+      outcomeClass: 'passed',
+      finalStatus: {
+        status: STATUS.PASS,
+        completion_summary: 'Deterministic suites passed',
+      },
+      redisEntry: {
+        status: STATUS.PASS,
+        source: 'buster-pipeline',
+        reason: 'deterministic_suites_passed',
+        summary: 'Deterministic suites passed',
+        run_id: 'run-identity-proof',
+        attempt: 1,
+        dispatch_id: 'buster-module-module-a-1781884965455-1',
+        completion_key: 'run-identity-proof:1:buster-module-module-a-1781884965455-1',
+      },
+      dispatchId: 'buster-module-module-a-1781884965455-1',
+    }),
+    saveStreamLog: () => {},
+    saveStatus: (_config, _dir, previousOrStatus, transition = null) => {
+      savedTransitions.push(transition?.lifecycleMutation?.eventType || null);
+      if (savedTransitions.filter((entry) => entry === 'module_attempt.passed').length > 1) {
+        throw new Error('duplicate PASS lifecycle save');
+      }
+      savedStatus = clone(transition?.status || previousOrStatus);
+    },
+    applyModuleCompletion: applyModuleCompletionForTest((nextStatus, lifecycleMutation) => {
+      savedTransitions.push(lifecycleMutation.eventType);
+      if (savedTransitions.filter((entry) => entry === 'module_attempt.passed').length > 1) {
+        throw new Error('duplicate PASS lifecycle save');
+      }
+      savedStatus = nextStatus;
+    }),
+    loadStatus: () => clone(savedStatus),
+  };
+
+  const result = await runModuleBusterPhase({
+    config,
+    progress: {},
+    moduleId: 'module-a',
+    mod: { title: 'Module A', test_suites: ['unit'] },
+    dir: 'module-a',
+    status: savedStatus,
+    timeout: 1,
+    maxFails: 2,
+    deps,
+    recalledMemoryIds: [],
+    handleModuleFail: async () => {
+      throw new Error('Redis PASS authority must not enter handleModuleFail');
+    },
+    buildRetryResult: () => {
+      throw new Error('Redis PASS authority must not build retry result');
+    },
+  });
+
+  assert.equal(result.retry, false);
+  assert.equal(result.result.outcome, 'passed');
+  assert.deepEqual(savedTransitions.filter(Boolean), ['module_attempt.testing_started', 'module_attempt.passed']);
+  assert.equal(savedStatus.status, STATUS.PASS);
+});
+
+test('module Buster phase accepts Redis-only deterministic PASS without local final status', async () => {
+  const config = configWithBusterWorker();
+  let savedStatus = {
+    status: STATUS.READY_FOR_TESTING,
+    current_phase: null,
+    fail_count: 0,
+    history: [],
+    cost: {},
+  };
+  const savedTransitions = [];
+
+  const deps = {
+    resolvePolicy: () => ({ model: 'buster-model', model_source: 'test' }),
+    logEffectivePolicy: () => {},
+    buildBusterModulePrompt: () => ({ prompt: 'buster prompt' }),
+    savePrompt: () => {},
+    validateBusterConfig: () => {},
+    setShutdownContext: () => {},
+    clearShutdownContext: () => {},
+    nowMs: () => 1781884965455,
+    discord: async () => {},
+    runModuleBusterWorker: async ({ workerInput }) => buildModuleBusterWorkerControlResult(config, workerInput, {
+      nextAction: 'pass',
+      outcomeClass: 'passed',
+      redisEntry: {
+        status: STATUS.PASS,
+        source: 'buster-pipeline',
+        reason: 'deterministic_suites_passed',
+        summary: 'Deterministic suites passed',
+        run_id: 'run-identity-proof',
+        attempt: 1,
+        dispatch_id: 'buster-module-module-a-1781884965455-1',
+        completion_key: 'run-identity-proof:1:buster-module-module-a-1781884965455-1',
+      },
+      dispatchId: 'buster-module-module-a-1781884965455-1',
+    }),
+    saveStreamLog: () => {},
+    saveStatus: (_config, _dir, previousOrStatus, transition = null) => {
+      savedTransitions.push(transition?.lifecycleMutation?.eventType || null);
+      savedStatus = clone(transition?.status || previousOrStatus);
+    },
+    applyModuleCompletion: applyModuleCompletionForTest((nextStatus, lifecycleMutation) => {
+      savedTransitions.push(lifecycleMutation.eventType);
+      savedStatus = nextStatus;
+    }),
+    loadStatus: () => clone(savedStatus),
+  };
+
+  const result = await runModuleBusterPhase({
+    config,
+    progress: {},
+    moduleId: 'module-a',
+    mod: { title: 'Module A', test_suites: ['unit'] },
+    dir: 'module-a',
+    status: savedStatus,
+    timeout: 1,
+    maxFails: 2,
+    deps,
+    recalledMemoryIds: [],
+    handleModuleFail: async () => {
+      throw new Error('Redis-only deterministic PASS must not enter handleModuleFail');
+    },
+    buildRetryResult: () => {
+      throw new Error('Redis-only deterministic PASS must not build retry result');
+    },
+  });
+
+  assert.equal(result.retry, false);
+  assert.equal(result.result.outcome, 'passed');
+  assert.equal(result.result.nextAction, 'continue');
+  assert.deepEqual(savedTransitions.filter(Boolean), ['module_attempt.testing_started', 'module_attempt.passed']);
+  assert.equal(savedStatus.status, STATUS.PASS);
+});
+
+test('module Buster worker keeps terminal poll authority over malformed cleanup status', async () => {
+  const config = configWithBusterWorker();
+  const workerInput = {
+    ids: {
+      moduleId: 'module-a',
+      runId: 'run-identity-proof',
+      attempt: 1,
+      dispatchId: 'dispatch-current',
+    },
+    executionContext: {
+      moduleDir: 'module-a',
+      timeoutMinutes: 1,
+    },
+    worker: {
+      workerType: 'module_buster',
+      backendConfig: {
+        model: 'buster-model',
+        runtimeKind: 'session',
+      },
+    },
+  };
+  let shutdownCleared = 0;
+  const result = await runModuleBusterWorker({
+    config,
+    progress: {},
+    workerInput,
+    deps: {
+      archiveModuleCompletions: async () => ({ failed: false }),
+      spawnAgent: async () => ({
+        dispatch_id: 'dispatch-current',
+        session_key: 'session-current',
+        gateway_label: 'gateway-current',
+        stream_log_path: '/tmp/session-current.jsonl',
+      }),
+      verifyAgentHealth: async () => ({ ok: true }),
+      killAgent: async () => ({ ok: true }),
+      pollDualWithRateLimitRecovery: async () => ({
+        ok: true,
+        reason: 'agent_verdict_pass',
+        status: {
+          status: STATUS.PASS,
+          summary: 'Buster agent passed',
+          _redis_entry: {
+            source: 'buster-pipeline',
+            reason: 'agent_verdict_pass',
+            dispatch_id: 'dispatch-current',
+            session_key: 'session-current',
+          },
+        },
+      }),
+      loadStatus: () => {
+        throw new SyntaxError('Expected double-quoted property name in JSON at position 65');
+      },
+      saveStreamLog: async () => {},
+      clearShutdownContext: () => {
+        shutdownCleared += 1;
+      },
+    },
+  });
+
+  assert.equal(result.nextAction, 'pass');
+  assert.equal(result.diagnostics.metadata.failure_class, 'pass');
+  assert.equal(result.diagnostics.metadata.dispatch_id, 'dispatch-current');
+  assert.equal(result.diagnostics.metadata.session_key, 'session-current');
+  assert.deepEqual(result.diagnostics.metadata.status_errors, [
+    {
+      phase: 'load_final_status',
+      error: 'Expected double-quoted property name in JSON at position 65',
+    },
+  ]);
+  assert.equal(shutdownCleared, 1);
+});
+
+test('module Buster worker returns typed parse corruption when poll reads malformed completion state', async () => {
+  const config = configWithBusterWorker();
+  const workerInput = {
+    ids: {
+      moduleId: 'module-a',
+      runId: 'run-identity-proof',
+      attempt: 1,
+      dispatchId: 'dispatch-current',
+    },
+    executionContext: {
+      moduleDir: 'module-a',
+      timeoutMinutes: 1,
+    },
+    worker: {
+      workerType: 'module_buster',
+      backendConfig: {
+        model: 'buster-model',
+        runtimeKind: 'session',
+      },
+    },
+  };
+  const result = await runModuleBusterWorker({
+    config,
+    progress: {},
+    workerInput,
+    deps: {
+      archiveModuleCompletions: async () => ({ failed: false }),
+      spawnAgent: async () => ({
+        dispatch_id: 'dispatch-current',
+        session_key: 'session-current',
+        gateway_label: 'gateway-current',
+        stream_log_path: '/tmp/session-current.jsonl',
+      }),
+      verifyAgentHealth: async () => ({ ok: true }),
+      killAgent: async () => ({ ok: true }),
+      pollDualWithRateLimitRecovery: async () => {
+        throw new SyntaxError('Expected double-quoted property name in JSON at position 65');
+      },
+      loadStatus: () => {
+        throw new SyntaxError('Expected double-quoted property name in JSON at position 65');
+      },
+      saveStreamLog: async () => {},
+      clearShutdownContext: () => {},
+    },
+  });
+
+  assert.equal(result.nextAction, 'retry');
+  assert.equal(result.diagnostics.metadata.reason, 'parse_corrupted');
+  assert.equal(result.diagnostics.metadata.failure_class, 'parse_corrupted');
+  assert.equal(result.diagnostics.metadata.dispatch_id, 'dispatch-current');
+  assert.equal(result.diagnostics.metadata.session_key, 'session-current');
+  assert.deepEqual(result.diagnostics.metadata.status_errors, [
+    {
+      phase: 'load_final_status',
+      error: 'Expected double-quoted property name in JSON at position 65',
+    },
+  ]);
 });
 
 test('module Buster phase retries startup failures with dedicated swarm config budget before PASS', async () => {
@@ -464,10 +1223,10 @@ test('module Buster phase retries startup failures with dedicated swarm config b
     clearShutdownContext: () => {},
     nowMs: () => 1781884965455,
     discord: async () => {},
-    runModuleBusterWorker: async (ctx) => {
+    runModuleBusterWorker: async ({ workerInput }) => {
       workerCalls += 1;
       if (workerCalls < 3) {
-        return buildModuleBusterWorkerControlResult(config, ctx, {
+        return buildModuleBusterWorkerControlResult(config, workerInput, {
           nextAction: 'retry',
           issueType: 'environment',
           outcomeClass: 'retrying',
@@ -475,9 +1234,11 @@ test('module Buster phase retries startup failures with dedicated swarm config b
           failureClass: 'healthcheck_failed',
           error: 'agent not running after spawn',
           dispatchId: `dispatch-${workerCalls}`,
+          gatewayLabel: `gateway-${workerCalls}`,
+          sessionKey: `session-${workerCalls}`,
         });
       }
-      return buildModuleBusterWorkerControlResult(config, ctx, {
+      return buildModuleBusterWorkerControlResult(config, workerInput, {
         nextAction: 'pass',
         outcomeClass: 'passed',
         finalStatus: {
@@ -485,12 +1246,17 @@ test('module Buster phase retries startup failures with dedicated swarm config b
           summary: 'Buster passed after startup retry',
         },
         dispatchId: 'dispatch-pass',
+        gatewayLabel: 'gateway-pass',
+        sessionKey: 'session-pass',
       });
     },
     saveStreamLog: () => {},
     saveStatus: (_config, _dir, previousOrStatus, transition = null) => {
       savedStatus = clone(transition?.status || previousOrStatus);
     },
+    applyModuleCompletion: applyModuleCompletionForTest((nextStatus) => {
+      savedStatus = nextStatus;
+    }),
     loadStatus: () => clone(savedStatus),
   };
 

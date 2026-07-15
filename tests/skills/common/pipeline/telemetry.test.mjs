@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { sanitizeTelemetryPayload } from '../../../../skills/common/pipeline/redaction.ts';
+import { sanitizeTelemetryPayload } from '../../../../skills/common/pipeline/egress.ts';
 import { validateTelemetryEventPayload } from '../../../../skills/common/pipeline/services/telemetry/payload-schema.ts';
 import { getTelemetrySeqKey, getTelemetryStreamKey } from '../../../../skills/common/pipeline/telemetry.ts';
 
@@ -19,7 +19,7 @@ test('telemetry sequence keys do not collide when identity parts contain separat
   );
 });
 
-test('telemetry payload redacts arrays under secret keys', () => {
+test('telemetry payload preserves arrays under secret-like keys', () => {
   assert.deepEqual(
     sanitizeTelemetryPayload({
       token: ['plain-secret'],
@@ -29,10 +29,10 @@ test('telemetry payload redacts arrays under secret keys', () => {
       },
     }),
     {
-      token: '[redacted-secret]',
-      api_keys: '[redacted-secret]',
+      token: ['plain-secret'],
+      api_keys: ['another-secret'],
       nested: {
-        oauth: '[redacted-secret]',
+        oauth: [['nested-secret']],
       },
     },
   );
@@ -49,8 +49,8 @@ test('telemetry payload handling does not recurse indefinitely on circular array
   });
 
   assert.equal(sanitized.details.items[0], 'safe');
-  assert.equal(sanitized.details.items[1].redacted, true);
-  assert.equal(sanitized.details.items[1].label, 'payload');
+  assert.equal(sanitized.details.items[1].type, 'circular');
+  assert.equal(sanitized.details.items[1].label, 'items');
   assert.equal(
     validateTelemetryEventPayload('plugin.event', {
       plugin_id: 'plugin',

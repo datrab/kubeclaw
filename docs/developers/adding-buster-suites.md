@@ -55,7 +55,7 @@ A suite should:
 - distinguish `FAIL` from `ERROR`
 - mark whether failures are critical
 - support evidence-only behavior when thresholds are absent if that matches the suite family
-- redact secrets from logs, metadata, screenshots, and telemetry
+- preserve diagnostic values while keeping logs, metadata, screenshots, and telemetry within size/shape bounds
 - respect task and suite deadlines
 
 ## Suite Config

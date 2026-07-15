@@ -69,6 +69,7 @@ const injectedDiff = service.collectMeaningfulForgeDiffEvidence({ project: 'cont
   diffEvidence: {
     paths: ['src/index.js'],
     ignored_paths: ['modules/01/forge-completion.json'],
+    hasMeaningfulChanges: true,
     head_now: 'def',
   },
 });

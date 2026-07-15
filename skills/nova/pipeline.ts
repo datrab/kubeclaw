@@ -12,6 +12,11 @@ declare const process: {
   exit(code?: number): never;
 };
 
+function requiredProcessExitCode(value: unknown): number {
+  if (typeof value === 'number' && Number.isInteger(value)) return value;
+  throw new Error('pipeline cli returned missing exit code');
+}
+
 const currentPath = fs.realpathSync(fileURLToPath(import.meta.url));
 const entryPath = process.argv[1] && fs.existsSync(process.argv[1])
   ? fs.realpathSync(process.argv[1])
@@ -20,5 +25,5 @@ const entryPath = process.argv[1] && fs.existsSync(process.argv[1])
 if (currentPath === entryPath) {
   const { main } = await import('./pipeline/cli.ts');
   const exitCode = await main();
-  process.exit(exitCode ?? 0);
+  process.exit(requiredProcessExitCode(exitCode));
 }

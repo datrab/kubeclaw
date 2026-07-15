@@ -1,0 +1,21 @@
+{
+  "schema_version": "real_e2e_integration_map.v1",
+  "integration_module": "04-nginx",
+  "consumes": [
+    "02-nginx",
+    "03-nginx"
+  ],
+  "consumed_surfaces": [
+    {
+      "module": "02-nginx",
+      "path": "src/content/branch-a.html",
+      "served_as": "/content/branch-a.html"
+    },
+    {
+      "module": "03-nginx",
+      "path": "src/assets/branch-b.css",
+      "served_as": "/assets/branch-b.css"
+    }
+  ],
+  "deployable_surface": "nginx-static-workload"
+}

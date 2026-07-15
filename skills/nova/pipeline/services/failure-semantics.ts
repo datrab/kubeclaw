@@ -1,5 +1,6 @@
 import { ACP_MONITOR_REASONS, isStoppedSessionState } from '../agents/acp-monitor.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export const FAILURE_LAYERS = Object.freeze({
   LOAD: 'load',
   INVOCATION: 'invocation',
@@ -42,7 +43,7 @@ export const NORMALIZED_FAILURE_CLASSES = Object.freeze({
   TEST_FAILURE: 'test_failure',
   INFRA_ERROR: 'infra_error',
   TIMEOUT: 'timeout',
-  UNKNOWN: 'unknown',
+  CLASSIFICATION_MISSING: 'classification_missing',
 });
 
 export const STALE_RECOVERY_ACTIONS = Object.freeze({
@@ -50,6 +51,26 @@ export const STALE_RECOVERY_ACTIONS = Object.freeze({
   KILLED_ORPHAN: 'killed_orphan',
   RESET_WITHOUT_SESSION: 'reset_without_session',
 });
+const TERMINAL_MONITOR_DETAIL = 'terminal';
+const ZERO_INACTIVITY_MINUTES = 0;
+
+function textValue(value) {
+  if (typeof value !== 'string') return null;
+  const normalized = value.trim();
+  return normalized ? normalized : null;
+}
+
+function textForMatching(...values) {
+  return values.map((value) => selectDefinedValue(() => (textValue(value)), () => (''))).join(' ').trim();
+}
+
+function firstTextValue(...values) {
+  for (const value of values) {
+    const normalized = textValue(value);
+    if (normalized) return normalized;
+  }
+  return null;
+}
 
 function includesAny(text, patterns) {
   return patterns.some((pattern) => pattern.test(text));
@@ -115,24 +136,46 @@ const FORGE_PATTERNS = [
   /expected output/i,
 ];
 
-export function normalizeFailureClass(phase, reason = '', opts = {}) {
-  const text = [
-    phase || '',
-    reason || '',
-    opts.failurePattern || '',
-    opts.monitorReason || '',
-    opts.preTestKind || '',
-  ].join(' ').trim();
+export function normalizeGitFailureClass(reason = '') {
+  const value = selectDefinedValue(() => (textValue(reason)), () => (''));
+  if (/authentication failed|publickey|permission denied \(publickey\)|could not read.*passphrase/i.test(value)) return 'git_credential_failed';
+  if (/\[rejected\]|non-fast-forward|updates were rejected/i.test(value)) return 'git_non_fast_forward';
+  if (/GIT_REBASE_CONFLICT|rebase conflict|\bCONFLICT\b|rebase --abort/i.test(value)) return 'git_rebase_conflict';
+  if (/git commit failed|pre-commit|commit hook|commit failed/i.test(value)) return 'git_commit_failed';
+  if (/network is unreachable|connection (refused|reset)|could not resolve hostname|name or service not known|temporary failure in name resolution|no route to host|timed out/i.test(value)) return 'git_push_unreachable';
+  if (/git push (failed|error)|push.*failed.*after.*retr|git sync failed|failed before buster handoff/i.test(value)) return 'git_sync_failed';
+  return null;
+}
 
-  if (opts.isTimeout || opts.monitorReason === ACP_MONITOR_REASONS.UNKNOWN_STALE_TIMEOUT || includesAny(text, TIMEOUT_PATTERNS)) {
+export function normalizeFailureClass(phase, reason = '', opts = {}) {
+  const text = textForMatching(
+    phase,
+    reason,
+    opts.failurePattern,
+    opts.monitorReason,
+    opts.preTestKind,
+  );
+
+  const gitFailureClass = normalizeGitFailureClass(text);
+  if (gitFailureClass) return gitFailureClass;
+
+  if (opts.isTimeout) {
     return NORMALIZED_FAILURE_CLASSES.TIMEOUT;
   }
 
-  if (opts.preTestKind === 'infra' || includesAny(text, INFRA_PATTERNS)) {
+  if (opts.monitorReason === ACP_MONITOR_REASONS.STALE_STATUS_TIMEOUT) {
+    return NORMALIZED_FAILURE_CLASSES.TIMEOUT;
+  }
+
+  if (includesAny(text, TIMEOUT_PATTERNS)) {
+    return NORMALIZED_FAILURE_CLASSES.TIMEOUT;
+  }
+
+  if (selectTruthyValue(() => (opts.preTestKind === 'infra'), () => (includesAny(text, INFRA_PATTERNS)))) {
     return NORMALIZED_FAILURE_CLASSES.INFRA_ERROR;
   }
 
-  if (opts.preTestKind === 'config' || includesAny(text, VALIDATION_PATTERNS)) {
+  if (selectTruthyValue(() => (opts.preTestKind === 'config'), () => (includesAny(text, VALIDATION_PATTERNS)))) {
     return NORMALIZED_FAILURE_CLASSES.VALIDATION_ERROR;
   }
 
@@ -144,7 +187,7 @@ export function normalizeFailureClass(phase, reason = '', opts = {}) {
     return NORMALIZED_FAILURE_CLASSES.FORGE_ERROR;
   }
 
-  return NORMALIZED_FAILURE_CLASSES.UNKNOWN;
+  return NORMALIZED_FAILURE_CLASSES.CLASSIFICATION_MISSING;
 }
 
 export function buildFailureFact({
@@ -156,9 +199,9 @@ export function buildFailureFact({
   ...rest
 } = {}) {
   return {
-    layer: layer || FAILURE_LAYERS.INVOCATION,
-    code: code || NORMALIZED_FAILURE_CODES.BACKEND_DISPATCH_FAILED,
-    source: source || FAILURE_SOURCES.BACKEND,
+    layer: firstTextValue(layer, FAILURE_LAYERS.INVOCATION),
+    code: firstTextValue(code, NORMALIZED_FAILURE_CODES.BACKEND_DISPATCH_FAILED),
+    source: firstTextValue(source, FAILURE_SOURCES.BACKEND),
     retryable: retryable === true,
     ...(detail ? { detail } : {}),
     ...rest,
@@ -166,15 +209,15 @@ export function buildFailureFact({
 }
 
 export function classifyMonitorFailureFact(monitor = {}, identity = {}) {
-  const reason = monitor?.reason || null;
+  const reason = selectTruthyValue(() => (monitor?.reason), () => (null));
   const detail = {
     monitor_reason: reason,
-    session_state: monitor?.sessionState || null,
+    session_state: selectTruthyValue(() => (monitor?.sessionState), () => (null)),
     gateway_unreachable: monitor?.gatewayUnreachable === true,
-    gateway_detail: monitor?.gatewayDetail || null,
-    transcript_detail: monitor?.transcript?.lastDetail || monitor?.lastDetail || null,
-    transcript_stale_polls: monitor?.transcriptStalePolls ?? null,
-    unknown_polls: monitor?.unknownPolls ?? null,
+    gateway_detail: selectTruthyValue(() => (monitor?.gatewayDetail), () => (null)),
+    transcript_detail: selectTruthyValue(() => (selectTruthyValue(() => (monitor?.transcript?.lastDetail), () => (monitor?.lastDetail))), () => (null)),
+    transcript_stale_polls: selectDefinedValue(() => (monitor?.transcriptStalePolls), () => (null)),
+    unknown_polls: selectDefinedValue(() => (monitor?.unknownPolls), () => (null)),
   };
 
   if (reason === ACP_MONITOR_REASONS.RATE_LIMITED) {
@@ -188,7 +231,7 @@ export function classifyMonitorFailureFact(monitor = {}, identity = {}) {
     });
   }
 
-  if (reason === ACP_MONITOR_REASONS.UNKNOWN_STALE_TIMEOUT) {
+  if (reason === ACP_MONITOR_REASONS.STALE_STATUS_TIMEOUT) {
     return buildFailureFact({
       layer: FAILURE_LAYERS.INVOCATION,
       code: NORMALIZED_FAILURE_CODES.BACKEND_TIMEOUT,
@@ -224,38 +267,39 @@ export function classifyMonitorFailureFact(monitor = {}, identity = {}) {
   return null;
 }
 
+function monitorStateDefinitivelyStopped(monitor = {}) {
+  return ['failed', 'terminal', 'sessionTerminal'].some((field) => monitor?.[field]);
+}
+
 export function isDefinitivelyStoppedMonitorState(monitor = {}) {
   return Boolean(
-    monitor?.failed
-    || monitor?.terminal
-    || monitor?.sessionTerminal
-    || isStoppedSessionState(monitor?.sessionState || '')
+    selectTruthyValue(() => (monitorStateDefinitivelyStopped(monitor)), () => (isStoppedSessionState(selectDefinedValue(() => (textValue(monitor?.sessionState)), () => ('')))))
   );
 }
 
 export function buildStaleRecoveryEvidence(monitor = {}, extra = {}) {
   return {
-    session_state: monitor?.sessionState || null,
-    monitor_reason: monitor?.reason || null,
-    detail: monitor?.lastDetail || monitor?.lastSummary || monitor?.detail || null,
+    session_state: selectTruthyValue(() => (monitor?.sessionState), () => (null)),
+    monitor_reason: selectTruthyValue(() => (monitor?.reason), () => (null)),
+    detail: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (monitor?.lastDetail), () => (monitor?.lastSummary))), () => (monitor?.detail))), () => (null)),
     gateway_unreachable: monitor?.gatewayUnreachable === true,
-    gateway_detail: monitor?.gatewayDetail || null,
-    transcript_stale_polls: monitor?.transcriptStalePolls ?? null,
-    unknown_polls: monitor?.unknownPolls ?? null,
+    gateway_detail: selectTruthyValue(() => (monitor?.gatewayDetail), () => (null)),
+    transcript_stale_polls: selectDefinedValue(() => (monitor?.transcriptStalePolls), () => (null)),
+    unknown_polls: selectDefinedValue(() => (monitor?.unknownPolls), () => (null)),
     ...extra,
   };
 }
 
 export function describeStaleRecovery(previousPhase, action, detail = {}) {
-  const phase = previousPhase || 'unknown';
+  const phase = selectTruthyValue(() => (previousPhase), () => ('missing_previous_phase'));
   if (action === STALE_RECOVERY_ACTIONS.OBSERVED_TERMINAL) {
-    return `Recovered stale ${phase} state after child session ended: ${detail.detail || 'terminal'}`;
+    return `Recovered stale ${phase} state after child session ended: ${selectDefinedValue(() => (textValue(detail.detail)), () => (TERMINAL_MONITOR_DETAIL))}`;
   }
   if (action === STALE_RECOVERY_ACTIONS.KILLED_ORPHAN) {
-    return `Recovered stale ${phase} state after killing orphaned child session: ${detail.sessionKey || 'unknown-session'}`;
+    return `Recovered stale ${phase} state after killing orphaned child session: ${selectTruthyValue(() => (detail.sessionKey), () => ('missing-session'))}`;
   }
   if (action === STALE_RECOVERY_ACTIONS.RESET_WITHOUT_SESSION) {
-    return `Recovered stale ${phase} state with no tracked child session after ${detail.inactivityMinutes ?? 0}m of inactivity`;
+    return `Recovered stale ${phase} state with no tracked child session after ${selectDefinedValue(() => (detail.inactivityMinutes), () => (ZERO_INACTIVITY_MINUTES))}m of inactivity`;
   }
   return `Recovered stale ${phase} state`;
 }

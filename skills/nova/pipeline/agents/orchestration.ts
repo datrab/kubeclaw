@@ -20,7 +20,7 @@ import {
   isModuleBusterWorkerControlResult,
   isModuleForgeWorkerControlResult,
 } from './module-worker-control-results.ts';
-import { verifyAgentAlive } from './orchestration-healthcheck.ts';
+import { verifyAgentAlive, verifyAgentHealth } from './orchestration-healthcheck.ts';
 import {
   telemetryModuleId,
 } from './orchestration-lifecycle-events.ts';
@@ -45,6 +45,7 @@ import {
   waitForRequiredAgentStartupEvidence,
 } from '../services/agent-observability-required.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 declare const process: any;
 type AnyRecord = Record<string, any>;
 
@@ -56,11 +57,58 @@ export {
   isModuleBusterWorkerControlResult,
   isModuleForgeWorkerControlResult,
 } from './module-worker-control-results.ts';
-export { verifyAgentAlive } from './orchestration-healthcheck.ts';
+export { verifyAgentAlive, verifyAgentHealth } from './orchestration-healthcheck.ts';
 export { runModuleBusterWorker, runModuleForgeWorker } from './module-workers.ts';
 export { killReviewerAgent, spawnReviewerAgent } from './reviewer-lifecycle.ts';
 
 const _redisDispatchModules = new Map<string, any>();
+const DISPLAY_AGENT_ROLE_FALLBACK = 'Agent';
+const REASONING_LEVEL_NOT_CONFIGURED = 'default';
+const MODULE_TEST_TASK_TYPE = 'module_test';
+
+function textValue(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const normalized = value.trim();
+  return normalized ? normalized : null;
+}
+
+function objectRecord(value: unknown): AnyRecord {
+  return value !== null && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : {};
+}
+
+function arrayValue(value: unknown): unknown[] {
+  return Array.isArray(value) ? value : [];
+}
+
+function reasoningLevelValue(value: unknown): string {
+  return selectDefinedValue(() => (textValue(value)), () => (REASONING_LEVEL_NOT_CONFIGURED));
+}
+
+function errorMessage(error: unknown): string {
+  if (error && typeof error === 'object' && 'message' in error) {
+    const message = (error as AnyRecord).message;
+    if (typeof message === 'string' && message.trim()) return message;
+  }
+  return String(error);
+}
+
+function requiredCanonicalModelId(model: unknown, label: string): string {
+  const resolved = canonicalizeModelId(model);
+  if (!resolved) throw new Error(`${label}: required non-empty model id`);
+  return resolved;
+}
+
+function requiredAcpAgentId(agentConfig: AnyRecord, agentType: string): string {
+  const agentId = textValue(agentConfig?.acp_agent_id);
+  if (!agentId) throw new Error(`ACP dispatch for '${agentType}' requires explicit acp_agent_id`);
+  return agentId;
+}
+
+function requiredAgentCwd(agentConfig: AnyRecord, config: AnyRecord, agentType: string, opts: AnyRecord = {}): string {
+  const cwd = selectDefinedValue(() => (selectDefinedValue(() => (textValue(opts?.cwd)), () => (textValue(agentConfig?.cwd)))), () => (textValue(config?.repo_root)));
+  if (!cwd) throw new Error(`Agent '${agentType}' requires explicit cwd or config.repo_root`);
+  return cwd;
+}
 
 async function getRedisDispatchModule(config: AnyRecord, agentType: string, opts: AnyRecord = {}) {
   if (!config?.agents?.[agentType]) throw new Error(`Unknown agent type: ${agentType}`);
@@ -69,7 +117,6 @@ async function getRedisDispatchModule(config: AnyRecord, agentType: string, opts
     agentType,
     source: `agents.${agentType}`,
     requiredMethods: ['publishTask'],
-    deps: opts.deps,
   });
 
   if (cacheable === false) {
@@ -110,7 +157,7 @@ function captureBaselineFiles(trackingKey: string, cwd: string | null) {
       entry._baselineFiles = new Set(baselineOutput.trim().split('\n').filter(Boolean));
     }
   } catch (e: any) {
-    log('DEBUG', `Could not capture baseline files for ${trackingKey}: ${e?.message || e}`);
+    log('DEBUG', `Could not capture baseline files for ${trackingKey}: ${errorMessage(e)}`);
   }
 }
 
@@ -120,8 +167,8 @@ export function computeFilesChanged(entry: AnyRecord | null, config: AnyRecord) 
   if (entry?._baselineFiles) {
     baselineTracked = true;
     try {
-      const baselineCwd = entry._baselineCwd || null;
-      if (!baselineCwd || !isGitWorktree(baselineCwd)) return { filesChanged, baselineTracked: false };
+      const baselineCwd = selectTruthyValue(() => (entry._baselineCwd), () => (null));
+      if (selectTruthyValue(() => (!baselineCwd), () => (!isGitWorktree(baselineCwd)))) return { filesChanged, baselineTracked: false };
       const currentOutput = execFileSync('git', ['-C', baselineCwd, 'diff', '--name-only', 'HEAD'], {
         encoding: 'utf8', timeout: 5000, stdio: ['ignore', 'pipe', 'pipe'], env: buildSubprocessEnv(),
       });
@@ -129,7 +176,7 @@ export function computeFilesChanged(entry: AnyRecord | null, config: AnyRecord) 
       const newFiles = [...currentFiles].filter(f => !entry._baselineFiles.has(f));
       if (newFiles.length > 0) filesChanged = newFiles;
     } catch (e: any) {
-      log('DEBUG', `Could not compute files changed for ${entry?.gatewayLabel || 'agent'}: ${e?.message || e}`);
+      log('DEBUG', `Could not compute files changed for ${selectDefinedValue(() => (textValue(entry?.gatewayLabel)), () => ('agent'))}: ${selectTruthyValue(() => (e?.message), () => (e))}`);
     }
   }
   return { filesChanged, baselineTracked };
@@ -140,8 +187,8 @@ export function acpLabel(agentType: string, moduleId: string) {
 }
 
 function displayAgentRole(agentType: string) {
-  const normalized = String(agentType || 'Agent').trim();
-  return normalized ? normalized.replace(/^\w/, (char) => char.toUpperCase()) : 'Agent';
+  const normalized = selectDefinedValue(() => (textValue(agentType)), () => (DISPLAY_AGENT_ROLE_FALLBACK));
+  return normalized.replace(/^\w/, (char) => char.toUpperCase());
 }
 
 export async function spawnAcpAgent(
@@ -153,29 +200,28 @@ export async function spawnAcpAgent(
   opts: AnyRecord = {},
 ) {
   const agentConfig = config.agents[agentType];
-  const resolvedModel = canonicalizeModelId(model) || model;
+  const resolvedModel = requiredCanonicalModelId(model, `Agent '${agentType}' model`);
   const trackingKey = opts.trackingLabel ? opts.trackingLabel : acpLabel(agentType, moduleId);
   const dispatchTs = Date.now();
   const gatewayLabel = `${trackingKey}-${dispatchTs}`;
   const runId = opts.run_id ? opts.run_id : config?._runId ? config._runId : config?.run_id ? config.run_id : null;
   const dispatchId = opts.dispatch_id ? opts.dispatch_id : `${trackingKey}-dispatch-${dispatchTs}`;
-  const agentId = modelToHarness(resolvedModel) || agentConfig.acp_agent_id;
-  if (!agentId) throw new Error(`ACP dispatch for '${agentType}' requires explicit acp_agent_id or model harness mapping`);
-  const cwd = agentConfig.cwd || config.repo_root;
+  const agentId = requiredAcpAgentId(agentConfig, agentType);
+  const cwd = requiredAgentCwd(agentConfig, config, agentType, opts);
   const runtime = agentConfig.dispatch === 'acp'
     ? 'acp'
     : resolveRuntime({ model: resolvedModel });
   const useSubagent = runtime === 'subagent';
-  const thinkingLevel = opts.thinking || null;
+  const thinkingLevel = selectTruthyValue(() => (opts.thinking), () => (null));
   const thinkingSource = opts.thinking_source ? opts.thinking_source : opts.thinkingSource ? opts.thinkingSource : null;
   const telemetryIdentity = {
     run_id: runId,
-    project: config?.project || null,
+    project: selectTruthyValue(() => (config?.project), () => (null)),
     agent_type: agentType,
     module_id: telemetryModuleId(opts, moduleId),
-    gate_id: opts.gate_id || null,
-    gate_type: opts.gate_type || null,
-    attempt: opts.attempt ?? null,
+    gate_id: selectTruthyValue(() => (opts.gate_id), () => (null)),
+    gate_type: selectTruthyValue(() => (opts.gate_type), () => (null)),
+    attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
     dispatch_id: dispatchId,
     gateway_label: gatewayLabel,
   };
@@ -188,7 +234,7 @@ export async function spawnAcpAgent(
   try {
     const sessionData = await spawnSession({
       session: { model: resolvedModel, runtime, agentId, cwd, label: gatewayLabel },
-    }, taskPrompt, agentConfig?.timeout_seconds || null, {
+    }, taskPrompt, selectTruthyValue(() => (agentConfig?.timeout_seconds), () => (null)), {
       ...sessionLifecyclePolicies(config),
       runtime,
       model: resolvedModel,
@@ -197,8 +243,8 @@ export async function spawnAcpAgent(
       label: gatewayLabel,
       thinking: thinkingLevel,
       trackActive: false,
-      budget: opts.budget || null,
-      signal: opts.signal || null,
+      budget: selectTruthyValue(() => (opts.budget), () => (null)),
+      signal: selectTruthyValue(() => (opts.signal), () => (null)),
       observabilityIdentity: telemetryIdentity,
     });
 
@@ -208,14 +254,14 @@ export async function spawnAcpAgent(
       runtime: useSubagent ? 'subagent' : 'acp',
       moduleId,
       run_id: runId,
-      attempt: opts.attempt ?? null,
+      attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
       dispatch_id: dispatchId,
       telemetry_module_id: telemetryModuleId(opts, moduleId),
-      telemetry_gate_id: opts.gate_id || null,
-      telemetry_gate_type: opts.gate_type || null,
-      telemetry_attempt: opts.attempt ?? null,
+      telemetry_gate_id: selectTruthyValue(() => (opts.gate_id), () => (null)),
+      telemetry_gate_type: selectTruthyValue(() => (opts.gate_type), () => (null)),
+      telemetry_attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
       telemetry_dispatch_id: dispatchId,
-      telemetry_substep: opts.substep || null,
+      telemetry_substep: selectTruthyValue(() => (opts.substep), () => (null)),
       telemetry_thinking: thinkingLevel,
       telemetry_thinking_source: thinkingSource,
     });
@@ -234,9 +280,9 @@ export async function spawnAcpAgent(
     const spawnDiscordCorrelation = {
       run_id: runId,
       module_id: telemetryModuleId(opts, moduleId),
-      gate_id: opts.gate_id || null,
-      gate_type: opts.gate_type || null,
-      attempt: opts.attempt ?? null,
+      gate_id: selectTruthyValue(() => (opts.gate_id), () => (null)),
+      gate_type: selectTruthyValue(() => (opts.gate_type), () => (null)),
+      attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
       dispatch_id: dispatchId,
       gateway_label: gatewayLabel,
       session_key: sessionData.childSessionKey,
@@ -244,20 +290,20 @@ export async function spawnAcpAgent(
     discord(config, 'INFO', `🔬 ${displayAgentRole(agentType)} ${useSubagent ? 'Subagent' : 'ACP'} Session Spawned: ${agentType}/${moduleId}`, 'Agent is now working.', buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.LIFECYCLE, {
       runId,
       moduleId: telemetryModuleId(opts, moduleId),
-      gateId: opts.gate_id || null,
-      gateType: opts.gate_type || null,
-      attempt: opts.attempt ?? null,
+      gateId: selectTruthyValue(() => (opts.gate_id), () => (null)),
+      gateType: selectTruthyValue(() => (opts.gate_type), () => (null)),
+      attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
       dispatchId,
       gatewayLabel,
       sessionKey: sessionData.childSessionKey,
       model: resolvedModel,
-      reasoningLevel: thinkingLevel || 'default',
+      reasoningLevel: reasoningLevelValue(thinkingLevel),
       thinkingSource,
       runtime: useSubagent ? 'subagent' : 'acp',
     }, [
       { name: 'Agent', value: agentId, inline: true },
     ]), { correlation: spawnDiscordCorrelation }).catch((e) => {
-      log('DEBUG', `Agent spawn Discord notice failed for ${gatewayLabel}: ${e?.message || e}`);
+      log('DEBUG', `Agent spawn Discord notice failed for ${gatewayLabel}: ${errorMessage(e)}`);
     });
     return {
       label: trackingKey,
@@ -266,14 +312,14 @@ export async function spawnAcpAgent(
       dispatchId,
       streamLogPath: sessionData.streamLogPath,
       session_key: sessionData.childSessionKey,
-      stream_log_path: sessionData.streamLogPath || null,
+      stream_log_path: selectTruthyValue(() => (sessionData.streamLogPath), () => (null)),
       gateway_label: gatewayLabel,
       dispatch_id: dispatchId,
       run_id: runId,
       runtime: useSubagent ? 'subagent' : 'acp',
       model: resolvedModel,
-      model_source: opts.model_source ?? opts.modelSource ?? null,
-      reasoning_level: thinkingLevel || null,
+      model_source: selectDefinedValue(() => (opts.model_source), () => (null)),
+      reasoning_level: selectTruthyValue(() => (thinkingLevel), () => (null)),
       thinking_source: thinkingSource,
       agent_id: agentId,
     };
@@ -282,27 +328,29 @@ export async function spawnAcpAgent(
     const spawnFailureDiscordCorrelation = {
       run_id: runId,
       module_id: telemetryModuleId(opts, moduleId),
-      gate_id: opts.gate_id || null,
-      gate_type: opts.gate_type || null,
-      attempt: opts.attempt ?? null,
+      gate_id: selectTruthyValue(() => (opts.gate_id), () => (null)),
+      gate_type: selectTruthyValue(() => (opts.gate_type), () => (null)),
+      attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
       dispatch_id: dispatchId,
       gateway_label: gatewayLabel,
     };
-    discord(config, 'CRITICAL', `❌ Spawn Failed: ${agentType}/${moduleId}`, e.message?.split('\n')[0] || 'unknown',
+    discord(config, 'CRITICAL', `❌ Spawn Failed: ${agentType}/${moduleId}`, selectTruthyValue(() => (e.message?.split('\n')[0]), () => ('missing_error_message')),
       buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.LIFECYCLE, {
         runId,
         moduleId: telemetryModuleId(opts, moduleId),
-        gateId: opts.gate_id || null,
-        gateType: opts.gate_type || null,
-        attempt: opts.attempt ?? null,
+        gateId: selectTruthyValue(() => (opts.gate_id), () => (null)),
+        gateType: selectTruthyValue(() => (opts.gate_type), () => (null)),
+        attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
         dispatchId,
         gatewayLabel,
       }),
       { correlation: spawnFailureDiscordCorrelation },
     ).catch((discordError) => {
-      log('DEBUG', `Agent spawn failure Discord notice failed for ${gatewayLabel}: ${discordError?.message || discordError}`);
+      log('DEBUG', `Agent spawn failure Discord notice failed for ${gatewayLabel}: ${errorMessage(discordError)}`);
     });
     const err: AnyRecord = new Error(`Failed to spawn session '${gatewayLabel}': ${e.message}`);
+    if (e?.code) err.code = e.code;
+    if (e?.gatewayStatus) err.gatewayStatus = e.gatewayStatus;
     err.gateway_label = gatewayLabel;
     throw err;
   }
@@ -324,7 +372,7 @@ export async function killAcpAgent(
     return false;
   }
   const runtime = entry?.runtime;
-  const entryModel = entry?.model || '';
+  const entryModel = selectDefinedValue(() => (textValue(entry?.model)), () => (''));
   const isSubagent = resolveRuntime({ runtime, model: entryModel }) === 'subagent';
 
   log('STEP', `Destroying ${isSubagent ? 'subagent' : 'ACP'} session: ${label} (${sessionKey})`);
@@ -342,14 +390,14 @@ export async function killAcpAgent(
     untrackAgent(label);
     log('OK', `Session destroyed: ${label}`);
   } else {
-    log('WARN', `Session not fully reconciled after stop: ${label} (${termination.state})`);
+    log(graceful ? 'DEBUG' : 'WARN', `Session not fully reconciled after stop: ${label} (${termination.state})`);
   }
   return termination.confirmed;
 }
 
 function resolveConfiguredBusterCapabilities(owner: AnyRecord = {}) {
   const value = owner.capabilities;
-  return Array.isArray(value) ? [...new Set(value.map((entry) => String(entry || '').trim()).filter(Boolean))] : [];
+  return [...new Set(arrayValue(value).map((entry) => textValue(entry)).filter(Boolean))];
 }
 
 function stablePortOffset(input: string) {
@@ -368,17 +416,17 @@ function deriveIsolatedServePort({
   dispatchId = '',
 }: AnyRecord = {}) {
   const runId = config?._runId ? config._runId : config?.run_id ? config.run_id : '';
-  if (!runId || !targetId || !Number.isInteger(attempt) || attempt < 1) return null;
-  return 20000 + stablePortOffset(`${runId}:${targetId}:${attempt}:${dispatchId || ''}`);
+  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (!runId), () => (!targetId))), () => (!Number.isInteger(attempt)))), () => (attempt < 1))) return null;
+  return 20000 + stablePortOffset(`${runId}:${targetId}:${attempt}:${selectDefinedValue(() => (textValue(dispatchId)), () => (''))}`);
 }
 
 function isolateServePortForBuster(testConfig: AnyRecord, opts: AnyRecord = {}) {
   const serve = testConfig?.serve && typeof testConfig.serve === 'object' ? testConfig.serve : null;
-  if (!serve || !Number.isInteger(serve.port) || serve.port <= 0) return testConfig;
-  if (typeof serve.start_cmd !== 'string' || !serve.start_cmd.trim()) return testConfig;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!serve), () => (!Number.isInteger(serve.port)))), () => (serve.port <= 0))) return testConfig;
+  if (selectTruthyValue(() => (typeof serve.start_cmd !== 'string'), () => (!serve.start_cmd.trim()))) return testConfig;
 
   const port = deriveIsolatedServePort(opts);
-  if (!port || port === serve.port) return testConfig;
+  if (selectTruthyValue(() => (!port), () => (port === serve.port))) return testConfig;
 
   const escapedPort = String(serve.port).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const startCmd = serve.start_cmd.replace(new RegExp(`(^|\\s)PORT=${escapedPort}(?=\\s|$)`), `$1PORT=${port}`);
@@ -399,8 +447,8 @@ function isolateServePortForBuster(testConfig: AnyRecord, opts: AnyRecord = {}) 
 export function buildBusterTestConfig(owner: AnyRecord = {}, config: AnyRecord = {}, opts: AnyRecord = {}) {
   const testConfig = owner?.test_config && typeof owner.test_config === 'object' ? owner.test_config : {};
   const busterRuntime = getBusterRuntimeConfig(config);
-  const configuredTimeout = testConfig.suite_timeout_ms ?? busterRuntime.suite_timeout_ms;
-  if (!Number.isInteger(configuredTimeout) || configuredTimeout <= 0) {
+  const configuredTimeout = selectDefinedValue(() => (testConfig.suite_timeout_ms), () => (busterRuntime.suite_timeout_ms));
+  if (selectTruthyValue(() => (!Number.isInteger(configuredTimeout)), () => (configuredTimeout <= 0))) {
     throw new Error('Buster payload requires positive test_config.suite_timeout_ms or config.buster.runtime.suite_timeout_ms');
   }
   const normalized = {
@@ -408,6 +456,38 @@ export function buildBusterTestConfig(owner: AnyRecord = {}, config: AnyRecord =
     suite_timeout_ms: configuredTimeout,
   };
   return isolateServePortForBuster(normalized, opts);
+}
+
+export function buildBusterAgentJudgmentPolicy(owner: AnyRecord = {}) {
+  const policy = owner?.agent_judgment;
+  if (selectTruthyValue(() => (policy === undefined), () => (policy === null))) {
+    return {
+      required: false,
+      reason: 'deterministic_suites_authoritative',
+    };
+  }
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!policy), () => (typeof policy !== 'object'))), () => (Array.isArray(policy)))) {
+    throw new Error('Buster agent_judgment must be an object');
+  }
+  if (typeof policy.required !== 'boolean') {
+    throw new Error('Buster agent_judgment.required must be a boolean');
+  }
+  return {
+    required: policy.required,
+    reason: typeof policy.reason === 'string' && policy.reason.trim()
+      ? policy.reason.trim()
+      : (policy.required ? 'agent_judgment_required' : 'deterministic_suites_authoritative'),
+  };
+}
+
+function requiredBusterCommitHash(taskType: string, status: AnyRecord | null, opts: AnyRecord = {}) {
+  const value = taskType === 'gate_test'
+    ? opts.commit_hash
+    : status?.forge_commit_hash;
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) {
+    throw new Error(`Buster ${taskType} payload requires explicit commit_hash`);
+  }
+  return value.trim();
 }
 
 export function buildBusterPayload(
@@ -420,13 +500,15 @@ export function buildBusterPayload(
   opts: AnyRecord = {},
 ) {
   const cooldownSeconds = Math.round(getRateLimitConfig(config).cooldown_hours * 60 * 60);
+  const commitHash = requiredBusterCommitHash(taskType, status, opts);
   const base = {
     task_type: taskType,
     module: moduleId,
     project: config.project,
-    commit_hash: status?.forge_commit_hash || null,
+    commit_hash: commitHash,
     timestamp: new Date().toISOString(),
     completion_stream: completionStreamKey(config),
+    discord_webhook_url: selectTruthyValue(() => (config.discord_webhook_url), () => (null)),
     acp_monitor: getAcpMonitorConfig(config),
     rate_limit: {
       max_pauses: getRateLimitConfig(config).max_pauses_per_module,
@@ -434,29 +516,29 @@ export function buildBusterPayload(
       max_cooldown_s: cooldownSeconds,
     },
   };
-  const resolvedModel = canonicalizeModelId(opts.model) || opts.model || null;
+  const resolvedModel = selectTruthyValue(() => (selectTruthyValue(() => (canonicalizeModelId(opts.model)), () => (opts.model))), () => (null));
   const sessionRuntime = resolveRuntime({ model: resolvedModel });
-  const thinkingSupported = opts.thinking_supported ?? opts.thinkingSupported ?? null;
-  const thinking = opts.thinking ?? null;
-  const thinkingSource = opts.thinking_source ?? opts.thinkingSource ?? null;
-  const reasoningLevel = opts.reasoning_level ?? opts.reasoningLevel ?? (thinkingSupported === false ? 'not supported' : (thinking || null));
-  const runId = opts.run_id || config.run_id || config._runId || null;
+  const thinkingSupported = selectDefinedValue(() => (selectDefinedValue(() => (opts.thinking_supported), () => (opts.thinkingSupported))), () => (null));
+  const thinking = selectDefinedValue(() => (opts.thinking), () => (null));
+  const thinkingSource = selectDefinedValue(() => (selectDefinedValue(() => (opts.thinking_source), () => (opts.thinkingSource))), () => (null));
+  const reasoningLevel = selectDefinedValue(() => (selectDefinedValue(() => (opts.reasoning_level), () => (opts.reasoningLevel))), () => ((thinkingSupported === false ? 'not supported' : (selectTruthyValue(() => (thinking), () => (null))))));
+  const runId = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (opts.run_id), () => (config.run_id))), () => (config._runId))), () => (null));
   const { attempt, dispatch_id: dispatchId } = opts;
-  if (!Number.isInteger(attempt) || attempt < 1) throw new Error(`Buster ${taskType} payload requires explicit positive integer attempt`);
-  if (typeof dispatchId !== 'string' || !dispatchId.trim()) throw new Error(`Buster ${taskType} payload requires explicit dispatch_id`);
+  if (selectTruthyValue(() => (!Number.isInteger(attempt)), () => (attempt < 1))) throw new Error(`Buster ${taskType} payload requires explicit positive integer attempt`);
+  if (selectTruthyValue(() => (typeof dispatchId !== 'string'), () => (!dispatchId.trim()))) throw new Error(`Buster ${taskType} payload requires explicit dispatch_id`);
   const artifacts = getPipelineArtifactBundle(config);
   if (taskType === 'module_test') {
     const mod = progress.modules[moduleId];
     const pipelineDefaults = getPipelineDefaultsConfig(config);
-    const timeoutSeconds = (mod?.timeout_minutes ?? pipelineDefaults.timeout_minutes) * 60;
-    return { ...base, stage_id: 'worker:module_buster', worker_type: 'module_buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: modelToHarness(resolvedModel) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel }, model: resolvedModel, model_source: opts.model_source ?? opts.modelSource ?? null, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel, runtime: sessionRuntime, module_path: mod ? modulePathRef(config, mod.dir) : null, buster_md_path: mod ? moduleBusterMdPathRef(config, mod.dir) : null, output_file: mod ? moduleBusterOutputPathRef(config, mod.dir) : null, suites: mod?.test_suites || null, test_config: buildBusterTestConfig(mod, config, { config, targetId: moduleId, attempt, dispatchId }), capabilities: resolveConfiguredBusterCapabilities(mod), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: mod ? moduleLogDir(config, mod.dir) : null, pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
+    const timeoutSeconds = (mod?.timeout_minutes) * 60;
+    return { ...base, stage_id: 'worker:module_buster', worker_type: 'module_buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: selectTruthyValue(() => (modelToHarness(resolvedModel)), () => (null)), cwd: selectDefinedValue(() => (textValue(opts?.cwd)), () => (config.repo_root)), timeout_seconds: timeoutSeconds, label: dispatchId, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel }, model: resolvedModel, model_source: selectDefinedValue(() => (opts.model_source), () => (null)), thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel, runtime: sessionRuntime, module_path: mod ? modulePathRef(config, mod.dir) : null, buster_md_path: mod ? moduleBusterMdPathRef(config, mod.dir) : null, output_file: mod ? moduleBusterOutputPathRef(config, mod.dir) : null, suites: selectTruthyValue(() => (mod?.test_suites), () => (null)), test_config: buildBusterTestConfig(mod, config, { config, targetId: moduleId, attempt, dispatchId }), agent_judgment: buildBusterAgentJudgmentPolicy(mod), capabilities: resolveConfiguredBusterCapabilities(mod), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: mod ? moduleLogDir(config, mod.dir) : null, pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
   }
   if (taskType !== 'gate_test') throw new Error(`Buster payload builder does not support task_type '${taskType}'`);
-  const gate = opts.gate || progress.gates?.[moduleId] || {};
+  const gate = objectRecord(selectDefinedValue(() => (opts.gate), () => (progress.gates?.[moduleId])));
   const pipelineDefaults = getPipelineDefaultsConfig(config);
-  const gateTimeout = gate.timeout_minutes ?? pipelineDefaults.timeout_minutes;
+  const gateTimeout = gate.timeout_minutes
   const timeoutSeconds = gateTimeout * 60;
-  return { ...base, stage_id: 'gate:buster', gate_type: 'buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: modelToHarness(resolvedModel) || null, cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel }, model: resolvedModel, model_source: opts.model_source ?? opts.modelSource ?? null, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel, runtime: sessionRuntime, gate_id: moduleId, gate_title: gate.title || moduleId, work_dir: gateWorkDirPathRef(config), output_file: gateOutputPathRef(config, gate), instructions_file: gateInstructionsPathRef(config, gate), suites: gate.test_suites || null, test_config: buildBusterTestConfig(gate, config, { config, targetId: moduleId, attempt, dispatchId }), capabilities: resolveConfiguredBusterCapabilities(gate), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: gateLogDir(config, moduleId), pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
+  return { ...base, stage_id: 'gate:buster', gate_type: 'buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: selectTruthyValue(() => (modelToHarness(resolvedModel)), () => (null)), cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel }, model: resolvedModel, model_source: selectDefinedValue(() => (opts.model_source), () => (null)), thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel, runtime: sessionRuntime, gate_id: moduleId, gate_title: selectTruthyValue(() => (gate.title), () => (moduleId)), work_dir: gateWorkDirPathRef(config), output_file: gateOutputPathRef(config, gate), instructions_file: gateInstructionsPathRef(config, gate), suites: selectTruthyValue(() => (gate.test_suites), () => (null)), test_config: buildBusterTestConfig(gate, config, { config, targetId: moduleId, attempt, dispatchId }), agent_judgment: buildBusterAgentJudgmentPolicy(gate), capabilities: resolveConfiguredBusterCapabilities(gate), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: gateLogDir(config, moduleId), pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
 }
 
 export async function dispatchRedisTask(
@@ -471,7 +553,7 @@ export async function dispatchRedisTask(
 ) {
   const agentConfig = config.agents[agentType];
   log('STEP', `Dispatching to Redis: ${agentType} (module: ${moduleId}, type: ${taskType})`);
-  const taskPayload = (taskType === 'module_test' || taskType === 'gate_test')
+  const taskPayload = (selectTruthyValue(() => (taskType === 'module_test'), () => (taskType === 'gate_test')))
     ? buildBusterPayload(config, progress, moduleId, taskType, payload, status, opts)
     : { module: moduleId, project: config.project, message: payload, timestamp: new Date().toISOString() };
 
@@ -485,15 +567,15 @@ export async function dispatchRedisTask(
     log('OK', `Redis task dispatched to ${agentType}: ${JSON.stringify(result)}`);
     return {
       ...result,
-      dispatch_id: taskPayload.dispatch_id || null,
-      gateway_label: taskPayload.session?.label || null,
-      run_id: taskPayload.run_id || null,
-      attempt: taskPayload.attempt || null,
-      runtime: taskPayload.session?.runtime || taskPayload.runtime || null,
-      model: taskPayload.session?.model || taskPayload.model || null,
-      model_source: taskPayload.model_source || null,
-      reasoning_level: taskPayload.reasoning_level || taskPayload.session?.reasoning_level || null,
-      thinking_source: taskPayload.thinking_source || taskPayload.session?.thinking_source || null,
+      dispatch_id: selectTruthyValue(() => (taskPayload.dispatch_id), () => (null)),
+      gateway_label: selectTruthyValue(() => (taskPayload.session?.label), () => (null)),
+      run_id: selectTruthyValue(() => (taskPayload.run_id), () => (null)),
+      attempt: selectTruthyValue(() => (taskPayload.attempt), () => (null)),
+      runtime: selectTruthyValue(() => (selectTruthyValue(() => (taskPayload.session?.runtime), () => (taskPayload.runtime))), () => (null)),
+      model: selectTruthyValue(() => (selectTruthyValue(() => (taskPayload.session?.model), () => (taskPayload.model))), () => (null)),
+      model_source: selectTruthyValue(() => (taskPayload.model_source), () => (null)),
+      reasoning_level: selectTruthyValue(() => (selectTruthyValue(() => (taskPayload.reasoning_level), () => (taskPayload.session?.reasoning_level))), () => (null)),
+      thinking_source: selectTruthyValue(() => (selectTruthyValue(() => (taskPayload.thinking_source), () => (taskPayload.session?.thinking_source))), () => (null)),
     };
   } catch (e: any) {
     throw new Error(`Failed to dispatch Redis task to ${agentType}: ${e.message}`);
@@ -511,9 +593,9 @@ export async function spawnAgent(
 ) {
   const agentConfig = config.agents[agentType];
   if (!agentConfig) throw new Error(`Unknown agent type: ${agentType}`);
-  const resolvedModel = canonicalizeModelId(model) || model;
+  const resolvedModel = requiredCanonicalModelId(model, `Agent '${agentType}' model`);
   if (agentConfig.dispatch === 'redis') {
-    const taskType = opts.taskType || 'module_test';
+  const taskType = selectDefinedValue(() => (textValue(opts.taskType)), () => (MODULE_TEST_TASK_TYPE));
     opts.model = resolvedModel;
     return await dispatchRedisTask(config, progress, agentType, moduleId, taskType, taskPrompt, opts.status, opts);
   }

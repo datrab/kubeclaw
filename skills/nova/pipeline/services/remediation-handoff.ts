@@ -1,8 +1,9 @@
 import { STATUS } from '../core/constants.ts';
 import { cloneSerializable } from './serialization.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 function requireNonEmptyString(value, label) {
-  if (typeof value !== 'string' || !value.trim()) {
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) {
     throw new Error(`gate remediation request requires ${label}`);
   }
   return value.trim();
@@ -10,14 +11,14 @@ function requireNonEmptyString(value, label) {
 
 function requirePositiveNumber(value, label) {
   const normalized = Number(value);
-  if (!Number.isFinite(normalized) || normalized < 1) {
+  if (selectTruthyValue(() => (!Number.isFinite(normalized)), () => (normalized < 1))) {
     throw new Error(`gate remediation request requires ${label} >= 1`);
   }
   return normalized;
 }
 
 function requireObject(value, label) {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!value), () => (typeof value !== 'object'))), () => (Array.isArray(value)))) {
     throw new Error(`gate remediation request requires ${label}`);
   }
   return value;
@@ -54,8 +55,8 @@ export function buildGateRemediationRequestControlResult({
     issueType: 'code',
     diagnostics: {
       summary,
-      findings: cloneSerializable(findings) || [],
-      metadata: cloneSerializable(metadata) || {},
+      findings: selectDefinedValue(() => (cloneSerializable(findings)), () => ([])),
+      metadata: selectDefinedValue(() => (cloneSerializable(metadata)), () => ({})),
       typed: {
         gate: {
           schemaVersion: 'v1',
@@ -82,8 +83,8 @@ export function buildGateRemediationRequestControlResult({
           },
           targetRef,
           startedAt,
-          correlation: cloneSerializable(remediation?.correlation || {}),
-          diagnostics: cloneSerializable(remediation?.diagnostics || {}),
+          correlation: cloneSerializable(selectDefinedValue(() => (remediation?.correlation), () => ({}))),
+          diagnostics: cloneSerializable(selectDefinedValue(() => (remediation?.diagnostics), () => ({}))),
         },
       },
     },
@@ -91,7 +92,7 @@ export function buildGateRemediationRequestControlResult({
 }
 
 export function readGateRemediationSpec(result = {}) {
-  return result?.diagnostics?.typed?.remediation || null;
+  return selectTruthyValue(() => (result?.diagnostics?.typed?.remediation), () => (null));
 }
 
 export function isGateRemediationControlResult(result = {}) {
@@ -101,12 +102,12 @@ export function isGateRemediationControlResult(result = {}) {
     && !!readGateRemediationSpec(result);
 }
 
-export function validateGateRemediationControlResult(result = {}, stageId = 'gate:unknown') {
+export function validateGateRemediationControlResult(result = {}, stageId = 'gate:missing_gate_type') {
   if (result?.nextAction !== 'request_fix') return [];
 
   const errors = [];
   const remediation = readGateRemediationSpec(result);
-  if (!remediation || typeof remediation !== 'object') {
+  if (selectTruthyValue(() => (!remediation), () => (typeof remediation !== 'object'))) {
     errors.push(`request_fix for ${stageId} requires diagnostics.typed.remediation`);
     return errors;
   }
@@ -116,29 +117,29 @@ export function validateGateRemediationControlResult(result = {}, stageId = 'gat
   if (remediation.sourceKind !== 'gate') {
     errors.push(`request_fix for ${stageId} requires remediation sourceKind 'gate'`);
   }
-  if (!remediation.gateId || typeof remediation.gateId !== 'string') {
+  if (selectTruthyValue(() => (!remediation.gateId), () => (typeof remediation.gateId !== 'string'))) {
     errors.push(`request_fix for ${stageId} requires remediation gateId`);
   }
-  if (!remediation.gateType || typeof remediation.gateType !== 'string') {
+  if (selectTruthyValue(() => (!remediation.gateType), () => (typeof remediation.gateType !== 'string'))) {
     errors.push(`request_fix for ${stageId} requires remediation gateType`);
   }
   const maxFixCycles = Number(remediation?.policy?.maxFixCycles);
-  if (!Number.isFinite(maxFixCycles) || maxFixCycles < 1) {
+  if (selectTruthyValue(() => (!Number.isFinite(maxFixCycles)), () => (maxFixCycles < 1))) {
     errors.push(`request_fix for ${stageId} requires remediation policy.maxFixCycles >= 1`);
   }
   const nextFixCycle = Number(remediation?.policy?.nextFixCycle);
-  if (!Number.isFinite(nextFixCycle) || nextFixCycle < 1) {
+  if (selectTruthyValue(() => (!Number.isFinite(nextFixCycle)), () => (nextFixCycle < 1))) {
     errors.push(`request_fix for ${stageId} requires remediation policy.nextFixCycle >= 1`);
   }
-  if (!remediation?.policy?.rerunStageId || typeof remediation.policy.rerunStageId !== 'string') {
+  if (selectTruthyValue(() => (!remediation?.policy?.rerunStageId), () => (typeof remediation.policy.rerunStageId !== 'string'))) {
     errors.push(`request_fix for ${stageId} requires remediation policy.rerunStageId`);
   }
   return errors;
 }
 
-export function validateGateRemediationController(controller = {}, stageId = 'gate:unknown') {
+export function validateGateRemediationController(controller = {}, stageId = 'gate:missing_gate_type') {
   const errors = [];
-  if (!controller || typeof controller !== 'object') {
+  if (selectTruthyValue(() => (!controller), () => (typeof controller !== 'object'))) {
     return [`${stageId} remediation controller must be an object`];
   }
   if (typeof controller.performFix !== 'function') {
@@ -158,17 +159,32 @@ export function resolveGateRemediationController({
   evaluateGate,
   performFix,
   buildExhaustedControlResult,
-} = {}, stageId = 'gate:unknown') {
-  const controller = remediationController || {
+} = {}, stageId = 'gate:missing_gate_type') {
+  const controller = remediationControllerAuthority({
+    remediationController,
     evaluateGate,
     performFix,
     buildExhaustedControlResult,
-  };
+  });
   const errors = validateGateRemediationController(controller, stageId);
   if (errors.length > 0) {
     throw new Error(errors.join('; '));
   }
   return controller;
+}
+
+function remediationControllerAuthority({
+  remediationController,
+  evaluateGate,
+  performFix,
+  buildExhaustedControlResult,
+}) {
+  if (remediationController) return remediationController;
+  return {
+    evaluateGate,
+    performFix,
+    buildExhaustedControlResult,
+  };
 }
 
 export function bumpGateRemediationControlResult(result = {}, nextFixCycle) {

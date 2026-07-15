@@ -3,6 +3,7 @@ import { transitionModuleStatus } from '../lifecycle-state.ts';
 import { projectSrcPath, relPath } from '../core/paths.ts';
 import { collectMeaningfulForgeDiffEvidence } from './agent-observability-forge-completion.ts';
 import {
+  commitModuleWorktreeChanges,
   gitCommitAndPush,
   gitExec,
   gitPullBeforePush,
@@ -11,6 +12,7 @@ import {
 import { FAIL_PATTERNS } from './failures/classification.ts';
 import { log } from '../core/logger.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 
 function errorMessage(error: unknown): string {
@@ -18,7 +20,7 @@ function errorMessage(error: unknown): string {
 }
 
 function normalizeRepoRelativePath(relPathName: unknown): string {
-  return String(relPathName || '')
+  return String(selectDefinedValue(() => (relPathName), () => ('')))
     .replace(/\\/g, '/')
     .replace(/^\/+/, '')
     .replace(/^(?:\.\/)+/, '')
@@ -30,8 +32,14 @@ function normalizeScopedGitPaths(paths: unknown): string[] {
   return [...new Set(paths.map(normalizeRepoRelativePath).filter(Boolean))];
 }
 
+function isIsolatedModuleWorktree(config: AnyRecord): boolean {
+  return config?._moduleWorktree?.kind === 'module_worktree';
+}
+
 /**
- * Commit and push all Forge output before handing off to Buster.
+ * Commit Forge output before handing off to Buster.
+ * Shared worktrees publish immediately; isolated module worktrees publish at
+ * the module-join authority after Buster passes.
  * Records the commit hash and diff stat in the module status object.
  */
 export async function gitSyncBeforeBuster(config: AnyRecord, moduleDir: string, status: AnyRecord, opts: { budget?: any; signal?: any } = {}) {
@@ -39,25 +47,28 @@ export async function gitSyncBeforeBuster(config: AnyRecord, moduleDir: string, 
   log('STEP', 'Git sync: committing and pushing Forge output before Buster');
 
   try {
-    const diffEvidence = collectMeaningfulForgeDiffEvidence(config, moduleDir, { headBefore: status?.head_before || null });
+    const diffEvidence = collectMeaningfulForgeDiffEvidence(config, moduleDir, { headBefore: selectTruthyValue(() => (status?.head_before), () => (null)) });
     const scopedPaths = normalizeScopedGitPaths(diffEvidence?.paths);
     const addPaths = scopedPaths.length > 0
       ? scopedPaths
       : [normalizeRepoRelativePath(relPath(config, projectSrcPath(config)))].filter(Boolean);
 
-    const result = await gitCommitAndPush(
-      config,
-      `[pipeline] Module ${status.module_id}: Forge output — ready for Buster`,
-      { addPaths, conflictPaths: scopedPaths, captureHash: true },
-    );
+    const message = `[pipeline] Module ${status.module_id}: Forge output — ready for Buster`;
+    const result = isIsolatedModuleWorktree(config)
+      ? commitModuleWorktreeChanges(config, message, { addPaths, captureHash: true })
+      : await gitCommitAndPush(
+        config,
+        message,
+        { addPaths, conflictPaths: scopedPaths, captureHash: true, budget, signal },
+      );
 
-    if (!result.committed) {
+    if (!result.committed && !isIsolatedModuleWorktree(config)) {
       log('INFO', 'No uncommitted changes (Forge already committed) — pushing existing commits');
       gitPullBeforePush(config);
       await gitPushWithRetry(config, { budget, signal });
     }
 
-    const commitHash = result.hash || gitExec(config.repo_root, ['rev-parse', 'HEAD']);
+    const commitHash = commitHashAuthority(result, config);
     const shortHash = commitHash.substring(0, 8);
 
     status.forge_commit_hash = commitHash;
@@ -77,4 +88,9 @@ export async function gitSyncBeforeBuster(config: AnyRecord, moduleDir: string, 
   } catch (e) {
     throw new Error(`[${FAIL_PATTERNS.GIT_SYNC_FAILED}] Git sync failed before Buster handoff: ${errorMessage(e)}`);
   }
+}
+
+function commitHashAuthority(result, config) {
+  if (typeof result.hash === 'string' && result.hash.trim()) return result.hash;
+  return gitExec(config.repo_root, ['rev-parse', 'HEAD']);
 }

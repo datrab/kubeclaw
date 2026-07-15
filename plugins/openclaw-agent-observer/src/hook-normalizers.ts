@@ -1,7 +1,6 @@
 import {
   AGENT_OBSERVABILITY_SCHEMA_VERSION,
   AGENT_OBSERVABILITY_SOURCE,
-  applyMinimalApiKeyMask,
   assertAgentObservabilityIngressEvent,
 } from './agent-observability/index.ts';
 import type {
@@ -368,15 +367,13 @@ function normalizeIngressEvent(
   now = new Date(),
   context?: unknown,
 ): AgentObservabilityIngressEventV1 {
-  const masked = applyMinimalApiKeyMask(payload as unknown as AgentObservabilityJsonValue);
   const ingressEvent = {
     v: AGENT_OBSERVABILITY_SCHEMA_VERSION,
     type,
     source: AGENT_OBSERVABILITY_SOURCE,
     ts: now.toISOString(),
     identity: normalizeIdentity(event, context),
-    payload: dropUndefined(masked.value),
-    masking: masked.masking,
+    payload: dropUndefined(payload as unknown as AgentObservabilityJsonValue),
   } as unknown as AgentObservabilityIngressEventV1;
   assertAgentObservabilityIngressEvent(ingressEvent);
   return ingressEvent;

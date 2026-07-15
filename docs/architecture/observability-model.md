@@ -63,7 +63,7 @@ The `kubeclaw-agent-observer` plugin is the source-owned agent runtime observabi
 - `pipeline:agent-observability:payload:v1`
 - `pipeline:agent-observability:deadletter:v1`
 
-Control-stream events carry lifecycle/routing facts such as session, agent, and subagent state. Payload-stream events carry larger tool, model, prompt, response, and general agent-output payloads after the plugin applies the configured masking profile and size fuse.
+Control-stream events carry lifecycle/routing facts such as session, agent, and subagent state. Payload-stream events carry larger tool, model, prompt, response, and general agent-output payloads after the plugin applies JSON-safe shape normalization and the size fuse.
 
 ## Explicit Non-Claims
 

@@ -5,8 +5,10 @@ import path from 'node:path';
 import test from 'node:test';
 
 import {
+  buildLatestPointer,
   createPluginArtifactsApi,
   getPluginArtifactBundle,
+  projectPipelineArtifactEvidence,
 } from '../../../../../skills/nova/pipeline/services/artifact-bundle.ts';
 
 function makeConfig() {
@@ -23,42 +25,67 @@ function makeConfig() {
   };
 }
 
-function isPathInside(candidate, root) {
-  const relative = path.relative(root, candidate);
-  return relative === '' || (relative && !relative.startsWith('..') && !path.isAbsolute(relative));
-}
-
-test('plugin artifact lane dot-only segments cannot escape plugin-artifacts root', async () => {
+test('plugin artifact lane rejects dot-only identity segments', () => {
   const config = makeConfig();
-  const runLogDir = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', 'run-test');
-  const pluginArtifactsRoot = path.join(runLogDir, 'plugin-artifacts');
 
-  const bundle = getPluginArtifactBundle(config, {
-    moduleId: '..',
-    hookFamily: '..',
-    stageId: '..',
+  assert.throws(
+    () => getPluginArtifactBundle(config, {
+      moduleId: '..',
+      hookFamily: 'worker.execute',
+      stageId: 'forge',
+    }),
+    /Plugin artifact moduleId must not be dot-only/,
+  );
+});
+
+test('artifact evidence rejects removed camelCase identity aliases', () => {
+  assert.throws(
+    () => projectPipelineArtifactEvidence({
+      artifact: { runId: 'run-legacy' },
+      expectedRunId: 'run-legacy',
+    }),
+    /removed alias 'runId' is not accepted/,
+  );
+});
+
+test('latest pointer projects canonical run facts for operator summaries', () => {
+  const config = makeConfig();
+  const runFacts = {
+    modules: { total: 4, completed: 4, failed_or_blocked: 0, pending: 0 },
+    gates: { total: 3, completed: 3, failed_or_blocked: 0, pending: 0 },
+  };
+
+  const latest = buildLatestPointer(config, {
+    status: 'completed',
+    terminalStatus: 'succeeded',
+    runFacts,
   });
 
-  assert.equal(isPathInside(bundle.lane_dir, pluginArtifactsRoot), true);
-  assert.equal(isPathInside(bundle.lane_data_dir, pluginArtifactsRoot), true);
-  assert.match(bundle.lane_dir, /plugin-artifacts[/\\]unknown[/\\]unknown[/\\]unknown$/);
-
-  const api = createPluginArtifactsApi(config, {
-    moduleId: '..',
-    hookFamily: '..',
-    stageId: '..',
-    now: () => '2026-06-03T00:00:00.000Z',
+  assert.equal(latest.run_facts, runFacts);
+  assert.equal(latest.pipeline_run_id, 'run-test');
+  assert.equal(latest.module_statuses, runFacts.modules);
+  assert.equal(latest.modules, runFacts.modules);
+  assert.equal(latest.gates, runFacts.gates);
+  assert.deepEqual(latest.tests.modules, {
+    total: 4,
+    completed: 4,
+    failed_or_blocked: 0,
+    pending: 0,
+    status_counts: {},
   });
-  const receipt = await api.persist({
-    type: 'diagnostic',
-    format: 'text',
-    content: 'payload',
-  });
+  assert.equal(latest.cost.source, 'not_available');
+});
 
-  assert.equal(receipt.artifact.type, 'diagnostic');
-  assert.equal(fs.existsSync(path.join(runLogDir, 'index.json')), false);
-  assert.equal(fs.existsSync(path.join(runLogDir, 'data')), false);
-  assert.equal(fs.existsSync(bundle.lane_index_path), true);
+test('plugin artifact lane rejects missing identity segments', () => {
+  const config = makeConfig();
+
+  assert.throws(
+    () => createPluginArtifactsApi(config, {
+      hookFamily: 'worker.execute',
+      stageId: 'forge',
+    }),
+    /Plugin artifact moduleId must be a non-empty string/,
+  );
 });
 
 test('plugin artifact index append preserves entries added before locked write', async () => {

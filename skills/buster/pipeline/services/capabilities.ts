@@ -1,15 +1,16 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // pipeline/services/capabilities.ts — Buster task capability contract
 // Default-deny execution boundary for destructive/tool-heavy Buster surfaces.
 
 import fs from 'fs';
 import path from 'path';
-import { sanitizeTelemetryPayload } from '../redaction.ts';
+import { sanitizeTelemetryPayload } from '../egress.ts';
 import { resolveScopedPath } from '../security.ts';
 
 export const BUSTER_CAPABILITIES = Object.freeze({
   STATIC_WEB_SERVER: 'static_web_server',
   CONTAINER_RUNTIME: 'container_runtime',
-  KUBERNETES_API: 'kubernetes_api',
+  KUBERNETES: 'kubernetes',
   BROWSER_AUTOMATION: 'browser_automation',
   LIGHTHOUSE: 'lighthouse',
   DISCORD_MEDIA: 'discord_media',
@@ -18,6 +19,46 @@ export const BUSTER_CAPABILITIES = Object.freeze({
 
 export const KNOWN_BUSTER_CAPABILITIES = Object.freeze(Object.values(BUSTER_CAPABILITIES));
 const KNOWN = new Set(KNOWN_BUSTER_CAPABILITIES);
+const CAPABILITY_DENIED_REASON = 'buster_capability_denied';
+const DEFAULT_SERVE_TYPE = 'static';
+const DEFAULT_BLOCKED_ACTION = 'tool_execution';
+const DEFAULT_ASSERTION_SUITE = 'task';
+const CAPABILITY_ALERT_SEVERITY = 'CRITICAL';
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function textValue(value) {
+  return typeof value === 'string' ? value : '';
+}
+
+function selectPresentValue(...values) {
+  for (const value of values) {
+    if (typeof value === 'string' && value.length > 0) return value;
+  }
+  return '';
+}
+
+function contextCapabilitySource(context = {}) {
+  if (context.capabilities !== undefined && context.capabilities !== null) return context.capabilities;
+  if (context.payload?.capabilities !== undefined && context.payload.capabilities !== null) return context.payload.capabilities;
+  return [];
+}
+
+function stderrErrorDetail(error) {
+  return typeof error?.message === 'string' && error.message ? error.message : String(error);
+}
+
+function missingCapabilityReason(missing = [], required = []) {
+  const missingList = missing.join(', ');
+  if (missingList) return `missing capability: ${missingList}`;
+  return `missing capability: ${required.join(', ')}`;
+}
 
 export class BusterCapabilityDeniedError extends Error {
   code: string;
@@ -31,14 +72,15 @@ export class BusterCapabilityDeniedError extends Error {
     this.name = 'BusterCapabilityDeniedError';
     this.code = 'BUSTER_CAPABILITY_DENIED';
     this.details = details;
-    this.suite = details.suite || undefined;
-    this.action = details.action || undefined;
-    this.missing_capabilities = details.missing_capabilities || [];
+    this.suite = selectTruthyValue(() => (details.suite), () => (undefined));
+    this.action = selectTruthyValue(() => (details.action), () => (undefined));
+    this.missing_capabilities = arrayValue(details.missing_capabilities);
   }
 }
 
 function splitCapabilityString(value) {
-  return String(value || '')
+  const raw = textValue(value);
+  return raw
     .split(/[\s,]+/)
     .map((entry) => entry.trim())
     .filter(Boolean);
@@ -46,23 +88,23 @@ function splitCapabilityString(value) {
 
 export function normalizeBusterCapabilities(value = []) {
   const raw = typeof value === 'string' ? splitCapabilityString(value) : (Array.isArray(value) ? value : []);
-  return [...new Set(raw.map((entry) => String(entry || '').trim()).filter(Boolean))];
+  return [...new Set(raw.map((entry) => textValue(entry).trim()).filter(Boolean))];
 }
 
-export function unknownBusterCapabilities(value = []) {
+export function unsupportedBusterCapabilities(value = []) {
   return normalizeBusterCapabilities(value).filter((entry) => !KNOWN.has(entry));
 }
 
-export function parseCapabilitiesEnv(value = '') {
+export function parseCapabilitiesEnv(value) {
   return normalizeBusterCapabilities(value);
 }
 
+export function parseCapabilitiesFromEnv(env: Record<string, unknown>, key: string) {
+  return parseCapabilitiesEnv(env[key]);
+}
+
 export function resolveContextCapabilities(context = {}) {
-  return normalizeBusterCapabilities(
-    context.capabilities
-      ?? context.payload?.capabilities
-      ?? [],
-  );
+  return normalizeBusterCapabilities(contextCapabilitySource(context));
 }
 
 export function hasBusterCapability(capabilities, capability) {
@@ -75,14 +117,14 @@ export function missingBusterCapabilities(capabilities, required = []) {
 }
 
 export function requiredCapabilitiesForSuite(suiteName: string, context: Record<string, any> = {}): string[] {
-  const serve = context.config?.serve || context.payload?.test_config?.serve || {};
+  const serve = objectRecord(selectDefinedValue(() => (context.config?.serve), () => (context.payload?.test_config?.serve)));
   switch (suiteName) {
     case 'build':
-      return [(serve.type || 'static') === 'server'
+      return [selectPresentValue(serve.type, DEFAULT_SERVE_TYPE) === 'server'
         ? BUSTER_CAPABILITIES.CONTAINER_RUNTIME
         : BUSTER_CAPABILITIES.STATIC_WEB_SERVER];
     case 'k8s':
-      return [BUSTER_CAPABILITIES.CONTAINER_RUNTIME, BUSTER_CAPABILITIES.KUBERNETES_API];
+      return [BUSTER_CAPABILITIES.CONTAINER_RUNTIME, BUSTER_CAPABILITIES.KUBERNETES];
     case 'a11y':
     case 'e2e':
     case 'visual-reg':
@@ -90,9 +132,7 @@ export function requiredCapabilitiesForSuite(suiteName: string, context: Record<
     case 'perf':
       return [BUSTER_CAPABILITIES.LIGHTHOUSE];
     case 'health':
-      return Array.isArray(serve.smoke_paths) && serve.smoke_paths.length > 0
-        ? [BUSTER_CAPABILITIES.BROWSER_AUTOMATION]
-        : [];
+      return [];
     default:
       return [];
   }
@@ -101,14 +141,14 @@ export function requiredCapabilitiesForSuite(suiteName: string, context: Record<
 const DEFAULT_OPERATOR_ALERT_PATH = path.join('.swarm', 'logs', 'pipeline', 'operator-alerts.jsonl');
 
 function containsParentTraversal(value) {
-  return String(value || '').split(/[\\/]+/).includes('..');
+  return textValue(value).split(/[\\/]+/).includes('..');
 }
 
 function resolveAlertTarget(candidate, field, validationPath = candidate) {
   if (!candidate) return null;
   const raw = String(candidate);
   const validationRaw = String(validationPath);
-  if (containsParentTraversal(validationRaw) || containsParentTraversal(raw)) throw new Error(`${field} must not contain parent traversal`);
+  if (selectTruthyValue(() => (containsParentTraversal(validationRaw)), () => (containsParentTraversal(raw)))) throw new Error(`${field} must not contain parent traversal`);
   return resolveScopedPath(raw, {
     baseDir: process.cwd(),
     scopeDir: process.cwd(),
@@ -118,16 +158,16 @@ function resolveAlertTarget(candidate, field, validationPath = candidate) {
 }
 
 function normalizeAlertContext(context = {}) {
-  const payload = context.payload || {};
+  const payload = objectRecord(context.payload);
   return {
-    project: context.project || context.config?.project || payload.project || null,
-    run_id: context.runId || context.run_id || payload.run_id || null,
-    module_id: context.moduleId || context.module || payload.module_id || payload.module || null,
-    gate_id: context.gateId || context.gate_id || payload.gate_id || null,
-    task_type: payload.task_type || null,
-    attempt: context.attempt ?? payload.attempt ?? null,
-    dispatch_id: context.dispatchId || context.dispatch_id || payload.dispatch_id || null,
-    session_key: context.sessionKey || context.session_key || null,
+    project: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (context.project), () => (context.config?.project))), () => (payload.project))), () => (null)),
+    run_id: selectTruthyValue(() => (context.runId), () => (null)),
+    module_id: selectTruthyValue(() => (context.moduleId), () => (null)),
+    gate_id: selectTruthyValue(() => (context.gateId), () => (null)),
+    task_type: selectTruthyValue(() => (payload.task_type), () => (null)),
+    attempt: selectDefinedValue(() => (selectDefinedValue(() => (context.attempt), () => (payload.attempt))), () => (null)),
+    dispatch_id: selectTruthyValue(() => (context.dispatchId), () => (null)),
+    session_key: selectTruthyValue(() => (context.sessionKey), () => (null)),
   };
 }
 
@@ -148,7 +188,7 @@ function alertTargets(context = {}) {
       targets.push(resolveAlertTarget(candidate, field, validationPath));
     } catch (error) {
       try {
-        process.stderr.write(`[BUSTER-CAPABILITY] ignored unsafe durable operator alert target: ${error?.message || error}\n`);
+        process.stderr.write(`[BUSTER-CAPABILITY] ignored unsafe durable operator alert target: ${stderrErrorDetail(error)}\n`);
       } catch (_stderrError) {
         // Durable-alert target filtering is best effort; the safe default remains.
       }
@@ -164,8 +204,8 @@ export function appendDurableOperatorAlert(context: Record<string, any> = {}, al
     ts: new Date().toISOString(),
     source: 'buster',
     emitter: 'buster/pipeline/services/capabilities',
-    severity: alert.severity || 'CRITICAL',
-    reason: alert.reason || 'buster_capability_denied',
+    severity: selectPresentValue(alert.severity, CAPABILITY_ALERT_SEVERITY),
+    reason: selectPresentValue(alert.reason, CAPABILITY_DENIED_REASON),
     ...normalizeAlertContext(context),
     ...alert,
   });
@@ -176,7 +216,7 @@ export function appendDurableOperatorAlert(context: Record<string, any> = {}, al
       fs.appendFileSync(target, `${JSON.stringify(record)}\n`);
     } catch (error) {
       try {
-        process.stderr.write(`[BUSTER-CAPABILITY] durable operator alert write failed: ${error?.message || error}\n`);
+        process.stderr.write(`[BUSTER-CAPABILITY] durable operator alert write failed: ${stderrErrorDetail(error)}\n`);
       } catch (_stderrError) {
         // Durable-alert writes are best effort, but every target is attempted.
       }
@@ -187,11 +227,11 @@ export function appendDurableOperatorAlert(context: Record<string, any> = {}, al
 
 export function buildCapabilityDeniedAlert({ suite = null, action, required = [], capabilities = [], missing = [], context = {} }: Record<string, any> = {}): Record<string, any> {
   return {
-    reason: 'buster_capability_denied',
+    reason: CAPABILITY_DENIED_REASON,
     who: suite ? `suite:${suite}` : 'buster_task',
     suite,
-    blocked_action: action || 'tool_execution',
-    why: `missing capability: ${missing.join(', ') || required.join(', ')}`,
+    blocked_action: selectPresentValue(action, DEFAULT_BLOCKED_ACTION),
+    why: missingCapabilityReason(missing, required),
     required_capabilities: normalizeBusterCapabilities(required),
     configured_capabilities: normalizeBusterCapabilities(capabilities),
     missing_capabilities: normalizeBusterCapabilities(missing),
@@ -207,7 +247,7 @@ export function assertBusterCapabilities(context: Record<string, any> = {}, { su
   const alert = buildCapabilityDeniedAlert({ suite, action, required, capabilities, missing, context });
   appendDurableOperatorAlert(context, alert);
   throw new BusterCapabilityDeniedError(
-    `Buster capability denied for ${suite || 'task'}: ${action} requires ${missing.join(', ')}`,
+    `Buster capability denied for ${selectPresentValue(suite, DEFAULT_ASSERTION_SUITE)}: ${action} requires ${missing.join(', ')}`,
     alert,
   );
 }

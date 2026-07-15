@@ -163,7 +163,97 @@ test('publishTaskOutcome normalizes monitor hard-timeout results', () => {
   assert.equal(discordCalls[0].context.session_key, 'session-123');
 });
 
-test('publishTaskOutcome stamps child-written output_file identity', () => {
+test('publishTaskOutcome lets late valid output_file win over monitor hard-timeout', () => {
+  const discordCalls = [];
+  const outputFile = path.join('.swarm', 'test-output', `late-timeout-pass-${Date.now()}-${Math.random()}.json`);
+  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
+  fs.writeFileSync(outputFile, JSON.stringify({
+    artifact_type: 'buster_output',
+    status: 'PASS',
+    summary: 'late child artifact passed after monitor timeout edge',
+    completed_at: '2026-07-10T09:42:54Z',
+  }));
+
+  try {
+    const published = publishTaskOutcome({
+      payload: {
+        task_type: 'module_test',
+        module_id: 'mod',
+        project: 'project',
+        run_id: 'run-current',
+        attempt: 2,
+        dispatch_id: 'dispatch-current',
+        output_file: outputFile,
+      },
+      sessionData: testSessionData(),
+      sessionResult: {
+        terminal: false,
+        reason: 'session_timeout_kill_confirmed',
+        detail: 'hard timeout reached after 300s; explicit termination confirmed as killed',
+        termination: { confirmed: true, unconfirmed: false },
+      },
+      elapsedSeconds: 300,
+      timeoutSeconds: 300,
+      moduleId: 'mod',
+      project: 'project',
+      commitHash: null,
+      currentDiscordContext: (extra = {}) => extra,
+      discord: (message, context) => discordCalls.push({ message, context }),
+      logger: noopLogger(),
+      dispatchIdForCompletion: 'dispatch-current',
+    });
+
+    assert.equal(published.outcome, 'PASS');
+    assert.equal(published.reason, 'agent_verdict_pass');
+    assert.equal(published.agentResult.source, 'agent_verdict');
+    assert.equal(discordCalls.length, 1);
+    assert.match(discordCalls[0].message.title, /Session Complete: PASS/);
+  } finally {
+    fs.rmSync(outputFile, { force: true });
+  }
+});
+
+test('publishTaskOutcome preserves terminal session errors instead of output_file_missing', () => {
+  const discordCalls = [];
+  const outputFile = path.join('.swarm', 'test-output', `missing-${Date.now()}-${Math.random()}.json`);
+  fs.rmSync(outputFile, { force: true });
+
+  const published = publishTaskOutcome({
+    payload: {
+      task_type: 'module_test',
+      module_id: 'mod',
+      project: 'project',
+      run_id: 'run-current',
+      attempt: 2,
+      dispatch_id: 'dispatch-current',
+      output_file: outputFile,
+    },
+    sessionData: testSessionData(),
+    sessionResult: {
+      terminal: true,
+      reason: 'session_terminal',
+      detail: 'child session entered terminal error state',
+      state: { sessionState: 'error' },
+    },
+    elapsedSeconds: 12,
+    timeoutSeconds: 60,
+    moduleId: 'mod',
+    project: 'project',
+    commitHash: null,
+    currentDiscordContext: (extra = {}) => extra,
+    discord: (message, context) => discordCalls.push({ message, context }),
+    logger: noopLogger(),
+    dispatchIdForCompletion: 'dispatch-current',
+  });
+
+  assert.equal(published.outcome, 'FAIL');
+  assert.equal(published.reason, 'agent_session_lifecycle_unstable');
+  assert.equal(published.agentResult.source, 'session_monitor');
+  assert.equal(discordCalls.length, 1);
+  assert.match(discordCalls[0].message.title, /Session Complete/);
+});
+
+test('publishTaskOutcome accepts child-written output_file as agent verdict', () => {
   const discordCalls = [];
   const outputFile = path.join('.swarm', 'test-output', `session-${Date.now()}-${Math.random()}.json`);
   fs.mkdirSync(path.dirname(outputFile), { recursive: true });
@@ -200,14 +290,64 @@ test('publishTaskOutcome stamps child-written output_file identity', () => {
     const artifact = JSON.parse(fs.readFileSync(outputFile, 'utf8'));
 
     assert.equal(published.outcome, 'PASS');
-    assert.equal(published.reason, 'output_file_pass');
-    assert.equal(published.agentResult.repaired_identity, true);
-    assert.equal(artifact.run_id, 'run-current');
-    assert.equal(artifact.attempt, '2');
-    assert.equal(artifact.dispatch_id, 'dispatch-current');
-    assert.equal(artifact.completion_key, 'run-current:2:dispatch-current');
+    assert.equal(published.reason, 'agent_verdict_pass');
+    assert.equal(published.agentResult.source, 'agent_verdict');
+    assert.equal(artifact.run_id, undefined);
     assert.equal(discordCalls.length, 1);
     assert.match(discordCalls[0].message.title, /Session Complete/);
+  } finally {
+    fs.rmSync(outputFile, { force: true });
+  }
+});
+
+test('publishTaskOutcome accepts current output_file despite terminal cleanup error', () => {
+  const discordCalls = [];
+  const outputFile = path.join('.swarm', 'test-output', `session-pass-${Date.now()}-${Math.random()}.json`);
+  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
+  fs.writeFileSync(outputFile, JSON.stringify({
+    artifact_type: 'buster_output',
+    run_id: 'run-current',
+    attempt: '2',
+    dispatch_id: 'dispatch-current',
+    completion_key: 'run-current:2:dispatch-current',
+    status: 'PASS',
+    summary: 'Buster agent passed the module evidence',
+  }));
+
+  try {
+    const published = publishTaskOutcome({
+      payload: {
+        task_type: 'module_test',
+        module_id: 'mod',
+        project: 'project',
+        run_id: 'run-current',
+        attempt: 2,
+        dispatch_id: 'dispatch-current',
+        output_file: outputFile,
+      },
+      sessionData: testSessionData(),
+      sessionResult: {
+        terminal: true,
+        reason: 'session_terminal',
+        detail: 'cleanup reported terminal session error after output',
+        state: { sessionState: 'error' },
+      },
+      elapsedSeconds: 12,
+      timeoutSeconds: 60,
+      moduleId: 'mod',
+      project: 'project',
+      commitHash: null,
+      currentDiscordContext: (extra = {}) => extra,
+      discord: (message, context) => discordCalls.push({ message, context }),
+      logger: noopLogger(),
+      dispatchIdForCompletion: 'dispatch-current',
+    });
+
+    assert.equal(published.outcome, 'PASS');
+    assert.equal(published.reason, 'output_file_pass');
+    assert.equal(published.agentResult.source, 'output_file');
+    assert.equal(discordCalls.length, 1);
+    assert.equal(discordCalls[0].context.session_key, 'session-123');
   } finally {
     fs.rmSync(outputFile, { force: true });
   }
@@ -242,8 +382,11 @@ test('monitorTaskSession clears active session when termination after monitor er
     },
   });
 
-  assert.equal(result.ok, false);
-  assert.match(result.reason, /monitor_error: monitor exploded/);
+  assert.equal(result.ok, true);
+  assert.equal(result.sessionResult.terminal, true);
+  assert.equal(result.sessionResult.failed, true);
+  assert.equal(result.sessionResult.reason, 'monitor_error');
+  assert.match(result.sessionResult.detail, /monitor exploded/);
   assert.deepEqual(clearCalls, [{ preserveFile: false }]);
   assert.equal(errors.some((entry) => entry.tag === 'SESSION' && /termination exploded/.test(entry.msg)), true);
 });

@@ -2,7 +2,6 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
-  AGENT_OBSERVABILITY_MASKING_PROFILE,
   AGENT_OBSERVABILITY_SOURCE,
 } from '../../../../../../skills/common/pipeline/agent-observability/src/constants.ts';
 import { validateAgentObservabilityIngressEvent } from '../../../../../../skills/common/pipeline/agent-observability/src/validation.ts';
@@ -19,11 +18,6 @@ function llmInputEvent(payloadOverrides = {}) {
       prompt: 'hello',
       history_messages: [],
       ...payloadOverrides,
-    },
-    masking: {
-      profile: AGENT_OBSERVABILITY_MASKING_PROFILE,
-      content: 'full',
-      masked: [],
     },
   };
 }

@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/polling-redis-completion.ts — Redis completion archive helpers.
 // Active completion waits consume Redis through completion event adapters.
 
@@ -8,8 +9,19 @@ import { emitObservabilityDegraded } from './telemetry.ts';
 import { resolveRegisteredRedisAdapter } from './adapter-registry.ts';
 import { resolveRedisCompletionPolicy } from './redis-completion-policy.ts';
 
+const COMPLETION_ARCHIVE_UNAVAILABLE = 'redis completion archive unavailable';
+const BUSTER_AGENT_TYPE = 'buster';
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function archiveErrorMessage(error, fallback = COMPLETION_ARCHIVE_UNAVAILABLE) {
+  return selectDefinedValue(() => (error?.message), () => (String(selectDefinedValue(() => (error), () => (fallback)))));
+}
+
 function buildCompletionArchiveFailureResult(moduleId, stream, archiveStream, activeIdentity = {}, error = null) {
-  const message = error?.message || String(error || 'redis completion archive unavailable');
+  const message = archiveErrorMessage(error);
   return {
     archived: 0,
     failed: true,
@@ -18,27 +30,33 @@ function buildCompletionArchiveFailureResult(moduleId, stream, archiveStream, ac
     stream,
     archive_stream: archiveStream,
     module: moduleId,
-    active_identity: activeIdentity || {},
+    active_identity: objectRecord(activeIdentity),
   };
 }
 
 function emitCompletionArchiveFailure(config, moduleId, stream, activeIdentity = {}, error = null, opts = {}) {
-  const detail = `Redis completion archive failed: ${error?.message || String(error || 'archive unavailable')}`;
-  const targetKind = opts.targetKind || opts.target_kind || (opts.gate_id ? 'gate' : 'module');
+  const detail = `Redis completion archive failed: ${archiveErrorMessage(error, 'archive unavailable')}`;
+  const targetKind = pollingTargetKindAuthority(opts);
   emitObservabilityDegraded({ config }, {
     component: 'redis_completion',
     surface: 'completion_archive',
     reason: 'completion_archive_failed',
     detail,
-    module_id: targetKind === 'gate' ? null : (opts.module_id ?? moduleId ?? null),
-    gate_id: targetKind === 'gate' ? (opts.gate_id ?? moduleId ?? null) : null,
-    gate_type: opts.gate_type || null,
-    agent_type: opts.agent_type || 'buster',
+    module_id: targetKind === 'gate' ? null : (selectDefinedValue(() => (selectDefinedValue(() => (opts.module_id), () => (moduleId))), () => (null))),
+    gate_id: targetKind === 'gate' ? (selectDefinedValue(() => (selectDefinedValue(() => (opts.gate_id), () => (moduleId))), () => (null))) : null,
+    gate_type: selectTruthyValue(() => (opts.gate_type), () => (null)),
+    agent_type: selectDefinedValue(() => (opts.agent_type), () => (BUSTER_AGENT_TYPE)),
     stream_key: stream,
-    attempt: activeIdentity?.attempt ?? null,
-    dispatch_id: activeIdentity?.dispatch_id ?? activeIdentity?.dispatchId ?? null,
-    session_key: activeIdentity?.session_key ?? activeIdentity?.sessionKey ?? null,
+    attempt: selectDefinedValue(() => (activeIdentity?.attempt), () => (null)),
+    dispatch_id: selectDefinedValue(() => (selectDefinedValue(() => (activeIdentity?.dispatch_id), () => (activeIdentity?.dispatchId))), () => (null)),
+    session_key: selectDefinedValue(() => (selectDefinedValue(() => (activeIdentity?.session_key), () => (activeIdentity?.sessionKey))), () => (null)),
   });
+}
+
+function pollingTargetKindAuthority(opts) {
+  if (opts.targetKind) return opts.targetKind;
+  if (opts.target_kind) return opts.target_kind;
+  return opts.gate_id ? 'gate' : 'module';
 }
 
 async function resolveRedisModule(config, opts = {}) {
@@ -46,7 +64,6 @@ async function resolveRedisModule(config, opts = {}) {
     const { adapter, key } = resolveRegisteredRedisAdapter(config, {
       source: 'completion archive',
       requiredMethods: ['archiveCompletions'],
-      deps: opts.deps,
     });
     log('INFO', `Redis completion adapter loaded from registry: ${key}`);
 
@@ -76,7 +93,7 @@ export async function archiveModuleCompletions(config, moduleId, activeIdentity 
   try {
     const { redisMod, importError } = await resolveRedisModule(config, opts);
     if (!redisMod) {
-      const error = new Error(importError || 'redis completion archive unavailable');
+      const error = new Error(selectDefinedValue(() => (importError), () => (COMPLETION_ARCHIVE_UNAVAILABLE)));
       emitCompletionArchiveFailure(config, moduleId, stream, activeIdentity, error, opts);
       log('WARN', `Completion archive failed for ${moduleId}: ${error.message}`);
       return buildCompletionArchiveFailureResult(moduleId, stream, archiveStream, activeIdentity, error);

@@ -16,6 +16,7 @@ import {
   generatePipelineReview,
   generateCaseStudy,
 } from '../services/summary.ts';
+import { preflightRuntimeRedis } from '../services/runtime-redis-preflight.ts';
 
 export const DEFAULT_PIPELINE_RUNNER_DEPS = {
   loadStatus,
@@ -32,6 +33,7 @@ export const DEFAULT_PIPELINE_RUNNER_DEPS = {
   generateProjectSummary,
   generatePipelineReview,
   generateCaseStudy,
+  preflightRuntimeRedis,
 };
 
 export function getPipelineRunnerDeps(config, overrides = {}) {

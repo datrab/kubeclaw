@@ -1,15 +1,23 @@
 import { STATUS } from '../core/constants.ts';
-import { archiveModuleCompletions, pollDualWithRateLimitRecovery, pollForgeCompletionWithRateLimitRecovery } from '../services/polling.ts';
-import { loadStatus, saveStreamLog } from '../services/status-store.ts';
+import {
+  buildModuleSessionRateLimitStatus,
+  getRateLimitConfig,
+  processSessionRateLimit,
+} from '../services/rate-limit.ts';
 import { buildActiveSessionAuthorityPolicy } from '../services/session-authority.ts';
-import { verifyAgentAlive } from './orchestration-healthcheck.ts';
 import {
   buildModuleBusterWorkerControlResult,
   buildModuleForgeWorkerControlResult,
 } from './module-worker-control-results.ts';
-import { getTrackedAgent } from './lifecycle.ts';
-import { spawnAgent, killAgent } from './orchestration.ts';
+import {
+  pollRedisEntry,
+  pollStatus,
+  statusEvidenceFields,
+  terminalBusterFinalStatus,
+} from './module-worker-buster-status.ts';
+import { normalizeModuleWorkerInput } from './module-worker-input.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 
 const FORGE_SUCCESSFUL_KILL_POLICY = Object.freeze({
@@ -21,104 +29,79 @@ const FORGE_SUCCESSFUL_KILL_POLICY = Object.freeze({
   acpxTimeoutMs: 5_000,
 });
 
-function defaultAcpLabel(agentType: string, moduleId: string, opts: AnyRecord = {}) {
-  const suffix = [
-    normalizeString(opts.runId) ? `run-${normalizeString(opts.runId)}` : null,
-    opts.attempt ? `attempt-${opts.attempt}` : null,
-  ].filter(Boolean).join('-');
-  return `${agentType}-${moduleId}${suffix ? `-${suffix}` : ''}`;
-}
-
 function normalizeString(value: unknown): string | null {
   if (typeof value !== 'string') return null;
   const normalized = value.trim();
-  return normalized || null;
+  return selectTruthyValue(() => (normalized), () => (null));
 }
 
-function normalizeAttempt(value: unknown, fallback = 1): number {
-  const numeric = Number(value);
-  return Number.isFinite(numeric) && numeric > 0 ? numeric : fallback;
+function requireNonEmptyString(value: unknown, field: string): string {
+  const normalized = normalizeString(value);
+  if (!normalized) throw new Error(`module worker requires ${field}`);
+  return normalized;
 }
 
-function objectOrNull(value: unknown): AnyRecord | null {
-  return value && typeof value === 'object' ? value as AnyRecord : null;
-}
-
-function pollStatus(pollResult: AnyRecord | null = null): AnyRecord | null {
-  return objectOrNull(pollResult?.status);
-}
-
-function pollRedisEntry(pollResult: AnyRecord | null = null): AnyRecord | null {
-  return objectOrNull(pollStatus(pollResult)?._redis_entry);
+function isOneOf(value: unknown, candidates: string[]) {
+  return typeof value === 'string' && candidates.includes(value);
 }
 
 const BUSTER_OUTPUT_ARTIFACT_FAILURES = new Set([
   'output_file_identity_mismatch',
   'output_file_missing',
 ]);
+const ACP_STARTUP_RATE_LIMIT_EXHAUSTED = 'ACP startup rate limit pauses exhausted';
+const ACP_STARTUP_RATE_LIMITED = 'ACP startup rate limited';
 
-function statusEvidenceFields(pollResult: AnyRecord | null = null): AnyRecord {
-  const status = pollStatus(pollResult);
-  const redisEntry = pollRedisEntry(pollResult);
-  return {
-    statusDetail: typeof status?.detail === 'string' && status.detail.trim() ? status.detail.trim() : null,
-    statusMessage: typeof status?.message === 'string' && status.message.trim() ? status.message.trim() : null,
-    statusErrors: Array.isArray(status?.errors) ? status.errors : null,
-    pollingGit: pollResult?.reason === 'git_error'
-      ? (status?.details ? status.details : status ? status : null)
-      : null,
-    completionConflict: pollResult?.reason === 'completion_conflict' ? (status || null) : null,
-    redisEntry,
-    rateLimitStatus: objectOrNull(pollResult?.rate_limit_status) || (pollResult?.reason === 'rate_limit_exhausted' || pollResult?.reason === 'rate_limited' ? status : null),
-    rateLimitPauses: pollResult?.rate_limit_pauses ?? status?.rate_limit_pauses ?? null,
-    maxRateLimitPauses: pollResult?.max_rate_limit_pauses ?? status?.max_rate_limit_pauses ?? null,
-  };
+function objectRecord(value: unknown): AnyRecord {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : {};
 }
 
-function normalizeModuleWorkerInput(workerType: 'module_forge' | 'module_buster', workerInput: AnyRecord = {}) {
-  const ids = workerInput?.ids && typeof workerInput.ids === 'object' ? { ...workerInput.ids } : {};
-  const refs = workerInput?.refs && typeof workerInput.refs === 'object' ? { ...workerInput.refs } : {};
-  const executionContext = workerInput?.executionContext && typeof workerInput.executionContext === 'object'
-    ? { ...workerInput.executionContext }
-    : {};
-  const worker = workerInput?.worker && typeof workerInput.worker === 'object'
-    ? { ...workerInput.worker }
-    : {};
+function requireObjectRecord(value: unknown, field: string): AnyRecord {
+  const record = objectRecord(value);
+  if (Object.keys(record).length === 0) throw new Error(`module worker requires ${field}`);
+  return record;
+}
 
-  ids.moduleId = normalizeString(ids.moduleId);
-  ids.runId = normalizeString(ids.runId);
-  ids.attempt = normalizeAttempt(ids.attempt);
-  ids.stageId = normalizeString(ids.stageId) || `worker:${workerType}`;
-  if (workerType === 'module_buster') {
-    ids.dispatchId = normalizeString(ids.dispatchId);
+function textValue(value: unknown): string {
+  return typeof value === 'string' ? value : '';
+}
+
+function selectPresentValue(...values: unknown[]): string {
+  for (const value of values) {
+    if (typeof value === 'string' && value.length > 0) return value;
   }
+  return '';
+}
 
-  executionContext.moduleDir = normalizeString(executionContext.moduleDir);
-  executionContext.timeoutMinutes = executionContext.timeoutMinutes ?? null;
+function errorMessage(error: unknown): string {
+  if (error && typeof error === 'object' && 'message' in error) {
+    const message = (error as { message?: unknown }).message;
+    if (typeof message === 'string' && message.trim()) return message;
+  }
+  return String(error);
+}
 
-  worker.workerType = worker.workerType || workerType;
-
-  if (!ids.moduleId) throw new Error(`${workerType} worker input requires ids.moduleId`);
-  if (!executionContext.moduleDir) throw new Error(`${workerType} worker input requires executionContext.moduleDir`);
-
-  return {
-    ...workerInput,
-    ids,
-    refs,
-    executionContext,
-    worker,
-  };
+function isJsonParseFailure(error: unknown): boolean {
+  if (error instanceof SyntaxError) return true;
+  const message = errorMessage(error).toLowerCase();
+  return message.includes('json') && (
+    message.includes('parse')
+    || message.includes('unexpected')
+    || message.includes('expected')
+    || message.includes('property name')
+  );
 }
 
 function resolveModuleBusterFailureClass(pollResult: AnyRecord = {}) {
-  const explicit = pollResult?.failure_class
-    || pollResult?.status?.failure_class
-    || null;
+  const explicit = typeof pollResult?.failure_class === 'string' ? pollResult.failure_class : null;
   if (typeof explicit === 'string' && explicit.trim()) return explicit.trim().toLowerCase();
+  const statusExplicit = typeof pollResult?.status?.failure_class === 'string' ? pollResult.status.failure_class : null;
+  if (typeof statusExplicit === 'string' && statusExplicit.trim()) return statusExplicit.trim().toLowerCase();
   const reason = typeof pollResult?.reason === 'string' ? pollResult.reason.trim().toLowerCase() : '';
   if (reason === 'timeout') return 'timeout';
   if (reason === 'parse_corrupted') return 'parse_corrupted';
   if (reason === 'rate_limit_exhausted') return 'rate_limit_exhausted';
+  if (reason === 'agent_session_lifecycle_unstable') return 'agent_session_lifecycle_unstable';
   if (reason === 'completion_archive_failed') return 'completion_archive_failed';
   if (BUSTER_OUTPUT_ARTIFACT_FAILURES.has(reason)) return reason;
   const redisReason = typeof pollResult?.status?._redis_entry?.reason === 'string'
@@ -135,52 +118,141 @@ function forgeControlForPollResult(pollResult: AnyRecord = {}) {
   }
   const reason = typeof pollResult?.reason === 'string' ? pollResult.reason.trim().toLowerCase() : '';
   if (reason === 'timeout') return { nextAction: 'retry', issueType: 'environment', outcomeClass: 'retrying' };
-  if (reason === 'session_ended_no_changes'
-      || reason === 'agent_ended_no_meaningful_diff'
-      || reason === 'session_ended_no_meaningful_diff'
-      || reason === 'invalid_forge_completion') {
+  if (isOneOf(reason, ['agent_ended_missing', 'agent_session_lifecycle_unstable', 'forge_completion_artifact_missing'])) {
+    return { nextAction: 'retry', issueType: 'environment', outcomeClass: 'retrying' };
+  }
+  if (isOneOf(reason, [
+    'session_ended_no_changes',
+    'agent_ended_no_meaningful_diff',
+    'session_ended_no_meaningful_diff',
+    'invalid_forge_completion',
+  ])) {
     return { nextAction: 'request_fix', issueType: 'code', outcomeClass: 'fix_requested' };
   }
   if (reason === 'rate_limit_exhausted') return { nextAction: 'block', issueType: 'environment', outcomeClass: 'rate_limited' };
-  if (reason === 'parse_corrupted' || reason === 'git_error') return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error' };
+  if (isOneOf(reason, ['parse_corrupted', 'git_error'])) return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error' };
   if (reason) return { nextAction: 'request_fix', issueType: 'code', outcomeClass: 'fix_requested' };
   return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error' };
 }
 
 function busterControlForPollResult(pollResult: AnyRecord = {}, failureClass: string | null = null) {
   const terminalStatus = String(
-    pollResult?.status?.status
-    || pollResult?.status?._redis_entry?.status
-    || '',
+    (selectDefinedValue(() => (pollResult?.status?.status), () => (''))),
   ).trim().toUpperCase();
   if (pollResult?.ok === true && terminalStatus !== STATUS.FAIL && terminalStatus !== STATUS.BLOCKED) {
     return { nextAction: 'pass', issueType: null, outcomeClass: 'passed', failureClass: 'pass' };
   }
-  if (failureClass === 'timeout'
-      || failureClass === 'parse_corrupted'
-      || failureClass === 'infra_crash'
-      || failureClass === 'pretest_infra'
-      || failureClass === 'pretest_config') {
+  if (isOneOf(failureClass, [
+    'timeout',
+    'parse_corrupted',
+    'agent_session_lifecycle_unstable',
+    'infra_crash',
+    'pretest_infra',
+    'pretest_config',
+  ])) {
     return { nextAction: 'retry', issueType: 'environment', outcomeClass: 'retrying', failureClass };
   }
-  if (failureClass === 'verdict_fail' || failureClass === 'pretest_code') {
+  if (isOneOf(failureClass, ['verdict_fail', 'pretest_code'])) {
     return { nextAction: 'request_fix', issueType: 'code', outcomeClass: 'fix_requested', failureClass };
   }
   if (failureClass === 'rate_limit_exhausted') {
     return { nextAction: 'block', issueType: 'environment', outcomeClass: 'rate_limited', failureClass };
   }
-  if (failureClass === 'spawn_failed'
-      || failureClass === 'completion_archive_failed'
-      || BUSTER_OUTPUT_ARTIFACT_FAILURES.has(failureClass || '')) {
+  if (selectTruthyValue(() => (isOneOf(failureClass, ['spawn_failed', 'completion_archive_failed'])), () => (BUSTER_OUTPUT_ARTIFACT_FAILURES.has(textValue(failureClass))))) {
     return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error', failureClass };
   }
-  return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error', failureClass: failureClass || 'unclassified_poll_failure' };
+  return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error', failureClass: failureClass == null ? 'poll_failure_class_missing' : failureClass };
 }
 
 function retryableStartupFailure(error: AnyRecord = null) {
   const reason = typeof error?.reason === 'string' ? error.reason.trim().toLowerCase() : '';
-  return error?.observability_required === true
-    || reason === 'missing_agent_observability_startup_evidence';
+  return [error?.observability_required === true, reason === 'missing_agent_observability_startup_evidence'].some(Boolean);
+}
+
+function normalizeHealthCheckResult(result: unknown): AnyRecord {
+  if (result && typeof result === 'object') return result as AnyRecord;
+  return { ok: result === true };
+}
+
+function requireWorkerDependency(deps: AnyRecord, name: string) {
+  const dependency = deps?.[name];
+  if (typeof dependency !== 'function') {
+    throw new Error(`module worker requires deps.${name}`);
+  }
+  return dependency;
+}
+
+async function processStartupRateLimit({
+  config,
+  workerInput,
+  moduleId,
+  moduleDir,
+  phase,
+  runId = null,
+  attempt = null,
+  dispatchId = null,
+  health = {},
+}: AnyRecord = {}) {
+  const status = buildModuleSessionRateLimitStatus({
+    ...objectRecord(health.status),
+    module_id: moduleId,
+    run_id: runId,
+    attempt,
+    dispatch_id: (selectDefinedValue(() => (dispatchId), () => (null))),
+    gateway_label: (selectDefinedValue(() => (health.gatewayLabel), () => (null))),
+    session_key: (selectDefinedValue(() => (health.sessionKey), () => (null))),
+    detail: (selectDefinedValue(() => (health.detail), () => (null))),
+    reason: 'rate_limited',
+  }, {
+    moduleId,
+    phase,
+    identity: objectRecord(health.identity),
+  });
+  const maxPauses = getRateLimitConfig(config).max_pauses_per_module;
+  const priorPauseCount = Number(workerInput?.executionContext?.startupRateLimitPauseCount);
+  const pauseCount = (Number.isFinite(priorPauseCount) && priorPauseCount >= 0 ? priorPauseCount : 0) + 1;
+  const rateLimitStep = await processSessionRateLimit(config, status, {
+    pauseCount,
+    maxPauses,
+    normalizeStatus: (value: AnyRecord = {}) => buildModuleSessionRateLimitStatus({
+      ...value,
+      detail: (selectDefinedValue(() => (value.detail), () => (null))),
+      reason: 'rate_limited',
+    }, {
+      moduleId,
+      phase,
+      identity: objectRecord(health.identity),
+    }),
+    pauseLogMessage: ({ pauseCount: count, maxPauses: max, cooldownHours, resumeAt }: AnyRecord) =>
+      `[${phase}-${moduleId}] ACP startup rate limited (pause ${count}/${max}) — sleeping ${cooldownHours}h (resume at ${resumeAt.toISOString()})`,
+    resumeLogMessage: () => `[${phase}-${moduleId}] ACP startup rate limit cooldown complete — retrying spawn`,
+  });
+
+  if (rateLimitStep.exhausted) {
+    return {
+      reason: 'rate_limit_exhausted',
+      nextAction: 'block',
+      issueType: 'environment',
+      outcomeClass: 'rate_limited',
+      failureClass: 'rate_limit_exhausted',
+      rateLimitStatus: requireObjectRecord(rateLimitStep.status, 'rateLimitStep.status'),
+      rateLimitPauses: pauseCount,
+      maxRateLimitPauses: maxPauses,
+      error: selectPresentValue(health.detail, ACP_STARTUP_RATE_LIMIT_EXHAUSTED),
+    };
+  }
+
+  return {
+    reason: 'rate_limited',
+    nextAction: 'retry',
+    issueType: 'environment',
+    outcomeClass: 'retrying',
+    failureClass: 'rate_limited',
+    rateLimitStatus: requireObjectRecord(rateLimitStep.status, 'rateLimitStep.status'),
+    rateLimitPauses: pauseCount,
+    maxRateLimitPauses: maxPauses,
+    error: selectPresentValue(health.detail, ACP_STARTUP_RATE_LIMITED),
+  };
 }
 
 export async function runModuleForgeWorker({
@@ -201,23 +273,23 @@ export async function runModuleForgeWorker({
     model,
     thinking = null,
     thinkingSource = null,
-  } = workerInput?.worker?.backendConfig || {};
+  } = objectRecord(workerInput?.worker?.backendConfig);
   const moduleId = workerInput.ids.moduleId;
   const moduleDir = workerInput.executionContext.moduleDir;
   const timeoutMinutes = workerInput.executionContext.timeoutMinutes;
   const attempt = workerInput.ids.attempt;
-  const runId = workerInput.ids.runId || config?._runId || config?.run_id || null;
-  const headBefore = workerInput.executionContext.headBefore ?? null;
+  const runId = workerInput.ids.runId;
+  const headBefore = selectDefinedValue(() => (workerInput.executionContext.headBefore), () => (null));
 
-  const spawn = deps.spawnAgent || spawnAgent;
-  const verifyAlive = deps.verifyAgentAlive || verifyAgentAlive;
-  const kill = deps.killAgent || killAgent;
-  const getTracked = deps.getTrackedAgent || getTrackedAgent;
-  const labelFor = deps.acpLabel || defaultAcpLabel;
-  const poll = deps.pollForgeCompletionWithRateLimitRecovery || pollForgeCompletionWithRateLimitRecovery;
-  const loadStatusFn = deps.loadStatus || loadStatus;
-  const saveStreamLogFn = deps.saveStreamLog || saveStreamLog;
-  const clearShutdownContextFn = deps.clearShutdownContext || (() => {});
+  const spawn = requireWorkerDependency(deps, 'spawnAgent');
+  const verifyHealth = requireWorkerDependency(deps, 'verifyAgentHealth');
+  const kill = requireWorkerDependency(deps, 'killAgent');
+  const getTracked = requireWorkerDependency(deps, 'getTrackedAgent');
+  const labelFor = requireWorkerDependency(deps, 'acpLabel');
+  const poll = requireWorkerDependency(deps, 'pollForgeCompletionWithRateLimitRecovery');
+  const loadStatusFn = requireWorkerDependency(deps, 'loadStatus');
+  const saveStreamLogFn = requireWorkerDependency(deps, 'saveStreamLog');
+  const clearShutdownContextFn = requireWorkerDependency(deps, 'clearShutdownContext');
 
   const forgeSessionLabel = labelFor('forge', moduleId, { runId, attempt });
   let pollResult = null;
@@ -244,15 +316,35 @@ export async function runModuleForgeWorker({
       outcomeClass: retryableStartupFailure(e) ? 'retrying' : 'error',
       reason: retryableStartupFailure(e) ? 'startup_evidence_missing' : 'spawn_failed',
       error: e.message,
-      gatewayLabel: e?.gateway_label || null,
-      sessionKey: e?.session_key || null,
+      gatewayLabel: selectDefinedValue(() => (e?.gateway_label), () => (null)),
+      sessionKey: selectDefinedValue(() => (e?.session_key), () => (null)),
       attempt,
     });
   }
 
-  if (!(await verifyAlive(config, 'forge', moduleId, { trackingLabel: forgeSessionLabel }))) {
+  const forgeHealth = normalizeHealthCheckResult(await verifyHealth(config, 'forge', moduleId, { trackingLabel: forgeSessionLabel }));
+  if (!forgeHealth.ok) {
     await kill(config, 'forge', moduleId, false, { trackingLabel: forgeSessionLabel });
     clearShutdownContextFn();
+    if ([forgeHealth.rateLimited, forgeHealth.reason === 'rate_limited'].some(Boolean)) {
+      const rateLimitControl = await processStartupRateLimit({
+        config,
+        workerInput,
+        moduleId,
+        moduleDir,
+        phase: 'forge',
+        runId,
+        attempt,
+        health: forgeHealth,
+      });
+      return buildModuleForgeWorkerControlResult(config, workerInput, {
+        ...rateLimitControl,
+        gatewayLabel: selectDefinedValue(() => (forgeHealth.gatewayLabel), () => (null)),
+        sessionKey: selectDefinedValue(() => (forgeHealth.sessionKey), () => (null)),
+        streamLogPath: selectDefinedValue(() => (forgeHealth.streamLogPath), () => (null)),
+        attempt,
+      });
+    }
     return buildModuleForgeWorkerControlResult(config, workerInput, {
       nextAction: 'retry',
       issueType: 'environment',
@@ -263,19 +355,19 @@ export async function runModuleForgeWorker({
     });
   }
 
-  trackedForgeAgent = getTracked(forgeSessionLabel) || null;
-  forgeStreamPath = trackedForgeAgent?.streamLogPath || null;
+  trackedForgeAgent = selectDefinedValue(() => (getTracked(forgeSessionLabel)), () => (null));
+  forgeStreamPath = selectDefinedValue(() => (trackedForgeAgent?.streamLogPath), () => (null));
 
   const dispatch = {
     label: forgeSessionLabel,
-    session_key: trackedForgeAgent?.sessionKey || null,
-    stream_log_path: trackedForgeAgent?.streamLogPath || null,
-    gateway_label: trackedForgeAgent?.gatewayLabel || null,
-    dispatch_id: trackedForgeAgent?.telemetry_dispatch_id || trackedForgeAgent?.dispatch_id || null,
-    run_id: trackedForgeAgent?.run_id || runId,
-    runtime: trackedForgeAgent?.runtime || null,
+    session_key: selectDefinedValue(() => (trackedForgeAgent?.sessionKey), () => (null)),
+    stream_log_path: selectDefinedValue(() => (trackedForgeAgent?.streamLogPath), () => (null)),
+    gateway_label: selectDefinedValue(() => (trackedForgeAgent?.gatewayLabel), () => (null)),
+    dispatch_id: (selectDefinedValue(() => (trackedForgeAgent?.telemetry_dispatch_id), () => (null))),
+    run_id: runId,
+    runtime: selectDefinedValue(() => (trackedForgeAgent?.runtime), () => (null)),
     model,
-    agent_id: trackedForgeAgent?.agentId || null,
+    agent_id: selectDefinedValue(() => (trackedForgeAgent?.agentId), () => (null)),
     attempt,
     phase: 'forge',
   };
@@ -296,6 +388,7 @@ export async function runModuleForgeWorker({
         headBefore,
         moduleId,
         runId: dispatch.run_id,
+        attempt,
         dispatchId: dispatch.dispatch_id,
         sessionKey: dispatch.session_key,
         gatewayLabel: dispatch.gateway_label,
@@ -303,21 +396,21 @@ export async function runModuleForgeWorker({
     }
   } finally {
     try {
-      forgeStreamPath = getTracked(forgeSessionLabel)?.streamLogPath || forgeStreamPath;
+      forgeStreamPath = (selectDefinedValue(() => (getTracked(forgeSessionLabel)?.streamLogPath), () => (null)));
       try {
-        await kill(config, 'forge', moduleId, pollResult?.ok || false, {
+        await kill(config, 'forge', moduleId, pollResult?.ok === true, {
           trackingLabel: forgeSessionLabel,
           ...(pollResult?.ok ? FORGE_SUCCESSFUL_KILL_POLICY : {}),
         });
       } catch (e: any) {
-        hookError = hookError || e;
-        hookFailureReason = hookFailureReason || 'cleanup_failed';
+        if (hookError === null) hookError = e;
+        hookFailureReason = 'cleanup_failed';
       }
       try {
-        finalStatus = loadStatusFn(config, moduleDir) || null;
+        finalStatus = selectDefinedValue(() => (loadStatusFn(config, moduleDir)), () => (null));
       } catch (e: any) {
-        hookError = hookError || e;
-        hookFailureReason = hookFailureReason || 'cleanup_failed';
+        if (hookError === null) hookError = e;
+        hookFailureReason = 'cleanup_failed';
       }
       if (typeof onFinalized === 'function') {
         try {
@@ -327,21 +420,21 @@ export async function runModuleForgeWorker({
             dispatch,
           });
           try {
-            finalStatus = loadStatusFn(config, moduleDir) || finalStatus;
+            finalStatus = requireObjectRecord(loadStatusFn(config, moduleDir), 'final Forge status after finalize');
           } catch (e: any) {
-            hookError = hookError || e;
-            hookFailureReason = hookFailureReason || 'cleanup_failed';
+            if (hookError === null) hookError = e;
+            hookFailureReason = 'cleanup_failed';
           }
         } catch (e: any) {
-          hookError = hookError || e;
-          hookFailureReason = hookFailureReason || 'finalize_hook_failed';
+          if (hookError === null) hookError = e;
+          hookFailureReason = 'finalize_hook_failed';
         }
       }
       try {
         await saveStreamLogFn(config, moduleDir, 'forge', attempt, forgeStreamPath);
       } catch (e: any) {
-        hookError = hookError || e;
-        hookFailureReason = hookFailureReason || 'cleanup_failed';
+        if (hookError === null) hookError = e;
+        hookFailureReason = 'cleanup_failed';
       }
     } finally {
       clearShutdownContextFn();
@@ -355,7 +448,7 @@ export async function runModuleForgeWorker({
       issueType: 'environment',
       outcomeClass: 'error',
       reason: hookFailureReason,
-      error: hookError?.message || String(hookError),
+      error: errorMessage(hookError),
       finalStatus,
       streamLogPath: forgeStreamPath,
       gatewayLabel: dispatch.gateway_label,
@@ -365,17 +458,17 @@ export async function runModuleForgeWorker({
     });
   }
 
-  const forgeControl = forgeControlForPollResult(pollResult || {});
+  const forgeControl = forgeControlForPollResult(objectRecord(pollResult));
   const forgeEvidence = statusEvidenceFields(pollResult);
   const forgePollStatus = pollStatus(pollResult);
   const forgeTerminalStatus = pollResult?.ok === true
-    && (forgePollStatus?.status === STATUS.READY_FOR_TESTING || forgePollStatus?.status === STATUS.BLOCKED)
+    && [STATUS.READY_FOR_TESTING, STATUS.BLOCKED].includes(forgePollStatus?.status)
     ? forgePollStatus
     : null;
   return buildModuleForgeWorkerControlResult(config, workerInput, {
     ...forgeControl,
-    reason: pollResult?.reason || null,
-    finalStatus: forgeTerminalStatus || finalStatus,
+    reason: selectDefinedValue(() => (pollResult?.reason), () => (null)),
+    finalStatus: forgeTerminalStatus === null ? finalStatus : forgeTerminalStatus,
     streamLogPath: forgeStreamPath,
     gatewayLabel: dispatch.gateway_label,
     sessionKey: dispatch.session_key,
@@ -405,24 +498,24 @@ export async function runModuleBusterWorker({
     thinking = null,
     thinkingSource = null,
     thinkingSupported = null,
-    reasoningLevel = thinkingSupported === false ? 'not supported' : (thinking || null),
+    reasoningLevel = thinkingSupported === false ? 'not supported' : (selectDefinedValue(() => (thinking), () => (null))),
     runtimeKind = null,
-  } = workerInput?.worker?.backendConfig || {};
+  } = objectRecord(workerInput?.worker?.backendConfig);
   const moduleId = workerInput.ids.moduleId;
   const moduleDir = workerInput.executionContext.moduleDir;
   const timeoutMinutes = workerInput.executionContext.timeoutMinutes;
-  const runId = workerInput.ids.runId || null;
+  const runId = workerInput.ids.runId;
   const attempt = workerInput.ids.attempt;
-  const dispatchId = workerInput.ids.dispatchId || null;
+  const dispatchId = selectDefinedValue(() => (workerInput.ids.dispatchId), () => (null));
 
-  const archive = deps.archiveModuleCompletions || archiveModuleCompletions;
-  const spawn = deps.spawnAgent || spawnAgent;
-  const verifyAlive = deps.verifyAgentAlive || verifyAgentAlive;
-  const kill = deps.killAgent || killAgent;
-  const poll = deps.pollDualWithRateLimitRecovery || pollDualWithRateLimitRecovery;
-  const loadStatusFn = deps.loadStatus || loadStatus;
-  const saveStreamLogFn = deps.saveStreamLog || saveStreamLog;
-  const clearShutdownContextFn = deps.clearShutdownContext || (() => {});
+  const archive = requireWorkerDependency(deps, 'archiveModuleCompletions');
+  const spawn = requireWorkerDependency(deps, 'spawnAgent');
+  const verifyHealth = requireWorkerDependency(deps, 'verifyAgentHealth');
+  const kill = requireWorkerDependency(deps, 'killAgent');
+  const poll = requireWorkerDependency(deps, 'pollDualWithRateLimitRecovery');
+  const loadStatusFn = requireWorkerDependency(deps, 'loadStatus');
+  const saveStreamLogFn = requireWorkerDependency(deps, 'saveStreamLog');
+  const clearShutdownContextFn = requireWorkerDependency(deps, 'clearShutdownContext');
 
   let workerDispatch = null;
   let pollResult = null;
@@ -431,6 +524,30 @@ export async function runModuleBusterWorker({
   let finalSessionKey = null;
   let hookError = null;
   let hookFailureReason = null;
+  const cleanupDiagnostics = [];
+
+  const recordCleanupDiagnostic = (phase, error) => {
+    cleanupDiagnostics.push({
+      phase,
+      error: errorMessage(error),
+    });
+  };
+
+  const hasTerminalPollAuthority = () => {
+    const status = pollStatus(pollResult);
+    return pollResult?.ok === true && [STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED].includes(status?.status);
+  };
+
+  const hasPollAuthority = () => {
+    return pollResult !== null && typeof pollResult?.reason === 'string' && pollResult.reason.trim();
+  };
+
+  const recordCleanupError = (phase, error) => {
+    recordCleanupDiagnostic(phase, error);
+    if (selectTruthyValue(() => (hasTerminalPollAuthority()), () => (hasPollAuthority()))) return;
+    if (hookError === null) hookError = error;
+    hookFailureReason = 'cleanup_failed';
+  };
 
   let archiveResult = null;
   try {
@@ -450,9 +567,9 @@ export async function runModuleBusterWorker({
       issueType: 'environment',
       outcomeClass: 'error',
       reason: 'completion_archive_failed',
-      error: e?.message || String(e),
+      error: errorMessage(e),
       failureClass: 'completion_archive_failed',
-      dispatchId: dispatchId || null,
+      dispatchId: selectDefinedValue(() => (dispatchId), () => (null)),
       attempt,
       runId,
     });
@@ -464,9 +581,9 @@ export async function runModuleBusterWorker({
       issueType: 'environment',
       outcomeClass: 'error',
       reason: 'completion_archive_failed',
-      error: archiveResult.error || 'Redis completion archive failed before Buster dispatch',
+      error: requireNonEmptyString(archiveResult.error, 'archiveResult.error'),
       failureClass: 'completion_archive_failed',
-      dispatchId: dispatchId || null,
+      dispatchId: selectDefinedValue(() => (dispatchId), () => (null)),
       attempt,
       runId,
     });
@@ -476,6 +593,7 @@ export async function runModuleBusterWorker({
     workerDispatch = await spawn(config, progress, 'buster', moduleId, model, prompt, {
       status,
       taskType: 'module_test',
+      cwd: selectDefinedValue(() => (workerInput?.workspace?.repoRoot), () => (config.repo_root)),
       run_id: runId,
       attempt,
       dispatch_id: dispatchId,
@@ -494,35 +612,58 @@ export async function runModuleBusterWorker({
       outcomeClass: retryableStartupFailure(e) ? 'retrying' : 'error',
       reason: retryableStartupFailure(e) ? 'startup_evidence_missing' : 'spawn_failed',
       failureClass: retryableStartupFailure(e) ? 'healthcheck_failed' : 'spawn_failed',
-      error: e.message,
-      dispatchId: dispatchId || null,
-      gatewayLabel: e?.gateway_label || null,
-      sessionKey: e?.session_key || null,
+      error: errorMessage(e),
+      dispatchId: selectDefinedValue(() => (dispatchId), () => (null)),
+      gatewayLabel: selectDefinedValue(() => (e?.gateway_label), () => (null)),
+      sessionKey: selectDefinedValue(() => (e?.session_key), () => (null)),
       attempt,
       runId,
     });
   }
 
   const dispatch = {
-    label: workerDispatch?.dispatch_id || dispatchId || null,
-    session_key: workerDispatch?.session_key || null,
-    stream_log_path: workerDispatch?.stream_log_path || null,
-    gateway_label: workerDispatch?.gateway_label || null,
-    dispatch_id: workerDispatch?.dispatch_id || dispatchId || null,
-    run_id: workerDispatch?.run_id || runId || null,
+    label: (selectDefinedValue(() => (workerDispatch?.dispatch_id), () => (null))),
+    session_key: selectDefinedValue(() => (workerDispatch?.session_key), () => (null)),
+    stream_log_path: selectDefinedValue(() => (workerDispatch?.stream_log_path), () => (null)),
+    gateway_label: selectDefinedValue(() => (workerDispatch?.gateway_label), () => (null)),
+    dispatch_id: (selectDefinedValue(() => (workerDispatch?.dispatch_id), () => (null))),
+    run_id: runId,
     attempt,
-    runtime: workerDispatch?.runtime || runtimeKind || null,
-    model: workerDispatch?.model || model || null,
-    model_source: workerDispatch?.model_source || modelSource || null,
-    reasoning_level: workerDispatch?.reasoning_level || reasoningLevel || null,
-    thinking_source: workerDispatch?.thinking_source || thinkingSource || null,
+    runtime: (selectDefinedValue(() => (workerDispatch?.runtime), () => (null))),
+    model: (selectDefinedValue(() => (workerDispatch?.model), () => (null))),
+    model_source: (selectDefinedValue(() => (workerDispatch?.model_source), () => (null))),
+    reasoning_level: (selectDefinedValue(() => (workerDispatch?.reasoning_level), () => (null))),
+    thinking_source: (selectDefinedValue(() => (workerDispatch?.thinking_source), () => (null))),
     agent_id: null,
     phase: 'buster',
   };
 
-  if (!(await verifyAlive(config, 'buster', moduleId))) {
+  const busterHealth = normalizeHealthCheckResult(await verifyHealth(config, 'buster', moduleId));
+  if (!busterHealth.ok) {
     await kill(config, 'buster', moduleId, false);
     clearShutdownContextFn();
+    if ([busterHealth.rateLimited, busterHealth.reason === 'rate_limited'].some(Boolean)) {
+      const rateLimitControl = await processStartupRateLimit({
+        config,
+        workerInput,
+        moduleId,
+        moduleDir,
+        phase: 'buster',
+        runId: dispatch.run_id,
+        attempt,
+        dispatchId: dispatch.dispatch_id,
+        health: busterHealth,
+      });
+      return buildModuleBusterWorkerControlResult(config, workerInput, {
+        ...rateLimitControl,
+        dispatchId: dispatch.dispatch_id,
+        gatewayLabel: (selectDefinedValue(() => (busterHealth.gatewayLabel), () => (null))),
+        sessionKey: (selectDefinedValue(() => (busterHealth.sessionKey), () => (null))),
+        streamLogPath: (selectDefinedValue(() => (busterHealth.streamLogPath), () => (null))),
+        attempt,
+        runId: dispatch.run_id,
+      });
+    }
     return buildModuleBusterWorkerControlResult(config, workerInput, {
       nextAction: 'retry',
       issueType: 'environment',
@@ -550,47 +691,61 @@ export async function runModuleBusterWorker({
     }
 
     if (!hookError) {
-      pollResult = await poll(config, moduleDir, moduleId,
-        [STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED], timeoutMinutes, {
-          run_id: dispatch.run_id,
-          attempt,
-          dispatch_id: dispatch.dispatch_id,
-          session_key: dispatch.session_key,
-          gateway_label: dispatch.gateway_label,
-        });
+      try {
+        pollResult = await poll(config, moduleDir, moduleId,
+          [STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED], timeoutMinutes, {
+            run_id: dispatch.run_id,
+            attempt,
+            dispatch_id: dispatch.dispatch_id,
+            session_key: dispatch.session_key,
+            gateway_label: dispatch.gateway_label,
+          });
+      } catch (e: any) {
+        const failureClass = isJsonParseFailure(e)
+          ? 'parse_corrupted'
+          : 'completion_event_adapter_failed';
+        pollResult = {
+          ok: false,
+          reason: failureClass,
+          status: {
+            module_id: moduleId,
+            status: STATUS.FAIL,
+            failure_class: failureClass,
+            error: errorMessage(e),
+            _source: 'module_buster_poll',
+          },
+          failure_class: failureClass,
+          error: e,
+        };
+      }
     }
   } finally {
     try {
       try {
-        await kill(config, 'buster', moduleId, pollResult?.ok || false);
+        await kill(config, 'buster', moduleId, pollResult?.ok === true);
       } catch (e: any) {
-        hookError = hookError || e;
-        hookFailureReason = hookFailureReason || 'cleanup_failed';
+        if (hookError === null) hookError = e;
+        hookFailureReason = 'cleanup_failed';
       }
       try {
-        finalStatus = loadStatusFn(config, moduleDir, { raw: true }) || null;
+        finalStatus = selectDefinedValue(() => (loadStatusFn(config, moduleDir, { raw: true })), () => (null));
       } catch (e: any) {
-        hookError = hookError || e;
-        hookFailureReason = hookFailureReason || 'cleanup_failed';
+        recordCleanupError('load_final_status', e);
       }
-      const finalActive = finalStatus?.active_agent || null;
+      const finalActive = selectDefinedValue(() => (finalStatus?.active_agent), () => (null));
       const finalActivePolicy = buildActiveSessionAuthorityPolicy({
         lifecycleActiveSession: finalActive,
         evidenceActiveSession: {
-          run_id: dispatch.run_id || null,
-          attempt: dispatch.attempt ?? null,
-          dispatch_id: dispatch.dispatch_id || null,
-          session_key: dispatch.session_key || null,
-          gateway_label: dispatch.gateway_label || null,
+          run_id: dispatch.run_id,
+          attempt: dispatch.attempt,
+          dispatch_id: dispatch.dispatch_id,
+          session_key: dispatch.session_key,
+          gateway_label: dispatch.gateway_label,
         },
       });
       const confirmedFinalActive = finalActivePolicy.identity_confirmed === true ? finalActive : null;
-      finalStreamPath = confirmedFinalActive?.stream_log_path || dispatch.stream_log_path || null;
-      finalSessionKey = confirmedFinalActive?.session_key
-        ?? pollRedisEntry(pollResult)?.session_key
-        ?? pollStatus(pollResult)?.session_key
-        ?? dispatch.session_key
-        ?? null;
+      finalStreamPath = (selectDefinedValue(() => (confirmedFinalActive?.stream_log_path), () => (null)));
+      finalSessionKey = selectDefinedValue(() => (dispatch.session_key), () => (null));
       if (typeof onFinalized === 'function') {
         try {
           await onFinalized({
@@ -600,21 +755,22 @@ export async function runModuleBusterWorker({
             dispatch,
           });
           try {
-            finalStatus = loadStatusFn(config, moduleDir, { raw: true }) || finalStatus;
+            finalStatus = requireObjectRecord(loadStatusFn(config, moduleDir, { raw: true }), 'final Buster status after finalize');
           } catch (e: any) {
-            hookError = hookError || e;
-            hookFailureReason = hookFailureReason || 'cleanup_failed';
+            recordCleanupError('load_finalized_status', e);
           }
         } catch (e: any) {
-          hookError = hookError || e;
-          hookFailureReason = hookFailureReason || 'finalize_hook_failed';
+          recordCleanupDiagnostic('finalize_hook', e);
+          if (!hasTerminalPollAuthority()) {
+            if (hookError === null) hookError = e;
+            hookFailureReason = 'finalize_hook_failed';
+          }
         }
       }
       try {
         await saveStreamLogFn(config, moduleDir, 'buster', attempt, finalStreamPath);
       } catch (e: any) {
-        hookError = hookError || e;
-        hookFailureReason = hookFailureReason || 'cleanup_failed';
+        recordCleanupError('save_stream_log', e);
       }
     } finally {
       clearShutdownContextFn();
@@ -629,7 +785,7 @@ export async function runModuleBusterWorker({
       outcomeClass: 'error',
       reason: hookFailureReason,
       failureClass: hookFailureReason,
-      error: hookError?.message || String(hookError),
+      error: errorMessage(hookError),
       finalStatus,
       streamLogPath: finalStreamPath,
       dispatchId: dispatch.dispatch_id,
@@ -641,13 +797,19 @@ export async function runModuleBusterWorker({
     });
   }
 
-  const failureClass = resolveModuleBusterFailureClass(pollResult || {});
-  const busterControl = busterControlForPollResult(pollResult || {}, failureClass);
+  const failureClass = resolveModuleBusterFailureClass(objectRecord(pollResult));
+  const busterControl = busterControlForPollResult(objectRecord(pollResult), failureClass);
   const busterEvidence = statusEvidenceFields(pollResult);
   return buildModuleBusterWorkerControlResult(config, workerInput, {
     ...busterControl,
-    reason: pollResult?.reason || null,
-    finalStatus,
+    reason: selectDefinedValue(() => (pollResult?.reason), () => (null)),
+    finalStatus: terminalBusterFinalStatus({
+      finalStatus,
+      pollStatus: pollStatus(pollResult),
+      redisEntry: pollRedisEntry(pollResult),
+      failureClass,
+      pollReason: pollResult?.reason,
+    }),
     streamLogPath: finalStreamPath,
     dispatchId: dispatch.dispatch_id,
     gatewayLabel: dispatch.gateway_label,
@@ -655,5 +817,6 @@ export async function runModuleBusterWorker({
     attempt,
     runId: dispatch.run_id,
     ...busterEvidence,
+    statusErrors: cleanupDiagnostics,
   });
 }

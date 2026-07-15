@@ -15,7 +15,7 @@ test('buildModuleValidatorRunInput exposes validator producerType metadata', () 
     'module-a',
     { fail_count: 0 },
     'validator:delivery_lint',
-    { attempt: 1 },
+    { attempt: 1, phase: 'validation' },
   );
 
   assert.equal(input.ids.producerType, 'delivery_lint');

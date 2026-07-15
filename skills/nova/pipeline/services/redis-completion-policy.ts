@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type RedisCompletionPolicy = {
   archiveMaxLen: number;
   tailScanBatchSize: number;
@@ -6,7 +7,7 @@ type RedisCompletionPolicy = {
 
 function positiveInteger(config: Record<string, any>, field: string): number {
   const value = Number(config?.redis_completion?.[field]);
-  if (!Number.isInteger(value) || value <= 0) {
+  if (selectTruthyValue(() => (!Number.isInteger(value)), () => (value <= 0))) {
     throw new Error(`config.redis_completion.${field}: required positive integer in swarm.config.json`);
   }
   return value;

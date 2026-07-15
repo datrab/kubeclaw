@@ -57,6 +57,11 @@ function buildTaskRepoSyncResult(syncResult: GitSyncResult): TaskRepoSyncResult 
   };
 }
 
+function taskSessionCwdAuthority(payload: BusterTaskPayload): string {
+  if (typeof payload?.session?.cwd === 'string' && payload.session.cwd.trim()) return payload.session.cwd;
+  return process.cwd();
+}
+
 export async function syncTaskRepo({
   payload,
   commitHash,
@@ -70,7 +75,7 @@ export async function syncTaskRepo({
   tctx: TelemetryContext;
   logger: Logger;
 }): Promise<{ repoRoot: string; syncResult: TaskRepoSyncResult }> {
-  const repoRoot = getRepoRoot(payload?.session?.cwd || process.cwd());
+  const repoRoot = getRepoRoot(taskSessionCwdAuthority(payload));
   logger.info('GIT', `Resolved repo root: ${repoRoot}`);
 
   const targetCommitHash = normalizeCommitHash(commitHash);

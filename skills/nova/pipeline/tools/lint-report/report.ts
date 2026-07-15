@@ -3,6 +3,35 @@ import path from 'path';
 import { commandExists } from './execution.ts';
 import { log } from './output.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
+const FULL_REPORT_SCOPE = 'full';
+const NO_OUTPUT_CAPTURED = 'no output captured';
+
+function resultCount(value) {
+  return typeof value === 'number' && Number.isFinite(value) ? value : 0;
+}
+
+function resultFindings(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function changedFiles(ctx) {
+  return Array.isArray(ctx.changedFiles) ? ctx.changedFiles : [];
+}
+
+function reportTargetFile(ctx, file = null) {
+  if (file) return file;
+  return ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
+}
+
+function toolBinaryName(tool) {
+  return selectDefinedValue(() => (tool.binary), () => (tool.id));
+}
+
+function reportProjectName(ctx) {
+  return selectDefinedValue(() => (ctx.project), () => (path.basename(ctx.repoRoot)));
+}
+
 function makeWarningResult({ file, code, message }) {
   return {
     errors: 0,
@@ -27,9 +56,9 @@ function makeConfigMissingResult(ctx, code, message) {
 }
 
 function makeParseFailureResult(ctx, toolId, parsed, result, file = null) {
-  const targetFile = file || (ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot);
-  const output = (result.stdout || result.stderr || '').trim();
-  const preview = output ? output.split('\n')[0].slice(0, 200) : 'no output captured';
+  const targetFile = reportTargetFile(ctx, file);
+  const output = selectDefinedValue(() => ([result.stdout, result.stderr].find((value) => typeof value === 'string' && value.trim())?.trim()), () => (''));
+  const preview = output ? output.split('\n')[0].slice(0, 200) : NO_OUTPUT_CAPTURED;
   const message = `${toolId} output could not be parsed. parseError=${parsed.error}; exitCode=${result.exitCode}; preview=${preview}`;
   log('WARN', message, { file: targetFile });
   return makeWarningResult({
@@ -47,7 +76,7 @@ async function runTool(tool, ctx) {
   const startTime = Date.now();
 
   // Check if the tool binary exists
-  const binaryName = tool.binary || tool.id;
+  const binaryName = toolBinaryName(tool);
   if (!commandExists(binaryName)) {
     return {
       status: 'skipped',
@@ -62,9 +91,9 @@ async function runTool(tool, ctx) {
 
     return {
       status: 'ok',
-      errors: result.errors || 0,
-      warnings: result.warnings || 0,
-      findings: result.findings || [],
+      errors: resultCount(result.errors),
+      warnings: resultCount(result.warnings),
+      findings: resultFindings(result.findings),
       duration_ms: durationMs,
     };
   } catch (e) {
@@ -137,11 +166,11 @@ async function runAllTools(ctx, toolRegistry) {
   }
 
   return {
-    project: ctx.project || path.basename(ctx.repoRoot),
-    scope: ctx.modulePath || 'full',
+    project: reportProjectName(ctx),
+    scope: selectDefinedValue(() => (ctx.modulePath), () => (FULL_REPORT_SCOPE)),
     timestamp: new Date().toISOString(),
     tier: ctx.tier,
-    changed_files: ctx.changedFiles || [],
+    changed_files: changedFiles(ctx),
     detected_types: [...ctx.projectTypes],
     diagnostics: Array.isArray(ctx.diagnostics) ? ctx.diagnostics : [],
     tools: toolResults,

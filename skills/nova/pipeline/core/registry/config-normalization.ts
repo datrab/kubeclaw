@@ -8,6 +8,7 @@ import {
 import { isPlainObject } from '../../services/validation.ts';
 import { createRegistryDictionary, isReservedRegistryKey } from './dictionary.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 type RegistryError = { code: string; message: string; [key: string]: any };
 
@@ -90,7 +91,7 @@ function normalizeStageOwners(stageOwnersInput: any, errors: RegistryError[]) {
       pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `config.plugins.stageOwners.${stageId} is reserved and cannot be used as a registry key`);
       continue;
     }
-    if (typeof moduleId !== 'string' || !moduleId.trim()) {
+    if (selectTruthyValue(() => (typeof moduleId !== 'string'), () => (!moduleId.trim()))) {
       pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `config.plugins.stageOwners.${stageId} must be a non-empty moduleId string`);
       continue;
     }
@@ -122,17 +123,17 @@ function normalizeCapabilityAllowlist(input: any, errors: RegistryError[]) {
     const seen = new Set();
     normalized[moduleId] = [];
     for (const capability of capabilities) {
-      if (typeof capability !== 'string' || !capability.trim()) {
+      if (selectTruthyValue(() => (typeof capability !== 'string'), () => (!capability.trim()))) {
         pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `config.plugins.restrictedCapabilityAllowlist.${moduleId} must contain only non-empty capability strings`);
         continue;
       }
       const trimmed = capability.trim();
       if (seen.has(trimmed)) {
-        pushError(errors, PLUGIN_CAPABILITY_REJECTION_CODES.CAPABILITY_UNKNOWN, `config.plugins.restrictedCapabilityAllowlist.${moduleId} contains duplicate capability '${trimmed}'`);
+        pushError(errors, PLUGIN_CAPABILITY_REJECTION_CODES.CAPABILITY_UNSUPPORTED, `config.plugins.restrictedCapabilityAllowlist.${moduleId} contains duplicate capability '${trimmed}'`);
         continue;
       }
       if (!allKnownCapabilities().has(trimmed)) {
-        pushError(errors, PLUGIN_CAPABILITY_REJECTION_CODES.CAPABILITY_UNKNOWN, `config.plugins.restrictedCapabilityAllowlist.${moduleId} references unknown capability '${trimmed}'`);
+        pushError(errors, PLUGIN_CAPABILITY_REJECTION_CODES.CAPABILITY_UNSUPPORTED, `config.plugins.restrictedCapabilityAllowlist.${moduleId} references unsupported capability '${trimmed}'`);
         continue;
       }
       seen.add(trimmed);
@@ -159,7 +160,7 @@ function normalizeExtraModulePaths(extraModulePathsInput: any, errors: RegistryE
 }
 
 export function normalizePluginConfig(pluginConfigInput: any, errors: RegistryError[]) {
-  if (pluginConfigInput === undefined || pluginConfigInput === null) {
+  if (selectTruthyValue(() => (pluginConfigInput === undefined), () => (pluginConfigInput === null))) {
     pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, 'config.plugins is required');
     return { enabled: false, allowCustomModules: false, extraModulePaths: [], modules: createRegistryDictionary(), stageOwners: createRegistryDictionary(), restrictedCapabilityAllowlist: createRegistryDictionary() };
   }

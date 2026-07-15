@@ -1,9 +1,16 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // runners/review-gate-output.ts — pure review gate output parsing and diagnostics helpers
 // Keep this module side-effect free: runner files own filesystem, telemetry, lifecycle, and Discord effects.
 
 /**
  * Extract actionable issues from a review result for Forge to fix.
  */
+const REVIEW_ISSUE_MESSAGE_MISSING = 'Review issue';
+
+function issueList(value) {
+  return Array.isArray(value) ? value : [];
+}
+
 export function extractReviewIssues(mergedResult) {
   if (!mergedResult) return [];
   const issues = [];
@@ -12,10 +19,10 @@ export function extractReviewIssues(mergedResult) {
     if (Array.isArray(mergedResult[key])) {
       for (const item of mergedResult[key]) {
         issues.push({
-          module: item.module || item.component || null,
-          location: item.location || null,
-          description: item.description || item.title || 'Unknown issue',
-          recommended_fix: item.recommended_fix || item.fix || null,
+          module: selectTruthyValue(() => (selectTruthyValue(() => (item.module), () => (item.component))), () => (null)),
+          location: selectTruthyValue(() => (item.location), () => (null)),
+          description: selectTruthyValue(() => (selectTruthyValue(() => (item.description), () => (item.title))), () => ('review_issue_description_missing')),
+          recommended_fix: selectTruthyValue(() => (selectTruthyValue(() => (item.recommended_fix), () => (item.fix))), () => (null)),
         });
       }
     }
@@ -25,7 +32,7 @@ export function extractReviewIssues(mergedResult) {
 }
 
 export function summarizeReviewFailReason(issues, mergedResult) {
-  const descriptions = (issues || [])
+  const descriptions = issueList(issues)
     .map((issue) => issue?.description)
     .filter(Boolean);
 
@@ -41,16 +48,16 @@ export function summarizeReviewFailReason(issues, mergedResult) {
 }
 
 export function buildReviewGateFindings(issues = []) {
-  return (issues || []).map((issue = {}, index) => ({
+  return issueList(issues).map((issue = {}, index) => ({
     code: `REVIEW_ISSUE_${index + 1}`,
     severity: 'error',
-    message: issue.description || issue.title || 'Review issue',
+    message: selectDefinedValue(() => (selectDefinedValue(() => (issue.description), () => (issue.title))), () => (REVIEW_ISSUE_MESSAGE_MISSING)),
     category: 'review',
-    target: issue.location || issue.module || null,
+    target: selectTruthyValue(() => (selectTruthyValue(() => (issue.location), () => (issue.module))), () => (null)),
     retryable: false,
     environmentIssue: false,
     metadata: {
-      recommended_fix: issue.recommended_fix || null,
+      recommended_fix: selectTruthyValue(() => (issue.recommended_fix), () => (null)),
     },
   }));
 }
@@ -62,6 +69,32 @@ function validatePassIssueList(reviewResult, key) {
   }
   if (reviewResult[key].length > 0) {
     return `Review output status PASS contradicts ${key}: ${reviewResult[key].length} critical issue(s) declared`;
+  }
+  return null;
+}
+
+function validatePassEvidenceArray(reviewResult, key, { requireNonEmpty = false, requireEmpty = false } = {}) {
+  if (!Array.isArray(reviewResult[key])) {
+    return `Review output status PASS requires ${key} to be an array`;
+  }
+  if (requireNonEmpty && reviewResult[key].length === 0) {
+    return `Review output status PASS requires ${key} to list at least one evidence item`;
+  }
+  if (requireEmpty && reviewResult[key].length > 0) {
+    return `Review output status PASS contradicts ${key}: ${reviewResult[key].length} unresolved item(s) declared`;
+  }
+  return null;
+}
+
+function validatePassEvidenceContract(reviewResult) {
+  for (const [key, policy] of [
+    ['checked_contracts', { requireNonEmpty: true }],
+    ['opened_artifacts', { requireNonEmpty: true }],
+    ['failed_commands', { requireEmpty: true }],
+    ['unverified_requirements', { requireEmpty: true }],
+  ]) {
+    const contractError = validatePassEvidenceArray(reviewResult, key, policy);
+    if (contractError) return contractError;
   }
   return null;
 }
@@ -83,7 +116,7 @@ export function parseReviewOutputContent(content) {
     };
   }
 
-  if (!reviewResult || typeof reviewResult !== 'object' || Array.isArray(reviewResult)) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!reviewResult), () => (typeof reviewResult !== 'object'))), () => (Array.isArray(reviewResult)))) {
     return {
       ok: false,
       decision: 'invalid_contract',
@@ -93,7 +126,7 @@ export function parseReviewOutputContent(content) {
     };
   }
 
-  const status = String(reviewResult.status || '').trim().toUpperCase();
+  const status = String(selectDefinedValue(() => (reviewResult.status), () => (''))).trim().toUpperCase();
   if (status === 'PASS') {
     for (const key of ['critical_issues', 'critical_blockers']) {
       const contractError = validatePassIssueList(reviewResult, key);
@@ -108,6 +141,18 @@ export function parseReviewOutputContent(content) {
           displayStatus: reviewResult.status,
         };
       }
+    }
+    const evidenceContractError = validatePassEvidenceContract(reviewResult);
+    if (evidenceContractError) {
+      return {
+        ok: false,
+        decision: 'invalid_contract',
+        error: evidenceContractError,
+        invalid_contract: true,
+        mergedResult: reviewResult,
+        normalizedStatus: status,
+        displayStatus: reviewResult.status,
+      };
     }
     return {
       ok: true,

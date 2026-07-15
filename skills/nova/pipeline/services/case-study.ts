@@ -10,7 +10,7 @@ import { pollForFile, sleep } from './polling.ts';
 import { discord } from '../integrations/discord.ts';
 import { emitEvent, onSummaryStarted, onSummaryCompleted } from './telemetry.ts';
 import { getRunId } from '../core/runtime.ts';
-import { copyRedactedTranscriptArtifact, sanitizeMarkdownText } from '../redaction.ts';
+import { copyTranscriptArtifact, sanitizeMarkdownText } from '../egress.ts';
 import {
   createTrackedSummarySessionRateLimitExhaustionOptions,
   createTrackedSummarySessionRateLimitRecoveryOptions,
@@ -28,21 +28,23 @@ import {
 import { buildGeneratorArtifactRef, buildGeneratorResult } from './contracts/generator-result.ts';
 import { createTrackedSummarySessionCleanup } from './summary-session-cleanup.ts';
 import { getPipelineArtifactBundle } from './artifact-bundle.ts';
+import { buildRunFacts } from './run-facts.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from './discord-fields.ts';
 import { sessionLifecyclePolicies } from '../core/session-policy.ts';
 import { getCaseStudyConfig } from './runtime-defaults.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 function buildCaseStudyDiscordFields(identity = {}, extra = []) {
   return buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, identity, extra);
 }
 
 function buildCaseStudyDiscordCorrelation(identity = {}) {
   return {
-    run_id: identity.run_id || null,
-    attempt: identity.attempt ?? null,
-    dispatch_id: identity.dispatch_id || null,
-    gateway_label: identity.gateway_label || null,
-    session_key: identity.session_key || null,
+    run_id: selectTruthyValue(() => (identity.run_id), () => (null)),
+    attempt: selectDefinedValue(() => (identity.attempt), () => (null)),
+    dispatch_id: selectTruthyValue(() => (identity.dispatch_id), () => (null)),
+    gateway_label: selectTruthyValue(() => (identity.gateway_label), () => (null)),
+    session_key: selectTruthyValue(() => (identity.session_key), () => (null)),
   };
 }
 
@@ -55,22 +57,48 @@ const DEFAULT_CASE_STUDY_DEPS = {
   sleep,
   discord,
   emitEvent,
-  copyRedactedTranscriptArtifact,
+  copyTranscriptArtifact,
 };
+
+function requireNonEmptyString(value, label) {
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) {
+    throw new Error(`${label}: required non-empty string`);
+  }
+  return value.trim();
+}
+
+function firstDefined(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return undefined;
+}
+
+function errorMessage(error) {
+  return error instanceof Error ? error.message : String(error);
+}
+
+function caseStudyRateLimitAttempt(exitResult, currentAttempt) {
+  return firstDefined(exitResult?.attempt, currentAttempt, null);
+}
+
+function caseStudyRateLimitStatus(exitResult, currentStatus) {
+  return firstDefined(exitResult?.rate_limit_status, currentStatus, null);
+}
 
 function getCaseStudyDeps(config, overrides = {}) {
   return { ...DEFAULT_CASE_STUDY_DEPS, ...selectDeps(overrides, 'caseStudy') };
 }
 
 function requirePositiveTimeoutMinutes(value, label) {
-  if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value)))), () => (value <= 0))) {
     throw new Error(`${label}: required positive number in swarm.config.json`);
   }
   return value;
 }
 
 export function caseStudyOutputPath(config, cs = {}) {
-  return path.join(swarmRoot(config), cs.output_file || 'logs/pipeline/case-study.md');
+  return path.join(swarmRoot(config), requireNonEmptyString(cs.output_file, 'config.case_study.output_file'));
 }
 
 export function caseStudyInstructionsPath(config, cs = {}) {
@@ -80,25 +108,33 @@ export function caseStudyInstructionsPath(config, cs = {}) {
 export function caseStudyAgentId(model, cs = {}) {
   if (cs.agent_id) return cs.agent_id;
   const dispatch = resolveRuntime({ model });
-  if (dispatch === 'subagent') return `${String(model || 'gpt5').split('/').pop().replace(/[^a-zA-Z0-9._-]+/g, '-')}_case-study`;
-  return modelToHarness(model) || 'claude';
+  const resolvedModel = requireNonEmptyString(model, 'config.case_study.model');
+  if (dispatch === 'subagent') return `${resolvedModel.split('/').pop().replace(/[^a-zA-Z0-9._-]+/g, '-')}_case-study`;
+  return requireNonEmptyString(modelToHarness(resolvedModel), 'config.case_study.agent_id');
 }
 
-export function writeCaseStudyInstructions(config, cs = {}) {
+export function writeCaseStudyInstructions(config, cs = {}, progress = null) {
   const out = caseStudyOutputPath(config, cs);
   const pathOut = caseStudyInstructionsPath(config, cs);
   fs.mkdirSync(path.dirname(pathOut), { recursive: true });
 
   const logDir = getPipelineArtifactBundle(config).pipeline_dir;
   const caseStudyBasePath = logDir ? path.join(logDir, 'case-study.base.json') : null;
+  const runFactsPath = logDir ? path.join(logDir, 'case-study.run-facts.json') : null;
   const projectSummaryPath = logDir ? path.join(logDir, 'project-summary.json') : null;
   const outputMdPath = relPath(config, out);
+
+  if (runFactsPath) {
+    fs.mkdirSync(path.dirname(runFactsPath), { recursive: true });
+    fs.writeFileSync(runFactsPath, JSON.stringify(buildRunFacts(config, progress), null, 2));
+  }
 
   const content = `You are writing a polished, publishable case study for the project: ${config.project}
 
 ## Input Data
 
 Read the following pipeline artifacts to gather all project information:
+- Canonical run facts: ${runFactsPath}
 - Case study base data: ${caseStudyBasePath}
 - Project summary: ${projectSummaryPath}
 
@@ -132,6 +168,7 @@ What would be done differently in a future run of this project or similar projec
 - The output must be a standalone markdown document, publishable as-is on a website
 - Use clear headings, bullet points where appropriate, and professional language
 - Include specific data from the pipeline artifacts (module names, attempt counts, costs, etc.)
+- Treat canonical run facts as the authority for terminal status, modules, gates, agents, and durations
 - Do NOT fabricate data — only report what is in the artifacts
 - The document should read as a professional engineering case study, not a log dump
 `;
@@ -141,23 +178,16 @@ What would be done differently in a future run of this project or similar projec
 
 export async function generateCaseStudy(config, progress, opts = {}) {
   const deps = getCaseStudyDeps(config, opts.deps);
-  // progress.json case_study overrides config case_study
-  const progressCs = progress?.case_study || {};
   const configCs = getCaseStudyConfig(config);
-  const cs = { ...configCs, ...progressCs };
-  if (!cs.enabled) {
-    return buildGeneratorResult('case_study', {
-      outputs: {
-        status: 'skipped',
-        reason: 'disabled',
-      },
-    });
+  const cs = configCs;
+  if (cs.enabled !== true) {
+    throw new Error('config.case_study.enabled: required true for terminal generator case_study');
   }
 
   const ctx = { config };
   const runId = getRunId(config);
   let sessionKey = null;
-  let model = cs.model || progress?.defaults?.models?.echo || config.fallback_model;
+  let model = requireNonEmptyString(cs.model, 'config.case_study.model');
   let label = null;
   let dispatch = null;
   let agentId = null;
@@ -179,14 +209,12 @@ export async function generateCaseStudy(config, progress, opts = {}) {
   try {
     dispatch = resolveRuntime({ model });
     agentId = caseStudyAgentId(model, cs);
-    instructionsPath = writeCaseStudyInstructions(config, cs);
+    instructionsPath = writeCaseStudyInstructions(config, cs, progress);
     const instructions = fs.readFileSync(instructionsPath, 'utf8');
     label = `case-study-${Date.now()}`;
     const cwd = config.repo_root;
-    const thinking = cs.thinking_level || null;
-    const timeoutMin = progressCs.timeout_minutes !== undefined
-      ? requirePositiveTimeoutMinutes(progressCs.timeout_minutes, 'progress.case_study.timeout_minutes')
-      : requirePositiveTimeoutMinutes(configCs.timeout_minutes, 'config.case_study.timeout_minutes');
+    const thinking = selectTruthyValue(() => (cs.thinking_level), () => (null));
+    const timeoutMin = requirePositiveTimeoutMinutes(configCs.timeout_minutes, 'config.case_study.timeout_minutes');
     onSummaryStarted({ config }, 'case_study', {
       attempt: caseStudyAttempt,
       gateway_label: caseStudyGatewayLabel,
@@ -206,13 +234,13 @@ export async function generateCaseStudy(config, progress, opts = {}) {
       label,
       thinking,
       trackActive: false,
-      budget: opts.budget || null,
-      signal: opts.signal || null,
+      budget: selectTruthyValue(() => (opts.budget), () => (null)),
+      signal: selectTruthyValue(() => (opts.signal), () => (null)),
     });
     sessionKey = sessionData.childSessionKey;
-    const streamLogPath = sessionData.streamLogPath || null;
+    const streamLogPath = selectTruthyValue(() => (sessionData.streamLogPath), () => (null));
     trackingKey = `case-study-${agentId}`;
-    caseStudyAttempt = resolveResultAttempt(sessionData) ?? caseStudyAttempt ?? null;
+    caseStudyAttempt = selectDefinedValue(() => (selectDefinedValue(() => (resolveResultAttempt(sessionData)), () => (caseStudyAttempt))), () => (null));
     deps.trackAgent(config, trackingKey, sessionKey, agentId, label, streamLogPath, {
       model,
       runtime: dispatch,
@@ -226,7 +254,7 @@ export async function generateCaseStudy(config, progress, opts = {}) {
       { name: 'Agent', value: agentId, inline: true },
       { name: 'Dispatch', value: dispatch, inline: true },
     ]), { correlation: buildCaseStudyDiscordCorrelation(spawnDiscordIdentity) }).catch((e) => {
-      log('DEBUG', `Case study spawn Discord notice failed: ${e?.message || e}`);
+      log('DEBUG', `Case study spawn Discord notice failed: ${errorMessage(e)}`);
     });
 
     const outputFilePath = caseStudyOutputPath(config, cs);
@@ -239,7 +267,7 @@ export async function generateCaseStudy(config, progress, opts = {}) {
       identity: {
         agent_type: 'echo',
         run_id: runId,
-        attempt: caseStudyAttempt ?? 1,
+        attempt: caseStudyAttempt,
         dispatch_id: caseStudyDispatchId,
         gateway_label: caseStudyGatewayLabel,
         session_key: sessionKey,
@@ -269,7 +297,7 @@ export async function generateCaseStudy(config, progress, opts = {}) {
     fs.mkdirSync(archiveDir, { recursive: true });
     const ts = new Date().toISOString().replace(/[:.]/g, '-');
     if (dispatch === 'acp' && streamLogPath && fs.existsSync(streamLogPath)) {
-      deps.copyRedactedTranscriptArtifact(streamLogPath, path.join(archiveDir, `case-study-transcript-${ts}.jsonl`));
+      deps.copyTranscriptArtifact(streamLogPath, path.join(archiveDir, `case-study-transcript-${ts}.jsonl`));
     }
 
     await cleanupSummarySession('post-poll');
@@ -303,41 +331,41 @@ export async function generateCaseStudy(config, progress, opts = {}) {
           discordIdentity: { run_id: runId },
         }),
       });
-      caseStudyAttempt = caseStudyRateLimitExit.attempt ?? caseStudyAttempt;
-      lastCaseStudyStatus = caseStudyRateLimitExit.rate_limit_status || lastCaseStudyStatus;
+      caseStudyAttempt = caseStudyRateLimitAttempt(caseStudyRateLimitExit, caseStudyAttempt);
+      lastCaseStudyStatus = caseStudyRateLimitStatus(caseStudyRateLimitExit, lastCaseStudyStatus);
       return {
         ...caseStudyRateLimitExit,
         ...buildGeneratorResult('case_study', {
           outputs: {
             status: 'failed',
-            reason: caseStudyRateLimitExit.reason || 'rate_limit_exhausted',
+            reason: selectDefinedValue(() => (caseStudyRateLimitExit.reason), () => ('rate_limit_exhausted')),
             rate_limit_exhausted: true,
           },
           diagnostics: {
-            rate_limit_status: caseStudyRateLimitExit.rate_limit_status || null,
+            rate_limit_status: selectTruthyValue(() => (caseStudyRateLimitExit.rate_limit_status), () => (null)),
           },
         }),
       };
     }
 
     if (!pollRes.ok) {
-      caseStudyAttempt = resolveResultAttempt(pollRes) ?? caseStudyAttempt ?? null;
+      caseStudyAttempt = selectDefinedValue(() => (selectDefinedValue(() => (resolveResultAttempt(pollRes)), () => (caseStudyAttempt))), () => (null));
       const failureReason = pollRes?.status?.detail ? `${pollRes.reason} (${pollRes.status.detail})` : pollRes.reason;
       const noOutputDiscordIdentity = {
         run_id: runId,
         attempt: caseStudyAttempt,
-        dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? caseStudyDispatchId ?? null),
-        gateway_label: (resolveStatusGatewayLabel(pollRes?.status) ?? caseStudyGatewayLabel ?? null),
-        session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
+        dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(pollRes?.status)), () => (caseStudyDispatchId))), () => (null))),
+        gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusGatewayLabel(pollRes?.status)), () => (caseStudyGatewayLabel))), () => (null))),
+        session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(pollRes?.status)), () => (sessionKey))), () => (null))),
       };
       await deps.discord(config, 'WARN', '📝 Case Study: No Output', `Case study agent finished without producing a report. Reason: ${failureReason}`, [
         ...buildCaseStudyDiscordFields(noOutputDiscordIdentity),
         { name: 'Timeout', value: `${timeoutMin}min`, inline: true },
         { name: 'Agent', value: agentId, inline: true },
         { name: 'Model', value: model, inline: true },
-        { name: 'Full Report', value: `\`${cs.output_file || 'logs/pipeline/case-study.md'}\``, inline: false },
+        { name: 'Full Report', value: `\`${requireNonEmptyString(cs.output_file, 'config.case_study.output_file')}\``, inline: false },
       ], { correlation: buildCaseStudyDiscordCorrelation(noOutputDiscordIdentity) }).catch((e) => {
-        log('DEBUG', `Case study timeout/failure Discord notice failed: ${e?.message || e}`);
+        log('DEBUG', `Case study timeout/failure Discord notice failed: ${errorMessage(e)}`);
       });
       throw new Error(`Case study generation failed: ${failureReason}`);
     }
@@ -346,9 +374,9 @@ export async function generateCaseStudy(config, progress, opts = {}) {
       attempt: caseStudyAttempt,
       status: 'ok',
       output: outputFilePath,
-      dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? caseStudyDispatchId ?? null),
-      session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
-      gateway_label: (resolveStatusGatewayLabel(pollRes?.status) ?? caseStudyGatewayLabel ?? null),
+      dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(pollRes?.status)), () => (caseStudyDispatchId))), () => (null))),
+      session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(pollRes?.status)), () => (sessionKey))), () => (null))),
+      gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusGatewayLabel(pollRes?.status)), () => (caseStudyGatewayLabel))), () => (null))),
       model,
       runtime: dispatch,
     });
@@ -362,13 +390,13 @@ export async function generateCaseStudy(config, progress, opts = {}) {
       const completeDiscordIdentity = {
         run_id: runId,
         attempt: caseStudyAttempt,
-        dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? caseStudyDispatchId ?? null),
-        gateway_label: (resolveStatusGatewayLabel(pollRes?.status) ?? caseStudyGatewayLabel ?? null),
-        session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
+        dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(pollRes?.status)), () => (caseStudyDispatchId))), () => (null))),
+        gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusGatewayLabel(pollRes?.status)), () => (caseStudyGatewayLabel))), () => (null))),
+        session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(pollRes?.status)), () => (sessionKey))), () => (null))),
       };
       await deps.discord(config, 'OK', '📝 Case Study Complete', preview, [
         ...buildCaseStudyDiscordFields(completeDiscordIdentity),
-        { name: 'Full Report', value: `\`${cs.output_file || 'logs/pipeline/case-study.md'}\``, inline: false },
+        { name: 'Full Report', value: `\`${requireNonEmptyString(cs.output_file, 'config.case_study.output_file')}\``, inline: false },
       ], { correlation: buildCaseStudyDiscordCorrelation(completeDiscordIdentity) });
     } catch (e) {
       log('WARN', `Case study Discord post failed (non-critical): ${e.message}`);
@@ -382,9 +410,9 @@ export async function generateCaseStudy(config, progress, opts = {}) {
       outputs: {
         status: 'ok',
         output: outputFilePath,
-        dispatch_id: (resolveStatusDispatchId(pollRes?.status) ?? caseStudyDispatchId ?? null),
-        session_key: (resolveStatusSessionKey(pollRes?.status) ?? sessionKey ?? null),
-        gateway_label: (resolveStatusGatewayLabel(pollRes?.status) ?? caseStudyGatewayLabel ?? null),
+        dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(pollRes?.status)), () => (caseStudyDispatchId))), () => (null))),
+        session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(pollRes?.status)), () => (sessionKey))), () => (null))),
+        gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusGatewayLabel(pollRes?.status)), () => (caseStudyGatewayLabel))), () => (null))),
         attempt: caseStudyAttempt,
         runtime: dispatch,
         model,
@@ -394,10 +422,10 @@ export async function generateCaseStudy(config, progress, opts = {}) {
     onSummaryCompleted({ config }, 'case_study', {
       attempt: caseStudyAttempt,
       status: 'failed',
-      reason: e.message || 'unknown',
-      dispatch_id: (resolveStatusDispatchId(lastCaseStudyStatus) ?? caseStudyDispatchId ?? null),
-      session_key: (resolveStatusSessionKey(lastCaseStudyStatus) ?? sessionKey ?? null),
-      gateway_label: (resolveStatusGatewayLabel(lastCaseStudyStatus) ?? caseStudyGatewayLabel ?? null),
+      reason: selectTruthyValue(() => (e.message), () => ('missing_error_message')),
+      dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(lastCaseStudyStatus)), () => (caseStudyDispatchId))), () => (null))),
+      session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(lastCaseStudyStatus)), () => (sessionKey))), () => (null))),
+      gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusGatewayLabel(lastCaseStudyStatus)), () => (caseStudyGatewayLabel))), () => (null))),
       model,
       runtime: dispatch,
     });
@@ -405,18 +433,18 @@ export async function generateCaseStudy(config, progress, opts = {}) {
     const failedDiscordIdentity = {
       run_id: runId,
       attempt: caseStudyAttempt,
-      dispatch_id: (resolveStatusDispatchId(lastCaseStudyStatus) ?? caseStudyDispatchId ?? null),
-      gateway_label: (resolveStatusGatewayLabel(lastCaseStudyStatus) ?? caseStudyGatewayLabel ?? null),
-      session_key: (resolveStatusSessionKey(lastCaseStudyStatus) ?? sessionKey ?? null),
+      dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(lastCaseStudyStatus)), () => (caseStudyDispatchId))), () => (null))),
+      gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusGatewayLabel(lastCaseStudyStatus)), () => (caseStudyGatewayLabel))), () => (null))),
+      session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(lastCaseStudyStatus)), () => (sessionKey))), () => (null))),
     };
-    await deps.discord(config, 'WARN', '📝 Case Study Failed', `Case study agent error: ${e.message?.split('\n')[0] || 'unknown'}`,
+    await deps.discord(config, 'WARN', '📝 Case Study Failed', `Case study agent error: ${selectTruthyValue(() => (e.message?.split('\n')[0]), () => ('missing_error_message'))}`,
       buildCaseStudyDiscordFields(failedDiscordIdentity, [
         ...(agentId ? [{ name: 'Agent', value: agentId, inline: true }] : []),
         ...(model ? [{ name: 'Model', value: model, inline: true }] : []),
       ]),
       { correlation: buildCaseStudyDiscordCorrelation(failedDiscordIdentity) },
     ).catch((discordError) => {
-      log('DEBUG', `Case study failure Discord notice failed: ${discordError?.message || discordError}`);
+      log('DEBUG', `Case study failure Discord notice failed: ${errorMessage(discordError)}`);
     });
     return buildGeneratorResult('case_study', {
       artifacts: [
@@ -425,15 +453,15 @@ export async function generateCaseStudy(config, progress, opts = {}) {
       ],
       outputs: {
         status: 'failed',
-        reason: e.message || 'unknown',
+        reason: selectTruthyValue(() => (e.message), () => ('missing_error_message')),
         attempt: caseStudyAttempt,
         runtime: dispatch,
         model,
       },
       diagnostics: {
-        dispatch_id: (resolveStatusDispatchId(lastCaseStudyStatus) ?? caseStudyDispatchId ?? null),
-        session_key: (resolveStatusSessionKey(lastCaseStudyStatus) ?? sessionKey ?? null),
-        gateway_label: (resolveStatusGatewayLabel(lastCaseStudyStatus) ?? caseStudyGatewayLabel ?? null),
+        dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusDispatchId(lastCaseStudyStatus)), () => (caseStudyDispatchId))), () => (null))),
+        session_key: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(lastCaseStudyStatus)), () => (sessionKey))), () => (null))),
+        gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusGatewayLabel(lastCaseStudyStatus)), () => (caseStudyGatewayLabel))), () => (null))),
       },
     });
   } finally {

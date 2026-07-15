@@ -70,6 +70,7 @@ test('redis completion entries without dispatch identity do not inherit active w
     blockMs: 0,
     RedisCtor: FakeRedis,
     host: '127.0.0.1',
+    port: 6379,
     enforceSecureMode: false,
   });
 
@@ -130,6 +131,7 @@ test('redis completion adapter treats stop-time disconnect as intentional shutdo
     blockMs: 0,
     RedisCtor: FakeRedis,
     host: '127.0.0.1',
+    port: 6379,
     enforceSecureMode: false,
   });
 

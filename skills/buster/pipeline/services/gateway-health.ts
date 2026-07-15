@@ -16,8 +16,12 @@ async function defaultGatewayShutdown(signal: string, opts: Record<string, any> 
   });
 }
 
+function gatewayShutdownAuthority(shutdown?: (signal: string, opts?: Record<string, any>) => any) {
+  return typeof shutdown === 'function' ? shutdown : defaultGatewayShutdown;
+}
+
 export async function waitForGateway({ shutdown }: { shutdown?: (signal: string, opts?: Record<string, any>) => any } = {}): Promise<void> {
-  const shutdownGateway = shutdown || defaultGatewayShutdown;
+  const shutdownGateway = gatewayShutdownAuthority(shutdown);
   const policy = loadBusterGatewayHealthPolicy();
   console.log(`[GATEWAY] Waiting for gateway readiness (max ${policy.readyTimeoutMs / 1000}s)...`);
   const deadline = Date.now() + policy.readyTimeoutMs;
@@ -39,7 +43,7 @@ export async function waitForGateway({ shutdown }: { shutdown?: (signal: string,
 }
 
 export function startGatewayHealthMonitor({ isShuttingDown = () => false, shutdown }: { isShuttingDown?: () => boolean; shutdown?: (signal: string, opts?: Record<string, any>) => any } = {}): ReturnType<typeof setInterval> {
-  const shutdownGateway = shutdown || defaultGatewayShutdown;
+  const shutdownGateway = gatewayShutdownAuthority(shutdown);
   const policy = loadBusterGatewayHealthPolicy();
   let consecutiveFailures = 0;
   return setInterval(async () => {

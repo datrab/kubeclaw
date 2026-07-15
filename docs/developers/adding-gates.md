@@ -19,7 +19,7 @@ Use this page when adding or changing gate behavior in Nova. Gates are control p
 
 Built-in gate types:
 
-- `review`: reviewer sessions and optional fix-and-rereview.
+- `review`: reviewer sessions that stop on failure.
 - `approval`: operator request/decision and timeout policy.
 - `buster`: Redis-backed Buster test task and optional fix-and-retest.
 

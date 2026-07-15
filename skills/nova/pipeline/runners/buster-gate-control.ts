@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // runners/buster-gate-control.js — Buster gate typed-control and issue mapping helpers
 // Keep this module free of runner lifecycle, spawning, polling, and Discord side effects.
 
@@ -17,22 +18,58 @@ export const BUSTER_GATE_FAILURE_CLASSES = Object.freeze([
   'completion_conflict',
   'completion_event_adapter_failed',
   'completion_event_unresolved',
+  'commit_hash_missing',
   'fix_loop_exhausted',
   'git_error',
   'instructions_read_failed',
   'invalid_contract',
+  'k8s_infra_unavailable',
   'parse_corrupted',
   'rate_limit_exhausted',
   'spawn_failed',
   'timeout',
   'unexpected_exit',
-  'unknown_failure',
+  'classification_missing',
   'verdict_fail',
 ]);
 
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : null;
+}
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function nonEmptyString(value) {
+  return typeof value === 'string' && value.trim() ? value.trim() : null;
+}
+
+function selectPresentValue(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null && value !== '') return value;
+  }
+  return null;
+}
+
+function gateType(gate) {
+  return selectDefinedValue(() => (nonEmptyString(gate?.type)), () => ('missing_gate_type'));
+}
+
+function fixAttemptsMetric(result) {
+  return selectDefinedValue(() => (result?.fix_attempts), () => (0));
+}
+
+function issueTitleSummary(issues) {
+  const titles = arrayValue(issues)
+    .map((issue) => objectRecord(issue)?.title)
+    .filter(Boolean);
+  return selectTruthyValue(() => (titles.join('; ')), () => ('missing_error_detail'));
+}
+
 function requireBusterFailureClass(result = {}, gateId = '') {
   if (isBusterGatePassResult(result)) return null;
-  const failureClass = String(result?.failure_class || '').trim().toLowerCase();
+  const failureClass = (selectDefinedValue(() => (nonEmptyString(result?.failure_class)), () => (''))).toLowerCase();
   if (!failureClass) {
     throw new Error(`Buster gate '${gateId}' non-pass result requires explicit failure_class`);
   }
@@ -47,19 +84,30 @@ function buildBusterGateControlSummary(gateId, result = {}) {
     const source = result?.completion_source ? ` via ${result.completion_source}` : '';
     return `Buster gate '${gateId}' passed${source}`;
   }
-  return result?.reason || `Buster gate '${gateId}' failed`;
+  return selectPresentValue(result?.reason, `Buster gate '${gateId}' failed`);
+}
+
+function busterGateResultGateId(result = {}, gateId = '') {
+  const resultGate = nonEmptyString(result?.gate);
+  if (resultGate) return resultGate;
+  const configuredGate = nonEmptyString(gateId);
+  if (configuredGate) return configuredGate;
+  throw new Error('Buster gate control result requires gate id');
 }
 
 function busterGateDecisionForResult(result = {}, failureClass = null) {
   if (isBusterGatePassResult(result)) {
     return { nextAction: GATE_CONTROL_ACTIONS.PASS, issueType: undefined, outcomeClass: 'passed' };
   }
-  const normalizedFailureClass = String(failureClass || '').trim().toLowerCase();
+  const normalizedFailureClass = (selectDefinedValue(() => (nonEmptyString(failureClass)), () => (''))).toLowerCase();
   if (['verdict_fail', 'fix_loop_exhausted'].includes(normalizedFailureClass)) {
     return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'code', outcomeClass: 'needs_nova' };
   }
   if (normalizedFailureClass === 'rate_limit_exhausted') {
     return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'environment', outcomeClass: 'rate_limited' };
+  }
+  if (normalizedFailureClass === 'k8s_infra_unavailable') {
+    return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'environment', outcomeClass: 'error' };
   }
   if (normalizedFailureClass === 'timeout') {
     return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'environment', outcomeClass: 'timeout' };
@@ -71,51 +119,52 @@ function busterGateDecisionForResult(result = {}, failureClass = null) {
     return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'environment', outcomeClass: 'error' };
   }
   if (normalizedFailureClass === 'completion_conflict') {
-    return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'unknown', outcomeClass: 'error' };
+    return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'contract', outcomeClass: 'error' };
   }
-  if (['parse_corrupted', 'unexpected_exit', 'config_invalid'].includes(normalizedFailureClass)) {
-    return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'unknown', outcomeClass: 'needs_nova' };
+  if (['parse_corrupted', 'unexpected_exit', 'config_invalid', 'commit_hash_missing'].includes(normalizedFailureClass)) {
+    return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'contract', outcomeClass: 'needs_nova' };
   }
-  return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'unknown', outcomeClass: 'error' };
+  return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'contract', outcomeClass: 'error' };
 }
 
 function buildBusterGateFindings(result = {}, gateId, failureClass = null) {
   if (isBusterGatePassResult(result)) return [];
   return [{
-    code: `BUSTER_GATE_${String(failureClass || 'FAILED').toUpperCase()}`,
+    code: `BUSTER_GATE_${(selectDefinedValue(() => (nonEmptyString(failureClass)), () => ('FAILED'))).toUpperCase()}`,
     severity: failureClass === 'parse_corrupted' ? 'critical' : 'error',
-    message: result?.reason || `Buster gate '${gateId}' failed`,
+    message: selectPresentValue(result?.reason, `Buster gate '${gateId}' failed`),
     category: 'buster_gate',
-    target: gateId || null,
+    target: selectTruthyValue(() => (gateId), () => (null)),
     retryable: false,
-    environmentIssue: ['rate_limit_exhausted', 'timeout', 'spawn_failed', 'completion_archive_failed', 'completion_event_adapter_failed', 'completion_event_unresolved'].includes(failureClass),
+    environmentIssue: ['rate_limit_exhausted', 'k8s_infra_unavailable', 'timeout', 'spawn_failed', 'completion_archive_failed', 'completion_event_adapter_failed', 'completion_event_unresolved'].includes(failureClass),
   }];
 }
 
 export function buildBusterIssueFindings(issues = []) {
-  return (issues || []).map((issue = {}, index) => ({
+  return arrayValue(issues).map((issue, index) => {
+    const record = selectDefinedValue(() => (objectRecord(issue)), () => ({}));
+    return ({
     code: `BUSTER_ISSUE_${index + 1}`,
-    severity: issue.severity === 'critical' ? 'critical' : 'error',
-    message: issue.title || issue.description || 'Buster gate issue',
+    severity: record.severity === 'critical' ? 'critical' : 'error',
+    message: selectPresentValue(record.title, record.description, 'Buster gate issue'),
     category: 'buster_gate',
-    target: Array.isArray(issue.affected_files) && issue.affected_files.length > 0
-      ? issue.affected_files[0]
-      : issue.affected_module || null,
+    target: Array.isArray(record.affected_files) && record.affected_files.length > 0
+      ? record.affected_files[0]
+      : selectDefinedValue(() => (record.affected_module), () => (null)),
     retryable: false,
     environmentIssue: false,
     metadata: {
-      description: issue.description || null,
-      severity: issue.severity || null,
-      reproduction: issue.reproduction || null,
-      affected_files: cloneSerializable(issue.affected_files || []),
+      description: selectDefinedValue(() => (record.description), () => (null)),
+      severity: selectDefinedValue(() => (record.severity), () => (null)),
+      reproduction: selectDefinedValue(() => (record.reproduction), () => (null)),
+      affected_files: cloneSerializable(arrayValue(record.affected_files)),
     },
-  }));
+    });
+  });
 }
 
 function isBusterGatePassResult(result = {}) {
-  return result?.passed === true
-    || result?.outcome_class === 'passed'
-    || String(result?.status || '').trim().toUpperCase() === 'PASS';
+  return selectTruthyValue(() => (selectTruthyValue(() => (result?.passed === true), () => (result?.outcome_class === 'passed'))), () => ((selectDefinedValue(() => (nonEmptyString(result?.status)), () => (''))).toUpperCase() === 'PASS'));
 }
 
 function requireTypedRemediationPolicy(policy = null) {
@@ -124,10 +173,10 @@ function requireTypedRemediationPolicy(policy = null) {
   const rerunStageId = typeof policy?.rerunStageId === 'string' && policy.rerunStageId
     ? policy.rerunStageId
     : null;
-  if (!Number.isFinite(nextFixCycle) || nextFixCycle < 1) {
+  if (selectTruthyValue(() => (!Number.isFinite(nextFixCycle)), () => (nextFixCycle < 1))) {
     throw new Error('Buster remediation policy must include a positive nextFixCycle');
   }
-  if (!Number.isFinite(maxFixCycles) || maxFixCycles < 1) {
+  if (selectTruthyValue(() => (!Number.isFinite(maxFixCycles)), () => (maxFixCycles < 1))) {
     throw new Error('Buster remediation policy must include a positive maxFixCycles');
   }
   if (!rerunStageId) {
@@ -139,30 +188,30 @@ function requireTypedRemediationPolicy(policy = null) {
 export function buildBusterGateControlResult(config, gateId, gate, result = {}, opts = {}) {
   const failureClass = requireBusterFailureClass(result, gateId);
   const decision = busterGateDecisionForResult(result, failureClass);
-  const runId = result?.run_id || config?._runId || config?.run_id || null;
+  const runId = selectPresentValue(result?.run_id, config?._runId, config?.run_id);
   const rateLimit = decision.outcomeClass === 'rate_limited'
     ? {
-        max_rate_limit_pauses: result?.max_rate_limit_pauses ?? result?.rate_limit_status?.max_rate_limit_pauses ?? null,
-        rate_limit_pauses: result?.rate_limit_pauses ?? null,
-        rate_limit_status: cloneSerializable(result?.rate_limit_status || null),
+        max_rate_limit_pauses: selectDefinedValue(() => (selectDefinedValue(() => (result?.max_rate_limit_pauses), () => (result?.rate_limit_status?.max_rate_limit_pauses))), () => (null)),
+        rate_limit_pauses: selectDefinedValue(() => (result?.rate_limit_pauses), () => (null)),
+        rate_limit_status: cloneSerializable(selectDefinedValue(() => (result?.rate_limit_status), () => (null))),
       }
     : null;
   const metadata = {
     gate_id: gateId,
-    gate_type: gate?.type || 'buster',
+    gate_type: gateType(gate),
     run_id: runId,
-    gate: result?.gate || gateId,
-    reason: result?.reason || null,
+    gate: busterGateResultGateId(result, gateId),
+    reason: selectDefinedValue(() => (result?.reason), () => (null)),
     failure_class: failureClass,
-    completion_source: result?.completion_source || null,
-    fix_attempts: result?.fix_attempts ?? null,
-    attempt: result?.attempt ?? opts?.input?.ids?.attempt ?? null,
-    gateway_label: result?.gateway_label || null,
-    session_key: result?.session_key || null,
-    dispatch_id: result?.dispatch_id || null,
-    status: cloneSerializable(result?.status || null),
-    polling_git: cloneSerializable(result?.polling_git || null),
-    remaining_issues: cloneSerializable(result?.remaining_issues || null),
+    completion_source: selectDefinedValue(() => (result?.completion_source), () => (null)),
+    fix_attempts: selectDefinedValue(() => (result?.fix_attempts), () => (null)),
+    attempt: selectDefinedValue(() => (selectDefinedValue(() => (result?.attempt), () => (opts?.input?.ids?.attempt))), () => (null)),
+    gateway_label: selectDefinedValue(() => (result?.gateway_label), () => (null)),
+    session_key: selectDefinedValue(() => (result?.session_key), () => (null)),
+    dispatch_id: selectDefinedValue(() => (result?.dispatch_id), () => (null)),
+    status: cloneSerializable(selectDefinedValue(() => (result?.status), () => (null))),
+    polling_git: cloneSerializable(selectDefinedValue(() => (result?.polling_git), () => (null))),
+    remaining_issues: cloneSerializable(selectDefinedValue(() => (result?.remaining_issues), () => (null))),
   };
 
   return buildTypedGateControlResult({
@@ -177,8 +226,8 @@ export function buildBusterGateControlResult(config, gateId, gate, result = {}, 
     recommendation: decision.nextAction === 'pass' ? 'proceed' : 'stop',
     rateLimit,
     metrics: {
-      fix_attempts: result?.fix_attempts ?? 0,
-      completion_source: result?.completion_source || null,
+      fix_attempts: fixAttemptsMetric(result),
+      completion_source: selectDefinedValue(() => (result?.completion_source), () => (null)),
     },
   });
 }
@@ -206,14 +255,14 @@ export function extractGateIssues(gateResult) {
 
   if (Array.isArray(data.issues)) {
     return data.issues
-      .filter(i => i.severity === 'critical' || i.severity === 'moderate' || !i.severity)
+      .filter(i => selectTruthyValue(() => (selectTruthyValue(() => (i.severity === 'critical'), () => (i.severity === 'moderate'))), () => (!i.severity)))
       .map(i => ({
-        title: i.title || 'Unknown issue',
-        description: i.description || '',
-        affected_module: i.affected_module || null,
-        affected_files: i.affected_files || [],
-        severity: i.severity || 'unknown',
-        reproduction: i.reproduction || null,
+        title: selectDefinedValue(() => (i.title), () => ('buster_issue_title_missing')),
+        description: selectDefinedValue(() => (i.description), () => ('')),
+        affected_module: selectDefinedValue(() => (i.affected_module), () => (null)),
+        affected_files: arrayValue(i.affected_files),
+        severity: selectDefinedValue(() => (i.severity), () => ('error')),
+        reproduction: selectDefinedValue(() => (i.reproduction), () => (null)),
       }));
   }
 
@@ -226,16 +275,16 @@ export function extractGateIssues(gateResult) {
       if (suite.findings?.length > 0) {
         for (const f of suite.findings.slice(0, 5)) {
           issues.push({
-            title: `${suiteName}: ${f.message || 'test failure'}`,
+            title: `${suiteName}: ${selectDefinedValue(() => (f.message), () => ('test failure'))}`,
             description: f.rule ? `Rule: ${f.rule}` : '',
-            severity: f.severity || 'critical',
+            severity: selectDefinedValue(() => (f.severity), () => ('critical')),
             affected_files: f.file ? [f.file] : [],
           });
         }
       } else {
         issues.push({
-          title: `${suiteName}: ${suite.error || suite.reason || 'failed'}`,
-          description: `Suite ${suiteName} ${suite.status} with ${suite.checks_failed || 0} check(s) failed`,
+          title: `${suiteName}: ${selectPresentValue(suite.error, suite.reason, 'failed')}`,
+          description: `Suite ${suiteName} ${suite.status} with ${selectDefinedValue(() => (suite.checks_failed), () => (0))} check(s) failed`,
           severity: suite.critical ? 'critical' : 'moderate',
           affected_files: [],
         });
@@ -244,8 +293,8 @@ export function extractGateIssues(gateResult) {
     if (issues.length > 0) return issues;
   }
 
-  const reason = data.reason || data.summary || 'Gate test failed without details';
-  return [{ title: 'Gate test failure', description: reason, severity: 'unknown', affected_files: [] }];
+  const reason = selectPresentValue(data.reason, data.summary, 'Gate test failed without details');
+  return [{ title: 'Gate test failure', description: reason, severity: 'error', affected_files: [] }];
 }
 
 
@@ -253,24 +302,24 @@ export function extractGateIssues(gateResult) {
 export function buildBusterRequestFixControlResult(config, gateId, gate, failData = {}, issues = [], opts = {}) {
   const remediationPolicy = requireTypedRemediationPolicy(opts.remediationPolicy);
   const attempt = remediationPolicy.nextFixCycle;
-  const failReason = issues.map((issue = {}) => issue.title).filter(Boolean).join('; ') || 'unknown (no error detail available)';
-  if (!('dispatchId' in opts) || !('gatewayLabel' in opts) || !('sessionKey' in opts)) throw new Error(`Buster gate '${gateId}' remediation requires explicit correlation`);
-  const dispatchId = opts.dispatchId ?? null;
-  const gatewayLabel = opts.gatewayLabel ?? null;
-  const sessionKey = opts.sessionKey ?? null;
+  const failReason = issueTitleSummary(issues);
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!('dispatchId' in opts)), () => (!('gatewayLabel' in opts)))), () => (!('sessionKey' in opts)))) throw new Error(`Buster gate '${gateId}' remediation requires explicit correlation`);
+  const dispatchId = selectDefinedValue(() => (opts.dispatchId), () => (null));
+  const gatewayLabel = selectDefinedValue(() => (opts.gatewayLabel), () => (null));
+  const sessionKey = selectDefinedValue(() => (opts.sessionKey), () => (null));
 
   return buildGateRemediationRequestControlResult({
     producerType: 'buster',
     gateId,
-    gateType: gate?.type || 'buster',
-    runId: getRunId(config) || config?._runId || config?.run_id || null,
+    gateType: gateType(gate),
+    runId: selectPresentValue(getRunId(config), config?._runId, config?.run_id),
     attempt,
     summary: failReason,
     findings: buildBusterIssueFindings(issues),
     metadata: {
       gate_id: gateId,
-      gate_type: gate?.type || 'buster',
-      run_id: getRunId(config) || config?._runId || config?.run_id || null,
+      gate_type: gateType(gate),
+      run_id: selectPresentValue(getRunId(config), config?._runId, config?.run_id),
       attempt,
       reason: failReason,
       failure_class: 'verdict_fail',

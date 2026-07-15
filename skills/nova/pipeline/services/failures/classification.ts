@@ -1,6 +1,7 @@
 import { normalizeFailureClass } from '../failure-semantics.ts';
 import { reportFailureSurfaceIncident } from './incidents.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 export const FAIL_PATTERNS = {
   BUSTER_IMAGE_UNAVAILABLE: 'BUSTER_IMAGE_UNAVAILABLE',
   BUSTER_PORT_CONFLICT: 'BUSTER_PORT_CONFLICT',
@@ -17,8 +18,34 @@ export const FAIL_PATTERNS = {
   RATE_LIMIT_EXHAUSTED: 'RATE_LIMIT_EXHAUSTED',
   OUTPUT_FILE_MISSING: 'OUTPUT_FILE_MISSING',
   MODULE_ORPHANED: 'MODULE_ORPHANED',
-  UNKNOWN: 'unknown',
+  CLASSIFICATION_MISSING: 'classification_missing',
 };
+
+const PRETEST_REASON_MISSING = 'Pre-test failure (no details)';
+const SUITE_FAILED_DETAIL_MISSING = 'failed';
+const CONFIG_PRETEST_DETAIL_MISSING = 'Configuration issue during pre-test';
+const INFRA_PRETEST_DETAIL_MISSING = 'Infrastructure issue during pre-test';
+const CODE_PRETEST_DETAIL_MISSING = 'Pre-test failure';
+
+function textValue(value) {
+  return selectTruthyValue(() => (value === undefined), () => (value === null)) ? '' : String(value);
+}
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : null;
+}
+
+function suitesRecord(verdict) {
+  return selectDefinedValue(() => (objectRecord(verdict?.suites)), () => ({}));
+}
+
+function selectPresentValue(...values) {
+  return values.find((value) => value !== undefined && value !== null && value !== '');
+}
 
 /**
  * Structured metadata for each failure pattern.
@@ -118,26 +145,26 @@ export const FAILURE_CLASS_MAP = {
     summary: 'Module blocked with no reason — likely orphaned',
     guidance: 'The module was marked BLOCKED but no failure reason was recorded. Inspect lifecycle read models and pipeline logs to determine the root cause before resuming.',
   },
-  unknown: {
-    class: 'unknown', recoverability: 'needs_nova',
+  classification_missing: {
+    class: 'classification_missing', recoverability: 'needs_nova',
     escalation: 'NEEDS_NOVA',
-    summary: 'Unclassified failure',
-    guidance: 'The failure could not be classified. Review the full failure summary and pipeline logs to identify the root cause.',
+    summary: 'Failure classification missing',
+    guidance: 'No failure classification rule matched the canonical error input. Review the full failure summary and pipeline logs to identify the root cause.',
   },
 };
 
 /**
  * Return structured metadata for a failure pattern code.
- * Always returns a record — falls back to the 'unknown' entry if code not found.
+ * Always returns a record — uses the classification_missing entry if code not found.
  * @param {string} code - A FAIL_PATTERNS value
  * @returns {{ class: string, recoverability: string, escalation: string, summary: string, guidance: string }}
  */
 export function describeFailure(code) {
-  return FAILURE_CLASS_MAP[code] || FAILURE_CLASS_MAP[FAIL_PATTERNS.UNKNOWN];
+  return selectTruthyValue(() => (FAILURE_CLASS_MAP[code]), () => (FAILURE_CLASS_MAP[FAIL_PATTERNS.CLASSIFICATION_MISSING]));
 }
 
 export function classifyFailPattern(text) {
-  const value = String(text || '');
+  const value = textValue(text);
   if (!value.trim()) return undefined;
 
   if (/image not known|image pull|no such image/i.test(value)) return FAIL_PATTERNS.BUSTER_IMAGE_UNAVAILABLE;
@@ -154,9 +181,9 @@ export function classifyFailPattern(text) {
   if (/parse (error|failed)|invalid json|corrupted (status|payload)|malformed (completion|payload|status)|unexpected token in json/i.test(value)) return FAIL_PATTERNS.PAYLOAD_CORRUPTED;
   if (/rate.?limit.*exhaust|rate.?limit.*recover.*fail|max.*rate.*limit.*attempt|repeated rate.?limit/i.test(value)) return FAIL_PATTERNS.RATE_LIMIT_EXHAUSTED;
   if (/output file (missing|not found)|expected output file|gate output.*missing|review.*output.*missing/i.test(value)) return FAIL_PATTERNS.OUTPUT_FILE_MISSING;
-  if (/\bBLOCKED\b/i.test(value) && (/no reason field/i.test(value) || /empty reason/i.test(value) || /\[.*\]\s*BLOCKED\s*$/i.test(value) || /^BLOCKED$/i.test(value.trim()))) return FAIL_PATTERNS.MODULE_ORPHANED;
+  if (/\bBLOCKED\b/i.test(value) && (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (/no reason field/i.test(value)), () => (/empty reason/i.test(value)))), () => (/\[.*\]\s*BLOCKED\s*$/i.test(value)))), () => (/^BLOCKED$/i.test(value.trim()))))) return FAIL_PATTERNS.MODULE_ORPHANED;
 
-  return FAIL_PATTERNS.UNKNOWN;
+  return FAIL_PATTERNS.CLASSIFICATION_MISSING;
 }
 
 /**
@@ -166,7 +193,7 @@ export function classifyFailPattern(text) {
  * @returns {string} A FAIL_PATTERNS value
  */
 export function classifyGitPushError(errorMessage) {
-  const msg = String(errorMessage || '');
+  const msg = textValue(errorMessage);
   if (/\[rejected\]|non-fast-forward|updates were rejected/i.test(msg)) return FAIL_PATTERNS.GIT_PUSH_REJECTED;
   if (/authentication failed|publickey|permission denied \(publickey\)|could not read.*passphrase/i.test(msg)) return FAIL_PATTERNS.GIT_PUSH_FAILED;
   if (/timeout|timed out|connection (refused|reset)|network (error|unreachable)/i.test(msg)) return FAIL_PATTERNS.GIT_PUSH_FAILED;
@@ -178,7 +205,7 @@ export function classifyGitPushError(errorMessage) {
  * Used by callers of handleFail to always provide informative anti-pattern data.
  */
 export function extractAgentFailReason(status, phase) {
-  const phaseHistory = [...(status.history || [])].reverse()
+  const phaseHistory = [...arrayValue(status.history)].reverse()
     .find(h => h.agent === phase && h.note);
   const reason = phaseHistory?.note
     ? `[${phase}] ${phaseHistory.note}`
@@ -192,14 +219,14 @@ export function extractAgentFailReason(status, phase) {
  * Extract a Forge-actionable fail reason from a Buster Pipeline pre-test failure.
  */
 export function extractPreTestFailReason(redisEntry) {
-  const reason = redisEntry?.reason || 'Pre-test failure (no details)';
+  const reason = selectDefinedValue(() => (redisEntry?.reason), () => (PRETEST_REASON_MISSING));
   let verdictDetails = '';
 
   if (redisEntry?.verdict) {
     try {
-      const failedSuites = Object.entries(parsePreTestVerdict(redisEntry).suites || {})
-        .filter(([_, s]) => s.status === 'FAIL' || s.status === 'ERROR')
-        .map(([name, s]) => `${name}: ${getSuiteFailureDetail(s) || 'failed'}`);
+      const failedSuites = Object.entries(suitesRecord(parsePreTestVerdict(redisEntry)))
+        .filter(([_, s]) => selectTruthyValue(() => (s.status === 'FAIL'), () => (s.status === 'ERROR')))
+        .map(([name, s]) => `${name}: ${selectPresentValue(getSuiteFailureDetail(s), SUITE_FAILED_DETAIL_MISSING)}`);
       if (failedSuites.length > 0) {
         verdictDetails = ` | Failed suites: ${failedSuites.join(' | ')}`;
       }
@@ -219,7 +246,7 @@ export function parsePreTestVerdict(redisEntry) {
     const parsed = typeof redisEntry.verdict === 'string'
       ? JSON.parse(redisEntry.verdict)
       : redisEntry.verdict;
-    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed) || !parsed.suites || typeof parsed.suites !== 'object' || Array.isArray(parsed.suites)) {
+    if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (!parsed), () => (typeof parsed !== 'object'))), () => (Array.isArray(parsed)))), () => (!parsed.suites))), () => (typeof parsed.suites !== 'object'))), () => (Array.isArray(parsed.suites)))) {
       reportFailureSurfaceIncident(null, 'pretest_verdict_shape_invalid', null, 'Invalid Buster pre-test verdict shape; using empty suite summary', {
         scope: 'parsePreTestVerdict',
       });
@@ -235,15 +262,15 @@ export function parsePreTestVerdict(redisEntry) {
 }
 
 export function getSuiteFailureDetail(suite) {
-  if (!suite || typeof suite !== 'object') return '';
+  if (selectTruthyValue(() => (!suite), () => (typeof suite !== 'object'))) return '';
   if (suite.error) return String(suite.error);
   if (suite.top_finding) return String(suite.top_finding);
-  const topFindings = (suite.findings || [])
+  const topFindings = arrayValue(suite.findings)
     .slice(0, 3)
-    .map(f => f?.description || f?.message || f?.title || 'unknown')
+    .map(f => selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (f?.description), () => (f?.message))), () => (f?.title))), () => ('missing_failure_description')))
     .filter(Boolean)
     .join('; ');
-  return topFindings || String(suite.reason || '');
+  return selectPresentValue(topFindings, textValue(suite.reason));
 }
 
 const PRETEST_INFRA_PATTERNS = [
@@ -274,13 +301,13 @@ const PRETEST_CONFIG_PATTERNS = [
 
 export function classifyPreTestFailure(redisEntry) {
   const verdict = parsePreTestVerdict(redisEntry);
-  const suiteEntries = Object.entries(verdict.suites || {});
+  const suiteEntries = Object.entries(suitesRecord(verdict));
   const failed = suiteEntries
-    .filter(([_, suite]) => suite?.status === 'FAIL' || suite?.status === 'ERROR')
-    .map(([name, suite]) => ({ name, detail: getSuiteFailureDetail(suite) || 'failed' }));
+    .filter(([_, suite]) => selectTruthyValue(() => (suite?.status === 'FAIL'), () => (suite?.status === 'ERROR')))
+    .map(([name, suite]) => ({ name, detail: selectPresentValue(getSuiteFailureDetail(suite), SUITE_FAILED_DETAIL_MISSING) }));
 
   const reasonText = [
-    redisEntry?.reason || '',
+    textValue(redisEntry?.reason),
     ...failed.map(({ name, detail }) => `${name}: ${detail}`),
   ].filter(Boolean).join(' | ');
 
@@ -294,7 +321,7 @@ export function classifyPreTestFailure(redisEntry) {
         code: pattern.code,
         summary: pattern.summary,
         failureClass: normalizeFailureClass('pre_check', reasonText, { preTestKind: 'config' }),
-        detail: failed[0]?.detail || reasonText || 'Configuration issue during pre-test',
+        detail: selectPresentValue(failed[0]?.detail, reasonText, CONFIG_PRETEST_DETAIL_MISSING),
       };
     }
   }
@@ -306,7 +333,7 @@ export function classifyPreTestFailure(redisEntry) {
         code: pattern.code,
         summary: pattern.summary,
         failureClass: normalizeFailureClass('buster', reasonText, { preTestKind: 'infra' }),
-        detail: failed[0]?.detail || reasonText || 'Infrastructure issue during pre-test',
+        detail: selectPresentValue(failed[0]?.detail, reasonText, INFRA_PRETEST_DETAIL_MISSING),
       };
     }
   }
@@ -316,12 +343,12 @@ export function classifyPreTestFailure(redisEntry) {
     code: 'PRETEST_SUITE_FAILURE',
     summary: 'Pre-test suite failure before Buster subagent spawn',
     failureClass: normalizeFailureClass('buster', reasonText, { preTestKind: 'code' }),
-    detail: failed[0]?.detail || reasonText || 'Pre-test failure',
+    detail: selectPresentValue(failed[0]?.detail, reasonText, CODE_PRETEST_DETAIL_MISSING),
   };
 }
 
 export function getPassedSuiteNames(redisEntry) {
-  return Object.entries(parsePreTestVerdict(redisEntry).suites || {})
+  return Object.entries(suitesRecord(parsePreTestVerdict(redisEntry)))
     .filter(([_, s]) => s?.status === 'PASS')
     .map(([name]) => name);
 }
@@ -330,7 +357,7 @@ export function getPassedSuiteNames(redisEntry) {
  * Extract the names of failed suites from a Redis completion entry's verdict.
  */
 export function getFailedSuiteNames(redisEntry) {
-  return Object.entries(parsePreTestVerdict(redisEntry).suites || {})
-    .filter(([_, s]) => s?.status === 'FAIL' || s?.status === 'ERROR')
+  return Object.entries(suitesRecord(parsePreTestVerdict(redisEntry)))
+    .filter(([_, s]) => selectTruthyValue(() => (s?.status === 'FAIL'), () => (s?.status === 'ERROR')))
     .map(([name]) => name);
 }

@@ -3,6 +3,7 @@ import fs from 'fs';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 declare const process: {
   env: Record<string, string | undefined>;
   cwd(): string;
@@ -31,6 +32,14 @@ const DEFAULT_SUBPROCESS_ENV_ALLOWLIST = Object.freeze([
   'XDG_CONFIG_HOME',
   'XDG_DATA_HOME',
   'KUBECONFIG',
+  'KUBERNETES_SERVICE_HOST',
+  'KUBERNETES_SERVICE_PORT',
+  'KUBERNETES_SERVICE_PORT_HTTPS',
+  'KUBERNETES_PORT',
+  'KUBERNETES_PORT_443_TCP',
+  'KUBERNETES_PORT_443_TCP_ADDR',
+  'KUBERNETES_PORT_443_TCP_PORT',
+  'KUBERNETES_PORT_443_TCP_PROTO',
   'CONTAINER_HOST',
   'DOCKER_HOST',
   'SSH_AUTH_SOCK',
@@ -71,13 +80,13 @@ type AllowedPathOptions = {
 };
 
 export function isDeniedSubprocessEnvKey(key: unknown) {
-  const name = String(key || '').trim();
+  const name = String(selectDefinedValue(() => (key), () => (''))).trim();
   return DENIED_SUBPROCESS_ENV_KEYS.some(pattern => pattern.test(name));
 }
 
 export function buildSubprocessEnv(overrides: Record<string, unknown> = {}, options: BuildEnvOptions = {}) {
-  const sourceEnv = options.sourceEnv || process.env;
-  const allowlist = options.allowlist || DEFAULT_SUBPROCESS_ENV_ALLOWLIST;
+  const sourceEnv = options.sourceEnv !== undefined ? options.sourceEnv : process.env;
+  const allowlist = options.allowlist !== undefined ? options.allowlist : DEFAULT_SUBPROCESS_ENV_ALLOWLIST;
   const allowedKeys = new Set(allowlist.filter((key) => key && !isDeniedSubprocessEnvKey(key)));
   const env: Record<string, string> = {};
 
@@ -86,14 +95,14 @@ export function buildSubprocessEnv(overrides: Record<string, unknown> = {}, opti
     if (value !== undefined && value !== null) env[key] = String(value);
   }
 
-  for (const [key, value] of Object.entries(overrides || {})) {
+  for (const [key, value] of Object.entries(selectDefinedValue(() => (overrides), () => ({})))) {
     if (isDeniedSubprocessEnvKey(key)) {
       throw new Error(`subprocess env key is denied: ${key}`);
     }
     if (!allowedKeys.has(key)) {
       throw new Error(`subprocess env key is not allowlisted: ${key}`);
     }
-    if (value === undefined || value === null) delete env[key];
+    if (selectTruthyValue(() => (value === undefined), () => (value === null))) delete env[key];
     else env[key] = String(value);
   }
 
@@ -123,19 +132,32 @@ function realpathForScope(candidate: string) {
   }
 }
 
+function scopedBaseDir(options: ScopedPathOptions) {
+  return path.resolve(selectDefinedValue(() => (selectDefinedValue(() => (options.baseDir), () => (options.scopeDir))), () => (process.cwd())));
+}
+
+function scopedRootDir(options: ScopedPathOptions, baseDir: string) {
+  return path.resolve(selectDefinedValue(() => (options.scopeDir), () => (baseDir)));
+}
+
+function allowedPathPrefixes(opts: AllowedPathOptions = {}) {
+  const prefixes = selectDefinedValue(() => (opts.allowedPrefixes), () => (DEFAULT_ALLOWED_PATH_PREFIXES));
+  return prefixes.map(normalizeAllowedPrefix);
+}
+
 export function isPathInside(candidate: string, root: string) {
   const resolvedCandidate = realpathForScope(candidate);
   const resolvedRoot = realpathForScope(root);
-  return resolvedCandidate === resolvedRoot || resolvedCandidate.startsWith(rootedPrefix(resolvedRoot));
+  return selectTruthyValue(() => (resolvedCandidate === resolvedRoot), () => (resolvedCandidate.startsWith(rootedPrefix(resolvedRoot))));
 }
 
 export function resolveScopedPath(p: unknown, options: ScopedPathOptions = {}) {
   if (!p) return null;
-  const baseDir = path.resolve(options.baseDir || options.scopeDir || process.cwd());
-  const scopeDir = path.resolve(options.scopeDir || baseDir);
-  const field = options.field || 'path';
+  const baseDir = scopedBaseDir(options);
+  const scopeDir = scopedRootDir(options, baseDir);
+  const field = selectDefinedValue(() => (options.field), () => ('path'));
   const raw = String(p);
-  const scopeDescription = options.scopeDescription || 'allowed scope';
+  const scopeDescription = selectDefinedValue(() => (options.scopeDescription), () => ('allowed scope'));
 
   if (raw.includes('\0')) {
     throw new Error(`${field} contains a null byte`);
@@ -154,11 +176,11 @@ function normalizeAllowedPrefix(prefix: string) {
 }
 
 export function validateAllowedPath(filePath: unknown, label: string, opts: AllowedPathOptions = {}) {
-  if (!filePath || typeof filePath !== 'string') {
+  if (selectTruthyValue(() => (!filePath), () => (typeof filePath !== 'string'))) {
     throw new Error(`${label}: path is empty or not a string`);
   }
   const normalized = path.resolve(filePath);
-  const allowedPrefixes = (opts.allowedPrefixes || DEFAULT_ALLOWED_PATH_PREFIXES).map(normalizeAllowedPrefix);
+  const allowedPrefixes = allowedPathPrefixes(opts);
   const realNormalized = realpathForScope(normalized);
   const allowed = allowedPrefixes.some((prefix) => isPathInside(realNormalized, prefix.slice(0, -1)));
   if (!allowed) {
@@ -170,14 +192,28 @@ export function validateAllowedPath(filePath: unknown, label: string, opts: Allo
 }
 
 export function tokenizeCommandString(command: unknown, label = 'command') {
-  if (!command || typeof command !== 'string') {
+  if (Array.isArray(command)) {
+    if (command.length === 0) throw new Error(`${label}: argv array is empty`);
+    const argv = command.map((part, index) => {
+      if (selectTruthyValue(() => (typeof part !== 'string'), () => (part.trim() === ''))) {
+        throw new Error(`${label}[${index}]: argv entry must be a non-empty string`);
+      }
+      if (/[\r\n\0]/.test(part)) {
+        throw new Error(`${label}[${index}]: argv entry contains newline or null-byte characters`);
+      }
+      return part;
+    });
+    return argv;
+  }
+
+  if (selectTruthyValue(() => (!command), () => (typeof command !== 'string'))) {
     throw new Error(`${label}: command is empty or not a string`);
   }
 
   const trimmed = command.trim();
   if (!trimmed) throw new Error(`${label}: command is empty`);
   if (/[\r\n\0]/.test(trimmed)) throw new Error(`${label}: command contains newline or null-byte characters`);
-  if (SHELL_META_PATTERN.test(trimmed) || trimmed.includes('$(') || trimmed.includes('${')) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (SHELL_META_PATTERN.test(trimmed)), () => (trimmed.includes('$(')))), () => (trimmed.includes('${')))) {
     throw new Error(`${label}: shell metacharacters are not allowed; pass a direct executable and args only`);
   }
 
@@ -201,7 +237,7 @@ export function tokenizeCommandString(command: unknown, label = 'command') {
       continue;
     }
 
-    if (ch === '"' || ch === "'") {
+    if (selectTruthyValue(() => (ch === '"'), () => (ch === "'"))) {
       quote = ch;
       continue;
     }

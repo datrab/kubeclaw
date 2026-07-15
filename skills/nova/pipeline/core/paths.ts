@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // core/paths.ts — Path helpers for swarm module/gate layout
 
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
@@ -7,17 +8,18 @@ import path from 'path';
 import { getRunId } from './runtime.ts';
 
 const ALLOWED_PATH_PREFIXES = ['/app/', '/opt/', '/home/'];
+const UNSAFE_PATH_SEGMENT_NAMES = new Set(['.', '..']);
 
 // Single canonical safe-path validator for the refactored pipeline.
 export function validateSafePath(filePath: any, label: any) {
-  if (!filePath || typeof filePath !== 'string') {
+  if (selectTruthyValue(() => (!filePath), () => (typeof filePath !== 'string'))) {
     throw new Error(`${label}: path is empty or not a string`);
   }
   const normalized = path.resolve(filePath);
   const allowed = ALLOWED_PATH_PREFIXES.some((prefix) => {
     const resolvedPrefix = path.resolve(prefix);
     const prefixWithSep = resolvedPrefix.endsWith(path.sep) ? resolvedPrefix : `${resolvedPrefix}${path.sep}`;
-    return normalized === resolvedPrefix || normalized.startsWith(prefixWithSep);
+    return selectTruthyValue(() => (normalized === resolvedPrefix), () => (normalized.startsWith(prefixWithSep)));
   });
   if (!allowed) {
     throw new Error(
@@ -29,12 +31,38 @@ export function validateSafePath(filePath: any, label: any) {
 }
 
 export function swarmRoot(config: any)         { return config.paths.swarm_dir; }
-export function projectSrcPath(config: any)    { return path.dirname(config.paths.swarm_dir); }
+export function projectSrcPath(config: any) {
+  const sourcePath = config?.paths?.project_src_dir;
+  if (selectTruthyValue(() => (typeof sourcePath !== 'string'), () => (!sourcePath.trim()))) {
+    throw new Error('config.paths.project_src_dir: required source root path');
+  }
+  return sourcePath;
+}
 export function relPath(config: any, absPath: any)  { return path.relative(config.repo_root, absPath); }
 export function portableRelPath(config: any, absPath: any) { return relPath(config, absPath).split(path.sep).join('/'); }
 
+function firstDefined(...values: any[]) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return null;
+}
+
+function requiredRepoRoot(config: any, label: any = 'repository root') {
+  if (selectTruthyValue(() => (typeof config?.repo_root !== 'string'), () => (!config.repo_root.trim()))) {
+    throw new Error(`${label}: required non-empty string`);
+  }
+  return config.repo_root;
+}
+
+function unsafePathSegmentSyntax(segment: string) {
+  if (/[\0/\\]/u.test(segment)) return true;
+  if (path.isAbsolute(segment)) return true;
+  return UNSAFE_PATH_SEGMENT_NAMES.has(segment);
+}
+
 function portableArtifactRefPath(config: any, absPath: any) {
-  const basePath = config?.repo_root || path.dirname(swarmRoot(config));
+  const basePath = requiredRepoRoot(config);
   return path.relative(basePath, absPath).split(path.sep).join('/');
 }
 
@@ -46,7 +74,7 @@ function rootedPrefix(root: any) {
 function isPathInside(candidate: any, root: any) {
   const resolvedCandidate = path.resolve(candidate);
   const resolvedRoot = path.resolve(root);
-  return resolvedCandidate === resolvedRoot || resolvedCandidate.startsWith(rootedPrefix(resolvedRoot));
+  return selectTruthyValue(() => (resolvedCandidate === resolvedRoot), () => (resolvedCandidate.startsWith(rootedPrefix(resolvedRoot))));
 }
 
 function assertPathInside(candidate: any, root: any, label: any, scopeDescription: any = 'swarm root') {
@@ -57,7 +85,7 @@ function assertPathInside(candidate: any, root: any, label: any, scopeDescriptio
 }
 
 function assertRelativePathInput(inputPath: any, label: any, scopeDescription: any) {
-  if (typeof inputPath !== 'string' || !inputPath.trim()) {
+  if (selectTruthyValue(() => (typeof inputPath !== 'string'), () => (!inputPath.trim()))) {
     throw new Error(`${label}: path is empty or not a string`);
   }
   if (inputPath.includes('\0')) throw new Error(`${label}: path contains a null byte`);
@@ -69,17 +97,10 @@ function assertRelativePathInput(inputPath: any, label: any, scopeDescription: a
 
 export function assertSafePathSegment(segment: any, label: any, opts: any = {}) {
   if (segment === '' && opts.allowEmpty === true) return segment;
-  if (typeof segment !== 'string' || !segment.trim()) {
+  if (selectTruthyValue(() => (typeof segment !== 'string'), () => (!segment.trim()))) {
     throw new Error(`${label}: identifier is empty or not a string`);
   }
-  if (
-    segment.includes('\0') ||
-    segment.includes('/') ||
-    segment.includes('\\') ||
-    path.isAbsolute(segment) ||
-    segment === '.' ||
-    segment === '..'
-  ) {
+  if (unsafePathSegmentSyntax(segment)) {
     throw new Error(`${label}: identifier must be a single safe path segment`);
   }
   return segment;
@@ -104,8 +125,7 @@ export function moduleBusterMdPathRef(config: any, dir: any) {
 
 export function moduleBusterOutputPath(config: any, dir: any) {
   const moduleDir = assertRelativePathInput(dir, 'module.dir', 'modules root');
-  const artifactPath = path.relative(swarmRoot(config), path.resolve(config.paths.modules_dir, moduleDir, 'buster-output.json'));
-  return resolveSwarmArtifactPath(config, artifactPath, 'module buster output_file');
+  return assertPathInside(path.resolve(config.paths.modules_dir, moduleDir, 'buster-output.json'), config.paths.modules_dir, 'module buster output_file', 'modules root');
 }
 
 export function moduleBusterOutputPathRef(config: any, dir: any) {
@@ -114,8 +134,7 @@ export function moduleBusterOutputPathRef(config: any, dir: any) {
 
 export function moduleBusterTestWorkspacePath(config: any, dir: any, attempt: any) {
   const moduleDir = assertRelativePathInput(dir, 'module.dir', 'modules root');
-  const artifactPath = path.relative(swarmRoot(config), path.resolve(config.paths.modules_dir, moduleDir, 'tests', `attempt-${attempt}`));
-  return resolveSwarmArtifactPath(config, artifactPath, 'module buster test workspace');
+  return assertPathInside(path.resolve(config.paths.modules_dir, moduleDir, 'tests', `attempt-${attempt}`), config.paths.modules_dir, 'module buster test workspace', 'modules root');
 }
 
 export function moduleBusterTestWorkspacePathRef(config: any, dir: any, attempt: any) {
@@ -123,10 +142,10 @@ export function moduleBusterTestWorkspacePathRef(config: any, dir: any, attempt:
 }
 
 function assertArtifactFileName(fileName: any, label: any) {
-  if (typeof fileName !== 'string' || !fileName.trim()) {
+  if (selectTruthyValue(() => (typeof fileName !== 'string'), () => (!fileName.trim()))) {
     throw new Error(`${label}: file name is empty or not a string`);
   }
-  if (fileName.includes('\0') || path.isAbsolute(fileName) || path.basename(fileName) !== fileName) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (fileName.includes('\0')), () => (path.isAbsolute(fileName)))), () => (path.basename(fileName) !== fileName))) {
     throw new Error(`${label}: file name must be a single relative path segment`);
   }
   return fileName;
@@ -149,7 +168,7 @@ export function swarmArtifactTopLevelRef(config: any, artifactPath: any, label: 
 }
 
 export function resolveRepoRelativePath(config: any, repoPath: any, label: any = 'repo path') {
-  if (!config?.repo_root || typeof config.repo_root !== 'string') {
+  if (selectTruthyValue(() => (!config?.repo_root), () => (typeof config.repo_root !== 'string'))) {
     throw new Error(`${label}: repository root is unavailable`);
   }
   assertRelativePathInput(repoPath, label, 'repository root');
@@ -198,9 +217,12 @@ export function gateInstructionsTopLevelRef(config: any, gate: any) {
 
 export function reviewGateOutputPath(config: any, gate: any, reviewerLabel: any) {
   const label = assertArtifactFileName(`${reviewerLabel}-${gate.review_name}.json`, 'review gate output file');
+  if (!gate?.review_output_dir) {
+    throw new Error('review gate output path requires gate.review_output_dir');
+  }
   return resolveSwarmArtifactPath(
     config,
-    path.join(gate.review_output_dir || 'echo-reviews', label),
+    path.join(gate.review_output_dir, label),
     'review gate output path'
   );
 }
@@ -272,6 +294,24 @@ export function completionStreamKey(config: any) {
   return `swarm:pipeline:${config.project}:completions`;
 }
 
+function approvalSignalStreamIdentity(config: any, state: any = {}) {
+  return {
+    project: firstDefined(state?.project, config?.project),
+    runId: firstDefined(state?.run_id, config?.run_id),
+  };
+}
+
+function encodeRedisKeyPart(value: any, label: any) {
+  const normalized = String(value == null ? '' : value).trim();
+  if (!normalized) throw new Error(`${label}: required for Redis stream key`);
+  return encodeURIComponent(normalized);
+}
+
+export function approvalSignalStreamKey(config: any, state: any = {}) {
+  const { project, runId } = approvalSignalStreamIdentity(config, state);
+  return `swarm:pipeline:${encodeRedisKeyPart(project, 'project')}:${encodeRedisKeyPart(runId, 'run_id')}:approval-signals`;
+}
+
 export function gateStatusPath(config: any, gateId: any) {
   const safeGateId = assertSafePathSegment(gateId, 'gate id');
   return assertPathInside(path.join(swarmRoot(config), `${safeGateId}-gate-status.json`), swarmRoot(config), 'gate status path');
@@ -324,7 +364,9 @@ export function ensureProjectLogDir(config: any) {
 }
 
 export function resolvePipelineRunLogDir(config: any, runId: any = getRunId(config)) {
-  const logDir = pipelineLogDir(config); if (!logDir || !runId) return null;
+  const logDir = pipelineLogDir(config);
+  if (!logDir) throw new Error('pipeline log dir: required for pipeline run log path');
+  if (!runId) throw new Error('pipeline run id: required for pipeline run log path');
   const safeRunId = assertSafePathSegment(runId, 'pipeline run id');
   return assertPathInside(path.join(logDir, 'runs', safeRunId), logDir, 'pipeline run log path', 'pipeline log root');
 }
@@ -340,7 +382,7 @@ export function archValidatorLogDir(config: any) {
 export function pipelineRunLogDir(config: any) {
   const runId = getRunId(config);
   const logDir = pipelineLogDir(config);
-  if (!logDir || !runId) return null;
+  if (selectTruthyValue(() => (!logDir), () => (!runId))) return null;
   const safeRunId = assertSafePathSegment(runId, 'pipeline run id');
   return assertPathInside(path.join(logDir, 'runs', safeRunId), logDir, 'pipeline run log path', 'pipeline log root');
 }

@@ -69,7 +69,11 @@ for (const marker of [
 assert.equal(moduleSharedSource.includes('function pushArtifactRef('), false, 'module runner shared should not keep a local artifact-ref existence helper after slice 6');
 assert.equal(pipelineSchedulingSource.includes('const pushIfPresent ='), false, 'pipeline scheduling should not keep a local artifact-ref existence helper after slice 6');
 assert.equal(helperSource.includes("throw new Error(`Malformed stage ref '${key}'"), true, 'stage refs must fail typed validation instead of silently omitting malformed refs');
-assert.equal(helperSource.includes('if (!artifact?.path || !existsFn(String(artifact.path))) continue;'), true, 'optional artifact refs must include only materialized artifacts as named policy');
+assert.equal(
+  helperSource.includes('if (selectTruthyValue(() => (!artifact?.path), () => (!existsFn(String(artifact.path))))) continue;'),
+  true,
+  'optional artifact refs must include only materialized artifacts as named policy',
+);
 assert.equal(waitableGateEngineSource.includes('resolveGateWaitController(waitController'), true, 'waitable gate engine must fail fast through wait-controller validation');
 assert.equal(waitableGateEngineSource.includes('error.gateStageStarted = true'), false, 'waitable gate loop must not mutate errors to signal stage-start evidence');
 assert.equal(waitableGateEngineSource.includes('return { controlResult: null, error, stageStarted: true };'), true, 'waitable gate loop errors should return typed stage-start evidence');

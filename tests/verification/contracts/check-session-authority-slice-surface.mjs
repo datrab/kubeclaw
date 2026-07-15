@@ -57,7 +57,16 @@ assert.equal(statusStoreSource.includes('const activeStatusSessionKey = activeAg
 assert.equal(statusStoreSource.includes('readModels.active_sessions.modules[moduleId] = activeSessionProjection'), true, 'status-store should keep module active-session read-model projection explicit');
 assert.equal(statusStoreSource.includes('buildStrongModuleActiveSessionProjection'), true, 'status-store should centralize lifecycle active-session projection hardening');
 assert.equal(statusStoreSource.includes('hasStrongActiveSessionIdentity(identity)'), true, 'module active-session read models must only be emitted with complete identity');
-assert.equal(statusStoreSource.includes('session_key: activeAgent?.session_key || null'), true, 'module active-session projection must come from typed active_agent identity, not status-level fallback evidence');
+assert.equal(
+  statusStoreSource.includes('session_key: selectTruthyValue(() => (activeAgent?.session_key), () => (null))'),
+  true,
+  'module active-session identity must read session_key from typed active_agent evidence',
+);
+assert.equal(
+  statusStoreSource.includes('session_key: selectTruthyValue(() => (status?.session_key), () => (null))'),
+  false,
+  'module active-session projection must not promote status-level session_key evidence',
+);
 
 assert.equal(
   statusCompatSource.includes('status.active_agent.gateway_label || status.active_agent.label'),

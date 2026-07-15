@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // =============================================================================
 // LINT-REPORT.JS — Deterministic Static Analysis Aggregator
 // =============================================================================
@@ -41,9 +42,9 @@ async function runAllTools(ctx) {
 }
 
 function lintReportExitCode(report = {}) {
-  const totalErrors = Number(report?.summary?.total_errors || 0);
-  const toolsFailed = Number(report?.summary?.tools_failed || 0);
-  return totalErrors > 0 || toolsFailed > 0 ? 1 : 0;
+  const totalErrors = Number(selectDefinedValue(() => (report?.summary?.total_errors), () => (0)));
+  const toolsFailed = Number(selectDefinedValue(() => (report?.summary?.tools_failed), () => (0)));
+  return selectTruthyValue(() => (totalErrors > 0), () => (toolsFailed > 0)) ? 1 : 0;
 }
 
 function parseArgs(args = process.argv.slice(2)) {
@@ -72,7 +73,7 @@ function normalizeModulePath(repoRoot, rawModulePath) {
   const modulePath = path.normalize(rawModulePath);
   const moduleRoot = path.resolve(repoRoot, modulePath);
   const relativeToRepo = path.relative(repoRoot, moduleRoot);
-  if (relativeToRepo.startsWith('..') || path.isAbsolute(relativeToRepo)) {
+  if (selectTruthyValue(() => (relativeToRepo.startsWith('..')), () => (path.isAbsolute(relativeToRepo)))) {
     throw new Error(`ERROR: --module-path escapes --repo: ${rawModulePath}`);
   }
 
@@ -89,7 +90,7 @@ function buildContext(flags) {
     throw new Error(`ERROR: repo path does not exist: ${repoRoot}`);
   }
 
-  const tier = flags.tier || DEFAULT_TIER;
+  const tier = lintReportTierAuthority(flags);
   if (!TIERS[tier]) {
     throw new Error(`ERROR: unknown tier '${tier}'. Valid: ${Object.keys(TIERS).join(', ')}`);
   }
@@ -105,14 +106,24 @@ function buildContext(flags) {
   return {
     repoRoot,
     modulePath,
-    project: flags.project || path.basename(repoRoot),
+    project: lintReportProjectAuthority(flags, repoRoot),
     tier,
     changedFiles,
     projectTypes,
-    semgrepConfig: flags['semgrep-config'] || null,
-    eslintConfig: flags['eslint-config'] || null,
+    semgrepConfig: selectTruthyValue(() => (flags['semgrep-config']), () => (null)),
+    eslintConfig: selectTruthyValue(() => (flags['eslint-config']), () => (null)),
     diagnostics: discoveryDiagnostics,
   };
+}
+
+function lintReportTierAuthority(flags) {
+  if (flags.tier) return flags.tier;
+  return DEFAULT_TIER;
+}
+
+function lintReportProjectAuthority(flags, repoRoot) {
+  if (flags.project) return flags.project;
+  return path.basename(repoRoot);
 }
 
 async function main() {
@@ -147,7 +158,7 @@ async function main() {
 
   log('INFO', `Starting lint report (tier: ${ctx.tier}, types: ${[...ctx.projectTypes].join(', ')})`);
   const report = await runAllTools(ctx);
-  writeReport(report, flags.output || null);
+  writeReport(report, selectTruthyValue(() => (flags.output), () => (null)));
 
   // Exit with error code if findings or tool failures make the report non-clean.
   process.exit(lintReportExitCode(report));

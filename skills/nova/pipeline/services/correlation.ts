@@ -1,7 +1,8 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/correlation.js — canonical correlation authority + provenance helpers
 
 function canonicalRef(prefix, value) {
-  if (value == null || value === '') return null;
+  if (selectTruthyValue(() => (value == null), () => (value === ''))) return null;
   const normalized = String(value).trim();
   if (!normalized) return null;
   return normalized.startsWith(`${prefix}:`) ? normalized : `${prefix}:${normalized}`;
@@ -15,7 +16,7 @@ function coalesce(...values) {
 }
 
 function normalizeResolvedValue(value) {
-  if (value === undefined || value === null) return null;
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
   if (typeof value === 'string') {
     const normalized = value.trim();
     return normalized === '' ? null : normalized;
@@ -253,7 +254,7 @@ export function buildInvocationRefs({ config = {}, hookFamily = null, stageId = 
     else if (gateRef) primaryRef = gateRef;
     else if (dispatchRef) primaryRef = dispatchRef;
     else if (waitRef) primaryRef = waitRef;
-    else primaryRef = canonicalRef('stage', stageId || `${hookFamily || 'unknown'}:${runId || 'unknown'}`);
+    else primaryRef = canonicalRef('stage', selectTruthyValue(() => (stageId), () => (`${selectTruthyValue(() => (hookFamily), () => ('missing_hook_family'))}:${selectTruthyValue(() => (runId), () => ('missing_run_id'))}`)));
   }
 
   return {
@@ -275,9 +276,9 @@ export function buildInvocationIds({ config = {}, hookFamily = null, stageId = n
     run_id: coalesce(invocation.runId, config?._runId, config?.run_id),
     module_id: coalesce(invocation.moduleId, invocation.module_id),
     gate_id: coalesce(invocation.gateId, invocation.gate_id),
-    stage_id: stageId || null,
-    hook_family: hookFamily || null,
-    attempt: invocation.attempt ?? null,
+    stage_id: selectTruthyValue(() => (stageId), () => (null)),
+    hook_family: selectTruthyValue(() => (hookFamily), () => (null)),
+    attempt: selectDefinedValue(() => (invocation.attempt), () => (null)),
     dispatch_id: coalesce(invocation.dispatchId, invocation.dispatch_id),
     session_key: coalesce(invocation.sessionKey, invocation.session_key),
     gateway_label: coalesce(invocation.gatewayLabel, invocation.gateway_label),

@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // runners/buster-gate-fix-cycle.js — Buster gate Forge fix-cycle adapter
 // Owns Buster-specific prompt/correlation/cleanup policy; shared Forge cycle mechanics live in gate-forge-fix-cycle.js.
 
@@ -10,6 +11,21 @@ import { readGateRemediationSpec } from '../services/remediation-handoff.ts';
 import { cloneSerializable } from '../services/contracts/gate-control-result.ts';
 import { runGateForgeFixCycle } from './gate-forge-fix-cycle.ts';
 import { getPipelineDefaultsConfig } from '../services/runtime-defaults.ts';
+const BUSTER_GATE_FIRST_FIX_CYCLE = 1;
+const BUSTER_GATE_NO_ISSUE_DETAILS = 'No details available';
+const BUSTER_GATE_MISSING_ISSUE_TITLE = 'missing_issue_title';
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function selectPresentValue(...values) {
+  return values.find((value) => value !== undefined && value !== null && value !== '');
+}
 
 function patchBusterRemediationControlResult(controlResult, updates = {}) {
   const cloned = cloneSerializable(controlResult);
@@ -17,22 +33,41 @@ function patchBusterRemediationControlResult(controlResult, updates = {}) {
 
   const remediation = cloned.diagnostics.typed.remediation;
   remediation.correlation = {
-    ...(remediation.correlation || {}),
-    ...cloneSerializable(updates.correlation || {}),
+    ...objectRecord(remediation.correlation),
+    ...objectRecord(cloneSerializable(updates.correlation)),
   };
   remediation.diagnostics = {
-    ...(remediation.diagnostics || {}),
-    ...cloneSerializable(updates.diagnostics || {}),
+    ...objectRecord(remediation.diagnostics),
+    ...objectRecord(cloneSerializable(updates.diagnostics)),
   };
   cloned.diagnostics.metadata = {
-    ...(cloned.diagnostics.metadata || {}),
-    ...cloneSerializable(updates.metadata || {}),
+    ...objectRecord(cloned.diagnostics.metadata),
+    ...objectRecord(cloneSerializable(updates.metadata)),
   };
   return cloned;
 }
 
 function issueBullets(issues, limit = 5) {
-  return issues.slice(0, limit).map(i => `• ${i.title}`).join('\n') || 'No details available';
+  return selectPresentValue(issues.slice(0, limit).map(i => `• ${i.title}`).join('\n'), BUSTER_GATE_NO_ISSUE_DETAILS);
+}
+
+function busterGateMaxFixCyclesAuthority(remediation, gate, pipelineDefaults) {
+  const value = selectPresentValue(remediation?.policy?.maxFixCycles, gate?.max_fix_cycles, pipelineDefaults?.max_fails);
+  const maxFixCycles = Number(value);
+  if (selectTruthyValue(() => (!Number.isFinite(maxFixCycles)), () => (maxFixCycles < 1))) {
+    throw new Error('Buster gate fix cycle requires positive maxFixCycles authority');
+  }
+  return maxFixCycles;
+}
+
+function gateStartedAtAuthority(opts, remediation) {
+  if (Number.isFinite(opts?.gateStartedAt)) return opts.gateStartedAt;
+  if (remediation?.startedAt) {
+    const startedAt = new Date(remediation.startedAt).getTime();
+    if (Number.isFinite(startedAt)) return startedAt;
+    throw new Error('Buster gate remediation startedAt is invalid');
+  }
+  return Date.now();
 }
 
 export async function performBusterGateFixAttempt({ config, progress, gateId, controlResult, opts = {}, deps, gate, callbacks = {} }) {
@@ -44,17 +79,17 @@ export async function performBusterGateFixAttempt({ config, progress, gateId, co
     telemetryCtx,
   } = callbacks;
 
-  const remediation = readGateRemediationSpec(controlResult) || {};
-  const cycle = Number(opts.cycle || remediation?.policy?.nextFixCycle || 1);
+  const remediation = objectRecord(readGateRemediationSpec(controlResult));
+  const cycle = Number(selectPresentValue(opts.cycle, remediation?.policy?.nextFixCycle, BUSTER_GATE_FIRST_FIX_CYCLE));
   const pipelineDefaults = getPipelineDefaultsConfig(config);
-  const maxFixCycles = Number(remediation?.policy?.maxFixCycles || gate.max_fix_cycles || pipelineDefaults.max_fails);
-  const gateStartedAt = opts.gateStartedAt ?? (remediation?.startedAt ? new Date(remediation.startedAt).getTime() : Date.now());
-  const issues = remediation?.diagnostics?.issues || [];
-  const fixHistory = opts.fixHistory || [];
+  const maxFixCycles = busterGateMaxFixCyclesAuthority(remediation, gate, pipelineDefaults);
+  const gateStartedAt = gateStartedAtAuthority(opts, remediation);
+  const issues = arrayValue(remediation?.diagnostics?.issues);
+  const fixHistory = arrayValue(opts.fixHistory);
 
-  const gateDispatchId = remediation?.correlation?.dispatch_id || null;
-  const gateGatewayLabel = remediation?.correlation?.gateway_label || null;
-  const gateSessionKey = remediation?.correlation?.session_key || null;
+  const gateDispatchId = selectTruthyValue(() => (remediation?.correlation?.dispatch_id), () => (null));
+  const gateGatewayLabel = selectTruthyValue(() => (remediation?.correlation?.gateway_label), () => (null));
+  const gateSessionKey = selectTruthyValue(() => (remediation?.correlation?.session_key), () => (null));
 
   log('STEP', `Gate '${gateId}' fix cycle ${cycle}/${maxFixCycles}`);
 
@@ -85,7 +120,7 @@ export async function performBusterGateFixAttempt({ config, progress, gateId, co
       phase: 'buster_gate_fix',
       gate_type: gate.type,
       attempt: cycle,
-      dispatch_id: correlation.dispatchId || null,
+      dispatch_id: selectTruthyValue(() => (correlation.dispatchId), () => (null)),
     }),
     discordIdentitySurface: DISCORD_IDENTITY_SURFACES.GATE_SESSION,
     messages: {
@@ -116,11 +151,11 @@ export async function performBusterGateFixAttempt({ config, progress, gateId, co
         const action = gitPersistenceDegraded
           ? 'produced typed file-change evidence, but Git persistence is degraded. Running Buster gate against the local worktree'
           : 'committed. Running Buster gate again';
-        return `Forge fix attempt ${cycle}/${maxFixCycles} ${action}...\n\n**Previous failures:**\n${issues.slice(0, 3).map(i => `• ${i.title}`).join('\n') || 'unknown'}`;
+        return `Forge fix attempt ${cycle}/${maxFixCycles} ${action}...\n\n**Previous failures:**\n${selectPresentValue(issues.slice(0, 3).map(i => `• ${i.title}`).join('\n'), BUSTER_GATE_MISSING_ISSUE_TITLE)}`;
       },
     },
     phase: 'buster_gate_fix',
-    timeoutMinutes: gate.timeout_minutes ?? pipelineDefaults.timeout_minutes,
+    timeoutMinutes: gate.timeout_minutes,
     artifactLogLabel: 'Gate fix',
     emitFixCycleFail: emitBusterGateFixCycleFail,
     getGateStats,

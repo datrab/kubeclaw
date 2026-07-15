@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/redis-log.js — Redis exchange artifact logging
 //
 // Writes Redis send/receive records under .swarm/logs/redis/ so that
@@ -9,7 +10,7 @@ import path from 'path';
 import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError } from '../noncritical-reporting.ts';
 import { redisLogArtifactTargets } from '../core/paths.ts';
 import { getRunId } from '../core/runtime.ts';
-import { sanitizeTelemetryPayload } from '../redaction.ts';
+import { sanitizeTelemetryPayload } from '../egress.ts';
 
 function reportRedisLogIncident(classification, error, context = {}) {
   return reportClassifiedNonBlockingError({
@@ -23,7 +24,7 @@ function reportRedisLogIncident(classification, error, context = {}) {
       context.direction,
       context.type,
     ),
-    message: context.message || 'Redis artifact logging failed; continuing without blocking pipeline execution',
+    message: selectDefinedValue(() => (context.message), () => ('Redis artifact logging failed; continuing without blocking pipeline execution')),
     error,
     level: 'WARN',
   });
@@ -31,6 +32,14 @@ function reportRedisLogIncident(classification, error, context = {}) {
 
 function isPlainObject(value) {
   return value != null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function errorDetail(error) {
+  return typeof error?.message === 'string' && error.message ? error.message : String(error);
+}
+
+function redisLogErrorRecords(errors = []) {
+  return errors.map(({ filePath, error }) => ({ filePath, message: errorDetail(error) }));
 }
 
 export function getRedisLogTargets(config, fileName = 'redis-exchanges.jsonl') {
@@ -60,14 +69,14 @@ export function appendRedisArtifactRecord(config, record, fileName = 'redis-exch
     return {
       ok: errors.length === 0,
       targets,
-      ...(errors.length > 0 && { errors: errors.map(({ filePath, error }) => ({ filePath, message: error?.message || String(error) })) }),
+      ...(errors.length > 0 && { errors: redisLogErrorRecords(errors) }),
     };
   } catch (error) {
     reportRedisLogIncident('redis_artifact_record_failed', error, {
       fileName,
       message: `Redis artifact record handling failed for ${fileName}`,
     });
-    return { ok: false, errors: [{ message: error?.message || String(error) }] };
+    return { ok: false, errors: [{ message: errorDetail(error) }] };
   }
 }
 
@@ -84,15 +93,15 @@ export function appendRedisArtifactRecord(config, record, fileName = 'redis-exch
  */
 export function logRedisExchange(config, direction, type, scope, scopeId, payload) {
   try {
-    // Sanitize payload: redact telemetry-sensitive values and cap at 2KB to avoid log bloat from large task payloads
+    // Preserve payload values and cap the preview to avoid log bloat from large task payloads.
     let sanitizedPayload = null;
     if (payload !== undefined && payload !== null) {
       try {
-        const redactedPayload = sanitizeTelemetryPayload(payload);
-        const raw = typeof redactedPayload === 'string' ? redactedPayload : JSON.stringify(redactedPayload);
+        const egressPayload = sanitizeTelemetryPayload(payload);
+        const raw = typeof egressPayload === 'string' ? egressPayload : JSON.stringify(egressPayload);
         sanitizedPayload = raw.length > 2048
           ? { _truncated: true, _size: raw.length, _preview: raw.slice(0, 256) }
-          : redactedPayload;
+          : egressPayload;
       } catch (error) {
         sanitizedPayload = { _serialization_error: true };
         reportRedisLogIncident('redis_exchange_payload_serialization_failed', error, {
@@ -121,7 +130,7 @@ export function logRedisExchange(config, direction, type, scope, scopeId, payloa
       type,
       message: 'Redis exchange logging failed; continuing without blocking pipeline execution',
     });
-    return { ok: false, errors: [{ message: error?.message || String(error) }] };
+    return { ok: false, errors: [{ message: errorDetail(error) }] };
   }
 }
 

@@ -135,7 +135,7 @@
       "type": "review",
       "title": "Midpoint architecture review",
       "review_name": "MIDPOINT-REVIEW",
-      "on_fail": "fix_and_rereview",
+      "on_fail": "stop",
       "instructions_file": "echo-review/MIDPOINT-REVIEW-INSTRUCTIONS.md",
       "output_file": "logs/echo-review/MIDPOINT-REVIEW.json",
       "review_output_dir": "logs/echo-review",

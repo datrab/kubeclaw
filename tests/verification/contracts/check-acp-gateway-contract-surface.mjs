@@ -243,8 +243,16 @@ assert.equal(acpMonitorSource.includes('export async function getAcpMonitorState
 assert.equal(acpMonitorSource.includes('maybeStreamLogPath'), false, 'ACP monitor must not keep legacy positional stream-log argument handling');
 assert.equal(acpMonitorSource.includes('getState(childSessionKey, streamLogPath, previousState, monitorOpts)'), false, 'ACP monitor event adapter must not call monitor hooks with legacy positional arguments');
 assert.equal(acpMonitorSource.includes('arguments.length !== 1'), true, 'ACP monitor must reject extra positional arguments');
-assert.equal(acpMonitorSource.includes('request.trackedAgent || await resolveTrackedAgent(sessionLabelOrKey)'), true, 'ACP monitor object-shaped Nova path must await tracked session resolution');
-assert.equal(acpMonitorSource.includes('entry?.streamLogPath ?? request.streamLogPath ?? null'), true, 'ACP monitor Nova path must keep tracked transcript path precedence');
+assert.equal(acpMonitorSource.includes('if (request.trackedAgent !== undefined && request.trackedAgent !== null)'), true, 'ACP monitor object-shaped Nova path must branch on explicit tracked session presence');
+assert.equal(acpMonitorSource.includes('return resolveTrackedAgent(sessionLabelOrKey);'), true, 'ACP monitor object-shaped Nova path must resolve tracked session data when absent from the request');
+assert.equal(acpMonitorSource.includes('selectDefinedValue(() => (selectDefinedValue(() => (entry?.streamLogPath), () => (request.streamLogPath))), () => (null))'), true, 'ACP monitor Nova path must keep tracked transcript path precedence');
+assert.equal(acpMonitorSource.includes('classifyTranscriptText(gatewayDetail)'), false, 'ACP monitor must not infer rate limits from unauthorised gateway detail text');
+
+const novaSessionEndSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services/polling-session-end.ts'), 'utf8');
+assert.equal(novaSessionEndSource.includes('classifyTranscriptText'), false, 'Nova session-end monitor must rely on typed rate-limit monitor state, not raw text scanning');
+
+const busterSessionMonitorSource = fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/services/session-monitor.ts'), 'utf8');
+assert.equal(busterSessionMonitorSource.includes('classifyTranscriptText'), false, 'Buster session monitor must rely on typed rate-limit monitor state, not raw text scanning');
 
 const lifecycleMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/common/pipeline/agents/lifecycle.ts')).href);
 await assert.rejects(

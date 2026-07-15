@@ -10,6 +10,7 @@ import { buildModuleForgeWorkerControlResult } from '../../../../../skills/nova/
 import { executeBusterWorkerAttempt } from '../../../../../skills/nova/pipeline/runners/module-runner-buster-worker.ts';
 import { runModuleForgePhase } from '../../../../../skills/nova/pipeline/runners/module-runner-forge.ts';
 import { resolveExpectedCompletionSessionKey } from '../../../../../skills/nova/pipeline/runners/module-runner/buster-phase/identity.ts';
+import { getModuleRunnerDeps } from '../../../../../skills/nova/pipeline/runners/module-runner/attempt.ts';
 
 function workerRecord(moduleId, stageId) {
   return {
@@ -47,6 +48,11 @@ function configWithWorker(stageId, moduleId) {
       agent_startup_retry_budget: 2,
       session_nudge_threshold: 0.75,
     },
+    agents: {
+      forge: {
+        acp_agent_id: 'forge-harness',
+      },
+    },
     repo_root: root,
     paths: {
       modules_dir: modulesDir,
@@ -80,7 +86,6 @@ test('forge worker dispatch-then-throw clears persisted active_agent and preserv
   const deps = {
     runPreflightValidation: () => ({ passed: true }),
     resolvePolicy: () => ({ model: 'forge-model', thinking: null, model_source: 'test' }),
-    modelToHarness: () => 'forge-harness',
     logEffectivePolicy: () => {},
     buildForgePrompt: () => ({ prompt: 'forge prompt', recalledMemoryIds: [] }),
     savePrompt: () => {},
@@ -88,6 +93,15 @@ test('forge worker dispatch-then-throw clears persisted active_agent and preserv
       savedStatus = JSON.parse(JSON.stringify(nextStatus));
     },
     loadStatus: () => JSON.parse(JSON.stringify(savedStatus)),
+    applyModuleCompletion: (_config, _dir, nextStatus, completion) => {
+      nextStatus.status = completion.phase === 'forge' && completion.status === 'PASS'
+        ? STATUS.READY_FOR_TESTING
+        : completion.status;
+      nextStatus.current_phase = null;
+      nextStatus.completion_summary = completion.summary;
+      savedStatus = JSON.parse(JSON.stringify(nextStatus));
+      return { status: nextStatus };
+    },
     setShutdownContext: () => {},
     invalidateHeadHash: () => {},
     headHash: () => 'head-before',
@@ -125,6 +139,20 @@ test('forge worker dispatch-then-throw clears persisted active_agent and preserv
   assert.equal(result.status.active_agent, null);
 });
 
+test('module runner default deps expose typed agent health for startup rate-limit cooldown', () => {
+  const deps = getModuleRunnerDeps(configWithWorker('worker:module_forge', 'builtin.worker.module_forge'));
+
+  assert.equal(typeof deps.verifyAgentHealth, 'function');
+  assert.equal(typeof deps.verifyAgentAlive, 'function');
+  assert.notEqual(deps.verifyAgentHealth, deps.verifyAgentAlive);
+});
+
+test('module runner default deps expose Forge worker polling authority', () => {
+  const deps = getModuleRunnerDeps(configWithWorker('worker:module_forge', 'builtin.worker.module_forge'));
+
+  assert.equal(typeof deps.pollForgeCompletionWithRateLimitRecovery, 'function');
+});
+
 test('forge startup retries use dedicated swarm config budget before succeeding', async () => {
   const config = configWithWorker('worker:module_forge', 'builtin.worker.module_forge');
   let savedStatus = statusFixture();
@@ -132,7 +160,6 @@ test('forge startup retries use dedicated swarm config budget before succeeding'
   const deps = {
     runPreflightValidation: () => ({ passed: true }),
     resolvePolicy: () => ({ model: 'forge-model', thinking: null, model_source: 'test', thinking_source: 'test' }),
-    modelToHarness: () => 'forge-harness',
     logEffectivePolicy: () => {},
     buildForgePrompt: () => ({ prompt: 'forge prompt', recalledMemoryIds: [] }),
     savePrompt: () => {},
@@ -140,6 +167,15 @@ test('forge startup retries use dedicated swarm config budget before succeeding'
       savedStatus = JSON.parse(JSON.stringify(nextStatus));
     },
     loadStatus: () => JSON.parse(JSON.stringify(savedStatus)),
+    applyModuleCompletion: (_config, _dir, nextStatus, completion) => {
+      nextStatus.status = completion.phase === 'forge' && completion.status === 'PASS'
+        ? STATUS.READY_FOR_TESTING
+        : completion.status;
+      nextStatus.current_phase = null;
+      nextStatus.completion_summary = completion.summary;
+      savedStatus = JSON.parse(JSON.stringify(nextStatus));
+      return { status: nextStatus };
+    },
     setShutdownContext: () => {},
     invalidateHeadHash: () => {},
     headHash: () => 'head-before',
@@ -148,7 +184,7 @@ test('forge startup retries use dedicated swarm config budget before succeeding'
     runModuleForgeWorker: async (ctx) => {
       workerCalls += 1;
       if (workerCalls < 3) {
-        return buildModuleForgeWorkerControlResult(config, ctx, {
+        return buildModuleForgeWorkerControlResult(config, ctx.workerInput, {
           nextAction: 'retry',
           issueType: 'environment',
           outcomeClass: 'retrying',
@@ -156,10 +192,12 @@ test('forge startup retries use dedicated swarm config budget before succeeding'
           error: 'agent not running after spawn',
         });
       }
-      return buildModuleForgeWorkerControlResult(config, ctx, {
+      return buildModuleForgeWorkerControlResult(config, ctx.workerInput, {
         nextAction: 'pass',
         outcomeClass: 'passed',
         reason: 'passed',
+        gatewayLabel: 'forge-gateway-module-a',
+        sessionKey: 'forge-session-module-a',
         finalStatus: {
           status: STATUS.READY_FOR_TESTING,
           summary: 'Forge completion evidence ready',

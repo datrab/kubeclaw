@@ -17,11 +17,48 @@ import {
 import { createRegistryDictionary } from './registry/dictionary.ts';
 import { buildGateTypeIndex, buildHookIndex, buildStageOwnerIndex } from './registry/indexes.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 type RegistryError = { code: string; message: string; [key: string]: any };
 
 function cloneArrayField(value: any) {
   return Array.isArray(value) ? [...value] : [];
+}
+
+function objectRecord(value: any): AnyRecord {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function requireSourceRef(value: any, moduleId: string): string {
+  if (typeof value === 'string' && value.trim()) return value.trim();
+  return `builtin:${moduleId}`;
+}
+
+function priorityValue(value: any): number {
+  return Number(selectDefinedValue(() => (value), () => (0)));
+}
+
+function moduleIdSortValue(value: any): string {
+  return typeof value === 'string' ? value : '';
+}
+
+function registryTrustTier(manifest: AnyRecord, override: AnyRecord) {
+  return selectDefinedValue(() => (override.trustOverride), () => (manifest.trustTier));
+}
+
+function registryEnabled(manifest: AnyRecord, override: AnyRecord) {
+  return selectDefinedValue(() => (override.enabled), () => (manifest.defaultEnabled));
+}
+
+function registryImplementationRef(definition: AnyRecord, manifest: AnyRecord) {
+  return selectDefinedValue(() => (definition.implementationRef), () => (manifest.moduleId));
+}
+
+function activeContextRegistry(config: any) {
+  const active = getActiveContext();
+  if (!active?.pluginRegistry) return null;
+  if (config && active.config !== config) return null;
+  return active.pluginRegistry;
 }
 
 function cloneManifest(manifest: AnyRecord = {}): AnyRecord {
@@ -94,22 +131,22 @@ export function buildPluginRegistry(pluginConfigInput: any, opts: AnyRecord = {}
     const manifest = cloneManifest(definition.manifest);
     validateImplementation(definition, errors);
 
-    const override = normalizedConfig.modules[manifest.moduleId] || {};
-    const resolvedTrustTier = override.trustOverride || manifest.trustTier;
+    const override = objectRecord(normalizedConfig.modules[manifest.moduleId]);
+    const resolvedTrustTier = registryTrustTier(manifest, override);
     if (override.trustOverride && !discoveredModuleIds.has(manifest.moduleId)) {
       pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_TRUST_OVERRIDE_INVALID, `config.plugins.modules.${manifest.moduleId}.trustOverride cannot target an undiscovered module`);
     }
-    const resolvedModuleConfig = resolveModuleConfig(manifest.moduleId, override.config || {}, manifest, errors);
+    const resolvedModuleConfig = resolveModuleConfig(manifest.moduleId, objectRecord(override.config), manifest, errors);
     validateTrustPolicy(manifest, override, resolvedTrustTier, errors);
     validateCapabilities(manifest, resolvedTrustTier, normalizedConfig.restrictedCapabilityAllowlist, errors);
 
     records[manifest.moduleId] = deepFreeze({
       manifest: deepFreeze(manifest),
-      enabled: override.enabled ?? manifest.defaultEnabled,
+      enabled: registryEnabled(manifest, override),
       resolvedTrustTier,
       resolvedStageIds: deepFreeze(cloneArrayField(manifest.stageIds)),
-      sourceRef: definition.sourceRef || `builtin:${manifest.moduleId}`,
-      implementationRef: definition.implementationRef || manifest.moduleId,
+      sourceRef: requireSourceRef(definition.sourceRef, manifest.moduleId),
+      implementationRef: registryImplementationRef(definition, manifest),
       implementation: deepFreeze({ ...definition.implementation }),
       config: deepFreeze(resolvedModuleConfig),
     });
@@ -142,7 +179,9 @@ export function buildPluginRegistry(pluginConfigInput: any, opts: AnyRecord = {}
   return { normalizedConfig, registry, errors };
 }
 
-export function getPluginRegistry(config: any) { const active = getActiveContext(); return config?.pluginRegistry || (active?.pluginRegistry && (!config || active.config === config) ? active.pluginRegistry : null); }
+export function getPluginRegistry(config: any) {
+  return selectDefinedValue(() => (config?.pluginRegistry), () => (activeContextRegistry(config)));
+}
 
 function resolveRegistryObject(configOrRegistry: any) {
   return configOrRegistry?.stageOwners ? configOrRegistry : getPluginRegistry(configOrRegistry);
@@ -163,12 +202,12 @@ export function resolveStageOwner(configOrRegistry: any, hookFamily: string, sta
   const registry = resolveRegistryObject(configOrRegistry);
   if (!registry) return null;
   if (registry.enabled === false) return null;
-  return registry.stageOwners?.[hookFamily]?.[stageId] || null;
+  return selectTruthyValue(() => (registry.stageOwners?.[hookFamily]?.[stageId]), () => (null));
 }
 
 export function requireStageOwner(configOrRegistry: any, hookFamily: string, stageId: string) {
   const registry = requirePluginRegistry(configOrRegistry);
-  const record = registry.stageOwners?.[hookFamily]?.[stageId] || null;
+  const record = selectTruthyValue(() => (registry.stageOwners?.[hookFamily]?.[stageId]), () => (null));
   if (!record) {
     throw new Error(`No registered plugin owner found for hookFamily '${hookFamily}' stage '${stageId}' in the startup-frozen registry.`);
   }
@@ -177,7 +216,7 @@ export function requireStageOwner(configOrRegistry: any, hookFamily: string, sta
 
 export function requireGateTypeOwner(configOrRegistry: any, gateType: string) {
   const registry = requirePluginRegistry(configOrRegistry);
-  const entry = registry.gateTypes?.[gateType] || null;
+  const entry = selectTruthyValue(() => (registry.gateTypes?.[gateType]), () => (null));
   if (!entry) {
     throw new Error(`No registered gate type owner found for gate type '${gateType}' in the startup-frozen registry.`);
   }
@@ -186,11 +225,11 @@ export function requireGateTypeOwner(configOrRegistry: any, gateType: string) {
 
 export function requireStageHandler(configOrRegistry: any, hookFamily: string, stageId: string, methodName: string | null = null) {
   const record = requireStageOwner(configOrRegistry, hookFamily, stageId);
-  const resolvedMethodName = methodName || (PLUGIN_METHOD_BY_KIND as AnyRecord)[record.manifest.kind] || null;
+  const resolvedMethodName = selectTruthyValue(() => (selectTruthyValue(() => (methodName), () => ((PLUGIN_METHOD_BY_KIND as AnyRecord)[record.manifest.kind]))), () => (null));
   if (!resolvedMethodName) {
     throw new Error(`No registry method mapping found for module '${record.manifest.moduleId}' at hookFamily '${hookFamily}' stage '${stageId}'.`);
   }
-  const handler = record.implementation?.[resolvedMethodName] || null;
+  const handler = selectTruthyValue(() => (record.implementation?.[resolvedMethodName]), () => (null));
   if (typeof handler !== 'function') {
     throw new Error(`Registered module '${record.manifest.moduleId}' does not implement '${resolvedMethodName}' for hookFamily '${hookFamily}' stage '${stageId}'.`);
   }
@@ -203,13 +242,13 @@ export function resolveHookListeners(configOrRegistry: any, hookFamily: string, 
   const registry = configOrRegistry?.hookIndex ? configOrRegistry : getPluginRegistry(configOrRegistry);
   if (!registry) return [];
   if (registry.enabled === false) return [];
-  const records = registry.hookIndex?.[hookFamily]?.[stageId] || [];
+  const records = Array.isArray(registry.hookIndex?.[hookFamily]?.[stageId]) ? registry.hookIndex[hookFamily][stageId] : [];
   return [...records]
     .filter((record: any) => record?.enabled)
     .sort((left: any, right: any) => {
-      const leftPriority = Number(left?.manifest?.priority ?? 0);
-      const rightPriority = Number(right?.manifest?.priority ?? 0);
+      const leftPriority = priorityValue(left?.manifest?.priority);
+      const rightPriority = priorityValue(right?.manifest?.priority);
       if (leftPriority !== rightPriority) return leftPriority - rightPriority;
-      return String(left?.manifest?.moduleId || '').localeCompare(String(right?.manifest?.moduleId || ''));
+      return moduleIdSortValue(left?.manifest?.moduleId).localeCompare(moduleIdSortValue(right?.manifest?.moduleId));
     });
 }

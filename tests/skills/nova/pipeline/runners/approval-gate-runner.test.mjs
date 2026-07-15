@@ -13,6 +13,7 @@ function testConfig(runId = 'run-invalid-timeout-policy') {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'approval-gate-runner-test-'));
   return {
     project: 'approval-gate-test',
+    repo_root: dir,
     _runId: runId,
     run_id: runId,
     pipeline_defaults: {
@@ -115,6 +116,25 @@ test('approval gate timeout with CONTINUE emits passing verdict telemetry', asyn
   assert.equal(verdicts[0].verdict, 'PASS');
 });
 
+test('approval gate fresh wait creates canonical state directory before watcher phase', async () => {
+  const config = testConfig('run-fresh-wait-state-dir');
+  const missingSwarmDir = path.join(config.paths.swarm_dir, 'missing', '.swarm');
+  config.paths.swarm_dir = missingSwarmDir;
+
+  const result = await runApprovalGateEvaluation(config, testProgress('BLOCK'), 'deploy', {
+    deps: {
+      discord: async () => {},
+    },
+  });
+
+  const statePath = path.join(missingSwarmDir, 'deploy-gate-status.json');
+  assert.equal(result.nextAction, GATE_CONTROL_ACTIONS.WAIT);
+  assert.equal(fs.existsSync(statePath), true);
+  const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
+  assert.equal(state.status, APPROVAL_STATUS.PENDING_APPROVAL);
+  assert.equal(state.gate_id, 'deploy');
+});
+
 test('approval gate wait resolves persisted TIMED_OUT CONTINUE signal as pass', async () => {
   const config = testConfig('run-timeout-continue-signal');
   const eventBus = createPipelineEventBus();
@@ -132,6 +152,45 @@ test('approval gate wait resolves persisted TIMED_OUT CONTINUE signal as pass', 
 
   const result = await waitForApprovalGateSignal(config, testProgress('CONTINUE'), 'deploy', null, {
     eventBus,
+    approvalSignalAdapter: {
+      start: () => {
+        state = {
+          ...state,
+          status: APPROVAL_STATUS.TIMED_OUT,
+          resolved_at: new Date().toISOString(),
+          decision_via: 'timeout',
+          continued: true,
+          reason: 'No decision received within 5 minutes',
+        };
+        setImmediate(() => eventBus.emit({
+          type: 'approval.signal',
+          source: 'local_fs',
+          identity: { gate_id: 'deploy', run_id: config.run_id },
+          payload: {
+            gate_id: 'deploy',
+            gate_type: 'approval',
+            run_id: config.run_id,
+            project: config.project,
+            wait_ref: null,
+            status: APPROVAL_STATUS.TIMED_OUT,
+            signal_kind: 'timeout_continue',
+            requested_at: state.requested_at,
+            deadline: state.deadline,
+            timeout_minutes: state.timeout_minutes,
+            timeout_policy: 'CONTINUE',
+            resolved_at: state.resolved_at,
+            decision_by: null,
+            decision_via: 'timeout',
+            continued: true,
+            reason: state.reason,
+            state_path: path.join(config.paths.swarm_dir, 'deploy-gate-status.json'),
+            updated_at: null,
+          },
+        }));
+        return { watching: 0, path: null };
+      },
+      stop: () => {},
+    },
     deps: {
       approvalGate: {
         loadGateState: () => state,
@@ -139,45 +198,6 @@ test('approval gate wait resolves persisted TIMED_OUT CONTINUE signal as pass', 
         appendTransition: () => {},
         writeApprovalRequest: () => {},
         writeApprovalDecision: () => {},
-        createSignalAdapter: () => ({
-          start: () => {
-            state = {
-              ...state,
-              status: APPROVAL_STATUS.TIMED_OUT,
-              resolved_at: new Date().toISOString(),
-              decision_via: 'timeout',
-              continued: true,
-              reason: 'No decision received within 5 minutes',
-            };
-            setImmediate(() => eventBus.emit({
-              type: 'approval.signal',
-              source: 'local_fs',
-              identity: { gate_id: 'deploy', run_id: config.run_id },
-              payload: {
-                gate_id: 'deploy',
-                gate_type: 'approval',
-                run_id: config.run_id,
-                project: config.project,
-                wait_ref: null,
-                status: APPROVAL_STATUS.TIMED_OUT,
-                signal_kind: 'timeout_continue',
-                requested_at: state.requested_at,
-                deadline: state.deadline,
-                timeout_minutes: state.timeout_minutes,
-                timeout_policy: 'CONTINUE',
-                resolved_at: state.resolved_at,
-                decision_by: null,
-                decision_via: 'timeout',
-                continued: true,
-                reason: state.reason,
-                state_path: path.join(config.paths.swarm_dir, 'deploy-gate-status.json'),
-                updated_at: null,
-              },
-            }));
-            return { watching: 0, path: null };
-          },
-          stop: () => {},
-        }),
       },
     },
   });

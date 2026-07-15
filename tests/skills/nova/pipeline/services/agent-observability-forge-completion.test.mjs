@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
+  collectMeaningfulForgeDiffEvidence,
   createAgentEndedTelemetryReader,
   isForgeCompletionControlPath,
 } from '../../../../../skills/nova/pipeline/services/agent-observability-forge-completion.ts';
@@ -53,6 +54,7 @@ test('agent ended telemetry reader advances past ignored stream entries', async 
     agent_observability: observabilityConfig(),
   }, {
     RedisCtor: FakeRedis,
+    redis: { host: '127.0.0.1', port: 6379, enforceSecureMode: false },
     runId: 'run-a',
     stream: 'telemetry-stream',
     startId: '0-0',
@@ -108,6 +110,7 @@ test('agent ended telemetry reader connects lazy Redis clients before xread', as
     agent_observability: observabilityConfig(),
   }, {
     RedisCtor: FakeRedis,
+    redis: { host: '127.0.0.1', port: 6379, enforceSecureMode: false },
     runId: 'run-a',
     stream: 'telemetry-stream',
     startId: '0-0',
@@ -133,4 +136,28 @@ test('forge completion control path ignores only scoped runtime control files', 
   assert.equal(isForgeCompletionControlPath('modules/module-a/status.json', config, 'module-a'), false);
   assert.equal(isForgeCompletionControlPath('modules/module-a/forge-completion.json', config, 'module-a'), true);
   assert.equal(isForgeCompletionControlPath('.swarm/logs/status.json', config, 'module-a'), true);
+});
+
+test('forge completion diff evidence requires typed project scope', () => {
+  const result = collectMeaningfulForgeDiffEvidence({
+    repo_root: '/repo',
+  }, 'module-a', { headBefore: 'abc123' });
+
+  assert.equal(result.ok, false);
+  assert.equal(result.source, 'project_scope_required');
+  assert.equal(result.error.code, 'FORGE_COMPLETION_PROJECT_SCOPE_REQUIRED');
+});
+
+test('injected forge diff evidence ignores only canonical ignored_paths field', () => {
+  const result = collectMeaningfulForgeDiffEvidence({}, 'module-a', {
+    diffEvidence: {
+      paths: ['src/index.js'],
+      ignoredPaths: ['legacy-alias.js'],
+      ignored_paths: ['canonical-control.json'],
+      hasMeaningfulChanges: true,
+    },
+  });
+
+  assert.deepEqual(result.paths, ['src/index.js']);
+  assert.deepEqual(result.ignoredPaths, ['canonical-control.json']);
 });

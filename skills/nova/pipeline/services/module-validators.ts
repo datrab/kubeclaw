@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/module-validators.ts — Built-in lint/precheck validator stages
 
 import fs from 'fs';
@@ -11,44 +12,78 @@ import { buildModuleValidatorControlResult } from './contracts/validator-control
 import { resolveModuleCommit } from './status-store-lifecycle/refs.ts';
 
 const EXECUTION_FAILED_VALIDATOR_POLICY = Object.freeze({ nextAction: 'block', issueType: 'environment', outcomeClass: 'execution_failed' });
+const INVALID_VALIDATOR_PRODUCER = 'invalid_validator_producer';
+const DELIVERY_LINT_STAGE_ID = 'validator:delivery_lint';
+const PRE_CHECK_STAGE_ID = 'validator:pre_check';
+const FULL_LINT_STAGE_ID = 'validator:full_lint';
+const FULL_LINT_TIER = 'full';
+const FULL_LINT_TARGET_ID = 'full_lint';
+const PRE_CHECK_FAILED_SUMMARY = 'Pre-check failed';
+const FULL_LINT_FAILED_SUMMARY = 'Full lint failed';
+const FULL_LINT_REPORT_UNAVAILABLE = 'Full lint report unavailable';
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function selectPresentValue(...values) {
+  return values.find((value) => value !== undefined && value !== null && value !== '');
+}
+
+function requireNonEmptyString(value, label) {
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) throw new Error(`${label}: required non-empty string`);
+  return value.trim();
+}
+
+function numericCount(value) {
+  return typeof value === 'number' && Number.isFinite(value) ? value : 0;
+}
 
 function stageProducerType(input = {}, opts = {}) {
-  const producerType = opts.producerType || input?.validator?.producerType || input?.ids?.producerType || null;
+  const producerType = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (opts.producerType), () => (input?.validator?.producerType))), () => (input?.ids?.producerType))), () => (null));
   return typeof producerType === 'string' && producerType.trim() ? producerType.trim() : null;
 }
 
 function getModuleId(input = {}) {
-  return input?.ids?.moduleId || input?.module?.moduleId || input?.module_id || null;
+  return selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (input?.ids?.moduleId), () => (input?.module?.moduleId))), () => (input?.module_id))), () => (null));
 }
 
 function getModuleDir(input = {}) {
-  return input?.executionContext?.moduleDir
-    || input?.module?.dir
-    || input?.ids?.moduleDir
-    || input?.module_dir
-    || null;
+  if (input?.executionContext?.moduleDir !== undefined) return input.executionContext.moduleDir;
+  if (input?.module?.dir !== undefined) return input.module.dir;
+  if (input?.ids?.moduleDir !== undefined) return input.ids.moduleDir;
+  return selectDefinedValue(() => (input?.module_dir), () => (null));
 }
 
 function getModuleConfig(progress = {}, moduleId = null, input = {}) {
-  return input?.module?.config
-    || input?.moduleConfig
-    || (moduleId ? progress?.modules?.[moduleId] : null)
-    || {};
+  let config = null;
+  if (input?.module?.config !== undefined) config = input.module.config;
+  else if (input?.moduleConfig !== undefined) config = input.moduleConfig;
+  else if (moduleId) config = selectDefinedValue(() => (progress?.modules?.[moduleId]), () => (null));
+  return objectRecord(config);
 }
 
 function getModuleStatus(input = {}) {
-  return input?.stateSnapshot?.module?.statusRaw
-    || input?.module?.status
-    || input?.status
-    || {};
+  let status = null;
+  if (input?.stateSnapshot?.module?.statusRaw !== undefined) status = input.stateSnapshot.module.statusRaw;
+  else if (input?.module?.status !== undefined) status = input.module.status;
+  else status = selectDefinedValue(() => (input?.status), () => (null));
+  return objectRecord(status);
 }
 
 function getGateId(input = {}) {
-  return input?.ids?.gateId || input?.gate?.gateId || input?.gate_id || null;
+  return selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (input?.ids?.gateId), () => (input?.gate?.gateId))), () => (input?.gate_id))), () => (null));
 }
-function lintArtifactPart(value = null, fallback = 'validator-full_lint') {
-  const raw = String(value || fallback).trim() || fallback;
-  return raw.replace(/[^a-zA-Z0-9._-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 120) || fallback;
+function lintArtifactPart(value = null) {
+  const raw = requireNonEmptyString(value, 'lint artifact identity');
+  const safe = raw.replace(/[^a-zA-Z0-9._-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 120);
+  if (!safe) throw new Error('lint artifact identity: no safe artifact token characters');
+  return safe;
+}
+function lintScheduleKey(input = {}, stageId) {
+  if (input?.executionContext?.scheduleKey !== undefined) return requireNonEmptyString(input.executionContext.scheduleKey, 'validator scheduleKey');
+  if (input?.refs?.validatorResultRef !== undefined) return requireNonEmptyString(input.refs.validatorResultRef, 'validatorResultRef');
+  return requireNonEmptyString(stageId, 'validator stageId');
 }
 function archiveFullLintReport(config, report = null, input = {}, moduleDir = null, stageId = 'validator:full_lint') {
   if (!report) return null;
@@ -57,7 +92,7 @@ function archiveFullLintReport(config, report = null, input = {}, moduleDir = nu
     ? moduleLintLogDir(config, moduleDir)
     : (gateId ? gateLintLogDir(config, gateId) : (runLogDir ? path.join(runLogDir, 'lint') : null));
   if (!lintDir) return null;
-  const scheduleKey = input?.executionContext?.scheduleKey || input?.refs?.validatorResultRef || stageId;
+  const scheduleKey = lintScheduleKey(input, stageId);
   const archivePath = path.join(lintDir, `full-lint-${lintArtifactPart(scheduleKey)}.json`);
   try {
     fs.mkdirSync(lintDir, { recursive: true });
@@ -72,20 +107,20 @@ function archiveFullLintReport(config, report = null, input = {}, moduleDir = nu
 function baseValidatorOpts(config, input = {}, stageId, extra = {}) {
   const producerType = stageProducerType(input, extra);
   return {
-    producerType: producerType || 'invalid_validator_producer',
+    producerType: selectPresentValue(producerType, INVALID_VALIDATOR_PRODUCER),
     stageId,
     moduleId: getModuleId(input),
     moduleDir: getModuleDir(input),
-    runId: input?.ids?.runId || getRunId(config),
+    runId: requireNonEmptyString(getRunId(config), 'pipeline run id'),
     scope: input?.ids?.moduleId ? 'module' : 'pipeline',
-    validatorRef: input?.refs?.validatorResultRef || null,
+    validatorRef: selectTruthyValue(() => (input?.refs?.validatorResultRef), () => (null)),
     ...extra,
   };
 }
 
 function moduleValidatorControlPolicy(result = {}) {
   if (result?.passed === true) return { nextAction: 'pass', outcomeClass: 'passed' };
-  if (result?.blocked === true || result?.tool_error === true) {
+  if (selectTruthyValue(() => (result?.blocked === true), () => (result?.tool_error === true))) {
     return { ...EXECUTION_FAILED_VALIDATOR_POLICY };
   }
   return { nextAction: 'request_fix', issueType: 'code', outcomeClass: 'validation_failed' };
@@ -97,7 +132,7 @@ function missingProducerControl(config, input = {}, stageId) {
     blocked: true,
     error: 'validator producerType metadata is required',
   }, baseValidatorOpts(config, input, stageId, {
-    producerType: 'invalid_validator_producer',
+    producerType: INVALID_VALIDATOR_PRODUCER,
     executionFailed: true,
     nextAction: 'block',
     issueType: 'environment',
@@ -106,7 +141,7 @@ function missingProducerControl(config, input = {}, stageId) {
 }
 
 export function runDeliveryLintValidatorStage(config, progress = {}, input = {}, opts = {}) {
-  const stageId = opts.stageId || input?.ids?.stageId || 'validator:delivery_lint';
+  const stageId = selectPresentValue(opts.stageId, input?.ids?.stageId, DELIVERY_LINT_STAGE_ID);
   const moduleId = getModuleId(input);
   const moduleDir = getModuleDir(input);
   const mod = getModuleConfig(progress, moduleId, input);
@@ -132,7 +167,7 @@ export function runDeliveryLintValidatorStage(config, progress = {}, input = {},
 }
 
 export async function runPreCheckValidatorStage(config, progress = {}, input = {}, opts = {}) {
-  const stageId = opts.stageId || input?.ids?.stageId || 'validator:pre_check';
+  const stageId = selectPresentValue(opts.stageId, input?.ids?.stageId, PRE_CHECK_STAGE_ID);
   const moduleId = getModuleId(input);
   const moduleDir = getModuleDir(input);
   const status = getModuleStatus(input);
@@ -140,7 +175,7 @@ export async function runPreCheckValidatorStage(config, progress = {}, input = {
 
   if (!producerType) return missingProducerControl(config, input, stageId);
 
-  if (!moduleDir || !moduleId) {
+  if (selectTruthyValue(() => (!moduleDir), () => (!moduleId))) {
     return buildModuleValidatorControlResult(config, {
       passed: false,
       blocked: true,
@@ -151,7 +186,7 @@ export async function runPreCheckValidatorStage(config, progress = {}, input = {
   const result = await runPreCheck(config, moduleDir, status, moduleId);
   return buildModuleValidatorControlResult(config, {
     ...result,
-    summary: result.passed ? 'Pre-check passed' : result.error || 'Pre-check failed',
+    summary: result.passed ? 'Pre-check passed' : selectPresentValue(result.error, PRE_CHECK_FAILED_SUMMARY),
   }, baseValidatorOpts(config, input, stageId, { producerType, ...moduleValidatorControlPolicy(result) }));
 }
 
@@ -160,14 +195,14 @@ function classifyFullLintResult(report = null, error = null) {
     return {
       passed: false,
       blocked: true,
-      error: error || 'Full lint report unavailable',
+      error: selectPresentValue(error, FULL_LINT_REPORT_UNAVAILABLE),
       tool_error: true,
       report: null,
     };
   }
 
-  const totalErrors = Number(report?.summary?.total_errors || 0);
-  const toolsFailed = Number(report?.summary?.tools_failed || 0);
+  const totalErrors = numericCount(report?.summary?.total_errors);
+  const toolsFailed = numericCount(report?.summary?.tools_failed);
   if (toolsFailed > 0) {
     return {
       passed: false,
@@ -185,19 +220,19 @@ function classifyFullLintResult(report = null, error = null) {
 }
 
 export function runFullLintValidatorStage(config, progress = {}, input = {}, opts = {}) {
-  const stageId = opts.stageId || input?.ids?.stageId || 'validator:full_lint';
+  const stageId = selectPresentValue(opts.stageId, input?.ids?.stageId, FULL_LINT_STAGE_ID);
   const moduleId = getModuleId(input);
   const moduleDir = getModuleDir(input);
   const moduleStatus = getModuleStatus(input);
   const producerType = stageProducerType(input, opts);
   if (!producerType) return missingProducerControl(config, input, stageId);
-  const lintTier = input?.validator?.config?.tier || opts.lintTier || 'full';
-  const logPath = input?.validator?.config?.logPath || opts.logPath || null;
+  const lintTier = selectPresentValue(input?.validator?.config?.tier, opts.lintTier, FULL_LINT_TIER);
+  const logPath = selectTruthyValue(() => (selectTruthyValue(() => (input?.validator?.config?.logPath), () => (opts.logPath))), () => (null));
   log('STEP', `Full lint validator: running tier ${lintTier}`);
   const { report, error } = generateLintReport(config, lintTier, {
     moduleDir,
-    moduleId: moduleId || getGateId(input) || 'full_lint',
-    forgeDiffStat: moduleStatus?.forge_diff_stat || null,
+    moduleId: selectPresentValue(moduleId, getGateId(input), FULL_LINT_TARGET_ID),
+    forgeDiffStat: selectTruthyValue(() => (moduleStatus?.forge_diff_stat), () => (null)),
     commitHash: resolveModuleCommit(moduleStatus),
     logPath,
   });
@@ -207,7 +242,7 @@ export function runFullLintValidatorStage(config, progress = {}, input = {}, opt
     ...result,
     summary: result.passed
       ? 'Full lint passed'
-      : result.error || 'Full lint failed',
+      : selectPresentValue(result.error, FULL_LINT_FAILED_SUMMARY),
   }, baseValidatorOpts(config, input, stageId, {
     producerType,
     ...moduleValidatorControlPolicy(result),

@@ -5,6 +5,7 @@ import { appendStructuredEventMirror, recordObservabilityDegraded, recordObserva
 import { emitTelemetryStreamEvent } from './telemetry-stream.ts';
 import { deepClone } from './serialization.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type UnknownRecord = Record<string, any>;
 
 export const NOTIFICATION_HOOK_IDS: readonly string[] = Object.freeze([
@@ -29,10 +30,54 @@ function notificationSinkPriority(sinkId: string): number {
   return priority;
 }
 function canonicalRef(prefix: string, value: unknown): string | null {
-  if (value == null || value === '') return null;
+  if (selectTruthyValue(() => (value == null), () => (value === ''))) return null;
   const normalized = String(value).trim();
   if (!normalized) return null;
   return normalized.startsWith(`${prefix}:`) ? normalized : `${prefix}:${normalized}`;
+}
+
+function canonicalExplicitRef(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() ? value.trim() : null;
+}
+
+function isRecord(value: unknown): value is UnknownRecord {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+}
+
+function recordOrEmpty(value: unknown): UnknownRecord {
+  return isRecord(value) ? value : {};
+}
+
+function cloneRecordOrEmpty(value: unknown): UnknownRecord {
+  return deepClone(recordOrEmpty(value));
+}
+
+function optionalText(value: unknown): string | null {
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
+  const text = String(value).trim();
+  return text ? text : null;
+}
+
+function requiredText(value: unknown, label: string): string {
+  const text = optionalText(value);
+  if (!text) throw new Error(`${label}: required non-empty string`);
+  return text;
+}
+
+function firstText(...values: unknown[]): string | null {
+  for (const value of values) {
+    const text = optionalText(value);
+    if (text !== null) return text;
+  }
+  return null;
+}
+
+function eventPayload(input: UnknownRecord): UnknownRecord {
+  return recordOrEmpty(input?.event?.payload);
+}
+
+function canonicalNotificationEmitter(value: unknown): string {
+  return requiredText(value, 'notification.event.emitter');
 }
 
 async function readNotificationConfig(ctx: UnknownRecord = {}): Promise<UnknownRecord> {
@@ -41,14 +86,14 @@ async function readNotificationConfig(ctx: UnknownRecord = {}): Promise<UnknownR
 }
 
 function normalizeNotificationIds(hookId: string, ctx: UnknownRecord = {}, envelope: UnknownRecord = {}): UnknownRecord {
-  const config = ctx?.config || {};
-  const explicitIds = envelope?.ids || {};
-  const eventPayload = envelope?.event?.payload || {};
-  const runId = explicitIds.runId || explicitIds.run_id || ctx?.runId || getRunId(config) || config?._runId || config?.run_id || null;
-  const moduleId = explicitIds.moduleId || explicitIds.module_id || eventPayload.module_id || null;
-  const gateId = explicitIds.gateId || explicitIds.gate_id || eventPayload.gate_id || null;
-  const gateType = explicitIds.gateType || explicitIds.gate_type || eventPayload.gate_type || null;
-  const attempt = explicitIds.attempt ?? eventPayload.attempt ?? null;
+  const config = recordOrEmpty(ctx?.config);
+  const explicitIds = recordOrEmpty(envelope?.ids);
+  const payload = recordOrEmpty(envelope?.event?.payload);
+  const runId = firstText(explicitIds.runId, explicitIds.run_id, ctx?.runId, getRunId(config), config?._runId, config?.run_id);
+  const moduleId = firstText(explicitIds.moduleId, explicitIds.module_id, payload.module_id);
+  const gateId = firstText(explicitIds.gateId, explicitIds.gate_id, payload.gate_id);
+  const gateType = firstText(explicitIds.gateType, explicitIds.gate_type, payload.gate_type);
+  const attempt = selectDefinedValue(() => (selectDefinedValue(() => (explicitIds.attempt), () => (payload.attempt))), () => (null));
   return {
     hookId,
     runId,
@@ -56,24 +101,16 @@ function normalizeNotificationIds(hookId: string, ctx: UnknownRecord = {}, envel
     attempt,
     gateId,
     gateType,
-    stageId: explicitIds.stageId || explicitIds.stage_id || hookId,
+    stageId: firstText(explicitIds.stageId, explicitIds.stage_id, hookId),
   };
 }
 
 function normalizeNotificationRefs(ids: UnknownRecord = {}, envelope: UnknownRecord = {}): UnknownRecord {
-  const explicitRefs = envelope?.refs || {};
-  const runRef = explicitRefs.runRef || explicitRefs.run_ref || canonicalRef('run', ids.runId);
-  const moduleAttemptRef = explicitRefs.moduleAttemptRef || explicitRefs.module_attempt_ref
-    || (ids.runId && ids.moduleId && ids.attempt != null ? `module_attempt:${ids.runId}:${ids.moduleId}:${ids.attempt}` : null);
-  const gateEvaluationRef = explicitRefs.gateEvaluationRef || explicitRefs.gate_evaluation_ref
-    || (ids.runId && ids.gateId ? `gate_evaluation:${ids.runId}:${ids.gateId}:${ids.attempt || 1}` : null);
-  const primaryRef = explicitRefs.primaryRef || explicitRefs.primary_ref
-    || moduleAttemptRef
-    || gateEvaluationRef
-    || canonicalRef('module', ids.moduleId)
-    || canonicalRef('gate', ids.gateId)
-    || runRef
-    || canonicalRef('stage', ids.stageId);
+  const explicitRefs = recordOrEmpty(envelope?.refs);
+  const runRef = selectDefinedValue(() => (canonicalExplicitRef(explicitRefs.runRef)), () => (canonicalRef('run', ids.runId)));
+  const moduleAttemptRef = selectDefinedValue(() => (canonicalExplicitRef(explicitRefs.moduleAttemptRef)), () => ((ids.runId && ids.moduleId && ids.attempt != null ? `module_attempt:${ids.runId}:${ids.moduleId}:${ids.attempt}` : null)));
+  const gateEvaluationRef = selectDefinedValue(() => (canonicalExplicitRef(explicitRefs.gateEvaluationRef)), () => ((ids.runId && ids.gateId && ids.attempt != null ? `gate_evaluation:${ids.runId}:${ids.gateId}:${ids.attempt}` : null)));
+  const primaryRef = selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (canonicalExplicitRef(explicitRefs.primaryRef)), () => (moduleAttemptRef))), () => (gateEvaluationRef))), () => (canonicalRef('module', ids.moduleId)))), () => (canonicalRef('gate', ids.gateId)))), () => (runRef))), () => (canonicalRef('stage', ids.stageId)));
   return {
     runRef,
     moduleAttemptRef,
@@ -83,7 +120,7 @@ function normalizeNotificationRefs(ids: UnknownRecord = {}, envelope: UnknownRec
 }
 
 function normalizeFieldName(value: unknown): string {
-  return String(value ?? '').trim().toLowerCase().replace(/[_-]+/g, ' ');
+  return String(selectDefinedValue(() => (optionalText(value)), () => (''))).toLowerCase().replace(/[_-]+/g, ' ');
 }
 
 function hasActionableValue(value: unknown): boolean {
@@ -110,14 +147,12 @@ function discordPresentationRequiresActionableContract(discordPresentation: Unkn
     discordPresentation.requires_actionable_contract,
   ];
   if (explicitFlags.some((value) => value === true)) return true;
-  const level = String(discordPresentation.level ?? '').trim().toUpperCase();
+  const level = String(selectDefinedValue(() => (optionalText(discordPresentation.level)), () => (''))).toUpperCase();
   return ['WARN', 'WARNING', 'ERROR', 'CRITICAL', 'FAIL', 'FAILED', 'BLOCKED', 'DEGRADED'].includes(level);
 }
 
 function discordPresentationRequiresNextAction(discordPresentation: UnknownRecord = {}): boolean {
-  return discordPresentation.critical === true
-    || discordPresentation.require_actionable === true
-    || discordPresentation.requires_actionable_contract === true;
+  return selectTruthyValue(() => (selectTruthyValue(() => (discordPresentation.critical === true), () => (discordPresentation.require_actionable === true))), () => (discordPresentation.requires_actionable_contract === true));
 }
 
 export function validateDiscordOperatorPresentation(discordPresentation: UnknownRecord = {}, ids: UnknownRecord = {}): string[] {
@@ -147,7 +182,7 @@ export function validateDiscordOperatorPresentation(discordPresentation: Unknown
     errors.push('critical Discord notification must include next action/action');
   }
 
-  const hookId = ids?.hookId ?? '';
+  const hookId = optionalText(ids?.hookId);
   if (String(hookId).startsWith('module.') && !ids?.moduleId) {
     errors.push('module Discord notification must include ids.moduleId');
   }
@@ -161,21 +196,24 @@ export function validateDiscordOperatorPresentation(discordPresentation: Unknown
 export function buildNotificationEventInput(ctx: UnknownRecord = {}, hookId: string, envelope: UnknownRecord = {}): UnknownRecord {
   const ids = normalizeNotificationIds(hookId, ctx, envelope);
   const refs = normalizeNotificationRefs(ids, envelope);
+  const event = isRecord(envelope?.event)
+    ? deepClone(envelope.event)
+    : {
+        type: hookId,
+        payload: {},
+        emitter: 'nova/pipeline/services/telemetry',
+      };
   return {
     refs,
     ids,
-    snapshot: deepClone(envelope?.snapshot || {}),
+    snapshot: cloneRecordOrEmpty(envelope?.snapshot),
     artifacts: deepClone(envelope?.artifacts),
     summaries: deepClone(envelope?.summaries),
-    stateSnapshot: deepClone(envelope?.stateSnapshot || {}),
-    executionContext: deepClone(envelope?.executionContext || {}),
-    event: deepClone(envelope?.event || {
-      type: hookId,
-      payload: {},
-      emitter: 'nova/pipeline/services/telemetry',
-    }),
-    presentation: deepClone(envelope?.presentation || {}),
-    occurredAt: envelope?.occurredAt || new Date().toISOString(),
+    stateSnapshot: cloneRecordOrEmpty(envelope?.stateSnapshot),
+    executionContext: cloneRecordOrEmpty(envelope?.executionContext),
+    event,
+    presentation: cloneRecordOrEmpty(envelope?.presentation),
+    occurredAt: selectDefinedValue(() => (optionalText(envelope?.occurredAt)), () => (new Date().toISOString())),
   };
 }
 
@@ -185,35 +223,35 @@ export function validateNotificationEventInput(input: UnknownRecord = {}): strin
   if (!NOTIFICATION_HOOK_IDS.includes(hookId)) {
     errors.push(`notification hookId must be one of: ${NOTIFICATION_HOOK_IDS.join(', ')}`);
   }
-  if (!input?.ids?.stageId || input.ids.stageId !== hookId) {
+  if (selectTruthyValue(() => (!input?.ids?.stageId), () => (input.ids.stageId !== hookId))) {
     errors.push('notification stageId must match hookId');
   }
-  if (!input?.ids?.runId || typeof input.ids.runId !== 'string') {
+  if (selectTruthyValue(() => (!input?.ids?.runId), () => (typeof input.ids.runId !== 'string'))) {
     errors.push('notification ids.runId must be a non-empty string');
   }
-  if (!input?.refs?.runRef || typeof input.refs.runRef !== 'string') {
+  if (selectTruthyValue(() => (!input?.refs?.runRef), () => (typeof input.refs.runRef !== 'string'))) {
     errors.push('notification refs.runRef must be a non-empty string');
   }
-  if (!input?.refs?.primaryRef || typeof input.refs.primaryRef !== 'string') {
+  if (selectTruthyValue(() => (!input?.refs?.primaryRef), () => (typeof input.refs.primaryRef !== 'string'))) {
     errors.push('notification refs.primaryRef must be a non-empty string');
   }
-  if (!input?.occurredAt || Number.isNaN(Date.parse(input.occurredAt))) {
+  if (selectTruthyValue(() => (!input?.occurredAt), () => (Number.isNaN(Date.parse(input.occurredAt))))) {
     errors.push('notification occurredAt must be an ISO-8601 timestamp');
   }
-  if (input?.event !== undefined && (typeof input.event !== 'object' || Array.isArray(input.event))) {
+  if (input?.event !== undefined && (selectTruthyValue(() => (typeof input.event !== 'object'), () => (Array.isArray(input.event))))) {
     errors.push('notification event must be an object when provided');
   }
   if (input?.event && typeof input.event.type !== 'string') {
     errors.push('notification event.type must be a string when provided');
   }
-  if (input?.presentation !== undefined && (typeof input.presentation !== 'object' || Array.isArray(input.presentation))) {
+  if (input?.presentation !== undefined && (selectTruthyValue(() => (typeof input.presentation !== 'object'), () => (Array.isArray(input.presentation))))) {
     errors.push('notification presentation must be an object when provided');
   }
   if (input?.presentation?.discord !== undefined) {
-    if (typeof input.presentation.discord !== 'object' || Array.isArray(input.presentation.discord)) {
+    if (selectTruthyValue(() => (typeof input.presentation.discord !== 'object'), () => (Array.isArray(input.presentation.discord)))) {
       errors.push('notification presentation.discord must be an object when provided');
     } else {
-      errors.push(...validateDiscordOperatorPresentation(input.presentation.discord, input.ids ?? {}));
+      errors.push(...validateDiscordOperatorPresentation(input.presentation.discord, recordOrEmpty(input.ids)));
     }
   }
   return errors;
@@ -229,17 +267,17 @@ export function assertNotificationEventInput(input: UnknownRecord = {}): Unknown
 
 export async function observeTelemetryNotification(input: UnknownRecord, ctx: UnknownRecord = {}): Promise<void> {
   const config = await readNotificationConfig(ctx);
-  const eventType = input?.event?.type || input?.ids?.hookId;
-  const payload = input?.event?.payload || {};
-  const emitter = input?.event?.emitter || 'nova/pipeline/services/telemetry';
+  const eventType = requiredText(firstText(input?.event?.type, input?.ids?.hookId), 'notification.event.type');
+  const payload = eventPayload(input);
+  const emitter = canonicalNotificationEmitter(input?.event?.emitter);
   const result = await emitTelemetryStreamEvent(config, eventType, payload, {
     emittedAt: input?.occurredAt,
     emitter,
     runId: input?.ids?.runId,
   });
   if (ctx?.notificationState) {
-    ctx.notificationState.telemetryResult = result || null;
-    ctx.notificationState.telemetryEvent = result?.event || null;
+    ctx.notificationState.telemetryResult = selectTruthyValue(() => (result), () => (null));
+    ctx.notificationState.telemetryEvent = selectTruthyValue(() => (result?.event), () => (null));
   }
   if (!result.ok && !result.skipped) {
     const telemetryError = result?.error as Error | undefined;
@@ -247,11 +285,11 @@ export async function observeTelemetryNotification(input: UnknownRecord, ctx: Un
       component: 'telemetry',
       surface: 'redis_stream',
       reason: 'redis_emit_failed',
-      detail: telemetryError?.message || 'redis telemetry emission failed',
+      detail: selectDefinedValue(() => (optionalText(telemetryError?.message)), () => ('redis_telemetry_error_message_missing')),
       impacted_event_type: eventType,
-      stream_key: result?.streamKey || null,
+      stream_key: optionalText(result?.streamKey),
     });
-    throw telemetryError || new Error(`telemetry sink failed for ${eventType}`);
+    throw telemetrySinkFailureAuthority(telemetryError, eventType);
   }
 
   if (result.ok) {
@@ -261,24 +299,29 @@ export async function observeTelemetryNotification(input: UnknownRecord, ctx: Un
       reason: 'redis_emit_failed',
       detail: 'redis telemetry emission restored',
       impacted_event_type: eventType,
-      stream_key: result?.streamKey || null,
+      stream_key: selectTruthyValue(() => (result?.streamKey), () => (null)),
     });
   }
 }
 
+function telemetrySinkFailureAuthority(telemetryError: Error | undefined, eventType: string): Error {
+  if (telemetryError) return telemetryError;
+  return new Error(`telemetry sink failed for ${eventType}`);
+}
+
 export async function observeStructuredEventNotification(input: UnknownRecord, ctx: UnknownRecord = {}): Promise<void> {
   const config = await readNotificationConfig(ctx);
-  const eventType = input?.event?.type || input?.ids?.hookId;
-  const payload = input?.event?.payload || {};
-  const telemetryEvent = ctx?.notificationState?.telemetryEvent || null;
+  const eventType = requiredText(firstText(input?.event?.type, input?.ids?.hookId), 'notification.event.type');
+  const payload = eventPayload(input);
+  const telemetryEvent = selectDefinedValue(() => (ctx?.notificationState?.telemetryEvent), () => (null));
   const ok = await appendStructuredEventMirror(config, eventType, {
     ...(telemetryEvent?.seq == null ? {} : { seq: telemetryEvent.seq }),
     ...payload,
     ts: input?.occurredAt,
-    run_id: input?.ids?.runId || payload?.run_id || null,
-    project: config?.project || payload?.project || '',
-    source: payload?.source || 'pipeline',
-    emitter: input?.event?.emitter || payload?.emitter || 'nova/pipeline/services/telemetry',
+    run_id: firstText(input?.ids?.runId, payload?.run_id),
+    project: requiredText(firstText(config?.project, payload?.project), 'notification.project'),
+    source: requiredText(payload?.source, 'notification.event.payload.source'),
+    emitter: canonicalNotificationEmitter(firstText(input?.event?.emitter, payload?.emitter)),
   });
   if (!ok) {
     throw new Error(`structured event artifact sink failed for ${eventType}`);
@@ -290,28 +333,28 @@ export async function observeDiscordNotification(input: UnknownRecord, ctx: Unkn
   if (!presentation) return;
   const config = await readNotificationConfig(ctx);
   const correlation = {
-    run_id: input?.ids?.runId || null,
-    module_id: input?.ids?.moduleId || null,
-    gate_id: input?.ids?.gateId || null,
-    gate_type: input?.ids?.gateType || null,
-    attempt: input?.ids?.attempt ?? null,
+    run_id: selectTruthyValue(() => (input?.ids?.runId), () => (null)),
+    module_id: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
+    gate_id: selectTruthyValue(() => (input?.ids?.gateId), () => (null)),
+    gate_type: selectTruthyValue(() => (input?.ids?.gateType), () => (null)),
+    attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
   };
   if (Array.isArray(presentation.embeds) && presentation.embeds.length) {
-    await discordEmbeds(config, presentation.embeds, { level: presentation.level || 'INFO', correlation });
+    await discordEmbeds(config, presentation.embeds, { level: requiredText(presentation.level, 'notification.presentation.discord.level'), correlation });
     return;
   }
   await discord(
     config,
-    presentation.level || 'INFO',
-    presentation.title || input?.event?.type || input?.ids?.hookId,
-    presentation.description || '',
+    requiredText(presentation.level, 'notification.presentation.discord.level'),
+    requiredText(presentation.title, 'notification.presentation.discord.title'),
+    optionalText(presentation.description),
     Array.isArray(presentation.fields) ? presentation.fields : [],
     { correlation },
   );
 }
 
 function sanitizeHookIdForModuleId(hookId: unknown): string {
-  return String(hookId || '').replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+  return requiredText(hookId, 'notification.hookId').replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_+|_+$/g, '');
 }
 
 function buildNotificationDefinition({ sinkId, hookId, displayName, description, defaultEnabled = true, capabilities = [], observe }: UnknownRecord): UnknownRecord {

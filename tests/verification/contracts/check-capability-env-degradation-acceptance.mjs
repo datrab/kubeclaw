@@ -5,6 +5,7 @@ import path from 'node:path';
 
 import {
   BUSTER_CAPABILITIES,
+  requiredCapabilitiesForSuite,
 } from '../../../skills/buster/pipeline/services/capabilities.ts';
 import {
   runSuites,
@@ -24,7 +25,7 @@ const capabilityCases = [
   {
     suite: 'k8s',
     config: {},
-    missing: [BUSTER_CAPABILITIES.CONTAINER_RUNTIME, BUSTER_CAPABILITIES.KUBERNETES_API],
+    missing: [BUSTER_CAPABILITIES.CONTAINER_RUNTIME, BUSTER_CAPABILITIES.KUBERNETES],
   },
   {
     suite: 'a11y',
@@ -46,12 +47,13 @@ const capabilityCases = [
     config: {},
     missing: [BUSTER_CAPABILITIES.LIGHTHOUSE],
   },
-  {
-    suite: 'health',
-    config: { serve: { smoke_paths: ['/healthz'] } },
-    missing: [BUSTER_CAPABILITIES.BROWSER_AUTOMATION],
-  },
 ];
+
+assert.deepEqual(
+  requiredCapabilitiesForSuite('health', { config: { serve: { smoke_paths: ['/healthz'] } } }),
+  [],
+  'health smoke paths are bounded HTTP checks and must not require browser automation',
+);
 
 const swarmDir = path.join(process.cwd(), '.swarm');
 fs.mkdirSync(swarmDir, { recursive: true });

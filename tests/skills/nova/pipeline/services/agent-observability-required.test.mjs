@@ -10,6 +10,10 @@ import {
   matchesAgentLifecycleTelemetry,
   waitForRequiredAgentStartupEvidence,
 } from '../../../../../skills/nova/pipeline/services/agent-observability-required.ts';
+import {
+  clearActiveContext,
+  setActiveContext,
+} from '../../../../../skills/nova/pipeline/core/logger.ts';
 
 function observabilityConfig({ timeoutMs = 10, blockMs = 1, required = true } = {}) {
   return {
@@ -172,6 +176,7 @@ test('startup evidence reader connects lazy Redis clients before xread', async (
     agent_observability: observabilityConfig({ blockMs: 250, required: false }),
   }, {
     RedisCtor: FakeRedis,
+    redis: { host: '127.0.0.1', port: 6379, enforceSecureMode: false },
     runId: 'run-test',
     stream: 'telemetry-stream',
     startId: '0-0',
@@ -241,6 +246,7 @@ test('startup evidence reader falls back to pipeline jsonl when telemetry stream
     agent_observability: observabilityConfig({ blockMs: 250, required: false }),
   }, {
     RedisCtor: FakeRedis,
+    redis: { host: '127.0.0.1', port: 6379, enforceSecureMode: false },
     runId: 'run-test',
     stream: 'telemetry-stream',
     pipelineLogPaths: [logPath],
@@ -261,4 +267,71 @@ test('startup evidence reader falls back to pipeline jsonl when telemetry stream
   assert.equal(event?.type, 'agent.spawned');
   assert.equal(event?.observability_source, 'pipeline_jsonl');
   assert.equal(event?.pipeline_jsonl_path, logPath);
+});
+
+test('startup evidence reader uses active run log authority for module worktree configs', async (t) => {
+  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'agent-observability-module-worktree-'));
+  const parentRunLogPath = path.join(tempRoot, 'parent', 'runs', 'run-test', 'pipeline.jsonl');
+  fs.mkdirSync(path.dirname(parentRunLogPath), { recursive: true });
+  fs.writeFileSync(parentRunLogPath, `${JSON.stringify({
+    v: 1,
+    type: 'agent.spawned',
+    run_id: 'child-run-test',
+    project: 'project-test',
+    source: 'pipeline',
+    emitter: 'nova/pipeline/services/agent-observability-ingester',
+    label: 'forge-module-a-1',
+    session_key: 'agent:main:subagent:a',
+    dispatch_id: null,
+    module_id: null,
+  })}\n`);
+
+  class FakeRedis {
+    constructor() {
+      this.status = 'ready';
+    }
+
+    on() {}
+    async ping() { return 'PONG'; }
+    async xread() { return []; }
+    disconnect() {}
+  }
+
+  setActiveContext({
+    stats: { errors: [] },
+    _runPipelineLogPath: parentRunLogPath,
+    _pipelineLogPath: path.join(tempRoot, 'parent', 'pipeline.jsonl'),
+  });
+  t.after(() => clearActiveContext());
+
+  const moduleWorktreeRoot = path.join(tempRoot, 'module-worktree');
+  const reader = createAgentLifecycleTelemetryReader({
+    project: 'project-test',
+    repo_root: moduleWorktreeRoot,
+    paths: { swarm_dir: path.join(moduleWorktreeRoot, 'Project', 'src', '.swarm') },
+    _runId: 'run-test',
+    telemetry: { enabled: true },
+    agent_observability: observabilityConfig({ blockMs: 1, required: false }),
+  }, {
+    RedisCtor: FakeRedis,
+    redis: { host: '127.0.0.1', port: 6379, enforceSecureMode: false },
+    runId: 'run-test',
+    stream: 'telemetry-stream',
+  });
+
+  const event = await reader.read({
+    run_id: 'run-test',
+    project: 'project-test',
+    agent_type: 'forge',
+    module_id: 'module-a',
+    dispatch_id: 'dispatch-a',
+    session_key: 'agent:main:subagent:a',
+    gateway_label: 'forge-module-a-1',
+  }, ['agent.spawned']);
+
+  reader.close();
+
+  assert.equal(event?.type, 'agent.spawned');
+  assert.equal(event?.observability_source, 'pipeline_jsonl');
+  assert.equal(event?.pipeline_jsonl_path, parentRunLogPath);
 });

@@ -15,37 +15,94 @@ import {
   buildModuleSessionRateLimitStatus,
 } from '../rate-limit-builders.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
+const RATE_LIMIT_DISCORD_RESUME_TITLE = 'Rate limit cooldown complete';
+const RATE_LIMIT_DISCORD_RESUME_DESCRIPTION = 'Resuming session.';
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function selectPresentValue(...values) {
+  for (const value of values) {
+    if (typeof value === 'string' && value.length > 0) return value;
+  }
+  return '';
+}
+
+function firstDefined(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return null;
+}
+
+function errorMessage(error) {
+  if (error && typeof error === 'object' && typeof error.message === 'string' && error.message.trim()) return error.message;
+  return String(error);
+}
+
+function requiredText(value, label) {
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) throw new Error(`${label} is required`);
+  return value;
+}
+
+function resolveTrackedModuleId(config, moduleDir, moduleId, callerStatus) {
+  const modules = config?._progress?.modules;
+  if (selectTruthyValue(() => (!modules), () => (typeof modules !== 'object'))) {
+    throw new Error('Tracked module rate-limit status requires canonical config._progress.modules');
+  }
+  if (callerStatus?.module_id) return callerStatus.module_id;
+  if (moduleId) return moduleId;
+  const matchedEntry = Object.entries(modules).find(([, mod]) => mod?.dir === moduleDir);
+  if (matchedEntry?.[0]) return matchedEntry[0];
+  throw new Error(`Tracked module rate-limit status requires canonical module identity for ${moduleDir}`);
+}
+
+function resolveTrackedModulePhase(phase, callerStatus, persistedStatus) {
+  return firstDefined(
+    phase,
+    callerStatus.current_phase,
+    callerStatus.phase,
+    persistedStatus.current_phase,
+  );
+}
+
+function resolveTrackedRateLimitAttempt(resolvedIdentity, persistedStatus) {
+  return firstDefined(
+    resolvedIdentity.attempt,
+    persistedStatus.attempt,
+    currentAttemptNumber(persistedStatus),
+  );
+}
+
 function currentAttemptNumber(status) {
-  return status?.attempt ?? null;
+  return selectDefinedValue(() => (status?.attempt), () => (null));
 }
 
 function buildRateLimitDiscordCorrelation(status: Record<string, any> = {}): Record<string, any> {
   return {
-    run_id: status?.run_id || null,
-    module_id: status?.module_id || null,
-    gate_id: status?.gate_id || null,
-    gate_type: status?.gate_type || null,
-    attempt: status?.attempt ?? null,
-    dispatch_id: resolveStatusDispatchId(status) ?? null,
-    gateway_label: resolveStatusGatewayLabel(status) ?? null,
-    session_key: resolveStatusSessionKey(status) ?? null,
+    run_id: selectTruthyValue(() => (status?.run_id), () => (null)),
+    module_id: selectTruthyValue(() => (status?.module_id), () => (null)),
+    gate_id: selectTruthyValue(() => (status?.gate_id), () => (null)),
+    gate_type: selectTruthyValue(() => (status?.gate_type), () => (null)),
+    attempt: selectDefinedValue(() => (status?.attempt), () => (null)),
+    dispatch_id: selectDefinedValue(() => (resolveStatusDispatchId(status)), () => (null)),
+    gateway_label: selectDefinedValue(() => (resolveStatusGatewayLabel(status)), () => (null)),
+    session_key: selectDefinedValue(() => (resolveStatusSessionKey(status)), () => (null)),
   };
 }
 
 function resolveModuleProjectionInput(config, moduleDir, moduleId, callerStatus = {}) {
-  const modules = config?._progress?.modules ?? {};
-  if (!modules || typeof modules !== 'object') {
+  const modules = config?._progress?.modules;
+  if (selectTruthyValue(() => (!modules), () => (typeof modules !== 'object'))) {
     throw new Error('Tracked module rate-limit status requires canonical config._progress.modules');
   }
-  const matchedEntry = Object.entries(modules).find(([, mod]) => mod?.dir === moduleDir);
-  const resolvedModuleId = callerStatus?.module_id
-    ?? moduleId
-    ?? (modules[moduleDir] ? moduleDir : null)
-    ?? matchedEntry?.[0]
-    ?? null;
-  if (!resolvedModuleId) {
-    throw new Error(`Tracked module rate-limit status requires canonical module identity for ${moduleDir}`);
-  }
+  const resolvedModuleId = resolveTrackedModuleId(config, moduleDir, moduleId, callerStatus);
   const moduleConfig = modules[resolvedModuleId];
   if (!moduleConfig) {
     throw new Error(`Tracked module rate-limit status requires canonical module config for ${resolvedModuleId}`);
@@ -79,8 +136,8 @@ export function createGateSessionRateLimitExhaustionOptions(config, {
       } finally {
         if (gateId && telemetryCtx) {
           const extraGateFailureData = typeof gateFailureData === 'function'
-            ? (gateFailureData(exitResult) || {})
-            : (gateFailureData || {});
+            ? objectRecord(gateFailureData(exitResult))
+            : objectRecord(gateFailureData);
           const discordPresentation = extraGateFailureData?.presentation?.discord;
           const presentation = discordPresentation && typeof discordPresentation === 'object' && !Array.isArray(discordPresentation)
             ? {
@@ -106,7 +163,7 @@ export function createGateSessionRateLimitExhaustionOptions(config, {
       }
     },
     emitRetryExhausted: (exitResult) => {
-      if (!gateId || !telemetryCtx || !phase) return;
+      if (selectTruthyValue(() => (selectTruthyValue(() => (!gateId), () => (!telemetryCtx))), () => (!phase))) return;
       return emitGateRetryExhausted(telemetryCtx, gateId, {
         gateType,
         phase,
@@ -121,7 +178,7 @@ export function createGateSessionRateLimitExhaustionOptions(config, {
     sendDiscord: (exitResult) => {
       const title = typeof discordTitle === 'function' ? discordTitle(exitResult) : discordTitle;
       const description = typeof discordDescription === 'function' ? discordDescription(exitResult) : discordDescription;
-      if (!config || !title || !description) return null;
+      if (selectTruthyValue(() => (selectTruthyValue(() => (!config), () => (!title))), () => (!description))) return null;
 
       return discordFn(
         config,
@@ -129,7 +186,7 @@ export function createGateSessionRateLimitExhaustionOptions(config, {
         title,
         description,
         buildSessionRateLimitDiscordFields({
-          run_id: exitResult.run_id || runId || 'unknown',
+          run_id: requiredText(firstDefined(exitResult.run_id, runId), 'gate rate-limit run_id'),
           ...(gateId == null ? {} : { gate_id: gateId }),
           ...(gateType == null ? {} : { gate_type: gateType }),
           attempt: exitResult.attempt,
@@ -139,13 +196,13 @@ export function createGateSessionRateLimitExhaustionOptions(config, {
         }),
         {
           correlation: {
-            run_id: exitResult.run_id || runId || null,
+            run_id: firstDefined(exitResult.run_id, runId),
             ...(gateId == null ? {} : { gate_id: gateId }),
             ...(gateType == null ? {} : { gate_type: gateType }),
-            attempt: exitResult.attempt ?? null,
-            dispatch_id: exitResult.dispatch_id || null,
-            gateway_label: exitResult.gateway_label || null,
-            session_key: exitResult.session_key || null,
+            attempt: selectDefinedValue(() => (exitResult.attempt), () => (null)),
+            dispatch_id: selectTruthyValue(() => (exitResult.dispatch_id), () => (null)),
+            gateway_label: selectTruthyValue(() => (exitResult.gateway_label), () => (null)),
+            session_key: selectTruthyValue(() => (exitResult.session_key), () => (null)),
           },
         },
       );
@@ -170,11 +227,11 @@ export function createSummarySessionRateLimitExhaustionOptions(config, {
     sendDiscord: async (exitResult) => {
       const title = typeof discordTitle === 'function' ? discordTitle(exitResult) : discordTitle;
       const description = typeof discordDescription === 'function' ? discordDescription(exitResult) : discordDescription;
-      if (!config || !title || !description) return;
+      if (selectTruthyValue(() => (selectTruthyValue(() => (!config), () => (!title))), () => (!description))) return;
 
       const extraFields = typeof discordExtraFields === 'function'
-        ? (discordExtraFields(exitResult) || [])
-        : discordExtraFields;
+        ? arrayValue(discordExtraFields(exitResult))
+        : arrayValue(discordExtraFields);
 
       await notifyDiscord(
         config,
@@ -197,18 +254,18 @@ export function createSummarySessionRateLimitExhaustionOptions(config, {
 }
 
 export function createSessionRateLimitDiscordNotifier(config, options = {}) {
-  const discordFn = options.discordFn || discord;
+  const discordFn = options.discordFn !== undefined ? options.discordFn : discord;
 
   return {
     sendPauseDiscord: async ({ status, embed }) => {
       const fields = typeof options.pauseFields === 'function'
-        ? options.pauseFields(status)
-        : (options.pauseFields || []);
+        ? arrayValue(options.pauseFields(status))
+        : arrayValue(options.pauseFields);
       await discordFn(config, 'WARN', embed.title, embed.description, [
         ...fields,
-        ...(embed?.fields || []),
+        ...arrayValue(embed?.fields),
       ], { correlation: buildRateLimitDiscordCorrelation(status) }).catch((e) => {
-        log('DEBUG', `Tracked rate-limit pause Discord notice failed: ${e?.message || e}`);
+        log('DEBUG', `Tracked rate-limit pause Discord notice failed: ${errorMessage(e)}`);
       });
     },
     sendResumeDiscord: async ({ status }) => {
@@ -216,10 +273,17 @@ export function createSessionRateLimitDiscordNotifier(config, options = {}) {
         ? options.resumeDescription(status)
         : options.resumeDescription;
       const fields = typeof options.resumeFields === 'function'
-        ? options.resumeFields(status)
-        : (options.resumeFields || []);
-      await discordFn(config, 'INFO', options.resumeTitle || 'Rate limit cooldown complete', description || 'Resuming session.', fields, { correlation: buildRateLimitDiscordCorrelation(status) }).catch((e) => {
-        log('DEBUG', `Tracked rate-limit resume Discord notice failed: ${e?.message || e}`);
+        ? arrayValue(options.resumeFields(status))
+        : arrayValue(options.resumeFields);
+      await discordFn(
+        config,
+        'INFO',
+        selectPresentValue(options.resumeTitle, RATE_LIMIT_DISCORD_RESUME_TITLE),
+        selectPresentValue(description, RATE_LIMIT_DISCORD_RESUME_DESCRIPTION),
+        fields,
+        { correlation: buildRateLimitDiscordCorrelation(status) },
+      ).catch((e) => {
+        log('DEBUG', `Tracked rate-limit resume Discord notice failed: ${errorMessage(e)}`);
       });
     },
   };
@@ -231,12 +295,8 @@ export function buildTrackedModuleSessionRateLimitStatus(config, moduleDir, call
   identity = {},
 } = {}) {
   const moduleProjection = resolveModuleProjectionInput(config, moduleDir, moduleId, callerStatus);
-  const persistedStatus = projectModuleSchedulerState(config, moduleProjection.moduleId, moduleProjection.moduleConfig) ?? {};
-  const currentPhase = phase
-    ?? callerStatus.current_phase
-    ?? callerStatus.phase
-    ?? persistedStatus.current_phase
-    ?? null;
+  const persistedStatus = objectRecord(projectModuleSchedulerState(config, moduleProjection.moduleId, moduleProjection.moduleConfig));
+  const currentPhase = resolveTrackedModulePhase(phase, callerStatus, persistedStatus);
   const optionCtx = { callerStatus, persistedStatus };
   const resolvedIdentity = resolveRateLimitIdentity(identity, optionCtx);
 
@@ -246,15 +306,15 @@ export function buildTrackedModuleSessionRateLimitStatus(config, moduleDir, call
       ...callerStatus,
     },
     {
-      moduleId: callerStatus.module_id ?? persistedStatus.module_id ?? moduleProjection.moduleId,
+      moduleId: selectDefinedValue(() => (callerStatus.module_id), () => (moduleProjection.moduleId)),
       phase: currentPhase,
       identity: {
-        agent_type: resolvedIdentity.agent_type ?? currentPhase ?? persistedStatus.current_phase ?? null,
-        run_id: resolvedIdentity.run_id ?? persistedStatus.run_id ?? getRunId(config) ?? config._runId ?? config.run_id ?? null,
-        attempt: resolvedIdentity.attempt ?? persistedStatus.attempt ?? currentAttemptNumber(persistedStatus),
-        dispatch_id: resolvedIdentity.dispatch_id ?? persistedStatus.dispatch_id ?? null,
-        session_key: (resolveStatusSessionKey(persistedStatus) ?? resolvedIdentity.session_key ?? null),
-        gateway_label: (resolveStatusGatewayLabel(persistedStatus) ?? resolvedIdentity.gateway_label ?? null),
+        agent_type: selectDefinedValue(() => (resolvedIdentity.agent_type), () => (null)),
+        run_id: selectDefinedValue(() => (resolvedIdentity.run_id), () => (null)),
+        attempt: resolveTrackedRateLimitAttempt(resolvedIdentity, persistedStatus),
+        dispatch_id: selectDefinedValue(() => (resolvedIdentity.dispatch_id), () => (null)),
+        session_key: resolvedIdentity.session_key,
+        gateway_label: resolvedIdentity.gateway_label,
       },
     },
   );

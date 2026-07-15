@@ -6,6 +6,7 @@ import path from 'path';
 import { getRunId } from '../../core/runtime.ts';
 import { resolvePipelineRunLogDir } from '../../core/paths.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 
 type ValidatorRunState = {
@@ -19,14 +20,14 @@ function errorMessage(error: unknown): string {
 }
 
 export function scheduledValidatorCompletionPath(config: AnyRecord): string | null {
-  const runId = getRunId(config) || config?._runId || config?.run_id || null;
+  const runId = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (getRunId(config)), () => (config?._runId))), () => (config?.run_id))), () => (null));
   const runLogDir = resolvePipelineRunLogDir(config, runId);
   return runLogDir ? path.join(runLogDir, 'scheduled-validator-completions.json') : null;
 }
 
 function validatorRunState(config: AnyRecord): ValidatorRunState {
   const filePath = scheduledValidatorCompletionPath(config);
-  if (!config._validatorRunState || typeof config._validatorRunState !== 'object' || config._validatorRunState.path !== filePath) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!config._validatorRunState), () => (typeof config._validatorRunState !== 'object'))), () => (config._validatorRunState.path !== filePath))) {
     config._validatorRunState = { path: filePath, completed: new Set<string>(), durableLoaded: false };
   }
   if (!(config._validatorRunState.completed instanceof Set)) {
@@ -40,7 +41,7 @@ function loadScheduledValidatorCompletions(config: AnyRecord): ValidatorRunState
   if (state.durableLoaded === true) return state;
   state.durableLoaded = true;
   const filePath = scheduledValidatorCompletionPath(config);
-  if (!filePath || !fs.existsSync(filePath)) return state;
+  if (selectTruthyValue(() => (!filePath), () => (!fs.existsSync(filePath)))) return state;
   try {
     const parsed = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     const entries = Array.isArray(parsed?.completed) ? parsed.completed : [];
@@ -60,8 +61,8 @@ function saveScheduledValidatorCompletions(config: AnyRecord, state: ValidatorRu
   const completedAt = new Date().toISOString();
   const payload = {
     schemaVersion: 'v1',
-    project: config?.project || null,
-    run_id: getRunId(config) || config?._runId || config?.run_id || null,
+    project: selectTruthyValue(() => (config?.project), () => (null)),
+    run_id: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (getRunId(config)), () => (config?._runId))), () => (config?.run_id))), () => (null)),
     completed: [...state.completed].sort().map((key: string) => ({ key, completed_at: completedAt })),
   };
   fs.mkdirSync(path.dirname(filePath), { recursive: true });

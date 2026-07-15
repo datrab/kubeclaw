@@ -14,6 +14,8 @@ function parseArgs(argv = process.argv.slice(2)) {
 const { sourceRoot } = parseArgs();
 const transportPath = path.join(sourceRoot, 'skills/common/pipeline/redis-transport.ts');
 const transportSource = fs.readFileSync(transportPath, 'utf8');
+const runtimeRedisPreflightPath = path.join(sourceRoot, 'skills/nova/pipeline/services/runtime-redis-preflight.ts');
+const runtimeRedisPreflightSource = fs.readFileSync(runtimeRedisPreflightPath, 'utf8');
 const transport = await import(pathToFileURL(transportPath).href);
 
 assert.equal(typeof transport.resolveRedisTransportConfig, 'function', 'shared Redis transport config resolver must be exported');
@@ -24,6 +26,16 @@ assert.equal(transportSource.includes('requireFirst'), false, 'Redis dependency 
 assert.equal(transportSource.includes('/app/node_modules/ioredis'), false, 'Redis dependency loading must not probe container absolute fallback paths');
 assert.equal(transportSource.includes('/usr/local/lib/node_modules/ioredis'), false, 'Redis dependency loading must not probe global absolute fallback paths');
 assert.equal(transportSource.includes("require('ioredis')"), true, 'Redis dependency loading must use native Node package resolution only');
+assert.equal(
+  runtimeRedisPreflightSource.includes('env: Record<string, string | undefined> = process.env'),
+  true,
+  'runtime Redis preflight must use deployment env as the infrastructure authority for Redis coordinates',
+);
+assert.equal(
+  runtimeRedisPreflightSource.includes('const env = {};'),
+  false,
+  'runtime Redis preflight must not force Redis coordinates into swarm.config.json by erasing deployment env',
+);
 
 try {
   transport.loadRedisCtor();

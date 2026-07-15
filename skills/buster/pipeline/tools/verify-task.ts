@@ -9,7 +9,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { parseCliFlagValues } from '../cli-args.ts';
 import { gitExec, getRepoRoot, getCurrentBranch, gitPushWithRetry } from '../services/git-workflows.ts';
+import { loadBusterGitPushPolicy } from '../services/runtime-policy.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // KEEP_TYPED_POLICY: role is presentation only, true no-change success is a
 // terminal helper success, and scope cleanup handles tracked and untracked
 // forbidden paths.
@@ -40,15 +42,15 @@ export interface CleanupAction {
 }
 
 export function validateProjectSlug(currentProject: unknown): string {
-  const project = String(currentProject || '').trim();
-  if (!/^[A-Za-z0-9._-]+$/.test(project) || project === '.' || project === '..') {
+  const project = stringValue(currentProject).trim();
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!/^[A-Za-z0-9._-]+$/.test(project)), () => (project === '.'))), () => (project === '..'))) {
     throw new Error('Invalid project id. Expected a safe project slug without path separators.');
   }
   return project;
 }
 
 export function normalizeGitPath(value: unknown): string {
-  return String(value || '')
+  return stringValue(value)
     .replace(/\\/g, '/')
     .replace(/^\/+/, '')
     .replace(/\/+/g, '/')
@@ -58,7 +60,7 @@ export function normalizeGitPath(value: unknown): string {
 export function isGitPathInside(file: string, root: string): boolean {
   const normalizedFile = normalizeGitPath(file);
   const normalizedRoot = normalizeGitPath(root);
-  return normalizedFile === normalizedRoot || normalizedFile.startsWith(`${normalizedRoot}/`);
+  return selectTruthyValue(() => (normalizedFile === normalizedRoot), () => (normalizedFile.startsWith(`${normalizedRoot}/`)));
 }
 
 export function buildSwarmScope(currentProject: unknown): { project: string; projectRoot: string; swarmRoot: string } {
@@ -69,7 +71,17 @@ export function buildSwarmScope(currentProject: unknown): { project: string; pro
 }
 
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error || 'unknown error');
+  return error instanceof Error ? error.message : String(selectTruthyValue(() => (error), () => ('missing_error_detail')));
+}
+
+function stringValue(value: unknown): string {
+  return selectTruthyValue(() => (value === undefined), () => (value === null)) ? '' : String(value);
+}
+
+function requireNonEmptyString(value: unknown, field: string): string {
+  const text = stringValue(value).trim();
+  if (!text) throw new Error(`${field} is required`);
+  return text;
 }
 
 function uniqueFiles(files: string[]): string[] {
@@ -82,14 +94,19 @@ export function parsePorcelainStatusPaths(statusOut: string): string[] {
 
   for (let i = 0; i < entries.length; i += 1) {
     const entry = entries[i]!;
-    const file = entry.substring(3);
+    const fileStart = entry.length >= 3 && entry[2] === ' '
+      ? 3
+      : entry.indexOf(' ') >= 0
+        ? entry.indexOf(' ') + 1
+        : 3;
+    const file = entry.substring(fileStart);
     if (!file) continue;
 
     files.push(file);
 
     const indexStatus = entry[0];
     const worktreeStatus = entry[1];
-    if (indexStatus === 'R' || indexStatus === 'C' || worktreeStatus === 'R' || worktreeStatus === 'C') {
+    if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (indexStatus === 'R'), () => (indexStatus === 'C'))), () => (worktreeStatus === 'R'))), () => (worktreeStatus === 'C'))) {
       const source = entries[i + 1];
       if (source) {
         files.push(source);
@@ -147,10 +164,10 @@ export function cleanupForbiddenFile(repoRoot: string, file: string): CleanupAct
 async function verifyAndPush(agentRole: string, currentProject: string, opts: VerifyOptions = {}): Promise<VerifyResult> {
   const logs: string[] = [];
   const log = (msg: string): void => { logs.push(msg); };
-  const agentName = String(agentRole || 'unknown').trim() || 'unknown';
+  const agentName = requireNonEmptyString(agentRole, 'agent role');
   const { project, projectRoot, swarmRoot } = buildSwarmScope(currentProject);
 
-  const commitMessage = opts.commitMessage || `[${agentName.toUpperCase()}] Update task via verify-task.ts`;
+  const commitMessage = requireNonEmptyString(opts.commitMessage, 'commit message');
 
   log(`[Verify] Validating swarm-scoped task for agent: '${agentName}' in project: '${project}'`);
 
@@ -196,7 +213,7 @@ async function verifyAndPush(agentRole: string, currentProject: string, opts: Ve
     const remainingAfterCleanup = listChangedFiles(repoRoot).filter((file) => isGitPathInside(file, projectRoot));
     const remainingBadFiles = badFiles.filter((file) => remainingAfterCleanup.includes(file));
     const failedCleanup = cleanupActions.filter((action) => !action.cleaned);
-    if (failedCleanup.length > 0 || remainingBadFiles.length > 0) {
+    if (selectTruthyValue(() => (failedCleanup.length > 0), () => (remainingBadFiles.length > 0))) {
       const error = 'Forbidden file cleanup failed; refusing commit/push.';
       log(`❌ [Verify] ${error}`);
       return {
@@ -260,8 +277,11 @@ async function verifyAndPush(agentRole: string, currentProject: string, opts: Ve
       warn: (_scope: unknown, msg: string) => log(`⚠️ [Verify] ${msg}`),
       info: (_scope: unknown, msg: string) => log(msg),
     };
+    const gitPushPolicy = loadBusterGitPushPolicy();
     const { hash: commitHash, pushed } = await gitPushWithRetry(repoRoot, currentBranch, {
       logger: gitLogger,
+      maxAttempts: gitPushPolicy.maxAttempts,
+      retryDelayMs: gitPushPolicy.retryDelayMs,
       commitMessage,
       addPaths: [swarmRoot],
     });
@@ -309,8 +329,14 @@ if (currentPath === entryPath) {
     },
   }) as Record<string, string | undefined>;
 
-  const agentRole = (flags.role || process.env.AGENT_ROLE || process.env.AGENT_NAME || 'unknown').toLowerCase();
-  const currentProject = flags.project || process.env.CURRENT_PROJECT;
+  const roleInput = flags.role
+    ? flags.role
+    : process.env.AGENT_ROLE
+      ? process.env.AGENT_ROLE
+      : process.env.AGENT_NAME;
+  if (!roleInput) throw new Error('agent role required via --role, AGENT_ROLE, or AGENT_NAME');
+  const agentRole = roleInput.toLowerCase();
+  const currentProject = flags.project ? flags.project : process.env.CURRENT_PROJECT;
   const commitMessage = flags.message;
 
   if (!currentProject) {

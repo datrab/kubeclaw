@@ -14,6 +14,7 @@ import {
 import { monitorSession } from '../session-monitor.ts';
 import { safeErrorMessage } from '../runtime-diagnostics.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 interface Logger {
   info: (tag: string, msg: string, data?: Record<string, unknown>) => void;
   error: (tag: string, msg: string, data?: Record<string, unknown>) => void;
@@ -99,32 +100,65 @@ function normalizeRequiredString(value: unknown): string | null {
   return trimmed ? trimmed : null;
 }
 
+function requireNonEmptyString(value: unknown, label: string): string {
+  const normalized = normalizeRequiredString(value);
+  if (!normalized) throw new Error(`${label}: required non-empty string`);
+  return normalized;
+}
+
+function resolveTaskThinking(payload: BusterTaskPayload): string | null {
+  const sessionThinking = normalizeThinking(payload?.session?.thinking);
+  if (sessionThinking) return sessionThinking;
+  const sessionThinkingLevel = normalizeThinking(payload?.session?.thinking_level);
+  if (sessionThinkingLevel) return sessionThinkingLevel;
+  const taskThinking = normalizeThinking(payload?.thinking);
+  if (taskThinking) return taskThinking;
+  return normalizeThinking(payload?.thinking_level);
+}
+
+function resolveCompletionDispatchId(dispatchIdForCompletion: string | null, sessionData: SessionData): string {
+  if (dispatchIdForCompletion !== null) return requireNonEmptyString(dispatchIdForCompletion, 'dispatchIdForCompletion');
+  return requireNonEmptyString(sessionData.label, 'sessionData.label');
+}
+
+function resolveTerminationResult(sessionResult: SessionResult, terminateChildSession: typeof terminateSession, sessionData: SessionData, sessionPolicies: BusterSessionPolicies) {
+  if (sessionResult.termination) return sessionResult.termination;
+  return terminateChildSession(sessionData.childSessionKey, {
+    ...sessionPolicies,
+    runtime: sessionData.runtime,
+    agentId: sessionData.agentId,
+    label:   sessionData.label,
+  });
+}
+
 function normalizeThinking(value: unknown): string | null {
   return normalizeRequiredString(value);
 }
 
 function normalizeRuntime(value: unknown): 'acp' | 'subagent' | null {
   const runtime = normalizeRequiredString(value)?.toLowerCase();
-  return runtime === 'acp' || runtime === 'subagent' ? runtime : null;
+  return selectTruthyValue(() => (runtime === 'acp'), () => (runtime === 'subagent')) ? runtime : null;
 }
 
 function isMonitorHardTimeout(sessionResult: SessionResult): boolean {
-  return sessionResult?.reason === 'session_timeout_kill_confirmed'
-    || sessionResult?.reason === 'session_timeout_kill_unconfirmed';
+  return selectTruthyValue(() => (sessionResult?.reason === 'session_timeout_kill_confirmed'), () => (sessionResult?.reason === 'session_timeout_kill_unconfirmed'));
 }
 
 function resolveTaskAgentResult(payload: BusterTaskPayload, sessionResult: SessionResult): Record<string, unknown> {
   if (isMonitorHardTimeout(sessionResult)) {
+    const outputAuthority = resolveBusterAgentResult(payload, sessionResult) as Record<string, unknown>;
+    if (outputAuthority.source !== 'session_monitor') return outputAuthority;
+    const timeoutDetail = requireNonEmptyString(sessionResult.detail, 'session monitor timeout detail');
     return {
       outcome: 'TIMEOUT',
       reason: sessionResult.reason,
-      summary: sessionResult.detail || sessionResult.reason,
-      detail: sessionResult.detail || sessionResult.reason,
+      summary: timeoutDetail,
+      detail: timeoutDetail,
       source: 'session_monitor',
     };
   }
 
-  return resolveBusterAgentResult(payload, sessionResult, { repairOutputFileIdentity: true }) as Record<string, unknown>;
+  return resolveBusterAgentResult(payload, sessionResult) as Record<string, unknown>;
 }
 
 export async function spawnTaskSession({
@@ -172,13 +206,8 @@ export async function spawnTaskSession({
   const agentId = primaryAgentId ? primaryAgentId : normalizeRequiredString(payload?.session?.agent_id);
   const cwd = normalizeRequiredString(payload?.session?.cwd);
   const label = normalizeRequiredString(payload?.session?.label);
-  const thinking = normalizeThinking(
-    payload?.session?.thinking
-    ?? payload?.session?.thinking_level
-    ?? payload?.thinking
-    ?? payload?.thinking_level,
-  );
-  const spawnChildSession = testHooks.spawnSession || spawnSession;
+  const thinking = resolveTaskThinking(payload);
+  const spawnChildSession = testHooks.spawnSession ? testHooks.spawnSession : spawnSession;
   let sessionData: SessionData;
   try {
     sessionData = await spawnChildSession({
@@ -203,14 +232,14 @@ export async function spawnTaskSession({
       budget,
       signal,
       observabilityIdentity: {
-        run_id: payload?.run_id ?? payload?.session?.run_id ?? null,
-        project: payload?.project ?? null,
+        run_id: selectDefinedValue(() => (selectDefinedValue(() => (payload?.run_id), () => (payload?.session?.run_id))), () => (null)),
+        project: selectDefinedValue(() => (payload?.project), () => (null)),
         agent_type: 'buster',
         module_id: moduleId,
-        gate_id: payload?.gate_id ?? null,
-        gate_type: payload?.gate_type ?? null,
-        attempt: payload?.attempt ?? null,
-        dispatch_id: payload?.dispatch_id ?? label,
+        gate_id: selectDefinedValue(() => (payload?.gate_id), () => (null)),
+        gate_type: selectDefinedValue(() => (payload?.gate_type), () => (null)),
+        attempt: selectDefinedValue(() => (payload?.attempt), () => (null)),
+        dispatch_id: payload?.dispatch_id !== undefined ? payload.dispatch_id : label,
         gateway_label: label,
       },
     }) as SessionData;
@@ -226,7 +255,7 @@ export async function spawnTaskSession({
   logger.info('SPAWN', `Session spawned: ${sessionData.childSessionKey}`, {
     runtime: sessionData.runtime,
   });
-  const nextDispatchId = dispatchIdForCompletion || sessionData.label;
+  const nextDispatchId = resolveCompletionDispatchId(dispatchIdForCompletion, sessionData);
   tctx.sessionKey = sessionData.childSessionKey;
   tctx.dispatchId = nextDispatchId;
   const sessionSpawnData = {
@@ -267,9 +296,9 @@ export async function monitorTaskSession({
   testHooks?: SessionTestHooks;
 }): Promise<{ ok: boolean; sessionResult?: SessionResult; elapsedSeconds?: number; reason?: string }> {
   const monitorStart = Date.now();
-  const monitorChildSession = testHooks.monitorSession || monitorSession;
-  const terminateChildSession = testHooks.terminateSession || terminateSession;
-  const clearActiveChildSession = testHooks.clearActiveSession || clearActiveSession;
+  const monitorChildSession = testHooks.monitorSession ? testHooks.monitorSession : monitorSession;
+  const terminateChildSession = testHooks.terminateSession ? testHooks.terminateSession : terminateSession;
+  const clearActiveChildSession = testHooks.clearActiveSession ? testHooks.clearActiveSession : clearActiveSession;
   try {
     const sessionResult = await monitorChildSession(
       sessionData.childSessionKey,
@@ -305,7 +334,18 @@ export async function monitorTaskSession({
       clearActiveChildSession({ preserveFile: termination?.unconfirmed === true });
     }
 
-    return { ok: false, reason: `monitor_error: ${monitorReason}` };
+    return {
+      ok: true,
+      sessionResult: {
+        terminal: true,
+        failed: true,
+        reason: 'monitor_error',
+        detail: monitorReason,
+        state: { sessionState: 'error', detail: monitorReason },
+        termination,
+      },
+      elapsedSeconds,
+    };
   }
 }
 
@@ -328,16 +368,11 @@ export async function killTaskSession({
   sessionPolicies?: BusterSessionPolicies;
   testHooks?: SessionTestHooks;
 }): Promise<unknown> {
-  const terminateChildSession = testHooks.terminateSession || terminateSession;
-  const clearActiveChildSession = testHooks.clearActiveSession || clearActiveSession;
+  const terminateChildSession = testHooks.terminateSession ? testHooks.terminateSession : terminateSession;
+  const clearActiveChildSession = testHooks.clearActiveSession ? testHooks.clearActiveSession : clearActiveSession;
   let termination: SessionTerminationResult | null = null;
   try {
-    termination = assertValidSessionTerminationResult(sessionResult.termination || await terminateChildSession(sessionData.childSessionKey, {
-      ...sessionPolicies,
-      runtime: sessionData.runtime,
-      agentId: sessionData.agentId,
-      label:   sessionData.label,
-    })) as SessionTerminationResult;
+    termination = assertValidSessionTerminationResult(await resolveTerminationResult(sessionResult, terminateChildSession, sessionData, sessionPolicies)) as SessionTerminationResult;
     if (sessionResult.termination) {
       logger.info('SESSION', 'Timeout termination already completed by monitor', {
         confirmed: termination.confirmed,
@@ -390,7 +425,7 @@ export function publishTaskOutcome({
   dispatchIdForCompletion: string | null;
 }): { outcome: string; reason: string; agentResult: Record<string, unknown> } {
   const agentResult = resolveTaskAgentResult(payload, sessionResult);
-  if (!agentResult.outcome || !agentResult.reason) throw new Error('Buster agent result requires explicit outcome and reason');
+  if (selectTruthyValue(() => (!agentResult.outcome), () => (!agentResult.reason))) throw new Error('Buster agent result requires explicit outcome and reason');
   const outcome = String(agentResult.outcome);
   const reason = String(agentResult.reason);
 
@@ -410,8 +445,8 @@ export function publishTaskOutcome({
       commitHash,
       durationSeconds: elapsedSeconds,
       childSessionKey: sessionData.childSessionKey,
-      summary: agentResult.summary || sessionResult.detail || sessionResult.reason || 'test',
-      source: agentResult.source || 'session_monitor',
+      summary: selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (agentResult.summary), () => (sessionResult.detail))), () => (sessionResult.reason))), () => ('test')),
+      source: selectDefinedValue(() => (agentResult.source), () => ('session_monitor')),
     };
     discord(buildSessionCompleteEmbed(moduleId, project, sessionCompleteData), currentDiscordContext({
       dispatch_id: dispatchIdForCompletion,

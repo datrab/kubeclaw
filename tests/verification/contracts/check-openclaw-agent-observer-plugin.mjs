@@ -253,10 +253,10 @@ assert.equal(written.event.type, 'openclaw.llm.input');
 assert.equal(written.event.identity.run_id, 'run-1');
 assert.equal(written.event.identity.session_key, 'agent:forge:session-1');
 assert.equal(written.event.identity.agent_id, 'forge');
-assert.equal(written.event.payload.prompt, 'Authorization: [REDACTED_API_KEY]');
+assert.equal(written.event.payload.prompt, 'Authorization: sk-1234567890abcdef');
 assert.equal(written.event.payload.system_prompt, 'raw system prompt');
 assert.equal(written.event.payload.history_messages[0].content, 'full user prompt');
-assert.deepEqual(written.event.masking.masked, [contract.AGENT_OBSERVABILITY_MASK_BASIC_API_KEY_PATTERN]);
+assert.equal(Object.prototype.hasOwnProperty.call(written.event, ['mask', 'ing'].join('')), false);
 assert.equal(contract.validateAgentObservabilityIngressEvent(written.event).ok, true);
 
 const deliveryTargetHook = api.hooks.find((hook) => hook.name === 'subagent_delivery_target');

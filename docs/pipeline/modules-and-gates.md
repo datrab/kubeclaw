@@ -121,7 +121,7 @@ The status output is safer than guessing from one artifact because it is project
 
 Current gate types:
 
-- `review`: Echo/reviewer sessions evaluate artifacts. `on_fail` can stop or trigger fix-and-rereview cycles.
+- `review`: Echo/reviewer sessions evaluate artifacts. `on_fail` is `stop`.
 - `approval`: Nova writes approval request artifacts and waits for an operator decision or timeout policy.
 - `buster`: Buster runs a gate-level test task. `on_fail` can stop or trigger fix-and-retest cycles.
 

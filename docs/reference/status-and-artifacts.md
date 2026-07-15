@@ -54,6 +54,8 @@ Run-scoped:
 - `.swarm/logs/pipeline/runs/<run_id>/redis/redis-exchanges.jsonl`
 - `.swarm/logs/pipeline/runs/<run_id>/redis/redis-ops.jsonl`
 
+Needs-Nova handoff rows in `nova-injections.jsonl` are valid only when they include the Gateway `message.send` receipt for the launch channel.
+
 ## Module Artifacts
 
 Common module artifacts:

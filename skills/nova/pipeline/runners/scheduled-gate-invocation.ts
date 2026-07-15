@@ -3,22 +3,23 @@ import { buildPluginInvocationEnvelope, createPluginContext } from '../core/cont
 import { requireStageHandler } from '../core/registry.ts';
 import { ensurePipelineRunLogDir } from '../core/paths.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 function requireNonEmptyString(value, label) {
-  if (typeof value !== 'string' || !value.trim()) {
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) {
     const messages = {
       stageId: 'scheduled gate invocation requires explicit stageId',
       gateId: 'scheduled gate invocation requires explicit gateId',
       runId: 'scheduled gate invocation requires explicit runId',
       gateType: 'scheduled gate invocation requires explicit gateType',
     };
-    throw new Error(messages[label] || `scheduled gate invocation requires explicit ${label}`);
+    throw new Error(selectDefinedValue(() => (messages[label]), () => (`scheduled gate invocation requires explicit ${label}`)));
   }
   return value.trim();
 }
 
 function requirePositiveAttempt(value) {
   const attempt = Number(value);
-  if (!Number.isFinite(attempt) || attempt < 1) {
+  if (selectTruthyValue(() => (!Number.isFinite(attempt)), () => (attempt < 1))) {
     throw new Error('scheduled gate invocation requires explicit positive attempt');
   }
   return attempt;
@@ -48,7 +49,7 @@ export function assertScheduledGateInvocationIdentity({
   gateInput,
   pluginInvocation,
 }) {
-  const ids = gateInput?.ids || {};
+  const ids = selectDefinedValue(() => (gateInput?.ids), () => ({}));
   const explicitStageId = requireNonEmptyString(stageId, 'stageId');
   const explicitGateId = requireNonEmptyString(gateId, 'gateId');
   const runId = requireNonEmptyString(ids.runId, 'runId');
@@ -103,7 +104,7 @@ export async function runScheduledGateInvocation({
       gateType: identity.gateType,
       novaPromptProvided: Boolean(opts?.novaPrompt),
     },
-    injectedDeps: opts.deps || null,
+    injectedDeps: selectTruthyValue(() => (opts.deps), () => (null)),
   });
 
   const rawResult = await executeGate(

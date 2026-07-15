@@ -39,6 +39,7 @@ test('publishTaskCompletionWithArtifact writes and verifies output_file before R
     moduleId: payload.module_id,
     outcome: 'FAIL',
     reason: 'output_file_missing',
+    failureClass: 'output_file_missing',
     summary: 'child did not write output_file',
     ensureBusterOutputFile: (actualPayload, result) => {
       calls.push({ type: 'ensure', payload: actualPayload, result });
@@ -62,6 +63,7 @@ test('publishTaskCompletionWithArtifact writes and verifies output_file before R
   assert.equal(redisClient.calls[0].fields.outcome, 'FAIL');
   assert.equal(redisClient.calls[0].fields.status, 'FAIL');
   assert.equal(redisClient.calls[0].fields.reason, 'output_file_missing');
+  assert.equal(redisClient.calls[0].fields.failure_class, 'output_file_missing');
 });
 
 test('publishTaskCompletionWithArtifact rejects failed output_file verification without Redis completion', async () => {
@@ -91,6 +93,40 @@ test('publishTaskCompletionWithArtifact rejects failed output_file verification 
 
   assert.equal(redisClient.calls.length, 0);
 });
+
+test('publishTaskCompletionWithArtifact emits failed completion for output_file contract failure', async () => {
+  const redisClient = createRecordingRedisClient();
+  const payload = {
+    task_type: 'module_test',
+    project: 'project',
+    module_id: 'mod',
+    run_id: 'run',
+    attempt: 1,
+    dispatch_id: 'dispatch',
+    completion_stream: 'swarm:nova:completion',
+    output_file: 'Projects/project/src/.swarm/modules/mod/buster-output.json',
+  };
+
+  const result = await publishTaskCompletionWithArtifact(redisClient, payload, {
+    moduleId: payload.module_id,
+    outcome: 'PASS',
+    reason: 'agent_verdict_pass',
+    summary: 'agent verdict pass',
+    ensureBusterOutputFile: () => ({ ok: false, path: payload.output_file, source: 'existing', status: 'PASS', reason: 'output_file_identity_mismatch:run_id' }),
+    verifyAndPush: async () => {
+      throw new Error('verify should not run');
+    },
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(result.outputFileResult.ok, false);
+  assert.equal(result.verifyResult, null);
+  assert.equal(redisClient.calls.length, 1);
+  assert.equal(redisClient.calls[0].fields.outcome, 'FAIL');
+  assert.equal(redisClient.calls[0].fields.reason, 'output_file_identity_mismatch:run_id');
+  assert.equal(redisClient.calls[0].fields.failure_class, 'output_contract_failed');
+});
+
 
 test('ensureTaskTerminalBeforeAck dead-letters non-terminal process results instead of synthesizing completion', async () => {
   const redisClient = createRecordingRedisClient();

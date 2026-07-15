@@ -1,8 +1,9 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 
 function normalizeModuleStepId(stepId: string): string | null {
-  if (typeof stepId !== 'string' || !stepId.trim()) return null;
-  if (stepId.startsWith('gate:') || stepId.startsWith('validator:')) return null;
+  if (selectTruthyValue(() => (typeof stepId !== 'string'), () => (!stepId.trim()))) return null;
+  if (selectTruthyValue(() => (stepId.startsWith('gate:')), () => (stepId.startsWith('validator:')))) return null;
   return stepId.startsWith('module:') ? stepId.slice('module:'.length) : stepId;
 }
 
@@ -17,7 +18,7 @@ function explicitGateModuleId(progress: AnyRecord = {}, gateId = ''): string | n
         : gate.targetModuleId
           ? gate.targetModuleId
           : null;
-  if (typeof explicit !== 'string' || !explicit.trim()) return null;
+  if (selectTruthyValue(() => (typeof explicit !== 'string'), () => (!explicit.trim()))) return null;
   return progress?.modules?.[explicit] ? explicit : null;
 }
 
@@ -26,7 +27,7 @@ export function resolveGateTargetModule(progress: AnyRecord = {}, gateId = ''): 
   if (explicit) {
     return {
       moduleId: explicit,
-      moduleDir: progress?.modules?.[explicit]?.dir || null,
+      moduleDir: selectTruthyValue(() => (progress?.modules?.[explicit]?.dir), () => (null)),
       source: 'gate_config',
     };
   }
@@ -42,7 +43,7 @@ export function resolveGateTargetModule(progress: AnyRecord = {}, gateId = ''): 
       if (!progress?.modules?.[moduleId]) continue;
       return {
         moduleId,
-        moduleDir: progress.modules[moduleId]?.dir || null,
+        moduleDir: selectTruthyValue(() => (progress.modules[moduleId]?.dir), () => (null)),
         source: 'execution_order',
       };
     }

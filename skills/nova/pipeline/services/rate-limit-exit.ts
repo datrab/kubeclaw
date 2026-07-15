@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/rate-limit-exit.js — Rate-limit exit/result builders and finalizers
 
 import { log } from '../core/logger.ts';
@@ -20,37 +21,83 @@ import {
 import {
   resolveResultAttempt,
   resolveResultDispatchId,
-  resolveResultSessionKey,
   resolveResultGatewayLabel,
+  resolveResultSessionKey,
 } from './correlation.ts';
 
+const RATE_LIMIT_EXHAUSTED_REASON = 'rate_limit_exhausted';
+const MAX_PAUSES_EXCEEDED_REASON = 'max_pauses_exceeded';
+const REDIS_COMPLETION_SOURCE_MISSING = 'missing_completion_source';
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function selectPresentValue(...values) {
+  for (const value of values) {
+    if (typeof value === 'string' && value.length > 0) return value;
+  }
+  return '';
+}
+
+function firstDefined(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return null;
+}
+
+function statusAuthority(status, key, resolvedValue) {
+  return Object.prototype.hasOwnProperty.call(status, key) ? status[key] : resolvedValue;
+}
+
+function requiredNonnegativeInteger(value, label) {
+  const count = Number(value);
+  if (selectTruthyValue(() => (!Number.isFinite(count)), () => (count < 0))) {
+    throw new Error(`${label} is required for rate-limit exhaustion results`);
+  }
+  return Math.trunc(count);
+}
+
 function normalizeGateRateLimitRunId(value) {
-  if (typeof value !== 'string' || value.trim() === '' || value !== value.trim()) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'string'), () => (value.trim() === ''))), () => (value !== value.trim()))) {
     throw new Error('gate rate-limit finalizer requires non-empty explicit run id');
   }
   return value;
 }
 
-function buildRateLimitOperatorAlertPayload(exitResult = {}, reason = 'rate_limit_exhausted', overrides = {}) {
+function errorMessage(error) {
+  if (error && typeof error === 'object' && 'message' in error) {
+    const message = error.message;
+    if (typeof message === 'string' && message.trim()) return message;
+  }
+  return String(error);
+}
+
+function buildRateLimitOperatorAlertPayload(exitResult = {}, reason = RATE_LIMIT_EXHAUSTED_REASON, overrides = {}) {
   return {
-    module_id: exitResult.module_id || exitResult.module || null,
-    gate_id: exitResult.gate_id || exitResult.gate || null,
-    gate_type: exitResult.gate_type || null,
-    attempt: exitResult.attempt ?? null,
-    dispatch_id: exitResult.dispatch_id || null,
-    gateway_label: exitResult.gateway_label || null,
-    session_key: exitResult.session_key || null,
+    module_id: selectTruthyValue(() => (selectTruthyValue(() => (exitResult.module_id), () => (exitResult.module))), () => (null)),
+    gate_id: selectTruthyValue(() => (selectTruthyValue(() => (exitResult.gate_id), () => (exitResult.gate))), () => (null)),
+    gate_type: selectTruthyValue(() => (exitResult.gate_type), () => (null)),
+    attempt: selectDefinedValue(() => (exitResult.attempt), () => (null)),
+    dispatch_id: selectTruthyValue(() => (exitResult.dispatch_id), () => (null)),
+    gateway_label: selectTruthyValue(() => (exitResult.gateway_label), () => (null)),
+    session_key: selectTruthyValue(() => (exitResult.session_key), () => (null)),
     terminal_status: 'rate_limited',
-    reason: exitResult.reason || reason,
+    reason: selectPresentValue(exitResult.reason, reason),
     rate_limit_exhausted: true,
-    max_rate_limit_pauses: exitResult.max_rate_limit_pauses ?? null,
-    rate_limit_pauses: exitResult.rate_limit_pauses ?? null,
-    rate_limit_status: exitResult.rate_limit_status || null,
+    max_rate_limit_pauses: selectDefinedValue(() => (exitResult.max_rate_limit_pauses), () => (null)),
+    rate_limit_pauses: selectDefinedValue(() => (exitResult.rate_limit_pauses), () => (null)),
+    rate_limit_status: selectTruthyValue(() => (exitResult.rate_limit_status), () => (null)),
     ...overrides,
   };
 }
 
-export function buildSessionRateLimitExitResult(result = {}, reason = 'rate_limit_exhausted', {
+export function buildSessionRateLimitExitResult(result = {}, reason = RATE_LIMIT_EXHAUSTED_REASON, {
   identity = {},
   maxPauses = null,
   exit = null,
@@ -63,17 +110,20 @@ export function buildSessionRateLimitExitResult(result = {}, reason = 'rate_limi
   resolveSessionKey = resolveResultSessionKey,
 } = {}) {
   const rateLimitStatus = resolveSessionRateLimitExhaustedStatus(result);
-  if (!rateLimitStatus || typeof rateLimitStatus !== 'object') {
+  if (selectTruthyValue(() => (!rateLimitStatus), () => (typeof rateLimitStatus !== 'object'))) {
     throw new Error('rate_limit_status is required for rate-limit exhaustion results');
   }
   const resolvedIdentity = resolveRateLimitIdentity(identity, { result, rateLimitStatus });
-  const maxRateLimitPauses = resolveSessionRateLimitMaxPauses(result, maxPauses) ?? 0;
+  const maxRateLimitPauses = requiredNonnegativeInteger(
+    resolveSessionRateLimitMaxPauses(result, maxPauses),
+    'max_rate_limit_pauses',
+  );
   const resolvedRunId = resolveRunId(result, resolvedIdentity.run_id);
   const correlation = {
-    attempt: resolveAttempt(result) ?? resolvedIdentity.attempt ?? null,
-    dispatch_id: resolveDispatchId(result) ?? resolvedIdentity.dispatch_id ?? null,
-    gateway_label: resolveGatewayLabel(result) ?? resolvedIdentity.gateway_label ?? null,
-    session_key: resolveSessionKey(result) ?? resolvedIdentity.session_key ?? null,
+    attempt: selectDefinedValue(() => (selectDefinedValue(() => (resolveAttempt(result)), () => (resolvedIdentity.attempt))), () => (null)),
+    dispatch_id: selectDefinedValue(() => (resolveDispatchId(result)), () => (null)),
+    gateway_label: selectDefinedValue(() => (resolveGatewayLabel(result)), () => (null)),
+    session_key: selectDefinedValue(() => (resolveSessionKey(result)), () => (null)),
     ...(resolvedRunId == null ? {} : { run_id: resolvedRunId }),
   };
   const {
@@ -82,7 +132,7 @@ export function buildSessionRateLimitExitResult(result = {}, reason = 'rate_limi
     rate_limit_pauses: _ignoredRateLimitPauses,
     max_rate_limit_pauses: _ignoredMaxRateLimitPauses,
     ...resultRest
-  } = result || {};
+  } = objectRecord(result);
 
   return buildSessionRateLimitExhaustedResult(
     {
@@ -90,7 +140,7 @@ export function buildSessionRateLimitExitResult(result = {}, reason = 'rate_limi
       ...correlation,
       ...statusOverrides,
     },
-    result?.rate_limit_pauses ?? 0,
+    requiredNonnegativeInteger(result?.rate_limit_pauses, 'rate_limit_pauses'),
     maxRateLimitPauses,
     {
       ...resultRest,
@@ -106,26 +156,26 @@ export function buildTerminalOwnedRedisRateLimitExitResult(redisEntry = {}, {
   expectedIdentity = {},
   status = {},
   resultOverrides = {},
-  reason = 'rate_limit_exhausted',
+  reason = RATE_LIMIT_EXHAUSTED_REASON,
   exit = null,
 } = {}) {
-  const exhaustedDispatchId = (resolveResultDispatchId(redisEntry) ?? expectedIdentity.dispatch_id ?? null);
-  const exhaustedSessionKey = (resolveResultSessionKey(redisEntry) ?? expectedIdentity.session_key ?? null);
-  const exhaustedGatewayLabel = (resolveResultGatewayLabel(redisEntry) ?? expectedIdentity.gateway_label ?? null);
-  const exhaustedAttempt = (resolveResultAttempt(redisEntry) ?? expectedIdentity.attempt ?? null);
-  const exhaustedRunId = redisEntry.run_id || expectedIdentity.run_id || null;
-  const exhaustedMaxRateLimitPauses = redisEntry.max_rate_limit_pauses ?? redisEntry.max_pauses ?? null;
-  const exhaustedPauseCount = redisEntry.rate_limit_pauses ?? redisEntry.pause_count ?? exhaustedMaxRateLimitPauses ?? 0;
+  const exhaustedDispatchId = selectDefinedValue(() => (expectedIdentity.dispatch_id), () => (null));
+  const exhaustedSessionKey = selectDefinedValue(() => (expectedIdentity.session_key), () => (null));
+  const exhaustedGatewayLabel = selectDefinedValue(() => (expectedIdentity.gateway_label), () => (null));
+  const exhaustedAttempt = (selectDefinedValue(() => (selectDefinedValue(() => (resolveResultAttempt(redisEntry)), () => (expectedIdentity.attempt))), () => (null)));
+  const exhaustedRunId = selectTruthyValue(() => (selectTruthyValue(() => (redisEntry.run_id), () => (expectedIdentity.run_id))), () => (null));
+  const exhaustedMaxRateLimitPauses = selectDefinedValue(() => (redisEntry.max_rate_limit_pauses), () => (null));
+  const exhaustedPauseCount = requiredNonnegativeInteger(redisEntry.rate_limit_pauses, 'redis rate_limit_pauses');
   const exhaustedStatus = {
     ...status,
-    reason: status.reason ?? (redisEntry.reason || redisEntry.summary || 'max_pauses_exceeded'),
-    source: status.source ?? (redisEntry.source || 'unknown'),
-    run_id: status.run_id ?? exhaustedRunId,
-    attempt: status.attempt ?? exhaustedAttempt,
-    dispatch_id: status.dispatch_id ?? exhaustedDispatchId,
-    gateway_label: status.gateway_label ?? exhaustedGatewayLabel,
-    session_key: status.session_key ?? exhaustedSessionKey,
-    max_rate_limit_pauses: status.max_rate_limit_pauses ?? exhaustedMaxRateLimitPauses,
+    reason: selectDefinedValue(() => (status.reason), () => (selectPresentValue(redisEntry.reason, redisEntry.summary, MAX_PAUSES_EXCEEDED_REASON))),
+    source: selectDefinedValue(() => (status.source), () => (selectPresentValue(redisEntry.source, REDIS_COMPLETION_SOURCE_MISSING))),
+    run_id: statusAuthority(status, 'run_id', exhaustedRunId),
+    attempt: statusAuthority(status, 'attempt', exhaustedAttempt),
+    dispatch_id: statusAuthority(status, 'dispatch_id', exhaustedDispatchId),
+    gateway_label: statusAuthority(status, 'gateway_label', exhaustedGatewayLabel),
+    session_key: statusAuthority(status, 'session_key', exhaustedSessionKey),
+    max_rate_limit_pauses: statusAuthority(status, 'max_rate_limit_pauses', exhaustedMaxRateLimitPauses),
     _source: 'redis',
     _redis_entry: redisEntry,
   };
@@ -141,7 +191,7 @@ export function buildTerminalOwnedRedisRateLimitExitResult(redisEntry = {}, {
       max_rate_limit_pauses: exhaustedMaxRateLimitPauses,
       rate_limit_pauses: exhaustedPauseCount,
       rate_limit_status: exhaustedStatus,
-      source: redisEntry.source || 'unknown',
+      source: selectPresentValue(redisEntry.source, REDIS_COMPLETION_SOURCE_MISSING),
       status: exhaustedStatus,
       _source: 'redis',
       _redis_entry: redisEntry,
@@ -151,10 +201,10 @@ export function buildTerminalOwnedRedisRateLimitExitResult(redisEntry = {}, {
     {
       identity: {
         run_id: exhaustedRunId,
-        attempt: expectedIdentity.attempt || null,
-        dispatch_id: expectedIdentity.dispatch_id || null,
-        gateway_label: expectedIdentity.gateway_label || null,
-        session_key: expectedIdentity.session_key || null,
+        attempt: selectDefinedValue(() => (expectedIdentity.attempt), () => (null)),
+        dispatch_id: selectDefinedValue(() => (expectedIdentity.dispatch_id), () => (null)),
+        gateway_label: selectDefinedValue(() => (expectedIdentity.gateway_label), () => (null)),
+        session_key: selectDefinedValue(() => (expectedIdentity.session_key), () => (null)),
       },
       maxPauses: exhaustedMaxRateLimitPauses,
       ...(exit == null ? {} : { exit }),
@@ -181,16 +231,16 @@ export function buildModuleTerminalOwnedRedisRateLimitExitResult(redisEntry = {}
     phase,
     identity: {
       ...identity,
-      run_id: expectedIdentity.run_id || identity.run_id || null,
-      attempt: expectedIdentity.attempt || identity.attempt || null,
-      dispatch_id: expectedIdentity.dispatch_id || identity.dispatch_id || null,
-      gateway_label: expectedIdentity.gateway_label || identity.gateway_label || null,
-      session_key: expectedIdentity.session_key || identity.session_key || null,
+      run_id: firstDefined(expectedIdentity.run_id, identity.run_id),
+      attempt: firstDefined(expectedIdentity.attempt, identity.attempt),
+      dispatch_id: firstDefined(expectedIdentity.dispatch_id, identity.dispatch_id),
+      gateway_label: firstDefined(expectedIdentity.gateway_label, identity.gateway_label),
+      session_key: firstDefined(expectedIdentity.session_key, identity.session_key),
     },
   });
 
-  const resolvedCompletionSummary = exhaustedStatus.completion_summary ?? completionSummary ?? redisEntry.summary ?? null;
-  const resolvedForgeCommitHash = exhaustedStatus.forge_commit_hash ?? forgeCommitHash ?? redisEntry.commit_hash ?? null;
+  const resolvedCompletionSummary = selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (exhaustedStatus.completion_summary), () => (completionSummary))), () => (redisEntry.summary))), () => (null));
+  const resolvedForgeCommitHash = selectDefinedValue(() => (exhaustedStatus.forge_commit_hash), () => (null));
 
   return buildTerminalOwnedRedisRateLimitExitResult(redisEntry, {
     expectedIdentity,
@@ -259,15 +309,15 @@ export async function finalizeSessionRateLimitExhaustion(result = {}, {
       appendDurableOperatorAlert(config, 'pipeline.operator_alert', buildRateLimitOperatorAlertPayload(exitResult, reason, {
         reason: 'rate_limit_exhaustion_delivery_failed',
         failed_hook: hookName,
-        error: error?.message || String(error),
-        original_reason: exitResult.reason || reason,
+        error: errorMessage(error),
+        original_reason: selectPresentValue(exitResult.reason, reason),
       }), {
         severity: 'WARN',
         source: 'rate_limit',
         emitter: 'nova/pipeline/services/rate-limit-exit',
       });
     } catch (alertError) {
-      log('WARN', `Rate-limit exhaustion ${hookName} delivery-failure alert write failed: ${alertError?.message || alertError}`);
+      log('WARN', `Rate-limit exhaustion ${hookName} delivery-failure alert write failed: ${errorMessage(alertError)}`);
     }
   };
 
@@ -277,7 +327,7 @@ export async function finalizeSessionRateLimitExhaustion(result = {}, {
       await hook(exitResult);
     } catch (error) {
       appendDeliveryFailureAlert(hookName, error);
-      log('WARN', `Rate-limit exhaustion ${hookName} hook failed after durable local evidence was written: ${error?.message || error}`);
+      log('WARN', `Rate-limit exhaustion ${hookName} hook failed after durable local evidence was written: ${errorMessage(error)}`);
     }
   };
 
@@ -306,14 +356,14 @@ export function appendInvalidRateLimitCooldownResumeAtAlert(config, step = {}, c
   appendDurableOperatorAlert(config, 'pipeline.operator_alert', {
     module_id: step.type === 'module' ? step.id : null,
     gate_id: step.type === 'gate' ? step.id : null,
-    gate_type: cooldown.gate_type || null,
-    attempt: cooldown.attempt ?? null,
-    dispatch_id: cooldown.dispatch_id || null,
-    gateway_label: cooldown.gateway_label || null,
-    session_key: cooldown.session_key || null,
+    gate_type: selectTruthyValue(() => (cooldown.gate_type), () => (null)),
+    attempt: selectDefinedValue(() => (cooldown.attempt), () => (null)),
+    dispatch_id: selectTruthyValue(() => (cooldown.dispatch_id), () => (null)),
+    gateway_label: selectTruthyValue(() => (cooldown.gateway_label), () => (null)),
+    session_key: selectTruthyValue(() => (cooldown.session_key), () => (null)),
     reason: 'invalid_rate_limit_cooldown_resume_at',
-    resume_at: resumeAt ?? null,
-    step_type: step.type || null,
+    resume_at: selectDefinedValue(() => (resumeAt), () => (null)),
+    step_type: selectTruthyValue(() => (step.type), () => (null)),
   }, {
     severity: 'WARN',
     source: 'rate_limit',
@@ -337,7 +387,7 @@ export async function finalizePostRunSummaryRateLimitExhaustion(result = {}, {
     ...buildOptions,
     config,
     emitRetryExhausted: (exitResult) => {
-      if (!config || !moduleId || !phase || !exhaustedReason) return;
+      if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (!config), () => (!moduleId))), () => (!phase))), () => (!exhaustedReason))) return;
       return onRetryExhausted({ config }, moduleId, {
         attempt: exitResult.attempt,
         phase,
@@ -350,7 +400,7 @@ export async function finalizePostRunSummaryRateLimitExhaustion(result = {}, {
       });
     },
     emitSummaryCompleted: (exitResult) => {
-      if (!config || !summaryType || !exhaustedReason) return;
+      if (selectTruthyValue(() => (selectTruthyValue(() => (!config), () => (!summaryType))), () => (!exhaustedReason))) return;
       return onSummaryCompleted({ config }, summaryType, {
         attempt: exitResult.attempt,
         status: 'failed',
@@ -457,8 +507,8 @@ export function createTrackedSummarySessionRateLimitExhaustionOptions({
     discordIdentity,
     discordExtraFields: (exitResult) => {
       const resolvedExtraFields = typeof discordExtraFields === 'function'
-        ? (discordExtraFields(exitResult) || [])
-        : (discordExtraFields || []);
+        ? arrayValue(discordExtraFields(exitResult))
+        : arrayValue(discordExtraFields);
       return [
         ...(agentId == null ? [] : [{ name: 'Agent', value: agentId, inline: true }]),
         ...(model == null ? [] : [{ name: 'Model', value: model, inline: true }]),
@@ -633,7 +683,7 @@ export function createModuleSessionRateLimitExhaustionOptions(config, {
 } = {}) {
   return {
     emitRetryExhausted: (exitResult) => {
-      if (!config || !moduleId) return;
+      if (selectTruthyValue(() => (!config), () => (!moduleId))) return;
       return onRetryExhausted({ config }, moduleId, {
         attempt: exitResult.attempt,
         phase,
@@ -646,10 +696,10 @@ export function createModuleSessionRateLimitExhaustionOptions(config, {
       });
     },
     sendDiscord: async (exitResult) => {
-      if (!config || !discordTitle || !discordDescription) return;
+      if (selectTruthyValue(() => (selectTruthyValue(() => (!config), () => (!discordTitle))), () => (!discordDescription))) return;
       const title = typeof discordTitle === 'function' ? discordTitle(exitResult) : discordTitle;
       const description = typeof discordDescription === 'function' ? discordDescription(exitResult) : discordDescription;
-      if (!title || !description) return;
+      if (selectTruthyValue(() => (!title), () => (!description))) return;
       await notifyDiscord(
         config,
         discordLevel,

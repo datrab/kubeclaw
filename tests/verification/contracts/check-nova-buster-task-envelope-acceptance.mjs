@@ -23,6 +23,7 @@ const config = {
   repo_root: repoRoot,
   run_id: runId,
   _runId: runId,
+  discord_webhook_url: 'https://discord.example/contract-webhook?wait=true',
   _runStats: {},
   pipeline_defaults: {
     timeout_minutes: 30,
@@ -77,7 +78,7 @@ const progress = {
           deployment_yaml: 'k8s/app.yaml',
         },
       },
-      capabilities: ['kubernetes_api'],
+      capabilities: ['kubernetes'],
       output_file: 'buster-test/final-buster-output.json',
       instructions_file: 'buster-test/FINAL-BUSTER.md',
     },
@@ -109,6 +110,7 @@ const payload = buildBusterPayload(
 
 assert.equal(payload.task_type, 'module_test');
 assert.equal(payload.run_id, runId);
+assert.equal(payload.discord_webhook_url, config.discord_webhook_url);
 assert.equal(payload.attempt, attempt);
 assert.equal(payload.dispatch_id, dispatchId);
 assert.equal(payload.commit_hash, status.forge_commit_hash);
@@ -116,6 +118,7 @@ assert.equal(payload.timeout_seconds, 12 * 60);
 assert.equal(payload.session.timeout_seconds, payload.timeout_seconds);
 assert.equal(payload.session.runtime, 'subagent');
 assert.equal(payload.session.agentId, 'codex');
+assert.equal(payload.session.cwd, repoRoot);
 assert.equal(payload.model_source, 'project_default');
 assert.equal(payload.thinking_source, 'project_default');
 assert.equal(payload.thinking_supported, true);
@@ -194,10 +197,11 @@ const gatePayload = buildBusterPayload(
   gateId,
   'gate_test',
   'Run the final Buster contract test.',
-  status,
+  null,
   {
     attempt,
     dispatch_id: gateDispatchId,
+    commit_hash: status.forge_commit_hash,
     model: 'gpt-5-codex',
     model_source: 'project_default',
     thinking: 'high',
@@ -211,8 +215,10 @@ const gatePayload = buildBusterPayload(
 assert.equal(gatePayload.task_type, 'gate_test');
 assert.equal(gatePayload.gate_id, gateId);
 assert.equal(gatePayload.run_id, runId);
+assert.equal(gatePayload.discord_webhook_url, config.discord_webhook_url);
 assert.equal(gatePayload.attempt, attempt);
 assert.equal(gatePayload.dispatch_id, gateDispatchId);
+assert.equal(gatePayload.commit_hash, status.forge_commit_hash);
 assert.equal(gatePayload.timeout_seconds, 20 * 60);
 assert.equal(gatePayload.session.timeout_seconds, gatePayload.timeout_seconds);
 assert.equal(gatePayload.session.runtime, 'subagent');
@@ -254,7 +260,7 @@ assert.deepEqual(gateIdentity, {
   workerType: null,
   timeoutSeconds: 1200,
   suites: ['manifest'],
-  capabilities: ['kubernetes_api'],
+  capabilities: ['kubernetes'],
   suiteTimeoutMs: 180000,
 });
 

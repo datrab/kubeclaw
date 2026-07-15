@@ -12,6 +12,7 @@ import {
   emitGateRetryExhausted,
   finalizeGateSessionRateLimitExit,
   handleSessionRateLimit,
+  resolveRateLimitCooldown,
   resumeDurableCooldownForStep,
 } from '../../../../../skills/nova/pipeline/services/rate-limit.ts';
 import { onSummaryCompleted } from '../../../../../skills/nova/pipeline/services/telemetry.ts';
@@ -83,6 +84,157 @@ function readJsonl(filePath) {
     .map((line) => JSON.parse(line));
 }
 
+test('rate-limit cooldown uses provider resume_at with reset safety buffer', () => {
+  const resolved = resolveRateLimitCooldown({
+    resume_at: '2026-07-02T12:01:00.000Z',
+  }, {
+    cooldown_hours: 2,
+    cooldown_buffer_ms: 5000,
+  }, {
+    nowMs: Date.parse('2026-07-02T12:00:00.000Z'),
+  });
+
+  assert.equal(resolved.cooldownSource, 'provider_status_resume_at');
+  assert.equal(resolved.cooldownMs, 180_000);
+  assert.equal(resolved.resumeAt.toISOString(), '2026-07-02T12:03:00.000Z');
+});
+
+test('rate-limit cooldown uses provider retry_after before configured cooldown', () => {
+  const resolved = resolveRateLimitCooldown({
+    retry_after_seconds: 45,
+  }, {
+    cooldown_hours: 2,
+    cooldown_buffer_ms: 1000,
+  }, {
+    nowMs: Date.parse('2026-07-02T12:00:00.000Z'),
+  });
+
+  assert.equal(resolved.cooldownSource, 'provider_status_retry_after');
+  assert.equal(resolved.cooldownMs, 46_000);
+  assert.equal(resolved.resumeAt.toISOString(), '2026-07-02T12:00:46.000Z');
+});
+
+test('rate-limit cooldown parses provider next reset duration from authorized detail', () => {
+  const resolved = resolveRateLimitCooldown({
+    detail: "You've reached your Codex subscription usage limit. Next reset in 2 hours, Jun 29 at 10:45 PM UTC.",
+  }, {
+    cooldown_hours: 8,
+    cooldown_buffer_ms: 5000,
+  }, {
+    nowMs: Date.parse('2026-07-02T12:00:00.000Z'),
+  });
+
+  assert.equal(resolved.cooldownSource, 'provider_status_retry_after');
+  assert.equal(resolved.cooldownMs, 7_205_000);
+  assert.equal(resolved.retryAfterSeconds, 7200);
+  assert.equal(resolved.resumeAt.toISOString(), '2026-07-02T14:00:05.000Z');
+});
+
+test('rate-limit cooldown prefers provider reset timestamp plus safety buffer when detail exposes exact reset time', () => {
+  const resolved = resolveRateLimitCooldown({
+    detail: "You've reached your Codex subscription usage limit. Next reset in 17 minutes, Jul 11 at 4:12 PM UTC.",
+  }, {
+    cooldown_hours: 8,
+    cooldown_buffer_ms: 5000,
+  }, {
+    nowMs: Date.parse('2026-07-11T15:55:00.000Z'),
+  });
+
+  assert.equal(resolved.cooldownSource, 'provider_status_reset_at_text');
+  assert.equal(resolved.cooldownMs, 1_140_000);
+  assert.equal(resolved.retryAfterSeconds, 1020);
+  assert.equal(resolved.resumeAt.toISOString(), '2026-07-11T16:14:00.000Z');
+});
+
+test('rate-limit cooldown parses compact provider reset duration from authorized detail', () => {
+  const resolved = resolveRateLimitCooldown({
+    detail: 'Codex subscription usage limit reached. Resets in 2h 28m.',
+  }, {
+    cooldown_hours: 8,
+    cooldown_buffer_ms: 0,
+  }, {
+    nowMs: Date.parse('2026-07-02T12:00:00.000Z'),
+  });
+
+  assert.equal(resolved.cooldownSource, 'provider_status_retry_after');
+  assert.equal(resolved.cooldownMs, 8_880_000);
+  assert.equal(resolved.retryAfterSeconds, 8880);
+  assert.equal(resolved.resumeAt.toISOString(), '2026-07-02T14:28:00.000Z');
+});
+
+test('session cooldown lifecycle uses provider next reset duration before config policy', async () => {
+  const config = makeConfig();
+  config.rate_limit.cooldown_hours = 8;
+  config.rate_limit.cooldown_buffer_ms = 1000;
+  let sleptMs = null;
+
+  await handleSessionRateLimit(config, {
+    module_id: 'alpha',
+    current_phase: 'forge',
+    detail: "You've reached your Codex subscription usage limit. Next reset in 2 hours.",
+  }, {
+    pauseCount: 1,
+    maxPauses: 1,
+    sendPauseDiscord: async () => {},
+    sleepFn: async (cooldownMs) => {
+      sleptMs = cooldownMs;
+    },
+  });
+
+  const cooldown = getLifecycleCooldown(config, { stepType: 'module', stepId: 'alpha' });
+  assert.equal(cooldown.cooldown_source, 'provider_status_retry_after');
+  assert.equal(cooldown.retry_after_seconds, 7200);
+  assert.equal(cooldown.cooldown_buffer_ms, 1000);
+  assert.equal(sleptMs, 7_201_000);
+});
+
+test('rate-limit cooldown falls back to configured policy with explicit source commentary', async () => {
+  const config = makeConfig();
+  config.rate_limit.cooldown_hours = 0.001;
+  config.rate_limit.cooldown_buffer_ms = 1000;
+  const discordCalls = [];
+  const lifecycleBefore = Date.now();
+
+  await handleSessionRateLimit(config, {
+    module_id: 'alpha',
+    current_phase: 'forge',
+    detail: 'provider returned rate limit without reset metadata',
+  }, {
+    pauseCount: 1,
+    maxPauses: 1,
+    sendPauseDiscord: async (ctx) => {
+      discordCalls.push(ctx);
+    },
+    sleepFn: async () => {},
+  });
+
+  const cooldown = getLifecycleCooldown(config, { stepType: 'module', stepId: 'alpha' });
+  assert.equal(cooldown.cooldown_source, 'config');
+  assert.equal(cooldown.cooldown_buffer_ms, 1000);
+  assert.ok(new Date(cooldown.resume_at).getTime() >= lifecycleBefore);
+  assert.equal(discordCalls.length, 1);
+  assert.equal(discordCalls[0].cooldownSource, 'config');
+  assert.ok(discordCalls[0].embed.fields.some((field) => (
+    field.name === 'Cooldown source'
+    && field.value.includes('configured rate_limit.cooldown_hours=0.001')
+  )));
+});
+
+test('rate-limit cooldown rejects empty monitor status instead of inventing configured wait', () => {
+  assert.throws(
+    () => resolveRateLimitCooldown({
+      reason: 'rate_limited',
+      detail: '',
+    }, {
+      cooldown_hours: 2,
+      cooldown_buffer_ms: 0,
+    }, {
+      nowMs: Date.parse('2026-07-11T20:52:20.000Z'),
+    }),
+    /did not include reset metadata or provider detail/,
+  );
+});
+
 test('resume hook failure leaves lifecycle cooldown open', async () => {
   const config = makeConfig();
 
@@ -90,6 +242,7 @@ test('resume hook failure leaves lifecycle cooldown open', async () => {
     () => handleSessionRateLimit(config, {
       module_id: 'alpha',
       current_phase: 'forge',
+      detail: 'provider returned rate limit without reset metadata',
     }, {
       pauseCount: 1,
       maxPauses: 1,

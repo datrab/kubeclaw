@@ -62,11 +62,15 @@ assert.equal(source.includes('addPaths: [swarmRoot]'), true, 'verify-task must p
 assert.equal(source.includes('[SWARM-SCOPE]'), true, 'verify-task must report swarm scope violations');
 
 const workflowsSource = fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/services/git-workflows.ts'), 'utf8');
+const gitSyncSource = workflowsSource.slice(
+  workflowsSource.indexOf('export async function gitSync'),
+  workflowsSource.indexOf('// ─── gitPushWithRetry'),
+);
 assert.equal(workflowsSource.includes("['add', '-A']"), false, 'gitPushWithRetry must not stage the entire worktree');
 assert.equal(workflowsSource.includes("['add', '--', ...addPaths]"), true, 'gitPushWithRetry commit mode must use scoped pathspecs');
 assert.equal(workflowsSource.includes('commit mode requires non-empty opts.addPaths'), true, 'gitPushWithRetry commit mode must require explicit pathspecs');
 assert.equal(workflowsSource.includes("'--autostash'"), true, 'gitPushWithRetry must tolerate unrelated dirty runtime state during pull --rebase');
-assert.equal(workflowsSource.includes('origin/${branch}'), false, 'gitSync must not reset to implicit origin/current-branch fallback');
+assert.equal(gitSyncSource.includes('origin/${branch}'), false, 'gitSync must not reset to implicit origin/current-branch fallback');
 assert.equal(workflowsSource.includes("error: 'missing_target_hash'"), true, 'gitSync must expose typed missing target hash failure metadata');
 assert.equal(workflowsSource.includes('rebase failed after'), true, 'gitPushWithRetry must fail closed after final rebase failure');
 
@@ -90,7 +94,7 @@ git(repo, ['push', '-u', 'origin', 'main']);
 
 fs.writeFileSync(path.join(repo, 'missing-addpaths.txt'), 'must not be staged\n');
 await assert.rejects(
-  () => gitPushWithRetry(repo, 'main', { commitMessage: 'missing add paths' }),
+  () => gitPushWithRetry(repo, 'main', { maxAttempts: 1, retryDelayMs: 1, commitMessage: 'missing add paths' }),
   /requires non-empty opts\.addPaths/,
   'commitMessage without addPaths must fail before staging',
 );
@@ -98,7 +102,7 @@ assert.equal(git(repo, ['diff', '--cached', '--name-only']), '', 'missing addPat
 
 fs.writeFileSync(path.join(repo, 'allowed.txt'), 'allowed\n');
 fs.writeFileSync(path.join(repo, 'unrelated.txt'), 'unrelated\n');
-await gitPushWithRetry(repo, 'main', { commitMessage: 'scoped commit', addPaths: ['allowed.txt'] });
+await gitPushWithRetry(repo, 'main', { maxAttempts: 1, retryDelayMs: 1, commitMessage: 'scoped commit', addPaths: ['allowed.txt'] });
 const committedFiles = git(repo, ['show', '--name-only', '--pretty=format:', 'HEAD']).split('\n').filter(Boolean);
 assert.deepEqual(committedFiles, ['allowed.txt'], 'scoped commit should include only explicit addPaths');
 const statusAfterScopedCommit = git(repo, ['status', '--porcelain']);

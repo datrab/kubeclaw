@@ -1,44 +1,20 @@
-// services/prompt-ingress.js — bounded/redacted operator prompt ingress for Nova CLI overrides
+import { selectTruthyValue } from '../optional-absence.ts';
+// services/prompt-ingress.js — bounded operator prompt ingress for Nova CLI overrides
 
 import fs from 'fs';
 import path from 'path';
 
 export const PROMPT_INGRESS_MAX_BYTES = 32768;
 export const PROMPT_INGRESS_MAX_CHARS = 32768;
-export const REDACTED_SECRET_PLACEHOLDER = '[REDACTED_SECRET]';
-
-const PROMPT_SECRET_PATTERNS = [
-  /sk-(?:ant|proj|live|test|app|api)[A-Za-z0-9_\-]{12,}/gi,
-  /ghp_[A-Za-z0-9]{20,}/gi,
-  /github_pat_[A-Za-z0-9_]{20,}/gi,
-  /xox[baprs]-[A-Za-z0-9-]{10,}/gi,
-  /(Bearer\s+)([A-Za-z0-9._~+/=-]{12,})/gi,
-  /((?:api[_-]?key|token|secret|password|authorization|cookie)\s*[:=]\s*)([^\s,'"`]+)/gi,
-];
 
 function pathInside(candidate, root) {
   const relative = path.relative(root, candidate);
-  return relative === '' || (relative && !relative.startsWith('..') && !path.isAbsolute(relative));
-}
-
-function redactPromptIngressSecrets(text) {
-  let redactions = 0;
-  let redacted = text;
-  for (const pattern of PROMPT_SECRET_PATTERNS) {
-    redacted = redacted.replace(pattern, (...args) => {
-      redactions += 1;
-      if (args.length >= 4 && typeof args[1] === 'string' && /(?:Bearer\s+|[:=]\s*)$/i.test(args[1])) {
-        return `${args[1]}${REDACTED_SECRET_PLACEHOLDER}`;
-      }
-      return REDACTED_SECRET_PLACEHOLDER;
-    });
-  }
-  return { text: redacted, redactions };
+  return selectTruthyValue(() => (relative === ''), () => ((relative && !relative.startsWith('..') && !path.isAbsolute(relative))));
 }
 
 export function resolvePromptFilePath(repoRoot, promptFile) {
-  if (typeof repoRoot !== 'string' || !repoRoot.trim()) throw new Error('Prompt file policy requires a repository root');
-  if (typeof promptFile !== 'string' || !promptFile.trim()) throw new Error('Prompt file path is empty');
+  if (selectTruthyValue(() => (typeof repoRoot !== 'string'), () => (!repoRoot.trim()))) throw new Error('Prompt file policy requires a repository root');
+  if (selectTruthyValue(() => (typeof promptFile !== 'string'), () => (!promptFile.trim()))) throw new Error('Prompt file path is empty');
   if (promptFile.includes('\0')) throw new Error('Prompt file path contains a null byte');
 
   const repoRealPath = fs.realpathSync(repoRoot);
@@ -81,14 +57,12 @@ function normalizePromptText(rawText, source) {
     throw new Error(`Prompt ${source} exceeds ${PROMPT_INGRESS_MAX_BYTES} byte limit`);
   }
 
-  const redaction = redactPromptIngressSecrets(trimmed);
   return {
-    prompt: redaction.text,
+    prompt: trimmed,
     metadata: {
       source,
-      chars: redaction.text.length,
-      bytes: Buffer.byteLength(redaction.text, 'utf8'),
-      redactions: redaction.redactions,
+      chars: trimmed.length,
+      bytes,
     },
   };
 }

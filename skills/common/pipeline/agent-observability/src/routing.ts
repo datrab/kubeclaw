@@ -11,6 +11,7 @@ import type {
   AgentObservabilityStreamKind,
 } from './types.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 const PAYLOAD_STREAM_EVENTS = Object.freeze([
   'openclaw.llm.input',
   'openclaw.llm.output',
@@ -29,11 +30,11 @@ export function selectAgentObservabilityStreamKey(type: AgentObservabilityIngres
 }
 
 export function normalizeAgentObservabilityMaxEventBytes(value: unknown): number {
-  if (value === undefined || value === null || value === '') {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) {
     throw new Error('agent observability max event bytes is required');
   }
   const numberValue = Number(value);
-  if (!Number.isInteger(numberValue) || numberValue <= 0) {
+  if (selectTruthyValue(() => (!Number.isInteger(numberValue)), () => (numberValue <= 0))) {
     throw new Error('agent observability max event bytes must be a positive integer');
   }
   if (numberValue > AGENT_OBSERVABILITY_ABSOLUTE_MAX_EVENT_BYTES) {

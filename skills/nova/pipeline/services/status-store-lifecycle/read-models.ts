@@ -9,12 +9,13 @@ import {
 } from './storage.ts';
 import { applyLifecycleEventToReadModels } from './projections.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 const LIFECYCLE_READ_MODELS_VERSION = 'v1';
 
 export function createDefaultLifecycleReadModels(config) {
   return {
     schemaVersion: LIFECYCLE_READ_MODELS_VERSION,
-    run_id: config?._runId || config?.run_id || getRunId(config) || null,
+    run_id: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (config?._runId), () => (config?.run_id))), () => (getRunId(config)))), () => (null)),
     generated_at: new Date().toISOString(),
     last_event_id: null,
     last_event_type: null,
@@ -52,12 +53,17 @@ export function loadLifecycleReadModels(config) {
     ? cloneSerializable(config._lifecycleReadModelsCache)
     : null;
   if (!filePath) {
-    return catchUpLifecycleReadModels(config, cached || createDefaultLifecycleReadModels(config), {
+    return catchUpLifecycleReadModels(config, lifecycleReadModelAuthority(config, cached), {
       persist: false,
     });
   }
-  const stored = readJsonIfPresent(filePath, cached || createDefaultLifecycleReadModels(config));
+  const stored = readJsonIfPresent(filePath, lifecycleReadModelAuthority(config, cached));
   return catchUpLifecycleReadModels(config, stored, { persist: config?._lifecycleReadOnly !== true });
+}
+
+function lifecycleReadModelAuthority(config, cached) {
+  if (cached) return cached;
+  return createDefaultLifecycleReadModels(config);
 }
 
 export function saveLifecycleReadModels(config, readModels) {
@@ -72,9 +78,13 @@ export function saveLifecycleReadModels(config, readModels) {
   return next;
 }
 
+function cachedLifecycleEvents(config) {
+  return Array.isArray(config?._lifecycleEventsCache) ? config._lifecycleEventsCache : [];
+}
+
 export function readLifecycleEvents(config) {
   const filePath = lifecycleEventsPath(config);
-  if (!filePath) return cloneSerializable(config?._lifecycleEventsCache || []);
+  if (!filePath) return cloneSerializable(cachedLifecycleEvents(config));
   return readJsonLines(filePath);
 }
 
@@ -95,7 +105,7 @@ function catchUpLifecycleReadModels(config, readModels, { persist = true } = {})
   const latestEvent = events[events.length - 1];
   if (
     readModels?.last_event_id === latestEvent?.event_id
-    && Number(readModels?.event_count || 0) >= events.length
+    && Number(selectDefinedValue(() => (readModels?.event_count), () => (0))) >= events.length
   ) {
     config._lifecycleReadModelsCache = cloneSerializable(readModels);
     return cloneSerializable(readModels);
@@ -108,7 +118,7 @@ function catchUpLifecycleReadModels(config, readModels, { persist = true } = {})
 }
 
 export function recomputeProgression(readModels) {
-  const moduleEntries = Object.values(readModels.modules || {});
+  const moduleEntries = Object.values(selectDefinedValue(() => (readModels.modules), () => ({})));
   readModels.progression = {
     modules_total: moduleEntries.length,
     modules_passed: moduleEntries.filter((entry) => entry.status === 'PASS').length,

@@ -79,6 +79,14 @@ Nova appends lifecycle events to `canonical-events.jsonl` and rebuilds `read-mod
 
 Why: module status JSON is too easy to mutate incorrectly. The append-only lifecycle log gives a replayable source of truth, while read models give fast scheduler/operator projections.
 
+### 7a. Completion Reducer
+
+Source: `skills/common/pipeline/completion.ts`, `services/status-store-lifecycle/appenders.ts`.
+
+Phase and gate runners submit small completion records to the lifecycle reducer. The reducer validates target, phase, attempt, status, and evidence authority, then appends the lifecycle event that updates read models. Runtime session data is carried as observation only.
+
+Why: Forge, Buster, validators, gates, future agents, and human approvals need one completion boundary. Without it, Redis output, local artifacts, child-session metadata, and telemetry hooks can each accidentally become competing state authorities.
+
 ### 8. Pipeline Start Event
 
 Source: `runners/pipeline-runner-start.ts`, `services/status-store.ts`, `services/telemetry.ts`.
@@ -209,9 +217,9 @@ Why: Redis is evidence, not absolute authority. A terminal Redis completion can 
 
 ### 24. Gates
 
-Source: `runners/gate-runner.ts`, `review-gate-runner.ts`, `approval-gate-runner.ts`, `buster-gate-runner.ts`, `remediable-gate-engine.ts`, `waitable-gate-engine.ts`.
+Source: `runners/gate-runner.ts`, `review-gate-runner.ts`, `approval-gate-runner.ts`, `buster-gate-runner.ts`, `remediable-gate-engine.ts`, `waitable-gate-engine.ts`, `services/status-store-lifecycle/appenders.ts`.
 
-The gate runner resolves gate type ownership through the startup registry, builds a stage envelope, normalizes typed gate control results, and maps them to pipeline step results. Remediable gates can run Forge fix cycles. Waitable gates open waits and close them from resume signals.
+The gate runner resolves gate type ownership through the startup registry, builds a stage envelope, normalizes typed gate control results, and maps accepted terminal controls to lifecycle completions before producing pipeline step results. Remediable gates can run Forge fix cycles. Waitable gates open waits and close them from resume signals.
 
 Why: gates evaluate cross-module policy and operator decisions. Keeping them separate from module attempts avoids hiding global policy inside module retry counters.
 
@@ -259,7 +267,7 @@ Why: telemetry is for live observers and dashboards. Validation prevents sinks f
 
 Source: `services/notification-contract.ts`, `notification-dispatch.ts`, `integrations/discord.ts`, `integrations/discord-webhook.ts`, Buster `pipeline/services/discord.ts`.
 
-Discord receives selected presentation events with identity fields and redacted summaries. Local `discord.jsonl` artifacts capture sent notification context.
+Discord receives selected presentation events with identity fields and bounded summaries. Local `discord.jsonl` artifacts capture sent notification context.
 
 Why: Discord is for humans. It must include enough identity to correlate with artifacts, but it is not the scheduler source of truth.
 

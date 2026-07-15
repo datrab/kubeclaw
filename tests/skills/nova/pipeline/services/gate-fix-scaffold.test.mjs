@@ -5,7 +5,10 @@ import path from 'node:path';
 import test from 'node:test';
 
 import { gateActiveSessionPath } from '../../../../../skills/nova/pipeline/core/paths.ts';
-import { finishGateForgeFixCycleScaffold } from '../../../../../skills/nova/pipeline/services/gate-fix-scaffold.ts';
+import {
+  finishGateForgeFixCycleScaffold,
+  validateGateForgeFixSpawnContract,
+} from '../../../../../skills/nova/pipeline/services/gate-fix-scaffold.ts';
 
 function makeConfig() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'gate-fix-scaffold-test-'));
@@ -20,6 +23,12 @@ function makeConfig() {
     },
     _runId: 'run-test',
     run_id: 'run-test',
+    locks: {
+      gate_active_session: {
+        stale_ms: 1000,
+        timeout_ms: 1000,
+      },
+    },
   };
 }
 
@@ -59,4 +68,34 @@ test('finishGateForgeFixCycleScaffold cleans up Forge session when polling throw
 
   assert.deepEqual(killCalls, [[config, 'forge', 'gatefix-quality-1', false]]);
   assert.equal(fs.existsSync(activeSessionPath), false);
+});
+
+test('validateGateForgeFixSpawnContract rejects invalid review-fix spawn before Gateway', () => {
+  const config = {
+    agents: {
+      forge: {
+        dispatch: 'acp',
+        acp_agent_id: 'codex',
+      },
+    },
+  };
+
+  assert.throws(
+    () => validateGateForgeFixSpawnContract(config, {
+      model: 'gpt-5.4/low',
+      fixLabel: 'reviewfix-module review-1',
+      fixAcpLabel: 'forge-reviewfix-module review-1',
+      gateId: 'module-review',
+      cycle: 1,
+    }),
+    /fixLabel is invalid/,
+  );
+
+  assert.doesNotThrow(() => validateGateForgeFixSpawnContract(config, {
+    model: 'gpt-5.4/low',
+    fixLabel: 'reviewfix-module-review-1',
+    fixAcpLabel: 'forge-reviewfix-module-review-1',
+    gateId: 'module-review',
+    cycle: 1,
+  }));
 });

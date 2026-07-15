@@ -1,10 +1,11 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Suite: manifest — Kubernetes Manifest Validation
 // ═══════════════════════════════════════════════════════════════
 //
 // KEEP_TYPED_POLICY: envFrom coverage uncertainty avoids false critical
 // failures while surfacing findings; evidence-only manifest findings stay PASS
-// when no blocking threshold is configured.
+// when manifest.enforced is not set and no blocking threshold is configured.
 // DELETE_LEGACY: requested manifest validation requires an existing parseable
 // deployment YAML, and secret refs require a present parseable secret YAML.
 
@@ -55,8 +56,21 @@ function log(msg: string): void {
   if (_logSink) _logSink({ suite: 'manifest', msg });
 }
 
+function objectRecord(value: unknown): AnyRecord | null {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : null;
+}
+
+function nonEmptyString(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() ? value : null;
+}
+
+function arrayValue<T = any>(value: unknown): T[] {
+  return Array.isArray(value) ? value as T[] : [];
+}
+
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error || 'unknown error');
+  if (error instanceof Error) return error.message;
+  return error == null ? 'missing_error_detail' : String(error);
 }
 
 const require = createRequire(import.meta.url);
@@ -84,13 +98,13 @@ export function dumpYamlDocuments(docs: AnyRecord[]): string {
 }
 
 function parseSecretYaml(content: string): SecretInfo {
-  const doc = loadYamlDocuments(content).find((item) => item?.kind === 'Secret') || {};
-  return { name: doc?.metadata?.name || '', keys: Object.keys(doc?.data || {}) };
+  const doc = selectDefinedValue(() => (objectRecord(loadYamlDocuments(content).find((item) => item?.kind === 'Secret'))), () => ({}));
+  return { name: selectDefinedValue(() => (nonEmptyString(doc?.metadata?.name)), () => ('')), keys: Object.keys(selectDefinedValue(() => (objectRecord(doc?.data)), () => ({}))) };
 }
 
 function getPodTemplateSpec(doc: AnyRecord): AnyRecord {
-  if (doc?.kind === 'CronJob') return doc?.spec?.jobTemplate?.spec?.template?.spec || {};
-  return doc?.spec?.template?.spec || {};
+  if (doc?.kind === 'CronJob') return selectDefinedValue(() => (objectRecord(doc?.spec?.jobTemplate?.spec?.template?.spec)), () => ({}));
+  return selectDefinedValue(() => (objectRecord(doc?.spec?.template?.spec)), () => ({}));
 }
 
 function emptyManifestData(kind: string | null = null): ManifestData {
@@ -121,12 +135,12 @@ function extractFromParsedDoc(doc: AnyRecord): ManifestData {
   }
 
   return {
-    kind: doc?.kind || null,
+    kind: selectTruthyValue(() => (doc?.kind), () => (null)),
     workloadCount: 1,
     images,
     env,
     envFrom,
-    imagePullSecrets: (podSpec?.imagePullSecrets || []).length > 0,
+    imagePullSecrets: arrayValue(podSpec?.imagePullSecrets).length > 0,
     hasLimits: containers.some((container: AnyRecord) => Boolean(container?.resources?.limits)),
     hasReadinessProbe: containers.some((container: AnyRecord) => Boolean(container?.readinessProbe)),
     hasLivenessProbe: containers.some((container: AnyRecord) => Boolean(container?.livenessProbe)),
@@ -134,7 +148,7 @@ function extractFromParsedDoc(doc: AnyRecord): ManifestData {
 }
 
 function extractFromParsedDocs(docs: AnyRecord[]): ManifestData {
-  const workloads = docs.filter((doc) => SUPPORTED_WORKLOAD_KINDS.has(String(doc?.kind || '')));
+  const workloads = docs.filter((doc) => SUPPORTED_WORKLOAD_KINDS.has(selectDefinedValue(() => (nonEmptyString(doc?.kind)), () => (''))));
   if (workloads.length === 0) return emptyManifestData();
 
   const aggregate = emptyManifestData(workloads.map((doc) => doc.kind).join(', '));
@@ -144,24 +158,24 @@ function extractFromParsedDocs(docs: AnyRecord[]): ManifestData {
     aggregate.images.push(...data.images);
     aggregate.env.push(...data.env);
     aggregate.envFrom.push(...data.envFrom);
-    aggregate.imagePullSecrets ||= data.imagePullSecrets;
-    aggregate.hasLimits ||= data.hasLimits;
-    aggregate.hasReadinessProbe ||= data.hasReadinessProbe;
-    aggregate.hasLivenessProbe ||= data.hasLivenessProbe;
+    aggregate.imagePullSecrets = selectTruthyValue(() => (aggregate.imagePullSecrets), () => (data.imagePullSecrets));
+    aggregate.hasLimits = selectTruthyValue(() => (aggregate.hasLimits), () => (data.hasLimits));
+    aggregate.hasReadinessProbe = selectTruthyValue(() => (aggregate.hasReadinessProbe), () => (data.hasReadinessProbe));
+    aggregate.hasLivenessProbe = selectTruthyValue(() => (aggregate.hasLivenessProbe), () => (data.hasLivenessProbe));
   }
   return aggregate;
 }
 
 function checkParseable(data: ManifestData, findings: Finding[]): boolean {
-  if (!data || data.workloadCount === 0) {
-    findings.push(createFinding(SEVERITY.CRITICAL, `Deployment YAML invalid or missing supported workload document (got: ${data?.kind || 'unknown'})`, { rule: 'yaml-parseable' }));
+  if (selectTruthyValue(() => (!data), () => (data.workloadCount === 0))) {
+    findings.push(createFinding(SEVERITY.CRITICAL, `Deployment YAML invalid or missing supported workload document (got: ${selectDefinedValue(() => (data?.kind), () => ('missing_workload_kind'))})`, { rule: 'yaml-parseable' }));
     return false;
   }
   return true;
 }
 
 function checkRequiredEnvVars(data: ManifestData, requiredEnv: unknown, findings: Finding[]): void {
-  if (!Array.isArray(requiredEnv) || requiredEnv.length === 0) return;
+  if (selectTruthyValue(() => (!Array.isArray(requiredEnv)), () => (requiredEnv.length === 0))) return;
   const presentNames = new Set(data.env.map((entry) => entry.name));
   const hasEnvFrom = data.envFrom.length > 0;
 
@@ -193,17 +207,19 @@ function checkSecretRefs(data: ManifestData, secretInfo: SecretInfo | null, find
   const secretKeySet = new Set(secretInfo.keys);
   for (const ref of refs) {
     if (ref.name !== secretInfo.name) {
-      findings.push(createFinding(SEVERITY.CRITICAL, `Secret ref "${ref.name}.${ref.key}" is not covered by manifest.secret_yaml "${secretInfo.name || '(unnamed)'}"`, { rule: 'secret-ref' }));
+      const secretName = secretInfo.name ? secretInfo.name : '(unnamed)';
+      findings.push(createFinding(SEVERITY.CRITICAL, `Secret ref "${ref.name}.${ref.key}" is not covered by manifest.secret_yaml "${secretName}"`, { rule: 'secret-ref' }));
       continue;
     }
     if (!secretKeySet.has(ref.key)) {
-      findings.push(createFinding(SEVERITY.CRITICAL, `Secret ref "${ref.name}.${ref.key}" not found in secret YAML (available: ${[...secretKeySet].join(', ') || 'none'})`, { rule: 'secret-ref' }));
+      const availableKeys = selectTruthyValue(() => ([...secretKeySet].join(', ')), () => ('none'));
+      findings.push(createFinding(SEVERITY.CRITICAL, `Secret ref "${ref.name}.${ref.key}" not found in secret YAML (available: ${availableKeys})`, { rule: 'secret-ref' }));
     }
   }
 }
 
 function checkImagePullSecrets(data: ManifestData, privateRegistries: unknown, findings: Finding[]): void {
-  if (!Array.isArray(privateRegistries) || privateRegistries.length === 0) return;
+  if (selectTruthyValue(() => (!Array.isArray(privateRegistries)), () => (privateRegistries.length === 0))) return;
   const usesPrivate = data.images.some((image) => privateRegistries.some((registry) => image.startsWith(String(registry))));
   if (usesPrivate && !data.imagePullSecrets) {
     findings.push(createFinding(SEVERITY.SERIOUS, `Container uses private registry (${privateRegistries.join(', ')}) but imagePullSecrets is not defined`, { rule: 'image-pull-secrets' }));
@@ -221,7 +237,7 @@ function checkResourceLimits(data: ManifestData, findings: Finding[]): void {
 }
 
 function hasBlockingFindingSince(findings: Finding[], startIndex: number): boolean {
-  return findings.slice(startIndex).some((finding) => finding.severity === SEVERITY.CRITICAL || finding.severity === SEVERITY.SERIOUS);
+  return findings.slice(startIndex).some((finding) => selectTruthyValue(() => (finding.severity === SEVERITY.CRITICAL), () => (finding.severity === SEVERITY.SERIOUS)));
 }
 
 function configFailure(startTime: number, message: string, rule: string): SuiteVerdict {
@@ -237,16 +253,16 @@ function configFailure(startTime: number, message: string, rule: string): SuiteV
 }
 
 export default async function manifestSuite(context: ManifestContext): Promise<SuiteVerdict> {
-  _logSink = context.logSink || null;
+  _logSink = selectTruthyValue(() => (context.logSink), () => (null));
   const startTime = Date.now();
-  const manifestCfg = context.config?.manifest || {};
+  const manifestCfg = selectDefinedValue(() => (objectRecord(context.config?.manifest)), () => ({}));
   const deploymentYamlRel = manifestCfg.deployment_yaml;
 
   if (!deploymentYamlRel) return configFailure(startTime, 'manifest.deployment_yaml is required when the manifest suite is requested', 'manifest-deployment-required');
 
   const deploymentYamlPath = resolveRepoScopedPath(deploymentYamlRel, { field: 'manifest.deployment_yaml' });
-  if (!deploymentYamlPath || !fs.existsSync(deploymentYamlPath)) {
-    return configFailure(startTime, `Deployment YAML not found: ${deploymentYamlPath || deploymentYamlRel}`, 'manifest-deployment-missing');
+  if (selectTruthyValue(() => (!deploymentYamlPath), () => (!fs.existsSync(deploymentYamlPath)))) {
+    return configFailure(startTime, `Deployment YAML not found: ${deploymentYamlMissingPath(deploymentYamlPath, deploymentYamlRel)}`, 'manifest-deployment-missing');
   }
 
   const findings: Finding[] = [];
@@ -325,14 +341,15 @@ export default async function manifestSuite(context: ManifestContext): Promise<S
   if (hasBlockingFindingSince(findings, prevLen5)) failedChecks++;
   if (findings.length === prevLen5) log('Resource limits: defined ✓');
 
-  const thresholds = manifestCfg.thresholds || null;
+  const thresholds = selectTruthyValue(() => (manifestCfg.thresholds), () => (null));
+  const enforced = manifestCfg.enforced === true || Boolean(thresholds);
   const criticalFinds = findings.filter((finding) => finding.severity === SEVERITY.CRITICAL);
   const seriousFinds = findings.filter((finding) => finding.severity === SEVERITY.SERIOUS);
   const totalIssues = findings.length;
   const hasThresholds = thresholds && typeof thresholds.max_issues === 'number';
   const exceedsThreshold = Boolean(hasThresholds && totalIssues > thresholds.max_issues);
   const hasCritical = criticalFinds.length > 0;
-  const shouldFail = hasCritical || exceedsThreshold;
+  const shouldFail = manifestShouldFail(hasCritical, exceedsThreshold);
   const duration_ms = Date.now() - startTime;
   const checks_failed = Math.min(checks, Math.max(failedChecks, exceedsThreshold ? 1 : 0));
   const checks_passed = checks - checks_failed;
@@ -348,11 +365,11 @@ export default async function manifestSuite(context: ManifestContext): Promise<S
       findings,
       metadata: {
         deployment_yaml: deploymentYamlRel,
-        secret_yaml: manifestCfg.secret_yaml || null,
+        secret_yaml: selectTruthyValue(() => (manifestCfg.secret_yaml), () => (null)),
         images: data.images,
         env_count: data.env.length,
         workload_count: data.workloadCount,
-        enforced: Boolean(hasThresholds),
+        enforced,
       },
     });
   }
@@ -367,11 +384,21 @@ export default async function manifestSuite(context: ManifestContext): Promise<S
     findings,
     metadata: {
       deployment_yaml: deploymentYamlRel,
-      secret_yaml: manifestCfg.secret_yaml || null,
+      secret_yaml: selectTruthyValue(() => (manifestCfg.secret_yaml), () => (null)),
       images: data.images,
       env_count: data.env.length,
       workload_count: data.workloadCount,
-      enforced: Boolean(hasThresholds),
+      enforced,
     },
   });
+}
+
+function deploymentYamlMissingPath(deploymentYamlPath: string | null, deploymentYamlRel: string): string {
+  if (deploymentYamlPath) return deploymentYamlPath;
+  return deploymentYamlRel;
+}
+
+function manifestShouldFail(hasCritical: boolean, exceedsThreshold: boolean): boolean {
+  if (hasCritical) return true;
+  return exceedsThreshold;
 }

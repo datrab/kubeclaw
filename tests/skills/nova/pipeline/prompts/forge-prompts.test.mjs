@@ -16,6 +16,7 @@ function makeConfig(projectDirName = 'project') {
     repo_root: root,
     agents: { forge: { cwd: projectSrc } },
     paths: {
+      project_src_dir: projectSrc,
       swarm_dir: swarmDir,
       modules_dir: modulesDir,
     },

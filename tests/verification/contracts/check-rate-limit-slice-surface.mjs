@@ -504,7 +504,7 @@ assert.equal(fs.existsSync(path.join(wrapperRunDir, 'operator-alerts.jsonl')), t
 const directSummaryStatus = buildersMod.buildSummarySessionRateLimitStatus({ gateway_label: 'summary-canonical-label' }, {
   identity: { gateway_label: 'summary-explicit-label' },
 });
-assert.equal(directSummaryStatus.gateway_label, 'summary-canonical-label', 'summary status should preserve canonical status gateway label over explicit identity');
+assert.equal(directSummaryStatus.gateway_label, 'summary-explicit-label', 'summary status must use explicit rate-limit identity as correlation authority');
 
 const trackedSummaryStatus = buildersMod.buildTrackedSummarySessionRateLimitStatus({}, {
   updateCorrelation: () => ({ dispatch_id: 'tracked-dispatch', gateway_label: 'tracked-summary-label' }),
@@ -524,7 +524,7 @@ const directNotifier = buildersMod.createSummarySessionRateLimitDiscordNotifier(
   },
 });
 await directNotifier.sendPauseDiscord({ status: { gateway_label: 'summary-canonical-label' }, embed: { title: 'pause', description: 'paused', fields: [] } });
-assert.equal(fieldValue(directDiscordCalls[0], 'Gateway Label'), 'summary-canonical-label', 'summary pause Discord fields should preserve canonical status gateway label over explicit identity');
+assert.equal(fieldValue(directDiscordCalls[0], 'Gateway Label'), 'summary-explicit-label', 'summary pause Discord fields must use explicit rate-limit identity as correlation authority');
 
 const trackedDiscordCalls = [];
 const trackedNotifier = buildersMod.createSummarySessionRateLimitDiscordNotifier({}, {
@@ -545,7 +545,7 @@ assert.equal(contractMod.normalizeRateLimitProvider(null), null, 'rate-limit pro
 assert.equal(contractMod.normalizeRateLimitProvider(null, { allowAnthropicDefault: true }), 'anthropic', 'Anthropic fallback must be explicitly selected');
 assert.equal(contractMod.buildRateLimitDetectedPayload({}, {}).provider, undefined, 'rate-limit payload must omit provider when no explicit provider/default policy is selected');
 assert.equal(contractMod.buildRateLimitDetectedPayload({}, { allowAnthropicDefault: true }).provider, 'anthropic', 'typed default policy should opt in to Anthropic provider fallback');
-assert.equal(mainSource.includes('allowAnthropicDefault: true'), true, 'Nova fallback rate-limit path must select the explicit typed provider default policy');
+assert.equal(mainSource.includes('allowAnthropicDefault: true'), false, 'Nova rate-limit handling must not fabricate provider identity when canonical evidence is absent');
 
 quietConsole.restore();
 console.log(JSON.stringify({ ok: true, checked: 48 }));

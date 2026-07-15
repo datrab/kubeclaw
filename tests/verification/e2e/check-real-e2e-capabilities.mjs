@@ -12,6 +12,8 @@ const execFileAsync = promisify(execFile);
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(SCRIPT_DIR, '../../..');
 const OPENCLAW_CONFIG_PATH = process.env.OPENCLAW_CONFIG || '/home/node/.openclaw/openclaw.json';
+const DEFAULT_REAL_E2E_MODEL = 'gpt-5.4';
+const DEFAULT_CONFIG_PROBE_PROJECT = 'pipeline-smoke-landing';
 
 function parseArgs(argv) {
   const args = { mode: 'full', json: true };
@@ -240,14 +242,15 @@ async function checkGatewayStatus() {
   };
 }
 
-async function checkAcpCodexSpawn() {
-  const labelPrefix = `real-e2e-acp-${Date.now()}`;
-  const quietConsole = installQuietRuntimeConsole({ label: 'real-e2e/acp-capability' });
+async function checkConfiguredCodexSpawn() {
+  const target = resolveProductionCodexLaunchTarget();
+  const labelPrefix = `real-e2e-${target.runtime}-${Date.now()}`;
+  const quietConsole = installQuietRuntimeConsole({ label: `real-e2e/${target.runtime}-capability` });
   try {
     const result = await verifyLaunchReachability({
-      runtime: 'acp',
-      model: process.env.REAL_E2E_ACP_MODEL || 'gpt-5-codex',
-      agentId: process.env.REAL_E2E_ACP_AGENT_ID || 'codex',
+      runtime: target.runtime,
+      model: target.model,
+      agentId: target.agentId,
       cwd: REPO_ROOT,
       timeoutSeconds: Number(process.env.REAL_E2E_ACP_TIMEOUT_SECONDS || 120),
       pollAttempts: Number(process.env.REAL_E2E_ACP_POLL_ATTEMPTS || 10),
@@ -258,18 +261,40 @@ async function checkAcpCodexSpawn() {
       allowTerminalAfterLaunch: true,
       allowStoppedCleanup: true,
     });
-    if (!result.ok) return { ok: false, reason: 'INFRA_ACP_SPAWN_FAILED', result };
-    return { ok: true, runtime: result.runtime, session_key: result.session_key || result.sessionKey || null, result };
+    if (!result.ok) return { ok: false, reason: 'INFRA_CODEX_SPAWN_FAILED', ...target, result };
+    return { ok: true, ...target, runtime: result.runtime || target.runtime, session_key: result.session_key || result.sessionKey || null, result };
   } finally {
     quietConsole.restore();
   }
+}
+
+export function resolveProductionCodexLaunchTarget({
+  env = process.env,
+  project = env.REAL_E2E_CONFIG_PROBE_PROJECT || DEFAULT_CONFIG_PROBE_PROJECT,
+} = {}) {
+  const configPath = path.join(REPO_ROOT, 'Projects', project, 'src', '.swarm', 'progress.json');
+  const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  const reviewer = Array.isArray(config?.defaults?.reviewers) ? config.defaults.reviewers[0] : null;
+  const runtime = String(env.REAL_E2E_AGENT_RUNTIME || reviewer?.dispatch || '').trim();
+  if (!['acp', 'subagent'].includes(runtime)) {
+    throw new Error(`production codex runtime must be acp or subagent in ${configPath}`);
+  }
+  const model = env.REAL_E2E_MODEL || reviewer?.model || config?.defaults?.models?.forge || DEFAULT_REAL_E2E_MODEL;
+  const agentId = env.REAL_E2E_AGENT_ID || reviewer?.agent_id || 'codex';
+  return {
+    runtime,
+    model,
+    agentId,
+    project,
+    config_path: configPath,
+  };
 }
 
 async function checkProductionNovaConfig() {
   const result = await execCapture(process.execPath, [
     path.join(REPO_ROOT, 'skills', 'nova', 'pipeline.ts'),
     '--project',
-    process.env.REAL_E2E_CONFIG_PROBE_PROJECT || 'pipeline-smoke-landing',
+    process.env.REAL_E2E_CONFIG_PROBE_PROJECT || DEFAULT_CONFIG_PROBE_PROJECT,
     '--repo',
     REPO_ROOT,
     '--dry-run',
@@ -525,7 +550,7 @@ export async function runCapabilityProbe({ mode = 'full' } = {}) {
 
   await runCheck(checks, 'OpenClaw gateway status', 'gateway', checkGatewayStatus);
   await runCheck(checks, 'Production Nova config contract', 'production_nova_config', checkProductionNovaConfig);
-  await runCheck(checks, 'ACP Codex spawn', 'acp_codex_spawn', checkAcpCodexSpawn);
+  await runCheck(checks, 'Configured Codex spawn', 'configured_codex_spawn', checkConfiguredCodexSpawn);
   await runCheck(checks, 'Redis stream roundtrip', 'redis_roundtrip', checkRedisRoundTrip);
   await runCheck(checks, 'Git branch roundtrip', 'git_branch_roundtrip', checkGitBranchRoundTrip);
   await runCheck(checks, 'Discord production delivery receipt', 'discord_delivery', () => checkDiscordDelivery(openclawConfig));

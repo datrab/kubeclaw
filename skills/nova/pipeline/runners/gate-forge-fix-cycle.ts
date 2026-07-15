@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // runners/gate-forge-fix-cycle.ts — shared Forge fix-cycle engine for gates
 // Gate-specific adapters own prompt content and post-fix cleanup/re-evaluation policy.
 
@@ -16,12 +17,19 @@ function gateFixMessage(messages, key, context) {
 }
 
 function buildGitPersistenceDegraded(gitResult) {
-  if (!gitResult || gitResult.committed === true) return null;
+  if (selectTruthyValue(() => (!gitResult), () => (gitResult.committed === true))) return null;
   return {
     code: 'gate_fix_git_persistence_degraded',
     committed: gitResult.committed === true,
-    error: gitResult.error || 'Git commit/push did not report durable persistence',
+    error: selectDefinedValue(() => (gitResult.error), () => ('Git commit/push did not report durable persistence')),
   };
+}
+
+function firstDefined(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return undefined;
 }
 
 export async function runGateForgeFixCycle({
@@ -57,21 +65,24 @@ export async function runGateForgeFixCycle({
   onBeforeSuccessDiscord,
   onSuccess,
 } = {}) {
-  let fixSessionKey = initialCorrelation.sessionKey || null;
-  let fixGatewayLabel = initialCorrelation.gatewayLabel || null;
-  let fixDispatchId = initialCorrelation.dispatchId || null;
+  if (typeof deps?.gitCommitAndPush !== 'function') {
+    throw new Error('gate Forge fix-cycle requires canonical gitCommitAndPush dependency');
+  }
+  let fixSessionKey = selectTruthyValue(() => (initialCorrelation.sessionKey), () => (null));
+  let fixGatewayLabel = selectTruthyValue(() => (initialCorrelation.gatewayLabel), () => (null));
+  let fixDispatchId = selectTruthyValue(() => (initialCorrelation.dispatchId), () => (null));
 
-  const resolveFixCycleSessionKey = () => fixSessionKey || initialCorrelation.sessionKey || null;
-  const resolveFixCycleGatewayLabel = () => fixGatewayLabel || initialCorrelation.gatewayLabel || null;
-  const resolveFixCycleDispatchId = () => fixDispatchId || initialCorrelation.dispatchId || null;
+  const resolveFixCycleSessionKey = () => selectTruthyValue(() => (selectTruthyValue(() => (fixSessionKey), () => (initialCorrelation.sessionKey))), () => (null));
+  const resolveFixCycleGatewayLabel = () => selectTruthyValue(() => (selectTruthyValue(() => (fixGatewayLabel), () => (initialCorrelation.gatewayLabel))), () => (null));
+  const resolveFixCycleDispatchId = () => selectTruthyValue(() => (selectTruthyValue(() => (fixDispatchId), () => (initialCorrelation.dispatchId))), () => (null));
   const identity = (overrides = {}) => ({
-    run_id: getRunId(config) || config?._runId || config?.run_id || 'unknown',
+    run_id: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (getRunId(config)), () => (config?._runId))), () => (config?.run_id))), () => ('missing_run_id')),
     gate_id: gateId,
     gate_type: gate?.type,
-    attempt: overrides.attempt ?? cycle,
-    dispatch_id: overrides.dispatch_id ?? resolveFixCycleDispatchId(),
-    gateway_label: overrides.gateway_label ?? resolveFixCycleGatewayLabel(),
-    session_key: overrides.session_key ?? resolveFixCycleSessionKey(),
+    attempt: firstDefined(overrides.attempt, cycle),
+    dispatch_id: firstDefined(overrides.dispatch_id, resolveFixCycleDispatchId()),
+    gateway_label: firstDefined(overrides.gateway_label, resolveFixCycleGatewayLabel()),
+    session_key: firstDefined(overrides.session_key, resolveFixCycleSessionKey()),
   });
   const fields = (overrides = {}, extra = []) => buildDiscordIdentitySurfaceFields(discordIdentitySurface, identity(overrides), extra);
   const context = {
@@ -124,7 +135,7 @@ export async function runGateForgeFixCycle({
   if (!fixStart.ok && fixStart.stage === 'spawn') {
     const error = fixStart.error;
     log('ERROR', msg('spawnFailedLog', { error }));
-    await send('CRITICAL', 'spawnFailedTitle', 'spawnFailedDescription', { error }, { gateway_label: error.gateway_label || resolveFixCycleGatewayLabel() });
+    await send('CRITICAL', 'spawnFailedTitle', 'spawnFailedDescription', { error }, { gateway_label: firstDefined(error.gateway_label, resolveFixCycleGatewayLabel()) });
     await emitFailure('spawnFailedReason', { error });
     return { mode: 'retry_request_fix', controlResult };
   }
@@ -165,7 +176,7 @@ export async function runGateForgeFixCycle({
     const exhaustedReason = msg('rateLimitReason', { fixLabel, sessionResult });
     const rateLimitExit = await finalizeGateSessionRateLimitExit({
       ...sessionResult,
-      gateway_label: sessionResult.gateway_label ?? sessionResult.rate_limit_status?.gateway_label ?? resolveFixCycleGatewayLabel() ?? null,
+      gateway_label: selectDefinedValue(() => (sessionResult.gateway_label), () => (null)),
     }, {
       config,
       gateId,
@@ -220,7 +231,7 @@ export async function runGateForgeFixCycle({
   fixHistory.push({ attempt: cycle, hasChanges: sessionResult.hasChanges, issues });
 
   if (!sessionResult.hasChanges) {
-    const reason = sessionResult.reason === 'timeout' || sessionResult.completed !== true
+    const reason = selectTruthyValue(() => (sessionResult.reason === 'timeout'), () => (sessionResult.completed !== true))
       ? 'timeout'
       : 'no_file_changes';
     const noChanges = { fixLabel, sessionResult, reason };
@@ -235,7 +246,7 @@ export async function runGateForgeFixCycle({
   emitGitCommitPushSoftFailDegraded(telemetryCtx(config), {
     error: gitResult?.error,
     gate_id: gateId,
-    gate_type: gate.type || null,
+    gate_type: selectTruthyValue(() => (gate.type), () => (null)),
     attempt: cycle,
     dispatch_id: resolveFixCycleDispatchId(),
     gateway_label: resolveFixCycleGatewayLabel(),

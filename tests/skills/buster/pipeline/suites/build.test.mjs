@@ -6,6 +6,7 @@ import test from 'node:test';
 import buildSuite from '../../../../../skills/buster/pipeline/suites/build.ts';
 import { resolveRepoDir } from '../../../../../skills/buster/pipeline/suites/repo-paths.ts';
 import {
+  buildDockerfileBuildCleanupLabelArgs,
   buildPodmanPublishArgs,
   parsePodmanMappedHostPort,
 } from '../../../../../skills/buster/pipeline/suites/build.ts';
@@ -108,4 +109,19 @@ test('build suite parses mapped host ports reported by podman', () => {
 test('build suite rejects invalid published container ports', () => {
   assert.throws(() => buildPodmanPublishArgs(0), /serve.port/);
   assert.throws(() => parsePodmanMappedHostPort('127.0.0.1:not-a-port', 8080), /mapped host port/);
+});
+
+test('configured Dockerfile images are not labeled as task cleanup resources', () => {
+  const payload = {
+    project: 'release-project',
+    module_id: '01-nginx',
+    attempt: 1,
+    run_id: 'run-1',
+  };
+
+  assert.deepEqual(buildDockerfileBuildCleanupLabelArgs(true, payload), []);
+  assert.deepEqual(
+    buildDockerfileBuildCleanupLabelArgs(false, payload).slice(0, 1),
+    ['--label'],
+  );
 });

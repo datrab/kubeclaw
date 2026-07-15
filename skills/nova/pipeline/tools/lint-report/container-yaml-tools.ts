@@ -6,8 +6,18 @@ import { findFiles } from './discovery.ts';
 import { tryParseJson } from './parsers.ts';
 import { makeParseFailureResult, makeWarningResult } from './report.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
+function jsonResourceItems(data) {
+  if (Array.isArray(data)) return data;
+  return [];
+}
+
+function commandOutput(result) {
+  return selectDefinedValue(() => ([result.stdout, result.stderr].find((value) => typeof value === 'string' && value.length > 0)), () => (''));
+}
+
 function scopedChangedFiles(ctx, predicate) {
-  if (!Array.isArray(ctx.changedFiles) || ctx.changedFiles.length === 0) return null;
+  if (selectTruthyValue(() => (!Array.isArray(ctx.changedFiles)), () => (ctx.changedFiles.length === 0))) return null;
   return ctx.changedFiles
     .filter(file => predicate(file.split(path.sep).join('/')))
     .map(file => path.join(ctx.repoRoot, file));
@@ -34,8 +44,7 @@ export function registerContainerYamlTools(registerTool) {
     detect: (ctx) => ctx.projectTypes.has('docker'),
     run: (ctx) => {
       const scanRoot = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
-      const dockerfiles = scopedChangedFiles(ctx, file => /^Dockerfile|\.dockerfile$/i.test(path.basename(file)))
-        || findFiles(scanRoot, f => /^Dockerfile|\.dockerfile$/i.test(f), 3);
+      const dockerfiles = selectTruthyValue(() => (scopedChangedFiles(ctx, file => /^Dockerfile|\.dockerfile$/i.test(path.basename(file)))), () => (findFiles(scanRoot, f => /^Dockerfile|\.dockerfile$/i.test(f), 3)));
       if (dockerfiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
 
       const allFindings = [];
@@ -47,7 +56,7 @@ export function registerContainerYamlTools(registerTool) {
           continue;
         }
 
-        for (const item of (parsed.data || [])) {
+        for (const item of jsonResourceItems(parsed.data)) {
           allFindings.push({
             file: dockerfile,
             line: item.line,
@@ -140,8 +149,7 @@ export function registerContainerYamlTools(registerTool) {
     detect: (ctx) => ctx.projectTypes.has('helm'),
     run: (ctx) => {
       const scanRoot = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
-      const yamlFiles = scopedChangedFiles(ctx, file => (file.endsWith('.yaml') || file.endsWith('.yml')) && !file.includes('values'))
-        || findFiles(scanRoot, f => (f.endsWith('.yaml') || f.endsWith('.yml')) && !f.includes('values'), 4);
+      const yamlFiles = selectTruthyValue(() => (scopedChangedFiles(ctx, file => (selectTruthyValue(() => (file.endsWith('.yaml')), () => (file.endsWith('.yml')))) && !file.includes('values'))), () => (findFiles(scanRoot, f => (selectTruthyValue(() => (f.endsWith('.yaml')), () => (f.endsWith('.yml')))) && !f.includes('values'), 4)));
       if (yamlFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
 
       const result = safeExec('kubeconform', ['-output', 'json', '-summary', ...yamlFiles], {
@@ -152,19 +160,19 @@ export function registerContainerYamlTools(registerTool) {
       let parseFailure = null;
 
       const pushResourceFinding = (item) => {
-        if (item?.status === 'statusInvalid' || item?.status === 'statusError') {
+        if (selectTruthyValue(() => (item?.status === 'statusInvalid'), () => (item?.status === 'statusError'))) {
           findings.push({
             file: item.filename,
             line: null,
             column: null,
             severity: 'error',
             code: 'kubeconform',
-            message: item.msg || `Invalid K8s manifest: ${item.filename}`,
+            message: selectDefinedValue(() => (item.msg), () => (`Invalid K8s manifest: ${item.filename}`)),
           });
         }
       };
 
-      const parsedOutput = tryParseJson(result.stdout || '');
+      const parsedOutput = tryParseJson(selectDefinedValue(() => (result.stdout), () => ('')));
       if (parsedOutput.ok) {
         const resources = Array.isArray(parsedOutput.data?.resources)
           ? parsedOutput.data.resources
@@ -175,11 +183,11 @@ export function registerContainerYamlTools(registerTool) {
           pushResourceFinding(item);
         }
       } else {
-        const lines = (result.stdout || '').split('\n').filter(Boolean);
+        const lines = (selectDefinedValue(() => (result.stdout), () => (''))).split('\n').filter(Boolean);
         for (const line of lines) {
           const parsed = tryParseJson(line);
           if (!parsed.ok) {
-            parseFailure ||= { parsed, line };
+            if (!parseFailure) parseFailure = { parsed, line };
             continue;
           }
           pushResourceFinding(parsed.data);
@@ -214,7 +222,7 @@ export function registerContainerYamlTools(registerTool) {
       const args = ['-f', 'parsable', '--strict', scanRoot];
 
       if (ctx.changedFiles.length > 0) {
-        const yamlFiles = ctx.changedFiles.filter(f => f.endsWith('.yaml') || f.endsWith('.yml'));
+        const yamlFiles = ctx.changedFiles.filter(f => selectTruthyValue(() => (f.endsWith('.yaml')), () => (f.endsWith('.yml'))));
         if (yamlFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
         args.length = 0;
         args.push('-f', 'parsable', '--strict', ...yamlFiles.map(f => path.join(ctx.repoRoot, f)));
@@ -224,7 +232,7 @@ export function registerContainerYamlTools(registerTool) {
 
       // parsable format: file:line:col: [level] message (rule)
       const findings = [];
-      const lines = (result.stdout || result.stderr || '').split('\n').filter(Boolean);
+      const lines = commandOutput(result).split('\n').filter(Boolean);
       for (const line of lines) {
         const match = line.match(/^(.+?):(\d+):(\d+): \[(error|warning)\] (.+)/);
         if (match) {

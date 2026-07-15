@@ -1,7 +1,6 @@
 import {
   AGENT_OBSERVABILITY_HOOKS,
   AGENT_OBSERVABILITY_INGRESS_EVENT_TYPES,
-  AGENT_OBSERVABILITY_MASKING_PROFILE,
   AGENT_OBSERVABILITY_SCHEMA_VERSION,
   AGENT_OBSERVABILITY_SOURCE,
 } from './constants.ts';
@@ -13,6 +12,7 @@ import type {
   AgentObservabilityValidationResult,
 } from './types.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 const TYPE_TO_HOOK: Record<AgentObservabilityIngressEventType, string> = Object.freeze({
   'openclaw.agent.ended': 'agent_end',
   'openclaw.llm.input': 'llm_input',
@@ -67,7 +67,7 @@ function isNonEmptyString(value: unknown): value is string {
 
 function isJsonSafe(value: unknown, seen = new Set<object>()): value is AgentObservabilityJsonValue {
   if (value === null) return true;
-  if (typeof value === 'string' || typeof value === 'boolean') return true;
+  if (selectTruthyValue(() => (typeof value === 'string'), () => (typeof value === 'boolean'))) return true;
   if (typeof value === 'number') return Number.isFinite(value);
   if (Array.isArray(value)) return value.every((item) => isJsonSafe(item, seen));
   if (!isPlainObject(value)) return false;
@@ -145,7 +145,7 @@ function optionalStringField(payload: Record<string, unknown>, field: string, er
 
 function optionalNumberField(payload: Record<string, unknown>, field: string, errors: string[]): void {
   const value = payload[field];
-  if (value !== undefined && value !== null && (typeof value !== 'number' || !Number.isFinite(value))) {
+  if (value !== undefined && value !== null && (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value))))) {
     errors.push(`payload.${field} must be null or a finite number`);
   }
 }
@@ -256,20 +256,6 @@ function validatePayload(type: AgentObservabilityIngressEventType, payload: unkn
   }
 }
 
-function validateMasking(masking: unknown, errors: string[]): void {
-  if (!isPlainObject(masking)) {
-    errors.push('masking must be an object');
-    return;
-  }
-  if (masking.profile !== AGENT_OBSERVABILITY_MASKING_PROFILE) {
-    errors.push(`masking.profile must be '${AGENT_OBSERVABILITY_MASKING_PROFILE}'`);
-  }
-  if (masking.content !== 'full') errors.push("masking.content must be 'full'");
-  if (!Array.isArray(masking.masked) || !masking.masked.every((item) => item === 'basic_api_key_pattern')) {
-    errors.push("masking.masked must contain only 'basic_api_key_pattern' markers");
-  }
-}
-
 export function validateAgentObservabilityIngressEvent(value: unknown): AgentObservabilityValidationResult {
   const errors: string[] = [];
   if (!isPlainObject(value)) return { ok: false, errors: ['event must be an object'] };
@@ -287,8 +273,6 @@ export function validateAgentObservabilityIngressEvent(value: unknown): AgentObs
   } else if (!isPlainObject(value.payload)) {
     errors.push('payload must be an object');
   }
-  validateMasking(value.masking, errors);
-
   return { ok: errors.length === 0, errors };
 }
 

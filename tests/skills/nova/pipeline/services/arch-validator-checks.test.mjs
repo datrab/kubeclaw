@@ -13,6 +13,11 @@ const config = {
   },
 };
 
+test('architecture judgment scopes are first-class schema values', () => {
+  assert.equal(SCOPE.DOMAIN_MODEL, 'domain_model');
+  assert.equal(SCOPE.INTEGRATION_BOUNDARY, 'integration_boundary');
+});
+
 test('checkDependencyGraph accepts dependencies on defined gates', () => {
   const findings = checkDependencyGraph({
     modules: {

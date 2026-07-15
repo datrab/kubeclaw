@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Suite Runner — Deterministic Test Suite Orchestrator
 // ═══════════════════════════════════════════════════════════════
@@ -21,6 +22,7 @@ import {
   BusterCapabilityDeniedError,
   assertBusterCapabilities,
   requiredCapabilitiesForSuite,
+  resolveContextCapabilities,
 } from '../services/capabilities.ts';
 import a11ySuite from '../suites/a11y.ts';
 import apiSuite from '../suites/api.ts';
@@ -32,8 +34,14 @@ import k8sSuite from '../suites/k8s.ts';
 import manifestSuite from '../suites/manifest.ts';
 import perfSuite from '../suites/perf.ts';
 import securitySuite from '../suites/security.ts';
+import tailscalePreviewSuite from '../suites/tailscale-preview.ts';
 import unitSuite from '../suites/unit.ts';
 import { runVisualReg } from '../suites/visual-reg.ts';
+import {
+  buildDependencyGraph,
+  collectReadyItems,
+  runBatch,
+} from '../scheduler.ts';
 
 const RESULTS_DIR = '/sandbox/results';
 
@@ -43,6 +51,12 @@ type LogSink = (entry: Record<string, unknown>) => void;
 
 interface SuiteRunnerPayload {
   project?: string;
+  run_id?: string;
+  module_id?: string;
+  gate_id?: string;
+  gate_type?: string;
+  dispatch_id?: string;
+  session_key?: string;
   test_config?: Record<string, unknown>;
   capabilities?: readonly string[];
   pipeline_log_path?: string;
@@ -64,7 +78,11 @@ interface SuiteRunnerOptions {
 interface SuiteContext extends Record<string, unknown> {
   payload: SuiteRunnerPayload;
   moduleId: string;
-  module: string;
+  runId: string | null;
+  gateId: string | null;
+  gateType: string | null;
+  dispatchId: string | null;
+  sessionKey: string | null;
   project: string;
   config: Record<string, unknown>;
   capabilities: readonly string[];
@@ -77,6 +95,7 @@ interface SuiteContext extends Record<string, unknown> {
   logSink: LogSink | null;
   attempt: number | undefined;
   telemetryContext: unknown;
+  suiteResults: Record<string, SuiteVerdict>;
   suiteAbortSignal?: AbortSignal;
   suiteDeadlineMs?: number;
 }
@@ -95,7 +114,7 @@ interface CapabilityDeniedLike extends Error {
 
 interface SuiteRunnerValidationDetails {
   reason: string;
-  unknown_suites?: string[];
+  unsupported_suites?: string[];
   invalid_suites?: unknown[];
   missing_fields?: string[];
   field?: string;
@@ -117,7 +136,7 @@ function createSuiteRunnerValidationError(message: string, details: SuiteRunnerV
 }
 
 function errorDetail(error: unknown): string {
-  return error instanceof Error ? error.message : String(error || 'unknown');
+  return error instanceof Error ? error.message : String(selectTruthyValue(() => (error), () => ('missing_error_detail')));
 }
 
 function warnNonBlocking(classification: string, error: unknown, context: Record<string, unknown> = {}): void {
@@ -130,18 +149,18 @@ function warnNonBlocking(classification: string, error: unknown, context: Record
 }
 
 async function emitResultWriteDiagnostic(tctx: unknown, classification: string, error: unknown, context: Record<string, unknown> = {}): Promise<void> {
-  const detail = error instanceof Error ? error.message : String(error || 'unknown');
+  const detail = error instanceof Error ? error.message : String(selectTruthyValue(() => (error), () => ('missing_error_detail')));
   await emitEvent(tctx, 'observability.degraded', {
     component: 'buster_suite_runner',
     surface: 'suite_results',
     reason: classification,
     detail,
-    module_id: context.module || null,
-    gate_id: context.gate_id || null,
-    gate_type: context.gate_type || null,
-    attempt: context.attempt ?? null,
-    dispatch_id: context.dispatch_id || null,
-    session_key: context.session_key || null,
+    module_id: selectTruthyValue(() => (context.module), () => (null)),
+    gate_id: selectTruthyValue(() => (context.gate_id), () => (null)),
+    gate_type: selectTruthyValue(() => (context.gate_type), () => (null)),
+    attempt: selectDefinedValue(() => (context.attempt), () => (null)),
+    dispatch_id: selectTruthyValue(() => (context.dispatch_id), () => (null)),
+    session_key: selectTruthyValue(() => (context.session_key), () => (null)),
     degraded_at: new Date().toISOString(),
   });
 }
@@ -168,6 +187,7 @@ const SUITE_REGISTRY: Readonly<Record<string, SuiteFunction>> = Object.freeze({
   manifest: manifestSuite,
   perf: perfSuite,
   security: securitySuite,
+  'tailscale-preview': tailscalePreviewSuite,
   unit: unitSuite,
   'visual-reg': runVisualReg,
 });
@@ -179,9 +199,9 @@ function hasSuite(name: string): boolean {
 function loadSuite(name: string): SuiteFunction {
   const suite = SUITE_REGISTRY[name];
   if (!suite) {
-    throw createSuiteRunnerValidationError(`Unknown Buster suite requested: ${name}`, {
-      reason: 'unknown_suite',
-      unknown_suites: [name],
+    throw createSuiteRunnerValidationError(`Unsupported Buster suite requested: ${name}`, {
+      reason: 'unsupported_suite',
+      unsupported_suites: [name],
     });
   }
   return suite;
@@ -198,7 +218,7 @@ export function validateSuiteNames(suites: readonly unknown[]): string[] {
   const invalidSuites: unknown[] = [];
   const suiteNames: string[] = [];
   for (const suite of suites) {
-    if (typeof suite !== 'string' || suite.trim() === '') {
+    if (selectTruthyValue(() => (typeof suite !== 'string'), () => (suite.trim() === ''))) {
       invalidSuites.push(suite);
       continue;
     }
@@ -212,11 +232,11 @@ export function validateSuiteNames(suites: readonly unknown[]): string[] {
     });
   }
 
-  const unknownSuites = suiteNames.filter(suite => !hasSuite(suite));
-  if (invalidSuites.length > 0 || unknownSuites.length > 0) {
-    throw createSuiteRunnerValidationError(`Invalid Buster suite request: ${unknownSuites.concat(invalidSuites.map(String)).join(', ')}`, {
-      reason: unknownSuites.length > 0 ? 'unknown_suite' : 'invalid_suite_name',
-      unknown_suites: unknownSuites,
+  const unsupportedSuites = suiteNames.filter(suite => !hasSuite(suite));
+  if (selectTruthyValue(() => (invalidSuites.length > 0), () => (unsupportedSuites.length > 0))) {
+    throw createSuiteRunnerValidationError(`Invalid Buster suite request: ${unsupportedSuites.concat(invalidSuites.map(String)).join(', ')}`, {
+      reason: unsupportedSuites.length > 0 ? 'unsupported_suite' : 'invalid_suite_name',
+      unsupported_suites: unsupportedSuites,
       invalid_suites: invalidSuites,
     });
   }
@@ -228,6 +248,25 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
 }
 
+function stringArrayValue(value: unknown): string[] {
+  return Array.isArray(value) ? value.filter((entry): entry is string => typeof entry === 'string') : [];
+}
+
+function firstNonEmptyString(...values: unknown[]): string | null {
+  for (const value of values) {
+    if (typeof value === 'string' && value.trim()) return value.trim();
+  }
+  return null;
+}
+
+function optionalNumber(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) ? value : null;
+}
+
+function optionalBoolean(value: unknown): boolean | null {
+  return typeof value === 'boolean' ? value : null;
+}
+
 export function resolveSuiteTimeoutMs(config: Record<string, unknown>): number {
   if (!Object.prototype.hasOwnProperty.call(config, 'suite_timeout_ms')) {
     throw createSuiteRunnerValidationError('test_config.suite_timeout_ms is required', {
@@ -237,7 +276,7 @@ export function resolveSuiteTimeoutMs(config: Record<string, unknown>): number {
   }
 
   const value = config.suite_timeout_ms;
-  if (typeof value !== 'number' || !Number.isFinite(value) || !Number.isInteger(value) || value <= 0) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value)))), () => (!Number.isInteger(value)))), () => (value <= 0))) {
     throw createSuiteRunnerValidationError('test_config.suite_timeout_ms must be a positive integer', {
       reason: 'invalid_suite_timeout_ms',
       field: 'test_config.suite_timeout_ms',
@@ -248,17 +287,19 @@ export function resolveSuiteTimeoutMs(config: Record<string, unknown>): number {
 }
 
 function createCapabilityDeniedVerdict(suiteName: string, error: CapabilityDeniedLike): SuiteVerdict {
+  const blockedAction = firstNonEmptyString(error.action, error.details?.blocked_action);
+  const metadata = {
+    ...(blockedAction ? { blocked_action: blockedAction } : {}),
+    ...(error.missing_capabilities !== undefined ? { missing_capabilities: stringArrayValue(error.missing_capabilities) } : {}),
+    ...(error.details?.required_capabilities !== undefined ? { required_capabilities: stringArrayValue(error.details.required_capabilities) } : {}),
+    ...(error.details?.configured_capabilities !== undefined ? { configured_capabilities: stringArrayValue(error.details.configured_capabilities) } : {}),
+  };
   return createSuiteVerdict(suiteName, STATUS.ERROR, {
     critical: true,
     error: error.message,
     reason: 'buster_capability_denied',
     findings: [createFinding(SEVERITY.CRITICAL, error.message, { rule: 'buster-capability-denied' })],
-    metadata: {
-      blocked_action: error.action || error.details?.blocked_action || 'tool_execution',
-      missing_capabilities: error.missing_capabilities || [],
-      required_capabilities: error.details?.required_capabilities || [],
-      configured_capabilities: error.details?.configured_capabilities || [],
-    },
+    metadata,
   });
 }
 
@@ -300,9 +341,9 @@ function sortSuites(suiteNames: readonly string[]): string[] {
 }
 
 export function applyBuildRuntimePort(config: Record<string, unknown>, buildResult: SuiteVerdict): void {
-  if (buildResult.suite !== 'build' || buildResult.status !== STATUS.PASS) return;
+  if (selectTruthyValue(() => (buildResult.suite !== 'build'), () => (buildResult.status !== STATUS.PASS))) return;
   const port = buildResult.metadata?.port;
-  if (!Number.isInteger(port) || port < 1 || port > 65535) return;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!Number.isInteger(port)), () => (port < 1))), () => (port > 65535))) return;
   const serve = isRecord(config.serve) ? config.serve : {};
   config.serve = { ...serve, port };
 }
@@ -347,11 +388,11 @@ async function writeResults(suiteMap: Record<string, SuiteVerdict>, moduleId: st
   const telemetryCtx = tctx && typeof tctx === 'object' ? tctx as Record<string, any> : {};
   const diagnosticContext = {
     module: telemetryCtx.gateId ? null : moduleId,
-    gate_id: telemetryCtx.gateId || null,
-    gate_type: telemetryCtx.gateType || null,
+    gate_id: selectTruthyValue(() => (telemetryCtx.gateId), () => (null)),
+    gate_type: selectTruthyValue(() => (telemetryCtx.gateType), () => (null)),
     attempt,
-    dispatch_id: telemetryCtx.dispatchId || null,
-    session_key: telemetryCtx.sessionKey || null,
+    dispatch_id: selectTruthyValue(() => (telemetryCtx.dispatchId), () => (null)),
+    session_key: selectTruthyValue(() => (telemetryCtx.sessionKey), () => (null)),
   };
 
   try {
@@ -381,7 +422,7 @@ async function writeResults(suiteMap: Record<string, SuiteVerdict>, moduleId: st
 }
 
 export async function runSuiteWithTimeout(suiteName: string, suiteFn: SuiteFunction, context: SuiteContext, suiteTimeout: number): Promise<SuiteVerdict> {
-  if (typeof suiteTimeout !== 'number' || !Number.isFinite(suiteTimeout) || !Number.isInteger(suiteTimeout) || suiteTimeout <= 0) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (typeof suiteTimeout !== 'number'), () => (!Number.isFinite(suiteTimeout)))), () => (!Number.isInteger(suiteTimeout)))), () => (suiteTimeout <= 0))) {
     throw createSuiteRunnerValidationError('suiteTimeout must be a positive integer', {
       reason: 'invalid_suite_timeout_ms',
       field: 'suiteTimeout',
@@ -393,7 +434,7 @@ export async function runSuiteWithTimeout(suiteName: string, suiteFn: SuiteFunct
   let acceptSuiteEffects = true;
   const guardedLogSink = context.logSink
     ? (entry: Record<string, unknown>): void => {
-        if (!acceptSuiteEffects || controller.signal.aborted) return;
+        if (selectTruthyValue(() => (!acceptSuiteEffects), () => (controller.signal.aborted))) return;
         context.logSink?.(entry);
       }
     : null;
@@ -424,21 +465,69 @@ export async function runSuiteWithTimeout(suiteName: string, suiteFn: SuiteFunct
 
 async function emitSuiteCompleted(tctx: unknown, moduleId: string | undefined, suiteName: string, result: SuiteVerdict, attempt: number | undefined, startMs: number): Promise<void> {
   const telemetryCtx = tctx && typeof tctx === 'object' ? tctx as Record<string, any> : null;
-  const gateId = telemetryCtx?.gateId || null;
+  const gateId = selectTruthyValue(() => (telemetryCtx?.gateId), () => (null));
   await emitPluginEvent(tctx, 'suite_completed', {
     module_id: gateId ? null : moduleId,
-    ...(gateId ? { gate_id: gateId, gate_type: telemetryCtx?.gateType ?? null } : {}),
+    ...(gateId ? { gate_id: gateId, gate_type: selectDefinedValue(() => (telemetryCtx?.gateType), () => (null)) } : {}),
     suite: suiteName,
     attempt,
     status: result.status,
     duration_seconds: Math.round((Date.now() - startMs) / 1000),
-    checks_passed: result.checks_passed ?? 0,
-    checks_failed: result.checks_failed ?? 0,
-    critical: result.critical ?? false,
-    reason: result.reason ?? null,
-    error: result.error ?? null,
-    top_finding: result.findings?.[0]?.message ?? result.reason ?? result.error ?? null,
+    checks_passed: optionalNumber(result.checks_passed),
+    checks_failed: optionalNumber(result.checks_failed),
+    critical: optionalBoolean(result.critical),
+    reason: selectDefinedValue(() => (result.reason), () => (null)),
+    error: selectDefinedValue(() => (result.error), () => (null)),
+    top_finding: selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (result.findings?.[0]?.message), () => (result.reason))), () => (result.error))), () => (null)),
   });
+}
+
+async function runOneSuite(input: {
+  suiteName: string;
+  context: SuiteContext;
+  suiteTimeout: number;
+  tctx: unknown;
+  moduleId: string | undefined;
+  attempt: number | undefined;
+}): Promise<SuiteResult> {
+  const { suiteName, context, suiteTimeout, tctx, moduleId, attempt } = input;
+
+  try {
+    enforceSuiteCapabilities(suiteName, context);
+  } catch (error: unknown) {
+    if (!(error instanceof BusterCapabilityDeniedError)) throw error;
+    const verdict = createCapabilityDeniedVerdict(suiteName, error);
+    await emitSuiteCompleted(tctx, moduleId, suiteName, verdict, attempt, Date.now());
+    return verdict;
+  }
+
+  const suiteFn = loadSuite(suiteName);
+  const startMs = Date.now();
+  const telemetryCtx = tctx && typeof tctx === 'object' ? tctx as Record<string, any> : null;
+  const gateId = selectTruthyValue(() => (telemetryCtx?.gateId), () => (null));
+  await emitPluginEvent(tctx, 'suite_started', {
+    module_id: gateId ? null : moduleId,
+    ...(gateId ? { gate_id: gateId, gate_type: selectDefinedValue(() => (telemetryCtx?.gateType), () => (null)) } : {}),
+    suite: suiteName,
+    attempt,
+  });
+
+  let result: SuiteVerdict;
+  try {
+    result = await runSuiteWithTimeout(suiteName, suiteFn, context, suiteTimeout);
+    if (!result.duration_ms) result.duration_ms = Date.now() - startMs;
+  } catch (err: unknown) {
+    const durationMs = Date.now() - startMs;
+    result = createSuiteVerdict(suiteName, STATUS.ERROR, {
+      critical: true,
+      duration_ms: durationMs,
+      error: err instanceof Error ? err.message : 'Suite threw an unexpected error',
+      findings: [],
+    });
+  }
+
+  await emitSuiteCompleted(tctx, moduleId, suiteName, result, attempt, startMs);
+  return { ...result, duration_seconds: Math.round((Date.now() - startMs) / 1000) };
 }
 
 export function buildSuiteSummary(results: readonly SuiteVerdict[]): string {
@@ -450,15 +539,35 @@ export function buildSuiteSummary(results: readonly SuiteVerdict[]): string {
 export function buildDetailedSuiteSummary(results: readonly SuiteVerdict[]): string {
   return results
     .map((result) => {
-      const detail = result.findings?.[0]?.message
-        || result.error
-        || result.reason
-        || null;
+      const detail = suiteDetailAuthority(result);
       return detail
         ? `${result.suite}: ${result.status} - ${detail}`
         : `${result.suite}: ${result.status}`;
     })
     .join(' | ');
+}
+
+function suiteDetailAuthority(result: SuiteVerdict): string | null {
+  const findingMessage = result.findings?.[0]?.message;
+  if (typeof findingMessage === 'string' && findingMessage.trim()) return findingMessage.trim();
+  if (typeof result.error === 'string' && result.error.trim()) return result.error.trim();
+  if (typeof result.reason === 'string' && result.reason.trim()) return result.reason.trim();
+  return null;
+}
+
+export function collectReadySuites(suiteNames: readonly string[], completedResults: Record<string, SuiteVerdict> = {}): string[] {
+  const ordered = sortSuites(suiteNames);
+  const pendingSuites = ordered.filter((suite) => !completedResults[suite]);
+  const requestedSuites = new Set(ordered);
+  const dependencyGraph = buildDependencyGraph(ordered.map((suite) => ({
+    id: suite,
+    dependencies: (DEPENDENCIES[suite] || []).filter((dependency) => requestedSuites.has(dependency)),
+  })));
+  return collectReadyItems({
+    orderedIds: pendingSuites,
+    dependencyIds: (suiteName) => dependencyGraph.dependencyIds(suiteName),
+    isCandidateReady: (_suiteName, { dependencyIds }) => dependencyIds.every((dependency) => Boolean(completedResults[dependency])),
+  });
 }
 
 export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOptions = {}): Promise<{ results: SuiteResult[]; suiteSummary: string; suiteDetailSummary: string; criticalFailed: boolean }> {
@@ -470,7 +579,7 @@ export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOpt
     throw createSuiteRunnerValidationError('Buster payload test_config must be an object', {
       reason: 'invalid_test_config_shape',
       field: 'test_config',
-      value: payload.test_config ?? null,
+      value: selectDefinedValue(() => (payload.test_config), () => (null)),
     });
   }
   const config = payload.test_config;
@@ -495,86 +604,96 @@ export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOpt
     }
   } : null;
 
-  const context: SuiteContext = {
-    payload,
-    moduleId: resolvedModuleId,
-    module: resolvedModuleId,
-    project,
-    config,
-    capabilities: opts.capabilities || payload.capabilities || [],
-    resultsDir: RESULTS_DIR,
-    testsLogDir: swarmResultsDir,
-    screenshotsDir: swarmResultsDir ? path.join(swarmResultsDir, 'visual-reg') : path.join(RESULTS_DIR, 'visual-reg'),
-    logDir,
-    pipelineLogPath: opts.pipelineLogPath || payload.pipeline_log_path || null,
-    pipelineRunLogPath: opts.pipelineRunLogPath || payload.pipeline_run_log_path || null,
-    logSink,
-    attempt,
-    telemetryContext: tctx,
-  };
-
   const results: SuiteResult[] = [];
   const suiteMap: Record<string, SuiteVerdict> = {};
   let criticalFailed = false;
 
-  for (const suiteName of ordered) {
-    const skipReason = checkDependencies(suiteName, suiteMap);
-    if (skipReason) {
+  const context: SuiteContext = {
+    payload,
+    moduleId: resolvedModuleId,
+    runId: selectDefinedValue(() => (payload.run_id), () => (null)),
+    gateId: selectDefinedValue(() => (payload.gate_id), () => (null)),
+    gateType: selectDefinedValue(() => (payload.gate_type), () => (null)),
+    dispatchId: selectDefinedValue(() => (payload.dispatch_id), () => (null)),
+    sessionKey: selectDefinedValue(() => (payload.session_key), () => (null)),
+    project,
+    config,
+    capabilities: resolveContextCapabilities({ capabilities: opts.capabilities, payload }),
+    resultsDir: RESULTS_DIR,
+    testsLogDir: swarmResultsDir,
+    screenshotsDir: swarmResultsDir ? path.join(swarmResultsDir, 'visual-reg') : path.join(RESULTS_DIR, 'visual-reg'),
+    logDir,
+    pipelineLogPath: selectDefinedValue(() => (opts.pipelineLogPath), () => (null)),
+    pipelineRunLogPath: selectDefinedValue(() => (opts.pipelineRunLogPath), () => (null)),
+    logSink,
+    attempt,
+    telemetryContext: tctx,
+    suiteResults: suiteMap,
+  };
+
+  const pendingSuites = new Set(ordered);
+
+  while (pendingSuites.size > 0) {
+    for (const suiteName of ordered.filter((suite) => pendingSuites.has(suite))) {
+      const skipReason = checkDependencies(suiteName, suiteMap);
+      if (!skipReason) continue;
       const verdict = createSuiteVerdict(suiteName, STATUS.SKIP, { reason: skipReason });
       suiteMap[suiteName] = verdict;
       results.push(verdict);
+      pendingSuites.delete(suiteName);
       await emitSuiteCompleted(tctx, moduleId, suiteName, verdict, attempt, Date.now());
-      continue;
     }
 
-    try {
-      enforceSuiteCapabilities(suiteName, context);
-    } catch (error: unknown) {
-      if (!(error instanceof BusterCapabilityDeniedError)) throw error;
-      const verdict = createCapabilityDeniedVerdict(suiteName, error);
-      criticalFailed = true;
-      suiteMap[suiteName] = verdict;
-      results.push(verdict);
-      await emitSuiteCompleted(tctx, moduleId, suiteName, verdict, attempt, Date.now());
-      continue;
-    }
+    const candidates = ordered.filter((suite) => pendingSuites.has(suite));
+    if (candidates.length === 0) break;
 
-    const suiteFn = loadSuite(suiteName);
+    const readySuites = collectReadySuites(candidates, suiteMap);
 
-    const startMs = Date.now();
-    const telemetryCtx = tctx && typeof tctx === 'object' ? tctx as Record<string, any> : null;
-    const gateId = telemetryCtx?.gateId || null;
-    await emitPluginEvent(tctx, 'suite_started', {
-      module_id: gateId ? null : moduleId,
-      ...(gateId ? { gate_id: gateId, gate_type: telemetryCtx?.gateType ?? null } : {}),
-      suite: suiteName,
-      attempt,
-    });
-
-    let result: SuiteVerdict;
-    try {
-      result = await runSuiteWithTimeout(suiteName, suiteFn, context, suiteTimeout);
-      if (!result.duration_ms) result.duration_ms = Date.now() - startMs;
-    } catch (err: unknown) {
-      const durationMs = Date.now() - startMs;
-      result = createSuiteVerdict(suiteName, STATUS.ERROR, {
-        critical: suiteName === 'build' || suiteName === 'health',
-        duration_ms: durationMs,
-        error: err instanceof Error ? err.message : 'Suite threw an unexpected error',
-        findings: [],
+    if (readySuites.length === 0) {
+      throw createSuiteRunnerValidationError('Buster suite dependency graph has no ready suites', {
+        reason: 'suite_dependency_deadlock',
+        invalid_suites: candidates,
       });
     }
 
-    await emitSuiteCompleted(tctx, moduleId, suiteName, result, attempt, startMs);
+    const batch = await runBatch({
+      batchId: `buster-suite:${resolvedModuleId}:${results.length + 1}`,
+      itemIds: readySuites,
+      executor: async (suiteName) => runOneSuite({
+        suiteName,
+        context,
+        suiteTimeout,
+        tctx,
+        moduleId,
+        attempt,
+      }),
+    });
 
-    if ((result.status === STATUS.FAIL || result.status === STATUS.ERROR) && result.critical) {
-      criticalFailed = true;
+    for (const entry of batch.results) {
+      const suiteName = entry.item_id;
+      let result: SuiteResult;
+      if (entry.status === 'fulfilled') {
+        result = entry.result as SuiteResult;
+      } else {
+        result = createSuiteVerdict(suiteName, STATUS.ERROR, {
+          critical: true,
+          error: entry.reason || 'Suite scheduler execution failed',
+          reason: entry.reason_code || 'suite_scheduler_execution_failed',
+          findings: [],
+        });
+        await emitSuiteCompleted(tctx, moduleId, suiteName, result, attempt, Date.now());
+      }
+
+      if (selectTruthyValue(() => (result.status === STATUS.ERROR), () => (result.status === STATUS.FAIL))) {
+        criticalFailed = true;
+      }
+
+      applyBuildRuntimePort(context.config, result);
+
+      suiteMap[suiteName] = result;
+      results.push(result);
+      pendingSuites.delete(suiteName);
     }
-
-    applyBuildRuntimePort(context.config, result);
-
-    suiteMap[suiteName] = result;
-    results.push({ ...result, duration_seconds: Math.round((Date.now() - startMs) / 1000) });
   }
 
   await writeResults(suiteMap, resolvedModuleId, project, swarmResultsDir, attempt, tctx);
@@ -588,7 +707,7 @@ export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOpt
 export const EXECUTION_ORDER = [
   'manifest',
   'build', 'health',
-  'k8s',
+  'k8s', 'tailscale-preview',
   'a11y', 'perf', 'bundle', 'security', 'visual-reg',
   'api', 'e2e', 'unit',
 ];
@@ -598,6 +717,7 @@ export const DEPENDENCIES: Record<string, string[]> = {
   build: ['manifest'],
   health: ['build'],
   k8s: [],
+  'tailscale-preview': ['k8s'],
   a11y: ['health'],
   perf: ['health'],
   bundle: ['build'],

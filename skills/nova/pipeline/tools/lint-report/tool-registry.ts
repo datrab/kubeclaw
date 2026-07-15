@@ -19,7 +19,64 @@ import {
 import { log } from './output.ts';
 import { registerContainerYamlTools } from './container-yaml-tools.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 const TOOL_REGISTRY = [];
+const TOOL_OUTPUT_EMPTY = '';
+const TOOL_OUTPUT_PREVIEW_MISSING = 'no output captured';
+const LINT_VULNERABILITY_FOUND = 'vulnerability found';
+
+function textValue(value) {
+  return typeof value === 'string' ? value : TOOL_OUTPUT_EMPTY;
+}
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function recordValue(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function selectPresentValue(...values) {
+  for (const value of values) {
+    if (typeof value === 'string' && value.length > 0) return value;
+  }
+  return TOOL_OUTPUT_EMPTY;
+}
+
+function requireString(value, label) {
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) throw new Error(`${label}: required non-empty string`);
+  return value.trim();
+}
+
+function requireNumber(value, label) {
+  if (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value)))) throw new Error(`${label}: required number`);
+  return value;
+}
+
+function isJavaScriptOrTypeScriptProject(ctx) {
+  return selectTruthyValue(() => (ctx.projectTypes.has('javascript')), () => (ctx.projectTypes.has('typescript')));
+}
+
+function hasPackageGraphForKnip(repoRoot) {
+  const packagePath = path.join(repoRoot, 'package.json');
+  if (!fs.existsSync(packagePath)) return false;
+  const packageJson = recordValue(JSON.parse(fs.readFileSync(packagePath, 'utf8')));
+  if (recordValue(packageJson.dependencies) && Object.keys(recordValue(packageJson.dependencies)).length > 0) return true;
+  if (recordValue(packageJson.devDependencies) && Object.keys(recordValue(packageJson.devDependencies)).length > 0) return true;
+  if (recordValue(packageJson.peerDependencies) && Object.keys(recordValue(packageJson.peerDependencies)).length > 0) return true;
+  if (packageJson.knip) return true;
+  return fs.existsSync(path.join(repoRoot, 'knip.json')) || fs.existsSync(path.join(repoRoot, 'knip.ts')) || fs.existsSync(path.join(repoRoot, 'knip.js'));
+}
+
+function isJavaScriptOrTypeScriptPolicyFile(file) {
+  if (path.basename(file) === 'tsconfig.json') return true;
+  return /\.(js|jsx|ts|tsx|mjs|cjs)$/.test(file);
+}
+
+function npmAuditSeverity(severity) {
+  return selectTruthyValue(() => (severity === 'critical'), () => (severity === 'high')) ? 'error' : 'warning';
+}
 
 function registerTool(tool) {
   TOOL_REGISTRY.push({
@@ -43,7 +100,7 @@ registerTool({
     const tsconfigDir = findNearestTsconfigDir(ctx.repoRoot, ctx.modulePath);
     if (!tsconfigDir) {
       const message = 'No tsconfig.json found for TypeScript lint run. Skipping tsc instead of guessing a working directory.';
-      log('WARN', message, { repoRoot: ctx.repoRoot, modulePath: ctx.modulePath || null });
+      log('WARN', message, { repoRoot: ctx.repoRoot, modulePath: selectTruthyValue(() => (ctx.modulePath), () => (null)) });
       return makeConfigMissingResult(ctx, 'tsconfig-missing', message);
     }
 
@@ -51,7 +108,7 @@ registerTool({
 
     // tsc outputs errors to stdout, one per line: file(line,col): error TSxxxx: message
     const findings = [];
-    const lines = (result.stdout || '').split('\n').filter(Boolean);
+    const lines = textValue(result.stdout).split('\n').filter(Boolean);
     for (const line of lines) {
       const match = line.match(/^(.+?)\((\d+),(\d+)\):\s+(error|warning)\s+(TS\d+):\s+(.+)$/);
       if (match) {
@@ -66,9 +123,9 @@ registerTool({
       }
     }
 
-    if (findings.length === 0 && (result.exitCode !== 0 || result.timedOut)) {
-      const output = (result.stdout || result.stderr || result.error || '').trim();
-      const preview = output ? output.split('\n')[0].slice(0, 200) : 'no output captured';
+    if (findings.length === 0 && (selectTruthyValue(() => (result.exitCode !== 0), () => (result.timedOut)))) {
+      const output = selectPresentValue(result.stdout, result.stderr, result.error).trim();
+      const preview = output ? output.split('\n')[0].slice(0, 200) : TOOL_OUTPUT_PREVIEW_MISSING;
       findings.push({
         file: path.join(tsconfigDir, 'tsconfig.json'),
         line: null,
@@ -93,15 +150,13 @@ registerTool({
   name: 'Repo Policy',
   binary: 'node',
   tier: 'full',
-  detect: (ctx) => ctx.projectTypes.has('javascript') || ctx.projectTypes.has('typescript'),
+  detect: isJavaScriptOrTypeScriptProject,
   run: (ctx) => {
     const scanRoot = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
     const findings = [];
 
     if (ctx.changedFiles.length > 0) {
-      const hasRelevantChange = ctx.changedFiles.some(file =>
-        /\.(js|jsx|ts|tsx|mjs|cjs)$/.test(file) || path.basename(file) === 'tsconfig.json'
-      );
+      const hasRelevantChange = ctx.changedFiles.some(isJavaScriptOrTypeScriptPolicyFile);
       if (!hasRelevantChange) {
         return { errors: 0, warnings: 0, findings: [] };
       }
@@ -111,7 +166,7 @@ registerTool({
       const tsconfigDir = findNearestTsconfigDir(ctx.repoRoot, ctx.modulePath);
       if (!tsconfigDir) {
         const message = 'No tsconfig.json found for TypeScript policy checks. Skipping erasableSyntaxOnly enforcement.';
-        log('WARN', message, { repoRoot: ctx.repoRoot, modulePath: ctx.modulePath || null });
+        log('WARN', message, { repoRoot: ctx.repoRoot, modulePath: selectTruthyValue(() => (ctx.modulePath), () => (null)) });
         findings.push(...makeConfigMissingResult(ctx, 'tsconfig-missing', message).findings);
       } else {
         const tsconfigPath = path.join(tsconfigDir, 'tsconfig.json');
@@ -204,10 +259,10 @@ registerTool({
     const parsed = tryParseJson(result.stdout);
     if (!parsed.ok) return makeParseFailureResult(ctx, 'ruff', parsed, result, target);
 
-    const findings = (parsed.data || []).map(item => ({
-      file: item.filename || item.file,
-      line: item.location?.row || item.line,
-      column: item.location?.column || item.column,
+    const findings = arrayValue(parsed.data).map(item => ({
+      file: requireString(item.filename, 'ruff finding filename'),
+      line: requireNumber(item.location?.row, 'ruff finding location.row'),
+      column: requireNumber(item.location?.column, 'ruff finding location.column'),
       severity: item.fix ? 'warning' : 'error',
       code: item.code,
       message: item.message,
@@ -246,7 +301,7 @@ registerTool({
     const parsed = tryParseJson(result.stdout);
     if (!parsed.ok) return makeParseFailureResult(ctx, 'shellcheck', parsed, result, scanRoot);
 
-    const comments = Array.isArray(parsed.data) ? parsed.data : (parsed.data?.comments || []);
+    const comments = Array.isArray(parsed.data) ? parsed.data : arrayValue(parsed.data?.comments);
     const findings = comments.map(item => ({
       file: item.file,
       line: item.line,
@@ -270,7 +325,7 @@ registerTool({
   name: 'ESLint',
   binary: 'eslint',
   tier: 'full',
-  detect: (ctx) => ctx.projectTypes.has('javascript') || ctx.projectTypes.has('typescript'),
+  detect: isJavaScriptOrTypeScriptProject,
   run: (ctx) => {
     const target = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
     const args = ['--format', 'json', '--no-error-on-unmatched-pattern'];
@@ -314,14 +369,14 @@ registerTool({
     if (!parsed.ok) return makeParseFailureResult(ctx, 'eslint', parsed, result, target);
 
     const findings = [];
-    for (const fileResult of (parsed.data || [])) {
-      for (const msg of (fileResult.messages || [])) {
+    for (const fileResult of arrayValue(parsed.data)) {
+      for (const msg of arrayValue(fileResult.messages)) {
         findings.push({
           file: fileResult.filePath,
           line: msg.line,
           column: msg.column,
           severity: msg.severity === 2 ? 'error' : 'warning',
-          code: msg.ruleId || null,
+          code: selectTruthyValue(() => (msg.ruleId), () => (null)),
           message: msg.message,
         });
       }
@@ -336,13 +391,29 @@ registerTool({
 });
 
 // ── knip (Unused exports/deps/files) ──
+const KNIP_MAX_REPORTED_FINDINGS = 50;
+
 registerTool({
   id: 'knip',
   name: 'Knip (Unused Code)',
   binary: 'knip',
   tier: 'full',
-  detect: (ctx) => ctx.projectTypes.has('javascript') || ctx.projectTypes.has('typescript'),
+  detect: isJavaScriptOrTypeScriptProject,
   run: (ctx) => {
+    if (!hasPackageGraphForKnip(ctx.repoRoot)) {
+      return {
+        errors: 0,
+        warnings: 0,
+        findings: [{
+          file: 'package.json',
+          line: null,
+          column: null,
+          severity: 'info',
+          code: 'knip:skipped_no_package_graph',
+          message: 'Knip skipped because this project has no dependency graph or explicit Knip config.',
+        }],
+      };
+    }
     const result = safeExec('knip', ['--reporter', 'json', '--no-progress'], {
       cwd: ctx.repoRoot,
       timeout: 60000,
@@ -352,14 +423,14 @@ registerTool({
     if (!parsed.ok) return makeParseFailureResult(ctx, 'knip', parsed, result);
 
     const findings = [];
-    const data = parsed.data || {};
+    const data = recordValue(parsed.data);
 
     for (const [category, items] of Object.entries(data)) {
       if (!Array.isArray(items)) continue;
       for (const item of items) {
         findings.push({
-          file: item.filePath || item.file || null,
-          line: item.line || null,
+          file: selectTruthyValue(() => (selectTruthyValue(() => (item.filePath), () => (item.file))), () => (null)),
+          line: selectTruthyValue(() => (item.line), () => (null)),
           column: null,
           severity: 'warning',
           code: `knip:${category}`,
@@ -370,10 +441,22 @@ registerTool({
       }
     }
 
+    const reportedFindings = findings.slice(0, KNIP_MAX_REPORTED_FINDINGS);
+    if (findings.length > reportedFindings.length) {
+      reportedFindings.push({
+        file: null,
+        line: null,
+        column: null,
+        severity: 'warning',
+        code: 'knip:advisory_summary',
+        message: `Knip reported ${findings.length} advisory warning(s); showing first ${KNIP_MAX_REPORTED_FINDINGS}. Treat the warning count as authoritative and inspect Knip directly when reducing unused-code debt.`,
+      });
+    }
+
     return {
       errors: 0,
       warnings: findings.length,
-      findings,
+      findings: reportedFindings,
     };
   },
 });
@@ -384,7 +467,7 @@ registerTool({
   name: 'Madge (Circular Dependencies)',
   binary: 'madge',
   tier: 'full',
-  detect: (ctx) => ctx.projectTypes.has('javascript') || ctx.projectTypes.has('typescript'),
+  detect: isJavaScriptOrTypeScriptProject,
   run: (ctx) => {
     const target = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
     const args = ['--circular', '--json'];
@@ -396,9 +479,9 @@ registerTool({
     const parsed = tryParseJson(result.stdout);
     if (!parsed.ok) return makeParseFailureResult(ctx, 'madge', parsed, result, target);
 
-    const cycles = parsed.data || [];
+    const cycles = arrayValue(parsed.data);
     const findings = cycles.map(cycle => ({
-      file: cycle[0] || null,
+      file: selectTruthyValue(() => (cycle[0]), () => (null)),
       line: null,
       column: null,
       severity: 'error',
@@ -420,7 +503,7 @@ registerTool({
   name: 'npm audit',
   binary: 'npm',
   tier: 'full',
-  detect: (ctx) => ctx.projectTypes.has('javascript') || ctx.projectTypes.has('typescript'),
+  detect: isJavaScriptOrTypeScriptProject,
   run: (ctx) => {
     const result = safeExec('npm', ['audit', '--json', '--omit=dev'], {
       cwd: ctx.repoRoot,
@@ -431,15 +514,15 @@ registerTool({
     if (!parsed.ok) return makeParseFailureResult(ctx, 'npm-audit', parsed, result, path.join(ctx.repoRoot, 'package.json'));
 
     const findings = [];
-    const vulns = parsed.data?.vulnerabilities || {};
+    const vulns = recordValue(parsed.data?.vulnerabilities);
     for (const [name, vuln] of Object.entries(vulns)) {
       findings.push({
         file: 'package.json',
         line: null,
         column: null,
-        severity: vuln.severity === 'critical' || vuln.severity === 'high' ? 'error' : 'warning',
+        severity: npmAuditSeverity(vuln.severity),
         code: `npm:${vuln.severity}`,
-        message: `${name}: ${vuln.title || vuln.via?.[0]?.title || 'vulnerability found'} (${vuln.severity})`,
+        message: `${name}: ${selectPresentValue(vuln.title, vuln.via?.[0]?.title, LINT_VULNERABILITY_FOUND)} (${vuln.severity})`,
       });
     }
 
@@ -474,11 +557,11 @@ registerTool({
     // mypy JSON output: one JSON object per line
     const findings = [];
     let parseFailure = null;
-    const lines = (result.stdout || '').split('\n').filter(Boolean);
+    const lines = textValue(result.stdout).split('\n').filter(Boolean);
     for (const line of lines) {
       const parsed = tryParseJson(line);
       if (!parsed.ok) {
-        parseFailure ||= { parsed, line };
+        if (!parseFailure) parseFailure = { parsed, line };
         continue;
       }
       const item = parsed.data;
@@ -487,7 +570,7 @@ registerTool({
         line: item.line,
         column: item.column,
         severity: item.severity === 'error' ? 'error' : 'warning',
-        code: item.code || null,
+        code: selectTruthyValue(() => (item.code), () => (null)),
         message: item.message,
       });
     }
@@ -524,15 +607,18 @@ registerTool({
     const parsed = tryParseJson(result.stdout);
     if (!parsed.ok) return makeParseFailureResult(ctx, 'pip-audit', parsed, result, path.join(ctx.repoRoot, 'requirements.txt'));
 
-    const findings = (parsed.data?.dependencies || parsed.data || [])
+    const dependencyEntries = Array.isArray(parsed.data?.dependencies)
+      ? parsed.data.dependencies
+      : (Array.isArray(parsed.data) ? parsed.data : []);
+    const findings = dependencyEntries
       .filter(dep => dep.vulns?.length > 0)
       .flatMap(dep => dep.vulns.map(vuln => ({
         file: 'requirements.txt',
         line: null,
         column: null,
         severity: 'error',
-        code: vuln.id || null,
-        message: `${dep.name} ${dep.version}: ${vuln.description || vuln.id}`,
+        code: selectTruthyValue(() => (vuln.id), () => (null)),
+        message: `${dep.name} ${dep.version}: ${requireString(vuln.description, 'pip-audit vulnerability description')}`,
       })));
 
     return {
@@ -590,13 +676,13 @@ registerTool({
     const parsed = tryParseJson(result.stdout);
     if (!parsed.ok) return makeParseFailureResult(ctx, 'semgrep', parsed, result, target);
 
-    const findings = (parsed.data?.results || []).map(item => ({
+    const findings = arrayValue(parsed.data?.results).map(item => ({
       file: item.path,
       line: item.start?.line,
       column: item.start?.col,
       severity: item.extra?.severity === 'ERROR' ? 'error' : 'warning',
       code: item.check_id,
-      message: item.extra?.message || item.check_id,
+      message: requireString(item.extra?.message, 'semgrep finding message'),
     }));
 
     return {

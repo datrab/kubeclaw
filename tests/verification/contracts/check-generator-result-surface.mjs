@@ -22,6 +22,8 @@ const caseStudyPath = path.join(sourceRoot, 'skills/nova/pipeline/services/case-
 const projectSummaryPath = path.join(sourceRoot, 'skills/nova/pipeline/services/summary/project-summary.ts');
 const schedulingPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner-scheduling.ts');
 const serializationPath = path.join(sourceRoot, 'skills/nova/pipeline/services/serialization.ts');
+const commonStandardProfilePath = path.join(sourceRoot, 'skills/common/pipeline/config-profiles/standard.json');
+const novaStandardProfilePath = path.join(sourceRoot, 'skills/nova/pipeline/core/config-profiles/standard.json');
 
 const helperSource = fs.readFileSync(helperPath, 'utf8');
 const summarySource = fs.readFileSync(summaryPath, 'utf8');
@@ -29,6 +31,8 @@ const caseStudySource = fs.readFileSync(caseStudyPath, 'utf8');
 const projectSummarySource = fs.readFileSync(projectSummaryPath, 'utf8');
 const schedulingSource = fs.readFileSync(schedulingPath, 'utf8');
 const serializationSource = fs.readFileSync(serializationPath, 'utf8');
+const commonStandardProfile = JSON.parse(fs.readFileSync(commonStandardProfilePath, 'utf8'));
+const novaStandardProfile = JSON.parse(fs.readFileSync(novaStandardProfilePath, 'utf8'));
 
 for (const marker of [
   'export function buildGeneratorArtifactRef(',
@@ -62,6 +66,13 @@ assert.equal(projectSummarySource.includes("from '../contracts/generator-result.
 assert.equal(summarySource.includes('reviewGatewayLabel || label'), false, 'pipeline review summary must not use the spawn label as an implicit gateway-label fallback');
 assert.equal(summarySource.includes('identity.label'), false, 'pipeline review Discord fields must not treat generic labels as gateway identity');
 assert.equal(summarySource.includes('function resolvePipelineReviewGatewayLabel('), true, 'pipeline review summary should resolve gateway labels through an explicit identity helper');
+assert.equal(caseStudySource.includes("reason: 'disabled'"), false, 'case study terminal generator must not return a disabled skip result');
+for (const [name, profile] of [['common', commonStandardProfile], ['nova', novaStandardProfile]]) {
+  assert.equal(profile.case_study?.enabled, true, `${name} standard profile must enable the required case study terminal generator`);
+  assert.equal(typeof profile.case_study?.model, 'string', `${name} standard profile must provide a case study model`);
+  assert.equal(typeof profile.case_study?.agent_id, 'string', `${name} standard profile must provide a case study agent id`);
+  assert.equal(profile.case_study?.output_file, 'logs/pipeline/case-study.md', `${name} standard profile must write the canonical case study artifact`);
+}
 
 const helperMod = await import(pathToFileURL(helperPath).href);
 assert.equal(typeof helperMod.buildGeneratorArtifactRef, 'function', 'shared generator helper should expose buildGeneratorArtifactRef');
@@ -138,11 +149,12 @@ assert.throws(
       && error?.validationErrors?.[0]?.includes('only schemaVersion')
       && error.diagnostics.rawResultPreview === undefined
       && error.diagnostics.coercedResultPreview === undefined
-      && error.diagnostics.rawResultSummary?.redacted === true
+      && error.diagnostics.rawResultSummary?.label === 'rawResult'
+      && Number.isInteger(error.diagnostics.rawResultSummary?.json_bytes)
       && error.diagnostics.coercedResultSummary === null
       && !diagnosticText.includes('super-secret-password');
   },
-  'normalizer should wrap invalid generator shapes in redacted structured contract-invalid diagnostics',
+  'normalizer should wrap invalid generator shapes in bounded structured contract-invalid diagnostics',
 );
 assert.throws(
   () => helperMod.normalizeGeneratorResult({ ...result, artifacts: [{ type: 'pipeline_review', path: '' }] }, { producerType: 'pipeline_review' }),

@@ -5,6 +5,7 @@ import { assertNotificationEventInput, buildNotificationEventInput } from './not
 import { recordObservabilityDegraded, recordObservabilityRestored } from './observability.ts';
 import { deepClone, deepFreeze } from './serialization.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 const MISSING_NOTIFICATION_REASONS = Object.freeze([
   'notification_registry_missing',
   'notification_registry_disabled',
@@ -13,15 +14,15 @@ const MISSING_NOTIFICATION_REASONS = Object.freeze([
 
 function buildNotificationInvocation(input = {}) {
   return {
-    runId: input?.ids?.runId || null,
-    moduleId: input?.ids?.moduleId || null,
-    gateId: input?.ids?.gateId || null,
-    gateType: input?.ids?.gateType || null,
-    attempt: input?.ids?.attempt ?? null,
-    runRef: input?.refs?.runRef || null,
-    primaryRef: input?.refs?.primaryRef || null,
-    moduleAttemptRef: input?.refs?.moduleAttemptRef || null,
-    gateEvaluationRef: input?.refs?.gateEvaluationRef || null,
+    runId: selectTruthyValue(() => (input?.ids?.runId), () => (null)),
+    moduleId: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
+    gateId: selectTruthyValue(() => (input?.ids?.gateId), () => (null)),
+    gateType: selectTruthyValue(() => (input?.ids?.gateType), () => (null)),
+    attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
+    runRef: selectTruthyValue(() => (input?.refs?.runRef), () => (null)),
+    primaryRef: selectTruthyValue(() => (input?.refs?.primaryRef), () => (null)),
+    moduleAttemptRef: selectTruthyValue(() => (input?.refs?.moduleAttemptRef), () => (null)),
+    gateEvaluationRef: selectTruthyValue(() => (input?.refs?.gateEvaluationRef), () => (null)),
   };
 }
 
@@ -31,13 +32,13 @@ function notificationPayload(input = {}, surface = 'listener_registry', reason =
     surface,
     reason,
     detail,
-    impacted_event_type: input?.event?.type || input?.ids?.hookId || null,
-    hook_id: input?.ids?.hookId || null,
-    stage_id: input?.ids?.stageId || null,
-    module_id: input?.ids?.moduleId || null,
-    gate_id: input?.ids?.gateId || null,
-    gate_type: input?.ids?.gateType || null,
-    attempt: input?.ids?.attempt ?? null,
+    impacted_event_type: selectTruthyValue(() => (selectTruthyValue(() => (input?.event?.type), () => (input?.ids?.hookId))), () => (null)),
+    hook_id: selectTruthyValue(() => (input?.ids?.hookId), () => (null)),
+    stage_id: selectTruthyValue(() => (input?.ids?.stageId), () => (null)),
+    module_id: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
+    gate_id: selectTruthyValue(() => (input?.ids?.gateId), () => (null)),
+    gate_type: selectTruthyValue(() => (input?.ids?.gateType), () => (null)),
+    attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
   };
 }
 
@@ -62,7 +63,7 @@ function resolveMissingListenerIncident(config, input) {
 }
 
 async function reportMissingListeners(ctx, input) {
-  const config = ctx?.config || {};
+  const config = selectDefinedValue(() => (ctx?.config), () => ({}));
   const incident = resolveMissingListenerIncident(config, input);
   await recordObservabilityDegraded(ctx, notificationPayload(input, 'listener_registry', incident.reason, incident.detail));
   log('WARN', `[notification] ${incident.detail}`);
@@ -92,7 +93,7 @@ function ensureBuiltinNotificationRuntime(pluginContext, record, config, progres
 
 export async function dispatchNotificationHook(ctx = {}, hookId, envelope = {}) {
   const config = ctx?.config;
-  const progress = ctx?.progress || null;
+  const progress = selectTruthyValue(() => (ctx?.progress), () => (null));
   const input = assertNotificationEventInput(buildNotificationEventInput(ctx, hookId, envelope));
   const listeners = resolveHookListeners(config, hookId, input.ids.stageId);
 
@@ -117,7 +118,7 @@ export async function dispatchNotificationHook(ctx = {}, hookId, envelope = {}) 
   for (const record of listeners) {
     const moduleId = record.manifest.moduleId;
     try {
-      const listenerInput = narrowPluginInputForCapabilities(frozenInput, record.manifest.capabilities || []);
+      const listenerInput = narrowPluginInputForCapabilities(frozenInput, selectDefinedValue(() => (record.manifest.capabilities), () => ([])));
       const pluginContext = createPluginContext({
         config,
         progress,
@@ -125,10 +126,10 @@ export async function dispatchNotificationHook(ctx = {}, hookId, envelope = {}) 
         stageId: listenerInput.ids.stageId,
         record,
         invocation,
-        stateSnapshot: listenerInput.stateSnapshot || {},
+        stateSnapshot: selectDefinedValue(() => (listenerInput.stateSnapshot), () => ({})),
         environmentMetadata: {
           notificationHook: hookId,
-          notificationEventType: listenerInput?.event?.type || null,
+          notificationEventType: selectTruthyValue(() => (listenerInput?.event?.type), () => (null)),
         },
       });
       ensureBuiltinNotificationRuntime(pluginContext, record, config, progress);
@@ -141,7 +142,7 @@ export async function dispatchNotificationHook(ctx = {}, hookId, envelope = {}) 
       await recordObservabilityRestored(ctx, notificationPayload(frozenInput, moduleId, 'notification_listener_failed', `notification listener '${moduleId}' restored`));
       results.push({ moduleId, ok: true });
     } catch (error) {
-      const detail = error?.message || `notification listener '${moduleId}' failed`;
+      const detail = selectDefinedValue(() => (error?.message), () => (`notification listener '${moduleId}' failed`));
       log('WARN', `[notification] listener '${moduleId}' degraded on '${hookId}': ${detail}`);
       await recordObservabilityDegraded(ctx, notificationPayload(frozenInput, moduleId, 'notification_listener_failed', detail));
       results.push({ moduleId, ok: false, error: detail });

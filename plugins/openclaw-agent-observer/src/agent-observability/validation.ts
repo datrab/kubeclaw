@@ -1,7 +1,6 @@
 import {
   AGENT_OBSERVABILITY_HOOKS,
   AGENT_OBSERVABILITY_INGRESS_EVENT_TYPES,
-  AGENT_OBSERVABILITY_MASKING_PROFILE,
   AGENT_OBSERVABILITY_SCHEMA_VERSION,
   AGENT_OBSERVABILITY_SOURCE,
 } from './constants.ts';
@@ -256,20 +255,6 @@ function validatePayload(type: AgentObservabilityIngressEventType, payload: unkn
   }
 }
 
-function validateMasking(masking: unknown, errors: string[]): void {
-  if (!isPlainObject(masking)) {
-    errors.push('masking must be an object');
-    return;
-  }
-  if (masking.profile !== AGENT_OBSERVABILITY_MASKING_PROFILE) {
-    errors.push(`masking.profile must be '${AGENT_OBSERVABILITY_MASKING_PROFILE}'`);
-  }
-  if (masking.content !== 'full') errors.push("masking.content must be 'full'");
-  if (!Array.isArray(masking.masked) || !masking.masked.every((item) => item === 'basic_api_key_pattern')) {
-    errors.push("masking.masked must contain only 'basic_api_key_pattern' markers");
-  }
-}
-
 export function validateAgentObservabilityIngressEvent(value: unknown): AgentObservabilityValidationResult {
   const errors: string[] = [];
   if (!isPlainObject(value)) return { ok: false, errors: ['event must be an object'] };
@@ -287,8 +272,6 @@ export function validateAgentObservabilityIngressEvent(value: unknown): AgentObs
   } else if (!isPlainObject(value.payload)) {
     errors.push('payload must be an object');
   }
-  validateMasking(value.masking, errors);
-
   return { ok: errors.length === 0, errors };
 }
 

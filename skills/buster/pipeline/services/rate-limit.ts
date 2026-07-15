@@ -9,6 +9,7 @@ import {
 import { buildSessionRateLimitDiscordFields } from './discord-fields.ts';
 import { sleep } from '../timing.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 interface RateLimitConfig {
   maxPauses?: number | string | null;
   initialCooldownS?: number | string | null;
@@ -57,7 +58,7 @@ interface RateLimitOptions {
   ownsCanonicalSignal?: boolean;
 }
 
-export type BusterSessionLivenessState = 'active' | 'closed' | 'gateway_unreachable' | 'probe_error' | 'unknown';
+export type BusterSessionLivenessState = 'active' | 'closed' | 'gateway_unreachable' | 'probe_error' | 'session_active_state_missing';
 
 interface BusterSessionLiveness {
   state: BusterSessionLivenessState;
@@ -84,7 +85,7 @@ function log(label: string, msg: string): void {
 function requiredNumber(config: RateLimitConfig, field: keyof RateLimitConfig): number {
   const raw = config[field];
   const value = Number(raw);
-  if (raw === undefined || raw === null || raw === '' || !Number.isFinite(value) || value < 0) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (raw === undefined), () => (raw === null))), () => (raw === ''))), () => (!Number.isFinite(value)))), () => (value < 0))) {
     throw new Error(`Buster rate-limit config invalid: ${field} is required as a non-negative number`);
   }
   return value;
@@ -181,12 +182,28 @@ function stringField(value: unknown): string | null {
   return typeof value === 'string' && value.trim() ? value : null;
 }
 
+function objectRecord(value: unknown): Record<string, unknown> {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
+}
+
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error || 'unknown');
+  return error instanceof Error ? error.message : String(selectTruthyValue(() => (error), () => ('missing_error_detail')));
+}
+
+function monitorGatewayDetailAuthority(monitorState: Record<string, unknown>): string | null {
+  const explicitGatewayDetail = stringField(monitorState.gatewayDetail);
+  if (explicitGatewayDetail) return explicitGatewayDetail;
+  return stringField(monitorState.detail);
+}
+
+function rateLimitGateIdAuthority(gateId: string | null, taskType: string | null, moduleId: string): string | null {
+  if (stringField(gateId)) return gateId;
+  if (taskType === 'gate_test') return moduleId;
+  return null;
 }
 
 export function buildProbeMonitorOptions(gatewayUrl: string | null, gatewayToken: string | null, acpMonitorConfig: Record<string, unknown> | null | undefined): Record<string, unknown> {
-  const monitorOptions = { ...(acpMonitorConfig || {}) };
+  const monitorOptions = { ...objectRecord(acpMonitorConfig) };
   if (stringField(gatewayUrl)) monitorOptions.gatewayUrl = gatewayUrl;
   if (stringField(gatewayToken)) monitorOptions.gatewayToken = gatewayToken;
   return monitorOptions;
@@ -201,7 +218,7 @@ async function probeSessionLiveness(childSessionKey: string, gatewayUrl: string 
       monitorOptions: buildProbeMonitorOptions(gatewayUrl, gatewayToken, acpMonitorConfig),
     });
     const gatewayUnreachable = monitorState.gatewayUnreachable === true;
-    const gatewayDetail = stringField(monitorState.gatewayDetail) || stringField(monitorState.detail);
+    const gatewayDetail = monitorGatewayDetailAuthority(monitorState);
     if (gatewayUnreachable) {
       return {
         state: 'gateway_unreachable',
@@ -230,11 +247,11 @@ async function probeSessionLiveness(childSessionKey: string, gatewayUrl: string 
       };
     }
     return {
-      state: 'unknown',
+      state: 'session_active_state_missing',
       sessionAlive: null,
       gatewayUnreachable: false,
       gatewayDetail,
-      detail: gatewayDetail || 'monitor returned no explicit sessionActive state',
+      detail: selectDefinedValue(() => (gatewayDetail), () => ('monitor returned no explicit sessionActive state')),
     };
   } catch (error: unknown) {
     const detail = errorMessage(error);
@@ -251,7 +268,7 @@ async function probeSessionLiveness(childSessionKey: string, gatewayUrl: string 
 
 function recoveryActionForLiveness(liveness: BusterSessionLiveness): string {
   // STRICTIFY_TS_SLICE: only a confirmed closed session can move to kill.
-  // Probe errors, unknown state, and gateway degradation preserve monitoring.
+  // Probe errors, missing active-state authority, and gateway degradation preserve monitoring.
   if (liveness.state === 'closed') {
     return resolveRateLimitRecoveryAction({ sessionAlive: false, gatewayUnreachable: false });
   }
@@ -272,24 +289,24 @@ export async function handleRateLimit(state: RateLimitState, opts: RateLimitOpti
     detail = null,
     taskType = null,
     phase = 'buster',
-    project = telemetryCtx?.project || '',
-    runId = telemetryCtx?.runId || null,
+    project = selectDefinedValue(() => (stringField(telemetryCtx?.project)), () => ('')),
+    runId = selectTruthyValue(() => (telemetryCtx?.runId), () => (null)),
     attempt = null,
     dispatchId = null,
-    gatewayLabel = dispatchId || null,
-    logDir = telemetryCtx?.logDir || null,
+    gatewayLabel = selectTruthyValue(() => (dispatchId), () => (null)),
+    logDir = selectTruthyValue(() => (telemetryCtx?.logDir), () => (null)),
     acpMonitorConfig = null,
     ownsCanonicalSignal = true,
   } = opts;
-  const resolvedGateId = gateId || (taskType === 'gate_test' ? moduleId : null);
-  const resolvedGateType = gateType || null;
+  const resolvedGateId = rateLimitGateIdAuthority(gateId, taskType, moduleId);
+  const resolvedGateType = selectTruthyValue(() => (gateType), () => (null));
   const signalModuleId = taskType === 'gate_test' ? null : moduleId;
 
   state.pauseCount += 1;
   const cooldownS = state.currentCooldownS;
   const cooldownMs = cooldownS * 1000;
   const resumeAt = new Date(Date.now() + cooldownMs).toISOString();
-  const resolvedDetail = detail || `rate limit pause ${state.pauseCount}/${state.maxPauses}`;
+  const resolvedDetail = selectDefinedValue(() => (stringField(detail)), () => (`rate limit pause ${state.pauseCount}/${state.maxPauses}`));
 
   log('WARN', `Rate limit detected — module=${moduleId} session=${childSessionKey} provider=${provider} pause=${state.pauseCount}/${state.maxPauses} cooldown=${cooldownS}s`);
 
@@ -331,7 +348,7 @@ export async function handleRateLimit(state: RateLimitState, opts: RateLimitOpti
       dispatchId,
       gatewayLabel,
       logDir,
-      webhookUrl: discord?.webhookUrl || null,
+      webhookUrl: selectTruthyValue(() => (discord?.webhookUrl), () => (null)),
     });
   } else {
     // KEEP_TYPED_POLICY: explicit duplicate-owner calls still sleep/probe but
@@ -350,7 +367,7 @@ export async function handleRateLimit(state: RateLimitState, opts: RateLimitOpti
   const action = recoveryActionForLiveness(liveness);
   if (liveness.state === 'gateway_unreachable') {
     log('WARN', `Gateway unreachable after cooldown, preserving degraded visibility and resuming monitor for session=${childSessionKey}`);
-  } else if (liveness.state === 'probe_error' || liveness.state === 'unknown') {
+  } else if (['probe_error', 'session_active_state_missing'].includes(liveness.state)) {
     log('WARN', `Liveness state ${liveness.state} after cooldown, preserving monitor for session=${childSessionKey}`);
   }
 

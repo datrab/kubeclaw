@@ -1,3 +1,6 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
 const DEFAULT_TAIL_LIMIT_BYTES = Number(process.env.REAL_E2E_DIAGNOSTIC_CAPTURE_LIMIT || 64 * 1024);
 const DEFAULT_FATAL_LINE_LIMIT = Number(process.env.REAL_E2E_DIAGNOSTIC_FATAL_LINE_LIMIT || 20);
 const DEFAULT_PARTIAL_LINE_LIMIT_BYTES = Number(process.env.REAL_E2E_DIAGNOSTIC_PARTIAL_LINE_LIMIT || 8 * 1024);
@@ -104,9 +107,13 @@ export function createChildOutputCapture({
   fatalLineLimit,
   partialLineLimitBytes,
   fatalLineTextLimitBytes,
+  stdoutLogPath = null,
+  stderrLogPath = null,
 } = {}) {
   return {
     label,
+    stdout_log_path: stdoutLogPath,
+    stderr_log_path: stderrLogPath,
     stdout: createStreamCapture({
       tailLimitBytes,
       fatalLineLimit,
@@ -125,25 +132,44 @@ export function createChildOutputCapture({
 export function captureChildOutput(child, {
   label,
   prefixOutput = true,
+  mirrorOutput = true,
+  stdoutLogPath = null,
+  stderrLogPath = null,
   tailLimitBytes,
   fatalLineLimit,
   partialLineLimitBytes,
   fatalLineTextLimitBytes,
 } = {}) {
+  if (stdoutLogPath) {
+    fs.mkdirSync(path.dirname(stdoutLogPath), { recursive: true });
+    fs.writeFileSync(stdoutLogPath, '');
+  }
+  if (stderrLogPath) {
+    fs.mkdirSync(path.dirname(stderrLogPath), { recursive: true });
+    fs.writeFileSync(stderrLogPath, '');
+  }
   const output = createChildOutputCapture({
     label,
     tailLimitBytes,
     fatalLineLimit,
     partialLineLimitBytes,
     fatalLineTextLimitBytes,
+    stdoutLogPath,
+    stderrLogPath,
   });
   child.stdout?.on('data', (chunk) => {
     appendStreamCapture(output.stdout, chunk);
-    process.stdout.write(prefixOutput && label ? `[${label}] ${chunk.toString()}` : chunk.toString());
+    if (stdoutLogPath) fs.appendFileSync(stdoutLogPath, chunk);
+    if (mirrorOutput) {
+      process.stdout.write(prefixOutput && label ? `[${label}] ${chunk.toString()}` : chunk.toString());
+    }
   });
   child.stderr?.on('data', (chunk) => {
     appendStreamCapture(output.stderr, chunk);
-    process.stderr.write(prefixOutput && label ? `[${label}] ${chunk.toString()}` : chunk.toString());
+    if (stderrLogPath) fs.appendFileSync(stderrLogPath, chunk);
+    if (mirrorOutput) {
+      process.stderr.write(prefixOutput && label ? `[${label}] ${chunk.toString()}` : chunk.toString());
+    }
   });
   return output;
 }
@@ -151,6 +177,8 @@ export function captureChildOutput(child, {
 export function childOutputDiagnostics(label, output) {
   return {
     label,
+    stdout_log_path: output.stdout_log_path || null,
+    stderr_log_path: output.stderr_log_path || null,
     stdout: streamCaptureSnapshot(output.stdout),
     stderr: streamCaptureSnapshot(output.stderr),
   };

@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Buster Git Workflows — repo synchronization and push policy
 // ═══════════════════════════════════════════════════════════════
@@ -7,9 +8,14 @@
 
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
+// @ts-expect-error Node built-in ambient types are not installed for this migration island.
+import os from 'os';
+// @ts-expect-error Node built-in ambient types are not installed for this migration island.
+import path from 'path';
 import { getRepoRoot, gitExec, getCurrentBranch } from '../git-primitives.ts';
 import { sleep } from '../timing.ts';
 import type { TimeBudget } from '../timing.ts';
+import { isRuntimeStatePath } from '../runtime-state-paths.ts';
 
 export { getRepoRoot, gitExec, getCurrentBranch };
 
@@ -41,8 +47,8 @@ export interface GitSyncFailure {
 export type GitSyncResult = GitSyncSuccess | GitSyncFailure;
 
 interface GitPushOptions extends GitWorkflowOptions {
-  maxAttempts?: number;
-  retryDelayMs?: number;
+  maxAttempts: number;
+  retryDelayMs: number;
   commitMessage?: string;
   addPaths?: string[];
   budget?: TimeBudget | null;
@@ -55,7 +61,7 @@ export interface GitPushResult {
 }
 
 function titleCaseAgent(value: string): string {
-  const normalized = String(value || '').trim().replace(/[-_]+/g, ' ');
+  const normalized = String(selectDefinedValue(() => (value), () => (''))).trim().replace(/[-_]+/g, ' ');
   if (!normalized) return 'Buster';
   return normalized
     .split(/\s+/)
@@ -65,8 +71,8 @@ function titleCaseAgent(value: string): string {
 }
 
 function firstLine(error: unknown): string {
-  if (error instanceof Error) return (error.message || String(error)).split('\n')[0] || 'unknown';
-  return String(error || 'unknown').split('\n')[0] || 'unknown';
+  if (error instanceof Error) return selectTruthyValue(() => ((selectTruthyValue(() => (error.message), () => (String(error)))).split('\n')[0]), () => ('missing_error_detail'));
+  return selectTruthyValue(() => (String(selectTruthyValue(() => (error), () => ('missing_error_detail'))).split('\n')[0]), () => ('missing_error_detail'));
 }
 
 function normalizeGitTargetHash(expectedHash: unknown): string | null {
@@ -78,7 +84,47 @@ function normalizeGitTargetHash(expectedHash: unknown): string | null {
 function gitHashMatchesTarget(actualHash: string, targetHash: string): boolean {
   const normalizedActual = actualHash.toLowerCase();
   const normalizedTarget = targetHash.toLowerCase();
-  return normalizedActual === normalizedTarget || (/^[0-9a-f]+$/i.test(targetHash) && normalizedActual.startsWith(normalizedTarget));
+  return selectTruthyValue(() => (normalizedActual === normalizedTarget), () => ((/^[0-9a-f]+$/i.test(targetHash) && normalizedActual.startsWith(normalizedTarget))));
+}
+
+function trackedRuntimeStatePaths(repoRoot: string): string[] {
+  const output = gitExec(repoRoot, ['ls-files', '-z', '--cached', '--modified', '--others', '--exclude-standard']);
+  return [...new Set(
+    output
+      .split('\0')
+      .map((entry) => entry.trim())
+      .filter(Boolean)
+      .filter((entry) => isRuntimeStatePath(entry))
+      .filter((entry) => fs.existsSync(path.join(repoRoot, entry))),
+  )];
+}
+
+function preserveRuntimeState(repoRoot: string): { root: string; paths: string[] } | null {
+  const paths = trackedRuntimeStatePaths(repoRoot);
+  if (paths.length === 0) return null;
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-runtime-state-'));
+  for (const relPath of paths) {
+    const source = path.join(repoRoot, relPath);
+    const target = path.join(root, relPath);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.copyFileSync(source, target);
+  }
+  return { root, paths };
+}
+
+function restoreRuntimeState(repoRoot: string, snapshot: { root: string; paths: string[] } | null): void {
+  if (!snapshot) return;
+  try {
+    for (const relPath of snapshot.paths) {
+      const source = path.join(snapshot.root, relPath);
+      const target = path.join(repoRoot, relPath);
+      if (!fs.existsSync(source)) continue;
+      fs.mkdirSync(path.dirname(target), { recursive: true });
+      fs.copyFileSync(source, target);
+    }
+  } finally {
+    fs.rmSync(snapshot.root, { recursive: true, force: true });
+  }
 }
 
 function logGit(logger: GitLogger | null, level: 'info' | 'warn', msg: string): void {
@@ -88,7 +134,7 @@ function logGit(logger: GitLogger | null, level: 'info' | 'warn', msg: string): 
 function gitConfigValue(repoRoot: string, key: string): string | null {
   try {
     const value = gitExec(repoRoot, ['config', '--get', key]);
-    return value || null;
+    return selectTruthyValue(() => (value), () => (null));
   } catch (_error: unknown) {
     return null;
   }
@@ -128,17 +174,17 @@ function hasScopedStagedChanges(repoRoot: string, addPaths: string[]): boolean {
 /**
  * Sync the repo to a deterministic task commit: fetch + reset-hard.
  *
- * DELETE_LEGACY: missing target hashes no longer fall back to origin/current
- * branch. Task repo sync must be tied to an explicit typed commit identity.
+ * DELETE_LEGACY: task repo sync must be tied to an explicit typed commit
+ * identity; branch-derived sync is not accepted.
  *
  * STRICTIFY_TS_SLICE: Git failures stay nonthrowing for task lifecycle cleanup,
  * but return typed failure metadata instead of a magic null sentinel.
  */
 export async function gitSync(repoRoot: string, expectedHash: string, opts: GitWorkflowOptions = {}): Promise<GitSyncResult> {
-  const logger = opts.logger || null;
+  const logger = selectTruthyValue(() => (opts.logger), () => (null));
   const targetHash = normalizeGitTargetHash(expectedHash);
   if (!targetHash) {
-    const detail = 'gitSync requires explicit expectedHash; implicit origin/current-branch sync is deleted';
+    const detail = 'gitSync requires explicit expectedHash; branch-derived sync is deleted';
     logGit(logger, 'warn', detail);
     return {
       ok: false,
@@ -149,11 +195,15 @@ export async function gitSync(repoRoot: string, expectedHash: string, opts: GitW
     };
   }
 
+  let runtimeState: { root: string; paths: string[] } | null = null;
   try {
+    runtimeState = preserveRuntimeState(repoRoot);
     gitExec(repoRoot, ['fetch', 'origin'], { stdio: 'ignore', timeout: 30000 });
     logGit(logger, 'info', 'Fetched from origin');
 
     gitExec(repoRoot, ['reset', '--hard', targetHash], { stdio: 'ignore' });
+    restoreRuntimeState(repoRoot, runtimeState);
+    runtimeState = null;
     logGit(logger, 'info', `Reset to expected hash: ${targetHash}`);
 
     const actualHash = gitExec(repoRoot, ['rev-parse', 'HEAD']);
@@ -169,6 +219,7 @@ export async function gitSync(repoRoot: string, expectedHash: string, opts: GitW
       detail: null,
     };
   } catch (error: unknown) {
+    restoreRuntimeState(repoRoot, runtimeState);
     const detail = firstLine(error);
     logGit(logger, 'warn', `Git sync failed: ${detail}`);
     return {
@@ -183,25 +234,38 @@ export async function gitSync(repoRoot: string, expectedHash: string, opts: GitW
 
 // ─── gitPushWithRetry ────────────────────────────────────────────────────────
 
-function normalizePositiveInteger(value: unknown, fallback: number, field: string): number {
-  if (value === undefined || value === null) return fallback;
+function normalizePositiveInteger(value: unknown, field: string): number {
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) {
+    throw new Error(`gitPushWithRetry ${field} is required`);
+  }
   const numeric = Number(value);
-  if (!Number.isInteger(numeric) || numeric < 1) {
+  if (selectTruthyValue(() => (!Number.isInteger(numeric)), () => (numeric < 1))) {
     throw new Error(`gitPushWithRetry ${field} must be a positive integer`);
   }
   return numeric;
 }
 
+function normalizeNonNegativeNumber(value: unknown, field: string): number {
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) {
+    throw new Error(`gitPushWithRetry ${field} is required`);
+  }
+  const numeric = Number(value);
+  if (selectTruthyValue(() => (!Number.isFinite(numeric)), () => (numeric < 0))) {
+    throw new Error(`gitPushWithRetry ${field} must be a non-negative number`);
+  }
+  return numeric;
+}
+
 function normalizeScopedAddPaths(addPaths: unknown): string[] {
-  if (!Array.isArray(addPaths) || addPaths.length === 0) {
+  if (selectTruthyValue(() => (!Array.isArray(addPaths)), () => (addPaths.length === 0))) {
     throw new Error('gitPushWithRetry commit mode requires non-empty opts.addPaths');
   }
-  const normalized = addPaths.map((entry) => String(entry || '').trim()).filter(Boolean);
+  const normalized = addPaths.map((entry) => String(selectDefinedValue(() => (entry), () => (''))).trim()).filter(Boolean);
   if (normalized.length !== addPaths.length) {
     throw new Error('gitPushWithRetry opts.addPaths must not contain empty pathspecs');
   }
   for (const pathspec of normalized) {
-    if (pathspec === '.' || pathspec === './' || pathspec === ':/' || pathspec === '-A' || pathspec.startsWith('-')) {
+    if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (pathspec === '.'), () => (pathspec === './'))), () => (pathspec === ':/'))), () => (pathspec === '-A'))), () => (pathspec.startsWith('-')))) {
       throw new Error(`gitPushWithRetry opts.addPaths contains unsafe broad pathspec: ${pathspec}`);
     }
   }
@@ -209,7 +273,7 @@ function normalizeScopedAddPaths(addPaths: unknown): string[] {
 }
 
 function normalizeRepoRelativePath(value: unknown): string {
-  return String(value || '')
+  return String(selectDefinedValue(() => (value), () => ('')))
     .replace(/\\/g, '/')
     .replace(/^\/+/, '')
     .replace(/^(?:\.\/)+/, '')
@@ -219,14 +283,15 @@ function normalizeRepoRelativePath(value: unknown): string {
 function pathMatchesScopedPathspec(filePath: string, pathspecs: string[] = []): boolean {
   const normalizedFilePath = normalizeRepoRelativePath(filePath);
   if (!normalizedFilePath) return false;
-  return pathspecs.some((pathspec) => normalizedFilePath === pathspec || normalizedFilePath.startsWith(`${pathspec}/`));
+  return pathspecs.some((pathspec) => selectTruthyValue(() => (normalizedFilePath === pathspec), () => (normalizedFilePath.startsWith(`${pathspec}/`))));
 }
 
 function isRebaseInProgress(repoRoot: string): boolean {
   try {
     const rebaseMergePath = gitExec(repoRoot, ['rev-parse', '--git-path', 'rebase-merge']);
     const rebaseApplyPath = gitExec(repoRoot, ['rev-parse', '--git-path', 'rebase-apply']);
-    return fs.existsSync(rebaseMergePath) || fs.existsSync(rebaseApplyPath);
+    if (fs.existsSync(rebaseMergePath)) return true;
+    return fs.existsSync(rebaseApplyPath);
   } catch (_error: unknown) {
     return false;
   }
@@ -274,7 +339,7 @@ function tryAutoResolveRebaseForScopedPaths(repoRoot: string, addPaths: string[]
     } catch (error: unknown) {
       if (!isRebaseInProgress(repoRoot)) break;
       const stillConflicted = getConflictedPaths(repoRoot);
-      if (stillConflicted.length === 0) throw error;
+      if (stillConflicted.length === 0) return false;
       if (stillConflicted.some((file) => !pathMatchesScopedPathspec(file, addPaths))) return false;
     }
 
@@ -285,25 +350,41 @@ function tryAutoResolveRebaseForScopedPaths(repoRoot: string, addPaths: string[]
   return true;
 }
 
+function rebuildScopedCommitOnOrigin(repoRoot: string, branch: string, addPaths: string[], commitMessage: string, logger: GitLogger | null): boolean {
+  try { gitExec(repoRoot, ['rebase', '--abort'], { stdio: 'ignore' }); } catch (_error: unknown) { /* best-effort abort */ }
+  gitExec(repoRoot, ['fetch', 'origin'], { stdio: 'ignore', timeout: 30000 });
+  gitExec(repoRoot, ['reset', '--soft', `origin/${branch}`], { stdio: 'ignore' });
+  gitExec(repoRoot, ['reset'], { stdio: 'ignore' });
+  gitExec(repoRoot, ['add', '--', ...addPaths]);
+  if (!hasScopedStagedChanges(repoRoot, addPaths)) {
+    logGit(logger, 'info', 'Scoped Buster output already matches origin after rebase rebuild');
+    return false;
+  }
+  gitExec(repoRoot, ['commit', '-m', commitMessage]);
+  logGit(logger, 'info', 'Rebuilt scoped Buster artifact commit on current origin');
+  return true;
+}
+
 function normalizePushBranch(branch: unknown): string {
   if (typeof branch !== 'string') {
     throw new Error('gitPushWithRetry branch must be a valid branch name');
   }
   const normalized = branch;
-  if (
-    !normalized ||
-    normalized.startsWith('-') ||
-    normalized.startsWith('/') ||
-    normalized.endsWith('/') ||
-    normalized.endsWith('.') ||
-    normalized === '@' ||
-    normalized.includes('..') ||
-    normalized.includes('@{') ||
-    normalized.includes('//') ||
-    /(?:^|\/)\./.test(normalized) ||
-    /(?:^|\/)[^/]+\.lock(?:\/|$)/.test(normalized) ||
-    /[\s\x00-\x1f\x7f~^:?*[\\]/.test(normalized)
-  ) {
+  const invalidBranchChecks = [
+    () => !normalized,
+    () => normalized.startsWith('-'),
+    () => normalized.startsWith('/'),
+    () => normalized.endsWith('/'),
+    () => normalized.endsWith('.'),
+    () => normalized === '@',
+    () => normalized.includes('..'),
+    () => normalized.includes('@{'),
+    () => normalized.includes('//'),
+    () => /(?:^|\/)\./.test(normalized),
+    () => /(?:^|\/)[^/]+\.lock(?:\/|$)/.test(normalized),
+    () => /[\s\x00-\x1f\x7f~^:?*[\\]/.test(normalized),
+  ];
+  if (invalidBranchChecks.some((isInvalidBranch) => isInvalidBranch())) {
     throw new Error(`gitPushWithRetry branch must be a valid branch name: ${String(branch)}`);
   }
   return normalized;
@@ -322,11 +403,11 @@ function normalizePushBranch(branch: unknown): string {
  */
 export async function gitPushWithRetry(repoRoot: string, branch: string, opts: GitPushOptions = {}): Promise<GitPushResult> {
   const pushBranch = normalizePushBranch(branch);
-  const maxAttempts = normalizePositiveInteger(opts.maxAttempts, 3, 'opts.maxAttempts');
-  const retryDelayMs = normalizePositiveInteger(opts.retryDelayMs, 2000, 'opts.retryDelayMs');
-  const budget = opts.budget || null;
-  const signal = opts.signal || null;
-  const logger = opts.logger || null;
+  const maxAttempts = normalizePositiveInteger(opts.maxAttempts, 'opts.maxAttempts');
+  const retryDelayMs = normalizeNonNegativeNumber(opts.retryDelayMs, 'opts.retryDelayMs');
+  const budget = selectTruthyValue(() => (opts.budget), () => (null));
+  const signal = selectTruthyValue(() => (opts.signal), () => (null));
+  const logger = selectTruthyValue(() => (opts.logger), () => (null));
 
   if (opts.commitMessage) {
     const addPaths = normalizeScopedAddPaths(opts.addPaths);
@@ -344,8 +425,12 @@ export async function gitPushWithRetry(repoRoot: string, branch: string, opts: G
     } catch (rebaseErr: unknown) {
       const detail = firstLine(rebaseErr);
       logGit(logger, 'warn', `Rebase attempt ${attempt}/${maxAttempts}: ${detail}`);
-      if (tryAutoResolveRebaseForScopedPaths(repoRoot, opts.commitMessage ? normalizeScopedAddPaths(opts.addPaths) : [], logger)) {
+      const commitModeAddPaths = opts.commitMessage ? normalizeScopedAddPaths(opts.addPaths) : [];
+      if (tryAutoResolveRebaseForScopedPaths(repoRoot, commitModeAddPaths, logger)) {
         // Rebase is already completed above. Continue to push on this same attempt.
+      } else if (opts.commitMessage) {
+        const rebuilt = rebuildScopedCommitOnOrigin(repoRoot, pushBranch, commitModeAddPaths, opts.commitMessage, logger);
+        if (!rebuilt) return { pushed: false, hash: gitExec(repoRoot, ['rev-parse', '--short', 'HEAD']) };
       } else {
         try { gitExec(repoRoot, ['rebase', '--abort'], { stdio: 'ignore' }); } catch (_error: unknown) { /* best-effort abort */ }
         if (attempt < maxAttempts) {

@@ -9,7 +9,7 @@ Map the source tree to the runtime behaviors documented elsewhere.
 
 ## Nova
 
-`skills/nova/pipeline.ts` is the public Nova entrypoint. It delegates to `skills/nova/pipeline/cli.ts` for flags and then into the pipeline runner. `core/config.ts` validates project, repository, swarm config, and progress JSON inputs. Runner modules under `skills/nova/pipeline/runners/` execute modules, gates, polling, terminal handling, and Buster dispatch paths. Service modules own lifecycle, status, telemetry, artifacts, Redis completion, Discord notifications, redaction, summaries, and validation.
+`skills/nova/pipeline.ts` is the public Nova entrypoint. It delegates to `skills/nova/pipeline/cli.ts` for flags and then into the pipeline runner. `core/config.ts` validates project, repository, swarm config, and progress JSON inputs. Runner modules under `skills/nova/pipeline/runners/` execute modules, gates, polling, terminal handling, and Buster dispatch paths. Service modules own lifecycle, status, telemetry, artifacts, Redis completion, Discord notifications, egress, summaries, and validation.
 
 ## Buster
 
@@ -17,7 +17,7 @@ Map the source tree to the runtime behaviors documented elsewhere.
 
 ## Shared contracts
 
-`skills/common/pipeline/` contains shared contracts for Redis task/completion messages, lifecycle events, telemetry payloads, task transport, redaction, runtime paths, and logging. Prefer these helpers over ad hoc schemas when adding new behavior.
+`skills/common/pipeline/` contains shared contracts for Redis task/completion messages, lifecycle events, telemetry payloads, task transport, egress, runtime paths, and logging. Prefer these helpers over ad hoc schemas when adding new behavior.
 
 ## Deployment and verification
 

@@ -41,7 +41,7 @@ import { ensureBaseImages } from './pipeline/services/base-images.ts';
 import {
   BUSTER_CAPABILITIES,
   hasBusterCapability,
-  parseCapabilitiesEnv,
+  parseCapabilitiesFromEnv,
 } from './pipeline/services/capabilities.ts';
 import { doSandboxCleanup } from './pipeline/services/pipeline-helpers.ts';
 import { loadBusterPlatformConfig, loadBusterRuntimePolicy, loadBusterSessionPolicies } from './pipeline/services/runtime-policy.ts';
@@ -94,6 +94,9 @@ const runtimeLoopAbort = new AbortController();
 const BUSTER_RUNTIME_LOOP_POLICY = Object.freeze({
   errorBackoffMs: 3000,
 });
+const SHUTDOWN_DEFAULT_EXIT_CODE = 0;
+const SHUTDOWN_DEFAULT_CLEANUP_STAGE = 'shutdown';
+const SHUTDOWN_GATEWAY_UNAVAILABLE_REASON = 'gateway_unavailable';
 
 function writeBusterHeartbeat(): void {
   const runtimePolicy = loadBusterRuntimePolicy();
@@ -118,9 +121,13 @@ async function emitGatewayHealthDegraded({ reason, detail }: { reason: string; d
 }
 
 function summarizeSandboxCleanupFailure(cleanupResult: SandboxCleanupResult): string {
-  return cleanupResult.errors?.join('; ')
-    || cleanupResult.policy_denied?.map((entry) => entry.reason).filter(Boolean).join('; ')
-    || 'cleanup returned ok=false';
+  const errors = cleanupResult.errors?.filter(Boolean) ?? [];
+  if (errors.length > 0) return errors.join('; ');
+
+  const deniedReasons = cleanupResult.policy_denied?.map((entry) => entry.reason).filter(Boolean) ?? [];
+  if (deniedReasons.length > 0) return deniedReasons.join('; ');
+
+  return 'startup_cleanup_failure_detail_missing';
 }
 
 export function assertStartupSandboxCleanupComplete(cleanupResult: SandboxCleanupResult | null | undefined): void {
@@ -163,13 +170,13 @@ export async function shutdown(signal: string, opts: ShutdownOptions = {}): Prom
   if (shuttingDown) return;
   shuttingDown = true;
   runtimeLoopAbort.abort(new Error(`Buster shutdown requested by ${signal}`));
-  const exitCode = opts.exitCode ?? 0;
-  const cleanupStage = opts.cleanupStage || 'shutdown';
+  const exitCode = opts.exitCode ?? SHUTDOWN_DEFAULT_EXIT_CODE;
+  const cleanupStage = opts.cleanupStage ?? SHUTDOWN_DEFAULT_CLEANUP_STAGE;
   console.log(`\n[SHUTDOWN] ${signal} received. Cleaning up...`);
   if (opts.emitGatewayDegraded) {
     await emitGatewayHealthDegraded({
-      reason: opts.reason || 'gateway_unavailable',
-      detail: opts.detail || `${signal} triggered structured shutdown`,
+      reason: opts.reason ?? SHUTDOWN_GATEWAY_UNAVAILABLE_REASON,
+      detail: opts.detail ?? `${signal} triggered structured shutdown`,
     }).catch((err: unknown) => console.warn(`[SHUTDOWN] Gateway degradation telemetry failed: ${safeErrorMessage(err)}`));
   }
   try {
@@ -249,12 +256,12 @@ export async function main(): Promise<void> {
     assertStartupSandboxCleanupComplete(await doSandboxCleanup('startup', {}));
     startGatewayHealthMonitor({ isShuttingDown: () => shuttingDown, shutdown });
 
-    const platformCapabilities = parseCapabilitiesEnv(process.env.BUSTER_PLATFORM_CAPABILITIES || '');
+    const platformCapabilities = parseCapabilitiesFromEnv(process.env, 'BUSTER_PLATFORM_CAPABILITIES');
     if (hasBusterCapability(platformCapabilities, BUSTER_CAPABILITIES.IMAGE_PREPULL)) {
       await ensureBaseImages(undefined, {
         capabilities: platformCapabilities,
         alertContext: {
-          project: process.env.BUSTER_PROJECT || null,
+          project: process.env.BUSTER_PROJECT === undefined || process.env.BUSTER_PROJECT === null ? null : String(process.env.BUSTER_PROJECT),
           logDir: getLastRunLogDir(),
         },
       });

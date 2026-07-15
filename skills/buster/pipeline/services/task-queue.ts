@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // pipeline/services/task-queue.ts — Redis task queue client, dequeue, ack/reclaim loop helpers
 // Keeps stream transport mechanics outside the Buster task orchestrator.
 
@@ -18,7 +19,52 @@ import {
 } from './task-completion.ts';
 import { loadBusterRuntimePolicy } from './runtime-policy.ts';
 
-export const AGENT_NAME = process.env.AGENT_NAME || 'buster';
+const TERMINAL_GUARANTEE_DETAIL_MISSING = 'completion/dead-letter was not recorded before ACK';
+const MALFORMED_TASK_REASON = 'malformed_task';
+const MALFORMED_TASK_PAYLOAD_JSON = '{}';
+const TASK_SENDER_MISSING = 'missing_task_sender';
+const TASK_TYPE_MISSING = 'missing_task_type';
+const CLEANUP_RETURNED_INCOMPLETE = 'cleanup returned ok=false';
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function selectPresentValue(...values) {
+  for (const value of values) {
+    if (typeof value === 'string' && value.length > 0) return value;
+  }
+  return '';
+}
+
+function taskPayloadText(value) {
+  return typeof value === 'string' && value.length > 0 ? value : MALFORMED_TASK_PAYLOAD_JSON;
+}
+
+function effectiveTaskType(payload, taskType) {
+  if (PIPELINE_TASK_TYPES.includes(payload.task_type)) return payload.task_type;
+  return taskType;
+}
+
+function taskModuleId(payload) {
+  if (payload.module_id !== undefined && payload.module_id !== null) return payload.module_id;
+  if (payload.module !== undefined && payload.module !== null) return payload.module;
+  return null;
+}
+
+function requireRuntimeEnvString(name: string): string {
+  const value = process.env[name];
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) {
+    throw new Error(`${name}: required runtime environment value`);
+  }
+  return value.trim();
+}
+
+export const AGENT_NAME = requireRuntimeEnvString('AGENT_NAME');
 export const GROUP_NAME = `${AGENT_NAME}-group`;
 export const CONSUMER_NAME = `${AGENT_NAME}-buster-pipeline-${hostname()}`;
 
@@ -31,7 +77,7 @@ let redis = null;
 
 export function getRedisClient() {
   if (redis) return redis;
-  RedisCtor ||= loadRedisCtor();
+  if (!RedisCtor) RedisCtor = loadRedisCtor();
   redis = createRedisClient(RedisCtor, {}, {
     retryStrategy:       (times) => Math.min(times * 100, 5000),
     maxRetriesPerRequest: null,
@@ -107,7 +153,7 @@ async function ackTask(taskQueue, id) {
 
 async function ackTaskAfterTerminal(taskQueue, id, terminalResult) {
   if (!terminalResult?.ok) {
-    throw buildTerminalGuaranteeError(terminalResult?.detail || 'completion/dead-letter was not recorded before ACK');
+    throw buildTerminalGuaranteeError(selectPresentValue(terminalResult?.detail, TERMINAL_GUARANTEE_DETAIL_MISSING));
   }
   await ackTask(taskQueue, id);
 }
@@ -117,7 +163,7 @@ async function writeMalformedDeadLetterBeforeAck(redisClient, taskQueue, taskCon
     await writeTaskDeadLetter(redisClient, {
       ...taskContext,
       streamKey: getTaskStreamKey(),
-      phase: taskContext.phase || 'malformed_task',
+      phase: selectPresentValue(taskContext.phase, MALFORMED_TASK_REASON),
     });
   } catch (deadLetterError) {
     reportBusterRuntimeDiagnostic({
@@ -141,25 +187,25 @@ export async function processOneQueuedTask(processTask) {
 
   let payload = {};
   try {
-    payload = JSON.parse(data.payload || '{}');
+    payload = JSON.parse(taskPayloadText(data.payload));
   } catch (error) {
     console.warn(`[TASK] ⚠️ Malformed task payload JSON for ${id}: ${safeErrorMessage(error)}`);
     appendMalformedTaskArtifact({
       redis_id: id,
       stream: getTaskStreamKey(),
-      sender: data.sender || 'unknown',
-      redis_type: data.type || 'unknown',
+      sender: selectPresentValue(data.sender, TASK_SENDER_MISSING),
+      redis_type: selectPresentValue(data.type, TASK_TYPE_MISSING),
       reason: 'payload_json_parse_failed',
       detail: safeErrorMessage(error),
-      payload_size: String(data.payload || '').length,
+      payload_size: taskPayloadText(data.payload).length,
     });
     await writeMalformedDeadLetterBeforeAck(redisClient, taskQueue, {
       id,
       data,
       payload,
-      sender: data.sender || 'unknown',
-      taskType: data.type || 'unknown',
-      effectiveType: data.type || 'unknown',
+      sender: selectPresentValue(data.sender, TASK_SENDER_MISSING),
+      taskType: selectPresentValue(data.type, TASK_TYPE_MISSING),
+      effectiveType: selectPresentValue(data.type, TASK_TYPE_MISSING),
       reason: 'payload_json_parse_failed',
       detail: error,
       phase: 'payload_parse',
@@ -167,8 +213,8 @@ export async function processOneQueuedTask(processTask) {
     return;
   }
 
-  const taskType = data.type || 'unknown';
-  const sender = data.sender || 'unknown';
+  const taskType = selectPresentValue(data.type, TASK_TYPE_MISSING);
+  const sender = selectPresentValue(data.sender, TASK_SENDER_MISSING);
   const taskEntryErrors = validateRedisTaskEntry({ _id: id, ...data }, { requireCanonicalEnvelope: true, expectedStreamRole: 'task' });
   if (taskEntryErrors.length > 0) {
     console.warn(`[TASK] ⚠️ Invalid task envelope for ${id}: ${taskEntryErrors.join('; ')}`);
@@ -178,7 +224,7 @@ export async function processOneQueuedTask(processTask) {
       payload,
       sender,
       taskType,
-      effectiveType: payload.task_type || taskType,
+      effectiveType: effectiveTaskType(payload, taskType),
       reason: 'invalid_task_entry_schema',
       detail: taskEntryErrors.join('; '),
       phase: 'task_envelope_validation',
@@ -186,9 +232,7 @@ export async function processOneQueuedTask(processTask) {
     return;
   }
 
-  const effectiveType = PIPELINE_TASK_TYPES.includes(payload.task_type)
-    ? payload.task_type
-    : taskType;
+  const effectiveType = effectiveTaskType(payload, taskType);
 
   console.log(`\n[TASK] ${id} | ${sender} ➔ ${AGENT_NAME} | type=${effectiveType}${reclaimed ? ' | reclaimed=pending' : ''}`);
 
@@ -201,7 +245,7 @@ export async function processOneQueuedTask(processTask) {
       sender,
       taskType,
       effectiveType,
-      reason: 'unknown_task_type',
+      reason: 'unsupported_task_type',
       detail: `Unknown task type: ${effectiveType}`,
       phase: 'task_type_validation',
     });
@@ -226,7 +270,7 @@ export async function processOneQueuedTask(processTask) {
       taskType,
       effectiveType,
       processResult,
-      moduleId: payload.module_id || payload.module,
+      moduleId: taskModuleId(payload),
       phase: 'process_task_returned',
     });
     await ackTaskAfterTerminal(taskQueue, id, terminalResult);
@@ -243,10 +287,10 @@ export async function processOneQueuedTask(processTask) {
       sender,
       redis_type: taskType,
       effective_type: effectiveType,
-      reason: processError.details?.reason || 'malformed_task',
-      missing_fields: processError.missing_fields || [],
-      unsafe_fields: processError.unsafe_fields || [],
-      payload_keys: Object.keys(payload || {}),
+      reason: selectPresentValue(processError.details?.reason, MALFORMED_TASK_REASON),
+      missing_fields: arrayValue(processError.missing_fields),
+      unsafe_fields: arrayValue(processError.unsafe_fields),
+      payload_keys: Object.keys(objectRecord(payload)),
     });
     await writeMalformedDeadLetterBeforeAck(redisClient, taskQueue, {
       id,
@@ -255,7 +299,7 @@ export async function processOneQueuedTask(processTask) {
       sender,
       taskType,
       effectiveType,
-      reason: processError.details?.reason || 'malformed_task',
+      reason: selectPresentValue(processError.details?.reason, MALFORMED_TASK_REASON),
       detail: processError,
       phase: 'payload_validation',
     });
@@ -270,7 +314,11 @@ export async function processOneQueuedTask(processTask) {
         component: 'buster_cleanup',
         surface: 'task_error_cleanup',
         reason: 'task_error_cleanup_incomplete',
-        detail: cleanupResult.errors?.join('; ') || cleanupResult.policy_denied?.map((entry) => entry.reason).join('; ') || 'cleanup returned ok=false',
+        detail: selectPresentValue(
+          arrayValue(cleanupResult.errors).join('; '),
+          arrayValue(cleanupResult.policy_denied).map((entry) => entry.reason).join('; '),
+          CLEANUP_RETURNED_INCOMPLETE,
+        ),
       });
     }
   } catch (cleanupError) {
@@ -291,7 +339,7 @@ export async function processOneQueuedTask(processTask) {
     taskType,
     effectiveType,
     error: processError,
-    moduleId: payload.module_id || payload.module,
+    moduleId: taskModuleId(payload),
     phase: 'process_task_error',
   });
 

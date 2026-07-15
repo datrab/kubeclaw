@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/session-authority.js — active session authority policy helpers
 //
 // Event-sourced lifecycle read models own active-session authority. Persisted
@@ -23,7 +24,7 @@ export const ACTIVE_SESSION_EVIDENCE_ROLES = Object.freeze({
 });
 
 function normalizeText(value) {
-  if (value === undefined || value === null) return null;
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
   const normalized = String(value).trim();
   return normalized ? normalized : null;
 }
@@ -33,8 +34,20 @@ function normalizeAttempt(value) {
   return typeof value === 'string' ? normalizeText(value) : null;
 }
 
+function identityAttempt(identity = {}, defaults = {}) {
+  return normalizeAttempt(selectDefinedValue(() => (identity?.attempt), () => (defaults?.attempt)));
+}
+
+function identityRuntime(identity = {}, defaults = {}) {
+  return normalizeText(selectDefinedValue(() => (identity?.runtime), () => (defaults?.runtime)));
+}
+
+function identityModel(identity = {}, defaults = {}) {
+  return normalizeText(selectDefinedValue(() => (identity?.model), () => (defaults?.model)));
+}
+
 function hasAnySessionEvidence(identity = {}) {
-  if (!identity || typeof identity !== 'object') return false;
+  if (selectTruthyValue(() => (!identity), () => (typeof identity !== 'object'))) return false;
   return [
     ...STRONG_ACTIVE_SESSION_IDENTITY_FIELDS,
     ...OPTIONAL_ACTIVE_SESSION_IDENTITY_FIELDS,
@@ -48,15 +61,15 @@ function hasAnySessionEvidence(identity = {}) {
 
 export function normalizeActiveSessionIdentity(identity = {}, defaults = {}) {
   return {
-    run_id: normalizeText(identity?.run_id ?? identity?.runId ?? defaults?.run_id ?? defaults?.runId),
-    attempt: normalizeAttempt(identity?.attempt ?? defaults?.attempt),
-    dispatch_id: normalizeText(identity?.dispatch_id ?? identity?.dispatchId ?? defaults?.dispatch_id ?? defaults?.dispatchId),
-    session_key: normalizeText(identity?.session_key ?? identity?.sessionKey ?? identity?.childSessionKey ?? defaults?.session_key ?? defaults?.sessionKey ?? defaults?.childSessionKey),
-    gateway_label: normalizeText(identity?.gateway_label ?? identity?.gatewayLabel ?? defaults?.gateway_label ?? defaults?.gatewayLabel),
-    diagnostic_label: normalizeText(identity?.diagnostic_label ?? identity?.diagnosticLabel ?? identity?.label ?? defaults?.diagnostic_label ?? defaults?.diagnosticLabel ?? defaults?.label),
-    runtime: normalizeText(identity?.runtime ?? defaults?.runtime),
-    model: normalizeText(identity?.model ?? defaults?.model),
-    stream_log_path: normalizeText(identity?.stream_log_path ?? identity?.streamLogPath ?? defaults?.stream_log_path ?? defaults?.streamLogPath),
+    run_id: normalizeText(identity?.run_id),
+    attempt: identityAttempt(identity, defaults),
+    dispatch_id: normalizeText(identity?.dispatch_id),
+    session_key: normalizeText(identity?.session_key),
+    gateway_label: normalizeText(identity?.gateway_label),
+    diagnostic_label: normalizeText(identity?.diagnostic_label),
+    runtime: identityRuntime(identity, defaults),
+    model: identityModel(identity, defaults),
+    stream_log_path: normalizeText(identity?.stream_log_path),
   };
 }
 
@@ -112,8 +125,8 @@ export function buildActiveSessionAuthorityPolicy({
   monitorEvidence = null,
   requireGatewayConfirmation = false,
 } = {}) {
-  const lifecycle = normalizeActiveSessionIdentity(lifecycleActiveSession || {});
-  const evidence = normalizeActiveSessionIdentity(evidenceActiveSession || {});
+  const lifecycle = normalizeActiveSessionIdentity(selectDefinedValue(() => (lifecycleActiveSession), () => ({})));
+  const evidence = normalizeActiveSessionIdentity(selectDefinedValue(() => (evidenceActiveSession), () => ({})));
   const hasLifecycleEvidence = hasStrongActiveSessionIdentity(lifecycleActiveSession);
   const hasDiagnosticEvidence = hasAnySessionEvidence(evidenceActiveSession);
   const missingLifecycleFields = getMissingActiveSessionIdentityFields(lifecycle);
@@ -122,12 +135,12 @@ export function buildActiveSessionAuthorityPolicy({
     ? buildActiveSessionConfirmation(lifecycle, evidence)
     : null;
   const identityConfirmed = lifecycleAuthoritative;
-  const effectiveGatewayEvidence = gatewayEvidence || monitorEvidence || null;
+  const effectiveGatewayEvidence = selectTruthyValue(() => (selectTruthyValue(() => (gatewayEvidence), () => (monitorEvidence))), () => (null));
   const gatewayConfirmed = requireGatewayConfirmation
     ? gatewayEvidenceConfirmed(effectiveGatewayEvidence)
     : null;
   const confirmed = lifecycleAuthoritative
-    && (!requireGatewayConfirmation || gatewayConfirmed === true);
+    && (selectTruthyValue(() => (!requireGatewayConfirmation), () => (gatewayConfirmed === true)));
 
   let code = 'lifecycle_active_session_authoritative';
   if (!hasLifecycleEvidence) code = 'no_lifecycle_active_session';

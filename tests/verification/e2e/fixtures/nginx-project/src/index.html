@@ -3,11 +3,17 @@
   <head>
     <meta charset="utf-8">
     <title>Real Pipeline E2E</title>
+    <link rel="stylesheet" href="/assets/branch-b.css">
   </head>
   <body>
     <main>
       <h1>REAL_E2E_NGINX_OK</h1>
       <p id="run-id">REAL_E2E_RUN_ID_PLACEHOLDER</p>
+      <section id="branch-a" data-module="02-nginx" data-source="/content/branch-a.html">
+        <a href="/content/branch-a.html">REAL_E2E_BRANCH_A_CONTENT</a>
+      </section>
+      <section id="branch-b" data-module="03-nginx" data-source="/assets/branch-b.css">asset branch mounted from /assets/branch-b.css</section>
+      <section id="integration" data-module="04-nginx" data-composes="/content/branch-a.html,/assets/branch-b.css">integration contract mounted</section>
     </main>
   </body>
 </html>

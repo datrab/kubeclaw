@@ -52,6 +52,7 @@ function addRuntimeFields(config) {
     project: 'demo',
     repo_root: sourceRoot,
     paths: {
+      project_src_dir: path.join(sourceRoot, 'Projects', 'demo', 'src'),
       swarm_dir: path.join(sourceRoot, 'Projects', 'demo', 'src', '.swarm'),
       modules_dir: path.join(sourceRoot, 'Projects', 'demo', 'src', '.swarm', 'modules'),
       progress_file: path.join(sourceRoot, 'Projects', 'demo', 'src', '.swarm', 'progress.json'),
@@ -123,7 +124,7 @@ test('compact swarm config rejects unknown profile names', () => {
 
   assert.throws(
     () => expandSwarmConfig(config),
-    /config\.profile: only 'standard' is supported/,
+    /config\.profile: supported profiles are 'standard'/,
   );
 });
 
@@ -148,14 +149,14 @@ test('compact swarm config rejects unknown compact fields and override paths', (
   fieldConfig.telemetry = { enabled: false };
   assert.throws(
     () => expandSwarmConfig(fieldConfig),
-    /config\.telemetry: unknown compact swarm config field/,
+    /config\.telemetry: unsupported compact swarm config field/,
   );
 
   const overrideConfig = loadCompactConfig();
   overrideConfig.overrides.telemetry = { missing_key: 1 };
   assert.throws(
     () => expandSwarmConfig(overrideConfig),
-    /overrides\.telemetry\.missing_key: unknown effective config path/,
+    /overrides\.telemetry\.missing_key: unsupported effective config path/,
   );
 });
 

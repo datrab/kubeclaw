@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // pipeline/services/base-images.ts — typed base image reference validation and pre-pull orchestration
 // Keeps podman image cache warmup outside the Buster task/queue orchestrator.
 
@@ -6,7 +7,7 @@ import { execFile } from 'child_process';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { promisify } from 'util';
 import { safeErrorMessage } from './runtime-diagnostics.ts';
-import { BUSTER_CAPABILITIES, assertBusterCapabilities, parseCapabilitiesEnv } from './capabilities.ts';
+import { BUSTER_CAPABILITIES, assertBusterCapabilities, parseCapabilitiesFromEnv } from './capabilities.ts';
 import { buildSubprocessEnv } from '../security.ts';
 
 declare const process: {
@@ -54,7 +55,6 @@ export interface EnsureBaseImagesResult {
 interface EnsureBaseImagesOptions {
   capabilities?: readonly string[];
   alertContext?: Record<string, unknown>;
-  execFileAsync?: ExecFileAsync;
 }
 
 export const BASE_IMAGES_STATIC = Object.freeze([
@@ -70,8 +70,8 @@ const IMAGE_REF_RE = /^[a-z0-9]+(?:(?:[._-][a-z0-9]+)+|[a-z0-9]*)(?::[0-9]+)?(?:
 const execFileAsyncDefault = promisify(execFile) as ExecFileAsync;
 
 function hasExplicitRegistryComponent(imageRef: string): boolean {
-  const registry = imageRef.split('/')[0] || '';
-  return registry === 'localhost' || registry.includes('.') || registry.includes(':');
+  const registry = selectDefinedValue(() => (imageRef.split('/')[0]), () => (''));
+  return selectTruthyValue(() => (selectTruthyValue(() => (registry === 'localhost'), () => (registry.includes('.')))), () => (registry.includes(':')));
 }
 
 // DELETE_LEGACY: bare image names are no longer normalized to docker.io/library.
@@ -90,6 +90,13 @@ export function validateBaseImageRef(imageRef: unknown): BaseImageValidationResu
 
 function imageResult(image: string, status: BaseImagePrepullStatus, reason: string | null = null, detail: string | null = null): BaseImagePrepullResult {
   return { image, status, reason, detail };
+}
+
+function invalidImageInputLabel(value: unknown): string {
+  if (value === undefined) return 'undefined';
+  if (typeof value === 'string') return value;
+  const serialized = JSON.stringify(value);
+  return typeof serialized === 'string' ? serialized : String(value);
 }
 
 function isExecError(error: unknown): error is ExecError {
@@ -114,9 +121,11 @@ function shouldSkipLocalImage(imageRef: string): boolean {
  * returned as typed degraded image-level failures instead of overall success.
  */
 export async function ensureBaseImages(images: Iterable<unknown> = BASE_IMAGES, options: EnsureBaseImagesOptions = {}): Promise<EnsureBaseImagesResult> {
-  const capabilities = options.capabilities ?? parseCapabilitiesEnv(process.env.BUSTER_PLATFORM_CAPABILITIES || '');
+  const capabilities = options.capabilities !== undefined
+    ? options.capabilities
+    : parseCapabilitiesFromEnv(process.env, 'BUSTER_PLATFORM_CAPABILITIES');
   try {
-    assertBusterCapabilities({ ...(options.alertContext || {}), capabilities }, {
+    assertBusterCapabilities({ ...(selectDefinedValue(() => (options.alertContext), () => ({}))), capabilities }, {
       suite: 'base-images',
       action: 'pre-pull Buster base images',
       required: [BUSTER_CAPABILITIES.IMAGE_PREPULL],
@@ -133,7 +142,6 @@ export async function ensureBaseImages(images: Iterable<unknown> = BASE_IMAGES, 
     };
   }
 
-  const runExecFile = options.execFileAsync || execFileAsyncDefault;
   const imageResults: BaseImagePrepullResult[] = [];
 
   console.log('[BASE_IMAGES] Ensuring base images are cached...');
@@ -141,7 +149,7 @@ export async function ensureBaseImages(images: Iterable<unknown> = BASE_IMAGES, 
     const validation = validateBaseImageRef(img);
     if (!validation.ok) {
       console.warn(`[BASE_IMAGES] Ignoring invalid image ${JSON.stringify(img)}: ${validation.reason}`);
-      imageResults.push(imageResult(String(img ?? ''), 'skipped', validation.reason));
+      imageResults.push(imageResult(invalidImageInputLabel(img), 'skipped', validation.reason));
       continue;
     }
     const imageRef = validation.value;
@@ -150,7 +158,7 @@ export async function ensureBaseImages(images: Iterable<unknown> = BASE_IMAGES, 
       continue;
     }
     try {
-      await runExecFile('podman', ['image', 'exists', imageRef], { timeout: 5000, env: buildSubprocessEnv() });
+      await execFileAsyncDefault('podman', ['image', 'exists', imageRef], { timeout: 5000, env: buildSubprocessEnv() });
       console.log(`[BASE_IMAGES] ✅ ${imageRef} (cached)`);
       imageResults.push(imageResult(imageRef, 'cached'));
     } catch (existsError: unknown) {
@@ -162,7 +170,7 @@ export async function ensureBaseImages(images: Iterable<unknown> = BASE_IMAGES, 
       }
       console.log(`[BASE_IMAGES] ⬇️  Pulling ${imageRef}...`);
       try {
-        await runExecFile('podman', ['pull', imageRef], { timeout: 300000, encoding: 'utf8', env: buildSubprocessEnv() });
+        await execFileAsyncDefault('podman', ['pull', imageRef], { timeout: 300000, encoding: 'utf8', env: buildSubprocessEnv() });
         console.log(`[BASE_IMAGES] ✅ ${imageRef} (pulled)`);
         imageResults.push(imageResult(imageRef, 'pulled'));
       } catch (pullError: unknown) {

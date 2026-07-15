@@ -53,7 +53,7 @@ These fields must stay inside the repository boundary and must not use parent tr
 
 - `static_web_server`
 - `container_runtime`
-- `kubernetes_api`
+- `kubernetes`
 - `browser_automation`
 - `lighthouse`
 - `discord_media`

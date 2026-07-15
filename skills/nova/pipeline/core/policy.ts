@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // core/policy.ts — Deterministic model and thinking override policy resolver
 //
 // PRECEDENCE (highest wins):
@@ -32,7 +33,7 @@ export const THINKING_SUPPORTED_PATHS = ['acp', 'subagent', 'redis'];
 export const THINKING_UNSUPPORTED_PATHS = [];
 
 export function validateThinkingLevel(value: unknown, context = 'thinking') {
-  if (value === null || value === undefined || value === '') return;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (value === null), () => (value === undefined))), () => (value === ''))) return;
   if (!VALID_THINKING_LEVELS.includes(String(value))) {
     throw new Error(
       `${context}: invalid thinking level '${value}'. ` +
@@ -55,9 +56,9 @@ export function resolvePolicy(config: any, progress: any, agentName: string, opt
     dispatchPath = null,
   } = opts;
 
-  const runtimeOverrides = getActiveContext()?.runtimeOverrides || null;
-  const runtimeModel   = runtimeOverrides?.model    ?? null;
-  const runtimeThinking = runtimeOverrides?.thinking ?? null;
+  const runtimeOverrides = selectTruthyValue(() => (getActiveContext()?.runtimeOverrides), () => (null));
+  const runtimeModel   = selectDefinedValue(() => (runtimeOverrides?.model), () => (null));
+  const runtimeThinking = selectDefinedValue(() => (runtimeOverrides?.thinking), () => (null));
 
   validateThinkingLevel(runtimeThinking,  'runtime --thinking');
   validateThinkingLevel(scopeThinking,    `${agentName} scope thinking`);
@@ -77,15 +78,15 @@ export function resolvePolicy(config: any, progress: any, agentName: string, opt
 
   let thinking = null;
   let thinking_source = 'none';
-  const thinking_supported = !dispatchPath || !THINKING_UNSUPPORTED_PATHS.includes(dispatchPath);
+  const thinking_supported = selectTruthyValue(() => (!dispatchPath), () => (!THINKING_UNSUPPORTED_PATHS.includes(dispatchPath)));
 
   if (!thinking_supported) {
     thinking_source = `not_supported_on_${dispatchPath}`;
   } else {
     const thinkingCandidates = [
-      [runtimeThinking || null,                                          'runtime_override'],
-      [scopeThinking   || null,                                          'scope_policy'],
-      [progress?.defaults?.thinking?.[agentName] || null,                'project_default'],
+      [selectTruthyValue(() => (runtimeThinking), () => (null)),                                          'runtime_override'],
+      [selectTruthyValue(() => (scopeThinking), () => (null)),                                          'scope_policy'],
+      [selectTruthyValue(() => (progress?.defaults?.thinking?.[agentName]), () => (null)),                'project_default'],
     ];
     for (const [value, source] of thinkingCandidates) {
       if (value) {
@@ -107,15 +108,15 @@ export function logEffectivePolicy(config: any, entry: any) {
     const record = {
       ts:                 new Date().toISOString(),
       run_id:             getRunId(config),
-      project:            config.project || '',
-      scope:              entry.scope              || 'unknown',
-      agent:              entry.agent              || 'unknown',
+      project:            selectDefinedValue(() => (config.project), () => ('')),
+      scope:              selectTruthyValue(() => (entry.scope), () => ('missing_policy_scope')),
+      agent:              selectTruthyValue(() => (entry.agent), () => ('missing_policy_agent')),
       ...(entry.moduleId && { module_id: entry.moduleId }),
       ...(entry.gateId   && { gate_id:   entry.gateId }),
-      model:              entry.model              ?? null,
-      model_source:       entry.model_source       || 'none',
-      thinking:           entry.thinking           ?? null,
-      thinking_source:    entry.thinking_source    || 'none',
+      model:              selectDefinedValue(() => (entry.model), () => (null)),
+      model_source:       selectDefinedValue(() => (entry.model_source), () => ('none')),
+      thinking:           selectDefinedValue(() => (entry.thinking), () => (null)),
+      thinking_source:    selectDefinedValue(() => (entry.thinking_source), () => ('none')),
       thinking_supported: entry.thinking_supported !== false,
     };
     fs.appendFileSync(policyLog, JSON.stringify(record) + '\n');

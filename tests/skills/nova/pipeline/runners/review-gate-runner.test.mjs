@@ -44,7 +44,7 @@ function makeProgress() {
         type: 'review',
         title: 'Review Gate',
         review_name: 'main',
-        on_fail: 'fix_and_rereview',
+        on_fail: 'stop',
       },
     },
   };

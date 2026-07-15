@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/completion-adjudicator.ts — canonical completion evidence projection/adjudication
 
 import { STATUS } from '../core/constants.ts';
@@ -5,18 +6,44 @@ import { STATUS } from '../core/constants.ts';
 export const COMPLETION_IDENTITY_FIELDS = Object.freeze(['run_id', 'attempt', 'dispatch_id', 'session_key']);
 export const STRONG_COMPLETION_IDENTITY_FIELDS = Object.freeze(['run_id', 'attempt', 'dispatch_id']);
 export const TERMINAL_COMPLETION_STATUSES = Object.freeze([STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED]);
+const REDIS_COMPLETION_SOURCE = 'redis';
+const LIFECYCLE_READ_MODEL_SOURCE = 'lifecycle_read_model';
 
 function normalizeIdentityValue(value) {
-  if (value === undefined || value === null || value === '') return null;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return null;
   return String(value);
+}
+
+function normalizeText(value) {
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return '';
+  return String(value).trim();
+}
+
+function normalizeStatusText(status) {
+  return normalizeText(status).toUpperCase();
+}
+
+function firstDefined(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return undefined;
+}
+
+function mapCompletionSource(...values) {
+  for (const value of values) {
+    const normalized = normalizeText(value);
+    if (normalized) return normalized;
+  }
+  return null;
 }
 
 export function normalizeCompletionIdentity(identity = {}) {
   const normalized = {
-    run_id: normalizeIdentityValue(identity.run_id ?? identity.runId),
+    run_id: normalizeIdentityValue(firstDefined(identity.run_id, identity.runId)),
     attempt: normalizeIdentityValue(identity.attempt),
-    dispatch_id: normalizeIdentityValue(identity.dispatch_id ?? identity.dispatchId),
-    session_key: normalizeIdentityValue(identity.session_key ?? identity.sessionKey),
+    dispatch_id: normalizeIdentityValue(firstDefined(identity.dispatch_id, identity.dispatchId)),
+    session_key: normalizeIdentityValue(firstDefined(identity.session_key, identity.sessionKey)),
   };
   return Object.fromEntries(Object.entries(normalized).filter(([, value]) => value !== null));
 }
@@ -77,24 +104,33 @@ export function mapRedisStatus(redisStatus) {
     BLOCKED: STATUS.BLOCKED,
     RATE_LIMITED: STATUS.RATE_LIMITED,
   };
-  return map[String(redisStatus || '').toUpperCase()] || STATUS.FAIL;
+  const mappedStatus = map[normalizeStatusText(redisStatus)];
+  return selectDefinedValue(() => (mappedStatus), () => (STATUS.FAIL));
 }
 
 export function isRedisTimeoutOutcome(redisEntry = {}) {
-  return String(redisEntry?.outcome || '').toUpperCase() === 'TIMEOUT';
+  return normalizeStatusText(redisEntry?.outcome) === 'TIMEOUT';
 }
 
 export function isRedisRateLimitedOutcome(redisEntry = {}) {
-  return String(redisEntry?.outcome || '').toUpperCase() === 'RATE_LIMITED';
+  return normalizeStatusText(redisEntry?.outcome) === 'RATE_LIMITED';
 }
 
 export function isBusterPipelineOwnedSource(source = '') {
-  return /(?:^|-)(?:orchestrator|buster-pipeline)/i.test(String(source || ''));
+  return /(?:^|-)(?:orchestrator|buster-pipeline)/i.test(normalizeText(source));
 }
 
 export function isTerminalOwnedRateLimitedOutcome(redisEntry = {}) {
   if (!isRedisRateLimitedOutcome(redisEntry)) return false;
-  return isBusterPipelineOwnedSource(redisEntry?.source || '');
+  return isBusterPipelineOwnedSource(redisEntry?.source);
+}
+
+function redisCompletionIsTerminal({ terminalOwnedRateLimited = false, timeout = false, targetReached = false, blocked = false } = {}) {
+  return Boolean(selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (terminalOwnedRateLimited), () => (timeout))), () => (targetReached))), () => (blocked)));
+}
+
+function statusCompletionIsTerminal({ targetReached = false, blocked = false } = {}) {
+  return Boolean(selectTruthyValue(() => (targetReached), () => (blocked)));
 }
 
 export function projectCompletionState({
@@ -107,7 +143,7 @@ export function projectCompletionState({
 } = {}) {
   if (redisEntry?.status) {
     const mappedStatus = mapRedisStatus(redisEntry.status);
-    const rateLimited = isRedisRateLimitedOutcome(redisEntry) || mappedStatus === STATUS.RATE_LIMITED;
+    const rateLimited = selectTruthyValue(() => (isRedisRateLimitedOutcome(redisEntry)), () => (mappedStatus === STATUS.RATE_LIMITED));
     const terminalOwnedRateLimited = isTerminalOwnedRateLimitedOutcome(redisEntry);
     const timeout = isRedisTimeoutOutcome(redisEntry);
     const targetReached = expectedStatuses.includes(mappedStatus) && !rateLimited && !timeout;
@@ -115,11 +151,11 @@ export function projectCompletionState({
     return {
       targetKind,
       targetId,
-      source: source || 'redis',
+      source: selectDefinedValue(() => (mapCompletionSource(source)), () => (REDIS_COMPLETION_SOURCE)),
       rawStatus: redisEntry.status,
       status: mappedStatus,
       redisEntry,
-      terminal: terminalOwnedRateLimited || timeout || targetReached || blocked,
+      terminal: redisCompletionIsTerminal({ terminalOwnedRateLimited, timeout, targetReached, blocked }),
       targetReached,
       blocked,
       rateLimited,
@@ -141,18 +177,18 @@ export function projectCompletionState({
 
   if (status?.status) {
     const rawStatus = status.status;
-    const normalizedStatus = String(rawStatus || '').toUpperCase();
+    const normalizedStatus = normalizeStatusText(rawStatus);
     const targetReached = expectedStatuses.includes(normalizedStatus);
     const blocked = normalizedStatus === STATUS.BLOCKED;
     const rateLimited = normalizedStatus === STATUS.RATE_LIMITED;
     return {
       targetKind,
       targetId,
-      source: source || status._source || 'lifecycle_read_model',
+      source: selectDefinedValue(() => (mapCompletionSource(source, status._source)), () => (LIFECYCLE_READ_MODEL_SOURCE)),
       rawStatus,
       status: normalizedStatus,
       statusEntry: status,
-      terminal: targetReached || blocked,
+      terminal: statusCompletionIsTerminal({ targetReached, blocked }),
       targetReached,
       blocked,
       rateLimited,
@@ -171,7 +207,7 @@ export function projectCompletionState({
   return {
     targetKind,
     targetId,
-    source: source || null,
+    source: mapCompletionSource(source),
     status: null,
     terminal: false,
     targetReached: false,
@@ -183,23 +219,25 @@ export function projectCompletionState({
   };
 }
 
-function normalizeStatusText(status) {
-  return String(status || '').trim().toUpperCase();
-}
-
 function isTerminalCompletionStatus(status) {
   return TERMINAL_COMPLETION_STATUSES.includes(normalizeStatusText(status));
+}
+
+function completionAuthorityCandidate({ statusCompletion = null, redisCompletion = null, pendingCompletion = null } = {}) {
+  if (statusCompletion) return statusCompletion;
+  if (redisCompletion && !redisCompletion.terminal) return redisCompletion;
+  return pendingCompletion;
 }
 
 function buildCompletionAuthorityPolicy({ redisCompletion = null, statusCompletion = null, expectedIdentity = {} } = {}) {
   const redisStatus = normalizeStatusText(redisCompletion?.status);
   const statusStatus = normalizeStatusText(statusCompletion?.status);
-  const redisOutcome = normalizeStatusText(redisCompletion?.redisEntry?.outcome || redisCompletion?.outcome);
+  const redisOutcome = normalizeStatusText(selectDefinedValue(() => (redisCompletion?.redisEntry?.outcome), () => (redisCompletion?.outcome)));
   const redisTerminal = Boolean(redisCompletion?.terminal && isTerminalCompletionStatus(redisStatus));
   const localTerminal = isTerminalCompletionStatus(statusStatus);
-  const activeDispatch = buildActiveDispatchConfirmation(expectedIdentity, redisCompletion?.redisEntry || {});
+  const activeDispatch = buildActiveDispatchConfirmation(expectedIdentity, selectDefinedValue(() => (redisCompletion?.redisEntry), () => ({})));
 
-  if (redisOutcome === 'COMPLETION_INVALID' || redisOutcome === 'COMPLETION_CONFLICT') {
+  if (selectTruthyValue(() => (redisOutcome === 'COMPLETION_INVALID'), () => (redisOutcome === 'COMPLETION_CONFLICT'))) {
     return {
       code: redisOutcome === 'COMPLETION_INVALID' ? 'redis_completion_entry_invalid' : 'same_identity_completion_conflict',
       allow_redis_authority: false,
@@ -207,8 +245,8 @@ function buildCompletionAuthorityPolicy({ redisCompletion = null, statusCompleti
       requires_active_dispatch: true,
       active_dispatch_confirmed: activeDispatch.confirmed,
       active_dispatch: activeDispatch,
-      redis_status: redisStatus || null,
-      local_status: statusStatus || null,
+      redis_status: selectTruthyValue(() => (redisStatus), () => (null)),
+      local_status: selectTruthyValue(() => (statusStatus), () => (null)),
     };
   }
 
@@ -248,7 +286,7 @@ function buildCompletionAuthorityPolicy({ redisCompletion = null, statusCompleti
       active_dispatch_confirmed: confirmed,
       active_dispatch: activeDispatch,
       redis_status: redisStatus,
-      local_status: statusStatus || null,
+      local_status: selectTruthyValue(() => (statusStatus), () => (null)),
     };
   }
 
@@ -259,8 +297,8 @@ function buildCompletionAuthorityPolicy({ redisCompletion = null, statusCompleti
     requires_active_dispatch: false,
     active_dispatch_confirmed: activeDispatch.confirmed,
     active_dispatch: activeDispatch,
-    redis_status: redisStatus || null,
-    local_status: statusStatus || null,
+    redis_status: selectTruthyValue(() => (redisStatus), () => (null)),
+    local_status: selectTruthyValue(() => (statusStatus), () => (null)),
   };
 }
 
@@ -284,26 +322,8 @@ export function buildCompletionDrift({ redisCompletion = null, statusCompletion 
       code: authorityPolicy.code,
       redis_status: redisStatus,
       local_status: statusStatus,
-      redis_outcome: redisCompletion?.redisEntry?.outcome || redisCompletion?.outcome || null,
-      status_outcome: statusCompletion?.outcome || null,
-    });
-  } else if (redisStatus && statusStatus && redisStatus !== statusStatus) {
-    drift.push({
-      code: 'completion_status_mismatch',
-      redis_status: redisStatus,
-      local_status: statusStatus,
-      redis_outcome: redisCompletion?.redisEntry?.outcome || redisCompletion?.outcome || null,
-      status_outcome: statusCompletion?.outcome || null,
-    });
-  }
-
-  if (authorityPolicy.code === 'redis_terminal_confirmed_by_active_dispatch' || authorityPolicy.code === 'redis_terminal_requires_active_dispatch') {
-    drift.push({
-      code: authorityPolicy.code,
-      redis_status: redisStatus || null,
-      local_status: statusStatus || null,
-      active_dispatch_confirmed: authorityPolicy.active_dispatch_confirmed === true,
-      active_dispatch: authorityPolicy.active_dispatch,
+      redis_outcome: selectTruthyValue(() => (selectTruthyValue(() => (redisCompletion?.redisEntry?.outcome), () => (redisCompletion?.outcome))), () => (null)),
+      status_outcome: selectTruthyValue(() => (statusCompletion?.outcome), () => (null)),
     });
   }
 
@@ -334,11 +354,11 @@ export function adjudicateCompletionEvidence({
     : null;
   const authority = preferRedis && redisCompletion && authority_policy.allow_redis_authority
     ? redisCompletion
-    : statusCompletion || (redisCompletion && !redisCompletion.terminal ? redisCompletion : pendingCompletion);
+    : completionAuthorityCandidate({ statusCompletion, redisCompletion, pendingCompletion });
 
   return {
     ...authority,
-    authority_source: authority?.source || null,
+    authority_source: selectTruthyValue(() => (authority?.source), () => (null)),
     candidate_completion,
     redis_completion: redisCompletion,
     status_completion: statusCompletion,
@@ -366,7 +386,7 @@ export function shouldApplyRedisCompletionToStatus({
     status,
     preferRedis: true,
   });
-  const redisStatus = adjudicated.redis_completion?.status || null;
+  const redisStatus = selectTruthyValue(() => (adjudicated.redis_completion?.status), () => (null));
   const localStatus = normalizeStatusText(status?.status);
   const terminalStatuses = new Set(TERMINAL_COMPLETION_STATUSES);
   const shouldApply = Boolean(

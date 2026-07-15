@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 const APPROVAL_SIGNAL_KINDS = new Set([
   'approve',
   'reject',
@@ -5,19 +6,40 @@ const APPROVAL_SIGNAL_KINDS = new Set([
   'timeout_continue',
   'timeout_block',
 ]);
+const FIRST_ATTEMPT = 1;
+const ZERO_ATTEMPT = 0;
+
+function objectRecord(value) {
+  return value !== null && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function numericValue(value, fallback) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+function textValue(value) {
+  if (typeof value !== 'string') return null;
+  const normalized = value.trim();
+  return normalized ? normalized : null;
+}
+
+function normalizedSignalKind(proposal, refs) {
+  return (selectDefinedValue(() => (selectDefinedValue(() => (textValue(proposal?.data?.signal_kind)), () => (textValue(refs?.signal_kind)))), () => (''))).toLowerCase();
+}
 
 export function ensureLifecycleEventLegal(config, readModels, proposal) {
   const type = proposal?.type;
-  const refs = proposal?.refs || {};
-  const waitState = refs?.wait_ref ? readModels?.waits?.by_ref?.[refs.wait_ref] || null : null;
-  const gateState = refs?.gate_id ? readModels?.gates?.[refs.gate_id] || null : null;
+  const refs = objectRecord(proposal?.refs);
+  const waitState = refs?.wait_ref ? selectTruthyValue(() => (readModels?.waits?.by_ref?.[refs.wait_ref]), () => (null)) : null;
+  const gateState = refs?.gate_id ? selectTruthyValue(() => (readModels?.gates?.[refs.gate_id]), () => (null)) : null;
   const cooldownScope = refs?.module_id ? 'modules' : (refs?.gate_id ? 'gates' : null);
-  const cooldownKey = refs?.module_id || refs?.gate_id || null;
+  const cooldownKey = selectTruthyValue(() => (selectTruthyValue(() => (refs?.module_id), () => (refs?.gate_id))), () => (null));
   const cooldownState = cooldownScope && cooldownKey
-    ? readModels?.cooldowns?.[cooldownScope]?.[cooldownKey] || null
+    ? selectTruthyValue(() => (readModels?.cooldowns?.[cooldownScope]?.[cooldownKey]), () => (null))
     : null;
-  const pipelineState = readModels?.pipeline || null;
-  const moduleState = refs?.module_id ? readModels?.modules?.[refs.module_id] || null : null;
+  const pipelineState = selectTruthyValue(() => (readModels?.pipeline), () => (null));
+  const moduleState = refs?.module_id ? selectTruthyValue(() => (readModels?.modules?.[refs.module_id]), () => (null)) : null;
   if (type === 'pipeline_run.started') {
     if (pipelineState?.status && pipelineState.run_id === refs.run_id) {
       throw new Error(`Illegal lifecycle append: pipeline run '${refs.run_id}' already started`);
@@ -25,12 +47,19 @@ export function ensureLifecycleEventLegal(config, readModels, proposal) {
     return;
   }
 
-  if (type === 'pipeline_run.completed' || type === 'pipeline_run.halted') {
-    if (!pipelineState || pipelineState.run_id !== refs.run_id) {
+  if (selectTruthyValue(() => (type === 'pipeline_run.completed'), () => (type === 'pipeline_run.halted'))) {
+    if (selectTruthyValue(() => (!pipelineState), () => (pipelineState.run_id !== refs.run_id))) {
       throw new Error(`Illegal lifecycle append: pipeline run '${refs.run_id}' has not started`);
     }
-    if (pipelineState.status === 'COMPLETED' || pipelineState.status === 'HALTED') {
+    if (selectTruthyValue(() => (pipelineState.status === 'COMPLETED'), () => (pipelineState.status === 'HALTED'))) {
       throw new Error(`Illegal lifecycle append: pipeline run '${refs.run_id}' is already terminal`);
+    }
+    return;
+  }
+
+  if (type === 'pipeline.checkpoint') {
+    if (!proposal?.data?.point) {
+      throw new Error('Illegal lifecycle append: pipeline.checkpoint requires point');
     }
     return;
   }
@@ -43,8 +72,8 @@ export function ensureLifecycleEventLegal(config, readModels, proposal) {
     if (gateState?.wait_status === 'OPEN') {
       throw new Error(`Illegal lifecycle append: gate '${refs.gate_id}' already has an open wait`);
     }
-    const requestedAttempt = Number(refs?.attempt || 1);
-    const currentGateAttempt = Number(gateState?.attempt || 0);
+    const requestedAttempt = numericValue(refs?.attempt, FIRST_ATTEMPT);
+    const currentGateAttempt = numericValue(gateState?.attempt, ZERO_ATTEMPT);
     if (gateState?.wait_status === 'CLOSED' && gateState?.status && requestedAttempt <= currentGateAttempt) {
       throw new Error(`Illegal lifecycle append: gate '${refs.gate_id}' already resolved its wait`);
     }
@@ -52,20 +81,20 @@ export function ensureLifecycleEventLegal(config, readModels, proposal) {
   }
 
   if (type === 'resume_signal.received') {
-    const signalKind = String(proposal?.data?.signal_kind || refs?.signal_kind || '').trim().toLowerCase();
+    const signalKind = normalizedSignalKind(proposal, refs);
     if (!refs?.resume_signal_ref) throw new Error('Illegal lifecycle append: resume_signal.received requires resume_signal_ref');
-    if (!waitState || waitState.state !== 'OPEN') {
+    if (selectTruthyValue(() => (!waitState), () => (waitState.state !== 'OPEN'))) {
       throw new Error(`Illegal lifecycle append: signal '${refs.resume_signal_ref}' has no open wait`);
     }
-    if ((refs?.gate_type || '').toLowerCase() === 'approval' && !APPROVAL_SIGNAL_KINDS.has(signalKind)) {
-      throw new Error(`Illegal lifecycle append: approval signal '${signalKind || 'unknown'}' is unsupported`);
+    if ((selectDefinedValue(() => (textValue(refs?.gate_type)), () => (''))).toLowerCase() === 'approval' && !APPROVAL_SIGNAL_KINDS.has(signalKind)) {
+      throw new Error(`Illegal lifecycle append: approval signal '${selectTruthyValue(() => (signalKind), () => ('missing_signal_kind'))}' is unsupported`);
     }
     return;
   }
 
   if (type === 'wait.closed') {
-    if (!waitState || waitState.state !== 'OPEN') {
-      throw new Error(`Illegal lifecycle append: wait '${refs.wait_ref || 'unknown'}' is not open`);
+    if (selectTruthyValue(() => (!waitState), () => (waitState.state !== 'OPEN'))) {
+      throw new Error(`Illegal lifecycle append: wait '${selectTruthyValue(() => (refs.wait_ref), () => ('missing_wait_ref'))}' is not open`);
     }
     if (!proposal?.data?.close_reason) {
       throw new Error(`Illegal lifecycle append: wait '${refs.wait_ref}' close_reason is required`);
@@ -110,14 +139,14 @@ export function ensureLifecycleEventLegal(config, readModels, proposal) {
 
     if (type === 'module_attempt.ready_for_testing') {
       if (!moduleState) {
-        if (Number(refs.attempt || 0) !== 1) {
+        if (numericValue(refs.attempt, ZERO_ATTEMPT) !== FIRST_ATTEMPT) {
           throw new Error(`Illegal lifecycle append: module '${refs.module_id}' cannot open attempt ${refs.attempt} at READY_FOR_TESTING`);
         }
         return;
       }
 
-      const currentAttempt = Number(moduleState.current_attempt || 0);
-      const requestedAttempt = Number(refs.attempt || 0);
+      const currentAttempt = numericValue(moduleState.current_attempt, ZERO_ATTEMPT);
+      const requestedAttempt = numericValue(refs.attempt, ZERO_ATTEMPT);
 
       if (requestedAttempt === currentAttempt) return;
 

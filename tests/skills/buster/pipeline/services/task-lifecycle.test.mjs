@@ -37,3 +37,33 @@ test('appendPreTestResultsToPrompt injects authoritative suite context and no-re
   assert.equal(prompt.includes('Runtime image: `localhost/pipeline-smoke-landing:module-01`'), true);
   assert.equal(prompt.includes('Running app URL: `http://127.0.0.1:43101/health`'), true);
 });
+
+test('appendPreTestResultsToPrompt places authoritative suite context before test instructions', () => {
+  const prompt = __taskLifecycleTest.appendPreTestResultsToPrompt('before\n## Test Instructions\nrun checks\n', {
+    suiteSummary: 'build passed',
+    results: [{ suite: 'build', status: 'PASS' }],
+  });
+
+  assert.equal(prompt.indexOf('## Pre-Test Results') < prompt.indexOf('## Test Instructions'), true);
+});
+
+test('resolveAgentJudgmentPolicy defaults deterministic-suite tasks to no child agent', () => {
+  const policy = __taskLifecycleTest.resolveAgentJudgmentPolicy({});
+
+  assert.equal(policy.required, false);
+  assert.equal(policy.reason, 'deterministic_suites_authoritative');
+});
+
+test('resolveAgentJudgmentPolicy requires explicit boolean when configured', () => {
+  assert.equal(__taskLifecycleTest.resolveAgentJudgmentPolicy({
+    agent_judgment: {
+      required: true,
+      reason: 'exploratory_browser_review_required',
+    },
+  }).required, true);
+
+  assert.throws(
+    () => __taskLifecycleTest.resolveAgentJudgmentPolicy({ agent_judgment: { required: 'yes' } }),
+    /agent_judgment\.required must be a boolean/,
+  );
+});

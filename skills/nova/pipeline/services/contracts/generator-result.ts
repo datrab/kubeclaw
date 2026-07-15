@@ -1,5 +1,6 @@
 import { createContractInvalidError } from '../contract-diagnostics.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type UnknownRecord = Record<string, unknown>;
 
 export interface GeneratorArtifactRef extends UnknownRecord {
@@ -38,6 +39,10 @@ function isNonEmptyString(value: unknown): value is string {
 
 function formatExpectedProducerType(producerType: string | null = null): string {
   return producerType ? `generator:${producerType}` : 'generator';
+}
+
+function generatorErrorLabel(label: string | null | undefined, stageId: string): string {
+  return isNonEmptyString(label) ? label.trim() : stageId;
 }
 
 export function buildGeneratorArtifactRef(
@@ -102,7 +107,7 @@ export function validateGeneratorArtifactRef(ref: unknown, pathPrefix = 'artifac
 
 export function validateGeneratorResult(result: unknown, {
   producerType = null,
-  stageId = `generator:${producerType || 'unknown'}`,
+  stageId = `generator:${selectTruthyValue(() => (producerType), () => ('missing_producer_type'))}`,
 }: GeneratorResultOptions = {}): string[] {
   const errors: string[] = [];
   if (!isPlainObject(result)) {
@@ -132,7 +137,7 @@ export function validateGeneratorResult(result: unknown, {
 export function normalizeGeneratorResult(rawResult: unknown, {
   producerType = null,
   label = null,
-  stageId = `generator:${producerType || 'unknown'}`,
+  stageId = `generator:${selectTruthyValue(() => (producerType), () => ('missing_producer_type'))}`,
   moduleId = null,
   input = null,
   invocation = null,
@@ -142,8 +147,9 @@ export function normalizeGeneratorResult(rawResult: unknown, {
     generatorResult = coerceGeneratorResult(rawResult, { producerType });
   } catch (error) {
     const validationErrors = [error instanceof Error && error.message ? error.message : 'coercion failed'];
-    throw createContractInvalidError(`${label || stageId} generator returned invalid result: ${validationErrors.join('; ')}`, {
-      label: label || stageId,
+    const errorLabel = generatorErrorLabel(label, stageId);
+    throw createContractInvalidError(`${errorLabel} generator returned invalid result: ${validationErrors.join('; ')}`, {
+      label: errorLabel,
       stageId,
       hookFamily: 'generator.run',
       producerKind: 'generator',
@@ -157,8 +163,9 @@ export function normalizeGeneratorResult(rawResult: unknown, {
   }
   const errors = validateGeneratorResult(generatorResult, { producerType, stageId });
   if (errors.length > 0) {
-    throw createContractInvalidError(`${label || stageId} generator returned invalid result: ${errors.join('; ')}`, {
-      label: label || stageId,
+    const errorLabel = generatorErrorLabel(label, stageId);
+    throw createContractInvalidError(`${errorLabel} generator returned invalid result: ${errors.join('; ')}`, {
+      label: errorLabel,
       stageId,
       hookFamily: 'generator.run',
       producerKind: 'generator',

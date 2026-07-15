@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 type AnyRecord = Record<string, any>;
 
 type LifecycleMutation = AnyRecord | null;
@@ -42,12 +43,12 @@ function lifecycleResult(status: AnyRecord, lifecycleMutation: LifecycleMutation
 function normalizeLifecycleMutation(candidate: any): LifecycleMutation {
   if (!candidate) return null;
   if (candidate.lifecycleMutation) return cloneSerializable(candidate.lifecycleMutation);
-  if (candidate.eventType || candidate.lifecycleIntent) return cloneSerializable(candidate);
+  if (selectTruthyValue(() => (candidate.eventType), () => (candidate.lifecycleIntent))) return cloneSerializable(candidate);
   return null;
 }
 
 function ensureHistory(status: AnyRecord) {
-  if (!status || typeof status !== 'object') throw new Error('status object is required');
+  if (selectTruthyValue(() => (!status), () => (typeof status !== 'object'))) throw new Error('status object is required');
   if (!Array.isArray(status.history)) status.history = [];
 }
 
@@ -55,10 +56,10 @@ function appendHistory(status: AnyRecord, newStatus: any, agent: any, note: any,
   ensureHistory(status);
   status.history.push({
     timestamp: now,
-    from: status.status || null,
+    from: selectTruthyValue(() => (status.status), () => (null)),
     to: newStatus,
     agent,
-    note: note || '',
+    note: selectDefinedValue(() => (note), () => ('')),
   });
 }
 
@@ -95,6 +96,18 @@ function mergeLifecycleMutation(current: any, patch: AnyRecord = {}) {
   };
 }
 
+function phaseStartedAtAuthority(candidate: any, now: any) {
+  return selectDefinedValue(() => (candidate), () => (now));
+}
+
+function completedAtAuthority(candidate: any, now: any) {
+  return selectDefinedValue(() => (candidate), () => (now));
+}
+
+function lifecycleNowAuthority(opts: AnyRecord = {}) {
+  return selectDefinedValue(() => (opts.now), () => (new Date().toISOString()));
+}
+
 export function transitionModuleStatus(status: AnyRecord, newStatus: any, {
   agent = 'pipeline',
   note = '',
@@ -107,8 +120,8 @@ export function transitionModuleStatus(status: AnyRecord, newStatus: any, {
   completedAt,
   attemptStartedAt,
 }: AnyRecord = {}) {
-  const oldStatus = status?.status || null;
-  const previousPhase = status?.current_phase || null;
+  const oldStatus = selectTruthyValue(() => (status?.status), () => (null));
+  const previousPhase = selectTruthyValue(() => (status?.current_phase), () => (null));
 
   appendHistory(status, newStatus, agent, note, now);
   status.status = newStatus;
@@ -124,7 +137,7 @@ export function transitionModuleStatus(status: AnyRecord, newStatus: any, {
   }
 
   if (clearActiveAgent) status.active_agent = null;
-  if (clearCompletionSummary || CLEAR_COMPLETION_SUMMARY_STATUSES.has(newStatus)) {
+  if (selectTruthyValue(() => (clearCompletionSummary), () => (CLEAR_COMPLETION_SUMMARY_STATUSES.has(newStatus)))) {
     status.completion_summary = null;
   }
   if (completionSummary !== undefined) {
@@ -135,12 +148,12 @@ export function transitionModuleStatus(status: AnyRecord, newStatus: any, {
     status.attempt_started_at = attemptStartedAt;
   }
 
-  if (newStatus === 'IN_PROGRESS' || newStatus === 'TESTING') {
-    status.phase_started_at = phaseStartedAt ?? now;
+  if (selectTruthyValue(() => (newStatus === 'IN_PROGRESS'), () => (newStatus === 'TESTING'))) {
+    status.phase_started_at = phaseStartedAtAuthority(phaseStartedAt, now);
     status.completed_at = null;
   } else if (newStatus === 'PASS') {
     status.phase_started_at = null;
-    status.completed_at = completedAt ?? now;
+    status.completed_at = completedAtAuthority(completedAt, now);
   } else if (newStatus !== 'RATE_LIMITED') {
     status.phase_started_at = null;
     status.completed_at = null;
@@ -153,14 +166,14 @@ export function transitionModuleStatus(status: AnyRecord, newStatus: any, {
       oldStatus,
       newStatus,
       previousPhase,
-      phase: phase ?? status.current_phase ?? null,
+      phase: selectDefinedValue(() => (selectDefinedValue(() => (phase), () => (status.current_phase))), () => (null)),
       now,
       note,
       completionSummary: completionSummary !== undefined ? completionSummary : status.completion_summary,
-      activeAgent: cloneSerializable(status.active_agent || null),
-      attemptStartedAt: status.attempt_started_at || null,
-      phaseStartedAt: status.phase_started_at || null,
-      completedAt: status.completed_at || null,
+      activeAgent: cloneSerializable(selectTruthyValue(() => (status.active_agent), () => (null))),
+      attemptStartedAt: selectTruthyValue(() => (status.attempt_started_at), () => (null)),
+      phaseStartedAt: selectTruthyValue(() => (status.phase_started_at), () => (null)),
+      completedAt: selectTruthyValue(() => (status.completed_at), () => (null)),
       clearActiveAgent,
     });
   }
@@ -171,7 +184,7 @@ export function transitionModuleStatus(status: AnyRecord, newStatus: any, {
       oldStatus,
       newStatus,
       previousPhase,
-      phase: phase ?? status.current_phase ?? null,
+      phase: selectDefinedValue(() => (selectDefinedValue(() => (phase), () => (status.current_phase))), () => (null)),
       now,
       note,
     });
@@ -181,10 +194,10 @@ export function transitionModuleStatus(status: AnyRecord, newStatus: any, {
 }
 
 export function normalizeLifecycleStatus(status: AnyRecord = {}) {
-  if (!status || typeof status !== 'object') throw new Error('status object is required');
+  if (selectTruthyValue(() => (!status), () => (typeof status !== 'object'))) throw new Error('status object is required');
 
   const normalized = { ...status };
-  const currentStatus = normalized.status || 'PENDING';
+  const currentStatus = selectDefinedValue(() => (normalized.status), () => ('PENDING'));
 
   if (CLEAR_COMPLETION_SUMMARY_STATUSES.has(currentStatus)) {
     normalized.completion_summary = null;
@@ -198,12 +211,12 @@ export function normalizeLifecycleStatus(status: AnyRecord = {}) {
 }
 
 export function startModulePhase(status: AnyRecord, phase: any, note: any, opts: AnyRecord = {}) {
-  const now = opts.now || new Date().toISOString();
+  const now = lifecycleNowAuthority(opts);
   const nextStatus = PHASE_TO_STATUS[phase];
   if (!nextStatus) throw new Error(`unsupported module phase: ${phase}`);
 
   if (!status.started_at) status.started_at = now;
-  if (phase === 'forge' || !status.attempt_started_at) status.attempt_started_at = now;
+  if (selectTruthyValue(() => (phase === 'forge'), () => (!status.attempt_started_at))) status.attempt_started_at = now;
 
   return transitionModuleStatus(status, nextStatus, {
     ...opts,
@@ -218,10 +231,10 @@ export function finalizeTerminalModuleState(status: AnyRecord, {
   completedAt,
   lifecycleMutation = null,
 }: AnyRecord = {}) {
-  if (!status || typeof status !== 'object') throw new Error('status object is required');
+  if (selectTruthyValue(() => (!status), () => (typeof status !== 'object'))) throw new Error('status object is required');
 
-  const oldStatus = status.status || null;
-  const previousPhase = status.current_phase || null;
+  const oldStatus = selectTruthyValue(() => (status.status), () => (null));
+  const previousPhase = selectTruthyValue(() => (status.current_phase), () => (null));
 
   status.current_phase = null;
   status.phase_started_at = null;
@@ -233,8 +246,8 @@ export function finalizeTerminalModuleState(status: AnyRecord, {
   const eventType = deriveLifecycleEventType(status.status);
   if (eventType && ['PASS', 'FAIL', 'BLOCKED'].includes(status.status)) {
     const current = mergeLifecycleMutation(lifecycleMutation, {
-      completedAt: status.completed_at || null,
-      phaseStartedAt: status.phase_started_at || null,
+      completedAt: selectTruthyValue(() => (status.completed_at), () => (null)),
+      phaseStartedAt: selectTruthyValue(() => (status.phase_started_at), () => (null)),
     });
     if (current) return lifecycleResult(status, current);
 
@@ -244,13 +257,13 @@ export function finalizeTerminalModuleState(status: AnyRecord, {
       newStatus: status.status,
       previousPhase,
       phase: null,
-      now: completedAt || new Date().toISOString(),
+      now: completedAtAuthority(completedAt, new Date().toISOString()),
       note: 'Terminal module state finalized',
-      completionSummary: status.completion_summary || null,
-      activeAgent: cloneSerializable(status.active_agent || null),
-      attemptStartedAt: status.attempt_started_at || null,
-      phaseStartedAt: status.phase_started_at || null,
-      completedAt: status.completed_at || null,
+      completionSummary: selectTruthyValue(() => (status.completion_summary), () => (null)),
+      activeAgent: cloneSerializable(selectTruthyValue(() => (status.active_agent), () => (null))),
+      attemptStartedAt: selectTruthyValue(() => (status.attempt_started_at), () => (null)),
+      phaseStartedAt: selectTruthyValue(() => (status.phase_started_at), () => (null)),
+      completedAt: selectTruthyValue(() => (status.completed_at), () => (null)),
       clearActiveAgent: false,
     });
   }
@@ -272,15 +285,15 @@ export function markModuleBlocked(status: AnyRecord, phase: any, note: any, {
     now,
     clearActiveAgent,
   });
-  status.blockedReason = reason || status.blockedReason || null;
+  status.blockedReason = selectTruthyValue(() => (selectTruthyValue(() => (reason), () => (status.blockedReason))), () => (null));
   status.blockedAt = now;
-  status.blockedPhase = phase || status.blockedPhase || null;
+  status.blockedPhase = selectTruthyValue(() => (selectTruthyValue(() => (phase), () => (status.blockedPhase))), () => (null));
   if (failCount != null) status.blockedFailCount = failCount;
   return lifecycleResult(status, mergeLifecycleMutation(transition.lifecycleMutation, {
     blockedReason: status.blockedReason,
     blockedAt: status.blockedAt,
     blockedPhase: status.blockedPhase,
-    blockedFailCount: status.blockedFailCount ?? null,
+    blockedFailCount: selectDefinedValue(() => (status.blockedFailCount), () => (null)),
   }));
 }
 
@@ -289,8 +302,8 @@ export function getRetryStatusForPhase(phase: any) {
 }
 
 export function setModuleActiveAgent(status: AnyRecord, activeAgent: AnyRecord, { merge = true, lifecycleMutation = null }: AnyRecord = {}) {
-  if (!status || typeof status !== 'object') throw new Error('status object is required');
-  const previous = merge ? (status.active_agent || {}) : {};
+  if (selectTruthyValue(() => (!status), () => (typeof status !== 'object'))) throw new Error('status object is required');
+  const previous = merge ? (selectDefinedValue(() => (status.active_agent), () => ({}))) : {};
   status.active_agent = {
     ...previous,
     ...activeAgent,
@@ -301,7 +314,7 @@ export function setModuleActiveAgent(status: AnyRecord, activeAgent: AnyRecord, 
 }
 
 export function clearModuleActiveAgent(status: AnyRecord, { lifecycleMutation = null }: AnyRecord = {}) {
-  if (!status || typeof status !== 'object') throw new Error('status object is required');
+  if (selectTruthyValue(() => (!status), () => (typeof status !== 'object'))) throw new Error('status object is required');
   status.active_agent = null;
   return lifecycleResult(status, mergeLifecycleMutation(lifecycleMutation, {
     activeAgent: null,
@@ -309,14 +322,14 @@ export function clearModuleActiveAgent(status: AnyRecord, { lifecycleMutation = 
 }
 
 export function markModuleLifecycleIntent(status: AnyRecord, lifecycleIntent: any, {
-  oldStatus = status?.status || null,
-  newStatus = status?.status || null,
-  previousPhase = status?.current_phase || null,
-  phase = status?.current_phase || null,
+  oldStatus = selectTruthyValue(() => (status?.status), () => (null)),
+  newStatus = selectTruthyValue(() => (status?.status), () => (null)),
+  previousPhase = selectTruthyValue(() => (status?.current_phase), () => (null)),
+  phase = selectTruthyValue(() => (status?.current_phase), () => (null)),
   now = new Date().toISOString(),
   note = '',
 }: AnyRecord = {}) {
-  if (!status || typeof status !== 'object') throw new Error('status object is required');
+  if (selectTruthyValue(() => (!status), () => (typeof status !== 'object'))) throw new Error('status object is required');
   return lifecycleResult(status, {
     lifecycleIntent,
     oldStatus,

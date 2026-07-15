@@ -6,25 +6,25 @@ import { requireStageHandler } from '../core/registry.ts';
 import {
   resolveStatusSessionKey,
   resolveStatusGatewayLabel,
+  resolveStatusDispatchId,
 } from '../services/correlation.ts';
 import { finalizeModuleSessionRateLimitExit, getRateLimitConfig } from '../services/rate-limit.ts';
 import { normalizeTypedValidatorControlResult } from '../services/contracts/validator-control-result.ts';
 import { assertPipelineStepResult } from '../services/contracts/pipeline-step-result.ts';
+import { archiveForgeCompletionArtifact } from '../services/forge-completion.ts';
 import {
   startModulePhase,
   transitionModuleStatus,
-  markModuleBlocked,
   setModuleActiveAgent,
   clearModuleActiveAgent,
 } from '../lifecycle-state.ts';
 import {
   onModuleStarted,
-  onModulePass,
   onPhaseStarted,
-  onPhaseCompleted,
   emitOperatorAlert,
 } from '../services/telemetry.ts';
 import { getPipelineDefaultsConfig } from '../services/runtime-defaults.ts';
+import { normalizeGitFailureClass } from '../services/failure-semantics.ts';
 import {
   _telemetryCtx,
   buildModuleForgeRunInput,
@@ -46,6 +46,8 @@ import {
   buildWorkerPluginEffects,
 } from './module-runner-shared.ts';
 import { runModulePreflight } from './module-runner/preflight.ts';
+import { applyModuleRunnerCompletion } from './module-runner/completions.ts';
+import { applyForgeBlockedCompletion, applyForgeOnlyPassCompletion, applyForgeReadyCompletion } from './module-runner/forge-completions.ts';
 import {
   buildModuleBlockedTerminalResult,
   buildModuleErrorTerminalResult,
@@ -56,15 +58,69 @@ import {
 
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
+const FORGE_REASONING_LEVEL_NOT_CONFIGURED = 'default';
+const GIT_SYNC_FAILED_CLASS = 'git_sync_failed';
+const POLLING_GIT_SYNC_FAILED_REASON = 'Polling git sync failed closed during Forge phase';
+const FORGE_COMPLETION_ARTIFACT_MISSING_REASON = 'Forge completion artifact was not produced';
+const FORGE_WORKER_PASS_SUMMARY = 'Forge worker passed';
+const FORGE_ONLY_NO_COMMIT_REASON = 'no commit was created';
 
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
+function textValue(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const normalized = value.trim();
+  return normalized ? normalized : null;
+}
+
+function firstTextValue(...values: unknown[]): string | null {
+  for (const value of values) {
+    const normalized = textValue(value);
+    if (normalized) return normalized;
+  }
+  return null;
+}
+
+function requireText(value: unknown, field: string): string {
+  const normalized = textValue(value);
+  if (!normalized) throw new Error(`${field}: required non-empty string`);
+  return normalized;
+}
+
+function requirePositiveNumber(value: unknown, field: string): number {
+  const number = Number(value);
+  if (selectTruthyValue(() => (!Number.isFinite(number)), () => (number <= 0))) throw new Error(`${field}: required positive number`);
+  return number;
+}
+
+function requiredRateLimitExitIdentity(rateLimitExit: AnyRecord) {
+  return {
+    runId: requireText(rateLimitExit.run_id, 'forgeRateLimitExit.run_id'),
+    attempt: requirePositiveNumber(rateLimitExit.attempt, 'forgeRateLimitExit.attempt'),
+    gatewayLabel: requireText(rateLimitExit.gateway_label, 'forgeRateLimitExit.gateway_label'),
+    sessionKey: requireText(rateLimitExit.session_key, 'forgeRateLimitExit.session_key'),
+  };
+}
+
+function forgeReasoningLevel(forgePolicy: AnyRecord): string {
+  return selectDefinedValue(() => (textValue(forgePolicy.thinking)), () => (FORGE_REASONING_LEVEL_NOT_CONFIGURED));
+}
+
+function recalledMemoryIdsFromPrompt(promptResult: AnyRecord): unknown[] {
+  return Array.isArray(promptResult.recalledMemoryIds) ? promptResult.recalledMemoryIds : [];
+}
+
+function forgeGitFailureClass(...values: unknown[]): string {
+  return selectDefinedValue(() => (normalizeGitFailureClass(firstTextValue(...values))), () => (GIT_SYNC_FAILED_CLASS));
+}
+
 function clearForgeActiveAgentAfterWorkerFailure({ config, dir, status, deps }: AnyRecord = {}) {
   try {
-    const latestStatus = deps.loadStatus(config, dir) || status;
+    const latestStatus = selectTruthyValue(() => (deps.loadStatus(config, dir)), () => (status));
     clearModuleActiveAgent(latestStatus);
     deps.saveStatus(config, dir, latestStatus);
     return latestStatus;
@@ -95,7 +151,9 @@ function workerTypedWorker(controlResult: AnyRecord | null = null): AnyRecord {
 
 function workerOutcomeClass(controlResult: AnyRecord | null = null): string | null {
   const typedWorker = workerTypedWorker(controlResult);
-  const outcomeClass = typedWorker.outcomeClass ?? typedWorker.metadata?.outcomeClass;
+  const outcomeClass = typedWorker.outcomeClass !== undefined
+    ? typedWorker.outcomeClass
+    : typedWorker.metadata?.outcomeClass;
   return typeof outcomeClass === 'string' && outcomeClass.trim() ? outcomeClass.trim() : null;
 }
 
@@ -105,7 +163,7 @@ function workerSummary(controlResult: AnyRecord | null = null): string | null {
 }
 
 function isRetryableStartupWorkerReason(reason: string | null = null): boolean {
-  return reason === 'healthcheck_failed' || reason === 'startup_evidence_missing';
+  return selectTruthyValue(() => (selectTruthyValue(() => (reason === 'healthcheck_failed'), () => (reason === 'startup_evidence_missing'))), () => (reason === 'rate_limited'));
 }
 
 export async function runModuleForgePhase({
@@ -144,13 +202,13 @@ export async function runModuleForgePhase({
 
   const forgePolicy = deps.resolvePolicy(config, progress, 'forge', {
     scopeModel: mod.forge_model,
-    scopeThinking: mod.thinking_level?.forge || null,
+    scopeThinking: selectTruthyValue(() => (mod.thinking_level?.forge), () => (null)),
     dispatchPath: 'acp',
   });
   const forgeModel = forgePolicy.model;
-  const forgeHarness = deps.modelToHarness(forgeModel) || config.agents?.forge?.acp_agent_id;
-  if (!forgeHarness) throw new Error('Forge ACP dispatch requires explicit agents.forge.acp_agent_id or model harness mapping');
-  log('STEP', `Phase: FORGE (harness: ${forgeHarness}, model: ${forgeModel ?? '(none)'}, thinking: ${forgePolicy.thinking ?? 'default'}, model_source: ${forgePolicy.model_source})`);
+  const forgeHarness = config.agents?.forge?.acp_agent_id;
+  if (!forgeHarness) throw new Error('Forge ACP dispatch requires explicit agents.forge.acp_agent_id');
+  log('STEP', `Phase: FORGE (harness: ${forgeHarness}, model: ${selectDefinedValue(() => (forgeModel), () => ('model_not_configured'))}, thinking: ${selectDefinedValue(() => (forgePolicy.thinking), () => ('thinking_not_configured'))}, model_source: ${forgePolicy.model_source})`);
   deps.logEffectivePolicy(config, { scope: 'module_forge', agent: 'forge', moduleId, ...forgePolicy });
   getModuleStats(config).total_forge_attempts++;
   await onModuleStarted(_telemetryCtx(config, deps._explicitDeps), moduleId, forgeModel, currentAttemptNumber(status), {
@@ -160,7 +218,7 @@ export async function runModuleForgePhase({
         title: `Module ${moduleId} started`,
         description: mod.title,
         fields: [
-          ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { run_id: getRunId(config), module_id: moduleId, attempt: currentAttemptNumber(status), gateway_label: resolveStatusGatewayLabel(status), model: forgeModel, reasoning_level: forgePolicy.thinking || 'default', thinking_source: forgePolicy.thinking_source, runtime: 'session' }),
+          ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { run_id: getRunId(config), module_id: moduleId, attempt: currentAttemptNumber(status), gateway_label: resolveStatusGatewayLabel(status), model: forgeModel, reasoning_level: forgeReasoningLevel(forgePolicy), thinking_source: forgePolicy.thinking_source, runtime: 'session' }),
           { name: 'Harness', value: forgeHarness },
           { name: 'Retry Budget', value: `${status.fail_count + 1}/${maxFails}` },
         ],
@@ -172,7 +230,7 @@ export async function runModuleForgePhase({
   const promptResult = await deps.buildForgePrompt(config, moduleId, mod, dir, status, maxFails, novaPrompt);
   if (promptResult.error) {
     log('ERROR', `Module ${moduleId}, attempt ${status.fail_count + 1}: forge prompt assembly failed: ${promptResult.error}`);
-    emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'forge', forgeModel, status?.status ?? STATUS.IN_PROGRESS, promptResult.error);
+    emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'forge', forgeModel, status?.status);
     return {
       status,
       recalledMemoryIds,
@@ -187,7 +245,12 @@ export async function runModuleForgePhase({
     };
   }
   const forgePrompt = promptResult.prompt;
-  recalledMemoryIds = promptResult.recalledMemoryIds || [];
+  recalledMemoryIds = recalledMemoryIdsFromPrompt(promptResult);
+
+  const archivedCompletion = archiveForgeCompletionArtifact(config, dir, currentAttemptNumber(status));
+  if (archivedCompletion) {
+    log('INFO', `Archived stale Forge completion before attempt ${currentAttemptNumber(status)}: ${archivedCompletion}`);
+  }
 
   deps.savePrompt(config, dir, 'forge', status.fail_count + 1, forgePrompt);
 
@@ -224,32 +287,33 @@ export async function runModuleForgePhase({
     prompt: forgePrompt,
     onDispatched: async (dispatch: AnyRecord = {}) => {
       setModuleActiveAgent(status, {
-        session_key: dispatch.session_key || null,
-        stream_log_path: dispatch.stream_log_path || null,
+        session_key: selectTruthyValue(() => (dispatch.session_key), () => (null)),
+        stream_log_path: selectTruthyValue(() => (dispatch.stream_log_path), () => (null)),
         label: forgeSessionLabel,
-        gateway_label: dispatch.gateway_label || null,
-        dispatch_id: dispatch.dispatch_id || null,
-        run_id: dispatch.run_id || config?._runId || config?.run_id || null,
+        gateway_label: selectTruthyValue(() => (dispatch.gateway_label), () => (null)),
+        dispatch_id: selectTruthyValue(() => (dispatch.dispatch_id), () => (null)),
+        run_id: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (dispatch.run_id), () => (config?._runId))), () => (config?.run_id))), () => (null)),
         attempt: currentAttemptNumber(status),
-        runtime: dispatch.runtime || null,
+        runtime: selectTruthyValue(() => (dispatch.runtime), () => (null)),
         model: forgeModel,
-        model_source: forgePolicy.model_source || null,
-        reasoning_level: forgePolicy.thinking || 'default',
-        thinking_source: forgePolicy.thinking_source || null,
-        agent_id: dispatch.agent_id || forgeHarness,
+        model_source: selectTruthyValue(() => (forgePolicy.model_source), () => (null)),
+        reasoning_level: forgeReasoningLevel(forgePolicy),
+        thinking_source: selectTruthyValue(() => (forgePolicy.thinking_source), () => (null)),
+        agent_id: selectDefinedValue(() => (dispatch.agent_id), () => (forgeHarness)),
         phase: 'forge',
         started_at: new Date().toISOString(),
       });
       deps.saveStatus(config, dir, status);
     },
     onFinalized: async ({ status: finalizedStatus = null }: AnyRecord = {}) => {
-      status = finalizedStatus || deps.loadStatus(config, dir) || status;
+      status = selectTruthyValue(() => (selectTruthyValue(() => (finalizedStatus), () => (deps.loadStatus(config, dir)))), () => (status));
       clearModuleActiveAgent(status);
       deps.saveStatus(config, dir, status);
     },
   };
 
   const agentStartupRetryBudget = getPipelineDefaultsConfig(config).agent_startup_retry_budget;
+  let startupRateLimitPauses = 0;
   let forgeWorkerMetadata: AnyRecord = {};
   let forgeWorkerTypedMetadata: AnyRecord = {};
   let forgeWorkerSummary: string | null = null;
@@ -279,21 +343,30 @@ export async function runModuleForgePhase({
           phase: 'forge',
           workerType: 'module_forge',
           model: forgeModel,
-          thinking: forgePolicy.thinking || null,
+          thinking: selectTruthyValue(() => (forgePolicy.thinking), () => (null)),
         },
         effects: buildWorkerPluginEffects(config, progress, forgeStageId, forgeWorkerInput, deps),
       });
 
       const rawForgeWorkerResult: unknown = await executeForgeWorker(
-        buildPluginInvocationEnvelope(forgeExecutionInput, pluginContext, { workerInput: forgeWorkerInput }),
+        buildPluginInvocationEnvelope(forgeExecutionInput, pluginContext, {
+          workerInput: {
+            ...forgeWorkerInput,
+            executionContext: {
+              ...forgeWorkerInput.executionContext,
+              startupRateLimitPauseCount: startupRateLimitPauses,
+            },
+          },
+        }),
         pluginContext,
       );
       forgeWorkerControlResult = normalizeModuleForgeWorkerResult(config, forgeExecutionInput, rawForgeWorkerResult, { stageId: forgeStageId, moduleId: forgeOwnerRecord.manifest.moduleId, pluginInvocation });
     } catch (error) {
       const reason = `Module Forge worker execution failed: ${errorMessage(error)}`;
       log('ERROR', reason);
-      const failureGatewayLabel = status?.active_agent?.gateway_label ?? resolveStatusGatewayLabel(status);
-      const failureSessionKey = status?.active_agent?.session_key ?? resolveStatusSessionKey(status);
+      const failureDispatchId = requireText(selectDefinedValue(() => (status?.active_agent?.dispatch_id), () => (resolveStatusDispatchId(status))), 'forge.failure.dispatch_id');
+      const failureGatewayLabel = requireText(selectDefinedValue(() => (status?.active_agent?.gateway_label), () => (resolveStatusGatewayLabel(status))), 'forge.failure.gateway_label');
+      const failureSessionKey = requireText(selectDefinedValue(() => (status?.active_agent?.session_key), () => (resolveStatusSessionKey(status))), 'forge.failure.session_key');
       status = clearForgeActiveAgentAfterWorkerFailure({ config, dir, status, deps });
       emitTerminalModuleFailTelemetry(
         config,
@@ -302,9 +375,10 @@ export async function runModuleForgePhase({
         mod,
         'forge',
         forgeModel,
-        status?.status ?? STATUS.IN_PROGRESS,
+        status?.status !== undefined ? status.status : STATUS.IN_PROGRESS,
         reason,
         {
+          dispatchId: failureDispatchId,
           gatewayLabel: failureGatewayLabel,
           sessionKey: failureSessionKey,
         },
@@ -317,6 +391,7 @@ export async function runModuleForgePhase({
           moduleDir: dir,
           attempt: currentAttemptNumber(status),
           phase: 'forge',
+          dispatchId: failureDispatchId,
           gatewayLabel: failureGatewayLabel,
           sessionKey: failureSessionKey,
           ...((error as AnyRecord)?.diagnostics ? { diagnostics: { contract_invalid: true, contract_diagnostic: (error as AnyRecord).diagnostics } } : {}),
@@ -327,15 +402,22 @@ export async function runModuleForgePhase({
     forgeWorkerMetadata = workerMetadata(forgeWorkerControlResult);
     forgeWorkerTypedMetadata = workerTypedMetadata(forgeWorkerControlResult);
     forgeWorkerSummary = workerSummary(forgeWorkerControlResult);
-    forgeFinalStatus = forgeWorkerMetadata.final_status || null;
-    workerReason = forgeWorkerMetadata.reason || workerOutcomeClass(forgeWorkerControlResult) || forgeWorkerTypedMetadata.outcomeClass || null;
-    if (!isRetryableStartupWorkerReason(workerReason) || startupRetryCount >= agentStartupRetryBudget) {
+    forgeFinalStatus = selectTruthyValue(() => (forgeWorkerMetadata.final_status), () => (null));
+    workerReason = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (forgeWorkerMetadata.reason), () => (workerOutcomeClass(forgeWorkerControlResult)))), () => (forgeWorkerTypedMetadata.outcomeClass))), () => (null));
+    if (workerReason === 'rate_limited') {
+      startupRateLimitPauses = forgeWorkerMetadata.rate_limit_pauses !== undefined
+        ? Number(forgeWorkerMetadata.rate_limit_pauses)
+        : startupRateLimitPauses + 1;
+      log('WARN', `Module ${moduleId}: Forge startup rate limited — retrying after cooldown pause ${startupRateLimitPauses}`);
+      continue;
+    }
+    if (selectTruthyValue(() => (!isRetryableStartupWorkerReason(workerReason)), () => (startupRetryCount >= agentStartupRetryBudget))) {
       break;
     }
     log('WARN', `Module ${moduleId}: Forge startup failed (${workerReason}) — retrying agent startup ${startupRetryCount + 1}/${agentStartupRetryBudget}`);
   }
 
-  const forgeSessionKey = (forgeWorkerMetadata.session_key ?? resolveStatusSessionKey(status));
+  const forgeSessionKey = requireText(selectDefinedValue(() => (forgeWorkerMetadata.session_key), () => (resolveStatusSessionKey(status))), 'forge.session_key');
   const terminalDetail = typeof forgeWorkerMetadata.status_detail === 'string' && forgeWorkerMetadata.status_detail.trim()
     ? forgeWorkerMetadata.status_detail.trim()
     : null;
@@ -346,8 +428,8 @@ export async function runModuleForgePhase({
 
   if (workerReason === 'spawn_failed') {
     const reason = `Forge spawn failed: ${forgeWorkerMetadata.error}`;
-    const spawnFailureGatewayLabel = (forgeWorkerMetadata.gateway_label ?? resolveStatusGatewayLabel(status));
-    const spawnFailureSessionKey = (forgeWorkerMetadata.session_key ?? resolveStatusSessionKey(status));
+    const spawnFailureGatewayLabel = requireText(selectDefinedValue(() => (forgeWorkerMetadata.gateway_label), () => (resolveStatusGatewayLabel(status))), 'forge.spawn_failure.gateway_label');
+    const spawnFailureSessionKey = requireText(selectDefinedValue(() => (forgeWorkerMetadata.session_key), () => (resolveStatusSessionKey(status))), 'forge.spawn_failure.session_key');
     log('ERROR', `Module ${moduleId}, attempt ${status.fail_count + 1}/${maxFails}: forge agent spawn failed: ${forgeWorkerMetadata.error}`);
     await emitOperatorAlert(_telemetryCtx(config, deps._explicitDeps), 'module.operator_alert', {
       module_id: moduleId,
@@ -385,7 +467,7 @@ export async function runModuleForgePhase({
       mod,
       'forge',
       forgeModel,
-      status?.status ?? STATUS.IN_PROGRESS,
+      status?.status !== undefined ? status.status : STATUS.IN_PROGRESS,
       reason,
       {
         gatewayLabel: spawnFailureGatewayLabel,
@@ -415,7 +497,7 @@ export async function runModuleForgePhase({
   }
 
   if (forgeWorkerControlResult?.nextAction !== 'pass') {
-    status = forgeFinalStatus || deps.loadStatus(config, dir) || status;
+    status = selectTruthyValue(() => (selectTruthyValue(() => (forgeFinalStatus), () => (deps.loadStatus(config, dir)))), () => (status));
 
     const forgeNoWorkReasons = new Set([
       'session_ended_no_changes',
@@ -467,10 +549,10 @@ export async function runModuleForgePhase({
       const rateLimitReason = 'Rate limit pauses exceeded maximum — pipeline halted';
       const forgeRateLimitExit = await finalizeModuleSessionRateLimitExit({
         reason: workerReason,
-        rate_limit_status: forgeWorkerMetadata.rate_limit_status || null,
-        rate_limit_pauses: forgeWorkerMetadata.rate_limit_pauses ?? null,
-        max_rate_limit_pauses: forgeWorkerMetadata.max_rate_limit_pauses ?? null,
-        status: forgeWorkerMetadata.rate_limit_status || null,
+        rate_limit_status: selectDefinedValue(() => (forgeWorkerMetadata.rate_limit_status), () => (null)),
+        rate_limit_pauses: selectDefinedValue(() => (forgeWorkerMetadata.rate_limit_pauses), () => (null)),
+        max_rate_limit_pauses: selectDefinedValue(() => (forgeWorkerMetadata.max_rate_limit_pauses), () => (null)),
+        status: selectDefinedValue(() => (forgeWorkerMetadata.rate_limit_status), () => (null)),
       }, {
         config,
         moduleId,
@@ -484,29 +566,52 @@ export async function runModuleForgePhase({
         identity: {
           run_id: getRunId(config),
           attempt: currentAttemptNumber(status),
-          gateway_label: (forgeWorkerMetadata.gateway_label ?? resolveStatusGatewayLabel(status)),
+          gateway_label: requireText(selectDefinedValue(() => (forgeWorkerMetadata.gateway_label), () => (resolveStatusGatewayLabel(status))), 'forge.rate_limit.gateway_label'),
           session_key: forgeSessionKey,
         },
         maxPauses: getRateLimitConfig(config).max_pauses_per_module,
         logLevel: 'ERROR',
         logMessage: `Module ${moduleId} rate limit pauses exhausted in forge phase`,
       } as AnyRecord);
+      const rateLimitIdentity = requiredRateLimitExitIdentity(forgeRateLimitExit);
       return { status, recalledMemoryIds, terminal: buildModuleRateLimitedTerminalResult(config, moduleId, {
         rateLimitResult: forgeRateLimitExit,
         reason: rateLimitReason,
-        runId: forgeRateLimitExit.run_id ?? getRunId(config),
+        runId: rateLimitIdentity.runId,
         moduleDir: dir,
-        attempt: forgeRateLimitExit.attempt ?? currentAttemptNumber(status),
+        attempt: rateLimitIdentity.attempt,
         phase: 'forge',
-        gatewayLabel: forgeRateLimitExit.gateway_label ?? (forgeWorkerMetadata.gateway_label ?? resolveStatusGatewayLabel(status)),
-        sessionKey: forgeRateLimitExit.session_key ?? forgeSessionKey,
+        gatewayLabel: rateLimitIdentity.gatewayLabel,
+        sessionKey: rateLimitIdentity.sessionKey,
       }) };
     }
     if (workerReason === 'invalid_forge_completion') {
       const detail = terminalErrors.length > 0
         ? terminalErrors.join('; ')
         : 'invalid Forge completion artifact';
-      const failResult = await handleModuleFail(status, 'forge', detail, { recalledMemoryIds });
+      applyModuleRunnerCompletion({
+        deps,
+        config,
+        dir,
+        status,
+        moduleId,
+        phase: 'forge',
+        attempt: currentAttemptNumber(status),
+        completionStatus: 'ERROR',
+        authority: { kind: 'artifact', path: 'forge-completion.json' },
+        reasonCode: 'invalid_contract',
+        summary: detail,
+        gatewayLabel: resolveStatusGatewayLabel(status),
+        sessionKey: selectDefinedValue(() => (resolveStatusSessionKey(status)), () => (forgeSessionKey)),
+        metadata: {
+          failure_class: 'invalid_contract',
+          status_errors: terminalErrors,
+        },
+      });
+      const failResult = await handleModuleFail(status, 'forge', detail, {
+        recalledMemoryIds,
+        discordFields: [{ name: 'Contract', value: 'forge-completion.json' }],
+      });
       return failResult._retry
         ? { status, recalledMemoryIds, terminal: buildRetryResult(failResult, status) }
         : { status, recalledMemoryIds, terminal: { retry: false, result: assertPipelineStepResult(failResult) } };
@@ -519,28 +624,28 @@ export async function runModuleForgePhase({
         : { status, recalledMemoryIds, terminal: { retry: false, result: assertPipelineStepResult(failResult) } };
     }
     if (workerReason === 'git_error') {
+      const gitFailureClass = forgeGitFailureClass(terminalMessage, terminalDetail, forgeWorkerSummary, workerReason);
       return {
         status,
         recalledMemoryIds,
         terminal: buildModuleErrorTerminalResult(config, moduleId, {
-          reason: terminalMessage || 'Polling git sync failed closed during Forge phase',
+          reason: selectDefinedValue(() => (textValue(terminalMessage)), () => (POLLING_GIT_SYNC_FAILED_REASON)),
           moduleDir: dir,
           attempt: currentAttemptNumber(status),
           phase: 'forge',
           gatewayLabel: resolveStatusGatewayLabel(status),
-          sessionKey: (resolveStatusSessionKey(status) ?? forgeSessionKey ?? null),
+          sessionKey: selectDefinedValue(() => (resolveStatusSessionKey(status)), () => (forgeSessionKey)),
+          terminalReasonCode: gitFailureClass,
+          terminalSource: 'module:forge_git',
           metadata: {
-            polling_git: forgeWorkerMetadata.polling_git || null,
+            failure_class: gitFailureClass,
+            polling_git: selectDefinedValue(() => (forgeWorkerMetadata.polling_git), () => (null)),
           },
         }),
       };
     }
 
-    const failReason = terminalDetail
-      || terminalMessage
-      || forgeWorkerSummary
-      || workerReason
-      || 'Forge completion artifact was not produced';
+    const failReason = selectDefinedValue(() => (firstTextValue(terminalDetail, terminalMessage, forgeWorkerSummary, workerReason)), () => (FORGE_COMPLETION_ARTIFACT_MISSING_REASON));
     const failResult = await handleModuleFail(status, 'forge', failReason, { recalledMemoryIds });
     return failResult._retry
       ? { status, recalledMemoryIds, terminal: buildRetryResult(failResult, status) }
@@ -555,7 +660,7 @@ export async function runModuleForgePhase({
   const typedPassForgeCompletion = workerReason === 'passed'
     ? {
         status: STATUS.READY_FOR_TESTING,
-        summary: forgeWorkerSummary || 'Forge worker passed',
+        summary: selectDefinedValue(() => (textValue(forgeWorkerSummary)), () => (FORGE_WORKER_PASS_SUMMARY)),
       }
     : null;
   const forgeCompletion = forgeCompletionReasons.has(workerReason)
@@ -563,13 +668,7 @@ export async function runModuleForgePhase({
     : typedPassForgeCompletion;
 
   if (forgeCompletion?.status === STATUS.BLOCKED) {
-    const blockedAt = new Date().toISOString();
-    const blockedTransition = markModuleBlocked(status, 'forge', forgeCompletion.summary, {
-      reason: forgeCompletion.summary,
-      now: blockedAt,
-      clearActiveAgent: true,
-    });
-    deps.saveStatus(config, dir, status, blockedTransition);
+    applyForgeBlockedCompletion({ deps, config, dir, status, moduleId, attempt: currentAttemptNumber(status), summary: forgeCompletion.summary, sessionKey: forgeSessionKey, gatewayLabel: resolveStatusGatewayLabel(status) });
     emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'forge', forgeModel, STATUS.BLOCKED, forgeCompletion.summary);
     return {
       status,
@@ -586,7 +685,7 @@ export async function runModuleForgePhase({
   }
 
   if (forgeCompletion?.status !== STATUS.READY_FOR_TESTING) {
-    const reason = `Unexpected Forge completion result: ${workerReason || 'unknown'}`;
+    const reason = `Unexpected Forge completion result: ${selectTruthyValue(() => (workerReason), () => ('missing_worker_reason'))}`;
     log('ERROR', reason);
     return {
       status,
@@ -602,14 +701,9 @@ export async function runModuleForgePhase({
     };
   }
 
-  const forgeReadyTransition = transitionModuleStatus(status, STATUS.READY_FOR_TESTING, {
-    note: `Forge completion evidence: ${forgeCompletion.summary}`,
-  });
-
   ensureValidationState(status);
-  deps.saveStatus(config, dir, status, forgeReadyTransition);
+  applyForgeReadyCompletion({ deps, config, dir, status, moduleId, attempt: currentAttemptNumber(status), summary: forgeCompletion.summary, sessionKey: forgeSessionKey, gatewayLabel: resolveStatusGatewayLabel(status) });
   log('OK', 'Forge completion evidence accepted → READY_FOR_TESTING');
-  onPhaseCompleted(_telemetryCtx(config, deps._explicitDeps), moduleId, 'forge');
 
   const forgeDurationSec = computeElapsedSeconds(getPhaseStartedAt(status));
   const forgeNextStep = stages.includes('buster') ? 'Buster' : 'done (no Buster)';
@@ -620,7 +714,7 @@ export async function runModuleForgePhase({
     gateway_label: resolveStatusGatewayLabel(status),
     session_key: forgeSessionKey,
     model: forgeModel,
-    reasoning_level: forgePolicy.thinking || 'default',
+    reasoning_level: forgeReasoningLevel(forgePolicy),
     thinking_source: forgePolicy.thinking_source,
     runtime: 'session',
   };
@@ -660,7 +754,7 @@ export async function finalizeForgeOnlyPass({
     }) };
   }
   if (gitResult?.committed !== true) {
-    const reason = `Forge-only module cannot PASS without a durable Git commit: ${gitResult?.error || 'no commit was created'}`;
+    const reason = `Forge-only module cannot PASS without a durable Git commit: ${selectDefinedValue(() => (textValue(gitResult?.error)), () => (FORGE_ONLY_NO_COMMIT_REASON))}`;
     log('ERROR', reason);
     return { terminal: buildModuleErrorTerminalResult(config, moduleId, {
       reason,
@@ -673,41 +767,14 @@ export async function finalizeForgeOnlyPass({
   }
 
   const forgeOnlyCompletedAt = new Date().toISOString();
-  const forgeOnlyPassTransition = transitionModuleStatus(status, STATUS.PASS, {
-    note: 'Forge-only module — no Buster phase',
-    now: forgeOnlyCompletedAt,
-    completedAt: forgeOnlyCompletedAt,
-  });
-  status.cost ||= {};
+  applyForgeOnlyPassCompletion({ deps, config, dir, status, moduleId, attempt: currentAttemptNumber(status), occurredAt: forgeOnlyCompletedAt, sessionKey: resolveStatusSessionKey(status), gatewayLabel: resolveStatusGatewayLabel(status) });
+  if (!status.cost) status.cost = {};
   if (status.started_at) {
     status.cost.total_duration_seconds = computeElapsedSeconds(status.started_at, status.completed_at);
   }
   status.cost.attempt_duration_seconds = computeElapsedSeconds(getAttemptStartedAt(status), status.completed_at);
-  deps.saveStatus(config, dir, status, forgeOnlyPassTransition);
 
   log('OK', `Module ${moduleId} PASS (forge-only)`);
-  onModulePass(_telemetryCtx(config, deps._explicitDeps), moduleId, {
-    title: mod.title,
-    old_status: 'READY_FOR_TESTING',
-    attempt: status.fail_count + 1,
-    phase: 'forge',
-    model: null,
-    duration_seconds: status.cost?.attempt_duration_seconds ?? status.cost?.total_duration_seconds ?? 0,
-    cost_estimate_usd: null,
-    commit_hash: status.commit_hash || null,
-    presentation: {
-      discord: {
-        level: 'OK',
-        title: `Module ${moduleId} PASS ✓ (forge-only)`,
-        description: mod.title,
-        fields: [
-          ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { run_id: getRunId(config), module_id: moduleId, attempt: currentAttemptNumber(status), gateway_label: resolveStatusGatewayLabel(status), session_key: resolveStatusSessionKey(status) }),
-          { name: 'Duration', value: formatDurationCompact(status.cost.attempt_duration_seconds || status.cost.total_duration_seconds) },
-          { name: 'Stages', value: stages.join(', ') },
-        ],
-      },
-    },
-  });
   setLogScope(null, null);
   getModuleStats(config).modules_completed.push(moduleId);
 

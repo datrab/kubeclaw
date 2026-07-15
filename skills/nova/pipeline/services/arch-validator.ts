@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/arch-validator.ts — Pre-pipeline architecture validation
 //
 // Runs before the first module executes. Combines deterministic structural
@@ -14,8 +15,8 @@
 //              agent/session flow, not a separate direct completion path.
 //
 // Blocking policy:
-//   severity='blocking' → pipeline must halt before module 01
-//   severity='error'|'warn'|'info' → proceed, log findings clearly
+//   severity='blocking'|'error' → pipeline must halt before module 01
+//   severity='warn'|'info' → require approval before module 01
 //
 // Model resolution: progress.arch_validation.model → progress.defaults.models.arch_validator → config.fallback_model.
 // Thinking resolution: progress.arch_validation.thinking_level → progress.defaults.thinking.arch_validator.
@@ -23,7 +24,7 @@
 // Artifact output under the canonical architecture-validator log directory:
 //   results.json        — machine-readable findings
 //   summary.md          — human-readable report
-//   validator-prompt.md — redacted prompt metadata for agent judgment run
+//   validator-prompt.md — bounded prompt artifact for agent judgment run
 
 import fs from 'fs';
 import path from 'path';
@@ -31,10 +32,12 @@ import { log } from '../core/logger.ts';
 import { getRunId } from '../core/runtime.ts';
 import { archValidatorLogDir } from '../core/paths.ts';
 import { resolvePolicy, logEffectivePolicy } from '../core/config.ts';
-import { writeRedactedPromptArtifact } from '../redaction.ts';
+import { writePromptArtifact } from '../egress.ts';
 import { spawnSession } from '../agents/lifecycle.ts';
 import { terminateSession } from '../agents/session-termination.ts';
+import { sessionLifecyclePolicies } from '../core/session-policy.ts';
 import { pollForFile } from './polling.ts';
+import { getRateLimitConfig, processSessionRateLimit } from './rate-limit.ts';
 import { modelToHarness, resolveRuntime } from '../agents/runtime.ts';
 import { getArchValidationConfig } from './runtime-defaults.ts';
 
@@ -63,7 +66,7 @@ function resolveArchValidatorRunId(config, preferred = null) {
 }
 
 function normalizeAgentFinding(rawFinding) {
-  if (!rawFinding || typeof rawFinding !== 'object' || Array.isArray(rawFinding)) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!rawFinding), () => (typeof rawFinding !== 'object'))), () => (Array.isArray(rawFinding)))) {
     throw new Error('each agent finding must be an object');
   }
 
@@ -100,24 +103,56 @@ function parseAgentFindingsFile(outputFilePath) {
 }
 
 function requirePositiveTimeoutMinutes(value, label) {
-  if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value)))), () => (value <= 0))) {
     throw new Error(`${label}: required positive number`);
   }
   return value;
 }
 
+function requirePositiveInteger(value, label) {
+  if (!Number.isInteger(value) || value <= 0) {
+    throw new Error(`${label}: required positive integer`);
+  }
+  return value;
+}
+
+function resolveAgentMaxAttempts(progress, archConfig) {
+  const value = progress?.arch_validation?.agent_max_attempts ?? archConfig.agent_max_attempts ?? 1;
+  return requirePositiveInteger(Number(value), 'arch_validation.agent_max_attempts');
+}
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function requireNonEmptyString(value, label) {
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) {
+    throw new Error(`${label}: required non-empty string`);
+  }
+  return value.trim();
+}
+
+function errorMessage(error) {
+  return error instanceof Error ? error.message : String(error);
+}
+
 // ── Agent-based judgment ──────────────────────────────────────────────────────
 
 export function buildValidatorPrompt(progress, config, deterministicFindings, outputFilePath) {
-  const modules = Object.entries(progress.modules || {}).map(([id, m]) => ({
+  const project = requireNonEmptyString(progress?.project, 'progress.project');
+  const modules = Object.entries(objectRecord(progress.modules)).map(([id, m]) => ({
     id,
     dir: m.dir,
     title: m.title,
+    role: m.role,
+    owned_paths: Array.isArray(m.owned_paths) ? m.owned_paths : [],
+    module_output_contract: m.module_output_contract,
+    consumes_module_outputs: Array.isArray(m.consumes_module_outputs) ? m.consumes_module_outputs : [],
     stages: m.stages,
     depends_on: m.depends_on,
   }));
 
-  const gates = Object.entries(progress.gates || {}).map(([id, g]) => ({
+  const gates = Object.entries(objectRecord(progress.gates)).map(([id, g]) => ({
     id,
     type: g.type,
     title: g.title,
@@ -127,17 +162,18 @@ export function buildValidatorPrompt(progress, config, deterministicFindings, ou
   const existingBlock = deterministicFindings.length === 0
     ? 'None.'
     : deterministicFindings.map(f => `- [${f.id}] (${f.severity}) ${f.explanation}`).join('\n');
+  const architectureIntent = objectRecord(progress.architecture_intent);
+  const architectureIntentBlock = Object.keys(architectureIntent).length === 0
+    ? 'None declared.'
+    : JSON.stringify(architectureIntent, null, 2);
 
-  return `# Architecture Validation — Project: ${progress.project || config.project}
+  return `# Architecture Validation — Project: ${project}
 
-You are performing an architecture validation pass over a software pipeline project definition.
-Your role is to identify structural coherence issues, gaps, and misalignments that would prevent successful execution.
-You are NOT reviewing code quality or runtime correctness — focus on project definition coherence only.
+You are performing an opinionated architecture review of the software being built or refactored.
+Your role is to provide an additional architectural opinion about the module design, boundaries, responsibilities, dependencies, and product/refactor shape.
+You are NOT checking progress tracking, tracing, control-flow artifacts, execution metadata, file existence, or runtime readiness. Deterministic validators own those checks.
 
 ## Project Definition
-
-Execution order:
-${JSON.stringify(progress.execution_order, null, 2)}
 
 Modules:
 ${JSON.stringify(modules, null, 2)}
@@ -145,15 +181,21 @@ ${JSON.stringify(modules, null, 2)}
 Gates:
 ${JSON.stringify(gates, null, 2)}
 
+Declared architecture intent:
+${architectureIntentBlock}
+
 ## Deterministic Findings Already Raised
 ${existingBlock}
 
 ## Your Task
-Review the project definition above for:
-1. Module overlap — do any modules have suspiciously similar or redundant scope?
-2. Coverage gaps — are there obvious missing steps in the execution order?
-3. Dependency ordering — does the execution_order respect declared depends_on relationships?
-4. Structural coherence — does the overall project definition make sense as a pipeline?
+Review the proposed software/module architecture above for:
+1. Module boundaries — are responsibilities split in a coherent way?
+2. Product/refactor shape — does the architecture fit the stated software idea?
+3. Architectural risks — are there obvious coupling, sequencing, or ownership concerns in the design?
+4. Missing architectural concepts — are important domain or integration components absent from the design?
+
+Do not report findings about progress.json correctness, tracing, execution-order bookkeeping, control files, generated artifact paths, or test harness state. Those are deterministic validation concerns and are already handled outside this agent judgment.
+If the declared architecture intent says a small fixture is intentionally split to exercise pipeline orchestration surfaces, judge whether that declared intent is explicit and internally coherent instead of treating the split itself as a product-architecture defect.
 
 ## Response Format
 Write a JSON array of findings to this exact file path:
@@ -162,7 +204,7 @@ Write a JSON array of findings to this exact file path:
 Each finding must have:
 - id: string (stable code like OVERLAP_DETECTED, COVERAGE_GAP, DEPENDENCY_ORDER_VIOLATION, etc.)
 - severity: "info" | "warn" | "error" | "blocking"
-- scope: "project" | "module" | "gate" | "dependency_graph" | "test_spec" | "config"
+- scope: "project" | "module" | "gate" | "dependency_graph" | "domain_model" | "integration_boundary"
 - paths: [] (empty array if not file-specific)
 - explanation: string (one to two sentences)
 - remediation: string (one actionable fix)
@@ -180,7 +222,7 @@ async function runAgentJudgment(progress, config, deterministicFindings, opts = 
 
   // Agent judgment is opt-in. Deterministic validation remains the reliable default path.
   const archConfig = getArchValidationConfig(config);
-  const agentEnabled = progress?.arch_validation?.agent_enabled ?? archConfig.agent_enabled;
+  const agentEnabled = progress?.arch_validation?.agent_enabled
   if (agentEnabled !== true) {
     log('INFO', '[arch-validator] Agent judgment disabled (explicit opt-in required)');
     return [];
@@ -217,63 +259,115 @@ async function runAgentJudgment(progress, config, deterministicFindings, opts = 
   logEffectivePolicy(config, { scope: 'arch_validator', agent: 'arch_validator', ...policy });
   const model = policy.model;
   const runtime = resolveRuntimeFn({ runtime: echoDispatch, model });
-  const agentId = modelToHarnessFn(model) || config?.agents?.echo?.acp_agent_id;
-  if (!agentId) throw new Error('config.agents.echo.acp_agent_id: required for architecture validator spawned session');
+  const agentId = requireNonEmptyString(modelToHarnessFn(model), 'architecture validator model harness');
   const cwd = config.repo_root;
   const label = `arch-validator-${Date.now()}`;
   const timeoutMinutes = progress?.arch_validation?.timeout_minutes !== undefined
     ? requirePositiveTimeoutMinutes(progress.arch_validation.timeout_minutes, 'progress.arch_validation.timeout_minutes')
     : requirePositiveTimeoutMinutes(archConfig.timeout_minutes, 'config.arch_validation.timeout_minutes');
-  let sessionData = null;
+  const maxAttempts = resolveAgentMaxAttempts(progress, archConfig);
+  const maxPauses = getRateLimitConfig(config).max_pauses_per_module;
+  let pauseCount = 0;
+  let sessionAttempt = 0;
+  let executionFailures = 0;
 
-  try {
-    sessionData = await spawnSessionFn({
-      session: { model, runtime, agentId, cwd, label },
-    }, prompt, timeoutMinutes * 60, {
-      runtime,
-      model,
-      agentId,
-      cwd,
+  for (;;) {
+    sessionAttempt += 1;
+    let sessionData = null;
+    const attemptLabel = [
       label,
-      thinking: policy.thinking || null,
-      trackActive: false,
-      observabilityIdentity: {
-        run_id: resolveArchValidatorRunId(config),
-        project: config?.project || progress?.project || null,
-        agent_type: 'arch_validator',
-        dispatch_id: label,
-        gateway_label: label,
-      },
-    });
+      sessionAttempt > 1 ? `attempt-${sessionAttempt}` : null,
+      pauseCount > 0 ? `resume-${pauseCount}` : null,
+    ].filter(Boolean).join('-');
+    try {
+      sessionData = await spawnSessionFn({
+        session: { model, runtime, agentId, cwd, label: attemptLabel },
+      }, prompt, timeoutMinutes * 60, {
+        runtime,
+        model,
+        agentId,
+        cwd,
+        label: attemptLabel,
+        thinking: selectTruthyValue(() => (policy.thinking), () => (null)),
+        ...sessionLifecyclePolicies(config),
+        trackActive: false,
+        observabilityIdentity: {
+          run_id: resolveArchValidatorRunId(config),
+          project: requireNonEmptyString(progress?.project, 'progress.project'),
+          agent_type: 'arch_validator',
+          dispatch_id: attemptLabel,
+          gateway_label: attemptLabel,
+        },
+      });
 
-    const pollResult = await pollForFileFn(config, outputFilePath, timeoutMinutes, 'Architecture Validator', sessionData.childSessionKey || label);
-    if (!pollResult?.ok) {
+      const childSessionKey = requireNonEmptyString(sessionData?.childSessionKey, 'architecture validator session key');
+      const pollResult = await pollForFileFn(config, outputFilePath, timeoutMinutes, 'Architecture Validator', childSessionKey);
+      if (pollResult?.ok) return parseAgentFindingsFile(outputFilePath);
+
+      if (pollResult?.reason === 'rate_limited') {
+        pauseCount += 1;
+        const rateLimitStep = await processSessionRateLimit(config, {
+          ...objectRecord(pollResult.status),
+          reason: 'rate_limited',
+          detail: selectTruthyValue(() => (
+            selectTruthyValue(
+              () => (selectTruthyValue(() => (pollResult.status?.detail), () => (pollResult.status?.rate_limit_reason))),
+              () => (pollResult.status?.transcript?.lastDetail),
+            )
+          ), () => (null)),
+          transcript: selectDefinedValue(() => (pollResult.status?.transcript), () => (null)),
+          transcript_detail: selectTruthyValue(() => (pollResult.status?.transcript?.lastDetail), () => (null)),
+          agent_type: 'arch_validator',
+          run_id: resolveArchValidatorRunId(config),
+          dispatch_id: attemptLabel,
+          gateway_label: attemptLabel,
+          session_key: childSessionKey,
+        }, {
+          pauseCount,
+          maxPauses,
+          pauseLogMessage: ({ pauseCount: count, maxPauses: max, cooldownHours, resumeAt }) =>
+            `[arch-validator] ACP session rate limited (pause ${count}/${max}) — sleeping ${cooldownHours}h (resume at ${resumeAt.toISOString()})`,
+          resumeLogMessage: () => '[arch-validator] ACP session rate limit cooldown complete — retrying validation agent',
+        });
+        if (rateLimitStep.exhausted) {
+          return [makeFinding(
+            FINDING_CODES.AGENT_JUDGMENT_EXECUTION_ERROR, SEVERITY.BLOCKING, SCOPE.PROJECT,
+            ['progress.json'],
+            'Architecture validator agent exhausted configured rate-limit pauses.',
+            'Wait for the provider quota reset or switch to an available configured model/provider, then rerun the pipeline.',
+          )];
+        }
+        continue;
+      }
+
+      executionFailures += 1;
+      const failureReason = selectTruthyValue(() => (pollResult?.reason), () => ('missing_failure_detail'));
+      if (executionFailures < maxAttempts) {
+        log('WARN', `[arch-validator] Agent judgment produced no findings output (${failureReason}); retrying attempt ${executionFailures + 1}/${maxAttempts}`);
+        continue;
+      }
+
       return [makeFinding(
         FINDING_CODES.AGENT_JUDGMENT_EXECUTION_ERROR, SEVERITY.ERROR, SCOPE.PROJECT,
         ['progress.json'],
-        `Architecture validator agent did not produce findings output: ${pollResult?.reason || 'unknown failure'}`,
+        `Architecture validator agent did not produce findings output after ${maxAttempts} attempt(s): ${failureReason}`,
         'Check validator agent session logs and prompt artifacts, then rerun the pipeline.',
       )];
-    }
-    return parseAgentFindingsFile(outputFilePath);
-  } catch (error) {
-    return [makeFinding(
-      FINDING_CODES.AGENT_JUDGMENT_EXECUTION_ERROR, SEVERITY.ERROR, SCOPE.PROJECT,
-      ['progress.json'],
-      `Architecture validator agent execution failed: ${error?.message || error}`,
-      'Check validator agent session logs and prompt artifacts, then rerun the pipeline.',
-    )];
-  } finally {
-    if (sessionData?.childSessionKey) {
-      try {
-        await terminateSessionFn(sessionData.childSessionKey, {
-          runtime,
-          model,
-          agentId,
-          label,
-        });
-      } catch (error) {
-        log('DEBUG', `[arch-validator] Session cleanup failed (non-critical): ${error?.message || error}`);
+    } catch (error) {
+      throw new Error(`Architecture validator agent execution failed: ${errorMessage(error)}`);
+    } finally {
+      if (sessionData?.childSessionKey) {
+        try {
+          await terminateSessionFn(sessionData.childSessionKey, {
+            ...sessionLifecyclePolicies(config),
+            runtime,
+            model,
+            agentId,
+            label: attemptLabel,
+          });
+        } catch (error) {
+          log('DEBUG', `[arch-validator] Session cleanup failed (non-critical): ${errorMessage(error)}`);
+        }
       }
     }
   }
@@ -333,7 +427,7 @@ function writeArtifacts(config, result, prompt) {
     fs.writeFileSync(path.join(logDir, 'results.json'), JSON.stringify(result, null, 2) + '\n');
     fs.writeFileSync(path.join(logDir, 'summary.md'), buildMarkdownSummary(result));
     if (prompt) {
-      writeRedactedPromptArtifact(path.join(logDir, 'validator-prompt.md'), prompt, { agent_type: 'arch_validator', project: result?.project || config?.project || 'unknown' });
+      writePromptArtifact(path.join(logDir, 'validator-prompt.md'), prompt, { agent_type: 'arch_validator', project: selectTruthyValue(() => (selectTruthyValue(() => (result?.project), () => (config?.project))), () => ('missing_project')) });
     }
   } catch (e) {
     log('WARN', `[arch-validator] Failed to write artifacts: ${e.message}`);
@@ -413,14 +507,15 @@ function buildArtifactRefs(config) {
 }
 
 function buildControlSummary({ blocked = false, findings = [], executionFailed = false, contractInvalid = false, error = null } = {}) {
-  if (executionFailed || contractInvalid) {
+  if (selectTruthyValue(() => (executionFailed), () => (contractInvalid))) {
     return error
       ? `Architecture validator execution failed: ${error}`
       : 'Architecture validator execution failed';
   }
   if (blocked) {
     const blockingCount = findings.filter((finding) => finding?.severity === SEVERITY.BLOCKING).length;
-    return `Architecture validation BLOCKED with ${blockingCount} blocking finding(s)`;
+    const errorCount = findings.filter((finding) => finding?.severity === SEVERITY.ERROR).length;
+    return `Architecture validation BLOCKED with ${blockingCount} blocking and ${errorCount} error finding(s)`;
   }
   if (findings.length > 0) {
     return `Architecture validation passed with ${findings.length} non-blocking finding(s)`;
@@ -428,19 +523,35 @@ function buildControlSummary({ blocked = false, findings = [], executionFailed =
   return 'Architecture validation passed';
 }
 
+function controlResultBlocked(result, { executionFailed = false, contractInvalid = false } = {}) {
+  if (executionFailed === true) return true;
+  if (contractInvalid === true) return true;
+  return result?.blocked === true;
+}
+
+function reportBlockedFromControlResult(result, metadata) {
+  if (result?.nextAction === 'block') return true;
+  return metadata.blocked === true;
+}
+
+function reportExecutionFailedFromMetadata(metadata) {
+  if (metadata.execution_failed === true) return true;
+  return metadata.contract_invalid === true;
+}
+
 export function buildArchitectureValidatorControlResult(config, result = {}, opts = {}) {
   const findings = Array.isArray(result?.findings) ? result.findings : [];
   const runId = resolveArchValidatorRunId(config, result?.run_id);
-  const project = result?.project || config?.project || 'unknown';
-  const timestamp = result?.timestamp || new Date().toISOString();
+  const project = requireNonEmptyString(result?.project, 'architecture validator result project');
+  const timestamp = requireNonEmptyString(result?.timestamp, 'architecture validator result timestamp');
   const executionFailed = opts.executionFailed === true;
   const contractInvalid = opts.contractInvalid === true;
-  const blocked = executionFailed || contractInvalid || result?.blocked === true;
+  const blocked = controlResultBlocked(result, { executionFailed, contractInvalid });
   const counts = countFindings(findings);
-  const stageId = opts?.input?.ids?.stageId || opts?.stageId || 'validator:architecture';
-  const validatorName = opts?.input?.ids?.validatorName || opts?.validatorName || 'architecture';
-  const error = opts?.error || null;
-  const contractDiagnostic = opts?.contractDiagnostic || null;
+  const stageId = requireNonEmptyString(selectDefinedValue(() => (opts?.input?.ids?.stageId), () => (opts?.stageId)), 'architecture validator stageId');
+  const validatorName = requireNonEmptyString(selectDefinedValue(() => (opts?.input?.ids?.validatorName), () => (opts?.validatorName)), 'architecture validator name');
+  const error = selectTruthyValue(() => (opts?.error), () => (null));
+  const contractDiagnostic = selectTruthyValue(() => (opts?.contractDiagnostic), () => (null));
   const artifactPaths = buildArtifactPaths(config);
   const summary = buildControlSummary({ blocked, findings, executionFailed, contractInvalid, error });
   const outcomeClass = blocked ? 'blocked' : 'passed';
@@ -450,21 +561,21 @@ export function buildArchitectureValidatorControlResult(config, result = {}, opt
     producerKind: 'validator',
     producerType: validatorName,
     nextAction: blocked ? 'block' : 'pass',
-    ...(blocked ? { issueType: executionFailed || contractInvalid ? 'unknown' : 'code' } : {}),
+    ...(blocked ? { issueType: selectTruthyValue(() => (executionFailed), () => (contractInvalid)) ? 'contract' : 'code' } : {}),
     diagnostics: {
       summary,
       findings: findings.map((finding = {}) => ({
-        code: finding.id || FINDING_CODES.VALIDATOR_INTERNAL_ERROR,
+        code: requireNonEmptyString(finding.id, 'architecture validator finding id'),
         severity: mapFindingSeverityToDiagnosticSeverity(finding.severity),
-        message: finding.explanation || 'Architecture validation finding',
-        category: finding.scope || null,
+        message: selectDefinedValue(() => (finding.explanation), () => ('Architecture validation finding')),
+        category: selectTruthyValue(() => (finding.scope), () => (null)),
         target: Array.isArray(finding.paths) && finding.paths.length > 0 ? finding.paths[0] : null,
         retryable: false,
         environmentIssue: false,
         metadata: {
-          remediation: finding.remediation || null,
+          remediation: selectTruthyValue(() => (finding.remediation), () => (null)),
           paths: Array.isArray(finding.paths) ? [...finding.paths] : [],
-          original_severity: finding.severity || null,
+          original_severity: selectTruthyValue(() => (finding.severity), () => (null)),
         },
       })),
       artifacts: buildArtifactRefs(config),
@@ -528,25 +639,25 @@ export function coerceArchitectureValidatorControlResult(config, result, opts = 
 
 export function extractArchValidatorReport(result, config) {
   if (isArchitectureValidatorControlResult(result)) {
-    const metadata = result?.diagnostics?.metadata || result?.diagnostics?.typed?.validator?.metadata || {};
+    const metadata = objectRecord(selectDefinedValue(() => (result?.diagnostics?.metadata), () => (result?.diagnostics?.typed?.validator?.metadata)));
     return {
-      blocked: result?.nextAction === 'block' || metadata.blocked === true,
+      blocked: reportBlockedFromControlResult(result, metadata),
       findings: Array.isArray(metadata.raw_findings) ? metadata.raw_findings : [],
-      timestamp: metadata.timestamp || new Date().toISOString(),
-      project: metadata.project || config?.project || 'unknown',
-      run_id: resolveArchValidatorRunId(config, metadata.run_id),
-      execution_failed: metadata.execution_failed === true || metadata.contract_invalid === true,
-      error: metadata.error || null,
-      artifact_paths: metadata.artifact_paths || buildArtifactPaths(config),
+      timestamp: requireNonEmptyString(metadata.timestamp, 'architecture validator metadata timestamp'),
+      project: requireNonEmptyString(metadata.project, 'architecture validator metadata project'),
+      run_id: requireNonEmptyString(metadata.run_id, 'architecture validator metadata run_id'),
+      execution_failed: reportExecutionFailedFromMetadata(metadata),
+      error: selectTruthyValue(() => (metadata.error), () => (null)),
+      artifact_paths: objectRecord(metadata.artifact_paths),
     };
   }
 
   return {
     blocked: result?.blocked === true,
     findings: Array.isArray(result?.findings) ? result.findings : [],
-    timestamp: result?.timestamp || new Date().toISOString(),
-    project: result?.project || config?.project || 'unknown',
-    run_id: resolveArchValidatorRunId(config, result?.run_id),
+    timestamp: requireNonEmptyString(result?.timestamp, 'architecture validator result timestamp'),
+    project: requireNonEmptyString(result?.project, 'architecture validator result project'),
+    run_id: requireNonEmptyString(result?.run_id, 'architecture validator result run_id'),
     execution_failed: false,
     error: null,
     artifact_paths: buildArtifactPaths(config),
@@ -556,7 +667,7 @@ export function extractArchValidatorReport(result, config) {
 // ── Blocking policy ───────────────────────────────────────────────────────────
 
 export function isBlocking(findings) {
-  return Array.isArray(findings) && findings.some(f => f.severity === SEVERITY.BLOCKING);
+  return Array.isArray(findings) && findings.some(f => f.severity === SEVERITY.BLOCKING || f.severity === SEVERITY.ERROR);
 }
 
 // ── Public API ────────────────────────────────────────────────────────────────
@@ -566,8 +677,8 @@ export function isBlocking(findings) {
  *
  * Returns: { blocked: boolean, findings: Finding[], timestamp: string, project: string }
  *
- *   blocked=true  → at least one finding has severity 'blocking'; caller must halt
- *   blocked=false → all findings are non-blocking; pipeline may continue
+ *   blocked=true  → at least one finding has severity 'blocking' or 'error'; caller must halt
+ *   blocked=false → warn/info findings require approval; no findings may continue
  *
  * Never throws. Internal errors are captured as BLOCKING findings so the pipeline fails closed.
  *
@@ -577,12 +688,14 @@ export function isBlocking(findings) {
  */
 export async function runArchValidator(config, progress, opts = {}) {
   const timestamp = new Date().toISOString();
-  const project = progress?.project || config?.project || 'unknown';
+  const project = requireNonEmptyString(progress?.project, 'progress.project');
 
   log('STEP', '[arch-validator] Running pre-pipeline architecture validation...');
 
   let allFindings = [];
   let agentPrompt = null;
+  let executionFailed = false;
+  let executionError = null;
 
   try {
     // Phase 1: Deterministic structural checks
@@ -594,24 +707,27 @@ export async function runArchValidator(config, progress, opts = {}) {
 
     allFindings = [...deterministicFindings, ...agentFindings];
   } catch (e) {
-    log('ERROR', `[arch-validator] Unexpected error during validation: ${e.message}`);
+    executionFailed = true;
+    executionError = errorMessage(e);
+    log('ERROR', `[arch-validator] Unexpected error during validation: ${executionError}`);
     allFindings = [makeFinding(
       FINDING_CODES.VALIDATOR_INTERNAL_ERROR, SEVERITY.BLOCKING, SCOPE.PROJECT,
       [],
-      `Architecture validator encountered an internal error: ${e.message}`,
+      `Architecture validator encountered an internal error: ${executionError}`,
       'Review validator logs and fix the validator/runtime error before starting pipeline work.',
     )];
   }
 
   const blocked = isBlocking(allFindings);
-  const result = { blocked, project, timestamp, findings: allFindings };
+  const result = { blocked, project, timestamp, findings: allFindings, execution_failed: executionFailed, error: executionError };
 
   // Write artifacts (non-critical — failure to write never blocks the pipeline)
   writeArtifacts(config, result, agentPrompt);
 
   if (blocked) {
-    log('ERROR', `[arch-validator] Architecture validation BLOCKED — ${allFindings.filter(f => f.severity === SEVERITY.BLOCKING).length} blocking finding(s)`);
-    for (const f of allFindings.filter(f => f.severity === SEVERITY.BLOCKING)) {
+    const blockingFindings = allFindings.filter(f => f.severity === SEVERITY.BLOCKING || f.severity === SEVERITY.ERROR);
+    log('ERROR', `[arch-validator] Architecture validation BLOCKED — ${blockingFindings.length} blocking/error finding(s)`);
+    for (const f of blockingFindings) {
       log('ERROR', `  [${f.id}] ${f.explanation}`);
       log('ERROR', `  Fix: ${f.remediation}`);
     }
@@ -626,5 +742,9 @@ export async function runArchValidator(config, progress, opts = {}) {
 
 export async function runArchitectureValidatorStage(config, progress, opts = {}) {
   const result = await runArchValidator(config, progress, opts);
-  return buildArchitectureValidatorControlResult(config, result, opts);
+  return buildArchitectureValidatorControlResult(config, result, {
+    ...opts,
+    executionFailed: result.execution_failed === true,
+    error: selectTruthyValue(() => (result.error), () => (null)),
+  });
 }

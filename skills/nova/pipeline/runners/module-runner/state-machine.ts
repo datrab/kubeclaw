@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 // runners/module-runner/state-machine.ts — explicit module attempt state machine
 
 import { STATUS } from '../../core/constants.ts';
@@ -31,6 +32,16 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
+function moduleStagesAuthority(mod: AnyRecord): string[] {
+  if (Array.isArray(mod?.stages) && mod.stages.length > 0) return mod.stages;
+  return ['forge', 'buster'];
+}
+
+function statusAfterBusterPhase(currentStatus: AnyRecord, busterPhase: AnyRecord): AnyRecord {
+  if (busterPhase?.status && typeof busterPhase.status === 'object') return busterPhase.status;
+  return currentStatus;
+}
+
 export const MODULE_ATTEMPT_ACTIONS = Object.freeze({
   TERMINAL_PASS: 'terminal_pass',
   TERMINAL_BLOCKED: 'terminal_blocked',
@@ -46,7 +57,7 @@ export const MODULE_ATTEMPT_ACTIONS = Object.freeze({
 export function planLoadedModuleStatus(status: AnyRecord) {
   if (status?.status === STATUS.PASS) return MODULE_ATTEMPT_ACTIONS.TERMINAL_PASS;
   if (status?.status === STATUS.BLOCKED) return MODULE_ATTEMPT_ACTIONS.TERMINAL_BLOCKED;
-  if (!status || status.status === STATUS.PENDING) return MODULE_ATTEMPT_ACTIONS.RELEASE_BLUEPRINT;
+  if (selectTruthyValue(() => (!status), () => (status.status === STATUS.PENDING))) return MODULE_ATTEMPT_ACTIONS.RELEASE_BLUEPRINT;
   return null;
 }
 
@@ -76,11 +87,11 @@ export function planAfterBusterPhase(busterPhase: AnyRecord = {}) {
 
 async function releaseBlueprintForAttempt({ config, progress, moduleId, mod, dir, deps, status }: AnyRecord) {
   try {
-    await deps.releaseBlueprint(config, progress, moduleId, dir, mod.stages || ['forge', 'buster']);
+    await deps.releaseBlueprint(config, progress, moduleId, dir, selectDefinedValue(() => (mod.stages), () => (['forge', 'buster'])));
   } catch (e) {
     const reason = `Blueprint release failed: ${errorMessage(e)}. Nova may need to create/fix the architecture branch.`;
     log('ERROR', `Module ${moduleId}: blueprint release failed: ${errorMessage(e)}`);
-    emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'blueprint_release', null, status?.status ?? STATUS.PENDING, reason, {}, deps._explicitDeps);
+    emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'blueprint_release', null, selectDefinedValue(() => (status?.status), () => (STATUS.PENDING)), reason, {}, deps._explicitDeps);
     return {
       status,
       terminal: buildModuleNeedsNovaTerminalResult(config, moduleId, {
@@ -108,10 +119,10 @@ function buildUnexpectedStatusTerminal({ config, moduleId, mod, status, deps }: 
   setLogScope(null, null);
   const reason = `Unexpected status: ${status?.status}`;
   log('ERROR', `Module ${moduleId} ended in unexpected status: ${status?.status}`);
-  emitTerminalModuleFailTelemetry(config, moduleId, status, mod, status?.current_phase || null, status?.active_agent?.model || null, status?.status ?? null, reason, {}, deps?._explicitDeps);
+  emitTerminalModuleFailTelemetry(config, moduleId, status, mod, selectTruthyValue(() => (status?.current_phase), () => (null)), selectTruthyValue(() => (status?.active_agent?.model), () => (null)), selectDefinedValue(() => (status?.status), () => (null)), reason, {}, deps?._explicitDeps);
   return buildModuleErrorTerminalResult(config, moduleId, {
     reason,
-    phase: status?.current_phase ?? null,
+    phase: selectDefinedValue(() => (status?.current_phase), () => (null)),
     gatewayLabel: resolveStatusGatewayLabel(status),
     sessionKey: resolveStatusSessionKey(status),
   });
@@ -147,11 +158,11 @@ export async function runModuleAttemptStateMachine({
     if (released.terminal) return released.terminal;
   }
 
-  const stages = mod.stages || ['forge', 'buster'];
+  const stages = moduleStagesAuthority(mod);
   ensureValidationState(status);
 
-  log('INFO', `Module ${moduleId}: entering attempt (status=${status?.status || 'NEW'}, ` +
-    `fail_count=${status?.fail_count || 0}, stages=${stages.join('+')})`);
+  log('INFO', `Module ${moduleId}: entering attempt (status=${selectDefinedValue(() => (status?.status), () => ('NEW'))}, ` +
+    `fail_count=${selectDefinedValue(() => (status?.fail_count), () => (0))}, stages=${stages.join('+')})`);
 
   if (planModuleAttemptPhase(status, stages) === MODULE_ATTEMPT_ACTIONS.RUN_FORGE) {
     const forgePhase = await runModuleForgePhase({
@@ -218,7 +229,7 @@ export async function runModuleAttemptStateMachine({
     handleModuleFail,
     buildRetryResult,
   });
-  status = busterPhase.status || status;
+  status = statusAfterBusterPhase(status, busterPhase);
   if (planAfterBusterPhase(busterPhase) === MODULE_ATTEMPT_ACTIONS.TERMINAL_OR_RETRY) {
     return busterPhase;
   }

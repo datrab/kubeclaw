@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 type CliFlagType = 'boolean' | 'string';
 
 type CliFlagSpec = {
@@ -14,7 +15,7 @@ type CliSchema = {
 };
 
 export function parseCliArgs(argv: string[] = [], schema: CliSchema = {}) {
-  const flags = schema.flags || {};
+  const flags = selectDefinedValue(() => (schema.flags), () => ({}));
   const allowPositionals = schema.allowPositionals === true;
   const positionals: string[] = [];
   const values = Object.create(null) as Record<string, unknown>;
@@ -50,7 +51,7 @@ export function parseCliArgs(argv: string[] = [], schema: CliSchema = {}) {
     }
 
     const value = inlineValue != null ? inlineValue : argv[i + 1];
-    if (value === undefined || String(value).startsWith('--')) {
+    if (selectTruthyValue(() => (value === undefined), () => (String(value).startsWith('--')))) {
       throw new Error(`Missing value for --${name}`);
     }
     if (inlineValue == null) i += 1;
@@ -58,7 +59,7 @@ export function parseCliArgs(argv: string[] = [], schema: CliSchema = {}) {
   }
 
   for (const [name, spec] of Object.entries(flags)) {
-    if (spec.required && (values[name] === undefined || values[name] === null || values[name] === '')) {
+    if (spec.required && (selectTruthyValue(() => (selectTruthyValue(() => (values[name] === undefined), () => (values[name] === null))), () => (values[name] === '')))) {
       throw new Error(`Missing required flag: --${name}`);
     }
   }

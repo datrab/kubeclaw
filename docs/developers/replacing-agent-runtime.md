@@ -35,7 +35,7 @@ Any replacement runtime must preserve:
 - terminal status contract
 - artifact creation before lifecycle mutation
 - telemetry and notification event shape
-- redaction/masking for logs and telemetry
+- JSON-safe bounded egress for logs and telemetry
 - deterministic completion or dead-letter evidence for worker tasks
 
 ## Worker Runtime Contract
@@ -91,7 +91,7 @@ Recommended sequence:
 - runtime reports success without artifacts: reject or mark action required
 - runtime cannot be resumed: document it as non-resumable and force explicit rerun semantics
 - runtime timeout lacks reason: record timeout with unknown reason and require operator inspection
-- runtime logs include secrets: block adoption until redaction is fixed
+- runtime logs lose diagnostic values or violate size/shape bounds: block adoption until egress is fixed
 
 ## Sources
 
@@ -108,7 +108,7 @@ Recommended sequence:
 | Launch/session identity | `skills/nova/pipeline/agents/orchestration.ts`; common ACP lifecycle helpers | stable `run_id`, `attempt`, `dispatch_id`, `session_key`, model/runtime labels, and stream log path where available |
 | Completion signal | module/gate runners and `pipeline-step-result.ts` | typed step result, terminal mapping, diagnostics, and artifacts before status advancement |
 | Gateway/status health | `skills/common/pipeline/services/acp-gateway-contract.ts`; chart health script | readiness/status command with explicit failure reasons, not silent timeout |
-| Observability | telemetry builders, Discord identity fields, observer plugin | event identity and redaction compatible with current telemetry contracts |
+| Observability | telemetry builders, Discord identity fields, observer plugin | event identity and egress compatible with current telemetry contracts |
 | Recovery | `session-authority.ts`; `pipeline-runner-recovery.ts` | strong active-session identity or explicit non-resumable semantics |
 
 ## Verification Path

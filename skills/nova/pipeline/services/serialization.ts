@@ -1,12 +1,17 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type JsonSafeValue = unknown;
+
+function serializedFunctionName(value: Function): string {
+  return typeof value.name === 'string' && value.name.trim() ? value.name : 'anonymous';
+}
 
 export function sanitizeForJson(value: unknown, seen: WeakSet<object> = new WeakSet()): JsonSafeValue {
   if (value === undefined) return undefined;
   if (value === null) return null;
   const valueType = typeof value;
-  if (valueType === 'string' || valueType === 'number' || valueType === 'boolean') return value;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (valueType === 'string'), () => (valueType === 'number'))), () => (valueType === 'boolean'))) return value;
   if (valueType === 'bigint') return String(value);
-  if (valueType === 'function') return `[Function ${(value as Function).name || 'anonymous'}]`;
+  if (valueType === 'function') return `[Function ${serializedFunctionName(value as Function)}]`;
   if (valueType !== 'object') return String(value);
   if (seen.has(value)) return '[Circular]';
   seen.add(value);
@@ -33,7 +38,7 @@ export function deepClone<T = unknown>(value: T): T {
 }
 
 export function deepFreeze<T>(value: T, seen: WeakSet<object> = new WeakSet()): T {
-  if (!value || typeof value !== 'object' || seen.has(value)) return value;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!value), () => (typeof value !== 'object'))), () => (seen.has(value)))) return value;
   seen.add(value);
   for (const entry of Object.values(value)) {
     deepFreeze(entry, seen);
@@ -42,7 +47,7 @@ export function deepFreeze<T>(value: T, seen: WeakSet<object> = new WeakSet()): 
 }
 
 export function cloneReadonlySnapshot(value: unknown, seen: WeakMap<object, unknown> = new WeakMap()): unknown {
-  if (value === undefined || value === null) return value;
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return value;
   if (typeof value === 'function') return undefined;
   if (typeof value !== 'object') return value;
   if (seen.has(value)) return seen.get(value);
@@ -52,7 +57,7 @@ export function cloneReadonlySnapshot(value: unknown, seen: WeakMap<object, unkn
     seen.set(value, clone);
     for (const entry of value) {
       const clonedEntry = cloneReadonlySnapshot(entry, seen);
-      if (clonedEntry !== undefined || entry === undefined) {
+      if (selectTruthyValue(() => (clonedEntry !== undefined), () => (entry === undefined))) {
         clone.push(clonedEntry);
       } else if (typeof entry === 'function') {
         clone.push(null);
@@ -65,7 +70,7 @@ export function cloneReadonlySnapshot(value: unknown, seen: WeakMap<object, unkn
   seen.set(value, clone);
   for (const [key, entry] of Object.entries(value)) {
     const clonedEntry = cloneReadonlySnapshot(entry, seen);
-    if (clonedEntry !== undefined || entry === undefined) {
+    if (selectTruthyValue(() => (clonedEntry !== undefined), () => (entry === undefined))) {
       clone[key] = clonedEntry;
     }
   }

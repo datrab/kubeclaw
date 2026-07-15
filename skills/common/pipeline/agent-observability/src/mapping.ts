@@ -1,5 +1,6 @@
 import type { AgentObservabilityTelemetryMappingV1 } from './types.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 export const AGENT_OBSERVABILITY_TELEMETRY_MAPPINGS = Object.freeze([
   {
     ingress_type: 'openclaw.agent.ended',
@@ -116,5 +117,5 @@ export const AGENT_OBSERVABILITY_TELEMETRY_MAPPINGS = Object.freeze([
 ] satisfies AgentObservabilityTelemetryMappingV1[]);
 
 export function getAgentObservabilityTelemetryMapping(ingressType: string): AgentObservabilityTelemetryMappingV1 | null {
-  return AGENT_OBSERVABILITY_TELEMETRY_MAPPINGS.find((mapping) => mapping.ingress_type === ingressType) ?? null;
+  return selectDefinedValue(() => (AGENT_OBSERVABILITY_TELEMETRY_MAPPINGS.find((mapping) => mapping.ingress_type === ingressType)), () => (null));
 }

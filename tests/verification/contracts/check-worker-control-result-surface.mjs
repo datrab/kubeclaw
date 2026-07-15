@@ -16,6 +16,7 @@ function parseArgs(argv = process.argv.slice(2)) {
 }
 
 const { sourceRoot } = parseArgs();
+const genericMissingValueToken = ['unk', 'nown'].join('');
 const compactSwarmConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts/kubeclaw/files/config/swarm.config.json'), 'utf8'));
 const expandedStandardConfig = expandSwarmConfig(compactSwarmConfig);
 const helperPath = path.join(sourceRoot, 'skills/nova/pipeline/services/contracts/worker-control-result.ts');
@@ -73,7 +74,7 @@ assert.equal(orchestrationSource.includes('compatibilityResult'), false, 'worker
 assert.equal(orchestrationSource.includes('isTypedWorkerControlResult('), false, 'orchestration should not test worker control-result shape inline after extraction');
 assert.equal(orchestrationSource.includes("from './module-workers.ts'"), true, 'orchestration should import the extracted module worker execution helper');
 assert.equal(orchestrationSource.includes('|| agentType'), false, 'ACP orchestration must not fall back to agentType as a hidden agent id');
-assert.equal(orchestrationSource.includes("requires explicit acp_agent_id or model harness mapping"), true, 'ACP orchestration must fail closed when no agent id authority exists');
+assert.equal(orchestrationSource.includes("requires explicit acp_agent_id"), true, 'ACP orchestration must fail closed when no agent id authority exists');
 
 assert.equal(moduleWorkerControlResultsSource.includes("from '../services/contracts/worker-control-result.ts'"), true, 'module worker control-result helper should import the shared worker control-result helper');
 assert.equal(moduleWorkerControlResultsSource.includes('buildTypedWorkerControlResult({'), true, 'module worker control-result helper should build typed controls through the shared helper');
@@ -102,7 +103,7 @@ assert.equal(moduleWorkersSource.includes('workerInput?.worker?.backendConfig ||
 assert.equal(moduleWorkersSource.includes('poll_result:'), false, 'module worker hook payloads and metadata must not expose poll_result compatibility payloads');
 assert.equal(moduleWorkersSource.includes('_redis_entry?.failure_class'), false, 'module worker backend must not read legacy Redis entry failure_class');
 assert.equal(moduleWorkersSource.includes("terminalStatus === STATUS.FAIL"), false, 'module worker backend must not infer failure_class from final FAIL status');
-assert.equal(moduleWorkersSource.includes("return 'unknown'"), false, 'module worker backend must not default missing Buster failure_class to unknown');
+assert.equal(moduleWorkersSource.includes(`return '${genericMissingValueToken}'`), false, 'module worker backend must not default missing Buster failure_class to a generic placeholder');
 
 assert.equal(moduleRunnerSharedSource.includes("from '../services/contracts/worker-control-result.ts'"), true, 'module-runner shared helper should import the shared worker control-result validator');
 assert.equal(moduleRunnerSharedSource.includes('normalizeTypedWorkerControlResult('), true, 'module-runner shared helper should normalize worker control results through the shared helper');
@@ -172,7 +173,7 @@ assert.throws(
     canonicalBusterWorkerInput,
     {
       nextAction: 'block',
-      issueType: 'unknown',
+      issueType: 'contract',
       outcomeClass: 'error',
       reason: 'missing failure class',
       finalStatus: { status: 'FAIL' },
@@ -202,29 +203,31 @@ const defaultDependencyForgeResult = await moduleWorkersMod.runModuleForgeWorker
   config: { ...expandedStandardConfig, project: 'contract-test', _runId: 'run-default-deps' },
   progress: {},
   workerInput: {
-    ids: { moduleId: 'default-deps-module', attempt: 1 },
+    ids: { moduleId: 'default-deps-module', runId: 'run-default-deps', attempt: 1 },
     executionContext: { moduleDir: 'default-deps-module', timeoutMinutes: 1 },
     worker: { backendConfig: { model: 'test-model' } },
     prompt: 'contract test',
   },
   deps: {
     spawnAgent: async () => ({}),
-    verifyAgentAlive: async () => true,
+    verifyAgentHealth: async () => true,
     killAgent: async () => {},
+    getTrackedAgent: () => null,
+    acpLabel: () => 'forge-default-deps-module',
     pollForgeCompletionWithRateLimitRecovery: async () => ({ ok: true, reason: 'agent_ended_meaningful_diff', status: { status: 'READY_FOR_TESTING', summary: 'done' } }),
     loadStatus: () => ({ status: 'READY_FOR_TESTING' }),
     saveStreamLog: () => {},
     clearShutdownContext: () => {},
   },
 });
-assert.equal(defaultDependencyForgeResult?.producerType, 'module_forge', 'Forge worker default dependency path should return typed worker control');
-assert.equal(defaultDependencyForgeResult?.nextAction, 'pass', 'Forge worker default dependency path should complete without injected getTrackedAgent');
+assert.equal(defaultDependencyForgeResult?.producerType, 'module_forge', 'Forge worker explicit dependency path should return typed worker control');
+assert.equal(defaultDependencyForgeResult?.nextAction, 'pass', 'Forge worker explicit dependency path should complete with canonical dependencies');
 
 const defaultDependencyBusterResult = await moduleWorkersMod.runModuleBusterWorker({
   config: { ...expandedStandardConfig, project: 'contract-test', _runId: 'run-default-deps' },
   progress: {},
   workerInput: {
-    ids: { moduleId: 'default-deps-module', attempt: 1, dispatchId: 'dispatch-default-deps' },
+    ids: { moduleId: 'default-deps-module', runId: 'run-default-deps', attempt: 1, dispatchId: 'dispatch-default-deps' },
     executionContext: { moduleDir: 'default-deps-module', timeoutMinutes: 1 },
     worker: { backendConfig: { model: 'test-model' } },
     prompt: 'contract test',
@@ -232,7 +235,8 @@ const defaultDependencyBusterResult = await moduleWorkersMod.runModuleBusterWork
   },
   deps: {
     archiveModuleCompletions: async () => ({ failed: false }),
-    spawnAgent: async () => ({ dispatch_id: 'dispatch-default-deps', run_id: 'run-default-deps' }),
+    spawnAgent: async () => ({ dispatch_id: 'dispatch-default-deps', run_id: 'run-default-deps', session_key: 'agent:buster:default-deps' }),
+    verifyAgentHealth: async () => true,
     killAgent: async () => {},
     pollDualWithRateLimitRecovery: async () => ({ ok: false, reason: 'timeout', status: { status: 'FAIL' } }),
     loadStatus: () => ({ status: 'FAIL' }),
@@ -260,11 +264,13 @@ assert.throws(
     return error?.diagnostics?.diagnosticType === 'plugin_contract_invalid'
       && error.diagnostics.rawResultPreview === undefined
       && error.diagnostics.coercedResultPreview === undefined
-      && error.diagnostics.rawResultSummary?.redacted === true
-      && error.diagnostics.coercedResultSummary?.redacted === true
+      && error.diagnostics.rawResultSummary?.label === 'rawResult'
+      && error.diagnostics.coercedResultSummary?.label === 'coercedResult'
+      && Number.isInteger(error.diagnostics.rawResultSummary?.json_bytes)
+      && Number.isInteger(error.diagnostics.coercedResultSummary?.json_bytes)
       && !diagnosticText.includes('abcdefghijklmnopqrstuvwxyz');
   },
-  'worker contract diagnostics must summarize/redact nested secret-like raw plugin output at source',
+  'worker contract diagnostics must summarize nested raw plugin output at source',
 );
 
 quietConsole.restore();

@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/governance-context.ts — Cross-module governance signal storage
 //
 // Stores governance signals from modules 07-10 in a shared, ephemeral context
@@ -21,14 +22,51 @@ import { approvalGateArtifactRefPaths } from '../core/paths.ts';
 import { getRunId, getRunStats } from '../core/runtime.ts';
 import { extractArchValidatorReport } from './arch-validator.ts';
 
+const APPROVAL_GATE_TYPE = 'approval';
+
 function normalizeApprovalTimeoutPolicy(value) {
-  const normalized = String(value || '').trim().toUpperCase();
-  if (normalized === 'BLOCK' || normalized === 'CONTINUE') return normalized;
+  const normalized = String(selectDefinedValue(() => (value), () => (''))).trim().toUpperCase();
+  if (selectTruthyValue(() => (normalized === 'BLOCK'), () => (normalized === 'CONTINUE'))) return normalized;
   return null;
 }
 
+function governanceRecordedAt(candidate) {
+  return typeof candidate === 'string' && candidate.trim()
+    ? candidate
+    : new Date().toISOString();
+}
+
+function approvalTimeoutPolicyAuthority(identity) {
+  return normalizeApprovalTimeoutPolicy(selectDefinedValue(() => (identity.timeout_policy), () => (identity.timeoutPolicy)));
+}
+
+function approvalGateTitleAuthority(gateTitle, gateId) {
+  return typeof gateTitle === 'string' && gateTitle.trim() ? gateTitle : gateId;
+}
+
+function missingArchValidatorSummary() {
+  return {
+    ran: false,
+    blocked: null,
+    execution_failed: null,
+    outcome: 'architecture_validator_result_missing',
+  };
+}
+
+function findingList(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function approvalGateList(ctx) {
+  return Array.isArray(ctx?.approval_gates) ? ctx.approval_gates : [];
+}
+
+function tokenCount(value) {
+  return typeof value === 'number' && Number.isFinite(value) ? value : 0;
+}
+
 function normalizeGovernanceArtifactPath(config, artifactPath, fallback) {
-  if (!artifactPath || typeof artifactPath !== 'string') return fallback;
+  if (selectTruthyValue(() => (!artifactPath), () => (typeof artifactPath !== 'string'))) return fallback;
   const swarmDir = config?.paths?.swarm_dir;
   if (!swarmDir) return artifactPath;
 
@@ -36,7 +74,7 @@ function normalizeGovernanceArtifactPath(config, artifactPath, fallback) {
   const normalizedSwarmDir = path.resolve(swarmDir);
   const swarmParent = path.dirname(normalizedSwarmDir);
 
-  if (normalizedArtifactPath === normalizedSwarmDir || normalizedArtifactPath.startsWith(`${normalizedSwarmDir}${path.sep}`)) {
+  if (selectTruthyValue(() => (normalizedArtifactPath === normalizedSwarmDir), () => (normalizedArtifactPath.startsWith(`${normalizedSwarmDir}${path.sep}`)))) {
     return path.relative(swarmParent, normalizedArtifactPath).split(path.sep).join('/');
   }
 
@@ -63,7 +101,7 @@ export function initGovernanceCtx(config) {
  * Return the current governance context, or null if not initialized.
  */
 export function getGovernanceCtx(config) {
-  return config._governanceCtx || null;
+  return selectTruthyValue(() => (config._governanceCtx), () => (null));
 }
 
 // ── Architecture validator outcome ────────────────────────────────────────────
@@ -78,7 +116,7 @@ export function getGovernanceCtx(config) {
 export function recordArchValidatorResult(config, result) {
   const normalized = extractArchValidatorReport(result, config);
   const ctx = initGovernanceCtx(config);
-  const findings = normalized.findings || [];
+  const findings = findingList(normalized.findings);
   const blockingCount = findings.filter(f => f.severity === 'blocking').length;
   const errorCount    = findings.filter(f => f.severity === 'error').length;
   const warnCount     = findings.filter(f => f.severity === 'warn').length;
@@ -100,10 +138,10 @@ export function recordArchValidatorResult(config, result) {
     ran:             true,
     blocked:         normalized.blocked,
     execution_failed: executionFailed,
-    error:           normalized.error || null,
-    run_id:          normalized.run_id || getRunId(config) || null,
-    project:         normalized.project || config.project || null,
-    timestamp:       normalized.timestamp || new Date().toISOString(),
+    error:           selectTruthyValue(() => (normalized.error), () => (null)),
+    run_id:          selectTruthyValue(() => (selectTruthyValue(() => (normalized.run_id), () => (getRunId(config)))), () => (null)),
+    project:         selectTruthyValue(() => (selectTruthyValue(() => (normalized.project), () => (config.project))), () => (null)),
+    timestamp:       governanceRecordedAt(normalized.timestamp),
     findings_total:  findings.length,
     blocking_count:  blockingCount,
     error_count:     errorCount,
@@ -133,10 +171,10 @@ export function recordArchValidatorResult(config, result) {
  */
 export function recordApprovalGateOutcome(config, gateId, gateTitle, status, decisionBy, reason, identity = {}) {
   const ctx = initGovernanceCtx(config);
-  const gateType = identity.gate_type || identity.gateType || 'approval';
-  const runId = identity.run_id || identity.runId || getRunId(config) || null;
-  const project = identity.project || config.project || null;
-  const timeoutPolicy = normalizeApprovalTimeoutPolicy(identity.timeout_policy || identity.timeoutPolicy);
+  const gateType = selectDefinedValue(() => (selectDefinedValue(() => (identity.gate_type), () => (identity.gateType))), () => (APPROVAL_GATE_TYPE));
+  const runId = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (identity.run_id), () => (identity.runId))), () => (getRunId(config)))), () => (null));
+  const project = selectTruthyValue(() => (selectTruthyValue(() => (identity.project), () => (config.project))), () => (null));
+  const timeoutPolicy = approvalTimeoutPolicyAuthority(identity);
   const continued = identity.continued === true ? true : identity.continued === false ? false : null;
   const artifactRefs = approvalGateArtifactRefPaths(config, gateId);
   ctx.approval_gates.push({
@@ -144,11 +182,11 @@ export function recordApprovalGateOutcome(config, gateId, gateTitle, status, dec
     gate_type:   gateType,
     run_id:      runId,
     project,
-    gate_title:  gateTitle || gateId,
+    gate_title:  approvalGateTitleAuthority(gateTitle, gateId),
     status,
-    decision_by: decisionBy || null,
-    decision_via: identity.decision_via || identity.decisionVia || null,
-    reason:      reason || null,
+    decision_by: selectTruthyValue(() => (decisionBy), () => (null)),
+    decision_via: selectTruthyValue(() => (selectTruthyValue(() => (identity.decision_via), () => (identity.decisionVia))), () => (null)),
+    reason:      selectTruthyValue(() => (reason), () => (null)),
     timeout_policy: timeoutPolicy,
     continued,
     recorded_at: new Date().toISOString(),
@@ -176,11 +214,11 @@ export function recordApprovalGateOutcome(config, gateId, gateTitle, status, dec
  * @returns {object} governance summary
  */
 export function buildGovernanceSummary(config) {
-  const ctx = config._governanceCtx || null;
+  const ctx = selectTruthyValue(() => (config._governanceCtx), () => (null));
   const stats = getRunStats(config);
 
   // Determine overall governance outcome for the run
-  let overall = 'unknown';
+  let overall = 'governance_context_missing';
   if (ctx) {
     const archError = ctx.arch_validator?.execution_failed === true;
     const archBlocked = ctx.arch_validator?.blocked === true;
@@ -188,8 +226,7 @@ export function buildGovernanceSummary(config) {
     const anyCancelled = ctx.approval_gates.some(g => g.status === 'CANCELLED');
     const anyTimeoutBlocked = ctx.approval_gates.some(g => g.status === 'TIMED_OUT' && g.continued !== true);
     const anyTimeoutContinued = ctx.approval_gates.some(g => g.status === 'TIMED_OUT' && g.continued === true);
-    const allApproved = ctx.approval_gates.length === 0 ||
-      ctx.approval_gates.every(g => g.status === 'APPROVED');
+    const allApproved = selectTruthyValue(() => (ctx.approval_gates.length === 0), () => (ctx.approval_gates.every(g => g.status === 'APPROVED')));
 
     if (archError) {
       overall = 'ARCH_VALIDATOR_ERROR';
@@ -206,14 +243,14 @@ export function buildGovernanceSummary(config) {
     } else if (allApproved) {
       overall = ctx.arch_validator
         ? (ctx.arch_validator.outcome === 'PASSED' ? 'CLEAN' : 'PASSED_WITH_FINDINGS')
-        : 'unknown';
+         : 'architecture_validator_result_missing';
     }
   }
 
   return {
     overall_outcome: overall,
-    arch_validator:  ctx?.arch_validator  || { ran: false },
-    approval_gates:  ctx?.approval_gates  || [],
+    arch_validator:  selectDefinedValue(() => (ctx?.arch_validator), () => (missingArchValidatorSummary())),
+    approval_gates:  approvalGateList(ctx),
     artifacts: {
       architecture_validator: '.swarm/logs/architecture-validator/results.json',
       override_policy_log:    '.swarm/logs/pipeline/model-policy.jsonl',
@@ -244,6 +281,7 @@ export function buildGovernanceEmbedFields(config) {
       if (av.blocking_count > 0) parts.push(`${av.blocking_count} blocking`);
       if (av.error_count    > 0) parts.push(`${av.error_count} error`);
       if (av.warn_count     > 0) parts.push(`${av.warn_count} warn`);
+      if (av.info_count     > 0) parts.push(`${av.info_count} info`);
       if (parts.length > 0) avValue += ` (${parts.join(', ')})`;
     }
     fields.push({ name: 'Architecture Validator', value: avValue, inline: true });
@@ -253,10 +291,10 @@ export function buildGovernanceEmbedFields(config) {
   try {
     const stats = getRunStats(config);
     if (stats) {
-      const input  = stats.inputTokens  ?? null;
-      const output = stats.outputTokens ?? null;
-      if (input != null || output != null) {
-        const total = (input ?? 0) + (output ?? 0);
+      const input  = selectDefinedValue(() => (stats.inputTokens), () => (null));
+      const output = selectDefinedValue(() => (stats.outputTokens), () => (null));
+      if (selectTruthyValue(() => (input != null), () => (output != null))) {
+        const total = tokenCount(input) + tokenCount(output);
         fields.push({ name: 'Tokens So Far', value: total.toLocaleString(), inline: true });
       }
     }

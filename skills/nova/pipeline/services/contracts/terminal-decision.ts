@@ -1,5 +1,6 @@
 import { cloneSerializable as cloneSerializableValue } from '../serialization.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type UnknownRecord = Record<string, any>;
 
 export const PIPELINE_TERMINAL_DECISION_SCHEMA_VERSION = 'v1';
@@ -55,19 +56,19 @@ function isPlainObject(value: unknown): value is UnknownRecord {
 function normalizeToken(value: unknown): string | null {
   if (value == null) return null;
   const normalized = String(value).trim().toLowerCase().replace(/[\s-]+/g, '_');
-  return normalized || null;
+  return selectTruthyValue(() => (normalized), () => (null));
 }
 
 function normalizeText(value: unknown): string | null {
   if (value == null) return null;
   const normalized = String(value).trim();
-  return normalized || null;
+  return selectTruthyValue(() => (normalized), () => (null));
 }
 
 function normalizePositiveInteger(value: unknown): number | null {
   if (value == null) return null;
   const numberValue = Number(value);
-  if (!Number.isInteger(numberValue) || numberValue < 1) return null;
+  if (selectTruthyValue(() => (!Number.isInteger(numberValue)), () => (numberValue < 1))) return null;
   return numberValue;
 }
 
@@ -95,7 +96,7 @@ export function isPipelineTerminalScope(scope: unknown): boolean {
 export function pipelineTerminalStatusForStepOutcome(outcome: unknown): string | null {
   const normalizedOutcome = normalizeToken(outcome);
   if (!normalizedOutcome) return null;
-  return TERMINAL_STATUS_BY_STEP_OUTCOME[normalizedOutcome] ?? null;
+  return selectDefinedValue(() => (TERMINAL_STATUS_BY_STEP_OUTCOME[normalizedOutcome]), () => (null));
 }
 
 export function buildPipelineTerminalDecision({
@@ -138,7 +139,7 @@ export function buildPipelineTerminalDecision({
     scope: normalizedScope,
     correlation,
     source: normalizeText(source),
-    metadata: cloneSerializable(metadata || {}),
+    metadata: cloneSerializable(selectDefinedValue(() => (metadata), () => ({}))),
   };
 
   const errors = validatePipelineTerminalDecision(decision);
@@ -176,7 +177,7 @@ export function buildPipelineTerminalDecisionFromStepOutcome({
   return buildPipelineTerminalDecision({
     status,
     action,
-    reasonCode: reasonCode || outcome,
+    reasonCode: terminalReasonCodeAuthority(reasonCode, outcome),
     humanReason,
     scope: normalizedScope,
     runId,
@@ -187,6 +188,11 @@ export function buildPipelineTerminalDecisionFromStepOutcome({
     metadata,
     ...scopedIdentity,
   });
+}
+
+function terminalReasonCodeAuthority(reasonCode: string | null, outcome: string): string {
+  if (reasonCode) return reasonCode;
+  return outcome;
 }
 
 export function isPipelineTerminalDecision(decision: unknown): decision is UnknownRecord {
@@ -224,7 +230,7 @@ export function validatePipelineTerminalDecision(decision: unknown = {}): string
   if (isPlainObject(decision.correlation)) {
     for (const [key, value] of Object.entries(decision.correlation)) {
       if (key === 'attempt') {
-        if (!Number.isInteger(value) || Number(value) < 1) errors.push('correlation.attempt must be a positive integer when present');
+        if (selectTruthyValue(() => (!Number.isInteger(value)), () => (Number(value) < 1))) errors.push('correlation.attempt must be a positive integer when present');
       } else if (value != null && typeof value !== 'string') {
         errors.push(`correlation.${key} must be a string when present`);
       }

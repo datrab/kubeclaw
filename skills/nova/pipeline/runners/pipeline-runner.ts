@@ -29,17 +29,22 @@ import {
   PIPELINE_TERMINAL_ACTIONS,
   PIPELINE_TERMINAL_SCOPES,
 } from '../services/contracts/terminal-decision.ts';
-import { maybeCrashForRealE2E } from '../services/real-e2e-crash-injection.ts';
+import { emitPipelineCheckpoint } from '../services/pipeline-checkpoint.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 function positiveNumber(value, label) {
   const num = Number(value);
-  if (!Number.isFinite(num) || num < 0) throw new Error(`${label}: required non-negative number in swarm.config.json`);
+  if (selectTruthyValue(() => (!Number.isFinite(num)), () => (num < 0))) throw new Error(`${label}: required non-negative number in swarm.config.json`);
   return num;
 }
 
 function pipelineRunAbortSettleMs(config) {
   return positiveNumber(config?.locks?.pipeline_run?.abort_settle_ms, 'config.locks.pipeline_run.abort_settle_ms');
 }
+
+const PIPELINE_RUNTIME_ERROR = 'PIPELINE_RUNTIME_ERROR';
+const PIPELINE_RUN_LOCK_LOST = 'pipeline_run_lock_lost';
+const PIPELINE_NOT_INITIALIZED = 'NOT_INITIALIZED';
 
 async function waitForInFlightPipelineSteps(inFlightSteps, timeoutMs) {
   if (!inFlightSteps?.size) return;
@@ -55,7 +60,7 @@ async function waitForInFlightPipelineSteps(inFlightSteps, timeoutMs) {
 }
 
 function abortReason(signal) {
-  return signal?.reason instanceof Error ? signal.reason.message : String(signal?.reason || 'pipeline_run_lock_lost');
+  return signal?.reason instanceof Error ? signal.reason.message : String(selectDefinedValue(() => (signal?.reason), () => (PIPELINE_RUN_LOCK_LOST)));
 }
 
 function errorMessage(error) {
@@ -63,7 +68,7 @@ function errorMessage(error) {
 }
 
 function runtimeErrorCode(error) {
-  return error?.code || error?.name || 'PIPELINE_RUNTIME_ERROR';
+  return selectDefinedValue(() => (selectDefinedValue(() => (error?.code), () => (error?.name))), () => (PIPELINE_RUNTIME_ERROR));
 }
 
 function runtimeErrorResult(config, error) {
@@ -80,11 +85,11 @@ function runtimeErrorResult(config, error) {
       summary: message,
       metadata: {
         error_code: code,
-        error_name: error?.name || null,
+        error_name: selectTruthyValue(() => (error?.name), () => (null)),
       },
     },
     correlation: {
-      run_id: config?._runId ?? config?.run_id ?? null,
+      run_id: selectDefinedValue(() => (selectDefinedValue(() => (config?._runId), () => (config?.run_id))), () => (null)),
     },
     terminalAction: PIPELINE_TERMINAL_ACTIONS.STOP,
     terminalScope: PIPELINE_TERMINAL_SCOPES.PIPELINE,
@@ -95,7 +100,7 @@ function runtimeErrorResult(config, error) {
 }
 
 async function abortablePipelineRunPromise(promise, signal) {
-  if (!signal || typeof signal.addEventListener !== 'function') return promise;
+  if (selectTruthyValue(() => (!signal), () => (typeof signal.addEventListener !== 'function'))) return promise;
   if (signal.aborted) throw new Error(`Pipeline runtime lock lost: ${abortReason(signal)}`);
 
   let removeAbortListener = null;
@@ -118,7 +123,7 @@ export async function runPipeline(config, progress, opts = {}) {
   const stepAbortController = typeof AbortController === 'function' ? new AbortController() : null;
   const forwardExternalAbort = () => {
     if (stepAbortController && !stepAbortController.signal.aborted) {
-      stepAbortController.abort(opts.signal.reason ?? 'pipeline_run_aborted');
+      stepAbortController.abort(opts.signal.reason);
     }
   };
   if (opts.signal?.aborted) forwardExternalAbort();
@@ -128,20 +133,20 @@ export async function runPipeline(config, progress, opts = {}) {
     onPipelineRunLockLost(reason) {
       opts.onPipelineRunLockLost?.(reason);
       if (lockAbortController && !lockAbortController.signal.aborted) {
-        lockAbortController.abort(reason ?? 'pipeline_run_lock_lost');
+        lockAbortController.abort(reason);
       }
       if (stepAbortController && !stepAbortController.signal.aborted) {
-        stepAbortController.abort(reason ?? 'pipeline_run_lock_lost');
+        stepAbortController.abort(reason);
       }
     },
   });
   const runOpts = {
     ...opts,
     assertPipelineRunLockActive: () => runLock.heartbeat?.assertActive?.(),
-    pipelineRunLockSignal: lockAbortController?.signal ?? null,
-    signal: stepAbortController?.signal ?? opts.signal ?? null,
+    pipelineRunLockSignal: selectDefinedValue(() => (lockAbortController?.signal), () => (null)),
+    signal: selectDefinedValue(() => (selectDefinedValue(() => (stepAbortController?.signal), () => (opts.signal))), () => (null)),
     trackPipelineStep(promise) {
-      if (!promise || typeof promise.finally !== 'function') return;
+      if (selectTruthyValue(() => (!promise), () => (typeof promise.finally !== 'function'))) return;
       inFlightSteps.add(promise);
       promise.finally(() => inFlightSteps.delete(promise)).catch(() => {});
       opts.trackPipelineStep?.(promise);
@@ -151,15 +156,13 @@ export async function runPipeline(config, progress, opts = {}) {
   let agentObservabilityIngester = null;
   let runError = null;
   try {
-    openClawAgentObserverPlugin = createOpenClawAgentObserverPluginController(
-      config,
-      runOpts.openClawAgentObserverPlugin ?? {},
-    );
+    openClawAgentObserverPlugin = createOpenClawAgentObserverPluginController(config);
     await openClawAgentObserverPlugin.start();
+    await getPipelineRunnerDeps(config, runOpts.deps).preflightRuntimeRedis(config);
     agentObservabilityIngester = startAgentObservabilityIngester(config, {
-      runId: config._runId ?? config.run_id ?? null,
-      project: config.project ?? null,
-    }, runOpts.agentObservabilityIngester ?? {});
+      runId: selectDefinedValue(() => (config._runId), () => (null)),
+      project: selectDefinedValue(() => (config.project), () => (null)),
+    });
     await reconcileStaleModuleState(config, progress);
     await reconcileStaleGateSessions(config, progress);
 
@@ -213,7 +216,7 @@ export async function runPipeline(config, progress, opts = {}) {
     } finally {
       releasePipelineRunLock(runLock);
     }
-    maybeCrashForRealE2E(config, progress, 'during_cleanup', {
+    emitPipelineCheckpoint(config, 'during_cleanup', {
       step_type: 'pipeline',
       step_id: 'runner_cleanup',
     });
@@ -228,9 +231,9 @@ export function printStatus(config, progress) {
     const projected = loadAuthoritativeModuleState(config, progress, id);
     overview.modules[id] = {
       title: mod.title,
-      status: projected?.status || 'NOT_INITIALIZED',
-      fail_count: projected?.fail_count || 0,
-      current_phase: projected?.current_phase || null,
+      status: selectDefinedValue(() => (projected?.status), () => (PIPELINE_NOT_INITIALIZED)),
+      fail_count: selectDefinedValue(() => (projected?.fail_count), () => (0)),
+      current_phase: selectTruthyValue(() => (projected?.current_phase), () => (null)),
       duration_min: projected?.cost?.total_duration_seconds ? Math.round(projected.cost.total_duration_seconds / 60) : 0,
     };
   }
@@ -258,7 +261,7 @@ export function dryRun(config, progress) {
       const mod = progress.modules[stepId];
       if (!mod) continue;
       const projected = loadAuthoritativeModuleState(config, progress, stepId);
-      log('STEP', `[${stepId}] ${mod.title} | ${projected?.status || STATUS.PENDING} | model=${mod.forge_model ?? progress.defaults?.models?.forge ?? config.fallback_model}`);
+      log('STEP', `[${stepId}] ${mod.title} | ${selectDefinedValue(() => (projected?.status), () => (STATUS.PENDING))} | model=${selectDefinedValue(() => (mod.forge_model), () => ('model_not_configured'))}`);
     }
   }
 }

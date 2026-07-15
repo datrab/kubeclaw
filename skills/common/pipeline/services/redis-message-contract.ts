@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export const REDIS_PIPELINE_MESSAGE_SCHEMA_VERSION = 'v1';
 
 export const REDIS_PIPELINE_TARGET_KINDS: readonly string[] = Object.freeze(['module', 'gate', 'pipeline']);
@@ -24,6 +25,8 @@ export const REDIS_COMPLETION_SOURCES: readonly string[] = Object.freeze([
 
 const STRONG_REDIS_IDENTITY_FIELDS: readonly string[] = Object.freeze(['run_id', 'attempt', 'dispatch_id']);
 const REDIS_STREAM_ID_PATTERN = /^\d+-\d+$/;
+const REDIS_COMPLETION_STREAM_ROLE = 'completion';
+const REDIS_TASK_STREAM_ROLE = 'task';
 
 type UnknownRecord = Record<string, any>;
 
@@ -36,12 +39,12 @@ function isNonEmptyString(value: unknown): value is string {
 }
 
 function normalizeValue(value: unknown): string | null {
-  if (value === undefined || value === null || value === '') return null;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return null;
   return String(value);
 }
 
 function normalizeUpper(value: unknown): string | null {
-  return normalizeValue(value)?.toUpperCase() || null;
+  return selectDefinedValue(() => (normalizeValue(value)?.toUpperCase()), () => (null));
 }
 
 function hasValue(entry: UnknownRecord = {}, field: string): boolean {
@@ -66,22 +69,24 @@ function parseJsonObject(value: unknown, fieldName: string, errors: string[]): U
 }
 
 export function inferRedisPipelineTargetKind(entry: UnknownRecord = {}): string | null {
-  const explicit = normalizeValue(entry.target_kind ?? entry.targetKind);
+  const explicit = normalizeValue(entry.target_kind);
   if (explicit) return explicit;
-  const targetId = normalizeValue(entry.target_id ?? entry.targetId ?? entry.module ?? entry.module_id ?? entry.gate_id);
+  const targetId = normalizeValue(selectDefinedValue(() => (selectDefinedValue(() => (entry.target_id), () => (entry.module_id))), () => (entry.gate_id)));
   if (!targetId) return null;
-  if (entry.gate_id != null || String(targetId).startsWith('gate:')) return 'gate';
+  if (selectTruthyValue(() => (entry.gate_id != null), () => (String(targetId).startsWith('gate:')))) return 'gate';
   return 'module';
 }
 
 export function inferRedisTaskTarget(payload: UnknownRecord = {}, taskType: unknown = payload?.task_type): UnknownRecord {
-  const normalizedType = normalizeValue(taskType ?? payload?.task_type);
-  const gateId = normalizeValue(payload?.gate_id ?? payload?.gateId);
-  const moduleId = normalizeValue(payload?.module_id ?? payload?.module);
+  const normalizedType = normalizeValue(taskType);
+  const gateId = normalizeValue(payload?.gate_id);
+  const moduleId = normalizeValue(payload?.module_id);
   if (normalizedType === 'gate_test') {
-    return { target_kind: 'gate', target_id: gateId || moduleId, module: moduleId, gate_id: gateId || moduleId };
+    const targetId = selectDefinedValue(() => (gateId), () => (moduleId));
+    return { target_kind: 'gate', target_id: targetId, module: moduleId, gate_id: targetId };
   }
-  return { target_kind: 'module', target_id: moduleId || gateId, module: moduleId || gateId, gate_id: gateId };
+  const targetId = selectDefinedValue(() => (moduleId), () => (gateId));
+  return { target_kind: 'module', target_id: targetId, module: targetId, gate_id: gateId };
 }
 
 export function buildRedisTaskStreamEntry({
@@ -93,25 +98,26 @@ export function buildRedisTaskStreamEntry({
   timestamp = Date.now(),
 }: UnknownRecord = {}): UnknownRecord {
   const normalizedPayload = isPlainObject(payload) ? payload : {};
-  const normalizedType = normalizeValue(type ?? normalizedPayload?.task_type);
+  const serializedPayload = typeof payload === 'string' ? payload : JSON.stringify(normalizedPayload);
+  const normalizedType = normalizeValue(type);
   const target = inferRedisTaskTarget(normalizedPayload, normalizedType);
   return {
     schema_version: REDIS_PIPELINE_MESSAGE_SCHEMA_VERSION,
     type: normalizedType,
-    stream_role: 'task',
+    stream_role: REDIS_TASK_STREAM_ROLE,
     project: normalizeValue(normalizedPayload?.project),
-    run_id: normalizeValue(normalizedPayload?.run_id ?? normalizedPayload?.runId),
+    run_id: normalizeValue(normalizedPayload?.run_id),
     target_kind: target.target_kind,
     target_id: target.target_id,
     module: target.module,
     gate_id: target.gate_id,
-    gate_type: normalizeValue(normalizedPayload?.gate_type ?? normalizedPayload?.gateType),
+    gate_type: normalizeValue(normalizedPayload?.gate_type),
     attempt: normalizeValue(normalizedPayload?.attempt),
-    dispatch_id: normalizeValue(normalizedPayload?.dispatch_id ?? normalizedPayload?.dispatchId),
-    session_key: normalizeValue(normalizedPayload?.session_key ?? normalizedPayload?.sessionKey),
+    dispatch_id: normalizeValue(normalizedPayload?.dispatch_id),
+    session_key: normalizeValue(normalizedPayload?.session_key),
     source: normalizeValue(source),
     sender: normalizeValue(sender),
-    payload: typeof payload === 'string' ? payload : JSON.stringify(payload || {}),
+    payload: serializedPayload,
     iteration: normalizeValue(iteration),
     timestamp: normalizeValue(timestamp),
   };
@@ -119,23 +125,24 @@ export function buildRedisTaskStreamEntry({
 
 export function normalizeRedisPipelineEnvelope(entry: UnknownRecord = {}): UnknownRecord {
   const targetKind = inferRedisPipelineTargetKind(entry);
-  const targetId = normalizeValue(entry.target_id ?? entry.targetId ?? entry.module ?? entry.module_id ?? entry.gate_id);
+  const targetId = normalizeValue(selectDefinedValue(() => (selectDefinedValue(() => (entry.target_id), () => (entry.module_id))), () => (entry.gate_id)));
+  const timestamp = normalizeValue(selectDefinedValue(() => (entry.timestamp), () => (entry.ts)));
   return {
-    schema_version: normalizeValue(entry.schema_version ?? entry.schemaVersion) || null,
+    schema_version: selectTruthyValue(() => (normalizeValue(entry.schema_version)), () => (null)),
     type: normalizeValue(entry.type),
-    stream_role: normalizeValue(entry.stream_role ?? entry.streamRole) || null,
-    project: normalizeValue(entry.project) || null,
-    run_id: normalizeValue(entry.run_id ?? entry.runId),
+    stream_role: selectTruthyValue(() => (normalizeValue(entry.stream_role)), () => (null)),
+    project: selectTruthyValue(() => (normalizeValue(entry.project)), () => (null)),
+    run_id: normalizeValue(entry.run_id),
     target_kind: targetKind,
     target_id: targetId,
-    module: normalizeValue(entry.module ?? entry.module_id),
+    module: normalizeValue(entry.module),
     gate_id: normalizeValue(entry.gate_id),
-    gate_type: normalizeValue(entry.gate_type ?? entry.gateType),
+    gate_type: normalizeValue(entry.gate_type),
     attempt: normalizeValue(entry.attempt),
-    dispatch_id: normalizeValue(entry.dispatch_id ?? entry.dispatchId),
-    session_key: normalizeValue(entry.session_key ?? entry.sessionKey),
+    dispatch_id: normalizeValue(entry.dispatch_id),
+    session_key: normalizeValue(entry.session_key),
     source: normalizeValue(entry.source),
-    timestamp: normalizeValue(entry.timestamp ?? entry.ts),
+    timestamp,
   };
 }
 
@@ -150,7 +157,7 @@ export function validateRedisPipelineEnvelope(entry: unknown = {}, {
   if (!isPlainObject(entry)) return ['entry must be an object'];
 
   const envelope = normalizeRedisPipelineEnvelope(entry);
-  if (requireStreamId && !REDIS_STREAM_ID_PATTERN.test(String(entry._id || ''))) {
+  if (requireStreamId && !REDIS_STREAM_ID_PATTERN.test(String(selectDefinedValue(() => (entry._id), () => (''))))) {
     errors.push('_id must be a Redis stream id');
   }
   if (requireCanonicalEnvelope && envelope.schema_version !== REDIS_PIPELINE_MESSAGE_SCHEMA_VERSION) {
@@ -159,7 +166,7 @@ export function validateRedisPipelineEnvelope(entry: unknown = {}, {
   if (expectedType && envelope.type !== expectedType) errors.push(`type must be '${expectedType}'`);
   else if (!isNonEmptyString(envelope.type)) errors.push('type must be a non-empty string');
 
-  if (requireCanonicalEnvelope || expectedStreamRole) {
+  if (selectTruthyValue(() => (requireCanonicalEnvelope), () => (expectedStreamRole))) {
     if (expectedStreamRole && envelope.stream_role !== expectedStreamRole) errors.push(`stream_role must be '${expectedStreamRole}'`);
     else if (requireCanonicalEnvelope && !REDIS_PIPELINE_STREAM_ROLES.includes(envelope.stream_role)) errors.push(`stream_role must be one of: ${REDIS_PIPELINE_STREAM_ROLES.join(', ')}`);
   }
@@ -181,7 +188,7 @@ export function validateRedisPipelineEnvelope(entry: unknown = {}, {
 
 export function validateRedisTaskEntry(entry: unknown = {}, opts: UnknownRecord = {}): string[] {
   const errors = validateRedisPipelineEnvelope(entry, {
-    expectedStreamRole: opts.expectedStreamRole || 'task',
+    expectedStreamRole: selectDefinedValue(() => (opts.expectedStreamRole), () => (REDIS_TASK_STREAM_ROLE)),
     requireCanonicalEnvelope: opts.requireCanonicalEnvelope !== false,
     requireStrongIdentity: opts.requireStrongIdentity !== false,
     requireStreamId: opts.requireStreamId !== false,
@@ -189,7 +196,7 @@ export function validateRedisTaskEntry(entry: unknown = {}, opts: UnknownRecord 
   if (!isPlainObject(entry)) return errors;
 
   const taskType = normalizeValue(entry.type);
-  if (!REDIS_TASK_TYPES.includes(taskType || '')) {
+  if (!REDIS_TASK_TYPES.includes(selectDefinedValue(() => (taskType), () => ('')))) {
     errors.push(`type must be one of: ${REDIS_TASK_TYPES.join(', ')}`);
   }
 
@@ -218,7 +225,7 @@ export function validateRedisTaskEntry(entry: unknown = {}, opts: UnknownRecord 
 export function validateRedisCompletionEntry(entry: unknown = {}, opts: UnknownRecord = {}): string[] {
   const errors = validateRedisPipelineEnvelope(entry, {
     expectedType: 'completion',
-    expectedStreamRole: opts.expectedStreamRole || 'completion',
+    expectedStreamRole: selectDefinedValue(() => (opts.expectedStreamRole), () => (REDIS_COMPLETION_STREAM_ROLE)),
     requireCanonicalEnvelope: opts.requireCanonicalEnvelope !== false,
     requireStrongIdentity: opts.requireStrongIdentity !== false,
     requireStreamId: opts.requireStreamId !== false,
@@ -229,7 +236,7 @@ export function validateRedisCompletionEntry(entry: unknown = {}, opts: UnknownR
   const outcome = normalizeUpper(entry.outcome);
   const source = normalizeValue(entry.source);
 
-  if (!REDIS_COMPLETION_STATUSES.includes(status || '')) {
+  if (!REDIS_COMPLETION_STATUSES.includes(selectDefinedValue(() => (status), () => ('')))) {
     errors.push(`status must be one of: ${REDIS_COMPLETION_STATUSES.join(', ')}`);
   }
   if (outcome && !REDIS_COMPLETION_OUTCOMES.includes(outcome)) {

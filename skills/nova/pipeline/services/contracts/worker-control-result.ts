@@ -1,6 +1,7 @@
 import { createContractInvalidError } from '../contract-diagnostics.ts';
 import { cloneSerializable as cloneSerializableValue } from '../serialization.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type UnknownRecord = Record<string, any>;
 
 const CANONICAL_OUTCOME_CLASSES = new Set([
@@ -21,6 +22,10 @@ export function cloneSerializable(value: unknown): any {
 
 function isPlainObject(value: unknown): value is UnknownRecord {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function workerOutcomeClassText(value: unknown): string {
+  return typeof value === 'string' ? value.trim() : '';
 }
 
 export function buildTypedWorkerControlResult({
@@ -69,13 +74,13 @@ export function isTypedWorkerControlResult(result: unknown, producerType: string
 }
 
 export function coerceTypedWorkerControlResult(result: unknown, { producerType }: { producerType?: string | null | undefined } = {}): UnknownRecord {
-  if (isTypedWorkerControlResult(result, producerType ?? null)) return result;
-  throw new Error(`worker:${producerType || 'unknown'} plugin output must be a typed worker control result; compatibility-shaped backend results are not accepted at the worker boundary`);
+  if (isTypedWorkerControlResult(result, selectDefinedValue(() => (producerType), () => (null)))) return result;
+  throw new Error(`worker:${selectTruthyValue(() => (producerType), () => ('missing_producer_type'))} plugin output must be a typed worker control result; compatibility-shaped backend results are not accepted at the worker boundary`);
 }
 
 export function validateTypedWorkerControlResult(result: unknown, {
   producerType,
-  stageId = `worker:${producerType || 'unknown'}`,
+  stageId = `worker:${selectTruthyValue(() => (producerType), () => ('missing_producer_type'))}`,
   allowedNextActions = ['pass', 'retry', 'request_fix', 'block'],
 }: {
   producerType?: string | null | undefined;
@@ -101,7 +106,7 @@ export function validateTypedWorkerControlResult(result: unknown, {
   if (!typedWorker) errors.push('diagnostics.typed.worker must be an object');
   else {
     if (typedWorker.schemaVersion !== 'v1') errors.push("diagnostics.typed.worker.schemaVersion must be 'v1'");
-    if (!CANONICAL_OUTCOME_CLASSES.has(String(typedWorker.outcomeClass || '').trim())) {
+    if (!CANONICAL_OUTCOME_CLASSES.has(workerOutcomeClassText(typedWorker.outcomeClass))) {
       errors.push('diagnostics.typed.worker.outcomeClass must be a canonical pipeline step outcome');
     }
   }
@@ -111,7 +116,7 @@ export function validateTypedWorkerControlResult(result: unknown, {
 export function normalizeTypedWorkerControlResult(rawResult: unknown, {
   producerType,
   label,
-  stageId = `worker:${producerType || 'unknown'}`,
+  stageId = `worker:${selectTruthyValue(() => (producerType), () => ('missing_producer_type'))}`,
   coerce,
   moduleId = null,
   input = null,
@@ -125,10 +130,23 @@ export function normalizeTypedWorkerControlResult(rawResult: unknown, {
   input?: unknown;
   invocation?: unknown;
 } = {}): UnknownRecord {
-  const coerceControl = coerce || ((value: unknown) => coerceTypedWorkerControlResult(value, { producerType }));
+  if (typeof coerce !== 'function') {
+    throw createContractInvalidError(`${label} worker missing explicit control result coercer`, {
+      label,
+      stageId,
+      hookFamily: 'worker.execute',
+      moduleId,
+      producerKind: 'worker',
+      producerType,
+      validationErrors: ['coerce must be provided by the worker composition boundary'],
+      rawResult,
+      input,
+      invocation,
+    });
+  }
   let controlResult: UnknownRecord;
   try {
-    controlResult = coerceControl(rawResult);
+    controlResult = coerce(rawResult);
   } catch (error) {
     const validationErrors = [error instanceof Error && error.message ? error.message : 'coercion failed'];
     throw createContractInvalidError(`${label} worker returned invalid control result: ${validationErrors.join('; ')}`, {

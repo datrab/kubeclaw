@@ -28,7 +28,7 @@ const remediationSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pip
 const registrySource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/core/registry.ts'), 'utf8');
 
 assert.equal(gateRunnerSource.includes("from './remediable-gate-engine.ts'"), true, 'gate-runner should import the shared remediable gate engine');
-assert.equal(gateRunnerSource.includes('runScheduledRemediableGate({'), true, 'gate-runner should delegate review/Buster remediation loops through the shared remediable gate engine');
+assert.equal(gateRunnerSource.includes('runScheduledRemediableGate({'), true, 'gate-runner should delegate Buster remediation loops through the shared remediable gate engine');
 assert.equal(gateRunnerSource.includes('runGateRemediationHandoff({'), false, 'gate-runner should not keep a local remediation handoff loop after slice 5');
 assert.equal(reviewGateSource.includes("from './remediable-gate-engine.ts'"), false, 'review gate runner must not import the remediable scheduler directly');
 assert.equal(reviewGateSource.includes('runRemediableGateControlLoop({'), false, 'review gate runner must not keep a direct remediation loop');
@@ -40,9 +40,9 @@ assert.equal(approvalGateSource.includes('export async function runApprovalGate(
 assert.equal(approvalGateSource.includes('export default runApprovalGate'), false, 'approval gate default direct wrapper export must be deleted');
 assert.equal(reviewGateSource.includes("from './review-gate-control.ts'"), true, 'review gate runner should delegate typed-control construction to the extracted control helper');
 assert.equal(busterGateSource.includes("from './buster-gate-control.ts'"), true, 'buster gate runner should delegate typed-control construction to the extracted control helper');
-assert.equal(reviewGateControlSource.includes('buildGateRemediationRequestControlResult'), true, 'review gate control helper should emit the shared remediation request contract');
+assert.equal(reviewGateControlSource.includes('buildGateRemediationRequestControlResult'), false, 'review gate control helper should not emit remediation request contracts');
 assert.equal(busterGateControlSource.includes('buildGateRemediationRequestControlResult'), true, 'buster gate control helper should emit the shared remediation request contract');
-assert.equal(reviewGateSource.includes('export function createReviewGateRemediationController('), true, 'review gate runner should expose a standard remediation controller factory');
+assert.equal(reviewGateSource.includes('export function createReviewGateRemediationController('), false, 'review gate runner should not expose remediation controllers');
 assert.equal(busterGateSource.includes('export function createBusterGateRemediationController('), true, 'buster gate runner should expose a standard remediation controller factory');
 assert.equal(reviewGateSource.includes('export function getReviewGateControlAdapter('), true, 'review gate runner should export its gate control adapter factory');
 assert.equal(busterGateSource.includes('export function getBusterGateControlAdapter('), true, 'buster gate runner should export its gate control adapter factory');
@@ -65,7 +65,7 @@ assert.equal(remediationSource.includes("nextAction: 'request_fix'") && remediat
 assert.equal(remediationSource.includes('validateGateRemediationController'), true, 'shared remediation service should validate remediation controller shape');
 assert.equal(remediationSource.includes('buildExhaustedControlResult'), true, 'shared remediation service should require typed exhausted control results');
 assert.equal(remediationSource.includes('buildExhaustedCompatibilityResult'), false, 'shared remediation service must not require exhausted compatibility results');
-assert.equal(reviewGateSource.includes('buildReviewRemediationExhaustedControlResult'), true, 'review gate runner should build typed exhausted remediation control results');
+assert.equal(reviewGateSource.includes('buildReviewRemediationExhaustedControlResult'), false, 'review gate runner should not build remediation exhausted control results');
 assert.equal(reviewGateSource.includes('buildReviewRemediationExhaustedCompatibilityResult'), false, 'review gate runner must not build exhausted remediation compatibility results');
 assert.equal(busterGateSource.includes('buildBusterRemediationExhaustedControlResult'), true, 'Buster gate runner should build typed exhausted remediation control results');
 assert.equal(busterGateSource.includes('buildBusterRemediationExhaustedCompatibilityResult'), false, 'Buster gate runner must not build exhausted remediation compatibility results');
@@ -78,9 +78,9 @@ const busterGateMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/n
 const approvalGateMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/nova/pipeline/runners/approval-gate-runner.ts')).href);
 
 const remediationControlResult = remediationMod.buildGateRemediationRequestControlResult({
-  producerType: 'review',
-  gateId: 'gate:review',
-  gateType: 'review',
+  producerType: 'buster',
+  gateId: 'gate:buster',
+  gateType: 'buster',
   runId: 'run-remediation-contract-1',
   attempt: 1,
   summary: 'Need a fix',
@@ -89,9 +89,9 @@ const remediationControlResult = remediationMod.buildGateRemediationRequestContr
     policy: {
       maxFixCycles: 2,
       nextFixCycle: 1,
-      rerunStageId: 'gate:review',
+    rerunStageId: 'gate:buster',
     },
-    targetRef: 'gate:gate:review',
+    targetRef: 'gate:gate:buster',
     startedAt: '2026-05-25T00:00:00.000Z',
   },
 });
@@ -105,9 +105,10 @@ assert.equal(Object.prototype.hasOwnProperty.call(reviewGateMod, 'runReviewGate'
 assert.equal(Object.prototype.hasOwnProperty.call(busterGateMod, 'runBusterGate'), false, 'Buster gate runner should not export direct runtime wrappers');
 assert.equal(Object.prototype.hasOwnProperty.call(approvalGateMod, 'runApprovalGate'), false, 'approval gate runner should not export direct runtime wrappers');
 assert.equal(typeof reviewGateMod.runReviewGateEvaluation, 'function', 'review gate runner should export runReviewGateEvaluation');
-assert.equal(typeof reviewGateMod.runReviewGateFixAttempt, 'function', 'review gate runner should export runReviewGateFixAttempt');
-assert.equal(typeof reviewGateMod.createReviewGateRemediationController, 'function', 'review gate runner should export createReviewGateRemediationController');
-assert.equal(typeof reviewGateMod.getReviewGateControlAdapter().createRemediationController, 'function', 'review gate control adapter should expose createRemediationController');
+assert.equal(Object.prototype.hasOwnProperty.call(reviewGateMod, 'runReviewGateFixAttempt'), false, 'review gate runner should not export review fix attempts');
+assert.equal(Object.prototype.hasOwnProperty.call(reviewGateMod, 'createReviewGateRemediationController'), false, 'review gate runner should not export review remediation controllers');
+assert.equal(reviewGateMod.getReviewGateControlAdapter().mode, 'standard', 'review gate control adapter should be standard');
+assert.equal(Object.prototype.hasOwnProperty.call(reviewGateMod.getReviewGateControlAdapter(), 'createRemediationController'), false, 'review gate control adapter should not expose remediation controllers');
 assert.equal(typeof busterGateMod.runBusterGateEvaluation, 'function', 'buster gate runner should export runBusterGateEvaluation');
 assert.equal(typeof busterGateMod.runBusterGateFixAttempt, 'function', 'buster gate runner should export runBusterGateFixAttempt');
 assert.equal(typeof busterGateMod.createBusterGateRemediationController, 'function', 'buster gate runner should export createBusterGateRemediationController');

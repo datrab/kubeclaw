@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Suite: a11y — Accessibility Check via axe-core
 // ═══════════════════════════════════════════════════════════════
@@ -44,8 +45,21 @@ function createLog(logSink: LogSink | null | undefined): (msg: string) => void {
   };
 }
 
+function objectRecord(value: unknown): AnyRecord | null {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : null;
+}
+
+function nonEmptyString(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() ? value : null;
+}
+
+function arrayValue<T = any>(value: unknown): T[] {
+  return Array.isArray(value) ? value as T[] : [];
+}
+
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error || 'unknown error');
+  if (error instanceof Error) return error.message;
+  return error == null ? 'missing_error_detail' : String(error);
 }
 
 function mapSeverity(impact: unknown): Finding['severity'] {
@@ -71,14 +85,14 @@ function evidenceMode(enforced: boolean): 'enforced' | 'evidence-only' {
 export default async function a11ySuite(context: A11yContext): Promise<SuiteVerdict> {
   const log = createLog(context.logSink);
   const startTime = Date.now();
-  const serve     = context.config?.serve || {};
-  const a11yConf  = context.config?.a11y  || {};
+  const serve     = selectDefinedValue(() => (objectRecord(context.config?.serve)), () => ({}));
+  const a11yConf  = selectDefinedValue(() => (objectRecord(context.config?.a11y)), () => ({}));
 
-  const type = serve.type || 'static';
-  const port = serve.port || (type === 'server' ? DEFAULTS.server_port : DEFAULTS.static_port);
+  const type = selectDefinedValue(() => (nonEmptyString(serve.type)), () => ('static'));
+  const port = selectDefinedValue(() => (serve.port), () => ((type === 'server' ? DEFAULTS.server_port : DEFAULTS.static_port)));
   let url: string;
   try {
-    url = buildLocalhostSuiteUrl(port, a11yConf.path || DEFAULTS.path, 'a11y.path');
+    url = buildLocalhostSuiteUrl(port, selectDefinedValue(() => (nonEmptyString(a11yConf.path)), () => (DEFAULTS.path)), 'a11y.path');
   } catch (error) {
     const message = errorMessage(error);
     return createSuiteVerdict('a11y', STATUS.ERROR, {
@@ -89,10 +103,10 @@ export default async function a11ySuite(context: A11yContext): Promise<SuiteVerd
     });
   }
 
-  const tags: string[] = a11yConf.tags || DEFAULTS.tags;
-  const exclude: string[] = a11yConf.exclude || DEFAULTS.exclude;
-  const maxFindings = a11yConf.max_findings || DEFAULTS.max_findings;
-  const thresholds = a11yConf.thresholds || null;
+  const tags: string[] = arrayValue<string>(a11yConf.tags).length > 0 ? arrayValue<string>(a11yConf.tags) : DEFAULTS.tags;
+  const exclude: string[] = arrayValue<string>(a11yConf.exclude);
+  const maxFindings = Number.isFinite(a11yConf.max_findings) ? a11yConf.max_findings : DEFAULTS.max_findings;
+  const thresholds = selectTruthyValue(() => (a11yConf.thresholds), () => (null));
   const enforced = thresholds !== null;
   const mode = evidenceMode(enforced);
 
@@ -122,7 +136,7 @@ export default async function a11ySuite(context: A11yContext): Promise<SuiteVerd
     const contextPw = await browser.newContext();
     const page = await contextPw.newPage();
 
-    await page.goto(url, { waitUntil: 'networkidle', timeout: a11yConf.timeout || DEFAULTS.timeout });
+    await page.goto(url, { waitUntil: 'networkidle', timeout: a11yTimeoutAuthority(a11yConf) });
 
     let builder = new AxeBuilder({ page }).withTags(tags);
     for (const sel of exclude) builder = builder.exclude(sel);
@@ -131,8 +145,10 @@ export default async function a11ySuite(context: A11yContext): Promise<SuiteVerd
     await contextPw.close();
 
     const findings: Finding[] = [];
-    for (const violation of results.violations || []) {
-      for (const node of violation.nodes || []) {
+    const violations = arrayValue<AnyRecord>(results.violations);
+    const passes = arrayValue<AnyRecord>(results.passes);
+    for (const violation of violations) {
+      for (const node of arrayValue(violation.nodes)) {
         if (findings.length >= maxFindings) break;
         findings.push(createFinding(mapSeverity(violation.impact), violation.help, {
           rule: violation.id,
@@ -142,20 +158,20 @@ export default async function a11ySuite(context: A11yContext): Promise<SuiteVerd
       if (findings.length >= maxFindings) break;
     }
 
-    const checksTotal = (results.passes || []).length + (results.violations || []).length;
-    const checksFailed = (results.violations || []).length;
-    const checksPassed = (results.passes || []).length;
+    const checksTotal = passes.length + violations.length;
+    const checksFailed = violations.length;
+    const checksPassed = passes.length;
     let status: SuiteStatus = STATUS.PASS;
 
     if (enforced && checksFailed > 0) {
       const counts: Record<string, number> = { critical: 0, serious: 0, moderate: 0, minor: 0 };
-      for (const violation of results.violations || []) {
-        const sev = String(violation.impact || 'minor');
-        counts[sev] = (counts[sev] || 0) + 1;
+      for (const violation of violations) {
+        const sev = selectDefinedValue(() => (nonEmptyString(violation.impact)), () => ('minor'));
+        counts[sev] = (selectDefinedValue(() => (counts[sev]), () => (0))) + 1;
       }
 
       for (const [sev, max] of Object.entries(thresholds)) {
-        if ((counts[sev] || 0) > Number(max)) {
+        if ((selectDefinedValue(() => (counts[sev]), () => (0))) > Number(max)) {
           status = STATUS.FAIL;
           break;
         }
@@ -179,8 +195,8 @@ export default async function a11ySuite(context: A11yContext): Promise<SuiteVerd
         mode,
         violations: checksFailed,
         passes: checksPassed,
-        incomplete: results.incomplete?.length || 0,
-        inapplicable: results.inapplicable?.length || 0,
+        incomplete: arrayValue(results.incomplete).length,
+        inapplicable: arrayValue(results.inapplicable).length,
         ...(enforced ? { thresholds } : {}),
       },
     });
@@ -198,4 +214,9 @@ export default async function a11ySuite(context: A11yContext): Promise<SuiteVerd
   } finally {
     if (browser) await browser.close().catch((error: unknown) => log(`non-blocking browser close failed: ${errorMessage(error)}`));
   }
+}
+
+function a11yTimeoutAuthority(a11yConf) {
+  if (a11yConf.timeout !== undefined && a11yConf.timeout !== null) return a11yConf.timeout;
+  return DEFAULTS.timeout;
 }

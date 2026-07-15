@@ -98,7 +98,7 @@ Set `"stages": ["forge"]` to skip per-module Buster testing. The module passes w
   "type": "review",
   "title": "Midpoint Review",
   "review_name": "MIDPOINT-REVIEW",
-  "on_fail": "fix_and_rereview",
+  "on_fail": "stop",
   "instructions_file": "echo-review/MIDPOINT-REVIEW-INSTRUCTIONS.md",
   "output_file": "logs/echo-review/MIDPOINT-REVIEW.json",
   "review_output_dir": "logs/echo-review",
@@ -113,7 +113,7 @@ Set `"stages": ["forge"]` to skip per-module Buster testing. The module passes w
   "forge_model": "anthropic/claude-sonnet-4-6",
   "forge_thinking_level": "adaptive",
   "timeout_minutes": 45,
-  "max_fix_cycles": 3
+  "max_fix_cycles": 0
 }
 ```
 
@@ -122,15 +122,15 @@ Set `"stages": ["forge"]` to skip per-module Buster testing. The module passes w
 | `type` | **yes** | — | `"review"` |
 | `title` | **yes** | — | Human-readable title |
 | `review_name` | **yes** | — | Review identifier (used in filenames) |
-| `on_fail` | no | `"fix_and_rereview"` | What to do on FAIL: `"fix_and_rereview"` or `"stop"` |
+| `on_fail` | no | `"stop"` | What to do on FAIL: `"stop"` |
 | `instructions_file` | **yes** | — | Path to review instructions (relative to `.swarm/`) |
 | `output_file` | **yes** | — | Path for review JSON output (relative to `.swarm/`) |
 | `review_output_dir` | no | — | Directory for review artifacts (relative to `.swarm/`) |
 | `reviewers` | no | set on gate or `defaults.reviewers`; otherwise none | Array of reviewer configs |
-| `forge_model` | no | `defaults.models.forge` or platform `fallback_model` | Model for fix-cycle Forge agent |
-| `forge_thinking_level` | no | — | Thinking level for fix-cycle Forge |
+| `forge_model` | no | `defaults.models.forge` or platform `fallback_model` | Reserved for gate-specific Forge policies |
+| `forge_thinking_level` | no | — | Reserved for gate-specific Forge policies |
 | `timeout_minutes` | no | `30` | Max time per review session |
-| `max_fix_cycles` | no | `3` | Max fix-and-rereview cycles before escalation |
+| `max_fix_cycles` | no | `0` | Reserved; review gates stop on FAIL |
 | `lint_tier` | no | `"full"` | Lint tier: `"full"` or `"pre-check"` |
 
 **Reviewer dispatch:**
@@ -302,8 +302,7 @@ When enabled, all pipeline events (module status, agent lifecycle, gate verdicts
 | `build_timeout` | `300` | Build timeout (seconds) |
 | `deployment_yaml` | — | K8s deployment YAML path (relative to repo root) — injects env vars into build |
 | `secret_yaml` | — | K8s secret YAML path (relative to repo root) — injects secrets into build |
-| `smoke_paths` | — | Array of URL paths to request after health passes (e.g. `["/", "/api/v1/health"]`) |
-| `smoke_settle_ms` | `0` | Wait time (ms) after smoke navigation before marking healthy |
+| `smoke_paths` | — | Array of URL paths to request with bounded HTTP checks after health passes (e.g. `["/", "/api/v1/health"]`) |
 
 ### `type: "static"` (Frontend)
 
@@ -353,7 +352,7 @@ Normal module and gate runs should use the default `purpose: "pretest"` and `cle
   "secrets_to_copy": ["app-runtime-secrets"],
   "test_credentials": [
     {
-      "secret": "app-preview-login",
+      "secret_name": "app-preview-login",
       "keys": ["username", "password"],
       "purpose": "login to the app under test"
     }
@@ -390,11 +389,11 @@ Normal module and gate runs should use the default `purpose: "pretest"` and `cle
 | `preview.hostname` | generated | Optional tailnet hostname label for the Tailscale Ingress |
 | `preview.expected_text` | `null` | Optional text that must be present in the fetched preview URL response body |
 | `preview.credentials_ref` | `null` | Human/operator reference, commonly `secret/<name>` |
-| `preview.reveal_credentials` | `false` | When true, verify the preview credential Secret and include a copy-paste retrieval command in Discord |
-| `preview.credentials_secret_name` | derived from `credentials_ref` | Source Secret name for credential retrieval |
+| `preview.reveal_credentials` | `false` | When true, verify the app-owned preview credential Secret in the leased namespace and include a copy-paste retrieval command in Discord |
+| `preview.credentials_secret_name` | derived from `credentials_ref` | App-owned Secret name for credential retrieval in the leased namespace |
 | `preview.credentials_keys` | all keys | Secret keys to retrieve, for example `["username", "password"]` |
 
-Final-preview Tailscale URLs require the Tailscale Kubernetes Operator to be installed by deployment. The k8s suite waits for the lease `status.previewUrl`, fetches that URL, and fails closed when `preview.expected_text` is configured but absent from the response body. The pipeline records the resulting tailnet URL and a non-secret credential retrieval command in the k8s verdict metadata; Nova uses that metadata for Discord delivery. `test_credentials` is the explicit allowlist for credentials Buster may see in prompt context for authenticated tests; do not put infrastructure, registry, deploy-key, or provider Secrets there.
+Final-preview Tailscale URLs require the Tailscale Kubernetes Operator to be installed by deployment. Preview creation is deterministic Buster k8s suite behavior, not Forge/Echo agent work: when `preview.provider` is `tailscale-ingress`, Buster creates a `BusterNamespaceLease` with `spec.exposure.provider=tailscale-ingress`, validates app content through the in-cluster Service URL, and waits for the lease `status.previewUrl`. The Buster/Nova pod does not need tailnet DNS for the default final-preview gate. The pipeline records the resulting tailnet URL and explicitly allowed app credentials in the k8s verdict metadata; Nova uses that metadata for Discord delivery. `test_credentials` is the explicit allowlist for credentials Buster may see in prompt context for authenticated tests; do not put infrastructure, registry, deploy-key, or provider Secrets there.
 
 ### test_config.manifest
 
@@ -540,7 +539,7 @@ Controls how task payloads are dispatched to Forge agents.
       "type": "review",
       "title": "Midpoint Review",
       "review_name": "MIDPOINT-REVIEW",
-      "on_fail": "fix_and_rereview",
+      "on_fail": "stop",
       "instructions_file": "echo-review/MIDPOINT-REVIEW-INSTRUCTIONS.md",
       "output_file": "logs/echo-review/MIDPOINT-REVIEW.json",
       "review_output_dir": "logs/echo-review",
@@ -550,13 +549,13 @@ Controls how task payloads are dispatched to Forge agents.
       "forge_model": "anthropic/claude-sonnet-4-6",
       "forge_thinking_level": "adaptive",
       "timeout_minutes": 45,
-      "max_fix_cycles": 3
+      "max_fix_cycles": 0
     },
     "final-review": {
       "type": "review",
       "title": "Final Review",
       "review_name": "FINAL-REVIEW",
-      "on_fail": "fix_and_rereview",
+      "on_fail": "stop",
       "instructions_file": "echo-review/FINAL-REVIEW-INSTRUCTIONS.md",
       "output_file": "logs/echo-review/FINAL-REVIEW.json",
       "review_output_dir": "logs/echo-review",
@@ -566,7 +565,7 @@ Controls how task payloads are dispatched to Forge agents.
       "forge_model": "anthropic/claude-sonnet-4-6",
       "forge_thinking_level": "adaptive",
       "timeout_minutes": 60,
-      "max_fix_cycles": 3
+      "max_fix_cycles": 0
     },
     "final-buster": {
       "type": "buster",

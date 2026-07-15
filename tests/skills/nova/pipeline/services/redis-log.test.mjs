@@ -25,7 +25,7 @@ function readProjectExchange(config) {
   return JSON.parse(lines.at(-1));
 }
 
-test('logRedisExchange redacts secret-like payload fields before persisting', () => {
+test('logRedisExchange preserves payload fields before persisting', () => {
   const config = makeConfig();
 
   logRedisExchange(config, 'sent', 'task', 'module', 'alpha', {
@@ -39,13 +39,13 @@ test('logRedisExchange redacts secret-like payload fields before persisting', ()
   const record = readProjectExchange(config);
   const serialized = JSON.stringify(record);
 
-  assert.equal(record.payload.token, '[redacted-secret]');
-  assert.equal(record.payload.nested.password, '[redacted-secret]');
-  assert.match(record.payload.nested.note, /\[redacted-secret\]/);
-  assert.doesNotMatch(serialized, /raw-token-value|raw-password-value|abcdefghijklmnop/);
+  assert.equal(record.payload.token, 'raw-token-value');
+  assert.equal(record.payload.nested.password, 'raw-password-value');
+  assert.match(record.payload.nested.note, /Bearer abcdefghijklmnop/);
+  assert.match(serialized, /raw-token-value|raw-password-value|abcdefghijklmnop/);
 });
 
-test('logRedisExchange truncation preview is derived from redacted payload', () => {
+test('logRedisExchange truncation preview is derived from bounded payload', () => {
   const config = makeConfig();
 
   logRedisExchange(config, 'received', 'completion', 'pipeline', 'run', {
@@ -57,6 +57,6 @@ test('logRedisExchange truncation preview is derived from redacted payload', () 
   const serialized = JSON.stringify(record);
 
   assert.equal(record.payload._truncated, true);
-  assert.match(record.payload._preview, /\[redacted-secret\]/);
-  assert.doesNotMatch(serialized, /Bearer abcdefghijklmnop|abcdefghijklmnop/);
+  assert.match(record.payload._preview, /Bearer abcdefghijklmnop/);
+  assert.match(serialized, /Bearer abcdefghijklmnop|abcdefghijklmnop/);
 });

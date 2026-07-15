@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // runners/buster-gate-runner.ts — Buster gate runner
 // Handles the buster gate lifecycle:
 //   1. Completion check (output_file is canonical; gate-status.json is diagnostic)
@@ -17,6 +18,7 @@ import { validateBusterConfig, resolvePolicy, logEffectivePolicy } from '../core
 import { relPath, gateLogDir, gateOutputPath, gateStatusPath } from '../core/paths.ts';
 import { headHash } from '../core/git-context.ts';
 import { discord } from '../integrations/discord.ts';
+import { gitCommitAndPush } from '../integrations/git-worktree.ts';
 import { archiveGateOutputIfPresent, readBusterGateCompletion } from '../services/status-store.ts';
 import { pollResult, sleep, archiveModuleCompletions, pollForSessionEnd } from '../services/polling.ts';
 import {
@@ -34,7 +36,7 @@ import { getActiveContext } from '../core/logger.ts';
 import { onGateStarted, onGateFail } from '../services/telemetry.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
 import { getPipelineDefaultsConfig } from '../services/runtime-defaults.ts';
-import { writeRedactedPromptArtifact } from '../redaction.ts';
+import { writePromptArtifact } from '../egress.ts';
 import { readGateRemediationSpec } from '../services/remediation-handoff.ts';
 import { persistGateActiveSession, clearGateActiveSession } from '../services/gate-active-session.ts';
 import {
@@ -45,6 +47,7 @@ import {
 import {
   applyTrackedBusterGateIdentity,
   buildBusterGateActiveSessionMetadata,
+  buildBusterGateActiveCompletionIdentity,
   buildBusterGateArchiveIdentity,
   buildBusterGateArchiveTarget,
   buildBusterGateRateLimitStatusOptions,
@@ -62,13 +65,49 @@ import {
   coerceBusterGateControlResult,
   extractGateIssues,
 } from './buster-gate-control.ts';
+const BUSTER_GATE_TYPE = 'buster';
+const BUSTER_GATE_FIRST_ATTEMPT = 1;
+const BUSTER_PIPELINE_SOURCE = 'buster-pipeline';
+const BUSTER_GATE_MISSING_ERROR_DETAIL = 'missing_error_detail';
+const TELEMETRY_CONTEXT_MISSING_RUN_ID = '';
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function selectPresentValue(...values) {
+  return values.find((value) => value !== undefined && value !== null && value !== '');
+}
+
+function gateType(gate) {
+  return selectPresentValue(gate?.type, BUSTER_GATE_TYPE);
+}
+
+function gateStartedAtAuthority(opts = {}, remediation = null) {
+  if (opts.gateStartedAt !== undefined) return opts.gateStartedAt;
+  if (remediation?.startedAt) return new Date(remediation.startedAt).getTime();
+  return Date.now();
+}
+
+function gateMaxFixCyclesAuthority(remediation = {}, metadata = {}, pipelineDefaults = {}) {
+  const candidate = selectDefinedValue(() => (selectDefinedValue(() => (remediation?.policy?.maxFixCycles), () => (metadata?.fix_attempts))), () => (pipelineDefaults.max_fails));
+  return Number(candidate);
+}
+
+function gateTimeoutAuthority(gate = {}, pipelineDefaults = {}) {
+  return selectDefinedValue(() => (gate.timeout_minutes), () => (pipelineDefaults.timeout_minutes));
+}
 
 function _telemetryCtx(config, deps = null) {
-  const active = getActiveContext() || {};
+  const active = objectRecord(getActiveContext());
   return {
     ...active,
     config: active.config ? active.config : config,
-    runId: active.runId ? active.runId : config?.run_id ? config.run_id : config?._runId ? config._runId : '',
+    runId: selectPresentValue(active.runId, config?.run_id, config?._runId, TELEMETRY_CONTEXT_MISSING_RUN_ID),
     deps,
   };
 }
@@ -89,6 +128,7 @@ const DEFAULT_DEPS = {
   validateBusterConfig,
   headHash,
   discord,
+  gitCommitAndPush,
   archiveGateOutputIfPresent,
   readBusterGateCompletion,
   pollResult,
@@ -121,12 +161,23 @@ function getGateStats(config) {
  */
 async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, timeout, instructions, attempt, busterGatePolicy = {}) {
   getGateStats(config).total_buster_attempts++;
-  const commitHash = deps.headHash(config);
+  const rawCommitHash = deps.headHash(config);
+  const commitHash = typeof rawCommitHash === 'string' ? rawCommitHash.trim() : '';
+  if (!commitHash) {
+    return deps.pollResult(false, 'commit_hash_missing', {
+      error: `Gate '${gateId}' Buster dispatch requires current HEAD commit_hash`,
+      run_id: getRunId(config),
+      attempt,
+      gate_id: gateId,
+      gate_type: gate.type,
+    });
+  }
   const completionIdentity = createBusterGateCompletionIdentity({
     runId: getRunId(config),
     gateId,
     attempt,
   });
+  completionIdentity.commitHash = commitHash;
   completionIdentity.model = model ? model : null;
   completionIdentity.model_source = busterGatePolicy.model_source ? busterGatePolicy.model_source : null;
   completionIdentity.reasoning_level = busterGatePolicy.thinking_supported === false ? 'not supported' : (busterGatePolicy.thinking ? busterGatePolicy.thinking : 'default');
@@ -139,7 +190,7 @@ async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, t
   try {
     const logDir = gateLogDir(config, gateId);
     fs.mkdirSync(logDir, { recursive: true });
-    writeRedactedPromptArtifact(path.join(logDir, `buster-prompt-attempt-${attempt}.md`), busterPrompt, { gate_id: gateId, attempt, agent_type: 'buster' });
+    writePromptArtifact(path.join(logDir, `buster-prompt-attempt-${attempt}.md`), busterPrompt, { gate_id: gateId, attempt, agent_type: 'buster' });
   } catch (_error) { /* non-critical */ }
 
   // Pre-dispatch config validation (gate) — only on first attempt
@@ -184,13 +235,13 @@ async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, t
     { ...buildBusterGateArchiveTarget(gateId, gate), deps: deps._explicitDeps }
   );
   if (archiveResult?.failed) {
-    const reason = `Gate '${gateId}' completion archive failed before Buster dispatch: ${archiveResult.error || 'unknown'}`;
+    const reason = `Gate '${gateId}' completion archive failed before Buster dispatch: ${selectTruthyValue(() => (archiveResult.error), () => ('missing_archive_error'))}`;
     log('ERROR', reason);
     return deps.pollResult(false, 'completion_archive_failed', {
       gate: gateId,
       status: STATUS.FAIL,
       reason,
-      error: archiveResult.error || null,
+      error: selectTruthyValue(() => (archiveResult.error), () => (null)),
       source: 'completion_archive',
       run_id: completionIdentity.runId,
       attempt: completionIdentity.attempt,
@@ -206,9 +257,9 @@ async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, t
       ...buildBusterGateSpawnOptions(gate, completionIdentity),
       model_source: completionIdentity.model_source,
       reasoning_level: completionIdentity.reasoning_level,
-      thinking: busterGatePolicy.thinking || null,
+      thinking: selectTruthyValue(() => (busterGatePolicy.thinking), () => (null)),
       thinking_source: completionIdentity.thinking_source,
-      thinking_supported: busterGatePolicy.thinking_supported ?? null,
+      thinking_supported: selectDefinedValue(() => (busterGatePolicy.thinking_supported), () => (null)),
       runtime_kind: completionIdentity.runtime,
       deps: deps._explicitDeps,
     });
@@ -216,7 +267,9 @@ async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, t
     const trackedGate = deps.getTrackedAgent(gateLabel);
     applyTrackedBusterGateIdentity(completionIdentity, trackedGate);
     syncBusterGateRateLimitStatusOptions(gateRateLimitStatusOptions, completionIdentity);
-    persistGateActiveSession(config, gateId, gateLabel, trackedGate, buildBusterGateActiveSessionMetadata(completionIdentity));
+    if (completionIdentity.sessionKey) {
+      persistGateActiveSession(config, gateId, gateLabel, trackedGate, buildBusterGateActiveSessionMetadata(completionIdentity));
+    }
   } catch (e) {
     return deps.pollResult(false, 'spawn_failed', {
       error: e.message,
@@ -239,8 +292,10 @@ async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, t
       timeoutMinutes: timeout,
     });
   } finally {
-    await deps.killAgent(config, 'buster', gateId, result?.ok || false);
-    clearGateActiveSession(config, gateId, completionIdentity);
+    await deps.killAgent(config, 'buster', gateId, result?.ok === true);
+    if (completionIdentity.sessionKey) {
+      clearGateActiveSession(config, gateId, buildBusterGateActiveCompletionIdentity(completionIdentity));
+    }
   }
   return result;
 }
@@ -258,16 +313,16 @@ async function _runBusterGateOnce(deps, config, progress, gateId, gate, model, t
 
 
 export async function buildBusterRemediationExhaustedControlResult(config, gateId, gate, controlResult, opts = {}) {
-  const remediation = readGateRemediationSpec(controlResult) || {};
-  const metadata = controlResult?.diagnostics?.metadata || {};
-  const gateStartedAt = opts.gateStartedAt ?? (remediation?.startedAt ? new Date(remediation.startedAt).getTime() : Date.now());
+  const remediation = objectRecord(readGateRemediationSpec(controlResult));
+  const metadata = objectRecord(controlResult?.diagnostics?.metadata);
+  const gateStartedAt = gateStartedAtAuthority(opts, remediation);
   const pipelineDefaults = getPipelineDefaultsConfig(config);
-  const maxFixCycles = Number(remediation?.policy?.maxFixCycles || metadata?.fix_attempts || pipelineDefaults.max_fails);
-  const issues = remediation?.diagnostics?.issues || metadata?.remaining_issues || [];
-  const latestGateDispatchId = remediation?.correlation?.dispatch_id || metadata?.dispatch_id || null;
-  const latestGateGatewayLabel = remediation?.correlation?.gateway_label || metadata?.gateway_label || null;
-  const latestGateSessionKey = remediation?.correlation?.session_key || metadata?.session_key || null;
-  const failReason = issues.map((issue = {}) => issue.title).filter(Boolean).join('; ') || 'unknown (no error detail available)';
+  const maxFixCycles = gateMaxFixCyclesAuthority(remediation, metadata, pipelineDefaults);
+  const issues = arrayValue(selectPresentValue(remediation?.diagnostics?.issues, metadata?.remaining_issues));
+  const latestGateDispatchId = selectTruthyValue(() => (selectTruthyValue(() => (remediation?.correlation?.dispatch_id), () => (metadata?.dispatch_id))), () => (null));
+  const latestGateGatewayLabel = selectTruthyValue(() => (selectTruthyValue(() => (remediation?.correlation?.gateway_label), () => (metadata?.gateway_label))), () => (null));
+  const latestGateSessionKey = selectTruthyValue(() => (selectTruthyValue(() => (remediation?.correlation?.session_key), () => (metadata?.session_key))), () => (null));
+  const failReason = selectPresentValue(issues.map((issue = {}) => issue.title).filter(Boolean).join('; '), BUSTER_GATE_MISSING_ERROR_DETAIL);
 
   log('ERROR', `Gate '${gateId}' fix loop exhausted (${maxFixCycles} attempts)`);
   getGateStats(config).gates_failed.push(gateId);
@@ -314,8 +369,8 @@ export async function buildBusterRemediationExhaustedControlResult(config, gateI
     findings: buildBusterIssueFindings(issues),
     metadata: {
       gate_id: gateId,
-      gate_type: gate?.type || 'buster',
-      run_id: getRunId(config) || config?._runId || config?.run_id || null,
+      gate_type: gateType(gate),
+      run_id: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (getRunId(config)), () => (config?._runId))), () => (config?.run_id))), () => (null)),
       gate: gateId,
       reason: `Gate '${gateId}' failed after ${maxFixCycles} fix attempts`,
       failure_class: 'fix_loop_exhausted',
@@ -340,10 +395,10 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
   const gate = progress.gates[gateId];
   if (!gate) throw new Error(`Gate '${gateId}' not found`);
 
-  const attempt = Number(opts.attempt || 1);
-  const gateStartedAt = opts.gateStartedAt ?? Date.now();
-  const remediation = opts.remediation || readGateRemediationSpec(opts.controlResult) || {};
-  const correlation = remediation?.correlation || {};
+  const attempt = Number(selectDefinedValue(() => (opts.attempt), () => (BUSTER_GATE_FIRST_ATTEMPT)));
+  const gateStartedAt = gateStartedAtAuthority(opts);
+  const remediation = objectRecord(selectPresentValue(opts.remediation, readGateRemediationSpec(opts.controlResult)));
+  const correlation = objectRecord(remediation?.correlation);
 
   if (!opts.skipStartedTelemetry) {
     log('STEP', `═══════════════════════════════════════════════════════`);
@@ -359,7 +414,7 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
         status: STATUS.PASS,
         passed: true,
         outcome_class: 'passed',
-        completion_source: existingCompletion.source || null,
+        completion_source: selectTruthyValue(() => (existingCompletion.source), () => (null)),
         attempt,
       }, { ...opts, input: { ids: { attempt } } });
     }
@@ -387,12 +442,12 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
   }
 
   const busterGatePolicy = deps.resolvePolicy(config, progress, 'buster', {
-    scopeModel: gate.model || null,
+    scopeModel: selectTruthyValue(() => (gate.model), () => (null)),
     dispatchPath: config?.agents?.buster?.dispatch,
   });
   const model = busterGatePolicy.model;
   deps.logEffectivePolicy(config, { scope: 'gate_buster', agent: 'buster', gateId, ...busterGatePolicy });
-  log('INFO', `Gate '${gateId}' model: ${model ?? '(none)'} [${busterGatePolicy.model_source}] thinking: ${busterGatePolicy.thinking || 'default'} (${busterGatePolicy.thinking_source})`);
+  log('INFO', `Gate '${gateId}' model: ${selectDefinedValue(() => (model), () => ('model_not_configured'))} [${busterGatePolicy.model_source}] thinking: ${selectDefinedValue(() => (busterGatePolicy.thinking), () => ('thinking_not_configured'))} (${busterGatePolicy.thinking_source})`);
 
   let instructions;
   try {
@@ -410,7 +465,7 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
           level: 'CRITICAL',
           title: `Buster Gate Setup Failed: ${gate.title}`,
           description: `Gate instructions could not be read: ${e.message}`,
-          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: getRunId(config), gate_id: gateId, gate_type: gate.type, attempt, model, reasoning_level: busterGatePolicy.thinking_supported === false ? 'not supported' : (busterGatePolicy.thinking || 'default'), thinking_source: busterGatePolicy.thinking_source || null, runtime: 'session' }),
+          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: getRunId(config), gate_id: gateId, gate_type: gate.type, attempt, model, reasoning_level: busterGatePolicy.thinking_supported === false ? 'not supported' : (selectDefinedValue(() => (busterGatePolicy.thinking), () => ('thinking_not_configured'))), thinking_source: selectTruthyValue(() => (busterGatePolicy.thinking_source), () => (null)), runtime: 'session' }),
         },
       },
     });
@@ -422,38 +477,9 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
     }, { ...opts, input: { ids: { attempt } } });
   }
   const pipelineDefaults = getPipelineDefaultsConfig(config);
-  const timeout = gate.timeout_minutes ?? pipelineDefaults.timeout_minutes;
-  const maxFixCycles = gate.max_fix_cycles ?? pipelineDefaults.max_fails;
-  const hasFixLoop = gate.on_fail === 'fix_and_retest';
-
-  if (hasFixLoop && maxFixCycles < 1) {
-    const reason = `Gate '${gateId}' ended unexpectedly`;
-    log('ERROR', reason);
-    getGateStats(config).gates_failed.push(gateId);
-    if (!opts.skipStartedTelemetry) {
-      await onGateStarted(_telemetryCtx(config, opts.deps), gateId, gate);
-    }
-    await onGateFail(_telemetryCtx(config, opts.deps), gateId, {
-      gate_type: gate.type,
-      fix_cycle: 0,
-      duration_seconds: Math.round((Date.now() - gateStartedAt) / 1000),
-      reason,
-      presentation: {
-        discord: {
-          level: 'CRITICAL',
-          title: `Gate '${gateId}' Ended Unexpectedly`,
-          description: 'Buster gate loop exited without a terminal outcome. Manual review required.',
-          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: getRunId(config), gate_id: gateId, gate_type: gate.type, attempt }),
-        },
-      },
-    });
-    return buildBusterGateControlResult(config, gateId, gate, {
-      reason,
-      failure_class: 'unexpected_exit',
-      outcome_class: 'needs_nova',
-      attempt,
-    }, { ...opts, input: { ids: { attempt } } });
-  }
+  const timeout = gateTimeoutAuthority(gate, pipelineDefaults);
+  const maxFixCycles = Number(selectDefinedValue(() => (gate.max_fix_cycles), () => (0)));
+  const hasFixLoop = gate.on_fail === 'fix_and_retest' && Number.isFinite(maxFixCycles) && maxFixCycles > 0;
 
   if (!opts.skipStartedTelemetry) {
     await onGateStarted(_telemetryCtx(config, opts.deps), gateId, gate, {
@@ -473,19 +499,19 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
 
   const result = await withSessionRateLimitRecovery(
     config,
-    () => (deps.runOnce || _runBusterGateOnce)(deps, config, progress, gateId, gate, model, timeout, instructions, attempt, busterGatePolicy),
+    () => _runBusterGateOnce(deps, config, progress, gateId, gate, model, timeout, instructions, attempt, busterGatePolicy),
     createTrackedGateSessionRateLimitRecoveryOptions(config, {
       sleepFn: deps.sleep,
       discordFn: deps.discord,
       gateId,
       gateType: gate.type,
       identity: {
-        agent_type: gate.type || 'buster',
+        agent_type: gateType(gate),
         run_id: getRunId(config),
         attempt,
-        dispatch_id: correlation.dispatch_id || null,
-        gateway_label: correlation.gateway_label || null,
-        session_key: correlation.session_key || null,
+        dispatch_id: selectTruthyValue(() => (correlation.dispatch_id), () => (null)),
+        gateway_label: selectTruthyValue(() => (correlation.gateway_label), () => (null)),
+        session_key: selectTruthyValue(() => (correlation.session_key), () => (null)),
       },
       updateCorrelation: () => correlation,
       maxPauses: maxRateLimitPauses,
@@ -493,7 +519,7 @@ export async function runBusterGateEvaluation(config, progress, gateId, opts = {
       resumeDescription: `Resuming gate ${gateId}`,
       pauseLogMessage: ({ pauseCount, maxPauses, cooldownHours, resumeAt }) => `Gate '${gateId}' rate limited (pause ${pauseCount}/${maxPauses}) — sleeping ${cooldownHours}h (resume at ${resumeAt.toISOString()})`,
       resumeLogMessage: () => `Gate '${gateId}' rate limit cooldown complete — retrying (attempt stays at ${attempt} due to rate limit)`,
-      suppressPausePresentation: ({ status }) => (status?.source || '').toLowerCase() === 'buster-pipeline',
+      suppressPausePresentation: ({ status }) => String(selectDefinedValue(() => (status?.source), () => (''))).toLowerCase() === BUSTER_PIPELINE_SOURCE,
       exhaustedResultConfig: {
         resultOverrides: { outcome_class: 'rate_limited' },
       },
@@ -546,7 +572,7 @@ export async function runBusterGateFixAttempt(config, progress, gateId, controlR
 
 
 export function createBusterGateRemediationController({ config, progress, gateId, gate, opts = {}, gateStartedAt }) {
-  const fixHistory = opts.fixHistory || [];
+  const fixHistory = arrayValue(opts.fixHistory);
   return {
     evaluateGate: ({ attempt, controlResult: remediationControlResult, remediation }) => runBusterGateEvaluation(config, progress, gateId, {
       attempt,

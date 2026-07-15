@@ -1,4 +1,14 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 const MAX_ERROR_BODY_PREVIEW = 500;
+const DISCORD_WEBHOOK_DELIVERY_FAILED = 'discord webhook delivery failed';
+
+function headerValue(value: string | null): string {
+  return selectDefinedValue(() => (value), () => (''));
+}
+
+function optionHeaders(value: unknown): Record<string, string> {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, string> : {};
+}
 
 type DiscordWebhookDeliveryDetails = {
   status?: number;
@@ -16,7 +26,7 @@ type DiscordWebhookOptions = {
 };
 
 async function readJsonBody(response: Response) {
-  const contentType = response.headers?.get?.('content-type') || '';
+  const contentType = headerValue(selectDefinedValue(() => (response.headers?.get?.('content-type')), () => (null)));
   if (!/json/i.test(contentType)) return null;
   try {
     return await response.json();
@@ -53,7 +63,7 @@ async function readBodyPreview(response: Response) {
 }
 
 function timeoutSignal(timeoutMs: number) {
-  if (!timeoutMs || timeoutMs <= 0) return { signal: undefined, cleanup: () => {} };
+  if (selectTruthyValue(() => (!timeoutMs), () => (timeoutMs <= 0))) return { signal: undefined, cleanup: () => {} };
   if (typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function') {
     return { signal: AbortSignal.timeout(timeoutMs), cleanup: () => {} };
   }
@@ -104,27 +114,27 @@ function requestAbortSignal(callerSignal: AbortSignal | null | undefined, timeou
 }
 
 export async function postDiscordWebhook(url: string, options: DiscordWebhookOptions = {}) {
-  if (!url || typeof url !== 'string') {
+  if (selectTruthyValue(() => (!url), () => (typeof url !== 'string'))) {
     throw new DiscordWebhookDeliveryError('discord webhook URL is required');
   }
-  if (!Object.prototype.hasOwnProperty.call(options, 'body') || options.body === undefined) {
+  if (selectTruthyValue(() => (!Object.prototype.hasOwnProperty.call(options, 'body')), () => (options.body === undefined))) {
     throw new DiscordWebhookDeliveryError('discord webhook body is required');
   }
   const body = options.body;
 
-  const fetchImpl = options.fetchImpl || globalThis.fetch;
+  const fetchImpl = fetchAuthority(options);
   if (typeof fetchImpl !== 'function') {
     throw new DiscordWebhookDeliveryError('fetch is unavailable for discord webhook delivery');
   }
 
-  const headers = { ...(options.headers || {}) };
+  const headers = { ...optionHeaders(options.headers) };
 
   try {
-    if (options.timeoutMs === undefined || options.timeoutMs === null) {
+    if (selectTruthyValue(() => (options.timeoutMs === undefined), () => (options.timeoutMs === null))) {
       throw new DiscordWebhookDeliveryError('discord webhook timeoutMs is required');
     }
     const timeoutMs = Number(options.timeoutMs);
-    if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
+    if (selectTruthyValue(() => (!Number.isFinite(timeoutMs)), () => (timeoutMs <= 0))) {
       throw new DiscordWebhookDeliveryError('discord webhook timeoutMs must be a positive number');
     }
     const { signal, cleanup } = requestAbortSignal(options.signal, timeoutMs);
@@ -139,7 +149,7 @@ export async function postDiscordWebhook(url: string, options: DiscordWebhookOpt
 
       if (!response?.ok) {
         const status = typeof response?.status === 'number' ? response.status : 0;
-        const statusText = response?.statusText || '';
+        const statusText = selectDefinedValue(() => (response?.statusText), () => (''));
         const bodyPreview = response ? await readBodyPreview(response) : '';
         throw new DiscordWebhookDeliveryError(
           `discord webhook HTTP ${status}${statusText ? ` ${statusText}` : ''}`,
@@ -151,7 +161,7 @@ export async function postDiscordWebhook(url: string, options: DiscordWebhookOpt
       return {
         ok: true,
         status: response.status,
-        statusText: response.statusText || '',
+        statusText: selectDefinedValue(() => (response.statusText), () => ('')),
         body: responseBody,
       };
     } finally {
@@ -159,6 +169,11 @@ export async function postDiscordWebhook(url: string, options: DiscordWebhookOpt
     }
   } catch (error: any) {
     if (error instanceof DiscordWebhookDeliveryError) throw error;
-    throw new DiscordWebhookDeliveryError(error?.message || 'discord webhook delivery failed', { cause: error });
+    throw new DiscordWebhookDeliveryError(selectDefinedValue(() => (error?.message), () => (DISCORD_WEBHOOK_DELIVERY_FAILED)), { cause: error });
   }
+}
+
+function fetchAuthority(options: Record<string, any>): typeof fetch {
+  if (options.fetchImpl) return options.fetchImpl;
+  return globalThis.fetch;
 }

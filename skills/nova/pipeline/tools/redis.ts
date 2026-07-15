@@ -8,30 +8,42 @@ import { createRedisClient, loadRedisCtor } from '../telemetry.ts';
 import { createRedisEventBus } from '../services/task-transport-contract.ts';
 import { resolveRedisCompletionPolicy } from '../services/redis-completion-policy.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // --- CONFIG ---
 const DEFAULT_SWARM_CONFIG_PATH = '/home/node/.openclaw/swarm.config.json';
 
 function loadSwarmConfig() {
-  const configPath = process.env.SWARM_CONFIG || DEFAULT_SWARM_CONFIG_PATH;
+  const configuredPath = process.env.SWARM_CONFIG;
+  const configPath = configuredPath !== undefined && configuredPath !== null && String(configuredPath).trim()
+    ? String(configuredPath)
+    : DEFAULT_SWARM_CONFIG_PATH;
   return expandSwarmConfig(JSON.parse(fs.readFileSync(configPath, 'utf8')));
 }
 
 function redisToolPolicy() {
   const config = loadSwarmConfig();
   const runtime = config?.buster?.runtime;
-  if (!runtime || typeof runtime !== 'object') throw new Error('config.buster.runtime: required platform config object');
+  if (selectTruthyValue(() => (!runtime), () => (typeof runtime !== 'object'))) throw new Error('config.buster.runtime: required platform config object');
   const completionPolicy = resolveRedisCompletionPolicy(config);
   const readyTimeoutMs = Number(config?.gateway?.health?.timeout_ms);
-  if (!Number.isInteger(readyTimeoutMs) || readyTimeoutMs <= 0) {
+  if (selectTruthyValue(() => (!Number.isInteger(readyTimeoutMs)), () => (readyTimeoutMs <= 0))) {
     throw new Error('config.gateway.health.timeout_ms: required positive integer in swarm.config.json');
   }
   return {
     readyTimeoutMs,
-    taskStream: String(runtime.task_stream || '').trim(),
+    taskStream: String(selectDefinedValue(() => (runtime.task_stream), () => (''))).trim(),
     archiveMaxLen: completionPolicy.archiveMaxLen,
     tailScanBatchSize: completionPolicy.tailScanBatchSize,
     tailScanLimit: completionPolicy.tailScanLimit,
   };
+}
+
+function requiredEnvString(name) {
+  const value = process.env[name];
+  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (!String(value).trim()))) {
+    throw new Error(`${name}: required runtime identity env var`);
+  }
+  return String(value).trim();
 }
 
 let _redis = null;
@@ -49,7 +61,7 @@ function getRedis() {
 }
 
 function waitForRedisReady(redis, timeoutMs) {
-  if (timeoutMs === undefined || timeoutMs === null) throw new Error('waitForRedisReady requires explicit timeoutMs');
+  if (selectTruthyValue(() => (timeoutMs === undefined), () => (timeoutMs === null))) throw new Error('waitForRedisReady requires explicit timeoutMs');
   if (redis.status === 'ready') return Promise.resolve();
 
   return new Promise((resolve, reject) => {
@@ -70,7 +82,7 @@ function waitForRedisReady(redis, timeoutMs) {
       fn(value);
     };
     const onReady = () => settle(resolve);
-    const onError = (err) => settle(reject, err instanceof Error ? err : new Error(String(err || 'Redis connection failed')));
+    const onError = (err) => settle(reject, err instanceof Error ? err : new Error(String(selectDefinedValue(() => (err), () => ('Redis connection failed')))));
     const onEnd = () => settle(reject, new Error('Redis connection ended before ready'));
     const onClose = () => settle(reject, new Error('Redis connection closed before ready'));
 
@@ -99,21 +111,21 @@ const WEBHOOK_URL = process.env.DISCORD_WEBHOOK;
 // ═══════════════════════════════════════════════════════════════
 
 function normalizeDiscordFieldValue(value) {
-  if (value === undefined || value === null || value === '') return null;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return null;
   return String(value);
 }
 
 function buildRedisDispatchDiscordFields(payload = {}, iter = 1, extra = []) {
   const fields = [];
-  const runId = normalizeDiscordFieldValue(payload.run_id ?? payload.runId);
-  const moduleId = normalizeDiscordFieldValue(payload.module ?? payload.module_id ?? payload.moduleId);
-  const gateId = normalizeDiscordFieldValue(payload.gate_id ?? payload.gateId);
-  const gateTitle = normalizeDiscordFieldValue(payload.gate_title ?? payload.gateTitle);
-  const gateType = normalizeDiscordFieldValue(payload.gate_type ?? payload.gateType);
-  const stageId = normalizeDiscordFieldValue(payload.stage_id ?? payload.stageId);
-  const dispatchId = normalizeDiscordFieldValue(payload.dispatch_id ?? payload.dispatchId);
-  const attempt = normalizeDiscordFieldValue(payload.attempt ?? iter);
-  const sessionKey = normalizeDiscordFieldValue(payload.session_key ?? payload.sessionKey);
+  const runId = normalizeDiscordFieldValue(payload.run_id);
+  const moduleId = normalizeDiscordFieldValue(payload.module_id);
+  const gateId = normalizeDiscordFieldValue(payload.gate_id);
+  const gateTitle = normalizeDiscordFieldValue(payload.gate_title);
+  const gateType = normalizeDiscordFieldValue(payload.gate_type);
+  const stageId = normalizeDiscordFieldValue(payload.stage_id);
+  const attempt = normalizeDiscordFieldValue(payload.attempt);
+  const dispatchId = normalizeDiscordFieldValue(payload.dispatch_id);
+  const sessionKey = normalizeDiscordFieldValue(payload.session_key);
 
   if (runId) fields.push({ name: 'Run ID', value: runId, inline: true });
   if (moduleId) fields.push({ name: 'Module', value: moduleId, inline: true });
@@ -127,19 +139,19 @@ function buildRedisDispatchDiscordFields(payload = {}, iter = 1, extra = []) {
 }
 
 function resolveRedisDiscordContext(payload = {}) {
-  const pipelineLogPath = normalizeDiscordFieldValue(payload.pipeline_log_path ?? payload.pipelineLogPath);
-  const pipelineRunLogPath = normalizeDiscordFieldValue(payload.pipeline_run_log_path ?? payload.pipelineRunLogPath);
-  const runId = normalizeDiscordFieldValue(payload.run_id ?? payload.runId);
-  const gateId = normalizeDiscordFieldValue(payload.gate_id ?? payload.gateId);
+  const pipelineLogPath = normalizeDiscordFieldValue(payload.pipeline_log_path);
+  const pipelineRunLogPath = normalizeDiscordFieldValue(payload.pipeline_run_log_path);
+  const runId = normalizeDiscordFieldValue(payload.run_id);
+  const gateId = normalizeDiscordFieldValue(payload.gate_id);
   return {
     project: normalizeDiscordFieldValue(payload.project),
     runId,
-    moduleId: gateId ? null : normalizeDiscordFieldValue(payload.module_id ?? payload.module ?? payload.moduleId),
+    moduleId: gateId ? null : normalizeDiscordFieldValue(payload.module_id),
     gateId,
-    gateType: normalizeDiscordFieldValue(payload.gate_type ?? payload.gateType),
+    gateType: normalizeDiscordFieldValue(payload.gate_type),
     attempt: normalizeDiscordFieldValue(payload.attempt),
-    dispatchId: normalizeDiscordFieldValue(payload.dispatch_id ?? payload.dispatchId),
-    sessionKey: normalizeDiscordFieldValue(payload.session_key ?? payload.sessionKey),
+    dispatchId: normalizeDiscordFieldValue(payload.dispatch_id),
+    sessionKey: normalizeDiscordFieldValue(payload.session_key),
     globalDiscordPath: pipelineLogPath ? path.join(path.dirname(pipelineLogPath), 'discord.jsonl') : null,
     runDiscordPath: pipelineRunLogPath ? path.join(path.dirname(pipelineRunLogPath), 'discord.jsonl') : null,
   };
@@ -149,7 +161,7 @@ async function logToDiscord(sender, target, type, iter, payload) {
   try {
     const [{ discordEmbeds }, { formatSummaryForDiscord, summarizePayloadForDiscord }] = await Promise.all([
       import('../integrations/discord.ts'),
-      import('../redaction.ts'),
+      import('../egress.ts'),
     ]);
     const header = `**${sender}** → **${target}**\nType: \`${type}\` | Iter: \`${iter}\``;
     const payloadSummary = summarizePayloadForDiscord(payload, 'task_payload');
@@ -173,7 +185,7 @@ async function logToDiscord(sender, target, type, iter, payload) {
     }, [{
       title: `⚡ Task: ${sender} → ${target}`,
       color: 5763719,
-      description: `${header}\n\nPayload redacted by default.`,
+      description: `${header}\n\nPayload shown with bounded formatting.`,
       fields: buildRedisDispatchDiscordFields(payload, iter, summaryFields),
     }], {
       level: 'INFO',
@@ -181,7 +193,7 @@ async function logToDiscord(sender, target, type, iter, payload) {
         module_id: context.moduleId,
         gate_id: context.gateId,
         gate_type: context.gateType,
-        attempt: context.attempt ?? iter,
+        attempt: context.attempt,
         dispatch_id: context.dispatchId,
         session_key: context.sessionKey,
       },
@@ -257,7 +269,7 @@ const lib = {
    * Nova only dispatches to Buster via this TaskQueue boundary (Forge/Echo use ACP).
    */
   async publishTask(targetAgent, type, payload, iteration = 1) {
-    const myName = process.env.AGENT_NAME || 'nova';
+    const myName = requiredEnvString('AGENT_NAME');
     const redis = getRedis();
 
     await waitForRedisReady(redis, redisToolPolicy().readyTimeoutMs);
@@ -317,7 +329,7 @@ const lib = {
       scan_truncated: result.truncated,
       ...(match && { entry: { status: match.status, source: match.source, summary: match.summary?.slice(0, 200), commit_hash: match.commit_hash, run_id: match.run_id, attempt: match.attempt, dispatch_id: match.dispatch_id, session_key: match.session_key, redis_id: match._id } }),
     });
-    return match || null;
+    return selectTruthyValue(() => (match), () => (null));
   },
 
   /**
@@ -332,10 +344,10 @@ const lib = {
   async archiveCompletions(streamKey, archiveStreamKey, moduleId, maxLen, activeIdentity = {}, opts = {}) {
     const redis = getRedis();
     const policy = redisToolPolicy();
-    const archiveMaxLen = maxLen ?? policy.archiveMaxLen;
+    const archiveMaxLen = policy.archiveMaxLen;
     const result = await archiveCompletionsChunked(redis, streamKey, archiveStreamKey, moduleId, archiveMaxLen, {
       activeIdentity,
-      batchSize: opts.batchSize ?? policy.tailScanBatchSize,
+      batchSize: policy.tailScanBatchSize,
     });
     emitLog({
       op: 'archive',
@@ -382,7 +394,7 @@ async function main(args = process.argv.slice(2)) {
     if (action === 'send') {
       const type = flags.type;
       const iter = flags.iteration;
-      const payload = JSON.parse(flags.payload || '{}');
+      const payload = JSON.parse(selectDefinedValue(() => (flags.payload), () => ('{}')));
       if (!type) throw new Error('Missing --type');
 
       const res = await lib.publishTask('buster', type, payload, iter);
@@ -393,12 +405,12 @@ async function main(args = process.argv.slice(2)) {
     if (action === 'read-completion') {
       const stream = flags.stream;
       const module = flags.module;
-      if (!stream || !module) throw new Error('Missing --stream or --module');
+      if (selectTruthyValue(() => (!stream), () => (!module))) throw new Error('Missing --stream or --module');
       const expectedIdentity = {
-        run_id: flags['run-id'] || undefined,
-        attempt: flags.attempt || undefined,
-        dispatch_id: flags['dispatch-id'] || undefined,
-        session_key: flags['session-key'] || undefined,
+        run_id: selectTruthyValue(() => (flags['run-id']), () => (undefined)),
+        attempt: selectTruthyValue(() => (flags.attempt), () => (undefined)),
+        dispatch_id: selectTruthyValue(() => (flags['dispatch-id']), () => (undefined)),
+        session_key: selectTruthyValue(() => (flags['session-key']), () => (undefined)),
       };
       const missingIdentity = getMissingExpectedCompletionIdentityFields(expectedIdentity);
       if (missingIdentity.length) {
@@ -408,7 +420,10 @@ async function main(args = process.argv.slice(2)) {
           dispatch_id: '--dispatch-id',
           session_key: '--session-key',
         };
-        throw new Error(`Missing completion identity fields: ${missingIdentity.map((field) => flagNames[field] || field).join(', ')}`);
+        throw new Error(`Missing completion identity fields: ${missingIdentity.map((field) => {
+          if (Object.prototype.hasOwnProperty.call(flagNames, field)) return flagNames[field];
+          return field;
+        }).join(', ')}`);
       }
       const res = await lib.readCompletion(stream, module, expectedIdentity);
       console.log(JSON.stringify(res, null, 2));
@@ -418,14 +433,14 @@ async function main(args = process.argv.slice(2)) {
     if (action === 'archive-completions') {
       const stream = flags.stream;
       const module = flags.module;
-      if (!stream || !module) throw new Error('Missing --stream or --module');
+      if (selectTruthyValue(() => (!stream), () => (!module))) throw new Error('Missing --stream or --module');
       const archiveStream = stream + ':log';
       const policy = redisToolPolicy();
       const res = await lib.archiveCompletions(stream, archiveStream, module, policy.archiveMaxLen, {
-        run_id: flags['run-id'] || undefined,
-        attempt: flags.attempt || undefined,
-        dispatch_id: flags['dispatch-id'] || undefined,
-        session_key: flags['session-key'] || undefined,
+        run_id: selectTruthyValue(() => (flags['run-id']), () => (undefined)),
+        attempt: selectTruthyValue(() => (flags.attempt), () => (undefined)),
+        dispatch_id: selectTruthyValue(() => (flags['dispatch-id']), () => (undefined)),
+        session_key: selectTruthyValue(() => (flags['session-key']), () => (undefined)),
       }, { batchSize: policy.tailScanBatchSize });
       console.log(JSON.stringify(res));
       return;

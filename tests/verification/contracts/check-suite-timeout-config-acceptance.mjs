@@ -16,7 +16,7 @@ async function expectSuiteRequestRejected(suites, opts, expected) {
         assert(error.details.missing_fields?.includes(expected.missingField), `missing_fields must include ${expected.missingField}`);
       }
       if (expected.unknownSuite) {
-        assert.deepEqual(error.details.unknown_suites, [expected.unknownSuite]);
+        assert.deepEqual(error.details.unsupported_suites, [expected.unknownSuite]);
       }
       return true;
     },
@@ -73,7 +73,7 @@ await expectSuiteRequestRejected(['missing-suite'], {
     },
   },
 }, {
-  reason: 'unknown_suite',
+  reason: 'unsupported_suite',
   unknownSuite: 'missing-suite',
 });
 

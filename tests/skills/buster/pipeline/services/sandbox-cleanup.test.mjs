@@ -32,14 +32,9 @@ function createSandboxRoot(t) {
 
 test('task-scoped pre cleanup leaves shared outputs and nginx alone', async (t) => {
   const sandboxRoot = createSandboxRoot(t);
-  const execCalls = [];
 
   const result = await cleanupSandboxResources('pre', scopedPayload(), {
     sandboxRoot,
-    async execFileAsync(command, args) {
-      execCalls.push([command, args]);
-      return { stdout: '' };
-    },
   });
 
   assert.equal(result.ok, true);
@@ -50,26 +45,19 @@ test('task-scoped pre cleanup leaves shared outputs and nginx alone', async (t) 
   assert.equal(result.cleaned.nginx_stopped, false);
   assert.equal(fs.existsSync(path.join(sandboxRoot, 'www', 'other-task.txt')), true);
   assert.equal(fs.existsSync(path.join(sandboxRoot, 'results', 'other-task.txt')), true);
-  assert.equal(execCalls.some(([command]) => command === 'nginx'), false);
 });
 
 test('task-scoped final cleanup leaves global nginx alone', async (t) => {
   const sandboxRoot = createSandboxRoot(t);
-  const execCalls = [];
 
   const result = await cleanupSandboxResources('final', scopedPayload(), {
     sandboxRoot,
-    async execFileAsync(command, args) {
-      execCalls.push([command, args]);
-      return { stdout: '' };
-    },
   });
 
   assert.equal(result.ok, true);
   assert.equal(result.cleanup_policy.name, 'task_scoped');
   assert.equal(result.cleanup_policy.process_cleanup, false);
   assert.equal(result.cleaned.nginx_stopped, false);
-  assert.equal(execCalls.some(([command]) => command === 'nginx'), false);
 });
 
 test('trackSandboxResources preserves resources tracked concurrently for the same scope', async (t) => {

@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Verdict Schema — Deterministic Test Suite Results
 // ═══════════════════════════════════════════════════════════════
@@ -77,6 +78,18 @@ export interface SuiteVerdict {
   error?: string;
 }
 
+interface NormalizedSuiteVerdictOptions {
+  critical: boolean;
+  duration_ms: number;
+  checks_total: number;
+  checks_passed: number;
+  checks_failed: number;
+  findings: Finding[];
+  metadata: Record<string, unknown>;
+  reason?: string | null;
+  error?: string | null;
+}
+
 export interface RunnerVerdict {
   run_id: string;
   module: string;
@@ -106,28 +119,43 @@ function isSeverity(severity: unknown): severity is FindingSeverity {
   return typeof severity === 'string' && severityValues().includes(severity as FindingSeverity);
 }
 
+function normalizeSuiteVerdictOptions(opts: SuiteVerdictOptions): NormalizedSuiteVerdictOptions {
+  return {
+    critical: opts.critical === true,
+    duration_ms: Number.isFinite(opts.duration_ms) ? Number(opts.duration_ms) : 0,
+    checks_total: Number.isFinite(opts.checks_total) ? Number(opts.checks_total) : 0,
+    checks_passed: Number.isFinite(opts.checks_passed) ? Number(opts.checks_passed) : 0,
+    checks_failed: Number.isFinite(opts.checks_failed) ? Number(opts.checks_failed) : 0,
+    findings: Array.isArray(opts.findings) ? opts.findings : [],
+    metadata: opts.metadata && typeof opts.metadata === 'object' && !Array.isArray(opts.metadata) ? opts.metadata : {},
+    reason: opts.reason,
+    error: opts.error,
+  };
+}
+
 // KEEP_TYPED_POLICY: minimal suite inputs receive deterministic typed defaults
 // for optional verdict fields.
 export function createSuiteVerdict(suite: string, status: SuiteStatus, opts: SuiteVerdictOptions = {}): SuiteVerdict {
-  if (!suite || typeof suite !== 'string') {
+  if (selectTruthyValue(() => (!suite), () => (typeof suite !== 'string'))) {
     throw new Error('createSuiteVerdict: suite name is required');
   }
   if (!isStatus(status)) {
     throw new Error(`createSuiteVerdict: invalid status "${status}" (expected: ${statusValues().join(', ')})`);
   }
+  const normalized = normalizeSuiteVerdictOptions(opts);
 
   return {
     suite,
     status,
-    critical:       opts.critical       ?? false,
-    duration_ms:    opts.duration_ms    ?? 0,
-    checks_total:   opts.checks_total   ?? 0,
-    checks_passed:  opts.checks_passed  ?? 0,
-    checks_failed:  opts.checks_failed  ?? 0,
-    findings:       opts.findings       ?? [],
-    metadata:       opts.metadata       ?? {},
-    ...(opts.reason ? { reason: opts.reason } : {}),
-    ...(opts.error  ? { error: opts.error }   : {}),
+    critical: normalized.critical,
+    duration_ms: normalized.duration_ms,
+    checks_total: normalized.checks_total,
+    checks_passed: normalized.checks_passed,
+    checks_failed: normalized.checks_failed,
+    findings: normalized.findings,
+    metadata: normalized.metadata,
+    ...(normalized.reason ? { reason: normalized.reason } : {}),
+    ...(normalized.error  ? { error: normalized.error }   : {}),
   };
 }
 
@@ -139,27 +167,30 @@ export function createFinding(severity: FindingSeverity, message: string, opts: 
   return {
     severity,
     message,
-    rule:    opts.rule    ?? null,
-    element: opts.element ?? null,
-    file:    opts.file    ?? null,
-    line:    opts.line    ?? null,
+    rule:    selectDefinedValue(() => (opts.rule), () => (null)),
+    element: selectDefinedValue(() => (opts.element), () => (null)),
+    file:    selectDefinedValue(() => (opts.file), () => (null)),
+    line:    selectDefinedValue(() => (opts.line), () => (null)),
   };
 }
 
 // KEEP_TYPED_POLICY: runner aggregation produces deterministic summaries from
 // partial verdict data; no fail/error means PASS.
 export function createRunnerVerdict(module: string, project: string, suiteResults: Record<string, SuiteVerdict> | null | undefined): RunnerVerdict {
-  const suites = suiteResults || {};
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!suiteResults), () => (typeof suiteResults !== 'object'))), () => (Array.isArray(suiteResults)))) {
+    throw new Error('createRunnerVerdict: suiteResults is required');
+  }
+  const suites = suiteResults;
   const values = Object.values(suites);
 
-  const durationMs = values.reduce((sum, verdict) => sum + (verdict.duration_ms || 0), 0);
-  const hasCriticalFail = values.some(verdict => verdict.critical && (verdict.status === STATUS.FAIL || verdict.status === STATUS.ERROR));
+  const durationMs = values.reduce((sum, verdict) => sum + verdict.duration_ms, 0);
   const hasAnyFail = values.some(verdict => verdict.status === STATUS.FAIL);
   const hasError = values.some(verdict => verdict.status === STATUS.ERROR);
+  const hasTerminalFailure = terminalFailureAuthority(hasAnyFail, hasError);
 
-  const overallStatus = (hasAnyFail || hasError) ? STATUS.FAIL : STATUS.PASS;
-  const criticalFailure = hasCriticalFail;
-  const recommendation = hasCriticalFail
+  const overallStatus = hasTerminalFailure ? STATUS.FAIL : STATUS.PASS;
+  const criticalFailure = hasTerminalFailure;
+  const recommendation = criticalFailure
     ? RECOMMENDATION.NO_SUBAGENT
     : RECOMMENDATION.SPAWN;
 
@@ -179,6 +210,11 @@ export function createRunnerVerdict(module: string, project: string, suiteResult
   };
 }
 
+function terminalFailureAuthority(hasAnyFail: boolean, hasError: boolean): boolean {
+  if (hasAnyFail) return true;
+  return hasError;
+}
+
 function buildSummary(suites: Record<string, SuiteVerdict>, overallStatus: SuiteStatus, criticalFailure: boolean): string {
   const entries = Object.entries(suites);
 
@@ -188,9 +224,9 @@ function buildSummary(suites: Record<string, SuiteVerdict>, overallStatus: Suite
   }
 
   const failures = entries
-    .filter(([, verdict]) => verdict.status === STATUS.FAIL || verdict.status === STATUS.ERROR)
+    .filter(([, verdict]) => selectTruthyValue(() => (verdict.status === STATUS.FAIL), () => (verdict.status === STATUS.ERROR)))
     .map(([name, verdict]) => {
-      const topFinding = verdict.findings?.[0]?.message || verdict.error || verdict.reason || 'unknown';
+      const topFinding = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (verdict.findings?.[0]?.message), () => (verdict.error))), () => (verdict.reason))), () => ('missing_failure_detail'));
       return `${name}: ${topFinding}`;
     });
 

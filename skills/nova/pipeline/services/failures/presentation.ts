@@ -4,8 +4,6 @@ import path from 'path';
 import { log, getActiveContext } from '../../core/logger.ts';
 import { getRunId } from '../../core/runtime.ts';
 import { gatewayInvokePolicy } from '../../core/session-policy.ts';
-import { discord } from '../../integrations/discord.ts';
-import { sendGatewaySessionMessage } from '../../integrations/gateway.ts';
 import { getPipelineArtifactBundle } from '../artifact-bundle.ts';
 import {
   resolveStatusSessionKey,
@@ -19,9 +17,33 @@ import { normalizeFailureClass } from '../failure-semantics.ts';
 import { formatRateLimitEmbed as formatSharedRateLimitEmbed } from '../rate-limit-contract.ts';
 import { getSuiteFailureDetail, parsePreTestVerdict } from './classification.ts';
 import { reportFailureSurfaceIncident } from './incidents.ts';
+import {
+  AGENT_SESSION_HANDOFF_SURFACE,
+  normalizeAgentSessionTarget,
+  sendAgentSessionHandoff,
+} from '../../agents/session-handoff.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 function telemetryCtx(config) {
-  return getActiveContext() || { config, runId: getRunId(config) || config?.run_id || config?._runId || '' };
+  const active = getActiveContext();
+  if (active) return active;
+  const runId = selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (getRunId(config)), () => (config?.run_id))), () => (config?._runId))), () => (null));
+  return { config, runId };
+}
+
+function firstDefined(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return undefined;
+}
+
+function errorMessage(error) {
+  return error instanceof Error ? error.message : String(error);
+}
+
+function injectionRunId(config) {
+  return firstDefined(config?._runId, config?.run_id, getRunId(config));
 }
 
 function computeElapsedSeconds(fromIso, toIso = new Date().toISOString()) {
@@ -48,50 +70,50 @@ function buildFailureDiscordFields(identity = {}, extra = []) {
 
 function buildFailureDiscordCorrelation(identity = {}) {
   return {
-    run_id: identity.run_id || null,
-    module_id: identity.module_id || null,
-    gate_id: identity.gate_id || null,
-    gate_type: identity.gate_type || null,
-    attempt: identity.attempt ?? null,
-    dispatch_id: identity.dispatch_id || null,
-    gateway_label: identity.gateway_label || null,
-    session_key: identity.session_key || null,
+    run_id: selectTruthyValue(() => (identity.run_id), () => (null)),
+    module_id: selectTruthyValue(() => (identity.module_id), () => (null)),
+    gate_id: selectTruthyValue(() => (identity.gate_id), () => (null)),
+    gate_type: selectTruthyValue(() => (identity.gate_type), () => (null)),
+    attempt: selectDefinedValue(() => (identity.attempt), () => (null)),
+    dispatch_id: selectTruthyValue(() => (identity.dispatch_id), () => (null)),
+    gateway_label: selectTruthyValue(() => (identity.gateway_label), () => (null)),
+    session_key: selectTruthyValue(() => (identity.session_key), () => (null)),
   };
 }
 
 function buildModuleFailureTelemetry(status, phase, reason, oldStatus, opts = {}) {
-  const startedAt = status?.phase_started_at || status?.attempt_started_at || status?.started_at || null;
+  const startedAt = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (status?.phase_started_at), () => (status?.attempt_started_at))), () => (status?.started_at))), () => (null));
   return {
-    title: status?.title || opts.moduleTitle || null,
-    old_status: oldStatus || null,
-    attempt: status?.fail_count ?? null,
-    dispatch_id: (opts.dispatch_id ?? resolveStatusDispatchId(status) ?? null),
-    gateway_label: (opts.gateway_label ?? resolveStatusGatewayLabel(status) ?? null),
-    phase: phase || status?.current_phase || null,
-    model: opts.model ?? status?.active_agent?.model ?? null,
+    title: selectTruthyValue(() => (selectTruthyValue(() => (status?.title), () => (opts.moduleTitle))), () => (null)),
+    old_status: selectTruthyValue(() => (oldStatus), () => (null)),
+    attempt: selectDefinedValue(() => (status?.fail_count), () => (null)),
+    dispatch_id: (selectDefinedValue(() => (selectDefinedValue(() => (opts.dispatch_id), () => (resolveStatusDispatchId(status)))), () => (null))),
+    gateway_label: (selectDefinedValue(() => (selectDefinedValue(() => (opts.gateway_label), () => (resolveStatusGatewayLabel(status)))), () => (null))),
+    phase: selectTruthyValue(() => (selectTruthyValue(() => (phase), () => (status?.current_phase))), () => (null)),
+    model: selectDefinedValue(() => (selectDefinedValue(() => (opts.model), () => (status?.active_agent?.model))), () => (null)),
     duration_seconds: computeElapsedSeconds(startedAt),
     cost_estimate_usd: null,
-    session_key: (opts.session_key ?? resolveStatusSessionKey(status) ?? null),
-    commit_hash: status?.commit_hash || status?.forge_commit_hash || status?.buster_commit_hash || status?.forge_commit || status?.buster_commit || null,
-    failure_class: normalizeFailureClass(phase || status?.current_phase || null, reason, {
+    session_key: (selectDefinedValue(() => (selectDefinedValue(() => (opts.session_key), () => (resolveStatusSessionKey(status)))), () => (null))),
+    commit_hash: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (status?.commit_hash), () => (status?.forge_commit_hash))), () => (status?.buster_commit_hash))), () => (status?.forge_commit))), () => (status?.buster_commit))), () => (null)),
+    failure_class: normalizeFailureClass(selectTruthyValue(() => (selectTruthyValue(() => (phase), () => (status?.current_phase))), () => (null)), reason, {
       isTimeout: opts.isTimeout === true,
-      monitorReason: opts.monitorReason || null,
+      monitorReason: selectTruthyValue(() => (opts.monitorReason), () => (null)),
     }),
-    reason: reason || null,
+    reason: selectTruthyValue(() => (reason), () => (null)),
   };
 }
 
 export function buildPreTestDiscordFields(redisEntry) {
-  const suites = parsePreTestVerdict(redisEntry).suites || {};
+  const suites = selectDefinedValue(() => (parsePreTestVerdict(redisEntry).suites), () => ({}));
   const passed = [];
   const failed = [];
   const skipped = [];
 
   for (const [name, suite] of Object.entries(suites)) {
-    const status = String(suite?.status || '').toUpperCase();
+    const status = String(selectDefinedValue(() => (suite?.status), () => (''))).toUpperCase();
     if (status === 'PASS') passed.push(name);
     else if (status === 'SKIP') skipped.push(name);
-    else if (status === 'FAIL' || status === 'ERROR') failed.push({ name, detail: getSuiteFailureDetail(suite) || 'failed' });
+    else if (selectTruthyValue(() => (status === 'FAIL'), () => (status === 'ERROR'))) failed.push({ name, detail: selectDefinedValue(() => (getSuiteFailureDetail(suite)), () => ('failed')) });
   }
 
   const fields = [
@@ -122,7 +144,7 @@ export function buildPreTestDiscordFields(redisEntry) {
  * Discord limits: field value ≤ 1024 chars, description ≤ 4096 chars.
  */
 export function truncateForDiscord(text, maxLength = 1024) {
-  const s = String(text || '');
+  const s = String(selectDefinedValue(() => (text), () => ('')));
   if (s.length <= maxLength) return s;
   return s.slice(0, maxLength - 1) + '…';
 }
@@ -142,24 +164,28 @@ export function formatRateLimitEmbed(config, context, pauseCount, maxPauses, coo
 }
 
 export async function injectNeedsNova(config, result, novaChannel, stepType = 'module', stepId = null, opts = {}) {
-  const channelId = novaChannel || process.env.NOVA_CHANNEL || null;
-  const gatewaySend = opts?.sendGatewaySessionMessage || sendGatewaySessionMessage;
-  const discordNotify = opts?.discord || discord;
-  const targetId = stepId || result?.module || 'unknown';
-  const terminalStatus = result?.terminal_status || result?.terminal?.status || 'action_required';
-  const terminalDecision = result?.terminal_decision || result?.terminal?.decision || null;
-  const terminalAction = terminalDecision?.action || null;
+  const configuredChannel = novaChannel !== undefined && novaChannel !== null && String(novaChannel).trim()
+    ? novaChannel
+    : process.env.NOVA_CHANNEL !== undefined && process.env.NOVA_CHANNEL !== null && String(process.env.NOVA_CHANNEL).trim()
+      ? process.env.NOVA_CHANNEL
+      : null;
+  const sessionTarget = normalizeAgentSessionTarget(configuredChannel);
+  const sessionSender = opts?.sendGatewaySessionMessage;
+  const targetId = selectTruthyValue(() => (selectTruthyValue(() => (stepId), () => (result?.module))), () => ('missing_step_target'));
+  const terminalStatus = selectDefinedValue(() => (selectDefinedValue(() => (result?.terminal_status), () => (result?.terminal?.status))), () => ('action_required'));
+  const terminalDecision = selectTruthyValue(() => (selectTruthyValue(() => (result?.terminal_decision), () => (result?.terminal?.decision))), () => (null));
+  const terminalAction = selectTruthyValue(() => (terminalDecision?.action), () => (null));
   if (!terminalAction) {
     throw new Error('Nova injection requires an explicit terminal decision action');
   }
-  const runId = config?._runId || config?.run_id || getRunId(config);
+  const runId = injectionRunId(config);
   const injectionCorrelation = resolveResultCorrelation(result);
   const injectionCorrelationProvenance = resolveResultReadModelCorrelationProvenance(result);
   const attempt = injectionCorrelation.attempt;
   const dispatchId = injectionCorrelation.dispatch_id;
   const gatewayLabel = injectionCorrelation.gateway_label;
   const childSessionKey = injectionCorrelation.session_key;
-  const gateId = stepType === 'gate' ? result?.gate_id || targetId : null;
+  const gateId = stepType === 'gate' ? firstDefined(result?.gate_id, targetId) : null;
   const gateType = stepType === 'gate' ? injectionCorrelation.gate_type : null;
   const artifactBundle = getPipelineArtifactBundle(config);
   const injectionLogPaths = [
@@ -170,25 +196,26 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
   const entry = {
     ts: new Date().toISOString(),
     run_id: runId,
-    status: 'skipped',
-    channel: channelId,
+    status: 'prepared',
+    session_key: sessionTarget,
+    delivery_surface: AGENT_SESSION_HANDOFF_SURFACE,
     step_type: stepType,
     step_id: targetId,
-    module: result?.module || null,
+    module: selectTruthyValue(() => (result?.module), () => (null)),
     gate_id: stepType === 'gate' ? gateId : undefined,
     gate_type: stepType === 'gate' ? gateType : undefined,
     terminal_status: terminalStatus,
     terminal_decision: terminalDecision,
     terminal_action: terminalAction,
-    reason: (result?.reason || '').slice(0, 500),
+    reason: String(selectDefinedValue(() => (result?.reason), () => (''))).slice(0, 500),
     attempt,
     dispatch_id: dispatchId,
     gateway_label: gatewayLabel,
-    session_key: childSessionKey,
+    child_session_key: childSessionKey,
     correlation_provenance: injectionCorrelationProvenance,
-    fail_count: result?.fail_count ?? null,
-    max_fails: result?.max_fails ?? null,
-    remaining_attempts: result?.remaining_attempts ?? null,
+    fail_count: selectDefinedValue(() => (result?.fail_count), () => (null)),
+    max_fails: selectDefinedValue(() => (result?.max_fails), () => (null)),
+    remaining_attempts: selectDefinedValue(() => (result?.remaining_attempts), () => (null)),
   };
 
   const appendInjectionLog = () => {
@@ -204,16 +231,17 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
     }
   };
 
-  if (!channelId) {
-    log('INFO', `${terminalStatus} — no --nova-channel set, skipping Nova session injection`);
-    entry.status = 'skipped_no_channel';
+  if (!sessionTarget) {
+    log('INFO', `${terminalStatus} — no --nova-channel set, skipping Nova handoff notification`);
+    entry.status = 'skipped_no_session';
+    entry.delivery_status = 'skipped_no_session';
+    entry.delivery_content_known = false;
+    entry.delivery_acknowledged = false;
     appendInjectionLog();
     return;
   }
 
-  const targetSessionKey = `agent:main:discord:channel:${channelId}`;
   const messageLines = [
-    '⚠️ Cronjob injected — Nova working on resolution.',
     `Project: ${config.project}`,
     `${stepType === 'gate' ? 'Gate' : 'Module'}: ${targetId}`,
     `Status: ${terminalStatus}`,
@@ -238,67 +266,42 @@ export async function injectNeedsNova(config, result, novaChannel, stepType = 'm
     messageLines.push(`Resume: ${String(result.resume_command).slice(0, 400)}`);
   }
   const message = messageLines.join('\n');
-  const injectionDiscordIdentity = { run_id: runId, step_type: stepType, step_id: targetId, gate_id: gateId, gate_type: gateType, attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: childSessionKey };
-  const injectionDiscordCorrelation = buildFailureDiscordCorrelation(injectionDiscordIdentity);
-  const sendPolicy = gatewayInvokePolicy(config, 'session_send');
+  const title = `Nova handoff required: ${targetId}`;
+  entry.intent_status = 'recorded';
+  entry.delivery_content_known = true;
 
   try {
-    try {
-      await gatewaySend(targetSessionKey, message, sendPolicy.timeoutMs, sendPolicy);
-    } catch (e) {
-      const errMsg = e?.message?.split('\n')[0] || 'unknown error';
-      const isAbort = /aborted|abort/i.test(errMsg);
-      if (isAbort) {
-        entry.status = 'delivery_unknown_aborted';
-        entry.error = errMsg;
-        entry.delivery_acknowledged = false;
-        log('WARN', `${terminalStatus} Nova injection delivery unknown for channel ${channelId} and ${stepType} ${targetId} (Gateway response aborted before acknowledgement)`);
-        await discordNotify(config, 'CRITICAL', `Nova injection delivery UNKNOWN: ${targetId}`, `Pipeline could not confirm Nova handoff delivery for ${stepType} ${targetId}; Gateway response aborted before acknowledgement. Manual verification required.`, [
-          ...buildFailureDiscordFields(injectionDiscordIdentity),
-          { name: 'Status', value: terminalStatus },
-          { name: 'Action', value: terminalAction },
-          { name: 'Channel', value: channelId },
-          { name: 'Target', value: `${stepType}:${targetId}` },
-          { name: 'Delivery', value: 'unknown_aborted' },
-          { name: 'Error', value: errMsg.slice(0, 200) },
-        ], { correlation: injectionDiscordCorrelation }).catch((discordError) => {
-          log('DEBUG', `Nova injection unknown-delivery Discord notice failed: ${discordError?.message || discordError}`);
-        });
-      } else {
-        entry.status = 'failed';
-        entry.error = errMsg;
-        log('WARN', `Failed to inject ${terminalStatus} into Nova channel ${channelId}: ${errMsg}`);
-        await discordNotify(config, 'CRITICAL', `Nova injection FAILED: ${targetId}`, `Pipeline could not deliver the Nova handoff for ${stepType} ${targetId}. Manual intervention required.`, [
-          ...buildFailureDiscordFields(injectionDiscordIdentity),
-          { name: 'Status', value: terminalStatus },
-          { name: 'Action', value: terminalAction },
-          { name: 'Channel', value: channelId },
-          { name: 'Target', value: `${stepType}:${targetId}` },
-          { name: 'Error', value: errMsg.slice(0, 200) },
-        ], { correlation: injectionDiscordCorrelation }).catch((discordError) => {
-          log('DEBUG', `Nova injection failure Discord notice failed: ${discordError?.message || discordError}`);
-        });
-      }
-      return;
+    const sendPolicy = gatewayInvokePolicy(config, 'session_send');
+    const receipt = await sendAgentSessionHandoff({
+      sessionKey: sessionTarget,
+      message: `${title}\n${message}`,
+      timeoutMs: sendPolicy.timeoutMs,
+      policy: sendPolicy,
+      ...(sessionSender ? { sendSessionMessage: sessionSender } : {}),
+    });
+    entry.delivery_acknowledged = receipt.acknowledged;
+    entry.delivery_status = receipt.delivery_status;
+    entry.raw_delivery_status = receipt.raw_delivery_status;
+    entry.gateway_run_id = receipt.gateway_run_id;
+    entry.delivery_session_key = receipt.session_key;
+    entry.turn_id = receipt.turn_id;
+    entry.response_status = receipt.response_status;
+    entry.status = entry.delivery_acknowledged ? 'ok' : 'failed';
+    entry.notification_status = entry.delivery_acknowledged ? 'ok' : 'failed';
+    if (!entry.delivery_acknowledged) {
+      entry.error = 'gateway sessions_send delivery receipt missing';
+      log('WARN', `Nova session handoff delivery was not acknowledged for ${stepType} ${targetId}: ${entry.error}`);
+    } else {
+      log('OK', `${terminalStatus} Nova handoff delivered to session ${sessionTarget} for ${stepType} ${targetId}`);
     }
-
-    entry.status = 'ok';
-    log('OK', `${terminalStatus} injected into Nova channel ${channelId} for ${stepType} ${targetId}`);
-    try {
-      await discordNotify(config, 'WARN', `Nova injection sent: ${targetId}`, `Pipeline sent the Nova handoff for ${stepType} ${targetId}.`, [
-        ...buildFailureDiscordFields(injectionDiscordIdentity),
-        { name: 'Status', value: terminalStatus },
-        { name: 'Action', value: terminalAction },
-        { name: 'Channel', value: channelId },
-        { name: 'Target', value: `${stepType}:${targetId}` },
-      ], { correlation: injectionDiscordCorrelation });
-      entry.notification_status = 'ok';
-    } catch (discordError) {
-      const discordErrMsg = discordError?.message?.split('\n')[0] || 'unknown error';
-      entry.notification_status = 'failed';
-      entry.notification_error = discordErrMsg;
-      log('WARN', `Nova injection confirmation Discord notice failed for ${stepType} ${targetId}: ${discordErrMsg}`);
-    }
+  } catch (sendError) {
+    const sendErrMsg = selectTruthyValue(() => (sendError?.message?.split('\n')[0]), () => ('missing_error_detail'));
+    entry.status = 'failed';
+    entry.notification_status = 'failed';
+    entry.delivery_status = 'gateway_sessions_send_failed';
+    entry.delivery_acknowledged = false;
+    entry.error = sendErrMsg;
+    log('WARN', `Nova session handoff failed for ${stepType} ${targetId}: ${sendErrMsg}`);
   } finally {
     appendInjectionLog();
   }

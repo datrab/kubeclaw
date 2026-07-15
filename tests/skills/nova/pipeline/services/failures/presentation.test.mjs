@@ -19,13 +19,23 @@ function makeConfig() {
     },
     _runId: 'run-test',
     run_id: 'run-test',
+    gateway: {
+      invoke: {
+        retry: {
+          max_attempts: 1,
+          retry_delay_ms: 0,
+        },
+        session_send: {
+          timeout_ms: 100,
+        },
+      },
+    },
   };
 }
 
-test('Nova injection stays ok when confirmation Discord notification fails', async () => {
+test('Nova handoff records delivered Gateway session prompt as the only successful path', async () => {
   const config = makeConfig();
-  let gatewayCalls = 0;
-  let discordCalls = 0;
+  const sends = [];
 
   await injectNeedsNova(config, {
     exit: 10,
@@ -35,12 +45,17 @@ test('Nova injection stays ok when confirmation Discord notification fails', asy
     max_fails: 2,
     terminal_decision: { action: 'request_handoff' },
   }, 'nova-channel', 'module', 'alpha', {
-    sendGatewaySessionMessage: async () => {
-      gatewayCalls += 1;
-    },
-    discord: async () => {
-      discordCalls += 1;
-      throw new Error('discord unavailable');
+    sendGatewaySessionMessage: async (sessionKey, message, timeoutMs, policy) => {
+      sends.push({ sessionKey, message, timeoutMs, policy });
+      return {
+        result: {
+          delivery: {
+            status: 'sent',
+            sessionKey: 'agent:main:discord:channel:nova-channel',
+            turnId: 'turn-1',
+          },
+        },
+      };
     },
   });
 
@@ -48,27 +63,31 @@ test('Nova injection stays ok when confirmation Discord notification fails', asy
   const entries = fs.readFileSync(runLogPath, 'utf8').trim().split('\n').map(line => JSON.parse(line));
   const entry = entries.at(-1);
 
-  assert.equal(gatewayCalls, 1);
-  assert.equal(discordCalls, 1);
+  assert.equal(sends.length, 1);
+  assert.equal(sends[0].sessionKey, 'agent:main:discord:channel:nova-channel');
+  assert.match(sends[0].message, /Nova handoff required: alpha/);
+  assert.equal(sends[0].timeoutMs, 100);
   assert.equal(entry.status, 'ok');
-  assert.equal(entry.notification_status, 'failed');
-  assert.equal(entry.notification_error, 'discord unavailable');
+  assert.equal(entry.delivery_surface, 'gateway_sessions_send');
+  assert.equal(entry.delivery_status, 'gateway_sessions_send_delivered');
+  assert.equal(entry.delivery_acknowledged, true);
+  assert.equal(entry.session_key, 'agent:main:discord:channel:nova-channel');
+  assert.equal(entry.delivery_session_key, 'agent:main:discord:channel:nova-channel');
+  assert.equal(entry.turn_id, 'turn-1');
 });
 
-test('Nova injection abort notices describe pipeline handoff instead of cronjob injection', async () => {
+test('Nova handoff fails when Gateway session prompt receipt is missing', async () => {
   const config = makeConfig();
-  const discordCalls = [];
+  const sends = [];
 
   await injectNeedsNova(config, {
     exit: 10,
     reason: 'needs operator input',
     terminal_decision: { action: 'request_handoff' },
   }, 'nova-channel', 'validator', 'validator:full_lint', {
-    sendGatewaySessionMessage: async () => {
-      throw new Error('This operation was aborted');
-    },
-    discord: async (_config, level, title, description, fields) => {
-      discordCalls.push({ level, title, description, fields });
+    sendGatewaySessionMessage: async (sessionKey, message) => {
+      sends.push({ sessionKey, message });
+      return { result: { delivery: { status: 'unknown' } } };
     },
   });
 
@@ -76,10 +95,14 @@ test('Nova injection abort notices describe pipeline handoff instead of cronjob 
   const entries = fs.readFileSync(runLogPath, 'utf8').trim().split('\n').map(line => JSON.parse(line));
   const entry = entries.at(-1);
 
-  assert.equal(entry.status, 'delivery_unknown_aborted');
-  assert.equal(entry.error, 'This operation was aborted');
-  assert.equal(discordCalls.length, 1);
-  assert.equal(discordCalls[0].title, 'Nova injection delivery UNKNOWN: validator:full_lint');
-  assert.match(discordCalls[0].description, /Pipeline could not confirm Nova handoff delivery/);
-  assert.doesNotMatch(discordCalls[0].description, /Cronjob/i);
+  assert.equal(entry.status, 'failed');
+  assert.equal(entry.delivery_surface, 'gateway_sessions_send');
+  assert.equal(entry.delivery_status, 'gateway_sessions_send_receipt_missing');
+  assert.equal(entry.intent_status, 'recorded');
+  assert.equal(entry.delivery_content_known, true);
+  assert.equal(entry.delivery_acknowledged, false);
+  assert.equal(entry.error, 'gateway sessions_send delivery receipt missing');
+  assert.equal(sends.length, 1);
+  assert.match(sends[0].message, /Project: nova-injection-test/);
+  assert.doesNotMatch(sends[0].message, /Cronjob/i);
 });

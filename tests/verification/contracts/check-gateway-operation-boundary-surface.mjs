@@ -55,7 +55,7 @@ for (const filePath of scannedFiles) {
     `${relPath} must not import or call raw gatewayInvoke; use typed common gateway operations`,
   );
   assert.equal(
-    /\b(?:session_status|sessions_send|sessions_spawn)\b|['"]subagents['"]/.test(source),
+    /['"](?:session_status|sessions_send|sessions_spawn|subagents)['"]/.test(source),
     false,
     `${relPath} must not reference raw Gateway tool names; use typed common gateway operations`,
   );
@@ -66,6 +66,7 @@ for (const wrapperName of [
   'getGatewaySessionStatus',
   'spawnGatewaySession',
   'sendGatewaySessionMessage',
+  'sendGatewayChannelMessage',
   'killGatewaySubagent',
   'listGatewaySubagents',
   'checkGatewayHealth',
@@ -80,8 +81,9 @@ for (const wrapperName of [
 for (const [relPath, marker] of [
   ['skills/common/pipeline/agents/lifecycle.ts', 'spawnGatewaySession'],
   ['skills/common/pipeline/agents/lifecycle.ts', 'sendGatewaySessionMessage'],
+  ['skills/common/pipeline/agents/session-handoff.ts', 'sendGatewaySessionMessage'],
   ['skills/common/pipeline/agents/acp-monitor.ts', 'getGatewaySessionStatus'],
-  ['skills/nova/pipeline/services/failures/presentation.ts', 'sendGatewaySessionMessage'],
+  ['skills/nova/pipeline/services/failures/presentation.ts', 'sendAgentSessionHandoff'],
   ['skills/nova/pipeline/services/polling-session-end.ts', 'sendGatewaySessionMessage'],
   ['skills/nova/pipeline/agents/orchestration.ts', 'sendGatewaySessionMessage'],
   ['skills/nova/pipeline/agents/orchestration-healthcheck.ts', 'getGatewaySessionStatus'],

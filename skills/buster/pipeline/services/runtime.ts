@@ -1,12 +1,18 @@
+declare const process: {
+  env: Record<string, string | undefined>;
+};
+
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+
 function normalizeDiscordWebhookUrl(value: unknown): string | null {
   if (typeof value !== 'string') return null;
   const trimmed = value.trim();
-  return trimmed || null;
+  return selectTruthyValue(() => (trimmed), () => (null));
 }
 
 export function resolveDiscordWebhookUrl(override: unknown = null): string | null {
-  return normalizeDiscordWebhookUrl(override)
-    || normalizeDiscordWebhookUrl(process.env.DISCORD_WEBHOOK_URL)
-    || normalizeDiscordWebhookUrl(process.env.DISCORD_WEBHOOK)
-    || null;
+  const normalizedOverride = normalizeDiscordWebhookUrl(override);
+  if (normalizedOverride !== null) return normalizedOverride;
+  if (typeof override === 'string') return normalizeDiscordWebhookUrl(process.env.DISCORD_WEBHOOK_URL);
+  return null;
 }

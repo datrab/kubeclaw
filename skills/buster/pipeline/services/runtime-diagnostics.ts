@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // pipeline/services/runtime-diagnostics.ts — sanitized process diagnostic helpers
 // Owns non-blocking diagnostics for malformed tasks and process/runtime health.
 
@@ -57,7 +58,7 @@ function asErrorLike(value: unknown): ErrorLike | null {
 function normalizeDiagnosticDetail(errorOrDetail: unknown): string | null {
   // KEEP_TYPED_POLICY: diagnostics accept arbitrary thrown/detail values but
   // normalize them through the shared sanitizer before persistence or stderr.
-  if (errorOrDetail === undefined || errorOrDetail === null) return null;
+  if (selectTruthyValue(() => (errorOrDetail === undefined), () => (errorOrDetail === null))) return null;
   if (typeof errorOrDetail === 'string') return sanitizeNonBlockingErrorDetail(errorOrDetail);
   const errorLike = asErrorLike(errorOrDetail);
   if (errorLike?.message) return sanitizeNonBlockingErrorDetail(errorLike.message);
@@ -72,10 +73,22 @@ export function sanitizeBusterRuntimeDetail(value: unknown, maxChars = 1200): st
   return sanitizeNonBlockingErrorDetail(value, maxChars);
 }
 
-export function safeErrorMessage(error: unknown, fallback = 'unknown'): string {
+export function safeErrorMessage(error: unknown, fallback = 'missing_error_detail'): string {
   const errorLike = asErrorLike(error);
-  const raw = errorLike?.message || errorLike?.code || String(error || fallback);
+  const raw = errorMessageAuthority(errorLike, error, fallback);
   return sanitizeBusterRuntimeDetail(raw);
+}
+
+function errorMessageAuthority(errorLike: Record<string, unknown> | null, error: unknown, fallback: string): unknown {
+  if (errorLike?.message) return errorLike.message;
+  if (errorLike?.code) return errorLike.code;
+  if (error) return String(error);
+  return fallback;
+}
+
+function envStringOrNull(name: string): string | null {
+  const value = process.env[name];
+  return typeof value === 'string' && value.trim() ? value.trim() : null;
 }
 
 export function buildBusterProcessDiagnosticRecord({
@@ -83,7 +96,7 @@ export function buildBusterProcessDiagnosticRecord({
   detail,
   component = 'buster_gateway_health',
   surface = 'gateway',
-  projectHint = process.env.BUSTER_PROJECT || null,
+  projectHint = envStringOrNull('BUSTER_PROJECT'),
   ts = new Date().toISOString(),
 }: BusterProcessDiagnosticInput = {}): BusterProcessDiagnosticRecord {
   // KEEP_TYPED_POLICY: process-level diagnostics may use the typed BUSTER_PROJECT
@@ -98,7 +111,7 @@ export function buildBusterProcessDiagnosticRecord({
     scope: 'process',
     component,
     surface,
-    reason: reason || 'gateway_unavailable',
+    reason: selectDefinedValue(() => (reason), () => ('gateway_unavailable')),
     detail: normalizeDiagnosticDetail(detail),
     agent_type: 'buster',
     project_hint: normalizeRequiredIdentity(projectHint),
@@ -143,6 +156,6 @@ export function appendBusterProcessDiagnostic(record: JsonObject = {}): void {
 export function reportBusterRuntimeDiagnostic({ reason, detail, component = 'buster_runtime', surface = 'runtime' }: BusterProcessDiagnosticInput = {}): BusterProcessDiagnosticRecord {
   const record = buildBusterProcessDiagnosticRecord({ reason, detail, component, surface });
   appendBusterProcessDiagnostic(record);
-  console.warn(`[DIAGNOSTIC] ${component}/${surface}: ${reason || 'runtime_diagnostic'}${record.detail ? ` — ${record.detail}` : ''}`);
+  console.warn(`[DIAGNOSTIC] ${component}/${surface}: ${selectTruthyValue(() => (reason), () => ('missing_diagnostic_reason'))}${record.detail ? ` — ${record.detail}` : ''}`);
   return record;
 }

@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // pipeline/services/runtime-policy.ts — required Buster runtime policy from swarm.config.json
 
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
@@ -19,7 +20,7 @@ function isRecord(value: unknown): value is Record<string, any> {
 
 function requirePositiveInteger(record: Record<string, any>, field: string, label: string): number {
   const value = record[field];
-  if (!Number.isInteger(value) || value <= 0) {
+  if (selectTruthyValue(() => (!Number.isInteger(value)), () => (value <= 0))) {
     throw new Error(`${label}: required positive integer in swarm.config.json`);
   }
   return value;
@@ -27,7 +28,7 @@ function requirePositiveInteger(record: Record<string, any>, field: string, labe
 
 function requireNonNegativeNumber(record: Record<string, any>, field: string, label: string): number {
   const value = record[field];
-  if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value)))), () => (value < 0))) {
     throw new Error(`${label}: required non-negative number in swarm.config.json`);
   }
   return value;
@@ -62,7 +63,7 @@ export function loadBusterRuntimePolicy(): Record<string, any> {
 
 export function loadBusterPlatformConfig(): Record<string, any> {
   if (cachedPlatformConfig) return cachedPlatformConfig;
-  const configPath = process.env.SWARM_CONFIG || DEFAULT_SWARM_CONFIG_PATH;
+  const configPath = resolveSwarmConfigPathFromEnv();
   cachedPlatformConfig = expandSwarmConfig(JSON.parse(fs.readFileSync(configPath, 'utf8')));
   return cachedPlatformConfig;
 }
@@ -136,6 +137,18 @@ export function loadBusterSessionPolicies(): Record<string, any> {
   };
 }
 
+export function loadBusterGitPushPolicy(): Record<string, any> {
+  const config = loadBusterPlatformConfig();
+  if (!isRecord(config.git?.push)) {
+    throw new Error('config.git.push: required platform config object in swarm.config.json');
+  }
+  const pushPolicy = config.git.push;
+  return {
+    maxAttempts: requirePositiveInteger(pushPolicy, 'max_attempts', 'config.git.push.max_attempts'),
+    retryDelayMs: requireNonNegativeNumber(pushPolicy, 'retry_delay_ms', 'config.git.push.retry_delay_ms'),
+  };
+}
+
 export function loadBusterGatewayHealthPolicy(): Record<string, any> {
   const config = loadBusterPlatformConfig();
   if (!isRecord(config?.gateway?.invoke?.health)) throw new Error('config.gateway.invoke.health: required platform config object in swarm.config.json');
@@ -152,4 +165,11 @@ export function loadBusterGatewayHealthPolicy(): Record<string, any> {
 export function resetBusterRuntimePolicyForTests(): void {
   cachedPolicy = null;
   cachedPlatformConfig = null;
+}
+function resolveSwarmConfigPathFromEnv(): string {
+  const configured = process.env.SWARM_CONFIG;
+  if (configured !== undefined && configured !== null && String(configured).trim()) {
+    return String(configured);
+  }
+  return DEFAULT_SWARM_CONFIG_PATH;
 }

@@ -6,11 +6,13 @@ import { STATUS } from '../services/verdict-schema.ts';
 import type { SuiteStatus } from '../services/verdict-schema.ts';
 import { deliverDiscordWebhookRequest } from '../services/discord.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // KEEP_TYPED_POLICY: Discord media upload is optional, noncritical, and bounded
 // to Discord-friendly embed/file limits. Delivery failures must not replace the
 // visual-reg verdict authority.
 
 const DEFAULT_DISCORD_DIFF_THRESHOLD = 2;
+const DISCORD_DELIVERY_FAILED_DETAIL = 'discord delivery failed';
 
 type LogFn = (msg: string) => void;
 type AnyRecord = Record<string, any>;
@@ -40,7 +42,9 @@ interface VisualPageResult {
 }
 
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error || 'discord delivery failed');
+  if (error instanceof Error) return error.message;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (error === undefined), () => (error === null))), () => (error === ''))) return DISCORD_DELIVERY_FAILED_DETAIL;
+  return String(error);
 }
 
 function deliverySkippedNoWebhook(): VisualDiscordDeliveryResult {
@@ -60,12 +64,17 @@ function deliveryFailed(error: unknown): VisualDiscordDeliveryResult {
 }
 
 function buildDeliveryContext(moduleId: string, options: DeliveryContextOptions = {}): AnyRecord {
-  const deliveryContext = options.deliveryContext || {};
+  const deliveryContext = options.deliveryContext && typeof options.deliveryContext === 'object' ? options.deliveryContext : {};
   return {
     ...deliveryContext,
-    module_id: deliveryContext.module_id ?? moduleId,
-    telemetry_context: options.telemetryContext ?? deliveryContext.telemetry_context ?? null,
+    module_id: visualDeliveryModuleId(deliveryContext, moduleId),
+    telemetry_context: selectDefinedValue(() => (options.telemetryContext), () => (null)),
   };
+}
+
+function visualDeliveryModuleId(deliveryContext, moduleId) {
+  if (deliveryContext.module_id !== undefined && deliveryContext.module_id !== null) return deliveryContext.module_id;
+  return moduleId;
 }
 
 export async function discordSummary(
@@ -80,7 +89,7 @@ export async function discordSummary(
     const icon = overallStatus === STATUS.PASS ? '✅' : '⚠️';
     const passCount = pageResults.filter((p) => p.status === STATUS.PASS).length;
     const failCount = pageResults.filter((p) => p.status === STATUS.FAIL).length;
-    const skipCount = pageResults.filter((p) => p.status === STATUS.SKIP || p.status === STATUS.ERROR).length;
+    const skipCount = pageResults.filter((p) => selectTruthyValue(() => (p.status === STATUS.SKIP), () => (p.status === STATUS.ERROR))).length;
 
     const lines = pageResults.map((p) => {
       const si = p.status === STATUS.PASS ? '✅'
@@ -104,7 +113,7 @@ export async function discordSummary(
 
     const attachments: Array<{ path: string; filename: string }> = [];
     pageResults.forEach((p) => {
-      if ((p.diffPercent ?? 0) > discordDiffThreshold && p.diffPath && fs.existsSync(p.diffPath)) {
+      if (typeof p.diffPercent === 'number' && p.diffPercent > discordDiffThreshold && p.diffPath && fs.existsSync(p.diffPath)) {
         attachments.push({ path: p.diffPath, filename: `diff-${p.name}.png` });
       }
     });

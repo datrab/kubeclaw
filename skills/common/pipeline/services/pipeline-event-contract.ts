@@ -1,8 +1,15 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // Shared in-process pipeline event contract.
 // Edge adapters emit normalized events; orchestration waits on this contract
 // instead of owning transport-specific polling loops.
 
 type UnknownRecord = Record<string, any>;
+
+const NO_REMAINING_BUDGET_MS = 0;
+
+function listenerSet(value: Set<(value: unknown) => void> | undefined): Set<(value: unknown) => void> {
+  return selectDefinedValue(() => (value), () => (new Set()));
+}
 
 class LocalEventEmitter {
   #listeners = new Map<string, Set<(value: unknown) => void>>();
@@ -10,7 +17,7 @@ class LocalEventEmitter {
   setMaxListeners(_maxListeners: number): void {}
 
   on(channel: string, listener: (value: unknown) => void): void {
-    const listeners = this.#listeners.get(channel) || new Set();
+    const listeners = listenerSet(this.#listeners.get(channel));
     listeners.add(listener);
     this.#listeners.set(channel, listeners);
   }
@@ -20,11 +27,11 @@ class LocalEventEmitter {
   }
 
   emit(channel: string, value: unknown): void {
-    for (const listener of [...(this.#listeners.get(channel) || [])]) listener(value);
+    for (const listener of [...listenerSet(this.#listeners.get(channel))]) listener(value);
   }
 
   listenerCount(channel: string): number {
-    return this.#listeners.get(channel)?.size || 0;
+    return selectDefinedValue(() => (this.#listeners.get(channel)?.size), () => (0));
   }
 }
 
@@ -39,6 +46,7 @@ export const PIPELINE_EVENT_SCHEMA_VERSION = 'v1';
 export const PIPELINE_EVENT_TYPES = Object.freeze([
   'completion.evidence',
   'local.evidence.updated',
+  'local.evidence.warning',
   'approval.signal',
   'acp.session.state',
   'acp.transcript.delta',
@@ -109,7 +117,7 @@ function isNonEmptyString(value: unknown): value is string {
 }
 
 function isNullableString(value: unknown): boolean {
-  return value === null || isNonEmptyString(value);
+  return selectTruthyValue(() => (value === null), () => (isNonEmptyString(value)));
 }
 
 const APPROVAL_SIGNAL_STATUSES = Object.freeze([
@@ -180,7 +188,7 @@ export function validateApprovalSignalEventPayload(payload: unknown = {}): strin
   }
   validateNullableTimestamp(payload.requested_at, 'requested_at', errors);
   validateNullableTimestamp(payload.deadline, 'deadline', errors);
-  if (payload.timeout_minutes !== null && (!Number.isFinite(payload.timeout_minutes) || payload.timeout_minutes < 0)) {
+  if (payload.timeout_minutes !== null && (selectTruthyValue(() => (!Number.isFinite(payload.timeout_minutes)), () => (payload.timeout_minutes < 0)))) {
     errors.push('timeout_minutes must be null or a non-negative number');
   }
   if (!APPROVAL_SIGNAL_TIMEOUT_POLICIES.includes(payload.timeout_policy)) {
@@ -200,40 +208,39 @@ export function validateApprovalSignalEventPayload(payload: unknown = {}): strin
 }
 
 function normalizeValue(value: unknown): string | null {
-  if (value === undefined || value === null || value === '') return null;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return null;
   return String(value);
 }
 
-function normalizeIdentityAliases(identity: UnknownRecord = {}): UnknownRecord {
-  return {
-    module_id: identity.module_id ?? identity.moduleId ?? identity.module,
-    gate_id: identity.gate_id ?? identity.gateId,
-    run_id: identity.run_id ?? identity.runId,
-    attempt: identity.attempt,
-    dispatch_id: identity.dispatch_id ?? identity.dispatchId,
-    session_key: identity.session_key ?? identity.sessionKey,
-    gateway_label: identity.gateway_label ?? identity.gatewayLabel,
-  };
+function pipelineEventIdentitySource(event: UnknownRecord = {}): UnknownRecord {
+  return isPlainObject(event.identity) ? event.identity : event;
+}
+
+function eventTimestampAuthority(event: UnknownRecord = {}): string {
+  return selectDefinedValue(() => (normalizeValue(selectDefinedValue(() => (event.ts), () => (event.timestamp)))), () => (new Date().toISOString()));
+}
+
+function waitTimeoutBudgetAuthority(callerTimeoutMs: number, budgetRemainingMs: number | null): number {
+  return Math.min(callerTimeoutMs, selectDefinedValue(() => (budgetRemainingMs), () => (Infinity)));
 }
 
 export function normalizePipelineEventIdentity(identity: UnknownRecord = {}): UnknownRecord {
-  const aliases = normalizeIdentityAliases(identity || {});
   return Object.fromEntries(
     PIPELINE_EVENT_IDENTITY_FIELDS
-      .map((field) => [field, normalizeValue(aliases[field])])
+      .map((field) => [field, normalizeValue((selectTruthyValue(() => (identity), () => ({})))[field])])
       .filter(([, value]) => value !== null),
   );
 }
 
 export function normalizePipelineEvent(event: UnknownRecord = {}): UnknownRecord {
-  const identity = normalizePipelineEventIdentity(event.identity || event);
+  const identity = normalizePipelineEventIdentity(pipelineEventIdentitySource(event));
   return {
-    schema_version: normalizeValue(event.schema_version ?? event.schemaVersion) || PIPELINE_EVENT_SCHEMA_VERSION,
+    schema_version: selectTruthyValue(() => (normalizeValue(event.schema_version)), () => (PIPELINE_EVENT_SCHEMA_VERSION)),
     type: normalizeValue(event.type),
     source: normalizeValue(event.source),
     identity,
     payload: isPlainObject(event.payload) ? event.payload : {},
-    ts: normalizeValue(event.ts ?? event.timestamp) || new Date().toISOString(),
+    ts: eventTimestampAuthority(event),
   };
 }
 
@@ -270,7 +277,7 @@ export function validatePipelineEvent(event: unknown = {}, opts: UnknownRecord =
     : [];
   for (const field of requiredIdentityFields) {
     if (!PIPELINE_EVENT_IDENTITY_FIELDS.includes(field)) {
-      errors.push(`requiredIdentityFields contains unknown field '${field}'`);
+      errors.push(`requiredIdentityFields contains unsupported field '${field}'`);
     } else if (!isNonEmptyString(normalized.identity[field])) {
       errors.push(`identity.${field} must be a non-empty string`);
     }
@@ -301,7 +308,7 @@ export function identityMatches(eventIdentity: UnknownRecord = {}, expectedIdent
 }
 
 function assertAbortSignal(signal: any): void {
-  if (!signal || typeof signal.addEventListener !== 'function' || typeof signal.removeEventListener !== 'function') {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!signal), () => (typeof signal.addEventListener !== 'function'))), () => (typeof signal.removeEventListener !== 'function'))) {
     throw new PipelineEventContractError('Pipeline event waits require an AbortSignal', { option: 'signal' });
   }
 }
@@ -323,7 +330,7 @@ function normalizeWaitTypes(types: unknown): any[] {
 
 function getEmitter(eventBus: any): any {
   const emitter = eventBus?._emitter;
-  if (!emitter || typeof emitter.on !== 'function' || typeof emitter.off !== 'function') {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!emitter), () => (typeof emitter.on !== 'function'))), () => (typeof emitter.off !== 'function'))) {
     throw new PipelineEventContractError('PipelineEventBus adapter is invalid', { adapter: eventBus });
   }
   return emitter;
@@ -347,15 +354,19 @@ function buildWaitAborted(types: any[], identity: UnknownRecord): PipelineEventW
 function buildWaitBudgetExhausted(types: any[], identity: UnknownRecord, budget: any): BudgetExhaustedError {
   return new BudgetExhaustedError(`Budget exhausted waiting for pipeline event: ${types.join(', ')}`, {
     deadlineMs: budget?.deadlineMs,
-    remainingMs: budget?.remainingMs?.() ?? 0,
+    remainingMs: selectDefinedValue(() => (budget?.remainingMs?.()), () => (NO_REMAINING_BUDGET_MS)),
     reason: 'pipeline_event_wait_budget_exhausted',
   });
 }
 
+function callerTimeoutCandidateMs(timeoutMs: unknown): number {
+  return selectTruthyValue(() => (timeoutMs === undefined), () => (timeoutMs === null)) ? Infinity : Number(timeoutMs);
+}
+
 export function waitForAny(eventBus: any, types: unknown, identity: UnknownRecord = {}, opts: UnknownRecord = {}): Promise<UnknownRecord> {
   const waitTypes = normalizeWaitTypes(types);
-  const budget = opts.budget || null;
-  const signal = opts.signal || budget?.signal;
+  const budget = selectDefinedValue(() => (opts.budget), () => (null));
+  const signal = selectDefinedValue(() => (opts.signal), () => (budget?.signal));
   assertAbortSignal(signal);
   const emitter = getEmitter(eventBus);
   const expectedIdentity = normalizePipelineEventIdentity(identity);
@@ -390,7 +401,7 @@ export function waitForAny(eventBus: any, types: unknown, identity: UnknownRecor
 
     const onEvent = (event: UnknownRecord): void => {
       if (!waitTypes.includes(event?.type)) return;
-      if (!identityMatches(event?.identity || {}, expectedIdentity)) return;
+      if (!identityMatches(selectDefinedValue(() => (event?.identity), () => ({})), expectedIdentity)) return;
       settle(resolve, event);
     };
 
@@ -398,14 +409,14 @@ export function waitForAny(eventBus: any, types: unknown, identity: UnknownRecor
     emitter.on(PIPELINE_EVENT_CHANNEL, onEvent);
 
     const budgetRemainingMs = budget?.remainingMs ? budget.remainingMs() : null;
-    if (timeoutMs !== undefined && timeoutMs !== null || budgetRemainingMs !== null) {
-      const callerTimeoutMs = timeoutMs === undefined || timeoutMs === null ? Infinity : Number(timeoutMs);
-      if (!Number.isFinite(callerTimeoutMs) && callerTimeoutMs !== Infinity || callerTimeoutMs < 0) {
+    if (selectTruthyValue(() => (timeoutMs !== undefined && timeoutMs !== null), () => (budgetRemainingMs !== null))) {
+      const callerTimeoutMs = callerTimeoutCandidateMs(timeoutMs);
+      if (selectTruthyValue(() => (!Number.isFinite(callerTimeoutMs) && callerTimeoutMs !== Infinity), () => (callerTimeoutMs < 0))) {
         settle(reject, new PipelineEventContractError('timeoutMs must be a non-negative number', { timeoutMs }));
         return;
       }
-      const normalizedTimeoutMs = Math.min(callerTimeoutMs, budgetRemainingMs ?? Infinity);
-      if (!Number.isFinite(normalizedTimeoutMs) || normalizedTimeoutMs < 0) {
+      const normalizedTimeoutMs = waitTimeoutBudgetAuthority(callerTimeoutMs, budgetRemainingMs);
+      if (selectTruthyValue(() => (!Number.isFinite(normalizedTimeoutMs)), () => (normalizedTimeoutMs < 0))) {
         settle(reject, new PipelineEventContractError('timeoutMs must be a non-negative number', { timeoutMs }));
         return;
       }

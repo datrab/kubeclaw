@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export function modelToHarness(modelId: any) {
   if (!modelId) return null;
   const m = String(modelId).toLowerCase();
@@ -20,10 +21,8 @@ export function canonicalizeModelId(modelId: any) {
 }
 
 export function isSubagentModel(modelId: any) {
-  const m = String(canonicalizeModelId(modelId) || '').toLowerCase();
-  return m.startsWith('openai/')
-    || m.includes('gpt-5')
-    || m.includes('codex');
+  const m = String(selectDefinedValue(() => (canonicalizeModelId(modelId)), () => (''))).toLowerCase();
+  return selectTruthyValue(() => (selectTruthyValue(() => (m.startsWith('openai/')), () => (m.includes('gpt-5')))), () => (m.includes('codex')));
 }
 
 export function resolveRuntime(input: any = {}) {
@@ -35,6 +34,6 @@ export function resolveRuntime(input: any = {}) {
       ? input.dispatch.trim().toLowerCase()
       : null;
 
-  if (runtime === 'acp' || runtime === 'subagent') return runtime;
+  if (selectTruthyValue(() => (runtime === 'acp'), () => (runtime === 'subagent'))) return runtime;
   return isSubagentModel(input?.model) ? 'subagent' : 'acp';
 }

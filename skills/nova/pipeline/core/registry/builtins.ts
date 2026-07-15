@@ -16,6 +16,7 @@ import { generateCaseStudy } from '../../services/case-study.ts';
 import { getBuiltinNotificationPluginDefinitions } from '../../services/notification-contract.ts';
 import { getBuiltinTelemetrySinkPluginDefinitions } from '../../services/telemetry-sink-contract.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 
 async function readPluginConfig(ctx: AnyRecord = {}) {
@@ -35,15 +36,15 @@ function readPluginDeps(ctx: AnyRecord = {}) {
 async function emitBuiltinBridgeTrace(ctx: AnyRecord = {}, eventType: string, message: string, payload: AnyRecord = {}) {
   const pluginId = eventType.startsWith('plugin.') && eventType.endsWith('.bridge_invoked')
     ? `builtin.${eventType.slice('plugin.'.length, -'.bridge_invoked'.length)}`
-    : 'builtin.unknown';
+    : 'builtin.missing';
   const canonicalPayload = {
     plugin_id: pluginId,
     plugin_event: 'bridge_invoked',
-    module_id: payload.moduleId || null,
-    gate_id: payload.gateId || null,
-    gate_type: payload.gateType || null,
-    attempt: payload.attempt ?? null,
-    dispatch_id: payload.dispatchId || null,
+    module_id: selectTruthyValue(() => (payload.moduleId), () => (null)),
+    gate_id: selectTruthyValue(() => (payload.gateId), () => (null)),
+    gate_type: selectTruthyValue(() => (payload.gateType), () => (null)),
+    attempt: selectDefinedValue(() => (payload.attempt), () => (null)),
+    dispatch_id: selectTruthyValue(() => (payload.dispatchId), () => (null)),
     details: {
       bridge_event_type: eventType,
       message,
@@ -76,13 +77,13 @@ export const BUILTIN_PLUGIN_DEFINITIONS = Object.freeze([
         const config = await readPluginConfig(ctx);
         await emitBuiltinBridgeTrace(ctx, 'plugin.worker.module_forge.bridge_invoked', 'Invoking built-in module Forge worker through PluginContextV1', {
           stageId: 'worker:module_forge',
-          moduleId: input?.ids?.moduleId || null,
-          attempt: input?.ids?.attempt ?? null,
+          moduleId: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
+          attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
         });
         return ctx.workerRuntime.dispatch({
           workerType: 'module_forge',
-          moduleId: input?.ids?.moduleId || null,
-          attempt: input?.ids?.attempt ?? null,
+          moduleId: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
+          attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
         });
       },
     },
@@ -109,15 +110,15 @@ export const BUILTIN_PLUGIN_DEFINITIONS = Object.freeze([
         const config = await readPluginConfig(ctx);
         await emitBuiltinBridgeTrace(ctx, 'plugin.worker.module_buster.bridge_invoked', 'Invoking built-in module Buster worker through PluginContextV1', {
           stageId: 'worker:module_buster',
-          moduleId: input?.ids?.moduleId || null,
-          attempt: input?.ids?.attempt ?? null,
-          dispatchId: input?.ids?.dispatchId || null,
+          moduleId: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
+          attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
+          dispatchId: selectTruthyValue(() => (input?.ids?.dispatchId), () => (null)),
         });
         return ctx.workerRuntime.dispatch({
           workerType: 'module_buster',
-          moduleId: input?.ids?.moduleId || null,
-          attempt: input?.ids?.attempt ?? null,
-          dispatchId: input?.ids?.dispatchId || null,
+          moduleId: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
+          attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
+          dispatchId: selectTruthyValue(() => (input?.ids?.dispatchId), () => (null)),
         });
       },
     },
@@ -145,12 +146,12 @@ export const BUILTIN_PLUGIN_DEFINITIONS = Object.freeze([
         const [config, progress] = await Promise.all([readPluginConfig(ctx), readPluginProgress(ctx)]);
         await emitBuiltinBridgeTrace(ctx, 'plugin.gate.review.bridge_invoked', 'Invoking built-in review gate through PluginContextV1', {
           stageId: 'gate:review',
-          gateId: input?.ids?.gateId || null,
-          attempt: input?.ids?.attempt ?? null,
+          gateId: selectTruthyValue(() => (input?.ids?.gateId), () => (null)),
+          attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
         });
         return runReviewGateStage(config, progress, input?.ids?.gateId, {
           input,
-          novaPrompt: input?.executionContext?.novaPrompt || null,
+          novaPrompt: selectTruthyValue(() => (input?.executionContext?.novaPrompt), () => (null)),
           deps: readPluginDeps(ctx),
         });
       },
@@ -180,8 +181,8 @@ export const BUILTIN_PLUGIN_DEFINITIONS = Object.freeze([
         const [config, progress] = await Promise.all([readPluginConfig(ctx), readPluginProgress(ctx)]);
         await emitBuiltinBridgeTrace(ctx, 'plugin.gate.approval.bridge_invoked', 'Invoking built-in approval gate through PluginContextV1', {
           stageId: 'gate:approval',
-          gateId: input?.ids?.gateId || null,
-          attempt: input?.ids?.attempt ?? null,
+          gateId: selectTruthyValue(() => (input?.ids?.gateId), () => (null)),
+          attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
         });
         return runApprovalGateStage(config, progress, input?.ids?.gateId, { input, deps: readPluginDeps(ctx) });
       },
@@ -211,8 +212,8 @@ export const BUILTIN_PLUGIN_DEFINITIONS = Object.freeze([
         const [config, progress] = await Promise.all([readPluginConfig(ctx), readPluginProgress(ctx)]);
         await emitBuiltinBridgeTrace(ctx, 'plugin.gate.buster.bridge_invoked', 'Invoking built-in Buster gate through PluginContextV1', {
           stageId: 'gate:buster',
-          gateId: input?.ids?.gateId || null,
-          attempt: input?.ids?.attempt ?? null,
+          gateId: selectTruthyValue(() => (input?.ids?.gateId), () => (null)),
+          attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
         });
         return runBusterGateStage(config, progress, input?.ids?.gateId, { input, deps: readPluginDeps(ctx) });
       },
@@ -268,7 +269,7 @@ export const BUILTIN_PLUGIN_DEFINITIONS = Object.freeze([
         const [config, progress] = await Promise.all([readPluginConfig(ctx), readPluginProgress(ctx)]);
         await emitBuiltinBridgeTrace(ctx, 'plugin.validator.delivery_lint.bridge_invoked', 'Invoking built-in delivery lint validator through PluginContextV1', {
           stageId: 'validator:delivery_lint',
-          moduleId: input?.ids?.moduleId || null,
+          moduleId: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
         });
         return runDeliveryLintValidatorStage(config, progress, input, { stageId: 'validator:delivery_lint', producerType: 'delivery_lint' });
       },
@@ -296,7 +297,7 @@ export const BUILTIN_PLUGIN_DEFINITIONS = Object.freeze([
         const [config, progress] = await Promise.all([readPluginConfig(ctx), readPluginProgress(ctx)]);
         await emitBuiltinBridgeTrace(ctx, 'plugin.validator.pre_check.bridge_invoked', 'Invoking built-in pre-check validator through PluginContextV1', {
           stageId: 'validator:pre_check',
-          moduleId: input?.ids?.moduleId || null,
+          moduleId: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
         });
         return runPreCheckValidatorStage(config, progress, input, { stageId: 'validator:pre_check', producerType: 'pre_check' });
       },
@@ -324,7 +325,7 @@ export const BUILTIN_PLUGIN_DEFINITIONS = Object.freeze([
         const [config, progress] = await Promise.all([readPluginConfig(ctx), readPluginProgress(ctx)]);
         await emitBuiltinBridgeTrace(ctx, 'plugin.validator.full_lint.bridge_invoked', 'Invoking built-in full lint validator through PluginContextV1', {
           stageId: 'validator:full_lint',
-          moduleId: input?.ids?.moduleId || null,
+          moduleId: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
         });
         return runFullLintValidatorStage(config, progress, input, { stageId: 'validator:full_lint', producerType: 'full_lint' });
       },

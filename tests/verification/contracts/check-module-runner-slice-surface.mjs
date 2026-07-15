@@ -6,6 +6,20 @@ import path from 'path';
 import assert from 'assert';
 import { pathToFileURL } from 'url';
 
+function contractRunConfig(runId, prefix) {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), `${prefix}-`));
+  return {
+    project: prefix,
+    _runId: runId,
+    run_id: runId,
+    repo_root: repoRoot,
+    paths: {
+      swarm_dir: path.join(repoRoot, '.swarm'),
+      modules_dir: path.join(repoRoot, 'modules'),
+    },
+  };
+}
+
 function parseArgs(argv = process.argv.slice(2)) {
   const args = { sourceRoot: process.cwd() };
   for (let i = 0; i < argv.length; i += 1) {
@@ -27,7 +41,7 @@ const busterPhasePath = path.join(sourceRoot, 'skills/nova/pipeline/runners/modu
 const busterDispatchPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/buster-phase/dispatch.ts');
 const busterPollFailurePath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure.ts');
 const busterTerminalFailurePath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure.ts');
-const busterTerminalPassPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/buster-phase/terminal-pass.ts');
+const moduleRunnerCompletionsPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/completions.ts');
 const terminalResultsPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/terminal-results.ts');
 const contextPath = path.join(sourceRoot, 'skills/nova/pipeline/core/context.ts');
 const registryPath = path.join(sourceRoot, 'skills/nova/pipeline/core/registry.ts');
@@ -47,7 +61,7 @@ const busterPhaseSource = fs.readFileSync(busterPhasePath, 'utf8');
 const busterDispatchSource = fs.readFileSync(busterDispatchPath, 'utf8');
 const busterPollFailureSource = fs.readFileSync(busterPollFailurePath, 'utf8');
 const busterTerminalFailureSource = fs.readFileSync(busterTerminalFailurePath, 'utf8');
-const busterTerminalPassSource = fs.readFileSync(busterTerminalPassPath, 'utf8');
+const moduleRunnerCompletionsSource = fs.readFileSync(moduleRunnerCompletionsPath, 'utf8');
 const terminalResultsSource = fs.readFileSync(terminalResultsPath, 'utf8');
 const contextSource = fs.readFileSync(contextPath, 'utf8');
 const registrySource = fs.readFileSync(registryPath, 'utf8');
@@ -109,7 +123,7 @@ assert.equal(forgeSource.includes('{ softFail: true }'), false, 'Forge-only PASS
 assert.equal(forgeSource.includes('Forge-only module cannot PASS without durable Git persistence'), true, 'Forge-only thrown Git publication failures must stop PASS');
 assert.equal(forgeSource.includes('Forge-only module cannot PASS without a durable Git commit'), true, 'Forge-only non-committed Git results must stop PASS');
 assert.equal(forgeSource.includes("|| 'forge'"), false, 'Forge ACP dispatch must not fall back to a literal forge agent id');
-assert.equal(forgeSource.includes('requires explicit agents.forge.acp_agent_id or model harness mapping'), true, 'Forge ACP dispatch must fail closed when no agent id authority exists');
+assert.equal(forgeSource.includes('requires explicit agents.forge.acp_agent_id'), true, 'Forge ACP dispatch must fail closed when no agent id authority exists');
 assert.equal(orchestrationSource.includes('opts.attempt || 1') || orchestrationSource.includes('opts.dispatch_id || `buster-'), false, 'Buster Redis payload construction must not default attempt or synthesize dispatch identity');
 assert.equal(busterDispatchSource.includes('Buster dispatch requires a typed nonempty test_suites list'), true, 'Buster dispatch must fail when requested suites are missing');
 assert.equal(busterDispatchSource.includes("requestedSuites.join(', ')"), true, 'Buster queued notification should render the validated typed suite list');
@@ -128,9 +142,14 @@ assert.equal(busterPollFailureSource.includes('polling_git:'), true, 'Buster pol
 assert.equal(busterPollFailureSource.includes('buildModuleRateLimitedTerminalResult(config, moduleId'), true, 'Buster polling rate-limit exhaustion must return typed rate-limited module result');
 assert.equal(busterTerminalFailureSource.includes('buildModuleNeedsNovaTerminalResult(config, moduleId'), true, 'Terminal Buster needs-Nova outcomes must be typed module results');
 assert.equal(busterTerminalFailureSource.includes('buildModuleBlockedTerminalResult(config, moduleId'), true, 'Terminal Buster blocked outcomes must be typed module results');
-assert.equal(busterTerminalFailureSource.includes('runId: resultRedisEntry?.run_id ?? completionIdentity.runId ?? getRunId(config)'), true, 'Terminal Buster invalid failure-class results must preserve Redis run authority');
-assert.equal(busterTerminalFailureSource.includes('attempt: resultRedisEntry?.attempt ?? completionIdentity.attempt ?? currentAttemptNumber(status)'), true, 'Terminal Buster pre-test results must preserve Redis/completion attempt authority');
-assert.equal(busterTerminalPassSource.includes('attempt: completionIdentity.attempt ?? status.fail_count + 1'), true, 'Terminal Buster PASS results must preserve completion attempt authority');
+assert.equal(busterTerminalFailureSource.includes("'repeated pre-test result gateway label'"), false, 'Repeated Buster pre-test terminal failures must not require gateway-label metadata as completion authority');
+assert.equal(busterTerminalFailureSource.includes("reasonCode: 'test_failure'"), true, 'Repeated Buster pre-test terminal failures must preserve module test_failure authority');
+assert.equal(busterTerminalFailureSource.includes("requireNonEmptyString(completionIdentity?.runId, 'completionIdentity.runId')"), true, 'Terminal Buster invalid failure-class results must require typed completion run authority');
+assert.equal(busterTerminalFailureSource.includes("requirePositiveAttempt(currentAttemptNumber(status), 'current status attempt')"), true, 'Terminal Buster pre-test results must require typed status attempt authority');
+assert.equal(fs.existsSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/buster-phase/terminal-pass.ts')), false, 'Buster PASS must not keep stale terminal-pass wrapper');
+assert.equal(busterPhaseSource.includes('function finalizeBusterPassCompletion('), true, 'Buster PASS must finalize at the phase boundary');
+assert.equal(busterPhaseSource.includes('attempt: completionIdentity.attempt'), true, 'Buster PASS results must use completion attempt authority');
+assert.equal(moduleRunnerCompletionsSource.includes('applyModuleRunnerCompletion requires completion authority'), true, 'module runner completions must require explicit authority');
 assert.equal(busterTerminalFailureSource.includes('redisEntry?.verdict'), false, 'Terminal Buster failure mapping must not classify from Redis verdict presence');
 assert.equal(busterTerminalFailureSource.includes('source regex'), false, 'Terminal Buster failure mapping must not use source regex classification');
 assert.equal(busterTerminalFailureSource.includes('Buster terminal failure lacks explicit typed failure_class'), true, 'Terminal Buster failures must require explicit typed failure_class');
@@ -158,7 +177,7 @@ assert.equal(contextSource.includes('bindPluginContextRuntime'), false, 'PluginC
 assert.equal(registryRuntimeSource.includes('getRuntimeConfigFromPluginContext'), false, 'built-in registry must use explicit coreRuntime instead of hidden context getters');
 assert.equal(registryRuntimeSource.includes('ctx.coreRuntime.readConfig()'), true, 'built-in registry should read runtime config through explicit coreRuntime');
 assert.equal(contextSource.includes("Object.defineProperty(pluginContext, 'coreRuntime'"), true, 'PluginContext should expose explicit non-enumerable coreRuntime only for built-ins');
-assert.equal(contextSource.includes("workerRuntime: effects.workerRuntime || {}"), true, 'PluginContext should resolve the core worker runtime adapter effects');
+assert.equal(contextSource.includes("workerRuntime: selectDefinedValue(() => (objectRecord(resolvedEffects.workerRuntime)), () => ({}))"), true, 'PluginContext should resolve the core worker runtime adapter effects through typed record normalization');
 assert.equal(contextSource.includes("hasCapability(capabilities, 'dispatch.worker_runtime')"), true, 'PluginContext should gate worker runtime dispatch by the renamed capability');
 assert.equal(contextSource.includes('pluginContext.workerRuntime'), true, 'PluginContext should expose the renamed trusted worker runtime surface');
 assert.equal(registryRuntimeSource.includes('ctx.workerRuntime.dispatch('), true, 'built-in worker stage owners should call the trusted worker runtime adapter');
@@ -234,12 +253,18 @@ assert.equal(stateMachineMod.planModuleAttemptPhase({ status: 'READY_FOR_TESTING
 assert.equal(stateMachineMod.planModuleAttemptPhase({ status: 'READY_FOR_TESTING' }, ['forge', 'buster']), stateMachineMod.MODULE_ATTEMPT_ACTIONS.PREPARE_BUSTER, 'state machine should route ready full modules through pre-Buster preparation');
 
 const emptySuiteDispatch = await busterDispatchMod.executeBusterAttemptDispatch({
-  config: { _runId: 'run-empty-suite-dispatch', run_id: 'run-empty-suite-dispatch' },
+  config: contractRunConfig('run-empty-suite-dispatch', 'contract-empty-suite-dispatch'),
   progress: {},
   moduleId: '01',
   mod: { title: 'Scaffold', test_suites: [] },
   dir: '01-scaffold',
-  status: { status: 'READY_FOR_TESTING', fail_count: 0 },
+  status: {
+    status: 'READY_FOR_TESTING',
+    fail_count: 0,
+    dispatch_id: 'dispatch-empty-suite',
+    gateway_label: 'buster-empty-suite',
+    session_key: 'session-empty-suite',
+  },
   timeout: 1,
   maxFails: 3,
   deps: { nowMs: () => 1000 },
@@ -252,7 +277,7 @@ assert.equal(emptySuiteDispatch.terminal?.result?.diagnostics?.summary, 'Buster 
 assert.equal(emptySuiteDispatch.terminal?.result?.diagnostics?.metadata?.code, 'buster_test_suites_empty', 'empty Buster suite dispatch should expose typed diagnostics');
 
 const forgeOnlyGitFailure = await forgeMod.finalizeForgeOnlyPass({
-  config: { _runId: 'run-forge-only-git-failure' },
+  config: contractRunConfig('run-forge-only-git-failure', 'contract-forge-only-git-failure'),
   moduleId: '01',
   mod: { title: 'Scaffold' },
   dir: '01-scaffold',
@@ -311,6 +336,9 @@ async function assertMalformedPreBusterValidatorPreservesDiagnostic({ stageId, p
     status: 'READY_FOR_TESTING',
     current_phase: null,
     fail_count: 0,
+    dispatch_id: `dispatch-contract-pre-buster-${producerType}`,
+    gateway_label: `gateway-contract-pre-buster-${producerType}`,
+    session_key: `session-contract-pre-buster-${producerType}`,
     validation: { ...validation },
     started_at: '2026-04-10T00:00:00.000Z',
     attempt_started_at: '2026-04-10T00:00:00.000Z',
@@ -320,6 +348,7 @@ async function assertMalformedPreBusterValidatorPreservesDiagnostic({ stageId, p
     execution_order: ['01'],
     modules: { '01': { title: 'Scaffold', dir: '01-scaffold', stages: ['forge', 'buster'] } },
   };
+  const savedStatuses = [];
   const prepared = await prebusterMod.prepareModuleForBuster({
     config,
     progress,
@@ -332,7 +361,18 @@ async function assertMalformedPreBusterValidatorPreservesDiagnostic({ stageId, p
     stages: ['forge', 'buster'],
     deps: {
       handleFail: async () => { throw new Error('handleFail should not run for malformed validator contract'); },
-      saveStatus: () => {},
+      applyModuleCompletion: (_config, _dir, savedStatus, completion) => {
+        savedStatus.status = completion.status === 'BLOCKED' ? 'BLOCKED' : 'FAIL';
+        savedStatus.current_phase = null;
+        savedStatus.blockedPhase = completion.phase;
+        savedStatus.blockedReason = completion.summary;
+        const lifecycleMutation = { eventType: 'module_attempt.blocked', completion };
+        savedStatuses.push({ status: { ...savedStatus }, lifecycleTransition: { lifecycleMutation } });
+        return { status: savedStatus, lifecycleMutation };
+      },
+      saveStatus: (_config, _dir, savedStatus, lifecycleTransition) => {
+        savedStatuses.push({ status: { ...savedStatus }, lifecycleTransition });
+      },
       gitSyncBeforeBuster: async () => { throw new Error('git sync should not run after malformed validator contract'); },
       discord: async () => {},
     },
@@ -350,8 +390,13 @@ async function assertMalformedPreBusterValidatorPreservesDiagnostic({ stageId, p
   assert.equal(terminalResult.diagnostics.contract_diagnostic.validationErrors.includes('diagnostics must be an object'), true, `${stageId}: validation error detail`);
   assert.equal(terminalResult.diagnostics.contract_diagnostic.rawResultPreview, undefined, `${stageId}: raw preview must be deleted`);
   assert.equal(terminalResult.diagnostics.contract_diagnostic.coercedResultPreview, undefined, `${stageId}: coerced preview must be deleted`);
-  assert.equal(terminalResult.diagnostics.contract_diagnostic.rawResultSummary.redacted, true, `${stageId}: raw result summary is redacted`);
-  assert.equal(terminalResult.diagnostics.contract_diagnostic.coercedResultSummary.redacted, true, `${stageId}: coerced result summary is redacted`);
+  assert.equal(terminalResult.diagnostics.contract_diagnostic.rawResultSummary.label, 'rawResult', `${stageId}: raw result summary label`);
+  assert.equal(terminalResult.diagnostics.contract_diagnostic.coercedResultSummary.label, 'coercedResult', `${stageId}: coerced result summary label`);
+  assert.equal(Number.isInteger(terminalResult.diagnostics.contract_diagnostic.rawResultSummary.json_bytes), true, `${stageId}: raw result summary is bounded`);
+  assert.equal(Number.isInteger(terminalResult.diagnostics.contract_diagnostic.coercedResultSummary.json_bytes), true, `${stageId}: coerced result summary is bounded`);
+  assert.equal(savedStatuses.at(-1)?.status.status, 'BLOCKED', `${stageId}: validator block should persist module BLOCKED status`);
+  assert.equal(savedStatuses.at(-1)?.status.blockedPhase, producerType, `${stageId}: validator block should persist canonical blockedPhase`);
+  assert.equal(savedStatuses.at(-1)?.lifecycleTransition?.lifecycleMutation?.eventType, 'module_attempt.blocked', `${stageId}: validator block should emit lifecycle blocked event`);
 }
 
 await assertMalformedPreBusterValidatorPreservesDiagnostic({

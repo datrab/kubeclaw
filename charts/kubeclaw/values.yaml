@@ -40,6 +40,10 @@ codeBundle:
     existingSecret: ""
     existingSecretKey: "token"
 
+runtimeInfrastructure:
+  # Writable in-cluster registry used by Buster k8s verification runs.
+  localRegistry: registry-local.kubeclaw.svc.cluster.local:5001
+
 # =============================================================================
 # GATEWAY
 # =============================================================================

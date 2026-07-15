@@ -25,6 +25,7 @@ import {
   assertValidKillSessionResult,
   assertValidSessionLifecycleRecord,
 } from '../services/acp-gateway-contract.ts';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export {
   getTrackedAgent,
   getTrackedAgentCount,
@@ -44,9 +45,17 @@ function log(level: any, msg: any) {
   console.log(`[LIFECYCLE] [${level}] ${msg}`);
 }
 
+function errorMessage(error: any): string {
+  if (error && typeof error === 'object' && 'message' in error) {
+    const message = error.message;
+    if (typeof message === 'string' && message.trim()) return message;
+  }
+  return String(error);
+}
+
 function requireFiniteMs(value: any, fieldName: string, { min = 0 }: AnyRecord = {}) {
   const number = Number(value);
-  if (!Number.isFinite(number) || number < min) {
+  if (selectTruthyValue(() => (!Number.isFinite(number)), () => (number < min))) {
     throw new Error(`${fieldName} must be explicit and >= ${min}`);
   }
   return Math.round(number);
@@ -54,14 +63,14 @@ function requireFiniteMs(value: any, fieldName: string, { min = 0 }: AnyRecord =
 
 function requirePositiveInteger(value: any, fieldName: string) {
   const number = Number(value);
-  if (!Number.isInteger(number) || number < 1) {
+  if (selectTruthyValue(() => (!Number.isInteger(number)), () => (number < 1))) {
     throw new Error(`${fieldName} must be explicit and >= 1`);
   }
   return number;
 }
 
 function requireGatewayPolicy(value: any, fieldName: string) {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!value), () => (typeof value !== 'object'))), () => (Array.isArray(value)))) {
     throw new Error(`${fieldName} must be explicit session gateway policy`);
   }
   return {
@@ -73,7 +82,7 @@ function requireGatewayPolicy(value: any, fieldName: string) {
 
 function resolveSpawnPolicy(opts: AnyRecord = {}) {
   const policy = opts.spawnPolicy;
-  if (!policy || typeof policy !== 'object' || Array.isArray(policy)) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!policy), () => (typeof policy !== 'object'))), () => (Array.isArray(policy)))) {
     throw new Error('spawnSession requires explicit opts.spawnPolicy from swarm.config.json');
   }
   const mode = requiredNonEmptyString(policy.mode, 'spawnPolicy.mode');
@@ -93,7 +102,7 @@ function resolveSpawnPolicy(opts: AnyRecord = {}) {
 
 function resolveKillPolicy(opts: AnyRecord = {}, isSubagent: boolean) {
   const policy = opts.killPolicy;
-  if (!policy || typeof policy !== 'object' || Array.isArray(policy)) {
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!policy), () => (typeof policy !== 'object'))), () => (Array.isArray(policy)))) {
     throw new Error('killSession requires explicit opts.killPolicy from swarm.config.json');
   }
   const confirmTimeoutMs = requireFiniteMs(
@@ -136,18 +145,18 @@ function writeJsonAtomic(filePath: any, data: any) {
 
 function persistActiveSession(data: AnyRecord) {
   assertValidSessionLifecycleRecord(data, 'active session record');
-  const filePath = data?.activeStatePath || null;
+  const filePath = selectTruthyValue(() => (data?.activeStatePath), () => (null));
   if (!filePath) return;
   writeJsonAtomic(filePath, {
-    childSessionKey: data.childSessionKey || null,
-    runId: data.runId || null,
-    label: data.label || null,
-    agentId: data.agentId || null,
-    model: data.model || null,
-    streamLogPath: data.streamLogPath || null,
-    runtime: data.runtime || null,
-    gatewayLabel: data.gatewayLabel || null,
-    cwd: data.cwd || null,
+    childSessionKey: selectTruthyValue(() => (data.childSessionKey), () => (null)),
+    runId: selectTruthyValue(() => (data.runId), () => (null)),
+    label: selectTruthyValue(() => (data.label), () => (null)),
+    agentId: selectTruthyValue(() => (data.agentId), () => (null)),
+    model: selectTruthyValue(() => (data.model), () => (null)),
+    streamLogPath: selectTruthyValue(() => (data.streamLogPath), () => (null)),
+    runtime: selectTruthyValue(() => (data.runtime), () => (null)),
+    gatewayLabel: selectTruthyValue(() => (data.gatewayLabel), () => (null)),
+    cwd: selectTruthyValue(() => (data.cwd), () => (null)),
     activeStatePath: filePath,
     trackedAt: new Date().toISOString(),
   });
@@ -159,7 +168,7 @@ function clearPersistedActiveSession(filePath: any) {
     if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
   } catch (error) {
     try {
-      process.stderr.write(`[session-lifecycle] active-session cleanup failed: ${(error as any)?.message || error}\n`);
+      process.stderr.write(`[session-lifecycle] active-session cleanup failed: ${errorMessage(error)}\n`);
     } catch (_stderrError) {
       // Best-effort cleanup must not block session lifecycle progress.
     }
@@ -175,13 +184,13 @@ async function readSessionLifecycleState(
 ): Promise<AnyRecord> {
   try {
     const raw = await requestGateway(getGatewaySessionStatus, 'session status', childSessionKey, timeoutMs, { gatewayUrl, gatewayToken, ...waitOptions });
-    const result: AnyRecord = raw?.result?.details || raw;
+    const result: AnyRecord = requireGatewayDetails(raw, 'session status');
     const parsed = parseSessionState(result);
     return { active: parsed.active, state: parsed.state, raw: result };
   } catch (err) {
     if (isCallerAbort(err, waitOptions.signal, waitOptions.budget)) throw err;
-    const msg = (err as any)?.message || String(err);
-    if (/\b404\b|not found|unknown session/i.test(msg)) {
+    const msg = errorMessage(err);
+    if (/\b404\b|not found|unrecognized session/i.test(msg)) {
       return { active: false, state: 'closed', raw: null };
     }
     return { active: false, state: 'unreachable', raw: null, error: err };
@@ -198,7 +207,7 @@ async function waitForSessionStop(
   waitOptions: AnyRecord = {},
 ): Promise<AnyRecord> {
   const deadline = Date.now() + Math.max(timeoutMs, 0);
-  let lastState: AnyRecord = { active: false, state: 'unknown', raw: null };
+  let lastState: AnyRecord = { active: false, state: 'session_status_not_observed', raw: null };
 
   while (Date.now() <= deadline) {
     throwIfCallerAbort(waitOptions.signal, waitOptions.budget);
@@ -221,7 +230,7 @@ export function getActiveSession() {
 
 export function clearActiveSession(opts: AnyRecord = {}) {
   const preserveFile = opts?.preserveFile === true;
-  const filePath = _activeSession?.activeStatePath || null;
+  const filePath = selectTruthyValue(() => (_activeSession?.activeStatePath), () => (null));
   _activeSession = null;
   if (!preserveFile) clearPersistedActiveSession(filePath);
 }
@@ -245,7 +254,7 @@ export function resolveSubagentTranscriptPath(childSessionKey: any) {
     const sessionsDir = path.join(os.homedir(), '.openclaw', 'agents', parentAgentId, 'sessions');
     const sessionsJsonPath = path.join(sessionsDir, 'sessions.json');
     const sessionsData = JSON.parse(fs.readFileSync(sessionsJsonPath, 'utf8'));
-    const entry = sessionsData?.[childSessionKey] || null;
+    const entry = selectTruthyValue(() => (sessionsData?.[childSessionKey]), () => (null));
     const sessionFile = entry?.sessionFile;
     if (sessionFile) {
       return path.isAbsolute(sessionFile)
@@ -261,19 +270,33 @@ export function resolveSubagentTranscriptPath(childSessionKey: any) {
 }
 
 export function resolveSpawnTranscriptPath(spawnResult: AnyRecord, runtime: any) {
-  const streamLogPath = spawnResult?.streamLogPath || null;
+  const streamLogPath = selectTruthyValue(() => (spawnResult?.streamLogPath), () => (null));
   if (streamLogPath) return streamLogPath;
   if (resolveRuntime({ runtime, model: null }) !== 'subagent') return null;
-  return resolveSubagentTranscriptPath(spawnResult?.childSessionKey || null);
+  return resolveSubagentTranscriptPath(selectTruthyValue(() => (spawnResult?.childSessionKey), () => (null)));
 }
 
 // ── Gateway helpers ──────────────────────────────────────────────────────────
 
 function normalizeGatewayError(endpoint: string, err: any) {
-  const msg = (err as any)?.message || String(err);
+  const msg = errorMessage(err);
+  const statusMatch = msg.match(/(?:^|[^\d])([45]\d\d)(?:[^\d]|$)/);
   const match = msg.match(/Gateway returned (\d+)/);
-  if (match) return new Error(`Gateway ${endpoint} returned ${match[1]}`);
+  if (match) {
+    const normalized = new Error(`Gateway ${endpoint} returned ${match[1]}`) as Error & { gatewayStatus?: number };
+    normalized.gatewayStatus = Number(match[1]);
+    return normalized;
+  }
+  if (statusMatch) {
+    const normalized = new Error(msg) as Error & { gatewayStatus?: number };
+    normalized.gatewayStatus = Number(statusMatch[1]);
+    return normalized;
+  }
   return err;
+}
+
+function isNonRetryableGatewayContractError(error: any) {
+  return selectTruthyValue(() => (Number(error?.gatewayStatus) === 400), () => (/\b400\b.*Bad Request|Bad Request.*\b400\b/i.test(String(selectDefinedValue(() => (selectDefinedValue(() => (error?.message), () => (error))), () => (''))))));
 }
 
 async function requestGateway(operation: AnyFunction, endpoint: string, operationArg: any, timeoutMs: number, waitOptions: AnyRecord = {}) {
@@ -286,9 +309,11 @@ async function requestGateway(operation: AnyFunction, endpoint: string, operatio
 }
 
 function isCallerAbort(error: any, signal: any, budget: any) {
-  return signal?.aborted
-    || budget?.signal?.aborted
-    || isBudgetExhaustedError(error);
+  return [
+    signal?.aborted,
+    budget?.signal?.aborted,
+    isBudgetExhaustedError(error),
+  ].some(Boolean);
 }
 
 function abortError(signal: any) {
@@ -324,18 +349,17 @@ function resolveAbortSignal(signal: any, budgetSignal: any): AnyRecord {
       },
     };
   }
-  return { signal: signal || budgetSignal || undefined, cleanup: () => {} };
+  return { signal: selectTruthyValue(() => (selectTruthyValue(() => (signal), () => (budgetSignal))), () => (undefined)), cleanup: () => {} };
 }
 
 // ── ACP cleanup ──────────────────────────────────────────────────────────────
 
 export async function acpxCleanup(agentId: any, gatewayLabel: any, opts: AnyRecord = {}) {
-  if (!agentId || !gatewayLabel) return;
+  if (selectTruthyValue(() => (!agentId), () => (!gatewayLabel))) return;
   throwIfCallerAbort(opts.signal, opts.budget);
-  const execFileAsync = opts.execFileAsync || execFileAsyncDefault;
   const abort = resolveAbortSignal(opts.signal, opts.budget?.signal);
   try {
-    await execFileAsync('acpx', [agentId, 'sessions', 'close', '--name', gatewayLabel], {
+    await execFileAsyncDefault('acpx', [agentId, 'sessions', 'close', '--name', gatewayLabel], {
       stdio: 'ignore',
       timeout: requireFiniteMs(opts.timeoutMs, 'acpxCleanup.timeoutMs'),
       env: buildSubprocessEnv(),
@@ -353,7 +377,7 @@ export async function acpxCleanup(agentId: any, gatewayLabel: any, opts: AnyReco
 // ── Spawn ────────────────────────────────────────────────────────────────────
 
 function requiredNonEmptyString(value: any, fieldName: string) {
-  if (typeof value !== 'string' || value.trim() === '') {
+  if (selectTruthyValue(() => (typeof value !== 'string'), () => (value.trim() === ''))) {
     throw new Error(`spawnSession requires explicit ${fieldName}`);
   }
   return value.trim();
@@ -374,51 +398,50 @@ function resolveCleanupConfirmTimeoutMs(value: any, confirmTimeoutMs: number) {
 }
 
 export async function spawnSession(payload: AnyRecord, prompt: any, timeoutSeconds: any, opts: AnyRecord = {}) {
-  const session = payload?.session || {};
-  const model = requiredNonEmptyString(canonicalizeModelId(opts.model ?? session.model), 'session.model');
-  const runtime = resolveExplicitRuntime(opts.runtime ?? session.runtime);
-  const agentId = requiredNonEmptyString(opts.agentId ?? session.agentId, 'session.agentId');
-  const cwd = requiredNonEmptyString(opts.cwd ?? session.cwd, 'session.cwd');
-  const label = requiredNonEmptyString(opts.label ?? session.label, 'session.label');
+  const session = selectDefinedValue(() => (payload?.session), () => ({}));
+  const model = requiredNonEmptyString(canonicalizeModelId(session.model), 'session.model');
+  const runtime = resolveExplicitRuntime(session.runtime);
+  const agentId = requiredNonEmptyString(session.agentId, 'session.agentId');
+  const cwd = requiredNonEmptyString(session.cwd, 'session.cwd');
+  const label = requiredNonEmptyString(session.label, 'session.label');
   const gatewayUrl = resolveGatewayBaseUrl(opts.gatewayUrl);
   const gatewayToken = resolveGatewayToken(opts.gatewayToken);
   const activeStatePath = resolveActiveSessionStatePath({
-    activeStatePath: opts.activeStatePath ?? session.activeStatePath ?? session.active_session_path ?? null,
+    activeStatePath: selectDefinedValue(() => (opts.activeStatePath), () => (null)),
     cwd,
   });
   const isSubagent = runtime === 'subagent';
-  const thinking = opts.thinking ?? session.thinking ?? null;
+  const thinking = selectDefinedValue(() => (session.thinking), () => (null));
   const spawnPolicy = resolveSpawnPolicy(opts);
   const maxRetries = spawnPolicy.gateway.maxRetries;
   const retryDelayMs = spawnPolicy.gateway.retryDelayMs;
   const requestTimeoutMs = spawnPolicy.gateway.timeoutMs;
-  const budget = opts.budget || null;
-  const signal = opts.signal || null;
+  const budget = selectTruthyValue(() => (opts.budget), () => (null));
+  const signal = selectTruthyValue(() => (opts.signal), () => (null));
   const shouldTrackActive = opts.trackActive !== false;
   const observabilityIdentity = opts.observabilityIdentity && typeof opts.observabilityIdentity === 'object'
     ? opts.observabilityIdentity
     : null;
 
   const spawnArgs: AnyRecord = {
-    task: opts.task || prompt,
+    task: requiredNonEmptyString(prompt, 'prompt'),
     runtime,
     label,
     model,
     cwd,
-    thread: opts.thread ?? spawnPolicy.thread,
-    mode: opts.mode ?? spawnPolicy.mode,
-    cleanup: opts.cleanup ?? spawnPolicy.cleanup,
+    thread: spawnPolicy.thread,
+    mode: spawnPolicy.mode,
+    cleanup: spawnPolicy.cleanup,
   };
   if (observabilityIdentity) {
-    spawnArgs.runId = observabilityIdentity.run_id ?? observabilityIdentity.runId ?? null;
-    spawnArgs.project = observabilityIdentity.project ?? null;
-    spawnArgs.dispatchId = observabilityIdentity.dispatch_id ?? observabilityIdentity.dispatchId ?? null;
-    spawnArgs.gatewayLabel = observabilityIdentity.gateway_label ?? observabilityIdentity.gatewayLabel ?? label;
-    spawnArgs.agentType = observabilityIdentity.agent_type ?? observabilityIdentity.agentType ?? null;
-    spawnArgs.moduleId = observabilityIdentity.module_id ?? observabilityIdentity.moduleId ?? null;
-    spawnArgs.gateId = observabilityIdentity.gate_id ?? observabilityIdentity.gateId ?? null;
+    spawnArgs.runId = selectDefinedValue(() => (selectDefinedValue(() => (observabilityIdentity.run_id), () => (observabilityIdentity.runId))), () => (null));
+    spawnArgs.project = selectDefinedValue(() => (observabilityIdentity.project), () => (null));
+    spawnArgs.dispatchId = selectDefinedValue(() => (selectDefinedValue(() => (observabilityIdentity.dispatch_id), () => (observabilityIdentity.dispatchId))), () => (null));
+    spawnArgs.gatewayLabel = requiredNonEmptyString(observabilityIdentity.gateway_label, 'observabilityIdentity.gateway_label');
+    spawnArgs.agentType = selectDefinedValue(() => (observabilityIdentity.agent_type), () => (null));
+    spawnArgs.moduleId = selectDefinedValue(() => (observabilityIdentity.module_id), () => (null));
+    spawnArgs.gateId = selectDefinedValue(() => (observabilityIdentity.gate_id), () => (null));
     spawnArgs.metadata = {
-      ...(spawnArgs.metadata ?? {}),
       run_id: spawnArgs.runId,
       project: spawnArgs.project,
       dispatch_id: spawnArgs.dispatchId,
@@ -426,13 +449,13 @@ export async function spawnSession(payload: AnyRecord, prompt: any, timeoutSecon
       agent_type: spawnArgs.agentType,
       module_id: spawnArgs.moduleId,
       gate_id: spawnArgs.gateId,
-      gate_type: observabilityIdentity.gate_type ?? observabilityIdentity.gateType ?? null,
-      attempt: observabilityIdentity.attempt ?? null,
+      gate_type: selectDefinedValue(() => (observabilityIdentity.gate_type), () => (null)),
+      attempt: selectDefinedValue(() => (observabilityIdentity.attempt), () => (null)),
     };
   }
   if (!isSubagent) {
     spawnArgs.agentId = agentId;
-    spawnArgs.streamTo = opts.streamTo ?? spawnPolicy.streamTo;
+    spawnArgs.streamTo = spawnPolicy.streamTo;
     if (thinking) spawnArgs.thinking = thinking;
   }
 
@@ -449,7 +472,7 @@ export async function spawnSession(payload: AnyRecord, prompt: any, timeoutSecon
         budget,
         signal,
       });
-      const result: AnyRecord = raw?.result?.details || raw;
+      const result: AnyRecord = requireGatewayDetails(raw, 'session spawn');
       if (result.status !== 'accepted') throw new Error(`Spawn not accepted: ${JSON.stringify(result)}`);
 
       const streamLogPath = resolveSpawnTranscriptPath(result, runtime);
@@ -476,21 +499,27 @@ export async function spawnSession(payload: AnyRecord, prompt: any, timeoutSecon
     } catch (err) {
       lastErr = err;
       if (isCallerAbort(err, signal, budget)) throw err;
+      if (isNonRetryableGatewayContractError(err)) {
+        const contractErr = new Error(`Gateway session spawn contract invalid for '${label}': ${(err as any).message}`) as Error & { code?: string; gatewayStatus?: number };
+        contractErr.code = 'gateway_spawn_contract_invalid';
+        contractErr.gatewayStatus = 400;
+        throw contractErr;
+      }
       if (attempt < maxRetries) {
-        log('WARN', `Spawn attempt ${attempt}/${maxRetries} failed: ${(err as any).message} - retrying in ${retryDelayMs / 1000}s`);
+        log('WARN', `Spawn attempt ${attempt}/${maxRetries} failed: ${errorMessage(err)} - retrying in ${retryDelayMs / 1000}s`);
         await sleep(retryDelayMs, { budget, signal });
       }
     }
   }
 
-  throw new Error(`Failed to spawn session '${label}' after ${maxRetries} attempts: ${(lastErr as any)?.message}`);
+  throw new Error(`Failed to spawn session '${label}' after ${maxRetries} attempts: ${errorMessage(lastErr)}`);
 }
 
 // ── Kill ─────────────────────────────────────────────────────────────────────
 
 function parseGatewayToolText(raw: AnyRecord) {
   const text = raw?.result?.content?.find?.((entry: AnyRecord) => entry?.type === 'text')?.text;
-  if (!text || typeof text !== 'string') return null;
+  if (selectTruthyValue(() => (!text), () => (typeof text !== 'string'))) return null;
   try {
     return JSON.parse(text);
   } catch (_error) {
@@ -498,8 +527,16 @@ function parseGatewayToolText(raw: AnyRecord) {
   }
 }
 
+function requireGatewayDetails(raw: AnyRecord, endpoint: string) {
+  if (raw?.result?.details && typeof raw.result.details === 'object') return raw.result.details;
+  if (raw?.details && typeof raw.details === 'object') return raw.details;
+  const parsed = parseGatewayToolText(raw);
+  if (parsed && typeof parsed === 'object') return parsed;
+  throw new Error(`Gateway ${endpoint} response missing typed details`);
+}
+
 function normalizeGatewayDetails(raw: AnyRecord) {
-  return raw?.result?.details || raw?.details || parseGatewayToolText(raw) || raw;
+  return requireGatewayDetails(raw, 'details');
 }
 
 function subagentListConfirmsInactive(raw: AnyRecord, childSessionKey: any, label: any) {
@@ -507,9 +544,7 @@ function subagentListConfirmsInactive(raw: AnyRecord, childSessionKey: any, labe
   const active = Array.isArray(details?.active) ? details.active : null;
   if (!active) return false;
   return !active.some((entry: AnyRecord) => (
-    entry?.sessionKey === childSessionKey
-    || entry?.key === childSessionKey
-    || (label && entry?.label === label)
+    selectTruthyValue(() => (selectTruthyValue(() => (entry?.sessionKey === childSessionKey), () => (entry?.key === childSessionKey))), () => ((label && entry?.label === label)))
   ));
 }
 
@@ -524,9 +559,9 @@ export async function killSession(childSessionKey: any, opts: AnyRecord = {}) {
   }
   const gatewayUrl = resolveGatewayBaseUrl(opts.gatewayUrl);
   const gatewayToken = resolveGatewayToken(opts.gatewayToken);
-  const runtime = resolveRuntime({ runtime: opts.runtime, model: opts.model || null });
+  const runtime = resolveRuntime({ runtime: opts.runtime, model: selectTruthyValue(() => (opts.model), () => (null)) });
   const isSubagent = runtime === 'subagent';
-  const label = opts.label || '';
+  const label = selectDefinedValue(() => (opts.label), () => (''));
   const killPolicy = resolveKillPolicy(opts, isSubagent);
   const confirmTimeoutMs = killPolicy.confirmTimeoutMs;
   const confirmPollMs = killPolicy.confirmPollMs;
@@ -539,14 +574,14 @@ export async function killSession(childSessionKey: any, opts: AnyRecord = {}) {
   const stopRequestTimeoutMs = killPolicy.stopRequestTimeoutMs;
   const listTimeoutMs = killPolicy.listTimeoutMs;
   const acpxTimeoutMs = killPolicy.acpxTimeoutMs;
-  const budget = opts.budget || null;
-  const signal = opts.signal || null;
+  const budget = selectTruthyValue(() => (opts.budget), () => (null));
+  const signal = selectTruthyValue(() => (opts.signal), () => (null));
   const waitOptions = { budget, signal };
 
   log('STEP', `Killing ${isSubagent ? 'subagent' : 'ACP'} session: ${childSessionKey}${label ? ` (${label})` : ''}`);
   let requested = false;
   let confirmed = false;
-  let state = 'unknown';
+  let state = 'session_stop_status_not_observed';
   let cleanupAttempted = false;
 
   throwIfCallerAbort(signal, budget);
@@ -557,7 +592,7 @@ export async function killSession(childSessionKey: any, opts: AnyRecord = {}) {
   });
   if (!confirmation.active && isStoppedSessionState(confirmation.state)) {
     confirmed = true;
-    state = confirmation.state || state;
+    if (confirmation.state) state = confirmation.state;
     log('OK', `Session already stopped: ${childSessionKey} (${state})`);
     return assertValidKillSessionResult({ requested, confirmed, state, cleanupAttempted });
   }
@@ -608,7 +643,7 @@ export async function killSession(childSessionKey: any, opts: AnyRecord = {}) {
     retryDelayMs: killPolicy.statusGateway.retryDelayMs,
   });
   confirmed = confirmation.confirmed;
-  state = confirmation.state || state;
+  if (confirmation.state) state = confirmation.state;
 
   if (!confirmed && isSubagent && requested) {
     try {
@@ -647,7 +682,7 @@ export async function killSession(childSessionKey: any, opts: AnyRecord = {}) {
       retryDelayMs: killPolicy.statusGateway.retryDelayMs,
     });
     confirmed = confirmation.confirmed;
-    state = confirmation.state || state;
+    if (confirmation.state) state = confirmation.state;
   }
 
   if (confirmed) log('OK', `Session stopped: ${childSessionKey} (${state})`);
@@ -668,9 +703,9 @@ export async function killActiveSession() {
   const result = await killSession(session.childSessionKey, {
     killPolicy: session.killPolicy,
     runtime: session.runtime,
-    model: session.model || null,
+    model: session.model,
     agentId: session.agentId,
-    label: session.gatewayLabel || session.label,
+    label: session.gatewayLabel,
   }) as AnyRecord;
   clearActiveSession({ preserveFile: !result?.confirmed });
   return !!result?.confirmed;

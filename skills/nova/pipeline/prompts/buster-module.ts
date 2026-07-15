@@ -1,8 +1,21 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // prompts/buster-module.ts — Module test prompt builder
 
 import { modulePath, relPath, projectSrcPath, moduleBusterOutputPathRef, moduleBusterTestWorkspacePathRef } from '../core/paths.ts';
 import { makePromptResult, quoteShellArg, buildGitSyncSection, buildAvailableToolsSection, buildTestWorkspaceSection, buildBusterCompletionProtocol } from './shared.ts';
 import { readBusterInstructions } from './buster-instructions.ts';
+
+function summarizeForgeDiffStat(diffStat) {
+  if (selectTruthyValue(() => (typeof diffStat !== 'string'), () => (!diffStat.trim()))) return null;
+  const relevantLines = diffStat
+    .split('\n')
+    .map((line) => line.trimEnd())
+    .filter((line) => line.trim())
+    .filter((line) => !line.includes('/.swarm/'))
+    .slice(0, 40);
+  if (relevantLines.length === 0) return null;
+  return relevantLines.join('\n');
+}
 
 export function buildBusterModulePrompt(config, moduleId, mod, dir, status, maxFails, completionIdentity = {}) {
   // ── Read test spec ──
@@ -34,8 +47,9 @@ export function buildBusterModulePrompt(config, moduleId, mod, dir, status, maxF
     '',
   ].filter(Boolean);
 
-  if (status.forge_diff_stat) {
-    contextBlock.push('**Files Changed by Forge:**', '```', status.forge_diff_stat, '```', '');
+  const forgeDiffStat = summarizeForgeDiffStat(status.forge_diff_stat);
+  if (forgeDiffStat) {
+    contextBlock.push('**Files Changed by Forge (application/control paths only):**', '```', forgeDiffStat, '```', '');
   }
 
   contextBlock.push('---', '');

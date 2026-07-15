@@ -9,6 +9,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
+import { buildPluginRegistry } from '../../../skills/nova/pipeline/core/registry.ts';
+import { PLUGIN_CONFIG_SCHEMA_ANY_OBJECT, PLUGIN_CONTRACT_VERSION } from '../../../skills/nova/pipeline/core/constants.ts';
 import {
   completePipeline,
   processExitCodeForTerminalStatus,
@@ -19,6 +21,34 @@ import {
 
 function git(args, cwd) {
   return execFileSync('git', args, { cwd, encoding: 'utf8', stdio: 'pipe' }).trim();
+}
+
+function generatorDefinition(stageId) {
+  const producerType = stageId.split(':')[1];
+  return {
+    manifest: {
+      moduleId: `contract.${producerType}`,
+      contractVersion: PLUGIN_CONTRACT_VERSION,
+      kind: 'generator',
+      hookFamily: 'generator.run',
+      stageIds: [stageId],
+      capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'write.artifacts'],
+      configSchema: PLUGIN_CONFIG_SCHEMA_ANY_OBJECT,
+      sourceType: 'builtin',
+      trustTier: 'trusted',
+      displayName: stageId,
+      description: stageId,
+      defaultEnabled: true,
+    },
+    implementation: {
+      run: async () => ({
+        schemaVersion: 'v1',
+        producerKind: 'generator',
+        producerType,
+        outputs: { status: 'ok' },
+      }),
+    },
+  };
 }
 
 const previousRepoRoot = process.env.REPO_ROOT;
@@ -60,6 +90,20 @@ try {
       message: 'Git persistence degraded; manual fallback required',
     }],
   };
+  config.pluginRegistry = buildPluginRegistry({
+    enabled: true,
+    allowCustomModules: false,
+    extraModulePaths: [],
+    modules: {},
+    stageOwners: {},
+    restrictedCapabilityAllowlist: {},
+  }, {
+    builtinModules: [
+      generatorDefinition('generator:project_summary'),
+      generatorDefinition('generator:pipeline_review'),
+      generatorDefinition('generator:case_study'),
+    ],
+  }).registry;
   const progress = {
     modules: {},
     gates: {},

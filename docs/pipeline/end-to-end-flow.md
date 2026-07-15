@@ -176,7 +176,7 @@ Gates are entries in `execution_order` that point to `gates.<id>`.
 
 Current gate types:
 
-- `review`: deterministic lint plus reviewer session, with optional fix-and-rereview
+- `review`: deterministic lint plus reviewer session; failures stop for explicit follow-up
 - `buster`: system or final test, with optional fix-and-retest
 - `approval`: waits for operator approve/reject signals
 

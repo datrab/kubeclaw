@@ -7,32 +7,40 @@ import {
 import { getPipelineRunnerDeps } from './pipeline-runner-deps.ts';
 import { runPipelineStateMachine } from './pipeline-runner-state-machine.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 
+function scheduledValidatorStepId(schedule: AnyRecord, next: AnyRecord): string {
+  if (typeof schedule?.key === 'string' && schedule.key.trim()) return schedule.key.trim();
+  if (typeof next?.id === 'string' && next.id.trim()) return next.id.trim();
+  throw new Error('Scheduled validator completion requires schedule key or step id');
+}
+
 export async function runValidatorStep(config: AnyRecord, progress: AnyRecord, next: AnyRecord, deps: AnyRecord, opts: AnyRecord = {}) {
-  const schedule = next?.schedule || {};
+  const schedule = selectDefinedValue(() => (next?.schedule), () => ({}));
+  const stepId = scheduledValidatorStepId(schedule, next);
   const controlResult = await runScheduledValidatorImpl(config, progress, next.id, {
     resume: false,
     stageId: next.id,
-    scheduleKey: schedule.key || null,
-    scheduleReason: schedule.scheduleReason || schedule.reason || null,
-    validatorConfig: schedule.validatorConfig || schedule.config || null,
-    scope: schedule.scope || 'pipeline',
-    moduleId: schedule.moduleId || null,
-    gateId: schedule.gateId || null,
-    orderIndex: schedule.orderIndex ?? null,
-    causationRef: schedule.causationRef || null,
-    signal: opts.signal || null,
+    scheduleKey: selectTruthyValue(() => (schedule.key), () => (null)),
+    scheduleReason: selectTruthyValue(() => (selectTruthyValue(() => (schedule.scheduleReason), () => (schedule.reason))), () => (null)),
+    validatorConfig: selectTruthyValue(() => (selectTruthyValue(() => (schedule.validatorConfig), () => (schedule.config))), () => (null)),
+    scope: selectDefinedValue(() => (schedule.scope), () => ('pipeline')),
+    moduleId: selectTruthyValue(() => (schedule.moduleId), () => (null)),
+    gateId: selectTruthyValue(() => (schedule.gateId), () => (null)),
+    orderIndex: selectDefinedValue(() => (schedule.orderIndex), () => (null)),
+    causationRef: selectTruthyValue(() => (schedule.causationRef), () => (null)),
+    signal: selectTruthyValue(() => (opts.signal), () => (null)),
   }, deps);
   const stepResult = projectValidatorControlResultToStepResult(config, controlResult, {
     stageId: next.id,
-    stepId: schedule.key || next.id,
-    scheduleKey: schedule.key || null,
-    moduleId: schedule.moduleId || null,
-    gateId: schedule.gateId || null,
+    stepId,
+    scheduleKey: selectTruthyValue(() => (schedule.key), () => (null)),
+    moduleId: selectTruthyValue(() => (schedule.moduleId), () => (null)),
+    gateId: selectTruthyValue(() => (schedule.gateId), () => (null)),
   });
   if (stepResult.nextAction === 'continue') {
-    markScheduledValidatorComplete(config, schedule.key || next.id);
+    markScheduledValidatorComplete(config, stepId);
   }
   return stepResult;
 }

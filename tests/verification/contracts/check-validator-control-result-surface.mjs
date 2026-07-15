@@ -308,7 +308,7 @@ const mixedMetadataContractInvalid = schedulingMod.projectValidatorControlResult
   producerKind: 'validator',
   producerType: 'architecture',
   nextAction: 'block',
-  issueType: 'unknown',
+  issueType: 'contract',
   diagnostics: {
     summary: 'Architecture contract invalid',
     metadata: { contract_invalid: true },
@@ -329,7 +329,7 @@ const typedMetadataContractInvalid = schedulingMod.projectValidatorControlResult
   producerKind: 'validator',
   producerType: 'architecture',
   nextAction: 'block',
-  issueType: 'unknown',
+  issueType: 'contract',
   diagnostics: {
     summary: 'Architecture contract invalid',
     metadata: { contract_invalid: false },
@@ -383,11 +383,13 @@ assert.throws(
     return error?.diagnostics?.diagnosticType === 'plugin_contract_invalid'
       && error.diagnostics.rawResultPreview === undefined
       && error.diagnostics.coercedResultPreview === undefined
-      && error.diagnostics.rawResultSummary?.redacted === true
-      && error.diagnostics.coercedResultSummary?.redacted === true
+      && error.diagnostics.rawResultSummary?.label === 'rawResult'
+      && error.diagnostics.coercedResultSummary?.label === 'coercedResult'
+      && Number.isInteger(error.diagnostics.rawResultSummary?.json_bytes)
+      && Number.isInteger(error.diagnostics.coercedResultSummary?.json_bytes)
       && !diagnosticText.includes('sk-proj12345678901234567890');
   },
-  'validator contract diagnostics must summarize/redact nested secret-like raw plugin output at source',
+  'validator contract diagnostics must summarize nested raw plugin output at source',
 );
 
 quietConsole.restore();

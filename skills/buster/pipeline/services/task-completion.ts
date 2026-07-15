@@ -9,6 +9,7 @@ import {
 } from './redis-message-contract.ts';
 import { createRedisEventBus } from './task-transport-contract.ts';
 
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export const DEFAULT_DEAD_LETTER_SUFFIX = ':dead-letter';
 
 function compactRecord(obj = {}) {
@@ -23,7 +24,7 @@ function resolveModuleId(payload = {}) {
   if (payload.module_id) return payload.module_id;
   if (payload.module) return payload.module;
   if (payload.gate_id) return payload.gate_id;
-  return 'unknown';
+  return 'missing_task_target';
 }
 
 export function createTaskCompletionState() {
@@ -32,13 +33,10 @@ export function createTaskCompletionState() {
 
 export function buildTaskCompletionRecord(payload = {}, opts = {}) {
   const { outcome, reason } = opts;
-  if (!outcome || !reason) throw new Error('Buster completion requires explicit outcome and reason');
+  if (selectTruthyValue(() => (!outcome), () => (!reason))) throw new Error('Buster completion requires explicit outcome and reason');
   const moduleId = opts.moduleId ? opts.moduleId : resolveModuleId(payload);
   const identityFields = buildCompletionIdentityFields(payload, {
-    runId: opts.runId ?? payload.run_id,
-    attempt: opts.attempt ?? payload.attempt,
-    dispatchId: opts.dispatchId ?? payload.dispatch_id,
-    sessionKey: opts.sessionKey ?? null,
+    sessionKey: selectDefinedValue(() => (opts.sessionKey), () => (null)),
   });
   const target = inferRedisTaskTarget(payload, payload?.task_type);
 
@@ -51,12 +49,13 @@ export function buildTaskCompletionRecord(payload = {}, opts = {}) {
     target_id: target.target_id ? target.target_id : moduleId,
     module: moduleId,
     gate_id: target.gate_id,
-    gate_type: payload?.gate_type ?? payload?.gateType,
+    gate_type: payload?.gate_type,
     status: outcome === 'PASS' ? 'PASS' : 'FAIL',
     outcome,
     source: opts.source ? opts.source : 'buster-pipeline',
     reason,
     summary: opts.summary ? opts.summary : reason ? reason : '',
+    ...(opts.failureClass ? { failure_class: opts.failureClass } : {}),
     ...(outcome === 'RATE_LIMITED' && opts.rateLimitMaxPauses !== null && opts.rateLimitMaxPauses !== undefined
       ? { max_rate_limit_pauses: String(opts.rateLimitMaxPauses) }
       : {}),
@@ -83,26 +82,40 @@ export async function emitTaskCompletion(redisClient, payload = {}, opts = {}) {
 
 export async function publishTaskCompletionWithArtifact(redisClient, payload = {}, opts = {}) {
   const { outcome, reason } = opts;
-  if (!outcome || !reason) throw new Error('Buster completion requires explicit outcome and reason');
+  if (selectTruthyValue(() => (!outcome), () => (!reason))) throw new Error('Buster completion requires explicit outcome and reason');
   if (!payload?.completion_stream) return { ok: false, skipped: true, reason: 'missing_completion_stream' };
   if (!payload?.output_file) throw new Error('Buster completion requires output_file artifact path');
 
   const moduleId = opts.moduleId ? opts.moduleId : resolveModuleId(payload);
   const ensureOutputFile = opts.ensureBusterOutputFile ? opts.ensureBusterOutputFile : ensureBusterOutputFile;
   const verifyTask = opts.verifyAndPush ? opts.verifyAndPush : verifyAndPush;
+  const emitCompletion = opts.emitTaskCompletion ? opts.emitTaskCompletion : emitTaskCompletion;
   const outputFileResult = ensureOutputFile(payload, {
     outcome,
     reason,
     summary: opts.artifactSummary ? opts.artifactSummary : opts.summary ? opts.summary : reason,
+    source: selectTruthyValue(() => (opts.artifactSource), () => (null)),
+    data: opts.artifactData && typeof opts.artifactData === 'object' ? opts.artifactData : null,
   });
+  if (outputFileResult?.ok === false) {
+    const contractReason = selectTruthyValue(() => (outputFileResult.reason), () => ('output_file_contract_failed'));
+    const emitted = await emitCompletion(redisClient, payload, {
+      ...opts,
+      outcome: 'FAIL',
+      reason: contractReason,
+      summary: `Buster output_file contract failed: ${contractReason}`,
+      source: 'buster-pipeline',
+      failureClass: selectTruthyValue(() => (opts.failureClass), () => ('output_contract_failed')),
+    });
+    return { ...emitted, outputFileResult, verifyResult: null };
+  }
   const verifyResult = await verifyTask('buster', payload.project, {
     commitMessage: opts.commitMessage ? opts.commitMessage : `[BUSTER] ${payload?.task_type ? payload.task_type : 'task'} ${moduleId}: output artifact`,
   });
   if (verifyResult?.status && verifyResult.status !== 'success') {
-    throw new Error(`output_file verify failed: ${verifyResult.error || verifyResult.action || 'unknown'}`);
+    throw new Error(`output_file verify failed: ${selectTruthyValue(() => (selectTruthyValue(() => (verifyResult.error), () => (verifyResult.action))), () => ('missing_verify_detail'))}`);
   }
 
-  const emitCompletion = opts.emitTaskCompletion ? opts.emitTaskCompletion : emitTaskCompletion;
   const emitted = await emitCompletion(redisClient, payload, opts);
   return { ...emitted, outputFileResult, verifyResult };
 }
@@ -118,8 +131,8 @@ export function buildTaskDeadLetterFields({
   id,
   data = {},
   payload = {},
-  sender = data.sender || 'unknown',
-  taskType = data.type || 'unknown',
+  sender = selectTruthyValue(() => (data.sender), () => ('missing_task_sender')),
+  taskType = selectTruthyValue(() => (data.type), () => ('missing_task_type')),
   effectiveType = taskType,
   reason = 'task_failed_before_completion',
   detail = '',
@@ -143,7 +156,7 @@ export function buildTaskDeadLetterFields({
     attempt: payload?.attempt,
     dispatch_id: payload?.dispatch_id,
     completion_stream: payload?.completion_stream,
-    payload_keys: Object.keys(payload || {}),
+    payload_keys: Object.keys(selectDefinedValue(() => (payload), () => ({}))),
     payload_size: data?.payload ? String(data.payload).length : undefined,
     timestamp: String(Date.now()),
   });
@@ -160,11 +173,15 @@ export function didProcessResultEmitTerminalCompletion(processResult) {
   return processResult?.completion?.terminal === true;
 }
 
+function taskPayloadRecord(payload) {
+  return payload && typeof payload === 'object' && !Array.isArray(payload) ? payload : {};
+}
+
 export async function ensureTaskTerminalBeforeAck(redisClient, opts = {}) {
-  const payload = opts.payload ?? {};
-  const processResult = opts.processResult ?? null;
-  const taskError = opts.error ?? null;
-  let completionError = opts.completionError || processResult?.completion?.error;
+  const payload = taskPayloadRecord(opts.payload);
+  const processResult = selectDefinedValue(() => (opts.processResult), () => (null));
+  const taskError = selectDefinedValue(() => (opts.error), () => (null));
+  let completionError = completionErrorAuthority(opts, processResult);
 
   if (didProcessResultEmitTerminalCompletion(processResult)) {
     return { ok: true, mode: 'completion_already_emitted', stream: processResult.completion.stream };
@@ -190,7 +207,7 @@ export async function ensureTaskTerminalBeforeAck(redisClient, opts = {}) {
       });
       if (completion?.ok) return { ok: true, mode: 'synthesized_failure_completion', stream: completion.stream };
     } catch (error) {
-      completionError ||= error;
+      if (!completionError) completionError = error;
     }
   }
 
@@ -210,4 +227,9 @@ export async function ensureTaskTerminalBeforeAck(redisClient, opts = {}) {
       detail: safeErrorMessage(deadLetterError),
     };
   }
+}
+
+function completionErrorAuthority(opts, processResult) {
+  if (opts.completionError) return opts.completionError;
+  return processResult?.completion?.error;
 }

@@ -65,12 +65,17 @@ test('gate completion compares immediate Redis terminal verdicts with pre-existi
           attempt: '1',
           dispatch_id: 'dispatch-test',
           session_key: 'session-test',
+          gateway_label: 'gateway-test',
           timestamp: '2026-06-03T00:00:00.000Z',
         });
       }
       return new Promise((resolve) => {
         this.waiting = resolve;
       });
+    }
+
+    async xrevrange() {
+      return [];
     }
 
     disconnect() {
@@ -92,7 +97,10 @@ test('gate completion compares immediate Redis terminal verdicts with pre-existi
     deps: {
       pollResult: (ok, reason, data) => ({ ok, reason, data }),
       _explicitDeps: {
-        completionEventAdapters: { RedisCtor: FakeRedis },
+        completionEventAdapters: {
+          RedisCtor: FakeRedis,
+          redisOptions: { host: '127.0.0.1', port: '6379', enforceSecureMode: false },
+        },
       },
     },
     config,
@@ -206,7 +214,10 @@ test('gate completion recovers canonical Redis completion from tail scan when li
     deps: {
       pollResult: (ok, reason, data) => ({ ok, reason, data }),
       _explicitDeps: {
-        completionEventAdapters: { RedisCtor: FakeRedis },
+        completionEventAdapters: {
+          RedisCtor: FakeRedis,
+          redisOptions: { host: '127.0.0.1', port: '6379', enforceSecureMode: false },
+        },
         createDedicatedRedisCompletionClient: () => ({
           on() {},
           disconnect() {},

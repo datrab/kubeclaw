@@ -10,7 +10,7 @@ function optionalRecord(value: any): AnyRecord {
 }
 
 function nonEmptyString(value: any, field: string): string {
-  const normalized = String(value ?? '').trim();
+  const normalized = String(value == null ? '' : value).trim();
   if (normalized) return normalized;
   throw new Error(`${field} must be a non-empty string`);
 }
@@ -66,6 +66,11 @@ export function agentObservabilityIngesterConfig(config: AnyRecord = {}) {
   const pressure = record(ingesterProfile.pressure, 'agent_observability profile ingester pressure');
   return {
     enabled: true,
+    redisHost: ingester.redisHost,
+    redisPort: ingester.redisPort,
+    redisUsername: ingester.redisUsername,
+    redisPassword: ingester.redisPassword,
+    redisTls: ingester.redisTls,
     redisNetworkIsolation: ingester.redisNetworkIsolation,
     groupName: nonEmptyString(ingester.groupName, 'agent_observability.ingester.groupName'),
     consumerName: nonEmptyString(ingester.consumerName, 'agent_observability.ingester.consumerName'),

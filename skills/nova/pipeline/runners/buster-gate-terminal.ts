@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // runners/buster-gate-terminal.js — Buster gate terminal/result handling
 // Owns post-attempt PASS/FAIL/rate-limit presentation and typed-control mapping.
 // The runner still owns setup, dispatch, polling loop, and remediation controller wiring.
@@ -17,6 +18,7 @@ import {
 export const BUSTER_GATE_EVALUATION_RESULT_TYPES = Object.freeze({
   PASS: 'pass',
   CONFIG_INVALID: 'config_invalid',
+  COMMIT_HASH_MISSING: 'commit_hash_missing',
   SPAWN_FAILED: 'spawn_failed',
   INVALID_CONTRACT: 'invalid_contract',
   PARSE_CORRUPTED: 'parse_corrupted',
@@ -32,6 +34,7 @@ export const BUSTER_GATE_EVALUATION_RESULT_TYPES = Object.freeze({
 
 const BUSTER_GATE_REASON_TO_EVALUATION_TYPE = Object.freeze({
   config_invalid: BUSTER_GATE_EVALUATION_RESULT_TYPES.CONFIG_INVALID,
+  commit_hash_missing: BUSTER_GATE_EVALUATION_RESULT_TYPES.COMMIT_HASH_MISSING,
   spawn_failed: BUSTER_GATE_EVALUATION_RESULT_TYPES.SPAWN_FAILED,
   invalid_contract: BUSTER_GATE_EVALUATION_RESULT_TYPES.INVALID_CONTRACT,
   parse_corrupted: BUSTER_GATE_EVALUATION_RESULT_TYPES.PARSE_CORRUPTED,
@@ -52,22 +55,63 @@ const NON_VERDICT_COMPLETION_EVALUATION_TYPES = new Set([
   BUSTER_GATE_EVALUATION_RESULT_TYPES.COMPLETION_EVENT_UNRESOLVED,
 ]);
 
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : null;
+}
+
+function nonEmptyString(value) {
+  return typeof value === 'string' && value.trim() ? value.trim() : null;
+}
+
+function selectPresentValue(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null && value !== '') return value;
+  }
+  return null;
+}
+
+function gateEvaluationAttempt(statusRecord, requestAttempt) {
+  return selectPresentValue(statusRecord?.attempt, requestAttempt);
+}
+
+function gateRateLimitExitIdentity(exitResult, requestIdentity) {
+  return {
+    attempt: selectPresentValue(exitResult?.attempt, requestIdentity.attempt),
+    dispatch_id: selectPresentValue(exitResult?.dispatch_id, requestIdentity.dispatch_id),
+    gateway_label: selectPresentValue(exitResult?.gateway_label, requestIdentity.gateway_label),
+    session_key: selectPresentValue(exitResult?.session_key, requestIdentity.session_key),
+  };
+}
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function issueTitles(issues) {
+  const titles = arrayValue(issues)
+    .map((issue) => objectRecord(issue)?.title)
+    .filter(Boolean);
+  return selectTruthyValue(() => (titles.join('; ')), () => ('missing_error_detail'));
+}
+
 export function assertBusterGateEvaluationResult(result = {}) {
-  const status = result?.status || {};
+  const status = selectDefinedValue(() => (objectRecord(result?.status)), () => ({}));
   if (result?.ok === true) {
-    const passReason = String(result?.reason || '').trim();
-    const statusValue = String(status?.status || '').trim().toUpperCase();
-    if (passReason !== 'target_reached' || statusValue !== STATUS.PASS) {
+    const passReason = selectDefinedValue(() => (nonEmptyString(result?.reason)), () => (''));
+    const statusValue = (selectDefinedValue(() => (nonEmptyString(status?.status)), () => (''))).toUpperCase();
+    if (selectTruthyValue(() => (passReason !== 'target_reached'), () => (statusValue !== STATUS.PASS))) {
+      const passReasonDisplay = selectTruthyValue(() => (passReason), () => ('(missing)'));
+      const statusValueDisplay = selectTruthyValue(() => (statusValue), () => ('(missing)'));
       return Object.freeze({
         type: BUSTER_GATE_EVALUATION_RESULT_TYPES.INVALID_CONTRACT,
         result,
         status: {
           ...status,
-          reason: status?.reason || `Buster gate pass payload invalid: reason=${passReason || '(missing)'} status=${statusValue || '(missing)'}`,
+          reason: selectDefinedValue(() => (status?.reason), () => (`Buster gate pass payload invalid: reason=${passReasonDisplay} status=${statusValueDisplay}`)),
           invalid_reason: 'invalid_pass_payload',
-          raw_reason: passReason || null,
+          raw_reason: selectTruthyValue(() => (passReason), () => (null)),
         },
-        reason: passReason || null,
+        reason: selectTruthyValue(() => (passReason), () => (null)),
       });
     }
     return Object.freeze({
@@ -77,41 +121,58 @@ export function assertBusterGateEvaluationResult(result = {}) {
       reason: null,
     });
   }
-  const rawReason = String(result?.reason || '').trim();
+  const rawReason = selectDefinedValue(() => (nonEmptyString(result?.reason)), () => (''));
   const type = BUSTER_GATE_REASON_TO_EVALUATION_TYPE[rawReason];
   if (!type) {
-    const invalidReason = rawReason ? 'unknown_reason' : 'missing_reason';
+    const invalidReason = rawReason ? 'unsupported_reason' : 'missing_reason';
+    const rawReasonDisplay = selectTruthyValue(() => (rawReason), () => ('(missing)'));
     return Object.freeze({
       type: BUSTER_GATE_EVALUATION_RESULT_TYPES.INVALID_CONTRACT,
       result,
       status: {
         ...status,
-        reason: status?.reason || `Buster gate result has ${invalidReason}: ${rawReason || '(missing)'}`,
+        reason: selectDefinedValue(() => (status?.reason), () => (`Buster gate result has ${invalidReason}: ${rawReasonDisplay}`)),
         invalid_reason: invalidReason,
-        raw_reason: rawReason || null,
+        raw_reason: selectTruthyValue(() => (rawReason), () => (null)),
       },
-      reason: rawReason || null,
+      reason: selectTruthyValue(() => (rawReason), () => (null)),
     });
   }
   return Object.freeze({
     type,
     result,
     status,
-    reason: rawReason || null,
+    reason: selectTruthyValue(() => (rawReason), () => (null)),
   });
 }
 
 function describeNonVerdictCompletionFailure(gateId, reason, status = {}) {
   if (reason === 'completion_conflict') {
-    return status.reason || status.summary || `Gate '${gateId}' completion conflict`;
+    return selectPresentValue(status.reason, status.summary, `Gate '${gateId}' completion conflict`);
   }
   if (reason === 'completion_archive_failed') {
-    return status.reason || status.error || `Gate '${gateId}' completion archive failed`;
+    return selectPresentValue(status.reason, status.error, `Gate '${gateId}' completion archive failed`);
   }
   if (reason === 'completion_event_adapter_failed') {
-    return status.reason || status.error || `Gate '${gateId}' completion event adapter failed`;
+    return selectDefinedValue(() => (selectDefinedValue(() => (status.reason), () => (status.error))), () => (`Gate '${gateId}' completion event adapter failed`));
   }
-  return status.reason || status.error || `Gate '${gateId}' completion event unresolved`;
+  return selectPresentValue(status.reason, status.error, `Gate '${gateId}' completion event unresolved`);
+}
+
+function busterGateHasK8sInfraFailure(status = {}) {
+  const suites = selectDefinedValue(() => (selectDefinedValue(() => (objectRecord(status?.verdict?.suites)), () => (objectRecord(status?.suites)))), () => ({}));
+  const k8sSuite = suites?.k8s;
+  const k8sResult = Array.isArray(status?.results) ? status.results.find((entry) => entry?.suite === 'k8s') : null;
+  const suiteFindings = [
+    ...(Array.isArray(k8sSuite?.findings) ? k8sSuite.findings : []),
+    ...arrayValue(k8sResult?.findings),
+  ];
+  return suiteFindings.some((finding) => {
+    const record = selectDefinedValue(() => (objectRecord(finding)), () => ({}));
+    const rule = selectDefinedValue(() => (nonEmptyString(record.rule)), () => (''));
+    const message = selectDefinedValue(() => (nonEmptyString(record.message)), () => (''));
+    return selectTruthyValue(() => (selectTruthyValue(() => (rule === 'k8s-capability-preflight'), () => (message.includes('k8s-capability-preflight failed')))), () => (message.includes('returned HTML instead of Kubernetes API data')));
+  });
 }
 
 export async function handleBusterGateEvaluationResult({
@@ -141,9 +202,9 @@ export async function handleBusterGateEvaluationResult({
   const resultStatus = evaluation.status;
   const resultReason = evaluation.reason;
   const runId = getRunId(config);
-  const dispatchId = resolveStatusDispatchId(resultStatus) ?? correlation.dispatch_id ?? null;
-  const gatewayLabel = resolveStatusGatewayLabel(resultStatus) ?? correlation.gateway_label ?? null;
-  const sessionKey = resolveStatusSessionKey(resultStatus) ?? correlation.session_key ?? null;
+  const dispatchId = selectDefinedValue(() => (resolveStatusDispatchId(resultStatus)), () => (null));
+  const gatewayLabel = selectDefinedValue(() => (resolveStatusGatewayLabel(resultStatus)), () => (null));
+  const sessionKey = selectDefinedValue(() => (resolveStatusSessionKey(resultStatus)), () => (null));
 
   if (evaluation.type === BUSTER_GATE_EVALUATION_RESULT_TYPES.PASS) {
     log('OK', `Gate '${gateId}' PASS${attempt > 1 ? ` (after ${attempt - 1} fix cycle(s))` : ''}`);
@@ -166,7 +227,7 @@ export async function handleBusterGateEvaluationResult({
             run_id: runId,
             gate_id: gateId,
             gate_type: gate.type,
-            attempt: resultStatus?.attempt ?? attempt,
+            attempt: attempt,
             dispatch_id: dispatchId,
             gateway_label: gatewayLabel,
             session_key: sessionKey,
@@ -178,7 +239,7 @@ export async function handleBusterGateEvaluationResult({
       status: STATUS.PASS,
       passed: true,
       outcome_class: 'passed',
-      completion_source: resultStatus?._source || resultStatus?.source || null,
+      completion_source: selectTruthyValue(() => (selectTruthyValue(() => (resultStatus?._source), () => (resultStatus?.source))), () => (null)),
       attempt,
       dispatch_id: dispatchId,
       gateway_label: gatewayLabel,
@@ -187,7 +248,7 @@ export async function handleBusterGateEvaluationResult({
   }
 
   if (evaluation.type === BUSTER_GATE_EVALUATION_RESULT_TYPES.CONFIG_INVALID) {
-    const err = resultStatus?.error || 'unknown (no error detail available)';
+    const err = selectDefinedValue(() => (resultStatus?.error), () => ('missing_error_detail'));
     log('ERROR', `Gate '${gateId}' config invalid: ${err}`);
     getGateStats(config).gates_failed.push(gateId);
     await onGateFail(telemetryCtx(config), gateId, {
@@ -204,7 +265,7 @@ export async function handleBusterGateEvaluationResult({
           level: 'CRITICAL',
           title: `Gate '${gateId}' Config Invalid`,
           description: `Gate '${gateId}' config invalid: ${err}`,
-          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: runId, gate_id: gateId, gate_type: gate.type, attempt: resultStatus?.attempt ?? attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey }),
+          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: runId, gate_id: gateId, gate_type: gate.type, attempt: attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey }),
         },
       },
     });
@@ -219,8 +280,41 @@ export async function handleBusterGateEvaluationResult({
     }, { ...opts, input: { ids: { attempt } } });
   }
 
+  if (evaluation.type === BUSTER_GATE_EVALUATION_RESULT_TYPES.COMMIT_HASH_MISSING) {
+    const err = selectDefinedValue(() => (resultStatus?.error), () => (`Gate '${gateId}' Buster dispatch requires commit_hash`));
+    log('ERROR', `Gate '${gateId}' commit identity missing: ${err}`);
+    getGateStats(config).gates_failed.push(gateId);
+    await onGateFail(telemetryCtx(config), gateId, {
+      run_id: runId,
+      gate_type: gate.type,
+      fix_cycle: attempt > 1 ? attempt - 1 : 0,
+      duration_seconds: Math.round((Date.now() - gateStartedAt) / 1000),
+      reason: err,
+      dispatch_id: dispatchId,
+      gateway_label: gatewayLabel,
+      session_key: sessionKey,
+      presentation: {
+        discord: {
+          level: 'CRITICAL',
+          title: `Gate '${gateId}' Commit Identity Missing`,
+          description: err.slice(0, 300),
+          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: runId, gate_id: gateId, gate_type: gate.type, attempt: attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey }),
+        },
+      },
+    });
+    return buildBusterGateControlResult(config, gateId, gate, {
+      reason: err,
+      gateway_label: gatewayLabel,
+      session_key: sessionKey,
+      failure_class: 'commit_hash_missing',
+      outcome_class: 'needs_nova',
+      attempt,
+      dispatch_id: dispatchId,
+    }, { ...opts, input: { ids: { attempt } } });
+  }
+
   if (evaluation.type === BUSTER_GATE_EVALUATION_RESULT_TYPES.SPAWN_FAILED) {
-    const err = resultStatus?.error || 'unknown (no error detail available)';
+    const err = selectDefinedValue(() => (resultStatus?.error), () => ('missing_error_detail'));
     log('ERROR', `Gate '${gateId}' agent spawn failed: ${err}`);
     getGateStats(config).gates_failed.push(gateId);
     await onGateFail(telemetryCtx(config), gateId, {
@@ -237,7 +331,7 @@ export async function handleBusterGateEvaluationResult({
           level: 'CRITICAL',
           title: `Gate '${gateId}' Spawn Failed`,
           description: `Buster agent could not be spawned: ${err}`,
-          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: runId, gate_id: gateId, gate_type: gate.type, attempt: resultStatus?.attempt ?? attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey }),
+          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: runId, gate_id: gateId, gate_type: gate.type, attempt: attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey }),
         },
       },
     });
@@ -253,8 +347,8 @@ export async function handleBusterGateEvaluationResult({
   }
 
   if (evaluation.type === BUSTER_GATE_EVALUATION_RESULT_TYPES.INVALID_CONTRACT) {
-    const invalid = resultStatus || {};
-    const err = invalid.reason || `Gate '${gateId}' output contract invalid`;
+    const invalid = selectDefinedValue(() => (objectRecord(resultStatus)), () => ({}));
+    const err = selectDefinedValue(() => (invalid.reason), () => (`Gate '${gateId}' output contract invalid`));
     log('ERROR', `Gate '${gateId}' output contract invalid: ${err}`);
     getGateStats(config).gates_failed.push(gateId);
     await onGateFail(telemetryCtx(config), gateId, {
@@ -275,7 +369,7 @@ export async function handleBusterGateEvaluationResult({
             run_id: runId,
             gate_id: gateId,
             gate_type: gate.type,
-            attempt: invalid.attempt ?? attempt,
+            attempt: gateEvaluationAttempt(invalid, attempt),
             dispatch_id: dispatchId,
             gateway_label: gatewayLabel,
             session_key: sessionKey,
@@ -314,7 +408,7 @@ export async function handleBusterGateEvaluationResult({
           level: 'CRITICAL',
           title: `Gate '${gateId}' Parse Corrupted`,
           description: 'Gate status file is permanently unparseable after multiple attempts.',
-          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: runId, gate_id: gateId, gate_type: gate.type, attempt: resultStatus?.attempt ?? attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey }),
+          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: runId, gate_id: gateId, gate_type: gate.type, attempt: attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey }),
         },
       },
     });
@@ -346,7 +440,7 @@ export async function handleBusterGateEvaluationResult({
           level: 'CRITICAL',
           title: `Gate '${gateId}' TIMEOUT`,
           description: `Buster did not complete within ${timeout}min`,
-          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: runId, gate_id: gateId, gate_type: gate.type, attempt: resultStatus?.attempt ?? attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey }),
+          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: runId, gate_id: gateId, gate_type: gate.type, attempt: attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey }),
         },
       },
     });
@@ -362,7 +456,7 @@ export async function handleBusterGateEvaluationResult({
   }
 
   if (evaluation.type === BUSTER_GATE_EVALUATION_RESULT_TYPES.GIT_ERROR) {
-    const err = resultStatus?.message || 'Polling git sync failed closed during gate execution';
+    const err = selectDefinedValue(() => (resultStatus?.message), () => ('Polling git sync failed closed during gate execution'));
     log('ERROR', `Gate '${gateId}' polling git sync failed closed: ${err}`);
     getGateStats(config).gates_failed.push(gateId);
     await onGateFail(telemetryCtx(config), gateId, {
@@ -379,13 +473,13 @@ export async function handleBusterGateEvaluationResult({
           level: 'CRITICAL',
           title: `Gate '${gateId}' Polling Git Unsafe`,
           description: err.slice(0, 300),
-          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: runId, gate_id: gateId, gate_type: gate.type, attempt: resultStatus?.attempt ?? attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey }),
+          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: runId, gate_id: gateId, gate_type: gate.type, attempt: attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey }),
         },
       },
     });
     return buildBusterGateControlResult(config, gateId, gate, {
       reason: err,
-      polling_git: resultStatus?.details || resultStatus || null,
+      polling_git: selectTruthyValue(() => (selectTruthyValue(() => (resultStatus?.details), () => (resultStatus))), () => (null)),
       gateway_label: gatewayLabel,
       session_key: sessionKey,
       failure_class: 'git_error',
@@ -444,19 +538,22 @@ export async function handleBusterGateEvaluationResult({
       logMessage: `Gate '${gateId}' rate limit pauses exhausted`,
       logLevel: 'ERROR',
     });
+    const gateRateLimitExitIdentityValues = gateRateLimitExitIdentity(gateRateLimitExit, {
+      attempt,
+      dispatch_id: dispatchId,
+      gateway_label: gatewayLabel,
+      session_key: sessionKey,
+    });
     return buildBusterGateControlResult(config, gateId, gate, {
       ...gateRateLimitExit,
       failure_class: 'rate_limit_exhausted',
       outcome_class: 'rate_limited',
-      attempt: gateRateLimitExit.attempt ?? attempt,
-      dispatch_id: gateRateLimitExit.dispatch_id ?? dispatchId,
-      gateway_label: gateRateLimitExit.gateway_label ?? gatewayLabel,
-      session_key: gateRateLimitExit.session_key ?? sessionKey,
+      ...gateRateLimitExitIdentityValues,
     }, { ...opts, input: { ids: { attempt } } });
   }
 
   if (NON_VERDICT_COMPLETION_EVALUATION_TYPES.has(evaluation.type)) {
-    const completionStatus = resultStatus || {};
+    const completionStatus = selectDefinedValue(() => (objectRecord(resultStatus)), () => ({}));
     const err = describeNonVerdictCompletionFailure(gateId, resultReason, completionStatus);
     log('ERROR', `Gate '${gateId}' completion failed before verdict: ${err}`);
     getGateStats(config).gates_failed.push(gateId);
@@ -478,7 +575,7 @@ export async function handleBusterGateEvaluationResult({
             run_id: runId,
             gate_id: gateId,
             gate_type: gate.type,
-            attempt: completionStatus.attempt ?? attempt,
+            attempt: gateEvaluationAttempt(completionStatus, attempt),
             dispatch_id: dispatchId,
             gateway_label: gatewayLabel,
             session_key: sessionKey,
@@ -498,11 +595,54 @@ export async function handleBusterGateEvaluationResult({
     }, { ...opts, input: { ids: { attempt } } });
   }
 
-  const failData = resultStatus || {};
+  const failData = selectDefinedValue(() => (objectRecord(resultStatus)), () => ({}));
   const issues = extractGateIssues(failData);
-  const failReason = issues.map((issue = {}) => issue.title).filter(Boolean).join('; ') || 'unknown (no error detail available)';
+  const failReason = issueTitles(issues);
 
   log('WARN', `Gate '${gateId}' FAIL: ${failReason}`);
+
+  if (busterGateHasK8sInfraFailure(failData)) {
+    const reason = `Gate '${gateId}' blocked by Kubernetes infrastructure preflight: ${failReason}`;
+    getGateStats(config).gates_failed.push(gateId);
+    await onGateFail(telemetryCtx(config), gateId, {
+      run_id: runId,
+      gate_type: gate.type,
+      issues_count: issues.length,
+      fix_cycle: attempt - 1,
+      duration_seconds: Math.round((Date.now() - gateStartedAt) / 1000),
+      reason,
+      gateway_label: gatewayLabel,
+      dispatch_id: dispatchId,
+      session_key: sessionKey,
+      presentation: {
+        discord: {
+          level: 'CRITICAL',
+          title: `Gate '${gateId}' Kubernetes Infra Unavailable`,
+          description: reason.slice(0, 300),
+          fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, {
+            run_id: runId,
+            gate_id: gateId,
+            gate_type: gate.type,
+            attempt,
+            dispatch_id: dispatchId,
+            gateway_label: gatewayLabel,
+            session_key: sessionKey,
+          }),
+        },
+      },
+    });
+    return buildBusterGateControlResult(config, gateId, gate, {
+      reason,
+      gateway_label: gatewayLabel,
+      session_key: sessionKey,
+      failure_class: 'k8s_infra_unavailable',
+      outcome_class: 'error',
+      remaining_issues: issues,
+      status: failData,
+      attempt,
+      dispatch_id: dispatchId,
+    }, { ...opts, input: { ids: { attempt } } });
+  }
 
   if (hasFixLoop) {
     await onGateFail(telemetryCtx(config), gateId, {
@@ -561,7 +701,7 @@ export async function handleBusterGateEvaluationResult({
         level: 'CRITICAL',
         title: `Gate '${gateId}' FAIL`,
         description: `Agent reported failure: ${failReason}`,
-        fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: runId, gate_id: gateId, gate_type: gate.type, attempt: failData?.attempt ?? attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey }),
+        fields: buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.GATE_SESSION, { run_id: runId, gate_id: gateId, gate_type: gate.type, attempt: attempt, dispatch_id: dispatchId, gateway_label: gatewayLabel, session_key: sessionKey }),
       },
     },
   });

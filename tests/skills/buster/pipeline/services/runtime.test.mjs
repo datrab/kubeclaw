@@ -45,13 +45,13 @@ test('resolveDiscordWebhookUrl falls back when override is empty', () => {
   });
 });
 
-test('resolveDiscordWebhookUrl ignores truthy non-string overrides', () => {
+test('resolveDiscordWebhookUrl ignores truthy non-string overrides and legacy webhook env', () => {
   for (const override of [{ url: 'https://example.invalid' }, 1, true, ['https://example.invalid']]) {
     withDiscordWebhookEnv({
       DISCORD_WEBHOOK_URL: undefined,
       DISCORD_WEBHOOK: 'https://legacy.example.test/webhook',
     }, () => {
-      assert.equal(resolveDiscordWebhookUrl(override), 'https://legacy.example.test/webhook');
+      assert.equal(resolveDiscordWebhookUrl(override), null);
     });
   }
 });

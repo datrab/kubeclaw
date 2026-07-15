@@ -2,26 +2,57 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import { readReusedCapabilityProbeResult, runCapabilityProbe } from './check-real-e2e-capabilities.mjs';
 import {
+  buildRunConfig,
   cleanupRealE2ERunWorkspace,
   createRealE2EGitCleanupBlocker,
   createRealE2ERunWorkspace,
+  DEFAULT_REAL_E2E_MODEL,
+  DEFAULT_REAL_E2E_THINKING,
+  applyRealE2EExecutionBoundary,
   REPO_ROOT,
   summarizeWorkspace,
+  validateRealE2EModel,
 } from './real-run-workspace.mjs';
 import { verifyExpectedFailureEvidence, verifyRealRunEvidence } from './real-run-evidence.mjs';
-import { buildRealE2EScenarioEnv, listRealE2EScenarioIds, resolveRealE2EScenario } from './failure-scenarios.mjs';
+import {
+  applyRealE2EFileScenario,
+  applyRealE2EScenario,
+  assertScenarioMutationChannel,
+  assertScenarioSetupChannel,
+  buildRealE2EScenarioEnv,
+  gitFaultForScenario,
+  listRealE2EScenarioIds,
+  resolveRealE2EScenario,
+  validateRealE2EScenarioSetup,
+} from './failure-scenarios.mjs';
 import { malformedOutputScenarioConfig } from './malformed-output-publisher.mjs';
 import {
   captureChildOutput,
   childOutputDiagnostics,
   createChildOutputCapture,
 } from './bounded-output-capture.mjs';
+import {
+  checkpointCaptureNames,
+  restoreCheckpointProjectSource,
+  startCheckpointCaptureController,
+} from './checkpoints.mjs';
 
 const OPENCLAW_CONFIG_PATH = '/home/node/.openclaw/openclaw.json';
 const RESULT_SCHEMA_VERSION = 'real_pipeline_e2e_result.v1';
 const REAL_E2E_CRASH_EXIT_CODE = 86;
+const execFileAsync = promisify(execFile);
+const DEFAULT_RATE_LIMIT_TIMEOUT_EXTENSION_MS = Number(
+  process.env.REAL_E2E_RATE_LIMIT_TIMEOUT_EXTENSION_MS
+    || process.env.REAL_E2E_MATRIX_RATE_LIMIT_TIMEOUT_EXTENSION_MS
+    || 3 * 60 * 60 * 1000,
+);
+const DEFAULT_RATE_LIMIT_MAX_PAUSES = Number(process.env.REAL_E2E_RATE_LIMIT_MAX_PAUSES || 5);
+const RATE_LIMIT_COOLDOWN_OUTPUT_PATTERN = /\b(rate[- ]limit(?:ed)?|usage limit|subscription usage limit)\b[\s\S]{0,240}\b(cooldown|sleeping|resume at|retrying after cooldown|authorized_rate_limit_cooldown)\b/i;
+const RATE_LIMIT_RESUME_AT_PATTERN = /\bresume at\s+([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:.]+Z)\b/i;
 
 function parseArgs(argv) {
   const args = {
@@ -30,6 +61,10 @@ function parseArgs(argv) {
     capabilitiesOnly: false,
     keepArtifacts: process.env.REAL_E2E_KEEP_ARTIFACTS === '1',
     resultPath: process.env.REAL_E2E_RESULT_PATH || null,
+    restoreCheckpointDir: process.env.REAL_E2E_RESTORE_CHECKPOINT_DIR || null,
+    restoreCheckpointName: process.env.REAL_E2E_RESTORE_CHECKPOINT_NAME || null,
+    captureCheckpointRoot: process.env.REAL_E2E_CAPTURE_CHECKPOINT_ROOT || null,
+    captureCheckpointSeedId: process.env.REAL_E2E_CAPTURE_CHECKPOINT_SEED_ID || 'canonical',
   };
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
@@ -43,6 +78,14 @@ function parseArgs(argv) {
       args.keepArtifacts = true;
     } else if (arg === '--result-path') {
       args.resultPath = argv[++index] || '';
+    } else if (arg === '--restore-checkpoint-dir') {
+      args.restoreCheckpointDir = argv[++index] || '';
+    } else if (arg === '--restore-checkpoint-name') {
+      args.restoreCheckpointName = argv[++index] || '';
+    } else if (arg === '--capture-checkpoint-root') {
+      args.captureCheckpointRoot = argv[++index] || '';
+    } else if (arg === '--capture-checkpoint-seed-id') {
+      args.captureCheckpointSeedId = argv[++index] || '';
     } else if (arg === '--help' || arg === '-h') {
       args.help = true;
     } else {
@@ -51,6 +94,13 @@ function parseArgs(argv) {
   }
   if (!['fast', 'full'].includes(args.mode)) throw new Error('--mode must be fast or full');
   if (args.resultPath === '') throw new Error('--result-path requires a path');
+  if (args.restoreCheckpointDir === '') throw new Error('--restore-checkpoint-dir requires a path');
+  if (args.restoreCheckpointName === '') throw new Error('--restore-checkpoint-name requires a checkpoint name');
+  if (args.captureCheckpointRoot === '') throw new Error('--capture-checkpoint-root requires a path');
+  if (args.captureCheckpointSeedId === '') throw new Error('--capture-checkpoint-seed-id requires an id');
+  if (args.restoreCheckpointDir && !args.restoreCheckpointName) {
+    throw new Error('--restore-checkpoint-name is required with --restore-checkpoint-dir');
+  }
   args.scenarioConfig = resolveRealE2EScenario(args.scenario);
   args.resultPath = path.resolve(args.resultPath || defaultResultPath(args));
   return args;
@@ -59,6 +109,8 @@ function parseArgs(argv) {
 function usage() {
   return [
     'Usage: node tests/verification/e2e/run-real-pipeline-e2e.mjs --mode fast|full [--scenario <id>] [--capabilities-only] [--keep-artifacts] [--result-path <file>]',
+    '       [--capture-checkpoint-root <dir> [--capture-checkpoint-seed-id <id>]]',
+    '       [--restore-checkpoint-dir <dir> --restore-checkpoint-name <checkpoint>]',
     '',
     `Scenarios: ${listRealE2EScenarioIds().join(', ')}`,
     '',
@@ -89,6 +141,19 @@ function writeJsonAtomic(filePath, value) {
   const tmpPath = `${filePath}.tmp-${process.pid}`;
   fs.writeFileSync(tmpPath, `${JSON.stringify(value, null, 2)}\n`);
   fs.renameSync(tmpPath, filePath);
+}
+
+function readJson(filePath) {
+  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+async function execGit(args, options = {}) {
+  return execFileAsync('git', args, {
+    cwd: options.cwd || REPO_ROOT,
+    encoding: 'utf8',
+    timeout: options.timeout || 60000,
+    maxBuffer: 4 * 1024 * 1024,
+  });
 }
 
 export function createResultRecord(args) {
@@ -134,11 +199,18 @@ export function summarizeCleanupVerification(cleanup, { keepArtifacts = false, c
   const steps = Array.isArray(cleanup?.steps) ? cleanup.steps : [];
   const step = (name) => steps.find((entry) => entry?.step === name) || null;
   const stepGroup = (name) => steps.filter((entry) => entry?.step === name);
+  const stepDetail = (name) => {
+    const entry = step(name);
+    if (entry) return entry.detail ?? { reason: 'cleanup_step_detail_missing', step: name, ok: entry.ok === true };
+    return { reason: 'cleanup_step_missing', step: name };
+  };
   const groupedSurface = (name) => {
     const entries = stepGroup(name);
     return {
       ok: entries.length > 0 && entries.every((entry) => entry?.ok === true),
-      detail: entries.map((entry) => entry?.detail ?? null),
+      detail: entries.length > 0
+        ? entries.map((entry) => entry?.detail ?? { reason: 'cleanup_step_detail_missing', step: name, ok: entry?.ok === true })
+        : [{ reason: 'cleanup_step_missing', step: name }],
     };
   };
   const artifactRetained = step('artifact_root_retained');
@@ -150,15 +222,15 @@ export function summarizeCleanupVerification(cleanup, { keepArtifacts = false, c
   const surfaces = {
     redis: {
       ok: step('redis_run_keys_delete')?.ok === true,
-      detail: step('redis_run_keys_delete')?.detail ?? null,
+      detail: stepDetail('redis_run_keys_delete'),
     },
     kubernetes: {
       ok: step('kubernetes_run_resources_delete')?.ok === true,
-      detail: step('kubernetes_run_resources_delete')?.detail ?? null,
+      detail: stepDetail('kubernetes_run_resources_delete'),
     },
     git_worktree: {
       ok: step('git_worktree_remove')?.ok === true,
-      detail: step('git_worktree_remove')?.detail ?? null,
+      detail: stepDetail('git_worktree_remove'),
     },
     git_branch: {
       ok: gitBranchOk && (gitArchitectureBranchDelete ? gitArchitectureBranchDelete.ok === true : true),
@@ -168,10 +240,10 @@ export function summarizeCleanupVerification(cleanup, { keepArtifacts = false, c
             architecture_branch: gitArchitectureBranchDelete?.detail ?? null,
           }
         : {
-            first_delete: gitBranchDelete?.detail ?? null,
+            first_delete: gitBranchDelete?.detail ?? { reason: 'cleanup_step_missing', step: 'git_branch_delete' },
             recovered_by_blocker_cleanup: cleanupFailureObserved,
-            retry_detail: gitBranchDeleteAfterBlocker?.detail ?? null,
-            architecture_branch: gitArchitectureBranchDelete?.detail ?? null,
+            retry_detail: gitBranchDeleteAfterBlocker?.detail ?? { reason: 'cleanup_step_missing', step: 'git_branch_delete_after_blocker_cleanup' },
+            architecture_branch: gitArchitectureBranchDelete?.detail ?? { reason: 'cleanup_step_missing', step: 'git_architecture_branch_delete' },
           },
     },
     git_remote_branch: groupedSurface('git_remote_branch_delete'),
@@ -196,9 +268,56 @@ export function summarizeCleanupVerification(cleanup, { keepArtifacts = false, c
   };
 }
 
+export function buildCleanupResult(cleanup, { keepArtifacts = false, expectsCleanupFailure = false } = {}) {
+  const steps = Array.isArray(cleanup?.steps) ? cleanup.steps : [];
+  const step = (name) => steps.find((entry) => entry?.step === name) || null;
+  const firstGitDelete = step('git_branch_delete');
+  const recoveredGitDelete = step('git_branch_delete_after_blocker_cleanup');
+  const cleanupFailureObserved = cleanup?.ok === false
+    && firstGitDelete?.ok === false
+    && recoveredGitDelete?.ok === true;
+  const verification = summarizeCleanupVerification(cleanup, { keepArtifacts, cleanupFailureObserved });
+  if (expectsCleanupFailure) {
+    return {
+      ok: cleanupFailureObserved,
+      code: cleanupFailureObserved ? 'git_cleanup_failed_recovered' : 'expected_git_cleanup_failure_missing',
+      failure_class: cleanupFailureObserved ? 'git_cleanup_failed' : 'cleanup_contract_mismatch',
+      cleanup_failure_observed: cleanupFailureObserved,
+      verification,
+    };
+  }
+  return {
+    ok: cleanup?.ok === true && verification.ok === true,
+    code: cleanup?.ok === true && verification.ok === true ? 'cleanup_succeeded' : 'cleanup_failed',
+    failure_class: cleanup?.ok === true && verification.ok === true ? null : 'cleanup_failed',
+    cleanup_failure_observed: cleanupFailureObserved,
+    verification,
+  };
+}
+
+function runnerErrorRecord(error) {
+  const message = error?.message || String(error);
+  if (/real E2E scenario setup contract failed/i.test(message)) {
+    return {
+      reason: 'REAL_E2E_SETUP_CONTRACT_FAILED',
+      phase: 'scenario_setup',
+      error: message,
+      setup_failures: Array.isArray(error?.failures) ? error.failures : [],
+    };
+  }
+  return {
+    reason: 'REAL_E2E_RUNNER_FAILED',
+    phase: 'runner',
+    error: message,
+  };
+}
+
 export function artifactPathsForWorkspace(workspace) {
   if (!workspace) return null;
   const pipelineRunId = discoverPipelineRunId(workspace);
+  const progressPath = path.join(workspace.swarmDir, 'progress.json');
+  const progress = readJsonIfPresent(progressPath);
+  const moduleIds = Object.keys(progress?.modules || { '01-nginx': {} });
   return {
     artifact_root: workspace.artifactRoot,
     worktree: workspace.worktreePath,
@@ -206,18 +325,151 @@ export function artifactPathsForWorkspace(workspace) {
     swarm_dir: workspace.swarmDir,
     swarm_config: workspace.runConfigPath,
     cleanup_manifest: workspace.cleanupManifestPath,
-    progress: path.join(workspace.swarmDir, 'progress.json'),
+    progress: progressPath,
     lifecycle_events: path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunId, 'lifecycle', 'canonical-events.jsonl'),
     pipeline_events: path.join(workspace.swarmDir, 'logs', 'pipeline', 'pipeline.jsonl'),
+    discord_jsonl: path.join(workspace.swarmDir, 'logs', 'pipeline', 'discord.jsonl'),
+    run_discord_jsonl: path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunId, 'discord.jsonl'),
+    discord_deliveries_jsonl: path.join(workspace.swarmDir, 'logs', 'pipeline', 'discord-deliveries.jsonl'),
+    run_discord_deliveries_jsonl: path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunId, 'discord-deliveries.jsonl'),
+    nova_injections_jsonl: path.join(workspace.swarmDir, 'logs', 'pipeline', 'nova-injections.jsonl'),
+    run_nova_injections_jsonl: path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunId, 'nova-injections.jsonl'),
     pipeline_summary: path.join(workspace.swarmDir, 'logs', 'pipeline', 'summary.json'),
+    pipeline_run_summary: path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunId, 'summary.json'),
+    pipeline_case_study: path.join(workspace.swarmDir, 'logs', 'pipeline', 'case-study.md'),
+    pipeline_case_study_base: path.join(workspace.swarmDir, 'logs', 'pipeline', 'case-study.base.json'),
     pipeline_latest: path.join(workspace.swarmDir, 'logs', 'pipeline', 'latest.json'),
     pipeline_review_json: path.join(workspace.swarmDir, 'logs', 'pipeline-review', 'PIPELINE-REVIEW.json'),
     pipeline_review_markdown: path.join(workspace.swarmDir, 'logs', 'pipeline-review', 'PIPELINE-REVIEW.md'),
     module_buster_output: path.join(workspace.swarmDir, 'modules', '01-nginx', 'buster-output.json'),
+    module_buster_outputs: Object.fromEntries(moduleIds.map((moduleId) => [
+      moduleId,
+      path.join(workspace.swarmDir, 'modules', moduleId, 'buster-output.json'),
+    ])),
     final_buster_output: path.join(workspace.swarmDir, 'buster-test', 'FINAL-BUSTER-RESULT.json'),
     approval_decision: path.join(workspace.swarmDir, 'logs', 'gates', 'operator-approval', 'approval-decision.json'),
     module_echo_review: path.join(workspace.swarmDir, 'logs', 'echo-review', 'MODULE-REVIEW.json'),
     final_echo_review: path.join(workspace.swarmDir, 'logs', 'echo-review', 'FINAL-REVIEW.json'),
+    architecture_validator_results: path.join(workspace.swarmDir, 'logs', 'architecture-validator', 'results.json'),
+  };
+}
+
+function stableResultArtifactRoot(args, workspace) {
+  const resultBase = path.basename(args.resultPath || `${workspace?.runId || 'run'}-result.json`, '.json');
+  return path.join(REPO_ROOT, '.swarm', 'real-e2e', 'results', 'artifacts', resultBase);
+}
+
+function copyResultArtifactFile(sourcePath, targetRoot, label) {
+  if (!sourcePath || !fs.existsSync(sourcePath)) return null;
+  const targetPath = path.join(targetRoot, `${safePathSegment(label)}${path.extname(sourcePath) || '.artifact'}`);
+  fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+  fs.copyFileSync(sourcePath, targetPath);
+  return targetPath;
+}
+
+function copyResultArtifactValue(sourceValue, targetRoot, label) {
+  if (!sourceValue || typeof sourceValue !== 'object' || Array.isArray(sourceValue)) {
+    return copyResultArtifactFile(sourceValue, targetRoot, label);
+  }
+  const copied = {};
+  for (const [key, value] of Object.entries(sourceValue)) {
+    const copiedPath = copyResultArtifactFile(value, targetRoot, `${label}-${key}`);
+    if (copiedPath) copied[key] = copiedPath;
+  }
+  return Object.keys(copied).length > 0 ? copied : null;
+}
+
+function artifactMissingStatus(label, copied = {}) {
+  const notReachedAfterModuleReview = new Set([
+    'approval_decision',
+    'final_buster_output',
+    'final_echo_review',
+    'pipeline_review_json',
+    'pipeline_review_markdown',
+    'pipeline_summary',
+    'pipeline_run_summary',
+    'pipeline_case_study',
+    'pipeline_case_study_base',
+  ]);
+  const notReachedAfterFinalBuster = new Set([
+    'final_echo_review',
+    'pipeline_review_json',
+    'pipeline_review_markdown',
+    'pipeline_summary',
+    'pipeline_run_summary',
+    'pipeline_case_study',
+    'pipeline_case_study_base',
+  ]);
+  if (!copied.module_buster_output && !copied.module_buster_outputs && label !== 'module_buster_output' && label !== 'module_buster_outputs') return 'not_reached';
+  if (label === 'module_echo_review' && !copied.module_echo_review) {
+    return copied.approval_decision || copied.final_buster_output ? 'missing' : 'not_reached';
+  }
+  if (!copied.module_echo_review && notReachedAfterModuleReview.has(label)) return 'not_reached';
+  if (!copied.final_buster_output && notReachedAfterFinalBuster.has(label)) return 'not_reached';
+  return 'missing';
+}
+
+export function snapshotResultArtifacts({ args, workspace }) {
+  if (!workspace) return null;
+  const sourcePaths = artifactPathsForWorkspace(workspace);
+  const bundleRoot = stableResultArtifactRoot(args, workspace);
+  fs.rmSync(bundleRoot, { recursive: true, force: true });
+  fs.mkdirSync(bundleRoot, { recursive: true });
+  const copied = {};
+  const missing = [];
+  const copyLabels = [
+    'progress',
+    'lifecycle_events',
+    'pipeline_events',
+    'discord_jsonl',
+    'run_discord_jsonl',
+    'discord_deliveries_jsonl',
+    'run_discord_deliveries_jsonl',
+    'nova_injections_jsonl',
+    'run_nova_injections_jsonl',
+    'pipeline_summary',
+    'pipeline_run_summary',
+    'pipeline_case_study',
+    'pipeline_case_study_base',
+    'pipeline_latest',
+    'pipeline_review_json',
+    'pipeline_review_markdown',
+    'module_buster_output',
+    'module_buster_outputs',
+    'final_buster_output',
+    'approval_decision',
+    'module_echo_review',
+    'final_echo_review',
+    'architecture_validator_results',
+  ];
+  for (const label of copyLabels) {
+    const copiedPath = copyResultArtifactValue(sourcePaths?.[label], bundleRoot, label);
+    if (copiedPath) {
+      copied[label] = copiedPath;
+    } else {
+      missing.push({ label, status: artifactMissingStatus(label, copied), source_path: sourcePaths?.[label] || null });
+    }
+  }
+  const manifest = {
+    schema_version: 'real_e2e_result_artifact_bundle.v1',
+    run_id: workspace.runId,
+    project: workspace.projectName,
+    created_at: new Date().toISOString(),
+    authority: 'real-e2e-result-bundle',
+    source_paths: sourcePaths,
+    copied,
+    missing,
+  };
+  writeJsonAtomic(path.join(bundleRoot, 'artifact-bundle.json'), manifest);
+  return {
+    authority: 'real-e2e-result-bundle',
+    artifact_root: bundleRoot,
+    ...copied,
+    stable_bundle_root: bundleRoot,
+    stable_bundle_manifest: path.join(bundleRoot, 'artifact-bundle.json'),
+    stable_artifacts: copied,
+    stable_missing_artifacts: missing,
+    diagnostic_source_paths: sourcePaths,
   };
 }
 
@@ -247,6 +499,199 @@ function discoverPipelineRunId(workspace) {
   return workspace.runId;
 }
 
+function safeCheckpointPoint(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9_.-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function runLifecycleEventsPath(workspace) {
+  return path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', workspace.runId, 'lifecycle', 'canonical-events.jsonl');
+}
+
+function pipelineRunLockPath(workspace) {
+  return path.join(workspace.swarmDir, 'logs', 'pipeline', 'active-run.lock.json');
+}
+
+async function commitRestoredCheckpointWorkspace(workspace) {
+  await execGit(['add', 'Projects'], { cwd: workspace.worktreePath });
+  const status = (await execGit(['status', '--porcelain'], { cwd: workspace.worktreePath })).stdout.trim();
+  if (status) {
+    await execGit(['commit', '-m', `[real-e2e] Restore checkpoint for ${workspace.scenario.id}`, '--', 'Projects'], {
+      cwd: workspace.worktreePath,
+    });
+  }
+  await execGit(['branch', '-f', workspace.architectureBranchName, 'HEAD'], { cwd: workspace.worktreePath });
+  await execGit(['push', '--force', 'origin', `${workspace.architectureBranchName}:${workspace.architectureBranchName}`], {
+    cwd: workspace.worktreePath,
+  });
+  if (workspace.runBranchUpstreamName) {
+    await execGit(['push', '--force', 'origin', `HEAD:${workspace.runBranchUpstreamName}`], {
+      cwd: workspace.worktreePath,
+    });
+  }
+}
+
+async function restoreCheckpointWorkspace({ workspace, args }) {
+  const restored = restoreCheckpointProjectSource({
+    checkpointDir: path.resolve(args.restoreCheckpointDir),
+    checkpoint: args.restoreCheckpointName,
+    workspace,
+    scenarioId: args.scenarioConfig.id,
+  });
+  const progressPath = path.join(workspace.swarmDir, 'progress.json');
+  const { progress } = applyRealE2EScenario(readJson(progressPath), args.scenarioConfig.id);
+  applyRealE2EExecutionBoundary(progress);
+  writeJsonAtomic(progressPath, progress);
+  applyRealE2EFileScenario({ projectSrc: workspace.projectSrc, scenarioId: args.scenarioConfig.id });
+  const runConfig = buildRunConfig({
+    runId: workspace.runId,
+    worktreePath: workspace.worktreePath,
+    scenarioId: args.scenarioConfig.id,
+  });
+  writeJsonAtomic(workspace.runConfigPath, runConfig);
+  validateRealE2EScenarioSetup({
+    progress,
+    config: runConfig,
+    projectSrc: workspace.projectSrc,
+    scenarioId: args.scenarioConfig.id,
+  });
+  await commitRestoredCheckpointWorkspace(workspace);
+  return restored;
+}
+
+function readJsonlIfPresent(filePath) {
+  try {
+    if (!fs.existsSync(filePath)) return [];
+    return fs.readFileSync(filePath, 'utf8')
+      .split(/\r?\n/)
+      .filter(Boolean)
+      .map((line) => JSON.parse(line));
+  } catch {
+    return [];
+  }
+}
+
+function writeExternalCrashMarker({ workspace, scenario, checkpoint }) {
+  const point = safeCheckpointPoint(scenario.crashPoint);
+  const markerPath = path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', workspace.runId, 'real-e2e-crash-injection', `${point}.json`);
+  writeJsonAtomic(markerPath, {
+    schema_version: 'real_e2e_crash_injection.v1',
+    artifact_type: 'real_e2e_crash_injection',
+    point,
+    requested_point: scenario.crashPoint,
+    run_id: workspace.runId,
+    project: workspace.projectName,
+    scenario: scenario.id,
+    crashed_at: new Date().toISOString(),
+    exit_code: REAL_E2E_CRASH_EXIT_CODE,
+    trigger: 'external_e2e_harness',
+    checkpoint_event_id: checkpoint?.event_id || null,
+    details: checkpoint?.data?.details || {},
+  });
+  return markerPath;
+}
+
+function appendExternalCrashEvent({ workspace, scenario, checkpoint }) {
+  const eventsPath = runLifecycleEventsPath(workspace);
+  fs.mkdirSync(path.dirname(eventsPath), { recursive: true });
+  const details = checkpoint?.data?.details || {};
+  const event = {
+    schemaVersion: 'v1',
+    event_id: `event-real-e2e-crash-${process.pid}-${Date.now()}`,
+    type: 'real_e2e.crash_injected',
+    occurred_at: new Date().toISOString(),
+    recorded_at: new Date().toISOString(),
+    refs: {
+      primary_ref: { kind: 'pipeline_run', id: `run:${workspace.runId}` },
+      run_id: workspace.runId,
+      run_ref: `run:${workspace.runId}`,
+      module_id: details.module_id || null,
+      gate_id: details.gate_id || null,
+    },
+    data: {
+      point: safeCheckpointPoint(scenario.crashPoint),
+      crash_exit_code: REAL_E2E_CRASH_EXIT_CODE,
+      scenario: scenario.id,
+      step_type: details.step_type || null,
+      step_id: details.step_id || null,
+      attempt: details.attempt ?? null,
+      dispatch_id: details.dispatch_id || null,
+      trigger: 'external_e2e_harness',
+      checkpoint_event_id: checkpoint?.event_id || null,
+    },
+  };
+  fs.appendFileSync(eventsPath, `${JSON.stringify(event)}\n`);
+  return event;
+}
+
+function startExternalCrashController({ workspace, scenario, child }) {
+  if (!scenario.crashResume || !scenario.crashPoint) {
+    return { stop() {}, state: { enabled: false } };
+  }
+  assertScenarioMutationChannel(scenario, 'crash-controller');
+  const point = safeCheckpointPoint(scenario.crashPoint);
+  const state = {
+    enabled: true,
+    point,
+    observed: false,
+    marker_path: null,
+    event_id: null,
+    signal: null,
+  };
+  const timer = setInterval(() => {
+    if (state.observed || child.exitCode !== null || child.signalCode !== null) return;
+    const checkpoint = readJsonlIfPresent(runLifecycleEventsPath(workspace))
+      .find((entry) => entry?.type === 'pipeline.checkpoint' && entry?.data?.point === point);
+    if (!checkpoint) return;
+    state.observed = true;
+    state.marker_path = writeExternalCrashMarker({ workspace, scenario, checkpoint });
+    const event = appendExternalCrashEvent({ workspace, scenario, checkpoint });
+    state.event_id = event.event_id;
+    state.signal = 'SIGTERM';
+    child.kill(state.signal);
+  }, 250);
+  return {
+    state,
+    stop() {
+      clearInterval(timer);
+    },
+  };
+}
+
+function startCheckpointCancellationController({ workspace, scenario, child }) {
+  if (!scenario.cancelAtCheckpoint) {
+    return { stop() {}, state: { enabled: false } };
+  }
+  assertScenarioMutationChannel(scenario, 'signal-controller');
+  const point = safeCheckpointPoint(scenario.cancelAtCheckpoint);
+  const state = {
+    enabled: true,
+    point,
+    observed: false,
+    signal: null,
+    checkpoint_event_id: null,
+  };
+  const timer = setInterval(() => {
+    if (state.observed || child.exitCode !== null || child.signalCode !== null) return;
+    const checkpoint = readJsonlIfPresent(runLifecycleEventsPath(workspace))
+      .find((entry) => entry?.type === 'pipeline.checkpoint' && entry?.data?.point === point);
+    if (!checkpoint) return;
+    state.observed = true;
+    state.signal = 'SIGTERM';
+    state.checkpoint_event_id = checkpoint?.event_id || null;
+    child.kill(state.signal);
+  }, 250);
+  return {
+    state,
+    stop() {
+      clearInterval(timer);
+    },
+  };
+}
+
 function readOpenClawConfig() {
   if (!fs.existsSync(OPENCLAW_CONFIG_PATH)) return null;
   return JSON.parse(fs.readFileSync(OPENCLAW_CONFIG_PATH, 'utf8'));
@@ -269,22 +714,102 @@ function waitForChild(child) {
   });
 }
 
-async function waitForChildWithTimeout(child, label, timeoutMs) {
+async function waitForPipelineRunLockLeaseExpiry(workspace, { bufferMs = 250, maxWaitMs = 30000 } = {}) {
+  const lock = readJsonIfPresent(pipelineRunLockPath(workspace));
+  if (!lock) return { waited_ms: 0, reason: 'lock_absent' };
+  const expiresAt = Date.parse(String(lock.lease_expires_at || ''));
+  if (!Number.isFinite(expiresAt)) {
+    throw new Error('real E2E crash resume lock wait requires active-run.lock.json lease_expires_at');
+  }
+  const waitMs = Math.max(0, expiresAt - Date.now() + bufferMs);
+  if (waitMs > maxWaitMs) {
+    throw new Error(`real E2E crash resume lock wait exceeds maxWaitMs: ${waitMs}`);
+  }
+  if (waitMs > 0) await new Promise((resolve) => setTimeout(resolve, waitMs));
+  return { waited_ms: waitMs, reason: 'lease_expired', lease_expires_at: lock.lease_expires_at };
+}
+
+function rateLimitCooldownDetails(output) {
+  if (!output) return null;
+  const text = [
+    output.stdout?.tail,
+    output.stderr?.tail,
+    ...(output.stdout?.fatal_lines || []),
+    ...(output.stderr?.fatal_lines || []),
+  ].filter(Boolean).join('\n');
+  if (!RATE_LIMIT_COOLDOWN_OUTPUT_PATTERN.test(text)) return null;
+  return {
+    resumeAt: text.match(RATE_LIMIT_RESUME_AT_PATTERN)?.[1] || null,
+    evidenceLength: text.length,
+  };
+}
+
+export function busterSimulatorTimeoutMsForPipeline({
+  pipelineTimeoutMs,
+  rateLimitTimeoutExtensionMs = DEFAULT_RATE_LIMIT_TIMEOUT_EXTENSION_MS,
+  maxRateLimitPauses = DEFAULT_RATE_LIMIT_MAX_PAUSES,
+} = {}) {
+  const pipelineMs = Number(pipelineTimeoutMs);
+  const extensionMs = Number(rateLimitTimeoutExtensionMs);
+  const pauses = Number(maxRateLimitPauses);
+  if (!Number.isFinite(pipelineMs) || pipelineMs <= 0) throw new Error('pipelineTimeoutMs must be positive');
+  if (!Number.isFinite(extensionMs) || extensionMs < 0) throw new Error('rateLimitTimeoutExtensionMs must be non-negative');
+  if (!Number.isFinite(pauses) || pauses < 0) throw new Error('maxRateLimitPauses must be non-negative');
+  return pipelineMs + (extensionMs * pauses) + (10 * 60 * 1000);
+}
+
+export const helperTimeoutMsForPipeline = busterSimulatorTimeoutMsForPipeline;
+
+async function waitForChildWithTimeout(child, label, timeoutMs, {
+  childOutput = null,
+  rateLimitTimeoutExtensionMs = DEFAULT_RATE_LIMIT_TIMEOUT_EXTENSION_MS,
+  maxRateLimitTimeoutExtensions = DEFAULT_RATE_LIMIT_MAX_PAUSES,
+} = {}) {
   let timedOut = false;
+  let timeoutExtensions = 0;
+  const extensionKeys = new Set();
   let timeout = null;
-  const result = await Promise.race([
-    waitForChild(child),
-    new Promise((resolve) => {
-      timeout = setTimeout(() => {
-        timedOut = true;
-        child.kill('SIGTERM');
-        resolve(null);
-      }, timeoutMs);
-    }),
-  ]);
-  clearTimeout(timeout);
-  if (result) return { ...result, timed_out: false };
+  let deadlineAt = Date.now() + timeoutMs;
+  while (true) {
+    const waitMs = Math.max(0, deadlineAt - Date.now());
+    const result = await Promise.race([
+      waitForChild(child),
+      new Promise((resolve) => {
+        timeout = setTimeout(() => resolve(null), waitMs);
+      }),
+    ]);
+    clearTimeout(timeout);
+    if (result) {
+      return {
+        ...result,
+        timed_out: false,
+        rate_limit_timeout_extended: timeoutExtensions > 0,
+        rate_limit_timeout_extensions: timeoutExtensions,
+      };
+    }
+    const cooldown = rateLimitCooldownDetails(childOutput);
+    if (
+      Number(rateLimitTimeoutExtensionMs) > 0
+      && timeoutExtensions < Number(maxRateLimitTimeoutExtensions)
+      && cooldown
+    ) {
+      const extensionKey = cooldown.resumeAt || `evidence:${cooldown.evidenceLength}`;
+      if (!extensionKeys.has(extensionKey)) {
+        extensionKeys.add(extensionKey);
+        timeoutExtensions += 1;
+        const resumeAtMs = cooldown.resumeAt ? Date.parse(cooldown.resumeAt) : NaN;
+        const extendedDeadline = Number.isFinite(resumeAtMs) && resumeAtMs > Date.now()
+          ? resumeAtMs + Number(rateLimitTimeoutExtensionMs)
+          : Date.now() + Number(rateLimitTimeoutExtensionMs);
+        deadlineAt = Math.max(deadlineAt, extendedDeadline);
+        continue;
+      }
+    }
+    break;
+  }
   let gracefulTimeout = null;
+  timedOut = true;
+  child.kill('SIGTERM');
   const graceful = await Promise.race([
     waitForChild(child),
     new Promise((resolve) => {
@@ -292,11 +817,23 @@ async function waitForChildWithTimeout(child, label, timeoutMs) {
     }),
   ]);
   clearTimeout(gracefulTimeout);
-  if (graceful) return { ...graceful, timed_out: timedOut };
+  if (graceful) {
+    return {
+      ...graceful,
+      timed_out: timedOut,
+      rate_limit_timeout_extended: timeoutExtensions > 0,
+      rate_limit_timeout_extensions: timeoutExtensions,
+    };
+  }
   process.stderr.write(`[${label}] forcing SIGKILL after pipeline timeout ${timeoutMs}ms\n`);
   child.kill('SIGKILL');
   const killed = await waitForChild(child);
-  return { ...killed, timed_out: timedOut };
+  return {
+    ...killed,
+    timed_out: timedOut,
+    rate_limit_timeout_extended: timeoutExtensions > 0,
+    rate_limit_timeout_extensions: timeoutExtensions,
+  };
 }
 
 async function stopChild(child, label) {
@@ -348,36 +885,20 @@ export function diagnoseExpectedFailureOutput({ scenario, pipelineOutput }) {
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_BUSTER_MODULE_FAILURE');
   }
   if (scenario.id === 'buster-module-infra-failure') {
-    const matched = /REAL_E2E_MISSING_DOCKERFILE|serve\.dockerfile|Dockerfile|not found|invalid/i.test(combined);
+    const matched = /REAL_E2E_BUSTER_INFRA_UNAVAILABLE|infra_error|Buster infrastructure/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_BUSTER_MODULE_INFRA_FAILURE');
   }
   if (scenario.id === 'needs-nova-code-failure') {
     const matched = combined.includes('REAL_E2E_EXPECTED_NEEDS_NOVA_CODE_FAILURE') || /needs_nova|NEEDS_NOVA|Nova must intervene|REQUEST_HANDOFF/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_NEEDS_NOVA');
   }
-  if (scenario.id === 'forge-spawn-gateway-failure') {
-    const matched = /spawn_failed|gateway|real-e2e-missing-forge-agent|agent.*not.*found|unknown.*agent|session.*spawn/i.test(combined);
-    return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_FORGE_SPAWN_GATEWAY_FAILURE');
-  }
   if (scenario.id === 'forge-malformed-output') {
-    const matched = /invalid_forge_completion|forge_completion.*invalid|completion artifact|artifact_type|invalid JSON/i.test(combined);
+    const matched = /invalid_forge_completion|invalid_contract|forge_completion.*invalid|completion artifact|artifact_type|invalid JSON/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_FORGE_MALFORMED_OUTPUT');
   }
   if (scenario.id === 'architecture-validator-block') {
     const matched = combined.includes('REAL_E2E_EXPECTED_ARCH_VALIDATOR_UNKNOWN_MODULE') || /ARCH_VALIDATION_BLOCKED|Architecture validation BLOCKED|EXEC_ORDER_MODULE_UNDEFINED/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_ARCHITECTURE_VALIDATOR_BLOCK');
-  }
-  if (scenario.id === 'architecture-validator-config-contract-failure') {
-    const matched = /VALIDATOR_INTERNAL_ERROR|Architecture validator encountered an internal error|timeout_minutes/i.test(combined);
-    return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_ARCHITECTURE_VALIDATOR_CONFIG_CONTRACT_FAILURE');
-  }
-  if (scenario.id === 'pipeline-review-config-contract-failure') {
-    const matched = /Pipeline review failed|pipeline_review|config\.pipeline_review\.timeout_minutes|timeout_minutes/i.test(combined);
-    return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_PIPELINE_REVIEW_CONFIG_CONTRACT_FAILURE');
-  }
-  if (scenario.id === 'echo-gate-config-failure') {
-    const matched = /Review gate|module-review|No reviewers configured|REVIEW_GATE_CONFIG_INVALID|config_invalid|reviewer/i.test(combined);
-    return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_ECHO_GATE_FAILURE');
   }
   if (scenario.id === 'echo-malformed-output') {
     const matched = /Review output must be valid JSON|invalid_contract|malformed JSON|Failed to read review output|Review invalid output/i.test(combined);
@@ -386,10 +907,6 @@ export function diagnoseExpectedFailureOutput({ scenario, pipelineOutput }) {
   if (scenario.id === 'buster-invalid-completion-identity') {
     const matched = /completion.*identity|identity.*mismatch|completion-invalid|mismatch|target.*not.*reached|real-e2e-identity-mismatch/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_BUSTER_INVALID_COMPLETION_IDENTITY');
-  }
-  if (scenario.id === 'buster-missing-output-file') {
-    const matched = /output_file|missing_required_identity|BUSTER_TASK_MALFORMED|dead.?letter|completion.*missing/i.test(combined);
-    return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_BUSTER_MISSING_OUTPUT_FILE');
   }
   if (scenario.id === 'buster-gate-failure') {
     const matched = combined.includes('REAL_E2E_EXPECTED_BUSTER_GATE_FAILURE') || /final-buster|gate.*FAIL|Buster.*FAIL/i.test(combined);
@@ -403,21 +920,13 @@ export function diagnoseExpectedFailureOutput({ scenario, pipelineOutput }) {
     const matched = /namespace_prefix|namespacePrefix|Invalid k8s namespace_prefix|expected one of|denied|forbidden/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_NAMESPACE_LEASE_DENIED');
   }
-  if (scenario.id === 'tailscale-ingress-creation-failure') {
-    const matched = /servicePort|70000|maximum|Tailscale|ingress|lease|invalid/i.test(combined);
-    return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_TAILSCALE_INGRESS_CREATION_FAILURE');
-  }
   if (scenario.id === 'tailscale-preview-url-unreachable') {
-    const matched = /Preview URL|preview-health-check|curl|HTTP|404|unreachable|real-e2e-unreachable/i.test(combined);
+    const matched = /tailscale-preview|dns-resolve|Preview URL|preview-health-check|HTTP|404|unreachable|real-e2e-unreachable/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_TAILSCALE_PREVIEW_URL_UNREACHABLE');
   }
   if (scenario.id === 'tailscale-preview-wrong-deployment') {
-    const matched = /Preview URL did not serve expected text|REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER|preview-health-check/i.test(combined);
+    const matched = /tailscale-preview|Preview URL did not serve expected text|REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER|preview-health-check/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_TAILSCALE_PREVIEW_WRONG_DEPLOYMENT');
-  }
-  if (scenario.id === 'tailscale-unavailable') {
-    const matched = /tailscale|previewUrl|preview_url|Ingress/i.test(combined);
-    return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_TAILSCALE_UNAVAILABLE');
   }
   if (scenario.id === 'pipeline-summary-failure') {
     const matched = /Project Summary Failed|project_summary|generator:project_summary|registry resolution failed|stage owner|disabled/i.test(combined);
@@ -427,17 +936,9 @@ export function diagnoseExpectedFailureOutput({ scenario, pipelineOutput }) {
     const matched = /Redis|ECONNREFUSED|Redis connection|REDIS_HOST|REDIS_PORT|Redis did not become ready/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_REDIS_UNAVAILABLE');
   }
-  if (scenario.id === 'redis-transport-policy-failure') {
-    const matched = /SECURE_REDIS_TRANSPORT_POLICY_VIOLATION|REDIS_PASSWORD|REDIS_TLS|REDIS_NETWORK_ISOLATION|Redis transport policy/i.test(combined);
-    return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_REDIS_TRANSPORT_POLICY_FAILURE');
-  }
   if (scenario.id === 'discord-unavailable') {
     const matched = /discord|webhook|ECONNREFUSED|delivery failed|127\.0\.0\.1:1/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_DISCORD_UNAVAILABLE');
-  }
-  if (scenario.id === 'discord-webhook-missing') {
-    const matched = /discord|webhook|webhook_url_missing|discord_webhook_url/i.test(combined);
-    return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_DISCORD_WEBHOOK_MISSING');
   }
   if (scenario.id === 'k8s-context-invalid') {
     const matched = /KUBECONFIG|real-e2e-missing-kubeconfig|namespace-lease|kubectl/i.test(combined);
@@ -446,18 +947,6 @@ export function diagnoseExpectedFailureOutput({ scenario, pipelineOutput }) {
   if (scenario.id === 'registry-pull-failure') {
     const matched = /registry-local|missing-base|image.*pull|pull access denied|manifest unknown|build.*failed|docker/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_REGISTRY_PULL_FAILURE');
-  }
-  if (scenario.id === 'registry-credentials-missing') {
-    const matched = /imagePullSecrets|private registry|registry\.example\.invalid/i.test(combined);
-    return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_REGISTRY_CREDENTIALS_MISSING');
-  }
-  if (scenario.id === 'tailscale-preview-credentials-missing') {
-    const matched = /real-e2e-missing-tailscale-preview-credentials|secret-copy|preview credentials|tailscale/i.test(combined);
-    return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_TAILSCALE_PREVIEW_CREDENTIALS_MISSING');
-  }
-  if (scenario.id === 'required-env-missing') {
-    const matched = /REAL_E2E_REQUIRED_CONFIG_TOKEN|required env var|manifest/i.test(combined);
-    return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_REQUIRED_ENV_MISSING');
   }
   return failureOutputDiagnostic(true, null);
 }
@@ -478,7 +967,92 @@ export function realPipelineScenarioResultOk({
   throw new Error(`unsupported scenario expectedPipelineExit: ${scenario.expectedPipelineExit}`);
 }
 
-async function runProductionPipeline({ workspace, mode, scenario }) {
+export function buildRealE2EPipelineEnv({ workspace, scenario, baseEnv = process.env } = {}) {
+  const kubeclawNamespace = baseEnv.KUBECLAW_NAMESPACE || 'kubeclaw';
+  const env = {
+    ...baseEnv,
+    ...buildRealE2EScenarioEnv(scenario.id),
+    // Temporary real-E2E bridge until deployed agents provide this env directly.
+    KUBECLAW_LOCAL_REGISTRY: baseEnv.KUBECLAW_LOCAL_REGISTRY || `registry-local.${kubeclawNamespace}.svc.cluster.local:5001`,
+    REPO_ROOT: workspace.worktreePath,
+    SWARM_CONFIG: workspace.runConfigPath,
+    AGENT_NAME: 'buster-real-e2e',
+    REAL_E2E_SCENARIO: scenario.id,
+  };
+  return withGitFaultShimEnv({ env, workspace, scenario });
+}
+
+function gitFaultMessage(fault) {
+  switch (fault?.error_code) {
+    case 'GIT_PUSH_AUTH_FAILED':
+      return 'Permission denied (publickey).';
+    case 'GIT_REMOTE_PUSH_FAILED':
+      return 'ssh: connect to host real-e2e-git-remote.invalid port 22: Network is unreachable';
+    case 'GIT_PUSH_REJECTED':
+      return '! [rejected] HEAD -> pipeline-code (non-fast-forward)\nerror: failed to push some refs';
+    case 'GIT_COMMIT_FAILED':
+      return 'git commit failed: pre-commit hook declined REAL_E2E_EXPECTED_GIT_COMMIT_FAILURE';
+    default:
+      return null;
+  }
+}
+
+function gitFaultShimScript({ realGit, fault, message }) {
+  return `#!/usr/bin/env node
+const { spawnSync } = require('node:child_process');
+const realGit = ${JSON.stringify(realGit)};
+const fault = ${JSON.stringify(fault)};
+const message = ${JSON.stringify(message)};
+const args = process.argv.slice(2);
+function gitCommand(argv) {
+  for (let index = 0; index < argv.length; index += 1) {
+    const arg = argv[index];
+    if (arg === '-C') {
+      index += 1;
+      continue;
+    }
+    if (arg.startsWith('-')) continue;
+    return arg;
+  }
+  return '';
+}
+const command = gitCommand(args);
+const fail = (fault.surface === 'commit_index' && command === 'commit')
+  || (['push_auth', 'remote_push', 'non_fast_forward'].includes(fault.surface) && command === 'push');
+if (fail) {
+  console.error(message);
+  process.exit(128);
+}
+const result = spawnSync(realGit, args, { stdio: 'inherit', env: process.env });
+if (result.error) {
+  console.error(result.error.message);
+  process.exit(1);
+}
+process.exit(result.status === null ? 1 : result.status);
+`;
+}
+
+function withGitFaultShimEnv({ env, workspace, scenario }) {
+  const fault = gitFaultForScenario(scenario.id);
+  const message = gitFaultMessage(fault);
+  if (!fault || !message) return env;
+  if (!workspace?.artifactRoot) throw new Error(`git fault scenario '${scenario.id}' requires workspace.artifactRoot`);
+  const shimDir = path.join(workspace.artifactRoot, 'git-fault-shim');
+  fs.mkdirSync(shimDir, { recursive: true });
+  const shimPath = path.join(shimDir, 'git');
+  fs.writeFileSync(shimPath, gitFaultShimScript({
+    realGit: process.env.REAL_E2E_REAL_GIT || '/usr/bin/git',
+    fault,
+    message,
+  }));
+  fs.chmodSync(shimPath, 0o755);
+  return {
+    ...env,
+    PATH: `${shimDir}${path.delimiter}${env.PATH || process.env.PATH || ''}`,
+  };
+}
+
+async function runProductionPipeline({ workspace, mode, scenario, resumeFromCheckpoint = false }) {
   const novaChannel = resolveNovaChannel();
   if (!novaChannel) {
     return {
@@ -489,19 +1063,26 @@ async function runProductionPipeline({ workspace, mode, scenario }) {
     };
   }
 
-  const env = {
-    ...process.env,
-    ...buildRealE2EScenarioEnv(scenario.id),
-    REPO_ROOT: workspace.worktreePath,
-    SWARM_CONFIG: workspace.runConfigPath,
-    AGENT_NAME: 'buster-real-e2e',
-    REAL_E2E_SCENARIO: scenario.id,
-    ...(scenario.crashResume ? { REAL_E2E_ENABLE_CRASH_INJECTION: '1' } : {}),
-  };
+  const env = buildRealE2EPipelineEnv({ workspace, scenario });
+  const pipelineTimeoutMs = Number(process.env.REAL_E2E_PIPELINE_TIMEOUT_MS || (mode === 'fast' ? 45 * 60 * 1000 : 2 * 60 * 60 * 1000));
+  const rateLimitTimeoutExtensionMs = Number(
+    process.env.REAL_E2E_RATE_LIMIT_TIMEOUT_EXTENSION_MS
+      || process.env.REAL_E2E_MATRIX_RATE_LIMIT_TIMEOUT_EXTENSION_MS
+      || DEFAULT_RATE_LIMIT_TIMEOUT_EXTENSION_MS,
+  );
+  const simulatorTimeoutMs = Number(process.env.REAL_E2E_BUSTER_SIMULATOR_TIMEOUT_MS || busterSimulatorTimeoutMsForPipeline({
+    pipelineTimeoutMs,
+    rateLimitTimeoutExtensionMs,
+  }));
+  const helperTimeoutMs = Number(process.env.REAL_E2E_HELPER_TIMEOUT_MS || helperTimeoutMsForPipeline({
+    pipelineTimeoutMs,
+    rateLimitTimeoutExtensionMs,
+  }));
+
   const simulator = spawn(process.execPath, [
     path.join(REPO_ROOT, 'tests', 'verification', 'e2e', 'buster-simulator.mjs'),
     '--timeout-ms',
-    String(Number(process.env.REAL_E2E_BUSTER_SIMULATOR_TIMEOUT_MS || (mode === 'fast' ? 20 * 60 * 1000 : 45 * 60 * 1000))),
+    String(simulatorTimeoutMs),
   ], {
     cwd: REPO_ROOT,
     env,
@@ -509,28 +1090,47 @@ async function runProductionPipeline({ workspace, mode, scenario }) {
   });
   const simulatorOutput = captureChildOutput(simulator, { label: 'real-e2e-buster' });
 
-  const approvalArgs = [
+  const startApprovalOperator = ({
+    stateFile,
+    decision = 'approve',
+    reason = 'Approved by canonical real E2E operator controller.',
+  }) => spawn(process.execPath, [
     path.join(REPO_ROOT, 'tests', 'verification', 'e2e', 'approval-operator.mjs'),
     '--state-path',
-    path.join(workspace.swarmDir, 'operator-approval-gate-status.json'),
+    path.join(workspace.swarmDir, stateFile),
     '--decision',
-    process.env.REAL_E2E_APPROVAL_DECISION || scenario.approvalDecision || 'approve',
+    decision,
     '--reason',
-    process.env.REAL_E2E_APPROVAL_REASON || 'Approved by canonical real E2E operator controller.',
+    reason,
     '--timeout-ms',
-    String(Number(process.env.REAL_E2E_APPROVAL_OPERATOR_TIMEOUT_MS || (mode === 'fast' ? 10 * 60 * 1000 : 20 * 60 * 1000))),
-  ];
-  const shouldRunApprovalOperator = scenario.approvalDecision !== null;
-  const approvalOperator = shouldRunApprovalOperator ? spawn(process.execPath, approvalArgs, {
+    String(Number(process.env.REAL_E2E_APPROVAL_OPERATOR_TIMEOUT_MS || helperTimeoutMs)),
+  ], {
     cwd: REPO_ROOT,
     env,
     stdio: ['ignore', 'pipe', 'pipe'],
+  });
+
+  const shouldRunApprovalOperator = scenario.approvalDecision !== null;
+  if (shouldRunApprovalOperator) {
+    assertScenarioSetupChannel(scenario, 'operator-controller');
+  }
+  const approvalOperator = shouldRunApprovalOperator ? startApprovalOperator({
+    stateFile: 'operator-approval-gate-status.json',
+    decision: process.env.REAL_E2E_APPROVAL_DECISION || scenario.approvalDecision || 'approve',
+    reason: process.env.REAL_E2E_APPROVAL_REASON || 'Approved by canonical real E2E operator controller.',
   }) : null;
   const approvalOutput = approvalOperator
     ? captureChildOutput(approvalOperator, { label: 'real-e2e-approval' })
     : createChildOutputCapture({ label: 'real-e2e-approval' });
+  const architectureApprovalOperator = startApprovalOperator({
+    stateFile: 'architecture-approval-gate-status.json',
+    decision: process.env.REAL_E2E_ARCH_APPROVAL_DECISION || 'approve',
+    reason: process.env.REAL_E2E_ARCH_APPROVAL_REASON || 'Approved by canonical real E2E architecture operator controller.',
+  });
+  const architectureApprovalOutput = captureChildOutput(architectureApprovalOperator, { label: 'real-e2e-architecture-approval' });
 
-  const malformedOutputPublisher = malformedOutputScenarioConfig(scenario.id) ? spawn(process.execPath, [
+  const malformedOutputConfig = malformedOutputScenarioConfig(scenario.id);
+  const malformedOutputPublisher = malformedOutputConfig ? spawn(process.execPath, [
     path.join(REPO_ROOT, 'tests', 'verification', 'e2e', 'malformed-output-publisher.mjs'),
     '--scenario',
     scenario.id,
@@ -541,7 +1141,9 @@ async function runProductionPipeline({ workspace, mode, scenario }) {
     '--project',
     workspace.projectName,
     '--timeout-ms',
-    String(Number(process.env.REAL_E2E_MALFORMED_OUTPUT_PUBLISHER_TIMEOUT_MS || (mode === 'fast' ? 10 * 60 * 1000 : 20 * 60 * 1000))),
+    String(Number(process.env.REAL_E2E_MALFORMED_OUTPUT_PUBLISHER_TIMEOUT_MS || helperTimeoutMs)),
+    '--poll-ms',
+    String(Number(process.env.REAL_E2E_MALFORMED_OUTPUT_PUBLISHER_POLL_MS || 50)),
   ], {
     cwd: REPO_ROOT,
     env,
@@ -550,8 +1152,6 @@ async function runProductionPipeline({ workspace, mode, scenario }) {
   const malformedOutputPublisherOutput = malformedOutputPublisher
     ? captureChildOutput(malformedOutputPublisher, { label: 'real-e2e-malformed-output' })
     : createChildOutputCapture({ label: 'real-e2e-malformed-output' });
-
-  const pipelineTimeoutMs = Number(process.env.REAL_E2E_PIPELINE_TIMEOUT_MS || (mode === 'fast' ? 45 * 60 * 1000 : 2 * 60 * 60 * 1000));
 
   const pipelineAttempts = [];
   const spawnPipelineAttempt = ({ resume = false, label = 'real-e2e-nova' } = {}) => {
@@ -564,9 +1164,9 @@ async function runProductionPipeline({ workspace, mode, scenario }) {
       '--nova-channel',
       novaChannel,
       '--model',
-      process.env.REAL_E2E_MODEL || 'gpt-5-codex',
+      validateRealE2EModel(process.env.REAL_E2E_MODEL || DEFAULT_REAL_E2E_MODEL),
       '--thinking',
-      process.env.REAL_E2E_THINKING || 'adaptive',
+      process.env.REAL_E2E_THINKING || DEFAULT_REAL_E2E_THINKING,
     ];
     if (resume) args.push('--resume');
     const child = spawn(process.execPath, args, {
@@ -581,45 +1181,51 @@ async function runProductionPipeline({ workspace, mode, scenario }) {
   };
 
   const firstPipelineAttempt = spawnPipelineAttempt({
-    resume: false,
+    resume: resumeFromCheckpoint,
     label: scenario.crashResume ? 'real-e2e-nova-crash' : 'real-e2e-nova',
   });
-  const cancellationTimer = scenario.cancelAfterMs
-    ? setTimeout(() => {
-      firstPipelineAttempt.child.kill('SIGTERM');
-    }, scenario.cancelAfterMs)
-    : null;
-  firstPipelineAttempt.exit = await waitForChildWithTimeout(firstPipelineAttempt.child, firstPipelineAttempt.label, pipelineTimeoutMs);
-  if (cancellationTimer) clearTimeout(cancellationTimer);
+  const externalCrash = startExternalCrashController({ workspace, scenario, child: firstPipelineAttempt.child });
+  const cancellation = startCheckpointCancellationController({ workspace, scenario, child: firstPipelineAttempt.child });
+  firstPipelineAttempt.exit = await waitForChildWithTimeout(firstPipelineAttempt.child, firstPipelineAttempt.label, pipelineTimeoutMs, {
+    childOutput: firstPipelineAttempt.output,
+    rateLimitTimeoutExtensionMs,
+  });
+  externalCrash.stop();
+  cancellation.stop();
   let pipelineExit = firstPipelineAttempt.exit;
   let pipelineOutput = firstPipelineAttempt.output;
   let crashResume = null;
   if (scenario.crashResume) {
-    const initialCrashObserved = firstPipelineAttempt.exit?.code === REAL_E2E_CRASH_EXIT_CODE;
+    const initialCrashObserved = externalCrash.state.observed === true
+      && (firstPipelineAttempt.exit?.code !== 0 || Boolean(firstPipelineAttempt.exit?.signal));
     crashResume = {
       enabled: true,
       point: scenario.crashPoint || null,
       expected_initial_exit_code: REAL_E2E_CRASH_EXIT_CODE,
+      expected_initial_signal: 'SIGTERM',
       initial_exit: firstPipelineAttempt.exit,
       initial_crash_observed: initialCrashObserved,
+      external_crash: externalCrash.state,
       resumed: false,
       resume_exit: null,
     };
     if (initialCrashObserved) {
+      const lockWait = await waitForPipelineRunLockLeaseExpiry(workspace);
       const resumePipelineAttempt = spawnPipelineAttempt({ resume: true, label: 'real-e2e-nova-resume' });
-      resumePipelineAttempt.exit = await waitForChildWithTimeout(resumePipelineAttempt.child, resumePipelineAttempt.label, pipelineTimeoutMs);
+      resumePipelineAttempt.exit = await waitForChildWithTimeout(resumePipelineAttempt.child, resumePipelineAttempt.label, pipelineTimeoutMs, {
+        childOutput: resumePipelineAttempt.output,
+        rateLimitTimeoutExtensionMs,
+      });
       pipelineExit = resumePipelineAttempt.exit;
       pipelineOutput = resumePipelineAttempt.output;
       crashResume = {
         ...crashResume,
         resumed: true,
         resume_exit: resumePipelineAttempt.exit,
+        lock_wait: lockWait,
       };
     }
   }
-  const simulatorStop = await stopChild(simulator, 'real-e2e-buster');
-  const approvalStop = await stopChild(approvalOperator, 'real-e2e-approval');
-  const malformedOutputPublisherStop = await stopChild(malformedOutputPublisher, 'real-e2e-malformed-output');
   const pipelineExpectationMet = (scenario.crashResume
     ? crashResume?.initial_crash_observed === true && crashResume?.resumed === true && pipelineExitMatchesExpectation(pipelineExit, scenario)
     : pipelineExitMatchesExpectation(pipelineExit, scenario));
@@ -630,6 +1236,10 @@ async function runProductionPipeline({ workspace, mode, scenario }) {
   const failureEvidence = scenario.expectedPipelineExit === 'nonzero'
     ? await verifyExpectedFailureEvidence(workspace, scenario)
     : null;
+  const simulatorStop = await stopChild(simulator, 'real-e2e-buster');
+  const approvalStop = await stopChild(approvalOperator, 'real-e2e-approval');
+  const architectureApprovalStop = await stopChild(architectureApprovalOperator, 'real-e2e-architecture-approval');
+  const malformedOutputPublisherStop = await stopChild(malformedOutputPublisher, 'real-e2e-malformed-output');
   const ok = realPipelineScenarioResultOk({
     scenario,
     pipelineExpectationMet,
@@ -643,12 +1253,14 @@ async function runProductionPipeline({ workspace, mode, scenario }) {
     scenario: scenario.id,
     expected_pipeline_exit: scenario.expectedPipelineExit,
     crash_resume: crashResume,
+    cancellation: cancellation.state,
     pipeline_expectation_met: pipelineExpectationMet,
     failure_output_diagnostic: failureOutputDiagnostic,
     failure_evidence: failureEvidence,
     pipeline_exit: pipelineExit,
     simulator_stop: simulatorStop,
     approval_operator_stop: approvalStop,
+    architecture_approval_operator_stop: architectureApprovalStop,
     malformed_output_publisher_stop: malformedOutputPublisherStop,
     evidence,
     diagnostics: {
@@ -661,6 +1273,7 @@ async function runProductionPipeline({ workspace, mode, scenario }) {
       })),
       buster_simulator: childOutputDiagnostics('real-e2e-buster', simulatorOutput),
       approval_operator: childOutputDiagnostics('real-e2e-approval', approvalOutput),
+      architecture_approval_operator: childOutputDiagnostics('real-e2e-architecture-approval', architectureApprovalOutput),
       malformed_output_publisher: childOutputDiagnostics('real-e2e-malformed-output', malformedOutputPublisherOutput),
     },
   };
@@ -684,6 +1297,7 @@ async function main() {
     process.stdout.write(usage());
     return 0;
   }
+  validateRealE2EModel(process.env.REAL_E2E_MODEL || DEFAULT_REAL_E2E_MODEL);
 
   const capabilities = readReusedCapabilityProbeResult({ ...process.env, REAL_E2E_MODE: args.mode })
     || await runCapabilityProbe({ mode: args.mode });
@@ -723,15 +1337,25 @@ async function main() {
   let runFailed = false;
   let runExitCode = 1;
   let runResultOk = false;
+  let resultArtifactSnapshot = null;
   try {
     workspace = await createRealE2ERunWorkspace({ mode: args.mode, scenarioId: args.scenarioConfig.id });
+    let restoredCheckpoint = null;
+    if (args.restoreCheckpointDir) {
+      restoredCheckpoint = await restoreCheckpointWorkspace({ workspace, args });
+      workspace.restoredCheckpoint = restoredCheckpoint;
+    }
     const workspaceSummary = summarizeWorkspace(workspace);
     persist({
       workspace: workspaceSummary,
       artifact_paths: artifactPathsForWorkspace(workspace),
+      checkpoint: restoredCheckpoint
+        ? { mode: 'restored', ...restoredCheckpoint }
+        : (args.captureCheckpointRoot ? { mode: 'capture', checkpoint_root: path.resolve(args.captureCheckpointRoot) } : null),
       phases: [
         ...resultRecord.phases,
         { phase: 'workspace-created', ok: true, completed_at: new Date().toISOString() },
+        ...(restoredCheckpoint ? [{ phase: 'checkpoint-restored', ok: true, completed_at: new Date().toISOString(), checkpoint: restoredCheckpoint }] : []),
       ],
     });
     process.stdout.write(`${JSON.stringify({
@@ -739,9 +1363,23 @@ async function main() {
       phase: 'workspace-created',
       result_path: args.resultPath,
       workspace: workspaceSummary,
+      checkpoint: restoredCheckpoint,
     }, null, 2)}\n`);
 
-    const runResult = await runProductionPipeline({ workspace, mode: args.mode, scenario: args.scenarioConfig });
+    const checkpointCapture = startCheckpointCaptureController({
+      checkpointRoot: args.captureCheckpointRoot ? path.resolve(args.captureCheckpointRoot) : null,
+      workspace,
+      seedId: args.captureCheckpointSeedId,
+      checkpoints: checkpointCaptureNames(),
+    });
+    const runResult = await runProductionPipeline({
+      workspace,
+      mode: args.mode,
+      scenario: args.scenarioConfig,
+      resumeFromCheckpoint: Boolean(restoredCheckpoint),
+    });
+    const checkpointCaptureResult = await checkpointCapture.stop();
+    resultArtifactSnapshot = snapshotResultArtifacts({ args, workspace });
     const pipelineResult = {
       ok: runResult.ok,
       phase: runResult.phase,
@@ -749,10 +1387,12 @@ async function main() {
       scenario: runResult.scenario,
       expected_pipeline_exit: runResult.expected_pipeline_exit,
       crash_resume: runResult.crash_resume || null,
+      cancellation: runResult.cancellation || null,
       pipeline_expectation_met: runResult.pipeline_expectation_met,
       pipeline_exit: runResult.pipeline_exit,
       simulator_stop: runResult.simulator_stop,
       approval_operator_stop: runResult.approval_operator_stop,
+      architecture_approval_operator_stop: runResult.architecture_approval_operator_stop,
       malformed_output_publisher_stop: runResult.malformed_output_publisher_stop,
     };
     persist({
@@ -764,9 +1404,14 @@ async function main() {
         failure_output_diagnostic: runResult.failure_output_diagnostic,
       },
       diagnostics: runResult.diagnostics,
+      artifact_paths: resultArtifactSnapshot,
+      checkpoint: restoredCheckpoint
+        ? { mode: 'restored', ...restoredCheckpoint }
+        : (args.captureCheckpointRoot ? { mode: 'capture', ...checkpointCaptureResult } : null),
       phases: [
         ...resultRecord.phases,
         { phase: 'pipeline-run', ok: runResult.ok, completed_at: new Date().toISOString() },
+        ...(args.captureCheckpointRoot ? [{ phase: 'checkpoint-capture', ok: checkpointCaptureResult.pending.length === 0, completed_at: new Date().toISOString(), ...checkpointCaptureResult }] : []),
       ],
     });
     process.stdout.write(`${JSON.stringify({
@@ -778,6 +1423,7 @@ async function main() {
     runResultOk = runResult.ok;
     runExitCode = runResult.ok ? 0 : 1;
     if (runResult.ok && args.scenarioConfig.id === 'git-cleanup-failure') {
+      assertScenarioMutationChannel(args.scenarioConfig, 'cleanup-blocker');
       const blockerPath = await createRealE2EGitCleanupBlocker(workspace);
       process.stdout.write(`${JSON.stringify({
         ok: true,
@@ -788,39 +1434,47 @@ async function main() {
       }, null, 2)}\n`);
     }
   } finally {
+    if (workspace && !resultArtifactSnapshot) {
+      try {
+        resultArtifactSnapshot = snapshotResultArtifacts({ args, workspace });
+      } catch (_error) {
+        resultArtifactSnapshot = artifactPathsForWorkspace(workspace);
+      }
+    }
     const keepArtifacts = args.keepArtifacts || runFailed;
     const cleanup = await cleanupRealE2ERunWorkspace(workspace, { keepArtifacts });
     const expectsCleanupFailure = args.scenarioConfig?.expectedCleanupOk === false;
-    const cleanupFailureObserved = cleanup.ok === false
-      && cleanup.steps.some((step) => step.step === 'git_branch_delete' && step.ok === false)
-      && cleanup.steps.some((step) => step.step === 'git_branch_delete_after_blocker_cleanup' && step.ok === true);
-    const cleanupVerification = summarizeCleanupVerification(cleanup, { keepArtifacts, cleanupFailureObserved });
+    const cleanupResult = buildCleanupResult(cleanup, { keepArtifacts, expectsCleanupFailure });
+    const cleanupFailureObserved = cleanupResult.cleanup_failure_observed === true;
+    const cleanupVerification = cleanupResult.verification;
     process.stdout.write(`${JSON.stringify({
-      ok: expectsCleanupFailure ? cleanupFailureObserved : cleanup.ok,
+      ok: cleanupResult.ok,
       phase: 'cleanup',
       result_path: args.resultPath,
       keep_artifacts: keepArtifacts,
       expected_cleanup_ok: args.scenarioConfig?.expectedCleanupOk !== false,
       cleanup_failure_observed: cleanupFailureObserved,
+      cleanup_result: cleanupResult,
       cleanup_verification: cleanupVerification,
       cleanup,
       workspace: summarizeWorkspace(workspace),
     }, null, 2)}\n`);
     if (expectsCleanupFailure) {
-      runExitCode = runResultOk && cleanupFailureObserved ? 0 : 1;
-    } else if (!cleanup.ok) {
+      runExitCode = runResultOk && cleanupResult.ok ? 0 : 1;
+    } else if (!cleanupResult.ok) {
       runExitCode = 1;
     }
     persist({
       ok: runExitCode === 0,
       exit_code: runExitCode,
       workspace: summarizeWorkspace(workspace),
-      artifact_paths: artifactPathsForWorkspace(workspace),
+      artifact_paths: resultArtifactSnapshot || artifactPathsForWorkspace(workspace),
       cleanup: {
-        ok: expectsCleanupFailure ? cleanupFailureObserved : cleanup.ok,
+        ok: cleanupResult.ok,
         keep_artifacts: keepArtifacts,
         expected_cleanup_ok: args.scenarioConfig?.expectedCleanupOk !== false,
         cleanup_failure_observed: cleanupFailureObserved,
+        cleanup_result: cleanupResult,
         cleanup_verification: cleanupVerification,
         cleanup,
       },
@@ -828,7 +1482,7 @@ async function main() {
         ...resultRecord.phases,
         {
           phase: 'cleanup',
-          ok: expectsCleanupFailure ? cleanupFailureObserved : cleanup.ok,
+          ok: cleanupResult.ok,
           completed_at: new Date().toISOString(),
         },
       ],
@@ -839,13 +1493,7 @@ async function main() {
     persist({
       ok: false,
       exit_code: 1,
-      errors: [
-        ...resultRecord.errors,
-        {
-          reason: 'REAL_E2E_RUNNER_FAILED',
-          error: error?.message || String(error),
-        },
-      ],
+      errors: [...resultRecord.errors, runnerErrorRecord(error)],
     });
     throw error;
   }

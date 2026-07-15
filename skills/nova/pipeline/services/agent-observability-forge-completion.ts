@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/agent-observability-forge-completion.ts — Phase 5 Forge completion authority.
 //
 // Forge readiness is decided from canonical agent.ended telemetry plus meaningful
@@ -17,6 +18,8 @@ export const AGENT_OBSERVABILITY_FORGE_READY_REASON = 'agent_ended_meaningful_di
 export const AGENT_OBSERVABILITY_FORGE_NO_WORK_REASON = 'agent_ended_no_meaningful_diff';
 export const AGENT_OBSERVABILITY_FORGE_FALLBACK_READY_REASON = 'session_ended_meaningful_diff';
 export const AGENT_OBSERVABILITY_FORGE_FALLBACK_NO_WORK_REASON = 'session_ended_no_meaningful_diff';
+const INJECTED_DIFF_EVIDENCE_SOURCE = 'injected';
+const REDIS_XREAD_LATEST_ID = '$';
 
 const RUNTIME_PATH_PREFIXES = [
   '.swarm/',
@@ -27,8 +30,56 @@ function stringValue(value) {
   return typeof value === 'string' && value.trim() ? value.trim() : null;
 }
 
+function rawStringValue(value) {
+  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return '';
+  return String(value);
+}
+
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function objectRecord(value) {
+  return value !== null && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function firstDefined(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return null;
+}
+
+function forgeCompletionSource(opts = {}) {
+  return firstDefined(opts.source, AGENT_OBSERVABILITY_FORGE_COMPLETION_SOURCE);
+}
+
+function agentEndedStreamKey(config, runId, opts = {}) {
+  return firstDefined(opts.stream, getTelemetryStreamKeyForRun(config, runId));
+}
+
+function agentEndedReadBlockPolicy(config, opts = {}) {
+  return firstDefined(opts.blockMs, agentEndedReadBlockMs(config));
+}
+
+function agentEndedRedisCtor(opts = {}) {
+  return firstDefined(opts.RedisCtor, loadRedisCtor());
+}
+
+function agentEndedRedisRetryStrategy(times) {
+  return Math.min(times * 100, 1000);
+}
+
+function agentEndedSettlePolicy(config = {}, opts = {}) {
+  return firstDefined(opts.agentEndedSettleMs, opts.settleMs, agentObservabilityForgeCompletionWait(config).settleMs);
+}
+
+function agentEndedReadBlockConfigPolicy(config = {}, opts = {}) {
+  return firstDefined(opts.blockMs, agentObservabilityForgeCompletionWait(config).xreadBlockMs);
+}
+
 function normalizeRelPath(value = '') {
-  return String(value || '')
+  return rawStringValue(value)
     .replace(/\\/g, '/')
     .replace(/^"|"$/g, '')
     .replace(/^(?:\.\/)+/, '')
@@ -41,30 +92,32 @@ function porcelainPath(line = '') {
 }
 
 function isInsidePath(child, parent) {
-  if (!child || !parent) return false;
+  if (selectTruthyValue(() => (!child), () => (!parent))) return false;
   const relative = path.relative(path.resolve(parent), path.resolve(child));
-  return relative === '' || (!!relative && !relative.startsWith('..') && !path.isAbsolute(relative));
+  return selectTruthyValue(() => (relative === ''), () => ((!!relative && !relative.startsWith('..') && !path.isAbsolute(relative))));
 }
 
 function moduleRelativePath(config, moduleDir, fileName) {
   const modulesDir = config?.paths?.modules_dir;
-  if (!modulesDir || !config?.repo_root || !moduleDir) return null;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!modulesDir), () => (!config?.repo_root))), () => (!moduleDir))) return null;
   const abs = path.resolve(modulesDir, moduleDir, fileName);
   return normalizeRelPath(path.relative(config.repo_root, abs));
 }
 
 function projectScopeRelPath(config) {
-  const repoRoot = config?.repo_root;
-  const swarmDir = config?.paths?.swarm_dir;
-  if (!repoRoot || !swarmDir) return null;
+  const repoRoot = stringValue(config?.repo_root);
+  const swarmDir = stringValue(config?.paths?.swarm_dir);
+  if (selectTruthyValue(() => (!repoRoot), () => (!swarmDir))) return null;
   return normalizeRelPath(path.relative(repoRoot, path.dirname(swarmDir)));
 }
 
 function isProjectScopedPath(config, relPath) {
   const scope = projectScopeRelPath(config);
-  if (!scope) return true;
+  if (!scope) {
+    throw new Error('Forge completion diff evidence requires repo_root and paths.swarm_dir to determine project scope');
+  }
   const normalized = normalizeRelPath(relPath);
-  return normalized === scope || normalized.startsWith(`${scope}/`);
+  return selectTruthyValue(() => (normalized === scope), () => (normalized.startsWith(`${scope}/`)));
 }
 
 function buildIgnoredPathSet(config, moduleDir, extraIgnoredPaths = []) {
@@ -77,8 +130,8 @@ function buildIgnoredPathSet(config, moduleDir, extraIgnoredPaths = []) {
 export function isForgeCompletionControlPath(relPath, config = {}, moduleDir = null, extraIgnoredPaths = []) {
   const normalized = normalizeRelPath(relPath);
   if (!normalized) return true;
-  if (RUNTIME_PATH_PREFIXES.some((prefix) => normalized === prefix.slice(0, -1) || normalized.startsWith(prefix))) return true;
-  if (normalized.includes('/.swarm/') || normalized.startsWith('.swarm/')) return true;
+  if (RUNTIME_PATH_PREFIXES.some((prefix) => selectTruthyValue(() => (normalized === prefix.slice(0, -1)), () => (normalized.startsWith(prefix))))) return true;
+  if (selectTruthyValue(() => (normalized.includes('/.swarm/')), () => (normalized.startsWith('.swarm/')))) return true;
   const ignored = buildIgnoredPathSet(config, moduleDir, extraIgnoredPaths);
   return ignored.has(normalized);
 }
@@ -102,17 +155,17 @@ function summarizePaths(paths = []) {
 
 export function collectMeaningfulForgeDiffEvidence(config, moduleDir, opts = {}) {
   if (opts.diffEvidence) {
-    const paths = [...new Set((opts.diffEvidence.paths || []).map(normalizeRelPath).filter(Boolean))];
-    const ignoredPaths = [...new Set((opts.diffEvidence.ignored_paths || opts.diffEvidence.ignoredPaths || []).map(normalizeRelPath).filter(Boolean))];
+    const paths = [...new Set(arrayValue(opts.diffEvidence.paths).map(normalizeRelPath).filter(Boolean))];
+    const ignoredPaths = [...new Set(arrayValue(opts.diffEvidence.ignored_paths).map(normalizeRelPath).filter(Boolean))];
     return {
       ok: opts.diffEvidence.ok !== false,
-      hasMeaningfulChanges: Boolean(opts.diffEvidence.hasMeaningfulChanges ?? opts.diffEvidence.has_meaningful_changes ?? paths.length > 0),
+      hasMeaningfulChanges: Boolean(opts.diffEvidence.hasMeaningfulChanges),
       paths,
       ignoredPaths,
-      headBefore: opts.diffEvidence.headBefore ?? opts.diffEvidence.head_before ?? opts.headBefore ?? null,
-      headNow: opts.diffEvidence.headNow ?? opts.diffEvidence.head_now ?? null,
-      source: opts.diffEvidence.source || 'injected',
-      error: opts.diffEvidence.error || null,
+      headBefore: selectDefinedValue(() => (opts.diffEvidence.headBefore), () => (null)),
+      headNow: selectDefinedValue(() => (opts.diffEvidence.headNow), () => (null)),
+      source: selectDefinedValue(() => (stringValue(opts.diffEvidence.source)), () => (INJECTED_DIFF_EVIDENCE_SOURCE)),
+      error: selectDefinedValue(() => (opts.diffEvidence.error), () => (null)),
     };
   }
 
@@ -122,7 +175,7 @@ export function collectMeaningfulForgeDiffEvidence(config, moduleDir, opts = {})
       hasMeaningfulChanges: false,
       paths: [],
       ignoredPaths: [],
-      headBefore: opts.headBefore || null,
+      headBefore: selectDefinedValue(() => (opts.headBefore), () => (null)),
       headNow: null,
       source: 'repo_root_required',
       error: {
@@ -131,21 +184,36 @@ export function collectMeaningfulForgeDiffEvidence(config, moduleDir, opts = {})
       },
     };
   }
+  if (!projectScopeRelPath(config)) {
+    return {
+      ok: false,
+      hasMeaningfulChanges: false,
+      paths: [],
+      ignoredPaths: [],
+      headBefore: selectDefinedValue(() => (opts.headBefore), () => (null)),
+      headNow: null,
+      source: 'project_scope_required',
+      error: {
+        code: 'FORGE_COMPLETION_PROJECT_SCOPE_REQUIRED',
+        message: 'Forge completion polling requires typed repo_root and paths.swarm_dir diff context',
+      },
+    };
+  }
 
-  const extraIgnoredPaths = opts.ignoredPaths || [];
+  const extraIgnoredPaths = arrayValue(opts.ignoredPaths);
   const meaningful = new Set();
   const ignored = new Set();
   const addPath = (relPath) => {
     const normalized = normalizeRelPath(relPath);
     if (!normalized) return;
-    if (!isProjectScopedPath(config, normalized) || isForgeCompletionControlPath(normalized, config, moduleDir, extraIgnoredPaths)) ignored.add(normalized);
+    if (selectTruthyValue(() => (!isProjectScopedPath(config, normalized)), () => (isForgeCompletionControlPath(normalized, config, moduleDir, extraIgnoredPaths)))) ignored.add(normalized);
     else meaningful.add(normalized);
   };
 
   try {
     invalidateHeadHash(config);
     const headNow = headHash(config);
-    const headBefore = opts.headBefore || null;
+    const headBefore = selectDefinedValue(() => (opts.headBefore), () => (null));
 
     if (headBefore && headNow && headBefore !== headNow) {
       for (const relPath of gitPathList(config, ['diff', '--name-only', `${headBefore}..${headNow}`])) addPath(relPath);
@@ -168,7 +236,7 @@ export function collectMeaningfulForgeDiffEvidence(config, moduleDir, opts = {})
       hasMeaningfulChanges: false,
       paths: [],
       ignoredPaths: [...ignored].sort(),
-      headBefore: opts.headBefore || null,
+      headBefore: selectDefinedValue(() => (opts.headBefore), () => (null)),
       headNow: null,
       source: 'git',
       error,
@@ -180,28 +248,28 @@ export function buildForgeCompletionStatusFromDiff(diffEvidence, event = null, o
   const ready = Boolean(diffEvidence?.hasMeaningfulChanges);
   return {
     status: ready ? STATUS.READY_FOR_TESTING : STATUS.FAIL,
-    source: opts.source || AGENT_OBSERVABILITY_FORGE_COMPLETION_SOURCE,
+    source: forgeCompletionSource(opts),
     summary: ready ? summarizePaths(diffEvidence.paths) : 'Forge agent ended without meaningful diff evidence',
     detail: ready ? null : 'Agent ended but only control/runtime artifacts changed, or no files changed.',
-    completed_at: event?.ended_at || event?.ts || new Date().toISOString(),
-    agent_ended_at: event?.ended_at || event?.ts || null,
-    outcome: event?.outcome ?? null,
-    reason: event?.reason ?? null,
-    module_id: event?.module_id ?? opts.identity?.module_id ?? null,
-    dispatch_id: event?.dispatch_id ?? opts.identity?.dispatch_id ?? null,
-    gateway_label: event?.gateway_label ?? event?.label ?? opts.identity?.gateway_label ?? null,
-    session_key: event?.session_key ?? opts.identity?.session_key ?? null,
-    meaningful_paths: diffEvidence.paths || [],
-    ignored_paths: diffEvidence.ignoredPaths || [],
-    head_before: diffEvidence.headBefore || null,
-    head_now: diffEvidence.headNow || null,
+    completed_at: (selectDefinedValue(() => (event?.ended_at), () => (new Date().toISOString()))),
+    agent_ended_at: (selectDefinedValue(() => (event?.ended_at), () => (null))),
+    outcome: selectDefinedValue(() => (event?.outcome), () => (null)),
+    reason: selectDefinedValue(() => (event?.reason), () => (null)),
+    module_id: selectDefinedValue(() => (selectDefinedValue(() => (event?.module_id), () => (opts.identity?.module_id))), () => (null)),
+    dispatch_id: selectDefinedValue(() => (selectDefinedValue(() => (event?.dispatch_id), () => (opts.identity?.dispatch_id))), () => (null)),
+    gateway_label: selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (event?.gateway_label), () => (event?.label))), () => (opts.identity?.gateway_label))), () => (null)),
+    session_key: selectDefinedValue(() => (selectDefinedValue(() => (event?.session_key), () => (opts.identity?.session_key))), () => (null)),
+    meaningful_paths: arrayValue(diffEvidence.paths),
+    ignored_paths: arrayValue(diffEvidence.ignoredPaths),
+    head_before: selectDefinedValue(() => (diffEvidence.headBefore), () => (null)),
+    head_now: selectDefinedValue(() => (diffEvidence.headNow), () => (null)),
   };
 }
 
 function decodeRedisEntry(rawEntry) {
-  if (!Array.isArray(rawEntry) || typeof rawEntry[0] !== 'string' || !Array.isArray(rawEntry[1])) return null;
+  if (selectTruthyValue(() => (selectTruthyValue(() => (!Array.isArray(rawEntry)), () => (typeof rawEntry[0] !== 'string'))), () => (!Array.isArray(rawEntry[1])))) return null;
   const data = {};
-  for (let i = 0; i < rawEntry[1].length; i += 2) data[String(rawEntry[1][i])] = String(rawEntry[1][i + 1] ?? '');
+  for (let i = 0; i < rawEntry[1].length; i += 2) data[String(rawEntry[1][i])] = rawStringValue(rawEntry[1][i + 1]);
   return { id: rawEntry[0], data };
 }
 
@@ -210,7 +278,7 @@ function parseTelemetryEvent(entry) {
   if (!raw) return null;
   try {
     const parsed = JSON.parse(raw);
-    if (!parsed || parsed.type !== 'agent.ended') return null;
+    if (selectTruthyValue(() => (!parsed), () => (parsed.type !== 'agent.ended'))) return null;
     return { ...parsed, redis_id: entry.id };
   } catch (_error) {
     return null;
@@ -234,54 +302,55 @@ function decodeXreadEntries(result) {
 function matchesKnownIdentity(expectedValue, actualValue) {
   const expected = stringValue(expectedValue);
   const actual = stringValue(actualValue);
-  return !expected || !actual || expected === actual;
+  return selectTruthyValue(() => (selectTruthyValue(() => (!expected), () => (!actual))), () => (expected === actual));
 }
 
 export function matchesForgeAgentEndedTelemetry(event = {}, identity = {}) {
   if (event.type !== 'agent.ended') return false;
   if (event.agent_type && event.agent_type !== 'forge') return false;
   if (event.agent_scope && event.agent_scope !== 'agent') return false;
-  const expectedModule = stringValue(identity.module_id) || stringValue(identity.moduleDir);
+  const expectedModule = (selectDefinedValue(() => (stringValue(identity.module_id)), () => (null)));
   if (expectedModule && event.module_id && event.module_id !== expectedModule) return false;
   if (!matchesKnownIdentity(identity.run_id, event.run_id)) return false;
   if (!matchesKnownIdentity(identity.dispatch_id, event.dispatch_id)) return false;
   if (!matchesKnownIdentity(identity.session_key, event.session_key)) return false;
-  if (!matchesKnownIdentity(identity.gateway_label, event.gateway_label || event.label)) return false;
+  if (!matchesKnownIdentity(identity.gateway_label, (selectDefinedValue(() => (event.gateway_label), () => (null))))) return false;
   return true;
 }
 
 export function buildForgeAgentEndedIdentity(config, moduleDir, opts = {}) {
-  const tracked = opts.trackedAgent || null;
+  const tracked = selectDefinedValue(() => (opts.trackedAgent), () => (null));
   return {
-    run_id: opts.runId || opts.run_id || tracked?.run_id || getRunId(config) || null,
-    module_id: opts.moduleId || opts.module_id || moduleDir || tracked?.moduleId || null,
+    run_id: (selectDefinedValue(() => (opts.runId), () => (null))),
+    module_id: (selectDefinedValue(() => (opts.moduleId), () => (null))),
     moduleDir,
-    dispatch_id: opts.dispatchId || opts.dispatch_id || tracked?.telemetry_dispatch_id || tracked?.dispatch_id || null,
-    session_key: opts.sessionKey || opts.session_key || tracked?.sessionKey || null,
-    gateway_label: opts.gatewayLabel || opts.gateway_label || tracked?.gatewayLabel || opts.sessionLabel || null,
+    attempt: (selectDefinedValue(() => (opts.attempt), () => (null))),
+    dispatch_id: (selectDefinedValue(() => (opts.dispatchId), () => (null))),
+    session_key: (selectDefinedValue(() => (opts.sessionKey), () => (null))),
+    gateway_label: (selectDefinedValue(() => (opts.gatewayLabel), () => (null))),
   };
 }
 
 export function createAgentEndedTelemetryReader(config, opts = {}) {
   if (opts.agentEndedReader) return opts.agentEndedReader;
-  const runId = opts.runId || opts.run_id || getRunId(config) || '';
-  const project = config?.project || '';
+  const runId = (selectDefinedValue(() => (opts.runId), () => ('')));
+  const project = stringValue(config?.project);
   if (config?.telemetry?.enabled !== true) {
     return null;
   }
-  if (!runId || !project) return null;
+  if (selectTruthyValue(() => (!runId), () => (!project))) return null;
 
-  const stream = opts.stream || getTelemetryStreamKeyForRun(config, runId);
-  const blockMs = opts.blockMs ?? agentEndedReadBlockMs(config);
-  let lastId = opts.startId || '$';
+  const stream = agentEndedStreamKey(config, runId, opts);
+  const blockMs = agentEndedReadBlockPolicy(config, opts);
+  let lastId = selectDefinedValue(() => (stringValue(opts.startId)), () => (REDIS_XREAD_LATEST_ID));
   let client = null;
   let redisReady = false;
 
   function redis() {
     if (client) return client;
-    const RedisCtor = opts.RedisCtor || loadRedisCtor();
-    client = createRedisClient(RedisCtor, opts.redis || {}, {
-      retryStrategy: opts.retryStrategy || ((times) => Math.min(times * 100, 1000)),
+    const RedisCtor = agentEndedRedisCtor(opts);
+    client = createRedisClient(RedisCtor, objectRecord(opts.redis), {
+      retryStrategy: typeof opts.retryStrategy === 'function' ? opts.retryStrategy : agentEndedRedisRetryStrategy,
       maxRetriesPerRequest: 1,
       enableOfflineQueue: false,
       lazyConnect: true,
@@ -333,21 +402,21 @@ export function createAgentEndedTelemetryReader(config, opts = {}) {
 }
 
 export function shouldSettleAgentEnded(seenAtMs, nowMs = Date.now(), settleMs) {
-  if (!Number.isFinite(Number(settleMs)) || Number(settleMs) < 0) {
+  if (selectTruthyValue(() => (!Number.isFinite(Number(settleMs))), () => (Number(settleMs) < 0))) {
     throw new Error('agent_observability forge completion settle_ms must be a non-negative number');
   }
   return seenAtMs > 0 && nowMs - seenAtMs < settleMs;
 }
 
 export function agentEndedSettleMs(config = {}, opts = {}) {
-  const value = opts.agentEndedSettleMs ?? opts.settleMs ?? agentObservabilityForgeCompletionWait(config).settleMs;
+  const value = agentEndedSettlePolicy(config, opts);
   const normalized = Number(value);
   if (Number.isFinite(normalized) && normalized >= 0) return normalized;
   throw new Error('agent_observability forge completion settle_ms must be a non-negative number');
 }
 
 export function agentEndedReadBlockMs(config = {}, opts = {}) {
-  const value = opts.blockMs ?? agentObservabilityForgeCompletionWait(config).xreadBlockMs;
+  const value = agentEndedReadBlockConfigPolicy(config, opts);
   const normalized = Number(value);
   if (Number.isFinite(normalized) && normalized >= 0) return normalized;
   throw new Error('agent_observability forge completion read block policy must resolve to a non-negative number');

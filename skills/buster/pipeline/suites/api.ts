@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Suite: api — API Test Runner (JSON-Spec)
 // ═══════════════════════════════════════════════════════════════
@@ -63,8 +64,17 @@ function log(msg: string): void {
   if (_logSink) _logSink({ suite: 'api', msg });
 }
 
+function objectRecord(value: unknown): AnyRecord | null {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : null;
+}
+
+function nonEmptyString(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() ? value : null;
+}
+
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error || 'unknown error');
+  if (error instanceof Error) return error.message;
+  return error == null ? 'missing_error_detail' : String(error);
 }
 
 function resolveSpecPath(specFile: unknown, projectDir: string): string {
@@ -79,11 +89,14 @@ function resolveSpecPath(specFile: unknown, projectDir: string): string {
 
 function interpolate(str: unknown, vars: Record<string, string>): unknown {
   if (typeof str !== 'string') return str;
-  return str.replace(/\{\{(\w+)\}\}/g, (_match: string, key: string) => vars[key] ?? `{{${key}}}`);
+  return str.replace(/\{\{(\w+)\}\}/g, (_match: string, key: string) => {
+    const replacement = vars[key];
+    return replacement === undefined ? `{{${key}}}` : replacement;
+  });
 }
 
 function interpolateObj(obj: any, vars: Record<string, string>): any {
-  if (!obj || Object.keys(vars).length === 0) return obj;
+  if (selectTruthyValue(() => (!obj), () => (Object.keys(vars).length === 0))) return obj;
   if (typeof obj === 'string') return interpolate(obj, vars);
   if (Array.isArray(obj)) return obj.map((value: any) => interpolateObj(value, vars));
   if (typeof obj === 'object') {
@@ -121,9 +134,11 @@ function collectTemplateVars(value: any, out: Set<string> = new Set()): Set<stri
 }
 
 function missingTemplateVarsForTest(test: AnyRecord, vars: Record<string, string>, defaults: AnyRecord = {}): string[] {
+  const defaultHeaders = selectDefinedValue(() => (objectRecord(defaults.headers)), () => ({}));
+  const testHeaders = selectDefinedValue(() => (objectRecord(test.headers)), () => ({}));
   const effectiveHeaders = {
-    ...(defaults.headers || {}),
-    ...(test.headers || {}),
+    ...defaultHeaders,
+    ...testHeaders,
   };
   const required = collectTemplateVars({
     path: test.path,
@@ -131,14 +146,14 @@ function missingTemplateVarsForTest(test: AnyRecord, vars: Record<string, string
     body: test.body,
     ws_messages: test.ws_messages,
   });
-  return [...required].filter((key) => vars[key] == null || vars[key] === '');
+  return [...required].filter((key) => selectTruthyValue(() => (vars[key] == null), () => (vars[key] === '')));
 }
 
 async function runAuthSetup(setup: AnyRecord | null, baseUrl: string, timeoutMs: number): Promise<AuthSetupResult> {
   if (!setup?.auth_endpoint) return { ok: true, vars: {} };
 
   const url  = `${baseUrl}${setup.auth_endpoint}`;
-  const body = setup.auth_body || {};
+  const body = selectDefinedValue(() => (objectRecord(setup.auth_body)), () => ({}));
 
   log(`Auth setup: POST ${url}`);
 
@@ -158,7 +173,7 @@ async function runAuthSetup(setup: AnyRecord | null, baseUrl: string, timeoutMs:
     }
 
     const json = await res.json();
-    const tokenPath = setup.token_path || 'token';
+    const tokenPath = selectDefinedValue(() => (nonEmptyString(setup.token_path)), () => ('token'));
     const token = getByPath(json, tokenPath);
 
     if (!token) {
@@ -175,12 +190,14 @@ async function runAuthSetup(setup: AnyRecord | null, baseUrl: string, timeoutMs:
 }
 
 async function runHttpTest(test: AnyRecord, baseUrl: string, defaults: AnyRecord, vars: Record<string, string>, timeoutMs: number): Promise<ApiTestResult> {
-  const method  = String(test.method || 'GET').toUpperCase();
+  const method  = (selectDefinedValue(() => (nonEmptyString(test.method)), () => ('GET'))).toUpperCase();
   const urlPath = interpolate(test.path, vars);
   const url     = `${baseUrl}${urlPath}`;
+  const defaultHeaders = selectDefinedValue(() => (objectRecord(defaults.headers)), () => ({}));
+  const testHeaders = selectDefinedValue(() => (objectRecord(test.headers)), () => ({}));
   const headers = interpolateObj({
-    ...(defaults.headers || {}),
-    ...(test.headers || {}),
+    ...defaultHeaders,
+    ...testHeaders,
   }, vars);
   const fetchOpts: RequestInit = { method, headers };
 
@@ -196,7 +213,7 @@ async function runHttpTest(test: AnyRecord, baseUrl: string, defaults: AnyRecord
   try {
     const res      = await fetch(url, fetchOpts);
     const elapsed  = Date.now() - start;
-    const expect   = test.expect || {};
+    const expect   = selectDefinedValue(() => (objectRecord(test.expect)), () => ({}));
     const failures: string[] = [];
 
     if (expect.status != null && res.status !== expect.status) {
@@ -204,7 +221,7 @@ async function runHttpTest(test: AnyRecord, baseUrl: string, defaults: AnyRecord
     }
 
     let body: any = null;
-    if (expect.body_type || expect.body_contains || expect.body_min_length != null) {
+    if (selectTruthyValue(() => (selectTruthyValue(() => (expect.body_type), () => (expect.body_contains))), () => (expect.body_min_length != null))) {
       try {
         body = await res.json();
       } catch (_error) {
@@ -285,7 +302,7 @@ async function runWsTest(test: AnyRecord, baseUrl: string, vars: Record<string, 
         resolve({ passed: failures.length === 0, failures, status: null, elapsed: Date.now() - start });
       }, timeoutMs);
 
-      const expect = test.expect || {};
+      const expect = selectDefinedValue(() => (objectRecord(test.expect)), () => ({}));
       const messages = Array.isArray(test.ws_messages) ? test.ws_messages : [];
       const responses: any[] = [];
 
@@ -315,7 +332,7 @@ async function runWsTest(test: AnyRecord, baseUrl: string, vars: Record<string, 
         if (expect.ws_response_contains && responses.length > 0) {
           for (const [key, expectedVal] of Object.entries(expect.ws_response_contains)) {
             const found = responses.some((response: any) => {
-              if (typeof response !== 'object' || response === null) return false;
+              if (selectTruthyValue(() => (typeof response !== 'object'), () => (response === null))) return false;
               const actual = getByPath(response, key);
               if (expectedVal === true) return actual !== undefined;
               return String(actual) === String(expectedVal);
@@ -356,17 +373,33 @@ function apiContractFailure(startTime: number, message: string, rule: string): S
   });
 }
 
-export default async function apiSuite(context: ApiContext): Promise<SuiteVerdict> {
-  _logSink = context.logSink || null;
-  const startTime = Date.now();
-  const serve = context.config?.serve || {};
-  const apiConf = context.config?.api || {};
+function apiProjectDirAuthority(serve: AnyRecord): string {
+  const requestedProjectDir = nonEmptyString(serve.project_dir);
+  if (requestedProjectDir) {
+    const resolved = resolveRepoScopedPath(requestedProjectDir, { field: 'serve.project_dir' });
+    if (!resolved) throw new Error('serve.project_dir is outside allowed repository scope');
+    return resolved;
+  }
+  return DEFAULTS.project_dir;
+}
 
-  const type = serve.type || 'static';
-  const port = serve.port || (type === 'server' ? DEFAULTS.server_port : DEFAULTS.static_port);
+function apiTimeoutMsAuthority(defaults: AnyRecord, field: 'timeout_ms' | 'ws_timeout_ms'): number {
+  const configured = defaults[field];
+  if (configured !== undefined && configured !== null) return Number(configured);
+  return field === 'ws_timeout_ms' ? DEFAULTS.ws_timeout_ms : DEFAULTS.timeout_ms;
+}
+
+export default async function apiSuite(context: ApiContext): Promise<SuiteVerdict> {
+  _logSink = selectTruthyValue(() => (context.logSink), () => (null));
+  const startTime = Date.now();
+  const serve = selectDefinedValue(() => (objectRecord(context.config?.serve)), () => ({}));
+  const apiConf = selectDefinedValue(() => (objectRecord(context.config?.api)), () => ({}));
+
+  const type = selectDefinedValue(() => (nonEmptyString(serve.type)), () => ('static'));
+  const port = selectDefinedValue(() => (serve.port), () => ((type === 'server' ? DEFAULTS.server_port : DEFAULTS.static_port)));
   const baseUrl = `http://localhost:${port}`;
-  const projectDir = resolveRepoScopedPath(serve.project_dir || DEFAULTS.project_dir, { field: 'serve.project_dir' }) || DEFAULTS.project_dir;
-  const specFile = apiConf.spec_file || null;
+  const projectDir = apiProjectDirAuthority(serve);
+  const specFile = selectTruthyValue(() => (apiConf.spec_file), () => (null));
 
   if (!specFile) return apiContractFailure(startTime, 'api.spec_file is required when the API suite is requested', 'api-spec-required');
 
@@ -389,25 +422,26 @@ export default async function apiSuite(context: ApiContext): Promise<SuiteVerdic
   const tests = Array.isArray(spec.tests) ? spec.tests : [];
   if (tests.length === 0) return apiContractFailure(startTime, 'API spec must contain at least one test', 'api-spec-empty');
 
-  const defaults = spec.defaults || {};
-  const setup = spec.setup || null;
-  const specBase = spec.base_url || baseUrl;
-  const thresholds = apiConf.thresholds || null;
+  const defaults = selectDefinedValue(() => (objectRecord(spec.defaults)), () => ({}));
+  const setup = objectRecord(spec.setup);
+  const specBase = selectDefinedValue(() => (nonEmptyString(spec.base_url)), () => (baseUrl));
+  const thresholds = selectTruthyValue(() => (apiConf.thresholds), () => (null));
   const enforced = thresholds !== null;
-  const timeoutMs = defaults.timeout_ms || DEFAULTS.timeout_ms;
-  const wsTimeout = defaults.ws_timeout_ms || DEFAULTS.ws_timeout_ms;
+  const timeoutMs = apiTimeoutMsAuthority(defaults, 'timeout_ms');
+  const wsTimeout = apiTimeoutMsAuthority(defaults, 'ws_timeout_ms');
 
   log(`Running ${tests.length} tests from ${specPath} (mode: ${enforced ? 'enforced' : 'informational'})`);
 
   const auth = await runAuthSetup(setup, specBase, timeoutMs);
-  if (!auth.ok) return apiContractFailure(startTime, auth.error || 'API auth setup failed', 'api-auth-setup');
+  if (!auth.ok) return apiContractFailure(startTime, selectDefinedValue(() => (auth.error), () => ('API auth setup failed')), 'api-auth-setup');
 
   const findings: Finding[] = [];
   let passed = 0;
   let failed = 0;
 
   for (const test of tests) {
-    const testName = test.name || `${test.method || 'GET'} ${test.path}`;
+    const testMethod = selectDefinedValue(() => (nonEmptyString(test.method)), () => ('GET'));
+    const testName = selectDefinedValue(() => (nonEmptyString(test.name)), () => (`${testMethod} ${test.path}`));
     const isWs = test.protocol === 'ws';
     const missingVars = missingTemplateVarsForTest(test, auth.vars, defaults);
     let result: ApiTestResult;
@@ -443,7 +477,8 @@ export default async function apiSuite(context: ApiContext): Promise<SuiteVerdic
   }
 
   let status: SuiteStatus = STATUS.PASS;
-  if (enforced && failed > (thresholds.max_failures ?? 0)) status = STATUS.FAIL;
+  const maxFailures = selectDefinedValue(() => (thresholds?.max_failures), () => (0));
+  if (enforced && failed > maxFailures) status = STATUS.FAIL;
 
   const duration_ms = Date.now() - startTime;
   log(`${status === STATUS.PASS ? '✅' : '⚠️'} ${enforced ? 'enforced' : 'informational'}: ${passed}/${tests.length} passed, ${failed} failed (${duration_ms}ms)`);

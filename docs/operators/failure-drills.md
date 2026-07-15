@@ -208,7 +208,7 @@ find Projects/my-project/src/.swarm/logs/gates -maxdepth 3 -type f | sort
 
 Recovery:
 
-- Review gate: fix reviewer findings or rerun the fix-and-rereview cycle.
+- Review gate: inspect reviewer findings and update the module before rerunning the pipeline.
 - Approval gate: provide the operator decision or handle timeout policy.
 - Buster gate: inspect gate output, Buster logs, and suite artifacts.
 

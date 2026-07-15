@@ -1,3 +1,4 @@
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/completion-event-adapters.ts — OI-42 edge adapters for completion evidence events.
 // Active Buster module/gate completion waits use these adapters.
 
@@ -9,10 +10,57 @@ import { decodeRedisStreamEntry } from './task-transport-contract.ts';
 import { normalizeRedisPipelineEnvelope } from './redis-message-contract.ts';
 import { assertPipelineEventBusAdapter } from './pipeline-event-contract.ts';
 
+const INTENTIONAL_ABORT_REDIS_ERROR_MESSAGES = [
+  'connection is closed',
+  'connection closed',
+  'connection forcefully',
+  'connection ended',
+  'connection lost',
+  'stream isn\'t writeable',
+  'stream is not writeable',
+  'connection is not writable',
+  'econnreset',
+  'abort',
+];
+const REDIS_LIVE_STREAM_START_ID = '$';
+
+function errorMessage(error) {
+  if (error && typeof error === 'object' && 'message' in error) {
+    const message = error.message;
+    if (typeof message === 'string' && message.trim()) return message;
+  }
+  return String(error);
+}
+
+function objectRecord(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function completionGateId(envelope) {
+  if (envelope.target_kind !== 'gate') return null;
+  if (!envelope.target_id) return null;
+  if (envelope.gate_id) return envelope.gate_id;
+  return envelope.target_id;
+}
+
+function completionModuleId(envelope) {
+  if (envelope.target_kind === 'gate') {
+    return envelope.module ? envelope.module : null;
+  }
+  if (!envelope.target_id) return null;
+  if (envelope.module) return envelope.module;
+  return envelope.target_id;
+}
+
+function completionEntryStreamKey(entryStream, configuredStream) {
+  if (entryStream) return entryStream;
+  return configuredStream;
+}
+
 export function createDedicatedRedisCompletionClient(opts = {}) {
-  const RedisCtor = opts.RedisCtor || loadRedisCtor();
+  const RedisCtor = selectDefinedValue(() => (opts.RedisCtor), () => (loadRedisCtor()));
   return createRedisClient(RedisCtor, opts, {
-    retryStrategy: opts.retryStrategy || ((times) => Math.min(times * 100, 5000)),
+    retryStrategy: selectDefinedValue(() => (opts.retryStrategy), () => (((times) => Math.min(times * 100, 5000)))),
     maxRetriesPerRequest: null,
     enableReadyCheck: true,
   });
@@ -20,18 +68,8 @@ export function createDedicatedRedisCompletionClient(opts = {}) {
 
 function isIntentionalAbortRedisError(error, { signal = null, stopping = false } = {}) {
   if (!signal?.aborted && !stopping) return false;
-  const message = String(error?.message || error || '').toLowerCase();
-  return message === ''
-    || message.includes('connection is closed')
-    || message.includes('connection closed')
-    || message.includes('connection forcefully')
-    || message.includes('connection ended')
-    || message.includes('connection lost')
-    || message.includes('stream isn\'t writeable')
-    || message.includes('stream is not writeable')
-    || message.includes('connection is not writable')
-    || message.includes('econnreset')
-    || message.includes('abort');
+  const message = String(selectDefinedValue(() => (selectDefinedValue(() => (error?.message), () => (error))), () => (''))).toLowerCase();
+  return [message === '', INTENTIONAL_ABORT_REDIS_ERROR_MESSAGES.some(fragment => message.includes(fragment))].some(Boolean);
 }
 
 function emitFatal(eventBus, identity, payload) {
@@ -54,12 +92,11 @@ function emitLocalEvidenceWarning(eventBus, identity, payload) {
 
 function buildCompletionEventIdentity(entry = {}) {
   const envelope = normalizeRedisPipelineEnvelope(entry);
-  const targetKind = envelope.target_kind;
-  const targetId = envelope.target_id;
+  const gateId = completionGateId(envelope);
+  const moduleId = completionModuleId(envelope);
   return {
-    ...(targetKind === 'gate' && targetId ? { gate_id: envelope.gate_id || targetId } : {}),
-    ...(targetKind !== 'gate' && targetId ? { module_id: envelope.module || targetId } : {}),
-    ...(targetKind === 'gate' && envelope.module ? { module_id: envelope.module } : {}),
+    ...(gateId ? { gate_id: gateId } : {}),
+    ...(moduleId ? { module_id: moduleId } : {}),
     ...(envelope.run_id ? { run_id: envelope.run_id } : {}),
     ...(envelope.attempt ? { attempt: envelope.attempt } : {}),
     ...(envelope.dispatch_id ? { dispatch_id: envelope.dispatch_id } : {}),
@@ -86,16 +123,16 @@ function decodeXreadEntries(results = []) {
 
 export function createRedisCompletionEventAdapter(config, opts = {}) {
   const eventBus = assertPipelineEventBusAdapter(opts.eventBus, 'RedisCompletionEventAdapter eventBus');
-  const stream = opts.stream || completionStreamKey(config);
-  if (opts.blockMs === undefined || opts.blockMs === null) {
+  const stream = selectDefinedValue(() => (opts.stream), () => (completionStreamKey(config)));
+  if (selectTruthyValue(() => (opts.blockMs === undefined), () => (opts.blockMs === null))) {
     throw new TypeError('RedisCompletionEventAdapter requires blockMs');
   }
   const blockMs = Number(opts.blockMs);
-  if (!Number.isFinite(blockMs) || blockMs < 0) {
+  if (selectTruthyValue(() => (!Number.isFinite(blockMs)), () => (blockMs < 0))) {
     throw new TypeError('RedisCompletionEventAdapter blockMs must be a non-negative number');
   }
-  const startId = opts.startId || '$';
-  const fatalIdentity = opts.identity || {};
+  const startId = selectDefinedValue(() => (opts.startId), () => (REDIS_LIVE_STREAM_START_ID));
+  const fatalIdentity = objectRecord(opts.identity);
   const controller = new AbortController();
   const signal = controller.signal;
   let client = null;
@@ -134,7 +171,7 @@ export function createRedisCompletionEventAdapter(config, opts = {}) {
     while (!signal.aborted) {
       try {
         const result = await client.xread('BLOCK', String(blockMs), 'STREAMS', stream, lastId);
-        if (signal.aborted || stopping) break;
+        if (selectTruthyValue(() => (signal.aborted), () => (stopping))) break;
         for (const entry of decodeXreadEntries(result)) {
           lastId = entry.id;
           if (entry.data.type && entry.data.type !== 'completion') continue;
@@ -143,7 +180,7 @@ export function createRedisCompletionEventAdapter(config, opts = {}) {
             source: 'redis',
             identity: buildCompletionEventIdentity(entry.data),
             payload: {
-              stream_key: entry.stream || stream,
+              stream_key: completionEntryStreamKey(entry.stream, stream),
               redis_id: entry.id,
               entry: entry.data,
             },
@@ -155,7 +192,7 @@ export function createRedisCompletionEventAdapter(config, opts = {}) {
           adapter: 'redis_completion',
           stream_key: stream,
           reason: 'redis_completion_adapter_failed',
-          error: error?.message || String(error),
+          error: errorMessage(error),
         });
         throw error;
       }
@@ -189,7 +226,8 @@ export function createRedisCompletionEventAdapter(config, opts = {}) {
 }
 
 function uniquePaths(paths = []) {
-  return [...new Set(paths.filter(Boolean).map((item) => path.resolve(item)))];
+  const entries = Array.isArray(paths) ? paths : [];
+  return [...new Set(entries.filter(Boolean).map((item) => path.resolve(item)))];
 }
 
 function nearestExistingDirectory(targetPath) {
@@ -217,18 +255,18 @@ function buildWatcherSpecs(paths = []) {
 
 function isSameOrAncestorPath(candidatePath, targetPath) {
   const relative = path.relative(path.resolve(candidatePath), path.resolve(targetPath));
-  return relative === '' || (!!relative && !relative.startsWith('..') && !path.isAbsolute(relative));
+  return selectTruthyValue(() => (relative === ''), () => ((!!relative && !relative.startsWith('..') && !path.isAbsolute(relative))));
 }
 
 export function createLocalEvidenceEventAdapter(config, opts = {}) {
   const eventBus = assertPipelineEventBusAdapter(opts.eventBus, 'LocalEvidenceEventAdapter eventBus');
-  const evidencePaths = uniquePaths(opts.paths || []);
-  const identity = opts.identity || {};
-  if (opts.debounceMs === undefined || opts.debounceMs === null) {
+  const evidencePaths = uniquePaths(opts.paths);
+  const identity = objectRecord(opts.identity);
+  if (selectTruthyValue(() => (opts.debounceMs === undefined), () => (opts.debounceMs === null))) {
     throw new TypeError('LocalEvidenceEventAdapter requires debounceMs');
   }
   const debounceMs = Number(opts.debounceMs);
-  if (!Number.isFinite(debounceMs) || debounceMs < 0) {
+  if (selectTruthyValue(() => (!Number.isFinite(debounceMs)), () => (debounceMs < 0))) {
     throw new TypeError('LocalEvidenceEventAdapter debounceMs must be a non-negative number');
   }
   const controller = new AbortController();
@@ -255,7 +293,7 @@ export function createLocalEvidenceEventAdapter(config, opts = {}) {
 
   function emitChanged() {
     timer = null;
-    if (signal.aborted || changedPaths.size === 0) return;
+    if (selectTruthyValue(() => (signal.aborted), () => (changedPaths.size === 0))) return;
     const paths = [...changedPaths];
     changedPaths.clear();
     eventBus.emit({
@@ -297,7 +335,7 @@ export function createLocalEvidenceEventAdapter(config, opts = {}) {
     const rescanKey = spec.targetPath;
     if (activeRescanKeys.has(rescanKey)) return;
     activeRescanKeys.add(rescanKey);
-    const intervalMs = Math.max(10, Math.min(debounceMs || 50, 250));
+    const intervalMs = Math.max(10, Math.min(debounceMs, 250));
     const timer = setInterval(() => {
       if (signal.aborted) return;
       const nextSpec = buildWatcherSpecs([spec.targetPath])[0];
@@ -334,7 +372,7 @@ export function createLocalEvidenceEventAdapter(config, opts = {}) {
           adapter: 'local_evidence',
           reason: 'watcher_error',
           path: spec.targetPath,
-          error: error?.message || String(error),
+          error: errorMessage(error),
         });
       });
       activeWatchKeys.add(watchKey);
@@ -345,7 +383,7 @@ export function createLocalEvidenceEventAdapter(config, opts = {}) {
         adapter: 'local_evidence',
         reason: error?.code === 'ENOSPC' ? 'watcher_limit_reached' : 'watcher_start_failed',
         path: spec.targetPath,
-        error: error?.message || String(error),
+        error: errorMessage(error),
       });
     }
   }
