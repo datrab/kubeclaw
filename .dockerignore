@@ -7,12 +7,14 @@
 !docker/Dockerfile.sandbox
 !docker/Dockerfile.namespace-controller
 
+!go.mod
+!cmd/
+!cmd/buster-namespace-controller/
+!cmd/buster-namespace-controller/**
+
 !plugins/
 !plugins/openclaw-agent-observer/
 !plugins/openclaw-agent-observer/**
-
-!scripts/
-!scripts/buster-namespace-controller.mjs
 
 # Always keep deployment values and local operator state out of image contexts,
 # even while my-values remains tracked as the audited deployment surface.

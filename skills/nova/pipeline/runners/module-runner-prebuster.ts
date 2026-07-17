@@ -7,9 +7,11 @@ import { log } from '../core/logger.ts';
 import { getRunId } from '../core/runtime.ts';
 import { requireStageHandler } from '../core/registry.ts';
 import { resolveStatusSessionKey, resolveStatusGatewayLabel } from '../services/correlation.ts';
+import { resolveModuleBusterDispatchId } from '../services/buster-dispatch-identity.ts';
 import { getContractInvalidDiagnostic, isContractInvalidError } from '../services/contract-diagnostics.ts';
 import { normalizeTypedValidatorControlResult } from '../services/contracts/validator-control-result.ts';
 import { assertPipelineStepResult } from '../services/contracts/pipeline-step-result.ts';
+import { normalizeGitFailureClass } from '../services/failure-semantics.ts';
 import { transitionModuleStatus } from '../lifecycle-state.ts';
 import { emitOperatorAlert } from '../services/telemetry.ts';
 import { emitPipelineCheckpoint } from '../services/pipeline-checkpoint.ts';
@@ -39,10 +41,6 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
-function bracketedErrorCode(message: string): string | null {
-  const match = String(selectDefinedValue(() => (message), () => (''))).match(/\[([A-Z][A-Z0-9_]+)\]/);
-  return selectTruthyValue(() => (match?.[1]), () => (null));
-}
 function moduleValidatorProducerType(stageId = ''): string {
   const producerType = String(selectDefinedValue(() => (stageId), () => (''))).split(':')[1];
   return selectDefinedValue(() => (producerType), () => ('missing_stage_type'));
@@ -181,6 +179,12 @@ function persistModuleValidatorBlocked({ config, dir, status, deps, phase, reaso
       fail_count: selectDefinedValue(() => (status?.fail_count), () => (null)),
     },
   });
+}
+
+function hasInFlightBusterDispatch(status: AnyRecord | null): boolean {
+  return status?.status === STATUS.TESTING
+    && status?.current_phase === 'buster'
+    && Boolean(resolveModuleBusterDispatchId(status));
 }
 
 export async function prepareModuleForBuster({
@@ -346,7 +350,7 @@ export async function prepareModuleForBuster({
   }
 
   if (stages.includes('buster')
-      && (selectTruthyValue(() => (status.status === STATUS.READY_FOR_TESTING), () => ((status.status === STATUS.TESTING && status.current_phase === 'buster'))))) {
+      && (selectTruthyValue(() => (status.status === STATUS.READY_FOR_TESTING), () => ((status.status === STATUS.TESTING && status.current_phase === 'buster' && !hasInFlightBusterDispatch(status)))))) {
     try {
       const gitSyncTransition = await deps.gitSyncBeforeBuster(config, dir, status);
       deps.saveStatus(config, dir, status, gitSyncTransition);
@@ -364,7 +368,7 @@ export async function prepareModuleForBuster({
       });
     } catch (e) {
       const message = errorMessage(e);
-      const errorCode = bracketedErrorCode(message);
+      const failureClass = normalizeGitFailureClass(message);
       log('ERROR', `Git sync before Buster failed: ${message}`);
       emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'git_sync', null, status?.status);
       return {
@@ -376,7 +380,10 @@ export async function prepareModuleForBuster({
           phase: 'git_sync',
           gatewayLabel: resolveStatusGatewayLabel(status),
           sessionKey: resolveStatusSessionKey(status),
-          ...(errorCode ? { terminalReasonCode: errorCode } : {}),
+          ...(failureClass ? {
+            terminalReasonCode: failureClass,
+            metadata: { failure_class: failureClass },
+          } : {}),
         }),
       };
     }

@@ -99,6 +99,24 @@ test('validateConfig normalizes compact swarm config in place before runtime val
   assert.equal(config.plugins.enabled, true);
 });
 
+test('validateConfig accepts expanded run identity and pipeline review config authority', () => {
+  const config = addRuntimeFields(expandSwarmConfig(loadCompactConfig()));
+  config.run_id = 'run-config-profile-test';
+  config.pipeline_review = {
+    enabled: true,
+    model: 'gpt-5.3-codex-spark',
+    thinking_level: 'none',
+    agent_id: 'codex',
+    instructions_file: 'pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md',
+    output_file: 'logs/pipeline-review/PIPELINE-REVIEW.md',
+    json_output_file: 'logs/pipeline-review/PIPELINE-REVIEW.json',
+    timeout_minutes: 10,
+    agent_max_attempts: 2,
+  };
+
+  assert.doesNotThrow(() => validateConfig(config, validProgress()));
+});
+
 test('compact swarm config supports structured overrides for known effective paths only', () => {
   const config = loadCompactConfig();
   config.overrides.session = { kill: { acp_confirm_timeout_ms: 45000 } };

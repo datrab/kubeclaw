@@ -13,9 +13,11 @@ import {
   DEFAULT_REAL_E2E_MODEL,
   DEFAULT_REAL_E2E_THINKING,
   applyRealE2EExecutionBoundary,
+  normalizeRealE2ERuntimeDefaults,
   REPO_ROOT,
   summarizeWorkspace,
   validateRealE2EModel,
+  writeRealE2ESwarmFiles,
 } from './real-run-workspace.mjs';
 import { verifyExpectedFailureEvidence, verifyRealRunEvidence } from './real-run-evidence.mjs';
 import {
@@ -43,7 +45,7 @@ import {
 
 const OPENCLAW_CONFIG_PATH = '/home/node/.openclaw/openclaw.json';
 const RESULT_SCHEMA_VERSION = 'real_pipeline_e2e_result.v1';
-const REAL_E2E_CRASH_EXIT_CODE = 86;
+const REAL_E2E_CRASH_SIGNAL = 'SIGKILL';
 const execFileAsync = promisify(execFile);
 const DEFAULT_RATE_LIMIT_TIMEOUT_EXTENSION_MS = Number(
   process.env.REAL_E2E_RATE_LIMIT_TIMEOUT_EXTENSION_MS
@@ -542,9 +544,14 @@ async function restoreCheckpointWorkspace({ workspace, args }) {
     scenarioId: args.scenarioConfig.id,
   });
   const progressPath = path.join(workspace.swarmDir, 'progress.json');
-  const { progress } = applyRealE2EScenario(readJson(progressPath), args.scenarioConfig.id);
-  applyRealE2EExecutionBoundary(progress);
+  const normalizedProgress = normalizeRealE2ERuntimeDefaults(readJson(progressPath), { scenarioId: args.scenarioConfig.id });
+  applyRealE2EExecutionBoundary(normalizedProgress);
+  const { progress } = applyRealE2EScenario(
+    normalizedProgress,
+    args.scenarioConfig.id,
+  );
   writeJsonAtomic(progressPath, progress);
+  writeRealE2ESwarmFiles(workspace.swarmDir, progress);
   applyRealE2EFileScenario({ projectSrc: workspace.projectSrc, scenarioId: args.scenarioConfig.id });
   const runConfig = buildRunConfig({
     runId: workspace.runId,
@@ -556,6 +563,7 @@ async function restoreCheckpointWorkspace({ workspace, args }) {
     progress,
     config: runConfig,
     projectSrc: workspace.projectSrc,
+    swarmDir: workspace.swarmDir,
     scenarioId: args.scenarioConfig.id,
   });
   await commitRestoredCheckpointWorkspace(workspace);
@@ -586,7 +594,7 @@ function writeExternalCrashMarker({ workspace, scenario, checkpoint }) {
     project: workspace.projectName,
     scenario: scenario.id,
     crashed_at: new Date().toISOString(),
-    exit_code: REAL_E2E_CRASH_EXIT_CODE,
+    signal: REAL_E2E_CRASH_SIGNAL,
     trigger: 'external_e2e_harness',
     checkpoint_event_id: checkpoint?.event_id || null,
     details: checkpoint?.data?.details || {},
@@ -613,7 +621,7 @@ function appendExternalCrashEvent({ workspace, scenario, checkpoint }) {
     },
     data: {
       point: safeCheckpointPoint(scenario.crashPoint),
-      crash_exit_code: REAL_E2E_CRASH_EXIT_CODE,
+      crash_signal: REAL_E2E_CRASH_SIGNAL,
       scenario: scenario.id,
       step_type: details.step_type || null,
       step_id: details.step_id || null,
@@ -650,7 +658,7 @@ function startExternalCrashController({ workspace, scenario, child }) {
     state.marker_path = writeExternalCrashMarker({ workspace, scenario, checkpoint });
     const event = appendExternalCrashEvent({ workspace, scenario, checkpoint });
     state.event_id = event.event_id;
-    state.signal = 'SIGTERM';
+    state.signal = REAL_E2E_CRASH_SIGNAL;
     child.kill(state.signal);
   }, 250);
   return {
@@ -659,6 +667,26 @@ function startExternalCrashController({ workspace, scenario, child }) {
       clearInterval(timer);
     },
   };
+}
+
+function readCrashCheckpoint(workspace, scenario) {
+  if (!scenario?.crashPoint) return null;
+  const point = safeCheckpointPoint(scenario.crashPoint);
+  return readJsonlIfPresent(runLifecycleEventsPath(workspace))
+    .find((entry) => entry?.type === 'pipeline.checkpoint' && entry?.data?.point === point) || null;
+}
+
+function injectCleanupCrash({ workspace, scenario, state }) {
+  if (safeCheckpointPoint(scenario?.crashPoint) !== 'during_cleanup' || state.observed) return false;
+  const checkpoint = readCrashCheckpoint(workspace, scenario);
+  if (!checkpoint) return false;
+  state.observed = true;
+  state.marker_path = writeExternalCrashMarker({ workspace, scenario, checkpoint });
+  const event = appendExternalCrashEvent({ workspace, scenario, checkpoint });
+  state.event_id = event.event_id;
+  state.signal = REAL_E2E_CRASH_SIGNAL;
+  state.harness_phase = 'cleanup';
+  return true;
 }
 
 function startCheckpointCancellationController({ workspace, scenario, child }) {
@@ -714,15 +742,136 @@ function waitForChild(child) {
   });
 }
 
-async function waitForPipelineRunLockLeaseExpiry(workspace, { bufferMs = 250, maxWaitMs = 30000 } = {}) {
+const trackedChildren = new Map();
+
+function trackChild(child, label) {
+  if (!child) return child;
+  trackedChildren.set(child.pid, { child, label });
+  child.once('exit', () => {
+    trackedChildren.delete(child.pid);
+  });
+  return child;
+}
+
+async function stopTrackedChildren({ gracefulMs = 10000 } = {}) {
+  const children = [...trackedChildren.values()]
+    .filter(({ child }) => child.exitCode === null && child.signalCode === null);
+  for (const { child } of children) {
+    try {
+      child.kill('SIGTERM');
+    } catch (_error) {
+      // Child already exited; exit handlers will remove it from the registry.
+    }
+  }
+  const graceful = await Promise.race([
+    Promise.all(children.map(({ child }) => waitForChild(child))),
+    new Promise((resolve) => setTimeout(() => resolve(null), gracefulMs)),
+  ]);
+  if (graceful) {
+    return {
+      forced: false,
+      children: children.map(({ label, child }, index) => ({
+        label,
+        pid: child.pid,
+        exit: graceful[index] || null,
+      })),
+    };
+  }
+  for (const { child } of children) {
+    try {
+      child.kill('SIGKILL');
+    } catch (_error) {
+      // Best-effort hard stop.
+    }
+  }
+  const killed = await Promise.all(children.map(({ child }) => waitForChild(child)));
+  return {
+    forced: true,
+    children: children.map(({ label, child }, index) => ({
+      label,
+      pid: child.pid,
+      exit: killed[index] || null,
+    })),
+  };
+}
+
+function installTerminationResultHandler({ persist, resultRecordRef }) {
+  let handling = false;
+  const handler = async (signal) => {
+    if (handling) return;
+    handling = true;
+    const exitCode = signal === 'SIGINT' ? 130 : 143;
+    let children = null;
+    try {
+      children = await stopTrackedChildren();
+    } catch (error) {
+      children = {
+        forced: null,
+        error: error?.message || String(error),
+      };
+    }
+    persist({
+      ok: false,
+      exit_code: exitCode,
+      pipeline: {
+        ok: false,
+        phase: 'harness-aborted',
+        reason: 'REAL_E2E_RUNNER_TERMINATED',
+        signal,
+      },
+      diagnostics: {
+        ...(resultRecordRef()?.diagnostics || {}),
+        terminated_children: children,
+      },
+      errors: [
+        ...(resultRecordRef()?.errors || []),
+        {
+          reason: 'REAL_E2E_RUNNER_TERMINATED',
+          phase: 'runner',
+          signal,
+        },
+      ],
+      phases: [
+        ...(resultRecordRef()?.phases || []),
+        {
+          phase: 'runner-terminated',
+          ok: false,
+          signal,
+          completed_at: new Date().toISOString(),
+        },
+      ],
+    });
+    process.exit(exitCode);
+  };
+  process.once('SIGTERM', handler);
+  process.once('SIGINT', handler);
+  return () => {
+    process.off('SIGTERM', handler);
+    process.off('SIGINT', handler);
+  };
+}
+
+export function pipelineRunLockLeaseWaitMaxMs(workspace, { bufferMs = 250 } = {}) {
+  const config = readJson(workspace.runConfigPath);
+  const leaseMs = Number(config?.locks?.pipeline_run?.lease_ms);
+  if (!Number.isFinite(leaseMs) || leaseMs <= 0) {
+    throw new Error('real E2E crash resume lock wait requires config.locks.pipeline_run.lease_ms');
+  }
+  return Math.ceil(leaseMs + bufferMs);
+}
+
+async function waitForPipelineRunLockLeaseExpiry(workspace, { bufferMs = 250, maxWaitMs = null } = {}) {
   const lock = readJsonIfPresent(pipelineRunLockPath(workspace));
   if (!lock) return { waited_ms: 0, reason: 'lock_absent' };
   const expiresAt = Date.parse(String(lock.lease_expires_at || ''));
   if (!Number.isFinite(expiresAt)) {
     throw new Error('real E2E crash resume lock wait requires active-run.lock.json lease_expires_at');
   }
+  const effectiveMaxWaitMs = maxWaitMs == null
+    ? pipelineRunLockLeaseWaitMaxMs(workspace, { bufferMs })
+    : maxWaitMs;
   const waitMs = Math.max(0, expiresAt - Date.now() + bufferMs);
-  if (waitMs > maxWaitMs) {
+  if (waitMs > effectiveMaxWaitMs) {
     throw new Error(`real E2E crash resume lock wait exceeds maxWaitMs: ${waitMs}`);
   }
   if (waitMs > 0) await new Promise((resolve) => setTimeout(resolve, waitMs));
@@ -1079,7 +1228,7 @@ async function runProductionPipeline({ workspace, mode, scenario, resumeFromChec
     rateLimitTimeoutExtensionMs,
   }));
 
-  const simulator = spawn(process.execPath, [
+  const simulator = trackChild(spawn(process.execPath, [
     path.join(REPO_ROOT, 'tests', 'verification', 'e2e', 'buster-simulator.mjs'),
     '--timeout-ms',
     String(simulatorTimeoutMs),
@@ -1087,14 +1236,14 @@ async function runProductionPipeline({ workspace, mode, scenario, resumeFromChec
     cwd: REPO_ROOT,
     env,
     stdio: ['ignore', 'pipe', 'pipe'],
-  });
+  }), 'real-e2e-buster');
   const simulatorOutput = captureChildOutput(simulator, { label: 'real-e2e-buster' });
 
   const startApprovalOperator = ({
     stateFile,
     decision = 'approve',
     reason = 'Approved by canonical real E2E operator controller.',
-  }) => spawn(process.execPath, [
+  }) => trackChild(spawn(process.execPath, [
     path.join(REPO_ROOT, 'tests', 'verification', 'e2e', 'approval-operator.mjs'),
     '--state-path',
     path.join(workspace.swarmDir, stateFile),
@@ -1108,7 +1257,7 @@ async function runProductionPipeline({ workspace, mode, scenario, resumeFromChec
     cwd: REPO_ROOT,
     env,
     stdio: ['ignore', 'pipe', 'pipe'],
-  });
+  }), `real-e2e-approval:${stateFile}`);
 
   const shouldRunApprovalOperator = scenario.approvalDecision !== null;
   if (shouldRunApprovalOperator) {
@@ -1130,7 +1279,7 @@ async function runProductionPipeline({ workspace, mode, scenario, resumeFromChec
   const architectureApprovalOutput = captureChildOutput(architectureApprovalOperator, { label: 'real-e2e-architecture-approval' });
 
   const malformedOutputConfig = malformedOutputScenarioConfig(scenario.id);
-  const malformedOutputPublisher = malformedOutputConfig ? spawn(process.execPath, [
+  const malformedOutputPublisher = malformedOutputConfig ? trackChild(spawn(process.execPath, [
     path.join(REPO_ROOT, 'tests', 'verification', 'e2e', 'malformed-output-publisher.mjs'),
     '--scenario',
     scenario.id,
@@ -1148,7 +1297,7 @@ async function runProductionPipeline({ workspace, mode, scenario, resumeFromChec
     cwd: REPO_ROOT,
     env,
     stdio: ['ignore', 'pipe', 'pipe'],
-  }) : null;
+  }), 'real-e2e-malformed-output') : null;
   const malformedOutputPublisherOutput = malformedOutputPublisher
     ? captureChildOutput(malformedOutputPublisher, { label: 'real-e2e-malformed-output' })
     : createChildOutputCapture({ label: 'real-e2e-malformed-output' });
@@ -1169,11 +1318,11 @@ async function runProductionPipeline({ workspace, mode, scenario, resumeFromChec
       process.env.REAL_E2E_THINKING || DEFAULT_REAL_E2E_THINKING,
     ];
     if (resume) args.push('--resume');
-    const child = spawn(process.execPath, args, {
+    const child = trackChild(spawn(process.execPath, args, {
       cwd: workspace.worktreePath,
       env,
       stdio: ['ignore', 'pipe', 'pipe'],
-    });
+    }), label);
     const output = captureChildOutput(child, { label });
     const attempt = { label, resume, child, output, exit: null };
     pipelineAttempts.push(attempt);
@@ -1192,6 +1341,20 @@ async function runProductionPipeline({ workspace, mode, scenario, resumeFromChec
   });
   externalCrash.stop();
   cancellation.stop();
+  if (scenario.crashResume && safeCheckpointPoint(scenario.crashPoint) === 'during_cleanup') {
+    const actualInitialExit = firstPipelineAttempt.exit;
+    if (injectCleanupCrash({ workspace, scenario, state: externalCrash.state })) {
+      firstPipelineAttempt.exit = {
+        code: null,
+        signal: REAL_E2E_CRASH_SIGNAL,
+        timed_out: false,
+        rate_limit_timeout_extended: false,
+        rate_limit_timeout_extensions: 0,
+        harness_phase: 'cleanup',
+        actual_exit: actualInitialExit,
+      };
+    }
+  }
   let pipelineExit = firstPipelineAttempt.exit;
   let pipelineOutput = firstPipelineAttempt.output;
   let crashResume = null;
@@ -1201,8 +1364,7 @@ async function runProductionPipeline({ workspace, mode, scenario, resumeFromChec
     crashResume = {
       enabled: true,
       point: scenario.crashPoint || null,
-      expected_initial_exit_code: REAL_E2E_CRASH_EXIT_CODE,
-      expected_initial_signal: 'SIGTERM',
+      expected_initial_signal: REAL_E2E_CRASH_SIGNAL,
       initial_exit: firstPipelineAttempt.exit,
       initial_crash_observed: initialCrashObserved,
       external_crash: externalCrash.state,
@@ -1292,6 +1454,10 @@ async function main() {
     return resultRecord;
   };
   persist();
+  const uninstallTerminationHandler = installTerminationResultHandler({
+    persist,
+    resultRecordRef: () => resultRecord,
+  });
   try {
   if (args.help) {
     process.stdout.write(usage());
@@ -1488,6 +1654,7 @@ async function main() {
       ],
     });
   }
+  uninstallTerminationHandler();
   return runExitCode;
   } catch (error) {
     persist({
@@ -1496,6 +1663,8 @@ async function main() {
       errors: [...resultRecord.errors, runnerErrorRecord(error)],
     });
     throw error;
+  } finally {
+    uninstallTerminationHandler();
   }
 }
 

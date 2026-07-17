@@ -12,6 +12,7 @@ import {
   buildModuleBlockedTerminalResult,
   buildModuleErrorTerminalResult,
   buildModuleRateLimitedTerminalResult,
+  buildModuleTimedOutTerminalResult,
 } from '../terminal-results.ts';
 import { applyModuleRunnerCompletion } from '../completions.ts';
 
@@ -387,8 +388,13 @@ export async function handleFailedPollResult({
       },
     });
 
-  return { terminal: buildModuleBlockedTerminalResult(config, moduleId, {
-    reason: `Buster subagent crashed ${maxBusterCrashRetries + 1} times — infrastructure issue (not sent to Forge)`,
+  const terminalBuilder = reasonCode === 'timeout'
+    ? buildModuleTimedOutTerminalResult
+    : buildModuleBlockedTerminalResult;
+  return { terminal: terminalBuilder(config, moduleId, {
+    reason: reasonCode === 'timeout'
+      ? `${crashFailReason} after ${crashAttemptBudget} attempt${crashAttemptSuffix} — not sent to Forge`
+      : `Buster subagent crashed ${maxBusterCrashRetries + 1} times — infrastructure issue (not sent to Forge)`,
     runId: identity.runId,
     moduleDir: dir,
     attempt: failEvent.attempt,
@@ -396,5 +402,10 @@ export async function handleFailedPollResult({
     dispatchId: failEvent.dispatch_id,
     gatewayLabel: failEvent.gateway_label,
     sessionKey: identity.sessionKey,
+    metadata: {
+      buster_crash_retries_exhausted: true,
+      retry_attempts: maxBusterCrashRetries,
+      reason_code: reasonCode,
+    },
   }) };
 }

@@ -113,3 +113,31 @@ test('terminateSession aborts the kill workflow when grace expires', async () =>
   assert.equal(abortObserved, true);
   assert.equal(delayedSideEffectRan, false);
 });
+
+test('terminateSession can wait past grace for strict halt cleanup', async () => {
+  let observedSignal = null;
+
+  const result = await terminateSession('session:test', {
+    terminationPolicy: terminationPolicy(10),
+    killPolicy,
+    graceBounded: false,
+    killSession: async (_sessionKey, opts) => {
+      observedSignal = opts.signal;
+      assert.equal(opts.killPolicy.subagentConfirmTimeoutMs, killPolicy.subagentConfirmTimeoutMs);
+      assert.equal(opts.killPolicy.statusTimeoutMs, killPolicy.statusTimeoutMs);
+      await delay(30);
+      return {
+        requested: true,
+        confirmed: true,
+        state: 'stopped',
+        cleanupAttempted: false,
+      };
+    },
+  });
+
+  assert.equal(result.requested, true);
+  assert.equal(result.confirmed, true);
+  assert.equal(result.unconfirmed, false);
+  assert.equal(result.state, 'stopped');
+  assert.equal(observedSignal.aborted, false);
+});

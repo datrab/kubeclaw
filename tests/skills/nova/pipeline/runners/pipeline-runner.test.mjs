@@ -31,6 +31,11 @@ function testConfig(dir) {
         mutation_stale_ms: 1,
         abort_settle_ms: 0,
       },
+      lifecycle_append: {
+        stale_ms: 1000,
+        retry_count: 1,
+        retry_delay_ms: 1,
+      },
     },
   };
   Object.defineProperty(config, 'agent_observability', {
@@ -50,6 +55,65 @@ test('runPipeline releases the run lock when observer setup fails', async () => 
     /observer setup failed/,
   );
   assert.equal(fs.existsSync(lockPath), false);
+});
+
+test('runPipeline records typed runtime halt when Redis preflight fails after start', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-redis-preflight-'));
+  const config = {
+    project: 'pipeline-runner-test',
+    _runId: 'run-redis-preflight-fails',
+    run_id: 'run-redis-preflight-fails',
+    paths: { swarm_dir: dir },
+    locks: {
+      pipeline_run: {
+        lease_ms: 2000,
+        heartbeat_ms: 1000,
+        mutation_stale_ms: 1,
+        abort_settle_ms: 0,
+      },
+      lifecycle_append: {
+        stale_ms: 1000,
+        timeout_ms: 1000,
+        retry_count: 1,
+        retry_delay_ms: 1,
+      },
+    },
+    telemetry: { enabled: false },
+  };
+  const progress = { modules: {}, gates: {}, execution_order: [] };
+  const error = new Error('connect ECONNREFUSED 127.0.0.1:1');
+  error.code = 'ECONNREFUSED';
+
+  const exitCode = await runPipeline(config, progress, {
+    deps: {
+      pipelineRunner: {
+        preflightRuntimeRedis: async () => {
+          throw error;
+        },
+        output() {},
+        discord() {},
+        writeSummary() {
+          return {};
+        },
+      },
+    },
+  });
+
+  const lifecyclePath = path.join(dir, 'logs', 'pipeline', 'runs', 'run-redis-preflight-fails', 'lifecycle', 'canonical-events.jsonl');
+  const events = fs.readFileSync(lifecyclePath, 'utf8')
+    .trim()
+    .split('\n')
+    .map((line) => JSON.parse(line));
+  const halted = events.find((event) => event.type === 'pipeline_run.halted');
+
+  assert.equal(exitCode, 1);
+  assert.equal(events[0].type, 'pipeline_run.started');
+  assert.equal(halted?.refs?.run_id, 'run-redis-preflight-fails');
+  assert.equal(halted?.data?.step_type, 'pipeline');
+  assert.equal(halted?.data?.step_id, 'runtime_config');
+  assert.equal(halted?.data?.terminal_status, 'failed');
+  assert.equal(halted?.data?.terminal_decision?.reasonCode, 'econnrefused');
+  assert.equal(halted?.data?.terminal_decision?.source, 'pipeline:runtime_config');
 });
 
 function generatorDefinition(stageId, calls) {
@@ -73,6 +137,21 @@ function generatorDefinition(stageId, calls) {
       run: async () => {
         calls.push(stageId);
         if (typeof calls.inspect === 'function') calls.inspect(stageId);
+        if (calls.failStage === stageId) {
+          return {
+            schemaVersion: 'v1',
+            producerKind: 'generator',
+            producerType,
+            outputs: {
+              status: 'failed',
+              reason: `${stageId} timed out`,
+              failure_class: 'timeout',
+            },
+            diagnostics: {
+              failure_class: 'timeout',
+            },
+          };
+        }
         return {
           schemaVersion: 'v1',
           producerKind: 'generator',
@@ -379,13 +458,68 @@ test('completePipeline resumes missing terminal generators for completed runs', 
   });
 
   assert.equal(exitCode, 0);
-  assert.deepEqual(calls, ['generator:case_study', 'generator:pipeline_review']);
+  assert.deepEqual(calls, ['generator:pipeline_review', 'generator:case_study']);
   const saved = JSON.parse(fs.readFileSync(completionPath, 'utf8'));
   assert.deepEqual(saved.completed.map((entry) => entry.stage_id), [
     'generator:case_study',
     'generator:pipeline_review',
     'generator:project_summary',
   ]);
+});
+
+test('completePipeline repairs stale terminal artifacts for completed resumed runs', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-terminal-repair-'));
+  const calls = [];
+  const config = completedRunConfig(dir, calls);
+  const progress = { modules: {}, gates: {}, execution_order: [] };
+  const completionPath = path.join(
+    config.paths.swarm_dir,
+    'logs',
+    'pipeline',
+    'runs',
+    config._runId,
+    'terminal-generator-completions.json',
+  );
+  const latestPath = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'latest.json');
+  const runTelemetryPath = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId, 'pipeline.jsonl');
+
+  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
+  appendPipelineLifecycleEvent(config, 'pipeline_run.completed', {
+    progress,
+    result: { exit: 0, reason: 'PIPELINE_COMPLETE' },
+  });
+  fs.mkdirSync(path.dirname(completionPath), { recursive: true });
+  fs.writeFileSync(completionPath, JSON.stringify({
+    schemaVersion: 'v1',
+    project: config.project,
+    run_id: config._runId,
+    completed: [
+      { stage_id: 'generator:project_summary', completed_at: '2026-06-03T00:00:00.000Z' },
+      { stage_id: 'generator:pipeline_review', completed_at: '2026-06-03T00:00:00.000Z' },
+      { stage_id: 'generator:case_study', completed_at: '2026-06-03T00:00:00.000Z' },
+    ],
+  }, null, 2));
+  fs.mkdirSync(path.dirname(latestPath), { recursive: true });
+  fs.writeFileSync(latestPath, JSON.stringify({
+    run_id: config._runId,
+    pipeline_run_id: config._runId,
+    status: 'running',
+    terminal_status: null,
+  }, null, 2));
+  config._terminalGeneratorRunState = undefined;
+
+  const exitCode = await completePipeline(config, progress);
+
+  assert.equal(exitCode, 0);
+  assert.deepEqual(calls, []);
+  const latest = JSON.parse(fs.readFileSync(latestPath, 'utf8'));
+  assert.equal(latest.status, 'completed');
+  assert.equal(latest.terminal_status, 'succeeded');
+  const telemetryEvents = fs.readFileSync(runTelemetryPath, 'utf8')
+    .trim()
+    .split('\n')
+    .map((line) => JSON.parse(line));
+  assert.equal(telemetryEvents.some((event) => event.type === 'pipeline.completed'), true);
 });
 
 test('completePipeline does not run terminal generators after a persisted terminal halt', async () => {
@@ -446,7 +580,7 @@ test('completePipeline halts when configured final preview lacks final-buster UR
         },
       },
     },
-    execution_order: [],
+    execution_order: ['gate:final-buster'],
   };
 
   appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
@@ -481,7 +615,7 @@ test('completePipeline halts when configured final preview lacks final-buster UR
   assert.equal(outputs.at(-1).terminal_decision.reasonCode, 'final_preview_url_missing');
 });
 
-test('completePipeline writes terminal lifecycle and summary before terminal generators', async () => {
+test('completePipeline writes summary before terminal generators and completes after they pass', async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-terminal-order-'));
   const calls = [];
   const config = completedRunConfig(dir, calls);
@@ -500,7 +634,7 @@ test('completePipeline writes terminal lifecycle and summary before terminal gen
       'lifecycle',
       'read-models.json',
     ), 'utf8'));
-    assert.equal(readModels.pipeline.status, 'COMPLETED');
+    assert.notEqual(readModels.pipeline.status, 'COMPLETED');
     assert.equal(fs.existsSync(summaryPath), true);
   };
 
@@ -520,9 +654,113 @@ test('completePipeline writes terminal lifecycle and summary before terminal gen
   assert.equal(exitCode, 0);
   assert.deepEqual(calls.slice(), [
     'generator:project_summary',
+    'generator:pipeline_review',
     'generator:case_study',
+  ]);
+});
+
+test('completePipeline rechecks degraded evidence before recording clean completion', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-completion-discord-degraded-'));
+  const calls = [];
+  const outputs = [];
+  const config = completedRunConfig(dir, calls);
+  const progress = {
+    modules: {},
+    gates: {},
+    execution_order: [],
+    real_e2e: { execution_boundary: 'final-buster' },
+  };
+  const pipelineJsonl = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId, 'pipeline.jsonl');
+  calls.inspect = (stageId) => {
+    if (stageId !== 'generator:project_summary') return;
+    fs.mkdirSync(path.dirname(pipelineJsonl), { recursive: true });
+    fs.appendFileSync(pipelineJsonl, JSON.stringify({
+      v: 1,
+      type: 'observability.degraded',
+      run_id: config._runId,
+      project: config.project,
+      component: 'discord',
+      surface: 'webhook',
+      reason: 'webhook_delivery_failed',
+      detail: 'completion Discord delivery failed',
+    }) + '\n');
+  };
+
+  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
+  const exitCode = await completePipeline(config, progress, {
+    deps: {
+      pipelineRunner: {
+        writeSummary() {
+          return { failed: false };
+        },
+        output(payload) {
+          outputs.push(payload);
+        },
+      },
+    },
+  });
+
+  const lifecyclePath = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId, 'lifecycle', 'canonical-events.jsonl');
+  const events = fs.readFileSync(lifecyclePath, 'utf8')
+    .trim()
+    .split('\n')
+    .map((line) => JSON.parse(line));
+  const halted = events.find((event) => event.type === 'pipeline_run.halted');
+  const completed = events.find((event) => event.type === 'pipeline_run.completed');
+
+  assert.equal(exitCode, 1);
+  assert.deepEqual(calls.slice(), ['generator:project_summary']);
+  assert.equal(halted?.data?.step_type, 'pipeline');
+  assert.equal(halted?.data?.step_id, 'degraded_evidence');
+  assert.equal(halted?.data?.terminal_decision?.reasonCode, 'degraded_evidence_requires_handoff');
+  assert.equal(completed, undefined);
+  assert.equal(outputs[0].terminal_decision.reasonCode, 'degraded_evidence_requires_handoff');
+});
+
+test('completePipeline halts with generator timeout before recording clean completion', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-generator-timeout-'));
+  const calls = [];
+  calls.failStage = 'generator:pipeline_review';
+  const outputs = [];
+  const config = completedRunConfig(dir, calls);
+  const progress = { modules: {}, gates: {}, execution_order: [] };
+
+  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
+  const exitCode = await completePipeline(config, progress, {
+    deps: {
+      pipelineRunner: {
+        output(payload) {
+          outputs.push(payload);
+        },
+        writeSummary: () => ({}),
+      },
+    },
+  });
+
+  assert.equal(exitCode, 1);
+  assert.deepEqual(calls.slice(), [
+    'generator:project_summary',
     'generator:pipeline_review',
   ]);
+  const terminalOutput = outputs.find((payload) => payload?.terminal_status === 'timed_out' || payload?.terminal?.status === 'timed_out');
+  assert.ok(terminalOutput);
+  assert.equal(terminalOutput.step_type, 'generator');
+  assert.equal(terminalOutput.step_id, 'generator:pipeline_review');
+  assert.equal(terminalOutput.terminal_decision.reasonCode, 'timeout');
+
+  const readModels = JSON.parse(fs.readFileSync(path.join(
+    config.paths.swarm_dir,
+    'logs',
+    'pipeline',
+    'runs',
+    config._runId,
+    'lifecycle',
+    'read-models.json',
+  ), 'utf8'));
+  assert.equal(readModels.pipeline.status, 'HALTED');
+  assert.equal(readModels.pipeline.step_type, 'generator');
+  assert.equal(readModels.pipeline.step_id, 'generator:pipeline_review');
+  assert.equal(readModels.pipeline.terminal_status, 'timed_out');
 });
 
 test('completePipeline blocks clean E2E success when required Discord receipt is missing', async () => {
@@ -659,8 +897,8 @@ test('completePipeline accepts restored observability degraded evidence with mat
   assert.equal(exitCode, 0);
   assert.deepEqual(calls, [
     'generator:project_summary',
-    'generator:case_study',
     'generator:pipeline_review',
+    'generator:case_study',
   ]);
 });
 
@@ -839,8 +1077,8 @@ test('terminal generator completion cache is isolated by run id when config is r
   assert.equal(await completePipeline(config, progress, { deps }), 0);
   assert.deepEqual(calls, [
     'generator:project_summary',
-    'generator:case_study',
     'generator:pipeline_review',
+    'generator:case_study',
   ]);
 
   config._runId = 'run-b';
@@ -853,10 +1091,10 @@ test('terminal generator completion cache is isolated by run id when config is r
   assert.equal(await completePipeline(config, progress, { deps }), 0);
   assert.deepEqual(calls, [
     'generator:project_summary',
-    'generator:case_study',
     'generator:pipeline_review',
+    'generator:case_study',
     'generator:project_summary',
-    'generator:case_study',
     'generator:pipeline_review',
+    'generator:case_study',
   ]);
 });

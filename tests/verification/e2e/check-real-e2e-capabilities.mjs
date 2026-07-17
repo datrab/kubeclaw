@@ -12,7 +12,7 @@ const execFileAsync = promisify(execFile);
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(SCRIPT_DIR, '../../..');
 const OPENCLAW_CONFIG_PATH = process.env.OPENCLAW_CONFIG || '/home/node/.openclaw/openclaw.json';
-const DEFAULT_REAL_E2E_MODEL = 'gpt-5.4';
+const DEFAULT_REAL_E2E_MODEL = 'gpt-5.3-codex-spark';
 const DEFAULT_CONFIG_PROBE_PROJECT = 'pipeline-smoke-landing';
 
 function parseArgs(argv) {

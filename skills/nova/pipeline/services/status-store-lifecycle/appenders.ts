@@ -301,6 +301,7 @@ export function appendStaleRecoveryLifecycleEvent(config, {
   dir = null,
   attempt = null,
   recoveryTargetStatus = null,
+  recoveryTargetPhase = null,
   recoveryAction = null,
   reason = null,
   sessionKey = null,
@@ -339,6 +340,7 @@ export function appendStaleRecoveryLifecycleEvent(config, {
     refs,
     data: {
       recovery_target_status: selectPresentValue(recoveryTargetStatus, STALE_RECOVERY_TARGET_STATUS),
+      recovery_target_phase: selectDefinedValue(() => (recoveryTargetPhase), () => (null)),
       recovery_action: selectTruthyValue(() => (recoveryAction), () => (null)),
       reason: selectPresentValue(reason, STALE_RECOVERY_REASON),
       session_key: selectDefinedValue(() => (sessionKey), () => (null)),

@@ -46,6 +46,15 @@ function requireRef(value, label) {
   return value.trim();
 }
 
+function phaseIdentitySuffix(refs) {
+  const dispatchId = typeof refs?.dispatch_id === 'string' ? refs.dispatch_id.trim() : '';
+  const sessionKey = typeof refs?.session_key === 'string' ? refs.session_key.trim() : '';
+  if (dispatchId || sessionKey) {
+    return `|identity:${hashValue(stableStringify({ dispatch_id: dispatchId || null, session_key: sessionKey || null }))}`;
+  }
+  return '';
+}
+
 export function buildLifecycleIdempotencyKey(type, refs, data = {}) {
   const primaryRef = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (refs?.primary_ref?.id), () => (refs?.module_attempt_ref))), () => (refs?.run_ref))), () => (null));
   switch (type) {
@@ -58,11 +67,11 @@ export function buildLifecycleIdempotencyKey(type, refs, data = {}) {
     case 'pipeline.checkpoint':
       return `${type}|${requireRef(refs?.run_ref, 'run_ref')}|point:${slugify(data.point)}`;
     case 'module_attempt.started':
-      return `${type}|${requireRef(refs?.module_attempt_ref, 'module_attempt_ref')}|phase:start`;
+      return `${type}|${requireRef(refs?.module_attempt_ref, 'module_attempt_ref')}|phase:start${phaseIdentitySuffix(refs)}`;
     case 'module_attempt.ready_for_testing':
       return `${type}|${requireRef(refs?.module_attempt_ref, 'module_attempt_ref')}|phase:ready_for_testing`;
     case 'module_attempt.testing_started':
-      return `${type}|${requireRef(refs?.module_attempt_ref, 'module_attempt_ref')}|phase:testing_started`;
+      return `${type}|${requireRef(refs?.module_attempt_ref, 'module_attempt_ref')}|phase:testing_started${phaseIdentitySuffix(refs)}`;
     case 'module_attempt.failed': {
       const fingerprint = hashValue(stableStringify({
         reason: selectTruthyValue(() => (data.reason), () => (null)),

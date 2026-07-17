@@ -46,7 +46,7 @@ export function buildCompletionIdentityFields(payload = {}, extra = {}) {
   const attempt = normalizeIdentityValue(payload?.attempt);
   const dispatchId = normalizeIdentityValue(payload?.dispatch_id);
   const gateId = normalizeIdentityValue(payload?.gate_id);
-  const sessionKey = normalizeIdentityValue(selectDefinedValue(() => (extra.sessionKey), () => (null)));
+  const sessionKey = normalizeIdentityValue(selectDefinedValue(() => (extra.sessionKey), () => (payload?.session_key)));
   const completionKey = buildCompletionKey({ runId, attempt, dispatchId, sessionKey });
 
   return {

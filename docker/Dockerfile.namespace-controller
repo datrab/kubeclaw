@@ -1,16 +1,24 @@
 # =============================================================================
 # KubeClaw Namespace Controller
 # =============================================================================
-# Lightweight controller runtime for Buster namespace leases.
-FROM node:22-bookworm-slim
+# Lightweight Go controller runtime for Buster namespace leases.
+FROM golang:1.22-bookworm AS build
 
 WORKDIR /app
 
-COPY scripts/buster-namespace-controller.mjs /app/scripts/buster-namespace-controller.mjs
+COPY go.mod /app/go.mod
+COPY cmd/buster-namespace-controller /app/cmd/buster-namespace-controller
 
-USER node
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+  go build -trimpath -ldflags="-s -w" -o /out/buster-namespace-controller ./cmd/buster-namespace-controller
 
-CMD ["node", "/app/scripts/buster-namespace-controller.mjs"]
+FROM gcr.io/distroless/static-debian12:nonroot
+
+COPY --from=build /out/buster-namespace-controller /app/buster-namespace-controller
+
+USER nonroot:nonroot
+
+ENTRYPOINT ["/app/buster-namespace-controller"]
 
 LABEL org.opencontainers.image.title="KubeClaw Namespace Controller"
-LABEL org.opencontainers.image.description="Lightweight Buster namespace lease controller"
+LABEL org.opencontainers.image.description="Lightweight Go Buster namespace lease controller"

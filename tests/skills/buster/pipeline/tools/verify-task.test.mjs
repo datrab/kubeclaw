@@ -129,6 +129,50 @@ test('verifyAndPush commits scoped swarm artifact despite unrelated dirty repo f
   }
 });
 
+test('verifyAndPush with explicit Buster paths does not publish stale Forge completion', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'verify-task-buster-explicit-paths-'));
+  const remote = path.join(root, 'origin.git');
+  const repoRoot = path.join(root, 'repo');
+  const outputRel = 'Projects/demo/src/.swarm/modules/01/buster-output.json';
+  const forgeRel = 'Projects/demo/src/.swarm/modules/01/forge-completion.json';
+  const previousRepoRoot = process.env.REPO_ROOT;
+
+  try {
+    git(root, ['init', '--bare', 'origin.git']);
+    fs.mkdirSync(repoRoot);
+    git(repoRoot, ['init', '-b', 'main']);
+    git(repoRoot, ['config', 'user.email', 'test@example.invalid']);
+    git(repoRoot, ['config', 'user.name', 'Test User']);
+    fs.mkdirSync(path.dirname(path.join(repoRoot, outputRel)), { recursive: true });
+    fs.writeFileSync(path.join(repoRoot, 'README.md'), 'baseline\n');
+    fs.writeFileSync(path.join(repoRoot, outputRel), '{"status":"PENDING"}\n');
+    fs.writeFileSync(path.join(repoRoot, forgeRel), '{"status":"READY_FOR_TESTING","normalized":true}\n');
+    git(repoRoot, ['add', '.']);
+    git(repoRoot, ['commit', '-m', 'baseline']);
+    git(repoRoot, ['remote', 'add', 'origin', remote]);
+    git(repoRoot, ['push', '-u', 'origin', 'main']);
+
+    fs.writeFileSync(path.join(repoRoot, outputRel), '{"status":"PASS"}\n');
+    fs.writeFileSync(path.join(repoRoot, forgeRel), '{"status":"READY_FOR_TESTING"}\n');
+
+    process.env.REPO_ROOT = repoRoot;
+    const result = await verifyAndPush('buster', 'demo', {
+      commitMessage: '[BUSTER] scoped output only',
+      addPaths: [outputRel],
+    });
+
+    assert.equal(result.status, 'success');
+    assert.equal(result.action, 'pushed');
+    assert.equal(git(repoRoot, ['show', '--name-only', '--pretty=format:', 'HEAD']).trim(), outputRel);
+    assert.equal(git(repoRoot, ['show', `origin/main:${forgeRel}`]).trim(), '{"status":"READY_FOR_TESTING","normalized":true}');
+    assert.match(git(repoRoot, ['status', '--porcelain']), new RegExp(`^ ?M ${forgeRel}$`, 'm'));
+  } finally {
+    if (previousRepoRoot === undefined) delete process.env.REPO_ROOT;
+    else process.env.REPO_ROOT = previousRepoRoot;
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test('verifyAndPush rebases newer scoped Buster output over prior attempt output', async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'verify-task-buster-retry-rebase-'));
   const remote = path.join(root, 'origin.git');

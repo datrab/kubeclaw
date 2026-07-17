@@ -8,6 +8,7 @@ import {
   appendLifecycleEvent,
   applyGateCompletion,
   appendModuleLifecycleEvent,
+  appendStaleRecoveryLifecycleEvent,
   appendWaitLifecycleEvent,
   applyModuleCompletion,
   loadLifecycleReadModels,
@@ -382,6 +383,243 @@ test('module completion applies through lifecycle spine without requiring sessio
   assert.equal(events[2].refs.session_key, null);
   assert.equal(readModels.modules.alpha.status, 'PASS');
   assert.equal(readModels.modules.alpha.current_phase, null);
+});
+
+test('module phase lifecycle events project active session identity for crash resume', () => {
+  const config = makeConfig();
+  const dir = 'alpha';
+  const status = {
+    module_id: 'alpha',
+    title: 'Alpha',
+    status: 'IN_PROGRESS',
+    current_phase: 'forge',
+    fail_count: 0,
+    history: [],
+  };
+
+  appendModuleLifecycleEvent(config, dir, status, {
+    eventType: 'module_attempt.started',
+    oldStatus: 'PENDING',
+    newStatus: 'IN_PROGRESS',
+    phase: 'forge',
+    attempt: 1,
+    now: '2026-06-03T06:00:00.000Z',
+  });
+
+  status.status = 'TESTING';
+  status.current_phase = 'buster';
+  status.active_agent = {
+    dispatch_id: 'buster-dispatch-1',
+    session_key: 'buster-session-1',
+    gateway_label: 'buster-gateway-1',
+    model: 'gpt-test',
+  };
+
+  appendModuleLifecycleEvent(config, dir, status, {
+    eventType: 'module_attempt.testing_started',
+    oldStatus: 'READY_FOR_TESTING',
+    newStatus: 'TESTING',
+    phase: 'buster',
+    attempt: 1,
+    now: '2026-06-03T06:01:00.000Z',
+  });
+
+  let readModels = loadLifecycleReadModels(config);
+  assert.equal(readModels.modules.alpha.status, 'TESTING');
+  assert.equal(readModels.modules.alpha.current_phase, 'buster');
+  assert.equal(readModels.modules.alpha.dispatch_id, 'buster-dispatch-1');
+  assert.equal(readModels.modules.alpha.session_key, 'buster-session-1');
+  assert.equal(readModels.active_sessions.modules.alpha.dispatch_id, 'buster-dispatch-1');
+  assert.equal(readModels.active_sessions.modules.alpha.session_key, 'buster-session-1');
+  assert.equal(readModels.active_sessions.modules.alpha.phase, 'buster');
+
+  appendModuleLifecycleEvent(config, dir, { ...status, status: 'PASS', active_agent: null }, {
+    eventType: 'module_attempt.passed',
+    oldStatus: 'TESTING',
+    newStatus: 'PASS',
+    phase: null,
+    attempt: 1,
+    now: '2026-06-03T06:03:00.000Z',
+  });
+
+  readModels = loadLifecycleReadModels(config);
+  assert.equal(readModels.modules.alpha.status, 'PASS');
+  assert.equal(readModels.active_sessions.modules.alpha, undefined);
+});
+
+test('module phase lifecycle event without session clears prior active session', () => {
+  const config = makeConfig();
+  const dir = 'alpha';
+  const status = {
+    module_id: 'alpha',
+    title: 'Alpha',
+    status: 'IN_PROGRESS',
+    current_phase: 'forge',
+    fail_count: 0,
+    history: [],
+    active_agent: {
+      dispatch_id: 'forge-dispatch-1',
+      session_key: 'forge-session-1',
+      gateway_label: 'forge-gateway-1',
+    },
+  };
+
+  appendModuleLifecycleEvent(config, dir, status, {
+    eventType: 'module_attempt.started',
+    oldStatus: 'PENDING',
+    newStatus: 'IN_PROGRESS',
+    phase: 'forge',
+    attempt: 1,
+    now: '2026-06-03T06:00:00.000Z',
+  });
+  assert.equal(loadLifecycleReadModels(config).active_sessions.modules.alpha.session_key, 'forge-session-1');
+
+  status.status = 'TESTING';
+  status.current_phase = 'buster';
+  status.active_agent = null;
+  appendModuleLifecycleEvent(config, dir, status, {
+    eventType: 'module_attempt.testing_started',
+    oldStatus: 'READY_FOR_TESTING',
+    newStatus: 'TESTING',
+    phase: 'buster',
+    attempt: 1,
+    now: '2026-06-03T06:01:00.000Z',
+  });
+
+  const readModels = loadLifecycleReadModels(config);
+  assert.equal(readModels.modules.alpha.status, 'TESTING');
+  assert.equal(readModels.modules.alpha.current_phase, 'buster');
+  assert.equal(readModels.active_sessions.modules.alpha, undefined);
+});
+
+test('module phase lifecycle re-dispatch with identity supersedes identity-less checkpoint marker', () => {
+  const config = makeConfig();
+  const dir = 'alpha';
+  const status = {
+    module_id: 'alpha',
+    title: 'Alpha',
+    status: 'TESTING',
+    current_phase: 'buster',
+    fail_count: 0,
+    history: [],
+    active_agent: null,
+  };
+
+  appendModuleLifecycleEvent(config, dir, {
+    ...status,
+    status: 'IN_PROGRESS',
+    current_phase: 'forge',
+  }, {
+    eventType: 'module_attempt.started',
+    oldStatus: 'PENDING',
+    newStatus: 'IN_PROGRESS',
+    phase: 'forge',
+    attempt: 1,
+    now: '2026-06-03T06:00:00.000Z',
+  });
+
+  appendModuleLifecycleEvent(config, dir, status, {
+    eventType: 'module_attempt.testing_started',
+    oldStatus: 'READY_FOR_TESTING',
+    newStatus: 'TESTING',
+    phase: 'buster',
+    attempt: 1,
+    now: '2026-06-03T06:01:00.000Z',
+  });
+  assert.equal(loadLifecycleReadModels(config).active_sessions.modules.alpha, undefined);
+
+  status.active_agent = {
+    dispatch_id: 'buster-dispatch-2',
+    session_key: 'buster-session-2',
+    gateway_label: 'buster-gateway-2',
+    model: 'gpt-test',
+  };
+
+  const result = appendModuleLifecycleEvent(config, dir, status, {
+    eventType: 'module_attempt.testing_started',
+    oldStatus: 'READY_FOR_TESTING',
+    newStatus: 'TESTING',
+    phase: 'buster',
+    attempt: 1,
+    now: '2026-06-03T06:02:00.000Z',
+  });
+
+  const testingStartedEvents = readLifecycleEvents(config).filter((event) => event.type === 'module_attempt.testing_started');
+  const readModels = loadLifecycleReadModels(config);
+
+  assert.equal(result.deduped, false);
+  assert.equal(testingStartedEvents.length, 2);
+  assert.equal(testingStartedEvents[1].refs.dispatch_id, 'buster-dispatch-2');
+  assert.equal(readModels.modules.alpha.dispatch_id, 'buster-dispatch-2');
+  assert.equal(readModels.modules.alpha.session_key, 'buster-session-2');
+  assert.equal(readModels.active_sessions.modules.alpha.dispatch_id, 'buster-dispatch-2');
+  assert.equal(readModels.active_sessions.modules.alpha.session_key, 'buster-session-2');
+});
+
+test('stale Buster recovery can preserve dispatch-only polling authority', () => {
+  const config = makeConfig();
+  const dir = 'alpha';
+  const status = {
+    module_id: 'alpha',
+    title: 'Alpha',
+    status: 'TESTING',
+    current_phase: 'buster',
+    fail_count: 0,
+    history: [],
+    active_agent: {
+      dispatch_id: 'buster-dispatch-preserved',
+      session_key: 'buster-session-terminal',
+      gateway_label: 'buster-gateway-preserved',
+      model: 'gpt-test',
+      phase: 'buster',
+    },
+  };
+
+  appendModuleLifecycleEvent(config, dir, {
+    ...status,
+    status: 'IN_PROGRESS',
+    current_phase: 'forge',
+    active_agent: null,
+  }, {
+    eventType: 'module_attempt.started',
+    oldStatus: 'PENDING',
+    newStatus: 'IN_PROGRESS',
+    phase: 'forge',
+    attempt: 1,
+    now: '2026-06-03T06:00:00.000Z',
+  });
+
+  appendModuleLifecycleEvent(config, dir, status, {
+    eventType: 'module_attempt.testing_started',
+    oldStatus: 'READY_FOR_TESTING',
+    newStatus: 'TESTING',
+    phase: 'buster',
+    attempt: 1,
+    now: '2026-06-03T06:01:00.000Z',
+  });
+
+  appendStaleRecoveryLifecycleEvent(config, {
+    moduleId: 'alpha',
+    dir,
+    status,
+    attempt: 1,
+    recoveryTargetStatus: 'TESTING',
+    recoveryTargetPhase: 'buster',
+    recoveryAction: 'observed_terminal',
+    reason: 'Buster session terminal; keep Redis completion polling authority',
+    dispatchId: 'buster-dispatch-preserved',
+    sessionKey: null,
+    gatewayLabel: 'buster-gateway-preserved',
+    staleEvidence: { preserve_for_completion_polling: true },
+    occurredAt: '2026-06-03T06:02:00.000Z',
+  });
+
+  const readModels = loadLifecycleReadModels(config);
+  assert.equal(readModels.modules.alpha.status, 'TESTING');
+  assert.equal(readModels.modules.alpha.current_phase, 'buster');
+  assert.equal(readModels.modules.alpha.dispatch_id, 'buster-dispatch-preserved');
+  assert.equal(readModels.modules.alpha.session_key, 'buster-session-terminal');
+  assert.equal(readModels.active_sessions.modules.alpha, undefined);
 });
 
 test('gate completion applies through lifecycle spine with idempotent retry', () => {

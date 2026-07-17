@@ -168,6 +168,19 @@ export function buildModuleErrorTerminalResult(config: AnyRecord, moduleId: stri
   });
 }
 
+export function buildModuleTimedOutTerminalResult(config: AnyRecord, moduleId: string, options: AnyRecord = {}) {
+  return buildModuleHaltTerminalResult(config, moduleId, {
+    ...options,
+    outcome: PIPELINE_STEP_OUTCOMES.TIMEOUT,
+    issueType: 'environment',
+    terminalAction: PIPELINE_TERMINAL_ACTIONS.STOP,
+    metadata: {
+      ...(options.metadata || {}),
+      failure_class: 'timeout',
+    },
+  });
+}
+
 export function buildModuleNeedsNovaTerminalResult(config: AnyRecord, moduleId: string, options: AnyRecord = {}) {
   return buildModuleHaltTerminalResult(config, moduleId, {
     outcome: PIPELINE_STEP_OUTCOMES.NEEDS_NOVA,

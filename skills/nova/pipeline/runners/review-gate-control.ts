@@ -18,6 +18,7 @@ import {
 export const REVIEW_GATE_FAILURE_CLASSES = Object.freeze([
   'config_invalid',
   'invalid_contract',
+  'timeout',
   'rate_limit_exhausted',
   'review_failed',
   'classification_missing',
@@ -27,6 +28,7 @@ export const REVIEW_GATE_FAILURE_CLASSES = Object.freeze([
 const REVIEW_GATE_FAILURE_DECISIONS = Object.freeze({
   'config_invalid': { issueType: 'contract', outcomeClass: 'error' },
   'invalid_contract': { issueType: 'contract', outcomeClass: 'error' },
+  'timeout': { issueType: 'environment', outcomeClass: 'timeout' },
   'rate_limit_exhausted': { issueType: 'environment', outcomeClass: 'rate_limited' },
   'review_failed': { issueType: 'environment', outcomeClass: 'error' },
   'classification_missing': { issueType: 'contract', outcomeClass: 'error' },
@@ -36,6 +38,7 @@ const REVIEW_GATE_FAILURE_DECISIONS = Object.freeze({
 const REVIEW_GATE_FAILURE_FINDINGS = Object.freeze({
   'config_invalid': { code: 'REVIEW_GATE_CONFIG_INVALID', severity: 'critical', retryable: false, environmentIssue: false },
   'invalid_contract': { code: 'REVIEW_GATE_INVALID_CONTRACT', severity: 'critical', retryable: false, environmentIssue: false },
+  'timeout': { code: 'REVIEW_GATE_TIMEOUT', severity: 'error', retryable: true, environmentIssue: true },
   'rate_limit_exhausted': { code: 'REVIEW_GATE_RATE_LIMIT_EXHAUSTED', severity: 'error', retryable: true, environmentIssue: true },
   'review_failed': { code: 'REVIEW_GATE_REVIEW_FAILED', severity: 'error', retryable: true, environmentIssue: true },
   'classification_missing': { code: 'REVIEW_GATE_CLASSIFICATION_MISSING', severity: 'error', retryable: false, environmentIssue: false },
@@ -64,6 +67,9 @@ function reviewReason(result, fallback) {
 function buildReviewControlSummary(gateId, result = {}) {
   if (isReviewGatePassResult(result)) {
     return `Review gate '${gateId}' passed`;
+  }
+  if (selectTruthyValue(() => (result?.failure_class === 'timeout'), () => (result?.outcome_class === 'timeout'))) {
+    return reviewReason(result, `Review gate '${gateId}' timed out`);
   }
   if (selectTruthyValue(() => (result?.failure_class === 'rate_limit_exhausted'), () => (result?.outcome_class === 'rate_limited'))) {
     return reviewReason(result, `Review gate '${gateId}' exceeded max rate limit pauses`);

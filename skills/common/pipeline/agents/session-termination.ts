@@ -140,6 +140,7 @@ async function awaitWithGrace(promise: Promise<any>, graceMs: number, onGraceExp
 export async function terminateSession(childSessionKey: any, opts: AnyRecord = {}) {
   const policy = resolveSessionTerminationPolicy(opts);
   const graceMs = policy.graceMs;
+  const graceBounded = opts.graceBounded !== false;
   if (!childSessionKey) {
     return buildTerminationResult({
       sessionKey: null,
@@ -168,15 +169,17 @@ export async function terminateSession(childSessionKey: any, opts: AnyRecord = {
   const { killSession: _killSession, ...killOpts } = opts;
   const killPolicy = {
     ...(selectDefinedValue(() => (opts.killPolicy), () => ({}))),
-    acpConfirmTimeoutMs: graceMs,
-    subagentConfirmTimeoutMs: graceMs,
-    confirmPollMs: policy.confirmPollMs,
-    cleanupConfirmTimeoutMs: policy.cleanupConfirmTimeoutMs,
-    statusTimeoutMs: policy.statusTimeoutMs,
-    requestTimeoutMs: policy.requestTimeoutMs,
-    stopRequestTimeoutMs: policy.stopRequestTimeoutMs,
-    listTimeoutMs: policy.listTimeoutMs,
-    acpxTimeoutMs: policy.acpxTimeoutMs,
+    ...(graceBounded ? {
+      acpConfirmTimeoutMs: graceMs,
+      subagentConfirmTimeoutMs: graceMs,
+      confirmPollMs: policy.confirmPollMs,
+      cleanupConfirmTimeoutMs: policy.cleanupConfirmTimeoutMs,
+      statusTimeoutMs: policy.statusTimeoutMs,
+      requestTimeoutMs: policy.requestTimeoutMs,
+      stopRequestTimeoutMs: policy.stopRequestTimeoutMs,
+      listTimeoutMs: policy.listTimeoutMs,
+      acpxTimeoutMs: policy.acpxTimeoutMs,
+    } : {}),
   };
   const killPromise = Promise.resolve().then(() => killSessionFn(childSessionKey, {
     ...killOpts,
@@ -185,17 +188,21 @@ export async function terminateSession(childSessionKey: any, opts: AnyRecord = {
   }));
   killPromise.catch(() => {});
   try {
-    killResult = await awaitWithGrace(killPromise, graceMs, () => killController.abort('session_termination_grace_expired'));
-    if (killResult === GRACE_EXPIRED) {
-      return buildTerminationResult({
-        sessionKey: childSessionKey,
-        requested: false,
-        confirmed: false,
-        state: 'termination_grace_expired',
-        cleanupAttempted: false,
-        cleanupConfirmed: false,
-        graceMs,
-      });
+    if (graceBounded) {
+      killResult = await awaitWithGrace(killPromise, graceMs, () => killController.abort('session_termination_grace_expired'));
+      if (killResult === GRACE_EXPIRED) {
+        return buildTerminationResult({
+          sessionKey: childSessionKey,
+          requested: false,
+          confirmed: false,
+          state: 'termination_grace_expired',
+          cleanupAttempted: false,
+          cleanupConfirmed: false,
+          graceMs,
+        });
+      }
+    } else {
+      killResult = await killPromise;
     }
   } catch (error) {
     return buildTerminationResult({

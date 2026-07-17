@@ -509,9 +509,9 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
   // boundary was a legacy fallback and is intentionally deleted in Phase 3.
   const KNOWN_TOP_LEVEL_FIELDS = new Set([
     '_doc',
-    'project', 'repo_root', 'projects_root', 'paths', 'agents', 'fallback_model', 'gates',
+    'project', 'repo_root', 'projects_root', 'paths', 'agents', 'fallback_model', 'gates', 'run_id',
     'pipeline_defaults',
-    'acp_monitor', 'telemetry', 'case_study', 'arch_validation',
+    'acp_monitor', 'telemetry', 'case_study', 'pipeline_review', 'arch_validation',
     'agent_observability',
     'plugins', 'discord_alerts', 'pre_check', 'review_defaults', 'buster',
     'gateway', 'session', 'polling', 'locks', 'git', 'redis_completion', 'event_adapters', 'discord',

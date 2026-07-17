@@ -25,7 +25,7 @@ const semgrepConfigSourcePath = path.join(chartDir, 'files', 'config', '.semgrep
 const deployScriptPath = path.join(sourceRoot, 'scripts', 'deploy.sh');
 const setupScriptPath = path.join(sourceRoot, 'scripts', 'setup.sh');
 const setupSecretsScriptPath = path.join(sourceRoot, 'my-values', 'setup-secrets.sh');
-const busterNamespaceControllerScriptPath = path.join(sourceRoot, 'scripts', 'buster-namespace-controller.mjs');
+const busterNamespaceControllerSourcePath = path.join(sourceRoot, 'cmd', 'buster-namespace-controller', 'main.go');
 const dockerignorePath = path.join(sourceRoot, '.dockerignore');
 const gitignorePath = path.join(sourceRoot, '.gitignore');
 const tailscaleValuesPath = path.join(sourceRoot, 'my-values', 'infra', 'tailscale-operator-values.yaml');
@@ -398,7 +398,7 @@ const semgrepConfigSource = fs.readFileSync(semgrepConfigSourcePath, 'utf8');
 const deployScript = fs.readFileSync(deployScriptPath, 'utf8');
 const setupScript = fs.readFileSync(setupScriptPath, 'utf8');
 const setupSecretsScript = fs.readFileSync(setupSecretsScriptPath, 'utf8');
-const busterNamespaceControllerScript = fs.readFileSync(busterNamespaceControllerScriptPath, 'utf8');
+const busterNamespaceControllerSource = fs.readFileSync(busterNamespaceControllerSourcePath, 'utf8');
 const dockerignore = fs.readFileSync(dockerignorePath, 'utf8');
 const gitignore = fs.readFileSync(gitignorePath, 'utf8');
 const tailscaleValues = fs.readFileSync(tailscaleValuesPath, 'utf8');
@@ -635,33 +635,33 @@ assert.deepEqual(
   'Buster namespace controller must inherit imagePullSecrets for private GHCR pulls',
 );
 assertIncludes(
-  busterNamespaceControllerScript,
-  'function normalizeLeaseNamespaceName(requestedName)',
+  busterNamespaceControllerSource,
+  'func (c *controller) normalizeLeaseNamespaceName(requestedName string) string',
   'Buster namespace controller must normalize requested lease namespace names',
 );
 assertIncludes(
-  busterNamespaceControllerScript,
-  "if (allowedPrefixes.has('test')) return 'test';",
+  busterNamespaceControllerSource,
+  'if prefix == "test"',
   'Buster namespace controller must default unprefixed lease namespace requests to test-*',
 );
 assertIncludes(
-  busterNamespaceControllerScript,
-  '63 - prefix.length - 1',
+  busterNamespaceControllerSource,
+  '63 - len(prefix) - 1',
   'Buster namespace controller must keep normalized namespaces within the DNS label length limit',
 );
 assertIncludes(
-  busterNamespaceControllerScript,
+  busterNamespaceControllerSource,
   'BUSTER_ADDITIONAL_RUNNER_SERVICE_ACCOUNTS',
   'Buster namespace controller must read additional runner ServiceAccounts from explicit broker config',
 );
 assertIncludes(
-  busterNamespaceControllerScript,
-  'function parseServiceAccountRefs(value)',
+  busterNamespaceControllerSource,
+  'func (c *controller) parseServiceAccountRefs(value string)',
   'Buster namespace controller must validate additional runner ServiceAccount references',
 );
 assertIncludes(
-  busterNamespaceControllerScript,
-  '...additionalRunnerServiceAccounts.map',
+  busterNamespaceControllerSource,
+  'for _, account := range c.additionalRunnerAccounts',
   'Buster namespace controller must bind additional runner ServiceAccounts in broker-created namespaces',
 );
 assert.equal(
@@ -1217,9 +1217,13 @@ for (const [label, dockerfile] of [
   assertIncludes(dockerfile, '/opt/openclaw-plugin-home', `${label} must expose the baked OpenClaw plugin home cache for init seeding`);
   assertIncludes(dockerfile, '.kubeclaw-plugin-cache-version', `${label} must write a baked plugin cache version stamp for incremental init seeding`);
 }
-assertIncludes(namespaceControllerDockerfile, 'FROM node:22-bookworm-slim', 'Namespace controller Dockerfile must use a lightweight Node image');
-assertIncludes(namespaceControllerDockerfile, 'COPY scripts/buster-namespace-controller.mjs /app/scripts/buster-namespace-controller.mjs', 'Namespace controller Dockerfile must package the namespace controller entrypoint');
-assertIncludes(namespaceControllerDockerfile, 'USER node', 'Namespace controller Dockerfile must run as the non-root node user');
+assertIncludes(imageBuildWorkflow, "cmd/buster-namespace-controller/**", 'Image-build workflow must rebuild the namespace controller image when Go controller source changes');
+assertIncludes(namespaceControllerDockerfile, 'FROM golang:1.22-bookworm AS build', 'Namespace controller Dockerfile must compile the Go controller in a dedicated build stage');
+assertIncludes(namespaceControllerDockerfile, 'go build -trimpath -ldflags="-s -w"', 'Namespace controller Dockerfile must build a stripped Go binary');
+assertIncludes(namespaceControllerDockerfile, 'FROM gcr.io/distroless/static-debian12:nonroot', 'Namespace controller Dockerfile must use a minimal non-root runtime image');
+assertIncludes(namespaceControllerDockerfile, 'COPY --from=build /out/buster-namespace-controller /app/buster-namespace-controller', 'Namespace controller Dockerfile must package the compiled controller binary');
+assertIncludes(namespaceControllerDockerfile, 'USER nonroot:nonroot', 'Namespace controller Dockerfile must run as a non-root user');
+assertIncludes(namespaceControllerDockerfile, 'ENTRYPOINT ["/app/buster-namespace-controller"]', 'Namespace controller Dockerfile must use the compiled controller binary as entrypoint');
 assert.equal(
   namespaceControllerDockerfile.includes('ghcr.io/openclaw/openclaw'),
   false,
@@ -1228,10 +1232,12 @@ assert.equal(
 assertIncludes(sandboxDockerfile, 'RUN npm install -g lighthouse serve playwright', 'Sandbox Dockerfile must fail closed when browser test tool installation fails');
 assertLine(dockerignore, '**', 'Docker build context must default-deny repository files');
 assertLine(dockerignore, '!docker/Dockerfile.namespace-controller', 'Docker build context must include the namespace controller Dockerfile');
+assertLine(dockerignore, '!go.mod', 'Docker build context must include the Go module file');
+assertLine(dockerignore, '!cmd/buster-namespace-controller/**', 'Docker build context must include the Go namespace controller source');
 assert.equal(dockerignore.includes('!skills/'), false, 'Docker build context must not include agent skills; code bundles own /app/skills');
 assert.equal(dockerignore.includes('!skills/**'), false, 'Docker build context must not include agent skills recursively; code bundles own /app/skills');
 assertLine(dockerignore, '!plugins/openclaw-agent-observer/**', 'Docker build context must include observer plugin source');
-assertLine(dockerignore, '!scripts/buster-namespace-controller.mjs', 'Docker build context must include the namespace controller entrypoint');
+assert.equal(dockerignore.includes('!scripts/buster-namespace-controller.mjs'), false, 'Docker build context must not include the removed JS namespace controller');
 assertLine(dockerignore, 'my-values/', 'Docker build context must exclude deployment values');
 assertLine(dockerignore, '.swarm/', 'Docker build context must exclude local swarm logs and state');
 assertLine(dockerignore, 'worktrees/', 'Docker build context must exclude local worktrees');

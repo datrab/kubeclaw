@@ -13,7 +13,7 @@ Document the current GitHub Actions workflow for runtime images and agent skill 
 
 - pushes to `main` that touch durable image inputs such as `docker/**`,
   `plugins/openclaw-agent-observer/**`, or
-  `scripts/buster-namespace-controller.mjs`
+  `cmd/buster-namespace-controller/**`
 - daily schedule at `03:00 UTC`
 - manual `workflow_dispatch`
 
@@ -40,7 +40,7 @@ Open issue: the scheduled base-image check inspects `ghcr.io/openclaw/openclaw:2
 ## Build Inputs and Outputs
 
 The workflow rebuilds runtime images when Dockerfiles, baked plugin source, or
-the Buster namespace controller script change on `main`. It does not rebuild
+the Buster namespace controller Go source changes on `main`. It does not rebuild
 images for `skills/**` changes; those are delivered through skill bundles. It
 does not run on documentation-only changes. Manual runs can force a rebuild
 with `workflow_dispatch.force_rebuild`, although the build job condition already
@@ -67,7 +67,7 @@ Those assets contain the effective `/app/skills` tree, not a second runtime layo
 | --- | --- | --- | --- | --- |
 | `kubeclaw-general` | `docker/Dockerfile.general` | Nova/Forge/Echo style agents through `my-values/nova-values.yaml` | OpenClaw base image, TypeScript/lint tooling, Python lint tools, Semgrep, hadolint, kubeconform, kubectl, Helm, observer plugin, baked `@openclaw/acpx` and `@openclaw/discord` npm cache | deployment truth checks the workflow still builds from `docker/Dockerfile.general`; Dockerfile install commands fail closed; agent skills are excluded from the image |
 | `kubeclaw-sandbox` | `docker/Dockerfile.sandbox` | Buster through `my-values/buster-values.yaml` | Podman/buildah, Playwright/Chromium, Lighthouse, k6, nginx, sandbox helpers, observer plugin, baked `@openclaw/acpx` and `@openclaw/discord` npm cache | deployment truth checks sandbox image, privileged runtime, Podman storage, resource bounds, Buster container split, and that agent skills are excluded from the image |
-| `kubeclaw-namespace-controller` | `docker/Dockerfile.namespace-controller` | Buster namespace controller through `busterNamespaceBroker.controller.image.*` | `node:22-bookworm-slim`, `scripts/buster-namespace-controller.mjs`, non-root `node` user | deployment truth checks the controller does not inherit the OpenClaw runtime image and live verification preflights its pull path |
+| `kubeclaw-namespace-controller` | `docker/Dockerfile.namespace-controller` | Buster namespace controller through `busterNamespaceBroker.controller.image.*` | Go build stage, distroless non-root runtime, `/app/buster-namespace-controller` | deployment truth checks the controller does not inherit the OpenClaw runtime image and live verification preflights its pull path |
 | `kubeclaw-prism-preview` | `docker/Dockerfile.prism-preview` | Nova Prism preview sidecar in `my-values/nova-values.yaml` | `node:20-alpine`, `serve`, `/designs`, port `3456` | Helm render proves the sidecar mount and port; live preview behavior depends on files under workspace `prism/designs` |
 
 ## Skill Bundle Contract

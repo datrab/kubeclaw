@@ -74,7 +74,7 @@ const SCENARIOS = Object.freeze({
   }),
   'forge-malformed-output': Object.freeze({
     id: 'forge-malformed-output',
-    description: 'Deterministic real E2E publisher writes malformed Forge completion output and Nova rejects the artifact contract.',
+    description: 'Deterministic real E2E publisher writes malformed Forge completion output, Nova rejects attempt 1, and retry recovery preserves the rejection evidence.',
     expectedPipelineExit: 'nonzero',
     approvalDecision: null,
     expectedEvidence: 'forge_malformed_output',
@@ -151,8 +151,8 @@ const SCENARIOS = Object.freeze({
   }),
   'discord-unavailable': Object.freeze({
     id: 'discord-unavailable',
-    description: 'Real Discord delivery failure records degraded observability while the product pipeline remains authoritative.',
-    expectedPipelineExit: 'zero',
+    description: 'Real Discord delivery failure records degraded observability and blocks clean completion until operator handoff.',
+    expectedPipelineExit: 'nonzero',
     approvalDecision: 'approve',
     expectedEvidence: 'discord_unavailable',
   }),
@@ -235,7 +235,7 @@ const SCENARIOS = Object.freeze({
   }),
   'pipeline-review-timeout': Object.freeze({
     id: 'pipeline-review-timeout',
-    description: 'Real pipeline review timeout records degraded terminal evidence without invalidating upstream final review artifacts.',
+    description: 'Real pipeline review timeout halts with a typed terminal generator timeout without invalidating upstream final review artifacts.',
     expectedPipelineExit: 'nonzero',
     approvalDecision: 'approve',
     expectedEvidence: 'pipeline_review_timeout',
@@ -454,6 +454,8 @@ const FAILURE_MATRIX_SUITE_BOUNDARIES = Object.freeze({
   'human-gates': Object.freeze({
     default: 'module-review',
     cases: Object.freeze({
+      'approval-deny': 'full',
+      'approval-timeout-block': 'full',
       'final-review-timeout': 'full',
       'pipeline-review-timeout': 'full',
     }),
@@ -466,10 +468,22 @@ const FAILURE_MATRIX_SUITE_BOUNDARIES = Object.freeze({
       'architecture-validator-block': 'modules',
       'pipeline-cancelled': 'modules',
       'redis-unavailable': 'modules',
+      'discord-unavailable': 'final-buster',
     }),
   }),
   'module-graph': Object.freeze({ default: 'modules' }),
-  'crash-resume': Object.freeze({ default: 'full' }),
+  'crash-resume': Object.freeze({
+    default: 'full',
+    cases: Object.freeze({
+      'crash-before-buster-handoff': 'modules',
+      'crash-after-buster-task-enqueue': 'modules',
+      'crash-during-buster-wait': 'modules',
+      'crash-after-failed-gate-before-retry': 'modules',
+      'crash-during-git-operation': 'modules',
+      'crash-after-final-review-before-summary': 'final-review',
+      'crash-during-cleanup': 'final-review',
+    }),
+  }),
 });
 
 export function failureMatrixExecutionBoundary({ suite = null, scenario = null } = {}) {
@@ -477,6 +491,21 @@ export function failureMatrixExecutionBoundary({ suite = null, scenario = null }
   const scenarioId = typeof scenario === 'string' ? scenario : scenario?.id;
   const boundary = FAILURE_MATRIX_SUITE_BOUNDARIES[suiteId || ''];
   return boundary?.cases?.[scenarioId || ''] || boundary?.default || 'full';
+}
+
+const FULL_GRAPH_SCENARIOS = Object.freeze(new Set([
+  'success',
+  'multi-module-independent-success',
+  'multi-module-dependent-success',
+  'multi-module-dependency-blocked',
+]));
+
+export function realE2EScenarioModuleIds(scenario = null) {
+  const scenarioId = typeof scenario === 'string' ? scenario : scenario?.id;
+  if (FULL_GRAPH_SCENARIOS.has(scenarioId || '')) {
+    return Object.freeze(['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
+  }
+  return Object.freeze(['01-nginx']);
 }
 
 export const DEFAULT_CHECKPOINT_FIXTURE_FAMILY = 'standard-4-module';
@@ -487,7 +516,7 @@ const SCENARIO_REQUIRED_HOOKS = Object.freeze({
 
   'buster-module-failure': 'pre-module-buster',
   'buster-module-infra-failure': 'pre-module-buster',
-  'buster-invalid-completion-identity': 'during-module-buster-wait',
+  'buster-invalid-completion-identity': 'pre-module-buster',
   'buster-module-timeout': 'pre-module-buster',
   'retry-budget-exhausted': 'pre-module-buster',
   'retry-fix-malformed-output': 'pre-forge',
@@ -767,6 +796,81 @@ function setupPathSuffixFailures(source, expected = {}) {
 }
 
 const SETUP_CONTRACTS = Object.freeze({
+  'approval-deny': Object.freeze({
+    progress: Object.freeze({
+      'execution_order.0': 'gate:operator-approval',
+      'real_e2e.approval_before_modules': true,
+    }),
+  }),
+  'approval-timeout-block': Object.freeze({
+    progress: Object.freeze({
+      'execution_order.0': 'gate:operator-approval',
+      'real_e2e.approval_before_modules': true,
+    }),
+  }),
+  'buster-module-failure': Object.freeze({
+    progress: Object.freeze({
+      'modules.01-nginx.test_config.unit.test_cmd': failUnitCommand('REAL_E2E_EXPECTED_BUSTER_MODULE_FAILURE'),
+    }),
+  }),
+  'needs-nova-code-failure': Object.freeze({
+    progress: Object.freeze({
+      'modules.01-nginx.test_config.unit.test_cmd': failUnitCommand('REAL_E2E_EXPECTED_NEEDS_NOVA_CODE_FAILURE'),
+    }),
+  }),
+  'retry-budget-exhausted': Object.freeze({
+    progress: Object.freeze({
+      'modules.01-nginx.max_fails': 2,
+      'modules.01-nginx.auto_retry_threshold': 1,
+      'modules.01-nginx.test_config.unit.test_cmd': failUnitCommand('REAL_E2E_EXPECTED_RETRY_BUDGET_EXHAUSTED'),
+    }),
+  }),
+  'retry-fix-malformed-output': Object.freeze({
+    progress: Object.freeze({
+      'modules.01-nginx.max_fails': 3,
+      'modules.01-nginx.auto_retry_threshold': 1,
+      'modules.01-nginx.timeout_minutes': Number(process.env.REAL_E2E_RETRY_FIX_MALFORMED_TIMEOUT_MINUTES || 15),
+      'modules.01-nginx.test_config.unit.test_cmd': failOnceUnitCommand(),
+    }),
+  }),
+  'retry-buster-pass-echo-rejects': Object.freeze({
+    progress: Object.freeze({
+      'modules.01-nginx.max_fails': 2,
+      'modules.01-nginx.auto_retry_threshold': 1,
+      'modules.01-nginx.test_config.unit.test_cmd': failOnceUnitCommand(),
+      'gates.module-review.primary_reviewer': 'echo-codex',
+      'gates.module-review.instructions_file': 'echo-review/MODULE-REVIEW-REJECT-INSTRUCTIONS.md',
+      'gates.module-review.output_file': 'logs/echo-review/MODULE-REVIEW.json',
+    }),
+    swarm_file_exact_line: Object.freeze({
+      'echo-review/MODULE-REVIEW-REJECT-INSTRUCTIONS.md': 'This is the canonical retry-buster-pass-echo-rejects fixture: return status "FAIL" with at least one critical issue after confirming the module retry recovered and reached module review.',
+    }),
+  }),
+  'forge-malformed-output': Object.freeze({
+    progress: Object.freeze({
+      'modules.01-nginx.timeout_minutes': Number(process.env.REAL_E2E_FORGE_MALFORMED_TIMEOUT_MINUTES || 15),
+    }),
+  }),
+  'architecture-validator-block': Object.freeze({
+    progress: Object.freeze({
+      'execution_order.0': 'REAL_E2E_EXPECTED_ARCH_VALIDATOR_UNKNOWN_MODULE',
+    }),
+  }),
+  'echo-malformed-output': Object.freeze({
+    progress: Object.freeze({
+      'gates.module-review.timeout_minutes': Number(process.env.REAL_E2E_ECHO_MALFORMED_TIMEOUT_MINUTES || 0.1),
+    }),
+  }),
+  'buster-invalid-completion-identity': Object.freeze({
+    progress: Object.freeze({
+      'modules.01-nginx.timeout_minutes': Number(process.env.REAL_E2E_BUSTER_IDENTITY_FAILURE_TIMEOUT_MINUTES || 1),
+    }),
+  }),
+  'buster-gate-failure': Object.freeze({
+    progress: Object.freeze({
+      'gates.final-buster.test_config.unit.test_cmd': failUnitCommand('REAL_E2E_EXPECTED_BUSTER_GATE_FAILURE'),
+    }),
+  }),
   'namespace-lease-denied': Object.freeze({
     progress: Object.freeze({
       'gates.final-buster.test_config.k8s.namespace_prefix': 'prod',
@@ -791,7 +895,7 @@ const SETUP_CONTRACTS = Object.freeze({
     progress: Object.freeze({
       'gates.final-buster.test_config.k8s.ready_timeout_seconds': 30,
     }),
-    file_exact_line: Object.freeze({
+    source_file_exact_line: Object.freeze({
       'k8s/deployment.yaml': '              path: /real-e2e-intentional-not-ready',
     }),
   }),
@@ -807,6 +911,12 @@ const SETUP_CONTRACTS = Object.freeze({
       'plugins.modules.builtin.generator.project_summary.enabled': false,
     }),
   }),
+  'redis-unavailable': Object.freeze({
+    progress: Object.freeze({
+      'real_e2e.intentional_config_failure.component': 'redis',
+      'real_e2e.intentional_config_failure.error_code': 'REDIS_CONNECTION_UNAVAILABLE',
+    }),
+  }),
   'registry-pull-failure': Object.freeze({
     progress_path_suffix: Object.freeze({
       'gates.final-buster.test_config.k8s.dockerfile': '/Dockerfile.real-e2e-missing-base',
@@ -815,8 +925,42 @@ const SETUP_CONTRACTS = Object.freeze({
     progress_absent: Object.freeze([
       'gates.final-buster.test_config.k8s.source_image',
     ]),
-    file_exact_line: Object.freeze({
+    source_file_exact_line: Object.freeze({
       'Dockerfile.real-e2e-missing-base': 'FROM registry-local.kubeclaw.svc.cluster.local:5001/real-e2e-intentional-missing-base:never',
+    }),
+  }),
+  'forge-timeout': Object.freeze({
+    progress: Object.freeze({
+      'modules.01-nginx.timeout_minutes': Number(process.env.REAL_E2E_FORGE_TIMEOUT_MINUTES || 0.001),
+    }),
+  }),
+  'buster-module-timeout': Object.freeze({
+    progress: Object.freeze({
+      'modules.01-nginx.timeout_minutes': Number(process.env.REAL_E2E_BUSTER_MODULE_TIMEOUT_MINUTES || 0.001),
+    }),
+  }),
+  'echo-gate-timeout': Object.freeze({
+    progress: Object.freeze({
+      'gates.module-review.timeout_minutes': Number(process.env.REAL_E2E_ECHO_GATE_TIMEOUT_MINUTES || 0.001),
+    }),
+  }),
+  'final-review-timeout': Object.freeze({
+    progress: Object.freeze({
+      'gates.final-review.timeout_minutes': Number(process.env.REAL_E2E_FINAL_REVIEW_TIMEOUT_MINUTES || 0.001),
+    }),
+  }),
+  'pipeline-review-timeout': Object.freeze({
+    config: Object.freeze({
+      'pipeline_review.timeout_minutes': Number(process.env.REAL_E2E_PIPELINE_REVIEW_TIMEOUT_MINUTES || 0.001),
+    }),
+  }),
+  'multi-module-dependency-blocked': Object.freeze({
+    progress: Object.freeze({
+      'modules.01-nginx.max_fails': 1,
+      'modules.01-nginx.test_config.unit.test_cmd': failUnitCommand('REAL_E2E_EXPECTED_MULTI_MODULE_DEPENDENCY_BLOCKED'),
+      'modules.02-nginx.depends_on.0': '01-nginx',
+      'real_e2e.multi_module.modules.0': '01-nginx',
+      'real_e2e.multi_module.modules.1': '02-nginx',
     }),
   }),
 });
@@ -826,7 +970,24 @@ export function realE2EScenarioSetupContract(scenarioId) {
   return SETUP_CONTRACTS[scenario.id] || Object.freeze({});
 }
 
-export function validateRealE2EScenarioSetup({ progress, config = {}, projectSrc, scenarioId }) {
+function setupFileLineFailures({ rootDir, contract, label }) {
+  const failures = [];
+  for (const [relativePath, expectedLine] of Object.entries(contract || {})) {
+    const filePath = rootDir ? path.join(rootDir, relativePath) : null;
+    const text = filePath && fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : null;
+    const lines = text == null ? [] : text.split(/\r?\n/);
+    if (!lines.includes(expectedLine)) {
+      failures.push({
+        field: `${label}:${relativePath}`,
+        expected_line: expectedLine,
+        actual: text == null ? null : 'present_without_expected_line',
+      });
+    }
+  }
+  return failures;
+}
+
+export function validateRealE2EScenarioSetup({ progress, config = {}, projectSrc, swarmDir, scenarioId }) {
   const scenario = requireScenario(scenarioId);
   const baseExpected = {
     'real_e2e.scenario_id': scenario.id,
@@ -843,18 +1004,8 @@ export function validateRealE2EScenarioSetup({ progress, config = {}, projectSrc
     ...setupPathSuffixFailures(progress, contract.progress_path_suffix || {}),
     ...setupPathSuffixFailures(config, contract.config_path_suffix || {}),
   ];
-  for (const [relativePath, expectedLine] of Object.entries(contract.file_exact_line || {})) {
-    const filePath = path.join(projectSrc, relativePath);
-    const text = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : null;
-    const lines = text == null ? [] : text.split(/\r?\n/);
-    if (!lines.includes(expectedLine)) {
-      failures.push({
-        field: `file:${relativePath}`,
-        expected_line: expectedLine,
-        actual: text == null ? null : 'present_without_expected_line',
-      });
-    }
-  }
+  failures.push(...setupFileLineFailures({ rootDir: projectSrc, contract: contract.source_file_exact_line, label: 'source_file' }));
+  failures.push(...setupFileLineFailures({ rootDir: swarmDir, contract: contract.swarm_file_exact_line, label: 'swarm_file' }));
   if (failures.length > 0) {
     const error = new Error(`real E2E scenario setup contract failed for ${scenario.id}`);
     error.failures = failures;
@@ -1132,7 +1283,7 @@ export function applyRealE2EScenario(progress, scenarioId) {
     const gate = next.gates?.['module-review'];
     if (!gate) throw new Error('real E2E progress must define module-review gate');
     gate.primary_reviewer = 'echo-codex';
-    gate.instructions_file = 'echo-review/MODULE-REVIEW-INSTRUCTIONS.md';
+    gate.instructions_file = 'echo-review/MODULE-REVIEW-REJECT-INSTRUCTIONS.md';
     gate.output_file = 'logs/echo-review/MODULE-REVIEW.json';
   }
 
@@ -1160,7 +1311,7 @@ export function applyRealE2EScenario(progress, scenarioId) {
 
   if (scenario.id === 'buster-invalid-completion-identity') {
     const mod = moduleConfig(next);
-    mod.timeout_minutes = Number(process.env.REAL_E2E_BUSTER_IDENTITY_FAILURE_TIMEOUT_MINUTES || 0.1);
+    mod.timeout_minutes = Number(process.env.REAL_E2E_BUSTER_IDENTITY_FAILURE_TIMEOUT_MINUTES || 1);
   }
 
   if (scenario.id === 'buster-gate-failure') {
@@ -1244,13 +1395,6 @@ export function applyRealE2EScenario(progress, scenarioId) {
     gate.timeout_minutes = Number(process.env.REAL_E2E_FINAL_REVIEW_TIMEOUT_MINUTES || 0.001);
   }
 
-  if (scenario.id === 'pipeline-review-timeout') {
-    next.pipeline_review = {
-      ...(next.pipeline_review || {}),
-      timeout_minutes: Number(process.env.REAL_E2E_PIPELINE_REVIEW_TIMEOUT_MINUTES || 0.001),
-    };
-  }
-
   if (scenario.id === 'multi-module-independent-success') {
     configureSecondModule(next);
   }
@@ -1312,6 +1456,13 @@ export function applyRealE2EConfigScenario(config, scenarioId) {
         redisPort: 1,
         redisNetworkIsolation: 'isolated',
       },
+    };
+  }
+
+  if (scenario.id === 'pipeline-review-timeout') {
+    next.pipeline_review = {
+      ...(next.pipeline_review || {}),
+      timeout_minutes: Number(process.env.REAL_E2E_PIPELINE_REVIEW_TIMEOUT_MINUTES || 0.001),
     };
   }
 

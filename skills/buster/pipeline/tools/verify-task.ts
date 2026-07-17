@@ -22,6 +22,7 @@ type AnyRecord = Record<string, any>;
 
 interface VerifyOptions {
   commitMessage?: string;
+  addPaths?: string[];
 }
 
 interface VerifyResult {
@@ -86,6 +87,26 @@ function requireNonEmptyString(value: unknown, field: string): string {
 
 function uniqueFiles(files: string[]): string[] {
   return [...new Set(files.map(normalizeGitPath).filter(Boolean))];
+}
+
+function normalizeExplicitAddPaths(addPaths: unknown, projectRoot: string, swarmRoot: string): string[] {
+  if (addPaths === undefined || addPaths === null) return [swarmRoot];
+  if (!Array.isArray(addPaths) || addPaths.length === 0) {
+    throw new Error('verifyAndPush addPaths must be a non-empty array when provided');
+  }
+  const normalized = uniqueFiles(addPaths.map((entry) => stringValue(entry).trim()));
+  if (normalized.length !== addPaths.length) {
+    throw new Error('verifyAndPush addPaths must not contain empty or duplicate paths');
+  }
+  for (const file of normalized) {
+    if (!isGitPathInside(file, projectRoot)) {
+      throw new Error(`verifyAndPush addPath is outside project scope: ${file}`);
+    }
+    if (!isGitPathInside(file, swarmRoot)) {
+      throw new Error(`verifyAndPush addPath is outside swarm scope: ${file}`);
+    }
+  }
+  return normalized;
 }
 
 export function parsePorcelainStatusPaths(statusOut: string): string[] {
@@ -168,6 +189,7 @@ async function verifyAndPush(agentRole: string, currentProject: string, opts: Ve
   const { project, projectRoot, swarmRoot } = buildSwarmScope(currentProject);
 
   const commitMessage = requireNonEmptyString(opts.commitMessage, 'commit message');
+  const explicitAddPaths = normalizeExplicitAddPaths(opts.addPaths, projectRoot, swarmRoot);
 
   log(`[Verify] Validating swarm-scoped task for agent: '${agentName}' in project: '${project}'`);
 
@@ -278,12 +300,13 @@ async function verifyAndPush(agentRole: string, currentProject: string, opts: Ve
       info: (_scope: unknown, msg: string) => log(msg),
     };
     const gitPushPolicy = loadBusterGitPushPolicy();
+    gitExec(repoRoot, ['reset'], { stdio: 'ignore' } as AnyRecord);
     const { hash: commitHash, pushed } = await gitPushWithRetry(repoRoot, currentBranch, {
       logger: gitLogger,
       maxAttempts: gitPushPolicy.maxAttempts,
       retryDelayMs: gitPushPolicy.retryDelayMs,
       commitMessage,
-      addPaths: [swarmRoot],
+      addPaths: explicitAddPaths,
     });
 
     if (!pushed) {

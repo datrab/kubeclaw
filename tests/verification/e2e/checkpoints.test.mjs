@@ -159,7 +159,7 @@ test('scenario checkpoint contracts cover all matrix scenarios without sentinel 
 
   assert.equal(checkpointForScenario('buster-module-failure'), 'pre-module-buster');
   assert.equal(checkpointForScenario('retry-budget-exhausted'), 'pre-module-buster');
-  assert.equal(checkpointForScenario('buster-invalid-completion-identity'), 'during-module-buster-wait');
+  assert.equal(checkpointForScenario('buster-invalid-completion-identity'), 'pre-module-buster');
   assert.equal(checkpointForScenario('retry-fix-malformed-output'), 'pre-forge');
   assert.equal(checkpointForScenario('retry-buster-pass-echo-rejects'), 'pre-forge');
   assert.equal(checkpointForScenario('git-cleanup-failure'), 'post-forge');
@@ -654,4 +654,68 @@ test('checkpoint restore rewrites pipeline run identity from latest pointer', ()
   const readModels = fs.readFileSync(path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', 'outer-restored', 'lifecycle', 'read-models.json'), 'utf8');
   assert.match(readModels, /outer-restored/);
   assert.doesNotMatch(readModels, /run-seed|project-a/);
+});
+
+test('pre-terminal checkpoint restore normalizes stale completed lifecycle boundary', () => {
+  const { root, swarmDir } = makeSwarmDir({ checkpoint: 'pre-terminal-delivery' });
+  const eventsPath = path.join(swarmDir, 'logs', 'pipeline', 'runs', 'run-1', 'lifecycle', 'canonical-events.jsonl');
+  fs.appendFileSync(eventsPath, JSON.stringify({
+    type: 'pipeline_run.completed',
+    refs: { run_id: 'run-1' },
+    data: { project: 'project-a', terminal_status: 'succeeded', reason_code: 'PIPELINE_COMPLETE' },
+  }) + '\n');
+  const readModelsPath = path.join(swarmDir, 'logs', 'pipeline', 'runs', 'run-1', 'lifecycle', 'read-models.json');
+  const readModels = JSON.parse(fs.readFileSync(readModelsPath, 'utf8'));
+  readModels.pipeline = {
+    ...readModels.pipeline,
+    run_id: 'run-1',
+    status: 'COMPLETED',
+    completed_at: '2026-07-14T17:38:49.505Z',
+    terminal_status: 'succeeded',
+    reason_code: 'PIPELINE_COMPLETE',
+    latest_event_type: 'pipeline_run.completed',
+  };
+  fs.writeFileSync(readModelsPath, JSON.stringify(readModels, null, 2) + '\n');
+
+  const checkpointRoot = defaultCheckpointRoot(fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-checkpoint-pre-terminal-store-')));
+  const captured = captureCheckpoint({
+    checkpointRoot,
+    checkpoint: 'pre-terminal-delivery',
+    seedId: 'seed-1',
+    workspace: {
+      runId: 'run-1',
+      projectName: 'project-a',
+      artifactRoot: root,
+      worktreePath: path.join(root, 'worktree'),
+      swarmDir,
+    },
+  });
+
+  const restoreRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-checkpoint-pre-terminal-target-'));
+  const workspace = {
+    runId: 'run-2',
+    projectName: 'project-b',
+    artifactRoot: restoreRoot,
+    worktreePath: path.join(restoreRoot, 'worktree'),
+    projectSrc: path.join(restoreRoot, 'worktree', 'Projects', 'project-b', 'src'),
+    swarmDir: path.join(restoreRoot, 'worktree', 'Projects', 'project-b', 'src', '.swarm'),
+  };
+
+  const restored = restoreCheckpointProjectSource({
+    checkpointDir: captured.checkpoint_dir,
+    checkpoint: 'pre-terminal-delivery',
+    workspace,
+  });
+
+  const restoredEventsPath = path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', 'run-2', 'lifecycle', 'canonical-events.jsonl');
+  const restoredEvents = fs.readFileSync(restoredEventsPath, 'utf8');
+  assert.doesNotMatch(restoredEvents, /pipeline_run\.completed/);
+  const restoredReadModels = JSON.parse(fs.readFileSync(
+    path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', 'run-2', 'lifecycle', 'read-models.json'),
+    'utf8',
+  ));
+  assert.equal(restoredReadModels.pipeline.status, 'RUNNING');
+  assert.equal(restoredReadModels.pipeline.terminal_status, null);
+  assert.equal(restoredReadModels.pipeline.latest_event_type, 'pipeline.checkpoint');
+  assert.ok(restored.boundary_normalized.some((entry) => entry.endsWith('canonical-events.jsonl')));
 });

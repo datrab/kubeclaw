@@ -216,6 +216,41 @@ function partitionRuntimeStateEntries(entries: PorcelainEntry[] = []) {
   return { runtimeEntries, nonRuntimeEntries };
 }
 
+function isBranchOwnedModuleRuntimePath(relPathName: unknown): boolean {
+  const normalizedPath = normalizeRepoRelativePath(relPathName);
+  const marker = '/.swarm/modules/';
+  const markerIndex = normalizedPath.indexOf(marker);
+  if (markerIndex === -1) return false;
+  const swarmPath = normalizedPath.slice(markerIndex + '/.swarm/'.length);
+  return /^modules\/[^/]+\/(?:forge|buster|review|gate)-completion(?:\.[^/]+)?\.json$/.test(swarmPath);
+}
+
+function discardBranchOwnedModuleRuntimeEntries(config: AnyRecord, entries: PorcelainEntry[] = []) {
+  const discardEntries = entries.filter((entry) => isBranchOwnedModuleRuntimePath(entry.path));
+  if (discardEntries.length === 0) return [];
+
+  const trackedPaths = discardEntries
+    .filter((entry) => entry.status !== '??')
+    .map((entry) => normalizeRepoRelativePath(entry.path))
+    .filter(Boolean);
+  const untrackedPaths = discardEntries
+    .filter((entry) => entry.status === '??')
+    .map((entry) => normalizeRepoRelativePath(entry.path))
+    .filter(Boolean);
+
+  if (trackedPaths.length > 0) {
+    gitExec(config.repo_root, ['reset', '--quiet', '--', ...trackedPaths], { stdio: 'ignore' });
+    gitExec(config.repo_root, ['checkout', '--', ...trackedPaths], { stdio: 'ignore' });
+  }
+  for (const filePath of untrackedPaths) {
+    fs.rmSync(path.join(config.repo_root, filePath), { recursive: true, force: true });
+  }
+
+  const discardedPaths = [...trackedPaths, ...untrackedPaths];
+  log('DEBUG', `Discarded ${discardedPaths.length} stale parent module runtime artifact(s) before module join`);
+  return discardedPaths;
+}
+
 function listStashEntries(repoRoot: string): StashEntry[] {
   const output = gitExec(repoRoot, ['stash', 'list', '--format=%gd%x00%H%x00%s']);
   return output
@@ -351,7 +386,11 @@ export function mergeModuleBranches(config: AnyRecord, input: AnyRecord = {}): A
 }
 
 function collectRuntimeOnlyStash(config: AnyRecord, label: string): RuntimeStashState {
-  const entries = parseProjectScopedPorcelainEntries(config);
+  let entries = parseProjectScopedPorcelainEntries(config);
+  if (entries.length === 0) return null;
+
+  discardBranchOwnedModuleRuntimeEntries(config, entries);
+  entries = parseProjectScopedPorcelainEntries(config);
   if (entries.length === 0) return null;
 
   const { runtimeEntries, nonRuntimeEntries } = partitionRuntimeStateEntries(entries);

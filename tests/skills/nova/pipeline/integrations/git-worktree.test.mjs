@@ -255,6 +255,50 @@ test('runtime-state classifier treats pipeline-generated module artifacts as saf
   for (const relPath of nonRuntimePaths) assert.equal(isRuntimeStatePath(relPath), false, relPath);
 });
 
+test('module branch join keeps branch-owned completion artifacts over stale parent runtime state', () => {
+  const repoRoot = makeRepo();
+  const config = {
+    repo_root: repoRoot,
+    project: 'demo',
+    ...gitPolicy(),
+    paths: {
+      swarm_dir: path.join(repoRoot, 'Projects/demo/src/.swarm'),
+      modules_dir: path.join(repoRoot, 'Projects/demo/src/.swarm/modules'),
+    },
+  };
+  const completionRel = 'Projects/demo/src/.swarm/modules/01-foundation/forge-completion.json';
+  const completionPath = path.join(repoRoot, completionRel);
+  fs.mkdirSync(path.dirname(completionPath), { recursive: true });
+  fs.writeFileSync(completionPath, JSON.stringify({ status: 'READY_FOR_TESTING', summary: 'base' }, null, 2));
+  git(repoRoot, ['add', completionRel]);
+  git(repoRoot, ['commit', '-m', 'base completion']);
+
+  git(repoRoot, ['checkout', '-b', 'module-01-output']);
+  fs.writeFileSync(completionPath, JSON.stringify({
+    artifact_type: 'forge_completion',
+    run_id: 'run-test',
+    module_id: '01-foundation',
+    attempt: 2,
+    status: 'READY_FOR_TESTING',
+    summary: 'normalized branch artifact',
+    normalized: true,
+    normalized_fields: ['artifact_type', 'run_id', 'module_id', 'attempt'],
+  }, null, 2));
+  git(repoRoot, ['add', completionRel]);
+  git(repoRoot, ['commit', '-m', 'normalized module completion']);
+
+  git(repoRoot, ['checkout', 'master']);
+  fs.writeFileSync(completionPath, JSON.stringify({ status: 'READY_FOR_TESTING', summary: 'stale parent artifact' }, null, 2));
+
+  mergeModuleBranches(config, { branches: ['module-01-output'] });
+
+  const joined = JSON.parse(fs.readFileSync(completionPath, 'utf8'));
+  assert.equal(joined.summary, 'normalized branch artifact');
+  assert.equal(joined.normalized, true);
+  assert.deepEqual(joined.normalized_fields, ['artifact_type', 'run_id', 'module_id', 'attempt']);
+  assert.equal(git(repoRoot, ['status', '--porcelain', '--', completionRel]), '');
+});
+
 test('gitSyncBeforeBuster commits only meaningful forge paths and auto-resolves scoped rebase conflicts', async () => {
   const { root, repoRoot, otherRoot } = makeRemoteRepo();
 

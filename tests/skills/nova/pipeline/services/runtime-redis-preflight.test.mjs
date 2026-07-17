@@ -59,11 +59,23 @@ test('runtime Redis preflight rejects insecure Redis through the canonical trans
         redisHost: 'redis.internal',
         redisPort: 6379,
       },
-    }),
+    }, {}),
     error => {
       assert.equal(error.code, 'SECURE_REDIS_TRANSPORT_POLICY_VIOLATION');
       assert.equal(error.surface, 'telemetry');
       return true;
     },
   );
+});
+
+test('runtime Redis preflight reports the root Redis connection error over secondary close errors', () => {
+  const root = new Error('connect ECONNREFUSED 127.0.0.1:1');
+  root.code = 'ECONNREFUSED';
+  const secondary = new Error('Connection is closed.');
+
+  const promoted = __runtimeRedisPreflightTest.redisPreflightError(secondary, root, 'telemetry');
+
+  assert.equal(promoted.message, 'telemetry Redis preflight failed: connect ECONNREFUSED 127.0.0.1:1');
+  assert.equal(promoted.code, 'ECONNREFUSED');
+  assert.equal(promoted.cause, root);
 });

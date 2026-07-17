@@ -21,6 +21,7 @@ export const SHARED_PIPELINE_HELPER_PATHS = [
   'pipeline/platform-config.ts',
   'pipeline/egress.ts',
   'pipeline/redis-transport.ts',
+  'pipeline/scheduler.ts',
   'pipeline/security.ts',
   'pipeline/services/acp-gateway-contract.ts',
   'pipeline/services/discord-fields.ts',

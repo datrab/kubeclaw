@@ -203,6 +203,76 @@ test('buildBusterPayload carries pipeline Discord webhook authority for module a
 
     assert.equal(modulePayload.discord_webhook_url, config.discord_webhook_url);
     assert.equal(gatePayload.discord_webhook_url, config.discord_webhook_url);
+    assert.equal(modulePayload.session_key, 'buster-module-01-nginx-test');
+    assert.equal(gatePayload.session_key, 'buster-gate-final-buster-test');
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('buildBusterPayload rounds tiny positive timeout minutes up to valid task timeout seconds', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-payload-timeout-'));
+  try {
+    const config = {
+      project: 'payload-timeout-test',
+      repo_root: root,
+      run_id: 'run-payload-timeout-test',
+      paths: {
+        swarm_dir: path.join(root, '.swarm'),
+        modules_dir: path.join(root, '.swarm', 'modules'),
+      },
+      buster: { runtime: { suite_timeout_ms: 120000, max_crash_retries: 1 } },
+      rate_limit: { cooldown_hours: 1, max_pauses_per_module: 1 },
+      pipeline_defaults: {
+        timeout_minutes: 5,
+        max_fails: 2,
+        auto_retry_threshold: 1,
+        agent_startup_retry_budget: 0,
+        session_nudge_threshold: 0,
+      },
+      acp_monitor: {
+        poll_limit: 10,
+        max_transcript_extensions: 3,
+        transcript_grace_ms: 300000,
+        monitor_poll_ms: 10000,
+      },
+    };
+    const progress = {
+      modules: {
+        '01-nginx': {
+          dir: '01-nginx',
+          timeout_minutes: 0.001,
+          test_suites: ['unit'],
+          test_config: { suite_timeout_ms: 120000, unit: { test_cmd: 'npm test' } },
+        },
+      },
+      gates: {
+        'final-buster': {
+          id: 'final-buster',
+          title: 'Final Buster',
+          timeout_minutes: 0.001,
+          test_suites: ['unit'],
+          test_config: { suite_timeout_ms: 120000, unit: { test_cmd: 'npm test' } },
+        },
+      },
+    };
+
+    const modulePayload = buildBusterPayload(config, progress, '01-nginx', 'module_test', 'prompt', { forge_commit_hash: 'abc123' }, {
+      attempt: 1,
+      dispatch_id: 'buster-module-01-nginx-test',
+      model: 'gpt-5',
+    });
+    const gatePayload = buildBusterPayload(config, progress, 'final-buster', 'gate_test', 'prompt', null, {
+      commit_hash: 'abc123',
+      attempt: 1,
+      dispatch_id: 'buster-gate-final-buster-test',
+      model: 'gpt-5',
+    });
+
+    assert.equal(modulePayload.timeout_seconds, 1);
+    assert.equal(modulePayload.session.timeout_seconds, 1);
+    assert.equal(gatePayload.timeout_seconds, 1);
+    assert.equal(gatePayload.session.timeout_seconds, 1);
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }

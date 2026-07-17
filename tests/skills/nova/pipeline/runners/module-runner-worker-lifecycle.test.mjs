@@ -241,9 +241,11 @@ test('buster worker dispatch-then-throw clears persisted active_agent and preser
     dispatchId: 'buster-dispatch-initial',
     gateway_label: null,
   };
+  let savedLifecycleMutation = null;
   const deps = {
-    saveStatus: (_config, _dir, nextStatus) => {
+    saveStatus: (_config, _dir, nextStatus, transition = null) => {
       savedStatus = JSON.parse(JSON.stringify(nextStatus));
+      if (transition?.lifecycleMutation) savedLifecycleMutation = JSON.parse(JSON.stringify(transition.lifecycleMutation));
     },
     loadStatus: () => JSON.parse(JSON.stringify(savedStatus)),
     runModuleBusterWorker: async ({ workerInput }) => {
@@ -281,6 +283,9 @@ test('buster worker dispatch-then-throw clears persisted active_agent and preser
   assert.equal(savedStatus.session_key, 'buster-session');
   assert.equal(savedStatus.dispatch_id, 'buster-dispatch');
   assert.equal(savedStatus.gateway_label, 'buster-gateway');
+  assert.equal(savedLifecycleMutation.eventType, 'module_attempt.testing_started');
+  assert.equal(savedLifecycleMutation.activeAgent.dispatch_id, 'buster-dispatch');
+  assert.equal(savedLifecycleMutation.activeAgent.session_key, 'buster-session');
   assert.equal(resolveExpectedCompletionSessionKey(savedStatus, completionIdentity, 'buster-session'), 'buster-session');
   assert.equal(savedStatus.active_agent, null);
   assert.equal(result.status.active_agent, null);

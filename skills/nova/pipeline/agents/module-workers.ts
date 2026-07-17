@@ -4,6 +4,11 @@ import {
   getRateLimitConfig,
   processSessionRateLimit,
 } from '../services/rate-limit.ts';
+import {
+  resolveStatusDispatchId,
+  resolveStatusGatewayLabel,
+  resolveStatusSessionKey,
+} from '../services/correlation.ts';
 import { buildActiveSessionAuthorityPolicy } from '../services/session-authority.ts';
 import {
   buildModuleBusterWorkerControlResult,
@@ -180,6 +185,33 @@ function requireWorkerDependency(deps: AnyRecord, name: string) {
     throw new Error(`module worker requires deps.${name}`);
   }
   return dependency;
+}
+
+function isResumedBusterDispatch(status: AnyRecord | null, dispatchId: string | null): boolean {
+  return status?.status === STATUS.TESTING
+    && status?.current_phase === 'buster'
+    && normalizeString(dispatchId) !== null
+    && normalizeString(resolveStatusDispatchId(status)) === normalizeString(dispatchId);
+}
+
+function resumedBusterDispatch(status: AnyRecord, workerInput: AnyRecord, runId: string | null, attempt: number | null, dispatchId: string | null): AnyRecord {
+  return {
+    label: dispatchId,
+    session_key: normalizeString(resolveStatusSessionKey(status)),
+    stream_log_path: normalizeString(status.active_agent?.stream_log_path),
+    gateway_label: normalizeString(resolveStatusGatewayLabel(status)),
+    dispatch_id: dispatchId,
+    run_id: runId,
+    attempt,
+    runtime: normalizeString(status.active_agent?.runtime),
+    model: normalizeString(status.active_agent?.model) || normalizeString(workerInput?.worker?.backendConfig?.model),
+    model_source: normalizeString(status.active_agent?.model_source) || normalizeString(workerInput?.worker?.backendConfig?.modelSource),
+    reasoning_level: normalizeString(status.active_agent?.reasoning_level) || normalizeString(workerInput?.worker?.backendConfig?.reasoningLevel),
+    thinking_source: normalizeString(status.active_agent?.thinking_source) || normalizeString(workerInput?.worker?.backendConfig?.thinkingSource),
+    agent_id: normalizeString(status.active_agent?.agent_id),
+    phase: 'buster',
+    resumed: true,
+  };
 }
 
 async function processStartupRateLimit({
@@ -507,6 +539,7 @@ export async function runModuleBusterWorker({
   const runId = workerInput.ids.runId;
   const attempt = workerInput.ids.attempt;
   const dispatchId = selectDefinedValue(() => (workerInput.ids.dispatchId), () => (null));
+  const resumeExistingDispatch = isResumedBusterDispatch(status, dispatchId);
 
   const archive = requireWorkerDependency(deps, 'archiveModuleCompletions');
   const spawn = requireWorkerDependency(deps, 'spawnAgent');
@@ -549,79 +582,81 @@ export async function runModuleBusterWorker({
     hookFailureReason = 'cleanup_failed';
   };
 
-  let archiveResult = null;
-  try {
-    archiveResult = await archive(config, moduleId, {
-      run_id: runId,
-      attempt,
-      dispatch_id: dispatchId,
-    }, {
-      targetKind: 'module',
-      module_id: moduleId,
-      agent_type: 'buster',
-    });
-  } catch (e: any) {
-    clearShutdownContextFn();
-    return buildModuleBusterWorkerControlResult(config, workerInput, {
-      nextAction: 'block',
-      issueType: 'environment',
-      outcomeClass: 'error',
-      reason: 'completion_archive_failed',
-      error: errorMessage(e),
-      failureClass: 'completion_archive_failed',
-      dispatchId: selectDefinedValue(() => (dispatchId), () => (null)),
-      attempt,
-      runId,
-    });
-  }
-  if (archiveResult?.failed) {
-    clearShutdownContextFn();
-    return buildModuleBusterWorkerControlResult(config, workerInput, {
-      nextAction: 'block',
-      issueType: 'environment',
-      outcomeClass: 'error',
-      reason: 'completion_archive_failed',
-      error: requireNonEmptyString(archiveResult.error, 'archiveResult.error'),
-      failureClass: 'completion_archive_failed',
-      dispatchId: selectDefinedValue(() => (dispatchId), () => (null)),
-      attempt,
-      runId,
-    });
+  if (!resumeExistingDispatch) {
+    let archiveResult = null;
+    try {
+      archiveResult = await archive(config, moduleId, {
+        run_id: runId,
+        attempt,
+        dispatch_id: dispatchId,
+      }, {
+        targetKind: 'module',
+        module_id: moduleId,
+        agent_type: 'buster',
+      });
+    } catch (e: any) {
+      clearShutdownContextFn();
+      return buildModuleBusterWorkerControlResult(config, workerInput, {
+        nextAction: 'block',
+        issueType: 'environment',
+        outcomeClass: 'error',
+        reason: 'completion_archive_failed',
+        error: errorMessage(e),
+        failureClass: 'completion_archive_failed',
+        dispatchId: selectDefinedValue(() => (dispatchId), () => (null)),
+        attempt,
+        runId,
+      });
+    }
+    if (archiveResult?.failed) {
+      clearShutdownContextFn();
+      return buildModuleBusterWorkerControlResult(config, workerInput, {
+        nextAction: 'block',
+        issueType: 'environment',
+        outcomeClass: 'error',
+        reason: 'completion_archive_failed',
+        error: requireNonEmptyString(archiveResult.error, 'archiveResult.error'),
+        failureClass: 'completion_archive_failed',
+        dispatchId: selectDefinedValue(() => (dispatchId), () => (null)),
+        attempt,
+        runId,
+      });
+    }
+
+    try {
+      workerDispatch = await spawn(config, progress, 'buster', moduleId, model, prompt, {
+        status,
+        taskType: 'module_test',
+        cwd: selectDefinedValue(() => (workerInput?.workspace?.repoRoot), () => (config.repo_root)),
+        run_id: runId,
+        attempt,
+        dispatch_id: dispatchId,
+        model_source: modelSource,
+        thinking,
+        thinking_source: thinkingSource,
+        thinking_supported: thinkingSupported,
+        reasoning_level: reasoningLevel,
+        runtime_kind: runtimeKind,
+      });
+    } catch (e: any) {
+      clearShutdownContextFn();
+      return buildModuleBusterWorkerControlResult(config, workerInput, {
+        nextAction: retryableStartupFailure(e) ? 'retry' : 'block',
+        issueType: 'environment',
+        outcomeClass: retryableStartupFailure(e) ? 'retrying' : 'error',
+        reason: retryableStartupFailure(e) ? 'startup_evidence_missing' : 'spawn_failed',
+        failureClass: retryableStartupFailure(e) ? 'healthcheck_failed' : 'spawn_failed',
+        error: errorMessage(e),
+        dispatchId: selectDefinedValue(() => (dispatchId), () => (null)),
+        gatewayLabel: selectDefinedValue(() => (e?.gateway_label), () => (null)),
+        sessionKey: selectDefinedValue(() => (e?.session_key), () => (null)),
+        attempt,
+        runId,
+      });
+    }
   }
 
-  try {
-    workerDispatch = await spawn(config, progress, 'buster', moduleId, model, prompt, {
-      status,
-      taskType: 'module_test',
-      cwd: selectDefinedValue(() => (workerInput?.workspace?.repoRoot), () => (config.repo_root)),
-      run_id: runId,
-      attempt,
-      dispatch_id: dispatchId,
-      model_source: modelSource,
-      thinking,
-      thinking_source: thinkingSource,
-      thinking_supported: thinkingSupported,
-      reasoning_level: reasoningLevel,
-      runtime_kind: runtimeKind,
-    });
-  } catch (e: any) {
-    clearShutdownContextFn();
-    return buildModuleBusterWorkerControlResult(config, workerInput, {
-      nextAction: retryableStartupFailure(e) ? 'retry' : 'block',
-      issueType: 'environment',
-      outcomeClass: retryableStartupFailure(e) ? 'retrying' : 'error',
-      reason: retryableStartupFailure(e) ? 'startup_evidence_missing' : 'spawn_failed',
-      failureClass: retryableStartupFailure(e) ? 'healthcheck_failed' : 'spawn_failed',
-      error: errorMessage(e),
-      dispatchId: selectDefinedValue(() => (dispatchId), () => (null)),
-      gatewayLabel: selectDefinedValue(() => (e?.gateway_label), () => (null)),
-      sessionKey: selectDefinedValue(() => (e?.session_key), () => (null)),
-      attempt,
-      runId,
-    });
-  }
-
-  const dispatch = {
+  const dispatch = resumeExistingDispatch ? resumedBusterDispatch(status, workerInput, runId, attempt, dispatchId) : {
     label: (selectDefinedValue(() => (workerDispatch?.dispatch_id), () => (null))),
     session_key: selectDefinedValue(() => (workerDispatch?.session_key), () => (null)),
     stream_log_path: selectDefinedValue(() => (workerDispatch?.stream_log_path), () => (null)),
@@ -638,7 +673,7 @@ export async function runModuleBusterWorker({
     phase: 'buster',
   };
 
-  const busterHealth = normalizeHealthCheckResult(await verifyHealth(config, 'buster', moduleId));
+  const busterHealth = resumeExistingDispatch ? { ok: true } : normalizeHealthCheckResult(await verifyHealth(config, 'buster', moduleId));
   if (!busterHealth.ok) {
     await kill(config, 'buster', moduleId, false);
     clearShutdownContextFn();
@@ -681,7 +716,7 @@ export async function runModuleBusterWorker({
   }
 
   try {
-    if (typeof onDispatched === 'function') {
+    if (!resumeExistingDispatch && typeof onDispatched === 'function') {
       try {
         await onDispatched(dispatch);
       } catch (e: any) {
@@ -722,7 +757,7 @@ export async function runModuleBusterWorker({
   } finally {
     try {
       try {
-        await kill(config, 'buster', moduleId, pollResult?.ok === true);
+        if (!resumeExistingDispatch) await kill(config, 'buster', moduleId, pollResult?.ok === true);
       } catch (e: any) {
         if (hookError === null) hookError = e;
         hookFailureReason = 'cleanup_failed';

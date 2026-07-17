@@ -12,6 +12,7 @@ import {
   createResultRecord,
   diagnoseExpectedFailureOutput,
   helperTimeoutMsForPipeline,
+  pipelineRunLockLeaseWaitMaxMs,
   realPipelineScenarioResultOk,
   snapshotResultArtifacts,
   summarizeCleanupVerification,
@@ -75,6 +76,24 @@ test('git fault scenarios use a harness shim instead of product config flags', (
     assert.equal(env.REAL_E2E_GIT_FAULT_SURFACE, undefined);
   } finally {
     fs.rmSync(artifactRoot, { recursive: true, force: true });
+  }
+});
+
+test('crash resume lock wait budget follows the configured pipeline lease', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-lock-wait-'));
+  try {
+    const runConfigPath = path.join(root, 'swarm.config.json');
+    fs.writeFileSync(runConfigPath, JSON.stringify({
+      locks: {
+        pipeline_run: {
+          lease_ms: 120000,
+        },
+      },
+    }));
+
+    assert.equal(pipelineRunLockLeaseWaitMaxMs({ runConfigPath }, { bufferMs: 500 }), 120500);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
   }
 });
 

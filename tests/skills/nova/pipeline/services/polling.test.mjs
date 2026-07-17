@@ -165,6 +165,8 @@ test('pollForgeCompletion normalizes missing Forge completion envelope identity 
   assert.equal(normalized.run_id, 'run-test');
   assert.equal(normalized.module_id, moduleDir);
   assert.equal(normalized.attempt, 2);
+  assert.equal(normalized.normalized, true);
+  assert.deepEqual(normalized.normalized_fields, ['artifact_type', 'run_id', 'module_id', 'attempt']);
 });
 
 test('pollForgeCompletion does not normalize wrong Forge completion identity values', async (t) => {
@@ -357,6 +359,91 @@ test('module completion wait does not require gateway label in Redis completion 
   assert.equal(result.failure_class, 'verdict_fail');
   assert.equal(result.status?.failure_class, 'verdict_fail');
   assert.equal(result.status?._redis_entry?._id, '2-0');
+});
+
+test('module completion wait treats session key as observed metadata, not selector authority', async (t) => {
+  class FakeRedis {
+    constructor() {
+      this.calls = 0;
+      this.waiting = null;
+    }
+
+    on() {}
+
+    async xread() {
+      this.calls += 1;
+      if (this.calls === 1) {
+        return completionXreadResult('3-0', {
+          _id: '3-0',
+          schema_version: 'v1',
+          type: 'completion',
+          stream_role: 'completion',
+          project: 'module-completion-test',
+          target_kind: 'module',
+          target_id: 'module-a',
+          module: 'module-a',
+          status: 'PASS',
+          outcome: 'PASS',
+          source: 'buster-pipeline',
+          run_id: 'run-test',
+          attempt: '1',
+          dispatch_id: 'dispatch-test',
+          session_key: 'session-current',
+          timestamp: '2026-06-03T00:00:00.000Z',
+        });
+      }
+      return new Promise((resolve) => {
+        this.waiting = resolve;
+      });
+    }
+
+    async xrevrange() {
+      return [];
+    }
+
+    disconnect() {
+      this.waiting?.(null);
+    }
+  }
+
+  const config = makeModuleCompletionConfig();
+  t.after(() => {
+    fs.rmSync(config.repo_root, { recursive: true, force: true });
+  });
+  const moduleId = 'module-a';
+  const moduleDir = 'module-a-dir';
+  fs.mkdirSync(path.join(config.paths.modules_dir, moduleDir), { recursive: true });
+  saveModuleStatus(config, moduleId, moduleDir, 'PASS');
+
+  const result = await waitForModuleBusterCompletion(
+    config,
+    moduleDir,
+    moduleId,
+    ['PASS', 'FAIL', 'BLOCKED'],
+    0.01,
+    {
+      run_id: 'run-test',
+      attempt: 1,
+      dispatch_id: 'dispatch-test',
+      session_key: 'session-stale',
+    },
+    (ok, reason, status = null, extra = {}) => ({ ok, reason, status, ...extra }),
+    {
+      deps: {
+        completionEventAdapters: {
+          RedisCtor: FakeRedis,
+          redisOptions: { host: '127.0.0.1', port: '6379', enforceSecureMode: false },
+          createRedisCompletionEventAdapter,
+          createLocalEvidenceEventAdapter: createNoopLocalEvidenceEventAdapter,
+        },
+      },
+    },
+  );
+
+  assert.equal(result.ok, true);
+  assert.equal(result.reason, 'target_reached');
+  assert.equal(result.status?._redis_entry?._id, '3-0');
+  assert.equal(result.status?._redis_entry?.session_key, 'session-current');
 });
 
 test('module completion wait recovers canonical Redis completion from tail scan when live stream delivery is missed', async (t) => {

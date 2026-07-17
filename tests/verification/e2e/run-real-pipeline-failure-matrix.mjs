@@ -26,6 +26,7 @@ const RUNNER_PATH = path.join(SCRIPT_DIR, 'run-real-pipeline-e2e.mjs');
 const OPENCLAW_CONFIG_PATH = process.env.OPENCLAW_CONFIG || '/home/node/.openclaw/openclaw.json';
 const DEFAULT_SCENARIO_TIMEOUT_MS = 30 * 60 * 1000;
 const DEFAULT_HAPPY_PATH_TIMEOUT_MS = Number(process.env.REAL_E2E_MATRIX_HAPPY_PATH_TIMEOUT_MS || 40 * 60 * 1000);
+const DEFAULT_CRASH_RESUME_TIMEOUT_MS = Number(process.env.REAL_E2E_MATRIX_CRASH_RESUME_TIMEOUT_MS || 90 * 60 * 1000);
 const DEFAULT_RATE_LIMIT_TIMEOUT_EXTENSION_MS = Number(
   process.env.REAL_E2E_MATRIX_RATE_LIMIT_TIMEOUT_EXTENSION_MS || 3 * 60 * 60 * 1000,
 );
@@ -51,6 +52,8 @@ function parseArgs(argv) {
     checkpointRoot: process.env.REAL_E2E_MATRIX_CHECKPOINT_ROOT || defaultCheckpointRoot(REPO_ROOT),
     checkpointSeedId: process.env.REAL_E2E_MATRIX_CHECKPOINT_SEED_ID || 'canonical',
     forceRefreshCheckpoints: process.env.REAL_E2E_MATRIX_FORCE_REFRESH_CHECKPOINTS === '1',
+    fromScenario: process.env.REAL_E2E_MATRIX_FROM_SCENARIO || null,
+    onlyScenario: process.env.REAL_E2E_MATRIX_SCENARIO || null,
   };
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
@@ -91,6 +94,10 @@ function parseArgs(argv) {
       args.checkpointSeedId = argv[++index] || '';
     } else if (arg === '--force-refresh-checkpoints') {
       args.forceRefreshCheckpoints = true;
+    } else if (arg === '--from-scenario') {
+      args.fromScenario = argv[++index] || '';
+    } else if (arg === '--scenario') {
+      args.onlyScenario = argv[++index] || '';
     } else if (arg === '--help' || arg === '-h') {
       args.help = true;
     } else {
@@ -117,14 +124,18 @@ function parseArgs(argv) {
   }
   if (args.checkpointRoot === '') throw new Error('--checkpoint-root requires a path');
   if (args.checkpointSeedId === '') throw new Error('--checkpoint-seed-id requires an id');
+  if (args.fromScenario === '') throw new Error('--from-scenario requires a scenario id');
+  if (args.onlyScenario === '') throw new Error('--scenario requires a scenario id');
   args.checkpointRoot = path.resolve(args.checkpointRoot);
   args.suites.forEach((suite) => resolveFailureMatrixSuite(suite));
+  if (args.fromScenario) resolveRealE2EScenario(args.fromScenario);
+  if (args.onlyScenario) resolveRealE2EScenario(args.onlyScenario);
   return args;
 }
 
 function usage() {
   return [
-    'Usage: node tests/verification/e2e/run-real-pipeline-failure-matrix.mjs --mode fast|full [--suite <id>|--suites a,b] [--keep-artifacts] [--report-path <file>] [--scenario-timeout-ms <ms>] [--happy-path-timeout-ms <ms>] [--rate-limit-timeout-extension-ms <ms>] [--global-blocker-threshold <n>]',
+    'Usage: node tests/verification/e2e/run-real-pipeline-failure-matrix.mjs --mode fast|full [--suite <id>|--suites a,b] [--scenario <id>|--from-scenario <id>] [--keep-artifacts] [--report-path <file>] [--scenario-timeout-ms <ms>] [--happy-path-timeout-ms <ms>] [--rate-limit-timeout-extension-ms <ms>] [--global-blocker-threshold <n>]',
     '       Add --continue-on-failure to run every requested suite and report all failures at the end.',
     '       Expected-failure scenario webhooks are muted by default; pass --allow-expected-failure-webhooks to send them.',
     '       Matrix-level suite start/completion Discord notifications are enabled by default; pass --disable-matrix-discord to suppress them.',
@@ -136,7 +147,15 @@ function usage() {
   ].join('\n');
 }
 
-export function timeoutMsForScenario({ scenarioConfig, scenarioTimeoutMs, happyPathTimeoutMs }) {
+export function timeoutMsForScenario({
+  scenarioConfig,
+  scenarioTimeoutMs,
+  happyPathTimeoutMs,
+  crashResumeTimeoutMs = DEFAULT_CRASH_RESUME_TIMEOUT_MS,
+}) {
+  if (scenarioConfig?.crashResume === true && Number(crashResumeTimeoutMs) > 0) {
+    return Number(crashResumeTimeoutMs);
+  }
   if (scenarioConfig?.expectedPipelineExit === 'zero' && Number(happyPathTimeoutMs) > 0) {
     return Number(happyPathTimeoutMs);
   }
@@ -146,7 +165,8 @@ export function timeoutMsForScenario({ scenarioConfig, scenarioTimeoutMs, happyP
 function shouldMuteScenarioWebhooks({ scenarioConfig, muteExpectedFailureWebhooks }) {
   return Boolean(
     muteExpectedFailureWebhooks
-      && scenarioConfig?.expectedPipelineExit === 'nonzero',
+      && scenarioConfig?.expectedPipelineExit === 'nonzero'
+      && scenarioConfig?.expectedEvidence !== 'discord_unavailable',
   );
 }
 
@@ -166,6 +186,8 @@ function normalizeFailureMatrixArgs(args) {
     checkpointRoot: defaultCheckpointRoot(REPO_ROOT),
     checkpointSeedId: 'canonical',
     forceRefreshCheckpoints: false,
+    fromScenario: null,
+    onlyScenario: null,
     ...args,
   };
 }
@@ -372,7 +394,21 @@ function writeStructuredResult(resultPath, result) {
 }
 
 function suiteCasesForArgs(args) {
-  return args.suites.flatMap((suiteId) => resolveFailureMatrixSuite(suiteId).scenarios);
+  return args.suites.flatMap((suiteId) => suiteScenariosForArgs(args, suiteId));
+}
+
+function suiteScenariosForArgs(args, suiteId) {
+  const scenarios = [...resolveFailureMatrixSuite(suiteId).scenarios];
+  if (args.onlyScenario) {
+    return scenarios.includes(args.onlyScenario) ? [args.onlyScenario] : [];
+  }
+  if (!args.fromScenario) return scenarios;
+  const start = scenarios.indexOf(args.fromScenario);
+  return start === -1 ? [] : scenarios.slice(start);
+}
+
+function requestedSuitesForArgs(args) {
+  return args.suites.filter((suiteId) => suiteScenariosForArgs(args, suiteId).length > 0);
 }
 
 function timeoutResultRecord({ mode, scenario, resultPath, exit, timeoutMs, diagnostics, existingResult = null }) {
@@ -626,7 +662,7 @@ export async function runScenario({
         : {}),
       ...(suite ? { REAL_E2E_FAILURE_MATRIX_SUITE: suite } : {}),
       ...(executionBoundary ? { REAL_E2E_EXECUTION_BOUNDARY: executionBoundary } : {}),
-      ...(suite && suite !== 'full-pipeline-smoke'
+      ...(executionBoundary && executionBoundary !== 'full'
         ? { REAL_E2E_TERMINAL_EXTRAS: '0' }
         : {}),
     },
@@ -680,6 +716,7 @@ export async function runScenario({
     scenario,
     ok: exit.code === 0 && resultOk,
     exit,
+    execution_boundary: executionBoundary,
     timed_out: exit.timed_out === true,
     result_path: resultPath,
     result,
@@ -727,12 +764,19 @@ function notRunSuiteCase(scenario, reason = 'not_run') {
   };
 }
 
-function suiteResultRecord({ mode, suite, cases }) {
+function suiteResultRecord({ mode, suite, cases, requestedScenarios = null }) {
   const suiteConfig = resolveFailureMatrixSuite(suite);
+  const requested = new Set(requestedScenarios || suiteConfig.scenarios);
   const byScenario = new Map(cases.map((entry) => [entry.scenario, entry]));
-  const allCases = suiteConfig.scenarios.map((scenario) => byScenario.get(scenario) || notRunSuiteCase(scenario));
-  const failures = allCases.filter((entry) => suiteCaseStatus(entry) !== 'passed');
-  const completedCases = allCases.filter((entry) => suiteCaseStatus(entry) !== 'not_run');
+  const allCases = suiteConfig.scenarios.map((scenario) => {
+    if (byScenario.has(scenario)) return byScenario.get(scenario);
+    return requested.has(scenario)
+      ? notRunSuiteCase(scenario)
+      : notRunSuiteCase(scenario, 'not_requested');
+  });
+  const requestedCases = allCases.filter((entry) => requested.has(entry.scenario));
+  const failures = requestedCases.filter((entry) => suiteCaseStatus(entry) !== 'passed');
+  const completedCases = requestedCases.filter((entry) => suiteCaseStatus(entry) !== 'not_run');
   return {
     schema_version: 'real_e2e_failure_matrix_suite_result.v1',
     artifact_type: 'real_e2e_failure_matrix_suite_result',
@@ -740,11 +784,12 @@ function suiteResultRecord({ mode, suite, cases }) {
     mode,
     suite,
     suite_description: suiteConfig.description,
-    ok: failures.length === 0 && completedCases.length === suiteConfig.scenarios.length,
+    ok: failures.length === 0 && completedCases.length === requestedCases.length,
     case_count: suiteConfig.scenarios.length,
+    requested_case_count: requestedCases.length,
     completed_case_count: completedCases.length,
     failed_case_count: failures.length,
-    not_run_case_count: allCases.length - completedCases.length,
+    not_run_case_count: requestedCases.length - completedCases.length,
     cases: allCases.map(suiteCaseSummary),
     failures: failures.map((entry) => ({
       scenario: entry.scenario,
@@ -766,22 +811,23 @@ async function runSuite({
   onCaseCompleted = null,
 }) {
   const suiteConfig = resolveFailureMatrixSuite(suite);
+  const suiteScenarios = suiteScenariosForArgs(args, suite);
   const cases = [];
   let reusableDiscordDelivery = discordDeliveryResult;
   const resultPath = resultPathForSuite(suite);
   const persistSuiteProgress = () => writeStructuredResult(
     resultPath,
-    suiteResultRecord({ mode: args.mode, suite, cases }),
+    suiteResultRecord({ mode: args.mode, suite, cases, requestedScenarios: suiteScenarios }),
   );
 
-  for (const [caseIndex, scenario] of suiteConfig.scenarios.entries()) {
+  for (const [caseIndex, scenario] of suiteScenarios.entries()) {
     await onCaseStarted?.({
       phase: 'failure-suite-case-started',
       mode: args.mode,
       suite,
       scenario,
       case_index: caseIndex + 1,
-      case_count: suiteConfig.scenarios.length,
+      case_count: suiteScenarios.length,
       scenario_description: resolveRealE2EScenario(scenario).description || null,
     });
     let result;
@@ -837,14 +883,14 @@ async function runSuite({
       mode: args.mode,
       suite,
       scenario,
-      case_index: caseIndex + 1,
-      case_count: suiteConfig.scenarios.length,
+        case_index: caseIndex + 1,
+      case_count: suiteScenarios.length,
       status: suiteCaseStatus(result),
       ...result,
     });
     if (!result.ok && !args.continueOnFailure) break;
   }
-  const record = suiteResultRecord({ mode: args.mode, suite, cases });
+  const record = suiteResultRecord({ mode: args.mode, suite, cases, requestedScenarios: suiteScenarios });
   writeStructuredResult(resultPath, record);
   const firstFailure = cases.find((entry) => suiteCaseStatus(entry) !== 'passed') || null;
   return {
@@ -955,9 +1001,14 @@ export async function runFailureMatrix(args, {
   let discordDeliveryResult = reusableDiscordDeliveryResult({ capability_probe: matrixCapabilityProbe });
   let checkpointSeedResult = null;
 
+  const requestedSuites = requestedSuitesForArgs(args);
+  if (requestedSuites.length === 0) {
+    const selector = args.onlyScenario || args.fromScenario || '<none>';
+    throw new Error(`no requested suite cases matched scenario selector: ${selector}`);
+  }
   const suitesToRun = matrixCapabilityProbe.ok || args.continueOnFailure
-    ? args.suites
-    : args.suites.slice(0, 1);
+    ? requestedSuites
+    : requestedSuites.slice(0, 1);
 
   if (!matrixCapabilityProbe.ok) {
     for (const [index, suite] of suitesToRun.entries()) {
@@ -1059,13 +1110,13 @@ export async function runFailureMatrix(args, {
     : null;
 
   return {
-    ok: failures.length === 0 && skippedByGlobalBlocker.length === 0 && completedResults.length === args.suites.length,
+    ok: failures.length === 0 && skippedByGlobalBlocker.length === 0 && completedResults.length === requestedSuites.length,
     results,
     failures,
     skipped_by_global_blocker: skippedByGlobalBlocker,
     report_path: reportPath,
     completed_count: completedResults.length,
-    skipped_count: args.suites.length - completedResults.length,
+    skipped_count: requestedSuites.length - completedResults.length,
     checkpoint_seed: checkpointSeedResult,
     checkpoint_summary: checkpointSummary,
   };

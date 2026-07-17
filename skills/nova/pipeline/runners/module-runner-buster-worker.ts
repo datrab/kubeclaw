@@ -5,7 +5,7 @@ import { buildPluginInvocationEnvelope, createPluginContext } from '../core/cont
 import { STATUS } from '../core/constants.ts';
 import { log } from '../core/logger.ts';
 import { requireStageHandler } from '../core/registry.ts';
-import { setModuleActiveAgent, clearModuleActiveAgent } from '../lifecycle-state.ts';
+import { setModuleActiveAgent, clearModuleActiveAgent, startModulePhase } from '../lifecycle-state.ts';
 import { emitPipelineCheckpoint } from '../services/pipeline-checkpoint.ts';
 import {
   buildModuleBusterRunInput,
@@ -120,7 +120,11 @@ export async function executeBusterWorkerAttempt({
       const dispatchRunId = dispatchIdentityValue(dispatch, completionIdentity, 'run_id');
       completionIdentity.dispatchId = dispatchId;
       completionIdentity.gateway_label = selectTruthyValue(() => (dispatch.gateway_label), () => (null));
-      setModuleActiveAgent(status, {
+      const busterPhaseStartedAt = new Date().toISOString();
+      const busterStartTransition = startModulePhase(status, 'buster',
+        `Buster started (subagent attempt ${busterAttempt}/${maxBusterCrashRetries + 1})`,
+        { now: busterPhaseStartedAt, clearCompletionSummary: true });
+      const activeAgentTransition = setModuleActiveAgent(status, {
         session_key: selectTruthyValue(() => (dispatch.session_key), () => (null)),
         stream_log_path: selectTruthyValue(() => (dispatch.stream_log_path), () => (null)),
         label: dispatchId,
@@ -136,12 +140,12 @@ export async function executeBusterWorkerAttempt({
         agent_id: selectTruthyValue(() => (dispatch.agent_id), () => (null)),
         phase: 'buster',
         started_at: new Date().toISOString(),
-      });
+      }, { lifecycleMutation: busterStartTransition.lifecycleMutation });
       status.session_key = selectTruthyValue(() => (dispatch.session_key), () => (null));
       status.dispatch_id = dispatchId;
       status.gateway_label = selectTruthyValue(() => (dispatch.gateway_label), () => (null));
       busterSessionKey = selectTruthyValue(() => (dispatch.session_key), () => (null));
-      deps.saveStatus(config, dir, status);
+      deps.saveStatus(config, dir, status, activeAgentTransition);
       const crashDetails = {
         step_type: 'module',
         step_id: moduleId,

@@ -17,6 +17,8 @@ import {
   createRealE2ERunWorkspace,
   isSafeE2ERemoteBranchName,
   isSafeE2ERunBranchName,
+  normalizeRealE2ERunConfigDefaults,
+  normalizeRealE2ERuntimeDefaults,
   REPO_ROOT,
   validateRealE2EModel,
 } from './real-run-workspace.mjs';
@@ -42,21 +44,20 @@ function withEnv(key, value, fn) {
   }
 }
 
-test('generated real e2e config defaults to advertised gpt-5.4 with thinking none', () => {
+test('generated real e2e config defaults to advertised gpt-5.3-codex-spark with thinking none', () => {
   const progress = buildProgress({ projectName: 'unit-model-defaults' });
 
-  assert.equal(progress.defaults.models.forge, 'gpt-5.4');
-  assert.equal(progress.defaults.models.buster, 'gpt-5.4');
-  assert.equal(progress.defaults.models.echo, 'gpt-5.4');
-  assert.equal(progress.defaults.models.arch_validator, 'gpt-5.4');
+  assert.equal(progress.defaults.models.forge, 'gpt-5.3-codex-spark');
+  assert.equal(progress.defaults.models.buster, 'gpt-5.3-codex-spark');
+  assert.equal(progress.defaults.models.echo, 'gpt-5.3-codex-spark');
+  assert.equal(progress.defaults.models.arch_validator, 'gpt-5.3-codex-spark');
   assert.equal(progress.defaults.thinking.forge, 'none');
   assert.equal(progress.defaults.thinking.buster, 'none');
   assert.equal(progress.defaults.thinking.echo, 'none');
   assert.equal(progress.defaults.thinking.arch_validator, 'none');
   assert.equal(progress.arch_validation.thinking_level, 'none');
   assert.equal(progress.arch_validation.agent_max_attempts, 2);
-  assert.equal(progress.pipeline_review.thinking_level, 'none');
-  assert.equal(progress.pipeline_review.agent_max_attempts, 2);
+  assert.equal(progress.pipeline_review, undefined);
   assert.equal(progress.case_study, undefined);
   assert.equal(progress.modules['01-nginx'].thinking_level, 'none');
   assert.equal(progress.gates['module-review'].forge_thinking_level, 'none');
@@ -71,7 +72,7 @@ test('generated real e2e seed requires publishable case study output', () => {
   });
 
   assert.equal(config.case_study.enabled, true);
-  assert.equal(config.case_study.model, 'gpt-5.4');
+  assert.equal(config.case_study.model, 'gpt-5.3-codex-spark');
   assert.equal(config.case_study.thinking_level, 'none');
   assert.equal(config.case_study.agent_id, 'codex');
   assert.equal(config.case_study.output_file, 'logs/pipeline/case-study.md');
@@ -87,9 +88,170 @@ test('non-smoke suite profile disables optional terminal extras canonically', ()
       scenarioId: 'retry-budget-exhausted',
     });
 
-    assert.equal(progress.pipeline_review.enabled, false);
+    assert.equal(progress.pipeline_review, undefined);
     assert.equal(config.case_study.enabled, false);
   });
+});
+
+test('module execution boundary disables terminal extras without env override', () => {
+  withEnv('REAL_E2E_TERMINAL_EXTRAS', undefined, () => withEnv('REAL_E2E_EXECUTION_BOUNDARY', 'modules', () => {
+    const progress = buildProgress({ projectName: 'unit-module-boundary-terminal-extras' });
+    const config = buildRunConfig({
+      runId: 'real-e2e-unit-module-boundary-terminal-extras',
+      worktreePath: '/tmp/real-e2e-unit-module-boundary-terminal-extras/worktree',
+      scenarioId: 'retry-fix-malformed-output',
+    });
+
+    assert.equal(progress.pipeline_review, undefined);
+    assert.equal(config.case_study.enabled, false);
+    assert.equal(config.pipeline_review.enabled, false);
+  }));
+});
+
+test('final-review execution boundary keeps summary scope without optional terminal extras', () => {
+  withEnv('REAL_E2E_TERMINAL_EXTRAS', undefined, () => withEnv('REAL_E2E_EXECUTION_BOUNDARY', 'final-review', () => {
+    const progress = buildProgress({ projectName: 'unit-final-review-boundary-terminal-extras' });
+    const config = buildRunConfig({
+      runId: 'real-e2e-unit-final-review-boundary-terminal-extras',
+      worktreePath: '/tmp/real-e2e-unit-final-review-boundary-terminal-extras/worktree',
+      scenarioId: 'crash-after-final-review-before-summary',
+    });
+
+    assert.deepEqual(progress.execution_order, [
+      '01-nginx',
+      '02-nginx',
+      '03-nginx',
+      '04-nginx',
+      'gate:module-review',
+      'gate:operator-approval',
+      'gate:final-buster',
+      'gate:final-review',
+    ]);
+    assert.equal(progress.real_e2e.execution_boundary, 'final-review');
+    assert.equal(progress.pipeline_review, undefined);
+    assert.equal(config.case_study.enabled, false);
+    assert.equal(config.pipeline_review.enabled, false);
+  }));
+});
+
+test('scenario module scope keeps module retry cases to the exercised module', () => {
+  withEnv('REAL_E2E_EXECUTION_BOUNDARY', 'modules', () => {
+    const { progress } = applyRealE2EScenario(
+      normalizeRealE2ERuntimeDefaults(buildProgress({
+        projectName: 'unit-scenario-module-scope',
+        moduleIds: ['01-nginx', '02-nginx', '03-nginx', '04-nginx'],
+      }), { scenarioId: 'retry-fix-malformed-output' }),
+      'retry-fix-malformed-output',
+    );
+
+    assert.deepEqual(Object.keys(progress.modules), ['01-nginx']);
+    assert.deepEqual(progress.real_e2e.module_scope, ['01-nginx']);
+    assert.deepEqual(progress.execution_order, ['01-nginx']);
+    assert.deepEqual(progress.gates['module-review'].contract.module_ids, ['01-nginx']);
+    assert.equal(progress.gates['final-buster'].test_config.unit.test_cmd, 'npm run verify:01-nginx');
+  });
+});
+
+test('scenario module scope preserves the full graph for graph-owned scenarios', () => {
+  withEnv('REAL_E2E_EXECUTION_BOUNDARY', 'modules', () => {
+    const { progress } = applyRealE2EScenario(
+      normalizeRealE2ERuntimeDefaults(buildProgress({
+        projectName: 'unit-scenario-full-graph-scope',
+        moduleIds: ['01-nginx', '02-nginx', '03-nginx', '04-nginx'],
+      }), { scenarioId: 'multi-module-independent-success' }),
+      'multi-module-independent-success',
+    );
+
+    assert.deepEqual(Object.keys(progress.modules), ['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
+    assert.deepEqual(progress.real_e2e.module_scope, ['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
+    assert.deepEqual(progress.execution_order, ['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
+    assert.equal(progress.gates['final-buster'].test_config.unit.test_cmd, 'npm run verify:04-nginx');
+  });
+});
+
+test('module-review boundary stops after scoped module review gate', () => {
+  withEnv('REAL_E2E_EXECUTION_BOUNDARY', 'module-review', () => {
+    const { progress } = applyRealE2EScenario(
+      normalizeRealE2ERuntimeDefaults(buildProgress({
+        projectName: 'unit-module-review-scope',
+        moduleIds: ['01-nginx', '02-nginx', '03-nginx', '04-nginx'],
+      }), { scenarioId: 'retry-buster-pass-echo-rejects' }),
+      'retry-buster-pass-echo-rejects',
+    );
+
+    assert.deepEqual(Object.keys(progress.modules), ['01-nginx']);
+    assert.deepEqual(progress.execution_order, ['01-nginx', 'gate:module-review']);
+    assert.equal(progress.pipeline_review, undefined);
+    assert.match(progress.architecture_intent.module_graph, /complete module set/);
+    assert.doesNotMatch(progress.architecture_intent.module_graph, /Four modules/);
+    assert.deepEqual(progress.contracts.runtime_config.static_serving.surfaces, []);
+  });
+});
+
+test('final-buster boundary stops after scoped final Buster gate', () => {
+  withEnv('REAL_E2E_EXECUTION_BOUNDARY', 'final-buster', () => {
+    const progress = normalizeRealE2ERuntimeDefaults(buildProgress({
+      projectName: 'unit-final-buster-scope',
+      moduleIds: ['01-nginx', '02-nginx', '03-nginx', '04-nginx'],
+    }), { scenarioId: 'buster-gate-failure' });
+
+    assert.deepEqual(Object.keys(progress.modules), ['01-nginx']);
+    assert.deepEqual(progress.execution_order, ['01-nginx', 'gate:final-buster']);
+    assert.equal(progress.pipeline_review, undefined);
+  });
+});
+
+test('run config runtime normalization refreshes terminal generator models', () => {
+  withEnv('REAL_E2E_TERMINAL_EXTRAS', undefined, () => withEnv('REAL_E2E_EXECUTION_BOUNDARY', 'full', () => {
+    const config = normalizeRealE2ERunConfigDefaults({
+      fallback_model: 'gpt-5.5',
+      case_study: {
+        enabled: true,
+        model: 'gpt-5.5',
+        thinking_level: 'medium',
+        agent_id: 'codex',
+        output_file: 'stale.md',
+        timeout_minutes: 99,
+      },
+      pipeline_review: {
+        enabled: true,
+        model: 'gpt-5.5',
+        thinking_level: 'medium',
+        agent_id: 'codex',
+        output_file: 'stale-review.md',
+        json_output_file: 'stale-review.json',
+        timeout_minutes: 99,
+      },
+    });
+
+    assert.equal(config.fallback_model, 'gpt-5.3-codex-spark');
+    assert.equal(config.case_study.enabled, true);
+    assert.equal(config.case_study.model, 'gpt-5.3-codex-spark');
+    assert.equal(config.case_study.thinking_level, 'none');
+    assert.equal(config.case_study.output_file, 'logs/pipeline/case-study.md');
+    assert.equal(config.case_study.timeout_minutes, 30);
+    assert.equal(config.pipeline_review.enabled, true);
+    assert.equal(config.pipeline_review.model, 'gpt-5.3-codex-spark');
+    assert.equal(config.pipeline_review.thinking_level, 'none');
+    assert.equal(config.pipeline_review.output_file, 'logs/pipeline-review/PIPELINE-REVIEW.md');
+    assert.equal(config.pipeline_review.json_output_file, 'logs/pipeline-review/PIPELINE-REVIEW.json');
+    assert.equal(config.pipeline_review.timeout_minutes, 10);
+  }));
+});
+
+test('pipeline review timeout scenario uses run config as the only pipeline review authority', () => {
+  const { progress } = applyRealE2EScenario(
+    buildProgress({ projectName: 'unit-pipeline-review-timeout' }),
+    'pipeline-review-timeout',
+  );
+  const config = buildRunConfig({
+    runId: 'run-unit-pipeline-review-timeout',
+    worktreePath: REPO_ROOT,
+    scenarioId: 'pipeline-review-timeout',
+  });
+
+  assert.equal(progress.pipeline_review, undefined);
+  assert.equal(config.pipeline_review.timeout_minutes, 0.001);
 });
 
 test('suite execution boundary narrows generated progress order canonically', () => {
@@ -103,6 +265,21 @@ test('suite execution boundary narrows generated progress order canonically', ()
     const progress = buildProgress({ projectName: 'unit-suite-boundary-review' });
     assert.deepEqual(progress.execution_order, ['01-nginx', '02-nginx', '03-nginx', '04-nginx', 'gate:module-review']);
     assert.equal(progress.real_e2e.execution_boundary, 'module-review');
+  });
+
+  withEnv('REAL_E2E_EXECUTION_BOUNDARY', 'final-review', () => {
+    const progress = buildProgress({ projectName: 'unit-suite-boundary-final-review' });
+    assert.deepEqual(progress.execution_order, [
+      '01-nginx',
+      '02-nginx',
+      '03-nginx',
+      '04-nginx',
+      'gate:module-review',
+      'gate:operator-approval',
+      'gate:final-buster',
+      'gate:final-review',
+    ]);
+    assert.equal(progress.real_e2e.execution_boundary, 'final-review');
   });
 });
 
@@ -159,12 +336,45 @@ test('generated real e2e module and Buster gate use bounded internal timeouts', 
     moduleIds: ['01-nginx', '02-nginx', '03-nginx', '04-nginx'],
   });
 
-  assert.equal(progress.modules['01-nginx'].timeout_minutes, 6);
-  assert.equal(progress.modules['02-nginx'].timeout_minutes, 3);
-  assert.equal(progress.gates['final-buster'].timeout_minutes, 5);
+  assert.equal(progress.modules['01-nginx'].timeout_minutes, 10);
+  assert.equal(progress.modules['02-nginx'].timeout_minutes, 10);
+  assert.equal(progress.gates['final-buster'].timeout_minutes, 10);
   assert.equal(progress.gates['module-review'].timeout_minutes, 15);
   assert.equal(progress.gates['final-review'].timeout_minutes, 20);
-  assert.equal(progress.pipeline_review.timeout_minutes, 10);
+  assert.equal(progress.pipeline_review, undefined);
+});
+
+test('checkpoint restore normalization refreshes harness-owned runtime defaults before scenario overrides', () => {
+  const progress = buildProgress({
+    projectName: 'unit-stale-checkpoint-defaults',
+    moduleIds: ['01-nginx', '02-nginx', '03-nginx', '04-nginx'],
+  });
+  progress.defaults.models.forge = 'gpt-5.4';
+  progress.defaults.thinking.forge = 'low';
+  progress.modules['01-nginx'].timeout_minutes = 6;
+  progress.modules['02-nginx'].timeout_minutes = 3;
+  progress.modules['03-nginx'].timeout_minutes = 3;
+  progress.modules['04-nginx'].timeout_minutes = 3;
+  progress.modules['02-nginx'].thinking_level = 'low';
+  progress.gates['final-buster'].timeout_minutes = 3;
+  progress.gates['final-buster'].model = 'gpt-5.4';
+  progress.pipeline_review = { timeout_minutes: 3 };
+
+  const normalized = normalizeRealE2ERuntimeDefaults(progress);
+
+  assert.equal(normalized.defaults.models.forge, 'gpt-5.3-codex-spark');
+  assert.equal(normalized.defaults.thinking.forge, 'none');
+  assert.equal(normalized.modules['01-nginx'].timeout_minutes, 10);
+  assert.equal(normalized.modules['02-nginx'].timeout_minutes, 10);
+  assert.equal(normalized.modules['03-nginx'].timeout_minutes, 10);
+  assert.equal(normalized.modules['04-nginx'].timeout_minutes, 10);
+  assert.equal(normalized.modules['02-nginx'].thinking_level, 'none');
+  assert.equal(normalized.gates['final-buster'].timeout_minutes, 10);
+  assert.equal(normalized.gates['final-buster'].model, 'gpt-5.3-codex-spark');
+  assert.equal(normalized.pipeline_review, undefined);
+
+  const { progress: scenarioProgress } = applyRealE2EScenario(normalized, 'forge-timeout');
+  assert.equal(scenarioProgress.modules['01-nginx'].timeout_minutes, 0.001);
 });
 
 function approvalTimeoutPolicyForScenario(scenarioId) {
@@ -200,9 +410,27 @@ test('retry-buster-pass-echo-rejects keeps canonical echo reviewer configured', 
   const gate = progress.gates['module-review'];
 
   assert.equal(gate.primary_reviewer, 'echo-codex');
-  assert.equal(gate.instructions_file, 'echo-review/MODULE-REVIEW-INSTRUCTIONS.md');
+  assert.equal(gate.instructions_file, 'echo-review/MODULE-REVIEW-REJECT-INSTRUCTIONS.md');
   assert.equal(gate.output_file, 'logs/echo-review/MODULE-REVIEW.json');
   assert.notEqual(gate.reviewers?.length, 0);
+});
+
+test('retry-buster-pass-echo-rejects materializes canonical swarm review instructions', async () => {
+  let workspace = null;
+  try {
+    workspace = await createRealE2ERunWorkspace({ scenarioId: 'retry-buster-pass-echo-rejects' });
+    const instructions = fs.readFileSync(
+      path.join(workspace.swarmDir, 'echo-review', 'MODULE-REVIEW-REJECT-INSTRUCTIONS.md'),
+      'utf8',
+    );
+    const architecture = fs.readFileSync(path.join(workspace.swarmDir, 'ARCHITECTURE.md'), 'utf8');
+
+    assert.match(instructions, /canonical retry-buster-pass-echo-rejects fixture/);
+    assert.match(architecture, /complete for this scenario/);
+    assert.doesNotMatch(architecture, /modules 02 and 03|module 04|four-module/i);
+  } finally {
+    if (workspace) await cleanupRealE2ERunWorkspace(workspace);
+  }
 });
 
 test('retry malformed-output scenarios enforce unit failures before retry', () => {
@@ -266,6 +494,34 @@ test('scenario setup preflight rejects drift before pipeline execution', () => {
         field: 'gates.final-buster.test_config.k8s.namespace_prefix',
         expected: 'prod',
         actual: 'test',
+      }]);
+      return true;
+    },
+  );
+});
+
+test('scenario setup preflight validates swarm-owned fixture files under swarm dir', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-swarm-setup-contract-'));
+  const projectSrc = path.join(root, 'src');
+  const swarmDir = path.join(projectSrc, '.swarm');
+  fs.mkdirSync(swarmDir, { recursive: true });
+  const base = buildProgress({ projectName: 'unit-retry-buster-pass-echo-rejects' });
+  const { progress } = applyRealE2EScenario(base, 'retry-buster-pass-echo-rejects');
+
+  assert.throws(
+    () => validateRealE2EScenarioSetup({
+      progress,
+      config: {},
+      projectSrc,
+      swarmDir,
+      scenarioId: 'retry-buster-pass-echo-rejects',
+    }),
+    (error) => {
+      assert.equal(error.message, 'real E2E scenario setup contract failed for retry-buster-pass-echo-rejects');
+      assert.deepEqual(error.failures, [{
+        field: 'swarm_file:echo-review/MODULE-REVIEW-REJECT-INSTRUCTIONS.md',
+        expected_line: 'This is the canonical retry-buster-pass-echo-rejects fixture: return status "FAIL" with at least one critical issue after confirming the module retry recovered and reached module review.',
+        actual: null,
       }]);
       return true;
     },
@@ -383,17 +639,23 @@ test('success seed uses a four-module DAG with sequential and parallel module wo
   }
 });
 
-test('expected-failure scenarios keep the canonical four-module architecture graph', async () => {
+test('expected-failure scenarios use the smallest canonical module scope', async () => {
   let workspace = null;
   try {
     workspace = await createRealE2ERunWorkspace({ scenarioId: 'approval-deny' });
     const progress = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'progress.json'), 'utf8'));
 
-    assert.deepEqual(Object.keys(progress.modules), ['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
-    assert.deepEqual(progress.execution_order.slice(0, 4), ['gate:operator-approval', '01-nginx', '02-nginx', '03-nginx']);
-    assert.equal(progress.execution_order.includes('04-nginx'), true);
-    assert.deepEqual(progress.gates['module-review'].contract.module_ids, ['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
-    assert.equal(progress.contracts.deployable_artifact.release_candidate_module, '04-nginx');
+    assert.deepEqual(Object.keys(progress.modules), ['01-nginx']);
+    assert.deepEqual(progress.real_e2e.module_scope, ['01-nginx']);
+    assert.deepEqual(progress.execution_order, [
+      'gate:operator-approval',
+      '01-nginx',
+      'gate:module-review',
+      'gate:final-buster',
+      'gate:final-review',
+    ]);
+    assert.deepEqual(progress.gates['module-review'].contract.module_ids, ['01-nginx']);
+    assert.equal(progress.contracts.deployable_artifact.release_candidate_module, '01-nginx');
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);
   }
@@ -406,10 +668,11 @@ test('generated real e2e run config uses repo-local profile tool paths', async (
     const config = JSON.parse(fs.readFileSync(workspace.runConfigPath, 'utf8'));
 
     assert.equal(config.pre_check.lint_report_path, path.join(workspace.worktreePath, 'skills', 'nova', 'pipeline', 'tools', 'lint-report.ts'));
-    assert.equal(config.agents.buster.redis_js_path, path.join(workspace.worktreePath, 'skills', 'nova', 'pipeline', 'tools', 'redis.ts'));
-    assert.equal(config.fallback_model, 'gpt-5.4');
+    assert.equal(config.agents.buster.redis_js_path, path.join(REPO_ROOT, 'skills', 'nova', 'pipeline', 'tools', 'redis.ts'));
+    assert.equal(config.fallback_model, 'gpt-5.3-codex-spark');
     assert.doesNotMatch(config.pre_check.lint_report_path, /^\/app\/skills\//);
     assert.doesNotMatch(config.agents.buster.redis_js_path, /^\/app\/skills\//);
+    assert.equal(config.agents.buster.redis_js_path.startsWith(workspace.worktreePath), false);
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);
   }
@@ -1003,9 +1266,17 @@ test('real e2e cleanup hands kept final-preview leases back to controller delete
 });
 
 test('namespace controller waits for namespace deletion before removing cleanup finalizer', () => {
-  const source = fs.readFileSync(path.join(REPO_ROOT, 'scripts', 'buster-namespace-controller.mjs'), 'utf8');
+  const source = fs.readFileSync(path.join(REPO_ROOT, 'cmd', 'buster-namespace-controller', 'main.go'), 'utf8');
 
-  assert.match(source, /await waitForNamespaceDeleted\(namespaceName\)/);
+  assert.match(source, /return c\.waitForNamespaceDeleted\(ctx, namespaceName\)/);
   assert.match(source, /namespace .* was not deleted before cleanup timeout/);
-  assert.match(source, /await removeFinalizer\(lease\)/);
+  assert.match(source, /return c\.removeFinalizer\(ctx, item\)/);
+});
+
+test('namespace controller initializes preview credential state before the service-pending return', () => {
+  const source = fs.readFileSync(path.join(REPO_ROOT, 'cmd', 'buster-namespace-controller', 'main.go'), 'utf8');
+  const previewExposure = source.match(/func \(c \*controller\) ensurePreviewExposure[\s\S]*?\n}\n\nfunc \(c \*controller\) copySecrets/)?.[0] || '';
+
+  assert.match(previewExposure, /credentialsAvailable := false[\s\S]*?\/api\/v1\/namespaces\/"\+namespaceName\+"\/services\/"\+exposure\.ServiceName/);
+  assert.match(previewExposure, /Waiting for Service\/" \+ exposure\.ServiceName \+ " before creating Tailscale ingress/);
 });

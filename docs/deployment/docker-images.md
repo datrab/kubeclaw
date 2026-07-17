@@ -13,13 +13,13 @@ Document what the runtime images contain.
 
 `docker/Dockerfile.sandbox` builds the Buster runtime from `ghcr.io/openclaw/openclaw:latest`. It installs Podman/buildah/slirp/fuse-overlayfs, Chromium, nginx, jq, tree, ripgrep, Lighthouse, Playwright, axe, pixelmatch, pngjs, ws, k6 `v0.54.0`, sandbox helper scripts, the observer plugin extension, and the same official external plugin cache plus a baked cache-version stamp for incremental init seeding. It intentionally does not bake Buster or common skills; those arrive through the code-bundle deploy path.
 
-`docker/Dockerfile.namespace-controller` builds the Buster namespace controller from `node:22-bookworm-slim`. It copies only `scripts/buster-namespace-controller.mjs` and runs it as the non-root `node` user. It does not inherit the OpenClaw runtime image.
+`docker/Dockerfile.namespace-controller` builds the Buster namespace controller from `cmd/buster-namespace-controller` in a Go build stage, then copies the compiled binary into a distroless non-root runtime image. It does not inherit the OpenClaw runtime image.
 
 `docker/Dockerfile.prism-preview` builds a lightweight `node:20-alpine` static server with `serve` and exposes port `3456`.
 
 Current production values use `latest` tags for general, sandbox, namespace-controller, and Prism preview images. CI publishes `latest`, SHA, and date tags.
 
-The root `.dockerignore` keeps runtime image build contexts narrow. It defaults to excluding repository files, then allows only the image inputs used by the Dockerfiles: Dockerfiles, the observer plugin source, and the namespace controller entrypoint. Agent skills are excluded from image contexts because code bundles own `/app/skills`. Deployment values under `my-values/`, local `.swarm` state, worktrees, local dependencies, logs, and secret-shaped files are excluded from Docker contexts even though `my-values/` remains tracked as the current audited deployment surface.
+The root `.dockerignore` keeps runtime image build contexts narrow. It defaults to excluding repository files, then allows only the image inputs used by the Dockerfiles: Dockerfiles, the observer plugin source, `go.mod`, and the namespace controller Go source. Agent skills are excluded from image contexts because code bundles own `/app/skills`. Deployment values under `my-values/`, local `.swarm` state, worktrees, local dependencies, logs, and secret-shaped files are excluded from Docker contexts even though `my-values/` remains tracked as the current audited deployment surface.
 
 ## Runtime Image Surfaces
 
@@ -27,12 +27,12 @@ The root `.dockerignore` keeps runtime image build contexts narrow. It defaults 
 | --- | --- | --- | --- | --- |
 | General | `plugins/openclaw-agent-observer/` | empty `/app/skills` mount point, `/app/dist/extensions/kubeclaw-agent-observer`, `/opt/openclaw-plugin-home` | `NODE_PATH=/usr/local/lib/node_modules:/app/node_modules`, `NPM_CONFIG_CACHE=/root/.npm`, `HOME=/home/node` | missing tool, plugin compile failure, or official plugin install failure during Docker build; deployment truth fails if install commands silently continue |
 | Sandbox | `plugins/openclaw-agent-observer/` | empty `/app/skills` mount point, `/sandbox`, `/var/lib/containers/storage`, `/ms-playwright`, `/app/dist/extensions/kubeclaw-agent-observer`, `/opt/openclaw-plugin-home` | `PLAYWRIGHT_BROWSERS_PATH=/ms-playwright`, `SANDBOX_TIMEOUT`, Podman storage under `/var/lib/containers/storage` | Buster startup or suite failures, Podman storage pressure, missing browser/tool binary, or official plugin install failure |
-| Namespace controller | `scripts/buster-namespace-controller.mjs` | `/app/scripts/buster-namespace-controller.mjs` | Kubernetes ServiceAccount env and token mount, `BUSTER_*` broker settings | controller pod `ImagePullBackOff`, ServiceAccount token/API host errors, or lease reconciliation errors |
+| Namespace controller | `cmd/buster-namespace-controller/**` | `/app/buster-namespace-controller` | Kubernetes ServiceAccount env and token mount, `BUSTER_*` broker settings | controller pod `ImagePullBackOff`, ServiceAccount token/API host errors, or lease reconciliation errors |
 | Prism preview | none beyond the Dockerfile | `/designs`, port `3456` | `serve /designs -p 3456 --no-clipboard` | sidecar reachable but no preview files if Nova has not written workspace designs |
 
 ## Build Context Contract
 
-`.dockerignore` starts with `**`, then allows only `docker/`, `plugins/openclaw-agent-observer/`, and `scripts/buster-namespace-controller.mjs`. This is intentional: agent skills, deployment values, local state, `.github/`, `node_modules`, logs, `.env` files, key material, and decrypted secret-shaped files must not enter the image build context.
+`.dockerignore` starts with `**`, then allows only `docker/`, `go.mod`, `cmd/buster-namespace-controller/`, and `plugins/openclaw-agent-observer/`. This is intentional: agent skills, deployment values, local state, `.github/`, `node_modules`, logs, `.env` files, key material, and decrypted secret-shaped files must not enter the image build context.
 
 ## Operator Deployment Use
 

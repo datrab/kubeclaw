@@ -457,6 +457,22 @@ function buildDegradedEvidenceBlockedResult(config: AnyRecord, progress: AnyReco
   });
 }
 
+function finalizeDegradedEvidenceHaltIfNeeded(config: AnyRecord, progress: AnyRecord, opts: AnyRecord, {
+  scheduleProjectSummaryOnBlocked = true,
+}: AnyRecord = {}): Promise<number> | null {
+  const degradedBlockedResult = buildDegradedEvidenceBlockedResult(config, progress);
+  if (!degradedBlockedResult) return null;
+  log('ERROR', 'Pipeline has unresolved degraded/manual fallback evidence — blocking clean completion');
+  return finalizeTerminalHalt(config, progress, {
+    stepType: 'pipeline',
+    stepId: 'degraded_evidence',
+    result: degradedBlockedResult,
+    opts,
+    summaryReason: 'degraded_evidence_requires_handoff',
+    scheduleProjectSummaryOnBlocked,
+  });
+}
+
 function buildFinalPreviewDeliveryFailureResult(config: AnyRecord, error: unknown): AnyRecord {
   const failureClass = typeof (error as AnyRecord)?.failure_class === 'string' && (error as AnyRecord).failure_class.trim()
     ? (error as AnyRecord).failure_class.trim()
@@ -615,15 +631,17 @@ export async function completePipeline(config: AnyRecord, progress: AnyRecord, o
   const persistedHaltExitCode = emitPersistedPipelineHalt(config, deps);
   if (persistedHaltExitCode !== null) return persistedHaltExitCode;
 
+  const ctx = _telemetryCtx(config);
   const priorPipelineState = selectDefinedValue(() => (loadLifecycleReadModels(config)?.pipeline), () => (null));
   const runId = requirePipelineRunId(config, 'Pipeline completion');
   if (priorPipelineState?.run_id === runId && priorPipelineState?.status === 'COMPLETED') {
-    log('INFO', `Pipeline run '${priorPipelineState.run_id}' already completed — checking terminal generators`);
+    log('INFO', `Pipeline run '${priorPipelineState.run_id}' already completed — repairing terminal artifacts and checking terminal generators`);
+    emitPipelineSummaryLifecycle(config, ctx, 'succeeded', 'PIPELINE_COMPLETE', progress, deps.writeSummary);
     await runMissingTerminalCompletionGenerators(config, progress, opts);
+    await onPipelineCompleted(ctx, 'succeeded', undefined, {}, {});
     return PROCESS_SUCCESS_CODE;
   }
 
-  const ctx = _telemetryCtx(config);
   const completionFields = buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: runId });
   const unavailableTerminalGenerator = validateTerminalCompletionGenerators(config, progress);
   if (unavailableTerminalGenerator) {
@@ -651,18 +669,38 @@ export async function completePipeline(config: AnyRecord, progress: AnyRecord, o
       });
     }
   }
-  const degradedBlockedResult = buildDegradedEvidenceBlockedResult(config, progress);
-  if (degradedBlockedResult) {
-    log('ERROR', 'Pipeline has unresolved degraded/manual fallback evidence — blocking clean completion');
+  const preCompletionDegradedHalt = finalizeDegradedEvidenceHaltIfNeeded(config, progress, opts);
+  if (preCompletionDegradedHalt) return preCompletionDegradedHalt;
+  emitPipelineCheckpoint(config, 'after_final_review_before_summary', {
+    step_type: 'pipeline',
+    step_id: 'pipeline_complete',
+  });
+  emitPipelineSummaryLifecycle(config, ctx, 'succeeded', 'PIPELINE_COMPLETE', progress, deps.writeSummary);
+  const failedTerminalGenerator = await runMissingTerminalCompletionGenerators(config, progress, opts);
+  if (failedTerminalGenerator) {
+    log('ERROR', `Terminal generator '${failedTerminalGenerator.stageId}' failed before clean completion`);
     return finalizeTerminalHalt(config, progress, {
-      stepType: 'pipeline',
-      stepId: 'degraded_evidence',
-      result: degradedBlockedResult,
+      stepType: 'generator',
+      stepId: failedTerminalGenerator.stageId,
+      result: buildTerminalGeneratorFailureResult(config, failedTerminalGenerator.stageId, failedTerminalGenerator.result),
       opts,
-      summaryReason: 'degraded_evidence_requires_handoff',
-      scheduleProjectSummaryOnBlocked: true,
+      summaryReason: 'terminal_generator_failed',
     });
   }
+  await onPipelineCompleted(ctx, 'succeeded', undefined, {}, {
+    presentation: {
+      discord: {
+        level: 'OK',
+        title: `Pipeline Complete: ${config.project}`,
+        description: 'All modules passed!',
+        fields: completionFields,
+      },
+    },
+  });
+  const postCompletionNotificationDegradedHalt = finalizeDegradedEvidenceHaltIfNeeded(config, progress, opts, {
+    scheduleProjectSummaryOnBlocked: false,
+  });
+  if (postCompletionNotificationDegradedHalt) return postCompletionNotificationDegradedHalt;
   try {
     appendPipelineLifecycleEvent(config, 'pipeline_run.completed', {
       progress,
@@ -676,38 +714,6 @@ export async function completePipeline(config: AnyRecord, progress: AnyRecord, o
   }
   log('OK', '🎉 Pipeline complete — all modules and gates PASS');
   deps.output({ exit: PROCESS_SUCCESS_CODE, status: 'PIPELINE_COMPLETE' });
-  await onPipelineCompleted(ctx, 'succeeded', undefined, {}, {
-    presentation: {
-      discord: {
-        level: 'OK',
-        title: `Pipeline Complete: ${config.project}`,
-        description: 'All modules passed!',
-        fields: completionFields,
-      },
-    },
-  });
-  emitPipelineCheckpoint(config, 'after_final_review_before_summary', {
-    step_type: 'pipeline',
-    step_id: 'pipeline_complete',
-  });
-  emitPipelineSummaryLifecycle(config, ctx, 'succeeded', 'PIPELINE_COMPLETE', progress, deps.writeSummary);
-  const failedTerminalGenerator = await runMissingTerminalCompletionGenerators(config, progress, opts);
-  if (failedTerminalGenerator) {
-    log('ERROR', `Terminal generator '${failedTerminalGenerator.stageId}' failed after canonical completion`);
-    deps.output({
-      exit: PROCESS_FAILURE_CODE,
-      terminal_status: 'failed',
-      terminal_decision: {
-        action: 'stop',
-        scope: 'pipeline',
-        reasonCode: 'terminal_generator_failed',
-        humanReason: `Terminal generator '${failedTerminalGenerator.stageId}' failed after canonical completion`,
-        source: failedTerminalGenerator.stageId,
-      },
-      generator_result: buildTerminalGeneratorFailureResult(config, failedTerminalGenerator.stageId, failedTerminalGenerator.result),
-    });
-    return PROCESS_FAILURE_CODE;
-  }
   return PROCESS_SUCCESS_CODE;
 }
 

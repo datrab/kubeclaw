@@ -23,11 +23,11 @@ const TERMINAL_COMPLETION_GENERATORS = Object.freeze([
     opts: { orderIndex: 1 },
   },
   {
-    stageId: 'generator:case_study',
+    stageId: 'generator:pipeline_review',
     opts: { orderIndex: 2 },
   },
   {
-    stageId: 'generator:pipeline_review',
+    stageId: 'generator:case_study',
     opts: { orderIndex: 3 },
   },
 ]);
@@ -119,9 +119,15 @@ function pipelineReviewConfig(config: AnyRecord, progress: AnyRecord): AnyRecord
   return selectDefinedValue(() => (selectDefinedValue(() => (config?.pipeline_review), () => (progress?.pipeline_review))), () => ({}));
 }
 
+function executionBoundary(progress: AnyRecord): string {
+  return String(selectDefinedValue(() => (progress?.real_e2e?.execution_boundary), () => ('full')) || 'full');
+}
+
 function terminalCompletionGenerators(config: AnyRecord, progress: AnyRecord): readonly AnyRecord[] {
   const pipelineReview = pipelineReviewConfig(config, progress);
+  const boundary = executionBoundary(progress);
   return TERMINAL_COMPLETION_GENERATORS.filter((generator: AnyRecord) => {
+    if (boundary !== 'full' && ['generator:case_study', 'generator:pipeline_review'].includes(generator.stageId)) return false;
     if (generator.stageId === 'generator:case_study') return config?.case_study?.enabled !== false;
     if (generator.stageId === 'generator:pipeline_review') return pipelineReview?.enabled !== false;
     return true;

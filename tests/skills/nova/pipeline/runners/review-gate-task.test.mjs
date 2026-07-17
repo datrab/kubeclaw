@@ -227,6 +227,7 @@ test('runReviewGateOnce removes stale review output even when archival fails', a
 
   assert.equal(result.ok, false);
   assert.match(result.error, /Review file not received/);
+  assert.equal(result.failure_class, 'timeout');
   assert.equal(fs.existsSync(outputFilePath), false);
 });
 

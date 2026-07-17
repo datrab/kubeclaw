@@ -182,7 +182,7 @@ function emitAcceptedGateControl(ctx, gateId, gate, controlResult) {
   return onGateFail(ctx, gateId, payload);
 }
 
-function buildGateStepResultFromControl(config, gateId, gate, controlResult, extra = {}) {
+export function buildGateStepResultFromControl(config, gateId, gate, controlResult, extra = {}) {
   const outcome = controlResult?.diagnostics?.typed?.gate?.outcomeClass;
   applyAcceptedGateControl(config, gateId, gate, controlResult);
   emitAcceptedGateControl(activeGateRunnerContext(config), gateId, gate, controlResult);
@@ -196,7 +196,6 @@ function buildGateStepResultFromControl(config, gateId, gate, controlResult, ext
     rateLimit: selectTruthyValue(() => (controlResult?.diagnostics?.typed?.rateLimit), () => (null)),
     terminalAction: terminalActionForGateOutcomeClass(outcome),
     terminalScope: PIPELINE_TERMINAL_SCOPES.GATE,
-    terminalReasonCode: outcome,
     terminalSource: 'gate_control_result',
   });
 }

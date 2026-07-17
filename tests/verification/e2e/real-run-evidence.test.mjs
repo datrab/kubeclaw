@@ -9,6 +9,7 @@ import {
   evidenceSchemaTestHooks,
   expectedFailureContractForScenario,
   verifyExpectedFailureEvidence,
+  verifyRealRunEvidence,
 } from './real-run-evidence.mjs';
 import {
   listRealE2EScenarioIds,
@@ -269,6 +270,7 @@ function createRetryWorkspace({
       for (const [field, value] of Object.entries(contract.setup.progress)) writeDotted(progress, field, value);
       writeJson(progressPath, progress);
     }
+    applyContractSetupFixtures(workspace, contract);
   } catch (error) {
     if (scenario.expectedPipelineExit === 'nonzero') throw error;
     // Success scenarios do not have failure contracts.
@@ -315,6 +317,107 @@ function writeModuleBusterOutput(workspace, moduleId, status = 'PASS') {
   });
 }
 
+function appendPipelineAgentEvent(workspace, event) {
+  appendJsonl(path.join(workspace.swarmDir, 'logs', 'pipeline', 'pipeline.jsonl'), {
+    v: 1,
+    event_id: `event-${++eventCounter}`,
+    ts: '2026-07-11T00:00:00.000Z',
+    project: workspace.projectName,
+    source: 'pipeline',
+    emitter: 'nova/pipeline/services/agent-observability-ingester',
+    ...event,
+  });
+}
+
+function writeModuleBoundarySuccessArtifacts(workspace) {
+  const pipelineRunId = pipelineRunIdFor(workspace);
+  writeJson(path.join(workspace.swarmDir, 'modules', '01-nginx', 'forge-completion.json'), {
+    artifact_type: 'forge_completion',
+    status: 'READY_FOR_TESTING',
+    summary: 'module ready for Buster',
+    evidence: {
+      inspected_files: ['src/index.js'],
+      consulted_contracts: ['.swarm/contracts/module.json'],
+      implementation_notes: 'validated module boundary fixture',
+    },
+    completed_at: '2026-07-11T00:00:00.000Z',
+  });
+  writeJson(path.join(workspace.swarmDir, 'logs', 'architecture-validator', 'results.json'), {
+    project: workspace.projectName,
+    run_id: workspace.runId,
+    blocked: false,
+    findings: [],
+    timestamp: '2026-07-11T00:00:00.000Z',
+  });
+  fs.mkdirSync(path.join(workspace.swarmDir, 'logs', 'architecture-validator'), { recursive: true });
+  fs.writeFileSync(path.join(workspace.swarmDir, 'logs', 'architecture-validator', 'summary.md'), '# Architecture validation\n');
+  const summary = {
+    run_id: pipelineRunId,
+    project: workspace.projectName,
+    terminal_status: 'succeeded',
+    governance: {},
+    telemetry_stream_key: `pipeline:telemetry:${workspace.projectName}:${pipelineRunId}`,
+  };
+  writeJson(path.join(workspace.swarmDir, 'logs', 'pipeline', 'summary.json'), summary);
+  writeJson(path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunId, 'summary.json'), summary);
+  writeJson(path.join(workspace.swarmDir, 'logs', 'pipeline', 'case-study.base.json'), {
+    run_id: pipelineRunId,
+    project: workspace.projectName,
+  });
+  writeJson(path.join(workspace.swarmDir, 'logs', 'pipeline', 'latest.json'), {
+    run_id: pipelineRunId,
+    status: 'completed',
+    terminal_status: 'succeeded',
+    telemetry_stream_key: `pipeline:telemetry:${workspace.projectName}:${pipelineRunId}`,
+    run_dir: `runs/${pipelineRunId}`,
+    path: `runs/${pipelineRunId}`,
+    pipeline_jsonl: `runs/${pipelineRunId}/pipeline.jsonl`,
+    summary_json: `runs/${pipelineRunId}/summary.json`,
+    authority: { source: 'test' },
+  });
+  const lifecyclePath = path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunId, 'lifecycle', 'canonical-events.jsonl');
+  appendJsonl(lifecyclePath, pipelineRunStarted(workspace));
+  appendJsonl(lifecyclePath, moduleAttemptEvent(workspace, 'module_attempt.started', 1));
+  appendJsonl(lifecyclePath, moduleAttemptEvent(workspace, 'module_attempt.testing_started', 1));
+  appendJsonl(lifecyclePath, moduleAttemptEvent(workspace, 'module_attempt.passed', 1));
+  appendJsonl(lifecyclePath, pipelineRunCompleted(workspace));
+  writeLifecycleReadModels(workspace, {
+    status: 'PASS',
+    fail_count: 0,
+    current_attempt: 1,
+    fail_summaries: [],
+  });
+  appendJsonl(path.join(workspace.swarmDir, 'logs', 'pipeline', 'discord.jsonl'), {
+    run_id: pipelineRunId,
+    project: workspace.projectName,
+    title: 'Module 01-nginx - Buster queued',
+    fields: [],
+  });
+  const receiptPath = path.join(workspace.swarmDir, 'logs', 'pipeline', 'discord-deliveries.jsonl');
+  const receiptBase = {
+    run_id: pipelineRunId,
+    project: workspace.projectName,
+    ok: true,
+    channel_id: 'channel-1',
+    webhook_message_returned: true,
+  };
+  appendJsonl(receiptPath, { ...receiptBase, title: 'Module 01-nginx - Buster queued', message_id: 'msg-1' });
+  appendJsonl(receiptPath, { ...receiptBase, title: 'Suite Results: PASS - 01-nginx', message_id: 'msg-2' });
+  workspace.__testTelemetryEvents = [
+    { v: 1, source: 'pipeline', type: 'pipeline.started', run_id: pipelineRunId, project: workspace.projectName, modules: [{ id: '01-nginx' }], gates: [] },
+    { v: 1, source: 'pipeline', type: 'module.started', run_id: pipelineRunId, project: workspace.projectName, module_id: '01-nginx' },
+    { v: 1, source: 'pipeline', type: 'pipeline.completed', run_id: pipelineRunId, project: workspace.projectName, terminal_status: 'succeeded' },
+  ];
+  for (const event of [
+    { type: 'agent.spawned', label: 'forge-01-nginx-1', session_key: 'agent:forge' },
+    { type: 'agent.tool.started', label: 'forge-01-nginx-1', tool_name: 'bash' },
+    { type: 'agent.tool.finished', label: 'forge-01-nginx-1', tool_name: 'bash', outcome: 'completed' },
+    { type: 'agent.ended', label: 'forge-01-nginx-1', session_key: 'agent:forge' },
+  ]) {
+    appendPipelineAgentEvent(workspace, event);
+  }
+}
+
 function createMultiModuleWorkspace({
   scenarioId = 'multi-module-independent-success',
   dependency = false,
@@ -328,8 +431,14 @@ function createMultiModuleWorkspace({
   const workspace = createWorkspace(scenario, {
     progressFields: {
       'modules.01-nginx.depends_on': [],
-      'modules.02-nginx.depends_on': dependency ? ['01-nginx'] : [],
-      'real_e2e.multi_module.modules': ['01-nginx', '02-nginx'],
+      'modules.02-nginx.depends_on': ['01-nginx'],
+      'modules.03-nginx.depends_on': ['01-nginx'],
+      'modules.04-nginx.depends_on': ['01-nginx', '02-nginx', '03-nginx'],
+      'real_e2e.multi_module.modules': ['01-nginx', '02-nginx', '03-nginx', '04-nginx'],
+      'real_e2e.multi_module.dependencies.01-nginx': [],
+      'real_e2e.multi_module.dependencies.02-nginx': ['01-nginx'],
+      'real_e2e.multi_module.dependencies.03-nginx': ['01-nginx'],
+      'real_e2e.multi_module.dependencies.04-nginx': ['01-nginx', '02-nginx', '03-nginx'],
     },
   });
   const lifecyclePath = path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', workspace.runId, 'lifecycle', 'canonical-events.jsonl');
@@ -346,35 +455,58 @@ function createMultiModuleWorkspace({
       ...(includeSecondStart ? [
         moduleAttemptEventFor(workspace, '02-nginx', 'module_attempt.testing_started', 1),
         moduleAttemptEventFor(workspace, '02-nginx', 'module_attempt.passed', 1),
+        moduleAttemptEventFor(workspace, '03-nginx', 'module_attempt.started', 1),
+        moduleAttemptEventFor(workspace, '03-nginx', 'module_attempt.testing_started', 1),
+        moduleAttemptEventFor(workspace, '03-nginx', 'module_attempt.passed', 1),
+        moduleAttemptEventFor(workspace, '04-nginx', 'module_attempt.started', 1),
+        moduleAttemptEventFor(workspace, '04-nginx', 'module_attempt.testing_started', 1),
+        moduleAttemptEventFor(workspace, '04-nginx', 'module_attempt.passed', 1),
       ] : []),
     ]
     : [
       moduleAttemptEventFor(workspace, '01-nginx', 'module_attempt.started', 1),
       ...(includeSecondStart && !dependency && !startSecondAfterFirstPass ? [moduleAttemptEventFor(workspace, '02-nginx', 'module_attempt.started', 1)] : []),
+      ...(includeSecondStart && !dependency && !startSecondAfterFirstPass ? [moduleAttemptEventFor(workspace, '03-nginx', 'module_attempt.started', 1)] : []),
       moduleAttemptEventFor(workspace, '01-nginx', 'module_attempt.testing_started', 1),
       moduleAttemptEventFor(workspace, '01-nginx', 'module_attempt.passed', 1),
       ...(includeSecondStart && (dependency || startSecondAfterFirstPass) ? [moduleAttemptEventFor(workspace, '02-nginx', 'module_attempt.started', 1)] : []),
+      ...(includeSecondStart && (dependency || startSecondAfterFirstPass) ? [moduleAttemptEventFor(workspace, '03-nginx', 'module_attempt.started', 1)] : []),
       ...(includeSecondStart ? [
         moduleAttemptEventFor(workspace, '02-nginx', 'module_attempt.testing_started', 1),
         moduleAttemptEventFor(workspace, '02-nginx', 'module_attempt.passed', 1),
+        moduleAttemptEventFor(workspace, '03-nginx', 'module_attempt.testing_started', 1),
+        moduleAttemptEventFor(workspace, '03-nginx', 'module_attempt.passed', 1),
+        moduleAttemptEventFor(workspace, '04-nginx', 'module_attempt.started', 1),
+        moduleAttemptEventFor(workspace, '04-nginx', 'module_attempt.testing_started', 1),
+        moduleAttemptEventFor(workspace, '04-nginx', 'module_attempt.passed', 1),
       ] : []),
     ];
   for (const event of events) appendJsonl(lifecyclePath, event);
   writeLifecycleReadModels(
     workspace,
     { status: 'PASS', fail_count: retry ? 1 : 0, current_attempt: retry ? 2 : 1 },
-    { '02-nginx': { status: 'PASS', fail_count: 0, current_attempt: 1 } },
+    {
+      '02-nginx': { status: 'PASS', fail_count: 0, current_attempt: 1 },
+      '03-nginx': { status: 'PASS', fail_count: 0, current_attempt: 1 },
+      '04-nginx': { status: 'PASS', fail_count: 0, current_attempt: 1 },
+    },
   );
   writeMultiModuleProjectSummary(workspace, [
     { id: '01-nginx', status: 'PASS', attempts: retry ? 2 : 1, failCount: retry ? 1 : 0 },
     { id: '02-nginx', status: 'PASS', attempts: 1, failCount: 0 },
+    { id: '03-nginx', status: 'PASS', attempts: 1, failCount: 0 },
+    { id: '04-nginx', status: 'PASS', attempts: 1, failCount: 0 },
   ]);
   writeModuleBusterOutput(workspace, '01-nginx');
   writeModuleBusterOutput(workspace, '02-nginx');
+  writeModuleBusterOutput(workspace, '03-nginx');
+  writeModuleBusterOutput(workspace, '04-nginx');
   workspace.__testDecodedBusterTasks = [
     busterTask(workspace, { moduleId: '01-nginx', attempt: 1 }),
     ...(retry ? [busterTask(workspace, { moduleId: '01-nginx', attempt: 2 })] : []),
     ...(omitSecondTask ? [] : [busterTask(workspace, { moduleId: '02-nginx', attempt: 1 })]),
+    ...(includeSecondStart ? [busterTask(workspace, { moduleId: '03-nginx', attempt: 1 })] : []),
+    ...(includeSecondStart ? [busterTask(workspace, { moduleId: '04-nginx', attempt: 1 })] : []),
     busterTask(workspace, { type: 'gate_test', attempt: 1 }),
   ];
   if (finalGateFailure) {
@@ -417,26 +549,6 @@ function pipelineRunCompleted(workspace) {
   };
 }
 
-function crashInjectedEvent(workspace, scenario) {
-  return {
-    event_id: `evt-${++eventCounter}`,
-    type: 'real_e2e.crash_injected',
-    refs: {
-      run_id: workspace.runId,
-      project: workspace.projectName,
-      module_id: '01-nginx',
-    },
-    data: {
-      point: scenario.crashPoint,
-      crash_exit_code: 86,
-      scenario: scenario.id,
-      step_type: 'module',
-      step_id: '01-nginx',
-      attempt: 1,
-    },
-  };
-}
-
 function pipelineCheckpointEvent(workspace, scenario) {
   return {
     event_id: `evt-${++eventCounter}`,
@@ -463,7 +575,7 @@ function writeCrashMarker(workspace, scenario, overrides = {}) {
     project: workspace.projectName,
     scenario: scenario.id,
     crashed_at: '2026-06-28T00:00:00.000Z',
-    exit_code: 86,
+    signal: 'SIGKILL',
     details: { module_id: '01-nginx', attempt: 1 },
     ...overrides,
   });
@@ -500,13 +612,17 @@ function createCrashResumeWorkspace({
   omitFinalGateTask = false,
   omitCheckpoint = false,
   latestOverrides = {},
+  executionBoundary = 'full',
 } = {}) {
   const scenario = resolveRealE2EScenario(scenarioId);
-  const workspace = createWorkspace(scenario);
+  const workspace = createWorkspace(scenario, {
+    progressFields: {
+      'real_e2e.execution_boundary': executionBoundary,
+    },
+  });
   const lifecyclePath = path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', workspace.runId, 'lifecycle', 'canonical-events.jsonl');
   appendJsonl(lifecyclePath, pipelineRunStarted(workspace));
   if (!omitCheckpoint) appendJsonl(lifecyclePath, pipelineCheckpointEvent(workspace, scenario));
-  appendJsonl(lifecyclePath, crashInjectedEvent(workspace, scenario));
   writeRetryLifecycle(workspace, {
     passedAttempt: retry ? 2 : 1,
     failedAttempts: retry ? [1] : [],
@@ -545,8 +661,13 @@ function createCrashResumeWorkspace({
 }
 
 function applyContractSetupFixtures(workspace, contract) {
-  for (const [relativePath, expectedLine] of Object.entries(contract.setup?.file_exact_line || {})) {
+  for (const [relativePath, expectedLine] of Object.entries(contract.setup?.source_file_exact_line || {})) {
     const filePath = path.join(workspace.projectSrc, relativePath);
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    fs.writeFileSync(filePath, `${expectedLine}\n`);
+  }
+  for (const [relativePath, expectedLine] of Object.entries(contract.setup?.swarm_file_exact_line || {})) {
+    const filePath = path.join(workspace.swarmDir, relativePath);
     fs.mkdirSync(path.dirname(filePath), { recursive: true });
     fs.writeFileSync(filePath, `${expectedLine}\n`);
   }
@@ -693,24 +814,26 @@ function busterFailureArtifact(workspace, {
 function createMalformedWorkspace(scenarioId) {
   const scenario = resolveRealE2EScenario(scenarioId);
   if (scenario.id === 'forge-malformed-output') {
+    const { workspace } = createRetryWorkspace({
+      scenarioId: 'forge-malformed-output',
+      moduleStatus: 'PASS',
+      failCount: 1,
+      passedAttempt: 2,
+      failedAttempts: [1],
+      failedAttemptsWithTesting: [],
+      taskAttempts: [2],
+      includeFinalGateTask: false,
+      failSummaries: [{
+        attempt: 1,
+        phase: 'forge',
+        failure_class: 'invalid_contract',
+        summary: 'invalid Forge completion artifact',
+      }],
+    });
+    appendContractTerminalEvent(workspace, scenario);
     return {
       scenario,
-      workspace: createWorkspace(scenario, {
-        progressFields: {
-          'modules.01-nginx.timeout_minutes': Number(process.env.REAL_E2E_FORGE_MALFORMED_TIMEOUT_MINUTES || 15),
-        },
-        events: [
-          pipelineRunHalted({
-            runId: 'real-e2e-run-1',
-            projectName: 'real-e2e-project',
-          }, {
-            step_type: 'module',
-            step_id: '01-nginx',
-            terminal_status: 'failed',
-            terminal_decision: { reasonCode: 'invalid_contract' },
-          }),
-        ],
-      }),
+      workspace,
     };
   }
   if (scenario.id === 'echo-malformed-output') {
@@ -777,8 +900,8 @@ test('Buster module failure setup requires the exact configured failing command'
   const evidence = await verifyExpectedFailureEvidence(workspace, scenario);
 
   assert.equal(evidence.ok, false);
-  const setup = evidence.failures.find((failure) => failure.code === 'expected_failure_setup_contract');
-  assert.equal(setup.reason, 'REAL_E2E_FAILURE_SETUP_CONTRACT_MISMATCH');
+  const setup = evidence.failures.find((failure) => failure.code === 'scenario_setup_contract');
+  assert.equal(setup.reason, 'REAL_E2E_SCENARIO_SETUP_CONTRACT_MISMATCH');
   assert.deepEqual(setup.field_failures, [{
     field: 'modules.01-nginx.test_config.unit.test_cmd',
     expected: expectedFailUnitCommand('REAL_E2E_EXPECTED_BUSTER_MODULE_FAILURE'),
@@ -814,8 +937,8 @@ test('Buster final gate failure setup requires the exact configured failing comm
   const evidence = await verifyExpectedFailureEvidence(workspace, scenario);
 
   assert.equal(evidence.ok, false);
-  const setup = evidence.failures.find((failure) => failure.code === 'expected_failure_setup_contract');
-  assert.equal(setup.reason, 'REAL_E2E_FAILURE_SETUP_CONTRACT_MISMATCH');
+  const setup = evidence.failures.find((failure) => failure.code === 'scenario_setup_contract');
+  assert.equal(setup.reason, 'REAL_E2E_SCENARIO_SETUP_CONTRACT_MISMATCH');
   assert.deepEqual(setup.field_failures, [{
     field: 'gates.final-buster.test_config.unit.test_cmd',
     expected: expectedFailUnitCommand('REAL_E2E_EXPECTED_BUSTER_GATE_FAILURE'),
@@ -1454,7 +1577,7 @@ test('multi-module evidence accepts independent modules with shared final gate',
   assert.equal(evidence.ok, true);
   assert.equal(evidence.code, 'multi_module_success');
   assert.equal(evidence.checks.find((check) => check.code === 'multi_module_parallel_start')?.ok, true);
-  assert.equal(evidence.checks.find((check) => check.code === 'multi_module_project_summary')?.module_ids.length, 2);
+  assert.equal(evidence.checks.find((check) => check.code === 'multi_module_project_summary')?.module_ids.length, 4);
 });
 
 test('multi-module evidence accepts dependency ordering and retry unlock', async () => {
@@ -1493,8 +1616,8 @@ test('multi-module evidence rejects missing second module Buster task', async ()
 
   assert.equal(evidence.ok, false);
   const taskFailure = evidence.failures.find((failure) => failure.code === 'multi_module_buster_task_stream');
-  assert.equal(taskFailure.reason, 'REAL_E2E_MULTI_MODULE_BUSTER_TASK_ORDER_MISMATCH');
-  assert.equal(taskFailure.task_order_contract.missing_contract, 'module_test:02-nginx:attempt-1');
+  assert.equal(taskFailure.reason, 'REAL_E2E_MULTI_MODULE_BUSTER_TASK_MISSING');
+  assert.equal(taskFailure.missing_contracts[0].name, 'module_test:02-nginx:attempt-1');
 });
 
 test('multi-module dependency evidence rejects dependent module starting before dependency passes', async () => {
@@ -1737,6 +1860,46 @@ test('retry fix malformed output evidence requires deterministic retry artifact 
   assert.deepEqual(normalized.normalized_fields, ['artifact_type', 'run_id', 'module_id', 'attempt']);
 });
 
+test('normalized Forge completion evidence uses runtime pipeline run identity', () => {
+  const { scenario, workspace } = createRetryWorkspace({
+    scenarioId: 'retry-fix-malformed-output',
+    moduleStatus: 'PASS',
+    failCount: 1,
+    passedAttempt: 2,
+    failedAttempts: [1],
+    failedAttemptsWithTesting: [1],
+    taskAttempts: [1, 2],
+    includeFinalGateTask: false,
+  });
+  const runtimeRunId = 'run-unit-runtime-1';
+  const { config } = writeMalformedPublication(workspace, scenario);
+  writeJson(path.join(workspace.swarmDir, 'logs/pipeline/summary.json'), {
+    run_id: runtimeRunId,
+    terminal_status: 'succeeded',
+  });
+  writeJson(path.join(workspace.swarmDir, 'logs/pipeline/runs', runtimeRunId, 'pipeline.jsonl'), {});
+  writeJson(path.join(workspace.swarmDir, config.target), {
+    artifact_type: 'forge_completion',
+    run_id: runtimeRunId,
+    module_id: '01-nginx',
+    attempt: 2,
+    status: 'READY_FOR_TESTING',
+    summary: 'retry output has a repairable missing envelope',
+    evidence: {
+      inspected_files: ['Projects/real-pipeline-e2e/src/index.html'],
+      consulted_contracts: ['.swarm/contracts/module-outputs/01-nginx.json'],
+      implementation_notes: 'the retry output is intentionally missing only canonical envelope identity fields',
+    },
+    completed_at: '2026-07-15T00:00:00Z',
+    normalized: true,
+    normalized_fields: ['artifact_type', 'run_id', 'module_id', 'attempt'],
+  });
+
+  const normalized = evidenceSchemaTestHooks.requireNormalizedForgeCompletionEvidence(workspace, scenario);
+
+  assert.equal(normalized.ok, true);
+});
+
 test('retry bad-output setup contracts require the first unit pass to fail', () => {
   for (const scenarioId of ['retry-fix-malformed-output', 'retry-buster-pass-echo-rejects']) {
     const scenario = resolveRealE2EScenario(scenarioId);
@@ -1878,6 +2041,20 @@ test('crash resume evidence rejects skipped final Buster gate task', async () =>
   assert.equal(queue.field_failures.some((failure) => failure.field === 'gate_test.task_attempts'), true);
 });
 
+test('module-boundary crash resume evidence does not require skipped final Buster gate task', async () => {
+  const { scenario, workspace } = createCrashResumeWorkspace({
+    omitFinalGateTask: true,
+    executionBoundary: 'modules',
+  });
+
+  const evidence = await evidenceSchemaTestHooks.requireCrashResumeEvidence(workspace, scenario);
+
+  assert.equal(evidence.ok, true);
+  const queue = evidence.checks.find((check) => check.code === 'crash_resume_buster_queue');
+  assert.deepEqual(queue.gate_task_attempts, []);
+  assert.equal(queue.expected_final_gate_task, false);
+});
+
 test('crash resume evidence rejects stale latest pointer', async () => {
   const { scenario, workspace } = createCrashResumeWorkspace({
     latestOverrides: { run_id: 'stale-run-id' },
@@ -1934,6 +2111,17 @@ test('each nonzero scenario setup validator accepts its exact setup contract', (
   }
 });
 
+test('success scenario setup validator does not require a failure contract', () => {
+  const scenario = resolveRealE2EScenario('forge-retry-then-success');
+  const workspace = createWorkspace(scenario);
+
+  const setup = evidenceSchemaTestHooks.requireScenarioSetupContract(workspace, scenario);
+
+  assert.equal(scenario.expectedPipelineExit, 'zero');
+  assert.equal(setup.ok, true);
+  assert.equal(setup.code, 'scenario_setup_contract');
+});
+
 test('terminal failure contracts reject the right broad step with the wrong failure class', () => {
   for (const scenario of listRealE2EScenarioIds()
     .map((id) => resolveRealE2EScenario(id))
@@ -1967,6 +2155,21 @@ test('Git failure contracts reject generic Git sync failures without exact root 
     assert.equal(contract.reason, 'REAL_E2E_FAILURE_TERMINAL_CONTRACT_MISMATCH', scenarioId);
     assert.equal(typeof contract.reason_contains, 'string', scenarioId);
   }
+});
+
+test('Git failure contracts accept canonical class with raw diagnostic last failure', () => {
+  const scenario = resolveRealE2EScenario('git-credential-failure');
+  const workspace = createFailureContractWorkspace(scenario, {
+    terminalOverrides: {
+      halt_reason: 'git_credential_failed',
+      last_failure: '[GIT_SYNC_FAILED] Git sync failed before Buster handoff: Permission denied (publickey).',
+    },
+  });
+
+  const contract = evidenceSchemaTestHooks.requireScenarioFailureContract(workspace, scenario);
+
+  assert.equal(contract.ok, true);
+  assert.equal(contract.failure_class, 'git_credential_failed');
 });
 
 test('failure contract rejects missing terminal event id', async () => {
@@ -2454,6 +2657,44 @@ test('agent observability success evidence uses promoted pipeline events, not ra
   assert.equal(evidence.types.includes('agent.spawned'), true);
 });
 
+test('module-boundary agent observability evidence requires only in-boundary agent labels', () => {
+  const scenario = resolveRealE2EScenario('forge-retry-then-success');
+  const workspace = createWorkspace(scenario, {
+    progressFields: {
+      'real_e2e.execution_boundary': 'modules',
+    },
+  });
+  const eventsPath = path.join(workspace.swarmDir, 'logs', 'pipeline', 'pipeline.jsonl');
+  for (const event of [
+    { type: 'agent.spawned', label: 'forge-01-nginx-1', session_key: 'agent:forge' },
+    { type: 'agent.tool.started', label: 'forge-01-nginx-1', tool_name: 'bash' },
+    { type: 'agent.tool.finished', label: 'forge-01-nginx-1', tool_name: 'bash', outcome: 'completed' },
+    { type: 'agent.ended', label: 'forge-01-nginx-1', session_key: 'agent:forge' },
+  ]) {
+    appendJsonl(eventsPath, {
+      v: 1,
+      event_id: `event-${++eventCounter}`,
+      ts: '2026-07-11T00:00:00.000Z',
+      project: workspace.projectName,
+      source: 'pipeline',
+      emitter: 'nova/pipeline/services/agent-observability-ingester',
+      ...event,
+    });
+  }
+
+  const scoped = evidenceSchemaTestHooks.requireAgentObservabilityTelemetryEvidence(workspace);
+  const progress = readJson(path.join(workspace.swarmDir, 'progress.json'));
+  delete progress.real_e2e.execution_boundary;
+  writeJson(path.join(workspace.swarmDir, 'progress.json'), progress);
+  const full = evidenceSchemaTestHooks.requireAgentObservabilityTelemetryEvidence(workspace);
+
+  assert.equal(scoped.ok, true);
+  assert.equal(scoped.execution_boundary, 'modules');
+  assert.equal(full.ok, false);
+  assert.deepEqual(full.missing_labels, ['echo-echo-codex-module-review', 'case-study', 'pipeline-review']);
+  assert.deepEqual(full.missing_types, ['agent.session.started']);
+});
+
 test('discord receipt evidence accepts deterministic Buster queued and suite result cards', () => {
   const workspace = createWorkspace(resolveRealE2EScenario('success'));
   const receiptPath = path.join(workspace.swarmDir, 'logs', 'pipeline', 'discord-deliveries.jsonl');
@@ -2500,9 +2741,16 @@ test('discord receipt evidence rejects missing deterministic Buster progress car
   ]);
 });
 
-test('forge malformed output requires exact payload hash length production rejection and no downstream success', async () => {
+test('forge malformed output requires exact payload publication and retry rejection evidence', async () => {
   const { scenario, workspace } = createMalformedWorkspace('forge-malformed-output');
   const { config } = writeMalformedPublication(workspace, scenario);
+  writeJson(path.join(workspace.swarmDir, config.target), {
+    artifact_type: 'forge_completion',
+    run_id: workspace.runId,
+    module_id: '01-nginx',
+    attempt: 2,
+    status: 'READY_FOR_TESTING',
+  });
 
   const evidence = await verifyExpectedFailureEvidence(workspace, scenario);
 
@@ -2513,15 +2761,14 @@ test('forge malformed output requires exact payload hash length production rejec
   assert.equal(malformed.raw_bytes, Buffer.byteLength(config.raw, 'utf8'));
   const rejection = evidence.checks.find((check) => check.code === 'malformed_output_production_rejection');
   assert.deepEqual({
-    component: rejection.component,
-    error_code: rejection.error_code,
-    artifact_path: rejection.artifact_path,
+    reason: rejection.reason,
+    failure_count: rejection.failures?.length ?? 0,
   }, {
-    component: 'module:01-nginx',
-    error_code: 'invalid_contract',
-    artifact_path: config.target,
+    reason: undefined,
+    failure_count: 0,
   });
-  assert.equal(evidence.checks.find((check) => check.code === 'malformed_output_no_downstream_success')?.ok, true);
+  assert.equal(malformed.target_rewritten, true);
+  assert.equal(evidence.checks.some((check) => check.code === 'malformed_output_no_downstream_success'), false);
 });
 
 test('malformed output evidence fails when deterministic manifest and payload are absent', async () => {
@@ -2648,6 +2895,30 @@ test('restored success evidence does not require skipped module buster stream ta
   assert.equal(full.reason, 'REAL_E2E_BUSTER_STREAM_MISSING_REQUIRED_TASKS');
 });
 
+test('restored post-final-review evidence does not require replayed Buster stream tasks', async () => {
+  const scenario = resolveRealE2EScenario('crash-after-final-review-before-summary');
+  const workspace = createWorkspace(scenario);
+  workspace.restoredCheckpoint = { checkpoint: 'post-final-review' };
+  workspace.__testDecodedBusterTasks = [];
+
+  const restored = await evidenceSchemaTestHooks.requireBusterStreamEvidence(workspace, {
+    requireModuleTask: false,
+    requireGateTask: false,
+  });
+  const full = await evidenceSchemaTestHooks.requireBusterStreamEvidence(workspace, {
+    requireModuleTask: true,
+    requireGateTask: true,
+  });
+
+  assert.equal(restored.ok, true);
+  assert.equal(restored.required_module_task, false);
+  assert.equal(restored.required_gate_task, false);
+  assert.equal(restored.module_task_id, null);
+  assert.equal(restored.gate_task_id, null);
+  assert.equal(full.ok, false);
+  assert.equal(full.reason, 'REAL_E2E_BUSTER_STREAM_MISSING_REQUIRED_TASKS');
+});
+
 test('restored telemetry evidence requires only remaining current-run events', async () => {
   const scenario = resolveRealE2EScenario('approval-deny');
   const workspace = createWorkspace(scenario);
@@ -2672,4 +2943,57 @@ test('restored telemetry evidence requires only remaining current-run events', a
   assert.equal(restored.restored_checkpoint, 'post-module-review');
   assert.equal(full.ok, false);
   assert.equal(full.reason, 'REAL_E2E_TELEMETRY_STREAM_MISSING_RUN_EVENTS');
+});
+
+test('module-boundary telemetry evidence does not require skipped final gates', async () => {
+  const scenario = resolveRealE2EScenario('forge-retry-then-success');
+  const workspace = createWorkspace(scenario, {
+    progressFields: {
+      'real_e2e.execution_boundary': 'modules',
+    },
+  });
+  workspace.restoredCheckpoint = { checkpoint: 'pre-forge' };
+  writeJson(path.join(workspace.swarmDir, 'logs', 'pipeline', 'summary.json'), {
+    run_id: workspace.runId,
+    project: workspace.projectName,
+    terminal_status: 'succeeded',
+    governance: {},
+    telemetry_stream_key: `pipeline:telemetry:${workspace.projectName}:${workspace.runId}`,
+  });
+  workspace.__testTelemetryEvents = [
+    { v: 1, source: 'pipeline', type: 'pipeline.completed', run_id: workspace.runId, project: workspace.projectName, terminal_status: 'succeeded' },
+  ];
+
+  const scoped = await evidenceSchemaTestHooks.requirePipelineTelemetryStreamEvidence(workspace);
+  const progress = readJson(path.join(workspace.swarmDir, 'progress.json'));
+  delete progress.real_e2e.execution_boundary;
+  writeJson(path.join(workspace.swarmDir, 'progress.json'), progress);
+  const full = await evidenceSchemaTestHooks.requirePipelineTelemetryStreamEvidence(workspace);
+
+  assert.equal(scoped.ok, true);
+  assert.equal(scoped.execution_boundary, 'modules');
+  assert.deepEqual(scoped.ordered_events.map((event) => event.name), ['pipeline.completed']);
+  assert.equal(full.ok, false);
+  assert.equal(full.telemetry_order_contract.missing_contract, 'gate.started:final-buster');
+});
+
+test('module-boundary success evidence does not require skipped terminal artifacts', async () => {
+  const scenario = resolveRealE2EScenario('git-dirty-worktree-preserved');
+  const workspace = createWorkspace(scenario, {
+    progressFields: {
+      'real_e2e.execution_boundary': 'modules',
+      'real_e2e.module_scope': ['01-nginx'],
+    },
+  });
+  writeModuleBoundarySuccessArtifacts(workspace);
+  const dirtyPath = path.join(workspace.projectSrc, '..', '..', '..', 'REAL_E2E_DIRTY_WORKTREE_PRESERVE.txt');
+  fs.writeFileSync(dirtyPath, `run_id=${workspace.runId}\nproject=${workspace.projectName}\n`);
+
+  const evidence = await verifyRealRunEvidence(workspace, { scenario });
+
+  assert.equal(evidence.ok, true);
+  assert.equal(evidence.checks.some((check) => check.code === 'git_dirty_worktree_preserved'), true);
+  assert.equal(evidence.checks.some((check) => check.code === 'final_buster_output'), false);
+  assert.equal(evidence.checks.some((check) => check.code === 'module_echo_gate_output'), false);
+  assert.equal(evidence.checks.some((check) => check.code === 'pipeline_review_json'), false);
 });

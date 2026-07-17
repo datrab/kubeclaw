@@ -1,4 +1,6 @@
 
+import fs from 'fs';
+
 import { buildCompletionIdentityFields, ensureBusterOutputFile } from './pipeline-helpers.ts';
 import { safeErrorMessage } from './runtime-diagnostics.ts';
 import verifyAndPush from '../tools/verify-task.ts';
@@ -25,6 +27,30 @@ function resolveModuleId(payload = {}) {
   if (payload.module) return payload.module;
   if (payload.gate_id) return payload.gate_id;
   return 'missing_task_target';
+}
+
+function normalizeRepoRelativePath(value) {
+  return String(selectDefinedValue(() => (value), () => ('')))
+    .replace(/\\/g, '/')
+    .replace(/^\/+/, '')
+    .replace(/^(?:\.\/)+/, '')
+    .replace(/\/+/g, '/')
+    .replace(/\/$/, '')
+    .trim();
+}
+
+export function busterCompletionCommitPaths(payload = {}, outputFileResult = {}) {
+  const outputFile = normalizeRepoRelativePath(payload?.output_file);
+  if (!outputFile) throw new Error('Buster completion requires output_file artifact path');
+  const paths = [outputFile];
+  const verdictPath = `${outputFile}.agent-verdict.json`;
+  const absoluteVerdictPath = typeof outputFileResult?.path === 'string'
+    ? `${outputFileResult.path}.agent-verdict.json`
+    : null;
+  if (absoluteVerdictPath && fs.existsSync(absoluteVerdictPath)) {
+    paths.push(verdictPath);
+  }
+  return [...new Set(paths)];
 }
 
 export function createTaskCompletionState() {
@@ -111,6 +137,7 @@ export async function publishTaskCompletionWithArtifact(redisClient, payload = {
   }
   const verifyResult = await verifyTask('buster', payload.project, {
     commitMessage: opts.commitMessage ? opts.commitMessage : `[BUSTER] ${payload?.task_type ? payload.task_type : 'task'} ${moduleId}: output artifact`,
+    addPaths: busterCompletionCommitPaths(payload, outputFileResult),
   });
   if (verifyResult?.status && verifyResult.status !== 'success') {
     throw new Error(`output_file verify failed: ${selectTruthyValue(() => (selectTruthyValue(() => (verifyResult.error), () => (verifyResult.action))), () => ('missing_verify_detail'))}`);

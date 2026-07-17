@@ -13,6 +13,7 @@ const SCENARIO_CONFIG = Object.freeze({
     raw: '{"artifact_type":"not_forge_completion","status":"BROKEN"}\n',
     artifactType: 'forge_completion',
     invalidJson: false,
+    targetMayBeRewritten: true,
   }),
   'retry-fix-malformed-output': Object.freeze({
     trigger: path.join('logs', 'modules', '01-nginx', 'forge-prompt-attempt-2.md'),

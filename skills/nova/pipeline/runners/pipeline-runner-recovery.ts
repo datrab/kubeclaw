@@ -42,6 +42,7 @@ type AnyRecord = Record<string, any>;
 const TERMINAL_MONITOR_DETAIL = 'terminal';
 const IDENTITY_UNCONFIRMED_STATE = 'identity_unconfirmed';
 const GATE_RECOVERY_PHASE = 'gate';
+const MODULE_BUSTER_PHASE = 'buster';
 const PENDING_STATUS = 'PENDING';
 
 function errorMessage(error: unknown): string {
@@ -64,6 +65,10 @@ function firstTextValue(...values: unknown[]): string | null {
     if (normalized) return normalized;
   }
   return null;
+}
+
+export function shouldPreserveTerminalModuleRecovery({ previousPhase, recoveryAction }: AnyRecord): boolean {
+  return textValue(previousPhase) === MODULE_BUSTER_PHASE && recoveryAction === STALE_RECOVERY_ACTIONS.OBSERVED_TERMINAL;
 }
 
 function runtimeName(active: AnyRecord): string | null {
@@ -450,6 +455,34 @@ export async function reconcileStaleModuleState(config: AnyRecord, progress: Any
         recoveryAction = recovered.recoveryAction;
         note = recovered.note;
         sessionAuthority = recovered.sessionAuthority;
+        if (shouldPreserveTerminalModuleRecovery({ previousPhase, recoveryAction })) {
+          const recoveryDispatchId = recoveryDispatchIdValue(active, status);
+          const recoverySessionKey = recoverySessionKeyValue(active, status);
+          appendStaleRecoveryLifecycleEvent(config, {
+            moduleId,
+            dir,
+            status,
+            attempt: recoveryAttempt,
+            recoveryTargetStatus: oldStatus,
+            recoveryTargetPhase: previousPhase,
+            recoveryAction,
+            reason: note,
+            sessionKey: recoverySessionKey,
+            dispatchId: recoveryDispatchId,
+            gatewayLabel: recoveryGatewayLabel,
+            staleEvidence: {
+              previous_phase: previousPhase,
+              observed_via: 'session_monitor',
+              status_before_reset: oldStatus,
+              diagnostic_label: recoveryDiagnosticLabel,
+              session_authority: sessionAuthority,
+              preserve_for_completion_polling: true,
+            },
+            occurredAt: now,
+          });
+          shouldReset = false;
+          log('INFO', `[stale-reconcile] ${moduleId}: ${note}; preserving active Buster dispatch for phase-owned completion polling`);
+        }
       } catch (e) {
         throw new Error(`Failed to reconcile stale ${previousPhase} session for module ${moduleId}: ${errorMessage(e)}`);
       }

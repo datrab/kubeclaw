@@ -110,6 +110,30 @@ test('failure matrix suite cases declare canonical execution boundaries', () => 
     suite: 'full-pipeline-smoke',
     scenario: 'success',
   }), 'full');
+  assert.equal(failureMatrixExecutionBoundary({
+    suite: 'human-gates',
+    scenario: 'approval-deny',
+  }), 'full');
+  assert.equal(failureMatrixExecutionBoundary({
+    suite: 'human-gates',
+    scenario: 'pipeline-review-timeout',
+  }), 'full');
+  assert.equal(failureMatrixExecutionBoundary({
+    suite: 'crash-resume',
+    scenario: 'crash-before-buster-handoff',
+  }), 'modules');
+  assert.equal(failureMatrixExecutionBoundary({
+    suite: 'crash-resume',
+    scenario: 'crash-during-git-operation',
+  }), 'modules');
+  assert.equal(failureMatrixExecutionBoundary({
+    suite: 'crash-resume',
+    scenario: 'crash-after-final-review-before-summary',
+  }), 'final-review');
+  assert.equal(failureMatrixExecutionBoundary({
+    suite: 'crash-resume',
+    scenario: 'crash-during-cleanup',
+  }), 'final-review');
 });
 
 test('failure matrix runs selected suites and rolls case failures into suite failures', async () => {
@@ -199,6 +223,74 @@ test('failure matrix records aborted case and continues through requested suite 
   assert.equal(record.completed_case_count, suiteCases.length);
   assert.equal(record.not_run_case_count, 0);
   assert.equal(record.cases.find((entry) => entry.scenario === 'retry-fix-malformed-output').status, 'aborted');
+});
+
+test('failure matrix can resume a suite from a selected scenario', async () => {
+  const calls = [];
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-suite-from-scenario-'));
+  const args = {
+    mode: 'full',
+    suites: ['module-failure-retry'],
+    fromScenario: 'retry-buster-pass-echo-rejects',
+    keepArtifacts: false,
+    continueOnFailure: true,
+    reportPath: path.join(root, 'review.md'),
+    checkpointMode: 'full',
+  };
+
+  const matrix = await runFailureMatrix(args, {
+    runCapabilityProbeImpl: async () => ({ ok: true, checks: [], failures: [] }),
+    runScenarioImpl: async ({ scenario }) => {
+      calls.push(scenario);
+      return {
+        scenario,
+        ok: true,
+        exit: { code: 0, signal: null },
+        result_path: path.join(root, `${scenario}.json`),
+        result: { ok: true },
+        result_read_failure: null,
+      };
+    },
+  });
+
+  const expected = resolveFailureMatrixSuite('module-failure-retry').scenarios
+    .slice(resolveFailureMatrixSuite('module-failure-retry').scenarios.indexOf('retry-buster-pass-echo-rejects'));
+  assert.deepEqual(calls, expected);
+  assert.equal(matrix.ok, true);
+  const record = JSON.parse(fs.readFileSync(matrix.results[0].result_path, 'utf8'));
+  assert.equal(record.requested_case_count, expected.length);
+  assert.equal(record.cases.find((entry) => entry.scenario === 'forge-retry-then-success').reason, 'not_requested');
+});
+
+test('failure matrix can run one selected scenario through its owning suite only', async () => {
+  const calls = [];
+  const args = {
+    mode: 'full',
+    suites: listFailureMatrixSuiteIds(),
+    onlyScenario: 'retry-buster-pass-echo-rejects',
+    keepArtifacts: false,
+    continueOnFailure: false,
+    checkpointMode: 'full',
+  };
+
+  const matrix = await runFailureMatrix(args, {
+    runCapabilityProbeImpl: async () => ({ ok: true, checks: [], failures: [] }),
+    runScenarioImpl: async ({ suite, scenario }) => {
+      calls.push({ suite, scenario });
+      return {
+        scenario,
+        ok: true,
+        exit: { code: 0, signal: null },
+        result_path: `/tmp/${scenario}.json`,
+        result: { ok: true },
+        result_read_failure: null,
+      };
+    },
+  });
+
+  assert.deepEqual(calls, [{ suite: 'module-failure-retry', scenario: 'retry-buster-pass-echo-rejects' }]);
+  assert.equal(matrix.ok, true);
+  assert.equal(matrix.completed_count, 1);
 });
 
 test('failure matrix fail-fast stops at the first failed suite', async () => {
@@ -458,6 +550,15 @@ test('failure matrix applies longer timeout only to expected happy-path scenario
     }),
     120000,
   );
+  assert.equal(
+    timeoutMsForScenario({
+      scenarioConfig: { expectedPipelineExit: 'zero', crashResume: true },
+      scenarioTimeoutMs: 120000,
+      happyPathTimeoutMs: 900000,
+      crashResumeTimeoutMs: 5400000,
+    }),
+    5400000,
+  );
 });
 
 test('failure matrix report includes suite and case result files', () => {
@@ -537,4 +638,78 @@ test('runScenario stamps typed harness-aborted result when child exits before pi
   assert.equal(result.result.assertions.failure_output_diagnostic.reason, 'REAL_E2E_HARNESS_ABORTED_BEFORE_PIPELINE_RESULT');
   assert.equal(fs.readFileSync(result.child_output_logs.stdout, 'utf8'), 'full stdout line from child\n');
   assert.equal(fs.readFileSync(result.child_output_logs.stderr, 'utf8'), 'full stderr line from child\n');
+});
+
+test('runScenario passes suite boundary and disables terminal extras outside full runs', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-boundary-env-'));
+  const runnerPath = path.join(root, 'env-runner.mjs');
+  fs.writeFileSync(runnerPath, `
+    import fs from 'node:fs';
+    import path from 'node:path';
+    const resultPath = process.argv[process.argv.indexOf('--result-path') + 1];
+    fs.mkdirSync(path.dirname(resultPath), { recursive: true });
+    fs.writeFileSync(resultPath, JSON.stringify({
+      schema_version: 'real_pipeline_e2e_result.v1',
+      ok: true,
+      scenario: { id: 'retry-buster-pass-echo-rejects' },
+      pipeline: { phase: 'pipeline-run' },
+      env: {
+        REAL_E2E_EXECUTION_BOUNDARY: process.env.REAL_E2E_EXECUTION_BOUNDARY,
+        REAL_E2E_TERMINAL_EXTRAS: process.env.REAL_E2E_TERMINAL_EXTRAS
+      }
+    }, null, 2));
+    process.exit(0);
+  `);
+
+  const result = await runScenario({
+    mode: 'full',
+    suite: 'module-failure-retry',
+    scenario: 'retry-buster-pass-echo-rejects',
+    keepArtifacts: false,
+    scenarioTimeoutMs: 30000,
+    runnerPath,
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(result.execution_boundary, 'module-review');
+  assert.equal(result.result.env.REAL_E2E_EXECUTION_BOUNDARY, 'module-review');
+  assert.equal(result.result.env.REAL_E2E_TERMINAL_EXTRAS, '0');
+});
+
+test('runScenario does not mute Discord webhooks for the Discord-unavailable scenario', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'failure-matrix-discord-unavailable-env-'));
+  const runnerPath = path.join(root, 'env-runner.mjs');
+  fs.writeFileSync(runnerPath, `
+    import fs from 'node:fs';
+    import path from 'node:path';
+    const resultPath = process.argv[process.argv.indexOf('--result-path') + 1];
+    fs.mkdirSync(path.dirname(resultPath), { recursive: true });
+    fs.writeFileSync(resultPath, JSON.stringify({
+      schema_version: 'real_pipeline_e2e_result.v1',
+      ok: true,
+      scenario: { id: 'discord-unavailable' },
+      pipeline: { phase: 'pipeline-run' },
+      env: {
+        REAL_E2E_EXECUTION_BOUNDARY: process.env.REAL_E2E_EXECUTION_BOUNDARY,
+        REAL_E2E_TERMINAL_EXTRAS: process.env.REAL_E2E_TERMINAL_EXTRAS,
+        KUBECLAW_DISABLE_DISCORD_WEBHOOKS: process.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS || null
+      }
+    }, null, 2));
+    process.exit(0);
+  `);
+
+  const result = await runScenario({
+    mode: 'full',
+    suite: 'infrastructure-observability',
+    scenario: 'discord-unavailable',
+    keepArtifacts: false,
+    scenarioTimeoutMs: 30000,
+    runnerPath,
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(result.execution_boundary, 'final-buster');
+  assert.equal(result.result.env.REAL_E2E_EXECUTION_BOUNDARY, 'final-buster');
+  assert.equal(result.result.env.REAL_E2E_TERMINAL_EXTRAS, '0');
+  assert.equal(result.result.env.KUBECLAW_DISABLE_DISCORD_WEBHOOKS, null);
 });

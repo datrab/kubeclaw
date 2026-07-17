@@ -857,6 +857,55 @@ export function clearRestoredCheckpointReadModelCommits(swarmDir) {
   return cleared;
 }
 
+function normalizePreTerminalDeliveryLifecycle(swarmDir) {
+  const normalized = [];
+  for (const runDir of lifecycleRunDirs(swarmDir)) {
+    const lifecycleDir = path.join(runDir, 'lifecycle');
+    const eventsPath = path.join(lifecycleDir, 'canonical-events.jsonl');
+    const readModelsPath = path.join(lifecycleDir, 'read-models.json');
+    if (fs.existsSync(eventsPath)) {
+      const lines = fs.readFileSync(eventsPath, 'utf8').split(/\r?\n/);
+      const kept = [];
+      let removed = false;
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        try {
+          const event = JSON.parse(line);
+          if (event?.type === 'pipeline_run.completed') {
+            removed = true;
+            continue;
+          }
+        } catch {
+          // Preserve unreadable lines; checkpoint validation will report them through normal paths.
+        }
+        kept.push(line);
+      }
+      if (removed) {
+        fs.writeFileSync(eventsPath, `${kept.join('\n')}${kept.length ? '\n' : ''}`);
+        normalized.push(path.relative(swarmDir, eventsPath));
+      }
+    }
+    if (fs.existsSync(readModelsPath)) {
+      const readModels = readJson(readModelsPath);
+      if (readModels?.pipeline?.status === 'COMPLETED' || readModels?.pipeline?.terminal_status === 'succeeded') {
+        readModels.pipeline = {
+          ...readModels.pipeline,
+          status: 'RUNNING',
+          completed_at: null,
+          terminal_status: null,
+          terminal_decision: null,
+          reason_code: null,
+          halt_reason: null,
+          latest_event_type: 'pipeline.checkpoint',
+        };
+        fs.writeFileSync(readModelsPath, `${JSON.stringify(readModels, null, 2)}\n`);
+        normalized.push(path.relative(swarmDir, readModelsPath));
+      }
+    }
+  }
+  return normalized;
+}
+
 export function restoreCheckpointProjectSource({ checkpointDir, checkpoint, workspace, scenarioId = null }) {
   const validation = validateCheckpointBundle({ checkpointDir, checkpoint, scenarioId });
   if (!validation.ok) {
@@ -908,6 +957,9 @@ export function restoreCheckpointProjectSource({ checkpointDir, checkpoint, work
     }
   }
   clearRestoredCheckpointReadModelCommits(workspace.swarmDir);
+  const boundaryNormalized = checkpoint === 'pre-terminal-delivery'
+    ? normalizePreTerminalDeliveryLifecycle(workspace.swarmDir)
+    : [];
 
   assertValidCheckpointState({ checkpoint, swarmDir: workspace.swarmDir });
   return {
@@ -917,6 +969,7 @@ export function restoreCheckpointProjectSource({ checkpointDir, checkpoint, work
     source: validation.manifest.source,
     restored_project: workspace.projectName,
     restored_run_id: workspace.runId,
+    boundary_normalized: boundaryNormalized,
   };
 }
 

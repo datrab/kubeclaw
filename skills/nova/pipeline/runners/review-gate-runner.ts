@@ -464,10 +464,12 @@ export async function runReviewGateEvaluation(config, progress, gateId, opts = {
     log('ERROR', `Review gate '${gateId}' failed: ${reviewResult.error}`);
     const reviewSessionKey = resolveResultSessionKey(reviewResult);
     const reviewGatewayLabel = resolveResultGatewayLabel(reviewResult);
+    const failureClass = typeof reviewResult?.failure_class === 'string' && reviewResult.failure_class.trim()
+      ? reviewResult.failure_class.trim()
+      : 'review_failed';
     return buildReviewGateControlResult(config, gateId, gate, {
       reason: `Review failed: ${reviewResult.error}`,
-      failure_class: 'review_failed',
-      outcome_class: 'error',
+      failure_class: failureClass,
       gateway_label: reviewGatewayLabel,
       session_key: reviewSessionKey,
       attempt,

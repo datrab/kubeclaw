@@ -470,7 +470,7 @@ export function applyLifecycleEventToReadModels(readModels, event) {
         module_attempt_ref: selectPresentValue(event.refs?.module_attempt_ref, existing.module_attempt_ref),
         current_attempt: selectDefinedValue(() => (selectDefinedValue(() => (event.refs?.attempt), () => (existing.current_attempt))), () => (null)),
         status: selectPresentValue(event.data?.recovery_target_status, existing.status, 'PENDING'),
-        current_phase: null,
+        current_phase: selectDefinedValue(() => (event.data?.recovery_target_phase), () => (null)),
         dispatch_id: selectDefinedValue(() => (selectDefinedValue(() => (event.refs?.dispatch_id), () => (existing.dispatch_id))), () => (null)),
         gateway_label: selectDefinedValue(() => (selectDefinedValue(() => (event.refs?.gateway_label), () => (existing.gateway_label))), () => (null)),
         session_key: selectDefinedValue(() => (selectDefinedValue(() => (event.refs?.session_key), () => (existing.session_key))), () => (null)),
@@ -608,6 +608,25 @@ export function applyLifecycleEventToReadModels(readModels, event) {
       latest_event_type: event.type,
       latest_event_at: event.occurred_at,
     };
+
+    const startsModulePhase = ['module_attempt.started', 'module_attempt.testing_started'].includes(event.type);
+    if (startsModulePhase && event.refs?.session_key) {
+      next.active_sessions.modules[moduleId] = {
+        module_id: moduleId,
+        run_id: selectDefinedValue(() => (event.refs?.run_id), () => (null)),
+        attempt: selectDefinedValue(() => (event.refs?.attempt), () => (null)),
+        dispatch_id: selectTruthyValue(() => (event.refs?.dispatch_id), () => (null)),
+        session_key: selectTruthyValue(() => (event.refs?.session_key), () => (null)),
+        gateway_label: selectTruthyValue(() => (event.refs?.gateway_label), () => (null)),
+        label: selectTruthyValue(() => (event.refs?.dispatch_id), () => (null)),
+        phase: currentPhaseByEvent[event.type] !== undefined ? currentPhaseByEvent[event.type] : null,
+        model: selectTruthyValue(() => (event.refs?.model), () => (null)),
+        tracked_at: event.occurred_at,
+        projection_source: 'canonical-events',
+      };
+    } else if (startsModulePhase || ['module_attempt.ready_for_testing', 'module_attempt.passed', 'module_attempt.failed', 'module_attempt.blocked'].includes(event.type)) {
+      delete next.active_sessions.modules[moduleId];
+    }
   }
 
   recomputeProgression(next);

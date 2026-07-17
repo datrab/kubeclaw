@@ -73,6 +73,14 @@ function formatReviewPollFailureReason(pollRes) {
   return detail ? `${reason} (${detail})` : reason;
 }
 
+function reviewPollFailureClass(pollRes) {
+  const reason = String(selectDefinedValue(() => (pollRes?.reason), () => ('')).toLowerCase());
+  const statusFailureClass = String(selectDefinedValue(() => (pollRes?.status?.failure_class), () => ('')).toLowerCase());
+  if (reason === 'timeout' || statusFailureClass === 'timeout') return 'timeout';
+  if (reason === 'rate_limit_exhausted' || statusFailureClass === 'rate_limit_exhausted' || pollRes?.rate_limit_exhausted === true) return 'rate_limit_exhausted';
+  return 'review_failed';
+}
+
 function reviewGateType(gate) {
   return selectDefinedValue(() => (gate?.type), () => (REVIEW_GATE_TYPE));
 }
@@ -393,10 +401,12 @@ export async function runReviewGateOnce({ deps, config, progress, gateId, gate, 
 
   if (!pollRes?.ok) {
     const failureReason = formatReviewPollFailureReason(pollRes);
+    const failureClass = reviewPollFailureClass(pollRes);
     log('WARN', `Review poll ended: ${failureReason}. Review file not received.`);
     return {
       ok: false,
       error: `Review file not received (${failureReason})`,
+      failure_class: failureClass,
       session_key: selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusSessionKey(pollRes?.status)), () => (echoSessionKey))), () => (null)),
       transcript: selectTruthyValue(() => (pollRes?.transcript), () => (null)),
     };

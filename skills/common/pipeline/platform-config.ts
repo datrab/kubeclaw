@@ -203,8 +203,8 @@ export function normalizeSwarmConfigInPlace(config: any) {
 
 export function discoverPlatformSwarmConfigCandidates() {
   return [...new Set([
-    DEFAULT_SWARM_CONFIG_PATH,
     process.env.SWARM_CONFIG,
+    DEFAULT_SWARM_CONFIG_PATH,
   ].filter(Boolean).map(candidate => path.resolve(candidate)))];
 }
 

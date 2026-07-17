@@ -37,8 +37,9 @@ jobs:
           filters: |
             image_inputs:
               - 'docker/**'
+              - 'go.mod'
+              - 'cmd/buster-namespace-controller/**'
               - 'plugins/openclaw-agent-observer/**'
-              - 'scripts/buster-namespace-controller.mjs'
   check-base-image:
     name: Check for base image updates
     runs-on: ubuntu-latest

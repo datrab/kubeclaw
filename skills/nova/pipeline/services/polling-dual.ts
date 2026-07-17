@@ -150,9 +150,6 @@ function buildModuleCompletionIdentity(moduleId, expectedIdentity = {}) {
     ...(expectedIdentity.dispatch_id
       ? { dispatch_id: expectedIdentity.dispatch_id }
       : {}),
-    ...(expectedIdentity.session_key
-      ? { session_key: expectedIdentity.session_key }
-      : {}),
   };
 }
 

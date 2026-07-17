@@ -42,12 +42,41 @@ function optionalNonEmptyString(value: unknown): string | null {
   return typeof value === 'string' && value.trim() ? value.trim() : null;
 }
 
+function firstNonEmptyString(...values: unknown[]): string | null {
+  for (const value of values) {
+    const text = optionalNonEmptyString(value);
+    if (text) return text;
+  }
+  return null;
+}
+
 function requirePositiveAttempt(value: unknown, field: string): number {
   const attempt = Number(value);
   if (selectTruthyValue(() => (!Number.isInteger(attempt)), () => (attempt < 1))) {
     throw new Error(`Buster terminal failure requires ${field}`);
   }
   return attempt;
+}
+
+function resolveOutputArtifactFailureIdentity(resultRedisEntry: AnyRecord | null, completionIdentity: AnyRecord, completionSessionKey: unknown) {
+  const resultDispatchId = optionalNonEmptyString(resolveResultDispatchId(resultRedisEntry));
+  const resultGatewayLabel = optionalNonEmptyString(resolveResultGatewayLabel(resultRedisEntry));
+  const resultSessionKey = optionalNonEmptyString(resolveResultSessionKey(resultRedisEntry));
+  const dispatchId = requireNonEmptyString(
+    firstNonEmptyString(resultDispatchId, completionIdentity?.dispatchId, completionIdentity?.dispatch_id),
+    'output artifact failure dispatch id',
+  );
+  const gatewayLabel = requireNonEmptyString(
+    firstNonEmptyString(resultGatewayLabel, completionIdentity?.gateway_label, completionIdentity?.gatewayLabel),
+    'output artifact failure gateway label',
+  );
+  const sessionKey = firstNonEmptyString(resultSessionKey, completionSessionKey, completionIdentity?.sessionKey, completionIdentity?.session_key);
+  return {
+    dispatchId,
+    gatewayLabel,
+    sessionKey,
+    authority: resultDispatchId && resultGatewayLabel ? 'redis_result' : 'completion_identity',
+  };
 }
 
 export async function handleBusterFailOrBlockedStatus({
@@ -121,9 +150,10 @@ export async function handleBusterFailOrBlockedStatus({
   const isOutputArtifactFailure = selectTruthyValue(() => (failureClass === 'output_file_identity_mismatch'), () => (failureClass === 'output_file_missing'));
 
   if (isOutputArtifactFailure) {
-    const mismatchDispatchId = requireNonEmptyString(resolveResultDispatchId(resultRedisEntry), 'result dispatch id');
-    const mismatchGatewayLabel = requireNonEmptyString(resolveResultGatewayLabel(resultRedisEntry), 'result gateway label');
-    const mismatchSessionKey = optionalNonEmptyString(resolveResultSessionKey(resultRedisEntry));
+    const outputFailureIdentity = resolveOutputArtifactFailureIdentity(resultRedisEntry, completionIdentity, completionSessionKey);
+    const mismatchDispatchId = outputFailureIdentity.dispatchId;
+    const mismatchGatewayLabel = outputFailureIdentity.gatewayLabel;
+    const mismatchSessionKey = outputFailureIdentity.sessionKey;
     const outputFailureLabel = failureClass === 'output_file_missing'
       ? 'Buster output_file missing'
       : 'Buster output_file identity mismatch';
@@ -156,7 +186,11 @@ export async function handleBusterFailOrBlockedStatus({
       dispatchId: mismatchDispatchId,
       gatewayLabel: mismatchGatewayLabel,
       sessionKey: mismatchSessionKey,
-      metadata: { failure_class: failureClass, redis_source: source },
+      metadata: {
+        failure_class: failureClass,
+        redis_source: source,
+        identity_authority: outputFailureIdentity.authority,
+      },
     });
 
     await deps.discord(config, 'CRITICAL', `Module ${moduleId} FAILED — ${outputFailureLabel}`,
@@ -215,6 +249,7 @@ export async function handleBusterFailOrBlockedStatus({
       metadata: {
         failure_class: failureClass,
         redis_source: source,
+        identity_authority: outputFailureIdentity.authority,
         forge_preserved: true,
         output_file_reason: selectDefinedValue(() => (selectDefinedValue(() => (resultRedisEntry?.reason), () => (status?.reason))), () => (null)),
       },

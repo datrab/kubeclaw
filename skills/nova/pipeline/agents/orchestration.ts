@@ -379,6 +379,7 @@ export async function killAcpAgent(
   const termination = await terminateSession(sessionKey, {
     ...sessionLifecyclePolicies(config),
     ...(graceful && opts.graceMs ? { graceMs: opts.graceMs } : {}),
+    graceBounded: graceful,
     runtime,
     model: entryModel,
     agentId: entry.agentId,
@@ -526,19 +527,25 @@ export function buildBusterPayload(
   const { attempt, dispatch_id: dispatchId } = opts;
   if (selectTruthyValue(() => (!Number.isInteger(attempt)), () => (attempt < 1))) throw new Error(`Buster ${taskType} payload requires explicit positive integer attempt`);
   if (selectTruthyValue(() => (typeof dispatchId !== 'string'), () => (!dispatchId.trim()))) throw new Error(`Buster ${taskType} payload requires explicit dispatch_id`);
+  const sessionKey = dispatchId;
   const artifacts = getPipelineArtifactBundle(config);
+  const timeoutSecondsForMinutes = (minutes: unknown, label: string) => {
+    const numeric = Number(minutes);
+    if (!Number.isFinite(numeric) || numeric <= 0) throw new Error(`${label} must be a positive number`);
+    return Math.max(1, Math.ceil(numeric * 60));
+  };
   if (taskType === 'module_test') {
     const mod = progress.modules[moduleId];
     const pipelineDefaults = getPipelineDefaultsConfig(config);
-    const timeoutSeconds = (mod?.timeout_minutes) * 60;
-    return { ...base, stage_id: 'worker:module_buster', worker_type: 'module_buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: selectTruthyValue(() => (modelToHarness(resolvedModel)), () => (null)), cwd: selectDefinedValue(() => (textValue(opts?.cwd)), () => (config.repo_root)), timeout_seconds: timeoutSeconds, label: dispatchId, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel }, model: resolvedModel, model_source: selectDefinedValue(() => (opts.model_source), () => (null)), thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel, runtime: sessionRuntime, module_path: mod ? modulePathRef(config, mod.dir) : null, buster_md_path: mod ? moduleBusterMdPathRef(config, mod.dir) : null, output_file: mod ? moduleBusterOutputPathRef(config, mod.dir) : null, suites: selectTruthyValue(() => (mod?.test_suites), () => (null)), test_config: buildBusterTestConfig(mod, config, { config, targetId: moduleId, attempt, dispatchId }), agent_judgment: buildBusterAgentJudgmentPolicy(mod), capabilities: resolveConfiguredBusterCapabilities(mod), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: mod ? moduleLogDir(config, mod.dir) : null, pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
+    const timeoutSeconds = timeoutSecondsForMinutes(mod?.timeout_minutes, `Module ${moduleId} timeout_minutes`);
+    return { ...base, stage_id: 'worker:module_buster', worker_type: 'module_buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session_key: sessionKey, session: { model: resolvedModel, runtime: sessionRuntime, agentId: selectTruthyValue(() => (modelToHarness(resolvedModel)), () => (null)), cwd: selectDefinedValue(() => (textValue(opts?.cwd)), () => (config.repo_root)), timeout_seconds: timeoutSeconds, label: dispatchId, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel }, model: resolvedModel, model_source: selectDefinedValue(() => (opts.model_source), () => (null)), thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel, runtime: sessionRuntime, module_path: mod ? modulePathRef(config, mod.dir) : null, buster_md_path: mod ? moduleBusterMdPathRef(config, mod.dir) : null, output_file: mod ? moduleBusterOutputPathRef(config, mod.dir) : null, suites: selectTruthyValue(() => (mod?.test_suites), () => (null)), test_config: buildBusterTestConfig(mod, config, { config, targetId: moduleId, attempt, dispatchId }), agent_judgment: buildBusterAgentJudgmentPolicy(mod), capabilities: resolveConfiguredBusterCapabilities(mod), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: mod ? moduleLogDir(config, mod.dir) : null, pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
   }
   if (taskType !== 'gate_test') throw new Error(`Buster payload builder does not support task_type '${taskType}'`);
   const gate = objectRecord(selectDefinedValue(() => (opts.gate), () => (progress.gates?.[moduleId])));
   const pipelineDefaults = getPipelineDefaultsConfig(config);
   const gateTimeout = gate.timeout_minutes
-  const timeoutSeconds = gateTimeout * 60;
-  return { ...base, stage_id: 'gate:buster', gate_type: 'buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session: { model: resolvedModel, runtime: sessionRuntime, agentId: selectTruthyValue(() => (modelToHarness(resolvedModel)), () => (null)), cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel }, model: resolvedModel, model_source: selectDefinedValue(() => (opts.model_source), () => (null)), thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel, runtime: sessionRuntime, gate_id: moduleId, gate_title: selectTruthyValue(() => (gate.title), () => (moduleId)), work_dir: gateWorkDirPathRef(config), output_file: gateOutputPathRef(config, gate), instructions_file: gateInstructionsPathRef(config, gate), suites: selectTruthyValue(() => (gate.test_suites), () => (null)), test_config: buildBusterTestConfig(gate, config, { config, targetId: moduleId, attempt, dispatchId }), agent_judgment: buildBusterAgentJudgmentPolicy(gate), capabilities: resolveConfiguredBusterCapabilities(gate), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: gateLogDir(config, moduleId), pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
+  const timeoutSeconds = timeoutSecondsForMinutes(gateTimeout, `Gate ${moduleId} timeout_minutes`);
+  return { ...base, stage_id: 'gate:buster', gate_type: 'buster', module_id: moduleId, prompt: taskPrompt, timeout_seconds: timeoutSeconds, session_key: sessionKey, session: { model: resolvedModel, runtime: sessionRuntime, agentId: selectTruthyValue(() => (modelToHarness(resolvedModel)), () => (null)), cwd: config.repo_root, timeout_seconds: timeoutSeconds, label: dispatchId, thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel }, model: resolvedModel, model_source: selectDefinedValue(() => (opts.model_source), () => (null)), thinking_level: thinking, thinking_source: thinkingSource, thinking_supported: thinkingSupported, reasoning_level: reasoningLevel, runtime: sessionRuntime, gate_id: moduleId, gate_title: selectTruthyValue(() => (gate.title), () => (moduleId)), work_dir: gateWorkDirPathRef(config), output_file: gateOutputPathRef(config, gate), instructions_file: gateInstructionsPathRef(config, gate), suites: selectTruthyValue(() => (gate.test_suites), () => (null)), test_config: buildBusterTestConfig(gate, config, { config, targetId: moduleId, attempt, dispatchId }), agent_judgment: buildBusterAgentJudgmentPolicy(gate), capabilities: resolveConfiguredBusterCapabilities(gate), run_id: runId, attempt, dispatch_id: dispatchId, log_dir: gateLogDir(config, moduleId), pipeline_log_path: artifacts.global_pipeline_jsonl_path, pipeline_run_log_path: artifacts.run_pipeline_jsonl_path };
 }
 
 export async function dispatchRedisTask(
@@ -569,6 +576,7 @@ export async function dispatchRedisTask(
       ...result,
       dispatch_id: selectTruthyValue(() => (taskPayload.dispatch_id), () => (null)),
       gateway_label: selectTruthyValue(() => (taskPayload.session?.label), () => (null)),
+      session_key: selectTruthyValue(() => (taskPayload.session_key), () => (null)),
       run_id: selectTruthyValue(() => (taskPayload.run_id), () => (null)),
       attempt: selectTruthyValue(() => (taskPayload.attempt), () => (null)),
       runtime: selectTruthyValue(() => (selectTruthyValue(() => (taskPayload.session?.runtime), () => (taskPayload.runtime))), () => (null)),

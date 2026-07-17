@@ -2,7 +2,10 @@ import fs from 'node:fs';
 import crypto from 'node:crypto';
 import path from 'node:path';
 import { checkpointSkippedAgentPhases } from './checkpoints.mjs';
-import { realE2EScenarioSetupContract } from './failure-scenarios.mjs';
+import {
+  realE2EScenarioSetupContract,
+  validateRealE2EScenarioSetup,
+} from './failure-scenarios.mjs';
 import { malformedOutputScenarioConfig } from './malformed-output-publisher.mjs';
 
 function readJson(filePath) {
@@ -1006,6 +1009,22 @@ function terminalFailureClassFromEvent(event = {}) {
     || null;
 }
 
+function terminalDiagnosticTextFromEvent(event = {}) {
+  const decision = terminalDecisionFromEvent(event);
+  return [
+    terminalReasonFromEvent(event),
+    decision?.humanReason,
+    event?.last_failure,
+    event?.data?.last_failure,
+    event?.result?.last_failure,
+    event?.diagnostics?.summary,
+    event?.data?.diagnostics?.summary,
+    event?.result?.diagnostics?.summary,
+  ]
+    .filter((value) => typeof value === 'string' && value.trim())
+    .join('\n');
+}
+
 function pipelineEventSchemaFields(event = {}) {
   return {
     event_id: terminalEventIdFromEvent(event),
@@ -1040,22 +1059,6 @@ function terminalContract(fields) {
   });
 }
 
-function expectedFailUnitCommand(message) {
-  return ['node', '-e', `console.error(${JSON.stringify(String(message))}); process.exit(1)`];
-}
-
-function expectedFailOnceUnitCommand() {
-  const code = [
-    'const fs=require("fs")',
-    'const path=require("path")',
-    'const marker=path.join(process.cwd(),".swarm","logs","real-e2e-retry-marker.txt")',
-    'fs.mkdirSync(path.dirname(marker),{recursive:true})',
-    'if(!fs.existsSync(marker)){fs.writeFileSync(marker,"REAL_E2E_EXPECTED_RETRYABLE_FORGE_CODE_FAILURE\\n");console.error("REAL_E2E_EXPECTED_RETRYABLE_FORGE_CODE_FAILURE");process.exit(1)}',
-    'console.log("REAL_E2E_RETRY_RECOVERED")',
-  ].join(';');
-  return ['node', '-e', code];
-}
-
 const MODULE_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.halted', step_type: 'module', step_id: '01-nginx', terminal_status: 'failed', failure_class: 'failed' });
 const MODULE_INFRA_ERROR_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.halted', step_type: 'module', step_id: '01-nginx', terminal_status: 'blocked', failure_class: 'infra_error' });
 const MODULE_TEST_FAILURE_EXHAUSTED_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.halted', step_type: 'module', step_id: '01-nginx', terminal_status: 'blocked', failure_class: 'test_failure' });
@@ -1063,65 +1066,38 @@ const MODULE_ACTION_REQUIRED_TERMINAL_CONTRACT = terminalContract({ event_type: 
 const FINAL_BUSTER_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.halted', step_type: 'gate', step_id: 'final-buster', terminal_status: 'action_required', failure_class: 'needs_nova' });
 const FINAL_BUSTER_VERDICT_FAIL_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.halted', step_type: 'gate', step_id: 'final-buster', terminal_status: 'action_required', failure_class: 'verdict_fail' });
 const DEGRADED_EVIDENCE_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.halted', step_type: 'pipeline', step_id: 'degraded_evidence', terminal_status: 'blocked', failure_class: 'degraded_evidence_requires_handoff' });
+const PIPELINE_REVIEW_TIMEOUT_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.halted', step_type: 'generator', step_id: 'generator:pipeline_review', terminal_status: 'timed_out', failure_class: 'timeout' });
 
 const FAILURE_CONTRACTS = Object.freeze({
   'approval-deny': Object.freeze({
     terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'gate', step_id: 'operator-approval', terminal_status: 'action_required', failure_class: 'needs_nova' }),
-    setup: Object.freeze({ progress: Object.freeze({ 'execution_order.0': 'gate:operator-approval', 'real_e2e.approval_before_modules': true }) }),
   }),
   'approval-timeout-block': Object.freeze({
     terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'gate', step_id: 'operator-approval', terminal_status: 'action_required', failure_class: 'needs_nova' }),
-    setup: Object.freeze({ progress: Object.freeze({ 'execution_order.0': 'gate:operator-approval', 'real_e2e.approval_before_modules': true }) }),
   }),
   'buster-module-failure': Object.freeze({
     terminal: MODULE_TEST_FAILURE_EXHAUSTED_TERMINAL_CONTRACT,
-    setup: Object.freeze({ progress: Object.freeze({ 'modules.01-nginx.test_config.unit.test_cmd': expectedFailUnitCommand('REAL_E2E_EXPECTED_BUSTER_MODULE_FAILURE') }) }),
   }),
   'buster-module-infra-failure': Object.freeze({
     terminal: MODULE_INFRA_ERROR_TERMINAL_CONTRACT,
-    setup: Object.freeze({}),
   }),
   'needs-nova-code-failure': Object.freeze({
     terminal: MODULE_ACTION_REQUIRED_TERMINAL_CONTRACT,
-    setup: Object.freeze({ progress: Object.freeze({ 'modules.01-nginx.test_config.unit.test_cmd': expectedFailUnitCommand('REAL_E2E_EXPECTED_NEEDS_NOVA_CODE_FAILURE') }) }),
   }),
   'retry-budget-exhausted': Object.freeze({
     terminal: MODULE_TEST_FAILURE_EXHAUSTED_TERMINAL_CONTRACT,
-    setup: Object.freeze({
-      progress: Object.freeze({
-        'modules.01-nginx.max_fails': 2,
-        'modules.01-nginx.auto_retry_threshold': 1,
-        'modules.01-nginx.test_config.unit.test_cmd': expectedFailUnitCommand('REAL_E2E_EXPECTED_RETRY_BUDGET_EXHAUSTED'),
-      }),
-    }),
   }),
   'retry-fix-malformed-output': Object.freeze({
     terminal: MODULE_ACTION_REQUIRED_TERMINAL_CONTRACT,
-    setup: Object.freeze({
-      progress: Object.freeze({
-        'modules.01-nginx.max_fails': 3,
-        'modules.01-nginx.auto_retry_threshold': 1,
-        'modules.01-nginx.timeout_minutes': Number(process.env.REAL_E2E_RETRY_FIX_MALFORMED_TIMEOUT_MINUTES || 15),
-        'modules.01-nginx.test_config.unit.test_cmd': expectedFailOnceUnitCommand(),
-      }),
-    }),
   }),
   'retry-buster-pass-echo-rejects': Object.freeze({
     terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'gate', step_id: 'module-review', terminal_status: 'action_required', failure_class: 'needs_nova' }),
-    setup: Object.freeze({
-      progress: Object.freeze({
-        'modules.01-nginx.max_fails': 2,
-        'modules.01-nginx.auto_retry_threshold': 1,
-        'modules.01-nginx.test_config.unit.test_cmd': expectedFailOnceUnitCommand(),
-        'gates.module-review.primary_reviewer': 'echo-codex',
-        'gates.module-review.instructions_file': 'echo-review/MODULE-REVIEW-INSTRUCTIONS.md',
-        'gates.module-review.output_file': 'logs/echo-review/MODULE-REVIEW.json',
-      }),
-    }),
   }),
   'forge-malformed-output': Object.freeze({
-    terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'module', step_id: '01-nginx', terminal_status: 'failed', failure_class: 'invalid_contract' }),
-    setup: Object.freeze({ progress: Object.freeze({ 'modules.01-nginx.timeout_minutes': Number(process.env.REAL_E2E_FORGE_MALFORMED_TIMEOUT_MINUTES || 15) }) }),
+    terminal: DEGRADED_EVIDENCE_TERMINAL_CONTRACT,
+  }),
+  'discord-unavailable': Object.freeze({
+    terminal: DEGRADED_EVIDENCE_TERMINAL_CONTRACT,
   }),
   'architecture-validator-block': Object.freeze({
     terminal: terminalContract({
@@ -1132,27 +1108,18 @@ const FAILURE_CONTRACTS = Object.freeze({
       reason: 'ARCH_VALIDATION_BLOCKED',
       failure_class: 'ARCH_VALIDATION_BLOCKED',
     }),
-    setup: Object.freeze({
-      progress: Object.freeze({
-        'execution_order.0': 'REAL_E2E_EXPECTED_ARCH_VALIDATOR_UNKNOWN_MODULE',
-      }),
-    }),
   }),
   'echo-malformed-output': Object.freeze({
     terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'gate', step_id: 'module-review', terminal_status: 'failed', failure_class: 'invalid_contract' }),
-    setup: Object.freeze({ progress: Object.freeze({ 'gates.module-review.timeout_minutes': Number(process.env.REAL_E2E_ECHO_MALFORMED_TIMEOUT_MINUTES || 0.1) }) }),
   }),
   'buster-invalid-completion-identity': Object.freeze({
     terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'module', step_id: '01-nginx', terminal_status: 'failed', failure_class: 'output_file_identity_mismatch' }),
-    setup: Object.freeze({ progress: Object.freeze({ 'modules.01-nginx.timeout_minutes': Number(process.env.REAL_E2E_BUSTER_IDENTITY_FAILURE_TIMEOUT_MINUTES || 0.1) }) }),
   }),
   'buster-gate-failure': Object.freeze({
     terminal: FINAL_BUSTER_VERDICT_FAIL_TERMINAL_CONTRACT,
-    setup: Object.freeze({ progress: Object.freeze({ 'gates.final-buster.test_config.unit.test_cmd': expectedFailUnitCommand('REAL_E2E_EXPECTED_BUSTER_GATE_FAILURE') }) }),
   }),
   'k8s-pod-never-ready': Object.freeze({
     terminal: FINAL_BUSTER_VERDICT_FAIL_TERMINAL_CONTRACT,
-    setup: Object.freeze({ file_exact_line: Object.freeze({ 'k8s/deployment.yaml': '              path: /real-e2e-intentional-not-ready' }) }),
   }),
   'namespace-lease-denied': Object.freeze({
     terminal: FINAL_BUSTER_VERDICT_FAIL_TERMINAL_CONTRACT,
@@ -1164,26 +1131,13 @@ const FAILURE_CONTRACTS = Object.freeze({
     terminal: FINAL_BUSTER_VERDICT_FAIL_TERMINAL_CONTRACT,
   }),
   'pipeline-summary-failure': Object.freeze({
-    terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'generator', step_id: 'generator:project_summary', terminal_status: 'failed', failure_class: 'failed' }),
+    terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'generator', step_id: 'generator:project_summary', terminal_status: 'failed', failure_class: 'error' }),
   }),
   'redis-unavailable': Object.freeze({
-    terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'pipeline', step_id: 'runtime_config', terminal_status: 'failed', failure_class: 'ECONNREFUSED' }),
-    setup: Object.freeze({
-      progress: Object.freeze({
-        'real_e2e.intentional_config_failure.component': 'redis',
-        'real_e2e.intentional_config_failure.error_code': 'REDIS_CONNECTION_UNAVAILABLE',
-      }),
-    }),
+    terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'pipeline', step_id: 'runtime_config', terminal_status: 'failed', failure_class: 'econnrefused' }),
   }),
   'k8s-context-invalid': Object.freeze({
     terminal: FINAL_BUSTER_TERMINAL_CONTRACT,
-    setup: Object.freeze({
-      progress: Object.freeze({
-        'gates.final-buster.test_config.k8s.kubeconfig_path': '/tmp/real-e2e-missing-kubeconfig',
-        'real_e2e.intentional_config_failure.component': 'kubernetes',
-        'real_e2e.intentional_config_failure.error_code': 'KUBECONFIG_UNAVAILABLE',
-      }),
-    }),
   }),
   'registry-pull-failure': Object.freeze({
     terminal: FINAL_BUSTER_TERMINAL_CONTRACT,
@@ -1202,38 +1156,24 @@ const FAILURE_CONTRACTS = Object.freeze({
   }),
   'forge-timeout': Object.freeze({
     terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'module', step_id: '01-nginx', terminal_status: 'timed_out', failure_class: 'timeout' }),
-    setup: Object.freeze({ progress: Object.freeze({ 'modules.01-nginx.timeout_minutes': Number(process.env.REAL_E2E_FORGE_TIMEOUT_MINUTES || 0.001) }) }),
   }),
   'buster-module-timeout': Object.freeze({
     terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'module', step_id: '01-nginx', terminal_status: 'timed_out', failure_class: 'timeout' }),
-    setup: Object.freeze({ progress: Object.freeze({ 'modules.01-nginx.timeout_minutes': Number(process.env.REAL_E2E_BUSTER_MODULE_TIMEOUT_MINUTES || 0.001) }) }),
   }),
   'echo-gate-timeout': Object.freeze({
     terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'gate', step_id: 'module-review', terminal_status: 'timed_out', failure_class: 'timeout' }),
-    setup: Object.freeze({ progress: Object.freeze({ 'gates.module-review.timeout_minutes': Number(process.env.REAL_E2E_ECHO_GATE_TIMEOUT_MINUTES || 0.001) }) }),
   }),
   'final-review-timeout': Object.freeze({
     terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'gate', step_id: 'final-review', terminal_status: 'timed_out', failure_class: 'timeout' }),
-    setup: Object.freeze({ progress: Object.freeze({ 'gates.final-review.timeout_minutes': Number(process.env.REAL_E2E_FINAL_REVIEW_TIMEOUT_MINUTES || 0.001) }) }),
   }),
   'pipeline-review-timeout': Object.freeze({
-    terminal: DEGRADED_EVIDENCE_TERMINAL_CONTRACT,
-    setup: Object.freeze({ progress: Object.freeze({ 'pipeline_review.timeout_minutes': Number(process.env.REAL_E2E_PIPELINE_REVIEW_TIMEOUT_MINUTES || 0.001) }) }),
+    terminal: PIPELINE_REVIEW_TIMEOUT_TERMINAL_CONTRACT,
   }),
   'pipeline-cancelled': Object.freeze({
     terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'pipeline', step_id: 'user_cancellation', terminal_status: 'cancelled', failure_class: 'PIPELINE_CANCELLED_BY_SIGTERM' }),
   }),
   'multi-module-dependency-blocked': Object.freeze({
     terminal: MODULE_TEST_FAILURE_EXHAUSTED_TERMINAL_CONTRACT,
-    setup: Object.freeze({
-      progress: Object.freeze({
-        'modules.01-nginx.max_fails': 1,
-        'modules.01-nginx.test_config.unit.test_cmd': expectedFailUnitCommand('REAL_E2E_EXPECTED_MULTI_MODULE_DEPENDENCY_BLOCKED'),
-        'modules.02-nginx.depends_on.0': '01-nginx',
-        'real_e2e.multi_module.modules.0': '01-nginx',
-        'real_e2e.multi_module.modules.1': '02-nginx',
-      }),
-    }),
   }),
 });
 
@@ -1242,10 +1182,9 @@ export function expectedFailureContractForScenario(scenario) {
   if (!contract) {
     throw new Error(`missing real E2E failure contract for scenario: ${scenario.id}`);
   }
-  const setup = realE2EScenarioSetupContract(scenario.id);
   return {
     ...contract,
-    setup: Object.keys(setup).length > 0 ? setup : contract.setup,
+    setup: realE2EScenarioSetupContract(scenario.id),
   };
 }
 
@@ -1285,57 +1224,7 @@ export const evidenceSchemaTestHooks = Object.freeze({
   validateSummaryForWorkspace,
 });
 
-function readPathValue(value, dottedPath) {
-  const parts = String(dottedPath).split('.');
-  const resolve = (current, index) => {
-    if (current == null) return undefined;
-    if (index >= parts.length) return current;
-    if (Array.isArray(current) && /^\d+$/.test(parts[index])) return resolve(current[Number(parts[index])], index + 1);
-    if (typeof current !== 'object') return undefined;
-    for (let end = parts.length; end > index; end--) {
-      const key = parts.slice(index, end).join('.');
-      if (Object.hasOwn(current, key)) return resolve(current[key], end);
-    }
-    return undefined;
-  };
-  return resolve(value, 0);
-}
-
-function setupFieldFailures(source, expected = {}) {
-  return Object.entries(expected)
-    .map(([field, expectedValue]) => {
-      const actual = readPathValue(source, field);
-      return JSON.stringify(actual) === JSON.stringify(expectedValue)
-        ? null
-        : { field, expected: expectedValue, actual: actual ?? null };
-    })
-    .filter(Boolean);
-}
-
-function setupAbsentFailures(source, fields = []) {
-  return fields
-    .map((field) => {
-      const actual = readPathValue(source, field);
-      return actual === undefined
-        ? null
-        : { field, expected_absent: true, actual };
-    })
-    .filter(Boolean);
-}
-
-function setupPathSuffixFailures(source, expected = {}) {
-  return Object.entries(expected)
-    .map(([field, expectedSuffix]) => {
-      const actual = readPathValue(source, field);
-      return typeof actual === 'string' && actual.endsWith(expectedSuffix)
-        ? null
-        : { field, expected_path_suffix: expectedSuffix, actual: actual ?? null };
-    })
-    .filter(Boolean);
-}
-
 function requireScenarioSetupContract(workspace, scenario) {
-  const contract = expectedFailureContractForScenario(scenario);
   const progressPath = path.join(workspace.swarmDir, 'progress.json');
   let progress;
   let config;
@@ -1343,48 +1232,33 @@ function requireScenarioSetupContract(workspace, scenario) {
     progress = readJson(progressPath);
     config = readJson(workspace.runConfigPath);
   } catch (error) {
-    return evidenceFail('expected_failure_setup_contract', 'REAL_E2E_FAILURE_SETUP_CONTRACT_READ_FAILED', {
+    return evidenceFail('scenario_setup_contract', 'REAL_E2E_SCENARIO_SETUP_CONTRACT_READ_FAILED', {
       scenario: scenario.id,
       progress_path: rel(workspace, progressPath),
       config_path: workspace.runConfigPath,
       error: error?.message || String(error),
     });
   }
-  const baseExpected = {
-    'real_e2e.scenario_id': scenario.id,
-    'real_e2e.expected_pipeline_exit': scenario.expectedPipelineExit,
-    'real_e2e.expected_evidence': scenario.expectedEvidence,
-  };
-  const failures = [
-    ...setupFieldFailures(progress, baseExpected),
-    ...setupFieldFailures(progress, contract.setup?.progress || {}),
-    ...setupFieldFailures(config, contract.setup?.config || {}),
-    ...setupAbsentFailures(progress, contract.setup?.progress_absent || []),
-    ...setupAbsentFailures(config, contract.setup?.config_absent || []),
-    ...setupPathSuffixFailures(progress, contract.setup?.progress_path_suffix || {}),
-    ...setupPathSuffixFailures(config, contract.setup?.config_path_suffix || {}),
-  ];
-  for (const [relativePath, expectedLine] of Object.entries(contract.setup?.file_exact_line || {})) {
-    const filePath = path.join(workspace.projectSrc, relativePath);
-    const text = readTextIfPresent(filePath);
-    const lines = text == null ? [] : text.split(/\r?\n/);
-    if (!lines.includes(expectedLine)) {
-      failures.push({
-        field: `file:${relativePath}`,
-        expected_line: expectedLine,
-        actual: text == null ? null : 'present_without_expected_line',
-      });
-    }
-  }
-  return failures.length === 0
-    ? evidencePass('expected_failure_setup_contract', {
+
+  try {
+    validateRealE2EScenarioSetup({
+      progress,
+      config,
+      projectSrc: workspace.projectSrc,
+      swarmDir: workspace.swarmDir,
+      scenarioId: scenario.id,
+    });
+    return evidencePass('scenario_setup_contract', {
       scenario: scenario.id,
       expected_evidence: scenario.expectedEvidence,
-    })
-    : evidenceFail('expected_failure_setup_contract', 'REAL_E2E_FAILURE_SETUP_CONTRACT_MISMATCH', {
-      scenario: scenario.id,
-      field_failures: failures,
     });
+  } catch (error) {
+    return evidenceFail('scenario_setup_contract', 'REAL_E2E_SCENARIO_SETUP_CONTRACT_MISMATCH', {
+      scenario: scenario.id,
+      field_failures: Array.isArray(error?.failures) ? error.failures : [],
+      error: error?.message || String(error),
+    });
+  }
 }
 
 function requirePipelineLifecycleSuccessEvidence(workspace) {
@@ -1528,6 +1402,39 @@ function requireBusterFailureArtifact(workspace, relativePath, code, expected = 
   });
 }
 
+function requireBusterIdentityMismatchArtifact(workspace, relativePath, expected = {}) {
+  return requireJsonFile(workspace, relativePath, 'buster_invalid_completion_identity', (data) => {
+    if (!isPlainObject(data)) return { ok: false, reason: 'REAL_E2E_BUSTER_IDENTITY_ARTIFACT_NOT_OBJECT' };
+    const expectedFields = {
+      artifact_type: 'buster_output',
+      ...expected,
+    };
+    const fieldCheck = assertTypedFields(data, expectedFields, 'REAL_E2E_BUSTER_IDENTITY_ARTIFACT_FIELD_MISMATCH');
+    if (!fieldCheck.ok) return fieldCheck;
+    const expectedRunId = primaryExpectedRunId(workspace);
+    if (data.run_id === expectedRunId) {
+      return {
+        ok: false,
+        reason: 'REAL_E2E_BUSTER_IDENTITY_ARTIFACT_RUN_ID_NOT_MUTATED',
+        run_id: data.run_id || null,
+      };
+    }
+    if (!String(data.reason || '').includes('REAL_E2E_EXPECTED_BUSTER_INVALID_COMPLETION_IDENTITY')) {
+      return {
+        ok: false,
+        reason: 'REAL_E2E_BUSTER_IDENTITY_ARTIFACT_REASON_MISMATCH',
+        actual_reason: data.reason || null,
+      };
+    }
+    return {
+      status: data.status || null,
+      expected_run_id: expectedRunId,
+      artifact_run_id: data.run_id || null,
+      module_id: data.module_id || null,
+    };
+  });
+}
+
 function requireDeliveryLintFailureEvidence(workspace, code, {
   module_id: moduleId = '01-nginx',
   marker = null,
@@ -1630,7 +1537,7 @@ function requireScenarioFailureContract(workspace, scenario) {
   const expectedFields = Object.fromEntries(Object.entries(expected).filter(([field, value]) => value != null && !['require_event_id', 'reason_contains'].includes(field)));
   const fieldCheck = assertTypedFields(actual, expectedFields, 'REAL_E2E_FAILURE_TERMINAL_CONTRACT_MISMATCH');
   const reasonContains = expected.reason_contains || null;
-  const reasonContainsOk = !reasonContains || String(actual.reason || '').includes(reasonContains);
+  const reasonContainsOk = !reasonContains || terminalDiagnosticTextFromEvent(halted).includes(reasonContains);
   const missingRequired = [];
   if (expected.require_event_id === true && !actual.event_id) missingRequired.push('event_id');
   if (!halted || !fieldCheck.ok || !reasonContainsOk || missingRequired.length > 0) {
@@ -1677,7 +1584,8 @@ function requireDeterministicMalformedOutputEvidence(workspace, scenario) {
 
     const targetPath = path.join(workspace.swarmDir, config.target);
     const targetRaw = readTextIfPresent(targetPath);
-    if (config.normalizable === true && targetRaw == null) {
+    const targetMayBeRewritten = config.normalizable === true || config.targetMayBeRewritten === true;
+    if (targetMayBeRewritten && targetRaw == null) {
       return {
         ok: false,
         reason: 'REAL_E2E_MALFORMED_OUTPUT_RAW_PAYLOAD_MISMATCH',
@@ -1689,7 +1597,7 @@ function requireDeterministicMalformedOutputEvidence(workspace, scenario) {
         target_rewritten: false,
       };
     }
-    const raw = config.normalizable === true
+    const raw = targetMayBeRewritten
       ? Buffer.from(String(manifest.raw_base64 || ''), 'base64').toString('utf8')
       : targetRaw;
     const expectedHash = sha256(config.raw);
@@ -1705,7 +1613,7 @@ function requireDeterministicMalformedOutputEvidence(workspace, scenario) {
         actual_sha256: actualHash,
         expected_bytes: expectedBytes,
         actual_bytes: actualBytes,
-        target_rewritten: config.normalizable === true && targetRaw !== config.raw,
+        target_rewritten: targetMayBeRewritten && targetRaw !== config.raw,
       };
     }
     let parsed = null;
@@ -1738,7 +1646,7 @@ function requireDeterministicMalformedOutputEvidence(workspace, scenario) {
       payload_kind: 'valid_json_contract_violation',
       raw_sha256: actualHash,
       raw_bytes: actualBytes,
-      ...(config.normalizable === true ? {
+      ...(targetMayBeRewritten ? {
         target_rewritten: targetRaw !== config.raw,
         target_sha256: targetRaw == null ? null : sha256(targetRaw),
       } : {}),
@@ -1752,9 +1660,10 @@ function requireNormalizedForgeCompletionEvidence(workspace, scenario) {
   if (!config?.normalizable) return evidencePass('forge_completion_normalized_not_required', { scenario: scenario.id });
 
   return requireJsonFile(workspace, config.target, 'forge_completion_normalized', (artifact) => {
+    const pipelineRunId = primaryExpectedRunId(workspace);
     const expected = {
       artifact_type: 'forge_completion',
-      run_id: workspace.runId,
+      run_id: pipelineRunId,
       module_id: '01-nginx',
       attempt: 2,
       status: 'READY_FOR_TESTING',
@@ -1780,14 +1689,6 @@ function requireNormalizedForgeCompletionEvidence(workspace, scenario) {
 }
 
 function downstreamSuccessArtifactChecks(workspace, scenario) {
-  if (scenario.id === 'forge-malformed-output') {
-    return [
-      ['modules/01-nginx/buster-output.json', 'module_buster_output'],
-      ['buster-test/FINAL-BUSTER-RESULT.json', 'final_buster_output'],
-      ['logs/echo-review/MODULE-REVIEW.json', 'module_echo_review'],
-      ['logs/echo-review/FINAL-REVIEW.json', 'final_echo_review'],
-    ];
-  }
   if (scenario.id === 'echo-malformed-output') {
     return [
       ['logs/echo-review/MODULE-REVIEW.json', 'module_echo_review'],
@@ -1920,9 +1821,21 @@ function requireObservabilityDegradedEvidence(workspace, scenario, expected = {}
     });
 }
 
-function requireMalformedOutputProductionRejectionEvidence(workspace, scenario) {
+async function requireMalformedOutputProductionRejectionEvidence(workspace, scenario) {
   const config = malformedOutputScenarioConfig(scenario.id);
   if (!config) return evidencePass('malformed_output_production_rejection_not_required', { scenario: scenario.id });
+  if (scenario.id === 'forge-malformed-output') {
+    return await requireRetryFixCycleEvidence(workspace, {
+      code: 'malformed_output_production_rejection',
+      expectedModuleStatus: 'PASS',
+      expectedFailCount: 1,
+      expectFinalGateTask: false,
+      failedAttemptsWithTesting: [],
+      expectedModuleTaskAttempts: [2],
+      requiredFailureMarkers: ['invalid Forge completion artifact'],
+      promptContracts: [{ attempt: 2, requiredFailureMarkers: ['invalid Forge completion artifact'] }],
+    });
+  }
   const terminalCheck = requireScenarioFailureContract(workspace, scenario);
   if (!terminalCheck.ok) {
     return evidenceFail('malformed_output_production_rejection', 'REAL_E2E_MALFORMED_OUTPUT_TERMINAL_REJECTION_MISMATCH', {
@@ -2091,7 +2004,7 @@ async function requireBusterDeadLetterEvidence(workspace, scenario, expected, co
     });
 }
 
-async function requireBusterStreamEvidence(workspace, { requireModuleTask = true } = {}) {
+async function requireBusterStreamEvidence(workspace, { requireModuleTask = true, requireGateTask = true } = {}) {
   const streamState = await readDecodedBusterTasks(workspace);
   if (streamState.error) {
     return evidenceFail('buster_task_stream', 'REAL_E2E_BUSTER_STREAM_READ_FAILED', streamState);
@@ -2116,7 +2029,7 @@ async function requireBusterStreamEvidence(workspace, { requireModuleTask = true
       presentFields: ['redis_id'],
       map: redisRecordSchemaFields,
     }] : []),
-    {
+    ...(requireGateTask ? [{
       name: 'gate_test:final-buster',
       expected: {
         schema_version: 'v1',
@@ -2134,25 +2047,27 @@ async function requireBusterStreamEvidence(workspace, { requireModuleTask = true
       },
       presentFields: ['redis_id'],
       map: redisRecordSchemaFields,
-    },
+    }] : []),
   ];
   const orderedTasks = assertOrderedContracts(streamState.decoded, contracts, 'REAL_E2E_BUSTER_STREAM_TASK_ORDER_MISMATCH');
   const moduleTask = orderedTasks.ok && requireModuleTask
     ? orderedTasks.matches.find((match) => match.name === 'module_test:01-nginx')?.record || null
     : null;
-  const gateTask = orderedTasks.ok
+  const gateTask = orderedTasks.ok && requireGateTask
     ? orderedTasks.matches.find((match) => match.name === 'gate_test:final-buster')?.record || null
     : null;
   const gateSuites = Array.isArray(gateTask?.payload?.suites) ? gateTask.payload.suites : [];
-  const missingGateSuites = requiredValuesMissing(gateSuites, ['k8s']);
+  const missingGateSuites = requireGateTask ? requiredValuesMissing(gateSuites, ['k8s']) : [];
   const hasGateK8sSuite = missingGateSuites.length === 0;
-  const hasPreviewContract = gateTask?.payload?.test_config?.k8s?.purpose === 'final-preview'
-    && gateTask?.payload?.test_config?.k8s?.preview?.expected_text === 'REAL_E2E_NGINX_OK';
-  if ((requireModuleTask && !moduleTask) || !gateTask || !hasGateK8sSuite || !hasPreviewContract) {
+  const hasPreviewContract = !requireGateTask || (gateTask?.payload?.test_config?.k8s?.purpose === 'final-preview'
+    && gateTask?.payload?.test_config?.k8s?.preview?.expected_text === 'REAL_E2E_NGINX_OK');
+  if ((requireModuleTask && !moduleTask) || (requireGateTask && !gateTask) || !hasGateK8sSuite || !hasPreviewContract) {
     return evidenceFail('buster_task_stream', 'REAL_E2E_BUSTER_STREAM_MISSING_REQUIRED_TASKS', {
       stream: streamState.stream,
       entry_count: streamState.entries.length,
       decoded_task_count: streamState.decoded.length,
+      required_module_task: requireModuleTask,
+      required_gate_task: requireGateTask,
       has_module_task: Boolean(moduleTask),
       has_gate_task: Boolean(gateTask),
       has_gate_k8s_suite: hasGateK8sSuite,
@@ -2165,8 +2080,10 @@ async function requireBusterStreamEvidence(workspace, { requireModuleTask = true
     stream: streamState.stream,
     entry_count: streamState.entries.length,
     decoded_task_count: streamState.decoded.length,
+    required_module_task: requireModuleTask,
+    required_gate_task: requireGateTask,
     module_task_id: moduleTask?.entry?._id || null,
-    gate_task_id: gateTask.entry._id,
+    gate_task_id: gateTask?.entry?._id || null,
     restored_checkpoint: restoredCheckpointName(workspace),
   });
 }
@@ -2547,7 +2464,7 @@ function requireCrashInjectionMarker(workspace, scenario) {
       run_id: workspace.runId,
       project: workspace.projectName,
       scenario: scenario.id,
-      exit_code: 86,
+      signal: 'SIGKILL',
     }, 'REAL_E2E_CRASH_MARKER_FIELD_MISMATCH');
     if (!fieldCheck.ok) return fieldCheck;
     return {
@@ -2744,6 +2661,31 @@ function requireMultiModuleProjectSummary(workspace, moduleIds = ['01-nginx', '0
     });
 }
 
+function multiModuleContractFromProgress(workspace) {
+  const progress = readJsonIfPresent(path.join(workspace.swarmDir, 'progress.json')) || {};
+  const modules = Array.isArray(progress?.real_e2e?.multi_module?.modules)
+    ? progress.real_e2e.multi_module.modules.filter((moduleId) => typeof moduleId === 'string' && moduleId.trim())
+    : [];
+  const moduleIds = modules.length > 0 ? modules : expectedModuleIdsFromProgress(workspace);
+  const dependencies = isPlainObject(progress?.real_e2e?.multi_module?.dependencies)
+    ? progress.real_e2e.multi_module.dependencies
+    : Object.fromEntries(moduleIds.map((moduleId) => [moduleId, progress?.modules?.[moduleId]?.depends_on || []]));
+  return { moduleIds, dependencies };
+}
+
+function dependencyReadySiblingBatch({ moduleIds, dependencies }) {
+  const groups = new Map();
+  for (const moduleId of moduleIds) {
+    const deps = Array.isArray(dependencies?.[moduleId]) ? [...dependencies[moduleId]].sort() : [];
+    if (deps.length === 0) continue;
+    const key = JSON.stringify(deps);
+    groups.set(key, [...(groups.get(key) || []), moduleId]);
+  }
+  const batches = [...groups.values()].filter((ids) => ids.length > 1);
+  if (batches.length > 0) return batches.sort((a, b) => b.length - a.length)[0];
+  return moduleIds.slice(0, 2);
+}
+
 function validateModuleBusterOutputForWorkspace(workspace, moduleId) {
   return (data) => {
     if (!isPlainObject(data)) return { ok: false, reason: 'REAL_E2E_MODULE_BUSTER_OUTPUT_NOT_OBJECT' };
@@ -2794,7 +2736,7 @@ async function requireMultiModuleBusterTaskStream(workspace, {
           target_id: moduleId,
           module_id: moduleId,
           attempt,
-          output_file: `modules/${moduleId}/buster-output.json`,
+          output_file: canonicalBusterOutputPath(workspace, `modules/${moduleId}/buster-output.json`),
         },
         presentFields: ['redis_id'],
         map: normalizeTaskFields,
@@ -2813,24 +2755,70 @@ async function requireMultiModuleBusterTaskStream(workspace, {
         target_kind: 'gate',
         target_id: 'final-buster',
         gate_id: 'final-buster',
-        output_file: 'buster-test/FINAL-BUSTER-RESULT.json',
+        output_file: canonicalBusterOutputPath(workspace, 'buster-test/FINAL-BUSTER-RESULT.json'),
       },
       presentFields: ['redis_id'],
       map: normalizeTaskFields,
     });
   }
-  const ordered = assertOrderedContracts(streamState.decoded, contracts, 'REAL_E2E_MULTI_MODULE_BUSTER_TASK_ORDER_MISMATCH');
-  if (!ordered.ok) {
-    return evidenceFail('multi_module_buster_task_stream', ordered.reason, {
+  const matches = [];
+  const missing = [];
+  for (const contract of contracts) {
+    const index = streamState.decoded.findIndex((record) => typedFieldFailures(contract.map(record), contract.expected).length === 0
+      && (contract.presentFields ? assertPresentFields(contract.map(record), contract.presentFields, 'REAL_E2E_MULTI_MODULE_BUSTER_TASK_FIELD_MISSING').ok : true));
+    if (index < 0) missing.push({ name: contract.name, expected: contract.expected });
+    else matches.push({ name: contract.name, index, record: streamState.decoded[index], fields: contract.map(streamState.decoded[index]) });
+  }
+  if (missing.length > 0) {
+    return evidenceFail('multi_module_buster_task_stream', 'REAL_E2E_MULTI_MODULE_BUSTER_TASK_MISSING', {
       stream: streamState.stream,
       decoded_task_count: streamState.decoded.length,
-      task_order_contract: ordered,
+      missing_contracts: missing,
+    });
+  }
+  const contract = multiModuleContractFromProgress(workspace);
+  const indexByModule = Object.fromEntries(matches
+    .filter((match) => match.fields.type === 'module_test')
+    .map((match) => [`${match.fields.module_id}:attempt-${match.fields.attempt}`, match.index]));
+  const orderFailures = [];
+  for (const moduleId of moduleIds) {
+    const attempts = attemptsByModule[moduleId] || [1];
+    for (let index = 1; index < attempts.length; index += 1) {
+      const previous = indexByModule[`${moduleId}:attempt-${attempts[index - 1]}`];
+      const current = indexByModule[`${moduleId}:attempt-${attempts[index]}`];
+      if (!(previous < current)) {
+        orderFailures.push({ field: `${moduleId}.attempt_order`, previous_attempt: attempts[index - 1], current_attempt: attempts[index], previous_index: previous ?? null, current_index: current ?? null });
+      }
+    }
+  }
+  for (const [moduleId, dependencies] of Object.entries(contract.dependencies || {})) {
+    const moduleIndex = indexByModule[`${moduleId}:attempt-${(attemptsByModule[moduleId] || [1]).at(-1)}`];
+    for (const dependency of Array.isArray(dependencies) ? dependencies : []) {
+      if (!moduleIds.includes(moduleId) || !moduleIds.includes(dependency)) continue;
+      const dependencyIndex = indexByModule[`${dependency}:attempt-${(attemptsByModule[dependency] || [1]).at(-1)}`];
+      if (!(dependencyIndex < moduleIndex)) {
+        orderFailures.push({ field: `${dependency}->${moduleId}`, dependency_index: dependencyIndex ?? null, module_index: moduleIndex ?? null });
+      }
+    }
+  }
+  if (expectFinalGate) {
+    const gateIndex = matches.find((match) => match.name === 'gate_test:final-buster')?.index ?? null;
+    const latestModuleIndex = Math.max(...Object.values(indexByModule));
+    if (!(latestModuleIndex < gateIndex)) orderFailures.push({ field: 'final_buster_after_modules', latest_module_index: latestModuleIndex, gate_index: gateIndex });
+  }
+  if (orderFailures.length > 0) {
+    return evidenceFail('multi_module_buster_task_stream', 'REAL_E2E_MULTI_MODULE_BUSTER_TASK_ORDER_MISMATCH', {
+      stream: streamState.stream,
+      decoded_task_count: streamState.decoded.length,
+      order_failures: orderFailures,
     });
   }
   return evidencePass('multi_module_buster_task_stream', {
     stream: streamState.stream,
     decoded_task_count: streamState.decoded.length,
-    ordered_tasks: ordered.matches.map((match) => ({
+    ordered_tasks: matches
+      .sort((a, b) => a.index - b.index)
+      .map((match) => ({
       name: match.name,
       redis_id: match.record.entry._id,
       module_id: redisRecordSchemaFields(match.record).module_id,
@@ -2844,39 +2832,45 @@ async function requireMultiModuleEvidence(workspace, scenario, {
   retryUnlock = false,
   finalGateFailure = false,
 } = {}) {
-  const moduleIds = ['01-nginx', '02-nginx'];
+  const contract = multiModuleContractFromProgress(workspace);
+  const moduleIds = contract.moduleIds;
+  const retryAttempts = retryUnlock || finalGateFailure ? [1, 2] : [1];
+  const readModelExpectation = Object.fromEntries(moduleIds.map((moduleId) => [
+    moduleId,
+    {
+      status: 'PASS',
+      ...(moduleId === '01-nginx' && (retryUnlock || finalGateFailure) ? { fail_count: 1, current_attempt: 2 } : {}),
+    },
+  ]));
   const checks = [
-    requireMultiModuleReadModels(workspace, {
-      '01-nginx': { status: 'PASS' },
-      '02-nginx': { status: 'PASS' },
-    }),
-    requireJsonFile(workspace, 'modules/01-nginx/buster-output.json', 'module_buster_output:01-nginx', validateModuleBusterOutputForWorkspace(workspace, '01-nginx')),
-    requireJsonFile(workspace, 'modules/02-nginx/buster-output.json', 'module_buster_output:02-nginx', validateModuleBusterOutputForWorkspace(workspace, '02-nginx')),
+    requireMultiModuleReadModels(workspace, readModelExpectation),
+    ...moduleIds.map((moduleId) => requireJsonFile(
+      workspace,
+      `modules/${moduleId}/buster-output.json`,
+      `module_buster_output:${moduleId}`,
+      validateModuleBusterOutputForWorkspace(workspace, moduleId),
+    )),
   ];
   if (!finalGateFailure) checks.push(requireMultiModuleProjectSummary(workspace, moduleIds));
   if (dependency || retryUnlock) {
     checks.push(requireDependencyOrderingEvidence(workspace));
   } else {
-    checks.push(requireParallelStartEvidence(workspace, moduleIds));
+    checks.push(requireParallelStartEvidence(workspace, dependencyReadySiblingBatch(contract)));
   }
-  if (retryUnlock || finalGateFailure) {
-    checks.push(requireModuleLifecycleContract(workspace, {
-      moduleId: '01-nginx',
-      expectedStartedAttempts: [1, 2],
-      expectedFailedAttempts: [1],
-      expectedPassedAttempts: [2],
-    }));
-  } else {
-    checks.push(requireModuleLifecycleContract(workspace, { moduleId: '01-nginx' }));
+  for (const moduleId of moduleIds) {
+    checks.push(moduleId === '01-nginx' && (retryUnlock || finalGateFailure)
+      ? requireModuleLifecycleContract(workspace, {
+        moduleId,
+        expectedStartedAttempts: [1, 2],
+        expectedFailedAttempts: [1],
+        expectedPassedAttempts: [2],
+      })
+      : requireModuleLifecycleContract(workspace, { moduleId }));
   }
-  checks.push(requireModuleLifecycleContract(workspace, { moduleId: '02-nginx' }));
   checks.push(await requireMultiModuleBusterTaskStream(workspace, {
     moduleIds,
-    attemptsByModule: {
-      '01-nginx': retryUnlock || finalGateFailure ? [1, 2] : [1],
-      '02-nginx': [1],
-    },
-    expectFinalGate: true,
+    attemptsByModule: Object.fromEntries(moduleIds.map((moduleId) => [moduleId, moduleId === '01-nginx' ? retryAttempts : [1]])),
+    expectFinalGate: finalGateFailure || realE2EExecutionBoundaryFromProgress(workspace) === 'full',
   }));
   if (finalGateFailure) {
     checks.push(requireBusterFailureArtifact(workspace, 'buster-test/FINAL-BUSTER-RESULT.json', scenario.expectedEvidence, { module_id: 'final-buster', gate_id: 'final-buster' }));
@@ -2904,7 +2898,6 @@ function requireCrashResumeLifecycleEvidence(workspace, scenario, { retry = fals
   const started = scoped.filter((entry) => entry.type === 'pipeline_run.started');
   const completed = scoped.filter((entry) => entry.type === 'pipeline_run.completed' && terminalStatusFromEvent(entry) === 'succeeded');
   const halted = scoped.filter((entry) => entry.type === 'pipeline_run.halted');
-  const crashes = scoped.filter((entry) => entry.type === 'real_e2e.crash_injected' && entry?.data?.point === scenario.crashPoint);
   const moduleStarted = scoped.filter((entry) => retryLifecycleEventFields(entry).event_type === 'module_attempt.started'
     && retryLifecycleEventFields(entry).module_id === '01-nginx');
   const modulePassed = scoped.filter((entry) => retryLifecycleEventFields(entry).event_type === 'module_attempt.passed'
@@ -2923,7 +2916,6 @@ function requireCrashResumeLifecycleEvidence(workspace, scenario, { retry = fals
     ...(started.length === 1 ? [] : [{ field: 'pipeline_run.started.count', expected: 1, actual: started.length }]),
     ...(completed.length === 1 ? [] : [{ field: 'pipeline_run.completed.count', expected: 1, actual: completed.length }]),
     ...(halted.length === 0 ? [] : [{ field: 'pipeline_run.halted.count', expected: 0, actual: halted.length }]),
-    ...(crashes.length === 1 ? [] : [{ field: 'real_e2e.crash_injected.count', expected: 1, actual: crashes.length }]),
     ...(JSON.stringify(actualStartedAttempts) === JSON.stringify(expectedStartedAttempts)
       ? []
       : [{ field: 'module_attempt.started.attempts', expected: expectedStartedAttempts, actual: actualStartedAttempts }]),
@@ -2941,7 +2933,6 @@ function requireCrashResumeLifecycleEvidence(workspace, scenario, { retry = fals
       crash_point: scenario.crashPoint,
       started_event_id: terminalEventIdFromEvent(started[0]),
       completed_event_id: terminalEventIdFromEvent(completed[0]),
-      crash_event_id: terminalEventIdFromEvent(crashes[0]),
       started_attempts: actualStartedAttempts,
       failed_attempts: actualFailedAttempts,
       passed_attempts: actualPassedAttempts,
@@ -2956,7 +2947,7 @@ function requireCrashResumeLifecycleEvidence(workspace, scenario, { retry = fals
     });
 }
 
-async function requireCrashResumeBusterQueueEvidence(workspace, scenario, { retry = false } = {}) {
+async function requireCrashResumeBusterQueueEvidence(workspace, scenario, { retry = false, expectModuleTask = true, expectFinalGateTask = true } = {}) {
   const streamState = await readDecodedBusterTasks(workspace);
   if (streamState.error) {
     return evidenceFail('crash_resume_buster_queue', 'REAL_E2E_CRASH_RESUME_BUSTER_TASK_STREAM_READ_FAILED', streamState);
@@ -2979,7 +2970,7 @@ async function requireCrashResumeBusterQueueEvidence(workspace, scenario, { retr
     });
   const attempts = moduleTasks.map((record) => redisRecordSchemaFields(record).attempt).filter((attempt) => attempt != null);
   const gateAttempts = gateTasks.map((record) => redisRecordSchemaFields(record).attempt).filter((attempt) => attempt != null);
-  const expectedAttempts = retry ? [1, 2] : [1];
+  const expectedAttempts = expectModuleTask ? (retry ? [1, 2] : [1]) : [];
   const redisIds = moduleTasks.map((record) => redisRecordSchemaFields(record).redis_id).filter(Boolean);
   const uniqueRedisIds = new Set(redisIds);
   const fieldFailures = [
@@ -2989,15 +2980,17 @@ async function requireCrashResumeBusterQueueEvidence(workspace, scenario, { retr
     ...(redisIds.length === uniqueRedisIds.size
       ? []
       : [{ field: 'module_test.redis_ids_unique', expected: true, actual: false, redis_ids: redisIds }]),
-    ...(JSON.stringify(gateAttempts) === JSON.stringify([1])
+    ...(JSON.stringify(gateAttempts) === JSON.stringify(expectFinalGateTask ? [1] : [])
       ? []
-      : [{ field: 'gate_test.task_attempts', expected: [1], actual: gateAttempts }]),
+      : [{ field: 'gate_test.task_attempts', expected: expectFinalGateTask ? [1] : [], actual: gateAttempts }]),
   ];
   return fieldFailures.length === 0
     ? evidencePass('crash_resume_buster_queue', {
       stream: streamState.stream,
       module_task_attempts: attempts,
       gate_task_attempts: gateAttempts,
+      expected_module_task: expectModuleTask,
+      expected_final_gate_task: expectFinalGateTask,
       redis_ids: redisIds,
     })
     : evidenceFail('crash_resume_buster_queue', 'REAL_E2E_CRASH_RESUME_BUSTER_QUEUE_CONTRACT_MISMATCH', {
@@ -3008,11 +3001,14 @@ async function requireCrashResumeBusterQueueEvidence(workspace, scenario, { retr
 }
 
 async function requireCrashResumeEvidence(workspace, scenario, { retry = false } = {}) {
+  const expectModuleTask = !restoredCheckpointSkipsPhase(workspace, 'module-buster');
+  const expectFinalGateTask = realE2EExecutionBoundaryFromProgress(workspace) === 'full'
+    && !restoredCheckpointSkipsPhase(workspace, 'final-buster');
   const checks = [
     requireCrashCheckpointEvidence(workspace, scenario),
     requireCrashInjectionMarker(workspace, scenario),
     requireCrashResumeLifecycleEvidence(workspace, scenario, { retry }),
-    await requireCrashResumeBusterQueueEvidence(workspace, scenario, { retry }),
+    await requireCrashResumeBusterQueueEvidence(workspace, scenario, { retry, expectModuleTask, expectFinalGateTask }),
     requireJsonFile(workspace, 'logs/pipeline/summary.json', 'crash_resume_pipeline_summary', validateSummaryForWorkspace(workspace)),
     requireJsonFile(workspace, 'logs/pipeline/latest.json', 'crash_resume_latest_pointer', validateLatestPointerForWorkspace(workspace)),
   ];
@@ -3021,8 +3017,8 @@ async function requireCrashResumeEvidence(workspace, scenario, { retry = false }
       code: 'crash_resume_retry_cycle',
       expectedModuleStatus: 'PASS',
       expectedFailCount: 1,
-      expectFinalGateTask: true,
-      expectProjectSummary: true,
+      expectFinalGateTask,
+      expectProjectSummary: expectFinalGateTask,
     }));
   }
   const failures = checks.filter((check) => !check.ok);
@@ -3037,8 +3033,32 @@ function telemetryStreamKey(workspace) {
 }
 
 function telemetryContractsForWorkspace(workspace, pipelineRunId) {
-  const restoredCheckpoint = restoredCheckpointName(workspace);
-  if (restoredCheckpoint) {
+  const scope = evidenceScopeForWorkspace(workspace);
+  if (scope.moduleBoundary) {
+    return [
+      ...(!scope.restoredCheckpoint ? [
+        {
+          name: 'pipeline.started',
+          expected: { version: 1, source: 'pipeline', type: 'pipeline.started', run_id: pipelineRunId, project: workspace.projectName },
+          presentFields: ['redis_id'],
+          map: redisRecordSchemaFields,
+        },
+        {
+          name: 'module.started:01-nginx',
+          expected: { version: 1, source: 'pipeline', type: 'module.started', run_id: pipelineRunId, project: workspace.projectName, module_id: '01-nginx' },
+          presentFields: ['redis_id'],
+          map: redisRecordSchemaFields,
+        },
+      ] : []),
+      {
+        name: 'pipeline.completed',
+        expected: { version: 1, source: 'pipeline', type: 'pipeline.completed', run_id: pipelineRunId, project: workspace.projectName, terminal_status: 'succeeded' },
+        presentFields: ['redis_id'],
+        map: redisRecordSchemaFields,
+      },
+    ];
+  }
+  if (scope.restoredCheckpoint) {
     return [
       ...(!restoredCheckpointSkipsPhase(workspace, 'final-buster') ? [{
         name: 'gate.started:final-buster',
@@ -3115,15 +3135,15 @@ async function requirePipelineTelemetryStreamEvidence(workspace) {
       && fields.run_id === pipelineRunId
       && fields.project === workspace.projectName;
   });
-  const restoredCheckpoint = restoredCheckpointName(workspace);
+  const scope = evidenceScopeForWorkspace(workspace);
   const orderedTelemetry = assertOrderedContracts(scoped, telemetryContractsForWorkspace(workspace, pipelineRunId), 'REAL_E2E_TELEMETRY_STREAM_ORDER_MISMATCH');
-  const pipelineStarted = orderedTelemetry.ok && !restoredCheckpoint
+  const pipelineStarted = orderedTelemetry.ok && !scope.restoredCheckpoint
     ? orderedTelemetry.matches.find((match) => match.name === 'pipeline.started')?.record.event || null
     : null;
   const startedModuleIds = Array.isArray(pipelineStarted?.modules) ? pipelineStarted.modules.map((module) => module?.id) : [];
   const startedGateIds = Array.isArray(pipelineStarted?.gates) ? pipelineStarted.gates.map((gate) => gate?.id) : [];
-  const missingStartedModules = restoredCheckpoint ? [] : requiredValuesMissing(startedModuleIds, ['01-nginx']);
-  const missingStartedGates = restoredCheckpoint ? [] : requiredValuesMissing(startedGateIds, ['module-review', 'operator-approval', 'final-buster', 'final-review']);
+  const missingStartedModules = scope.restoredCheckpoint ? [] : requiredValuesMissing(startedModuleIds, ['01-nginx']);
+  const missingStartedGates = scope.restoredCheckpoint || scope.moduleBoundary ? [] : requiredValuesMissing(startedGateIds, ['module-review', 'operator-approval', 'final-buster', 'final-review']);
   if (!orderedTelemetry.ok || missingStartedModules.length > 0 || missingStartedGates.length > 0) {
     return evidenceFail('pipeline_telemetry_stream', 'REAL_E2E_TELEMETRY_STREAM_MISSING_RUN_EVENTS', {
       stream,
@@ -3142,19 +3162,25 @@ async function requirePipelineTelemetryStreamEvidence(workspace) {
     ordered_events: orderedTelemetry.matches.map((match) => ({ name: match.name, redis_id: match.record.entry._id })),
     pipeline_started_modules: startedModuleIds,
     pipeline_started_gates: startedGateIds,
-    restored_checkpoint: restoredCheckpoint,
+    restored_checkpoint: scope.restoredCheckpoint,
+    execution_boundary: scope.executionBoundary,
   });
 }
 
 function requireAgentObservabilityTelemetryEvidence(workspace) {
+  const scope = evidenceScopeForWorkspace(workspace);
   const eventPath = path.join(workspace.swarmDir, 'logs', 'pipeline', 'pipeline.jsonl');
   const events = readJsonLines(eventPath).filter((event) => event?.project === workspace.projectName);
   const agentEvents = events.filter((event) => String(event?.type || '').startsWith('agent.'));
   const typeSet = new Set(agentEvents.map((event) => event.type).filter(Boolean));
-  const requiredTypes = ['agent.spawned', 'agent.session.started', 'agent.ended', 'agent.tool.started', 'agent.tool.finished'];
+  const requiredTypes = !scope.terminalExtras
+    ? ['agent.spawned', 'agent.ended', 'agent.tool.started', 'agent.tool.finished']
+    : ['agent.spawned', 'agent.session.started', 'agent.ended', 'agent.tool.started', 'agent.tool.finished'];
   const missingTypes = requiredValuesMissing([...typeSet], requiredTypes);
   const labels = agentEvents.map((event) => event.label).filter(Boolean);
-  const requiredLabels = ['forge-01-nginx', 'echo-echo-codex-module-review', 'case-study', 'pipeline-review'];
+  const requiredLabels = !scope.terminalExtras
+    ? ['forge-01-nginx']
+    : ['forge-01-nginx', 'echo-echo-codex-module-review', 'case-study', 'pipeline-review'];
   const missingLabels = requiredLabels.filter((label) => !labels.some((actual) => String(actual).startsWith(label)));
   const invalidEvents = agentEvents
     .filter((event) => event.v !== 1
@@ -3176,6 +3202,7 @@ function requireAgentObservabilityTelemetryEvidence(workspace) {
       agent_event_count: agentEvents.length,
       types: [...typeSet].sort(),
       labels: labels.slice(0, 20),
+      execution_boundary: scope.executionBoundary,
     })
     : evidenceFail('agent_observability_pipeline_events', 'REAL_E2E_AGENT_OBSERVABILITY_TELEMETRY_EVIDENCE_FAILED', {
       path: rel(workspace, eventPath),
@@ -3188,6 +3215,9 @@ function requireAgentObservabilityTelemetryEvidence(workspace) {
         source: 'pipeline',
         emitter: 'nova/pipeline/services/agent-observability-ingester',
         project: workspace.projectName,
+        execution_boundary: scope.executionBoundary,
+        required_types: requiredTypes,
+        required_labels: requiredLabels,
       },
     });
 }
@@ -3218,10 +3248,31 @@ function realE2EExecutionBoundaryFromProgress(workspace) {
   return progress?.real_e2e?.execution_boundary || 'full';
 }
 
+function expectedModuleIdsFromProgress(workspace) {
+  const progress = readJsonIfPresent(path.join(workspace.swarmDir, 'progress.json'));
+  const scoped = Array.isArray(progress?.real_e2e?.module_scope)
+    ? progress.real_e2e.module_scope.filter((moduleId) => typeof moduleId === 'string' && moduleId.trim())
+    : [];
+  if (scoped.length > 0) return scoped;
+  return Object.keys(progress?.modules || {});
+}
+
+function evidenceScopeForWorkspace(workspace) {
+  const executionBoundary = realE2EExecutionBoundaryFromProgress(workspace);
+  const restoredCheckpoint = restoredCheckpointName(workspace);
+  return {
+    executionBoundary,
+    restoredCheckpoint,
+    skippedPhases: skippedAgentPhasesForWorkspace(workspace),
+    moduleBoundary: executionBoundary === 'modules',
+    terminalExtras: executionBoundary === 'full',
+  };
+}
+
 function requireModuleBoundarySuccessEvidence(workspace, scenario) {
   const readModels = readLifecycleReadModels(workspace);
   if (!readModels.ok) return evidenceFail('module_boundary_success', readModels.reason, readModels);
-  const moduleIds = ['01-nginx', '02-nginx', '03-nginx', '04-nginx'];
+  const moduleIds = expectedModuleIdsFromProgress(workspace);
   const modules = readModels.data?.modules || {};
   const fieldFailures = moduleIds.flatMap((moduleId) => {
     const state = modules[moduleId] || null;
@@ -3252,13 +3303,15 @@ function requirePipelineLifecycleModuleBoundarySuccess(workspace) {
   ], 'REAL_E2E_PIPELINE_LIFECYCLE_ORDER_MISMATCH');
   const started = orderedContracts.ok ? orderedContracts.matches[0].record : null;
   const modules = Array.isArray(started?.data?.modules) ? started.data.modules : [];
-  const missingModules = requiredValuesMissing(modules.map((entry) => entry?.module_id), ['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
+  const expectedModules = expectedModuleIdsFromProgress(workspace);
+  const missingModules = requiredValuesMissing(modules.map((entry) => entry?.module_id), expectedModules);
   return scoped.length > 0 && orderedContracts.ok && missingModules.length === 0
     ? evidencePass('pipeline_module_boundary_lifecycle_contract', {
       event_count: scoped.length,
       started_event_id: terminalEventIdFromEvent(started),
       completed_event_id: terminalEventIdFromEvent(orderedContracts.matches[1].record),
       module_ids: modules.map((entry) => entry?.module_id).filter(Boolean),
+      expected_module_ids: expectedModules,
     })
     : evidenceFail('pipeline_module_boundary_lifecycle_contract', 'REAL_E2E_PIPELINE_MODULE_BOUNDARY_LIFECYCLE_INCOMPLETE', {
       event_count: scoped.length,
@@ -3311,6 +3364,56 @@ async function verifyModuleBoundarySuccessAfterMalformedRetry(workspace, { mode 
   };
 }
 
+async function verifyModuleBoundarySuccess(workspace, { mode = 'full', scenario = null } = {}) {
+  const pipelineRunId = primaryExpectedRunId(workspace);
+  const checks = [
+    requireScenarioSetupContract(workspace, scenario),
+    requireJsonFile(workspace, 'modules/01-nginx/forge-completion.json', 'forge_completion', validateForgeCompletionForWorkspace(workspace)),
+    requireJsonFile(workspace, 'logs/architecture-validator/results.json', 'architecture_validator_results', validateArchitectureResultsForWorkspace(workspace)),
+    requireFile(workspace, 'logs/architecture-validator/summary.md', 'architecture_validator_summary'),
+    requireJsonFile(workspace, 'logs/pipeline/summary.json', 'pipeline_summary', validateSummaryForWorkspace(workspace)),
+    requireJsonFile(workspace, `logs/pipeline/runs/${pipelineRunId}/summary.json`, 'pipeline_run_summary', validateSummaryForWorkspace(workspace)),
+    requireFile(workspace, 'logs/pipeline/case-study.base.json', 'pipeline_case_study_base'),
+    requireJsonFile(workspace, 'logs/pipeline/latest.json', 'pipeline_latest_pointer', validateLatestPointerForWorkspace(workspace)),
+    requireAnyFile(workspace, [
+      `logs/pipeline/runs/${pipelineRunId}/lifecycle/canonical-events.jsonl`,
+      'logs/pipeline/pipeline.jsonl',
+      'logs/pipeline/runs/latest/pipeline.jsonl',
+    ], 'pipeline_lifecycle_log'),
+    requirePipelineLifecycleModuleBoundarySuccess(workspace),
+    requireModuleBoundarySuccessEvidence(workspace, scenario),
+    requireDiscordAudit(workspace),
+    requireDiscordDeliveryReceipt(workspace),
+    await requirePipelineTelemetryStreamEvidence(workspace),
+    requireAgentObservabilityTelemetryEvidence(workspace),
+  ];
+
+  if (scenario?.id === 'git-dirty-worktree-preserved') {
+    checks.push(requireDirtyWorktreePreserved(workspace));
+  }
+  if (scenario?.id === 'multi-module-independent-success') {
+    checks.push(await requireMultiModuleEvidence(workspace, scenario));
+  }
+  if (scenario?.id === 'multi-module-dependent-success') {
+    checks.push(await requireMultiModuleEvidence(workspace, scenario, { dependency: true }));
+  }
+  if (scenario?.crashResume) {
+    checks.push(await requireCrashResumeEvidence(workspace, scenario, {
+      retry: scenario.expectedEvidence === 'success_after_crash_resume_retry',
+    }));
+  }
+
+  pushScenarioDegradedObservabilityChecks(checks, workspace, scenario);
+
+  const failures = checks.filter((check) => !check.ok);
+  return {
+    ok: failures.length === 0,
+    mode,
+    checks,
+    failures,
+  };
+}
+
 export async function verifyRealRunEvidence(workspace, { mode = 'full', scenario = null } = {}) {
   if (scenario?.expectedEvidence === 'retry_fix_malformed_output' && realE2EExecutionBoundaryFromProgress(workspace) === 'modules') {
     return verifyModuleBoundarySuccessAfterMalformedRetry(workspace, { mode, scenario });
@@ -3318,8 +3421,13 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full', scenario
   if (scenario?.expectedEvidence === 'success_after_retry' && realE2EExecutionBoundaryFromProgress(workspace) === 'modules') {
     return verifyModuleBoundarySuccessAfterRetry(workspace, { mode, scenario });
   }
+  if (realE2EExecutionBoundaryFromProgress(workspace) === 'modules') {
+    return verifyModuleBoundarySuccess(workspace, { mode, scenario });
+  }
   const pipelineRunId = primaryExpectedRunId(workspace);
   const requireModuleBusterTask = !restoredCheckpointSkipsPhase(workspace, 'module-buster');
+  const requireFinalBusterTask = !restoredCheckpointSkipsPhase(workspace, 'final-buster');
+  const scope = evidenceScopeForWorkspace(workspace);
   const checks = [
     requireJsonFile(workspace, 'modules/01-nginx/forge-completion.json', 'forge_completion', validateForgeCompletionForWorkspace(workspace)),
     requireJsonFile(workspace, 'logs/architecture-validator/results.json', 'architecture_validator_results', validateArchitectureResultsForWorkspace(workspace)),
@@ -3329,9 +3437,6 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full', scenario
     requireJsonFile(workspace, 'logs/echo-review/FINAL-REVIEW.json', 'final_echo_gate_output', validateEchoReviewForWorkspace(workspace, { gateId: 'final-review' })),
     requireJsonFile(workspace, 'logs/gates/operator-approval/approval-request.json', 'approval_request'),
     requireJsonFile(workspace, 'logs/gates/operator-approval/approval-decision.json', 'approval_decision', validateApprovalDecisionForScenario(scenario)),
-    requireFile(workspace, 'logs/pipeline-review/PIPELINE-REVIEW.md', 'pipeline_review_markdown'),
-    requireJsonFile(workspace, 'logs/pipeline-review/PIPELINE-REVIEW.json', 'pipeline_review_json', validatePipelineReviewForWorkspace(workspace)),
-    requireFile(workspace, 'logs/pipeline/case-study.md', 'pipeline_case_study'),
     requireJsonFile(workspace, 'logs/pipeline/summary.json', 'pipeline_summary', validateSummaryForWorkspace(workspace)),
     requireJsonFile(workspace, `logs/pipeline/runs/${pipelineRunId}/summary.json`, 'pipeline_run_summary', validateSummaryForWorkspace(workspace)),
     requireFile(workspace, 'logs/pipeline/case-study.base.json', 'pipeline_case_study_base'),
@@ -3344,10 +3449,17 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full', scenario
     requirePipelineLifecycleSuccessEvidence(workspace),
     requireDiscordAudit(workspace),
     requireDiscordDeliveryReceipt(workspace),
-    await requireBusterStreamEvidence(workspace, { requireModuleTask: requireModuleBusterTask }),
+    await requireBusterStreamEvidence(workspace, { requireModuleTask: requireModuleBusterTask, requireGateTask: requireFinalBusterTask }),
     await requirePipelineTelemetryStreamEvidence(workspace),
     requireAgentObservabilityTelemetryEvidence(workspace),
   ];
+  if (scope.terminalExtras) {
+    checks.splice(8, 0,
+      requireFile(workspace, 'logs/pipeline-review/PIPELINE-REVIEW.md', 'pipeline_review_markdown'),
+      requireJsonFile(workspace, 'logs/pipeline-review/PIPELINE-REVIEW.json', 'pipeline_review_json', validatePipelineReviewForWorkspace(workspace)),
+      requireFile(workspace, 'logs/pipeline/case-study.md', 'pipeline_case_study'),
+    );
+  }
 
   if (scenario?.id === 'forge-retry-then-success') {
     checks.push(await requireRetryFixCycleEvidence(workspace, {
@@ -3430,14 +3542,13 @@ export async function verifyExpectedFailureEvidence(workspace, scenario) {
     }));
   } else if (scenario.id === 'forge-malformed-output') {
     checks.push(requireDeterministicMalformedOutputEvidence(workspace, scenario));
-    checks.push(requireMalformedOutputProductionRejectionEvidence(workspace, scenario));
-    checks.push(requireNoDownstreamSuccessAfterMalformedOutput(workspace, scenario));
+    checks.push(await requireMalformedOutputProductionRejectionEvidence(workspace, scenario));
   } else if (scenario.id === 'echo-malformed-output') {
     checks.push(requireDeterministicMalformedOutputEvidence(workspace, scenario));
-    checks.push(requireMalformedOutputProductionRejectionEvidence(workspace, scenario));
+    checks.push(await requireMalformedOutputProductionRejectionEvidence(workspace, scenario));
     checks.push(requireNoDownstreamSuccessAfterMalformedOutput(workspace, scenario));
   } else if (scenario.id === 'buster-invalid-completion-identity') {
-    checks.push(requireBusterFailureArtifact(workspace, 'modules/01-nginx/buster-output.json', 'buster_invalid_completion_identity', { module_id: '01-nginx' }));
+    checks.push(requireBusterIdentityMismatchArtifact(workspace, 'modules/01-nginx/buster-output.json', { module_id: '01-nginx' }));
   } else if (scenario.id === 'buster-gate-failure') {
     checks.push(requireBusterFailureArtifact(workspace, 'buster-test/FINAL-BUSTER-RESULT.json', 'buster_gate_failure', { module_id: 'final-buster', gate_id: 'final-buster' }));
   } else if (scenario.id === 'multi-module-dependency-blocked') {

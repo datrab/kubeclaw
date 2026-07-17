@@ -5,7 +5,7 @@ import {
   resolveStatusSessionKey,
   resolveStatusGatewayLabel,
 } from '../../../services/correlation.ts';
-import { startModulePhase } from '../../../lifecycle-state.ts';
+import { resolveModuleBusterDispatchId } from '../../../services/buster-dispatch-identity.ts';
 import {
   emitTerminalModuleFailTelemetry,
 } from '../../module-runner-shared.ts';
@@ -36,6 +36,29 @@ export function createModuleBusterCompletionIdentity({ runId, moduleId, attempt,
     attempt,
     dispatchId: `buster-module-${moduleId}-${nowMs}-${busterAttempt}`,
     gateway_label: null,
+  };
+}
+
+function isBusterResumeDispatch(status: AnyRecord | null): boolean {
+  return status?.status === STATUS.TESTING
+    && status?.current_phase === 'buster'
+    && Boolean(resolveModuleBusterDispatchId(status));
+}
+
+function createResumedModuleBusterCompletionIdentity({ runId, moduleId, attempt, status }: AnyRecord = {}) {
+  if (!runId) throw new Error('Resumed Module Buster completion identity requires runId');
+  if (!moduleId) throw new Error('Resumed Module Buster completion identity requires moduleId');
+  if (selectTruthyValue(() => (!Number.isInteger(attempt)), () => (attempt < 1))) throw new Error('Resumed Module Buster completion identity requires positive integer attempt');
+  const dispatchId = resolveModuleBusterDispatchId(status);
+  const sessionKey = resolveStatusSessionKey(status);
+  if (!dispatchId) throw new Error('Resumed Module Buster completion identity requires status.dispatch_id');
+  return {
+    runId,
+    attempt,
+    dispatchId,
+    gateway_label: resolveStatusGatewayLabel(status),
+    sessionKey,
+    resumed: true,
   };
 }
 
@@ -74,10 +97,17 @@ export async function executeBusterAttemptDispatch({
   startupRateLimitPauseCount = 0,
 }: AnyRecord = {}) {
   const requestedSuites = normalizeRequestedBusterSuites(mod);
-  const completionIdentity = createModuleBusterCompletionIdentity({
-    runId: getRunId(config),
+  const runId = getRunId(config);
+  const attempt = status.fail_count + 1;
+  const completionIdentity = isBusterResumeDispatch(status) ? createResumedModuleBusterCompletionIdentity({
+    runId,
     moduleId,
-    attempt: status.fail_count + 1,
+    attempt,
+    status,
+  }) : createModuleBusterCompletionIdentity({
+    runId,
+    moduleId,
+    attempt,
     busterAttempt,
     nowMs: resolveModuleBusterIdentityNowMs(deps),
   });
@@ -208,11 +238,7 @@ export async function executeBusterAttemptDispatch({
     }
   }
 
-  const busterPhaseStartedAt = new Date().toISOString();
-  const busterStartTransition = startModulePhase(status, 'buster',
-    `Buster started (subagent attempt ${busterAttempt}/${maxBusterCrashRetries + 1})`,
-    { now: busterPhaseStartedAt, clearCompletionSummary: true });
-  deps.saveStatus(config, dir, status, busterStartTransition);
+  if (completionIdentity.resumed === true) log('INFO', `Module ${moduleId}: adopting existing Buster dispatch ${completionIdentity.dispatchId} on resume`);
 
   deps.setShutdownContext(config, 'buster', moduleId, dir);
 

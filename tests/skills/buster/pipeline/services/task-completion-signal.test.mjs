@@ -6,6 +6,7 @@ import test from 'node:test';
 import { sendTaskCompletionSignal } from '../../../../../skills/buster/pipeline/services/task-lifecycle/completion-signal.ts';
 import { resolveBusterOutputFilePath } from '../../../../../skills/buster/pipeline/services/pipeline-helpers.ts';
 import {
+  buildTaskCompletionRecord,
   createTaskCompletionState,
   publishTaskCompletionWithArtifact,
 } from '../../../../../skills/buster/pipeline/services/task-completion.ts';
@@ -43,6 +44,20 @@ function logger() {
     error() {},
   };
 }
+
+test('Buster completion record carries payload session identity', () => {
+  const payload = makePayload({ session_key: 'buster-module-01-forge-dispatch-1' });
+  const record = buildTaskCompletionRecord(payload, {
+    outcome: 'FAIL',
+    reason: 'output_file_identity_mismatch:run_id,completion_key',
+  });
+
+  assert.equal(record.run_id, payload.run_id);
+  assert.equal(record.attempt, String(payload.attempt));
+  assert.equal(record.dispatch_id, payload.dispatch_id);
+  assert.equal(record.session_key, payload.session_key);
+  assert.equal(record.completion_key, `${payload.run_id}:${payload.attempt}:${payload.dispatch_id}`);
+});
 
 test('Buster completion signal rejects stale output_file identity before Redis completion', async () => {
   const payload = makePayload();
@@ -239,6 +254,7 @@ test('Buster completion signal writes deterministic suite PASS artifact without 
     assert.equal(artifact.suites.unit.status, 'PASS');
     assert.equal(Array.isArray(artifact.results), true);
     assert.equal(verified.length, 1);
+    assert.deepEqual(verified[0][2].addPaths, [payload.output_file.replace(/\\/g, '/')]);
     assert.equal(emitted.length, 1);
     assert.equal(completionState.terminal, true);
   } finally {

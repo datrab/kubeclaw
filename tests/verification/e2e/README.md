@@ -76,8 +76,8 @@ Nova Kubernetes read access for this probe must remain opt-in. The Helm chart ke
 
 The run itself uses an expanded run-scoped `SWARM_CONFIG` only to isolate streams and worktree paths after the production config contract has passed.
 
-The generated E2E module and final Buster gate use a short internal timeout by
-default (`REAL_E2E_MODULE_TIMEOUT_MINUTES`, default `5`, and
+The generated E2E module and final Buster gate use a bounded internal timeout by
+default (`REAL_E2E_MODULE_TIMEOUT_MINUTES`, default `10`, and
 `REAL_E2E_BUSTER_GATE_TIMEOUT_MINUTES`, defaulting to the module timeout). The
 matrix scenario timeout remains an outer guard only. This keeps Buster's normal
 session monitor, `buster-output.json` writer, Git push, and Redis completion

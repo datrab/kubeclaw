@@ -98,8 +98,7 @@ spec:
           image: "{{ .Values.busterNamespaceBroker.controller.image.repository }}:{{ .Values.busterNamespaceBroker.controller.image.tag }}"
           imagePullPolicy: {{ .Values.busterNamespaceBroker.controller.image.pullPolicy }}
           command:
-            - node
-            - /app/scripts/buster-namespace-controller.mjs
+            - /app/buster-namespace-controller
           env:
             - name: KUBECLAW_NAMESPACE
               value: {{ .Release.Namespace | quote }}

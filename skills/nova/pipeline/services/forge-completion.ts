@@ -156,8 +156,23 @@ export function readForgeCompletionArtifact(config, moduleDir, expectedIdentity 
   if (selectTruthyValue(() => (errors.length > 0), () => (identityErrors.length > 0))) {
     return { found: true, file, valid: false, errors: [...errors, ...identityErrors], artifact: parsed };
   }
+  const canonicalArtifact = {
+    artifact_type: FORGE_COMPLETION_ARTIFACT_TYPE,
+    run_id: artifactValue.run_id,
+    module_id: artifactValue.module_id,
+    attempt: artifactValue.attempt,
+    status: artifactValue.status,
+    summary: artifactValue.summary.trim(),
+    evidence: {
+      inspected_files: normalizeStringArray(artifactValue.evidence?.inspected_files),
+      consulted_contracts: normalizeStringArray(artifactValue.evidence?.consulted_contracts),
+      implementation_notes: artifactValue.evidence.implementation_notes.trim(),
+    },
+    completed_at: artifactValue.completed_at.trim(),
+    ...(normalized.normalized ? { normalized: true, normalized_fields: normalized.normalized_fields } : {}),
+  };
   if (normalized.normalized) {
-    fs.writeFileSync(file, `${JSON.stringify(artifactValue, null, 2)}\n`);
+    fs.writeFileSync(file, `${JSON.stringify(canonicalArtifact, null, 2)}\n`);
   }
 
   return {
@@ -166,20 +181,6 @@ export function readForgeCompletionArtifact(config, moduleDir, expectedIdentity 
     valid: true,
     normalized: normalized.normalized,
     normalized_fields: normalized.normalized_fields,
-    artifact: {
-      artifact_type: FORGE_COMPLETION_ARTIFACT_TYPE,
-      run_id: artifactValue.run_id,
-      module_id: artifactValue.module_id,
-      attempt: artifactValue.attempt,
-      status: artifactValue.status,
-      summary: artifactValue.summary.trim(),
-      evidence: {
-        inspected_files: normalizeStringArray(artifactValue.evidence?.inspected_files),
-        consulted_contracts: normalizeStringArray(artifactValue.evidence?.consulted_contracts),
-        implementation_notes: artifactValue.evidence.implementation_notes.trim(),
-      },
-      completed_at: artifactValue.completed_at.trim(),
-      ...(normalized.normalized ? { normalized: true, normalized_fields: normalized.normalized_fields } : {}),
-    },
+    artifact: canonicalArtifact,
   };
 }

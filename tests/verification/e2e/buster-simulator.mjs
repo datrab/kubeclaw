@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 
+import fs from 'node:fs';
+import path from 'node:path';
+
 import { ensureTaskConsumerGroup, processOneQueuedTask, disconnectRedisClient, getRedisClient } from '../../../skills/buster/pipeline/services/task-queue.ts';
 import { processTask } from '../../../skills/buster/pipeline/services/task-lifecycle.ts';
 import { publishTaskCompletionWithArtifact } from '../../../skills/buster/pipeline/services/task-completion.ts';
+import { resolveBusterOutputFilePath } from '../../../skills/buster/pipeline/services/pipeline-helpers.ts';
 import { assertScenarioMutationChannel } from './failure-scenarios.mjs';
 
 function parseArgs(argv) {
@@ -37,6 +41,38 @@ function delay(ms) {
 
 function realE2EScenario() {
   return process.env.REAL_E2E_SCENARIO || 'success';
+}
+
+export function isRedisNoGroupError(error) {
+  return /\bNOGROUP\b/.test(error?.message || String(error));
+}
+
+export function buildInvalidBusterCompletionIdentityArtifact(payload = {}) {
+  const wrongRunId = `${payload?.run_id || 'missing-run'}-real-e2e-identity-mismatch`;
+  return {
+    artifact_type: 'buster_output',
+    task_type: payload?.task_type || null,
+    module_id: payload?.module_id || payload?.module || null,
+    run_id: wrongRunId,
+    attempt: payload?.attempt,
+    dispatch_id: payload?.dispatch_id,
+    completion_key: `${wrongRunId}:${payload?.attempt || 'missing-attempt'}:${payload?.dispatch_id || payload?.session_key || 'missing-dispatch'}`,
+    status: 'PASS',
+    summary: 'Intentional real E2E Buster output identity mismatch.',
+    reason: 'REAL_E2E_EXPECTED_BUSTER_INVALID_COMPLETION_IDENTITY',
+    completed_at: new Date().toISOString(),
+  };
+}
+
+function writeInvalidBusterCompletionIdentityArtifact(payload = {}) {
+  const outputFilePath = resolveBusterOutputFilePath(payload);
+  const artifact = buildInvalidBusterCompletionIdentityArtifact(payload);
+  fs.mkdirSync(path.dirname(outputFilePath), { recursive: true });
+  const tmpPath = `${outputFilePath}.tmp`;
+  fs.writeFileSync(tmpPath, `${JSON.stringify(artifact, null, 2)}\n`);
+  JSON.parse(fs.readFileSync(tmpPath, 'utf8'));
+  fs.renameSync(tmpPath, outputFilePath);
+  return { outputFilePath, artifact };
 }
 
 function busterTaskProcessorForScenario() {
@@ -112,21 +148,49 @@ function busterTaskProcessorForScenario() {
 
   if (realE2EScenario() !== 'buster-invalid-completion-identity') return processTask;
   assertScenarioMutationChannel(realE2EScenario(), 'buster-simulator');
-  return (payload) => {
-    const mutated = {
-      ...payload,
-      run_id: `${payload?.run_id || 'missing-run'}-real-e2e-identity-mismatch`,
-    };
+  return async (payload) => {
+    const written = writeInvalidBusterCompletionIdentityArtifact(payload);
     process.stdout.write(`${JSON.stringify({
       ok: true,
-      phase: 'buster-simulator-mutated-completion-identity',
+      phase: 'buster-simulator-mutated-output-identity',
       scenario: realE2EScenario(),
       original_run_id: payload?.run_id || null,
-      emitted_run_id: mutated.run_id,
+      artifact_run_id: written.artifact.run_id,
+      output_file: written.outputFilePath,
       module_id: payload?.module_id || payload?.module || null,
       task_type: payload?.task_type || null,
     })}\n`);
-    return processTask(mutated);
+    const reason = 'REAL_E2E_EXPECTED_BUSTER_INVALID_COMPLETION_IDENTITY';
+    const completion = await publishTaskCompletionWithArtifact(getRedisClient(), payload, {
+      outcome: 'PASS',
+      reason,
+      summary: reason,
+      source: 'buster-pipeline',
+      failureClass: 'output_file_identity_mismatch',
+      moduleId: payload?.module_id || payload?.module || null,
+    });
+    process.stdout.write(`${JSON.stringify({
+      ok: true,
+      phase: 'buster-simulator-published-identity-mismatch-completion',
+      scenario: realE2EScenario(),
+      completion_ok: completion?.ok ?? null,
+      completion_skipped: completion?.skipped ?? null,
+      completion_stream: completion?.stream || null,
+      output_file_result: completion?.outputFileResult || null,
+      module_id: payload?.module_id || payload?.module || null,
+      dispatch_id: payload?.dispatch_id || null,
+      session_key: payload?.session_key || null,
+    })}\n`);
+    return {
+      outcome: 'FAIL',
+      reason: completion?.outputFileResult?.reason || reason,
+      completion: {
+        attempted: true,
+        terminal: true,
+        stream: completion?.stream || payload?.completion_stream || null,
+        error: null,
+      },
+    };
   };
 }
 
@@ -151,7 +215,18 @@ export async function runBusterCompatibleSimulator({ timeoutMs = 30 * 60 * 1000,
         return { ok: true, loops, aborted: true };
       }
       loops += 1;
-      await processOneQueuedTask(processTaskForScenario);
+      try {
+        await processOneQueuedTask(processTaskForScenario);
+      } catch (error) {
+        if (!isRedisNoGroupError(error)) throw error;
+        process.stdout.write(`${JSON.stringify({
+          ok: true,
+          phase: 'buster-simulator-queue-closed',
+          reason: 'REDIS_CONSUMER_GROUP_MISSING',
+          loops,
+        })}\n`);
+        return { ok: true, loops, queue_closed: true };
+      }
       await delay(pollMs);
     }
     return { ok: false, loops, reason: 'REAL_E2E_BUSTER_SIMULATOR_TIMEOUT' };

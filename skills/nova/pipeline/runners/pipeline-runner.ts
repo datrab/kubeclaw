@@ -158,6 +158,8 @@ export async function runPipeline(config, progress, opts = {}) {
   try {
     openClawAgentObserverPlugin = createOpenClawAgentObserverPluginController(config);
     await openClawAgentObserverPlugin.start();
+    runOpts.assertPipelineRunLockActive();
+    await startPipelineRun(config, progress, runOpts);
     await getPipelineRunnerDeps(config, runOpts.deps).preflightRuntimeRedis(config);
     agentObservabilityIngester = startAgentObservabilityIngester(config, {
       runId: selectDefinedValue(() => (config._runId), () => (null)),
@@ -167,7 +169,6 @@ export async function runPipeline(config, progress, opts = {}) {
     await reconcileStaleGateSessions(config, progress);
 
     runOpts.assertPipelineRunLockActive();
-    await startPipelineRun(config, progress, runOpts);
     if (runOpts.module) {
       const singleModuleRun = runSingleModulePipeline(config, progress, runOpts);
       runOpts.trackPipelineStep(singleModuleRun);

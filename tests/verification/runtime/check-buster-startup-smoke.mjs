@@ -109,6 +109,7 @@ try {
     'packaged Buster git-primitives must import adjacent shared platform-config',
   );
   await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/git-primitives.ts');
+  await importRuntimeModule(runtimeRoot, '/app/skills/pipeline/scheduler.ts');
 } finally {
   fs.rmSync(runtimeRoot, { recursive: true, force: true });
 }
