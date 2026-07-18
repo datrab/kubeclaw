@@ -46,6 +46,7 @@ import {
 import { forgeCompletionArtifactFile, invalidForgeCompletionArtifactStatus, readForgeCompletionArtifact } from './forge-completion.ts';
 import { projectSrcPath } from '../core/paths.ts';
 import { BudgetExhaustedError, createBudgetFromMinutes, isBudgetExhaustedError, sleep } from '../timing.ts';
+import { pollingBudget, pollingPolicyNumber } from './polling-policy.ts';
 
 export { archiveModuleCompletions } from './polling-redis-completion.ts';
 export { BudgetExhaustedError, createBudget, createBudgetFromMinutes, isBudgetExhaustedError, sleep } from '../timing.ts';
@@ -120,20 +121,6 @@ function statusLogValue(status) {
 
 function phaseLogValue(status) {
   return selectDefinedValue(() => (textValue(status?.current_phase)), () => (''));
-}
-
-function pollingPolicyNumber(config, field, options = {}) {
-  const raw = config?.polling?.[field];
-  const value = Number(raw);
-  if (selectTruthyValue(() => (!Number.isFinite(value)), () => ((options.positive && value <= 0)))) {
-    throw new Error(`config.polling.${field}: required ${options.positive ? 'positive ' : ''}number in swarm.config.json`);
-  }
-  return value;
-}
-
-function pollingBudget(opts, timeoutMinutes, label) {
-  if (opts.budget) return opts.budget;
-  return createBudgetFromMinutes(timeoutMinutes, { label });
 }
 
 // ─── Primitives ───────────────────────────────────────────────────────────────
@@ -571,12 +558,13 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
     });
   }
 
-  function completionFromArtifact(identity, transcript = null) {
+  function completionFromArtifact(identity, transcript = null, { acceptInvalid = false } = {}) {
     const artifact = readForgeCompletionArtifact(config, moduleDir, identity);
     if (!artifact.found) return null;
     if (!artifact.valid) {
       const errors = Array.isArray(artifact.errors) ? artifact.errors : [];
-      if (errors.some((entry) => !String(entry).startsWith('invalid JSON:'))) {
+      const hasSemanticErrors = errors.some((entry) => !String(entry).startsWith('invalid JSON:'));
+      if (acceptInvalid && hasSemanticErrors) {
         return {
           done: true,
           result: pollResult(false, 'invalid_forge_completion', invalidForgeCompletionArtifactStatus(config, moduleDir, identity, errors), {
@@ -584,9 +572,16 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
           }),
         };
       }
+      if (hasSemanticErrors) {
+        return {
+          done: false,
+          logMsg: 'forge_completion=invalid waiting_for_agent_terminal_write',
+          logKey: 'forge_completion=invalid',
+        };
+      }
       return {
         parse_error: true,
-        logMsg: 'forge_completion=invalid waiting_for_rewrite',
+        logMsg: 'forge_completion=invalid_json waiting_for_rewrite',
         logKey: 'forge_completion=invalid',
       };
     }
@@ -610,7 +605,7 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
       const { currentStatus, pollIdentity, identity } = buildArtifactIdentity();
       const identityModuleId = requireTextValue(pollIdentity.module_id, 'poll_identity.module_id');
 
-      const artifactCompletion = completionFromArtifact(identity);
+      const artifactCompletion = completionFromArtifact(identity, null, { acceptInvalid: !sessionLabel });
       if (artifactCompletion) return artifactCompletion;
 
       if (!observedAgentEnded && hookReader) {
@@ -633,6 +628,8 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
         if (shouldSettleAgentEnded(observedAgentEndedAt, Date.now(), settleMs)) {
           return { done: false, logMsg: 'agent_ended=observed settling_final_writes' };
         }
+        const terminalArtifact = completionFromArtifact(identity, null, { acceptInvalid: true });
+        if (terminalArtifact?.done) return terminalArtifact;
         return {
           done: true,
           result: completionFromDiff(observedAgentEnded, AGENT_OBSERVABILITY_FORGE_COMPLETION_SOURCE),
@@ -687,7 +684,7 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
         if (acpState.terminal) {
           const terminalDetail = sanitizeTranscriptDetail(acpState.detail);
           const transcript = sanitizeAcpTranscriptEvidence(acpState.transcript);
-          const artifactCompletionWithTranscript = completionFromArtifact(identity, transcript);
+          const artifactCompletionWithTranscript = completionFromArtifact(identity, transcript, { acceptInvalid: true });
           if (artifactCompletionWithTranscript?.done) return artifactCompletionWithTranscript;
           const missingArtifactStatus = {
             status: STATUS.FAIL,
@@ -723,7 +720,7 @@ export async function pollForgeCompletion(config, moduleDir, timeoutMinutes, opt
     }, timeoutMinutes, moduleDir, {
       ...opts,
       onTimeoutBeforeResult: () => {
-        const finalArtifactCompletion = completionFromArtifact(buildArtifactIdentity().identity);
+        const finalArtifactCompletion = completionFromArtifact(buildArtifactIdentity().identity, null, { acceptInvalid: true });
         return finalArtifactCompletion?.done ? finalArtifactCompletion.result : null;
       },
     });

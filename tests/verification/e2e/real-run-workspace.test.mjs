@@ -147,8 +147,21 @@ test('scenario module scope keeps module retry cases to the exercised module', (
     assert.deepEqual(Object.keys(progress.modules), ['01-nginx']);
     assert.deepEqual(progress.real_e2e.module_scope, ['01-nginx']);
     assert.deepEqual(progress.execution_order, ['01-nginx']);
+    assert.equal(progress.arch_validation.enabled, false);
+    assert.equal(progress.arch_validation.agent_enabled, false);
     assert.deepEqual(progress.gates['module-review'].contract.module_ids, ['01-nginx']);
     assert.equal(progress.gates['final-buster'].test_config.unit.test_cmd, 'npm run verify:01-nginx');
+  });
+});
+
+test('architecture validator scenario keeps its owned phase enabled at a module boundary', () => {
+  withEnv('REAL_E2E_EXECUTION_BOUNDARY', 'modules', () => {
+    const progress = normalizeRealE2ERuntimeDefaults(buildProgress({
+      projectName: 'unit-architecture-validator-boundary',
+    }), { scenarioId: 'architecture-validator-block' });
+
+    assert.equal(progress.arch_validation.enabled, true);
+    assert.equal(progress.arch_validation.agent_enabled, true);
   });
 });
 
@@ -535,10 +548,25 @@ test('k8s pod never ready scenario preserves intentional readiness failure throu
     const manifest = fs.readFileSync(path.join(workspace.projectSrc, 'k8s', 'deployment.yaml'), 'utf8');
     const contract = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'real-e2e-scenario-contract.json'), 'utf8'));
 
-    assert.match(manifest, /path: \/real-e2e-intentional-not-ready/);
+    assert.match(manifest, /readinessProbe:\s+exec:\s+command: \["\/bin\/sh", "-c", "exit 1"\]/s);
     assert.equal(contract.scenario_id, 'k8s-pod-never-ready');
     assert.equal(contract.intentional_fixture.intent, 'pod_readiness_timeout');
-    assert.deepEqual(contract.intentional_fixture.evidence, ['/real-e2e-intentional-not-ready']);
+    assert.deepEqual(contract.intentional_fixture.evidence, ['readinessProbe.exec.command=/bin/sh -c exit 1']);
+  } finally {
+    if (workspace) await cleanupRealE2ERunWorkspace(workspace);
+  }
+});
+
+test('k8s invalid context scenario materializes an explicit run-scoped kubeconfig', async () => {
+  let workspace = null;
+  try {
+    workspace = await createRealE2ERunWorkspace({ scenarioId: 'k8s-context-invalid' });
+    const progress = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'progress.json'), 'utf8'));
+    const kubeconfigPath = progress.gates['final-buster'].test_config.k8s.kubeconfig_path;
+
+    assert.equal(kubeconfigPath, path.join(workspace.projectSrc, '.real-e2e-invalid-kubeconfig'));
+    assert.match(fs.readFileSync(kubeconfigPath, 'utf8'), /current-context: real-e2e-context-does-not-exist/);
+    assert.equal(progress.real_e2e.intentional_config_failure.error_code, 'KUBECONFIG_CONTEXT_INVALID');
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);
   }

@@ -18,6 +18,7 @@ Generated from: `scripts/deploy.sh`, `my-values/setup-secrets.sh`
 | `AGENT_HELM_TIMEOUT` | Helm wait timeout for agent upgrades (default: 45m) | `45m` |  |
 | `AGENT_ROLLOUT_TIMEOUT` | Pod/deployment readiness timeout for agents (default: 45m) | `45m` |  |
 | `ALLOW_PARTIAL_INFRA` | true\|false (default: false) | `false` |  |
+| `BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE` | Rootless BuildKit probe image (default: moby/buildkit:rootless) | `moby/buildkit:rootless` |  |
 | `BUSTER_CODE_BUNDLE_ARCHIVE_URL` | Resolved Buster bundle archive URL for code deploy |  |  |
 | `BUSTER_CODE_BUNDLE_EXPECTED_COMMIT` | Expected Buster source commit for code deploy |  |  |
 | `CODE_BUNDLE_DEFAULT_REF` | Git ref to resolve when code deploy omits an explicit expected commit (default: refs/heads/main) | `refs/heads/main` |  |

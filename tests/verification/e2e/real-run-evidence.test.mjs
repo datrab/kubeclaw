@@ -2771,6 +2771,40 @@ test('forge malformed output requires exact payload publication and retry reject
   assert.equal(evidence.checks.some((check) => check.code === 'malformed_output_no_downstream_success'), false);
 });
 
+test('forge malformed output derives the eventual recovery attempt from lifecycle evidence', async () => {
+  const scenario = resolveRealE2EScenario('forge-malformed-output');
+  const { workspace } = createRetryWorkspace({
+    scenarioId: 'forge-malformed-output',
+    moduleStatus: 'PASS',
+    attempts: 3,
+    failCount: 2,
+    currentAttempt: 3,
+    passedAttempt: 3,
+    failedAttempts: [1, 2],
+    failedAttemptsWithTesting: [],
+    taskAttempts: [3],
+    includeFinalGateTask: false,
+    failSummaries: [
+      { attempt: 1, phase: 'forge', failure_class: 'invalid_contract', summary: 'invalid Forge completion artifact' },
+      { attempt: 2, phase: 'forge', failure_class: 'invalid_contract', summary: 'invalid Forge completion artifact' },
+    ],
+  });
+  const { config } = writeMalformedPublication(workspace, scenario);
+  writeJson(path.join(workspace.swarmDir, config.target), {
+    artifact_type: 'forge_completion',
+    run_id: workspace.runId,
+    module_id: '01-nginx',
+    attempt: 3,
+    status: 'READY_FOR_TESTING',
+  });
+  appendContractTerminalEvent(workspace, scenario);
+
+  const evidence = await verifyExpectedFailureEvidence(workspace, scenario);
+
+  assert.equal(evidence.ok, true, JSON.stringify(evidence.failures, null, 2));
+  assert.equal(evidence.checks.find((check) => check.code === 'malformed_output_production_rejection')?.ok, true);
+});
+
 test('malformed output evidence fails when deterministic manifest and payload are absent', async () => {
   for (const scenarioId of ['forge-malformed-output', 'echo-malformed-output']) {
     const { scenario, workspace } = createMalformedWorkspace(scenarioId);
@@ -2996,4 +3030,6 @@ test('module-boundary success evidence does not require skipped terminal artifac
   assert.equal(evidence.checks.some((check) => check.code === 'final_buster_output'), false);
   assert.equal(evidence.checks.some((check) => check.code === 'module_echo_gate_output'), false);
   assert.equal(evidence.checks.some((check) => check.code === 'pipeline_review_json'), false);
+  assert.equal(evidence.checks.some((check) => check.code === 'architecture_validator_results'), false);
+  assert.equal(evidence.checks.some((check) => check.code === 'architecture_validator_summary'), false);
 });

@@ -891,6 +891,7 @@ assertIncludes(renderedBuster, 'mountPath: /home/node/.openclaw/workspace', 'Bus
 assert.equal(renderedBuster.includes('mountPath: /home/node/.openclaw/openclaw.json'), false, 'Buster containers must keep openclaw.json as the writable persistent file');
 assertIncludes(renderedBuster, 'mountPath: /home/node/.openclaw/swarm.config.json', 'Buster containers must share the rendered swarm runtime config');
 assertIncludes(renderedBuster, 'mountPath: /app/skills', 'Buster containers must share the merged skills runtime');
+assertIncludes(renderedBuster, "await import('/app/skills/pipeline/platform-config.ts')", 'Buster readiness must expand compact swarm config before reading runtime policy');
 assertIncludes(renderedBuster, 'config.buster.runtime.heartbeat_path is required', 'Buster readiness must use swarm.config.json as heartbeat path authority');
 assert.equal(renderedBuster.includes('BUSTER_HEARTBEAT_PATH'), false, 'Buster deployment must not keep heartbeat path env fallback after swarm config owns it');
 assert.equal(renderedBuster.includes('BUSTER_HEARTBEAT_INTERVAL_MS'), false, 'Buster deployment must not keep obsolete heartbeat interval env fallback');
@@ -1256,6 +1257,14 @@ assert.equal(
 assert.equal((deployScriptMode & 0o111) !== 0, true, 'Deploy script must remain executable as the canonical operator deployment surface');
 assertIncludes(deployScript, 'deploy_tailscale_operator() {', 'Deploy script must expose a canonical Tailscale operator deployment command');
 assertIncludes(deployScript, 'cmd_secrets() {', 'Deploy script must expose a canonical guided secret setup command');
+assertIncludes(deployScript, 'cmd_buildkit_preflight() {', 'Deploy script must expose an explicit rootless BuildKit node capability probe');
+assertIncludes(deployScript, 'image: "${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE}"', 'BuildKit preflight must use the configurable official rootless image');
+assertIncludes(deployScript, 'privileged: false', 'BuildKit preflight must prove the builder works without privileged mode');
+assertIncludes(deployScript, 'runAsNonRoot: true', 'BuildKit preflight must run the builder as a non-root user');
+assertIncludes(deployScript, 'automountServiceAccountToken: false', 'BuildKit preflight must not expose Kubernetes API credentials to the builder');
+assertIncludes(deployScript, 'buildctl --addr "$socket" debug workers', 'BuildKit preflight must verify a real BuildKit worker instead of checking sysctls only');
+assertIncludes(deployScript, 'cleanup_buildkit_preflight_pod "$probe_name"', 'BuildKit preflight must clean up its temporary pod');
+assert.equal(deployScript.includes('sysctl -w'), false, 'Deploy script must not mutate node sysctls for rootless BuildKit');
 assertIncludes(deployScript, 'prompt_workspace_namespace_if_needed() {', 'Deploy script must prompt for a workspace namespace when no namespace is configured');
 assertIncludes(deployScript, 'How would you like to name the workspace namespace?', 'Deploy script must present operator-facing workspace namespace wording');
 assertIncludes(deployScript, 'KUBECLAW_WORKSPACE_NAMESPACE_FILE', 'Deploy script must remember the selected workspace namespace for later setup runs');
@@ -1483,11 +1492,8 @@ const result = {
     'Deploy script exposes canonical Tailscale operator installation for final-preview ingress',
     'Tailscale operator deployment uses Kubernetes Secret/operator-oauth, repository-local values, and pod readiness',
     'Infra rollout failures fail closed unless ALLOW_PARTIAL_INFRA is explicit',
-    'Deploy script exposes a canonical local image-build command for deployment verification',
-    'Deploy script exposes a canonical live deployment verification command',
-    'Live deployment verification builds runtime and namespace controller images and pushes them to registry-local',
-    'Live deployment verification preflights every deployed runtime image pull path',
-    'Live deployment verification redeploys Nova and Buster against registry-local before smoke runs',
+    'Deploy script exposes a non-privileged rootless BuildKit node capability preflight',
+    'Rootless BuildKit preflight verifies a real worker without Kubernetes API credentials or node mutation',
     'Deploy script exposes canonical pod-level smoke commands for the deployed agents',
     'Deploy smoke waits for rollout and pod readiness before checking the live pod surface',
     'Deploy smoke verifies in-pod gateway status, runtime skills mount, and runtime swarm config',

@@ -5,9 +5,7 @@ Owner: Nova / maintainers
 
 ## Purpose
 
-This file is the persistent operating guide for the KubeClaw documentation effort.
-
-Read it at the start of every documentation session, at the start of every documentation phase, and after every compaction. Also read `docs/DOCUMENTATION_HANDOFF_PROMPT.md` at each of those points. These files keep the documentation process consistent while we audit a large codebase over many passes.
+This file is the operating guide for maintaining KubeClaw documentation. Read it with `docs/DOCUMENTATION_HANDOFF_PROMPT.md` when beginning or resuming a documentation change.
 
 ## Core rule
 
@@ -19,16 +17,11 @@ Treat every currently available documentation file as potentially outdated sourc
 
 ## Execution discipline
 
-Work sequentially to avoid context overflow and stale partial edits:
-
-- complete one phase at a time
-- do not voluntarily stop until every phase in `docs/DOCUMENTATION_PLAN.md` is complete
-- work on one target documentation file at a time within each phase
-- inspect only the source files needed for the current file
-- write or update that file, add source references only when they materially help the reader, run the most relevant focused check, then move on
-- stop early only if genuinely blocked or forced to hand off because context is getting large
-- when stopping early, stop only at a clean boundary after a completed file
-- leave the next exact file to continue with in the session summary
+- Scope the affected topics and source owners before editing.
+- Review every related active page, index, example, diagram, generated slice, issue, and roadmap entry.
+- Replace stale claims directly and keep one current path.
+- Run the narrow source-owned verifier as well as the docs checks.
+- Stop at a clean boundary and report exact remaining uncertainty when live proof is unavailable.
 
 ## Required workflow for each documentation area
 
@@ -60,7 +53,7 @@ For every document or section we create:
    - decisions docs explain why the design exists
 
 5. **Capture findings immediately**
-   - bugs, inconsistencies, stale docs, unclear behavior, and simplification opportunities go to `docs/open-issues.md`
+   - unresolved bugs, inconsistencies, stale docs, unclear behavior, and active risks go to `docs/open-issues.md`
    - future implementation ideas go to `docs/future-implementation-ideas.md`
    - do not bury findings inside prose where they will be lost
 
@@ -133,15 +126,7 @@ Add an entry to `docs/open-issues.md` when code review finds:
 - security, secret-handling, or path-safety concerns
 - operator-facing ambiguity or poor failure messages
 
-Each issue must include:
-
-- status
-- area
-- priority
-- source files checked
-- problem
-- impact
-- next step
+Each issue must include its area, priority, exact source paths, problem/impact, and smallest next step. Delete the entry when it is resolved.
 
 ## Future idea capture rules
 
@@ -180,4 +165,4 @@ Before ending or after resuming a documentation session, check:
 - `docs/future-implementation-ideas.md`
 - `git status --short`
 
-Then continue from the current phase in `docs/DOCUMENTATION_PLAN.md`, one target file at a time.
+Then continue from the exact current page or topic recorded in the handoff.

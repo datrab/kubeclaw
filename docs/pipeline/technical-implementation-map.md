@@ -17,7 +17,7 @@ Static parts describe intended work and platform policy. They are read at startu
 - Platform config: `/home/node/.openclaw/swarm.config.json`, normally rendered from `charts/kubeclaw/files/config/swarm.config.json`. This supplies global defaults, model policy, Redis/Discord/runtime settings, rate-limit policy, and plugin/observer settings.
 - Startup registry: `skills/nova/pipeline/core/registry/`. Built-in validators, generators, gates, workers, telemetry sinks, and notifications are loaded once for the run. Gate and stage dispatch uses this registry instead of switch statements scattered through the scheduler.
 - Source path policy: `skills/nova/pipeline/core/paths.ts`, `skills/nova/pipeline/core/config.ts`, and Buster task validation helpers reject unsafe project paths, parent traversal, and ambiguous runtime locations.
-- Typed contracts: `skills/nova/pipeline/services/contracts/`, `skills/common/pipeline/services/*-contract.ts`, and Buster's `pipeline/services/*-contract.ts` define what a stage result, Redis message, telemetry event, task queue adapter, and terminal decision must look like.
+- Typed contracts: `skills/nova/pipeline/services/contracts/`, `skills/common/pipeline/services/*-contract.ts`, and Buster's `pipeline/services/*-contract.ts` define what a stage result, Redis message, telemetry event, task queue adapter, and terminal decision must look like. `skills/common/pipeline/agent-artifact.ts` owns immutable identity and atomic publication for semantic artifacts produced by agents.
 - Built-in Buster suites: `skills/buster/pipeline/suites/*.ts`. Suite code is deterministic evidence. It may stop a Buster task before any child agent is spawned.
 - Prompt builders: `skills/nova/pipeline/prompts/*.ts`. These shape Forge, Buster, review, and fix prompts, but prompts are not lifecycle authority.
 
@@ -137,11 +137,11 @@ Why: `["forge"]`, `["buster"]`, and `["forge", "buster"]` have different operati
 
 ### 14. Forge Worker
 
-Source: `agents/orchestration.ts`, `agents/module-workers.ts`, `prompts/forge.ts`, `agents/lifecycle.ts`, `services/forge-completion.ts`.
+Source: `agents/orchestration.ts`, `agents/module-workers.ts`, `prompts/shared.ts`, `agents/lifecycle.ts`, `services/forge-completion.ts`, `tools/write-forge-completion.ts`, and the shared `skills/common/pipeline/agent-artifact.ts`.
 
-Forge is spawned through OpenClaw runtime adapters. Nova persists active session identity, monitors the session, reads transcript/completion evidence, commits produced changes when appropriate, and transitions module status.
+Forge is spawned through OpenClaw runtime adapters. Nova persists active session identity, writes an immutable artifact-identity context, monitors the session, validates the semantic completion payload, commits produced changes when appropriate, and applies completion through the lifecycle reducer. The agent supplies status, summary, and evidence; Nova injects run/module/attempt/schema/timestamp/output identity and atomically publishes the watched artifact.
 
-Why: Forge is nondeterministic and external. Nova wraps it with durable identity, polling, git evidence, and lifecycle transitions so prompt text cannot become scheduler authority.
+Why: Forge is nondeterministic and external. Nova wraps it with durable identity, pipeline-owned artifact publication, polling, git evidence, and lifecycle transitions so an otherwise correct implementation cannot be retried because an agent mistyped envelope metadata.
 
 ### 15. Pre-Buster Validation
 

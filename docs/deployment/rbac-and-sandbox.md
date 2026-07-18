@@ -49,6 +49,18 @@ That authority is intentional for the current Buster role, but it is still a hig
 - The namespace fence does not constrain namespaced resource writes in existing namespaces.
 - Buster combines privileged container execution with namespace-lease permissions in production values.
 
+## Rootless BuildKit Prerequisite
+
+The planned Podman removal keeps image construction in the existing `buster-pipeline` container and replaces privileged Podman with rootless BuildKit. Kubernetes does not create the required Linux user namespace as a resource; the scheduled Ubuntu/K3s node must permit unprivileged user namespaces and allow the unconfined AppArmor/seccomp posture required by rootless BuildKit's OCI worker.
+
+Verify the real node capability before that migration:
+
+```bash
+./scripts/deploy.sh buildkit-preflight
+```
+
+The command creates a temporary non-privileged `moby/buildkit:rootless` pod, waits for its worker, verifies it with `buildctl debug workers`, and deletes it. It does not modify node configuration. If the probe fails, host bootstrap or Ansible owns any required `kernel.unprivileged_userns_clone`, `user.max_user_namespaces`, or AppArmor change; Helm must not silently mutate those host policies.
+
 ## Verification And Recovery
 
 | Surface | Command | Expected result |
@@ -57,5 +69,6 @@ That authority is intentional for the current Buster role, but it is still a hig
 | Lease client authority | `kubectl -n "$NAMESPACE" auth can-i create busternamespaceleases --as system:serviceaccount:"$NAMESPACE":agent-buster` | allowed when broker mode is enabled |
 | Namespace controller authority | `kubectl auth can-i create namespaces --as system:serviceaccount:"$NAMESPACE":agent-buster-namespace-controller` | allowed, with namespace-fence policy required for prefix restriction |
 | Nova write authority | `kubectl -n "$NAMESPACE" auth can-i create pods --as system:serviceaccount:"$NAMESPACE":agent-nova` | should not be broadly allowed by the agent chart |
+| Rootless image builder | `./scripts/deploy.sh buildkit-preflight` | temporary pod reaches Ready, reports an OCI worker, and is deleted |
 
 If Buster suites fail with Kubernetes authorization errors, identify whether the failing pod is `agent-buster` or `agent-buster-namespace-controller`. The first should only request leases and run sandbox work; the second owns test namespace creation/deletion. Preserve the failed task payload because capabilities and requested suite type decide which authority was expected.

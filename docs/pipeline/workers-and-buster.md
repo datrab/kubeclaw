@@ -11,7 +11,7 @@ Buster is the deterministic test worker for module and gate tasks. Nova dispatch
 
 The Buster flow shows the terminal guarantee: a Redis task is acknowledged only after completion evidence or dead-letter evidence exists.
 
-The active runtime is `skills/buster/buster-pipeline.ts`. `buster-processor.cjs` is not the active worker path.
+The active runtime is `skills/buster/buster-pipeline.ts`.
 
 ## Startup Flow
 

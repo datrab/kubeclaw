@@ -159,6 +159,36 @@ test('common Git authority preserves parent runtime state while joining module b
   cleanupModuleWorktree(config, moduleTwo);
 });
 
+test('common Git authority treats Buster attempt workspaces as runtime state during module join', () => {
+  const repoRoot = createRepo();
+  const config = {
+    repo_root: repoRoot,
+    project: 'git-worktree-buster-attempt-runtime-test',
+    paths: {
+      swarm_dir: path.join(repoRoot, 'Projects/demo/src/.swarm'),
+    },
+  };
+  fs.mkdirSync(path.join(repoRoot, 'Projects/demo/src'), { recursive: true });
+  fs.writeFileSync(path.join(repoRoot, 'Projects/demo/src/app.txt'), 'base\n');
+  git(repoRoot, ['add', 'Projects/demo/src/app.txt']);
+  git(repoRoot, ['commit', '-m', 'app base']);
+  const base = freezeParallelGitBase(config);
+
+  const moduleTwo = allocateModuleWorktree(config, { runId: 'run-buster-attempt', moduleId: '02-nginx', attempt: 1, baseCommit: base.base_commit });
+  const testEvidence = path.join(repoRoot, 'Projects/demo/src/.swarm/modules/01-nginx/tests/attempt-1/test-runtime.js');
+  fs.mkdirSync(path.dirname(testEvidence), { recursive: true });
+  fs.writeFileSync(testEvidence, 'export default true;\n');
+
+  commitFile(moduleTwo.worktree_path, 'Projects/demo/src/modules/02/content.txt', 'content branch\n', 'module 02');
+  const merge = mergeModuleBranches(config, { branches: [moduleTwo.branch] });
+
+  assert.equal(merge.ok, true);
+  assert.deepEqual(merge.runtime_stash_paths, ['Projects/demo/src/.swarm/modules/01-nginx/tests/attempt-1/test-runtime.js']);
+  assert.equal(fs.readFileSync(testEvidence, 'utf8'), 'export default true;\n');
+
+  cleanupModuleWorktree(config, moduleTwo);
+});
+
 test('common Git authority rejects module worktree roots inside the run worktree', () => {
   const repoRoot = createRepo();
   const config = {

@@ -1,8 +1,7 @@
 # Checkpoint Scenario Inventory
 
-Status: active suite inventory implemented. The executable checkpoint matrix has
-eight top-level suites. Individual scenarios are suite cases, not matrix
-children.
+Status: current
+Audience: maintainers, pipeline developers
 
 Purpose: keep one canonical matrix surface while preserving typed evidence for
 each failure/recovery contract.
@@ -13,7 +12,6 @@ each failure/recovery contract.
 - Active matrix suites: 8.
 - Active matrix cases: 46.
 - Manual cases outside the matrix: none.
-- Removed execution model: 45 independent failure-matrix children.
 
 Each suite restores the case hook, mutates only the declared surface, runs only
 the remaining phase authority for that case, and stops the suite on the first
@@ -109,8 +107,9 @@ Crash and resume idempotency across pipeline checkpoints.
 
 ## Rules
 
-- Top-level matrix selection is by suite only: `--suite` or `--suites`.
-- Case names remain the evidence identity inside a suite.
+- Aggregate matrix selection uses `--suite` or `--suites`.
+- Focused diagnosis uses `--scenario`; suite continuation uses `--from-scenario`.
+- Case names remain the evidence identity and retain exactly one suite owner.
 - No case may be owned by more than one suite.
 - No real E2E case may be outside all suites.
 - Checkpoint mode defaults to `auto`; full lifecycle is explicit operator mode.

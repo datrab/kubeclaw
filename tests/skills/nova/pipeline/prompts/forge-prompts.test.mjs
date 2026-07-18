@@ -62,3 +62,34 @@ test('forge prompt shell-quotes project source cd command with leading hyphen', 
   assert.ok(result.prompt.includes("`cd -- '-work dir/one; touch bad'\\''file'` before creating or modifying any files."));
   assert.doesNotMatch(result.prompt, /`cd -work dir\/one; touch bad/);
 });
+
+test('forge prompt requires the canonical atomic completion writer', async () => {
+  const config = makeConfig();
+  config.run_id = 'run-atomic';
+  const moduleDir = 'app';
+  fs.mkdirSync(path.join(config.paths.modules_dir, moduleDir), { recursive: true });
+  fs.writeFileSync(path.join(config.paths.modules_dir, moduleDir, 'FORGE.md'), 'Build the app.');
+
+  const result = await buildForgePrompt(
+    config,
+    'app',
+    { title: 'App' },
+    moduleDir,
+    { status: 'READY', fail_count: 0 },
+    3,
+  );
+
+  assert.equal(result.error, undefined);
+  assert.match(result.prompt, /node '.*\/skills\/nova\/pipeline\/tools\/write-forge-completion\.ts'/);
+  assert.match(result.prompt, /Do not write or edit the JSON file directly/);
+  assert.ok(result.prompt.includes(`--context '${path.join(config.paths.modules_dir, moduleDir, 'forge-completion.json.identity.json')}'`));
+  assert.doesNotMatch(result.prompt, /--run-id|--module-id|--attempt/);
+  const identity = JSON.parse(fs.readFileSync(path.join(config.paths.modules_dir, moduleDir, 'forge-completion.json.identity.json'), 'utf8'));
+  assert.deepEqual(identity.envelope, {
+    artifact_type: 'forge_completion',
+    schema_version: 1,
+    run_id: 'run-atomic',
+    module_id: 'app',
+    attempt: 1,
+  });
+});

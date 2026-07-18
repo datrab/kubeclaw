@@ -44,11 +44,12 @@ Important fields:
 
 1. Nova verifies dependencies and reads module config.
 2. Forge starts and moves the module to `IN_PROGRESS`.
-3. Preflight and delivery lint validators check declared artifacts and produced output.
-4. Forge success moves the module to `READY_FOR_TESTING` unless it is forge-only.
-5. Buster dispatch moves the module to `TESTING`.
-6. Buster completion produces a task verdict and output JSON.
-7. Nova records `PASS`, retries/fix cycles, `FAIL`, or `BLOCKED` based on the typed result and retry policy.
+3. The agent submits semantic completion through the Forge writer; Nova injects immutable run/module/attempt/schema/timestamp/path identity and atomically publishes the completion artifact.
+4. Preflight and delivery lint validators check declared artifacts and produced output.
+5. Forge success moves the module to `READY_FOR_TESTING` unless it is forge-only.
+6. Buster dispatch moves the module to `TESTING`.
+7. Buster completion produces a task verdict and output JSON.
+8. Nova records `PASS`, retries/fix cycles, `FAIL`, or `BLOCKED` based on the typed result and retry policy.
 
 Forge-only modules pass after Forge completion. Use that for documentation/config modules or when a later Buster gate performs system testing.
 

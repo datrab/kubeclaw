@@ -40,6 +40,7 @@ Terminal behavior must use typed `terminal_status`, `terminal_decision`, and `re
 | New module or gate execution behavior | `skills/nova/pipeline/runners/module-runner.ts`; `skills/nova/pipeline/runners/gate-runner.ts`; focused runner file | use typed worker/gate control result and terminal decision helpers | lifecycle events, status read model, artifacts, telemetry | runner unit tests plus `node tests/verification/contracts/check-module-runner-slice-surface.mjs --source-root "$PWD"` |
 | New Buster task field or suite capability | `skills/buster/pipeline/services/task-validation.ts`; `skills/buster/pipeline/services/capabilities.ts`; suite runner files | Buster task payload must validate identity, capability, timeout, and repo-relative path boundaries | Redis completion or dead-letter before ACK | `node --test tests/skills/buster/pipeline/services/task-validation.test.mjs tests/skills/buster/pipeline/services/task-completion.test.mjs`; Buster contract check |
 | New artifact or telemetry surface | `skills/nova/pipeline/services/artifact-bundle.ts`; `skills/nova/pipeline/services/telemetry/builders.ts`; `skills/nova/pipeline/services/telemetry/dispatch.ts`; `skills/nova/pipeline/services/telemetry-sink-contract.ts` | event envelope stays flat; artifact path stays inside run/plugin artifact roots | `pipeline.jsonl`, Redis telemetry stream, artifact index or summary file | `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"`; telemetry contract check |
+| New agent-produced semantic artifact | `skills/common/pipeline/agent-artifact.ts`; role facade; role prompt/tool | pipeline creates identity context; agent cannot supply immutable envelope fields; publication is validated and atomic | watched artifact under the pipeline-selected path | `node --test tests/skills/common/pipeline/agent-artifact.test.mjs`; role prompt/writer tests |
 
 ## Failure Modes To Preserve
 
@@ -48,6 +49,7 @@ Terminal behavior must use typed `terminal_status`, `terminal_decision`, and `re
 - Lifecycle-owned fields must not be changed through unguarded status writes; `STATUS_LIFECYCLE_GUARD_VIOLATION` is the expected protection.
 - Telemetry sink failures should degrade observability without changing pipeline terminal truth.
 - Prompt files and repo-relative paths must stay inside the current repo and pass path-segment validation.
+- Agent-produced semantic payloads must not own run/module/gate/attempt/dispatch/schema/timestamp/output identity. Extend the common envelope contract when a genuinely shared field is needed instead of adding a role-local publication path.
 
 ## Verification
 

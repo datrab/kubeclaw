@@ -1,7 +1,14 @@
 // prompts/shared.ts — Common prompt sections used by multiple prompt builders
 
 import path from 'path';
+import { fileURLToPath } from 'node:url';
 import { relPath, modulePath, gateOutputPath, moduleBusterOutputPathRef } from '../core/paths.ts';
+import { agentArtifactContextPath, writeAgentArtifactContext } from '../agent-artifact.ts';
+
+const FORGE_COMPLETION_WRITER_PATH = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  '../tools/write-forge-completion.ts',
+);
 
 // ─── Return shape helper ──────────────────────────────────────────────────────
 // All prompt builders return this shape. The .toString() shim lets callers
@@ -99,7 +106,7 @@ export function buildTestWorkspaceSection(testWorkspacePath) {
 }
 
 export function forgeCompletionArtifactPath(config, dir) {
-  return relPath(config, path.join(modulePath(config, dir), 'forge-completion.json'));
+  return path.join(modulePath(config, dir), 'forge-completion.json');
 }
 
 export function buildForgeCompletionArtifactContract(config, dir, identity = {}) {
@@ -107,28 +114,30 @@ export function buildForgeCompletionArtifactContract(config, dir, identity = {})
   const runId = identity.run_id || identity.runId || 'run-id-from-prompt';
   const moduleId = identity.module_id || identity.moduleId || dir;
   const attempt = identity.attempt || 1;
+  const contextPath = agentArtifactContextPath(artifactPath);
+  writeAgentArtifactContext(artifactPath, {
+    artifact_type: 'forge_completion',
+    schema_version: 1,
+    run_id: runId,
+    module_id: moduleId,
+    attempt,
+  });
   return [
-    `Write \`${artifactPath}\` as raw, directly parseable JSON. Do not wrap it in Markdown, do not use fenced code blocks, and do not write explanatory text into the file.`,
-    'The file content must be one JSON object with exactly this shape:',
-    '{',
-    '  "artifact_type": "forge_completion",',
-    `  "run_id": "${runId}",`,
-    `  "module_id": "${moduleId}",`,
-    `  "attempt": ${attempt},`,
-    '  "status": "READY_FOR_TESTING",',
-    '  "summary": "brief implementation summary",',
-    '  "evidence": {',
-    '    "inspected_files": ["relative/path/inspected"],',
-    '    "consulted_contracts": ["relative/path/or/contract/ref"],',
-    '    "implementation_notes": "what changed, or why unchanged source remains compliant"',
-    '  },',
-    '  "completed_at": "2026-05-13T14:37:00Z"',
-    '}',
+    `Publish \`${artifactPath}\` only through the canonical atomic writer. Do not write or edit the JSON file directly.`,
+    'Run this command after replacing only the descriptive and evidence values:',
+    '```sh',
+    `node ${quoteShellArg(FORGE_COMPLETION_WRITER_PATH)} \\`,
+    `  --context ${quoteShellArg(contextPath)} \\`,
+    '  --status "READY_FOR_TESTING" \\',
+    '  --summary "brief implementation summary" \\',
+    '  --inspected-file "relative/path/inspected" \\',
+    '  --consulted-contract "relative/path/or/contract/ref" \\',
+    '  --implementation-notes "what changed, or why unchanged source remains compliant"',
+    '```',
+    'Repeat `--inspected-file` and `--consulted-contract` for every evidence path. The writer injects pipeline-owned identity, validates the semantic payload, and atomically publishes the artifact.',
     'Schema rules:',
     '- `artifact_type` must be exactly `forge_completion`.',
-    `- \`run_id\` must be exactly \`${runId}\`.`,
-    `- \`module_id\` must be exactly \`${moduleId}\`.`,
-    `- \`attempt\` must be exactly \`${attempt}\`.`,
+    '- `run_id`, `module_id`, `attempt`, schema metadata, and timestamps are injected by the pipeline and must not be authored by the agent.',
     '- `status` must be exactly `READY_FOR_TESTING` when the implementation is ready for Buster, or `BLOCKED` only when implementation cannot be completed.',
     '- `summary` must be a non-empty string describing what changed or why the task is blocked.',
     '- `evidence.inspected_files` must list the owned files or contract files you inspected.',

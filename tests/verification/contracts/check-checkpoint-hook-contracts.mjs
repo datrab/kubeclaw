@@ -241,15 +241,14 @@ assert.equal(
 
 const redesignDoc = read(sourceRoot, 'docs/pipeline/checkpoint-hook-contracts-redesign.md');
 for (const marker of [
-  'scenario mutation contracts',
-  'plan-validation tests',
+  'scenario mutation contract',
+  'Contract Verification',
   'Pruned and merged scenarios are not active matrix children',
   'No legacy full-lifecycle fallback remains',
-  'Make CLI output compact before the next canary matrix. Done.',
-  'Keep full child stdout/stderr in files only. Done.',
-  'eight suite declarations own the executable matrix',
   'The executable checkpoint matrix is suite-owned.',
-  'Do not restore the old per-scenario matrix.',
+  'Use `--suite <id>` or `--suites a,b` for aggregate execution.',
+  'Use `--scenario <id>` for a focused case and `--from-scenario <id>` to resume a suite',
+  'Do not restore an uncontracted per-scenario execution path',
 ]) {
   assert.equal(redesignDoc.includes(marker), true, `checkpoint redesign doc must document: ${marker}`);
 }

@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 
 import {
-  applyRealE2EFileScenario,
+  applyRealE2EWorkspaceScenario,
   applyRealE2EScenario,
   failureMatrixExecutionBoundary,
   listFailureMatrixSuiteIds,
@@ -155,9 +155,9 @@ function materializeScenario({ rootDir, suiteId, scenarioId, mode }) {
       : cloneJson(baseProgress);
     applyRealE2EExecutionBoundary(normalized);
     const { progress, scenario } = applyRealE2EScenario(normalized, scenarioId);
+    applyRealE2EWorkspaceScenario({ projectSrc, progress, scenarioId: scenario.id });
     writeJson(path.join(swarmDir, 'progress.json'), progress);
     writeRealE2ESwarmFiles(swarmDir, progress);
-    applyRealE2EFileScenario({ projectSrc, scenarioId: scenario.id });
     const config = buildRunConfig({ runId, worktreePath, scenarioId: scenario.id });
     writeJson(path.join(rootDir, suiteId, scenarioId, mode, 'swarm.config.json'), config);
     validateRealE2EScenarioSetup({

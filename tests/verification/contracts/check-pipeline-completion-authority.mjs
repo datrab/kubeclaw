@@ -57,10 +57,10 @@ const attempt = read(sourceRoot, 'skills/nova/pipeline/runners/module-runner/att
 const packageJson = JSON.parse(read(sourceRoot, 'package.json'));
 
 for (const marker of [
-  'runner evidence -> Completion -> lifecycle reducer -> lifecycle event spine -> read models -> sinks/plugins/reports',
-  '`session_key` is observation/control metadata',
-  'Terminal module and gate state must not be persisted by scattered',
-  'applyModuleCompletion',
+  'validated evidence -> Completion -> lifecycle reducer -> canonical lifecycle event -> read models -> telemetry, artifacts, and operator sinks',
+  'Session keys and gateway labels are observations used for live-session control and correlation.',
+  'They are not required to accept otherwise valid terminal evidence.',
+  'The pipeline owns immutable envelope fields',
 ]) {
   assert.equal(plan.includes(marker), true, `completion authority plan must document: ${marker}`);
 }

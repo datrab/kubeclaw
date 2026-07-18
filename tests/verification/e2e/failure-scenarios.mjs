@@ -896,14 +896,19 @@ const SETUP_CONTRACTS = Object.freeze({
       'gates.final-buster.test_config.k8s.ready_timeout_seconds': 30,
     }),
     source_file_exact_line: Object.freeze({
-      'k8s/deployment.yaml': '              path: /real-e2e-intentional-not-ready',
+      'k8s/deployment.yaml': '              command: ["/bin/sh", "-c", "exit 1"]',
     }),
   }),
   'k8s-context-invalid': Object.freeze({
     progress: Object.freeze({
-      'gates.final-buster.test_config.k8s.kubeconfig_path': '/tmp/real-e2e-missing-kubeconfig',
       'real_e2e.intentional_config_failure.component': 'kubernetes',
-      'real_e2e.intentional_config_failure.error_code': 'KUBECONFIG_UNAVAILABLE',
+      'real_e2e.intentional_config_failure.error_code': 'KUBECONFIG_CONTEXT_INVALID',
+    }),
+    progress_path_suffix: Object.freeze({
+      'gates.final-buster.test_config.k8s.kubeconfig_path': '/.real-e2e-invalid-kubeconfig',
+    }),
+    source_file_exact_line: Object.freeze({
+      '.real-e2e-invalid-kubeconfig': 'current-context: real-e2e-context-does-not-exist',
     }),
   }),
   'pipeline-summary-failure': Object.freeze({
@@ -1031,8 +1036,8 @@ function scenarioFixtureContract(scenario) {
     'k8s-pod-never-ready': {
       owner: 'final-buster',
       intent: 'pod_readiness_timeout',
-      preserve: ['k8s/deployment.yaml:readinessProbe.httpGet.path'],
-      evidence: ['/real-e2e-intentional-not-ready'],
+      preserve: ['k8s/deployment.yaml:readinessProbe.exec.command'],
+      evidence: ['readinessProbe.exec.command=/bin/sh -c exit 1'],
     },
   };
   const fixture = fixtures[scenario.id];
@@ -1358,11 +1363,10 @@ export function applyRealE2EScenario(progress, scenarioId) {
   if (scenario.id === 'k8s-context-invalid') {
     const gate = finalBusterGate(next);
     gate.test_config.k8s.namespace_prefix = 'test';
-    gate.test_config.k8s.kubeconfig_path = '/tmp/real-e2e-missing-kubeconfig';
     next.real_e2e.intentional_config_failure = {
       component: 'kubernetes',
       surface: 'kubeconfig',
-      error_code: 'KUBECONFIG_UNAVAILABLE',
+      error_code: 'KUBECONFIG_CONTEXT_INVALID',
     };
   }
 
@@ -1525,16 +1529,37 @@ export function applyRealE2EFileScenario({ projectSrc, scenarioId }) {
     return;
   }
 
+  if (scenario.id === 'k8s-context-invalid') {
+    fs.writeFileSync(path.join(projectSrc, '.real-e2e-invalid-kubeconfig'), [
+      'apiVersion: v1',
+      'kind: Config',
+      'current-context: real-e2e-context-does-not-exist',
+      'clusters: []',
+      'contexts: []',
+      'users: []',
+      '',
+    ].join('\n'));
+    return;
+  }
+
   if (scenario.id !== 'k8s-pod-never-ready') return;
 
   const deploymentPath = path.join(projectSrc, 'k8s', 'deployment.yaml');
   const current = fs.readFileSync(deploymentPath, 'utf8');
   const next = current.replace(
     /readinessProbe:\n(\s+)httpGet:\n(\s+)path: \/\n(\s+)port: http/,
-    'readinessProbe:\n$1httpGet:\n$2path: /real-e2e-intentional-not-ready\n$3port: http',
+    'readinessProbe:\n$1exec:\n$2command: ["/bin/sh", "-c", "exit 1"]',
   );
   if (next === current) {
     throw new Error(`could not inject readiness failure into ${deploymentPath}`);
   }
   fs.writeFileSync(deploymentPath, next);
+}
+
+export function applyRealE2EWorkspaceScenario({ projectSrc, progress, scenarioId }) {
+  applyRealE2EFileScenario({ projectSrc, scenarioId });
+  if (scenarioId !== 'k8s-context-invalid') return progress;
+  const gate = finalBusterGate(progress);
+  gate.test_config.k8s.kubeconfig_path = path.join(projectSrc, '.real-e2e-invalid-kubeconfig');
+  return progress;
 }

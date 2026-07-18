@@ -1,22 +1,19 @@
 # Documentation Target Page List
 
-Status: historical target list; reconcile against current docs tree
+Status: current inventory guide
 Audience: maintainers, documentation agents
 
 ## Purpose
 
-This is the first rebuild pass target tree produced by Phase 2 of `DOCUMENTATION_REBUILD_PLAN.md`. It is retained as historical planning context.
-
-Do not treat this file as the current missing-page list. Current coverage and priorities live in the active topic map and 2026-06-12 audit artifacts:
+This page describes the active documentation shape. Current coverage and priorities live in:
 
 - `docs/DOCUMENTATION_TOPIC_MAP.md`
-- `docs/archive/audits/2026-06-12-documentation-enrichment-changelog.md`
 
 Use `find docs -type f -not -path 'docs/archive/*' | sort` and `npm run docs:check` for current inventory and generated-reference checks.
 
 ## Active Sections
 
-### Home And Rebuild Control
+### Home And Maintenance Control
 
 - `README.md`
 - `DOCUMENTATION_REBUILD_PLAN.md`
@@ -28,7 +25,7 @@ Use `find docs -type f -not -path 'docs/archive/*' | sort` and `npm run docs:che
 - `open-issues.md`
 - `future-implementation-ideas.md`
 
-Superseded but temporarily retained for context:
+Historical planning references:
 
 - `DOCUMENTATION_HANDOFF_PROMPT.md`
 - `DOCUMENTATION_PLAN.md`
@@ -80,7 +77,7 @@ Superseded but temporarily retained for context:
 - `deployment/deployment-verification.md`
 - `deployment/docker-images.md`
 
-`deployment/docker-images.md` is a merge candidate. Keep it until image publishing and generated image/value references absorb the useful content.
+`deployment/docker-images.md` remains the image/runtime build authority and is kept separate from CI publishing procedures.
 
 ### Operators
 

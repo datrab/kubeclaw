@@ -13,7 +13,7 @@ Nova loads `swarm.config.json`, then project `.swarm/progress.json`. The project
 
 The pipeline creates a run ID and initializes `.swarm/logs/pipeline/`. It writes a global `pipeline.jsonl`, a run-scoped `runs/<run_id>/pipeline.jsonl`, and `latest.json` pointing at the active run bundle.
 
-For module work, Nova uses built-in worker plugin definitions for `worker:module_forge` and `worker:module_buster`. Forge/Echo paths go through OpenClaw gateway session helpers. Buster paths create typed Redis task payloads with run, module, attempt, dispatch, stage, session, suite, and output-file identity.
+For module work, Nova uses built-in worker plugin definitions for `worker:module_forge` and `worker:module_buster`. Forge/Echo paths go through OpenClaw gateway session helpers. Before a Forge session starts, Nova writes the immutable completion identity context. The agent submits only semantic status, summary, and evidence; the common publisher injects identity and atomically publishes the watched completion artifact. Buster paths create typed Redis task payloads with run, module, attempt, dispatch, stage, session, suite, and output-file identity.
 
 Buster consumes task entries from Redis, validates the canonical envelope and payload identity, rejects malformed tasks to a dead-letter path before ACK, runs suites or a subagent task lifecycle, pushes the scoped output artifact when required, emits completion to the requested completion stream, and ACKs only after terminal completion or dead-letter evidence exists.
 
@@ -63,6 +63,7 @@ If Buster cannot publish completion, it writes a dead-letter record before ACK. 
 
 - `progress.json` defines intended order and config, but persisted lifecycle state decides what is already complete.
 - module/gate output files are evidence, but Nova projects them through typed control/result contracts before advancing.
+- agents own semantic conclusions, not artifact-envelope identity. Pipeline code owns run/module/gate/attempt/dispatch/schema/timestamp/path fields and atomic publication.
 - Redis telemetry streams are live observability, but local artifacts remain the durable audit trail.
 - Discord messages are presentation and audit evidence; they are not scheduler truth.
 - Kubernetes pod status explains runtime health, not pipeline intent.
@@ -75,6 +76,7 @@ This authority order is why the recommended stuck-run trace starts with `--statu
 | --- | --- | --- | --- |
 | Config and progress loading | `skills/nova/pipeline/core/config.ts`; `skills/nova/pipeline/core/platform-config.ts`; `charts/kubeclaw/files/config/swarm.config.json` | project, repo root, `.swarm/progress.json`, plugin registry summary | `node --test tests/skills/nova/pipeline/core/config-plugin-registry.test.mjs tests/skills/nova/pipeline/core/path-segments.test.mjs` |
 | Pipeline lifecycle and read models | `skills/nova/pipeline/services/status-store.ts`; `skills/nova/pipeline/services/status-store-lifecycle/**` | `canonical-events.jsonl`, `read-models.json`, run-scoped `pipeline.jsonl` | `node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"` |
+| Agent semantic artifacts | `skills/common/pipeline/agent-artifact.ts`; Nova Forge writer/prompt | identity context and atomically published Forge completion | `node --test tests/skills/common/pipeline/agent-artifact.test.mjs` |
 | Buster task and completion stream | `skills/buster/pipeline/services/task-queue.ts`; `task-validation.ts`; `task-completion.ts` | `swarm:<agent>:tasks`, completion stream, `:dead-letter` stream | `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"` |
 | Telemetry and operator mirrors | `skills/nova/pipeline/services/telemetry*.ts`; `skills/common/pipeline/telemetry.ts` | `pipeline:telemetry:<project>:<run_id>`, `discord.jsonl`, fallback telemetry JSONL | `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"` |
 

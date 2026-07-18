@@ -37,6 +37,7 @@ Generated from: `scripts/deploy.sh`
 - `infra`
 - `secrets`
 - `tailscale`
+- `buildkit-preflight`
 - `agents`
 - `agent`
 - `image`

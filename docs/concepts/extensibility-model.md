@@ -27,6 +27,7 @@ KubeClaw is extended through source-owned seams: Nova pipeline features, plugin 
 | Verification areas | `tests/verification/e2e/*.test.mjs`; `tests/verification/contracts/*.mjs`; `tests/verification/deployment/check-deployment-truth.mjs` | source root, claim-specific fixtures, rendered manifests | pass/fail output and checked counts | `npm run docs:check` |
 | Generated docs references | `scripts/docs-inventory.mjs`; `scripts/docs-generate.mjs`; `scripts/docs-check.mjs` | deploy script, secret helper, values files, generated inventory JSON | generated sections in reference pages | `npm run docs:check` |
 | Observability sinks | `skills/nova/pipeline/services/telemetry-sink-contract.ts`; `skills/nova/pipeline/services/telemetry/dispatch.ts`; `plugins/openclaw-agent-observer/src/index.ts` | flat telemetry event envelopes and sink config | Redis streams, Discord artifacts, observer plugin streams | `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"` |
+| Agent semantic artifacts | `skills/common/pipeline/agent-artifact.ts`; role-local facades | pipeline-created identity context plus agent semantic payload | validated atomic artifact with pipeline-owned immutable envelope | `node --test tests/skills/common/pipeline/agent-artifact.test.mjs` |
 
 ## Runtime Boundaries
 
@@ -34,6 +35,7 @@ KubeClaw is extended through source-owned seams: Nova pipeline features, plugin 
 - `.swarm/progress.json` controls project work: modules, gates, dependencies, defaults, validation, and optional generators.
 - `skills/nova/pipeline/core/config.ts` rejects legacy or misplaced config such as top-level `models` in swarm config and gate types that are not registered at startup.
 - Buster task execution must cross the typed Redis task boundary. Nova should not bypass `skills/buster/pipeline/services/task-validation.ts`, `task-queue.ts`, or `task-completion.ts`.
+- New agent roles that publish watched artifacts must use the common agent-artifact boundary. Agents own semantic conclusions and evidence; orchestration owns identity, schema, timestamps, paths, and atomic publication.
 
 ## Commands
 

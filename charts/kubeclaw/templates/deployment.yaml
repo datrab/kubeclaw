@@ -403,16 +403,17 @@ spec:
               }
 
               let cachedSwarmConfig = null;
-              function readSwarmConfig() {
+              async function readSwarmConfig() {
                 if (cachedSwarmConfig) return cachedSwarmConfig;
                 const swarmConfigPath = process.env.SWARM_CONFIG;
                 if (!swarmConfigPath) throw new Error('SWARM_CONFIG is required');
-                cachedSwarmConfig = JSON.parse(fs.readFileSync(swarmConfigPath, 'utf8'));
+                const { expandSwarmConfig } = await import('/app/skills/pipeline/platform-config.ts');
+                cachedSwarmConfig = expandSwarmConfig(JSON.parse(fs.readFileSync(swarmConfigPath, 'utf8')));
                 return cachedSwarmConfig;
               }
 
-              function busterHeartbeatPath() {
-                const path = readSwarmConfig()?.buster?.runtime?.heartbeat_path;
+              async function busterHeartbeatPath() {
+                const path = (await readSwarmConfig())?.buster?.runtime?.heartbeat_path;
                 if (typeof path === 'string' && path.trim()) return path.trim();
                 throw new Error('config.buster.runtime.heartbeat_path is required');
               }
@@ -526,9 +527,9 @@ spec:
                 }
               }
 
-              function checkBusterHeartbeat() {
+              async function checkBusterHeartbeat() {
                 if (agent !== 'buster' || !enabled('KUBECLAW_HEALTH_CHECK_BUSTER_HEARTBEAT', true)) return;
-                const path = busterHeartbeatPath();
+                const path = await busterHeartbeatPath();
                 const maxAgeMs = Number.parseInt(process.env.KUBECLAW_HEALTH_BUSTER_HEARTBEAT_MAX_AGE_MS || '120000', 10);
                 const stat = fs.statSync(path);
                 const age = Date.now() - stat.mtimeMs;

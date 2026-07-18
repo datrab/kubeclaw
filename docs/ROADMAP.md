@@ -7,24 +7,21 @@ Audience: maintainers, operators, developers
 
 This page keeps future direction separate from current operator behavior. Items here are not deployment guarantees until source, tests, manifests, generated inventory, and operator docs prove them.
 
-## Current Documentation Rebuild
+## Near-Term Sequence
 
-The original near-term roadmap was the documentation rebuild in `DOCUMENTATION_REBUILD_PLAN.md`. Current execution context is now the active topic map plus the 2026-06-12 enrichment changelog under `docs/archive/audits/`.
-
-Current sequence:
-
-1. Keep P0/P1 docs source-grounded and update the topic map when enriching them.
-2. Expand generated inventory for the remaining drift-prone references.
-3. Finish clean-cluster quickstart verification before promising live first-run behavior.
-4. Split active limitations from long resolved-history tracker content where useful.
-5. Add failure drills and docs maintenance automation only after source-backed procedures exist.
+1. Keep current docs aligned with source and generated inventory; expand automated references where exact contracts remain manually maintained.
+2. Redeploy the latest code bundles and use ClawDeck as the first production project built by the validated pipeline.
+3. Use that real project to identify operational and extension-boundary pressure rather than inventing abstractions in isolation.
+4. Establish a real separation between core platform contracts and optional extensions, as described by the extensibility model.
+5. Complete the deeper operator/reference documentation pass after the first production workload exposes the remaining practical gaps.
+6. Finish clean-cluster bootstrap verification before promising a one-command first deployment.
 
 ## Product And Platform Direction
 
 These are candidate roadmap themes, not current behavior claims:
 
-- Documentation overhaul
-- Clawdeck observability for richer platform and pipeline visibility.
+- ClawDeck as the first real pipeline-built project and as richer platform/pipeline visibility.
+- Explicit core-versus-extension packaging, ownership, configuration, and verification boundaries.
 - Design agent and design flow for design-aware application delivery.
 - Improved linting with more configurable rules and clearer failure output.
 - Code mapping and autoreview features that help agents reason about ownership and risk.
@@ -32,6 +29,7 @@ These are candidate roadmap themes, not current behavior claims:
 - Parallel pipelines for multiple modules or intents.
 - Improved pipeline reviews and pipeline auto-improvement loops.
 - Improved templates for project setup, gates, tests, and docs.
+- Faster container image builds through cache-friendly layering, smaller build contexts, dependency cache reuse, and clearer separation between heavyweight base dependencies and frequently changing runtime code.
 - Improved prompt engineering and prompt upgrade workflows.
 - Additional intent-driven use cases beyond application delivery, including infrastructure-oriented workflows.
 - Pentest and security agent workflows.

@@ -49,6 +49,8 @@ This is the active documentation home for KubeClaw. It separates current source-
 
 The active tree is source-backed by repository code, manifests, generated inventory, verification tests, or upstream documentation where the upstream project owns the behavior.
 
+The real pipeline E2E surface currently contains eight suites and 46 uniquely owned cases. The latest result for every case is green as of 2026-07-18. The matrix covers full completion, module failure/retry, human gates, final deployment/Buster, Git authority, infrastructure degradation, module graphs, and crash/resume recovery. See [checkpoint scenario inventory](pipeline/checkpoint-scenario-inventory.md) and [matrix status](pipeline/checkpoint-matrix-findings-ledger.md).
+
 The docs deliberately separate current behavior from unresolved readiness gaps:
 
 - source-verified local quickstart exists for Helm rendering and deployment truth verification

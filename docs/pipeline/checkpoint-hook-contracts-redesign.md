@@ -1,12 +1,11 @@
-# Checkpoint Hook Contracts Redesign
+# Checkpoint Hook Contracts
 
-Status: phases 1-13 implemented. Scenario hook declarations live beside the scenario registry, checkpoint reuse validates the scenario hook contract before restore or fault injection, mutation entrypoints assert scenario mutation contracts, eight suite declarations own the executable matrix, and root contract verification enforces the redesign.
+Status: current
+Audience: maintainers, pipeline developers
 
-## Problem
+## Purpose
 
-Checkpoint reuse currently behaves too much like "restore a mostly complete seed workspace and hope the scenario still lines up." That makes scenario evidence fragile because restored state may contain unrelated artifacts, stale lifecycle read models, or topology assumptions that the scenario never owned.
-
-Checkpoint snapshots must become phase contracts. A scenario should declare the exact hook point it needs, restore only canonical state for that hook, inject one fault, and execute only the relevant phase or downstream consequences.
+Checkpoint snapshots are phase contracts, not copies of a mostly completed workspace. Each scenario declares the exact hook it needs, restores only canonical state for that hook, injects one fault through its declared mutation channel, and executes only the boundary needed to prove its evidence contract.
 
 ## Contract
 
@@ -96,7 +95,7 @@ If a scenario needs a fixture shape outside these families, either add a tiny fi
   explicit operator choice, but `auto` and `reuse` may not silently run a
   scenario from scratch when a hook contract or checkpoint bundle is missing.
 
-## Plan-Validation Tests
+## Contract Verification
 
 The checkpoint redesign is guarded by plan-level contracts, not only by matrix
 behavior:
@@ -120,22 +119,8 @@ behavior:
 These tests validate the checkpoint contract plan itself. The full matrix is
 not the authority for whether checkpoint hook contracts are structurally valid.
 
-## Migration Order
+## Operator Surface
 
-1. Add scenario inventory and grouping.
-2. Add hook contract metadata beside the scenario registry. Done.
-3. Make checkpoint validation use hook contracts before reuse. Done.
-4. Collapse required artifacts, forbidden artifacts, lifecycle requirements, remaining phases, and allowed fault surfaces into one hook contract authority. Done.
-5. Add phase-specific hook points and fixture-family enforcement. Done.
-6. Enforce scenario mutation surfaces at every mutation entrypoint. Done.
-7. Delete empty full-lifecycle checkpoint fallback paths. Done.
-8. Add plan-validation tests and update docs. Done.
-9. Prune or demote duplicate scenarios. Done.
-10. Make CLI output compact before the next canary matrix. Done.
-11. Keep full child stdout/stderr in files only. Done.
-12. Merge scenario children into eight executable suites. Done.
-13. Run the suite matrix instead of the old 45-child scenario matrix. Done.
+Use `--suite <id>` or `--suites a,b` for aggregate execution. Use `--scenario <id>` for a focused case and `--from-scenario <id>` to resume a suite from a known case. Focused selection does not change suite ownership or evidence identity.
 
-Do not restore the old per-scenario matrix. The canonical operator surface is
-`run-real-pipeline-failure-matrix.mjs --suite <id>` or `--suites a,b`; individual
-scenario names remain case-level evidence identities only.
+Do not restore an uncontracted per-scenario execution path or any silent fallback from checkpoint reuse to a full lifecycle.

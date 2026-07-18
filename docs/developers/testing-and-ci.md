@@ -13,13 +13,11 @@ Document the verification commands and CI surfaces visible in this repository.
 ./tests/verification/run-fast-verification.sh
 ./tests/verification/run-full-verification.sh
 npm run docs:check
-npm run docs:check
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"
 node --test tests/verification/e2e/*.test.mjs
 node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"
 node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"
-node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 git diff --check
 ```
 
@@ -51,6 +49,7 @@ CI/image documentation is in `../deployment/ci-and-image-publishing.md`. The cur
 | pipeline E2E behavior | `node --test tests/verification/e2e/*.test.mjs` | module/gate scheduling, config, state, or runner behavior changes |
 | Buster contract | `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"` | Buster task, Redis, suite, completion, ACK, or dead-letter behavior changes |
 | status/recovery contract | `node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"` | lifecycle, read model, artifact, recovery, or status docs change |
-| telemetry docs/contract | `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"` and `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"` | telemetry event, sink, observer, or generated event docs change |
+| telemetry docs/contract | `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"` | telemetry event, sink, observer, or generated event docs change |
+| real E2E suite/case registry | `node tests/verification/contracts/check-checkpoint-hook-contracts.mjs --source-root "$PWD"` | checkpoint hooks, scenarios, suites, boundaries, or mutation contracts change |
 
 Record any command that remains local-only in the changed doc. Do not imply CI protects a behavior unless a workflow actually runs that verifier.

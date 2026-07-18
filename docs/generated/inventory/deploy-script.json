@@ -69,6 +69,7 @@
     "infra",
     "secrets",
     "tailscale",
+    "buildkit-preflight",
     "agents",
     "agent",
     "image",
@@ -165,6 +166,10 @@
     {
       "name": "ALLOW_PARTIAL_INFRA",
       "description": "true|false (default: false)"
+    },
+    {
+      "name": "BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE",
+      "description": "Rootless BuildKit probe image (default: moby/buildkit:rootless)"
     }
   ],
   "defaults": {
@@ -188,7 +193,8 @@
     "KUBECLAW_DEPLOY_POSTGRESQL": "true",
     "KUBECLAW_DEPLOY_QDRANT": "true",
     "KUBECLAW_DEPLOY_LITELLM": "true",
-    "ALLOW_PARTIAL_INFRA": "false"
+    "ALLOW_PARTIAL_INFRA": "false",
+    "BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE": "moby/buildkit:rootless"
   },
   "functions": [
     "warn",
@@ -217,6 +223,8 @@
     "is_valid_namespace",
     "prompt_workspace_namespace_if_needed",
     "component_enabled",
+    "cleanup_buildkit_preflight_pod",
+    "cmd_buildkit_preflight",
     "cmd_setup",
     "cmd_secrets",
     "run_secret_setup_if_enabled",
@@ -251,12 +259,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 587,
-    "secrets": 631,
-    "tailscale": 690,
-    "infra": 781,
-    "agents": 980,
-    "smoke": 1081,
-    "teardown": 1220
+    "setup": 702,
+    "secrets": 746,
+    "tailscale": 805,
+    "infra": 896,
+    "agents": 1095,
+    "smoke": 1196,
+    "teardown": 1335
   }
 }

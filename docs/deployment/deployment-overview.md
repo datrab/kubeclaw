@@ -22,6 +22,7 @@ KubeClaw deploys infrastructure first, then two agent releases from the shared H
 | --- | --- | --- | --- | --- | --- |
 | Setup | `./scripts/deploy.sh setup` | `cmd_setup` in `scripts/deploy.sh`; `my-values/setup-secrets.sh` | `NAMESPACE`, workspace namespace prompt settings, secret setup mode | namespace, Helm repos, Secrets, remembered workspace namespace file `my-values/.workspace-namespace` | required command missing, secret setup warning/failure, invalid namespace |
 | Infra | `./scripts/deploy.sh infra` | `cmd_infra` and component helpers in `scripts/deploy.sh` | `KUBECLAW_DEPLOY_POSTGRESQL`, `KUBECLAW_DEPLOY_QDRANT`, `KUBECLAW_DEPLOY_LITELLM`, `TAILSCALE_OPERATOR_ENABLED`, `ALLOW_PARTIAL_INFRA` | Redis, Qdrant, PostgreSQL, LiteLLM, registry services, NetworkPolicies, namespace fence, optional Tailscale operator | rollout failure; fail-closed unless `ALLOW_PARTIAL_INFRA=true` |
+| Rootless builder preflight | `./scripts/deploy.sh buildkit-preflight` | `cmd_buildkit_preflight` in `scripts/deploy.sh` | live Kubernetes node, `moby/buildkit:rootless`, Ubuntu user-namespace and AppArmor support | temporary non-privileged BuildKit pod, verified OCI worker, automatic pod cleanup | worker readiness timeout with pod description, logs, and host-remediation guidance |
 | Agents | `./scripts/deploy.sh agents` or `./scripts/deploy.sh image [target]` | `deploy_agent` in `scripts/deploy.sh`; Helm chart templates | `my-values/nova-values.yaml`, `my-values/buster-values.yaml`, `ghcr-secret`, runtime Secrets | `agent-nova` and `agent-buster` releases, Services, PVCs, runtime config overlays, rollout restart for mutable runtime tags | Helm render failure, rollout restart failure, rollout timeout, gateway readiness failure |
 | Code bundles | `./scripts/deploy.sh code [target]` | `deploy_agent` in `scripts/deploy.sh`; `.github/workflows/build-images.yaml`; `scripts/package-agent-skill-bundle.sh`; Helm chart templates | per-agent expected commit plus optional explicit bundle URL override | default all-agent `/app/skills` bundle rollout without local image builds; optional single-agent targeting | missing expected commit, failed bundle download, manifest mismatch, rollout timeout |
 | Smoke | `./scripts/deploy.sh smoke` | `cmd_smoke` and `cmd_smoke_agent` in `scripts/deploy.sh` | live pods in `NAMESPACE` | pod readiness, gateway status, runtime skills mount and runtime config checks | pod not ready, `openclaw gateway status` fails, missing runtime files |
@@ -31,6 +32,7 @@ KubeClaw deploys infrastructure first, then two agent releases from the shared H
 ```bash
 ./scripts/deploy.sh setup
 ./scripts/deploy.sh infra
+./scripts/deploy.sh buildkit-preflight
 ./scripts/deploy.sh image
 ./scripts/deploy.sh smoke
 ```
@@ -44,6 +46,8 @@ For code-only updates:
 By default the deploy script resolves the latest remote `main` commit, then derives the GitHub release asset URL from `CODE_BUNDLE_GITHUB_REPOSITORY` when set, otherwise from the deployed `ghcr.io/<owner>/kubeclaw-*` image owner, and finally falls back to the local Git remote. Set `NOVA_CODE_BUNDLE_EXPECTED_COMMIT`, `BUSTER_CODE_BUNDLE_EXPECTED_COMMIT`, `NOVA_CODE_BUNDLE_ARCHIVE_URL`, or `BUSTER_CODE_BUNDLE_ARCHIVE_URL` only when overriding that default source.
 
 `scripts/setup.sh` is a guarded legacy Git repository bootstrap. It is not the normal platform deployment flow.
+
+The BuildKit preflight is non-mutating at node level. It creates one temporary pod in the workspace namespace, verifies that rootless BuildKit can initialize an OCI worker, and deletes the pod. Run it before migrating Buster away from privileged Podman. Helm and `deploy.sh` do not alter node sysctls or AppArmor policy.
 
 ## Runtime Artifacts
 

@@ -21,7 +21,7 @@ import {
 } from './real-run-workspace.mjs';
 import { verifyExpectedFailureEvidence, verifyRealRunEvidence } from './real-run-evidence.mjs';
 import {
-  applyRealE2EFileScenario,
+  applyRealE2EWorkspaceScenario,
   applyRealE2EScenario,
   assertScenarioMutationChannel,
   assertScenarioSetupChannel,
@@ -550,9 +550,9 @@ async function restoreCheckpointWorkspace({ workspace, args }) {
     normalizedProgress,
     args.scenarioConfig.id,
   );
+  applyRealE2EWorkspaceScenario({ projectSrc: workspace.projectSrc, progress, scenarioId: args.scenarioConfig.id });
   writeJsonAtomic(progressPath, progress);
   writeRealE2ESwarmFiles(workspace.swarmDir, progress);
-  applyRealE2EFileScenario({ projectSrc: workspace.projectSrc, scenarioId: args.scenarioConfig.id });
   const runConfig = buildRunConfig({
     runId: workspace.runId,
     worktreePath: workspace.worktreePath,
@@ -1090,7 +1090,7 @@ export function diagnoseExpectedFailureOutput({ scenario, pipelineOutput }) {
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_DISCORD_UNAVAILABLE');
   }
   if (scenario.id === 'k8s-context-invalid') {
-    const matched = /KUBECONFIG|real-e2e-missing-kubeconfig|namespace-lease|kubectl/i.test(combined);
+    const matched = /KUBECONFIG|real-e2e-context-does-not-exist|namespace-lease|kubectl/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_K8S_CONTEXT_INVALID');
   }
   if (scenario.id === 'registry-pull-failure') {

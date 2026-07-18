@@ -61,10 +61,14 @@ Needs-Nova handoff rows in `nova-injections.jsonl` are valid only when they incl
 Common module artifacts:
 
 - `.swarm/modules/<module_dir>/FORGE.md`
+- `.swarm/modules/<module_dir>/forge-completion.json.identity.json`
+- `.swarm/modules/<module_dir>/forge-completion.json`
 - `.swarm/modules/<module_dir>/buster-output.json`
 - `.swarm/modules/<module_dir>/tests/attempt-<attempt>/`
 - `.swarm/logs/modules/<module_dir>/lint/precheck-attempt-<attempt>.json`
 - `.swarm/logs/modules/<module_dir>/lint/precheck-trace-attempt-<attempt>.jsonl`
+
+`forge-completion.json.identity.json` is pipeline-created runtime context. The Forge agent does not author immutable identity fields or choose the output path. It submits semantic status, summary, and evidence through `write-forge-completion.ts`; the shared publisher injects the canonical envelope and atomically replaces `forge-completion.json`. Both files are runtime state and must not be committed as product source.
 
 ## Gate Artifacts
 
@@ -96,6 +100,7 @@ This page is manually maintained from:
 - `skills/nova/pipeline/services/artifact-bundle.ts`
 - `skills/nova/pipeline/services/status-store.ts`
 - `skills/common/pipeline/lifecycle-state.ts`
+- `skills/common/pipeline/agent-artifact.ts`
 
 ## Authority And Recovery
 

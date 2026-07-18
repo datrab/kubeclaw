@@ -5,7 +5,7 @@ import { promisify } from 'node:util';
 import { fileURLToPath } from 'node:url';
 import {
   applyRealE2EConfigScenario,
-  applyRealE2EFileScenario,
+  applyRealE2EWorkspaceScenario,
   applyRealE2EScenario,
   assertScenarioMutationChannel,
   realE2EScenarioModuleIds,
@@ -554,6 +554,9 @@ export function normalizeRealE2ERuntimeDefaults(progress, { scenarioId = null } 
   }
 
   if (progress.arch_validation && typeof progress.arch_validation === 'object') {
+    const architectureValidationEnabled = boundary === 'full' || scenarioId === 'architecture-validator-block';
+    progress.arch_validation.enabled = architectureValidationEnabled;
+    progress.arch_validation.agent_enabled = architectureValidationEnabled;
     progress.arch_validation.model = model;
     progress.arch_validation.thinking_level = thinking;
     progress.arch_validation.timeout_minutes = 15;
@@ -1443,9 +1446,9 @@ export async function createRealE2ERunWorkspace({ mode = 'full', scenarioId = 's
   applyRealE2EExecutionBoundary(baseProgress);
   const { progress, scenario } = applyRealE2EScenario(baseProgress, scenarioId);
   validateRealE2EContractAuthority(progress);
+  applyRealE2EWorkspaceScenario({ projectSrc, progress, scenarioId: scenario.id });
   writeJson(path.join(swarmDir, 'progress.json'), progress);
   writeRealE2ESwarmFiles(swarmDir, progress);
-  applyRealE2EFileScenario({ projectSrc, scenarioId: scenario.id });
   if (scenario.id === 'git-dirty-worktree-preserved') {
     assertScenarioMutationChannel(scenario, 'workspace-file');
     writeText(

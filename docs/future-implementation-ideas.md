@@ -178,7 +178,7 @@ These facts are operator-facing and drift-prone. The current docs are source-bac
 
 ### Notes
 
-Related files: `scripts/docs-generate.mjs`, `scripts/docs-inventory.mjs`, `docs/reference/verification-commands.md`, and `docs/archive/audits/2026-06-12-documentation-enrichment-changelog.md`.
+Related files: `scripts/docs-generate.mjs`, `scripts/docs-inventory.mjs`, `docs/reference/verification-commands.md`, and `docs/generated/inventory/`.
 
 ## Add Kubernetes-native observability resources
 
@@ -214,7 +214,7 @@ The current docs intentionally stop at source-verified render and deployment tru
 
 ### Notes
 
-Related issue: `DOCS-2026-06-05-001` in `docs/open-issues.md`.
+Related issue: the clean-cluster deployment gap in `docs/open-issues.md`.
 
 ## Add first-class OpenClaw agent observer CLI status command
 

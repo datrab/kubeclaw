@@ -118,7 +118,18 @@ export async function publishMalformedOutput(args) {
     await sleep(args.pollMs);
   }
 
-  fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+  const triggerMtimeMs = fs.statSync(triggerPath).mtimeMs;
+  while (true) {
+    if (exists(targetPath)) {
+      const targetStat = fs.statSync(targetPath);
+      if (targetStat.isFile() && targetStat.size > 0 && targetStat.mtimeMs >= triggerMtimeMs) break;
+    }
+    if (Date.now() - startedAt > args.timeoutMs) {
+      throw new Error(`timed out waiting for authoritative output target: ${targetPath}`);
+    }
+    await sleep(args.pollMs);
+  }
+
   fs.writeFileSync(targetPath, config.raw);
 
   const manifest = {

@@ -13,6 +13,15 @@ export { isRuntimeStatePath } from '../runtime-state-paths.ts';
 export { allocateModuleWorktree, freezeParallelGitBase } from './module-worktree-allocation.ts';
 export { cleanupModuleWorktree, verifyModuleWorktreeClean } from './module-worktree-maintenance.ts';
 import { MODULE_WORKTREE_DIRTY } from './module-worktree-maintenance.ts';
+import {
+  filterProjectScopedPaths,
+  isPathWithinProjectScope,
+  normalizeRepoRelativePath,
+  normalizeScopedGitPaths,
+  pathMatchesScopedPathspec,
+  projectScopedStatusArgs,
+  resolveDefaultGitAddPaths,
+} from './git-worktree-scope.ts';
 
 type AnyRecord = Record<string, any>;
 type PorcelainEntry = { raw: string; status: string; path: string };
@@ -89,58 +98,6 @@ function log(level: string, message: string): void {
 function incrementStat(config: AnyRecord, key: string) {
   const stats = selectTruthyValue(() => (config?._runStats), () => (null));
   if (stats && typeof stats[key] === 'number') stats[key]++;
-}
-
-function projectScopePathspec(config: AnyRecord): string {
-  const repoRoot = typeof config?.repo_root === 'string' ? config.repo_root : '';
-  const swarmDir = typeof config?.paths?.swarm_dir === 'string' ? config.paths.swarm_dir : '';
-  if (selectTruthyValue(() => (!repoRoot), () => (!swarmDir))) return '';
-  return normalizeRepoRelativePath(path.relative(repoRoot, path.dirname(swarmDir)));
-}
-
-function isPathWithinProjectScope(config: AnyRecord, relPathName: unknown): boolean {
-  const normalizedPath = normalizeRepoRelativePath(relPathName);
-  if (!normalizedPath) return false;
-  const scopePathspec = projectScopePathspec(config);
-  if (!scopePathspec) return true;
-  return selectTruthyValue(() => (normalizedPath === scopePathspec), () => (normalizedPath.startsWith(`${scopePathspec}/`)));
-}
-
-function projectScopedStatusArgs(config: AnyRecord): string[] {
-  const scopePathspec = projectScopePathspec(config);
-  const args = ['status', '--porcelain', '--untracked-files=all'];
-  if (scopePathspec) args.push('--', scopePathspec);
-  return args;
-}
-
-function filterProjectScopedPaths(config: AnyRecord, paths: string[] = []): string[] {
-  return paths
-    .map(normalizeRepoRelativePath)
-    .filter((filePath) => filePath && isPathWithinProjectScope(config, filePath));
-}
-
-function resolveDefaultGitAddPaths(config: AnyRecord): string[] {
-  const scopePathspec = projectScopePathspec(config);
-  return scopePathspec ? [scopePathspec] : ['-A'];
-}
-
-function normalizeRepoRelativePath(relPathName: unknown): string {
-  return textValue(relPathName)
-    .replace(/\\/g, '/')
-    .replace(/^\/+/, '')
-    .replace(/^(?:\.\/)+/, '')
-    .trim();
-}
-
-function normalizeScopedGitPaths(paths: unknown): string[] {
-  if (!Array.isArray(paths)) return [];
-  return [...new Set(paths.map(normalizeRepoRelativePath).filter(Boolean))];
-}
-
-function pathMatchesScopedPathspec(repoRelativePath: string, pathspecs: string[] = []): boolean {
-  const normalizedPath = normalizeRepoRelativePath(repoRelativePath);
-  if (!normalizedPath) return false;
-  return pathspecs.some((pathspec) => selectTruthyValue(() => (normalizedPath === pathspec), () => (normalizedPath.startsWith(`${pathspec}/`))));
 }
 
 function continueRebaseFavoringLocal(config: AnyRecord, allowedConflicts: string[], label: string): boolean {

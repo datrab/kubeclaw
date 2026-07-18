@@ -143,7 +143,7 @@ function applyAcceptedGateControl(config, gateId, gate, controlResult) {
     attempt: metadata.attempt || typedGate.metrics?.attempt || 1,
     status,
     authority: gateCompletionAuthorityForControlResult(controlResult, gate),
-    reason_code: metadata.failure_class || typedGate.outcomeClass || null,
+    reason_code: typedGate.outcomeClass || null,
     summary: controlResult?.diagnostics?.summary || null,
     observed: {
       session_key: metadata.session_key || null,
@@ -196,6 +196,7 @@ export function buildGateStepResultFromControl(config, gateId, gate, controlResu
     rateLimit: selectTruthyValue(() => (controlResult?.diagnostics?.typed?.rateLimit), () => (null)),
     terminalAction: terminalActionForGateOutcomeClass(outcome),
     terminalScope: PIPELINE_TERMINAL_SCOPES.GATE,
+    terminalReasonCode: outcome,
     terminalSource: 'gate_control_result',
   });
 }

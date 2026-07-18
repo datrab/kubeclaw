@@ -191,6 +191,50 @@ test('pollForgeCompletion does not normalize wrong Forge completion identity val
   assert.deepEqual(result.status?.status_errors, ["run_id must be 'run-test' (got 'wrong-run')"]);
 });
 
+test('pollForgeCompletion lets an active Forge session replace an invalid intermediate artifact', async (t) => {
+  const config = makeModuleCompletionConfig();
+  config.polling.interval_seconds = 0.01;
+  const moduleDir = 'module-a-dir';
+  const moduleRoot = path.join(config.paths.modules_dir, moduleDir);
+  const streamLogPath = path.join(config.repo_root, 'forge-active.jsonl');
+  fs.mkdirSync(moduleRoot, { recursive: true });
+  fs.writeFileSync(path.join(moduleRoot, 'forge-completion.json'), JSON.stringify(forgeCompletionArtifact({
+    run_id: 'intermediate-wrong-run',
+    module_id: moduleDir,
+  }), null, 2));
+  fs.writeFileSync(streamLogPath, `${JSON.stringify({ kind: 'lifecycle', phase: 'running', ts: new Date().toISOString() })}\n`);
+  trackAgent(config, 'forge-module-active', 'agent:forge:active', 'agent-id', 'gateway-forge-active', streamLogPath, {
+    module_id: moduleDir,
+    run_id: 'run-test',
+    attempt: 1,
+    dispatch_id: 'forge-dispatch-active',
+  });
+  const replacement = setTimeout(() => {
+    fs.writeFileSync(path.join(moduleRoot, 'forge-completion.json'), JSON.stringify(forgeCompletionArtifact({
+      run_id: 'run-test',
+      module_id: moduleDir,
+      summary: 'final valid completion',
+    }), null, 2));
+  }, 25);
+  t.after(() => {
+    clearTimeout(replacement);
+    untrackAgent('forge-module-active');
+    fs.rmSync(config.repo_root, { recursive: true, force: true });
+  });
+
+  const result = await pollForgeCompletion(config, moduleDir, 1, {
+    runId: 'run-test',
+    moduleId: moduleDir,
+    attempt: 1,
+    dispatchId: 'forge-dispatch-active',
+    sessionLabel: 'forge-module-active',
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(result.reason, 'forge_completion');
+  assert.equal(result.status?.summary, 'final valid completion');
+});
+
 test('module completion wait preserves attempt zero in event identity', async (t) => {
   class FakeRedis {
     constructor() {

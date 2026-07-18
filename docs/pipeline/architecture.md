@@ -40,7 +40,7 @@ This separation is why the pipeline can recover after restarts and stale session
 - run a module
 - complete or halt the pipeline
 
-Every action returns a canonical pipeline step result. The terminal layer normalizes old compatibility shapes before deciding whether the loop continues or halts.
+Every action returns a canonical pipeline step result. The terminal layer validates that result before deciding whether the loop continues or halts.
 
 ## Registry Boundary
 
@@ -63,7 +63,7 @@ For the long-form operator narrative, see [end-to-end flow](end-to-end-flow.md).
 4. Nova starts the OpenClaw agent observer plugin controller and agent observability ingester when enabled in `swarm.config.json`.
 5. Nova reconciles stale module/gate state so a resumed run can continue from durable evidence.
 6. The state machine walks `execution_order`, runs modules and `gate:<id>` entries, and schedules validators/generators through registry-owned stages.
-7. Forge work dispatches through the configured OpenClaw runtime. Buster work dispatches as a typed Redis task.
+7. Forge work dispatches through the configured OpenClaw runtime. Agent semantic output is published through a pipeline-owned immutable artifact envelope. Buster work dispatches as a typed Redis task.
 8. Terminal completion writes summaries, cost/artifact records, and optional generators such as project summary, pipeline review, and case study.
 
 ## State And Ownership
@@ -113,7 +113,7 @@ Buster rejects malformed work before execution, dead-letters invalid payloads be
 | Stage | Owner | Inputs | Outputs/evidence | Failure handling |
 | --- | --- | --- | --- | --- |
 | Config load | `core/config.ts`; `core/platform-config.ts` | `--project`, `CURRENT_PROJECT`, `REPO_ROOT`, `SWARM_CONFIG`, `.swarm/progress.json` | runtime config, progress object, plugin registry | missing project/progress/config fields fail before scheduling |
-| Module Forge | module runner and worker runtime adapters | module metadata, model/runtime defaults, active session identity | module status transitions, prompt/transcript artifacts, telemetry | timeout, rate-limit, blocked, or no-output outcomes become typed step results |
+| Module Forge | module runner, worker runtime adapters, common agent-artifact publisher | module metadata, model/runtime defaults, pipeline-owned artifact identity context | semantic completion inside an immutable atomic envelope, lifecycle transitions, prompt/transcript artifacts, telemetry | timeout, rate-limit, blocked, invalid semantic output, or no-output outcomes become typed step results |
 | Buster module/gate test | Buster task runner and Redis transport | task payload with identity, suites, paths, capabilities, completion stream | `buster-output.json`, suite verdicts, Redis completion/dead-letter | malformed tasks and runtime failures must emit terminal evidence before ACK |
 | Review/approval gates | gate runners | gate instructions, output paths, reviewer/approval config | gate artifacts, review outputs, approval decisions, lifecycle events | wait/request-fix/block decisions preserve resume identity |
 | Pipeline terminal | terminal runner and artifact bundle | step results, lifecycle read models, completion adjudication | `latest.json`, `summary.json`, run-scoped `pipeline.jsonl`, terminal decision | terminal status maps to explicit operator action |

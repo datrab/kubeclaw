@@ -27,6 +27,7 @@ function relPath(sourceRoot, filePath) {
 }
 
 const APPROVED_COMMON_FACADES = Object.freeze([
+  'skills/buster/pipeline/agent-artifact.ts',
   'skills/buster/pipeline/agent-observability/src/index.ts',
   'skills/buster/pipeline/agents/acp-monitor.ts',
   'skills/buster/pipeline/agents/lifecycle.ts',
@@ -63,6 +64,7 @@ const APPROVED_COMMON_FACADES = Object.freeze([
   'skills/buster/pipeline/telemetry.ts',
   'skills/buster/pipeline/timing.ts',
   'skills/nova/pipeline/agent-observability/src/index.ts',
+  'skills/nova/pipeline/agent-artifact.ts',
   'skills/nova/pipeline/agents/acp-monitor.ts',
   'skills/nova/pipeline/agents/lifecycle.ts',
   'skills/nova/pipeline/agents/runtime.ts',

@@ -1,5 +1,22 @@
 # Real E2E Harness Changelog
 
+## 2026-07-18 - Pipeline-owned agent artifact identity
+
+- Added one shared agent-artifact publisher under `skills/common/pipeline` for Nova, Buster, and future agent roles.
+- Moved immutable artifact envelope fields (`artifact_type`, schema version, run/module/gate identity, attempt/dispatch identity, and completion timestamp) behind pipeline authority.
+- Changed the Forge completion CLI to accept semantic result fields only; agents can no longer supply `run_id`, `module_id`, `attempt`, schema metadata, or timestamps.
+- Made Forge prompt assembly publish the canonical identity context before dispatch and pass only its context path to the agent-facing writer.
+- Classified identity contexts as runtime state so they cannot enter product commits or interfere with parallel worktree joins.
+- Added regression coverage for immutable-field rejection, pipeline identity injection, semantic Forge publication, prompt flags, packaging facades, and runtime-state classification.
+
+## 2026-07-18 - Atomic Forge completion publication
+
+- Added a Nova-owned Forge completion writer that validates required evidence, serializes multiline content safely, and atomically renames the completed artifact into place.
+- Changed Forge prompts to require the canonical writer instead of asking agents to hand-author watched JSON files.
+- Made the completion output path absolute from the scoped module config so serial and parallel attempt worktrees publish to the same canonical authority regardless of agent working-directory changes.
+- Removed architecture-validator artifact requirements from module-boundary evidence because those boundaries intentionally disable architecture validation.
+- Added regression coverage for atomic multiline serialization, incomplete evidence rejection, prompt authority, and boundary-scoped architecture evidence.
+
 ## 2026-07-16
 
 - Normalized restored checkpoints so harness-owned runtime defaults, scenario module scope, and generated `.swarm` contracts are refreshed before each scenario mutation.
@@ -18,6 +35,16 @@
 
 ## 2026-07-17
 
+- Made execution boundaries skip unrelated architecture validation for module/review/final-gate scenarios while preserving it for full runs and the dedicated architecture-validator scenario, eliminating stochastic and costly pre-scenario agent work.
+- Synchronized malformed-output injection on the agent-authored target artifact, aligned module-review rejection with the typed `verdict_fail` cause, and made Forge malformed-output recovery evidence derive its final successful attempt from lifecycle authority instead of assuming attempt 2.
+- Deferred semantic rejection of `forge-completion.json` until the active Forge session reaches a terminal state, allowing an in-progress agent to replace an intermediate identity-invalid artifact while retaining strict validation of its final handoff.
+- Classified Buster's run-scoped `.swarm/modules/<module>/tests/attempt-<n>/` workspace as runtime state during parallel module joins, so generated test evidence is stashed and restored without being mistaken for dirty product source.
+
+- Removed the obsolete generic final-Buster `needs_nova` terminal expectation; deterministic registry image-build failure now follows the same product-owned `verdict_fail` contract as other final-Buster suite failures.
+
+- Replaced the ambiguous missing-file `KUBECONFIG` scenario with a run-scoped kubeconfig whose selected context is explicitly absent. Fresh and checkpoint-restored runs now use one workspace-fixture authority, evidence requires failure at Kubernetes capability preflight before namespace lease dispatch, and the terminal contract follows the product-owned `k8s_infra_unavailable` classification.
+
+- Made the `k8s-pod-never-ready` fixture deterministic by replacing its HTTP-path readiness mutation with an always-failing kubelet exec probe; the nginx fixture intentionally serves unknown paths successfully, so path-based failure could not prove pod readiness timeout.
 - Replaced the Buster namespace lease controller's JavaScript entrypoint with a compact Go binary while preserving the existing `BusterNamespaceLease` CRD, spec/status fields, finalizer, RBAC, and Helm values contract.
 - Updated the namespace-controller image to build via the existing GitHub image workflow from `cmd/buster-namespace-controller/**`, using a Go build stage and distroless non-root runtime.
 - Removed the legacy JS controller source and updated Docker, Helm, deployment truth checks, and docs so the Go controller is the only namespace-controller implementation path.

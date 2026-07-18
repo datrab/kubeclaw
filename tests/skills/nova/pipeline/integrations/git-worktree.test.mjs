@@ -239,6 +239,7 @@ test('runtime-state classifier treats pipeline-generated module artifacts as saf
   const runtimePaths = [
     'Projects/demo/src/.swarm/progress.json',
     'Projects/demo/src/.swarm/modules/01-foundation/forge-completion.json',
+    'Projects/demo/src/.swarm/modules/01-foundation/forge-completion.json.identity.json',
     'Projects/demo/src/.swarm/modules/01-foundation/forge-completion.stale-before-attempt-2.json',
     'Projects/demo/src/.swarm/modules/01-foundation/buster-completion.json',
     'Projects/demo/src/.swarm/modules/01-foundation/forge-output.json',

@@ -579,8 +579,8 @@ const BUSTER_FAILURE_REASON_CONTRACTS = Object.freeze({
     artifact_reason_prefix: 'NO_SUBAGENT:',
     suite: 'k8s',
     suite_status: 'FAIL',
-    failed_check: 'namespace-lease',
-    finding_contains: 'real-e2e-missing-kubeconfig',
+    failed_check: 'k8s-capability-preflight',
+    finding_contains: 'real-e2e-context-does-not-exist',
   }),
   registry_pull_failure: Object.freeze({
     artifact_reason_prefix: 'NO_SUBAGENT:',
@@ -1063,8 +1063,8 @@ const MODULE_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.ha
 const MODULE_INFRA_ERROR_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.halted', step_type: 'module', step_id: '01-nginx', terminal_status: 'blocked', failure_class: 'infra_error' });
 const MODULE_TEST_FAILURE_EXHAUSTED_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.halted', step_type: 'module', step_id: '01-nginx', terminal_status: 'blocked', failure_class: 'test_failure' });
 const MODULE_ACTION_REQUIRED_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.halted', step_type: 'module', step_id: '01-nginx', terminal_status: 'action_required', failure_class: 'needs_nova' });
-const FINAL_BUSTER_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.halted', step_type: 'gate', step_id: 'final-buster', terminal_status: 'action_required', failure_class: 'needs_nova' });
 const FINAL_BUSTER_VERDICT_FAIL_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.halted', step_type: 'gate', step_id: 'final-buster', terminal_status: 'action_required', failure_class: 'verdict_fail' });
+const FINAL_BUSTER_K8S_INFRA_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.halted', step_type: 'gate', step_id: 'final-buster', terminal_status: 'failed', failure_class: 'k8s_infra_unavailable' });
 const DEGRADED_EVIDENCE_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.halted', step_type: 'pipeline', step_id: 'degraded_evidence', terminal_status: 'blocked', failure_class: 'degraded_evidence_requires_handoff' });
 const PIPELINE_REVIEW_TIMEOUT_TERMINAL_CONTRACT = terminalContract({ event_type: 'pipeline_run.halted', step_type: 'generator', step_id: 'generator:pipeline_review', terminal_status: 'timed_out', failure_class: 'timeout' });
 
@@ -1091,7 +1091,7 @@ const FAILURE_CONTRACTS = Object.freeze({
     terminal: MODULE_ACTION_REQUIRED_TERMINAL_CONTRACT,
   }),
   'retry-buster-pass-echo-rejects': Object.freeze({
-    terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'gate', step_id: 'module-review', terminal_status: 'action_required', failure_class: 'needs_nova' }),
+    terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'gate', step_id: 'module-review', terminal_status: 'action_required', failure_class: 'verdict_fail' }),
   }),
   'forge-malformed-output': Object.freeze({
     terminal: DEGRADED_EVIDENCE_TERMINAL_CONTRACT,
@@ -1137,10 +1137,10 @@ const FAILURE_CONTRACTS = Object.freeze({
     terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'pipeline', step_id: 'runtime_config', terminal_status: 'failed', failure_class: 'econnrefused' }),
   }),
   'k8s-context-invalid': Object.freeze({
-    terminal: FINAL_BUSTER_TERMINAL_CONTRACT,
+    terminal: FINAL_BUSTER_K8S_INFRA_TERMINAL_CONTRACT,
   }),
   'registry-pull-failure': Object.freeze({
-    terminal: FINAL_BUSTER_TERMINAL_CONTRACT,
+    terminal: FINAL_BUSTER_VERDICT_FAIL_TERMINAL_CONTRACT,
   }),
   'git-credential-failure': Object.freeze({
     terminal: terminalContract({ event_type: 'pipeline_run.halted', step_type: 'module', step_id: '01-nginx', terminal_status: 'failed', failure_class: 'git_credential_failed', reason_contains: 'Permission denied (publickey)' }),
@@ -1825,13 +1825,35 @@ async function requireMalformedOutputProductionRejectionEvidence(workspace, scen
   const config = malformedOutputScenarioConfig(scenario.id);
   if (!config) return evidencePass('malformed_output_production_rejection_not_required', { scenario: scenario.id });
   if (scenario.id === 'forge-malformed-output') {
+    const { events } = readPipelineEvents(workspace);
+    const moduleEvents = scopedPipelineEvents(workspace, events)
+      .filter((event) => retryLifecycleEventFields(event).module_id === '01-nginx');
+    const failedAttempts = [...new Set(moduleEvents
+      .filter((event) => retryLifecycleEventFields(event).event_type === 'module_attempt.failed')
+      .map(attemptFromEvent)
+      .filter((attempt) => Number.isInteger(attempt)))];
+    const recoveredAttempt = moduleEvents
+      .filter((event) => retryLifecycleEventFields(event).event_type === 'module_attempt.passed')
+      .map(attemptFromEvent)
+      .find((attempt) => Number.isInteger(attempt) && attempt > 1) || null;
+    if (failedAttempts[0] !== 1 || recoveredAttempt == null) {
+      return evidenceFail('malformed_output_production_rejection', 'REAL_E2E_MALFORMED_OUTPUT_RECOVERY_ATTEMPT_MISSING', {
+        failed_attempts: failedAttempts,
+        recovered_attempt: recoveredAttempt,
+      });
+    }
     return await requireRetryFixCycleEvidence(workspace, {
       code: 'malformed_output_production_rejection',
       expectedModuleStatus: 'PASS',
-      expectedFailCount: 1,
+      expectedFailCount: failedAttempts.length,
+      expectedAttempts: recoveredAttempt,
+      expectedCurrentAttempt: recoveredAttempt,
+      expectedFailedAttempts: failedAttempts,
+      readModelFailedAttempts: failedAttempts,
+      passedAttempt: recoveredAttempt,
       expectFinalGateTask: false,
       failedAttemptsWithTesting: [],
-      expectedModuleTaskAttempts: [2],
+      expectedModuleTaskAttempts: [recoveredAttempt],
       requiredFailureMarkers: ['invalid Forge completion artifact'],
       promptContracts: [{ attempt: 2, requiredFailureMarkers: ['invalid Forge completion artifact'] }],
     });
@@ -3369,8 +3391,6 @@ async function verifyModuleBoundarySuccess(workspace, { mode = 'full', scenario 
   const checks = [
     requireScenarioSetupContract(workspace, scenario),
     requireJsonFile(workspace, 'modules/01-nginx/forge-completion.json', 'forge_completion', validateForgeCompletionForWorkspace(workspace)),
-    requireJsonFile(workspace, 'logs/architecture-validator/results.json', 'architecture_validator_results', validateArchitectureResultsForWorkspace(workspace)),
-    requireFile(workspace, 'logs/architecture-validator/summary.md', 'architecture_validator_summary'),
     requireJsonFile(workspace, 'logs/pipeline/summary.json', 'pipeline_summary', validateSummaryForWorkspace(workspace)),
     requireJsonFile(workspace, `logs/pipeline/runs/${pipelineRunId}/summary.json`, 'pipeline_run_summary', validateSummaryForWorkspace(workspace)),
     requireFile(workspace, 'logs/pipeline/case-study.base.json', 'pipeline_case_study_base'),

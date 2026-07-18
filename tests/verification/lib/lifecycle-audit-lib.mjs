@@ -4,6 +4,7 @@ import path from 'path';
 import { pathToFileURL } from 'url';
 
 export const SHARED_PIPELINE_HELPER_PATHS = [
+  'pipeline/agent-artifact.ts',
   'pipeline/agents/acp-monitor.ts',
   'pipeline/agents/lifecycle.ts',
   'pipeline/agents/runtime.ts',

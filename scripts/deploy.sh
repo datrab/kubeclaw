@@ -9,6 +9,7 @@
 #   ./deploy.sh secrets            Create/copy/prompt required Kubernetes secrets
 #   ./deploy.sh infra              Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM
 #   ./deploy.sh tailscale          Deploy Tailscale Kubernetes Operator
+#   ./deploy.sh buildkit-preflight Verify rootless BuildKit support on a cluster node
 #   ./deploy.sh agents             Deploy agents (Nova + Buster)
 #   ./deploy.sh agent <name> [--with-code]  Deploy single agent (nova|buster), optionally followed by code deploy
 #   ./deploy.sh image              Deploy both agents using image/runtime values
@@ -44,6 +45,8 @@
 #   KUBECLAW_DEPLOY_QDRANT        true|false (default: true)
 #   KUBECLAW_DEPLOY_LITELLM       true|false (default: true)
 #   ALLOW_PARTIAL_INFRA           true|false (default: false)
+#   BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE   Rootless BuildKit probe image (default: moby/buildkit:rootless)
+#   BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT Probe pod readiness timeout (default: 180s)
 # =============================================================================
 set -euo pipefail
 
@@ -71,6 +74,8 @@ AGENT_ROLLOUT_TIMEOUT="${AGENT_ROLLOUT_TIMEOUT:-45m}"
 CODE_BUNDLE_DEFAULT_REF="${CODE_BUNDLE_DEFAULT_REF:-refs/heads/main}"
 CODE_BUNDLE_RELEASE_TAG="${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}"
 CODE_BUNDLE_PREFLIGHT_SKIP="${CODE_BUNDLE_PREFLIGHT_SKIP:-false}"
+BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-moby/buildkit:rootless}"
+BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT="${BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT:-180s}"
 
 export NAMESPACE
 export KUBECLAW_DEPLOY_POSTGRESQL
@@ -582,6 +587,116 @@ component_enabled() {
   local value
   value="$(normalize_boolish "$1")"
   [[ "$value" == "true" ]]
+}
+
+cleanup_buildkit_preflight_pod() {
+  local probe_name="$1"
+  if kubectl delete pod "$probe_name" -n "$NAMESPACE" --ignore-not-found --wait=true >/dev/null 2>&1; then
+    return 0
+  fi
+  warn "Could not delete temporary BuildKit probe pod '$probe_name'; remove it manually."
+  return 1
+}
+
+cmd_buildkit_preflight() {
+  local probe_name="kubeclaw-buildkit-preflight-$$"
+  local socket="unix:///run/user/1000/buildkit/buildkitd.sock"
+  local probe_ready=0
+
+  header "Rootless BuildKit Preflight"
+  require_command kubectl
+
+  if [[ ! "$BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE" =~ ^[A-Za-z0-9._/@:-]+$ ]]; then
+    err "Invalid BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE: $BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE"
+    return 1
+  fi
+
+  kubectl get namespace "$NAMESPACE" >/dev/null
+  info "Starting temporary non-privileged BuildKit probe in namespace '$NAMESPACE'..."
+  trap 'cleanup_buildkit_preflight_pod "$probe_name"' EXIT INT TERM
+
+  kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ${probe_name}
+  namespace: ${NAMESPACE}
+  labels:
+    app.kubernetes.io/name: kubeclaw-buildkit-preflight
+  annotations:
+    container.apparmor.security.beta.kubernetes.io/buildkit: unconfined
+spec:
+  restartPolicy: Never
+  automountServiceAccountToken: false
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    runAsNonRoot: true
+    seccompProfile:
+      type: Unconfined
+  containers:
+    - name: buildkit
+      image: "${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE}"
+      args:
+        - --addr
+        - ${socket}
+        - --oci-worker-no-process-sandbox
+      securityContext:
+        privileged: false
+        allowPrivilegeEscalation: true
+      readinessProbe:
+        exec:
+          command:
+            - buildctl
+            - --addr
+            - ${socket}
+            - debug
+            - workers
+        initialDelaySeconds: 2
+        periodSeconds: 2
+        timeoutSeconds: 2
+        failureThreshold: 60
+      volumeMounts:
+        - name: buildkit-state
+          mountPath: /home/user/.local/share/buildkit
+        - name: buildkit-runtime
+          mountPath: /run/user/1000
+  volumes:
+    - name: buildkit-state
+      emptyDir: {}
+    - name: buildkit-runtime
+      emptyDir: {}
+EOF
+
+  if kubectl wait --for=condition=Ready "pod/${probe_name}" -n "$NAMESPACE" --timeout="$BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT"; then
+    if kubectl exec -n "$NAMESPACE" "$probe_name" -c buildkit -- \
+      buildctl --addr "$socket" debug workers >/dev/null; then
+      probe_ready=1
+    fi
+  fi
+
+  if [[ "$probe_ready" == "1" ]]; then
+    cleanup_buildkit_preflight_pod "$probe_name"
+    trap - EXIT INT TERM
+    log "Rootless BuildKit worker initialized successfully."
+    return 0
+  fi
+
+  err "Rootless BuildKit could not initialize on the scheduled node."
+  if ! kubectl describe pod "$probe_name" -n "$NAMESPACE" >&2; then
+    warn "Could not describe the failed BuildKit probe pod."
+  fi
+  if ! kubectl logs "$probe_name" -n "$NAMESPACE" -c buildkit >&2; then
+    warn "Could not read logs from the failed BuildKit probe pod."
+  fi
+  if ! cleanup_buildkit_preflight_pod "$probe_name"; then
+    warn "BuildKit preflight cleanup requires operator attention."
+  fi
+  trap - EXIT INT TERM
+  info "Ubuntu/K3s hosts must allow unprivileged user namespaces and an unconfined BuildKit AppArmor profile."
+  info "Check: sysctl kernel.unprivileged_userns_clone user.max_user_namespaces"
+  info "Node bootstrap, not Helm, owns any required sysctl or AppArmor change."
+  return 1
 }
 
 cmd_setup() {
@@ -1257,6 +1372,9 @@ case "${1:-}" in
   tailscale)
     TAILSCALE_OPERATOR_ENABLED=true deploy_tailscale_operator
     ;;
+  buildkit-preflight)
+    cmd_buildkit_preflight
+    ;;
   agents)
     cmd_agents
     ;;
@@ -1309,6 +1427,7 @@ case "${1:-}" in
     echo "  secrets            Create/copy/prompt required Kubernetes secrets"
     echo "  infra              Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM"
     echo "  tailscale          Deploy Tailscale Kubernetes Operator"
+    echo "  buildkit-preflight Verify rootless BuildKit support with a temporary pod"
     echo "  agents             Deploy agents (Nova + Buster) using image/runtime values"
     echo "  agent <name> [--with-code]  Deploy single agent using image/runtime values"
     echo "                    Add --with-code to also smoke, deploy code, and smoke again"

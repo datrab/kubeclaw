@@ -18,6 +18,12 @@ test('malformed output publisher deterministically writes the Forge invalid arti
   fs.mkdirSync(path.dirname(triggerPath), { recursive: true });
   fs.writeFileSync(triggerPath, 'prompt metadata\n');
 
+  const targetPath = path.join(swarmDir, config.target);
+  fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+  const authoritativeWrite = setTimeout(() => {
+    fs.writeFileSync(targetPath, '{"artifact_type":"forge_completion"}\n');
+  }, 25);
+
   const manifest = await publishMalformedOutput({
     scenario: 'forge-malformed-output',
     swarmDir,
@@ -26,8 +32,8 @@ test('malformed output publisher deterministically writes the Forge invalid arti
     timeoutMs: 1000,
     pollMs: 10,
   });
+  clearTimeout(authoritativeWrite);
 
-  const targetPath = path.join(swarmDir, config.target);
   assert.equal(fs.readFileSync(targetPath, 'utf8'), config.raw);
   assert.equal(JSON.parse(fs.readFileSync(targetPath, 'utf8')).artifact_type, 'not_forge_completion');
   assert.equal(manifest.artifact_type, 'real_e2e_malformed_output_publication');

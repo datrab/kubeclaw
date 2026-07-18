@@ -15,7 +15,7 @@ Module status transitions use `transitionModuleStatus(...)`. Current statuses in
 
 Run state is scoped by a generated run ID. The pipeline writes run-scoped replay artifacts under `.swarm/logs/pipeline/runs/<run_id>/` and updates `.swarm/logs/pipeline/latest.json` with the active or latest run pointer.
 
-Historical status artifacts are diagnostic/operator evidence in current code; scheduler truth comes from lifecycle read models and typed projections.
+Status snapshots and output artifacts are diagnostic/operator evidence; scheduler truth comes from lifecycle read models and typed projections.
 
 ## Lifecycle Storage
 
@@ -57,7 +57,7 @@ The scheduler reads these projections through `status-store.ts` and related proj
 
 ## Why Not Just Edit Status JSON
 
-Plain status JSON is still useful as compatibility and diagnostic evidence, but it is not enough for the current runtime because:
+Plain status JSON is useful as diagnostic evidence, but it is not enough for the current runtime because:
 
 - it cannot prove which run and attempt produced a state
 - it cannot safely represent concurrent wait/cooldown/recovery events

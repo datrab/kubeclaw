@@ -30,7 +30,7 @@ function makeConfig() {
   };
 }
 
-test('gate control terminal reason preserves typed failure class over broad outcome class', () => {
+test('gate control terminal reason uses typed outcome while preserving diagnostic failure class', () => {
   const config = makeConfig();
   const gateId = 'module-review';
   const gate = {
@@ -49,9 +49,10 @@ test('gate control terminal reason preserves typed failure class over broad outc
   const stepResult = buildGateStepResultFromControl(config, gateId, gate, controlResult);
   const normalized = normalizeStepResultForPipeline(stepResult, { type: 'gate', id: gateId });
 
-  assert.equal(normalized.terminalDecision.reasonCode, 'invalid_contract');
+  assert.equal(normalized.terminalDecision.reasonCode, 'error');
   assert.equal(normalized.terminalDecision.scope, 'gate');
   assert.equal(normalized.terminalDecision.correlation.gate_id, gateId);
+  assert.equal(stepResult.diagnostics.metadata.failure_class, 'invalid_contract');
 });
 
 test('review gate timeout maps to timed-out terminal status', () => {
