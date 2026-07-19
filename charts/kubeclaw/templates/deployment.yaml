@@ -916,7 +916,7 @@ spec:
             - name: HOME
               value: "/home/node"
             - name: NODE_PATH
-              value: "/usr/local/lib/node_modules:/app/node_modules"
+              value: "/opt/kubeclaw-tools/node_modules:/usr/local/lib/node_modules:/app/node_modules"
             - name: AGENT_NAME
               value: {{ .Values.agentRole | default "default" | quote }}
             - name: KUBECLAW_CONTAINER_ROLE

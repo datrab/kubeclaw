@@ -796,6 +796,8 @@ assert.equal(busterPipelineContainerObject.securityContext?.privileged, false, '
 assert.equal(busterGatewayContainerObject.livenessProbe?.periodSeconds >= 10, true, 'Buster gateway liveness period must tolerate build pressure');
 assert.equal(busterGatewayContainerObject.livenessProbe?.timeoutSeconds >= 5, true, 'Buster gateway liveness timeout must tolerate build pressure');
 assert.equal(busterGatewayContainerObject.livenessProbe?.failureThreshold >= 6, true, 'Buster gateway liveness failure threshold must avoid transient restart loops');
+assert.equal(envValue(novaGatewayContainerObject, 'NODE_PATH'), '/opt/kubeclaw-tools/node_modules:/usr/local/lib/node_modules:/app/node_modules', 'Nova gateway must resolve general-image locked JavaScript tools and OpenClaw globals');
+assert.equal(envValue(busterGatewayContainerObject, 'NODE_PATH'), '/opt/kubeclaw-tools/node_modules:/usr/local/lib/node_modules:/app/node_modules', 'Buster gateway must resolve shared chart health dependencies across gateway image variants');
 assert.equal(envValue(busterPipelineContainerObject, 'BUSTER_PLATFORM_CAPABILITIES'), 'rootless_buildkit', 'Buster pipeline must expose rootless BuildKit capability');
 assert.equal(envValue(busterPipelineContainerObject, 'NODE_PATH'), '/app/node_modules', 'Buster pipeline must resolve mounted ESM skills against image-local dependencies');
 assert.equal(busterPipelineContainerObject.livenessProbe?.periodSeconds >= 10, true, 'Buster pipeline liveness period must tolerate build pressure');
