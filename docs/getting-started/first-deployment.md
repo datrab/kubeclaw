@@ -17,7 +17,7 @@ helm template agent-buster charts/kubeclaw -n kubeclaw -f my-values/buster-value
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 ```
 
-The deployment truth check validates rendered Kubernetes resources, confirms expected service exposure, verifies Buster RBAC/sandbox resources, and rejects legacy processor surfaces.
+The deployment truth check validates rendered Kubernetes resources, confirms expected service exposure, verifies Buster RBAC and isolation resources, and rejects legacy processor surfaces.
 
 ## Live deployment shape
 

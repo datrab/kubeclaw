@@ -3,13 +3,13 @@
 Status: current
 Audience: operator, maintainer
 
-## Separate Sandbox Posture For Buster
+## Separate Build And Execution Posture For Buster
 
-Decision: Buster runs with sandbox-specific image, service account, RBAC, and privileged container settings.
+Decision: Buster separates its non-privileged OpenClaw gateway from a dedicated non-root rootless-BuildKit pipeline image. The pipeline receives lease-client and registry-build authority; neither container is privileged.
 
-Reason: Buster performs browser, container, Kubernetes, and destructive test work that the general Nova image does not perform.
+Reason: Buster performs browser, image-build, Kubernetes, and destructive test work that does not belong in its agent gateway. The gateway therefore uses a dedicated minimal OpenClaw image, while the pipeline worker owns the larger deterministic and rootless-BuildKit toolchain.
 
-Source proof: `my-values/buster-values.yaml` sets the Buster role values, `docker/Dockerfile.sandbox` defines the sandbox image, and `charts/kubeclaw/templates/deployment.yaml` renders Buster's privileged sandbox mounts and gateway/pipeline containers. `charts/kubeclaw/templates/rbac.yaml` and `charts/kubeclaw/templates/serviceaccount.yaml` render role-specific Kubernetes permissions and service accounts.
+Source proof: `my-values/buster-values.yaml` sets the Buster role values, `docker/Dockerfile.buster-gateway` defines the minimal agent runtime, `docker/Dockerfile.buster-pipeline` defines the worker image, and `charts/kubeclaw/templates/deployment.yaml` renders the non-privileged gateway/pipeline split and pipeline-only state mounts. `charts/kubeclaw/templates/rbac.yaml` and `charts/kubeclaw/templates/serviceaccount.yaml` render lease-client permissions and service accounts.
 
 Verification:
 

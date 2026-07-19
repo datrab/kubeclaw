@@ -21,8 +21,8 @@ agentRole: "nova"
 # =============================================================================
 
 image:
-  # General image for Nova, Forge, Echo
-  # Override with sandbox image for Buster
+  # General image for Nova, Forge, and Echo. Buster production values select
+  # the dedicated minimal gateway image instead.
   repository: ghcr.io/datrab/kubeclaw-general
   tag: "latest"
   pullPolicy: Always
@@ -73,12 +73,23 @@ gateway:
 
 busterPipeline:
   enabled: false
-  command:
-    - "node"
-    - "/app/skills/buster-pipeline.ts"
+  image:
+    repository: ghcr.io/datrab/kubeclaw-buster-pipeline
+    tag: "latest"
+    pullPolicy: Always
   platformCapabilities:
-    - image_prepull
-  resources: {}
+    - rootless_buildkit
+  # Rootless BuildKit retains intermediate layers in this bounded emptyDir.
+  storageSize: "50Gi"
+  resources:
+    requests:
+      cpu: "2"
+      memory: "8Gi"
+      ephemeral-storage: "8Gi"
+    limits:
+      cpu: "8"
+      memory: "24Gi"
+      ephemeral-storage: "60Gi"
 
 # -- Replica count (always 1 per agent — agents are stateful)
 replicaCount: 1
@@ -267,7 +278,7 @@ resources:
 # SECURITY
 # =============================================================================
 # OpenClaw's base image requires root. Set to false only if running a custom
-# rootless image. Ignored when sandbox.enabled=true (Podman always needs root).
+# rootless image. Containers remain non-privileged in either mode.
 
 runAsRoot: true
 
@@ -322,29 +333,18 @@ probes:
 
 shutdown:
   # Kubernetes sends SIGTERM after preStop completes; keep this long enough for
-  # Redis task settlement, active-session termination, and sandbox cleanup.
+  # Redis task settlement, active-session termination, and lease cleanup.
   terminationGracePeriodSeconds: 180
   drainFile: "/tmp/kubeclaw-draining"
   preStopDrainSeconds: 5
 
 # =============================================================================
-# SANDBOX (Buster only)
-# =============================================================================
-# Enables Podman-in-Pod for isolated container execution.
-# ONLY enable for the Buster (tester) agent.
-# Requires privileged security context.
-
-sandbox:
-  enabled: false
-  storageSize: "50Gi"
-  registriesConf: "" # Optional TOML mounted into /etc/containers/registries.conf.d/999-kubeclaw.conf
-
-# =============================================================================
 # SERVICE ACCOUNT
 # =============================================================================
 # When enabled, creates an agent ServiceAccount. By default it does not mount a
-# Kubernetes token. Buster deployments that need k8s suite access should use
-# busterNamespaceBroker and explicitly enable automount for this account.
+# Kubernetes token. Buster deployments that need Kubernetes suite access use
+# busterNamespaceBroker; the chart projects a lease-client token only into the
+# pipeline sidecar and keeps the gateway token-free.
 
 serviceAccount:
   create: false

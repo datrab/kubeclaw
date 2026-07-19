@@ -48,7 +48,7 @@ export function statusEvidenceFields(pollResult: AnyRecord | null = null): AnyRe
     pollingGit: pollResult?.reason === 'git_error'
       ? (status?.details ? status.details : status ? status : null)
       : null,
-    completionConflict: pollResult?.reason === 'completion_conflict' ? (status || null) : null,
+    completionConflict: pollResult?.reason === 'completion_conflict' ? (status ?? null) : null,
     redisEntry,
     rateLimitStatus,
     rateLimitPauses: pollResult?.rate_limit_pauses ?? null,
@@ -69,7 +69,8 @@ export function terminalBusterFinalStatus({
   failureClass: string | null;
   pollReason: unknown;
 }): AnyRecord | null {
-  const terminal = terminalStatusText(pollStatus?.status) || terminalStatusText(redisEntry?.status);
+  const pollTerminal = terminalStatusText(pollStatus?.status);
+  const terminal = pollTerminal ?? terminalStatusText(redisEntry?.status);
   if (!terminal) return finalStatus;
   return {
     ...objectRecord(finalStatus),

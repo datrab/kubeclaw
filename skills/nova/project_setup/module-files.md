@@ -98,7 +98,7 @@ File names, cleanup rules, dev dependencies.
 
 | Aspect | FORGE.md (Unit Tests) | BUSTER.md (Subagent Tests) |
 |---|---|---|
-| Runs in | Podman sandbox (no cluster) | Gateway pod (with cluster) |
+| Runs in | Leased Kubernetes namespace | Gateway pod |
 | Executed by | `unit.ts` suite | LLM subagent (Claude) |
 | K8s access | No | Yes (ServiceAccount) |
 | Test type | Deterministic, reproducible | Intelligent, exploratory |
@@ -182,13 +182,13 @@ With auth:
 }
 ```
 
-### Sandbox Testing Strategy
+### Leased-Namespace Testing Strategy
 
-The sandbox has no K8s cluster. Testable things:
+The application runs in a controller-issued test namespace. Tests should exercise the real service while keeping cluster assumptions explicit:
 
 | Category | Example | Expected |
 |---|---|---|
-| Degradation | GET /api/v1/pods with auth | 503 |
+| Degradation | GET /api/v1/pods when its dependency is intentionally unavailable | 503 |
 | Auth enforcement | GET /api/v1/pods without auth | 401 |
 | Input validation | PATCH scale replicas=-1 | 422 |
 | Business logic | DELETE pod without ?confirm=true | 400 |
@@ -198,7 +198,7 @@ The sandbox has no K8s cluster. Testable things:
 
 ### API Key
 
-If auth uses a static bearer token: put the key directly in `headers` per test. Must match the key in `start_cmd` env vars (e.g. `KUBECOMMAND_API_KEY=test-key-123`).
+Declare test credentials as namespace-scoped Secret references. Never embed test keys in commands, source, or generated manifests.
 
 ### Regression Tests
 
@@ -285,6 +285,6 @@ For multi-path, the running app must be accessible without manual login. Two mec
 | Context | How |
 |---|---|
 | **Preview HTML** (baseline generation) | `?baselines=true` query param skips setup page |
-| **Running app** (visual-reg suite) | `SANDBOX=true` env var — backend returns `sandbox: true` in health, frontend auto-auths |
+| **Running app** (visual-reg suite) | Explicit credentials copied into the leased namespace and declared in the test contract |
 
-The `SANDBOX=true` env var is already passed to every Podman container by `build.cjs`. The app needs to implement sandbox auto-auth — typically a `useEffect` on mount that checks `/api/v1/health` and auto-sets the API key if `sandbox: true`.
+Test authentication must be declared through test credential Secrets and consumed by the leased-namespace deployment. Applications must not contain environment-specific auto-auth bypasses.

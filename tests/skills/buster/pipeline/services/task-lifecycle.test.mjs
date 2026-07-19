@@ -11,7 +11,7 @@ test('appendPreTestResultsToPrompt injects authoritative suite context and no-re
         suite: 'build',
         status: 'PASS',
         metadata: {
-          tool: 'podman-run',
+          tool: 'rootless-buildkit',
           image: 'localhost/pipeline-smoke-landing:module-01',
           port: 43101,
         },
@@ -32,8 +32,8 @@ test('appendPreTestResultsToPrompt injects authoritative suite context and no-re
 
   assert.equal(prompt.includes('## Pre-Test Results'), true);
   assert.equal(prompt.includes('These deterministic pre-test results are authoritative for build and initial app startup.'), true);
-  assert.equal(prompt.includes('Do not run `npm run build`, `docker build`, `podman build`, `npm start`, or start a second local server'), true);
-  assert.equal(prompt.includes('Build authority: podman-run already produced the runnable artifact for this attempt.'), true);
+  assert.equal(prompt.includes('Do not run another image build, deployment, `npm start`, or local server'), true);
+  assert.equal(prompt.includes('Build authority: rootless-buildkit already produced the runnable artifact for this attempt.'), true);
   assert.equal(prompt.includes('Runtime image: `localhost/pipeline-smoke-landing:module-01`'), true);
   assert.equal(prompt.includes('Running app URL: `http://127.0.0.1:43101/health`'), true);
 });

@@ -5,19 +5,9 @@ on:
   # Nightly check for base image updates (OpenClaw releases)
   schedule:
     - cron: '0 3 * * *'  # 3am UTC daily
-  # Manual trigger
   workflow_dispatch:
-    inputs:
-      force_rebuild:
-        description: 'Force rebuild even if no changes detected'
-        type: boolean
-        default: false
 env:
   REGISTRY: ghcr.io
-  GENERAL_IMAGE: ghcr.io/${{ github.repository_owner }}/kubeclaw-general
-  SANDBOX_IMAGE: ghcr.io/${{ github.repository_owner }}/kubeclaw-sandbox
-  NAMESPACE_CONTROLLER_IMAGE: ghcr.io/${{ github.repository_owner }}/kubeclaw-namespace-controller
-  PRISM_IMAGE: ghcr.io/${{ github.repository_owner }}/kubeclaw-prism-preview
 jobs:
   detect-build-inputs:
     name: Detect Image Build Inputs
@@ -41,53 +31,79 @@ jobs:
               - 'cmd/buster-namespace-controller/**'
               - 'plugins/openclaw-agent-observer/**'
   check-base-image:
-    name: Check for base image updates
+    name: Check pinned OpenClaw base
     runs-on: ubuntu-latest
-    # Only run on schedule, skip for push (push always builds)
     if: github.event_name == 'schedule'
-    outputs:
-      changed: ${{ steps.check.outputs.changed }}
+    permissions:
+      contents: read
     steps:
-      - name: Check OpenClaw base image digest
-        id: check
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Verify the pinned base is current
         run: |
-          # Get current digest of base image
-          BASE_IMAGE="ghcr.io/openclaw/openclaw:2026.3.7"
-          DIGEST=$(docker manifest inspect "$BASE_IMAGE" 2>/dev/null | jq -r '.config.digest // .manifests[0].digest' || echo "unknown")
-          echo "Base image digest: $DIGEST"
-          # Compare with last known digest (stored as artifact)
-          LAST_DIGEST=""
-          if [ -f /tmp/last-base-digest.txt ]; then
-            LAST_DIGEST=$(cat /tmp/last-base-digest.txt)
+          set -euo pipefail
+          mapfile -t pinned_refs < <(
+            sed -n 's/^ARG OPENCLAW_BASE=//p' \
+              docker/Dockerfile.general \
+              docker/Dockerfile.buster-gateway \
+              | sort -u
+          )
+          if [[ ${#pinned_refs[@]} -ne 1 ]]; then
+            echo "OpenClaw Dockerfiles must share one pinned base reference" >&2
+            printf 'Found: %s\n' "${pinned_refs[@]}" >&2
+            exit 1
           fi
-          if [ "$DIGEST" != "$LAST_DIGEST" ] && [ "$DIGEST" != "unknown" ]; then
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "$DIGEST" > /tmp/last-base-digest.txt
-          else
-            echo "changed=false" >> "$GITHUB_OUTPUT"
+          pinned_ref="${pinned_refs[0]}"
+          pinned_digest="${pinned_ref##*@}"
+          latest_ref="ghcr.io/openclaw/openclaw:latest"
+          latest_digest="$(
+            docker buildx imagetools inspect "$latest_ref" \
+              | awk '$1 == "Digest:" { print $2; exit }'
+          )"
+          if [[ ! "$pinned_digest" =~ ^sha256:[0-9a-f]{64}$ ]]; then
+            echo "Invalid pinned OpenClaw digest: $pinned_digest" >&2
+            exit 1
+          fi
+          if [[ ! "$latest_digest" =~ ^sha256:[0-9a-f]{64}$ ]]; then
+            echo "Could not resolve the current OpenClaw digest" >&2
+            exit 1
+          fi
+          {
+            echo "### OpenClaw base image"
+            echo ""
+            echo "- Pinned: \`$pinned_ref\`"
+            echo "- Latest digest: \`$latest_digest\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [[ "$latest_digest" != "$pinned_digest" ]]; then
+            echo "Pinned OpenClaw base is out of date; update its version, digest, and Debian snapshot intentionally." >&2
+            exit 1
           fi
   build:
     name: Build & Push
     runs-on: ubuntu-latest
-    needs: [detect-build-inputs, check-base-image]
-    # Run if: manual trigger, base image changed on schedule, or image inputs changed on push
+    needs: detect-build-inputs
     if: |
       always() &&
       (github.event_name == 'workflow_dispatch' ||
-       (github.event_name == 'schedule' && needs.check-base-image.outputs.changed == 'true') ||
        (github.event_name == 'push' && needs.detect-build-inputs.outputs.image_inputs_changed == 'true'))
     permissions:
       contents: read
       packages: write
     strategy:
+      fail-fast: false
       matrix:
         include:
           - name: general
             dockerfile: docker/Dockerfile.general
             image_suffix: kubeclaw-general
-          - name: sandbox
-            dockerfile: docker/Dockerfile.sandbox
-            image_suffix: kubeclaw-sandbox
+          - name: buster-gateway
+            dockerfile: docker/Dockerfile.buster-gateway
+            image_suffix: kubeclaw-buster-gateway
+          - name: buster-pipeline
+            dockerfile: docker/Dockerfile.buster-pipeline
+            image_suffix: kubeclaw-buster-pipeline
           - name: namespace-controller
             dockerfile: docker/Dockerfile.namespace-controller
             image_suffix: kubeclaw-namespace-controller
@@ -133,7 +149,7 @@ jobs:
   bundle-skills:
     name: Package & Publish Skill Bundles
     runs-on: ubuntu-latest
-    needs: [detect-build-inputs, check-base-image]
+    needs: detect-build-inputs
     if: |
       always() &&
       (github.event_name == 'push' ||

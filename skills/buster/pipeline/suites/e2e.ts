@@ -216,14 +216,14 @@ export default async function e2eSuite(context: E2eContext): Promise<SuiteVerdic
   log(`Found ${testFiles.length} test file(s): ${testFiles.map((file) => path.basename(file)).join(', ')}`);
 
   const env = buildSubprocessEnv({ BASE_URL: baseUrl, PLAYWRIGHT_BROWSERS_PATH: '/ms-playwright', CI: 'true' });
-  const playwrightArgs = ['playwright', 'test', ...testFiles, '--reporter=line', `--timeout=${timeoutMs}`];
+  const playwrightArgs = ['test', ...testFiles, '--reporter=line', `--timeout=${timeoutMs}`];
 
   let stdout = '';
   let stderr = '';
   let exitCode = 0;
 
   try {
-    const result = await execFileAsync('npx', playwrightArgs, {
+    const result = await execFileAsync('playwright', playwrightArgs, {
       encoding: 'utf8',
       timeout: timeoutWithinSuite(timeoutMs + 10000, context),
       env,

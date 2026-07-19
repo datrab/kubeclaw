@@ -379,6 +379,11 @@ func (c *controller) namespaceRole(namespaceName string) map[string]interface{} 
 			},
 			map[string]interface{}{
 				"apiGroups": []string{""},
+				"resources": []string{"pods/portforward"},
+				"verbs":     []string{"create"},
+			},
+			map[string]interface{}{
+				"apiGroups": []string{""},
 				"resources": []string{"secrets"},
 				"verbs":     []string{"get"},
 			},

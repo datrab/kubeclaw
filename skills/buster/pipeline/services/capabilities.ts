@@ -8,19 +8,16 @@ import { sanitizeTelemetryPayload } from '../egress.ts';
 import { resolveScopedPath } from '../security.ts';
 
 export const BUSTER_CAPABILITIES = Object.freeze({
-  STATIC_WEB_SERVER: 'static_web_server',
-  CONTAINER_RUNTIME: 'container_runtime',
+  IMAGE_BUILD: 'image_build',
   KUBERNETES: 'kubernetes',
   BROWSER_AUTOMATION: 'browser_automation',
   LIGHTHOUSE: 'lighthouse',
   DISCORD_MEDIA: 'discord_media',
-  IMAGE_PREPULL: 'image_prepull',
 });
 
 export const KNOWN_BUSTER_CAPABILITIES = Object.freeze(Object.values(BUSTER_CAPABILITIES));
 const KNOWN = new Set(KNOWN_BUSTER_CAPABILITIES);
 const CAPABILITY_DENIED_REASON = 'buster_capability_denied';
-const DEFAULT_SERVE_TYPE = 'static';
 const DEFAULT_BLOCKED_ACTION = 'tool_execution';
 const DEFAULT_ASSERTION_SUITE = 'task';
 const CAPABILITY_ALERT_SEVERITY = 'CRITICAL';
@@ -116,15 +113,12 @@ export function missingBusterCapabilities(capabilities, required = []) {
   return normalizeBusterCapabilities(required).filter((capability) => !current.has(capability));
 }
 
-export function requiredCapabilitiesForSuite(suiteName: string, context: Record<string, any> = {}): string[] {
-  const serve = objectRecord(selectDefinedValue(() => (context.config?.serve), () => (context.payload?.test_config?.serve)));
+export function requiredCapabilitiesForSuite(suiteName: string, _context: Record<string, any> = {}): string[] {
   switch (suiteName) {
     case 'build':
-      return [selectPresentValue(serve.type, DEFAULT_SERVE_TYPE) === 'server'
-        ? BUSTER_CAPABILITIES.CONTAINER_RUNTIME
-        : BUSTER_CAPABILITIES.STATIC_WEB_SERVER];
+      return [BUSTER_CAPABILITIES.IMAGE_BUILD, BUSTER_CAPABILITIES.KUBERNETES];
     case 'k8s':
-      return [BUSTER_CAPABILITIES.CONTAINER_RUNTIME, BUSTER_CAPABILITIES.KUBERNETES];
+      return [BUSTER_CAPABILITIES.IMAGE_BUILD, BUSTER_CAPABILITIES.KUBERNETES];
     case 'a11y':
     case 'e2e':
     case 'visual-reg':

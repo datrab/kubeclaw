@@ -57,7 +57,7 @@ The docs deliberately separate current behavior from unresolved readiness gaps:
 - complete live clean-cluster quickstart remains open until prerequisites and secret provisioning are fully source-verified
 - root `LICENSE` is not present because maintainers have not selected license terms
 - public security disclosure contact is still a maintainer decision
-- NodePort exposure, privileged Buster, version compatibility gaps, and missing Kubernetes-native observability are tracked as current risks or future work
+- Temporary NodePort exposure and runtime image pinning are tracked as deferred hardening work
 - generated docs automation covers CLI, Helm values, environment variables, secrets, verification commands, and source inventory; remaining reference automation opportunities are tracked rather than presented as current behavior
 
 ## Archive boundary

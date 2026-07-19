@@ -14,7 +14,7 @@ export function execFileWithInput(command: string, args: string[], input: string
       encoding: 'utf8',
       timeout: options.timeout,
       maxBuffer: Number.isFinite(options.maxBuffer) ? Number(options.maxBuffer) : 5 * 1024 * 1024,
-      env: options.env || buildSubprocessEnv(),
+      env: options.env ?? buildSubprocessEnv(),
     }, (error: any, stdout: string, stderr: string) => {
       if (error) {
         error.stdout = stdout;

@@ -1476,7 +1476,7 @@ Buster is the first producer using this shape for task, suite, sandbox, git-sync
 | duration_seconds | number\|null | Duration for timed plugin events |
 | details | object | JSON-safe plugin-owned payload. Arbitrary plugin fields are allowed only inside this object. |
 
-Buster currently uses these `plugin_event` values: `task_started`, `task_completed`, `sandbox_cleanup`, `git_sync`, `decision`, `suite_started`, `suite_completed`, `session_monitor`, and `visual_reg`. Rate-limit pauses are surfaced through the shared `rate_limit.detected` event, not a plugin-specific event.
+Buster currently uses these `plugin_event` values: `task_started`, `task_completed`, `resource_cleanup`, `git_sync`, `decision`, `suite_started`, `suite_completed`, `session_monitor`, and `visual_reg`. Rate-limit pauses are surfaced through the shared `rate_limit.detected` event, not a plugin-specific event.
 
 ---
 

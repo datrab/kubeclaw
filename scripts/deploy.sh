@@ -10,6 +10,7 @@
 #   ./deploy.sh infra              Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM
 #   ./deploy.sh tailscale          Deploy Tailscale Kubernetes Operator
 #   ./deploy.sh buildkit-preflight Verify rootless BuildKit support on a cluster node
+#   ./deploy.sh buster-buildkit-smoke Build, push, deploy, and clean a live Buster fixture
 #   ./deploy.sh agents             Deploy agents (Nova + Buster)
 #   ./deploy.sh agent <name> [--with-code]  Deploy single agent (nova|buster), optionally followed by code deploy
 #   ./deploy.sh image              Deploy both agents using image/runtime values
@@ -228,6 +229,8 @@ append_image_override_file() {
   local disable_pull_secrets="$4"
   local controller_image_repo="${5:-}"
   local controller_image_tag="${6:-}"
+  local pipeline_image_repo="${7:-}"
+  local pipeline_image_tag="${8:-}"
 
   if [[ -n "$image_repo" || -n "$image_tag" ]]; then
     echo "image:" >> "$output_path"
@@ -252,6 +255,17 @@ append_image_override_file() {
     fi
     if [[ -n "$controller_image_tag" ]]; then
       echo "      tag: \"$controller_image_tag\"" >> "$output_path"
+    fi
+  fi
+
+  if [[ -n "$pipeline_image_repo" || -n "$pipeline_image_tag" ]]; then
+    echo "busterPipeline:" >> "$output_path"
+    echo "  image:" >> "$output_path"
+    if [[ -n "$pipeline_image_repo" ]]; then
+      echo "    repository: \"$pipeline_image_repo\"" >> "$output_path"
+    fi
+    if [[ -n "$pipeline_image_tag" ]]; then
+      echo "    tag: \"$pipeline_image_tag\"" >> "$output_path"
     fi
   fi
 }
@@ -623,8 +637,6 @@ metadata:
   namespace: ${NAMESPACE}
   labels:
     app.kubernetes.io/name: kubeclaw-buildkit-preflight
-  annotations:
-    container.apparmor.security.beta.kubernetes.io/buildkit: unconfined
 spec:
   restartPolicy: Never
   automountServiceAccountToken: false
@@ -642,6 +654,8 @@ spec:
         - ${socket}
         - --oci-worker-no-process-sandbox
       securityContext:
+        appArmorProfile:
+          type: Unconfined
         privileged: false
         allowPrivilegeEscalation: true
       readinessProbe:
@@ -977,6 +991,8 @@ deploy_agent() {
   local image_tag=""
   local controller_image_repo=""
   local controller_image_tag=""
+  local pipeline_image_repo=""
+  local pipeline_image_tag=""
   local bundle_archive_url=""
   local bundle_expected_commit=""
   local bundle_contract_version=""
@@ -997,8 +1013,10 @@ deploy_agent() {
       image_tag="${NOVA_IMAGE_TAG:-${GENERAL_IMAGE_TAG:-}}"
       ;;
     buster)
-      image_repo="${BUSTER_IMAGE_REPOSITORY:-${SANDBOX_IMAGE_REPOSITORY:-}}"
-      image_tag="${BUSTER_IMAGE_TAG:-${SANDBOX_IMAGE_TAG:-}}"
+      image_repo="${BUSTER_GATEWAY_IMAGE_REPOSITORY:-}"
+      image_tag="${BUSTER_GATEWAY_IMAGE_TAG:-}"
+      pipeline_image_repo="${BUSTER_PIPELINE_IMAGE_REPOSITORY:-}"
+      pipeline_image_tag="${BUSTER_PIPELINE_IMAGE_TAG:-}"
       controller_image_repo="${BUSTER_CONTROLLER_IMAGE_REPOSITORY:-${NAMESPACE_CONTROLLER_IMAGE_REPOSITORY:-}}"
       controller_image_tag="${BUSTER_CONTROLLER_IMAGE_TAG:-${NAMESPACE_CONTROLLER_IMAGE_TAG:-}}"
       ;;
@@ -1045,13 +1063,13 @@ deploy_agent() {
     verify_bundle_archive_url "$role" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_auth_secret"
   fi
 
-  if [[ -n "$image_repo" || -n "$image_tag" || -n "$controller_image_repo" || -n "$controller_image_tag" || "$disable_pull_secrets" == "1" || "$mode" == "code" ]]; then
+  if [[ -n "$image_repo" || -n "$image_tag" || -n "$controller_image_repo" || -n "$controller_image_tag" || -n "$pipeline_image_repo" || -n "$pipeline_image_tag" || "$disable_pull_secrets" == "1" || "$mode" == "code" ]]; then
     override_file="$(mktemp)"
     : > "$override_file"
   fi
 
-  if [[ -n "$override_file" && ( -n "$image_repo" || -n "$image_tag" || -n "$controller_image_repo" || -n "$controller_image_tag" || "$disable_pull_secrets" == "1" ) ]]; then
-    append_image_override_file "$override_file" "$image_repo" "$image_tag" "$disable_pull_secrets" "$controller_image_repo" "$controller_image_tag"
+  if [[ -n "$override_file" && ( -n "$image_repo" || -n "$image_tag" || -n "$controller_image_repo" || -n "$controller_image_tag" || -n "$pipeline_image_repo" || -n "$pipeline_image_tag" || "$disable_pull_secrets" == "1" ) ]]; then
+    append_image_override_file "$override_file" "$image_repo" "$image_tag" "$disable_pull_secrets" "$controller_image_repo" "$controller_image_tag" "$pipeline_image_repo" "$pipeline_image_tag"
   fi
 
   if [[ -n "$override_file" && "$mode" == "code" ]]; then
@@ -1088,14 +1106,20 @@ deploy_agent() {
     rm -f "$override_file"
   fi
 
+  if [[ "$mode" == "image" ]]; then
+    kubectl rollout restart deployment -n "$NAMESPACE" -l "app.kubernetes.io/instance=agent-${role}"
+  fi
   wait_for_agent_rollout "agent-${role}"
+  if [[ "$role" == "buster" && "$mode" == "image" ]]; then
+    kubectl rollout status deployment/agent-buster-namespace-controller -n "$NAMESPACE" --timeout="$AGENT_ROLLOUT_TIMEOUT"
+  fi
   log "agent-${role} deployed (${mode})"
 }
 
 cmd_agents() {
   header "Agents (image deploy)"
   # Nova = orchestrator + Forge/Echo as ACP subagents (all in one pod)
-  # Buster = isolated tester (separate pod with Podman sandbox)
+  # Buster = isolated tester (gateway plus rootless BuildKit pipeline sidecar)
   for role in nova buster; do
     deploy_agent "$role" image
   done
@@ -1198,6 +1222,14 @@ cmd_smoke() {
   for role in nova buster; do
     cmd_smoke_agent "$role"
   done
+}
+
+cmd_buster_buildkit_smoke() {
+  header "Buster BuildKit Production Smoke"
+  require_command kubectl
+  require_command node
+  node "$REPO_DIR/tests/verification/live/buster-buildkit-production-smoke.mjs"
+  log "Buster BuildKit production smoke passed"
 }
 
 # ─── Teardown ────────────────────────────────────────────────────────────
@@ -1375,6 +1407,9 @@ case "${1:-}" in
   buildkit-preflight)
     cmd_buildkit_preflight
     ;;
+  buster-buildkit-smoke)
+    cmd_buster_buildkit_smoke
+    ;;
   agents)
     cmd_agents
     ;;
@@ -1428,6 +1463,7 @@ case "${1:-}" in
     echo "  infra              Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM"
     echo "  tailscale          Deploy Tailscale Kubernetes Operator"
     echo "  buildkit-preflight Verify rootless BuildKit support with a temporary pod"
+    echo "  buster-buildkit-smoke Build, push, deploy, verify, and clean a live Buster fixture"
     echo "  agents             Deploy agents (Nova + Buster) using image/runtime values"
     echo "  agent <name> [--with-code]  Deploy single agent using image/runtime values"
     echo "                    Add --with-code to also smoke, deploy code, and smoke again"

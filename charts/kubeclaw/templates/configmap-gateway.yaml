@@ -343,7 +343,7 @@ data:
             "enabled": true
           },
           "kubeclaw-agent-observer": {
-            "enabled": false,
+            "enabled": {{ eq (.Values.agentRole | default "") "buster" }},
             "hooks": {
               "allowConversationAccess": true
             }

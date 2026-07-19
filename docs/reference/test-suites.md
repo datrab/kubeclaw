@@ -140,13 +140,11 @@ Failure behavior: namespace lease failure, build/push failure, manifest apply fa
 
 Known Buster capabilities:
 
-- `static_web_server`
-- `container_runtime`
+- `image_build`
 - `kubernetes`
 - `browser_automation`
 - `lighthouse`
 - `discord_media`
-- `image_prepull`
 
 Unknown capabilities reject the task before suite execution.
 

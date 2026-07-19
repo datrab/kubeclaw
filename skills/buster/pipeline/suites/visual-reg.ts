@@ -291,7 +291,7 @@ export function resolveVisualRegBaselineDir(context: VisualRegContext = {}): str
 
 function resolveArtifactDir(context: VisualRegContext = {}): string {
   const preferred = selectDefinedValue(() => (nonEmptyString(context.screenshotsDir)), () => ((context.testsLogDir ? path.join(context.testsLogDir, 'visual-reg') : null)));
-  return selectDefinedValue(() => (preferred), () => (path.join(selectDefinedValue(() => (nonEmptyString(context.resultsDir)), () => ('/sandbox/results')), 'visual-reg')));
+  return selectDefinedValue(() => (preferred), () => (path.join(selectDefinedValue(() => (nonEmptyString(context.resultsDir)), () => (process.env.BUSTER_RESULTS_DIR ?? '/home/builder/.openclaw/results')), 'visual-reg')));
 }
 
 function resolveChildArtifactPath(dir: string, fileName: string, field: string): string {

@@ -4,7 +4,7 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 
 import { hostname } from 'os';
 import { createRedisClient, loadRedisCtor } from '../telemetry.ts';
-import { doSandboxCleanup } from './pipeline-helpers.ts';
+import { doResourceCleanup } from './pipeline-helpers.ts';
 import { validateRedisTaskEntry } from './redis-message-contract.ts';
 import { createRedisTaskQueue } from './task-transport-contract.ts';
 import { PIPELINE_TASK_TYPES } from './task-validation.ts';
@@ -308,7 +308,7 @@ export async function processOneQueuedTask(processTask) {
 
   console.error(`[TASK] ❌ Failed: ${safeErrorMessage(processError)}`);
   try {
-    const cleanupResult = await doSandboxCleanup('error', payload);
+    const cleanupResult = await doResourceCleanup('error', payload);
     if (cleanupResult?.ok === false) {
       reportBusterRuntimeDiagnostic({
         component: 'buster_cleanup',

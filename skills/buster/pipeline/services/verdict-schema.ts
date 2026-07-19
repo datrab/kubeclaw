@@ -249,7 +249,7 @@ export function truncateForPrompt(runnerVerdict: RunnerVerdict, maxFindings = 5)
       const total = suite.findings.length;
       suite.findings = suite.findings.slice(0, maxFindings);
       suite.findings.push(createFinding(SEVERITY.MINOR,
-        `${total - maxFindings} more findings in /sandbox/results/${suite.suite}-verdict.json`,
+        `${total - maxFindings} more findings in ${process.env.BUSTER_RESULTS_DIR ?? '/home/builder/.openclaw/results'}/${suite.suite}-verdict.json`,
       ));
     }
   }

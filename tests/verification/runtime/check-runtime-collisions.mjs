@@ -18,7 +18,7 @@ import {
 
 const args = parseArgs();
 const { sourceRoot, overlayRoot } = resolveRoots(args);
-const images = ['general', 'sandbox'];
+const images = ['general', 'busterPipeline'];
 const results = [];
 
 function walkFiles(dir, out = []) {
@@ -224,7 +224,7 @@ for (const image of images) {
         importChecks.push({ runtimePath, ok: false, error: error.message });
       }
     }
-  } else if (image === 'sandbox') {
+  } else if (image === 'busterPipeline') {
     for (const runtimePath of ['/app/skills/buster-pipeline.ts', '/app/skills/pipeline/tools/redis.ts']) {
       try {
         await importRuntimeModule(runtimeRoot, runtimePath);

@@ -43,8 +43,8 @@ const shimSource = fs.readFileSync(busterShim, 'utf8');
 
 assert.match(
   source,
-  /import\s*{[^}]*doSandboxCleanup[^}]*}\s*from\s*['"]\.\/pipeline\/services\/pipeline-helpers\.ts['"]/s,
-  'typed buster entrypoint must import doSandboxCleanup as a local ESM binding before startup/shutdown uses it',
+  /import\s*{[^}]*doResourceCleanup[^}]*}\s*from\s*['"]\.\/pipeline\/services\/pipeline-helpers\.ts['"]/s,
+  'typed buster entrypoint must import doResourceCleanup as a local ESM binding before startup/shutdown uses it',
 );
 assert.equal(
   source.includes('redis?.disconnect()'),
@@ -95,7 +95,7 @@ assert.equal(
 
 const runtimeRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-runtime-smoke-'));
 try {
-  materializeRuntimeTree(sourceRoot, null, 'sandbox', runtimeRoot);
+  materializeRuntimeTree(sourceRoot, null, 'busterPipeline', runtimeRoot);
   const runtimeGitPrimitives = path.join(runtimeRoot, 'app', 'skills', 'pipeline', 'git-primitives.ts');
   const runtimeGitPrimitivesSource = fs.readFileSync(runtimeGitPrimitives, 'utf8');
   assert.equal(

@@ -113,10 +113,16 @@ export async function sendAgentSessionHandoff({
   policy?: AnyRecord;
   sendSessionMessage?: SessionMessageSender;
 }) {
-  if (!sessionKey || !String(sessionKey).trim()) {
+  if (!sessionKey) {
     throw new Error('Agent session handoff requires a target session key');
   }
-  if (!message || !String(message).trim()) {
+  if (!String(sessionKey).trim()) {
+    throw new Error('Agent session handoff requires a target session key');
+  }
+  if (!message) {
+    throw new Error('Agent session handoff requires a message');
+  }
+  if (!String(message).trim()) {
     throw new Error('Agent session handoff requires a message');
   }
   const result = await sendSessionMessage(String(sessionKey), String(message), timeoutMs, {

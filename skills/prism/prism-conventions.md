@@ -67,14 +67,14 @@ function App() {
 - The bypass must set the app into a fully authenticated state — all navigation must work.
 - The initial page after bypass should be the default authenticated page (usually `dashboard`).
 - Without `?baselines=true` (or with `?baselines=false`), the preview must behave normally (show login).
-- The bypass is a **preview-only** feature. The real app uses `SANDBOX=true` env var for auth bypass (different mechanism, see below).
+- The bypass is a **preview-only** feature. The running application uses explicit namespace-scoped test credentials instead.
 
 ## Auth in the Real App vs. Preview
 
 | Context | Auth Bypass Mechanism | Used By |
 |---|---|---|
 | **Preview HTML** (local file, `file://`) | `?baselines=true` query param | Baseline generator (`screenshot.ts`) |
-| **Running app** (Podman, `http://`) | `SANDBOX=true` env var → `/api/v1/health` returns `sandbox: true` → frontend auto-auth | Visual-reg suite (`visual-reg.ts`) |
+| **Running app** (leased namespace, `http://`) | Explicit test credentials are injected through namespace-scoped Secrets | Visual-reg suite (`visual-reg.ts`) |
 
 The two mechanisms are deliberately separate. The preview is a static HTML file opened via `file://` protocol — no backend, no env vars. The running app has a backend with env vars but no query param parsing.
 

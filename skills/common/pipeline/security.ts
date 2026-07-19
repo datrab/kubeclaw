@@ -9,7 +9,7 @@ declare const process: {
   cwd(): string;
 };
 
-const DEFAULT_ALLOWED_PATH_PREFIXES = ['/app/', '/opt/', '/home/', '/sandbox/', '/tmp/'];
+const DEFAULT_ALLOWED_PATH_PREFIXES = ['/app/', '/opt/', '/home/', '/tmp/'];
 const SHELL_META_PATTERN = /[;&|<>`]/;
 const DEFAULT_SUBPROCESS_ENV_ALLOWLIST = Object.freeze([
   'PATH',

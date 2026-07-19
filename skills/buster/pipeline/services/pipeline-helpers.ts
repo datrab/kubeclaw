@@ -4,7 +4,7 @@ import path from 'path';
 import { getRepoRoot } from './git-workflows.ts';
 import { resolveScopedPath } from '../security.ts';
 import { createRunnerVerdict } from './verdict-schema.ts';
-import { CLEANUP_POLICY, cleanupSandboxResources } from './sandbox-cleanup.ts';
+import { CLEANUP_POLICY, cleanupRuntimeResources } from './resource-cleanup.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 const ACTIVE_SESSION_STATE_FILE = path.join('.swarm', 'logs', 'buster', 'active-session.json');
@@ -491,8 +491,10 @@ export function buildSessionSpawnEmbed(moduleId, project, sessionData) {
  */
 export function buildSessionCompleteEmbed(moduleId, project, { outcome, reason, commitHash, durationSeconds, childSessionKey, source }) {
   const pass = outcome === 'PASS';
-  const outputContractFailure = String(reason || '').startsWith('output_file_identity_mismatch')
-    || String(reason || '') === 'output_file_contract_failed';
+  const normalizedReason = String(reason ?? '');
+  const outputContractFailure = ['output_file_contract_failed'].includes(normalizedReason)
+    ? true
+    : normalizedReason.startsWith('output_file_identity_mismatch');
   return {
     title:  pass
       ? `✅ Session Complete: PASS — ${moduleId}`
@@ -559,7 +561,7 @@ export function buildTaskFailureEmbed(moduleId, project, { reason, stage, attemp
   };
 }
 
-export async function doSandboxCleanup(stage: string, payload: Record<string, any> = {}): Promise<any> {
+export async function doResourceCleanup(stage: string, payload: Record<string, any> = {}): Promise<any> {
   const hasScopedIdentity = payload && ['run_id', 'module_id', 'gate_id', 'dispatch_id'].some(field => payload[field]);
   const scopedPayload = hasScopedIdentity
     ? payload
@@ -571,5 +573,5 @@ export async function doSandboxCleanup(stage: string, payload: Record<string, an
       : stage === 'shutdown'
         ? CLEANUP_POLICY.SHUTDOWN_SWEEP
         : CLEANUP_POLICY.DISABLED;
-  return cleanupSandboxResources(stage, scopedPayload, { cleanupPolicy });
+  return cleanupRuntimeResources(stage, scopedPayload, { cleanupPolicy });
 }

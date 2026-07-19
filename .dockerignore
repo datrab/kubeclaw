@@ -4,7 +4,9 @@
 
 !docker/
 !docker/Dockerfile.general
-!docker/Dockerfile.sandbox
+!docker/Dockerfile.buster-gateway
+!docker/Dockerfile.buster-pipeline
+!docker/buster-pipeline-entrypoint.sh
 !docker/Dockerfile.namespace-controller
 
 !go.mod

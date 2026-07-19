@@ -56,7 +56,7 @@ export function buildAvailableToolsSection() {
     '- `git pull` — repo is synced to the expected commit',
     '- Build + Serve — the app is running (URL in Pre-Test Results above)',
     '- Deterministic test suites (build, health, a11y, perf, etc.) — results in Pre-Test Results above',
-    '- Do **NOT** run `sandbox-build`, `sandbox-serve`, `sandbox-cleanup`, or `git pull`',
+    '- Do **NOT** invoke Buster image-build/deployment services or run `git pull`',
     '',
     '### Testing Tools',
     '```',
@@ -111,9 +111,9 @@ export function forgeCompletionArtifactPath(config, dir) {
 
 export function buildForgeCompletionArtifactContract(config, dir, identity = {}) {
   const artifactPath = forgeCompletionArtifactPath(config, dir);
-  const runId = identity.run_id || identity.runId || 'run-id-from-prompt';
-  const moduleId = identity.module_id || identity.moduleId || dir;
-  const attempt = identity.attempt || 1;
+  const runId = identity.run_id ? identity.run_id : (identity.runId ? identity.runId : 'run-id-from-prompt');
+  const moduleId = identity.module_id ? identity.module_id : (identity.moduleId ? identity.moduleId : dir);
+  const attempt = identity.attempt ? identity.attempt : 1;
   const contextPath = agentArtifactContextPath(artifactPath);
   writeAgentArtifactContext(artifactPath, {
     artifact_type: 'forge_completion',

@@ -20,6 +20,22 @@ import {
 
 function testConfig() {
   const root = fs.mkdtempSync(path.join(process.cwd(), '.tmp-pipeline-state-machine-'));
+  const telemetrySink = {
+    enabled: true,
+    manifest: {
+      moduleId: 'test.telemetry.noop',
+      kind: 'telemetry',
+      hookFamily: 'telemetry.sink',
+      stageIds: ['telemetry.sink'],
+      capabilities: [],
+      sourceType: 'builtin',
+      trustTier: 'trusted',
+      priority: 1,
+    },
+    implementation: {
+      async observe() {},
+    },
+  };
   return {
     project: 'state-machine-test',
     _runId: 'run-test',
@@ -33,6 +49,18 @@ function testConfig() {
     },
     locks: {
       lifecycle_append: { stale_ms: 1, timeout_ms: 1 },
+    },
+    telemetry: {
+      sink_timeout_ms: 1_000,
+    },
+    pluginRegistry: {
+      enabled: true,
+      stageOwners: { worker: {} },
+      hookIndex: {
+        'telemetry.sink': {
+          'telemetry.sink': [telemetrySink],
+        },
+      },
     },
   };
 }
@@ -282,7 +310,6 @@ test('pipeline state machine plans module batches as a first-class action', () =
 
 test('pipeline state machine runs parallel modules in isolated worktrees and joins passing branches', async () => {
   const config = testConfig();
-  config.pluginRegistry = { enabled: true, stageOwners: { worker: {} } };
   initGitRepo(config.repo_root);
   const progress = { modules: {}, gates: {}, execution_order: [] };
   appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });

@@ -27,21 +27,26 @@ export function resolveModuleBusterFailureClass(pollResult: AnyRecord = {}) {
   const redisReason = typeof pollResult?.status?._redis_entry?.reason === 'string'
     ? pollResult.status._redis_entry.reason.trim().toLowerCase()
     : '';
-  if (BUSTER_OUTPUT_ARTIFACT_FAILURES.has(redisReason) || redisReason === 'completion_archive_failed') return redisReason;
+  if (BUSTER_OUTPUT_ARTIFACT_FAILURES.has(redisReason)) return redisReason;
+  if (redisReason === 'completion_archive_failed') return redisReason;
   return null;
 }
 
 export function forgeControlForPollResult(pollResult: AnyRecord = {}) {
   if (pollResult?.ok === true) return { nextAction: 'pass', issueType: null, outcomeClass: 'passed' };
   const reason = typeof pollResult?.reason === 'string' ? pollResult.reason.trim().toLowerCase() : '';
-  if (reason === 'timeout' || isOneOf(reason, ['agent_ended_missing', 'agent_session_lifecycle_unstable', 'forge_completion_artifact_missing'])) {
+  if (reason === 'timeout') {
+    return { nextAction: 'retry', issueType: 'environment', outcomeClass: 'retrying' };
+  }
+  if (isOneOf(reason, ['agent_ended_missing', 'agent_session_lifecycle_unstable', 'forge_completion_artifact_missing'])) {
     return { nextAction: 'retry', issueType: 'environment', outcomeClass: 'retrying' };
   }
   if (isOneOf(reason, ['session_ended_no_changes', 'agent_ended_no_meaningful_diff', 'session_ended_no_meaningful_diff', 'invalid_forge_completion'])) {
     return { nextAction: 'request_fix', issueType: 'code', outcomeClass: 'fix_requested' };
   }
   if (reason === 'rate_limit_exhausted') return { nextAction: 'block', issueType: 'environment', outcomeClass: 'rate_limited' };
-  if (isOneOf(reason, ['parse_corrupted', 'git_error']) || !reason) return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error' };
+  if (isOneOf(reason, ['parse_corrupted', 'git_error'])) return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error' };
+  if (!reason) return { nextAction: 'block', issueType: 'environment', outcomeClass: 'error' };
   return { nextAction: 'request_fix', issueType: 'code', outcomeClass: 'fix_requested' };
 }
 

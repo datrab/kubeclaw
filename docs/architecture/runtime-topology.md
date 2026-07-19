@@ -23,17 +23,18 @@ Nova render:
 Buster render:
 
 - ServiceAccount: `agent-buster`
-- ConfigMaps: `agent-buster-config`, `agent-buster-podman-registries`, `agent-buster-swarm-config`
+- ConfigMaps: `agent-buster-config`, `agent-buster-swarm-config`
 - PVCs: `agent-buster-config`, `agent-buster-workspace`
 - Lease-client Role and RoleBinding: `agent-buster-namespace-lease-client`
 - CRD: `BusterNamespaceLease`
 - Controller Deployment and ServiceAccount: `agent-buster-namespace-controller`
 - Service: `agent-buster`, ClusterIP for gateway/bridge
 - Deployment: `agent-buster`
-- Main image: `ghcr.io/datrab/kubeclaw-sandbox:latest`
+- Gateway image: `ghcr.io/datrab/kubeclaw-buster-gateway:latest`
+- Worker image: `ghcr.io/datrab/kubeclaw-buster-pipeline:latest`
 - Namespace controller image: `ghcr.io/datrab/kubeclaw-namespace-controller:latest`
 - Gateway URL env: `OPENCLAW_GATEWAY_URL=http://127.0.0.1:18789` by default
-- Sandbox volumes: Podman storage at `/var/lib/containers`, sandbox workspace at `/sandbox`
+- Pipeline-only transient volumes: BuildKit state at `/home/builder/.local/share/buildkit`, results at `/home/builder/.openclaw/results`
 
 The namespace controller is a separate one-replica pod rendered by the Buster chart when `busterNamespaceBroker.enabled` is true. It runs from the lightweight `kubeclaw-namespace-controller` image, not from an OpenClaw agent image. Buster itself can create/read/delete lease objects in the release namespace; the controller creates the actual test namespace, namespaced Role/RoleBinding, copied secrets, and final-preview Tailscale Ingress.
 

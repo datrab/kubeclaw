@@ -76,19 +76,16 @@ The `prism-preview` sidecar uses `ghcr.io/datrab/kubeclaw-prism-preview:latest`,
 
 ## Buster Deployment
 
-Buster uses `ghcr.io/datrab/kubeclaw-sandbox:latest` in production values. It renders:
+Buster uses `ghcr.io/datrab/kubeclaw-buster-gateway:latest` for its minimal OpenClaw gateway and `ghcr.io/datrab/kubeclaw-buster-pipeline:latest` for its deterministic worker in production values. It renders:
 
 - `ServiceAccount/agent-buster`
 - `Role/agent-buster-namespace-lease-client`
 - `RoleBinding/agent-buster-namespace-lease-client`
 - `CustomResourceDefinition/busternamespaceleases.kubeclaw.forgestack.ai`
 - `Deployment/agent-buster-namespace-controller`
-- `ConfigMap/agent-buster-podman-registries`
-- `podman-storage`, `podman-registries`, and `sandbox-workspace` volumes
+- `buildkit-state` and `buster-results` transient volumes
 
-Buster sets sandbox mode on both Buster containers. The rendered security context is privileged, unconfined for AppArmor/seccomp, allows privilege escalation, and adds container/Kubernetes testing capabilities required by Podman-in-Pod, deterministic Buster suites, and gateway-side agent tests. The gateway container remains available if the pipeline container crashes, and the containers have separate logs:
-
-The production Buster values cap Podman `emptyDir` storage at `50Gi` and set `ephemeral-storage` requests/limits on both Buster containers. Sandbox cleanup emits before/after disk usage for `/sandbox` and `/var/lib/containers`.
+Buster uses a minimal dedicated OpenClaw image for its gateway and the separate `kubeclaw-buster-pipeline` image for deterministic suites. The gateway contains agent/plugin runtime dependencies but no pipeline-owned linters, browsers, scanners, BuildKit, or Kubernetes tools. It is non-privileged and drops every capability. The pipeline sidecar is non-root and starts rootless BuildKit locally; it shares the pod network so gateway tools remain available at `127.0.0.1:18789`. The containers have separate logs:
 
 ```bash
 kubectl logs -n "$NAMESPACE" deployment/agent-buster -c kubeclaw
@@ -99,9 +96,9 @@ kubectl logs -n "$NAMESPACE" deployment/agent-buster -c buster-pipeline
 
 Both agents receive Redis, Qdrant, LiteLLM, gateway, Git, Discord, and project environment from the chart. Secret-backed variables include `REDIS_PASSWORD`, `OPENCLAW_GATEWAY_TOKEN`, `LITELLM_API_KEY`, optional `ANTHROPIC_API_KEY`/`CLAUDE_CODE_OAUTH_TOKEN`, optional `DISCORD_TOKEN`, and optional `DISCORD_WEBHOOK`.
 
-The chart pins `SWARM_CONFIG` to `/home/node/.openclaw/swarm.config.json` and `REPO_ROOT` to `/home/node/.openclaw/workspace/git-repo`. Runtime containers mount the retained config PVC at `/home/node/.openclaw`, expose the same retained source at `/home/node/.openclaw-persisted`, and overlay `/runtime-config/openclaw.json` at `/home/node/.openclaw/openclaw.json`. Secret-bearing OpenClaw config fields use env SecretRefs for `LITELLM_API_KEY` and `DISCORD_TOKEN`, while `swarm.config.json` is still overlaid from an `emptyDir` runtime config volume so `DISCORD_WEBHOOK` does not persist to the PVC. Startup doctor runs after gateway health against a staged writable temp home and syncs repaired `openclaw.json` back into both the persistent and runtime copies. Buster's gateway and pipeline containers share this runtime config, the workspace PVC, `/app/skills`, Podman storage, registry config, and `/sandbox`, so pipeline preparation and gateway-side agent tests use the same runtime surface.
+The chart pins `SWARM_CONFIG` to `/home/node/.openclaw/swarm.config.json` and `REPO_ROOT` to `/home/node/.openclaw/workspace/git-repo`. Runtime containers mount the retained config PVC at `/home/node/.openclaw`, expose the same retained source at `/home/node/.openclaw-persisted`, and overlay `/runtime-config/openclaw.json` at `/home/node/.openclaw/openclaw.json`. Secret-bearing OpenClaw config fields use env SecretRefs for `LITELLM_API_KEY` and `DISCORD_TOKEN`, while `swarm.config.json` is overlaid from a pod-local runtime-config volume. Buster's containers share runtime config, workspace, skills, and localhost networking; only the pipeline sidecar mounts BuildKit state and suite-result storage.
 
-Persistent storage and incident checks are detailed in `persistent-storage.md` and `../operators/security-operations.md`. The deployment verifier asserts that the retained config source is exposed separately, `openclaw.json` is overlaid from `/runtime-config` through `subPath`, Buster containers mount `/var/lib/containers` and `/sandbox`, and the sandbox ephemeral-storage limit remains `50Gi`.
+Persistent storage and incident checks are detailed in `persistent-storage.md` and `../operators/security-operations.md`. The deployment verifier asserts the retained config overlay, dedicated pipeline image, non-privileged security contexts, BuildKit worker probes, and pipeline-only transient storage.
 
 ## Health Probes
 

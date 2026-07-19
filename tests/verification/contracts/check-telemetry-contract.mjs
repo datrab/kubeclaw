@@ -590,9 +590,9 @@ process.env.REDIS_HOST = '127.0.0.1';
 process.env.REDIS_PORT = '6379';
 process.env.REDIS_PASSWORD = 'verification-redis-password';
 
-const { runtimeRoot: sandboxRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'sandbox');
-installFakeRedis(sandboxRoot);
-const busterTelemetry = await importRuntimeModule(sandboxRoot, '/app/skills/pipeline/services/telemetry.ts');
+const { runtimeRoot: busterPipelineRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, 'busterPipeline');
+installFakeRedis(busterPipelineRoot);
+const busterTelemetry = await importRuntimeModule(busterPipelineRoot, '/app/skills/pipeline/services/telemetry.ts');
 const busterCtxA = busterTelemetry.createTelemetryContext({
   project: 'proj',
   module_id: 'mod-a',
@@ -1232,6 +1232,9 @@ const crashConfig = {
     agent_startup_retry_budget: 0,
     session_nudge_threshold: 0,
   },
+  locks: {
+    lifecycle_append: { stale_ms: 300000, timeout_ms: 30000 },
+  },
   agents: {
     buster: { dispatch: 'redis' },
   },
@@ -1310,9 +1313,21 @@ const crashProgress = {
   },
 };
 
+statusStoreMod.appendModuleLifecycleEvent(crashConfig, 'mod-crash', crashStatus, {
+  eventType: 'module_attempt.started',
+  oldStatus: 'PENDING',
+  previousPhase: null,
+  note: 'seed contract fixture open attempt',
+  now: crashStatus.attempt_started_at,
+});
+
 const crashEventOffset = xaddEvents(sharedStreamKey).length;
 const crashResult = await moduleRunnerMod.runModule(crashConfig, crashProgress, 'mod-crash', { deps: crashDeps });
-assert.equal(crashResult.terminal?.status, 'blocked', 'terminal Buster crash exhaustion should block the module');
+assert.equal(
+  crashResult.terminal?.status,
+  'timed_out',
+  'terminal Buster timeout exhaustion should preserve the typed timeout outcome',
+);
 await flushAsync();
 
 const crashEvents = xaddEvents(sharedStreamKey)

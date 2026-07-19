@@ -89,17 +89,17 @@ test('validateBusterTaskPayload accepts canonical kubernetes capability', () => 
     worker_type: undefined,
     suites: ['k8s'],
     capabilities: [
-      BUSTER_CAPABILITIES.CONTAINER_RUNTIME,
+      BUSTER_CAPABILITIES.IMAGE_BUILD,
       BUSTER_CAPABILITIES.KUBERNETES,
     ],
   }));
   assert.equal(identity.taskType, 'gate_test');
-  assert.deepEqual(identity.capabilities, ['container_runtime', 'kubernetes']);
+  assert.deepEqual(identity.capabilities, ['image_build', 'kubernetes']);
 });
 
 test('validateBusterTaskPayload rejects unsupported capability names', () => {
   assert.throws(
-    () => validateBusterTaskPayload(validPayload({ capabilities: ['container_runtime', 'magic_cluster'] })),
+    () => validateBusterTaskPayload(validPayload({ capabilities: ['image_build', 'magic_cluster'] })),
     (error) => error instanceof MalformedBusterTaskError
       && error.details.reason === 'unsupported_capabilities'
       && error.details.unsupported_capabilities.includes('magic_cluster'),

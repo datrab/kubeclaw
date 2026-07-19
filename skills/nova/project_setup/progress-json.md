@@ -291,7 +291,7 @@ When enabled, all pipeline events (module status, agent lifecycle, gate verdicts
 |---|---|---|
 | `project_dir` | repo root | Relative to repo root (e.g. `Projects/<project>/src`) |
 | `start_cmd` | `npm start` | Server start command |
-| `image` | `docker.io/library/node:20-slim` | Podman image tag |
+| `image` | `docker.io/library/node:20-slim` | Fully qualified BuildKit base image |
 | `port` | `3000` | Server listen port |
 | `health_path` | `/` | Health check endpoint |
 | `health_retries` | `3` | Health check retry count |
@@ -310,7 +310,7 @@ When enabled, all pipeline events (module status, agent lifecycle, gate verdicts
 |---|---|---|
 | `project_dir` | repo root | Relative to repo root |
 | `build_cmd` | `npm run build` | Must install deps + build |
-| `image` | `docker.io/library/node:20-slim` | Podman image |
+| `image` | `docker.io/library/node:20-slim` | Fully qualified BuildKit base image |
 
 `image` must be a fully qualified registry/namespace reference. Shorthand names such as `node:20-slim` are rejected before Buster accepts a task.
 

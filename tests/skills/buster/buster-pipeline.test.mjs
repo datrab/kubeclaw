@@ -6,7 +6,7 @@ import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 import {
-  assertStartupSandboxCleanupComplete,
+  assertStartupResourceCleanupComplete,
   handleBusterEntrypoint,
   parseBusterEntrypointArgs,
 } from '../../../skills/buster/buster-pipeline.ts';
@@ -78,7 +78,7 @@ test('handleBusterEntrypoint runs main with no extra arguments', async () => {
   assert.equal(ranMain, true);
 });
 
-test('assertStartupSandboxCleanupComplete reports and rejects incomplete startup cleanup', (t) => {
+test('assertStartupResourceCleanupComplete reports and rejects incomplete startup cleanup', (t) => {
   const originalCwd = process.cwd();
   const originalWarn = console.warn;
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-startup-cleanup-'));
@@ -94,18 +94,18 @@ test('assertStartupSandboxCleanupComplete reports and rejects incomplete startup
   console.warn = (...args) => warnings.push(args.join(' '));
 
   assert.throws(
-    () => assertStartupSandboxCleanupComplete({ ok: false, errors: ['container removal failed'] }),
-    /BUSTER_STARTUP_CLEANUP_INCOMPLETE: container removal failed/,
+    () => assertStartupResourceCleanupComplete({ ok: false, errors: ['lease removal failed'] }),
+    /BUSTER_STARTUP_CLEANUP_INCOMPLETE: lease removal failed/,
   );
 
-  assert.equal(warnings.some((line) => line.includes('startup_cleanup_incomplete') && line.includes('container removal failed')), true);
+  assert.equal(warnings.some((line) => line.includes('startup_cleanup_incomplete') && line.includes('lease removal failed')), true);
   const diagnosticPath = path.join(tempDir, '.swarm', 'logs', 'buster', 'process-health.jsonl');
   const [line] = fs.readFileSync(diagnosticPath, 'utf8').trim().split('\n');
   const record = JSON.parse(line);
   assert.equal(record.component, 'buster_cleanup');
   assert.equal(record.surface, 'startup');
   assert.equal(record.reason, 'startup_cleanup_incomplete');
-  assert.equal(record.detail, 'container removal failed');
+  assert.equal(record.detail, 'lease removal failed');
 });
 
 test('recoverOrphanedActiveSession keeps persisted active-session files diagnostic-only without blocking startup', async (t) => {

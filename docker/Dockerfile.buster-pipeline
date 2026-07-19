@@ -1,0 +1,63 @@
+# Buster's deterministic worker and rootless image builder. OpenClaw remains in
+# the colocated gateway container; both containers share the pod network, so the
+# worker reaches gateway tools through http://127.0.0.1:18789/tools/invoke.
+FROM moby/buildkit:rootless AS buildkit
+FROM node:24-bookworm-slim
+
+USER root
+ARG KUBECTL_VERSION=1.35.6
+ARG TARGETARCH
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      bash ca-certificates curl git openssh-client jq python3 python3-pip \
+      uidmap slirp4netns fuse-overlayfs iproute2 iptables tini \
+      build-essential shellcheck yamllint ripgrep tree netcat-openbsd nmap \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=buildkit /usr/bin/buildkitd /usr/local/bin/buildkitd
+COPY --from=buildkit /usr/bin/buildctl /usr/local/bin/buildctl
+COPY --from=buildkit /usr/bin/buildkit-runc /usr/local/bin/buildkit-runc
+COPY --from=buildkit /usr/bin/rootlesskit /usr/local/bin/rootlesskit
+
+RUN arch="${TARGETARCH:-amd64}" \
+    && curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl" -o /usr/local/bin/kubectl \
+    && chmod +x /usr/local/bin/kubectl \
+    && npm install --prefix /app --no-audit --no-fund ioredis js-yaml uuid typescript eslint lighthouse playwright @axe-core/playwright pixelmatch pngjs ws \
+    && groupmod --new-name builder node \
+    && usermod --login builder --home /home/builder --move-home --shell /bin/bash node \
+    && printf 'builder:100000:65536\n' >> /etc/subuid \
+    && printf 'builder:100000:65536\n' >> /etc/subgid \
+    && mkdir -p /app/skills /home/builder/.openclaw /home/builder/.local/share/buildkit /run/user/1000/buildkit \
+    && chown -R builder:builder /app/skills /home/builder /run/user/1000
+
+RUN pip install --break-system-packages --no-cache-dir ruff mypy pip-audit semgrep
+
+ARG K6_VERSION=v0.54.0
+ARG HADOLINT_VERSION=2.12.0
+ARG KUBECONFORM_VERSION=0.6.4
+RUN set -eux; \
+    arch="${TARGETARCH:-amd64}"; \
+    case "$arch" in amd64) hadolint_arch="x86_64" ;; arm64) hadolint_arch="arm64" ;; *) exit 1 ;; esac; \
+    curl -fsSL "https://github.com/grafana/k6/releases/download/${K6_VERSION}/k6-${K6_VERSION}-linux-${arch}.tar.gz" | tar xz --strip-components=1 -C /usr/local/bin "k6-${K6_VERSION}-linux-${arch}/k6"; \
+    curl -fsSL "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-${hadolint_arch}" -o /usr/local/bin/hadolint; \
+    curl -fsSL "https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/kubeconform-linux-${arch}.tar.gz" | tar xz -C /usr/local/bin; \
+    chmod +x /usr/local/bin/hadolint
+
+ENV PATH="/app/node_modules/.bin:${PATH}" \
+    PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+RUN playwright install --with-deps chromium && chown -R builder:builder /ms-playwright
+
+COPY docker/buster-pipeline-entrypoint.sh /usr/local/bin/buster-pipeline-entrypoint
+RUN chmod +x /usr/local/bin/buster-pipeline-entrypoint
+
+ENV HOME=/home/builder \
+    NODE_PATH=/app/node_modules \
+    BUILDKIT_HOST=unix:///run/user/1000/buildkit/buildkitd.sock \
+    BUILDKIT_STATE_DIR=/home/builder/.local/share/buildkit \
+    BUSTER_RESULTS_DIR=/home/builder/.openclaw/results
+
+USER 1000:1000
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/buster-pipeline-entrypoint"]
+
+LABEL org.opencontainers.image.title="KubeClaw Buster Pipeline"
+LABEL org.opencontainers.image.description="Unprivileged Buster worker with colocated rootless BuildKit"

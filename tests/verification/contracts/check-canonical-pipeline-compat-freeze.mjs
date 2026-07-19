@@ -287,7 +287,6 @@ const highRiskOrLimits = {
   'skills/buster/pipeline/services/rate-limit.ts': 2,
   'skills/buster/pipeline/services/runtime-diagnostics.ts': 2,
   'skills/buster/pipeline/services/runtime.ts': 2,
-  'skills/buster/pipeline/services/sandbox-cleanup.ts': 9,
   'skills/buster/pipeline/services/session-monitor.ts': 12,
   'skills/buster/pipeline/services/task-completion.ts': 5,
   'skills/buster/pipeline/services/task-lifecycle/completion-signal.ts': 1,

@@ -51,13 +51,11 @@ These fields must stay inside the repository boundary and must not use parent tr
 
 ## Known Capabilities
 
-- `static_web_server`
-- `container_runtime`
+- `image_build`
 - `kubernetes`
 - `browser_automation`
 - `lighthouse`
 - `discord_media`
-- `image_prepull`
 
 ## Output And Completion
 

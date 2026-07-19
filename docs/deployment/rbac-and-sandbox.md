@@ -25,19 +25,20 @@ The Buster namespace fence is a ValidatingAdmissionPolicy and binding. It denies
 
 When broker mode is disabled, the chart does not render Kubernetes tester RBAC. Kubernetes suites must use `busterNamespaceBroker.enabled=true`, lease-client RBAC, and the namespace controller. Missing broker permissions should fail verification instead of silently falling back to broad namespace authority.
 
-Buster sandbox mode renders privileged security context, unconfined AppArmor/seccomp, privilege escalation, and added capabilities. It mounts Podman storage and `/sandbox` `emptyDir` volumes.
+Buster splits the non-privileged OpenClaw gateway from a dedicated non-root pipeline sidecar. The gateway drops every Linux capability and cannot build images. The pipeline sidecar runs rootless BuildKit locally, stores only transient BuildKit state, and receives lease-client rather than cluster-wide workload authority.
 
-Buster runtime code adds a separate default-deny suite capability boundary. Suites require capabilities such as `container_runtime`, `kubernetes`, `browser_automation`, `lighthouse`, or `static_web_server` depending on suite and serve config.
+Buster runtime code adds a separate default-deny suite capability boundary. Suites require capabilities such as `image_build`, `kubernetes`, `browser_automation`, or `lighthouse` depending on suite and serve config.
 
 ## Why Buster Is Different
 
-Nova coordinates work and should not need Kubernetes write authority. Buster executes destructive verification, builds and runs containers, asks the broker for ephemeral test namespaces, and can run browser, performance, security, and Kubernetes suites. The deployment therefore gives Buster a privileged container posture and lease-scoped Kubernetes API permissions.
+Nova coordinates work and does not need Kubernetes write authority. Buster executes deterministic verification, builds images with rootless BuildKit, asks the broker for ephemeral test namespaces, and runs browser, performance, security, and Kubernetes suites. The deployment gives only the Buster pipeline sidecar lease-client Kubernetes permissions; workload authority is restricted to controller-issued namespaces.
 
 That authority is intentional for the current Buster role, but it is still a high-risk surface. The namespace fence constrains the controller's namespace create/delete authority, and Buster suite capabilities narrow which suite behaviors are allowed by task payload, but neither control is equivalent to full network isolation.
 
 ## Operator Checklist
 
-- Deploy Buster only in a namespace and cluster profile where privileged Podman-in-Pod is acceptable.
+- Run `./scripts/deploy.sh buildkit-preflight` on every new node pool used by Buster.
+- Run `./scripts/deploy.sh buster-buildkit-smoke` after deploying a new Buster pipeline image.
 - Apply `my-values/infra/buster-namespace-fence.yaml` before running Kubernetes suites.
 - Confirm `agent-buster` has only lease-client RBAC in broker mode.
 - Confirm `agent-buster-namespace-controller` is covered by the namespace fence.
@@ -47,13 +48,13 @@ That authority is intentional for the current Buster role, but it is still a hig
 ## Open Issues
 
 - The namespace fence does not constrain namespaced resource writes in existing namespaces.
-- Buster combines privileged container execution with namespace-lease permissions in production values.
+- Buster's pipeline sidecar uses rootless BuildKit with an unconfined BuildKit AppArmor/seccomp posture and setuid UID/GID mapping helpers, but it remains non-root and non-privileged.
 
 ## Rootless BuildKit Prerequisite
 
-The planned Podman removal keeps image construction in the existing `buster-pipeline` container and replaces privileged Podman with rootless BuildKit. Kubernetes does not create the required Linux user namespace as a resource; the scheduled Ubuntu/K3s node must permit unprivileged user namespaces and allow the unconfined AppArmor/seccomp posture required by rootless BuildKit's OCI worker.
+Image construction runs in the existing `buster-pipeline` container through rootless BuildKit. Kubernetes does not create the required Linux user namespace as a resource; the scheduled node must permit unprivileged user namespaces and the AppArmor/seccomp posture required by BuildKit's rootless OCI worker.
 
-Verify the real node capability before that migration:
+Verify the real node capability before deploying Buster:
 
 ```bash
 ./scripts/deploy.sh buildkit-preflight
@@ -70,5 +71,6 @@ The command creates a temporary non-privileged `moby/buildkit:rootless` pod, wai
 | Namespace controller authority | `kubectl auth can-i create namespaces --as system:serviceaccount:"$NAMESPACE":agent-buster-namespace-controller` | allowed, with namespace-fence policy required for prefix restriction |
 | Nova write authority | `kubectl -n "$NAMESPACE" auth can-i create pods --as system:serviceaccount:"$NAMESPACE":agent-nova` | should not be broadly allowed by the agent chart |
 | Rootless image builder | `./scripts/deploy.sh buildkit-preflight` | temporary pod reaches Ready, reports an OCI worker, and is deleted |
+| Production build path | `./scripts/deploy.sh buster-buildkit-smoke` | gateway tool invocation, image build/push, immutable-digest deployment, health check, and namespace cleanup all pass |
 
-If Buster suites fail with Kubernetes authorization errors, identify whether the failing pod is `agent-buster` or `agent-buster-namespace-controller`. The first should only request leases and run sandbox work; the second owns test namespace creation/deletion. Preserve the failed task payload because capabilities and requested suite type decide which authority was expected.
+If Buster suites fail with Kubernetes authorization errors, identify whether the failing pod is `agent-buster` or `agent-buster-namespace-controller`. The first should only request leases and run workloads inside controller-issued namespaces; the controller-created namespace Role grants workload operations and pod port-forward only within that leased namespace. The controller owns test namespace creation/deletion. Preserve the failed task payload because capabilities and requested suite type decide which authority was expected.

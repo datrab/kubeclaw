@@ -11,7 +11,7 @@ import {
   applyBuildRuntimePort,
   buildDetailedSuiteSummary,
   collectReadySuites,
-  resolveSandboxResultsDir,
+  resolveSuiteResultsDir,
   runSuites,
   runSuiteWithTimeout,
 } from '../../../../../skills/buster/pipeline/runners/suite-runner.ts';
@@ -51,16 +51,16 @@ test('runSuiteWithTimeout aborts suite subprocess work near the suite timeout', 
   assert.ok(Date.now() - started < 500);
 });
 
-test('sandbox verdict paths are namespaced by module and attempt', () => {
+test('suite verdict paths are namespaced by module and attempt', () => {
   assert.equal(
-    resolveSandboxResultsDir('module/a', 1),
-    path.join('/sandbox/results', 'module_a-attempt-1'),
+    resolveSuiteResultsDir('module/a', 1),
+    path.join('/home/builder/.openclaw/results', 'module_a-attempt-1'),
   );
   assert.equal(
-    resolveSandboxResultsDir('module-b', 2),
-    path.join('/sandbox/results', 'module-b-attempt-2'),
+    resolveSuiteResultsDir('module-b', 2),
+    path.join('/home/builder/.openclaw/results', 'module-b-attempt-2'),
   );
-  assert.notEqual(resolveSandboxResultsDir('module/a', 1), resolveSandboxResultsDir('module-b', 2));
+  assert.notEqual(resolveSuiteResultsDir('module/a', 1), resolveSuiteResultsDir('module-b', 2));
 });
 
 test('detailed suite summary preserves the top failure reason', () => {
@@ -119,18 +119,18 @@ test('collectReadySuites selects independent Buster suites and waits on declared
 });
 
 test('perf report paths use per-run scratch and final artifacts', () => {
-  const first = resolvePerfReportPaths({ moduleId: 'module/a', attempt: 1, resultsDir: '/sandbox/results' });
-  const second = resolvePerfReportPaths({ moduleId: 'module-b', attempt: 1, resultsDir: '/sandbox/results' });
+  const first = resolvePerfReportPaths({ moduleId: 'module/a', attempt: 1, resultsDir: '/tmp/buster-results' });
+  const second = resolvePerfReportPaths({ moduleId: 'module-b', attempt: 1, resultsDir: '/tmp/buster-results' });
 
-  assert.match(first.scratchPath, /^\/sandbox\/results\/module_a-attempt-1\/\.lighthouse-report-module_a-attempt-1-[a-zA-Z0-9._-]+\.tmp\.json$/);
-  assert.match(first.finalPath, /^\/sandbox\/results\/module_a-attempt-1\/lighthouse-report-module_a-attempt-1-[a-zA-Z0-9._-]+\.json$/);
+  assert.match(first.scratchPath, /^\/tmp\/buster-results\/module_a-attempt-1\/\.lighthouse-report-module_a-attempt-1-[a-zA-Z0-9._-]+\.tmp\.json$/);
+  assert.match(first.finalPath, /^\/tmp\/buster-results\/module_a-attempt-1\/lighthouse-report-module_a-attempt-1-[a-zA-Z0-9._-]+\.json$/);
   assert.notEqual(first.scratchPath, first.finalPath);
   assert.notEqual(first.scratchPath, second.scratchPath);
   assert.notEqual(first.finalPath, second.finalPath);
 });
 
 test('perf report paths use a unique scratch path for each invocation', () => {
-  const context = { moduleId: 'module/a', attempt: 1, testsLogDir: '/tmp/shared-tests', resultsDir: '/sandbox/results' };
+  const context = { moduleId: 'module/a', attempt: 1, testsLogDir: '/tmp/shared-tests', resultsDir: '/tmp/buster-results' };
   const first = resolvePerfReportPaths(context);
   const second = resolvePerfReportPaths(context);
 
@@ -140,8 +140,8 @@ test('perf report paths use a unique scratch path for each invocation', () => {
 
 test('perf report paths stay distinct even when modules share testsLogDir', () => {
   const sharedTestsDir = '/tmp/shared-tests';
-  const first = resolvePerfReportPaths({ moduleId: 'module/a', attempt: 1, testsLogDir: sharedTestsDir, resultsDir: '/sandbox/results' });
-  const second = resolvePerfReportPaths({ moduleId: 'module-b', attempt: 1, testsLogDir: sharedTestsDir, resultsDir: '/sandbox/results' });
+  const first = resolvePerfReportPaths({ moduleId: 'module/a', attempt: 1, testsLogDir: sharedTestsDir, resultsDir: '/tmp/buster-results' });
+  const second = resolvePerfReportPaths({ moduleId: 'module-b', attempt: 1, testsLogDir: sharedTestsDir, resultsDir: '/tmp/buster-results' });
 
   assert.match(first.finalPath, /^\/tmp\/shared-tests\/lighthouse-report-module_a-attempt-1-[a-zA-Z0-9._-]+\.json$/);
   assert.match(second.finalPath, /^\/tmp\/shared-tests\/lighthouse-report-module-b-attempt-1-[a-zA-Z0-9._-]+\.json$/);
@@ -187,6 +187,7 @@ test('runSuites writes JSONL suite logs when logDir is fresh', async () => {
   fs.rmSync(testsDir, { recursive: true, force: true });
 
   await runSuites(['unit'], {
+    repoRoot: process.cwd(),
     moduleId: 'mod',
     logDir,
     payload: {
@@ -206,6 +207,7 @@ test('runSuites writes JSONL suite logs when logDir is fresh', async () => {
 
 test('runSuites treats enforced unit failures as critical', async () => {
   const result = await runSuites(['unit'], {
+    repoRoot: process.cwd(),
     moduleId: 'mod',
     payload: {
       project: 'proj',
@@ -226,6 +228,7 @@ test('runSuites treats enforced unit failures as critical', async () => {
 
 test('runSuites treats every suite error as terminal critical failure', async () => {
   const result = await runSuites(['unit'], {
+    repoRoot: process.cwd(),
     moduleId: 'mod',
     payload: {
       project: 'proj',
@@ -245,6 +248,7 @@ test('runSuites treats every suite error as terminal critical failure', async ()
 
 test('runSuites treats rejected unit command configuration as critical', async () => {
   const result = await runSuites(['unit'], {
+    repoRoot: process.cwd(),
     moduleId: 'mod',
     payload: {
       project: 'proj',

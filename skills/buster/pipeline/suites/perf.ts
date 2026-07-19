@@ -59,7 +59,7 @@ const DEFAULTS = {
 
 const execFileAsync = promisify(execFile) as any;
 
-const DEFAULT_RESULTS_DIR = '/sandbox/results';
+const DEFAULT_RESULTS_DIR = process.env.BUSTER_RESULTS_DIR ?? '/home/builder/.openclaw/results';
 const CATEGORY_NAMES: Record<string, string> = {
   performance: 'Performance',
   accessibility: 'Accessibility',

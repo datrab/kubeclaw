@@ -64,7 +64,7 @@ const progress = {
           test_cmd: ['npm', 'test'],
         },
       },
-      capabilities: ['container_runtime'],
+      capabilities: ['image_build'],
     },
   },
   gates: {
@@ -156,7 +156,7 @@ assert.deepEqual(identity, {
   workerType: 'module_buster',
   timeoutSeconds: 720,
   suites: ['build', 'unit'],
-  capabilities: ['container_runtime'],
+  capabilities: ['image_build'],
   suiteTimeoutMs: 120000,
 });
 

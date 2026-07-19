@@ -122,7 +122,7 @@ telemetry builder in skills/nova/pipeline/services/telemetry/builders.ts
   -> pipeline:telemetry:<project>:<run_id>
 ```
 
-OpenClaw agent observability is separate from pipeline telemetry. The `kubeclaw-agent-observer` plugin registers OpenClaw hooks in `plugins/openclaw-agent-observer/src/index.ts`, prefers the runtime agent event bus for live agent output, normalizes hook/model usage/runtime events in `hook-normalizers.ts`, and writes Redis events through `redis-writer.ts`. Its runtime values come from the expanded standard profile fields `agent_observability.plugin_control.*` and `agent_observability.ingester.*`.
+OpenClaw agent observability is separate from pipeline telemetry. The `kubeclaw-agent-observer` plugin registers OpenClaw hooks in `plugins/openclaw-agent-observer/src/index.ts`, prefers the runtime agent event bus for live agent output, normalizes hook/model usage/runtime events in `hook-normalizers.ts`, and writes Redis events through `redis-writer.ts`. Buster keeps the plugin enabled in gateway config for the gateway lifetime; its dedicated pipeline sidecar neither contains OpenClaw nor controls gateway plugins. Nova retains its pipeline-owned controller policy, while the Redis ingester remains configured through `agent_observability.ingester.*`.
 
 The observer Gateway methods are:
 
@@ -165,7 +165,7 @@ If Discord is quiet but artifacts and Redis show progress, continue the operatio
 - Buster not consuming tasks: inspect `buster-pipeline` logs, worker status, Redis connectivity, and `BUSTER_TASK_STREAM`
 - Redis telemetry empty: inspect `buster-telemetry-fallback.jsonl`, Redis connectivity, and local artifact logs
 - Discord missing: inspect `discord.jsonl`; webhook delivery can fail while the pipeline continues
-- Observer stream quiet: check `kubeclaw.agentObserver.status`, expanded `agent_observability.plugin_control.enabled`, plugin runtime logs, Redis connectivity, dead-letter entries, and whether OpenClaw emitted the runtime event or hook family being inspected
+- Observer stream quiet: check `kubeclaw.agentObserver.status`, the gateway plugin entry, plugin runtime logs, Redis connectivity, dead-letter entries, and whether OpenClaw emitted the runtime event or hook family being inspected
 
 ## Related Pages
 

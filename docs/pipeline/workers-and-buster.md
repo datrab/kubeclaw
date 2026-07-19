@@ -19,9 +19,9 @@ On startup Buster:
 
 1. waits for gateway readiness for up to 120 seconds
 2. recovers an orphaned active session when lifecycle authority allows it
-3. runs sandbox cleanup
+3. recovers and deletes tracked namespace leases from interrupted tasks
 4. starts periodic gateway health monitoring
-5. optionally pre-pulls base images when `BUSTER_PLATFORM_CAPABILITIES` includes `image_prepull`
+5. verifies the local rootless BuildKit worker through the container readiness probe
 6. ensures the Redis consumer group
 7. polls Redis tasks continuously
 

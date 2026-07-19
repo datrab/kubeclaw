@@ -6,25 +6,24 @@ Buster Pipeline — automated test harness for KubeClaw Swarm modules. Dequeues 
 
 ```
 buster/
-  buster-pipeline.ts       Executable packaged entrypoint for node /app/skills/buster-pipeline.ts
   buster-pipeline.ts       Typed runtime entrypoint, startup/shutdown loop, narrow start/status API
   CONVENTIONS.md           Subagent operational conventions
-  Dockerfile.sandbox       Sandbox container definition
   pipeline/
     runners/
       suite-runner.ts      Suite dispatch, telemetry emission, dependency tracking
     services/
-      base-images.ts       Base-image validation and pre-pull orchestration
+      buildkit.ts          Rootless BuildKit build/push authority
+      image-reference.ts   Fully-qualified container image validation
       discord.ts           Discord artifact write and webhook delivery helpers
       gateway-health.ts    Gateway readiness/health monitor
       git-workflows.ts     Typed Buster Git sync/push workflows using shared primitives
       logger.ts            Structured dual-write logger (stdout + JSONL)
       orphan-recovery.ts   Startup active-session recovery
-      pipeline-helpers.ts  Task/status helpers, embed builders, sandbox cleanup wrapper; import helpers here, not from the root entrypoint
+      pipeline-helpers.ts  Task/status helpers and embed builders; import helpers here, not from the root entrypoint
       rate-limit.ts        Rate-limit detection and pause/resume logic
       runtime.ts           Redis/discovery runtime helpers
       runtime-diagnostics.ts Sanitized process diagnostics
-      sandbox-cleanup.ts   Sandbox cleanup policy/enforcement
+      resource-cleanup.ts  Namespace-lease tracking and cleanup
       session-monitor.ts   ACP session polling and transcript classification
       task-lifecycle.ts    Per-task cleanup/git/suites/spawn/monitor/completion flow
       task-queue.ts        Redis stream dequeue/reclaim/ack loop
@@ -59,7 +58,7 @@ Redis task stream
  dequeue task (payload)
       │
       ▼
- pre-cleanup (sandbox teardown from previous run)
+ recover tracked namespace leases from interrupted runs
       │
       ▼
  git-sync (deterministic checkout to typed task commit)
@@ -86,7 +85,7 @@ Redis task stream
          determine outcome (PASS / FAIL / TIMEOUT / RATE_LIMITED)
       │
       ▼
- final-cleanup (sandbox teardown)
+ delete task-owned namespace leases
       │
       ▼
  read required output_file artifact
@@ -155,7 +154,7 @@ Suite configuration is read from `payload.test_config`. Each key maps to a suite
 }
 ```
 
-Container image references must be fully qualified with registry and namespace, for example `docker.io/library/node:20-slim`. Buster rejects shorthand image names before running Podman.
+Container image references must be fully qualified with registry and namespace, for example `docker.io/library/node:20-slim`. Buster rejects shorthand references before invoking rootless BuildKit.
 
 ## Environment variables
 
@@ -207,22 +206,20 @@ Container image references must be fully qualified with registry and namespace, 
 
 Buster is default-deny for destructive/tool-heavy boundaries. Grant only the capabilities a task needs:
 
-- `static_web_server` — static build serving through nginx.
-- `container_runtime` — podman build/run/push paths.
+- `image_build` — rootless BuildKit build/push paths.
 - `kubernetes` — kubectl namespace/apply/wait/status paths and Buster namespace-controller deployments.
 - `browser_automation` — Playwright/browser suites and visual capture.
 - `lighthouse` — Lighthouse performance audits.
 - `discord_media` — Discord image/video media upload.
-- `image_prepull` — platform startup image cache warmup; set through `BUSTER_PLATFORM_CAPABILITIES`, not task payloads.
 
-Missing capabilities fail closed loudly with an ERROR verdict and a durable `operator.alert` containing who, blocked action, and missing capability. Sandbox cleanup is intentionally asymmetric: cleanup uses maximum platform privilege to destroy run-scoped dangling resources and is not restricted by the task capability set.
+Missing capabilities fail closed loudly with an ERROR verdict and a durable `operator.alert` containing who, blocked action, and missing capability. Resource cleanup deletes only task-owned `BusterNamespaceLease` objects; the namespace controller owns namespace teardown.
 
 ## Suite reference
 
 | Suite | Critical | Description | Key config fields |
 |---|---|---|---|
 | `manifest` | yes | Kubernetes manifest static analysis (YAML validation, env vars, secret refs, probes, resource limits) | `manifest.deployment_yaml`, `manifest.secret_yaml`, `manifest.required_env`, `manifest.thresholds` |
-| `build` | yes | Compile and serve the project (static: nginx on :9999, server: podman container) | `serve.type`, `serve.build_cmd`, `serve.image`, `serve.port` |
+| `build` | yes | Build and push an immutable image with rootless BuildKit, then deploy it into a leased namespace | `serve.type`, `serve.build_cmd`, `serve.image`, `serve.port`, `serve.deployment_yaml` |
 | `health` | no | HTTP health check with retry (3×, exponential backoff) | `serve.health_path`, `serve.port` |
 | `api` | no | JSON-spec HTTP/WebSocket API tests; informational unless thresholds set | `api.spec_file`, `api.thresholds.max_failures` |
 | `unit` | no | Unit test runner (Jest, Vitest, Mocha, Node TAP, pytest); skips if no test script | `unit.test_cmd` |

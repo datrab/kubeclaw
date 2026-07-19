@@ -85,11 +85,11 @@ No "it seems broken". Exact data.
 
 ---
 
-## Sandbox Rules
+## Runtime Rules
 
-- Do **NOT** run `sandbox-build`, `sandbox-serve` or `sandbox-cleanup` — the Buster Pipeline handles that
+- Do **NOT** build images, deploy workloads, or clean namespace leases — the Buster Pipeline handles that
 - The app is already running (URL is in Pre-Test Results)
-- Test scripts run inside the container, not in the sandbox
+- Test scripts run in the Buster pipeline sidecar; application workloads run only in leased namespaces
 - Place test scripts and output artifacts under `.swarm/`; Buster Pipeline runs verify-task.ts before completion emission
 
 ---

@@ -22,7 +22,7 @@ import { safeErrorMessage } from './runtime-diagnostics.ts';
 import { loadBusterSessionPolicies } from './runtime-policy.ts';
 import { createTaskCompletionState, publishTaskCompletionWithArtifact } from './task-completion.ts';
 import { getRedisClient } from './task-queue.ts';
-import { runSandboxCleanupStage } from './task-lifecycle/cleanup.ts';
+import { runResourceCleanupStage } from './task-lifecycle/cleanup.ts';
 import { syncTaskRepo } from './task-lifecycle/git-sync.ts';
 import { sendTaskCompletionSignal } from './task-lifecycle/completion-signal.ts';
 import {
@@ -36,7 +36,7 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 const TASK_LIFECYCLE_STATE = {
   lastRunLogDir: null,
 };
-const SANDBOX_CLEANUP_RETURNED_INCOMPLETE = 'cleanup returned ok=false';
+const RESOURCE_CLEANUP_RETURNED_INCOMPLETE = 'cleanup returned ok=false';
 const SUITE_NAME_MISSING = 'missing_suite_name';
 const PRETEST_STATUS_MISSING = 'UNKNOWN';
 const SUITE_SUMMARY_MISSING = 'No suite summary available.';
@@ -103,7 +103,7 @@ function notifyTaskFailure(moduleId, project, result, context = {}) {
   discord(buildTaskFailureEmbed(moduleId, project, result), context);
 }
 
-function sandboxCleanupFailureReason(cleanup) {
+function resourceCleanupFailureReason(cleanup) {
   if (!cleanup) return 'cleanup returned no result';
   if (Array.isArray(cleanup.errors) && cleanup.errors.length > 0) {
     return cleanup.errors.map(safeErrorMessage).join('; ');
@@ -111,7 +111,7 @@ function sandboxCleanupFailureReason(cleanup) {
   if (Array.isArray(cleanup.failures) && cleanup.failures.length > 0) {
     return cleanup.failures.map(safeErrorMessage).join('; ');
   }
-  return selectPresentValue(cleanup.reason, cleanup.error, SANDBOX_CLEANUP_RETURNED_INCOMPLETE);
+  return selectPresentValue(cleanup.reason, cleanup.error, RESOURCE_CLEANUP_RETURNED_INCOMPLETE);
 }
 
 function collectAppTestCredentials(suitesInfo = {}) {
@@ -174,7 +174,7 @@ function appendPreTestResultsToPrompt(prompt, suitesInfo = {}) {
 
   if (selectTruthyValue(() => (buildPassed), () => (healthPassed))) {
     section.push(
-      'Do not run `npm run build`, `docker build`, `podman build`, `npm start`, or start a second local server unless you are investigating a new failure the pre-test runner did not already cover.',
+      'Do not run another image build, deployment, `npm start`, or local server unless you are investigating a new failure the pre-test runner did not already cover.',
     );
   }
   if (buildPassed && buildTool) {
@@ -356,7 +356,7 @@ export async function processTask(payload, opts = {}) {
     stage = 'pre-cleanup';
     logger.step('pre-cleanup');
 
-    await runSandboxCleanupStage({
+    await runResourceCleanupStage({
       payload,
       moduleId,
       tctx,
@@ -368,7 +368,7 @@ export async function processTask(payload, opts = {}) {
     stage = 'git-sync';
     logger.step('git-sync');
 
-    const { syncResult } = await syncTaskRepo({ payload, commitHash, moduleId, tctx, logger });
+    const { repoRoot, syncResult } = await syncTaskRepo({ payload, commitHash, moduleId, tctx, logger });
 
     if (!syncResult.ok) {
       outcome = 'FAIL';
@@ -387,6 +387,7 @@ export async function processTask(payload, opts = {}) {
     logger.step('run-suites');
 
     suitesInfo = await runSuites(suites, {
+      repoRoot,
       payload,
       moduleId,
       attempt,
@@ -543,7 +544,7 @@ export async function processTask(payload, opts = {}) {
 
     let finalCleanupFailed = false;
     try {
-      const cleanup = await runSandboxCleanupStage({
+      const cleanup = await runResourceCleanupStage({
         payload,
         moduleId,
         tctx,
@@ -552,12 +553,12 @@ export async function processTask(payload, opts = {}) {
       });
       if (cleanup?.ok === false) {
         finalCleanupFailed = true;
-        const cleanupDetail = sandboxCleanupFailureReason(cleanup);
+        const cleanupDetail = resourceCleanupFailureReason(cleanup);
         outcome = 'FAIL';
         reason = reason && reason !== 'missing_task_lifecycle_reason'
           ? `${reason}; final_cleanup_failed: ${cleanupDetail}`
           : `final_cleanup_failed: ${cleanupDetail}`;
-        logger.error('SANDBOX', `Final cleanup failed: ${cleanupDetail}`);
+        logger.error('RESOURCE', `Final cleanup failed: ${cleanupDetail}`);
         notifyTaskFailure(moduleId, project, { reason, stage, attempt, taskType, commitHash }, currentDiscordContext());
       }
     } catch (cleanupError) {
@@ -566,7 +567,7 @@ export async function processTask(payload, opts = {}) {
       reason = reason && reason !== 'missing_task_lifecycle_reason'
         ? `${reason}; final_cleanup_failed: ${safeErrorMessage(cleanupError)}`
         : `final_cleanup_failed: ${safeErrorMessage(cleanupError)}`;
-      logger.error('SANDBOX', `Final cleanup failed: ${safeErrorMessage(cleanupError)}`, {
+      logger.error('RESOURCE', `Final cleanup failed: ${safeErrorMessage(cleanupError)}`, {
         error_name: selectTruthyValue(() => (cleanupError?.name), () => (null)),
         error_code: selectTruthyValue(() => (cleanupError?.code), () => (null)),
       });

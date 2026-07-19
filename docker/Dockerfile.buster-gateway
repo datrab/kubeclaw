@@ -1,0 +1,48 @@
+# Buster's OpenClaw gateway and native/ACP agent runtime. Deterministic test,
+# image-build, and Kubernetes tooling belongs exclusively to buster-pipeline.
+ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.7.1@sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c
+# hadolint ignore=DL3006
+FROM ${OPENCLAW_BASE} AS gateway-assets
+USER root
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+ARG TYPESCRIPT_VERSION=5.9.3
+RUN npm install -g "typescript@${TYPESCRIPT_VERSION}"
+
+COPY plugins/openclaw-agent-observer/ /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer/
+RUN cd /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer \
+    && rm -rf dist \
+    && node "$(npm root -g)/typescript/bin/tsc" -p tsconfig.build.json \
+    && mkdir -p /out/extensions/kubeclaw-agent-observer \
+    && cp -R package.json openclaw.plugin.json src dist /out/extensions/kubeclaw-agent-observer/
+
+ARG OPENCLAW_PLUGIN_VERSION=2026.7.1
+RUN mkdir -p /tmp/openclaw-plugin-home \
+    && HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}" \
+    && HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}" \
+    && mkdir -p /out/openclaw-plugin-home \
+    && cp -a /tmp/openclaw-plugin-home/.openclaw/. /out/openclaw-plugin-home/ \
+    && cd /out/openclaw-plugin-home/npm \
+    && find . -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}' > /out/openclaw-plugin-home/.kubeclaw-plugin-cache-version
+
+# hadolint ignore=DL3006
+FROM ${OPENCLAW_BASE}
+USER root
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      ca-certificates curl git openssh-client jq ripgrep tree \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /app/skills /root/.npm \
+    && npm config set cache /root/.npm --global \
+    && npm install -g ioredis@5.11.1
+
+COPY --from=gateway-assets /out/extensions/kubeclaw-agent-observer /app/dist/extensions/kubeclaw-agent-observer
+COPY --from=gateway-assets /out/openclaw-plugin-home /opt/openclaw-plugin-home
+
+ENV NODE_PATH=/usr/local/lib/node_modules:/app/node_modules \
+    NPM_CONFIG_CACHE=/root/.npm \
+    HOME=/home/node
+
+LABEL org.opencontainers.image.title="KubeClaw Buster Gateway"
+LABEL org.opencontainers.image.description="Minimal OpenClaw gateway for Buster native and ACP agents"

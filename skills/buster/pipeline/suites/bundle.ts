@@ -50,7 +50,7 @@ interface ScanResult {
 }
 
 const DEFAULTS = {
-  www_dir: '/sandbox/www',
+  www_dir: process.env.BUSTER_BUILD_OUTPUT_DIR ?? `${process.env.REPO_ROOT ?? '/home/node/.openclaw/workspace/git-repo'}/dist`,
 };
 
 const execFileAsync = promisify(execFile) as any;

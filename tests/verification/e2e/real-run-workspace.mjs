@@ -777,7 +777,7 @@ function buildModuleProgress({ moduleId, moduleIds, projectSrc, releaseCandidate
     auto_retry_threshold: REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD,
     thinking_level: thinking,
     test_suites: ['build', 'health', 'unit'],
-    capabilities: ['container_runtime'],
+    capabilities: ['image_build', 'kubernetes'],
     agent_judgment: agentJudgment,
     contracts: {
       deployable_artifact_ref: REAL_E2E_CONTRACT_REFS.deployableArtifact,
@@ -937,7 +937,7 @@ export function buildProgress({ projectName, runId = '', moduleIds = REAL_E2E_SE
         timeout_minutes: busterGateTimeoutMinutes,
         max_fix_cycles: 0,
         test_suites: ['build', 'health', 'unit', 'manifest', 'k8s', 'tailscale-preview'],
-        capabilities: ['container_runtime', 'kubernetes'],
+        capabilities: ['image_build', 'kubernetes'],
         test_config: {
           serve: {
             type: 'server',

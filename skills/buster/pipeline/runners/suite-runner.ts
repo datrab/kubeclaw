@@ -43,7 +43,7 @@ import {
   runBatch,
 } from '../scheduler.ts';
 
-const RESULTS_DIR = '/sandbox/results';
+const RESULTS_DIR = process.env.BUSTER_RESULTS_DIR || '/home/builder/.openclaw/results';
 
 type SuiteFunction = (context: SuiteContext) => Promise<SuiteVerdict> | SuiteVerdict;
 
@@ -65,6 +65,7 @@ interface SuiteRunnerPayload {
 }
 
 interface SuiteRunnerOptions {
+  repoRoot: string;
   payload?: SuiteRunnerPayload;
   moduleId?: string;
   attempt?: number;
@@ -76,6 +77,7 @@ interface SuiteRunnerOptions {
 }
 
 interface SuiteContext extends Record<string, unknown> {
+  repoRoot: string;
   payload: SuiteRunnerPayload;
   moduleId: string;
   runId: string | null;
@@ -96,6 +98,7 @@ interface SuiteContext extends Record<string, unknown> {
   attempt: number | undefined;
   telemetryContext: unknown;
   suiteResults: Record<string, SuiteVerdict>;
+  registerRuntimeCleanup: (cleanup: () => Promise<void> | void) => void;
   suiteAbortSignal?: AbortSignal;
   suiteDeadlineMs?: number;
 }
@@ -375,7 +378,7 @@ function safeArtifactSegment(value: string): string {
   return segment;
 }
 
-export function resolveSandboxResultsDir(moduleId: string, attempt: number | undefined): string {
+export function resolveSuiteResultsDir(moduleId: string, attempt: number | undefined): string {
   const suffix = attempt ? `-attempt-${attempt}` : '';
   return path.join(RESULTS_DIR, `${safeArtifactSegment(moduleId)}${suffix}`);
 }
@@ -384,7 +387,7 @@ export function resolveSandboxResultsDir(moduleId: string, attempt: number | und
 // write failures must not override verdict execution.
 async function writeResults(suiteMap: Record<string, SuiteVerdict>, moduleId: string, project: string, swarmResultsDir: string | null, attempt: number | undefined, tctx: unknown): Promise<void> {
   const runnerVerdict = createRunnerVerdict(moduleId, project, suiteMap);
-  const sandboxResultsDir = resolveSandboxResultsDir(moduleId, attempt);
+  const suiteResultsDir = resolveSuiteResultsDir(moduleId, attempt);
   const telemetryCtx = tctx && typeof tctx === 'object' ? tctx as Record<string, any> : {};
   const diagnosticContext = {
     module: telemetryCtx.gateId ? null : moduleId,
@@ -396,14 +399,14 @@ async function writeResults(suiteMap: Record<string, SuiteVerdict>, moduleId: st
   };
 
   try {
-    if (!fs.existsSync(sandboxResultsDir)) fs.mkdirSync(sandboxResultsDir, { recursive: true });
+    if (!fs.existsSync(suiteResultsDir)) fs.mkdirSync(suiteResultsDir, { recursive: true });
     for (const [name, suite] of Object.entries(suiteMap)) {
-      fs.writeFileSync(path.join(sandboxResultsDir, `${name}-verdict.json`), JSON.stringify(suite, null, 2));
+      fs.writeFileSync(path.join(suiteResultsDir, `${name}-verdict.json`), JSON.stringify(suite, null, 2));
     }
-    fs.writeFileSync(path.join(sandboxResultsDir, 'runner-verdict.json'), JSON.stringify(runnerVerdict, null, 2));
+    fs.writeFileSync(path.join(suiteResultsDir, 'runner-verdict.json'), JSON.stringify(runnerVerdict, null, 2));
   } catch (error: unknown) {
-    warnNonBlocking('sandbox_results_write_failed', error, { module: moduleId, project });
-    await emitResultWriteDiagnostic(tctx, 'sandbox_results_write_failed', error, diagnosticContext);
+    warnNonBlocking('buster_results_write_failed', error, { module: moduleId, project });
+    await emitResultWriteDiagnostic(tctx, 'buster_results_write_failed', error, diagnosticContext);
   }
 
   if (swarmResultsDir) {
@@ -570,9 +573,17 @@ export function collectReadySuites(suiteNames: readonly string[], completedResul
   });
 }
 
-export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOptions = {}): Promise<{ results: SuiteResult[]; suiteSummary: string; suiteDetailSummary: string; criticalFailed: boolean }> {
+export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOptions): Promise<{ results: SuiteResult[]; suiteSummary: string; suiteDetailSummary: string; criticalFailed: boolean }> {
   const { payload = {}, moduleId, attempt, telemetryContext: tctx, logDir = null } = opts;
   const suiteIdentity = requireSuiteIdentity(moduleId, payload.project);
+  const repoRoot = typeof opts.repoRoot === 'string' ? opts.repoRoot.trim() : '';
+  if (!repoRoot || !path.isAbsolute(repoRoot)) {
+    throw createSuiteRunnerValidationError('Buster suite runner requires an absolute synchronized repository root', {
+      reason: 'invalid_suite_repo_root',
+      field: 'repoRoot',
+      value: opts.repoRoot,
+    });
+  }
 
   const suiteNames = validateSuiteNames(suites);
   if (!isRecord(payload.test_config)) {
@@ -606,9 +617,11 @@ export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOpt
 
   const results: SuiteResult[] = [];
   const suiteMap: Record<string, SuiteVerdict> = {};
+  const runtimeCleanups: Array<() => Promise<void> | void> = [];
   let criticalFailed = false;
 
   const context: SuiteContext = {
+    repoRoot,
     payload,
     moduleId: resolvedModuleId,
     runId: selectDefinedValue(() => (payload.run_id), () => (null)),
@@ -629,8 +642,10 @@ export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOpt
     attempt,
     telemetryContext: tctx,
     suiteResults: suiteMap,
+    registerRuntimeCleanup: (cleanup): void => { runtimeCleanups.push(cleanup); },
   };
 
+  try {
   const pendingSuites = new Set(ordered);
 
   while (pendingSuites.size > 0) {
@@ -702,6 +717,15 @@ export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOpt
   const suiteDetailSummary = buildDetailedSuiteSummary(results);
 
   return { results, suiteSummary, suiteDetailSummary, criticalFailed };
+  } finally {
+    for (const cleanup of runtimeCleanups.reverse()) {
+      try {
+        await cleanup();
+      } catch (error: unknown) {
+        warnNonBlocking('suite_runtime_cleanup_failed', error, { module: resolvedModuleId, project });
+      }
+    }
+  }
 }
 
 export const EXECUTION_ORDER = [

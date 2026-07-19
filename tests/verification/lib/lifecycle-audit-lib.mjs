@@ -49,7 +49,7 @@ export function expectedPackagedRuntimeOwners(image) {
     ]),
   );
 
-  if (image === 'sandbox') {
+  if (image === 'busterPipeline') {
     owners['/app/skills/pipeline/tools/redis.ts'] = 'skills/buster/pipeline/tools/redis.ts';
   }
 
@@ -141,23 +141,21 @@ export function effectiveFiles(sourceRoot, overlayRoot, relDir) {
 
 export function loadPackagingRules(sourceRoot, overlayRoot) {
   const generalDockerfile = readOverlayText(sourceRoot, overlayRoot, 'docker/Dockerfile.general');
-  const sandboxDockerfile = readOverlayText(sourceRoot, overlayRoot, 'docker/Dockerfile.sandbox');
+  const busterPipelineDockerfile = readOverlayText(sourceRoot, overlayRoot, 'docker/Dockerfile.buster-pipeline');
   const deploymentTemplate = readOverlayText(sourceRoot, overlayRoot, 'charts/kubeclaw/templates/deployment.yaml');
 
   const requiredGeneral = [
-    'sudo curl wget git openssh-client jq',
+    'sudo curl git openssh-client jq',
     'RUN mkdir -p /app/skills',
-    'node "$(npm root -g)/typescript/bin/tsc" -p tsconfig.build.json',
+    'node /opt/kubeclaw-tools/node_modules/typescript/bin/tsc -p tsconfig.build.json',
     'mkdir -p /app/dist/extensions/kubeclaw-agent-observer',
     'cp -R package.json openclaw.plugin.json src dist /app/dist/extensions/kubeclaw-agent-observer/',
   ];
-  const requiredSandbox = [
-    'curl wget git openssh-client netcat-openbsd',
-    'RUN mkdir -p /app/skills',
-    'npm install -g ioredis js-yaml uuid @qdrant/js-client-rest typescript',
-    'node "$(npm root -g)/typescript/bin/tsc" -p tsconfig.build.json',
-    'mkdir -p /app/dist/extensions/kubeclaw-agent-observer',
-    'cp -R package.json openclaw.plugin.json src dist /app/dist/extensions/kubeclaw-agent-observer/',
+  const requiredBusterPipeline = [
+    'FROM moby/buildkit:rootless AS buildkit',
+    'npm install --prefix /app --no-audit --no-fund ioredis js-yaml uuid typescript',
+    'USER 1000:1000',
+    'ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/buster-pipeline-entrypoint"]',
   ];
   const requiredDeployment = [
     'cp -r /app/skills/. /skills-merged/',
@@ -168,8 +166,8 @@ export function loadPackagingRules(sourceRoot, overlayRoot) {
   for (const needle of requiredGeneral) {
     if (!generalDockerfile.includes(needle)) throw new Error(`docker/Dockerfile.general missing expected packaging rule: ${needle}`);
   }
-  for (const needle of requiredSandbox) {
-    if (!sandboxDockerfile.includes(needle)) throw new Error(`docker/Dockerfile.sandbox missing expected packaging rule: ${needle}`);
+  for (const needle of requiredBusterPipeline) {
+    if (!busterPipelineDockerfile.includes(needle)) throw new Error(`docker/Dockerfile.buster-pipeline missing expected packaging rule: ${needle}`);
   }
   for (const needle of requiredDeployment) {
     if (!deploymentTemplate.includes(needle)) throw new Error(`charts/kubeclaw/templates/deployment.yaml missing expected merge rule: ${needle}`);
@@ -177,7 +175,7 @@ export function loadPackagingRules(sourceRoot, overlayRoot) {
 
   for (const [relPath, dockerfile] of [
     ['docker/Dockerfile.general', generalDockerfile],
-    ['docker/Dockerfile.sandbox', sandboxDockerfile],
+    ['docker/Dockerfile.buster-pipeline', busterPipelineDockerfile],
   ]) {
     if (dockerfile.includes('/app/common')) {
       throw new Error(`${relPath} must not materialize shared pipeline helpers under /app/common`);
@@ -194,7 +192,7 @@ export function loadPackagingRules(sourceRoot, overlayRoot) {
         { sourceDir: 'skills/common', destDir: '/app/skills', excludes: new Set() },
       ],
     },
-    sandbox: {
+    busterPipeline: {
       layers: [
         { sourceDir: 'skills/buster', destDir: '/app/skills', excludes: new Set() },
         { sourceDir: 'skills/common', destDir: '/app/skills', excludes: new Set() },

@@ -6,7 +6,7 @@ import path from 'path';
 import { normalizeBusterCapabilities, unsupportedBusterCapabilities } from './capabilities.ts';
 import { getRepoRoot, gitExec } from './git-workflows.ts';
 import { resolveScopedPath } from '../security.ts';
-import { validateBaseImageRef } from './base-images.ts';
+import { validateImageReference } from './image-reference.ts';
 
 export const PIPELINE_TASK_TYPES = ['module_test', 'gate_test'];
 
@@ -148,7 +148,7 @@ function validatePayloadPathBoundaries(payload, taskType) {
 function validateServeImagePolicy(testConfig) {
   const image = testConfig?.serve?.image;
   if (selectTruthyValue(() => (selectTruthyValue(() => (image === undefined), () => (image === null))), () => (image === ''))) return;
-  const validation = validateBaseImageRef(image);
+  const validation = validateImageReference(image);
   if (validation.ok) return;
   throw new MalformedBusterTaskError(`Buster task test_config.serve.image must be fully qualified: ${validation.reason}`, {
     reason: 'invalid_serve_image_reference',

@@ -32,6 +32,7 @@ active-run.lock.json
 # Node (if developing skills locally)
 node_modules/
 package-lock.json
+!docker/general-tools/package-lock.json
 plugins/openclaw-agent-observer/dist/
 
 # Ansible (if using infrastructure layer)

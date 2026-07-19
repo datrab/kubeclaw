@@ -10,6 +10,10 @@ export const FORGE_COMPLETION_STATUSES = Object.freeze([
   STATUS.BLOCKED,
 ]);
 
+function isAbsent(value) {
+  return value === undefined || value === null || value === '';
+}
+
 function nonEmptyStringArray(value) {
   return Array.isArray(value) && value.some((entry) => typeof entry === 'string' && entry.trim());
 }
@@ -29,7 +33,7 @@ export function archiveForgeCompletionArtifact(config, moduleDir, attempt) {
   if (!fs.existsSync(file)) return null;
   const archiveFile = path.join(
     path.dirname(file),
-    `forge-completion.stale-before-attempt-${Number(attempt) || 'unknown'}.json`,
+    `forge-completion.stale-before-attempt-${Number.isFinite(Number(attempt)) ? Number(attempt) : 'unknown'}.json`,
   );
   fs.renameSync(file, archiveFile);
   return archiveFile;
@@ -87,7 +91,7 @@ export function validateForgeCompletionArtifact(value) {
 }
 
 function normalizeIdentityValue(value) {
-  if (value === undefined || value === null || value === '') return null;
+  if (isAbsent(value)) return null;
   return String(value);
 }
 
@@ -107,12 +111,12 @@ function normalizeForgeCompletionEnvelope(value, expected = {}) {
   const next = { ...value };
   const normalizedFields = [];
 
-  if (next.artifact_type === undefined || next.artifact_type === null || next.artifact_type === '') {
+  if (isAbsent(next.artifact_type)) {
     next.artifact_type = FORGE_COMPLETION_ARTIFACT_TYPE;
     normalizedFields.push('artifact_type');
   }
   for (const field of ['run_id', 'module_id', 'attempt']) {
-    if ((next[field] === undefined || next[field] === null || next[field] === '') && expectedIdentity[field]) {
+    if (isAbsent(next[field]) && expectedIdentity[field]) {
       next[field] = field === 'attempt' ? Number(expectedIdentity[field]) : expectedIdentity[field];
       normalizedFields.push(field);
     }

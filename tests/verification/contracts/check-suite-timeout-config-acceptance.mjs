@@ -24,6 +24,7 @@ async function expectSuiteRequestRejected(suites, opts, expected) {
 }
 
 const baseOptions = {
+  repoRoot: process.cwd(),
   moduleId: 'module-suite-contract',
   payload: {
     project: 'suite-timeout-contract',

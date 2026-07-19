@@ -143,7 +143,7 @@ Sink input validation requires a run ID, run reference, primary reference, event
 
 ## Agent Observability
 
-The compact `swarm.config.json` selects the `standard` profile, which expands to enable the OpenClaw agent observer plugin controller and ingester by default. Current effective `standard` values:
+The compact `swarm.config.json` selects the `standard` profile, which expands Nova's OpenClaw observer controller policy and the Redis ingester. Buster instead enables the same plugin permanently in gateway config, because the dedicated Buster pipeline sidecar does not own OpenClaw plugin lifecycle. Current effective `standard` values for the Nova controller and shared ingester are:
 
 - plugin ID: `kubeclaw-agent-observer`
 - plugin command: `openclaw`

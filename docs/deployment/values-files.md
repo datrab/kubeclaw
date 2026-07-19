@@ -27,14 +27,14 @@ Explain how defaults and production values differ.
 `my-values/buster-values.yaml` sets:
 
 - `agentRole: buster`
-- sandbox image `ghcr.io/datrab/kubeclaw-sandbox:latest`
+- gateway image `ghcr.io/datrab/kubeclaw-buster-gateway:latest`
+- pipeline image `ghcr.io/datrab/kubeclaw-buster-pipeline:latest`
 - namespace controller image `ghcr.io/datrab/kubeclaw-namespace-controller:latest`
-- two-container Buster pod with `kubeclaw` gateway and `buster-pipeline` worker containers sharing runtime config, workspace, skills, Podman storage, registry config, and `/sandbox`
+- two-container Buster pod with dedicated gateway and rootless-BuildKit pipeline images sharing runtime config, workspace, skills, and localhost networking
 - Buster-specific gateway and Discord secret keys
 - Discord exec/command approver user ID
 - cluster-internal gateway Service
-- `sandbox.enabled: true`
-- Podman registry config for registry-local and registry-mirror
+- `busterPipeline.platformCapabilities: [rootless_buildkit]`
 - `serviceAccount.create: true`
 - workspace bootstrap disabled
 
@@ -43,11 +43,11 @@ Explain how defaults and production values differ.
 | Values area | Default owner | Nova override | Buster override | Rendered effect |
 | --- | --- | --- | --- | --- |
 | Agent identity | `agentRole` in `charts/kubeclaw/values.yaml` | `agentRole: nova` | `agentRole: buster` | labels, deployment name, `AGENT_NAME`, role-specific service account/RBAC decisions |
-| Images | `image.repository`, `image.tag`, `image.pullPolicy`, `imagePullSecrets`, `busterNamespaceBroker.controller.image.*` | `ghcr.io/datrab/kubeclaw-general:latest`; `ghcr-secret` | `ghcr.io/datrab/kubeclaw-sandbox:latest`; controller `ghcr.io/datrab/kubeclaw-namespace-controller:latest`; `ghcr-secret` | init and main container images; Buster pipeline container image; namespace controller image; image pull Secret wiring |
+| Images | `image.repository`, `image.tag`, `image.pullPolicy`, `imagePullSecrets`, `busterPipeline.image.*`, `busterNamespaceBroker.controller.image.*` | `ghcr.io/datrab/kubeclaw-general:latest`; `ghcr-secret` | gateway `ghcr.io/datrab/kubeclaw-buster-gateway:latest`; worker `ghcr.io/datrab/kubeclaw-buster-pipeline:latest`; controller `ghcr.io/datrab/kubeclaw-namespace-controller:latest`; `ghcr-secret` | role-specific gateway image, dedicated Buster worker image, namespace controller image, and pull Secret wiring |
 | Secrets | `auth.*`, `anthropic.*`, `stitch.*`, `litellm.*`, `discord.*`, `discordWebhook.*`, `agent.git.secretName` | Nova-specific gateway and Discord keys from `openclaw-shared-secrets`; `git-deploy-key-nova` | Buster-specific gateway and Discord keys from `openclaw-shared-secrets`; `git-deploy-key-buster` | env vars and mounted SSH key in `charts/kubeclaw/templates/deployment.yaml` |
 | Services | `service.type`, `service.gatewayPort`, `service.bridgePort`, `service.extraPorts` | Prism preview extra port `3456` with NodePort `30456` | internal gateway/bridge only | `charts/kubeclaw/templates/service.yaml` and dedicated extra-port NodePort behavior checked by deployment truth |
-| Persistence | `persistence.config.*`, `persistence.workspace.*` | defaults unless overridden | defaults unless overridden plus sandbox storage | kept PVCs from `charts/kubeclaw/templates/pvc.yaml` and workspace/config mounts |
-| Sandbox | `sandbox.*`, `busterPipeline.*`, `serviceAccount.*`, `busterNamespaceBroker.*` | disabled by default | sandbox enabled, pipeline container enabled, service account and namespace broker enabled | privileged Podman-in-Pod, two-container Buster pod, lease-client RBAC |
+| Persistence | `persistence.config.*`, `persistence.workspace.*`, `busterPipeline.storageSize`, `busterPipeline.resultsSize` | defaults unless overridden | defaults plus transient BuildKit/result storage | kept PVCs from `charts/kubeclaw/templates/pvc.yaml`; pipeline-only `emptyDir` mounts |
+| Buster pipeline | `busterPipeline.*`, `serviceAccount.*`, `busterNamespaceBroker.*` | disabled by default | dedicated pipeline image enabled, rootless BuildKit capability, service account and namespace broker enabled | non-privileged two-container Buster pod and lease-client RBAC |
 | Runtime config | `swarmConfigJson`, `semgrepConfigYaml`, `eslintConfigMjs`, `customSkills` | chart-bundled config unless overridden | chart-bundled config unless overridden | ConfigMaps copied to the retained config PVC and runtime overlay |
 
 ## Verification And Diff Commands

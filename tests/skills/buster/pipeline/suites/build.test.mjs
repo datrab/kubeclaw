@@ -5,11 +5,7 @@ import test from 'node:test';
 
 import buildSuite from '../../../../../skills/buster/pipeline/suites/build.ts';
 import { resolveRepoDir } from '../../../../../skills/buster/pipeline/suites/repo-paths.ts';
-import {
-  buildDockerfileBuildCleanupLabelArgs,
-  buildPodmanPublishArgs,
-  parsePodmanMappedHostPort,
-} from '../../../../../skills/buster/pipeline/suites/build.ts';
+import { validateDockerfileFromImages } from '../../../../../skills/buster/pipeline/suites/build.ts';
 
 test('buildSuite rejects secretKeyRef satisfied by a differently named secret_yaml', async () => {
   const repoRoot = resolveRepoDir();
@@ -47,6 +43,7 @@ data:
 
   try {
     const verdict = await buildSuite({
+      repoRoot,
       config: {
         serve: {
           type: 'server',
@@ -67,7 +64,7 @@ data:
   }
 });
 
-test('buildSuite rejects shorthand Dockerfile FROM images before podman build', async () => {
+test('buildSuite rejects shorthand Dockerfile FROM images before BuildKit', async () => {
   const repoRoot = resolveRepoDir();
   const fixtureDir = path.join(repoRoot, '.swarm', 'build-suite-dockerfile-test', String(process.pid));
   const dockerfilePath = path.join(fixtureDir, 'Dockerfile');
@@ -77,6 +74,7 @@ test('buildSuite rejects shorthand Dockerfile FROM images before podman build', 
 
   try {
     const verdict = await buildSuite({
+      repoRoot,
       config: {
         serve: {
           type: 'server',
@@ -97,31 +95,17 @@ test('buildSuite rejects shorthand Dockerfile FROM images before podman build', 
   }
 });
 
-test('build suite publishes container ports on ephemeral localhost host ports', () => {
-  assert.deepEqual(buildPodmanPublishArgs(8080), ['-p', '127.0.0.1::8080/tcp']);
-});
-
-test('build suite parses mapped host ports reported by podman', () => {
-  assert.equal(parsePodmanMappedHostPort('127.0.0.1:43127\n', 8080), 43127);
-  assert.equal(parsePodmanMappedHostPort('0.0.0.0:43128->8080/tcp\n', 8080), 43128);
-});
-
-test('build suite rejects invalid published container ports', () => {
-  assert.throws(() => buildPodmanPublishArgs(0), /serve.port/);
-  assert.throws(() => parsePodmanMappedHostPort('127.0.0.1:not-a-port', 8080), /mapped host port/);
-});
-
-test('configured Dockerfile images are not labeled as task cleanup resources', () => {
-  const payload = {
-    project: 'release-project',
-    module_id: '01-nginx',
-    attempt: 1,
-    run_id: 'run-1',
-  };
-
-  assert.deepEqual(buildDockerfileBuildCleanupLabelArgs(true, payload), []);
-  assert.deepEqual(
-    buildDockerfileBuildCleanupLabelArgs(false, payload).slice(0, 1),
-    ['--label'],
-  );
+test('Dockerfile validation accepts only explicit registry authority', () => {
+  const repoRoot = resolveRepoDir();
+  const fixtureDir = path.join(repoRoot, '.swarm', 'build-suite-image-ref-test', String(process.pid));
+  const dockerfilePath = path.join(fixtureDir, 'Dockerfile');
+  fs.mkdirSync(fixtureDir, { recursive: true });
+  try {
+    fs.writeFileSync(dockerfilePath, 'FROM docker.io/library/node:20-slim AS build\nFROM build AS release\n');
+    assert.deepEqual(validateDockerfileFromImages(dockerfilePath), []);
+    fs.writeFileSync(dockerfilePath, 'ARG BASE=node:20-slim\nFROM $BASE\n');
+    assert.match(validateDockerfileFromImages(dockerfilePath)[0] ?? '', /may not use agent-controlled build arguments/);
+  } finally {
+    fs.rmSync(fixtureDir, { recursive: true, force: true });
+  }
 });

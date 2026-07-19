@@ -264,7 +264,7 @@ Buster-reported surface that ClawDeck must understand:
 - 9 Buster-native event types:
   - `buster.task_started`
   - `buster.task_completed`
-  - `buster.sandbox_cleanup`
+  - `buster.resource_cleanup`
   - `buster.git_sync`
   - `buster.suite_started`
   - `buster.suite_completed`

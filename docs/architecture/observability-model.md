@@ -57,7 +57,7 @@ kubectl exec -n "$NAMESPACE" deployment/agent-buster -c kubeclaw -- openclaw gat
 
 Inside project workspaces, pipeline artifacts under `.swarm/logs/**` are the primary audit trail. Redis telemetry streams are the live structured event channel. Discord webhook delivery is best-effort and writes audit evidence when configured.
 
-The `kubeclaw-agent-observer` plugin is the source-owned agent runtime observability path. It registers the known OpenClaw hook family, prefers the runtime `events.onAgentEvent` bus for live agent output, falls back to the host agent-event subscription bridge when the runtime facade is absent, and exposes Gateway methods `kubeclaw.agentObserver.status` and `kubeclaw.agentObserver.selfTest`. Its Redis streams are:
+The `kubeclaw-agent-observer` plugin is the source-owned agent runtime observability path. It runs in the OpenClaw gateway, not the Buster pipeline sidecar. Buster gateway config keeps it enabled for the gateway lifetime; the Buster worker does not execute `openclaw plugins` commands. The plugin registers the known OpenClaw hook family, prefers the runtime `events.onAgentEvent` bus for live agent output, falls back to the host agent-event subscription bridge when the runtime facade is absent, and exposes Gateway methods `kubeclaw.agentObserver.status` and `kubeclaw.agentObserver.selfTest`. Its Redis streams are:
 
 - `pipeline:agent-observability:control:v1`
 - `pipeline:agent-observability:payload:v1`

@@ -3,7 +3,6 @@
 # =============================================================================
 # Deploy: helm upgrade --install agent-buster ./charts/kubeclaw -n kubeclaw -f my-values/buster-values.yaml
 #
-# Buster uses the sandbox image (Podman-in-Pod) and requires privileged mode.
 # Buster is a persistent pod — receives tasks via Redis, not ACP.
 
 agentRole: "buster"
@@ -15,12 +14,16 @@ anthropic:
 # Buster runs as one pod with two containers:
 # - kubeclaw: OpenClaw gateway and gateway-side agent tests
 # - buster-pipeline: persistent Redis task worker and deterministic suites
-# Both containers keep the sandbox runtime mounts because both participate in tests.
 busterPipeline:
   enabled: true
+  image:
+    repository: ghcr.io/datrab/kubeclaw-buster-pipeline
+    tag: "latest"
+    pullPolicy: Always
+  storageSize: "50Gi"
   resources:
-    requests: { cpu: 1000m, memory: 12288Mi, ephemeral-storage: 4Gi }
-    limits: { cpu: 4000m, memory: 24576Mi, ephemeral-storage: 50Gi }
+    requests: { cpu: "2", memory: 8Gi, ephemeral-storage: 8Gi }
+    limits: { cpu: "8", memory: 24Gi, ephemeral-storage: 60Gi }
 
 gateway:
   resources:
@@ -28,7 +31,7 @@ gateway:
     limits: { cpu: 1000m, memory: 24576Mi, ephemeral-storage: 50Gi }
 
 image:
-  repository: ghcr.io/datrab/kubeclaw-sandbox
+  repository: ghcr.io/datrab/kubeclaw-buster-gateway
   tag: "latest"
   pullPolicy: Always
 imagePullSecrets:
@@ -86,23 +89,11 @@ agent:
     secretName: "git-deploy-key-buster"
     repoUrl: "git@github.com:Ravencrypt/ForgeStack.git"
 
-sandbox:
-  enabled: true
-  storageSize: "50Gi"
-  registriesConf: |
-    unqualified-search-registries = ["docker.io"]
-
-    [[registry]]
-    location = "registry-local.kubeclaw.svc.cluster.local:5001"
-    insecure = true
-
-    [[registry]]
-    location = "registry-mirror.kubeclaw.svc.cluster.local:5000"
-    insecure = true
-
 serviceAccount:
   create: true
-  automount: true
+  # The pod-level token mount is disabled. Only buster-pipeline receives the
+  # projected lease-client token; the colocated OpenClaw gateway receives none.
+  automount: false
 
 busterNamespaceBroker:
   enabled: true
@@ -149,7 +140,7 @@ workspace:
     2. Review existing context: BUSTER.md, status.json, fail_summaries, and repo logs
     3. Read BUSTER.md for this module — contains all test specifications
     4. Execute every check in BUSTER.md sequentially against the running app. Log each result.
-    5. Do NOT run `sandbox-build`, `sandbox-serve`, or `sandbox-cleanup` — the Buster Pipeline handles this.
+    5. Do NOT build images or deploy workloads yourself — the Buster Pipeline owns BuildKit and namespace leases.
     6. Write verdict to status.json:
        - PASS: set status "PASS", document commit hash
        - FAIL: set status "FAIL", increment fail_count, write exact error to fail_summaries
@@ -158,7 +149,7 @@ workspace:
 
     ## What You Never Do
     - Fix code (that's Forge's job)
-    - Build, serve, or cleanup the sandbox (the Buster Pipeline does this)
+    - Build images, deploy workloads, or clean namespace leases (the Buster Pipeline does this)
     - Skip checks because "it's probably fine"
     - Mark PASS if any check is ambiguous — when in doubt, FAIL
 
@@ -196,5 +187,5 @@ workspace:
 
   bootstrap: |
     1. Read SOUL.md, AGENTS.md, TOOLS.md.
-    2. Post to Discord: "💥 Buster online. Sandbox operational."
+    2. Post to Discord: "💥 Buster online. Rootless build and leased-namespace verification operational."
     3. Delete this file.

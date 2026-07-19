@@ -25,7 +25,7 @@ KubeClaw deploys an OpenClaw-based agent platform into Kubernetes. The productio
 | Agent chart | `charts/kubeclaw/templates/deployment.yaml`; `service.yaml`; `pvc.yaml`; `rbac.yaml`; `configmap-gateway.yaml`; `configmap-swarm-config.yaml` | chart defaults plus `my-values/nova-values.yaml` and `my-values/buster-values.yaml` | Nova/Buster Deployments, Services, PVCs, runtime config overlays, service accounts | Helm render and deployment truth |
 | Network policy | `my-values/infra/network-policies.yaml`; `scripts/deploy.sh` infra/teardown functions | target namespace, service labels, DNS/port allowances | 13 portable Kubernetes `NetworkPolicy` resources | deployment truth |
 | Runtime config | `charts/kubeclaw/files/config/swarm.config.json`; `charts/kubeclaw/templates/configmap-swarm-config.yaml`; `skills/nova/pipeline/core/config.ts` | `SWARM_CONFIG`, `CURRENT_PROJECT`, `REPO_ROOT`, `.swarm/progress.json` | loaded platform config, project progress, plugin registry | config registry tests |
-| Images | `docker/Dockerfile.general`; `docker/Dockerfile.sandbox`; `.github/workflows/build-images.yaml`; `.dockerignore` | GHCR workflow tags, local registry overrides | general agent image, sandbox image, Prism preview image | deployment truth image/build-context assertions |
+| Images | `docker/Dockerfile.general`; `docker/Dockerfile.buster-gateway`; `docker/Dockerfile.buster-pipeline`; `.github/workflows/build-images.yaml`; `.dockerignore` | GHCR workflow tags, local registry overrides | general agent image, dedicated Buster gateway and pipeline images, namespace controller, Prism preview | deployment truth image/build-context assertions |
 
 ## Commands
 

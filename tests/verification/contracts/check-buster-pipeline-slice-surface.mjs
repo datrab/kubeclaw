@@ -31,13 +31,12 @@ const taskLifecycleSessionPath = path.join(sourceRoot, 'skills/buster/pipeline/s
 const taskLifecycleCompletionPath = path.join(sourceRoot, 'skills/buster/pipeline/services/task-lifecycle/completion-signal.ts');
 const taskValidationPath = path.join(sourceRoot, 'skills/buster/pipeline/services/task-validation.ts');
 const capabilitiesPath = path.join(sourceRoot, 'skills/buster/pipeline/services/capabilities.ts');
-const sandboxCleanupPath = path.join(sourceRoot, 'skills/buster/pipeline/services/sandbox-cleanup.ts');
+const resourceCleanupPath = path.join(sourceRoot, 'skills/buster/pipeline/services/resource-cleanup.ts');
 const rateLimitPath = path.join(sourceRoot, 'skills/buster/pipeline/services/rate-limit.ts');
 const discordPath = path.join(sourceRoot, 'skills/buster/pipeline/services/discord.ts');
-const baseImagesPath = path.join(sourceRoot, 'skills/buster/pipeline/services/base-images.ts');
+const imageReferencePath = path.join(sourceRoot, 'skills/buster/pipeline/services/image-reference.ts');
+const buildkitPath = path.join(sourceRoot, 'skills/buster/pipeline/services/buildkit.ts');
 const gatewayHealthPath = path.join(sourceRoot, 'skills/buster/pipeline/services/gateway-health.ts');
-const busterOpenClawPluginRuntimePath = path.join(sourceRoot, 'skills/buster/pipeline/services/openclaw-plugin-runtime.ts');
-const commonOpenClawPluginRuntimePath = path.join(sourceRoot, 'skills/common/pipeline/services/openclaw-plugin-runtime.ts');
 const suiteRunnerPath = path.join(sourceRoot, 'skills/buster/pipeline/runners/suite-runner.ts');
 const a11ySuitePath = path.join(sourceRoot, 'skills/buster/pipeline/suites/a11y.ts');
 const apiSuitePath = path.join(sourceRoot, 'skills/buster/pipeline/suites/api.ts');
@@ -70,13 +69,12 @@ const taskLifecycleCompletionSource = fs.readFileSync(taskLifecycleCompletionPat
 const taskLifecycleCombinedSource = `${taskLifecycleSource}\n${taskLifecycleSessionSource}\n${taskLifecycleCompletionSource}`;
 const taskValidationSource = fs.readFileSync(taskValidationPath, 'utf8');
 const capabilitiesSource = fs.readFileSync(capabilitiesPath, 'utf8');
-const sandboxCleanupSource = fs.readFileSync(sandboxCleanupPath, 'utf8');
+const resourceCleanupSource = fs.readFileSync(resourceCleanupPath, 'utf8');
 const rateLimitSource = fs.readFileSync(rateLimitPath, 'utf8');
 const discordSource = fs.readFileSync(discordPath, 'utf8');
-const baseImagesSource = fs.readFileSync(baseImagesPath, 'utf8');
+const imageReferenceSource = fs.readFileSync(imageReferencePath, 'utf8');
+const buildkitSource = fs.readFileSync(buildkitPath, 'utf8');
 const gatewayHealthSource = fs.readFileSync(gatewayHealthPath, 'utf8');
-const busterOpenClawPluginRuntimeSource = fs.readFileSync(busterOpenClawPluginRuntimePath, 'utf8');
-const commonOpenClawPluginRuntimeSource = fs.readFileSync(commonOpenClawPluginRuntimePath, 'utf8');
 const suiteRunnerSource = fs.readFileSync(suiteRunnerPath, 'utf8');
 const a11ySuiteSource = fs.readFileSync(a11ySuitePath, 'utf8');
 const apiSuiteSource = fs.readFileSync(apiSuitePath, 'utf8');
@@ -105,13 +103,9 @@ assert.equal(mainSource.includes("from './pipeline/services/pipeline-helpers.ts'
 assert.equal(mainSource.includes("from './pipeline/services/session-monitor.ts'"), false, 'typed buster entrypoint should not re-export or import the session monitor helper barrel');
 assert.equal(mainSource.includes('ensureTaskConsumerGroup'), true, 'buster-pipeline should initialize the task queue through the TaskQueue boundary');
 assert.equal(mainSource.includes("redisClient.xgroup('CREATE'"), false, 'buster-pipeline should not create Redis groups directly');
-assert.equal(mainSource.includes("from './pipeline/services/capabilities.ts'"), true, 'typed buster entrypoint should use the Buster capability contract at startup');
-assert.equal(mainSource.includes("from './pipeline/services/openclaw-plugin-runtime.ts'"), true, 'typed buster entrypoint should use shared OpenClaw observer plugin runtime control');
-assert.equal(mainSource.includes('createOpenClawAgentObserverPluginController(loadBusterPlatformConfig())'), true, 'Buster startup should enable the observer plugin from swarm.config.json');
-assert.equal(mainSource.includes('await openClawAgentObserverPlugin.start();'), true, 'Buster startup should enable observer plugin before task polling');
-assert.equal(mainSource.includes('await openClawAgentObserverPlugin.stop();'), true, 'Buster shutdown should disable observer plugin during cleanup');
-assert.equal(busterOpenClawPluginRuntimeSource.includes('../../../common/pipeline/services/openclaw-plugin-runtime.ts'), true, 'Buster OpenClaw plugin wrapper should re-export the common controller');
-assert.equal(commonOpenClawPluginRuntimeSource.includes("['plugins', action, pluginId]"), true, 'common OpenClaw plugin runtime should own enable/disable command construction');
+assert.equal(mainSource.includes('ensureBaseImages'), false, 'typed Buster startup must not preserve image pre-pull authority');
+assert.equal(mainSource.includes('openclaw-plugin-runtime'), false, 'Buster worker must not control gateway-owned plugins');
+assert.equal(mainSource.includes('createOpenClawAgentObserverPluginController'), false, 'Buster worker must not enable the gateway-owned observer plugin');
 assert.equal(capabilitiesSource.includes('BUSTER_CAPABILITIES'), true, 'Buster capability contract should define canonical capabilities');
 assert.equal(capabilitiesSource.includes('appendDurableOperatorAlert'), true, 'Buster capability denials must write durable operator alerts');
 assert.equal(capabilitiesSource.includes('explicitCandidates.length > 0'), true, 'Buster capability alerts should not write repo-root .swarm fallback when explicit log targets exist');
@@ -160,7 +154,10 @@ assert.equal(apiSuiteSource.includes('STATUS.SKIP'), false, 'requested API suite
 assert.equal(apiSuiteSource.includes('api.spec_file is required'), true, 'API suite should fail typed validation when spec_file is missing');
 assert.equal(apiSuiteSource.includes('Missing API template variable'), true, 'API suite should fail tests with missing template variables instead of silently preserving placeholders');
 assert.equal(buildSuiteSource.includes('UNRESOLVED_SECRET_'), false, 'build suite must not inject unresolved secret placeholders');
-assert.equal(buildSuiteSource.includes('serve.secret_yaml is required when deployment env uses secretKeyRef'), true, 'build suite should fail when manifest env secret refs lack secret YAML');
+assert.equal(buildSuiteSource.includes('validateSecretAuthority'), true, 'build suite should validate deployment secret authority before deployment');
+assert.equal(buildSuiteSource.includes('k8sSuite'), true, 'build suite should reuse leased-namespace deployment authority');
+assert.equal(buildkitSource.includes('push=true'), true, 'BuildKit must build and publish in one operation');
+assert.equal(buildkitSource.includes('immutableImage'), true, 'BuildKit must return an immutable digest reference');
 assert.equal(healthSuiteSource.includes('autoDetectSmokePaths'), false, 'health suite must not infer smoke paths from visual-reg baselines');
 assert.equal(healthSuiteSource.includes('Smoke HTTP checks'), true, 'health suite smoke paths should be bounded HTTP checks');
 assert.equal(healthSuiteSource.includes("import('playwright')"), false, 'health suite must not depend on Playwright for smoke paths');
@@ -176,20 +173,13 @@ assert.equal(k8sSuiteSource.includes('Math.min(remainingSeconds, 30)'), true, 'k
 assert.equal(manifestSuiteSource.includes('STATUS.SKIP'), false, 'requested manifest suite must not SKIP missing deployment YAML');
 assert.equal(manifestSuiteSource.includes('manifest.deployment_yaml is required'), true, 'manifest suite should fail typed validation when deployment YAML is missing');
 assert.equal(manifestSuiteSource.includes('Deployment uses secretKeyRef but manifest.secret_yaml is missing or invalid'), true, 'manifest suite should fail when secret refs lack valid secret YAML evidence');
-assert.equal(baseImagesSource.includes('loadBaseImagesFromProgress'), false, 'base images must not mine .swarm/progress.json for legacy image inputs');
-assert.equal(baseImagesSource.includes('docker.io/library/${value}'), false, 'base images must not normalize bare image names to docker.io/library');
-assert.equal(baseImagesSource.includes("reason: 'not_fully_qualified'"), true, 'base images should require fully qualified typed image refs');
-assert.equal(baseImagesSource.includes("'podman_inspect_failed'"), true, 'base image inspect failures should surface typed degraded image result metadata');
-assert.equal(baseImagesSource.includes("'podman_pull_failed'"), true, 'base image pull failures should surface typed degraded image result metadata');
+assert.equal(imageReferenceSource.includes("reason: 'not_fully_qualified'"), true, 'images should require fully qualified typed references');
 assert.equal(rateLimitSource.includes("liveness_state"), true, 'buster rate-limit recovery should return typed liveness state evidence');
 assert.equal(rateLimitSource.includes("if (liveness.state === 'closed')"), true, 'buster rate-limit recovery should only kill after confirmed closed liveness');
 assert.equal(rateLimitSource.includes("state: 'probe_error'"), true, 'buster rate-limit probe errors should be represented as typed liveness states');
-assert.equal(sandboxCleanupSource.includes("'corrupt'"), true, 'sandbox cleanup should distinguish corrupt cleanup state files');
-assert.equal(sandboxCleanupSource.includes("'missing'"), true, 'sandbox cleanup should distinguish missing cleanup state files');
-assert.equal(sandboxCleanupSource.includes('cleanup_policy ||'), false, 'sandbox cleanup owner should not retain snake_case cleanup policy alias fallback');
-assert.equal(sandboxCleanupSource.includes('tracked_resources'), true, 'sandbox cleanup may still expose public snake_case result fields');
-assert.equal(sandboxCleanupSource.includes("from './capabilities.ts'"), false, 'sandbox cleanup must not be gated by task capability limits');
-assert.equal(sandboxCleanupSource.includes('discoverLabeledResources'), true, 'sandbox cleanup should discover run-labeled rogue resources with maximum platform authority');
+assert.equal(resourceCleanupSource.includes('busternamespacelease'), true, 'runtime cleanup should delete leases through the controller');
+assert.equal(resourceCleanupSource.includes('containers'), false, 'runtime cleanup must not retain local container authority');
+assert.equal(resourceCleanupSource.includes('images'), false, 'runtime cleanup must not retain local image authority');
 assert.equal(taskQueueSource.includes("from './task-transport-contract.ts'"), true, 'Buster task queue should depend on the TaskQueue transport boundary');
 assert.equal(taskQueueSource.includes('createRedisTaskQueue('), true, 'Buster task queue should construct a TaskQueue adapter around the Redis client');
 assert.equal(taskCompletionSource.includes("from './task-transport-contract.ts'"), true, 'Buster completion should depend on the EventBus transport boundary');
@@ -213,7 +203,7 @@ for (const marker of [
   'export function buildSessionCompleteEmbed(',
   'export function buildTimeoutEmbed(',
   'export function buildTaskFailureEmbed(',
-  'export async function doSandboxCleanup(',
+  'export async function doResourceCleanup(',
 ]) {
   assert.equal(helpersSource.includes(marker), true, `buster task helper module must export ${marker}`);
 }
@@ -253,7 +243,7 @@ assert.equal(mainSource.includes('BUSTER_RUNTIME_LOOP_POLICY'), true, 'buster ru
 assert.equal(mainSource.includes("reason: 'task_poll_loop_failed'"), true, 'buster runtime loop failures should emit structured diagnostics');
 assert.equal(mainSource.includes('new Promise(resolve => setTimeout(resolve, 3000))'), false, 'buster runtime loop must not keep raw sleep');
 assert.equal(gatewayHealthSource.includes("shutdownGateway('GATEWAY_HEALTH_FAILED'"), true, 'buster gateway health monitor should route failures through structured shutdown');
-assert.equal(mainSource.includes('doSandboxCleanup(cleanupStage'), true, 'structured shutdown should run sandbox cleanup for the triggering stage');
+assert.equal(mainSource.includes('doResourceCleanup(cleanupStage'), true, 'structured shutdown should run lease cleanup for the triggering stage');
 assert.equal(suiteRunnerSource.includes('export async function runSuiteWithTimeout('), true, 'suite runner should expose timeout wrapper for direct cleanup regression coverage');
 assert.equal(suiteRunnerSource.includes('clearTimeout(timeoutId)'), true, 'suite runner must clear suite timeout handles after suite completion');
 assert.equal(suiteRunnerSource.includes("emitEvent(tctx, 'observability.degraded'"), true, 'suite result write failures should emit structured degraded diagnostics');
@@ -304,30 +294,22 @@ for (const disallowed of [
   'export function buildSessionSpawnEmbed(',
   'export function buildSessionCompleteEmbed(',
   'export function buildTimeoutEmbed(',
-  'async function doSandboxCleanup(',
+  'async function doResourceCleanup(',
   'export async function monitorSession(',
 ]) {
   assert.equal(mainSource.includes(disallowed), false, `buster-pipeline main surface must not keep extracted helper ${disallowed}`);
 }
 
 const mainMod = await import(pathToFileURL(mainPath).href);
-const busterOpenClawPluginRuntimeMod = await import(pathToFileURL(busterOpenClawPluginRuntimePath).href);
-const commonOpenClawPluginRuntimeMod = await import(pathToFileURL(commonOpenClawPluginRuntimePath).href);
-const baseImagesMod = await import(pathToFileURL(baseImagesPath).href);
+const imageReferenceMod = await import(pathToFileURL(imageReferencePath).href);
 const helpersMod = await import(pathToFileURL(helpersPath).href);
 const monitorMod = await import(pathToFileURL(monitorPath).href);
 const suiteRunnerMod = await import(pathToFileURL(suiteRunnerPath).href);
 const capabilitiesMod = await import(pathToFileURL(capabilitiesPath).href);
 const validationMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/buster/pipeline/services/task-validation.ts')).href);
 
-assert.equal(baseImagesMod.validateBaseImageRef('node:20-slim').ok, false, 'bare base image refs must not be normalized or accepted');
-assert.equal(baseImagesMod.validateBaseImageRef('docker.io/library/node:20-slim').ok, true, 'fully qualified base image refs should validate');
-assert.equal(
-  busterOpenClawPluginRuntimeMod.createOpenClawAgentObserverPluginController,
-  commonOpenClawPluginRuntimeMod.createOpenClawAgentObserverPluginController,
-  'Buster OpenClaw plugin runtime wrapper must re-export the common controller',
-);
-
+assert.equal(imageReferenceMod.validateImageReference('node:20-slim').ok, false, 'bare image refs must not be normalized or accepted');
+assert.equal(imageReferenceMod.validateImageReference('docker.io/library/node:20-slim').ok, true, 'fully qualified image refs should validate');
 assert.throws(() => suiteRunnerMod.validateSuiteNames(['build', 'missing-suite']), (error) => {
   assert.equal(error.code, 'BUSTER_SUITE_REQUEST_INVALID');
   assert.equal(error.details.reason, 'unsupported_suite');
@@ -364,7 +346,7 @@ for (const [mod, name] of [
   [helpersMod, 'ensureBusterOutputFile'],
   [helpersMod, 'resolveBusterRateLimitMaxPauses'],
   [helpersMod, 'buildPreTestVerdict'],
-  [helpersMod, 'doSandboxCleanup'],
+  [helpersMod, 'doResourceCleanup'],
   [monitorMod, 'monitorSession'],
 ]) {
   assert.equal(typeof mod[name], 'function', `${name} should be exported from its owning module`);
@@ -387,13 +369,11 @@ for (const removedRootExport of [
 }
 
 assert.deepEqual(capabilitiesMod.KNOWN_BUSTER_CAPABILITIES, [
-  'static_web_server',
-  'container_runtime',
+  'image_build',
   'kubernetes',
   'browser_automation',
   'lighthouse',
   'discord_media',
-  'image_prepull',
 ]);
 
 const validBusterTaskPayload = {
@@ -621,6 +601,7 @@ const fakeSuiteTelemetryRedis = {
 const blockedLogDir = path.join(repoRootForArtifact, '.tmp-buster-suite-blocked-log');
 fs.writeFileSync(blockedLogDir, 'not-a-directory\n');
 const suiteResultWithBlockedWrite = await suiteRunnerMod.runSuites(['build'], {
+  repoRoot: repoRootForArtifact,
   payload: {
     project: 'demo-project',
     test_config: { suite_timeout_ms: 300000, serve: { type: 'static' } },

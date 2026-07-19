@@ -1,4 +1,7 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import test from 'node:test';
 
 import {
@@ -13,6 +16,7 @@ import {
   shouldUsePortForwardHealthCheck,
   validateK8sServicePort,
 } from '../../../../../skills/buster/pipeline/suites/k8s.ts';
+import { startServicePortForward } from '../../../../../skills/buster/pipeline/suites/k8s-port-forward.ts';
 
 test('renderManifestForK8sSuite rejects cluster-scoped manifests', () => {
   const manifest = `
@@ -136,6 +140,23 @@ test('buildK8sSuiteNamespace truncates project segment while preserving suffix',
 test('buildLocalServiceHealthUrl points service checks at the local port-forward', () => {
   assert.equal(buildLocalServiceHealthUrl(49152, '/ready'), 'http://127.0.0.1:49152/ready');
   assert.equal(buildLocalServiceHealthUrl(49152, 'ready'), 'http://127.0.0.1:49152/ready');
+});
+
+test('task-scoped service port-forward starts and stops its kubectl subprocess', async () => {
+  const fixtureDir = fs.mkdtempSync(path.join(os.tmpdir(), 'k8s-port-forward-'));
+  const kubectl = path.join(fixtureDir, 'kubectl');
+  fs.writeFileSync(kubectl, '#!/bin/sh\ntrap "exit 0" TERM INT\nprintf "Forwarding from 127.0.0.1\\n"\nwhile :; do sleep 1; done\n');
+  fs.chmodSync(kubectl, 0o755);
+  try {
+    const forward = await startServicePortForward('test-app', 'app', 8080, '/health', () => {}, {
+      ...process.env,
+      PATH: `${fixtureDir}:${process.env.PATH}`,
+    });
+    assert.match(forward.url, /^http:\/\/127\.0\.0\.1:\d+\/health$/);
+    await forward.stop();
+  } finally {
+    fs.rmSync(fixtureDir, { recursive: true, force: true });
+  }
 });
 
 test('shouldUsePortForwardHealthCheck skips port-forward for final-preview Tailscale exposure', () => {

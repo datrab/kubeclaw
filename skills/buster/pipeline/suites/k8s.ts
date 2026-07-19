@@ -7,9 +7,7 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // secret propagation must fail loudly when missing or broken.
 
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
-import { execFile, spawn } from 'child_process';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
-import net from 'net';
+import { execFile } from 'child_process';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { promisify } from 'util';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
@@ -21,15 +19,18 @@ import path from 'path';
 import { createSuiteVerdict, createFinding, STATUS, SEVERITY } from '../services/verdict-schema.ts';
 import type { Finding, SuiteStatus, SuiteVerdict } from '../services/verdict-schema.ts';
 import { getRepoRoot } from '../services/git-workflows.ts';
-import { buildCleanupKubernetesLabels, buildCleanupPodmanLabelArgs, trackSandboxResources } from '../services/sandbox-cleanup.ts';
+import { buildCleanupKubernetesLabels, trackRuntimeResources } from '../services/resource-cleanup.ts';
 import { dumpYamlDocuments, loadYamlDocuments } from './manifest.ts';
 import { resolveRepoScopedPath } from './repo-paths.ts';
 import { buildSubprocessEnv } from '../security.ts';
 import { buildPreviewCredentialCommand, normalizeTestCredentialSpecs, parseSecretNameFromRef } from './k8s-credentials.ts';
 import type { TestCredentialSpec } from './k8s-credentials.ts';
-import { promoteSourceImage, pushImage } from './k8s-image-promotion.ts';
+import { buildAndPushImage, copyAndPushImage } from '../services/buildkit.ts';
 import { buildK8sCommandEnv, execFileWithInput } from './k8s-command-env.ts';
 import type { K8sCommandEnv } from './k8s-command-env.ts';
+import { withServicePortForward } from './k8s-port-forward.ts';
+
+export { buildLocalServiceHealthUrl } from './k8s-port-forward.ts';
 
 export { normalizeTestCredentialSpecs };
 
@@ -301,22 +302,6 @@ export function renderManifestForK8sSuiteWithStats(content: string, imageName: s
 
 export function renderManifestForK8sSuite(content: string, imageName: string, registryTag: string, targetNs: string, log: SuiteLog = () => {}): string {
   return renderManifestForK8sSuiteWithStats(content, imageName, registryTag, targetNs, log).content;
-}
-
-async function buildImage(dockerfile: string, buildContext: string, tag: string, timeoutMs: number, log: SuiteLog, payload: AnyRecord = {}): Promise<void> {
-  log(`Building: ${tag}`);
-  log(`  Dockerfile: ${dockerfile}`);
-  log(`  Context:    ${buildContext}`);
-  const { stdout, stderr } = await execFileAsync('podman', [
-    'build',
-    ...buildCleanupPodmanLabelArgs(payload),
-    '--pull=never',
-    '-t', tag,
-    '-f', dockerfile,
-    buildContext,
-  ], { timeout: timeoutMs, encoding: 'utf8', maxBuffer: 20 * 1024 * 1024, env: buildSubprocessEnv() });
-  const lines = `${stdout}\n${stderr}`.trim().split('\n');
-  log(`Build output (last 10):\n${lines.slice(-10).join('\n')}`);
 }
 
 export function kubectlOutputLooksLikeHtml(value: unknown): boolean {
@@ -692,76 +677,6 @@ async function httpHealthCheck(url: string, log: SuiteLog): Promise<number> {
   return code;
 }
 
-function allocateLocalPort(): Promise<number> {
-  return new Promise((resolve, reject) => {
-    const server = net.createServer();
-    server.once('error', reject);
-    server.listen(0, '127.0.0.1', () => {
-      const address = server.address();
-      server.close((error: unknown) => {
-        if (error) {
-          reject(error);
-          return;
-        }
-        if (selectTruthyValue(() => (!address), () => (typeof address === 'string'))) {
-          reject(new Error('could not allocate local port for kubectl port-forward'));
-          return;
-        }
-        resolve(address.port);
-      });
-    });
-  });
-}
-
-export function buildLocalServiceHealthUrl(localPort: number, healthPath: string): string {
-  return `http://127.0.0.1:${localPort}${healthPath.startsWith('/') ? healthPath : `/${healthPath}`}`;
-}
-
-async function withServicePortForward<T>(ns: string, serviceName: string, servicePort: number, healthPath: string, log: SuiteLog, env: K8sCommandEnv, action: (url: string) => Promise<T>): Promise<T> {
-  const localPort = await allocateLocalPort();
-  const localUrl = buildLocalServiceHealthUrl(localPort, healthPath);
-  log(`Port-forwarding svc/${serviceName} ${localPort}:${servicePort} in ${ns}`);
-
-  const child = spawn('kubectl', ['-n', ns, 'port-forward', `svc/${serviceName}`, `${localPort}:${servicePort}`, '--address', '127.0.0.1'], {
-    env,
-    stdio: ['ignore', 'pipe', 'pipe'],
-  });
-  let output = '';
-  let settled = false;
-
-  const ready = await new Promise<void>((resolve, reject) => {
-    const timeout = setTimeout(() => {
-      reject(new Error(`kubectl port-forward did not become ready: ${trimOut(output, 500)}`));
-    }, 15000);
-    const finish = (error?: Error): void => {
-      if (settled) return;
-      settled = true;
-      clearTimeout(timeout);
-      if (error) reject(error);
-      else resolve();
-    };
-    const onData = (chunk: unknown): void => {
-      output += String(chunk);
-      if (/Forwarding from/i.test(output)) finish();
-    };
-    child.stdout?.on('data', onData);
-    child.stderr?.on('data', onData);
-    child.once('error', (error: Error) => finish(error));
-    child.once('exit', (code: number | null, signal: string | null) => {
-      const exitCode = code === null ? 'exit_code_not_reported' : String(code);
-      const exitSignal = signal === null ? 'signal_not_reported' : signal;
-      finish(new Error(`kubectl port-forward exited before ready (code=${exitCode} signal=${exitSignal}): ${trimOut(output, 500)}`));
-    });
-  });
-
-  try {
-    await ready;
-    return await action(localUrl);
-  } finally {
-    if (!child.killed) child.kill('SIGTERM');
-  }
-}
-
 export function shouldUsePortForwardHealthCheck({ purpose, previewExposureProvider }: { purpose: string; previewExposureProvider: string }): boolean {
   return !(purpose === 'final-preview' && previewExposureProvider === 'tailscale-ingress');
 }
@@ -959,12 +874,8 @@ export default async function k8sSuite(context: K8sContext): Promise<SuiteVerdic
     credentialsKeys: previewCredentialsKeys,
     revealCredentials: previewRevealCredentials,
   };
-  const localTag = `localhost/k8s-suite-${imageName}:${runId}`;
   const registryTag = `${registryLocal}/${imageName}:${runId}`;
-  trackSandboxResources(payload, {
-    images: sourceImage ? [registryTag] : [localTag, registryTag],
-    namespaces: purpose === 'final-preview' && previewExposureProvider === 'tailscale-ingress' ? [] : [testNs],
-  });
+  trackRuntimeResources(payload, { leases: [leaseName] });
   log(`Starting: module=${moduleId} project=${payload?.project} ns=${testNs}`);
   const namespaceLease = buildBusterNamespaceLease({
     leaseName,
@@ -987,6 +898,7 @@ export default async function k8sSuite(context: K8sContext): Promise<SuiteVerdic
   let internalBodyBytes: number | null = null;
   let sourceImageId: string | null = null;
   let registryImageDigest: string | null = null;
+  let deploymentImage: string | null = null;
 
   const runStep = async (name: string, started: string, action: () => Promise<string>): Promise<void> => {
     if (criticalFailed) return;
@@ -1011,20 +923,24 @@ export default async function k8sSuite(context: K8sContext): Promise<SuiteVerdic
   });
   if (sourceImage) {
     await runStep('source-image-promote', `Promoting ${sourceImage} to ${registryLocal}`, async () => {
-      const promotion = await promoteSourceImage(sourceImage, registryTag, pushTimeoutMs, log);
-      sourceImageId = promotion.sourceImageId;
-      registryImageDigest = promotion.registryDigest;
-      const immutable = registryImageDigest || sourceImageId || 'immutable-id-unavailable';
-      return `Promoted: ${sourceImage} -> ${registryTag} (${immutable})`;
+      const result = await copyAndPushImage({ sourceImage, image: registryTag, timeoutMs: pushTimeoutMs, log });
+      sourceImageId = result.digest;
+      registryImageDigest = result.digest;
+      deploymentImage = result.immutableImage;
+      return `Promoted: ${sourceImage} -> ${result.immutableImage}`;
     });
   } else {
-    await runStep('dockerfile-build', `Building ${imageName} from ${k8sCfg.dockerfile}`, async () => {
-      await buildImage(dockerfile as string, buildContext as string, localTag, buildTimeoutMs, log, payload);
-      return `Built: ${localTag}`;
-    });
-    await runStep('registry-push', `Pushing to ${registryLocal}`, async () => {
-      await pushImage(localTag, registryTag, pushTimeoutMs, log);
-      return `Pushed: ${registryTag}`;
+    await runStep('buildkit-build-push', `Building and publishing ${imageName} from ${k8sCfg.dockerfile}`, async () => {
+      const result = await buildAndPushImage({
+        dockerfile: dockerfile as string,
+        contextDir: buildContext as string,
+        image: registryTag,
+        timeoutMs: buildTimeoutMs + pushTimeoutMs,
+        log,
+      });
+      registryImageDigest = result.digest;
+      deploymentImage = result.immutableImage;
+      return `Published: ${result.immutableImage}`;
     });
   }
   await runStep('namespace-lease', testNs, async () => {
@@ -1054,7 +970,8 @@ export default async function k8sSuite(context: K8sContext): Promise<SuiteVerdic
       : 'No required secrets requested';
   });
   await runStep('manifest-apply', `${manifestPaths.length} manifest(s) → ${testNs}`, async () => {
-    await applyManifests(manifestPaths, imageName, registryTag, testNs, deployTimeoutMs, log, k8sCommandEnv);
+    if (!deploymentImage) throw new Error('BuildKit image digest missing before manifest apply');
+    await applyManifests(manifestPaths, imageName, deploymentImage, testNs, deployTimeoutMs, log, k8sCommandEnv);
     return `${manifestPaths.length} manifest(s) applied`;
   });
   await runStep('test-credentials', `${testCredentialSpecs.length} app test credential secret(s)`, async () => {
@@ -1128,6 +1045,7 @@ export default async function k8sSuite(context: K8sContext): Promise<SuiteVerdic
       source_image: sourceImage,
       source_image_id: sourceImageId,
       registry_image: registryTag,
+      deployed_image: deploymentImage,
       registry_image_digest: registryImageDigest,
       image_promotion: sourceImage
         ? {

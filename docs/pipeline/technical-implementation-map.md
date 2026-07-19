@@ -169,9 +169,9 @@ Why: Redis gives durable-ish asynchronous handoff between Nova and Buster pods. 
 
 ### 18. Buster Worker Startup
 
-Source: `skills/buster/buster-pipeline.ts`, `pipeline/services/gateway-health.ts`, `pipeline/services/orphan-recovery.ts`, `pipeline/services/sandbox-cleanup.ts`.
+Source: `skills/buster/buster-pipeline.ts`, `pipeline/services/gateway-health.ts`, `pipeline/services/orphan-recovery.ts`, `pipeline/services/resource-cleanup.ts`, `pipeline/services/buildkit.ts`.
 
-Buster waits for gateway readiness, recovers allowed orphan sessions, cleans the sandbox, starts gateway health monitoring, optionally prepares base images, creates the consumer group, then polls tasks.
+Buster waits for gateway readiness, recovers allowed orphan sessions and tracked leases, starts gateway health monitoring, creates the consumer group, then polls tasks. The sidecar readiness probe independently requires a live rootless BuildKit worker.
 
 Why: a worker should not accept tasks until the runtime surfaces it depends on are healthy.
 

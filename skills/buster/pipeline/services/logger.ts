@@ -10,7 +10,7 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // Usage:
 //   const logger = createLogger({ logPath, module, taskType });
 //   logger.step('pre-cleanup');
-//   logger.info('SANDBOX', 'Cleanup started');
+//   logger.info('RESOURCE', 'Cleanup started');
 //   logger.warn('GIT', 'No commit hash provided');
 //   logger.error('SPAWN', 'Failed to spawn session', { err: e.message });
 //   logger.flush(); // no-op — writes are synchronous
@@ -214,7 +214,7 @@ export function createLogger(opts: LoggerOptions = {}): Logger {
   return {
     /**
      * Log an INFO entry.
-     * @param {string} tag   - Short category label (e.g. "SANDBOX", "GIT")
+     * @param {string} tag   - Short category label (e.g. "RESOURCE", "GIT")
      * @param {string} msg   - Human-readable message
      * @param {object} [data] - Optional structured payload
      */

@@ -36,7 +36,10 @@ const busterNamespaceFencePath = path.join(sourceRoot, 'my-values', 'infra', 'bu
 const imageBuildWorkflowPath = path.join(sourceRoot, '.github', 'workflows', 'build-images.yaml');
 const packageSkillBundleScriptPath = path.join(sourceRoot, 'scripts', 'package-agent-skill-bundle.sh');
 const generalDockerfilePath = path.join(sourceRoot, 'docker', 'Dockerfile.general');
-const sandboxDockerfilePath = path.join(sourceRoot, 'docker', 'Dockerfile.sandbox');
+const generalToolsPackagePath = path.join(sourceRoot, 'docker', 'general-tools', 'package.json');
+const generalToolsLockPath = path.join(sourceRoot, 'docker', 'general-tools', 'package-lock.json');
+const busterGatewayDockerfilePath = path.join(sourceRoot, 'docker', 'Dockerfile.buster-gateway');
+const busterPipelineDockerfilePath = path.join(sourceRoot, 'docker', 'Dockerfile.buster-pipeline');
 const namespaceControllerDockerfilePath = path.join(sourceRoot, 'docker', 'Dockerfile.namespace-controller');
 const rbacSandboxDocsPath = path.join(sourceRoot, 'docs', 'deployment', 'rbac-and-sandbox.md');
 
@@ -140,6 +143,10 @@ function resourceQuantity(container, type, resourceName) {
 
 function containerMountPaths(container) {
   return (container?.volumeMounts || []).map((mount) => mount?.mountPath).filter(Boolean);
+}
+
+function containerMount(container, mountPath) {
+  return (container?.volumeMounts || []).find((mount) => mount?.mountPath === mountPath);
 }
 
 function envValue(container, name) {
@@ -408,7 +415,14 @@ const networkPolicies = fs.readFileSync(networkPoliciesPath, 'utf8');
 const imageBuildWorkflow = fs.readFileSync(imageBuildWorkflowPath, 'utf8');
 const packageSkillBundleScript = fs.readFileSync(packageSkillBundleScriptPath, 'utf8');
 const generalDockerfile = fs.readFileSync(generalDockerfilePath, 'utf8');
-const sandboxDockerfile = fs.readFileSync(sandboxDockerfilePath, 'utf8');
+const generalToolsPackage = JSON.parse(fs.readFileSync(generalToolsPackagePath, 'utf8'));
+const generalToolsLock = JSON.parse(fs.readFileSync(generalToolsLockPath, 'utf8'));
+const busterGatewayDockerfile = fs.readFileSync(busterGatewayDockerfilePath, 'utf8');
+const busterPipelineDockerfile = fs.readFileSync(busterPipelineDockerfilePath, 'utf8');
+const busterGatewayRuntimeStage = busterGatewayDockerfile.split(/^FROM /m).at(-1);
+const generalOpenClawBase = generalDockerfile.match(/^ARG OPENCLAW_BASE=(.+)$/m)?.[1];
+const busterOpenClawBase = busterGatewayDockerfile.match(/^ARG OPENCLAW_BASE=(.+)$/m)?.[1];
+const generalAptInstall = generalDockerfile.match(/apt-get install -y --no-install-recommends([\s\S]*?)&& rm -rf \/var\/lib\/apt\/lists\//)?.[1] ?? '';
 const namespaceControllerDockerfile = fs.readFileSync(namespaceControllerDockerfilePath, 'utf8');
 const rbacSandboxDocs = fs.readFileSync(rbacSandboxDocsPath, 'utf8');
 const deployScriptMode = fs.statSync(deployScriptPath).mode;
@@ -664,6 +678,11 @@ assertIncludes(
   'for _, account := range c.additionalRunnerAccounts',
   'Buster namespace controller must bind additional runner ServiceAccounts in broker-created namespaces',
 );
+assertIncludes(
+  busterNamespaceControllerSource,
+  '"resources": []string{"pods/portforward"}',
+  'Buster namespace controller must grant port-forward only inside broker-created namespaces',
+);
 assert.equal(
   rulesGrantResource(busterLeaseClientRoleObject.rules, 'namespaces'),
   false,
@@ -717,18 +736,38 @@ assert.equal(
 
 assert.deepEqual(
   containerMountPaths(busterGatewayContainerObject).filter((mountPath) => ['/var/lib/containers', '/sandbox'].includes(mountPath)).sort(),
-  ['/sandbox', '/var/lib/containers'],
-  'Structured Buster gateway container must mount bounded sandbox storage',
+  [],
+  'Structured Buster gateway container must not mount build or workload runtime storage',
 );
 assert.deepEqual(
   containerMountPaths(novaGatewayContainerObject).filter((mountPath) => ['/var/lib/containers', '/sandbox'].includes(mountPath)).sort(),
-  ['/sandbox', '/var/lib/containers'],
-  'Structured Nova gateway container must mount bounded sandbox storage for contained real E2E execution',
+  [],
+  'Structured Nova gateway container must not mount container runtime storage',
 );
 assert.deepEqual(
   containerMountPaths(busterPipelineContainerObject).filter((mountPath) => ['/var/lib/containers', '/sandbox'].includes(mountPath)).sort(),
-  ['/sandbox', '/var/lib/containers'],
-  'Structured Buster pipeline container must mount bounded sandbox storage',
+  [],
+  'Structured Buster pipeline container must not mount privileged container runtime storage',
+);
+assert.equal(
+  busterDeploymentObject.spec?.template?.spec?.automountServiceAccountToken,
+  false,
+  'Structured Buster pod must disable implicit service-account token mounts',
+);
+assert.equal(
+  containerMountPaths(busterGatewayContainerObject).includes('/var/run/secrets/kubernetes.io/serviceaccount'),
+  false,
+  'Structured Buster gateway must not receive Kubernetes API credentials',
+);
+assert.equal(
+  containerMountPaths(busterPipelineContainerObject).includes('/var/run/secrets/kubernetes.io/serviceaccount'),
+  true,
+  'Structured Buster pipeline must receive the explicit projected Kubernetes API credential',
+);
+assert.equal(
+  Array.isArray(volumeByName(busterDeploymentObject, 'buster-api-token')?.projected?.sources),
+  true,
+  'Structured Buster pipeline credential must be a projected service-account volume',
 );
 assert.equal(novaDeploymentObject.spec?.template?.spec?.terminationGracePeriodSeconds >= 120, true, 'Structured Nova deployment must define a real shutdown grace budget');
 assert.equal(busterDeploymentObject.spec?.template?.spec?.terminationGracePeriodSeconds >= 120, true, 'Structured Buster deployment must define a real shutdown grace budget');
@@ -743,17 +782,24 @@ for (const [label, container] of [
   assertIncludes(preStopCommand(container), 'sleep "${KUBECLAW_PRESTOP_DRAIN_SECONDS:-5}"', `${label} preStop hook must give readiness a short handoff window`);
 }
 assert.equal(resourceQuantity(busterGatewayContainerObject, 'limits', 'ephemeral-storage'), '50Gi', 'Structured Buster gateway ephemeral-storage limit must be 50Gi');
-assert.equal(resourceQuantity(busterPipelineContainerObject, 'limits', 'ephemeral-storage'), '50Gi', 'Structured Buster pipeline ephemeral-storage limit must be 50Gi');
-assert.equal(volumeByName(novaDeploymentObject, 'podman-storage')?.emptyDir?.sizeLimit, '50Gi', 'Structured Nova Podman emptyDir storage must be capped at 50Gi');
-assert.equal(volumeByName(busterDeploymentObject, 'podman-storage')?.emptyDir?.sizeLimit, '50Gi', 'Structured Buster Podman emptyDir storage must be capped at 50Gi');
-assert.equal(novaDeploymentObject.spec?.template?.spec?.shareProcessNamespace, false, 'Structured Nova sandbox deployment must not share the pod process namespace');
-assert.equal(novaGatewayContainerObject.securityContext?.privileged, true, 'Structured Nova sandbox deployment must retain privileged Podman-in-Pod execution');
-assert.equal(busterGatewayContainerObject.livenessProbe?.periodSeconds >= 10, true, 'Buster gateway liveness period must tolerate sandbox pressure');
-assert.equal(busterGatewayContainerObject.livenessProbe?.timeoutSeconds >= 5, true, 'Buster gateway liveness timeout must tolerate sandbox pressure');
+assert.equal(resourceQuantity(busterPipelineContainerObject, 'limits', 'ephemeral-storage'), '60Gi', 'Structured Buster pipeline ephemeral-storage limit must be 60Gi');
+assert.equal(volumeByName(busterDeploymentObject, 'buildkit-state')?.emptyDir?.sizeLimit, '50Gi', 'Structured Buster rootless BuildKit state must be bounded at 50Gi');
+assert.equal(containerMountPaths(busterPipelineContainerObject).includes('/run/user/1000'), true, 'Structured Buster pipeline must expose its rootless BuildKit socket across the worker mount namespace');
+assert.equal(containerMount(busterPipelineContainerObject, '/home/node/.openclaw')?.readOnly, true, 'Structured Buster pipeline must consume gateway configuration read-only');
+assert.equal(containerMountPaths(busterPipelineContainerObject).includes('/home/node/.openclaw-persisted'), false, 'Structured Buster pipeline must not mount the gateway persisted-config alias');
+assert.equal(envValue(busterPipelineContainerObject, 'KUBECLAW_HEALTH_STARTUP_STATUS_PATH'), '/home/builder/.openclaw/logs/startup-verification.json', 'Structured Buster pipeline must write startup health evidence in its builder-owned home');
+assert.equal(novaDeploymentObject.spec?.template?.spec?.shareProcessNamespace, true, 'Structured Nova deployment should share process namespace for lifecycle coordination');
+assert.equal(busterDeploymentObject.spec?.template?.spec?.shareProcessNamespace, false, 'Structured Buster deployment must not expose gateway processes to the pipeline sidecar');
+assert.equal(novaGatewayContainerObject.securityContext?.privileged, false, 'Structured Nova gateway must remain non-privileged');
+assert.equal(busterGatewayContainerObject.securityContext?.privileged, false, 'Structured Buster gateway must remain non-privileged');
+assert.equal(busterPipelineContainerObject.securityContext?.privileged, false, 'Structured Buster pipeline must remain non-privileged');
+assert.equal(busterGatewayContainerObject.livenessProbe?.periodSeconds >= 10, true, 'Buster gateway liveness period must tolerate build pressure');
+assert.equal(busterGatewayContainerObject.livenessProbe?.timeoutSeconds >= 5, true, 'Buster gateway liveness timeout must tolerate build pressure');
 assert.equal(busterGatewayContainerObject.livenessProbe?.failureThreshold >= 6, true, 'Buster gateway liveness failure threshold must avoid transient restart loops');
-assert.equal(envValue(busterPipelineContainerObject, 'BUSTER_PLATFORM_CAPABILITIES'), 'image_prepull', 'Buster pipeline must pre-pull standard base images before task polling');
-assert.equal(busterPipelineContainerObject.livenessProbe?.periodSeconds >= 10, true, 'Buster pipeline liveness period must tolerate sandbox pressure');
-assert.equal(busterPipelineContainerObject.livenessProbe?.timeoutSeconds >= 5, true, 'Buster pipeline liveness timeout must tolerate sandbox pressure');
+assert.equal(envValue(busterPipelineContainerObject, 'BUSTER_PLATFORM_CAPABILITIES'), 'rootless_buildkit', 'Buster pipeline must expose rootless BuildKit capability');
+assert.equal(envValue(busterPipelineContainerObject, 'NODE_PATH'), '/app/node_modules', 'Buster pipeline must resolve mounted ESM skills against image-local dependencies');
+assert.equal(busterPipelineContainerObject.livenessProbe?.periodSeconds >= 10, true, 'Buster pipeline liveness period must tolerate build pressure');
+assert.equal(busterPipelineContainerObject.livenessProbe?.timeoutSeconds >= 5, true, 'Buster pipeline liveness timeout must tolerate build pressure');
 assert.equal(busterPipelineContainerObject.livenessProbe?.failureThreshold >= 6, true, 'Buster pipeline liveness failure threshold must avoid transient restart loops');
 
 assert.equal(networkPolicyObjects.length, 13, 'Structured NetworkPolicy baseline must contain exactly 13 policies');
@@ -870,14 +916,16 @@ assertIncludes(renderedBuster, 'name: agent-buster', 'Buster Helm render must ta
 assertIncludes(renderedBuster, 'type: ClusterIP', 'Rendered Buster gateway Service must be cluster-internal by default');
 assert.equal(renderedBuster.includes('nodePort: 30074'), false, 'Rendered Buster gateway must not expose a NodePort');
 assertIncludes(renderedBuster, 'kind: Deployment', 'Buster Helm render must include a Deployment');
-assertIncludes(renderedBuster, 'image: "ghcr.io/datrab/kubeclaw-sandbox:latest"', 'Buster deployment must render the sandbox runtime image');
+assertIncludes(renderedBuster, 'image: "ghcr.io/datrab/kubeclaw-buster-gateway:latest"', 'Buster gateway must render its dedicated minimal OpenClaw image');
+assertIncludes(renderedBuster, 'image: "ghcr.io/datrab/kubeclaw-buster-pipeline:latest"', 'Buster worker must render its dedicated pipeline image');
 assertIncludes(renderedBuster, 'name: kubeclaw', 'Buster deployment must render the OpenClaw gateway container');
 assertIncludes(renderedBuster, 'name: buster-pipeline', 'Buster deployment must render the Buster pipeline worker container separately');
 assertIncludes(renderedBuster, 'value: "gateway"', 'Buster gateway container must expose its health role explicitly');
 assertIncludes(renderedBuster, 'value: "buster-pipeline"', 'Buster pipeline container must expose its health role explicitly');
 assertIncludes(renderedBuster, 'name: KUBECLAW_CODE_BUNDLE_ENABLED', 'Buster deployment must expose code bundle state to both runtime containers');
 assertIncludes(renderedBuster, '- /app/openclaw.mjs', 'Buster gateway container must start OpenClaw gateway directly');
-assertIncludes(renderedBuster, '- /app/skills/buster-pipeline.ts', 'Buster pipeline container must start the Buster worker directly');
+assertIncludes(busterPipelineDockerfile, 'buster-pipeline-entrypoint', 'Buster pipeline image must use its dedicated worker entrypoint');
+assertIncludes(busterPipelineDockerfile, 'npm install --prefix /app', 'Buster pipeline image must install Node dependencies where mounted ESM skills can resolve them');
 assertIncludes(postStartCommand(novaGatewayContainerObject), '/runtime-config/kubeclaw-startup-doctor.sh', 'Nova gateway postStart must run the startup doctor helper');
 assertIncludes(postStartCommand(busterGatewayContainerObject), '/runtime-config/kubeclaw-startup-doctor.sh', 'Buster gateway postStart must run the startup doctor helper');
 assert.equal(postStartCommand(busterPipelineContainerObject), '', 'Buster pipeline worker must not run OpenClaw doctor');
@@ -897,17 +945,19 @@ assert.equal(renderedBuster.includes('BUSTER_HEARTBEAT_PATH'), false, 'Buster de
 assert.equal(renderedBuster.includes('BUSTER_HEARTBEAT_INTERVAL_MS'), false, 'Buster deployment must not keep obsolete heartbeat interval env fallback');
 assertIncludes(renderedBuster, 'KUBECLAW_HEALTH_CHECK_BUSTER_HEARTBEAT', 'Buster deployment must enable Buster heartbeat readiness checks');
 assertIncludes(renderedBusterGatewayUrlOverride, 'value: "http://agent-buster.kubeclaw.svc.cluster.local:18789"', 'Buster deployment must honor gateway.url when explicitly configured');
-assertIncludes(renderedBuster, 'shareProcessNamespace: false', 'Buster sandbox deployment must not share the pod process namespace');
-assertIncludes(renderedBuster, 'privileged: true', 'Buster sandbox deployment must retain privileged Podman-in-Pod execution');
-assertIncludes(renderedBuster, 'mountPath: /var/lib/containers', 'Buster sandbox deployment must mount Podman container storage');
-assertIncludes(renderedBuster, 'mountPath: /sandbox', 'Buster sandbox deployment must mount the sandbox workspace');
-assertIncludes(renderedBuster, 'ephemeral-storage: 50Gi', 'Buster sandbox containers must bound ephemeral storage at 50Gi');
-assertIncludes(renderedBuster, 'sizeLimit: 50Gi', 'Buster Podman emptyDir storage must be capped at 50Gi');
-assertMatchCountAtLeast(renderedBusterDeployment, 'privileged: true', 2, 'Buster gateway and pipeline containers must both retain sandbox execution privileges');
-assertMatchCountAtLeast(renderedBusterDeployment, 'mountPath: /var/lib/containers', 2, 'Buster gateway and pipeline containers must both mount Podman container storage');
-assertMatchCountAtLeast(renderedBusterDeployment, 'mountPath: /sandbox', 2, 'Buster gateway and pipeline containers must both mount the sandbox workspace');
-assertIncludes(renderedBuster, 'name: agent-buster-podman-registries', 'Buster render must include Podman registry configuration');
-assertIncludes(renderedBuster, 'registry-local.kubeclaw.svc.cluster.local:5001', 'Buster Podman registries must preserve registry-local for live verification images');
+assertIncludes(renderedBuster, 'shareProcessNamespace: false', 'Buster pipeline must reach gateway tools over pod networking without cross-container process visibility');
+assert.equal(renderedBusterDeployment.includes('privileged: true'), false, 'Buster deployment must contain no privileged container');
+assert.equal(renderedBusterDeployment.includes('mountPath: /var/lib/containers'), false, 'Buster deployment must contain no container-runtime storage mount');
+assertIncludes(renderedBusterDeployment, 'ghcr.io/datrab/kubeclaw-buster-pipeline:latest', 'Buster pipeline must use its dedicated image');
+assertIncludes(renderedBusterDeployment, 'mountPath: /home/builder/.local/share/buildkit', 'Buster pipeline must mount bounded rootless BuildKit state');
+assertIncludes(renderedBusterDeployment, 'sizeLimit: 50Gi', 'Buster pipeline must receive bounded BuildKit storage sized for production image builds');
+assert.equal(busterPipelineContainerObject.resources?.requests?.cpu, '2', 'Buster pipeline must reserve two CPUs for image builds');
+assert.equal(busterPipelineContainerObject.resources?.requests?.memory, '8Gi', 'Buster pipeline must reserve eight GiB for image builds');
+assert.equal(busterPipelineContainerObject.resources?.limits?.cpu, '8', 'Buster pipeline must permit bounded build parallelism');
+assert.equal(busterPipelineContainerObject.resources?.limits?.memory, '24Gi', 'Buster pipeline must have a bounded production build memory ceiling');
+assert.equal(busterPipelineContainerObject.resources?.limits?.['ephemeral-storage'], '60Gi', 'Buster pipeline must bound total ephemeral build storage');
+assertIncludes(renderedBusterDeployment, 'BUILDKIT_HOST', 'Buster pipeline must expose the local BuildKit socket authority');
+assertIncludes(renderedBusterDeployment, 'buildctl --addr "$BUILDKIT_HOST" debug workers', 'Buster pipeline probes must verify the BuildKit worker');
 assertIncludes(renderedBuster, 'name: KUBECLAW_LOCAL_REGISTRY', 'Buster runtime must receive local registry coordinates through deployment env');
 assertIncludes(registryLocalManifest, 'type: ClusterIP', 'registry-local must stay cluster-internal by default');
 assert.equal(registryLocalManifest.includes('nodePort: 30051'), false, 'registry-local must not expose its writable registry through NodePort');
@@ -1018,7 +1068,12 @@ assert.equal(
 assert.deepEqual(
   renderedBusterGatewayConfig.plugins?.entries?.['kubeclaw-agent-observer']?.hooks,
   { allowConversationAccess: true },
-  'Rendered Buster gateway config must grant observer hook conversation access for pipeline-controlled enablement',
+  'Rendered Buster gateway config must grant observer hook conversation access',
+);
+assert.equal(
+  renderedBusterGatewayConfig.plugins?.entries?.['kubeclaw-agent-observer']?.enabled,
+  true,
+  'Rendered Buster gateway config must keep the gateway-owned observer plugin permanently enabled',
 );
 assert.equal(
   renderedSwarmConfigJson?.profile,
@@ -1176,8 +1231,10 @@ assertIncludes(customSkillsConfigMapTemplate, 'extension-only', 'Custom skills C
 assertIncludes(customSkillsConfigMapTemplate, 'cannot be used as a compatibility patch path', 'Custom skills ConfigMap comment must forbid core runtime compatibility patching');
 assert.equal(customSkillsConfigMapTemplate.includes('/app/skills-kubeclaw'), false, 'Custom skills ConfigMap comment must not point at the stale skills path');
 assertIncludes(imageBuildWorkflow, 'docker/Dockerfile.general', 'Image-build workflow must build the general runtime image from docker/Dockerfile.general');
+assertIncludes(imageBuildWorkflow, 'docker/Dockerfile.buster-gateway', 'Image-build workflow must build the dedicated Buster gateway image');
 assertIncludes(imageBuildWorkflow, 'docker/build-push-action@v5', 'Image-build workflow must use docker/build-push-action for the general runtime image');
 assertIncludes(imageBuildWorkflow, 'image_suffix: kubeclaw-general', 'Image-build workflow must publish the kubeclaw-general image');
+assertIncludes(imageBuildWorkflow, 'image_suffix: kubeclaw-buster-gateway', 'Image-build workflow must publish the dedicated Buster gateway image');
 assertIncludes(imageBuildWorkflow, 'docker/Dockerfile.namespace-controller', 'Image-build workflow must build the namespace controller image from docker/Dockerfile.namespace-controller');
 assertIncludes(imageBuildWorkflow, 'image_suffix: kubeclaw-namespace-controller', 'Image-build workflow must publish the kubeclaw-namespace-controller image');
 assertIncludes(imageBuildWorkflow, 'dorny/paths-filter@v3', 'Build workflow must detect image-affecting changes without suppressing bundle publication on unrelated pushes');
@@ -1194,30 +1251,49 @@ assertIncludes(packageSkillBundleScript, 'cp -R "${common_source}/." "$skills_ro
 assertIncludes(packageSkillBundleScript, '"runtimeSurface": "/app/skills"', 'Bundle packaging manifest must declare the /app/skills runtime surface');
 assertIncludes(packageSkillBundleScript, '"bundleKind": "app-skills-overlay"', 'Bundle packaging manifest must describe the overlay-style bundle contract');
 assertDockerInstallCommandsFailClosed(generalDockerfile, 'General Dockerfile');
-assertDockerInstallCommandsFailClosed(sandboxDockerfile, 'Sandbox Dockerfile');
+assertDockerInstallCommandsFailClosed(busterGatewayDockerfile, 'Buster gateway Dockerfile');
+assertDockerInstallCommandsFailClosed(busterPipelineDockerfile, 'Buster pipeline Dockerfile');
 assert.equal(generalDockerfile.includes('COPY skills/'), false, 'General runtime image must not bake fast-changing agent skills');
-assert.equal(sandboxDockerfile.includes('COPY skills/'), false, 'Sandbox runtime image must not bake fast-changing agent skills');
+assert.equal(busterGatewayDockerfile.includes('COPY skills/'), false, 'Buster gateway image must not bake fast-changing agent skills');
+assert.equal(busterPipelineDockerfile.includes('COPY skills/'), false, 'Buster pipeline image must not bake fast-changing agent skills');
 assertIncludes(generalDockerfile, 'ARG KUBECTL_VERSION=', 'General Dockerfile must pin kubectl for live Kubernetes verification');
-assertIncludes(generalDockerfile, 'https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl', 'General Dockerfile must install kubectl from the pinned Kubernetes release');
-assertIncludes(generalDockerfile, 'chmod +x /usr/local/bin/kubectl', 'General Dockerfile must make kubectl executable in PATH');
-assertIncludes(generalDockerfile, 'podman buildah slirp4netns fuse-overlayfs uidmap passwd', 'General Dockerfile must include Podman-in-Pod tooling for contained real E2E Buster execution');
-assertIncludes(generalDockerfile, '/etc/containers/storage.conf', 'General Dockerfile must configure Podman storage for contained real E2E builds');
-assertIncludes(generalDockerfile, 'registry-local.kubeclaw.svc.cluster.local:5001', 'General Dockerfile must trust the in-cluster local registry for real E2E image pushes');
-assertIncludes(generalDockerfile, 'js-yaml playwright lighthouse serve @axe-core/playwright pixelmatch pngjs ws', 'General Dockerfile must include browser and manifest tooling used by real Buster suites');
-assertIncludes(generalDockerfile, 'PLAYWRIGHT_BROWSERS_PATH=/ms-playwright', 'General Dockerfile must install Playwright browsers into the runtime path');
-assertIncludes(generalDockerfile, 'K6_VERSION=', 'General Dockerfile must include k6 for full Buster load-suite capability');
-assertIncludes(generalDockerfile, 'mkdir -p /sandbox/{www,results,scripts}', 'General Dockerfile must create the sandbox workspace used by Buster suites');
-assertIncludes(generalDockerfile, '/usr/local/bin/sandbox-build', 'General Dockerfile must include sandbox-build for static build serving');
-assertIncludes(generalDockerfile, '/usr/local/bin/sandbox-cleanup', 'General Dockerfile must include sandbox cleanup helpers for real E2E runs');
-for (const [label, dockerfile] of [
-  ['General Dockerfile', generalDockerfile],
-  ['Sandbox Dockerfile', sandboxDockerfile],
-]) {
-  assertIncludes(dockerfile, 'openclaw plugins install @openclaw/acpx', `${label} must bake the official ACPX plugin into the image cache`);
-  assertIncludes(dockerfile, 'openclaw plugins install @openclaw/discord', `${label} must bake the official Discord plugin into the image cache`);
-  assertIncludes(dockerfile, '/opt/openclaw-plugin-home', `${label} must expose the baked OpenClaw plugin home cache for init seeding`);
-  assertIncludes(dockerfile, '.kubeclaw-plugin-cache-version', `${label} must write a baked plugin cache version stamp for incremental init seeding`);
+assertIncludes(generalDockerfile, 'ARG HELM_VERSION=', 'General Dockerfile must pin Helm for reproducible image builds');
+assert.equal(generalDockerfile.includes('ARG KUBECTL_VERSION=1.35.'), true, 'General kubectl must stay within one minor of the production Kubernetes 1.34 API');
+assert.equal(busterPipelineDockerfile.includes('ARG KUBECTL_VERSION=1.35.'), true, 'Buster kubectl must stay within one minor of the production Kubernetes 1.34 API');
+assertIncludes(generalDockerfile, 'ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:', 'General Dockerfile must pin the OpenClaw base version');
+assertIncludes(generalDockerfile, '@sha256:', 'General Dockerfile must pin the OpenClaw base digest');
+assert.equal(generalOpenClawBase, busterOpenClawBase, 'OpenClaw-derived runtime images must share one version-and-digest-pinned base');
+assertIncludes(generalDockerfile, 'ARG DEBIAN_SNAPSHOT=', 'General Dockerfile must pin the Debian package snapshot');
+assertIncludes(generalDockerfile, 'COPY docker/general-tools/package.json docker/general-tools/package-lock.json', 'General Dockerfile must install JavaScript tools from the committed lockfile');
+assert.deepEqual(generalToolsLock.packages?.['']?.dependencies, generalToolsPackage.dependencies, 'General JavaScript tool lock must match its direct dependency manifest');
+for (const [dependency, version] of Object.entries(generalToolsPackage.dependencies)) {
+  assert.match(version, /^\d+\.\d+\.\d+$/, `General JavaScript tool ${dependency} must use an exact semantic version`);
 }
+assertIncludes(generalDockerfile, 'https://get.helm.sh/${helm_archive}.sha256sum', 'General Dockerfile must checksum the pinned official Helm archive');
+assert.equal(generalDockerfile.includes('get-helm-3'), false, 'General Dockerfile must not depend on the mutable Helm convenience installer');
+assertIncludes(generalDockerfile, 'https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl', 'General Dockerfile must install architecture-aware kubectl from the pinned Kubernetes release');
+assertIncludes(generalDockerfile, 'kubectl.sha256', 'General Dockerfile must verify the kubectl release checksum');
+assertIncludes(generalDockerfile, 'install -m 0755 "$tmp/$kubectl_file" /usr/local/bin/kubectl', 'General Dockerfile must install verified kubectl in PATH');
+assert.equal(/\bchromium\b/.test(generalAptInstall), false, 'General Dockerfile must not duplicate Playwright Chromium with the Debian browser package');
+assertIncludes(busterGatewayDockerfile, 'ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:', 'Buster gateway must share the pinned OpenClaw base version');
+assertIncludes(imageBuildWorkflow, 'Verify the pinned base is current', 'Image workflow must compare the pinned OpenClaw digest with the current release');
+assert.equal(imageBuildWorkflow.includes('/tmp/last-base-digest.txt'), false, 'Image workflow must not pretend ephemeral runner state persists between schedules');
+assertIncludes(busterPipelineDockerfile, 'FROM moby/buildkit:rootless AS buildkit', 'Buster pipeline image must source rootless BuildKit');
+assertIncludes(busterPipelineDockerfile, 'USER 1000:1000', 'Buster pipeline image must run as a non-root user');
+assertIncludes(generalDockerfile, 'openclaw plugins install "@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}"', 'General Dockerfile must bake the pinned official ACPX plugin into the gateway image cache');
+assertIncludes(generalDockerfile, 'openclaw plugins install "@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}"', 'General Dockerfile must bake the pinned official Discord plugin into the gateway image cache');
+assertIncludes(busterGatewayDockerfile, 'openclaw plugins install "@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}"', 'Buster gateway must bake the pinned official ACPX plugin into its gateway cache');
+assertIncludes(busterGatewayDockerfile, 'openclaw plugins install "@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}"', 'Buster gateway must bake the pinned official Discord plugin into its gateway cache');
+assertIncludes(busterGatewayDockerfile, '/app/dist/extensions/kubeclaw-agent-observer', 'Buster gateway must package the observer plugin into the OpenClaw extension tree');
+assertIncludes(busterGatewayRuntimeStage, 'npm install -g ioredis', 'Buster gateway runtime must include the observer Redis transport dependency');
+for (const forbiddenRuntimeTool of ['eslint', 'playwright', 'lighthouse', 'semgrep', 'hadolint', 'kubeconform', 'kubectl', 'buildkit', 'k6']) {
+  assert.equal(
+    busterGatewayRuntimeStage.toLowerCase().includes(forbiddenRuntimeTool),
+    false,
+    `Buster gateway runtime must not contain pipeline-owned tool ${forbiddenRuntimeTool}`,
+  );
+}
+assert.equal(busterPipelineDockerfile.includes('openclaw plugins install'), false, 'Buster pipeline image must not carry gateway plugin/runtime weight');
 assertIncludes(imageBuildWorkflow, "cmd/buster-namespace-controller/**", 'Image-build workflow must rebuild the namespace controller image when Go controller source changes');
 assertIncludes(namespaceControllerDockerfile, 'FROM golang:1.22-bookworm AS build', 'Namespace controller Dockerfile must compile the Go controller in a dedicated build stage');
 assertIncludes(namespaceControllerDockerfile, 'go build -trimpath -ldflags="-s -w"', 'Namespace controller Dockerfile must build a stripped Go binary');
@@ -1230,9 +1306,12 @@ assert.equal(
   false,
   'Namespace controller Dockerfile must not inherit the OpenClaw runtime image',
 );
-assertIncludes(sandboxDockerfile, 'RUN npm install -g lighthouse serve playwright', 'Sandbox Dockerfile must fail closed when browser test tool installation fails');
+assertIncludes(busterPipelineDockerfile, 'npm install --prefix /app', 'Buster pipeline Dockerfile must install deterministic suite tools into the ESM-resolvable application tree');
 assertLine(dockerignore, '**', 'Docker build context must default-deny repository files');
 assertLine(dockerignore, '!docker/Dockerfile.namespace-controller', 'Docker build context must include the namespace controller Dockerfile');
+assertLine(dockerignore, '!docker/Dockerfile.buster-gateway', 'Docker build context must include the Buster gateway Dockerfile');
+assertLine(dockerignore, '!docker/Dockerfile.buster-pipeline', 'Docker build context must include the Buster pipeline Dockerfile');
+assertLine(dockerignore, '!docker/buster-pipeline-entrypoint.sh', 'Docker build context must include the Buster pipeline entrypoint');
 assertLine(dockerignore, '!go.mod', 'Docker build context must include the Go module file');
 assertLine(dockerignore, '!cmd/buster-namespace-controller/**', 'Docker build context must include the Go namespace controller source');
 assert.equal(dockerignore.includes('!skills/'), false, 'Docker build context must not include agent skills; code bundles own /app/skills');
@@ -1258,6 +1337,8 @@ assert.equal((deployScriptMode & 0o111) !== 0, true, 'Deploy script must remain 
 assertIncludes(deployScript, 'deploy_tailscale_operator() {', 'Deploy script must expose a canonical Tailscale operator deployment command');
 assertIncludes(deployScript, 'cmd_secrets() {', 'Deploy script must expose a canonical guided secret setup command');
 assertIncludes(deployScript, 'cmd_buildkit_preflight() {', 'Deploy script must expose an explicit rootless BuildKit node capability probe');
+assertIncludes(deployScript, 'cmd_buster_buildkit_smoke() {', 'Deploy script must expose the live Buster build, push, deploy, and cleanup smoke');
+assertIncludes(deployScript, 'tests/verification/live/buster-buildkit-production-smoke.mjs', 'Live Buster smoke must use the canonical production BuildKit test');
 assertIncludes(deployScript, 'image: "${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE}"', 'BuildKit preflight must use the configurable official rootless image');
 assertIncludes(deployScript, 'privileged: false', 'BuildKit preflight must prove the builder works without privileged mode');
 assertIncludes(deployScript, 'runAsNonRoot: true', 'BuildKit preflight must run the builder as a non-root user');
@@ -1341,6 +1422,12 @@ assertIncludes(deployScript, 'releases/download/${CODE_BUNDLE_RELEASE_TAG}/${rol
 assertIncludes(deployScript, 'code deploy requires $(tr', 'Deploy script must still fail closed when neither an explicit commit nor a default ref can be resolved');
 assertIncludes(deployScript, 'controller_image_repo="${BUSTER_CONTROLLER_IMAGE_REPOSITORY:-${NAMESPACE_CONTROLLER_IMAGE_REPOSITORY:-}}"', 'Buster deploy overrides must keep the namespace controller on the dedicated controller image repository');
 assertIncludes(deployScript, 'controller_image_tag="${BUSTER_CONTROLLER_IMAGE_TAG:-${NAMESPACE_CONTROLLER_IMAGE_TAG:-}}"', 'Buster deploy overrides must keep the namespace controller on the dedicated controller image tag');
+assertIncludes(deployScript, 'image_repo="${BUSTER_GATEWAY_IMAGE_REPOSITORY:-}"', 'Buster deploy overrides must expose the dedicated gateway image repository');
+assertIncludes(deployScript, 'image_tag="${BUSTER_GATEWAY_IMAGE_TAG:-}"', 'Buster deploy overrides must expose the dedicated gateway image tag');
+assertIncludes(deployScript, 'pipeline_image_repo="${BUSTER_PIPELINE_IMAGE_REPOSITORY:-}"', 'Buster deploy overrides must expose the dedicated pipeline image repository');
+assertIncludes(deployScript, 'pipeline_image_tag="${BUSTER_PIPELINE_IMAGE_TAG:-}"', 'Buster deploy overrides must expose the dedicated pipeline image tag');
+assert.equal(deployScript.includes('SANDBOX_IMAGE_REPOSITORY'), false, 'Buster deploy must not retain the retired sandbox image repository path');
+assert.equal(deployScript.includes('SANDBOX_IMAGE_TAG'), false, 'Buster deploy must not retain the retired sandbox image tag path');
 assertIncludes(deployScript, '--set probes.dependencies.litellm.enabled=false', 'Agent deployment must disable LiteLLM readiness checks when LiteLLM infrastructure is intentionally disabled');
 assertIncludes(deployScript, '--set probes.dependencies.qdrant.enabled=false', 'Agent deployment must disable Qdrant readiness checks when Qdrant infrastructure is intentionally disabled');
 assertIncludes(deployScript, 'AGENT_HELM_TIMEOUT="${AGENT_HELM_TIMEOUT:-45m}"', 'Deploy script must expose a longer default Helm timeout for slow agent upgrades');
@@ -1348,9 +1435,8 @@ assertIncludes(deployScript, 'AGENT_ROLLOUT_TIMEOUT="${AGENT_ROLLOUT_TIMEOUT:-45
 assertIncludes(deployScript, '--wait --timeout "$AGENT_HELM_TIMEOUT"', 'Agent deployment must route Helm wait time through the configurable agent timeout');
 assertIncludes(deployScript, 'wait_for_agent_rollout() {', 'Agent deployment must define a shared rollout wait helper');
 assertIncludes(deployScript, 'wait_for_agent_rollout "agent-${role}"', 'Code deploy must wait for the Helm-triggered rollout to become ready');
-assert.equal(deployScript.includes('restart_agent_deployment() {'), false, 'Deploy script must not define a forced rollout restart helper for image deploys');
-assert.equal(deployScript.includes('kubectl rollout restart deployment/"$release" -n "$NAMESPACE"'), false, 'Deploy script must avoid a second rollout cycle after Helm wait completes');
-assert.equal(deployScript.includes('restart_agent_deployment "agent-${role}"'), false, 'Image deploy must not force a second restart after Helm apply');
+assertIncludes(deployScript, 'kubectl rollout restart deployment -n "$NAMESPACE" -l "app.kubernetes.io/instance=agent-${role}"', 'Mutable image deploys must restart every deployment owned by the selected release');
+assertIncludes(deployScript, 'kubectl rollout status deployment/agent-buster-namespace-controller', 'Buster image deploys must wait for the refreshed namespace controller');
 assertIncludes(deployScript, 'cmd_smoke_agent() {', 'Deploy script must expose a canonical single-agent smoke command');
 assertIncludes(deployScript, 'cmd_smoke() {', 'Deploy script must expose a canonical multi-agent smoke command');
 assertIncludes(deployScript, 'image [target]', 'Deploy script usage must advertise the image deploy mode');
@@ -1446,24 +1532,25 @@ const result = {
     'Rendered Nova Service keeps the gateway internal while exposing only Prism preview through NodePort',
     'Helm render includes Buster Service and Deployment',
     'Rendered Buster Service keeps the gateway internal',
-    'Rendered Buster Deployment preserves sandbox image and privileged Podman-in-Pod surface',
-    'Rendered Buster Deployment bounds Podman emptyDir and container ephemeral storage',
+    'Rendered Buster Deployment uses a dedicated rootless BuildKit image',
+    'Rendered Buster Deployment bounds BuildKit state and container ephemeral storage',
     'Rendered Buster Deployment uses conservative liveness budgets for gateway and pipeline containers',
-    'Structured Buster checks enforce lease-only agent RBAC and bounded sandbox resources',
+    'Structured Buster checks enforce lease-only agent RBAC and bounded BuildKit resources',
     'Rendered Buster Deployment separates buster-pipeline.ts from the OpenClaw gateway container',
     'Rendered Buster containers share OpenClaw runtime config, workspace, and merged skills',
-    'Rendered Buster gateway and pipeline containers both retain sandbox execution privileges and mounts',
+    'Rendered Buster gateway and pipeline containers remain non-privileged with separated runtime authority',
     'Rendered Buster Deployment exposes the colocated OpenClaw gateway URL to Buster startup',
     'Rendered Buster Deployment honors the explicit gateway.url override',
     'Rendered Buster Deployment keeps Redis, gateway-token, and Anthropic secret wiring',
     'Rendered Buster broker includes BusterNamespaceLease, namespace controller, and lease-client RBAC',
     'Rendered BusterNamespaceLease status schema omits plaintext credentials and keeps credential availability only',
     'Buster namespace controller normalizes human lease namespace requests into test-* namespaces',
+    'Buster namespace controller grants pod port-forward only inside leased namespaces',
     'Buster namespace fence denies direct Buster namespace lifecycle and constrains the controller to managed test namespaces',
     'Rendered Buster broker mode omits the legacy broad k8s tester ClusterRole and pods/exec grant',
     'Broker-disabled Buster render does not fall back to legacy broad Kubernetes tester RBAC',
     'RBAC docs distinguish broker-mode lease-client Buster authority from namespace-controller authority',
-    'Rendered Buster Podman registries preserve registry-local live-verification pull path',
+    'Rendered Buster rootless BuildKit preserves registry-local build/push authority',
     'registry-local stays ClusterIP while LiteLLM preserves its temporary NodePort',
     'NetworkPolicies define default-deny ingress and egress with explicit service allowances',
     'Structured NetworkPolicy checks verify expected selectors and ports',

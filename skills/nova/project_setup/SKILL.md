@@ -274,7 +274,7 @@ Use for any module that produces a Dockerfile + K8s manifests.
 | `manifests` | yes | Array of manifest paths relative to repo root |
 | `port` | no | Service port (default: 3000) |
 | `health_path` | no | Health check path (default: /health) |
-| `build_context` | no | Podman build context dir (default: dockerfile directory) |
+| `build_context` | no | BuildKit context directory (default: Dockerfile directory) |
 | `secrets_to_copy` | no | Secret names to copy from `kubeclaw` ns into the test ns |
 | `test_credentials` | no | App-under-test Secret/key allowlist decoded by the deterministic k8s suite and injected into Buster's prompt |
 | `ready_timeout_seconds` | no | Pod readiness wait (default: 120) |

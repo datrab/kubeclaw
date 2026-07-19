@@ -22,17 +22,11 @@ spec:
         {{- if .Values.customSkills }}
         checksum/skills: {{ include (print $.Template.BasePath "/configmap-skills.yaml") . | sha256sum }}
         {{- end }}
-        {{- if and .Values.sandbox.enabled .Values.sandbox.registriesConf }}
-        checksum/podman-registries: {{ include (print $.Template.BasePath "/configmap-podman-registries.yaml") . | sha256sum }}
-        {{- end }}
         {{- if .Values.workspace.enabled }}
         checksum/workspace: {{ include (print $.Template.BasePath "/configmap-workspace.yaml") . | sha256sum }}
         {{- end }}
         {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-        {{- end }}
-        {{- if .Values.sandbox.enabled }}
-        container.apparmor.security.beta.kubernetes.io/kubeclaw: "unconfined"
         {{- end }}
     spec:
       terminationGracePeriodSeconds: {{ .Values.shutdown.terminationGracePeriodSeconds | default 180 }}
@@ -44,13 +38,12 @@ spec:
       {{- if .Values.serviceAccount.create }}
       serviceAccountName: {{ include "kubeclaw.fullname" . }}
       automountServiceAccountToken: {{ .Values.serviceAccount.automount | default false }}
-      {{- else if .Values.sandbox.enabled }}
-      # Sandbox mode without serviceAccount: disable token mount
+      {{- else }}
       automountServiceAccountToken: false
       {{- end }}
 
       securityContext:
-        {{- if or .Values.sandbox.enabled .Values.runAsRoot }}
+        {{- if .Values.runAsRoot }}
         fsGroup: 0
         runAsUser: 0
         runAsGroup: 0
@@ -817,7 +810,15 @@ spec:
               fi
 
               echo "==> 6. Fixing Permissions"
-              chown -R 0:0 /workspace /config /runtime-config /root/.ssh /skills-merged
+              chown -R 0:0 /config /runtime-config /skills-merged
+              if [ "${AGENT_NAME}" = "buster" ]; then
+                chown -R 1000:1000 /workspace
+                chown -R 0:1000 /root/.ssh
+                find /root/.ssh -type d -exec chmod 750 {} +
+                if [ -f /root/.ssh/id_rsa ]; then chmod 640 /root/.ssh/id_rsa; fi
+              else
+                chown -R 0:0 /workspace /root/.ssh
+              fi
               echo "==> Init Complete."
               ls -la /workspace/
 
@@ -900,7 +901,9 @@ spec:
       # ---------------------------------------------------------------
       # MAIN CONTAINERS
       # ---------------------------------------------------------------
-      shareProcessNamespace: {{ not .Values.sandbox.enabled }}
+      # Buster's worker reaches gateway tools over the shared pod network. It
+      # does not need visibility into gateway container processes.
+      shareProcessNamespace: {{ ne (lower (.Values.agentRole | default "nova")) "buster" }}
       containers:
 
         # ── OpenClaw Gateway ──
@@ -1043,19 +1046,6 @@ spec:
               mountPath: /root/.ssh
             - name: skills-merged
               mountPath: /app/skills
-            {{- if .Values.sandbox.enabled }}
-            - name: podman-storage
-              mountPropagation: Bidirectional
-              mountPath: /var/lib/containers
-            {{- if .Values.sandbox.registriesConf }}
-            - name: podman-registries
-              mountPath: /etc/containers/registries.conf.d/999-kubeclaw.conf
-              subPath: registries.conf
-              readOnly: true
-            {{- end }}
-            - name: sandbox-workspace
-              mountPath: /sandbox
-            {{- end }}
             {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -1082,36 +1072,18 @@ spec:
                     sleep "${KUBECLAW_PRESTOP_DRAIN_SECONDS:-5}"
 
           securityContext:
-            {{- if or .Values.sandbox.enabled .Values.runAsRoot }}
+            {{- if .Values.runAsRoot }}
             runAsUser: 0
             runAsGroup: 0
             {{- else }}
             runAsUser: 1000
             runAsGroup: 1000
             {{- end }}
-            {{- if .Values.sandbox.enabled }}
-            appArmorProfile:
-              type: Unconfined
-            privileged: true
-            seccompProfile:
-              type: Unconfined
-            allowPrivilegeEscalation: true
-            capabilities:
-              drop: []
-              add:
-                - SYS_ADMIN
-                - SYS_CHROOT
-                - SETUID
-                - SETGID
-                - SETFCAP
-                - NET_ADMIN
-                - MKNOD
-            {{- else }}
             allowPrivilegeEscalation: false
+            privileged: false
             capabilities:
               drop:
                 - ALL
-            {{- end }}
 
           {{- if .Values.probes.startup.enabled }}
           startupProbe:
@@ -1153,15 +1125,14 @@ spec:
         {{- if and (eq (.Values.agentRole | default "") "buster") (.Values.busterPipeline.enabled | default false) }}
         # ── Buster Pipeline Worker ──
         - name: buster-pipeline
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: {{- toYaml .Values.busterPipeline.command | nindent 12 }}
+          image: "{{ .Values.busterPipeline.image.repository }}:{{ .Values.busterPipeline.image.tag }}"
+          imagePullPolicy: {{ .Values.busterPipeline.image.pullPolicy }}
 
           env:
             - name: HOME
-              value: "/home/node"
+              value: "/home/builder"
             - name: NODE_PATH
-              value: "/usr/local/lib/node_modules:/app/node_modules"
+              value: "/app/node_modules"
             - name: AGENT_NAME
               value: {{ .Values.agentRole | default "default" | quote }}
             - name: KUBECLAW_CONTAINER_ROLE
@@ -1193,6 +1164,10 @@ spec:
                   key: {{ .Values.redis.secretKey | default "redis-password" }}
             - name: KUBECLAW_LOCAL_REGISTRY
               value: {{ .Values.runtimeInfrastructure.localRegistry | quote }}
+            - name: BUILDKIT_HOST
+              value: "unix:///run/user/1000/buildkit/buildkitd.sock"
+            - name: BUSTER_RESULTS_DIR
+              value: "/home/builder/.openclaw/results"
             - name: QDRANT_URL
               value: {{ .Values.qdrant.url | quote }}
             - name: LITELLM_URL
@@ -1233,9 +1208,9 @@ spec:
             - name: KUBECLAW_HEALTH_TIMEOUT_MS
               value: {{ mul (.Values.probes.readiness.timeoutSeconds | default 10 | int) 1000 | quote }}
             - name: KUBECLAW_HEALTH_STARTUP_STATUS_PATH
-              value: "/home/node/.openclaw/logs/startup-verification.json"
+              value: "/home/builder/.openclaw/logs/startup-verification.json"
             - name: KUBECLAW_HEALTH_STARTUP_EVENT_LOG_PATH
-              value: "/home/node/.openclaw/logs/startup-verification.jsonl"
+              value: "/home/builder/.openclaw/logs/startup-verification.jsonl"
             - name: KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER
               value: "true"
             - name: KUBECLAW_HEALTH_CHECK_GATEWAY
@@ -1271,33 +1246,29 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /home/node/.openclaw
+              readOnly: true
             - name: runtime-config
               mountPath: /home/node/.openclaw/swarm.config.json
               subPath: swarm.config.json
+              readOnly: true
             - name: runtime-config
               mountPath: /runtime-config
               readOnly: true
-            - name: config
-              mountPath: /home/node/.openclaw-persisted
             - name: workspace
               mountPath: /home/node/.openclaw/workspace
             - name: ssh-home-vol
-              mountPath: /root/.ssh
+              mountPath: /home/builder/.ssh
             - name: skills-merged
               mountPath: /app/skills
-            {{- if .Values.sandbox.enabled }}
-            - name: podman-storage
-              mountPropagation: Bidirectional
-              mountPath: /var/lib/containers
-            {{- if .Values.sandbox.registriesConf }}
-            - name: podman-registries
-              mountPath: /etc/containers/registries.conf.d/999-kubeclaw.conf
-              subPath: registries.conf
+            - name: buildkit-state
+              mountPath: /home/builder/.local/share/buildkit
+            - name: buildkit-runtime
+              mountPath: /run/user/1000
+            - name: buster-results
+              mountPath: /home/builder/.openclaw/results
+            - name: buster-api-token
+              mountPath: /var/run/secrets/kubernetes.io/serviceaccount
               readOnly: true
-            {{- end }}
-            - name: sandbox-workspace
-              mountPath: /sandbox
-            {{- end }}
             {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -1317,32 +1288,27 @@ spec:
                     sleep "${KUBECLAW_PRESTOP_DRAIN_SECONDS:-5}"
 
           securityContext:
-            runAsUser: 0
-            runAsGroup: 0
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
             appArmorProfile:
               type: Unconfined
-            privileged: true
+            privileged: false
             seccompProfile:
               type: Unconfined
+            # RootlessKit requires its setuid uid/gid mapping helpers. The
+            # container remains non-root, non-privileged, and drops all caps.
             allowPrivilegeEscalation: true
             capabilities:
-              drop: []
-              add:
-                - SYS_ADMIN
-                - SYS_CHROOT
-                - SETUID
-                - SETGID
-                - SETFCAP
-                - NET_ADMIN
-                - MKNOD
+              drop: ["ALL"]
 
           {{- if .Values.probes.startup.enabled }}
           startupProbe:
             exec:
               command:
-                - node
-                - /runtime-config/kubeclaw-health.mjs
-                - startup
+                - /bin/sh
+                - -c
+                - buildctl --addr "$BUILDKIT_HOST" debug workers >/dev/null && node /runtime-config/kubeclaw-health.mjs startup
             initialDelaySeconds: {{ .Values.probes.startup.initialDelaySeconds }}
             periodSeconds: {{ .Values.probes.startup.periodSeconds }}
             timeoutSeconds: {{ .Values.probes.startup.timeoutSeconds }}
@@ -1352,9 +1318,9 @@ spec:
           readinessProbe:
             exec:
               command:
-                - node
-                - /runtime-config/kubeclaw-health.mjs
-                - readiness
+                - /bin/sh
+                - -c
+                - buildctl --addr "$BUILDKIT_HOST" debug workers >/dev/null && node /runtime-config/kubeclaw-health.mjs readiness
             initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
             periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
             timeoutSeconds: {{ .Values.probes.readiness.timeoutSeconds }}
@@ -1364,9 +1330,9 @@ spec:
           livenessProbe:
             exec:
               command:
-                - node
-                - /runtime-config/kubeclaw-health.mjs
-                - liveness
+                - /bin/sh
+                - -c
+                - buildctl --addr "$BUILDKIT_HOST" debug workers >/dev/null && node /runtime-config/kubeclaw-health.mjs liveness
             initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
             periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
             timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}
@@ -1420,24 +1386,37 @@ spec:
             optional: true
         - name: skills-merged
           emptyDir: {}
+        {{- if and (eq (.Values.agentRole | default "") "buster") (.Values.busterPipeline.enabled | default false) }}
+        - name: buildkit-state
+          emptyDir:
+            sizeLimit: {{ .Values.busterPipeline.storageSize | default "50Gi" }}
+        - name: buildkit-runtime
+          emptyDir: {}
+        - name: buster-results
+          emptyDir:
+            sizeLimit: "2Gi"
+        - name: buster-api-token
+          projected:
+            defaultMode: 0400
+            sources:
+              - serviceAccountToken:
+                  path: token
+                  expirationSeconds: 3600
+              - configMap:
+                  name: kube-root-ca.crt
+                  items:
+                    - key: ca.crt
+                      path: ca.crt
+              - downwardAPI:
+                  items:
+                    - path: namespace
+                      fieldRef:
+                        fieldPath: metadata.namespace
+        {{- end }}
         - name: init-swarm-config
           configMap:
             name: {{ include "kubeclaw.fullname" . }}-swarm-config
             defaultMode: 0444
-        {{- if .Values.sandbox.enabled }}
-        - name: podman-storage
-          emptyDir:
-            sizeLimit: {{ .Values.sandbox.storageSize | default "25Gi" }}
-        {{- if .Values.sandbox.registriesConf }}
-        - name: podman-registries
-          configMap:
-            name: {{ include "kubeclaw.fullname" . }}-podman-registries
-            defaultMode: 0444
-        {{- end }}
-        - name: sandbox-workspace
-          emptyDir:
-            sizeLimit: 2Gi
-        {{- end }}
         {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}
         {{- end }}

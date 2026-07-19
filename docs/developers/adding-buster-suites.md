@@ -128,7 +128,7 @@ node --test tests/verification/e2e/*.test.mjs
 - `skills/buster/pipeline/services/verdict-schema.ts`
 - `skills/buster/pipeline/services/task-validation.ts`
 - `skills/buster/pipeline/suites/*.ts`
-- `docker/Dockerfile.sandbox`
+- `docker/Dockerfile.buster-pipeline`
 
 ## Contract Checklist
 

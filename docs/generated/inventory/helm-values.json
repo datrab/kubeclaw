@@ -43,7 +43,6 @@
         "runAsRoot",
         "probes",
         "shutdown",
-        "sandbox",
         "serviceAccount",
         "busterNamespaceBroker",
         "commands",
@@ -64,7 +63,7 @@
         {
           "key": "secretName",
           "value": "redis-secrets",
-          "line": 189
+          "line": 200
         }
       ]
     },
@@ -85,7 +84,6 @@
         "agent",
         "serviceAccount",
         "busterNamespaceBroker",
-        "sandbox",
         "service",
         "resources",
         "extraContainers",
@@ -151,7 +149,6 @@
         "discordWebhook",
         "probes",
         "agent",
-        "sandbox",
         "serviceAccount",
         "busterNamespaceBroker",
         "resources",
@@ -161,37 +158,37 @@
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 12
+          "line": 11
         },
         {
           "key": "existingSecret",
           "value": "github-bundle-reader",
-          "line": 43
+          "line": 46
         },
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 47
+          "line": 50
         },
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 51
+          "line": 54
         },
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 56
+          "line": 59
         },
         {
           "key": "secretName",
           "value": "openclaw-shared-secrets",
-          "line": 70
+          "line": 73
         },
         {
           "key": "secretName",
           "value": "git-deploy-key-buster",
-          "line": 86
+          "line": 89
         }
       ]
     },

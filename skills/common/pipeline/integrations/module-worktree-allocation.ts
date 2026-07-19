@@ -17,8 +17,8 @@ function createStructuredGitError(config, code, message, details = {}) {
   error.code = code;
   error.gitSync = {
     code,
-    repo_root: config?.repo_root || null,
-    project: config?.project || null,
+    repo_root: config?.repo_root ?? null,
+    project: config?.project ?? null,
     ...details,
   };
   return error;
@@ -38,19 +38,21 @@ function moduleAttemptBranch(input = {}) {
   const runId = sanitizeGitPathSegment(selectPresentValue(input.runId, input.run_id));
   const moduleId = sanitizeGitPathSegment(selectPresentValue(input.moduleId, input.module_id, input.itemId));
   const attempt = Number(input.attempt);
-  if (!Number.isInteger(attempt) || attempt < 1) throw new Error('module worktree branch requires positive integer attempt');
+  if (!Number.isInteger(attempt)) throw new Error('module worktree branch requires positive integer attempt');
+  if (attempt < 1) throw new Error('module worktree branch requires positive integer attempt');
   return `run/${runId}/module/${moduleId}/attempt-${attempt}`;
 }
 
 function defaultParallelWorktreeRoot(config) {
-  const configured = textValue(config?.git?.parallel_worktree_root || config?.git?.worktree_root);
+  const configured = textValue(selectPresentValue(config?.git?.parallel_worktree_root, config?.git?.worktree_root));
   if (configured) return path.isAbsolute(configured) ? configured : path.join(config.repo_root, configured);
   return path.join(path.dirname(config.repo_root), 'worktrees');
 }
 
 function isPathInsideOrEqual(child, parent) {
   const relative = path.relative(path.resolve(parent), path.resolve(child));
-  return relative === '' || (!relative.startsWith('..') && !path.isAbsolute(relative));
+  if (relative === '') return true;
+  return !relative.startsWith('..') && !path.isAbsolute(relative);
 }
 
 function assertParallelWorktreeRootOutsideRepo(config, root) {

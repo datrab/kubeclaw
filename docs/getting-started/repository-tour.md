@@ -14,7 +14,7 @@ Orient new readers to the repository before they edit docs, deployment files, pi
 | `charts/kubeclaw/` | shared Helm chart for Nova and Buster agents, ConfigMaps, Services, PVCs, RBAC, Secrets, and runtime config rendering | changing rendered Kubernetes resources |
 | `my-values/` | production values and infrastructure manifests for Nova, Buster, Redis, Qdrant, LiteLLM, PostgreSQL, registries, Tailscale, and NetworkPolicies | changing deployment shape or optional components |
 | `scripts/` | deployment helper, docs inventory/generation/check tooling, setup helpers, and pipeline-light scripts | changing operator commands or generated references |
-| `docker/` | general, sandbox, and Prism preview image definitions | changing runtime image contents or build context |
+| `docker/` | general, Buster gateway/pipeline, namespace-controller, and Prism preview image definitions | changing runtime image contents or build context |
 | `skills/nova/` | Nova pipeline orchestrator entrypoint, CLI, config loading, plugin registry, runners, gates, telemetry, status store, and helpers | changing orchestration behavior |
 | `skills/buster/` | Buster Redis worker, task validation/completion, deterministic suites, browser tooling, sandbox runtime support | changing test execution behavior |
 | `skills/common/` | shared pipeline contracts, transports, lifecycle, egress, telemetry, security, and service helpers | changing code shared by Nova and Buster |

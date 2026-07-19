@@ -282,12 +282,12 @@ const PRETEST_INFRA_PATTERNS = [
   {
     code: 'REGISTRY_ACCESS_FAILED',
     summary: 'Registry access failed during pre-test',
-    re: /(x509|certificate signed by unknown authority|tls|authentication required|unauthorized|denied|no route to host|connection refused|network is unreachable|i\/o timeout|temporary failure in name resolution|no such host).*(registry|podman|docker)|(?:registry|podman|docker).*(x509|certificate|unauthorized|denied|connection refused|timeout)/i,
+    re: /(x509|certificate signed by unknown authority|tls|authentication required|unauthorized|denied|no route to host|connection refused|network is unreachable|i\/o timeout|temporary failure in name resolution|no such host).*(registry|buildkit)|(?:registry|buildkit).*(x509|certificate|unauthorized|denied|connection refused|timeout)/i,
   },
   {
-    code: 'SANDBOX_RUNTIME_FAILURE',
-    summary: 'Sandbox or Podman runtime failed before tests could run',
-    re: /(sandbox-build|sandbox-run|podman) .*?(failed|error|cannot|unable)|error: pinging container registry/i,
+    code: 'BUILDKIT_RUNTIME_FAILURE',
+    summary: 'Rootless BuildKit failed before tests could run',
+    re: /buildkit .*?(failed|error|cannot|unable)|error: pinging container registry/i,
   },
 ];
 
@@ -312,7 +312,7 @@ export function classifyPreTestFailure(redisEntry) {
   ].filter(Boolean).join(' | ');
 
   // Explicit project/progress/test-config evidence wins before broad infra regexes.
-  // Example: "podman build failed: Dockerfile not found" contains a runtime token,
+  // Example: "BuildKit failed: Dockerfile not found" contains a runtime token,
   // but the actionable owner is still the declared Buster test configuration.
   for (const pattern of PRETEST_CONFIG_PATTERNS) {
     if (pattern.re.test(reasonText)) {

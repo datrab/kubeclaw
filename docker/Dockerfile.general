@@ -1,208 +1,158 @@
 # =============================================================================
 # KubeClaw General — Root Environment for Nova, Forge, Echo
 # =============================================================================
-FROM ghcr.io/openclaw/openclaw:latest
-USER root
+ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.7.1@sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c
+# hadolint ignore=DL3006
+FROM ${OPENCLAW_BASE}
 
-# 1. System tools
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    sudo curl wget git openssh-client jq nano tree net-tools iputils-ping dnsutils ripgrep \
-    build-essential python3 python3-pip python3-venv python-is-python3 ffmpeg \
-    podman buildah slirp4netns fuse-overlayfs uidmap passwd \
-    chromium netcat-openbsd nmap nginx \
-    shellcheck yamllint \
+# Root is the declared Nova/Forge/Echo runtime mode.
+# hadolint ignore=DL3002
+USER root
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# Anchor Debian packages to the snapshot matching the pinned OpenClaw base.
+ARG DEBIAN_SNAPSHOT=20260713T000000Z
+RUN printf '%s\n' \
+      'Types: deb' \
+      "URIs: https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}" \
+      'Suites: bookworm bookworm-updates' \
+      'Components: main' \
+      'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
+      '' \
+      'Types: deb' \
+      "URIs: https://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}" \
+      'Suites: bookworm-security' \
+      'Components: main' \
+      'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
+      > /etc/apt/sources.list.d/debian.sources \
+    && rm -f /etc/apt/sources.list \
+    && printf 'Acquire::Check-Valid-Until "false";\n' > /etc/apt/apt.conf.d/99snapshot
+
+# System tools. Playwright owns its Chromium binary and installs only the
+# corresponding OS libraries below, avoiding a second Debian Chromium copy.
+# Package resolution is pinned by DEBIAN_SNAPSHOT rather than per-package
+# versions, keeping the complete dependency graph coherent.
+# hadolint ignore=DL3008
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+      sudo curl git openssh-client jq nano tree net-tools iputils-ping dnsutils ripgrep \
+      build-essential python3 python3-pip python3-venv python-is-python3 ffmpeg \
+      netcat-openbsd nmap shellcheck yamllint \
     && rm -rf /var/lib/apt/lists/*
 
-# 2. Global skill dependencies + lint tools (JS/TS)
-RUN mkdir -p /root/.npm && npm config set cache /root/.npm --global \
-    && npm install -g ioredis uuid @qdrant/js-client-rest \
-       typescript eslint knip madge \
-       js-yaml playwright lighthouse serve @axe-core/playwright pixelmatch pngjs ws
+# Locked JavaScript runtime and verification tools.
+COPY docker/general-tools/package.json docker/general-tools/package-lock.json /opt/kubeclaw-tools/
+RUN npm ci --prefix /opt/kubeclaw-tools --ignore-scripts --no-audit --no-fund \
+    && mkdir -p /root/.npm
 
-# 2a. Podman-in-Pod runtime surface used by the real E2E Buster-compatible
-#     simulator path. Nova still receives only narrow lease-client Kubernetes
-#     RBAC; this enables local image build/push and browser suites, not direct
-#     namespace authority.
-RUN echo "root:100000:65536" >> /etc/subuid && \
-    echo "root:100000:65536" >> /etc/subgid
+ENV PATH=/opt/kubeclaw-tools/node_modules/.bin:${PATH} \
+    NODE_PATH=/opt/kubeclaw-tools/node_modules:/app/node_modules \
+    PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \
+    NPM_CONFIG_CACHE=/root/.npm
 
-RUN mkdir -p /etc/containers /run/containers/storage /var/lib/containers/storage && \
-    printf '[storage]\ndriver = "vfs"\nrunroot = "/run/containers/storage"\ngraphroot = "/var/lib/containers/storage"\n' \
-      > /etc/containers/storage.conf && \
-    printf 'unqualified-search-registries = ["docker.io", "ghcr.io"]\n\n[[registry]]\nprefix = "docker.io"\nlocation = "docker.io"\n\n[[registry.mirror]]\nlocation = "registry-mirror.kubeclaw.svc.cluster.local:5000"\ninsecure = true\n\n[[registry]]\nlocation = "registry-local.kubeclaw.svc.cluster.local:5001"\ninsecure = true\n' \
-      > /etc/containers/registries.conf && \
-    printf '[engine]\ncgroup_manager = "cgroupfs"\nevents_logger = "file"\nruntime = "crun"\n' \
-      > /etc/containers/containers.conf
+RUN playwright install --with-deps chromium \
+    && playwright --version \
+    && test -d /ms-playwright
 
-ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
-RUN npx playwright install --with-deps chromium \
-    && echo "Playwright browsers installed at /ms-playwright" \
-    && ls /ms-playwright/
-
-# k6 load testing tool
-ARG K6_VERSION=v0.54.0
-RUN set -eux; \
-    ARCH=$(dpkg --print-architecture); \
-    case "$ARCH" in \
-      amd64) K6_ARCH="amd64" ;; \
-      arm64) K6_ARCH="arm64" ;; \
-      *) echo "Unsupported arch: $ARCH" && exit 1 ;; \
-    esac; \
-    URL="https://github.com/grafana/k6/releases/download/${K6_VERSION}/k6-${K6_VERSION}-linux-${K6_ARCH}.tar.gz"; \
-    curl -fsSL "$URL" | tar xz --strip-components=1 -C /usr/local/bin k6-${K6_VERSION}-linux-${K6_ARCH}/k6; \
-    k6 version
-
-RUN mkdir -p /sandbox/{www,results,scripts} && chown -R root:root /sandbox
-
-COPY <<'NGINXCONF' /etc/nginx/sites-available/sandbox
-server {
-    listen 9999;
-    root /sandbox/www;
-    index index.html;
-    add_header X-Frame-Options "DENY" always;
-    add_header X-Content-Type-Options "nosniff" always;
-    location / { try_files $uri $uri/ =404; }
-}
-NGINXCONF
-RUN ln -sf /etc/nginx/sites-available/sandbox /etc/nginx/sites-enabled/sandbox && \
-    rm -f /etc/nginx/sites-enabled/default
-
-COPY <<'SCRIPT' /usr/local/bin/sandbox-run
-#!/bin/bash
-set -euo pipefail
-IMAGE="${1:?Usage: sandbox-run <image> [command]}"
-CMD="${2:-}"
-NAME="sb-$(date +%s)-$RANDOM"
-TIMEOUT="${SANDBOX_TIMEOUT:-300}"
-ARGS=(--name "$NAME" --rm --network host --memory 2g --cpus 2 --pids-limit 256 --tmpfs /tmp:size=512m -v /sandbox:/sandbox:rw -e SANDBOX=true -e NODE_ENV=test)
-if [[ -n "$CMD" ]]; then
-  timeout "$TIMEOUT" podman run "${ARGS[@]}" "$IMAGE" sh -c "$CMD"
-else
-  podman run -d "${ARGS[@]}" "$IMAGE"
-  echo "[SANDBOX] $NAME running. Stop: sandbox-kill $NAME"
-fi
-SCRIPT
-
-COPY <<'SCRIPT' /usr/local/bin/sandbox-build
-#!/bin/bash
-set -euo pipefail
-IMAGE="${1:?Usage: sandbox-build <image> <project-dir> <build-cmd>}"
-PROJECT="${2:?Provide project directory}"
-BUILD_CMD="${3:?Provide build command}"
-TIMEOUT="${SANDBOX_TIMEOUT:-300}"
-[[ ! -d "$PROJECT" ]] && echo "[BUILD] Not found: $PROJECT" && exit 1
-rm -rf /sandbox/www/*
-timeout "$TIMEOUT" podman run --rm --network host --memory 2g --cpus 2 --pids-limit 256 --tmpfs /tmp:size=512m -v "$PROJECT":/src:ro -v /sandbox/www:/output:rw "$IMAGE" sh -c "cp -r /src/. /build && cd /build && $BUILD_CMD && (cp -r dist/* /output/ 2>/dev/null || cp -r build/* /output/ 2>/dev/null || cp -r out/* /output/ 2>/dev/null || echo 'WARN: no standard output dir found')"
-echo "[BUILD] Output: /sandbox/www/ ($(du -sh /sandbox/www/ 2>/dev/null | cut -f1))"
-SCRIPT
-
-COPY <<'SCRIPT' /usr/local/bin/sandbox-serve
-#!/bin/bash
-SRC="${1:-.}"
-rm -rf /sandbox/www/*
-cp -r "$SRC"/. /sandbox/www/ 2>/dev/null || cp -r "$SRC" /sandbox/www/
-nginx 2>/dev/null; nginx -s reload 2>/dev/null || nginx
-echo "[SANDBOX] http://localhost:9999"
-SCRIPT
-
-COPY <<'SCRIPT' /usr/local/bin/sandbox-cleanup
-#!/bin/bash
-echo "[SANDBOX] Cleaning up..."
-podman stop -a 2>/dev/null; podman rm -a -f 2>/dev/null; podman image prune -a -f 2>/dev/null
-rm -rf /sandbox/www/* /sandbox/results/*
-nginx -s stop 2>/dev/null
-echo "[SANDBOX] Clean."
-SCRIPT
-
-COPY <<'SCRIPT' /usr/local/bin/sandbox-kill
-#!/bin/bash
-podman stop "${1:?Usage: sandbox-kill <n>}" 2>/dev/null && echo "Stopped: $1" || echo "Not found: $1"
-SCRIPT
-
-COPY <<'SCRIPT' /usr/local/bin/sandbox-stop
-#!/bin/bash
-nginx -s stop 2>/dev/null && echo "[SANDBOX] nginx stopped." || true
-SCRIPT
-
-COPY <<'SCRIPT' /usr/local/bin/sandbox-ps
-#!/bin/bash
-podman ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}" 2>/dev/null
-podman stats --no-stream --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}" 2>/dev/null || true
-SCRIPT
-
-RUN chmod +x /usr/local/bin/sandbox-*
-
-# 3. Python lint tools (stable, no hash issues)
+# Exact Python tool versions keep resolver output stable.
+ARG RUFF_VERSION=0.15.22
+ARG MYPY_VERSION=2.3.0
+ARG PIP_AUDIT_VERSION=2.10.1
+ARG SEMGREP_VERSION=1.170.0
 RUN pip install --break-system-packages --no-cache-dir \
-    'ruff>=0.1.0' 'mypy>=1.0' 'pip-audit>=2.6.0'
+      "ruff==${RUFF_VERSION}" \
+      "mypy==${MYPY_VERSION}" \
+      "pip-audit==${PIP_AUDIT_VERSION}" \
+    && python3 -m venv /opt/semgrep \
+    && /opt/semgrep/bin/pip install --no-cache-dir "semgrep==${SEMGREP_VERSION}" \
+    && ln -s /opt/semgrep/bin/semgrep /usr/local/bin/semgrep \
+    && ruff --version \
+    && mypy --version \
+    && pip-audit --version \
+    && semgrep --version
 
-# 4. Semgrep — isolated install (musl/hash issues on PyPI)
-#    Eigenes venv verhindert Konflikte mit System-Python
-RUN python3 -m venv /opt/semgrep \
-    && /opt/semgrep/bin/pip install --no-cache-dir 'semgrep>=1.40.0' \
-    && ln -s /opt/semgrep/bin/semgrep /usr/local/bin/semgrep
-
-# 5. Binary tools — pinned versions for reproducible builds
+# Pinned, checksum-verified binary tools for amd64 and arm64.
+ARG TARGETARCH
+ARG K6_VERSION=v0.54.0
 ARG HADOLINT_VERSION=2.12.0
 ARG KUBECONFORM_VERSION=0.6.4
-ARG KUBECTL_VERSION=1.36.2
+ARG KUBECTL_VERSION=1.35.6
+ARG HELM_VERSION=3.18.4
+RUN set -eux; \
+    arch="${TARGETARCH:-$(dpkg --print-architecture)}"; \
+    case "$arch" in \
+      amd64) hadolint_arch="x86_64" ;; \
+      arm64) hadolint_arch="arm64" ;; \
+      *) echo "Unsupported architecture: $arch" >&2; exit 1 ;; \
+    esac; \
+    tmp="$(mktemp -d)"; \
+    k6_archive="k6-${K6_VERSION}-linux-${arch}.tar.gz"; \
+    curl -fsSL "https://github.com/grafana/k6/releases/download/${K6_VERSION}/${k6_archive}" -o "$tmp/$k6_archive"; \
+    curl -fsSL "https://github.com/grafana/k6/releases/download/${K6_VERSION}/k6-${K6_VERSION}-checksums.txt" -o "$tmp/k6-checksums.txt"; \
+    k6_sha="$(awk -v file="$k6_archive" '$2 == file { print $1 }' "$tmp/k6-checksums.txt")"; \
+    printf '%s  %s\n' "$k6_sha" "$tmp/$k6_archive" | sha256sum -c -; \
+    tar -xzf "$tmp/$k6_archive" --strip-components=1 -C /usr/local/bin "k6-${K6_VERSION}-linux-${arch}/k6"; \
+    hadolint_file="hadolint-Linux-${hadolint_arch}"; \
+    curl -fsSL "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/${hadolint_file}" -o "$tmp/$hadolint_file"; \
+    curl -fsSL "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/${hadolint_file}.sha256" -o "$tmp/${hadolint_file}.sha256"; \
+    hadolint_sha="$(awk '{ print $1 }' "$tmp/${hadolint_file}.sha256")"; \
+    printf '%s  %s\n' "$hadolint_sha" "$tmp/$hadolint_file" | sha256sum -c -; \
+    install -m 0755 "$tmp/$hadolint_file" /usr/local/bin/hadolint; \
+    kubeconform_archive="kubeconform-linux-${arch}.tar.gz"; \
+    curl -fsSL "https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/${kubeconform_archive}" -o "$tmp/$kubeconform_archive"; \
+    curl -fsSL "https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/CHECKSUMS" -o "$tmp/kubeconform-checksums.txt"; \
+    kubeconform_sha="$(awk -v file="$kubeconform_archive" '$2 == file { print $1 }' "$tmp/kubeconform-checksums.txt")"; \
+    printf '%s  %s\n' "$kubeconform_sha" "$tmp/$kubeconform_archive" | sha256sum -c -; \
+    tar -xzf "$tmp/$kubeconform_archive" -C /usr/local/bin kubeconform; \
+    kubectl_file="kubectl-${arch}"; \
+    curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl" -o "$tmp/$kubectl_file"; \
+    kubectl_sha="$(curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl.sha256")"; \
+    printf '%s  %s\n' "$kubectl_sha" "$tmp/$kubectl_file" | sha256sum -c -; \
+    install -m 0755 "$tmp/$kubectl_file" /usr/local/bin/kubectl; \
+    helm_archive="helm-v${HELM_VERSION}-linux-${arch}.tar.gz"; \
+    curl -fsSL "https://get.helm.sh/${helm_archive}" -o "$tmp/$helm_archive"; \
+    helm_sha="$(curl -fsSL "https://get.helm.sh/${helm_archive}.sha256sum" | awk '{ print $1 }')"; \
+    printf '%s  %s\n' "$helm_sha" "$tmp/$helm_archive" | sha256sum -c -; \
+    tar -xzf "$tmp/$helm_archive" -C "$tmp"; \
+    install -m 0755 "$tmp/linux-${arch}/helm" /usr/local/bin/helm; \
+    rm -rf "$tmp"; \
+    k6 version; \
+    hadolint --version; \
+    kubeconform -v; \
+    kubectl version --client=true; \
+    helm version --short
 
-# hadolint — Dockerfile linter
-RUN wget -qO /usr/local/bin/hadolint \
-    https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-x86_64 \
-    && chmod +x /usr/local/bin/hadolint
-
-# kubeconform — K8s manifest validation
-RUN wget -qO- \
-    https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz \
-    | tar xz -C /usr/local/bin/
-
-# kubectl — live Kubernetes verification and Buster namespace lease checks
-RUN wget -qO /usr/local/bin/kubectl \
-    https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl \
-    && chmod +x /usr/local/bin/kubectl
-
-# helm (if not already in base image)
-RUN if ! command -v helm &>/dev/null; then \
-      curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash; \
-    fi
-
-# 6. File ownership for root mode
-RUN chown -R root:root /app
-
-# 7. KubeClaw skills mount point
-#    Agent skill code is delivered by the code-bundle overlay at deploy time.
-#    Images intentionally keep only durable tools/runtime dependencies here.
+# Agent skill code is delivered by the code-bundle overlay at deploy time.
 RUN mkdir -p /app/skills
 
-# 8. KubeClaw OpenClaw plugins
-#    Runtime surface is OpenClaw's bundled plugin tree. The agent observer
-#    plugin is self-contained and must not import from /app/skills.
+# The observer is self-contained and must not import from /app/skills.
 COPY plugins/openclaw-agent-observer/ /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer/
-RUN cd /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer \
-    && rm -rf dist \
-    && node "$(npm root -g)/typescript/bin/tsc" -p tsconfig.build.json \
+WORKDIR /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer
+RUN rm -rf dist \
+    && node /opt/kubeclaw-tools/node_modules/typescript/bin/tsc -p tsconfig.build.json \
     && mkdir -p /app/dist/extensions/kubeclaw-agent-observer \
     && cp -R package.json openclaw.plugin.json src dist /app/dist/extensions/kubeclaw-agent-observer/ \
     && rm -rf /tmp/kubeclaw-openclaw-plugins
 
-# 9. Official external OpenClaw plugins
-#    These install into a dedicated OpenClaw home slice during image build. Pod
-#    init seeds the mounted OpenClaw home from this baked cache, avoiding first
-#    boot network installs and preserving the plugin metadata OpenClaw expects.
+# Official plugins are pinned and baked into an OpenClaw home seed so startup
+# never requires a network install.
+ARG OPENCLAW_PLUGIN_VERSION=2026.7.1
 RUN mkdir -p /tmp/openclaw-plugin-home \
-    && HOME=/tmp/openclaw-plugin-home openclaw plugins install @openclaw/acpx \
-    && HOME=/tmp/openclaw-plugin-home openclaw plugins install @openclaw/discord \
+    && HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}" \
+    && HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}" \
     && mkdir -p /opt/openclaw-plugin-home \
     && cp -a /tmp/openclaw-plugin-home/.openclaw/. /opt/openclaw-plugin-home/ \
-    && cd /opt/openclaw-plugin-home/npm \
-    && find . -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}' > /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version \
     && rm -rf /tmp/openclaw-plugin-home
 
-# 10. Environment
-ENV NODE_PATH=/usr/local/lib/node_modules:/app/node_modules
-ENV NPM_CONFIG_CACHE=/root/.npm
+WORKDIR /opt/openclaw-plugin-home/npm
+RUN find . -type f -print0 \
+      | sort -z \
+      | xargs -0 sha256sum \
+      | sha256sum \
+      | awk '{print $1}' > /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version
+
+WORKDIR /app
 ENV HOME=/home/node
 
 LABEL org.opencontainers.image.title="KubeClaw General (Root Mode)"
-LABEL org.opencontainers.image.description="Root environment for K8s stateful deployments with lint tools"
+LABEL org.opencontainers.image.description="Root environment for Nova, Forge, and Echo with locked verification tools"

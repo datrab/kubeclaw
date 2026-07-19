@@ -15,17 +15,17 @@ const capabilityCases = [
   {
     suite: 'build',
     config: { serve: { type: 'static' } },
-    missing: [BUSTER_CAPABILITIES.STATIC_WEB_SERVER],
+    missing: [BUSTER_CAPABILITIES.IMAGE_BUILD, BUSTER_CAPABILITIES.KUBERNETES],
   },
   {
     suite: 'build',
     config: { serve: { type: 'server' } },
-    missing: [BUSTER_CAPABILITIES.CONTAINER_RUNTIME],
+    missing: [BUSTER_CAPABILITIES.IMAGE_BUILD, BUSTER_CAPABILITIES.KUBERNETES],
   },
   {
     suite: 'k8s',
     config: {},
-    missing: [BUSTER_CAPABILITIES.CONTAINER_RUNTIME, BUSTER_CAPABILITIES.KUBERNETES],
+    missing: [BUSTER_CAPABILITIES.IMAGE_BUILD, BUSTER_CAPABILITIES.KUBERNETES],
   },
   {
     suite: 'a11y',
@@ -63,6 +63,7 @@ try {
   for (const item of capabilityCases) {
     const logDir = path.join(root, item.suite.replace(/[^a-zA-Z0-9._-]+/g, '_'));
     const result = await runSuites([item.suite], {
+      repoRoot: process.cwd(),
       moduleId: `module-${item.suite}`,
       attempt: 1,
       logDir,

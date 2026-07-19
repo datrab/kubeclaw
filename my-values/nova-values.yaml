@@ -72,20 +72,6 @@ busterNamespaceBroker:
     verificationRead:
       enabled: true
 
-sandbox:
-  enabled: true
-  storageSize: "50Gi"
-  registriesConf: |
-    unqualified-search-registries = ["docker.io"]
-
-    [[registry]]
-    location = "registry-local.kubeclaw.svc.cluster.local:5001"
-    insecure = true
-
-    [[registry]]
-    location = "registry-mirror.kubeclaw.svc.cluster.local:5000"
-    insecure = true
-
 service:
   extraPorts:
     - name: prism-preview
