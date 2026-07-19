@@ -138,7 +138,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-to: type=gha,mode=min,ignore-error=true
           labels: ${{ steps.meta.outputs.labels }}
       - name: Summary
         run: |

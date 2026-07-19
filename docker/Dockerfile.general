@@ -43,6 +43,7 @@ RUN apt-get update \
 # Locked JavaScript runtime and verification tools.
 COPY docker/general-tools/package.json docker/general-tools/package-lock.json /opt/kubeclaw-tools/
 RUN npm ci --prefix /opt/kubeclaw-tools --ignore-scripts --no-audit --no-fund \
+    && npm install -g --no-audit --no-fund ioredis@5.11.1 \
     && mkdir -p /root/.npm
 
 ENV PATH=/opt/kubeclaw-tools/node_modules/.bin:${PATH} \

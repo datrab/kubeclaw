@@ -1260,6 +1260,7 @@ assert.equal(busterGatewayDockerfile.includes('COPY skills/'), false, 'Buster ga
 assert.equal(busterPipelineDockerfile.includes('COPY skills/'), false, 'Buster pipeline image must not bake fast-changing agent skills');
 assertIncludes(generalDockerfile, 'ARG KUBECTL_VERSION=', 'General Dockerfile must pin kubectl for live Kubernetes verification');
 assertIncludes(generalDockerfile, 'ARG HELM_VERSION=', 'General Dockerfile must pin Helm for reproducible image builds');
+assertIncludes(generalDockerfile, 'npm install -g --no-audit --no-fund ioredis@5.11.1', 'General gateway runtime must include the Redis health-check dependency on the global Node path');
 assert.equal(generalDockerfile.includes('ARG KUBECTL_VERSION=1.35.'), true, 'General kubectl must stay within one minor of the production Kubernetes 1.34 API');
 assert.equal(busterPipelineDockerfile.includes('ARG KUBECTL_VERSION=1.35.'), true, 'Buster kubectl must stay within one minor of the production Kubernetes 1.34 API');
 assertIncludes(generalDockerfile, 'ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:', 'General Dockerfile must pin the OpenClaw base version');
