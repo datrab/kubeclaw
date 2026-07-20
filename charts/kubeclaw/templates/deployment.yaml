@@ -1169,6 +1169,8 @@ spec:
                   key: {{ .Values.redis.secretKey | default "redis-password" }}
             - name: KUBECLAW_LOCAL_REGISTRY
               value: {{ .Values.runtimeInfrastructure.localRegistry | quote }}
+            - name: XDG_RUNTIME_DIR
+              value: "/run/user/1000"
             - name: BUILDKIT_HOST
               value: "unix:///run/user/1000/buildkit/buildkitd.sock"
             - name: BUSTER_RESULTS_DIR

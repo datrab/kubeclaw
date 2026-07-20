@@ -697,6 +697,9 @@ ${pull_secret_yaml}
     - name: buildkit
       image: "${probe_image}"
       imagePullPolicy: Always
+      env:
+        - name: XDG_RUNTIME_DIR
+          value: /run/user/1000
       command:
         - rootlesskit
       args:

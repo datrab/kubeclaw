@@ -787,6 +787,7 @@ assert.equal(resourceQuantity(busterGatewayContainerObject, 'limits', 'ephemeral
 assert.equal(resourceQuantity(busterPipelineContainerObject, 'limits', 'ephemeral-storage'), '60Gi', 'Structured Buster pipeline ephemeral-storage limit must be 60Gi');
 assert.equal(volumeByName(busterDeploymentObject, 'buildkit-state')?.emptyDir?.sizeLimit, '50Gi', 'Structured Buster rootless BuildKit state must be bounded at 50Gi');
 assert.equal(containerMountPaths(busterPipelineContainerObject).includes('/run/user/1000'), true, 'Structured Buster pipeline must expose its rootless BuildKit socket across the worker mount namespace');
+assert.equal(envValue(busterPipelineContainerObject, 'XDG_RUNTIME_DIR'), '/run/user/1000', 'Structured Buster pipeline must keep all rootless BuildKit runtime sockets in its writable runtime mount');
 assert.equal(containerMountPaths(busterPipelineContainerObject).includes('/home/node/.openclaw'), false, 'Structured Buster pipeline must not traverse the gateway-owned OpenClaw home');
 assert.equal(containerMountPaths(busterPipelineContainerObject).includes('/workspace'), true, 'Structured Buster pipeline must mount the shared checkout at its own runtime root');
 assert.equal(envValue(busterPipelineContainerObject, 'REPO_ROOT'), '/workspace/git-repo', 'Structured Buster pipeline must resolve the checkout from its isolated workspace mount');
@@ -1380,6 +1381,7 @@ assertIncludes(deployScript, 'local probe_image="${1:-$BUILDKIT_ROOTLESS_PREFLIG
 assertIncludes(deployScript, 'image: "${probe_image}"', 'BuildKit preflight must run the selected host or Buster pipeline image');
 assertIncludes(deployScript, 'command:\n        - rootlesskit', 'BuildKit preflight must bypass application entrypoints and launch RootlessKit directly');
 assertIncludes(deployScript, 'imagePullPolicy: Always', 'BuildKit preflight must inspect the current mutable worker tag rather than a stale node image');
+assertIncludes(deployScript, 'name: XDG_RUNTIME_DIR\n          value: /run/user/1000', 'BuildKit preflight must place rootless runtime and trace sockets in its writable runtime mount');
 assertIncludes(deployScript, 'privileged: false', 'BuildKit preflight must prove the builder works without privileged mode');
 assertIncludes(deployScript, 'runAsNonRoot: true', 'BuildKit preflight must run the builder as a non-root user');
 assertIncludes(deployScript, 'automountServiceAccountToken: false', 'BuildKit preflight must not expose Kubernetes API credentials to the builder');
