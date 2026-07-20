@@ -215,6 +215,7 @@
     "append_code_bundle_override_file",
     "yaml_get_section_key",
     "yaml_get_nested_section_key",
+    "yaml_get_first_named_list_item",
     "derive_github_repository_from_image_repository",
     "derive_github_repository",
     "default_bundle_archive_url",
@@ -263,12 +264,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 717,
-    "secrets": 761,
-    "tailscale": 820,
-    "infra": 911,
-    "agents": 1124,
-    "smoke": 1225,
-    "teardown": 1380
+    "setup": 775,
+    "secrets": 819,
+    "tailscale": 878,
+    "infra": 969,
+    "agents": 1193,
+    "smoke": 1294,
+    "teardown": 1449
   }
 }

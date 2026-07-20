@@ -376,6 +376,39 @@ yaml_get_nested_section_key() {
   ' "$file"
 }
 
+yaml_get_first_named_list_item() {
+  local file="$1"
+  local section="$2"
+
+  awk -v section="$section" '
+    function trim(value) {
+      sub(/^[[:space:]]+/, "", value)
+      sub(/[[:space:]]+$/, "", value)
+      gsub(/^"/, "", value)
+      gsub(/"$/, "", value)
+      gsub(/^'"'"'/, "", value)
+      gsub(/'"'"'$/, "", value)
+      return value
+    }
+
+    $0 ~ ("^" section ":[[:space:]]*$") {
+      in_section = 1
+      next
+    }
+
+    in_section && $0 ~ /^[^[:space:]]/ {
+      in_section = 0
+    }
+
+    in_section && $0 ~ /^[[:space:]]*-[[:space:]]+name:[[:space:]]*/ {
+      value = $0
+      sub(/^[[:space:]]*-[[:space:]]+name:[[:space:]]*/, "", value)
+      print trim(value)
+      exit
+    }
+  ' "$file"
+}
+
 derive_github_repository_from_image_repository() {
   local image_repository="${1:-}"
 
@@ -616,14 +649,25 @@ cleanup_buildkit_preflight_pod() {
 cmd_buildkit_preflight() {
   local probe_name="kubeclaw-buildkit-preflight-$$"
   local socket="unix:///run/user/1000/buildkit/buildkitd.sock"
+  local probe_image="${1:-$BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE}"
+  local pull_secret="${2:-}"
+  local pull_secret_yaml=""
   local probe_ready=0
 
   header "Rootless BuildKit Preflight"
   require_command kubectl
 
-  if [[ ! "$BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE" =~ ^[A-Za-z0-9._/@:-]+$ ]]; then
-    err "Invalid BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE: $BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE"
+  if [[ ! $probe_image =~ ^[A-Za-z0-9._/@:-]+$ ]]; then
+    err "Invalid BuildKit preflight image: $probe_image"
     return 1
+  fi
+  if [[ -n $pull_secret && ! $pull_secret =~ ^[a-z0-9]([-a-z0-9.]*[a-z0-9])?$ ]]; then
+    err "Invalid BuildKit preflight image pull Secret: $pull_secret"
+    return 1
+  fi
+  if [[ -n $pull_secret ]]; then
+    pull_secret_yaml="  imagePullSecrets:
+    - name: ${pull_secret}"
   fi
 
   kubectl get namespace "$NAMESPACE" >/dev/null
@@ -645,20 +689,34 @@ spec:
     runAsUser: 1000
     runAsGroup: 1000
     runAsNonRoot: true
+    fsGroup: 1000
     seccompProfile:
       type: Unconfined
+${pull_secret_yaml}
   containers:
     - name: buildkit
-      image: "${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE}"
+      image: "${probe_image}"
+      imagePullPolicy: Always
+      command:
+        - rootlesskit
       args:
+        - buildkitd
         - --addr
         - ${socket}
+        - --root
+        - /tmp/buildkit-state
         - --oci-worker-no-process-sandbox
       securityContext:
         appArmorProfile:
           type: Unconfined
         privileged: false
         allowPrivilegeEscalation: true
+        capabilities:
+          drop:
+            - ALL
+          add:
+            - SETUID
+            - SETGID
       readinessProbe:
         exec:
           command:
@@ -673,7 +731,7 @@ spec:
         failureThreshold: 60
       volumeMounts:
         - name: buildkit-state
-          mountPath: /home/user/.local/share/buildkit
+          mountPath: /tmp/buildkit-state
         - name: buildkit-runtime
           mountPath: /run/user/1000
   volumes:
@@ -1064,8 +1122,19 @@ deploy_agent() {
     verify_bundle_archive_url "$role" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_auth_secret"
   fi
 
-  if [[ "$role" == "buster" && "$mode" == "image" ]]; then
-    cmd_buildkit_preflight
+  if [[ $role == "buster" && $mode == "image" ]]; then
+    local pipeline_preflight_repo="${pipeline_image_repo:-$(yaml_get_nested_section_key "$values_file" busterPipeline image repository)}"
+    local pipeline_preflight_tag="${pipeline_image_tag:-$(yaml_get_nested_section_key "$values_file" busterPipeline image tag)}"
+    local pipeline_preflight_image="${pipeline_preflight_repo}"
+    local pipeline_preflight_pull_secret
+    pipeline_preflight_pull_secret="$(yaml_get_first_named_list_item "$values_file" imagePullSecrets)"
+    if [[ $disable_pull_secrets == "1" ]]; then
+      pipeline_preflight_pull_secret=""
+    fi
+    if [[ $pipeline_preflight_image != *@* ]]; then
+      pipeline_preflight_image="${pipeline_preflight_image}:${pipeline_preflight_tag:-latest}"
+    fi
+    cmd_buildkit_preflight "$pipeline_preflight_image" "$pipeline_preflight_pull_secret"
   fi
 
   if [[ -n "$image_repo" || -n "$image_tag" || -n "$controller_image_repo" || -n "$controller_image_tag" || -n "$pipeline_image_repo" || -n "$pipeline_image_tag" || "$disable_pull_secrets" == "1" || "$mode" == "code" ]]; then

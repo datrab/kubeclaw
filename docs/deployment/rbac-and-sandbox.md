@@ -49,7 +49,7 @@ That authority is intentional for the current Buster role, but it is still a hig
 ## Open Issues
 
 - The namespace fence does not constrain namespaced resource writes in existing namespaces.
-- Buster's pipeline sidecar uses rootless BuildKit with an unconfined BuildKit AppArmor/seccomp posture and setuid UID/GID mapping helpers, but it remains non-root and non-privileged.
+- Buster's pipeline sidecar uses rootless BuildKit with an unconfined BuildKit AppArmor/seccomp posture. Debian's UID/GID mapping helpers carry only `cap_setuid`/`cap_setgid`, the container bounding set contains only `SETUID`/`SETGID`, and the worker remains non-root and non-privileged.
 
 ## Rootless BuildKit Prerequisite
 
@@ -61,7 +61,7 @@ Verify the real node capability before deploying Buster:
 ./scripts/deploy.sh buildkit-preflight
 ```
 
-The command creates a temporary non-privileged `moby/buildkit:rootless` pod, waits for its worker, verifies it with `buildctl debug workers`, and deletes it. It does not modify node configuration. If the probe fails, host bootstrap or Ansible owns any required `kernel.unprivileged_userns_clone`, `user.max_user_namespaces`, `kernel.apparmor_restrict_unprivileged_userns`, or AppArmor change; Helm must not silently mutate those host policies. Ubuntu 24.04 nodes must set `kernel.apparmor_restrict_unprivileged_userns=0` for the chart's unconfined rootless BuildKit process.
+The standalone command creates a temporary non-privileged `moby/buildkit:rootless` pod, waits for its worker, verifies it with `buildctl debug workers`, and deletes it. Buster image deployment runs the same probe with the exact pipeline image and capability posture that Helm will deploy, preventing an official-image pass from hiding a worker-image packaging failure. Neither path modifies node configuration. If the probe fails, host bootstrap or Ansible owns any required `kernel.unprivileged_userns_clone`, `user.max_user_namespaces`, `kernel.apparmor_restrict_unprivileged_userns`, or AppArmor change; Helm must not silently mutate those host policies. Ubuntu 24.04 nodes must set `kernel.apparmor_restrict_unprivileged_userns=0` for the chart's unconfined rootless BuildKit process.
 
 ## Verification And Recovery
 

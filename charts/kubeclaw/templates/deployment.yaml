@@ -1298,11 +1298,13 @@ spec:
             privileged: false
             seccompProfile:
               type: Unconfined
-            # RootlessKit requires its setuid uid/gid mapping helpers. Keep the
-            # runtime's default capability bounding set so those helpers can
-            # acquire SETUID/SETGID; the container remains non-root and
-            # non-privileged.
+            # Debian's uidmap helpers carry only their exact file capabilities.
+            # Keep those capabilities in the container bounding set while the
+            # worker remains non-root and non-privileged.
             allowPrivilegeEscalation: true
+            capabilities:
+              drop: ["ALL"]
+              add: ["SETUID", "SETGID"]
 
           {{- if .Values.probes.startup.enabled }}
           startupProbe:

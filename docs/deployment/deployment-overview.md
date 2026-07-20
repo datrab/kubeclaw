@@ -51,7 +51,7 @@ By default the deploy script resolves the latest remote `main` commit, then deri
 
 `scripts/setup.sh` is a guarded legacy Git repository bootstrap. It is not the normal platform deployment flow.
 
-The BuildKit preflight is non-mutating at node level. It creates one temporary pod in the workspace namespace, verifies that rootless BuildKit can initialize an OCI worker, and deletes the pod. Run it before deploying Buster on a new node pool. Helm and `deploy.sh` do not alter node sysctls or AppArmor policy.
+The BuildKit preflight is non-mutating at node level. It creates one temporary pod in the workspace namespace, verifies that rootless BuildKit can initialize an OCI worker, and deletes the pod. Run it before deploying Buster on a new node pool. Buster image deployments additionally preflight the exact pipeline image before Helm rollout. Helm and `deploy.sh` do not alter node sysctls or AppArmor policy.
 
 ## Runtime Artifacts
 
