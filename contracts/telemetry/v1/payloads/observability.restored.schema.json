@@ -1,0 +1,205 @@
+{
+  "$id": "observability.restored.payload.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "agent_type": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "artifact_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "authorization": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "component": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "content_completeness": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "degraded_at": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "detail": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dispatch_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "error": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "gate_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "gate_type": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "gateway_label": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "hook_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "impacted_event_type": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "module_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "payload": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "reason": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "restored_after_ms": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "restored_at": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "session_key": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "stage_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "stdout": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "stream_key": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "surface": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "tool_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "transcript": {
+      "oneOf": [
+        {
+          "type": "array"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "validation_errors": {
+      "type": [
+        "array",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "component",
+    "surface",
+    "reason"
+  ],
+  "type": "object"
+}

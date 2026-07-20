@@ -339,6 +339,8 @@ export function validateConfig(config: AnyRecord, progress: AnyRecord) {
   }
   requireBoolean(config.pre_check.enabled, 'config.pre_check.enabled');
   requireNonEmptyString(config.pre_check.lint_report_path, 'config.pre_check.lint_report_path');
+  requireNonEmptyString(config.pre_check.lint_policy_path, 'config.pre_check.lint_policy_path');
+  requireNonEmptyString(config.pre_check.lint_policy_project, 'config.pre_check.lint_policy_project');
   requireNumber(config.pre_check, 'timeout_seconds', 'config.pre_check.timeout_seconds', { min: 0, allowZero: false });
 
   if (!isPlainObject(config.review_defaults)) {

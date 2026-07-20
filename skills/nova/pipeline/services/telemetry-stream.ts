@@ -1,5 +1,6 @@
 import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError } from '../noncritical-reporting.ts';
 import { sanitizeTelemetryPayload } from '../egress.ts';
+import { buildCanonicalEnvelope } from '../observability-contract.ts';
 import {
   TELEMETRY_SEQ_TTL_SECONDS,
   requireTelemetryStreamMaxLenFromConfig,
@@ -128,17 +129,31 @@ async function allocateSeq(redis, seqKey) {
 }
 
 export function buildTelemetryStreamEvent(eventType, payload = {}, identity = {}, seq, opts = {}, emittedAt = new Date().toISOString()) {
-  return {
-    ...sanitizeTelemetryPayload(objectRecord(payload)),
-    v: 1,
+  const sanitized = sanitizeTelemetryPayload(objectRecord(payload));
+  delete sanitized.project;
+  delete sanitized.run_id;
+  delete sanitized.source;
+  delete sanitized.emitter;
+  const gateId = normalizeTelemetryIdentityPart(sanitized.gate_id);
+  const moduleId = normalizeTelemetryIdentityPart(sanitized.module_id);
+  const stepId = normalizeTelemetryIdentityPart(sanitized.step_id);
+  const workId = gateId || moduleId || stepId || identity.runId;
+  const workType = gateId ? 'gate' : moduleId ? 'module' : stepId ? 'pipeline_step' : 'pipeline';
+  return buildCanonicalEnvelope({
     type: eventType,
-    ts: emittedAt,
-    run_id: identity.runId,
-    project: identity.project,
+    payload: sanitized,
     seq,
-    source: 'pipeline',
-    emitter: selectPresentValue(opts.emitter, TELEMETRY_EMITTER),
-  };
+    occurredAt: opts.occurredAt || emittedAt,
+    emittedAt,
+    causationId: opts.causationId || null,
+    identity: {
+      project: identity.project, run_id: identity.runId, work_id: workId, work_type: workType,
+      gate_id: gateId, attempt: sanitized.attempt, dispatch_id: sanitized.dispatch_id,
+      session_id: sanitized.session_id || sanitized.session_key, agent_id: sanitized.agent_id || sanitized.agent_type,
+      model_call_id: sanitized.model_call_id, tool_call_id: sanitized.tool_call_id,
+      source: selectPresentValue(opts.source, 'pipeline'), producer: selectPresentValue(opts.emitter, TELEMETRY_EMITTER),
+    },
+  });
 }
 
 export async function emitTelemetryStreamEvent(config, eventType, payload = {}, opts = {}) {

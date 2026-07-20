@@ -64,14 +64,14 @@ const observedEvents = [
     hook: 'before_tool_call',
     tool_name: 'read',
     params: { path: 'README.md' },
-  }, { tool_call_id: 'tool-1' }),
+  }, { tool_call_id: 'tool-1', model_call_id: 'model-1' }),
   makeEvent('openclaw.tool.finished', {
     hook: 'after_tool_call',
     tool_name: 'read',
     result: { ok: true },
     duration_ms: 12,
     outcome: 'success',
-  }, { tool_call_id: 'tool-1' }),
+  }, { tool_call_id: 'tool-1', model_call_id: 'model-1' }),
   makeEvent('openclaw.model.started', {
     hook: 'model_call_started',
     provider: 'anthropic',

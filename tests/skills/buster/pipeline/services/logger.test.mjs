@@ -17,6 +17,6 @@ test('Buster logger recreates module log directory if git sync removed it after 
   assert.ok(fs.existsSync(logPath));
   const entries = fs.readFileSync(logPath, 'utf8').trim().split('\n').map((line) => JSON.parse(line));
   assert.equal(entries.length, 1);
-  assert.equal(entries[0].module, '02-nginx');
-  assert.equal(entries[0].msg, 'after sync');
+  assert.equal(entries[0].work_id, '02-nginx');
+  assert.equal(entries[0].message, 'after sync');
 });

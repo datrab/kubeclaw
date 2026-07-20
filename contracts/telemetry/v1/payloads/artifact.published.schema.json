@@ -1,0 +1,150 @@
+{
+  "$id": "artifact.published.payload.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "artifact_id": {
+      "type": "string"
+    },
+    "artifact_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "byte_length": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "completeness": {
+      "enum": [
+        "full",
+        "truncated",
+        "summarized",
+        "transformed",
+        "unavailable",
+        "reference-only"
+      ]
+    },
+    "content_class": {
+      "enum": [
+        "metadata",
+        "payload",
+        "artifact",
+        "quarantined"
+      ]
+    },
+    "content_completeness": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "dispatch_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "gate_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "gate_type": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "type": "string"
+    },
+    "logical_id": {
+      "type": "string"
+    },
+    "media_type": {
+      "type": "string"
+    },
+    "model_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "module_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "original_byte_length": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "original_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reference": {
+      "type": "string"
+    },
+    "session_key": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "tool_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "transformation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "artifact_id",
+    "logical_id",
+    "kind",
+    "media_type",
+    "byte_length",
+    "sha256",
+    "content_class",
+    "reference"
+  ],
+  "type": "object"
+}

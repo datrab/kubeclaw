@@ -11,6 +11,7 @@ import {
 } from '../integrations/git-worktree.ts';
 import { FAIL_PATTERNS } from './failures/classification.ts';
 import { log } from '../core/logger.ts';
+import { appendEvaluationFact, publishArtifact } from './evidence-plane.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
@@ -78,6 +79,13 @@ export async function gitSyncBeforeBuster(config: AnyRecord, moduleDir: string, 
     } catch (_error) {
       status.forge_diff_stat = null;
     }
+    const diff = gitExec(config.repo_root, ['diff', '--binary', `${status?.head_before || `${commitHash}^`}`, commitHash, '--', ...addPaths]);
+    const diffArtifact = publishArtifact({ ...config, pipeline_dir: config?.paths?.swarm_dir ? `${config.paths.swarm_dir}/logs/pipeline` : null }, {
+      logical_id: `git-diff/${status.module_id}/${commitHash}`,
+      kind: 'git-diff', media_type: 'text/x-diff', bytes: diff, producer: 'nova/git-sync', content_class: 'artifact',
+      correlation: { project: config.project, run_id: config._runId ?? config.run_id, work_id: status.module_id, work_type: 'module', attempt: status.attempt ?? status.fail_count + 1, source: 'pipeline', producer: 'nova/git-sync' },
+    });
+    appendEvaluationFact(config, { dimension:'git.workspace', work_id:status.module_id, attempt:status.attempt??status.fail_count+1, starting_commit:status?.head_before??null, final_commit:commitHash, files_touched:addPaths, diff_stat:status.forge_diff_stat, diff_reference:diffArtifact.reference, branch:gitExec(config.repo_root,['branch','--show-current']) });
 
     const gitSyncTransition = transitionModuleStatus(status, STATUS.READY_FOR_TESTING, {
       note: `Git sync complete (${shortHash})`,

@@ -61,7 +61,7 @@ Owns:
 
 Inputs: Redis task messages, `OPENCLAW_GATEWAY_URL`, `OPENCLAW_GATEWAY_TOKEN`, `BUSTER_TASK_STREAM`, Git repo, suite config, capabilities.
 
-Outputs: Buster output files, completion stream entries, dead-letter entries, run logs, telemetry/fallback artifacts, optional Discord media evidence.
+Outputs: Buster output files, completion stream entries, dead-letter entries, run logs, canonical telemetry or explicit quarantine evidence, and optional Discord media evidence.
 
 Primary code paths:
 

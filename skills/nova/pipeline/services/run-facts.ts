@@ -3,6 +3,7 @@ import fs from 'fs';
 import { getOptionalRunStats } from '../core/runtime.ts';
 import { getPipelineArtifactBundle } from './artifact-bundle.ts';
 import { loadLifecycleReadModels } from './status-store-lifecycle.ts';
+import { canonicalFingerprint } from '../portable-artifacts.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 
@@ -28,6 +29,7 @@ function readJsonIfPresent(filePath: string | null) {
 function sortedUnique(values: any[]) {
   return [...new Set(values.map(textOrNull).filter(Boolean))].sort();
 }
+function nonSecret(value:any):any { if(Array.isArray(value))return value.map(nonSecret);if(!value||typeof value!=='object')return value;return Object.fromEntries(Object.entries(value).filter(([key])=>!/secret|token|password|credential|api.?key/i.test(key)).map(([key,item])=>[key,nonSecret(item)])); }
 
 function lifecycleReadModels(config: any) {
   try {
@@ -137,6 +139,21 @@ export function buildRunFacts(config: any, progress: any = null, terminalOverrid
   const modules = moduleFacts(progress, readModels);
   const gates = gateFacts(progress, readModels);
   const agents = agentFacts(stats, summary);
+  const evaluationDimensions = {
+    pipeline_runtime_version: config?.runtime_version ?? process.version,
+    configuration_fingerprint: canonicalFingerprint(nonSecret({ profile:config?.profile, telemetry:config?.telemetry, governance:config?.governance, agents:config?.agents, review_defaults:config?.review_defaults, pipeline_defaults:config?.pipeline_defaults })),
+    prompt_fingerprint: config?.nova_prompt ? canonicalFingerprint(config.nova_prompt) : null,
+    models: progress?.defaults?.models ?? config?.models ?? null,
+    providers: config?.providers ?? null,
+    thinking: config?.thinking ?? progress?.defaults?.thinking ?? null,
+    tools: config?.tools ?? null,
+    plugins: config?.plugins ?? null,
+    skills: config?.skills ?? null,
+    attempts: { forge: agents.forge, buster: agents.buster, echo: agents.echo },
+    loops: Number(stats?.loop_count ?? 0),
+    operator_interventions: Number(stats?.operator_interventions ?? 0),
+    observability_completeness: summary?.observability_completeness ?? 'unknown',
+  };
 
   return {
     schema_version: 'pipeline_run_facts.v1',
@@ -160,6 +177,7 @@ export function buildRunFacts(config: any, progress: any = null, terminalOverrid
     modules,
     gates,
     agents,
+    evaluation_dimensions: evaluationDimensions,
     diagnostics: {
       lifecycle_read_model_available: Boolean(readModels),
       run_stats_available: Boolean(stats),

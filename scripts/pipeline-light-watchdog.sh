@@ -34,7 +34,7 @@ while [[ $# -gt 0 ]]; do
       heartbeat_seconds="${2:-}"
       shift 2
       ;;
-    -h|--help)
+    -h | --help)
       cat <<'EOF'
 Usage:
   scripts/pipeline-light-watchdog.sh \
@@ -57,7 +57,7 @@ EOF
   esac
 done
 
-if [[ -z "$status_file" || -z "$run_pid" || -z "$log_file" ]]; then
+if [[ -z $status_file || -z $run_pid || -z $log_file ]]; then
   echo "--status-file, --run-pid, and --log-file are required" >&2
   exit 2
 fi
@@ -73,7 +73,7 @@ now_iso() {
 }
 
 append_log() {
-  printf '%s pid=%s %s\n' "$(now_iso)" "$run_pid" "$1" >> "$log_file"
+  printf '%s pid=%s %s\n' "$(now_iso)" "$run_pid" "$1" >>"$log_file"
 }
 
 read_status_field() {
@@ -94,7 +94,7 @@ status_snapshot_line() {
 
 notify_terminal_status() {
   local status progress current branch worktree error message message output exit_code
-  [[ -n "$notify_command" ]] || return 0
+  [[ -n $notify_command ]] || return 0
 
   status="$(read_status_field '.status // "unknown"')"
   progress="$(read_status_field '((.currentIndex // 0) | tostring) + "/" + ((.total // 0) | tostring)')"
@@ -104,7 +104,7 @@ notify_terminal_status() {
   error="$(read_status_field 'if ((.failures // []) | length) > 0 then .failures[-1].error // "" else "" end')"
 
   message=$'status: '"$status"$'\n'"progress: $progress"$'\n'"current: $current"$'\n'"branch: $branch"$'\n'"worktree: $worktree"
-  if [[ -n "$error" ]]; then
+  if [[ -n $error ]]; then
     message+=$'\n'"error: $error"
   fi
 
@@ -112,21 +112,21 @@ notify_terminal_status() {
   output="$(
     set +e
     PIPELINE_LIGHT_MESSAGE="$message" \
-    PIPELINE_LIGHT_LEVEL="$status" \
-    PIPELINE_LIGHT_STATUS_FILE="$status_file" \
-    PIPELINE_LIGHT_WATCHDOG_LOG_FILE="$log_file" \
-    PIPELINE_LIGHT_RUN_PID="$run_pid" \
-    "$notify_command" 2>&1
+      PIPELINE_LIGHT_LEVEL="$status" \
+      PIPELINE_LIGHT_STATUS_FILE="$status_file" \
+      PIPELINE_LIGHT_WATCHDOG_LOG_FILE="$log_file" \
+      PIPELINE_LIGHT_RUN_PID="$run_pid" \
+      "$notify_command" 2>&1
     printf '\n__PIPELINE_LIGHT_NOTIFY_EXIT_CODE__=%s\n' "$?"
   )"
   exit_code="$(printf '%s\n' "$output" | sed -n 's/^__PIPELINE_LIGHT_NOTIFY_EXIT_CODE__=//p' | tail -n 1)"
   output="$(printf '%s\n' "$output" | sed '/^__PIPELINE_LIGHT_NOTIFY_EXIT_CODE__=/d')"
-  if [[ -n "$output" ]]; then
+  if [[ -n $output ]]; then
     while IFS= read -r line; do
       append_log "notify output=$line"
-    done <<< "$output"
+    done <<<"$output"
   fi
-  if [[ "${exit_code:-1}" == "0" ]]; then
+  if [[ ${exit_code:-1} == "0" ]]; then
     append_log "notify status=$status result=sent"
   else
     append_log "notify status=$status result=failed exit=$exit_code command=$notify_command"
@@ -135,7 +135,7 @@ notify_terminal_status() {
 }
 
 emit_snapshot() {
-  if [[ -f "$status_file" ]]; then
+  if [[ -f $status_file ]]; then
     append_log "$(status_snapshot_line)"
   else
     append_log "status=pending"
@@ -145,7 +145,7 @@ emit_snapshot() {
 
 emit_snapshot
 
-if [[ -f "$status_file" ]]; then
+if [[ -f $status_file ]]; then
   last_status="$(read_status_field '.status // "unknown"')"
 fi
 
@@ -156,26 +156,26 @@ while true; do
     alive=1
   fi
 
-  if [[ -f "$status_file" ]]; then
+  if [[ -f $status_file ]]; then
     status="$(read_status_field '.status // "unknown"')"
-    if [[ "$status" != "$last_status" ]]; then
+    if [[ $status != "$last_status" ]]; then
       emit_snapshot
       last_status="$status"
-    elif (( current_epoch - last_heartbeat_epoch >= heartbeat_seconds )); then
+    elif ((current_epoch - last_heartbeat_epoch >= heartbeat_seconds)); then
       emit_snapshot
       last_heartbeat_epoch="$current_epoch"
     fi
 
-    if [[ "$notified_terminal" -eq 0 && ( "$status" == "failed" || "$status" == "complete" ) ]]; then
+    if [[ $notified_terminal -eq 0 && ($status == "failed" || $status == "complete") ]]; then
       notify_terminal_status
       notified_terminal=1
     fi
-  elif (( current_epoch - last_heartbeat_epoch >= heartbeat_seconds )); then
+  elif ((current_epoch - last_heartbeat_epoch >= heartbeat_seconds)); then
     emit_snapshot
     last_heartbeat_epoch="$current_epoch"
   fi
 
-  if [[ "$alive" -eq 0 ]]; then
+  if [[ $alive -eq 0 ]]; then
     break
   fi
 
@@ -184,9 +184,9 @@ done
 
 emit_snapshot
 
-if [[ -f "$status_file" ]]; then
+if [[ -f $status_file ]]; then
   status="$(read_status_field '.status // "unknown"')"
-  if [[ "$notified_terminal" -eq 0 && ( "$status" == "failed" || "$status" == "complete" ) ]]; then
+  if [[ $notified_terminal -eq 0 && ($status == "failed" || $status == "complete") ]]; then
     notify_terminal_status
     notified_terminal=1
   fi

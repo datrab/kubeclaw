@@ -267,6 +267,14 @@ export function validateAgentObservabilityIngressEvent(value: unknown): AgentObs
   if (value.source !== AGENT_OBSERVABILITY_SOURCE) errors.push(`source must be '${AGENT_OBSERVABILITY_SOURCE}'`);
   validateTimestamp(value.ts, errors);
   validateIdentity(value.identity, errors);
+  const identity = isPlainObject(value.identity) ? value.identity : {};
+  if (['openclaw.tool.started','openclaw.tool.finished'].includes(String(value.type))) {
+    if (!isNonEmptyString(identity.tool_call_id)) errors.push('identity.tool_call_id is required for tool events');
+    if (!isNonEmptyString(identity.model_call_id)) errors.push('identity.model_call_id is required for tool parent correlation');
+  }
+  if (['openclaw.model.started','openclaw.model.ended','openclaw.model.usage','openclaw.llm.input','openclaw.llm.output'].includes(String(value.type)) && !isNonEmptyString(identity.model_call_id)) {
+    errors.push('identity.model_call_id is required for model and LLM events');
+  }
 
   if (AGENT_OBSERVABILITY_INGRESS_EVENT_TYPES.includes(value.type as AgentObservabilityIngressEventType)) {
     validatePayload(value.type as AgentObservabilityIngressEventType, value.payload, errors);

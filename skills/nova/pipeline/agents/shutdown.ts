@@ -11,6 +11,7 @@ import { getTrackedAgent, listTrackedAgents, trackAgent, untrackAgent } from './
 import { terminateSession } from './session-termination.ts';
 import { buildSubprocessEnv } from '../security.ts';
 import { sessionLifecyclePolicies } from '../core/session-policy.ts';
+import { finalizeEvidencePlane } from '../services/evidence-plane.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 declare const process: any;
@@ -243,6 +244,11 @@ async function performSignalShutdown(signal: string, stateConfig: AnyRecord | nu
       });
     } catch (e: any) {
       log('WARN', `Shutdown: failed to persist pipeline cancellation lifecycle event: ${errorMessage(e)}`);
+    }
+    try {
+      finalizeEvidencePlane(stateConfig, { outcome:'cancelled', reason_code:`PIPELINE_CANCELLED_BY_${signalName(signal).toUpperCase()}`, duration_ms:null, progress:stateConfig._progress??null });
+    } catch (e:any) {
+      log('WARN', `Shutdown: failed to persist terminal closure: ${errorMessage(e)}`);
     }
   }
 

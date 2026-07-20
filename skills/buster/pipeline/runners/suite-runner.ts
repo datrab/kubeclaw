@@ -18,6 +18,7 @@ import {
 import type { SuiteStatus, SuiteVerdict } from '../services/verdict-schema.ts';
 
 import { emitEvent, emitPluginEvent } from '../services/telemetry.ts';
+import { publishSuiteArtifacts } from '../services/quality-artifacts.ts';
 import {
   BusterCapabilityDeniedError,
   assertBusterCapabilities,
@@ -469,6 +470,7 @@ export async function runSuiteWithTimeout(suiteName: string, suiteFn: SuiteFunct
 async function emitSuiteCompleted(tctx: unknown, moduleId: string | undefined, suiteName: string, result: SuiteVerdict, attempt: number | undefined, startMs: number): Promise<void> {
   const telemetryCtx = tctx && typeof tctx === 'object' ? tctx as Record<string, any> : null;
   const gateId = selectTruthyValue(() => (telemetryCtx?.gateId), () => (null));
+  const artifactReferences = publishSuiteArtifacts(telemetryCtx, { moduleId, gateId, suiteName, result, attempt });
   await emitPluginEvent(tctx, 'suite_completed', {
     module_id: gateId ? null : moduleId,
     ...(gateId ? { gate_id: gateId, gate_type: selectDefinedValue(() => (telemetryCtx?.gateType), () => (null)) } : {}),
@@ -482,6 +484,22 @@ async function emitSuiteCompleted(tctx: unknown, moduleId: string | undefined, s
     reason: selectDefinedValue(() => (result.reason), () => (null)),
     error: selectDefinedValue(() => (result.error), () => (null)),
     top_finding: selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (result.findings?.[0]?.message), () => (result.reason))), () => (result.error))), () => (null)),
+  });
+  await emitEvent(tctx, 'quality.evidence', {
+    module_id: gateId ? null : moduleId,
+    ...(gateId ? { gate_id: gateId, gate_type: selectDefinedValue(() => (telemetryCtx?.gateType), () => (null)) } : {}),
+    attempt,
+    item_type: 'suite', suite: suiteName, verdict: result.status,
+    skipped_reason: result.status === STATUS.SKIP ? (result.reason || 'dependency') : null,
+    findings: result.findings || [], dispositions: [], artifact_references: artifactReferences,
+  });
+  if (['k8s','health','tailscale-preview'].includes(suiteName)) await emitEvent(tctx, 'infrastructure.evidence', {
+    module_id: gateId ? null : moduleId,
+    ...(gateId ? { gate_id: gateId, gate_type: selectDefinedValue(() => (telemetryCtx?.gateType), () => (null)) } : {}),
+    attempt, evidence_type: `suite.${suiteName}`, status: result.status,
+    readiness: suiteName === 'health' ? result.status === STATUS.PASS : null,
+    preview_url: typeof result.metadata?.preview_url === 'string' ? result.metadata.preview_url : null,
+    workload: result.metadata || null,
   });
 }
 

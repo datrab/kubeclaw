@@ -10,7 +10,7 @@ agentRole: "buster"
 anthropic:
   existingSecret: "openclaw-shared-secrets"
   existingSecretKey: "anthropicApiKey"
-  
+
 # Buster runs as one pod with two containers:
 # - kubeclaw: OpenClaw gateway and gateway-side agent tests
 # - buster-pipeline: persistent Redis task worker and deterministic suites

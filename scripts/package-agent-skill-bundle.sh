@@ -10,17 +10,17 @@ commit="${3:-${GITHUB_SHA:-}}"
 contract_version="${4:-v1}"
 built_at="${5:-$(date -u +"%Y-%m-%dT%H:%M:%SZ")}"
 
-if [[ -z "$role" || -z "$output_path" ]]; then
+if [[ -z $role || -z $output_path ]]; then
   echo "Usage: $0 <nova|buster> <output-path.tgz> [commit] [contract-version] [built-at]" >&2
   exit 1
 fi
 
-if [[ "$role" != "nova" && "$role" != "buster" ]]; then
+if [[ $role != "nova" && $role != "buster" ]]; then
   echo "Unsupported role: $role" >&2
   exit 1
 fi
 
-if [[ -z "$commit" ]]; then
+if [[ -z $commit ]]; then
   echo "Commit SHA is required as argument 3 or GITHUB_SHA" >&2
   exit 1
 fi
@@ -40,7 +40,7 @@ mkdir -p "$skills_root"
 cp -R "${role_source}/." "$skills_root/"
 cp -R "${common_source}/." "$skills_root/"
 
-cat > "${bundle_root}/manifest.json" <<EOF
+cat >"${bundle_root}/manifest.json" <<EOF
 {
   "contractVersion": "${contract_version}",
   "bundleKind": "app-skills-overlay",

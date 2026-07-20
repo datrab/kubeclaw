@@ -60,7 +60,7 @@ Do not obscure values before writing to Redis, Discord, local JSONL, or external
 Preferred behavior:
 
 - local artifact failure: emit degraded observability and continue if scheduler truth is preserved
-- Redis sink failure: write fallback artifacts where supported and mark observability degraded
+- Redis sink failure: retain canonical local evidence, quarantine inadmissible payloads, and mark observability degraded
 - Discord sink failure: write audit artifacts and do not change pipeline outcome by itself
 - invalid sink input: fail loudly in the plugin path; fix the emitter contract
 
@@ -131,6 +131,6 @@ npm run docs:generate:check
 ## Failure Signals
 
 - sink throws and breaks pipeline control flow: incorrect, sinks must degrade without owning scheduler truth.
-- event appears in Redis but not external sink: inspect sink config and fallback artifacts before changing telemetry builders.
+- event appears in Redis but not external sink: inspect sink config, canonical artifacts, and quarantine evidence before changing telemetry builders.
 - sink output loses diagnostic values or violates size/shape bounds: block the sink until egress is fixed and covered by tests.
 - observer runtime capture changes should update `plugins/openclaw-agent-observer/src/index.ts`, `hook-normalizers.ts`, the status/self-test contract check, and the operator stream checks together.

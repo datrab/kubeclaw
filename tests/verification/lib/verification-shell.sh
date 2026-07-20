@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 verification_verbose_enabled() {
-  [[ "${VERIFICATION_VERBOSE:-0}" == "1" ]]
+  [[ ${VERIFICATION_VERBOSE:-0} == "1" ]]
 }
 
 verification_warn_pattern='(^|[^[:alnum:]_])(WARN|WARNING|WARNINGS|Warning|Warnings)([^[:alnum:]_]|$)|(^|[[:space:]])warning:|"level":"WARN"'
@@ -18,7 +18,7 @@ verification_run_step() {
     return
   fi
 
-  if [[ -z "${VERIFICATION_OUTPUT_DIR:-}" || ! -d "$VERIFICATION_OUTPUT_DIR" ]]; then
+  if [[ -z ${VERIFICATION_OUTPUT_DIR:-} || ! -d $VERIFICATION_OUTPUT_DIR ]]; then
     echo "[$prefix] missing VERIFICATION_OUTPUT_DIR for quiet output capture" >&2
     return 1
   fi
@@ -30,7 +30,7 @@ verification_run_step() {
 
   "$@" >"$output_path" 2>&1 || status=$?
 
-  if [[ "$status" == "0" ]]; then
+  if [[ $status == "0" ]]; then
     if grep -Eq "$verification_warn_pattern" "$output_path"; then
       echo "[$prefix] WARNING output from $label:" >&2
       grep -E "$verification_warn_pattern" "$output_path" >&2
@@ -39,7 +39,7 @@ verification_run_step() {
   fi
 
   echo "[$prefix] FAILED: $label" >&2
-  if [[ -s "$output_path" ]]; then
+  if [[ -s $output_path ]]; then
     cat "$output_path" >&2
   else
     echo "[$prefix] command produced no output" >&2

@@ -1,0 +1,22 @@
+{
+  "agent:codex:acp:f63543e2-306b-4d90-82ea-6feae602bebc": {
+    "sessionId": "5aa79820-e06c-47f2-a5a9-e44dc7f48e74",
+    "sessionFile": "contract-session.jsonl",
+    "spawnedBy": "pipeline-golden-run-parent",
+    "label": "golden-observability-contract-probe",
+    "status": "done",
+    "startedAt": 1784565365647,
+    "endedAt": 1784565397623,
+    "runtimeMs": 31447
+  },
+  "agent:codex:acp:6d335e54-f117-49cf-a98e-ef15faa7b262": {
+    "sessionId": "f2ed4d34-d322-457d-960c-787e18ef454d",
+    "sessionFile": "artifact-session.jsonl",
+    "spawnedBy": "pipeline-golden-run-parent",
+    "label": "golden-observability-artifact-probe",
+    "status": "done",
+    "startedAt": 1784565370928,
+    "endedAt": 1784565391123,
+    "runtimeMs": 19889
+  }
+}

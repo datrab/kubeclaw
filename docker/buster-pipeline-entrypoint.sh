@@ -3,7 +3,8 @@ set -eu
 
 socket="${BUILDKIT_HOST:-unix:///run/user/1000/buildkit/buildkitd.sock}"
 address="${socket#unix://}"
-mkdir -p "$(dirname "$address")" "${BUILDKIT_STATE_DIR:-/home/builder/.local/share/buildkit}"
+otel_socket="${XDG_RUNTIME_DIR:?XDG_RUNTIME_DIR is required}/buildkit/otel-grpc.sock"
+mkdir -p "$(dirname "$address")" "$(dirname "$otel_socket")" "${BUILDKIT_STATE_DIR:-/home/builder/.local/share/buildkit}"
 config_dir="${HOME}/.config/buildkit"
 mkdir -p "$config_dir"
 registry="${KUBECLAW_LOCAL_REGISTRY:?KUBECLAW_LOCAL_REGISTRY is required}"
@@ -25,11 +26,12 @@ rootlesskit \
   --copy-up=/etc \
   --copy-up=/run \
   buildkitd \
-    --config "${config_dir}/buildkitd.toml" \
-    --addr "$socket" \
-    --root "${BUILDKIT_STATE_DIR:-/home/builder/.local/share/buildkit}" \
-    --oci-worker-no-process-sandbox \
-    > /tmp/buildkitd.log 2>&1 &
+  --config "${config_dir}/buildkitd.toml" \
+  --addr "$socket" \
+  --otel-socket-path "$otel_socket" \
+  --root "${BUILDKIT_STATE_DIR:-/home/builder/.local/share/buildkit}" \
+  --oci-worker-no-process-sandbox \
+  > /tmp/buildkitd.log 2>&1 &
 buildkit_pid=$!
 
 cleanup() {

@@ -230,7 +230,7 @@ assert.equal(monitorSource.includes('ownsCanonicalSignal: true'), true, 'buster 
 assert.equal(rateLimitSource.includes('ownsCanonicalSignal = true'), true, 'buster rate-limit service should default to emitting canonical pause telemetry for local sleeps');
 assert.equal(rateLimitSource.includes("taskType !== 'gate_test'"), false, 'gate_test must not suppress Buster-owned canonical pause telemetry');
 assert.equal(rateLimitSource.includes('Rate-limit Discord notice failed'), true, 'Buster rate-limit Discord fire-and-forget path must report delivery failures explicitly');
-assert.equal(telemetrySource.includes('artifact_fallback: true'), true, 'Buster telemetry must keep explicit artifact fallback evidence for degraded diagnostic events');
+assert.equal(telemetrySource.includes("schema_version:'quarantined_payload.v1'"), true, 'Buster telemetry must persist explicit quarantined evidence for rejected or transport-lost events');
 assert.equal(discordSource.includes('createObservabilityHealthState'), true, 'Buster Discord health should use the shared observability health state machine');
 assert.equal(discordSource.includes('new Map<string, HealthState>()'), false, 'Buster Discord must not own a local health-state map');
 assert.equal(redisToolSource.includes('shouldNotifyRedisTaskPayload'), true, 'Buster Redis tool must centralize task payload notification policy');

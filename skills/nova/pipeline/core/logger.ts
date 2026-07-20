@@ -22,11 +22,14 @@ type PipelineLogContext = {
   _logPhase?: string | null;
 };
 type LogEntry = Record<string, unknown> & {
-  ts: string;
+  schema_version: 'runtime_log.v1';
+  timestamp: string;
   level: string;
-  msg: string;
+  component: string;
+  message: string;
   run_id?: string;
-  module?: string | null;
+  work_id?: string | null;
+  work_type?: string | null;
   phase?: string | null;
   data?: unknown;
 };
@@ -61,7 +64,7 @@ function writeEntry(ctx: PipelineLogContext, entry: LogEntry) {
       fs.appendFileSync(target, line);
     } catch (error) {
       emitPipelineLogAppendWarning(ctx.config, target, error, {
-        module_id: selectTruthyValue(() => (selectTruthyValue(() => (safeEntry.module), () => (ctx._logModule))), () => (null)),
+        module_id: selectTruthyValue(() => (selectTruthyValue(() => (safeEntry.work_id), () => (ctx._logModule))), () => (null)),
         path_role: target === ctx._runPipelineLogPath ? 'run_pipeline_jsonl' : 'pipeline_jsonl',
       });
     }
@@ -72,19 +75,18 @@ export function createLogger(ctx: PipelineLogContext) {
   return {
     log(level: string, msg: string, data: unknown = null) {
       const entry: LogEntry = {
-        ts: new Date().toISOString(),
-        level,
+        schema_version: 'runtime_log.v1', timestamp: new Date().toISOString(), level: level.toLowerCase() === 'step' || level.toLowerCase() === 'ok' ? 'info' : level.toLowerCase(), component: 'nova/pipeline',
         ...(ctx.runId && { run_id: ctx.runId }),
-        ...(ctx._logModule && { module: ctx._logModule }),
+        ...(ctx._logModule && { work_id: ctx._logModule, work_type: 'module' }),
         ...(ctx._logPhase && { phase: ctx._logPhase }),
-        msg,
+        message: msg,
         ...(data !== null && { data }),
       };
       const safeEntry = sanitizeJsonEgress(entry, 'log_entry') as LogEntry;
       console.error(JSON.stringify(safeEntry));
       writeEntry(ctx, safeEntry);
       if (level === 'ERROR' && ctx.stats.errors.length < 50) {
-        ctx.stats.errors.push({ ts: safeEntry.ts, msg: safeEntry.msg, ...(ctx._logModule && { module: ctx._logModule }) });
+        ctx.stats.errors.push({ timestamp: safeEntry.timestamp, message: safeEntry.message, ...(ctx._logModule && { work_id: ctx._logModule }) });
       }
     },
     setModule(moduleId: string | null) { ctx._logModule = moduleId; },
@@ -113,27 +115,24 @@ export function log(level: string, msg: string, data: unknown = null) {
   if (!ctx) {
     // No active context — write to stderr only
     const entry: LogEntry = {
-      ts: new Date().toISOString(),
-      level,
-      msg,
+      schema_version: 'runtime_log.v1', timestamp: new Date().toISOString(), level: level.toLowerCase() === 'step' || level.toLowerCase() === 'ok' ? 'info' : level.toLowerCase(), component: 'nova/pipeline', message: msg,
       ...(data !== null && { data }),
     };
     console.error(JSON.stringify(sanitizeJsonEgress(entry, 'log_entry')));
     return;
   }
   const entry: LogEntry = {
-    ts: new Date().toISOString(),
-    level,
+    schema_version: 'runtime_log.v1', timestamp: new Date().toISOString(), level: level.toLowerCase() === 'step' || level.toLowerCase() === 'ok' ? 'info' : level.toLowerCase(), component: 'nova/pipeline',
     ...(ctx.runId && { run_id: ctx.runId }),
-    ...(ctx._logModule && { module: ctx._logModule }),
+    ...(ctx._logModule && { work_id: ctx._logModule, work_type: 'module' }),
     ...(ctx._logPhase && { phase: ctx._logPhase }),
-    msg,
+    message: msg,
     ...(data !== null && { data }),
   };
   const safeEntry = sanitizeJsonEgress(entry, 'log_entry') as LogEntry;
   console.error(JSON.stringify(safeEntry));
   writeEntry(ctx, safeEntry);
   if (level === 'ERROR' && ctx.stats.errors.length < 50) {
-    ctx.stats.errors.push({ ts: safeEntry.ts, msg: safeEntry.msg, ...(ctx._logModule && { module: ctx._logModule }) });
+    ctx.stats.errors.push({ timestamp: safeEntry.timestamp, message: safeEntry.message, ...(ctx._logModule && { work_id: ctx._logModule }) });
   }
 }

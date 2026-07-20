@@ -128,6 +128,8 @@ test('project summary uses lifecycle gates and labeled agent spawn telemetry', a
       'module-review': { status: 'PASS', completed: true, completed_at: '2026-07-07T00:03:00.000Z', started_at: '2026-07-07T00:02:00.000Z' },
     },
   }, null, 2));
+  fs.writeFileSync(path.join(swarmRoot, 'logs', 'pipeline', 'runs', 'run-demo', 'archive-manifest.json'), JSON.stringify({ run_id:'run-demo', sha256:'archive-demo' }));
+  fs.writeFileSync(path.join(swarmRoot, 'logs', 'pipeline', 'run-catalog.jsonl'), `${JSON.stringify({ run_id:'run-demo', archive_reference:'runs/run-demo/archive-manifest.json', sha256:'archive-demo' })}\n`);
   fs.writeFileSync(path.join(swarmRoot, 'logs', 'pipeline', 'pipeline.jsonl'), [
     JSON.stringify({ type: 'agent.spawned', label: 'forge-01-app-1', ts: '2026-07-07T00:00:00.000Z' }),
     JSON.stringify({ type: 'agent.spawned', label: 'echo-echo-codex-module-review-1', ts: '2026-07-07T00:02:00.000Z' }),

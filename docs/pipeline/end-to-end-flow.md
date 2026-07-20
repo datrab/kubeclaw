@@ -332,7 +332,7 @@ local artifacts written
   -> scheduler truth still comes from local status and typed completions
 ```
 
-Operator implication: do not conclude the run vanished because a Redis telemetry stream is empty. Check `.swarm/logs/pipeline/latest.json`, run-scoped `pipeline.jsonl`, and Buster fallback artifacts.
+Operator implication: do not conclude the run vanished because a Redis telemetry stream is empty. Check the durable run catalog, run-scoped `pipeline.jsonl`, and Buster quarantine evidence.
 
 ## Operator Trace Checklist
 
@@ -344,7 +344,7 @@ When someone asks "where is the run stuck?", trace in this order:
 4. run-scoped `summary.json` and `pipeline.jsonl`
 5. module status under `.swarm/modules/<dir>`
 6. gate output/status files if the active item is `gate:<id>`
-7. Buster output/dead-letter/fallback artifacts if the active phase is Buster
+7. Buster output, dead-letter, and quarantine evidence if the active phase is Buster
 8. Redis telemetry only after local artifacts are understood
 9. pod logs and gateway status if runtime health is suspect
 

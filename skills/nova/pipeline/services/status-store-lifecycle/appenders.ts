@@ -86,6 +86,9 @@ function pipelineProgressGates(progress) {
 function proposalData(proposal) {
   return objectRecord(proposal?.data);
 }
+function lifecycleWork(refs={}) { if(refs.module_id)return{work_type:'module',work_id:refs.module_id};if(refs.gate_id)return{work_type:'gate',work_id:refs.gate_id};if(refs.primary_ref?.kind==='pipeline_run')return{work_type:'pipeline',work_id:refs.run_id};return{work_type:'pipeline_step',work_id:refs.primary_ref?.id}; }
+function currentLifecycleState(readModels,refs={}) { if(refs.module_id)return readModels?.modules?.[refs.module_id]?.status??null;if(refs.gate_id)return readModels?.gates?.[refs.gate_id]?.status??null;if(refs.primary_ref?.kind==='pipeline_run')return readModels?.pipeline?.status??null;return null; }
+function proposedLifecycleState(proposal) { const data=proposalData(proposal);return selectPresentValue(data.new_state,data.new_status,data.status,data.terminal_status,proposal.type.endsWith('.started')?'IN_PROGRESS':proposal.type==='pipeline_run.completed'?'COMPLETED':proposal.type==='pipeline_run.halted'?'HALTED':null); }
 
 export function appendLifecycleEvent(config, proposal = {}) {
   if (!proposal?.type) throw new Error('appendLifecycleEvent requires type');
@@ -101,13 +104,22 @@ export function appendLifecycleEvent(config, proposal = {}) {
 
     ensureLifecycleEventLegal(config, readModels, proposal);
 
+    const occurredAt=eventOccurredAt(proposal.occurredAt);
     const event = {
-      schemaVersion: LIFECYCLE_READ_MODELS_VERSION,
+      schema_version: 'pipeline_lifecycle_event.v1',
+      lifecycle_version: Number(readModels?.event_count ?? 0) + 1,
       event_id: createOpaqueId('event'),
       type: proposal.type,
-      occurred_at: eventOccurredAt(proposal.occurredAt),
+      occurred_at: occurredAt,
+      effective_at: occurredAt,
       recorded_at: new Date().toISOString(),
       idempotency_key: idempotencyKey,
+      ...lifecycleWork(proposal.refs),
+      attempt: proposal.refs?.attempt ?? null,
+      previous_state: currentLifecycleState(readModels,proposal.refs),
+      new_state: proposedLifecycleState(proposal),
+      reason_code: selectPresentValue(proposalData(proposal).reason_code,proposalData(proposal).reason,proposalData(proposal).note,proposal.type.toUpperCase().replaceAll('.','_')),
+      producer_authority: 'nova/pipeline/lifecycle-reducer',
       refs: cloneSerializable(proposal.refs),
       data: cloneSerializable(proposalData(proposal)),
     };

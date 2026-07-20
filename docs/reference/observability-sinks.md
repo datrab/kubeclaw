@@ -64,7 +64,7 @@ Raw embeds are rejected by the telemetry sink contract.
 
 ## Failure Behavior
 
-- Redis telemetry failures can degrade observability and use fallback artifacts.
+- Redis telemetry failures degrade observability and produce explicit quarantine evidence when a payload cannot be admitted.
 - Discord telemetry is filtered and should not affect scheduler truth.
 - Invalid sink input should fail loudly in the emitter/plugin path.
 - Structured event artifact failures are observability failures, not module success/failure authority.

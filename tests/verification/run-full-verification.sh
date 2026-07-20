@@ -9,7 +9,7 @@ source "$REPO_DIR/tests/verification/lib/verification-shell.sh"
 TEMP_DIR="$(mktemp -d)"
 export VERIFICATION_OUTPUT_DIR="$TEMP_DIR"
 cleanup() {
-  if [[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]]; then
+  if [[ -n $TEMP_DIR && -d $TEMP_DIR ]]; then
     rm -rf "$TEMP_DIR"
   fi
   "$REPO_DIR/tests/verification/lib/cleanup-home-artifacts.sh"
@@ -49,14 +49,14 @@ run_step() {
   local status
   shift
   verification_run_step "full-verification" "$label" "$@" || status=$?
-  if [[ "${status:-0}" != "0" ]]; then
+  if [[ ${status:-0} != "0" ]]; then
     exit "$status"
   fi
 }
 
 cd "$REPO_DIR"
 export REPO_ROOT="$REPO_DIR"
-if [[ -z "${OPENCLAW_GATEWAY_URL:-}" && -n "${OPENCLAW_GATEWAY_PORT:-}" ]]; then
+if [[ -z ${OPENCLAW_GATEWAY_URL:-} && -n ${OPENCLAW_GATEWAY_PORT:-} ]]; then
   export OPENCLAW_GATEWAY_URL="http://127.0.0.1:${OPENCLAW_GATEWAY_PORT}"
 fi
 "$REPO_DIR/tests/verification/lib/cleanup-home-artifacts.sh"

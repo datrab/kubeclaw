@@ -35,7 +35,7 @@ import { sanitizeJsonEgress, sanitizeMarkdownText } from '../egress.ts';
 import { buildSubprocessEnv, resolveScopedPath, validateAllowedPath } from '../security.ts';
 import { buildCaseStudyBase, buildDiscordEmbeds, buildMarkdown, pct } from './project-summary-formatters.ts';
 import { addDiagnostic, discoverLatestLifecycleReadModels, extToLang, readJsonData, readJsonRecord } from './project-summary-lifecycle.ts';
-
+import { discoverLatestRun } from '../run-discovery.ts';
 // ── Helpers ─────────────────────────────────────────────────────
 
 function log(msg) { console.log(`[SUMMARY] ${sanitizeMarkdownText(msg)}`); }
@@ -724,7 +724,7 @@ function resolveDiscordContext(opts = {}) {
   const configPath = opts.configPath ? opts.configPath : null;
   const { swarmRoot } = resolveProjectPaths(project, repoDir, configPath);
   const logDir = path.join(swarmRoot, 'logs');
-  const latest = recordOrEmpty(readJsonData(path.join(logDir, 'pipeline', 'latest.json'), null));
+  const latest = recordOrEmpty(discoverLatestRun(path.join(logDir, 'pipeline')));
   let runId = null;
   if (opts.runId !== undefined && opts.runId !== null && String(opts.runId).trim()) {
     runId = opts.runId;

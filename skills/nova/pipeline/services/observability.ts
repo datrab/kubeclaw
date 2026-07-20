@@ -7,7 +7,7 @@ import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError } from '.
 import { appendDurableOperatorAlert } from './durable-operator-alert.ts';
 import { getPipelineArtifactBundle } from './artifact-bundle.ts';
 import { buildRunFacts } from './run-facts.ts';
-import { emitTelemetryStreamEvent } from './telemetry-stream.ts';
+import { buildTelemetryStreamEvent, emitTelemetryStreamEvent } from './telemetry-stream.ts';
 import { TelemetryPayloadInvalidError, validateTelemetryEventPayload } from './telemetry/payload-schema.ts';
 import { createObservabilityHealthState } from './observability-health.ts';
 
@@ -47,12 +47,12 @@ function budgetThresholdConfig(config) {
 function payloadForSchemaValidation(payload = {}) {
   if (selectTruthyValue(() => (selectTruthyValue(() => (!payload), () => (typeof payload !== 'object'))), () => (Array.isArray(payload)))) return payload;
   const {
-    v,
+    v, schema_version: schemaVersion, event_id: eventId,
     type,
-    ts,
+    ts, occurred_at: occurredAt, emitted_at: emittedAt, cursor, causation_id: causationId,
     run_id: runId,
     project,
-    seq,
+    seq, source, emitter, producer, work_id: workId, work_type: workType,
     ...eventPayload
   } = payload;
   return eventPayload;
@@ -247,17 +247,18 @@ export function appendStructuredEvent(config, eventType, payload = {}) {
     return { ok: false, skipped: false, error };
   }
   try {
-    const event = {
-      v: 1,
-      event_id: createOpaqueId('event'),
-      type: eventType,
-      ts: new Date().toISOString(),
-      run_id: observabilityRunId(config),
+    const canonical = payload?.schema_version === 'telemetry_envelope.v1' && payload?.event_id;
+    const primary = artifacts.run_pipeline_jsonl_path || artifacts.global_pipeline_jsonl_path;
+    const priorCount = primary && fs.existsSync(primary) ? fs.readFileSync(primary, 'utf8').split('\n').filter(Boolean).length : 0;
+    const event = canonical ? payload : buildTelemetryStreamEvent(eventType, payloadForSchemaValidation(payload), {
       project: selectPresentValue(config.project, OBSERVABILITY_PROJECT_MISSING),
-      source: OBSERVABILITY_SOURCE_PIPELINE,
-      emitter: 'nova/pipeline/services/observability',
-      ...payload,
-    };
+      runId: observabilityRunId(config),
+    }, priorCount + 1, {
+      source: selectPresentValue(payload?.source, OBSERVABILITY_SOURCE_PIPELINE),
+      emitter: selectPresentValue(payload?.producer, payload?.emitter, 'nova/pipeline/services/observability'),
+      occurredAt: payload?.occurred_at || payload?.ts,
+      causationId: payload?.causation_id,
+    });
     for (const pipelineJsonl of targets) {
       fs.mkdirSync(path.dirname(pipelineJsonl), { recursive: true });
       fs.appendFileSync(pipelineJsonl, JSON.stringify(event) + '\n');

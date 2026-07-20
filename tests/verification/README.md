@@ -75,5 +75,5 @@ The matrix writes structured result JSON and renders Markdown review reports fro
 ## Replay And Audit Artifacts
 
 - `.swarm/logs/pipeline/latest.json` is the canonical pointer into the run-scoped replay bundle under `.swarm/logs/pipeline/runs/<run_id>/`
-- `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,buster-telemetry-fallback.jsonl,redis/redis-exchanges.jsonl,redis/redis-ops.jsonl,summary.json}` is the replay/audit bundle for deploy, replay, and operator handoff evidence
+- `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,quarantine.jsonl,redis/redis-exchanges.jsonl,redis/redis-ops.jsonl,summary.json}` is the replay/audit bundle for deploy, replay, and operator handoff evidence
 - `.swarm/logs/redis/{redis-exchanges.jsonl,redis-ops.jsonl}` plus `.swarm/logs/pipeline/runs/<run_id>/redis/` is the Redis audit artifact layout

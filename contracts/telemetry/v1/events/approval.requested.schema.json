@@ -1,0 +1,193 @@
+{
+  "$id": "approval.requested.event.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "approval_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "artifact_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "causation_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "content_completeness": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "cursor": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dispatch_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "emitted_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "event_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "gate_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "gate_title": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "gate_type": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "module_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "occurred_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "options": {
+      "type": "array"
+    },
+    "producer": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "project": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "prompt": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "run_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "telemetry_envelope.v1"
+    },
+    "seq": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "session_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "session_key": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "timeout_minutes": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "timeout_policy": {},
+    "tool_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "type": {
+      "const": "approval.requested"
+    },
+    "work_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "work_type": {
+      "enum": [
+        "pipeline",
+        "module",
+        "gate",
+        "generator",
+        "validator",
+        "pipeline_step",
+        null
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "event_id",
+    "type",
+    "occurred_at",
+    "emitted_at",
+    "seq",
+    "project",
+    "run_id",
+    "source",
+    "producer",
+    "approval_id",
+    "prompt",
+    "options"
+  ],
+  "type": "object"
+}

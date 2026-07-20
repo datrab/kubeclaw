@@ -205,7 +205,7 @@ Escalate to a maintainer when:
 - `latest.json` and status output disagree
 - a valid-looking Buster task dead-letters repeatedly
 - the run lock cannot recover after pod restart
-- observability is degraded and fallback artifacts are absent
+- observability is degraded and neither canonical nor quarantined evidence explains the gap
 - terminal status is `blocked` and the reason is not actionable
 
 ## Related Reference

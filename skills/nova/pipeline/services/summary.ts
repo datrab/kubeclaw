@@ -49,12 +49,12 @@ import { createTrackedSummarySessionCleanup } from './summary-session-cleanup.ts
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from './discord-fields.ts';
 import { sessionLifecyclePolicies } from '../core/session-policy.ts';
 import { getReviewDefaultsConfig } from './runtime-defaults.ts';
+import { finalizeSummaryEvidence, summaryEvidenceFields } from './evidence-plane.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 function buildPipelineReviewDiscordFields(identity = {}, extra = []) {
   return buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, identity, extra);
 }
-
 function buildPipelineReviewDiscordCorrelation(identity = {}) {
   return {
     run_id: selectTruthyValue(() => (identity.run_id), () => (null)),
@@ -64,7 +64,6 @@ function buildPipelineReviewDiscordCorrelation(identity = {}) {
     session_key: selectTruthyValue(() => (identity.session_key), () => (null)),
   };
 }
-
 function resolvePipelineReviewGatewayLabel(status) {
   return selectDefinedValue(() => (selectDefinedValue(() => (status?.gateway_label), () => (status?.active_agent?.gateway_label))), () => (null));
 }
@@ -288,9 +287,11 @@ export function writeSummary(config, terminalStatus, reasonCode, ctx = null, pro
     const runSummaryPath = requireArtifactBundlePath(artifactBundle, 'run_summary_path');
     const pipelineSummaryPath = requireArtifactBundlePath(artifactBundle, 'pipeline_summary_path');
     fs.mkdirSync(runLogDir, { recursive: true });
-    const safeSummary = sanitizeJsonEgress(summary, 'pipeline_summary');
-    fs.writeFileSync(runSummaryPath, JSON.stringify(safeSummary, null, 2));
-    fs.writeFileSync(pipelineSummaryPath, JSON.stringify(safeSummary, null, 2));
+    const evidence = finalizeSummaryEvidence(config, { progress, terminalStatus, reasonCode, durationSeconds, runStats: run_stats, cost: summary.cost, summaryReference: artifactBundle.relative.summary_json });
+    Object.assign(summary, summaryEvidenceFields(evidence));
+    const enrichedSummary = sanitizeJsonEgress(summary, 'pipeline_summary');
+    fs.writeFileSync(runSummaryPath, JSON.stringify(enrichedSummary, null, 2));
+    fs.writeFileSync(pipelineSummaryPath, JSON.stringify(enrichedSummary, null, 2));
 
     // Write latest.json pointer atomically so operators can find the most recent run.
     const latestPath = requireArtifactBundlePath(artifactBundle, 'latest_json_path');

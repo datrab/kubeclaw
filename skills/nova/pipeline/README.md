@@ -156,11 +156,12 @@ All governance observability artifacts live under `.swarm/logs/`:
 ```
 .swarm/logs/
 ├── pipeline/
-│   ├── latest.json           ← Pointer to the latest run-scoped audit tree
+│   ├── run-catalog.jsonl     ← Durable run discovery authority
+│   ├── latest.json           ← Non-authoritative operator convenience pointer
 │   ├── pipeline.jsonl        ← Lifecycle event stream
 │   ├── discord.jsonl         ← Persisted Discord audit log
 │   ├── nova-injections.jsonl ← needs-Nova Gateway session handoff audit
-│   ├── buster-telemetry-fallback.jsonl ← Buster Redis-telemetry fallback/degradation mirror
+│   ├── quarantine.jsonl      ← Explicit invalid/unavailable payload evidence
 │   ├── model-policy.jsonl    ← Model/thinking resolution log
 │   └── summary.json          ← End-of-run summary with governance section
 ├── architecture-validator/   ← Validator findings and report
@@ -169,9 +170,11 @@ All governance observability artifacts live under `.swarm/logs/`:
 └── gates/<gate-id>/          ← Approval gate audit artifacts
 ```
 
-`.swarm/logs/pipeline/latest.json` points operators at the newest run-scoped `pipeline.jsonl`, `discord.jsonl`, `nova-injections.jsonl`, `buster-telemetry-fallback.jsonl`, `redis/redis-exchanges.jsonl`, `redis/redis-ops.jsonl`, and `summary.json` under `.swarm/logs/pipeline/runs/<run-id>/`, and records the canonical live `telemetry_stream_key` for that run. Needs-Nova terminal handoffs use Gateway `sessions_send` to prompt the launch chat session; `nova-injections.jsonl` records the handoff intent plus the returned session delivery receipt.
+`.swarm/logs/pipeline/run-catalog.jsonl` discovers verified run archives. `latest.json` is an operator convenience pointer only. Needs-Nova terminal handoffs use Gateway `sessions_send` to prompt the launch chat session; `nova-injections.jsonl` records the handoff intent plus the returned session delivery receipt.
 
-`.github/workflows/build-images.yaml`, `scripts/deploy.sh image [nova|buster|both]`, `scripts/deploy.sh code [nova|buster|both]`, and `scripts/deploy.sh smoke` / `scripts/deploy.sh smoke-agent <nova|buster>` are the canonical live deployment command surface; `.swarm/logs/pipeline/latest.json` plus the run-scoped audit bundle are the canonical replay/audit surface for that deployment path.
+Pipeline command handling is implemented but disabled by default. Runtime Control requires both `control.enabled: true` and the privileged `PIPELINE_CONTROL_ENABLED=1` environment flag. The only accepted commands are approval resolution, cooperative pause/resume, and bounded cancellation on `pipeline:commands:<project>:<run_id>`; every request and disposition is immutable run evidence.
+
+`.github/workflows/build-images.yaml`, `scripts/deploy.sh image [nova|buster|both]`, `scripts/deploy.sh code [nova|buster|both]`, and `scripts/deploy.sh smoke` / `scripts/deploy.sh smoke-agent <nova|buster>` are the canonical live deployment command surface; the durable run catalog plus the run-scoped audit bundle are the canonical replay/audit surface for that deployment path.
 
 ### Governance Docs
 

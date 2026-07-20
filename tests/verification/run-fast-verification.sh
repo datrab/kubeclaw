@@ -9,7 +9,7 @@ source "$REPO_DIR/tests/verification/lib/verification-shell.sh"
 TEMP_DIR="$(mktemp -d)"
 export VERIFICATION_OUTPUT_DIR="$TEMP_DIR"
 cleanup() {
-  if [[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]]; then
+  if [[ -n $TEMP_DIR && -d $TEMP_DIR ]]; then
     rm -rf "$TEMP_DIR"
   fi
   "$REPO_DIR/tests/verification/lib/cleanup-home-artifacts.sh"
@@ -39,7 +39,7 @@ run_step() {
   local status
   shift
   verification_run_step "fast-verification" "$label" "$@" || status=$?
-  if [[ "${status:-0}" != "0" ]]; then
+  if [[ ${status:-0} != "0" ]]; then
     exit "$status"
   fi
 }

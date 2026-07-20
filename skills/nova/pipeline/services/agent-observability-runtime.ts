@@ -95,7 +95,7 @@ export function startAgentObservabilityIngester(config, ctx = {}) {
   const task = loop();
   log('INFO', '[agent-observability-ingester] runtime loop started from swarm.config.json');
 
-  return {
+  const controller = {
     started: true,
     stats: () => (typeof ingester.getStats === 'function' ? ingester.getStats() : null),
     async stop() {
@@ -116,4 +116,6 @@ export function startAgentObservabilityIngester(config, ctx = {}) {
       }
     },
   };
+  config._agentObservabilityRuntime = controller;
+  return controller;
 }

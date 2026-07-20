@@ -1,6 +1,7 @@
 import { getRunId, getRunStats } from '../../core/runtime.ts';
 import { recordObservabilityDegraded, recordObservabilityRestored } from '../observability.ts';
 import { emitEvent, emitEventNonBlocking } from './dispatch.ts';
+import { buildRunManifest } from '../evidence-plane.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 const PIPELINE_COMPLETED_STATUS = 'succeeded';
@@ -85,6 +86,7 @@ function mapPipelineTerminalSnapshotStatus(terminalStatus) {
  */
 export function onPipelineStarted(ctx: any, progress: any = null, options: any = {}) {
   const config = ctx?.config;
+  const manifest = buildRunManifest(config, progress || {});
 
   const payload = {};
   if (progress && typeof progress === 'object') {
@@ -108,6 +110,8 @@ export function onPipelineStarted(ctx: any, progress: any = null, options: any =
     payload.resume = !!(config?.resume);
     payload.nova_prompt = selectTruthyValue(() => (config?.nova_prompt), () => (null));
   }
+  payload.manifest_fingerprint = manifest.fingerprint;
+  payload.manifest_reference = 'run-manifest.json';
 
   return emitEvent(ctx, 'pipeline.started', payload, {
     stateSnapshot: { status: 'IN_PROGRESS' },

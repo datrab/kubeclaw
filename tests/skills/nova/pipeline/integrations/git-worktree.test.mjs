@@ -405,7 +405,10 @@ test('gitSyncBeforeBuster commits isolated module worktree output without pull-r
     );
 
     const clean = verifyModuleWorktreeClean(worktree.worktree_path);
-    assert.deepEqual(clean.ignored_runtime_paths, ['?? Projects/demo/src/.swarm/logs/modules/02-nginx/runtime.jsonl']);
+    assert.equal(clean.ignored_runtime_paths.includes('?? Projects/demo/src/.swarm/logs/modules/02-nginx/runtime.jsonl'), true);
+    assert.equal(clean.ignored_runtime_paths.some((entry) => entry.includes('/pipeline/runs/run-module-worktree-sync-test/artifacts.jsonl')), true);
+    assert.equal(clean.ignored_runtime_paths.some((entry) => entry.includes('/pipeline/runs/run-module-worktree-sync-test/blobs/sha256/')), true);
+    assert.equal(clean.ignored_runtime_paths.some((entry) => entry.includes('/pipeline/runs/run-module-worktree-sync-test/evaluation-facts.jsonl')), true);
 
     const merge = mergeModuleBranches(parentConfig, { branches: [worktree.branch] });
     assert.equal(merge.ok, true);

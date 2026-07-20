@@ -231,7 +231,7 @@ Escalate to a maintainer when:
 - a validator reports tool execution failure after the tool path/config is verified
 - a run cannot acquire or release the lock after pod restart
 - terminal artifacts disagree with status JSON
-- observability is degraded and no fallback artifacts are being written
+- observability is degraded and no canonical or quarantine evidence is being written
 
 ## Sources
 

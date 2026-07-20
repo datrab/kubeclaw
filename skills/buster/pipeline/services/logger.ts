@@ -158,11 +158,17 @@ export function createLogger(opts: LoggerOptions = {}): Logger {
 
   function write(level: string, tag: string, msg: string, data?: JsonObject): void {
     const entry: JsonObject = {
-      ts:        new Date().toISOString(),
-      level,
+      schema_version: 'runtime_log.v1',
+      timestamp: new Date().toISOString(),
+      level: level.toLowerCase() === 'step' ? 'info' : level.toLowerCase(),
+      component: 'buster/pipeline',
       tag,
-      msg,
-      module:    mod,
+      message: msg,
+      work_id: mod || opts.gateId || null,
+      work_type: opts.gateId ? 'gate' : mod ? 'module' : null,
+      attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
+      dispatch_id: selectTruthyValue(() => (opts.dispatchId), () => (null)),
+      session_id: selectTruthyValue(() => (opts.sessionKey), () => (null)),
       step:      currentStep,
       task_type: taskType,
     };
@@ -170,8 +176,7 @@ export function createLogger(opts: LoggerOptions = {}): Logger {
       entry.data = sanitizeLoggerValue(data);
     }
 
-    // stdout — human-readable prefix
-    console.log(`[BUSTER-PIPELINE] [${level}] [${tag}] ${msg}`);
+    console.log(JSON.stringify(entry));
 
     // file — compact JSON line
     if (logPath) {

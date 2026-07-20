@@ -201,7 +201,7 @@ function classifyFullLintResult(report = null, error = null) {
     };
   }
 
-  const totalErrors = numericCount(report?.summary?.total_errors);
+  const totalErrors = numericCount(report?.summary?.total_blocking);
   const toolsFailed = numericCount(report?.summary?.tools_failed);
   if (toolsFailed > 0) {
     return {

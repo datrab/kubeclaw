@@ -318,7 +318,7 @@ export class AgentObserverRedisWriter {
   private logOnce(key: string, message: string): void {
     if (this.loggedFailures.has(key)) return;
     this.loggedFailures.add(key);
-    this.logger.warn(`[kubeclaw-agent-observer] ${message}`);
+    this.logger.warn(JSON.stringify({ schema_version:'runtime_log.v1', timestamp:new Date().toISOString(), level:'warn', component:'openclaw-agent-observer/redis-writer', message, error_class:null, reason_code:'REDIS_WRITER_FAILURE' }));
   }
 
   async stop(): Promise<void> {

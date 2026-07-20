@@ -539,6 +539,7 @@ export async function runPipelineStateMachine({
   runValidatorStep,
 }: AnyRecord = {}): Promise<any> {
   while (true) {
+    await opts.awaitCommandPermission?.();
     assertPipelineStepActive(opts);
     const persistedHaltExitCode = emitPersistedPipelineHalt(config, deps);
     if (persistedHaltExitCode !== null) return persistedHaltExitCode;

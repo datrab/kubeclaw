@@ -45,6 +45,7 @@ function makeModelUsageEvent() {
       session_key: 'session-test',
       agent_type: 'forge',
       module_id: 'alpha',
+      model_call_id: 'model-call-test',
     },
     payload: {
       hook: 'model_usage',

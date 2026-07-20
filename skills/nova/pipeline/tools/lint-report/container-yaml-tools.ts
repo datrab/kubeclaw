@@ -1,10 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 
-import { safeExec } from './execution.ts';
-import { findFiles } from './discovery.ts';
+import { requireToolExecution, safeExec } from './execution.ts';
+import { configuredTargetPaths, listConfiguredTargetFiles } from './discovery.ts';
+import { renderChart } from './helm-render.ts';
 import { tryParseJson } from './parsers.ts';
-import { makeParseFailureResult, makeWarningResult } from './report.ts';
+import { failParse } from './report.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 function jsonResourceItems(data) {
@@ -17,21 +18,10 @@ function commandOutput(result) {
 }
 
 function scopedChangedFiles(ctx, predicate) {
-  if (selectTruthyValue(() => (!Array.isArray(ctx.changedFiles)), () => (ctx.changedFiles.length === 0))) return null;
+  if (!ctx.changedFilesRequested) return null;
   return ctx.changedFiles
     .filter(file => predicate(file.split(path.sep).join('/')))
     .map(file => path.join(ctx.repoRoot, file));
-}
-
-function findChartDirForFile(repoRoot, filePath) {
-  let cursor = path.dirname(filePath);
-  const repoBoundary = path.resolve(repoRoot);
-  while (cursor.startsWith(repoBoundary)) {
-    if (fs.existsSync(path.join(cursor, 'Chart.yaml'))) return cursor;
-    if (cursor === repoBoundary) break;
-    cursor = path.dirname(cursor);
-  }
-  return null;
 }
 
 export function registerContainerYamlTools(registerTool) {
@@ -43,20 +33,25 @@ export function registerContainerYamlTools(registerTool) {
     tier: 'full',
     detect: (ctx) => ctx.projectTypes.has('docker'),
     run: (ctx) => {
-      const scanRoot = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
-      const dockerfiles = selectTruthyValue(() => (scopedChangedFiles(ctx, file => /^Dockerfile|\.dockerfile$/i.test(path.basename(file)))), () => (findFiles(scanRoot, f => /^Dockerfile|\.dockerfile$/i.test(f), 3)));
+      const dockerfiles = selectTruthyValue(() => (scopedChangedFiles(ctx, file => /^Dockerfile|\.dockerfile$/i.test(path.basename(file)))), () => (listConfiguredTargetFiles(ctx, file => /^Dockerfile|\.dockerfile$/i.test(path.basename(file)))));
       if (dockerfiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
 
       const allFindings = [];
       for (const dockerfile of dockerfiles) {
-        const result = safeExec('hadolint', ['--format', 'json', dockerfile]);
+        const findingsBefore = allFindings.length;
+        const sourceLines = fs.readFileSync(dockerfile, 'utf8').split('\n');
+        const occurrences = new Map();
+        const result = requireToolExecution(safeExec('hadolint', ['--format', 'json', dockerfile], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'hadolint');
         const parsed = tryParseJson(result.stdout);
         if (!parsed.ok) {
-          allFindings.push(...makeParseFailureResult(ctx, 'hadolint', parsed, result, dockerfile).findings);
-          continue;
+          return failParse(ctx, 'hadolint', parsed, result, dockerfile);
         }
 
         for (const item of jsonResourceItems(parsed.data)) {
+          const sourceLine = sourceLines[Math.max(0, Number(item.line || 1) - 1)]?.trim() || '';
+          const identity = JSON.stringify({ code: item.code, file: path.relative(ctx.repoRoot, dockerfile).split(path.sep).join('/'), message: item.message, source_line: sourceLine });
+          const occurrence = (occurrences.get(identity) || 0) + 1;
+          occurrences.set(identity, occurrence);
           allFindings.push({
             file: dockerfile,
             line: item.line,
@@ -64,8 +59,10 @@ export function registerContainerYamlTools(registerTool) {
             severity: item.level === 'error' ? 'error' : 'warning',
             code: item.code,
             message: item.message,
+            fingerprint_seed: { code: item.code, file: path.relative(ctx.repoRoot, dockerfile).split(path.sep).join('/'), message: item.message, source_line: sourceLine, occurrence },
           });
         }
+        if (result.exitCode !== 0 && allFindings.length === findingsBefore) return failParse(ctx, 'hadolint', { error: 'non-zero exit without diagnostics' }, result, dockerfile);
       }
 
       return {
@@ -84,25 +81,12 @@ export function registerContainerYamlTools(registerTool) {
     tier: 'full',
     detect: (ctx) => ctx.projectTypes.has('helm'),
     run: (ctx) => {
-      const scanRoot = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
-
-      // Find Chart.yaml and lint from its parent directory
-      const changedChartDirs = Array.isArray(ctx.changedFiles) && ctx.changedFiles.length > 0
-        ? [...new Set(
-          ctx.changedFiles
-            .map(file => findChartDirForFile(ctx.repoRoot, path.join(ctx.repoRoot, file)))
-            .filter(Boolean),
-        )]
-        : null;
-      const chartFiles = changedChartDirs
-        ? changedChartDirs.map(chartDir => path.join(chartDir, 'Chart.yaml'))
-        : findFiles(scanRoot, f => f === 'Chart.yaml', 3);
-      if (chartFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
+      const chartDirs = configuredTargetPaths(ctx);
 
       const allFindings = [];
-      for (const chartFile of chartFiles) {
-        const chartDir = path.dirname(chartFile);
-        const result = safeExec('helm', ['lint', '--strict', chartDir], { cwd: ctx.repoRoot });
+      for (const chartDir of chartDirs) {
+        const findingCountBeforeChart = allFindings.length;
+        const result = requireToolExecution(safeExec('helm', ['lint', '--strict', chartDir], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'helm-lint');
         const output = result.stdout + result.stderr;
 
         // Parse helm lint output: [ERROR] or [WARNING] lines
@@ -130,6 +114,9 @@ export function registerContainerYamlTools(registerTool) {
             });
           }
         }
+        if (result.exitCode !== 0 && allFindings.length === findingCountBeforeChart) {
+          return failParse(ctx, 'helm-lint', { error: 'non-zero exit without parsed findings' }, result, chartDir);
+        }
       }
 
       return {
@@ -148,16 +135,7 @@ export function registerContainerYamlTools(registerTool) {
     tier: 'full',
     detect: (ctx) => ctx.projectTypes.has('helm'),
     run: (ctx) => {
-      const scanRoot = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
-      const yamlFiles = selectTruthyValue(() => (scopedChangedFiles(ctx, file => (selectTruthyValue(() => (file.endsWith('.yaml')), () => (file.endsWith('.yml')))) && !file.includes('values'))), () => (findFiles(scanRoot, f => (selectTruthyValue(() => (f.endsWith('.yaml')), () => (f.endsWith('.yml')))) && !f.includes('values'), 4)));
-      if (yamlFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
-
-      const result = safeExec('kubeconform', ['-output', 'json', '-summary', ...yamlFiles], {
-        cwd: ctx.repoRoot,
-      });
-
       const findings = [];
-      let parseFailure = null;
 
       const pushResourceFinding = (item) => {
         if (selectTruthyValue(() => (item?.status === 'statusInvalid'), () => (item?.status === 'statusError'))) {
@@ -172,34 +150,20 @@ export function registerContainerYamlTools(registerTool) {
         }
       };
 
-      const parsedOutput = tryParseJson(selectDefinedValue(() => (result.stdout), () => ('')));
-      if (parsedOutput.ok) {
-        const resources = Array.isArray(parsedOutput.data?.resources)
-          ? parsedOutput.data.resources
-          : Array.isArray(parsedOutput.data)
-            ? parsedOutput.data
-            : [parsedOutput.data];
-        for (const item of resources) {
-          pushResourceFinding(item);
+      for (const chartDir of configuredTargetPaths(ctx)) {
+        const findingsBefore = findings.length;
+        const result = requireToolExecution(safeExec('kubeconform', ['-output', 'json', '-summary', '-strict', '-'], {
+          cwd: ctx.repoRoot,
+          timeout: ctx.tool.timeout_ms,
+          input: renderChart(ctx, chartDir),
+        }), 'kubeconform');
+        const parsed = tryParseJson(result.stdout);
+        if (!parsed.ok) return failParse(ctx, 'kubeconform', parsed, result, chartDir);
+        const resources = Array.isArray(parsed.data?.resources) ? parsed.data.resources : [];
+        for (const item of resources) pushResourceFinding(item);
+        if (findings.length === findingsBefore && result.exitCode !== 0) {
+          return failParse(ctx, 'kubeconform', { error: 'non-zero exit without parsed findings' }, result, chartDir);
         }
-      } else {
-        const lines = (selectDefinedValue(() => (result.stdout), () => (''))).split('\n').filter(Boolean);
-        for (const line of lines) {
-          const parsed = tryParseJson(line);
-          if (!parsed.ok) {
-            if (!parseFailure) parseFailure = { parsed, line };
-            continue;
-          }
-          pushResourceFinding(parsed.data);
-        }
-      }
-
-      if (parseFailure) {
-        findings.push(...makeWarningResult({
-          file: scanRoot,
-          code: 'kubeconform-parse-failed',
-          message: `kubeconform output included unparsable JSON lines. parseError=${parseFailure.parsed.error}; preview=${parseFailure.line.slice(0, 200)}`,
-        }).findings);
       }
 
       return {
@@ -218,17 +182,14 @@ export function registerContainerYamlTools(registerTool) {
     tier: 'full',
     detect: (ctx) => ctx.projectTypes.has('yaml'),
     run: (ctx) => {
-      const scanRoot = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
-      const args = ['-f', 'parsable', '--strict', scanRoot];
+      const config = ctx.tool.config_path;
+      const yamlFiles = ctx.changedFilesRequested
+        ? ctx.changedFiles.map(file => path.join(ctx.repoRoot, file))
+        : listConfiguredTargetFiles(ctx, file => file.endsWith('.yaml') || file.endsWith('.yml'));
+      if (yamlFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
+      const args = ['-c', config, '-f', 'parsable', '--strict', ...yamlFiles];
 
-      if (ctx.changedFiles.length > 0) {
-        const yamlFiles = ctx.changedFiles.filter(f => selectTruthyValue(() => (f.endsWith('.yaml')), () => (f.endsWith('.yml'))));
-        if (yamlFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
-        args.length = 0;
-        args.push('-f', 'parsable', '--strict', ...yamlFiles.map(f => path.join(ctx.repoRoot, f)));
-      }
-
-      const result = safeExec('yamllint', args, { cwd: ctx.repoRoot, timeout: 30000 });
+      const result = requireToolExecution(safeExec('yamllint', args, { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'yamllint');
 
       // parsable format: file:line:col: [level] message (rule)
       const findings = [];
@@ -245,6 +206,9 @@ export function registerContainerYamlTools(registerTool) {
             message: match[5],
           });
         }
+      }
+      if (findings.length === 0 && result.exitCode !== 0) {
+        return failParse(ctx, 'yamllint', { error: 'non-zero exit without parsed findings' }, result, ctx.repoRoot);
       }
 
       return {

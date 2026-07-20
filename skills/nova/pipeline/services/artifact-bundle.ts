@@ -14,7 +14,7 @@ export const PIPELINE_ARTIFACT_AUTHORITY_ROLES = Object.freeze({
   RUN_SCOPED_REPLAY: 'run_scoped_replay',
   LATEST_POINTER: 'latest_pointer',
   OPERATOR_MIRROR: 'operator_mirror',
-  DIAGNOSTIC_FALLBACK: 'diagnostic_fallback',
+  QUARANTINED_EVIDENCE: 'quarantined_evidence',
   SUMMARY_OPERATOR_VIEW: 'summary_operator_view',
   PLUGIN_ARTIFACT_REFERENCE: 'plugin_artifact_reference',
 });
@@ -28,7 +28,7 @@ export const PIPELINE_ARTIFACT_SURFACES = Object.freeze({
   GLOBAL_DISCORD_JSONL: 'global_discord_jsonl',
   PIPELINE_SUMMARY_JSON: 'pipeline_summary_json',
   BUSTER_DIAGNOSTIC: 'buster_diagnostic',
-  FALLBACK_TELEMETRY: 'fallback_telemetry',
+  QUARANTINE: 'quarantine',
   PLUGIN_ARTIFACT_INDEX: 'plugin_artifact_index',
 });
 
@@ -44,9 +44,9 @@ const OPERATOR_MIRROR_SURFACES = new Set([
   PIPELINE_ARTIFACT_SURFACES.PIPELINE_SUMMARY_JSON,
 ]);
 
-const DIAGNOSTIC_FALLBACK_SURFACES = new Set([
+const QUARANTINED_EVIDENCE_SURFACES = new Set([
   PIPELINE_ARTIFACT_SURFACES.BUSTER_DIAGNOSTIC,
-  PIPELINE_ARTIFACT_SURFACES.FALLBACK_TELEMETRY,
+  PIPELINE_ARTIFACT_SURFACES.QUARANTINE,
 ]);
 
 function sanitizeSegment(value, label = 'Artifact segment') {
@@ -309,8 +309,8 @@ export function classifyPipelineArtifactSurface(surface = null, artifact = {}) {
   if (normalizedSurface === PIPELINE_ARTIFACT_SURFACES.PLUGIN_ARTIFACT_INDEX) return PIPELINE_ARTIFACT_AUTHORITY_ROLES.PLUGIN_ARTIFACT_REFERENCE;
   if (RUN_SCOPED_REPLAY_SURFACES.has(normalizedSurface)) return PIPELINE_ARTIFACT_AUTHORITY_ROLES.RUN_SCOPED_REPLAY;
   if (OPERATOR_MIRROR_SURFACES.has(normalizedSurface)) return PIPELINE_ARTIFACT_AUTHORITY_ROLES.OPERATOR_MIRROR;
-  if (DIAGNOSTIC_FALLBACK_SURFACES.has(normalizedSurface)) return PIPELINE_ARTIFACT_AUTHORITY_ROLES.DIAGNOSTIC_FALLBACK;
-  if (selectTruthyValue(() => (artifact?.artifact_fallback === true), () => (artifact?.seq === null))) return PIPELINE_ARTIFACT_AUTHORITY_ROLES.DIAGNOSTIC_FALLBACK;
+  if (QUARANTINED_EVIDENCE_SURFACES.has(normalizedSurface)) return PIPELINE_ARTIFACT_AUTHORITY_ROLES.QUARANTINED_EVIDENCE;
+  if (artifact?.schema_version === 'quarantined_payload.v1') return PIPELINE_ARTIFACT_AUTHORITY_ROLES.QUARANTINED_EVIDENCE;
   return PIPELINE_ARTIFACT_AUTHORITY_ROLES.OPERATOR_MIRROR;
 }
 
@@ -329,10 +329,7 @@ export function buildPipelineArtifactAuthorityPolicy({
   const runIdMatches = selectTruthyValue(() => (selectTruthyValue(() => (!expectedRunId), () => (!artifactRunId))), () => (String(expectedRunId) === String(artifactRunId)));
   const sessionKeyMatches = selectTruthyValue(() => (selectTruthyValue(() => (!expectedSessionKey), () => (!artifactSessionKey))), () => (String(expectedSessionKey) === String(artifactSessionKey)));
   const dispatchIdMatches = selectTruthyValue(() => (selectTruthyValue(() => (!expectedDispatchId), () => (!artifactDispatchId))), () => (String(expectedDispatchId) === String(artifactDispatchId)));
-  const artifactMarkedFallback = artifact?.artifact_fallback === true;
-  const artifactMissingSequence = artifact?.seq === null;
-  const roleMarksDiagnosticFallback = role === PIPELINE_ARTIFACT_AUTHORITY_ROLES.DIAGNOSTIC_FALLBACK;
-  const fallbackEvidence = [artifactMarkedFallback, artifactMissingSequence, roleMarksDiagnosticFallback].some(Boolean);
+  const quarantinedEvidence = role === PIPELINE_ARTIFACT_AUTHORITY_ROLES.QUARANTINED_EVIDENCE || artifact?.schema_version === 'quarantined_payload.v1';
   const identityDrift = Boolean(selectTruthyValue(() => (selectTruthyValue(() => ((expectedRunId && artifactRunId && !runIdMatches)), () => ((expectedSessionKey && artifactSessionKey && !sessionKeyMatches)))), () => ((expectedDispatchId && artifactDispatchId && !dispatchIdMatches))));
   const stalePointer = Boolean(role === PIPELINE_ARTIFACT_AUTHORITY_ROLES.LATEST_POINTER && identityDrift);
   return {
@@ -348,7 +345,7 @@ export function buildPipelineArtifactAuthorityPolicy({
     artifact_dispatch_id: artifactDispatchId,
     expected_dispatch_id: selectTruthyValue(() => (expectedDispatchId), () => (null)),
     dispatch_id_matches: dispatchIdMatches,
-    fallback_evidence: fallbackEvidence,
+    quarantined_evidence: quarantinedEvidence,
     identity_drift: identityDrift,
     stale_pointer: stalePointer,
     allow_lifecycle_authority: false,
@@ -356,9 +353,9 @@ export function buildPipelineArtifactAuthorityPolicy({
     allow_scheduler_authority: false,
     allow_completion_authority: false,
     allow_ordering_authority: false,
-    operator_replay_authority: role === PIPELINE_ARTIFACT_AUTHORITY_ROLES.RUN_SCOPED_REPLAY && runIdMatches && !fallbackEvidence,
+    operator_replay_authority: role === PIPELINE_ARTIFACT_AUTHORITY_ROLES.RUN_SCOPED_REPLAY && runIdMatches && !quarantinedEvidence,
     operator_pointer_only: role === PIPELINE_ARTIFACT_AUTHORITY_ROLES.LATEST_POINTER,
-    diagnostic_evidence_only: [fallbackEvidence, roleMarksDiagnosticFallback].some(Boolean),
+    diagnostic_evidence_only: quarantinedEvidence,
   };
 }
 
@@ -459,7 +456,7 @@ export function getPipelineArtifactBundle(config = {}) {
     discord_jsonl: runDir ? `${runDir}/discord.jsonl` : null,
     summary_json: runDir ? `${runDir}/summary.json` : null,
     nova_injections_jsonl: runDir ? `${runDir}/nova-injections.jsonl` : null,
-    buster_telemetry_fallback_jsonl: runDir ? `${runDir}/buster-telemetry-fallback.jsonl` : null,
+    quarantine_jsonl: runDir ? `${runDir}/quarantine.jsonl` : null,
     redis_exchanges_jsonl: runDir ? `${runDir}/redis/redis-exchanges.jsonl` : null,
     redis_ops_jsonl: runDir ? `${runDir}/redis/redis-ops.jsonl` : null,
     pipeline_summary_json: 'summary.json',
@@ -471,7 +468,7 @@ export function getPipelineArtifactBundle(config = {}) {
     summary_json: projectPipelineArtifactEvidence({ surface: PIPELINE_ARTIFACT_SURFACES.RUN_SUMMARY_JSON, path: relative.summary_json, artifact: { run_id: runId }, expectedRunId: runId }),
     latest_json: projectPipelineArtifactEvidence({ surface: PIPELINE_ARTIFACT_SURFACES.LATEST_JSON, path: relative.latest_json, artifact: { run_id: runId }, expectedRunId: runId }),
     pipeline_summary_json: projectPipelineArtifactEvidence({ surface: PIPELINE_ARTIFACT_SURFACES.PIPELINE_SUMMARY_JSON, path: relative.pipeline_summary_json, artifact: { run_id: runId }, expectedRunId: runId }),
-    buster_telemetry_fallback_jsonl: projectPipelineArtifactEvidence({ surface: PIPELINE_ARTIFACT_SURFACES.FALLBACK_TELEMETRY, path: relative.buster_telemetry_fallback_jsonl, artifact: { run_id: runId, artifact_fallback: true }, expectedRunId: runId }),
+    quarantine_jsonl: projectPipelineArtifactEvidence({ surface: PIPELINE_ARTIFACT_SURFACES.QUARANTINE, path: relative.quarantine_jsonl, artifact: { run_id: runId, schema_version: 'quarantined_payload.v1' }, expectedRunId: runId }),
   };
 
   return {
@@ -484,12 +481,12 @@ export function getPipelineArtifactBundle(config = {}) {
     global_discord_jsonl_path: pipelineDir ? path.join(pipelineDir, 'discord.jsonl') : null,
     pipeline_summary_path: pipelineDir ? path.join(pipelineDir, 'summary.json') : null,
     global_nova_injections_jsonl_path: pipelineDir ? path.join(pipelineDir, 'nova-injections.jsonl') : null,
-    global_buster_telemetry_fallback_jsonl_path: pipelineDir ? path.join(pipelineDir, 'buster-telemetry-fallback.jsonl') : null,
+    global_quarantine_jsonl_path: pipelineDir ? path.join(pipelineDir, 'quarantine.jsonl') : null,
     run_pipeline_jsonl_path: runLogDir ? path.join(runLogDir, 'pipeline.jsonl') : null,
     run_discord_jsonl_path: runLogDir ? path.join(runLogDir, 'discord.jsonl') : null,
     run_summary_path: runLogDir ? path.join(runLogDir, 'summary.json') : null,
     run_nova_injections_jsonl_path: runLogDir ? path.join(runLogDir, 'nova-injections.jsonl') : null,
-    run_buster_telemetry_fallback_jsonl_path: runLogDir ? path.join(runLogDir, 'buster-telemetry-fallback.jsonl') : null,
+    run_quarantine_jsonl_path: runLogDir ? path.join(runLogDir, 'quarantine.jsonl') : null,
     run_redis_exchanges_jsonl_path: runLogDir ? path.join(runLogDir, 'redis', 'redis-exchanges.jsonl') : null,
     run_redis_ops_jsonl_path: runLogDir ? path.join(runLogDir, 'redis', 'redis-ops.jsonl') : null,
     relative,
@@ -545,7 +542,7 @@ export function buildLatestPointer(config = {}, {
     discord_jsonl: artifacts.relative.discord_jsonl,
     summary_json: artifacts.relative.summary_json,
     nova_injections_jsonl: artifacts.relative.nova_injections_jsonl,
-    buster_telemetry_fallback_jsonl: artifacts.relative.buster_telemetry_fallback_jsonl,
+    quarantine_jsonl: artifacts.relative.quarantine_jsonl,
     redis_exchanges_jsonl: artifacts.relative.redis_exchanges_jsonl,
     redis_ops_jsonl: artifacts.relative.redis_ops_jsonl,
     started_at: startedAt,
@@ -570,7 +567,7 @@ export function buildSummaryArtifactBundle(config = {}) {
     discord_jsonl: artifacts.relative.discord_jsonl,
     summary_json: artifacts.relative.summary_json,
     nova_injections_jsonl: artifacts.relative.nova_injections_jsonl,
-    buster_telemetry_fallback_jsonl: artifacts.relative.buster_telemetry_fallback_jsonl,
+    quarantine_jsonl: artifacts.relative.quarantine_jsonl,
     redis_exchanges_jsonl: artifacts.relative.redis_exchanges_jsonl,
     redis_ops_jsonl: artifacts.relative.redis_ops_jsonl,
     pipeline_summary_json: artifacts.relative.pipeline_summary_json,

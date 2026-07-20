@@ -86,12 +86,20 @@ export KUBECLAW_DEPLOY_LITELLM
 export ALLOW_PARTIAL_INFRA
 
 # Colors
-RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; NC='\033[0m'
-log()  { echo -e "${GREEN}[✓]${NC} $1"; }
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+log() { echo -e "${GREEN}[✓]${NC} $1"; }
 warn() { echo -e "${YELLOW}[!]${NC} $1"; }
-err()  { echo -e "${RED}[✗]${NC} $1" >&2; }
+err() { echo -e "${RED}[✗]${NC} $1" >&2; }
 info() { echo -e "${BLUE}[i]${NC} $1"; }
-header() { echo -e "\n${BLUE}═══════════════════════════════════════${NC}"; echo -e "${BLUE} $1${NC}"; echo -e "${BLUE}═══════════════════════════════════════${NC}"; }
+header() {
+  echo -e "\n${BLUE}═══════════════════════════════════════${NC}"
+  echo -e "${BLUE} $1${NC}"
+  echo -e "${BLUE}═══════════════════════════════════════${NC}"
+}
 
 require_command() {
   if ! command -v "$1" >/dev/null 2>&1; then
@@ -102,7 +110,7 @@ require_command() {
 
 is_not_found_error() {
   local text="$1"
-  [[ "$text" =~ [Nn]ot[Ff]ound|[Nn]ot\ [Ff]ound|No\ resources\ found ]]
+  [[ $text =~ [Nn]ot[Ff]ound|[Nn]ot\ [Ff]ound|No\ resources\ found ]]
 }
 
 warn_nonfatal_failure() {
@@ -110,7 +118,7 @@ warn_nonfatal_failure() {
   local detail="${2:-}"
 
   warn "$context"
-  if [[ -n "$detail" ]]; then
+  if [[ -n $detail ]]; then
     warn "  ${detail//$'\n'/$'\n  '}"
   fi
 }
@@ -124,7 +132,7 @@ add_helm_repo_once() {
     return 0
   fi
 
-  if [[ "$output" == *"already exists"* ]]; then
+  if [[ $output == *"already exists"* ]]; then
     warn "Helm repo '$name' already exists; keeping existing repo definition."
     return 0
   fi
@@ -159,7 +167,7 @@ show_optional_kubectl_table() {
   local output
 
   if output=$(kubectl get "$@" 2>&1); then
-    if [[ -n "$output" ]]; then
+    if [[ -n $output ]]; then
       echo "$output"
     else
       warn "No $description found"
@@ -233,40 +241,40 @@ append_image_override_file() {
   local pipeline_image_repo="${7:-}"
   local pipeline_image_tag="${8:-}"
 
-  if [[ -n "$image_repo" || -n "$image_tag" ]]; then
-    echo "image:" >> "$output_path"
-    if [[ -n "$image_repo" ]]; then
-      echo "  repository: \"$image_repo\"" >> "$output_path"
+  if [[ -n $image_repo || -n $image_tag ]]; then
+    echo "image:" >>"$output_path"
+    if [[ -n $image_repo ]]; then
+      echo "  repository: \"$image_repo\"" >>"$output_path"
     fi
-    if [[ -n "$image_tag" ]]; then
-      echo "  tag: \"$image_tag\"" >> "$output_path"
-    fi
-  fi
-
-  if [[ "$disable_pull_secrets" == "1" ]]; then
-    echo "imagePullSecrets: []" >> "$output_path"
-  fi
-
-  if [[ -n "$controller_image_repo" || -n "$controller_image_tag" ]]; then
-    echo "busterNamespaceBroker:" >> "$output_path"
-    echo "  controller:" >> "$output_path"
-    echo "    image:" >> "$output_path"
-    if [[ -n "$controller_image_repo" ]]; then
-      echo "      repository: \"$controller_image_repo\"" >> "$output_path"
-    fi
-    if [[ -n "$controller_image_tag" ]]; then
-      echo "      tag: \"$controller_image_tag\"" >> "$output_path"
+    if [[ -n $image_tag ]]; then
+      echo "  tag: \"$image_tag\"" >>"$output_path"
     fi
   fi
 
-  if [[ -n "$pipeline_image_repo" || -n "$pipeline_image_tag" ]]; then
-    echo "busterPipeline:" >> "$output_path"
-    echo "  image:" >> "$output_path"
-    if [[ -n "$pipeline_image_repo" ]]; then
-      echo "    repository: \"$pipeline_image_repo\"" >> "$output_path"
+  if [[ $disable_pull_secrets == "1" ]]; then
+    echo "imagePullSecrets: []" >>"$output_path"
+  fi
+
+  if [[ -n $controller_image_repo || -n $controller_image_tag ]]; then
+    echo "busterNamespaceBroker:" >>"$output_path"
+    echo "  controller:" >>"$output_path"
+    echo "    image:" >>"$output_path"
+    if [[ -n $controller_image_repo ]]; then
+      echo "      repository: \"$controller_image_repo\"" >>"$output_path"
     fi
-    if [[ -n "$pipeline_image_tag" ]]; then
-      echo "    tag: \"$pipeline_image_tag\"" >> "$output_path"
+    if [[ -n $controller_image_tag ]]; then
+      echo "      tag: \"$controller_image_tag\"" >>"$output_path"
+    fi
+  fi
+
+  if [[ -n $pipeline_image_repo || -n $pipeline_image_tag ]]; then
+    echo "busterPipeline:" >>"$output_path"
+    echo "  image:" >>"$output_path"
+    if [[ -n $pipeline_image_repo ]]; then
+      echo "    repository: \"$pipeline_image_repo\"" >>"$output_path"
+    fi
+    if [[ -n $pipeline_image_tag ]]; then
+      echo "    tag: \"$pipeline_image_tag\"" >>"$output_path"
     fi
   fi
 }
@@ -279,7 +287,7 @@ append_code_bundle_override_file() {
   local auth_secret="${5:-}"
   local auth_key="${6:-token}"
 
-  cat >> "$output_path" <<EOF
+  cat >>"$output_path" <<EOF
 codeBundle:
   enabled: true
   archiveUrl: "$archive_url"
@@ -287,8 +295,8 @@ codeBundle:
   contractVersion: "$contract_version"
 EOF
 
-  if [[ -n "$auth_secret" ]]; then
-    cat >> "$output_path" <<EOF
+  if [[ -n $auth_secret ]]; then
+    cat >>"$output_path" <<EOF
   auth:
     existingSecret: "$auth_secret"
     existingSecretKey: "$auth_key"
@@ -412,7 +420,7 @@ yaml_get_first_named_list_item() {
 derive_github_repository_from_image_repository() {
   local image_repository="${1:-}"
 
-  if [[ "$image_repository" =~ ^ghcr\.io/([^/]+)/kubeclaw([-.][A-Za-z0-9._-]+)?$ ]]; then
+  if [[ $image_repository =~ ^ghcr\.io/([^/]+)/kubeclaw([-.][A-Za-z0-9._-]+)?$ ]]; then
     echo "${BASH_REMATCH[1]}/kubeclaw"
     return 0
   fi
@@ -423,7 +431,7 @@ derive_github_repository_from_image_repository() {
 derive_github_repository() {
   local image_repository="${1:-}"
 
-  if [[ -n "${CODE_BUNDLE_GITHUB_REPOSITORY:-}" ]]; then
+  if [[ -n ${CODE_BUNDLE_GITHUB_REPOSITORY:-} ]]; then
     echo "$CODE_BUNDLE_GITHUB_REPOSITORY"
     return 0
   fi
@@ -437,7 +445,7 @@ derive_github_repository() {
   if ! remote_url="$(git -C "$REPO_DIR" config --get remote.origin.url 2>/dev/null)"; then
     return 1
   fi
-  if [[ -z "$remote_url" ]]; then
+  if [[ -z $remote_url ]]; then
     return 1
   fi
 
@@ -445,11 +453,11 @@ derive_github_repository() {
   repo="$remote_url"
   repo="${repo#git@github.com:}"
   repo="${repo#ssh://git@github.com/}"
-  if [[ "$repo" == "$remote_url" && "$remote_url" =~ ^https?://([^/@]+@)?github\.com/(.+)$ ]]; then
+  if [[ $repo == "$remote_url" && $remote_url =~ ^https?://([^/@]+@)?github\.com/(.+)$ ]]; then
     repo="${BASH_REMATCH[2]}"
   fi
   repo="${repo%.git}"
-  if [[ "$repo" == "$remote_url" || "$repo" != */* ]]; then
+  if [[ $repo == "$remote_url" || $repo != */* ]]; then
     return 1
   fi
   echo "$repo"
@@ -462,7 +470,7 @@ default_bundle_archive_url() {
   local repository
 
   repository="$(derive_github_repository "$image_repository")" || return 1
-  if [[ -z "$expected_commit" ]]; then
+  if [[ -z $expected_commit ]]; then
     return 1
   fi
 
@@ -473,19 +481,19 @@ default_bundle_expected_commit() {
   local ref="$CODE_BUNDLE_DEFAULT_REF"
   local resolved=""
 
-  if resolved="$(git -C "$REPO_DIR" ls-remote --exit-code origin "$ref" 2>/dev/null | awk 'NR==1 {print $1}')" && [[ -n "$resolved" ]]; then
+  if resolved="$(git -C "$REPO_DIR" ls-remote --exit-code origin "$ref" 2>/dev/null | awk 'NR==1 {print $1}')" && [[ -n $resolved ]]; then
     echo "$resolved"
     return 0
   fi
 
-  if [[ "$ref" == "refs/heads/main" ]] || [[ "$ref" == "main" ]]; then
-    if resolved="$(git -C "$REPO_DIR" rev-parse --verify origin/main 2>/dev/null)" && [[ -n "$resolved" ]]; then
+  if [[ $ref == "refs/heads/main" ]] || [[ $ref == "main" ]]; then
+    if resolved="$(git -C "$REPO_DIR" rev-parse --verify origin/main 2>/dev/null)" && [[ -n $resolved ]]; then
       echo "$resolved"
       return 0
     fi
   fi
 
-  if resolved="$(git -C "$REPO_DIR" rev-parse --verify HEAD 2>/dev/null)" && [[ -n "$resolved" ]]; then
+  if resolved="$(git -C "$REPO_DIR" rev-parse --verify HEAD 2>/dev/null)" && [[ -n $resolved ]]; then
     echo "$resolved"
     return 0
   fi
@@ -499,12 +507,12 @@ verify_bundle_archive_url() {
   local expected_commit="$3"
   local auth_secret="${4:-}"
 
-  if [[ "${CODE_BUNDLE_PREFLIGHT_SKIP,,}" == "true" ]]; then
+  if [[ ${CODE_BUNDLE_PREFLIGHT_SKIP,,} == "true" ]]; then
     warn "Skipping ${role} bundle archive preflight because CODE_BUNDLE_PREFLIGHT_SKIP=true."
     return 0
   fi
 
-  if [[ -n "$auth_secret" ]]; then
+  if [[ -n $auth_secret ]]; then
     warn "Skipping ${role} bundle archive preflight because runtime auth uses Kubernetes Secret ${auth_secret}."
     return 0
   fi
@@ -521,13 +529,13 @@ verify_bundle_archive_url() {
     if ! status="$(curl -fsSL -o /dev/null -w '%{http_code}' "$archive_url" 2>/dev/null)"; then
       err "${role} code bundle is not available: ${archive_url}"
       err "Expected published asset: ${role}-${expected_commit}.tgz under release tag ${CODE_BUNDLE_RELEASE_TAG}"
-      err "Push the commit to main and wait for the bundle publication workflow, or set $(tr '[:lower:]' '[:upper:]' <<< "$role")_CODE_BUNDLE_ARCHIVE_URL explicitly."
+      err "Push the commit to main and wait for the bundle publication workflow, or set $(tr '[:lower:]' '[:upper:]' <<<"$role")_CODE_BUNDLE_ARCHIVE_URL explicitly."
       return 1
     fi
   fi
 
   case "$status" in
-    2*|3*)
+    2* | 3*)
       return 0
       ;;
     *)
@@ -560,7 +568,7 @@ resolve_deploy_targets() {
   local target="${1:-both}"
   case "$target" in
     both) echo "nova buster" ;;
-    nova|buster) echo "$target" ;;
+    nova | buster) echo "$target" ;;
     *)
       err "Usage: $0 code [nova|buster] or $0 image [nova|buster|both]"
       return 1
@@ -572,7 +580,7 @@ resolve_deploy_targets() {
 
 is_valid_namespace() {
   local value="$1"
-  [[ "$value" =~ ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$ && "${#value}" -le 63 ]]
+  [[ $value =~ ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$ && ${#value} -le 63 ]]
 }
 
 prompt_workspace_namespace_if_needed() {
@@ -581,8 +589,8 @@ prompt_workspace_namespace_if_needed() {
   local prompt_default="$NAMESPACE"
 
   mode="$(normalize_boolish "$KUBECLAW_WORKSPACE_PROMPT")"
-  if [[ -z "$NAMESPACE_WAS_SET" && -f "$KUBECLAW_WORKSPACE_NAMESPACE_FILE" ]]; then
-    workspace="$(tr -d '[:space:]' < "$KUBECLAW_WORKSPACE_NAMESPACE_FILE")"
+  if [[ -z $NAMESPACE_WAS_SET && -f $KUBECLAW_WORKSPACE_NAMESPACE_FILE ]]; then
+    workspace="$(tr -d '[:space:]' <"$KUBECLAW_WORKSPACE_NAMESPACE_FILE")"
     if is_valid_namespace "$workspace"; then
       NAMESPACE="$workspace"
       prompt_default="$workspace"
@@ -596,13 +604,13 @@ prompt_workspace_namespace_if_needed() {
       export NAMESPACE
       return 0
       ;;
-    true|auto)
-      if [[ "$mode" == "auto" && -n "$NAMESPACE_WAS_SET" ]]; then
+    true | auto)
+      if [[ $mode == "auto" && -n $NAMESPACE_WAS_SET ]]; then
         export NAMESPACE
         return 0
       fi
       if [[ ! -r /dev/tty || ! -w /dev/tty ]]; then
-        if [[ "$mode" == "true" ]]; then
+        if [[ $mode == "true" ]]; then
           err "KUBECLAW_WORKSPACE_PROMPT=true requires an interactive terminal."
           return 1
         fi
@@ -617,13 +625,13 @@ prompt_workspace_namespace_if_needed() {
   esac
 
   while true; do
-    read -r -p "How would you like to name the workspace namespace? [$prompt_default]: " workspace < /dev/tty
+    read -r -p "How would you like to name the workspace namespace? [$prompt_default]: " workspace </dev/tty
     workspace="${workspace:-$prompt_default}"
     if is_valid_namespace "$workspace"; then
       NAMESPACE="$workspace"
       export NAMESPACE
       mkdir -p "$(dirname "$KUBECLAW_WORKSPACE_NAMESPACE_FILE")"
-      printf '%s\n' "$NAMESPACE" > "$KUBECLAW_WORKSPACE_NAMESPACE_FILE"
+      printf '%s\n' "$NAMESPACE" >"$KUBECLAW_WORKSPACE_NAMESPACE_FILE"
       log "Workspace namespace: $NAMESPACE"
       return 0
     fi
@@ -634,7 +642,7 @@ prompt_workspace_namespace_if_needed() {
 component_enabled() {
   local value
   value="$(normalize_boolish "$1")"
-  [[ "$value" == "true" ]]
+  [[ $value == "true" ]]
 }
 
 cleanup_buildkit_preflight_pod() {
@@ -649,6 +657,7 @@ cleanup_buildkit_preflight_pod() {
 cmd_buildkit_preflight() {
   local probe_name="kubeclaw-buildkit-preflight-$$"
   local socket="unix:///run/user/1000/buildkit/buildkitd.sock"
+  local otel_socket="/run/user/1000/buildkit/otel-grpc.sock"
   local probe_image="${1:-$BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE}"
   local pull_secret="${2:-}"
   local pull_secret_yaml=""
@@ -706,6 +715,8 @@ ${pull_secret_yaml}
         - buildkitd
         - --addr
         - ${socket}
+        - --otel-socket-path
+        - ${otel_socket}
         - --root
         - /tmp/buildkit-state
         - --oci-worker-no-process-sandbox
@@ -751,7 +762,7 @@ EOF
     fi
   fi
 
-  if [[ "$probe_ready" == "1" ]]; then
+  if [[ $probe_ready == "1" ]]; then
     cleanup_buildkit_preflight_pod "$probe_name"
     trap - EXIT INT TERM
     log "Rootless BuildKit worker initialized successfully."
@@ -857,7 +868,7 @@ run_secret_setup_if_enabled() {
 run_secret_setup() {
   local helper="$VALUES_DIR/setup-secrets.sh"
 
-  if [[ ! -x "$helper" ]]; then
+  if [[ ! -x $helper ]]; then
     err "Secret setup helper is not executable: $helper"
     info "Run: chmod +x $helper"
     return 1
@@ -872,8 +883,8 @@ normalize_boolish() {
   local value
   value="$(echo "${1:-}" | tr '[:upper:]' '[:lower:]')"
   case "$value" in
-    1|true|yes|on|enabled) echo "true" ;;
-    0|false|no|off|disabled) echo "false" ;;
+    1 | true | yes | on | enabled) echo "true" ;;
+    0 | false | no | off | disabled) echo "false" ;;
     *) echo "$value" ;;
   esac
 }
@@ -888,7 +899,7 @@ deploy_tailscale_operator() {
   require_command kubectl
   require_command helm
 
-  if [[ "$normalized_mode" == "false" ]]; then
+  if [[ $normalized_mode == "false" ]]; then
     warn "Tailscale operator install disabled by TAILSCALE_OPERATOR_ENABLED=$mode"
     return 0
   fi
@@ -899,14 +910,14 @@ deploy_tailscale_operator() {
   else
     secret_status=$?
   fi
-  if [[ "$secret_status" == "2" ]]; then
+  if [[ $secret_status == "2" ]]; then
     return 0
   fi
-  if [[ "$secret_status" != "0" ]]; then
+  if [[ $secret_status != "0" ]]; then
     return "$secret_status"
   fi
 
-  if [[ ! -f "$TAILSCALE_VALUES_FILE" ]]; then
+  if [[ ! -f $TAILSCALE_VALUES_FILE ]]; then
     err "Tailscale values file not found: $TAILSCALE_VALUES_FILE"
     return 1
   fi
@@ -945,7 +956,7 @@ ensure_tailscale_oauth_secret() {
     return 1
   fi
 
-  if [[ -n "$client_id" && -n "$client_secret" ]]; then
+  if [[ -n $client_id && -n $client_secret ]]; then
     kubectl create namespace "$TAILSCALE_OPERATOR_NAMESPACE" --dry-run=client -o yaml | kubectl apply -f -
     kubectl create secret generic "$TAILSCALE_OAUTH_SECRET_NAME" \
       --namespace "$TAILSCALE_OPERATOR_NAMESPACE" \
@@ -956,7 +967,7 @@ ensure_tailscale_oauth_secret() {
     return 0
   fi
 
-  if [[ "$normalized_mode" == "true" ]]; then
+  if [[ $normalized_mode == "true" ]]; then
     err "Tailscale operator install requires Secret/${TAILSCALE_OAUTH_SECRET_NAME} in namespace '${TAILSCALE_OPERATOR_NAMESPACE}' with keys client_id and client_secret."
     info "Create it with:"
     info "  kubectl create namespace ${TAILSCALE_OPERATOR_NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -"
@@ -1064,7 +1075,7 @@ deploy_agent() {
   local disable_pull_secrets="${DISABLE_IMAGE_PULL_SECRETS:-0}"
   local helm_args=()
 
-  if [[ ! -f "$values_file" ]]; then
+  if [[ ! -f $values_file ]]; then
     err "Values file not found: $values_file"
     return 1
   fi
@@ -1084,42 +1095,42 @@ deploy_agent() {
       ;;
   esac
 
-  if [[ -z "$image_repo" ]]; then
+  if [[ -z $image_repo ]]; then
     image_repo="$(yaml_get_section_key "$values_file" image repository)"
   fi
 
-  if [[ "$mode" == "code" ]]; then
+  if [[ $mode == "code" ]]; then
     bundle_expected_commit="$(bundle_env_for_role "$role" expected_commit)"
     bundle_contract_version="$(bundle_env_for_role "$role" contract_version)"
     bundle_auth_secret="$(bundle_env_for_role "$role" auth_secret)"
     bundle_auth_key="$(bundle_env_for_role "$role" auth_key)"
     bundle_archive_url="$(bundle_env_for_role "$role" archive_url)"
 
-    if [[ -z "$bundle_auth_secret" ]]; then
+    if [[ -z $bundle_auth_secret ]]; then
       bundle_auth_secret="$(yaml_get_nested_section_key "$values_file" codeBundle auth existingSecret)"
     fi
-    if [[ -z "$bundle_auth_key" || "$bundle_auth_key" == "token" ]]; then
+    if [[ -z $bundle_auth_key || $bundle_auth_key == "token" ]]; then
       local values_auth_key=""
       values_auth_key="$(yaml_get_nested_section_key "$values_file" codeBundle auth existingSecretKey)"
-      if [[ -n "$values_auth_key" ]]; then
+      if [[ -n $values_auth_key ]]; then
         bundle_auth_key="$values_auth_key"
       fi
     fi
 
-    if [[ -z "$bundle_expected_commit" ]]; then
+    if [[ -z $bundle_expected_commit ]]; then
       if ! bundle_expected_commit="$(default_bundle_expected_commit)"; then
-        err "${role} code deploy requires $(tr '[:lower:]' '[:upper:]' <<< "$role")_CODE_BUNDLE_EXPECTED_COMMIT or a resolvable ${CODE_BUNDLE_DEFAULT_REF}"
+        err "${role} code deploy requires $(tr '[:lower:]' '[:upper:]' <<<"$role")_CODE_BUNDLE_EXPECTED_COMMIT or a resolvable ${CODE_BUNDLE_DEFAULT_REF}"
         return 1
       fi
       info "Resolved ${role} code bundle commit from ${CODE_BUNDLE_DEFAULT_REF}: ${bundle_expected_commit}"
     fi
-    if [[ -z "$bundle_archive_url" ]]; then
+    if [[ -z $bundle_archive_url ]]; then
       if ! bundle_archive_url="$(default_bundle_archive_url "$role" "$bundle_expected_commit" "$image_repo")"; then
         bundle_archive_url=""
       fi
     fi
-    if [[ -z "$bundle_archive_url" ]]; then
-      err "${role} code deploy requires $(tr '[:lower:]' '[:upper:]' <<< "$role")_CODE_BUNDLE_ARCHIVE_URL or a derivable GitHub repository"
+    if [[ -z $bundle_archive_url ]]; then
+      err "${role} code deploy requires $(tr '[:lower:]' '[:upper:]' <<<"$role")_CODE_BUNDLE_ARCHIVE_URL or a derivable GitHub repository"
       return 1
     fi
     verify_bundle_archive_url "$role" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_auth_secret"
@@ -1140,16 +1151,16 @@ deploy_agent() {
     cmd_buildkit_preflight "$pipeline_preflight_image" "$pipeline_preflight_pull_secret"
   fi
 
-  if [[ -n "$image_repo" || -n "$image_tag" || -n "$controller_image_repo" || -n "$controller_image_tag" || -n "$pipeline_image_repo" || -n "$pipeline_image_tag" || "$disable_pull_secrets" == "1" || "$mode" == "code" ]]; then
+  if [[ -n $image_repo || -n $image_tag || -n $controller_image_repo || -n $controller_image_tag || -n $pipeline_image_repo || -n $pipeline_image_tag || $disable_pull_secrets == "1" || $mode == "code" ]]; then
     override_file="$(mktemp)"
-    : > "$override_file"
+    : >"$override_file"
   fi
 
-  if [[ -n "$override_file" && ( -n "$image_repo" || -n "$image_tag" || -n "$controller_image_repo" || -n "$controller_image_tag" || -n "$pipeline_image_repo" || -n "$pipeline_image_tag" || "$disable_pull_secrets" == "1" ) ]]; then
+  if [[ -n $override_file && (-n $image_repo || -n $image_tag || -n $controller_image_repo || -n $controller_image_tag || -n $pipeline_image_repo || -n $pipeline_image_tag || $disable_pull_secrets == "1") ]]; then
     append_image_override_file "$override_file" "$image_repo" "$image_tag" "$disable_pull_secrets" "$controller_image_repo" "$controller_image_tag" "$pipeline_image_repo" "$pipeline_image_tag"
   fi
 
-  if [[ -n "$override_file" && "$mode" == "code" ]]; then
+  if [[ -n $override_file && $mode == "code" ]]; then
     append_code_bundle_override_file "$override_file" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_contract_version" "$bundle_auth_secret" "$bundle_auth_key"
   fi
 
@@ -1167,27 +1178,27 @@ deploy_agent() {
     helm_args+=(--set probes.dependencies.qdrant.enabled=false)
   fi
 
-  if [[ -n "$override_file" ]]; then
+  if [[ -n $override_file ]]; then
     helm_args+=(--values "$override_file")
   fi
 
   info "Deploying agent-${role} (${mode})..."
   if ! helm "${helm_args[@]}"; then
-    if [[ -n "$override_file" ]]; then
+    if [[ -n $override_file ]]; then
       rm -f "$override_file"
     fi
     return 1
   fi
 
-  if [[ -n "$override_file" ]]; then
+  if [[ -n $override_file ]]; then
     rm -f "$override_file"
   fi
 
-  if [[ "$mode" == "image" ]]; then
+  if [[ $mode == "image" ]]; then
     kubectl rollout restart deployment -n "$NAMESPACE" -l "app.kubernetes.io/instance=agent-${role}"
   fi
   wait_for_agent_rollout "agent-${role}"
-  if [[ "$role" == "buster" && "$mode" == "image" ]]; then
+  if [[ $role == "buster" && $mode == "image" ]]; then
     kubectl rollout status deployment/agent-buster-namespace-controller -n "$NAMESPACE" --timeout="$AGENT_ROLLOUT_TIMEOUT"
   fi
   log "agent-${role} deployed (${mode})"
@@ -1203,8 +1214,8 @@ cmd_agents() {
 
   echo ""
   log "All agents deployed."
-  kubectl get pods -n "$NAMESPACE" -l app.kubernetes.io/name=kubeclaw --no-headers \
-    | awk '{print "  " $1 " → " $3}'
+  kubectl get pods -n "$NAMESPACE" -l app.kubernetes.io/name=kubeclaw --no-headers |
+    awk '{print "  " $1 " → " $3}'
 }
 
 cmd_image() {
@@ -1230,7 +1241,7 @@ cmd_agent() {
   local with_code=0
   local extra_arg="${2:-}"
 
-  if [[ -z "$role" ]]; then
+  if [[ -z $role ]]; then
     err "Usage: $0 agent <nova|buster> [--with-code]"
     return 1
   fi
@@ -1250,7 +1261,7 @@ cmd_agent() {
   header "Agent Deploy: ${role}"
   deploy_agent "$role" image
 
-  if [[ "$with_code" == "1" ]]; then
+  if [[ $with_code == "1" ]]; then
     cmd_smoke_agent "$role"
     deploy_agent "$role" code
     cmd_smoke_agent "$role"
@@ -1276,7 +1287,7 @@ cmd_smoke_agent() {
   local role="$1"
   local release="agent-${role}"
 
-  if [[ "$role" != "nova" && "$role" != "buster" ]]; then
+  if [[ $role != "nova" && $role != "buster" ]]; then
     err "Usage: $0 smoke-agent <nova|buster>"
     return 1
   fi
@@ -1363,7 +1374,7 @@ delete_manifested_resource_if_present() {
 
     warn "Manifest delete failed for $name; attempting selector fallback ($fallback_types -l $fallback_selector)."
     if fallback_output=$(kubectl delete "$fallback_types" -n "$NAMESPACE" -l "$fallback_selector" 2>&1); then
-      [[ -n "$fallback_output" ]] && echo "$fallback_output"
+      [[ -n $fallback_output ]] && echo "$fallback_output"
       log "Removed: $name via selector fallback"
       return 0
     fi
@@ -1407,12 +1418,12 @@ cleanup_leftover_pvcs() {
   local pvc
 
   pvcs=$(kubectl get pvc -n "$NAMESPACE" --no-headers -o custom-columns=NAME:.metadata.name)
-  if [[ -n "$pvcs" ]]; then
+  if [[ -n $pvcs ]]; then
     warn "Removing leftover PVCs..."
     while IFS= read -r pvc; do
-      [[ -n "$pvc" ]] || continue
+      [[ -n $pvc ]] || continue
       kubectl delete pvc "$pvc" -n "$NAMESPACE"
-    done <<< "$pvcs"
+    done <<<"$pvcs"
     log "PVCs removed"
   fi
 }
@@ -1434,7 +1445,7 @@ run_destructive_teardown() {
   cmd_teardown_agents
   remove_destructive_infra
 
-  if [[ "$destroy_namespace" == "1" ]]; then
+  if [[ $destroy_namespace == "1" ]]; then
     warn "Deleting namespace $NAMESPACE (this removes all remaining resources)..."
     kubectl delete namespace "$NAMESPACE" --timeout=120s
     log "Namespace $NAMESPACE deleted."
@@ -1453,7 +1464,7 @@ cmd_teardown() {
   echo -e "${YELLOW}WARNING: This will remove agents + infrastructure (Helm releases + PVCs)${NC}"
   echo "Keeping: namespace '$NAMESPACE', secrets"
   read -p "Type 'yes' to confirm: " confirm
-  if [[ "$confirm" != "yes" ]]; then
+  if [[ $confirm != "yes" ]]; then
     echo "Aborted."
     exit 0
   fi
@@ -1466,7 +1477,7 @@ cmd_teardown_all() {
   echo "Including: all agents, infra, PVCs, secrets, namespace itself"
   echo -e "${YELLOW}You will need to re-run setup-secrets.sh after recreating the namespace.${NC}"
   read -p "Type 'destroy' to confirm: " confirm
-  if [[ "$confirm" != "destroy" ]]; then
+  if [[ $confirm != "destroy" ]]; then
     echo "Aborted."
     exit 0
   fi
@@ -1522,7 +1533,7 @@ case "${1:-}" in
     cmd_smoke
     ;;
   smoke-agent)
-    if [[ -z "${2:-}" ]]; then
+    if [[ -z ${2:-} ]]; then
       err "Usage: $0 smoke-agent <nova|buster>"
       exit 1
     fi

@@ -49,10 +49,10 @@ for (const denied of [
 assert.equal(Object.isFrozen(helperMod.PIPELINE_ARTIFACT_AUTHORITY_ROLES), true, 'artifact authority roles must be frozen');
 assert.equal(Object.isFrozen(helperMod.PIPELINE_ARTIFACT_SURFACES), true, 'artifact surfaces must be frozen');
 assert.deepEqual(Object.values(helperMod.PIPELINE_ARTIFACT_AUTHORITY_ROLES).sort(), [
-  'diagnostic_fallback',
   'latest_pointer',
   'operator_mirror',
   'plugin_artifact_reference',
+  'quarantined_evidence',
   'run_scoped_replay',
   'summary_operator_view',
 ]);
@@ -105,11 +105,11 @@ assert.equal(mismatchedSessionArtifact.allow_session_authority, false);
 assert.equal(mismatchedSessionArtifact.allow_scheduler_authority, false);
 
 const fallbackTelemetry = helperMod.buildPipelineArtifactAuthorityPolicy({
-  surface: helperMod.PIPELINE_ARTIFACT_SURFACES.FALLBACK_TELEMETRY,
-  artifact: { run_id: 'run-1', artifact_fallback: true, seq: null },
+  surface: helperMod.PIPELINE_ARTIFACT_SURFACES.QUARANTINE,
+  artifact: { run_id: 'run-1', schema_version: 'quarantined_payload.v1' },
   expectedRunId: 'run-1',
 });
-assert.equal(fallbackTelemetry.role, 'diagnostic_fallback');
+assert.equal(fallbackTelemetry.role, 'quarantined_evidence');
 assert.equal(fallbackTelemetry.diagnostic_evidence_only, true);
 assert.equal(fallbackTelemetry.operator_replay_authority, false);
 assert.equal(fallbackTelemetry.allow_ordering_authority, false);
@@ -133,8 +133,8 @@ assert.equal(bundle.authority.pipeline_jsonl.role, 'run_scoped_replay');
 assert.equal(bundle.authority.pipeline_jsonl.authority.operator_replay_authority, true);
 assert.equal(bundle.authority.latest_json.role, 'latest_pointer');
 assert.equal(bundle.authority.latest_json.authority.operator_pointer_only, true);
-assert.equal(bundle.authority.buster_telemetry_fallback_jsonl.role, 'diagnostic_fallback');
-assert.equal(bundle.authority.buster_telemetry_fallback_jsonl.authority.diagnostic_evidence_only, true);
+assert.equal(bundle.authority.quarantine_jsonl.role, 'quarantined_evidence');
+assert.equal(bundle.authority.quarantine_jsonl.authority.diagnostic_evidence_only, true);
 
 const latest = helperMod.buildLatestPointer({
   project: 'authority-surface',

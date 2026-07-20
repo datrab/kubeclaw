@@ -1,0 +1,193 @@
+{
+  "$id": "summary.completed.payload.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "artifact_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "case_study_base_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "content_completeness": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "data_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dispatch_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "gate_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "gate_type": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "gateway_label": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "latest_json_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "markdown_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "module_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "output": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "output_dir": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "output_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pipeline_summary_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reason_code": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "runtime": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "session_key": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "summary_json_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "summary_type": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "terminal_decision": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "terminal_status": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "tool_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "summary_type"
+  ],
+  "type": "object"
+}

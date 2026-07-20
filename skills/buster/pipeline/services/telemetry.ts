@@ -23,6 +23,7 @@ import {
 } from '../telemetry.ts';
 import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError } from '../noncritical-reporting.ts';
 import { sanitizeTelemetryPayload } from '../egress.ts';
+import { buildCanonicalEnvelope, redactProhibitedSecrets, sha256 } from '../observability-contract.ts';
 import { loadBusterPlatformConfig } from './runtime-policy.ts';
 import {
   assertTelemetryEventPayload,
@@ -238,24 +239,24 @@ export function resolveTelemetryStreamKey(opts: TelemetryOptions = {}): string |
 function buildEnvelope(ctx: BusterTelemetryContext, type: string, data: AnyRecord = {}, seq: number | null): AnyRecord {
   const payload = data;
   const hasModuleId = Object.prototype.hasOwnProperty.call(payload, 'module_id');
-  return {
+  const normalizedPayload = {
     ...payload,
-    v: 1,
-    type,
-    ts: new Date().toISOString(),
-    project: ctx.project,
-    run_id: ctx.runId,
-    seq,
-    source: 'buster',
-    emitter: ctx.emitter,
     module_id: hasModuleId ? payload.module_id : (payload?.gate_id ? null : (selectDefinedValue(() => (ctx.moduleId), () => (null)))),
     attempt: selectDefinedValue(() => (selectDefinedValue(() => (payload.attempt), () => (ctx.attempt))), () => (null)),
     dispatch_id: selectDefinedValue(() => (selectDefinedValue(() => (payload.dispatch_id), () => (ctx.dispatchId))), () => (null)),
     session_key: selectDefinedValue(() => (selectDefinedValue(() => (payload.session_key), () => (ctx.sessionKey))), () => (null)),
   };
+  delete normalizedPayload.project;
+  delete normalizedPayload.run_id;
+  delete normalizedPayload.source;
+  delete normalizedPayload.emitter;
+  if (seq == null) return { schema_version:'quarantined_payload.v1', quarantined_at:new Date().toISOString(), reason_code:'TRANSPORT_UNAVAILABLE', intended_type_sha256:sha256(type), project:ctx.project, run_id:ctx.runId, producer:ctx.emitter, original_sha256:sha256(JSON.stringify(normalizedPayload)), payload:redactProhibitedSecrets(normalizedPayload) };
+  const gateId = normalizedPayload.gate_id || ctx.gateId || null;
+  const workId = gateId || normalizedPayload.module_id || ctx.runId;
+  return buildCanonicalEnvelope({ type, payload:normalizedPayload, seq, identity:{project:ctx.project,run_id:ctx.runId,work_id:workId,work_type:gateId?'gate':normalizedPayload.module_id?'module':'pipeline',gate_id:gateId,attempt:normalizedPayload.attempt,dispatch_id:normalizedPayload.dispatch_id,session_id:normalizedPayload.session_key,agent_id:null,model_call_id:normalizedPayload.model_call_id,tool_call_id:normalizedPayload.tool_call_id,source:'buster',producer:ctx.emitter} });
 }
 
-function buildBusterFallbackCorrelation(ctx: Partial<BusterTelemetryContext> = {}, data: AnyRecord = {}): AnyRecord {
+function buildBusterQuarantineCorrelation(ctx: Partial<BusterTelemetryContext> = {}, data: AnyRecord = {}): AnyRecord {
   const gateId = selectDefinedValue(() => (selectDefinedValue(() => (data.gate_id), () => (ctx.gateId))), () => (null));
   return {
     module_id: Object.prototype.hasOwnProperty.call(data, 'module_id')
@@ -269,32 +270,23 @@ function buildBusterFallbackCorrelation(ctx: Partial<BusterTelemetryContext> = {
   };
 }
 
-function appendFallbackEvent(ctx: BusterTelemetryContext, type: string, data: AnyRecord = {}): void {
+function appendQuarantinedEvent(ctx: BusterTelemetryContext, type: string, data: AnyRecord = {}): void {
   const targets: string[] = [];
-  if (ctx?.logDir) targets.push(path.join(ctx.logDir, 'telemetry-fallback.jsonl'));
-  if (ctx?.pipelineLogPath) targets.push(path.join(path.dirname(ctx.pipelineLogPath), 'buster-telemetry-fallback.jsonl'));
-  if (ctx?.pipelineRunLogPath) targets.push(path.join(path.dirname(ctx.pipelineRunLogPath), 'buster-telemetry-fallback.jsonl'));
+  if (ctx?.logDir) targets.push(path.join(ctx.logDir, 'quarantine.jsonl'));
+  if (ctx?.pipelineLogPath) targets.push(path.join(path.dirname(ctx.pipelineLogPath), 'quarantine.jsonl'));
+  if (ctx?.pipelineRunLogPath) targets.push(path.join(path.dirname(ctx.pipelineRunLogPath), 'quarantine.jsonl'));
   const uniqueTargets = [...new Set(targets)];
   if (!uniqueTargets.length) return;
   try {
-    const record = {
-      v: 1,
-      type,
-      ts: new Date().toISOString(),
-      project: ctx.project,
-      run_id: ctx.runId,
-      source: 'buster',
-      emitter: ctx.emitter,
-      artifact_fallback: true,
-      ...buildBusterFallbackCorrelation(ctx, data),
-      ...sanitizeTelemetryPayload(data),
-    };
+    const payload={...buildBusterQuarantineCorrelation(ctx,data),...sanitizeTelemetryPayload(data)};
+    const serialized=JSON.stringify(payload);
+    const record = { schema_version:'quarantined_payload.v1', quarantined_at:new Date().toISOString(), reason_code:'REDIS_TELEMETRY_UNAVAILABLE', intended_type_sha256:sha256(type), project:ctx.project, run_id:ctx.runId, producer:ctx.emitter, original_byte_length:new TextEncoder().encode(serialized).byteLength, original_sha256:sha256(serialized), payload:redactProhibitedSecrets(payload) };
     for (const target of uniqueTargets) {
       fs.mkdirSync(path.dirname(target), { recursive: true });
       fs.appendFileSync(target, JSON.stringify(record) + '\n');
     }
   } catch (error) {
-    reportBusterTelemetryIncident(ctx, 'fallback_artifact_write_failed', error, 'Buster telemetry fallback artifact write failed', {
+    reportBusterTelemetryIncident(ctx, 'quarantine_write_failed', error, 'Buster telemetry quarantine write failed', {
       scope: type,
     });
   }
@@ -355,11 +347,10 @@ function recordTelemetryPayloadInvalid(ctx: BusterTelemetryContext, type: string
     validation_errors: Array.isArray(errorLike?.validationErrors) ? errorLike.validationErrors : [],
     degraded_at: new Date().toISOString(),
   };
-  appendFallbackEvent(ctx, 'observability.degraded', payload);
+  appendQuarantinedEvent(ctx, 'observability.degraded', payload);
   const sanitizedPayload = sanitizeTelemetryPayload(payload);
   appendPipelineArtifactEvent(ctx, buildEnvelope(ctx, 'observability.degraded', {
     ...sanitizedPayload,
-    artifact_fallback: true,
   }, null));
 }
 
@@ -391,11 +382,10 @@ function markTelemetryDegradedOnce(ctx: BusterTelemetryContext | null, type: str
     stream_key: selectDefinedValue(() => (ctx.streamKey), () => (null)),
     degraded_at: degradedAt,
   };
-  appendFallbackEvent(ctx, 'observability.degraded', payload);
+  appendQuarantinedEvent(ctx, 'observability.degraded', payload);
   const sanitizedPayload = sanitizeTelemetryPayload(payload);
   appendPipelineArtifactEvent(ctx, buildEnvelope(ctx, 'observability.degraded', {
     ...sanitizedPayload,
-    artifact_fallback: true,
   }, null));
 }
 
@@ -422,7 +412,7 @@ async function emitRestoredIfNeeded(ctx: BusterTelemetryContext): Promise<void> 
     restored_at: restoredAt,
     restored_after_ms: degradedAt ? Math.max(0, Date.now() - new Date(degradedAt).getTime()) : null,
   };
-  appendFallbackEvent(ctx, 'observability.restored', payload);
+  appendQuarantinedEvent(ctx, 'observability.restored', payload);
   try {
     const seq = await ctx.redis.incr(ctx.seqKey);
     const event = buildEnvelope(ctx, 'observability.restored', sanitizeTelemetryPayload(payload), seq);
@@ -517,7 +507,8 @@ export async function emitEvent(ctx: unknown, type: string, data: AnyRecord = {}
   if (selectTruthyValue(() => (!telemetryCtx), () => (!type))) return;
   if (telemetryCtx?._health?.redis?.disabled) return;
   try {
-    assertTelemetryEventPayload(type, data);
+    const { project, run_id: runId, source, emitter, producer, ...payload } = data;
+    assertTelemetryEventPayload(type, payload);
   } catch (error) {
     // KEEP_TYPED_POLICY: schema drift records degraded evidence and never
     // emits invalid telemetry stream events.

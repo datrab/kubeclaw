@@ -10,6 +10,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 // @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
+import { discoverLatestRun } from './run-discovery.ts';
 import { registerShutdownHooks } from './agents/shutdown.ts';
 import { loadConfig } from './core/config.ts';
 import { listBlueprints, releaseBlueprint } from './services/blueprint.ts';
@@ -62,10 +63,10 @@ function prepareReadOnlyLifecycleContext(config: AnyRecord = {}) {
 
 function prepareResumeLifecycleContext(config: AnyRecord = {}) {
   const swarmDir = config?.paths?.swarm_dir;
-  const latestPath = swarmDir ? path.join(swarmDir, 'logs', 'pipeline', 'latest.json') : null;
-  if (selectTruthyValue(() => (!latestPath), () => (!fs.existsSync(latestPath)))) return;
+  const pipelineRoot = swarmDir ? path.join(swarmDir, 'logs', 'pipeline') : null;
+  if (!pipelineRoot) return;
   try {
-    const latest = JSON.parse(fs.readFileSync(latestPath, 'utf8'));
+    const latest = discoverLatestRun(pipelineRoot);
     const runId = typeof latest?.run_id === 'string' ? latest.run_id.trim() : '';
     if (!runId) return;
     if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (runId.includes('\0')), () => (runId.includes('/')))), () => (runId.includes('\\')))), () => (runId === '.'))), () => (runId === '..'))) return;

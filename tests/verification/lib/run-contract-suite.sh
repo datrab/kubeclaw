@@ -102,7 +102,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [[ "$LIST_ONLY" == "1" ]]; then
+if [[ $LIST_ONLY == "1" ]]; then
   echo "check-telemetry-contract.mjs"
   printf '%s\n' "${CONTRACTS[@]}"
   exit 0

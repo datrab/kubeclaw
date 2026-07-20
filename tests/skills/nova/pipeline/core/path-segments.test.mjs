@@ -93,7 +93,7 @@ function makeConfig() {
       },
     },
     discord_alerts: { info: false, warn: false, critical: false, ok: false },
-    pre_check: { enabled: false, lint_report_path: '/home/node/lint.js', timeout_seconds: 1 },
+    pre_check: { enabled: false, lint_report_path: '/home/node/lint.js', lint_policy_path: '/home/node/lint-policy.json', lint_policy_project: 'workspace', timeout_seconds: 1 },
     review_defaults: { timeout_minutes: 1, max_fix_cycles: 0, lint_tier: 'pre-check', lint_required: false },
     case_study: { timeout_minutes: 1 },
     arch_validation: { enabled: true, agent_enabled: false, timeout_minutes: 1 },

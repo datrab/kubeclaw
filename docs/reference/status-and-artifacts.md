@@ -50,7 +50,7 @@ Run-scoped:
 - `.swarm/logs/pipeline/runs/<run_id>/discord.jsonl`
 - `.swarm/logs/pipeline/runs/<run_id>/summary.json`
 - `.swarm/logs/pipeline/runs/<run_id>/nova-injections.jsonl`
-- `.swarm/logs/pipeline/runs/<run_id>/buster-telemetry-fallback.jsonl`
+- `.swarm/logs/pipeline/runs/<run_id>/quarantine.jsonl`
 - `.swarm/logs/pipeline/runs/<run_id>/redis/redis-exchanges.jsonl`
 - `.swarm/logs/pipeline/runs/<run_id>/redis/redis-ops.jsonl`
 

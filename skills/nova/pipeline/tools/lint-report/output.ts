@@ -33,6 +33,8 @@ Usage: node lint-report.ts [options]
 
 Required:
   --repo <path>           Git repo root
+  --policy <path>         Absolute path to canonical lint-policy.json
+  --policy-project <id>   Exact project id declared by the policy
 
 Optional:
   --tier <tier>           Tool tier: 'pre-check' or 'full' (default: full)
@@ -40,18 +42,14 @@ Optional:
   --project <name>        Project name for report metadata
   --output <path>         Write JSON report to file (default: stdout)
   --changed-files <list>  Comma-separated list of changed files (repo-relative)
-  --semgrep-config <path> Path to .semgrep.yml (default: auto-detect)
-  --eslint-config <path>  Path to eslint.config.* (default: auto-detect)
   --help                  Show this help
 
 Tiers:
   pre-check   Fast checks only: tsc + ruff + shellcheck (<10s)
-  full        All applicable tools based on project type detection
+  full        All policy-configured tools applicable to declared language evidence
 
 Examples:
-  node lint-report.ts --repo /workspace/forgestack --tier full
-  node lint-report.ts --repo /workspace/forgestack --tier pre-check --project kubecommand
-  node lint-report.ts --repo /workspace/forgestack --changed-files "src/handler.ts,src/auth.ts"
+  node lint-report.ts --repo /workspace/forgestack --policy /config/lint-policy.json --policy-project workspace --tier full
   `);
 }
 
@@ -61,8 +59,8 @@ function writeReport(report, outputPath = null) {
   if (outputPath) {
     fs.writeFileSync(outputPath, json);
     log('OK', `Report written to ${outputPath}`);
-    log('OK', `Summary: ${report.summary.total_errors} errors, ${report.summary.total_warnings} warnings `
-      + `(${report.summary.tools_ok} ok, ${report.summary.tools_skipped} skipped, ${report.summary.tools_failed} failed)`);
+    log('OK', `Summary: ${report.summary.total_errors} errors, ${report.summary.total_warnings} warnings, ${report.summary.total_blocking} blocking, ${report.summary.total_baselined} baselined `
+      + `(${report.summary.tools_ok} ok, ${report.summary.tools_not_applicable} not applicable, ${report.summary.tools_failed} failed)`);
   } else {
     process.stdout.write(json);
   }

@@ -1,0 +1,86 @@
+{
+  "schema_version": "pipeline_lint_policy.v5",
+  "baseline_path": "lint-baseline.json",
+  "projects": [
+    {
+      "id": "workspace",
+      "root": ".",
+      "discovery_max_depth": 20,
+      "languages": ["javascript", "typescript", "shell", "docker", "helm", "yaml", "go"],
+      "language_evidence": {
+        "javascript": ["package.json"],
+        "typescript": ["skills/nova/tsconfig.json"],
+        "shell": ["scripts/*.sh"],
+        "docker": ["docker/Dockerfile.general"],
+        "helm": ["charts/kubeclaw/Chart.yaml"],
+        "yaml": ["charts/kubeclaw/values.yaml"],
+        "go": ["go.mod"]
+      },
+      "go": {
+        "modules": [
+          { "mod_file": "go.mod", "packages": ["./cmd/buster-namespace-controller/..."], "build_tags": [], "allowed_import_prefixes": ["github.com/datrab/kubeclaw"] }
+        ]
+      },
+      "terraform": { "roots": [], "provider_mirror": "/opt/terraform-provider-mirror" }
+    }
+  ],
+  "global_exclusions": [
+    ".git/**",
+    ".swarm/**",
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/coverage/**",
+    "**/vendor/**",
+    "**/generated/**"
+  ],
+  "architecture": {
+    "layers": [
+      { "id": "observer-plugin", "roots": ["plugins/openclaw-agent-observer/src"], "may_depend_on": ["observer-plugin"] },
+      { "id": "common-pipeline", "roots": ["skills/common/pipeline"], "may_depend_on": ["common-pipeline"] },
+      { "id": "buster-pipeline", "roots": ["skills/buster/pipeline"], "may_depend_on": ["buster-pipeline", "common-pipeline"] },
+      { "id": "nova-pipeline", "roots": ["skills/nova/pipeline"], "may_depend_on": ["nova-pipeline", "common-pipeline"] }
+    ]
+  },
+  "tools": [
+    {
+      "id": "tsc", "required": true, "category": "types", "scope": "affected-projects", "tier": "pre-check", "timeout_ms": 60000, "blocking_severity": "warning", "languages": ["typescript"], "config_path": null,
+      "targets": [
+        "plugins/openclaw-agent-observer/tsconfig.json",
+        "skills/buster/tsconfig.json",
+        "skills/common/pipeline/agent-observability/tsconfig.json",
+        "skills/nova/pipeline/services/agent-observability-evidence/tsconfig.json",
+        "skills/nova/pipeline/services/agent-observability-ingester/tsconfig.json",
+        "skills/nova/project_setup/tsconfig.json",
+        "skills/nova/tsconfig.json"
+      ],
+      "include": ["**/*.ts", "**/*.tsx"], "exclude": []
+    },
+    { "id": "gofmt", "required": true, "category": "format", "scope": "changed-files", "tier": "pre-check", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["go"], "config_path": null, "arguments": [], "targets": ["."], "include": ["**/*.go"], "exclude": [] },
+    { "id": "go-vet", "required": true, "category": "lint", "scope": "affected-projects", "tier": "pre-check", "timeout_ms": 60000, "blocking_severity": "warning", "languages": ["go"], "config_path": null, "arguments": ["./cmd/buster-namespace-controller/..."], "targets": ["."], "include": ["**/*.go", "go.mod", "go.sum"], "exclude": [] },
+    { "id": "gocyclo", "required": true, "category": "architecture", "scope": "affected-projects", "tier": "full", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["go"], "config_path": null, "arguments": ["-over", "10"], "targets": ["."], "include": ["**/*.go", "go.mod", "go.sum"], "exclude": [] },
+    { "id": "shellcheck", "required": true, "category": "lint", "scope": "changed-files", "tier": "pre-check", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["shell"], "config_path": null, "arguments": ["--severity=warning"], "targets": ["docker", "my-values", "scripts", "tests/verification"], "include": ["**/*.sh"], "exclude": [] },
+    { "id": "shfmt", "required": true, "category": "format", "scope": "changed-files", "tier": "pre-check", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["shell"], "config_path": null, "arguments": ["-s", "-i", "2", "-ci"], "targets": ["docker", "my-values", "scripts", "tests/verification"], "include": ["**/*.sh"], "exclude": [] },
+    { "id": "ruff", "required": true, "category": "lint", "scope": "changed-files", "tier": "pre-check", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["python"], "config_path": null, "targets": ["."], "include": ["**/*.py"], "exclude": [] },
+    { "id": "eslint", "required": true, "category": "lint", "scope": "changed-files", "tier": "full", "timeout_ms": 60000, "blocking_severity": "warning", "languages": ["javascript", "typescript"], "config_path": "eslint.config.mjs", "targets": ["plugins/openclaw-agent-observer/src", "scripts", "skills/buster", "skills/common/pipeline", "skills/nova"], "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.mjs", "**/*.cjs"], "exclude": [] },
+    { "id": "knip", "required": true, "category": "architecture", "scope": "repository", "tier": "full", "timeout_ms": 120000, "blocking_severity": "warning", "languages": ["javascript", "typescript"], "config_path": "knip.json", "targets": ["."], "include": [], "exclude": [] },
+    { "id": "dependency-cruiser", "required": true, "category": "architecture", "scope": "project", "tier": "full", "timeout_ms": 120000, "blocking_severity": "warning", "languages": ["javascript", "typescript"], "config_path": null, "targets": ["plugins/openclaw-agent-observer/src", "skills/common/pipeline", "skills/buster/pipeline", "skills/nova/pipeline"], "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.mjs", "**/*.cjs"], "exclude": [] },
+    { "id": "jscpd", "required": true, "category": "duplication", "scope": "repository", "tier": "full", "timeout_ms": 120000, "blocking_severity": "warning", "languages": [], "config_path": "jscpd.json", "targets": ["."], "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.mjs", "**/*.cjs", "**/*.go", "**/*.py", "**/*.sh", "**/Dockerfile", "**/Dockerfile.*", "**/*.tf"], "exclude": [] },
+    { "id": "npm-audit", "required": true, "category": "dependencies", "scope": "repository", "tier": "full", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["javascript", "typescript"], "config_path": null, "targets": ["docker/general-tools/package.json", "docker/general-tools/package-lock.json"], "include": ["**/package.json", "**/package-lock.json"], "exclude": [] },
+    { "id": "mypy", "required": true, "category": "types", "scope": "project", "tier": "full", "timeout_ms": 60000, "blocking_severity": "warning", "languages": ["python"], "config_path": null, "targets": ["."], "include": ["**/*.py"], "exclude": [] },
+    { "id": "pip-audit", "required": true, "category": "dependencies", "scope": "repository", "tier": "full", "timeout_ms": 60000, "blocking_severity": "warning", "languages": ["python"], "config_path": null, "targets": ["."], "include": ["requirements.txt", "**/requirements.txt"], "exclude": [] },
+    { "id": "go-imports", "required": true, "category": "architecture", "scope": "affected-projects", "tier": "full", "timeout_ms": 60000, "blocking_severity": "warning", "languages": ["go"], "config_path": null, "arguments": ["./cmd/buster-namespace-controller/..."], "targets": ["."], "include": ["**/*.go", "go.mod", "go.sum"], "exclude": [] },
+    { "id": "staticcheck", "required": true, "category": "lint", "scope": "affected-projects", "tier": "full", "timeout_ms": 60000, "blocking_severity": "warning", "languages": ["go"], "config_path": null, "arguments": ["./cmd/buster-namespace-controller/..."], "targets": ["."], "include": ["**/*.go", "go.mod", "go.sum"], "exclude": [] },
+    { "id": "govulncheck", "required": true, "category": "dependencies", "scope": "affected-projects", "tier": "full", "timeout_ms": 120000, "blocking_severity": "warning", "languages": ["go"], "config_path": null, "arguments": ["./cmd/buster-namespace-controller/..."], "targets": ["."], "include": ["**/*.go", "go.mod", "go.sum"], "exclude": [] },
+    { "id": "terraform-fmt", "required": true, "category": "format", "scope": "changed-files", "tier": "pre-check", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["terraform"], "config_path": null, "arguments": [], "targets": [], "include": ["**/*.tf", "**/*.tfvars"], "exclude": ["**/.terraform/**", "**/*.tfstate", "**/*.tfstate.*"] },
+    { "id": "terraform-validate", "required": true, "category": "lint", "scope": "project", "tier": "full", "timeout_ms": 60000, "blocking_severity": "warning", "languages": ["terraform"], "config_path": null, "arguments": [], "targets": [], "include": ["**/*.tf", ".terraform.lock.hcl"], "exclude": ["**/.terraform/**"] },
+    { "id": "tflint", "required": true, "category": "lint", "scope": "project", "tier": "full", "timeout_ms": 60000, "blocking_severity": "warning", "languages": ["terraform"], "config_path": ".tflint.hcl", "arguments": [], "targets": [], "include": ["**/*.tf", "**/*.tfvars"], "exclude": ["**/.terraform/**"] },
+    { "id": "trivy-terraform", "required": true, "category": "security", "scope": "project", "tier": "full", "timeout_ms": 120000, "blocking_severity": "warning", "languages": ["terraform"], "config_path": null, "arguments": [], "targets": [], "include": ["**/*.tf", "**/*.tfvars"], "exclude": ["**/.terraform/**", "**/*.tfstate", "**/*.tfstate.*"] },
+    { "id": "semgrep", "required": true, "category": "security", "scope": "changed-files", "tier": "full", "timeout_ms": 120000, "blocking_severity": "warning", "languages": [], "config_path": ".semgrep.yml", "targets": ["Projects/pipeline-smoke-landing/src", "plugins/openclaw-agent-observer/src", "scripts", "skills/buster", "skills/common/discord-purge.ts", "skills/common/pipeline", "skills/nova"], "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.mjs", "**/*.cjs", "**/*.py"], "exclude": ["scripts/docs-check-refs.mjs"] },
+    { "id": "hadolint", "required": true, "category": "lint", "scope": "changed-files", "tier": "full", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["docker"], "config_path": null, "targets": ["Projects/buster-infra-smoke/src/Dockerfile", "Projects/pipeline-smoke-landing/src/Dockerfile", "docker/Dockerfile.buster-gateway", "docker/Dockerfile.buster-pipeline", "docker/Dockerfile.general", "docker/Dockerfile.namespace-controller", "docker/Dockerfile.prism-preview", "tests/verification/e2e/fixtures/nginx-project/Dockerfile"], "include": ["**/Dockerfile", "**/Dockerfile.*", "**/*.dockerfile"], "exclude": [] },
+    { "id": "helm-lint", "required": true, "category": "manifests", "scope": "project", "tier": "full", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["helm"], "config_path": null, "targets": ["charts/kubeclaw"], "include": ["**/Chart.yaml"], "exclude": [] },
+    { "id": "kubeconform", "required": true, "category": "manifests", "scope": "project", "tier": "full", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["helm"], "config_path": null, "targets": ["charts/kubeclaw"], "include": ["**/*.yaml", "**/*.yml"], "exclude": [] },
+    { "id": "trivy-kubernetes", "required": true, "category": "security", "scope": "project", "tier": "full", "timeout_ms": 120000, "blocking_severity": "warning", "languages": ["helm"], "config_path": null, "arguments": [], "targets": ["charts/kubeclaw"], "include": ["**/*.yaml", "**/*.yml"], "exclude": [] },
+    { "id": "yamllint", "required": true, "category": "lint", "scope": "changed-files", "tier": "full", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["yaml"], "config_path": ".yamllint.yml", "targets": [".github", "Projects/buster-infra-smoke/src/deployment.yaml", "charts/kubeclaw/values.yaml", "examples", "my-values", "tests/verification/e2e/fixtures/nginx-project/k8s/deployment.yaml"], "include": ["**/*.yaml", "**/*.yml"], "exclude": [] }
+  ]
+}

@@ -397,6 +397,7 @@ export function applyLifecycleEventToReadModels(readModels, event) {
   next.last_event_id = event.event_id;
   next.last_event_type = event.type;
   next.event_count = numberValue(next.event_count, 0) + 1;
+  next.lifecycle_version = numberValue(event.lifecycle_version, next.event_count);
 
   if (event.type === 'pipeline_run.started') {
     next.pipeline = {
@@ -414,6 +415,7 @@ export function applyLifecycleEventToReadModels(readModels, event) {
       reason_code: null,
       halt_reason: null,
       latest_event_type: event.type,
+      lifecycle_version: event.lifecycle_version,
     };
   } else if (event.type === 'pipeline_run.completed') {
     next.pipeline = {
@@ -426,6 +428,7 @@ export function applyLifecycleEventToReadModels(readModels, event) {
       terminal_decision: event.data.terminal_decision,
       reason_code: event.data.reason_code,
       latest_event_type: event.type,
+      lifecycle_version: event.lifecycle_version,
     };
   } else if (event.type === 'pipeline_run.halted') {
     next.pipeline = {
@@ -441,6 +444,7 @@ export function applyLifecycleEventToReadModels(readModels, event) {
       step_type: event.data.step_type,
       step_id: event.data.step_id,
       latest_event_type: event.type,
+      lifecycle_version: event.lifecycle_version,
     };
   }
 

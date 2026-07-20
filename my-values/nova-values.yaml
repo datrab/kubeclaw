@@ -32,7 +32,7 @@ anthropic:
 stitch:
   existingSecret: "openclaw-shared-secrets"
   existingSecretKey: "stitchApiKey"
-  
+
 litellm:
   existingSecret: "openclaw-shared-secrets"
   existingSecretKey: "litellmApiKey"

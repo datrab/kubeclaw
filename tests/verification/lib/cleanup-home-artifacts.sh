@@ -4,12 +4,12 @@ set -euo pipefail
 HOME_ROOT="${VERIFICATION_HOME_ROOT:-/home}"
 WORKSPACE_ROOT="${VERIFICATION_WORKSPACE_ROOT:-/home/node/.openclaw/workspace}"
 
-if [[ "$HOME_ROOT" != "/home" ]]; then
+if [[ $HOME_ROOT != "/home" ]]; then
   echo "[verification-cleanup] refusing non-/home root: $HOME_ROOT" >&2
   exit 1
 fi
 
-if [[ "$WORKSPACE_ROOT" != "/home/node/.openclaw/workspace" ]]; then
+if [[ $WORKSPACE_ROOT != "/home/node/.openclaw/workspace" ]]; then
   echo "[verification-cleanup] refusing unexpected workspace root: $WORKSPACE_ROOT" >&2
   exit 1
 fi
@@ -44,7 +44,7 @@ deleted=0
 clean_root() {
   local root="$1"
   shift
-  [[ -d "$root" ]] || return 0
+  [[ -d $root ]] || return 0
   local pattern
   for pattern in "$@"; do
     while IFS= read -r -d '' path; do
@@ -57,6 +57,6 @@ clean_root() {
 clean_root "$HOME_ROOT" "${home_patterns[@]}"
 clean_root "$WORKSPACE_ROOT" "${workspace_patterns[@]}"
 
-if [[ "$deleted" -gt 0 ]]; then
+if [[ $deleted -gt 0 ]]; then
   echo "[verification-cleanup] removed $deleted verification artifact(s)"
 fi

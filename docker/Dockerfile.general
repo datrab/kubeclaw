@@ -37,13 +37,16 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
       sudo curl git openssh-client jq nano tree net-tools iputils-ping dnsutils ripgrep \
       build-essential python3 python3-pip python3-venv python-is-python3 ffmpeg \
-      netcat-openbsd nmap shellcheck yamllint \
+      netcat-openbsd nmap shellcheck unzip yamllint \
     && rm -rf /var/lib/apt/lists/*
 
 # Locked JavaScript runtime and verification tools.
 COPY docker/general-tools/package.json docker/general-tools/package-lock.json /opt/kubeclaw-tools/
 RUN npm ci --prefix /opt/kubeclaw-tools --ignore-scripts --no-audit --no-fund \
     && npm install -g --no-audit --no-fund ioredis@5.11.1 \
+    && /opt/kubeclaw-tools/node_modules/.bin/depcruise --version \
+    && /opt/kubeclaw-tools/node_modules/.bin/knip --version \
+    && /opt/kubeclaw-tools/node_modules/.bin/jscpd --version \
     && mkdir -p /root/.npm
 
 ENV PATH=/opt/kubeclaw-tools/node_modules/.bin:${PATH} \
@@ -72,18 +75,49 @@ RUN pip install --break-system-packages --no-cache-dir \
     && pip-audit --version \
     && semgrep --version
 
-# Pinned, checksum-verified binary tools for amd64 and arm64.
+# Pinned Go toolchain and Go-native analyzers.
 ARG TARGETARCH
+ARG GO_VERSION=1.26.5
+ARG STATICCHECK_VERSION=2026.1
+ARG GOVULNCHECK_VERSION=v1.1.4
+ARG GOCYCLO_VERSION=v0.6.0
+RUN set -eux; \
+    arch="${TARGETARCH:-$(dpkg --print-architecture)}"; \
+    case "$arch" in \
+      amd64) go_sha="5c2c3b16caefa1d968a94c1daca04a7ca301a496d9b086e17ad77bb81393f053" ;; \
+      arm64) go_sha="fe4789e92b1f33358680864bbe8704289e7bb5fc207d80623c308935bd696d49" ;; \
+      *) echo "Unsupported architecture: $arch" >&2; exit 1 ;; \
+    esac; \
+    go_archive="go${GO_VERSION}.linux-${arch}.tar.gz"; \
+    curl -fsSL "https://go.dev/dl/${go_archive}" -o "/tmp/${go_archive}"; \
+    printf '%s  %s\n' "$go_sha" "/tmp/${go_archive}" | sha256sum -c -; \
+    tar -C /usr/local -xzf "/tmp/${go_archive}"; \
+    rm "/tmp/${go_archive}"
+
+ENV PATH=/usr/local/go/bin:${PATH}
+RUN GOBIN=/usr/local/bin go install "honnef.co/go/tools/cmd/staticcheck@${STATICCHECK_VERSION}" \
+    && GOBIN=/usr/local/bin go install "golang.org/x/vuln/cmd/govulncheck@${GOVULNCHECK_VERSION}" \
+    && GOBIN=/usr/local/bin go install "github.com/fzipp/gocyclo/cmd/gocyclo@${GOCYCLO_VERSION}" \
+    && go version \
+    && staticcheck -version \
+    && govulncheck -version \
+    && gocyclo -help >/dev/null
+
+# Pinned, checksum-verified binary tools for amd64 and arm64.
 ARG K6_VERSION=v0.54.0
 ARG HADOLINT_VERSION=2.12.0
 ARG KUBECONFORM_VERSION=0.6.4
 ARG KUBECTL_VERSION=1.35.6
 ARG HELM_VERSION=3.18.4
+ARG SHFMT_VERSION=3.13.1
+ARG TERRAFORM_VERSION=1.15.7
+ARG TFLINT_VERSION=0.64.0
+ARG TRIVY_VERSION=0.72.0
 RUN set -eux; \
     arch="${TARGETARCH:-$(dpkg --print-architecture)}"; \
     case "$arch" in \
-      amd64) hadolint_arch="x86_64" ;; \
-      arm64) hadolint_arch="arm64" ;; \
+      amd64) hadolint_arch="x86_64"; shfmt_sha="fb096c5d1ac6beabbdbaa2874d025badb03ee07929f0c9ff67563ce8c75398b1"; terraform_sha="73bbb8f5188ad75d4fb853fd100ae4d7e146ef7af7db18776109642fdb7759d2"; tflint_sha="cca9d13e2e1d7a2c627af60ff899a3c9b74212899416aeb96ec764d2ef954537"; trivy_arch="64bit"; trivy_sha="bbb64b9695866ce4a7a8f5c9592002c5961cab378577fa3f8a040df362b9b2ea" ;; \
+      arm64) hadolint_arch="arm64"; shfmt_sha="32d92acaa5cd8abb29fc49dac123dc412442d5713967819d8af2c29f1b3857c7"; terraform_sha="7a9e92105ede978cf9049a2fbe53dfe67c6a8da4b4d7f613d89e7dd7c63ec40d"; tflint_sha="560da89aacf59389d4eb029730dd5b109b7288096c32f2726a0d9e783a5ea8eb"; trivy_arch="ARM64"; trivy_sha="2ca2c023109c2db6b2b77366b6717291452d4531167377d95c79547f0c8e3467" ;; \
       *) echo "Unsupported architecture: $arch" >&2; exit 1 ;; \
     esac; \
     tmp="$(mktemp -d)"; \
@@ -99,6 +133,24 @@ RUN set -eux; \
     hadolint_sha="$(awk '{ print $1 }' "$tmp/${hadolint_file}.sha256")"; \
     printf '%s  %s\n' "$hadolint_sha" "$tmp/$hadolint_file" | sha256sum -c -; \
     install -m 0755 "$tmp/$hadolint_file" /usr/local/bin/hadolint; \
+    shfmt_file="shfmt_v${SHFMT_VERSION}_linux_${arch}"; \
+    curl -fsSL "https://github.com/mvdan/sh/releases/download/v${SHFMT_VERSION}/${shfmt_file}" -o "$tmp/$shfmt_file"; \
+    printf '%s  %s\n' "$shfmt_sha" "$tmp/$shfmt_file" | sha256sum -c -; \
+    install -m 0755 "$tmp/$shfmt_file" /usr/local/bin/shfmt; \
+    terraform_archive="terraform_${TERRAFORM_VERSION}_linux_${arch}.zip"; \
+    curl -fsSL "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/${terraform_archive}" -o "$tmp/$terraform_archive"; \
+    printf '%s  %s\n' "$terraform_sha" "$tmp/$terraform_archive" | sha256sum -c -; \
+    unzip -q "$tmp/$terraform_archive" -d "$tmp/terraform"; \
+    install -m 0755 "$tmp/terraform/terraform" /usr/local/bin/terraform; \
+    tflint_archive="tflint_linux_${arch}.zip"; \
+    curl -fsSL "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/${tflint_archive}" -o "$tmp/$tflint_archive"; \
+    printf '%s  %s\n' "$tflint_sha" "$tmp/$tflint_archive" | sha256sum -c -; \
+    unzip -q "$tmp/$tflint_archive" -d "$tmp/tflint"; \
+    install -m 0755 "$tmp/tflint/tflint" /usr/local/bin/tflint; \
+    trivy_archive="trivy_${TRIVY_VERSION}_Linux-${trivy_arch}.tar.gz"; \
+    curl -fsSL "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${trivy_archive}" -o "$tmp/$trivy_archive"; \
+    printf '%s  %s\n' "$trivy_sha" "$tmp/$trivy_archive" | sha256sum -c -; \
+    tar -xzf "$tmp/$trivy_archive" -C /usr/local/bin trivy; \
     kubeconform_archive="kubeconform-linux-${arch}.tar.gz"; \
     curl -fsSL "https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/${kubeconform_archive}" -o "$tmp/$kubeconform_archive"; \
     curl -fsSL "https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/CHECKSUMS" -o "$tmp/kubeconform-checksums.txt"; \
@@ -119,12 +171,17 @@ RUN set -eux; \
     rm -rf "$tmp"; \
     k6 version; \
     hadolint --version; \
+    shfmt --version; \
+    terraform version -json; \
+    tflint --version; \
+    trivy --version; \
     kubeconform -v; \
     kubectl version --client=true; \
     helm version --short
 
 # Agent skill code is delivered by the code-bundle overlay at deploy time.
-RUN mkdir -p /app/skills
+# Terraform validation uses only explicitly pre-provisioned provider packages.
+RUN mkdir -p /app/skills /opt/terraform-provider-mirror
 
 # The observer is self-contained and must not import from /app/skills.
 COPY plugins/openclaw-agent-observer/ /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer/

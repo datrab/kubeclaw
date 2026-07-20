@@ -12,7 +12,7 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 //   Tier 2 (full):       All applicable tools — before Review Gates
 //
 // Usage:
-//   node lint-report.ts --repo /workspace/forgestack --tier full --output /tmp/lint-report.json
+//   node lint-report.ts --repo /workspace/forgestack --policy /config/lint-policy.json --policy-project workspace --tier full --output /tmp/lint-report.json
 //   node lint-report.ts --repo /workspace/forgestack --tier pre-check --module-path Projects/kubecommand/src/modules/06
 //   node lint-report.ts --repo /workspace/forgestack --tier full --changed-files "src/handler.ts,src/auth.ts"
 //   node lint-report.ts --help
@@ -34,17 +34,19 @@ import { DEFAULT_TIER, TIERS } from './lint-report/constants.ts';
 import { detectProjectTypes, resolveScope, takeDiscoveryDiagnostics } from './lint-report/discovery.ts';
 import { log, printHelp, setLintLogPath, writeReport } from './lint-report/output.ts';
 import { runAllTools as runToolsForRegistry } from './lint-report/report.ts';
-import { TOOL_REGISTRY } from './lint-report/tool-registry.ts';
+import { validateLintReport } from './lint-report/report-contract.ts';
+import { loadLintPolicy, policyDigest, selectPolicyProject, validatePolicyTargetPaths } from './lint-report/policy.ts';
+import { buildToolRegistry, TOOL_ADAPTERS } from './lint-report/tool-registry.ts';
 import { parseCliFlagValues } from '../cli-args.ts';
 
 async function runAllTools(ctx) {
-  return runToolsForRegistry(ctx, TOOL_REGISTRY);
+  return runToolsForRegistry(ctx, buildToolRegistry(ctx.policy, ctx.projectTypes));
 }
 
 function lintReportExitCode(report = {}) {
-  const totalErrors = Number(selectDefinedValue(() => (report?.summary?.total_errors), () => (0)));
+  const totalBlocking = Number(selectDefinedValue(() => (report?.summary?.total_blocking), () => (0)));
   const toolsFailed = Number(selectDefinedValue(() => (report?.summary?.tools_failed), () => (0)));
-  return selectTruthyValue(() => (totalErrors > 0), () => (toolsFailed > 0)) ? 1 : 0;
+  return selectTruthyValue(() => (totalBlocking > 0), () => (toolsFailed > 0)) ? 1 : 0;
 }
 
 function parseArgs(args = process.argv.slice(2)) {
@@ -55,9 +57,9 @@ function parseArgs(args = process.argv.slice(2)) {
       'module-path': { type: 'string' },
       project: { type: 'string' },
       output: { type: 'string' },
+      policy: { type: 'string' },
+      'policy-project': { type: 'string' },
       'changed-files': { type: 'string' },
-      'semgrep-config': { type: 'string' },
-      'eslint-config': { type: 'string' },
       'log-path': { type: 'string' },
       help: { type: 'boolean', default: false },
     },
@@ -84,6 +86,8 @@ function buildContext(flags) {
   if (!flags.repo) {
     throw new Error('ERROR: --repo is required. Use --help for usage.');
   }
+  if (!flags.policy) throw new Error('ERROR: --policy is required.');
+  if (!flags['policy-project']) throw new Error('ERROR: --policy-project is required.');
 
   const repoRoot = path.resolve(flags.repo);
   if (!fs.existsSync(repoRoot)) {
@@ -100,7 +104,11 @@ function buildContext(flags) {
     : [];
 
   const modulePath = normalizeModulePath(repoRoot, flags['module-path']);
-  const { types: projectTypes } = detectProjectTypes(repoRoot, modulePath);
+  const policyPath = flags.policy;
+  const policy = loadLintPolicy(policyPath);
+  const policyProject = selectPolicyProject(policy, flags['policy-project']);
+  validatePolicyTargetPaths(repoRoot, policy, policyProject);
+  const { types: projectTypes } = detectProjectTypes(repoRoot, policyProject, policy.global_exclusions);
   const discoveryDiagnostics = takeDiscoveryDiagnostics();
 
   return {
@@ -109,9 +117,12 @@ function buildContext(flags) {
     project: lintReportProjectAuthority(flags, repoRoot),
     tier,
     changedFiles,
+    changedFilesRequested: changedFiles.length > 0,
     projectTypes,
-    semgrepConfig: selectTruthyValue(() => (flags['semgrep-config']), () => (null)),
-    eslintConfig: selectTruthyValue(() => (flags['eslint-config']), () => (null)),
+    policy,
+    policyPath,
+    policyDigest: policyDigest(policy),
+    policyProject,
     diagnostics: discoveryDiagnostics,
   };
 }
@@ -158,6 +169,7 @@ async function main() {
 
   log('INFO', `Starting lint report (tier: ${ctx.tier}, types: ${[...ctx.projectTypes].join(', ')})`);
   const report = await runAllTools(ctx);
+  validateLintReport(report);
   writeReport(report, selectTruthyValue(() => (flags.output), () => (null)));
 
   // Exit with error code if findings or tool failures make the report non-clean.
@@ -166,7 +178,7 @@ async function main() {
 
 // ─── Exports (for pipeline.ts to import directly) ──────────────────────────
 
-export { buildContext, lintReportExitCode, normalizeModulePath, runAllTools, detectProjectTypes, TOOL_REGISTRY, TIERS };
+export { buildContext, lintReportExitCode, normalizeModulePath, runAllTools, detectProjectTypes, TOOL_ADAPTERS, TIERS };
 export default main;
 
 // ─── Direct execution ──────────────────────────────────────────────────────

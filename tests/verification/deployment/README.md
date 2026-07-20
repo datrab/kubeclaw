@@ -22,7 +22,7 @@ Canonical operator evidence split:
 - destructive teardown commands live under `scripts/deploy.sh teardown`, `scripts/deploy.sh teardown-agents`, and `scripts/deploy.sh teardown-all`
 - `scripts/deploy.sh` remains tracked executable so that canonical live deployment commands are directly runnable from the repo checkout
 - `teardown` and `teardown-all` share one destructive implementation surface and differ only on whether the namespace is preserved or deleted
-- replay/audit artifacts live under `.swarm/logs/pipeline/latest.json` and the run-scoped `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,buster-telemetry-fallback.jsonl,redis/redis-exchanges.jsonl,redis/redis-ops.jsonl,summary.json}` bundle
+- replay/audit artifacts live under `.swarm/logs/pipeline/latest.json` and the run-scoped `.swarm/logs/pipeline/runs/<run_id>/{pipeline.jsonl,discord.jsonl,nova-injections.jsonl,quarantine.jsonl,redis/redis-exchanges.jsonl,redis/redis-ops.jsonl,summary.json}` bundle
 - Redis audit artifacts remain under `.swarm/logs/redis/{redis-exchanges.jsonl,redis-ops.jsonl}` plus the run-scoped `.swarm/logs/pipeline/runs/<run_id>/redis/` mirror
 
 Live scope:

@@ -41,18 +41,26 @@ TAILSCALE_OPERATOR_ENABLED="${TAILSCALE_OPERATOR_ENABLED:-true}"
 POSTGRES_LITELLM_PASSWORD=""
 SHARED_LITELLM_API_KEY=""
 
-GREEN='\033[0;32m'; YELLOW='\033[1;33m'; RED='\033[0;31m'; BLUE='\033[0;34m'; NC='\033[0m'
-log()  { echo -e "${GREEN}[✓]${NC} $1"; }
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+log() { echo -e "${GREEN}[✓]${NC} $1"; }
 warn() { echo -e "${YELLOW}[!]${NC} $1"; }
-err()  { echo -e "${RED}[✗]${NC} $1" >&2; }
+err() { echo -e "${RED}[✗]${NC} $1" >&2; }
 info() { echo -e "${BLUE}[i]${NC} $1"; }
-header() { echo -e "\n${BLUE}═══════════════════════════════════════${NC}"; echo -e "${BLUE} $1${NC}"; echo -e "${BLUE}═══════════════════════════════════════${NC}"; }
+header() {
+  echo -e "\n${BLUE}═══════════════════════════════════════${NC}"
+  echo -e "${BLUE} $1${NC}"
+  echo -e "${BLUE}═══════════════════════════════════════${NC}"
+}
 
 TMP_FILES=()
 cleanup_tmp_files() {
   local file
   for file in "${TMP_FILES[@]}"; do
-    if [[ -n "$file" && -f "$file" ]]; then
+    if [[ -n $file && -f $file ]]; then
       rm -f "$file"
     fi
   done
@@ -61,15 +69,15 @@ trap cleanup_tmp_files EXIT
 
 is_not_found_error() {
   local text="$1"
-  [[ "$text" =~ [Nn]ot[Ff]ound|[Nn]ot\ [Ff]ound|not\ found|No\ resources\ found ]]
+  [[ $text =~ [Nn]ot[Ff]ound|[Nn]ot\ [Ff]ound|not\ found|No\ resources\ found ]]
 }
 
 normalize_boolish() {
   local value
   value="$(echo "${1:-}" | tr '[:upper:]' '[:lower:]')"
   case "$value" in
-    1|true|yes|on|enabled) echo "true" ;;
-    0|false|no|off|disabled) echo "false" ;;
+    1 | true | yes | on | enabled) echo "true" ;;
+    0 | false | no | off | disabled) echo "false" ;;
     *) echo "$value" ;;
   esac
 }
@@ -84,7 +92,7 @@ require_command() {
 component_enabled() {
   local value
   value="$(normalize_boolish "$1")"
-  [[ "$value" == "true" ]]
+  [[ $value == "true" ]]
 }
 
 interactive_enabled() {
@@ -92,8 +100,8 @@ interactive_enabled() {
   mode="$(normalize_boolish "$SECRET_SETUP_MODE")"
 
   case "$mode" in
-    interactive|true) [[ -r /dev/tty && -w /dev/tty ]] ;;
-    noninteractive|false) return 1 ;;
+    interactive | true) [[ -r /dev/tty && -w /dev/tty ]] ;;
+    noninteractive | false) return 1 ;;
     auto) [[ -r /dev/tty && -w /dev/tty ]] ;;
     *)
       err "Invalid KUBECLAW_SECRET_SETUP_MODE='$SECRET_SETUP_MODE' (expected auto, interactive, or noninteractive)"
@@ -133,7 +141,7 @@ target_secret_ready() {
     return 0
   fi
   status=$?
-  if [[ "$status" == "2" ]]; then
+  if [[ $status == "2" ]]; then
     exit 1
   fi
   return 1
@@ -152,7 +160,7 @@ operator_secret_ready() {
     return 0
   fi
   status=$?
-  if [[ "$status" == "2" ]]; then
+  if [[ $status == "2" ]]; then
     exit 1
   fi
   return 1
@@ -166,7 +174,7 @@ load_secret_key() {
   local encoded
 
   if encoded=$(kubectl get secret "$name" -n "$namespace" -o "go-template={{ index .data \"$key\" }}" 2>&1); then
-    if [[ -z "$encoded" ]]; then
+    if [[ -z $encoded ]]; then
       return 1
     fi
     printf -v "$out_var" '%s' "$(printf '%s' "$encoded" | base64 -d)"
@@ -189,7 +197,7 @@ secret_key_present() {
   local encoded
 
   if encoded=$(kubectl get secret "$name" -n "$namespace" -o "go-template={{ index .data \"$key\" }}" 2>&1); then
-    [[ -n "$encoded" ]]
+    [[ -n $encoded ]]
     return
   fi
 
@@ -215,7 +223,7 @@ secret_missing_keys() {
     fi
   done
 
-  if [[ "${#missing[@]}" -gt 0 ]]; then
+  if [[ ${#missing[@]} -gt 0 ]]; then
     printf '%s\n' "${missing[@]}"
   fi
 }
@@ -225,7 +233,7 @@ join_by_comma() {
   local item
 
   for item in "$@"; do
-    if [[ -z "$joined" ]]; then
+    if [[ -z $joined ]]; then
       joined="$item"
     else
       joined="${joined}, ${item}"
@@ -263,7 +271,7 @@ existing_secret_complete() {
   local missing
   mapfile -t missing < <(secret_missing_keys "$namespace" "$name" "$@")
 
-  if [[ "${#missing[@]}" == "0" ]]; then
+  if [[ ${#missing[@]} == "0" ]]; then
     log "Using existing Secret: ${namespace}/${name}"
     return 0
   fi
@@ -284,7 +292,7 @@ sops_get() {
   fi
 
   err "Failed to read '$key' from SOPS file: $SOPS_FILE"
-  if [[ -s "$err_file" ]]; then
+  if [[ -s $err_file ]]; then
     sed 's/^/  /' "$err_file" >&2
   fi
   rm -f "$err_file"
@@ -316,9 +324,9 @@ copy_secret_from_source() {
   local output
 
   if output=$(kubectl get secret "$source_name" -n "$SRC_NS" 2>&1); then
-    kubectl get secret "$source_name" -n "$SRC_NS" -o yaml \
-      | sed "s/namespace: ${SRC_NS}/namespace: ${target_namespace}/" \
-      | kubectl apply -n "$target_namespace" -f - >/dev/null
+    kubectl get secret "$source_name" -n "$SRC_NS" -o yaml |
+      sed "s/namespace: ${SRC_NS}/namespace: ${target_namespace}/" |
+      kubectl apply -n "$target_namespace" -f - >/dev/null
     log "Copied: ${target_namespace}/${name}"
     return 0
   fi
@@ -347,8 +355,8 @@ prompt_hidden() {
   local out_var="$2"
   local value
 
-  read -r -s -p "$prompt: " value < /dev/tty
-  echo "" > /dev/tty
+  read -r -s -p "$prompt: " value </dev/tty
+  echo "" >/dev/tty
   printf -v "$out_var" '%s' "$value"
 }
 
@@ -357,7 +365,7 @@ prompt_plain() {
   local out_var="$2"
   local value
 
-  read -r -p "$prompt: " value < /dev/tty
+  read -r -p "$prompt: " value </dev/tty
   printf -v "$out_var" '%s' "$value"
 }
 
@@ -368,7 +376,7 @@ prompt_secret_required() {
 
   while true; do
     prompt_hidden "$prompt" value
-    if [[ -n "$value" ]]; then
+    if [[ -n $value ]]; then
       printf -v "$out_var" '%s' "$value"
       return 0
     fi
@@ -382,7 +390,7 @@ prompt_secret_or_generate() {
   local value
 
   prompt_hidden "$prompt (blank = generate)" value
-  if [[ -z "$value" ]]; then
+  if [[ -z $value ]]; then
     value="$(generate_secret_value)"
     log "Generated secret value for: $prompt"
   fi
@@ -397,8 +405,8 @@ prompt_file_or_paste() {
   local line
 
   prompt_plain "$prompt file path (blank = paste, finish with EOF on its own line)" path
-  if [[ -n "$path" ]]; then
-    if [[ ! -f "$path" ]]; then
+  if [[ -n $path ]]; then
+    if [[ ! -f $path ]]; then
       err "File not found: $path"
       return 1
     fi
@@ -409,14 +417,14 @@ prompt_file_or_paste() {
   tmp_file="$(mktemp)"
   TMP_FILES+=("$tmp_file")
   info "Paste $prompt now. Finish with a line containing only EOF."
-  while IFS= read -r line < /dev/tty; do
-    if [[ "$line" == "EOF" ]]; then
+  while IFS= read -r line </dev/tty; do
+    if [[ $line == "EOF" ]]; then
       break
     fi
-    printf '%s\n' "$line" >> "$tmp_file"
+    printf '%s\n' "$line" >>"$tmp_file"
   done
 
-  if [[ ! -s "$tmp_file" ]]; then
+  if [[ ! -s $tmp_file ]]; then
     err "$prompt was empty"
     return 1
   fi
@@ -555,7 +563,7 @@ setup_shared_secret() {
 
   if secret_exists "$NAMESPACE" "$SECRET_NAME" && [[ "$(normalize_boolish "$SECRETS_OVERWRITE")" != "true" ]]; then
     mapfile -t missing < <(secret_missing_keys "$NAMESPACE" "$SECRET_NAME" "${required_keys[@]}")
-    if [[ "${#missing[@]}" == "0" ]]; then
+    if [[ ${#missing[@]} == "0" ]]; then
       log "Using existing Secret: ${NAMESPACE}/${SECRET_NAME}"
     elif interactive_enabled; then
       warn "Secret ${NAMESPACE}/${SECRET_NAME} exists but is missing keys: $(join_by_comma "${missing[@]}")"
@@ -569,7 +577,7 @@ setup_shared_secret() {
     return 0
   fi
 
-  if [[ -f "$SOPS_FILE" ]]; then
+  if [[ -f $SOPS_FILE ]]; then
     create_shared_secret_from_sops
     if component_enabled "$KUBECLAW_DEPLOY_LITELLM" && ! load_secret_key "$NAMESPACE" "$SECRET_NAME" litellmApiKey SHARED_LITELLM_API_KEY; then
       warn "Secret ${NAMESPACE}/${SECRET_NAME} is missing litellmApiKey; LiteLLM setup may prompt or generate a separate value."
@@ -602,7 +610,7 @@ setup_redis_secret() {
 
   if secret_exists "$NAMESPACE" redis-secrets && [[ "$(normalize_boolish "$SECRETS_OVERWRITE")" != "true" ]]; then
     mapfile -t missing < <(secret_missing_keys "$NAMESPACE" redis-secrets redis-password)
-    if [[ "${#missing[@]}" == "0" ]]; then
+    if [[ ${#missing[@]} == "0" ]]; then
       log "Using existing Secret: ${NAMESPACE}/redis-secrets"
     elif interactive_enabled; then
       warn "Secret ${NAMESPACE}/redis-secrets exists but is missing keys: $(join_by_comma "${missing[@]}")"
@@ -637,7 +645,7 @@ setup_postgresql_secret() {
 
   if secret_exists "$NAMESPACE" postgresql-secrets && [[ "$(normalize_boolish "$SECRETS_OVERWRITE")" != "true" ]]; then
     mapfile -t missing < <(secret_missing_keys "$NAMESPACE" postgresql-secrets postgres-password litellm-password)
-    if [[ "${#missing[@]}" == "0" ]]; then
+    if [[ ${#missing[@]} == "0" ]]; then
       log "Using existing Secret: ${NAMESPACE}/postgresql-secrets"
     elif interactive_enabled; then
       warn "Secret ${NAMESPACE}/postgresql-secrets exists but is missing keys: $(join_by_comma "${missing[@]}")"
@@ -692,14 +700,14 @@ setup_litellm_secret() {
 
   if secret_exists "$NAMESPACE" litellm-secrets && [[ "$(normalize_boolish "$SECRETS_OVERWRITE")" != "true" ]]; then
     mapfile -t missing < <(secret_missing_keys "$NAMESPACE" litellm-secrets LITELLM_MASTER_KEY DATABASE_URL)
-    if [[ "${#missing[@]}" == "0" ]]; then
+    if [[ ${#missing[@]} == "0" ]]; then
       log "Using existing Secret: ${NAMESPACE}/litellm-secrets"
     elif interactive_enabled; then
       warn "Secret ${NAMESPACE}/litellm-secrets exists but is missing keys: $(join_by_comma "${missing[@]}")"
       for key in "${missing[@]}"; do
         case "$key" in
           LITELLM_MASTER_KEY)
-            if [[ -n "$SHARED_LITELLM_API_KEY" ]]; then
+            if [[ -n $SHARED_LITELLM_API_KEY ]]; then
               litellm_master_key="$SHARED_LITELLM_API_KEY"
               log "Using LiteLLM master key from ${NAMESPACE}/${SECRET_NAME}: litellmApiKey"
             else
@@ -710,7 +718,7 @@ setup_litellm_secret() {
           DATABASE_URL)
             if ! component_enabled "$KUBECLAW_DEPLOY_POSTGRESQL"; then
               prompt_secret_required "LiteLLM DATABASE_URL" database_url
-            elif [[ -n "$POSTGRES_LITELLM_PASSWORD" ]]; then
+            elif [[ -n $POSTGRES_LITELLM_PASSWORD ]]; then
               litellm_password="$POSTGRES_LITELLM_PASSWORD"
               log "Using PostgreSQL litellm password from ${NAMESPACE}/postgresql-secrets"
               database_url="postgresql://litellm:${litellm_password}@postgresql.${NAMESPACE}.svc.cluster.local:5432/litellm"
@@ -737,7 +745,7 @@ setup_litellm_secret() {
   fi
 
   header "Secret: ${NAMESPACE}/litellm-secrets"
-  if [[ -n "$SHARED_LITELLM_API_KEY" ]]; then
+  if [[ -n $SHARED_LITELLM_API_KEY ]]; then
     litellm_master_key="$SHARED_LITELLM_API_KEY"
     log "Using LiteLLM master key from ${NAMESPACE}/${SECRET_NAME}: litellmApiKey"
   else
@@ -745,7 +753,7 @@ setup_litellm_secret() {
   fi
   if ! component_enabled "$KUBECLAW_DEPLOY_POSTGRESQL"; then
     prompt_secret_required "LiteLLM DATABASE_URL" database_url
-  elif [[ -n "$POSTGRES_LITELLM_PASSWORD" ]]; then
+  elif [[ -n $POSTGRES_LITELLM_PASSWORD ]]; then
     litellm_password="$POSTGRES_LITELLM_PASSWORD"
     log "Using PostgreSQL litellm password from ${NAMESPACE}/postgresql-secrets"
     database_url="postgresql://litellm:${litellm_password}@postgresql.${NAMESPACE}.svc.cluster.local:5432/litellm"
@@ -769,9 +777,9 @@ rewrite_litellm_database_url_namespace() {
     if echo "$old_url" | grep -q "${SRC_NS}"; then
       require_command jq
       new_url=$(echo "$old_url" | sed "s/${SRC_NS}/${NAMESPACE}/g")
-      kubectl get secret litellm-secrets -n "$NAMESPACE" -o json \
-        | jq --arg val "$(echo -n "$new_url" | base64 -w0)" '.data.DATABASE_URL = $val' \
-        | kubectl apply -n "$NAMESPACE" -f - >/dev/null
+      kubectl get secret litellm-secrets -n "$NAMESPACE" -o json |
+        jq --arg val "$(echo -n "$new_url" | base64 -w0)" '.data.DATABASE_URL = $val' |
+        kubectl apply -n "$NAMESPACE" -f - >/dev/null
       log "Fixed DATABASE_URL: ${SRC_NS} → ${NAMESPACE}"
     else
       log "DATABASE_URL already correct (no ${SRC_NS} reference)"
@@ -791,7 +799,7 @@ setup_google_sa_key() {
 
   if secret_exists "$NAMESPACE" google-sa-key && [[ "$(normalize_boolish "$SECRETS_OVERWRITE")" != "true" ]]; then
     mapfile -t missing < <(secret_missing_keys "$NAMESPACE" google-sa-key credentials.json)
-    if [[ "${#missing[@]}" == "0" ]]; then
+    if [[ ${#missing[@]} == "0" ]]; then
       log "Using existing Secret: ${NAMESPACE}/google-sa-key"
     elif interactive_enabled; then
       warn "Secret ${NAMESPACE}/google-sa-key exists but is missing keys: $(join_by_comma "${missing[@]}")"
@@ -826,7 +834,7 @@ setup_ghcr_secret() {
 
   if secret_exists "$NAMESPACE" ghcr-secret && [[ "$(normalize_boolish "$SECRETS_OVERWRITE")" != "true" ]]; then
     mapfile -t missing < <(secret_missing_keys "$NAMESPACE" ghcr-secret .dockerconfigjson)
-    if [[ "${#missing[@]}" == "0" ]]; then
+    if [[ ${#missing[@]} == "0" ]]; then
       log "Using existing Secret: ${NAMESPACE}/ghcr-secret"
       return 0
     fi
@@ -849,13 +857,13 @@ setup_ghcr_secret() {
 
   header "Secret: ${NAMESPACE}/ghcr-secret"
   prompt_plain "GHCR username" username
-  while [[ -z "$username" ]]; do
+  while [[ -z $username ]]; do
     warn "GHCR username is required."
     prompt_plain "GHCR username" username
   done
   prompt_secret_required "GHCR token/password" token
   prompt_plain "GHCR email (blank = noreply@example.com)" email
-  if [[ -z "$email" ]]; then
+  if [[ -z $email ]]; then
     email="noreply@example.com"
   fi
 
@@ -877,7 +885,7 @@ setup_git_deploy_key() {
 
   if secret_exists "$NAMESPACE" "$name" && [[ "$(normalize_boolish "$SECRETS_OVERWRITE")" != "true" ]]; then
     mapfile -t missing < <(secret_missing_keys "$NAMESPACE" "$name" id_rsa)
-    if [[ "${#missing[@]}" == "0" ]]; then
+    if [[ ${#missing[@]} == "0" ]]; then
       log "Using existing Secret: ${NAMESPACE}/${name}"
     elif interactive_enabled; then
       warn "Secret ${NAMESPACE}/${name} exists but is missing keys: $(join_by_comma "${missing[@]}")"
@@ -919,7 +927,7 @@ setup_tailscale_oauth_secret() {
 
   if secret_exists "$TAILSCALE_OPERATOR_NAMESPACE" "$TAILSCALE_OAUTH_SECRET_NAME" && [[ "$(normalize_boolish "$SECRETS_OVERWRITE")" != "true" ]]; then
     mapfile -t missing < <(secret_missing_keys "$TAILSCALE_OPERATOR_NAMESPACE" "$TAILSCALE_OAUTH_SECRET_NAME" client_id client_secret)
-    if [[ "${#missing[@]}" == "0" ]]; then
+    if [[ ${#missing[@]} == "0" ]]; then
       log "Using existing Secret: ${TAILSCALE_OPERATOR_NAMESPACE}/${TAILSCALE_OAUTH_SECRET_NAME}"
     elif interactive_enabled; then
       warn "Secret ${TAILSCALE_OPERATOR_NAMESPACE}/${TAILSCALE_OAUTH_SECRET_NAME} exists but is missing keys: $(join_by_comma "${missing[@]}")"
@@ -944,7 +952,7 @@ setup_tailscale_oauth_secret() {
 
   create_namespace_if_needed "$TAILSCALE_OPERATOR_NAMESPACE"
 
-  if [[ -n "$client_id" && -n "$client_secret" ]]; then
+  if [[ -n $client_id && -n $client_secret ]]; then
     kubectl create secret generic "$TAILSCALE_OAUTH_SECRET_NAME" \
       --namespace "$TAILSCALE_OPERATOR_NAMESPACE" \
       --from-literal=client_id="$client_id" \

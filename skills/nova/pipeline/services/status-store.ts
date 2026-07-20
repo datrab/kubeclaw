@@ -8,6 +8,7 @@ import { moduleLogDir, relPath, gateLogDir, ensureProjectLogDir, ensurePipelineR
 import { log, initContextLogging } from '../core/logger.ts';
 import { copyTranscriptArtifact, writePromptArtifact } from '../egress.ts';
 import { emitPromptArtifactWriteWarning } from './system-io-warning.ts';
+import { publishPromptEvidence } from './evidence-plane.ts';
 import { buildLatestPointer } from './artifact-bundle.ts';
 import {
   applyGateCompletion,
@@ -413,6 +414,8 @@ export function savePrompt(config, dir, agentType, attempt, prompt) {
   try {
     fs.mkdirSync(path.dirname(filePath), { recursive: true });
     writePromptArtifact(filePath, prompt, { agent_type: agentType, attempt, module_dir: dir });
+    const moduleId = resolveModuleIdForDir(config, dir);
+    publishPromptEvidence(config, { prompt, agent_type: agentType, work_id: moduleId, attempt });
     log('DEBUG', `Prompt artifact saved: ${relPath(config, filePath)} (${prompt.length} chars)`);
   } catch (e) {
     log('DEBUG', `Prompt save failed (non-critical): ${e.message}`);

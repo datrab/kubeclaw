@@ -22,6 +22,12 @@ const swarmConfigTemplatePath = path.join(chartDir, 'templates', 'configmap-swar
 const customSkillsConfigMapTemplatePath = path.join(chartDir, 'templates', 'configmap-skills.yaml');
 const swarmConfigSourcePath = path.join(chartDir, 'files', 'config', 'swarm.config.json');
 const semgrepConfigSourcePath = path.join(chartDir, 'files', 'config', '.semgrep.yml');
+const yamllintConfigSourcePath = path.join(chartDir, 'files', 'config', '.yamllint.yml');
+const tflintConfigSourcePath = path.join(chartDir, 'files', 'config', '.tflint.hcl');
+const knipConfigSourcePath = path.join(chartDir, 'files', 'config', 'knip.json');
+const jscpdConfigSourcePath = path.join(chartDir, 'files', 'config', 'jscpd.json');
+const lintBaselineSourcePath = path.join(chartDir, 'files', 'config', 'lint-baseline.json');
+const lintPolicySourcePath = path.join(chartDir, 'files', 'config', 'lint-policy.json');
 const deployScriptPath = path.join(sourceRoot, 'scripts', 'deploy.sh');
 const setupScriptPath = path.join(sourceRoot, 'scripts', 'setup.sh');
 const setupSecretsScriptPath = path.join(sourceRoot, 'my-values', 'setup-secrets.sh');
@@ -403,6 +409,12 @@ const swarmConfigTemplate = fs.readFileSync(swarmConfigTemplatePath, 'utf8');
 const customSkillsConfigMapTemplate = fs.readFileSync(customSkillsConfigMapTemplatePath, 'utf8');
 const swarmConfigSource = fs.readFileSync(swarmConfigSourcePath, 'utf8');
 const semgrepConfigSource = fs.readFileSync(semgrepConfigSourcePath, 'utf8');
+const yamllintConfigSource = fs.readFileSync(yamllintConfigSourcePath, 'utf8');
+const tflintConfigSource = fs.readFileSync(tflintConfigSourcePath, 'utf8');
+const knipConfigSource = fs.readFileSync(knipConfigSourcePath, 'utf8');
+const jscpdConfigSource = fs.readFileSync(jscpdConfigSourcePath, 'utf8');
+const lintBaselineSource = fs.readFileSync(lintBaselineSourcePath, 'utf8');
+const lintPolicySource = fs.readFileSync(lintPolicySourcePath, 'utf8');
 const deployScript = fs.readFileSync(deployScriptPath, 'utf8');
 const setupScript = fs.readFileSync(setupScriptPath, 'utf8');
 const setupSecretsScript = fs.readFileSync(setupSecretsScriptPath, 'utf8');
@@ -435,6 +447,12 @@ const renderedSwarmConfigMap = findRenderedDocument(rendered, {
 const renderedSwarmConfig = extractLiteralDataBlock(renderedSwarmConfigMap, 'swarm.config.json');
 const renderedSwarmConfigJson = JSON.parse(renderedSwarmConfig);
 const renderedSemgrepConfig = extractLiteralDataBlock(renderedSwarmConfigMap, '.semgrep.yml');
+const renderedYamllintConfig = extractLiteralDataBlock(renderedSwarmConfigMap, '.yamllint.yml');
+const renderedTflintConfig = extractLiteralDataBlock(renderedSwarmConfigMap, '.tflint.hcl');
+const renderedKnipConfig = extractLiteralDataBlock(renderedSwarmConfigMap, 'knip.json');
+const renderedJscpdConfig = extractLiteralDataBlock(renderedSwarmConfigMap, 'jscpd.json');
+const renderedLintBaseline = extractLiteralDataBlock(renderedSwarmConfigMap, 'lint-baseline.json');
+const renderedLintPolicy = extractLiteralDataBlock(renderedSwarmConfigMap, 'lint-policy.json');
 const renderedBusterGatewayConfigMap = findRenderedDocument(renderedBuster, {
   kind: 'ConfigMap',
   name: 'agent-buster-config',
@@ -947,6 +965,7 @@ assertIncludes(busterPipelineDockerfile, "getcap /usr/bin/newuidmap | grep -Fx '
 assertIncludes(busterPipelineDockerfile, "getcap /usr/bin/newgidmap | grep -Fx '/usr/bin/newgidmap cap_setgid=ep'", 'Buster pipeline image build must verify the newgidmap capability');
 assertIncludes(busterPipelineEntrypoint, 'kernel.apparmor_restrict_unprivileged_userns=1', 'Buster pipeline entrypoint must diagnose the Ubuntu rootless-user-namespace host policy explicitly');
 assertIncludes(busterPipelineEntrypoint, '--disable-host-loopback', 'Buster rootless network must not expose host loopback services');
+assertIncludes(busterPipelineEntrypoint, '--otel-socket-path "$otel_socket"', 'Buster pipeline must place BuildKit\'s OTEL trace socket in its writable rootless runtime directory');
 assertIncludes(deploymentTemplate, 'chown -R 0:1000 /workspace', 'Deployment init must assign the shared workspace group canonically');
 assertIncludes(deploymentTemplate, 'chmod -R g+rwX /workspace', 'Deployment init must preserve shared workspace access across gateway and pipeline UIDs');
 assertIncludes(deploymentTemplate, 'find /workspace -type d -exec chmod g+s {} +', 'Deployment init must keep inherited workspace group ownership on new directories');
@@ -1250,9 +1269,23 @@ assertIncludes(deploymentTemplate, 'removed obsolete kubeclaw-agent-observer plu
 assert.equal(gatewayConfigTemplate.includes('/app/openclaw-plugins/kubeclaw-agent-observer'), false, 'Gateway config template must not seed the obsolete observer plugin load path');
 assertIncludes(deploymentTemplate, 'cp -Lf "/init-swarm-config/swarm.config.json" "/config/swarm.config.json"', 'Deployment template must copy chart swarm.config.json into the retained source config surface every init');
 assertIncludes(deploymentTemplate, 'cp -Lf /config/.semgrep.yml /runtime-config/.semgrep.yml', 'Deployment template must copy .semgrep.yml into the runtime config surface');
+assertIncludes(deploymentTemplate, 'cp -Lf /config/lint-policy.json /runtime-config/lint-policy.json', 'Deployment template must copy the canonical lint policy into the runtime config surface');
+assertIncludes(deploymentTemplate, 'cp -Lf /config/.yamllint.yml /runtime-config/.yamllint.yml', 'Deployment template must copy the canonical Yamllint config into the runtime config surface');
+assertIncludes(deploymentTemplate, 'cp -Lf /config/.tflint.hcl /runtime-config/.tflint.hcl', 'Deployment template must copy the canonical TFLint config into the runtime config surface');
+assertIncludes(deploymentTemplate, 'for lint_config in knip.json jscpd.json lint-baseline.json', 'Deployment template must copy canonical architecture, duplication, and baseline configs');
+assertIncludes(deploymentTemplate, 'ln -sfnT /opt/kubeclaw-tools/node_modules /runtime-config/node_modules', 'Runtime ESLint config must replace stale paths and resolve its pinned parser from the general toolchain');
+assertIncludes(deploymentTemplate, 'ln -sfnT /opt/kubeclaw-tools/node_modules /config/node_modules', 'Authoritative persistent ESLint config must replace stale paths and resolve its pinned parser from the general toolchain');
+assertIncludes(deploymentTemplate, 'rm -rf /config/node_modules', 'Owned persistent ESLint module path must remove a stale real directory before linking the pinned toolchain');
+assertIncludes(deploymentTemplate, 'rm -rf /runtime-config/node_modules', 'Owned runtime ESLint module path must remove stale state before linking the pinned toolchain');
 assertIncludes(serviceTemplate, '.Values.service.extraPorts', 'Service template must continue rendering configured extra service ports');
 assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/swarm.config.json"', 'Swarm config template must source swarm.config.json from the chart artifact by default');
 assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/.semgrep.yml"', 'Swarm config template must source .semgrep.yml from the chart artifact by default');
+assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/.yamllint.yml"', 'Swarm config template must source .yamllint.yml from the chart artifact');
+assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/.tflint.hcl"', 'Swarm config template must source .tflint.hcl from the chart artifact');
+assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/knip.json"', 'Swarm config template must source knip.json from the chart artifact');
+assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/jscpd.json"', 'Swarm config template must source jscpd.json from the chart artifact');
+assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/lint-baseline.json"', 'Swarm config template must source the lint baseline from the chart artifact');
+assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/lint-policy.json"', 'Swarm config template must source the canonical lint policy from the chart artifact');
 assertIncludes(customSkillsConfigMapTemplate, 'code bundles to /app/skills', 'Custom skills ConfigMap comment must match the code-bundle runtime skills mount path');
 assertIncludes(customSkillsConfigMapTemplate, 'extension-only', 'Custom skills ConfigMap comment must define customSkills as extension-only');
 assertIncludes(customSkillsConfigMapTemplate, 'cannot be used as a compatibility patch path', 'Custom skills ConfigMap comment must forbid core runtime compatibility patching');
@@ -1381,7 +1414,9 @@ assertIncludes(deployScript, 'local probe_image="${1:-$BUILDKIT_ROOTLESS_PREFLIG
 assertIncludes(deployScript, 'image: "${probe_image}"', 'BuildKit preflight must run the selected host or Buster pipeline image');
 assertIncludes(deployScript, 'command:\n        - rootlesskit', 'BuildKit preflight must bypass application entrypoints and launch RootlessKit directly');
 assertIncludes(deployScript, 'imagePullPolicy: Always', 'BuildKit preflight must inspect the current mutable worker tag rather than a stale node image');
-assertIncludes(deployScript, 'name: XDG_RUNTIME_DIR\n          value: /run/user/1000', 'BuildKit preflight must place rootless runtime and trace sockets in its writable runtime mount');
+assertIncludes(deployScript, 'name: XDG_RUNTIME_DIR\n          value: /run/user/1000', 'BuildKit preflight must place its rootless runtime in the writable runtime mount');
+assertIncludes(deployScript, 'local otel_socket="/run/user/1000/buildkit/otel-grpc.sock"', 'BuildKit preflight must place its OTEL trace socket in the writable runtime mount');
+assertIncludes(deployScript, '- --otel-socket-path\n        - ${otel_socket}', 'BuildKit preflight must override BuildKit\'s root-owned OTEL socket default');
 assertIncludes(deployScript, 'privileged: false', 'BuildKit preflight must prove the builder works without privileged mode');
 assertIncludes(deployScript, 'runAsNonRoot: true', 'BuildKit preflight must run the builder as a non-root user');
 assertIncludes(deployScript, 'automountServiceAccountToken: false', 'BuildKit preflight must not expose Kubernetes API credentials to the builder');
@@ -1562,6 +1597,24 @@ assert.equal(
   normalizeLiteralPayload(semgrepConfigSource),
   'Rendered .semgrep.yml must exactly match the chart-provided source artifact',
 );
+assert.equal(
+  normalizeLiteralPayload(renderedYamllintConfig),
+  normalizeLiteralPayload(yamllintConfigSource),
+  'Rendered .yamllint.yml must exactly match the chart-provided source artifact',
+);
+assert.equal(
+  normalizeLiteralPayload(renderedTflintConfig),
+  normalizeLiteralPayload(tflintConfigSource),
+  'Rendered .tflint.hcl must exactly match the chart-provided source artifact',
+);
+assert.equal(normalizeLiteralPayload(renderedKnipConfig), normalizeLiteralPayload(knipConfigSource), 'Rendered knip.json must exactly match the chart source');
+assert.equal(normalizeLiteralPayload(renderedJscpdConfig), normalizeLiteralPayload(jscpdConfigSource), 'Rendered jscpd.json must exactly match the chart source');
+assert.equal(normalizeLiteralPayload(renderedLintBaseline), normalizeLiteralPayload(lintBaselineSource), 'Rendered lint-baseline.json must exactly match the chart source');
+assert.equal(
+  normalizeLiteralPayload(renderedLintPolicy),
+  normalizeLiteralPayload(lintPolicySource),
+  'Rendered lint-policy.json must exactly match the chart-provided source artifact',
+);
 
 const result = {
   sourceRoot,
@@ -1606,7 +1659,7 @@ const result = {
     'Rendered init flow keeps OpenClaw config SecretRef-backed, writable, and doctor-compatible',
     'Rendered probes use dependency-aware health checks instead of TCP-only port checks',
     'Rendered agent Deployments define shutdown grace, preStop drain markers, and drain-aware readiness',
-    'Rendered swarm-config ConfigMap matches the chart-provided swarm.config.json and .semgrep.yml artifacts',
+    'Rendered swarm-config ConfigMap matches all chart-provided lint policy, baseline, and native configuration artifacts',
     'Templates still pin SWARM_CONFIG and default swarm config artifacts in source',
     'Custom skills ConfigMap comments match the /app/skills runtime path and mark customSkills extension-only',
     'Templates still expose extra service ports and merge logic in source',

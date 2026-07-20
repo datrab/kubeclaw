@@ -18,18 +18,21 @@ REPO_URL="${1:-}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(dirname "$SCRIPT_DIR")"
 
-GREEN='\033[0;32m'; YELLOW='\033[1;33m'; RED='\033[0;31m'; NC='\033[0m'
-log()  { echo -e "${GREEN}[✓]${NC} $1"; }
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+log() { echo -e "${GREEN}[✓]${NC} $1"; }
 warn() { echo -e "${YELLOW}[!]${NC} $1"; }
-err()  { echo -e "${RED}[✗]${NC} $1" >&2; }
+err() { echo -e "${RED}[✗]${NC} $1" >&2; }
 
-if [[ -z "$REPO_URL" ]]; then
+if [[ -z $REPO_URL ]]; then
   echo "Usage: $0 <github-repo-url>"
   echo "Example: $0 git@github.com:ForgeStack/kubeclaw.git"
   exit 1
 fi
 
-if [[ "${KUBECLAW_ALLOW_LEGACY_REPO_SETUP:-}" != "1" ]]; then
+if [[ ${KUBECLAW_ALLOW_LEGACY_REPO_SETUP:-} != "1" ]]; then
   err "scripts/setup.sh is a legacy one-time bootstrap that runs broad git add/commit/push."
   err "Use the normal git workflow instead, or rerun with KUBECLAW_ALLOW_LEGACY_REPO_SETUP=1 if this is intentional."
   exit 1
@@ -84,7 +87,7 @@ echo ""
 if remote_output=$(git remote get-url origin 2>&1); then
   git remote remove origin
   warn "Replaced existing origin remote: $remote_output"
-elif [[ "$remote_output" == *"No such remote"* || "$remote_output" == *"No such remote 'origin'"* ]]; then
+elif [[ $remote_output == *"No such remote"* || $remote_output == *"No such remote 'origin'"* ]]; then
   log "No existing origin remote to remove"
 else
   err "Failed to inspect existing origin remote"

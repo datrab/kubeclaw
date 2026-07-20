@@ -1,4 +1,4 @@
-# ConfigMap: Swarm platform config (swarm.config.json + .semgrep.yml + eslint.config.mjs).
+# ConfigMap: Swarm platform config and its canonical lint policy.
 # Init container copies these to /home/node/.openclaw/ (config PVC).
 apiVersion: v1
 kind: ConfigMap
@@ -25,3 +25,15 @@ data:
 {{- else }}
 {{ .Files.Get "files/config/eslint.config.mjs" | indent 4 }}
 {{- end }}
+  .yamllint.yml: |
+{{ .Files.Get "files/config/.yamllint.yml" | indent 4 }}
+  .tflint.hcl: |
+{{ .Files.Get "files/config/.tflint.hcl" | indent 4 }}
+  knip.json: |
+{{ .Files.Get "files/config/knip.json" | indent 4 }}
+  jscpd.json: |
+{{ .Files.Get "files/config/jscpd.json" | indent 4 }}
+  lint-baseline.json: |
+{{ .Files.Get "files/config/lint-baseline.json" | indent 4 }}
+  lint-policy.json: |
+{{ .Files.Get "files/config/lint-policy.json" | indent 4 }}

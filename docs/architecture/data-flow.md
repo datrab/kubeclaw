@@ -37,7 +37,7 @@ Buster writes worker evidence:
 - suite artifacts such as logs, screenshots, verdicts, and manifest/k8s evidence
 - completion records to the requested completion stream
 - dead-letter records to the task dead-letter stream when validation or terminal guarantee fails
-- fallback telemetry artifacts when Redis telemetry degrades
+- explicit quarantine evidence when Redis telemetry degrades
 
 ## Redis Message Flow
 
@@ -78,7 +78,7 @@ This authority order is why the recommended stuck-run trace starts with `--statu
 | Pipeline lifecycle and read models | `skills/nova/pipeline/services/status-store.ts`; `skills/nova/pipeline/services/status-store-lifecycle/**` | `canonical-events.jsonl`, `read-models.json`, run-scoped `pipeline.jsonl` | `node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"` |
 | Agent semantic artifacts | `skills/common/pipeline/agent-artifact.ts`; Nova Forge writer/prompt | identity context and atomically published Forge completion | `node --test tests/skills/common/pipeline/agent-artifact.test.mjs` |
 | Buster task and completion stream | `skills/buster/pipeline/services/task-queue.ts`; `task-validation.ts`; `task-completion.ts` | `swarm:<agent>:tasks`, completion stream, `:dead-letter` stream | `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"` |
-| Telemetry and operator mirrors | `skills/nova/pipeline/services/telemetry*.ts`; `skills/common/pipeline/telemetry.ts` | `pipeline:telemetry:<project>:<run_id>`, `discord.jsonl`, fallback telemetry JSONL | `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"` |
+| Telemetry and operator mirrors | `skills/nova/pipeline/services/telemetry*.ts`; `skills/common/pipeline/telemetry.ts` | `pipeline:telemetry:<project>:<run_id>`, `discord.jsonl`, canonical run evidence and quarantine JSONL | `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"` |
 
 ## Common Breakpoints
 

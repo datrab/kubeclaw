@@ -54,12 +54,12 @@ try {
   assert.equal(staleLatest.authority.operator_replay_authority, false);
 
   const diagnosticFallback = projectPipelineArtifactEvidence({
-    surface: PIPELINE_ARTIFACT_SURFACES.FALLBACK_TELEMETRY,
-    path: `runs/${runId}/buster-telemetry-fallback.jsonl`,
-    artifact: { run_id: runId, artifact_fallback: true, seq: null },
+    surface: PIPELINE_ARTIFACT_SURFACES.QUARANTINE,
+    path: `runs/${runId}/quarantine.jsonl`,
+    artifact: { run_id: runId, schema_version: 'quarantined_payload.v1' },
     expectedRunId: runId,
   });
-  assert.equal(diagnosticFallback.role, PIPELINE_ARTIFACT_AUTHORITY_ROLES.DIAGNOSTIC_FALLBACK);
+  assert.equal(diagnosticFallback.role, PIPELINE_ARTIFACT_AUTHORITY_ROLES.QUARANTINED_EVIDENCE);
   assert.equal(diagnosticFallback.authority.diagnostic_evidence_only, true);
   assert.equal(diagnosticFallback.authority.operator_replay_authority, false);
   assert.equal(diagnosticFallback.authority.allow_completion_authority, false);

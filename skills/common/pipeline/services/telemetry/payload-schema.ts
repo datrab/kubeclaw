@@ -73,8 +73,17 @@ function isJsonSafe(value: any, seen: Set<any> = new Set()): boolean {
 const jsonObject: Validator = (value: any) => isPlainObject(value) && isJsonSafe(value);
 
 const commonFields: Record<string, Validator> = {
-  source: optional(nonEmptyString),
-  emitter: optional(nonEmptyString),
+  module_id: nullable(nonEmptyString),
+  gate_id: nullable(nonEmptyString),
+  gate_type: nullable(nonEmptyString),
+  attempt: nullable(number),
+  dispatch_id: nullable(nonEmptyString),
+  session_key: nullable(nonEmptyString),
+  agent_id: nullable(nonEmptyString),
+  model_call_id: nullable(nonEmptyString),
+  tool_call_id: nullable(nonEmptyString),
+  artifact_reference: optional(nonEmptyString),
+  content_completeness: optional(nonEmptyString),
 };
 
 function schema(required: Record<string, Validator> = {}, optionalFields: Record<string, Validator> = {}): TelemetryPayloadSchema {
@@ -501,6 +510,8 @@ export const TELEMETRY_PAYLOAD_SCHEMAS: Record<string, TelemetryPayloadSchema> =
   'pipeline.started': schema({ modules: array, gates: array, execution_order: array, resume: boolean }, {
     models: nullable(object),
     nova_prompt: nullable(string),
+    manifest_fingerprint: nonEmptyString,
+    manifest_reference: nonEmptyString,
   }),
   'rate_limit.detected': schema({}, {
     run_id: nullable(nonEmptyString),
@@ -599,6 +610,20 @@ export const TELEMETRY_PAYLOAD_SCHEMAS: Record<string, TelemetryPayloadSchema> =
     terminal_decision: nullable(jsonObject),
     reason_code: nullable(string),
   }),
+  'artifact.published': schema({ artifact_id:nonEmptyString, logical_id:nonEmptyString, kind:nonEmptyString, media_type:nonEmptyString, byte_length:number, sha256:nonEmptyString, content_class:nonEmptyString, reference:nonEmptyString }, { completeness:nonEmptyString, original_byte_length:nullable(number), original_sha256:nullable(nonEmptyString), transformation:nullable(string) }),
+  'lifecycle.transition': schema({ lifecycle_version:nonEmptyString, new_state:nonEmptyString, reason_code:nonEmptyString, effective_at:nonEmptyString, authority:nonEmptyString }, { previous_state:nullable(nonEmptyString) }),
+  'lifecycle.snapshot': schema({ lifecycle_version:nonEmptyString, read_models:jsonObject }, { event_count:number, last_cursor:nullable(nonEmptyString) }),
+  'producer.health': schema({ producer_id:nonEmptyString, status:nonEmptyString, invalid_count:number, quarantined_count:number, dead_letter_count:number }, { last_successful_emission:nullable(nonEmptyString), lag:nullable(number), checkpoint:nullable(nonEmptyString), missing_payload_count:number, restart_count:number, reconciliation:nullable(jsonObject) }),
+  'terminal.closure': schema({ outcome:nonEmptyString, reason_code:nonEmptyString, manifest_fingerprint:nonEmptyString, observability:nonEmptyString }, { duration_ms:nullable(number), counts:jsonObject, cost:nullable(jsonObject), last_work_id:nullable(nonEmptyString), references:array }),
+  'runtime.log': schema({ level:nonEmptyString, component:nonEmptyString, message:string }, { error_class:nullable(nonEmptyString), reason_code:nullable(nonEmptyString) }),
+  'git.evidence': schema({ repository:nonEmptyString }, { branch:nullable(nonEmptyString), starting_commit:nullable(nonEmptyString), final_commit:nullable(nonEmptyString), dirty:nullable(boolean), files_touched:stringArray, diff_stat:nullable(string), diff_reference:nullable(nonEmptyString) }),
+  'quality.evidence': schema({ item_type:nonEmptyString, verdict:nonEmptyString }, { suite:nullable(nonEmptyString), check:nullable(nonEmptyString), skipped_reason:nullable(string), findings:array, dispositions:array, source_commit:nullable(nonEmptyString), artifact_references:array, preview_url:nullable(nonEmptyString) }),
+  'infrastructure.evidence': schema({ evidence_type:nonEmptyString, status:nonEmptyString }, { workload:nullable(jsonObject), restarts:nullable(number), termination_reason:nullable(nonEmptyString), readiness:nullable(boolean), resource_usage:nullable(jsonObject), namespace_lease:nullable(jsonObject), rollout:nullable(jsonObject), preview_url:nullable(nonEmptyString), redis:nullable(jsonObject), gateway:nullable(jsonObject), delivery:nullable(jsonObject) }),
+  'evaluation.fact': schema({ dimension:nonEmptyString, value:any }, { fingerprint:nullable(nonEmptyString) }),
+  'command.requested': schema({ command_id:nonEmptyString, command_type:nonEmptyString, actor:nonEmptyString, capability:nonEmptyString, expires_at:nonEmptyString, expected_lifecycle_version:number }, { target:nullable(jsonObject), decision:nullable(nonEmptyString) }),
+  'command.accepted': schema({ command_id:nonEmptyString, command_type:nonEmptyString }, { actor:nullable(nonEmptyString), target:nullable(jsonObject) }),
+  'command.rejected': schema({ command_id:nonEmptyString, reason_code:nonEmptyString }, { command_type:nullable(nonEmptyString), actor:nullable(nonEmptyString), target:nullable(jsonObject) }),
+  'command.completed': schema({ command_id:nonEmptyString, command_type:nonEmptyString }, { actor:nullable(nonEmptyString), target:nullable(jsonObject), result:nullable(jsonObject) }),
 });
 
 export const TELEMETRY_PAYLOAD_EVENT_TYPES: readonly string[] = Object.freeze(Object.keys(TELEMETRY_PAYLOAD_SCHEMAS).sort());

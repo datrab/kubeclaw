@@ -16,7 +16,7 @@ The pipeline uses several event-like surfaces with different authority:
 - Redis completions: asynchronous Buster evidence back to Nova, accepted only after identity/adjudication checks.
 - Telemetry events: live observability for dashboards, diagnostics, and sinks.
 - Discord notifications: selected, human-readable presentation events.
-- JSONL logs: local audit trails for pipeline, Redis operations, Discord sends, Buster task steps, and fallback telemetry.
+- JSONL logs: local audit trails for pipeline, Redis operations, Discord sends, Buster task steps, and quarantined telemetry.
 
 Do not treat these as interchangeable. Lifecycle events decide state. The other surfaces explain, transport, or enrich state.
 
@@ -40,12 +40,13 @@ Project-global pipeline artifacts:
 
 ```text
 Projects/<project>/src/.swarm/logs/pipeline/latest.json
+Projects/<project>/src/.swarm/logs/pipeline/run-catalog.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/pipeline.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/discord.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/summary.json
 ```
 
-`latest.json` is the operator pointer to the newest run-scoped audit tree and records the run `telemetry_stream_key` alongside the replay artifact bundle.
+`run-catalog.jsonl` is the durable discovery authority. `latest.json` is only a convenience pointer and must never be used for replay or repair authority.
 
 Run-scoped artifacts:
 
@@ -54,7 +55,7 @@ Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/pipeline.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/discord.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/summary.json
 Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/nova-injections.jsonl
-Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/buster-telemetry-fallback.jsonl
+Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/quarantine.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/redis/redis-exchanges.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/redis/redis-ops.jsonl
 ```
@@ -153,20 +154,20 @@ The compact `swarm.config.json` selects the `standard` profile, which expands No
 - control lag degraded threshold: `1000`
 - payload pressure degraded threshold: `10000`
 
-When telemetry delivery degrades, the code records degraded/restored events and writes fallback artifacts where supported.
+When telemetry delivery degrades, the code records degraded/restored evidence and quarantines payloads that cannot be admitted canonically.
 
 ## Operator Checks
 
-Find the latest run:
+List verified runs through the pipeline-owned verifier and catalog:
 
 ```bash
-jq . Projects/my-project/src/.swarm/logs/pipeline/latest.json
+tail -n 20 Projects/my-project/src/.swarm/logs/pipeline/run-catalog.jsonl
 ```
 
 Inspect terminal summary:
 
 ```bash
-RUN_ID="$(jq -r '.run_id' Projects/my-project/src/.swarm/logs/pipeline/latest.json)"
+RUN_ID="$(tail -n 1 Projects/my-project/src/.swarm/logs/pipeline/run-catalog.jsonl | jq -r '.run_id')"
 jq . "Projects/my-project/src/.swarm/logs/pipeline/runs/${RUN_ID}/summary.json"
 ```
 
@@ -186,8 +187,8 @@ rg '"observability.degraded|observability.restored"' Projects/my-project/src/.sw
 ## Troubleshooting
 
 - Missing Discord messages: check `discord.jsonl` and webhook configuration. Continue using local artifacts for authority.
-- Missing Redis telemetry: check `buster-telemetry-fallback.jsonl`, Redis connectivity, and expanded `agent_observability.ingester` settings.
-- Missing `latest.json`: the run may have failed before log initialization.
+- Missing Redis telemetry: check `quarantine.jsonl`, Redis connectivity, and expanded `agent_observability.ingester` settings.
+- Missing catalog entry: inspect the run directory for a durable closure/archive and run the verifier before repair.
 - Summary missing but pipeline has logs: inspect terminal completion errors in run-scoped `pipeline.jsonl`.
 - Redis stream empty but artifacts present: Redis sink may be degraded; use local artifacts and recover Redis separately.
 

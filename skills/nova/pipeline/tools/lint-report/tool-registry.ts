@@ -1,26 +1,27 @@
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 
-import { DEFAULT_TOOL_TIMEOUT } from './constants.ts';
-import { safeExec } from './execution.ts';
+import { requireToolExecution, safeExec } from './execution.ts';
 import {
-  discoverPlatformEslintConfigCandidates,
-  discoverPlatformSemgrepConfigCandidates,
+  configuredTargetPaths,
   findFiles,
-  findNearestTsconfigDir,
-  listPolicySourceFiles,
+  listConfiguredTargetFiles,
 } from './discovery.ts';
-import { extractPublicExportNames, tryParseJson } from './parsers.ts';
+import { tryParseJson } from './parsers.ts';
 import {
-  makeConfigMissingResult,
-  makeParseFailureResult,
-  makeWarningResult,
+  failConfigMissing,
+  failParse,
+  notApplicable,
 } from './report.ts';
 import { log } from './output.ts';
 import { registerContainerYamlTools } from './container-yaml-tools.ts';
+import { registerKubernetesSecurityTools } from './kubernetes-security-tools.ts';
+import { registerGoTools, registerTerraformTools } from './go-terraform-tools.ts';
+import { registerArchitectureTools } from './architecture-tools.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
-const TOOL_REGISTRY = [];
+const TOOL_ADAPTERS = [];
 const TOOL_OUTPUT_EMPTY = '';
 const TOOL_OUTPUT_PREVIEW_MISSING = 'no output captured';
 const LINT_VULNERABILITY_FOUND = 'vulnerability found';
@@ -44,6 +45,15 @@ function selectPresentValue(...values) {
   return TOOL_OUTPUT_EMPTY;
 }
 
+function eslintFindingSeed(ctx, fileResult, message, occurrences) {
+  const file = path.relative(ctx.repoRoot, fileResult.filePath).split(path.sep).join('/');
+  const sourceLine = textValue(fileResult.source).split('\n')[Math.max(0, (message.line || 1) - 1)]?.trim() || '';
+  const key = JSON.stringify({ code: message.ruleId || 'eslint', file, message: message.message, source_line: sourceLine });
+  const occurrence = (occurrences.get(key) || 0) + 1;
+  occurrences.set(key, occurrence);
+  return { code: message.ruleId || 'eslint', file, message: message.message, source_line: sourceLine, occurrence };
+}
+
 function requireString(value, label) {
   if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) throw new Error(`${label}: required non-empty string`);
   return value.trim();
@@ -58,20 +68,22 @@ function isJavaScriptOrTypeScriptProject(ctx) {
   return selectTruthyValue(() => (ctx.projectTypes.has('javascript')), () => (ctx.projectTypes.has('typescript')));
 }
 
-function hasPackageGraphForKnip(repoRoot) {
-  const packagePath = path.join(repoRoot, 'package.json');
-  if (!fs.existsSync(packagePath)) return false;
-  const packageJson = recordValue(JSON.parse(fs.readFileSync(packagePath, 'utf8')));
-  if (recordValue(packageJson.dependencies) && Object.keys(recordValue(packageJson.dependencies)).length > 0) return true;
-  if (recordValue(packageJson.devDependencies) && Object.keys(recordValue(packageJson.devDependencies)).length > 0) return true;
-  if (recordValue(packageJson.peerDependencies) && Object.keys(recordValue(packageJson.peerDependencies)).length > 0) return true;
-  if (packageJson.knip) return true;
-  return fs.existsSync(path.join(repoRoot, 'knip.json')) || fs.existsSync(path.join(repoRoot, 'knip.ts')) || fs.existsSync(path.join(repoRoot, 'knip.js'));
+function pathContains(parent, child) {
+  const relative = path.relative(parent, child);
+  return relative === '' || (!relative.startsWith('..') && !path.isAbsolute(relative));
 }
 
-function isJavaScriptOrTypeScriptPolicyFile(file) {
-  if (path.basename(file) === 'tsconfig.json') return true;
-  return /\.(js|jsx|ts|tsx|mjs|cjs)$/.test(file);
+function affectedTypeScriptConfigs(ctx) {
+  const configs = configuredTargetPaths(ctx);
+  if (ctx.changedFilesRequested) {
+    const changes = ctx.changedFiles.map(file => path.resolve(ctx.repoRoot, file));
+    return configs.filter(config => changes.some(change => pathContains(path.dirname(config), change)));
+  }
+  if (ctx.requestedModulePath) {
+    const requested = path.resolve(ctx.repoRoot, ctx.requestedModulePath);
+    return configs.filter(config => pathContains(path.dirname(config), requested) || pathContains(requested, path.dirname(config)));
+  }
+  return configs;
 }
 
 function npmAuditSeverity(severity) {
@@ -79,10 +91,27 @@ function npmAuditSeverity(severity) {
 }
 
 function registerTool(tool) {
-  TOOL_REGISTRY.push({
-    timeout: DEFAULT_TOOL_TIMEOUT,
-    ...tool,
+  TOOL_ADAPTERS.push(tool);
+}
+
+function buildToolRegistry(policy, projectTypes) {
+  const adapters = new Map(TOOL_ADAPTERS.map(adapter => [adapter.id, adapter]));
+  const configured = policy.tools.map((settings) => {
+    const adapter = adapters.get(settings.id);
+    if (!adapter) throw Object.assign(new Error(`No lint adapter exists for configured tool '${settings.id}'`), { code: 'LINT_POLICY_ADAPTER_MISSING' });
+    return {
+      id: adapter.id,
+      name: adapter.name,
+      binary: adapter.binary,
+      run: adapter.run,
+      ...settings,
+      detect: () => settings.languages.length === 0 || settings.languages.some(language => projectTypes.has(language)),
+    };
   });
+  const configuredIds = new Set(policy.tools.map(tool => tool.id));
+  const unconfigured = TOOL_ADAPTERS.filter(adapter => !configuredIds.has(adapter.id)).map(adapter => adapter.id);
+  if (unconfigured.length > 0) throw Object.assign(new Error(`Lint adapters missing canonical policy: ${unconfigured.join(', ')}`), { code: 'LINT_POLICY_TOOL_MISSING' });
+  return configured;
 }
 
 // ─── Tool Registrations ─────────────────────────────────────────────────────
@@ -97,137 +126,24 @@ registerTool({
   tier: 'pre-check',
   detect: (ctx) => ctx.projectTypes.has('typescript'),
   run: (ctx) => {
-    const tsconfigDir = findNearestTsconfigDir(ctx.repoRoot, ctx.modulePath);
-    if (!tsconfigDir) {
-      const message = 'No tsconfig.json found for TypeScript lint run. Skipping tsc instead of guessing a working directory.';
-      log('WARN', message, { repoRoot: ctx.repoRoot, modulePath: selectTruthyValue(() => (ctx.modulePath), () => (null)) });
-      return makeConfigMissingResult(ctx, 'tsconfig-missing', message);
-    }
-
-    const result = safeExec('tsc', ['--noEmit', '--pretty', 'false'], { cwd: tsconfigDir, timeout: 60000 });
-
-    // tsc outputs errors to stdout, one per line: file(line,col): error TSxxxx: message
     const findings = [];
-    const lines = textValue(result.stdout).split('\n').filter(Boolean);
-    for (const line of lines) {
-      const match = line.match(/^(.+?)\((\d+),(\d+)\):\s+(error|warning)\s+(TS\d+):\s+(.+)$/);
-      if (match) {
-        findings.push({
-          file: match[1],
-          line: parseInt(match[2], 10),
-          column: parseInt(match[3], 10),
-          severity: match[4],
-          code: match[5],
-          message: match[6],
-        });
-      }
-    }
-
-    if (findings.length === 0 && (selectTruthyValue(() => (result.exitCode !== 0), () => (result.timedOut)))) {
-      const output = selectPresentValue(result.stdout, result.stderr, result.error).trim();
-      const preview = output ? output.split('\n')[0].slice(0, 200) : TOOL_OUTPUT_PREVIEW_MISSING;
-      findings.push({
-        file: path.join(tsconfigDir, 'tsconfig.json'),
-        line: null,
-        column: null,
-        severity: 'error',
-        code: result.timedOut ? 'tsc-timeout' : 'tsc-failed',
-        message: `tsc failed without file-scoped diagnostics. exitCode=${result.exitCode}; preview=${preview}`,
-      });
-    }
-
-    return {
-      errors: findings.filter(f => f.severity === 'error').length,
-      warnings: findings.filter(f => f.severity === 'warning').length,
-      findings,
-    };
-  },
-});
-
-// ── repo policy (Custom maintainability checks) ──
-registerTool({
-  id: 'repo-policy',
-  name: 'Repo Policy',
-  binary: 'node',
-  tier: 'full',
-  detect: isJavaScriptOrTypeScriptProject,
-  run: (ctx) => {
-    const scanRoot = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
-    const findings = [];
-
-    if (ctx.changedFiles.length > 0) {
-      const hasRelevantChange = ctx.changedFiles.some(isJavaScriptOrTypeScriptPolicyFile);
-      if (!hasRelevantChange) {
-        return { errors: 0, warnings: 0, findings: [] };
-      }
-    }
-
-    if (ctx.projectTypes.has('typescript')) {
-      const tsconfigDir = findNearestTsconfigDir(ctx.repoRoot, ctx.modulePath);
-      if (!tsconfigDir) {
-        const message = 'No tsconfig.json found for TypeScript policy checks. Skipping erasableSyntaxOnly enforcement.';
-        log('WARN', message, { repoRoot: ctx.repoRoot, modulePath: selectTruthyValue(() => (ctx.modulePath), () => (null)) });
-        findings.push(...makeConfigMissingResult(ctx, 'tsconfig-missing', message).findings);
-      } else {
-        const tsconfigPath = path.join(tsconfigDir, 'tsconfig.json');
-        const result = safeExec('tsc', ['--showConfig', '--project', tsconfigPath], {
-          cwd: tsconfigDir,
-          timeout: 60000,
-        });
-        const parsed = tryParseJson(result.stdout);
-        if (!parsed.ok) {
-          findings.push(...makeParseFailureResult(ctx, 'tsconfig-show-config', parsed, result, tsconfigPath).findings);
-        } else {
-          const erasableSyntaxOnly = parsed.data?.compilerOptions?.erasableSyntaxOnly;
-          if (erasableSyntaxOnly !== true) {
-            findings.push({
-              file: tsconfigPath,
-              line: null,
-              column: null,
-              severity: 'error',
-              code: 'tsconfig-erasable-syntax-only-missing',
-              message: 'TypeScript policy requires compilerOptions.erasableSyntaxOnly = true.',
-            });
-          }
+    const configs = affectedTypeScriptConfigs(ctx);
+    if (configs.length === 0) return notApplicable('No configured TypeScript project is affected by the requested scope.');
+    for (const config of configs) {
+      const result = requireToolExecution(safeExec('tsc', ['--noEmit', '--pretty', 'false', '--project', config], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'tsc');
+      const lines = textValue(result.stdout).split('\n').filter(Boolean);
+      const findingsBefore = findings.length;
+      for (const line of lines) {
+        const match = line.match(/^(.+?)\((\d+),(\d+)\):\s+(error|warning)\s+(TS\d+):\s+(.+)$/);
+        if (match) {
+          findings.push({ file: match[1], line: parseInt(match[2], 10), column: parseInt(match[3], 10), severity: match[4], code: match[5], message: match[6] });
         }
       }
-    }
-
-    const jsTsFiles = listPolicySourceFiles(scanRoot);
-    const exportsByName = new Map();
-    for (const file of jsTsFiles) {
-      let sourceText;
-      try {
-        sourceText = fs.readFileSync(file, 'utf8');
-      } catch (e) {
-        findings.push(...makeWarningResult({
-          file,
-          code: 'repo-policy-read-failed',
-          message: `Could not read file for repo policy checks: ${e.message}`,
-        }).findings);
-        continue;
+      if (findings.length === findingsBefore && result.exitCode !== 0) {
+        const output = selectPresentValue(result.stdout, result.stderr, result.error).trim();
+        const preview = output ? output.split('\n')[0].slice(0, 200) : TOOL_OUTPUT_PREVIEW_MISSING;
+        throw Object.assign(new Error(`tsc failed without file-scoped diagnostics for ${config}. exitCode=${result.exitCode}; preview=${preview}`), { code: 'tsc-output-invalid' });
       }
-
-      for (const exported of extractPublicExportNames(sourceText)) {
-        if (!exportsByName.has(exported.name)) exportsByName.set(exported.name, []);
-        exportsByName.get(exported.name).push({ file, line: exported.line });
-      }
-    }
-
-    for (const [name, occurrences] of exportsByName.entries()) {
-      if (occurrences.length < 2) continue;
-      const preview = occurrences
-        .slice(0, 4)
-        .map(({ file, line }) => `${path.relative(ctx.repoRoot, file)}:${line}`)
-        .join(', ');
-      findings.push({
-        file: occurrences[0].file,
-        line: occurrences[0].line,
-        column: null,
-        severity: 'warning',
-        code: 'duplicate-public-export-name',
-        message: `Public export name '${name}' appears ${occurrences.length} times in the scanned scope. Examples: ${preview}`,
-      });
     }
 
     return {
@@ -248,16 +164,16 @@ registerTool({
   run: (ctx) => {
     const target = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
     const args = ['check', '--output-format', 'json', target];
-    if (ctx.changedFiles.length > 0) {
+    if (ctx.changedFilesRequested) {
       const pyFiles = ctx.changedFiles.filter(f => f.endsWith('.py'));
       if (pyFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
       args.length = 0;
       args.push('check', '--output-format', 'json', ...pyFiles.map(f => path.join(ctx.repoRoot, f)));
     }
 
-    const result = safeExec('ruff', args, { cwd: ctx.repoRoot });
+    const result = requireToolExecution(safeExec('ruff', args, { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'ruff');
     const parsed = tryParseJson(result.stdout);
-    if (!parsed.ok) return makeParseFailureResult(ctx, 'ruff', parsed, result, target);
+    if (!parsed.ok) return failParse(ctx, 'ruff', parsed, result, target);
 
     const findings = arrayValue(parsed.data).map(item => ({
       file: requireString(item.filename, 'ruff finding filename'),
@@ -284,22 +200,21 @@ registerTool({
   tier: 'pre-check',
   detect: (ctx) => ctx.projectTypes.has('shell'),
   run: (ctx) => {
-    const scanRoot = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
     let shellFiles;
 
-    if (ctx.changedFiles.length > 0) {
+    if (ctx.changedFilesRequested) {
       shellFiles = ctx.changedFiles
         .filter(f => f.endsWith('.sh'))
         .map(f => path.join(ctx.repoRoot, f));
     } else {
-      shellFiles = findFiles(scanRoot, f => f.endsWith('.sh'), 5);
+      shellFiles = listConfiguredTargetFiles(ctx, file => file.endsWith('.sh'));
     }
 
     if (shellFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
 
-    const result = safeExec('shellcheck', ['--format', 'json', ...shellFiles], { cwd: ctx.repoRoot });
+    const result = requireToolExecution(safeExec('shellcheck', ['--format', 'json', ...ctx.tool.arguments, ...shellFiles], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'shellcheck');
     const parsed = tryParseJson(result.stdout);
-    if (!parsed.ok) return makeParseFailureResult(ctx, 'shellcheck', parsed, result, scanRoot);
+    if (!parsed.ok) return failParse(ctx, 'shellcheck', parsed, result, ctx.repoRoot);
 
     const comments = Array.isArray(parsed.data) ? parsed.data : arrayValue(parsed.data?.comments);
     const findings = comments.map(item => ({
@@ -310,12 +225,38 @@ registerTool({
       code: `SC${item.code}`,
       message: item.message,
     }));
+    if (result.exitCode !== 0 && findings.length === 0) return failParse(ctx, 'shellcheck', { error: 'non-zero exit without diagnostics' }, result, ctx.repoRoot);
 
     return {
       errors: findings.filter(f => f.severity === 'error').length,
       warnings: findings.filter(f => f.severity === 'warning').length,
       findings,
     };
+  },
+});
+
+// ── shfmt (canonical shell formatting) ──
+registerTool({
+  id: 'shfmt',
+  name: 'shfmt',
+  binary: 'shfmt',
+  tier: 'pre-check',
+  detect: (ctx) => ctx.projectTypes.has('shell'),
+  run: (ctx) => {
+    const shellFiles = ctx.changedFilesRequested
+      ? ctx.changedFiles.filter(file => file.endsWith('.sh')).map(file => path.join(ctx.repoRoot, file))
+      : listConfiguredTargetFiles(ctx, file => file.endsWith('.sh'));
+    if (shellFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
+    const findings = [];
+    for (const file of shellFiles) {
+      const result = requireToolExecution(safeExec('shfmt', ['-d', ...ctx.tool.arguments, file], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'shfmt');
+      if (result.exitCode === 1 && result.stdout.trim()) {
+        findings.push({ file, line: null, column: null, severity: 'error', code: 'shell-format', message: `Shell file is not in canonical shfmt format. Run shfmt -w ${ctx.tool.arguments.join(' ')} on this file.` });
+      } else if (result.exitCode !== 0) {
+        return failParse(ctx, 'shfmt', { error: 'unexpected exit without a format diff' }, result, file);
+      }
+    }
+    return { errors: findings.length, warnings: 0, findings };
   },
 });
 
@@ -330,54 +271,38 @@ registerTool({
     const target = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
     const args = ['--format', 'json', '--no-error-on-unmatched-pattern'];
 
-    // Resolution chain for ESLint config:
-    //   1. --eslint-config CLI flag (passed via ctx)
-    //   2. platform-level eslint.config.mjs discovered next to the canonical swarm config path
-    // If nothing is found, do not fall back to repo-local or ESLint auto lookup, surface an explicit warning instead.
-    const candidates = [
-      ctx.eslintConfig,
-      ...discoverPlatformEslintConfigCandidates(),
-    ].filter(Boolean);
-
-    let config = null;
-    for (const candidate of candidates) {
-      if (fs.existsSync(candidate)) {
-        config = candidate;
-        break;
-      }
+    // The caller owns one exact ESLint config path. Missing config is an execution failure.
+    const config = ctx.tool.config_path;
+    if (!config || !fs.existsSync(config)) {
+      failConfigMissing('eslint-config-missing', `Configured ESLint config does not exist: ${config || '<missing --eslint-config>'}`);
     }
+    log('INFO', `ESLint using config: ${config}`);
+    args.push('--config', config);
 
-    if (config) {
-      log('INFO', `ESLint using config: ${config}`);
-      args.push('--config', config);
-    } else {
-      const message = 'No ESLint config found, expected --eslint-config or platform eslint.config.mjs. Skipping ESLint instead of using repo-local or implicit auto lookup.';
-      log('WARN', message, { repoRoot: ctx.repoRoot });
-      return makeConfigMissingResult(ctx, 'eslint-config-missing', message);
-    }
-
-    if (ctx.changedFiles.length > 0) {
+    if (ctx.changedFilesRequested) {
       const jsFiles = ctx.changedFiles.filter(f => /\.(js|ts|jsx|tsx|mjs|cjs)$/.test(f));
       if (jsFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
       args.push(...jsFiles.map(f => path.join(ctx.repoRoot, f)));
     } else {
-      args.push(target);
+      args.push(...configuredTargetPaths(ctx));
     }
 
-    const result = safeExec('eslint', args, { cwd: ctx.repoRoot, timeout: 60000 });
+    const result = requireToolExecution(safeExec('eslint', args, { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'eslint');
     const parsed = tryParseJson(result.stdout);
-    if (!parsed.ok) return makeParseFailureResult(ctx, 'eslint', parsed, result, target);
+    if (!parsed.ok) return failParse(ctx, 'eslint', parsed, result, target);
 
     const findings = [];
     for (const fileResult of arrayValue(parsed.data)) {
+      const occurrences = new Map();
       for (const msg of arrayValue(fileResult.messages)) {
         findings.push({
           file: fileResult.filePath,
           line: msg.line,
           column: msg.column,
           severity: msg.severity === 2 ? 'error' : 'warning',
-          code: selectTruthyValue(() => (msg.ruleId), () => (null)),
+          code: selectTruthyValue(() => (msg.ruleId), () => ('eslint')),
           message: msg.message,
+          fingerprint_seed: eslintFindingSeed(ctx, fileResult, msg, occurrences),
         });
       }
     }
@@ -385,113 +310,6 @@ registerTool({
     return {
       errors: findings.filter(f => f.severity === 'error').length,
       warnings: findings.filter(f => f.severity === 'warning').length,
-      findings,
-    };
-  },
-});
-
-// ── knip (Unused exports/deps/files) ──
-const KNIP_MAX_REPORTED_FINDINGS = 50;
-
-registerTool({
-  id: 'knip',
-  name: 'Knip (Unused Code)',
-  binary: 'knip',
-  tier: 'full',
-  detect: isJavaScriptOrTypeScriptProject,
-  run: (ctx) => {
-    if (!hasPackageGraphForKnip(ctx.repoRoot)) {
-      return {
-        errors: 0,
-        warnings: 0,
-        findings: [{
-          file: 'package.json',
-          line: null,
-          column: null,
-          severity: 'info',
-          code: 'knip:skipped_no_package_graph',
-          message: 'Knip skipped because this project has no dependency graph or explicit Knip config.',
-        }],
-      };
-    }
-    const result = safeExec('knip', ['--reporter', 'json', '--no-progress'], {
-      cwd: ctx.repoRoot,
-      timeout: 60000,
-    });
-
-    const parsed = tryParseJson(result.stdout);
-    if (!parsed.ok) return makeParseFailureResult(ctx, 'knip', parsed, result);
-
-    const findings = [];
-    const data = recordValue(parsed.data);
-
-    for (const [category, items] of Object.entries(data)) {
-      if (!Array.isArray(items)) continue;
-      for (const item of items) {
-        findings.push({
-          file: selectTruthyValue(() => (selectTruthyValue(() => (item.filePath), () => (item.file))), () => (null)),
-          line: selectTruthyValue(() => (item.line), () => (null)),
-          column: null,
-          severity: 'warning',
-          code: `knip:${category}`,
-          message: item.name
-            ? `Unused ${category}: ${item.name}`
-            : `Unused ${category}`,
-        });
-      }
-    }
-
-    const reportedFindings = findings.slice(0, KNIP_MAX_REPORTED_FINDINGS);
-    if (findings.length > reportedFindings.length) {
-      reportedFindings.push({
-        file: null,
-        line: null,
-        column: null,
-        severity: 'warning',
-        code: 'knip:advisory_summary',
-        message: `Knip reported ${findings.length} advisory warning(s); showing first ${KNIP_MAX_REPORTED_FINDINGS}. Treat the warning count as authoritative and inspect Knip directly when reducing unused-code debt.`,
-      });
-    }
-
-    return {
-      errors: 0,
-      warnings: findings.length,
-      findings: reportedFindings,
-    };
-  },
-});
-
-// ── madge (Circular dependencies) ──
-registerTool({
-  id: 'madge',
-  name: 'Madge (Circular Dependencies)',
-  binary: 'madge',
-  tier: 'full',
-  detect: isJavaScriptOrTypeScriptProject,
-  run: (ctx) => {
-    const target = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
-    const args = ['--circular', '--json'];
-
-    if (ctx.projectTypes.has('typescript')) args.push('--ts-config', 'tsconfig.json');
-    args.push(target);
-
-    const result = safeExec('madge', args, { cwd: ctx.repoRoot, timeout: 60000 });
-    const parsed = tryParseJson(result.stdout);
-    if (!parsed.ok) return makeParseFailureResult(ctx, 'madge', parsed, result, target);
-
-    const cycles = arrayValue(parsed.data);
-    const findings = cycles.map(cycle => ({
-      file: selectTruthyValue(() => (cycle[0]), () => (null)),
-      line: null,
-      column: null,
-      severity: 'error',
-      code: 'circular-dependency',
-      message: `Circular dependency: ${cycle.join(' → ')}`,
-    }));
-
-    return {
-      errors: findings.length,
-      warnings: 0,
       findings,
     };
   },
@@ -505,19 +323,25 @@ registerTool({
   tier: 'full',
   detect: isJavaScriptOrTypeScriptProject,
   run: (ctx) => {
-    const result = safeExec('npm', ['audit', '--json', '--omit=dev'], {
-      cwd: ctx.repoRoot,
-      timeout: 30000,
-    });
+    const packageRoot = path.dirname(configuredTargetPaths(ctx)[0]);
+    const result = requireToolExecution(safeExec('npm', ['audit', '--json', '--omit=dev'], {
+      cwd: packageRoot,
+      timeout: ctx.tool.timeout_ms,
+    }), 'npm-audit');
 
     const parsed = tryParseJson(result.stdout);
-    if (!parsed.ok) return makeParseFailureResult(ctx, 'npm-audit', parsed, result, path.join(ctx.repoRoot, 'package.json'));
+    if (!parsed.ok) return failParse(ctx, 'npm-audit', parsed, result, path.join(ctx.repoRoot, 'package.json'));
+    if (parsed.data?.error) {
+      const auditError = recordValue(parsed.data.error);
+      const message = selectPresentValue(auditError.summary, auditError.message, typeof parsed.data.error === 'string' ? parsed.data.error : '', 'npm audit returned an operational error');
+      throw Object.assign(new Error(message), { code: 'npm-audit-execution-failed' });
+    }
 
     const findings = [];
     const vulns = recordValue(parsed.data?.vulnerabilities);
     for (const [name, vuln] of Object.entries(vulns)) {
       findings.push({
-        file: 'package.json',
+        file: path.join(packageRoot, 'package.json'),
         line: null,
         column: null,
         severity: npmAuditSeverity(vuln.severity),
@@ -525,6 +349,7 @@ registerTool({
         message: `${name}: ${selectPresentValue(vuln.title, vuln.via?.[0]?.title, LINT_VULNERABILITY_FOUND)} (${vuln.severity})`,
       });
     }
+    if (result.exitCode !== 0 && findings.length === 0) return failParse(ctx, 'npm-audit', { error: 'non-zero exit without vulnerability findings' }, result, path.join(packageRoot, 'package.json'));
 
     return {
       errors: findings.filter(f => f.severity === 'error').length,
@@ -545,14 +370,14 @@ registerTool({
     const target = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
     const args = ['--output', 'json', '--no-color-output', target];
 
-    if (ctx.changedFiles.length > 0) {
+    if (ctx.changedFilesRequested) {
       const pyFiles = ctx.changedFiles.filter(f => f.endsWith('.py'));
       if (pyFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
       args.length = 0;
       args.push('--output', 'json', '--no-color-output', ...pyFiles.map(f => path.join(ctx.repoRoot, f)));
     }
 
-    const result = safeExec('mypy', args, { cwd: ctx.repoRoot, timeout: 60000 });
+    const result = requireToolExecution(safeExec('mypy', args, { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'mypy');
 
     // mypy JSON output: one JSON object per line
     const findings = [];
@@ -570,17 +395,16 @@ registerTool({
         line: item.line,
         column: item.column,
         severity: item.severity === 'error' ? 'error' : 'warning',
-        code: selectTruthyValue(() => (item.code), () => (null)),
+        code: selectTruthyValue(() => (item.code), () => ('mypy')),
         message: item.message,
       });
     }
 
     if (parseFailure) {
-      findings.push(...makeWarningResult({
-        file: target,
-        code: 'mypy-parse-failed',
-        message: `mypy output included unparsable JSON lines. parseError=${parseFailure.parsed.error}; preview=${parseFailure.line.slice(0, 200)}`,
-      }).findings);
+      return failParse(ctx, 'mypy', parseFailure.parsed, result, target);
+    }
+    if (findings.length === 0 && result.exitCode !== 0) {
+      return failParse(ctx, 'mypy', { error: 'non-zero exit without JSON findings' }, result, target);
     }
 
     return {
@@ -599,13 +423,13 @@ registerTool({
   tier: 'full',
   detect: (ctx) => ctx.projectTypes.has('python'),
   run: (ctx) => {
-    const result = safeExec('pip-audit', ['--format', 'json'], {
+    const result = requireToolExecution(safeExec('pip-audit', ['--format', 'json'], {
       cwd: ctx.repoRoot,
-      timeout: 60000,
-    });
+      timeout: ctx.tool.timeout_ms,
+    }), 'pip-audit');
 
     const parsed = tryParseJson(result.stdout);
-    if (!parsed.ok) return makeParseFailureResult(ctx, 'pip-audit', parsed, result, path.join(ctx.repoRoot, 'requirements.txt'));
+    if (!parsed.ok) return failParse(ctx, 'pip-audit', parsed, result, path.join(ctx.repoRoot, 'requirements.txt'));
 
     const dependencyEntries = Array.isArray(parsed.data?.dependencies)
       ? parsed.data.dependencies
@@ -617,7 +441,7 @@ registerTool({
         line: null,
         column: null,
         severity: 'error',
-        code: selectTruthyValue(() => (vuln.id), () => (null)),
+        code: selectTruthyValue(() => (vuln.id), () => ('pip-audit')),
         message: `${dep.name} ${dep.version}: ${requireString(vuln.description, 'pip-audit vulnerability description')}`,
       })));
 
@@ -629,6 +453,38 @@ registerTool({
   },
 });
 
+function semgrepArgs(ctx, config) {
+  const exclusions = (ctx.tool.exclude ?? []).flatMap(pattern => ['--exclude', pattern]);
+  const targets = ctx.changedFilesRequested
+    ? ctx.changedFiles.map(file => path.join(ctx.repoRoot, file))
+    : configuredTargetPaths(ctx);
+  return ['scan', '--json', '--disable-version-check', '--metrics=off', '--config', config, '--quiet', ...exclusions, ...targets];
+}
+
+function parseSemgrepResult(ctx, result, target) {
+  const parsed = tryParseJson(result.stdout);
+  if (!parsed.ok) return failParse(ctx, 'semgrep', parsed, result, target);
+  const semgrepErrors = arrayValue(parsed.data?.errors);
+  if (semgrepErrors.length > 0) {
+    const message = selectPresentValue(semgrepErrors[0]?.message, semgrepErrors[0]?.type, 'Semgrep reported an execution error');
+    throw Object.assign(new Error(message), { code: 'semgrep-execution-failed' });
+  }
+  if (result.exitCode !== 0) return failParse(ctx, 'semgrep', { error: 'non-zero execution status' }, result, target);
+  const findings = arrayValue(parsed.data?.results).map(item => ({
+    file: item.path,
+    line: item.start?.line,
+    column: item.start?.col,
+    severity: item.extra?.severity === 'ERROR' ? 'error' : 'warning',
+    code: selectTruthyValue(() => (item.check_id), () => ('semgrep')),
+    message: requireString(item.extra?.message, 'semgrep finding message'),
+  }));
+  return {
+    errors: findings.filter(f => f.severity === 'error').length,
+    warnings: findings.filter(f => f.severity === 'warning').length,
+    findings,
+  };
+}
+
 // ── semgrep (Pattern-based static analysis) ──
 registerTool({
   id: 'semgrep',
@@ -638,61 +494,26 @@ registerTool({
   detect: () => true, // Multi-language — always applicable
   run: (ctx) => {
     const target = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
-    // Resolution chain for Semgrep config:
-    //   1. --semgrep-config CLI flag (passed via ctx)
-    //   2. /home/node/.openclaw/.semgrep.yml
-    //   3. SWARM_CONFIG-adjacent .semgrep.yml fallback
-    // If nothing is found, do not fall back to repo-local, env, or Semgrep registry auto mode; surface an explicit warning instead.
-    const candidates = [
-      ctx.semgrepConfig,
-      ...discoverPlatformSemgrepConfigCandidates(),
-    ].filter(Boolean);
-
-    let config = null;
-    for (const candidate of candidates) {
-      if (fs.existsSync(candidate)) {
-        config = candidate;
-        break;
-      }
+    // The caller owns one exact Semgrep config path. Missing config is an execution failure.
+    const config = ctx.tool.config_path;
+    if (!config || !fs.existsSync(config)) {
+      failConfigMissing('semgrep-config-missing', `Configured Semgrep config does not exist: ${config || '<missing --semgrep-config>'}`);
     }
+    log('INFO', `Semgrep using config: ${config}`);
 
-    if (config) {
-      log('INFO', `Semgrep using config: ${config}`);
-    } else {
-      const message = 'Semgrep config missing or invalid: expected --semgrep-config, /home/node/.openclaw/.semgrep.yml, or SWARM_CONFIG-adjacent .semgrep.yml fallback. Skipping Semgrep instead of using repo-local, env, or registry auto mode.';
-      log('WARN', message, { repoRoot: ctx.repoRoot });
-      return makeConfigMissingResult(ctx, 'semgrep-config-missing', message);
-    }
-
-    const args = ['scan', '--json', '--config', config, '--quiet', target];
-
-    if (ctx.changedFiles.length > 0) {
-      args.length = 0;
-      args.push('scan', '--json', '--config', config, '--quiet',
-        ...ctx.changedFiles.map(f => path.join(ctx.repoRoot, f)));
-    }
-
-    const result = safeExec('semgrep', args, { cwd: ctx.repoRoot, timeout: 120000 });
-    const parsed = tryParseJson(result.stdout);
-    if (!parsed.ok) return makeParseFailureResult(ctx, 'semgrep', parsed, result, target);
-
-    const findings = arrayValue(parsed.data?.results).map(item => ({
-      file: item.path,
-      line: item.start?.line,
-      column: item.start?.col,
-      severity: item.extra?.severity === 'ERROR' ? 'error' : 'warning',
-      code: item.check_id,
-      message: requireString(item.extra?.message, 'semgrep finding message'),
-    }));
-
-    return {
-      errors: findings.filter(f => f.severity === 'error').length,
-      warnings: findings.filter(f => f.severity === 'warning').length,
-      findings,
-    };
+    const result = requireToolExecution(safeExec('semgrep', semgrepArgs(ctx, config), {
+      cwd: ctx.repoRoot,
+      timeout: ctx.tool.timeout_ms,
+      env: { SEMGREP_LOG_FILE: path.join(os.tmpdir(), `kubeclaw-semgrep-${process.pid}.log`) },
+    }), 'semgrep');
+    return parseSemgrepResult(ctx, result, target);
   },
 });
 
 registerContainerYamlTools(registerTool);
+registerKubernetesSecurityTools(registerTool);
+registerArchitectureTools(registerTool);
+registerGoTools(registerTool);
+registerTerraformTools(registerTool);
 
-export { TOOL_REGISTRY };
+export { buildToolRegistry, TOOL_ADAPTERS, TOOL_ADAPTERS as TOOL_REGISTRY };

@@ -86,7 +86,7 @@ function makeSwarmConfig() {
       },
     },
     discord_alerts: { info: false, warn: false, critical: false, ok: false },
-    pre_check: { enabled: false, lint_report_path: '/home/node/lint.js', timeout_seconds: 1 },
+    pre_check: { enabled: false, lint_report_path: '/home/node/lint.js', lint_policy_path: '/home/node/lint-policy.json', lint_policy_project: 'workspace', timeout_seconds: 1 },
     review_defaults: { timeout_minutes: 1, max_fix_cycles: 0, lint_tier: 'pre-check', lint_required: false },
     case_study: { timeout_minutes: 1 },
     arch_validation: { enabled: true, agent_enabled: false, timeout_minutes: 1 },
@@ -133,6 +133,17 @@ test('loadConfig binds the startup plugin registry onto loaded config', () => {
     assert.doesNotThrow(() => validateConfig(loaded.config, loaded.progress));
   } finally {
     fs.rmSync(repoRoot, { recursive: true, force: true });
+  }
+});
+
+test('validateConfig requires one exact lint policy path and project', () => {
+  for (const field of ['lint_policy_path', 'lint_policy_project']) {
+    const config = makeSwarmConfig();
+    delete config.pre_check[field];
+    assert.throws(
+      () => validateConfig(config, { project: 'demo', execution_order: [], modules: {}, gates: {} }),
+      new RegExp(`config\\.pre_check\\.${field}`)
+    );
   }
 });
 

@@ -15,7 +15,7 @@ Start with the surface closest to the symptom:
 
 - deployment readiness: Kubernetes pods, services, PVCs, rollouts, events, and `./scripts/deploy.sh status`
 - gateway readiness: `openclaw gateway status` inside Nova and Buster containers
-- pipeline progress: `.swarm/logs/pipeline/latest.json`, run-scoped `pipeline.jsonl`, and `summary.json`
+- pipeline progress: `.swarm/logs/pipeline/run-catalog.jsonl`, run-scoped `pipeline.jsonl`, and `summary.json`
 - Buster worker health: `buster-pipeline` container logs and `node /app/skills/buster-pipeline.ts --status`
 - live structured events: Redis stream `pipeline:telemetry:<project>:<run_id>`
 - notification delivery: global and run-scoped `discord.jsonl`
@@ -54,10 +54,11 @@ kubectl -n "$NAMESPACE" exec deployment/agent-buster -c buster-pipeline -- \
 
 ## Pipeline Artifacts
 
-Pipeline artifacts are the durable audit path. The global files point to the latest run:
+Pipeline artifacts are the durable audit path. The append-only catalog discovers runs; the latest pointer is convenience-only:
 
 ```text
 Projects/<project>/src/.swarm/logs/pipeline/latest.json
+Projects/<project>/src/.swarm/logs/pipeline/run-catalog.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/pipeline.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/discord.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/summary.json
@@ -70,7 +71,7 @@ Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/pipeline.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/discord.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/summary.json
 Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/nova-injections.jsonl
-Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/buster-telemetry-fallback.jsonl
+Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/quarantine.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/redis/redis-exchanges.jsonl
 Projects/<project>/src/.swarm/logs/pipeline/runs/<run_id>/redis/redis-ops.jsonl
 ```
@@ -80,8 +81,8 @@ Needs-Nova handoffs are operator-visible only when the run-scoped `nova-injectio
 Find and inspect the latest run:
 
 ```bash
-jq . Projects/my-project/src/.swarm/logs/pipeline/latest.json
-RUN_ID="$(jq -r '.run_id' Projects/my-project/src/.swarm/logs/pipeline/latest.json)"
+tail -n 20 Projects/my-project/src/.swarm/logs/pipeline/run-catalog.jsonl
+RUN_ID="$(tail -n 1 Projects/my-project/src/.swarm/logs/pipeline/run-catalog.jsonl | jq -r '.run_id')"
 jq . "Projects/my-project/src/.swarm/logs/pipeline/runs/${RUN_ID}/summary.json"
 ```
 
@@ -161,9 +162,9 @@ If Discord is quiet but artifacts and Redis show progress, continue the operatio
 
 - pod not ready: check rollout status, pod events, init container logs, mounted secrets, and PVCs
 - gateway unhealthy: run `openclaw gateway status` in the agent container and inspect `kubeclaw` logs
-- pipeline appears stuck: inspect `latest.json`, run-scoped `pipeline.jsonl`, and Redis telemetry for the same run ID
+- pipeline appears stuck: inspect the durable run catalog, run-scoped `pipeline.jsonl`, and Redis telemetry for the same run ID
 - Buster not consuming tasks: inspect `buster-pipeline` logs, worker status, Redis connectivity, and `BUSTER_TASK_STREAM`
-- Redis telemetry empty: inspect `buster-telemetry-fallback.jsonl`, Redis connectivity, and local artifact logs
+- Redis telemetry empty: inspect `quarantine.jsonl`, Redis connectivity, and local artifact logs
 - Discord missing: inspect `discord.jsonl`; webhook delivery can fail while the pipeline continues
 - Observer stream quiet: check `kubeclaw.agentObserver.status`, the gateway plugin entry, plugin runtime logs, Redis connectivity, dead-letter entries, and whether OpenClaw emitted the runtime event or hook family being inspected
 

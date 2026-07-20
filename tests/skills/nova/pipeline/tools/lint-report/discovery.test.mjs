@@ -8,16 +8,31 @@ import { buildContext } from '../../../../../../skills/nova/pipeline/tools/lint-
 import { registerContainerYamlTools } from '../../../../../../skills/nova/pipeline/tools/lint-report/container-yaml-tools.ts';
 import { detectProjectTypes, listPolicySourceFiles } from '../../../../../../skills/nova/pipeline/tools/lint-report/discovery.ts';
 
+function writePolicy(repoRoot, languages = ['javascript']) {
+  const policyPath = path.join(repoRoot, 'lint-policy.json');
+  fs.writeFileSync(path.join(repoRoot, 'lint-baseline.json'), '{"schema_version":"pipeline_lint_baseline.v1","groups":[]}\n');
+  fs.writeFileSync(policyPath, JSON.stringify({
+    schema_version: 'pipeline_lint_policy.v5',
+    baseline_path: 'lint-baseline.json',
+    projects: [{ id: 'workspace', root: '.', discovery_max_depth: 5, languages, language_evidence: Object.fromEntries(languages.map(language => [language, language === 'helm' ? ['**/Chart.yaml'] : ['package.json']])) }],
+    global_exclusions: [],
+    architecture: { layers: [{ id: 'workspace', roots: ['.'], may_depend_on: ['workspace'] }] },
+    tools: [{ id: 'shellcheck', required: true, category: 'lint', scope: 'changed-files', tier: 'pre-check', timeout_ms: 1000, blocking_severity: 'error', languages: [], config_path: null, targets: ['.'], include: [], exclude: [] }],
+  }));
+  return policyPath;
+}
+
 test('detectProjectTypes detects nested Helm charts for helm tools', () => {
   const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'helm-discovery-test-'));
   const chartDir = path.join(tempRoot, 'charts', 'app');
   fs.mkdirSync(chartDir, { recursive: true });
   fs.writeFileSync(path.join(chartDir, 'Chart.yaml'), 'apiVersion: v2\nname: app\nversion: 0.1.0\n');
 
-  const { types, markers } = detectProjectTypes(tempRoot, null);
+  const project = { root: '.', discovery_max_depth: 5, languages: ['helm'], language_evidence: { helm: ['**/Chart.yaml'] } };
+  const { types, markers } = detectProjectTypes(tempRoot, project);
 
   assert.equal(types.has('helm'), true);
-  assert.equal(markers.helm, path.join(chartDir, 'Chart.yaml'));
+  assert.equal(markers.helm, '**/Chart.yaml');
 
   const tools = [];
   registerContainerYamlTools(tool => tools.push(tool));
@@ -35,14 +50,15 @@ test('buildContext rejects module paths outside the repo root', () => {
   const tempParent = fs.mkdtempSync(path.join(os.tmpdir(), 'lint-report-context-test-'));
   const repoRoot = path.join(tempParent, 'repo');
   fs.mkdirSync(repoRoot);
+  const policy = writePolicy(repoRoot);
 
   assert.throws(
-    () => buildContext({ repo: repoRoot, 'module-path': '../outside' }),
+    () => buildContext({ repo: repoRoot, policy, 'policy-project': 'workspace', 'module-path': '../outside' }),
     /--module-path escapes --repo/
   );
 
   assert.throws(
-    () => buildContext({ repo: repoRoot, 'module-path': path.join(tempParent, 'outside') }),
+    () => buildContext({ repo: repoRoot, policy, 'policy-project': 'workspace', 'module-path': path.join(tempParent, 'outside') }),
     /--module-path must be relative/
   );
 });
@@ -52,9 +68,13 @@ test('buildContext normalizes valid nested module paths before discovery', () =>
   const moduleDir = path.join(repoRoot, 'modules', 'app');
   fs.mkdirSync(moduleDir, { recursive: true });
   fs.writeFileSync(path.join(moduleDir, 'package.json'), '{}\n');
+  fs.writeFileSync(path.join(repoRoot, 'package.json'), '{}\n');
+  const policy = writePolicy(repoRoot);
 
   const ctx = buildContext({
     repo: repoRoot,
+    policy,
+    'policy-project': 'workspace',
     'module-path': 'modules/./app',
     tier: 'full',
   });

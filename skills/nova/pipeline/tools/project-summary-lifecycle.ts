@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { discoverLatestRun } from '../run-discovery.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export function addDiagnostic(diagnostics, entry = {}) {
@@ -57,51 +58,10 @@ export function extToLang(ext) {
 
 export function discoverLatestLifecycleReadModels(swarmRoot, readJsonData, diagnostics = null) {
   const pipelineLogRoot = path.join(swarmRoot, 'logs', 'pipeline');
-  const latestPointerPath = path.join(pipelineLogRoot, 'latest.json');
-  const latest = readJsonData(latestPointerPath, diagnostics);
-  const candidatePaths = [];
-
-  const runDir = typeof latest?.run_dir === 'string' && latest.run_dir.trim()
-    ? path.join(pipelineLogRoot, latest.run_dir, 'lifecycle', 'read-models.json')
-    : null;
-  const runIdPath = typeof latest?.run_id === 'string' && latest.run_id.trim()
-    ? path.join(pipelineLogRoot, 'runs', latest.run_id, 'lifecycle', 'read-models.json')
-    : null;
-  if (runDir) candidatePaths.push(runDir);
-  if (runIdPath && runIdPath !== runDir) candidatePaths.push(runIdPath);
-
-  for (const candidatePath of candidatePaths) {
-    const data = readJsonData(candidatePath, diagnostics);
-    if (data && typeof data === 'object') {
-      return { data, path: candidatePath, source: 'latest_pointer' };
-    }
-  }
-
-  const runsRoot = path.join(pipelineLogRoot, 'runs');
-  if (!fs.existsSync(runsRoot)) return { data: null, path: null, source: 'absent' };
-
-  const fallbackCandidates = fs.readdirSync(runsRoot, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => {
-      const readModelsPath = path.join(runsRoot, entry.name, 'lifecycle', 'read-models.json');
-      if (!fs.existsSync(readModelsPath)) return null;
-      let mtimeMs = 0;
-      try {
-        mtimeMs = fs.statSync(readModelsPath).mtimeMs;
-      } catch (_error) {
-        mtimeMs = 0;
-      }
-      return { readModelsPath, mtimeMs };
-    })
-    .filter(Boolean)
-    .sort((a, b) => b.mtimeMs - a.mtimeMs);
-
-  for (const candidate of fallbackCandidates) {
-    const data = readJsonData(candidate.readModelsPath, diagnostics);
-    if (data && typeof data === 'object') {
-      return { data, path: candidate.readModelsPath, source: 'latest_run_fallback' };
-    }
-  }
-
+  const latest = discoverLatestRun(pipelineLogRoot);
+  if (!latest) return { data: null, path: null, source: 'absent' };
+  const readModelsPath = path.join(pipelineLogRoot, 'runs', latest.run_id, 'lifecycle', 'read-models.json');
+  const data = readJsonData(readModelsPath, diagnostics);
+  if (data && typeof data === 'object') return { data, path: readModelsPath, source: 'run_catalog' };
   return { data: null, path: null, source: 'absent' };
 }

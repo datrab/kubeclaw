@@ -20,6 +20,8 @@ import {
   commitModelUsageSnapshot,
   prepareModelUsageAggregate,
 } from './usage-aggregation.ts';
+import { publishArtifact } from '../evidence-plane.ts';
+import { redactProhibitedSecrets } from '../../observability-contract.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 interface RedisClient {
@@ -42,6 +44,7 @@ type Logger = Pick<Console, 'info' | 'warn' | 'error' | 'debug'>;
 type RedisClientFactory = (config: AgentObservabilityIngesterConfig) => RedisClient;
 type EmitEvent = (ctx: unknown, eventType: string, payload: Record<string, unknown>, options?: Record<string, unknown>) => Promise<unknown>;
 type ObservabilityReporter = (ctx: unknown, data: Record<string, unknown>, options?: Record<string, unknown>) => Promise<unknown>;
+type ArtifactPublisher = (ctx: unknown, event: AgentObservabilityIngressEventV1, entry: StreamEntry) => { reference: string } | null;
 
 interface StreamEntry {
   stream: AgentObservabilityStreamKey;
@@ -55,6 +58,7 @@ type AgentObservabilityStreamKey =
   | typeof AGENT_OBSERVABILITY_PAYLOAD_STREAM;
 
 const TELEMETRY_EMIT_FAILED = 'telemetry emit failed';
+function runtimeLog(level:string,message:string,reasonCode:string|null=null){return JSON.stringify({schema_version:'runtime_log.v1',timestamp:new Date().toISOString(),level,component:'nova/agent-observability-ingester',message,error_class:null,reason_code:reasonCode});}
 
 export interface AgentObservabilityIngesterStats {
   read: number;
@@ -80,6 +84,7 @@ export interface AgentObservabilityIngesterOptions {
   emitEvent?: EmitEvent;
   recordObservabilityDegraded?: ObservabilityReporter;
   recordObservabilityRestored?: ObservabilityReporter;
+  publishArtifact?: ArtifactPublisher;
 }
 
 export function createDefaultAgentObservabilityRedisClient(config: AgentObservabilityIngesterConfig): RedisClient {
@@ -205,6 +210,7 @@ export class AgentObservabilityIngester {
   private readonly emitEvent: EmitEvent;
   private readonly recordObservabilityDegraded: ObservabilityReporter;
   private readonly recordObservabilityRestored: ObservabilityReporter;
+  private readonly publishArtifact: ArtifactPublisher;
   private readonly degradedReasons = new Set<string>();
   private readonly loggedFailures = new Set<string>();
   private redis: RedisClient | null = null;
@@ -235,6 +241,21 @@ export class AgentObservabilityIngester {
     this.emitEvent = emitEventAuthority(options.emitEvent);
     this.recordObservabilityDegraded = observabilityDegradedReporterAuthority(options.recordObservabilityDegraded);
     this.recordObservabilityRestored = observabilityRestoredReporterAuthority(options.recordObservabilityRestored);
+    this.publishArtifact = options.publishArtifact ?? ((ctx, event, entry) => {
+      const config = (ctx && typeof ctx === 'object' && 'config' in ctx) ? (ctx as { config: any }).config : null;
+      if (!config) return null;
+      const identity = event.identity as Record<string, unknown>;
+      return publishArtifact(config, {
+        logical_id: `observer/${entry.stream}/${entry.id}`,
+        kind: 'openclaw-observer-payload',
+        media_type: 'application/json',
+        bytes: JSON.stringify(redactProhibitedSecrets(event)),
+        producer: 'openclaw-agent-observability-ingester',
+        content_class: 'payload',
+        completeness: 'full',
+        correlation: identity,
+      });
+    });
   }
 
   getStats(): AgentObservabilityIngesterStats {
@@ -385,8 +406,19 @@ export class AgentObservabilityIngester {
       return;
     }
 
+    let artifact;
     try {
-      const result = await this.emitEvent(ctx, emission.eventType, emission.payload as Record<string, unknown>, emission.options);
+      artifact = this.publishArtifact(ctx, event, entry);
+    } catch (error) {
+      await this.deadLetterAndAck(entry, 'artifact_publication_failed', [errorMessage(error)], raw);
+      return;
+    }
+
+    try {
+      const enrichedPayload = artifact
+        ? { ...emission.payload, artifact_reference: artifact.reference, content_completeness: 'full' }
+        : emission.payload;
+      const result = await this.emitEvent(ctx, emission.eventType, enrichedPayload as Record<string, unknown>, emission.options);
       if (result && typeof result === 'object' && 'validationError' in result && (result as { validationError?: unknown }).validationError) {
         await this.deadLetterAndAck(entry, 'telemetry_payload_invalid', [String((result as { validationError: unknown }).validationError)], raw);
         return;
@@ -460,7 +492,7 @@ export class AgentObservabilityIngester {
           description,
         );
       } catch (error) {
-        this.logger.warn?.(`[agent-observability-ingester] ${description} failed: ${errorMessage(error)}`);
+        this.logger.warn?.(runtimeLog('warn',`${description} failed: ${errorMessage(error)}`,'REDIS_TRIM_FAILED'));
       }
     }
   }
@@ -475,7 +507,7 @@ export class AgentObservabilityIngester {
     let task: Promise<void>;
     task = this.trim()
       .catch((error) => {
-        this.logger.warn?.(`[agent-observability-ingester] agent observability trim failed: ${errorMessage(error)}`);
+        this.logger.warn?.(runtimeLog('warn',`agent observability trim failed: ${errorMessage(error)}`,'REDIS_TRIM_FAILED'));
       })
       .finally(() => {
         if (this.trimTask === task) this.trimTask = null;
@@ -595,7 +627,7 @@ export class AgentObservabilityIngester {
     } catch (error) {
       this.stats.lastError = errorMessage(error);
       if (this.lifecycleState === 'draining' && isExpectedRedisCloseDuringShutdown(error)) {
-        this.logger.debug?.(`[agent-observability-ingester] Redis already closed during draining shutdown: ${this.stats.lastError}`);
+        this.logger.debug?.(runtimeLog('debug',`Redis already closed during draining shutdown: ${this.stats.lastError}`,'REDIS_ALREADY_CLOSED'));
       } else {
         this.logOnce('redis-close', `agent observability ingester Redis close failed: ${this.stats.lastError}`);
       }
@@ -608,6 +640,6 @@ export class AgentObservabilityIngester {
   private logOnce(key: string, message: string): void {
     if (this.loggedFailures.has(key)) return;
     this.loggedFailures.add(key);
-    this.logger.warn(`[agent-observability-ingester] ${message}`);
+    this.logger.warn(runtimeLog('warn',message,'INGESTER_RUNTIME_FAILURE'));
   }
 }

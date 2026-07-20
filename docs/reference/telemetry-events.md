@@ -43,7 +43,7 @@ Do not add numeric process exit fields as replay state.
 
 ## Failure Behavior
 
-Telemetry write failures are non-blocking for scheduler truth when local artifacts preserve recovery evidence. Degraded/restored events and fallback artifacts make the observability failure visible.
+Telemetry write failures are non-blocking for scheduler truth when local canonical artifacts preserve recovery evidence. Degraded/restored events and explicit quarantine records make the observability failure visible.
 
 ## Event Build Path
 

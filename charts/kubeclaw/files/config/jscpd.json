@@ -1,0 +1,18 @@
+{
+  "minTokens": 70,
+  "minLines": 10,
+  "mode": "mild",
+  "maxSize": "1mb",
+  "format": ["javascript", "jsx", "typescript", "tsx", "go", "python", "bash", "docker", "hcl"],
+  "reporters": ["json", "silent"],
+  "ignore": [
+    "**/.git/**",
+    "**/.swarm/**",
+    "**/build/**",
+    "**/coverage/**",
+    "**/dist/**",
+    "**/generated/**",
+    "**/node_modules/**",
+    "**/vendor/**"
+  ]
+}

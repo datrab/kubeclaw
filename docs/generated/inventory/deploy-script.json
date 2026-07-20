@@ -199,7 +199,9 @@
     "BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE": "moby/buildkit:rootless"
   },
   "functions": [
+    "log",
     "warn",
+    "err",
     "info",
     "header",
     "require_command",
@@ -264,12 +266,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 778,
-    "secrets": 822,
-    "tailscale": 881,
-    "infra": 972,
-    "agents": 1196,
-    "smoke": 1297,
-    "teardown": 1452
+    "setup": 789,
+    "secrets": 833,
+    "tailscale": 892,
+    "infra": 983,
+    "agents": 1207,
+    "smoke": 1308,
+    "teardown": 1463
   }
 }

@@ -1,0 +1,219 @@
+{
+  "$id": "terminal.closure.event.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "artifact_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "causation_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "content_completeness": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "cost": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "counts": {
+      "type": "object"
+    },
+    "cursor": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dispatch_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "duration_ms": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "emitted_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "event_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "gate_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "gate_type": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "last_work_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "manifest_fingerprint": {
+      "type": "string"
+    },
+    "model_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "module_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "observability": {
+      "enum": [
+        "complete",
+        "partial",
+        "degraded",
+        "unknown"
+      ]
+    },
+    "occurred_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "outcome": {
+      "enum": [
+        "success",
+        "failure",
+        "paused",
+        "cancelled",
+        "process_lost",
+        "abandoned",
+        "completed"
+      ]
+    },
+    "producer": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "project": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reason_code": {
+      "type": "string"
+    },
+    "references": {
+      "type": "array"
+    },
+    "run_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "telemetry_envelope.v1"
+    },
+    "seq": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "session_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "session_key": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "tool_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "type": {
+      "const": "terminal.closure"
+    },
+    "work_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "work_type": {
+      "enum": [
+        "pipeline",
+        "module",
+        "gate",
+        "generator",
+        "validator",
+        "pipeline_step",
+        null
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "event_id",
+    "type",
+    "occurred_at",
+    "emitted_at",
+    "seq",
+    "project",
+    "run_id",
+    "source",
+    "producer",
+    "outcome",
+    "reason_code",
+    "manifest_fingerprint",
+    "observability"
+  ],
+  "type": "object"
+}

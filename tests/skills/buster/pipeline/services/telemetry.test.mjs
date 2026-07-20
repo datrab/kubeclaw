@@ -114,7 +114,7 @@ test('payload fields cannot override canonical telemetry envelope fields', async
   assert.equal(artifactEvent.run_id, 'run-a');
   assert.equal(artifactEvent.seq, 1);
   assert.equal(artifactEvent.source, 'buster');
-  assert.equal(artifactEvent.emitter, 'buster/pipeline/services/telemetry.test');
+  assert.equal(artifactEvent.producer, 'buster/pipeline/services/telemetry.test');
   assert.equal(artifactEvent.module_id, 'payload-module');
   assert.deepEqual(redisEvent, artifactEvent);
 });
@@ -129,9 +129,9 @@ test('invalid telemetry degraded artifact preserves validation diagnostics', asy
 
   const [event] = readJsonl(pipelineLogPath);
   const serialized = JSON.stringify(event);
-  assert.equal(event.type, 'observability.degraded');
-  assert.equal(event.artifact_fallback, true);
-  assert.match(serialized, /supersecretvalue123456/);
+  assert.equal(event.schema_version, 'quarantined_payload.v1');
+  assert.equal(event.reason_code, 'TRANSPORT_UNAVAILABLE');
+  assert.doesNotMatch(serialized, /supersecretvalue123456/);
 });
 
 test('redis degraded artifact preserves runtime error detail', async (t) => {
@@ -151,10 +151,9 @@ test('redis degraded artifact preserves runtime error detail', async (t) => {
 
   const [event] = readJsonl(pipelineLogPath);
   const serialized = JSON.stringify(event);
-  assert.equal(event.type, 'observability.degraded');
-  assert.equal(event.artifact_fallback, true);
-  assert.equal(event.detail, 'redis auth failed with Bearer abcdefghijklmnop1234567890');
-  assert.match(serialized, /abcdefghijklmnop1234567890/);
+  assert.equal(event.schema_version, 'quarantined_payload.v1');
+  assert.equal(event.reason_code, 'TRANSPORT_UNAVAILABLE');
+  assert.doesNotMatch(serialized, /abcdefghijklmnop1234567890/);
 });
 
 test('failed restored redis write keeps degradation pending for retry', async (t) => {

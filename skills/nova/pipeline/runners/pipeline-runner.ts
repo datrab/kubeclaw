@@ -30,6 +30,7 @@ import {
   PIPELINE_TERMINAL_SCOPES,
 } from '../services/contracts/terminal-decision.ts';
 import { emitPipelineCheckpoint } from '../services/pipeline-checkpoint.ts';
+import { startCommandRuntime } from '../services/command-runtime.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 function positiveNumber(value, label) {
@@ -154,6 +155,7 @@ export async function runPipeline(config, progress, opts = {}) {
   };
   let openClawAgentObserverPlugin = null;
   let agentObservabilityIngester = null;
+  let commandRuntime = null;
   let runError = null;
   try {
     openClawAgentObserverPlugin = createOpenClawAgentObserverPluginController(config);
@@ -161,6 +163,12 @@ export async function runPipeline(config, progress, opts = {}) {
     runOpts.assertPipelineRunLockActive();
     await startPipelineRun(config, progress, runOpts);
     await getPipelineRunnerDeps(config, runOpts.deps).preflightRuntimeRedis(config);
+    commandRuntime = startCommandRuntime(config, progress, {
+      abort(reason) {
+        if (stepAbortController && !stepAbortController.signal.aborted) stepAbortController.abort(reason);
+      },
+    });
+    runOpts.awaitCommandPermission = () => commandRuntime.awaitPermission();
     agentObservabilityIngester = startAgentObservabilityIngester(config, {
       runId: selectDefinedValue(() => (config._runId), () => (null)),
       project: selectDefinedValue(() => (config.project), () => (null)),
@@ -210,6 +218,7 @@ export async function runPipeline(config, progress, opts = {}) {
         }
       }
       if (agentObservabilityIngester) await agentObservabilityIngester.stop();
+      if (commandRuntime) await commandRuntime.stop();
       if (openClawAgentObserverPlugin) await openClawAgentObserverPlugin.stop();
     } catch (error) {
       cleanupError = error;

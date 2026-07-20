@@ -170,9 +170,20 @@ assert.equal(preCheckPass.nextAction, 'pass');
 const lintAttemptRoot = fs.mkdtempSync(path.join(sourceRoot, '.tmp-validator-lint-attempt-'));
 try {
   const lintReportPath = path.join(lintAttemptRoot, 'fake-lint-report.mjs');
+  const lintPolicyPath = path.join(lintAttemptRoot, 'lint-policy.json');
+  fs.writeFileSync(path.join(lintAttemptRoot, 'lint-baseline.json'), '{"schema_version":"pipeline_lint_baseline.v1","groups":[]}\n');
+  fs.writeFileSync(lintPolicyPath, JSON.stringify({
+    schema_version: 'pipeline_lint_policy.v5',
+    baseline_path: 'lint-baseline.json',
+    projects: [{ id: 'workspace', root: '.', discovery_max_depth: 3, languages: ['shell'], language_evidence: { shell: ['never-present.sh'] } }],
+    global_exclusions: [],
+    architecture: { layers: [{ id: 'workspace', roots: ['.'], may_depend_on: ['workspace'] }] },
+    tools: [{ id: 'shellcheck', required: true, category: 'lint', scope: 'changed-files', tier: 'pre-check', timeout_ms: 1000, blocking_severity: 'error', languages: ['shell'], config_path: null, targets: ['.'], include: ['**/*.sh'], exclude: [] }],
+  }));
   fs.writeFileSync(lintReportPath, `
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 const args = process.argv.slice(2);
 const valueAfter = (name) => {
   const index = args.indexOf(name);
@@ -180,14 +191,32 @@ const valueAfter = (name) => {
 };
 const output = valueAfter('--output');
 const logPath = valueAfter('--log-path');
+const policyPath = valueAfter('--policy');
+const requestedScope = valueAfter('--module-path') || 'full';
+const requestedChangedFiles = valueAfter('--changed-files');
+const policySource = fs.readFileSync(policyPath);
+const policyDigest = crypto.createHash('sha256').update(policySource).digest('hex');
+const policy = JSON.parse(policySource);
+const configDigests = Object.fromEntries(policy.tools.filter(tool => tool.config_path).map(tool => {
+  const configPath = path.resolve(path.dirname(policyPath), tool.config_path);
+  return [tool.id, crypto.createHash('sha256').update(fs.readFileSync(configPath)).digest('hex')];
+}));
 if (logPath) {
   fs.mkdirSync(path.dirname(logPath), { recursive: true });
   fs.writeFileSync(logPath, JSON.stringify({ event: 'trace' }) + '\\n');
 }
 fs.writeFileSync(output, JSON.stringify({
+  schema_version: 'pipeline_lint_report.v5',
+  policy: { schema_version: 'pipeline_lint_policy.v5', digest: policyDigest, project: 'workspace', config_digests: configDigests, baseline_digest: 'bb7e399cfbd2651eddfd7e7aca202f97f682ec1a61cde54b5ea12a26d8a7fe44' },
+  project: 'validator-control-contract',
+  scope: requestedScope,
   tier: valueAfter('--tier') || 'pre-check',
   timestamp: '2026-05-07T00:00:00.000Z',
-  summary: { total_errors: 0, total_warnings: 0, tools_ok: 1, tools_skipped: 0, tools_failed: 0 },
+  changed_files: requestedChangedFiles ? requestedChangedFiles.split(',') : [],
+  detected_types: [],
+  diagnostics: [],
+  summary: { total_errors: 0, total_warnings: 0, total_blocking: 0,
+    total_baselined: 0, tools_ok: 0, tools_not_applicable: 0, tools_failed: 0 },
   tools: {},
 }, null, 2));
 `);
@@ -202,7 +231,7 @@ fs.writeFileSync(output, JSON.stringify({
     project: 'validator-control-contract-lint-attempt',
     repo_root: repoRoot,
     paths: { ...expandedStandardConfig.paths, modules_dir: modulesDir, swarm_dir: path.join(repoRoot, '.swarm') },
-    pre_check: { ...expandedStandardConfig.pre_check, lint_report_path: lintReportPath, timeout_seconds: 60 },
+    pre_check: { ...expandedStandardConfig.pre_check, lint_report_path: lintReportPath, lint_policy_path: lintPolicyPath, lint_policy_project: 'workspace', timeout_seconds: 60 },
   }, moduleDir, {}, moduleDir);
   assert.equal(lintResult.passed, true, 'pre-check should pass with fake clean lint report and missing fail_count');
   const lintDir = path.join(logDir, 'modules', moduleDir, 'lint');
@@ -222,7 +251,7 @@ fs.writeFileSync(output, JSON.stringify({
     repo_root: repoRoot,
     paths: { ...expandedStandardConfig.paths, modules_dir: modulesDir, swarm_dir: path.join(repoRoot, '.swarm') },
     _runId: 'run-validator-control-contract-lint-attempt',
-    pre_check: { ...expandedStandardConfig.pre_check, lint_report_path: lintReportPath },
+    pre_check: { ...expandedStandardConfig.pre_check, lint_report_path: lintReportPath, lint_policy_path: lintPolicyPath, lint_policy_project: 'workspace' },
   }, {}, {
     ids: { runId: 'run-validator-control-contract-lint-attempt', gateId: 'review', stageId: 'validator:full_lint', producerType: 'full_lint' },
     executionContext: { scheduleKey: 'mandatory:before:gate:review:validator:full_lint' },

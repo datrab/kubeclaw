@@ -101,7 +101,7 @@ func newController() (*controller, error) {
 	host := os.Getenv("KUBERNETES_SERVICE_HOST")
 	port := env("KUBERNETES_SERVICE_PORT", "443")
 	if host == "" || token == "" {
-		return nil, errors.New("Kubernetes service host and ServiceAccount token are required")
+		return nil, errors.New("kubernetes service host and ServiceAccount token are required")
 	}
 
 	apiGroup := env("BUSTER_LEASE_API_GROUP", "kubeclaw.forgestack.ai")
@@ -849,10 +849,7 @@ func exposureChanged(status map[string]interface{}, exposure map[string]interfac
 			return true
 		}
 	}
-	if boolValue(status["credentialsAvailable"]) != boolValue(exposure["credentialsAvailable"]) {
-		return true
-	}
-	return false
+	return boolValue(status["credentialsAvailable"]) != boolValue(exposure["credentialsAvailable"])
 }
 
 func copyStatusWithoutCredentials(status map[string]interface{}) map[string]interface{} {

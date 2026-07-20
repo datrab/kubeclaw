@@ -25,6 +25,7 @@ function safeExec(cmd, args, opts = {}) {
       maxBuffer: 10 * 1024 * 1024, // 10MB — eslint on large projects can be verbose
       cwd: selectDefinedValue(() => (opts.cwd), () => (undefined)),
       env: buildSubprocessEnv(selectDefinedValue(() => (opts.env), () => ({}))),
+      input: selectDefinedValue(() => (opts.input), () => (undefined)),
       stdio: ['pipe', 'pipe', 'pipe'],
     });
     return { ok: true, stdout: outputText(stdout), stderr: '', exitCode: 0 };
@@ -37,9 +38,19 @@ function safeExec(cmd, args, opts = {}) {
       stderr: outputText(e.stderr),
     exitCode: lintExecutionExitCode(e),
       timedOut: commandTimedOut(e),
-      error: commandTimedOut(e) ? `timeout after ${timeout}ms` : null,
+      error: commandTimedOut(e) ? `timeout after ${timeout}ms` : outputText(e.message),
     };
   }
+}
+
+function requireToolExecution(result, toolId) {
+  if (result?.timedOut) {
+    throw Object.assign(new Error(`${toolId} timed out: ${result.error}`), { code: `${toolId}-timeout` });
+  }
+  if (result?.exitCode === -1) {
+    throw Object.assign(new Error(`${toolId} could not execute: ${result.error || 'unknown execution error'}`), { code: `${toolId}-execution-failed` });
+  }
+  return result;
 }
 
 function lintExecutionExitCode(e: Record<string, any>): number {
@@ -64,4 +75,4 @@ function commandExists(cmd) {
   }
 }
 
-export { commandExists, safeExec };
+export { commandExists, requireToolExecution, safeExec };

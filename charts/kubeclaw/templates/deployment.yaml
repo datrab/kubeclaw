@@ -290,6 +290,10 @@ spec:
               mkdir -p /config/agents/main/sessions
 
               echo "==> 4b. Swarm Config"
+              if [ -e /config/node_modules ] && [ ! -L /config/node_modules ]; then
+                rm -rf /config/node_modules
+              fi
+              ln -sfnT /opt/kubeclaw-tools/node_modules /config/node_modules
               if [ -f "/init-swarm-config/swarm.config.json" ]; then
                 cp -Lf "/init-swarm-config/swarm.config.json" "/config/swarm.config.json"
                 echo "    swarm.config.json written from chart source"
@@ -313,9 +317,29 @@ spec:
                   echo "    eslint.config.mjs exists, keeping (override=false)"
                 fi
               fi
+              if [ -f "/init-swarm-config/.yamllint.yml" ]; then
+                cp -Lf "/init-swarm-config/.yamllint.yml" "/config/.yamllint.yml"
+                echo "    .yamllint.yml written from chart source"
+              fi
+              if [ -f "/init-swarm-config/.tflint.hcl" ]; then
+                cp -Lf "/init-swarm-config/.tflint.hcl" "/config/.tflint.hcl"
+                echo "    .tflint.hcl written from chart source"
+              fi
+              for lint_config in knip.json jscpd.json lint-baseline.json; do
+                if [ -f "/init-swarm-config/$lint_config" ]; then
+                  cp -Lf "/init-swarm-config/$lint_config" "/config/$lint_config"
+                  echo "    $lint_config written from chart source"
+                fi
+              done
+              if [ -f "/init-swarm-config/lint-policy.json" ]; then
+                cp -Lf "/init-swarm-config/lint-policy.json" "/config/lint-policy.json"
+                echo "    lint-policy.json written from chart source"
+              fi
 
               echo "==> 4c. Runtime Config"
               mkdir -p /runtime-config
+              rm -rf /runtime-config/node_modules
+              ln -sfnT /opt/kubeclaw-tools/node_modules /runtime-config/node_modules
               if [ -f /config/swarm.config.json ]; then
                 node -e 'const fs=require("fs"); const source="/config/swarm.config.json"; const target="/runtime-config/swarm.config.json"; const config=JSON.parse(fs.readFileSync(source,"utf8")); if (process.env.DISCORD_WEBHOOK) config.discord_webhook_url=process.env.DISCORD_WEBHOOK; fs.writeFileSync(target, JSON.stringify(config,null,2)+"\n");'
                 echo "    swarm.config.json rendered into runtime config"
@@ -325,6 +349,20 @@ spec:
               fi
               if [ -f /config/eslint.config.mjs ]; then
                 cp -Lf /config/eslint.config.mjs /runtime-config/eslint.config.mjs
+              fi
+              if [ -f /config/.yamllint.yml ]; then
+                cp -Lf /config/.yamllint.yml /runtime-config/.yamllint.yml
+              fi
+              if [ -f /config/.tflint.hcl ]; then
+                cp -Lf /config/.tflint.hcl /runtime-config/.tflint.hcl
+              fi
+              for lint_config in knip.json jscpd.json lint-baseline.json; do
+                if [ -f "/config/$lint_config" ]; then
+                  cp -Lf "/config/$lint_config" "/runtime-config/$lint_config"
+                fi
+              done
+              if [ -f /config/lint-policy.json ]; then
+                cp -Lf /config/lint-policy.json /runtime-config/lint-policy.json
               fi
               rm -f /runtime-config/code-bundle-manifest.json
               cat > /runtime-config/kubeclaw-health.mjs <<'HEALTH_SCRIPT'

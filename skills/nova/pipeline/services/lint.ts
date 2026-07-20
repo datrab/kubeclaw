@@ -2,12 +2,14 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // services/lint.ts — Static analysis (lint) report generation and pre-check runner
 
 import { execFileSync } from 'child_process';
-import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 import { log } from '../core/logger.ts';
 import { validateSafePath, relPath, modulePath, moduleLintLogDir } from '../core/paths.ts';
 import { buildSubprocessEnv } from '../security.ts';
+import { validateLintReport } from '../tools/lint-report/report-contract.ts';
+import { detectProjectTypes } from '../tools/lint-report/discovery.ts';
+import { applicablePolicyToolIds, loadLintPolicy, policyDigest, selectPolicyProject } from '../tools/lint-report/policy.ts';
 
 const LINT_REPORT_MODULE_ID = 'report';
 const LINT_REPORT_UNAVAILABLE = 'Lint report unavailable';
@@ -103,87 +105,11 @@ function preCheckTimeoutMs(config) {
   return timeoutSeconds * 1000;
 }
 
-const RUNTIME_LINT_REPORT_PATH = '/app/skills/pipeline/tools/lint-report.ts';
-const REPO_LINT_REPORT_PATH = 'skills/nova/pipeline/tools/lint-report.ts';
-
 function resolveLintReportPath(config) {
-  const configuredPath = validateSafePath(
+  return validateSafePath(
     config.pre_check.lint_report_path,
     'config.pre_check.lint_report_path'
   );
-  if (fs.existsSync(configuredPath)) return configuredPath;
-
-  if (configuredPath === RUNTIME_LINT_REPORT_PATH && typeof config?.repo_root === 'string') {
-    const repoPath = validateSafePath(
-      path.join(config.repo_root, REPO_LINT_REPORT_PATH),
-      'config.pre_check.lint_report_path repo fallback'
-    );
-    if (fs.existsSync(repoPath)) {
-      log('INFO', `Lint report: resolved runtime tool alias ${RUNTIME_LINT_REPORT_PATH} to repo tool ${repoPath}`);
-      return repoPath;
-    }
-  }
-
-  return configuredPath;
-}
-
-function gitHead(config) {
-  try {
-    const result = execFileSync('git', ['-C', config.repo_root, 'rev-parse', 'HEAD'], {
-      encoding: 'utf8',
-      timeout: 10000,
-      stdio: ['ignore', 'pipe', 'ignore'],
-      env: buildSubprocessEnv(),
-    });
-    return typeof result === 'string' ? result.trim() : 'unknown-head';
-  } catch {
-    return 'unknown-head';
-  }
-}
-
-function lintCachePath(config, tier, opts, cliTier, changedFiles) {
-  const swarmDir = textValue(config?.paths?.swarm_dir);
-  if (!swarmDir) return null;
-  const key = {
-    repo_root: textValue(config.repo_root),
-    project: textValue(config.project),
-    tier,
-    cli_tier: cliTier,
-    module_dir: textValue(opts.moduleDir),
-    module_id: textValue(opts.moduleId),
-    commit_hash: textValue(opts.commitHash),
-    git_head: gitHead(config),
-    changed_files: arrayValue(changedFiles).map(normalizeRepoRelativePath).sort(),
-    forge_diff_stat: textValue(opts.forgeDiffStat),
-  };
-  const digest = crypto.createHash('sha256').update(JSON.stringify(key)).digest('hex').slice(0, 24);
-  return path.join(swarmDir, 'logs', 'lint-cache', `${digest}.json`);
-}
-
-function readCachedLintReport(cachePath) {
-  if (!cachePath || !fs.existsSync(cachePath)) return null;
-  try {
-    const cached = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
-    if (cached?.schema_version !== 'pipeline_lint_report_cache.v1') return null;
-    if (!cached.report || typeof cached.report !== 'object') return null;
-    return cached.report;
-  } catch {
-    return null;
-  }
-}
-
-function writeCachedLintReport(cachePath, report) {
-  if (!cachePath || !report) return;
-  try {
-    fs.mkdirSync(path.dirname(cachePath), { recursive: true });
-    fs.writeFileSync(cachePath, `${JSON.stringify({
-      schema_version: 'pipeline_lint_report_cache.v1',
-      created_at: new Date().toISOString(),
-      report,
-    }, null, 2)}\n`);
-  } catch (error) {
-    log('DEBUG', `Lint report cache write skipped: ${error.message}`);
-  }
 }
 
 /**
@@ -210,29 +136,43 @@ export function generateLintReport(config, tier, opts = {}) {
   }
 
   const timeout = lintTimeoutAuthority(opts, tier, config);
+  const lintPolicyPath = validateSafePath(config.pre_check.lint_policy_path, 'config.pre_check.lint_policy_path');
+  let expectedPolicy;
+  let expectedToolIds;
+  let expectedToolPolicies;
+  try {
+    expectedPolicy = loadLintPolicy(lintPolicyPath);
+    const expectedProject = selectPolicyProject(expectedPolicy, config.pre_check.lint_policy_project);
+    const { types } = detectProjectTypes(config.repo_root, expectedProject, expectedPolicy.global_exclusions);
+    expectedToolIds = applicablePolicyToolIds(expectedPolicy, types, cliTier);
+    expectedToolPolicies = Object.fromEntries(expectedPolicy.tools
+      .filter(tool => expectedToolIds.includes(tool.id))
+      .map(tool => [tool.id, { category: tool.category, scope: tool.scope, blocking_severity: tool.blocking_severity }]));
+  } catch (e) {
+    const error = { code: 'LINT_POLICY_INVALID', message: `Lint policy invalid: ${e.message}`, lint_policy_path: lintPolicyPath, tier };
+    log('ERROR', error.message);
+    return { report: null, error: error.message, setup_failed: true, error_code: error.code, diagnostic: error };
+  }
   const outputPath = tmpFile(`lint-${tier}`, selectPresentValue(opts.moduleId, LINT_REPORT_MODULE_ID), '.json');
 
   const args = [
     '--repo', config.repo_root,
     '--tier', cliTier,
     '--project', config.project,
+    '--policy', lintPolicyPath,
+    '--policy-project', config.pre_check.lint_policy_project,
     '--output', outputPath,
   ];
-
-  // Pass semgrep config path if configured (platform-level, not repo-level)
-  if (config.pre_check?.semgrep_config_path) {
-    args.push('--semgrep-config', config.pre_check.semgrep_config_path);
-  }
 
   // Pass execution trace log path for dual-write in lint-report.ts
   if (opts.logPath) {
     args.push('--log-path', opts.logPath);
   }
 
-  if (opts.moduleDir) {
-    const modRelPath = relPath(config, modulePath(config, opts.moduleDir));
-    args.push('--module-path', modRelPath);
-  }
+  const requestedModulePath = opts.moduleDir
+    ? relPath(config, modulePath(config, opts.moduleDir))
+    : 'full';
+  if (opts.moduleDir) args.push('--module-path', requestedModulePath);
 
   const explicitChangedFiles = Array.isArray(opts.changedFiles) ? opts.changedFiles.filter(Boolean) : [];
   const changedFiles = scopeChangedFilesToModule(opts.moduleDir, explicitChangedFiles.length > 0
@@ -240,14 +180,6 @@ export function generateLintReport(config, tier, opts = {}) {
     : (opts.forgeDiffStat ? changedFilesFromDiffStat(opts.forgeDiffStat) : changedFilesFromCommit(config, opts.commitHash)));
   if (changedFiles.length > 0) {
     args.push('--changed-files', changedFiles.join(','));
-  }
-
-  const cachePath = lintCachePath(config, tier, opts, cliTier, changedFiles);
-  const cachedReport = readCachedLintReport(cachePath);
-  if (cachedReport) {
-    const { total_errors, total_warnings, tools_ok, tools_failed } = cachedReport.summary || {};
-    log('INFO', `Lint report (${tier}): reused cached report ${Number(total_errors) || 0} errors, ${Number(total_warnings) || 0} warnings (${Number(tools_ok) || 0} ok, ${Number(tools_failed) || 0} failed)`);
-    return { report: cachedReport, error: null, cached: true };
   }
 
   log('STEP', `Lint report: running lint-report.ts --tier ${cliTier}`);
@@ -265,14 +197,25 @@ export function generateLintReport(config, tier, opts = {}) {
 
     try {
       const report = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
-      const { total_errors, total_warnings, tools_ok, tools_failed } = report.summary;
-      log('INFO', `Lint report (${tier}): ${total_errors} errors, ${total_warnings} warnings (${tools_ok} ok, ${tools_failed} failed)`);
-      writeCachedLintReport(cachePath, report);
+      validateLintReport(report, {
+        tier: cliTier,
+        policyProject: config.pre_check.lint_policy_project,
+        policyDigest: policyDigest(expectedPolicy),
+        baselineDigest: expectedPolicy.baseline.digest,
+        configDigests: expectedPolicy.config_digests,
+        toolIds: expectedToolIds,
+        toolPolicies: expectedToolPolicies,
+        scope: requestedModulePath,
+        changedFiles,
+      });
+      const { total_errors, total_warnings, total_blocking, total_baselined, tools_ok, tools_failed } = report.summary;
+      log('INFO', `Lint report (${tier}): ${total_errors} errors, ${total_warnings} warnings, ${total_blocking} blocking, ${total_baselined} baselined (${tools_ok} ok, ${tools_failed} failed)`);
       return { report, error: null };
     } catch (e) {
+      const contractInvalid = e?.code === 'LINT_REPORT_CONTRACT_INVALID';
       const error = {
-        code: 'LINT_REPORT_UNPARSEABLE',
-        message: `Lint report unparseable: ${e.message}`,
+        code: contractInvalid ? 'LINT_REPORT_CONTRACT_INVALID' : 'LINT_REPORT_UNPARSEABLE',
+        message: `${contractInvalid ? 'Lint report contract invalid' : 'Lint report unparseable'}: ${e.message}`,
         lint_report_path: lintReportPath,
         output_path: outputPath,
         tier,
@@ -339,7 +282,7 @@ export function formatLintReportForReviewer(report) {
     '',
     `**Tier:** ${report.tier} | **Timestamp:** ${report.timestamp}`,
     `**Summary:** ${report.summary.total_errors} errors, ${report.summary.total_warnings} warnings`,
-    `**Tools:** ${report.summary.tools_ok} passed, ${report.summary.tools_skipped} skipped, ${report.summary.tools_failed} failed`,
+    `**Tools:** ${report.summary.tools_ok} passed, ${report.summary.tools_not_applicable} not applicable, ${report.summary.tools_failed} failed`,
     '',
   ];
 
@@ -432,7 +375,7 @@ export async function runPreCheck(config, moduleDir, status, moduleId) {
     };
   }
 
-  const totalErrors = numericCount(report.summary?.total_errors);
+  const totalErrors = numericCount(report.summary?.total_blocking);
   const toolsFailed = numericCount(report.summary?.tools_failed);
 
   if (totalErrors === 0 && toolsFailed === 0) {

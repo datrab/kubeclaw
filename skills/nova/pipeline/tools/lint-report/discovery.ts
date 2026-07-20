@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
-import { discoverPlatformSwarmConfigCandidates } from '../../core/platform-config.ts';
 import { log } from './output.ts';
+import { matchesPolicyPattern, policyIncludesFile } from './policy.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 const discoveryDiagnostics = [];
@@ -26,8 +26,6 @@ const LINT_POLICY_IGNORED_FILE_PATTERNS = [
   /\.(test|spec)\.[jt]sx?$/,
   /\.min\.(js|mjs|cjs)$/,
 ];
-const YAML_FILE_EXTENSIONS = ['.yaml', '.yml'];
-
 function recordDiscoveryDiagnostic(entry = {}) {
   discoveryDiagnostics.push({
     source: 'lint-report.discovery',
@@ -38,24 +36,6 @@ function recordDiscoveryDiagnostic(entry = {}) {
 
 function takeDiscoveryDiagnostics() {
   return discoveryDiagnostics.splice(0, discoveryDiagnostics.length);
-}
-
-function discoverPlatformSemgrepConfigCandidates() {
-  const candidates = [
-    ...discoverPlatformSwarmConfigCandidates().map(swarmConfigPath => path.join(path.dirname(swarmConfigPath), '.semgrep.yml')),
-    '/home/node/.openclaw/.semgrep.yml',
-  ];
-
-  return [...new Set(candidates.filter(Boolean))];
-}
-
-function discoverPlatformEslintConfigCandidates() {
-  const candidates = [
-    ...discoverPlatformSwarmConfigCandidates().map(swarmConfigPath => path.join(path.dirname(swarmConfigPath), 'eslint.config.mjs')),
-    '/home/node/.openclaw/eslint.config.mjs',
-  ];
-
-  return [...new Set(candidates.filter(Boolean))];
 }
 
 function findNearestTsconfigDir(repoRoot, modulePath = null) {
@@ -86,6 +66,26 @@ function listPolicySourceFiles(scanRoot) {
     .filter(file => !isPolicyIgnoredFile(file));
 }
 
+function configuredTargetPaths(ctx, tool = ctx.tool) {
+  const projectRoot = path.resolve(ctx.repoRoot, ctx.policyProject?.root || '.');
+  return tool.targets.map(target => path.resolve(projectRoot, target));
+}
+
+function listConfiguredTargetFiles(ctx, predicate = () => true) {
+  const projectRoot = path.resolve(ctx.repoRoot, ctx.policyProject?.root || '.');
+  const candidates = [];
+  for (const target of configuredTargetPaths(ctx)) {
+    const stat = fs.statSync(target);
+    candidates.push(...(stat.isDirectory() ? findFiles(target, () => true, Number.MAX_SAFE_INTEGER) : [target]));
+  }
+  return [...new Set(candidates)]
+    .filter(file => {
+      const relative = path.relative(projectRoot, file).split(path.sep).join('/');
+      return predicate(relative) && policyIncludesFile(relative, ctx.tool, ctx.policy.global_exclusions);
+    })
+    .sort();
+}
+
 /**
  * Detect project type(s) by looking for marker files.
  * A project can be multi-type (e.g. Full-Stack: JS + Python + Docker + Helm).
@@ -94,55 +94,24 @@ function listPolicySourceFiles(scanRoot) {
  * @param {string|null} modulePath - Optional module subdirectory to narrow scope
  * @returns {{ types: Set<string>, markers: object }}
  */
-function detectProjectTypes(repoRoot, modulePath) {
-  const scanRoot = modulePath ? path.join(repoRoot, modulePath) : repoRoot;
+function detectProjectTypes(repoRoot, project, globalExclusions = []) {
+  const scanRoot = path.resolve(repoRoot, project.root);
   const types = new Set();
   const markers = {};
 
-  const checks = [
-    { file: 'tsconfig.json',       type: 'typescript', search: [scanRoot, repoRoot] },
-    { file: 'package.json',        type: 'javascript', search: [scanRoot, repoRoot] },
-    { file: 'pyproject.toml',      type: 'python',     search: [scanRoot, repoRoot] },
-    { file: 'requirements.txt',    type: 'python',     search: [scanRoot, repoRoot] },
-    { file: 'setup.py',            type: 'python',     search: [scanRoot, repoRoot] },
-  ];
-
-  for (const check of checks) {
-    for (const dir of check.search) {
-      const fullPath = path.join(dir, check.file);
-      if (fs.existsSync(fullPath)) {
-        types.add(check.type);
-        markers[check.type] = fullPath;
-        break;
-      }
+  const candidates = findFiles(scanRoot, () => true, project.discovery_max_depth)
+    .map(file => path.relative(scanRoot, file).split(path.sep).join('/'))
+    .filter(file => !globalExclusions.some(pattern => matchesPolicyPattern(file, pattern)));
+  for (const language of project.languages) {
+    const evidence = project.language_evidence[language];
+    const matched = evidence.find((pattern) => {
+      if (!pattern.includes('*')) return fs.existsSync(path.join(scanRoot, pattern));
+      return candidates.some(candidate => matchesPolicyPattern(candidate, pattern));
+    });
+    if (matched) {
+      types.add(language);
+      markers[language] = matched;
     }
-  }
-
-  // Helm chart detection — match helm-lint's recursive chart discovery.
-  const chartFiles = findFiles(scanRoot, f => f === 'Chart.yaml', 3);
-  if (chartFiles.length > 0) {
-    types.add('helm');
-    markers.helm = chartFiles[0];
-  }
-
-  // Dockerfile detection — can be anywhere in the tree
-  const dockerfiles = findFiles(scanRoot, f => /^Dockerfile|\.dockerfile$/i.test(f), 3);
-  if (dockerfiles.length > 0) {
-    types.add('docker');
-    markers.docker = dockerfiles[0];
-  }
-
-  // Shell script detection — look for .sh files
-  const shellFiles = findFiles(scanRoot, f => f.endsWith('.sh'), 3);
-  if (shellFiles.length > 0) {
-    types.add('shell');
-    markers.shell = shellFiles[0];
-  }
-
-  // YAML detection — always true if any .yaml/.yml exists (for yamllint)
-  const yamlFiles = findFiles(scanRoot, f => YAML_FILE_EXTENSIONS.some(extension => f.endsWith(extension)), 2);
-  if (yamlFiles.length > 0) {
-    types.add('yaml');
   }
 
   log('INFO', `Detected project types: ${[...types].join(', ')}`, { markers });
@@ -210,11 +179,10 @@ function resolveScope(ctx) {
 
 export {
   detectProjectTypes,
-  discoverPlatformEslintConfigCandidates,
-  discoverPlatformSemgrepConfigCandidates,
-  discoverPlatformSwarmConfigCandidates,
   findFiles,
   findNearestTsconfigDir,
+  configuredTargetPaths,
+  listConfiguredTargetFiles,
   listPolicySourceFiles,
   resolveScope,
   takeDiscoveryDiagnostics,

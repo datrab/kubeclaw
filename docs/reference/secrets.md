@@ -37,15 +37,15 @@ Generated from: `my-values/setup-secrets.sh`
 
 | Secret | Namespace | Required when | Keys | Setup source |
 | --- | --- | --- | --- | --- |
-| `openclaw-shared-secrets` | `NAMESPACE` | always; litellmApiKey is required when KUBECLAW_DEPLOY_LITELLM is enabled | `gatewayToken-forge`, `gatewayToken-echo`, `gatewayToken-buster`, `gatewayToken-nova`, `anthropicApiKey`, `stitchApiKey`, `discordToken-forge`, `discordToken-echo`, `discordToken-buster`, `discordToken-nova`, `discordWebhook`, `litellmApiKey` | setup_shared_secret, line 535 |
-| `redis-secrets` | `NAMESPACE` | always | `redis-password` | setup_redis_secret, line 599 |
-| `postgresql-secrets` | `NAMESPACE` | KUBECLAW_DEPLOY_POSTGRESQL is enabled | `postgres-password`, `litellm-password` | setup_postgresql_secret, line 634 |
-| `litellm-secrets` | `NAMESPACE` | KUBECLAW_DEPLOY_LITELLM is enabled | `LITELLM_MASTER_KEY`, `DATABASE_URL` | setup_litellm_secret, line 689 |
-| `google-sa-key` | `NAMESPACE` | KUBECLAW_DEPLOY_LITELLM is enabled | `credentials.json` | setup_google_sa_key, line 788 |
-| `ghcr-secret` | `NAMESPACE` | always when imagePullSecrets reference GHCR | `.dockerconfigjson` | setup_ghcr_secret, line 823 |
-| `git-deploy-key-nova` | `NAMESPACE` | Nova git checkout is enabled | `id_rsa` | setup_git_deploy_key git-deploy-key-nova Nova, line 1009 |
-| `git-deploy-key-buster` | `NAMESPACE` | Buster git checkout is enabled | `id_rsa` | setup_git_deploy_key git-deploy-key-buster Buster, line 1010 |
-| `operator-oauth` | `TAILSCALE_OPERATOR_NAMESPACE` | TAILSCALE_OPERATOR_ENABLED is enabled | `client_id`, `client_secret` | setup_tailscale_oauth_secret, line 910 |
+| `openclaw-shared-secrets` | `NAMESPACE` | always; litellmApiKey is required when KUBECLAW_DEPLOY_LITELLM is enabled | `gatewayToken-forge`, `gatewayToken-echo`, `gatewayToken-buster`, `gatewayToken-nova`, `anthropicApiKey`, `stitchApiKey`, `discordToken-forge`, `discordToken-echo`, `discordToken-buster`, `discordToken-nova`, `discordWebhook`, `litellmApiKey` | setup_shared_secret, line 543 |
+| `redis-secrets` | `NAMESPACE` | always | `redis-password` | setup_redis_secret, line 607 |
+| `postgresql-secrets` | `NAMESPACE` | KUBECLAW_DEPLOY_POSTGRESQL is enabled | `postgres-password`, `litellm-password` | setup_postgresql_secret, line 642 |
+| `litellm-secrets` | `NAMESPACE` | KUBECLAW_DEPLOY_LITELLM is enabled | `LITELLM_MASTER_KEY`, `DATABASE_URL` | setup_litellm_secret, line 697 |
+| `google-sa-key` | `NAMESPACE` | KUBECLAW_DEPLOY_LITELLM is enabled | `credentials.json` | setup_google_sa_key, line 796 |
+| `ghcr-secret` | `NAMESPACE` | always when imagePullSecrets reference GHCR | `.dockerconfigjson` | setup_ghcr_secret, line 831 |
+| `git-deploy-key-nova` | `NAMESPACE` | Nova git checkout is enabled | `id_rsa` | setup_git_deploy_key git-deploy-key-nova Nova, line 1017 |
+| `git-deploy-key-buster` | `NAMESPACE` | Buster git checkout is enabled | `id_rsa` | setup_git_deploy_key git-deploy-key-buster Buster, line 1018 |
+| `operator-oauth` | `TAILSCALE_OPERATOR_NAMESPACE` | TAILSCALE_OPERATOR_ENABLED is enabled | `client_id`, `client_secret` | setup_tailscale_oauth_secret, line 918 |
 
 
 <!-- END GENERATED -->

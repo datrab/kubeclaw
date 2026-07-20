@@ -274,7 +274,7 @@ export class OpenClawAgentObserver {
   private logOnce(key: string, message: string): void {
     if (this.loggedFailures.has(key)) return;
     this.loggedFailures.add(key);
-    this.logger.warn(`[kubeclaw-agent-observer] ${message}`);
+    this.logger.warn(JSON.stringify({ schema_version:'runtime_log.v1', timestamp:new Date().toISOString(), level:'warn', component:'openclaw-agent-observer', message, error_class:null, reason_code:'OBSERVER_RUNTIME_FAILURE' }));
   }
 }
 
