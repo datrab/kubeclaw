@@ -10,7 +10,8 @@
 #   ./deploy.sh infra              Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM
 #   ./deploy.sh tailscale          Deploy Tailscale Kubernetes Operator
 #   ./deploy.sh buildkit-preflight Verify rootless BuildKit support on a cluster node
-#   ./deploy.sh buster-buildkit-smoke Build, push, deploy, and clean a live Buster fixture
+#   ./deploy.sh buster-buildkit-smoke Exercise BuildKit directly inside the deployed Buster pipeline container
+#   ./deploy.sh buster-infra-smoke Publish a task through Redis for the deployed Buster consumer
 #   ./deploy.sh agents             Deploy agents (Nova + Buster)
 #   ./deploy.sh agent <name> [--with-code]  Deploy single agent (nova|buster), optionally followed by code deploy
 #   ./deploy.sh image              Deploy both agents using image/runtime values
@@ -708,7 +709,7 @@ EOF
   fi
   trap - EXIT INT TERM
   info "Ubuntu/K3s hosts must allow unprivileged user namespaces and an unconfined BuildKit AppArmor profile."
-  info "Check: sysctl kernel.unprivileged_userns_clone user.max_user_namespaces"
+  info "Check: sysctl kernel.unprivileged_userns_clone user.max_user_namespaces kernel.apparmor_restrict_unprivileged_userns"
   info "Node bootstrap, not Helm, owns any required sysctl or AppArmor change."
   return 1
 }
@@ -1063,6 +1064,10 @@ deploy_agent() {
     verify_bundle_archive_url "$role" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_auth_secret"
   fi
 
+  if [[ "$role" == "buster" && "$mode" == "image" ]]; then
+    cmd_buildkit_preflight
+  fi
+
   if [[ -n "$image_repo" || -n "$image_tag" || -n "$controller_image_repo" || -n "$controller_image_tag" || -n "$pipeline_image_repo" || -n "$pipeline_image_tag" || "$disable_pull_secrets" == "1" || "$mode" == "code" ]]; then
     override_file="$(mktemp)"
     : > "$override_file"
@@ -1230,6 +1235,14 @@ cmd_buster_buildkit_smoke() {
   require_command node
   node "$REPO_DIR/tests/verification/live/buster-buildkit-production-smoke.mjs"
   log "Buster BuildKit production smoke passed"
+}
+
+cmd_buster_infra_smoke() {
+  header "Buster Full Infrastructure Production Smoke"
+  require_command kubectl
+  require_command node
+  node "$REPO_DIR/tests/verification/live/buster-infra-production-smoke.mjs"
+  log "Buster full infrastructure production smoke passed"
 }
 
 # ─── Teardown ────────────────────────────────────────────────────────────
@@ -1410,6 +1423,9 @@ case "${1:-}" in
   buster-buildkit-smoke)
     cmd_buster_buildkit_smoke
     ;;
+  buster-infra-smoke)
+    cmd_buster_infra_smoke
+    ;;
   agents)
     cmd_agents
     ;;
@@ -1463,7 +1479,8 @@ case "${1:-}" in
     echo "  infra              Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM"
     echo "  tailscale          Deploy Tailscale Kubernetes Operator"
     echo "  buildkit-preflight Verify rootless BuildKit support with a temporary pod"
-    echo "  buster-buildkit-smoke Build, push, deploy, verify, and clean a live Buster fixture"
+    echo "  buster-buildkit-smoke Directly test BuildKit in the deployed Buster pipeline container"
+    echo "  buster-infra-smoke  Test Redis → deployed Buster → BuildKit → deploy → completion"
     echo "  agents             Deploy agents (Nova + Buster) using image/runtime values"
     echo "  agent <name> [--with-code]  Deploy single agent using image/runtime values"
     echo "                    Add --with-code to also smoke, deploy code, and smoke again"

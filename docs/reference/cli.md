@@ -39,6 +39,7 @@ Generated from: `scripts/deploy.sh`
 - `tailscale`
 - `buildkit-preflight`
 - `buster-buildkit-smoke`
+- `buster-infra-smoke`
 - `agents`
 - `agent`
 - `image`

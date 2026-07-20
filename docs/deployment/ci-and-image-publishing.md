@@ -28,6 +28,8 @@ The image build job publishes a matrix:
 
 Images are pushed to GHCR under the repository owner with `latest`, SHA, and date tags. The workflow has `contents: read` and `packages: write` for images, plus `contents: write` for bundle release assets.
 
+Each matrix image uses its own minimal GitHub Actions cache scope. Cache export is best-effort: an optional cache upload cannot turn an already-published image into a failed build result.
+
 The same workflow also packages durable per-agent `/app/skills` bundles on
 every push and manual dispatch. Skill-only changes publish new bundles without
 rebuilding runtime images:

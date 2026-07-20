@@ -7,6 +7,12 @@ mkdir -p "$(dirname "$address")" "${BUILDKIT_STATE_DIR:-/home/builder/.local/sha
 config_dir="${HOME}/.config/buildkit"
 mkdir -p "$config_dir"
 registry="${KUBECLAW_LOCAL_REGISTRY:?KUBECLAW_LOCAL_REGISTRY is required}"
+apparmor_userns_policy=/proc/sys/kernel/apparmor_restrict_unprivileged_userns
+if [ -r "$apparmor_userns_policy" ] && [ "$(cat "$apparmor_userns_policy")" = "1" ]; then
+  echo "Buster rootless BuildKit cannot start: kernel.apparmor_restrict_unprivileged_userns=1 on this node." >&2
+  echo "Set kernel.apparmor_restrict_unprivileged_userns=0 in node bootstrap, then redeploy Buster." >&2
+  exit 78
+fi
 cat >"${config_dir}/buildkitd.toml" <<EOF
 [registry."${registry}"]
   http = true
@@ -15,6 +21,7 @@ EOF
 
 rootlesskit \
   --net=slirp4netns \
+  --disable-host-loopback \
   --copy-up=/etc \
   --copy-up=/run \
   buildkitd \

@@ -71,6 +71,7 @@
     "tailscale",
     "buildkit-preflight",
     "buster-buildkit-smoke",
+    "buster-infra-smoke",
     "agents",
     "agent",
     "image",
@@ -243,6 +244,7 @@
     "cmd_smoke_agent",
     "cmd_smoke",
     "cmd_buster_buildkit_smoke",
+    "cmd_buster_infra_smoke",
     "cmd_teardown_agents",
     "uninstall_helm_release_if_present",
     "delete_manifested_resource_if_present",
@@ -261,12 +263,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 716,
-    "secrets": 760,
-    "tailscale": 819,
-    "infra": 910,
-    "agents": 1119,
-    "smoke": 1220,
-    "teardown": 1367
+    "setup": 717,
+    "secrets": 761,
+    "tailscale": 820,
+    "infra": 911,
+    "agents": 1124,
+    "smoke": 1225,
+    "teardown": 1380
   }
 }

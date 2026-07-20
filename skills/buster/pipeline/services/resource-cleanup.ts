@@ -17,7 +17,12 @@ type CleanupState = { leases: string[] };
 
 const execFileAsync = promisify(execFile) as any;
 const CLEANUP_SCOPE_LABEL = 'kubeclaw.io/cleanup-scope';
-const STATE_ROOT = '/home/node/.openclaw/workspace/.swarm/resource-cleanup';
+
+function runtimeStateRoot(): string {
+  const repoRoot = String(process.env.REPO_ROOT ?? '').trim();
+  if (!repoRoot) throw new Error('REPO_ROOT is required for Buster runtime cleanup state');
+  return path.join(repoRoot, '.swarm', 'resource-cleanup');
+}
 
 export const CLEANUP_POLICY = Object.freeze({ TASK_SCOPED: 'task-scoped', STARTUP_SWEEP: 'startup-sweep', SHUTDOWN_SWEEP: 'shutdown-sweep', DISABLED: 'disabled' });
 
@@ -38,7 +43,7 @@ export function buildCleanupKubernetesLabels(payload: Payload = {}): Record<stri
 }
 
 export function getCleanupStatePath(payload: Payload = {}, options: { stateRoot?: string } = {}): string {
-  return path.join(options.stateRoot ?? STATE_ROOT, `${scopeKey(payload)}.json`);
+  return path.join(options.stateRoot ?? runtimeStateRoot(), `${scopeKey(payload)}.json`);
 }
 
 function readState(statePath: string): CleanupState {
@@ -68,7 +73,7 @@ async function deleteLease(lease: string): Promise<void> {
 
 export async function cleanupRuntimeResources(_stage: string, payload: Payload | null = null, options: { cleanupPolicy?: string; stateRoot?: string } = {}): Promise<Record<string, unknown>> {
   if (options.cleanupPolicy === CLEANUP_POLICY.DISABLED) return { ok: true, leases_deleted: [] };
-  const root = options.stateRoot ?? STATE_ROOT;
+  const root = options.stateRoot ?? runtimeStateRoot();
   const statePaths = payload
     ? [getCleanupStatePath(payload, options)]
     : (fs.existsSync(root) ? fs.readdirSync(root).filter((name) => name.endsWith('.json')).map((name) => path.join(root, name)) : []);

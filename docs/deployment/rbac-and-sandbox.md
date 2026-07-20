@@ -39,6 +39,7 @@ That authority is intentional for the current Buster role, but it is still a hig
 
 - Run `./scripts/deploy.sh buildkit-preflight` on every new node pool used by Buster.
 - Run `./scripts/deploy.sh buster-buildkit-smoke` after deploying a new Buster pipeline image.
+- Run `./scripts/deploy.sh buster-infra-smoke` after deploying Buster to verify the real Redis consumer and completion path.
 - Apply `my-values/infra/buster-namespace-fence.yaml` before running Kubernetes suites.
 - Confirm `agent-buster` has only lease-client RBAC in broker mode.
 - Confirm `agent-buster-namespace-controller` is covered by the namespace fence.
@@ -60,7 +61,7 @@ Verify the real node capability before deploying Buster:
 ./scripts/deploy.sh buildkit-preflight
 ```
 
-The command creates a temporary non-privileged `moby/buildkit:rootless` pod, waits for its worker, verifies it with `buildctl debug workers`, and deletes it. It does not modify node configuration. If the probe fails, host bootstrap or Ansible owns any required `kernel.unprivileged_userns_clone`, `user.max_user_namespaces`, or AppArmor change; Helm must not silently mutate those host policies.
+The command creates a temporary non-privileged `moby/buildkit:rootless` pod, waits for its worker, verifies it with `buildctl debug workers`, and deletes it. It does not modify node configuration. If the probe fails, host bootstrap or Ansible owns any required `kernel.unprivileged_userns_clone`, `user.max_user_namespaces`, `kernel.apparmor_restrict_unprivileged_userns`, or AppArmor change; Helm must not silently mutate those host policies. Ubuntu 24.04 nodes must set `kernel.apparmor_restrict_unprivileged_userns=0` for the chart's unconfined rootless BuildKit process.
 
 ## Verification And Recovery
 
@@ -71,6 +72,7 @@ The command creates a temporary non-privileged `moby/buildkit:rootless` pod, wai
 | Namespace controller authority | `kubectl auth can-i create namespaces --as system:serviceaccount:"$NAMESPACE":agent-buster-namespace-controller` | allowed, with namespace-fence policy required for prefix restriction |
 | Nova write authority | `kubectl -n "$NAMESPACE" auth can-i create pods --as system:serviceaccount:"$NAMESPACE":agent-nova` | should not be broadly allowed by the agent chart |
 | Rootless image builder | `./scripts/deploy.sh buildkit-preflight` | temporary pod reaches Ready, reports an OCI worker, and is deleted |
-| Production build path | `./scripts/deploy.sh buster-buildkit-smoke` | gateway tool invocation, image build/push, immutable-digest deployment, health check, and namespace cleanup all pass |
+| Direct production build path | `./scripts/deploy.sh buster-buildkit-smoke` | direct image build/push, immutable-digest deployment, health check, and namespace cleanup all pass inside the Buster pipeline container |
+| Full Buster infrastructure path | `./scripts/deploy.sh buster-infra-smoke` | Nova publishes through Redis; deployed Buster builds, pushes, deploys, emits telemetry and typed completion, ACKs the task, and cleans its lease and namespace |
 
 If Buster suites fail with Kubernetes authorization errors, identify whether the failing pod is `agent-buster` or `agent-buster-namespace-controller`. The first should only request leases and run workloads inside controller-issued namespaces; the controller-created namespace Role grants workload operations and pod port-forward only within that leased namespace. The controller owns test namespace creation/deletion. Preserve the failed task payload because capabilities and requested suite type decide which authority was expected.

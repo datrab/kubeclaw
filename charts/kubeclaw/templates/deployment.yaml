@@ -43,12 +43,15 @@ spec:
       {{- end }}
 
       securityContext:
+        # The gateway and the non-root Buster worker share the workspace PVC.
+        # Keep a single writable group across both containers while preserving
+        # the configured runtime UID for the gateway.
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
         {{- if .Values.runAsRoot }}
-        fsGroup: 0
         runAsUser: 0
         runAsGroup: 0
         {{- else }}
-        fsGroup: 1000
         runAsUser: 1000
         runAsGroup: 1000
         runAsNonRoot: true
@@ -144,7 +147,9 @@ spec:
                   fi
                 fi
               done
-              chown -R 0:0 /workspace
+              chown -R 0:1000 /workspace
+              chmod -R g+rwX /workspace
+              find /workspace -type d -exec chmod g+s {} +
 
               echo "==> 4. Config Setup"
               if [ ! -f /config/openclaw.json ]; then
@@ -554,7 +559,7 @@ spec:
                 }
               } else {
                 await check('runtime openclaw config', () => requirePath('/home/node/.openclaw/openclaw.json', 'file'));
-                await check('runtime swarm config', () => requirePath('/home/node/.openclaw/swarm.config.json', 'file'));
+                await check('runtime swarm config', () => requirePath(process.env.SWARM_CONFIG, 'file'));
                 await check('code bundle', checkCodeBundle);
                 await check('skills', () => requirePath('/app/skills', 'dir'));
                 if (mode === 'startup') {
@@ -1152,7 +1157,7 @@ spec:
             - name: GIT_REPO_URL
               value: {{ .Values.agent.git.repoUrl | quote }}
             - name: REPO_ROOT
-              value: "/home/node/.openclaw/workspace/git-repo"
+              value: "/workspace/git-repo"
             - name: REDIS_HOST
               value: {{ .Values.redis.host | quote }}
             - name: REDIS_PORT
@@ -1198,7 +1203,7 @@ spec:
                   key: {{ .Values.discordWebhook.secretKey | default "discordWebhook" }}
             {{- end }}
             - name: SWARM_CONFIG
-              value: "/home/node/.openclaw/swarm.config.json"
+              value: "/home/builder/.openclaw/swarm.config.json"
             - name: GATEWAY_PORT
               value: {{ .Values.gateway.port | quote }}
             - name: KUBECLAW_DRAIN_FILE
@@ -1244,18 +1249,15 @@ spec:
             {{- end }}
 
           volumeMounts:
-            - name: config
-              mountPath: /home/node/.openclaw
-              readOnly: true
             - name: runtime-config
-              mountPath: /home/node/.openclaw/swarm.config.json
+              mountPath: /home/builder/.openclaw/swarm.config.json
               subPath: swarm.config.json
               readOnly: true
             - name: runtime-config
               mountPath: /runtime-config
               readOnly: true
             - name: workspace
-              mountPath: /home/node/.openclaw/workspace
+              mountPath: /workspace
             - name: ssh-home-vol
               mountPath: /home/builder/.ssh
             - name: skills-merged
@@ -1296,11 +1298,11 @@ spec:
             privileged: false
             seccompProfile:
               type: Unconfined
-            # RootlessKit requires its setuid uid/gid mapping helpers. The
-            # container remains non-root, non-privileged, and drops all caps.
+            # RootlessKit requires its setuid uid/gid mapping helpers. Keep the
+            # runtime's default capability bounding set so those helpers can
+            # acquire SETUID/SETGID; the container remains non-root and
+            # non-privileged.
             allowPrivilegeEscalation: true
-            capabilities:
-              drop: ["ALL"]
 
           {{- if .Values.probes.startup.enabled }}
           startupProbe:

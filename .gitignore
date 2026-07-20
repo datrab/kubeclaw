@@ -19,6 +19,7 @@ Thumbs.db
 *.log
 active-run.lock.json
 /.swarm/
+**/.swarm/live-buster-infra/
 
 # Temp
 /tmp/

@@ -12,7 +12,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       bash ca-certificates curl git openssh-client jq python3 python3-pip \
       uidmap slirp4netns fuse-overlayfs iproute2 iptables tini \
       build-essential shellcheck yamllint ripgrep tree netcat-openbsd nmap \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && test -u /usr/bin/newuidmap \
+    && test -u /usr/bin/newgidmap
 
 COPY --from=buildkit /usr/bin/buildkitd /usr/local/bin/buildkitd
 COPY --from=buildkit /usr/bin/buildctl /usr/local/bin/buildctl

@@ -17,3 +17,17 @@ test('runtime cleanup state tracks only namespace leases', () => {
     fs.rmSync(stateRoot, { recursive: true, force: true });
   }
 });
+
+test('runtime cleanup state is rooted in the canonical repository workspace', () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'resource-cleanup-repo-'));
+  const previousRepoRoot = process.env.REPO_ROOT;
+  process.env.REPO_ROOT = repoRoot;
+  try {
+    const statePath = getCleanupStatePath({ project: 'p', module_id: 'm', attempt: 1, run_id: 'r' });
+    assert.equal(path.dirname(statePath), path.join(repoRoot, '.swarm', 'resource-cleanup'));
+  } finally {
+    if (previousRepoRoot === undefined) delete process.env.REPO_ROOT;
+    else process.env.REPO_ROOT = previousRepoRoot;
+    fs.rmSync(repoRoot, { recursive: true, force: true });
+  }
+});
