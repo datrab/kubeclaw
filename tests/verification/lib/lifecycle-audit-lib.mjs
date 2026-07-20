@@ -154,6 +154,7 @@ export function loadPackagingRules(sourceRoot, overlayRoot) {
   const requiredBusterPipeline = [
     'FROM moby/buildkit:rootless AS buildkit',
     'npm install --prefix /app --no-audit --no-fund ioredis js-yaml uuid typescript',
+    'XDG_RUNTIME_DIR=/run/user/1000',
     'USER 1000:1000',
     'ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/buster-pipeline-entrypoint"]',
   ];

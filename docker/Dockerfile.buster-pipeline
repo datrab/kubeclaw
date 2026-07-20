@@ -56,6 +56,7 @@ COPY docker/buster-pipeline-entrypoint.sh /usr/local/bin/buster-pipeline-entrypo
 RUN chmod +x /usr/local/bin/buster-pipeline-entrypoint
 
 ENV HOME=/home/builder \
+    XDG_RUNTIME_DIR=/run/user/1000 \
     NODE_PATH=/app/node_modules \
     BUILDKIT_HOST=unix:///run/user/1000/buildkit/buildkitd.sock \
     BUILDKIT_STATE_DIR=/home/builder/.local/share/buildkit \
